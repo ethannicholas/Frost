@@ -473,7 +473,7 @@ void ParserGenerator::generate(const char* hDest, const char* cppDest) {
 
     std::ofstream hOut(hDest);
     hOut << "#pragma once\n";
-    hOut << "#include \"GLRParser.h\"\n";
+    hOut << "#include \"runtime/GLRParser.h\"\n";
     hOut << "typedef ParserGenerator::GLRParser::Action Action;\n";
     hOut << "typedef ParserGenerator::GLRParser::StackEntry StackEntry;\n";
     hOut << "typedef ParserGenerator::GLRParser::State State;\n";

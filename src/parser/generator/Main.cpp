@@ -8,6 +8,10 @@ int main(int argc, const char** argv) {
     std::ifstream in(argv[1]);
     std::string text((std::istreambuf_iterator<char>(in)),
                         std::istreambuf_iterator<char>());
+    if (in.fail()) {
+        printf("error reading %s\n", argv[1]);
+        exit(1);
+    }
 
     ParserGenerator::ErrorReporter errorReporter;
     ParserGenerator::Parser parser(text, &errorReporter);
