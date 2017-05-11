@@ -9,6 +9,7 @@ class ErrorReporter {
 public:
     void error(Position position, String msg) {
         printf("%d: %s\n", position.fLine, msg.c_str());
+        exit(1);
     }
 };
 

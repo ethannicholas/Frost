@@ -11,5 +11,8 @@ int main(int argc, char** argv) {
         printf("error reading %s\n", argv[1]);
         exit(1);
     }
-    PandaParser().file(text);
+    ParseError error;
+    if (!PandaParser().file(text, &error)) {
+        printf("parse error at %d, %d\n", error.fLine, error.fColumn);
+    }
 }

@@ -9,6 +9,7 @@ struct Token {
     enum Kind {
         END_OF_FILE,
         WHITESPACE,
+        COLONCOLON,
         COLON,
         DOT,
         COMMA,

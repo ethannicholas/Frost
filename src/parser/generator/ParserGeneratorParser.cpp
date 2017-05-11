@@ -247,15 +247,15 @@ bool Parser::code(String* result) {
     return true;
 }
 
-// IDENTIFIER (DOT IDENTIFIER)* (LT type (COMMA type)* GT)? QUESTION?
+// IDENTIFIER ((DOT | COLONCOLON) IDENTIFIER)* (LT type (COMMA type)* GT)? QUESTION?
 bool Parser::type(String* result) {
     Token t;
     if (!this->expect(Token::IDENTIFIER, "an identifier", &t)) {
         return false;
     }
     *result += t.fText;
-    while (this->checkNext(Token::DOT)) {
-        *result += ".";
+    while (this->checkNext(Token::DOT, &t) || this->checkNext(Token::COLONCOLON, &t)) {
+        *result += t.fText;
         if (!this->expect(Token::IDENTIFIER, "an identifier", &t)) {
             return false;
         }
@@ -332,7 +332,7 @@ bool Parser::production(Production* result) {
     } while (!done);
     if (this->checkNext(Token::NOT)) {
         Token excludesToken;
-        if (!this->expect(Token::CHARSET, "a charset", &excludesToken)) {
+        if (this->expect(Token::CHARSET, "a charset", &excludesToken)) {
             excludes = charset(excludesToken.fText);
         }
     }

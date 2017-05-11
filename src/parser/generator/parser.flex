@@ -26,6 +26,7 @@ LITERALCHAR [^\\']|\\[trn\\']
 
 %%
 
+"::"                    { return ParserGenerator::Token::COLONCOLON; }
 ":"                     { return ParserGenerator::Token::COLON; }
 "."                     { return ParserGenerator::Token::DOT; }
 ","                     { return ParserGenerator::Token::COMMA; }

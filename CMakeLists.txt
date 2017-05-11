@@ -19,6 +19,7 @@ add_custom_command(
         PandaParser.cpp
     DEPENDS
         parsergenerator
+        src/parser/generator/panda.grammar
     COMMAND
         parsergenerator
         src/parser/generator/panda.grammar
@@ -31,6 +32,7 @@ add_custom_command(
 
 include_directories(
     src/pandac
+    src/parser/runtime
     ${CMAKE_CURRENT_BINARY_DIR}
 )
 

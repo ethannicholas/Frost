@@ -150,20 +150,20 @@ void ParserGenerator::computeClosure(std::unordered_set<StateFragment>* fragment
     while (updated);
 }
 
-void ParserGenerator::setAction(int start, char c, GLRParser::Action action) {
-    GLRParser::Action& old = fActions[start][c];
+void ParserGenerator::setAction(int start, char c, Action action) {
+    Action& old = fActions[start][c];
     switch (old.fKind) {
-        case GLRParser::Action::kMultiple_Kind:
+        case Action::kMultiple_Kind:
             old.fSubactions.push_back(action);
             break;
-        case GLRParser::Action::kNull_Kind:
+        case Action::kNull_Kind:
             fActions[start][c] = action;
             break;
         default:
-            std::vector<GLRParser::Action> subactions;
+            std::vector<Action> subactions;
             subactions.push_back(old);
             subactions.push_back(action);
-            fActions[start][c] = GLRParser::Action(subactions);
+            fActions[start][c] = Action(subactions);
     }
 }
 
@@ -171,14 +171,37 @@ String to_string(const Node* node) {
     switch (node->fKind) {
         case Node::kIdentifier_Kind: return ((IdentifierNode*) node)->fIdentifier;
         case Node::kCharset_Kind: {
-            String result;
+            String result = "[";
             for (char c : ((CharsetNode*) node)->fChars) {
-                result += c;
+                switch (c) {
+                    case '\n':
+                        result += "\\n";
+                        break;
+                    case '\r':
+                        result += "\\r";
+                        break;
+                    case '\t':
+                        result += "\\t";
+                        break;
+                    default:
+                        result += c;
+                }
             }
+            result += "]";
             return result;
         }
         case Node::kLiteral_Kind: return ((LiteralNode*) node)->fLiteral;
-        case Node::kChar_Kind: return String("'") + ((CharNode*) node)->fChar + "'";
+        case Node::kChar_Kind:
+            switch (((CharNode*) node)->fChar) {
+                case '\n':
+                    return "'\\n'";
+                case '\r':
+                    return "'\\r'";
+                case '\t':
+                    return "'\\t'";
+                default:
+                    return String("'") + ((CharNode*) node)->fChar + "'";
+            }
         case Node::kCut_Kind: return "<cut>";
         case Node::kEOF_Kind: return "<eof>";
     }
@@ -201,8 +224,7 @@ void ParserGenerator::computeTransitions(const State& state, std::unordered_set<
                 if (i == f.fProductionId) {
                     const Production& p = fProductions[i];
                     for (char c : this->follow(p.fName)) {
-                        this->setAction(start, c, GLRParser::Action(GLRParser::Action::kReduce_Kind,
-                                i));
+                        this->setAction(start, c, Action(Action::kReduce_Kind, i));
                     }
                 }
             }
@@ -236,28 +258,23 @@ void ParserGenerator::computeTransitions(const State& state, std::unordered_set<
             }
             case Node::kChar_Kind: {
                 char c = ((CharNode&) node).fChar;
-                this->setAction(state.fId, c, GLRParser::Action(GLRParser::Action::kShift_Kind,
-                        target));
+                this->setAction(state.fId, c, Action(Action::kShift_Kind, target));
                 break;
             }
             case Node::kCharset_Kind: {
                 for (char c : ((CharsetNode&) node).fChars) {
-                    this->setAction(state.fId, c, GLRParser::Action(GLRParser::Action::kShift_Kind,
-                        target));
+                    this->setAction(state.fId, c, Action(Action::kShift_Kind, target));
                 }
                 break;
             }
             case Node::kCut_Kind:
                 for (unsigned char c = START_CHAR; c <= END_CHAR; ++c) {
-                    this->setAction(state.fId, c, GLRParser::Action(GLRParser::Action::kCut_Kind,
-                        target));
+                    this->setAction(state.fId, c, Action(Action::kCut_Kind, target));
                 }
-                this->setAction(state.fId, EOF_CHAR,
-                        GLRParser::Action(GLRParser::Action::kCut_Kind, target));
+                this->setAction(state.fId, EOF_CHAR, Action(Action::kCut_Kind, target));
                 break;
             case Node::kEOF_Kind: {
-                this->setAction(state.fId, EOF_CHAR,
-                        GLRParser::Action(GLRParser::Action::kShift_Kind, target));
+                this->setAction(state.fId, EOF_CHAR, Action(Action::kShift_Kind, target));
                 break;
             }
             default:
@@ -276,13 +293,29 @@ int ParserGenerator::addState(std::unordered_set<StateFragment> fragments,
     }
     states->insert(state);
     fActions.emplace_back();
-    std::vector<GLRParser::Action>& newActions = fActions.back();
-    // TODO: does this really need to be +1?
-    for (int i = 0; i <= END_CHAR + 1; i++) {
+    std::vector<Action>& newActions = fActions.back();
+    for (int i = 0; i <= END_CHAR; i++) {
         newActions.emplace_back();
     }
     fGotos.emplace_back();
     this->computeTransitions(state, states);
+/*
+    printf("State %d:\n", state.fId);
+    for (const auto& f : fragments) {
+        const Production& p = fProductions[f.fProductionId];
+        printf("    %s =", p.fName.c_str());
+        for (int i = 0; i < p.fNodes.size(); i++) {
+            if (i == f.fPosition) {
+                printf(" <*>");
+            }
+            printf(" %s", to_string(p.fNodes[i].get()).c_str());
+        }
+        if (p.fNodes.size() == f.fPosition) {
+            printf(" <*>");
+        }
+        printf("\n");
+    }
+*/
     return state.fId;
 }
 
@@ -298,7 +331,7 @@ void ParserGenerator::createParseTables() {
             nodes.emplace_back(new EOFNode());
             int index = (int) fProductions.size();
             fProductions.emplace_back(p.fName + "_START", false, p.fType, std::move(nodes),
-                    std::unordered_set<char>(), "result = " + p.fName);
+                    std::unordered_set<char>(), "result = " + p.fName + ";");
             startProductions.push_back(index);
         }
     }
@@ -386,7 +419,7 @@ String ParserGenerator::getType(const Node& node) {
     switch (node.fKind) {
         case Node::kChar_Kind: // fall through
         case Node::kCharset_Kind:
-            return "String";
+            return "char";
         case Node::kIdentifier_Kind: {
             const String& name = ((IdentifierNode&) node).fIdentifier;
             String type;
@@ -410,23 +443,38 @@ String ParserGenerator::getType(const Node& node) {
     }
 }
 
+void ParserGenerator::createWrapper(const String& rawType, std::ofstream& out) {
+    String name = String("Wrapper") + std::to_string(fWrappers.size());
+    if (fWrappers.find(rawType) != fWrappers.end()) {
+        return;
+    }
+    fWrappers[rawType] = name;
+    out << "struct " << name << " : StackEntry {\n";
+    out << "    " << name << "(" << rawType << " value) : fValue(value) {}\n";
+    out << "    " << rawType << " fValue;\n";
+    out << "};\n";
+}
+
+String ParserGenerator::wrapper(const String& rawType) {
+    return fWrappers[rawType];
+}
+
 void ParserGenerator::writeReductions(std::ofstream& out) {
-    out << "std::unique_ptr<StackEntry> " << fName << "::reduce(int prodId, State* parserState, "
+    out << fName << "Output " << fName << "::reduce(int prodId, State* parserState, "
             "bool* die) const {\n";
     out << "    switch (prodId) {\n";
     for (int i = 0; i < fProductions.size(); ++i) {
         const Production& p = fProductions[i];
+        out << "        case " << i << ": {\n";
+        const char* indentation = "            ";
 
-        // FIXME TEMPORARY
-        ((Production&) p).fType = "";
-        ((Production&) p).fCode = "";
-
-        out << "        case " << i << ": ";
+        if (p.fType.size()) {
+            out << indentation << p.fType << " result;\n";
+        }
         if (p.fCode.size()) {
-            const char* indentation = "            ";
             ASSERT(p.fType.size(), "expected production with code to have a type");
-            out << "{\n" << indentation << p.fType << " result;\n";
-            for (const auto& n : p.fNodes) {
+            for (int i = p.fNodes.size() - 1; i >= 0; --i) {
+                const auto& n = p.fNodes[i];
                 String name;
                 if (n->fLabel.size()) {
                     name = n->fLabel;
@@ -437,20 +485,22 @@ void ParserGenerator::writeReductions(std::ofstream& out) {
                 if (name.size()) {
                     String type = getType(*n);
                     ASSERT(type.size(), "expected named node to have a type");
-                    out << indentation << "const " << type << "& " << name << 
-                            " = (" << type << "&) *parserState->state.output;\n";
+                    out << indentation << "const " << type << " " << name <<
+                            " = parserState->fNode->fOutput." << fWrappers[type] << ";\n";
                 }
                 out << indentation << "parserState->fNode = parserState->fNode->fNext;\n";
             }
-            out << indentation << p.fCode << "\nreturn result;\n";
-            out << indentation << "}\n";
         }
         else {
-            ASSERT(!p.fType.size(), "expected production without code to not have a type");
-            out << "for (int i = 0; i < " << p.fNodes.size() << "; i++) { "
-                    "parserState->fNode = parserState->fNode->fNext; } "
-                    "return nullptr;\n";
+            out << indentation << "for (int i = 0; i < " << p.fNodes.size() <<
+                    "; i++) { parserState->fNode = parserState->fNode->fNext; }\n";
         }
+        if (p.fType.size()) {
+            out << indentation << p.fCode << "return " << fName << "Output(result);\n";
+        } else {
+            out << indentation << "return " << fName << "Output();\n";
+        }
+        out << indentation << "}\n";
     }
     out << "        default: abort();\n";
     out << "    }\n";
@@ -460,11 +510,27 @@ void ParserGenerator::writeReductions(std::ofstream& out) {
 void ParserGenerator::writeStarts(std::ofstream& out) {
     for (auto iter = fStartStates.begin(); iter != fStartStates.end(); ++iter) {
         const Production& p = fProductions[iter->first];
-        out << "    " << /*p.fType*/"void" << " " << p.fName.substr(0, p.fName.length() - strlen("_START")) << 
-                "(String text, void* reference = nullptr) {\n";
-        out << "        " << fName << "().parse(text, " << iter->second << ", reference);\n";
+        if (fName == "PandaParser") {
+            printf("HACK!\n");
+            out << "    bool " << p.fName.substr(0, p.fName.length() - strlen("_START")) <<
+                    "(String text, ParseError* error, "
+                        "void* reference = nullptr) {\n";
+            out << "        " << fName << "Output tmp;\n";
+            out << "         bool result = this->parse(text, " << iter->second <<
+                    ", &tmp, error, reference);\n";
+            out << "        return result;\n";
+            out << "    }\n";
+            continue;
+        }
+        out << "    bool " << p.fName.substr(0, p.fName.length() - strlen("_START")) <<
+                "(String text, " << p.fType << "* output, ParseError* error, "
+                    "void* reference = nullptr) {\n";
+        out << "        " << fName << "Output tmp;\n";
+        out << "        bool result = this->parse(text, " << iter->second <<
+                ", &tmp, error, reference);\n";
+        out << "        *output = tmp." << wrapper(p.fType) << ";\n";
+        out << "        return result;\n";
         out << "    }\n";
-
     }
 }
 
@@ -474,17 +540,41 @@ void ParserGenerator::generate(const char* hDest, const char* cppDest) {
     std::ofstream hOut(hDest);
     hOut << "#pragma once\n";
     hOut << "#include \"runtime/GLRParser.h\"\n";
-    hOut << "typedef ParserGenerator::GLRParser::Action Action;\n";
-    hOut << "typedef ParserGenerator::GLRParser::StackEntry StackEntry;\n";
-    hOut << "typedef ParserGenerator::GLRParser::State State;\n";
-    hOut << "class " << fName << " : public ParserGenerator::GLRParser {\n";
+    if (fGrammar.fCode.size()) {
+        hOut << fGrammar.fCode;
+    }
+    // TODO: replace this with something equivalent to boost::variant
+    hOut << "struct " << fName << "Output {\n";
+    hOut << "    " << fName << "Output() {}\n";
+    fWrappers["char"] = "fCharValue";
+    hOut << "    char fCharValue;\n";
+    hOut << "    " << fName << "Output(char c) : fCharValue(c) {}\n";
+    for (const auto& p : fProductions) {
+        if (fName == "PandaParser") {
+            ((Production&) p).fType = "";
+            ((Production&) p).fCode = "";
+            printf("HACK!\n");
+        }
+
+        if (p.fType.size() && fWrappers.find(p.fType) == fWrappers.end()) {
+            fWrappers[p.fType] = "fValue" + std::to_string(fWrappers.size());
+            hOut << "    " << p.fType << " " << fWrappers[p.fType] << ";\n";
+            hOut << "    " << fName << "Output(" << p.fType << " value) : " << fWrappers[p.fType] <<
+                    "(value) {}\n";
+        }
+    }
+    hOut << "};\n";
+    hOut << "typedef ParserGenerator::GLRParser<" << fName << "Output>::State State;\n";
+    hOut << "typedef ParserGenerator::Action Action;\n";
+    hOut << "typedef ParserGenerator::ParseError ParseError;\n";
+    hOut << "class " << fName << " : public ParserGenerator::GLRParser<" << fName << "Output> {\n";
     hOut << "public:\n";
     this->writeStarts(hOut);
     hOut << "private:\n";
     hOut << "    const Action& getAction(int stateId, char c) const override;\n";
     hOut << "    int getGoto(int stateId, int productionId) const override;\n";
     hOut << "    int getProductionId(int production) const override;\n";
-    hOut << "    std::unique_ptr<StackEntry> reduce(int prodId, State* parserState, bool* die) "
+    hOut << "    " << fName << "Output reduce(int prodId, State* parserState, bool* die) "
             "const override;\n";
     hOut << "};";
 

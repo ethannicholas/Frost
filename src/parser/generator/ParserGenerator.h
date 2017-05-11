@@ -95,7 +95,13 @@ public:
     ParserGenerator(String name, const Grammar* grammar)
     : fName(std::move(name))
     , fGrammar(*grammar)
-    , fProductions(std::move(grammar->fProductions)) {}
+    , fProductions(std::move(grammar->fProductions)) {
+        for (const auto& p : fProductions) {
+            for (char c : p.fExcludes) {
+                fFollowExcludes[p.fName].insert(c);
+            }
+        }
+    }
 
     void generate(const char* hDest, const char* cppDest);
 
@@ -142,7 +148,7 @@ private:
     /**
      * Sets an action table entry.
      */
-    void setAction(int start, char c, GLRParser::Action action);
+    void setAction(int start, char c, Action action);
 
     /**
      * Computes the closure of the state by expanding all nonterminal symbols expected to be parsed
@@ -165,6 +171,10 @@ private:
 
     String getType(const Node& node);
 
+    void createWrapper(const String& rawType, std::ofstream& out);
+
+    String wrapper(const String& rawType);
+
     void writeProductions(std::ofstream& out);
 
     void writeActions(std::ofstream& out);
@@ -184,8 +194,8 @@ private:
     std::vector<int> fProductionIds;
     // maps production indices to start state id
     std::unordered_map<int, int> fStartStates;
-    // maps production indices to actions
-    std::vector<std::vector<GLRParser::Action>> fActions;
+    // maps production indices to lists of actions (by character)
+    std::vector<std::vector<Action>> fActions;
     // maps production indices to goto lists
     std::vector<std::vector<int>> fGotos;
     // maps production names to characters which can start the production. The null character (\0)
@@ -198,8 +208,7 @@ private:
     // maps production names to characters which have been explicitly declared in the grammar to
     // *not* follow them
     std::unordered_map<String, std::unordered_set<char>> fFollowExcludes;
-    // for uniquely numbering generated symbols
-    int fSyntheticCount;
+    std::unordered_map<String, String> fWrappers;
 };
 
 }

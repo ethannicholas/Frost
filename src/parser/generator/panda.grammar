@@ -1,163 +1,3 @@
-{
-    package org.pandalanguage.pandac.parser
-
-    uses org.pandalanguage.pandac.ast.ASTArrayLiteral
-    uses org.pandalanguage.pandac.ast.ASTArrowExpression
-    uses org.pandalanguage.pandac.ast.ASTAnnotation
-    uses org.pandalanguage.pandac.ast.ASTAssert
-    uses org.pandalanguage.pandac.ast.ASTAssignment
-    uses org.pandalanguage.pandac.ast.ASTAtReturn
-    uses org.pandalanguage.pandac.ast.ASTBinaryExpression
-    uses org.pandalanguage.pandac.ast.ASTBitLiteral
-    uses org.pandalanguage.pandac.ast.ASTBlock
-    uses org.pandalanguage.pandac.ast.ASTBreak
-    uses org.pandalanguage.pandac.ast.ASTCallExpression
-    uses org.pandalanguage.pandac.ast.ASTCatch
-    uses org.pandalanguage.pandac.ast.ASTChoice
-    uses org.pandalanguage.pandac.ast.ASTChoiceValue
-    uses org.pandalanguage.pandac.ast.ASTClass
-    uses org.pandalanguage.pandac.ast.ASTClassLiteral
-    uses org.pandalanguage.pandac.ast.ASTClassType
-    uses org.pandalanguage.pandac.ast.ASTContinue
-    uses org.pandalanguage.pandac.ast.ASTDo
-    uses org.pandalanguage.pandac.ast.ASTDotExpression
-    uses org.pandalanguage.pandac.ast.ASTExpression
-    uses org.pandalanguage.pandac.ast.ASTExpressionStatement
-    uses org.pandalanguage.pandac.ast.ASTField
-    uses org.pandalanguage.pandac.ast.ASTFile
-    uses org.pandalanguage.pandac.ast.ASTFor
-    uses org.pandalanguage.pandac.ast.ASTFormatExpression
-    uses org.pandalanguage.pandac.ast.ASTIdentifier
-    uses org.pandalanguage.pandac.ast.ASTIf
-    uses org.pandalanguage.pandac.ast.ASTIndex
-    uses org.pandalanguage.pandac.ast.ASTInstanceDeclaration
-    uses org.pandalanguage.pandac.ast.ASTIntegerLiteral
-    uses org.pandalanguage.pandac.ast.ASTInvariant
-    uses org.pandalanguage.pandac.ast.ASTLambdaExpression
-    uses org.pandalanguage.pandac.ast.ASTLoop
-    uses org.pandalanguage.pandac.ast.ASTMethod
-    uses org.pandalanguage.pandac.ast.ASTMethodType
-    uses org.pandalanguage.pandac.ast.ASTMethodValue
-    uses org.pandalanguage.pandac.ast.ASTNestedDeclaration
-    uses org.pandalanguage.pandac.ast.ASTNode
-    uses org.pandalanguage.pandac.ast.ASTNullLiteral
-    uses org.pandalanguage.pandac.ast.ASTPackageDeclaration
-    uses org.pandalanguage.pandac.ast.ASTParameter
-    uses org.pandalanguage.pandac.ast.ASTPostcondition
-    uses org.pandalanguage.pandac.ast.ASTPre
-    uses org.pandalanguage.pandac.ast.ASTPrecondition
-    uses org.pandalanguage.pandac.ast.ASTRangeExpression
-    uses org.pandalanguage.pandac.ast.ASTRealLiteral
-    uses org.pandalanguage.pandac.ast.ASTRegex
-    uses org.pandalanguage.pandac.ast.ASTReturn
-    uses org.pandalanguage.pandac.ast.ASTSelf
-    uses org.pandalanguage.pandac.ast.ASTSimpleAnnotation
-    uses org.pandalanguage.pandac.ast.ASTStatement
-    uses org.pandalanguage.pandac.ast.ASTStringLiteral
-    uses org.pandalanguage.pandac.ast.ASTSuper
-    uses org.pandalanguage.pandac.ast.ASTSwitch
-    uses org.pandalanguage.pandac.ast.ASTSwitchCase
-    uses org.pandalanguage.pandac.ast.ASTThrow
-    uses org.pandalanguage.pandac.ast.ASTTry
-    uses org.pandalanguage.pandac.ast.ASTTupleExpression
-    uses org.pandalanguage.pandac.ast.ASTTupleType
-    uses org.pandalanguage.pandac.ast.ASTType
-    uses org.pandalanguage.pandac.ast.ASTTypedIdentifier
-    uses org.pandalanguage.pandac.ast.ASTUnaryExpression
-    uses org.pandalanguage.pandac.ast.ASTUnreachable
-    uses org.pandalanguage.pandac.ast.ASTUsesDeclaration
-    uses org.pandalanguage.pandac.ast.ASTVarDeclaration
-    uses org.pandalanguage.pandac.ast.ASTWhile
-    uses org.pandalanguage.pandac.stubs.ClassStub
-    uses org.pandalanguage.pandac.stubs.MethodStub
-    uses org.pandalanguage.pandac.tree.BinaryOperation
-    uses org.pandalanguage.pandac.tree.MethodNode
-    uses org.pandalanguage.pandac.tree.Position
-    uses org.pandalanguage.pandac.tree.UnaryOperation
-    uses org.pandalanguage.pandac.tree.Variable
-
-    class FormatField {
-        def fillChar:Char
-        def alignment:ASTFormatExpression.Alignment
-        def width:Int
-
-        init(fillChar:Char, alignment:ASTFormatExpression.Alignment, 
-                width:Int) {
-            self.fillChar := fillChar
-            self.alignment := alignment
-            self.width := width
-        }
-    }
-
-    class Identifier {
-        def text:String
-        def position:Position
-
-        init(text:String, position:Position) {
-            self.text := text
-            self.position := position
-        }
-    }
-
-    class ParserUtil {
-        constant KEYWORDS := HashSet<String>(["package", "uses", "as", 
-                    "class", "method", "function", "init", "var", "def", 
-                    "property", "constant", "do", "while", "for", "by", "loop", 
-                    "if", "else", "switch", "case", "default", "self", "true",
-                     "false", "enum", "return", "break", "continue", "null", 
-                     "assert", "unreachable", "try", "catch", "finally", 
-                     "throw", "super"])
-
-        @class
-        @pre(base >= 2 & base <= 36)
-        function parseInt(s:String, base:UInt8):UInt64? {
-            var result:UInt64 := 0
-            constant DIGITS := "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-            constant DIGITS_LOWER := "0123456789abcdefghijklmnopqrstuvwxyz"
-            for i in 0 .. s.length {
-                var digit := DIGITS.indexOf(s[i])
-                if digit = null {
-                    digit := DIGITS_LOWER.indexOf(s[i])
-                }
-                if digit = null | digit >= base {
-                    return null
-                }
-                result := result * base + digit->(UInt64)
-            }
-            return result
-        }
-
-        @class
-        function unescape(text:String):String {
-            def result := MutableString()
-            var i := 0
-            while i < result.length {
-                var c := text[i]
-                i += 1
-                if c = "\\" {
-                    c := text[i]
-                    switch c {
-                        case "n": result.append("\n")
-                        case "r": result.append("\r")
-                        case "t": result.append("\t")
-                        default: result.append(c)
-                    }
-                    i += 1
-                }
-                else {
-                    result.append(c)
-                }
-            }
-            return result.convert()
-        }
-
-        @class
-        function isExternal(file:File):Bit {
-            return file.name.endsWith(".plink")
-        }
-    }
-}
-
 @file:Array<ASTNode> = WS bodyEntries optionalTrailingLineComment
     { result := bodyEntries }
 @file:Array<ASTNode> = WS optionalTrailingLineComment
@@ -1122,7 +962,8 @@ term:ASTExpression = lambda
     { result := lambda }
 term:ASTExpression = methodValue
     { result := methodValue }
-term:ASTExpression = '/' regex '/' WS
+REGEX_START = '/' ![/] ;
+term:ASTExpression = REGEX_START regex '/' WS
     { result := ASTRegex(Position(parserState.reference->File, parserState.row, parserState.column), regex) }
 term:ASTExpression = PRE LPAREN expression RPAREN
     { result := ASTPre(Position(parserState.reference->File, parserState.row, parserState.column), expression) }
@@ -1639,7 +1480,8 @@ ADD = '+' WS ;
 SUB_TEXT = '-' ![-] ;
 SUB = SUB_TEXT WS ;
 MUL = '*' WS ;
-DIV = '/' WS ;
+DIV_TEXT = '/' ![/] ;
+DIV = DIV_TEXT WS ;
 REM = '%' WS ;
 INTDIV = '//' WS ;
 AND = '&' WS ;
