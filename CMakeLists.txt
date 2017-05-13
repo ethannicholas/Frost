@@ -1,5 +1,5 @@
 project(panda CXX)
-cmake_minimum_required(VERSION 3.4)
+cmake_minimum_required(VERSION 2.8)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 include_directories(
@@ -21,7 +21,7 @@ add_custom_command(
         parsergenerator
         src/parser/generator/panda.grammar
     COMMAND
-        parsergenerator
+        ${CMAKE_CURRENT_BINARY_DIR}/parsergenerator
         src/parser/generator/panda.grammar
         PandaParser
         ${CMAKE_CURRENT_BINARY_DIR}/PandaParser.h

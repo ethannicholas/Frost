@@ -61,8 +61,9 @@ instanceDeclaration:ASTInstanceDeclaration = INSTANCE ^ type
     }
 
 classDeclaration:ASTClass = optionalDoccomment optionalAnnotations CLASS 
-        IDENTIFIER optionalGenericsDeclaration optionalTypeDeclaration
-        optionalInterfaces LBRACE ^ classMembers RBRACE
+        IDENTIFIER optionalGenericsDeclaration @"expected '{'" 
+        optionalTypeDeclaration optionalInterfaces LBRACE @"expected '}'" ^ 
+        classMembers RBRACE @
     { 
         result := ASTClass(CLASS, IDENTIFIER.text, ClassStub.Kind.CLASS, 
                 optionalDoccomment, optionalAnnotations, 
@@ -203,12 +204,12 @@ invariant:ASTInvariant = INVARIANT LPAREN expression RPAREN
     { result := ASTInvariant(Position(parserState.reference->File, parserState.row, parserState.column), expression) }
 
 methodDeclaration:ASTMethod = optionalDoccomment optionalAnnotations 
-        METHOD ^ methodName formalParameters optionalTypeDeclaration 
+        METHOD ^ methodName parameters optionalTypeDeclaration 
         optionalBlock optionalPostconditions
     {
         result := ASTMethod(Position(parserState.reference->File, parserState.row, parserState.column), methodName, 
                 MethodStub.Kind.METHOD, optionalDoccomment, 
-                optionalAnnotations, formalParameters, optionalTypeDeclaration, 
+                optionalAnnotations, parameters, optionalTypeDeclaration, 
                 optionalBlock, optionalPostconditions)
     }
 methodName:String = IDENTIFIER 
@@ -271,9 +272,9 @@ specialMethodName:String = GTEQ
     { result := ">=" }
 specialMethodName:String = LTEQ
     { result := "<=" }
-formalParameters:Array<ASTParameter> = LPAREN parameterList RPAREN
+parameters:Array<ASTParameter> = LPAREN @"expected ')'" parameterList RPAREN @
     { result := parameterList }
-formalParameters:Array<ASTParameter> = LPAREN RPAREN
+parameters:Array<ASTParameter> = LPAREN @"expected ')'" RPAREN @
     { result := [] }
 parameterList:Array<ASTParameter> = parameterList COMMA parameter
     {
@@ -282,8 +283,8 @@ parameterList:Array<ASTParameter> = parameterList COMMA parameter
     }
 parameterList:Array<ASTParameter> = parameter
     { result := [parameter] }
-parameter:ASTParameter = optionalVar IDENTIFIER COLON type 
-        optionalEllipsis
+parameter:ASTParameter = optionalVar @"expected identifier" IDENTIFIER @ @"expected ':'" COLON @
+        type optionalEllipsis
     { 
         result := ASTParameter(IDENTIFIER.position, IDENTIFIER.text, type, 
                 optionalVar, optionalEllipsis)
@@ -309,22 +310,22 @@ optionalBlock:ASTBlock? =
     { result := initDeclaration }
 
 functionDeclaration:ASTMethod = optionalDoccomment optionalAnnotations 
-        FUNCTION ^ methodName formalParameters typeDeclaration optionalBlock
+        FUNCTION ^ methodName parameters typeDeclaration optionalBlock
         optionalPostconditions
     {
         result := ASTMethod(Position(parserState.reference->File, parserState.row, parserState.column), 
                 methodName, MethodStub.Kind.FUNCTION, optionalDoccomment, 
-                optionalAnnotations, formalParameters, typeDeclaration, 
+                optionalAnnotations, parameters, typeDeclaration, 
                 optionalBlock, optionalPostconditions)
     }
 
 initDeclaration:ASTMethod = optionalDoccomment optionalAnnotations 
-        INIT ^ formalParameters optionalBlock optionalPostconditions
+        INIT ^ parameters optionalBlock optionalPostconditions
     {
         result := ASTMethod(Position(parserState.reference->File, parserState.row, parserState.column), 
                 MethodNode.INIT_NAME, 
                 MethodStub.Kind.INIT, optionalDoccomment, optionalAnnotations, 
-                formalParameters, null, optionalBlock, optionalPostconditions)
+                parameters, null, optionalBlock, optionalPostconditions)
     }
 
 fieldDeclaration:ASTField = optionalDoccomment optionalAnnotations 
@@ -428,10 +429,10 @@ doLoop:ASTDo = optionalLabel DO ^ block WHILE expression
 loopLoop:ASTLoop = optionalLabel LOOP ^ block
     { result := ASTLoop(Position(parserState.reference->File, parserState.row, parserState.column), optionalLabel, block) }
 
-methodCall:ASTExpression = callExpression parameters
-    { result := ASTCallExpression(callExpression, parameters) }
-methodCall:ASTExpression = INIT parameters
-    { result := ASTCallExpression(ASTIdentifier(INIT, "init"), parameters) }
+methodCall:ASTExpression = callExpression arguments
+    { result := ASTCallExpression(callExpression, arguments) }
+methodCall:ASTExpression = INIT arguments
+    { result := ASTCallExpression(ASTIdentifier(INIT, "init"), arguments) }
 assignment:ASTStatement = expressionList assignmentOperator expression
     { 
         result := ASTAssignment(expressionList, assignmentOperator, 
@@ -585,43 +586,45 @@ unreachableStatement:ASTUnreachable = UNREACHABLE COLON expression
     { result := ASTUnreachable(Position(parserState.reference->File, parserState.row, parserState.column), expression) }
 
 
-@type:ASTType = dottedName optionalQuestion
+@type = @"expected a type" innerType @
+    { result = innerType; }
+innerType:ASTType = dottedName optionalQuestion
     { 
         result := ASTClassType(Position(parserState.reference->File, parserState.row, parserState.column), 
                 dottedName.convert(), null, optionalQuestion) 
     }
-@type:ASTType = dottedName genericParameters optionalQuestion
+innerType:ASTType = dottedName genericParameters optionalQuestion
     { 
         result := ASTClassType(Position(parserState.reference->File, parserState.row, parserState.column), 
                 dottedName.convert(), genericParameters, optionalQuestion) 
     }
-@type:ASTType = LPAREN twoOrMoreTypes RPAREN optionalQuestion
+innerType:ASTType = LPAREN @"expected ')'" twoOrMoreTypes RPAREN @ optionalQuestion
     { result := ASTTupleType(Position(parserState.reference->File, parserState.row, parserState.column), twoOrMoreTypes, optionalQuestion) }
-@type:ASTType = LPAREN optionalTypeList RPAREN YIELDS methodReturnType 
+innerType:ASTType = LPAREN @"expected ')'" optionalTypeList RPAREN @ YIELDS methodReturnType 
         optionalQuestion
     { 
         result := ASTMethodType(Position(parserState.reference->File, parserState.row, parserState.column), optionalTypeList, 
                 methodReturnType, optionalQuestion, true, false) 
     }
-@type:ASTType = LPAREN optionalTypeList RPAREN YIELDS_METHOD methodReturnType 
+innerType:ASTType = LPAREN @"expected ')'" optionalTypeList RPAREN @ YIELDS_METHOD methodReturnType 
         optionalQuestion
     { 
         result := ASTMethodType(Position(parserState.reference->File, parserState.row, parserState.column), optionalTypeList, 
                 methodReturnType, optionalQuestion, false, false) 
     }
-@type:ASTType = LPAREN optionalTypeList RPAREN YIELDS_IMMUTABLE methodReturnType
-        optionalQuestion
+innerType:ASTType = LPAREN @"expected ')'" optionalTypeList RPAREN @ YIELDS_IMMUTABLE
+        methodReturnType optionalQuestion
     { 
         result := ASTMethodType(Position(parserState.reference->File, parserState.row, parserState.column), optionalTypeList, 
                 methodReturnType, optionalQuestion, true, true) 
     }
-@type:ASTType = LPAREN optionalTypeList RPAREN YIELDS_METHOD_IMMUTABLE 
+innerType:ASTType = LPAREN @"expected ')'" optionalTypeList RPAREN @ YIELDS_METHOD_IMMUTABLE 
         methodReturnType optionalQuestion
     { 
         result := ASTMethodType(Position(parserState.reference->File, parserState.row, parserState.column), optionalTypeList, 
                 methodReturnType, optionalQuestion, false, true) 
     }
-genericParameters:Array<ASTType> = LT typeList GT
+genericParameters:Array<ASTType> = LT @"expected '>'" typeList GT @
     { result := typeList }
 typeList:Array<ASTType> = type COMMA typeList
     { 
@@ -643,12 +646,12 @@ optionalQuestion:Bit = QUESTION
     { result := true }
 optionalQuestion:Bit = 
     { result := false }
-methodReturnType:ASTType? = LPAREN RPAREN
+methodReturnType:ASTType? = LPAREN @"expected ')'" RPAREN @
     { result := null }
-methodReturnType:ASTType? = LPAREN type RPAREN
+methodReturnType:ASTType? = LPAREN @"expected ')'" type RPAREN @
     { result := type }
 
-@expression:ASTExpression = orExpression
+@expression:ASTExpression = @"expected an expression" orExpression @
     { result := orExpression }
 orExpression:ASTExpression = andExpression 
     { result := andExpression }
@@ -902,7 +905,7 @@ typeExpression:ASTType = type
 typeExpression:ASTType = LPAREN type RPAREN
     { result := type }
 
-parameters:Array<ASTExpression> = LPAREN expressionList optionalEllipsis RPAREN
+arguments:Array<ASTExpression> = LPAREN @"expected ')'" expressionList optionalEllipsis RPAREN @
     { 
         result := expressionList 
         if optionalEllipsis {
@@ -911,7 +914,7 @@ parameters:Array<ASTExpression> = LPAREN expressionList optionalEllipsis RPAREN
                     null, null, true)
         }
     }
-parameters:Array<ASTExpression> = LPAREN RPAREN
+arguments:Array<ASTExpression> = LPAREN RPAREN
     { result := [] }
 optionalEllipsis:Bit = ELLIPSIS
     { result := true }
@@ -1063,8 +1066,7 @@ untypedLambdaParameters:Array<ASTTypedIdentifier> = IDENTIFIER
         result := [ASTTypedIdentifier(IDENTIFIER.position, IDENTIFIER.text,
                 null)]
     }
-typedLambdaParameters:Array<ASTTypedIdentifier> = typedLambdaParameters 
-        COMMA IDENTIFIER COLON type
+typedLambdaParameters:Array<ASTTypedIdentifier> = typedLambdaParameters COMMA IDENTIFIER COLON type
     { 
         result := typedLambdaParameters
         result.add(ASTTypedIdentifier(IDENTIFIER.position, IDENTIFIER.text,
@@ -1076,33 +1078,29 @@ typedLambdaParameters:Array<ASTTypedIdentifier> = IDENTIFIER COLON type
                 type)]
     }
 
-@methodValue:ASTMethodValue = METHOD formalParameters ^ optionalTypeDeclaration 
-        block
+@methodValue:ASTMethodValue = METHOD parameters ^ optionalTypeDeclaration block
     {
         result := ASTMethodValue(METHOD, MethodStub.Kind.METHOD, 
-                formalParameters, optionalTypeDeclaration, block)
+                parameters, optionalTypeDeclaration, block)
     }
-@methodValue:ASTMethodValue = FUNCTION formalParameters ^ 
-        optionalTypeDeclaration block
+@methodValue:ASTMethodValue = FUNCTION parameters ^ optionalTypeDeclaration block
     {
         result := ASTMethodValue(FUNCTION, MethodStub.Kind.FUNCTION, 
-                formalParameters, optionalTypeDeclaration, block)
+                parameters, optionalTypeDeclaration, block)
     }
 
-namedMethodValue:ASTStatement = METHOD IDENTIFIER formalParameters ^ 
-        optionalTypeDeclaration block
+namedMethodValue:ASTStatement = METHOD IDENTIFIER parameters ^ optionalTypeDeclaration block
     {
         def m := ASTMethodValue(METHOD, MethodStub.Kind.METHOD, 
-                formalParameters, optionalTypeDeclaration, block)
+                parameters, optionalTypeDeclaration, block)
         result := ASTVarDeclaration(METHOD, Variable.Kind.DEF, 
                 [ASTTypedIdentifier(IDENTIFIER.position, IDENTIFIER.text, null)], 
                 m)
     }
-namedMethodValue:ASTStatement = FUNCTION IDENTIFIER formalParameters ^ 
-        optionalTypeDeclaration block
+namedMethodValue:ASTStatement = FUNCTION IDENTIFIER parameters ^ optionalTypeDeclaration block
     {
         def m := ASTMethodValue(FUNCTION, MethodStub.Kind.FUNCTION, 
-                formalParameters, optionalTypeDeclaration, block)
+                parameters, optionalTypeDeclaration, block)
         result := ASTVarDeclaration(FUNCTION, Variable.Kind.DEF, 
                 [ASTTypedIdentifier(IDENTIFIER.position, IDENTIFIER.text, null)], 
                 m)

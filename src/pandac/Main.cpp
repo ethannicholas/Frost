@@ -13,6 +13,6 @@ int main(int argc, char** argv) {
     }
     ParseError error;
     if (!PandaParser().file(text, &error)) {
-        printf("parse error at %d, %d\n", error.fLine, error.fColumn);
+        printf("%d:%d: %s\n", error.fLine, error.fColumn, error.fMessage.c_str());
     }
 }

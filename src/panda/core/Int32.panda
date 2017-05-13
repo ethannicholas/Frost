@@ -1,37 +1,3 @@
 class Int32 : Value {
     @private
-    init(value:builtin_int32) {
-        self.value := value
-    }
-
-    function +(other:Int32):Int32 {
-        return Int32(value + other.value)
-    }
-
-    function -(other:Int32):Int32 {
-        return Int32(value + other.value)
-    }
-
-    function *(other:Int32):Int32 {
-        return Int32(value * other.value)
-    }
-
-    function //(other:Int32):Int32 {
-        return Int32(value // other.value)
-    }
-
-    function -():Int32 {
-        return Int32(-value)
-    }
-
-    function ||(other:Int32):Int32 {
-        return value || other
-    }
-
-    function &&(other:Int32):Int32 {
-        return value
-    }
-
-    @private
-    def value:builtin_int32
-}
+    init(value:

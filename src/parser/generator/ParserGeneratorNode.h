@@ -13,6 +13,8 @@ struct Node {
         kLiteral_Kind,
         kChar_Kind,
         kCut_Kind,
+        kPush_Kind,
+        kPop_Kind,
         kEOF_Kind
     };
 
@@ -95,7 +97,6 @@ struct LiteralNode : public Node {
         return fKind == other.fKind && fLiteral == ((LiteralNode&) other).fLiteral;
     }
 
-
     typedef Node INHERITED;
 };
 
@@ -120,6 +121,39 @@ struct CharNode : public Node {
 struct CutNode : public Node {
     CutNode() 
     : INHERITED(kCut_Kind) {}
+
+    int hash() const override {
+        return 0;
+    }
+
+    bool operator==(const Node& other) const override {
+        return fKind == other.fKind;
+    }
+
+    typedef Node INHERITED;
+};
+
+struct PushNode : public Node {
+    PushNode(String msg) 
+    : INHERITED(kPush_Kind)
+    , fMessage(msg) {}
+
+    String fMessage;
+
+    int hash() const override {
+        return std::hash<String>{}(fMessage);
+    }
+
+    bool operator==(const Node& other) const override {
+        return fKind == other.fKind && fMessage == ((PushNode&) other).fMessage;
+    }
+
+    typedef Node INHERITED;
+};
+
+struct PopNode : public Node {
+    PopNode() 
+    : INHERITED(kPop_Kind) {}
 
     int hash() const override {
         return 0;

@@ -15,6 +15,12 @@ String Action::code() const {
         case kCut_Kind:
             return "Action(Action::kCut_Kind, " +
                     std::to_string(fTarget) + ")";
+        case kPush_Kind:
+            return "Action(Action::kPush_Kind, " +
+                    std::to_string(fTarget) + ")";
+        case kPop_Kind:
+            return "Action(Action::kPop_Kind, " +
+                    std::to_string(fTarget) + ")";
         case kMultiple_Kind: {
             String result = "Action({ ";
             const char* separator = "";

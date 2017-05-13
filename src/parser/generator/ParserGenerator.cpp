@@ -34,7 +34,9 @@ void ParserGenerator::computeFirst(const Production& p) {
     for (int i = 0; i < p.fNodes.size(); ++i) {
         const Node& node = *p.fNodes[i];
         switch (node.fKind) {
-            case Node::kCut_Kind:
+            case Node::kCut_Kind: // fall through
+            case Node::kPop_Kind: // fall through
+            case Node::kPush_Kind:
                 continue;
             case Node::kIdentifier_Kind: {
                 std::unordered_set<char> chars = this->first(node);
@@ -96,7 +98,8 @@ void ParserGenerator::addFollows(const String& name, const std::unordered_set<ch
 void ParserGenerator::computeFollow(const String& name, const Production& p, int pos) {
     for (int i = pos + 1; i < p.fNodes.size(); ++i) {
         const Node& n = *p.fNodes[i];
-        if (n.fKind == Node::kCut_Kind) {
+        if (n.fKind == Node::kCut_Kind || n.fKind == Node::kPush_Kind ||
+                n.fKind == Node::kPop_Kind) {
             continue;
         }
         std::unordered_set<char> next = this->first(n);
@@ -202,7 +205,9 @@ String to_string(const Node* node) {
                 default:
                     return String("'") + ((CharNode*) node)->fChar + "'";
             }
+        case Node::kPush_Kind: return "@\"" + ((PushNode*) node)->fMessage + "\"";
         case Node::kCut_Kind: return "<cut>";
+        case Node::kPop_Kind: return "<pop>";
         case Node::kEOF_Kind: return "<eof>";
     }
 }
@@ -210,6 +215,8 @@ String to_string(const Node* node) {
 void ParserGenerator::computeTransitions(const State& state, std::unordered_set<State>* states) {
     std::unordered_map<const Node*, std::unordered_set<StateFragment>, NodePointerHash,
             NodePointerEqual> outgoing;
+    String message;
+    bool haveMessage = false;
     for (const auto& f : state.fFragments) {
         // check to see if we're following within this production or need to head out to the follow
         // set
@@ -261,23 +268,37 @@ void ParserGenerator::computeTransitions(const State& state, std::unordered_set<
                 this->setAction(state.fId, c, Action(Action::kShift_Kind, target));
                 break;
             }
-            case Node::kCharset_Kind: {
+            case Node::kCharset_Kind:
                 for (char c : ((CharsetNode&) node).fChars) {
                     this->setAction(state.fId, c, Action(Action::kShift_Kind, target));
                 }
                 break;
-            }
             case Node::kCut_Kind:
                 for (unsigned char c = START_CHAR; c <= END_CHAR; ++c) {
                     this->setAction(state.fId, c, Action(Action::kCut_Kind, target));
                 }
                 this->setAction(state.fId, EOF_CHAR, Action(Action::kCut_Kind, target));
                 break;
-            case Node::kEOF_Kind: {
+            case Node::kPush_Kind:
+                ASSERT(fPushMessages.find(state.fId) == fPushMessages.end(), "message conflict");
+                fPushMessages[state.fId] = ((PushNode&) node).fMessage;
+                for (unsigned char c = START_CHAR; c <= END_CHAR; ++c) {
+                    this->setAction(state.fId, c, Action(Action::kPush_Kind, target));
+                }
+                this->setAction(state.fId, EOF_CHAR, Action(Action::kPush_Kind, target));
+                break;
+            case Node::kPop_Kind:
+                ASSERT(fPushMessages.find(state.fId) == fPushMessages.end(), "message conflict");
+                fPushMessages[state.fId] = "";
+                for (unsigned char c = START_CHAR; c <= END_CHAR; ++c) {
+                    this->setAction(state.fId, c, Action(Action::kPop_Kind, target));
+                }
+                this->setAction(state.fId, EOF_CHAR, Action(Action::kPop_Kind, target));
+                break;
+            case Node::kEOF_Kind:
                 this->setAction(state.fId, EOF_CHAR, Action(Action::kShift_Kind, target));
                 break;
-            }
-            default:
+            case Node::kLiteral_Kind:
                 abort();
         }
     }
@@ -299,7 +320,7 @@ int ParserGenerator::addState(std::unordered_set<StateFragment> fragments,
     }
     fGotos.emplace_back();
     this->computeTransitions(state, states);
-/*
+
     printf("State %d:\n", state.fId);
     for (const auto& f : fragments) {
         const Production& p = fProductions[f.fProductionId];
@@ -315,7 +336,7 @@ int ParserGenerator::addState(std::unordered_set<StateFragment> fragments,
         }
         printf("\n");
     }
-*/
+
     return state.fId;
 }
 
@@ -368,8 +389,8 @@ void ParserGenerator::createParseTables() {
 void ParserGenerator::writeProductions(std::ofstream& out) {
     out << "const int " << fName << "_PRODUCTIONS[" << fProductionIds.size() << "] = { ";
     const char* separator = "";
-    for (int id : fProductionIds) {
-        out << separator << id;
+    for (int i = 0; i < fProductionIds.size(); i++) {
+        out << separator << "/* " << i << " */ " << fProductionIds[i];
         separator = ", ";
     }
     out << "};\n";
@@ -379,10 +400,10 @@ void ParserGenerator::writeActions(std::ofstream& out) {
     out << "const Action " << fName << "_ACTIONS[" << fActions.size() << "][" <<
             (END_CHAR + 2) << "] = {\n";
     const char* outerSeparator = "";
-    for (const auto& row : fActions) {
-        out << outerSeparator << "    { ";
+    for (int i = 0; i < fActions.size(); i++) {
+        out << outerSeparator << "    /* " << i << " */ { ";
         const char* innerSeparator = "";
-        for (const auto& a : row) {
+        for (const auto& a : fActions[i]) {
             out << innerSeparator << a.code();
             innerSeparator = ", ";
         }
@@ -402,15 +423,45 @@ void ParserGenerator::writeGotos(std::ofstream& out) {
     out << "const int " << fName << "_GOTOS[" << fActions.size() << "][" <<
             max << "] = {\n";
     const char* outerSeparator = "";
-    for (const auto& row : fGotos) {
-        out << outerSeparator << "    { ";
+    for (int i = 0; i < fGotos.size(); i++) {
+        out << outerSeparator << "    /* " << i << " */ { ";
         const char* innerSeparator = "";
-        for (const auto& g : row) {
+        for (const auto& g : fGotos[i]) {
             out << innerSeparator << g;
             innerSeparator = ", ";
         }
         out << "}";
         outerSeparator = ",\n";
+    }
+    out << "\n    };\n";
+}
+
+void ParserGenerator::writePushes(std::ofstream& out) {
+    int max = 0;
+    for (const auto& row : fGotos) {
+        if (row.size() > max) {
+            max = row.size();
+        }
+    }
+    out << "const char* " << fName << "_MESSAGES[" << fActions.size() << "] = {\n";
+    const char* separator = "";
+    for (int i = 0; i < fActions.size(); i++) {
+        out << separator << "    /* " << i << " */ ";
+        auto found = fPushMessages.find(i);
+        if (found != fPushMessages.end()) {
+            out << '"';
+            for (char c : found->second) {
+                switch (c) {
+                    case '\"': out << "\\\"";
+                    default: out << c;
+                }
+            }
+            out << '"';
+        }
+        else {
+            out << "nullptr";
+        }
+        separator = ",\n";
     }
     out << "\n    };\n";
 }
@@ -574,6 +625,7 @@ void ParserGenerator::generate(const char* hDest, const char* cppDest) {
     hOut << "    const Action& getAction(int stateId, char c) const override;\n";
     hOut << "    int getGoto(int stateId, int productionId) const override;\n";
     hOut << "    int getProductionId(int production) const override;\n";
+    hOut << "    const char* getMessage(int stateId) const override;\n";
     hOut << "    " << fName << "Output reduce(int prodId, State* parserState, bool* die) "
             "const override;\n";
     hOut << "};";
@@ -584,6 +636,7 @@ void ParserGenerator::generate(const char* hDest, const char* cppDest) {
     this->writeProductions(cppOut);
     this->writeActions(cppOut);
     this->writeGotos(cppOut); 
+    this->writePushes(cppOut); 
     this->writeReductions(cppOut);
     cppOut << "const Action& " << fName << "::getAction(int stateId, char c) const {\n";
     cppOut << "    return " << fName << "_ACTIONS[stateId][c];\n";
@@ -593,6 +646,9 @@ void ParserGenerator::generate(const char* hDest, const char* cppDest) {
     cppOut << "}\n";
     cppOut << "int " << fName << "::getProductionId(int production) const {\n";
     cppOut << "    return " << fName << "_PRODUCTIONS[production];\n";
+    cppOut << "}\n";
+    cppOut << "const char* " << fName << "::getMessage(int stateId) const {\n";
+    cppOut << "    return " << fName << "_MESSAGES[stateId];\n";
     cppOut << "}\n";
 }
 

@@ -184,7 +184,7 @@ static String process_escapes(const String&& s) {
     return result;
 }
 
-// IDENTIFIER (COLON (IDENTIFIER | CHARSET)) | LITERAL | CHARSET | CARET
+// IDENTIFIER (COLON (IDENTIFIER | CHARSET)) | SINGLELITERAL | CHARSET | CARET | AT DOUBLELITERAL?
 std::unique_ptr<Node> Parser::term() {
     Token start = this->nextToken();
     switch (start.fKind) {
@@ -203,13 +203,21 @@ std::unique_ptr<Node> Parser::term() {
                 }
             }
             return std::unique_ptr<Node>(new IdentifierNode(start.fText));
-        case Token::LITERAL:
+        case Token::SINGLELITERAL:
             return std::unique_ptr<Node>(new LiteralNode(process_escapes(start.fText.substr(1, 
                     start.fText.length() - 2))));
         case Token::CHARSET:
             return std::unique_ptr<Node>(new CharsetNode(charset(start.fText)));
         case Token::CARET:
             return std::unique_ptr<Node>(new CutNode());
+        case Token::AT: {
+            Token text;
+            if (this->checkNext(Token::DOUBLELITERAL, &text)) {
+                return std::unique_ptr<Node>(new PushNode(text.fText.substr(1, 
+                        text.fText.length() - 2)));
+            }
+            return std::unique_ptr<Node>(new PopNode());
+        }
         default:
             fErrors.error(start.fPosition, "expected a term");
             return nullptr;
@@ -307,10 +315,11 @@ bool Parser::production(Production* result) {
     bool done = false;
     do {
         switch (this->peek().fKind) {
-            case Token::IDENTIFIER: // fall through
-            case Token::LITERAL:    // fall through
-            case Token::CHARSET:    // fall through
-            case Token::CARET: {
+            case Token::IDENTIFIER:    // fall through
+            case Token::SINGLELITERAL: // fall through
+            case Token::CHARSET:       // fall through
+            case Token::CARET:         // fall through
+            case Token::AT: {
                 std::unique_ptr<Node> term = this->term();
                 if (!term) {
                     return false;

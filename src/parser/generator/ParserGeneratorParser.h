@@ -1,13 +1,11 @@
 #pragma once
 
+#include "GLRParser.h"
 #include "ParserGeneratorErrorReporter.h"
 #include "ParserGeneratorGrammar.h"
 #include "ParserGeneratorProduction.h"
 #include "ParserGeneratorNode.h"
 #include "ParserGeneratorToken.h"
-
-#define START_CHAR   9
-#define END_CHAR   127
 
 namespace ParserGenerator {
 

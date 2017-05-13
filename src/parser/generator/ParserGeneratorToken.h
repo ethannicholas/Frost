@@ -20,10 +20,12 @@ struct Token {
         NOT,
         CARET,
         QUESTION,
+        AT,
         CHARSET,
         LBRACE,
         RBRACE,
-        LITERAL,
+        SINGLELITERAL,
+        DOUBLELITERAL,
         IDENTIFIER,
         INVALID_TOKEN
     };

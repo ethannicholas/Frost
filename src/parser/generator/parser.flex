@@ -22,28 +22,31 @@
 RANGECHAR [^\\\]\n\r]|(\\[^\n\r])
 RANGE {RANGECHAR}("-"[{RANGECHAR}])?
 
-LITERALCHAR [^\\']|\\[trn\\']
+SINGLELITERALCHAR [^\\']|\\[trn\\']
+DOUBLELITERALCHAR [^\\"]|\\[trn\\"]
 
 %%
 
-"::"                    { return ParserGenerator::Token::COLONCOLON; }
-":"                     { return ParserGenerator::Token::COLON; }
-"."                     { return ParserGenerator::Token::DOT; }
-","                     { return ParserGenerator::Token::COMMA; }
-"<"                     { return ParserGenerator::Token::LT; }
-">"                     { return ParserGenerator::Token::GT; }
-"!"                     { return ParserGenerator::Token::NOT; }
-"^"                     { return ParserGenerator::Token::CARET; }
-"{"                     { return ParserGenerator::Token::LBRACE; }
-"}"                     { return ParserGenerator::Token::RBRACE; }
-"="                     { return ParserGenerator::Token::EQ; }
-";"                     { return ParserGenerator::Token::SEMICOLON; }
-"?"                     { return ParserGenerator::Token::QUESTION; }
-"["{RANGE}*"]"        { return ParserGenerator::Token::CHARSET; }
-"'"{LITERALCHAR}*"'"    { return ParserGenerator::Token::LITERAL; }
-[@A-Za-z_][A-Za-z0-9_]* { return ParserGenerator::Token::IDENTIFIER; }
-
-[ \t\r\n]+              { return ParserGenerator::Token::WHITESPACE; }
+"::"                         { return ParserGenerator::Token::COLONCOLON; }
+":"                          { return ParserGenerator::Token::COLON; }
+"."                          { return ParserGenerator::Token::DOT; }
+","                          { return ParserGenerator::Token::COMMA; }
+"<"                          { return ParserGenerator::Token::LT; }
+">"                          { return ParserGenerator::Token::GT; }
+"!"                          { return ParserGenerator::Token::NOT; }
+"^"                          { return ParserGenerator::Token::CARET; }
+"{"                          { return ParserGenerator::Token::LBRACE; }
+"}"                          { return ParserGenerator::Token::RBRACE; }
+"="                          { return ParserGenerator::Token::EQ; }
+";"                          { return ParserGenerator::Token::SEMICOLON; }
+"?"                          { return ParserGenerator::Token::QUESTION; }
+"["{RANGE}*"]"               { return ParserGenerator::Token::CHARSET; }
+"'"{SINGLELITERALCHAR}*"'"   { return ParserGenerator::Token::SINGLELITERAL; }
+"\""{DOUBLELITERALCHAR}*"\"" { return ParserGenerator::Token::DOUBLELITERAL; }
+[@A-Za-z_][A-Za-z0-9_]+      { return ParserGenerator::Token::IDENTIFIER; }
+[A-Za-z_]                    { return ParserGenerator::Token::IDENTIFIER; }
+"@"                          { return ParserGenerator::Token::AT; }
+[ \t\r\n]+                   { return ParserGenerator::Token::WHITESPACE; }
 
 . { return ParserGenerator::Token::INVALID_TOKEN; }
 

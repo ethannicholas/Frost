@@ -1,12 +1,16 @@
 #pragma once
 
+#include <cstring>
+#include <memory>
 #include <stack>
 #include <string>
 #include <unordered_set>
 #include <vector>
 #include "stdlib.h"
 
-#define EOF_CHAR '\1'
+#define START_CHAR   9
+#define END_CHAR   127
+#define EOF_CHAR     1
 
 typedef std::string String;
 
@@ -17,12 +21,14 @@ struct ParseError {
     : fLine(-1)
     , fColumn(-1) {}
 
-    ParseError(int line, int column)
+    ParseError(int line, int column, String message)
     : fLine(line)
-    , fColumn(column) {}
+    , fColumn(column)
+    , fMessage(message) {}
 
     int fLine;
     int fColumn;
+    String fMessage;
 };
 
 class Action {
@@ -32,6 +38,8 @@ public:
         kShift_Kind,
         kReduce_Kind,
         kCut_Kind,
+        kPush_Kind,
+        kPop_Kind,
         kMultiple_Kind,
         kAccept_Kind
     } fKind;
@@ -94,18 +102,67 @@ public:
     };
 
 protected:
+    const char* getErrorMessage(State* state) {
+        bool done;
+        do {
+            done = true;
+            for (unsigned char c = START_CHAR; c <= END_CHAR; c++) {
+                const Action& a = getAction(state->fNode->fId, c);
+                if (a.fKind == Action::kReduce_Kind) {
+                    printf("current state: %d\n", state->fNode->fId);
+                    printf("reducing %d (%c)\n", a.fTarget, c);
+                    bool die;
+                    T output = this->reduce(a.fTarget, state, &die);
+                    if (die) {
+                        done = true;
+                        break;
+                    }
+                    done = false;
+                    int next = this->getGoto(state->fNode->fId,
+                            this->getProductionId(a.fTarget));
+                    printf("goto %d\n", next);
+                    state->fNode.reset(new StateNode { next, std::move(output),
+                            state->fNode });
+                    break;
+                }
+            }
+        }
+        while (!done);
+
+        const char* errorText = "parse error";
+        int depth = 0;
+        StateNode* node = state->fNode.get();
+        while (node != nullptr) {
+            printf("### state %d (%d)\n", node->fId, depth);
+            const char* msg = this->getMessage(node->fId);
+            if (msg) {
+                printf("### have msg '%s'\n", msg);
+                if (strlen(msg)) {
+                    ++depth;
+                    if (depth > 0) {
+                        errorText = msg;
+                        break;
+                    }
+                }
+                else {
+                    --depth;
+                }
+            }
+            node = node->fNext.get();
+        }
+        return errorText;
+    }
+
     bool parse(String text, int startState, T* output, ParseError* error, void* reference) {
         text += EOF_CHAR;
-        int farthestRow = 1;
-        int farthestColumn = 1;
-        int farthestOffset = 0;
+        State farthest = { reference, 0, 1, 1,
+                std::shared_ptr<StateNode>(new StateNode { startState, T(), nullptr }) };
         std::stack<State> parsers;
-        parsers.push({ reference, farthestOffset, farthestRow, farthestColumn,
-                std::shared_ptr<StateNode>(new StateNode { startState, T(), nullptr }) });
+        parsers.push(farthest);
 
         for (;;) {
             if (!parsers.size()) {
-                *error = ParseError(farthestRow, farthestColumn);
+                *error = ParseError(farthest.fRow, farthest.fColumn, getErrorMessage(&farthest));
                 return false;
             }
             State& top = parsers.top();
@@ -113,10 +170,8 @@ protected:
                 *output = top.fNode->fNext->fOutput;
                 return true;
             }
-            if (top.fOffset > farthestOffset) {
-                farthestOffset = top.fOffset;
-                farthestRow = top.fRow;
-                farthestColumn = top.fColumn;
+            if (top.fOffset >= farthest.fOffset) {
+                farthest = top;
             }
             if (top.fNode->fId < 0) {
                 // error state
@@ -137,6 +192,8 @@ private:
 
     virtual int getGoto(int stateId, int productionId) const = 0;
 
+    virtual const char* getMessage(int stateId) const = 0;
+
     virtual int getProductionId(int production) const = 0;
 
     virtual T reduce(int prodId, State* parserState, bool* die) const = 0;
@@ -146,6 +203,7 @@ private:
         switch (action.fKind) {
             case Action::kShift_Kind: {
                 char c = text[parserState->fOffset];
+                printf("shifting '%c' into %d\n", c, action.fTarget);
                 parserState->fNode.reset(new StateNode { action.fTarget, T(c),
                         parserState->fNode });
                 ++parserState->fOffset;
@@ -202,7 +260,16 @@ private:
                 parsers->push(top);
                 break;
             }
-            default:
+            case Action::kPush_Kind: {
+                parserState->fNode.reset(new StateNode { action.fTarget, T(), parserState->fNode });
+                break;
+            }
+            case Action::kPop_Kind: {
+                parserState->fNode.reset(new StateNode { action.fTarget, T(), parserState->fNode });
+                break;
+            }
+            case Action::kNull_Kind:
+            case Action::kAccept_Kind:
                 abort();
         }
     }

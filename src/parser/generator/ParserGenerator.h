@@ -181,6 +181,8 @@ private:
 
     void writeGotos(std::ofstream& out);
 
+    void writePushes(std::ofstream& out);
+
     void writeReductions(std::ofstream& out);
 
     void writeStarts(std::ofstream& out);
@@ -209,6 +211,8 @@ private:
     // *not* follow them
     std::unordered_map<String, std::unordered_set<char>> fFollowExcludes;
     std::unordered_map<String, String> fWrappers;
+    // maps states to error push messages
+    std::unordered_map<int, String> fPushMessages;
 };
 
 }
