@@ -60,10 +60,9 @@ instanceDeclaration:ASTInstanceDeclaration = INSTANCE ^ type
                 parserState.row, parserState.column), type) 
     }
 
-classDeclaration:ASTClass = optionalDoccomment optionalAnnotations CLASS 
-        IDENTIFIER optionalGenericsDeclaration @"expected '{'" 
-        optionalTypeDeclaration optionalInterfaces LBRACE @"expected '}'" ^ 
-        classMembers RBRACE @
+classDeclaration:ASTClass = optionalDoccomment optionalAnnotations CLASS IDENTIFIER
+        optionalGenericsDeclaration @"expected '{'" optionalTypeDeclaration optionalInterfaces
+        '{' @"expected '}' to complete class body (started at <pos>)" WS ^ classMembers RBRACE @
     { 
         result := ASTClass(CLASS, IDENTIFIER.text, ClassStub.Kind.CLASS, 
                 optionalDoccomment, optionalAnnotations, 
@@ -71,9 +70,9 @@ classDeclaration:ASTClass = optionalDoccomment optionalAnnotations CLASS
                 optionalGenericsDeclaration, classMembers, 
                 ParserUtil.isExternal(parserState.reference->File))
     }
-interfaceDeclaration:ASTClass = optionalDoccomment optionalAnnotations 
-        INTERFACE ^ IDENTIFIER optionalGenericsDeclaration 
-        optionalTypeDeclarations LBRACE classMembers RBRACE
+interfaceDeclaration:ASTClass = optionalDoccomment optionalAnnotations INTERFACE ^ IDENTIFIER
+        optionalGenericsDeclaration optionalTypeDeclarations '{'
+        @"expected '}' to complete interface body (started at <pos>)" WS classMembers RBRACE @
     { 
         result := ASTClass(INTERFACE, IDENTIFIER.text, ClassStub.Kind.INTERFACE, 
                 optionalDoccomment, optionalAnnotations, null, 
@@ -81,7 +80,8 @@ interfaceDeclaration:ASTClass = optionalDoccomment optionalAnnotations
                 classMembers, ParserUtil.isExternal(parserState.reference->File))
     }
 choiceDeclaration:ASTChoice = optionalDoccomment optionalAnnotations 
-        CHOICE ^ IDENTIFIER optionalInterfaces LBRACE choices RBRACE
+        CHOICE ^ IDENTIFIER optionalInterfaces '{'
+        @"expected '}' to complete 'choice' (started at <pos>)" WS choices RBRACE @
     { 
         result := ASTChoice(CHOICE, IDENTIFIER.text, optionalDoccomment, 
                 optionalAnnotations, choices, ParserUtil.isExternal(parserState.reference->File))
@@ -272,9 +272,9 @@ specialMethodName:String = GTEQ
     { result := ">=" }
 specialMethodName:String = LTEQ
     { result := "<=" }
-parameters:Array<ASTParameter> = LPAREN @"expected ')'" parameterList RPAREN @
+parameters:Array<ASTParameter> = @"expected '('" LPAREN @"expected ')'" parameterList RPAREN @
     { result := parameterList }
-parameters:Array<ASTParameter> = LPAREN @"expected ')'" RPAREN @
+parameters:Array<ASTParameter> = @"expected '('" LPAREN @"expected ')'" RPAREN @
     { result := [] }
 parameterList:Array<ASTParameter> = parameterList COMMA parameter
     {
@@ -340,28 +340,32 @@ declaration:ASTStatement = varDeclaration
 declaration:ASTStatement = namedMethodValue
     { result := namedMethodValue }
 
-@statement:ASTStatement = ifStatement
+@statement:ASTStatement = @"expected a statement" anyStatement @
+    { result = anyStatement; }
+anyStatement:ASTStatement = ifStatement
     { result := ifStatement }
-@statement:ASTStatement = forLoop 
+anyStatement:ASTStatement = forLoop 
     { result := forLoop }
-@statement:ASTStatement = whileLoop 
+anyStatement:ASTStatement = whileLoop 
     { result := whileLoop }
-@statement:ASTStatement = doLoop 
+anyStatement:ASTStatement = doLoop 
     { result := doLoop }
-@statement:ASTStatement = loopLoop
+anyStatement:ASTStatement = loopLoop
     { result := loopLoop }
-@statement:ASTStatement = methodCall
+anyStatement:ASTStatement = methodCall
     { result := ASTExpressionStatement(methodCall) }
-@statement:ASTStatement = assignment
+anyStatement:ASTStatement = assignment
     { result := assignment }
-@statement:ASTStatement = assertStatement 
+anyStatement:ASTStatement = assertStatement 
     { result := assertStatement }
-@statement:ASTStatement = switchStatement
+anyStatement:ASTStatement = switchStatement
     { result := switchStatement }
-@statement:ASTStatement = tryStatement 
+anyStatement:ASTStatement = tryStatement 
     { result := tryStatement }
-@statement:ASTStatement = block
-    { result := block }
+anyStatement:ASTStatement = LBRACE statements RBRACE
+    { result = statements; }
+anyStatement:ASTStatement = LBRACE RBRACE
+    { result = statements; }
 
 varDeclaration:ASTVarDeclaration = VAR varDeclarations
     { result := ASTVarDeclaration(VAR, Variable.Kind.VAR, varDeclarations, null) }
@@ -402,12 +406,12 @@ optionalElse:ASTStatement? = ELSE block
 optionalElse:ASTStatement? =
     { result := null }
 
-forLoop:ASTFor = optionalLabel FOR ^ forTarget IN ^ expression block
+forLoop:ASTFor = optionalLabel FOR @ ^ forTarget @"expected 'in'" IN @ ^ expression block
     { 
         result := ASTFor(Position(parserState.reference->File, parserState.row, parserState.column), 
                 optionalLabel, forTarget, expression, block) 
     }
-optionalLabel:String? = IDENTIFIER COLON
+optionalLabel:String? = IDENTIFIER COLON @"expected 'while', 'loop', 'do', or 'for'" 
     { result := IDENTIFIER.text }
 optionalLabel:String? =
     { result := null }
@@ -416,24 +420,24 @@ forTarget:ListView<ASTTypedIdentifier> = optionallyTypedIdentifier
 forTarget:ListView<ASTTypedIdentifier> = LPAREN varDeclarations RPAREN
     { result := varDeclarations }
 
-whileLoop:ASTWhile = optionalLabel WHILE ^ expression block
+whileLoop:ASTWhile = optionalLabel WHILE @ ^ expression block
     { 
         result := ASTWhile(Position(parserState.reference->File, parserState.row, parserState.column), optionalLabel, expression, block)
     }
 
-doLoop:ASTDo = optionalLabel DO ^ block WHILE expression
+doLoop:ASTDo = optionalLabel DO @ ^ block @"expected 'while'" WHILE @ expression
     { 
         result := ASTDo(Position(parserState.reference->File, parserState.row, parserState.column), optionalLabel, expression, block)
     }
 
-loopLoop:ASTLoop = optionalLabel LOOP ^ block
+loopLoop:ASTLoop = optionalLabel LOOP @ ^ block
     { result := ASTLoop(Position(parserState.reference->File, parserState.row, parserState.column), optionalLabel, block) }
 
 methodCall:ASTExpression = callExpression arguments
     { result := ASTCallExpression(callExpression, arguments) }
 methodCall:ASTExpression = INIT arguments
     { result := ASTCallExpression(ASTIdentifier(INIT, "init"), arguments) }
-assignment:ASTStatement = expressionList assignmentOperator expression
+assignment:ASTStatement = assignmentExpressionList assignmentOperator expression
     { 
         result := ASTAssignment(expressionList, assignmentOperator, 
                 expression) 
@@ -526,7 +530,7 @@ catchBlock:ASTCatch = CATCH ^ IDENTIFIER typeDeclaration block
         result := ASTCatch(CATCH, IDENTIFIER.text, typeDeclaration, block) 
     }
 
-@block:ASTBlock = LBRACE statements RBRACE
+@block:ASTBlock = @"expected '{'" LBRACE @ statements RBRACE
     { result := ASTBlock(Position(parserState.reference->File, parserState.row, parserState.column), statements) }
 @block:ASTBlock = LBRACE RBRACE
     { result := ASTBlock(Position(parserState.reference->File, parserState.row, parserState.column), []) }
@@ -624,14 +628,14 @@ innerType:ASTType = LPAREN @"expected ')'" optionalTypeList RPAREN @ YIELDS_METH
         result := ASTMethodType(Position(parserState.reference->File, parserState.row, parserState.column), optionalTypeList, 
                 methodReturnType, optionalQuestion, false, true) 
     }
-genericParameters:Array<ASTType> = LT @"expected '>'" typeList GT @
+genericParameters:Array<ASTType> = LT typeList GT
     { result := typeList }
-typeList:Array<ASTType> = type COMMA typeList
+typeList:Array<ASTType> = type @"expected ',' or '>'" COMMA @ typeList
     { 
         result := [type]
         result.addAll(typeList)
     }
-twoOrMoreTypes:Array<ASTType> = typeList COMMA type
+twoOrMoreTypes:Array<ASTType> = typeList @"expected ',' or '>'" COMMA @ type
     { 
         result := typeList 
         result.add(type)
@@ -926,6 +930,13 @@ expressionList:Array<ASTExpression> = expressionList COMMA expression
         result.add(expression)
     }
 expressionList:Array<ASTExpression> = expression
+    { result := [expression] }
+assignmentExpressionList:Array<ASTExpression> = assignmentExpressionList COMMA orExpression
+    { 
+        result := expressionList
+        result.add(expression)
+    }
+assignmentExpressionList:Array<ASTExpression> = orExpression
     { result := [expression] }
 
 term:ASTExpression = IDENTIFIER
@@ -1542,21 +1553,22 @@ LINE_COMMENT = '--' LINE_COMMENT_CHARS [\n] ;
 LINE_COMMENT_CHARS = LINE_COMMENT_CHARS [^\n] ;
 LINE_COMMENT_CHARS = ;
 TRAILING_LINE_COMMENT = '--' LINE_COMMENT_CHARS ;
-BLOCK_COMMENT = '-*' BLOCK_COMMENT_CHARS '*-' ;
+BLOCK_COMMENT = '-*' @"expected '*-' to close comment (started at <pos>)" BLOCK_COMMENT_CHARS '*-' @ ;
 BLOCK_COMMENT_CHARS = BLOCK_COMMENT_CHARS BLOCK_COMMENT_CHAR ;
 BLOCK_COMMENT_CHARS = ;
 BLOCK_COMMENT_CHAR = [^*] ;
 BLOCK_COMMENT_CHAR = '*' [^-] ;
 BLOCK_COMMENT_CHAR = BLOCK_COMMENT ;
-SINGLE_LINE_BLOCK_COMMENT = '-*' SINGLE_LINE_BLOCK_COMMENT_CHARS '*-' ;
+SINGLE_LINE_BLOCK_COMMENT = '-*'  @"expected '*-' to close comment (started at <pos>)"
+        SINGLE_LINE_BLOCK_COMMENT_CHARS '*-' @ ;
 SINGLE_LINE_BLOCK_COMMENT_CHARS = SINGLE_LINE_BLOCK_COMMENT_CHARS 
         SINGLE_LINE_BLOCK_COMMENT_CHAR ;
 SINGLE_LINE_BLOCK_COMMENT_CHARS = ;
 SINGLE_LINE_BLOCK_COMMENT_CHAR = [^*\n\r] ;
 SINGLE_LINE_BLOCK_COMMENT_CHAR = '*' [^-] ;
 SINGLE_LINE_BLOCK_COMMENT_CHAR = SINGLE_LINE_BLOCK_COMMENT ;
-DOCCOMMENT:String = '===' TRAILING_EQUALS DOCCOMMENT_CHARS '===' TRAILING_EQUALS
-        WS
+DOCCOMMENT:String = '===' @"expected '===' to close comment (started at <pos>)" TRAILING_EQUALS
+        DOCCOMMENT_CHARS '===' @ TRAILING_EQUALS WS
     { result := DOCCOMMENT_CHARS }
 DOCCOMMENT_CHARS:String = DOCCOMMENT_CHARS DOCCOMMENT_CHAR
     { result := DOCCOMMENT_CHARS + DOCCOMMENT_CHAR }

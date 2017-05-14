@@ -125,14 +125,24 @@ void ParserGenerator::computeFollow(const String& name) {
     }
 }
 
+bool creates_state(const Node& node) {
+    return node.fKind != Node::kPush_Kind && node.fKind != Node::kPop_Kind;
+}
+
 void ParserGenerator::computeClosure(std::unordered_set<StateFragment>* fragments) {
     bool updated;
     do {
         updated = false;
         std::unordered_set<StateFragment> newFragments;
         for (const auto& f : *fragments) {
-            if (f.fPosition < fProductions[f.fProductionId].fNodes.size()) {
-                const Node& node = *fProductions[f.fProductionId].fNodes[f.fPosition];
+            int position = f.fPosition;
+            while (position < fProductions[f.fProductionId].fNodes.size() &&
+                    !creates_state(*fProductions[f.fProductionId].fNodes[position])) {
+                ++position;
+            }
+            if (position < fProductions[f.fProductionId].fNodes.size()) {
+                const Node& node = *fProductions[f.fProductionId].fNodes[position].get();
+                ASSERT(creates_state(node), "unexpected dummy node");
                 if (node.fKind == Node::kIdentifier_Kind) {
                     const String& name = ((IdentifierNode&) node).fIdentifier;
                     for (int i = 0; i < fProductions.size(); ++i) {
@@ -220,10 +230,30 @@ void ParserGenerator::computeTransitions(const State& state, std::unordered_set<
     for (const auto& f : state.fFragments) {
         // check to see if we're following within this production or need to head out to the follow
         // set
-        if (f.fPosition < fProductions[f.fProductionId].fNodes.size()) {
-            const Node& node = *fProductions[f.fProductionId].fNodes[f.fPosition];
+        int position = f.fPosition;
+        while (position < fProductions[f.fProductionId].fNodes.size() &&
+                !creates_state(*fProductions[f.fProductionId].fNodes[position])) {
+            const Node& n = *fProductions[f.fProductionId].fNodes[position];
+            switch (n.fKind) {
+                case Node::kPush_Kind:
+                    printf("have message %s for %d\n", ((PushNode&) n).fMessage.c_str(), state.fId);
+//                    ASSERT(fPushMessages.find(state.fId) == fPushMessages.end(), "message conflict");
+                    fPushMessages[state.fId] = ((PushNode&) n).fMessage;
+                    break;
+                case Node::kPop_Kind:
+                    printf("have pop for %d\n", state.fId);
+//                    ASSERT(fPushMessages.find(state.fId) == fPushMessages.end(), "message conflict");
+                    fPushMessages[state.fId] = "";
+                    break;
+                default:
+                    abort();
+            }
+            ++position;
+        }
+        if (position < fProductions[f.fProductionId].fNodes.size()) {
+            const Node& node = *fProductions[f.fProductionId].fNodes[position];
             std::unordered_set<StateFragment>& outgoingSet = outgoing[&node];
-            outgoingSet.insert(StateFragment(f.fProductionId, f.fPosition + 1));
+            outgoingSet.insert(StateFragment(f.fProductionId, position + 1));
         }
         else {
             int start = state.fId;
@@ -240,9 +270,9 @@ void ParserGenerator::computeTransitions(const State& state, std::unordered_set<
     for (auto iter = outgoing.begin(); iter != outgoing.end(); ++iter) {
         const Node& node = *iter->first;
         const std::unordered_set<StateFragment>& set = iter->second;
-        int target = this->addState(set, states);
         switch (node.fKind) {
             case Node::kIdentifier_Kind: {
+                int target = this->addState(set, states);
                 const String& name = ((IdentifierNode&) node).fIdentifier;
                 bool found = false;
                 int id = -1;
@@ -264,40 +294,33 @@ void ParserGenerator::computeTransitions(const State& state, std::unordered_set<
                 break;
             }
             case Node::kChar_Kind: {
+                int target = this->addState(set, states);
                 char c = ((CharNode&) node).fChar;
                 this->setAction(state.fId, c, Action(Action::kShift_Kind, target));
                 break;
             }
-            case Node::kCharset_Kind:
+            case Node::kCharset_Kind: {
+                int target = this->addState(set, states);
                 for (char c : ((CharsetNode&) node).fChars) {
                     this->setAction(state.fId, c, Action(Action::kShift_Kind, target));
                 }
                 break;
-            case Node::kCut_Kind:
+            }
+            case Node::kCut_Kind: {
+                int target = this->addState(set, states);
                 for (unsigned char c = START_CHAR; c <= END_CHAR; ++c) {
                     this->setAction(state.fId, c, Action(Action::kCut_Kind, target));
                 }
                 this->setAction(state.fId, EOF_CHAR, Action(Action::kCut_Kind, target));
                 break;
-            case Node::kPush_Kind:
-                ASSERT(fPushMessages.find(state.fId) == fPushMessages.end(), "message conflict");
-                fPushMessages[state.fId] = ((PushNode&) node).fMessage;
-                for (unsigned char c = START_CHAR; c <= END_CHAR; ++c) {
-                    this->setAction(state.fId, c, Action(Action::kPush_Kind, target));
-                }
-                this->setAction(state.fId, EOF_CHAR, Action(Action::kPush_Kind, target));
-                break;
-            case Node::kPop_Kind:
-                ASSERT(fPushMessages.find(state.fId) == fPushMessages.end(), "message conflict");
-                fPushMessages[state.fId] = "";
-                for (unsigned char c = START_CHAR; c <= END_CHAR; ++c) {
-                    this->setAction(state.fId, c, Action(Action::kPop_Kind, target));
-                }
-                this->setAction(state.fId, EOF_CHAR, Action(Action::kPop_Kind, target));
-                break;
-            case Node::kEOF_Kind:
+            }
+            case Node::kEOF_Kind: {
+                int target = this->addState(set, states);
                 this->setAction(state.fId, EOF_CHAR, Action(Action::kShift_Kind, target));
                 break;
+            }
+            case Node::kPush_Kind: // fall through
+            case Node::kPop_Kind:  // fall through
             case Node::kLiteral_Kind:
                 abort();
         }
@@ -526,6 +549,9 @@ void ParserGenerator::writeReductions(std::ofstream& out) {
             ASSERT(p.fType.size(), "expected production with code to have a type");
             for (int i = p.fNodes.size() - 1; i >= 0; --i) {
                 const auto& n = p.fNodes[i];
+                if (!creates_state(*n)) {
+                    continue;
+                }
                 String name;
                 if (n->fLabel.size()) {
                     name = n->fLabel;
@@ -543,7 +569,13 @@ void ParserGenerator::writeReductions(std::ofstream& out) {
             }
         }
         else {
-            out << indentation << "for (int i = 0; i < " << p.fNodes.size() <<
+            int count = 0;
+            for (const auto& n : p.fNodes) {
+                if (creates_state(*n)) {
+                    ++count;
+                }
+            }
+            out << indentation << "for (int i = 0; i < " << count <<
                     "; i++) { parserState->fNode = parserState->fNode->fNext; }\n";
         }
         if (p.fType.size()) {
@@ -564,20 +596,20 @@ void ParserGenerator::writeStarts(std::ofstream& out) {
         if (fName == "PandaParser") {
             printf("HACK!\n");
             out << "    bool " << p.fName.substr(0, p.fName.length() - strlen("_START")) <<
-                    "(String text, ParseError* error, "
+                    "(const String& name, const String& text, ParseError* error, "
                         "void* reference = nullptr) {\n";
             out << "        " << fName << "Output tmp;\n";
-            out << "         bool result = this->parse(text, " << iter->second <<
+            out << "         bool result = this->parse(name, text, " << iter->second <<
                     ", &tmp, error, reference);\n";
             out << "        return result;\n";
             out << "    }\n";
             continue;
         }
         out << "    bool " << p.fName.substr(0, p.fName.length() - strlen("_START")) <<
-                "(String text, " << p.fType << "* output, ParseError* error, "
-                    "void* reference = nullptr) {\n";
+                "(const String& name, const String& text, " << p.fType << "* output, "
+                    "ParseError* error, void* reference = nullptr) {\n";
         out << "        " << fName << "Output tmp;\n";
-        out << "        bool result = this->parse(text, " << iter->second <<
+        out << "        bool result = this->parse(name, text, " << iter->second <<
                 ", &tmp, error, reference);\n";
         out << "        *output = tmp." << wrapper(p.fType) << ";\n";
         out << "        return result;\n";

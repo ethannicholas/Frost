@@ -38,8 +38,6 @@ public:
         kShift_Kind,
         kReduce_Kind,
         kCut_Kind,
-        kPush_Kind,
-        kPop_Kind,
         kMultiple_Kind,
         kAccept_Kind
     } fKind;
@@ -72,6 +70,12 @@ public:
         /** The grammar's output for this node. */
         T fOutput;
 
+        /** The current line numer (for error reporting purposes). */
+        int fRow;
+
+        /** The current column within the line (for error reporting purposes). */
+        int fColumn;
+
         /** The next node on the stack. */
         std::shared_ptr<StateNode> fNext;
     };
@@ -91,56 +95,72 @@ public:
         /** The index of the character we are currently looking at. */
         int fOffset;
 
-        /** The current line numer (for error reporting purposes). */
-        int fRow;
-
-        /** The current column within the line (for error reporting purposes). */
-        int fColumn;
-
         /** The top of the parse stack. */
         std::shared_ptr<StateNode> fNode;
     };
 
 protected:
-    const char* getErrorMessage(State* state) {
+    String getErrorMessage(String name, State* state) {
+        // the production on top of the stack might not have been reduced, because the next
+        // character (the one we failed at) isn't in its follow set. We don't care about that
+        // anymore; reduce things so we can figure out what we're looking at.
         bool done;
         do {
             done = true;
             for (unsigned char c = START_CHAR; c <= END_CHAR; c++) {
+                // right this second, we just grab the first reduction we run into and hope this
+                // yields a sensible error message. Seems to be ok for now, but we might eventually
+                // have to follow all reduce paths and then merge the messages together.
                 const Action& a = getAction(state->fNode->fId, c);
+                int reduce = -1;
                 if (a.fKind == Action::kReduce_Kind) {
-                    printf("current state: %d\n", state->fNode->fId);
-                    printf("reducing %d (%c)\n", a.fTarget, c);
+                    reduce = a.fTarget;
+                }
+                else if (a.fKind == Action::kMultiple_Kind) {
+                    for (const Action& sub : a.fSubactions) {
+                        if (sub.fKind == Action::kReduce_Kind) {
+                            reduce = sub.fTarget;
+                            break;
+                        }
+                    }
+                }
+                if (reduce != -1) {
                     bool die;
-                    T output = this->reduce(a.fTarget, state, &die);
+                    T output = this->reduce(reduce, state, &die);
                     if (die) {
                         done = true;
                         break;
                     }
                     done = false;
-                    int next = this->getGoto(state->fNode->fId,
-                            this->getProductionId(a.fTarget));
-                    printf("goto %d\n", next);
-                    state->fNode.reset(new StateNode { next, std::move(output),
-                            state->fNode });
+                    int next = this->getGoto(state->fNode->fId, this->getProductionId(reduce));
+                    state->fNode.reset(new StateNode { next, std::move(output), state->fNode->fRow,
+                            state->fNode->fColumn, state->fNode });
                     break;
+                }
+            }
+            if (!done) {
+                const char* msg = this->getMessage(state->fNode->fId);
+                if (msg && strlen(msg)) {
+                    done = true;
                 }
             }
         }
         while (!done);
 
-        const char* errorText = "parse error";
+        String errorText = "parse error";
+        int row = state->fNode->fRow;
+        int column = state->fNode->fColumn;
         int depth = 0;
         StateNode* node = state->fNode.get();
         while (node != nullptr) {
-            printf("### state %d (%d)\n", node->fId, depth);
             const char* msg = this->getMessage(node->fId);
             if (msg) {
-                printf("### have msg '%s'\n", msg);
                 if (strlen(msg)) {
                     ++depth;
                     if (depth > 0) {
                         errorText = msg;
+                        row = node->fRow;
+                        column = node->fColumn;
                         break;
                     }
                 }
@@ -150,19 +170,28 @@ protected:
             }
             node = node->fNext.get();
         }
+        String posToken = "<pos>";
+        std::string::size_type pos = errorText.find(posToken);
+        if (pos != std::string::npos) {
+            errorText.replace(pos, posToken.size(), name + ":" + std::to_string(row) + ":" +
+                    std::to_string(column));
+        }
+
         return errorText;
     }
 
-    bool parse(String text, int startState, T* output, ParseError* error, void* reference) {
+    bool parse(const String& name, String text, int startState, T* output, ParseError* error,
+                void* reference) {
         text += EOF_CHAR;
-        State farthest = { reference, 0, 1, 1,
-                std::shared_ptr<StateNode>(new StateNode { startState, T(), nullptr }) };
+        State farthest = { reference, 0,
+                std::shared_ptr<StateNode>(new StateNode { startState, T(), 1, 1, nullptr }) };
         std::stack<State> parsers;
         parsers.push(farthest);
 
         for (;;) {
             if (!parsers.size()) {
-                *error = ParseError(farthest.fRow, farthest.fColumn, getErrorMessage(&farthest));
+                *error = ParseError(farthest.fNode->fRow, farthest.fNode->fColumn,
+                        getErrorMessage(name, &farthest));
                 return false;
             }
             State& top = parsers.top();
@@ -203,34 +232,37 @@ private:
         switch (action.fKind) {
             case Action::kShift_Kind: {
                 char c = text[parserState->fOffset];
-                printf("shifting '%c' into %d\n", c, action.fTarget);
-                parserState->fNode.reset(new StateNode { action.fTarget, T(c),
-                        parserState->fNode });
-                ++parserState->fOffset;
+                int row = parserState->fNode->fRow;
+                int column = parserState->fNode->fColumn;
                 switch (c) {
                     case '\n':
-                        ++parserState->fRow;
-                        parserState->fColumn = 1;
+                        ++row;
+                        column = 1;
                         break;
                     case '\t':
-                        parserState->fColumn += 4 - parserState->fColumn % 4;
+                        column += 4 - column % 4;
                         break;
                     default:
-                        ++parserState->fColumn;
+                        ++column;
                 }
+                parserState->fNode.reset(new StateNode { action.fTarget, T(c), row, column,
+                        parserState->fNode });
+                ++parserState->fOffset;
                 break;
             }
             case Action::kReduce_Kind: {
                 bool die = false;
+                int row = parserState->fNode->fRow;
+                int column = parserState->fNode->fColumn;
                 T output = this->reduce(action.fTarget, parserState, &die);
                 if (die) {
-                    parserState->fNode.reset(new StateNode { -1, std::move(output),
+                    parserState->fNode.reset(new StateNode { -1, std::move(output), row, column,
                             parserState->fNode });
                     return;
                 }
                 int next = this->getGoto(parserState->fNode->fId,
                         this->getProductionId(action.fTarget));
-                parserState->fNode.reset(new StateNode { next, std::move(output),
+                parserState->fNode.reset(new StateNode { next, std::move(output), row, column,
                         parserState->fNode });
                 break;
             }
@@ -238,13 +270,11 @@ private:
                 auto iter = action.fSubactions.begin();
                 std::shared_ptr<StateNode> oldState = parserState->fNode;
                 int oldOffset = parserState->fOffset;
-                int oldRow = parserState->fRow;
-                int oldColumn = parserState->fColumn;
                 std::shared_ptr<StateNode>& next = oldState->fNext;
                 this->performAction(*iter, text, parserState, parsers);
                 ++iter;
                 while (iter != action.fSubactions.end()) {
-                    State sub { parserState->fReference, oldOffset, oldRow, oldColumn, oldState };
+                    State sub { parserState->fReference, oldOffset, oldState };
                     this->performAction(*iter, text, &sub, parsers);
                     parsers->push(sub);
                     ++iter;
@@ -252,20 +282,14 @@ private:
                 break;
             }
             case Action::kCut_Kind: {
-                parserState->fNode.reset(new StateNode { action.fTarget, T(), parserState->fNode });
+                parserState->fNode.reset(new StateNode { action.fTarget, T(),
+                        parserState->fNode->fRow, parserState->fNode->fColumn,
+                        parserState->fNode });
                 State top = parsers->top();
                 while (!parsers->empty()) {
                     parsers->pop();
                 }
                 parsers->push(top);
-                break;
-            }
-            case Action::kPush_Kind: {
-                parserState->fNode.reset(new StateNode { action.fTarget, T(), parserState->fNode });
-                break;
-            }
-            case Action::kPop_Kind: {
-                parserState->fNode.reset(new StateNode { action.fTarget, T(), parserState->fNode });
                 break;
             }
             case Action::kNull_Kind:

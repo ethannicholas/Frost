@@ -12,7 +12,9 @@ int main(int argc, char** argv) {
         exit(1);
     }
     ParseError error;
-    if (!PandaParser().file(text, &error)) {
-        printf("%d:%d: %s\n", error.fLine, error.fColumn, error.fMessage.c_str());
+    String path = String(argv[1]);
+    String name = path.substr(path.find_last_of("/\\") + 1);
+    if (!PandaParser().file(name, text, &error)) {
+        printf("%s:%d:%d: %s\n", name.c_str(), error.fLine, error.fColumn, error.fMessage.c_str());
     }
 }
