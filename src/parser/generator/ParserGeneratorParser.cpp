@@ -48,7 +48,7 @@ Token Parser::nextRawToken() {
     }
     int token = parserlex(fScanner);
     String text = String(parserget_text(fScanner));
-    return Token(Position(parserget_lineno(fScanner)), (Token::Kind) token, text);
+    return Token(Position(nullptr, parserget_lineno(fScanner), -1), (Token::Kind) token, text);
 }
 
 Token Parser::nextToken() {
@@ -56,8 +56,8 @@ Token Parser::nextToken() {
     do {
         token = this->nextRawToken();
         if (token.fKind == Token::INVALID_TOKEN) {
-            fErrors.error(Position(parserget_lineno(fScanner)), "invalid token: '" + token.fText +
-                    "'");
+            fErrors.error(Position(nullptr, parserget_lineno(fScanner), -1), "invalid token: '" +
+                    token.fText + "'");
             token.fKind = Token::END_OF_FILE;
         }
     } while (token.fKind == Token::WHITESPACE);

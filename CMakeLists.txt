@@ -6,6 +6,8 @@ include_directories(
     src/parser
 )
 
+add_definitions("-ferror-limit=1000")
+
 add_executable(parsergenerator
     src/parser/generator/Main.cpp
     src/parser/generator/ParserGenerator.cpp

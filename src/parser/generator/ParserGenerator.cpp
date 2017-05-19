@@ -343,7 +343,7 @@ int ParserGenerator::addState(std::unordered_set<StateFragment> fragments,
     }
     fGotos.emplace_back();
     this->computeTransitions(state, states);
-
+/*
     printf("State %d:\n", state.fId);
     for (const auto& f : fragments) {
         const Production& p = fProductions[f.fProductionId];
@@ -359,7 +359,7 @@ int ParserGenerator::addState(std::unordered_set<StateFragment> fragments,
         }
         printf("\n");
     }
-
+*/
     return state.fId;
 }
 
@@ -593,18 +593,6 @@ void ParserGenerator::writeReductions(std::ofstream& out) {
 void ParserGenerator::writeStarts(std::ofstream& out) {
     for (auto iter = fStartStates.begin(); iter != fStartStates.end(); ++iter) {
         const Production& p = fProductions[iter->first];
-        if (fName == "PandaParser") {
-            printf("HACK!\n");
-            out << "    bool " << p.fName.substr(0, p.fName.length() - strlen("_START")) <<
-                    "(const String& name, const String& text, ParseError* error, "
-                        "void* reference = nullptr) {\n";
-            out << "        " << fName << "Output tmp;\n";
-            out << "         bool result = this->parse(name, text, " << iter->second <<
-                    ", &tmp, error, reference);\n";
-            out << "        return result;\n";
-            out << "    }\n";
-            continue;
-        }
         out << "    bool " << p.fName.substr(0, p.fName.length() - strlen("_START")) <<
                 "(const String& name, const String& text, " << p.fType << "* output, "
                     "ParseError* error, void* reference = nullptr) {\n";
@@ -633,12 +621,6 @@ void ParserGenerator::generate(const char* hDest, const char* cppDest) {
     hOut << "    char fCharValue;\n";
     hOut << "    " << fName << "Output(char c) : fCharValue(c) {}\n";
     for (const auto& p : fProductions) {
-        if (fName == "PandaParser") {
-            ((Production&) p).fType = "";
-            ((Production&) p).fCode = "";
-            printf("HACK!\n");
-        }
-
         if (p.fType.size() && fWrappers.find(p.fType) == fWrappers.end()) {
             fWrappers[p.fType] = "fValue" + std::to_string(fWrappers.size());
             hOut << "    " << p.fType << " " << fWrappers[p.fType] << ";\n";

@@ -4,12 +4,17 @@ namespace ParserGenerator {
 
 struct Position {
     Position()
-    : fLine(-1) {}
+    : fLine(-1)
+    , fColumn(-1) {}
 
-    Position(int line)
-    : fLine(line) {}
+    Position(String* name, int line, int column)
+    : fName(name)
+    , fLine(line)
+    , fColumn(column) {}
 
+    String* fName;
     int fLine;
+    int fColumn;
 };
 
 }
