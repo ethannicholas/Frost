@@ -13,6 +13,7 @@ struct ASTNode {
         ARRAY,
         AS,
         ASSERT,
+        ASSIGNMENT_TUPLE,
         AT_RETURN,
         BINARY,
         BLOCK,
@@ -166,6 +167,7 @@ struct ASTNode {
             case Kind::ARRAY:                   result += "Array";                 break;
             case Kind::AS:                      result += "As";                    break;
             case Kind::ASSERT:                  result += "Assert";                break;
+            case Kind::ASSIGNMENT_TUPLE:        result += "AssignmentTuple";       break;
             case Kind::AT_RETURN:               result += "AtReturn";              break;
             case Kind::BINARY:                  result += "Binary"; o = true;      break;
             case Kind::BLOCK:                   result += "Block";                 break;

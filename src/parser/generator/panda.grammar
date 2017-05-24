@@ -504,42 +504,47 @@ methodCall:ASTNode = INIT arguments
                 std::vector<ASTNode> { ASTNode(CURRENT_POSITION, ASTNode::Kind::IDENTIFIER, "init"),
                     arguments } );
     }
-assignment:ASTNode = assignmentExpressionList assignmentOperator expression
+assignment:ASTNode = assignmentTarget ASSIGNMENT expression
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::BINARY, assignmentOperator,
-                { assignmentExpressionList, expression });
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::BINARY, Operator::ASSIGNMENT,
+                std::vector<ASTNode> { assignmentTarget, expression });
     }
-assignmentOperator:Operator = ASSIGNMENT
+assignment:ASTNode = e1:expression compoundAssignmentOperator e2:expression
+    {
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::BINARY, compoundAssignmentOperator,
+                std::vector<ASTNode> { e1, e2 });
+    }
+compoundAssignmentOperator:Operator = ASSIGNMENT
     { result = Operator::ASSIGNMENT; }
-assignmentOperator:Operator = ADDEQ
+compoundAssignmentOperator:Operator = ADDEQ
     { result = Operator::ADDEQ; }
-assignmentOperator:Operator = SUBEQ
+compoundAssignmentOperator:Operator = SUBEQ
     { result = Operator::SUBEQ; }
-assignmentOperator:Operator = MULEQ
+compoundAssignmentOperator:Operator = MULEQ
     { result = Operator::MULEQ; }
-assignmentOperator:Operator = DIVEQ
+compoundAssignmentOperator:Operator = DIVEQ
     { result = Operator::DIVEQ; }
-assignmentOperator:Operator = INTDIVEQ
+compoundAssignmentOperator:Operator = INTDIVEQ
     { result = Operator::INTDIVEQ; }
-assignmentOperator:Operator = POWEQ
+compoundAssignmentOperator:Operator = POWEQ
     { result = Operator::POWEQ; }
-assignmentOperator:Operator = REMEQ
+compoundAssignmentOperator:Operator = REMEQ
     { result = Operator::REMEQ; }
-assignmentOperator:Operator = ANDEQ
+compoundAssignmentOperator:Operator = ANDEQ
     { result = Operator::ANDEQ; }
-assignmentOperator:Operator = BITWISEANDEQ
+compoundAssignmentOperator:Operator = BITWISEANDEQ
     { result = Operator::BITWISEANDEQ; }
-assignmentOperator:Operator = OREQ
+compoundAssignmentOperator:Operator = OREQ
     { result = Operator::OREQ; }
-assignmentOperator:Operator = BITWISEOREQ
+compoundAssignmentOperator:Operator = BITWISEOREQ
     { result = Operator::BITWISEOREQ; }
-assignmentOperator:Operator = XOREQ
+compoundAssignmentOperator:Operator = XOREQ
     { result = Operator::XOREQ; }
-assignmentOperator:Operator = BITWISEXOREQ
+compoundAssignmentOperator:Operator = BITWISEXOREQ
     { result = Operator::BITWISEXOREQ; }
-assignmentOperator:Operator = SHIFTLEFTEQ
+compoundAssignmentOperator:Operator = SHIFTLEFTEQ
     { result = Operator::SHIFTLEFTEQ; }
-assignmentOperator:Operator = SHIFTRIGHTEQ
+compoundAssignmentOperator:Operator = SHIFTRIGHTEQ
     { result = Operator::SHIFTRIGHTEQ; }
 
 assertStatement:ASTNode = ASSERT expression
@@ -978,13 +983,24 @@ expressionList:ASTNode = expressionList COMMA expression
     }
 expressionList:ASTNode = expression
     { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::EXPRESSIONS, { expression }); }
-assignmentExpressionList:ASTNode = assignmentExpressionList COMMA orExpression
+assignmentTarget:ASTNode = LPAREN assignmentTargetList COMMA assignmentTarget RPAREN
     {
-        result = assignmentExpressionList;
-        result.fChildren.push_back(orExpression);
+        result = ASTNode(assignmentTargetList.fPosition, ASTNode::Kind::ASSIGNMENT_TUPLE,
+                std::move(assignmentTargetList.fChildren));
+        result.fChildren.push_back(assignmentTarget);
     }
-assignmentExpressionList:ASTNode = orExpression
-    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::EXPRESSIONS, { orExpression }); }
+assignmentTarget:ASTNode = orExpression
+    { result = orExpression; }
+assignmentTargetList:ASTNode = assignmentTarget
+    {
+        result = ASTNode(assignmentTarget.fPosition, ASTNode::Kind::EXPRESSIONS,
+                { assignmentTarget });
+    }
+assignmentTargetList:ASTNode = assignmentTargetList COMMA assignmentTarget
+    {
+        result = assignmentTargetList;
+        result.fChildren.push_back(assignmentTarget);
+    }
 
 term:ASTNode = IDENTIFIER
     { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::IDENTIFIER, IDENTIFIER.fText); }

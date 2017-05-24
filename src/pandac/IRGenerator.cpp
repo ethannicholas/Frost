@@ -18,7 +18,9 @@ static int required_size(int64_t value) {
 
 bool IRGenerator::coerce(IRNode* node, const Type& type, IRNode* out) {
     if (node->fType == type) {
-        *out = std::move(*node);
+        if (out != node) {
+            *out = std::move(*node);
+        }
         return true;
     }
     if (type.fCategory == Type::Category::BUILTIN_INT) {
@@ -170,6 +172,34 @@ bool IRGenerator::foldBits(Position p, const IRNode& left, Operator op, const IR
     return false;
 }
 
+bool is_assignment(Operator op) {
+    switch (op) {
+        case Operator::ASSIGNMENT:   // fall through
+        case Operator::ADDEQ:        // fall through
+        case Operator::SUBEQ:        // fall through
+        case Operator::MULEQ:        // fall through
+        case Operator::DIVEQ:        // fall through
+        case Operator::INTDIVEQ:     // fall through
+        case Operator::REMEQ:        // fall through
+        case Operator::POWEQ:        // fall through
+        case Operator::OREQ:         // fall through
+        case Operator::ANDEQ:        // fall through
+        case Operator::XOREQ:        // fall through
+        case Operator::BITWISEOREQ:  // fall through
+        case Operator::BITWISEANDEQ: // fall through
+        case Operator::BITWISEXOREQ: // fall through
+        case Operator::SHIFTLEFTEQ:  // fall through
+        case Operator::SHIFTRIGHTEQ:
+            return true;
+        default:
+            return false;
+    }
+}
+
+static bool is_lvalue(const IRNode& node) {
+    return node.fKind == IRNode::Kind::VARIABLE_REFERENCE;
+}
+
 bool IRGenerator::convertBinary(const ASTNode& b, IRNode* out) {
     ASSERT(b.fKind == ASTNode::Kind::BINARY);
     ASSERT(b.fChildren.size() == 2);
@@ -181,24 +211,100 @@ bool IRGenerator::convertBinary(const ASTNode& b, IRNode* out) {
     if (!this->convertExpression(b.fChildren[1], &right)) {
         return false;
     }
-    if (left.fKind == IRNode::Kind::INT && right.fKind == IRNode::Kind::INT) {
-        this->foldInts(b.fPosition, left, (Operator) b.fValue.fInt, right, out);
-        return true;
+    if (left.fType.fCategory == Type::Category::BUILTIN_INT &&
+            right.fType.fCategory == Type::Category::INT_LITERAL) {
+        if (!coerce(&right, left.fType, &right)) {
+            return false;
+        }
     }
-    if (left.fKind == IRNode::Kind::BIT && right.fKind == IRNode::Kind::BIT) {
-        this->foldBits(b.fPosition, left, (Operator) b.fValue.fInt, right, out);
-        return true;
+    if (left.fType.fCategory == Type::Category::INT_LITERAL &&
+            right.fType.fCategory == Type::Category::BUILTIN_INT) {
+        if (!coerce(&left, right.fType, &left)) {
+            return false;
+        }
     }
-    if (left.fType == right.fType && left.fType.fCategory == Type::Category::BUILTIN_INT) {
-        Type type = left.fType;
+    Operator op = (Operator) b.fValue.fInt;
+    if (is_assignment(op)) {
+        if (!this->coerce(&right, left.fType, &right)) {
+            return false;
+        }
+        if (!is_lvalue(left)) {
+            this->error(left.fPosition, "cannot assign to this expression");
+            return false;
+        }
         std::vector<IRNode> children;
         children.push_back(std::move(left));
         children.push_back(std::move(right));
-        *out = IRNode(b.fPosition, IRNode::Kind::BINARY, type, b.fValue.fInt, std::move(children));
+        *out = IRNode(b.fPosition, IRNode::Kind::BINARY, left.fType, (int64_t) op,
+                std::move(children));
+    }
+    if (left.fKind == IRNode::Kind::INT && right.fKind == IRNode::Kind::INT) {
+        this->foldInts(b.fPosition, left, op, right, out);
         return true;
     }
-    this->error(b.fPosition, String("'") + operator_text((Operator) b.fValue.fInt) +
-            "' cannot operate on '" + left.fType.fName + "', '" + right.fType.fName + "'");
+    if (left.fKind == IRNode::Kind::BIT && right.fKind == IRNode::Kind::BIT) {
+        this->foldBits(b.fPosition, left, op, right, out);
+        return true;
+    }
+    if (left.fType == right.fType && left.fType.fCategory == Type::Category::BUILTIN_INT) {
+        Type type;
+        switch (op) {
+            case Operator::ADD:          // fall through
+            case Operator::SUB:          // fall through
+            case Operator::MUL:          // fall through
+            case Operator::DIV:          // fall through
+            case Operator::INTDIV:       // fall through
+            case Operator::REM:          // fall through
+            case Operator::POW:          // fall through
+            case Operator::OR:           // fall through
+            case Operator::AND:          // fall through
+            case Operator::XOR:          // fall through
+            case Operator::BITWISEOR:    // fall through
+            case Operator::BITWISEAND:   // fall through
+            case Operator::BITWISEXOR:   // fall through
+            case Operator::SHIFTLEFT:    // fall through
+            case Operator::SHIFTRIGHT:   // fall through
+            case Operator::ASSIGNMENT:   // fall through
+            case Operator::ADDEQ:        // fall through
+            case Operator::SUBEQ:        // fall through
+            case Operator::MULEQ:        // fall through
+            case Operator::DIVEQ:        // fall through
+            case Operator::INTDIVEQ:     // fall through
+            case Operator::REMEQ:        // fall through
+            case Operator::POWEQ:        // fall through
+            case Operator::OREQ:         // fall through
+            case Operator::ANDEQ:        // fall through
+            case Operator::XOREQ:        // fall through
+            case Operator::BITWISEOREQ:  // fall through
+            case Operator::BITWISEANDEQ: // fall through
+            case Operator::BITWISEXOREQ: // fall through
+            case Operator::SHIFTLEFTEQ:  // fall through
+            case Operator::SHIFTRIGHTEQ: // fall through
+            case Operator::NOT:          // fall through
+            case Operator::BITWISENOT:
+                type = left.fType;
+                break;
+            case Operator::EQ:           // fall through
+            case Operator::NEQ:          // fall through
+            case Operator::IDENTITY:     // fall through
+            case Operator::NIDENTITY:    // fall through
+            case Operator::GT:           // fall through
+            case Operator::LT:           // fall through
+            case Operator::GTEQ:         // fall through
+            case Operator::LTEQ:
+                type = Type::Bit();
+                break;
+            default:
+                abort();
+        }
+        std::vector<IRNode> children;
+        children.push_back(std::move(left));
+        children.push_back(std::move(right));
+        *out = IRNode(b.fPosition, IRNode::Kind::BINARY, type, (int64_t) op, std::move(children));
+        return true;
+    }
+    this->error(b.fPosition, String("'") + operator_text(op) + "' cannot operate on '" +
+            left.fType.fName + "', '" + right.fType.fName + "'");
     return false;
 }
 
@@ -390,6 +496,8 @@ bool IRGenerator::convertStatement(const ASTNode& s, IRNode* out) {
             return this->convertCall(s, out);
         case ASTNode::Kind::IF:
             return this->convertIf(s, out);
+        case ASTNode::Kind::BINARY:
+            return this->convertBinary(s, out);
         case ASTNode::Kind::VAR:      // fall through
         case ASTNode::Kind::DEF:      // fall through
         case ASTNode::Kind::PROPERTY: // fall through

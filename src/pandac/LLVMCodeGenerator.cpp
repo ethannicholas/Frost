@@ -31,6 +31,7 @@ String LLVMCodeGenerator::nextLabel() {
 
 void LLVMCodeGenerator::createBlock(const String& label, std::ostream& out) {
     out << "\n" << label << ":" << "\n";
+    fCurrentBlock = label;
 }
 
 String LLVMCodeGenerator::getVariableReference(const Variable& var, std::ostream& out) {
@@ -40,22 +41,81 @@ String LLVMCodeGenerator::getVariableReference(const Variable& var, std::ostream
     return result;
 }
 
-String LLVMCodeGenerator::getBinaryReference(const IRNode& bin, std::ostream& out) {
-    ASSERT(bin.fKind == IRNode::Kind::BINARY);
-    ASSERT(bin.fChildren.size() == 2);
-    ASSERT(bin.fChildren[0].fType == bin.fChildren[1].fType);
-    String left = this->getTypedReference(bin.fChildren[0], out);
-    String right = this->getReference(bin.fChildren[1], out);
-    String op;
-    switch ((Operator) bin.fValue.fInt) {
-        case Operator::ADD: op = "add"; break;
+String LLVMCodeGenerator::getBinaryReference(const String leftRef, Operator op,
+        const String rightRef, std::ostream& out) {
+    String llvmOp;
+    switch (op) {
+        case Operator::ADD:        llvmOp = "add";      break;
+        case Operator::SUB:        llvmOp = "sub";      break;
+        case Operator::MUL:        llvmOp = "mul";      break;
+        case Operator::DIV:        llvmOp = "div";      break;
+        case Operator::REM:        llvmOp = "mod";      break;
+        case Operator::SHIFTLEFT:  llvmOp = "shl";      break;
+        case Operator::SHIFTRIGHT: llvmOp = "shr";      break;
+        case Operator::BITWISEAND: llvmOp = "and";      break;
+        case Operator::BITWISEOR:  llvmOp = "or";       break;
+        case Operator::XOR:        // fall through
+        case Operator::BITWISEXOR: llvmOp = "xor";      break;
+        case Operator::EQ:         llvmOp = "icmp eq";  break;
+        case Operator::NEQ:        llvmOp = "icmp ne";  break;
+        case Operator::GT:         llvmOp = "icmp sgt"; break;
+        case Operator::LT:         llvmOp = "icmp slt"; break;
+        case Operator::GTEQ:       llvmOp = "icmp sge"; break;
+        case Operator::LTEQ:       llvmOp = "icmp sle"; break;
         default:
-            printf("unsupported operator: %s\n", operator_text((Operator) bin.fValue.fInt));
+            printf("unsupported operator: %s\n", operator_text(op));
             abort();
     }
     String result = this->nextVar();
-    out << "    " << result << " = " << op << " " << left << ", " << right << "\n";
+    out << "    " << result << " = " << llvmOp << " " << leftRef << ", " << rightRef << "\n";
     return result;
+}
+
+String LLVMCodeGenerator::getAndReference(const IRNode& left, const IRNode& right,
+        std::ostream& out) {
+    String leftRef = this->getReference(left, out);
+    String start = fCurrentBlock;
+    String ifTrue = this->nextLabel();
+    String ifFalse = this->nextLabel();
+    out << "    br i1 " << leftRef << ", label %" << ifTrue << ", label %" << ifFalse << "\n";
+    this->createBlock(ifTrue, out);
+    String rightRef = this->getReference(right, out);
+    out << "    br label %" << ifFalse;
+    this->createBlock(ifFalse, out);
+    String result = this->nextVar();
+    out << "    " << result << " = phi i1 [0, %" << start << "], [" << rightRef << ", %" <<
+            ifTrue << "]\n";
+    return result;
+}
+
+String LLVMCodeGenerator::getOrReference(const IRNode& left, const IRNode& right,
+        std::ostream& out) {
+    String leftRef = this->getReference(left, out);
+    String start = fCurrentBlock;
+    String ifTrue = this->nextLabel();
+    String ifFalse = this->nextLabel();
+    out << "    br i1 " << leftRef << ", label %" << ifTrue << ", label %" << ifFalse << "\n";
+    this->createBlock(ifFalse, out);
+    String rightRef = this->getReference(right, out);
+    out << "    br label %" << ifTrue;
+    this->createBlock(ifTrue, out);
+    String result = this->nextVar();
+    out << "    " << result << " = phi i1 [1, %" << start << "], [" << rightRef << ", %" <<
+            ifFalse << "]\n";
+    return result;
+}
+
+String LLVMCodeGenerator::getBinaryReference(const IRNode& left, Operator op, const IRNode& right,
+        std::ostream& out) {
+    ASSERT(left.fType == right.fType);
+    switch (op) {
+        case Operator::AND: return this->getAndReference(left, right, out);
+        case Operator::OR:  return this->getOrReference(left, right, out);
+        default:
+            String leftRef = this->getTypedReference(left, out);
+            String rightRef = this->getReference(right, out);
+            return this->getBinaryReference(leftRef, op, rightRef, out);
+    }
 }
 
 String LLVMCodeGenerator::getReference(const IRNode& expr, std::ostream& out) {
@@ -65,7 +125,9 @@ String LLVMCodeGenerator::getReference(const IRNode& expr, std::ostream& out) {
         case IRNode::Kind::INT:
             return std::to_string(expr.fValue.fInt);
         case IRNode::Kind::BINARY:
-            return this->getBinaryReference(expr, out);
+            ASSERT(expr.fChildren.size() == 2);
+            return this->getBinaryReference(expr.fChildren[0], (Operator) expr.fValue.fInt,
+                    expr.fChildren[1], out);
         case IRNode::Kind::METHOD_REFERENCE:
             return this->methodName(((MethodStub*) expr.fValue.fPtr)->fName);
         case IRNode::Kind::VARIABLE_REFERENCE:
@@ -78,6 +140,78 @@ String LLVMCodeGenerator::getReference(const IRNode& expr, std::ostream& out) {
 
 String LLVMCodeGenerator::getTypedReference(const IRNode& expr, std::ostream& out) {
     return this->llvmType(expr.fType) + " " + this->getReference(expr, out);
+}
+
+String LLVMCodeGenerator::getLValue(const IRNode& lvalue, std::ostream& out) {
+    ASSERT(lvalue.fKind == IRNode::Kind::VARIABLE_REFERENCE);
+    Variable* var = (Variable*) lvalue.fValue.fPtr;
+    return this->llvmType(var->fType) + "* " + this->varName(*var);
+}
+
+void LLVMCodeGenerator::writeAndEq(const String& lvalue, const IRNode& right, std::ostream& out) {
+    String left = this->nextVar();
+    out << "    " << left << " = load " << lvalue << "\n";
+    String ifTrue = this->nextLabel();
+    String ifFalse = this->nextLabel();
+    out << "    br i1 " << left << ", label %" << ifTrue << ", label %" << ifFalse << "\n";
+    this->createBlock(ifTrue, out);
+    String rightRef = this->getTypedReference(right, out);
+    out << "    store " << rightRef << ", " << lvalue << "\n";
+    out << "    br label %" << ifFalse;
+    this->createBlock(ifFalse, out);
+}
+
+void LLVMCodeGenerator::writeOrEq(const String& lvalue, const IRNode& right, std::ostream& out) {
+    String left = this->nextVar();
+    out << "    " << left << " = load " << lvalue << "\n";
+    String ifTrue = this->nextLabel();
+    String ifFalse = this->nextLabel();
+    out << "    br i1 " << left << ", label %" << ifTrue << ", label %" << ifFalse << "\n";
+    this->createBlock(ifFalse, out);
+    String rightRef = this->getTypedReference(right, out);
+    out << "    store " << rightRef << ", " << lvalue << "\n";
+    out << "    br label %" << ifTrue;
+    this->createBlock(ifTrue, out);
+}
+
+void LLVMCodeGenerator::writeAssignment(const IRNode& a, std::ostream& out) {
+    ASSERT(a.fKind == IRNode::Kind::BINARY);
+    ASSERT(a.fChildren.size() == 2);
+    String lvalue = this->getLValue(a.fChildren[0], out);
+    String value;
+    String type = this->llvmType(a.fChildren[0].fType);
+    Operator op = (Operator) a.fValue.fInt;
+    if (op == Operator::ASSIGNMENT) {
+        String right = this->getReference(a.fChildren[1], out);
+        value = type + " " + right;
+    }
+    else {
+        Operator binOp;
+        switch (op) {
+            case Operator::ADDEQ:        binOp = Operator::ADD;                         break;
+            case Operator::SUBEQ:        binOp = Operator::SUB;                         break;
+            case Operator::MULEQ:        binOp = Operator::MUL;                         break;
+            case Operator::DIVEQ:        binOp = Operator::DIV;                         break;
+            case Operator::INTDIVEQ:     binOp = Operator::INTDIV;                      break;
+            case Operator::REMEQ:        binOp = Operator::REM;                         break;
+            case Operator::POWEQ:        binOp = Operator::POW;                         break;
+            case Operator::XOREQ:        binOp = Operator::XOR;                         break;
+            case Operator::BITWISEOREQ:  binOp = Operator::BITWISEOR;                   break;
+            case Operator::BITWISEANDEQ: binOp = Operator::BITWISEAND;                  break;
+            case Operator::BITWISEXOREQ: binOp = Operator::BITWISEXOR;                  break;
+            case Operator::SHIFTLEFTEQ:  binOp = Operator::SHIFTLEFT;                   break;
+            case Operator::SHIFTRIGHTEQ: binOp = Operator::SHIFTRIGHT;                  break;
+            case Operator::ANDEQ:        this->writeAndEq(lvalue, a.fChildren[1], out); return;
+            case Operator::OREQ:         this->writeOrEq(lvalue, a.fChildren[1], out);  return;
+            default: abort();
+        }
+        String left = this->nextVar();
+        out << "    " << left << " = load " << lvalue << "\n";
+        String right = this->getReference(a.fChildren[1], out);
+        value = type + " " +
+                this->getBinaryReference(type + " " + left, binOp, right, out);
+    }
+    out << "    store " << value << ", " << lvalue << "\n";
 }
 
 void LLVMCodeGenerator::writeCall(const IRNode& stmt, std::ostream& out) {
@@ -158,9 +292,10 @@ void LLVMCodeGenerator::writeBlock(const IRNode& block, std::ostream& out) {
 
 void LLVMCodeGenerator::writeStatement(const IRNode& stmt, std::ostream& out) {
     switch (stmt.fKind) {
-        case IRNode::Kind::BLOCK:    this->writeBlock(stmt, out); break;
-        case IRNode::Kind::CALL:     this->writeCall (stmt, out); break;
-        case IRNode::Kind::IF:       this->writeIf   (stmt, out); break;
+        case IRNode::Kind::BINARY:   this->writeAssignment(stmt, out); break;
+        case IRNode::Kind::BLOCK:    this->writeBlock     (stmt, out); break;
+        case IRNode::Kind::CALL:     this->writeCall      (stmt, out); break;
+        case IRNode::Kind::IF:       this->writeIf        (stmt, out); break;
         case IRNode::Kind::VAR:      // fall through
         case IRNode::Kind::DEF:      // fall through
         case IRNode::Kind::PROPERTY: // fall through

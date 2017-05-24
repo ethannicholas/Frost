@@ -21,7 +21,15 @@ private:
 
     String getVariableReference(const Variable& var, std::ostream& out);
     
-    String getBinaryReference(const IRNode& stmt, std::ostream& out);
+    String getAndReference(const IRNode& left, const IRNode& right, std::ostream& out);
+
+    String getOrReference(const IRNode& left, const IRNode& right, std::ostream& out);
+
+    String getBinaryReference(const String leftRef, Operator op, const String rightRef,
+            std::ostream& out);
+
+    String getBinaryReference(const IRNode& left, Operator op, const IRNode& right,
+            std::ostream& out);
 
     String getReference(const IRNode& stmt, std::ostream& out);
 
@@ -34,6 +42,14 @@ private:
     void writeVarTarget(const IRNode& var, const IRNode* value, std::ostream& out);
 
     void writeVar(const IRNode& var, std::ostream& out);
+
+    String getLValue(const IRNode& lvalue, std::ostream& out);
+
+    void writeAndEq(const String& lvalue, const IRNode& right, std::ostream& out);
+
+    void writeOrEq(const String& lvalue, const IRNode& right, std::ostream& out);
+
+    void writeAssignment(const IRNode& a, std::ostream& out);
 
     void writeStatement(const IRNode& stmt, std::ostream& out);
 
@@ -51,5 +67,5 @@ private:
 
     std::stringstream fMethodHeader;
 
-    String fCurrentBlock = "<error>";
+    String fCurrentBlock = "0";
 };
