@@ -34,12 +34,12 @@ struct ParseError {
 class Action {
 public:
     enum Kind {
-        kNull_Kind,
-        kShift_Kind,
-        kReduce_Kind,
-        kCut_Kind,
-        kMultiple_Kind,
-        kAccept_Kind
+        NONE,
+        SHIFT,
+        REDUCE,
+        CUT,
+        MULTIPLE,
+        ACCEPT
     } fKind;
 
     int fTarget;
@@ -47,14 +47,14 @@ public:
     std::vector<Action> fSubactions;
 
     Action()
-    : fKind(kNull_Kind) {}
+    : fKind(Kind::NONE) {}
 
     Action(Kind kind, int target) 
     : fKind(kind)
     , fTarget(target) {}
 
     Action(std::vector<Action> subactions)
-    : fKind(kMultiple_Kind)
+    : fKind(Kind::MULTIPLE)
     , fSubactions(std::move(subactions)) {}
 
     String code() const;
@@ -113,12 +113,12 @@ protected:
                 // have to follow all reduce paths and then merge the messages together.
                 const Action& a = getAction(state->fNode->fId, c);
                 int reduce = -1;
-                if (a.fKind == Action::kReduce_Kind) {
+                if (a.fKind == Action::Kind::REDUCE) {
                     reduce = a.fTarget;
                 }
-                else if (a.fKind == Action::kMultiple_Kind) {
+                else if (a.fKind == Action::Kind::MULTIPLE) {
                     for (const Action& sub : a.fSubactions) {
-                        if (sub.fKind == Action::kReduce_Kind) {
+                        if (sub.fKind == Action::Kind::REDUCE) {
                             reduce = sub.fTarget;
                             break;
                         }
@@ -181,7 +181,7 @@ protected:
     }
 
     bool parse(const String& name, String text, int startState, T* output, ParseError* error,
-                void* reference) {
+               void* reference) {
         text += EOF_CHAR;
         State farthest = { reference, 0,
                 std::shared_ptr<StateNode>(new StateNode { startState, T(), 1, 1, nullptr }) };
@@ -208,7 +208,7 @@ protected:
                 continue;
             }
             const Action& action = this->getAction(top.fNode->fId, text[top.fOffset]);
-            if (action.fKind == Action::kNull_Kind) {
+            if (action.fKind == Action::Kind::NONE) {
                 parsers.pop();
                 continue;
             }
@@ -230,7 +230,7 @@ private:
     void performAction(const Action& action, const String& text, State* parserState,
             std::stack<State>* parsers) {
         switch (action.fKind) {
-            case Action::kShift_Kind: {
+            case Action::Kind::SHIFT: {
                 char c = text[parserState->fOffset];
                 int row = parserState->fNode->fRow;
                 int column = parserState->fNode->fColumn;
@@ -250,7 +250,7 @@ private:
                 ++parserState->fOffset;
                 break;
             }
-            case Action::kReduce_Kind: {
+            case Action::Kind::REDUCE: {
                 bool die = false;
                 int row = parserState->fNode->fRow;
                 int column = parserState->fNode->fColumn;
@@ -266,7 +266,7 @@ private:
                         parserState->fNode });
                 break;
             }
-            case Action::kMultiple_Kind: {
+            case Action::Kind::MULTIPLE: {
                 auto iter = action.fSubactions.begin();
                 std::shared_ptr<StateNode> oldState = parserState->fNode;
                 int oldOffset = parserState->fOffset;
@@ -281,7 +281,7 @@ private:
                 }
                 break;
             }
-            case Action::kCut_Kind: {
+            case Action::Kind::CUT: {
                 parserState->fNode.reset(new StateNode { action.fTarget, T(),
                         parserState->fNode->fRow, parserState->fNode->fColumn,
                         parserState->fNode });
@@ -292,8 +292,8 @@ private:
                 parsers->push(top);
                 break;
             }
-            case Action::kNull_Kind:
-            case Action::kAccept_Kind:
+            case Action::Kind::NONE:
+            case Action::Kind::ACCEPT:
                 abort();
         }
     }

@@ -1,0 +1,24 @@
+class Pointer<T> : Value {
+	@class
+	@external
+	method alloc():Pointer<T>
+
+	@class
+	@external
+	method alloc(count:Int):Pointer<T>
+
+	@external
+	function get():T
+
+	@external
+	method set(value:T)
+
+	@external
+	function [](index:Int):T
+
+	@external
+	method []:=(index:Int, value:T)
+
+	@external
+	method destroy()
+}

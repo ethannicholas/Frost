@@ -7,15 +7,15 @@
 namespace ParserGenerator {
 
 struct Node {
-    enum Kind {
-        kIdentifier_Kind,
-        kCharset_Kind,
-        kLiteral_Kind,
-        kChar_Kind,
-        kCut_Kind,
-        kPush_Kind,
-        kPop_Kind,
-        kEOF_Kind
+    enum class Kind {
+        IDENTIFIER,
+        CHARSET,
+        LITERAL,
+        CHAR,
+        CUT,
+        PUSH,
+        POP,
+        END_OF_FILE
     };
 
     Node(Kind kind)
@@ -39,12 +39,12 @@ struct Node {
 
 struct IdentifierNode : public Node {
     IdentifierNode(String label, String identifier) 
-    : INHERITED(kIdentifier_Kind, std::move(label))
-    , fIdentifier(std::move(identifier)) { ASSERT(fIdentifier.size(), "empty identifier"); }
+    : INHERITED(Kind::IDENTIFIER, std::move(label))
+    , fIdentifier(std::move(identifier)) { ASSERT(fIdentifier.size()); }
 
     IdentifierNode(String identifier) 
-    : INHERITED(kIdentifier_Kind)
-    , fIdentifier(std::move(identifier)) { ASSERT(fIdentifier.size(), "empty identifier"); }
+    : INHERITED(Kind::IDENTIFIER)
+    , fIdentifier(std::move(identifier)) { ASSERT(fIdentifier.size()); }
 
     String fIdentifier;
 
@@ -61,11 +61,11 @@ struct IdentifierNode : public Node {
 
 struct CharsetNode : public Node {
     CharsetNode(String label, std::unordered_set<char> chars) 
-    : INHERITED(kCharset_Kind, std::move(label))
+    : INHERITED(Kind::CHARSET, std::move(label))
     , fChars(std::move(chars)) {}
 
     CharsetNode(std::unordered_set<char> chars) 
-    : INHERITED(kCharset_Kind)
+    : INHERITED(Kind::CHARSET)
     , fChars(std::move(chars)) {}
 
     std::unordered_set<char> fChars;
@@ -84,7 +84,7 @@ struct CharsetNode : public Node {
 
 struct LiteralNode : public Node {
     LiteralNode(String literal) 
-    : INHERITED(kLiteral_Kind)
+    : INHERITED(Kind::LITERAL)
     , fLiteral(literal) {}
 
     String fLiteral;
@@ -102,7 +102,7 @@ struct LiteralNode : public Node {
 
 struct CharNode : public Node {
     CharNode(char c) 
-    : INHERITED(kChar_Kind)
+    : INHERITED(Kind::CHAR)
     , fChar(c) {}
 
     char fChar;
@@ -120,7 +120,7 @@ struct CharNode : public Node {
 
 struct CutNode : public Node {
     CutNode() 
-    : INHERITED(kCut_Kind) {}
+    : INHERITED(Kind::CUT) {}
 
     int hash() const override {
         return 0;
@@ -135,7 +135,7 @@ struct CutNode : public Node {
 
 struct PushNode : public Node {
     PushNode(String msg) 
-    : INHERITED(kPush_Kind)
+    : INHERITED(Kind::PUSH)
     , fMessage(msg) {}
 
     String fMessage;
@@ -153,7 +153,7 @@ struct PushNode : public Node {
 
 struct PopNode : public Node {
     PopNode() 
-    : INHERITED(kPop_Kind) {}
+    : INHERITED(Kind::POP) {}
 
     int hash() const override {
         return 0;
@@ -168,7 +168,7 @@ struct PopNode : public Node {
 
 struct EOFNode : public Node {
     EOFNode() 
-    : INHERITED(kEOF_Kind) {}
+    : INHERITED(Kind::END_OF_FILE) {}
 
     int hash() const override {
         return 1;

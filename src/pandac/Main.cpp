@@ -1,3 +1,5 @@
+#include "IRGenerator.h"
+#include "LLVMCodeGenerator.h"
 #include "PandaParser.h"
 
 #include <string>
@@ -15,8 +17,11 @@ int main(int argc, char** argv) {
     String path = String(argv[1]);
     String name = path.substr(path.find_last_of("/\\") + 1);
     ASTNode output;
-    if (PandaParser().file(name, text, &output, &error)) {
-        printf("%s\n", output.description().c_str());
+    if (PandaParser().file(name, text, &output, &error, &name)) {
+        IRFile converted;
+        if (IRGenerator().convertFile(output, &converted)) {
+            LLVMCodeGenerator().write(converted, std::ofstream(argv[2]));
+        }
     }
     else {
         printf("%s:%d:%d: %s\n", name.c_str(), error.fLine, error.fColumn, error.fMessage.c_str());

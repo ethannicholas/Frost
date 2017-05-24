@@ -40,6 +40,9 @@ include_directories(
 
 add_executable(pandac
     PandaParser.cpp
-    src/parser/runtime/GLRParser.cpp
+    src/pandac/IRGenerator.cpp
+    src/pandac/LLVMCodeGenerator.cpp
     src/pandac/Main.cpp
+    src/pandac/Operator.cpp
+    src/parser/runtime/GLRParser.cpp
 )

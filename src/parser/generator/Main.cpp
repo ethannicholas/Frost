@@ -4,7 +4,7 @@
 #include <fstream>
 
 int main(int argc, const char** argv) {
-    ASSERT(argc == 5, "wrong number of arguments");
+    ASSERT(argc == 5);
     std::ifstream in(argv[1]);
     std::string text((std::istreambuf_iterator<char>(in)),
                         std::istreambuf_iterator<char>());

@@ -1,5 +1,6 @@
 {
-    #include "ast/ASTNode.h"
+    #include "ASTNode.h"
+    #include "Operator.h"
 
     #undef NULL
     #define CURRENT_POSITION Position(((String*) parserState->fReference), \
@@ -62,7 +63,7 @@ bodyEntries:ASTNode = bodyEntries bodyEntry
         result.fChildren.push_back(bodyEntry);
     }
 bodyEntries:ASTNode = bodyEntry
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kBodyEntries_Kind, { bodyEntry }); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::BODY_ENTRIES, { bodyEntry }); }
 optionalTrailingLineComment = TRAILING_LINE_COMMENT ;
 optionalTrailingLineComment = ;
 
@@ -88,7 +89,7 @@ optionalTrailingLineComment = ;
     { result = varDeclaration; }
 
 packageDeclaration:ASTNode = PACKAGE ^ dottedName
-    { result = ASTNode(PACKAGE, ASTNode::kPackage_Kind, dottedName); }
+    { result = ASTNode(PACKAGE, ASTNode::Kind::PACKAGE, dottedName); }
 dottedName:String = dottedName DOT IDENTIFIER
     {
         result = dottedName + "." + IDENTIFIER.fText;
@@ -96,23 +97,23 @@ dottedName:String = dottedName DOT IDENTIFIER
 dottedName:String = IDENTIFIER
     { result = IDENTIFIER.fText; }
 usesStatement:ASTNode = USES usesName
-    { result = ASTNode(USES, ASTNode::kUses_Kind, usesName); }
+    { result = ASTNode(USES, ASTNode::Kind::USES, usesName); }
 usesStatement:ASTNode = USES id:dottedName AS ^ alias:dottedName
-    { result = ASTNode(USES, ASTNode::kUses_Kind, id, { ASTNode(AS, ASTNode::kAs_Kind, alias) }); }
+    { result = ASTNode(USES, ASTNode::Kind::USES, id, { ASTNode(AS, ASTNode::Kind::AS, alias) }); }
 usesName:String = dottedName DOT STAR
     { result = dottedName + ".*"; }
 usesName:String = dottedName
     { result = dottedName; }
 instanceDeclaration:ASTNode = INSTANCE ^ type
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kInstance_Kind, { type });
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::INSTANCE, { type });
     }
 
 classDeclaration:ASTNode = optionalDoccomment optionalAnnotations CLASS IDENTIFIER
         optionalGenericsDeclaration @"expected '{'" optionalTypeDeclaration optionalInterfaces
         '{' @"expected '}' to complete class body (started at <pos>)" WS ^ classMembers RBRACE @
     {
-        result = ASTNode(CLASS, ASTNode::kClass_Kind, IDENTIFIER.fText, { optionalDoccomment,
+        result = ASTNode(CLASS, ASTNode::Kind::CLASS, IDENTIFIER.fText, { optionalDoccomment,
                 optionalAnnotations, optionalGenericsDeclaration, optionalTypeDeclaration,
                 optionalInterfaces, classMembers });
     }
@@ -121,7 +122,7 @@ interfaceDeclaration:ASTNode = optionalDoccomment optionalAnnotations INTERFACE 
         optionalGenericsDeclaration optionalTypeDeclarations '{'
         @"expected '}' to complete interface body (started at <pos>)" WS classMembers RBRACE @
     {
-        result = ASTNode(INTERFACE, ASTNode::kInterface_Kind, IDENTIFIER.fText,
+        result = ASTNode(INTERFACE, ASTNode::Kind::INTERFACE, IDENTIFIER.fText,
                 { optionalDoccomment, optionalAnnotations, optionalGenericsDeclaration,
                     optionalTypeDeclarations, classMembers });
     }
@@ -129,7 +130,7 @@ choiceDeclaration:ASTNode = optionalDoccomment optionalAnnotations CHOICE ^ IDEN
         optionalInterfaces '{' @"expected '}' to complete 'choice' (started at <pos>)" WS choices
         RBRACE @
     {
-        result = ASTNode(CHOICE, ASTNode::kChoice_Kind, IDENTIFIER.fText, { optionalDoccomment,
+        result = ASTNode(CHOICE, ASTNode::Kind::CHOICE, IDENTIFIER.fText, { optionalDoccomment,
                 optionalAnnotations, choices });
     }
 choices:ASTNode = choices COMMA choice
@@ -138,45 +139,45 @@ choices:ASTNode = choices COMMA choice
         result.fChildren.push_back(choice);
     }
 choices:ASTNode = choice
-    { result = ASTNode(choice.fPosition, ASTNode::kChoices_Kind, { choice }); }
+    { result = ASTNode(choice.fPosition, ASTNode::Kind::CHOICES, { choice }); }
 choice:ASTNode = optionalDoccomment IDENTIFIER
     {
-        result = ASTNode(IDENTIFIER.fPosition, ASTNode::kChoiceValue_Kind, IDENTIFIER.fText,
+        result = ASTNode(IDENTIFIER.fPosition, ASTNode::Kind::CHOICE_VALUE, IDENTIFIER.fText,
                 { optionalDoccomment });
     }
 optionalDoccomment:ASTNode = DOCCOMMENT
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kDoccomment_Kind, DOCCOMMENT); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::DOCCOMMENT, DOCCOMMENT); }
 optionalDoccomment:ASTNode =
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kDoccomment_Kind); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::DOCCOMMENT); }
 optionalAnnotations:ASTNode = annotations
     { result = annotations; }
 optionalAnnotations:ASTNode =
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kAnnotations_Kind); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::ANNOTATIONS); }
 optionalTypeDeclarations:ASTNode = COLON typeList
     { result = typeList; }
 optionalTypeDeclarations:ASTNode =
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kTypes_Kind); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::TYPES); }
 optionalTypeDeclaration:ASTNode = typeDeclaration
     { result = typeDeclaration; }
 optionalTypeDeclaration:ASTNode =
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kType_Kind); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::VOID); }
 typeDeclaration:ASTNode = COLON type
     { result = type; }
 optionalGenericsDeclaration:ASTNode = LT genericsDeclarations GT
     { result = genericsDeclarations; }
 optionalGenericsDeclaration:ASTNode =
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kTypes_Kind); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::TYPES); }
 genericsDeclarations:ASTNode = genericsDeclarations COMMA optionallyTypedIdentifier
     {
         result = genericsDeclarations;
         result.fChildren.push_back(optionallyTypedIdentifier);
     }
 genericsDeclarations:ASTNode = optionallyTypedIdentifier
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kGenerics_Kind, { optionallyTypedIdentifier }); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::GENERICS, { optionallyTypedIdentifier }); }
 optionalInterfaces:ASTNode = LPAREN typeList RPAREN
     { result = typeList; }
 optionalInterfaces:ASTNode =
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kTypes_Kind); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::TYPES); }
 classMembers:ASTNode = classMemberList
     { result = classMemberList; }
 classMembers:ASTNode =
@@ -207,7 +208,7 @@ classMember:ASTNode = choiceDeclaration
 classMember:ASTNode = nestedDeclaration
     { result = nestedDeclaration; }
 nestedDeclaration:ASTNode = NESTED ^ type
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kNested_Kind, { type }); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::NESTED, { type }); }
 
 annotations:ASTNode = annotations annotation
     {
@@ -215,35 +216,35 @@ annotations:ASTNode = annotations annotation
         result.fChildren.push_back(annotation);
     }
 annotations:ASTNode = annotation
-    { result = ASTNode(annotation.fPosition, ASTNode::kAnnotations_Kind, { annotation }); }
+    { result = ASTNode(annotation.fPosition, ASTNode::Kind::ANNOTATIONS, { annotation }); }
 annotation:ASTNode = '@' identifierText WS
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kAnnotation_Kind, identifierText) ;
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::ANNOTATION, identifierText) ;
     }
 annotation:ASTNode = MATH LPAREN OVERFLOW RPAREN
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kAnnotation_Kind, "math(overflow)"); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::ANNOTATION, "math(overflow)"); }
 annotation:ASTNode = PRE LPAREN expression RPAREN
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kAnnotation_Kind, "pre", { expression }); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::ANNOTATION, "pre", { expression }); }
 annotation:ASTNode = PRE_OR LPAREN expression RPAREN
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kAnnotation_Kind, "preOr", { expression }); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::ANNOTATION, "preOr", { expression }); }
 postcondition:ASTNode = POST LPAREN expression RPAREN
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kAnnotation_Kind, "post", { expression }); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::ANNOTATION, "post", { expression }); }
 postcondition:ASTNode = POST_AND LPAREN expression RPAREN
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kAnnotation_Kind, "postAnd", { expression }); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::ANNOTATION, "postAnd", { expression }); }
 postconditions:ASTNode = postconditions postcondition
     {
         result = postconditions;
         result.fChildren.push_back(postcondition);
     }
 postconditions:ASTNode = postcondition
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kAnnotations_Kind, { postcondition }); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::ANNOTATIONS, { postcondition }); }
 optionalPostconditions:ASTNode = postconditions
     { result = postconditions; }
 optionalPostconditions:ASTNode =
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kAnnotations_Kind); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::ANNOTATIONS); }
 
 invariant:ASTNode = INVARIANT LPAREN expression RPAREN
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kAnnotation_Kind, "invariant", { expression }); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::ANNOTATION, "invariant", { expression }); }
 
 methodDeclaration:ASTNode = optionalDoccomment optionalAnnotations METHOD ^ methodName parameters
         optionalTypeDeclaration optionalBlock optionalPostconditions
@@ -251,7 +252,7 @@ methodDeclaration:ASTNode = optionalDoccomment optionalAnnotations METHOD ^ meth
         ASTNode annotations = optionalAnnotations;
         annotations.fChildren.insert(annotations.fChildren.end(),
                 optionalPostconditions.fChildren.begin(), optionalPostconditions.fChildren.end());
-        result = ASTNode(CURRENT_POSITION, ASTNode::kMethod_Kind, methodName, { optionalDoccomment,
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::METHOD, methodName, { optionalDoccomment,
                 annotations, parameters, optionalTypeDeclaration, optionalBlock });
     }
 methodName:String = IDENTIFIER
@@ -317,32 +318,32 @@ specialMethodName:String = LTEQ
 parameters:ASTNode = @"expected '('" LPAREN @"expected ')'" parameterList RPAREN @
     { result = parameterList; }
 parameters:ASTNode = @"expected '('" LPAREN @"expected ')'" RPAREN @
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kParameters_Kind); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::PARAMETERS); }
 parameterList:ASTNode = parameterList COMMA parameter
     {
         result = parameterList;
         result.fChildren.push_back(parameter);
     }
 parameterList:ASTNode = parameter
-    { result = ASTNode(parameter.fPosition, ASTNode::kParameters_Kind, { parameter }); }
+    { result = ASTNode(parameter.fPosition, ASTNode::Kind::PARAMETERS, { parameter }); }
 parameter:ASTNode = optionalVar @"expected identifier" IDENTIFIER @ @"expected ':'" COLON @ type
         optionalEllipsis
     {
-        result = ASTNode(IDENTIFIER.fPosition, ASTNode::kParameter_Kind, IDENTIFIER.fText, { type,
+        result = ASTNode(IDENTIFIER.fPosition, ASTNode::Kind::PARAMETER, IDENTIFIER.fText, { type,
                 optionalVar, optionalEllipsis });
     }
 optionalVar:ASTNode = VAR
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kBool_Kind, true); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::BIT, true); }
 optionalVar:ASTNode =
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kBool_Kind, false); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::BIT, false); }
 optionalEllipsis:ASTNode = ELLIPSIS
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kBool_Kind, true); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::BIT, true); }
 optionalEllipsis:ASTNode =
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kBool_Kind, false); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::BIT, false); }
 optionalBlock:ASTNode = block
     { result = block; }
 optionalBlock:ASTNode =
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kBlock_Kind); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::BLOCK); }
 
 @anyMethod:ASTNode = functionDeclaration
     { result = functionDeclaration; }
@@ -357,7 +358,7 @@ functionDeclaration:ASTNode = optionalDoccomment optionalAnnotations FUNCTION ^ 
         ASTNode annotations = optionalAnnotations;
         annotations.fChildren.insert(annotations.fChildren.end(),
                 optionalPostconditions.fChildren.begin(), optionalPostconditions.fChildren.end());
-        result = ASTNode(CURRENT_POSITION, ASTNode::kFunction_Kind, methodName,
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::FUNCTION, methodName,
                 { optionalDoccomment, annotations, parameters, typeDeclaration, optionalBlock });
     }
 
@@ -367,13 +368,13 @@ initDeclaration:ASTNode = optionalDoccomment optionalAnnotations INIT ^ paramete
         ASTNode annotations = optionalAnnotations;
         annotations.fChildren.insert(annotations.fChildren.end(),
                 optionalPostconditions.fChildren.begin(), optionalPostconditions.fChildren.end());
-        result = ASTNode(CURRENT_POSITION, ASTNode::kInit_Kind, "init",
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::INIT, "init",
                 { optionalDoccomment, annotations, parameters, optionalBlock });
     }
 
 fieldDeclaration:ASTNode = optionalDoccomment optionalAnnotations varDeclaration
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kField_Kind,
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::FIELD,
                 { optionalDoccomment, optionalAnnotations, varDeclaration });
     }
 
@@ -395,7 +396,7 @@ anyStatement:ASTNode = doLoop
 anyStatement:ASTNode = loopLoop
     { result = loopLoop; }
 anyStatement:ASTNode = methodCall
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kExpression_Kind, { methodCall }); }
+    { result = methodCall; }
 anyStatement:ASTNode = assignment
     { result = assignment; }
 anyStatement:ASTNode = assertStatement
@@ -405,48 +406,55 @@ anyStatement:ASTNode = matchStatement
 anyStatement:ASTNode = LBRACE statements RBRACE
     { result = statements; }
 anyStatement:ASTNode = LBRACE RBRACE
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kStatements_Kind); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::STATEMENTS); }
 
 varDeclaration:ASTNode = VAR varDeclarations
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kVar_Kind, { varDeclarations }); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::VAR, varDeclarations.fChildren); }
 varDeclaration:ASTNode = DEF varDeclarations
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kDef_Kind, { varDeclarations }); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::DEF, varDeclarations.fChildren); }
 varDeclaration:ASTNode = PROPERTY varDeclarations
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kProperty_Kind, { varDeclarations }); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::PROPERTY, varDeclarations.fChildren); }
 varDeclaration:ASTNode = CONSTANT varDeclarations
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kConstant_Kind, { varDeclarations }); }
-varDeclaration:ASTNode = VAR varDeclarations ASSIGNMENT expression
-    { 
-        result = ASTNode(CURRENT_POSITION, ASTNode::kVar_Kind,
-                std::vector<ASTNode> { varDeclarations, expression });
-    }
-varDeclaration:ASTNode = DEF varDeclarations ASSIGNMENT expression
-    {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kDef_Kind,
-                std::vector<ASTNode> { varDeclarations, expression });
-    }
-varDeclaration:ASTNode = CONSTANT varDeclarations ASSIGNMENT expression
-    {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kConstant_Kind,
-                std::vector<ASTNode> { varDeclarations, expression });
-    }
-varDeclarations:ASTNode = varDeclarations COMMA optionallyTypedIdentifier
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::CONSTANT, varDeclarations.fChildren); }
+
+varDeclarations:ASTNode = varDeclarations COMMA singleDeclaration
     {
         result = varDeclarations;
-        result.fChildren.push_back(optionallyTypedIdentifier);
+        result.fChildren.push_back(singleDeclaration);
     }
-varDeclarations:ASTNode = optionallyTypedIdentifier
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kVar_Kind, { optionallyTypedIdentifier }); }
+varDeclarations:ASTNode = singleDeclaration
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::VARS, { singleDeclaration }); }
+singleDeclaration:ASTNode = target
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::DECLARATION, { target }); }
+singleDeclaration:ASTNode = target ASSIGNMENT expression
+    {
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::DECLARATION,
+                std::vector<ASTNode> { target, expression });
+    }
+target:ASTNode = optionallyTypedIdentifier
+    { result = optionallyTypedIdentifier; }
+target:ASTNode = LPAREN targetList COMMA target RPAREN
+    { 
+        result = targetList;
+        result.fChildren.push_back(target);
+    }
+targetList:ASTNode = target
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::TUPLE_TARGET, { target }); }
+targetList:ASTNode = targetList COMMA target
+    {
+        result = targetList;
+        result.fChildren.push_back(target);        
+    }
 optionallyTypedIdentifier:ASTNode = IDENTIFIER
-    { result = ASTNode(IDENTIFIER.fPosition, ASTNode::kIdentifier_Kind, IDENTIFIER.fText); }
+    { result = ASTNode(IDENTIFIER.fPosition, ASTNode::Kind::IDENTIFIER, IDENTIFIER.fText); }
 optionallyTypedIdentifier:ASTNode = IDENTIFIER COLON type
     {
-        result = ASTNode(IDENTIFIER.fPosition, ASTNode::kIdentifier_Kind, IDENTIFIER.fText,
+        result = ASTNode(IDENTIFIER.fPosition, ASTNode::Kind::IDENTIFIER, IDENTIFIER.fText,
                 { type });
     }
 
 ifStatement:ASTNode = IF ^ expression block optionalElse
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kIf_Kind, { expression, block, optionalElse }); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::IF, { expression, block, optionalElse }); }
 optionalElse:ASTNode = ELSE ifStatement
     { result = ifStatement; }
 optionalElse:ASTNode = ELSE block
@@ -456,7 +464,7 @@ optionalElse:ASTNode =
 
 forLoop:ASTNode = optionalLabel FOR @ ^ forTarget @"expected 'in'" IN @ ^ expression block
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kFor_Kind, optionalLabel, { forTarget,
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::FOR, optionalLabel, { forTarget,
                 expression, block });
     }
 optionalLabel:String = IDENTIFIER COLON @"expected 'while', 'loop', 'do', or 'for'"
@@ -465,90 +473,91 @@ optionalLabel:String =
     { }
 forTarget:ASTNode = optionallyTypedIdentifier
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kVar_Kind, { optionallyTypedIdentifier });
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::VAR, { optionallyTypedIdentifier });
     }
 forTarget:ASTNode = LPAREN varDeclarations RPAREN
     { result = varDeclarations; }
 
 whileLoop:ASTNode = optionalLabel WHILE @ ^ expression block
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kWhile_Kind, optionalLabel,
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::WHILE, optionalLabel,
                 { expression, block });
     }
 
 doLoop:ASTNode = optionalLabel DO @ ^ block @"expected 'while'" WHILE @ expression
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kDo_Kind, optionalLabel, { expression, block });
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::DO, optionalLabel, { expression, block });
     }
 
 loopLoop:ASTNode = optionalLabel LOOP @ ^ block
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kLoop_Kind, optionalLabel, { block }); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::LOOP, optionalLabel, { block }); }
 
 methodCall:ASTNode = target:callExpression arguments
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kCall_Kind,
-                std::vector<ASTNode> { target, arguments });
+        std::vector<ASTNode> children { target };
+        children.insert(children.end(), arguments.fChildren.begin(), arguments.fChildren.end());
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::CALL, children);
     }
 methodCall:ASTNode = INIT arguments
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kCall_Kind,
-                std::vector<ASTNode> { ASTNode(CURRENT_POSITION, ASTNode::kIdentifier_Kind, "init"),
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::CALL,
+                std::vector<ASTNode> { ASTNode(CURRENT_POSITION, ASTNode::Kind::IDENTIFIER, "init"),
                     arguments } );
     }
 assignment:ASTNode = assignmentExpressionList assignmentOperator expression
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kBinary_Kind, assignmentOperator,
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::BINARY, assignmentOperator,
                 { assignmentExpressionList, expression });
     }
-assignmentOperator:String = ASSIGNMENT
-    { result = ":="; }
-assignmentOperator:String = ADDEQ
-    { result = "+="; }
-assignmentOperator:String = SUBEQ
-    { result = "-="; }
-assignmentOperator:String = MULEQ
-    { result = "*="; }
-assignmentOperator:String = DIVEQ
-    { result = "/="; }
-assignmentOperator:String = INTDIVEQ
-    { result = "//="; }
-assignmentOperator:String = POWEQ
-    { result = "^="; }
-assignmentOperator:String = REMEQ
-    { result = "%="; }
-assignmentOperator:String = ANDEQ
-    { result = "&="; }
-assignmentOperator:String = BITWISEANDEQ
-    { result = "&&="; }
-assignmentOperator:String = OREQ
-    { result = "|="; }
-assignmentOperator:String = BITWISEOREQ
-    { result = "||="; }
-assignmentOperator:String = XOREQ
-    { result = "^="; }
-assignmentOperator:String = BITWISEXOREQ
-    { result = "^^="; }
-assignmentOperator:String = SHIFTLEFTEQ
-    { result = "<<="; }
-assignmentOperator:String = SHIFTRIGHTEQ
-    { result = ">>="; }
+assignmentOperator:Operator = ASSIGNMENT
+    { result = Operator::ASSIGNMENT; }
+assignmentOperator:Operator = ADDEQ
+    { result = Operator::ADDEQ; }
+assignmentOperator:Operator = SUBEQ
+    { result = Operator::SUBEQ; }
+assignmentOperator:Operator = MULEQ
+    { result = Operator::MULEQ; }
+assignmentOperator:Operator = DIVEQ
+    { result = Operator::DIVEQ; }
+assignmentOperator:Operator = INTDIVEQ
+    { result = Operator::INTDIVEQ; }
+assignmentOperator:Operator = POWEQ
+    { result = Operator::POWEQ; }
+assignmentOperator:Operator = REMEQ
+    { result = Operator::REMEQ; }
+assignmentOperator:Operator = ANDEQ
+    { result = Operator::ANDEQ; }
+assignmentOperator:Operator = BITWISEANDEQ
+    { result = Operator::BITWISEANDEQ; }
+assignmentOperator:Operator = OREQ
+    { result = Operator::OREQ; }
+assignmentOperator:Operator = BITWISEOREQ
+    { result = Operator::BITWISEOREQ; }
+assignmentOperator:Operator = XOREQ
+    { result = Operator::XOREQ; }
+assignmentOperator:Operator = BITWISEXOREQ
+    { result = Operator::BITWISEXOREQ; }
+assignmentOperator:Operator = SHIFTLEFTEQ
+    { result = Operator::SHIFTLEFTEQ; }
+assignmentOperator:Operator = SHIFTRIGHTEQ
+    { result = Operator::SHIFTRIGHTEQ; }
 
 assertStatement:ASTNode = ASSERT expression
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kAssert_Kind, { expression }); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::ASSERT, { expression }); }
 assertStatement:ASTNode = ASSERT test:expression COLON ^ msg:expression
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kAssert_Kind,
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::ASSERT,
                 std::vector<ASTNode> { test, msg });
     }
 
 matchStatement:ASTNode = MATCH expression LBRACE whens RBRACE ^
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kMatch_Kind,
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::MATCH,
                 std::vector<ASTNode> { expression, whens });
     }
 matchStatement:ASTNode = MATCH expression LBRACE whens matchDefault RBRACE ^
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kMatch_Kind,
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::MATCH,
                 std::vector<ASTNode> { expression, whens, matchDefault });
     }
 whens:ASTNode = whens when
@@ -557,7 +566,7 @@ whens:ASTNode = whens when
         result.fChildren.push_back(when);
     }
 whens:ASTNode = when
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kWhens_Kind, { when }); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::WHENS, { when }); }
 when:ASTNode = WHEN ^ expressionList COLON statements
     {
         ASTNode statement;
@@ -565,9 +574,9 @@ when:ASTNode = WHEN ^ expressionList COLON statements
             statement = statements.fChildren[0];
         }
         else {
-            statement = ASTNode(statements.fPosition, ASTNode::kBlock_Kind, statements.fChildren);
+            statement = ASTNode(statements.fPosition, ASTNode::Kind::BLOCK, statements.fChildren);
         }
-        result = ASTNode(CURRENT_POSITION, ASTNode::kWhen_Kind,
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::WHEN,
                 std::vector<ASTNode> { expressionList, statement });
     }
 matchDefault:ASTNode = DEFAULT ^ COLON statements
@@ -576,18 +585,18 @@ matchDefault:ASTNode = DEFAULT ^ COLON statements
             result = statements.fChildren[0];
         }
         else {
-            result = ASTNode(statements.fPosition, ASTNode::kBlock_Kind, statements.fChildren);
+            result = ASTNode(statements.fPosition, ASTNode::Kind::BLOCK, statements.fChildren);
         }
     }
 
 @block:ASTNode = @"expected '{'" LBRACE @ statements RBRACE
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kBlock_Kind, statements.fChildren); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::BLOCK, statements.fChildren); }
 @block:ASTNode = LBRACE RBRACE
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kBlock_Kind); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::BLOCK); }
 statements:ASTNode = statementList
     { result = statementList; }
 statements:ASTNode = terminalStatement
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kStatements_Kind, { terminalStatement }); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::STATEMENTS, { terminalStatement }); }
 statements:ASTNode = statementList terminalStatement
     {
         result = statementList;
@@ -599,7 +608,7 @@ statementList:ASTNode = statementList statementOrDeclaration
         result.fChildren.push_back(statementOrDeclaration);
     }
 statementList:ASTNode = statementOrDeclaration
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kStatements_Kind, { statementOrDeclaration }); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::STATEMENTS, { statementOrDeclaration }); }
 statementOrDeclaration:ASTNode = statement
     { result = statement; }
 statementOrDeclaration:ASTNode = declaration
@@ -615,65 +624,65 @@ terminalStatement:ASTNode = unreachableStatement
     { result = unreachableStatement; }
 
 returnStatement:ASTNode = RETURN
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kReturn_Kind); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::RETURN); }
 returnStatement:ASTNode = RETURN WS expression
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kReturn_Kind, { expression }); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::RETURN, { expression }); }
 
 breakStatement:ASTNode = BREAK
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kBreak_Kind); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::BREAK); }
 breakStatement:ASTNode = BREAK IDENTIFIER
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kBreak_Kind, IDENTIFIER.fText); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::BREAK, IDENTIFIER.fText); }
 
 continueStatement:ASTNode = CONTINUE
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kContinue_Kind); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::CONTINUE); }
 continueStatement:ASTNode = CONTINUE IDENTIFIER
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kContinue_Kind, IDENTIFIER.fText); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::CONTINUE, IDENTIFIER.fText); }
 
 unreachableStatement:ASTNode = UNREACHABLE
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kUnreachable_Kind); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::UNREACHABLE); }
 unreachableStatement:ASTNode = UNREACHABLE COLON expression
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kUnreachable_Kind, { expression }); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::UNREACHABLE, { expression }); }
 
 
 @type:ASTNode = @"expected a type" innerType @
     { result = innerType; }
 innerType:ASTNode = dottedName optionalQuestion
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kClassType_Kind, dottedName,
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::CLASS_TYPE, dottedName,
                 { optionalQuestion });
     }
 innerType:ASTNode = dottedName genericParameters optionalQuestion
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kClassType_Kind, dottedName,
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::CLASS_TYPE, dottedName,
                 std::vector<ASTNode> { optionalQuestion, genericParameters });
     }
 innerType:ASTNode = LPAREN @"expected ')'" twoOrMoreTypes RPAREN @ optionalQuestion
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kTupleType_Kind,
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::TUPLE_TYPE,
                 std::vector<ASTNode> { optionalQuestion, twoOrMoreTypes });
     }
 innerType:ASTNode = LPAREN @"expected ')'" optionalTypeList RPAREN @ YIELDS methodReturnType
         optionalQuestion
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kFunctionType_Kind,
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::FUNCTION_TYPE,
                 std::vector<ASTNode> { optionalQuestion, optionalTypeList, methodReturnType });
     }
 innerType:ASTNode = LPAREN @"expected ')'" optionalTypeList RPAREN @ YIELDS_METHOD methodReturnType
         optionalQuestion
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kMethodType_Kind,
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::METHOD_TYPE,
                 std::vector<ASTNode> { optionalQuestion, optionalTypeList, methodReturnType });
     }
 innerType:ASTNode = LPAREN @"expected ')'" optionalTypeList RPAREN @ YIELDS_IMMUTABLE
         methodReturnType optionalQuestion
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kImmutableFunctionType_Kind,
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::IMMUTABLE_FUNCTION_TYPE,
                 std::vector<ASTNode> { optionalQuestion, optionalTypeList, methodReturnType });
     }
 innerType:ASTNode = LPAREN @"expected ')'" optionalTypeList RPAREN @ YIELDS_METHOD_IMMUTABLE
         methodReturnType optionalQuestion
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kImmutableMethodType_Kind,
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::IMMUTABLE_METHOD_TYPE,
                 std::vector<ASTNode> { optionalQuestion, optionalTypeList, methodReturnType });
     }
 genericParameters:ASTNode = LT typeList GT
@@ -689,15 +698,15 @@ twoOrMoreTypes:ASTNode = typeList @"expected ',' or '>'" COMMA @ type
         result.fChildren.push_back(type);
     }
 typeList:ASTNode = type
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kTypes_Kind, { type }); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::TYPES, { type }); }
 optionalTypeList:ASTNode = typeList
     { result = typeList; }
 optionalTypeList:ASTNode =
     { }
 optionalQuestion:ASTNode = QUESTION
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kBool_Kind, true); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::BIT, true); }
 optionalQuestion:ASTNode =
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kBool_Kind, false); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::BIT, false); }
 methodReturnType:ASTNode = LPAREN @"expected ')'" RPAREN @
     { }
 methodReturnType:ASTNode = LPAREN @"expected ')'" type RPAREN @
@@ -709,19 +718,19 @@ orExpression:ASTNode = andExpression
     { result = andExpression; }
 orExpression:ASTNode = orExpression OR andExpression
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kBinary_Kind, "|",
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::BINARY, Operator::OR,
                 { orExpression, andExpression });
     }
 andExpression:ASTNode = comparisonExpression
     { result = comparisonExpression; }
 andExpression:ASTNode = andExpression AND comparisonExpression
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kBinary_Kind, "&",
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::BINARY, Operator::AND,
                 { andExpression, comparisonExpression });
     }
 andExpression:ASTNode = andExpression XOR comparisonExpression
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kBinary_Kind, "~",
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::BINARY, Operator::XOR,
                 { andExpression, comparisonExpression });
     }
 
@@ -729,44 +738,44 @@ comparisonExpression:ASTNode = rangeExpression
     { result = rangeExpression; }
 comparisonExpression:ASTNode = comparisonExpression EQ rangeExpression
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kBinary_Kind, "=",
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::BINARY, Operator::EQ,
                 { comparisonExpression, rangeExpression });
     }
 comparisonExpression:ASTNode = comparisonExpression NEQ rangeExpression
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kBinary_Kind, "!=",
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::BINARY, Operator::NEQ,
                 { comparisonExpression, rangeExpression });
     }
 comparisonExpression:ASTNode = comparisonExpression IDENTITY
         rangeExpression
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kBinary_Kind, "==",
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::BINARY, Operator::IDENTITY,
                 { comparisonExpression, rangeExpression });
     }
 comparisonExpression:ASTNode = comparisonExpression NIDENTITY
         rangeExpression
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kBinary_Kind, "!==",
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::BINARY, Operator::NIDENTITY,
                 { comparisonExpression, rangeExpression });
     }
 comparisonExpression:ASTNode = comparisonExpression GT rangeExpression
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kBinary_Kind, ">",
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::BINARY, Operator::GT,
                 { comparisonExpression, rangeExpression });
     }
 comparisonExpression:ASTNode = comparisonExpression LT rangeExpression
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kBinary_Kind, "<",
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::BINARY, Operator::LT,
                 { comparisonExpression, rangeExpression });
     }
 comparisonExpression:ASTNode = comparisonExpression GTEQ rangeExpression
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kBinary_Kind, ">=",
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::BINARY, Operator::GTEQ,
                 { comparisonExpression, rangeExpression });
     }
 comparisonExpression:ASTNode = comparisonExpression LTEQ rangeExpression
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kBinary_Kind, "<=",
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::BINARY, Operator::LTEQ,
                 { comparisonExpression, rangeExpression });
     }
 
@@ -779,9 +788,9 @@ optionalBound:ASTNode = additiveExpression
 optionalBound:ASTNode =
     { }
 rangeType:ASTNode::Kind = DOTDOT
-    { result = ASTNode::kRangeExclusive_Kind; }
+    { result = ASTNode::Kind::RANGE_EXCLUSIVE; }
 rangeType:ASTNode::Kind = ELLIPSIS
-    { result = ASTNode::kRangeInclusive_Kind; }
+    { result = ASTNode::Kind::RANGE_INCLUSIVE; }
 optionalBy:ASTNode = BY additiveExpression
     { result = additiveExpression; }
 optionalBy:ASTNode =
@@ -797,17 +806,17 @@ additiveExpression:ASTNode = multiplicativeExpression
     { result = multiplicativeExpression; }
 additiveExpression:ASTNode = additiveExpression ADD multiplicativeExpression
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kBinary_Kind, "+",
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::BINARY, Operator::ADD,
                 { additiveExpression, multiplicativeExpression });
     }
 additiveExpression:ASTNode = additiveExpression SUB multiplicativeExpression
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kBinary_Kind, "-",
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::BINARY, Operator::SUB,
                 { additiveExpression, multiplicativeExpression });
     }
 additiveExpression:ASTNode = additiveExpression BITWISEOR multiplicativeExpression
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kBinary_Kind, "||",
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::BINARY, Operator::BITWISEOR,
                 { additiveExpression, multiplicativeExpression });
     }
 
@@ -815,43 +824,43 @@ multiplicativeExpression:ASTNode = preExpression
     { result = preExpression; }
 multiplicativeExpression:ASTNode = multiplicativeExpression MUL preExpression
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kBinary_Kind, "*",
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::BINARY, Operator::MUL,
                 { multiplicativeExpression, preExpression });
     }
 multiplicativeExpression:ASTNode = multiplicativeExpression DIV preExpression
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kBinary_Kind, "/",
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::BINARY, Operator::DIV,
                 { multiplicativeExpression, preExpression });
     }
 multiplicativeExpression:ASTNode = multiplicativeExpression INTDIV preExpression
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kBinary_Kind, "//",
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::BINARY, Operator::INTDIV,
                 { multiplicativeExpression, preExpression });
     }
 multiplicativeExpression:ASTNode = multiplicativeExpression REM preExpression
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kBinary_Kind, "%",
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::BINARY, Operator::REM,
                 { multiplicativeExpression, preExpression });
     }
 multiplicativeExpression:ASTNode = multiplicativeExpression SHIFTLEFT preExpression
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kBinary_Kind, "<<",
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::BINARY, Operator::SHIFTLEFT,
                 { multiplicativeExpression, preExpression });
     }
 multiplicativeExpression:ASTNode = multiplicativeExpression SHIFTRIGHT preExpression
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kBinary_Kind, ">>",
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::BINARY, Operator::SHIFTRIGHT,
                 { multiplicativeExpression, preExpression });
     }
 multiplicativeExpression:ASTNode = multiplicativeExpression BITWISEAND preExpression
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kBinary_Kind, "&&",
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::BINARY, Operator::BITWISEAND,
                 { multiplicativeExpression, preExpression });
     }
 multiplicativeExpression:ASTNode = multiplicativeExpression BITWISEXOR
         preExpression
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kBinary_Kind, "~~",
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::BINARY, Operator::BITWISEXOR,
                 { multiplicativeExpression, preExpression });
     }
 
@@ -859,29 +868,33 @@ preExpression:ASTNode = postExpression
     { result = postExpression; }
 preExpression:ASTNode = SUB postExpression
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kPrefix_Kind, "-", { postExpression });
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::PREFIX, Operator::SUB,
+                { postExpression });
     }
 preExpression:ASTNode = NOT postExpression
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kPrefix_Kind, "!", { postExpression });
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::PREFIX, Operator::NOT,
+                { postExpression });
     }
 preExpression:ASTNode = BITWISENOT postExpression
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kPrefix_Kind, "!!", { postExpression });
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::PREFIX, Operator::BITWISENOT,
+                { postExpression });
     }
 
 postExpression:ASTNode = exponentExpression
     { result = exponentExpression; }
 postExpression:ASTNode = exponentExpression NOT
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kPostfix_Kind, "!", { exponentExpression });
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::POSTFIX, Operator::FORCENONNULL,
+                { exponentExpression });
     }
 
 exponentExpression:ASTNode = callExpression
     { result = callExpression; }
 exponentExpression:ASTNode = callExpression POW exponentExpression
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kBinary_Kind, "^",
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::BINARY, Operator::POW,
                 { callExpression, exponentExpression });
     }
 
@@ -891,14 +904,14 @@ callExpression:ASTNode = methodCall
     { result = methodCall; }
 callExpression:ASTNode = callExpression LBRACKET indexExpression RBRACKET
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kIndex_Kind,
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::INDEX,
                 std::vector<ASTNode> { callExpression, indexExpression });
     }
 callExpression:ASTNode = callExpression LT typeList GT
     {
-        if (callExpression.fKind == ASTNode::kIdentifier_Kind ||
-                callExpression.fKind == ASTNode::kDot_Kind) {
-            result = ASTNode(CURRENT_POSITION, ASTNode::kClassLiteral_Kind,
+        if (callExpression.fKind == ASTNode::Kind::IDENTIFIER ||
+                callExpression.fKind == ASTNode::Kind::DOT) {
+            result = ASTNode(CURRENT_POSITION, ASTNode::Kind::CLASS_LITERAL,
                     std::vector<ASTNode> { callExpression, typeList });
         }
         else {
@@ -907,31 +920,31 @@ callExpression:ASTNode = callExpression LT typeList GT
     }
 callExpression:ASTNode = callExpression DOT IDENTIFIER
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kDot_Kind, IDENTIFIER.fText,
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::DOT, IDENTIFIER.fText,
                 { callExpression });
     }
 callExpression:ASTNode = callExpression DOT specialMethodName
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kDot_Kind, specialMethodName,
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::DOT, specialMethodName,
                 { callExpression });
     }
 callExpression:ASTNode = callExpression DOT CLASS
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kDot_Kind, "$class", { callExpression, }); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::DOT, "$class", { callExpression, }); }
 callExpression:ASTNode = callExpression DOT INIT
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kDot_Kind, "init", { callExpression, }); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::DOT, "init", { callExpression, }); }
 callExpression:ASTNode = callExpression INSTANCEOF typeExpression
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kBinary_Kind, "-?>",
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::BINARY, Operator::INSTANCEOF,
                 std::vector<ASTNode> { callExpression, typeExpression });
     }
 callExpression:ASTNode = callExpression NINSTANCEOF typeExpression
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kBinary_Kind, "-!>",
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::BINARY, Operator::NINSTANCEOF,
                 std::vector<ASTNode> { callExpression, typeExpression });
     }
 callExpression:ASTNode = callExpression CAST typeExpression
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kBinary_Kind, "->",
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::BINARY, Operator::CAST,
                 std::vector<ASTNode> { callExpression, typeExpression });
     }
 indexExpression:ASTNode = expression
@@ -949,32 +962,32 @@ arguments:ASTNode = LPAREN @"expected ')'" expressionList optionalEllipsis RPARE
         if (optionalEllipsis.fValue.fBool) {
             ASTNode last = result.fChildren[result.fChildren.size() - 1];
             result.fChildren[result.fChildren.size() - 1] = ASTNode(last.fPosition,
-                    ASTNode::kRangeInclusive_Kind, std::vector<ASTNode> { last, ASTNode() });
+                    ASTNode::Kind::RANGE_INCLUSIVE, std::vector<ASTNode> { last, ASTNode() });
         }
     }
 arguments:ASTNode = LPAREN RPAREN
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kExpressions_Kind); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::EXPRESSIONS); }
 optionalEllipsis:ASTNode = ELLIPSIS
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kBool_Kind, true); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::BIT, true); }
 optionalEllipsis:ASTNode =
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kBool_Kind, false); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::BIT, false); }
 expressionList:ASTNode = expressionList COMMA expression
     {
         result = expressionList;
         result.fChildren.push_back(expression);
     }
 expressionList:ASTNode = expression
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kExpressions_Kind, { expression }); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::EXPRESSIONS, { expression }); }
 assignmentExpressionList:ASTNode = assignmentExpressionList COMMA orExpression
     {
         result = assignmentExpressionList;
         result.fChildren.push_back(orExpression);
     }
 assignmentExpressionList:ASTNode = orExpression
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kExpressions_Kind, { orExpression }); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::EXPRESSIONS, { orExpression }); }
 
 term:ASTNode = IDENTIFIER
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kIdentifier_Kind, IDENTIFIER.fText); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::IDENTIFIER, IDENTIFIER.fText); }
 term:ASTNode = INTEGER
     { result = INTEGER; }
 term:ASTNode = STRING
@@ -982,19 +995,19 @@ term:ASTNode = STRING
 term:ASTNode = FLOAT
     { result = FLOAT; }
 term:ASTNode = TRUE
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kBool_Kind, true); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::BIT, true); }
 term:ASTNode = FALSE
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kBool_Kind, false); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::BIT, false); }
 term:ASTNode = NULL
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kNull_Kind); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::NULL_LITERAL); }
 term:ASTNode = SELF
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kSelf_Kind); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::SELF); }
 term:ASTNode = SUPER
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kSuper_Kind); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::SUPER); }
 term:ASTNode = CLASS
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kDot_Kind, "$class",
-                { ASTNode(CURRENT_POSITION, ASTNode::kSelf_Kind) });
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::DOT, "$class",
+                { ASTNode(CURRENT_POSITION, ASTNode::Kind::SELF) });
     }
 term:ASTNode = LPAREN expressionList RPAREN
     {
@@ -1002,24 +1015,24 @@ term:ASTNode = LPAREN expressionList RPAREN
             result = expressionList.fChildren[0];
         }
         else {
-            result = ASTNode(CURRENT_POSITION, ASTNode::kTuple_Kind, expressionList.fChildren);
+            result = ASTNode(CURRENT_POSITION, ASTNode::Kind::TUPLE, expressionList.fChildren);
         }
     }
 term:ASTNode = LBRACKET expressionList RBRACKET
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kArray_Kind, { expressionList }); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::ARRAY, { expressionList }); }
 term:ASTNode = LBRACKET RBRACKET
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kArray_Kind); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::ARRAY); }
 term:ASTNode = lambda
     { result = lambda; }
 term:ASTNode = methodValue
     { result = methodValue; }
 REGEX_START = '/' ![/] ;
 term:ASTNode = REGEX_START regex '/' WS
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kRegex_Kind, regex); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::REGEX, regex); }
 term:ASTNode = PRE LPAREN expression RPAREN
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kPre_Kind, { expression }); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::PRE, { expression }); }
 term:ASTNode = ATRETURN
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kAtReturn_Kind); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::AT_RETURN); }
 
 regex:String = regexTerm
     { result = regexTerm; }
@@ -1082,23 +1095,23 @@ regexInt:String = regexInt DECIMAL_CHAR
 
 lambda:ASTNode = lambdaParameters YIELDS expression
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kLambda_Kind,
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::LAMBDA,
                 std::vector<ASTNode> { lambdaParameters, expression });
     }
 lambdaParameters:ASTNode = IDENTIFIER
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kLambdaParameters_Kind,
-                std::vector<ASTNode> { ASTNode(IDENTIFIER.fPosition, ASTNode::kIdentifier_Kind, 
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::LAMBDA_PARAMETERS,
+                std::vector<ASTNode> { ASTNode(IDENTIFIER.fPosition, ASTNode::Kind::IDENTIFIER, 
                     IDENTIFIER.fText) });
     }
 lambdaParameters:ASTNode = IDENTIFIER COLON type
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kLambdaParameters_Kind,
-                std::vector<ASTNode> { ASTNode(IDENTIFIER.fPosition, ASTNode::kIdentifier_Kind,
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::LAMBDA_PARAMETERS,
+                std::vector<ASTNode> { ASTNode(IDENTIFIER.fPosition, ASTNode::Kind::IDENTIFIER,
                     IDENTIFIER.fText, { type }) });
     }
 lambdaParameters:ASTNode = LPAREN RPAREN
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kLambdaParameters_Kind); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::LAMBDA_PARAMETERS); }
 lambdaParameters:ASTNode = LPAREN untypedLambdaParameters RPAREN
     { result = untypedLambdaParameters; }
 lambdaParameters:ASTNode = LPAREN typedLambdaParameters RPAREN
@@ -1106,52 +1119,52 @@ lambdaParameters:ASTNode = LPAREN typedLambdaParameters RPAREN
 untypedLambdaParameters:ASTNode = untypedLambdaParameters COMMA IDENTIFIER
     {
         result = untypedLambdaParameters;
-        result.fChildren.push_back(ASTNode(IDENTIFIER.fPosition, ASTNode::kIdentifier_Kind,
+        result.fChildren.push_back(ASTNode(IDENTIFIER.fPosition, ASTNode::Kind::IDENTIFIER,
                 IDENTIFIER.fText));
     }
 untypedLambdaParameters:ASTNode = IDENTIFIER
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kLambdaParameters_Kind,
-                std::vector<ASTNode> { ASTNode(CURRENT_POSITION, ASTNode::kIdentifier_Kind,
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::LAMBDA_PARAMETERS,
+                std::vector<ASTNode> { ASTNode(CURRENT_POSITION, ASTNode::Kind::IDENTIFIER,
                     IDENTIFIER.fText) });
     }
 typedLambdaParameters:ASTNode = typedLambdaParameters COMMA IDENTIFIER COLON type
     {
         result = typedLambdaParameters;
-        result.fChildren.push_back(ASTNode(IDENTIFIER.fPosition, ASTNode::kIdentifier_Kind,
+        result.fChildren.push_back(ASTNode(IDENTIFIER.fPosition, ASTNode::Kind::IDENTIFIER,
                 IDENTIFIER.fText, { type }));
     }
 typedLambdaParameters:ASTNode = IDENTIFIER COLON type
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kLambdaParameters_Kind,
-                std::vector<ASTNode> { ASTNode(CURRENT_POSITION, ASTNode::kIdentifier_Kind,
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::LAMBDA_PARAMETERS,
+                std::vector<ASTNode> { ASTNode(CURRENT_POSITION, ASTNode::Kind::IDENTIFIER,
                     IDENTIFIER.fText, { type }) });
     }
 
 @methodValue:ASTNode = METHOD parameters ^ optionalTypeDeclaration block
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kMethodValue_Kind,
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::METHOD_VALUE,
                 std::vector<ASTNode> { parameters, optionalTypeDeclaration, block });
     }
 @methodValue:ASTNode = FUNCTION parameters ^ optionalTypeDeclaration block
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kFunctionValue_Kind,
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::FUNCTION_VALUE,
                 std::vector<ASTNode> { parameters, optionalTypeDeclaration, block });
     }
 
 namedMethodValue:ASTNode = METHOD IDENTIFIER parameters ^ optionalTypeDeclaration block
     {
-        ASTNode id = ASTNode(IDENTIFIER.fPosition, ASTNode::kIdentifier_Kind, IDENTIFIER.fText);
-        ASTNode m = ASTNode(CURRENT_POSITION, ASTNode::kMethodValue_Kind,
+        ASTNode id = ASTNode(IDENTIFIER.fPosition, ASTNode::Kind::IDENTIFIER, IDENTIFIER.fText);
+        ASTNode m = ASTNode(CURRENT_POSITION, ASTNode::Kind::METHOD_VALUE,
                 std::vector<ASTNode> { parameters, optionalTypeDeclaration, block });
-        result = ASTNode(CURRENT_POSITION, ASTNode::kDef_Kind, std::vector<ASTNode> { id, m });
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::DEF, std::vector<ASTNode> { id, m });
     }
 namedMethodValue:ASTNode = FUNCTION IDENTIFIER parameters ^ optionalTypeDeclaration block
     {
-        ASTNode id = ASTNode(IDENTIFIER.fPosition, ASTNode::kIdentifier_Kind, IDENTIFIER.fText);
-        ASTNode m = ASTNode(CURRENT_POSITION, ASTNode::kFunctionValue_Kind,
+        ASTNode id = ASTNode(IDENTIFIER.fPosition, ASTNode::Kind::IDENTIFIER, IDENTIFIER.fText);
+        ASTNode m = ASTNode(CURRENT_POSITION, ASTNode::Kind::FUNCTION_VALUE,
                 std::vector<ASTNode> { parameters, optionalTypeDeclaration, block });
-        result = ASTNode(CURRENT_POSITION, ASTNode::kDef_Kind, std::vector<ASTNode> { id, m });
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::DEF, std::vector<ASTNode> { id, m });
     }
 
 IDENTIFIER:ASTNode = identifierText WS
@@ -1160,7 +1173,7 @@ IDENTIFIER:ASTNode = identifierText WS
             DIE(ASTNode());
         }
         else {
-            result = ASTNode(CURRENT_POSITION, ASTNode::kIdentifier_Kind, identifierText);
+            result = ASTNode(CURRENT_POSITION, ASTNode::Kind::IDENTIFIER, identifierText);
         }
     }
 identifierText:String = identifierStart identifierChars ![A-Za-z_$0-9]
@@ -1186,16 +1199,16 @@ INTEGER:ASTNode = INTEGER_TEXT WS
     { result = INTEGER_TEXT; }
 INTEGER_TEXT:ASTNode = DECIMAL_TEXT
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kInt_Kind,
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::INT,
                 ParserUtil::ToInt(DECIMAL_TEXT, 10));
     }
 INTEGER_TEXT:ASTNode = '0x' HEX_TEXT
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kInt_Kind, ParserUtil::ToInt(HEX_TEXT, 16));
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::INT, ParserUtil::ToInt(HEX_TEXT, 16));
     }
 INTEGER_TEXT:ASTNode = '0b' BINARY_TEXT
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kInt_Kind, ParserUtil::ToInt(BINARY_TEXT, 2));
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::INT, ParserUtil::ToInt(BINARY_TEXT, 2));
     }
 DECIMAL_TEXT:String = DECIMAL_CHARS ![A-Za-z_$0-9]
     { result = DECIMAL_CHARS; }
@@ -1224,27 +1237,27 @@ BINARY_CHAR:String = digit:[01]
 
 FLOAT:ASTNode = '.' DECIMAL_TEXT WS
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kFloat_Kind,
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::FLOAT,
                 ParserUtil::ToDouble("." + DECIMAL_TEXT));
     }
 FLOAT:ASTNode = '.' DECIMAL_CHARS EXPONENT WS
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kFloat_Kind,
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::FLOAT,
                 ParserUtil::ToDouble("." + DECIMAL_CHARS + EXPONENT));
     }
 FLOAT:ASTNode = d1:DECIMAL_CHARS '.' d2:DECIMAL_TEXT WS
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kFloat_Kind,
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::FLOAT,
                 ParserUtil::ToDouble(d1 + "." + d2));
     }
 FLOAT:ASTNode = DECIMAL_CHARS EXPONENT WS
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kFloat_Kind,
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::FLOAT,
                 ParserUtil::ToDouble(DECIMAL_CHARS + EXPONENT));
     }
 FLOAT:ASTNode = d1:DECIMAL_CHARS '.' d2:DECIMAL_CHARS EXPONENT WS
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kFloat_Kind,
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::FLOAT,
                 ParserUtil::ToDouble(d1 + "." + d2 + EXPONENT));
     }
 EXPONENT:String = [eE] DECIMAL_TEXT
@@ -1257,7 +1270,7 @@ STRING:ASTNode = STRING_SINGLE ^ WS
 STRING:ASTNode = STRING_DOUBLE ^ WS
     { result = STRING_DOUBLE; }
 STRING_SINGLE:ASTNode = ['] STRING_CHARS_SINGLE [']
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kString_Kind, STRING_CHARS_SINGLE); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::STRING, STRING_CHARS_SINGLE); }
 STRING_CHARS_SINGLE:String = STRING_CHARS_SINGLE STRING_CHAR_SINGLE
     { result = STRING_CHARS_SINGLE + STRING_CHAR_SINGLE; }
 STRING_CHARS_SINGLE:String =
@@ -1267,7 +1280,7 @@ STRING_CHAR_SINGLE:String = c:[^'\\\n\r]
 STRING_CHAR_SINGLE:String = ESCAPE
     { result = ESCAPE; }
 STRING_DOUBLE:ASTNode = ["] STRING_CHARS_DOUBLE ["]
-    { result = ASTNode(CURRENT_POSITION, ASTNode::kString_Kind, STRING_CHARS_DOUBLE); }
+    { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::STRING, STRING_CHARS_DOUBLE); }
 STRING_CHARS_DOUBLE:String = STRING_CHARS_DOUBLE STRING_CHAR_DOUBLE
     { result = STRING_CHARS_DOUBLE + STRING_CHAR_DOUBLE; }
 STRING_CHARS_DOUBLE:String =
@@ -1285,16 +1298,16 @@ ESCAPE:String = '\\{' formatExpression '}'
     }
 @formatExpression:ASTNode = expression optionalField optionalFormatString
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kFormatExpression_Kind, optionalFormatString,
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::FORMAT_EXPRESSION, optionalFormatString,
                 std::vector<ASTNode> { expression, optionalField });
     }
 optionalField:ASTNode = COMMA optionalFillChar alignment DECIMAL_CHARS
     {
-        result = ASTNode(CURRENT_POSITION, ASTNode::kFormatField_Kind,
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::FORMAT_FIELD,
                 std::vector<ASTNode> {
-                    ASTNode(CURRENT_POSITION, ASTNode::kInt_Kind, (int64_t) optionalFillChar),
-                    ASTNode(CURRENT_POSITION, ASTNode::kInt_Kind, (int64_t) alignment),
-                    ASTNode(CURRENT_POSITION, ASTNode::kInt_Kind,
+                    ASTNode(CURRENT_POSITION, ASTNode::Kind::INT, (int64_t) optionalFillChar),
+                    ASTNode(CURRENT_POSITION, ASTNode::Kind::INT, (int64_t) alignment),
+                    ASTNode(CURRENT_POSITION, ASTNode::Kind::INT,
                             ParserUtil::ToInt(DECIMAL_CHARS, 10))
                 });
     }

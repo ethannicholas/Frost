@@ -4,18 +4,18 @@ namespace ParserGenerator {
 
 String Action::code() const {
     switch (fKind) {
-        case kNull_Kind:
+        case Kind::NONE:
             return "Action()";
-        case kShift_Kind:
-            return "Action(Action::kShift_Kind, " +
+        case Kind::SHIFT:
+            return "Action(Action::Kind::SHIFT, " +
                     std::to_string(fTarget) + ")";
-        case kReduce_Kind:
-            return "Action(Action::kReduce_Kind, " +
+        case Kind::REDUCE:
+            return "Action(Action::Kind::REDUCE, " +
                     std::to_string(fTarget) + ")";
-        case kCut_Kind:
-            return "Action(Action::kCut_Kind, " +
+        case Kind::CUT:
+            return "Action(Action::Kind::CUT, " +
                     std::to_string(fTarget) + ")";
-        case kMultiple_Kind: {
+        case Kind::MULTIPLE: {
             String result = "Action({ ";
             const char* separator = "";
             for (const auto& a : fSubactions) {
@@ -25,8 +25,8 @@ String Action::code() const {
             }
             return result + " })";
         }
-        case kAccept_Kind:
-            return "Action(Action::kAccept_Kind, 0)";
+        case Kind::ACCEPT:
+            return "Action(Action::Kind::ACCEPT, 0)";
     }
 }
 

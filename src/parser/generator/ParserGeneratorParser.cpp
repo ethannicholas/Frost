@@ -65,7 +65,7 @@ Token Parser::nextToken() {
 }
 
 void Parser::pushback(Token t) {
-    ASSERT(fPushback.fKind == Token::INVALID_TOKEN, "already have a token pushed back");
+    ASSERT(fPushback.fKind == Token::INVALID_TOKEN);
     fPushback = t;
 }
 
@@ -103,11 +103,11 @@ bool Parser::checkNext(Token::Kind kind, Token* result) {
 }
 
 static char get_charset_char(String s, int* index) {
-    ASSERT(*index < s.length(), "index out of bounds");
+    ASSERT(*index < s.length());
     char result;
     if (s[*index] == '\\') {
         ++(*index);
-        ASSERT(*index < s.length(), "index out of bounds");
+        ASSERT(*index < s.length());
         switch (s[*index]) {
             case 'n':  result = '\n'; break;
             case 'r':  result = '\r'; break;
@@ -126,7 +126,7 @@ static char get_charset_char(String s, int* index) {
 }
 
 static std::unordered_set<char> charset(String s) {
-    ASSERT(s[0] == '[' && s[s.length() - 1] == ']', "expected charset to be wrapped by brackets");
+    ASSERT(s[0] == '[' && s[s.length() - 1] == ']');
     s = s.substr(1, s.length() - 2);
     std::unordered_set<char> result;
     bool inverse = s[0] == '^';
@@ -146,7 +146,7 @@ static std::unordered_set<char> charset(String s) {
         else {
             end = start;
         }
-        ASSERT(start <= end, "invalid charset");
+        ASSERT(start <= end);
         for (unsigned char c = start; c <= end; ++c) {
             if (inverse) {
                 result.erase(c);
@@ -165,7 +165,7 @@ static String process_escapes(const String&& s) {
         char c = s[i];
         if (c == '\\') {
             ++i;
-            ASSERT(i < s.length(), "invalid escape sequence");
+            ASSERT(i < s.length());
             switch (s[i]) {
                 case 'n':  result += '\n'; break;
                 case 'r':  result += '\r'; break;
@@ -324,7 +324,7 @@ bool Parser::production(Production* result) {
                 if (!term) {
                     return false;
                 }
-                if (term->fKind == Node::kLiteral_Kind) {
+                if (term->fKind == Node::Kind::LITERAL) {
                     LiteralNode& literal = (LiteralNode&) *term;
                     for (char c : literal.fLiteral) {
                         nodes.emplace_back(new CharNode(c));

@@ -7,4 +7,4 @@
 
 typedef std::string String;
 
-#define ASSERT(x, msg) assert(x)
+#define ASSERT(x) assert(x)
