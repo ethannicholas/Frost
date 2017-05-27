@@ -1,13 +1,33 @@
 #include "LLVMCodeGenerator.h"
 #include "MethodStub.h"
 
+LLVMCodeGenerator::LLVMCodeGenerator(std::ostream* out)
+: fOut(*out) {
+    fOut << "target datalayout = \"e-p:64:64:64-i1:8:8-i8:8:8-i16:16:16-i32:32:32-i64:64:64-"
+            "f32:32:32-f64:64:64-v64:64:64-v128:128:128-a0:0:64-s0:64:64-f80:128:128-"
+            "n8:16:32:64-S128\"\n";
+    fOut << "target triple = \"x86_64-apple-macosx10.8.0\"\n";
+
+    // temporary
+    fOut << "declare i32 @printf(i8*, ...)\n";
+    fOut << "@fmt = private constant [4 x i8] [i8 37, i8 100, i8 10, i8 0]\n";
+    fOut << "define fastcc void @print$builtin_int64(i64 %num) {\n";
+    fOut << "    call i32 (i8*, ...)* @printf(i8* bitcast ([4 x i8]* @fmt to i8*), i64 %num)\n";
+    fOut << "    ret void\n";
+    fOut << "}\n";
+}
+
 String LLVMCodeGenerator::llvmType(const Type& type) {
     switch (type.fCategory) {
         case Type::Category::VOID:        return "void";
-        case Type::Category::BUILTIN_INT: return "i" + std::to_string(type.fSize);
-        case Type::Category::METHOD: abort();
-        case Type::Category::TYPE: abort();
-        case Type::Category::INT_LITERAL: abort();
+        case Type::Category::BUILTIN_INT: // fall through
+        case Type::Category::BUILTIN_UINT: return "i" + std::to_string(type.fSize);
+        case Type::Category::BUILTIN_FLOAT: return "f" + std::to_string(type.fSize);
+        case Type::Category::METHOD:      // fall through
+        case Type::Category::CLASS:       // fall through
+        case Type::Category::PACKAGE:     // fall through
+        case Type::Category::INT_LITERAL: // fall through
+        case Type::Category::UNRESOLVED: abort();
     }
 }
 
@@ -17,6 +37,7 @@ static bool ends_with_branch(const IRNode& block) {
         return false;
     }
     switch (block.fChildren[block.fChildren.size() - 1].fKind) {
+        case IRNode::Kind::RETURN: return true;
         default: return false;
     }
 }
@@ -35,36 +56,94 @@ void LLVMCodeGenerator::createBlock(const String& label, std::ostream& out) {
 }
 
 String LLVMCodeGenerator::getVariableReference(const Variable& var, std::ostream& out) {
+    if (var.fStorage == Variable::Storage::PARAMETER) {
+        return this->varName(var);
+    }
     String result = nextVar();
     out << "    " << result << " = load " << this->llvmType(var.fType) << "* " <<
             this->varName(var) << "\n";
     return result;
 }
 
-String LLVMCodeGenerator::getBinaryReference(const String leftRef, Operator op,
+
+LLVMCodeGenerator::OpClass op_class(Type t) {
+    switch (t.fCategory) {
+        case Type::Category::BUILTIN_INT:   return LLVMCodeGenerator::OpClass::SIGNED;
+        case Type::Category::BUILTIN_UINT:  return LLVMCodeGenerator::OpClass::UNSIGNED;
+        case Type::Category::BUILTIN_FLOAT: return LLVMCodeGenerator::OpClass::FLOAT;
+        default: abort();
+    }
+}
+
+String LLVMCodeGenerator::getBinaryReference(OpClass cl, const String leftRef, Operator op,
         const String rightRef, std::ostream& out) {
     String llvmOp;
-    switch (op) {
-        case Operator::ADD:        llvmOp = "add";      break;
-        case Operator::SUB:        llvmOp = "sub";      break;
-        case Operator::MUL:        llvmOp = "mul";      break;
-        case Operator::DIV:        llvmOp = "div";      break;
-        case Operator::REM:        llvmOp = "mod";      break;
-        case Operator::SHIFTLEFT:  llvmOp = "shl";      break;
-        case Operator::SHIFTRIGHT: llvmOp = "shr";      break;
-        case Operator::BITWISEAND: llvmOp = "and";      break;
-        case Operator::BITWISEOR:  llvmOp = "or";       break;
-        case Operator::XOR:        // fall through
-        case Operator::BITWISEXOR: llvmOp = "xor";      break;
-        case Operator::EQ:         llvmOp = "icmp eq";  break;
-        case Operator::NEQ:        llvmOp = "icmp ne";  break;
-        case Operator::GT:         llvmOp = "icmp sgt"; break;
-        case Operator::LT:         llvmOp = "icmp slt"; break;
-        case Operator::GTEQ:       llvmOp = "icmp sge"; break;
-        case Operator::LTEQ:       llvmOp = "icmp sle"; break;
-        default:
-            printf("unsupported operator: %s\n", operator_text(op));
-            abort();
+    switch (cl) {
+        case OpClass::SIGNED:
+            switch (op) {
+                case Operator::ADD:        llvmOp = "add";      break;
+                case Operator::SUB:        llvmOp = "sub";      break;
+                case Operator::MUL:        llvmOp = "mul";      break;
+                case Operator::INTDIV:     llvmOp = "sdiv";     break;
+                case Operator::REM:        llvmOp = "mod";      break;
+                case Operator::SHIFTLEFT:  llvmOp = "shl";      break;
+                case Operator::SHIFTRIGHT: llvmOp = "ashr";     break;
+                case Operator::BITWISEAND: llvmOp = "and";      break;
+                case Operator::BITWISEOR:  llvmOp = "or";       break;
+                case Operator::XOR:        // fall through
+                case Operator::BITWISEXOR: llvmOp = "xor";      break;
+                case Operator::EQ:         llvmOp = "icmp eq";  break;
+                case Operator::NEQ:        llvmOp = "icmp ne";  break;
+                case Operator::GT:         llvmOp = "icmp sgt"; break;
+                case Operator::LT:         llvmOp = "icmp slt"; break;
+                case Operator::GTEQ:       llvmOp = "icmp sge"; break;
+                case Operator::LTEQ:       llvmOp = "icmp sle"; break;
+                default:
+                    printf("unsupported signed operator: %s\n", operator_text(op));
+                    abort();
+            }
+            break;
+        case OpClass::UNSIGNED:
+            switch (op) {
+                case Operator::ADD:        llvmOp = "add";      break;
+                case Operator::SUB:        llvmOp = "sub";      break;
+                case Operator::MUL:        llvmOp = "mul";      break;
+                case Operator::INTDIV:     llvmOp = "udiv";     break;
+                case Operator::REM:        llvmOp = "mod";      break;
+                case Operator::SHIFTLEFT:  llvmOp = "shl";      break;
+                case Operator::SHIFTRIGHT: llvmOp = "lshr";     break;
+                case Operator::BITWISEAND: llvmOp = "and";      break;
+                case Operator::BITWISEOR:  llvmOp = "or";       break;
+                case Operator::XOR:        // fall through
+                case Operator::BITWISEXOR: llvmOp = "xor";      break;
+                case Operator::EQ:         llvmOp = "icmp eq";  break;
+                case Operator::NEQ:        llvmOp = "icmp ne";  break;
+                case Operator::GT:         llvmOp = "icmp ugt"; break;
+                case Operator::LT:         llvmOp = "icmp ult"; break;
+                case Operator::GTEQ:       llvmOp = "icmp uge"; break;
+                case Operator::LTEQ:       llvmOp = "icmp ule"; break;
+                default:
+                    printf("unsupported unsigned operator: %s\n", operator_text(op));
+                    abort();
+            }
+            break;
+        case OpClass::FLOAT:
+            switch (op) {
+                case Operator::ADD:        llvmOp = "fadd";     break;
+                case Operator::SUB:        llvmOp = "fsub";     break;
+                case Operator::MUL:        llvmOp = "fmul";     break;
+                case Operator::INTDIV:     llvmOp = "fdiv";     break;
+                case Operator::EQ:         llvmOp = "fcmp oeq"; break;
+                case Operator::NEQ:        llvmOp = "fcmp one"; break;
+                case Operator::GT:         llvmOp = "fcmp ogt"; break;
+                case Operator::LT:         llvmOp = "fcmp olt"; break;
+                case Operator::GTEQ:       llvmOp = "fcmp oge"; break;
+                case Operator::LTEQ:       llvmOp = "fcmp ole"; break;
+                default:
+                    printf("unsupported float operator: %s\n", operator_text(op));
+                    abort();
+            }
+            break;
     }
     String result = this->nextVar();
     out << "    " << result << " = " << llvmOp << " " << leftRef << ", " << rightRef << "\n";
@@ -114,22 +193,66 @@ String LLVMCodeGenerator::getBinaryReference(const IRNode& left, Operator op, co
         default:
             String leftRef = this->getTypedReference(left, out);
             String rightRef = this->getReference(right, out);
-            return this->getBinaryReference(leftRef, op, rightRef, out);
+            return this->getBinaryReference(op_class(left.fType), leftRef, op, rightRef, out);
     }
+}
+
+String LLVMCodeGenerator::getPrefixReference(const IRNode& expr, std::ostream& out) {
+    ASSERT(expr.fKind == IRNode::Kind::PREFIX);
+    ASSERT(expr.fChildren.size() == 1);
+    String base = this->getReference(expr.fChildren[0], out);
+    String result = this->nextVar();
+    switch ((Operator) expr.fValue.fInt) {
+        case Operator::SUB: {
+            out << "    " << result << " = sub " << this->llvmType(expr.fType) << " 0, " << base <<
+                    "\n";
+            return result;
+        }
+        case Operator::NOT: // fall through
+        case Operator::BITWISENOT: {
+            out << "    " << result << " = xor " << this->llvmType(expr.fType) << " -1, " << base <<
+                    "\n";
+            return result;
+        }
+        default:
+            printf("unsupported prefix operator: %s\n", operator_text((Operator) expr.fValue.fInt));
+            abort();
+    }
+}
+
+String LLVMCodeGenerator::getCallReference(const IRNode& call, std::ostream& out) {
+    std::vector<String> args;
+    for (int i = 1; i < call.fChildren.size(); ++i) {
+        args.push_back(this->getTypedReference(call.fChildren[i], out));
+    }
+    String result = this->nextVar();
+    out << "    " << result << " = call " << this->llvmType(call.fType) << " " <<
+            this->getReference(call.fChildren[0], out) << "(";
+    const char* separator = "";
+    for (const auto& arg : args) {
+        out << separator << arg; 
+        separator = ", ";
+    }
+    out << ")\n";
+    return result;
 }
 
 String LLVMCodeGenerator::getReference(const IRNode& expr, std::ostream& out) {
     switch (expr.fKind) {
         case IRNode::Kind::BIT:
             return std::to_string(expr.fValue.fBool);
-        case IRNode::Kind::INT:
-            return std::to_string(expr.fValue.fInt);
         case IRNode::Kind::BINARY:
             ASSERT(expr.fChildren.size() == 2);
             return this->getBinaryReference(expr.fChildren[0], (Operator) expr.fValue.fInt,
                     expr.fChildren[1], out);
+        case IRNode::Kind::CALL:
+            return this->getCallReference(expr, out);
+        case IRNode::Kind::INT:
+            return std::to_string(expr.fValue.fInt);
         case IRNode::Kind::METHOD_REFERENCE:
-            return this->methodName(((MethodStub*) expr.fValue.fPtr)->fName);
+            return this->methodName(*(MethodStub*) expr.fValue.fPtr);
+        case IRNode::Kind::PREFIX:
+            return this->getPrefixReference(expr, out);
         case IRNode::Kind::VARIABLE_REFERENCE:
             return this->getVariableReference(*((Variable*) expr.fValue.fPtr), out);
         default:
@@ -209,7 +332,8 @@ void LLVMCodeGenerator::writeAssignment(const IRNode& a, std::ostream& out) {
         out << "    " << left << " = load " << lvalue << "\n";
         String right = this->getReference(a.fChildren[1], out);
         value = type + " " +
-                this->getBinaryReference(type + " " + left, binOp, right, out);
+                this->getBinaryReference(op_class(a.fChildren[0].fType), type + " " + left, binOp,
+                        right, out);
     }
     out << "    store " << value << ", " << lvalue << "\n";
 }
@@ -290,12 +414,25 @@ void LLVMCodeGenerator::writeBlock(const IRNode& block, std::ostream& out) {
     }
 }
 
+void LLVMCodeGenerator::writeReturn(const IRNode& ret, std::ostream& out) {
+    ASSERT(ret.fKind == IRNode::Kind::RETURN);
+    if (ret.fChildren.size() == 1) {
+        String ref = this->getTypedReference(ret.fChildren[0], out);
+        out << "    ret " << ref << "\n";
+    }
+    else {
+        ASSERT(ret.fChildren.size() == 0);
+        out << "ret void\n`";
+    }
+}
+
 void LLVMCodeGenerator::writeStatement(const IRNode& stmt, std::ostream& out) {
     switch (stmt.fKind) {
         case IRNode::Kind::BINARY:   this->writeAssignment(stmt, out); break;
         case IRNode::Kind::BLOCK:    this->writeBlock     (stmt, out); break;
         case IRNode::Kind::CALL:     this->writeCall      (stmt, out); break;
         case IRNode::Kind::IF:       this->writeIf        (stmt, out); break;
+        case IRNode::Kind::RETURN:   this->writeReturn    (stmt, out); break;
         case IRNode::Kind::VAR:      // fall through
         case IRNode::Kind::DEF:      // fall through
         case IRNode::Kind::PROPERTY: // fall through
@@ -306,60 +443,46 @@ void LLVMCodeGenerator::writeStatement(const IRNode& stmt, std::ostream& out) {
     }
 }
 
-String LLVMCodeGenerator::methodName(const String& name) {
-    return "@" + name;
+static String escape_type_name(String name) {
+    return name;
+}
+
+String LLVMCodeGenerator::methodName(const MethodStub& method) {
+    String result = "@" + method.fName;
+    for (const auto& p : method.fParameters) {
+        result += "$" + escape_type_name(p.fType.fName);
+    }
+    if (method.fReturnType != Type::Void()) {
+        result += "$R$" + escape_type_name(method.fReturnType.fName);
+    }
+    return result;
 }
 
 String LLVMCodeGenerator::varName(const Variable& var) {
     return "%" + var.fName;
 }
 
-void LLVMCodeGenerator::writeMethod(const IRNode& method, std::ostream& out) {
+void LLVMCodeGenerator::writeMethod(const ClassStub& cl, const MethodStub& method,
+        const IRNode& body) {
     fTmpVars = 1;
-    ASSERT(method.fKind == IRNode::Kind::METHOD);
-    ASSERT(method.fChildren[0].fKind == IRNode::Kind::PARAMETERS);
-    ASSERT(method.fChildren[1].fKind == IRNode::Kind::TYPE_REFERENCE);
-    out << "define fastcc " << this->llvmType(*(Type*) method.fChildren[1].fValue.fPtr) <<
-            " " << this->methodName(method.fText) << "(";
-    out << ") {\n";
+    fOut << "\ndefine fastcc " << this->llvmType(method.fReturnType) << " " <<
+            this->methodName(method) << "(";
+    const char* separator = "";
+    for (const auto& p : method.fParameters) {
+        fOut << separator << this->llvmType(p.fType) << " %" << p.fName;
+        separator = ", ";
+    }
+    fOut << ") {\n";
     fMethodHeader = std::stringstream();
-    std::stringstream body;
-    ASSERT(method.fChildren[2].fKind == IRNode::Kind::BLOCK);
-    const IRNode& block = method.fChildren[2];
-    ASSERT(block.fKind == IRNode::Kind::BLOCK);
-    for (const auto& s : block.fChildren) {
-        this->writeStatement(s, body);
+    std::stringstream bodyCode;
+    ASSERT(body.fKind == IRNode::Kind::BLOCK);
+    for (const auto& s : body.fChildren) {
+        this->writeStatement(s, bodyCode);
     }
-    out << fMethodHeader.str();
-    out << body.str();
-    if (!ends_with_branch(block)) {
-        out << "    ret void\n";
+    fOut << fMethodHeader.str();
+    fOut << bodyCode.str();
+    if (!ends_with_branch(body)) {
+        fOut << "    ret void\n";
     }
-    out << "}\n";
-}
-
-void LLVMCodeGenerator::write(const IRFile& file, std::ostream&& out) {
-    ASSERT(file.fRoot.fKind == IRNode::Kind::FILE);
-    out << "target datalayout = \"e-p:64:64:64-i1:8:8-i8:8:8-i16:16:16-i32:32:32-i64:64:64-"
-            "f32:32:32-f64:64:64-v64:64:64-v128:128:128-a0:0:64-s0:64:64-f80:128:128-"
-            "n8:16:32:64-S128\"\n";
-    out << "target triple = \"x86_64-apple-macosx10.8.0\"\n";
-
-    // temporary
-    out << "declare i32 @printf(i8*, ...)\n";
-    out << "@fmt = private constant [4 x i8] [i8 37, i8 100, i8 10, i8 0]\n";
-    out << "define fastcc void @print(i64 %num) {\n";
-    out << "    call i32 (i8*, ...)* @printf(i8* bitcast ([4 x i8]* @fmt to i8*), i64 %num)\n";
-    out << "    ret void\n";
-    out << "}\n";
-
-    for (const auto& e : file.fRoot.fChildren) {
-        switch (e.fKind) {
-            case IRNode::Kind::METHOD:
-                this->writeMethod(e, out);
-                break;
-            default:
-                abort();
-        }
-    }
+    fOut << "}\n";
 }

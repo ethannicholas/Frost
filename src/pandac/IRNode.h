@@ -9,10 +9,12 @@
 
 struct IRNode {
     enum class Kind {
+        ARGUMENTS,
         BINARY,
         BIT,
         BLOCK,
         CALL,
+        CLASS_REFERENCE,
         CONSTANT,
         DECLARATION,
         DEF,
@@ -23,12 +25,17 @@ struct IRNode {
         INT,
         METHOD,
         METHOD_REFERENCE,
+        PACKAGE_REFERENCE,
         PARAMETER,
         PARAMETERS,
+        PREFIX,
         PROPERTY,
+        RETURN,
         TUPLE_TARGET,
         TYPE,
         TYPE_REFERENCE,
+        UNRESOLVED_METHOD_REFERENCE,
+        UNRESOLVED_CALL,
         VARIABLE_REFERENCE,
         VAR,
         VOID
@@ -50,10 +57,19 @@ struct IRNode {
     , fKind(kind)
     , fText(std::move(text)) {}
 
-    IRNode(Position position, Kind kind, Type type, int64_t value)
+
+    IRNode(Position position, Kind kind, Type type, uint64_t value)
     : fPosition(position)
     , fKind(kind)
     , fType(type) {
+        fValue.fInt = value;
+    }
+
+    IRNode(Position position, Kind kind, Type type, uint64_t value, std::vector<IRNode> children)
+    : fPosition(position)
+    , fKind(kind)
+    , fType(type)
+    , fChildren(std::move(children)) {
         fValue.fInt = value;
     }
 
@@ -116,29 +132,39 @@ struct IRNode {
         bool o = false;
         bool p = false;
         switch (fKind) {
-            case Kind::BINARY:             result += "binary"; o = 1;               break;
-            case Kind::BIT:                result += "bit"; b = 1;                  break;
-            case Kind::BLOCK:              result += "block";                       break;
-            case Kind::CALL:               result += "Call";                        break;
-            case Kind::CONSTANT:           result += "Constant";                    break;
-            case Kind::DECLARATION:        result += "Declaration";                 break;
-            case Kind::DEF:                result += "Def";                         break;
-            case Kind::ERROR:              result += "<error>";                     break;
-            case Kind::EXPRESSION:         result += "Expression";                  break;
-            case Kind::FILE:               result += "File";                        break;
-            case Kind::IF:                 result += "If";                          break;
-            case Kind::INT:                result += "Int"; i = 1;                  break;
-            case Kind::METHOD:             result += "Method";                      break;
-            case Kind::METHOD_REFERENCE:   result += "MethodReference";             break;
-            case Kind::PARAMETER:          result += "Parameter";                   break;
-            case Kind::PARAMETERS:         result += "Parameters";                  break;
-            case Kind::PROPERTY:           result += "Property";                    break;
-            case Kind::TUPLE_TARGET:       result += "TupleTarget";                 break;
-            case Kind::TYPE:               result += "Type";                        break;
-            case Kind::TYPE_REFERENCE:     result += "TypeReference";               break;
-            case Kind::VAR:                result += "Var";                         break;
-            case Kind::VOID:               result += "Void";                        break;
-            case Kind::VARIABLE_REFERENCE: result += "VariableReference"; p = true; break;
+            case Kind::ARGUMENTS:                   result += "Arguments";                   break;
+            case Kind::BINARY:                      result += "Binary"; o = 1;               break;
+            case Kind::BIT:                         result += "Bit"; b = 1;                  break;
+            case Kind::BLOCK:                       result += "Block";                       break;
+            case Kind::CALL:                        result += "Call";                        break;
+            case Kind::CLASS_REFERENCE:             result += "ClassReference";              break;
+            case Kind::CONSTANT:                    result += "Constant";                    break;
+            case Kind::DECLARATION:                 result += "Declaration";                 break;
+            case Kind::DEF:                         result += "Def";                         break;
+            case Kind::ERROR:                       result += "<error>";                     break;
+            case Kind::EXPRESSION:                  result += "Expression";                  break;
+            case Kind::FILE:                        result += "File";                        break;
+            case Kind::IF:                          result += "If";                          break;
+            case Kind::INT:                         result += "Int"; i = 1;                  break;
+            case Kind::METHOD:                      result += "Method";                      break;
+            case Kind::METHOD_REFERENCE:            result += "MethodReference"; p = 1;      break;
+            case Kind::PACKAGE_REFERENCE:           result += "PackageReference"; p = 1;     break;
+            case Kind::PARAMETER:                   result += "Parameter";                   break;
+            case Kind::PARAMETERS:                  result += "Parameters";                  break;
+            case Kind::PREFIX:                      result += "Prefix"; o = 1;               break;
+            case Kind::PROPERTY:                    result += "Property";                    break;
+            case Kind::RETURN:                      result += "Return";                      break;
+            case Kind::TUPLE_TARGET:                result += "TupleTarget";                 break;
+            case Kind::TYPE:                        result += "Type";                        break;
+            case Kind::TYPE_REFERENCE:              result += "TypeReference"; p = 1;        break;
+            case Kind::UNRESOLVED_METHOD_REFERENCE: result += "UnresolvedMethodReference";   break;
+            case Kind::UNRESOLVED_CALL:             result += "UnresolvedCall";              break;
+            case Kind::VAR:                         result += "Var";                         break;
+            case Kind::VOID:                        result += "Void";                        break;
+            case Kind::VARIABLE_REFERENCE:          result += "VariableReference"; p = true; break;
+        }
+        if (fType.fCategory != Type::Category::VOID) {
+            result += ":" + fType.fName;
         }
         result += "(";
         const char* separator = "";
@@ -195,7 +221,7 @@ struct IRNode {
     
     // used only by certain kinds of nodes
     union {
-        int64_t fInt;
+        uint64_t fInt;
         double fFloat;
         bool fBool;
         void* fPtr;

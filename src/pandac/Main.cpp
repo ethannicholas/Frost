@@ -1,4 +1,4 @@
-#include "IRGenerator.h"
+#include "Compiler.h"
 #include "LLVMCodeGenerator.h"
 #include "PandaParser.h"
 
@@ -16,12 +16,13 @@ int main(int argc, char** argv) {
     ParseError error;
     String path = String(argv[1]);
     String name = path.substr(path.find_last_of("/\\") + 1);
-    ASTNode output;
-    if (PandaParser().file(name, text, &output, &error, &name)) {
-        IRFile converted;
-        if (IRGenerator().convertFile(output, &converted)) {
-            LLVMCodeGenerator().write(converted, std::ofstream(argv[2]));
-        }
+    ASTNode parsed;
+    if (PandaParser().file(name, text, &parsed, &error, &name)) {
+        std::ofstream out(argv[2]);
+        LLVMCodeGenerator codeGenerator(&out);
+        Compiler compiler(&codeGenerator);
+        compiler.scan(&parsed);
+        compiler.compile();
     }
     else {
         printf("%s:%d:%d: %s\n", name.c_str(), error.fLine, error.fColumn, error.fMessage.c_str());

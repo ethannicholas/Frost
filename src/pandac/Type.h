@@ -11,22 +11,35 @@ struct Type : public Symbol {
         // or builtin_int which can hold it.
         INT_LITERAL,
         BUILTIN_INT,
+        BUILTIN_UINT,
+        BUILTIN_FLOAT,
         METHOD,
-        TYPE
+        PACKAGE,
+        CLASS,
+        UNRESOLVED
     };
 
     Type()
-    : INHERITED(Symbol::Kind::TYPE, "void")
+    : INHERITED(Position(), Symbol::Kind::TYPE, "void")
     , fCategory(Category::VOID) {}
 
-    Type(Category category, String name)
-    : INHERITED(Kind::TYPE, std::move(name))
+    Type(Position position, Category category, String name)
+    : INHERITED(Position(), Kind::TYPE, std::move(name))
     , fCategory(category) {}
 
-    Type(Category category, String name, int size)
-    : INHERITED(Kind::TYPE, std::move(name))
+    Type(Position position, Category category, String name, int size)
+    : INHERITED(Position(), Kind::TYPE, std::move(name))
     , fCategory(category)
     , fSize(size) {}
+
+    bool isBuiltinInt() {
+        return fCategory == Category::BUILTIN_INT  || fCategory == Category::BUILTIN_UINT;
+    }
+
+    bool isBuiltinNumber() {
+        return isBuiltinInt() || fCategory == Category::BUILTIN_FLOAT ||
+                fCategory == Category::INT_LITERAL;
+    }
 
     bool operator==(const Type& other) const {
         return fCategory == other.fCategory && fName == other.fName && fSize == other.fSize;
@@ -37,12 +50,12 @@ struct Type : public Symbol {
     }
 
     static Type& IntLiteral() {
-        static Type result = Type(Category::INT_LITERAL, "$intLiteral", 1);
+        static Type result = Type(Position(), Category::INT_LITERAL, "$intLiteral", 1);
         return result;
     }
 
     static Type& BuiltinBit() {
-        static Type result = Type(Category::BUILTIN_INT, "builtin_bit", 1);
+        static Type result = Type(Position(), Category::BUILTIN_UINT, "builtin_bit", 1);
         return result;
     }
 
@@ -51,7 +64,7 @@ struct Type : public Symbol {
     }
 
     static Type& Void() {
-        static Type result = Type(Category::VOID, "$void");
+        static Type result = Type(Position(), Category::VOID, "$void");
         return result;
     }
 

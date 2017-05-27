@@ -107,7 +107,7 @@ struct ASTNode {
     , fKind(kind)
     , fText(std::move(text)) {}
 
-    ASTNode(Position position, Kind kind, int64_t value)
+    ASTNode(Position position, Kind kind, uint64_t value)
     : fPosition(position)
     , fKind(kind) {
         fValue.fInt = value;
@@ -294,7 +294,7 @@ struct ASTNode {
     
     // used only by certain kinds of nodes
     union {
-        int64_t fInt;
+        uint64_t fInt;
         double fFloat;
         bool fBool;
     } fValue;

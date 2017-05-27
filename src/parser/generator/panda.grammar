@@ -20,8 +20,8 @@
             return keywords.find(s) != keywords.end();
         }
 
-        static int64_t ToInt(String s, int radix) {
-            return std::stol(s, 0, radix);
+        static uint64_t ToInt(String s, int radix) {
+            return std::stoul(s, 0, radix);
         }
 
         static double ToDouble(String s) {
@@ -180,15 +180,15 @@ optionalInterfaces:ASTNode =
     { result = ASTNode(CURRENT_POSITION, ASTNode::Kind::TYPES); }
 classMembers:ASTNode = classMemberList
     { result = classMemberList; }
-classMembers:ASTNode =
-    { }
 classMemberList:ASTNode = classMemberList classMember
     {
         result = classMemberList;
         result.fChildren.push_back(classMember);
     }
 classMemberList:ASTNode =
-    { }
+    {
+        result = ASTNode(CURRENT_POSITION, ASTNode::Kind::CLASS_MEMBERS);
+    }
 classMember:ASTNode = invariant
     { result = invariant; }
 classMember:ASTNode = methodDeclaration
@@ -1213,16 +1213,16 @@ identifierChar:String = c:[a-zA-Z_$0-9]
 
 INTEGER:ASTNode = INTEGER_TEXT WS
     { result = INTEGER_TEXT; }
-INTEGER_TEXT:ASTNode = DECIMAL_TEXT
+INTEGER_TEXT:ASTNode = DECIMAL_TEXT ![A-Za-z0-9_]
     {
         result = ASTNode(CURRENT_POSITION, ASTNode::Kind::INT,
                 ParserUtil::ToInt(DECIMAL_TEXT, 10));
     }
-INTEGER_TEXT:ASTNode = '0x' HEX_TEXT
+INTEGER_TEXT:ASTNode = '0x' HEX_TEXT ![A-Za-z0-9_]
     {
         result = ASTNode(CURRENT_POSITION, ASTNode::Kind::INT, ParserUtil::ToInt(HEX_TEXT, 16));
     }
-INTEGER_TEXT:ASTNode = '0b' BINARY_TEXT
+INTEGER_TEXT:ASTNode = '0b' BINARY_TEXT ![A-Za-z0-9_]
     {
         result = ASTNode(CURRENT_POSITION, ASTNode::Kind::INT, ParserUtil::ToInt(BINARY_TEXT, 2));
     }
@@ -1321,8 +1321,8 @@ optionalField:ASTNode = COMMA optionalFillChar alignment DECIMAL_CHARS
     {
         result = ASTNode(CURRENT_POSITION, ASTNode::Kind::FORMAT_FIELD,
                 std::vector<ASTNode> {
-                    ASTNode(CURRENT_POSITION, ASTNode::Kind::INT, (int64_t) optionalFillChar),
-                    ASTNode(CURRENT_POSITION, ASTNode::Kind::INT, (int64_t) alignment),
+                    ASTNode(CURRENT_POSITION, ASTNode::Kind::INT, (uint64_t) optionalFillChar),
+                    ASTNode(CURRENT_POSITION, ASTNode::Kind::INT, (uint64_t) alignment),
                     ASTNode(CURRENT_POSITION, ASTNode::Kind::INT,
                             ParserUtil::ToInt(DECIMAL_CHARS, 10))
                 });

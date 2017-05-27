@@ -1,18 +1,24 @@
 #pragma once
 
+#include "Position.h"
 #include "Util.h"
 
 struct Symbol {
     enum class Kind {
+        CLASS,
         METHOD,
-        VARIABLE,
-        TYPE
+        METHODS,
+        PACKAGE,
+        TYPE,
+        VARIABLE
     };
 
-    Symbol(Kind kind, String name)
-    : fKind(kind)
+    Symbol(Position position, Kind kind, String name)
+    : fPosition(position)
+    , fKind(kind)
     , fName(std::move(name)) {}
 
+    Position fPosition;
     Kind fKind;
     String fName;
 };
