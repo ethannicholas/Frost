@@ -1,0 +1,8 @@
+@foo
+@class
+@private
+@protected
+@class
+@override
+class Test {
+}

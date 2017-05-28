@@ -23,6 +23,8 @@ struct IRNode {
         BLOCK,
         // a method call
         CALL,
+        // a typecast
+        CAST,
         // a literal reference to a class
         CLASS_REFERENCE,
         // a constant declaration statement
@@ -181,6 +183,7 @@ struct IRNode {
             case Kind::BIT:                         result += "Bit"; b = 1;                  break;
             case Kind::BLOCK:                       result += "Block";                       break;
             case Kind::CALL:                        result += "Call";                        break;
+            case Kind::CAST:                        result += "Cast";                        break;
             case Kind::CLASS_REFERENCE:             result += "ClassReference";              break;
             case Kind::CONSTANT:                    result += "Constant";                    break;
             case Kind::CONSTRUCT:                   result += "Construct";                   break;

@@ -133,6 +133,13 @@ bool Compiler::coerce(IRNode* node, const Type& type, IRNode* out) {
         default:
             break;
     }
+    if (this->coercionCost(node->fType, type) != INT_MAX) {
+        Position p = node->fPosition;
+        std::vector<IRNode> children;
+        children.push_back(std::move(*node));
+        *out = IRNode(p, IRNode::Kind::CAST, type, std::move(children));
+        return true;
+    }
     String value = node->fKind == IRNode::Kind::INT ? std::to_string(node->fValue.fInt) :
             node->fType.fName;
     this->error(node->fPosition, "expected '" + type.fName + "', but found '" + value + "'");
@@ -143,6 +150,27 @@ bool Compiler::coerce(IRNode* node, const Type& type, IRNode* out) {
 int Compiler::coercionCost(const Type& type, const Type& target) {
     if (type == target) {
         return 0;
+    }
+    if (type.fCategory == Type::Category::CLASS && target.fCategory == Type::Category::CLASS) {
+        int cost = 0;
+        Class* ancestor = this->resolveClass(type);
+        Class* targetClass = this->resolveClass(target);
+        if (!ancestor || !targetClass) {
+            return INT_MAX;
+        }
+        for (;;) {
+            if (ancestor == targetClass) {
+                return cost;
+            }
+            ++cost;
+            if (ancestor->fSuper == Type::Void()) {
+                break;
+            }
+            ancestor = this->resolveClass(ancestor->fSuper);
+            if (ancestor == nullptr) {
+                break;
+            }
+        }
     }
     return INT_MAX;
 }
@@ -270,10 +298,9 @@ bool Compiler::call(IRNode* method, std::vector<IRNode>* args, IRNode* out) {
                                     "@class context");
                         }
                         children.push_back(IRNode(method->fPosition, IRNode::Kind::SELF,
-                                fCurrentClass.top()->type()));
+                                fCurrentClass.top()->fType));
                     }
                     else {
-                        ASSERT(target.fType == fCurrentClass.top()->type());
                         children.push_back(std::move(target));
                     }
                 }
@@ -336,7 +363,7 @@ bool Compiler::call(IRNode* method, std::vector<IRNode>* args, IRNode* out) {
             if (this->call(&init, args, &initCall)) {
                 std::vector<IRNode> children;
                 children.push_back(std::move(initCall));
-                *out = IRNode(method->fPosition, IRNode::Kind::CONSTRUCT, cl.type(),
+                *out = IRNode(method->fPosition, IRNode::Kind::CONSTRUCT, cl.fType,
                         std::move(children));
                 return true;
             }
@@ -520,6 +547,7 @@ bool Compiler::convertBinary(const ASTNode& b, IRNode* out) {
         children.push_back(std::move(right));
         *out = IRNode(b.fPosition, IRNode::Kind::BINARY, left.fType, (uint64_t) op,
                 std::move(children));
+        return true;
     }
     if (left.fKind == IRNode::Kind::INT && right.fKind == IRNode::Kind::INT) {
         this->foldInts(b.fPosition, left, op, right, out);
@@ -594,8 +622,6 @@ bool Compiler::convertBinary(const ASTNode& b, IRNode* out) {
 void Compiler::symbolRef(Position p, Symbol* symbol, IRNode* out, IRNode* target) {
     switch (symbol->fKind) {
         case Symbol::Kind::CLASS:
-            ASSERT(!target);
-            fClasses[((Class*) symbol)->fName] = (Class*) symbol;
             *out = IRNode(p, IRNode::Kind::CLASS_REFERENCE,
                     Type(Position(), Type::Category::CLASS, "<type>"), symbol);
             return;
@@ -622,7 +648,6 @@ void Compiler::symbolRef(Position p, Symbol* symbol, IRNode* out, IRNode* target
             }
             return;
         case Symbol::Kind::PACKAGE:
-            ASSERT(!target);
             *out = IRNode(p, IRNode::Kind::PACKAGE_REFERENCE,
                     Type(Position(), Type::Category::PACKAGE, "<package>"), symbol);
             return;
@@ -751,7 +776,7 @@ bool Compiler::convertSelf(const ASTNode& s, IRNode* out) {
     if (fCurrentMethod.top()->fAnnotations.isClass()) {
         this->error(s.fPosition, "cannot reference 'self' from a @class method");
     }
-    *out = IRNode(s.fPosition, IRNode::Kind::SELF, fCurrentClass.top()->type());
+    *out = IRNode(s.fPosition, IRNode::Kind::SELF, fCurrentClass.top()->fType);
     return true;
 }
 
@@ -1011,12 +1036,18 @@ bool Compiler::convertType(const ASTNode& t, IRNode* out) {
                 this->error(t.fPosition, "unknown identifier '" + t.fText + "'");
                 return false;
             }
-            if (symbol->fKind != Symbol::Kind::TYPE) {
-                this->error(t.fPosition, "'" + t.fText + "' is not a type");
-                return false;
+            switch (symbol->fKind) {
+                case Symbol::Kind::TYPE:
+                    *out = IRNode(t.fPosition, IRNode::Kind::TYPE_REFERENCE, symbol);
+                    return true;
+                case Symbol::Kind::CLASS:
+                    *out = IRNode(t.fPosition, IRNode::Kind::TYPE_REFERENCE,
+                            &((Class*) symbol)->fType);
+                    return true;
+                default:
+                    this->error(t.fPosition, "'" + t.fText + "' is not a type");
+                    return false;
             }
-            *out = IRNode(t.fPosition, IRNode::Kind::TYPE_REFERENCE, symbol);
-            return true;
         }
         default:
             printf("unsupported type: %s\n", t.description().c_str());
@@ -1040,13 +1071,13 @@ void Compiler::compile(const SymbolTable& parent, const Method& method) {
         return;
     }
     if (fErrors.fErrorCount == 0) {
-        fCodeGenerator.writeMethod(*fCurrentClass.top(), method, block);
+        fCodeGenerator.writeMethod(method, block, *this);
     }
     fSymbolTable = nullptr;
 }
 
 void Compiler::compile(const SymbolTable& symbols) {
-    symbols.foreach([this, &symbols](const Symbol& s) {
+    symbols.foreach_const([this, &symbols](const Symbol& s) {
         switch (s.fKind) {
             case Symbol::Kind::PACKAGE:
                 this->compile(((Package&) s).fSymbolTable);
@@ -1076,7 +1107,71 @@ void Compiler::compile(const SymbolTable& symbols) {
     });
 }
 
+void Compiler::findClasses(SymbolTable& symbols) {
+    symbols.foreach([this, &symbols](Symbol& s) {
+        switch (s.fKind) {
+            case Symbol::Kind::PACKAGE:
+                this->findClasses(((Package&) s).fSymbolTable);
+                break;
+            case Symbol::Kind::CLASS:
+                fClasses[((Class&) s).fName] = &(Class&) s;
+                this->findClasses(((Class&) s).fSymbolTable);
+                break;
+            default:
+                break;
+        }
+    });
+}
+
+void Compiler::buildVTable(Class& cl) {
+    if (cl.fVirtualMethods.size()) {
+        return;
+    }
+    if (cl.fSuper != Type::Void()) {
+        Class* super = this->resolveClass(cl.fSuper);
+        if (!super) {
+            return;
+        }
+        this->buildVTable(*super);
+        cl.fVirtualMethods = super->fVirtualMethods;
+    }
+    for (const Method* derived : cl.fMethods) {
+        if (derived->fMethodKind == Method::Kind::INIT || derived->fAnnotations.isClass()) {
+            continue;
+        }
+        bool found = false;
+        for (int i = 0; i < cl.fVirtualMethods.size(); ++i) {
+            const Method* base = cl.fVirtualMethods[i];
+            if (derived->matches(*base)) {
+                found = true;
+                cl.fVirtualMethods[i] = derived;
+                break;
+            }
+        }
+        if (!found) {
+            cl.fVirtualMethods.push_back(derived);
+        }
+    }
+}
+
+void Compiler::buildVTables(SymbolTable& symbols) {
+    symbols.foreach([this, &symbols](Symbol& s) {
+        switch (s.fKind) {
+            case Symbol::Kind::PACKAGE:
+                this->buildVTables(((Package&) s).fSymbolTable);
+                break;
+            case Symbol::Kind::CLASS:
+                this->buildVTable((Class&) s);
+                break;
+            default:
+                break;
+        }
+    });
+}
+
 void Compiler::compile() {
+    this->findClasses(fRoot);
+    this->buildVTables(fRoot);
     this->compile(fRoot);
 }
 

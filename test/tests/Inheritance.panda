@@ -1,0 +1,26 @@
+class Super {
+    init() {
+    }
+
+    function foo():builtin_int64 {
+        return 1
+    }
+}
+
+class Sub : Super {
+    init() {
+    }
+
+    @override
+    function foo():builtin_int64 {
+        return 2
+    }
+
+    @class
+    method main() {
+        var s:Super := Super()
+        print(s.foo())
+        s := Sub()
+        print(s.foo())
+    }
+}

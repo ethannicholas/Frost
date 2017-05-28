@@ -62,8 +62,15 @@ public:
         return nullptr;
     }
 
+    template <typename iterFunction> // f(Symbol&)
+    void foreach(iterFunction&& fn) {
+        for (auto iter = fSymbols.begin(); iter != fSymbols.end(); ++iter) {
+            fn(*iter->second);
+        }
+    }    
+
     template <typename iterFunction> // f(const Symbol&)
-    void foreach(iterFunction&& fn) const {
+    void foreach_const(iterFunction&& fn) const {
         for (auto iter = fSymbols.begin(); iter != fSymbols.end(); ++iter) {
             fn((const Symbol&) *iter->second);
         }

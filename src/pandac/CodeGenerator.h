@@ -8,7 +8,9 @@
 #include <ostream>
 #include <sstream>
 
+class Compiler;
+
 class CodeGenerator {
 public:
-    virtual void writeMethod(const Class& cl, const Method& method, const IRNode& body) = 0;
+    virtual void writeMethod(const Method& method, const IRNode& body, Compiler& compiler) = 0;
 };

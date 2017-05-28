@@ -29,7 +29,27 @@ struct Method : public Symbol {
     , fMethodKind(kind)
     , fParameters(std::move(parameters))
     , fReturnType(std::move(returnType))
-    , fBody(body) {}
+    , fBody(body) {
+        ASSERT(owner);
+    }
+
+    bool matches(const Method& other) const {
+        if (fName != other.fName) {
+            return false;
+        }
+        if (fReturnType != other.fReturnType) {
+            return false;
+        }
+        if (fParameters.size() != other.fParameters.size()) {
+            return false;
+        }
+        for (int i = 0; i < fParameters.size(); ++i) {
+            if (fParameters[i].fType != other.fParameters[i].fType) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     String description() const {
         String result;

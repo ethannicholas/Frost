@@ -11,18 +11,21 @@ Annotations Scanner::convertAnnotations(const ASTNode& a) {
     ASSERT(a.fKind == ASTNode::Kind::ANNOTATIONS);
     for (const auto& sub : a.fChildren) {
         ASSERT(sub.fKind == ASTNode::Kind::ANNOTATION);
-        if (sub.fText == "class") {
-            flags |= Annotations::CLASS;
+        #define BASIC_ANNOTATION(text, flag) \
+        if (sub.fText == text) { \
+            if ((flags & Annotations::flag) != 0) { \
+                this->error(sub.fPosition, "duplicate annotation '@" text "'"); \
+            } \
+            flags |= Annotations::flag; \
         }
-        else if (sub.fText == "protected") {
-            flags |= Annotations::PROTECTED;
-        }
-        else if (sub.fText == "private") {
-            flags |= Annotations::PROTECTED;
-        }
+        BASIC_ANNOTATION("class", CLASS)
+        else BASIC_ANNOTATION("protected", PROTECTED)
+        else BASIC_ANNOTATION("private", PRIVATE)
+        else BASIC_ANNOTATION("override", OVERRIDE)
         else {
-            this->error(a.fPosition, "unrecognized annotation '@" + sub.fText + "'");
+            this->error(sub.fPosition, "unrecognized annotation '@" + sub.fText + "'");
         }
+        #undef BASIC_ANNOTATION
     }
     return Annotations(flags);
 }
@@ -54,7 +57,7 @@ void Scanner::error(Position position, String msg) {
 }
 
 std::unique_ptr<Method> Scanner::convertMethod(ASTNode* m, const SymbolTable& st,
-        const Class* owner) {
+        Class* owner) {
     if (m->fText == "init") {
         this->error(m->fPosition, "methods and functions may not be named 'init'");
     }
@@ -78,12 +81,14 @@ std::unique_ptr<Method> Scanner::convertMethod(ASTNode* m, const SymbolTable& st
         default:
             abort();
     }
-    return std::unique_ptr<Method>(new Method(m->fPosition, owner, annotations, kind, m->fText,
-            std::move(parameters), std::move(returnType), std::move(m->fChildren[4])));
+    Method* result = new Method(m->fPosition, owner, annotations, kind, m->fText,
+            std::move(parameters), std::move(returnType), std::move(m->fChildren[4]));
+    owner->fMethods.push_back(result);
+    return std::unique_ptr<Method>(result);
 }
 
 std::unique_ptr<Method> Scanner::convertInit(ASTNode* i, const SymbolTable& st,
-        const Class* owner) {
+        Class* owner) {
     ASSERT(i->fChildren.size() == 4);
     ASSERT(i->fChildren[0].fKind == ASTNode::Kind::DOCCOMMENT);
     Annotations annotations = this->convertAnnotations(i->fChildren[1]);
@@ -92,20 +97,42 @@ std::unique_ptr<Method> Scanner::convertInit(ASTNode* i, const SymbolTable& st,
     for (const auto& p : i->fChildren[2].fChildren) {
         parameters.push_back(this->convertParameter(p, st));
     }
-    return std::unique_ptr<Method>(new Method(i->fPosition, owner, annotations, Method::Kind::INIT,
-            "init", std::move(parameters), Type(), std::move(i->fChildren[3])));
+    Method* result = new Method(i->fPosition, owner, annotations, Method::Kind::INIT, "init",
+            std::move(parameters), Type(), std::move(i->fChildren[3]));
+    owner->fMethods.push_back(result);
+    return std::unique_ptr<Method>(result);
 }
 
 void Scanner::scanClass(String contextName, SymbolTable* parent, ASTNode* cl) {
     ASSERT(cl->fKind == ASTNode::Kind::CLASS);
     ASSERT(cl->fChildren.size() == 6);
+    Annotations annotations = this->convertAnnotations(cl->fChildren[1]);
+    Type superclass;
+    if (cl->fChildren[3].fKind == ASTNode::Kind::VOID) {
+        superclass = Type();
+    }
+    else {
+        superclass = this->convertType(cl->fChildren[3], parent);
+    }
     ASSERT(cl->fChildren[5].fKind == ASTNode::Kind::CLASS_MEMBERS);
     String fullName = contextName;
     if (fullName.size()) {
         fullName += ".";
     }
     fullName += cl->fText;
-    Class* result = new Class(cl->fPosition, fullName, parent);
+    if (annotations.isClass()) {
+        this->error(cl->fPosition, "'@class' annotation may not be applied to classes");
+    }
+    if (annotations.isPrivate()) {
+        this->error(cl->fPosition, "'@private' annotation may not be applied to classes");
+    }
+    if (annotations.isProtected()) {
+        this->error(cl->fPosition, "'@protected' annotation may not be applied to classes");
+    }
+    if (annotations.isOverride()) {
+        this->error(cl->fPosition, "'@override' annotation may not be applied to classes");
+    }
+    Class* result = new Class(cl->fPosition, annotations, fullName, parent, superclass);
     SymbolTable& symbols = result->fSymbolTable;
     parent->add(cl->fText, std::unique_ptr<Symbol>(result));
     for (auto& child : cl->fChildren[5].fChildren) {

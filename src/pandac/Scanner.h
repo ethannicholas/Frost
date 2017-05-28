@@ -25,9 +25,9 @@ private:
     
     Method::Parameter convertParameter(const ASTNode& param, const SymbolTable& st);
 
-    std::unique_ptr<Method> convertMethod(ASTNode* m, const SymbolTable& st, const Class* owner);
+    std::unique_ptr<Method> convertMethod(ASTNode* m, const SymbolTable& st, Class* owner);
 
-    std::unique_ptr<Method> convertInit(ASTNode* i, const SymbolTable& st, const Class* owner);
+    std::unique_ptr<Method> convertInit(ASTNode* i, const SymbolTable& st, Class* owner);
 
     void scanClass(String contextName, SymbolTable* parent, ASTNode* cl);
 

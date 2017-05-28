@@ -62,6 +62,7 @@ String compileProgram(const char* pandac, const char* testdir, const char* name)
 }
 
 bool runTest(const char* pandac, const char* testdir, const char* name) {
+    remove(OUTPUT_LOCATION);
     printf("Testing %s... ", name);
     String expectedPath = String(testdir) + "/" + name + ".expected";
     std::ifstream in(expectedPath.c_str());

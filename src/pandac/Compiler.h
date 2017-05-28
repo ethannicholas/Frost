@@ -37,7 +37,8 @@ public:
                 "builtin_uint32", 32)));
         fRoot.add(std::unique_ptr<Symbol>(new Type(Position(), Type::Category::BUILTIN_UINT,
                 "builtin_uint64", 64)));
-        fRoot.add(std::unique_ptr<Symbol>(new Method(Position(), nullptr,
+        static Class* builtin = new Class(Position(), Annotations(), "builtin", nullptr, Type());
+        fRoot.add(std::unique_ptr<Symbol>(new Method(Position(), builtin,
                 Annotations(Annotations::CLASS), Method::Kind::METHOD, "print",
                 { { "v", (Type&) *fRoot["builtin_int64"] } }, Type::Void(), ASTNode())));
     }
@@ -45,6 +46,8 @@ public:
     void scan(ASTNode* file);
 
     void compile();
+
+    Class* resolveClass(Type t);
 
 private:
     // for all convert methods: a true result means "successful enough to have produced output",
@@ -87,8 +90,6 @@ private:
             const std::vector<IRNode>& args, const Type* returnType);
 
     bool call(IRNode* method, std::vector<IRNode>* args, IRNode* out);
-
-    Class* resolveClass(Type t);
 
     bool foldBits(Position p, const IRNode& left, Operator op, const IRNode& right, IRNode* out);
 
@@ -135,6 +136,12 @@ private:
     void compile(const SymbolTable& parent, const Method& method);
 
     void compile(const SymbolTable& symbols);
+
+    void findClasses(SymbolTable& symbols);
+
+    void buildVTable(Class& cl);
+
+    void buildVTables(SymbolTable& symbols);
 
     void error(Position position, String msg);
 

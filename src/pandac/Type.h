@@ -64,7 +64,7 @@ struct Type : public Symbol {
     }
 
     static Type& Void() {
-        static Type result = Type(Position(), Category::VOID, "$void");
+        static Type result = Type();
         return result;
     }
 

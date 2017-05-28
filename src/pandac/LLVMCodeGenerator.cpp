@@ -1,5 +1,8 @@
+#include "Compiler.h"
 #include "LLVMCodeGenerator.h"
 #include "Method.h"
+
+#define VTABLE_INDEX 1
 
 LLVMCodeGenerator::LLVMCodeGenerator(std::ostream* out)
 : fOut(*out) {
@@ -13,7 +16,7 @@ LLVMCodeGenerator::LLVMCodeGenerator(std::ostream* out)
     // temporary
     fOut << "declare i32 @printf(i8*, ...)\n";
     fOut << "@fmt = private constant [4 x i8] [i8 37, i8 100, i8 10, i8 0]\n";
-    fOut << "define fastcc void @print$builtin_int64(i64 %num) {\n";
+    fOut << "define fastcc void @builtin$print$builtin_int64(i64 %num) {\n";
     fOut << "    call i32 (i8*, ...)* @printf(i8* bitcast ([4 x i8]* @fmt to i8*), i64 %num)\n";
     fOut << "    ret void\n";
     fOut << "}\n";
@@ -23,7 +26,7 @@ size_t LLVMCodeGenerator::sizeOf(const Type& type) {
     switch (type.fCategory) {
         case Type::Category::BUILTIN_INT: // fall through
         case Type::Category::BUILTIN_UINT: return std::max(type.fSize / 8, 1);
-        case Type::Category::CLASS: return 0;
+        case Type::Category::CLASS: return 8;
         default: abort();
     }
 }
@@ -32,11 +35,45 @@ static String escape_type_name(String name) {
     return name;
 }
 
+LLVMCodeGenerator::ClassConstant& LLVMCodeGenerator::getClassConstant(const Class& cl) {
+    auto found = fClassConstants.find(cl.fName);
+    if (found == fClassConstants.end()) {
+        String super;
+        if (cl.fSuper != Type::Void()) {
+            const ClassConstant& superCC = getClassConstant(*fCompiler->resolveClass(cl.fSuper));
+            super = "bitcast(" + superCC.fType + "* " + superCC.fName + " to i8*)";
+        }
+        else {
+            super = "null";
+        }
+        ClassConstant cc("@" + escape_type_name(cl.fType.fName) + "$class",
+                "{ i8*, [" + std::to_string(cl.fVirtualMethods.size()) + " x i8*] }");
+        fClassConstants[cl.fName] = cc;
+        String code = cc.fName + " = constant " + cc.fType + " { i8* " + super + ", [" + 
+                std::to_string(cl.fVirtualMethods.size()) + " x i8*] [";
+        const char* separator = "";
+        for (const Method* m : cl.fVirtualMethods) {
+            code += separator + ("i8* bitcast(" + this->llvmType(*m)) + " " +
+                    this->methodName(*m) + " to i8*)";
+            separator = ", ";
+        }
+        code += "] }\n";
+        fTypeDeclarations << code;
+        return fClassConstants[cl.fName];
+    }
+    return found->second;
+}
+
 void LLVMCodeGenerator::writeType(const Type& type) {
     if (fWrittenTypes.find(type.fName) == fWrittenTypes.end()) {
-        fTypeDeclarations << "%" << escape_type_name(type.fName) << " = type { ";
-        fTypeDeclarations << "};";
         fWrittenTypes.insert(type.fName);
+        Class* cl = fCompiler->resolveClass(type);
+        ASSERT(cl);
+        this->getClassConstant(*cl);
+        fTypeDeclarations << "\n";
+        fTypeDeclarations << "%" << escape_type_name(type.fName) << " = type {";
+        fTypeDeclarations << " i8*";
+        fTypeDeclarations << " }\n";
     }
 }
 
@@ -54,6 +91,32 @@ String LLVMCodeGenerator::llvmType(const Type& type) {
         case Type::Category::INT_LITERAL: // fall through
         case Type::Category::UNRESOLVED: abort();
     }
+}
+
+static bool is_instance(const Method& method) {
+    return !method.fAnnotations.isClass();
+}
+
+static bool is_virtual(const Method& method) {
+    return is_instance(method) && method.fMethodKind != Method::Kind::INIT;
+}
+
+String LLVMCodeGenerator::llvmType(const Method& m) {
+    String result = this->llvmType(m.fReturnType);
+    result += "(";
+    const char* separator = "";
+    if (is_instance(m)) {
+        result += separator;
+        result += this->llvmType(m.fOwner.fType);
+        separator = ", ";
+    }
+    for (const auto& p : m.fParameters) {
+        result += separator;
+        result += this->llvmType(p.fType);
+        separator = ", ";
+    }
+    result += ")*";
+    return result;
 }
 
 static bool ends_with_branch(const IRNode& block) {
@@ -245,27 +308,45 @@ String LLVMCodeGenerator::getPrefixReference(const IRNode& expr, std::ostream& o
     }
 }
 
-String LLVMCodeGenerator::getCallReference(const IRNode& call, const String& target,
+String LLVMCodeGenerator::getMethodReference(const String& target, const Method* m,
         std::ostream& out) {
+    if (is_virtual(*m)) {
+        ASSERT(target.size());
+        return this->getVirtualMethodReference(target, m, out);
+    }
+    else {
+        return this->methodName(*m);
+    }
+}
+
+String LLVMCodeGenerator::getCallReference(const IRNode& call, std::ostream& out) {
     ASSERT(call.fKind == IRNode::Kind::CALL);
     ASSERT(call.fChildren.size() >= 1);
     std::vector<String> args;
     for (int i = 1; i < call.fChildren.size(); ++i) {
         args.push_back(this->getTypedReference(call.fChildren[i], out));
     }
+    Method* m = (Method*) call.fChildren[0].fValue.fPtr;
+    String target = args.size() ? args[0] : "";
+    String methodRef = this->getMethodReference(target, m, out);
     String result = this->nextVar();
-    out << "    " << result << " = call " << this->llvmType(call.fType) << " " <<
-            this->getReference(call.fChildren[0], out) << "(";
+    out << "    " << result << " = call " << this->llvmType(call.fType) << " " << methodRef << "(";
     const char* separator = "";
-    if (target.size()) {
-        out << separator << target;
-        separator = ", ";
-    }
     for (const auto& arg : args) {
         out << separator << arg; 
         separator = ", ";
     }
     out << ")\n";
+    return result;
+}
+
+String LLVMCodeGenerator::getCastReference(const IRNode& cast, std::ostream& out) {
+    ASSERT(cast.fKind == IRNode::Kind::CAST);
+    ASSERT(cast.fChildren.size() == 1);
+    String base = this->getTypedReference(cast.fChildren[0], out);
+    String result = this->nextVar();
+    out << "    " << result << " = bitcast " << base << " to " << this->llvmType(cast.fType) <<
+            "\n";
     return result;
 }
 
@@ -278,6 +359,12 @@ String LLVMCodeGenerator::getConstructReference(const IRNode& construct, std::os
     String result = this->nextVar();
     out << "    " << result << " = bitcast i8* " << callRef << " to " <<
             this->llvmType(construct.fType) << "\n";
+    String classPtr = this->nextVar();
+    out << "    " << classPtr << " = getelementptr inbounds " << this->llvmType(construct.fType) <<
+            " " << result << ", i64 0, i32 0" << "\n";
+    const ClassConstant& cc = this->getClassConstant(*fCompiler->resolveClass(construct.fType));
+    out << "    store i8* bitcast(" << cc.fType << "* " << cc.fName << " to i8*), i8** " <<
+            classPtr << "\n";
     this->writeCall(construct.fChildren[0], this->llvmType(construct.fType) + " " + result, out);
     return result;
 }
@@ -295,7 +382,9 @@ String LLVMCodeGenerator::getReference(const IRNode& expr, std::ostream& out) {
             return this->getBinaryReference(expr.fChildren[0], (Operator) expr.fValue.fInt,
                     expr.fChildren[1], out);
         case IRNode::Kind::CALL:
-            return this->getCallReference(expr, "", out);
+            return this->getCallReference(expr, out);
+        case IRNode::Kind::CAST:
+            return this->getCastReference(expr, out);
         case IRNode::Kind::CONSTRUCT:
             return this->getConstructReference(expr, out);
         case IRNode::Kind::INT:
@@ -391,13 +480,42 @@ void LLVMCodeGenerator::writeAssignment(const IRNode& a, std::ostream& out) {
     out << "    store " << value << ", " << lvalue << "\n";
 }
 
+String LLVMCodeGenerator::getVirtualMethodReference(const String& target, const Method* m,
+        std::ostream& out) {
+    const ClassConstant& cc = this->getClassConstant(m->fOwner);
+    int index = -1;
+    for (int i = 0; i < m->fOwner.fVirtualMethods.size(); ++i) {
+        if (m->fOwner.fVirtualMethods[i] == m) {
+            index = i;
+            break;
+        }
+    }
+    ASSERT(index != -1);
+    String classPtrPtr = this->nextVar();
+    out << "    " << classPtrPtr << " = getelementptr " << target << ", i64 0, i32 0\n";
+    String classPtr = this->nextVar();
+    out << "    " << classPtr << " = load i8** " << classPtrPtr << "\n";
+    String cast = this->nextVar();
+    out << "    " << cast << " = bitcast i8* " << classPtr << " to " << cc.fType << "*\n";
+    String ptr = this->nextVar();
+    out << "    " << ptr << " = getelementptr " << cc.fType << "* " << cast << " , i64 0, i32 " <<
+            VTABLE_INDEX << ", i64 " << index << "\n";
+    String load = this->nextVar();
+    out << "    " << load << " = load i8** " << ptr << "\n";
+    String result = this->nextVar();
+    out << "    " << result << " = bitcast i8* " << load << " to " << this->llvmType(*m) << "\n";
+    return result;
+}
+
 void LLVMCodeGenerator::writeCall(const IRNode& stmt, const String& target, std::ostream& out) {
     std::vector<String> args;
     for (int i = 1; i < stmt.fChildren.size(); ++i) {
         args.push_back(this->getTypedReference(stmt.fChildren[i], out));
     }
-    out << "    call " << this->llvmType(stmt.fType) << " " <<
-            this->getReference(stmt.fChildren[0], out) << "(";
+    ASSERT(stmt.fChildren[0].fKind == IRNode::Kind::METHOD_REFERENCE);
+    Method* m = (Method*) stmt.fChildren[0].fValue.fPtr;
+    String methodRef = this->getMethodReference(is_virtual(*m) ? args[0] : "", m, out);
+    out << "    call " << this->llvmType(stmt.fType) << " " << methodRef << "(";
     const char* separator = "";
     if (target.size()) {
         out << separator << target;
@@ -501,7 +619,10 @@ void LLVMCodeGenerator::writeStatement(const IRNode& stmt, std::ostream& out) {
 }
 
 String LLVMCodeGenerator::methodName(const Method& method) {
-    String result = "@" + method.fName;
+    if (method.fName == "main") {
+        return "@main";
+    }
+    String result = "@" + escape_type_name(method.fOwner.fName) + "$" + method.fName;
     for (const auto& p : method.fParameters) {
         result += "$" + escape_type_name(p.fType.fName);
     }
@@ -515,18 +636,15 @@ String LLVMCodeGenerator::varName(const Variable& var) {
     return "%" + var.fName;
 }
 
-static bool is_instance(const Method& method) {
-    return !method.fAnnotations.isClass();
-}
-
-void LLVMCodeGenerator::writeMethod(const Class& cl, const Method& method, const IRNode& body) {
+void LLVMCodeGenerator::writeMethod(const Method& method, const IRNode& body, Compiler& compiler) {
+    fCompiler = &compiler;
     fTmpVars = 1;
     std::ostream& out = fMethods;
     out << "\ndefine fastcc " << this->llvmType(method.fReturnType) << " " <<
             this->methodName(method) << "(";
     const char* separator = "";
     if (is_instance(method)) {
-        out << separator << this->llvmType(method.fOwner.type()) << " %self";
+        out << separator << this->llvmType(method.fOwner.fType) << " %self";
         separator = ", ";
     }
     for (const auto& p : method.fParameters) {
@@ -546,4 +664,5 @@ void LLVMCodeGenerator::writeMethod(const Class& cl, const Method& method, const
         out << "    ret void\n";
     }
     out << "}\n";
+    fCompiler = nullptr;
 }

@@ -5,7 +5,8 @@ public:
     enum Flag {
         PRIVATE   = 1 << 1,
         PROTECTED = 1 << 2,
-        CLASS     = 1 << 3
+        CLASS     = 1 << 3,
+        OVERRIDE  = 1 << 4
     };
 
     Annotations()
@@ -24,6 +25,10 @@ public:
 
     bool isClass() const {
         return (fFlags & CLASS) != 0;
+    }
+
+    bool isOverride() const {
+        return (fFlags & OVERRIDE) != 0;
     }
 
 private:

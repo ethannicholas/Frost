@@ -16,7 +16,7 @@ public:
         fOut << fMethods.str();
     }
 
-    void writeMethod(const IRNode& cl, const IRNode& method);
+    void writeMethod(const Method& method, const IRNode& body, Compiler& compiler) override;
 
     enum class OpClass {
         SIGNED,
@@ -25,11 +25,28 @@ public:
     };
 
 private:
+    class ClassConstant {
+    public:
+        ClassConstant() {}
+        
+        ClassConstant(String name, String type)
+        : fName(std::move(name))
+        , fType(std::move(type)) {}
+
+        String fName;
+
+        String fType;
+    };
+
     void writeType(const Type& type);
 
     size_t sizeOf(const Type& type);
 
+    ClassConstant& getClassConstant(const Class& cl);
+
     String llvmType(const Type& type);
+
+    String llvmType(const Method& m);
 
     String nextVar();
 
@@ -51,7 +68,13 @@ private:
 
     String getPrefixReference(const IRNode& expr, std::ostream& out);
 
-    String getCallReference(const IRNode& call, const String& target, std::ostream& out);
+    String getVirtualMethodReference(const String& target, const Method* m, std::ostream& out);
+
+    String getMethodReference(const String& target, const Method* m, std::ostream& out);
+
+    String getCallReference(const IRNode& call, std::ostream& out);
+
+    String getCastReference(const IRNode& call, std::ostream& out);
 
     String getConstructReference(const IRNode& construct, std::ostream& out);
 
@@ -87,8 +110,6 @@ private:
 
     String varName(const Variable& var);
 
-    void writeMethod(const Class& cl, const Method& method, const IRNode& body) override;
-
     int fTmpVars = 1;
 
     int fLabels = 0;
@@ -104,4 +125,8 @@ private:
     std::ostream& fOut;
 
     String fCurrentBlock = "0";
+
+    Compiler* fCompiler;
+
+    std::unordered_map<String, ClassConstant> fClassConstants;
 };

@@ -1,0 +1,35 @@
+package p1.p2.p3
+
+class Foo {
+    @class
+    method x():builtin_int64 {
+        return 1
+    }
+}
+
+package p1.p2
+
+class Bar {
+    @class
+    method x():builtin_int64 {
+        return p3.Foo.x() * 2
+    }
+}
+
+class Baz {
+    @class
+    method x():builtin_int64 {
+        return Bar.x() + 1
+    }
+}
+
+package p4
+
+class Packages {
+    @class
+    method main() {
+        print(p1.p2.p3.Foo.x())
+        print(p1.p2.Bar.x())
+        print(p1.p2.Baz.x())
+    }
+}
