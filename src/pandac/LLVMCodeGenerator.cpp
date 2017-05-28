@@ -1,5 +1,5 @@
 #include "LLVMCodeGenerator.h"
-#include "MethodStub.h"
+#include "Method.h"
 
 LLVMCodeGenerator::LLVMCodeGenerator(std::ostream* out)
 : fOut(*out) {
@@ -7,6 +7,8 @@ LLVMCodeGenerator::LLVMCodeGenerator(std::ostream* out)
             "f32:32:32-f64:64:64-v64:64:64-v128:128:128-a0:0:64-s0:64:64-f80:128:128-"
             "n8:16:32:64-S128\"\n";
     fOut << "target triple = \"x86_64-apple-macosx10.8.0\"\n";
+
+    fOut << "declare i8* @malloc(i64)\n";
 
     // temporary
     fOut << "declare i32 @printf(i8*, ...)\n";
@@ -17,14 +19,37 @@ LLVMCodeGenerator::LLVMCodeGenerator(std::ostream* out)
     fOut << "}\n";
 }
 
+size_t LLVMCodeGenerator::sizeOf(const Type& type) {
+    switch (type.fCategory) {
+        case Type::Category::BUILTIN_INT: // fall through
+        case Type::Category::BUILTIN_UINT: return std::max(type.fSize / 8, 1);
+        case Type::Category::CLASS: return 0;
+        default: abort();
+    }
+}
+
+static String escape_type_name(String name) {
+    return name;
+}
+
+void LLVMCodeGenerator::writeType(const Type& type) {
+    if (fWrittenTypes.find(type.fName) == fWrittenTypes.end()) {
+        fTypeDeclarations << "%" << escape_type_name(type.fName) << " = type { ";
+        fTypeDeclarations << "};";
+        fWrittenTypes.insert(type.fName);
+    }
+}
+
 String LLVMCodeGenerator::llvmType(const Type& type) {
     switch (type.fCategory) {
-        case Type::Category::VOID:        return "void";
+        case Type::Category::VOID: return "void";
         case Type::Category::BUILTIN_INT: // fall through
         case Type::Category::BUILTIN_UINT: return "i" + std::to_string(type.fSize);
         case Type::Category::BUILTIN_FLOAT: return "f" + std::to_string(type.fSize);
+        case Type::Category::CLASS:
+            this->writeType(type);
+            return "%" + escape_type_name(type.fName) + "*";
         case Type::Category::METHOD:      // fall through
-        case Type::Category::CLASS:       // fall through
         case Type::Category::PACKAGE:     // fall through
         case Type::Category::INT_LITERAL: // fall through
         case Type::Category::UNRESOLVED: abort();
@@ -220,7 +245,10 @@ String LLVMCodeGenerator::getPrefixReference(const IRNode& expr, std::ostream& o
     }
 }
 
-String LLVMCodeGenerator::getCallReference(const IRNode& call, std::ostream& out) {
+String LLVMCodeGenerator::getCallReference(const IRNode& call, const String& target,
+        std::ostream& out) {
+    ASSERT(call.fKind == IRNode::Kind::CALL);
+    ASSERT(call.fChildren.size() >= 1);
     std::vector<String> args;
     for (int i = 1; i < call.fChildren.size(); ++i) {
         args.push_back(this->getTypedReference(call.fChildren[i], out));
@@ -229,12 +257,33 @@ String LLVMCodeGenerator::getCallReference(const IRNode& call, std::ostream& out
     out << "    " << result << " = call " << this->llvmType(call.fType) << " " <<
             this->getReference(call.fChildren[0], out) << "(";
     const char* separator = "";
+    if (target.size()) {
+        out << separator << target;
+        separator = ", ";
+    }
     for (const auto& arg : args) {
         out << separator << arg; 
         separator = ", ";
     }
     out << ")\n";
     return result;
+}
+
+String LLVMCodeGenerator::getConstructReference(const IRNode& construct, std::ostream& out) {
+    ASSERT(construct.fKind == IRNode::Kind::CONSTRUCT);
+    ASSERT(construct.fChildren.size() >= 1);
+    String callRef = this->nextVar();
+    out << "    " << callRef << " = call i8* @malloc(i64 " << this->sizeOf(construct.fType) <<
+            ")\n";
+    String result = this->nextVar();
+    out << "    " << result << " = bitcast i8* " << callRef << " to " <<
+            this->llvmType(construct.fType) << "\n";
+    this->writeCall(construct.fChildren[0], this->llvmType(construct.fType) + " " + result, out);
+    return result;
+}
+
+String LLVMCodeGenerator::getSelfReference(const IRNode& self, std::ostream& out) {
+    return "%self";
 }
 
 String LLVMCodeGenerator::getReference(const IRNode& expr, std::ostream& out) {
@@ -246,13 +295,17 @@ String LLVMCodeGenerator::getReference(const IRNode& expr, std::ostream& out) {
             return this->getBinaryReference(expr.fChildren[0], (Operator) expr.fValue.fInt,
                     expr.fChildren[1], out);
         case IRNode::Kind::CALL:
-            return this->getCallReference(expr, out);
+            return this->getCallReference(expr, "", out);
+        case IRNode::Kind::CONSTRUCT:
+            return this->getConstructReference(expr, out);
         case IRNode::Kind::INT:
             return std::to_string(expr.fValue.fInt);
         case IRNode::Kind::METHOD_REFERENCE:
-            return this->methodName(*(MethodStub*) expr.fValue.fPtr);
+            return this->methodName(*(Method*) expr.fValue.fPtr);
         case IRNode::Kind::PREFIX:
             return this->getPrefixReference(expr, out);
+        case IRNode::Kind::SELF:
+            return this->getSelfReference(expr, out);
         case IRNode::Kind::VARIABLE_REFERENCE:
             return this->getVariableReference(*((Variable*) expr.fValue.fPtr), out);
         default:
@@ -338,7 +391,7 @@ void LLVMCodeGenerator::writeAssignment(const IRNode& a, std::ostream& out) {
     out << "    store " << value << ", " << lvalue << "\n";
 }
 
-void LLVMCodeGenerator::writeCall(const IRNode& stmt, std::ostream& out) {
+void LLVMCodeGenerator::writeCall(const IRNode& stmt, const String& target, std::ostream& out) {
     std::vector<String> args;
     for (int i = 1; i < stmt.fChildren.size(); ++i) {
         args.push_back(this->getTypedReference(stmt.fChildren[i], out));
@@ -346,6 +399,10 @@ void LLVMCodeGenerator::writeCall(const IRNode& stmt, std::ostream& out) {
     out << "    call " << this->llvmType(stmt.fType) << " " <<
             this->getReference(stmt.fChildren[0], out) << "(";
     const char* separator = "";
+    if (target.size()) {
+        out << separator << target;
+        separator = ", ";
+    }
     for (const auto& arg : args) {
         out << separator << arg; 
         separator = ", ";
@@ -428,11 +485,11 @@ void LLVMCodeGenerator::writeReturn(const IRNode& ret, std::ostream& out) {
 
 void LLVMCodeGenerator::writeStatement(const IRNode& stmt, std::ostream& out) {
     switch (stmt.fKind) {
-        case IRNode::Kind::BINARY:   this->writeAssignment(stmt, out); break;
-        case IRNode::Kind::BLOCK:    this->writeBlock     (stmt, out); break;
-        case IRNode::Kind::CALL:     this->writeCall      (stmt, out); break;
-        case IRNode::Kind::IF:       this->writeIf        (stmt, out); break;
-        case IRNode::Kind::RETURN:   this->writeReturn    (stmt, out); break;
+        case IRNode::Kind::BINARY:   this->writeAssignment(stmt, out);     break;
+        case IRNode::Kind::BLOCK:    this->writeBlock     (stmt, out);     break;
+        case IRNode::Kind::CALL:     this->writeCall      (stmt, "", out); break;
+        case IRNode::Kind::IF:       this->writeIf        (stmt, out);     break;
+        case IRNode::Kind::RETURN:   this->writeReturn    (stmt, out);     break;
         case IRNode::Kind::VAR:      // fall through
         case IRNode::Kind::DEF:      // fall through
         case IRNode::Kind::PROPERTY: // fall through
@@ -443,16 +500,12 @@ void LLVMCodeGenerator::writeStatement(const IRNode& stmt, std::ostream& out) {
     }
 }
 
-static String escape_type_name(String name) {
-    return name;
-}
-
-String LLVMCodeGenerator::methodName(const MethodStub& method) {
+String LLVMCodeGenerator::methodName(const Method& method) {
     String result = "@" + method.fName;
     for (const auto& p : method.fParameters) {
         result += "$" + escape_type_name(p.fType.fName);
     }
-    if (method.fReturnType != Type::Void()) {
+    if (method.fMethodKind != Method::Kind::INIT && method.fReturnType != Type::Void()) {
         result += "$R$" + escape_type_name(method.fReturnType.fName);
     }
     return result;
@@ -462,27 +515,35 @@ String LLVMCodeGenerator::varName(const Variable& var) {
     return "%" + var.fName;
 }
 
-void LLVMCodeGenerator::writeMethod(const ClassStub& cl, const MethodStub& method,
-        const IRNode& body) {
+static bool is_instance(const Method& method) {
+    return !method.fAnnotations.isClass();
+}
+
+void LLVMCodeGenerator::writeMethod(const Class& cl, const Method& method, const IRNode& body) {
     fTmpVars = 1;
-    fOut << "\ndefine fastcc " << this->llvmType(method.fReturnType) << " " <<
+    std::ostream& out = fMethods;
+    out << "\ndefine fastcc " << this->llvmType(method.fReturnType) << " " <<
             this->methodName(method) << "(";
     const char* separator = "";
-    for (const auto& p : method.fParameters) {
-        fOut << separator << this->llvmType(p.fType) << " %" << p.fName;
+    if (is_instance(method)) {
+        out << separator << this->llvmType(method.fOwner.type()) << " %self";
         separator = ", ";
     }
-    fOut << ") {\n";
+    for (const auto& p : method.fParameters) {
+        out << separator << this->llvmType(p.fType) << " %" << p.fName;
+        separator = ", ";
+    }
+    out << ") {\n";
     fMethodHeader = std::stringstream();
     std::stringstream bodyCode;
     ASSERT(body.fKind == IRNode::Kind::BLOCK);
     for (const auto& s : body.fChildren) {
         this->writeStatement(s, bodyCode);
     }
-    fOut << fMethodHeader.str();
-    fOut << bodyCode.str();
+    out << fMethodHeader.str();
+    out << bodyCode.str();
     if (!ends_with_branch(body)) {
-        fOut << "    ret void\n";
+        out << "    ret void\n";
     }
-    fOut << "}\n";
+    out << "}\n";
 }

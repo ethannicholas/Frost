@@ -50,7 +50,7 @@ struct Type : public Symbol {
     }
 
     static Type& IntLiteral() {
-        static Type result = Type(Position(), Category::INT_LITERAL, "$intLiteral", 1);
+        static Type result = Type(Position(), Category::INT_LITERAL, "<integer>", 1);
         return result;
     }
 

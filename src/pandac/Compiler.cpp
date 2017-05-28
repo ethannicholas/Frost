@@ -1,6 +1,6 @@
 #include "Compiler.h"
 
-#include "ClassStub.h"
+#include "Class.h"
 #include "Operator.h"
 #include "Package.h"
 #include "Variable.h"
@@ -35,11 +35,25 @@ static int required_size(uint64_t value) {
     return 64;
 }
 
-int Compiler::matchMethods(const std::vector<MethodStub*>& methods, const std::vector<IRNode>& args,
-        const Type* returnType, std::vector<MethodStub*>* outMatches) {
+Class* Compiler::resolveClass(Type t) {
+    auto found = fClasses.find(t.fName);
+    if (found == fClasses.end()) {
+        this->error(t.fPosition, "no class named '" + t.fName + "'");
+        fClasses[t.fName] = nullptr;
+        return nullptr;
+    }
+    return found->second;
+}
+
+int Compiler::matchMethods(const std::vector<Method*>& methods, const std::vector<IRNode>& args,
+        const Type* returnType, std::vector<Method*>* outMatches) {
+    *outMatches = { };
     int minCost = INT_MAX;
     for (const auto& m : methods) {
         int newCost = this->callCost(*m, args, returnType);
+        if (newCost == INT_MAX) {
+            continue;
+        }
         if (newCost < minCost) {
             minCost = newCost;
             *outMatches = { };
@@ -72,6 +86,7 @@ bool Compiler::coerce(IRNode* node, const Type& type, IRNode* out) {
             }
         case IRNode::Kind::PREFIX: {
             IRNode base;
+            // FIXME: wrong at extremes
             if (!this->coerce(&node->fChildren[0], type, &base)) {
                 return false;
             }
@@ -84,12 +99,13 @@ bool Compiler::coerce(IRNode* node, const Type& type, IRNode* out) {
         case IRNode::Kind::UNRESOLVED_CALL: {
             ASSERT(node->fChildren.size() == 2);
             ASSERT(node->fChildren[0].fKind == IRNode::Kind::UNRESOLVED_METHOD_REFERENCE);
-            std::vector<MethodStub*> methods;
-            for (const auto& m : node->fChildren[0].fChildren) {
+            std::vector<Method*> methods;
+            for (int i = 1; i < node->fChildren[0].fChildren.size(); ++i) {
+                const auto& m = node->fChildren[0].fChildren[i];
                 ASSERT(m.fKind == IRNode::Kind::METHOD_REFERENCE);
-                methods.push_back((MethodStub*) m.fValue.fPtr);
+                methods.push_back((Method*) m.fValue.fPtr);
             }
-            std::vector<MethodStub*> matches;
+            std::vector<Method*> matches;
             this->matchMethods(methods, node->fChildren[1].fChildren, &type, &matches);
             if (matches.size() == 1) {
                 Type returnType = matches[0]->fReturnType;
@@ -141,13 +157,17 @@ int Compiler::coercionCost(const IRNode& node, const Type& target) {
                 return 0;
             }
             break;
+        case IRNode::Kind::PREFIX: {
+            // temporary hack
+            return this->coercionCost(node.fChildren[0], target);
+        }
         case IRNode::Kind::UNRESOLVED_CALL: {
-            std::vector<MethodStub*> methods;
+            std::vector<Method*> methods;
             for (const auto& m : node.fChildren[0].fChildren) {
                 ASSERT(m.fKind == IRNode::Kind::METHOD_REFERENCE);
-                methods.push_back((MethodStub*) m.fValue.fPtr);
+                methods.push_back((Method*) m.fValue.fPtr);
             }
-            std::vector<MethodStub*> matches;
+            std::vector<Method*> matches;
             return this->matchMethods(methods, node.fChildren[1].fChildren, &target, &matches);
         }
         default:
@@ -156,7 +176,7 @@ int Compiler::coercionCost(const IRNode& node, const Type& target) {
     return this->coercionCost(node.fType, target);
 }
 
-int Compiler::callCost(const MethodStub& method, const std::vector<IRNode>& args,
+int Compiler::callCost(const Method& method, const std::vector<IRNode>& args,
         const Type* returnType) {
     if (method.fParameters.size() != args.size()) {
         return INT_MAX;
@@ -195,7 +215,7 @@ void Compiler::reportNoMatch(Position position, const String& name,
     this->error(position, msg);
 }
 
-void Compiler::reportAmbiguousMatch(Position position, const std::vector<MethodStub*>& methods,
+void Compiler::reportAmbiguousMatch(Position position, const std::vector<Method*>& methods,
         const std::vector<IRNode>& args, const Type* returnType) {
     String msg = "call '" + methods[0]->fName + "(";
     const char* separator = "";
@@ -217,30 +237,62 @@ void Compiler::reportAmbiguousMatch(Position position, const std::vector<MethodS
 bool Compiler::call(IRNode* method, std::vector<IRNode>* args, IRNode* out) {
     switch (method->fKind) {
         case IRNode::Kind::METHOD_REFERENCE: {
-            const MethodStub& stub = *(MethodStub*) method->fValue.fPtr;
-            if (stub.fParameters.size() != args->size()) {
-                this->error(method->fPosition, "'" + stub.fName + "' expected " +
-                        std::to_string(stub.fParameters.size()) + " arguments, but received " +
+            const Method& m = *(Method*) method->fValue.fPtr;
+            if (m.fParameters.size() != args->size()) {
+                this->error(method->fPosition, "'" + m.fName + "' expected " +
+                        std::to_string(m.fParameters.size()) + " arguments, but received " +
                         std::to_string(args->size()));
                 return false;
             }
             std::vector<IRNode> children;
-            children.push_back(std::move(*method));
+            if (m.fMethodKind == Method::Kind::INIT) {
+                ASSERT(method->fChildren.size() == 0 || (method->fChildren.size() == 1 &&
+                        method->fChildren[0].fKind == IRNode::Kind::VOID));
+                children.push_back(std::move(*method));
+            }
+            else {
+                ASSERT(method->fChildren.size() == 1);
+                IRNode target = std::move(method->fChildren[0]);
+                method->fChildren.pop_back();
+                children.push_back(std::move(*method));
+                if (m.fAnnotations.isClass()) {
+                    if (target.fKind != IRNode::Kind::CLASS_REFERENCE &&
+                            target.fKind != IRNode::Kind::VOID) {
+                        this->error(method->fPosition, "cannot call class " + m.description() +
+                                " on an instance");
+                    }
+                }
+                else {
+                    if (target.fKind == IRNode::Kind::VOID) {
+                        IRNode self;
+                        if (fCurrentMethod.top()->fAnnotations.isClass()) {
+                            this->error(method->fPosition, "cannot call instance method in a "
+                                    "@class context");
+                        }
+                        children.push_back(IRNode(method->fPosition, IRNode::Kind::SELF,
+                                fCurrentClass.top()->type()));
+                    }
+                    else {
+                        ASSERT(target.fType == fCurrentClass.top()->type());
+                        children.push_back(std::move(target));
+                    }
+                }
+            }
             for (int i = 0; i < args->size(); i++) {
                 IRNode converted;
-                if (!this->coerce(&(*args)[i], stub.fParameters[i].fType, &converted)) {
+                if (!this->coerce(&(*args)[i], m.fParameters[i].fType, &converted)) {
                     return false;
                 }
                 children.push_back(std::move(converted));
             }
-            *out = IRNode(method->fPosition, IRNode::Kind::CALL, stub.fReturnType,
+            *out = IRNode(method->fPosition, IRNode::Kind::CALL, m.fReturnType,
                     std::move(children));
             return true;
         }
         case IRNode::Kind::UNRESOLVED_METHOD_REFERENCE: {
-            std::vector<MethodStub*> min;
+            std::vector<Method*> min;
             const Methods& methods = *(Methods*) method->fValue.fPtr;
-            std::vector<MethodStub*> methodPtrs;
+            std::vector<Method*> methodPtrs;
             for (const auto& m : methods.fMethods) {
                 methodPtrs.push_back(m.get());
             }
@@ -250,15 +302,18 @@ bool Compiler::call(IRNode* method, std::vector<IRNode>* args, IRNode* out) {
                 return false;
             }
             if (min.size() > 1) {
-                std::vector<IRNode> methodNodes;
+                std::vector<IRNode> methodsChildren;
+                ASSERT(method->fChildren.size() == 1);
+                methodsChildren.push_back(std::move(method->fChildren[0]));
+                method->fChildren.pop_back();
                 for (const auto m : min) {
                     IRNode ref;
                     this->symbolRef(method->fPosition, m, &ref);
-                    methodNodes.push_back(std::move(ref));
+                    methodsChildren.push_back(std::move(ref));
                 }
                 std::vector<IRNode> children;
                 children.push_back(IRNode(method->fPosition,
-                        IRNode::Kind::UNRESOLVED_METHOD_REFERENCE, std::move(methodNodes)));
+                        IRNode::Kind::UNRESOLVED_METHOD_REFERENCE, std::move(methodsChildren)));
                 children.emplace_back(method->fPosition, IRNode::Kind::ARGUMENTS, std::move(*args));
                 *out = IRNode(method->fPosition, IRNode::Kind::UNRESOLVED_CALL,
                         Type(method->fPosition, Type::Category::UNRESOLVED,
@@ -266,9 +321,26 @@ bool Compiler::call(IRNode* method, std::vector<IRNode>* args, IRNode* out) {
                         std::move(children));
                 return true;
             }
-            IRNode m(min[0]->fPosition, IRNode::Kind::METHOD_REFERENCE,
-                    Type(Position(), Type::Category::METHOD, "<method>"), min[0]);
+            IRNode m(method->fPosition, IRNode::Kind::METHOD_REFERENCE,
+                    Type(Position(), Type::Category::METHOD, "<method>"), min[0],
+                    std::move(method->fChildren));
             return this->call(&m, args, out);
+        }
+        case IRNode::Kind::CLASS_REFERENCE: {
+            Class& cl = *(Class*) method->fValue.fPtr;
+            Symbol* symbol = cl.fSymbolTable["init"];
+            ASSERT(symbol);
+            IRNode init;
+            this->symbolRef(method->fPosition, symbol, &init);
+            IRNode initCall;
+            if (this->call(&init, args, &initCall)) {
+                std::vector<IRNode> children;
+                children.push_back(std::move(initCall));
+                *out = IRNode(method->fPosition, IRNode::Kind::CONSTRUCT, cl.type(),
+                        std::move(children));
+                return true;
+            }
+            return false;
         }
         default:
             printf("%s\n", method->description().c_str());
@@ -519,29 +591,38 @@ bool Compiler::convertBinary(const ASTNode& b, IRNode* out) {
     return false;
 }
 
-void Compiler::symbolRef(Position p, Symbol* symbol, IRNode* out) {
+void Compiler::symbolRef(Position p, Symbol* symbol, IRNode* out, IRNode* target) {
     switch (symbol->fKind) {
         case Symbol::Kind::CLASS:
+            ASSERT(!target);
+            fClasses[((Class*) symbol)->fName] = (Class*) symbol;
             *out = IRNode(p, IRNode::Kind::CLASS_REFERENCE,
                     Type(Position(), Type::Category::CLASS, "<type>"), symbol);
             return;
         case Symbol::Kind::TYPE:
+            ASSERT(!target);
             *out = IRNode(p, IRNode::Kind::TYPE_REFERENCE,
                     Type(Position(), Type::Category::CLASS, "<type>"), symbol);
             return;
         case Symbol::Kind::METHOD:
             *out = IRNode(p, IRNode::Kind::METHOD_REFERENCE,
                     Type(Position(), Type::Category::METHOD, "<method>"), symbol);
+            out->fChildren.push_back(target ? std::move(*target) : IRNode(p, IRNode::Kind::VOID));
             return;
         case Symbol::Kind::METHODS:
             *out = IRNode(p, IRNode::Kind::UNRESOLVED_METHOD_REFERENCE,
                     Type(Position(), Type::Category::METHOD, "<method>"), symbol);
+            out->fChildren.push_back(target ? std::move(*target) : IRNode(p, IRNode::Kind::VOID));
             return;
         case Symbol::Kind::VARIABLE:
             *out = IRNode(p, IRNode::Kind::VARIABLE_REFERENCE,
                     ((Variable*) symbol)->fType, symbol);
+            if (target) {
+                out->fChildren.push_back(std::move(*target));
+            }
             return;
         case Symbol::Kind::PACKAGE:
+            ASSERT(!target);
             *out = IRNode(p, IRNode::Kind::PACKAGE_REFERENCE,
                     Type(Position(), Type::Category::PACKAGE, "<package>"), symbol);
             return;
@@ -630,7 +711,7 @@ bool Compiler::convertDot(const ASTNode& d, IRNode* out) {
     SymbolTable* st;
     switch (left.fKind) {
         case IRNode::Kind::CLASS_REFERENCE: {
-            ClassStub& cl = *((ClassStub*) left.fValue.fPtr);
+            Class& cl = *((Class*) left.fValue.fPtr);
             st = &cl.fSymbolTable;
             name = "class " + cl.fName;
             break;
@@ -641,18 +722,37 @@ bool Compiler::convertDot(const ASTNode& d, IRNode* out) {
             name = "package " + p.fName;
             break;
         }
-        default: this->error(d.fPosition, "cannot use '.' on value of type '" + left.fType.fName +
-                "'");
+        default:
+            if (left.fType.fCategory == Type::Category::CLASS) {
+                Class* cl = this->resolveClass(left.fType);
+                if (!cl) {
+                    return false;
+                }
+                st = &cl->fSymbolTable;
+            }
+            else {
+                this->error(d.fPosition, "cannot use '.' on value of type '" + left.fType.fName +
+                        "'");
+            }
     }
     Symbol* symbol = (*st)[d.fText];
     if (symbol) {
-        this->symbolRef(d.fPosition, symbol, out);
+        this->symbolRef(d.fPosition, symbol, out, &left);
         return true;
     }
     else {
-        this->error(d.fPosition, name + " does not contain '" + d.fText + "'");
+        this->error(d.fPosition, name + " does not have a member named '" + d.fText + "'");
         return false;
     }
+}
+
+bool Compiler::convertSelf(const ASTNode& s, IRNode* out) {
+    ASSERT(s.fKind == ASTNode::Kind::SELF);
+    if (fCurrentMethod.top()->fAnnotations.isClass()) {
+        this->error(s.fPosition, "cannot reference 'self' from a @class method");
+    }
+    *out = IRNode(s.fPosition, IRNode::Kind::SELF, fCurrentClass.top()->type());
+    return true;
 }
 
 bool Compiler::doConvertExpression(const ASTNode& e, IRNode* out) {
@@ -673,6 +773,8 @@ bool Compiler::doConvertExpression(const ASTNode& e, IRNode* out) {
             return true;
         case ASTNode::Kind::PREFIX:
             return this->convertPrefix(e, out);
+        case ASTNode::Kind::SELF:
+            return this->convertSelf(e, out);
         default:
             printf("unhandled expression: %s\n", e.description().c_str());
             abort();
@@ -716,6 +818,29 @@ static Type variable_type(Type exprType) {
     return std::move(exprType);
 }
 
+IRNode Compiler::resolve(IRNode* value) {
+    switch (value->fKind) {
+        case IRNode::Kind::UNRESOLVED_METHOD_REFERENCE:
+            this->error(value->fPosition, "ambiguous reference to method '" +
+                    ((Methods*) value->fValue.fPtr)->fMethods[0]->fName + "'");
+            break;
+        case IRNode::Kind::UNRESOLVED_CALL: {
+            std::vector<Method*> methods;
+            for (int i = 1; i < value->fChildren[0].fChildren.size(); ++i) {
+                const auto& m = value->fChildren[0].fChildren[i];
+                ASSERT(m.fKind == IRNode::Kind::METHOD_REFERENCE);
+                methods.push_back((Method*) m.fValue.fPtr);
+            }
+            this->reportAmbiguousMatch(value->fPosition, methods, value->fChildren[1].fChildren,
+                    nullptr);
+            break;
+        }
+        default:
+            break;
+    }
+    return std::move(*value);
+}
+
 bool Compiler::convertTarget(const ASTNode& t, IRNode* value, IRNode* out) {
     switch (t.fKind) {
         case ASTNode::Kind::IDENTIFIER: {
@@ -728,6 +853,7 @@ bool Compiler::convertTarget(const ASTNode& t, IRNode* value, IRNode* out) {
                 type = *(Type*) typeNode.fValue.fPtr;
             }
             else {
+                *value = this->resolve(value);
                 type = variable_type(value->fType);
             }
             if (!this->coerce(value, type, value)) {
@@ -824,8 +950,14 @@ bool Compiler::convertStatement(const ASTNode& s, IRNode* out) {
             return this->convertBlock(s, out);
         case ASTNode::Kind::BINARY:
             return this->convertBinary(s, out);
-        case ASTNode::Kind::CALL:
-            return this->convertCall(s, out);
+        case ASTNode::Kind::CALL: {
+            bool result = this->convertCall(s, out);
+            if (!result) {
+                return false;
+            }
+            *out = resolve(out);
+            return true;
+        }
         case ASTNode::Kind::IF:
             return this->convertIf(s, out);
         case ASTNode::Kind::RETURN:
@@ -892,7 +1024,7 @@ bool Compiler::convertType(const ASTNode& t, IRNode* out) {
     }
 }
 
-void Compiler::compile(const SymbolTable& parent, const MethodStub& method) {
+void Compiler::compile(const SymbolTable& parent, const Method& method) {
     if (method.fBody.fKind == ASTNode::Kind::VOID) {
         return;
     }
@@ -907,7 +1039,9 @@ void Compiler::compile(const SymbolTable& parent, const MethodStub& method) {
         fSymbolTable = nullptr;
         return;
     }
-    fCodeGenerator.writeMethod(*fCurrentClass.top(), method, block);
+    if (fErrors.fErrorCount == 0) {
+        fCodeGenerator.writeMethod(*fCurrentClass.top(), method, block);
+    }
     fSymbolTable = nullptr;
 }
 
@@ -918,19 +1052,19 @@ void Compiler::compile(const SymbolTable& symbols) {
                 this->compile(((Package&) s).fSymbolTable);
                 break;
             case Symbol::Kind::CLASS:
-                fCurrentClass.push((ClassStub*) &s);
-                this->compile(((ClassStub&) s).fSymbolTable);
+                fCurrentClass.push((Class*) &s);
+                this->compile(((Class&) s).fSymbolTable);
                 fCurrentClass.pop();
                 break;
             case Symbol::Kind::METHOD:
-                fCurrentMethod.push((MethodStub*) &s);
-                this->compile(symbols, (MethodStub&) s);
+                fCurrentMethod.push((Method*) &s);
+                this->compile(symbols, (Method&) s);
                 fCurrentMethod.pop();
                 break;
             case Symbol::Kind::METHODS:
                 for (const auto& m : ((Methods&) s).fMethods) {
-                    fCurrentMethod.push((MethodStub*) m.get());
-                    this->compile(symbols, (MethodStub&) *m);
+                    fCurrentMethod.push((Method*) m.get());
+                    this->compile(symbols, (Method&) *m);
                     fCurrentMethod.pop();
                 }
                 break;
@@ -947,7 +1081,6 @@ void Compiler::compile() {
 }
 
 void Compiler::error(Position position, String msg) {
-    printf("%s:%d:%d: %s\n", position.fName->c_str(), position.fLine, position.fColumn,
-            msg.c_str());
+    fErrors.error(position, msg);
 }
 

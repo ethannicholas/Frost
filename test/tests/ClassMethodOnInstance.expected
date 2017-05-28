@@ -1,0 +1,2 @@
+ClassMethodOnInstance.panda:16:9: cannot call class method m1() (ClassMethodOnInstance.panda:5:5) on an instance
+1 error

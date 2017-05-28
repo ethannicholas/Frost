@@ -13,7 +13,7 @@ struct Position {
     , fLine(line)
     , fColumn(column) {}
 
-    String description() {
+    String description() const {
         if (fName) {
             return *fName + ":" + std::to_string(fLine) + ":" + std::to_string(fColumn);
         }

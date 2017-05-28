@@ -1,0 +1,28 @@
+class Overloading {
+    init() {
+    }
+    
+    method instanceTest():builtin_int8 {
+        return 8
+    }
+
+    method instanceTest():builtin_int64 {
+        return 64
+    }
+
+    @class
+    method classTest():builtin_int8 {
+        return 8
+    }
+
+    @class
+    method classTest():builtin_int64 {
+        return 64
+    }
+
+    @class
+    method main() {
+        print(classTest())
+        print(Overloading().classTest())
+    }
+}

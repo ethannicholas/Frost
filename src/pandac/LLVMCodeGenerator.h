@@ -5,10 +5,16 @@
 
 #include <ostream>
 #include <sstream>
+#include <unordered_set>
 
 class LLVMCodeGenerator : public CodeGenerator {
 public:
     LLVMCodeGenerator(std::ostream* out);
+
+    ~LLVMCodeGenerator() {
+        fOut << fTypeDeclarations.str();
+        fOut << fMethods.str();
+    }
 
     void writeMethod(const IRNode& cl, const IRNode& method);
 
@@ -19,6 +25,10 @@ public:
     };
 
 private:
+    void writeType(const Type& type);
+
+    size_t sizeOf(const Type& type);
+
     String llvmType(const Type& type);
 
     String nextVar();
@@ -28,7 +38,7 @@ private:
     void createBlock(const String& label, std::ostream& out);
 
     String getVariableReference(const Variable& var, std::ostream& out);
-    
+
     String getAndReference(const IRNode& left, const IRNode& right, std::ostream& out);
 
     String getOrReference(const IRNode& left, const IRNode& right, std::ostream& out);
@@ -41,16 +51,20 @@ private:
 
     String getPrefixReference(const IRNode& expr, std::ostream& out);
 
-    String getCallReference(const IRNode& call, std::ostream& out);
-    
+    String getCallReference(const IRNode& call, const String& target, std::ostream& out);
+
+    String getConstructReference(const IRNode& construct, std::ostream& out);
+
+    String getSelfReference(const IRNode& self, std::ostream& out);
+
     String getReference(const IRNode& stmt, std::ostream& out);
 
     String getTypedReference(const IRNode& stmt, std::ostream& out);
 
-    void writeCall(const IRNode& stmt, std::ostream& out);
+    void writeCall(const IRNode& stmt, const String& target, std::ostream& out);
 
     void writeIf(const IRNode& s, std::ostream& out);
-    
+
     void writeVarTarget(const IRNode& var, const IRNode* value, std::ostream& out);
 
     void writeVar(const IRNode& var, std::ostream& out);
@@ -64,22 +78,28 @@ private:
     void writeAssignment(const IRNode& a, std::ostream& out);
 
     void writeReturn(const IRNode& ret, std::ostream& out);
-    
+
     void writeStatement(const IRNode& stmt, std::ostream& out);
 
     void writeBlock(const IRNode& block, std::ostream& out);
 
-    String methodName(const MethodStub& name);
+    String methodName(const Method& name);
 
     String varName(const Variable& var);
 
-    void writeMethod(const ClassStub& cl, const MethodStub& method, const IRNode& body) override;
+    void writeMethod(const Class& cl, const Method& method, const IRNode& body) override;
 
     int fTmpVars = 1;
 
     int fLabels = 0;
 
     std::stringstream fMethodHeader;
+
+    std::unordered_set<String> fWrittenTypes;
+
+    std::stringstream fTypeDeclarations;
+
+    std::stringstream fMethods;
 
     std::ostream& fOut;
 

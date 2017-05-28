@@ -47,3 +47,7 @@ add_executable(pandac
     src/pandac/Scanner.cpp
     src/parser/runtime/GLRParser.cpp
 )
+
+add_executable(testrunner
+    test/TestRunner.cpp
+)

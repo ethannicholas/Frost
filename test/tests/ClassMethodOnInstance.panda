@@ -1,0 +1,18 @@
+class ClassMethodOnInstance {
+    init() {
+    }
+
+    @class
+    method m1() {
+    }
+
+    method m2() {
+    }
+
+    @class
+    method main() {
+        m1()
+        ClassMethodOnInstance().m2()
+        ClassMethodOnInstance().m1()
+    }
+}

@@ -2,8 +2,9 @@
 
 #include "ASTNode.h"
 #include "CodeGenerator.h"
+#include "ErrorReporter.h"
 #include "IRNode.h"
-#include "MethodStub.h"
+#include "Method.h"
 #include "Scanner.h"
 #include "Symbol.h"
 #include "SymbolTable.h"
@@ -14,8 +15,10 @@
 
 class Compiler {
 public:
-    Compiler(CodeGenerator* codeGenerator)
-    : fCodeGenerator(*codeGenerator) {
+    Compiler(CodeGenerator* codeGenerator, ErrorReporter* errors)
+    : fScanner(errors)
+    , fCodeGenerator(*codeGenerator)
+    , fErrors(*errors) {
         fRoot.add(std::unique_ptr<Symbol>(new Type(Position(), Type::Category::BUILTIN_INT,
                 "builtin_bit", 1)));
         fRoot.add(std::unique_ptr<Symbol>(new Type(Position(), Type::Category::BUILTIN_INT,
@@ -34,7 +37,8 @@ public:
                 "builtin_uint32", 32)));
         fRoot.add(std::unique_ptr<Symbol>(new Type(Position(), Type::Category::BUILTIN_UINT,
                 "builtin_uint64", 64)));
-        fRoot.add(std::unique_ptr<Symbol>(new MethodStub(Position(), "print", 
+        fRoot.add(std::unique_ptr<Symbol>(new Method(Position(), nullptr,
+                Annotations(Annotations::CLASS), Method::Kind::METHOD, "print",
                 { { "v", (Type&) *fRoot["builtin_int64"] } }, Type::Void(), ASTNode())));
     }
 
@@ -67,22 +71,24 @@ private:
      * required return type, storing them in outMatches. Returns a number representing the match
      * cost of the method call (INT_MAX in the case where no matches were found.)
      */
-    int matchMethods(const std::vector<MethodStub*>& methods, const std::vector<IRNode>& args,
-        const Type* returnType, std::vector<MethodStub*>* outMatches);
+    int matchMethods(const std::vector<Method*>& methods, const std::vector<IRNode>& args,
+        const Type* returnType, std::vector<Method*>* outMatches);
 
     /**
      * Determine the "cost" (see coercionCost) of calling a method with the provided parameters and
      * (optional) expected return type. If returnType is null, it is ignored for matching purposes.
      */
-    int callCost(const MethodStub& method, const std::vector<IRNode>& args, const Type* returnType);
+    int callCost(const Method& method, const std::vector<IRNode>& args, const Type* returnType);
 
     void reportNoMatch(Position position, const String& name, const std::vector<IRNode>& args,
             const Type* returnType);
 
-    void reportAmbiguousMatch(Position position, const std::vector<MethodStub*>& methods,
+    void reportAmbiguousMatch(Position position, const std::vector<Method*>& methods,
             const std::vector<IRNode>& args, const Type* returnType);
 
     bool call(IRNode* method, std::vector<IRNode>* args, IRNode* out);
+
+    Class* resolveClass(Type t);
 
     bool foldBits(Position p, const IRNode& left, Operator op, const IRNode& right, IRNode* out);
 
@@ -94,13 +100,17 @@ private:
 
     bool convertCall(const ASTNode& b, IRNode* out);
 
-    void symbolRef(Position p, Symbol* symbol, IRNode* out);
+    void symbolRef(Position p, Symbol* symbol, IRNode* out, IRNode* target = nullptr);
 
     bool convertIdentifier(const ASTNode& i, IRNode* out);
 
     bool convertDot(const ASTNode& d, IRNode* out);
 
+    bool convertSelf(const ASTNode& s, IRNode* out);
+
     bool convertExpression(const ASTNode& e, IRNode* out);
+
+    IRNode resolve(IRNode* value);
 
     bool doConvertExpression(const ASTNode& e, IRNode* out);
     
@@ -122,7 +132,7 @@ private:
 
     bool convertType(const ASTNode& method, IRNode* out);
 
-    void compile(const SymbolTable& parent, const MethodStub& method);
+    void compile(const SymbolTable& parent, const Method& method);
 
     void compile(const SymbolTable& symbols);
 
@@ -132,11 +142,15 @@ private:
     
     CodeGenerator& fCodeGenerator;
 
+    ErrorReporter& fErrors;
+
     SymbolTable fRoot;
 
     SymbolTable* fSymbolTable;
 
-    std::stack<MethodStub*> fCurrentMethod;
+    std::stack<Method*> fCurrentMethod;
 
-    std::stack<ClassStub*> fCurrentClass;
+    std::stack<Class*> fCurrentClass;
+
+    std::unordered_map<String, Class*> fClasses;
 };

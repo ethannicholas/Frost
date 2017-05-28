@@ -1,0 +1,11 @@
+AmbiguousMatch.panda:30:9: call 'test(<integer>)' is ambiguous.
+The following methods are all equally good matches:
+    method test(builtin_int8) (AmbiguousMatch.panda:2:5)
+    method test(builtin_int16) (AmbiguousMatch.panda:6:5)
+    method test(builtin_int32) (AmbiguousMatch.panda:10:5)
+    method test(builtin_int64) (AmbiguousMatch.panda:14:5)
+AmbiguousMatch.panda:31:18: call 'test2(<integer>)' is ambiguous.
+The following methods are all equally good matches:
+    function test2(builtin_int8) (AmbiguousMatch.panda:18:5)
+    function test2(builtin_int64) (AmbiguousMatch.panda:23:5)
+2 errors

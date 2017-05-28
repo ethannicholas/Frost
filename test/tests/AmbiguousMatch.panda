@@ -1,0 +1,33 @@
+class AmbiguousMatch {
+    @class
+    method test(x:builtin_int8) {
+    }
+
+    @class
+    method test(x:builtin_int16) {
+    }
+
+    @class
+    method test(x:builtin_int32) {
+    }
+
+    @class
+    method test(x:builtin_int64) {
+    }
+
+    @class
+    function test2(x:builtin_int8):builtin_int64 {
+        return 1
+    }
+
+    @class
+    function test2(x:builtin_int64):builtin_int64 {
+        return 1
+    }
+
+    @class
+    method main() {
+        test(0)
+        def a := test2(1)
+    }
+}

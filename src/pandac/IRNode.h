@@ -7,37 +7,68 @@
 
 #include <vector>
 
+/**
+ * A node in the IR (intermediate representation) of the code. IR is generated from the AST by the
+ * Compiler class and then fed to the CodeGenerator.
+ */
 struct IRNode {
     enum class Kind {
+        // a list of arguments to a method
         ARGUMENTS,
+        // a binary operation
         BINARY,
+        // a literal bit (true or false)
         BIT,
+        // a list of statements
         BLOCK,
+        // a method call
         CALL,
+        // a literal reference to a class
         CLASS_REFERENCE,
+        // a constant declaration statement
         CONSTANT,
+        // an object construction expression
+        CONSTRUCT,
+        // a single declaration within a var, def, constant, or property (e.g. 'var x := 1, y' has
+        // two declarations, 'x := 1' and 'y')
         DECLARATION,
+        // a def declaration statement
         DEF,
+        // an invalid IR node
         ERROR,
-        EXPRESSION,
-        FILE,
+        // an if statement
         IF,
+        // a literal integer
         INT,
-        METHOD,
+        // a reference to a method, such as 'String.convert'
         METHOD_REFERENCE,
+        // the name of a package
         PACKAGE_REFERENCE,
+        // formal parameter of a method
         PARAMETER,
+        // list of method parameters
         PARAMETERS,
+        // a prefix expression (-x, !x, !!x)
         PREFIX,
+        // a property declaration statement
         PROPERTY,
+        // a return statement
         RETURN,
+        // the 'self' keyword
+        SELF,
+        // represents a tuple target in a declaration statement, such as in 'var (x, y) := tuple'
         TUPLE_TARGET,
-        TYPE,
+        // literal reference to a type name, such as 'String'
         TYPE_REFERENCE,
+        // an ambiguous method reference which could refer to multiple methods
         UNRESOLVED_METHOD_REFERENCE,
+        // an ambiguous method call, where the return type is needed to disambiguate it
         UNRESOLVED_CALL,
+        // a reference to a var, def, constant, or property
         VARIABLE_REFERENCE,
+        // a var declaration statement
         VAR,
+        // a placeholder representing the absence of a node
         VOID
     };
 
@@ -52,6 +83,11 @@ struct IRNode {
     : fPosition(position)
     , fKind(kind) {}
 
+    IRNode(Position position, Kind kind, Type type)
+    : fPosition(position)
+    , fKind(kind)
+    , fType(std::move(type)) {}
+
     IRNode(Position position, Kind kind, String text)
     : fPosition(position)
     , fKind(kind)
@@ -61,14 +97,14 @@ struct IRNode {
     IRNode(Position position, Kind kind, Type type, uint64_t value)
     : fPosition(position)
     , fKind(kind)
-    , fType(type) {
+    , fType(std::move(type)) {
         fValue.fInt = value;
     }
 
     IRNode(Position position, Kind kind, Type type, uint64_t value, std::vector<IRNode> children)
     : fPosition(position)
     , fKind(kind)
-    , fType(type)
+    , fType(std::move(type))
     , fChildren(std::move(children)) {
         fValue.fInt = value;
     }
@@ -76,21 +112,29 @@ struct IRNode {
     IRNode(Position position, Kind kind, Type type, double value)
     : fPosition(position)
     , fKind(kind)
-    , fType(type) {
+    , fType(std::move(type)) {
         fValue.fFloat = value;
     }
 
     IRNode(Position position, Kind kind, Type type, bool value)
     : fPosition(position)
     , fKind(kind)
-    , fType(type) {
+    , fType(std::move(type)) {
         fValue.fBool = value;
     }
 
     IRNode(Position position, Kind kind, Type type, void* value)
     : fPosition(position)
     , fKind(kind)
-    , fType(type) {
+    , fType(std::move(type)) {
+        fValue.fPtr = value;
+    }
+
+    IRNode(Position position, Kind kind, Type type, void* value, std::vector<IRNode> children)
+    : fPosition(position)
+    , fKind(kind)
+    , fType(std::move(type))
+    , fChildren(std::move(children)) {
         fValue.fPtr = value;
     }
 
@@ -139,14 +183,12 @@ struct IRNode {
             case Kind::CALL:                        result += "Call";                        break;
             case Kind::CLASS_REFERENCE:             result += "ClassReference";              break;
             case Kind::CONSTANT:                    result += "Constant";                    break;
+            case Kind::CONSTRUCT:                   result += "Construct";                   break;
             case Kind::DECLARATION:                 result += "Declaration";                 break;
             case Kind::DEF:                         result += "Def";                         break;
             case Kind::ERROR:                       result += "<error>";                     break;
-            case Kind::EXPRESSION:                  result += "Expression";                  break;
-            case Kind::FILE:                        result += "File";                        break;
             case Kind::IF:                          result += "If";                          break;
             case Kind::INT:                         result += "Int"; i = 1;                  break;
-            case Kind::METHOD:                      result += "Method";                      break;
             case Kind::METHOD_REFERENCE:            result += "MethodReference"; p = 1;      break;
             case Kind::PACKAGE_REFERENCE:           result += "PackageReference"; p = 1;     break;
             case Kind::PARAMETER:                   result += "Parameter";                   break;
@@ -154,14 +196,14 @@ struct IRNode {
             case Kind::PREFIX:                      result += "Prefix"; o = 1;               break;
             case Kind::PROPERTY:                    result += "Property";                    break;
             case Kind::RETURN:                      result += "Return";                      break;
+            case Kind::SELF:                        result += "Self";                        break;
             case Kind::TUPLE_TARGET:                result += "TupleTarget";                 break;
-            case Kind::TYPE:                        result += "Type";                        break;
             case Kind::TYPE_REFERENCE:              result += "TypeReference"; p = 1;        break;
             case Kind::UNRESOLVED_METHOD_REFERENCE: result += "UnresolvedMethodReference";   break;
             case Kind::UNRESOLVED_CALL:             result += "UnresolvedCall";              break;
             case Kind::VAR:                         result += "Var";                         break;
-            case Kind::VOID:                        result += "Void";                        break;
             case Kind::VARIABLE_REFERENCE:          result += "VariableReference"; p = true; break;
+            case Kind::VOID:                        result += "Void";                        break;
         }
         if (fType.fCategory != Type::Category::VOID) {
             result += ":" + fType.fName;

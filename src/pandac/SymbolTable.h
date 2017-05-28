@@ -26,14 +26,14 @@ public:
             if (symbol->fKind == Symbol::Kind::METHOD) {
                 switch (found->second->fKind) {
                     case Symbol::Kind::METHODS:
-                        ((Methods&) *found->second).fMethods.push_back(std::unique_ptr<MethodStub>(
-                                (MethodStub*) symbol.release()));
+                        ((Methods&) *found->second).fMethods.push_back(std::unique_ptr<Method>(
+                                (Method*) symbol.release()));
                         return;
                     case Symbol::Kind::METHOD: {
-                        std::vector<std::unique_ptr<MethodStub>> methods;
-                        methods.push_back(std::unique_ptr<MethodStub>(
-                                (MethodStub*) found->second.release()));
-                        methods.emplace_back((MethodStub*) symbol.release());
+                        std::vector<std::unique_ptr<Method>> methods;
+                        methods.push_back(std::unique_ptr<Method>(
+                                (Method*) found->second.release()));
+                        methods.emplace_back((Method*) symbol.release());
                         fSymbols[name] = std::unique_ptr<Symbol>(new Methods(std::move(methods)));
                         return;
                     }

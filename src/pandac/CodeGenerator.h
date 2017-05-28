@@ -1,8 +1,8 @@
 #pragma once
 
-#include "ClassStub.h"
+#include "Class.h"
 #include "IRNode.h"
-#include "MethodStub.h"
+#include "Method.h"
 #include "Variable.h"
 
 #include <ostream>
@@ -10,5 +10,5 @@
 
 class CodeGenerator {
 public:
-    virtual void writeMethod(const ClassStub& cl, const MethodStub& method, const IRNode& body) = 0;
+    virtual void writeMethod(const Class& cl, const Method& method, const IRNode& body) = 0;
 };

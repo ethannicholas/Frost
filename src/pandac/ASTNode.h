@@ -6,7 +6,11 @@
 
 #include <vector>
 
+/**
+ * A node in the parse tree.
+ */
 struct ASTNode {
+    // see panda.grammar to see which constructs result in which kinds of nodes
     enum class Kind {
         ANNOTATION,
         ANNOTATIONS,
