@@ -326,6 +326,7 @@ String LLVMCodeGenerator::getCallReference(const IRNode& call, std::ostream& out
     for (int i = 1; i < call.fChildren.size(); ++i) {
         args.push_back(this->getTypedReference(call.fChildren[i], out));
     }
+    ASSERT(call.fChildren[0].fKind == IRNode::Kind::METHOD_REFERENCE);
     Method* m = (Method*) call.fChildren[0].fValue.fPtr;
     String target = args.size() ? args[0] : "";
     String methodRef = this->getMethodReference(target, m, out);

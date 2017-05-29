@@ -125,14 +125,14 @@ struct IRNode {
         fValue.fBool = value;
     }
 
-    IRNode(Position position, Kind kind, Type type, void* value)
+    IRNode(Position position, Kind kind, Type type, const void* value)
     : fPosition(position)
     , fKind(kind)
     , fType(std::move(type)) {
         fValue.fPtr = value;
     }
 
-    IRNode(Position position, Kind kind, Type type, void* value, std::vector<IRNode> children)
+    IRNode(Position position, Kind kind, Type type, const void* value, std::vector<IRNode> children)
     : fPosition(position)
     , fKind(kind)
     , fType(std::move(type))
@@ -269,7 +269,7 @@ struct IRNode {
         uint64_t fInt;
         double fFloat;
         bool fBool;
-        void* fPtr;
+        const void* fPtr;
     } fValue;
     
     std::vector<IRNode> fChildren;

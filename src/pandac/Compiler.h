@@ -101,7 +101,25 @@ private:
 
     bool convertCall(const ASTNode& b, IRNode* out);
 
-    void symbolRef(Position p, Symbol* symbol, IRNode* out, IRNode* target = nullptr);
+    /**
+     * Adds a method to a vector, replacing an existing match if present.
+     */
+    void addMethod(Position p, const SymbolTable& st, Method* m, std::vector<IRNode>* methods);
+
+    /**
+     * Adds all methods matching the specified name to the vector, recursively across symbol tables.
+     * More recent (i.e. closer to the provided symbol table) method versions will override older
+     * ones, as in inheritance.
+     */
+    void addAllMethods(Position p, const SymbolTable& st, const String& name,
+            std::vector<IRNode>* methods, bool start = true);
+
+    void symbolRef(Position p, const SymbolTable& st, Symbol* symbol, IRNode* out,
+            IRNode* target = nullptr);
+
+    // as symbolRef, but expands to include all superclass / interface methods with that name
+    void symbolRefAllMethods(Position p, const SymbolTable& st, Symbol* symbol, IRNode* out,
+            IRNode* target = nullptr);
 
     bool convertIdentifier(const ASTNode& i, IRNode* out);
 

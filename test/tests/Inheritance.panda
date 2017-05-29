@@ -5,9 +5,13 @@ class Super {
     function foo():builtin_int64 {
         return 1
     }
+
+    function foo(x:builtin_int64):builtin_int64 {
+        return x * 2
+    }
 }
 
-class Sub : Super {
+class S1 : Super {
     init() {
     }
 
@@ -15,12 +19,49 @@ class Sub : Super {
     function foo():builtin_int64 {
         return 2
     }
+}
 
+class S2 : Super {
+    init() {
+    }
+
+    @override
+    function foo(x:builtin_int64):builtin_int64 {
+        return x * 3
+    }
+}
+
+class S3 : S2 {
+    init() {
+    }
+
+    @override
+    function foo():builtin_int64 {
+        return 5
+    }
+}
+
+class Inheritance {
     @class
     method main() {
         var s:Super := Super()
         print(s.foo())
-        s := Sub()
+        print(s.foo(12))
+        s := S1()
         print(s.foo())
+        print(s.foo(12))
+        s := S2()
+        print(s.foo())
+        print(s.foo(12))
+        s := S3()
+        print(s.foo())
+        print(s.foo(12))
+
+        var s2:S2 := S2()
+        print(s2.foo())
+        print(s2.foo(12))
+        s2 := S3()
+        print(s2.foo())
+        print(s2.foo(12))
     }
 }

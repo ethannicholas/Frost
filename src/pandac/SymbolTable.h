@@ -8,15 +8,15 @@
 
 class SymbolTable {
 public:
-    SymbolTable()
-    : fParent(nullptr) {
+    SymbolTable() {
         static bool rootCreated = false;
         ASSERT(!rootCreated);
         rootCreated = true;
     }
 
-    SymbolTable(const SymbolTable* parent)
-    : fParent(parent) {}
+    SymbolTable(const SymbolTable* parent) {
+        fParents.push_back(parent);
+    }
 
     SymbolTable(const SymbolTable&) = delete;
 
@@ -56,8 +56,11 @@ public:
         if (found != fSymbols.end()) {
             return found->second.get();
         }
-        if (fParent) {
-            return (*fParent)[name];
+        for (const auto parent : fParents) {
+            Symbol* result = (*parent)[name];
+            if (result) {
+                return result;
+            }
         }
         return nullptr;
     }
@@ -81,7 +84,7 @@ public:
     }
 
 private:
-    const SymbolTable* fParent;
+    std::vector<const SymbolTable*> fParents;
 
     std::unordered_map<String, std::unique_ptr<Symbol>> fSymbols;
 

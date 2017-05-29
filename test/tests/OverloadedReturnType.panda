@@ -23,6 +23,6 @@ class Overloading {
     @class
     method main() {
         print(classTest())
-        print(Overloading().classTest())
+        print(Overloading.classTest())
     }
 }
