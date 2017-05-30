@@ -44,9 +44,13 @@ private:
 
     ClassConstant& getClassConstant(const Class& cl);
 
+    String llvmTypeName(const Type& type);
+
     String llvmType(const Type& type);
 
     String llvmType(const Method& m);
+
+    std::vector<const Field*> getAllFields(const Class& cl);
 
     String nextVar();
 
@@ -79,6 +83,8 @@ private:
     String getConstructReference(const IRNode& construct, std::ostream& out);
 
     String getSelfReference(const IRNode& self, std::ostream& out);
+
+    String getFieldReference(const IRNode& self, std::ostream& out);
 
     String getReference(const IRNode& stmt, std::ostream& out);
 
@@ -129,4 +135,6 @@ private:
     Compiler* fCompiler;
 
     std::unordered_map<String, ClassConstant> fClassConstants;
+
+    std::unordered_map<String, size_t> fSizes;
 };

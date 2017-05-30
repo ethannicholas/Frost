@@ -56,20 +56,91 @@ void Scanner::error(Position position, String msg) {
     fErrors.error(position, msg);
 }
 
-std::unique_ptr<Method> Scanner::convertMethod(ASTNode* m, const SymbolTable& st,
-        Class* owner) {
-    if (m->fText == "init") {
-        this->error(m->fPosition, "methods and functions may not be named 'init'");
+void Scanner::convertDeclaration(const Annotations& annotations, Field::Kind kind,
+        const ASTNode& d, Class* owner, std::vector<int> tupleIndices) {
+    ASSERT(d.fKind == ASTNode::Kind::DECLARATION);
+    ASSERT(d.fChildren.size() == 1 || d.fChildren.size() == 2);
+    const ASTNode& target = d.fChildren[0];
+    const ASTNode* value;
+    if (d.fChildren.size() == 2) {
+        value = &d.fChildren[1];
     }
+    else {
+        value = nullptr;
+    }
+    switch (target.fKind) {
+        case ASTNode::Kind::IDENTIFIER: {
+            Type type;
+            if (target.fChildren.size() == 1) {
+                type = this->convertType(target.fChildren[0], owner->fSymbolTable);
+            }
+            else {
+                ASSERT(target.fChildren.size() == 0);
+                if (!value) {
+                    this->error(d.fPosition, "field '" + target.fText +
+                            "' has neither a type nor a value");
+                    return;
+                }
+            }
+            Field* field = new Field(d.fPosition, owner, annotations, kind, target.fText, type);
+            owner->fFields.push_back(field);
+            owner->fSymbolTable.add(std::unique_ptr<Field>(field));
+            if (type == Type::Void()) {
+                int index = -1;
+                for (int i = 0; i < fUntypedFieldValues.size(); ++i) {
+                    if (fUntypedFieldValues[i] == value) {
+                        index = i;
+                        break;
+                    }
+                }
+                if (index == -1) {
+                    index = fUntypedFieldValues.size();
+                    fUntypedFieldValues.push_back(value);
+                }
+                fUntypedFields.push_back({
+                    field,
+                    index,
+                    tupleIndices
+                });
+            }
+            break;
+        }
+        case ASTNode::Kind::TUPLE_TARGET:
+            abort();
+        default:
+            abort();
+    }
+}
+
+void Scanner::convertField(ASTNode* f, SymbolTable* st, Class* owner) {
+    ASSERT(f->fKind == ASTNode::Kind::FIELD);
+    ASSERT(f->fChildren.size() == 3);
+    ASSERT(f->fChildren[0].fKind == ASTNode::Kind::DOCCOMMENT);
+    Annotations annotations = this->convertAnnotations(f->fChildren[1]);
+    Field::Kind kind;
+    switch (f->fChildren[2].fKind) {
+        case ASTNode::Kind::VAR:      kind = Field::Kind::VAR;      break;
+        case ASTNode::Kind::DEF:      kind = Field::Kind::DEF;      break;
+        case ASTNode::Kind::PROPERTY: kind = Field::Kind::PROPERTY; break;
+        case ASTNode::Kind::CONSTANT: kind = Field::Kind::CONSTANT; break;
+        default: abort();
+    }
+    for (const auto& astDecl : f->fChildren[2].fChildren) {
+        this->convertDeclaration(annotations, kind, astDecl, owner, { });
+    }
+}
+
+void Scanner::convertMethod(ASTNode* m, SymbolTable* st, Class* owner) {
+    ASSERT(m->fText != "init");
     ASSERT(m->fChildren.size() == 5);
     ASSERT(m->fChildren[0].fKind == ASTNode::Kind::DOCCOMMENT);
     Annotations annotations = this->convertAnnotations(m->fChildren[1]);
     ASSERT(m->fChildren[2].fKind == ASTNode::Kind::PARAMETERS);
     std::vector<Method::Parameter> parameters;
     for (const auto& p : m->fChildren[2].fChildren) {
-        parameters.push_back(this->convertParameter(p, st));
+        parameters.push_back(this->convertParameter(p, *st));
     }
-    Type returnType = this->convertType(m->fChildren[3], st);
+    Type returnType = this->convertType(m->fChildren[3], *st);
     Method::Kind kind;
     switch (m->fKind) {
         case ASTNode::Kind::METHOD:
@@ -84,23 +155,22 @@ std::unique_ptr<Method> Scanner::convertMethod(ASTNode* m, const SymbolTable& st
     Method* result = new Method(m->fPosition, owner, annotations, kind, m->fText,
             std::move(parameters), std::move(returnType), std::move(m->fChildren[4]));
     owner->fMethods.push_back(result);
-    return std::unique_ptr<Method>(result);
+    st->add(std::unique_ptr<Method>(result));
 }
 
-std::unique_ptr<Method> Scanner::convertInit(ASTNode* i, const SymbolTable& st,
-        Class* owner) {
+void Scanner::convertInit(ASTNode* i, SymbolTable* st, Class* owner) {
     ASSERT(i->fChildren.size() == 4);
     ASSERT(i->fChildren[0].fKind == ASTNode::Kind::DOCCOMMENT);
     Annotations annotations = this->convertAnnotations(i->fChildren[1]);
     ASSERT(i->fChildren[2].fKind == ASTNode::Kind::PARAMETERS);
     std::vector<Method::Parameter> parameters;
     for (const auto& p : i->fChildren[2].fChildren) {
-        parameters.push_back(this->convertParameter(p, st));
+        parameters.push_back(this->convertParameter(p, *st));
     }
     Method* result = new Method(i->fPosition, owner, annotations, Method::Kind::INIT, "init",
             std::move(parameters), Type(), std::move(i->fChildren[3]));
     owner->fMethods.push_back(result);
-    return std::unique_ptr<Method>(result);
+    st->add(std::unique_ptr<Method>(result));
 }
 
 void Scanner::scanClass(String contextName, SymbolTable* parent, ASTNode* cl) {
@@ -139,10 +209,13 @@ void Scanner::scanClass(String contextName, SymbolTable* parent, ASTNode* cl) {
         switch (child.fKind) {
             case ASTNode::Kind::METHOD: // fall through
             case ASTNode::Kind::FUNCTION:
-                symbols.add(this->convertMethod(&child, &symbols, result));
+                this->convertMethod(&child, &symbols, result);
+                break;
+            case ASTNode::Kind::FIELD:
+                this->convertField(&child, &symbols, result);
                 break;
             case ASTNode::Kind::INIT:
-                symbols.add(this->convertInit(&child, &symbols, result));
+                this->convertInit(&child, &symbols, result);
                 break;
             case ASTNode::Kind::CLASS:
                 this->scanClass(fullName, &symbols, &child);

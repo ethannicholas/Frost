@@ -38,6 +38,8 @@ struct IRNode {
         DEF,
         // an invalid IR node
         ERROR,
+        // reference to a field of an object
+        FIELD_REFERENCE,
         // an if statement
         IF,
         // a literal integer
@@ -190,6 +192,7 @@ struct IRNode {
             case Kind::DECLARATION:                 result += "Declaration";                 break;
             case Kind::DEF:                         result += "Def";                         break;
             case Kind::ERROR:                       result += "<error>";                     break;
+            case Kind::FIELD_REFERENCE:             result += "FieldReference";              break;
             case Kind::IF:                          result += "If";                          break;
             case Kind::INT:                         result += "Int"; i = 1;                  break;
             case Kind::METHOD_REFERENCE:            result += "MethodReference"; p = 1;      break;

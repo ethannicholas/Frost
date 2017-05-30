@@ -6,7 +6,7 @@
 #include <string>
 #include <fstream>
 
-#define LLC_PATH "/opt/local/libexec/llvm-3.4/bin/llc"
+#define LLC_PATH "/opt/local/libexec/llvm-3.8/bin/llc"
 #define GCC_PATH "/usr/bin/gcc"
 
 void make_executable(const char* llvm, const char* dest) {
@@ -78,7 +78,7 @@ int main(int argc, char** argv) {
     String name = path.substr(path.find_last_of("/\\") + 1);
     ASTNode parsed;
     if (PandaParser().file(name, text, &parsed, &error, &name)) {
-        const char* llvm = "/tmp/output.llvm";
+        const char* llvm = "/tmp/output.ll";
         {
             std::ofstream out(llvm);
             LLVMCodeGenerator codeGenerator(&out);

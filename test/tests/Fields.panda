@@ -1,0 +1,37 @@
+class Point2D {
+    init(x:builtin_int64, y:builtin_int64) {
+        self.x := x
+        self.y := y
+    }
+
+    var x:builtin_int64
+    var y:builtin_int64
+}
+
+class Point3D : Point2D {
+    init(x:builtin_int64, y:builtin_int64, z:builtin_int64) {
+        self.x := x
+        self.y := y
+        self.z := z
+    }
+
+    var z:builtin_int64
+}
+
+class Fields {
+    @class
+    method main() {
+        var p1 := Point2D(1, 2)
+        print(p1.x)
+        print(p1.y)
+        
+        var p2 := Point3D(5, 10, 15)
+        print(p2.x)
+        print(p2.y)
+        print(p2.z)
+
+        p1 := p2
+        print(p1.x)
+        print(p1.y)
+    }
+}

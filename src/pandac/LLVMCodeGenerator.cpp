@@ -3,6 +3,8 @@
 #include "Method.h"
 
 #define VTABLE_INDEX 1
+#define POINTER_SIZE 8
+#define SIZE_T "i64"
 
 LLVMCodeGenerator::LLVMCodeGenerator(std::ostream* out)
 : fOut(*out) {
@@ -11,23 +13,49 @@ LLVMCodeGenerator::LLVMCodeGenerator(std::ostream* out)
             "n8:16:32:64-S128\"\n";
     fOut << "target triple = \"x86_64-apple-macosx10.8.0\"\n";
 
-    fOut << "declare i8* @malloc(i64)\n";
+    fOut << "declare i8* @malloc(" SIZE_T ")\n";
 
     // temporary
     fOut << "declare i32 @printf(i8*, ...)\n";
     fOut << "@fmt = private constant [4 x i8] [i8 37, i8 100, i8 10, i8 0]\n";
     fOut << "define fastcc void @builtin$print$builtin_int64(i64 %num) {\n";
-    fOut << "    call i32 (i8*, ...)* @printf(i8* bitcast ([4 x i8]* @fmt to i8*), i64 %num)\n";
+    fOut << "    call i32 (i8*, ...) @printf(i8* bitcast ([4 x i8]* @fmt to i8*), i64 %num)\n";
     fOut << "    ret void\n";
     fOut << "}\n";
 }
 
-size_t LLVMCodeGenerator::sizeOf(const Type& type) {
+static size_t field_size(const Type& type) {
     switch (type.fCategory) {
         case Type::Category::BUILTIN_INT: // fall through
         case Type::Category::BUILTIN_UINT: return std::max(type.fSize / 8, 1);
-        case Type::Category::CLASS: return 8;
+        case Type::Category::CLASS: return POINTER_SIZE;
         default: abort();
+    }
+}
+
+size_t LLVMCodeGenerator::sizeOf(const Type& type) {
+    if (type.fCategory == Type::Category::CLASS) {
+        auto found = fSizes.find(type.fName);
+        if (found != fSizes.end()) {
+            return found->second;
+        }
+        size_t result = 8;
+        Class* cl = fCompiler->resolveClass(type);
+        ASSERT(cl);
+        for (const Field* f : this->getAllFields(*cl)) {
+            size_t fieldSize = field_size(f->fType);
+            size_t align = result % fieldSize;
+            if (align) {
+                result += fieldSize - align;
+            }
+            ASSERT(result % fieldSize == 0);
+            result += fieldSize;
+        }
+        fSizes[type.fName] = result;
+        return result;
+    }
+    else {
+        return field_size(type);
     }
 }
 
@@ -64,6 +92,15 @@ LLVMCodeGenerator::ClassConstant& LLVMCodeGenerator::getClassConstant(const Clas
     return found->second;
 }
 
+std::vector<const Field*> LLVMCodeGenerator::getAllFields(const Class& cl) {
+    if (cl.fSuper == Type::Void()) {
+        return cl.fFields;
+    }
+    std::vector<const Field*> result = this->getAllFields(*fCompiler->resolveClass(cl.fSuper));
+    result.insert(result.end(), cl.fFields.begin(), cl.fFields.end());
+    return result;
+}
+
 void LLVMCodeGenerator::writeType(const Type& type) {
     if (fWrittenTypes.find(type.fName) == fWrittenTypes.end()) {
         fWrittenTypes.insert(type.fName);
@@ -71,10 +108,19 @@ void LLVMCodeGenerator::writeType(const Type& type) {
         ASSERT(cl);
         this->getClassConstant(*cl);
         fTypeDeclarations << "\n";
-        fTypeDeclarations << "%" << escape_type_name(type.fName) << " = type {";
+        fTypeDeclarations << this->llvmTypeName(type) << " = type {";
         fTypeDeclarations << " i8*";
+        std::vector<const Field*> fields = this->getAllFields(*cl);
+        for (const Field* f : fields) {
+            fTypeDeclarations << ", " << this->llvmType(f->fType);
+        }
         fTypeDeclarations << " }\n";
     }
+}
+
+String LLVMCodeGenerator::llvmTypeName(const Type& type) {
+    ASSERT(type.fCategory == Type::Category::CLASS);
+    return "%" + escape_type_name(type.fName);
 }
 
 String LLVMCodeGenerator::llvmType(const Type& type) {
@@ -85,7 +131,7 @@ String LLVMCodeGenerator::llvmType(const Type& type) {
         case Type::Category::BUILTIN_FLOAT: return "f" + std::to_string(type.fSize);
         case Type::Category::CLASS:
             this->writeType(type);
-            return "%" + escape_type_name(type.fName) + "*";
+            return this->llvmTypeName(type) + "*";
         case Type::Category::METHOD:      // fall through
         case Type::Category::PACKAGE:     // fall through
         case Type::Category::INT_LITERAL: // fall through
@@ -148,8 +194,9 @@ String LLVMCodeGenerator::getVariableReference(const Variable& var, std::ostream
         return this->varName(var);
     }
     String result = nextVar();
-    out << "    " << result << " = load " << this->llvmType(var.fType) << "* " <<
-            this->varName(var) << "\n";
+    String type = this->llvmType(var.fType);
+    out << "    " << result << " = load " << type << ", " << type << "* " << this->varName(var) <<
+            "\n";
     return result;
 }
 
@@ -361,7 +408,8 @@ String LLVMCodeGenerator::getConstructReference(const IRNode& construct, std::os
     out << "    " << result << " = bitcast i8* " << callRef << " to " <<
             this->llvmType(construct.fType) << "\n";
     String classPtr = this->nextVar();
-    out << "    " << classPtr << " = getelementptr inbounds " << this->llvmType(construct.fType) <<
+    out << "    " << classPtr << " = getelementptr inbounds " <<
+            this->llvmTypeName(construct.fType) << ", " << this->llvmType(construct.fType) <<
             " " << result << ", i64 0, i32 0" << "\n";
     const ClassConstant& cc = this->getClassConstant(*fCompiler->resolveClass(construct.fType));
     out << "    store i8* bitcast(" << cc.fType << "* " << cc.fName << " to i8*), i8** " <<
@@ -372,6 +420,13 @@ String LLVMCodeGenerator::getConstructReference(const IRNode& construct, std::os
 
 String LLVMCodeGenerator::getSelfReference(const IRNode& self, std::ostream& out) {
     return "%self";
+}
+
+String LLVMCodeGenerator::getFieldReference(const IRNode& field, std::ostream& out) {
+    String ptr = this->getLValue(field, out);
+    String result = this->nextVar();
+    out << "    " << result << " = load " << this->llvmType(field.fType) << ", " << ptr << "\n";
+    return result;
 }
 
 String LLVMCodeGenerator::getReference(const IRNode& expr, std::ostream& out) {
@@ -388,6 +443,8 @@ String LLVMCodeGenerator::getReference(const IRNode& expr, std::ostream& out) {
             return this->getCastReference(expr, out);
         case IRNode::Kind::CONSTRUCT:
             return this->getConstructReference(expr, out);
+        case IRNode::Kind::FIELD_REFERENCE:
+            return this->getFieldReference(expr, out);
         case IRNode::Kind::INT:
             return std::to_string(expr.fValue.fInt);
         case IRNode::Kind::METHOD_REFERENCE:
@@ -409,14 +466,41 @@ String LLVMCodeGenerator::getTypedReference(const IRNode& expr, std::ostream& ou
 }
 
 String LLVMCodeGenerator::getLValue(const IRNode& lvalue, std::ostream& out) {
-    ASSERT(lvalue.fKind == IRNode::Kind::VARIABLE_REFERENCE);
-    Variable* var = (Variable*) lvalue.fValue.fPtr;
-    return this->llvmType(var->fType) + "* " + this->varName(*var);
+    switch (lvalue.fKind) {
+        case IRNode::Kind::VARIABLE_REFERENCE: {
+            Variable* var = (Variable*) lvalue.fValue.fPtr;
+            return this->llvmType(var->fType) + "* " + this->varName(*var);
+        }
+        case IRNode::Kind::FIELD_REFERENCE: {
+            String base = this->getReference(lvalue.fChildren[0], out);
+            String ptr = this->nextVar();
+            Class* cl = fCompiler->resolveClass(lvalue.fChildren[0].fType);
+            ASSERT(cl);
+            std::vector<const Field*> fields = this->getAllFields(*cl);
+            int index = -1;
+            for (int i = 0; i < fields.size(); ++i) {
+                if (fields[i] == lvalue.fValue.fPtr) {
+                    index = i;
+                    break;
+                }
+            }
+            ASSERT(index != -1);
+
+            ++index; // until class field is in place
+
+            out << "    " << ptr << " = getelementptr inbounds " << this->llvmTypeName(cl->fType) <<
+                    ", " << this->llvmType(cl->fType) << " " << base << ", i64 0, i32 " << index <<
+                    "\n";
+            return this->llvmType(lvalue.fType) + "* " + ptr;
+        }
+        default:
+            abort();
+    }
 }
 
 void LLVMCodeGenerator::writeAndEq(const String& lvalue, const IRNode& right, std::ostream& out) {
     String left = this->nextVar();
-    out << "    " << left << " = load " << lvalue << "\n";
+    out << "    " << left << " = load i8 " << lvalue << "\n";
     String ifTrue = this->nextLabel();
     String ifFalse = this->nextLabel();
     out << "    br i1 " << left << ", label %" << ifTrue << ", label %" << ifFalse << "\n";
@@ -429,7 +513,7 @@ void LLVMCodeGenerator::writeAndEq(const String& lvalue, const IRNode& right, st
 
 void LLVMCodeGenerator::writeOrEq(const String& lvalue, const IRNode& right, std::ostream& out) {
     String left = this->nextVar();
-    out << "    " << left << " = load " << lvalue << "\n";
+    out << "    " << left << " = load i8 " << lvalue << "\n";
     String ifTrue = this->nextLabel();
     String ifFalse = this->nextLabel();
     out << "    br i1 " << left << ", label %" << ifTrue << ", label %" << ifFalse << "\n";
@@ -472,7 +556,8 @@ void LLVMCodeGenerator::writeAssignment(const IRNode& a, std::ostream& out) {
             default: abort();
         }
         String left = this->nextVar();
-        out << "    " << left << " = load " << lvalue << "\n";
+        out << "    " << left << " = load " << this->llvmType(a.fChildren[0].fType) << ", " <<
+                lvalue << "\n";
         String right = this->getReference(a.fChildren[1], out);
         value = type + " " +
                 this->getBinaryReference(op_class(a.fChildren[0].fType), type + " " + left, binOp,
@@ -493,16 +578,17 @@ String LLVMCodeGenerator::getVirtualMethodReference(const String& target, const 
     }
     ASSERT(index != -1);
     String classPtrPtr = this->nextVar();
-    out << "    " << classPtrPtr << " = getelementptr " << target << ", i64 0, i32 0\n";
+    out << "    " << classPtrPtr << " = getelementptr " << this->llvmTypeName(m->fOwner.fType) <<
+            ", " << target << ", i64 0, i32 0\n";
     String classPtr = this->nextVar();
-    out << "    " << classPtr << " = load i8** " << classPtrPtr << "\n";
+    out << "    " << classPtr << " = load i8*, i8** " << classPtrPtr << "\n";
     String cast = this->nextVar();
     out << "    " << cast << " = bitcast i8* " << classPtr << " to " << cc.fType << "*\n";
     String ptr = this->nextVar();
-    out << "    " << ptr << " = getelementptr " << cc.fType << "* " << cast << " , i64 0, i32 " <<
-            VTABLE_INDEX << ", i64 " << index << "\n";
+    out << "    " << ptr << " = getelementptr " << cc.fType << ", " << cc.fType << "* " << cast <<
+            " , i64 0, i32 " << VTABLE_INDEX << ", i64 " << index << "\n";
     String load = this->nextVar();
-    out << "    " << load << " = load i8** " << ptr << "\n";
+    out << "    " << load << " = load i8*, i8** " << ptr << "\n";
     String result = this->nextVar();
     out << "    " << result << " = bitcast i8* " << load << " to " << this->llvmType(*m) << "\n";
     return result;

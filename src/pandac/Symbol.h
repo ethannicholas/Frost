@@ -6,6 +6,7 @@
 struct Symbol {
     enum class Kind {
         CLASS,
+        FIELD,
         METHOD,
         METHODS,
         PACKAGE,

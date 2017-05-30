@@ -66,6 +66,8 @@ int Compiler::matchMethods(const std::vector<Method*>& methods, const std::vecto
 }
 
 bool Compiler::coerce(IRNode* node, const Type& type, IRNode* out) {
+    ASSERT(node);
+    ASSERT(out);
     if (node->fType == type) {
         if (out != node) {
             *out = std::move(*node);
@@ -84,6 +86,7 @@ bool Compiler::coerce(IRNode* node, const Type& type, IRNode* out) {
                 *out = IRNode(node->fPosition, IRNode::Kind::INT, type, node->fValue.fInt);
                 return true;
             }
+            break;
         case IRNode::Kind::PREFIX: {
             IRNode base;
             // FIXME: wrong at extremes
@@ -510,7 +513,13 @@ bool is_assignment(Operator op) {
 }
 
 static bool is_lvalue(const IRNode& node) {
-    return node.fKind == IRNode::Kind::VARIABLE_REFERENCE;
+    switch (node.fKind) {
+        case IRNode::Kind::FIELD_REFERENCE: // fall through
+        case IRNode::Kind::VARIABLE_REFERENCE:
+            return true;
+        default:
+            return false;
+    }
 }
 
 bool Compiler::convertBinary(const ASTNode& b, IRNode* out) {
@@ -698,12 +707,15 @@ void Compiler::symbolRef(Position p, const SymbolTable& st, Symbol* symbol, IRNo
                     Type(Position(), Type::Category::METHOD, "<method>"), &st, std::move(children));
             return;
         }
-        case Symbol::Kind::VARIABLE:
-            *out = IRNode(p, IRNode::Kind::VARIABLE_REFERENCE,
-                    ((Variable*) symbol)->fType, symbol);
+        case Symbol::Kind::FIELD:
+            *out = IRNode(p, IRNode::Kind::FIELD_REFERENCE, ((Field*) symbol)->fType, symbol);
             if (target) {
                 out->fChildren.push_back(std::move(*target));
             }
+            return;
+        case Symbol::Kind::VARIABLE:
+            ASSERT(!target);
+            *out = IRNode(p, IRNode::Kind::VARIABLE_REFERENCE, ((Variable*) symbol)->fType, symbol);
             return;
         case Symbol::Kind::PACKAGE:
             *out = IRNode(p, IRNode::Kind::PACKAGE_REFERENCE,
@@ -812,6 +824,7 @@ bool Compiler::convertDot(const ASTNode& d, IRNode* out) {
                     return false;
                 }
                 st = &cl->fSymbolTable;
+                name = "class " + cl->fName;
             }
             else {
                 this->error(d.fPosition, "cannot use '.' on value of type '" + left.fType.fName +
@@ -1159,6 +1172,7 @@ void Compiler::compile(const SymbolTable& symbols) {
                     fCurrentMethod.pop();
                 }
                 break;
+            case Symbol::Kind::FIELD: // fall through
             case Symbol::Kind::TYPE:
                 break;
             case Symbol::Kind::VARIABLE:
