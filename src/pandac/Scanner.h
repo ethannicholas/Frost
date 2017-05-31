@@ -15,12 +15,12 @@
 class Scanner {
 public:
     /**
-     * Stores information about a field whose type has not yet been determined.
+     * Stores information about a field's value prior to converting it to an IRNode.
      */
-    struct UntypedField {
+    struct FieldDescriptor {
         // The field in question
-        Field* fField;
-        // index into the fUntypedFieldValues list, from which the field's value is drawn
+        Field& fField;
+        // index into the fFieldValues list, from which the field's value is drawn
         int fValueIndex;
         // if this is part of a tuple destructuring, holds tuple indices
         // e.g. in def (a, (b, c)), c would have indices { 0, 1 }.
@@ -33,9 +33,9 @@ public:
 
     void scan(ASTNode* file, SymbolTable* root);
 
-    std::vector<const ASTNode*> fUntypedFieldValues;
+    std::vector<std::pair<Class*, const ASTNode*>> fFieldValues;
 
-    std::vector<UntypedField> fUntypedFields;
+    std::vector<FieldDescriptor> fFieldDescriptors;
 
 private:
     Annotations convertAnnotations(const ASTNode& a);

@@ -18,6 +18,12 @@ class Point3D : Point2D {
     var z:builtin_int64
 }
 
+class Untyped {
+    init() {}
+    
+    var untyped := 12
+}
+
 class Fields {
     @class
     method main() {
@@ -33,5 +39,7 @@ class Fields {
         p1 := p2
         print(p1.x)
         print(p1.y)
+
+        print(Untyped().untyped)
     }
 }

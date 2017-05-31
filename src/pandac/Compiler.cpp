@@ -45,6 +45,15 @@ Class* Compiler::resolveClass(Type t) {
     return found->second;
 }
 
+std::vector<const Field*> Compiler::getAllFields(const Class& cl) {
+    if (cl.fSuper == Type::Void()) {
+        return cl.fFields;
+    }
+    std::vector<const Field*> result = this->getAllFields(*this->resolveClass(cl.fSuper));
+    result.insert(result.end(), cl.fFields.begin(), cl.fFields.end());
+    return result;
+}
+
 int Compiler::matchMethods(const std::vector<Method*>& methods, const std::vector<IRNode>& args,
         const Type* returnType, std::vector<Method*>* outMatches) {
     *outMatches = { };
@@ -1143,6 +1152,24 @@ void Compiler::compile(const SymbolTable& parent, const Method& method) {
         fSymbolTable = nullptr;
         return;
     }
+    if (method.fMethodKind == Method::Kind::INIT) {
+        auto insertPoint = block.fChildren.begin();
+        for (const auto& field : this->getAllFields(method.fOwner)) {
+            if (field->fValue) {
+                Position p = field->fValue->fPosition;
+                std::vector<IRNode> fieldChildren;
+                fieldChildren.push_back(IRNode(p, IRNode::Kind::SELF, field->fOwner.fType));
+                IRNode fieldRef(p, IRNode::Kind::FIELD_REFERENCE, field->fType, field,
+                        std::move(fieldChildren));
+                std::vector<IRNode> stmtChildren;
+                stmtChildren.push_back(std::move(fieldRef));
+                stmtChildren.push_back(field->fValue->copy());
+                IRNode stmt = IRNode(p, IRNode::Kind::BINARY, Type(), (int) Operator::ASSIGNMENT,
+                        std::move(stmtChildren));
+                insertPoint = block.fChildren.insert(insertPoint, std::move(stmt)) + 1;
+            }
+        }
+    }
     if (fErrors.fErrorCount == 0) {
         fCodeGenerator.writeMethod(method, block, *this);
     }
@@ -1244,9 +1271,32 @@ void Compiler::buildVTables(SymbolTable& symbols) {
     });
 }
 
+void Compiler::processFieldValues() {
+    // index of each value within its parent class
+    std::vector<int> valueIndices;
+    for (const auto& ownerValuePair : fScanner.fFieldValues) {
+        IRNode node;
+        if (this->convertExpression(*ownerValuePair.second, &node)) {
+            valueIndices.push_back(ownerValuePair.first->fFieldValues.size());
+            ownerValuePair.first->fFieldValues.push_back(std::move(node));
+        }
+        else {
+            return;
+        }
+    }
+    for (const auto& desc : fScanner.fFieldDescriptors) {
+        ASSERT(desc.fTupleIndices.size() == 0); // until tuple support is in...
+        ASSERT(desc.fValueIndex < valueIndices.size());
+        ASSERT(valueIndices[desc.fValueIndex] < desc.fField.fOwner.fFieldValues.size());
+        desc.fField.fValue = &desc.fField.fOwner.fFieldValues[valueIndices[desc.fValueIndex]];
+        desc.fField.fType = variable_type(desc.fField.fValue->fType);
+    }
+}
+
 void Compiler::compile() {
     this->findClasses(fRoot);
     this->buildVTables(fRoot);
+    this->processFieldValues();
     this->compile(fRoot);
 }
 

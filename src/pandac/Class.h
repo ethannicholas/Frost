@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Annotations.h"
+#include "IRNode.h"
 #include "SymbolTable.h"
 #include "Type.h"
 
@@ -23,6 +24,11 @@ struct Class : public Symbol {
 
     // fields defined in this class (not including inherited fields)
     std::vector<const Field*> fFields;
+
+    // holds values assigned to fields. We have to store them in a centralized place (meaning, not
+    // attached to the fields themselves) because they can be shared by multiple fields due to tuple
+    // destructuring
+    std::vector<IRNode> fFieldValues;
 
     // methods defined in this class (not including inherited methods)
     std::vector<const Method*> fMethods;

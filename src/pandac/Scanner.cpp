@@ -85,20 +85,20 @@ void Scanner::convertDeclaration(const Annotations& annotations, Field::Kind kin
             Field* field = new Field(d.fPosition, owner, annotations, kind, target.fText, type);
             owner->fFields.push_back(field);
             owner->fSymbolTable.add(std::unique_ptr<Field>(field));
-            if (type == Type::Void()) {
+            if (value) {
                 int index = -1;
-                for (int i = 0; i < fUntypedFieldValues.size(); ++i) {
-                    if (fUntypedFieldValues[i] == value) {
+                for (int i = 0; i < fFieldValues.size(); ++i) {
+                    if (fFieldValues[i].second == value) {
                         index = i;
                         break;
                     }
                 }
                 if (index == -1) {
-                    index = fUntypedFieldValues.size();
-                    fUntypedFieldValues.push_back(value);
+                    index = fFieldValues.size();
+                    fFieldValues.push_back(std::make_pair(owner, value));
                 }
-                fUntypedFields.push_back({
-                    field,
+                fFieldDescriptors.push_back({
+                    *field,
                     index,
                     tupleIndices
                 });

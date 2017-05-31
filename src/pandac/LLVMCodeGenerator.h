@@ -50,8 +50,6 @@ private:
 
     String llvmType(const Method& m);
 
-    std::vector<const Field*> getAllFields(const Class& cl);
-
     String nextVar();
 
     String nextLabel();

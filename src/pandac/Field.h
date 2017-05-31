@@ -5,6 +5,8 @@
 #include "Symbol.h"
 #include "Type.h"
 
+struct IRNode;
+
 struct Field : public Symbol {
     enum class Kind {
         VAR,
@@ -18,17 +20,27 @@ struct Field : public Symbol {
     Field(Position position, const Class* owner, Annotations annotations, Kind fieldKind,
             String name, Type type)
     : INHERITED(position, Symbol::Kind::FIELD, std::move(name))
+    , fOwner(*owner)
     , fAnnotations(std::move(annotations))
     , fFieldKind(fieldKind)
     , fType(std::move(type)) {}
 
-    const Class* fOwner;
+    const Class& fOwner;
 
     const Annotations fAnnotations;
 
     const Kind fFieldKind;
     
-    const Type fType;
+    Type fType;
+
+    // pointer to the value this field was initialized with. The values are stored in the field's
+    // class for lifetime purposes (they cannot live in the field itself, because multiple fields
+    // can refer to the same value due to tuple destructuring)
+    const IRNode* fValue = nullptr;
+
+    // indices into the field's value, in the event this is a tuple destructuring. Will be empty for
+    // a straight assignment.
+    std::vector<int> fTupleIndices;
 
     typedef Symbol INHERITED;
 };

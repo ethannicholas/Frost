@@ -173,6 +173,25 @@ struct IRNode {
         fValue.fInt = value;
     }
 
+    IRNode(Position position, Kind kind, Type type, void* ptr, std::vector<IRNode> children)
+    : fPosition(position)
+    , fKind(kind)
+    , fType(std::move(type))
+    , fChildren(std::move(children)) {
+        fValue.fPtr = ptr;
+    }
+
+    // copying IRNodes can be very expensive and is incredibly easy to do by accident, so we kill
+    // the default copy constructor and make it an explicit method call
+    IRNode copy() const {
+        IRNode result(fPosition, fKind, fType);
+        memcpy(&result.fValue, &fValue, sizeof(fValue));
+        for (const auto& child : fChildren) {
+            result.fChildren.push_back(child.copy());
+        }
+        return result;
+    }
+
     String description() const {
         String result;
         bool b = false;

@@ -42,7 +42,7 @@ size_t LLVMCodeGenerator::sizeOf(const Type& type) {
         size_t result = 8;
         Class* cl = fCompiler->resolveClass(type);
         ASSERT(cl);
-        for (const Field* f : this->getAllFields(*cl)) {
+        for (const Field* f : fCompiler->getAllFields(*cl)) {
             size_t fieldSize = field_size(f->fType);
             size_t align = result % fieldSize;
             if (align) {
@@ -92,15 +92,6 @@ LLVMCodeGenerator::ClassConstant& LLVMCodeGenerator::getClassConstant(const Clas
     return found->second;
 }
 
-std::vector<const Field*> LLVMCodeGenerator::getAllFields(const Class& cl) {
-    if (cl.fSuper == Type::Void()) {
-        return cl.fFields;
-    }
-    std::vector<const Field*> result = this->getAllFields(*fCompiler->resolveClass(cl.fSuper));
-    result.insert(result.end(), cl.fFields.begin(), cl.fFields.end());
-    return result;
-}
-
 void LLVMCodeGenerator::writeType(const Type& type) {
     if (fWrittenTypes.find(type.fName) == fWrittenTypes.end()) {
         fWrittenTypes.insert(type.fName);
@@ -110,7 +101,7 @@ void LLVMCodeGenerator::writeType(const Type& type) {
         fTypeDeclarations << "\n";
         fTypeDeclarations << this->llvmTypeName(type) << " = type {";
         fTypeDeclarations << " i8*";
-        std::vector<const Field*> fields = this->getAllFields(*cl);
+        std::vector<const Field*> fields = fCompiler->getAllFields(*cl);
         for (const Field* f : fields) {
             fTypeDeclarations << ", " << this->llvmType(f->fType);
         }
@@ -476,7 +467,7 @@ String LLVMCodeGenerator::getLValue(const IRNode& lvalue, std::ostream& out) {
             String ptr = this->nextVar();
             Class* cl = fCompiler->resolveClass(lvalue.fChildren[0].fType);
             ASSERT(cl);
-            std::vector<const Field*> fields = this->getAllFields(*cl);
+            std::vector<const Field*> fields = fCompiler->getAllFields(*cl);
             int index = -1;
             for (int i = 0; i < fields.size(); ++i) {
                 if (fields[i] == lvalue.fValue.fPtr) {

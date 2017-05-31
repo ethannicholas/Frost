@@ -49,6 +49,8 @@ public:
 
     Class* resolveClass(Type t);
 
+    std::vector<const Field*> getAllFields(const Class& cl);
+
 private:
     // for all convert methods: a true result means "successful enough to have produced output",
     // false means failure. Success may still have generated errors.
@@ -160,6 +162,8 @@ private:
     void buildVTable(Class& cl);
 
     void buildVTables(SymbolTable& symbols);
+
+    void processFieldValues();
 
     void error(Position position, String msg);
 
