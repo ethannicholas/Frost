@@ -12,7 +12,7 @@ Annotations Scanner::convertAnnotations(const ASTNode& a) {
     for (const auto& sub : a.fChildren) {
         ASSERT(sub.fKind == ASTNode::Kind::ANNOTATION);
         #define BASIC_ANNOTATION(text, flag) \
-        if (sub.fText == text) { \
+        if (sub.fText == "@" text) { \
             if ((flags & Annotations::flag) != 0) { \
                 this->error(sub.fPosition, "duplicate annotation '@" text "'"); \
             } \
@@ -23,7 +23,7 @@ Annotations Scanner::convertAnnotations(const ASTNode& a) {
         else BASIC_ANNOTATION("private", PRIVATE)
         else BASIC_ANNOTATION("override", OVERRIDE)
         else {
-            this->error(sub.fPosition, "unrecognized annotation '@" + sub.fText + "'");
+            this->error(sub.fPosition, "unrecognized annotation '" + sub.fText + "'");
         }
         #undef BASIC_ANNOTATION
     }
@@ -115,7 +115,6 @@ void Scanner::convertDeclaration(const Annotations& annotations, Field::Kind kin
 void Scanner::convertField(ASTNode* f, SymbolTable* st, Class* owner) {
     ASSERT(f->fKind == ASTNode::Kind::FIELD);
     ASSERT(f->fChildren.size() == 3);
-    ASSERT(f->fChildren[0].fKind == ASTNode::Kind::DOCCOMMENT);
     Annotations annotations = this->convertAnnotations(f->fChildren[1]);
     Field::Kind kind;
     switch (f->fChildren[2].fKind) {
@@ -132,8 +131,7 @@ void Scanner::convertField(ASTNode* f, SymbolTable* st, Class* owner) {
 
 void Scanner::convertMethod(ASTNode* m, SymbolTable* st, Class* owner) {
     ASSERT(m->fText != "init");
-    ASSERT(m->fChildren.size() == 5);
-    ASSERT(m->fChildren[0].fKind == ASTNode::Kind::DOCCOMMENT);
+    ASSERT(m->fChildren.size() == 6);
     Annotations annotations = this->convertAnnotations(m->fChildren[1]);
     ASSERT(m->fChildren[2].fKind == ASTNode::Kind::PARAMETERS);
     std::vector<Method::Parameter> parameters;
@@ -159,8 +157,7 @@ void Scanner::convertMethod(ASTNode* m, SymbolTable* st, Class* owner) {
 }
 
 void Scanner::convertInit(ASTNode* i, SymbolTable* st, Class* owner) {
-    ASSERT(i->fChildren.size() == 4);
-    ASSERT(i->fChildren[0].fKind == ASTNode::Kind::DOCCOMMENT);
+    ASSERT(i->fChildren.size() == 5);
     Annotations annotations = this->convertAnnotations(i->fChildren[1]);
     ASSERT(i->fChildren[2].fKind == ASTNode::Kind::PARAMETERS);
     std::vector<Method::Parameter> parameters;

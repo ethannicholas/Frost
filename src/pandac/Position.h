@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ParserUtil.h"
+#include "Util.h"
 
 struct Position {
     Position()
@@ -8,7 +8,7 @@ struct Position {
     , fLine(-1)
     , fColumn(-1) {}
 
-    Position(String* name, int line, int column)
+    Position(const String* name, int line, int column)
     : fName(name)
     , fLine(line)
     , fColumn(column) {}
@@ -20,7 +20,7 @@ struct Position {
         return std::to_string(fLine) + ":" + std::to_string(fColumn);
     }
 
-    String* fName;
+    const String* fName;
     int fLine;
     int fColumn;
 };

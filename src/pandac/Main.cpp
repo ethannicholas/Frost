@@ -32,7 +32,7 @@ void make_executable(const char* llvm, const char* dest) {
     int status;
     waitpid(pid, &status, 0);
     if (status) {
-        printf("llc failed with exit code %d\n", status);
+        printf("llc failed with exit code %d\n", WEXITSTATUS(status));
         exit(1);
     }
 
@@ -77,12 +77,12 @@ int main(int argc, char** argv) {
     String path = String(argv[1]);
     String name = path.substr(path.find_last_of("/\\") + 1);
     ASTNode parsed;
-    if (PandaParser().file(name, text, &parsed, &error, &name)) {
+    ErrorReporter errors;
+    if (PandaParser(&errors).file(name, text, &parsed)) {
         const char* llvm = "/tmp/output.ll";
         {
             std::ofstream out(llvm);
             LLVMCodeGenerator codeGenerator(&out);
-            ErrorReporter errors;
             Compiler compiler(&codeGenerator, &errors);
             compiler.scan(&parsed);
             if (errors.fErrorCount) {

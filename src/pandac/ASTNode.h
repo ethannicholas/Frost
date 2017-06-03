@@ -1,8 +1,8 @@
 #pragma once
 
 #include "Operator.h"
-#include "ParserUtil.h"
 #include "Position.h"
+#include "Util.h"
 
 #include <vector>
 
@@ -159,6 +159,10 @@ struct ASTNode {
     , fKind(kind)
     , fText(std::move(text))
     , fChildren(std::move(children)) {}
+
+    ASTNode(const ASTNode&) = delete;
+    ASTNode(ASTNode&&) = default;
+    ASTNode& operator=(ASTNode&& src) = default;
 
     String description() const {
         String result;

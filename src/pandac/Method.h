@@ -29,7 +29,7 @@ struct Method : public Symbol {
     , fMethodKind(kind)
     , fParameters(std::move(parameters))
     , fReturnType(std::move(returnType))
-    , fBody(body) {
+    , fBody(std::move(body)) {
         ASSERT(owner);
     }
 

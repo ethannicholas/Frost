@@ -1,5 +1,5 @@
 
-#line 3 "lex.parser.c"
+#line 3 "lex.panda.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -7,8 +7,8 @@
 
 #define FLEX_SCANNER
 #define YY_FLEX_MAJOR_VERSION 2
-#define YY_FLEX_MINOR_VERSION 5
-#define YY_FLEX_SUBMINOR_VERSION 37
+#define YY_FLEX_MINOR_VERSION 6
+#define YY_FLEX_SUBMINOR_VERSION 1
 #if YY_FLEX_SUBMINOR_VERSION > 0
 #define FLEX_BETA
 #endif
@@ -87,25 +87,13 @@ typedef unsigned int flex_uint32_t;
 
 #endif /* ! FLEXINT_H */
 
-#ifdef __cplusplus
-
-/* The "const" storage-class-modifier is valid. */
-#define YY_USE_CONST
-
-#else	/* ! __cplusplus */
-
-/* C99 requires __STDC__ to be defined as 1. */
-#if defined (__STDC__)
-
-#define YY_USE_CONST
-
-#endif	/* defined (__STDC__) */
-#endif	/* ! __cplusplus */
-
-#ifdef YY_USE_CONST
+/* TODO: this is always defined, so inline it */
 #define yyconst const
+
+#if defined(__GNUC__) && __GNUC__ >= 3
+#define yynoreturn __attribute__((__noreturn__))
 #else
-#define yyconst
+#define yynoreturn
 #endif
 
 /* Returned upon end-of-file. */
@@ -152,13 +140,21 @@ typedef void* yyscan_t;
 #define YY_STATE_EOF(state) (YY_END_OF_BUFFER + state + 1)
 
 /* Special action meaning "start processing a new file". */
-#define YY_NEW_FILE parserrestart(yyin ,yyscanner )
+#define YY_NEW_FILE pandarestart(yyin ,yyscanner )
 
 #define YY_END_OF_BUFFER_CHAR 0
 
 /* Size of default input buffer. */
 #ifndef YY_BUF_SIZE
+#ifdef __ia64__
+/* On IA-64, the buffer size is 16k, not 8k.
+ * Moreover, YY_BUF_SIZE is 2*YY_READ_BUF_SIZE in the general case.
+ * Ditto for the __ia64__ case accordingly.
+ */
+#define YY_BUF_SIZE 32768
+#else
 #define YY_BUF_SIZE 16384
+#endif /* __ia64__ */
 #endif
 
 /* The state buf must be large enough to hold one state per character in the main buffer.
@@ -179,20 +175,8 @@ typedef size_t yy_size_t;
 #define EOB_ACT_END_OF_FILE 1
 #define EOB_ACT_LAST_MATCH 2
 
-    /* Note: We specifically omit the test for yy_rule_can_match_eol because it requires
-     *       access to the local variable yy_act. Since yyless() is a macro, it would break
-     *       existing scanners that call yyless() from OUTSIDE parserlex. 
-     *       One obvious solution it to make yy_act a global. I tried that, and saw
-     *       a 5% performance hit in a non-yylineno scanner, because yy_act is
-     *       normally declared as a register variable-- so it is not worth it.
-     */
-    #define  YY_LESS_LINENO(n) \
-            do { \
-                int yyl;\
-                for ( yyl = n; yyl < yyleng; ++yyl )\
-                    if ( yytext[yyl] == '\n' )\
-                        --yylineno;\
-            }while(0)
+    #define YY_LESS_LINENO(n)
+    #define YY_LINENO_REWIND_TO(ptr)
     
 /* Return all but the first "n" matched characters back to the input stream. */
 #define yyless(n) \
@@ -222,12 +206,12 @@ struct yy_buffer_state
 	/* Size of input buffer in bytes, not including room for EOB
 	 * characters.
 	 */
-	yy_size_t yy_buf_size;
+	int yy_buf_size;
 
 	/* Number of characters read into yy_ch_buf, not including EOB
 	 * characters.
 	 */
-	yy_size_t yy_n_chars;
+	int yy_n_chars;
 
 	/* Whether we "own" the buffer - i.e., we know we created it,
 	 * and can realloc() it to grow it, and should free() it to
@@ -267,7 +251,7 @@ struct yy_buffer_state
 	 * possible backing-up.
 	 *
 	 * When we actually see the EOF, we change the status to "new"
-	 * (via parserrestart()), so that the user can continue scanning by
+	 * (via pandarestart()), so that the user can continue scanning by
 	 * just pointing yyin at a new input file.
 	 */
 #define YY_BUFFER_EOF_PENDING 2
@@ -290,36 +274,36 @@ struct yy_buffer_state
  */
 #define YY_CURRENT_BUFFER_LVALUE yyg->yy_buffer_stack[yyg->yy_buffer_stack_top]
 
-void parserrestart (FILE *input_file ,yyscan_t yyscanner );
-void parser_switch_to_buffer (YY_BUFFER_STATE new_buffer ,yyscan_t yyscanner );
-YY_BUFFER_STATE parser_create_buffer (FILE *file,int size ,yyscan_t yyscanner );
-void parser_delete_buffer (YY_BUFFER_STATE b ,yyscan_t yyscanner );
-void parser_flush_buffer (YY_BUFFER_STATE b ,yyscan_t yyscanner );
-void parserpush_buffer_state (YY_BUFFER_STATE new_buffer ,yyscan_t yyscanner );
-void parserpop_buffer_state (yyscan_t yyscanner );
+void pandarestart (FILE *input_file ,yyscan_t yyscanner );
+void panda_switch_to_buffer (YY_BUFFER_STATE new_buffer ,yyscan_t yyscanner );
+YY_BUFFER_STATE panda_create_buffer (FILE *file,int size ,yyscan_t yyscanner );
+void panda_delete_buffer (YY_BUFFER_STATE b ,yyscan_t yyscanner );
+void panda_flush_buffer (YY_BUFFER_STATE b ,yyscan_t yyscanner );
+void pandapush_buffer_state (YY_BUFFER_STATE new_buffer ,yyscan_t yyscanner );
+void pandapop_buffer_state (yyscan_t yyscanner );
 
-static void parserensure_buffer_stack (yyscan_t yyscanner );
-static void parser_load_buffer_state (yyscan_t yyscanner );
-static void parser_init_buffer (YY_BUFFER_STATE b,FILE *file ,yyscan_t yyscanner );
+static void pandaensure_buffer_stack (yyscan_t yyscanner );
+static void panda_load_buffer_state (yyscan_t yyscanner );
+static void panda_init_buffer (YY_BUFFER_STATE b,FILE *file ,yyscan_t yyscanner );
 
-#define YY_FLUSH_BUFFER parser_flush_buffer(YY_CURRENT_BUFFER ,yyscanner)
+#define YY_FLUSH_BUFFER panda_flush_buffer(YY_CURRENT_BUFFER ,yyscanner)
 
-YY_BUFFER_STATE parser_scan_buffer (char *base,yy_size_t size ,yyscan_t yyscanner );
-YY_BUFFER_STATE parser_scan_string (yyconst char *yy_str ,yyscan_t yyscanner );
-YY_BUFFER_STATE parser_scan_bytes (yyconst char *bytes,yy_size_t len ,yyscan_t yyscanner );
+YY_BUFFER_STATE panda_scan_buffer (char *base,yy_size_t size ,yyscan_t yyscanner );
+YY_BUFFER_STATE panda_scan_string (yyconst char *yy_str ,yyscan_t yyscanner );
+YY_BUFFER_STATE panda_scan_bytes (yyconst char *bytes,int len ,yyscan_t yyscanner );
 
-void *parseralloc (yy_size_t ,yyscan_t yyscanner );
-void *parserrealloc (void *,yy_size_t ,yyscan_t yyscanner );
-void parserfree (void * ,yyscan_t yyscanner );
+void *pandaalloc (yy_size_t ,yyscan_t yyscanner );
+void *pandarealloc (void *,yy_size_t ,yyscan_t yyscanner );
+void pandafree (void * ,yyscan_t yyscanner );
 
-#define yy_new_buffer parser_create_buffer
+#define yy_new_buffer panda_create_buffer
 
 #define yy_set_interactive(is_interactive) \
 	{ \
 	if ( ! YY_CURRENT_BUFFER ){ \
-        parserensure_buffer_stack (yyscanner); \
+        pandaensure_buffer_stack (yyscanner); \
 		YY_CURRENT_BUFFER_LVALUE =    \
-            parser_create_buffer(yyin,YY_BUF_SIZE ,yyscanner); \
+            panda_create_buffer(yyin,YY_BUF_SIZE ,yyscanner); \
 	} \
 	YY_CURRENT_BUFFER_LVALUE->yy_is_interactive = is_interactive; \
 	}
@@ -327,9 +311,9 @@ void parserfree (void * ,yyscan_t yyscanner );
 #define yy_set_bol(at_bol) \
 	{ \
 	if ( ! YY_CURRENT_BUFFER ){\
-        parserensure_buffer_stack (yyscanner); \
+        pandaensure_buffer_stack (yyscanner); \
 		YY_CURRENT_BUFFER_LVALUE =    \
-            parser_create_buffer(yyin,YY_BUF_SIZE ,yyscanner); \
+            panda_create_buffer(yyin,YY_BUF_SIZE ,yyscanner); \
 	} \
 	YY_CURRENT_BUFFER_LVALUE->yy_at_bol = at_bol; \
 	}
@@ -347,20 +331,20 @@ typedef int yy_state_type;
 static yy_state_type yy_get_previous_state (yyscan_t yyscanner );
 static yy_state_type yy_try_NUL_trans (yy_state_type current_state  ,yyscan_t yyscanner);
 static int yy_get_next_buffer (yyscan_t yyscanner );
-static void yy_fatal_error (yyconst char msg[] ,yyscan_t yyscanner );
+static void yynoreturn yy_fatal_error (yyconst char* msg ,yyscan_t yyscanner );
 
 /* Done after the current pattern has been matched and before the
  * corresponding action - sets up yytext.
  */
 #define YY_DO_BEFORE_ACTION \
 	yyg->yytext_ptr = yy_bp; \
-	yyleng = (size_t) (yy_cp - yy_bp); \
+	yyleng = (int) (yy_cp - yy_bp); \
 	yyg->yy_hold_char = *yy_cp; \
 	*yy_cp = '\0'; \
 	yyg->yy_c_buf_p = yy_cp;
 
-#define YY_NUM_RULES 22
-#define YY_END_OF_BUFFER 23
+#define YY_NUM_RULES 114
+#define YY_END_OF_BUFFER 115
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -368,30 +352,55 @@ struct yy_trans_info
 	flex_int32_t yy_verify;
 	flex_int32_t yy_nxt;
 	};
-static yyconst flex_int16_t yy_accept[39] =
+static yyconst flex_int16_t yy_accept[263] =
     {   0,
-        0,    0,   23,   21,   20,   20,    7,   21,   21,    4,
-        3,    2,   12,    5,   11,    6,   13,   19,   18,   21,
-        8,    9,   10,   20,    0,   16,    0,    0,   15,    0,
-        1,   17,    0,    0,   14,    0,    0,    0
+        0,    0,  115,  114,  113,   50,    5,  111,   57,   67,
+      108,  109,   54,   52,  110,   53,  103,   55,    1,    1,
+       99,   63,   59,   64,   98,  114,  106,  107,   58,   49,
+      111,  111,  111,  111,  111,  111,  111,  111,  111,  111,
+      111,  111,  111,  111,  111,  111,  111,  104,   69,  105,
+       71,  113,   51,   60,  111,   79,   68,   83,   77,   75,
+        0,    7,    6,   76,   90,    0,  101,    4,   56,   78,
+        0,    1,    0,    0,    0,  100,   74,   73,   65,    0,
+       61,   94,   66,    0,  112,  112,   89,   11,  111,   28,
+      111,  111,  111,  111,  111,   25,  111,  111,  111,  111,
+
+      111,   31,   29,  111,  111,  111,  111,  111,  111,  111,
+      111,  111,  111,  111,  111,  111,  111,  111,  111,   81,
+       70,   85,   72,   62,   84,   93,    6,   91,   92,  102,
+       80,    4,    0,    4,    2,    3,   87,   95,    8,   96,
+       88,  112,  112,  111,  111,  111,  111,  111,  111,   19,
+      111,  111,  111,   27,  111,  111,  111,  111,  111,  111,
+       36,  111,  111,  111,  111,  111,  111,  111,  111,   39,
+      111,  111,   18,  111,  111,   82,   86,   97,   48,  111,
+      111,  111,  111,  111,  111,  111,  111,   32,  111,  111,
+      111,   17,  111,   30,  111,  111,   35,  111,  111,  111,
+
+       46,  111,  111,   33,  111,   10,   44,  111,  111,   23,
+       40,  111,   12,  111,  111,  111,   34,  111,  111,  111,
+       43,  111,  111,  111,  111,   47,   42,  111,   26,   37,
+       14,  111,  111,  111,  111,  111,  111,   16,  111,  111,
+       22,  111,  111,  111,   45,   41,  111,  111,    9,  111,
+      111,   21,   24,   15,  111,   20,  111,   13,  111,  111,
+       38,    0
     } ;
 
-static yyconst flex_int32_t yy_ec[256] =
+static yyconst YY_CHAR yy_ec[256] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    2,    3,
-        1,    1,    4,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    2,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    2,    5,    6,    1,    1,    1,    1,    7,    1,
-        1,    1,    1,    8,    9,   10,    1,   11,   11,   11,
-       11,   11,   11,   11,   11,   11,   11,   12,   13,   14,
-       15,   16,   17,   18,   19,   20,   19,   20,   19,   20,
-       19,   19,   20,   20,   20,   20,   20,   19,   20,   20,
-       20,   19,   20,   20,   20,   20,   20,   20,   20,   20,
-       21,   22,   23,   24,   20,    1,   20,   20,   20,   20,
+        1,    2,    4,    5,    1,    6,    7,    8,    1,    9,
+       10,   11,   12,   13,   14,   15,   16,   17,   18,   19,
+       19,   19,   19,   19,   19,   19,   19,   20,    1,   21,
+       22,   23,   24,   25,   26,   26,   26,   26,   27,   26,
+        6,    6,    6,    6,    6,    6,    6,    6,    6,    6,
+        6,    6,    6,    6,    6,    6,    6,    6,    6,    6,
+       28,    1,   29,   30,   31,    1,   32,   33,   34,   35,
 
-       20,   20,   20,   20,   20,   20,   20,   20,   20,   25,
-       20,   20,   20,   25,   20,   25,   20,   20,   20,   20,
-       20,   20,   26,    1,   27,    1,    1,    1,    1,    1,
+       36,   37,   38,   39,   40,    6,   41,   42,   43,   44,
+       45,   46,    6,   47,   48,   49,   50,   51,   52,   53,
+       54,    6,   55,   56,   57,   58,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -408,72 +417,173 @@ static yyconst flex_int32_t yy_ec[256] =
         1,    1,    1,    1,    1
     } ;
 
-static yyconst flex_int32_t yy_meta[28] =
+static yyconst YY_CHAR yy_meta[59] =
     {   0,
-        1,    1,    2,    2,    1,    1,    1,    1,    1,    1,
+        1,    1,    2,    1,    1,    3,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    4,    4,    4,    1,
+        1,    1,    1,    1,    1,    5,    5,    1,    1,    1,
+        3,    5,    5,    5,    5,    5,    5,    3,    3,    3,
+        3,    3,    3,    3,    3,    3,    3,    3,    3,    3,
+        3,    3,    3,    3,    1,    1,    1,    1
+    } ;
+
+static yyconst flex_uint16_t yy_base[268] =
+    {   0,
+        0,    0,  322,  323,   57,   57,  323,    0,  299,   54,
+      323,  323,  298,  297,  323,   59,   49,   49,   69,   74,
+       52,   56,   72,   75,  323,  272,  323,  323,  295,    0,
+      268,   52,   72,   64,  273,   75,   75,  269,   91,   80,
+       43,  277,   82,   74,   80,  280,  272,  323,   47,  323,
+       86,  131,  323,  288,    0,  323,  287,  323,  323,  323,
+      285,  323,    0,  323,  284,  283,  290,  118,  282,  323,
+      121,  131,  143,  124,    0,  323,  323,  281,  323,  279,
+      279,  289,  323,  277,    0,  251,  323,  249,  260,    0,
+      246,  249,  261,  248,  254,    0,  242,  247,  244,  240,
+
+      242,    0,  103,  240,  235,  234,  230,  239,  246,  234,
+      229,  235,  230,  228,   97,  227,  237,  225,  123,  323,
+      249,  323,  248,  323,  323,  323,    0,  323,  323,  323,
+      323,  147,  151,  154,  158,    0,  323,  258,  323,  323,
+      323,    0,  232,  231,  234,  231,  224,  215,  129,  230,
+      225,  212,  227,    0,  224,  208,  220,  209,  220,  214,
+        0,  210,  210,  204,  199,  211,  211,  201,  209,    0,
+      208,  195,    0,  198,  199,  323,  323,  323,    0,  193,
+      198,  199,  203,  188,  186,  194,  183,    0,  196,  189,
+      181,    0,  182,    0,  189,  182,    0,  194,  189,  177,
+
+        0,  176,  170,    0,  189,    0,    0,  184,  170,    0,
+        0,  182,    0,  185,  172,  173,    0,  172,  173,  175,
+        0,  176,  172,  162,  164,    0,    0,  173,    0,    0,
+        0,  162,  155,  155,  149,  157,  169,    0,  164,  142,
+        0,  149,  133,  145,    0,    0,  136,  145,    0,  102,
+      121,    0,    0,    0,   95,    0,   96,    0,   84,   49,
+        0,  323,  181,  184,  189,  191,  194
+    } ;
+
+static yyconst flex_int16_t yy_def[268] =
+    {   0,
+      262,    1,  262,  262,  262,  262,  262,  263,  262,  262,
+      262,  262,  262,  262,  262,  262,  262,  262,  262,  262,
+      262,  262,  262,  262,  262,  264,  262,  262,  262,  263,
+      263,  263,  263,  263,  263,  263,  263,  263,  263,  263,
+      263,  263,  263,  263,  263,  263,  263,  262,  262,  262,
+      262,  262,  262,  262,  263,  262,  262,  262,  262,  262,
+      262,  262,  265,  262,  262,  262,  262,  262,  262,  262,
+      262,  262,  262,  262,  266,  262,  262,  262,  262,  262,
+      262,  262,  262,  262,  267,  267,  262,  263,  263,  263,
+      263,  263,  263,  263,  263,  263,  263,  263,  263,  263,
+
+      263,  263,  263,  263,  263,  263,  263,  263,  263,  263,
+      263,  263,  263,  263,  263,  263,  263,  263,  263,  262,
+      262,  262,  262,  262,  262,  262,  265,  262,  262,  262,
+      262,  262,  262,  262,  262,  266,  262,  262,  262,  262,
+      262,  267,  267,  263,  263,  263,  263,  263,  263,  263,
+      263,  263,  263,  263,  263,  263,  263,  263,  263,  263,
+      263,  263,  263,  263,  263,  263,  263,  263,  263,  263,
+      263,  263,  263,  263,  263,  262,  262,  262,  267,  263,
+      263,  263,  263,  263,  263,  263,  263,  263,  263,  263,
+      263,  263,  263,  263,  263,  263,  263,  263,  263,  263,
+
+      263,  263,  263,  263,  263,  263,  263,  263,  263,  263,
+      263,  263,  263,  263,  263,  263,  263,  263,  263,  263,
+      263,  263,  263,  263,  263,  263,  263,  263,  263,  263,
+      263,  263,  263,  263,  263,  263,  263,  263,  263,  263,
+      263,  263,  263,  263,  263,  263,  263,  263,  263,  263,
+      263,  263,  263,  263,  263,  263,  263,  263,  263,  263,
+      263,    0,  262,  262,  262,  262,  262
+    } ;
+
+static yyconst flex_uint16_t yy_nxt[382] =
+    {   0,
+        4,    5,    5,    6,    7,    8,    9,   10,   11,   12,
+       13,   14,   15,   16,   17,   18,   19,   20,   20,   21,
+       22,   23,   24,   25,   26,    8,    8,   27,   28,   29,
+       30,   31,   32,   33,   34,   35,   36,    8,    8,   37,
+        8,   38,   39,   40,    8,   41,   42,   43,   44,   45,
+       46,   47,    8,    8,   48,   49,   50,   51,   52,   52,
+       53,   57,   61,   67,   69,   68,   68,   68,  120,   62,
+       70,   76,   63,   77,  109,   58,   78,   79,   54,   80,
+       64,   65,   66,   71,  261,   72,   72,   72,   71,  110,
+       72,   72,   72,   81,   82,   73,   83,   84,   89,   95,
+
+       73,   74,  121,   91,   73,   90,   98,  122,   96,   73,
+       92,  102,  114,   93,   99,  107,   94,  112,  103,  100,
+      115,   75,  105,  116,  101,  260,  106,  117,  259,  108,
+      258,  113,   52,   52,   68,   68,   68,  132,  132,  132,
+      135,  135,  156,  123,   73,   71,  169,   72,   72,   72,
+      170,  157,  257,   73,  133,  256,  133,   73,  174,  134,
+      134,  134,  175,  132,  132,  132,   73,  134,  134,  134,
+      134,  134,  134,   73,  135,  135,  185,  186,  255,  254,
+      253,  252,   73,   55,   55,   55,   85,  251,   85,  127,
+      250,  127,  127,  127,  136,  136,  142,  142,  142,  249,
+
+      248,  247,  246,  245,  244,  243,  242,  241,  240,  239,
+      238,  237,  236,  235,  234,  233,  232,  231,  230,  229,
+      228,  227,  226,  225,  224,  223,  222,  221,  220,  219,
+      218,  217,  216,  215,  214,  213,  212,  211,  210,  209,
+      208,  207,  206,  205,  204,  203,  202,  201,  200,  199,
+      198,  197,  196,  195,  194,  193,  192,  191,  190,  189,
+      188,  187,  184,  183,  182,  181,  180,  179,  178,  177,
+      176,  173,  172,  171,  168,  167,  166,  165,  164,  163,
+      162,  161,  160,  159,  158,  155,  154,  153,  152,  151,
+      150,  149,  148,  147,  146,  145,  144,  143,  141,  140,
+
+      139,  138,  137,  131,  130,  129,  128,  126,  125,  124,
+      119,  118,  111,  104,   97,   88,   87,   86,   60,   59,
+       56,  262,    3,  262,  262,  262,  262,  262,  262,  262,
+      262,  262,  262,  262,  262,  262,  262,  262,  262,  262,
+      262,  262,  262,  262,  262,  262,  262,  262,  262,  262,
+      262,  262,  262,  262,  262,  262,  262,  262,  262,  262,
+      262,  262,  262,  262,  262,  262,  262,  262,  262,  262,
+      262,  262,  262,  262,  262,  262,  262,  262,  262,  262,
+      262
+    } ;
+
+static yyconst flex_int16_t yy_chk[382] =
+    {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1
-    } ;
-
-static yyconst flex_int16_t yy_base[42] =
-    {   0,
-        0,    0,   68,   97,   26,   29,   97,   28,   29,   97,
-       97,   55,   97,   97,   97,   97,   97,   24,   27,   17,
-       97,   97,   97,   51,   35,   97,   36,   38,   97,   41,
-       97,   45,   50,    0,   97,   65,   53,   97,   92,   94,
-       36
-    } ;
-
-static yyconst flex_int16_t yy_def[42] =
-    {   0,
-       38,    1,   38,   38,   38,   38,   38,   39,   40,   38,
-       38,   38,   38,   38,   38,   38,   38,   38,   38,   41,
-       38,   38,   38,   38,   39,   38,   38,   40,   38,   38,
-       38,   38,   41,   41,   38,   41,   41,    0,   38,   38,
-       38
-    } ;
-
-static yyconst flex_int16_t yy_nxt[125] =
-    {   0,
-        4,    5,    6,    5,    7,    8,    9,   10,    4,   11,
-        4,   12,   13,   14,   15,   16,   17,   18,   19,   19,
-       20,    4,    4,   21,   19,   22,   23,   24,   24,   24,
-       24,   24,   24,   26,   32,   29,   33,   32,   34,   35,
-       26,   25,   32,   32,   29,   32,   32,   28,   32,   27,
-       30,   32,   24,   24,   24,   32,   27,   25,   36,   30,
-       25,   36,   28,   32,   32,   28,   31,   38,   38,   32,
-       38,   34,   35,   36,   34,   35,   38,   38,   38,   38,
-       38,   38,   38,   37,   38,   38,   34,   35,   38,   38,
-       37,   37,   25,   25,   28,   28,    3,   38,   38,   38,
-
-       38,   38,   38,   38,   38,   38,   38,   38,   38,   38,
-       38,   38,   38,   38,   38,   38,   38,   38,   38,   38,
-       38,   38,   38,   38
-    } ;
-
-static yyconst flex_int16_t yy_chk[125] =
-    {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    5,    5,    5,
-        6,    6,    6,    8,   18,    9,   41,   19,   20,   20,
-       25,   27,   18,   18,   28,   19,   19,   30,   18,    8,
-        9,   19,   24,   24,   24,   32,   25,   27,   33,   28,
-       27,   37,   30,   32,   32,   30,   12,    3,    0,   32,
-        0,   33,   33,   36,   37,   37,    0,    0,    0,    0,
-        0,    0,    0,   36,    0,    0,   36,   36,    0,    0,
-       36,   36,   39,   39,   40,   40,   38,   38,   38,   38,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    5,    5,
+        6,   10,   16,   17,   18,   17,   17,   17,   49,   16,
+       18,   21,   16,   21,   41,   10,   22,   22,    6,   23,
+       16,   16,   16,   19,  260,   19,   19,   19,   20,   41,
+       20,   20,   20,   23,   23,   19,   24,   24,   32,   34,
 
-       38,   38,   38,   38,   38,   38,   38,   38,   38,   38,
-       38,   38,   38,   38,   38,   38,   38,   38,   38,   38,
-       38,   38,   38,   38
+       20,   19,   49,   33,   19,   32,   36,   51,   34,   20,
+       33,   37,   44,   33,   36,   40,   33,   43,   37,   36,
+       44,   19,   39,   45,   36,  259,   39,   45,  257,   40,
+      255,   43,   52,   52,   68,   68,   68,   71,   71,   71,
+       74,   74,  103,   51,   68,   72,  115,   72,   72,   72,
+      115,  103,  251,   68,   73,  250,   73,   72,  119,   73,
+       73,   73,  119,  132,  132,  132,   72,  133,  133,  133,
+      134,  134,  134,  132,  135,  135,  149,  149,  248,  247,
+      244,  243,  132,  263,  263,  263,  264,  242,  264,  265,
+      240,  265,  265,  265,  266,  266,  267,  267,  267,  239,
+
+      237,  236,  235,  234,  233,  232,  228,  225,  224,  223,
+      222,  220,  219,  218,  216,  215,  214,  212,  209,  208,
+      205,  203,  202,  200,  199,  198,  196,  195,  193,  191,
+      190,  189,  187,  186,  185,  184,  183,  182,  181,  180,
+      175,  174,  172,  171,  169,  168,  167,  166,  165,  164,
+      163,  162,  160,  159,  158,  157,  156,  155,  153,  152,
+      151,  150,  148,  147,  146,  145,  144,  143,  138,  123,
+      121,  118,  117,  116,  114,  113,  112,  111,  110,  109,
+      108,  107,  106,  105,  104,  101,  100,   99,   98,   97,
+       95,   94,   93,   92,   91,   89,   88,   86,   84,   82,
+
+       81,   80,   78,   69,   67,   66,   65,   61,   57,   54,
+       47,   46,   42,   38,   35,   31,   29,   26,   14,   13,
+        9,    3,  262,  262,  262,  262,  262,  262,  262,  262,
+      262,  262,  262,  262,  262,  262,  262,  262,  262,  262,
+      262,  262,  262,  262,  262,  262,  262,  262,  262,  262,
+      262,  262,  262,  262,  262,  262,  262,  262,  262,  262,
+      262,  262,  262,  262,  262,  262,  262,  262,  262,  262,
+      262,  262,  262,  262,  262,  262,  262,  262,  262,  262,
+      262
     } ;
-
-/* Table of booleans, true if rule could match eol. */
-static yyconst flex_int32_t yy_rule_can_match_eol[23] =
-    {   0,
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 
-    1, 0, 0,     };
 
 /* The intent behind this definition is that it'll catch
  * any uses of REJECT which flex missed.
@@ -482,21 +592,10 @@ static yyconst flex_int32_t yy_rule_can_match_eol[23] =
 #define yymore() yymore_used_but_not_detected
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
-#line 1 "parser.flex"
-/*
-
-    This file is IGNORED during the build process!
-
-    As this file is updated so infrequently, to avoid a dependency on flex you must manually
-    regenerate the lex.parser.c file by running:
-
-        flex parser.flex
-
-*/
+#line 1 "panda.flex"
 #define YY_NO_UNISTD_H 1
-#line 19 "parser.flex"
-#include "ParserGeneratorToken.h"
-#line 500 "lex.parser.c"
+#include "Token.h"
+#line 599 "lex.panda.c"
 
 #define INITIAL 0
 
@@ -525,8 +624,8 @@ struct yyguts_t
     size_t yy_buffer_stack_max; /**< capacity of stack. */
     YY_BUFFER_STATE * yy_buffer_stack; /**< Stack as an array. */
     char yy_hold_char;
-    yy_size_t yy_n_chars;
-    yy_size_t yyleng_r;
+    int yy_n_chars;
+    int yyleng_r;
     char *yy_c_buf_p;
     int yy_init;
     int yy_start;
@@ -548,42 +647,42 @@ struct yyguts_t
 
 static int yy_init_globals (yyscan_t yyscanner );
 
-int parserlex_init (yyscan_t* scanner);
+int pandalex_init (yyscan_t* scanner);
 
-int parserlex_init_extra (YY_EXTRA_TYPE user_defined,yyscan_t* scanner);
+int pandalex_init_extra (YY_EXTRA_TYPE user_defined,yyscan_t* scanner);
 
 /* Accessor methods to globals.
    These are made visible to non-reentrant scanners for convenience. */
 
-int parserlex_destroy (yyscan_t yyscanner );
+int pandalex_destroy (yyscan_t yyscanner );
 
-int parserget_debug (yyscan_t yyscanner );
+int pandaget_debug (yyscan_t yyscanner );
 
-void parserset_debug (int debug_flag ,yyscan_t yyscanner );
+void pandaset_debug (int debug_flag ,yyscan_t yyscanner );
 
-YY_EXTRA_TYPE parserget_extra (yyscan_t yyscanner );
+YY_EXTRA_TYPE pandaget_extra (yyscan_t yyscanner );
 
-void parserset_extra (YY_EXTRA_TYPE user_defined ,yyscan_t yyscanner );
+void pandaset_extra (YY_EXTRA_TYPE user_defined ,yyscan_t yyscanner );
 
-FILE *parserget_in (yyscan_t yyscanner );
+FILE *pandaget_in (yyscan_t yyscanner );
 
-void parserset_in  (FILE * in_str ,yyscan_t yyscanner );
+void pandaset_in  (FILE * _in_str ,yyscan_t yyscanner );
 
-FILE *parserget_out (yyscan_t yyscanner );
+FILE *pandaget_out (yyscan_t yyscanner );
 
-void parserset_out  (FILE * out_str ,yyscan_t yyscanner );
+void pandaset_out  (FILE * _out_str ,yyscan_t yyscanner );
 
-yy_size_t parserget_leng (yyscan_t yyscanner );
+			int pandaget_leng (yyscan_t yyscanner );
 
-char *parserget_text (yyscan_t yyscanner );
+char *pandaget_text (yyscan_t yyscanner );
 
-int parserget_lineno (yyscan_t yyscanner );
+int pandaget_lineno (yyscan_t yyscanner );
 
-void parserset_lineno (int line_number ,yyscan_t yyscanner );
+void pandaset_lineno (int _line_number ,yyscan_t yyscanner );
 
-int parserget_column  (yyscan_t yyscanner );
+int pandaget_column  (yyscan_t yyscanner );
 
-void parserset_column (int column_no ,yyscan_t yyscanner );
+void pandaset_column (int _column_no ,yyscan_t yyscanner );
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -591,14 +690,18 @@ void parserset_column (int column_no ,yyscan_t yyscanner );
 
 #ifndef YY_SKIP_YYWRAP
 #ifdef __cplusplus
-extern "C" int parserwrap (yyscan_t yyscanner );
+extern "C" int pandawrap (yyscan_t yyscanner );
 #else
-extern int parserwrap (yyscan_t yyscanner );
+extern int pandawrap (yyscan_t yyscanner );
 #endif
 #endif
 
+#ifndef YY_NO_UNPUT
+    
     static void yyunput (int c,char *buf_ptr  ,yyscan_t yyscanner);
     
+#endif
+
 #ifndef yytext_ptr
 static void yy_flex_strncpy (char *,yyconst char *,int ,yyscan_t yyscanner);
 #endif
@@ -619,7 +722,12 @@ static int input (yyscan_t yyscanner );
 
 /* Amount of stuff to slurp up with each read. */
 #ifndef YY_READ_BUF_SIZE
+#ifdef __ia64__
+/* On IA-64, the buffer size is 16k, not 8k */
+#define YY_READ_BUF_SIZE 16384
+#else
 #define YY_READ_BUF_SIZE 8192
+#endif /* __ia64__ */
 #endif
 
 /* Copy whatever the last rule matched to the standard output. */
@@ -627,7 +735,7 @@ static int input (yyscan_t yyscanner );
 /* This used to be an fputs(), but since the string might contain NUL's,
  * we now use fwrite().
  */
-#define ECHO do { if (fwrite( yytext, yyleng, 1, yyout )) {} } while (0)
+#define ECHO do { if (fwrite( yytext, (size_t) yyleng, 1, yyout )) {} } while (0)
 #endif
 
 /* Gets input and stuffs it into "buf".  number of characters read, or YY_NULL,
@@ -651,7 +759,7 @@ static int input (yyscan_t yyscanner );
 	else \
 		{ \
 		errno=0; \
-		while ( (result = fread(buf, 1, max_size, yyin))==0 && ferror(yyin)) \
+		while ( (result = (int) fread(buf, 1, max_size, yyin))==0 && ferror(yyin)) \
 			{ \
 			if( errno != EINTR) \
 				{ \
@@ -692,9 +800,9 @@ static int input (yyscan_t yyscanner );
 #ifndef YY_DECL
 #define YY_DECL_IS_OURS 1
 
-extern int parserlex (yyscan_t yyscanner);
+extern int pandalex (yyscan_t yyscanner);
 
-#define YY_DECL int parserlex (yyscan_t yyscanner)
+#define YY_DECL int pandalex (yyscan_t yyscanner)
 #endif /* !YY_DECL */
 
 /* Code executed at the beginning of each rule, after yytext and yyleng
@@ -706,7 +814,7 @@ extern int parserlex (yyscan_t yyscanner);
 
 /* Code executed at the end of each rule. */
 #ifndef YY_BREAK
-#define YY_BREAK break;
+#define YY_BREAK /*LINTED*/break;
 #endif
 
 #define YY_RULE_SETUP \
@@ -716,15 +824,10 @@ extern int parserlex (yyscan_t yyscanner);
  */
 YY_DECL
 {
-	register yy_state_type yy_current_state;
-	register char *yy_cp, *yy_bp;
-	register int yy_act;
+	yy_state_type yy_current_state;
+	char *yy_cp, *yy_bp;
+	int yy_act;
     struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
-
-#line 28 "parser.flex"
-
-
-#line 728 "lex.parser.c"
 
 	if ( !yyg->yy_init )
 		{
@@ -744,15 +847,21 @@ YY_DECL
 			yyout = stdout;
 
 		if ( ! YY_CURRENT_BUFFER ) {
-			parserensure_buffer_stack (yyscanner);
+			pandaensure_buffer_stack (yyscanner);
 			YY_CURRENT_BUFFER_LVALUE =
-				parser_create_buffer(yyin,YY_BUF_SIZE ,yyscanner);
+				panda_create_buffer(yyin,YY_BUF_SIZE ,yyscanner);
 		}
 
-		parser_load_buffer_state(yyscanner );
+		panda_load_buffer_state(yyscanner );
 		}
 
-	while ( 1 )		/* loops until end-of-file is reached */
+	{
+#line 11 "panda.flex"
+
+
+#line 863 "lex.panda.c"
+
+	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
 		yy_cp = yyg->yy_c_buf_p;
 
@@ -768,7 +877,7 @@ YY_DECL
 yy_match:
 		do
 			{
-			register YY_CHAR yy_c = yy_ec[YY_SC_TO_UI(*yy_cp)];
+			YY_CHAR yy_c = yy_ec[YY_SC_TO_UI(*yy_cp)] ;
 			if ( yy_accept[yy_current_state] )
 				{
 				yyg->yy_last_accepting_state = yy_current_state;
@@ -777,13 +886,13 @@ yy_match:
 			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 				{
 				yy_current_state = (int) yy_def[yy_current_state];
-				if ( yy_current_state >= 39 )
+				if ( yy_current_state >= 263 )
 					yy_c = yy_meta[(unsigned int) yy_c];
 				}
-			yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
+			yy_current_state = yy_nxt[yy_base[yy_current_state] + (flex_int16_t) yy_c];
 			++yy_cp;
 			}
-		while ( yy_current_state != 38 );
+		while ( yy_current_state != 262 );
 		yy_cp = yyg->yy_last_accepting_cpos;
 		yy_current_state = yyg->yy_last_accepting_state;
 
@@ -791,18 +900,6 @@ yy_find_action:
 		yy_act = yy_accept[yy_current_state];
 
 		YY_DO_BEFORE_ACTION;
-
-		if ( yy_act != YY_END_OF_BUFFER && yy_rule_can_match_eol[yy_act] )
-			{
-			int yyl;
-			for ( yyl = 0; yyl < yyleng; ++yyl )
-				if ( yytext[yyl] == '\n' )
-					   
-    do{ yylineno++;
-        yycolumn=0;
-    }while(0)
-;
-			}
 
 do_action:	/* This label is used only to access EOF actions. */
 
@@ -817,118 +914,578 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 30 "parser.flex"
-{ return ParserGenerator::Token::COLONCOLON; }
+#line 13 "panda.flex"
+{ return (int) Token::Kind::DECIMAL; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 31 "parser.flex"
-{ return ParserGenerator::Token::COLON; }
+#line 15 "panda.flex"
+{ return (int) Token::Kind::BINARY; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 32 "parser.flex"
-{ return ParserGenerator::Token::DOT; }
+#line 17 "panda.flex"
+{ return (int) Token::Kind::HEX; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 33 "parser.flex"
-{ return ParserGenerator::Token::COMMA; }
+#line 19 "panda.flex"
+{ 
+    return (int) Token::Kind::FLOAT;
+}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 34 "parser.flex"
-{ return ParserGenerator::Token::LT; }
+#line 23 "panda.flex"
+{ return (int) Token::Kind::QUOTE; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 35 "parser.flex"
-{ return ParserGenerator::Token::GT; }
+#line 25 "panda.flex"
+{ return (int) Token::Kind::LINE_COMMENT; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 36 "parser.flex"
-{ return ParserGenerator::Token::NOT; }
+#line 27 "panda.flex"
+{ return (int) Token::Kind::BLOCK_COMMENT_START; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 37 "parser.flex"
-{ return ParserGenerator::Token::CARET; }
+#line 29 "panda.flex"
+{ return (int) Token::Kind::DOC_COMMENT_START; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 38 "parser.flex"
-{ return ParserGenerator::Token::LBRACE; }
+#line 31 "panda.flex"
+{ return (int) Token::Kind::PACKAGE; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 39 "parser.flex"
-{ return ParserGenerator::Token::RBRACE; }
+#line 32 "panda.flex"
+{ return (int) Token::Kind::USES; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 40 "parser.flex"
-{ return ParserGenerator::Token::EQ; }
+#line 33 "panda.flex"
+{ return (int) Token::Kind::AS; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 41 "parser.flex"
-{ return ParserGenerator::Token::SEMICOLON; }
+#line 34 "panda.flex"
+{ return (int) Token::Kind::CLASS; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 42 "parser.flex"
-{ return ParserGenerator::Token::QUESTION; }
+#line 35 "panda.flex"
+{ return (int) Token::Kind::INTERFACE; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 43 "parser.flex"
-{ return ParserGenerator::Token::CHARSET; }
+#line 36 "panda.flex"
+{ return (int) Token::Kind::CHOICE; }
 	YY_BREAK
 case 15:
-/* rule 15 can match eol */
 YY_RULE_SETUP
-#line 44 "parser.flex"
-{ return ParserGenerator::Token::SINGLELITERAL; }
+#line 37 "panda.flex"
+{ return (int) Token::Kind::FUNCTION; }
 	YY_BREAK
 case 16:
-/* rule 16 can match eol */
 YY_RULE_SETUP
-#line 45 "parser.flex"
-{ return ParserGenerator::Token::DOUBLELITERAL; }
+#line 38 "panda.flex"
+{ return (int) Token::Kind::METHOD; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 46 "parser.flex"
-{ return ParserGenerator::Token::IDENTIFIER; }
+#line 39 "panda.flex"
+{ return (int) Token::Kind::INIT; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 47 "parser.flex"
-{ return ParserGenerator::Token::IDENTIFIER; }
+#line 40 "panda.flex"
+{ return (int) Token::Kind::VAR; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 48 "parser.flex"
-{ return ParserGenerator::Token::AT; }
+#line 41 "panda.flex"
+{ return (int) Token::Kind::DEF; }
 	YY_BREAK
 case 20:
-/* rule 20 can match eol */
 YY_RULE_SETUP
-#line 49 "parser.flex"
-{ return ParserGenerator::Token::WHITESPACE; }
+#line 42 "panda.flex"
+{ return (int) Token::Kind::PROPERTY; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 51 "parser.flex"
-{ return ParserGenerator::Token::INVALID_TOKEN; }
+#line 43 "panda.flex"
+{ return (int) Token::Kind::CONSTANT; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 53 "parser.flex"
+#line 44 "panda.flex"
+{ return (int) Token::Kind::RETURN; }
+	YY_BREAK
+case 23:
+YY_RULE_SETUP
+#line 45 "panda.flex"
+{ return (int) Token::Kind::BREAK; }
+	YY_BREAK
+case 24:
+YY_RULE_SETUP
+#line 46 "panda.flex"
+{ return (int) Token::Kind::CONTINUE; }
+	YY_BREAK
+case 25:
+YY_RULE_SETUP
+#line 47 "panda.flex"
+{ return (int) Token::Kind::DO; }
+	YY_BREAK
+case 26:
+YY_RULE_SETUP
+#line 48 "panda.flex"
+{ return (int) Token::Kind::WHILE; }
+	YY_BREAK
+case 27:
+YY_RULE_SETUP
+#line 49 "panda.flex"
+{ return (int) Token::Kind::FOR; }
+	YY_BREAK
+case 28:
+YY_RULE_SETUP
+#line 50 "panda.flex"
+{ return (int) Token::Kind::BY; }
+	YY_BREAK
+case 29:
+YY_RULE_SETUP
+#line 51 "panda.flex"
+{ return (int) Token::Kind::IN; }
+	YY_BREAK
+case 30:
+YY_RULE_SETUP
+#line 52 "panda.flex"
+{ return (int) Token::Kind::LOOP; }
+	YY_BREAK
+case 31:
+YY_RULE_SETUP
+#line 53 "panda.flex"
+{ return (int) Token::Kind::IF; }
+	YY_BREAK
+case 32:
+YY_RULE_SETUP
+#line 54 "panda.flex"
+{ return (int) Token::Kind::ELSE; }
+	YY_BREAK
+case 33:
+YY_RULE_SETUP
+#line 55 "panda.flex"
+{ return (int) Token::Kind::TRUE_LITERAL; }
+	YY_BREAK
+case 34:
+YY_RULE_SETUP
+#line 56 "panda.flex"
+{ return (int) Token::Kind::FALSE_LITERAL; }
+	YY_BREAK
+case 35:
+YY_RULE_SETUP
+#line 57 "panda.flex"
+{ return (int) Token::Kind::NULL_LITERAL; }
+	YY_BREAK
+case 36:
+YY_RULE_SETUP
+#line 58 "panda.flex"
+{ return (int) Token::Kind::NEW; }
+	YY_BREAK
+case 37:
+YY_RULE_SETUP
+#line 59 "panda.flex"
+{ return (int) Token::Kind::ASSERT; }
+	YY_BREAK
+case 38:
+YY_RULE_SETUP
+#line 60 "panda.flex"
+{ return (int) Token::Kind::UNREACHABLE; }
+	YY_BREAK
+case 39:
+YY_RULE_SETUP
+#line 61 "panda.flex"
+{ return (int) Token::Kind::TRY; }
+	YY_BREAK
+case 40:
+YY_RULE_SETUP
+#line 62 "panda.flex"
+{ return (int) Token::Kind::CATCH; }
+	YY_BREAK
+case 41:
+YY_RULE_SETUP
+#line 63 "panda.flex"
+{ return (int) Token::Kind::FINALLY; }
+	YY_BREAK
+case 42:
+YY_RULE_SETUP
+#line 64 "panda.flex"
+{ return (int) Token::Kind::THROW; }
+	YY_BREAK
+case 43:
+YY_RULE_SETUP
+#line 65 "panda.flex"
+{ return (int) Token::Kind::MATCH; }
+	YY_BREAK
+case 44:
+YY_RULE_SETUP
+#line 66 "panda.flex"
+{ return (int) Token::Kind::WHEN; }
+	YY_BREAK
+case 45:
+YY_RULE_SETUP
+#line 67 "panda.flex"
+{ return (int) Token::Kind::DEFAULT; }
+	YY_BREAK
+case 46:
+YY_RULE_SETUP
+#line 68 "panda.flex"
+{ return (int) Token::Kind::SELF; }
+	YY_BREAK
+case 47:
+YY_RULE_SETUP
+#line 69 "panda.flex"
+{ return (int) Token::Kind::SUPER; }
+	YY_BREAK
+case 48:
+YY_RULE_SETUP
+#line 70 "panda.flex"
+{ return (int) Token::Kind::PRE; }
+	YY_BREAK
+case 49:
+YY_RULE_SETUP
+#line 71 "panda.flex"
+{ return (int) Token::Kind::UNDERSCORE; }
+	YY_BREAK
+case 50:
+YY_RULE_SETUP
+#line 72 "panda.flex"
+{ return (int) Token::Kind::NOT; }
+	YY_BREAK
+case 51:
+YY_RULE_SETUP
+#line 73 "panda.flex"
+{ return (int) Token::Kind::BITWISENOT; }
+	YY_BREAK
+case 52:
+YY_RULE_SETUP
+#line 74 "panda.flex"
+{ return (int) Token::Kind::ADD; }
+	YY_BREAK
+case 53:
+YY_RULE_SETUP
+#line 75 "panda.flex"
+{ return (int) Token::Kind::SUB; }
+	YY_BREAK
+case 54:
+YY_RULE_SETUP
+#line 76 "panda.flex"
+{ return (int) Token::Kind::MUL; }
+	YY_BREAK
+case 55:
+YY_RULE_SETUP
+#line 77 "panda.flex"
+{ return (int) Token::Kind::DIV; }
+	YY_BREAK
+case 56:
+YY_RULE_SETUP
+#line 78 "panda.flex"
+{ return (int) Token::Kind::INTDIV; }
+	YY_BREAK
+case 57:
+YY_RULE_SETUP
+#line 79 "panda.flex"
+{ return (int) Token::Kind::REM; }
+	YY_BREAK
+case 58:
+YY_RULE_SETUP
+#line 80 "panda.flex"
+{ return (int) Token::Kind::POW; }
+	YY_BREAK
+case 59:
+YY_RULE_SETUP
+#line 81 "panda.flex"
+{ return (int) Token::Kind::EQ; }
+	YY_BREAK
+case 60:
+YY_RULE_SETUP
+#line 82 "panda.flex"
+{ return (int) Token::Kind::NEQ; }
+	YY_BREAK
+case 61:
+YY_RULE_SETUP
+#line 83 "panda.flex"
+{ return (int) Token::Kind::IDENTITY; }
+	YY_BREAK
+case 62:
+YY_RULE_SETUP
+#line 84 "panda.flex"
+{ return (int) Token::Kind::NIDENTITY; }
+	YY_BREAK
+case 63:
+YY_RULE_SETUP
+#line 85 "panda.flex"
+{ return (int) Token::Kind::LT; }
+	YY_BREAK
+case 64:
+YY_RULE_SETUP
+#line 86 "panda.flex"
+{ return (int) Token::Kind::GT; }
+	YY_BREAK
+case 65:
+YY_RULE_SETUP
+#line 87 "panda.flex"
+{ return (int) Token::Kind::LTEQ; }
+	YY_BREAK
+case 66:
+YY_RULE_SETUP
+#line 88 "panda.flex"
+{ return (int) Token::Kind::GTEQ; }
+	YY_BREAK
+case 67:
+YY_RULE_SETUP
+#line 89 "panda.flex"
+{ return (int) Token::Kind::AND; }
+	YY_BREAK
+case 68:
+YY_RULE_SETUP
+#line 90 "panda.flex"
+{ return (int) Token::Kind::BITWISEAND; }
+	YY_BREAK
+case 69:
+YY_RULE_SETUP
+#line 91 "panda.flex"
+{ return (int) Token::Kind::OR; }
+	YY_BREAK
+case 70:
+YY_RULE_SETUP
+#line 92 "panda.flex"
+{ return (int) Token::Kind::BITWISEOR; }
+	YY_BREAK
+case 71:
+YY_RULE_SETUP
+#line 93 "panda.flex"
+{ return (int) Token::Kind::XOR; }
+	YY_BREAK
+case 72:
+YY_RULE_SETUP
+#line 94 "panda.flex"
+{ return (int) Token::Kind::BITWISEXOR; }
+	YY_BREAK
+case 73:
+YY_RULE_SETUP
+#line 95 "panda.flex"
+{ return (int) Token::Kind::SHIFTLEFT; }
+	YY_BREAK
+case 74:
+YY_RULE_SETUP
+#line 96 "panda.flex"
+{ return (int) Token::Kind::ASSIGNMENT; }
+	YY_BREAK
+case 75:
+YY_RULE_SETUP
+#line 97 "panda.flex"
+{ return (int) Token::Kind::ADDEQ; }
+	YY_BREAK
+case 76:
+YY_RULE_SETUP
+#line 98 "panda.flex"
+{ return (int) Token::Kind::SUBEQ; }
+	YY_BREAK
+case 77:
+YY_RULE_SETUP
+#line 99 "panda.flex"
+{ return (int) Token::Kind::MULEQ; }
+	YY_BREAK
+case 78:
+YY_RULE_SETUP
+#line 100 "panda.flex"
+{ return (int) Token::Kind::DIVEQ; }
+	YY_BREAK
+case 79:
+YY_RULE_SETUP
+#line 101 "panda.flex"
+{ return (int) Token::Kind::REMEQ; }
+	YY_BREAK
+case 80:
+YY_RULE_SETUP
+#line 102 "panda.flex"
+{ return (int) Token::Kind::INTDIVEQ; }
+	YY_BREAK
+case 81:
+YY_RULE_SETUP
+#line 103 "panda.flex"
+{ return (int) Token::Kind::OREQ; }
+	YY_BREAK
+case 82:
+YY_RULE_SETUP
+#line 104 "panda.flex"
+{ return (int) Token::Kind::BITWISEOREQ; }
+	YY_BREAK
+case 83:
+YY_RULE_SETUP
+#line 105 "panda.flex"
+{ return (int) Token::Kind::ANDEQ; }
+	YY_BREAK
+case 84:
+YY_RULE_SETUP
+#line 106 "panda.flex"
+{ return (int) Token::Kind::BITWISEANDEQ; }
+	YY_BREAK
+case 85:
+YY_RULE_SETUP
+#line 107 "panda.flex"
+{ return (int) Token::Kind::XOREQ; }
+	YY_BREAK
+case 86:
+YY_RULE_SETUP
+#line 108 "panda.flex"
+{ return (int) Token::Kind::BITWISEXOREQ; }
+	YY_BREAK
+case 87:
+YY_RULE_SETUP
+#line 109 "panda.flex"
+{ return (int) Token::Kind::SHIFTLEFTEQ; }
+	YY_BREAK
+case 88:
+YY_RULE_SETUP
+#line 110 "panda.flex"
+{ return (int) Token::Kind::SHIFTRIGHTEQ; }
+	YY_BREAK
+case 89:
+YY_RULE_SETUP
+#line 111 "panda.flex"
+{ return (int) Token::Kind::POWEQ; }
+	YY_BREAK
+case 90:
+YY_RULE_SETUP
+#line 112 "panda.flex"
+{ return (int) Token::Kind::CAST; }
+	YY_BREAK
+case 91:
+YY_RULE_SETUP
+#line 113 "panda.flex"
+{ return (int) Token::Kind::CONVERT; }
+	YY_BREAK
+case 92:
+YY_RULE_SETUP
+#line 114 "panda.flex"
+{ return (int) Token::Kind::INSTANCEOF; }
+	YY_BREAK
+case 93:
+YY_RULE_SETUP
+#line 115 "panda.flex"
+{ return (int) Token::Kind::NINSTANCEOF; }
+	YY_BREAK
+case 94:
+YY_RULE_SETUP
+#line 116 "panda.flex"
+{ return (int) Token::Kind::YIELDS; }
+	YY_BREAK
+case 95:
+YY_RULE_SETUP
+#line 117 "panda.flex"
+{ return (int) Token::Kind::YIELDS_METHOD; }
+	YY_BREAK
+case 96:
+YY_RULE_SETUP
+#line 118 "panda.flex"
+{ return (int) Token::Kind::YIELDS_IMMUTABLE; }
+	YY_BREAK
+case 97:
+YY_RULE_SETUP
+#line 119 "panda.flex"
+{ return (int) Token::Kind::YIELDS_METHOD_IMMUTABLE; }
+	YY_BREAK
+case 98:
+YY_RULE_SETUP
+#line 120 "panda.flex"
+{ return (int) Token::Kind::QUESTION; }
+	YY_BREAK
+case 99:
+YY_RULE_SETUP
+#line 121 "panda.flex"
+{ return (int) Token::Kind::COLON; }
+	YY_BREAK
+case 100:
+YY_RULE_SETUP
+#line 122 "panda.flex"
+{ return (int) Token::Kind::MEMBER; }
+	YY_BREAK
+case 101:
+YY_RULE_SETUP
+#line 123 "panda.flex"
+{ return (int) Token::Kind::DOTDOT; }
+	YY_BREAK
+case 102:
+YY_RULE_SETUP
+#line 124 "panda.flex"
+{ return (int) Token::Kind::ELLIPSIS; }
+	YY_BREAK
+case 103:
+YY_RULE_SETUP
+#line 125 "panda.flex"
+{ return (int) Token::Kind::DOT; }
+	YY_BREAK
+case 104:
+YY_RULE_SETUP
+#line 126 "panda.flex"
+{ return (int) Token::Kind::LBRACE; }
+	YY_BREAK
+case 105:
+YY_RULE_SETUP
+#line 127 "panda.flex"
+{ return (int) Token::Kind::RBRACE; }
+	YY_BREAK
+case 106:
+YY_RULE_SETUP
+#line 128 "panda.flex"
+{ return (int) Token::Kind::LBRACKET; }
+	YY_BREAK
+case 107:
+YY_RULE_SETUP
+#line 129 "panda.flex"
+{ return (int) Token::Kind::RBRACKET; }
+	YY_BREAK
+case 108:
+YY_RULE_SETUP
+#line 130 "panda.flex"
+{ return (int) Token::Kind::LPAREN; }
+	YY_BREAK
+case 109:
+YY_RULE_SETUP
+#line 131 "panda.flex"
+{ return (int) Token::Kind::RPAREN; }
+	YY_BREAK
+case 110:
+YY_RULE_SETUP
+#line 132 "panda.flex"
+{ return (int) Token::Kind::COMMA; }
+	YY_BREAK
+case 111:
+YY_RULE_SETUP
+#line 134 "panda.flex"
+{ return (int) Token::Kind::IDENTIFIER; }
+	YY_BREAK
+case 112:
+YY_RULE_SETUP
+#line 135 "panda.flex"
+{ return (int) Token::Kind::ANNOTATION; }
+	YY_BREAK
+case 113:
+/* rule 113 can match eol */
+YY_RULE_SETUP
+#line 137 "panda.flex"
+{ return (int) Token::Kind::WHITESPACE; }
+	YY_BREAK
+case 114:
+YY_RULE_SETUP
+#line 139 "panda.flex"
 ECHO;
 	YY_BREAK
-#line 932 "lex.parser.c"
+#line 1489 "lex.panda.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -946,7 +1503,7 @@ case YY_STATE_EOF(INITIAL):
 			/* We're scanning a new file or input source.  It's
 			 * possible that this happened because the user
 			 * just pointed yyin at a new source and called
-			 * parserlex().  If so, then we have to assure
+			 * pandalex().  If so, then we have to assure
 			 * consistency between YY_CURRENT_BUFFER and our
 			 * globals.  Here is the right place to do so, because
 			 * this is the first action (other than possibly a
@@ -1007,7 +1564,7 @@ case YY_STATE_EOF(INITIAL):
 				{
 				yyg->yy_did_buffer_switch_on_eof = 0;
 
-				if ( parserwrap(yyscanner ) )
+				if ( pandawrap(yyscanner ) )
 					{
 					/* Note: because we've taken care in
 					 * yy_get_next_buffer() to have set up
@@ -1060,7 +1617,8 @@ case YY_STATE_EOF(INITIAL):
 			"fatal flex scanner internal error--no action found" );
 	} /* end of action switch */
 		} /* end of scanning one token */
-} /* end of parserlex */
+	} /* end of user's declarations */
+} /* end of pandalex */
 
 /* yy_get_next_buffer - try to read in a new buffer
  *
@@ -1072,9 +1630,9 @@ case YY_STATE_EOF(INITIAL):
 static int yy_get_next_buffer (yyscan_t yyscanner)
 {
     struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
-	register char *dest = YY_CURRENT_BUFFER_LVALUE->yy_ch_buf;
-	register char *source = yyg->yytext_ptr;
-	register int number_to_move, i;
+	char *dest = YY_CURRENT_BUFFER_LVALUE->yy_ch_buf;
+	char *source = yyg->yytext_ptr;
+	yy_size_t number_to_move, i;
 	int ret_val;
 
 	if ( yyg->yy_c_buf_p > &YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[yyg->yy_n_chars + 1] )
@@ -1103,7 +1661,7 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
 	/* Try to read more data. */
 
 	/* First move last chars to start of buffer. */
-	number_to_move = (int) (yyg->yy_c_buf_p - yyg->yytext_ptr) - 1;
+	number_to_move = (yy_size_t) (yyg->yy_c_buf_p - yyg->yytext_ptr) - 1;
 
 	for ( i = 0; i < number_to_move; ++i )
 		*(dest++) = *(source++);
@@ -1116,7 +1674,7 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
 
 	else
 		{
-			yy_size_t num_to_read =
+			int num_to_read =
 			YY_CURRENT_BUFFER_LVALUE->yy_buf_size - number_to_move - 1;
 
 		while ( num_to_read <= 0 )
@@ -1130,7 +1688,7 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
 
 			if ( b->yy_is_our_buffer )
 				{
-				yy_size_t new_size = b->yy_buf_size * 2;
+				int new_size = b->yy_buf_size * 2;
 
 				if ( new_size <= 0 )
 					b->yy_buf_size += b->yy_buf_size / 8;
@@ -1139,11 +1697,11 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
 
 				b->yy_ch_buf = (char *)
 					/* Include room in for 2 EOB chars. */
-					parserrealloc((void *) b->yy_ch_buf,b->yy_buf_size + 2 ,yyscanner );
+					pandarealloc((void *) b->yy_ch_buf,b->yy_buf_size + 2 ,yyscanner );
 				}
 			else
 				/* Can't grow it, we don't own it. */
-				b->yy_ch_buf = 0;
+				b->yy_ch_buf = NULL;
 
 			if ( ! b->yy_ch_buf )
 				YY_FATAL_ERROR(
@@ -1171,7 +1729,7 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
 		if ( number_to_move == YY_MORE_ADJ )
 			{
 			ret_val = EOB_ACT_END_OF_FILE;
-			parserrestart(yyin  ,yyscanner);
+			pandarestart(yyin  ,yyscanner);
 			}
 
 		else
@@ -1185,10 +1743,10 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
 	else
 		ret_val = EOB_ACT_CONTINUE_SCAN;
 
-	if ((yy_size_t) (yyg->yy_n_chars + number_to_move) > YY_CURRENT_BUFFER_LVALUE->yy_buf_size) {
+	if ((int) (yyg->yy_n_chars + number_to_move) > YY_CURRENT_BUFFER_LVALUE->yy_buf_size) {
 		/* Extend the array by 50%, plus the number we really need. */
-		yy_size_t new_size = yyg->yy_n_chars + number_to_move + (yyg->yy_n_chars >> 1);
-		YY_CURRENT_BUFFER_LVALUE->yy_ch_buf = (char *) parserrealloc((void *) YY_CURRENT_BUFFER_LVALUE->yy_ch_buf,new_size ,yyscanner );
+		int new_size = yyg->yy_n_chars + number_to_move + (yyg->yy_n_chars >> 1);
+		YY_CURRENT_BUFFER_LVALUE->yy_ch_buf = (char *) pandarealloc((void *) YY_CURRENT_BUFFER_LVALUE->yy_ch_buf,new_size ,yyscanner );
 		if ( ! YY_CURRENT_BUFFER_LVALUE->yy_ch_buf )
 			YY_FATAL_ERROR( "out of dynamic memory in yy_get_next_buffer()" );
 	}
@@ -1206,15 +1764,15 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
 
     static yy_state_type yy_get_previous_state (yyscan_t yyscanner)
 {
-	register yy_state_type yy_current_state;
-	register char *yy_cp;
+	yy_state_type yy_current_state;
+	char *yy_cp;
     struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
 
 	yy_current_state = yyg->yy_start;
 
 	for ( yy_cp = yyg->yytext_ptr + YY_MORE_ADJ; yy_cp < yyg->yy_c_buf_p; ++yy_cp )
 		{
-		register YY_CHAR yy_c = (*yy_cp ? yy_ec[YY_SC_TO_UI(*yy_cp)] : 1);
+		YY_CHAR yy_c = (*yy_cp ? yy_ec[YY_SC_TO_UI(*yy_cp)] : 1);
 		if ( yy_accept[yy_current_state] )
 			{
 			yyg->yy_last_accepting_state = yy_current_state;
@@ -1223,10 +1781,10 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
 		while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 			{
 			yy_current_state = (int) yy_def[yy_current_state];
-			if ( yy_current_state >= 39 )
+			if ( yy_current_state >= 263 )
 				yy_c = yy_meta[(unsigned int) yy_c];
 			}
-		yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
+		yy_current_state = yy_nxt[yy_base[yy_current_state] + (flex_int16_t) yy_c];
 		}
 
 	return yy_current_state;
@@ -1239,11 +1797,11 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
  */
     static yy_state_type yy_try_NUL_trans  (yy_state_type yy_current_state , yyscan_t yyscanner)
 {
-	register int yy_is_jam;
+	int yy_is_jam;
     struct yyguts_t * yyg = (struct yyguts_t*)yyscanner; /* This var may be unused depending upon options. */
-	register char *yy_cp = yyg->yy_c_buf_p;
+	char *yy_cp = yyg->yy_c_buf_p;
 
-	register YY_CHAR yy_c = 1;
+	YY_CHAR yy_c = 1;
 	if ( yy_accept[yy_current_state] )
 		{
 		yyg->yy_last_accepting_state = yy_current_state;
@@ -1252,19 +1810,21 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
 	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 		{
 		yy_current_state = (int) yy_def[yy_current_state];
-		if ( yy_current_state >= 39 )
+		if ( yy_current_state >= 263 )
 			yy_c = yy_meta[(unsigned int) yy_c];
 		}
-	yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
-	yy_is_jam = (yy_current_state == 38);
+	yy_current_state = yy_nxt[yy_base[yy_current_state] + (flex_int16_t) yy_c];
+	yy_is_jam = (yy_current_state == 262);
 
 	(void)yyg;
 	return yy_is_jam ? 0 : yy_current_state;
 }
 
-    static void yyunput (int c, register char * yy_bp , yyscan_t yyscanner)
+#ifndef YY_NO_UNPUT
+
+    static void yyunput (int c, char * yy_bp , yyscan_t yyscanner)
 {
-	register char *yy_cp;
+	char *yy_cp;
     struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
 
     yy_cp = yyg->yy_c_buf_p;
@@ -1275,10 +1835,10 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
 	if ( yy_cp < YY_CURRENT_BUFFER_LVALUE->yy_ch_buf + 2 )
 		{ /* need to shift things up to make room */
 		/* +2 for EOB chars. */
-		register yy_size_t number_to_move = yyg->yy_n_chars + 2;
-		register char *dest = &YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[
+		int number_to_move = yyg->yy_n_chars + 2;
+		char *dest = &YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[
 					YY_CURRENT_BUFFER_LVALUE->yy_buf_size + 2];
-		register char *source =
+		char *source =
 				&YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[number_to_move];
 
 		while ( source > YY_CURRENT_BUFFER_LVALUE->yy_ch_buf )
@@ -1287,7 +1847,7 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
 		yy_cp += (int) (dest - source);
 		yy_bp += (int) (dest - source);
 		YY_CURRENT_BUFFER_LVALUE->yy_n_chars =
-			yyg->yy_n_chars = YY_CURRENT_BUFFER_LVALUE->yy_buf_size;
+			yyg->yy_n_chars = (int) YY_CURRENT_BUFFER_LVALUE->yy_buf_size;
 
 		if ( yy_cp < YY_CURRENT_BUFFER_LVALUE->yy_ch_buf + 2 )
 			YY_FATAL_ERROR( "flex scanner push-back overflow" );
@@ -1295,14 +1855,12 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
 
 	*--yy_cp = (char) c;
 
-    if ( c == '\n' ){
-        --yylineno;
-    }
-
 	yyg->yytext_ptr = yy_bp;
 	yyg->yy_hold_char = *yy_cp;
 	yyg->yy_c_buf_p = yy_cp;
 }
+
+#endif
 
 #ifndef YY_NO_INPUT
 #ifdef __cplusplus
@@ -1329,7 +1887,7 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
 
 		else
 			{ /* need more input */
-			yy_size_t offset = yyg->yy_c_buf_p - yyg->yytext_ptr;
+			int offset = yyg->yy_c_buf_p - yyg->yytext_ptr;
 			++yyg->yy_c_buf_p;
 
 			switch ( yy_get_next_buffer( yyscanner ) )
@@ -1346,14 +1904,14 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
 					 */
 
 					/* Reset buffer status. */
-					parserrestart(yyin ,yyscanner);
+					pandarestart(yyin ,yyscanner);
 
 					/*FALLTHROUGH*/
 
 				case EOB_ACT_END_OF_FILE:
 					{
-					if ( parserwrap(yyscanner ) )
-						return EOF;
+					if ( pandawrap(yyscanner ) )
+						return 0;
 
 					if ( ! yyg->yy_did_buffer_switch_on_eof )
 						YY_NEW_FILE;
@@ -1375,13 +1933,6 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
 	*yyg->yy_c_buf_p = '\0';	/* preserve yytext */
 	yyg->yy_hold_char = *++yyg->yy_c_buf_p;
 
-	if ( c == '\n' )
-		   
-    do{ yylineno++;
-        yycolumn=0;
-    }while(0)
-;
-
 	return c;
 }
 #endif	/* ifndef YY_NO_INPUT */
@@ -1391,34 +1942,34 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
  * @param yyscanner The scanner object.
  * @note This function does not reset the start condition to @c INITIAL .
  */
-    void parserrestart  (FILE * input_file , yyscan_t yyscanner)
+    void pandarestart  (FILE * input_file , yyscan_t yyscanner)
 {
     struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
 
 	if ( ! YY_CURRENT_BUFFER ){
-        parserensure_buffer_stack (yyscanner);
+        pandaensure_buffer_stack (yyscanner);
 		YY_CURRENT_BUFFER_LVALUE =
-            parser_create_buffer(yyin,YY_BUF_SIZE ,yyscanner);
+            panda_create_buffer(yyin,YY_BUF_SIZE ,yyscanner);
 	}
 
-	parser_init_buffer(YY_CURRENT_BUFFER,input_file ,yyscanner);
-	parser_load_buffer_state(yyscanner );
+	panda_init_buffer(YY_CURRENT_BUFFER,input_file ,yyscanner);
+	panda_load_buffer_state(yyscanner );
 }
 
 /** Switch to a different input buffer.
  * @param new_buffer The new input buffer.
  * @param yyscanner The scanner object.
  */
-    void parser_switch_to_buffer  (YY_BUFFER_STATE  new_buffer , yyscan_t yyscanner)
+    void panda_switch_to_buffer  (YY_BUFFER_STATE  new_buffer , yyscan_t yyscanner)
 {
     struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
 
 	/* TODO. We should be able to replace this entire function body
 	 * with
-	 *		parserpop_buffer_state();
-	 *		parserpush_buffer_state(new_buffer);
+	 *		pandapop_buffer_state();
+	 *		pandapush_buffer_state(new_buffer);
      */
-	parserensure_buffer_stack (yyscanner);
+	pandaensure_buffer_stack (yyscanner);
 	if ( YY_CURRENT_BUFFER == new_buffer )
 		return;
 
@@ -1431,17 +1982,17 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
 		}
 
 	YY_CURRENT_BUFFER_LVALUE = new_buffer;
-	parser_load_buffer_state(yyscanner );
+	panda_load_buffer_state(yyscanner );
 
 	/* We don't actually know whether we did this switch during
-	 * EOF (parserwrap()) processing, but the only time this flag
-	 * is looked at is after parserwrap() is called, so it's safe
+	 * EOF (pandawrap()) processing, but the only time this flag
+	 * is looked at is after pandawrap() is called, so it's safe
 	 * to go ahead and always set it.
 	 */
 	yyg->yy_did_buffer_switch_on_eof = 1;
 }
 
-static void parser_load_buffer_state  (yyscan_t yyscanner)
+static void panda_load_buffer_state  (yyscan_t yyscanner)
 {
     struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
 	yyg->yy_n_chars = YY_CURRENT_BUFFER_LVALUE->yy_n_chars;
@@ -1456,35 +2007,35 @@ static void parser_load_buffer_state  (yyscan_t yyscanner)
  * @param yyscanner The scanner object.
  * @return the allocated buffer state.
  */
-    YY_BUFFER_STATE parser_create_buffer  (FILE * file, int  size , yyscan_t yyscanner)
+    YY_BUFFER_STATE panda_create_buffer  (FILE * file, int  size , yyscan_t yyscanner)
 {
 	YY_BUFFER_STATE b;
     
-	b = (YY_BUFFER_STATE) parseralloc(sizeof( struct yy_buffer_state ) ,yyscanner );
+	b = (YY_BUFFER_STATE) pandaalloc(sizeof( struct yy_buffer_state ) ,yyscanner );
 	if ( ! b )
-		YY_FATAL_ERROR( "out of dynamic memory in parser_create_buffer()" );
+		YY_FATAL_ERROR( "out of dynamic memory in panda_create_buffer()" );
 
-	b->yy_buf_size = size;
+	b->yy_buf_size = (yy_size_t)size;
 
 	/* yy_ch_buf has to be 2 characters longer than the size given because
 	 * we need to put in 2 end-of-buffer characters.
 	 */
-	b->yy_ch_buf = (char *) parseralloc(b->yy_buf_size + 2 ,yyscanner );
+	b->yy_ch_buf = (char *) pandaalloc(b->yy_buf_size + 2 ,yyscanner );
 	if ( ! b->yy_ch_buf )
-		YY_FATAL_ERROR( "out of dynamic memory in parser_create_buffer()" );
+		YY_FATAL_ERROR( "out of dynamic memory in panda_create_buffer()" );
 
 	b->yy_is_our_buffer = 1;
 
-	parser_init_buffer(b,file ,yyscanner);
+	panda_init_buffer(b,file ,yyscanner);
 
 	return b;
 }
 
 /** Destroy the buffer.
- * @param b a buffer created with parser_create_buffer()
+ * @param b a buffer created with panda_create_buffer()
  * @param yyscanner The scanner object.
  */
-    void parser_delete_buffer (YY_BUFFER_STATE  b , yyscan_t yyscanner)
+    void panda_delete_buffer (YY_BUFFER_STATE  b , yyscan_t yyscanner)
 {
     struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
 
@@ -1495,28 +2046,28 @@ static void parser_load_buffer_state  (yyscan_t yyscanner)
 		YY_CURRENT_BUFFER_LVALUE = (YY_BUFFER_STATE) 0;
 
 	if ( b->yy_is_our_buffer )
-		parserfree((void *) b->yy_ch_buf ,yyscanner );
+		pandafree((void *) b->yy_ch_buf ,yyscanner );
 
-	parserfree((void *) b ,yyscanner );
+	pandafree((void *) b ,yyscanner );
 }
 
 /* Initializes or reinitializes a buffer.
  * This function is sometimes called more than once on the same buffer,
- * such as during a parserrestart() or at EOF.
+ * such as during a pandarestart() or at EOF.
  */
-    static void parser_init_buffer  (YY_BUFFER_STATE  b, FILE * file , yyscan_t yyscanner)
+    static void panda_init_buffer  (YY_BUFFER_STATE  b, FILE * file , yyscan_t yyscanner)
 
 {
 	int oerrno = errno;
     struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
 
-	parser_flush_buffer(b ,yyscanner);
+	panda_flush_buffer(b ,yyscanner);
 
 	b->yy_input_file = file;
 	b->yy_fill_buffer = 1;
 
-    /* If b is the current buffer, then parser_init_buffer was _probably_
-     * called from parserrestart() or through yy_get_next_buffer.
+    /* If b is the current buffer, then panda_init_buffer was _probably_
+     * called from pandarestart() or through yy_get_next_buffer.
      * In that case, we don't want to reset the lineno or column.
      */
     if (b != YY_CURRENT_BUFFER){
@@ -1533,7 +2084,7 @@ static void parser_load_buffer_state  (yyscan_t yyscanner)
  * @param b the buffer state to be flushed, usually @c YY_CURRENT_BUFFER.
  * @param yyscanner The scanner object.
  */
-    void parser_flush_buffer (YY_BUFFER_STATE  b , yyscan_t yyscanner)
+    void panda_flush_buffer (YY_BUFFER_STATE  b , yyscan_t yyscanner)
 {
     struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
 	if ( ! b )
@@ -1554,7 +2105,7 @@ static void parser_load_buffer_state  (yyscan_t yyscanner)
 	b->yy_buffer_status = YY_BUFFER_NEW;
 
 	if ( b == YY_CURRENT_BUFFER )
-		parser_load_buffer_state(yyscanner );
+		panda_load_buffer_state(yyscanner );
 }
 
 /** Pushes the new state onto the stack. The new state becomes
@@ -1563,15 +2114,15 @@ static void parser_load_buffer_state  (yyscan_t yyscanner)
  *  @param new_buffer The new state.
  *  @param yyscanner The scanner object.
  */
-void parserpush_buffer_state (YY_BUFFER_STATE new_buffer , yyscan_t yyscanner)
+void pandapush_buffer_state (YY_BUFFER_STATE new_buffer , yyscan_t yyscanner)
 {
     struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
 	if (new_buffer == NULL)
 		return;
 
-	parserensure_buffer_stack(yyscanner);
+	pandaensure_buffer_stack(yyscanner);
 
-	/* This block is copied from parser_switch_to_buffer. */
+	/* This block is copied from panda_switch_to_buffer. */
 	if ( YY_CURRENT_BUFFER )
 		{
 		/* Flush out information for old buffer. */
@@ -1585,8 +2136,8 @@ void parserpush_buffer_state (YY_BUFFER_STATE new_buffer , yyscan_t yyscanner)
 		yyg->yy_buffer_stack_top++;
 	YY_CURRENT_BUFFER_LVALUE = new_buffer;
 
-	/* copied from parser_switch_to_buffer. */
-	parser_load_buffer_state(yyscanner );
+	/* copied from panda_switch_to_buffer. */
+	panda_load_buffer_state(yyscanner );
 	yyg->yy_did_buffer_switch_on_eof = 1;
 }
 
@@ -1594,19 +2145,19 @@ void parserpush_buffer_state (YY_BUFFER_STATE new_buffer , yyscan_t yyscanner)
  *  The next element becomes the new top.
  *  @param yyscanner The scanner object.
  */
-void parserpop_buffer_state (yyscan_t yyscanner)
+void pandapop_buffer_state (yyscan_t yyscanner)
 {
     struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
 	if (!YY_CURRENT_BUFFER)
 		return;
 
-	parser_delete_buffer(YY_CURRENT_BUFFER ,yyscanner);
+	panda_delete_buffer(YY_CURRENT_BUFFER ,yyscanner);
 	YY_CURRENT_BUFFER_LVALUE = NULL;
 	if (yyg->yy_buffer_stack_top > 0)
 		--yyg->yy_buffer_stack_top;
 
 	if (YY_CURRENT_BUFFER) {
-		parser_load_buffer_state(yyscanner );
+		panda_load_buffer_state(yyscanner );
 		yyg->yy_did_buffer_switch_on_eof = 1;
 	}
 }
@@ -1614,9 +2165,9 @@ void parserpop_buffer_state (yyscan_t yyscanner)
 /* Allocates the stack if it does not exist.
  *  Guarantees space for at least one push.
  */
-static void parserensure_buffer_stack (yyscan_t yyscanner)
+static void pandaensure_buffer_stack (yyscan_t yyscanner)
 {
-	yy_size_t num_to_alloc;
+	int num_to_alloc;
     struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
 
 	if (!yyg->yy_buffer_stack) {
@@ -1625,12 +2176,12 @@ static void parserensure_buffer_stack (yyscan_t yyscanner)
 		 * scanner will even need a stack. We use 2 instead of 1 to avoid an
 		 * immediate realloc on the next call.
          */
-		num_to_alloc = 1;
-		yyg->yy_buffer_stack = (struct yy_buffer_state**)parseralloc
+      num_to_alloc = 1; /* After all that talk, this was set to 1 anyways... */
+		yyg->yy_buffer_stack = (struct yy_buffer_state**)pandaalloc
 								(num_to_alloc * sizeof(struct yy_buffer_state*)
 								, yyscanner);
 		if ( ! yyg->yy_buffer_stack )
-			YY_FATAL_ERROR( "out of dynamic memory in parserensure_buffer_stack()" );
+			YY_FATAL_ERROR( "out of dynamic memory in pandaensure_buffer_stack()" );
 								  
 		memset(yyg->yy_buffer_stack, 0, num_to_alloc * sizeof(struct yy_buffer_state*));
 				
@@ -1642,15 +2193,15 @@ static void parserensure_buffer_stack (yyscan_t yyscanner)
 	if (yyg->yy_buffer_stack_top >= (yyg->yy_buffer_stack_max) - 1){
 
 		/* Increase the buffer to prepare for a possible push. */
-		int grow_size = 8 /* arbitrary grow size */;
+		yy_size_t grow_size = 8 /* arbitrary grow size */;
 
 		num_to_alloc = yyg->yy_buffer_stack_max + grow_size;
-		yyg->yy_buffer_stack = (struct yy_buffer_state**)parserrealloc
+		yyg->yy_buffer_stack = (struct yy_buffer_state**)pandarealloc
 								(yyg->yy_buffer_stack,
 								num_to_alloc * sizeof(struct yy_buffer_state*)
 								, yyscanner);
 		if ( ! yyg->yy_buffer_stack )
-			YY_FATAL_ERROR( "out of dynamic memory in parserensure_buffer_stack()" );
+			YY_FATAL_ERROR( "out of dynamic memory in pandaensure_buffer_stack()" );
 
 		/* zero only the new slots.*/
 		memset(yyg->yy_buffer_stack + yyg->yy_buffer_stack_max, 0, grow_size * sizeof(struct yy_buffer_state*));
@@ -1664,7 +2215,7 @@ static void parserensure_buffer_stack (yyscan_t yyscanner)
  * @param yyscanner The scanner object.
  * @return the newly allocated buffer state object. 
  */
-YY_BUFFER_STATE parser_scan_buffer  (char * base, yy_size_t  size , yyscan_t yyscanner)
+YY_BUFFER_STATE panda_scan_buffer  (char * base, yy_size_t  size , yyscan_t yyscanner)
 {
 	YY_BUFFER_STATE b;
     
@@ -1672,69 +2223,69 @@ YY_BUFFER_STATE parser_scan_buffer  (char * base, yy_size_t  size , yyscan_t yys
 	     base[size-2] != YY_END_OF_BUFFER_CHAR ||
 	     base[size-1] != YY_END_OF_BUFFER_CHAR )
 		/* They forgot to leave room for the EOB's. */
-		return 0;
+		return NULL;
 
-	b = (YY_BUFFER_STATE) parseralloc(sizeof( struct yy_buffer_state ) ,yyscanner );
+	b = (YY_BUFFER_STATE) pandaalloc(sizeof( struct yy_buffer_state ) ,yyscanner );
 	if ( ! b )
-		YY_FATAL_ERROR( "out of dynamic memory in parser_scan_buffer()" );
+		YY_FATAL_ERROR( "out of dynamic memory in panda_scan_buffer()" );
 
 	b->yy_buf_size = size - 2;	/* "- 2" to take care of EOB's */
 	b->yy_buf_pos = b->yy_ch_buf = base;
 	b->yy_is_our_buffer = 0;
-	b->yy_input_file = 0;
+	b->yy_input_file = NULL;
 	b->yy_n_chars = b->yy_buf_size;
 	b->yy_is_interactive = 0;
 	b->yy_at_bol = 1;
 	b->yy_fill_buffer = 0;
 	b->yy_buffer_status = YY_BUFFER_NEW;
 
-	parser_switch_to_buffer(b ,yyscanner );
+	panda_switch_to_buffer(b ,yyscanner );
 
 	return b;
 }
 
-/** Setup the input buffer state to scan a string. The next call to parserlex() will
+/** Setup the input buffer state to scan a string. The next call to pandalex() will
  * scan from a @e copy of @a str.
  * @param yystr a NUL-terminated string to scan
  * @param yyscanner The scanner object.
  * @return the newly allocated buffer state object.
  * @note If you want to scan bytes that may contain NUL values, then use
- *       parser_scan_bytes() instead.
+ *       panda_scan_bytes() instead.
  */
-YY_BUFFER_STATE parser_scan_string (yyconst char * yystr , yyscan_t yyscanner)
+YY_BUFFER_STATE panda_scan_string (yyconst char * yystr , yyscan_t yyscanner)
 {
     
-	return parser_scan_bytes(yystr,strlen(yystr) ,yyscanner);
+	return panda_scan_bytes(yystr,(int) strlen(yystr) ,yyscanner);
 }
 
-/** Setup the input buffer state to scan the given bytes. The next call to parserlex() will
+/** Setup the input buffer state to scan the given bytes. The next call to pandalex() will
  * scan from a @e copy of @a bytes.
  * @param yybytes the byte buffer to scan
  * @param _yybytes_len the number of bytes in the buffer pointed to by @a bytes.
  * @param yyscanner The scanner object.
  * @return the newly allocated buffer state object.
  */
-YY_BUFFER_STATE parser_scan_bytes  (yyconst char * yybytes, yy_size_t  _yybytes_len , yyscan_t yyscanner)
+YY_BUFFER_STATE panda_scan_bytes  (yyconst char * yybytes, int  _yybytes_len , yyscan_t yyscanner)
 {
 	YY_BUFFER_STATE b;
 	char *buf;
 	yy_size_t n;
-	int i;
+	yy_size_t i;
     
 	/* Get memory for full buffer, including space for trailing EOB's. */
-	n = _yybytes_len + 2;
-	buf = (char *) parseralloc(n ,yyscanner );
+	n = (yy_size_t) _yybytes_len + 2;
+	buf = (char *) pandaalloc(n ,yyscanner );
 	if ( ! buf )
-		YY_FATAL_ERROR( "out of dynamic memory in parser_scan_bytes()" );
+		YY_FATAL_ERROR( "out of dynamic memory in panda_scan_bytes()" );
 
 	for ( i = 0; i < _yybytes_len; ++i )
 		buf[i] = yybytes[i];
 
 	buf[_yybytes_len] = buf[_yybytes_len+1] = YY_END_OF_BUFFER_CHAR;
 
-	b = parser_scan_buffer(buf,n ,yyscanner);
+	b = panda_scan_buffer(buf,n ,yyscanner);
 	if ( ! b )
-		YY_FATAL_ERROR( "bad buffer in parser_scan_bytes()" );
+		YY_FATAL_ERROR( "bad buffer in panda_scan_bytes()" );
 
 	/* It's okay to grow etc. this buffer, and we should throw it
 	 * away when we're done.
@@ -1748,9 +2299,11 @@ YY_BUFFER_STATE parser_scan_bytes  (yyconst char * yybytes, yy_size_t  _yybytes_
 #define YY_EXIT_FAILURE 2
 #endif
 
-static void yy_fatal_error (yyconst char* msg , yyscan_t yyscanner)
+static void yynoreturn yy_fatal_error (yyconst char* msg , yyscan_t yyscanner)
 {
-    	(void) fprintf( stderr, "%s\n", msg );
+	struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+	(void)yyg;
+	(void) fprintf( stderr, "%s\n", msg );
 	exit( YY_EXIT_FAILURE );
 }
 
@@ -1776,7 +2329,7 @@ static void yy_fatal_error (yyconst char* msg , yyscan_t yyscanner)
 /** Get the user-defined data for this scanner.
  * @param yyscanner The scanner object.
  */
-YY_EXTRA_TYPE parserget_extra  (yyscan_t yyscanner)
+YY_EXTRA_TYPE pandaget_extra  (yyscan_t yyscanner)
 {
     struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
     return yyextra;
@@ -1785,7 +2338,7 @@ YY_EXTRA_TYPE parserget_extra  (yyscan_t yyscanner)
 /** Get the current line number.
  * @param yyscanner The scanner object.
  */
-int parserget_lineno  (yyscan_t yyscanner)
+int pandaget_lineno  (yyscan_t yyscanner)
 {
     struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
     
@@ -1798,7 +2351,7 @@ int parserget_lineno  (yyscan_t yyscanner)
 /** Get the current column number.
  * @param yyscanner The scanner object.
  */
-int parserget_column  (yyscan_t yyscanner)
+int pandaget_column  (yyscan_t yyscanner)
 {
     struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
     
@@ -1811,7 +2364,7 @@ int parserget_column  (yyscan_t yyscanner)
 /** Get the input stream.
  * @param yyscanner The scanner object.
  */
-FILE *parserget_in  (yyscan_t yyscanner)
+FILE *pandaget_in  (yyscan_t yyscanner)
 {
     struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
     return yyin;
@@ -1820,7 +2373,7 @@ FILE *parserget_in  (yyscan_t yyscanner)
 /** Get the output stream.
  * @param yyscanner The scanner object.
  */
-FILE *parserget_out  (yyscan_t yyscanner)
+FILE *pandaget_out  (yyscan_t yyscanner)
 {
     struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
     return yyout;
@@ -1829,7 +2382,7 @@ FILE *parserget_out  (yyscan_t yyscanner)
 /** Get the length of the current token.
  * @param yyscanner The scanner object.
  */
-yy_size_t parserget_leng  (yyscan_t yyscanner)
+int pandaget_leng  (yyscan_t yyscanner)
 {
     struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
     return yyleng;
@@ -1839,7 +2392,7 @@ yy_size_t parserget_leng  (yyscan_t yyscanner)
  * @param yyscanner The scanner object.
  */
 
-char *parserget_text  (yyscan_t yyscanner)
+char *pandaget_text  (yyscan_t yyscanner)
 {
     struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
     return yytext;
@@ -1849,82 +2402,82 @@ char *parserget_text  (yyscan_t yyscanner)
  * @param user_defined The data to be associated with this scanner.
  * @param yyscanner The scanner object.
  */
-void parserset_extra (YY_EXTRA_TYPE  user_defined , yyscan_t yyscanner)
+void pandaset_extra (YY_EXTRA_TYPE  user_defined , yyscan_t yyscanner)
 {
     struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
     yyextra = user_defined ;
 }
 
 /** Set the current line number.
- * @param line_number
+ * @param _line_number line number
  * @param yyscanner The scanner object.
  */
-void parserset_lineno (int  line_number , yyscan_t yyscanner)
+void pandaset_lineno (int  _line_number , yyscan_t yyscanner)
 {
     struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
 
         /* lineno is only valid if an input buffer exists. */
         if (! YY_CURRENT_BUFFER )
-           YY_FATAL_ERROR( "parserset_lineno called with no buffer" );
+           YY_FATAL_ERROR( "pandaset_lineno called with no buffer" );
     
-    yylineno = line_number;
+    yylineno = _line_number;
 }
 
 /** Set the current column.
- * @param line_number
+ * @param _column_no column number
  * @param yyscanner The scanner object.
  */
-void parserset_column (int  column_no , yyscan_t yyscanner)
+void pandaset_column (int  _column_no , yyscan_t yyscanner)
 {
     struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
 
         /* column is only valid if an input buffer exists. */
         if (! YY_CURRENT_BUFFER )
-           YY_FATAL_ERROR( "parserset_column called with no buffer" );
+           YY_FATAL_ERROR( "pandaset_column called with no buffer" );
     
-    yycolumn = column_no;
+    yycolumn = _column_no;
 }
 
 /** Set the input stream. This does not discard the current
  * input buffer.
- * @param in_str A readable stream.
+ * @param _in_str A readable stream.
  * @param yyscanner The scanner object.
- * @see parser_switch_to_buffer
+ * @see panda_switch_to_buffer
  */
-void parserset_in (FILE *  in_str , yyscan_t yyscanner)
+void pandaset_in (FILE *  _in_str , yyscan_t yyscanner)
 {
     struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
-    yyin = in_str ;
+    yyin = _in_str ;
 }
 
-void parserset_out (FILE *  out_str , yyscan_t yyscanner)
+void pandaset_out (FILE *  _out_str , yyscan_t yyscanner)
 {
     struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
-    yyout = out_str ;
+    yyout = _out_str ;
 }
 
-int parserget_debug  (yyscan_t yyscanner)
+int pandaget_debug  (yyscan_t yyscanner)
 {
     struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
     return yy_flex_debug;
 }
 
-void parserset_debug (int  bdebug , yyscan_t yyscanner)
+void pandaset_debug (int  _bdebug , yyscan_t yyscanner)
 {
     struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
-    yy_flex_debug = bdebug ;
+    yy_flex_debug = _bdebug ;
 }
 
 /* Accessor methods for yylval and yylloc */
 
 /* User-visible API */
 
-/* parserlex_init is special because it creates the scanner itself, so it is
+/* pandalex_init is special because it creates the scanner itself, so it is
  * the ONLY reentrant function that doesn't take the scanner as the last argument.
  * That's why we explicitly handle the declaration, instead of using our macros.
  */
 
-int parserlex_init(yyscan_t* ptr_yy_globals)
+int pandalex_init(yyscan_t* ptr_yy_globals)
 
 {
     if (ptr_yy_globals == NULL){
@@ -1932,7 +2485,7 @@ int parserlex_init(yyscan_t* ptr_yy_globals)
         return 1;
     }
 
-    *ptr_yy_globals = (yyscan_t) parseralloc ( sizeof( struct yyguts_t ), NULL );
+    *ptr_yy_globals = (yyscan_t) pandaalloc ( sizeof( struct yyguts_t ), NULL );
 
     if (*ptr_yy_globals == NULL){
         errno = ENOMEM;
@@ -1945,27 +2498,27 @@ int parserlex_init(yyscan_t* ptr_yy_globals)
     return yy_init_globals ( *ptr_yy_globals );
 }
 
-/* parserlex_init_extra has the same functionality as parserlex_init, but follows the
+/* pandalex_init_extra has the same functionality as pandalex_init, but follows the
  * convention of taking the scanner as the last argument. Note however, that
  * this is a *pointer* to a scanner, as it will be allocated by this call (and
  * is the reason, too, why this function also must handle its own declaration).
- * The user defined value in the first argument will be available to parseralloc in
+ * The user defined value in the first argument will be available to pandaalloc in
  * the yyextra field.
  */
 
-int parserlex_init_extra(YY_EXTRA_TYPE yy_user_defined,yyscan_t* ptr_yy_globals )
+int pandalex_init_extra(YY_EXTRA_TYPE yy_user_defined,yyscan_t* ptr_yy_globals )
 
 {
     struct yyguts_t dummy_yyguts;
 
-    parserset_extra (yy_user_defined, &dummy_yyguts);
+    pandaset_extra (yy_user_defined, &dummy_yyguts);
 
     if (ptr_yy_globals == NULL){
         errno = EINVAL;
         return 1;
     }
 	
-    *ptr_yy_globals = (yyscan_t) parseralloc ( sizeof( struct yyguts_t ), &dummy_yyguts );
+    *ptr_yy_globals = (yyscan_t) pandaalloc ( sizeof( struct yyguts_t ), &dummy_yyguts );
 	
     if (*ptr_yy_globals == NULL){
         errno = ENOMEM;
@@ -1976,7 +2529,7 @@ int parserlex_init_extra(YY_EXTRA_TYPE yy_user_defined,yyscan_t* ptr_yy_globals 
     yy_init_globals. Leave at 0x00 for releases. */
     memset(*ptr_yy_globals,0x00,sizeof(struct yyguts_t));
     
-    parserset_extra (yy_user_defined, *ptr_yy_globals);
+    pandaset_extra (yy_user_defined, *ptr_yy_globals);
     
     return yy_init_globals ( *ptr_yy_globals );
 }
@@ -1985,13 +2538,13 @@ static int yy_init_globals (yyscan_t yyscanner)
 {
     struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
     /* Initialization is the same as for the non-reentrant scanner.
-     * This function is called from parserlex_destroy(), so don't allocate here.
+     * This function is called from pandalex_destroy(), so don't allocate here.
      */
 
-    yyg->yy_buffer_stack = 0;
+    yyg->yy_buffer_stack = NULL;
     yyg->yy_buffer_stack_top = 0;
     yyg->yy_buffer_stack_max = 0;
-    yyg->yy_c_buf_p = (char *) 0;
+    yyg->yy_c_buf_p = NULL;
     yyg->yy_init = 0;
     yyg->yy_start = 0;
 
@@ -2004,42 +2557,42 @@ static int yy_init_globals (yyscan_t yyscanner)
     yyin = stdin;
     yyout = stdout;
 #else
-    yyin = (FILE *) 0;
-    yyout = (FILE *) 0;
+    yyin = NULL;
+    yyout = NULL;
 #endif
 
     /* For future reference: Set errno on error, since we are called by
-     * parserlex_init()
+     * pandalex_init()
      */
     return 0;
 }
 
-/* parserlex_destroy is for both reentrant and non-reentrant scanners. */
-int parserlex_destroy  (yyscan_t yyscanner)
+/* pandalex_destroy is for both reentrant and non-reentrant scanners. */
+int pandalex_destroy  (yyscan_t yyscanner)
 {
     struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
 
     /* Pop the buffer stack, destroying each element. */
 	while(YY_CURRENT_BUFFER){
-		parser_delete_buffer(YY_CURRENT_BUFFER ,yyscanner );
+		panda_delete_buffer(YY_CURRENT_BUFFER ,yyscanner );
 		YY_CURRENT_BUFFER_LVALUE = NULL;
-		parserpop_buffer_state(yyscanner);
+		pandapop_buffer_state(yyscanner);
 	}
 
 	/* Destroy the stack itself. */
-	parserfree(yyg->yy_buffer_stack ,yyscanner);
+	pandafree(yyg->yy_buffer_stack ,yyscanner);
 	yyg->yy_buffer_stack = NULL;
 
     /* Destroy the start condition stack. */
-        parserfree(yyg->yy_start_stack ,yyscanner );
+        pandafree(yyg->yy_start_stack ,yyscanner );
         yyg->yy_start_stack = NULL;
 
     /* Reset the globals. This is important in a non-reentrant scanner so the next time
-     * parserlex() is called, initialization will occur. */
+     * pandalex() is called, initialization will occur. */
     yy_init_globals( yyscanner);
 
     /* Destroy the main struct (reentrant only). */
-    parserfree ( yyscanner , yyscanner );
+    pandafree ( yyscanner , yyscanner );
     yyscanner = NULL;
     return 0;
 }
@@ -2051,7 +2604,10 @@ int parserlex_destroy  (yyscan_t yyscanner)
 #ifndef yytext_ptr
 static void yy_flex_strncpy (char* s1, yyconst char * s2, int n , yyscan_t yyscanner)
 {
-	register int i;
+	struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+	(void)yyg;
+
+	int i;
 	for ( i = 0; i < n; ++i )
 		s1[i] = s2[i];
 }
@@ -2060,7 +2616,7 @@ static void yy_flex_strncpy (char* s1, yyconst char * s2, int n , yyscan_t yysca
 #ifdef YY_NEED_STRLEN
 static int yy_flex_strlen (yyconst char * s , yyscan_t yyscanner)
 {
-	register int n;
+	int n;
 	for ( n = 0; s[n]; ++n )
 		;
 
@@ -2068,13 +2624,18 @@ static int yy_flex_strlen (yyconst char * s , yyscan_t yyscanner)
 }
 #endif
 
-void *parseralloc (yy_size_t  size , yyscan_t yyscanner)
+void *pandaalloc (yy_size_t  size , yyscan_t yyscanner)
 {
-	return (void *) malloc( size );
+	struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+	(void)yyg;
+	return malloc(size);
 }
 
-void *parserrealloc  (void * ptr, yy_size_t  size , yyscan_t yyscanner)
+void *pandarealloc  (void * ptr, yy_size_t  size , yyscan_t yyscanner)
 {
+	struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+	(void)yyg;
+
 	/* The cast to (char *) in the following accommodates both
 	 * implementations that use char* generic pointers, and those
 	 * that use void* generic pointers.  It works with the latter
@@ -2082,21 +2643,23 @@ void *parserrealloc  (void * ptr, yy_size_t  size , yyscan_t yyscanner)
 	 * any pointer type to void*, and deal with argument conversions
 	 * as though doing an assignment.
 	 */
-	return (void *) realloc( (char *) ptr, size );
+	return realloc(ptr, size);
 }
 
-void parserfree (void * ptr , yyscan_t yyscanner)
+void pandafree (void * ptr , yyscan_t yyscanner)
 {
-	free( (char *) ptr );	/* see parserrealloc() for (char *) cast */
+	struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+	(void)yyg;
+	free( (char *) ptr );	/* see pandarealloc() for (char *) cast */
 }
 
 #define YYTABLES_NAME "yytables"
 
-#line 53 "parser.flex"
+#line 139 "panda.flex"
 
 
 
-int parserwrap(yyscan_t scanner) {
-    return 1; // terminate
+int pandawrap(yyscan_t scanner) {
+    return 1;
 }
 
