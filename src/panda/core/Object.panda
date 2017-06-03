@@ -1,3 +1,5 @@
+package panda.core
+
 class Object {
     def $class:Class
 }

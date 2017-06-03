@@ -4,6 +4,8 @@
 #include "ASTNode.h"
 #include "ErrorReporter.h"
 
+#include <stack>
+
 typedef void* yyscan_t;
 
 struct yy_buffer_state;
@@ -20,26 +22,11 @@ YY_BUFFER_STATE panda_scan_string(const char* yy_str, yyscan_t yyscanner);
 
 char* pandaget_text(yyscan_t yyscanner);
 
-struct ParseError {
-    ParseError()
-    : fLine(-1)
-    , fColumn(-1) {}
-
-    ParseError(int line, int column, String message)
-    : fLine(line)
-    , fColumn(column)
-    , fMessage(message) {}
-
-    int fLine;
-    int fColumn;
-    String fMessage;
-};
-
 class PandaParser {
 public:
     PandaParser(ErrorReporter* errors);
 
-    bool file(const String& name, const String& text, ASTNode* outResult);
+    bool file(const String* name, const String& text, ASTNode* outResult);
 
 private:
     Token nextRawToken();
@@ -57,6 +44,16 @@ private:
     bool expect(Token::Kind kind, String expected, Token* result);
 
     void error(Position position, String msg);
+
+    // Begins a speculative parse. Must call either rewind() or accept() prior to the next call to
+    // startSpeculative().
+    void startSpeculative();
+
+    // Undo all tokens read since the start of startSpeculative().
+    void rewind();
+
+    // Accept a speculative parse.
+    void accept();
 
     // ----
 
@@ -175,4 +172,9 @@ private:
     yyscan_t fScanner;
     YY_BUFFER_STATE fBuffer;
     std::vector<Token> fPushbackBuffer;
+    bool fInSpeculative = false;
+    std::vector<Token> fSpeculativeBuffer;
+    std::stack<bool> fCommaSeparatedExpressionContext;
+
+    friend class AutoCommaContext;
 };

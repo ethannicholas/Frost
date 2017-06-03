@@ -42,7 +42,7 @@ public:
                 }
             }
             this->error(symbol->fPosition, "duplicate symbol '" + name + "' (previous declaration "
-                    "at " + fSymbols[symbol->fName]->fPosition.description().c_str() + ")");
+                    "at " + found->second->fPosition.description().c_str() + ")");
         }
         fSymbols[name] = std::move(symbol);
     }

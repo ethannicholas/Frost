@@ -35,21 +35,48 @@ static int required_size(uint64_t value) {
     return 64;
 }
 
-Class* Compiler::resolveClass(Type t) {
-    auto found = fClasses.find(t.fName);
-    if (found == fClasses.end()) {
-        this->error(t.fPosition, "no class named '" + t.fName + "'");
-        fClasses[t.fName] = nullptr;
-        return nullptr;
+Class* Compiler::resolveClass(const SymbolTable& st, Type t) {
+    const SymbolTable* current = &st;
+    std::stringstream ss;
+    ss.str(t.fName);
+    std::string token;
+    Class* result = nullptr;
+    Package* p = nullptr;
+    while (std::getline(ss, token, '.')) {
+        Symbol* s = (*current)[token];
+        if (!s) {
+            this->error(t.fPosition, "no type named '" + t.fName + "'");
+            return nullptr;
+        }
+        switch (s->fKind) {
+            case Symbol::Kind::CLASS:
+                result = (Class*) s;
+                current = &((Class*) s)->fSymbolTable;
+                break;
+            case Symbol::Kind::PACKAGE:
+                result = nullptr;
+                p = (Package*) s;
+                current = &p->fSymbolTable;
+                break;
+            default:
+                this->error(t.fPosition, "'" + t.fName + "' is not a type");
+                return nullptr;
+        }
     }
-    return found->second;
+    if (result) {
+        return result;
+    }
+    ASSERT(p);
+    this->error(t.fPosition, "expected a type, but found package '" + p->fName + "'");
+    return nullptr;
 }
 
 std::vector<const Field*> Compiler::getAllFields(const Class& cl) {
     if (cl.fSuper == Type::Void()) {
         return cl.fFields;
     }
-    std::vector<const Field*> result = this->getAllFields(*this->resolveClass(cl.fSuper));
+    std::vector<const Field*> result = this->getAllFields(*this->resolveClass(cl.fSymbolTable,
+                                                                              cl.fSuper));
     result.insert(result.end(), cl.fFields.begin(), cl.fFields.end());
     return result;
 }
@@ -162,8 +189,8 @@ int Compiler::coercionCost(const Type& type, const Type& target) {
     }
     if (type.fCategory == Type::Category::CLASS && target.fCategory == Type::Category::CLASS) {
         int cost = 0;
-        Class* ancestor = this->resolveClass(type);
-        Class* targetClass = this->resolveClass(target);
+        Class* ancestor = this->resolveClass(fCurrentClass.top()->fSymbolTable, type);
+        Class* targetClass = this->resolveClass(fCurrentClass.top()->fSymbolTable, target);
         if (!ancestor || !targetClass) {
             return INT_MAX;
         }
@@ -175,7 +202,7 @@ int Compiler::coercionCost(const Type& type, const Type& target) {
             if (ancestor->fSuper == Type::Void()) {
                 break;
             }
-            ancestor = this->resolveClass(ancestor->fSuper);
+            ancestor = this->resolveClass(fCurrentClass.top()->fSymbolTable, ancestor->fSuper);
             if (ancestor == nullptr) {
                 break;
             }
@@ -828,7 +855,7 @@ bool Compiler::convertDot(const ASTNode& d, IRNode* out) {
         }
         default:
             if (left.fType.fCategory == Type::Category::CLASS) {
-                Class* cl = this->resolveClass(left.fType);
+                Class* cl = this->resolveClass(fCurrentClass.top()->fSymbolTable, left.fType);
                 if (!cl) {
                     return false;
                 }
@@ -1229,7 +1256,7 @@ void Compiler::buildVTable(Class& cl) {
         return;
     }
     if (cl.fSuper != Type::Void()) {
-        Class* super = this->resolveClass(cl.fSuper);
+        Class* super = this->resolveClass(cl.fSymbolTable, cl.fSuper);
         if (!super) {
             return;
         }

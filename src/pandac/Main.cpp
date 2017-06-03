@@ -66,38 +66,51 @@ void reportErrors(ErrorReporter& errors) {
 }
 
 int main(int argc, char** argv) {
-    std::ifstream in(argv[1]);
-    std::string text((std::istreambuf_iterator<char>(in)),
-                        std::istreambuf_iterator<char>());
-    if (in.fail()) {
-        printf("error reading %s\n", argv[1]);
-        exit(1);
+    std::vector<String> sources;
+    String dest;
+    for (int i = 1; i < argc; i++) {
+        if (!strcmp(argv[i], "-o")) {
+            ++i;
+            ASSERT(i < argc);
+            dest = argv[i];
+        }
+        else {
+            sources.push_back(argv[i]);
+        }
     }
-    ParseError error;
-    String path = String(argv[1]);
-    String name = path.substr(path.find_last_of("/\\") + 1);
-    ASTNode parsed;
-    ErrorReporter errors;
-    if (PandaParser(&errors).file(name, text, &parsed)) {
-        const char* llvm = "/tmp/output.ll";
-        {
-            std::ofstream out(llvm);
-            LLVMCodeGenerator codeGenerator(&out);
-            Compiler compiler(&codeGenerator, &errors);
-            compiler.scan(&parsed);
-            if (errors.fErrorCount) {
-                reportErrors(errors);
+    std::vector<ASTNode> parsed;
+    const char* llvm = "/tmp/output.ll";
+    {
+        std::ofstream out(llvm);
+        LLVMCodeGenerator codeGenerator(&out);
+        ErrorReporter errors;
+        Compiler compiler(&codeGenerator, &errors);
+        std::vector<String> names;
+        for (auto path : sources) {
+            names.push_back(path.substr(path.find_last_of("/\\") + 1));
+            parsed.emplace_back();
+        }
+        for (int i = 0; i < sources.size(); i++) {
+            std::ifstream in(sources[i]);
+            if (in.fail()) {
+                printf("error reading %s\n", sources[i].c_str());
                 exit(1);
             }
-            compiler.compile();
-            if (errors.fErrorCount) {
-                reportErrors(errors);
-                exit(1);
+            std::string text((std::istreambuf_iterator<char>(in)),
+                                std::istreambuf_iterator<char>());
+            if (PandaParser(&errors).file(&names[i], text, &parsed[i])) {
+                compiler.scan(&parsed[i]);
             }
         }
-        make_executable(llvm, argv[2]);
+        if (errors.fErrorCount) {
+            reportErrors(errors);
+            exit(1);
+        }
+        compiler.compile();
+        if (errors.fErrorCount) {
+            reportErrors(errors);
+            exit(1);
+        }
     }
-    else {
-        printf("%s:%d:%d: %s\n", name.c_str(), error.fLine, error.fColumn, error.fMessage.c_str());
-    }
+    make_executable(llvm, dest.c_str());
 }

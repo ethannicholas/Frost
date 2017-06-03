@@ -1,3 +1,5 @@
+package panda.core
+
 class Pointer<T> : Value {
 	@class
 	@external

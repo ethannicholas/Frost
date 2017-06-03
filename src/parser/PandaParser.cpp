@@ -1,8 +1,24 @@
 #include "PandaParser.h"
 
+class AutoCommaContext {
+public:
+    AutoCommaContext(PandaParser* parser, bool value)
+    : fParser(*parser) {
+        fParser.fCommaSeparatedExpressionContext.push(value);
+    }
+
+    ~AutoCommaContext() {
+        fParser.fCommaSeparatedExpressionContext.pop();
+    }
+
+private:
+    PandaParser& fParser;
+};
+
 PandaParser::PandaParser(ErrorReporter* errors)
 : fErrors(errors) {
     pandalex_init(&fScanner);
+    fCommaSeparatedExpressionContext.push(false);
 }
 
 Token PandaParser::nextRawToken() {
@@ -26,6 +42,11 @@ Token PandaParser::nextRawToken() {
             default:
                 ++fColumn;
         }
+    }
+    if (fInSpeculative) {
+        Token result = Token(p, (Token::Kind) token, String(text));
+        fSpeculativeBuffer.push_back(result);
+        return result;
     }
     return Token(p, (Token::Kind) token, String(text));
 }
@@ -78,8 +99,38 @@ bool PandaParser::expect(Token::Kind kind, String expected, Token* result) {
 }
 
 void PandaParser::error(Position position, String msg) {
-    fErrors->error(position, msg);
-    abort();
+    if (!fInSpeculative) {
+        fErrors->error(position, msg);
+        abort();
+    }
+    else {
+        printf("rejecting error: %s: %s\n", position.description().c_str(), msg.c_str());
+    }
+}
+
+void PandaParser::startSpeculative() {
+    ASSERT(!fInSpeculative);
+    fInSpeculative = true;
+    fSpeculativeBuffer = fPushbackBuffer;
+    printf("start!\n");
+    for (Token t : fSpeculativeBuffer) {
+        printf("    %s\n", t.fText.c_str());
+    }
+}
+
+void PandaParser::accept() {
+    fInSpeculative = false;
+}
+
+void PandaParser::rewind() {
+    fInSpeculative = false;
+    std::reverse(fSpeculativeBuffer.begin(), fSpeculativeBuffer.end());
+    fPushbackBuffer.insert(fPushbackBuffer.begin(), fSpeculativeBuffer.begin(),
+            fSpeculativeBuffer.end());
+    printf("rewound!\n");
+    for (Token t : fPushbackBuffer) {
+        printf("    %s\n", t.fText.c_str());
+    }
 }
 
 static int to_operator(Token::Kind kind) {
@@ -132,8 +183,8 @@ static int to_operator(Token::Kind kind) {
 }
 
 // file = bodyEntry*
-bool PandaParser::file(const String& name, const String& text, ASTNode* outResult) {
-    fName = &name;
+bool PandaParser::file(const String* name, const String& text, ASTNode* outResult) {
+    fName = name;
     fBuffer = panda_scan_string(text.c_str(), fScanner);
     fLine = 1;
     fColumn = 1;
@@ -141,8 +192,10 @@ bool PandaParser::file(const String& name, const String& text, ASTNode* outResul
     while (this->peek().fKind != Token::Kind::END_OF_FILE) {
         ASTNode entry;
         if (!this->bodyEntry(&entry)) {
+            ASSERT(!fInSpeculative);
             return false;
         }
+        ASSERT(!fInSpeculative);
         entries.push_back(std::move(entry));
     }
     *outResult = ASTNode(Position(), ASTNode::Kind::BODY_ENTRIES, std::move(entries));
@@ -299,7 +352,28 @@ bool PandaParser::breakStatement(ASTNode* outResult) {
     abort();
 }
 
+static String get_class_name(const ASTNode& expr) {
+    switch (expr.fKind) {
+        case ASTNode::Kind::IDENTIFIER:
+            return expr.fText;
+        case ASTNode::Kind::DOT: {
+            String result = get_class_name(expr.fChildren[0]);
+            if (result.size()) {
+                result += "." + expr.fText;
+            }
+            return result;
+        }
+        default:
+            return "";
+    }
+}
+
 // callExpression = term (LPAREN (expression (COMMA expression)*)? RPAREN | DOT IDENTIFIER)*
+//         (<if result so far is a valid class name> LT type (COMMA type)* GT)?
+// Note there is a great deal of special handling to deal with class names, due to ambiguities
+// between generic parameters and comparison expressions, e.g. foo(X < Y, Z > ... could be either a
+// generic type X<Y, Z> or two comparison expressions X < Y and Z > <whatever the next token is>. We
+// can't disambiguate this until we see the next token.
 bool PandaParser::callExpression(ASTNode* outResult) {
     if (!this->term(outResult)) {
         return false;
@@ -308,6 +382,7 @@ bool PandaParser::callExpression(ASTNode* outResult) {
         Token next = this->nextToken();
         switch (next.fKind) {
             case Token::Kind::LPAREN: {
+                AutoCommaContext(this, true);
                 Position p = outResult->fPosition;
                 std::vector<ASTNode> children;
                 children.push_back(std::move(*outResult));
@@ -340,6 +415,86 @@ bool PandaParser::callExpression(ASTNode* outResult) {
                 *outResult = ASTNode(next.fPosition, ASTNode::Kind::DOT, field.fText,
                         std::move(children));
                 break;
+            }
+            case Token::Kind::LT: {
+                // this is where we need to be careful. First, we make sure it makes sense to
+                // interpret this as the start of a generic parameter list...
+                this->pushback(next);
+                String name = get_class_name(*outResult);
+                if (name.size()) {
+                    this->startSpeculative();
+                    this->nextToken();
+                    // no matter what, we might have to backtrack, because we might not find a '>'
+                    // e.g. foo(X < Y)
+                    std::vector<ASTNode> types;
+                    ASTNode type;
+                    if (!this->type(&type)) {
+                        this->rewind();
+                        return true;
+                    }
+                    types.push_back(std::move(type));
+                    while (this->checkNext(Token::Kind::COMMA)) {
+                        ASTNode type;
+                        if (!this->type(&type)) {
+                            this->rewind();
+                            return true;
+                        }
+                        types.push_back(std::move(type));
+                    }
+                    if (!this->expect(Token::Kind::GT, "'>'")) {
+                        this->rewind();
+                        return true;
+                    }
+                    // ok, we've successfully parsed a type... but we still might be wrong. If we
+                    // have, say, X<Y, Z>, it's possible that was supposed to be two comparison
+                    // expressions (which would include whatever the next token is).
+                    // Consider the following cases:
+                    //
+                    // var x := X<Y, Z>
+                    // foo() -- type name followed by a method call
+                    //
+                    // bar(X<Y, Z>foo) -- two expressions, X<Y and Z>foo
+                    //
+                    // note that, ignoring whitespace, the sequence X<Y,Z>foo is identical in both
+                    // cases. We can resolve the ambiguity by noting that the other interpretation
+                    // is incorrect in both cases; there is no way for var x := (two expressions) to
+                    // make sense, and there is no way for (<type name> <identifier>) to make sense
+                    // in function call parameters.
+                    // So, we keep track of whether we are in a context that expects a comma-
+                    // separated list of expressions. If so, we need to look at the next token after
+                    // the type, as only a very few tokens can legally follow a type name in an
+                    // expression list. If not, we know it's a type regardless of what follows it,
+                    // because there is no way it can resolve to multiple expressions.
+                    bool accept;
+                    if (this->fCommaSeparatedExpressionContext.top()) {
+                        switch (this->peek().fKind) {
+                            case Token::Kind::DOT:        // fall through
+                            case Token::Kind::RPAREN:     // fall through
+                            case Token::Kind::COMMA:      // fall through
+                            case Token::Kind::CAST:       // fall through
+                            case Token::Kind::INSTANCEOF: // fall through
+                            case Token::Kind::NINSTANCEOF:
+                                accept = true;
+                                break;
+                            default:
+                                accept = false;
+                        }
+                    }
+                    else {
+                        accept = true;
+                    }
+                    if (accept) {
+                        this->accept();
+                        *outResult = ASTNode(outResult->fPosition, ASTNode::Kind::CLASS_TYPE,
+                                std::move(name), std::move(types));
+                        break;
+                    }
+                    else {
+                        this->rewind();
+                        return true;
+                    }
+                }
+                return true;
             }
             default:
                 this->pushback(next);
@@ -598,12 +753,10 @@ bool PandaParser::genericsDeclaration(ASTNode* outResult) {
     std::vector<ASTNode> children;
     ASTNode type;
     if (this->peek().fKind == Token::Kind::COLON) {
-        if (this->type(&type)) {
-            children.push_back(std::move(type));
-        }
-        else {
+        if (!this->type(&type)) {
             return false;
         }
+        children.push_back(std::move(type));
     }
     children.emplace_back(id.fPosition, ASTNode::Kind::IDENTIFIER, id.fText, std::move(children));
     while (!this->checkNext(Token::Kind::GT)) {
@@ -613,11 +766,9 @@ bool PandaParser::genericsDeclaration(ASTNode* outResult) {
         children.clear();
         if (this->peek().fKind == Token::Kind::COLON) {
             if (this->type(&type)) {
-                children.push_back(std::move(type));
-            }
-            else {
                 return false;
             }
+            children.push_back(std::move(type));
         }
         children.emplace_back(id.fPosition, ASTNode::Kind::IDENTIFIER, id.fText,
                 std::move(children));
@@ -789,13 +940,65 @@ bool PandaParser::methodDeclaration(ASTNode* outResult, ASTNode doccomment,
     return true;
 }
 
+// methodName = IDENTIFIER | ADD | SUB | MUL | DIV | INTDIV | POW | EQ | GT | LT | GTEQ | LTEQ |
+//         REM | AND | BITWISEAND | OR | BITWISEOR | XOR | BITWISEXOR | NOT | BITWISENOT |
+//         SHIFTLEFT | SHIFTRIGHT | (LBRACKET (DOTDOT | ELLIPSIS)? RBRACKET ASSIGNMENT?)
 bool PandaParser::methodName(String* outResult) {
-    Token name;
-    if (!this->expect(Token::Kind::IDENTIFIER, "an identifier", &name)) {
-        return false;
+    Token name = this->nextToken();
+    switch (name.fKind) {
+        case Token::Kind::IDENTIFIER: // fall through
+        case Token::Kind::ADD:        // fall through
+        case Token::Kind::SUB:        // fall through
+        case Token::Kind::MUL:        // fall through
+        case Token::Kind::DIV:        // fall through
+        case Token::Kind::INTDIV:     // fall through
+        case Token::Kind::POW:        // fall through
+        case Token::Kind::EQ:         // fall through
+        case Token::Kind::LT:         // fall through
+        case Token::Kind::GTEQ:       // fall through
+        case Token::Kind::LTEQ:       // fall through
+        case Token::Kind::REM:        // fall through
+        case Token::Kind::AND:        // fall through
+        case Token::Kind::BITWISEAND: // fall through
+        case Token::Kind::OR:         // fall through
+        case Token::Kind::BITWISEOR:  // fall through
+        case Token::Kind::XOR:        // fall through
+        case Token::Kind::BITWISEXOR: // fall through
+        case Token::Kind::NOT:        // fall through
+        case Token::Kind::BITWISENOT: // fall through
+        case Token::Kind::SHIFTLEFT:
+            *outResult = name.fText;
+            return true;
+        case Token::Kind::GT: {
+            *outResult = name.fText;
+            Token next = this->nextRawToken();
+            if (next.fKind == Token::Kind::GT) { // two GT's in a row = SHIFTRIGHT
+                *outResult += ">";
+            }
+            else {
+                this->pushback(next);
+            }
+            return true;
+        }
+        case Token::Kind::LBRACKET:
+            *outResult = name.fText;
+            if (this->checkNext(Token::Kind::DOTDOT)) {
+                *outResult += "..";
+            }
+            else if (this->checkNext(Token::Kind::ELLIPSIS)) {
+                *outResult += "...";
+            }
+            if (!this->expect(Token::Kind::RBRACKET, "']'")) {
+                return false;
+            }
+            *outResult += "]";
+            if (this->checkNext(Token::Kind::ASSIGNMENT)) {
+                *outResult += ":=";
+            }
+            return true;
+        default:
+            return false;
     }
-    *outResult = name.fText;
-    return true;
 }
 
 // multiplicativeExpression = prefixExpression ((MUL | DIV | INTDIV | REM | SHIFTLEFT | SHIFTRIGHT |
@@ -1047,7 +1250,7 @@ bool PandaParser::target(ASTNode* outResult) {
     return true;
 }
 
-// IDENTIFIER | DECIMAL | SELF
+// term = IDENTIFIER | DECIMAL | SELF | LPAREN expression RPAREN
 bool PandaParser::term(ASTNode* outResult) {
     Token t = this->nextToken();
     switch (t.fKind) {
@@ -1060,13 +1263,19 @@ bool PandaParser::term(ASTNode* outResult) {
         case Token::Kind::SELF:
             *outResult = ASTNode(t.fPosition, ASTNode::Kind::SELF);
             return true;
+        case Token::Kind::LPAREN: {
+            if (!this->expression(outResult)) {
+                return false;
+            }
+            return this->expect(Token::Kind::RPAREN, "')'");
+        }
         default:
             this->error(t.fPosition, "expected an expression, but found '" + t.fText + "'");
             return false;
     }
 }
 
-// IDENTIFIER (DOT IDENTIFIER)*
+// type = IDENTIFIER (DOT IDENTIFIER)* (LT type (COMMA type)*) GT)?
 bool PandaParser::type(ASTNode* outResult) {
     Token start;
     if (!this->expect(Token::Kind::IDENTIFIER, "an identifier", &start)) {
@@ -1082,6 +1291,29 @@ bool PandaParser::type(ASTNode* outResult) {
         name += id.fText;
     }
     *outResult = ASTNode(start.fPosition, ASTNode::Kind::CLASS_TYPE, name);
+    if (this->checkNext(Token::Kind::LT)) {
+        std::vector<ASTNode> types;
+        ASTNode type;
+        if (!this->type(&type)) {
+            return false;
+        }
+        types.push_back(std::move(type));
+        while (this->checkNext(Token::Kind::COMMA)) {
+            ASTNode type;
+            if (!this->type(&type)) {
+                return false;
+            }
+            types.push_back(std::move(type));
+        }
+        if (!this->expect(Token::Kind::GT, "'>'")) {
+            return false;
+        }
+        ASTNode generics = ASTNode(start.fPosition, ASTNode::Kind::TYPES, std::move(types));
+        std::vector<ASTNode> children;
+        children.push_back(std::move(*outResult));
+        children.push_back(std::move(generics));
+        *outResult = ASTNode(start.fPosition, ASTNode::Kind::CLASS_TYPE, std::move(children));
+    }
     return true;
 }
 

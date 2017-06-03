@@ -47,7 +47,7 @@ public:
 
     void compile();
 
-    Class* resolveClass(Type t);
+    Class* resolveClass(const SymbolTable& st, Type t);
 
     std::vector<const Field*> getAllFields(const Class& cl);
 

@@ -40,7 +40,7 @@ size_t LLVMCodeGenerator::sizeOf(const Type& type) {
             return found->second;
         }
         size_t result = 8;
-        Class* cl = fCompiler->resolveClass(type);
+        Class* cl = fCompiler->resolveClass(fCurrentClass->fSymbolTable, type);
         ASSERT(cl);
         for (const Field* f : fCompiler->getAllFields(*cl)) {
             size_t fieldSize = field_size(f->fType);
@@ -68,7 +68,8 @@ LLVMCodeGenerator::ClassConstant& LLVMCodeGenerator::getClassConstant(const Clas
     if (found == fClassConstants.end()) {
         String super;
         if (cl.fSuper != Type::Void()) {
-            const ClassConstant& superCC = getClassConstant(*fCompiler->resolveClass(cl.fSuper));
+            const ClassConstant& superCC = getClassConstant(*fCompiler->resolveClass(
+                    cl.fSymbolTable, cl.fSuper));
             super = "bitcast(" + superCC.fType + "* " + superCC.fName + " to i8*)";
         }
         else {
@@ -95,7 +96,7 @@ LLVMCodeGenerator::ClassConstant& LLVMCodeGenerator::getClassConstant(const Clas
 void LLVMCodeGenerator::writeType(const Type& type) {
     if (fWrittenTypes.find(type.fName) == fWrittenTypes.end()) {
         fWrittenTypes.insert(type.fName);
-        Class* cl = fCompiler->resolveClass(type);
+        Class* cl = fCompiler->resolveClass(fCurrentClass->fSymbolTable, type);
         ASSERT(cl);
         this->getClassConstant(*cl);
         fTypeDeclarations << "\n";
@@ -190,7 +191,6 @@ String LLVMCodeGenerator::getVariableReference(const Variable& var, std::ostream
             "\n";
     return result;
 }
-
 
 LLVMCodeGenerator::OpClass op_class(Type t) {
     switch (t.fCategory) {
@@ -402,7 +402,8 @@ String LLVMCodeGenerator::getConstructReference(const IRNode& construct, std::os
     out << "    " << classPtr << " = getelementptr inbounds " <<
             this->llvmTypeName(construct.fType) << ", " << this->llvmType(construct.fType) <<
             " " << result << ", i64 0, i32 0" << "\n";
-    const ClassConstant& cc = this->getClassConstant(*fCompiler->resolveClass(construct.fType));
+    const ClassConstant& cc = this->getClassConstant(*fCompiler->resolveClass(
+            fCurrentClass->fSymbolTable, construct.fType));
     out << "    store i8* bitcast(" << cc.fType << "* " << cc.fName << " to i8*), i8** " <<
             classPtr << "\n";
     this->writeCall(construct.fChildren[0], this->llvmType(construct.fType) + " " + result, out);
@@ -465,7 +466,8 @@ String LLVMCodeGenerator::getLValue(const IRNode& lvalue, std::ostream& out) {
         case IRNode::Kind::FIELD_REFERENCE: {
             String base = this->getReference(lvalue.fChildren[0], out);
             String ptr = this->nextVar();
-            Class* cl = fCompiler->resolveClass(lvalue.fChildren[0].fType);
+            Class* cl = fCompiler->resolveClass(fCurrentClass->fSymbolTable,
+                    lvalue.fChildren[0].fType);
             ASSERT(cl);
             std::vector<const Field*> fields = fCompiler->getAllFields(*cl);
             int index = -1;
@@ -715,6 +717,8 @@ String LLVMCodeGenerator::varName(const Variable& var) {
 }
 
 void LLVMCodeGenerator::writeMethod(const Method& method, const IRNode& body, Compiler& compiler) {
+    fCurrentMethod = &method;
+    fCurrentClass = &method.fOwner;
     fCompiler = &compiler;
     fTmpVars = 1;
     std::ostream& out = fMethods;
@@ -742,5 +746,4 @@ void LLVMCodeGenerator::writeMethod(const Method& method, const IRNode& body, Co
         out << "    ret void\n";
     }
     out << "}\n";
-    fCompiler = nullptr;
 }

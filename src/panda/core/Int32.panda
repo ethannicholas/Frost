@@ -1,3 +1,5 @@
+package panda.core
+
 class Int32 : Value {
     @private
     init(value:builtin_int32) {

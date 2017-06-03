@@ -24,11 +24,11 @@ struct Type : public Symbol {
     , fCategory(Category::VOID) {}
 
     Type(Position position, Category category, String name)
-    : INHERITED(Position(), Kind::TYPE, std::move(name))
+    : INHERITED(position, Kind::TYPE, std::move(name))
     , fCategory(category) {}
 
     Type(Position position, Category category, String name, int size)
-    : INHERITED(Position(), Kind::TYPE, std::move(name))
+    : INHERITED(position, Kind::TYPE, std::move(name))
     , fCategory(category)
     , fSize(size) {}
 

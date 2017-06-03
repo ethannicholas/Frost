@@ -118,6 +118,10 @@ private:
 
     int fLabels = 0;
 
+    const Class* fCurrentClass;
+
+    const Method* fCurrentMethod;
+
     std::stringstream fMethodHeader;
 
     std::unordered_set<String> fWrittenTypes;

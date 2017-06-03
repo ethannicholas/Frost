@@ -6,7 +6,8 @@ public:
         PRIVATE   = 1 << 1,
         PROTECTED = 1 << 2,
         CLASS     = 1 << 3,
-        OVERRIDE  = 1 << 4
+        OVERRIDE  = 1 << 4,
+        EXTERNAL  = 1 << 5
     };
 
     Annotations()
@@ -29,6 +30,10 @@ public:
 
     bool isOverride() const {
         return (fFlags & OVERRIDE) != 0;
+    }
+
+    bool isExternal() const {
+        return (fFlags & EXTERNAL) != 0;
     }
 
 private:

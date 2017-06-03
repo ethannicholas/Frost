@@ -22,6 +22,7 @@ Annotations Scanner::convertAnnotations(const ASTNode& a) {
         else BASIC_ANNOTATION("protected", PROTECTED)
         else BASIC_ANNOTATION("private", PRIVATE)
         else BASIC_ANNOTATION("override", OVERRIDE)
+        else BASIC_ANNOTATION("external", EXTERNAL)
         else {
             this->error(sub.fPosition, "unrecognized annotation '" + sub.fText + "'");
         }

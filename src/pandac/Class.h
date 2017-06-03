@@ -15,7 +15,7 @@ struct Class : public Symbol {
             Type superclass)
     : INHERITED(position, Kind::CLASS, std::move(name))
     , fSymbolTable(parent)
-    , fSuper(superclass)
+    , fSuper(std::move(superclass))
     , fType(fPosition, Type::Category::CLASS, fName) {}
 
     Annotations fAnnotations;

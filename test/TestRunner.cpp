@@ -33,11 +33,12 @@ String compileProgram(const char* pandac, const char* testdir, const char* name)
             perror("dup2 onto stderr failed");
             exit(1);
         }
-        char* args[4];
+        char* args[5];
         args[0] = (char*) pandac;
         args[1] = (char*) panda.c_str();
-        args[2] = (char*) OUTPUT_LOCATION;
-        args[3] = nullptr;
+        args[2] = (char*) "-o";
+        args[3] = (char*) OUTPUT_LOCATION;
+        args[4] = nullptr;
         execv(pandac, args);
         perror("error exec'ing pandac");
         exit(1);
