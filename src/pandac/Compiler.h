@@ -47,6 +47,8 @@ public:
 
     void compile();
 
+    void resolveType(const SymbolTable& st, Type* t);
+
     Class* resolveClass(const SymbolTable& st, Type t);
 
     std::vector<const Field*> getAllFields(const Class& cl);
@@ -96,6 +98,12 @@ private:
     bool foldBits(Position p, const IRNode& left, Operator op, const IRNode& right, IRNode* out);
 
     bool foldInts(Position p, const IRNode& left, Operator op, const IRNode& right, IRNode* out);
+
+    IRNode operatorCall(IRNode* left, const Method& m, IRNode* right);
+
+    int operatorCost(IRNode* left, const Method& m, IRNode* right);
+
+    bool operatorCall(IRNode* left, Operator op, IRNode* right, IRNode* outResult);
 
     bool convertBinary(const ASTNode& b, IRNode* out);
 
@@ -157,7 +165,11 @@ private:
 
     void compile(const SymbolTable& symbols);
 
-    void findClasses(SymbolTable& symbols);
+    void resolveTypes(Method* m);
+
+    void findClassesAndResolveTypes(SymbolTable& symbols);
+
+    void resolveTypes(SymbolTable& symbols);
 
     void buildVTable(Class& cl);
 

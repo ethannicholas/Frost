@@ -71,8 +71,8 @@ struct Method : public Symbol {
     const Class& fOwner;
     const Annotations fAnnotations;
     const Kind fMethodKind;
-    const std::vector<Parameter> fParameters;
-    const Type fReturnType;
+    std::vector<Parameter> fParameters;
+    Type fReturnType;
     const ASTNode fBody;
 
     typedef Symbol INHERITED;

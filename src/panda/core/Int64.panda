@@ -1,0 +1,43 @@
+package panda.core
+
+class Int64 : Value {
+    @private
+    init(value:builtin_int64) {
+        self.value := value
+    }
+
+    function +(other:Int64):Int64 {
+        return Int64(value + other.value)
+    }
+
+    function -(other:Int64):Int64 {
+        return Int64(value + other.value)
+    }
+
+    function *(other:Int64):Int64 {
+        return Int64(value * other.value)
+    }
+
+    function //(other:Int64):Int64 {
+        return Int64(value // other.value)
+    }
+
+    function -():Int64 {
+        return Int64(-value)
+    }
+
+    function ||(other:Int64):Int64 {
+        return Int64(value || other.value)
+    }
+
+    function &&(other:Int64):Int64 {
+        return Int64(value && other.value)
+    }
+
+    function ~~(other:Int64):Int64 {
+        return Int64(value ~~ other.value)
+    }
+
+    @private
+    def value:builtin_int64
+}

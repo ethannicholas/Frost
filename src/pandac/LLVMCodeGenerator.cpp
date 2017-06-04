@@ -698,11 +698,46 @@ void LLVMCodeGenerator::writeStatement(const IRNode& stmt, std::ostream& out) {
     }
 }
 
+std::unordered_map<String, String> METHOD_NAME_MAP {
+    { "+",       "$ADD" },
+    { "-",       "$SUB" },
+    { "*",       "$MUL" },
+    { "/",       "$DIV" },
+    { "//",      "$INTDIV" },
+    { "^",       "$POW" },
+    { "[]",      "$IDX" },
+    { "[]:=",    "$IDXEQ" },
+    { "[..]",    "$SLE" },
+    { "[..]:=",  "$SLEEQ" },
+    { "[...]",   "$SLI" },
+    { "[...]:=", "$SLIEQ" },
+    { "=",       "$EQ" },
+    { ">",       "$GT" },
+    { "<",       "$LT" },
+    { ">=",      "$GE" },
+    { "<=",      "$LE" },
+    { "|",       "$OR" },
+    { "||",      "$BOR" },
+    { "&",       "$AND" },
+    { "&&",      "$BAND" },
+    { "~",       "$XOR" },
+    { "~~",      "$BXOR" },
+    { "!",       "$NOT" },
+    { "!!",      "$BNOT" },
+    { "<<",      "$SHL" },
+    { ">>",      "$SHR" }
+};
+
 String LLVMCodeGenerator::methodName(const Method& method) {
     if (method.fName == "main") {
         return "@main";
     }
-    String result = "@" + escape_type_name(method.fOwner.fName) + "$" + method.fName;
+    String name = method.fName;
+    auto found = METHOD_NAME_MAP.find(name);
+    if (found != METHOD_NAME_MAP.end()) {
+        name = found->second;
+    }
+    String result = "@" + escape_type_name(method.fOwner.fName) + "$" + name;
     for (const auto& p : method.fParameters) {
         result += "$" + escape_type_name(p.fType.fName);
     }

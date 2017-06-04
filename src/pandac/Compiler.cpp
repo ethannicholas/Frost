@@ -35,6 +35,15 @@ static int required_size(uint64_t value) {
     return 64;
 }
 
+void Compiler::resolveType(const SymbolTable& st, Type* t) {
+    if (t->fCategory == Type::Category::CLASS) {
+        Class* cl = this->resolveClass(st, *t);
+        if (cl) {
+            *t = cl->fType;
+        }
+    }
+}
+
 Class* Compiler::resolveClass(const SymbolTable& st, Type t) {
     const SymbolTable* current = &st;
     std::stringstream ss;
@@ -558,6 +567,84 @@ static bool is_lvalue(const IRNode& node) {
     }
 }
 
+int Compiler::operatorCost(IRNode* left, const Method& m, IRNode* right) {
+    std::vector<IRNode> args;
+    if (m.fAnnotations.isClass()) {
+        args.push_back(std::move(*left));
+        args.push_back(std::move(*right));
+        int result = this->callCost(m, args, nullptr);
+        *left = std::move(args[0]);
+        *right = std::move(args[1]);
+        return result;
+    }
+    else {
+        args.push_back(std::move(*right));
+        int result = this->callCost(m, args, nullptr);
+        *right = std::move(args[0]);
+        return result;
+    }
+}
+
+IRNode Compiler::operatorCall(IRNode* left, const Method& m, IRNode* right) {
+    IRNode methodRef;
+    std::vector<IRNode> args;
+    if (m.fAnnotations.isClass()) {
+        methodRef = IRNode(left->fPosition, IRNode::Kind::METHOD_REFERENCE,
+                Type(Position(), Type::Category::METHOD, "<method>"), &m);
+        args.push_back(std::move(*left));
+        args.push_back(std::move(*right));
+    }
+    else {
+        std::vector<IRNode> children;
+        children.push_back(std::move(*left));
+        methodRef = IRNode(left->fPosition, IRNode::Kind::METHOD_REFERENCE,
+                Type(Position(), Type::Category::METHOD, "<method>"), &m, std::move(children));
+        args.push_back(std::move(*right));
+    }
+    IRNode result;
+    bool success = this->call(&methodRef, &args, &result);
+    ASSERT(success);
+    return std::move(result);
+}
+
+bool Compiler::operatorCall(IRNode* left, Operator op, IRNode* right, IRNode* outResult) {
+    if (left->fType.fCategory != Type::Category::CLASS ||
+            right->fType.fCategory != Type::Category::CLASS) {
+        return false;
+    }
+    Class* leftClass = this->resolveClass(fCurrentClass.top()->fSymbolTable, left->fType);
+    if (!leftClass) {
+        return false;
+    }
+    const Symbol* leftMethods = leftClass->fSymbolTable[operator_text(op)];
+    if (leftMethods) {
+        switch (leftMethods->fKind) {
+            case Symbol::Kind::METHOD:
+                if (operatorCost(left, (Method&) *leftMethods, right) != INT_MAX) {
+                    *outResult = this->operatorCall(left, (Method&) *leftMethods, right);
+                    ASSERT(outResult);
+                    return true;
+                }
+                break;
+            case Symbol::Kind::METHODS:
+                abort();
+/*                IRNode min;
+                for (const Method* m : ((Methods*) leftMethods).fMethods) {
+                if (operatorCost(left, ((Method*) leftMethods, right, outResult) != INT_MAX) {
+                    return true;
+                }
+                break;*/
+            default:
+                abort();
+        }
+    }
+    Class* rightClass = this->resolveClass(fCurrentClass.top()->fSymbolTable, right->fType);
+    if (!rightClass) {
+        return false;
+    }
+    return false;
+}
+
 bool Compiler::convertBinary(const ASTNode& b, IRNode* out) {
     ASSERT(b.fKind == ASTNode::Kind::BINARY);
     ASSERT(b.fChildren.size() == 2);
@@ -582,6 +669,11 @@ bool Compiler::convertBinary(const ASTNode& b, IRNode* out) {
         }
     }
     Operator op = (Operator) b.fValue.fInt;
+    IRNode call;
+    if (this->operatorCall(&left, op, &right, &call)) {
+        *out = std::move(call);
+        return true;
+    }
     if (is_assignment(op)) {
         if (!this->coerce(&right, left.fType, &right)) {
             return false;
@@ -747,6 +839,9 @@ void Compiler::symbolRef(Position p, const SymbolTable& st, Symbol* symbol, IRNo
             *out = IRNode(p, IRNode::Kind::FIELD_REFERENCE, ((Field*) symbol)->fType, symbol);
             if (target) {
                 out->fChildren.push_back(std::move(*target));
+            }
+            else {
+                out->fChildren.push_back(IRNode(p, IRNode::Kind::SELF, fCurrentClass.top()->fType));
             }
             return;
         case Symbol::Kind::VARIABLE:
@@ -1235,15 +1330,31 @@ void Compiler::compile(const SymbolTable& symbols) {
     });
 }
 
-void Compiler::findClasses(SymbolTable& symbols) {
+void Compiler::resolveTypes(Method* m) {
+    const SymbolTable& st = m->fOwner.fSymbolTable;
+    this->resolveType(st, &m->fReturnType);
+    for (auto& p : m->fParameters) {
+        this->resolveType(st, &p.fType);
+    }
+}
+
+void Compiler::findClassesAndResolveTypes(SymbolTable& symbols) {
     symbols.foreach([this, &symbols](Symbol& s) {
         switch (s.fKind) {
             case Symbol::Kind::PACKAGE:
-                this->findClasses(((Package&) s).fSymbolTable);
+                this->findClassesAndResolveTypes(((Package&) s).fSymbolTable);
                 break;
             case Symbol::Kind::CLASS:
                 fClasses[((Class&) s).fName] = &(Class&) s;
-                this->findClasses(((Class&) s).fSymbolTable);
+                this->findClassesAndResolveTypes(((Class&) s).fSymbolTable);
+                break;
+            case Symbol::Kind::METHOD:
+                this->resolveTypes((Method*) &s);
+                break;
+            case Symbol::Kind::METHODS:
+                for (const auto& m : ((Methods&) s).fMethods) {
+                    this->resolveTypes(m.get());
+                }
                 break;
             default:
                 break;
@@ -1321,7 +1432,7 @@ void Compiler::processFieldValues() {
 }
 
 void Compiler::compile() {
-    this->findClasses(fRoot);
+    this->findClassesAndResolveTypes(fRoot);
     this->buildVTables(fRoot);
     this->processFieldValues();
     this->compile(fRoot);
@@ -1329,5 +1440,6 @@ void Compiler::compile() {
 
 void Compiler::error(Position position, String msg) {
     fErrors.error(position, msg);
+    abort();
 }
 
