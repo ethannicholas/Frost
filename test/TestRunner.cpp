@@ -2,8 +2,11 @@
 #include "stdio.h"
 #include "stdlib.h"
 #include "unistd.h"
+#include <cstring>
 #include <fstream>
 #include <string>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 #define OUTPUT_LOCATION "/tmp/out"
 

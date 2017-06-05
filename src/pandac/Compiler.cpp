@@ -5,6 +5,8 @@
 #include "Package.h"
 #include "Variable.h"
 
+#include <limits.h>
+
 void Compiler::scan(ASTNode* file) {
     fScanner.scan(file, &fRoot);
 }

@@ -5,6 +5,7 @@
 #include "Type.h"
 #include "Util.h"
 
+#include <string.h>
 #include <vector>
 
 /**

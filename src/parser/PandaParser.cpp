@@ -1,5 +1,7 @@
 #include "PandaParser.h"
 
+#include <algorithm>
+
 class AutoCommaContext {
 public:
     AutoCommaContext(PandaParser* parser, bool value)

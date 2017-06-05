@@ -11,6 +11,7 @@
 #include "Type.h"
 #include "Util.h"
 
+#include <memory>
 #include <stack>
 #include <unordered_map>
 

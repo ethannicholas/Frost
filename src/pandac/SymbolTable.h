@@ -51,7 +51,8 @@ public:
     }
 
     void add(std::unique_ptr<Symbol> symbol) {
-        this->add(symbol->fName, std::move(symbol));
+        String name = symbol->fName;
+        this->add(name, std::move(symbol));
     }
 
     Symbol* operator[](String name) const {

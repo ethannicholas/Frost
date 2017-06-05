@@ -5,6 +5,8 @@
 #include "Symbol.h"
 #include "Type.h"
 
+#include <memory>
+
 struct Class;
 
 struct Method : public Symbol {
