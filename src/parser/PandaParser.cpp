@@ -101,10 +101,6 @@ bool PandaParser::expect(Token::Kind kind, String expected, Token* result) {
 void PandaParser::error(Position position, String msg) {
     if (!fInSpeculative) {
         fErrors->error(position, msg);
-        abort();
-    }
-    else {
-        printf("rejecting error: %s: %s\n", position.description().c_str(), msg.c_str());
     }
 }
 
@@ -112,10 +108,6 @@ void PandaParser::startSpeculative() {
     ASSERT(!fInSpeculative);
     fInSpeculative = true;
     fSpeculativeBuffer = fPushbackBuffer;
-    printf("start!\n");
-    for (Token t : fSpeculativeBuffer) {
-        printf("    %s\n", t.fText.c_str());
-    }
 }
 
 void PandaParser::accept() {
@@ -127,10 +119,6 @@ void PandaParser::rewind() {
     std::reverse(fSpeculativeBuffer.begin(), fSpeculativeBuffer.end());
     fPushbackBuffer.insert(fPushbackBuffer.begin(), fSpeculativeBuffer.begin(),
             fSpeculativeBuffer.end());
-    printf("rewound!\n");
-    for (Token t : fPushbackBuffer) {
-        printf("    %s\n", t.fText.c_str());
-    }
 }
 
 static int to_operator(Token::Kind kind) {
@@ -824,8 +812,37 @@ bool PandaParser::functionDeclaration(ASTNode* outResult, ASTNode doccomment,
     return true;
 }
 
+// ifStatement = IF expression BLOCK (else (ifStatement | BLOCK))?
 bool PandaParser::ifStatement(ASTNode* outResult) {
-    abort();
+    Token start;
+    if (!this->expect(Token::Kind::IF, "'if'", &start)) {
+        return false;
+    }
+    ASTNode test;
+    if (!this->expression(&test)) {
+        return false;
+    }
+    std::vector<ASTNode> children;
+    children.push_back(std::move(test));
+    ASTNode ifTrue;
+    if (!this->block(&ifTrue)) {
+        return false;
+    }
+    children.push_back(std::move(ifTrue));
+    if (this->checkNext(Token::Kind::ELSE)) {
+        ASTNode ifFalse;
+        if (this->peek().fKind == Token::Kind::IF) {
+            if (!this->ifStatement(&ifFalse)) {
+                return false;
+            }
+        }
+        else if (!this->block(&ifFalse)) {
+            return false;
+        }
+        children.push_back(std::move(ifFalse));
+    }
+    *outResult = ASTNode(start.fPosition, ASTNode::Kind::IF, std::move(children));
+    return true;
 }
 
 // initDeclaration = INIT parameters block? postconditions?
@@ -954,6 +971,7 @@ bool PandaParser::methodName(String* outResult) {
         case Token::Kind::INTDIV:     // fall through
         case Token::Kind::POW:        // fall through
         case Token::Kind::EQ:         // fall through
+        case Token::Kind::NEQ:        // fall through
         case Token::Kind::LT:         // fall through
         case Token::Kind::GTEQ:       // fall through
         case Token::Kind::LTEQ:       // fall through
@@ -997,6 +1015,7 @@ bool PandaParser::methodName(String* outResult) {
             }
             return true;
         default:
+            this->error(name.fPosition, "expected a method name, but found '" + name.fText + "'");
             return false;
     }
 }
@@ -1028,6 +1047,25 @@ bool PandaParser::multiplicativeExpression(ASTNode* outResult) {
                 children.push_back(std::move(next));
                 *outResult = ASTNode(op.fPosition, ASTNode::Kind::BINARY, to_operator(op.fKind),
                         std::move(children));
+                return true;
+            }
+            case Token::Kind::GT: {
+                // two GTs in a row = SHIFTRIGHT
+                Token next = this->nextRawToken();
+                if (next.fKind == Token::Kind::GT) {
+                    ASTNode next;
+                    if (!this->prefixExpression(&next)) {
+                        return false;
+                    }
+                    std::vector<ASTNode> children;
+                    children.push_back(std::move(*outResult));
+                    children.push_back(std::move(next));
+                    *outResult = ASTNode(op.fPosition, ASTNode::Kind::BINARY, Operator::SHIFTRIGHT,
+                            std::move(children));
+                    return true;
+                }
+                this->pushback(next);
+                this->pushback(op);
                 return true;
             }
             default:
@@ -1250,7 +1288,7 @@ bool PandaParser::target(ASTNode* outResult) {
     return true;
 }
 
-// term = IDENTIFIER | DECIMAL | SELF | LPAREN expression RPAREN
+// term = IDENTIFIER | DECIMAL | SELF | TRUE | FALSE | LPAREN expression RPAREN
 bool PandaParser::term(ASTNode* outResult) {
     Token t = this->nextToken();
     switch (t.fKind) {
@@ -1262,6 +1300,12 @@ bool PandaParser::term(ASTNode* outResult) {
             return true;
         case Token::Kind::SELF:
             *outResult = ASTNode(t.fPosition, ASTNode::Kind::SELF);
+            return true;
+        case Token::Kind::TRUE_LITERAL:
+            *outResult = ASTNode(t.fPosition, ASTNode::Kind::TRUE_LITERAL);
+            return true;
+        case Token::Kind::FALSE_LITERAL:
+            *outResult = ASTNode(t.fPosition, ASTNode::Kind::FALSE_LITERAL);
             return true;
         case Token::Kind::LPAREN: {
             if (!this->expression(outResult)) {

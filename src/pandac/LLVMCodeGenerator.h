@@ -132,7 +132,7 @@ private:
 
     std::ostream& fOut;
 
-    String fCurrentBlock = "0";
+    String fCurrentBlock;
 
     Compiler* fCompiler;
 

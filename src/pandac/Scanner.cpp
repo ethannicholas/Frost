@@ -234,10 +234,12 @@ void Scanner::scan(ASTNode* file, SymbolTable* root) {
     SymbolTable* currentTable = root;
     std::vector<String> uses;
     std::unordered_map<String, String> aliases;
+    aliases["Bit"] = "panda.core.Bit";
     aliases["Int8"] = "panda.core.Int8";
     aliases["Int16"] = "panda.core.Int16";
     aliases["Int32"] = "panda.core.Int32";
     aliases["Int64"] = "panda.core.Int64";
+    aliases["Console"] = "panda.io.Console";
     for (auto& e : file->fChildren) {
         switch (e.fKind) {
             case ASTNode::Kind::PACKAGE: {

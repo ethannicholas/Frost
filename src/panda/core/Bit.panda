@@ -1,0 +1,27 @@
+package panda.core
+
+class Bit : Value {
+    @$implicit
+    init(value:builtin_bit) {
+        self.value := value
+    }
+
+    function !():Bit {
+        return Bit(!value)
+    }
+
+    function |(other:Bit):Bit {
+        return value
+    }
+
+    function &(other:Bit):Bit {
+        return value
+    }    
+
+    function ~(other:Bit):Bit {
+        return Bit(value ~ other.value)
+    }
+
+    @private
+    def value:builtin_bit
+}

@@ -499,7 +499,7 @@ String LLVMCodeGenerator::getLValue(const IRNode& lvalue, std::ostream& out) {
 
 void LLVMCodeGenerator::writeAndEq(const String& lvalue, const IRNode& right, std::ostream& out) {
     String left = this->nextVar();
-    out << "    " << left << " = load i8 " << lvalue << "\n";
+    out << "    " << left << " = load i1, " << lvalue << "\n";
     String ifTrue = this->nextLabel();
     String ifFalse = this->nextLabel();
     out << "    br i1 " << left << ", label %" << ifTrue << ", label %" << ifFalse << "\n";
@@ -512,7 +512,7 @@ void LLVMCodeGenerator::writeAndEq(const String& lvalue, const IRNode& right, st
 
 void LLVMCodeGenerator::writeOrEq(const String& lvalue, const IRNode& right, std::ostream& out) {
     String left = this->nextVar();
-    out << "    " << left << " = load i8 " << lvalue << "\n";
+    out << "    " << left << " = load i1, " << lvalue << "\n";
     String ifTrue = this->nextLabel();
     String ifFalse = this->nextLabel();
     out << "    br i1 " << left << ", label %" << ifTrue << ", label %" << ifFalse << "\n";
@@ -720,6 +720,7 @@ std::unordered_map<String, String> METHOD_NAME_MAP {
     { "[...]",   "$SLI" },
     { "[...]:=", "$SLIEQ" },
     { "=",       "$EQ" },
+    { "!=",      "$NEQ" },
     { ">",       "$GT" },
     { "<",       "$LT" },
     { ">=",      "$GE" },
@@ -764,6 +765,7 @@ void LLVMCodeGenerator::writeMethod(const Method& method, const IRNode& body, Co
     fCurrentClass = &method.fOwner;
     fCompiler = &compiler;
     fTmpVars = 1;
+    fCurrentBlock = "0";
     std::ostream& out = fMethods;
     out << "\ndefine fastcc " << this->llvmType(method.fReturnType) << " " <<
             this->methodName(method) << "(";

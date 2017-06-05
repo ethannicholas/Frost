@@ -1,0 +1,18 @@
+package panda.io
+
+class Console {
+    @class
+    method println(i:Int64) {
+        print(i)
+    }
+
+    @class
+    method println(b:Bit) {
+        if b {
+            print(1)
+        }
+        else {
+            print(0)
+        }
+    }
+}

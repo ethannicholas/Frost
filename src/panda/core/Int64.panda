@@ -11,7 +11,7 @@ class Int64 : Value {
     }
 
     function -(other:Int64):Int64 {
-        return Int64(value + other.value)
+        return Int64(value - other.value)
     }
 
     function *(other:Int64):Int64 {
@@ -26,6 +26,10 @@ class Int64 : Value {
         return Int64(-value)
     }
 
+    function !!():Int64 {
+        return Int64(!!value)
+    }
+
     function ||(other:Int64):Int64 {
         return Int64(value || other.value)
     }
@@ -36,6 +40,38 @@ class Int64 : Value {
 
     function ~~(other:Int64):Int64 {
         return Int64(value ~~ other.value)
+    }
+
+    function <<(other:Int64):Int64 {
+        return Int64(value << other.value)
+    }
+
+    function >>(other:Int64):Int64 {
+        return Int64(value >> other.value)
+    }
+
+    function =(other:Int64):Bit {
+        return value = other.value
+    }
+
+    function !=(other:Int64):Bit {
+        return value != other.value
+    }
+
+    function >(other:Int64):Bit {
+        return value > other.value
+    }
+
+    function <(other:Int64):Bit {
+        return value < other.value
+    }
+
+    function >=(other:Int64):Bit {
+        return value >= other.value
+    }
+
+    function <=(other:Int64):Bit {
+        return value <= other.value
     }
 
     @private

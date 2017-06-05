@@ -65,7 +65,8 @@ struct Type : public Symbol {
     }
 
     static Type& Bit() {
-        return BuiltinBit();
+        static Type result = Type(Position(), Category::CLASS, "panda.core.Bit");
+        return result;
     }
 
     static Type& Void() {

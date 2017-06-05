@@ -41,6 +41,7 @@ struct ASTNode {
         DOCCOMMENT,
         DOT,
         EXPRESSIONS,
+        FALSE_LITERAL,
         FIELD,
         FLOAT,
         FOR,
@@ -84,6 +85,7 @@ struct ASTNode {
         STATEMENTS,
         STRING,
         SUPER,
+        TRUE_LITERAL,
         TUPLE,
         TUPLE_TARGET,
         TUPLE_TYPE,
@@ -199,6 +201,7 @@ struct ASTNode {
             case Kind::DOCCOMMENT:              result += "Doccomment";            break;
             case Kind::DOT:                     result += "Dot";                   break;
             case Kind::EXPRESSIONS:             result += "Expressions";           break;
+            case Kind::FALSE_LITERAL:           result += "False";                 break;
             case Kind::FIELD:                   result += "Field";                 break;
             case Kind::FLOAT:                   result += "Float";                 break;
             case Kind::FOR:                     result += "For";                   break;
@@ -242,6 +245,7 @@ struct ASTNode {
             case Kind::STATEMENTS:              result += "Statements";            break;
             case Kind::STRING:                  result += "String";                break;
             case Kind::SUPER:                   result += "Super";                 break;
+            case Kind::TRUE_LITERAL:            result += "True";                  break;
             case Kind::TUPLE:                   result += "Tuple";                 break;
             case Kind::TUPLE_TARGET:            result += "TupleTarget";           break;
             case Kind::TUPLE_TYPE:              result += "TupleType";             break;

@@ -11,7 +11,7 @@ class Int32 : Value {
     }
 
     function -(other:Int32):Int32 {
-        return Int32(value + other.value)
+        return Int32(value - other.value)
     }
 
     function *(other:Int32):Int32 {
@@ -26,6 +26,10 @@ class Int32 : Value {
         return Int32(-value)
     }
 
+    function !!():Int32 {
+        return Int32(!!value)
+    }
+
     function ||(other:Int32):Int32 {
         return Int32(value || other.value)
     }
@@ -36,6 +40,38 @@ class Int32 : Value {
 
     function ~~(other:Int32):Int32 {
         return Int32(value ~~ other.value)
+    }
+
+    function <<(other:Int32):Int32 {
+        return Int32(value << other.value)
+    }
+
+    function >>(other:Int32):Int32 {
+        return Int32(value >> other.value)
+    }
+
+    function =(other:Int32):Bit {
+        return value = other.value
+    }
+
+    function !=(other:Int32):Bit {
+        return value != other.value
+    }
+
+    function >(other:Int32):Bit {
+        return value > other.value
+    }
+
+    function <(other:Int32):Bit {
+        return value < other.value
+    }
+
+    function >=(other:Int32):Bit {
+        return value >= other.value
+    }
+
+    function <=(other:Int32):Bit {
+        return value <= other.value
     }
 
     @private

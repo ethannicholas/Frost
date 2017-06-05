@@ -11,7 +11,7 @@ class Int8 : Value {
     }
 
     function -(other:Int8):Int8 {
-        return Int8(value + other.value)
+        return Int8(value - other.value)
     }
 
     function *(other:Int8):Int8 {
@@ -26,6 +26,10 @@ class Int8 : Value {
         return Int8(-value)
     }
 
+    function !!():Int8 {
+        return Int8(!!value)
+    }
+
     function ||(other:Int8):Int8 {
         return Int8(value || other.value)
     }
@@ -36,6 +40,38 @@ class Int8 : Value {
 
     function ~~(other:Int8):Int8 {
         return Int8(value ~~ other.value)
+    }
+
+    function <<(other:Int8):Int8 {
+        return Int8(value << other.value)
+    }
+
+    function >>(other:Int8):Int8 {
+        return Int8(value >> other.value)
+    }
+
+    function =(other:Int8):Bit {
+        return value = other.value
+    }
+
+    function !=(other:Int8):Bit {
+        return value != other.value
+    }
+
+    function >(other:Int8):Bit {
+        return value > other.value
+    }
+
+    function <(other:Int8):Bit {
+        return value < other.value
+    }
+
+    function >=(other:Int8):Bit {
+        return value >= other.value
+    }
+
+    function <=(other:Int8):Bit {
+        return value <= other.value
     }
 
     @private

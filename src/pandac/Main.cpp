@@ -68,11 +68,13 @@ void reportErrors(ErrorReporter& errors) {
 
 int main(int argc, char** argv) {
     std::vector<String> sources;
+    sources.push_back(PANDA_HOME + "panda/core/Bit.panda");
     sources.push_back(PANDA_HOME + "panda/core/Int8.panda");
     sources.push_back(PANDA_HOME + "panda/core/Int16.panda");
     sources.push_back(PANDA_HOME + "panda/core/Int32.panda");
     sources.push_back(PANDA_HOME + "panda/core/Int64.panda");
     sources.push_back(PANDA_HOME + "panda/core/Value.panda");
+    sources.push_back(PANDA_HOME + "panda/io/Console.panda");
     String dest;
     for (int i = 1; i < argc; i++) {
         if (!strcmp(argv[i], "-o")) {
@@ -106,6 +108,9 @@ int main(int argc, char** argv) {
                                 std::istreambuf_iterator<char>());
             if (PandaParser(&errors).file(&names[i], text, &parsed[i])) {
                 compiler.scan(&parsed[i]);
+            }
+            else {
+                ASSERT(errors.fErrorCount);
             }
         }
         if (errors.fErrorCount) {

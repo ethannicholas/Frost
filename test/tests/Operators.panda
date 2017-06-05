@@ -1,0 +1,93 @@
+class Operators {
+    @class
+    method int64() {
+        var x:Int64 := 10
+        var y:Int64 := 7
+        Console.println(x + y)
+        Console.println(x - y)
+        Console.println(x * y)
+        Console.println(x // y)
+        Console.println(x << 1)
+        Console.println(x >> 1)
+        Console.println(x = y)
+        Console.println(x = x)
+        Console.println(x != y)
+        Console.println(x != x)
+        Console.println(x > x)
+        Console.println(x > y)
+        Console.println(y > x)
+        Console.println(x >= y)
+        Console.println(y >= x)
+        Console.println(x >= x)
+        Console.println(x < y)
+        Console.println(y < x)
+        Console.println(y < y)
+        Console.println(x <= y)
+        Console.println(y <= x)
+        Console.println(y <= y)
+    }
+
+    @class
+    function noisyTrue():Bit {
+        Console.println(-1)
+        return true
+    }
+
+    @class
+    function noisyFalse():Bit {
+        Console.println(-2)
+        return false
+    }
+
+    @class
+    method bit() {
+        Console.println(!noisyTrue())
+        Console.println(!noisyFalse())
+        Console.println(noisyTrue() & noisyTrue())
+        Console.println(noisyTrue() & noisyFalse())
+        Console.println(noisyFalse() & noisyTrue())
+        Console.println(noisyFalse() & noisyFalse())
+        Console.println(noisyTrue() | noisyTrue())
+        Console.println(noisyTrue() | noisyFalse())
+        Console.println(noisyFalse() | noisyTrue())
+        Console.println(noisyFalse() | noisyFalse())
+
+        var x := true
+        x &= noisyTrue()
+        Console.println(x)
+
+        x := true
+        x &= noisyFalse()
+        Console.println(x)
+
+        x := false
+        x &= noisyTrue()
+        Console.println(x)
+
+        x := false
+        x &= noisyFalse()
+        Console.println(x)
+
+        x := true
+        x |= noisyTrue()
+        Console.println(x)
+
+        x := true
+        x |= noisyFalse()
+        Console.println(x)
+
+        x := false
+        x |= noisyTrue()
+        Console.println(x)
+
+        x := false
+        x |= noisyFalse()
+        Console.println(x)
+    }
+
+    @class
+    method main() {
+        int64()
+        bit()
+    }
+}

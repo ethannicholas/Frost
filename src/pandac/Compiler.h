@@ -20,7 +20,7 @@ public:
     : fScanner(errors)
     , fCodeGenerator(*codeGenerator)
     , fErrors(*errors) {
-        fRoot.add(std::unique_ptr<Symbol>(new Type(Position(), Type::Category::BUILTIN_INT,
+        fRoot.add(std::unique_ptr<Symbol>(new Type(Position(), Type::Category::BUILTIN_UINT,
                 "builtin_bit", 1)));
         fRoot.add(std::unique_ptr<Symbol>(new Type(Position(), Type::Category::BUILTIN_INT,
                 "builtin_int8", 8)));

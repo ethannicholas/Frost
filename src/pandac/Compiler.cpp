@@ -149,7 +149,8 @@ bool Compiler::coerce(IRNode* node, const Type& type, IRNode* out) {
                 if (!this->coerce(&node->fChildren[0], type, &base)) {
                     return false;
                 }
-                return this->convertPrefix(node->fPosition, Operator::SUB, std::move(base), out);
+                return this->convertPrefix(node->fPosition, (Operator) node->fValue.fInt,
+                        std::move(base), out);
             }
             break;
         }
@@ -333,6 +334,7 @@ void Compiler::reportNoMatch(Position position, const String& name,
     }
     msg += "'";
     this->error(position, msg);
+    abort();
 }
 
 void Compiler::reportAmbiguousMatch(Position position, const std::vector<const Method*>& methods,
@@ -734,6 +736,20 @@ bool Compiler::convertBinary(const ASTNode& b, IRNode* out) {
         }
     }
     Operator op = (Operator) b.fValue.fInt;
+    if ((op == Operator::AND || op == Operator::OR || op == Operator::ANDEQ || 
+                op == Operator::OREQ) && left.fType == Type::Bit() && right.fType == Type::Bit()) {
+        Class* bit = fClasses["panda.core.Bit"];
+        ASSERT(bit);
+        Field* value = (Field*) bit->fSymbolTable["value"];
+        std::vector<IRNode> children;
+        children.push_back(std::move(left));
+        left = IRNode(b.fPosition, IRNode::Kind::FIELD_REFERENCE, Type::BuiltinBit(), value,
+                std::move(children));
+        children.clear();
+        children.push_back(std::move(right));
+        right = IRNode(b.fPosition, IRNode::Kind::FIELD_REFERENCE, Type::BuiltinBit(), value,
+                std::move(children));
+    }
     IRNode call;
     if (this->operatorCall(&left, op, &right, &call)) {
         *out = std::move(call);
@@ -808,7 +824,7 @@ bool Compiler::convertBinary(const ASTNode& b, IRNode* out) {
             case Operator::LT:           // fall through
             case Operator::GTEQ:         // fall through
             case Operator::LTEQ:
-                type = Type::Bit();
+                type = Type::BuiltinBit();
                 break;
             default:
                 abort();
@@ -1009,9 +1025,22 @@ bool Compiler::convertPrefix(Position p, Operator op, IRNode base, IRNode* out) 
                         "'");
                 return false;
             }
+        case Operator::BITWISENOT:
+            if (base.fType.isBuiltinNumber()) {
+                Type type = base.fType;
+                std::vector<IRNode> children;
+                children.push_back(std::move(base));
+                *out = IRNode(p, IRNode::Kind::PREFIX, type, (uint64_t) op,
+                        std::move(children));
+                return true;
+            }
+            else {
+                this->error(base.fPosition, "expected a number, but found '" + base.fType.fName +
+                        "'");
+                return false;
+            }
         case Operator::NOT: {
-            IRNode bit;
-            if (!this->coerce(&base, Type::BuiltinBit(), &bit)) {
+            if (!this->coerce(&base, Type::BuiltinBit(), &base)) {
                 return false;
             }
             Type type = base.fType;
@@ -1111,6 +1140,12 @@ bool Compiler::doConvertExpression(const ASTNode& e, IRNode* out) {
             return true;
         case ASTNode::Kind::PREFIX:
             return this->convertPrefix(e, out);
+        case ASTNode::Kind::TRUE_LITERAL:
+            *out = IRNode(e.fPosition, IRNode::Kind::INT, Type::BuiltinBit(), true);
+            return true;
+        case ASTNode::Kind::FALSE_LITERAL:
+            *out = IRNode(e.fPosition, IRNode::Kind::INT, Type::BuiltinBit(), false);
+            return true;
         case ASTNode::Kind::SELF:
             return this->convertSelf(e, out);
         default:
@@ -1131,6 +1166,13 @@ bool Compiler::convertIf(const ASTNode& i, IRNode* out) {
     IRNode test;
     if (this->convertExpression(i.fChildren[0], &test)) {
         this->coerce(&test, Type::Bit(), &test);
+        Class* bit = fClasses["panda.core.Bit"];
+        ASSERT(bit);
+        Field* value = (Field*) bit->fSymbolTable["value"];
+        std::vector<IRNode> children;
+        children.push_back(std::move(test));
+        test = IRNode(i.fPosition, IRNode::Kind::FIELD_REFERENCE, Type::BuiltinBit(), value,
+                std::move(children));
     }
     IRNode ifTrue;
     this->convertStatement(i.fChildren[1], &ifTrue);
@@ -1151,7 +1193,10 @@ bool Compiler::convertIf(const ASTNode& i, IRNode* out) {
 // returns the type that a variable should have when initialized with an expression of exprType
 static Type variable_type(Type exprType) {
     if (exprType == Type::IntLiteral()) {
-        return Type(Position(), Type::Category::CLASS, "panda.core.Int64");
+        return Type::Int64();
+    }
+    if (exprType == Type::BuiltinBit()) {
+        return Type::Bit();
     }
     return std::move(exprType);
 }
