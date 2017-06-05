@@ -1,21 +1,21 @@
 class Point2D {
-    init(x:builtin_int64, y:builtin_int64) {
+    init(x:Int64, y:Int64) {
         self.x := x
         self.y := y
     }
 
-    var x:builtin_int64
-    var y:builtin_int64
+    var x:Int64
+    var y:Int64
 }
 
 class Point3D : Point2D {
-    init(x:builtin_int64, y:builtin_int64, z:builtin_int64) {
+    init(x:Int64, y:Int64, z:Int64) {
         self.x := x
         self.y := y
         self.z := z
     }
 
-    var z:builtin_int64
+    var z:Int64
 }
 
 class Untyped {

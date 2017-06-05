@@ -54,6 +54,11 @@ struct Type : public Symbol {
         return result;
     }
 
+    static Type& Int64() {
+        static Type result = Type(Position(), Category::CLASS, "panda.core.Int64");
+        return result;
+    }
+
     static Type& BuiltinBit() {
         static Type result = Type(Position(), Category::BUILTIN_UINT, "builtin_bit", 1);
         return result;

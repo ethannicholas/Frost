@@ -1,0 +1,43 @@
+package panda.core
+
+class Int16 : Value {
+    @$implicit
+    init(value:builtin_int16) {
+        self.value := value
+    }
+
+    function +(other:Int16):Int16 {
+        return Int16(value + other.value)
+    }
+
+    function -(other:Int16):Int16 {
+        return Int16(value + other.value)
+    }
+
+    function *(other:Int16):Int16 {
+        return Int16(value * other.value)
+    }
+
+    function //(other:Int16):Int16 {
+        return Int16(value // other.value)
+    }
+
+    function -():Int16 {
+        return Int16(-value)
+    }
+
+    function ||(other:Int16):Int16 {
+        return Int16(value || other.value)
+    }
+
+    function &&(other:Int16):Int16 {
+        return Int16(value && other.value)
+    }
+
+    function ~~(other:Int16):Int16 {
+        return Int16(value ~~ other.value)
+    }
+
+    @private
+    def value:builtin_int16
+}

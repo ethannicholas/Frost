@@ -1,0 +1,43 @@
+package panda.core
+
+class Int8 : Value {
+    @$implicit
+    init(value:builtin_int8) {
+        self.value := value
+    }
+
+    function +(other:Int8):Int8 {
+        return Int8(value + other.value)
+    }
+
+    function -(other:Int8):Int8 {
+        return Int8(value + other.value)
+    }
+
+    function *(other:Int8):Int8 {
+        return Int8(value * other.value)
+    }
+
+    function //(other:Int8):Int8 {
+        return Int8(value // other.value)
+    }
+
+    function -():Int8 {
+        return Int8(-value)
+    }
+
+    function ||(other:Int8):Int8 {
+        return Int8(value || other.value)
+    }
+
+    function &&(other:Int8):Int8 {
+        return Int8(value && other.value)
+    }
+
+    function ~~(other:Int8):Int8 {
+        return Int8(value ~~ other.value)
+    }
+
+    @private
+    def value:builtin_int8
+}

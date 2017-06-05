@@ -2,7 +2,7 @@ class Overloading {
     init() {
     }
 
-    init(x:builtin_int64) {
+    init(x:Int64) {
         print(-1)
     }
 
@@ -12,12 +12,12 @@ class Overloading {
     }
 
     @class
-    method classTest(x:builtin_int64) {
+    method classTest(x:Int64) {
         print(x)
     }
 
     @class
-    method classTest(x:builtin_int64, y:builtin_int64) {
+    method classTest(x:Int64, y:Int64) {
         print(x + y)
     }
 
@@ -25,11 +25,11 @@ class Overloading {
         print(4)
     }
 
-    method instanceTest(x:builtin_int64) {
+    method instanceTest(x:Int64) {
         print(x)
     }
 
-    method instanceTest(x:builtin_int64, y:builtin_int64) {
+    method instanceTest(x:Int64, y:Int64) {
         print(x + y)
     }
 

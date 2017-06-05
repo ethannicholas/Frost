@@ -53,7 +53,8 @@ private:
 
     void convertInit(ASTNode* i, SymbolTable* st, Class* owner);
 
-    void scanClass(String contextName, SymbolTable* parent, ASTNode* cl);
+    void scanClass(String contextName, std::vector<String> uses,
+            std::unordered_map<String, String> aliases, SymbolTable* parent, ASTNode* cl);
 
     void error(Position position, String msg);
 

@@ -2,7 +2,7 @@ package p1.p2.p3
 
 class Foo {
     @class
-    method x():builtin_int64 {
+    method x():Int64 {
         return 1
     }
 }
@@ -11,14 +11,14 @@ package p1.p2
 
 class Bar {
     @class
-    method x():builtin_int64 {
+    method x():Int64 {
         return p3.Foo.x() * 2
     }
 }
 
 class Baz {
     @class
-    method x():builtin_int64 {
+    method x():Int64 {
         return Bar.x() + 1
     }
 }

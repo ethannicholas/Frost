@@ -2,11 +2,11 @@ class Super {
     init() {
     }
 
-    function foo():builtin_int64 {
+    function foo():Int64 {
         return 1
     }
 
-    function foo(x:builtin_int64):builtin_int64 {
+    function foo(x:Int64):Int64 {
         return x * 2
     }
 }
@@ -16,7 +16,7 @@ class S1 : Super {
     }
 
     @override
-    function foo():builtin_int64 {
+    function foo():Int64 {
         return 2
     }
 }
@@ -26,7 +26,7 @@ class S2 : Super {
     }
 
     @override
-    function foo(x:builtin_int64):builtin_int64 {
+    function foo(x:Int64):Int64 {
         return x * 3
     }
 }
@@ -36,7 +36,7 @@ class S3 : S2 {
     }
 
     @override
-    function foo():builtin_int64 {
+    function foo():Int64 {
         return 5
     }
 }

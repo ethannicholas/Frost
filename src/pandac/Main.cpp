@@ -8,6 +8,7 @@
 
 #define LLC_PATH "/opt/local/libexec/llvm-3.8/bin/llc"
 #define GCC_PATH "/usr/bin/gcc"
+#define PANDA_HOME String("../src/")
 
 void make_executable(const char* llvm, const char* dest) {
     const char* tmp = "/tmp/output.s";
@@ -67,6 +68,11 @@ void reportErrors(ErrorReporter& errors) {
 
 int main(int argc, char** argv) {
     std::vector<String> sources;
+    sources.push_back(PANDA_HOME + "panda/core/Int8.panda");
+    sources.push_back(PANDA_HOME + "panda/core/Int16.panda");
+    sources.push_back(PANDA_HOME + "panda/core/Int32.panda");
+    sources.push_back(PANDA_HOME + "panda/core/Int64.panda");
+    sources.push_back(PANDA_HOME + "panda/core/Value.panda");
     String dest;
     for (int i = 1; i < argc; i++) {
         if (!strcmp(argv[i], "-o")) {

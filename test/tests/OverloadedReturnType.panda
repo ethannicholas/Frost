@@ -2,21 +2,21 @@ class Overloading {
     init() {
     }
     
-    method instanceTest():builtin_int8 {
+    method instanceTest():Int8 {
         return 8
     }
 
-    method instanceTest():builtin_int64 {
+    method instanceTest():Int64 {
         return 64
     }
 
     @class
-    method classTest():builtin_int8 {
+    method classTest():Int8 {
         return 8
     }
 
     @class
-    method classTest():builtin_int64 {
+    method classTest():Int64 {
         return 64
     }
 

@@ -23,6 +23,7 @@ Annotations Scanner::convertAnnotations(const ASTNode& a) {
         else BASIC_ANNOTATION("private", PRIVATE)
         else BASIC_ANNOTATION("override", OVERRIDE)
         else BASIC_ANNOTATION("external", EXTERNAL)
+        else BASIC_ANNOTATION("$implicit", IMPLICIT)
         else {
             this->error(sub.fPosition, "unrecognized annotation '" + sub.fText + "'");
         }
@@ -171,7 +172,8 @@ void Scanner::convertInit(ASTNode* i, SymbolTable* st, Class* owner) {
     st->add(std::unique_ptr<Method>(result));
 }
 
-void Scanner::scanClass(String contextName, SymbolTable* parent, ASTNode* cl) {
+void Scanner::scanClass(String contextName, std::vector<String> uses,
+        std::unordered_map<String, String> aliases, SymbolTable* parent, ASTNode* cl) {
     ASSERT(cl->fKind == ASTNode::Kind::CLASS);
     ASSERT(cl->fChildren.size() == 6);
     Annotations annotations = this->convertAnnotations(cl->fChildren[1]);
@@ -180,7 +182,7 @@ void Scanner::scanClass(String contextName, SymbolTable* parent, ASTNode* cl) {
         superclass = Type();
     }
     else {
-        superclass = this->convertType(cl->fChildren[3], parent);
+        superclass = this->convertType(cl->fChildren[3], *parent);
     }
     ASSERT(cl->fChildren[5].fKind == ASTNode::Kind::CLASS_MEMBERS);
     String fullName = contextName;
@@ -200,7 +202,8 @@ void Scanner::scanClass(String contextName, SymbolTable* parent, ASTNode* cl) {
     if (annotations.isOverride()) {
         this->error(cl->fPosition, "'@override' annotation may not be applied to classes");
     }
-    Class* result = new Class(cl->fPosition, annotations, fullName, parent, superclass);
+    Class* result = new Class(cl->fPosition, uses, aliases, annotations, fullName, parent,
+            superclass);
     SymbolTable& symbols = result->fSymbolTable;
     parent->add(cl->fText, std::unique_ptr<Symbol>(result));
     for (auto& child : cl->fChildren[5].fChildren) {
@@ -216,7 +219,7 @@ void Scanner::scanClass(String contextName, SymbolTable* parent, ASTNode* cl) {
                 this->convertInit(&child, &symbols, result);
                 break;
             case ASTNode::Kind::CLASS:
-                this->scanClass(fullName, &symbols, &child);
+                this->scanClass(fullName, uses, aliases, &symbols, &child);
                 break;
             default:
                 printf("unsupported child: %s\n", child.description().c_str());
@@ -229,6 +232,12 @@ void Scanner::scan(ASTNode* file, SymbolTable* root) {
     ASSERT(file->fKind == ASTNode::Kind::BODY_ENTRIES);
     String contextName;
     SymbolTable* currentTable = root;
+    std::vector<String> uses;
+    std::unordered_map<String, String> aliases;
+    aliases["Int8"] = "panda.core.Int8";
+    aliases["Int16"] = "panda.core.Int16";
+    aliases["Int32"] = "panda.core.Int32";
+    aliases["Int64"] = "panda.core.Int64";
     for (auto& e : file->fChildren) {
         switch (e.fKind) {
             case ASTNode::Kind::PACKAGE: {
@@ -256,7 +265,7 @@ void Scanner::scan(ASTNode* file, SymbolTable* root) {
                 break;
             }
             case ASTNode::Kind::CLASS:
-                this->scanClass(contextName, currentTable, &e);
+                this->scanClass(contextName, uses, aliases, currentTable, &e);
                 break;
             default:
                 break;

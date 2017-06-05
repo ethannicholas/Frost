@@ -4,7 +4,7 @@
 #include "Symbol.h"
 #include "Util.h"
 
-#include <unordered_map>
+#include <map>
 
 class SymbolTable {
 public:
@@ -14,11 +14,14 @@ public:
         rootCreated = true;
     }
 
-    SymbolTable(const SymbolTable* parent) {
+    SymbolTable(const SymbolTable* parent, const Class* cl)
+    : fClass(cl) {
         fParents.push_back(parent);
     }
 
     SymbolTable(const SymbolTable&) = delete;
+    SymbolTable(SymbolTable&&) = default;
+    SymbolTable& operator=(SymbolTable&& src) = default;
 
     void add(String name, std::unique_ptr<Symbol> symbol) {
         auto found = fSymbols.find(name);
@@ -83,10 +86,12 @@ public:
         printf("%s: %s\n", position.description().c_str(), text.c_str());
     }
 
+    const Class* fClass;
+
 private:
     std::vector<const SymbolTable*> fParents;
 
-    std::unordered_map<String, std::unique_ptr<Symbol>> fSymbols;
+    std::map<String, std::unique_ptr<Symbol>> fSymbols;
 
     friend class Compiler;
 };

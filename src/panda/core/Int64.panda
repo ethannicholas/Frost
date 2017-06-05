@@ -1,7 +1,7 @@
 package panda.core
 
 class Int64 : Value {
-    @private
+    @$implicit
     init(value:builtin_int64) {
         self.value := value
     }

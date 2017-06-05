@@ -16,12 +16,14 @@ LLVMCodeGenerator::LLVMCodeGenerator(std::ostream* out)
     fOut << "declare i8* @malloc(" SIZE_T ")\n";
 
     // temporary
-    fOut << "declare i32 @printf(i8*, ...)\n";
-    fOut << "@fmt = private constant [4 x i8] [i8 37, i8 100, i8 10, i8 0]\n";
-    fOut << "define fastcc void @builtin$print$builtin_int64(i64 %num) {\n";
-    fOut << "    call i32 (i8*, ...) @printf(i8* bitcast ([4 x i8]* @fmt to i8*), i64 %num)\n";
-    fOut << "    ret void\n";
-    fOut << "}\n";
+    fMethods << "declare i32 @printf(i8*, ...)\n";
+    fMethods << "@fmt = private constant [4 x i8] [i8 37, i8 100, i8 10, i8 0]\n";
+    fMethods << "define fastcc void @builtin$print$panda.core.Int64(%panda.core.Int64* %num) {\n";
+    fMethods << "    %1 = getelementptr %panda.core.Int64, %panda.core.Int64* %num, i64 0, i32 1;\n";
+    fMethods << "    %2 = load i64, i64* %1;\n";
+    fMethods << "    call i32 (i8*, ...) @printf(i8* bitcast ([4 x i8]* @fmt to i8*), i64 %2)\n";
+    fMethods << "    ret void\n";
+    fMethods << "}\n";
 }
 
 static size_t field_size(const Type& type) {
@@ -99,12 +101,16 @@ void LLVMCodeGenerator::writeType(const Type& type) {
         Class* cl = fCompiler->resolveClass(fCurrentClass->fSymbolTable, type);
         ASSERT(cl);
         this->getClassConstant(*cl);
+        std::vector<const Field*> fields = fCompiler->getAllFields(*cl);
+        std::vector<String> types;
+        for (const Field* f : fields) {
+            types.push_back(this->llvmType(f->fType));
+        }
         fTypeDeclarations << "\n";
         fTypeDeclarations << this->llvmTypeName(type) << " = type {";
         fTypeDeclarations << " i8*";
-        std::vector<const Field*> fields = fCompiler->getAllFields(*cl);
-        for (const Field* f : fields) {
-            fTypeDeclarations << ", " << this->llvmType(f->fType);
+        for (const String& t : types) {
+            fTypeDeclarations << ", " << t;
         }
         fTypeDeclarations << " }\n";
     }
@@ -588,6 +594,8 @@ String LLVMCodeGenerator::getVirtualMethodReference(const String& target, const 
 }
 
 void LLVMCodeGenerator::writeCall(const IRNode& stmt, const String& target, std::ostream& out) {
+    ASSERT(stmt.fKind == IRNode::Kind::CALL);
+    ASSERT(stmt.fChildren.size() >= 1);
     std::vector<String> args;
     for (int i = 1; i < stmt.fChildren.size(); ++i) {
         args.push_back(this->getTypedReference(stmt.fChildren[i], out));
