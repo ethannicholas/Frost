@@ -24,20 +24,30 @@ public:
     SymbolTable& operator=(SymbolTable&& src) = default;
 
     void add(String name, std::unique_ptr<Symbol> symbol) {
+        this->addAlias(name, symbol.get());
+        fOwnedPtrs.push_back(std::move(symbol));
+    }
+
+    void add(std::unique_ptr<Symbol> symbol) {
+        String name = symbol->fName;
+        this->add(name, std::move(symbol));
+    }
+
+    void addAlias(String name, Symbol* symbol) {
         auto found = fSymbols.find(name);
         if (found != fSymbols.end()) {
             if (symbol->fKind == Symbol::Kind::METHOD) {
                 switch (found->second->fKind) {
                     case Symbol::Kind::METHODS:
-                        ((Methods&) *found->second).fMethods.push_back(std::unique_ptr<Method>(
-                                (Method*) symbol.release()));
+                        ((Methods&) *found->second).fMethods.push_back((Method*) symbol);
                         return;
                     case Symbol::Kind::METHOD: {
-                        std::vector<std::unique_ptr<Method>> methods;
-                        methods.push_back(std::unique_ptr<Method>(
-                                (Method*) found->second.release()));
-                        methods.emplace_back((Method*) symbol.release());
-                        fSymbols[name] = std::unique_ptr<Symbol>(new Methods(std::move(methods)));
+                        std::vector<Method*> list;
+                        list.push_back((Method*) found->second);
+                        list.emplace_back((Method*) symbol);
+                        Methods* methods = new Methods(std::move(list));
+                        fSymbols[name] = methods;
+                        fOwnedPtrs.push_back(std::unique_ptr<Symbol>());
                         return;
                     }
                     default:
@@ -47,18 +57,13 @@ public:
             this->error(symbol->fPosition, "duplicate symbol '" + name + "' (previous declaration "
                     "at " + found->second->fPosition.description().c_str() + ")");
         }
-        fSymbols[name] = std::move(symbol);
-    }
-
-    void add(std::unique_ptr<Symbol> symbol) {
-        String name = symbol->fName;
-        this->add(name, std::move(symbol));
+        fSymbols[name] = symbol;
     }
 
     Symbol* operator[](String name) const {
         auto found = fSymbols.find(name);
         if (found != fSymbols.end()) {
-            return found->second.get();
+            return found->second;
         }
         for (const auto parent : fParents) {
             Symbol* result = (*parent)[name];
@@ -92,7 +97,9 @@ public:
 private:
     std::vector<const SymbolTable*> fParents;
 
-    std::map<String, std::unique_ptr<Symbol>> fSymbols;
+    std::vector<std::unique_ptr<Symbol>> fOwnedPtrs;
+
+    std::map<String, Symbol*> fSymbols;
 
     friend class Compiler;
 };

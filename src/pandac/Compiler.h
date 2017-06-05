@@ -39,8 +39,7 @@ public:
                 "builtin_uint32", 32)));
         fRoot.add(std::unique_ptr<Symbol>(new Type(Position(), Type::Category::BUILTIN_UINT,
                 "builtin_uint64", 64)));
-        static Class* builtin = new Class(Position(), {}, {}, Annotations(), "builtin", &fRoot,
-                Type());
+        static Class* builtin = new Class(Position(), {}, Annotations(), "builtin", &fRoot, Type());
         fRoot.add(std::unique_ptr<Symbol>(new Method(Position(), builtin,
                 Annotations(Annotations::CLASS), Method::Kind::METHOD, "print",
                 { { "v", Type::Int64() } }, Type::Void(), ASTNode())));
@@ -171,6 +170,8 @@ private:
     void compile(const SymbolTable& symbols);
 
     void resolveTypes(Method* m);
+
+    void findClassesAndResolveTypes(Class& cl);
 
     void findClassesAndResolveTypes(SymbolTable& symbols);
 

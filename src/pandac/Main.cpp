@@ -8,7 +8,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-#define LLC_PATH "/usr/bin/llc"
+#define LLC_PATH "/opt/local/libexec/llvm-3.8/bin/llc"
 #define GCC_PATH "/usr/bin/gcc"
 #define PANDA_HOME String("../src/")
 

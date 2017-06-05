@@ -48,15 +48,8 @@ void Compiler::resolveType(const SymbolTable& st, Type* t) {
 
 Class* Compiler::resolveClass(const SymbolTable& st, Type t) {
     const SymbolTable* current = &st;
-    String name = t.fName;
-    if (st.fClass) {
-        auto alias = st.fClass->fAliases.find(name);
-        if (alias != st.fClass->fAliases.end()) {
-            name = alias->second;
-        }
-    }
     std::stringstream ss;
-    ss.str(name);
+    ss.str(t.fName);
     std::string token;
     Class* result = nullptr;
     Package* p = nullptr;
@@ -683,7 +676,7 @@ bool Compiler::operatorCall(IRNode* left, Operator op, IRNode* right, IRNode* ou
                             min.clear();
                         }
                         if (cost == minCost) {
-                            min.push_back(m.get());
+                            min.push_back(m);
                         }
                     }
                     if (min.size() > 1) {
@@ -864,7 +857,7 @@ void Compiler::addAllMethods(Position p, const SymbolTable& st, const String& na
     }
     auto found = st.fSymbols.find(name);
     if (found != st.fSymbols.end()) {
-        Symbol* s = found->second.get();
+        Symbol* s = found->second;
         switch (s->fKind) {
             case Symbol::Kind::METHOD:
                 if (start || is_heritable((Method*) s)) {
@@ -874,7 +867,7 @@ void Compiler::addAllMethods(Position p, const SymbolTable& st, const String& na
             case Symbol::Kind::METHODS:
                 for (const auto& m : ((Methods*) s)->fMethods) {
                     if (start || is_heritable((Method*) s)) {
-                        this->addMethod(p, st, m.get(), methods);
+                        this->addMethod(p, st, m, methods);
                     }
                 }
                 break;
@@ -947,12 +940,6 @@ bool Compiler::convertIdentifier(const ASTNode& i, IRNode* out) {
         return true;
     }
     else {
-        auto alias = fCurrentClass.top()->fAliases.find(i.fText);
-        if (alias != fCurrentClass.top()->fAliases.end()) {
-            *out = IRNode(i.fPosition, IRNode::Kind::CLASS_REFERENCE,
-                    Type(Position(), Type::Category::CLASS, "<type>"), fClasses[alias->second]);
-            return true;
-        }
         this->error(i.fPosition, "unknown identifier '" + i.fText + "'");
         return false;
     }
@@ -994,7 +981,7 @@ bool Compiler::convertPrefix(Position p, Operator op, IRNode base, IRNode* out) 
                 case Symbol::Kind::METHODS:
                     for (const auto& test : ((Methods*) s)->fMethods) {
                         if (!test->fAnnotations.isClass() && test->fParameters.size() == 0) {
-                            m = test.get();
+                            m = test;
                             break;
                         }
                     }
@@ -1397,10 +1384,6 @@ bool Compiler::convertType(const ASTNode& t, IRNode* out) {
             if (!symbol) {
                 String name = t.fText;
                 Class* context = fCurrentClass.top();
-                auto alias = context->fAliases.find(name);
-                if (alias != context->fAliases.end()) {
-                    name = alias->second;
-                }
                 Class* cl = fClasses[name];
                 if (cl) {
                     *out = IRNode(t.fPosition, IRNode::Kind::TYPE_REFERENCE,
@@ -1486,7 +1469,7 @@ void Compiler::compile(const SymbolTable& symbols) {
                 break;
             case Symbol::Kind::METHODS:
                 for (const auto& m : ((Methods&) s).fMethods) {
-                    fCurrentMethod.push((Method*) m.get());
+                    fCurrentMethod.push((Method*) m);
                     this->compile(symbols, (Method&) *m);
                     fCurrentMethod.pop();
                 }
@@ -1508,6 +1491,21 @@ void Compiler::resolveTypes(Method* m) {
     }
 }
 
+void Compiler::findClassesAndResolveTypes(Class& cl) {
+    this->resolveType(cl.fSymbolTable, &cl.fSuper);
+    fClasses[cl.fName] = &cl;
+    for (const auto& u : cl.fUses) {
+        if (u.fAlias.size()) {
+            Class* resolved = this->resolveClass(cl.fSymbolTable,
+                    Type(u.fPosition, Type::Category::CLASS, u.fImport));
+            if (resolved) {
+                cl.fAliasTable.addAlias(u.fAlias, resolved);
+            }
+        }
+    }
+    this->findClassesAndResolveTypes(cl.fSymbolTable);
+}
+
 void Compiler::findClassesAndResolveTypes(SymbolTable& symbols) {
     symbols.foreach([this, &symbols](Symbol& s) {
         switch (s.fKind) {
@@ -1516,9 +1514,7 @@ void Compiler::findClassesAndResolveTypes(SymbolTable& symbols) {
                 break;
             case Symbol::Kind::CLASS: {
                 Class& cl = (Class&) s;
-                this->resolveType(cl.fSymbolTable, &cl.fSuper);
-                fClasses[cl.fName] = &cl;
-                this->findClassesAndResolveTypes(cl.fSymbolTable);
+                this->findClassesAndResolveTypes(cl);
                 break;
             }
             case Symbol::Kind::METHOD:
@@ -1526,7 +1522,7 @@ void Compiler::findClassesAndResolveTypes(SymbolTable& symbols) {
                 break;
             case Symbol::Kind::METHODS:
                 for (const auto& m : ((Methods&) s).fMethods) {
-                    this->resolveTypes(m.get());
+                    this->resolveTypes(m);
                 }
                 break;
             default:
