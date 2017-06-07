@@ -49,6 +49,15 @@ struct Type : public Symbol {
         return !(*this == other);
     }
 
+    static Type& Object() {
+        static Type result = Type(Position(), Category::CLASS, "panda.core.Object");
+        return result;
+    }
+
+    static Type& Any() {
+        return Object();
+    }
+
     static Type& IntLiteral() {
         static Type result = Type(Position(), Category::INT_LITERAL, "<integer>", 1);
         return result;

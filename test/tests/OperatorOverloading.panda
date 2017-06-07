@@ -1,0 +1,36 @@
+class A {
+    init() {}
+
+    function +(other:A):Int {
+        return 100
+    }
+
+    function +(other:A):Bit {
+        return true
+    }
+
+    function *(other:A):Int {
+        return 101
+    }
+}
+
+class B : A {
+    init() {}
+
+    @class
+    function *(a:A, b:B):Int {
+        return 102
+    }
+}
+
+class OperatorOverloading {
+    @class
+    method main() {
+        var a:Int := A() + A()
+        Console.println(a)
+        var b:Bit := A() + A()
+        Console.println(b)
+        Console.println(A() * A())
+        Console.println(A() * B())
+    }
+}

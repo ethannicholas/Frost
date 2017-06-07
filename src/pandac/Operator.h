@@ -45,7 +45,8 @@ enum class Operator {
     LTEQ,
     INSTANCEOF,
     NINSTANCEOF,
-    CAST
+    CAST,
+    INDEX
 };
 
 const char* operator_text(Operator op);

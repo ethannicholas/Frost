@@ -180,6 +180,24 @@ bool Compiler::coerce(IRNode* node, const Type& type, IRNode* out) {
                 return false;
             }
         }
+        case IRNode::Kind::UNRESOLVED_BINARY: {
+            std::vector<const Method*> matches;
+            Operator op = (Operator) node->fValue.fInt;
+            if (this->operatorMatch(&node->fChildren[0], op, &node->fChildren[1], &type,
+                    &matches) == INT_MAX) {
+                this->error(node->fPosition, String("no '") + operator_text(op) +
+                        "' operator on '" + node->fChildren[0].fType.fName + "', '" +
+                        node->fChildren[1].fType.fName + "' returns type '" + type.fName + "'");
+                return false;
+            }
+            if (matches.size() > 1) {
+                this->reportAmbiguousMatch(node->fPosition, matches, node->fChildren, &type);
+                return false;
+            }
+            *out = this->operatorCall(node->fPosition, &node->fChildren[0], *matches[0],
+                    &node->fChildren[1]);
+            return true;
+        }
         default:
             break;
     }
@@ -268,6 +286,12 @@ int Compiler::coercionCost(const IRNode& node, const Type& target) {
             }
             std::vector<const Method*> matches;
             return this->matchMethods(methods, node.fChildren[1].fChildren, &target, &matches);
+        }
+        case IRNode::Kind::UNRESOLVED_BINARY: {
+            ASSERT(node.fChildren.size() == 2);
+            std::vector<const Method*> ignored;
+            return this->operatorMatch((IRNode*) &node.fChildren[0], (Operator) node.fValue.fInt,
+                    (IRNode*) &node.fChildren[1], &target, &ignored);
         }
         default:
             break;
@@ -610,37 +634,129 @@ static bool is_lvalue(const IRNode& node) {
     }
 }
 
-int Compiler::operatorCost(IRNode* left, const Method& m, IRNode* right) {
+int Compiler::operatorCost(IRNode* left, const Method& m, IRNode* right, const Type* returnType) {
     std::vector<IRNode> args;
     if (m.fAnnotations.isClass()) {
         args.push_back(std::move(*left));
         args.push_back(std::move(*right));
-        int result = this->callCost(m, args, nullptr);
+        int result = this->callCost(m, args, returnType);
         *left = std::move(args[0]);
         *right = std::move(args[1]);
         return result;
     }
     else {
         args.push_back(std::move(*right));
-        int result = this->callCost(m, args, nullptr);
+        int result = this->callCost(m, args, returnType);
         *right = std::move(args[0]);
         return result;
     }
 }
 
-IRNode Compiler::operatorCall(IRNode* left, const Method& m, IRNode* right) {
+int Compiler::operatorMatch(IRNode* left, Operator op, IRNode* right, const Type* returnType,
+        std::vector<const Method*>* outResult) {
+    int min = INT_MAX;
+    if (left->fType.fCategory == Type::Category::CLASS) {
+        Class* leftClass = this->resolveClass(fCurrentClass.top()->fSymbolTable, left->fType);
+        if (!leftClass) {
+            return false;
+        }
+        ASSERT(!outResult->size());
+        const Symbol* leftMethods = leftClass->fSymbolTable[operator_text(op)];
+        if (leftMethods) {
+            switch (leftMethods->fKind) {
+                case Symbol::Kind::METHOD: {
+                    const Method& m = (const Method&) *leftMethods;
+                    int cost = this->operatorCost(left, m, right, returnType);
+                    if (cost < min) {
+                        outResult->clear();
+                        min = cost;
+                    }
+                    if (cost == min) {
+                        outResult->push_back(&m);
+                    }
+                    break;
+                }
+                case Symbol::Kind::METHODS: {
+                    for (const Method* m : ((Methods&) *leftMethods).fMethods) {
+                        int cost = this->operatorCost(left, *m, right, returnType);
+                        if (cost < min) {
+                            outResult->clear();
+                            min = cost;
+                        }
+                        if (cost == min) {
+                            outResult->push_back(m);
+                        }
+                    }
+                    break;
+                }
+                default:
+                    abort();
+            }
+        }
+        if (left->fType == right->fType) {
+            return min;
+        }
+    }
+    if (right->fType.fCategory == Type::Category::CLASS) {
+        Class* rightClass = this->resolveClass(fCurrentClass.top()->fSymbolTable, right->fType);
+        if (!rightClass) {
+            return false;
+        }
+        const Symbol* rightMethods = rightClass->fSymbolTable[operator_text(op)];
+        if (rightMethods) {
+            switch (rightMethods->fKind) {
+                case Symbol::Kind::METHOD: {
+                    const Method& m = (const Method&) *rightMethods;
+                    if (m.fAnnotations.isClass()) {
+                        int cost = this->operatorCost(left, m, right, returnType);
+                        if (cost < min) {
+                            outResult->clear();
+                            min = cost;
+                        }
+                        if (cost == min) {
+                            outResult->push_back((const Method*) &m);
+                        }
+                    }
+                    break;
+                }
+                case Symbol::Kind::METHODS: {
+                    for (const Method* m : ((Methods&) *rightMethods).fMethods) {
+                        if (m->fAnnotations.isClass()) {
+                            int cost = this->operatorCost(left, *m, right, returnType);
+                            if (cost < min) {
+                                outResult->clear();
+                                min = cost;
+                            }
+                            if (cost == min) {
+                                outResult->push_back(m);
+                            }
+                        }
+                    }
+                    break;
+                }
+                default:
+                    abort();
+            }
+        }
+    }
+    return min;
+}
+
+IRNode Compiler::operatorCall(Position position, IRNode* left, const Method& m, IRNode* right) {
     IRNode methodRef;
     std::vector<IRNode> args;
     if (m.fAnnotations.isClass()) {
-        methodRef = IRNode(left->fPosition, IRNode::Kind::METHOD_REFERENCE,
-                Type(Position(), Type::Category::METHOD, "<method>"), &m);
+        std::vector<IRNode> children;
+        children.push_back(IRNode(position, IRNode::Kind::VOID));
+        methodRef = IRNode(position, IRNode::Kind::METHOD_REFERENCE,
+                Type(Position(), Type::Category::METHOD, "<method>"), &m, std::move(children));
         args.push_back(std::move(*left));
         args.push_back(std::move(*right));
     }
     else {
         std::vector<IRNode> children;
         children.push_back(std::move(*left));
-        methodRef = IRNode(left->fPosition, IRNode::Kind::METHOD_REFERENCE,
+        methodRef = IRNode(position, IRNode::Kind::METHOD_REFERENCE,
                 Type(Position(), Type::Category::METHOD, "<method>"), &m, std::move(children));
         args.push_back(std::move(*right));
     }
@@ -650,61 +766,24 @@ IRNode Compiler::operatorCall(IRNode* left, const Method& m, IRNode* right) {
     return std::move(result);
 }
 
-bool Compiler::operatorCall(IRNode* left, Operator op, IRNode* right, IRNode* outResult) {
-    if (left->fType.fCategory == Type::Category::CLASS) {
-        Class* leftClass = this->resolveClass(fCurrentClass.top()->fSymbolTable, left->fType);
-        if (!leftClass) {
-            return false;
-        }
-        const Symbol* leftMethods = leftClass->fSymbolTable[operator_text(op)];
-        if (leftMethods) {
-            switch (leftMethods->fKind) {
-                case Symbol::Kind::METHOD:
-                    if (operatorCost(left, (Method&) *leftMethods, right) != INT_MAX) {
-                        *outResult = this->operatorCall(left, (Method&) *leftMethods, right);
-                        ASSERT(outResult);
-                        return true;
-                    }
-                    break;
-                case Symbol::Kind::METHODS: {
-                    std::vector<const Method*> min;
-                    int minCost = INT_MAX;
-                    for (const auto& m : ((const Methods*) leftMethods)->fMethods) {
-                        int cost = this->operatorCost(left, *m, right);
-                        if (cost < minCost) {
-                            minCost = cost;
-                            min.clear();
-                        }
-                        if (cost == minCost) {
-                            min.push_back(m);
-                        }
-                    }
-                    if (min.size() > 1) {
-                        std::vector<IRNode> args;
-                        args.push_back(std::move(*left));
-                        args.push_back(std::move(*right));
-                        this->reportAmbiguousMatch(left->fPosition, min, args, nullptr);
-                        return false;
-                    }
-                    if (min.size() == 1) {
-                        *outResult = this->operatorCall(left, *min[0], right);
-                        return true;
-                    }
-                    break;
-                }
-                default:
-                    abort();
-            }
-        }
+bool Compiler::operatorCall(Position position, IRNode* left, Operator op, IRNode* right,
+        IRNode* outResult) {
+    std::vector<const Method*> matches;
+    if (this->operatorMatch(left, op, right, nullptr, &matches) == INT_MAX) {
+        return false;
     }
-    if (right->fType.fCategory == Type::Category::CLASS) {
-        Class* rightClass = this->resolveClass(fCurrentClass.top()->fSymbolTable, right->fType);
-        if (!rightClass) {
-            return false;
-        }
-        // todo
+    if (matches.size() > 1) {
+        std::vector<IRNode> children;
+        children.push_back(std::move(*left));
+        children.push_back(std::move(*right));
+        *outResult = IRNode(position, IRNode::Kind::UNRESOLVED_BINARY,
+                Type(Position(), Type::Category::UNRESOLVED, "<unresolved binary operator>"),
+                (int) op, std::move(children));
+        return true;
     }
-    return false;
+    ASSERT(matches.size() == 1);
+    *outResult = this->operatorCall(position, left, *matches[0], right);
+    return true;
 }
 
 bool Compiler::convertBinary(const ASTNode& b, IRNode* out) {
@@ -745,8 +824,17 @@ bool Compiler::convertBinary(const ASTNode& b, IRNode* out) {
         right = IRNode(b.fPosition, IRNode::Kind::FIELD_REFERENCE, Type::BuiltinBit(), value,
                 std::move(children));
     }
+    if (op == Operator::INDEX) {
+        std::vector<IRNode> children;
+        children.push_back(std::move(left));
+        children.push_back(std::move(right));
+        *out = IRNode(b.fPosition, IRNode::Kind::UNRESOLVED_INDEX,
+                Type(b.fPosition, Type::Category::UNRESOLVED, "<unresolved index expression>"),
+                std::move(children));
+        return true;
+    }
     IRNode call;
-    if (this->operatorCall(&left, op, &right, &call)) {
+    if (this->operatorCall(b.fPosition, &left, op, &right, &call)) {
         *out = std::move(call);
         return true;
     }

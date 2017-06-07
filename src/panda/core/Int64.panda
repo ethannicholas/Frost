@@ -74,6 +74,10 @@ class Int64 : Value {
         return value <= other.value
     }
 
+    function [](index:Int64):Bit {
+        return (value >> index.value && 1) != 0
+    }
+
     @private
     def value:builtin_int64
 }

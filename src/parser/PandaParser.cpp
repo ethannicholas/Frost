@@ -213,7 +213,7 @@ bool PandaParser::additiveExpression(ASTNode* outResult) {
                 children.push_back(std::move(next));
                 *outResult = ASTNode(op.fPosition, ASTNode::Kind::BINARY, to_operator(op.fKind),
                         std::move(children));
-                return true;
+                break;
             }
             default:
                 this->pushback(op);
@@ -241,7 +241,7 @@ bool PandaParser::andExpression(ASTNode* outResult) {
                 children.push_back(std::move(next));
                 *outResult = ASTNode(op.fPosition, ASTNode::Kind::BINARY, to_operator(op.fKind),
                         std::move(children));
-                return true;
+                break;
             }
             default:
                 this->pushback(op);
@@ -358,7 +358,8 @@ static String get_class_name(const ASTNode& expr) {
     }
 }
 
-// callExpression = term (LPAREN (expression (COMMA expression)*)? RPAREN | DOT IDENTIFIER)*
+// callExpression = term (LPAREN (expression (COMMA expression)*)? RPAREN | DOT IDENTIFIER |
+//         LBRACKET expression RBRACKET)*
 //         (<if result so far is a valid class name> LT type (COMMA type)* GT)?
 // Note there is a great deal of special handling to deal with class names, due to ambiguities
 // between generic parameters and comparison expressions, e.g. foo(X < Y, Z > ... could be either a
@@ -393,6 +394,22 @@ bool PandaParser::callExpression(ASTNode* outResult) {
                     }
                 }
                 *outResult = ASTNode(p, ASTNode::Kind::CALL, std::move(children));
+                break;
+            }
+            case Token::Kind::LBRACKET: {
+                Position p = outResult->fPosition;
+                std::vector<ASTNode> children;
+                children.push_back(std::move(*outResult));
+                ASTNode expr;
+                if (!this->expression(&expr)) {
+                    return false;
+                }
+                children.push_back(std::move(expr));
+                *outResult = ASTNode(p, ASTNode::Kind::BINARY, (int) Operator::INDEX,
+                        std::move(children));
+                if (!this->expect(Token::Kind::RBRACKET, "']'")) {
+                    return false;
+                }
                 break;
             }
             case Token::Kind::DOT: {
@@ -571,7 +588,7 @@ bool PandaParser::comparisonExpression(ASTNode* outResult) {
                 children.push_back(std::move(next));
                 *outResult = ASTNode(op.fPosition, ASTNode::Kind::BINARY, to_operator(op.fKind),
                         std::move(children));
-                return true;
+                break;
             }
             default:
                 this->pushback(op);
@@ -1049,7 +1066,7 @@ bool PandaParser::multiplicativeExpression(ASTNode* outResult) {
                 children.push_back(std::move(next));
                 *outResult = ASTNode(op.fPosition, ASTNode::Kind::BINARY, to_operator(op.fKind),
                         std::move(children));
-                return true;
+                break;
             }
             case Token::Kind::GT: {
                 // two GTs in a row = SHIFTRIGHT
@@ -1064,7 +1081,7 @@ bool PandaParser::multiplicativeExpression(ASTNode* outResult) {
                     children.push_back(std::move(next));
                     *outResult = ASTNode(op.fPosition, ASTNode::Kind::BINARY, Operator::SHIFTRIGHT,
                             std::move(children));
-                    return true;
+                    break;
                 }
                 this->pushback(next);
                 this->pushback(op);

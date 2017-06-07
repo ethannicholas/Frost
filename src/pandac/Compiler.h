@@ -101,11 +101,14 @@ private:
 
     bool foldInts(Position p, const IRNode& left, Operator op, const IRNode& right, IRNode* out);
 
-    IRNode operatorCall(IRNode* left, const Method& m, IRNode* right);
+    IRNode operatorCall(Position p, IRNode* left, const Method& m, IRNode* right);
 
-    int operatorCost(IRNode* left, const Method& m, IRNode* right);
+    int operatorCost(IRNode* left, const Method& m, IRNode* right, const Type* returnType);
 
-    bool operatorCall(IRNode* left, Operator op, IRNode* right, IRNode* outResult);
+    int operatorMatch(IRNode* left, Operator op, IRNode* right, const Type* returnType,
+            std::vector<const Method*>* outResult);
+
+    bool operatorCall(Position p, IRNode* left, Operator op, IRNode* right, IRNode* outResult);
 
     bool convertBinary(const ASTNode& b, IRNode* out);
 

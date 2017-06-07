@@ -114,10 +114,11 @@ void LLVMCodeGenerator::writeType(const Type& type) {
             types.push_back(this->llvmType(f->fType));
         }
         fTypeDeclarations << "\n";
-        fTypeDeclarations << this->llvmTypeName(type) << " = type {";
-        fTypeDeclarations << " i8*";
+        fTypeDeclarations << this->llvmTypeName(type) << " = type { ";
+        const char* separator = "";
         for (const String& t : types) {
-            fTypeDeclarations << ", " << t;
+            fTypeDeclarations << separator << t;
+            separator = ", ";
         }
         fTypeDeclarations << " }\n";
     }
@@ -417,8 +418,8 @@ String LLVMCodeGenerator::getConstructReference(const IRNode& construct, std::os
             " " << result << ", i64 0, i32 0" << "\n";
     const ClassConstant& cc = this->getClassConstant(*fCompiler->resolveClass(
             fCurrentClass->fSymbolTable, construct.fType));
-    out << "    store i8* bitcast(" << cc.fType << "* " << cc.fName << " to i8*), i8** " <<
-            classPtr << "\n";
+    out << "    store %Class* bitcast(" << cc.fType << "* " << cc.fName << " to %Class*), "
+            "%Class** " << classPtr << "\n";
     this->writeCall(construct.fChildren[0], this->llvmType(construct.fType) + " " + result, out);
     return result;
 }
@@ -491,8 +492,6 @@ String LLVMCodeGenerator::getLValue(const IRNode& lvalue, std::ostream& out) {
                 }
             }
             ASSERT(index != -1);
-
-            ++index; // until class field is in place
 
             out << "    " << ptr << " = getelementptr inbounds " << this->llvmTypeName(cl->fType) <<
                     ", " << this->llvmType(cl->fType) << " " << base << ", i64 0, i32 " << index <<
@@ -587,9 +586,9 @@ String LLVMCodeGenerator::getVirtualMethodReference(const String& target, const 
     out << "    " << classPtrPtr << " = getelementptr " << this->llvmTypeName(m->fOwner.fType) <<
             ", " << target << ", i64 0, i32 0\n";
     String classPtr = this->nextVar();
-    out << "    " << classPtr << " = load i8*, i8** " << classPtrPtr << "\n";
+    out << "    " << classPtr << " = load %Class*, %Class** " << classPtrPtr << "\n";
     String cast = this->nextVar();
-    out << "    " << cast << " = bitcast i8* " << classPtr << " to " << cc.fType << "*\n";
+    out << "    " << cast << " = bitcast %Class* " << classPtr << " to " << cc.fType << "*\n";
     String ptr = this->nextVar();
     out << "    " << ptr << " = getelementptr " << cc.fType << ", " << cc.fType << "* " << cast <<
             " , i64 0, i32 " << VTABLE_INDEX << ", i64 " << index << "\n";

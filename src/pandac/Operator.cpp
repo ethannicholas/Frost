@@ -47,5 +47,6 @@ const char* operator_text(Operator op) {
         case Operator::INSTANCEOF:   return "-?>";
         case Operator::NINSTANCEOF:  return "-!>";
         case Operator::CAST:         return "->";
+        case Operator::INDEX:        return "[]";
     }
 }

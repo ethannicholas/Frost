@@ -65,11 +65,15 @@ struct IRNode {
         TUPLE_TARGET,
         // literal reference to a type name, such as 'String'
         TYPE_REFERENCE,
+        // an ambiguous binary operation which could refer to multiple methods
+        UNRESOLVED_BINARY,
         // an ambiguous method reference which could refer to multiple methods
-        UNRESOLVED_METHOD_REFERENCE,
-        // an ambiguous method call, where the return type is needed to disambiguate it
         UNRESOLVED_CALL,
         // a reference to a var, def, constant, or property
+        UNRESOLVED_METHOD_REFERENCE,
+        // an ambiguous method call, where the return type is needed to disambiguate it
+        UNRESOLVED_INDEX,
+        // an index (x[y]) expression before we've determined whether or not it's an assignment
         VARIABLE_REFERENCE,
         // a var declaration statement
         VAR,
@@ -225,8 +229,10 @@ struct IRNode {
             case Kind::SELF:                        result += "Self";                        break;
             case Kind::TUPLE_TARGET:                result += "TupleTarget";                 break;
             case Kind::TYPE_REFERENCE:              result += "TypeReference"; p = 1;        break;
-            case Kind::UNRESOLVED_METHOD_REFERENCE: result += "UnresolvedMethodReference";   break;
+            case Kind::UNRESOLVED_BINARY:           result += "UnresolvedBinary";            break;
             case Kind::UNRESOLVED_CALL:             result += "UnresolvedCall";              break;
+            case Kind::UNRESOLVED_METHOD_REFERENCE: result += "UnresolvedMethodReference";   break;
+            case Kind::UNRESOLVED_INDEX:            result += "UnresolvedIndex";             break;
             case Kind::VAR:                         result += "Var";                         break;
             case Kind::VARIABLE_REFERENCE:          result += "VariableReference"; p = true; break;
             case Kind::VOID:                        result += "Void";                        break;

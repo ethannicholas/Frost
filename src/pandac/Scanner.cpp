@@ -177,19 +177,21 @@ void Scanner::scanClass(String contextName, std::vector<Class::UsesDeclaration> 
     ASSERT(cl->fKind == ASTNode::Kind::CLASS);
     ASSERT(cl->fChildren.size() == 6);
     Annotations annotations = this->convertAnnotations(cl->fChildren[1]);
-    Type superclass;
-    if (cl->fChildren[3].fKind == ASTNode::Kind::VOID) {
-        superclass = Type();
-    }
-    else {
-        superclass = this->convertType(cl->fChildren[3], *parent);
-    }
     ASSERT(cl->fChildren[5].fKind == ASTNode::Kind::CLASS_MEMBERS);
     String fullName = contextName;
     if (fullName.size()) {
         fullName += ".";
     }
     fullName += cl->fText;
+    Type superclass;
+    if (cl->fChildren[3].fKind == ASTNode::Kind::VOID) {
+        if (fullName != "panda.core.Object") {
+            superclass = Type::Object();
+        }
+    }
+    else {
+        superclass = this->convertType(cl->fChildren[3], *parent);
+    }
     if (annotations.isClass()) {
         this->error(cl->fPosition, "'@class' annotation may not be applied to classes");
     }
@@ -237,6 +239,7 @@ void Scanner::scan(ASTNode* file, SymbolTable* root) {
     uses.push_back({ Position(), "panda.core.Int16", "Int16" });;
     uses.push_back({ Position(), "panda.core.Int32", "Int32" });;
     uses.push_back({ Position(), "panda.core.Int64", "Int64" });;
+    uses.push_back({ Position(), "panda.core.Int64", "Int" });;
     uses.push_back({ Position(), "panda.io.Console", "Console" });;
     for (auto& e : file->fChildren) {
         switch (e.fKind) {
