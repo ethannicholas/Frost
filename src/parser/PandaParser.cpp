@@ -23,6 +23,10 @@ PandaParser::PandaParser(ErrorReporter* errors)
     fCommaSeparatedExpressionContext.push(false);
 }
 
+PandaParser::~PandaParser() {
+    pandalex_destroy(fScanner);
+}
+
 Token PandaParser::nextRawToken() {
     if (fPushbackBuffer.size()) {
         Token result = fPushbackBuffer.back();
@@ -183,12 +187,14 @@ bool PandaParser::file(const String* name, const String& text, ASTNode* outResul
         ASTNode entry;
         if (!this->bodyEntry(&entry)) {
             ASSERT(!fInSpeculative);
+            panda_delete_buffer(fBuffer, fScanner);
             return false;
         }
         ASSERT(!fInSpeculative);
         entries.push_back(std::move(entry));
     }
     *outResult = ASTNode(Position(), ASTNode::Kind::BODY_ENTRIES, std::move(entries));
+    panda_delete_buffer(fBuffer, fScanner);
     return true;
 }
 
@@ -1355,27 +1361,21 @@ bool PandaParser::type(ASTNode* outResult) {
     }
     *outResult = ASTNode(start.fPosition, ASTNode::Kind::CLASS_TYPE, name);
     if (this->checkNext(Token::Kind::LT)) {
-        std::vector<ASTNode> types;
         ASTNode type;
         if (!this->type(&type)) {
             return false;
         }
-        types.push_back(std::move(type));
+        outResult->fChildren.push_back(std::move(type));
         while (this->checkNext(Token::Kind::COMMA)) {
             ASTNode type;
             if (!this->type(&type)) {
                 return false;
             }
-            types.push_back(std::move(type));
+            outResult->fChildren.push_back(std::move(type));
         }
         if (!this->expect(Token::Kind::GT, "'>'")) {
             return false;
         }
-        ASTNode generics = ASTNode(start.fPosition, ASTNode::Kind::TYPES, std::move(types));
-        std::vector<ASTNode> children;
-        children.push_back(std::move(*outResult));
-        children.push_back(std::move(generics));
-        *outResult = ASTNode(start.fPosition, ASTNode::Kind::CLASS_TYPE, std::move(children));
     }
     return true;
 }

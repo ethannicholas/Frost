@@ -54,6 +54,11 @@ struct Type : public Symbol {
         return result;
     }
 
+    static Type& Class() {
+        static Type result = Type(Position(), Category::CLASS, "panda.core.Class");
+        return result;
+    }
+
     static Type& Any() {
         return Object();
     }

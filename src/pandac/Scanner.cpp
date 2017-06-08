@@ -177,6 +177,21 @@ void Scanner::scanClass(String contextName, std::vector<Class::UsesDeclaration> 
     ASSERT(cl->fKind == ASTNode::Kind::CLASS);
     ASSERT(cl->fChildren.size() == 6);
     Annotations annotations = this->convertAnnotations(cl->fChildren[1]);
+    std::vector<Class::GenericParameter> parameters;
+    if (cl->fChildren[2].fKind != ASTNode::Kind::VOID) {
+        ASSERT(cl->fChildren[2].fKind == ASTNode::Kind::GENERICS);
+        for (const auto& p : cl->fChildren[2].fChildren) {
+            ASSERT(p.fKind == ASTNode::Kind::IDENTIFIER);
+            Type type;
+            if (p.fChildren.size() > 0) {
+                abort();
+            }
+            else {
+                type = Type::Any();
+            }
+            parameters.emplace_back(p.fPosition, p.fText, std::move(type));
+        }
+    }
     ASSERT(cl->fChildren[5].fKind == ASTNode::Kind::CLASS_MEMBERS);
     String fullName = contextName;
     if (fullName.size()) {
@@ -204,7 +219,8 @@ void Scanner::scanClass(String contextName, std::vector<Class::UsesDeclaration> 
     if (annotations.isOverride()) {
         this->error(cl->fPosition, "'@override' annotation may not be applied to classes");
     }
-    Class* result = new Class(cl->fPosition, uses, annotations, fullName, parent, superclass);
+    Class* result = new Class(cl->fPosition, uses, annotations, fullName, parameters, parent,
+            superclass);
     SymbolTable& symbols = result->fSymbolTable;
     parent->add(cl->fText, std::unique_ptr<Symbol>(result));
     for (auto& child : cl->fChildren[5].fChildren) {

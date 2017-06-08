@@ -21,17 +21,33 @@ struct Class : public Symbol {
         String fAlias;
     };
 
+    struct GenericParameter : public Symbol {
+        GenericParameter(Position position, String name, Type type)
+        : INHERITED(position, Symbol::Kind::GENERIC_PARAMETER, name)
+        , fType(std::move(type)) {}
+
+        Type fType;
+
+        typedef Symbol INHERITED;
+    };
+
     Class(const Class&) = delete;
 
     Class(Position position, std::vector<UsesDeclaration> uses, Annotations annotations,
-            String name, const SymbolTable* parent, Type superclass)
+            String name, std::vector<GenericParameter> parameters, const SymbolTable* parent,
+            Type superclass)
     : INHERITED(position, Kind::CLASS, std::move(name))
     , fUses(std::move(uses))
     , fAnnotations(std::move(annotations))
     , fAliasTable(parent, this)
     , fSymbolTable(&fAliasTable, this)
+    , fParameters(std::move(parameters))
     , fSuper(std::move(superclass))
-    , fType(fPosition, Type::Category::CLASS, fName) {}
+    , fType(fPosition, Type::Category::CLASS, fName) {
+        for (auto& p : fParameters) {
+            fSymbolTable.addAlias(p.fName, &p);
+        }
+    }
 
     std::vector<UsesDeclaration> fUses;
 
@@ -40,6 +56,8 @@ struct Class : public Symbol {
     SymbolTable fAliasTable;
 
     SymbolTable fSymbolTable;
+
+    std::vector<GenericParameter> fParameters;
 
     // fields defined in this class (not including inherited fields)
     std::vector<const Field*> fFields;

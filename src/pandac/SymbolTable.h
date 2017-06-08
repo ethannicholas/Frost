@@ -47,7 +47,7 @@ public:
                         list.emplace_back((Method*) symbol);
                         Methods* methods = new Methods(std::move(list));
                         fSymbols[name] = methods;
-                        fOwnedPtrs.push_back(std::unique_ptr<Symbol>());
+                        fOwnedPtrs.push_back(std::unique_ptr<Symbol>(methods));
                         return;
                     }
                     default:

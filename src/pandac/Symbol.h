@@ -7,6 +7,7 @@ struct Symbol {
     enum class Kind {
         CLASS,
         FIELD,
+        GENERIC_PARAMETER,
         METHOD,
         METHODS,
         PACKAGE,
@@ -17,7 +18,11 @@ struct Symbol {
     Symbol(Position position, Kind kind, String name)
     : fPosition(position)
     , fKind(kind)
-    , fName(std::move(name)) {}
+    , fName(std::move(name)) {
+        ASSERT(fName.size());
+    }
+
+    virtual ~Symbol() {}
 
     Position fPosition;
     Kind fKind;

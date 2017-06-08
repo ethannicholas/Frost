@@ -16,6 +16,8 @@ int pandalex_init(yyscan_t* scanner);
 
 int pandalex_destroy(yyscan_t yyscanner);
 
+void panda_delete_buffer(YY_BUFFER_STATE b, yyscan_t yyscanner);
+
 int pandalex(yyscan_t yyscanner);
 
 YY_BUFFER_STATE panda_scan_string(const char* yy_str, yyscan_t yyscanner);
@@ -25,6 +27,8 @@ char* pandaget_text(yyscan_t yyscanner);
 class PandaParser {
 public:
     PandaParser(ErrorReporter* errors);
+
+    ~PandaParser();
 
     bool file(const String* name, const String& text, ASTNode* outResult);
 

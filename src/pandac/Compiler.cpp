@@ -70,6 +70,13 @@ Class* Compiler::resolveClass(const SymbolTable& st, Type t) {
                 p = (Package*) s;
                 current = &p->fSymbolTable;
                 break;
+            case Symbol::Kind::GENERIC_PARAMETER:
+                result = this->resolveClass(st, ((Class::GenericParameter*) s)->fType);
+                if (!result) {
+                    return nullptr;
+                }
+                current = &result->fSymbolTable;
+                break;
             default:
                 this->error(t.fPosition, "'" + t.fName + "' is not a type");
                 return nullptr;
@@ -1016,6 +1023,8 @@ void Compiler::symbolRef(Position p, const SymbolTable& st, Symbol* symbol, IRNo
             *out = IRNode(p, IRNode::Kind::PACKAGE_REFERENCE,
                     Type(Position(), Type::Category::PACKAGE, "<package>"), symbol);
             return;
+        case Symbol::Kind::GENERIC_PARAMETER:
+            abort();
     }
 }
 
@@ -1225,6 +1234,8 @@ bool Compiler::doConvertExpression(const ASTNode& e, IRNode* out) {
             return true;
         case ASTNode::Kind::SELF:
             return this->convertSelf(e, out);
+        case ASTNode::Kind::CLASS_TYPE:
+            return this->convertType(e, out);
         default:
             printf("unhandled expression: %s\n", e.description().c_str());
             abort();
@@ -1474,8 +1485,8 @@ bool Compiler::convertType(const ASTNode& t, IRNode* out) {
                 Class* context = fCurrentClass.top();
                 Class* cl = fClasses[name];
                 if (cl) {
-                    *out = IRNode(t.fPosition, IRNode::Kind::TYPE_REFERENCE,
-                            Type(Position(), Type::Category::CLASS, "<type>"), &cl->fType);
+                    *out = IRNode(t.fPosition, IRNode::Kind::CLASS_REFERENCE, Type::Class(),
+                            &cl->fType);
                     return true;
                 }
                 this->error(t.fPosition, "unknown type '" + t.fText + "'");
@@ -1483,10 +1494,11 @@ bool Compiler::convertType(const ASTNode& t, IRNode* out) {
             }
             switch (symbol->fKind) {
                 case Symbol::Kind::TYPE:
-                    *out = IRNode(t.fPosition, IRNode::Kind::TYPE_REFERENCE, symbol);
+                    *out = IRNode(t.fPosition, IRNode::Kind::CLASS_REFERENCE, Type::Class(),
+                            symbol);
                     return true;
                 case Symbol::Kind::CLASS:
-                    *out = IRNode(t.fPosition, IRNode::Kind::TYPE_REFERENCE,
+                    *out = IRNode(t.fPosition, IRNode::Kind::CLASS_REFERENCE, Type::Class(),
                             &((Class*) symbol)->fType);
                     return true;
                 default:
@@ -1563,7 +1575,8 @@ void Compiler::compile(const SymbolTable& symbols) {
                 }
                 break;
             case Symbol::Kind::FIELD: // fall through
-            case Symbol::Kind::TYPE:
+            case Symbol::Kind::TYPE:  // fall through
+            case Symbol::Kind::GENERIC_PARAMETER:
                 break;
             case Symbol::Kind::VARIABLE:
                 abort();

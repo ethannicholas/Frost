@@ -8,7 +8,9 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-#define LLC_PATH "/opt/local/libexec/llvm-3.8/bin/llc"
+#define INNERSTRING(x) #x
+#define STRING(x) INNERSTRING(x)
+#define LLC_PATH (STRING(LLVM_DIR) "/bin/llc")
 #define GCC_PATH "/usr/bin/gcc"
 #define PANDA_HOME String("../src/")
 
@@ -77,7 +79,7 @@ int main(int argc, char** argv) {
     sources.push_back(PANDA_HOME + "panda/core/Int32.panda");
     sources.push_back(PANDA_HOME + "panda/core/Int64.panda");
     sources.push_back(PANDA_HOME + "panda/core/Object.panda");
-//    sources.push_back(PANDA_HOME + "panda/core/Pointer.panda");
+    sources.push_back(PANDA_HOME + "panda/core/Pointer.panda");
     sources.push_back(PANDA_HOME + "panda/core/Value.panda");
     sources.push_back(PANDA_HOME + "panda/io/Console.panda");
     String dest;
