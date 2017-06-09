@@ -220,8 +220,8 @@ bool Compiler::coerce(IRNode* node, const Type& type, IRNode* out) {
                         ASSERT(m->fMethodKind == Method::Kind::INIT);
                         ASSERT(m->fParameters.size() == 1);
                         if (this->coercionCost(*node, m->fParameters[0].fType) != INT_MAX) {
-                            IRNode type = IRNode(node->fPosition, IRNode::Kind::CLASS_REFERENCE,
-                                    cl);
+                            IRNode type = IRNode(node->fPosition, IRNode::Kind::TYPE_REFERENCE,
+                                    &cl->fType);
                             std::vector<IRNode> args;
                             args.push_back(std::move(*node));
                             return this->call(std::move(type), std::move(args), out);
@@ -404,7 +404,7 @@ bool Compiler::call(IRNode method, std::vector<IRNode> args, IRNode* out) {
                 method.fChildren.pop_back();
                 children.push_back(std::move(method));
                 if (m.fAnnotations.isClass()) {
-                    if (target.fKind != IRNode::Kind::CLASS_REFERENCE &&
+                    if (target.fKind != IRNode::Kind::TYPE_REFERENCE &&
                             target.fKind != IRNode::Kind::VOID) {
                         this->error(method.fPosition, "cannot call class " + m.description() +
                                 " on an instance");
@@ -478,18 +478,22 @@ bool Compiler::call(IRNode method, std::vector<IRNode> args, IRNode* out) {
                     std::move(children));
             return this->call(std::move(m), std::move(args), out);
         }
-        case IRNode::Kind::CLASS_REFERENCE: {
-            Class& cl = *(Class*) method.fValue.fPtr;
-            Symbol* symbol = cl.fSymbolTable["init"];
+        case IRNode::Kind::TYPE_REFERENCE: {
+            Type& t = *(Type*) method.fValue.fPtr;
+            Class* cl = this->resolveClass(*fSymbolTable, t);
+            if (!cl) {
+                return false;
+            }
+            Symbol* symbol = cl->fSymbolTable["init"];
             ASSERT(symbol);
             IRNode init;
-            this->symbolRef(method.fPosition, cl.fSymbolTable, symbol, &init);
+            this->symbolRef(method.fPosition, cl->fSymbolTable, symbol, &init);
             IRNode initCall;
             if (this->call(std::move(init), std::move(args), &initCall)) {
                 initCall = this->resolve(&initCall);
                 std::vector<IRNode> children;
                 children.push_back(std::move(initCall));
-                *out = IRNode(method.fPosition, IRNode::Kind::CONSTRUCT, cl.fType,
+                *out = IRNode(method.fPosition, IRNode::Kind::CONSTRUCT, cl->fType,
                         std::move(children));
                 return true;
             }
@@ -976,8 +980,8 @@ void Compiler::symbolRef(Position p, const SymbolTable& st, Symbol* symbol, IRNo
         IRNode* target) {
     switch (symbol->fKind) {
         case Symbol::Kind::CLASS:
-            *out = IRNode(p, IRNode::Kind::CLASS_REFERENCE,
-                    Type(Position(), Type::Category::CLASS, "<type>"), symbol);
+            *out = IRNode(p, IRNode::Kind::TYPE_REFERENCE,
+                    Type(Position(), Type::Category::CLASS, "<type>"), &((Class*) symbol)->fType);
             return;
         case Symbol::Kind::TYPE:
             ASSERT(!target);
@@ -1162,10 +1166,14 @@ bool Compiler::convertDot(const ASTNode& d, IRNode* out) {
     String name;
     SymbolTable* st;
     switch (left.fKind) {
-        case IRNode::Kind::CLASS_REFERENCE: {
-            Class& cl = *((Class*) left.fValue.fPtr);
-            st = &cl.fSymbolTable;
-            name = "class " + cl.fName;
+        case IRNode::Kind::TYPE_REFERENCE: {
+            Type& t = *((Type*) left.fValue.fPtr);
+            Class* cl = this->resolveClass(*fSymbolTable, t);
+            if (!cl) {
+                return false;
+            }
+            st = &cl->fSymbolTable;
+            name = "class " + cl->fName;
             break;
         }
         case IRNode::Kind::PACKAGE_REFERENCE: {
@@ -1485,7 +1493,7 @@ bool Compiler::convertType(const ASTNode& t, IRNode* out) {
                 Class* context = fCurrentClass.top();
                 Class* cl = fClasses[name];
                 if (cl) {
-                    *out = IRNode(t.fPosition, IRNode::Kind::CLASS_REFERENCE, Type::Class(),
+                    *out = IRNode(t.fPosition, IRNode::Kind::TYPE_REFERENCE, Type::Class(),
                             &cl->fType);
                     return true;
                 }
@@ -1494,11 +1502,11 @@ bool Compiler::convertType(const ASTNode& t, IRNode* out) {
             }
             switch (symbol->fKind) {
                 case Symbol::Kind::TYPE:
-                    *out = IRNode(t.fPosition, IRNode::Kind::CLASS_REFERENCE, Type::Class(),
+                    *out = IRNode(t.fPosition, IRNode::Kind::TYPE_REFERENCE, Type::Class(),
                             symbol);
                     return true;
                 case Symbol::Kind::CLASS:
-                    *out = IRNode(t.fPosition, IRNode::Kind::CLASS_REFERENCE, Type::Class(),
+                    *out = IRNode(t.fPosition, IRNode::Kind::TYPE_REFERENCE, Type::Class(),
                             &((Class*) symbol)->fType);
                     return true;
                 default:
@@ -1699,6 +1707,7 @@ void Compiler::processFieldValues() {
         desc.fField.fValue = &desc.fField.fOwner.fFieldValues[valueIndices[desc.fValueIndex]];
         desc.fField.fType = variable_type(desc.fField.fValue->fType);
         fCurrentClass.push(&desc.fField.fOwner);
+        fSymbolTable = &desc.fField.fOwner.fSymbolTable;
         this->coerce(desc.fField.fValue, desc.fField.fType, desc.fField.fValue);
     }
 }

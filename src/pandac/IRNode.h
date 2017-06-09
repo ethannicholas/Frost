@@ -26,8 +26,6 @@ struct IRNode {
         CALL,
         // a typecast
         CAST,
-        // a literal reference to a class
-        CLASS_REFERENCE,
         // a constant declaration statement
         CONSTANT,
         // an object construction expression
@@ -63,7 +61,7 @@ struct IRNode {
         SELF,
         // represents a tuple target in a declaration statement, such as in 'var (x, y) := tuple'
         TUPLE_TARGET,
-        // literal reference to a type name, such as 'String'
+        // literal reference to a Type
         TYPE_REFERENCE,
         // an ambiguous binary operation which could refer to multiple methods
         UNRESOLVED_BINARY,
@@ -210,7 +208,6 @@ struct IRNode {
             case Kind::BLOCK:                       result += "Block";                       break;
             case Kind::CALL:                        result += "Call";                        break;
             case Kind::CAST:                        result += "Cast";                        break;
-            case Kind::CLASS_REFERENCE:             result += "ClassReference";              break;
             case Kind::CONSTANT:                    result += "Constant";                    break;
             case Kind::CONSTRUCT:                   result += "Construct";                   break;
             case Kind::DECLARATION:                 result += "Declaration";                 break;
