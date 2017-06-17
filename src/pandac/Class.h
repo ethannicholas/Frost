@@ -49,6 +49,10 @@ struct Class : public Symbol {
         }
     }
 
+    bool isValue() const {
+        return fSuper.fName == "panda.core.Value";
+    }
+
     std::vector<UsesDeclaration> fUses;
 
     Annotations fAnnotations;

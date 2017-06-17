@@ -24,6 +24,7 @@ Annotations Scanner::convertAnnotations(const ASTNode& a) {
         else BASIC_ANNOTATION("override", OVERRIDE)
         else BASIC_ANNOTATION("external", EXTERNAL)
         else BASIC_ANNOTATION("$implicit", IMPLICIT)
+        else BASIC_ANNOTATION("final", FINAL)
         else {
             this->error(sub.fPosition, "unrecognized annotation '" + sub.fText + "'");
         }

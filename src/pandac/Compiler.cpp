@@ -117,7 +117,7 @@ Class* Compiler::resolveClass(const SymbolTable& st, Type t) {
 }
 
 std::vector<const Field*> Compiler::getAllFields(const Class& cl) {
-    if (cl.fSuper == Type::Void()) {
+    if (cl.fSuper == Type::Void() || cl.isValue()) {
         return cl.fFields;
     }
     std::vector<const Field*> result = this->getAllFields(*this->resolveClass(cl.fSymbolTable,
@@ -933,20 +933,6 @@ bool Compiler::convertBinary(const ASTNode& b, IRNode* out) {
         }
     }
     Operator op = (Operator) b.fValue.fInt;
-    if ((op == Operator::AND || op == Operator::OR || op == Operator::ANDEQ || 
-                op == Operator::OREQ) && left.fType == Type::Bit() && right.fType == Type::Bit()) {
-        Class* bit = fClasses["panda.core.Bit"];
-        ASSERT(bit);
-        Field* value = (Field*) bit->fSymbolTable["value"];
-        std::vector<IRNode> children;
-        children.push_back(std::move(left));
-        left = IRNode(b.fPosition, IRNode::Kind::FIELD_REFERENCE, Type::BuiltinBit(), value,
-                std::move(children));
-        children.clear();
-        children.push_back(std::move(right));
-        right = IRNode(b.fPosition, IRNode::Kind::FIELD_REFERENCE, Type::BuiltinBit(), value,
-                std::move(children));
-    }
     if (op == Operator::INDEX) {
         // index expressions are always unresolved at first, because it might turn out to be an
         // indexed assignment
@@ -1398,7 +1384,7 @@ bool Compiler::convertExpression(const ASTNode& e, IRNode* out) {
 
 bool Compiler::convertIf(const ASTNode& i, IRNode* out) {
     ASSERT(i.fKind == ASTNode::Kind::IF);
-    ASSERT(i.fChildren.size() == 3);
+    ASSERT(i.fChildren.size() == 2 || i.fChildren.size() == 3);
     IRNode test;
     if (this->convertExpression(i.fChildren[0], &test)) {
         this->coerce(&test, Type::Bit(), &test);
@@ -1415,7 +1401,7 @@ bool Compiler::convertIf(const ASTNode& i, IRNode* out) {
     std::vector<IRNode> children;
     children.push_back(std::move(test));
     children.push_back(std::move(ifTrue));
-    if (i.fChildren[2].fKind == ASTNode::Kind::VOID) {
+    if (i.fChildren.size() == 2) {
         *out = IRNode(i.fPosition, IRNode::Kind::IF, std::move(children));
         return true;
     }
@@ -1746,6 +1732,9 @@ void Compiler::compile(const SymbolTable& symbols) {
 }
 
 void Compiler::resolveTypes(Method* m) {
+    if (m->fOwner.fAnnotations.isFinal()) {
+        m->fAnnotations.fFlags |= Annotations::Flag::FINAL;
+    }
     const SymbolTable& st = m->fOwner.fSymbolTable;
     this->resolveType(st, &m->fReturnType);
     for (auto& p : m->fParameters) {
@@ -1760,6 +1749,9 @@ void Compiler::resolveType(Field* f) {
 
 void Compiler::findClassesAndResolveTypes(Class& cl) {
     this->resolveType(cl.fSymbolTable, &cl.fSuper);
+    if (cl.isValue()) {
+        cl.fAnnotations.fFlags |= Annotations::Flag::FINAL;
+    }
     fClasses[cl.fName] = &cl;
     for (const auto& u : cl.fUses) {
         if (u.fAlias.size()) {

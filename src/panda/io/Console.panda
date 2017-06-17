@@ -1,5 +1,6 @@
 package panda.io
 
+@final
 class Console {
     @class
     @external

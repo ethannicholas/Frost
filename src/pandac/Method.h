@@ -72,7 +72,7 @@ struct Method : public Symbol {
     }
 
     const Class& fOwner;
-    const Annotations fAnnotations;
+    Annotations fAnnotations;
     const Kind fMethodKind;
     std::vector<Parameter> fParameters;
     Type fReturnType;

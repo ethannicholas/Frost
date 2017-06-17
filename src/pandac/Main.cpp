@@ -11,12 +11,42 @@
 #define INNERSTRING(x) #x
 #define STRING(x) INNERSTRING(x)
 #define LLC_PATH (STRING(LLVM_DIR) "/bin/llc")
+#define OPT_PATH (STRING(LLVM_DIR) "/bin/opt")
 #define GCC_PATH "/usr/bin/gcc"
 #define PANDA_HOME String("../src/")
 
 void make_executable(const char* llvm, const char* dest) {
-    const char* tmp = "/tmp/output.s";
+    const char* optimized = "/tmp/output.ll.opt";
     pid_t pid = fork();
+    if (pid < 0) {
+        perror("fork failed");
+        exit(1);
+    }
+    if (!pid) {
+        // child
+        char* args[8];
+        args[0] = (char*) OPT_PATH;
+        args[1] = (char*) "-lint";
+        args[2] = (char*) "-O3";
+        args[3] = (char*) "-S";
+        args[4] = (char*) llvm;
+        args[5] = (char*) "-o";
+        args[6] = (char*) optimized;
+        args[7] = nullptr;
+        execv(OPT_PATH, args);
+        perror("opt exec failed");
+        exit(1);
+    }
+    // parent
+    int status;
+    waitpid(pid, &status, 0);
+    if (status) {
+        printf("opt failed with exit code %d\n", WEXITSTATUS(status));
+        exit(1);
+    }
+
+    const char* assembly = "/tmp/output.s";
+    pid = fork();
     if (pid < 0) {
         perror("fork failed");
         exit(1);
@@ -25,16 +55,15 @@ void make_executable(const char* llvm, const char* dest) {
         // child
         char* args[5];
         args[0] = (char*) LLC_PATH;
-        args[1] = (char*) llvm;
+        args[1] = (char*) optimized;
         args[2] = (char*) "-o";
-        args[3] = (char*) tmp;
+        args[3] = (char*) assembly;
         args[4] = nullptr;
         execv(LLC_PATH, args);
         perror("llc exec failed");
         exit(1);
     }
     // parent
-    int status;
     waitpid(pid, &status, 0);
     if (status) {
         printf("llc failed with exit code %d\n", WEXITSTATUS(status));
@@ -50,7 +79,7 @@ void make_executable(const char* llvm, const char* dest) {
         // child
         char* args[5];
         args[0] = (char*) GCC_PATH;
-        args[1] = (char*) tmp;
+        args[1] = (char*) assembly;
         args[2] = (char*) "-o";
         args[3] = (char*) dest;
         args[4] = nullptr;

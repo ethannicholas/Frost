@@ -52,6 +52,8 @@ private:
 
     String llvmType(const Method& m);
 
+    String selfType(const Method& m);
+
     String nextVar();
 
     String nextLabel();

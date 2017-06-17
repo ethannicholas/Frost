@@ -8,7 +8,8 @@ public:
         CLASS     = 1 << 3,
         OVERRIDE  = 1 << 4,
         EXTERNAL  = 1 << 5,
-        IMPLICIT  = 1 << 6
+        IMPLICIT  = 1 << 6,
+        FINAL     = 1 << 7
     };
 
     Annotations()
@@ -41,6 +42,12 @@ public:
         return (fFlags & IMPLICIT) != 0;
     }
 
+    bool isFinal() const {
+        return (fFlags & FINAL) != 0;
+    }
+
 private:
     int fFlags;
+
+    friend class Compiler;
 };
