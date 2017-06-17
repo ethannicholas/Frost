@@ -15,8 +15,10 @@ add_executable(pandac
     src/pandac/Compiler.cpp
     src/pandac/LLVMCodeGenerator.cpp
     src/pandac/Main.cpp
+    src/pandac/MethodRef.cpp
     src/pandac/Operator.cpp
     src/pandac/Scanner.cpp
+    src/pandac/SymbolTable.cpp
 )
 
 add_executable(testrunner

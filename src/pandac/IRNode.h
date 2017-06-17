@@ -76,10 +76,13 @@ struct IRNode {
         // a var declaration statement
         VAR,
         // a placeholder representing the absence of a node
-        VOID
+        VOID,
+        // a while loop
+        WHILE
     };
 
     IRNode(const IRNode&) = delete;
+    IRNode& operator=(const IRNode& src) = delete;
     IRNode(IRNode&&) = default;
     IRNode& operator=(IRNode&& src) = default;
 
@@ -88,17 +91,23 @@ struct IRNode {
 
     IRNode(Position position, Kind kind)
     : fPosition(position)
-    , fKind(kind) {}
+    , fKind(kind) {
+        this->init();
+    }
 
     IRNode(Position position, Kind kind, Type type)
     : fPosition(position)
     , fKind(kind)
-    , fType(std::move(type)) {}
+    , fType(std::move(type)) {
+        this->init();
+    }
 
     IRNode(Position position, Kind kind, String text)
     : fPosition(position)
     , fKind(kind)
-    , fText(std::move(text)) {}
+    , fText(std::move(text)) {
+        this->init();
+    }
 
 
     IRNode(Position position, Kind kind, Type type, uint64_t value)
@@ -106,6 +115,7 @@ struct IRNode {
     , fKind(kind)
     , fType(std::move(type)) {
         fValue.fInt = value;
+        this->init();
     }
 
     IRNode(Position position, Kind kind, Type type, uint64_t value, std::vector<IRNode> children)
@@ -114,6 +124,7 @@ struct IRNode {
     , fType(std::move(type))
     , fChildren(std::move(children)) {
         fValue.fInt = value;
+        this->init();
     }
 
     IRNode(Position position, Kind kind, Type type, double value)
@@ -121,6 +132,7 @@ struct IRNode {
     , fKind(kind)
     , fType(std::move(type)) {
         fValue.fFloat = value;
+        this->init();
     }
 
     IRNode(Position position, Kind kind, Type type, bool value)
@@ -128,6 +140,7 @@ struct IRNode {
     , fKind(kind)
     , fType(std::move(type)) {
         fValue.fBool = value;
+        this->init();
     }
 
     IRNode(Position position, Kind kind, Type type, const void* value)
@@ -135,6 +148,7 @@ struct IRNode {
     , fKind(kind)
     , fType(std::move(type)) {
         fValue.fPtr = value;
+        this->init();
     }
 
     IRNode(Position position, Kind kind, Type type, const void* value, std::vector<IRNode> children)
@@ -143,30 +157,38 @@ struct IRNode {
     , fType(std::move(type))
     , fChildren(std::move(children)) {
         fValue.fPtr = value;
+        this->init();
     }
 
     IRNode(Position position, Kind kind, void* ptr)
     : fPosition(position)
     , fKind(kind) {
         fValue.fPtr = ptr;
+        this->init();
     }
 
     IRNode(Position position, Kind kind, std::vector<IRNode> children)
     : fPosition(position)
     , fKind(kind)
-    , fChildren(std::move(children)) {}
+    , fChildren(std::move(children)) {
+        this->init();
+    }
 
     IRNode(Position position, Kind kind, String text, std::vector<IRNode> children)
     : fPosition(position)
     , fKind(kind)
     , fText(std::move(text))
-    , fChildren(std::move(children)) {}
+    , fChildren(std::move(children)) {
+        this->init();
+    }
 
     IRNode(Position position, Kind kind, Type type, std::vector<IRNode> children)
     : fPosition(position)
     , fKind(kind)
     , fType(std::move(type))
-    , fChildren(std::move(children)) {}
+    , fChildren(std::move(children)) {
+        this->init();
+    }
 
     IRNode(Position position, Kind kind, Type type, int value, std::vector<IRNode> children)
     : fPosition(position)
@@ -174,6 +196,7 @@ struct IRNode {
     , fType(std::move(type))
     , fChildren(std::move(children)) {
         fValue.fInt = value;
+        this->init();
     }
 
     IRNode(Position position, Kind kind, Type type, void* ptr, std::vector<IRNode> children)
@@ -182,6 +205,10 @@ struct IRNode {
     , fType(std::move(type))
     , fChildren(std::move(children)) {
         fValue.fPtr = ptr;
+        this->init();
+    }
+
+    void init() {
     }
 
     // copying IRNodes can be very expensive and is incredibly easy to do by accident, so we kill
@@ -233,9 +260,10 @@ struct IRNode {
             case Kind::VAR:                         result += "Var";                         break;
             case Kind::VARIABLE_REFERENCE:          result += "VariableReference"; p = true; break;
             case Kind::VOID:                        result += "Void";                        break;
+            case Kind::WHILE:                       result += "While";                       break;
         }
         if (fType.fCategory != Type::Category::VOID) {
-            result += ":" + fType.fName;
+            result += ":" + fType.description();
         }
         result += "(";
         const char* separator = "";

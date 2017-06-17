@@ -16,6 +16,8 @@ public:
         fOut << fMethods.str();
     }
 
+    void writeMethodDeclaration(const Method& method, Compiler& compiler) override;
+
     void writeMethod(const Method& method, const IRNode& body, Compiler& compiler) override;
 
     enum class OpClass {
@@ -74,6 +76,8 @@ private:
 
     String getMethodReference(const String& target, const Method* m, std::ostream& out);
 
+    String getPointerCallReference(const IRNode& call, std::ostream& out);
+
     String getCallReference(const IRNode& call, std::ostream& out);
 
     String getCastReference(const IRNode& call, std::ostream& out);
@@ -88,9 +92,13 @@ private:
 
     String getTypedReference(const IRNode& stmt, std::ostream& out);
 
+    void writePointerCall(const IRNode& stmt, std::ostream& out);
+
     void writeCall(const IRNode& stmt, const String& target, std::ostream& out);
 
     void writeIf(const IRNode& s, std::ostream& out);
+
+    void writeWhile(const IRNode& w, std::ostream& out);
 
     void writeVarTarget(const IRNode& var, const IRNode* value, std::ostream& out);
 
@@ -139,4 +147,6 @@ private:
     std::unordered_map<String, ClassConstant> fClassConstants;
 
     std::unordered_map<String, size_t> fSizes;
+
+    bool fKillCast = false;
 };

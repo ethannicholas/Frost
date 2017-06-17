@@ -3,34 +3,34 @@ class Overloading {
     }
 
     init(x:Int64) {
-        print(-1)
+        Console.println(-1)
     }
 
     @class
     method classTest() {
-        print(1)
+        Console.println(1)
     }
 
     @class
     method classTest(x:Int64) {
-        print(x)
+        Console.println(x)
     }
 
     @class
     method classTest(x:Int64, y:Int64) {
-        print(x + y)
+        Console.println(x + y)
     }
 
     method instanceTest() {
-        print(4)
+        Console.println(4)
     }
 
     method instanceTest(x:Int64) {
-        print(x)
+        Console.println(x)
     }
 
     method instanceTest(x:Int64, y:Int64) {
-        print(x + y)
+        Console.println(x + y)
     }
 
     @class

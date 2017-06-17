@@ -28,18 +28,18 @@ class Fields {
     @class
     method main() {
         var p1 := Point2D(1, 2)
-        print(p1.x)
-        print(p1.y)
+        Console.println(p1.x)
+        Console.println(p1.y)
         
         var p2 := Point3D(5, 10, 15)
-        print(p2.x)
-        print(p2.y)
-        print(p2.z)
+        Console.println(p2.x)
+        Console.println(p2.y)
+        Console.println(p2.z)
 
         p1 := p2
-        print(p1.x)
-        print(p1.y)
+        Console.println(p1.x)
+        Console.println(p1.y)
 
-        print(Untyped().untyped)
+        Console.println(Untyped().untyped)
     }
 }

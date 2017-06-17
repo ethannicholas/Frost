@@ -1,0 +1,11 @@
+package panda.core
+
+class Char8 : Value {
+    @private
+    init(value:builtin_int8) {
+        self.value := value
+    }
+
+    @private
+    def value:builtin_int8
+}

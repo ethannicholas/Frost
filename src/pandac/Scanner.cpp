@@ -38,10 +38,22 @@ Type Scanner::convertType(const ASTNode& t, const SymbolTable& st) {
             return Type::Void();
         case ASTNode::Kind::CLASS_TYPE: {
             Symbol* s = st[t.fText];
+            Type converted;
             if (s && s->fKind == Symbol::Kind::TYPE) {
-                return *(Type*) s;
+                converted = *(Type*) s;
             }
-            return Type(t.fPosition, Type::Category::CLASS, t.fText);
+            else {
+                converted = Type(t.fPosition, Type::Category::CLASS, t.fText);
+            }
+            if (t.fChildren.size()) {
+                std::vector<Type> types;
+                types.push_back(std::move(converted));
+                for (const ASTNode& child : t.fChildren) {
+                    types.push_back(this->convertType(child, st));
+                }
+                converted = Type(types);
+            }
+            return std::move(converted);
         }
         default:
             printf("unsupported type: %s\n", t.description().c_str());
@@ -251,11 +263,13 @@ void Scanner::scan(ASTNode* file, SymbolTable* root) {
     SymbolTable* currentTable = root;
     std::vector<Class::UsesDeclaration> uses;
     uses.push_back({ Position(), "panda.core.Bit", "Bit" });
+    uses.push_back({ Position(), "panda.core.Char8", "Char8" });
     uses.push_back({ Position(), "panda.core.Int8", "Int8" });;
     uses.push_back({ Position(), "panda.core.Int16", "Int16" });;
     uses.push_back({ Position(), "panda.core.Int32", "Int32" });;
     uses.push_back({ Position(), "panda.core.Int64", "Int64" });;
     uses.push_back({ Position(), "panda.core.Int64", "Int" });;
+    uses.push_back({ Position(), "panda.core.String", "String" });;
     uses.push_back({ Position(), "panda.io.Console", "Console" });;
     for (auto& e : file->fChildren) {
         switch (e.fKind) {

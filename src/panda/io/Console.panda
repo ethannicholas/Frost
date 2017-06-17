@@ -2,17 +2,35 @@ package panda.io
 
 class Console {
     @class
-    method println(i:Int64) {
-        print(i)
+    @external
+    method print(c:Char8)
+
+    @class
+    method print(s:String) {
+        var i := 0
+        while i < s.size {
+            Console.print(s.data[i])
+            i := i + 1
+        }
     }
+
+    @class
+    method println(s:String) {
+        print(s)
+        print(Char8(10))
+    }
+
+    @class
+    @external
+    method println(i:Int64)
 
     @class
     method println(b:Bit) {
         if b {
-            print(1)
+            println(1)
         }
         else {
-            print(0)
+            println(0)
         }
     }
 }

@@ -1,2 +1,2 @@
-InstanceMethodOnClass.panda:16:9: cannot call instance method in a @class context
+InstanceMethodOnClass.panda:16:9: error: cannot call instance method in a @class context
 1 error

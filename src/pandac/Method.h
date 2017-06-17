@@ -2,6 +2,7 @@
 
 #include "Annotations.h"
 #include "ASTNode.h"
+#include "MethodRef.h"
 #include "Symbol.h"
 #include "Type.h"
 
@@ -76,6 +77,8 @@ struct Method : public Symbol {
     std::vector<Parameter> fParameters;
     Type fReturnType;
     const ASTNode fBody;
+
+    mutable std::vector<std::unique_ptr<const MethodRef>> fMethodRefs;
 
     typedef Symbol INHERITED;
 };

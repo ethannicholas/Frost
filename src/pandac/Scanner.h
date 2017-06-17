@@ -33,6 +33,8 @@ public:
 
     void scan(ASTNode* file, SymbolTable* root);
 
+    Type convertType(const ASTNode& t, const SymbolTable& st);
+    
     std::vector<std::pair<Class*, const ASTNode*>> fFieldValues;
 
     std::vector<FieldDescriptor> fFieldDescriptors;
@@ -40,8 +42,6 @@ public:
 private:
     Annotations convertAnnotations(const ASTNode& a);
 
-    Type convertType(const ASTNode& t, const SymbolTable& st);
-    
     Method::Parameter convertParameter(const ASTNode& param, const SymbolTable& st);
 
     void convertDeclaration(const Annotations& annotations, Field::Kind kind, const ASTNode& d,

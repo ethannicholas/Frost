@@ -33,6 +33,8 @@ public:
     bool file(const String* name, const String& text, ASTNode* outResult);
 
 private:
+    void advancePosition(const char* text);
+
     Token nextRawToken();
 
     Token nextToken();

@@ -27,15 +27,7 @@ PandaParser::~PandaParser() {
     pandalex_destroy(fScanner);
 }
 
-Token PandaParser::nextRawToken() {
-    if (fPushbackBuffer.size()) {
-        Token result = fPushbackBuffer.back();
-        fPushbackBuffer.pop_back();
-        return result;
-    }
-    int token = pandalex(fScanner);
-    Position p(fName, fLine, fColumn);
-    const char* text = pandaget_text(fScanner);
+void PandaParser::advancePosition(const char* text) {
     for (const char* c = text; *c != '\0'; c++) {
         switch (*c) {
             case '\n':
@@ -49,6 +41,33 @@ Token PandaParser::nextRawToken() {
                 ++fColumn;
         }
     }
+}
+
+Token PandaParser::nextRawToken() {
+    if (fPushbackBuffer.size()) {
+        Token result = fPushbackBuffer.back();
+        fPushbackBuffer.pop_back();
+        return result;
+    }
+    int token = pandalex(fScanner);
+    Position p(fName, fLine, fColumn);
+    const char* text = pandaget_text(fScanner);
+    this->advancePosition(text);
+    switch ((Token::Kind) token) {
+        case Token::Kind::BLOCK_COMMENT: {
+            Token next;
+            do {
+                next = this->nextRawToken();
+                this->advancePosition(next.fText.c_str());
+            }
+            while (next.fKind != Token::Kind::BLOCK_COMMENT_END &&
+                    next.fKind != Token::Kind::END_OF_FILE);
+            if (next.fKind == Token::Kind::END_OF_FILE) {
+                this->error(p, "unterminated comment");
+            }
+        }
+        default: break;
+    }
     if (fInSpeculative) {
         Token result = Token(p, (Token::Kind) token, String(text));
         fSpeculativeBuffer.push_back(result);
@@ -59,9 +78,17 @@ Token PandaParser::nextRawToken() {
 
 Token PandaParser::nextToken() {
     Token token;
-    do {
+    for (;;) {
         token = this->nextRawToken();
-    } while (token.fKind == Token::Kind::WHITESPACE);
+        switch (token.fKind) {
+            case Token::Kind::WHITESPACE:    // fall through
+            case Token::Kind::BLOCK_COMMENT: // fall through
+            case Token::Kind::LINE_COMMENT:  // fall through
+            case Token::Kind::DOC_COMMENT: break;
+            default: goto done;
+        }
+    }
+    done:
     return std::move(token);
 }
 
@@ -337,7 +364,7 @@ bool PandaParser::bodyEntry(ASTNode* outResult) {
         case Token::Kind::METHOD:     // fall through
         case Token::Kind::FUNCTION:   // fall through
         case Token::Kind::ANNOTATION: // fall through
-        case Token::Kind::DOC_COMMENT_START:
+        case Token::Kind::DOC_COMMENT:
             return this->declaration(outResult);
         default:
             return this->statement(outResult);
@@ -616,7 +643,7 @@ bool PandaParser::declaration(ASTNode* outResult) {
         return this->invariant(outResult);
     }
     ASTNode dc;
-    if (start.fKind == Token::Kind::DOC_COMMENT_START && !this->doccomment(&dc)) {
+    if (start.fKind == Token::Kind::DOC_COMMENT && !this->doccomment(&dc)) {
         return false;
     }
     ASTNode a;
@@ -1466,6 +1493,22 @@ bool PandaParser::varDeclaration(ASTNode* outResult) {
 }
 
 bool PandaParser::whileLoop(ASTNode* outResult, String label) {
-    abort();
+    Token start;
+    if (!this->expect(Token::Kind::WHILE, "'while'", &start)) {
+        return false;
+    }
+    ASTNode test;
+    if (!this->expression(&test)) {
+        return false;
+    }
+    ASTNode block;
+    if (!this->block(&block)) {
+        return false;
+    }
+    std::vector<ASTNode> children;
+    children.push_back(std::move(test));
+    children.push_back(std::move(block));
+    *outResult = ASTNode(start.fPosition, ASTNode::Kind::WHILE, label, std::move(children));
+    return true;
 }
 

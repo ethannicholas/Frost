@@ -24,9 +24,11 @@ LETTER [a-zA-Z_$]
 
 --[^\n]* { return (int) Token::Kind::LINE_COMMENT; }
 
-"-*" { return (int) Token::Kind::BLOCK_COMMENT_START; }
+"-*" { return (int) Token::Kind::BLOCK_COMMENT; }
 
-"===" { return (int) Token::Kind::DOC_COMMENT_START; }
+"*-" { return (int) Token::Kind::BLOCK_COMMENT_END; }
+
+"==="[=]* { return (int) Token::Kind::DOC_COMMENT; }
 
 "package"     { return (int) Token::Kind::PACKAGE; }
 "uses"        { return (int) Token::Kind::USES; }
@@ -129,6 +131,8 @@ LETTER [a-zA-Z_$]
 "@"[a-zA-Z_$][a-zA-Z0-9_$]* { return (int) Token::Kind::ANNOTATION; }
 
 [ \t\n\r]+ { return (int) Token::Kind::WHITESPACE; }
+
+. { return (int) Token::Kind::INVALID; }
 
 %%
 

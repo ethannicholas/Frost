@@ -1,0 +1,15 @@
+package panda.core
+
+class String {
+    @private
+    init(data:Pointer<Char8>, size:Int) {
+        self.data := data
+        self.size := size
+    }
+
+    @private
+    def data:Pointer<Char8>
+
+    @private
+    def size:Int
+}

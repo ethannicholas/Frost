@@ -39,11 +39,6 @@ public:
                 "builtin_uint32", 32)));
         fRoot.add(std::unique_ptr<Symbol>(new Type(Position(), Type::Category::BUILTIN_UINT,
                 "builtin_uint64", 64)));
-        static Class* builtin = new Class(Position(), {}, Annotations(), "builtin", {},
-                &fRoot, Type());
-        fRoot.add(std::unique_ptr<Symbol>(new Method(Position(), builtin,
-                Annotations(Annotations::CLASS), Method::Kind::METHOD, "print",
-                { { "v", Type::Int64() } }, Type::Void(), ASTNode())));
     }
 
     void scan(ASTNode* file);
@@ -81,35 +76,40 @@ private:
      * required return type, storing them in outMatches. Returns a number representing the match
      * cost of the method call (INT_MAX in the case where no matches were found.)
      */
-    int matchMethods(const std::vector<const Method*>& methods, const std::vector<IRNode>& args,
-            const Type* returnType, std::vector<const Method*>* outMatches);
+    int matchMethods(const std::vector<const MethodRef*>& methods, const std::vector<IRNode>& args,
+            const Type* returnType, std::vector<const MethodRef*>* outMatches);
 
     /**
      * Determine the "cost" (see coercionCost) of calling a method with the provided parameters and
      * (optional) expected return type. If returnType is null, it is ignored for matching purposes.
      */
-    int callCost(const Method& method, const std::vector<IRNode>& args, const Type* returnType);
+    int callCost(const MethodRef& method, const std::vector<IRNode>& args, const Type* returnType);
 
     void reportNoMatch(Position position, const String& name, const std::vector<IRNode>& args,
             const Type* returnType);
 
-    void reportAmbiguousMatch(Position position, const std::vector<const Method*>& methods,
+    void reportAmbiguousMatch(Position position, const std::vector<const MethodRef*>& methods,
             const std::vector<IRNode>& args, const Type* returnType);
 
     bool call(IRNode method, std::vector<IRNode> args, IRNode* out);
+
+    bool call(IRNode target, String methodName, std::vector<IRNode> args, Type* returnType,
+            IRNode* out);
 
     bool foldBits(Position p, const IRNode& left, Operator op, const IRNode& right, IRNode* out);
 
     bool foldInts(Position p, const IRNode& left, Operator op, const IRNode& right, IRNode* out);
 
-    IRNode operatorCall(Position p, IRNode* left, const Method& m, IRNode* right);
+    IRNode operatorCall(Position p, IRNode* left, const MethodRef& m, IRNode* right);
 
-    int operatorCost(IRNode* left, const Method& m, IRNode* right, const Type* returnType);
+    int operatorCost(IRNode* left, const MethodRef& m, IRNode* right, const Type* returnType);
 
     int operatorMatch(IRNode* left, Operator op, IRNode* right, const Type* returnType,
-            std::vector<const Method*>* outResult);
+            std::vector<const MethodRef*>* outResult);
 
     bool operatorCall(Position p, IRNode* left, Operator op, IRNode* right, IRNode* outResult);
+
+    bool convertIndexedAssignment(Position p, IRNode left, Operator op, IRNode right, IRNode* out);
 
     bool convertBinary(const ASTNode& b, IRNode* out);
 
@@ -122,14 +122,15 @@ private:
     /**
      * Adds a method to a vector, replacing an existing match if present.
      */
-    void addMethod(Position p, const SymbolTable& st, Method* m, std::vector<IRNode>* methods);
+    void addMethod(Position p, const SymbolTable& st, Method* m, const std::vector<Type>& types,
+            std::vector<IRNode>* methods);
 
     /**
      * Adds all methods matching the specified name to the vector, recursively across symbol tables.
      * More recent (i.e. closer to the provided symbol table) method versions will override older
      * ones, as in inheritance.
      */
-    void addAllMethods(Position p, const SymbolTable& st, const String& name,
+    void addAllMethods(Position p, const SymbolTable& st, const IRNode* target, const String& name,
             std::vector<IRNode>* methods, bool start = true);
 
     void symbolRef(Position p, const SymbolTable& st, Symbol* symbol, IRNode* out,
@@ -147,13 +148,15 @@ private:
 
     bool convertExpression(const ASTNode& e, IRNode* out);
 
-    IRNode resolve(IRNode* value);
+    bool resolve(IRNode* value);
 
     bool doConvertExpression(const ASTNode& e, IRNode* out);
     
     bool convertParameter(const ASTNode& p, IRNode* out);
 
     bool convertIf(const ASTNode& p, IRNode* out);
+
+    bool convertWhile(const ASTNode& p, IRNode* out);
 
     bool convertTarget(const ASTNode& t, IRNode* value, IRNode* out);
 
@@ -174,6 +177,8 @@ private:
     void compile(const SymbolTable& symbols);
 
     void resolveTypes(Method* m);
+
+    void resolveType(Field* f);
 
     void findClassesAndResolveTypes(Class& cl);
 
@@ -204,4 +209,6 @@ private:
     std::stack<Class*> fCurrentClass;
 
     std::unordered_map<String, Class*> fClasses;
+
+    std::unordered_map<String, std::unique_ptr<Type>> fTypes;
 };

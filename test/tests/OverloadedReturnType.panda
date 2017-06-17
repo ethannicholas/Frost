@@ -22,7 +22,7 @@ class Overloading {
 
     @class
     method main() {
-        print(classTest())
-        print(Overloading.classTest())
+        Console.println(classTest())
+        Console.println(Overloading.classTest())
     }
 }
