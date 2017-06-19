@@ -57,8 +57,16 @@ struct IRNode {
         PROPERTY,
         // a return statement
         RETURN,
+        // wraps an expression to indicate that it is reused elsewhere in the tree without
+        // reevaluation
+        REUSED_VALUE_DEFINITION,
+        // marks the position where a REUSED_VALUE_DEFINITION is referenced again. This node is
+        // empty but has the same int value as a previously-evaluated REUSED_VALUE_DEFINITION.
+        REUSED_VALUE,
         // the 'self' keyword
         SELF,
+        // a string literal
+        STRING,
         // represents a tuple target in a declaration statement, such as in 'var (x, y) := tuple'
         TUPLE_TARGET,
         // literal reference to a Type
@@ -143,6 +151,12 @@ struct IRNode {
         this->init();
     }
 
+    IRNode(Position position, Kind kind, Type type, String text)
+    : fPosition(position)
+    , fKind(kind)
+    , fType(std::move(type))
+    , fText(std::move(text)) {}
+
     IRNode(Position position, Kind kind, Type type, const void* value)
     : fPosition(position)
     , fKind(kind)
@@ -157,6 +171,13 @@ struct IRNode {
     , fType(std::move(type))
     , fChildren(std::move(children)) {
         fValue.fPtr = value;
+        this->init();
+    }
+
+    IRNode(Position position, Kind kind, uint64_t value)
+    : fPosition(position)
+    , fKind(kind) {
+        fValue.fInt = value;
         this->init();
     }
 
@@ -250,7 +271,10 @@ struct IRNode {
             case Kind::PREFIX:                      result += "Prefix"; o = 1;               break;
             case Kind::PROPERTY:                    result += "Property";                    break;
             case Kind::RETURN:                      result += "Return";                      break;
+            case Kind::REUSED_VALUE_DEFINITION:     result += "ReusedValueDefinition";       break;
+            case Kind::REUSED_VALUE:                result += "ReusedValue";                 break;
             case Kind::SELF:                        result += "Self";                        break;
+            case Kind::STRING:                      result += "String";                      break;
             case Kind::TUPLE_TARGET:                result += "TupleTarget";                 break;
             case Kind::TYPE_REFERENCE:              result += "TypeReference"; p = 1;        break;
             case Kind::UNRESOLVED_BINARY:           result += "UnresolvedBinary";            break;

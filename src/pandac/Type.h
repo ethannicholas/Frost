@@ -4,6 +4,7 @@
 #include "Util.h"
 
 #include <map>
+#include <set>
 #include <vector>
 
 struct Type : public Symbol {
@@ -26,7 +27,7 @@ struct Type : public Symbol {
         // a generic parameter type. In the class List<T>, T is a parameter type. fSubtypes[0] is
         // the parameter's bound.
         PARAMETER,
-        UNRESOLVED,
+        UNRESOLVED
     };
 
     Type()
@@ -49,10 +50,27 @@ struct Type : public Symbol {
         return result;
     }
 
+    static String unresolved_type_name(std::set<Type>& types) {
+        String result = "unresolved<";
+        const char* separator = "";
+        for (const Type& t : types) {
+            result += separator;
+            result += t.fName;
+            separator = " | ";
+        }
+        result += ">";
+        return result;
+    }
+
     Type(std::vector<Type> types)
     : INHERITED(types[0].fPosition, Kind::TYPE, generic_type_name(types))
     , fCategory(Category::GENERIC)
     , fSubtypes(std::move(types)) {}
+
+    Type(Position p, std::set<Type> types)
+    : INHERITED(p, Kind::TYPE, unresolved_type_name(types))
+    , fCategory(Category::UNRESOLVED)
+    , fSubtypes(types.begin(), types.end()) {}
 
     Type(Position position, Category category, String name, int size)
     : INHERITED(position, Kind::TYPE, std::move(name))
@@ -83,6 +101,22 @@ struct Type : public Symbol {
 
     bool operator!=(const Type& other) const {
         return !(*this == other);
+    }
+
+    bool operator<(const Type& other) const {
+        return fName < other.fName;
+    }
+
+    bool operator<=(const Type& other) const {
+        return fName <= other.fName;
+    }
+
+    bool operator>(const Type& other) const {
+        return fName > other.fName;
+    }
+
+    bool operator>=(const Type& other) const {
+        return fName >= other.fName;
     }
 
     String description() const {
@@ -144,6 +178,11 @@ struct Type : public Symbol {
 
     static Type& Bit() {
         static Type result = Type(Position(), Category::CLASS, "panda.core.Bit");
+        return result;
+    }
+
+    static Type& PandaString() {
+        static Type result = Type(Position(), Category::CLASS, "panda.core.String");
         return result;
     }
 

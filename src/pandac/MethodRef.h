@@ -14,6 +14,8 @@ struct MethodRef {
     // types for the owning class' generic parameters, followed by the method's generic parameters
     MethodRef(const Method* method, std::vector<Type> types);
 
+    Type owner() const;
+
     int parameterCount() const;
 
     Type parameterType(int idx) const;
@@ -22,5 +24,7 @@ struct MethodRef {
 
     const Method& fMethod;
 
-    std::map<String, Type> fTypes;
+    std::vector<Type> fTypes;
+
+    std::map<String, Type> fTypeMap;
 };

@@ -7,6 +7,21 @@ class String {
         self.size := size
     }
 
+    function +(other:String):String {
+        def result := Pointer<Char8>.alloc(size + other.size)
+        var i := 0
+        while i < size {
+            result[i] := data[i]
+            i := i + 1
+        }
+        i := 0
+        while i < other.size {
+            result[size + i] := other.data[i]
+            i := i + 1
+        }
+        return String(result, size + other.size)
+    }
+
     @private
     def data:Pointer<Char8>
 

@@ -8,6 +8,7 @@
 #include "Variable.h"
 
 #include <limits.h>
+#include <set>
 
 void Compiler::scan(ASTNode* file) {
     fScanner.scan(file, &fRoot);
@@ -521,9 +522,12 @@ bool Compiler::call(IRNode method, std::vector<IRNode> args, IRNode* out) {
                         IRNode::Kind::UNRESOLVED_METHOD_REFERENCE, std::move(methodsChildren)));
                 children.emplace_back(method.fPosition, IRNode::Kind::ARGUMENTS, std::move(args));
                 ASSERT(method.fValue.fPtr);
+                std::set<Type> types;
+                for (const MethodRef* m : min) {
+                    types.insert(m->returnType());
+                }
                 *out = IRNode(method.fPosition, IRNode::Kind::UNRESOLVED_CALL,
-                        Type(method.fPosition, Type::Category::UNRESOLVED,
-                            "<unresolved method call>"),
+                        Type(method.fPosition, std::move(types)),
                         method.fValue.fPtr,
                         std::move(children));
                 return true;
@@ -687,7 +691,7 @@ bool Compiler::foldBits(Position p, const IRNode& left, Operator op, const IRNod
     return false;
 }
 
-bool is_assignment(Operator op) {
+static bool is_assignment(Operator op) {
     switch (op) {
         case Operator::ASSIGNMENT:   // fall through
         case Operator::ADDEQ:        // fall through
@@ -711,11 +715,35 @@ bool is_assignment(Operator op) {
     }
 }
 
+static Operator remove_assignment(Operator op) {
+    switch (op) {
+        case Operator::ADDEQ:        return Operator::ADD;
+        case Operator::SUBEQ:        return Operator::SUB;
+        case Operator::MULEQ:        return Operator::MUL;
+        case Operator::DIVEQ:        return Operator::DIV;
+        case Operator::INTDIVEQ:     return Operator::INTDIV;
+        case Operator::REMEQ:        return Operator::REM;
+        case Operator::POWEQ:        return Operator::POW;
+        case Operator::OREQ:         return Operator::OR;
+        case Operator::ANDEQ:        return Operator::AND;
+        case Operator::XOREQ:        return Operator::XOR;
+        case Operator::BITWISEOREQ:  return Operator::BITWISEOR;
+        case Operator::BITWISEANDEQ: return Operator::BITWISEAND;
+        case Operator::BITWISEXOREQ: return Operator::BITWISEXOR;
+        case Operator::SHIFTLEFTEQ:  return Operator::SHIFTLEFT;
+        case Operator::SHIFTRIGHTEQ: return Operator::SHIFTRIGHT;
+        default: abort();
+    }
+}
+
+
 static bool is_lvalue(const IRNode& node) {
     switch (node.fKind) {
         case IRNode::Kind::FIELD_REFERENCE: // fall through
         case IRNode::Kind::VARIABLE_REFERENCE:
             return true;
+        case IRNode::Kind::REUSED_VALUE_DEFINITION:
+            return is_lvalue(node.fChildren[0]);
         default:
             return false;
     }
@@ -755,22 +783,31 @@ static std::vector<Type> type_parameters(const IRNode& node) {
     return type_parameters(node.fType);
 }
 
-int Compiler::operatorMatch(IRNode* left, Operator op, IRNode* right, const Type* returnType,
-        std::vector<const MethodRef*>* outResult) {
+int Compiler::operatorMatchLeft(const Class& leftClass, IRNode* left, Operator op, IRNode* right,
+        const Type* returnType, std::vector<const MethodRef*>* outResult) {
     int min = INT_MAX;
-    if (left->fType.isClass()) {
-        Class* leftClass = this->resolveClass(fCurrentClass.top()->fSymbolTable, left->fType);
-        if (!leftClass) {
-            return false;
-        }
-        ASSERT(!outResult->size());
-        const Symbol* leftMethods = leftClass->fSymbolTable[operator_text(op)];
-        if (leftMethods) {
-            switch (leftMethods->fKind) {
-                case Symbol::Kind::METHOD: {
-                    MethodRef* ref = new MethodRef((const Method*) leftMethods,
-                            type_parameters(*left));
-                    ((const Method*) leftMethods)->fMethodRefs.emplace_back(ref);
+    ASSERT(!outResult->size());
+    const Symbol* leftMethods = leftClass.fSymbolTable[operator_text(op)];
+    if (leftMethods) {
+        switch (leftMethods->fKind) {
+            case Symbol::Kind::METHOD: {
+                MethodRef* ref = new MethodRef((const Method*) leftMethods,
+                        type_parameters(*left));
+                ((const Method*) leftMethods)->fMethodRefs.emplace_back(ref);
+                int cost = this->operatorCost(left, *ref, right, returnType);
+                if (cost < min) {
+                    outResult->clear();
+                    min = cost;
+                }
+                if (cost == min) {
+                    outResult->push_back(ref);
+                }
+                break;
+            }
+            case Symbol::Kind::METHODS: {
+                for (const Method* m : ((Methods&) *leftMethods).fMethods) {
+                    MethodRef* ref = new MethodRef(m, type_parameters(*left));
+                    m->fMethodRefs.emplace_back(ref);
                     int cost = this->operatorCost(left, *ref, right, returnType);
                     if (cost < min) {
                         outResult->clear();
@@ -779,30 +816,45 @@ int Compiler::operatorMatch(IRNode* left, Operator op, IRNode* right, const Type
                     if (cost == min) {
                         outResult->push_back(ref);
                     }
-                    break;
                 }
-                case Symbol::Kind::METHODS: {
-                    for (const Method* m : ((Methods&) *leftMethods).fMethods) {
-                        MethodRef* ref = new MethodRef(m, type_parameters(*left));
-                        m->fMethodRefs.emplace_back(ref);
-                        int cost = this->operatorCost(left, *ref, right, returnType);
-                        if (cost < min) {
-                            outResult->clear();
-                            min = cost;
-                        }
-                        if (cost == min) {
-                            outResult->push_back(ref);
-                        }
-                    }
-                    break;
-                }
-                default:
-                    abort();
+                break;
+            }
+            default:
+                abort();
+        }
+    }
+    return min;
+}
+
+int Compiler::operatorMatch(IRNode* left, Operator op, IRNode* right, const Type* returnType,
+        std::vector<const MethodRef*>* outResult) {
+    int min = INT_MAX;
+    if (left->fType.isClass()) {
+        Class* leftClass = this->resolveClass(fCurrentClass.top()->fSymbolTable, left->fType);
+        if (!leftClass) {
+            return false;
+        }
+        min = this->operatorMatchLeft(*leftClass, left, op, right, returnType, outResult);
+    }
+    else if (left->fType.fCategory == Type::Category::UNRESOLVED) {
+        for (const Type& t : left->fType.fSubtypes) {
+            Class* leftClass = this->resolveClass(fCurrentClass.top()->fSymbolTable, t);
+            if (!leftClass) {
+                return false;
+            }
+            std::vector<const MethodRef*> matches;
+            int cost = this->operatorMatchLeft(*leftClass, left, op, right, returnType, &matches);
+            if (cost < min) {
+                min = cost;
+                outResult->clear();
+            }
+            if (cost == min) {
+                outResult->insert(outResult->end(), matches.begin(), matches.end());
             }
         }
-        if (left->fType == right->fType) {
-            return min;
-        }
+    }
+    if (left->fType == right->fType) {
+        return min;
     }
     if (right->fType.isClass()) {
         Class* rightClass = this->resolveClass(fCurrentClass.top()->fSymbolTable, right->fType);
@@ -867,6 +919,7 @@ IRNode Compiler::operatorCall(Position position, IRNode* left, const MethodRef& 
     }
     else {
         std::vector<IRNode> children;
+        this->coerce(left, m.owner(), left);
         children.push_back(std::move(*left));
         methodRef = IRNode(position, IRNode::Kind::METHOD_REFERENCE,
                 Type(Position(), Type::Category::METHOD, "<method>"), &m,
@@ -889,8 +942,12 @@ bool Compiler::operatorCall(Position position, IRNode* left, Operator op, IRNode
         std::vector<IRNode> children;
         children.push_back(std::move(*left));
         children.push_back(std::move(*right));
+        std::set<Type> types;
+        for (const MethodRef* m : matches) {
+            types.insert(m->returnType());
+        }
         *outResult = IRNode(position, IRNode::Kind::UNRESOLVED_BINARY,
-                Type(Position(), Type::Category::UNRESOLVED, "<unresolved binary operator>"),
+                Type(Position(), std::move(types)),
                 (int) op, std::move(children));
         return true;
     }
@@ -903,84 +960,133 @@ bool Compiler::convertIndexedAssignment(Position p, IRNode left, Operator op, IR
         IRNode* out) {
     ASSERT(left.fKind == IRNode::Kind::UNRESOLVED_INDEX);
     ASSERT(left.fChildren.size() == 2);
-    std::vector<IRNode> args;
-    args.push_back(std::move(left.fChildren[1]));
-    args.push_back(std::move(right));
-    return this->call(std::move(left.fChildren[0]), "[]:=", std::move(args), nullptr, out);
+    if (op == Operator::ASSIGNMENT) {
+        std::vector<IRNode> args;
+        args.push_back(std::move(left.fChildren[1]));
+        args.push_back(std::move(right));
+        return this->call(std::move(left.fChildren[0]), "[]:=", std::move(args), nullptr, out);
+    }
+    ASSERT(is_assignment(op));
+    // compound indexed assignment (e.g. foo[bar] += 1), which needs to get converted to
+    // foo.[]:=(bar, foo.[](bar) + 1). We need to reuse both the base and the index so they're only
+    // evaluated once.
+    Position basePosition = left.fChildren[0].fPosition;
+    Type baseType = left.fChildren[0].fType;
+    std::vector<IRNode> children;
+    children.push_back(std::move(left.fChildren[0]));
+    uint64_t baseId = ++fReusedValues;
+    IRNode base = IRNode(basePosition, IRNode::Kind::REUSED_VALUE_DEFINITION, baseType, baseId,
+            std::move(children));
+    children.clear();
+
+    Position indexPosition = left.fChildren[1].fPosition;
+    Type indexType = left.fChildren[1].fType;
+    children.push_back(std::move(left.fChildren[1]));
+    uint64_t indexId = ++fReusedValues;
+    IRNode index = IRNode(indexPosition, IRNode::Kind::REUSED_VALUE_DEFINITION, indexType, indexId,
+            std::move(children));
+    IRNode rhsIndex; // in our example, foo.[](bar)
+    IRNode baseRef = IRNode(base.fPosition, IRNode::Kind::REUSED_VALUE, baseType, baseId);
+    IRNode indexRef = IRNode(index.fPosition, IRNode::Kind::REUSED_VALUE, indexType, indexId);
+    if (!this->convertBinary(p, &baseRef, Operator::INDEX, &indexRef, &rhsIndex)) {
+        return false;
+    }
+    IRNode value; // foo.[](bar) + 1
+    if (!this->convertBinary(p, &rhsIndex, remove_assignment(op), &right, &value)) {
+        return false;
+    }
+    children.clear();
+    children.push_back(std::move(index));
+    children.push_back(std::move(value));
+    return this->call(std::move(base), "[]:=", std::move(children), nullptr, out);
 }
 
-bool Compiler::convertBinary(const ASTNode& b, IRNode* out) {
-    ASSERT(b.fKind == ASTNode::Kind::BINARY);
-    ASSERT(b.fChildren.size() == 2);
-    IRNode left;
-    if (!this->convertExpression(b.fChildren[0], &left)) {
-        return false;
-    }
-    IRNode right;
-    if (!this->convertExpression(b.fChildren[1], &right)) {
-        return false;
-    }
-    if (left.fType.fCategory == Type::Category::BUILTIN_INT &&
-            right.fType.fCategory == Type::Category::INT_LITERAL) {
-        if (!coerce(&right, left.fType, &right)) {
+bool Compiler::convertBinary(Position p, IRNode* left, Operator op, IRNode* right, IRNode* out) {
+    if (left->fType.fCategory == Type::Category::BUILTIN_INT &&
+            right->fType.fCategory == Type::Category::INT_LITERAL) {
+        if (!coerce(right, left->fType, right)) {
             return false;
         }
     }
-    if (left.fType.fCategory == Type::Category::INT_LITERAL &&
-            right.fType.fCategory == Type::Category::BUILTIN_INT) {
-        if (!coerce(&left, right.fType, &left)) {
+    if (left->fType.fCategory == Type::Category::INT_LITERAL &&
+            right->fType.fCategory == Type::Category::BUILTIN_INT) {
+        if (!coerce(left, right->fType, left)) {
             return false;
         }
     }
-    Operator op = (Operator) b.fValue.fInt;
     if (op == Operator::INDEX) {
         // index expressions are always unresolved at first, because it might turn out to be an
         // indexed assignment
+        std::vector<const MethodRef*> matches;
+        this->operatorMatch(left, op, right, nullptr, &matches);
+        std::set<Type> types;
+        for (const MethodRef* m : matches) {
+            types.insert(m->returnType());
+        }
         std::vector<IRNode> children;
-        children.push_back(std::move(left));
-        children.push_back(std::move(right));
-        *out = IRNode(b.fPosition, IRNode::Kind::UNRESOLVED_INDEX,
-                Type(b.fPosition, Type::Category::UNRESOLVED, "<unresolved index expression>"),
+        children.push_back(std::move(*left));
+        children.push_back(std::move(*right));
+        *out = IRNode(p, IRNode::Kind::UNRESOLVED_INDEX,
+                Type(p, std::move(types)),
                 std::move(children));
         return true;
     }
     IRNode call;
-    if (this->operatorCall(b.fPosition, &left, op, &right, &call)) {
+    if (this->operatorCall(p, left, op, right, &call)) {
         *out = std::move(call);
         return true;
     }
-    if (is_assignment(op)) {
-        if (left.fKind == IRNode::Kind::UNRESOLVED_INDEX) {
-            return this->convertIndexedAssignment(b.fPosition, std::move(left), op,
-                    std::move(right), out);
+    if (op == Operator::ASSIGNMENT) {
+        if (left->fKind == IRNode::Kind::UNRESOLVED_INDEX) {
+            return this->convertIndexedAssignment(p, std::move(*left), op, std::move(*right), out);
         }
-        if (!this->resolve(&left)) {
+        if (!this->resolve(left)) {
             return false;
         }
-        if (!this->coerce(&right, left.fType, &right)) {
+        if (!this->coerce(right, left->fType, right)) {
             return false;
         }
-        if (!is_lvalue(left)) {
-            this->error(left.fPosition, "cannot assign to this expression");
+        if (!is_lvalue(*left)) {
+            printf("left: %s\n", left->description().c_str());
+            this->error(left->fPosition, "cannot assign to this expression");
             return false;
         }
         std::vector<IRNode> children;
-        Type resultType = left.fType;
-        children.push_back(std::move(left));
-        children.push_back(std::move(right));
-        *out = IRNode(b.fPosition, IRNode::Kind::BINARY, std::move(resultType), (uint64_t) op,
+        Type resultType = left->fType;
+        children.push_back(std::move(*left));
+        children.push_back(std::move(*right));
+        *out = IRNode(p, IRNode::Kind::BINARY, std::move(resultType), (uint64_t) op,
                 std::move(children));
         return true;
     }
-    if (left.fKind == IRNode::Kind::INT && right.fKind == IRNode::Kind::INT) {
-        this->foldInts(b.fPosition, left, op, right, out);
+    if (is_assignment(op)) {
+        if (left->fKind == IRNode::Kind::UNRESOLVED_INDEX) {
+            return this->convertIndexedAssignment(p, std::move(*left), op, std::move(*right), out);
+        }
+        if (!this->resolve(left)) {
+            return false;
+        }
+        Position leftP = left->fPosition;
+        Type leftT = left->fType;
+        std::vector<IRNode> children;
+        children.push_back(std::move(*left));
+        *left = IRNode(leftP, IRNode::Kind::REUSED_VALUE_DEFINITION, leftT, ++fReusedValues,
+                std::move(children));
+        IRNode reusedLeft = IRNode(leftP, IRNode::Kind::REUSED_VALUE, leftT, fReusedValues);
+        if (!this->convertBinary(p, &reusedLeft, remove_assignment(op), right, right)) {
+            return false;
+        }
+        return this->convertBinary(p, left, Operator::ASSIGNMENT, right, out);
+    }
+    if (left->fKind == IRNode::Kind::INT && right->fKind == IRNode::Kind::INT) {
+        this->foldInts(p, *left, op, *right, out);
         return true;
     }
-    if (left.fKind == IRNode::Kind::BIT && right.fKind == IRNode::Kind::BIT) {
-        this->foldBits(b.fPosition, left, op, right, out);
+    if (left->fKind == IRNode::Kind::BIT && right->fKind == IRNode::Kind::BIT) {
+        this->foldBits(p, *left, op, *right, out);
         return true;
     }
-    if (left.fType == right.fType && left.fType.isBuiltinInt()) {
+    if (left->fType == right->fType && left->fType.isBuiltinInt()) {
         Type type;
         switch (op) {
             case Operator::ADD:          // fall through
@@ -999,24 +1105,7 @@ bool Compiler::convertBinary(const ASTNode& b, IRNode* out) {
             case Operator::SHIFTLEFT:    // fall through
             case Operator::SHIFTRIGHT:   // fall through
             case Operator::ASSIGNMENT:   // fall through
-            case Operator::ADDEQ:        // fall through
-            case Operator::SUBEQ:        // fall through
-            case Operator::MULEQ:        // fall through
-            case Operator::DIVEQ:        // fall through
-            case Operator::INTDIVEQ:     // fall through
-            case Operator::REMEQ:        // fall through
-            case Operator::POWEQ:        // fall through
-            case Operator::OREQ:         // fall through
-            case Operator::ANDEQ:        // fall through
-            case Operator::XOREQ:        // fall through
-            case Operator::BITWISEOREQ:  // fall through
-            case Operator::BITWISEANDEQ: // fall through
-            case Operator::BITWISEXOREQ: // fall through
-            case Operator::SHIFTLEFTEQ:  // fall through
-            case Operator::SHIFTRIGHTEQ: // fall through
-            case Operator::NOT:          // fall through
-            case Operator::BITWISENOT:
-                type = left.fType;
+                type = left->fType;
                 break;
             case Operator::EQ:           // fall through
             case Operator::NEQ:          // fall through
@@ -1032,14 +1121,28 @@ bool Compiler::convertBinary(const ASTNode& b, IRNode* out) {
                 abort();
         }
         std::vector<IRNode> children;
-        children.push_back(std::move(left));
-        children.push_back(std::move(right));
-        *out = IRNode(b.fPosition, IRNode::Kind::BINARY, type, (uint64_t) op, std::move(children));
+        children.push_back(std::move(*left));
+        children.push_back(std::move(*right));
+        *out = IRNode(p, IRNode::Kind::BINARY, type, (uint64_t) op, std::move(children));
         return true;
     }
-    this->error(b.fPosition, String("'") + operator_text(op) + "' cannot operate on '" +
-            left.fType.fName + "', '" + right.fType.fName + "'");
+    this->error(p, String("'") + operator_text(op) + "' cannot operate on '" + left->fType.fName +
+            "', '" + right->fType.fName + "'");
     return false;
+}
+
+bool Compiler::convertBinary(const ASTNode& b, IRNode* out) {
+    ASSERT(b.fKind == ASTNode::Kind::BINARY);
+    ASSERT(b.fChildren.size() == 2);
+    IRNode left;
+    if (!this->convertExpression(b.fChildren[0], &left)) {
+        return false;
+    }
+    IRNode right;
+    if (!this->convertExpression(b.fChildren[1], &right)) {
+        return false;
+    }
+    return this->convertBinary(b.fPosition, &left, (Operator) b.fValue.fInt, &right, out);
 }
 
 void Compiler::addMethod(Position p, const SymbolTable& st, Method* m,
@@ -1342,6 +1445,11 @@ bool Compiler::convertSelf(const ASTNode& s, IRNode* out) {
     return true;
 }
 
+bool Compiler::convertString(const ASTNode& s, IRNode* out) {
+    *out = IRNode(s.fPosition, IRNode::Kind::STRING, Type::PandaString(), s.fText);
+    return true;
+}
+
 bool Compiler::doConvertExpression(const ASTNode& e, IRNode* out) {
     switch (e.fKind) {
         case ASTNode::Kind::BINARY:
@@ -1370,6 +1478,8 @@ bool Compiler::doConvertExpression(const ASTNode& e, IRNode* out) {
             return this->convertSelf(e, out);
         case ASTNode::Kind::CLASS_TYPE:
             return this->convertType(e, out);
+        case ASTNode::Kind::STRING:
+            return this->convertString(e, out);
         default:
             printf("unhandled expression: %s\n", e.description().c_str());
             abort();

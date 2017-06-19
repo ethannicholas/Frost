@@ -6,6 +6,10 @@ class Pointer<T> : Value {
 	@external
 	method alloc(count:Int):Pointer<T>
 
+    @class
+    @external
+    method stackAlloc(count:Int):Pointer<T>
+
 	@external
 	function get():T
 

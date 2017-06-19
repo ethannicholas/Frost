@@ -78,6 +78,39 @@ class Int64 : Value {
         return (value >> index.value && 1) != 0
     }
 
+-*
+    function convert():String {
+        constant max := 20
+        def result := Pointer<Char8>.stackAlloc(max)
+        var index := max - 1
+        var value := self
+        if value >= 0 {
+            do {
+                result[index] := (value % 10 + 48).convert()
+                value //= 10
+                index -= 1
+            } 
+            while value > 0
+            index += 1
+        }
+        else {
+            do {
+                result[index] := (48 - value % 10).convert()
+                value //= 10
+                index -= 1
+            }
+            while value < 0
+            result[index] := "-"
+        }
+        def size := max - index
+        def chars := Pointer<Char>.alloc(size)
+        for i in index .. max {
+            chars[i - index] := result[i]
+        }
+        return String(chars, size)
+    }
+*-
+
     @private
     def value:builtin_int64
 }

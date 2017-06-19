@@ -13,6 +13,7 @@ public:
 
     ~LLVMCodeGenerator() {
         fOut << fTypeDeclarations.str();
+        fOut << fStrings.str();
         fOut << fMethods.str();
     }
 
@@ -90,6 +91,8 @@ private:
 
     String getFieldReference(const IRNode& self, std::ostream& out);
 
+    String getStringReference(const IRNode& s, std::ostream& out);
+
     String getReference(const IRNode& stmt, std::ostream& out);
 
     String getTypedReference(const IRNode& stmt, std::ostream& out);
@@ -138,6 +141,8 @@ private:
 
     std::stringstream fTypeDeclarations;
 
+    std::stringstream fStrings;
+
     std::stringstream fMethods;
 
     std::ostream& fOut;
@@ -149,6 +154,8 @@ private:
     std::unordered_map<String, ClassConstant> fClassConstants;
 
     std::unordered_map<String, size_t> fSizes;
+
+    std::unordered_map<uint64_t, String> fReusedValues;
 
     bool fKillCast = false;
 };

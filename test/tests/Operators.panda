@@ -3,12 +3,14 @@ class Operators {
     method int64() {
         var x:Int64 := 10
         var y:Int64 := 7
+        Console.println("Int64 Arithmetic")
         Console.println(x + y)
         Console.println(x - y)
         Console.println(x * y)
         Console.println(x // y)
         Console.println(x << 1)
         Console.println(x >> 1)
+        Console.println("Int64 Comparisons")
         Console.println(x = y)
         Console.println(x = x)
         Console.println(x != y)
@@ -25,22 +27,36 @@ class Operators {
         Console.println(x <= y)
         Console.println(y <= x)
         Console.println(y <= y)
+        Console.println("Int64 Compound Assignment")
+        x += y
+        Console.println(x)
+        x -= y
+        Console.println(x)
+        x *= y
+        Console.println(x)
+        x //= y
+        Console.println(x)
+        x <<= 1
+        Console.println(x)
+        x >>= 1
+        Console.println(x)
     }
 
     @class
-    function noisyTrue():Bit {
+    method noisyTrue():Bit {
         Console.println(-1)
         return true
     }
 
     @class
-    function noisyFalse():Bit {
+    method noisyFalse():Bit {
         Console.println(-2)
         return false
     }
 
     @class
     method bit() {
+        Console.println("Bit Logic")
         Console.println(!noisyTrue())
         Console.println(!noisyFalse())
         Console.println(noisyTrue() & noisyTrue())
@@ -52,6 +68,7 @@ class Operators {
         Console.println(noisyFalse() | noisyTrue())
         Console.println(noisyFalse() | noisyFalse())
 
+        Console.println("Bit Compound Assignment")
         var x := true
         x &= noisyTrue()
         Console.println(x)

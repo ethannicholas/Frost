@@ -1340,7 +1340,40 @@ bool PandaParser::target(ASTNode* outResult) {
     return true;
 }
 
-// term = IDENTIFIER | DECIMAL | SELF | TRUE | FALSE | LPAREN expression RPAREN
+bool PandaParser::string(ASTNode* outResult) {
+    Token start = this->nextToken();
+    if (start.fKind != Token::Kind::DOUBLE_QUOTE && start.fKind != Token::Kind::SINGLE_QUOTE) {
+        this->error(start.fPosition, "expected a string, but found '" + start.fText + "'");
+        return false;
+    }
+    String result;
+    for (;;) {
+        Token next = this->nextRawToken();
+        if (next.fKind == start.fKind) {
+            break;
+        }
+        else if (next.fKind == Token::Kind::WHITESPACE) {
+            for (char c : next.fText) {
+                if (c == '\n') {
+                    this->error(start.fPosition, "unterminated string literal");
+                    return false;
+                }
+            }
+            result += next.fText;
+        }
+        else if (next.fKind == Token::Kind::END_OF_FILE) {
+            this->error(start.fPosition, "unterminated string literal");
+            return false;
+        }
+        else {
+            result += next.fText;
+        }
+    }
+    *outResult = ASTNode(start.fPosition, ASTNode::Kind::STRING, result);
+    return true;
+}
+
+// term = IDENTIFIER | DECIMAL | SELF | TRUE | FALSE | string | LPAREN expression RPAREN
 bool PandaParser::term(ASTNode* outResult) {
     Token t = this->nextToken();
     switch (t.fKind) {
@@ -1359,6 +1392,10 @@ bool PandaParser::term(ASTNode* outResult) {
         case Token::Kind::FALSE_LITERAL:
             *outResult = ASTNode(t.fPosition, ASTNode::Kind::FALSE_LITERAL);
             return true;
+        case Token::Kind::DOUBLE_QUOTE: // fall through
+        case Token::Kind::SINGLE_QUOTE:
+            this->pushback(t);
+            return this->string(outResult);
         case Token::Kind::LPAREN: {
             if (!this->expression(outResult)) {
                 return false;

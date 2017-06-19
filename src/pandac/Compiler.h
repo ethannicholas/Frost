@@ -104,12 +104,17 @@ private:
 
     int operatorCost(IRNode* left, const MethodRef& m, IRNode* right, const Type* returnType);
 
+    int operatorMatchLeft(const Class& leftClass, IRNode* left, Operator op, IRNode* right,
+            const Type* returnType, std::vector<const MethodRef*>* outResult);
+
     int operatorMatch(IRNode* left, Operator op, IRNode* right, const Type* returnType,
             std::vector<const MethodRef*>* outResult);
 
     bool operatorCall(Position p, IRNode* left, Operator op, IRNode* right, IRNode* outResult);
 
     bool convertIndexedAssignment(Position p, IRNode left, Operator op, IRNode right, IRNode* out);
+
+    bool convertBinary(Position p, IRNode* left, Operator op, IRNode* right, IRNode* out);
 
     bool convertBinary(const ASTNode& b, IRNode* out);
 
@@ -145,6 +150,8 @@ private:
     bool convertDot(const ASTNode& d, IRNode* out);
 
     bool convertSelf(const ASTNode& s, IRNode* out);
+
+    bool convertString(const ASTNode& s, IRNode* out);
 
     bool convertExpression(const ASTNode& e, IRNode* out);
 
@@ -211,4 +218,6 @@ private:
     std::unordered_map<String, Class*> fClasses;
 
     std::unordered_map<String, std::unique_ptr<Type>> fTypes;
+
+    uint64_t fReusedValues;
 };

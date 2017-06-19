@@ -259,7 +259,9 @@ LLVMCodeGenerator::OpClass op_class(Type t) {
         case Type::Category::BUILTIN_INT:   return LLVMCodeGenerator::OpClass::SIGNED;
         case Type::Category::BUILTIN_UINT:  return LLVMCodeGenerator::OpClass::UNSIGNED;
         case Type::Category::BUILTIN_FLOAT: return LLVMCodeGenerator::OpClass::FLOAT;
-        default: abort();
+        default:
+            printf("unsupported type in op_class: %s\n", t.description().c_str());
+            abort();
     }
 }
 
@@ -611,9 +613,31 @@ String LLVMCodeGenerator::getFieldReference(const IRNode& field, std::ostream& o
                 " " << base << ", " << index << "\n";
         return result;
     }
-    String ptr = this->getLValue(field, out);
+    String ptr = this->llvmType(field.fType) + "* " + this->getLValue(field, out);
     String result = this->nextVar();
     out << "    " << result << " = load " << this->llvmType(field.fType) << ", " << ptr << "\n";
+    return result;
+}
+
+String LLVMCodeGenerator::getStringReference(const IRNode& s, std::ostream& out) {
+    String chars = "@$chars" + std::to_string(++fLabels);
+    String charsType = "[" + std::to_string(s.fText.size()) + " x i8]";
+    fStrings << chars << " = private unnamed_addr constant " << charsType << " [ ";
+    const char* separator = "";
+    for (char c : s.fText) {
+        fStrings << separator << "i8 " << (int) c;
+        separator = ", ";
+    }
+    fStrings << " ];\n";
+    String result = "@$str" + std::to_string(++fLabels);
+    Class* string = fCompiler->resolveClass(fCurrentClass->fSymbolTable, Type::PandaString());
+    ASSERT(string);
+    const ClassConstant& cc = this->getClassConstant(*string);
+    fStrings << result << " = private unnamed_addr constant %panda$core$String { " <<
+            "%panda$core$Class* bitcast(" << cc.fType << "* " << cc.fName << " to " <<
+            "%panda$core$Class*), %panda$core$Char8* bitcast(" << charsType << "* " << chars <<
+            " to %panda$core$Char8*), %panda$core$Int64 insertvalue(%panda$core$Int64 " <<
+            "{ i64 undef }, i64 " << s.fText.size() << ", 0) }\n";
     return result;
 }
 
@@ -641,8 +665,19 @@ String LLVMCodeGenerator::getReference(const IRNode& expr, std::ostream& out) {
             return this->getPrefixReference(expr, out);
         case IRNode::Kind::SELF:
             return this->getSelfReference(expr, out);
+        case IRNode::Kind::STRING:
+            return this->getStringReference(expr, out);
         case IRNode::Kind::VARIABLE_REFERENCE:
             return this->getVariableReference(*((Variable*) expr.fValue.fPtr), out);
+        case IRNode::Kind::REUSED_VALUE_DEFINITION: {
+            ASSERT(fReusedValues.find(expr.fValue.fInt) == fReusedValues.end());
+            String result = this->getReference(expr.fChildren[0], out);
+            fReusedValues[expr.fValue.fInt] = result;
+            return result;
+        }
+        case IRNode::Kind::REUSED_VALUE:
+            ASSERT(fReusedValues.find(expr.fValue.fInt) != fReusedValues.end());
+            return fReusedValues[expr.fValue.fInt];
         default:
             printf("unsupported expression: %s\n", expr.description().c_str());
             abort();
@@ -657,7 +692,7 @@ String LLVMCodeGenerator::getLValue(const IRNode& lvalue, std::ostream& out) {
     switch (lvalue.fKind) {
         case IRNode::Kind::VARIABLE_REFERENCE: {
             Variable* var = (Variable*) lvalue.fValue.fPtr;
-            return this->llvmType(var->fType) + "* " + this->varName(*var);
+            return this->varName(*var);
         }
         case IRNode::Kind::FIELD_REFERENCE: {
             String base = this->getReference(lvalue.fChildren[0], out);
@@ -678,7 +713,15 @@ String LLVMCodeGenerator::getLValue(const IRNode& lvalue, std::ostream& out) {
             out << "    " << ptr << " = getelementptr inbounds " << this->llvmTypeName(cl->fType) <<
                     ", " << this->llvmTypeName(cl->fType) << "* " << base << ", i64 0, i32 " <<
                     index << "\n";
-            return this->llvmType(lvalue.fType) + "* " + ptr;
+            return ptr;
+        }
+        case IRNode::Kind::REUSED_VALUE_DEFINITION: {
+            String result = this->getLValue(lvalue.fChildren[0], out);
+            String reused = this->nextVar();
+            out << "    " << reused << " = load " << this->llvmType(lvalue.fType) << ", " <<
+                    this->llvmType(lvalue.fType) << "* " << result << "\n";
+            fReusedValues[lvalue.fValue.fInt] = reused;
+            return result;
         }
         default:
             abort();
@@ -718,7 +761,8 @@ void LLVMCodeGenerator::writeOrEq(const String& lvalue, const IRNode& right, std
 void LLVMCodeGenerator::writeAssignment(const IRNode& a, std::ostream& out) {
     ASSERT(a.fKind == IRNode::Kind::BINARY);
     ASSERT(a.fChildren.size() == 2);
-    String lvalue = this->getLValue(a.fChildren[0], out);
+    String lvalue = this->llvmType(a.fChildren[0].fType) + "* " +
+            this->getLValue(a.fChildren[0], out);
     String value;
     String type = this->llvmType(a.fChildren[0].fType);
     Operator op = (Operator) a.fValue.fInt;

@@ -159,6 +159,8 @@ private:
 
     bool terminalStatement(ASTNode* outResult);
 
+    bool string(ASTNode* outResult);
+
     bool term(ASTNode* outResult);
 
     bool type(ASTNode* outResult);

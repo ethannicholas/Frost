@@ -20,8 +20,6 @@ LETTER [a-zA-Z_$]
     return (int) Token::Kind::FLOAT;
 }
 
-["] { return (int) Token::Kind::QUOTE; }
-
 --[^\n]* { return (int) Token::Kind::LINE_COMMENT; }
 
 "-*" { return (int) Token::Kind::BLOCK_COMMENT; }
@@ -29,6 +27,10 @@ LETTER [a-zA-Z_$]
 "*-" { return (int) Token::Kind::BLOCK_COMMENT_END; }
 
 "==="[=]* { return (int) Token::Kind::DOC_COMMENT; }
+
+['] { return (int) Token::Kind::SINGLE_QUOTE; }
+
+["] { return (int) Token::Kind::DOUBLE_QUOTE; }
 
 "package"     { return (int) Token::Kind::PACKAGE; }
 "uses"        { return (int) Token::Kind::USES; }
