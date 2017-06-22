@@ -22,12 +22,14 @@ LLVMCodeGenerator::LLVMCodeGenerator(std::ostream* out)
 #endif
 
     fOut << "declare i8* @malloc(" SIZE_T ")\n";
+    fOut << "declare i8* @realloc(i8*, " SIZE_T ")\n";
+    fOut << "declare void @free(i8*)\n";
 
     // temporary
     fMethods << "declare i64 @putchar(i64)\n";
     fMethods << "declare i64 @printf(i8*, ...)\n";
     fMethods << "@fmt = private constant [4 x i8] [i8 37, i8 100, i8 10, i8 0]\n";
-    fMethods << "define fastcc void @panda$io$Console$println$panda$core$Int64(%panda$core$Int64 %num) {\n";
+    fMethods << "define fastcc void @panda$io$Console$printLine$panda$core$Int64(%panda$core$Int64 %num) {\n";
     fMethods << "    %1 = extractvalue %panda$core$Int64 %num, 0;\n";
     fMethods << "    call i64 (i8*, ...) @printf(i8* bitcast ([4 x i8]* @fmt to i8*), i64 %1)\n";
     fMethods << "    ret void\n";
@@ -46,33 +48,40 @@ static size_t field_size(const Type& type) {
         case Type::Category::BUILTIN_UINT: return std::max(type.fSize / 8, 1);
         case Type::Category::CLASS: // fall through
         case Type::Category::GENERIC: return POINTER_SIZE;
+        case Type::Category::PARAMETER:
+            return POINTER_SIZE;
         default: abort();
     }
 }
 
 size_t LLVMCodeGenerator::sizeOf(const Type& type) {
-    if (type.fCategory == Type::Category::CLASS) {
-        auto found = fSizes.find(type.fName);
-        if (found != fSizes.end()) {
-            return found->second;
-        }
-        size_t result = 0;
-        Class* cl = fCompiler->resolveClass(fCurrentClass->fSymbolTable, type);
-        ASSERT(cl);
-        for (const Field* f : fCompiler->getAllFields(*cl)) {
-            size_t fieldSize = field_size(f->fType);
-            size_t align = result % fieldSize;
-            if (align) {
-                result += fieldSize - align;
+    switch (type.fCategory) {
+        case Type::Category::CLASS: {
+            auto found = fSizes.find(type.fName);
+            if (found != fSizes.end()) {
+                return found->second;
             }
-            ASSERT(result % fieldSize == 0);
-            result += fieldSize;
+            size_t result = 0;
+            Class* cl = fCompiler->resolveClass(fCurrentClass->fSymbolTable, type);
+            ASSERT(cl);
+            for (const Field* f : fCompiler->getAllFields(*cl)) {
+                size_t fieldSize = field_size(f->fType);
+                size_t align = result % fieldSize;
+                if (align) {
+                    result += fieldSize - align;
+                }
+                ASSERT(result % fieldSize == 0);
+                result += fieldSize;
+            }
+            fSizes[type.fName] = result;
+            return result;
         }
-        fSizes[type.fName] = result;
-        return result;
-    }
-    else {
-        return field_size(type);
+        case Type::Category::GENERIC:
+            return this->sizeOf(type.fSubtypes[0]);
+        case Type::Category::PARAMETER:
+            return this->sizeOf(type.fSubtypes[0]);
+        default:
+            return field_size(type);
     }
 }
 
@@ -275,7 +284,7 @@ String LLVMCodeGenerator::getBinaryReference(OpClass cl, const String leftRef, O
                 case Operator::SUB:        llvmOp = "sub";      break;
                 case Operator::MUL:        llvmOp = "mul";      break;
                 case Operator::INTDIV:     llvmOp = "sdiv";     break;
-                case Operator::REM:        llvmOp = "mod";      break;
+                case Operator::REM:        llvmOp = "srem";     break;
                 case Operator::SHIFTLEFT:  llvmOp = "shl";      break;
                 case Operator::SHIFTRIGHT: llvmOp = "ashr";     break;
                 case Operator::BITWISEAND: llvmOp = "and";      break;
@@ -299,7 +308,7 @@ String LLVMCodeGenerator::getBinaryReference(OpClass cl, const String leftRef, O
                 case Operator::SUB:        llvmOp = "sub";      break;
                 case Operator::MUL:        llvmOp = "mul";      break;
                 case Operator::INTDIV:     llvmOp = "udiv";     break;
-                case Operator::REM:        llvmOp = "mod";      break;
+                case Operator::REM:        llvmOp = "urem";     break;
                 case Operator::SHIFTLEFT:  llvmOp = "shl";      break;
                 case Operator::SHIFTRIGHT: llvmOp = "lshr";     break;
                 case Operator::BITWISEAND: llvmOp = "and";      break;
@@ -497,6 +506,26 @@ String LLVMCodeGenerator::getPointerCallReference(const IRNode& call, std::ostre
         fKillCast = true;
         return load;
     }
+    else if (m->fMethod.fName == "realloc") {
+        ASSERT(call.fChildren.size() == 3);
+        String ptr = this->getTypedReference(unwrap_cast(call.fChildren[1]), out);
+        String ptrCast = this->nextVar();
+        out << "    " << ptrCast << " = bitcast " << ptr << " to i8*\n";
+        String countStruct = this->getTypedReference(call.fChildren[2], out);
+        String count = this->nextVar();
+        out << "    " << count << " = extractvalue " << countStruct << ", 0\n";
+        String size = this->nextVar();
+        out << "    " << size << " = mul " << SIZE_T << " " << count << ", " <<
+                this->sizeOf(m->returnType().fSubtypes[1]) << "\n";
+        String realloc = this->nextVar();
+        out << "    " << realloc << " = call i8* @realloc(i8* " << ptrCast << ", " << SIZE_T <<
+                " " << size << ")\n";
+        String result = this->nextVar();
+        out << "    " << result << " = bitcast i8* " << realloc << " to " <<
+                this->llvmType(m->returnType()) << "\n";
+        fKillCast = true;
+        return result;
+    }
     abort();
 }
 
@@ -554,8 +583,26 @@ String LLVMCodeGenerator::getCastReference(const IRNode& cast, std::ostream& out
         return base;
     }
     String result = this->nextVar();
-    out << "    " << result << " = bitcast " << this->llvmType(cast.fChildren[0].fType) << " " <<
-            base << " to " << this->llvmType(cast.fType) << "\n";
+    String op;
+    if (cast.fType.isBuiltinNumber()) {
+        ASSERT(cast.fChildren[0].fType.isBuiltinNumber());
+        int size1 = cast.fChildren[0].fType.fSize;
+        int size2 = cast.fType.fSize;
+        if (size1 > size2) {
+            op = "trunc";
+        }
+        else if (size1 < size2) {
+            op = "sext";
+        }
+        else {
+            return result;
+        }
+    }
+    else {
+        op = "bitcast";
+    }
+    out << "    " << result << " = " << op << " " << this->llvmType(cast.fChildren[0].fType) <<
+            " " << base << " to " << this->llvmType(cast.fType) << "\n";
     return result;
 }
 
@@ -580,9 +627,15 @@ String LLVMCodeGenerator::getConstructReference(const IRNode& construct, std::os
     out << "    " << result << " = bitcast i8* " << callRef << " to " <<
             this->llvmType(construct.fType) << "\n";
     String classPtr = this->nextVar();
-    out << "    " << classPtr << " = getelementptr inbounds " <<
-            this->llvmTypeName(construct.fType) << ", " << type << " " << result <<
-            ", i64 0, i32 0" << "\n";
+    String className;
+    if (construct.fType.fCategory == Type::Category::GENERIC) {
+        className = this->llvmTypeName(construct.fType.fSubtypes[0]);
+    }
+    else {
+        className = this->llvmTypeName(construct.fType);
+    }
+    out << "    " << classPtr << " = getelementptr inbounds " << className << ", " << type <<
+            " " << result << ", i64 0, i32 0" << "\n";
     const ClassConstant& cc = this->getClassConstant(*cl);
     out << "    store %panda$core$Class* bitcast(" << cc.fType << "* " << cc.fName <<
             " to %panda$core$Class*), %panda$core$Class** " << classPtr << "\n";
@@ -853,6 +906,13 @@ void LLVMCodeGenerator::writePointerCall(const IRNode& stmt, std::ostream& out) 
                 base << ", " << SIZE_T << " " << index << "\n";
         out << "    store " << value << ", " << this->llvmType(baseType) << "* " << ptr << "\n";
     }
+    else if (m->fMethod.fName == "destroy") {
+        ASSERT(stmt.fChildren.size() == 2);
+        String ptr = this->getTypedReference(unwrap_cast(stmt.fChildren[1]), out);
+        String cast = this->nextVar();
+        out << "    " << cast << " = bitcast " << ptr << " to i8*\n";
+        out << "    call void @free(i8* " << cast << ")\n";
+    }
     else {
         abort();
     }
@@ -913,10 +973,10 @@ void LLVMCodeGenerator::writeWhile(const IRNode& w, std::ostream& out) {
     ASSERT(w.fKind == IRNode::Kind::WHILE);
     ASSERT(w.fChildren.size() == 2);
     String loopStart = this->nextLabel();
+    String loopBody = this->nextLabel();
     out << "    br label %" << loopStart << "\n";
     this->createBlock(loopStart, out);
     String test = this->getReference(w.fChildren[0], out);
-    String loopBody = this->nextLabel();
     String loopEnd = this->nextLabel();
     out << "    br i1 " << test << ", label %" << loopBody << ", label %" << loopEnd << "\n";
     this->createBlock(loopBody, out);
@@ -927,6 +987,23 @@ void LLVMCodeGenerator::writeWhile(const IRNode& w, std::ostream& out) {
     this->createBlock(loopEnd, out);
 }
 
+void LLVMCodeGenerator::writeDo(const IRNode& d, std::ostream& out) {
+    ASSERT(d.fKind == IRNode::Kind::DO);
+    ASSERT(d.fChildren.size() == 2);
+    String loopStart = this->nextLabel();
+    String loopBody = this->nextLabel();
+    out << "    br label %" << loopBody << "\n";
+    this->createBlock(loopStart, out);
+    String test = this->getReference(d.fChildren[1], out);
+    String loopEnd = this->nextLabel();
+    out << "    br i1 " << test << ", label %" << loopBody << ", label %" << loopEnd << "\n";
+    this->createBlock(loopBody, out);
+    this->writeStatement(d.fChildren[0], out);
+    if (!ends_with_branch(d.fChildren[0])) {
+        out << "    br label %" << loopStart << "\n";
+    }
+    this->createBlock(loopEnd, out);
+}
 
 void LLVMCodeGenerator::writeVarTarget(const IRNode& target, const IRNode* value,
             std::ostream& out) {
@@ -986,6 +1063,7 @@ void LLVMCodeGenerator::writeStatement(const IRNode& stmt, std::ostream& out) {
         case IRNode::Kind::CALL:     this->writeCall      (stmt, "", out); break;
         case IRNode::Kind::IF:       this->writeIf        (stmt, out);     break;
         case IRNode::Kind::WHILE:    this->writeWhile     (stmt, out);     break;
+        case IRNode::Kind::DO:       this->writeDo        (stmt, out);     break;
         case IRNode::Kind::RETURN:   this->writeReturn    (stmt, out);     break;
         case IRNode::Kind::VAR:      // fall through
         case IRNode::Kind::DEF:      // fall through
@@ -995,6 +1073,7 @@ void LLVMCodeGenerator::writeStatement(const IRNode& stmt, std::ostream& out) {
             printf("unsupported statement: %s\n", stmt.description().c_str());
             abort();
     }
+    ASSERT(!fKillCast);
 }
 
 std::unordered_map<String, String> METHOD_NAME_MAP {
@@ -1003,6 +1082,7 @@ std::unordered_map<String, String> METHOD_NAME_MAP {
     { "*",       "$MUL" },
     { "/",       "$DIV" },
     { "//",      "$INTDIV" },
+    { "%",       "$REM" },
     { "^",       "$POW" },
     { "[]",      "$IDX" },
     { "[]:=",    "$IDXEQ" },
@@ -1092,7 +1172,7 @@ void LLVMCodeGenerator::writeMethod(const Method& method, const IRNode& body, Co
         separator = ", ";
     }
     out << ") {\n";
-    fMethodHeader = std::stringstream();
+    fMethodHeader.str("");
     std::stringstream bodyCode;
     ASSERT(body.fKind == IRNode::Kind::BLOCK);
     for (const auto& s : body.fChildren) {

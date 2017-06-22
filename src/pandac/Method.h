@@ -67,7 +67,12 @@ struct Method : public Symbol {
             result += separator + p.fType.fName;
             separator = ", ";
         }
-        result += ") (" + fPosition.description() + ")";
+        result += ')';
+        if (fReturnType != Type::Void()) {
+            result += ':';
+            result += fReturnType.description();
+        }
+        result += " (" + fPosition.description() + ")";
         return result;
     }
 

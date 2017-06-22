@@ -55,6 +55,10 @@ private:
     // for all convert methods: a true result means "successful enough to have produced output",
     // false means failure. Success may still have generated errors.
 
+    bool coerce(IRNode* expr, const Type& type) {
+        return this->coerce(expr, type, expr);
+    }
+
     bool coerce(IRNode* expr, const Type& type, IRNode* out);
 
     /**
@@ -70,6 +74,8 @@ private:
      * it handles complex situations such as unresolved methods.
      */
     int coercionCost(const IRNode& node, const Type& target);
+
+    bool canCast(const IRNode& node, const Type& target);
 
     /**
      * Determines which method(s) are the best match for the provided arguments and (optional)
@@ -114,6 +120,8 @@ private:
 
     bool convertIndexedAssignment(Position p, IRNode left, Operator op, IRNode right, IRNode* out);
 
+    bool convertArrow(const ASTNode& a, IRNode* out);
+
     bool convertBinary(Position p, IRNode* left, Operator op, IRNode* right, IRNode* out);
 
     bool convertBinary(const ASTNode& b, IRNode* out);
@@ -153,6 +161,8 @@ private:
 
     bool convertString(const ASTNode& s, IRNode* out);
 
+    bool convertRange(const ASTNode& r, IRNode* out);
+
     bool convertExpression(const ASTNode& e, IRNode* out);
 
     bool resolve(IRNode* value);
@@ -161,21 +171,25 @@ private:
     
     bool convertParameter(const ASTNode& p, IRNode* out);
 
-    bool convertIf(const ASTNode& p, IRNode* out);
+    bool convertIf(const ASTNode& i, IRNode* out);
 
-    bool convertWhile(const ASTNode& p, IRNode* out);
+    bool convertWhile(const ASTNode& w, IRNode* out);
 
-    bool convertTarget(const ASTNode& t, IRNode* value, IRNode* out);
+    bool convertDo(const ASTNode& d, IRNode* out);
+
+    bool convertFor(const ASTNode& f, IRNode* out);
+
+    bool convertTarget(const ASTNode& t, IRNode* value, const Type* valueType, IRNode* out);
 
     bool convertDeclaration(const ASTNode& d, IRNode* out);
 
     bool convertVar(const ASTNode& v, IRNode* out);
 
-    bool convertReturn(const ASTNode& s, IRNode* out);
+    bool convertReturn(const ASTNode& r, IRNode* out);
 
-    bool convertStatement(const ASTNode& p, IRNode* out);
+    bool convertStatement(const ASTNode& s, IRNode* out);
 
-    bool convertBlock(const ASTNode& p, IRNode* out);
+    bool convertBlock(const ASTNode& b, IRNode* out);
 
     bool convertType(const ASTNode& method, IRNode* out);
 

@@ -105,6 +105,8 @@ private:
 
     void writeWhile(const IRNode& w, std::ostream& out);
 
+    void writeDo(const IRNode& d, std::ostream& out);
+
     void writeVarTarget(const IRNode& var, const IRNode* value, std::ostream& out);
 
     void writeVar(const IRNode& var, std::ostream& out);

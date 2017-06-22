@@ -1,0 +1,20 @@
+A * A: A
+A
+A * A: B
+B
+A * B: A
+A
+A * B: B
+B
+A * B: C
+C
+A * A: A
+A * A: B
+B
+A * A: B
+A * B: C
+C
+C[A]: A
+A
+C[A]: B
+B

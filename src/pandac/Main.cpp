@@ -101,6 +101,7 @@ void reportErrors(ErrorReporter& errors) {
 
 int main(int argc, char** argv) {
     std::vector<String> sources;
+    sources.push_back(PANDA_HOME + "panda/core/Array.panda");
     sources.push_back(PANDA_HOME + "panda/core/Bit.panda");
     sources.push_back(PANDA_HOME + "panda/core/Char8.panda");
     sources.push_back(PANDA_HOME + "panda/core/Class.panda");

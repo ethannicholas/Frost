@@ -7,6 +7,12 @@ class String {
         self.size := size
     }
 
+    @override
+    @private
+    method cleanup() {
+        data.destroy()
+    }
+
     function +(other:String):String {
         def result := Pointer<Char8>.alloc(size + other.size)
         var i := 0

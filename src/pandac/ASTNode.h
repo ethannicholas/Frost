@@ -15,6 +15,7 @@ struct ASTNode {
         ANNOTATION,
         ANNOTATIONS,
         ARRAY,
+        ARROW,
         AS,
         ASSERT,
         ASSIGNMENT_TUPLE,
@@ -175,6 +176,7 @@ struct ASTNode {
             case Kind::ANNOTATION:              result += "Annotation";            break;
             case Kind::ANNOTATIONS:             result += "Annotations";           break;
             case Kind::ARRAY:                   result += "Array";                 break;
+            case Kind::ARROW:                   result += "Arrow";                 break;
             case Kind::AS:                      result += "As";                    break;
             case Kind::ASSERT:                  result += "Assert";                break;
             case Kind::ASSIGNMENT_TUPLE:        result += "AssignmentTuple";       break;

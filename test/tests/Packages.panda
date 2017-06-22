@@ -28,8 +28,8 @@ package p4
 class Packages {
     @class
     method main() {
-        Console.println(p1.p2.p3.Foo.x())
-        Console.println(p1.p2.Bar.x())
-        Console.println(p1.p2.Baz.x())
+        Console.printLine(p1.p2.p3.Foo.x())
+        Console.printLine(p1.p2.Bar.x())
+        Console.printLine(p1.p2.Baz.x())
     }
 }

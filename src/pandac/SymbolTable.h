@@ -4,6 +4,7 @@
 #include "Util.h"
 
 #include <map>
+#include <memory>
 #include <vector>
 
 struct Class;

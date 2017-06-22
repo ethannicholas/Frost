@@ -1,0 +1,32 @@
+package panda.core
+
+class Array<T> {
+    init() {
+        capacity := 16
+        data := Pointer<T>.alloc(capacity)
+    }
+
+    function [](index:Int):T {
+        return data[index]
+    }
+
+    method []:=(index:Int, value:T) {
+        data[index] := value
+    }
+
+    method add(value:T) {
+        def index := size
+        size += 1
+        if size > capacity {
+            capacity *= 2
+            data := data.realloc(capacity)
+        }
+        data[index] := value
+    }
+
+    var size := 0
+
+    var capacity := 16
+
+    var data:Pointer<T>
+}

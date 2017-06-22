@@ -22,9 +22,12 @@ struct Class : public Symbol {
     };
 
     struct GenericParameter : public Symbol {
-        GenericParameter(Position position, String name, Type type)
+        GenericParameter(Position position, String owner, String name, Type type)
         : INHERITED(position, Symbol::Kind::GENERIC_PARAMETER, name)
+        , fOwner(std::move(owner))
         , fType(std::move(type)) {}
+
+        String fOwner;
 
         Type fType;
 

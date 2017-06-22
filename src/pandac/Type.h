@@ -56,7 +56,7 @@ struct Type : public Symbol {
         for (const Type& t : types) {
             result += separator;
             result += t.fName;
-            separator = " | ";
+            separator = "|";
         }
         result += ">";
         return result;
@@ -162,8 +162,12 @@ struct Type : public Symbol {
     }
 
     static Type& IntLiteral() {
-        static Type result = Type(Position(), Category::INT_LITERAL, "<integer literal>", 1);
+        static Type result = Type(Position(), Category::INT_LITERAL, "<integer>", 1);
         return result;
+    }
+
+    static Type& Int() {
+        return Int64();
     }
 
     static Type& Int64() {

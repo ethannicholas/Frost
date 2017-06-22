@@ -7,7 +7,10 @@ MethodRef::MethodRef(const Method* method, std::vector<Type> types)
 : fMethod(*method)
 , fTypes(std::move(types)) {
     for (int i = 0; i < fTypes.size(); ++i) {
-        fTypeMap[method->fOwner.fParameters[i].fName] = fTypes[i];
+        if (i >= method->fOwner.fParameters.size()) {
+            break;
+        }
+        fTypeMap[method->fOwner.fName + "." + method->fOwner.fParameters[i].fName] = fTypes[i];
     }
 }
 

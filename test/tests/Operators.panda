@@ -3,103 +3,103 @@ class Operators {
     method int64() {
         var x:Int64 := 10
         var y:Int64 := 7
-        Console.println("Int64 Arithmetic")
-        Console.println(x + y)
-        Console.println(x - y)
-        Console.println(x * y)
-        Console.println(x // y)
-        Console.println(x << 1)
-        Console.println(x >> 1)
-        Console.println("Int64 Comparisons")
-        Console.println(x = y)
-        Console.println(x = x)
-        Console.println(x != y)
-        Console.println(x != x)
-        Console.println(x > x)
-        Console.println(x > y)
-        Console.println(y > x)
-        Console.println(x >= y)
-        Console.println(y >= x)
-        Console.println(x >= x)
-        Console.println(x < y)
-        Console.println(y < x)
-        Console.println(y < y)
-        Console.println(x <= y)
-        Console.println(y <= x)
-        Console.println(y <= y)
-        Console.println("Int64 Compound Assignment")
+        Console.printLine("Int64 Arithmetic")
+        Console.printLine(x + y)
+        Console.printLine(x - y)
+        Console.printLine(x * y)
+        Console.printLine(x // y)
+        Console.printLine(x << 1)
+        Console.printLine(x >> 1)
+        Console.printLine("Int64 Comparisons")
+        Console.printLine(x = y)
+        Console.printLine(x = x)
+        Console.printLine(x != y)
+        Console.printLine(x != x)
+        Console.printLine(x > x)
+        Console.printLine(x > y)
+        Console.printLine(y > x)
+        Console.printLine(x >= y)
+        Console.printLine(y >= x)
+        Console.printLine(x >= x)
+        Console.printLine(x < y)
+        Console.printLine(y < x)
+        Console.printLine(y < y)
+        Console.printLine(x <= y)
+        Console.printLine(y <= x)
+        Console.printLine(y <= y)
+        Console.printLine("Int64 Compound Assignment")
         x += y
-        Console.println(x)
+        Console.printLine(x)
         x -= y
-        Console.println(x)
+        Console.printLine(x)
         x *= y
-        Console.println(x)
+        Console.printLine(x)
         x //= y
-        Console.println(x)
+        Console.printLine(x)
         x <<= 1
-        Console.println(x)
+        Console.printLine(x)
         x >>= 1
-        Console.println(x)
+        Console.printLine(x)
     }
 
     @class
     method noisyTrue():Bit {
-        Console.println(-1)
+        Console.printLine(-1)
         return true
     }
 
     @class
     method noisyFalse():Bit {
-        Console.println(-2)
+        Console.printLine(-2)
         return false
     }
 
     @class
     method bit() {
-        Console.println("Bit Logic")
-        Console.println(!noisyTrue())
-        Console.println(!noisyFalse())
-        Console.println(noisyTrue() & noisyTrue())
-        Console.println(noisyTrue() & noisyFalse())
-        Console.println(noisyFalse() & noisyTrue())
-        Console.println(noisyFalse() & noisyFalse())
-        Console.println(noisyTrue() | noisyTrue())
-        Console.println(noisyTrue() | noisyFalse())
-        Console.println(noisyFalse() | noisyTrue())
-        Console.println(noisyFalse() | noisyFalse())
+        Console.printLine("Bit Logic")
+        Console.printLine(!noisyTrue())
+        Console.printLine(!noisyFalse())
+        Console.printLine(noisyTrue() & noisyTrue())
+        Console.printLine(noisyTrue() & noisyFalse())
+        Console.printLine(noisyFalse() & noisyTrue())
+        Console.printLine(noisyFalse() & noisyFalse())
+        Console.printLine(noisyTrue() | noisyTrue())
+        Console.printLine(noisyTrue() | noisyFalse())
+        Console.printLine(noisyFalse() | noisyTrue())
+        Console.printLine(noisyFalse() | noisyFalse())
 
-        Console.println("Bit Compound Assignment")
+        Console.printLine("Bit Compound Assignment")
         var x := true
         x &= noisyTrue()
-        Console.println(x)
+        Console.printLine(x)
 
         x := true
         x &= noisyFalse()
-        Console.println(x)
+        Console.printLine(x)
 
         x := false
         x &= noisyTrue()
-        Console.println(x)
+        Console.printLine(x)
 
         x := false
         x &= noisyFalse()
-        Console.println(x)
+        Console.printLine(x)
 
         x := true
         x |= noisyTrue()
-        Console.println(x)
+        Console.printLine(x)
 
         x := true
         x |= noisyFalse()
-        Console.println(x)
+        Console.printLine(x)
 
         x := false
         x |= noisyTrue()
-        Console.println(x)
+        Console.printLine(x)
 
         x := false
         x |= noisyFalse()
-        Console.println(x)
+        Console.printLine(x)
     }
 
     @class

@@ -1,7 +1,7 @@
 class CompoundAssignmentReuse {
     @class
     method noisyZero():Int {
-        Console.println("calculating index")
+        Console.printLine("calculating index")
         return 0
     }
 
@@ -10,8 +10,8 @@ class CompoundAssignmentReuse {
         def x := Pointer<Int>.alloc(1)
         x[0] := 16
         x[noisyZero()] += 5
-        Console.println(x[0])
+        Console.printLine(x[0])
         x[noisyZero()] *= 2
-        Console.println(x[0])
+        Console.printLine(x[0])
     }
 }

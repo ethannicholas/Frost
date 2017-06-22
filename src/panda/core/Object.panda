@@ -1,5 +1,10 @@
 package panda.core
 
 class Object {
+    @protected
+    method cleanup() {
+    }
+
+    @private
     def $class:Class
 }

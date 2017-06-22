@@ -1,0 +1,78 @@
+class A {
+    init() {}
+
+    function *(other:A):A {
+        Console.printLine("A * A: A")
+        return A()
+    }
+
+    function *(other:A):B {
+        Console.printLine("A * A: B")
+        return B()
+    }
+
+    function *(other:B):C {
+        Console.printLine("A * B: C")
+        return C()
+    }
+}
+
+class B {
+    init() {}
+
+    @class
+    function *(left:A, right:B):B {
+        Console.printLine("A * B: B")
+        return B()
+    }
+
+    @class
+    function *(left:A, right:B):A {
+        Console.printLine("A * B: A")
+        return A()
+    }
+}
+
+class C {
+    init() {}
+
+    function [](a:A):A {
+        Console.printLine("C[A]: A")
+        return A()
+    }
+
+    function [](a:A):B {
+        Console.printLine("C[A]: B")
+        return B()
+    }
+}
+
+class OperatorOverloadingReturnTypes {
+    @class
+    method a(a:A) {
+        Console.printLine("A")
+    }
+
+    @class
+    method b(b:B) {
+        Console.printLine("B")
+    }
+
+    @class
+    method c(c:C) {
+        Console.printLine("C")
+    }
+
+    @class
+    method main() {
+        a(A() * A())
+        b(A() * A())
+        a(A() * B())
+        b(A() * B())
+        c(A() * B())
+        b(A() * (A() * A()))
+        c(A() * (A() * A()))
+        a(C()[A()])
+        b(C()[A()])
+    }
+}

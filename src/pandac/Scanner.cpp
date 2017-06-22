@@ -190,6 +190,11 @@ void Scanner::scanClass(String contextName, std::vector<Class::UsesDeclaration> 
     ASSERT(cl->fKind == ASTNode::Kind::CLASS);
     ASSERT(cl->fChildren.size() == 6);
     Annotations annotations = this->convertAnnotations(cl->fChildren[1]);
+    String fullName = contextName;
+    if (fullName.size()) {
+        fullName += ".";
+    }
+    fullName += cl->fText;
     std::vector<Class::GenericParameter> parameters;
     if (cl->fChildren[2].fKind != ASTNode::Kind::VOID) {
         ASSERT(cl->fChildren[2].fKind == ASTNode::Kind::GENERICS);
@@ -202,15 +207,10 @@ void Scanner::scanClass(String contextName, std::vector<Class::UsesDeclaration> 
             else {
                 type = Type::Any();
             }
-            parameters.emplace_back(p.fPosition, p.fText, std::move(type));
+            parameters.emplace_back(p.fPosition, fullName, p.fText, std::move(type));
         }
     }
     ASSERT(cl->fChildren[5].fKind == ASTNode::Kind::CLASS_MEMBERS);
-    String fullName = contextName;
-    if (fullName.size()) {
-        fullName += ".";
-    }
-    fullName += cl->fText;
     Type superclass;
     if (cl->fChildren[3].fKind == ASTNode::Kind::VOID) {
         if (fullName != "panda.core.Object") {

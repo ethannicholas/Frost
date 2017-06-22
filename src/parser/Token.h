@@ -94,7 +94,6 @@ struct Token {
         SHIFTRIGHTEQ,
         POWEQ,
         CAST,
-        CONVERT,
         INSTANCEOF,
         NINSTANCEOF,
         YIELDS,

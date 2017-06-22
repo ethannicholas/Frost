@@ -16,6 +16,8 @@ struct IRNode {
     enum class Kind {
         // a list of arguments to a method
         ARGUMENTS,
+        // a cast, instanceof, or not instanceof expression
+        ARROW,
         // a binary operation
         BINARY,
         // a literal bit (true or false)
@@ -30,6 +32,8 @@ struct IRNode {
         CONSTANT,
         // an object construction expression
         CONSTRUCT,
+        // a do loop
+        DO,
         // a single declaration within a var, def, constant, or property (e.g. 'var x := 1, y' has
         // two declarations, 'x := 1' and 'y')
         DECLARATION,
@@ -45,6 +49,8 @@ struct IRNode {
         INT,
         // a reference to a method, such as 'String.convert'
         METHOD_REFERENCE,
+        // a for loop over a numeric range
+        NUMERIC_FOR,
         // the name of a package
         PACKAGE_REFERENCE,
         // formal parameter of a method
@@ -55,6 +61,10 @@ struct IRNode {
         PREFIX,
         // a property declaration statement
         PROPERTY,
+        // a '..' range
+        RANGE_EXCLUSIVE,
+        // a '...' range
+        RANGE_INCLUSIVE,
         // a return statement
         RETURN,
         // wraps an expression to indicate that it is reused elsewhere in the tree without
@@ -251,6 +261,7 @@ struct IRNode {
         bool p = false;
         switch (fKind) {
             case Kind::ARGUMENTS:                   result += "Arguments";                   break;
+            case Kind::ARROW:                       result += "Arrow";                       break;
             case Kind::BINARY:                      result += "Binary"; o = 1;               break;
             case Kind::BIT:                         result += "Bit"; b = 1;                  break;
             case Kind::BLOCK:                       result += "Block";                       break;
@@ -260,8 +271,10 @@ struct IRNode {
             case Kind::CONSTRUCT:                   result += "Construct";                   break;
             case Kind::DECLARATION:                 result += "Declaration";                 break;
             case Kind::DEF:                         result += "Def";                         break;
+            case Kind::DO:                          result += "Do";                          break;
             case Kind::ERROR:                       result += "<error>";                     break;
             case Kind::FIELD_REFERENCE:             result += "FieldReference";              break;
+            case Kind::NUMERIC_FOR:                 result += "NumericFor";                  break;
             case Kind::IF:                          result += "If";                          break;
             case Kind::INT:                         result += "Int"; i = 1;                  break;
             case Kind::METHOD_REFERENCE:            result += "MethodReference"; p = 1;      break;
@@ -270,6 +283,8 @@ struct IRNode {
             case Kind::PARAMETERS:                  result += "Parameters";                  break;
             case Kind::PREFIX:                      result += "Prefix"; o = 1;               break;
             case Kind::PROPERTY:                    result += "Property";                    break;
+            case Kind::RANGE_EXCLUSIVE:             result += "RangeExclusive";              break;
+            case Kind::RANGE_INCLUSIVE:             result += "RangeInclusive";              break;
             case Kind::RETURN:                      result += "Return";                      break;
             case Kind::REUSED_VALUE_DEFINITION:     result += "ReusedValueDefinition";       break;
             case Kind::REUSED_VALUE:                result += "ReusedValue";                 break;

@@ -22,6 +22,10 @@ class Int64 : Value {
         return Int64(value // other.value)
     }
 
+    function %(other:Int64):Int64 {
+        return Int64(value % other.value)
+    }
+
     function -():Int64 {
         return Int64(-value)
     }
@@ -74,19 +78,32 @@ class Int64 : Value {
         return value <= other.value
     }
 
+    function min(other:Int64):Int64 {
+        if value < other.value {
+            return self
+        }
+        return other
+    }
+
+    function max(other:Int64):Int64 {
+        if value > other.value {
+            return self
+        }
+        return other
+    }
+
     function [](index:Int64):Bit {
         return (value >> index.value && 1) != 0
     }
 
--*
     function convert():String {
         constant max := 20
-        def result := Pointer<Char8>.stackAlloc(max)
+        def chars := Pointer<Char8>.alloc(max)
         var index := max - 1
         var value := self
         if value >= 0 {
             do {
-                result[index] := (value % 10 + 48).convert()
+                chars[index] := Char8((value % 10 + 48).value->builtin_int8)
                 value //= 10
                 index -= 1
             } 
@@ -95,21 +112,26 @@ class Int64 : Value {
         }
         else {
             do {
-                result[index] := (48 - value % 10).convert()
+                chars[index] := Char8((48 - value % 10).value->builtin_int8)
                 value //= 10
                 index -= 1
             }
             while value < 0
-            result[index] := "-"
+            chars[index] := Char8(45) -- "-"
         }
         def size := max - index
-        def chars := Pointer<Char>.alloc(size)
-        for i in index .. max {
-            chars[i - index] := result[i]
+        def result := Pointer<Char8>.alloc(size)
+--        for i in index .. max {
+--            result[i - index] := chars[i]
+--        }
+        var i := index
+        while i < max {
+            result[i - index] := chars[i]
+            i += 1
         }
-        return String(chars, size)
+        chars.destroy()
+        return String(result, size)
     }
-*-
 
     @private
     def value:builtin_int64

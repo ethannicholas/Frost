@@ -1,9 +1,8 @@
 package panda.core
 
 class Char8 : Value {
-    @private
-    init(value:builtin_int8) {
-        self.value := value
+    init(value:Int8) {
+        self.value := value.value
     }
 
     @private

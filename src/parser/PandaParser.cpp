@@ -391,8 +391,8 @@ static String get_class_name(const ASTNode& expr) {
     }
 }
 
-// callExpression = term (LPAREN (expression (COMMA expression)*)? RPAREN | DOT IDENTIFIER |
-//         LBRACKET expression RBRACKET)*
+// callExpression = term ((LPAREN (expression (COMMA expression)*)? RPAREN | DOT IDENTIFIER |
+//         LBRACKET expression RBRACKET)* | (CAST | INSTANCEOF | NINSTANCEOF) type)* |
 //         (<if result so far is a valid class name> LT type (COMMA type)* GT)?
 // Note there is a great deal of special handling to deal with class names, due to ambiguities
 // between generic parameters and comparison expressions, e.g. foo(X < Y, Z > ... could be either a
@@ -453,6 +453,20 @@ bool PandaParser::callExpression(ASTNode* outResult) {
                 std::vector<ASTNode> children;
                 children.push_back(std::move(*outResult));                
                 *outResult = ASTNode(next.fPosition, ASTNode::Kind::DOT, field.fText,
+                        std::move(children));
+                break;
+            }
+            case Token::Kind::CAST:       // fall through
+            case Token::Kind::INSTANCEOF: // fall through
+            case Token::Kind::NINSTANCEOF: {
+                ASTNode type;
+                if (!this->type(&type)) {
+                    return false;
+                }
+                std::vector<ASTNode> children;
+                children.push_back(std::move(*outResult));
+                children.push_back(std::move(type));
+                *outResult = ASTNode(next.fPosition, ASTNode::Kind::ARROW, to_operator(next.fKind),
                         std::move(children));
                 break;
             }
@@ -679,10 +693,6 @@ bool PandaParser::doccomment(ASTNode* outResult) {
     abort();
 }
 
-bool PandaParser::doLoop(ASTNode* outResult, String label) {
-    abort();
-}
-
 // exponentExression = callExpression (POW callExpression)*
 bool PandaParser::exponentExpression(ASTNode* outResult) {
     if (!this->callExpression(outResult)) {
@@ -817,8 +827,33 @@ bool PandaParser::genericsDeclaration(ASTNode* outResult) {
     return true;
 }
 
+// forLoop = FOR target IN expression block
 bool PandaParser::forLoop(ASTNode* outResult, String label) {
-    abort();
+    Token start;
+    if (!this->expect(Token::Kind::FOR, "'for'", &start)) {
+        return false;
+    }
+    ASTNode target;
+    if (!this->target(&target)) {
+        return false;
+    }
+    if (!this->expect(Token::Kind::IN, "'in'", &start)) {
+        return false;
+    }
+    ASTNode list;
+    if (!this->expression(&list)) {
+        return false;
+    }
+    ASTNode block;
+    if (!this->block(&block)) {
+        return false;
+    }
+    std::vector<ASTNode> children;
+    children.push_back(std::move(target));
+    children.push_back(std::move(list));
+    children.push_back(std::move(block));
+    *outResult = ASTNode(start.fPosition, ASTNode::Kind::FOR, std::move(children));
+    return true;
 }
 
 bool PandaParser::functionDeclaration(ASTNode* outResult, ASTNode doccomment,
@@ -1546,6 +1581,30 @@ bool PandaParser::whileLoop(ASTNode* outResult, String label) {
     children.push_back(std::move(test));
     children.push_back(std::move(block));
     *outResult = ASTNode(start.fPosition, ASTNode::Kind::WHILE, label, std::move(children));
+    return true;
+}
+
+
+bool PandaParser::doLoop(ASTNode* outResult, String label) {
+    Token start;
+    if (!this->expect(Token::Kind::DO, "'do'", &start)) {
+        return false;
+    }
+    ASTNode block;
+    if (!this->block(&block)) {
+        return false;
+    }
+    if (!this->expect(Token::Kind::WHILE, "'while'")) {
+        return false;
+    }
+    ASTNode test;
+    if (!this->expression(&test)) {
+        return false;
+    }
+    std::vector<ASTNode> children;
+    children.push_back(std::move(block));
+    children.push_back(std::move(test));
+    *outResult = ASTNode(start.fPosition, ASTNode::Kind::DO, label, std::move(children));
     return true;
 }
 

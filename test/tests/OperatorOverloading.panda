@@ -27,10 +27,10 @@ class OperatorOverloading {
     @class
     method main() {
         var a:Int := A() + A()
-        Console.println(a)
+        Console.printLine(a)
         var b:Bit := A() + A()
-        Console.println(b)
-        Console.println(A() * A())
-        Console.println(A() * B())
+        Console.printLine(b)
+        Console.printLine(A() * A())
+        Console.printLine(A() * B())
     }
 }

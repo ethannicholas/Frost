@@ -16,22 +16,22 @@ class Console {
     }
 
     @class
-    method println(s:String) {
+    method printLine(s:String) {
         print(s)
         print(Char8(10))
     }
 
     @class
     @external
-    method println(i:Int64)
+    method printLine(i:Int64)
 
     @class
-    method println(b:Bit) {
+    method printLine(b:Bit) {
         if b {
-            println(1)
+            printLine(1)
         }
         else {
-            println(0)
+            printLine(0)
         }
     }
 }
