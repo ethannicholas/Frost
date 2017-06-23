@@ -3,8 +3,9 @@
 #include "Method.h"
 #include "MethodRef.h"
 
-#define VTABLE_INDEX 1
-#define POINTER_SIZE 8
+static constexpr int VTABLE_INDEX = 1;
+static constexpr int POINTER_SIZE = 8;
+static constexpr int OBJECT_FIELD_COUNT = 2;
 #define SIZE_T "i64"
 
 LLVMCodeGenerator::LLVMCodeGenerator(std::ostream* out)
@@ -134,10 +135,10 @@ void LLVMCodeGenerator::writeType(const Type& type) {
     if (fWrittenTypes.find(type.fName) == fWrittenTypes.end()) {
         fWrittenTypes.insert(type.fName);
         Class* cl = fCompiler->resolveClass(fCurrentClass->fSymbolTable, type);
+        ASSERT(cl);
         if (cl->fName == "panda.core.Pointer") {
             return;
         }
-        ASSERT(cl);
         this->getClassConstant(*cl);
         std::vector<const Field*> fields = fCompiler->getAllFields(*cl);
         std::vector<String> types;
@@ -150,6 +151,28 @@ void LLVMCodeGenerator::writeType(const Type& type) {
         for (const String& t : types) {
             fTypeDeclarations << separator << t;
             separator = ", ";
+        }
+        fTypeDeclarations << " }\n";
+    }
+}
+
+void LLVMCodeGenerator::writeWrapperType(const Type& type) {
+    if (fWrittenWrappers.find(type.fName) == fWrittenWrappers.end()) {
+        fWrittenWrappers.insert(type.fName);
+        Class* cl = fCompiler->resolveClass(fCurrentClass->fSymbolTable, type);
+        ASSERT(cl);
+        ASSERT(cl->isValue());
+        this->getClassConstant(*cl);
+        std::vector<const Field*> fields = fCompiler->getAllFields(*cl);
+        std::vector<String> types;
+        for (const Field* f : fields) {
+            types.push_back(this->llvmType(f->fType));
+        }
+        fTypeDeclarations << "\n";
+        fTypeDeclarations << this->llvmTypeName(type) <<
+                "$wrapper = type { %panda$core$Class*, i32";
+        for (const String& t : types) {
+            fTypeDeclarations << ", " << t;
         }
         fTypeDeclarations << " }\n";
     }
@@ -189,6 +212,16 @@ String LLVMCodeGenerator::llvmType(const Type& type) {
         case Type::Category::INT_LITERAL: // fall through
         case Type::Category::UNRESOLVED: abort();
     }
+}
+
+String LLVMCodeGenerator::llvmWrapperTypeName(const Type& type) {
+    ASSERT(type.fCategory == Type::Category::CLASS);
+    this->writeWrapperType(type);
+    return this->llvmTypeName(type) + "$wrapper";
+}
+
+String LLVMCodeGenerator::llvmWrapperType(const Type& type) {
+    return this->llvmWrapperTypeName(type) + "*";
 }
 
 static bool is_instance(const Method& method) {
@@ -582,7 +615,6 @@ String LLVMCodeGenerator::getCastReference(const IRNode& cast, std::ostream& out
         fKillCast = false;
         return base;
     }
-    String result = this->nextVar();
     String op;
     if (cast.fType.isBuiltinNumber()) {
         ASSERT(cast.fChildren[0].fType.isBuiltinNumber());
@@ -595,12 +627,87 @@ String LLVMCodeGenerator::getCastReference(const IRNode& cast, std::ostream& out
             op = "sext";
         }
         else {
-            return result;
+            return base;
         }
     }
     else {
+        const Class* src = fCompiler->resolveClass(fCurrentClass->fSymbolTable,
+                cast.fChildren[0].fType);
+        ASSERT(src);
+        const Class* target = fCompiler->resolveClass(fCurrentClass->fSymbolTable, cast.fType);
+        ASSERT(target);
+        if (src->isValue() && !target->isValue()) {
+            // wrap it in an object
+            String mallocRef = this->nextVar();
+            out << "    " << mallocRef << " = call i8* @malloc(i64 " <<
+                    this->sizeOf(Type::Object()) + this->sizeOf(src->fType) << ")\n";
+            String wrapperTypeName = this->llvmWrapperTypeName(src->fType);
+            String wrapperType = this->llvmWrapperType(src->fType);
+            String wrapperCast = this->nextVar();
+            out << "    " << wrapperCast << " = bitcast i8* " << mallocRef << " to " <<
+                    wrapperType << "\n";
+            String classPtr = this->nextVar();
+            out << "    " << classPtr << " = getelementptr " << wrapperTypeName << ", " <<
+                    wrapperType << " " << wrapperCast << ", i64 0, i32 0\n";
+            const ClassConstant& cc = this->getClassConstant(*src);
+            out << "    store %panda$core$Class* bitcast(" << cc.fType << "* " << cc.fName <<
+                    " to %panda$core$Class*), %panda$core$Class** " << classPtr << "\n";
+            String refCount = this->nextVar();
+            out << "    " << refCount << " = getelementptr " << wrapperTypeName << ", " <<
+                    wrapperType << " " << wrapperCast << ", i64 0, i32 1\n";
+            out << "    store i32 0, i32* " << refCount << "\n";
+            std::vector<const Field*> fields = fCompiler->getAllFields(*src);
+            for (int i = 0; i < fields.size(); ++i) {
+                String fieldSrc = this->nextVar();
+                out << "    " << fieldSrc << " = extractvalue " << this->llvmType(src->fType) <<
+                        " " << base << ", " << i << "\n";
+                String fieldTarget = this->nextVar();
+                out << "    " << fieldTarget << " = getelementptr " << wrapperTypeName << ", " <<
+                        wrapperType << " " << wrapperCast << ", i64 0, i32 " <<
+                        OBJECT_FIELD_COUNT + i << "\n";
+                out << "    store " << this->llvmType(fields[i]->fType) << " " << fieldSrc <<
+                        ", " << this->llvmType(fields[i]->fType) << "* " << fieldTarget << "\n";
+            }
+            String result = this->nextVar();
+            out << "    " << result << " = bitcast " << wrapperType << " " << wrapperCast <<
+                    " to " << this->llvmType(target->fType) << "\n";
+            return result;
+        }
+        else if (!src->isValue() && target->isValue()) {
+            String targetType = this->llvmType(target->fType);
+            String wrapperTypeName = this->llvmWrapperTypeName(target->fType);
+            String wrapperType = this->llvmWrapperType(target->fType);
+            String srcCast = this->nextVar();
+            out << "    " << srcCast << " = bitcast " << this->llvmType(cast.fChildren[0].fType) <<
+                    " " << base << " to " << wrapperType << "; wrapper cast\n";
+            String value = "{";
+            std::vector<const Field*> fields = fCompiler->getAllFields(*target);
+            const char* separator = " ";
+            for (const Field* f : fields) {
+                value += separator;
+                value += this->llvmType(f->fType);
+                value += " undef";
+                separator = ", ";
+            }
+            value += " }";
+            for (int i = 0; i < fields.size(); ++i) {
+                String ptr = this->nextVar();
+                out << "    " << ptr << " = getelementptr " << wrapperTypeName << ", " <<
+                        wrapperType << " " << srcCast << ", i64 0, i32 " <<
+                        OBJECT_FIELD_COUNT + i << "\n";
+                String read = this->nextVar();
+                out << "    " << read << " = load " << this->llvmType(fields[i]->fType) << ", " <<
+                        this->llvmType(fields[i]->fType) << "* " << ptr << "\n";
+                String next = this->nextVar();
+                out << "    " << next << " = insertvalue " << targetType << " " << value <<
+                        ", " << this->llvmType(fields[i]->fType) << " " << read << ", " << i;
+                value = next;
+            }
+            return value;
+        }
         op = "bitcast";
     }
+    String result = this->nextVar();
     out << "    " << result << " = " << op << " " << this->llvmType(cast.fChildren[0].fType) <<
             " " << base << " to " << this->llvmType(cast.fType) << "\n";
     return result;

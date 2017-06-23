@@ -43,6 +43,8 @@ private:
 
     void writeType(const Type& type);
 
+    void writeWrapperType(const Type& type);
+
     size_t sizeOf(const Type& type);
 
     ClassConstant& getClassConstant(const Class& cl);
@@ -50,6 +52,10 @@ private:
     String llvmTypeName(const Type& type);
 
     String llvmType(const Type& type);
+
+    String llvmWrapperTypeName(const Type& type);
+
+    String llvmWrapperType(const Type& type);
 
     String llvmType(const Method& m);
 
@@ -140,6 +146,8 @@ private:
     std::stringstream fMethodHeader;
 
     std::unordered_set<String> fWrittenTypes;
+
+    std::unordered_set<String> fWrittenWrappers;
 
     std::stringstream fTypeDeclarations;
 

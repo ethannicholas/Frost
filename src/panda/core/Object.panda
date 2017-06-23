@@ -7,4 +7,7 @@ class Object {
 
     @private
     def $class:Class
+
+    @private
+    var refCount:Int32
 }
