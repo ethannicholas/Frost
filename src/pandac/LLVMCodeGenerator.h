@@ -113,6 +113,8 @@ private:
 
     void writeDo(const IRNode& d, std::ostream& out);
 
+    void writeNumericFor(const IRNode& f, std::ostream& out);
+
     void writeVarTarget(const IRNode& var, const IRNode* value, std::ostream& out);
 
     void writeVar(const IRNode& var, std::ostream& out);
@@ -166,6 +168,8 @@ private:
     std::unordered_map<String, size_t> fSizes;
 
     std::unordered_map<uint64_t, String> fReusedValues;
+
+    std::unordered_map<const Variable*, String> fVariableNames;
 
     bool fKillCast = false;
 };

@@ -17,7 +17,7 @@ public:
         rootCreated = true;
     }
 
-    SymbolTable(const SymbolTable* parent, const Class* cl)
+    SymbolTable(SymbolTable* parent, const Class* cl)
     : fClass(cl) {
         fParents.push_back(parent);
     }
@@ -61,7 +61,7 @@ public:
     const Class* fClass;
 
 private:
-    std::vector<const SymbolTable*> fParents;
+    std::vector<SymbolTable*> fParents;
 
     std::vector<std::unique_ptr<Symbol>> fOwnedPtrs;
 

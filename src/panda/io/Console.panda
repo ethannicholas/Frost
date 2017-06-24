@@ -8,10 +8,8 @@ class Console {
 
     @class
     method print(s:String) {
-        var i := 0
-        while i < s.size {
+        for i in 0 .. s.size {
             Console.print(s.data[i])
-            i := i + 1
         }
     }
 
@@ -22,8 +20,9 @@ class Console {
     }
 
     @class
-    @external
-    method printLine(i:Int64)
+    method printLine(i:Int64) {
+        printLine(i.convert())
+    }
 
     @class
     method printLine(b:Bit) {

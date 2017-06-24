@@ -52,6 +52,27 @@ public:
     std::vector<const Field*> getAllFields(const Class& cl);
 
 private:
+    class AutoSymbolTable {
+    public:
+        AutoSymbolTable(Compiler* compiler)
+        : fCompiler(compiler) {
+            fCompiler->fSymbolTable = new SymbolTable(fCompiler->fSymbolTable,
+                    fCompiler->fSymbolTable->fClass);
+        }
+
+        ~AutoSymbolTable() {
+            SymbolTable* old = fCompiler->fSymbolTable;
+            for (auto& ptr : old->fOwnedPtrs) {
+                old->fParents[0]->fOwnedPtrs.push_back(std::move(ptr));
+            }
+            fCompiler->fSymbolTable = old->fParents[0];
+            delete old;
+        }
+
+    private:
+        Compiler* fCompiler;
+    };
+
     // for all convert methods: a true result means "successful enough to have produced output",
     // false means failure. Success may still have generated errors.
 
@@ -196,9 +217,9 @@ private:
 
     bool convertType(const ASTNode& method, IRNode* out);
 
-    void compile(const SymbolTable& parent, const Method& method);
+    void compile(SymbolTable& parent, const Method& method);
 
-    void compile(const SymbolTable& symbols);
+    void compile(SymbolTable& symbols);
 
     void resolveTypes(Method* m);
 

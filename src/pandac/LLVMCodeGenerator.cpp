@@ -30,11 +30,6 @@ LLVMCodeGenerator::LLVMCodeGenerator(std::ostream* out)
     fMethods << "declare i64 @putchar(i64)\n";
     fMethods << "declare i64 @printf(i8*, ...)\n";
     fMethods << "@fmt = private constant [4 x i8] [i8 37, i8 100, i8 10, i8 0]\n";
-    fMethods << "define fastcc void @panda$io$Console$printLine$panda$core$Int64(%panda$core$Int64 %num) {\n";
-    fMethods << "    %1 = extractvalue %panda$core$Int64 %num, 0;\n";
-    fMethods << "    call i64 (i8*, ...) @printf(i8* bitcast ([4 x i8]* @fmt to i8*), i64 %1)\n";
-    fMethods << "    ret void\n";
-    fMethods << "}\n";
     fMethods << "define fastcc void @panda$io$Console$print$panda$core$Char8(%panda$core$Char8 %c) {\n";
     fMethods << "    %1 = extractvalue %panda$core$Char8 %c, 0;\n";
     fMethods << "    %2 = sext i8 %1 to i64\n";
@@ -485,7 +480,7 @@ String LLVMCodeGenerator::getMethodReference(const String& target, const Method*
 
 static const IRNode& unwrap_cast(const IRNode& node) {
     if (node.fKind == IRNode::Kind::CAST) {
-        return unwrap_cast(node.fChildren[0]);
+        return node.fChildren[0];
     }
     return node;
 }
@@ -1118,6 +1113,66 @@ void LLVMCodeGenerator::writeDo(const IRNode& d, std::ostream& out) {
     this->createBlock(loopEnd, out);
 }
 
+void LLVMCodeGenerator::writeNumericFor(const IRNode& f, std::ostream& out) {
+    ASSERT(f.fKind == IRNode::Kind::NUMERIC_FOR);
+    ASSERT(f.fChildren.size() == 3);
+    const IRNode& target = f.fChildren[0];
+    ASSERT(f.fChildren[1].fKind == IRNode::Kind::CONSTRUCT);
+    ASSERT(f.fChildren[1].fType.fCategory == Type::Category::GENERIC);
+    ASSERT(f.fChildren[1].fType.fSubtypes.size() == 2);
+    ASSERT(f.fChildren[1].fType.fSubtypes[0].fName == "panda.core.Range");
+    ASSERT(f.fChildren[1].fChildren.size() == 1);
+    const IRNode& range = f.fChildren[1].fChildren[0];
+    const IRNode& block = f.fChildren[2];
+    const Type& type = f.fChildren[1].fType.fSubtypes[1];
+    ASSERT(target.fKind == IRNode::Kind::VARIABLE_REFERENCE);
+    ASSERT(range.fChildren.size() == 4);
+    String index = this->varName(*(Variable*) target.fValue.fPtr);
+    fMethodHeader << "    " << index << " = alloca " << this->llvmType(type) << "\n";
+    String start = this->getTypedReference(unwrap_cast(range.fChildren[1]),
+            out);
+    out << "    store " << start << ", " << this->llvmType(type) << "* " << index << "\n";
+    String end = this->getTypedReference(unwrap_cast(range.fChildren[2]),
+            out);
+    String endValue = this->nextVar();
+    out << "    " << endValue << " = extractvalue " << end << ", 0\n";
+    String loopStart = this->nextLabel();
+    String loopBody = this->nextLabel();
+    out << "    br label %" << loopStart << "\n";
+    this->createBlock(loopStart, out);
+    String indexLoad = this->nextVar();
+    out << "    " << indexLoad << " = load " << this->llvmType(type) << ", " <<
+            this->llvmType(type) << "* " << index << "\n";
+    String indexValue = this->nextVar();
+    out << "    " << indexValue << " = extractvalue " << this->llvmType(type) << " " <<
+            indexLoad << ", 0\n";
+    String test = this->nextVar();
+    // hack hardcoded i64
+    String baseType = "i64";
+    ASSERT(range.fChildren[3].fKind == IRNode::Kind::CONSTRUCT);
+    ASSERT(range.fChildren[3].fType == Type::Bit());
+    ASSERT(range.fChildren[3].fChildren[0].fChildren[1].fKind == IRNode::Kind::BIT);
+    const char* cmp = range.fChildren[3].fChildren[0].fChildren[1].fValue.fBool ? "sle" : "slt";
+    out << "    " << test << " = icmp " << cmp << " " << baseType << " " << indexValue << ", " <<
+            endValue << "\n";
+    String loopEnd = this->nextLabel();
+    out << "    br i1 " << test << ", label %" << loopBody << ", label %" << loopEnd << "\n";
+    this->createBlock(loopBody, out);
+    this->writeStatement(block, out);
+    if (!ends_with_branch(block)) {
+        String inc = this->nextVar();
+        out << "    " << inc << " = add " << baseType << " " << indexValue << ", 1\n";
+        String incStruct = this->nextVar();
+        out << "    " << incStruct << " = insertvalue " << this->llvmType(type) << " { " <<
+                baseType << " undef }, " << baseType << " " << inc << ", 0\n";
+        out << "    store " << this->llvmType(type) << " " << incStruct << ", " <<
+                this->llvmType(type) << "* " << index << "\n";
+        out << "    br label %" << loopStart << "\n";
+    }
+    this->createBlock(loopEnd, out);
+
+}
+
 void LLVMCodeGenerator::writeVarTarget(const IRNode& target, const IRNode* value,
             std::ostream& out) {
     if (target.fKind == IRNode::Kind::TUPLE_TARGET) {
@@ -1169,19 +1224,19 @@ void LLVMCodeGenerator::writeReturn(const IRNode& ret, std::ostream& out) {
 }
 
 void LLVMCodeGenerator::writeStatement(const IRNode& stmt, std::ostream& out) {
-    out << "; " << stmt.description() << "\n";
     switch (stmt.fKind) {
-        case IRNode::Kind::BINARY:   this->writeAssignment(stmt, out);     break;
-        case IRNode::Kind::BLOCK:    this->writeBlock     (stmt, out);     break;
-        case IRNode::Kind::CALL:     this->writeCall      (stmt, "", out); break;
-        case IRNode::Kind::IF:       this->writeIf        (stmt, out);     break;
-        case IRNode::Kind::WHILE:    this->writeWhile     (stmt, out);     break;
-        case IRNode::Kind::DO:       this->writeDo        (stmt, out);     break;
-        case IRNode::Kind::RETURN:   this->writeReturn    (stmt, out);     break;
-        case IRNode::Kind::VAR:      // fall through
-        case IRNode::Kind::DEF:      // fall through
-        case IRNode::Kind::PROPERTY: // fall through
-        case IRNode::Kind::CONSTANT: this->writeVar(stmt, out); break;
+        case IRNode::Kind::BINARY:      this->writeAssignment(stmt, out);     break;
+        case IRNode::Kind::BLOCK:       this->writeBlock     (stmt, out);     break;
+        case IRNode::Kind::CALL:        this->writeCall      (stmt, "", out); break;
+        case IRNode::Kind::IF:          this->writeIf        (stmt, out);     break;
+        case IRNode::Kind::WHILE:       this->writeWhile     (stmt, out);     break;
+        case IRNode::Kind::DO:          this->writeDo        (stmt, out);     break;
+        case IRNode::Kind::NUMERIC_FOR: this->writeNumericFor(stmt, out);     break;
+        case IRNode::Kind::RETURN:      this->writeReturn    (stmt, out);     break;
+        case IRNode::Kind::VAR:         // fall through
+        case IRNode::Kind::DEF:         // fall through
+        case IRNode::Kind::PROPERTY:    // fall through
+        case IRNode::Kind::CONSTANT:    this->writeVar(stmt, out); break;
         default:
             printf("unsupported statement: %s\n", stmt.description().c_str());
             abort();
@@ -1241,7 +1296,16 @@ String LLVMCodeGenerator::methodName(const Method& method) {
 }
 
 String LLVMCodeGenerator::varName(const Variable& var) {
-    return "%" + var.fName;
+    if (var.fStorage != Variable::Storage::LOCAL) {
+        return "%" + var.fName;
+    }
+    auto found = fVariableNames.find(&var);
+    if (found == fVariableNames.end()) {
+        String result = "%" + var.fName + std::to_string(fVariableNames.size());
+        fVariableNames[&var] = result;
+        return result;
+    }
+    return found->second;
 }
 
 void LLVMCodeGenerator::writeMethodDeclaration(const Method& method, Compiler& compiler) {

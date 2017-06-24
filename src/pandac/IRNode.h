@@ -230,6 +230,15 @@ struct IRNode {
         this->init();
     }
 
+    IRNode(Position position, Kind kind, Type type, bool value, std::vector<IRNode> children)
+    : fPosition(position)
+    , fKind(kind)
+    , fType(std::move(type))
+    , fChildren(std::move(children)) {
+        fValue.fBool = value;
+        this->init();
+    }
+
     IRNode(Position position, Kind kind, Type type, void* ptr, std::vector<IRNode> children)
     : fPosition(position)
     , fKind(kind)

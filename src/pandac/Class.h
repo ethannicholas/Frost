@@ -37,7 +37,7 @@ struct Class : public Symbol {
     Class(const Class&) = delete;
 
     Class(Position position, std::vector<UsesDeclaration> uses, Annotations annotations,
-            String name, std::vector<GenericParameter> parameters, const SymbolTable* parent,
+            String name, std::vector<GenericParameter> parameters, SymbolTable* parent,
             Type superclass)
     : INHERITED(position, Kind::CLASS, std::move(name))
     , fUses(std::move(uses))

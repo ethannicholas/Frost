@@ -10,9 +10,9 @@ class Bit : Value {
         return Bit(!value)
     }
 
-    -- note that the '|' and '&' functions do not provide for short circuiting, so these operators
-    -- require special support in the CodeGenerator. These implementations are therefore not often
-    -- called.
+    -- note that the '|' and '&' functions do not have any way to provide for short circuiting, so
+    -- these operators require special support in the CodeGenerator. These implementations are
+    -- therefore not often called.
     function |(other:Bit):Bit {
         return value
     }

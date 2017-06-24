@@ -121,13 +121,8 @@ class Int64 : Value {
         }
         def size := max - index
         def result := Pointer<Char8>.alloc(size)
---        for i in index .. max {
---            result[i - index] := chars[i]
---        }
-        var i := index
-        while i < max {
+        for i in index .. max {
             result[i - index] := chars[i]
-            i += 1
         }
         chars.destroy()
         return String(result, size)

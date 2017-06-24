@@ -15,15 +15,11 @@ class String {
 
     function +(other:String):String {
         def result := Pointer<Char8>.alloc(size + other.size)
-        var i := 0
-        while i < size {
+        for i in 0 .. size {
             result[i] := data[i]
-            i := i + 1
         }
-        i := 0
-        while i < other.size {
+        for i in 0 .. other.size {
             result[size + i] := other.data[i]
-            i := i + 1
         }
         return String(result, size + other.size)
     }

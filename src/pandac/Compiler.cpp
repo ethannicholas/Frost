@@ -267,7 +267,7 @@ bool Compiler::coerce(IRNode* node, const Type& target, IRNode* out) {
                 args.push_back(std::move(node->fChildren[0]));
                 args.push_back(std::move(node->fChildren[1]));
                 args.emplace_back(node->fPosition, IRNode::Kind::BIT, Type::BuiltinBit(),
-                        node->fValue.fInt ? true : false);
+                        node->fValue.fBool);
                 Type rangeType = Type::RangeOf(baseType);
                 Class* cl = this->resolveClass(*fSymbolTable, rangeType);
                 if (!cl) {
@@ -1341,7 +1341,26 @@ void Compiler::symbolRef(Position p, const SymbolTable& st, Symbol* symbol, IRNo
         case Symbol::Kind::FIELD:
             *out = IRNode(p, IRNode::Kind::FIELD_REFERENCE, ((Field*) symbol)->fType, symbol);
             if (target) {
+                Type effectiveType = out->fType;
+                if (target->fType.fCategory == Type::Category::GENERIC) {
+                    ASSERT(target->fType.fSubtypes.size() >= 2);
+                    std::map<String, Type> typeMap;
+                    const Type& owner = target->fType.fSubtypes[0];
+                    Class* cl = this->resolveClass(*fSymbolTable, owner);
+                    if (cl) {
+                        for (int i = 1; i < target->fType.fSubtypes.size(); ++i) {
+                            typeMap[cl->fName + "." + cl->fParameters[i - 1].fName] =
+                                    target->fType.fSubtypes[i];
+                        }
+                        effectiveType = out->fType.remap(typeMap);
+                    }
+                }
                 out->fChildren.push_back(std::move(*target));
+                if (effectiveType != out->fType) {
+                    std::vector<IRNode> children;
+                    children.push_back(std::move(*out));
+                    *out = IRNode(p, IRNode::Kind::CAST, effectiveType, std::move(children));
+                }
             }
             else {
                 out->fChildren.push_back(IRNode(p, IRNode::Kind::SELF, fCurrentClass.top()->fType));
@@ -1570,6 +1589,7 @@ bool Compiler::convertRange(const ASTNode& r, IRNode* out) {
     children.push_back(std::move(end));
     *out = IRNode(r.fPosition, IRNode::Kind::UNRESOLVED_RANGE,
             Type(r.fPosition, Type::Category::UNRESOLVED, "<unresolved range>"),
+            r.fKind == ASTNode::Kind::RANGE_INCLUSIVE,
             std::move(children));
     return true;
 }
@@ -1700,8 +1720,12 @@ bool Compiler::convertDo(const ASTNode& d, IRNode* out) {
 bool Compiler::convertFor(const ASTNode& f, IRNode* out) {
     ASSERT(f.fKind == ASTNode::Kind::FOR);
     ASSERT(f.fChildren.size() == 3);
+    AutoSymbolTable st(this);
     IRNode list;
     if (!this->convertExpression(f.fChildren[1], &list)) {
+        return false;
+    }
+    if (!this->resolve(&list)) {
         return false;
     }
     IRNode target;
@@ -1710,11 +1734,19 @@ bool Compiler::convertFor(const ASTNode& f, IRNode* out) {
     }
     IRNode block;
     this->convertBlock(f.fChildren[2], &block);
-    std::vector<IRNode> children;
-    children.push_back(std::move(target));
-    children.push_back(std::move(block));
-    *out = IRNode(f.fPosition, IRNode::Kind::NUMERIC_FOR, f.fText, std::move(children));
-    return true;
+    if (list.fType == Type::RangeOf(Type::Int())) {
+        std::vector<IRNode> children;
+        children.push_back(std::move(target));
+        children.push_back(std::move(list));
+        children.push_back(std::move(block));
+        *out = IRNode(f.fPosition, IRNode::Kind::NUMERIC_FOR, f.fText, std::move(children));
+        return true;
+    }
+    else {
+        this->error(list.fPosition, "'for' loop expected an Iterable, but found '" +
+                list.fType.description() + "'");
+        return false;
+    }
 }
 
 
@@ -1732,7 +1764,7 @@ static Type variable_type(const IRNode& node) {
             break;
     }
     if (node.fType == Type::IntLiteral()) {
-        return Type::Int64();
+        return Type::Int();
     }
     if (node.fType == Type::BuiltinBit()) {
         return Type::Bit();
@@ -1943,6 +1975,7 @@ bool Compiler::convertStatement(const ASTNode& s, IRNode* out) {
 
 bool Compiler::convertBlock(const ASTNode& b, IRNode* out) {
     ASSERT(b.fKind == ASTNode::Kind::BLOCK);
+    AutoSymbolTable st(this);
     std::vector<IRNode> statements;
     for (const auto& s : b.fChildren) {
         IRNode converted;
@@ -1986,7 +2019,7 @@ bool Compiler::convertType(const ASTNode& t, IRNode* out) {
     return true;
 }
 
-void Compiler::compile(const SymbolTable& parent, const Method& method) {
+void Compiler::compile(SymbolTable& parent, const Method& method) {
     if (method.fBody.fKind == ASTNode::Kind::VOID) {
         fCodeGenerator.writeMethodDeclaration(method, *this);
         return;
@@ -2026,7 +2059,7 @@ void Compiler::compile(const SymbolTable& parent, const Method& method) {
     fSymbolTable = nullptr;
 }
 
-void Compiler::compile(const SymbolTable& symbols) {
+void Compiler::compile(SymbolTable& symbols) {
     symbols.foreach_const([this, &symbols](const Symbol& s) {
         switch (s.fKind) {
             case Symbol::Kind::PACKAGE:
