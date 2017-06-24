@@ -61,10 +61,8 @@ struct IRNode {
         PREFIX,
         // a property declaration statement
         PROPERTY,
-        // a '..' range
-        RANGE_EXCLUSIVE,
-        // a '...' range
-        RANGE_INCLUSIVE,
+        // a '..' or '...' expression prior to determining its final type
+        UNRESOLVED_RANGE,
         // a return statement
         RETURN,
         // wraps an expression to indicate that it is reused elsewhere in the tree without
@@ -165,7 +163,9 @@ struct IRNode {
     : fPosition(position)
     , fKind(kind)
     , fType(std::move(type))
-    , fText(std::move(text)) {}
+    , fText(std::move(text)) {
+        this->init();
+    }
 
     IRNode(Position position, Kind kind, Type type, const void* value)
     : fPosition(position)
@@ -240,6 +240,7 @@ struct IRNode {
     }
 
     void init() {
+        ASSERT(fKind != Kind::CAST || fType != fChildren[0].fType);
     }
 
     // copying IRNodes can be very expensive and is incredibly easy to do by accident, so we kill
@@ -283,8 +284,6 @@ struct IRNode {
             case Kind::PARAMETERS:                  result += "Parameters";                  break;
             case Kind::PREFIX:                      result += "Prefix"; o = 1;               break;
             case Kind::PROPERTY:                    result += "Property";                    break;
-            case Kind::RANGE_EXCLUSIVE:             result += "RangeExclusive";              break;
-            case Kind::RANGE_INCLUSIVE:             result += "RangeInclusive";              break;
             case Kind::RETURN:                      result += "Return";                      break;
             case Kind::REUSED_VALUE_DEFINITION:     result += "ReusedValueDefinition";       break;
             case Kind::REUSED_VALUE:                result += "ReusedValue";                 break;
@@ -294,8 +293,9 @@ struct IRNode {
             case Kind::TYPE_REFERENCE:              result += "TypeReference"; p = 1;        break;
             case Kind::UNRESOLVED_BINARY:           result += "UnresolvedBinary";            break;
             case Kind::UNRESOLVED_CALL:             result += "UnresolvedCall";              break;
-            case Kind::UNRESOLVED_METHOD_REFERENCE: result += "UnresolvedMethodReference";   break;
             case Kind::UNRESOLVED_INDEX:            result += "UnresolvedIndex";             break;
+            case Kind::UNRESOLVED_METHOD_REFERENCE: result += "UnresolvedMethodReference";   break;
+            case Kind::UNRESOLVED_RANGE:            result += "UnresolvedRange";             break;
             case Kind::VAR:                         result += "Var";                         break;
             case Kind::VARIABLE_REFERENCE:          result += "VariableReference"; p = true; break;
             case Kind::VOID:                        result += "Void";                        break;

@@ -22,6 +22,8 @@ struct MethodRef {
 
     Type returnType() const;
 
+    String description() const;
+
     const Method& fMethod;
 
     std::vector<Type> fTypes;

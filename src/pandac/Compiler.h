@@ -55,11 +55,11 @@ private:
     // for all convert methods: a true result means "successful enough to have produced output",
     // false means failure. Success may still have generated errors.
 
-    bool coerce(IRNode* expr, const Type& type) {
-        return this->coerce(expr, type, expr);
+    bool coerce(IRNode* expr, const Type& target) {
+        return this->coerce(expr, target, expr);
     }
 
-    bool coerce(IRNode* expr, const Type& type, IRNode* out);
+    bool coerce(IRNode* expr, const Type& target, IRNode* out);
 
     /**
      * Determines the "cost" of converting a type to a different type. The cost is a number with no
@@ -190,6 +190,9 @@ private:
     bool convertStatement(const ASTNode& s, IRNode* out);
 
     bool convertBlock(const ASTNode& b, IRNode* out);
+
+    // returns a pointer to the type that remains valid as long as the compiler lives
+    Type* typePointer(const Type& t);
 
     bool convertType(const ASTNode& method, IRNode* out);
 

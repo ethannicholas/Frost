@@ -104,6 +104,9 @@ static String escape_type_name(String name) {
 LLVMCodeGenerator::ClassConstant& LLVMCodeGenerator::getClassConstant(const Class& cl) {
     auto found = fClassConstants.find(cl.fName);
     if (found == fClassConstants.end()) {
+        ClassConstant cc("@" + escape_type_name(cl.fType.fName) + "$class",
+                "{ i8*, [" + std::to_string(cl.fVirtualMethods.size()) + " x i8*] }");
+        fClassConstants[cl.fName] = cc;
         String super;
         if (cl.fSuper != Type::Void()) {
             const ClassConstant& superCC = getClassConstant(*fCompiler->resolveClass(
@@ -113,9 +116,6 @@ LLVMCodeGenerator::ClassConstant& LLVMCodeGenerator::getClassConstant(const Clas
         else {
             super = "null";
         }
-        ClassConstant cc("@" + escape_type_name(cl.fType.fName) + "$class",
-                "{ i8*, [" + std::to_string(cl.fVirtualMethods.size()) + " x i8*] }");
-        fClassConstants[cl.fName] = cc;
         String code = cc.fName + " = constant " + cc.fType + " { i8* " + super + ", [" + 
                 std::to_string(cl.fVirtualMethods.size()) + " x i8*] [";
         const char* separator = "";
@@ -707,9 +707,14 @@ String LLVMCodeGenerator::getCastReference(const IRNode& cast, std::ostream& out
         }
         op = "bitcast";
     }
+    String srcType = this->llvmType(cast.fChildren[0].fType);
+    String dstType = this->llvmType(cast.fType);
+    if (srcType == dstType) {
+        return base;
+    }
     String result = this->nextVar();
-    out << "    " << result << " = " << op << " " << this->llvmType(cast.fChildren[0].fType) <<
-            " " << base << " to " << this->llvmType(cast.fType) << "\n";
+    out << "    " << result << " = " << op << " " << srcType << " " << base << " to " << dstType <<
+            "\n";
     return result;
 }
 
@@ -795,7 +800,8 @@ String LLVMCodeGenerator::getStringReference(const IRNode& s, std::ostream& out)
     const ClassConstant& cc = this->getClassConstant(*string);
     fStrings << result << " = private unnamed_addr constant %panda$core$String { " <<
             "%panda$core$Class* bitcast(" << cc.fType << "* " << cc.fName << " to " <<
-            "%panda$core$Class*), %panda$core$Char8* bitcast(" << charsType << "* " << chars <<
+            "%panda$core$Class*), %panda$core$Int32 insertvalue(%panda$core$Int32 " <<
+            "{ i32 undef }, i32 1, 0), %panda$core$Char8* bitcast(" << charsType << "* " << chars <<
             " to %panda$core$Char8*), %panda$core$Int64 insertvalue(%panda$core$Int64 " <<
             "{ i64 undef }, i64 " << s.fText.size() << ", 0) }\n";
     return result;

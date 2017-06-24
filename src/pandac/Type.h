@@ -200,6 +200,20 @@ struct Type : public Symbol {
         return result;
     }
 
+    static Type ArrayOf(const Type& t) {
+        std::vector<Type> children;
+        children.emplace_back(Position(), Category::CLASS, "panda.collections.Array");
+        children.push_back(t);
+        return Type(std::move(children));
+    }
+
+    static Type RangeOf(const Type& t) {
+        std::vector<Type> children;
+        children.emplace_back(Position(), Category::CLASS, "panda.core.Range");
+        children.push_back(t);
+        return Type(std::move(children));
+    }
+
     Category fCategory;
     // size in bits, for the builtin numbers
     int fSize = -1;

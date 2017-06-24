@@ -1,9 +1,16 @@
-package panda.core
+package panda.collections
+
+uses panda.core.Pointer
 
 class Array<T> {
     init() {
         capacity := 16
         data := Pointer<T>.alloc(capacity)
+    }
+
+    @override
+    method cleanup() {
+        data.destroy()
     }
 
     function [](index:Int):T {

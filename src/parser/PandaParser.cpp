@@ -1517,7 +1517,7 @@ bool PandaParser::usesDeclaration(ASTNode* outResult) {
         return false;
     }
     Token next;
-    if (!this->expect(Token::Kind::IDENTIFIER, "an identifier")) {
+    if (!this->expect(Token::Kind::IDENTIFIER, "an identifier", &next)) {
         return false;
     }
     String name = next.fText;
@@ -1527,7 +1527,7 @@ bool PandaParser::usesDeclaration(ASTNode* outResult) {
             name += "*";
             break;
         }
-        if (!this->expect(Token::Kind::IDENTIFIER, "an identifier")) {
+        if (!this->expect(Token::Kind::IDENTIFIER, "an identifier", &next)) {
             return false;
         }
         name += next.fText;

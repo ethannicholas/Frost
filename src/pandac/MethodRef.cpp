@@ -35,3 +35,15 @@ Type MethodRef::parameterType(int idx) const {
 Type MethodRef::returnType() const {
     return fMethod.fReturnType.remap(fTypeMap);
 }
+
+String MethodRef::description() const {
+    String result = "MethodRef(" + fMethod.description();
+    const char* separator = "";
+    for (const auto& t : fTypes) {
+        result += separator;
+        result += t.description();
+        separator = ", ";
+    }
+    result += ")";
+    return result;
+}

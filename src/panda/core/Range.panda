@@ -1,0 +1,15 @@
+package panda.core
+
+class Range<T> : Value {
+    init(start:T, end:T, inclusive:Bit) {
+        self.start := start
+        self.end := end
+        self.inclusive := inclusive
+    }
+
+    def start:T
+
+    def end:T
+
+    def inclusive:Bit
+}

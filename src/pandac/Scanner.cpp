@@ -263,6 +263,7 @@ void Scanner::scan(ASTNode* file, SymbolTable* root) {
     String contextName;
     SymbolTable* currentTable = root;
     std::vector<Class::UsesDeclaration> uses;
+    uses.push_back({ Position(), "panda.collections.Array", "Array" });
     uses.push_back({ Position(), "panda.core.Bit", "Bit" });
     uses.push_back({ Position(), "panda.core.Char8", "Char8" });
     uses.push_back({ Position(), "panda.core.Int8", "Int8" });;
@@ -274,6 +275,19 @@ void Scanner::scan(ASTNode* file, SymbolTable* root) {
     uses.push_back({ Position(), "panda.io.Console", "Console" });;
     for (auto& e : file->fChildren) {
         switch (e.fKind) {
+            case ASTNode::Kind::USES: {
+                String alias;
+                auto pos = e.fText.find_last_of('.');
+                if (pos != String::npos) {
+                    ++pos;
+                    alias = e.fText.substr(pos, e.fText.size() - pos);
+                }
+                else {
+                    alias = e.fText;
+                }
+                uses.push_back({ e.fPosition, e.fText, alias });;
+                break;
+            }
             case ASTNode::Kind::PACKAGE: {
                 contextName = "";
                 currentTable = root;
