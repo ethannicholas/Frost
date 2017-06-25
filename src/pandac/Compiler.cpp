@@ -252,7 +252,7 @@ bool Compiler::coerce(IRNode* node, const Type& target, IRNode* out) {
             return true;
         }
         case IRNode::Kind::UNRESOLVED_RANGE: {
-            ASSERT(node->fChildren.size() == 2);
+            ASSERT(node->fChildren.size() == 3);
             if (target.fCategory == Type::Category::GENERIC &&
                     target.fSubtypes[0].fName == "panda.core.Range") {
                 ASSERT(target.fSubtypes.size() == 2);
@@ -266,6 +266,7 @@ bool Compiler::coerce(IRNode* node, const Type& target, IRNode* out) {
                 }
                 args.push_back(std::move(node->fChildren[0]));
                 args.push_back(std::move(node->fChildren[1]));
+                args.push_back(std::move(node->fChildren[2]));
                 args.emplace_back(node->fPosition, IRNode::Kind::BIT, Type::BuiltinBit(),
                         node->fValue.fBool);
                 Type rangeType = Type::RangeOf(baseType);
@@ -1587,6 +1588,17 @@ bool Compiler::convertRange(const ASTNode& r, IRNode* out) {
     std::vector<IRNode> children;
     children.push_back(std::move(start));
     children.push_back(std::move(end));
+    if (r.fChildren[2].fKind != ASTNode::Kind::VOID) {
+        IRNode step;
+        if (!this->convertExpression(r.fChildren[2], &step)) {
+            return false;
+        }
+        children.push_back(std::move(step));
+    }
+    else {
+        children.push_back(IRNode(r.fPosition, IRNode::Kind::INT, Type::IntLiteral(),
+                (uint64_t) 1));
+    }
     *out = IRNode(r.fPosition, IRNode::Kind::UNRESOLVED_RANGE,
             Type(r.fPosition, Type::Category::UNRESOLVED, "<unresolved range>"),
             r.fKind == ASTNode::Kind::RANGE_INCLUSIVE,
@@ -1728,22 +1740,24 @@ bool Compiler::convertFor(const ASTNode& f, IRNode* out) {
     if (!this->resolve(&list)) {
         return false;
     }
-    IRNode target;
-    if (!this->convertTarget(f.fChildren[0], nullptr, &Type::Int(), &target)) {
-        return false;
-    }
-    IRNode block;
-    this->convertBlock(f.fChildren[2], &block);
-    if (list.fType == Type::RangeOf(Type::Int())) {
+    if (list.fType.fCategory == Type::Category::GENERIC &&
+            list.fType.fSubtypes[0].fName == "panda.core.Range" &&
+            list.fType.fSubtypes[1].isNumeric()) {
+        IRNode target;
+        if (!this->convertTarget(f.fChildren[0], nullptr, &list.fType.fSubtypes[1], &target)) {
+            return false;
+        }
+        IRNode block;
+        this->convertBlock(f.fChildren[2], &block);
         std::vector<IRNode> children;
         children.push_back(std::move(target));
         children.push_back(std::move(list));
         children.push_back(std::move(block));
-        *out = IRNode(f.fPosition, IRNode::Kind::NUMERIC_FOR, f.fText, std::move(children));
+        *out = IRNode(f.fPosition, IRNode::Kind::RANGE_FOR, f.fText, std::move(children));
         return true;
     }
     else {
-        this->error(list.fPosition, "'for' loop expected an Iterable, but found '" +
+        this->error(list.fPosition, "'for' loop expected a Range or Iterable, but found '" +
                 list.fType.description() + "'");
         return false;
     }

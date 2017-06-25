@@ -1248,14 +1248,14 @@ bool PandaParser::rangeExpression(ASTNode* outResult) {
             if (this->peek().fKind != Token::Kind::BY && !this->additiveExpression(&right)) {
                 return false;
             }
-            ASTNode by;
-            if (this->checkNext(Token::Kind::BY) && !this->additiveExpression(&right)) {
+            ASTNode step;
+            if (this->checkNext(Token::Kind::BY) && !this->additiveExpression(&step)) {
                 return false;
             }
             std::vector<ASTNode> children;
             children.push_back(std::move(*outResult));
             children.push_back(std::move(right));
-            children.push_back(std::move(by));
+            children.push_back(std::move(step));
             ASTNode::Kind kind = (op.fKind == Token::Kind::DOTDOT)
                     ? ASTNode::Kind::RANGE_EXCLUSIVE
                     : ASTNode::Kind::RANGE_INCLUSIVE;

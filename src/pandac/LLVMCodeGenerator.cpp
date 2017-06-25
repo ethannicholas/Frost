@@ -29,11 +29,15 @@ LLVMCodeGenerator::LLVMCodeGenerator(std::ostream* out)
     // temporary
     fMethods << "declare i64 @putchar(i64)\n";
     fMethods << "declare i64 @printf(i8*, ...)\n";
-    fMethods << "@fmt = private constant [4 x i8] [i8 37, i8 100, i8 10, i8 0]\n";
     fMethods << "define fastcc void @panda$io$Console$print$panda$core$Char8(%panda$core$Char8 %c) {\n";
     fMethods << "    %1 = extractvalue %panda$core$Char8 %c, 0;\n";
     fMethods << "    %2 = sext i8 %1 to i64\n";
     fMethods << "    call i64 @putchar(i64 %2)\n";
+    fMethods << "    ret void\n";
+    fMethods << "}";
+    fMethods << "@fmt = private constant [4 x i8] [i8 37, i8 100, i8 10, i8 0]\n";
+    fMethods << "define fastcc void @debugPrint(i8 %value) {\n";
+    fMethods << "    call i64 (i8*, ...) @printf(i8* bitcast ([4 x i8]* @fmt to i8*), i8 %value)\n";
     fMethods << "    ret void\n";
     fMethods << "}";
 }
@@ -1113,64 +1117,225 @@ void LLVMCodeGenerator::writeDo(const IRNode& d, std::ostream& out) {
     this->createBlock(loopEnd, out);
 }
 
-void LLVMCodeGenerator::writeNumericFor(const IRNode& f, std::ostream& out) {
-    ASSERT(f.fKind == IRNode::Kind::NUMERIC_FOR);
+void LLVMCodeGenerator::writeRangeFor(const IRNode& f, std::ostream& out) {
+    // I am acutely aware of how horrific this looks.
+    //
+    // There's no easy way to produce clean output here, since we have to handle different step
+    // values, different loop directions, and both inclusive and exclusive ranges, all of which
+    // could potentially be determined at runtime. It gets even uglier when you consider the
+    // difficulty of handling the extremes of the numeric types. You can't just add 1 and then
+    // check to see if it's in range when the limit is MAX_INT, because you'll overflow and end up
+    // with an infinite loop. You also can't just check for being equal to the limit before adding
+    // the step, because with a step bigger than 1 (or smaller than -1) you might need to stop
+    // before actually hitting the end. So you instead check the difference between the current
+    // index and the limit, but even there you need to be careful because it could overflow in a
+    // signed test, and... ugh, it's surprisingly messy and results in a ton of code.
+    //
+    // Fortunately, we can just write incredibly awful-but-straightforward code and let LLVM
+    // optimize it to something sensible if it turns out the values are known at compile time. This
+    // works remarkably well, because LLVM is awesome.
+    ASSERT(f.fKind == IRNode::Kind::RANGE_FOR);
     ASSERT(f.fChildren.size() == 3);
     const IRNode& target = f.fChildren[0];
-    ASSERT(f.fChildren[1].fKind == IRNode::Kind::CONSTRUCT);
     ASSERT(f.fChildren[1].fType.fCategory == Type::Category::GENERIC);
     ASSERT(f.fChildren[1].fType.fSubtypes.size() == 2);
     ASSERT(f.fChildren[1].fType.fSubtypes[0].fName == "panda.core.Range");
-    ASSERT(f.fChildren[1].fChildren.size() == 1);
-    const IRNode& range = f.fChildren[1].fChildren[0];
+    String range = this->getTypedReference(f.fChildren[1], out);
     const IRNode& block = f.fChildren[2];
     const Type& type = f.fChildren[1].fType.fSubtypes[1];
+    String llt = this->llvmType(type);
+    Class* cl = fCompiler->resolveClass(fCurrentClass->fSymbolTable, type);
+    ASSERT(cl);
+    ASSERT(fCompiler->getAllFields(*cl).size() == 1);
+    String numberType = this->llvmType(fCompiler->getAllFields(*cl)[0]->fType);
     ASSERT(target.fKind == IRNode::Kind::VARIABLE_REFERENCE);
-    ASSERT(range.fChildren.size() == 4);
     String index = this->varName(*(Variable*) target.fValue.fPtr);
-    fMethodHeader << "    " << index << " = alloca " << this->llvmType(type) << "\n";
-    String start = this->getTypedReference(unwrap_cast(range.fChildren[1]),
-            out);
-    out << "    store " << start << ", " << this->llvmType(type) << "* " << index << "\n";
-    String end = this->getTypedReference(unwrap_cast(range.fChildren[2]),
-            out);
-    String endValue = this->nextVar();
-    out << "    " << endValue << " = extractvalue " << end << ", 0\n";
+    fMethodHeader << "    " << index << " = alloca " << llt << "\n";
+
+    // extract start value from range
+    String startPtr = this->nextVar();
+    out << "    " << startPtr << " = extractvalue " << range << ", 0\n";
+    String startPtrCast = this->nextVar();
+    out << "    " << startPtrCast << " = bitcast " << this->llvmType(Type::Object()) << " " <<
+            startPtr << " to " << this->llvmWrapperType(type) << "\n";
+    String startFieldPtr = this->nextVar();
+    out << "    " << startFieldPtr << " = getelementptr " << this->llvmWrapperTypeName(type) <<
+            ", " << this->llvmWrapperType(type) << " " << startPtrCast << ", i64 0, i32 " <<
+            OBJECT_FIELD_COUNT << "\n";
+    String startFieldPtrCast = this->nextVar();
+    out << "    " << startFieldPtrCast << " = bitcast " << numberType << "* " <<
+                startFieldPtr << " to " << llt << "*\n";
+    String start = this->nextVar();
+    out << "    " << start << " = load " << llt << ", " << llt <<
+            "* " << startFieldPtrCast << "\n";
+    out << "    store " << llt << start << ", " << llt << "* " <<
+            index << "\n";
+    String startValue = this->nextVar();
+    out << "    " << startValue << " = extractvalue " << llt << " " << start << ", 0\n";
+
+    // extract end value from range
+    String endPtr = this->nextVar();
+    out << "    " << endPtr << " = extractvalue " << range << ", 1\n";
+    String endPtrCast = this->nextVar();
+    out << "    " << endPtrCast << " = bitcast " << this->llvmType(Type::Object()) << " " <<
+            endPtr << " to " << this->llvmWrapperType(type) << "\n";
+    String endFieldPtr = this->nextVar();
+    out << "    " << endFieldPtr << " = getelementptr " << this->llvmWrapperTypeName(type) <<
+            ", " << this->llvmWrapperType(type) << " " << endPtrCast << ", i64 0, i32 " <<
+            OBJECT_FIELD_COUNT << "\n";
+    String end = this->nextVar();
+    out << "    " << end << " = load " << numberType << ", " << numberType <<
+            "* " << endFieldPtr << "\n";
+
+    // extract step value from range
+    String stepPtr = this->nextVar();
+    out << "    " << stepPtr << " = extractvalue " << range << ", 2\n";
+    String stepPtrCast = this->nextVar();
+    out << "    " << stepPtrCast << " = bitcast " << this->llvmType(Type::Object()) << " " <<
+            stepPtr << " to " << this->llvmWrapperType(type) << "\n";
+    String stepFieldPtr = this->nextVar();
+    out << "    " << stepFieldPtr << " = getelementptr " << this->llvmWrapperTypeName(type) <<
+            ", " << this->llvmWrapperType(type) << " " << stepPtrCast << ", i64 0, i32 " <<
+            OBJECT_FIELD_COUNT << "\n";
+    String step = this->nextVar();
+    out << "    " << step << " = load " << numberType << ", " << numberType <<
+            "* " << stepFieldPtr << "\n";
+
+    // extract inclusive / exclusive from range
+    String inclusive = this->nextVar();
+    out << "    " << inclusive << " = extractvalue " << range << ", 3, 0\n";
+
+    // start block
     String loopStart = this->nextLabel();
     String loopBody = this->nextLabel();
-    out << "    br label %" << loopStart << "\n";
+    String loopEnd = this->nextLabel();
+    String forwardEntry = this->nextLabel();
+    String backwardEntry = this->nextLabel();
+    char signPrefix = 's';
+    String direction;
+    if (signPrefix == 's') {
+        direction = this->nextVar();
+        out << "    " << direction << " = icmp sge " << numberType << " " << step <<
+                ", 0\n";
+    }
+    else {
+        direction = "1";
+    }
+    out << "    br i1 " << direction << ", label %" << forwardEntry << ", label %" <<
+            backwardEntry << "\n";
+    this->createBlock(forwardEntry, out);
+    String forwardEntryTest = this->nextVar();
+    out << "    " << forwardEntryTest << " = icmp " << signPrefix << "le " << numberType << " " <<
+            startValue << ", " << end << "\n";
+    out << "    br i1 " << forwardEntryTest << ", label %" << loopStart << ", label %" <<
+            loopEnd << "\n";
+    this->createBlock(backwardEntry, out);
+    String backwardEntryTest = this->nextVar();
+    out << "    " << backwardEntryTest << " = icmp " << signPrefix << "ge " << numberType << " " <<
+            startValue << ", " << end << "\n";
+    out << "    br i1 " << backwardEntryTest << ", label %" << loopStart << ", label %" <<
+            loopEnd << "\n";
     this->createBlock(loopStart, out);
     String indexLoad = this->nextVar();
-    out << "    " << indexLoad << " = load " << this->llvmType(type) << ", " <<
-            this->llvmType(type) << "* " << index << "\n";
+    out << "    " << indexLoad << " = load " << llt << ", " <<
+            llt << "* " << index << "\n";
     String indexValue = this->nextVar();
-    out << "    " << indexValue << " = extractvalue " << this->llvmType(type) << " " <<
+    out << "    " << indexValue << " = extractvalue " << llt << " " <<
             indexLoad << ", 0\n";
-    String test = this->nextVar();
-    // hack hardcoded i64
-    String baseType = "i64";
-    ASSERT(range.fChildren[3].fKind == IRNode::Kind::CONSTRUCT);
-    ASSERT(range.fChildren[3].fType == Type::Bit());
-    ASSERT(range.fChildren[3].fChildren[0].fChildren[1].fKind == IRNode::Kind::BIT);
-    const char* cmp = range.fChildren[3].fChildren[0].fChildren[1].fValue.fBool ? "sle" : "slt";
-    out << "    " << test << " = icmp " << cmp << " " << baseType << " " << indexValue << ", " <<
-            endValue << "\n";
-    String loopEnd = this->nextLabel();
-    out << "    br i1 " << test << ", label %" << loopBody << ", label %" << loopEnd << "\n";
-    this->createBlock(loopBody, out);
     this->writeStatement(block, out);
+    String loopTest = this->nextLabel();
     if (!ends_with_branch(block)) {
-        String inc = this->nextVar();
-        out << "    " << inc << " = add " << baseType << " " << indexValue << ", 1\n";
-        String incStruct = this->nextVar();
-        out << "    " << incStruct << " = insertvalue " << this->llvmType(type) << " { " <<
-                baseType << " undef }, " << baseType << " " << inc << ", 0\n";
-        out << "    store " << this->llvmType(type) << " " << incStruct << ", " <<
-                this->llvmType(type) << "* " << index << "\n";
-        out << "    br label %" << loopStart << "\n";
+        out << "    br label %" << loopTest << "\n";
     }
-    this->createBlock(loopEnd, out);
+    this->createBlock(loopTest, out);
+    String loopInc = this->nextLabel();
+    // beginning of loop test, determine direction
+    out << "; direction test\n";
+    String forwardLabel = this->nextLabel();
+    String backwardLabel = this->nextLabel();
+    out << "    br i1 " << direction << ", label %" << forwardLabel << ", label %" <<
+            backwardLabel << "\n";
 
+    // forward loop; perform the test by subtracting index from end and then comparing to step, to
+    // avoid overflows near the maximum value
+    this->createBlock(forwardLabel, out);
+    out << "; forward test\n";
+    String forwardDelta = this->nextVar();
+    out << "    " << forwardDelta << " = sub " << numberType << " " << end << ", " << indexValue <<
+            "\n";
+
+    // forward loop; determine inclusive / exclusive
+    String forwardInclusiveLabel = this->nextLabel();
+    String forwardExclusiveLabel = this->nextLabel();
+    out << "    br i1 " << inclusive << ", label %" << forwardInclusiveLabel << ", label %" <<
+            forwardExclusiveLabel << "\n";
+
+    // forward inclusive test
+    this->createBlock(forwardInclusiveLabel, out);
+    out << "; forward inclusive\n";
+    String forwardInclusiveTest = this->nextVar();
+    // always use unsigned comparison to avoid overflow; we know both the delta and the step are
+    // the same sign
+    out << "    " << forwardInclusiveTest << " = icmp uge " << numberType <<
+            " " << forwardDelta << ", " << step << "\n";
+    out << "    br i1 " << forwardInclusiveTest << ", label %" << loopInc << ", label %" <<
+            loopEnd << "\n";
+    this->createBlock(forwardExclusiveLabel, out);
+
+    // forward exclusive test
+    String forwardExclusiveTest = this->nextVar();
+    out << "; forward exclusive\n";
+    out << "    " << forwardExclusiveTest << " = icmp ugt " << numberType << " " << forwardDelta <<
+            ", " << step << "\n";
+    out << "    br i1 " << forwardExclusiveTest << ", label %" << loopInc << ", label %" <<
+            loopEnd << "\n";
+
+    // backward loop; perform the test by subtracting end from index and then comparing to -step, to
+    // avoid overflows near the minimum value
+    this->createBlock(backwardLabel, out);
+    out << "; backward test\n";
+    String backwardDelta = this->nextVar();
+    out << "    " << backwardDelta << " = sub " << numberType << " " << indexValue << ", " << end <<
+            "\n";
+    String negStep = this->nextVar();
+    out << "    " << negStep << " = sub " << numberType << " 0, " << step << "\n";
+
+    // backward loop; determine inclusive / exclusive
+    String backwardInclusiveLabel = this->nextLabel();
+    String backwardExclusiveLabel = this->nextLabel();
+    out << "    br i1 " << inclusive << ", label %" << backwardInclusiveLabel << ", label %" <<
+            backwardExclusiveLabel << "\n";
+
+    // backward inclusive test
+    this->createBlock(backwardInclusiveLabel, out);
+    out << "; backward inclusive\n";
+    String backwardInclusiveTest = this->nextVar();
+    out << "    " << backwardInclusiveTest << " = icmp uge " << numberType << " " <<
+            backwardDelta << ", " << negStep << "\n";
+    out << "    br i1 " << backwardInclusiveTest << ", label %" << loopInc << ", label %" <<
+            loopEnd << "\n";
+    this->createBlock(backwardExclusiveLabel, out);
+
+    // backward exclusive test
+    String backwardExclusiveTest = this->nextVar();
+    out << "; backward exclusive\n";
+    out << "    " << backwardExclusiveTest << " = icmp ugt " << numberType <<
+            " " << backwardDelta << ", " << negStep << "\n";
+    out << "    br i1 " << backwardExclusiveTest << ", label %" << loopInc << ", label %" <<
+            loopEnd << "\n";
+
+    this->createBlock(loopInc, out);
+    String inc = this->nextVar();
+    out << "    " << inc << " = add " << numberType << " " << indexValue << ", " << step <<
+            "\n";
+    String incStruct = this->nextVar();
+    out << "    " << incStruct << " = insertvalue " << llt << " { " <<
+            numberType << " undef }, " << numberType << " " << inc << ", 0\n";
+    out << "    store " << llt << " " << incStruct << ", " <<
+            llt << "* " << index << "\n";
+    out << "    br label %" << loopStart << "\n";
+
+    this->createBlock(loopEnd, out);
 }
 
 void LLVMCodeGenerator::writeVarTarget(const IRNode& target, const IRNode* value,
@@ -1225,18 +1390,18 @@ void LLVMCodeGenerator::writeReturn(const IRNode& ret, std::ostream& out) {
 
 void LLVMCodeGenerator::writeStatement(const IRNode& stmt, std::ostream& out) {
     switch (stmt.fKind) {
-        case IRNode::Kind::BINARY:      this->writeAssignment(stmt, out);     break;
-        case IRNode::Kind::BLOCK:       this->writeBlock     (stmt, out);     break;
-        case IRNode::Kind::CALL:        this->writeCall      (stmt, "", out); break;
-        case IRNode::Kind::IF:          this->writeIf        (stmt, out);     break;
-        case IRNode::Kind::WHILE:       this->writeWhile     (stmt, out);     break;
-        case IRNode::Kind::DO:          this->writeDo        (stmt, out);     break;
-        case IRNode::Kind::NUMERIC_FOR: this->writeNumericFor(stmt, out);     break;
-        case IRNode::Kind::RETURN:      this->writeReturn    (stmt, out);     break;
-        case IRNode::Kind::VAR:         // fall through
-        case IRNode::Kind::DEF:         // fall through
-        case IRNode::Kind::PROPERTY:    // fall through
-        case IRNode::Kind::CONSTANT:    this->writeVar(stmt, out); break;
+        case IRNode::Kind::BINARY:    this->writeAssignment(stmt, out);     break;
+        case IRNode::Kind::BLOCK:     this->writeBlock     (stmt, out);     break;
+        case IRNode::Kind::CALL:      this->writeCall      (stmt, "", out); break;
+        case IRNode::Kind::IF:        this->writeIf        (stmt, out);     break;
+        case IRNode::Kind::WHILE:     this->writeWhile     (stmt, out);     break;
+        case IRNode::Kind::DO:        this->writeDo        (stmt, out);     break;
+        case IRNode::Kind::RANGE_FOR: this->writeRangeFor  (stmt, out);     break;
+        case IRNode::Kind::RETURN:    this->writeReturn    (stmt, out);     break;
+        case IRNode::Kind::VAR:       // fall through
+        case IRNode::Kind::DEF:       // fall through
+        case IRNode::Kind::PROPERTY:  // fall through
+        case IRNode::Kind::CONSTANT:  this->writeVar       (stmt, out);     break;
         default:
             printf("unsupported statement: %s\n", stmt.description().c_str());
             abort();

@@ -91,6 +91,12 @@ struct Type : public Symbol {
                 fCategory == Category::INT_LITERAL;
     }
 
+    bool isNumeric() const {
+        return !strncmp(fName.c_str(), "panda.core.Int", strlen("panda.core.Int")) ||
+                !strncmp(fName.c_str(), "panda.core.Int", strlen("panda.core.UInt")) ||
+                !strncmp(fName.c_str(), "panda.core.Int", strlen("panda.core.Char"));
+    }
+
     bool isClass() const {
         return fCategory == Category::CLASS || fCategory == Category::GENERIC;
     }

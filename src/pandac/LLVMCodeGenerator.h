@@ -113,7 +113,7 @@ private:
 
     void writeDo(const IRNode& d, std::ostream& out);
 
-    void writeNumericFor(const IRNode& f, std::ostream& out);
+    void writeRangeFor(const IRNode& f, std::ostream& out);
 
     void writeVarTarget(const IRNode& var, const IRNode* value, std::ostream& out);
 

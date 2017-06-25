@@ -22,6 +22,10 @@ class Int8 : Value {
         return Int8(value // other.value)
     }
 
+    function %(other:Int8):Int8 {
+        return Int8(value % other.value)
+    }
+
     function -():Int8 {
         return Int8(-value)
     }
@@ -72,6 +76,38 @@ class Int8 : Value {
 
     function <=(other:Int8):Bit {
         return value <= other.value
+    }
+
+    function convert():String {
+        constant max := 20
+        def chars := Pointer<Char8>.alloc(max)
+        var index := max - 1
+        var value := self
+        if value >= 0 {
+            do {
+                chars[index] := Char8((value % 10 + 48).value)
+                value //= 10
+                index -= 1
+            }
+            while value > 0
+            index += 1
+        }
+        else {
+            do {
+                chars[index] := Char8((48 - value % 10).value)
+                value //= 10
+                index -= 1
+            }
+            while value < 0
+            chars[index] := Char8(45) -- "-"
+        }
+        def size := max - index
+        def result := Pointer<Char8>.alloc(size)
+        for i in index .. max {
+            result[i - index] := chars[i]
+        }
+        chars.destroy()
+        return String(result, size)
     }
 
     @private

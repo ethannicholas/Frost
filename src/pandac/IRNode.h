@@ -49,8 +49,6 @@ struct IRNode {
         INT,
         // a reference to a method, such as 'String.convert'
         METHOD_REFERENCE,
-        // a for loop over a numeric range
-        NUMERIC_FOR,
         // the name of a package
         PACKAGE_REFERENCE,
         // formal parameter of a method
@@ -61,8 +59,8 @@ struct IRNode {
         PREFIX,
         // a property declaration statement
         PROPERTY,
-        // a '..' or '...' expression prior to determining its final type
-        UNRESOLVED_RANGE,
+        // a for loop over a range
+        RANGE_FOR,
         // a return statement
         RETURN,
         // wraps an expression to indicate that it is reused elsewhere in the tree without
@@ -87,6 +85,8 @@ struct IRNode {
         UNRESOLVED_METHOD_REFERENCE,
         // an ambiguous method call, where the return type is needed to disambiguate it
         UNRESOLVED_INDEX,
+        // a '..' or '...' expression prior to determining its final type
+        UNRESOLVED_RANGE,
         // an index (x[y]) expression before we've determined whether or not it's an assignment
         VARIABLE_REFERENCE,
         // a var declaration statement
@@ -284,7 +284,6 @@ struct IRNode {
             case Kind::DO:                          result += "Do";                          break;
             case Kind::ERROR:                       result += "<error>";                     break;
             case Kind::FIELD_REFERENCE:             result += "FieldReference";              break;
-            case Kind::NUMERIC_FOR:                 result += "NumericFor";                  break;
             case Kind::IF:                          result += "If";                          break;
             case Kind::INT:                         result += "Int"; i = 1;                  break;
             case Kind::METHOD_REFERENCE:            result += "MethodReference"; p = 1;      break;
@@ -293,9 +292,10 @@ struct IRNode {
             case Kind::PARAMETERS:                  result += "Parameters";                  break;
             case Kind::PREFIX:                      result += "Prefix"; o = 1;               break;
             case Kind::PROPERTY:                    result += "Property";                    break;
+            case Kind::RANGE_FOR:                   result += "RangeFor";                    break;
             case Kind::RETURN:                      result += "Return";                      break;
-            case Kind::REUSED_VALUE_DEFINITION:     result += "ReusedValueDefinition";       break;
             case Kind::REUSED_VALUE:                result += "ReusedValue";                 break;
+            case Kind::REUSED_VALUE_DEFINITION:     result += "ReusedValueDefinition";       break;
             case Kind::SELF:                        result += "Self";                        break;
             case Kind::STRING:                      result += "String";                      break;
             case Kind::TUPLE_TARGET:                result += "TupleTarget";                 break;
