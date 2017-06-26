@@ -22,7 +22,13 @@ class Overloading {
 
     @class
     method main() {
-        Console.printLine(classTest())
-        Console.printLine(Overloading.classTest())
+        var i8:Int8 := classTest()
+        var i64:Int64 := classTest()
+        Console.printLine(i8)
+        Console.printLine(i64)
+        i8 := Overloading().instanceTest()
+        i64 := Overloading().instanceTest()
+        Console.printLine(i8)
+        Console.printLine(i64)
     }
 }

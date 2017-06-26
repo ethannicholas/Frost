@@ -1,6 +1,10 @@
 package panda.core
 
 class Object {
+    function convert():String {
+        return "<object>"
+    }
+
     @protected
     method cleanup() {
     }

@@ -74,6 +74,10 @@ class Int32 : Value {
         return value <= other.value
     }
 
+    function convert():String {
+        return Int64(value->builtin_int64).convert()
+    }
+
     @private
     def value:builtin_int32
 }

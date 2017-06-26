@@ -14,6 +14,7 @@ public:
     ~LLVMCodeGenerator() {
         fOut << fTypeDeclarations.str();
         fOut << fStrings.str();
+        fOut << fShims.str();
         fOut << fMethods.str();
     }
 
@@ -48,6 +49,15 @@ private:
     size_t sizeOf(const Type& type);
 
     ClassConstant& getClassConstant(const Class& cl);
+
+    ClassConstant& getWrapperClassConstant(const Class& cl);
+
+    /**
+     * For the given Value class method, creates a shim method which receives a wrapped value,
+     * unwraps it, and forwards it to the actual method implementation (which expects an unwrapped
+     * 'self').
+     */
+    String createWrapperShim(const Method& m, std::ostream& out);
 
     String llvmTypeName(const Type& type);
 
@@ -154,6 +164,8 @@ private:
     std::stringstream fTypeDeclarations;
 
     std::stringstream fStrings;
+
+    std::stringstream fShims;
 
     std::stringstream fMethods;
 

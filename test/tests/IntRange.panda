@@ -1,0 +1,24 @@
+class IntRange {
+    @class
+    method main() {
+        var int8Min:Int8 := -128
+        Console.printLine(int8Min)
+        var int8Max:Int8 := 127
+        Console.printLine(int8Max)
+
+        var int16Min:Int16 := -32768
+        Console.printLine(int16Min)
+        var int16Max:Int16 := 32767
+        Console.printLine(int16Max)
+
+        var int32Min:Int32 := -2147483648
+        Console.printLine(int32Min)
+        var int32Max:Int32 := 2147483647
+        Console.printLine(int32Max)
+
+        var int64Min:Int64 := -9223372036854775808
+        Console.printLine(int64Min)
+        var int64Max:Int64 := 9223372036854775807
+        Console.printLine(int64Max)
+    }
+}

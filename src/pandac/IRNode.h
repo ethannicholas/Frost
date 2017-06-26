@@ -49,6 +49,8 @@ struct IRNode {
         INT,
         // a reference to a method, such as 'String.convert'
         METHOD_REFERENCE,
+        // a negative literal integer (where fValue.fInt is the absolute value)
+        NEGATED_INT,
         // the name of a package
         PACKAGE_REFERENCE,
         // formal parameter of a method
@@ -250,6 +252,8 @@ struct IRNode {
 
     void init() {
         ASSERT(fKind != Kind::CAST || fType != fChildren[0].fType);
+        ASSERT(fKind != Kind::CAST || fChildren[0].fType.fCategory != Type::Category::UNRESOLVED);
+        ASSERT(fKind != Kind::CAST || fChildren[0].fType.fCategory != Type::Category::INT_LITERAL);
     }
 
     // copying IRNodes can be very expensive and is incredibly easy to do by accident, so we kill
@@ -287,6 +291,7 @@ struct IRNode {
             case Kind::IF:                          result += "If";                          break;
             case Kind::INT:                         result += "Int"; i = 1;                  break;
             case Kind::METHOD_REFERENCE:            result += "MethodReference"; p = 1;      break;
+            case Kind::NEGATED_INT:                 result += "NegatedInt"; i = 1;           break;
             case Kind::PACKAGE_REFERENCE:           result += "PackageReference"; p = 1;     break;
             case Kind::PARAMETER:                   result += "Parameter";                   break;
             case Kind::PARAMETERS:                  result += "Parameters";                  break;

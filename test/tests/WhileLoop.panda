@@ -1,0 +1,13 @@
+class WhileLoop {
+    @class
+    method main() {
+        var i := 0
+        while i < 10 {
+            Console.printLine(i)
+            i += 1
+        }
+        while false {
+            Console.printLine("uh oh")
+        }
+    }
+}

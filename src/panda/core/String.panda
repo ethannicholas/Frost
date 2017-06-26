@@ -8,6 +8,11 @@ class String {
     }
 
     @override
+    function convert():String {
+        return self
+    }
+
+    @override
     @private
     method cleanup() {
         data.destroy()
@@ -22,6 +27,10 @@ class String {
             result[size + i] := other.data[i]
         }
         return String(result, size + other.size)
+    }
+
+    function +(other:Object):String {
+        return self + other.convert()->String
     }
 
     @private

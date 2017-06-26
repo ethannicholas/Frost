@@ -167,6 +167,11 @@ struct Type : public Symbol {
         return Object();
     }
 
+    static Type& Value() {
+        static Type result = Type(Position(), Category::CLASS, "panda.core.Value");
+        return result;
+    }
+
     static Type& IntLiteral() {
         static Type result = Type(Position(), Category::INT_LITERAL, "<integer>", 1);
         return result;

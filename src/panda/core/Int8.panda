@@ -79,35 +79,7 @@ class Int8 : Value {
     }
 
     function convert():String {
-        constant max := 20
-        def chars := Pointer<Char8>.alloc(max)
-        var index := max - 1
-        var value := self
-        if value >= 0 {
-            do {
-                chars[index] := Char8((value % 10 + 48).value)
-                value //= 10
-                index -= 1
-            }
-            while value > 0
-            index += 1
-        }
-        else {
-            do {
-                chars[index] := Char8((48 - value % 10).value)
-                value //= 10
-                index -= 1
-            }
-            while value < 0
-            chars[index] := Char8(45) -- "-"
-        }
-        def size := max - index
-        def result := Pointer<Char8>.alloc(size)
-        for i in index .. max {
-            result[i - index] := chars[i]
-        }
-        chars.destroy()
-        return String(result, size)
+        return Int64(value->builtin_int64).convert()
     }
 
     @private

@@ -150,6 +150,28 @@ int Compiler::matchMethods(const std::vector<const MethodRef*>& methods,
     return minCost;
 }
 
+// returns the type that a variable should have when initialized with the given node
+static Type variable_type(const IRNode& node) {
+    switch (node.fKind) {
+        case IRNode::Kind::UNRESOLVED_RANGE:
+            for (const auto& child : node.fChildren) {
+                if (child.fKind != IRNode::Kind::VOID) {
+                    return variable_type(child);
+                }
+            }
+            abort();
+        default:
+            break;
+    }
+    if (node.fType == Type::IntLiteral()) {
+        return Type::Int();
+    }
+    if (node.fType == Type::BuiltinBit()) {
+        return Type::Bit();
+    }
+    return node.fType;
+}
+
 bool Compiler::coerce(IRNode* node, const Type& target, IRNode* out) {
     ASSERT(node);
     ASSERT(out);
@@ -171,20 +193,23 @@ bool Compiler::coerce(IRNode* node, const Type& target, IRNode* out) {
                 *out = IRNode(node->fPosition, IRNode::Kind::INT, target, node->fValue.fInt);
                 return true;
             }
-            break;
-        case IRNode::Kind::PREFIX: {
-            ASSERT(node->fChildren.size() == 1);
-            if (node->fChildren[0].fType.isBuiltinNumber()) {
-                IRNode base;
-                // FIXME: wrong at extremes
-                if (!this->coerce(&node->fChildren[0], target, &base)) {
-                    return false;
-                }
-                return this->convertPrefix(node->fPosition, (Operator) node->fValue.fInt,
-                        std::move(base), out);
+            if (target.fCategory == Type::Category::CLASS && !target.isNumeric() &&
+                    this->coerce(node, variable_type(*node), node)) {
+                return this->coerce(node, target, out);
             }
             break;
-        }
+        case IRNode::Kind::NEGATED_INT:
+            if (target.fCategory == Type::Category::BUILTIN_INT &&
+                    required_size((int64_t) -node->fValue.fInt) <= target.fSize) {
+                *out = IRNode(node->fPosition, IRNode::Kind::NEGATED_INT, target,
+                        node->fValue.fInt);
+                return true;
+            }
+            if (target.fCategory == Type::Category::CLASS && !target.isNumeric() &&
+                    this->coerce(node, variable_type(*node), node)) {
+                return this->coerce(node, target, out);
+            }
+            break;
         case IRNode::Kind::UNRESOLVED_CALL: {
             ASSERT(node->fChildren.size() == 2);
             ASSERT(node->fChildren[0].fKind == IRNode::Kind::UNRESOLVED_METHOD_REFERENCE);
@@ -316,8 +341,17 @@ bool Compiler::coerce(IRNode* node, const Type& target, IRNode* out) {
         *out = IRNode(p, IRNode::Kind::CAST, target, std::move(children));
         return true;
     }
-    String value = node->fKind == IRNode::Kind::INT ? std::to_string(node->fValue.fInt) :
-            node->fType.fName;
+    String value;
+    switch (node->fKind) {
+        case IRNode::Kind::INT:
+            value = std::to_string(node->fValue.fInt);
+            break;
+        case IRNode::Kind::NEGATED_INT:
+            value = '-' + std::to_string(node->fValue.fInt);
+            break;
+        default:
+            value = node->fType.fName;
+    }
     this->error(node->fPosition, "expected '" + target.fName + "', but found '" + value + "'");
     return false;
 }
@@ -358,6 +392,18 @@ int Compiler::coercionCost(const IRNode& node, const Type& target) {
                     (target.fCategory == Type::Category::BUILTIN_UINT &&
                         required_size((uint64_t) node.fValue.fInt) <= target.fSize)) {
                 return 0;
+            }
+            if (!target.isNumeric()) {
+                return this->coercionCost(variable_type(node), target);
+            }
+            break;
+        case IRNode::Kind::NEGATED_INT:
+            if ((target.fCategory == Type::Category::BUILTIN_INT &&
+                    required_size((int64_t) -node.fValue.fInt) <= target.fSize)) {
+                return 0;
+            }
+            if (!target.isNumeric()) {
+                return this->coercionCost(variable_type(node), target);
             }
             break;
         case IRNode::Kind::PREFIX: {
@@ -868,7 +914,10 @@ bool Compiler::convertArrow(const ASTNode& a, IRNode* outResult) {
     this->resolveType(*fSymbolTable, &type);
     switch ((Operator) a.fValue.fInt) {
         case Operator::CAST:
-            if (canCast(value, type)) {
+            if (this->coercionCost(value, type) != INT_MAX) {
+                return this->coerce(&value, type, outResult);
+            }
+            if (this->canCast(value, type)) {
                 std::vector<IRNode> children;
                 children.push_back(std::move(value));
                 *outResult = IRNode(a.fPosition, IRNode::Kind::CAST, std::move(type),
@@ -1452,19 +1501,26 @@ bool Compiler::convertPrefix(Position p, Operator op, IRNode base, IRNode* out) 
     }
     switch (op) {
         case Operator::SUB:
-            if (base.fType.isBuiltinNumber()) {
-                Type type = base.fType;
-                std::vector<IRNode> children;
-                children.push_back(std::move(base));
-                *out = IRNode(p, IRNode::Kind::PREFIX, type, (uint64_t) op,
-                        std::move(children));
-                return true;
+            switch (base.fKind) {
+                case IRNode::Kind::INT:
+                    *out = IRNode(p, IRNode::Kind::NEGATED_INT, base.fType, base.fValue.fInt);
+                    return true;
+                case IRNode::Kind::NEGATED_INT:
+                    *out = IRNode(p, IRNode::Kind::INT, base.fType, base.fValue.fInt);
+                    return true;
+                default:
+                    if (base.fType.isBuiltinNumber()) {
+                        Type type = base.fType;
+                        std::vector<IRNode> children;
+                        children.push_back(std::move(base));
+                        *out = IRNode(p, IRNode::Kind::PREFIX, type, (uint64_t) Operator::SUB,
+                                std::move(children));
+                        return true;
+                    }
             }
-            else {
-                this->error(base.fPosition, "expected a number, but found '" + base.fType.fName +
-                        "'");
-                return false;
-            }
+            this->error(base.fPosition, "expected a number, but found '" + base.fType.fName +
+                    "'");
+            return false;
         case Operator::BITWISENOT:
             if (base.fType.isBuiltinNumber()) {
                 Type type = base.fType;
@@ -1764,28 +1820,6 @@ bool Compiler::convertFor(const ASTNode& f, IRNode* out) {
 }
 
 
-// returns the type that a variable should have when initialized with the given node
-static Type variable_type(const IRNode& node) {
-    switch (node.fKind) {
-        case IRNode::Kind::UNRESOLVED_RANGE:
-            for (const auto& child : node.fChildren) {
-                if (child.fKind != IRNode::Kind::VOID) {
-                    return variable_type(child);
-                }
-            }
-            abort();
-        default:
-            break;
-    }
-    if (node.fType == Type::IntLiteral()) {
-        return Type::Int();
-    }
-    if (node.fType == Type::BuiltinBit()) {
-        return Type::Bit();
-    }
-    return node.fType;
-}
-
 bool Compiler::resolve(IRNode* value) {
     switch (value->fKind) {
         case IRNode::Kind::UNRESOLVED_METHOD_REFERENCE:
@@ -1820,6 +1854,8 @@ bool Compiler::resolve(IRNode* value) {
             }
         }
         case IRNode::Kind::INT:
+            return this->coerce(value, Type::Int());
+        case IRNode::Kind::NEGATED_INT:
             return this->coerce(value, Type::Int());
         case IRNode::Kind::PREFIX:
             ASSERT(value->fChildren.size() == 1);

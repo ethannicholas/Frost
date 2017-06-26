@@ -14,23 +14,13 @@ class Console {
     }
 
     @class
-    method printLine(s:String) {
-        print(s)
+    method print(o:Object) {
+        print(o.convert())
+    }
+
+    @class
+    method printLine(o:Object) {
+        print(o.convert())
         print(Char8(10))
-    }
-
-    @class
-    method printLine(i:Int64) {
-        printLine(i.convert())
-    }
-
-    @class
-    method printLine(b:Bit) {
-        if b {
-            printLine(1)
-        }
-        else {
-            printLine(0)
-        }
     }
 }

@@ -271,6 +271,7 @@ void Scanner::scan(ASTNode* file, SymbolTable* root) {
     uses.push_back({ Position(), "panda.core.Int32", "Int32" });;
     uses.push_back({ Position(), "panda.core.Int64", "Int64" });;
     uses.push_back({ Position(), "panda.core.Int64", "Int" });;
+    uses.push_back({ Position(), "panda.core.Object", "Object" });;
     uses.push_back({ Position(), "panda.core.String", "String" });;
     uses.push_back({ Position(), "panda.io.Console", "Console" });;
     for (auto& e : file->fChildren) {

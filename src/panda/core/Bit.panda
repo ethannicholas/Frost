@@ -6,6 +6,16 @@ class Bit : Value {
         self.value := value
     }
 
+    @override
+    function convert():String {
+        if self {
+            return "true"
+        }
+        else {
+            return "false"
+        }
+    }
+
     function !():Bit {
         return Bit(!value)
     }
