@@ -1,6 +1,4 @@
 class A {
-    init() {}
-
     function *(other:A):A {
         Console.printLine("A * A: A")
         return A()
@@ -18,8 +16,6 @@ class A {
 }
 
 class B {
-    init() {}
-
     @class
     function *(left:A, right:B):B {
         Console.printLine("A * B: B")
@@ -34,8 +30,6 @@ class B {
 }
 
 class C {
-    init() {}
-
     function [](a:A):A {
         Console.printLine("C[A]: A")
         return A()

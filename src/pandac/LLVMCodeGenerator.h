@@ -29,8 +29,7 @@ public:
     };
 
 private:
-    class ClassConstant {
-    public:
+    struct ClassConstant {
         ClassConstant() {}
         
         ClassConstant(String name, String type)
@@ -40,6 +39,17 @@ private:
         String fName;
 
         String fType;
+    };
+
+    struct LoopDescriptor {
+        LoopDescriptor(String label, String breakLabel, String continueLabel)
+        : fLabel(label)
+        , fBreakLabel(breakLabel)
+        , fContinueLabel(continueLabel) {}
+
+        String fLabel;
+        String fBreakLabel;
+        String fContinueLabel;
     };
 
     void writeType(const Type& type);
@@ -137,15 +147,21 @@ private:
 
     void writeAssignment(const IRNode& a, std::ostream& out);
 
-    void writeReturn(const IRNode& ret, std::ostream& out);
+    void writeReturn(const IRNode& r, std::ostream& out);
 
-    void writeStatement(const IRNode& stmt, std::ostream& out);
+    void writeBreak(const IRNode& b, std::ostream& out);
+
+    void writeContinue(const IRNode& c, std::ostream& out);
+
+    void writeStatement(const IRNode& s, std::ostream& out);
 
     void writeBlock(const IRNode& block, std::ostream& out);
 
     String methodName(const Method& name);
 
     String varName(const Variable& var);
+
+    const LoopDescriptor& findLoop(String name);
 
     int fTmpVars = 1;
 
@@ -183,5 +199,9 @@ private:
 
     std::unordered_map<const Variable*, String> fVariableNames;
 
+    std::vector<LoopDescriptor> fLoops;
+
     bool fKillCast = false;
+
+    friend class AutoLoopDescriptor;
 };

@@ -67,5 +67,6 @@ private:
 
     std::map<String, Symbol*> fSymbols;
 
+    friend class AutoSymbolTable;
     friend class Compiler;
 };

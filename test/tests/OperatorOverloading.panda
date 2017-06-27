@@ -1,6 +1,4 @@
 class A {
-    init() {}
-
     function +(other:A):Int {
         return 100
     }
@@ -15,8 +13,6 @@ class A {
 }
 
 class B : A {
-    init() {}
-
     @class
     function *(a:A, b:B):Int {
         return 102

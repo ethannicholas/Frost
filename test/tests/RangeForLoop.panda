@@ -13,6 +13,10 @@ class RangeForLoop {
         for i in 127->Int8 ... (-128)->Int8 {
             Console.printLine("    " + i)
         }
+        Console.printLine("-128 ... 127 by -1")
+        for i in (-128)->Int8 ... 127->Int8 by -1 {
+            Console.printLine("    " + i)
+        }
         Console.printLine("127 ... -128 by -1")
         for i in 127->Int8 ... (-128)->Int8 by -1 {
             Console.printLine("    " + i)
@@ -27,6 +31,20 @@ class RangeForLoop {
         }
         Console.printLine("127 ... -128 by -10")
         for i in 127->Int8 ... (-128)->Int8 by -10 {
+            Console.printLine("    " + i)
+        }
+        Console.printLine("1 ... 10 with break at 5")
+        for i in 1 ... 10 {
+            Console.printLine("    " + i)
+            if i = 5 {
+                break
+            }
+        }
+        Console.printLine("1 ... 10 with continue on evens")
+        for i in 1 ... 10 {
+            if i % 2 = 0 {
+                continue
+            }
             Console.printLine("    " + i)
         }
     }

@@ -10,6 +10,42 @@
 #include <limits.h>
 #include <set>
 
+class AutoSymbolTable {
+public:
+    AutoSymbolTable(Compiler* compiler)
+    : fCompiler(compiler) {
+        fCompiler->fSymbolTable = new SymbolTable(fCompiler->fSymbolTable,
+                fCompiler->fSymbolTable->fClass);
+    }
+
+    ~AutoSymbolTable() {
+        SymbolTable* old = fCompiler->fSymbolTable;
+        for (auto& ptr : old->fOwnedPtrs) {
+            old->fParents[0]->fOwnedPtrs.push_back(std::move(ptr));
+        }
+        fCompiler->fSymbolTable = old->fParents[0];
+        delete old;
+    }
+
+private:
+    Compiler* fCompiler;
+};
+
+class AutoLoop {
+public:
+    AutoLoop(Compiler* compiler, String text)
+    : fCompiler(compiler) {
+        fCompiler->fLoops.push_back(text);
+    }
+
+    ~AutoLoop() {
+        fCompiler->fLoops.pop_back();
+    }
+
+private:
+    Compiler* fCompiler;
+};
+
 void Compiler::scan(ASTNode* file) {
     fScanner.scan(file, &fRoot);
 }
@@ -1742,6 +1778,7 @@ bool Compiler::convertIf(const ASTNode& i, IRNode* out) {
 bool Compiler::convertWhile(const ASTNode& w, IRNode* out) {
     ASSERT(w.fKind == ASTNode::Kind::WHILE);
     ASSERT(w.fChildren.size() == 2);
+    AutoLoop loop(this, w.fText);
     IRNode test;
     if (this->convertExpression(w.fChildren[0], &test)) {
         this->coerce(&test, Type::Bit());
@@ -1765,6 +1802,7 @@ bool Compiler::convertWhile(const ASTNode& w, IRNode* out) {
 bool Compiler::convertDo(const ASTNode& d, IRNode* out) {
     ASSERT(d.fKind == ASTNode::Kind::DO);
     ASSERT(d.fChildren.size() == 2);
+    AutoLoop loop(this, d.fText);
     IRNode block;
     this->convertBlock(d.fChildren[0], &block);
     IRNode test;
@@ -1789,6 +1827,7 @@ bool Compiler::convertFor(const ASTNode& f, IRNode* out) {
     ASSERT(f.fKind == ASTNode::Kind::FOR);
     ASSERT(f.fChildren.size() == 3);
     AutoSymbolTable st(this);
+    AutoLoop loop(this, f.fText);
     IRNode list;
     if (!this->convertExpression(f.fChildren[1], &list)) {
         return false;
@@ -1970,11 +2009,11 @@ bool Compiler::convertVar(const ASTNode& v, IRNode* out) {
     return true;
 }
 
-bool Compiler::convertReturn(const ASTNode& s, IRNode* out) {
-    ASSERT(s.fKind == ASTNode::Kind::RETURN);
-    if (s.fChildren.size() == 1) {
+bool Compiler::convertReturn(const ASTNode& r, IRNode* out) {
+    ASSERT(r.fKind == ASTNode::Kind::RETURN);
+    if (r.fChildren.size() == 1) {
         IRNode converted;
-        if (!this->convertExpression(s.fChildren[0], &converted)) {
+        if (!this->convertExpression(r.fChildren[0], &converted)) {
             return false;
         }
         if (!this->coerce(&converted, fCurrentMethod.top()->fReturnType)) {
@@ -1982,13 +2021,58 @@ bool Compiler::convertReturn(const ASTNode& s, IRNode* out) {
         }
         std::vector<IRNode> children;
         children.push_back(std::move(converted));
-        *out = IRNode(s.fPosition, IRNode::Kind::RETURN, std::move(children));
+        *out = IRNode(r.fPosition, IRNode::Kind::RETURN, std::move(children));
         return true;
     }
-    ASSERT(s.fChildren.size() == 0);
-    *out = IRNode(s.fPosition, IRNode::Kind::RETURN);
+    ASSERT(r.fChildren.size() == 0);
+    *out = IRNode(r.fPosition, IRNode::Kind::RETURN);
     return true;
 }
+
+bool Compiler::convertBreak(const ASTNode& b, IRNode* out) {
+    ASSERT(b.fKind == ASTNode::Kind::BREAK);
+    if (b.fText.size()) {
+        bool found = false;
+        for (const String& l : fLoops) {
+            if (l == b.fText) {
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            this->error(b.fPosition, "'break " + b.fText + "' must be inside a loop labelled '" +
+                    b.fText + ":'");
+        }
+    }
+    else if (!fLoops.size()) {
+        this->error(b.fPosition, "'break' must be inside a loop");
+    }
+    *out = IRNode(b.fPosition, IRNode::Kind::BREAK, b.fText);
+    return true;
+}
+
+bool Compiler::convertContinue(const ASTNode& c, IRNode* out) {
+    ASSERT(c.fKind == ASTNode::Kind::CONTINUE);
+    if (c.fText.size()) {
+        bool found = false;
+        for (const String& l : fLoops) {
+            if (l == c.fText) {
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            this->error(c.fPosition, "'continue " + c.fText + "' must be inside a loop labelled '" +
+                    c.fText + ":'");
+        }
+    }
+    else if (!fLoops.size()) {
+        this->error(c.fPosition, "'continue' must be inside a loop");
+    }
+    *out = IRNode(c.fPosition, IRNode::Kind::CONTINUE, c.fText);
+    return true;
+}
+
 
 bool Compiler::convertStatement(const ASTNode& s, IRNode* out) {
     switch (s.fKind) {
@@ -2012,6 +2096,10 @@ bool Compiler::convertStatement(const ASTNode& s, IRNode* out) {
             return this->convertFor(s, out);
         case ASTNode::Kind::RETURN:
             return this->convertReturn(s, out);
+        case ASTNode::Kind::BREAK:
+            return this->convertBreak(s, out);
+        case ASTNode::Kind::CONTINUE:
+            return this->convertContinue(s, out);
         case ASTNode::Kind::VAR:      // fall through
         case ASTNode::Kind::DEF:      // fall through
         case ASTNode::Kind::PROPERTY: // fall through

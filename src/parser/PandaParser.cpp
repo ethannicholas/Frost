@@ -372,7 +372,14 @@ bool PandaParser::bodyEntry(ASTNode* outResult) {
 }
 
 bool PandaParser::breakStatement(ASTNode* outResult) {
-    abort();
+    Token start;
+    if (!this->expect(Token::Kind::BREAK, "'break'", &start)) {
+        return false;
+    }
+    Token label;
+    this->checkNext(Token::Kind::IDENTIFIER, &label);
+    *outResult = ASTNode(start.fPosition, ASTNode::Kind::BREAK, label.fText);
+    return true;
 }
 
 static String get_class_name(const ASTNode& expr) {
@@ -645,7 +652,14 @@ bool PandaParser::comparisonExpression(ASTNode* outResult) {
 }
 
 bool PandaParser::continueStatement(ASTNode* outResult) {
-    abort();
+    Token start;
+    if (!this->expect(Token::Kind::CONTINUE, "'continue'", &start)) {
+        return false;
+    }
+    Token label;
+    this->checkNext(Token::Kind::IDENTIFIER, &label);
+    *outResult = ASTNode(start.fPosition, ASTNode::Kind::CONTINUE, label.fText);
+    return true;
 }
 
 // declaration = invariant | (doccomment? annotations) (classDeclaration | interfaceDeclaration |
@@ -1322,7 +1336,7 @@ bool PandaParser::statement(ASTNode* outResult) {
         case Token::Kind::LBRACE: return this->block(outResult);
         case Token::Kind::IDENTIFIER: {
             Token id = this->nextToken();
-            if (this->peek().fKind == Token::Kind::COLON) {
+            if (this->checkNext(Token::Kind::COLON)) {
                 return this->anyLoop(outResult, id.fText);
             }
             this->pushback(id);
@@ -1336,6 +1350,13 @@ bool PandaParser::statement(ASTNode* outResult) {
         case Token::Kind::PROPERTY: // fall through
         case Token::Kind::CONSTANT:
             return this->varDeclaration(outResult);
+        case Token::Kind::INVALID:
+            if (this->peek().fText == ";") {
+                Token semicolon = this->nextToken();
+                this->error(semicolon.fPosition,
+                        "statements are not terminated by semicolons in Panda");
+                return true;
+            }
         default:
             // trigger error
             this->expect(Token::Kind::IF, "a statement");

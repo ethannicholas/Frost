@@ -5,6 +5,14 @@ class Char8 : Value {
         self.value := value.value
     }
 
+    function =(other:Char8):Bit {
+        return value = other.value
+    }
+
+    function !=(other:Char8):Bit {
+        return value != other.value
+    }
+
     @private
     def value:builtin_int8
 }

@@ -8,6 +8,23 @@ static constexpr int POINTER_SIZE = 8;
 static constexpr int OBJECT_FIELD_COUNT = 2;
 #define SIZE_T "i64"
 
+class AutoLoopDescriptor {
+public:
+    AutoLoopDescriptor(LLVMCodeGenerator* llvm, String loopLabel, String breakLabel,
+            String continueLabel)
+    : fLLVM(llvm) {
+        llvm->fLoops.emplace_back(std::move(loopLabel), std::move(breakLabel),
+                std::move(continueLabel));
+    }
+
+    ~AutoLoopDescriptor() {
+        fLLVM->fLoops.pop_back();
+    }
+
+private:
+    LLVMCodeGenerator* fLLVM;
+};
+
 LLVMCodeGenerator::LLVMCodeGenerator(std::ostream* out)
 : fOut(*out) {
     fOut << "target datalayout = \"e-p:64:64:64-i1:8:8-i8:8:8-i16:16:16-i32:32:32-i64:64:64-"
@@ -343,6 +360,8 @@ static bool ends_with_branch(const IRNode& block) {
         return false;
     }
     switch (block.fChildren[block.fChildren.size() - 1].fKind) {
+        case IRNode::Kind::BREAK:    // fall through
+        case IRNode::Kind::CONTINUE: // fall through
         case IRNode::Kind::RETURN: return true;
         default: return false;
     }
@@ -1167,10 +1186,11 @@ void LLVMCodeGenerator::writeWhile(const IRNode& w, std::ostream& out) {
     ASSERT(w.fChildren.size() == 2);
     String loopStart = this->nextLabel();
     String loopBody = this->nextLabel();
+    String loopEnd = this->nextLabel();
+    AutoLoopDescriptor loop(this, w.fText, loopEnd, loopStart);
     out << "    br label %" << loopStart << "\n";
     this->createBlock(loopStart, out);
     String test = this->getReference(w.fChildren[0], out);
-    String loopEnd = this->nextLabel();
     out << "    br i1 " << test << ", label %" << loopBody << ", label %" << loopEnd << "\n";
     this->createBlock(loopBody, out);
     this->writeStatement(w.fChildren[1], out);
@@ -1185,10 +1205,11 @@ void LLVMCodeGenerator::writeDo(const IRNode& d, std::ostream& out) {
     ASSERT(d.fChildren.size() == 2);
     String loopStart = this->nextLabel();
     String loopBody = this->nextLabel();
+    String loopEnd = this->nextLabel();
+    AutoLoopDescriptor loop(this, d.fText, loopEnd, loopStart);
     out << "    br label %" << loopBody << "\n";
     this->createBlock(loopStart, out);
     String test = this->getReference(d.fChildren[1], out);
-    String loopEnd = this->nextLabel();
     out << "    br i1 " << test << ", label %" << loopBody << ", label %" << loopEnd << "\n";
     this->createBlock(loopBody, out);
     this->writeStatement(d.fChildren[0], out);
@@ -1290,6 +1311,8 @@ void LLVMCodeGenerator::writeRangeFor(const IRNode& f, std::ostream& out) {
     String loopStart = this->nextLabel();
     String loopBody = this->nextLabel();
     String loopEnd = this->nextLabel();
+    String loopTest = this->nextLabel();
+    AutoLoopDescriptor loop(this, f.fText, loopEnd, loopTest);
     String forwardEntry = this->nextLabel();
     String backwardEntry = this->nextLabel();
     char signPrefix = 's';
@@ -1324,7 +1347,6 @@ void LLVMCodeGenerator::writeRangeFor(const IRNode& f, std::ostream& out) {
     out << "    " << indexValue << " = extractvalue " << llt << " " <<
             indexLoad << ", 0\n";
     this->writeStatement(block, out);
-    String loopTest = this->nextLabel();
     if (!ends_with_branch(block)) {
         out << "    br label %" << loopTest << "\n";
     }
@@ -1457,16 +1479,39 @@ void LLVMCodeGenerator::writeBlock(const IRNode& block, std::ostream& out) {
     }
 }
 
-void LLVMCodeGenerator::writeReturn(const IRNode& ret, std::ostream& out) {
-    ASSERT(ret.fKind == IRNode::Kind::RETURN);
-    if (ret.fChildren.size() == 1) {
-        String ref = this->getTypedReference(ret.fChildren[0], out);
+void LLVMCodeGenerator::writeReturn(const IRNode& r, std::ostream& out) {
+    ASSERT(r.fKind == IRNode::Kind::RETURN);
+    if (r.fChildren.size() == 1) {
+        String ref = this->getTypedReference(r.fChildren[0], out);
         out << "    ret " << ref << "\n";
     }
     else {
-        ASSERT(ret.fChildren.size() == 0);
+        ASSERT(r.fChildren.size() == 0);
         out << "ret void\n`";
     }
+}
+
+const LLVMCodeGenerator::LoopDescriptor& LLVMCodeGenerator::findLoop(String name) {
+    ASSERT(fLoops.size());
+    if (name.size() == 0) {
+        return fLoops.back();
+    }
+    for (int i = fLoops.size() - 1; i >= 0; i--) {
+        if (fLoops[i].fLabel == name) {
+            return fLoops[i];
+        }
+    }
+    abort();
+}
+
+void LLVMCodeGenerator::writeBreak(const IRNode& b, std::ostream& out) {
+    const LoopDescriptor& loop = this->findLoop(b.fText);
+    out << "    br label %" << loop.fBreakLabel << "\n";
+}
+
+void LLVMCodeGenerator::writeContinue(const IRNode& b, std::ostream& out) {
+    const LoopDescriptor& loop = this->findLoop(b.fText);
+    out << "    br label %" << loop.fContinueLabel << "\n";
 }
 
 void LLVMCodeGenerator::writeStatement(const IRNode& stmt, std::ostream& out) {
@@ -1479,6 +1524,8 @@ void LLVMCodeGenerator::writeStatement(const IRNode& stmt, std::ostream& out) {
         case IRNode::Kind::DO:        this->writeDo        (stmt, out);     break;
         case IRNode::Kind::RANGE_FOR: this->writeRangeFor  (stmt, out);     break;
         case IRNode::Kind::RETURN:    this->writeReturn    (stmt, out);     break;
+        case IRNode::Kind::BREAK:     this->writeBreak     (stmt, out);     break;
+        case IRNode::Kind::CONTINUE:  this->writeContinue  (stmt, out);     break;
         case IRNode::Kind::VAR:       // fall through
         case IRNode::Kind::DEF:       // fall through
         case IRNode::Kind::PROPERTY:  // fall through

@@ -33,6 +33,22 @@ class String {
         return self + other.convert()->String
     }
 
+    function =(other:String):Bit {
+        if size != other.size {
+            return false
+        }
+        for i in 0 .. size {
+            if data[i]->Char8 != other.data[i]->Char8 {
+                return false
+            }
+        }
+        return true
+    }
+
+    function hash():Int {
+        return 0
+    }
+
     @private
     def data:Pointer<Char8>
 

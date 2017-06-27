@@ -236,6 +236,7 @@ void Scanner::scanClass(String contextName, std::vector<Class::UsesDeclaration> 
             superclass);
     SymbolTable& symbols = result->fSymbolTable;
     parent->add(cl->fText, std::unique_ptr<Symbol>(result));
+    bool foundInit = false;
     for (auto& child : cl->fChildren[5].fChildren) {
         switch (child.fKind) {
             case ASTNode::Kind::METHOD: // fall through
@@ -247,6 +248,7 @@ void Scanner::scanClass(String contextName, std::vector<Class::UsesDeclaration> 
                 break;
             case ASTNode::Kind::INIT:
                 this->convertInit(&child, &symbols, result);
+                foundInit = true;
                 break;
             case ASTNode::Kind::CLASS:
                 this->scanClass(fullName, uses, &symbols, &child);
@@ -255,6 +257,13 @@ void Scanner::scanClass(String contextName, std::vector<Class::UsesDeclaration> 
                 printf("unsupported child: %s\n", child.description().c_str());
                 abort();
         }
+    }
+    if (!foundInit && result->fName != "panda.core.Pointer") {
+        Method* defaultInit = new Method(cl->fPosition, result, Annotations(),
+                Method::Kind::INIT, "init", std::vector<Method::Parameter>(), Type(),
+                ASTNode(cl->fPosition, ASTNode::Kind::BLOCK));
+        result->fMethods.push_back(defaultInit);
+        symbols.add(std::unique_ptr<Method>(defaultInit));
     }
 }
 

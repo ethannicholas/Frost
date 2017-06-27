@@ -11,5 +11,17 @@ class DoLoop {
             Console.printLine("ok")
         }
         while false
+        i := 0
+        do {
+            i += 1
+            if i % 2 = 1 {
+                continue
+            }
+            if i = 10 {
+                break
+            }
+            Console.printLine(i)
+        }
+        while true
     }
 }

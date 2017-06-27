@@ -1,0 +1,266 @@
+====================================================================================================
+A single key/value pair from a `HashMap`.
+====================================================================================================
+@private
+class MutableMapEntry<K, V> {
+    ================================================================================================
+    The entry's key.
+    ================================================================================================
+    def key:K
+
+    ================================================================================================
+    The entry's value.
+    ================================================================================================
+    var value:V
+    
+    var next:MutableMapEntry<K, V>?
+    
+    @private
+    init(key:K, value:V) {
+        self.key := key
+        self.value := value
+    }
+}
+
+====================================================================================================
+Standard implementation of the [Map] interface, which associates keys with  values. An arbitrary
+number of values can be stored in a `HashMap` and then retrieved in constant time:
+
+    def alignment := HashMap<String, String>()
+    alignment["human"]  := "good"
+    alignment["orc"]    := "evil"
+    alignment["dragon"] := "neutral"
+    Console.writeLine(alignment["human"])
+
+This will display the value `"good"`.
+====================================================================================================
+@specialize
+class HashMap<K:String, V> {
+    @private
+    constant DEFAULT_CAPACITY := 16
+
+    @private
+    var count:Int
+
+    @private 
+    -- size must be a power of 2 (see indexFor)
+    var contents:Pointer<MutableMapEntry<K, V>>
+
+    @private
+    var bucketCount:Int
+    
+    @private
+    var threshold:Int
+
+    @private
+    var changeCount := 0
+    
+    ================================================================================================
+    Creates a new, empty `HashMap`.
+    ================================================================================================
+    init() {
+        clear()
+    }
+
+    ================================================================================================
+    Given a key, returns the bucket in which the key's entry should be stored.
+    ================================================================================================
+    @private
+    function indexFor(key:K):Int {
+        var h:Int
+        if key = null {
+            h := 0
+        }
+        else {
+            h := key.hash
+        }
+        -- supplemental hash function to defend against poor hash codes, as we do not use a prime
+        -- table length
+        h ~~= (h >> 20) ~~ (h >> 12) ~~ (h >> 7) ~~ (h >> 4)
+        -- the bitwise and below is equivalent to mod if length is a power of 2, which is why we
+        -- require that
+        h &&= bucketCount - 1
+        return h
+    }
+    
+    @override
+    function [](key:K):V {
+        def index := indexFor(key)
+        var e := contents[index]
+        while e != null & e.key != key {
+            e := e.next
+        }
+        if e != null {
+            return e.value
+        }
+        else {
+            return null
+        }
+    }
+    
+    @override
+    function contains(key:K):Bit {
+        def index := indexFor(key)
+        var e := contents[index]
+        while e != null & e.key != key {
+            e := e.next
+        }
+        return e != null
+    }
+
+    @override
+    @self
+    method []:=(key:K, value:V) {
+        changeCount += 1
+        def index := indexFor(key)
+        var e := contents[index]
+        while e != null & e.key != key {
+            e := e.next
+        }
+        if e = null {
+            def old := contents[index]
+            e := MutableMapEntry<K, V>(key, value)
+            e.next := old
+            contents[index] := e
+            assert contents[index] == e
+            incrementLength()
+        }
+        else {
+            e.value := value
+        }
+    }
+    
+    @override
+    @self
+    method remove(key:K) {
+        changeCount += 1
+        def index := indexFor(key)
+        var e := contents[index]
+        -- not found
+        if e = null {
+            return
+        }
+        -- found in the first slot, need to update the contents array
+        if e.key = key {
+            contents[index] := e.next
+            count -= 1
+            return
+        }
+        loop {
+            def next := e.next
+            if next = null {
+                -- not found
+                return
+            }
+            if next.key = key {
+                -- it's the next slot in the list
+                break
+            }
+            e := next
+        }
+        -- we are looking at the entry before it, update its next pointer to skip over it
+        def next := e.next
+        assert next != null
+        e.next := next.next
+        count -= 1
+    }
+
+    @override
+    @self
+    method addAll(map:MapView<K, V>) {
+        for (key, value) in map {
+            self[key] := value
+        }
+    }    
+
+    @override
+    @self
+    method clear() {
+        changeCount += 1
+        count := 0
+        contents.destroy()
+        contents := Pointer<MutableMapEntry<K, V>?>.alloc(DEFAULT_LENGTH)
+        threshold := (contents.length * 3) // 4
+    }
+    
+    ================================================================================================
+    Doubles the size of the `contents` array, rehashing all of its entries.
+    ================================================================================================
+    @private
+    method incrementLength() {
+        _length += 1
+        if count >= threshold {
+            _length := 0
+            var oldContents := contents
+            contents := PrimitiveArray<MutableMapEntry<K, V>?>(contents.length * 2)
+            threshold *= 2
+            for i in oldContents.length - 1 ... 0 by -1 {
+                var e := oldContents[i]
+                while e != null {
+                    self[e.key] := e.value
+                    e := e.next
+                }
+            }
+        }
+    }
+
+    ================================================================================================
+    Returns `true` if `o` is a Map containing the same key/value pairs as this
+    map.
+
+    @param o the object to compare against
+    @returns `true` if the two values are equal
+    ================================================================================================
+    @override
+    function =(o:Object):Bit {
+        if o-!>Map<K, V> {
+            return false
+        }
+        var m := o->Map<K, V>
+        if count != m.count {
+            return false
+        }
+        for (key, value) in self {
+            if value != m[key] {
+                return false
+            }
+        }
+        return true
+    }
+
+    ================================================================================================
+    Returns a string representation of the map.
+
+    @param fmt the format string
+    @returns a string representation of this object
+    ================================================================================================
+    @override
+    function convert():String {
+        def result := MutableString()
+        result.append("{")
+        var first := true
+        for (key, value) in self {
+            if !first {
+                result.append(", ")
+            }
+            else {
+                first := false
+            }
+            if key != null {
+                result.append(key)
+            }
+            else {
+                result.append("null")
+            }
+            result.append(": ")
+            if value != null {
+                result.append(value)
+            }
+            else {
+                result.append("null")
+            }
+        }
+        result.append("}")
+        return result.convert()
+    }
+}

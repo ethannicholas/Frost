@@ -1,7 +1,4 @@
 class Overloading {
-    init() {
-    }
-    
     method instanceTest():Int8 {
         return 8
     }

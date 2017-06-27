@@ -24,6 +24,8 @@ struct IRNode {
         BIT,
         // a list of statements
         BLOCK,
+        // a break statement
+        BREAK,
         // a method call
         CALL,
         // a typecast
@@ -32,6 +34,8 @@ struct IRNode {
         CONSTANT,
         // an object construction expression
         CONSTRUCT,
+        // a continue statement
+        CONTINUE,
         // a do loop
         DO,
         // a single declaration within a var, def, constant, or property (e.g. 'var x := 1, y' has
@@ -279,10 +283,12 @@ struct IRNode {
             case Kind::BINARY:                      result += "Binary"; o = 1;               break;
             case Kind::BIT:                         result += "Bit"; b = 1;                  break;
             case Kind::BLOCK:                       result += "Block";                       break;
+            case Kind::BREAK:                       result += "Break";                       break;
             case Kind::CALL:                        result += "Call";                        break;
             case Kind::CAST:                        result += "Cast";                        break;
             case Kind::CONSTANT:                    result += "Constant";                    break;
             case Kind::CONSTRUCT:                   result += "Construct";                   break;
+            case Kind::CONTINUE:                    result += "Continue";                    break;
             case Kind::DECLARATION:                 result += "Declaration";                 break;
             case Kind::DEF:                         result += "Def";                         break;
             case Kind::DO:                          result += "Do";                          break;

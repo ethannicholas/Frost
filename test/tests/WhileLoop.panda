@@ -9,5 +9,30 @@ class WhileLoop {
         while false {
             Console.printLine("uh oh")
         }
+        i := 0
+        while true {
+            i += 1
+            if i % 2 = 1 {
+                continue
+            }
+            if i = 10 {
+                break
+            }
+            Console.printLine(i)
+        }
+        var j := 0
+        outer: while j < 5 {
+            i := 0
+            while i < 5 {
+                Console.print(".")
+                if j = 2 & i = 2 {
+                    break outer
+                }
+                i += 1
+            }
+            Console.printLine()
+            j += 1
+        }
+        Console.printLine()
     }
 }

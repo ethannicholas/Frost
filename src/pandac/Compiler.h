@@ -52,27 +52,6 @@ public:
     std::vector<const Field*> getAllFields(const Class& cl);
 
 private:
-    class AutoSymbolTable {
-    public:
-        AutoSymbolTable(Compiler* compiler)
-        : fCompiler(compiler) {
-            fCompiler->fSymbolTable = new SymbolTable(fCompiler->fSymbolTable,
-                    fCompiler->fSymbolTable->fClass);
-        }
-
-        ~AutoSymbolTable() {
-            SymbolTable* old = fCompiler->fSymbolTable;
-            for (auto& ptr : old->fOwnedPtrs) {
-                old->fParents[0]->fOwnedPtrs.push_back(std::move(ptr));
-            }
-            fCompiler->fSymbolTable = old->fParents[0];
-            delete old;
-        }
-
-    private:
-        Compiler* fCompiler;
-    };
-
     // for all convert methods: a true result means "successful enough to have produced output",
     // false means failure. Success may still have generated errors.
 
@@ -208,6 +187,10 @@ private:
 
     bool convertReturn(const ASTNode& r, IRNode* out);
 
+    bool convertBreak(const ASTNode& b, IRNode* out);
+
+    bool convertContinue(const ASTNode& c, IRNode* out);
+
     bool convertStatement(const ASTNode& s, IRNode* out);
 
     bool convertBlock(const ASTNode& b, IRNode* out);
@@ -253,9 +236,14 @@ private:
 
     std::stack<Class*> fCurrentClass;
 
+    std::vector<String> fLoops;
+
     std::unordered_map<String, Class*> fClasses;
 
     std::unordered_map<String, std::unique_ptr<Type>> fTypes;
 
     uint64_t fReusedValues;
+
+    friend class AutoLoop;
+    friend class AutoSymbolTable;
 };

@@ -19,8 +19,6 @@ class Point3D : Point2D {
 }
 
 class Untyped {
-    init() {}
-    
     var untyped := 12
 }
 

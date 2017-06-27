@@ -1,7 +1,4 @@
 class InstanceMethodOnClass {
-    init() {
-    }
-
     @class
     method m1() {
     }

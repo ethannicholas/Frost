@@ -1,7 +1,4 @@
 class Super {
-    init() {
-    }
-
     function foo():Int64 {
         return 1
     }
@@ -12,9 +9,6 @@ class Super {
 }
 
 class S1 : Super {
-    init() {
-    }
-
     @override
     function foo():Int64 {
         return 2
@@ -22,9 +16,6 @@ class S1 : Super {
 }
 
 class S2 : Super {
-    init() {
-    }
-
     @override
     function foo(x:Int64):Int64 {
         return x * 3
@@ -32,9 +23,6 @@ class S2 : Super {
 }
 
 class S3 : S2 {
-    init() {
-    }
-
     @override
     function foo():Int64 {
         return 5

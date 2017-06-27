@@ -21,6 +21,11 @@ class Console {
     @class
     method printLine(o:Object) {
         print(o.convert())
+        printLine()
+    }
+
+    @class
+    method printLine() {
         print(Char8(10))
     }
 }
