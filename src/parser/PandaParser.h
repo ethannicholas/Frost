@@ -116,6 +116,8 @@ private:
 
     bool ifStatement(ASTNode* outResult);
 
+    bool initCall(ASTNode* outResult);
+
     bool initDeclaration(ASTNode* outResult, ASTNode doccomment = ASTNode(),
             ASTNode annotations = ASTNode());
 

@@ -35,6 +35,7 @@ void make_executable(const char* llvm, const char* dest) {
         args[7] = nullptr;
         execv(OPT_PATH, args);
         perror("opt exec failed");
+        printf("(%s)\n", OPT_PATH);
         exit(1);
     }
     // parent
@@ -61,6 +62,7 @@ void make_executable(const char* llvm, const char* dest) {
         args[4] = nullptr;
         execv(LLC_PATH, args);
         perror("llc exec failed");
+        printf("(%s)\n", LLC_PATH);
         exit(1);
     }
     // parent

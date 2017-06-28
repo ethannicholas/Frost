@@ -1,0 +1,16 @@
+class SelfInit {
+    init() {
+        init(12357)
+    }
+
+    init(x:Int) {
+        self.x := x
+    }
+
+    var x:Int
+
+    @class
+    method main() {
+        Console.printLine(SelfInit().x)        
+    }
+}

@@ -567,9 +567,9 @@ String LLVMCodeGenerator::getPrefixReference(const IRNode& expr, std::ostream& o
     }
 }
 
-String LLVMCodeGenerator::getMethodReference(const String& target, const Method* m,
+String LLVMCodeGenerator::getMethodReference(const String& target, const Method* m, bool isSuper,
         std::ostream& out) {
-    if (is_virtual(*m)) {
+    if (!isSuper && is_virtual(*m)) {
         ASSERT(target.size());
         return this->getVirtualMethodReference(target, m, out);
     }
@@ -688,7 +688,8 @@ String LLVMCodeGenerator::getCallReference(const IRNode& call, std::ostream& out
     }
     ASSERT(call.fChildren[0].fKind == IRNode::Kind::METHOD_REFERENCE);
     String target = args.size() ? args[0] : "";
-    String methodRef = this->getMethodReference(target, m, out);
+    bool isSuper = call.fChildren.size() > 1 && call.fChildren[1].fKind == IRNode::Kind::SUPER;
+    String methodRef = this->getMethodReference(target, m, isSuper, out);
     String result = this->nextVar();
     out << "    " << result << " = call fastcc " << this->llvmType(call.fType) << " " <<
             methodRef << "(";
@@ -856,6 +857,13 @@ String LLVMCodeGenerator::getSelfReference(const IRNode& self, std::ostream& out
     return "%self";
 }
 
+String LLVMCodeGenerator::getSuperReference(const IRNode& super, std::ostream& out) {
+    String result = this->nextVar();
+    out << "    " << result << " = bitcast " << this->llvmType(fCurrentClass->fType) <<
+            " %self to " << this->llvmType(super.fType) << "\n";
+    return result;
+}
+
 String LLVMCodeGenerator::getFieldReference(const IRNode& field, std::ostream& out) {
     Class* cl = fCompiler->resolveClass(fCurrentClass->fSymbolTable, field.fChildren[0].fType);
     ASSERT(cl);
@@ -932,6 +940,8 @@ String LLVMCodeGenerator::getReference(const IRNode& expr, std::ostream& out) {
             return this->getSelfReference(expr, out);
         case IRNode::Kind::STRING:
             return this->getStringReference(expr, out);
+        case IRNode::Kind::SUPER:
+            return this->getSuperReference(expr, out);
         case IRNode::Kind::VARIABLE_REFERENCE:
             return this->getVariableReference(*((Variable*) expr.fValue.fPtr), out);
         case IRNode::Kind::REUSED_VALUE_DEFINITION: {
@@ -1143,8 +1153,9 @@ void LLVMCodeGenerator::writeCall(const IRNode& stmt, const String& target, std:
         args.push_back(this->getTypedReference(stmt.fChildren[i], out));
     }
     ASSERT(stmt.fChildren[0].fKind == IRNode::Kind::METHOD_REFERENCE);
+    bool isSuper = stmt.fChildren.size() > 1 && stmt.fChildren[1].fKind == IRNode::Kind::SUPER;
     String methodRef = this->getMethodReference(is_virtual(m->fMethod) ? args[0] : "", &m->fMethod,
-            out);
+            isSuper, out);
     out << "    call fastcc " << this->llvmType(stmt.fType) << " " << methodRef << "(";
     const char* separator = "";
     if (target.size()) {

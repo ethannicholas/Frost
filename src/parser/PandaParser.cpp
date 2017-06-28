@@ -398,8 +398,9 @@ static String get_class_name(const ASTNode& expr) {
     }
 }
 
-// callExpression = term ((LPAREN (expression (COMMA expression)*)? RPAREN | DOT IDENTIFIER |
-//         LBRACKET expression RBRACKET)* | (CAST | INSTANCEOF | NINSTANCEOF) type)* |
+// callExpression = term ((LPAREN (expression (COMMA expression)*)? RPAREN |
+//         DOT (methodName | INIT) | LBRACKET expression RBRACKET)* |
+//         (CAST | INSTANCEOF | NINSTANCEOF) type)* |
 //         (<if result so far is a valid class name> LT type (COMMA type)* GT)?
 // Note there is a great deal of special handling to deal with class names, due to ambiguities
 // between generic parameters and comparison expressions, e.g. foo(X < Y, Z > ... could be either a
@@ -453,14 +454,16 @@ bool PandaParser::callExpression(ASTNode* outResult) {
                 break;
             }
             case Token::Kind::DOT: {
-                Token field;
-                if (!this->expect(Token::Kind::IDENTIFIER, "an identifier", &field)) {
+                String name;
+                if (this->checkNext(Token::Kind::INIT)) {
+                    name = "init";
+                }
+                else if (!this->methodName(&name)) {
                     return false;
                 }
                 std::vector<ASTNode> children;
-                children.push_back(std::move(*outResult));                
-                *outResult = ASTNode(next.fPosition, ASTNode::Kind::DOT, field.fText,
-                        std::move(children));
+                children.push_back(std::move(*outResult));
+                *outResult = ASTNode(next.fPosition, ASTNode::Kind::DOT, name, std::move(children));
                 break;
             }
             case Token::Kind::CAST:       // fall through
@@ -946,6 +949,39 @@ bool PandaParser::ifStatement(ASTNode* outResult) {
     return true;
 }
 
+// initCall = INIT LPAREN (expression (COMMA expression)*)? RPAREN
+bool PandaParser::initCall(ASTNode* outResult) {
+    Token start;
+    if (!this->expect(Token::Kind::INIT, "'init'", &start)) {
+        return false;
+    }
+    if (!this->expect(Token::Kind::LPAREN, "'('")) {
+        return false;
+    }
+    AutoCommaContext(this, true);
+    std::vector<ASTNode> children;
+    children.push_back(ASTNode(start.fPosition, ASTNode::Kind::IDENTIFIER, start.fText));
+    ASTNode expr;
+    if (!this->checkNext(Token::Kind::RPAREN)) {
+        if (!this->expression(&expr)) {
+            return false;
+        }
+        children.push_back(std::move(expr));
+        while (this->checkNext(Token::Kind::COMMA)) {
+            if (!this->expression(&expr)) {
+                return false;
+            }
+            children.push_back(std::move(expr));
+        }
+        if (!this->expect(Token::Kind::RPAREN, "')'")) {
+            return false;
+        }
+    }
+    *outResult = ASTNode(start.fPosition, ASTNode::Kind::CALL, std::move(children));
+    return true;
+}
+
+
 // initDeclaration = INIT parameters block? postconditions?
 bool PandaParser::initDeclaration(ASTNode* outResult, ASTNode doccomment, ASTNode annotations) {
     Token start;
@@ -1060,7 +1096,7 @@ bool PandaParser::methodDeclaration(ASTNode* outResult, ASTNode doccomment,
 
 // methodName = IDENTIFIER | ADD | SUB | MUL | DIV | INTDIV | POW | EQ | GT | LT | GTEQ | LTEQ |
 //         REM | AND | BITWISEAND | OR | BITWISEOR | XOR | BITWISEXOR | NOT | BITWISENOT |
-//         SHIFTLEFT | SHIFTRIGHT | (LBRACKET (DOTDOT | ELLIPSIS)? RBRACKET ASSIGNMENT?)
+//         SHIFTLEFT | SHIFTRIGHT | (LBRACKET RBRACKET ASSIGNMENT?)
 bool PandaParser::methodName(String* outResult) {
     Token name = this->nextToken();
     switch (name.fKind) {
@@ -1100,23 +1136,17 @@ bool PandaParser::methodName(String* outResult) {
             return true;
         }
         case Token::Kind::LBRACKET:
-            *outResult = name.fText;
-            if (this->checkNext(Token::Kind::DOTDOT)) {
-                *outResult += "..";
-            }
-            else if (this->checkNext(Token::Kind::ELLIPSIS)) {
-                *outResult += "...";
-            }
             if (!this->expect(Token::Kind::RBRACKET, "']'")) {
                 return false;
             }
-            *outResult += "]";
+            *outResult = "[]";
             if (this->checkNext(Token::Kind::ASSIGNMENT)) {
                 *outResult += ":=";
             }
             return true;
         default:
-            this->error(name.fPosition, "expected a method name, but found '" + name.fText + "'");
+            this->error(name.fPosition, "expected an identifier or operator, but found '" +
+                    name.fText + "'");
             return false;
     }
 }
@@ -1323,7 +1353,7 @@ bool PandaParser::singleVar(ASTNode* outResult) {
 }
 
 // statement = ifStatement | anyLoop | expressionOrAssignment | assertStatement | matchStatement |
-//         block | varDeclaration
+//         block | varDeclaration | initCall
 bool PandaParser::statement(ASTNode* outResult) {
     switch (this->peek().fKind) {
         case Token::Kind::IF:     return this->ifStatement(outResult);
@@ -1350,6 +1380,8 @@ bool PandaParser::statement(ASTNode* outResult) {
         case Token::Kind::PROPERTY: // fall through
         case Token::Kind::CONSTANT:
             return this->varDeclaration(outResult);
+        case Token::Kind::INIT:
+            return this->initCall(outResult);
         case Token::Kind::INVALID:
             if (this->peek().fText == ";") {
                 Token semicolon = this->nextToken();
@@ -1429,7 +1461,7 @@ bool PandaParser::string(ASTNode* outResult) {
     return true;
 }
 
-// term = IDENTIFIER | DECIMAL | SELF | TRUE | FALSE | string | LPAREN expression RPAREN
+// term = IDENTIFIER | DECIMAL | SELF | SUPER | TRUE | FALSE | string | LPAREN expression RPAREN
 bool PandaParser::term(ASTNode* outResult) {
     Token t = this->nextToken();
     switch (t.fKind) {
@@ -1441,6 +1473,9 @@ bool PandaParser::term(ASTNode* outResult) {
             return true;
         case Token::Kind::SELF:
             *outResult = ASTNode(t.fPosition, ASTNode::Kind::SELF);
+            return true;
+        case Token::Kind::SUPER:
+            *outResult = ASTNode(t.fPosition, ASTNode::Kind::SUPER);
             return true;
         case Token::Kind::TRUE_LITERAL:
             *outResult = ASTNode(t.fPosition, ASTNode::Kind::TRUE_LITERAL);

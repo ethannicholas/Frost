@@ -583,13 +583,48 @@ bool Compiler::call(IRNode method, std::vector<IRNode> args, IRNode* out) {
             const MethodRef& m = *(MethodRef*) method.fValue.fPtr;
             if (m.parameterCount() != args.size()) {
                 this->error(method.fPosition, "'" + m.fMethod.fName + "' expected " +
-                        std::to_string(m.parameterCount()) + " arguments, but received " +
+                        std::to_string(m.parameterCount()) + " argument" +
+                        (m.parameterCount() == 1 ? "" : "s") + ", but received " +
                         std::to_string(args.size()));
                 return false;
             }
             std::vector<IRNode> children;
             if (m.fMethod.fMethodKind == Method::Kind::INIT) {
+                ASSERT(method.fChildren.size() == 1);
+                IRNode target = std::move(method.fChildren[0]);
+                method.fChildren.pop_back();
                 children.push_back(std::move(method));
+                switch (target.fKind) {
+                    case IRNode::Kind::SELF:
+                        children.push_back(std::move(target));
+                        break;
+                    case IRNode::Kind::SUPER: {
+                        std::vector<IRNode> castChildren;
+                        castChildren.push_back(IRNode(method.fPosition, IRNode::Kind::SELF,
+                                fCurrentClass.top()->fType));
+                        children.push_back(IRNode(method.fPosition, IRNode::Kind::CAST,
+                                fCurrentClass.top()->fSuper, std::move(castChildren)));
+                        break;
+                    }
+                    case IRNode::Kind::VOID:
+                        if (fCurrentMethod.size() &&
+                                fCurrentMethod.top()->fMethodKind == Method::Kind::INIT) {
+                            children.push_back(IRNode(method.fPosition, IRNode::Kind::SELF,
+                                    fCurrentClass.top()->fType));
+                        }
+                        else {
+                            this->error(method.fPosition, "self.init() can only be called from "
+                                    "within another init method");
+                            return false;
+                        }
+                        break;
+                    case IRNode::Kind::TYPE_REFERENCE:
+                        break;
+                    default:
+                        this->error(method.fPosition, "init() can only be directly called on "
+                                "'self' or 'super'");
+                        return false;
+                }
             }
             else {
                 ASSERT(method.fChildren.size() == 1);
@@ -627,7 +662,7 @@ bool Compiler::call(IRNode method, std::vector<IRNode> args, IRNode* out) {
             }
             for (int i = 0; i < args.size(); i++) {
                 IRNode converted;
-                if (!this->coerce(&(args)[i], m.parameterType(i), &converted)) {
+                if (!this->coerce(&args[i], m.parameterType(i), &converted)) {
                     return false;
                 }
                 if (m.fMethod.fOwner.fName != "panda.core.Pointer" &&
@@ -655,6 +690,7 @@ bool Compiler::call(IRNode method, std::vector<IRNode> args, IRNode* out) {
             for (int i = 1; i < method.fChildren.size(); i++) {
                 methodPtrs.push_back((MethodRef*) method.fChildren[i].fValue.fPtr);
             }
+            ASSERT(methodPtrs.size());
             this->matchMethods(methodPtrs, args, nullptr, &min);
             if (!min.size()) {
                 this->reportNoMatch(method.fPosition, methodPtrs[0]->fMethod.fName, args, nullptr);
@@ -1354,26 +1390,26 @@ static bool is_heritable(Method* m) {
 }
 
 void Compiler::addAllMethods(Position p, const SymbolTable& st, const IRNode* target,
-        const String& name, std::vector<IRNode>* methods, bool start) {
+        const String& name, std::vector<IRNode>* methods, const Class* startClass) {
     std::vector<Type> types;
     if (target) {
         types = type_parameters(*target);
     }
     for (const SymbolTable* parent : st.fParents) {
-        this->addAllMethods(p, *parent, target, name, methods, false);
+        this->addAllMethods(p, *parent, target, name, methods, startClass);
     }
     auto found = st.fSymbols.find(name);
     if (found != st.fSymbols.end()) {
         Symbol* s = found->second;
         switch (s->fKind) {
             case Symbol::Kind::METHOD:
-                if (start || is_heritable((Method*) s)) {
+                if (st.fClass == startClass || is_heritable((Method*) s)) {
                     this->addMethod(p, st, (Method*) s, types, methods);
                 }
                 break;
             case Symbol::Kind::METHODS:
                 for (const auto& m : ((Methods*) s)->fMethods) {
-                    if (start || is_heritable((Method*) s)) {
+                    if (st.fClass == startClass || is_heritable(m)) {
                         this->addMethod(p, st, m, types, methods);
                     }
                 }
@@ -1403,7 +1439,7 @@ void Compiler::symbolRef(Position p, const SymbolTable& st, Symbol* symbol, IRNo
             }
             std::vector<IRNode> children;
             children.push_back(target ? std::move(*target) : IRNode(p, IRNode::Kind::VOID));
-            this->addAllMethods(p, st, &children[0], symbol->fName, &children);
+            this->addAllMethods(p, st, &children[0], symbol->fName, &children, st.fClass);
             if (children.size() == 2) {
                 MethodRef* ref = new MethodRef((Method*) symbol, types);
                 *out = IRNode(p, IRNode::Kind::METHOD_REFERENCE,
@@ -1419,7 +1455,7 @@ void Compiler::symbolRef(Position p, const SymbolTable& st, Symbol* symbol, IRNo
         case Symbol::Kind::METHODS: {
             std::vector<IRNode> children;
             children.push_back(target ? std::move(*target) : IRNode(p, IRNode::Kind::VOID));
-            this->addAllMethods(p, st, target, symbol->fName, &children);
+            this->addAllMethods(p, st, target, symbol->fName, &children, st.fClass);
             *out = IRNode(p, IRNode::Kind::UNRESOLVED_METHOD_REFERENCE,
                     Type(Position(), Type::Category::METHOD, "<method>"), &st, std::move(children));
             return;
@@ -1627,6 +1663,14 @@ bool Compiler::convertDot(const ASTNode& d, IRNode* out) {
             name = "package " + p.fName;
             break;
         }
+        case IRNode::Kind::SUPER: {
+            Class* super = this->resolveClass(fCurrentClass.top()->fSymbolTable,
+                    fCurrentClass.top()->fSuper);
+            ASSERT(super);
+            st = &super->fSymbolTable;
+            name = "class " + super->fName;
+            break;
+        }
         default:
             if (left.fType.isClass()) {
                 Class* cl = this->resolveClass(fCurrentClass.top()->fSymbolTable, left.fType);
@@ -1658,6 +1702,15 @@ bool Compiler::convertSelf(const ASTNode& s, IRNode* out) {
         this->error(s.fPosition, "cannot reference 'self' from a @class method");
     }
     *out = IRNode(s.fPosition, IRNode::Kind::SELF, fCurrentClass.top()->fType);
+    return true;
+}
+
+bool Compiler::convertSuper(const ASTNode& s, IRNode* out) {
+    ASSERT(s.fKind == ASTNode::Kind::SUPER);
+    if (fCurrentMethod.top()->fAnnotations.isClass()) {
+        this->error(s.fPosition, "cannot reference 'super' from a @class method");
+    }
+    *out = IRNode(s.fPosition, IRNode::Kind::SUPER, fCurrentClass.top()->fSuper);
     return true;
 }
 
@@ -1726,6 +1779,8 @@ bool Compiler::doConvertExpression(const ASTNode& e, IRNode* out) {
             return true;
         case ASTNode::Kind::SELF:
             return this->convertSelf(e, out);
+        case ASTNode::Kind::SUPER:
+            return this->convertSuper(e, out);
         case ASTNode::Kind::CLASS_TYPE:
             return this->convertType(e, out);
         case ASTNode::Kind::STRING:

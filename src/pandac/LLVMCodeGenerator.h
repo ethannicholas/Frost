@@ -103,7 +103,8 @@ private:
 
     String getVirtualMethodReference(const String& target, const Method* m, std::ostream& out);
 
-    String getMethodReference(const String& target, const Method* m, std::ostream& out);
+    String getMethodReference(const String& target, const Method* m, bool isSuper,
+            std::ostream& out);
 
     String getPointerCallReference(const IRNode& call, std::ostream& out);
 
@@ -114,6 +115,8 @@ private:
     String getConstructReference(const IRNode& construct, std::ostream& out);
 
     String getSelfReference(const IRNode& self, std::ostream& out);
+
+    String getSuperReference(const IRNode& super, std::ostream& out);
 
     String getFieldReference(const IRNode& self, std::ostream& out);
 

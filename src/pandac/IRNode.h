@@ -79,6 +79,8 @@ struct IRNode {
         SELF,
         // a string literal
         STRING,
+        // the 'super' keyword
+        SUPER,
         // represents a tuple target in a declaration statement, such as in 'var (x, y) := tuple'
         TUPLE_TARGET,
         // literal reference to a Type
@@ -258,6 +260,7 @@ struct IRNode {
         ASSERT(fKind != Kind::CAST || fType != fChildren[0].fType);
         ASSERT(fKind != Kind::CAST || fChildren[0].fType.fCategory != Type::Category::UNRESOLVED);
         ASSERT(fKind != Kind::CAST || fChildren[0].fType.fCategory != Type::Category::INT_LITERAL);
+        ASSERT(fKind != Kind::UNRESOLVED_METHOD_REFERENCE || fChildren.size() >= 2);
     }
 
     // copying IRNodes can be very expensive and is incredibly easy to do by accident, so we kill
@@ -309,6 +312,7 @@ struct IRNode {
             case Kind::REUSED_VALUE_DEFINITION:     result += "ReusedValueDefinition";       break;
             case Kind::SELF:                        result += "Self";                        break;
             case Kind::STRING:                      result += "String";                      break;
+            case Kind::SUPER:                       result += "Super";                       break;
             case Kind::TUPLE_TARGET:                result += "TupleTarget";                 break;
             case Kind::TYPE_REFERENCE:              result += "TypeReference"; p = 1;        break;
             case Kind::UNRESOLVED_BINARY:           result += "UnresolvedBinary";            break;

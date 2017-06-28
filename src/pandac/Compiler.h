@@ -144,7 +144,7 @@ private:
      * ones, as in inheritance.
      */
     void addAllMethods(Position p, const SymbolTable& st, const IRNode* target, const String& name,
-            std::vector<IRNode>* methods, bool start = true);
+            std::vector<IRNode>* methods, const Class* startClass);
 
     void symbolRef(Position p, const SymbolTable& st, Symbol* symbol, IRNode* out,
             IRNode* target = nullptr);
@@ -158,6 +158,8 @@ private:
     bool convertDot(const ASTNode& d, IRNode* out);
 
     bool convertSelf(const ASTNode& s, IRNode* out);
+
+    bool convertSuper(const ASTNode& s, IRNode* out);
 
     bool convertString(const ASTNode& s, IRNode* out);
 

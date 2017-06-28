@@ -1,0 +1,8 @@
+class OperatorCalls {
+    @class
+    method main() {
+        Console.printLine(5.*(10))
+        Console.printLine(5.<(10))
+        Console.printLine("Hello".+(", World"))
+    }
+}

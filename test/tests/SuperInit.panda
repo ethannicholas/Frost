@@ -1,0 +1,24 @@
+class Super {
+    init() {
+        x := 123
+    }
+
+    init(x:Int) {
+        self.x := x
+    }
+
+    var x:Int
+}
+
+class Sub : Super {
+    init() {
+        super.init(456)
+    }
+}
+
+class SuperInit {
+    @class
+    method main() {
+        Console.printLine(Sub().x)
+    }
+}

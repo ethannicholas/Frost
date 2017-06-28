@@ -11,7 +11,8 @@ struct Class;
 
 class SymbolTable {
 public:
-    SymbolTable() {
+    SymbolTable()
+    : fClass(nullptr) {
         static bool rootCreated = false;
         ASSERT(!rootCreated);
         rootCreated = true;

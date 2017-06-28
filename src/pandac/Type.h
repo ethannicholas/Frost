@@ -3,6 +3,7 @@
 #include "Symbol.h"
 #include "Util.h"
 
+#include <cstring>
 #include <map>
 #include <set>
 #include <vector>
