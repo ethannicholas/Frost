@@ -1463,6 +1463,10 @@ void Compiler::symbolRef(Position p, const SymbolTable& st, Symbol* symbol, IRNo
         case Symbol::Kind::FIELD:
             *out = IRNode(p, IRNode::Kind::FIELD_REFERENCE, ((Field*) symbol)->fType, symbol);
             if (target) {
+                if (target->fKind == IRNode::Kind::SUPER) {
+                    this->error(target->fPosition,
+                            "'super' can only be used as part of a method call");
+                }
                 Type effectiveType = out->fType;
                 if (target->fType.fCategory == Type::Category::GENERIC) {
                     ASSERT(target->fType.fSubtypes.size() >= 2);
@@ -1641,7 +1645,7 @@ bool Compiler::convertDot(const ASTNode& d, IRNode* out) {
     if (!this->convertExpression(d.fChildren[0], &left)) {
         return false;
     }
-    if (!this->resolve(&left)) {
+    if (left.fKind != IRNode::Kind::SUPER && !this->resolve(&left)) {
         return false;
     }
     String name;
@@ -1700,6 +1704,7 @@ bool Compiler::convertSelf(const ASTNode& s, IRNode* out) {
     ASSERT(s.fKind == ASTNode::Kind::SELF);
     if (fCurrentMethod.top()->fAnnotations.isClass()) {
         this->error(s.fPosition, "cannot reference 'self' from a @class method");
+        return false;
     }
     *out = IRNode(s.fPosition, IRNode::Kind::SELF, fCurrentClass.top()->fType);
     return true;
@@ -1709,6 +1714,7 @@ bool Compiler::convertSuper(const ASTNode& s, IRNode* out) {
     ASSERT(s.fKind == ASTNode::Kind::SUPER);
     if (fCurrentMethod.top()->fAnnotations.isClass()) {
         this->error(s.fPosition, "cannot reference 'super' from a @class method");
+        return false;
     }
     *out = IRNode(s.fPosition, IRNode::Kind::SUPER, fCurrentClass.top()->fSuper);
     return true;
@@ -1969,6 +1975,9 @@ bool Compiler::resolve(IRNode* value) {
             }
             return this->coerce(value, Type::RangeOf(baseType));
         }
+        case IRNode::Kind::SUPER:
+            this->error(value->fPosition, "'super' can only be used as part of a method call");
+            return false;
         default:
             return true;
     }
@@ -2212,6 +2221,16 @@ bool Compiler::convertType(const ASTNode& t, IRNode* out) {
     return true;
 }
 
+IRNode Compiler::defaultValue(Position p, const Type& type) {
+    if (type.isNumeric()) {
+        return IRNode(p, IRNode::Kind::INT, Type::IntLiteral(), (uint64_t) 0);
+    }
+    if (type == Type::Bit()) {
+        return IRNode(p, IRNode::Kind::BIT, Type::BuiltinBit(), false);
+    }
+    return IRNode(p, IRNode::Kind::VOID);
+}
+
 void Compiler::compile(SymbolTable& parent, const Method& method) {
     if (method.fBody.fKind == ASTNode::Kind::VOID) {
         fCodeGenerator.writeMethodDeclaration(method, *this);
@@ -2230,16 +2249,25 @@ void Compiler::compile(SymbolTable& parent, const Method& method) {
     }
     if (method.fMethodKind == Method::Kind::INIT) {
         auto insertPoint = block.fChildren.begin();
-        for (const auto& field : this->getAllFields(method.fOwner)) {
-            if (field->fValue) {
-                Position p = field->fValue->fPosition;
+        for (const auto& field : method.fOwner.fFields) {
+            IRNode* value = field->fValue;
+            IRNode defaultValue;
+            if (!value) {
+                defaultValue = this->defaultValue(field->fPosition, field->fType);
+                if (defaultValue.fKind != IRNode::Kind::VOID) {
+                    value = &defaultValue;
+                }
+            }
+            if (value) {
+                Position p = value->fPosition;
                 std::vector<IRNode> fieldChildren;
                 fieldChildren.push_back(IRNode(p, IRNode::Kind::SELF, field->fOwner.fType));
                 IRNode fieldRef(p, IRNode::Kind::FIELD_REFERENCE, field->fType, field,
                         std::move(fieldChildren));
                 std::vector<IRNode> stmtChildren;
                 stmtChildren.push_back(std::move(fieldRef));
-                stmtChildren.push_back(field->fValue->copy());
+                this->coerce(value, field->fType);
+                stmtChildren.push_back(value->copy());
                 IRNode stmt = IRNode(p, IRNode::Kind::BINARY, Type(), (int) Operator::ASSIGNMENT,
                         std::move(stmtChildren));
                 insertPoint = block.fChildren.insert(insertPoint, std::move(stmt)) + 1;

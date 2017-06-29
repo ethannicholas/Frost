@@ -1,0 +1,6 @@
+class MisusedSelf {
+    @class
+    method main() {
+        var x := self
+    }
+}

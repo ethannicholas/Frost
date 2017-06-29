@@ -202,6 +202,8 @@ private:
 
     bool convertType(const ASTNode& method, IRNode* out);
 
+    IRNode defaultValue(Position p, const Type& type);
+
     void compile(SymbolTable& parent, const Method& method);
 
     void compile(SymbolTable& symbols);

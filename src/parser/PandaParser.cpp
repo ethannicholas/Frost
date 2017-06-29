@@ -1428,36 +1428,85 @@ bool PandaParser::target(ASTNode* outResult) {
     return true;
 }
 
+static void add_string_chunk(ASTNode chunk, ASTNode* outResult) {
+    if (outResult->fKind != ASTNode::Kind::VOID) {
+        Position p = outResult->fPosition;
+        std::vector<ASTNode> children;
+        children.push_back(std::move(*outResult));
+        children.push_back(std::move(chunk));
+        *outResult = ASTNode(p, ASTNode::Kind::BINARY,
+                (int) Operator::ADD, std::move(children));
+    }
+    else {
+        *outResult = std::move(chunk);
+    }
+}
+
 bool PandaParser::string(ASTNode* outResult) {
     Token start = this->nextToken();
     if (start.fKind != Token::Kind::DOUBLE_QUOTE && start.fKind != Token::Kind::SINGLE_QUOTE) {
         this->error(start.fPosition, "expected a string, but found '" + start.fText + "'");
         return false;
     }
+    *outResult = ASTNode();
     String result;
     for (;;) {
         Token next = this->nextRawToken();
         if (next.fKind == start.fKind) {
             break;
         }
-        else if (next.fKind == Token::Kind::WHITESPACE) {
-            for (char c : next.fText) {
-                if (c == '\n') {
+        switch (next.fKind) {
+            case Token::Kind::WHITESPACE:
+                for (char c : next.fText) {
+                    if (c == '\n') {
+                        this->error(start.fPosition, "unterminated string literal");
+                        return false;
+                    }
+                }
+                result += next.fText;
+                break;
+            case Token::Kind::END_OF_FILE:
+                this->error(start.fPosition, "unterminated string literal");
+                return false;
+            case Token::Kind::BACKSLASH: {
+                Token escape = this->nextRawToken();
+                if (escape.fKind == Token::Kind::END_OF_FILE) {
                     this->error(start.fPosition, "unterminated string literal");
                     return false;
                 }
+                ASSERT(escape.fText.size() > 0);
+                switch (escape.fText[0]) {
+                    case 'n':  result += '\n'; break;
+                    case 'r':  result += '\r'; break;
+                    case 't':  result += '\t'; break;
+                    case '\'': result += '\''; break;
+                    case '"':  result += '"';  break;
+                    case '\\': result += '\\'; break;
+                    case '{': {
+                        ASTNode expr;
+                        if (!this->expression(&expr)) {
+                            return false;
+                        }
+                        if (!this->expect(Token::Kind::RBRACE, "'}'")) {
+                            return false;
+                        }
+                        add_string_chunk(ASTNode(start.fPosition, ASTNode::Kind::STRING, result),
+                                outResult);
+                        result = "";
+                        add_string_chunk(std::move(expr), outResult);
+                        break;
+                    }
+                    default:
+                        this->error(next.fPosition, "invalid string escape sequence");
+                }
+                result += escape.fText.substr(1);
+                break;
             }
-            result += next.fText;
-        }
-        else if (next.fKind == Token::Kind::END_OF_FILE) {
-            this->error(start.fPosition, "unterminated string literal");
-            return false;
-        }
-        else {
-            result += next.fText;
+            default:
+                result += next.fText;
         }
     }
-    *outResult = ASTNode(start.fPosition, ASTNode::Kind::STRING, result);
+    add_string_chunk(ASTNode(start.fPosition, ASTNode::Kind::STRING, result), outResult);
     return true;
 }
 

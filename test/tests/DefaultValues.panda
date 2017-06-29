@@ -1,0 +1,17 @@
+class DefaultValues {
+    def i8:Int8
+    def i16:Int16
+    def i32:Int32
+    def i64:Int64
+    def b:Bit
+
+    @class
+    method main() {
+        def d := DefaultValues()
+        Console.printLine(d.i8)
+        Console.printLine(d.i16)
+        Console.printLine(d.i32)
+        Console.printLine(d.i64)
+        Console.printLine(d.b)
+    }
+}

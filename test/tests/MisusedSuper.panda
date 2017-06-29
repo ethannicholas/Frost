@@ -1,0 +1,18 @@
+class Super {
+    def field := 5
+}
+
+class MisusedSuper : Super {
+    init() {
+        Console.printLine(super.field)
+    }
+
+    method foo() {
+        var x := super
+    }
+
+    @class
+    method main() {
+        var x := super
+    }
+}

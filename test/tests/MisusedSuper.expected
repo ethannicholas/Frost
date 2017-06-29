@@ -1,0 +1,4 @@
+MisusedSuper.panda:11:18: error: 'super' can only be used as part of a method call
+MisusedSuper.panda:7:27: error: 'super' can only be used as part of a method call
+MisusedSuper.panda:16:18: error: cannot reference 'super' from a @class method
+3 errors

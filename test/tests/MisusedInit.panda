@@ -1,0 +1,13 @@
+class MisusedInit {
+    method test() {
+        init()
+        def five := 5
+        five.init(6)
+    }
+
+    @class
+    method main() {
+        def five := 5
+        five.init(6)
+    }
+}

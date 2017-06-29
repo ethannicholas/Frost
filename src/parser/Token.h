@@ -114,6 +114,7 @@ struct Token {
         COMMA,
         IDENTIFIER,
         ANNOTATION,
+        BACKSLASH,
         WHITESPACE,
         INVALID
     };

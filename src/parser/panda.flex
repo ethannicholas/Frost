@@ -128,6 +128,7 @@ LETTER [a-zA-Z_$]
 "("           { return (int) Token::Kind::LPAREN; }
 ")"           { return (int) Token::Kind::RPAREN; }
 ","           { return (int) Token::Kind::COMMA; }
+"\\"          { return (int) Token::Kind::BACKSLASH; }
 
 [a-zA-Z_$][a-zA-Z0-9_$]* { return (int) Token::Kind::IDENTIFIER; }
 "@"[a-zA-Z_$][a-zA-Z0-9_$]* { return (int) Token::Kind::ANNOTATION; }

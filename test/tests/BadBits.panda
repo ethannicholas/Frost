@@ -1,0 +1,17 @@
+class BadBits {
+    method badIf() {
+        if 5 {
+        }
+    }
+
+    method badWhile() {
+        while "hello" {
+        }
+    }
+
+    method badDo() {
+        do {
+        }
+        while self
+    }
+}

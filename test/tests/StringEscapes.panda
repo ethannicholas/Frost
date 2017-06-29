@@ -1,0 +1,6 @@
+class StringEscapes {
+    @class
+    method main() {
+        Console.printLine("\t\r\n\"\\")
+    }
+}

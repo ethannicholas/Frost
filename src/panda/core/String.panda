@@ -33,6 +33,11 @@ class String {
         return self + other.convert()->String
     }
 
+    @class
+    function +(o:Object, s:String):String {
+        return o.convert() + s
+    }
+
     function =(other:String):Bit {
         if size != other.size {
             return false
