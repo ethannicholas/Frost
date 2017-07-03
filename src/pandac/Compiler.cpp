@@ -164,12 +164,18 @@ Class* Compiler::resolveClass(const SymbolTable& st, Type t) {
     return nullptr;
 }
 
-std::vector<const Field*> Compiler::getAllFields(const Class& cl) {
+std::vector<const Field*> Compiler::getInstanceFields(const Class& cl) {
     if (cl.fSuper == Type::Void() || cl.isValue()) {
-        return cl.fFields;
+        std::vector<const Field*> result;
+        for (const Field* f : cl.fFields) {
+            if (!f->fAnnotations.isClass()) {
+                result.push_back(f);
+            }
+        }
+        return std::move(result);
     }
-    std::vector<const Field*> result = this->getAllFields(*this->resolveClass(cl.fSymbolTable,
-                                                                              cl.fSuper));
+    std::vector<const Field*> result = this->getInstanceFields(*this->resolveClass(cl.fSymbolTable,
+            cl.fSuper));
     result.insert(result.end(), cl.fFields.begin(), cl.fFields.end());
     return result;
 }
@@ -797,7 +803,9 @@ bool Compiler::call(IRNode method, std::vector<IRNode> args, IRNode* out) {
             ASSERT(symbol);
             IRNode target(method.fPosition, IRNode::Kind::TYPE_REFERENCE, this->typePointer(t));
             IRNode init;
-            this->symbolRef(method.fPosition, cl->fSymbolTable, symbol, &init, &target);
+            if (!this->symbolRef(method.fPosition, cl->fSymbolTable, symbol, &init, &target)) {
+                return false;
+            }
             IRNode initCall;
             if (this->call(std::move(init), std::move(args), &initCall)) {
                 if (!this->resolve(&initCall)) {
@@ -830,7 +838,9 @@ bool Compiler::call(IRNode target, String methodName, std::vector<IRNode> args, 
     }
     IRNode method;
     Position p = target.fPosition;
-    this->symbolRef(p, cl->fSymbolTable, symbol, &method, &target);
+    if (!this->symbolRef(p, cl->fSymbolTable, symbol, &method, &target)) {
+        return false;
+    }
     return this->call(std::move(method), std::move(args), out);
 }
 
@@ -1503,18 +1513,18 @@ void Compiler::addAllMethods(Position p, const SymbolTable& st, const IRNode* ta
     }
 }
 
-void Compiler::symbolRef(Position p, const SymbolTable& st, Symbol* symbol, IRNode* out,
+bool Compiler::symbolRef(Position p, const SymbolTable& st, Symbol* symbol, IRNode* out,
         IRNode* target) {
     switch (symbol->fKind) {
         case Symbol::Kind::CLASS:
             *out = IRNode(p, IRNode::Kind::TYPE_REFERENCE,
                     Type(Position(), Type::Category::CLASS, "<type>"), &((Class*) symbol)->fType);
-            return;
+            return true;
         case Symbol::Kind::TYPE:
             ASSERT(!target);
             *out = IRNode(p, IRNode::Kind::TYPE_REFERENCE,
                     Type(Position(), Type::Category::CLASS, "<type>"), symbol);
-            return;
+            return true;
         case Symbol::Kind::METHOD: {
             std::vector<Type> types;
             if (target) {
@@ -1530,11 +1540,11 @@ void Compiler::symbolRef(Position p, const SymbolTable& st, Symbol* symbol, IRNo
                         Type(Position(), Type::Category::METHOD, "<method>"), ref);
                 out->fChildren.push_back(target ? std::move(children[0]) :
                         IRNode(p, IRNode::Kind::VOID));
-                return;
+                return true;
             }
             *out = IRNode(p, IRNode::Kind::UNRESOLVED_METHOD_REFERENCE,
                     Type(Position(), Type::Category::METHOD, "<method>"), &st, std::move(children));
-            return;
+            return true;
         }
         case Symbol::Kind::METHODS: {
             std::vector<IRNode> children;
@@ -1542,9 +1552,12 @@ void Compiler::symbolRef(Position p, const SymbolTable& st, Symbol* symbol, IRNo
             this->addAllMethods(p, st, target, symbol->fName, &children, st.fClass);
             *out = IRNode(p, IRNode::Kind::UNRESOLVED_METHOD_REFERENCE,
                     Type(Position(), Type::Category::METHOD, "<method>"), &st, std::move(children));
-            return;
+            return true;
         }
         case Symbol::Kind::FIELD:
+            if (!this->inferFieldType((Field*) symbol)) {
+                return false;
+            }
             *out = IRNode(p, IRNode::Kind::FIELD_REFERENCE, ((Field*) symbol)->fType, symbol);
             if (target) {
                 if (target->fKind == IRNode::Kind::SUPER) {
@@ -1575,15 +1588,15 @@ void Compiler::symbolRef(Position p, const SymbolTable& st, Symbol* symbol, IRNo
             else {
                 out->fChildren.push_back(IRNode(p, IRNode::Kind::SELF, fCurrentClass.top()->fType));
             }
-            return;
+            return true;
         case Symbol::Kind::VARIABLE:
             ASSERT(!target);
             *out = IRNode(p, IRNode::Kind::VARIABLE_REFERENCE, ((Variable*) symbol)->fType, symbol);
-            return;
+            return true;
         case Symbol::Kind::PACKAGE:
             *out = IRNode(p, IRNode::Kind::PACKAGE_REFERENCE,
                     Type(Position(), Type::Category::PACKAGE, "<package>"), symbol);
-            return;
+            return true;
         case Symbol::Kind::GENERIC_PARAMETER:
             abort();
     }
@@ -1594,8 +1607,7 @@ bool Compiler::convertIdentifier(const ASTNode& i, IRNode* out) {
     ASSERT(!i.fChildren.size());
     Symbol* symbol = (*fSymbolTable)[i.fText];
     if (symbol) {
-        this->symbolRef(i.fPosition, *fSymbolTable, symbol, out);
-        return true;
+        return this->symbolRef(i.fPosition, *fSymbolTable, symbol, out);
     }
     else {
         this->error(i.fPosition, "unknown identifier '" + i.fText + "'");
@@ -1775,8 +1787,7 @@ bool Compiler::convertDot(const ASTNode& d, IRNode* out) {
     }
     Symbol* symbol = (*st)[d.fText];
     if (symbol) {
-        this->symbolRef(d.fPosition, *st, symbol, out, &left);
-        return true;
+        return this->symbolRef(d.fPosition, *st, symbol, out, &left);
     }
     else {
         this->error(d.fPosition, name + " does not have a member named '" + d.fText + "'");
@@ -2520,41 +2531,73 @@ void Compiler::buildVTables(SymbolTable& symbols) {
     });
 }
 
-void Compiler::processFieldValues() {
-    // index of each value within its parent class
-    std::vector<int> valueIndices;
-    for (const auto& ownerValuePair : fScanner.fFieldValues) {
-        IRNode node;
-        fCurrentClass.push(ownerValuePair.first);
-        fSymbolTable = &ownerValuePair.first->fSymbolTable;
-        if (this->convertExpression(*ownerValuePair.second, &node)) {
-            valueIndices.push_back(ownerValuePair.first->fFieldValues.size());
-            ownerValuePair.first->fFieldValues.push_back(std::move(node));
+bool Compiler::inferFieldType(Field* field) {
+    if (field->fType != Type::Void()) {
+        return true;
+    }
+    if (fCurrentlyInferring.find(field) != fCurrentlyInferring.end()) {
+        String msg = "unable to resolve field types due to a circular dependency involving:";
+        // jump through some hoops to ensure the message is always identical, for testing purposes
+        std::vector<String> lines;
+        std::vector<Position> positions;
+        for (const Field* f : fCurrentlyInferring) {
+            lines.push_back("\n    " + f->fOwner.fName + "." + f->fName + " (" +
+                    f->fPosition.description() + ")");
+            positions.push_back(f->fPosition);
         }
-        else {
+        std::sort(lines.begin(), lines.end());
+        std::sort(positions.begin(), positions.end());
+        for (const String& line : lines) {
+            msg += line;
+        }
+        this->error(positions[0], msg);
+        return false;
+    }
+    fCurrentlyInferring.insert(field);
+    ASSERT(fScanner.fFieldDescriptors.find(field) != fScanner.fFieldDescriptors.end());
+    Scanner::FieldDescriptor& desc = fScanner.fFieldDescriptors[field];
+    ASSERT(desc.fValueIndex < fScanner.fFieldValues.size());
+    Scanner::FieldValue& value = fScanner.fFieldValues[desc.fValueIndex];
+    if (value.fConvertedValue.fKind == IRNode::Kind::VOID) {
+        fCurrentClass.push(&field->fOwner);
+        SymbolTable* old = fSymbolTable;
+        fSymbolTable = &field->fOwner.fSymbolTable;
+        if (!this->convertExpression(*value.fUnconvertedValue, &value.fConvertedValue)) {
             fCurrentClass.pop();
-            return;
+            fSymbolTable = old;
+            fCurrentlyInferring.erase(field);
+            return false;
         }
         fCurrentClass.pop();
+        fSymbolTable = old;
+        fCurrentlyInferring.erase(field);
     }
-    for (const auto& desc : fScanner.fFieldDescriptors) {
-        ASSERT(desc.fTupleIndices.size() == 0); // until tuple support is in...
-        ASSERT(desc.fValueIndex < valueIndices.size());
-        ASSERT(valueIndices[desc.fValueIndex] < desc.fField.fOwner.fFieldValues.size());
-        desc.fField.fValue = &desc.fField.fOwner.fFieldValues[valueIndices[desc.fValueIndex]];
-        desc.fField.fType = variable_type(*desc.fField.fValue);
-        fCurrentClass.push(&desc.fField.fOwner);
-        fSymbolTable = &desc.fField.fOwner.fSymbolTable;
-        this->coerce(desc.fField.fValue, desc.fField.fType);
-        fCurrentClass.pop();
+    ASSERT(desc.fTupleIndices.size() == 0); // until tuple support is in...
+    field->fValue = &value.fConvertedValue;
+    field->fType = variable_type(*field->fValue);
+    fCurrentClass.push(&field->fOwner);
+    fSymbolTable = &field->fOwner.fSymbolTable;
+    this->coerce(field->fValue, field->fType);
+    fCurrentClass.pop();
+    fFieldInitializationOrder.push_back(field);
+    return true;
+}
+
+bool Compiler::processFieldValues() {
+    for (auto pair : fScanner.fFieldDescriptors) {
+        if (!this->inferFieldType(pair.first)) {
+            return false;
+        }
     }
+    return true;
 }
 
 void Compiler::compile() {
     this->findClassesAndResolveTypes(fRoot);
     this->buildVTables(fRoot);
-    this->processFieldValues();
-    this->compile(fRoot);
+    if (this->processFieldValues()) {
+        this->compile(fRoot);
+    }
 }
 
 void Compiler::error(Position position, String msg) {

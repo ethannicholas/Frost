@@ -14,12 +14,17 @@
  */
 class Scanner {
 public:
+    struct FieldValue {
+        // always defined
+        const ASTNode* fUnconvertedValue;
+        // void until this value gets processed
+        IRNode fConvertedValue;
+    };
+
     /**
-     * Stores information about a field's value prior to converting it to an IRNode.
+     * Stores information about a field's value for type inference purposes.
      */
     struct FieldDescriptor {
-        // The field in question
-        Field& fField;
         // index into the fFieldValues list, from which the field's value is drawn
         int fValueIndex;
         // if this is part of a tuple destructuring, holds tuple indices
@@ -35,9 +40,9 @@ public:
 
     Type convertType(const ASTNode& t, const SymbolTable& st);
     
-    std::vector<std::pair<Class*, const ASTNode*>> fFieldValues;
+    std::vector<FieldValue> fFieldValues;
 
-    std::vector<FieldDescriptor> fFieldDescriptors;
+    std::unordered_map<Field*, FieldDescriptor> fFieldDescriptors;
 
 private:
     Annotations convertAnnotations(const ASTNode& a);

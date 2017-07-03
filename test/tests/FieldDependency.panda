@@ -1,0 +1,25 @@
+class FieldDependency1 {
+    constant F := FieldDependency3.E + 1
+
+    @class
+    method main() {
+        Console.printLine(F)
+    }
+}
+
+class FieldDependency2 {
+    constant C := FieldDependency5.B + 1
+}
+
+class FieldDependency3 {
+    constant E := D + 1
+    constant D := FieldDependency2.C + 1
+}
+
+class FieldDependency4 {
+    constant A := 1    
+}
+
+class FieldDependency5 {
+    constant B := FieldDependency4.A + 1
+}

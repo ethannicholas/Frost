@@ -50,4 +50,5 @@ private:
     int fFlags;
 
     friend class Compiler;
+    friend class Scanner;
 };

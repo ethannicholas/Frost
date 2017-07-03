@@ -20,6 +20,10 @@ struct Position {
         return std::to_string(fLine) + ":" + std::to_string(fColumn);
     }
 
+    bool operator<(const Position& other) const {
+        return description() < other.description();
+    }
+
     const String* fName;
     int fLine;
     int fColumn;

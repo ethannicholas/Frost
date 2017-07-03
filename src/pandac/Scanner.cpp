@@ -106,25 +106,24 @@ void Scanner::convertDeclaration(const Annotations& annotations, Field::Kind kin
                 }
             }
             Field* field = new Field(d.fPosition, owner, annotations, kind, target.fText, type);
+            if (kind == Field::Kind::CONSTANT) {
+                field->fAnnotations.fFlags |= Annotations::Flag::CLASS;
+            }
             owner->fFields.push_back(field);
             owner->fSymbolTable.add(std::unique_ptr<Field>(field));
             if (value) {
                 int index = -1;
                 for (int i = 0; i < fFieldValues.size(); ++i) {
-                    if (fFieldValues[i].second == value) {
+                    if (fFieldValues[i].fUnconvertedValue == value) {
                         index = i;
                         break;
                     }
                 }
                 if (index == -1) {
                     index = fFieldValues.size();
-                    fFieldValues.push_back(std::make_pair(owner, value));
+                    fFieldValues.push_back({ value, IRNode(Position(), IRNode::Kind::VOID) });
                 }
-                fFieldDescriptors.push_back({
-                    *field,
-                    index,
-                    tupleIndices
-                });
+                fFieldDescriptors[field] = { index, tupleIndices };
             }
             break;
         }

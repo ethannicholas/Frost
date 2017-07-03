@@ -184,7 +184,11 @@ private:
 
     String methodName(const Method& name);
 
+    String fieldName(const Field& field);
+
     String varName(const Variable& var);
+
+    String defaultValue(const Type& type);
 
     const LoopDescriptor& findLoop(String name);
 

@@ -49,7 +49,9 @@ public:
 
     Class* resolveClass(const SymbolTable& st, Type t);
 
-    std::vector<const Field*> getAllFields(const Class& cl);
+    std::vector<const Field*> getInstanceFields(const Class& cl);
+
+    std::vector<const Field*> fFieldInitializationOrder;
 
 private:
     // for all convert methods: a true result means "successful enough to have produced output",
@@ -146,7 +148,7 @@ private:
     void addAllMethods(Position p, const SymbolTable& st, const IRNode* target, const String& name,
             std::vector<IRNode>* methods, const Class* startClass);
 
-    void symbolRef(Position p, const SymbolTable& st, Symbol* symbol, IRNode* out,
+    bool symbolRef(Position p, const SymbolTable& st, Symbol* symbol, IRNode* out,
             IRNode* target = nullptr);
 
     // as symbolRef, but expands to include all superclass / interface methods with that name
@@ -222,7 +224,9 @@ private:
 
     void buildVTables(SymbolTable& symbols);
 
-    void processFieldValues();
+    bool inferFieldType(Field* field);
+
+    bool processFieldValues();
 
     void error(Position position, String msg);
 
@@ -239,6 +243,8 @@ private:
     std::stack<Method*> fCurrentMethod;
 
     std::stack<Class*> fCurrentClass;
+
+    std::set<const Field*> fCurrentlyInferring;
 
     std::vector<String> fLoops;
 

@@ -27,7 +27,7 @@ struct Field : public Symbol {
 
     Class& fOwner;
 
-    const Annotations fAnnotations;
+    Annotations fAnnotations;
 
     const Kind fFieldKind;
     
