@@ -15,7 +15,7 @@ class NullableValues {
                 a.add(null)
             }
         }
-        for i in 0 .. a.size {
+        for i in 0 .. a.count {
             if a[i] != null {
                 Console.printLine(a[i])
             }

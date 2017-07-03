@@ -1,0 +1,8 @@
+class VoidExpression {
+    method foo() {
+    }
+
+    method test() {
+        def value := foo()
+    }
+}

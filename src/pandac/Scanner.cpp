@@ -169,6 +169,9 @@ void Scanner::convertMethod(ASTNode* m, SymbolTable* st, Class* owner) {
             break;
         case ASTNode::Kind::FUNCTION:
             kind = Method::Kind::FUNCTION;
+            if (returnType == Type::Void()) {
+                this->error(m->fPosition, "functions must have a return type");
+            }
             break;
         default:
             abort();

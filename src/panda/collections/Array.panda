@@ -22,16 +22,16 @@ class Array<T> {
     }
 
     method add(value:T) {
-        def index := size
-        size += 1
-        if size > capacity {
+        def index := count
+        count += 1
+        if count > capacity {
             capacity *= 2
             data := data.realloc(capacity)
         }
         data[index] := value
     }
 
-    var size := 0
+    var count := 0
 
     var capacity := 16
 

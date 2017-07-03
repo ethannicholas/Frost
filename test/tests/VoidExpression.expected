@@ -1,0 +1,2 @@
+VoidExpression.panda:6:22: error: method 'foo' does not return a value
+1 error

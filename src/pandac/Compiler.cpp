@@ -1853,8 +1853,19 @@ bool Compiler::doConvertExpression(const ASTNode& e, IRNode* out) {
         case ASTNode::Kind::BIT:
             *out = IRNode(e.fPosition, IRNode::Kind::BIT, Type::BuiltinBit(), e.fValue.fBool);
             return true;
-        case ASTNode::Kind::CALL:
-            return this->convertCall(e, out);
+        case ASTNode::Kind::CALL: {
+            bool result = this->convertCall(e, out);
+            if (result && out->fType == Type::Void()) {
+                ASSERT(out->fKind == IRNode::Kind::CALL);
+                ASSERT(out->fChildren.size() >= 1);
+                ASSERT(out->fChildren[0].fKind == IRNode::Kind::METHOD_REFERENCE);
+                MethodRef* m = (MethodRef*) out->fChildren[0].fValue.fPtr;
+                this->error(e.fPosition, "method '" + m->fMethod.fName +
+                        "' does not return a value");
+                return false;
+            }
+            return result;
+        }
         case ASTNode::Kind::DOT:
             return this->convertDot(e, out);
         case ASTNode::Kind::IDENTIFIER:
