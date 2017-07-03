@@ -103,13 +103,22 @@ void Compiler::resolveType(const SymbolTable& st, Type* t) {
             *t = Type(std::move(result));
             break;
         }
+        case Type::Category::NULLABLE: {
+            ASSERT(t->fSubtypes.size() == 1);
+            std::vector<Type> children;
+            Type child = std::move(t->fSubtypes[0]);
+            this->resolveType(st, &child);
+            String name = child.fName + "?";
+            children.push_back(std::move(child));
+            *t = Type(t->fPosition, Type::Category::NULLABLE, name, std::move(children));
+        }
         default:
             break;
     }
 }
 
 Class* Compiler::resolveClass(const SymbolTable& st, Type t) {
-    if (t.fCategory == Type::Category::GENERIC) {
+    if (t.fCategory == Type::Category::GENERIC || t.fCategory == Type::Category::NULLABLE) {
         return this->resolveClass(st, t.fSubtypes[0]);
     }
     const SymbolTable* current = &st;
@@ -186,26 +195,38 @@ int Compiler::matchMethods(const std::vector<const MethodRef*>& methods,
     return minCost;
 }
 
-// returns the type that a variable should have when initialized with the given node
-static Type variable_type(const IRNode& node) {
-    switch (node.fKind) {
-        case IRNode::Kind::UNRESOLVED_RANGE:
-            for (const auto& child : node.fChildren) {
-                if (child.fKind != IRNode::Kind::VOID) {
-                    return variable_type(child);
-                }
-            }
-            abort();
-        default:
-            break;
+// returns the type that a variable should have when initialized with the given type
+static Type variable_type(const Type& type) {
+    if (type.fCategory == Type::Category::NULLABLE) {
+        ASSERT(type.fSubtypes.size() == 1);
+        std::vector<Type> children;
+        Type base = variable_type(type.fSubtypes[0]);
+        String name = base.fName + "?";
+        children.push_back(std::move(base));
+        return Type(type.fPosition, Type::Category::NULLABLE, name, std::move(children));
     }
-    if (node.fType == Type::IntLiteral()) {
+    if (type == Type::IntLiteral()) {
         return Type::Int();
     }
-    if (node.fType == Type::BuiltinBit()) {
+    if (type == Type::BuiltinBit()) {
         return Type::Bit();
     }
-    return node.fType;
+    return type;
+}
+
+// returns the type that a variable should have when initialized with the given node
+static Type variable_type(const IRNode& node) {
+    if (node.fKind == IRNode::Kind::UNRESOLVED_RANGE) {
+        Type baseType = node.fChildren[0].fType;
+        baseType = baseType.typeUnion(node.fChildren[1].fType);
+        baseType = baseType.typeUnion(node.fChildren[2].fType);
+        if (baseType == Type::Null()) {
+            baseType = baseType.typeUnion(Type::Int());
+        }
+        baseType = variable_type(baseType);
+        return Type::RangeOf(baseType);
+    }
+    return variable_type(node.fType);
 }
 
 bool Compiler::coerce(IRNode* node, const Type& target, IRNode* out) {
@@ -244,6 +265,12 @@ bool Compiler::coerce(IRNode* node, const Type& target, IRNode* out) {
             if (target.fCategory == Type::Category::CLASS && !target.isNumeric() &&
                     this->coerce(node, variable_type(*node), node)) {
                 return this->coerce(node, target, out);
+            }
+            break;
+        case IRNode::Kind::NULL_LITERAL:
+            if (target.fCategory == Type::Category::NULLABLE) {
+                *out = IRNode(node->fPosition, IRNode::Kind::NULL_LITERAL, target);
+                return true;
             }
             break;
         case IRNode::Kind::UNRESOLVED_CALL: {
@@ -373,9 +400,20 @@ bool Compiler::coerce(IRNode* node, const Type& target, IRNode* out) {
             }
         }
         std::vector<IRNode> children;
+        this->resolve(node);
         children.push_back(std::move(*node));
         *out = IRNode(p, IRNode::Kind::CAST, target, std::move(children));
         return true;
+    }
+    if (target.fCategory == Type::Category::NULLABLE) {
+        if (this->coerce(node, target.fSubtypes[0])) {
+            Position p = node->fPosition;
+            std::vector<IRNode> children;
+            children.push_back(std::move(*node));
+            *out = IRNode(p, IRNode::Kind::CAST, target, std::move(children));
+            return true;
+        }
+        return false;
     }
     String value;
     switch (node->fKind) {
@@ -393,8 +431,28 @@ bool Compiler::coerce(IRNode* node, const Type& target, IRNode* out) {
 }
 
 int Compiler::coercionCost(const Type& type, const Type& target) {
+    static constexpr int kNullCastCost = 1;
     if (type == target) {
         return 0;
+    }
+    if (type == Type::Null()) {
+        return target.fCategory == Type::Category::NULLABLE ? 0 : INT_MAX;
+    }
+    if (type.fCategory != Type::Category::NULLABLE &&
+            target.fCategory == Type::Category::NULLABLE) {
+        int result = this->coercionCost(type, target.fSubtypes[0]);
+        if (result != INT_MAX) {
+            result += kNullCastCost;
+        }
+        return result;
+    }
+    if (type.fCategory == Type::Category::NULLABLE &&
+            target.fCategory != Type::Category::NULLABLE) {
+        int result = this->coercionCost(type.fSubtypes[0], target);
+        if (result != INT_MAX) {
+            result += kNullCastCost;
+        }
+        return result;
     }
     if (type.fCategory == Type::Category::CLASS && target.fCategory == Type::Category::CLASS) {
         int cost = 0;
@@ -651,10 +709,11 @@ bool Compiler::call(IRNode method, std::vector<IRNode> args, IRNode* out) {
                     else {
                         if (!m.fMethod.fAnnotations.isClass() &&
                                 target.fType != m.fMethod.fOwner.fType) {
+                            Position p = target.fPosition;
                             std::vector<IRNode> children;
                             children.push_back(std::move(target));
-                            target = IRNode(children[0].fPosition, IRNode::Kind::CAST,
-                                    m.fMethod.fOwner.fType, std::move(children));
+                            target = IRNode(p, IRNode::Kind::CAST, m.fMethod.fOwner.fType,
+                                        std::move(children));
                         }
                         children.push_back(std::move(target));
                     }
@@ -667,10 +726,11 @@ bool Compiler::call(IRNode method, std::vector<IRNode> args, IRNode* out) {
                 }
                 if (m.fMethod.fOwner.fName != "panda.core.Pointer" &&
                         converted.fType != m.fMethod.fParameters[i].fType) {
+                    Position p = converted.fPosition;
                     std::vector<IRNode> children;
                     children.push_back(std::move(converted));
-                    converted = IRNode(converted.fPosition, IRNode::Kind::CAST,
-                            m.fMethod.fParameters[i].fType, std::move(children));
+                    converted = IRNode(p, IRNode::Kind::CAST, m.fMethod.fParameters[i].fType,
+                            std::move(children));
                 }
                 children.push_back(std::move(converted));
             }
@@ -1179,7 +1239,7 @@ bool Compiler::operatorCall(Position position, IRNode* left, Operator op, IRNode
         }
         *outResult = IRNode(position, IRNode::Kind::UNRESOLVED_BINARY,
                 Type(Position(), std::move(types)),
-                (int) op, std::move(children));
+                (uint64_t) op, std::move(children));
         return true;
     }
     ASSERT(matches.size() == 1);
@@ -1240,6 +1300,29 @@ bool Compiler::convertBinary(Position p, IRNode* left, Operator op, IRNode* righ
     if (right->fType.fCategory == Type::Category::INT_LITERAL &&
             this->coercionCost(*right, left->fType) != INT_MAX) {
         coerce(right, left->fType);
+    }
+    if (op == Operator::EQ || op == Operator::NEQ || op == Operator::IDENTITY ||
+            op == Operator::NIDENTITY) {
+        IRNode::Kind kind = (op == Operator::EQ || op == Operator::IDENTITY) ? 
+                IRNode::Kind::IS_NULL : IRNode::Kind::IS_NONNULL;
+        if (left->fKind == IRNode::Kind::NULL_LITERAL) {
+            std::vector<IRNode> children;
+            if (!this->resolve(right)) {
+                return false;
+            }
+            children.push_back(std::move(*right));
+            *out = IRNode(p, kind, Type::Bit(), std::move(children));
+            return true;
+        }
+        if (right->fKind == IRNode::Kind::NULL_LITERAL) {
+            std::vector<IRNode> children;
+            if (!this->resolve(left)) {
+                return false;
+            }
+            children.push_back(std::move(*left));
+            *out = IRNode(p, kind, Type::Bit(), std::move(children));
+            return true;
+        }
     }
     if (op == Operator::INDEX) {
         // index expressions are always unresolved at first, because it might turn out to be an
@@ -1442,6 +1525,7 @@ void Compiler::symbolRef(Position p, const SymbolTable& st, Symbol* symbol, IRNo
             this->addAllMethods(p, st, &children[0], symbol->fName, &children, st.fClass);
             if (children.size() == 2) {
                 MethodRef* ref = new MethodRef((Method*) symbol, types);
+                ((Method*) symbol)->fMethodRefs.emplace_back(ref);
                 *out = IRNode(p, IRNode::Kind::METHOD_REFERENCE,
                         Type(Position(), Type::Category::METHOD, "<method>"), ref);
                 out->fChildren.push_back(target ? std::move(children[0]) :
@@ -1729,27 +1813,30 @@ bool Compiler::convertRange(const ASTNode& r, IRNode* out) {
     ASSERT(r.fKind == ASTNode::Kind::RANGE_EXCLUSIVE || r.fKind == ASTNode::Kind::RANGE_INCLUSIVE);
     ASSERT(r.fChildren.size() == 3);
     IRNode start;
-    if (!this->convertExpression(r.fChildren[0], &start)) {
+    if (r.fChildren[0].fKind == ASTNode::Kind::VOID) {
+        start = IRNode(r.fPosition, IRNode::Kind::NULL_LITERAL, Type::Null());
+    }
+    else if (!this->convertExpression(r.fChildren[0], &start)) {
         return false;
     }
     IRNode end;
-    if (!this->convertExpression(r.fChildren[1], &end)) {
+    if (r.fChildren[1].fKind == ASTNode::Kind::VOID) {
+        end = IRNode(r.fPosition, IRNode::Kind::NULL_LITERAL, Type::Null());
+    }
+    else if (!this->convertExpression(r.fChildren[1], &end)) {
+        return false;
+    }
+    IRNode step;
+    if (r.fChildren[2].fKind == ASTNode::Kind::VOID) {
+        step = IRNode(r.fPosition, IRNode::Kind::NULL_LITERAL, Type::Null());
+    }
+    else if (!this->convertExpression(r.fChildren[2], &step)) {
         return false;
     }
     std::vector<IRNode> children;
     children.push_back(std::move(start));
     children.push_back(std::move(end));
-    if (r.fChildren[2].fKind != ASTNode::Kind::VOID) {
-        IRNode step;
-        if (!this->convertExpression(r.fChildren[2], &step)) {
-            return false;
-        }
-        children.push_back(std::move(step));
-    }
-    else {
-        children.push_back(IRNode(r.fPosition, IRNode::Kind::INT, Type::IntLiteral(),
-                (uint64_t) 1));
-    }
+    children.push_back(std::move(step));
     *out = IRNode(r.fPosition, IRNode::Kind::UNRESOLVED_RANGE,
             Type(r.fPosition, Type::Category::UNRESOLVED, "<unresolved range>"),
             r.fKind == ASTNode::Kind::RANGE_INCLUSIVE,
@@ -1782,6 +1869,9 @@ bool Compiler::doConvertExpression(const ASTNode& e, IRNode* out) {
             return true;
         case ASTNode::Kind::FALSE_LITERAL:
             *out = IRNode(e.fPosition, IRNode::Kind::BIT, Type::BuiltinBit(), false);
+            return true;
+        case ASTNode::Kind::NULL_LITERAL:
+            *out = IRNode(e.fPosition, IRNode::Kind::NULL_LITERAL, Type::Null());
             return true;
         case ASTNode::Kind::SELF:
             return this->convertSelf(e, out);
@@ -1900,7 +1990,12 @@ bool Compiler::convertFor(const ASTNode& f, IRNode* out) {
             list.fType.fSubtypes[0].fName == "panda.core.Range" &&
             list.fType.fSubtypes[1].isNumeric()) {
         IRNode target;
-        if (!this->convertTarget(f.fChildren[0], nullptr, &list.fType.fSubtypes[1], &target)) {
+        Type indexType = list.fType.fSubtypes[1];
+        if (indexType.fCategory == Type::Category::NULLABLE) {
+            ASSERT(indexType.fSubtypes.size() == 1);
+            indexType = indexType.fSubtypes[0];
+        }
+        if (!this->convertTarget(f.fChildren[0], nullptr, &indexType, &target)) {
             return false;
         }
         IRNode block;
@@ -1965,15 +2060,7 @@ bool Compiler::resolve(IRNode* value) {
             return this->convertPrefix(value->fPosition, (Operator) value->fValue.fInt,
                     std::move(value->fChildren[0]), value);
         case IRNode::Kind::UNRESOLVED_RANGE: {
-            Type baseType;
-            if (value->fChildren[0].fKind != IRNode::Kind::VOID) {
-                baseType = variable_type(value->fChildren[0]);
-            }
-            else {
-                ASSERT(value->fChildren[1].fKind != IRNode::Kind::VOID);
-                baseType = variable_type(value->fChildren[1]);
-            }
-            return this->coerce(value, Type::RangeOf(baseType));
+            return this->coerce(value, variable_type(*value));
         }
         case IRNode::Kind::SUPER:
             this->error(value->fPosition, "'super' can only be used as part of a method call");
@@ -2268,8 +2355,8 @@ void Compiler::compile(SymbolTable& parent, const Method& method) {
                 stmtChildren.push_back(std::move(fieldRef));
                 this->coerce(value, field->fType);
                 stmtChildren.push_back(value->copy());
-                IRNode stmt = IRNode(p, IRNode::Kind::BINARY, Type(), (int) Operator::ASSIGNMENT,
-                        std::move(stmtChildren));
+                IRNode stmt = IRNode(p, IRNode::Kind::BINARY, Type(),
+                        (uint64_t) Operator::ASSIGNMENT, std::move(stmtChildren));
                 insertPoint = block.fChildren.insert(insertPoint, std::move(stmt)) + 1;
             }
         }
@@ -2427,13 +2514,17 @@ void Compiler::processFieldValues() {
     std::vector<int> valueIndices;
     for (const auto& ownerValuePair : fScanner.fFieldValues) {
         IRNode node;
+        fCurrentClass.push(ownerValuePair.first);
+        fSymbolTable = &ownerValuePair.first->fSymbolTable;
         if (this->convertExpression(*ownerValuePair.second, &node)) {
             valueIndices.push_back(ownerValuePair.first->fFieldValues.size());
             ownerValuePair.first->fFieldValues.push_back(std::move(node));
         }
         else {
+            fCurrentClass.pop();
             return;
         }
+        fCurrentClass.pop();
     }
     for (const auto& desc : fScanner.fFieldDescriptors) {
         ASSERT(desc.fTupleIndices.size() == 0); // until tuple support is in...
@@ -2444,6 +2535,7 @@ void Compiler::processFieldValues() {
         fCurrentClass.push(&desc.fField.fOwner);
         fSymbolTable = &desc.fField.fOwner.fSymbolTable;
         this->coerce(desc.fField.fValue, desc.fField.fType);
+        fCurrentClass.pop();
     }
 }
 

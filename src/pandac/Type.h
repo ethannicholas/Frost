@@ -15,6 +15,9 @@ struct Type : public Symbol {
         // a raw number, before a specific type has been chosen for it. Will coerce to any size Int
         // or builtin_int which can hold it.
         INT_LITERAL,
+        // the type of the null literal. This is not the same as Any(), because e.g. the union of
+        // Int and Object? is Object?, whereas the union of Int and null is Int?.
+        NULL_LITERAL,
         BUILTIN_INT,
         BUILTIN_UINT,
         BUILTIN_FLOAT,
@@ -25,6 +28,8 @@ struct Type : public Symbol {
         // a class name with generic parameters, e.g. List<Int>. fSubtypes[0] is the base class, and
         // the remaining subtypes are the generic parameters.
         GENERIC,
+        // a nullable version of fSubtypes[0]
+        NULLABLE,
         // a generic parameter type. In the class List<T>, T is a parameter type. fSubtypes[0] is
         // the parameter's bound.
         PARAMETER,
@@ -83,6 +88,12 @@ struct Type : public Symbol {
     , fCategory(category)
     , fSubtypes(std::move(types)) {}
 
+    Type nullable() const {
+        std::vector<Type> children;
+        children.push_back(*this);
+        return Type(fPosition, Category::NULLABLE, fName + "?", std::move(children));
+    }
+
     bool isBuiltinInt() const {
         return fCategory == Category::BUILTIN_INT  || fCategory == Category::BUILTIN_UINT;
     }
@@ -92,14 +103,19 @@ struct Type : public Symbol {
                 fCategory == Category::INT_LITERAL;
     }
 
-    bool isNumeric() const {
+    bool isNumber() const {
         return !strncmp(fName.c_str(), "panda.core.Int", strlen("panda.core.Int")) ||
-                !strncmp(fName.c_str(), "panda.core.Int", strlen("panda.core.UInt")) ||
-                !strncmp(fName.c_str(), "panda.core.Int", strlen("panda.core.Char"));
+                !strncmp(fName.c_str(), "panda.core.UInt", strlen("panda.core.UInt"));
+    }
+
+    bool isNumeric() const {
+        return isNumber() ||
+                !strncmp(fName.c_str(), "panda.core.Char", strlen("panda.core.Char"));
     }
 
     bool isClass() const {
-        return fCategory == Category::CLASS || fCategory == Category::GENERIC;
+        return fCategory == Category::CLASS || fCategory == Category::GENERIC ||
+                fCategory == Category::NULLABLE;
     }
 
     bool operator==(const Type& other) const {
@@ -129,6 +145,33 @@ struct Type : public Symbol {
     String description() const {
         ASSERT(fCategory != Category::GENERIC || fSubtypes.size() >= 2);
         return fName;
+    }
+
+    // returns the narrowest type that can hold an instance of either type
+    Type typeUnion(const Type& other) const {
+        if (*this == other) {
+            return *this;
+        }
+        if (*this == Type::Null()) {
+            if (other.fCategory == Type::Category::NULLABLE) {
+                return other;
+            }
+            return other.nullable();
+        }
+        if (other == Type::Null()) {
+            if (fCategory == Type::Category::NULLABLE) {
+                return *this;
+            }
+            return this->nullable();
+        }
+        if (*this == IntLiteral() && other.isNumber()) {
+            return other;
+        }
+        if (isNumber() && other == IntLiteral()) {
+            return *this;
+        }
+        printf("union of %s and %s\n", fName.c_str(), other.fName.c_str());
+        abort();
     }
 
     Type remap(const std::map<String, Type>& types) const {
@@ -175,6 +218,11 @@ struct Type : public Symbol {
 
     static Type& IntLiteral() {
         static Type result = Type(Position(), Category::INT_LITERAL, "<integer>", 1);
+        return result;
+    }
+
+    static Type& Null() {
+        static Type result = Type(Position(), Category::NULL_LITERAL, "<null>", 1);
         return result;
     }
 

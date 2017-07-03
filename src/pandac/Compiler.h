@@ -246,7 +246,7 @@ private:
 
     std::unordered_map<String, std::unique_ptr<Type>> fTypes;
 
-    uint64_t fReusedValues;
+    uint64_t fReusedValues = 0;
 
     friend class AutoLoop;
     friend class AutoSymbolTable;

@@ -16,9 +16,7 @@ struct Variable : public Symbol {
     Variable(Position position, String name, Type type, Storage storage = Variable::Storage::LOCAL)
     : INHERITED(position, Kind::VARIABLE, std::move(name))
     , fType(std::move(type))
-    , fStorage(storage) {
-        ASSERT(fType.fName != "Int");
-    }
+    , fStorage(storage) {}
 
     const Type fType;
 

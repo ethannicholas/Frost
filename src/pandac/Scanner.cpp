@@ -56,6 +56,14 @@ Type Scanner::convertType(const ASTNode& t, const SymbolTable& st) {
             }
             return std::move(converted);
         }
+        case ASTNode::Kind::NULLABLE_TYPE: {
+            ASSERT(t.fChildren.size() == 1);
+            Type base = this->convertType(t.fChildren[0], st);
+            String name = base.fName + "?";
+            std::vector<Type> children;
+            children.push_back(std::move(base));
+            return Type(t.fPosition, Type::Category::NULLABLE, name, std::move(children));
+        }
         default:
             printf("unsupported type: %s\n", t.description().c_str());
             abort();
@@ -281,6 +289,7 @@ void Scanner::scan(ASTNode* file, SymbolTable* root) {
     uses.push_back({ Position(), "panda.core.Int64", "Int64" });;
     uses.push_back({ Position(), "panda.core.Int64", "Int" });;
     uses.push_back({ Position(), "panda.core.Object", "Object" });;
+    uses.push_back({ Position(), "panda.core.Range", "Range" });;
     uses.push_back({ Position(), "panda.core.String", "String" });;
     uses.push_back({ Position(), "panda.io.Console", "Console" });;
     for (auto& e : file->fChildren) {

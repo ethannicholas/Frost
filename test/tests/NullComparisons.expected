@@ -1,0 +1,23 @@
+Nullable Object: Null
+true
+false
+true
+false
+
+Nullable Object: Non-Null
+false
+true
+false
+true
+
+Nullable Value: Null
+true
+false
+true
+false
+
+Nullable Value: Non-Null
+false
+true
+false
+true

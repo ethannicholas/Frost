@@ -56,6 +56,8 @@ private:
 
     void writeWrapperType(const Type& type);
 
+    void writeNullableType(const Type& type);
+
     size_t sizeOf(const Type& type);
 
     ClassConstant& getClassConstant(const Class& cl);
@@ -76,6 +78,8 @@ private:
     String llvmWrapperTypeName(const Type& type);
 
     String llvmWrapperType(const Type& type);
+
+    String llvmNullableType(const Type& type);
 
     String llvmType(const Method& m);
 
@@ -99,6 +103,12 @@ private:
     String getBinaryReference(const IRNode& left, Operator op, const IRNode& right,
             std::ostream& out);
 
+    String getNullReference(const IRNode& n, std::ostream& out);
+
+    String getIsNonNullReference(const IRNode& test, std::ostream& out);
+
+    String getIsNullReference(const IRNode& test, std::ostream& out);
+
     String getPrefixReference(const IRNode& expr, std::ostream& out);
 
     String getVirtualMethodReference(const String& target, const Method* m, std::ostream& out);
@@ -109,6 +119,18 @@ private:
     String getPointerCallReference(const IRNode& call, std::ostream& out);
 
     String getCallReference(const IRNode& call, std::ostream& out);
+
+    String wrapValue(const String& value, const Type& srcType, const Type& dstType,
+            std::ostream& out);
+
+    String unwrapValue(const String& value, const Type& srcType, const Type& dstType,
+            std::ostream& out);
+
+    String toNullableValue(const String& value, const Type& srcType, const Type& dstType,
+            std::ostream& out);
+
+    String toNonNullableValue(const String& value, const Type& srcType, const Type& dstType,
+            std::ostream& out);
 
     String getCastReference(const IRNode& call, std::ostream& out);
 
@@ -179,6 +201,8 @@ private:
     std::unordered_set<String> fWrittenTypes;
 
     std::unordered_set<String> fWrittenWrappers;
+
+    std::unordered_set<String> fWrittenNullables;
 
     std::stringstream fTypeDeclarations;
 

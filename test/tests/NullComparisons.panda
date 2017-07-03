@@ -1,0 +1,35 @@
+class NullComparisons {
+    @class
+    method main() {
+        Console.printLine("Nullable Object: Null")
+        def a:Object? := null
+        Console.printLine(a = null)
+        Console.printLine(a != null)
+        Console.printLine(a == null)
+        Console.printLine(a !== null)
+        Console.printLine()
+
+        Console.printLine("Nullable Object: Non-Null")
+        a := 12
+        Console.printLine(a = null)
+        Console.printLine(a != null)
+        Console.printLine(a == null)
+        Console.printLine(a !== null)
+        Console.printLine()
+
+        Console.printLine("Nullable Value: Null")
+        def b:Int? := null
+        Console.printLine(b = null)
+        Console.printLine(b != null)
+        Console.printLine(b == null)
+        Console.printLine(b !== null)
+        Console.printLine()
+
+        Console.printLine("Nullable Value: Non-Null")
+        b := 12
+        Console.printLine(b = null)
+        Console.printLine(b != null)
+        Console.printLine(b == null)
+        Console.printLine(b !== null)
+    }
+}

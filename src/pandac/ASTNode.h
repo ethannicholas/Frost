@@ -71,6 +71,7 @@ struct ASTNode {
         METHOD_VALUE,
         NESTED,
         NULL_LITERAL,
+        NULLABLE_TYPE,
         PACKAGE,
         PARAMETER,
         PARAMETERS,
@@ -232,6 +233,7 @@ struct ASTNode {
             case Kind::METHOD_VALUE:            result += "MethodValue";           break;
             case Kind::NESTED:                  result += "Nested";                break;
             case Kind::NULL_LITERAL:            result += "Null";                  break;
+            case Kind::NULLABLE_TYPE:           result += "NullableType";          break;
             case Kind::PACKAGE:                 result += "Package";               break;
             case Kind::PARAMETER:               result += "Parameter";             break;
             case Kind::PARAMETERS:              result += "Parameters";            break;

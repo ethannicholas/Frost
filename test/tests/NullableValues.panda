@@ -1,0 +1,27 @@
+class NullableValues {
+    @class
+    method main() {
+        def a := Array<Int?>()
+        for i in 1 ... 100 {
+            def found := false
+            for j in 1 .. i {
+                if j * j = i {
+                    a.add(i)
+                    found := true
+                    break
+                }
+            }
+            if !found {
+                a.add(null)
+            }
+        }
+        for i in 0 .. a.size {
+            if a[i] != null {
+                Console.printLine(a[i])
+            }
+            else {
+                Console.printLine("not square")
+            }
+        }
+    }
+}

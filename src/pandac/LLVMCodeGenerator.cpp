@@ -53,8 +53,8 @@ LLVMCodeGenerator::LLVMCodeGenerator(std::ostream* out)
     fMethods << "    ret void\n";
     fMethods << "}\n";
     fMethods << "@fmt = private constant [4 x i8] [i8 37, i8 100, i8 10, i8 0]\n";
-    fMethods << "define fastcc void @debugPrint(i8 %value) {\n";
-    fMethods << "    call i64 (i8*, ...) @printf(i8* bitcast ([4 x i8]* @fmt to i8*), i8 %value)\n";
+    fMethods << "define fastcc void @debugPrint(i64 %value) {\n";
+    fMethods << "    call i64 (i8*, ...) @printf(i8* bitcast ([4 x i8]* @fmt to i8*), i64 %value)\n";
     fMethods << "    ret void\n";
     fMethods << "}\n";
 }
@@ -107,6 +107,7 @@ static String escape_type_name(String name) {
     for (char c : name) {
         switch (c) {
             case '.': result += "$";   break;
+            case '?': result += "$Q";   break;
             case '<': result += "$LT"; break;
             case '>': result += "$GT"; break;
             case ',': result += ",";   break;
@@ -280,6 +281,32 @@ void LLVMCodeGenerator::writeWrapperType(const Type& type) {
     }
 }
 
+void LLVMCodeGenerator::writeNullableType(const Type& type) {
+    ASSERT(type.fCategory == Type::Category::NULLABLE);
+    ASSERT(type.fSubtypes.size() == 1);
+    const Type& base = type.fSubtypes[0];
+    if (fWrittenNullables.find(base.fName) == fWrittenNullables.end()) {
+        fWrittenNullables.insert(base.fName);
+        Class* cl = fCompiler->resolveClass(fCurrentClass->fSymbolTable, base);
+        ASSERT(cl);
+        ASSERT(cl->isValue());
+        std::vector<const Field*> fields = fCompiler->getAllFields(*cl);
+        std::vector<String> types;
+        for (const Field* f : fields) {
+            types.push_back(this->llvmType(f->fType));
+        }
+        fTypeDeclarations << "\n";
+        fTypeDeclarations << this->llvmTypeName(base) <<
+                "$nullable = type { ";
+        const char* separator = "";
+        for (const String& t : types) {
+            fTypeDeclarations << separator << t;
+            separator = ", ";
+        }
+        fTypeDeclarations << separator << "i1 }\n";
+    }
+}
+
 String LLVMCodeGenerator::llvmTypeName(const Type& type) {
     ASSERT(type.fCategory == Type::Category::CLASS);
     return "%" + escape_type_name(type.fName);
@@ -291,6 +318,7 @@ String LLVMCodeGenerator::llvmType(const Type& type) {
         case Type::Category::BUILTIN_INT: // fall through
         case Type::Category::BUILTIN_UINT: return "i" + std::to_string(type.fSize);
         case Type::Category::BUILTIN_FLOAT: return "f" + std::to_string(type.fSize);
+        case Type::Category::NULL_LITERAL: return "i8*";
         case Type::Category::CLASS: {
             this->writeType(type);
             const Class* cl = fCompiler->resolveClass(fCurrentClass->fSymbolTable, type);
@@ -309,14 +337,28 @@ String LLVMCodeGenerator::llvmType(const Type& type) {
             return this->llvmType(type.fSubtypes[0]);
         case Type::Category::PARAMETER:
             return this->llvmType(type.fSubtypes[0]);
+        case Type::Category::NULLABLE: {
+            const Class* cl = fCompiler->resolveClass(fCurrentClass->fSymbolTable,
+                    type.fSubtypes[0]);
+            ASSERT(cl);
+            if (cl->isValue()) {
+                return this->llvmNullableType(type);
+            }
+            return this->llvmType(type.fSubtypes[0]);
+        }
         case Type::Category::METHOD:      // fall through
         case Type::Category::PACKAGE:     // fall through
         case Type::Category::INT_LITERAL: // fall through
-        case Type::Category::UNRESOLVED: abort();
+        case Type::Category::UNRESOLVED:
+            printf("internal error: unresolved type %s\n", type.fName.c_str());
+            return "<internal error>";
     }
 }
 
 String LLVMCodeGenerator::llvmWrapperTypeName(const Type& type) {
+    if (type.fCategory == Type::Category::NULLABLE) {
+        return this->llvmWrapperTypeName(type.fSubtypes[0]);
+    }
     ASSERT(type.fCategory == Type::Category::CLASS);
     this->writeWrapperType(type);
     return this->llvmTypeName(type) + "$wrapper";
@@ -324,6 +366,13 @@ String LLVMCodeGenerator::llvmWrapperTypeName(const Type& type) {
 
 String LLVMCodeGenerator::llvmWrapperType(const Type& type) {
     return this->llvmWrapperTypeName(type) + "*";
+}
+
+String LLVMCodeGenerator::llvmNullableType(const Type& type) {
+    ASSERT(type.fCategory == Type::Category::NULLABLE);
+    ASSERT(type.fSubtypes.size() == 1);
+    this->writeNullableType(type);
+    return this->llvmTypeName(type.fSubtypes[0]) + "$nullable";
 }
 
 String LLVMCodeGenerator::llvmType(const Method& m) {
@@ -702,6 +751,195 @@ String LLVMCodeGenerator::getCallReference(const IRNode& call, std::ostream& out
     return result;
 }
 
+String LLVMCodeGenerator::wrapValue(const String& value, const Type& srcType, const Type& dstType,
+        std::ostream& out) {
+    out << "; wrap value\n";
+    const Class* src = fCompiler->resolveClass(fCurrentClass->fSymbolTable, srcType);
+    std::vector<const Field*> fields = fCompiler->getAllFields(*src);
+    ASSERT(src);
+    if (srcType.fCategory == Type::Category::NULLABLE) {
+        // casting nullable value to nullable wrapper, need to special-case null
+        out << "; handle nullable-to-nullable wrap\n";
+        String testStart = fCurrentBlock;
+        String isNonNull = this->nextVar();
+        out << "    " << isNonNull << " = extractvalue " << this->llvmNullableType(srcType) <<
+                " " << value << ", " << fields.size() << "\n";
+        String nonNullLabel = this->nextLabel();
+        String endLabel = this->nextLabel();
+        out << "    br i1 " << isNonNull << ", label %" << nonNullLabel << ", label %" <<
+                endLabel << "\n";
+        this->createBlock(nonNullLabel, out);
+        String unwrapped = this->toNonNullableValue(value, srcType, srcType.fSubtypes[0], out);
+        String nonNullValue = this->wrapValue(unwrapped, srcType.fSubtypes[0], dstType, out);
+        out << "    br label %" << endLabel << "\n";
+        this->createBlock(endLabel, out);
+        String result = this->nextVar();
+        out << "    " << result << " = phi " << this->llvmType(dstType) << " [null, %" << testStart <<
+                "], [" << nonNullValue << ", %" << nonNullLabel << "]\n";
+        return result;
+    }
+    String mallocRef = this->nextVar();
+    out << "    " << mallocRef << " = call i8* @malloc(i64 " <<
+            this->sizeOf(Type::Object()) + this->sizeOf(src->fType) << ")\n";
+    String wrapperTypeName = this->llvmWrapperTypeName(src->fType);
+    String wrapperType = this->llvmWrapperType(src->fType);
+    String wrapperCast = this->nextVar();
+    out << "    " << wrapperCast << " = bitcast i8* " << mallocRef << " to " <<
+            wrapperType << "\n";
+    String classPtr = this->nextVar();
+    out << "    " << classPtr << " = getelementptr " << wrapperTypeName << ", " <<
+            wrapperType << " " << wrapperCast << ", i64 0, i32 0\n";
+    const ClassConstant& cc = this->getWrapperClassConstant(*src);
+    out << "    store %panda$core$Class* bitcast(" << cc.fType << "* " << cc.fName <<
+            " to %panda$core$Class*), %panda$core$Class** " << classPtr << "\n";
+    String refCount = this->nextVar();
+    out << "    " << refCount << " = getelementptr " << wrapperTypeName << ", " <<
+            wrapperType << " " << wrapperCast << ", i64 0, i32 1\n";
+    out << "    store i32 0, i32* " << refCount << "\n";
+    for (int i = 0; i < fields.size(); ++i) {
+        String fieldSrc = this->nextVar();
+        out << "    " << fieldSrc << " = extractvalue " << this->llvmType(src->fType) <<
+                " " << value << ", " << i << "\n";
+        String fieldTarget = this->nextVar();
+        out << "    " << fieldTarget << " = getelementptr " << wrapperTypeName << ", " <<
+                wrapperType << " " << wrapperCast << ", i64 0, i32 " <<
+                OBJECT_FIELD_COUNT + i << "\n";
+        out << "    store " << this->llvmType(fields[i]->fType) << " " << fieldSrc <<
+                ", " << this->llvmType(fields[i]->fType) << "* " << fieldTarget << "\n";
+    }
+    if (wrapperType != this->llvmType(dstType)) {
+        String result = this->nextVar();
+        out << "    " << result << " = bitcast " << wrapperType << " " << wrapperCast << " to " <<
+                this->llvmType(dstType) << "\n";
+        return result;
+    }
+    return wrapperCast;
+}
+
+String LLVMCodeGenerator::unwrapValue(const String& value, const Type& srcType, const Type& dstType,
+        std::ostream& out) {
+    out << "; unwrap value\n";
+    const Class* target = fCompiler->resolveClass(fCurrentClass->fSymbolTable, dstType);
+    std::vector<const Field*> fields = fCompiler->getAllFields(*target);
+    if (dstType.fCategory == Type::Category::NULLABLE) {
+        // casting nullable wrapper to nullable value, need to special-case null
+        out << "; handle nullable-to-nullable unwrap\n";
+        String testStart = fCurrentBlock;
+        String isNonNull = this->nextVar();
+        out << "    " << isNonNull << " = icmp ne " << this->llvmType(srcType) <<
+                " " << value << ", null\n";
+        String nonNullLabel = this->nextLabel();
+        String endLabel = this->nextLabel();
+        out << "    br i1 " << isNonNull << ", label %" << nonNullLabel << ", label %" <<
+                endLabel << "\n";
+        this->createBlock(nonNullLabel, out);
+        String wrapped = this->unwrapValue(value, srcType, dstType.fSubtypes[0], out);
+        String nonNullValue = this->toNullableValue(wrapped, dstType.fSubtypes[0], dstType, out);
+        out << "    br label %" << endLabel << "\n";
+        this->createBlock(endLabel, out);
+        String result = this->nextVar();
+        out << "    " << result << " = phi " << this->llvmType(dstType) << " [{";
+        const char* separator = " ";
+        for (const Field* f : fields) {
+            out << separator << this->llvmType(f->fType) << " undef";
+            separator = ", ";
+        }
+        out << separator << "i1 0 }, %" << testStart << "], [" << nonNullValue << ", %" <<
+                nonNullLabel << "]\n";
+        return result;
+    }
+    ASSERT(target);
+    String targetType = this->llvmType(dstType);
+    String wrapperTypeName = this->llvmWrapperTypeName(dstType);
+    String wrapperType = this->llvmWrapperType(dstType);
+    String srcCast = this->nextVar();
+    out << "    " << srcCast << " = bitcast " << this->llvmType(srcType) <<
+            " " << value << " to " << wrapperType << "\n";
+    String result = "{";
+    const char* separator = " ";
+    for (const Field* f : fields) {
+        result += separator;
+        result += this->llvmType(f->fType);
+        result += " undef";
+        separator = ", ";
+    }
+    result += " }";
+    for (int i = 0; i < fields.size(); ++i) {
+        String ptr = this->nextVar();
+        out << "    " << ptr << " = getelementptr " << wrapperTypeName << ", " <<
+                wrapperType << " " << srcCast << ", i64 0, i32 " <<
+                OBJECT_FIELD_COUNT + i << "\n";
+        String read = this->nextVar();
+        out << "    " << read << " = load " << this->llvmType(fields[i]->fType) << ", " <<
+                this->llvmType(fields[i]->fType) << "* " << ptr << "\n";
+        String next = this->nextVar();
+        out << "    " << next << " = insertvalue " << targetType << " " << result <<
+                ", " << this->llvmType(fields[i]->fType) << " " << read << ", " << i <<
+                "\n";
+        result = next;
+    }
+    return result;
+}
+
+String LLVMCodeGenerator::toNullableValue(const String& value, const Type& srcType,
+        const Type& dstType, std::ostream& out) {
+    out << "; to nullable\n";
+    const Class* cl = fCompiler->resolveClass(fCurrentClass->fSymbolTable, srcType);
+    ASSERT(cl);
+    String nullableType = this->llvmNullableType(dstType);
+    std::vector<const Field*> fields = fCompiler->getAllFields(*cl);
+    String result = "{";
+    const char* separator = " ";
+    for (const Field* f : fields) {
+        result += separator;
+        result += this->llvmType(f->fType);
+        result += " undef";
+        separator = ", ";
+    }
+    result += separator;
+    result += "i1 true }";
+    for (int i = 0; i < fields.size(); ++i) {
+        String fieldValue = this->nextVar();
+        out << "    " << fieldValue << " = extractvalue " << this->llvmType(srcType) << " " <<
+                value << ", " << i << "\n";
+        String next = this->nextVar();
+        out << "    " << next << " = insertvalue " << nullableType << " " << result <<
+                ", " << this->llvmType(fields[i]->fType) << " " << fieldValue << ", " << i <<
+                "\n";
+        result = next;
+    }
+    return result;
+}
+
+String LLVMCodeGenerator::toNonNullableValue(const String& value, const Type& srcType,
+        const Type& dstType, std::ostream& out) {
+    out << "; to nonnullable\n";
+    const Class* cl = fCompiler->resolveClass(fCurrentClass->fSymbolTable, dstType);
+    ASSERT(cl);
+    String nullableType = this->llvmNullableType(srcType);
+    std::vector<const Field*> fields = fCompiler->getAllFields(*cl);
+    String result = "{";
+    const char* separator = " ";
+    for (const Field* f : fields) {
+        result += separator;
+        result += this->llvmType(f->fType);
+        result += " undef";
+        separator = ", ";
+    }
+    result += " }";
+    for (int i = 0; i < fields.size(); ++i) {
+        String fieldValue = this->nextVar();
+        out << "    " << fieldValue << " = extractvalue " << nullableType << " " << value << ", " <<
+                i << "\n";
+        String next = this->nextVar();
+        out << "    " << next << " = insertvalue " << this->llvmType(dstType) << " " << result <<
+                ", " << this->llvmType(fields[i]->fType) << " " << fieldValue << ", " << i <<
+                "\n";
+        result = next;
+    }
+    return result;
+}
+
 String LLVMCodeGenerator::getCastReference(const IRNode& cast, std::ostream& out) {
     ASSERT(!fKillCast);
     ASSERT(cast.fKind == IRNode::Kind::CAST);
@@ -733,75 +971,20 @@ String LLVMCodeGenerator::getCastReference(const IRNode& cast, std::ostream& out
         const Class* target = fCompiler->resolveClass(fCurrentClass->fSymbolTable, cast.fType);
         ASSERT(target);
         if (src->isValue() && !target->isValue()) {
-            // wrap it in an object
-            String mallocRef = this->nextVar();
-            out << "    " << mallocRef << " = call i8* @malloc(i64 " <<
-                    this->sizeOf(Type::Object()) + this->sizeOf(src->fType) << ")\n";
-            String wrapperTypeName = this->llvmWrapperTypeName(src->fType);
-            String wrapperType = this->llvmWrapperType(src->fType);
-            String wrapperCast = this->nextVar();
-            out << "    " << wrapperCast << " = bitcast i8* " << mallocRef << " to " <<
-                    wrapperType << "\n";
-            String classPtr = this->nextVar();
-            out << "    " << classPtr << " = getelementptr " << wrapperTypeName << ", " <<
-                    wrapperType << " " << wrapperCast << ", i64 0, i32 0\n";
-            const ClassConstant& cc = this->getWrapperClassConstant(*src);
-            out << "    store %panda$core$Class* bitcast(" << cc.fType << "* " << cc.fName <<
-                    " to %panda$core$Class*), %panda$core$Class** " << classPtr << "\n";
-            String refCount = this->nextVar();
-            out << "    " << refCount << " = getelementptr " << wrapperTypeName << ", " <<
-                    wrapperType << " " << wrapperCast << ", i64 0, i32 1\n";
-            out << "    store i32 0, i32* " << refCount << "\n";
-            std::vector<const Field*> fields = fCompiler->getAllFields(*src);
-            for (int i = 0; i < fields.size(); ++i) {
-                String fieldSrc = this->nextVar();
-                out << "    " << fieldSrc << " = extractvalue " << this->llvmType(src->fType) <<
-                        " " << base << ", " << i << "\n";
-                String fieldTarget = this->nextVar();
-                out << "    " << fieldTarget << " = getelementptr " << wrapperTypeName << ", " <<
-                        wrapperType << " " << wrapperCast << ", i64 0, i32 " <<
-                        OBJECT_FIELD_COUNT + i << "\n";
-                out << "    store " << this->llvmType(fields[i]->fType) << " " << fieldSrc <<
-                        ", " << this->llvmType(fields[i]->fType) << "* " << fieldTarget << "\n";
-            }
-            String result = this->nextVar();
-            out << "    " << result << " = bitcast " << wrapperType << " " << wrapperCast <<
-                    " to " << this->llvmType(target->fType) << "\n";
-            return result;
+            return this->wrapValue(base, cast.fChildren[0].fType, cast.fType, out);
         }
         else if (!src->isValue() && target->isValue()) {
-            // unwrap wrapped value
-            String targetType = this->llvmType(target->fType);
-            String wrapperTypeName = this->llvmWrapperTypeName(target->fType);
-            String wrapperType = this->llvmWrapperType(target->fType);
-            String srcCast = this->nextVar();
-            out << "    " << srcCast << " = bitcast " << this->llvmType(cast.fChildren[0].fType) <<
-                    " " << base << " to " << wrapperType << "\n";
-            String value = "{";
-            std::vector<const Field*> fields = fCompiler->getAllFields(*target);
-            const char* separator = " ";
-            for (const Field* f : fields) {
-                value += separator;
-                value += this->llvmType(f->fType);
-                value += " undef";
-                separator = ", ";
-            }
-            value += " }";
-            for (int i = 0; i < fields.size(); ++i) {
-                String ptr = this->nextVar();
-                out << "    " << ptr << " = getelementptr " << wrapperTypeName << ", " <<
-                        wrapperType << " " << srcCast << ", i64 0, i32 " <<
-                        OBJECT_FIELD_COUNT + i << "\n";
-                String read = this->nextVar();
-                out << "    " << read << " = load " << this->llvmType(fields[i]->fType) << ", " <<
-                        this->llvmType(fields[i]->fType) << "* " << ptr << "\n";
-                String next = this->nextVar();
-                out << "    " << next << " = insertvalue " << targetType << " " << value <<
-                        ", " << this->llvmType(fields[i]->fType) << " " << read << ", " << i <<
-                        "\n";
-                value = next;
-            }
-            return value;
+            return this->unwrapValue(base, cast.fChildren[0].fType, cast.fType, out);
+        }
+        else if (src->isValue() &&
+                cast.fType.fCategory == Type::Category::NULLABLE &&
+                cast.fType.fSubtypes[0] == cast.fChildren[0].fType) {
+            return this->toNullableValue(base, cast.fChildren[0].fType, cast.fType, out);
+        }
+        else if (target->isValue() &&
+                cast.fChildren[0].fType.fCategory == Type::Category::NULLABLE &&
+                cast.fChildren[0].fType.fSubtypes[0] == cast.fType) {
+            return this->toNonNullableValue(base, cast.fChildren[0].fType, cast.fType, out);
         }
         op = "bitcast";
     }
@@ -912,6 +1095,78 @@ String LLVMCodeGenerator::getStringReference(const IRNode& s, std::ostream& out)
     return result;
 }
 
+String LLVMCodeGenerator::getNullReference(const IRNode& n, std::ostream& out) {
+    Class* cl = fCompiler->resolveClass(fCurrentClass->fSymbolTable, n.fType);
+    if (cl->isValue()) {
+        std::vector<const Field*> fields = fCompiler->getAllFields(*cl);
+        String result = "{";
+        const char* separator = " ";
+        for (const Field* f : fields) {
+            result += separator;
+            result += this->llvmType(f->fType);
+            result += " undef";
+            separator = ", ";
+        }
+        result += separator;
+        result += "i1 0 }";
+        return result;
+    }
+    else {
+        return "null";
+    }
+}
+
+String LLVMCodeGenerator::getIsNullReference(const IRNode& test, std::ostream& out) {
+    ASSERT(test.fKind == IRNode::Kind::IS_NULL);
+    ASSERT(test.fChildren.size() == 1);
+    String value = this->getTypedReference(test.fChildren[0], out);
+    if (test.fChildren[0].fType.fCategory != Type::Category::NULLABLE) {
+        return "{ i8 0 }";
+    }
+    Class* cl = fCompiler->resolveClass(fCurrentClass->fSymbolTable, test.fChildren[0].fType);
+    String resultValue;
+    if (cl->isValue()) {
+        String field = this->nextVar();
+        std::vector<const Field*> fields = fCompiler->getAllFields(*cl);
+        out << "    " << field << " = extractvalue " << value << ", " << fields.size() << "\n";
+        resultValue = this->nextVar();
+        out << "    " << resultValue << " = xor i1 " << field << ", -1\n";
+    }
+    else {
+        resultValue = this->nextVar();
+        out << "    " << resultValue << " = icmp eq " << value << ", null\n";
+    }
+    String result = this->nextVar();
+    out << "    " << result << " = insertvalue %panda$core$Bit { i1 undef }, i1 " << resultValue <<
+            ", 0\n";
+    return result;
+}
+
+String LLVMCodeGenerator::getIsNonNullReference(const IRNode& test, std::ostream& out) {
+    ASSERT(test.fKind == IRNode::Kind::IS_NONNULL);
+    ASSERT(test.fChildren.size() == 1);
+    String value = this->getTypedReference(test.fChildren[0], out);
+    if (test.fChildren[0].fType.fCategory != Type::Category::NULLABLE) {
+        return "{ i8 0 }";
+    }
+    Class* cl = fCompiler->resolveClass(fCurrentClass->fSymbolTable, test.fChildren[0].fType);
+    String resultValue;
+    if (cl->isValue()) {
+        resultValue = this->nextVar();
+        std::vector<const Field*> fields = fCompiler->getAllFields(*cl);
+        out << "    " << resultValue << " = extractvalue " << value << ", " << fields.size() <<
+                "\n";
+    }
+    else {
+        resultValue = this->nextVar();
+        out << "    " << resultValue << " = icmp ne " << value << ", null\n";
+    }
+    String result = this->nextVar();
+    out << "    " << result << " = insertvalue %panda$core$Bit { i1 undef }, i1 " << resultValue <<
+            ", 0\n";
+    return result;
+}
+
 String LLVMCodeGenerator::getReference(const IRNode& expr, std::ostream& out) {
     switch (expr.fKind) {
         case IRNode::Kind::BIT:
@@ -930,10 +1185,16 @@ String LLVMCodeGenerator::getReference(const IRNode& expr, std::ostream& out) {
             return this->getFieldReference(expr, out);
         case IRNode::Kind::INT:
             return std::to_string(expr.fValue.fInt);
-        case IRNode::Kind::NEGATED_INT:
-            return '-' + std::to_string(expr.fValue.fInt);
+        case IRNode::Kind::IS_NULL:
+            return this->getIsNullReference(expr, out);
+        case IRNode::Kind::IS_NONNULL:
+            return this->getIsNonNullReference(expr, out);
         case IRNode::Kind::METHOD_REFERENCE:
             return this->methodName(((MethodRef*) expr.fValue.fPtr)->fMethod);
+        case IRNode::Kind::NEGATED_INT:
+            return '-' + std::to_string(expr.fValue.fInt);
+        case IRNode::Kind::NULL_LITERAL:
+            return this->getNullReference(expr, out);
         case IRNode::Kind::PREFIX:
             return this->getPrefixReference(expr, out);
         case IRNode::Kind::SELF:
@@ -1242,7 +1503,8 @@ void LLVMCodeGenerator::writeRangeFor(const IRNode& f, std::ostream& out) {
     // the step, because with a step bigger than 1 (or smaller than -1) you might need to stop
     // before actually hitting the end. So you instead check the difference between the current
     // index and the limit, but even there you need to be careful because it could overflow in a
-    // signed test, and... ugh, it's surprisingly messy and results in a ton of code.
+    // signed test, and we need to handle null values, and... ugh, it's surprisingly messy and
+    // results in a ton of code.
     //
     // Fortunately, we can just write incredibly awful-but-straightforward code and let LLVM
     // optimize it to something sensible if it turns out the values are known at compile time. This
@@ -1257,13 +1519,21 @@ void LLVMCodeGenerator::writeRangeFor(const IRNode& f, std::ostream& out) {
     const IRNode& block = f.fChildren[2];
     const Type& type = f.fChildren[1].fType.fSubtypes[1];
     String llt = this->llvmType(type);
+    String indexType;
+    if (type.fCategory == Type::Category::NULLABLE) {
+        ASSERT(type.fSubtypes.size() == 1);
+        indexType = this->llvmType(type.fSubtypes[0]);
+    }
+    else {
+        indexType = llt;
+    }
     Class* cl = fCompiler->resolveClass(fCurrentClass->fSymbolTable, type);
     ASSERT(cl);
     ASSERT(fCompiler->getAllFields(*cl).size() == 1);
     String numberType = this->llvmType(fCompiler->getAllFields(*cl)[0]->fType);
     ASSERT(target.fKind == IRNode::Kind::VARIABLE_REFERENCE);
     String index = this->varName(*(Variable*) target.fValue.fPtr);
-    fMethodHeader << "    " << index << " = alloca " << llt << "\n";
+    fMethodHeader << "    " << index << " = alloca " << indexType << "\n";
 
     // extract start value from range
     String startPtr = this->nextVar();
@@ -1275,16 +1545,16 @@ void LLVMCodeGenerator::writeRangeFor(const IRNode& f, std::ostream& out) {
     out << "    " << startFieldPtr << " = getelementptr " << this->llvmWrapperTypeName(type) <<
             ", " << this->llvmWrapperType(type) << " " << startPtrCast << ", i64 0, i32 " <<
             OBJECT_FIELD_COUNT << "\n";
-    String startFieldPtrCast = this->nextVar();
-    out << "    " << startFieldPtrCast << " = bitcast " << numberType << "* " <<
-                startFieldPtr << " to " << llt << "*\n";
     String start = this->nextVar();
-    out << "    " << start << " = load " << llt << ", " << llt <<
-            "* " << startFieldPtrCast << "\n";
-    out << "    store " << llt << start << ", " << llt << "* " <<
-            index << "\n";
-    String startValue = this->nextVar();
-    out << "    " << startValue << " = extractvalue " << llt << " " << start << ", 0\n";
+    out << "    " << start << " = load " << numberType << ", " << numberType <<
+            "* " << startFieldPtr << "\n";
+
+    // store start value
+    String indexValuePtr = this->nextVar();
+    out << "    " << indexValuePtr << " = getelementptr " << indexType << ", " << indexType <<
+            "* " << index << ", i64 0, i32 0\n";
+    out << "    store " << numberType << " " << start << ", " << numberType << "* " <<
+            indexValuePtr << "\n";
 
     // extract end value from range
     String endPtr = this->nextVar();
@@ -1303,6 +1573,14 @@ void LLVMCodeGenerator::writeRangeFor(const IRNode& f, std::ostream& out) {
     // extract step value from range
     String stepPtr = this->nextVar();
     out << "    " << stepPtr << " = extractvalue " << range << ", 2\n";
+    String stepNull = this->nextVar();
+    out << "    " << stepNull << " = icmp eq " << this->llvmType(Type::Object()) << " " <<
+            stepPtr << ", null\n";
+    String stepStart = fCurrentBlock;
+    String stepEnd = this->nextLabel();
+    String stepNonNull = this->nextLabel();
+    out << "    br i1 " << stepNull << ", label %" << stepEnd << ", label %" << stepNonNull;
+    this->createBlock(stepNonNull, out);
     String stepPtrCast = this->nextVar();
     out << "    " << stepPtrCast << " = bitcast " << this->llvmType(Type::Object()) << " " <<
             stepPtr << " to " << this->llvmWrapperType(type) << "\n";
@@ -1310,9 +1588,14 @@ void LLVMCodeGenerator::writeRangeFor(const IRNode& f, std::ostream& out) {
     out << "    " << stepFieldPtr << " = getelementptr " << this->llvmWrapperTypeName(type) <<
             ", " << this->llvmWrapperType(type) << " " << stepPtrCast << ", i64 0, i32 " <<
             OBJECT_FIELD_COUNT << "\n";
-    String step = this->nextVar();
-    out << "    " << step << " = load " << numberType << ", " << numberType <<
+    String stepLoad = this->nextVar();
+    out << "    " << stepLoad << " = load " << numberType << ", " << numberType <<
             "* " << stepFieldPtr << "\n";
+    out << "    br label %" << stepEnd << "\n";
+    this->createBlock(stepEnd, out);
+    String step = this->nextVar();
+    out << "    " << step << " = phi " << numberType << " [1, %" << stepStart << "], [" <<
+            stepLoad << ", %" << stepNonNull << "]\n";
 
     // extract inclusive / exclusive from range
     String inclusive = this->nextVar();
@@ -1341,22 +1624,18 @@ void LLVMCodeGenerator::writeRangeFor(const IRNode& f, std::ostream& out) {
     this->createBlock(forwardEntry, out);
     String forwardEntryTest = this->nextVar();
     out << "    " << forwardEntryTest << " = icmp " << signPrefix << "le " << numberType << " " <<
-            startValue << ", " << end << "\n";
+            start << ", " << end << "\n";
     out << "    br i1 " << forwardEntryTest << ", label %" << loopStart << ", label %" <<
             loopEnd << "\n";
     this->createBlock(backwardEntry, out);
     String backwardEntryTest = this->nextVar();
     out << "    " << backwardEntryTest << " = icmp " << signPrefix << "ge " << numberType << " " <<
-            startValue << ", " << end << "\n";
+            start << ", " << end << "\n";
     out << "    br i1 " << backwardEntryTest << ", label %" << loopStart << ", label %" <<
             loopEnd << "\n";
     this->createBlock(loopStart, out);
-    String indexLoad = this->nextVar();
-    out << "    " << indexLoad << " = load " << llt << ", " <<
-            llt << "* " << index << "\n";
     String indexValue = this->nextVar();
-    out << "    " << indexValue << " = extractvalue " << llt << " " <<
-            indexLoad << ", 0\n";
+    out << "    load " << numberType << ", " << numberType << "* " << indexValuePtr << "\n";
     this->writeStatement(block, out);
     if (!ends_with_branch(block)) {
         out << "    br label %" << loopTest << "\n";
@@ -1443,10 +1722,11 @@ void LLVMCodeGenerator::writeRangeFor(const IRNode& f, std::ostream& out) {
     out << "    " << inc << " = add " << numberType << " " << indexValue << ", " << step <<
             "\n";
     String incStruct = this->nextVar();
-    out << "    " << incStruct << " = insertvalue " << llt << " { " <<
-            numberType << " undef }, " << numberType << " " << inc << ", 0\n";
-    out << "    store " << llt << " " << incStruct << ", " <<
-            llt << "* " << index << "\n";
+    out << "    " << incStruct << " = insertvalue " << indexType << " { " <<
+            numberType << " undef";
+    out << " }, " << numberType << " " << inc << ", 0\n";
+    out << "    store " << indexType << " " << incStruct << ", " << indexType << "* " << index <<
+            "\n";
     out << "    br label %" << loopStart << "\n";
 
     this->createBlock(loopEnd, out);
@@ -1670,4 +1950,6 @@ void LLVMCodeGenerator::writeMethod(const Method& method, const IRNode& body, Co
         }
     }
     out << "}\n";
+    fVariableNames.clear();
+    fReusedValues.clear();
 }

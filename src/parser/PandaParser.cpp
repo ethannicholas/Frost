@@ -1042,10 +1042,6 @@ bool PandaParser::invariant(ASTNode* outResult) {
     abort();
 }
 
-bool PandaParser::loopLoop(ASTNode* outResult, String label) {
-    abort();
-}
-
 bool PandaParser::matchStatement(ASTNode* outResult) {
     abort();
 }
@@ -1278,10 +1274,14 @@ bool PandaParser::postconditions(ASTNode* outResult) {
     abort();
 }
 
-// rangeExpression = additiveExpression ((DOTDOT | ELLIPSIS) additiveExpression? 
-//            (BY additiveExpression)?)?
+// rangeExpression = additiveExpression | (additiveExpression? (DOTDOT | ELLIPSIS)
+//        additiveExpression? (BY additiveExpression)?)
 bool PandaParser::rangeExpression(ASTNode* outResult) {
-    if (!this->additiveExpression(outResult)) {
+    Token peek = this->peek();
+    if (peek.fKind == Token::Kind::DOTDOT || peek.fKind == Token::Kind::ELLIPSIS) {
+        *outResult = ASTNode();
+    }
+    else if (!this->additiveExpression(outResult)) {
         return false;
     }
     Token op = this->nextToken();
@@ -1289,7 +1289,9 @@ bool PandaParser::rangeExpression(ASTNode* outResult) {
         case Token::Kind::DOTDOT: // fall through
         case Token::Kind::ELLIPSIS: {
             ASTNode right;
-            if (this->peek().fKind != Token::Kind::BY && !this->additiveExpression(&right)) {
+            peek = this->peek();
+            if (peek.fKind != Token::Kind::RBRACKET && peek.fKind != Token::Kind::RPAREN &&
+                    peek.fKind != Token::Kind::BY && !this->additiveExpression(&right)) {
                 return false;
             }
             ASTNode step;
@@ -1510,7 +1512,8 @@ bool PandaParser::string(ASTNode* outResult) {
     return true;
 }
 
-// term = IDENTIFIER | DECIMAL | SELF | SUPER | TRUE | FALSE | string | LPAREN expression RPAREN
+// term = IDENTIFIER | DECIMAL | SELF | SUPER | NULL | TRUE | FALSE | string |
+//         LPAREN expression RPAREN
 bool PandaParser::term(ASTNode* outResult) {
     Token t = this->nextToken();
     switch (t.fKind) {
@@ -1525,6 +1528,9 @@ bool PandaParser::term(ASTNode* outResult) {
             return true;
         case Token::Kind::SUPER:
             *outResult = ASTNode(t.fPosition, ASTNode::Kind::SUPER);
+            return true;
+        case Token::Kind::NULL_LITERAL:
+            *outResult = ASTNode(t.fPosition, ASTNode::Kind::NULL_LITERAL);
             return true;
         case Token::Kind::TRUE_LITERAL:
             *outResult = ASTNode(t.fPosition, ASTNode::Kind::TRUE_LITERAL);
@@ -1548,7 +1554,7 @@ bool PandaParser::term(ASTNode* outResult) {
     }
 }
 
-// type = IDENTIFIER (DOT IDENTIFIER)* (LT type (COMMA type)*) GT)?
+// type = IDENTIFIER (DOT IDENTIFIER)* (LT type (COMMA type)*) GT)? QUESTION?
 bool PandaParser::type(ASTNode* outResult) {
     Token start;
     if (!this->expect(Token::Kind::IDENTIFIER, "an identifier", &start)) {
@@ -1580,6 +1586,11 @@ bool PandaParser::type(ASTNode* outResult) {
         if (!this->expect(Token::Kind::GT, "'>'")) {
             return false;
         }
+    }
+    if (this->checkNext(Token::Kind::QUESTION)) {
+        std::vector<ASTNode> children;
+        children.push_back(std::move(*outResult));
+        *outResult = ASTNode(start.fPosition, ASTNode::Kind::NULLABLE_TYPE, std::move(children));
     }
     return true;
 }
@@ -1713,3 +1724,17 @@ bool PandaParser::doLoop(ASTNode* outResult, String label) {
     return true;
 }
 
+bool PandaParser::loopLoop(ASTNode* outResult, String label) {
+    Token start;
+    if (!this->expect(Token::Kind::LOOP, "'loop'", &start)) {
+        return false;
+    }
+    ASTNode block;
+    if (!this->block(&block)) {
+        return false;
+    }    
+    std::vector<ASTNode> children;
+    children.push_back(std::move(block));
+    *outResult = ASTNode(start.fPosition, ASTNode::Kind::LOOP, label, std::move(children));
+    return true;
+}

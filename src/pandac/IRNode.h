@@ -51,10 +51,18 @@ struct IRNode {
         IF,
         // a literal integer
         INT,
+        // a negated equality check against null
+        IS_NONNULL,
+        // an equality check against null
+        IS_NULL,
+        // a 'loop' loop
+        LOOP,
         // a reference to a method, such as 'String.convert'
         METHOD_REFERENCE,
         // a negative literal integer (where fValue.fInt is the absolute value)
         NEGATED_INT,
+        // the 'null' keyword
+        NULL_LITERAL,
         // the name of a package
         PACKAGE_REFERENCE,
         // formal parameter of a method
@@ -142,15 +150,6 @@ struct IRNode {
         this->init();
     }
 
-    IRNode(Position position, Kind kind, Type type, uint64_t value, std::vector<IRNode> children)
-    : fPosition(position)
-    , fKind(kind)
-    , fType(std::move(type))
-    , fChildren(std::move(children)) {
-        fValue.fInt = value;
-        this->init();
-    }
-
     IRNode(Position position, Kind kind, Type type, double value)
     : fPosition(position)
     , fKind(kind)
@@ -229,7 +228,7 @@ struct IRNode {
         this->init();
     }
 
-    IRNode(Position position, Kind kind, Type type, int value, std::vector<IRNode> children)
+    IRNode(Position position, Kind kind, Type type, uint64_t value, std::vector<IRNode> children)
     : fPosition(position)
     , fKind(kind)
     , fType(std::move(type))
@@ -260,6 +259,7 @@ struct IRNode {
         ASSERT(fKind != Kind::CAST || fType != fChildren[0].fType);
         ASSERT(fKind != Kind::CAST || fChildren[0].fType.fCategory != Type::Category::UNRESOLVED);
         ASSERT(fKind != Kind::CAST || fChildren[0].fType.fCategory != Type::Category::INT_LITERAL);
+        ASSERT(fKind != Kind::CAST || fChildren[0].fType.fCategory != Type::Category::NULL_LITERAL);
         ASSERT(fKind != Kind::UNRESOLVED_METHOD_REFERENCE || fChildren.size() >= 2);
     }
 
@@ -281,49 +281,53 @@ struct IRNode {
         bool o = false;
         bool p = false;
         switch (fKind) {
-            case Kind::ARGUMENTS:                   result += "Arguments";                   break;
-            case Kind::ARROW:                       result += "Arrow";                       break;
-            case Kind::BINARY:                      result += "Binary"; o = 1;               break;
-            case Kind::BIT:                         result += "Bit"; b = 1;                  break;
-            case Kind::BLOCK:                       result += "Block";                       break;
-            case Kind::BREAK:                       result += "Break";                       break;
-            case Kind::CALL:                        result += "Call";                        break;
-            case Kind::CAST:                        result += "Cast";                        break;
-            case Kind::CONSTANT:                    result += "Constant";                    break;
-            case Kind::CONSTRUCT:                   result += "Construct";                   break;
-            case Kind::CONTINUE:                    result += "Continue";                    break;
-            case Kind::DECLARATION:                 result += "Declaration";                 break;
-            case Kind::DEF:                         result += "Def";                         break;
-            case Kind::DO:                          result += "Do";                          break;
-            case Kind::ERROR:                       result += "<error>";                     break;
-            case Kind::FIELD_REFERENCE:             result += "FieldReference";              break;
-            case Kind::IF:                          result += "If";                          break;
-            case Kind::INT:                         result += "Int"; i = 1;                  break;
-            case Kind::METHOD_REFERENCE:            result += "MethodReference"; p = 1;      break;
-            case Kind::NEGATED_INT:                 result += "NegatedInt"; i = 1;           break;
-            case Kind::PACKAGE_REFERENCE:           result += "PackageReference"; p = 1;     break;
-            case Kind::PARAMETER:                   result += "Parameter";                   break;
-            case Kind::PARAMETERS:                  result += "Parameters";                  break;
-            case Kind::PREFIX:                      result += "Prefix"; o = 1;               break;
-            case Kind::PROPERTY:                    result += "Property";                    break;
-            case Kind::RANGE_FOR:                   result += "RangeFor";                    break;
-            case Kind::RETURN:                      result += "Return";                      break;
-            case Kind::REUSED_VALUE:                result += "ReusedValue";                 break;
-            case Kind::REUSED_VALUE_DEFINITION:     result += "ReusedValueDefinition";       break;
-            case Kind::SELF:                        result += "Self";                        break;
-            case Kind::STRING:                      result += "String";                      break;
-            case Kind::SUPER:                       result += "Super";                       break;
-            case Kind::TUPLE_TARGET:                result += "TupleTarget";                 break;
-            case Kind::TYPE_REFERENCE:              result += "TypeReference"; p = 1;        break;
-            case Kind::UNRESOLVED_BINARY:           result += "UnresolvedBinary";            break;
-            case Kind::UNRESOLVED_CALL:             result += "UnresolvedCall";              break;
-            case Kind::UNRESOLVED_INDEX:            result += "UnresolvedIndex";             break;
-            case Kind::UNRESOLVED_METHOD_REFERENCE: result += "UnresolvedMethodReference";   break;
-            case Kind::UNRESOLVED_RANGE:            result += "UnresolvedRange";             break;
-            case Kind::VAR:                         result += "Var";                         break;
-            case Kind::VARIABLE_REFERENCE:          result += "VariableReference"; p = true; break;
-            case Kind::VOID:                        result += "Void";                        break;
-            case Kind::WHILE:                       result += "While";                       break;
+            case Kind::ARGUMENTS:                   result += "Arguments";                    break;
+            case Kind::ARROW:                       result += "Arrow";                        break;
+            case Kind::BINARY:                      result += "Binary"; o = 1;                break;
+            case Kind::BIT:                         result += "Bit"; b = 1;                   break;
+            case Kind::BLOCK:                       result += "Block";                        break;
+            case Kind::BREAK:                       result += "Break";                        break;
+            case Kind::CALL:                        result += "Call";                         break;
+            case Kind::CAST:                        result += "Cast";                         break;
+            case Kind::CONSTANT:                    result += "Constant";                     break;
+            case Kind::CONSTRUCT:                   result += "Construct";                    break;
+            case Kind::CONTINUE:                    result += "Continue";                     break;
+            case Kind::DECLARATION:                 result += "Declaration";                  break;
+            case Kind::DEF:                         result += "Def";                          break;
+            case Kind::DO:                          result += "Do";                           break;
+            case Kind::ERROR:                       result += "<error>";                      break;
+            case Kind::FIELD_REFERENCE:             result += "FieldReference";               break;
+            case Kind::IF:                          result += "If";                           break;
+            case Kind::INT:                         result += "Int"; i = 1;                   break;
+            case Kind::IS_NONNULL:                  result += "IsNonNull";                    break;
+            case Kind::IS_NULL:                     result += "IsNull";                       break;
+            case Kind::LOOP:                        result += "Loop";                         break;
+            case Kind::METHOD_REFERENCE:            result += "MethodReference"; p = 1;       break;
+            case Kind::NEGATED_INT:                 result += "NegatedInt"; i = 1;            break;
+            case Kind::NULL_LITERAL:                result += "Null";                         break;
+            case Kind::PACKAGE_REFERENCE:           result += "PackageReference"; p = 1;      break;
+            case Kind::PARAMETER:                   result += "Parameter";                    break;
+            case Kind::PARAMETERS:                  result += "Parameters";                   break;
+            case Kind::PREFIX:                      result += "Prefix"; o = 1;                break;
+            case Kind::PROPERTY:                    result += "Property";                     break;
+            case Kind::RANGE_FOR:                   result += "RangeFor";                     break;
+            case Kind::RETURN:                      result += "Return";                       break;
+            case Kind::REUSED_VALUE:                result += "ReusedValue"; i = 1;           break;
+            case Kind::REUSED_VALUE_DEFINITION:     result += "ReusedValueDefinition"; i = 1; break;
+            case Kind::SELF:                        result += "Self";                         break;
+            case Kind::STRING:                      result += "String";                       break;
+            case Kind::SUPER:                       result += "Super";                        break;
+            case Kind::TUPLE_TARGET:                result += "TupleTarget";                  break;
+            case Kind::TYPE_REFERENCE:              result += "TypeReference"; p = 1;         break;
+            case Kind::UNRESOLVED_BINARY:           result += "UnresolvedBinary";             break;
+            case Kind::UNRESOLVED_CALL:             result += "UnresolvedCall";               break;
+            case Kind::UNRESOLVED_INDEX:            result += "UnresolvedIndex";              break;
+            case Kind::UNRESOLVED_METHOD_REFERENCE: result += "UnresolvedMethodReference";    break;
+            case Kind::UNRESOLVED_RANGE:            result += "UnresolvedRange";              break;
+            case Kind::VAR:                         result += "Var";                          break;
+            case Kind::VARIABLE_REFERENCE:          result += "VariableReference"; p = true;  break;
+            case Kind::VOID:                        result += "Void";                         break;
+            case Kind::WHILE:                       result += "While";                        break;
         }
         if (fType.fCategory != Type::Category::VOID) {
             result += ":" + fType.description();
