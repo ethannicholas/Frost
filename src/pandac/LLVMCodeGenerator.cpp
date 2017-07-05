@@ -409,12 +409,13 @@ String LLVMCodeGenerator::selfType(const Method& method) {
     return std::move(result);
 }
 
-static bool ends_with_branch(const IRNode& block) {
-    ASSERT(block.fKind == IRNode::Kind::BLOCK);
-    if (block.fChildren.size() == 0) {
-        return false;
-    }
-    switch (block.fChildren[block.fChildren.size() - 1].fKind) {
+static bool ends_with_branch(const IRNode& stmt) {
+    switch (stmt.fKind) {
+        case IRNode::Kind::BLOCK:
+            if (stmt.fChildren.size() == 0) {
+                return false;
+            }
+            return ends_with_branch(stmt.fChildren.back());
         case IRNode::Kind::BREAK:    // fall through
         case IRNode::Kind::CONTINUE: // fall through
         case IRNode::Kind::RETURN: return true;
@@ -1054,6 +1055,8 @@ String LLVMCodeGenerator::getSuperReference(const IRNode& super, std::ostream& o
 }
 
 String LLVMCodeGenerator::getFieldReference(const IRNode& fieldRef, std::ostream& out) {
+    ASSERT(fieldRef.fKind == IRNode::Kind::FIELD_REFERENCE);
+    ASSERT(fieldRef.fChildren.size() == 1);
     Field* field = (Field*) fieldRef.fValue.fPtr;
     String type = this->llvmType(field->fType);
     if (field->fAnnotations.isClass()) {
@@ -1273,6 +1276,13 @@ String LLVMCodeGenerator::getLValue(const IRNode& lvalue, std::ostream& out) {
             fReusedValues[lvalue.fValue.fInt] = reused;
             return result;
         }
+        case IRNode::Kind::CAST: {
+            ASSERT(!lvalue.fValue.fBool);
+            ASSERT(lvalue.fChildren.size() == 1);
+            String base = this->getLValue(lvalue.fChildren[0], out);
+            // FIXME
+            return base;
+        }
         default:
             abort();
     }
@@ -1431,6 +1441,9 @@ void LLVMCodeGenerator::writeCall(const IRNode& stmt, const String& target, std:
     bool isSuper = stmt.fChildren.size() > 1 && stmt.fChildren[1].fKind == IRNode::Kind::SUPER;
     String methodRef = this->getMethodReference(is_virtual(m->fMethod) ? args[0] : "", &m->fMethod,
             isSuper, out);
+    if (stmt.fType != Type::Void()) {
+        this->nextVar();
+    }
     out << "    call fastcc " << this->llvmType(stmt.fType) << " " << methodRef << "(";
     const char* separator = "";
     if (target.size()) {
@@ -1852,10 +1865,6 @@ std::unordered_map<String, String> METHOD_NAME_MAP {
     { "^",       "$POW" },
     { "[]",      "$IDX" },
     { "[]:=",    "$IDXEQ" },
-    { "[..]",    "$SLE" },
-    { "[..]:=",  "$SLEEQ" },
-    { "[...]",   "$SLI" },
-    { "[...]:=", "$SLIEQ" },
     { "=",       "$EQ" },
     { "!=",      "$NEQ" },
     { ">",       "$GT" },

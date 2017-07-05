@@ -1,0 +1,47 @@
+class String {
+    @class
+    method main() {
+        def r :=  0 ... 13 by -1
+        for i in r {
+            Console.printLine(i)
+        }
+
+        def h := "Hello, World!"
+
+        Console.printLine("startsWith")
+        Console.printLine(h.startsWith("Hello"))
+        Console.printLine(h.startsWith("hello"))
+        Console.printLine(h.startsWith(""))
+        Console.printLine(h.startsWith("Hello, World!"))
+        Console.printLine(h.startsWith("Hello, World! And Some More Stuff"))
+        Console.printLine()
+
+        Console.printLine("endsWith")
+        Console.printLine(h.endsWith("!"))
+        Console.printLine(h.endsWith(""))
+        Console.printLine(h.endsWith("Hello, World!"))
+        Console.printLine(h.endsWith("world!"))
+        Console.printLine(h.endsWith("More Stuff Hello, World!"))
+        Console.printLine()
+
+        Console.printLine("[Range]")
+        Console.printLine(h[..])
+        Console.printLine(h[.. by 1])
+        Console.printLine(h[...])
+        Console.printLine(h[... by 1])
+        Console.printLine(h[... by 2])
+        Console.printLine(h[... by -1])
+        Console.printLine(h[... by -2])
+        Console.printLine(h[0 .. 5])
+        Console.printLine(h[0 ... 5])
+        Console.printLine(h[0 ... 5 by 2])
+        Console.printLine(h[7..])
+        Console.printLine(h[7...])
+        Console.printLine(h[7 .. 12])
+        Console.printLine(h[7 ... 12])
+        Console.printLine(h[11 ... 7 by -1])
+        Console.printLine(h[4 .. by -1])
+        Console.printLine(h[4 ... by -1])
+        Console.printLine(h[0 ... by 100])
+    }
+}

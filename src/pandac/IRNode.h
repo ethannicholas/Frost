@@ -260,17 +260,19 @@ struct IRNode {
         ASSERT(fKind != Kind::CAST || fChildren[0].fType.fCategory != Type::Category::UNRESOLVED);
         ASSERT(fKind != Kind::CAST || fChildren[0].fType.fCategory != Type::Category::INT_LITERAL);
         ASSERT(fKind != Kind::CAST || fChildren[0].fType.fCategory != Type::Category::NULL_LITERAL);
+        ASSERT(fKind != Kind::FIELD_REFERENCE || fChildren.size() == 1);
         ASSERT(fKind != Kind::UNRESOLVED_METHOD_REFERENCE || fChildren.size() >= 2);
     }
 
     // copying IRNodes can be very expensive and is incredibly easy to do by accident, so we kill
     // the default copy constructor and make it an explicit method call
     IRNode copy() const {
-        IRNode result(fPosition, fKind, fType);
-        memcpy(&result.fValue, &fValue, sizeof(fValue));
+        std::vector<IRNode> children;
         for (const auto& child : fChildren) {
-            result.fChildren.push_back(child.copy());
+            children.push_back(child.copy());
         }
+        IRNode result(fPosition, fKind, fType, std::move(children));
+        memcpy(&result.fValue, &fValue, sizeof(fValue));
         return result;
     }
 

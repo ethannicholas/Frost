@@ -56,7 +56,7 @@ void make_executable(const char* llvm, const char* dest) {
         // child
         char* args[5];
         args[0] = (char*) LLC_PATH;
-        args[1] = (char*) optimized;
+        args[1] = (char*) llvm;
         args[2] = (char*) "-o";
         args[3] = (char*) assembly;
         args[4] = nullptr;

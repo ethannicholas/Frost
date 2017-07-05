@@ -80,6 +80,16 @@ private:
     bool canCast(const IRNode& node, const Type& target);
 
     /**
+     * Performs a typecast. If 'isExplicit' is true, the typecast was specified in the Panda source
+     * and will be error checked. If false, it is being performed by the compiler itself and no
+     * error checking will be performed (typically you should use coerce() instead). The resulting
+     * cast node is flagged with whether or not it was explicit, and some downstream code will care
+     * about the difference (e.g. it is ok to treat an implicit cast as an lvalue, but not an
+     * explicit one).
+     */
+    bool cast(Position p, IRNode* node, bool isExplicit, const Type& target, IRNode* out = nullptr);
+
+    /**
      * Determines which method(s) are the best match for the provided arguments and (optional)
      * required return type, storing them in outMatches. Returns a number representing the match
      * cost of the method call (INT_MAX in the case where no matches were found.)

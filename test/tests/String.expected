@@ -1,0 +1,33 @@
+startsWith
+true
+false
+false
+true
+false
+
+endsWith
+true
+false
+true
+false
+false
+
+[Range]
+Hello, World!
+Hello, World!
+Hello, World!
+Hello, World!
+Hlo ol!
+!dlroW ,olleH
+!lo olH
+Hello
+Hello,
+Hlo
+World!
+World!
+World
+World!
+dlroW
+olleH
+olleH
+H

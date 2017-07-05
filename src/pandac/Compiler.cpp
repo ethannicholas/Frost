@@ -7,6 +7,7 @@
 #include "Package.h"
 #include "Variable.h"
 
+#include <algorithm>
 #include <limits.h>
 #include <set>
 
@@ -407,17 +408,11 @@ bool Compiler::coerce(IRNode* node, const Type& target, IRNode* out) {
         }
         std::vector<IRNode> children;
         this->resolve(node);
-        children.push_back(std::move(*node));
-        *out = IRNode(p, IRNode::Kind::CAST, target, std::move(children));
-        return true;
+        return this->cast(p, node, false, target, out);
     }
     if (target.fCategory == Type::Category::NULLABLE) {
         if (this->coerce(node, target.fSubtypes[0])) {
-            Position p = node->fPosition;
-            std::vector<IRNode> children;
-            children.push_back(std::move(*node));
-            *out = IRNode(p, IRNode::Kind::CAST, target, std::move(children));
-            return true;
+            return this->cast(node->fPosition, node, false, target, out);
         }
         return false;
     }
@@ -436,8 +431,9 @@ bool Compiler::coerce(IRNode* node, const Type& target, IRNode* out) {
     return false;
 }
 
+static constexpr int kNullCastCost = 1;
+
 int Compiler::coercionCost(const Type& type, const Type& target) {
-    static constexpr int kNullCastCost = 1;
     if (type == target) {
         return 0;
     }
@@ -485,6 +481,14 @@ int Compiler::coercionCost(const Type& type, const Type& target) {
 }
 
 int Compiler::coercionCost(const IRNode& node, const Type& target) {
+    if (node.fType.fCategory != Type::Category::NULLABLE &&
+            target.fCategory == Type::Category::NULLABLE) {
+        ASSERT(target.fSubtypes.size() == 1);
+        int cost = this->coercionCost(node, target.fSubtypes[0]);
+        if (cost != INT_MAX) {
+            return cost + kNullCastCost;
+        }
+    }
     switch (node.fKind) {
         case IRNode::Kind::INT:
             if ((target.fCategory == Type::Category::BUILTIN_INT &&
@@ -572,15 +576,30 @@ int Compiler::coercionCost(const IRNode& node, const Type& target) {
     return this->coercionCost(node.fType, target);
 }
 
-bool Compiler::canCast(const IRNode& node, const Type& type) {
+bool Compiler::canCast(const IRNode& node, const Type& target) {
     // unfinished
-    if (this->coercionCost(node, type) != INT_MAX) {
+    if (this->coercionCost(node, target) != INT_MAX) {
         return true;
     }
-    if (node.fType.isBuiltinNumber() && type.isBuiltinNumber()) {
+    if (node.fType.isBuiltinNumber() && target.isBuiltinNumber()) {
         return true;
     }
     return false;
+}
+
+bool Compiler::cast(Position p, IRNode* node, bool isExplicit, const Type& target, IRNode* out) {
+    ASSERT(target != Type::Void());
+    if (isExplicit && !canCast(*node, target)) {
+        this->error(p, "value of type '" + node->fType.description() +
+                "' cannot possibly be an instance of '" + target.description() + "'");
+    }
+    std::vector<IRNode> children;
+    children.push_back(std::move(*node));
+    if (out == nullptr) {
+        out = node;
+    }
+    *out = IRNode(p, IRNode::Kind::CAST, target, isExplicit, std::move(children));
+    return true;
 }
 
 int Compiler::callCost(const MethodRef& method, const std::vector<IRNode>& args,
@@ -663,11 +682,13 @@ bool Compiler::call(IRNode method, std::vector<IRNode> args, IRNode* out) {
                         children.push_back(std::move(target));
                         break;
                     case IRNode::Kind::SUPER: {
-                        std::vector<IRNode> castChildren;
-                        castChildren.push_back(IRNode(method.fPosition, IRNode::Kind::SELF,
-                                fCurrentClass.top()->fType));
-                        children.push_back(IRNode(method.fPosition, IRNode::Kind::CAST,
-                                fCurrentClass.top()->fSuper, std::move(castChildren)));
+                        IRNode super(method.fPosition, IRNode::Kind::SELF,
+                                fCurrentClass.top()->fType);
+                        if (!this->cast(method.fPosition, &super, false,
+                                fCurrentClass.top()->fSuper)) {
+                            return false;
+                        }
+                        children.push_back(std::move(super));
                         break;
                     }
                     case IRNode::Kind::VOID:
@@ -715,11 +736,10 @@ bool Compiler::call(IRNode method, std::vector<IRNode> args, IRNode* out) {
                     else {
                         if (!m.fMethod.fAnnotations.isClass() &&
                                 target.fType != m.fMethod.fOwner.fType) {
-                            Position p = target.fPosition;
-                            std::vector<IRNode> children;
-                            children.push_back(std::move(target));
-                            target = IRNode(p, IRNode::Kind::CAST, m.fMethod.fOwner.fType,
-                                        std::move(children));
+                            if (!this->cast(target.fPosition, &target, false,
+                                    m.fMethod.fOwner.fType)) {
+                                return false;
+                            }
                         }
                         children.push_back(std::move(target));
                     }
@@ -732,11 +752,10 @@ bool Compiler::call(IRNode method, std::vector<IRNode> args, IRNode* out) {
                 }
                 if (m.fMethod.fOwner.fName != "panda.core.Pointer" &&
                         converted.fType != m.fMethod.fParameters[i].fType) {
-                    Position p = converted.fPosition;
-                    std::vector<IRNode> children;
-                    children.push_back(std::move(converted));
-                    converted = IRNode(p, IRNode::Kind::CAST, m.fMethod.fParameters[i].fType,
-                            std::move(children));
+                    if (!this->cast(converted.fPosition, &converted, false,
+                            m.fMethod.fParameters[i].fType)) {
+                        return false;
+                    }
                 }
                 children.push_back(std::move(converted));
             }
@@ -744,9 +763,9 @@ bool Compiler::call(IRNode method, std::vector<IRNode> args, IRNode* out) {
                     std::move(children));
             Type effective = m.returnType();
             if (out->fType != effective) {
-                std::vector<IRNode> children;
-                children.push_back(std::move(*out));
-                *out = IRNode(method.fPosition, IRNode::Kind::CAST, effective, std::move(children));
+                if (!this->cast(method.fPosition, out, false, effective)) {
+                    return false;
+                }
             }
             return true;
         }
@@ -998,6 +1017,12 @@ static Operator remove_assignment(Operator op) {
 
 static bool is_lvalue(const IRNode& node) {
     switch (node.fKind) {
+        case IRNode::Kind::CAST:
+            ASSERT(node.fChildren.size() == 1);
+            if (!node.fValue.fBool) {
+                return is_lvalue(node.fChildren[0]);
+            }
+            return false;
         case IRNode::Kind::FIELD_REFERENCE: // fall through
         case IRNode::Kind::VARIABLE_REFERENCE:
             return true;
@@ -1060,11 +1085,7 @@ bool Compiler::convertArrow(const ASTNode& a, IRNode* outResult) {
                 return this->coerce(&value, type, outResult);
             }
             if (this->canCast(value, type)) {
-                std::vector<IRNode> children;
-                children.push_back(std::move(value));
-                *outResult = IRNode(a.fPosition, IRNode::Kind::CAST, std::move(type),
-                        std::move(children));
-                return true;
+                return this->cast(a.fPosition, &value, true, type, outResult);
             }
             else {
                 this->error(a.fPosition, "value of type '" + value.fType.description() +
@@ -1385,6 +1406,10 @@ bool Compiler::convertBinary(Position p, IRNode* left, Operator op, IRNode* righ
         if (!this->resolve(left)) {
             return false;
         }
+        if (!is_lvalue(*left)) {
+            this->error(left->fPosition, "cannot assign to this expression");
+            return false;
+        }
         Position leftP = left->fPosition;
         Type leftT = left->fType;
         std::vector<IRNode> children;
@@ -1554,17 +1579,17 @@ bool Compiler::symbolRef(Position p, const SymbolTable& st, Symbol* symbol, IRNo
                     Type(Position(), Type::Category::METHOD, "<method>"), &st, std::move(children));
             return true;
         }
-        case Symbol::Kind::FIELD:
+        case Symbol::Kind::FIELD: {
             if (!this->inferFieldType((Field*) symbol)) {
                 return false;
             }
-            *out = IRNode(p, IRNode::Kind::FIELD_REFERENCE, ((Field*) symbol)->fType, symbol);
+            std::vector<IRNode> children;
             if (target) {
                 if (target->fKind == IRNode::Kind::SUPER) {
                     this->error(target->fPosition,
                             "'super' can only be used as part of a method call");
                 }
-                Type effectiveType = out->fType;
+                Type effectiveType = ((Field*) symbol)->fType;
                 if (target->fType.fCategory == Type::Category::GENERIC) {
                     ASSERT(target->fType.fSubtypes.size() >= 2);
                     std::map<String, Type> typeMap;
@@ -1575,20 +1600,25 @@ bool Compiler::symbolRef(Position p, const SymbolTable& st, Symbol* symbol, IRNo
                             typeMap[cl->fName + "." + cl->fParameters[i - 1].fName] =
                                     target->fType.fSubtypes[i];
                         }
-                        effectiveType = out->fType.remap(typeMap);
+                        effectiveType = ((Field*) symbol)->fType.remap(typeMap);
                     }
                 }
-                out->fChildren.push_back(std::move(*target));
+                children.push_back(std::move(*target));
+                *out = IRNode(p, IRNode::Kind::FIELD_REFERENCE, ((Field*) symbol)->fType, symbol,
+                        std::move(children));
                 if (effectiveType != out->fType) {
-                    std::vector<IRNode> children;
-                    children.push_back(std::move(*out));
-                    *out = IRNode(p, IRNode::Kind::CAST, effectiveType, std::move(children));
+                    if (!this->cast(p, out, false, effectiveType)) {
+                        return false;
+                    }
                 }
             }
             else {
-                out->fChildren.push_back(IRNode(p, IRNode::Kind::SELF, fCurrentClass.top()->fType));
+                children.push_back(IRNode(p, IRNode::Kind::SELF, fCurrentClass.top()->fType));
+                *out = IRNode(p, IRNode::Kind::FIELD_REFERENCE, ((Field*) symbol)->fType, symbol,
+                        std::move(children));
             }
             return true;
+        }
         case Symbol::Kind::VARIABLE:
             ASSERT(!target);
             *out = IRNode(p, IRNode::Kind::VARIABLE_REFERENCE, ((Variable*) symbol)->fType, symbol);
