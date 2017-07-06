@@ -2,6 +2,7 @@
 #include "stdio.h"
 #include "stdlib.h"
 #include "unistd.h"
+#include <cstdio>
 #include <cstring>
 #include <fstream>
 #include <string>
@@ -110,6 +111,8 @@ bool runTest(const char* pandac, const char* testdir, const char* name) {
             perror("dup2 onto stderr failed");
             exit(1);
         }
+        String inFile = String(testdir) + "/" + name + ".in";
+        freopen(inFile.c_str(), "r", stdin);
         char* args[2];
         args[0] = (char*) OUTPUT_LOCATION;
         args[1] = nullptr;

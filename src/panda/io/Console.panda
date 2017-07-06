@@ -28,4 +28,27 @@ class Console {
     method printLine() {
         print(Char8(10))
     }
+
+    @class
+    @external
+    method read():Char8?
+
+    @class
+    method readLine():String? {
+        var result := ""
+        loop {
+            def c:Char8? := read()
+            if c = null {
+                if result.size = 0 {
+                    return null
+                }
+                break
+            }
+            if c = Char8(10) {
+                break
+            }
+            result += c
+        }
+        return result
+    }
 }

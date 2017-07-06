@@ -133,6 +133,114 @@ class String {
         return String(slice, count)
     }
 
+    ================================================================================================
+    Returns the index of the first occurrence of the string `s` within this string, or `null` if not
+    found.
+
+    @param s the string to search for
+    @returns the index of the match, or `null` if not found
+    ================================================================================================
+    function indexOf(s:String):Int? {
+        return indexOf(s, 0)
+    }
+
+    ================================================================================================
+    Returns the index of the first occurrence of the string `s` within this string, starting from
+    the specified `index`, or `null` if not found.
+
+    @param s the string to search for
+    @param start the index to begin searching from
+    @returns the index of the match, or `null` if not found
+    ================================================================================================
+    function indexOf(s:String, start:Int):Int? {
+        if size < s.size {
+            return null
+        }
+        outer: for i in start ... size - s.size {
+            for j in 0 .. s.size {
+                if data[i + j] != s.data[j] {
+                    continue outer
+                }
+            }
+            return i
+        }
+        return null
+    }
+
+    ================================================================================================
+    Splits this string into tokens separated by a delimiter. For instance,
+    `"This is a long string".split(" ")` yields `"This"`, `"is"`, `"a"`, `"long"`, and `"string"`.
+
+    @param delimiter the token delimiter
+    @returns the split tokens
+    ================================================================================================
+    function split(delimiter:String):Array<String> {
+        return split(delimiter, Int.MAX)
+    }
+
+    ================================================================================================
+    Splits this string into tokens separated by a delimiter. At most `maxResults` results will be
+    returned; any additional delimiters beyond that point will be ignored. For instance,
+    `"This is a long string".split(" ", 3)` yields `"This"`, `"is"`, and `"a long string"`.
+
+    @param delimiter the token delimiter
+    @param maxResults the maximum number of results to return
+    @returns the split tokens
+    ================================================================================================
+    function split(delimiter:String, maxResults:Int):Array<String> {
+        def result := Array<String>()
+        var index := 0
+        loop {
+            def nextIndex:Int?
+            if delimiter.size = 0 {
+                nextIndex := index + 1
+            }
+            else {
+                nextIndex := indexOf(delimiter, index)
+            }
+            if nextIndex = null | result.count = maxResults - 1 {
+                result.add(self[index..])
+                break
+            }
+            result.add(self[index .. nextIndex])
+            index := nextIndex + delimiter.size
+        }
+        return result
+    }
+
+    ================================================================================================
+    Converts this string to a number. The string must be a sequence of decimal digits, optionally
+    preceded by a minus sign (`-`), whose numeric representation can fit into an `Int64`. Returns
+    `null` if the conversion fails.
+
+    @returns this string converted to a number, or `null`
+    ================================================================================================
+    function convert():Int64? {
+        if size = 0 {
+            return null
+        }
+        var result:Int64 := 0
+        var start:Int
+        if data[0] = Char8(45) {
+            start := 1
+        }
+        else {
+            start := 0
+        }
+        for i in start .. size {
+            def digit := Int64(data[i].value->builtin_int64) - 48
+            if digit < 0 | digit > 9 {
+                return null
+            }
+            result := result * 10 + digit
+        }
+        if data[0] = Char8(45) {
+            result := -result
+        }
+        return result
+    }
+
+
     function hash():Int {
         return 0
     }

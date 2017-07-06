@@ -246,6 +246,14 @@ bool Compiler::coerce(IRNode* node, const Type& target, IRNode* out) {
         return true;
     }
     switch (node->fKind) {
+        case IRNode::Kind::BIT:
+            if (target != Type::Bit()) {
+                if (!this->coerce(node, Type::Bit())) {
+                    return false;
+                }
+                return this->coerce(node, target, out);
+            }
+            break;
         case IRNode::Kind::INT:
             if (target.fCategory == Type::Category::BUILTIN_INT &&
                     required_size(node->fValue.fInt) <= target.fSize) {
@@ -476,6 +484,9 @@ int Compiler::coercionCost(const Type& type, const Type& target) {
                 break;
             }
         }
+    }
+    if (type == Type::BuiltinBit()) {
+        return this->coercionCost(Type::Bit(), target);
     }
     return INT_MAX;
 }
@@ -2026,6 +2037,18 @@ bool Compiler::convertDo(const ASTNode& d, IRNode* out) {
     return true;
 }
 
+bool Compiler::convertLoop(const ASTNode& l, IRNode* out) {
+    ASSERT(l.fKind == ASTNode::Kind::LOOP);
+    ASSERT(l.fChildren.size() == 1);
+    AutoLoop loop(this, l.fText);
+    IRNode block;
+    this->convertBlock(l.fChildren[0], &block);
+    std::vector<IRNode> children;
+    children.push_back(std::move(block));
+    *out = IRNode(l.fPosition, IRNode::Kind::LOOP, l.fText, std::move(children));
+    return true;
+}
+
 bool Compiler::convertFor(const ASTNode& f, IRNode* out) {
     ASSERT(f.fKind == ASTNode::Kind::FOR);
     ASSERT(f.fChildren.size() == 3);
@@ -2295,6 +2318,8 @@ bool Compiler::convertStatement(const ASTNode& s, IRNode* out) {
             return this->convertWhile(s, out);
         case ASTNode::Kind::DO:
             return this->convertDo(s, out);
+        case ASTNode::Kind::LOOP:
+            return this->convertLoop(s, out);
         case ASTNode::Kind::FOR:
             return this->convertFor(s, out);
         case ASTNode::Kind::RETURN:
@@ -2389,6 +2414,9 @@ void Compiler::compile(SymbolTable& parent, const Method& method) {
     if (method.fMethodKind == Method::Kind::INIT) {
         auto insertPoint = block.fChildren.begin();
         for (const auto& field : method.fOwner.fFields) {
+            if (field->fAnnotations.isClass()) {
+                continue;
+            }
             IRNode* value = field->fValue;
             IRNode defaultValue;
             if (!value) {

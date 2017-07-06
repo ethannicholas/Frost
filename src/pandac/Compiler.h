@@ -191,6 +191,8 @@ private:
 
     bool convertDo(const ASTNode& d, IRNode* out);
 
+    bool convertLoop(const ASTNode& l, IRNode* out);
+
     bool convertFor(const ASTNode& f, IRNode* out);
 
     bool convertTarget(const ASTNode& t, IRNode* value, const Type* valueType, IRNode* out);

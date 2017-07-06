@@ -39,7 +39,7 @@ struct ASTNode {
         DEF,
         DEFAULT,
         DO,
-        DOCCOMMENT,
+        DOC_COMMENT,
         DOT,
         EXPRESSIONS,
         FALSE_LITERAL,
@@ -201,7 +201,7 @@ struct ASTNode {
             case Kind::DEF:                     result += "Def";                   break;
             case Kind::DEFAULT:                 result += "Default";               break;
             case Kind::DO:                      result += "Do";                    break;
-            case Kind::DOCCOMMENT:              result += "Doccomment";            break;
+            case Kind::DOC_COMMENT:             result += "DocComment";            break;
             case Kind::DOT:                     result += "Dot";                   break;
             case Kind::EXPRESSIONS:             result += "Expressions";           break;
             case Kind::FALSE_LITERAL:           result += "False";                 break;

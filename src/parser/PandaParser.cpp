@@ -58,7 +58,6 @@ Token PandaParser::nextRawToken() {
             Token next;
             do {
                 next = this->nextRawToken();
-                this->advancePosition(next.fText.c_str());
             }
             while (next.fKind != Token::Kind::BLOCK_COMMENT_END &&
                     next.fKind != Token::Kind::END_OF_FILE);
@@ -83,8 +82,7 @@ Token PandaParser::nextToken() {
         switch (token.fKind) {
             case Token::Kind::WHITESPACE:    // fall through
             case Token::Kind::BLOCK_COMMENT: // fall through
-            case Token::Kind::LINE_COMMENT:  // fall through
-            case Token::Kind::DOC_COMMENT: break;
+            case Token::Kind::LINE_COMMENT: break;
             default: goto done;
         }
     }
@@ -707,7 +705,25 @@ bool PandaParser::declaration(ASTNode* outResult) {
 }
 
 bool PandaParser::doccomment(ASTNode* outResult) {
-    abort();
+    Token start;
+    if (!this->expect(Token::Kind::DOC_COMMENT, "a documentation comment")) {
+        return false;
+    }
+    String result;
+    Token next;
+    for (;;) {
+        next = this->nextRawToken();
+        if (next.fKind == Token::Kind::DOC_COMMENT) {
+            break;
+        }
+        if (next.fKind == Token::Kind::END_OF_FILE) {
+            this->error(start.fPosition, "unterminated documentation comment");
+            return false;
+        }
+        result += next.fText;
+    }
+    *outResult = ASTNode(start.fPosition, ASTNode::Kind::DOC_COMMENT, result);
+    return true;
 }
 
 // exponentExression = callExpression (POW callExpression)*
@@ -869,7 +885,7 @@ bool PandaParser::forLoop(ASTNode* outResult, String label) {
     children.push_back(std::move(target));
     children.push_back(std::move(list));
     children.push_back(std::move(block));
-    *outResult = ASTNode(start.fPosition, ASTNode::Kind::FOR, std::move(children));
+    *outResult = ASTNode(start.fPosition, ASTNode::Kind::FOR, label, std::move(children));
     return true;
 }
 

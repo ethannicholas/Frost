@@ -43,6 +43,8 @@ struct IRNode {
         DECLARATION,
         // a def declaration statement
         DEF,
+        // a documentation comment
+        DOC_COMMENT,
         // an invalid IR node
         ERROR,
         // reference to a field of an object
@@ -297,6 +299,7 @@ struct IRNode {
             case Kind::DECLARATION:                 result += "Declaration";                  break;
             case Kind::DEF:                         result += "Def";                          break;
             case Kind::DO:                          result += "Do";                           break;
+            case Kind::DOC_COMMENT:                 result += "DocComment";                   break;
             case Kind::ERROR:                       result += "<error>";                      break;
             case Kind::FIELD_REFERENCE:             result += "FieldReference";               break;
             case Kind::IF:                          result += "If";                           break;

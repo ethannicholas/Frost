@@ -45,12 +45,19 @@ LLVMCodeGenerator::LLVMCodeGenerator(std::ostream* out)
 
     // temporary
     fMethods << "declare i64 @putchar(i64)\n";
+    fMethods << "declare i64 @getchar()\n";
     fMethods << "declare i64 @printf(i8*, ...)\n";
     fMethods << "define fastcc void @panda$io$Console$print$panda$core$Char8(%panda$core$Char8 %c) {\n";
     fMethods << "    %1 = extractvalue %panda$core$Char8 %c, 0;\n";
     fMethods << "    %2 = sext i8 %1 to i64\n";
     fMethods << "    call i64 @putchar(i64 %2)\n";
     fMethods << "    ret void\n";
+    fMethods << "}\n";
+    fMethods << "define fastcc %panda$core$Char8$nullable @panda$io$Console$read$R$panda$core$Char8$Q() {\n";
+    fMethods << "    %1 = call i64 @getchar()\n";
+    fMethods << "    %2 = trunc i64 %1 to i8\n";
+    fMethods << "    %3 = insertvalue %panda$core$Char8$nullable { i8 undef, i1 1 }, i8 %2, 0\n";
+    fMethods << "    ret %panda$core$Char8$nullable %3\n";
     fMethods << "}\n";
     fMethods << "@fmt = private constant [4 x i8] [i8 37, i8 100, i8 10, i8 0]\n";
     fMethods << "define fastcc void @debugPrint(i64 %value) {\n";
@@ -135,7 +142,7 @@ LLVMCodeGenerator::ClassConstant& LLVMCodeGenerator::getClassConstant(const Clas
         fClassConstants[cl.fName] = cc;
         String super;
         if (cl.fSuper != Type::Void()) {
-            const ClassConstant& superCC = getClassConstant(*fCompiler->resolveClass(
+            const ClassConstant& superCC = this->getClassConstant(*fCompiler->resolveClass(
                     cl.fSymbolTable, cl.fSuper));
             super = "bitcast(" + superCC.fType + "* " + superCC.fName + " to i8*)";
         }
@@ -152,12 +159,6 @@ LLVMCodeGenerator::ClassConstant& LLVMCodeGenerator::getClassConstant(const Clas
         }
         code += "] }\n";
         fTypeDeclarations << code;
-        for (const Field* f : cl.fFields) {
-            if (f->fAnnotations.isClass()) {
-                fTypeDeclarations << this->fieldName(*f) << " = global " <<
-                        this->defaultValue(f->fType) << "\n";
-            }
-        }
         return fClassConstants[cl.fName];
     }
     return found->second;
@@ -177,7 +178,7 @@ LLVMCodeGenerator::ClassConstant& LLVMCodeGenerator::getWrapperClassConstant(con
         ClassConstant cc("@" + escape_type_name(cl.fType.fName) + "$wrapperclass",
                 "{ i8*, [" + std::to_string(value.fVirtualMethods.size()) + " x i8*] }");
         fClassConstants[name] = cc;
-        const ClassConstant& superCC = getClassConstant(*fCompiler->resolveClass(
+        const ClassConstant& superCC = this->getClassConstant(*fCompiler->resolveClass(
                 cl.fSymbolTable, cl.fSuper));
         String super = "bitcast(" + superCC.fType + "* " + superCC.fName + " to i8*)";
         String code = cc.fName + " = constant " + cc.fType + " { i8* " + super + ", [" +
@@ -262,6 +263,12 @@ void LLVMCodeGenerator::writeType(const Type& type) {
             separator = ", ";
         }
         fTypeDeclarations << " }\n";
+        for (const Field* f : cl->fFields) {
+            if (f->fAnnotations.isClass()) {
+                fTypeDeclarations << this->fieldName(*f) << " = global " <<
+                        this->defaultValue(f->fType) << "\n";
+            }
+        }
     }
 }
 
@@ -552,11 +559,12 @@ String LLVMCodeGenerator::getAndReference(const IRNode& left, const IRNode& righ
         out << "    " << rightField << " = extractvalue %panda$core$Bit " << rightRef << ", 0\n";
         rightRef = rightField;
     }
+    String truePred = fCurrentBlock;
     out << "    br label %" << ifFalse;
     this->createBlock(ifFalse, out);
     String result = this->nextVar();
     out << "    " << result << " = phi i1 [0, %" << start << "], [" << rightRef << ", %" <<
-            ifTrue << "]\n";
+            truePred << "]\n";
     return result;
 }
 
@@ -579,11 +587,12 @@ String LLVMCodeGenerator::getOrReference(const IRNode& left, const IRNode& right
         out << "    " << rightField << " = extractvalue %panda$core$Bit " << rightRef << ", 0\n";
         rightRef = rightField;
     }
+    String falsePred = fCurrentBlock;
     out << "    br label %" << ifTrue;
     this->createBlock(ifTrue, out);
     String result = this->nextVar();
     out << "    " << result << " = phi i1 [1, %" << start << "], [" << rightRef << ", %" <<
-            ifFalse << "]\n";
+            falsePred << "]\n";
     return result;
 }
 
@@ -1261,6 +1270,9 @@ String LLVMCodeGenerator::getLValue(const IRNode& lvalue, std::ostream& out) {
                     break;
                 }
             }
+            if (index == -1) {
+                printf("couldn't find field %s in %s\n", ((Field*) lvalue.fValue.fPtr)->fName.c_str(), lvalue.description().c_str());
+            }
             ASSERT(index != -1);
 
             out << "    " << ptr << " = getelementptr inbounds " << this->llvmTypeName(cl->fType) <<
@@ -1513,6 +1525,21 @@ void LLVMCodeGenerator::writeDo(const IRNode& d, std::ostream& out) {
     this->createBlock(loopBody, out);
     this->writeStatement(d.fChildren[0], out);
     if (!ends_with_branch(d.fChildren[0])) {
+        out << "    br label %" << loopStart << "\n";
+    }
+    this->createBlock(loopEnd, out);
+}
+
+void LLVMCodeGenerator::writeLoop(const IRNode& l, std::ostream& out) {
+    ASSERT(l.fKind == IRNode::Kind::LOOP);
+    ASSERT(l.fChildren.size() == 1);
+    String loopStart = this->nextLabel();
+    String loopEnd = this->nextLabel();
+    AutoLoopDescriptor loop(this, l.fText, loopEnd, loopStart);
+    out << "    br label %" << loopStart << "\n";
+    this->createBlock(loopStart, out);
+    this->writeStatement(l.fChildren[0], out);
+    if (!ends_with_branch(l.fChildren[0])) {
         out << "    br label %" << loopStart << "\n";
     }
     this->createBlock(loopEnd, out);
@@ -1840,6 +1867,7 @@ void LLVMCodeGenerator::writeStatement(const IRNode& stmt, std::ostream& out) {
         case IRNode::Kind::IF:        this->writeIf        (stmt, out);     break;
         case IRNode::Kind::WHILE:     this->writeWhile     (stmt, out);     break;
         case IRNode::Kind::DO:        this->writeDo        (stmt, out);     break;
+        case IRNode::Kind::LOOP:      this->writeLoop      (stmt, out);     break;
         case IRNode::Kind::RANGE_FOR: this->writeRangeFor  (stmt, out);     break;
         case IRNode::Kind::RETURN:    this->writeReturn    (stmt, out);     break;
         case IRNode::Kind::BREAK:     this->writeBreak     (stmt, out);     break;

@@ -1,6 +1,9 @@
 package panda.core
 
 class Int64 : Value {
+    constant MIN := -922337203854775808
+    constant MAX := 922337203854775807
+
     @$implicit
     init(value:builtin_int64) {
         self.value := value

@@ -1,3 +1,9 @@
++
+Hello, World!!
+Hello, World!5123
+Hello, World!true
+falseHello, World!
+
 startsWith
 true
 false
@@ -31,3 +37,24 @@ dlroW
 olleH
 olleH
 H
+
+indexOf
+0
+4
+8
+0
+true
+true
+true
+
+split1
+This
+is
+a
+long
+string
+
+split2
+This
+is
+a long string
