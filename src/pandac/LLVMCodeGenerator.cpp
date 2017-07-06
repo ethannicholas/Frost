@@ -44,6 +44,12 @@ LLVMCodeGenerator::LLVMCodeGenerator(std::ostream* out)
     fOut << "declare void @free(i8*)\n";
 
     // temporary
+    fMethods << "declare void @exit(i64)\n";
+    fMethods << "define fastcc void @panda$core$System$exit$panda$core$Int64(%panda$core$Int64 %v) {\n";
+    fMethods << "    %1 = extractvalue %panda$core$Int64 %v, 0\n";
+    fMethods << "    call void @exit(i64 %1)\n";
+    fMethods << "    unreachable\n";
+    fMethods << "}\n";
     fMethods << "declare i64 @putchar(i64)\n";
     fMethods << "declare i64 @getchar()\n";
     fMethods << "declare i64 @printf(i8*, ...)\n";
@@ -1094,12 +1100,12 @@ String LLVMCodeGenerator::getFieldReference(const IRNode& fieldRef, std::ostream
     return result;
 }
 
-String LLVMCodeGenerator::getStringReference(const IRNode& s, std::ostream& out) {
+String LLVMCodeGenerator::getStringReference(const String& s, std::ostream& out) {
     String chars = "@$chars" + std::to_string(++fLabels);
-    String charsType = "[" + std::to_string(s.fText.size()) + " x i8]";
+    String charsType = "[" + std::to_string(s.size()) + " x i8]";
     fStrings << chars << " = private unnamed_addr constant " << charsType << " [ ";
     const char* separator = "";
-    for (char c : s.fText) {
+    for (char c : s) {
         fStrings << separator << "i8 " << (int) c;
         separator = ", ";
     }
@@ -1113,7 +1119,7 @@ String LLVMCodeGenerator::getStringReference(const IRNode& s, std::ostream& out)
             "%panda$core$Class*), %panda$core$Int32 insertvalue(%panda$core$Int32 " <<
             "{ i32 undef }, i32 1, 0), %panda$core$Char8* bitcast(" << charsType << "* " << chars <<
             " to %panda$core$Char8*), %panda$core$Int64 insertvalue(%panda$core$Int64 " <<
-            "{ i64 undef }, i64 " << s.fText.size() << ", 0) }\n";
+            "{ i64 undef }, i64 " << s.size() << ", 0) }\n";
     return result;
 }
 
@@ -1222,7 +1228,7 @@ String LLVMCodeGenerator::getReference(const IRNode& expr, std::ostream& out) {
         case IRNode::Kind::SELF:
             return this->getSelfReference(expr, out);
         case IRNode::Kind::STRING:
-            return this->getStringReference(expr, out);
+            return this->getStringReference(expr.fText, out);
         case IRNode::Kind::SUPER:
             return this->getSuperReference(expr, out);
         case IRNode::Kind::VARIABLE_REFERENCE:
@@ -1849,9 +1855,42 @@ void LLVMCodeGenerator::writeBreak(const IRNode& b, std::ostream& out) {
     out << "    br label %" << loop.fBreakLabel << "\n";
 }
 
-void LLVMCodeGenerator::writeContinue(const IRNode& b, std::ostream& out) {
-    const LoopDescriptor& loop = this->findLoop(b.fText);
+void LLVMCodeGenerator::writeContinue(const IRNode& c, std::ostream& out) {
+    const LoopDescriptor& loop = this->findLoop(c.fText);
     out << "    br label %" << loop.fContinueLabel << "\n";
+}
+
+void LLVMCodeGenerator::writeAssert(const IRNode& a, std::ostream& out) {
+    ASSERT(a.fKind == IRNode::Kind::ASSERT);
+    ASSERT(a.fChildren.size() == 1 || a.fChildren.size() == 2);
+    String test = this->getReference(a.fChildren[0], out);
+    String ifTrue = this->nextLabel();
+    String ifFalse = this->nextLabel();
+    out << "    br i1 " << test << ", label %" << ifTrue << ", label %" << ifFalse << "\n";
+    this->createBlock(ifFalse, out);
+    ASSERT(a.fPosition.fName);
+    String file = this->getStringReference(*a.fPosition.fName, out);
+    String line = this->nextVar();
+    out << "    " << line << " = insertvalue %panda$core$Int64 { i64 undef }, i64 " <<
+            a.fPosition.fLine << ", 0\n";
+    String msg;
+    if (a.fChildren.size() == 2) {
+        msg = this->getReference(a.fChildren[1], out);
+    }
+    out << "    call fastcc void ";
+    if (a.fChildren.size() == 1) {
+        out << "@panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64";
+    }
+    else {
+        out << "@panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String";
+    }
+    out << "(%panda$core$String* " << file << ", %panda$core$Int64 " << line;
+    if (a.fChildren.size() == 2) {
+        out << ", %panda$core$String* " << msg;
+    }
+    out << ")\n";
+    out << "    unreachable\n";
+    this->createBlock(ifTrue, out);
 }
 
 void LLVMCodeGenerator::writeStatement(const IRNode& stmt, std::ostream& out) {
@@ -1867,6 +1906,7 @@ void LLVMCodeGenerator::writeStatement(const IRNode& stmt, std::ostream& out) {
         case IRNode::Kind::RETURN:    this->writeReturn    (stmt, out);     break;
         case IRNode::Kind::BREAK:     this->writeBreak     (stmt, out);     break;
         case IRNode::Kind::CONTINUE:  this->writeContinue  (stmt, out);     break;
+        case IRNode::Kind::ASSERT:    this->writeAssert    (stmt, out);     break;
         case IRNode::Kind::VAR:       // fall through
         case IRNode::Kind::DEF:       // fall through
         case IRNode::Kind::PROPERTY:  // fall through

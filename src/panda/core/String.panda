@@ -132,7 +132,7 @@ class String {
         def slice := Pointer<Char8>.alloc(count)
         var index := 0
         for i in start .. end by step {
-            -- FIXME need range assert
+            assert index >= 0 & index < size
             slice[index] := data[i]
             index += 1
         }

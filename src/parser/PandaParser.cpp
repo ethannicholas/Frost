@@ -304,9 +304,27 @@ bool PandaParser::anyLoop(ASTNode* outResult, String label) {
             return false;
     }
 }
-
+// assert = ASSERT expression (COMMA expression)?
 bool PandaParser::assertStatement(ASTNode* outResult) {
-    abort();
+    Token start;
+    if (!this->expect(Token::Kind::ASSERT, "'assert'", &start)) {
+        return false;
+    }
+    ASTNode expression;
+    if (!this->expression(&expression)) {
+        return false;
+    }
+    std::vector<ASTNode> children;
+    children.push_back(std::move(expression));
+    if (this->checkNext(Token::Kind::COMMA)) {
+        ASTNode message;
+        if (!this->expression(&message)) {
+            return false;
+        }
+        children.push_back(std::move(message));
+    }
+    *outResult = ASTNode(start.fPosition, ASTNode::Kind::ASSERT, std::move(children));
+    return true;
 }
 
 // block = LBRACE statement* terminalStatement? RBRACE

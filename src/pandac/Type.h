@@ -255,6 +255,11 @@ struct Type : public Symbol {
         return result;
     }
 
+    static Type& Console() {
+        static Type result = Type(Position(), Category::CLASS, "panda.io.Console");
+        return result;
+    }
+
     static Type& Void() {
         static Type result = Type();
         return result;

@@ -209,6 +209,8 @@ private:
 
     bool convertContinue(const ASTNode& c, IRNode* out);
 
+    bool convertAssert(const ASTNode& a, IRNode* out);
+
     bool convertStatement(const ASTNode& s, IRNode* out);
 
     bool convertBlock(const ASTNode& b, IRNode* out);

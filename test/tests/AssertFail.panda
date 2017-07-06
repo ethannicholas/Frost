@@ -1,0 +1,7 @@
+class AssertFail {
+    @class
+    method main() {
+        assert 2 < 0
+        Console.printLine("failure")
+    }
+}

@@ -18,6 +18,8 @@ struct IRNode {
         ARGUMENTS,
         // a cast, instanceof, or not instanceof expression
         ARROW,
+        // an assert statement
+        ASSERT,
         // a binary operation
         BINARY,
         // a literal bit (true or false)
@@ -287,6 +289,7 @@ struct IRNode {
         switch (fKind) {
             case Kind::ARGUMENTS:                   result += "Arguments";                    break;
             case Kind::ARROW:                       result += "Arrow";                        break;
+            case Kind::ASSERT:                      result += "Assert";                       break;
             case Kind::BINARY:                      result += "Binary"; o = 1;                break;
             case Kind::BIT:                         result += "Bit"; b = 1;                   break;
             case Kind::BLOCK:                       result += "Block";                        break;

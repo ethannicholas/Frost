@@ -294,6 +294,7 @@ void Scanner::scan(ASTNode* file, SymbolTable* root) {
     uses.push_back({ Position(), "panda.core.Object", "Object" });;
     uses.push_back({ Position(), "panda.core.Range", "Range" });;
     uses.push_back({ Position(), "panda.core.String", "String" });;
+    uses.push_back({ Position(), "panda.core.System", "System" });;
     uses.push_back({ Position(), "panda.io.Console", "Console" });;
     uses.push_back({ Position(), "panda.math.XorShift128Plus", "XorShift128Plus" });;
     for (auto& e : file->fChildren) {

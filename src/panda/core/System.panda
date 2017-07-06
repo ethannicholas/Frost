@@ -1,0 +1,9 @@
+package panda.core
+
+====================================================================================================
+Provides utility methods that interface with the operating environment.
+====================================================================================================
+class System {
+    @class
+    method exit(status:Int)
+}

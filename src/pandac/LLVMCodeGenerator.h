@@ -142,7 +142,7 @@ private:
 
     String getFieldReference(const IRNode& self, std::ostream& out);
 
-    String getStringReference(const IRNode& s, std::ostream& out);
+    String getStringReference(const String& s, std::ostream& out);
 
     String getReference(const IRNode& stmt, std::ostream& out);
 
@@ -179,6 +179,8 @@ private:
     void writeBreak(const IRNode& b, std::ostream& out);
 
     void writeContinue(const IRNode& c, std::ostream& out);
+
+    void writeAssert(const IRNode& a, std::ostream& out);
 
     void writeStatement(const IRNode& s, std::ostream& out);
 

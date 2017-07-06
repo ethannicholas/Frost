@@ -1,0 +1,18 @@
+package panda.core
+
+====================================================================================================
+Contains utility methods used in the internal implementation of certain language features.
+====================================================================================================
+class Panda {
+    @class
+    method assertionFailure(file:String, line:Int) {
+        Console.printLine("assertion failure (\{file}:\{line})")
+        System.exit(1)
+    }
+
+    @class
+    method assertionFailure(file:String, line:Int, msg:String) {
+        Console.printLine("assertion failure (\{file}:\{line}): \{msg}")
+        System.exit(1)
+    }
+}

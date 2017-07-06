@@ -113,9 +113,11 @@ int main(int argc, char** argv) {
     sources.push_back(PANDA_HOME + "panda/core/Int64.panda");
     sources.push_back(PANDA_HOME + "panda/core/MutableString.panda");
     sources.push_back(PANDA_HOME + "panda/core/Object.panda");
+    sources.push_back(PANDA_HOME + "panda/core/Panda.panda");
     sources.push_back(PANDA_HOME + "panda/core/Pointer.panda");
     sources.push_back(PANDA_HOME + "panda/core/Range.panda");
     sources.push_back(PANDA_HOME + "panda/core/String.panda");
+    sources.push_back(PANDA_HOME + "panda/core/System.panda");
     sources.push_back(PANDA_HOME + "panda/core/Value.panda");
     sources.push_back(PANDA_HOME + "panda/io/Console.panda");
     sources.push_back(PANDA_HOME + "panda/math/XorShift128Plus.panda");

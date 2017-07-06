@@ -891,7 +891,7 @@ bool Compiler::foldInts(Position p, const IRNode& left, Operator op, const IRNod
     bool result;
     uint64_t tmp;
     #define FOLD_BIT(op) \
-        *out = IRNode(p, IRNode::Kind::BIT, Type::Bit(), (bool) (val1 op val2)); \
+        *out = IRNode(p, IRNode::Kind::BIT, Type::BuiltinBit(), (bool) (val1 op val2)); \
         return true;
 
     #define FOLD_INT(op) \
@@ -1973,7 +1973,9 @@ bool Compiler::convertIf(const ASTNode& i, IRNode* out) {
     ASSERT(i.fChildren.size() == 2 || i.fChildren.size() == 3);
     IRNode test;
     if (this->convertExpression(i.fChildren[0], &test)) {
-        this->coerce(&test, Type::Bit());
+        if (!this->coerce(&test, Type::Bit())) {
+            return false;
+        }
         Class* bit = fClasses["panda.core.Bit"];
         ASSERT(bit);
         Field* value = (Field*) bit->fSymbolTable["value"];
@@ -2004,7 +2006,9 @@ bool Compiler::convertWhile(const ASTNode& w, IRNode* out) {
     AutoLoop loop(this, w.fText);
     IRNode test;
     if (this->convertExpression(w.fChildren[0], &test)) {
-        this->coerce(&test, Type::Bit());
+        if (!this->coerce(&test, Type::Bit())) {
+            return false;
+        }
         Class* bit = fClasses["panda.core.Bit"];
         ASSERT(bit);
         Field* value = (Field*) bit->fSymbolTable["value"];
@@ -2030,7 +2034,9 @@ bool Compiler::convertDo(const ASTNode& d, IRNode* out) {
     this->convertBlock(d.fChildren[0], &block);
     IRNode test;
     if (this->convertExpression(d.fChildren[1], &test)) {
-        this->coerce(&test, Type::Bit());
+        if (!this->coerce(&test, Type::Bit())) {
+            return false;
+        }
         Class* bit = fClasses["panda.core.Bit"];
         ASSERT(bit);
         Field* value = (Field*) bit->fSymbolTable["value"];
@@ -2308,6 +2314,40 @@ bool Compiler::convertContinue(const ASTNode& c, IRNode* out) {
     return true;
 }
 
+bool Compiler::convertAssert(const ASTNode& a, IRNode* out) {
+    ASSERT(a.fKind == ASTNode::Kind::ASSERT);
+    ASSERT(a.fChildren.size() == 1 || a.fChildren.size() == 2);
+    IRNode test;
+    if (this->convertExpression(a.fChildren[0], &test)) {
+        if (!this->coerce(&test, Type::Bit())) {
+            return false;
+        }
+        Class* bit = fClasses["panda.core.Bit"];
+        ASSERT(bit);
+        Field* value = (Field*) bit->fSymbolTable["value"];
+        std::vector<IRNode> children;
+        children.push_back(std::move(test));
+        test = IRNode(a.fPosition, IRNode::Kind::FIELD_REFERENCE, Type::BuiltinBit(), value,
+                std::move(children));
+    }
+    else {
+        return false;
+    }
+    std::vector<IRNode> children;
+    children.push_back(std::move(test));
+    if (a.fChildren.size() == 2) {
+        IRNode msg;
+        if (!this->convertExpression(a.fChildren[1], &msg)) {
+            return false;
+        }
+        if (!this->coerce(&msg, Type::PandaString())) {
+            return false;
+        }
+        children.push_back(std::move(msg));
+    }
+    *out = IRNode(a.fPosition, IRNode::Kind::ASSERT, std::move(children));
+    return true;
+}
 
 bool Compiler::convertStatement(const ASTNode& s, IRNode* out) {
     switch (s.fKind) {
@@ -2341,6 +2381,8 @@ bool Compiler::convertStatement(const ASTNode& s, IRNode* out) {
             return this->convertBreak(s, out);
         case ASTNode::Kind::CONTINUE:
             return this->convertContinue(s, out);
+        case ASTNode::Kind::ASSERT:
+            return this->convertAssert(s, out);
         case ASTNode::Kind::VAR:      // fall through
         case ASTNode::Kind::DEF:      // fall through
         case ASTNode::Kind::PROPERTY: // fall through
