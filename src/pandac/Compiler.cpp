@@ -118,6 +118,15 @@ void Compiler::resolveType(const SymbolTable& st, Type* t) {
     }
 }
 
+Class* Compiler::getClass(Type t) {
+    if (t.fCategory == Type::Category::GENERIC || t.fCategory == Type::Category::NULLABLE ||
+            t.fCategory == Type::Category::PARAMETER) {
+        return this->getClass(t.fSubtypes[0]);
+    }
+    Class* result = fClasses[t.fName];
+    return result;
+}
+
 Class* Compiler::resolveClass(const SymbolTable& st, Type t) {
     if (t.fCategory == Type::Category::GENERIC || t.fCategory == Type::Category::NULLABLE) {
         return this->resolveClass(st, t.fSubtypes[0]);
@@ -2309,6 +2318,10 @@ bool Compiler::convertStatement(const ASTNode& s, IRNode* out) {
         case ASTNode::Kind::CALL: {
             if (this->convertCall(s, out)) {
                 this->resolve(out);
+            }
+            if (out->fKind == IRNode::Kind::CAST) {
+                ASSERT(out->fChildren.size() == 1);
+                *out = std::move(out->fChildren[0]);
             }
             return true;
         }

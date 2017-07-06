@@ -35,7 +35,7 @@ class Console {
 
     @class
     method readLine():String? {
-        var result := ""
+        def result := MutableString()
         loop {
             def c:Char8? := read()
             if c = null {
@@ -47,8 +47,8 @@ class Console {
             if c = Char8(10) {
                 break
             }
-            result += c
+            result.append(c)
         }
-        return result
+        return result.convert()
     }
 }

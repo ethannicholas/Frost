@@ -111,6 +111,7 @@ int main(int argc, char** argv) {
     sources.push_back(PANDA_HOME + "panda/core/Int16.panda");
     sources.push_back(PANDA_HOME + "panda/core/Int32.panda");
     sources.push_back(PANDA_HOME + "panda/core/Int64.panda");
+    sources.push_back(PANDA_HOME + "panda/core/MutableString.panda");
     sources.push_back(PANDA_HOME + "panda/core/Object.panda");
     sources.push_back(PANDA_HOME + "panda/core/Pointer.panda");
     sources.push_back(PANDA_HOME + "panda/core/Range.panda");

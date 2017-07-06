@@ -1,0 +1,72 @@
+package panda.core
+
+class MutableString {
+    @private
+    constant DEFAULT_SIZE := 16
+
+    @private
+    var data:Pointer<Char8>
+
+    @private
+    var size:Int
+
+    @private
+    var maxSize:Int
+
+    init() {
+        size := 0
+        maxSize := DEFAULT_SIZE
+        data := Pointer<Char8>.alloc(maxSize)
+    }
+
+    init(s:String) {
+        size := 0
+        maxSize := size + DEFAULT_SIZE
+        data := Pointer<Char8>.alloc(maxSize)
+        append(s)
+    }
+
+    @override
+    @private
+    method cleanup() {
+        data.destroy()
+    }
+
+    method append(c:Char8) {
+        ensureCapacity(size + 1)
+        data[size] := c
+        size += 1
+    }
+
+    method append(s:String) {
+        ensureCapacity(size + s.size)
+        for i in 0 .. s.size {
+            data[size + i] := s.data[i]
+        }
+        size += s.size
+    }
+
+    method append(o:Object) {
+        append(o.convert()->String)
+    }
+
+    @private
+    method ensureCapacity(newSize:Int) {
+        if maxSize >= newSize {
+            return
+        }
+        while maxSize < newSize {
+            maxSize *= 2
+        }
+        data := data.realloc(maxSize)
+    }
+
+    @override
+    function convert():String {
+        def result := Pointer<Char8>.alloc(size)
+        for i in 0 .. size {
+            result[i] := data[i]
+        }
+        return String(result, size)
+    }
+}

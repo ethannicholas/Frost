@@ -47,13 +47,15 @@ public:
 
     void resolveType(const SymbolTable& st, Type* t);
 
-    Class* resolveClass(const SymbolTable& st, Type t);
+    Class* getClass(Type t);
 
     std::vector<const Field*> getInstanceFields(const Class& cl);
 
     std::vector<const Field*> fFieldInitializationOrder;
 
 private:
+    Class* resolveClass(const SymbolTable& st, Type t);
+
     // for all convert methods: a true result means "successful enough to have produced output",
     // false means failure. Success may still have generated errors.
 

@@ -86,7 +86,7 @@ size_t LLVMCodeGenerator::sizeOf(const Type& type) {
                 return found->second;
             }
             size_t result = 0;
-            Class* cl = fCompiler->resolveClass(fCurrentClass->fSymbolTable, type);
+            Class* cl = fCompiler->getClass(type);
             ASSERT(cl);
             for (const Field* f : fCompiler->getInstanceFields(*cl)) {
                 size_t fieldSize = field_size(f->fType);
@@ -142,8 +142,7 @@ LLVMCodeGenerator::ClassConstant& LLVMCodeGenerator::getClassConstant(const Clas
         fClassConstants[cl.fName] = cc;
         String super;
         if (cl.fSuper != Type::Void()) {
-            const ClassConstant& superCC = this->getClassConstant(*fCompiler->resolveClass(
-                    cl.fSymbolTable, cl.fSuper));
+            const ClassConstant& superCC = this->getClassConstant(*fCompiler->getClass(cl.fSuper));
             super = "bitcast(" + superCC.fType + "* " + superCC.fName + " to i8*)";
         }
         else {
@@ -174,12 +173,11 @@ LLVMCodeGenerator::ClassConstant& LLVMCodeGenerator::getWrapperClassConstant(con
     String name = cl.fName + "$Wrapper";
     auto found = fClassConstants.find(name);
     if (found == fClassConstants.end()) {
-        Class& value = *fCompiler->resolveClass(cl.fSymbolTable, Type::Value());
+        Class& value = *fCompiler->getClass(Type::Value());
         ClassConstant cc("@" + escape_type_name(cl.fType.fName) + "$wrapperclass",
                 "{ i8*, [" + std::to_string(value.fVirtualMethods.size()) + " x i8*] }");
         fClassConstants[name] = cc;
-        const ClassConstant& superCC = this->getClassConstant(*fCompiler->resolveClass(
-                cl.fSymbolTable, cl.fSuper));
+        const ClassConstant& superCC = this->getClassConstant(*fCompiler->getClass(cl.fSuper));
         String super = "bitcast(" + superCC.fType + "* " + superCC.fName + " to i8*)";
         String code = cc.fName + " = constant " + cc.fType + " { i8* " + super + ", [" +
                 std::to_string(value.fVirtualMethods.size()) + " x i8*] [";
@@ -244,7 +242,7 @@ String LLVMCodeGenerator::createWrapperShim(const Method& m, std::ostream& out) 
 void LLVMCodeGenerator::writeType(const Type& type) {
     if (fWrittenTypes.find(type.fName) == fWrittenTypes.end()) {
         fWrittenTypes.insert(type.fName);
-        Class* cl = fCompiler->resolveClass(fCurrentClass->fSymbolTable, type);
+        Class* cl = fCompiler->getClass(type);
         ASSERT(cl);
         if (cl->fName == "panda.core.Pointer") {
             return;
@@ -275,7 +273,7 @@ void LLVMCodeGenerator::writeType(const Type& type) {
 void LLVMCodeGenerator::writeWrapperType(const Type& type) {
     if (fWrittenWrappers.find(type.fName) == fWrittenWrappers.end()) {
         fWrittenWrappers.insert(type.fName);
-        Class* cl = fCompiler->resolveClass(fCurrentClass->fSymbolTable, type);
+        Class* cl = fCompiler->getClass(type);
         ASSERT(cl);
         ASSERT(cl->isValue());
         this->getWrapperClassConstant(*cl);
@@ -300,7 +298,7 @@ void LLVMCodeGenerator::writeNullableType(const Type& type) {
     const Type& base = type.fSubtypes[0];
     if (fWrittenNullables.find(base.fName) == fWrittenNullables.end()) {
         fWrittenNullables.insert(base.fName);
-        Class* cl = fCompiler->resolveClass(fCurrentClass->fSymbolTable, base);
+        Class* cl = fCompiler->getClass(base);
         ASSERT(cl);
         ASSERT(cl->isValue());
         std::vector<const Field*> fields = fCompiler->getInstanceFields(*cl);
@@ -334,7 +332,7 @@ String LLVMCodeGenerator::llvmType(const Type& type) {
         case Type::Category::NULL_LITERAL: return "i8*";
         case Type::Category::CLASS: {
             this->writeType(type);
-            const Class* cl = fCompiler->resolveClass(fCurrentClass->fSymbolTable, type);
+            const Class* cl = fCompiler->getClass(type);
             ASSERT(cl);
             if (cl->isValue()) {
                 return this->llvmTypeName(type);
@@ -351,8 +349,7 @@ String LLVMCodeGenerator::llvmType(const Type& type) {
         case Type::Category::PARAMETER:
             return this->llvmType(type.fSubtypes[0]);
         case Type::Category::NULLABLE: {
-            const Class* cl = fCompiler->resolveClass(fCurrentClass->fSymbolTable,
-                    type.fSubtypes[0]);
+            const Class* cl = fCompiler->getClass(type.fSubtypes[0]);
             ASSERT(cl);
             if (cl->isValue()) {
                 return this->llvmNullableType(type);
@@ -770,7 +767,7 @@ String LLVMCodeGenerator::getCallReference(const IRNode& call, std::ostream& out
 String LLVMCodeGenerator::wrapValue(const String& value, const Type& srcType, const Type& dstType,
         std::ostream& out) {
     out << "; wrap value\n";
-    const Class* src = fCompiler->resolveClass(fCurrentClass->fSymbolTable, srcType);
+    const Class* src = fCompiler->getClass(srcType);
     std::vector<const Field*> fields = fCompiler->getInstanceFields(*src);
     ASSERT(src);
     if (srcType.fCategory == Type::Category::NULLABLE) {
@@ -835,7 +832,7 @@ String LLVMCodeGenerator::wrapValue(const String& value, const Type& srcType, co
 String LLVMCodeGenerator::unwrapValue(const String& value, const Type& srcType, const Type& dstType,
         std::ostream& out) {
     out << "; unwrap value\n";
-    const Class* target = fCompiler->resolveClass(fCurrentClass->fSymbolTable, dstType);
+    const Class* target = fCompiler->getClass(dstType);
     std::vector<const Field*> fields = fCompiler->getInstanceFields(*target);
     if (dstType.fCategory == Type::Category::NULLABLE) {
         // casting nullable wrapper to nullable value, need to special-case null
@@ -900,7 +897,7 @@ String LLVMCodeGenerator::unwrapValue(const String& value, const Type& srcType, 
 String LLVMCodeGenerator::toNullableValue(const String& value, const Type& srcType,
         const Type& dstType, std::ostream& out) {
     out << "; to nullable\n";
-    const Class* cl = fCompiler->resolveClass(fCurrentClass->fSymbolTable, srcType);
+    const Class* cl = fCompiler->getClass(srcType);
     ASSERT(cl);
     String nullableType = this->llvmNullableType(dstType);
     std::vector<const Field*> fields = fCompiler->getInstanceFields(*cl);
@@ -930,7 +927,7 @@ String LLVMCodeGenerator::toNullableValue(const String& value, const Type& srcTy
 String LLVMCodeGenerator::toNonNullableValue(const String& value, const Type& srcType,
         const Type& dstType, std::ostream& out) {
     out << "; to nonnullable\n";
-    const Class* cl = fCompiler->resolveClass(fCurrentClass->fSymbolTable, dstType);
+    const Class* cl = fCompiler->getClass(dstType);
     ASSERT(cl);
     String nullableType = this->llvmNullableType(srcType);
     std::vector<const Field*> fields = fCompiler->getInstanceFields(*cl);
@@ -981,10 +978,9 @@ String LLVMCodeGenerator::getCastReference(const IRNode& cast, std::ostream& out
         }
     }
     else {
-        const Class* src = fCompiler->resolveClass(fCurrentClass->fSymbolTable,
-                cast.fChildren[0].fType);
+        const Class* src = fCompiler->getClass(cast.fChildren[0].fType);
         ASSERT(src);
-        const Class* target = fCompiler->resolveClass(fCurrentClass->fSymbolTable, cast.fType);
+        const Class* target = fCompiler->getClass(cast.fType);
         ASSERT(target);
         if (src->isValue() && !target->isValue()) {
             return this->wrapValue(base, cast.fChildren[0].fType, cast.fType, out);
@@ -1018,7 +1014,7 @@ String LLVMCodeGenerator::getCastReference(const IRNode& cast, std::ostream& out
 String LLVMCodeGenerator::getConstructReference(const IRNode& construct, std::ostream& out) {
     ASSERT(construct.fKind == IRNode::Kind::CONSTRUCT);
     ASSERT(construct.fChildren.size() >= 1);
-    const Class* cl = fCompiler->resolveClass(fCurrentClass->fSymbolTable, construct.fType);
+    const Class* cl = fCompiler->getClass(construct.fType);
     ASSERT(cl);
     String type = this->llvmType(construct.fType);
     if (cl->isValue()) {
@@ -1074,7 +1070,7 @@ String LLVMCodeGenerator::getFieldReference(const IRNode& fieldRef, std::ostream
                 this->fieldName(*field) << "\n";
         return load;
     }
-    Class* cl = fCompiler->resolveClass(fCurrentClass->fSymbolTable, fieldRef.fChildren[0].fType);
+    Class* cl = fCompiler->getClass(fieldRef.fChildren[0].fType);
     ASSERT(cl);
     if (cl->isValue()) {
         String base = this->getReference(fieldRef.fChildren[0], out);
@@ -1109,7 +1105,7 @@ String LLVMCodeGenerator::getStringReference(const IRNode& s, std::ostream& out)
     }
     fStrings << " ];\n";
     String result = "@$str" + std::to_string(++fLabels);
-    Class* string = fCompiler->resolveClass(fCurrentClass->fSymbolTable, Type::PandaString());
+    Class* string = fCompiler->getClass(Type::PandaString());
     ASSERT(string);
     const ClassConstant& cc = this->getClassConstant(*string);
     fStrings << result << " = private unnamed_addr constant %panda$core$String { " <<
@@ -1122,7 +1118,7 @@ String LLVMCodeGenerator::getStringReference(const IRNode& s, std::ostream& out)
 }
 
 String LLVMCodeGenerator::getNullReference(const IRNode& n, std::ostream& out) {
-    Class* cl = fCompiler->resolveClass(fCurrentClass->fSymbolTable, n.fType);
+    Class* cl = fCompiler->getClass(n.fType);
     if (cl->isValue()) {
         std::vector<const Field*> fields = fCompiler->getInstanceFields(*cl);
         String result = "{";
@@ -1149,7 +1145,7 @@ String LLVMCodeGenerator::getIsNullReference(const IRNode& test, std::ostream& o
     if (test.fChildren[0].fType.fCategory != Type::Category::NULLABLE) {
         return "{ i8 0 }";
     }
-    Class* cl = fCompiler->resolveClass(fCurrentClass->fSymbolTable, test.fChildren[0].fType);
+    Class* cl = fCompiler->getClass(test.fChildren[0].fType);
     String resultValue;
     if (cl->isValue()) {
         String field = this->nextVar();
@@ -1175,7 +1171,7 @@ String LLVMCodeGenerator::getIsNonNullReference(const IRNode& test, std::ostream
     if (test.fChildren[0].fType.fCategory != Type::Category::NULLABLE) {
         return "{ i8 0 }";
     }
-    Class* cl = fCompiler->resolveClass(fCurrentClass->fSymbolTable, test.fChildren[0].fType);
+    Class* cl = fCompiler->getClass(test.fChildren[0].fType);
     String resultValue;
     if (cl->isValue()) {
         resultValue = this->nextVar();
@@ -1259,8 +1255,7 @@ String LLVMCodeGenerator::getLValue(const IRNode& lvalue, std::ostream& out) {
         case IRNode::Kind::FIELD_REFERENCE: {
             String base = this->getReference(lvalue.fChildren[0], out);
             String ptr = this->nextVar();
-            Class* cl = fCompiler->resolveClass(fCurrentClass->fSymbolTable,
-                    lvalue.fChildren[0].fType);
+            Class* cl = fCompiler->getClass(lvalue.fChildren[0].fType);
             ASSERT(cl);
             std::vector<const Field*> fields = fCompiler->getInstanceFields(*cl);
             int index = -1;
@@ -1581,7 +1576,7 @@ void LLVMCodeGenerator::writeRangeFor(const IRNode& f, std::ostream& out) {
     else {
         indexType = llt;
     }
-    Class* cl = fCompiler->resolveClass(fCurrentClass->fSymbolTable, type);
+    Class* cl = fCompiler->getClass(type);
     ASSERT(cl);
     ASSERT(fCompiler->getInstanceFields(*cl).size() == 1);
     String numberType = this->llvmType(fCompiler->getInstanceFields(*cl)[0]->fType);
@@ -1832,7 +1827,7 @@ void LLVMCodeGenerator::writeReturn(const IRNode& r, std::ostream& out) {
     }
     else {
         ASSERT(r.fChildren.size() == 0);
-        out << "ret void\n`";
+        out << "ret void\n";
     }
 }
 
@@ -1954,7 +1949,7 @@ String LLVMCodeGenerator::defaultValue(const Type& type) {
         result += "0";
     }
     else {
-        Class* cl = fCompiler->resolveClass(fCurrentClass->fSymbolTable, type);
+        Class* cl = fCompiler->getClass(type);
         if (cl->isValue()) {
             result += "{";
             const char* separator = " ";

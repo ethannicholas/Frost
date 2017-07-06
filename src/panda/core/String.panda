@@ -2,6 +2,12 @@ package panda.core
 
 class String {
     @private
+    def data:Pointer<Char8>
+
+    @private
+    def size:Int
+
+    @private
     init(data:Pointer<Char8>, size:Int) {
         self.data := data
         self.size := size
@@ -244,10 +250,4 @@ class String {
     function hash():Int {
         return 0
     }
-
-    @private
-    def data:Pointer<Char8>
-
-    @private
-    def size:Int
 }
