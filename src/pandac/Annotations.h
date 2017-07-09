@@ -9,7 +9,8 @@ public:
         OVERRIDE  = 1 << 4,
         EXTERNAL  = 1 << 5,
         IMPLICIT  = 1 << 6,
-        FINAL     = 1 << 7
+        FINAL     = 1 << 7,
+        ABSTRACT  = 1 << 8
     };
 
     Annotations()
@@ -44,6 +45,10 @@ public:
 
     bool isFinal() const {
         return (fFlags & FINAL) != 0;
+    }
+
+    bool isAbstract() const {
+        return (fFlags & ABSTRACT) != 0;
     }
 
 private:

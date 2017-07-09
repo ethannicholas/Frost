@@ -474,25 +474,21 @@ int Compiler::coercionCost(const Type& type, const Type& target) {
         return result;
     }
     if (type.fCategory == Type::Category::CLASS && target.fCategory == Type::Category::CLASS) {
-        int cost = 0;
-        Class* ancestor = this->resolveClass(fCurrentClass.top()->fSymbolTable, type);
-        Class* targetClass = this->resolveClass(fCurrentClass.top()->fSymbolTable, target);
-        if (!ancestor || !targetClass) {
+        int cost = INT_MAX;
+        Class* cl = this->resolveClass(fCurrentClass.top()->fSymbolTable, type);
+        if (!cl) {
             return INT_MAX;
         }
-        for (;;) {
-            if (ancestor == targetClass) {
-                return cost;
-            }
-            ++cost;
-            if (ancestor->fSuper == Type::Void()) {
-                break;
-            }
-            ancestor = this->resolveClass(fCurrentClass.top()->fSymbolTable, ancestor->fSuper);
-            if (ancestor == nullptr) {
-                break;
-            }
+        if (cl->fSuper != Type::Void()) {
+            cost = std::min(cost, this->coercionCost(cl->fSuper, target));
         }
+        for (const auto& intf : cl->fInterfaces) {
+            cost = std::min(cost, this->coercionCost(intf, target));
+        }
+        if (cost != INT_MAX) {
+            ++cost;
+        }
+        return cost;
     }
     if (type == Type::BuiltinBit()) {
         return this->coercionCost(Type::Bit(), target);
@@ -597,14 +593,13 @@ int Compiler::coercionCost(const IRNode& node, const Type& target) {
 }
 
 bool Compiler::canCast(const IRNode& node, const Type& target) {
-    // unfinished
     if (this->coercionCost(node, target) != INT_MAX) {
         return true;
     }
     if (node.fType.isBuiltinNumber() && target.isBuiltinNumber()) {
         return true;
     }
-    return false;
+    return coercionCost(target, node.fType) != INT_MAX;
 }
 
 bool Compiler::cast(Position p, IRNode* node, bool isExplicit, const Type& target, IRNode* out) {
@@ -2553,6 +2548,9 @@ void Compiler::resolveType(Field* f) {
 
 void Compiler::findClassesAndResolveTypes(Class& cl) {
     this->resolveType(cl.fSymbolTable, &cl.fSuper);
+    for (auto& intf : cl.fInterfaces) {
+        this->resolveType(cl.fSymbolTable, &intf);
+    }
     if (cl.isValue()) {
         cl.fAnnotations.fFlags |= Annotations::Flag::FINAL;
     }
@@ -2609,6 +2607,14 @@ void Compiler::buildVTable(Class& cl) {
         cl.fSymbolTable.fParents.push_back(&super->fSymbolTable);
         this->buildVTable(*super);
         cl.fVirtualMethods = super->fVirtualMethods;
+    }
+    for (const auto& intfType : cl.fInterfaces) {
+        Class* intf = this->resolveClass(cl.fSymbolTable, intfType);
+        if (!intf) {
+            return;
+        }
+        cl.fSymbolTable.fParents.push_back(&intf->fSymbolTable);
+        this->buildVTable(*intf);
     }
     for (const Method* derived : cl.fMethods) {
         if (derived->fMethodKind == Method::Kind::INIT || derived->fAnnotations.isClass()) {
@@ -2667,30 +2673,37 @@ bool Compiler::inferFieldType(Field* field) {
         return false;
     }
     fCurrentlyInferring.insert(field);
+    bool result = this->processFieldValue(field);
+    fCurrentlyInferring.erase(field);
+    return result;
+}
+
+bool Compiler::processFieldValue(Field* field) {
     ASSERT(fScanner.fFieldDescriptors.find(field) != fScanner.fFieldDescriptors.end());
     Scanner::FieldDescriptor& desc = fScanner.fFieldDescriptors[field];
     ASSERT(desc.fValueIndex < fScanner.fFieldValues.size());
     Scanner::FieldValue& value = fScanner.fFieldValues[desc.fValueIndex];
+    SymbolTable* old = fSymbolTable;
     if (value.fConvertedValue.fKind == IRNode::Kind::VOID) {
         fCurrentClass.push(&field->fOwner);
-        SymbolTable* old = fSymbolTable;
         fSymbolTable = &field->fOwner.fSymbolTable;
         if (!this->convertExpression(*value.fUnconvertedValue, &value.fConvertedValue)) {
             fCurrentClass.pop();
             fSymbolTable = old;
-            fCurrentlyInferring.erase(field);
             return false;
         }
         fCurrentClass.pop();
         fSymbolTable = old;
-        fCurrentlyInferring.erase(field);
     }
     ASSERT(desc.fTupleIndices.size() == 0); // until tuple support is in...
     field->fValue = &value.fConvertedValue;
-    field->fType = variable_type(*field->fValue);
     fCurrentClass.push(&field->fOwner);
     fSymbolTable = &field->fOwner.fSymbolTable;
+    if (field->fType == Type::Void()) {
+        field->fType = variable_type(*field->fValue);
+    }
     this->coerce(field->fValue, field->fType);
+    fSymbolTable = old;
     fCurrentClass.pop();
     fFieldInitializationOrder.push_back(field);
     return true;
@@ -2698,7 +2711,7 @@ bool Compiler::inferFieldType(Field* field) {
 
 bool Compiler::processFieldValues() {
     for (auto pair : fScanner.fFieldDescriptors) {
-        if (!this->inferFieldType(pair.first)) {
+        if (!this->processFieldValue(pair.first)) {
             return false;
         }
     }

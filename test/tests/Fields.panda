@@ -22,6 +22,18 @@ class Untyped {
     var untyped := 12
 }
 
+class TypedDefaultInit {
+    var value:Int := 47
+}
+
+class TypedExplicitInit {
+    var value:Int := 48
+
+    init() {
+        Console.printLine("initing!")
+    }
+}
+
 class Fields {
     @class
     method main() {
@@ -39,5 +51,9 @@ class Fields {
         Console.printLine(p1.y)
 
         Console.printLine(Untyped().untyped)
+
+        Console.printLine(TypedDefaultInit().value)
+
+        Console.printLine(TypedExplicitInit().value)
     }
 }

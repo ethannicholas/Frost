@@ -242,6 +242,8 @@ private:
 
     bool inferFieldType(Field* field);
 
+    bool processFieldValue(Field* field);
+
     bool processFieldValues();
 
     void error(Position position, String msg);

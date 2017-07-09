@@ -155,6 +155,9 @@ void Scanner::convertMethod(ASTNode* m, SymbolTable* st, Class* owner) {
     ASSERT(m->fText != "init");
     ASSERT(m->fChildren.size() == 6);
     Annotations annotations = this->convertAnnotations(m->fChildren[1]);
+    if (owner->fClassKind == Class::ClassKind::INTERFACE) {
+        annotations.fFlags |= Annotations::Flag::ABSTRACT;
+    }
     ASSERT(m->fChildren[2].fKind == ASTNode::Kind::PARAMETERS);
     std::vector<Method::Parameter> parameters;
     for (const auto& p : m->fChildren[2].fChildren) {
@@ -220,7 +223,6 @@ void Scanner::scanClass(String contextName, std::vector<Class::UsesDeclaration> 
             parameters.emplace_back(p.fPosition, fullName, p.fText, std::move(type));
         }
     }
-    ASSERT(cl->fChildren[5].fKind == ASTNode::Kind::CLASS_MEMBERS);
     Type superclass;
     if (cl->fChildren[3].fKind == ASTNode::Kind::VOID) {
         if (fullName != "panda.core.Object") {
@@ -229,6 +231,14 @@ void Scanner::scanClass(String contextName, std::vector<Class::UsesDeclaration> 
     }
     else {
         superclass = this->convertType(cl->fChildren[3], *parent);
+    }
+    std::vector<Type> interfaces;
+    if (cl->fChildren[4].fKind != ASTNode::Kind::VOID) {
+        ASSERT(cl->fChildren[4].fKind == ASTNode::Kind::TYPES);
+        for (const ASTNode& node : cl->fChildren[4].fChildren) {
+            Type t = this->convertType(node, *parent);
+            interfaces.push_back(std::move(t));
+        }
     }
     if (annotations.isClass()) {
         this->error(cl->fPosition, "'@class' annotation may not be applied to classes");
@@ -242,11 +252,12 @@ void Scanner::scanClass(String contextName, std::vector<Class::UsesDeclaration> 
     if (annotations.isOverride()) {
         this->error(cl->fPosition, "'@override' annotation may not be applied to classes");
     }
-    Class* result = new Class(cl->fPosition, uses, annotations, fullName, parameters, parent,
-            superclass);
+    Class* result = new Class(cl->fPosition, Class::ClassKind::CLASS, uses, annotations, fullName,
+            parameters, parent, superclass, interfaces);
     SymbolTable& symbols = result->fSymbolTable;
     parent->add(cl->fText, std::unique_ptr<Symbol>(result));
     bool foundInit = false;
+    ASSERT(cl->fChildren[5].fKind == ASTNode::Kind::CLASS_MEMBERS);
     for (auto& child : cl->fChildren[5].fChildren) {
         switch (child.fKind) {
             case ASTNode::Kind::METHOD: // fall through
@@ -277,6 +288,74 @@ void Scanner::scanClass(String contextName, std::vector<Class::UsesDeclaration> 
     }
 }
 
+void Scanner::scanInterface(String contextName, std::vector<Class::UsesDeclaration> uses,
+        SymbolTable* parent, ASTNode* cl) {
+    ASSERT(cl->fKind == ASTNode::Kind::INTERFACE);
+    ASSERT(cl->fChildren.size() == 5);
+    Annotations annotations = this->convertAnnotations(cl->fChildren[1]);
+    String fullName = contextName;
+    if (fullName.size()) {
+        fullName += ".";
+    }
+    fullName += cl->fText;
+    std::vector<Class::GenericParameter> parameters;
+    if (cl->fChildren[2].fKind != ASTNode::Kind::VOID) {
+        ASSERT(cl->fChildren[2].fKind == ASTNode::Kind::GENERICS);
+        for (const auto& p : cl->fChildren[2].fChildren) {
+            ASSERT(p.fKind == ASTNode::Kind::IDENTIFIER);
+            Type type;
+            if (p.fChildren.size() > 0) {
+                abort();
+            }
+            else {
+                type = Type::Any();
+            }
+            parameters.emplace_back(p.fPosition, fullName, p.fText, std::move(type));
+        }
+    }
+    std::vector<Type> superinterfaces;
+    if (cl->fChildren[3].fKind != ASTNode::Kind::VOID) {
+        ASSERT(cl->fChildren[3].fKind == ASTNode::Kind::TYPES);
+    }
+    ASSERT(cl->fChildren[4].fKind == ASTNode::Kind::CLASS_MEMBERS);
+    if (annotations.isClass()) {
+        this->error(cl->fPosition, "'@class' annotation may not be applied to interfaces");
+    }
+    if (annotations.isPrivate()) {
+        this->error(cl->fPosition, "'@private' annotation may not be applied to interfaces");
+    }
+    if (annotations.isProtected()) {
+        this->error(cl->fPosition, "'@protected' annotation may not be applied to interfaces");
+    }
+    if (annotations.isOverride()) {
+        this->error(cl->fPosition, "'@override' annotation may not be applied to interfaces");
+    }
+    Class* result = new Class(cl->fPosition, Class::ClassKind::INTERFACE, uses, annotations,
+            fullName, parameters, parent, Type::Object(), superinterfaces);
+    SymbolTable& symbols = result->fSymbolTable;
+    parent->add(cl->fText, std::unique_ptr<Symbol>(result));
+    for (auto& child : cl->fChildren[4].fChildren) {
+        switch (child.fKind) {
+            case ASTNode::Kind::METHOD: // fall through
+            case ASTNode::Kind::FUNCTION:
+                this->convertMethod(&child, &symbols, result);
+                break;
+            case ASTNode::Kind::FIELD:
+                this->convertField(&child, &symbols, result);
+                break;
+            case ASTNode::Kind::INIT:
+                this->error(child.fPosition, "interfaces may not contain init methods");
+                break;
+            case ASTNode::Kind::CLASS:
+                this->scanClass(fullName, uses, &symbols, &child);
+                break;
+            default:
+                printf("unsupported child: %s\n", child.description().c_str());
+                abort();
+        }
+    }
+}
+
 void Scanner::scan(ASTNode* file, SymbolTable* root) {
     ASSERT(file->fKind == ASTNode::Kind::BODY_ENTRIES);
     String contextName;
@@ -296,6 +375,7 @@ void Scanner::scan(ASTNode* file, SymbolTable* root) {
     uses.push_back({ Position(), "panda.core.String", "String" });;
     uses.push_back({ Position(), "panda.core.System", "System" });;
     uses.push_back({ Position(), "panda.io.Console", "Console" });;
+    uses.push_back({ Position(), "panda.math.Random", "Random" });;
     uses.push_back({ Position(), "panda.math.XorShift128Plus", "XorShift128Plus" });;
     for (auto& e : file->fChildren) {
         switch (e.fKind) {
@@ -338,6 +418,9 @@ void Scanner::scan(ASTNode* file, SymbolTable* root) {
             }
             case ASTNode::Kind::CLASS:
                 this->scanClass(contextName, uses, currentTable, &e);
+                break;
+            case ASTNode::Kind::INTERFACE:
+                this->scanInterface(contextName, uses, currentTable, &e);
                 break;
             default:
                 break;

@@ -8,10 +8,16 @@
 #include <unordered_map>
 #include <vector>
 
+class Compiler;
 struct Field;
 struct Method;
 
 struct Class : public Symbol {
+    enum class ClassKind {
+        CLASS,
+        INTERFACE
+    };
+
     struct UsesDeclaration {
         Position fPosition;
 
@@ -36,16 +42,18 @@ struct Class : public Symbol {
 
     Class(const Class&) = delete;
 
-    Class(Position position, std::vector<UsesDeclaration> uses, Annotations annotations,
-            String name, std::vector<GenericParameter> parameters, SymbolTable* parent,
-            Type superclass)
+    Class(Position position, ClassKind kind, std::vector<UsesDeclaration> uses,
+            Annotations annotations, String name, std::vector<GenericParameter> parameters,
+            SymbolTable* parent, Type superclass, std::vector<Type> interfaces)
     : INHERITED(position, Kind::CLASS, std::move(name))
+    , fClassKind(kind)
     , fUses(std::move(uses))
     , fAnnotations(std::move(annotations))
     , fAliasTable(parent, this)
     , fSymbolTable(&fAliasTable, this)
     , fParameters(std::move(parameters))
     , fSuper(std::move(superclass))
+    , fInterfaces(std::move(interfaces))
     , fType(fPosition, Type::Category::CLASS, fName) {
         for (auto& p : fParameters) {
             fSymbolTable.addAlias(p.fName, &p);
@@ -55,6 +63,14 @@ struct Class : public Symbol {
     bool isValue() const {
         return fSuper.fName == "panda.core.Value";
     }
+
+    const Method* findMethod(const Method& m, Compiler& compiler) const;
+
+    std::set<const Class*> allInterfaces(Compiler& compiler) const;
+
+    std::vector<const Method*> interfaceMethods(const Class& intf, Compiler& compiler) const;
+
+    ClassKind fClassKind;
 
     std::vector<UsesDeclaration> fUses;
 
@@ -78,6 +94,8 @@ struct Class : public Symbol {
     std::vector<const Method*> fMethods;
 
     Type fSuper;
+
+    std::vector<Type> fInterfaces;
 
     Type fType;
 

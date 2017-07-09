@@ -60,6 +60,8 @@ private:
 
     size_t sizeOf(const Type& type);
 
+    String getITable(const Class& cl);
+
     ClassConstant& getClassConstant(const Class& cl);
 
     ClassConstant& getWrapperClassConstant(const Class& cl);
@@ -111,9 +113,11 @@ private:
 
     String getPrefixReference(const IRNode& expr, std::ostream& out);
 
-    String getVirtualMethodReference(const String& target, const Method* m, std::ostream& out);
+    String getVirtualMethodReference(const String& target, const Method& m, std::ostream& out);
 
-    String getMethodReference(const String& target, const Method* m, bool isSuper,
+    String getInterfaceMethodReference(const String& target, const Method& m, std::ostream& out);
+
+    String getMethodReference(const String& target, const Method& m, bool isSuper,
             std::ostream& out);
 
     String getPointerCallReference(const IRNode& call, std::ostream& out);

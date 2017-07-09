@@ -61,6 +61,9 @@ private:
     void scanClass(String contextName, std::vector<Class::UsesDeclaration> uses,
             SymbolTable* parent, ASTNode* cl);
 
+    void scanInterface(String contextName, std::vector<Class::UsesDeclaration> uses,
+            SymbolTable* parent, ASTNode* cl);
+
     void error(Position position, String msg);
 
     ErrorReporter& fErrors;

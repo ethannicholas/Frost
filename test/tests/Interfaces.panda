@@ -1,0 +1,82 @@
+interface Intf1 {
+    function number():Int
+
+    method action()
+}
+
+interface Intf2 {
+    function string():String
+}
+
+class Test1 (Intf1, Intf2) {
+    @override
+    method action() {
+        Console.printLine("action1!")
+    }
+
+    @override
+    function string():String {
+        return "string1!"
+    }
+
+    @override
+    function number():Int {
+        return 12
+    }
+}
+
+class Test2 (Intf1) {
+    @override
+    function number():Int {
+        return 5
+    }
+
+    @override
+    method action() {
+        Console.printLine("action2!")
+    }
+}
+
+class Test3 : Test2 {
+}
+
+class Test4 : Test3 (Intf2) {
+    @override
+    function string():String {
+        return "string2!"
+    }
+}
+
+class Test5 {
+    function string():String {
+        return "string3!"
+    }
+}
+
+class Test6 : Test5 (Intf2) {
+}
+
+class Interfaces {
+    @class
+    method main() {
+        def i1:Intf1 := Test1()
+        i1.action()
+        Console.printLine(i1.number())
+        i1 := Test2()
+        i1.action()
+        Console.printLine(i1.number())
+        i1 := Test3()
+        i1.action()
+        Console.printLine(i1.number())
+        i1 := Test4()
+        i1.action()
+        Console.printLine(i1.number())
+
+        def i2:Intf2 := Test1()
+        Console.printLine(i2.string())
+        i2 := Test4()
+        Console.printLine(i2.string())
+        i2 := Test6()
+        Console.printLine(i2.string())
+    }
+}

@@ -12,6 +12,7 @@ include_directories(
 add_executable(pandac
     src/parser/lex.panda.cpp
     src/parser/PandaParser.cpp
+    src/pandac/Class.cpp
     src/pandac/Compiler.cpp
     src/pandac/LLVMCodeGenerator.cpp
     src/pandac/Main.cpp

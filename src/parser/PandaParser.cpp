@@ -588,8 +588,8 @@ bool PandaParser::choiceDeclaration(ASTNode* outResult, ASTNode doccomment,
     abort();
 }
 
-// classDeclaration = doccomment? annotations CLASS IDENTIFIER genericsDeclaration? typeDeclaration?
-//         interfaces? LBRACE declaration* RBRACE
+// classDeclaration = CLASS IDENTIFIER genericsDeclaration? typeDeclaration? interfaces? LBRACE
+//         declaration* RBRACE
 bool PandaParser::classDeclaration(ASTNode* outResult, ASTNode doccomment, ASTNode annotations) {
     std::vector<ASTNode> children;
     children.push_back(std::move(doccomment));
@@ -1049,9 +1049,57 @@ bool PandaParser::initDeclaration(ASTNode* outResult, ASTNode doccomment, ASTNod
     return true;
 }
 
+// interfaceDeclaration = INTERFACE IDENTIFIER genericsDeclaration? (COLON type (COMMA type)*)?
+//         LBRACE declaration* RBRACE
 bool PandaParser::interfaceDeclaration(ASTNode* outResult, ASTNode doccomment,
         ASTNode annotations) {
-    abort();
+    std::vector<ASTNode> children;
+    children.push_back(std::move(doccomment));
+    children.push_back(std::move(annotations));
+    Token start;
+    if (!this->expect(Token::Kind::INTERFACE, "'interface'", &start)) {
+        return false;
+    }
+    Token name;
+    if (!this->expect(Token::Kind::IDENTIFIER, "an identifier", &name)) {
+        return false;
+    }
+    ASTNode genericsDeclaration;
+    if (peek().fKind == Token::Kind::LT && !this->genericsDeclaration(&genericsDeclaration)) {
+        return false;
+    }
+    children.push_back(std::move(genericsDeclaration));
+    std::vector<ASTNode> interfaces;
+    if (this->checkNext(Token::Kind::COLON)) {
+        ASTNode type;
+        if (!this->type(&type)) {
+            return false;
+        }
+        interfaces.push_back(std::move(type));
+        while (this->checkNext(Token::Kind::COMMA)) {
+            if (!this->type(&type)) {
+                return false;
+            }
+            interfaces.push_back(std::move(type));
+        }
+    }
+    children.emplace_back(start.fPosition, ASTNode::Kind::TYPES, std::move(interfaces));
+    Token brace;
+    if (!this->expect(Token::Kind::LBRACE, "'{'", &brace)) {
+        return false;
+    }
+    std::vector<ASTNode> members;
+    while (!this->checkNext(Token::Kind::RBRACE)) {
+        ASTNode member;
+        if (!this->declaration(&member)) {
+            return false;
+        }
+        members.push_back(std::move(member));
+    }
+    children.emplace_back(brace.fPosition, ASTNode::Kind::CLASS_MEMBERS, std::move(members));
+    *outResult = ASTNode(start.fPosition, ASTNode::Kind::INTERFACE, name.fText,
+            std::move(children));
+    return true;
 }
 
 // interfaces = LPAREN type (COMMA type)* RPAREN
@@ -1061,12 +1109,20 @@ bool PandaParser::interfaces(ASTNode* outResult) {
     if (!this->expect(Token::Kind::LPAREN, "'('", &start)) {
         return false;
     }
-    while (!this->checkNext(Token::Kind::RPAREN)) {
+    ASTNode type;
+    if (!this->type(&type)) {
+        return false;
+    }
+    children.push_back(std::move(type));
+    while (this->checkNext(Token::Kind::COMMA)) {
         ASTNode type;
         if (!this->type(&type)) {
             return false;
         }
         children.push_back(std::move(type));
+    }
+    if (!this->expect(Token::Kind::RPAREN, "')'")) {
+        return false;
     }
     *outResult = ASTNode(start.fPosition, ASTNode::Kind::TYPES, std::move(children));
     return true;

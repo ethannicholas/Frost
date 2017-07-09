@@ -31,5 +31,11 @@ class NullComparisons {
         Console.printLine(b != null)
         Console.printLine(b == null)
         Console.printLine(b !== null)
+        Console.printLine()
+
+        Console.printLine("Non-Nullable Value")
+        def n:Int := 12
+        Console.printLine(n = null)
+        Console.printLine(n != null)
     }
 }

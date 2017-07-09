@@ -31,7 +31,7 @@ class HuntTheWumpus {
     constant EXITS  := 3
     constant ARROWS := 5
 
-    def random := XorShift128Plus(1)
+    def random:Random := XorShift128Plus(1)
     var rooms:Array<Room>
     var currentRoom:Room
     var arrows := ARROWS

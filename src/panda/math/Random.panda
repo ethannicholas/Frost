@@ -1,0 +1,7 @@
+package panda.math
+
+interface Random {
+    method int64():Int64
+
+    method int(n:Int64):Int64
+}

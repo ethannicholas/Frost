@@ -3,10 +3,15 @@
 #include "Method.h"
 #include "MethodRef.h"
 
-static constexpr int VTABLE_INDEX = 1;
+static constexpr int CLASS_POINTER_INDEX = 0;
+static constexpr int ITABLE_INDEX = 2;
+static constexpr int VTABLE_INDEX = 3;
 static constexpr int POINTER_SIZE = 8;
 static constexpr int OBJECT_FIELD_COUNT = 2;
+#define INT_T "i64"
 #define SIZE_T "i64"
+#define SHARED_LINKAGE "weak_odr"
+
 
 class AutoLoopDescriptor {
 public:
@@ -38,6 +43,7 @@ LLVMCodeGenerator::LLVMCodeGenerator(std::ostream* out)
 #else
     unsupported operating system
 #endif
+    fOut << "%$itable = type { %panda$core$Class*, %$itable*, [0 x i8*] }\n";
 
     fOut << "declare i8* @malloc(" SIZE_T ")\n";
     fOut << "declare i8* @realloc(i8*, " SIZE_T ")\n";
@@ -140,11 +146,45 @@ static bool is_virtual(const Method& method) {
             !method.fAnnotations.isFinal();
 }
 
+String LLVMCodeGenerator::getITable(const Class& cl) {
+    std::set<const Class*> interfaces = cl.allInterfaces(*fCompiler);
+    String previous = "%$itable* null";
+    for (const Class* intf : interfaces) {
+        ClassConstant& intfCC = this->getClassConstant(*intf);
+        std::vector<const Method*> methods = cl.interfaceMethods(*intf, *fCompiler);
+        String name = "@" + escape_type_name(cl.fName) + "$." + escape_type_name(intf->fName);
+        String type = "{ " + this->llvmType(Type::Class()) + ", %$itable*, [" +
+                std::to_string(methods.size()) + " x i8*] }";
+        String result;
+        result += name + " = " + SHARED_LINKAGE + " constant ";
+        result += type + " { " + this->llvmType(Type::Class()) + " bitcast(" + intfCC.fType +
+                "* " + intfCC.fName + " to " + this->llvmType(Type::Class()) + "), " + previous +
+                ", [" + std::to_string(methods.size()) + " x i8*][";
+        const char* separator = "";
+        for (const Method* m : methods) {
+            result += separator;
+            separator = ", ";
+            if (m->fAnnotations.isAbstract()) {
+                result += "i8* null";
+            }
+            else {
+                result += "i8* bitcast(" + this->llvmType(*m) + " " + this->methodName(*m) +
+                        " to i8*)";
+            }
+        }
+        result += "] }\n";
+        fTypeDeclarations << result;
+        previous = "%$itable* bitcast(" + type + "* " + name + " to %$itable*)";
+    }
+    return previous;
+}
+
 LLVMCodeGenerator::ClassConstant& LLVMCodeGenerator::getClassConstant(const Class& cl) {
     auto found = fClassConstants.find(cl.fName);
     if (found == fClassConstants.end()) {
         ClassConstant cc("@" + escape_type_name(cl.fType.fName) + "$class",
-                "{ i8*, [" + std::to_string(cl.fVirtualMethods.size()) + " x i8*] }");
+                "{ i8*, " INT_T ", %$itable*, [" + std::to_string(cl.fVirtualMethods.size()) +
+                " x i8*] }");
         fClassConstants[cl.fName] = cc;
         String super;
         if (cl.fSuper != Type::Void()) {
@@ -154,12 +194,20 @@ LLVMCodeGenerator::ClassConstant& LLVMCodeGenerator::getClassConstant(const Clas
         else {
             super = "null";
         }
-        String code = cc.fName + " = constant " + cc.fType + " { i8* " + super + ", [" + 
-                std::to_string(cl.fVirtualMethods.size()) + " x i8*] [";
+        String itable = this->getITable(cl);
+        String code = cc.fName + " = constant " + cc.fType + " { i8* " + super +
+                (", " INT_T " 1, ") + itable + ", [" + std::to_string(cl.fVirtualMethods.size()) +
+                " x i8*] [";
         const char* separator = "";
         for (const Method* m : cl.fVirtualMethods) {
-            code += separator + ("i8* bitcast(" + this->llvmType(*m)) + " " + this->methodName(*m) +
-                    " to i8*)";
+            code += separator;
+            if (m->fAnnotations.isAbstract()) {
+                code += "i8* null";
+            }
+            else {
+                code += ("i8* bitcast(" + this->llvmType(*m)) + " " + this->methodName(*m) +
+                        " to i8*)";
+            }
             separator = ", ";
         }
         code += "] }\n";
@@ -181,12 +229,14 @@ LLVMCodeGenerator::ClassConstant& LLVMCodeGenerator::getWrapperClassConstant(con
     if (found == fClassConstants.end()) {
         Class& value = *fCompiler->getClass(Type::Value());
         ClassConstant cc("@" + escape_type_name(cl.fType.fName) + "$wrapperclass",
-                "{ i8*, [" + std::to_string(value.fVirtualMethods.size()) + " x i8*] }");
+                "{ i8*, " INT_T ", %$itable*, [" + std::to_string(value.fVirtualMethods.size()) +
+                " x i8*] }");
         fClassConstants[name] = cc;
         const ClassConstant& superCC = this->getClassConstant(*fCompiler->getClass(cl.fSuper));
         String super = "bitcast(" + superCC.fType + "* " + superCC.fName + " to i8*)";
-        String code = cc.fName + " = constant " + cc.fType + " { i8* " + super + ", [" +
-                std::to_string(value.fVirtualMethods.size()) + " x i8*] [";
+        String code = cc.fName + " = constant " + cc.fType + " { i8* " + super +
+                ", " INT_T " 1, %$itable* null, [" + std::to_string(value.fVirtualMethods.size()) +
+                " x i8*] [";
         const char* separator = "";
         for (int i = 0; i < value.fVirtualMethods.size(); ++i) {
             const Method* m = cl.fVirtualMethods[i];
@@ -265,6 +315,9 @@ void LLVMCodeGenerator::writeType(const Type& type) {
         for (const String& t : types) {
             fTypeDeclarations << separator << t;
             separator = ", ";
+        }
+        if (type == Type::Class()) {
+            fTypeDeclarations << ", %$itable*";
         }
         fTypeDeclarations << " }\n";
         for (const Field* f : cl->fFields) {
@@ -635,14 +688,19 @@ String LLVMCodeGenerator::getPrefixReference(const IRNode& expr, std::ostream& o
     }
 }
 
-String LLVMCodeGenerator::getMethodReference(const String& target, const Method* m, bool isSuper,
+String LLVMCodeGenerator::getMethodReference(const String& target, const Method& m, bool isSuper,
         std::ostream& out) {
-    if (!isSuper && is_virtual(*m)) {
+    if (!isSuper && is_virtual(m)) {
         ASSERT(target.size());
-        return this->getVirtualMethodReference(target, m, out);
+        if (m.fOwner.fClassKind == Class::ClassKind::INTERFACE) {
+            return this->getInterfaceMethodReference(target, m, out);
+        }
+        else {
+            return this->getVirtualMethodReference(target, m, out);
+        }
     }
     else {
-        return this->methodName(*m);
+        return this->methodName(m);
     }
 }
 
@@ -757,7 +815,7 @@ String LLVMCodeGenerator::getCallReference(const IRNode& call, std::ostream& out
     ASSERT(call.fChildren[0].fKind == IRNode::Kind::METHOD_REFERENCE);
     String target = args.size() ? args[0] : "";
     bool isSuper = call.fChildren.size() > 1 && call.fChildren[1].fKind == IRNode::Kind::SUPER;
-    String methodRef = this->getMethodReference(target, m, isSuper, out);
+    String methodRef = this->getMethodReference(target, *m, isSuper, out);
     String result = this->nextVar();
     out << "    " << result << " = call fastcc " << this->llvmType(call.fType) << " " <<
             methodRef << "(";
@@ -1149,7 +1207,7 @@ String LLVMCodeGenerator::getIsNullReference(const IRNode& test, std::ostream& o
     ASSERT(test.fChildren.size() == 1);
     String value = this->getTypedReference(test.fChildren[0], out);
     if (test.fChildren[0].fType.fCategory != Type::Category::NULLABLE) {
-        return "{ i8 0 }";
+        return "{ i1 0 }";
     }
     Class* cl = fCompiler->getClass(test.fChildren[0].fType);
     String resultValue;
@@ -1175,7 +1233,7 @@ String LLVMCodeGenerator::getIsNonNullReference(const IRNode& test, std::ostream
     ASSERT(test.fChildren.size() == 1);
     String value = this->getTypedReference(test.fChildren[0], out);
     if (test.fChildren[0].fType.fCategory != Type::Category::NULLABLE) {
-        return "{ i8 0 }";
+        return "{ i1 1 }";
     }
     Class* cl = fCompiler->getClass(test.fChildren[0].fType);
     String resultValue;
@@ -1374,12 +1432,12 @@ void LLVMCodeGenerator::writeAssignment(const IRNode& a, std::ostream& out) {
     out << "    store " << value << ", " << lvalue << "\n";
 }
 
-String LLVMCodeGenerator::getVirtualMethodReference(const String& target, const Method* m,
+String LLVMCodeGenerator::getVirtualMethodReference(const String& target, const Method& m,
         std::ostream& out) {
-    const ClassConstant& cc = this->getClassConstant(m->fOwner);
+    const ClassConstant& cc = this->getClassConstant(m.fOwner);
     int index = -1;
-    for (int i = 0; i < m->fOwner.fVirtualMethods.size(); ++i) {
-        if (m->fOwner.fVirtualMethods[i] == m) {
+    for (int i = 0; i < m.fOwner.fVirtualMethods.size(); ++i) {
+        if (m.fOwner.fVirtualMethods[i] == &m) {
             index = i;
             break;
         }
@@ -1387,7 +1445,7 @@ String LLVMCodeGenerator::getVirtualMethodReference(const String& target, const 
     ASSERT(index != -1);
     String classPtrPtr = this->nextVar();
     out << "    " << classPtrPtr << " = getelementptr inbounds " <<
-            this->llvmTypeName(m->fOwner.fType) << ", " << target << ", i64 0, i32 0\n";
+            this->llvmTypeName(m.fOwner.fType) << ", " << target << ", i64 0, i32 0\n";
     String classPtr = this->nextVar();
     out << "    " << classPtr << " = load %panda$core$Class*, %panda$core$Class** " << classPtrPtr
             << "\n";
@@ -1400,8 +1458,78 @@ String LLVMCodeGenerator::getVirtualMethodReference(const String& target, const 
     String load = this->nextVar();
     out << "    " << load << " = load i8*, i8** " << ptr << "\n";
     String result = this->nextVar();
-    out << "    " << result << " = bitcast i8* " << load << " to " << this->llvmType(*m) << "\n";
+    out << "    " << result << " = bitcast i8* " << load << " to " << this->llvmType(m) << "\n";
     return result;
+}
+
+String LLVMCodeGenerator::getInterfaceMethodReference(const String& target, const Method& m,
+        std::ostream& out) {
+    String methodType = llvmType(m);
+    // load class constant entry
+    String entry = this->nextLabel();
+    out << "br label %" << entry << "\n";
+    this->createBlock(entry, out);
+    String classPointer = this->nextVar();
+    out << "    " << classPointer + " = getelementptr inbounds " <<
+            this->llvmTypeName(m.fOwner.fType) << ", " << target << ", " SIZE_T << " 0, i32 " <<
+            CLASS_POINTER_INDEX << "\n";
+    String loadedClass = this->nextVar();
+    String classType = this->llvmTypeName(Type::Class());
+    out << "    " << loadedClass << " = load " << classType << "*, " << classType << "** " <<
+            classPointer << "\n";
+    String itableFirst = this->nextVar();
+    out << "    " << itableFirst << " = getelementptr inbounds " << classType << ", " <<
+            classType << "* " << loadedClass << ", " << SIZE_T << " 0, i32 " << ITABLE_INDEX <<
+            "\n";
+    String next = this->nextLabel();
+    out << "    br label %" << next << "\n";
+    String leavingEntryLabel = fCurrentBlock;
+    this->createBlock(next, out);
+    String itableNext = "%$itable" + std::to_string(++fLabels);
+    String itablePtrPtr = this->nextVar();
+    String fail = this->nextLabel();
+    out << "    " << itablePtrPtr << " = phi %$itable** [ " << itableFirst + ", %" <<
+            leavingEntryLabel << "], [ " << itableNext << ", %" << fail << " ]\n";
+    String itablePtr = this->nextVar();
+    out << "    " << itablePtr << " = load %$itable*, %$itable** " << itablePtrPtr << "\n";
+    String itableClassPtr = this->nextVar();
+    out << "    " << itableClassPtr << " = getelementptr inbounds %$itable, %$itable* " <<
+            itablePtr << ", " << SIZE_T << " 0, i32 0\n";
+    String itableClass = this->nextVar();
+    out << "    " << itableClass << " = load " << classType << "*, " << classType << "** " <<
+            itableClassPtr << "\n";
+    String test = this->nextVar();
+    ClassConstant& intfCC = getClassConstant(m.fOwner);
+    out << "    " << test << " = icmp eq " << classType << "* bitcast(" << intfCC.fType << "* " <<
+            intfCC.fName << " to " << classType << "*), " << itableClass << "\n";
+    String success = this->nextLabel();
+    out << "br i1 " << test << ", label %" << success << ", label %" << fail << "\n";
+
+    this->createBlock(fail, out);
+    out << "    " << itableNext << " = getelementptr inbounds %$itable, %$itable* " << itablePtr <<
+            ", " << SIZE_T << " 0, i32 1\n";
+    out << "br label %" << next << "\n";
+
+    this->createBlock(success, out);
+    int index = -1;
+    for (int i = 0; i < m.fOwner.fVirtualMethods.size(); ++i) {
+        if (m.fOwner.fVirtualMethods[i] == &m) {
+            index = i;
+            break;
+        }
+    }
+    index -= fCompiler->getClass(Type::Object())->fVirtualMethods.size();
+    ASSERT(index != -1);
+    String methodPtrPtr = this->nextVar();
+    out << "    " << methodPtrPtr << " = getelementptr inbounds %$itable, %$itable* " <<
+            itablePtr << ", " SIZE_T " 0, i32 2, i32 " << index << "\n";
+    String cast = this->nextVar();
+    out << "    " << cast << " = bitcast i8** " << methodPtrPtr <<
+            " to " << methodType << "*\n";
+    String methodPtr = this->nextVar();
+    out << "    " << methodPtr << " = load " << methodType << ", " << methodType << "* " << cast <<
+            "\n";
+    return methodPtr;
 }
 
 void LLVMCodeGenerator::writePointerCall(const IRNode& stmt, std::ostream& out) {
@@ -1452,7 +1580,7 @@ void LLVMCodeGenerator::writeCall(const IRNode& stmt, const String& target, std:
     }
     ASSERT(stmt.fChildren[0].fKind == IRNode::Kind::METHOD_REFERENCE);
     bool isSuper = stmt.fChildren.size() > 1 && stmt.fChildren[1].fKind == IRNode::Kind::SUPER;
-    String methodRef = this->getMethodReference(is_virtual(m->fMethod) ? args[0] : "", &m->fMethod,
+    String methodRef = this->getMethodReference(is_virtual(m->fMethod) ? args[0] : "", m->fMethod,
             isSuper, out);
     if (stmt.fType != Type::Void()) {
         this->nextVar();
@@ -1990,6 +2118,7 @@ String LLVMCodeGenerator::defaultValue(const Type& type) {
     }
     else {
         Class* cl = fCompiler->getClass(type);
+        ASSERT(cl);
         if (cl->isValue()) {
             result += "{";
             const char* separator = " ";

@@ -120,6 +120,7 @@ int main(int argc, char** argv) {
     sources.push_back(PANDA_HOME + "panda/core/System.panda");
     sources.push_back(PANDA_HOME + "panda/core/Value.panda");
     sources.push_back(PANDA_HOME + "panda/io/Console.panda");
+    sources.push_back(PANDA_HOME + "panda/math/Random.panda");
     sources.push_back(PANDA_HOME + "panda/math/XorShift128Plus.panda");
     String dest;
     for (int i = 1; i < argc; i++) {
