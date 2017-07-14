@@ -1,0 +1,41 @@
+class Super1 {
+    function foo():String
+}
+
+class Super2 : Super1 {
+    method foo():Int
+}
+
+interface Intf {
+    function foo():Int
+}
+
+class Sub1 : Super2 {
+    function foo():String {
+        return "Hello"
+    }
+}
+
+class Sub2 : Super1 {
+    function foo():String {
+        return "Hello"
+    }
+}
+
+class Sub3 (Intf) {
+    function foo():Int {
+        return 42
+    }   
+}
+
+class Sub4 : Super1 {
+    function foo():Int {
+        return 42
+    }
+}
+
+class Sub5 : Super2 {
+    function foo():Int {
+        return 42
+    }
+}

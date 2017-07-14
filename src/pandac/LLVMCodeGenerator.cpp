@@ -60,7 +60,7 @@ LLVMCodeGenerator::LLVMCodeGenerator(std::ostream* out)
     fMethods << "declare i64 @getchar()\n";
     fMethods << "declare i64 @printf(i8*, ...)\n";
     fMethods << "define fastcc void @panda$io$Console$print$panda$core$Char8(%panda$core$Char8 %c) {\n";
-    fMethods << "    %1 = extractvalue %panda$core$Char8 %c, 0;\n";
+    fMethods << "    %1 = extractvalue %panda$core$Char8 %c, 0\n";
     fMethods << "    %2 = sext i8 %1 to i64\n";
     fMethods << "    call i64 @putchar(i64 %2)\n";
     fMethods << "    ret void\n";
@@ -146,12 +146,18 @@ static bool is_virtual(const Method& method) {
             !method.fAnnotations.isFinal();
 }
 
+void LLVMCodeGenerator::getMethodTableEntry(const Method& m, String* outName, String* outType) {
+    *outName = this->methodName(m);
+    *outType = this->llvmType(m.inheritedTypeWithSelf(*fCompiler));
+}
+
 String LLVMCodeGenerator::getITable(const Class& cl) {
-    std::set<const Class*> interfaces = cl.allInterfaces(*fCompiler);
+    std::set<Type> interfaces = fCompiler->allInterfaces(cl.fType);
     String previous = "%$itable* null";
-    for (const Class* intf : interfaces) {
+    for (const Type intfType : interfaces) {
+        Class* intf = fCompiler->getClass(intfType);
         ClassConstant& intfCC = this->getClassConstant(*intf);
-        std::vector<const Method*> methods = cl.interfaceMethods(*intf, *fCompiler);
+        std::vector<const Method*> methods = fCompiler->interfaceMethods(cl, intfType);
         String name = "@" + escape_type_name(cl.fName) + "$." + escape_type_name(intf->fName);
         String type = "{ " + this->llvmType(Type::Class()) + ", %$itable*, [" +
                 std::to_string(methods.size()) + " x i8*] }";
@@ -168,8 +174,10 @@ String LLVMCodeGenerator::getITable(const Class& cl) {
                 result += "i8* null";
             }
             else {
-                result += "i8* bitcast(" + this->llvmType(*m) + " " + this->methodName(*m) +
-                        " to i8*)";
+                String name;
+                String type;
+                this->getMethodTableEntry(*m, &name, &type);
+                result += "i8* bitcast(" + type + " " + name + " to i8*)";
             }
         }
         result += "] }\n";
@@ -187,8 +195,9 @@ LLVMCodeGenerator::ClassConstant& LLVMCodeGenerator::getClassConstant(const Clas
                 " x i8*] }");
         fClassConstants[cl.fName] = cc;
         String super;
-        if (cl.fSuper != Type::Void()) {
-            const ClassConstant& superCC = this->getClassConstant(*fCompiler->getClass(cl.fSuper));
+        if (cl.fRawSuper != Type::Void()) {
+            const ClassConstant& superCC = this->getClassConstant(
+                    *fCompiler->getClass(cl.fRawSuper));
             super = "bitcast(" + superCC.fType + "* " + superCC.fName + " to i8*)";
         }
         else {
@@ -205,8 +214,10 @@ LLVMCodeGenerator::ClassConstant& LLVMCodeGenerator::getClassConstant(const Clas
                 code += "i8* null";
             }
             else {
-                code += ("i8* bitcast(" + this->llvmType(*m)) + " " + this->methodName(*m) +
-                        " to i8*)";
+                String name;
+                String type;
+                this->getMethodTableEntry(*m, &name, &type);
+                code += "i8* bitcast(" + type + " " + name + " to i8*)";
             }
             separator = ", ";
         }
@@ -232,7 +243,7 @@ LLVMCodeGenerator::ClassConstant& LLVMCodeGenerator::getWrapperClassConstant(con
                 "{ i8*, " INT_T ", %$itable*, [" + std::to_string(value.fVirtualMethods.size()) +
                 " x i8*] }");
         fClassConstants[name] = cc;
-        const ClassConstant& superCC = this->getClassConstant(*fCompiler->getClass(cl.fSuper));
+        const ClassConstant& superCC = this->getClassConstant(*fCompiler->getClass(cl.fRawSuper));
         String super = "bitcast(" + superCC.fType + "* " + superCC.fName + " to i8*)";
         String code = cc.fName + " = constant " + cc.fType + " { i8* " + super +
                 ", " INT_T " 1, %$itable* null, [" + std::to_string(value.fVirtualMethods.size()) +
@@ -415,7 +426,20 @@ String LLVMCodeGenerator::llvmType(const Type& type) {
             }
             return this->llvmType(type.fSubtypes[0]);
         }
-        case Type::Category::METHOD:      // fall through
+        case Type::Category::FUNCTION: // fall through
+        case Type::Category::METHOD: {
+            ASSERT(type.fSubtypes.size() >= 1);
+            String result = this->llvmType(type.fSubtypes.back());
+            result += "(";
+            const char* separator = "";
+            for (int i = 0; i < type.fSubtypes.size() - 1; ++i) {
+                result += separator;
+                result += this->llvmType(type.fSubtypes[i]);
+                separator = ", ";
+            }
+            result += ")*";
+            return result;
+        }
         case Type::Category::PACKAGE:     // fall through
         case Type::Category::INT_LITERAL: // fall through
         case Type::Category::UNRESOLVED:
@@ -726,7 +750,6 @@ String LLVMCodeGenerator::getPointerCallReference(const IRNode& call, std::ostre
         String result = this->nextVar();
         out << "    " << result << " = bitcast i8* " << malloc << " to " <<
                 this->llvmType(m->returnType()) << "\n";
-        fKillCast = true;
         return result;
     }
     else if (m->fMethod.fName == "get") {
@@ -738,7 +761,6 @@ String LLVMCodeGenerator::getPointerCallReference(const IRNode& call, std::ostre
         out << "    " << cast << " = bitcast " << ptr << " to " << ptrType << "\n";
         String load = this->nextVar();
         out << "    " << load << " = load " << baseType << ", " << ptrType << " " << cast << "\n";
-        fKillCast = true;
         return load;
     }
     else if (m->fMethod.fName == "[]") {
@@ -757,7 +779,6 @@ String LLVMCodeGenerator::getPointerCallReference(const IRNode& call, std::ostre
         String load = this->nextVar();
         out << "    " << load << " = load " << baseType << ", " << ptrType << " " << offsetPtr <<
                 "\n";
-        fKillCast = true;
         return load;
     }
     else if (m->fMethod.fName == "realloc") {
@@ -777,7 +798,6 @@ String LLVMCodeGenerator::getPointerCallReference(const IRNode& call, std::ostre
         String result = this->nextVar();
         out << "    " << result << " = bitcast i8* " << realloc << " to " <<
                 this->llvmType(m->returnType()) << "\n";
-        fKillCast = true;
         return result;
     }
     abort();
@@ -1017,20 +1037,13 @@ String LLVMCodeGenerator::toNonNullableValue(const String& value, const Type& sr
     return result;
 }
 
-String LLVMCodeGenerator::getCastReference(const IRNode& cast, std::ostream& out) {
-    ASSERT(!fKillCast);
-    ASSERT(cast.fKind == IRNode::Kind::CAST);
-    ASSERT(cast.fChildren.size() == 1);
-    String base = this->getReference(cast.fChildren[0], out);
-    if (fKillCast) {
-        fKillCast = false;
-        return base;
-    }
+String LLVMCodeGenerator::getCastReference(const String& value, const Type& src, const Type& target,
+        std::ostream& out) {
     String op;
-    if (cast.fType.isBuiltinNumber()) {
-        ASSERT(cast.fChildren[0].fType.isBuiltinNumber());
-        int size1 = cast.fChildren[0].fType.fSize;
-        int size2 = cast.fType.fSize;
+    if (target.isBuiltinNumber()) {
+        ASSERT(src.isBuiltinNumber());
+        int size1 = src.fSize;
+        int size2 = target.fSize;
         if (size1 > size2) {
             op = "trunc";
         }
@@ -1038,41 +1051,48 @@ String LLVMCodeGenerator::getCastReference(const IRNode& cast, std::ostream& out
             op = "sext";
         }
         else {
-            return base;
+            return value;
         }
     }
     else {
-        const Class* src = fCompiler->getClass(cast.fChildren[0].fType);
-        ASSERT(src);
-        const Class* target = fCompiler->getClass(cast.fType);
-        ASSERT(target);
-        if (src->isValue() && !target->isValue()) {
-            return this->wrapValue(base, cast.fChildren[0].fType, cast.fType, out);
+        const Class* srcClass = fCompiler->getClass(src);
+        ASSERT(srcClass);
+        const Class* targetClass = fCompiler->getClass(target);
+        ASSERT(targetClass);
+        if (srcClass->isValue() && !targetClass->isValue()) {
+            return this->wrapValue(value, src, target, out);
         }
-        else if (!src->isValue() && target->isValue()) {
-            return this->unwrapValue(base, cast.fChildren[0].fType, cast.fType, out);
+        else if (!srcClass->isValue() && targetClass->isValue()) {
+            return this->unwrapValue(value, src, target, out);
         }
-        else if (src->isValue() &&
-                cast.fType.fCategory == Type::Category::NULLABLE &&
-                cast.fType.fSubtypes[0] == cast.fChildren[0].fType) {
-            return this->toNullableValue(base, cast.fChildren[0].fType, cast.fType, out);
+        else if (srcClass->isValue() &&
+                target.fCategory == Type::Category::NULLABLE &&
+                target.fSubtypes[0] == src) {
+            return this->toNullableValue(value, src, target, out);
         }
-        else if (target->isValue() &&
-                cast.fChildren[0].fType.fCategory == Type::Category::NULLABLE &&
-                cast.fChildren[0].fType.fSubtypes[0] == cast.fType) {
-            return this->toNonNullableValue(base, cast.fChildren[0].fType, cast.fType, out);
+        else if (targetClass->isValue() &&
+                src.fCategory == Type::Category::NULLABLE &&
+                src.fSubtypes[0] == target) {
+            return this->toNonNullableValue(value, src, target, out);
         }
         op = "bitcast";
     }
-    String srcType = this->llvmType(cast.fChildren[0].fType);
-    String dstType = this->llvmType(cast.fType);
+    String srcType = this->llvmType(src);
+    String dstType = this->llvmType(target);
     if (srcType == dstType) {
-        return base;
+        return value;
     }
     String result = this->nextVar();
-    out << "    " << result << " = " << op << " " << srcType << " " << base << " to " << dstType <<
+    out << "    " << result << " = " << op << " " << srcType << " " << value << " to " << dstType <<
             "\n";
     return result;
+}
+
+String LLVMCodeGenerator::getCastReference(const IRNode& cast, std::ostream& out) {
+    ASSERT(cast.fKind == IRNode::Kind::CAST);
+    ASSERT(cast.fChildren.size() == 1);
+    String base = this->getReference(cast.fChildren[0], out);
+    return this->getCastReference(base, cast.fChildren[0].fType, cast.fType, out);
 }
 
 String LLVMCodeGenerator::getConstructReference(const IRNode& construct, std::ostream& out) {
@@ -1167,7 +1187,7 @@ String LLVMCodeGenerator::getStringReference(const String& s, std::ostream& out)
         fStrings << separator << "i8 " << (int) c;
         separator = ", ";
     }
-    fStrings << " ];\n";
+    fStrings << " ]\n";
     String result = "@$str" + std::to_string(++fLabels);
     Class* string = fCompiler->getClass(Type::PandaString());
     ASSERT(string);
@@ -1458,7 +1478,8 @@ String LLVMCodeGenerator::getVirtualMethodReference(const String& target, const 
     String load = this->nextVar();
     out << "    " << load << " = load i8*, i8** " << ptr << "\n";
     String result = this->nextVar();
-    out << "    " << result << " = bitcast i8* " << load << " to " << this->llvmType(m) << "\n";
+    out << "    " << result << " = bitcast i8* " << load << " to " <<
+            this->llvmType(m.inheritedTypeWithSelf(*fCompiler)) << "\n";
     return result;
 }
 
@@ -1467,7 +1488,7 @@ String LLVMCodeGenerator::getInterfaceMethodReference(const String& target, cons
     String methodType = llvmType(m);
     // load class constant entry
     String entry = this->nextLabel();
-    out << "br label %" << entry << "\n";
+    out << "    br label %" << entry << "\n";
     this->createBlock(entry, out);
     String classPointer = this->nextVar();
     out << "    " << classPointer + " = getelementptr inbounds " <<
@@ -1503,12 +1524,12 @@ String LLVMCodeGenerator::getInterfaceMethodReference(const String& target, cons
     out << "    " << test << " = icmp eq " << classType << "* bitcast(" << intfCC.fType << "* " <<
             intfCC.fName << " to " << classType << "*), " << itableClass << "\n";
     String success = this->nextLabel();
-    out << "br i1 " << test << ", label %" << success << ", label %" << fail << "\n";
+    out << "    br i1 " << test << ", label %" << success << ", label %" << fail << "\n";
 
     this->createBlock(fail, out);
     out << "    " << itableNext << " = getelementptr inbounds %$itable, %$itable* " << itablePtr <<
             ", " << SIZE_T << " 0, i32 1\n";
-    out << "br label %" << next << "\n";
+    out << "    br label %" << next << "\n";
 
     this->createBlock(success, out);
     int index = -1;
@@ -1956,8 +1977,13 @@ void LLVMCodeGenerator::writeBlock(const IRNode& block, std::ostream& out) {
 void LLVMCodeGenerator::writeReturn(const IRNode& r, std::ostream& out) {
     ASSERT(r.fKind == IRNode::Kind::RETURN);
     if (r.fChildren.size() == 1) {
-        String ref = this->getTypedReference(r.fChildren[0], out);
-        out << "    ret " << ref << "\n";
+        String ref = this->getReference(r.fChildren[0], out);
+        const Type& rawType = r.fChildren[0].fType;
+        const Type actualType = fCurrentMethod->inheritedType(*fCompiler).fSubtypes.back();
+        if (rawType != actualType) {
+            ref = this->getCastReference(ref, rawType, actualType, out);
+        }
+        out << "    ret " << this->llvmType(actualType) << " " << ref << "\n";
     }
     else {
         ASSERT(r.fChildren.size() == 0);
@@ -2023,27 +2049,27 @@ void LLVMCodeGenerator::writeAssert(const IRNode& a, std::ostream& out) {
 
 void LLVMCodeGenerator::writeStatement(const IRNode& stmt, std::ostream& out) {
     switch (stmt.fKind) {
-        case IRNode::Kind::BINARY:    this->writeAssignment(stmt, out);     break;
-        case IRNode::Kind::BLOCK:     this->writeBlock     (stmt, out);     break;
-        case IRNode::Kind::CALL:      this->writeCall      (stmt, "", out); break;
-        case IRNode::Kind::IF:        this->writeIf        (stmt, out);     break;
-        case IRNode::Kind::WHILE:     this->writeWhile     (stmt, out);     break;
-        case IRNode::Kind::DO:        this->writeDo        (stmt, out);     break;
-        case IRNode::Kind::LOOP:      this->writeLoop      (stmt, out);     break;
-        case IRNode::Kind::RANGE_FOR: this->writeRangeFor  (stmt, out);     break;
-        case IRNode::Kind::RETURN:    this->writeReturn    (stmt, out);     break;
-        case IRNode::Kind::BREAK:     this->writeBreak     (stmt, out);     break;
-        case IRNode::Kind::CONTINUE:  this->writeContinue  (stmt, out);     break;
-        case IRNode::Kind::ASSERT:    this->writeAssert    (stmt, out);     break;
+        case IRNode::Kind::BINARY:    this->writeAssignment(stmt, out);              break;
+        case IRNode::Kind::BLOCK:     this->writeBlock     (stmt, out);              break;
+        case IRNode::Kind::CALL:      this->writeCall      (stmt, "", out);          break;
+        case IRNode::Kind::IF:        this->writeIf        (stmt, out);              break;
+        case IRNode::Kind::WHILE:     this->writeWhile     (stmt, out);              break;
+        case IRNode::Kind::DO:        this->writeDo        (stmt, out);              break;
+        case IRNode::Kind::LOOP:      this->writeLoop      (stmt, out);              break;
+        case IRNode::Kind::RANGE_FOR: this->writeRangeFor  (stmt, out);              break;
+        case IRNode::Kind::RETURN:    this->writeReturn    (stmt, out);              break;
+        case IRNode::Kind::BREAK:     this->writeBreak     (stmt, out);              break;
+        case IRNode::Kind::CONTINUE:  this->writeContinue  (stmt, out);              break;
+        case IRNode::Kind::ASSERT:    this->writeAssert    (stmt, out);              break;
         case IRNode::Kind::VAR:       // fall through
         case IRNode::Kind::DEF:       // fall through
         case IRNode::Kind::PROPERTY:  // fall through
-        case IRNode::Kind::CONSTANT:  this->writeVar       (stmt, out);     break;
+        case IRNode::Kind::CONSTANT:  this->writeVar       (stmt, out);              break;
+        case IRNode::Kind::CAST:      this->writeStatement (stmt.fChildren[0], out); break;
         default:
             printf("unsupported statement: %s\n", stmt.description().c_str());
             abort();
     }
-    ASSERT(!fKillCast);
 }
 
 std::unordered_map<String, String> METHOD_NAME_MAP {
@@ -2099,8 +2125,10 @@ String LLVMCodeGenerator::fieldName(const Field& field) {
 }
 
 String LLVMCodeGenerator::varName(const Variable& var) {
-    if (var.fStorage != Variable::Storage::LOCAL) {
-        return "%" + var.fName;
+    if (var.fStorage == Variable::Storage::PARAMETER) {
+        String result = fParameterNames[var.fName];
+        ASSERT(result.size());
+        return std::move(result);
     }
     auto found = fVariableNames.find(&var);
     if (found == fVariableNames.end()) {
@@ -2158,6 +2186,74 @@ void LLVMCodeGenerator::writeMethodDeclaration(const Method& method, Compiler& c
     out << ")\n";
 }
 
+void LLVMCodeGenerator::createMethodShim(const Method& raw, const Type& effective,
+        std::ostream& out, String* outName, String* outType) {
+    abort();
+    auto found = fMethodShims.find(&raw);
+    if (found != fMethodShims.end()) {
+        *outName = found->second.first;
+        *outType = found->second.second;
+        return;
+    }
+    ASSERT(effective.isMethod());
+    ASSERT(effective.fSubtypes.size() == raw.fParameters.size() + 1);
+    ASSERT(!raw.fAnnotations.isClass());
+    int oldTmpVar = fTmpVars;
+    fTmpVars = 1;
+    ASSERT(is_instance(raw));
+    String result = this->methodName(raw) + "$shim";
+    *outType = this->llvmType(effective.fSubtypes.back());
+    out << "define fastcc " << *outType << " " << result << "(";
+    String selfType = this->selfType(raw);
+    out << selfType << " %self";
+    *outType += "(";
+    *outType += selfType;
+    for (int i = 0; i < raw.fParameters.size(); ++i) {
+        String pType = this->llvmType(effective.fSubtypes[i]);
+        *outType += ", ";
+        *outType += pType;
+        out << ", " << pType << " %p" << i;
+    }
+    out << ") {\n";
+    *outType += ")*";
+    std::vector<String> casts;
+    for (int i = 0; i < raw.fParameters.size(); ++i) {
+        String p = "%p" + std::to_string(i);
+        if (raw.fParameters[i].fType != effective.fSubtypes[i]) {
+            casts.push_back(this->getCastReference(p, effective.fSubtypes[i],
+                    raw.fParameters[i].fType, out));
+        }
+        else {
+            casts.push_back(p);
+        }
+    }
+    out << "    ";
+    String returnValue;
+    if (raw.fReturnType != Type::Void()) {
+        returnValue = this->nextVar();
+        out << returnValue << " = ";
+    }
+    else {
+        returnValue = "void";
+    }
+    out << "call fastcc " << this->llvmType(raw.fReturnType) << " " << this->methodName(raw) <<
+            "(" << selfType << " %self";
+    for (int i = 0; i < raw.fParameters.size(); ++i) {
+        out << ", " << this->llvmType(raw.fParameters[i].fType) << " " << casts[i];
+    }
+    out << ")\n";
+    if (raw.fReturnType != Type::Void()) {
+        returnValue = this->llvmType(effective.fSubtypes.back()) + " " +
+                this->getCastReference(returnValue, raw.fReturnType, effective.fSubtypes.back(),
+                        out);
+    }
+    out << "    ret " << returnValue << "\n";
+    out << "}\n";
+    fTmpVars = oldTmpVar;
+    *outName = result;
+    fMethodShims[&raw] = std::make_pair(*outName, *outType);
+}
+
 void LLVMCodeGenerator::writeMethod(const Method& method, const IRNode& body, Compiler& compiler) {
     fCurrentMethod = &method;
     fCurrentClass = &method.fOwner;
@@ -2165,18 +2261,36 @@ void LLVMCodeGenerator::writeMethod(const Method& method, const IRNode& body, Co
     fTmpVars = 1;
     fCurrentBlock = "0";
     std::ostream& out = fMethods;
-    out << "\ndefine fastcc " << this->llvmType(method.fReturnType) << " " <<
+    const Type actualType = method.inheritedType(*fCompiler);
+    out << "\ndefine fastcc " << this->llvmType(actualType.fSubtypes.back()) << " " <<
             this->methodName(method) << "(";
     const char* separator = "";
     if (is_instance(method)) {
         out << separator << this->selfType(method) << " %self";
         separator = ", ";
     }
-    for (const auto& p : method.fParameters) {
-        out << separator << this->llvmType(p.fType) << " %" << p.fName;
+    for (int i = 0; i < method.fParameters.size(); ++i) {
+        out << separator << this->llvmType(actualType.fSubtypes[i]) << " %" <<
+                method.fParameters[i].fName;
+        if (actualType.fSubtypes[i] != method.fParameters[i].fType) {
+            out << "$Raw";
+        }
         separator = ", ";
     }
     out << ") {\n";
+    // cast parameters to declared types and populate fParameterNames
+    ASSERT(!fParameterNames.size());
+    ASSERT(!fVariableNames.size());
+    for (int i = 0; i < method.fParameters.size(); ++i) {
+        if (actualType.fSubtypes[i] != method.fParameters[i].fType) {
+            fParameterNames[method.fParameters[i].fName] = this->getCastReference("%" +
+                    method.fParameters[i].fName + "$Raw", actualType.fSubtypes[i],
+                    method.fParameters[i].fType, out);
+        }
+        else {
+            fParameterNames[method.fParameters[i].fName] = "%" + method.fParameters[i].fName;
+        }
+    }
     fMethodHeader.str("");
     std::stringstream init;
     if (method.fName == "main") {
@@ -2205,6 +2319,7 @@ void LLVMCodeGenerator::writeMethod(const Method& method, const IRNode& body, Co
         }
     }
     out << "}\n";
+    fParameterNames.clear();
     fVariableNames.clear();
     fReusedValues.clear();
 }

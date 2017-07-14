@@ -1,0 +1,5 @@
+MissingOverride.panda:14:5: error: function foo():panda.core.String overrides function foo():panda.core.String (MissingOverride.panda:2:5), but is not marked @override
+MissingOverride.panda:20:5: error: function foo():panda.core.String overrides function foo():panda.core.String (MissingOverride.panda:2:5), but is not marked @override
+MissingOverride.panda:26:5: error: function foo():panda.core.Int64 overrides function foo():panda.core.Int64 (MissingOverride.panda:10:5), but is not marked @override
+MissingOverride.panda:38:5: error: function foo():panda.core.Int64 overrides method foo():panda.core.Int64 (MissingOverride.panda:6:5), but is not marked @override
+4 errors

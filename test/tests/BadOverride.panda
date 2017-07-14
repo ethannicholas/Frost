@@ -1,0 +1,19 @@
+class Super {
+    function foo():String {
+        return "Hello"
+    }
+}
+
+class Sub1 : Super {
+    @override
+    method foo():Int {
+        return 42
+    }
+}
+
+class Sub2 : Super {
+    @override
+    method foo():String {
+        return "Hello"
+    }
+}

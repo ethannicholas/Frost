@@ -1456,7 +1456,8 @@ bool PandaParser::statement(ASTNode* outResult) {
         case Token::Kind::ASSERT: return this->assertStatement(outResult);
         case Token::Kind::MATCH:  return this->matchStatement(outResult);
         case Token::Kind::LBRACE: return this->block(outResult);
-        case Token::Kind::IDENTIFIER: {
+        case Token::Kind::IDENTIFIER: // fall through
+        case Token::Kind::LPAREN: {
             Token id = this->nextToken();
             if (this->checkNext(Token::Kind::COLON)) {
                 return this->anyLoop(outResult, id.fText);
@@ -1481,6 +1482,7 @@ bool PandaParser::statement(ASTNode* outResult) {
                         "statements are not terminated by semicolons in Panda");
                 return true;
             }
+            // fall through
         default:
             // trigger error
             this->expect(Token::Kind::IF, "a statement");

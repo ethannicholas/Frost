@@ -9,6 +9,7 @@
 #include <memory>
 
 struct Class;
+class Compiler;
 
 struct Method : public Symbol {
     enum class Kind {
@@ -24,7 +25,7 @@ struct Method : public Symbol {
 
     Method(const Method&) = delete;
 
-    Method(Position position, const Class* owner, Annotations annotations, Kind kind, String name,
+    Method(Position position, Class* owner, Annotations annotations, Kind kind, String name,
             std::vector<Parameter> parameters, Type returnType, ASTNode body)
     : INHERITED(position, Symbol::Kind::METHOD, std::move(name))
     , fOwner(*owner)
@@ -36,54 +37,55 @@ struct Method : public Symbol {
         ASSERT(owner);
     }
 
-    bool matches(const Method& other) const {
-        if (fName != other.fName) {
-            return false;
-        }
-        if (fReturnType != other.fReturnType) {
-            return false;
-        }
-        if (fParameters.size() != other.fParameters.size()) {
-            return false;
-        }
-        for (int i = 0; i < fParameters.size(); ++i) {
-            if (fParameters[i].fType != other.fParameters[i].fType) {
-                return false;
-            }
-        }
-        return true;
-    }
+    bool matches(const Method& other) const;
+
+    /**
+     * Returns the type the method was declared with (its actual type signature in the source code).
+     *
+     * Given:
+     *
+     *    class Super<T> { method foo(x:T) { } }
+     *    class Sub : Super<String> { @override method foo(x:String) { } }
+     *
+     * The declaredType of Sub.foo is (String)=>().
+     */
+    Type declaredType() const;
+
+    /**
+     * Returns the actual type of the method, taking inheritance into account.
+     *
+     * Given:
+     *
+     *    class Super<T> { method foo(x:T) { } }
+     *    class Sub : Super<String> { @override method foo(x:String) { } }
+     *
+     * The inheritedType of Sub.foo is (Super.T)=>().
+     */
+    Type inheritedType(Compiler& compiler) const;
+
+    /**
+     * As inheritedType(), but includes explicitly includes self as the first parameter.
+     */
+    Type inheritedTypeWithSelf(Compiler& compiler) const;
+
+    String signature() const;
 
     String description() const {
-        String result;
-        switch (fMethodKind) {
-            case Kind::METHOD: result += "method ";     break;
-            case Kind::FUNCTION: result += "function "; break;
-            case Kind::INIT: ASSERT(fName == "init");   break;
-        }
-        result += fName + "(";
-        const char* separator = "";
-        for (const auto& p : fParameters) {
-            result += separator + p.fType.fName;
-            separator = ", ";
-        }
-        result += ')';
-        if (fReturnType != Type::Void()) {
-            result += ':';
-            result += fReturnType.description();
-        }
-        result += " (" + fPosition.description() + ")";
-        return result;
+        return this->signature() + " (" + fPosition.description() + ")";
     }
 
-    const Class& fOwner;
+    Class& fOwner;
     Annotations fAnnotations;
-    const Kind fMethodKind;
+    Kind fMethodKind;
     std::vector<Parameter> fParameters;
     Type fReturnType;
-    const ASTNode fBody;
-
+    ASTNode fBody;
     mutable std::vector<std::unique_ptr<const MethodRef>> fMethodRefs;
+
+private:
+    Type declaredTypeWithSelf(Type self) const;
+
+    Type inheritedTypeWithSelf(Compiler& compiler, Type self) const;
 
     typedef Symbol INHERITED;
 };

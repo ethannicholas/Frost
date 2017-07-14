@@ -25,6 +25,7 @@ Annotations Scanner::convertAnnotations(const ASTNode& a) {
         else BASIC_ANNOTATION("external", EXTERNAL)
         else BASIC_ANNOTATION("$implicit", IMPLICIT)
         else BASIC_ANNOTATION("final", FINAL)
+        else BASIC_ANNOTATION("abstract", ABSTRACT)
         else {
             this->error(sub.fPosition, "unrecognized annotation '" + sub.fText + "'");
         }
@@ -316,6 +317,10 @@ void Scanner::scanInterface(String contextName, std::vector<Class::UsesDeclarati
     std::vector<Type> superinterfaces;
     if (cl->fChildren[3].fKind != ASTNode::Kind::VOID) {
         ASSERT(cl->fChildren[3].fKind == ASTNode::Kind::TYPES);
+        for (const ASTNode& node : cl->fChildren[3].fChildren) {
+            Type t = this->convertType(node, *parent);
+            superinterfaces.push_back(std::move(t));
+        }
     }
     ASSERT(cl->fChildren[4].fKind == ASTNode::Kind::CLASS_MEMBERS);
     if (annotations.isClass()) {
@@ -362,6 +367,12 @@ void Scanner::scan(ASTNode* file, SymbolTable* root) {
     SymbolTable* currentTable = root;
     std::vector<Class::UsesDeclaration> uses;
     uses.push_back({ Position(), "panda.collections.Array", "Array" });
+    uses.push_back({ Position(), "panda.collections.Collection", "Collection" });
+    uses.push_back({ Position(), "panda.collections.CollectionView", "CollectionView" });
+    uses.push_back({ Position(), "panda.collections.CollectionWriter", "CollectionWriter" });
+    uses.push_back({ Position(), "panda.collections.List", "List" });
+    uses.push_back({ Position(), "panda.collections.ListView", "ListView" });
+    uses.push_back({ Position(), "panda.collections.ListWriter", "ListWriter" });
     uses.push_back({ Position(), "panda.core.Bit", "Bit" });
     uses.push_back({ Position(), "panda.core.Char8", "Char8" });
     uses.push_back({ Position(), "panda.core.Int8", "Int8" });;

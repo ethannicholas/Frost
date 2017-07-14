@@ -1,0 +1,15 @@
+package panda.collections
+
+uses panda.core.Pointer
+
+interface CollectionWriter<T> {
+    -- property count:Int
+
+    function get_count():Int
+
+    method add(value:T)
+
+    method remove(value:T)
+
+    method clear()
+}

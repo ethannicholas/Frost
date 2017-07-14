@@ -52,8 +52,8 @@ struct Class : public Symbol {
     , fAliasTable(parent, this)
     , fSymbolTable(&fAliasTable, this)
     , fParameters(std::move(parameters))
-    , fSuper(std::move(superclass))
-    , fInterfaces(std::move(interfaces))
+    , fRawSuper(std::move(superclass))
+    , fRawInterfaces(std::move(interfaces))
     , fType(fPosition, Type::Category::CLASS, fName) {
         for (auto& p : fParameters) {
             fSymbolTable.addAlias(p.fName, &p);
@@ -61,14 +61,8 @@ struct Class : public Symbol {
     }
 
     bool isValue() const {
-        return fSuper.fName == "panda.core.Value";
+        return fRawSuper.fName == "panda.core.Value";
     }
-
-    const Method* findMethod(const Method& m, Compiler& compiler) const;
-
-    std::set<const Class*> allInterfaces(Compiler& compiler) const;
-
-    std::vector<const Method*> interfaceMethods(const Class& intf, Compiler& compiler) const;
 
     ClassKind fClassKind;
 
@@ -93,9 +87,9 @@ struct Class : public Symbol {
     // methods defined in this class (not including inherited methods)
     std::vector<const Method*> fMethods;
 
-    Type fSuper;
+    Type fRawSuper;
 
-    std::vector<Type> fInterfaces;
+    std::vector<Type> fRawInterfaces;
 
     Type fType;
 

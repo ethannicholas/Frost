@@ -118,6 +118,29 @@ void Compiler::resolveType(const SymbolTable& st, Type* t) {
     }
 }
 
+Type Compiler::remapType(const Type& context, const Type& raw) {
+    switch (context.fCategory) {
+        case Type::Category::CLASS:
+            return raw;
+        case Type::Category::NULLABLE:
+            ASSERT(context.fSubtypes.size() == 1);
+            return this->remapType(context.fSubtypes[0], raw);
+        case Type::Category::GENERIC: {
+            ASSERT(context.fSubtypes.size() >= 2);
+            std::map<String, Type> typeMap;
+            const Type& base = context.fSubtypes[0];
+            Class* cl = this->resolveClass(*fSymbolTable, base);
+            ASSERT(cl);
+            for (int i = 1; i < context.fSubtypes.size(); ++i) {
+                typeMap[cl->fName + "." + cl->fParameters[i - 1].fName] = context.fSubtypes[i];
+            }
+            return raw.remap(typeMap);
+        }
+        default:
+            abort();
+    }
+}
+
 Class* Compiler::getClass(Type t) {
     if (t.fCategory == Type::Category::GENERIC || t.fCategory == Type::Category::NULLABLE ||
             t.fCategory == Type::Category::PARAMETER) {
@@ -142,6 +165,7 @@ Class* Compiler::resolveClass(const SymbolTable& st, Type t) {
         Symbol* s = (*current)[token];
         if (!s) {
             this->error(t.fPosition, "no type named '" + t.fName + "'");
+            abort();
             return nullptr;
         }
         switch (s->fKind) {
@@ -174,8 +198,85 @@ Class* Compiler::resolveClass(const SymbolTable& st, Type t) {
     return nullptr;
 }
 
+std::set<Type> Compiler::allInterfaces(const Type& t) {
+    Class* cl = this->getClass(t);
+    std::set<Type> result;
+    if (cl->fRawSuper != Type::Void()) {
+        std::set<Type> add = this->allInterfaces(this->remapType(t, cl->fRawSuper));
+        result.insert(add.begin(), add.end());
+    }
+    for (const Type& intf : cl->fRawInterfaces) {
+        std::set<Type> add = this->allInterfaces(this->remapType(t, intf));
+        result.insert(add.begin(), add.end());
+    }
+    if (cl->fClassKind == Class::ClassKind::INTERFACE) {
+        result.insert(t);
+    }
+    return std::move(result);
+}
+
+
+static bool method_signature_match(const Type& t1, const Type& t2) {
+    ASSERT(t1.isMethod());
+    ASSERT(t2.isMethod());
+    return t1.fSubtypes == t2.fSubtypes;
+}
+
+const Method* Compiler::findMethod(const Type& owner, const String& name, const Type& methodType,
+        bool checkInterfaces) {
+    Class* cl = this->getClass(owner);
+    ASSERT(cl);
+    for (const Method* test : cl->fMethods) {
+        if (test->fName == name && method_signature_match(this->remapType(owner,
+                test->declaredType()), methodType)) {
+            return test;
+        }
+    }
+    if (checkInterfaces || cl->fClassKind == Class::ClassKind::INTERFACE) {
+        for (const Type& raw : cl->fRawInterfaces) {
+            const Method* result = this->findMethod(this->remapType(owner, raw), name, methodType,
+                    checkInterfaces);
+            if (result) {
+                return result;
+            }
+        }
+    }
+    if (cl->fRawSuper != Type::Void()) {
+        return this->findMethod(this->remapType(owner, cl->fRawSuper), name, methodType,
+                checkInterfaces);
+    }
+    return nullptr;
+}
+
+const Method* Compiler::getOverriddenMethod(const Method& m) {
+    const Type methodType = m.declaredType();
+    const Class& cl = m.fOwner;
+    for (const Type& raw : cl.fRawInterfaces) {
+        const Method* result = this->findMethod(this->remapType(cl.fType, raw), m.fName, methodType,
+                true);
+        if (result) {
+            return result;
+        }
+    }
+    if (cl.fRawSuper != Type::Void()) {
+        return this->findMethod(this->remapType(cl.fType, cl.fRawSuper), m.fName, methodType, true);
+    }
+    return nullptr;
+}
+
+std::vector<const Method*> Compiler::interfaceMethods(const Class& cl, const Type& intf) {
+    std::vector<const Method*> result;
+    for (const Method* m : this->getClass(intf)->fMethods) {
+        const Method* found = this->findMethod(cl.fType, m->fName, this->remapType(intf,
+                m->inheritedType(*this)), false);
+        ASSERT(found);
+        result.push_back(found);
+    }
+    return std::move(result);
+}
+
 std::vector<const Field*> Compiler::getInstanceFields(const Class& cl) {
-    if (cl.fSuper == Type::Void() || cl.isValue()) {
+    if (cl.fRawSuper == Type::Void() || cl.isValue()) {
         std::vector<const Field*> result;
         for (const Field* f : cl.fFields) {
             if (!f->fAnnotations.isClass()) {
@@ -185,7 +286,7 @@ std::vector<const Field*> Compiler::getInstanceFields(const Class& cl) {
         return std::move(result);
     }
     std::vector<const Field*> result = this->getInstanceFields(*this->resolveClass(cl.fSymbolTable,
-            cl.fSuper));
+            cl.fRawSuper));
     result.insert(result.end(), cl.fFields.begin(), cl.fFields.end());
     return result;
 }
@@ -473,22 +574,26 @@ int Compiler::coercionCost(const Type& type, const Type& target) {
         }
         return result;
     }
-    if (type.fCategory == Type::Category::CLASS && target.fCategory == Type::Category::CLASS) {
+    if (type.isClass() && target.isClass()) {
         int cost = INT_MAX;
         Class* cl = this->resolveClass(fCurrentClass.top()->fSymbolTable, type);
         if (!cl) {
             return INT_MAX;
         }
-        if (cl->fSuper != Type::Void()) {
-            cost = std::min(cost, this->coercionCost(cl->fSuper, target));
+        if (cl->fRawSuper != Type::Void()) {
+            cost = std::min(cost, this->coercionCost(this->remapType(type, cl->fRawSuper), target));
         }
-        for (const auto& intf : cl->fInterfaces) {
-            cost = std::min(cost, this->coercionCost(intf, target));
+        for (const auto& intf : cl->fRawInterfaces) {
+            cost = std::min(cost, this->coercionCost(this->remapType(type, intf), target));
         }
         if (cost != INT_MAX) {
             ++cost;
         }
         return cost;
+    }
+    if (type.fCategory == Type::Category::PARAMETER) {
+        ASSERT(type.fSubtypes.size() == 1);
+        return this->coercionCost(type.fSubtypes[0], target);
     }
     if (type == Type::BuiltinBit()) {
         return this->coercionCost(Type::Bit(), target);
@@ -603,6 +708,9 @@ bool Compiler::canCast(const IRNode& node, const Type& target) {
 }
 
 bool Compiler::cast(Position p, IRNode* node, bool isExplicit, const Type& target, IRNode* out) {
+    if (node->fType == target) {
+        return true;
+    }
     ASSERT(target != Type::Void());
     if (isExplicit && !canCast(*node, target)) {
         this->error(p, "value of type '" + node->fType.description() +
@@ -700,7 +808,7 @@ bool Compiler::call(IRNode method, std::vector<IRNode> args, IRNode* out) {
                         IRNode super(method.fPosition, IRNode::Kind::SELF,
                                 fCurrentClass.top()->fType);
                         if (!this->cast(method.fPosition, &super, false,
-                                fCurrentClass.top()->fSuper)) {
+                                fCurrentClass.top()->fRawSuper)) {
                             return false;
                         }
                         children.push_back(std::move(super));
@@ -760,27 +868,26 @@ bool Compiler::call(IRNode method, std::vector<IRNode> args, IRNode* out) {
                     }
                 }
             }
+            Type actualMethodType = m.fMethod.inheritedType(*this);
+            ASSERT(actualMethodType.fSubtypes.size() == args.size() + 1);
             for (int i = 0; i < args.size(); i++) {
                 IRNode converted;
                 if (!this->coerce(&args[i], m.parameterType(i), &converted)) {
                     return false;
                 }
-                if (m.fMethod.fOwner.fName != "panda.core.Pointer" &&
-                        converted.fType != m.fMethod.fParameters[i].fType) {
-                    if (!this->cast(converted.fPosition, &converted, false,
-                            m.fMethod.fParameters[i].fType)) {
-                        return false;
-                    }
+                if (m.fMethod.fOwner.fName != "panda.core.Pointer") {
+                    this->cast(out->fPosition, &converted, false, actualMethodType.fSubtypes[i]);
                 }
                 children.push_back(std::move(converted));
             }
-            *out = IRNode(method.fPosition, IRNode::Kind::CALL, m.fMethod.fReturnType,
-                    std::move(children));
-            Type effective = m.returnType();
-            if (out->fType != effective) {
-                if (!this->cast(method.fPosition, out, false, effective)) {
-                    return false;
-                }
+            if (m.fMethod.fOwner.fName == "panda.core.Pointer") {
+                *out = IRNode(method.fPosition, IRNode::Kind::CALL, m.returnType(),
+                        std::move(children));
+            }
+            else {
+                *out = IRNode(method.fPosition, IRNode::Kind::CALL,
+                        actualMethodType.fSubtypes.back(), std::move(children));
+                this->cast(out->fPosition, out, false, m.returnType());
             }
             return true;
         }
@@ -1507,19 +1614,36 @@ bool Compiler::convertBinary(const ASTNode& b, IRNode* out) {
 void Compiler::addMethod(Position p, const SymbolTable& st, Method* m,
         const std::vector<Type>& types, std::vector<IRNode>* methods) {
     for (const IRNode& n : *methods) {
-        if (n.fKind == IRNode::Kind::METHOD_REFERENCE &&
-                ((MethodRef*) n.fValue.fPtr)->fMethod.matches(*m)) {
+        if (&((MethodRef*) n.fValue.fPtr)->fMethod == m) {
             return;
         }
     }
+    // FIXME handle lifespan here
     MethodRef* ref = new MethodRef(m, types);
     m->fMethodRefs.emplace_back(ref);
-    methods->push_back(IRNode(p, IRNode::Kind::METHOD_REFERENCE,
-            Type(Position(), Type::Category::METHOD, "<method>"), ref));
+    IRNode node(p, IRNode::Kind::METHOD_REFERENCE,
+            Type(Position(), Type::Category::METHOD, "<method>"), ref);
+    if (m->fMethodKind != Method::Kind::INIT) {
+        const Method* overridden = this->getOverriddenMethod(*m);
+        if (overridden) {
+            for (int i = 0; i < methods->size(); i++) {
+                const IRNode& n = (*methods)[i];
+                ASSERT(n.fKind == IRNode::Kind::METHOD_REFERENCE);
+                if (&((MethodRef*) n.fValue.fPtr)->fMethod == overridden) {
+                    (*methods)[i] = std::move(node);
+                    return;
+                }
+            }
+            printf("internal error: failed to find overridden method %s in method vector\n",
+                    overridden->description().c_str());
+            abort();
+        }
+    }
+    methods->push_back(std::move(node));
 }
 
-static bool is_heritable(Method* m) {
-    return m->fMethodKind != Method::Kind::INIT;
+static bool is_heritable(const Method& m) {
+    return m.fMethodKind != Method::Kind::INIT;
 }
 
 void Compiler::addAllMethods(Position p, const SymbolTable& st, const IRNode* target,
@@ -1536,13 +1660,13 @@ void Compiler::addAllMethods(Position p, const SymbolTable& st, const IRNode* ta
         Symbol* s = found->second;
         switch (s->fKind) {
             case Symbol::Kind::METHOD:
-                if (st.fClass == startClass || is_heritable((Method*) s)) {
+                if (st.fClass == startClass || is_heritable(*(Method*) s)) {
                     this->addMethod(p, st, (Method*) s, types, methods);
                 }
                 break;
             case Symbol::Kind::METHODS:
                 for (const auto& m : ((Methods*) s)->fMethods) {
-                    if (st.fClass == startClass || is_heritable(m)) {
+                    if (st.fClass == startClass || is_heritable(*m)) {
                         this->addMethod(p, st, m, types, methods);
                     }
                 }
@@ -1571,8 +1695,9 @@ bool Compiler::symbolRef(Position p, const SymbolTable& st, Symbol* symbol, IRNo
                 types = type_parameters(*target);
             }
             std::vector<IRNode> children;
-            children.push_back(target ? std::move(*target) : IRNode(p, IRNode::Kind::VOID));
-            this->addAllMethods(p, st, &children[0], symbol->fName, &children, st.fClass);
+            this->addAllMethods(p, st, target, symbol->fName, &children, st.fClass);
+            children.insert(children.begin(), target ? std::move(*target) :
+                    IRNode(p, IRNode::Kind::VOID));
             if (children.size() == 2) {
                 MethodRef* ref = new MethodRef((Method*) symbol, types);
                 ((Method*) symbol)->fMethodRefs.emplace_back(ref);
@@ -1588,8 +1713,9 @@ bool Compiler::symbolRef(Position p, const SymbolTable& st, Symbol* symbol, IRNo
         }
         case Symbol::Kind::METHODS: {
             std::vector<IRNode> children;
-            children.push_back(target ? std::move(*target) : IRNode(p, IRNode::Kind::VOID));
-            this->addAllMethods(p, st, target, symbol->fName, &children, st.fClass);
+            this->addAllMethods(p, st, &children[0], symbol->fName, &children, st.fClass);
+            children.insert(children.begin(), target ? std::move(*target) :
+                    IRNode(p, IRNode::Kind::VOID));
             *out = IRNode(p, IRNode::Kind::UNRESOLVED_METHOD_REFERENCE,
                     Type(Position(), Type::Category::METHOD, "<method>"), &st, std::move(children));
             return true;
@@ -1606,17 +1732,7 @@ bool Compiler::symbolRef(Position p, const SymbolTable& st, Symbol* symbol, IRNo
                 }
                 Type effectiveType = ((Field*) symbol)->fType;
                 if (target->fType.fCategory == Type::Category::GENERIC) {
-                    ASSERT(target->fType.fSubtypes.size() >= 2);
-                    std::map<String, Type> typeMap;
-                    const Type& owner = target->fType.fSubtypes[0];
-                    Class* cl = this->resolveClass(*fSymbolTable, owner);
-                    if (cl) {
-                        for (int i = 1; i < target->fType.fSubtypes.size(); ++i) {
-                            typeMap[cl->fName + "." + cl->fParameters[i - 1].fName] =
-                                    target->fType.fSubtypes[i];
-                        }
-                        effectiveType = ((Field*) symbol)->fType.remap(typeMap);
-                    }
+                    effectiveType = this->remapType(target->fType, ((Field*) symbol)->fType);
                 }
                 children.push_back(std::move(*target));
                 *out = IRNode(p, IRNode::Kind::FIELD_REFERENCE, ((Field*) symbol)->fType, symbol,
@@ -1810,7 +1926,7 @@ bool Compiler::convertDot(const ASTNode& d, IRNode* out) {
         }
         case IRNode::Kind::SUPER: {
             Class* super = this->resolveClass(fCurrentClass.top()->fSymbolTable,
-                    fCurrentClass.top()->fSuper);
+                    fCurrentClass.top()->fRawSuper);
             ASSERT(super);
             st = &super->fSymbolTable;
             name = "class " + super->fName;
@@ -1856,7 +1972,7 @@ bool Compiler::convertSuper(const ASTNode& s, IRNode* out) {
         this->error(s.fPosition, "cannot reference 'super' from a @class method");
         return false;
     }
-    *out = IRNode(s.fPosition, IRNode::Kind::SUPER, fCurrentClass.top()->fSuper);
+    *out = IRNode(s.fPosition, IRNode::Kind::SUPER, fCurrentClass.top()->fRawSuper);
     return true;
 }
 
@@ -2445,13 +2561,33 @@ IRNode Compiler::defaultValue(Position p, const Type& type) {
     return IRNode(p, IRNode::Kind::VOID);
 }
 
-void Compiler::compile(SymbolTable& parent, const Method& method) {
+void Compiler::compile(const Method& method) {
+    SymbolTable symbols(&method.fOwner.fSymbolTable, &method.fOwner);
+    fSymbolTable = &symbols;
+    const Method* overridden;
+    if (method.fMethodKind != Method::Kind::INIT) {
+        overridden = this->getOverriddenMethod(method);
+        if (overridden && !method.fAnnotations.isOverride()) {
+            this->error(method.fPosition, method.signature() + " overrides " +
+                    overridden->description() + ", but is not marked @override");
+        }
+        else if (!overridden && method.fAnnotations.isOverride()) {
+            this->error(method.fPosition, method.signature() + " is marked @override, but no "
+                    "matching method exists among its ancestors");
+        }
+        else if (overridden && overridden->fMethodKind == Method::Kind::FUNCTION &&
+                method.fMethodKind != Method::Kind::FUNCTION) {
+            this->error(method.fPosition, method.signature() + " overrides " +
+                    overridden->description() + ", but is not a function");
+        }
+    }
+    else {
+        overridden = nullptr;
+    }
     if (method.fBody.fKind == ASTNode::Kind::VOID) {
         fCodeGenerator.writeMethodDeclaration(method, *this);
         return;
     }
-    SymbolTable symbols(&parent, &method.fOwner);
-    fSymbolTable = &symbols;
     for (const auto& p : method.fParameters) {
         symbols.add(std::unique_ptr<Symbol>(new Variable(method.fPosition, p.fName, p.fType,
                 Variable::Storage::PARAMETER)));
@@ -2497,26 +2633,48 @@ void Compiler::compile(SymbolTable& parent, const Method& method) {
     fSymbolTable = nullptr;
 }
 
+void Compiler::compile(Class& cl) {
+    if (cl.fRawSuper != Type::Void()) {
+        switch (this->getClass(cl.fRawSuper)->fClassKind) {
+            case Class::ClassKind::CLASS:
+                break;
+            case Class::ClassKind::INTERFACE:
+                this->error(cl.fPosition, "class '" + cl.fName + "' cannot subclass interface '" +
+                        cl.fRawSuper.fName + "'");
+        }
+    }
+    for (const Type& intf : cl.fRawInterfaces) {
+        switch (this->getClass(intf)->fClassKind) {
+            case Class::ClassKind::CLASS:
+                this->error(cl.fPosition, "class '" + intf.fName + "' is not an interface");
+                break;
+            case Class::ClassKind::INTERFACE:
+                break;
+        }
+    }
+    this->compile(cl.fSymbolTable);
+}
+
 void Compiler::compile(SymbolTable& symbols) {
-    symbols.foreach_const([this, &symbols](const Symbol& s) {
+    symbols.foreach([this, &symbols](Symbol& s) {
         switch (s.fKind) {
             case Symbol::Kind::PACKAGE:
                 this->compile(((Package&) s).fSymbolTable);
                 break;
             case Symbol::Kind::CLASS:
                 fCurrentClass.push((Class*) &s);
-                this->compile(((Class&) s).fSymbolTable);
+                this->compile((Class&) s);
                 fCurrentClass.pop();
                 break;
             case Symbol::Kind::METHOD:
                 fCurrentMethod.push((Method*) &s);
-                this->compile(symbols, (Method&) s);
+                this->compile((Method&) s);
                 fCurrentMethod.pop();
                 break;
             case Symbol::Kind::METHODS:
-                for (const auto& m : ((Methods&) s).fMethods) {
+                for (auto& m : ((Methods&) s).fMethods) {
                     fCurrentMethod.push((Method*) m);
-                    this->compile(symbols, (Method&) *m);
+                    this->compile(*(Method*) m);
                     fCurrentMethod.pop();
                 }
                 break;
@@ -2547,14 +2705,6 @@ void Compiler::resolveType(Field* f) {
 }
 
 void Compiler::findClassesAndResolveTypes(Class& cl) {
-    this->resolveType(cl.fSymbolTable, &cl.fSuper);
-    for (auto& intf : cl.fInterfaces) {
-        this->resolveType(cl.fSymbolTable, &intf);
-    }
-    if (cl.isValue()) {
-        cl.fAnnotations.fFlags |= Annotations::Flag::FINAL;
-    }
-    fClasses[cl.fName] = &cl;
     for (const auto& u : cl.fUses) {
         if (u.fAlias.size()) {
             Class* resolved = this->resolveClass(cl.fSymbolTable,
@@ -2564,6 +2714,14 @@ void Compiler::findClassesAndResolveTypes(Class& cl) {
             }
         }
     }
+    this->resolveType(cl.fSymbolTable, &cl.fRawSuper);
+    for (auto& intf : cl.fRawInterfaces) {
+        this->resolveType(cl.fSymbolTable, &intf);
+    }
+    if (cl.isValue()) {
+        cl.fAnnotations.fFlags |= Annotations::Flag::FINAL;
+    }
+    fClasses[cl.fName] = &cl;
     this->findClassesAndResolveTypes(cl.fSymbolTable);
 }
 
@@ -2599,8 +2757,8 @@ void Compiler::buildVTable(Class& cl) {
     if (cl.fVirtualMethods.size()) {
         return;
     }
-    if (cl.fSuper != Type::Void()) {
-        Class* super = this->resolveClass(cl.fSymbolTable, cl.fSuper);
+    if (cl.fRawSuper != Type::Void()) {
+        Class* super = this->resolveClass(cl.fSymbolTable, cl.fRawSuper);
         if (!super) {
             return;
         }
@@ -2608,7 +2766,7 @@ void Compiler::buildVTable(Class& cl) {
         this->buildVTable(*super);
         cl.fVirtualMethods = super->fVirtualMethods;
     }
-    for (const auto& intfType : cl.fInterfaces) {
+    for (const auto& intfType : cl.fRawInterfaces) {
         Class* intf = this->resolveClass(cl.fSymbolTable, intfType);
         if (!intf) {
             return;

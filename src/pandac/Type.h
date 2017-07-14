@@ -21,7 +21,6 @@ struct Type : public Symbol {
         BUILTIN_INT,
         BUILTIN_UINT,
         BUILTIN_FLOAT,
-        METHOD,
         PACKAGE,
         // a simple class name
         CLASS,
@@ -33,6 +32,10 @@ struct Type : public Symbol {
         // a generic parameter type. In the class List<T>, T is a parameter type. fSubtypes[0] is
         // the parameter's bound.
         PARAMETER,
+        // argument types followed by return type. 'self' is the first parameter, if applicable.
+        METHOD,
+        // argument types followed by return type. 'self' is the first parameter, if applicable.
+        FUNCTION,
         UNRESOLVED
     };
 
@@ -118,6 +121,10 @@ struct Type : public Symbol {
                 fCategory == Category::NULLABLE;
     }
 
+    bool isMethod() const {
+        return fCategory == Category::METHOD || fCategory == Category::FUNCTION;
+    }
+
     bool operator==(const Type& other) const {
         return fName == other.fName;
     }
@@ -192,6 +199,38 @@ struct Type : public Symbol {
                     subtypes.push_back(t.remap(types));
                 }
                 return Type(std::move(subtypes));
+            }
+            case Category::NULLABLE:
+                return fSubtypes[0].remap(types).nullable();
+            case Category::METHOD: // fall through
+            case Category::FUNCTION: {
+                std::vector<Type> subtypes;
+                String name = "(";
+                const char* separator = "";
+                ASSERT(fSubtypes.size() >= 1);
+                for (size_t i = 0; i < fSubtypes.size() - 1; ++i) {
+                    Type remapped = fSubtypes[i].remap(types);
+                    name += separator;
+                    name += remapped.fName;
+                    subtypes.push_back(std::move(remapped));
+                    separator = ", ";
+                }
+                if (fCategory == Category::FUNCTION) {
+                    name += ")=>(";
+                }
+                else {
+                    name += ")=&>(";
+                }
+                if (fSubtypes.back() != Type::Void()) {
+                    Type remapped = fSubtypes.back().remap(types);
+                    name += remapped.fName;
+                    subtypes.push_back(std::move(remapped));
+                }
+                else {
+                    subtypes.push_back(Type::Void());
+                }
+                name += ")";
+                return Type(fPosition, fCategory, name, std::move(subtypes));
             }
             default: return *this;
         }

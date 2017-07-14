@@ -1,0 +1,2 @@
+InterfaceSubclassingClass.panda:4:1: error: class 'NotIntf' is not an interface
+1 error

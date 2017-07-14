@@ -45,7 +45,49 @@ public:
 
     void compile();
 
+    /**
+     * Resolve a type to a fully-qualified name (e.g. 'Array<String>' to
+     * 'panda.collections.Array<panda.core.String>').
+     */
     void resolveType(const SymbolTable& st, Type* t);
+
+    /**
+     * Determine an 'effective' type in a particular context. For instance, panda.collections.Array
+     * implements the 'raw' interface panda.collections.List<panda.collections.Array.T>. But inside
+     * an instance of Array<String>, it should be seen as implementing List<String>, not
+     * List<Array.T>.
+     * We use remapType(Array<String>, List<Array.T>) to determine this, resulting in List<String>.
+     */
+    Type remapType(const Type& context, const Type& raw);
+
+    /**
+     * Returns the effective supertype of a class type.
+     */
+    Type* superclass(const Type& sub);
+
+    /**
+     * Returns all effective interfaces implemented by a class type (including indirectly).
+     */
+    std::set<Type> allInterfaces(const Type& t);
+
+    /**
+     * Finds the method with the given name and type within `owner` or its ancestors. The resulting
+     * method will have the same effective type as `methodType`, but not necessarily the same raw
+     * type.
+     */
+    const Method* findMethod(const Type& owner, const String& name, const Type& methodType,
+            bool checkInterfaces);
+
+    /**
+     * Searches the owner's ancestors for a method overridden by the given method.
+     */
+    const Method* getOverriddenMethod(const Method& m);
+
+    /**
+     * Returns a list of the method definitions within a class responsible for implementing the
+     * given interface, in the same order as the interface's methods.
+     */
+    std::vector<const Method*> interfaceMethods(const Class& cl, const Type& intf);
 
     Class* getClass(Type t);
 
@@ -222,7 +264,9 @@ private:
 
     IRNode defaultValue(Position p, const Type& type);
 
-    void compile(SymbolTable& parent, const Method& method);
+    void compile(const Method& method);
+
+    void compile(Class& cl);
 
     void compile(SymbolTable& symbols);
 

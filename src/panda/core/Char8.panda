@@ -13,6 +13,7 @@ class Char8 : Value {
         return value != other.value
     }
 
+    @override
     function convert():String {
         def ptr := Pointer<Char8>.alloc(1)
         ptr[0] := self

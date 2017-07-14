@@ -136,6 +136,9 @@ private:
     String toNonNullableValue(const String& value, const Type& srcType, const Type& dstType,
             std::ostream& out);
 
+    String getCastReference(const String& value, const Type& src, const Type& target,
+            std::ostream& out);
+
     String getCastReference(const IRNode& call, std::ostream& out);
 
     String getConstructReference(const IRNode& construct, std::ostream& out);
@@ -190,6 +193,11 @@ private:
 
     void writeBlock(const IRNode& block, std::ostream& out);
 
+    void getMethodTableEntry(const Method& m, String* outName, String* outType);
+
+    void createMethodShim(const Method& raw, const Type& effective, std::ostream& out,
+            String* outName, String* outType);
+
     String methodName(const Method& name);
 
     String fieldName(const Field& field);
@@ -224,6 +232,9 @@ private:
 
     std::stringstream fMethods;
 
+    // maps method to (name, type)
+    std::unordered_map<const Method*, std::pair<String, String>> fMethodShims;
+
     std::ostream& fOut;
 
     String fCurrentBlock;
@@ -238,9 +249,9 @@ private:
 
     std::unordered_map<const Variable*, String> fVariableNames;
 
-    std::vector<LoopDescriptor> fLoops;
+    std::unordered_map<String, String> fParameterNames;
 
-    bool fKillCast = false;
+    std::vector<LoopDescriptor> fLoops;
 
     friend class AutoLoopDescriptor;
 };

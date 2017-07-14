@@ -1,0 +1,6 @@
+package panda.collections
+
+uses panda.core.Pointer
+
+interface Collection<T> : CollectionView<T>, CollectionWriter<T> {
+}

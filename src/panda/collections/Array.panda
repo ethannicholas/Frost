@@ -2,7 +2,16 @@ package panda.collections
 
 uses panda.core.Pointer
 
-class Array<T> {
+class Array<T> (List<T>) {
+    @private
+    var count := 0
+
+    @private
+    var capacity := 16
+
+    @private
+    var data:Pointer<T>
+
     init() {
         capacity := 16
         data := Pointer<T>.alloc(capacity)
@@ -13,14 +22,17 @@ class Array<T> {
         data.destroy()
     }
 
+    @override
     function [](index:Int):T {
         return data[index]
     }
 
+    @override
     method []:=(index:Int, value:T) {
         data[index] := value
     }
 
+    @override
     method add(value:T) {
         def index := count
         count += 1
@@ -31,9 +43,45 @@ class Array<T> {
         data[index] := value
     }
 
-    var count := 0
+    @override
+    function get_count():Int {
+        return count
+    }
 
-    var capacity := 16
+    @override
+    method remove(index:Int) {
+        for i in index .. count - 1 {
+            self[i] := self[i + 1]
+        }
+        count -= 1
+    }
 
-    var data:Pointer<T>
+    @override
+    method remove(value:T) {
+-*        for i in 0 .. count {
+            if self[i] = value {
+                remove(i)
+            }
+        }*-
+        assert false
+    }
+
+    @override
+    method clear() {
+        count := 0
+    }
+
+    @override
+    function convert():String {
+        def result := MutableString()
+        result.append("[")
+        var separator := ""
+        for i in 0 .. count {
+            result.append(separator)
+            separator := ", "
+            result.append(self[i])
+        }
+        result.append("]")
+        return result.convert()
+    }
 }

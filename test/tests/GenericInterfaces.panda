@@ -1,0 +1,49 @@
+interface Generic1<T> {
+    function getValue():T
+}
+
+class Test1 (Generic1<String>) {
+    @override
+    function getValue():String {
+        return "Test1"
+    }
+}
+
+interface Generic2<U> : Generic1<U> {
+    function convertValue(v:U):U
+}
+
+class Test2 (Generic2<Int>) {
+    @override
+    function getValue():Int {
+        return 42
+    }
+
+    @override
+    function convertValue(v:Int):Int {
+        return v * v
+    }
+}
+
+class Test3 : Test2 {
+    @override
+    function getValue():Int {
+        return 12
+    }
+}
+
+class GenericInterfaces {
+    @class
+    method main() {
+        def intf1:Generic1<String> := Test1()
+        Console.printLine(intf1.getValue())
+        def intf2:Generic1<Int> := Test2()
+        Console.printLine(intf2.getValue())
+        var intf3:Generic2<Int> := Test2()
+        Console.printLine(intf3.getValue())
+        Console.printLine(intf3.convertValue(12))
+        intf3 := Test3()
+        Console.printLine(intf3.getValue())
+        Console.printLine(intf3.convertValue(12))
+    }
+}

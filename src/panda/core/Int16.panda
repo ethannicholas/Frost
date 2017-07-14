@@ -74,6 +74,7 @@ class Int16 : Value {
         return value <= other.value
     }
 
+    @override
     function convert():String {
         return Int64(value->builtin_int64).convert()
     }
