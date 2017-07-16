@@ -5,5 +5,5 @@ uses panda.core.Pointer
 interface ListWriter<T> : CollectionWriter<T> {
     method []:=(index:Int, value:T)
 
-    method remove(index:Int)
+    method removeIndex(index:Int)
 }

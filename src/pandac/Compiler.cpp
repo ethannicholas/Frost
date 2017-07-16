@@ -558,6 +558,10 @@ int Compiler::coercionCost(const Type& type, const Type& target) {
     if (type == Type::Null()) {
         return target.fCategory == Type::Category::NULLABLE ? 0 : INT_MAX;
     }
+    if (type.fCategory == Type::Category::PARAMETER) {
+        ASSERT(type.fSubtypes.size() == 1);
+        return this->coercionCost(type.fSubtypes[0], target);
+    }
     if (type.fCategory != Type::Category::NULLABLE &&
             target.fCategory == Type::Category::NULLABLE) {
         int result = this->coercionCost(type, target.fSubtypes[0]);
@@ -590,10 +594,6 @@ int Compiler::coercionCost(const Type& type, const Type& target) {
             ++cost;
         }
         return cost;
-    }
-    if (type.fCategory == Type::Category::PARAMETER) {
-        ASSERT(type.fSubtypes.size() == 1);
-        return this->coercionCost(type.fSubtypes[0], target);
     }
     if (type == Type::BuiltinBit()) {
         return this->coercionCost(Type::Bit(), target);
@@ -1477,6 +1477,19 @@ bool Compiler::convertBinary(Position p, IRNode* left, Operator op, IRNode* righ
             return true;
         }
     }
+    if (op == Operator::IDENTITY || op == Operator::NIDENTITY) {
+        if (!this->coerce(left, Type::Object())) {
+            return false;
+        }
+        if (!this->coerce(right, Type::Object())) {
+            return false;
+        }
+        std::vector<IRNode> children;
+        children.push_back(std::move(*left));
+        children.push_back(std::move(*right));
+        *out = IRNode(p, IRNode::Kind::BINARY, Type::Bit(), (uint64_t) op, std::move(children));
+        return true;
+    }
     if (op == Operator::INDEX) {
         // index expressions are always unresolved at first, because it might turn out to be an
         // indexed assignment
@@ -1944,6 +1957,7 @@ bool Compiler::convertDot(const ASTNode& d, IRNode* out) {
             else {
                 this->error(d.fPosition, "cannot use '.' on value of type '" + left.fType.fName +
                         "'");
+                return false;
             }
     }
     Symbol* symbol = (*st)[d.fText];

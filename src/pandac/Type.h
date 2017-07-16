@@ -118,7 +118,7 @@ struct Type : public Symbol {
 
     bool isClass() const {
         return fCategory == Category::CLASS || fCategory == Category::GENERIC ||
-                fCategory == Category::NULLABLE;
+                fCategory == Category::NULLABLE || fCategory == Category::PARAMETER;
     }
 
     bool isMethod() const {

@@ -99,6 +99,10 @@ private:
 
     String getOrReference(const IRNode& left, const IRNode& right, std::ostream& out);
 
+    String getIdentityReference(const IRNode& left, const IRNode& right, std::ostream& out);
+
+    String getNIdentityReference(const IRNode& left, const IRNode& right, std::ostream& out);
+
     String getBinaryReference(OpClass cl, const String leftRef, Operator op, const String rightRef,
             std::ostream& out);
 

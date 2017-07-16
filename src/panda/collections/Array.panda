@@ -49,7 +49,7 @@ class Array<T> (List<T>) {
     }
 
     @override
-    method remove(index:Int) {
+    method removeIndex(index:Int) {
         for i in index .. count - 1 {
             self[i] := self[i + 1]
         }
@@ -58,12 +58,12 @@ class Array<T> (List<T>) {
 
     @override
     method remove(value:T) {
--*        for i in 0 .. count {
+        for i in 0 .. count {
             if self[i] = value {
-                remove(i)
+                removeIndex(i)
+                return
             }
-        }*-
-        assert false
+        }
     }
 
     @override
@@ -79,7 +79,7 @@ class Array<T> (List<T>) {
         for i in 0 .. count {
             result.append(separator)
             separator := ", "
-            result.append(self[i])
+            result.append(self[i].convert())
         }
         result.append("]")
         return result.convert()

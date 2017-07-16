@@ -676,12 +676,36 @@ String LLVMCodeGenerator::getOrReference(const IRNode& left, const IRNode& right
     return result;
 }
 
+String LLVMCodeGenerator::getIdentityReference(const IRNode& left, const IRNode& right,
+        std::ostream& out) {
+    String leftRef = this->getTypedReference(left, out);
+    String rightRef = this->getReference(left, out);
+    String raw = this->nextVar();
+    out << "    icmp eq " << leftRef << ", " << rightRef << "\n";
+    String result = this->nextVar();
+    out << "    " << result << " = insertvalue %panda$core$Bit { i1 undef }, i1 " << raw << ", 0\n";
+    return result;
+}
+
+String LLVMCodeGenerator::getNIdentityReference(const IRNode& left, const IRNode& right,
+        std::ostream& out) {
+    String leftRef = this->getTypedReference(left, out);
+    String rightRef = this->getReference(left, out);
+    String raw = this->nextVar();
+    out << "    icmp ne " << leftRef << ", " << rightRef << "\n";
+    String result = this->nextVar();
+    out << "    " << result << " = insertvalue %panda$core$Bit { i1 undef }, i1 " << raw << ", 0\n";
+    return result;
+}
+
 String LLVMCodeGenerator::getBinaryReference(const IRNode& left, Operator op, const IRNode& right,
         std::ostream& out) {
     ASSERT(left.fType == right.fType);
     switch (op) {
-        case Operator::AND: return this->getAndReference(left, right, out);
-        case Operator::OR:  return this->getOrReference(left, right, out);
+        case Operator::AND:       return this->getAndReference(left, right, out);
+        case Operator::OR:        return this->getOrReference(left, right, out);
+        case Operator::IDENTITY:  return this->getIdentityReference(left, right, out);
+        case Operator::NIDENTITY: return this->getNIdentityReference(left, right, out);
         default:
             String leftRef = this->getTypedReference(left, out);
             String rightRef = this->getReference(right, out);
