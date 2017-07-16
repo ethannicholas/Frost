@@ -269,6 +269,10 @@ std::vector<const Method*> Compiler::interfaceMethods(const Class& cl, const Typ
     for (const Method* m : this->getClass(intf)->fMethods) {
         const Method* found = this->findMethod(cl.fType, m->fName, this->remapType(intf,
                 m->inheritedType(*this)), false);
+        if (!found) {
+            printf("internal error: interface method %s not found in %s", m->description().c_str(),
+                    cl.fName.c_str());
+        }
         ASSERT(found);
         result.push_back(found);
     }
@@ -1976,7 +1980,23 @@ bool Compiler::convertSelf(const ASTNode& s, IRNode* out) {
         this->error(s.fPosition, "cannot reference 'self' from a @class method");
         return false;
     }
-    *out = IRNode(s.fPosition, IRNode::Kind::SELF, fCurrentClass.top()->fType);
+    Type type;
+    Class* cl = fCurrentClass.top();
+    if (cl->fParameters.size()) {
+        std::vector<Type> subtypes;
+        subtypes.push_back(cl->fType);
+        for (const auto& p : cl->fParameters) {
+            std::vector<Type> pType;
+            pType.push_back(p.fType);
+            subtypes.emplace_back(p.fPosition, Type::Category::PARAMETER, cl->fName + "." + p.fName,
+                        std::move(pType));
+        }
+        type = Type(std::move(subtypes));
+    }
+    else {
+        type = cl->fType;
+    }
+    *out = IRNode(s.fPosition, IRNode::Kind::SELF, type);
     return true;
 }
 

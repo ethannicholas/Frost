@@ -2,6 +2,27 @@ package panda.collections
 
 uses panda.core.Pointer
 
+class ArrayIterator<T> (Iterator<T>) {
+    var array:Array<T>
+
+    var index := 0
+
+    init(array:Array<T>) {
+        self.array := array
+    }
+
+    @override
+    function get_done():Bit {
+        return index = array.count - 1
+    }
+
+    @override
+    function next():T {
+        index += 1
+        return array[index - 1]
+    }
+}
+
 class Array<T> (List<T>) {
     @private
     var count := 0
@@ -64,6 +85,11 @@ class Array<T> (List<T>) {
                 return
             }
         }
+    }
+
+    @override
+    function iterator():Iterator<T> {
+        return ArrayIterator<T>(self)
     }
 
     @override

@@ -1,8 +1,6 @@
 package panda.collections
 
-uses panda.core.Pointer
-
-interface CollectionView<T> {
+interface CollectionView<T> : Iterable<T> {
     -- property count:Int
 
     function get_count():Int

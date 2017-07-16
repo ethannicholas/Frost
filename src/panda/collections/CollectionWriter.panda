@@ -1,7 +1,5 @@
 package panda.collections
 
-uses panda.core.Pointer
-
 interface CollectionWriter<T> {
     -- property count:Int
 

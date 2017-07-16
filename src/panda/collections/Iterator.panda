@@ -1,0 +1,9 @@
+package panda.collections
+
+interface Iterator<T> {
+    -- property done:Bit
+
+    function get_done():Bit
+
+    method next():T
+}

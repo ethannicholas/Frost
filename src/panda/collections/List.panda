@@ -1,6 +1,4 @@
 package panda.collections
 
-uses panda.core.Pointer
-
 interface List<T> : ListView<T>, ListWriter<T>, Collection<T> {
 }

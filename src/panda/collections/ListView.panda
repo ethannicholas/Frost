@@ -1,7 +1,5 @@
 package panda.collections
 
-uses panda.core.Pointer
-
 interface ListView<T> : CollectionView<T> {
     function [](index:Int):T
 }

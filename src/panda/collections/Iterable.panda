@@ -1,0 +1,5 @@
+package panda.collections
+
+interface Iterable<T> {
+    function iterator():Iterator<T>
+}
