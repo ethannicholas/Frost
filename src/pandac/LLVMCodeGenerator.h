@@ -58,6 +58,8 @@ private:
 
     void writeNullableType(const Type& type);
 
+    size_t fieldSize(const Type& type);
+
     size_t sizeOf(const Type& type);
 
     String getITable(const Class& cl);

@@ -215,8 +215,9 @@ void Scanner::scanClass(String contextName, std::vector<Class::UsesDeclaration> 
         for (const auto& p : cl->fChildren[2].fChildren) {
             ASSERT(p.fKind == ASTNode::Kind::IDENTIFIER);
             Type type;
-            if (p.fChildren.size() > 0) {
-                abort();
+            if (p.fChildren.size()) {
+                ASSERT(p.fChildren.size() == 1);
+                type = this->convertType(p.fChildren[0], *parent);
             }
             else {
                 type = Type::Any();

@@ -853,26 +853,30 @@ bool PandaParser::genericsDeclaration(ASTNode* outResult) {
     }
     std::vector<ASTNode> children;
     ASTNode type;
-    if (this->peek().fKind == Token::Kind::COLON) {
+    std::vector<ASTNode> idChildren;
+    if (this->checkNext(Token::Kind::COLON)) {
         if (!this->type(&type)) {
             return false;
         }
-        children.push_back(std::move(type));
+        idChildren.push_back(std::move(type));
     }
-    children.emplace_back(id.fPosition, ASTNode::Kind::IDENTIFIER, id.fText, std::move(children));
-    while (!this->checkNext(Token::Kind::GT)) {
+    children.emplace_back(id.fPosition, ASTNode::Kind::IDENTIFIER, id.fText, std::move(idChildren));
+    while (this->checkNext(Token::Kind::COMMA)) {
         if (!this->expect(Token::Kind::IDENTIFIER, "an identifier", &id)) {
             return false;
         }
-        children.clear();
-        if (this->peek().fKind == Token::Kind::COLON) {
+        idChildren.clear();
+        if (this->checkNext(Token::Kind::COLON)) {
             if (this->type(&type)) {
                 return false;
             }
-            children.push_back(std::move(type));
+            idChildren.push_back(std::move(type));
         }
         children.emplace_back(id.fPosition, ASTNode::Kind::IDENTIFIER, id.fText,
-                std::move(children));
+                std::move(idChildren));
+    }
+    if (!this->expect(Token::Kind::GT, "'>'")) {
+        return false;
     }
     *outResult = ASTNode(start.fPosition, ASTNode::Kind::GENERICS, std::move(children));
     return true;

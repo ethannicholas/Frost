@@ -6,7 +6,11 @@ class Object {
     }
 
     function !=(o:Object):Bit {
-        return !(self == o)
+        return !(self = o)
+    }
+
+    function hash():Int {
+        return 0
     }
 
     function convert():String {

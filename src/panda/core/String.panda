@@ -68,7 +68,10 @@ class String {
         return o.convert() + s
     }
 
-    function =(other:String):Bit {
+    @override
+    function =(o:Object):Bit {
+        -- FIXME need to check o's class
+        def other := o->String
         if size != other.size {
             return false
         }
@@ -246,8 +249,13 @@ class String {
         return result
     }
 
-
+    @override
     function hash():Int {
-        return 0
+        var result := 0
+        for i in 0 .. size {
+            result := result * 101 + Int64(data[i].value->builtin_int64)
+        }
+        return result
     }
+
 }

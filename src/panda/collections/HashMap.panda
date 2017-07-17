@@ -1,7 +1,10 @@
+package panda.collections
+
+uses panda.core.Pointer
+
 ====================================================================================================
 A single key/value pair from a `HashMap`.
 ====================================================================================================
-@private
 class MutableMapEntry<K, V> {
     ================================================================================================
     The entry's key.
@@ -34,21 +37,20 @@ number of values can be stored in a `HashMap` and then retrieved in constant tim
 
 This will display the value `"good"`.
 ====================================================================================================
-@specialize
-class HashMap<K:String, V> {
+class HashMap<K, V> {
     @private
-    constant DEFAULT_CAPACITY := 16
+    constant DEFAULT_BUCKET_COUNT := 16
 
     @private
-    var count:Int
-
-    @private 
-    -- size must be a power of 2 (see indexFor)
-    var contents:Pointer<MutableMapEntry<K, V>>
+    var _count:Int
 
     @private
+    -- must be a power of 2 (see indexFor)
     var bucketCount:Int
-    
+
+    @private
+    var contents:Pointer<MutableMapEntry<K, V>?>
+
     @private
     var threshold:Int
 
@@ -59,7 +61,14 @@ class HashMap<K:String, V> {
     Creates a new, empty `HashMap`.
     ================================================================================================
     init() {
-        clear()
+        changeCount += 1
+        _count := 0
+        bucketCount := DEFAULT_BUCKET_COUNT
+        contents := Pointer<MutableMapEntry<K, V>?>.alloc(bucketCount)
+        for i in 0 .. bucketCount {
+            contents[i] := null
+        }
+        threshold := (bucketCount * 3) // 4
     }
 
     ================================================================================================
@@ -72,7 +81,7 @@ class HashMap<K:String, V> {
             h := 0
         }
         else {
-            h := key.hash
+            h := key.hash()
         }
         -- supplemental hash function to defend against poor hash codes, as we do not use a prime
         -- table length
@@ -83,8 +92,7 @@ class HashMap<K:String, V> {
         return h
     }
     
-    @override
-    function [](key:K):V {
+    function [](key:K):V? {
         def index := indexFor(key)
         var e := contents[index]
         while e != null & e.key != key {
@@ -98,7 +106,6 @@ class HashMap<K:String, V> {
         }
     }
     
-    @override
     function contains(key:K):Bit {
         def index := indexFor(key)
         var e := contents[index]
@@ -108,8 +115,6 @@ class HashMap<K:String, V> {
         return e != null
     }
 
-    @override
-    @self
     method []:=(key:K, value:V) {
         changeCount += 1
         def index := indexFor(key)
@@ -122,16 +127,13 @@ class HashMap<K:String, V> {
             e := MutableMapEntry<K, V>(key, value)
             e.next := old
             contents[index] := e
-            assert contents[index] == e
-            incrementLength()
+            incrementCount()
         }
         else {
             e.value := value
         }
     }
     
-    @override
-    @self
     method remove(key:K) {
         changeCount += 1
         def index := indexFor(key)
@@ -143,7 +145,7 @@ class HashMap<K:String, V> {
         -- found in the first slot, need to update the contents array
         if e.key = key {
             contents[index] := e.next
-            count -= 1
+            _count -= 1
             return
         }
         loop {
@@ -162,39 +164,34 @@ class HashMap<K:String, V> {
         def next := e.next
         assert next != null
         e.next := next.next
-        count -= 1
+        _count -= 1
     }
 
-    @override
-    @self
-    method addAll(map:MapView<K, V>) {
-        for (key, value) in map {
-            self[key] := value
-        }
-    }    
-
-    @override
-    @self
     method clear() {
         changeCount += 1
-        count := 0
+        _count := 0
         contents.destroy()
-        contents := Pointer<MutableMapEntry<K, V>?>.alloc(DEFAULT_LENGTH)
-        threshold := (contents.length * 3) // 4
+        bucketCount := DEFAULT_BUCKET_COUNT
+        contents := Pointer<MutableMapEntry<K, V>?>.alloc(bucketCount)
+        for i in 0 .. bucketCount {
+            contents[i] := null
+        }
+        threshold := (bucketCount * 3) // 4
     }
     
-    ================================================================================================
-    Doubles the size of the `contents` array, rehashing all of its entries.
-    ================================================================================================
     @private
-    method incrementLength() {
-        _length += 1
-        if count >= threshold {
-            _length := 0
-            var oldContents := contents
-            contents := PrimitiveArray<MutableMapEntry<K, V>?>(contents.length * 2)
+    method incrementCount() {
+        _count += 1
+        if _count >= threshold {
+            def oldContents := contents
+            def oldBucketCount := bucketCount
+            bucketCount *= 2
+            contents := Pointer<MutableMapEntry<K, V>?>.alloc(bucketCount)
+            for i in 0 .. bucketCount {
+                contents[i] := null
+            }
             threshold *= 2
-            for i in oldContents.length - 1 ... 0 by -1 {
+            for i in 0 .. oldBucketCount {
                 var e := oldContents[i]
                 while e != null {
                     self[e.key] := e.value
@@ -213,7 +210,7 @@ class HashMap<K:String, V> {
     ================================================================================================
     @override
     function =(o:Object):Bit {
-        if o-!>Map<K, V> {
+-*        if o-!>Map<K, V> {
             return false
         }
         var m := o->Map<K, V>
@@ -225,7 +222,8 @@ class HashMap<K:String, V> {
                 return false
             }
         }
-        return true
+        return true*-
+        assert false
     }
 
     ================================================================================================
@@ -236,7 +234,7 @@ class HashMap<K:String, V> {
     ================================================================================================
     @override
     function convert():String {
-        def result := MutableString()
+-*        def result := MutableString()
         result.append("{")
         var first := true
         for (key, value) in self {
@@ -261,6 +259,7 @@ class HashMap<K:String, V> {
             }
         }
         result.append("}")
-        return result.convert()
+        return result.convert()*-
+        assert false
     }
 }

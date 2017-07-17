@@ -78,7 +78,7 @@ LLVMCodeGenerator::LLVMCodeGenerator(std::ostream* out)
     fMethods << "}\n";
 }
 
-static size_t field_size(const Type& type) {
+size_t LLVMCodeGenerator::fieldSize(const Type& type) {
     switch (type.fCategory) {
         case Type::Category::BUILTIN_INT: // fall through
         case Type::Category::BUILTIN_UINT: return std::max(type.fSize / 8, 1);
@@ -86,6 +86,15 @@ static size_t field_size(const Type& type) {
         case Type::Category::GENERIC: return POINTER_SIZE;
         case Type::Category::PARAMETER:
             return POINTER_SIZE;
+        case Type::Category::NULLABLE: {
+            ASSERT(type.fSubtypes.size() == 1);
+            Class* cl = fCompiler->getClass(type);
+            ASSERT(cl);
+            if (cl->isValue()) {
+                return this->fieldSize(type.fSubtypes[0]) + 1;
+            }
+            return POINTER_SIZE;
+        }
         default: abort();
     }
 }
@@ -101,7 +110,7 @@ size_t LLVMCodeGenerator::sizeOf(const Type& type) {
             Class* cl = fCompiler->getClass(type);
             ASSERT(cl);
             for (const Field* f : fCompiler->getInstanceFields(*cl)) {
-                size_t fieldSize = field_size(f->fType);
+                size_t fieldSize = this->fieldSize(f->fType);
                 size_t align = result % fieldSize;
                 if (align) {
                     result += fieldSize - align;
@@ -117,7 +126,7 @@ size_t LLVMCodeGenerator::sizeOf(const Type& type) {
         case Type::Category::PARAMETER:
             return this->sizeOf(type.fSubtypes[0]);
         default:
-            return field_size(type);
+            return this->fieldSize(type);
     }
 }
 

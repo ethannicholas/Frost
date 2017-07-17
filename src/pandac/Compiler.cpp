@@ -165,7 +165,6 @@ Class* Compiler::resolveClass(const SymbolTable& st, Type t) {
         Symbol* s = (*current)[token];
         if (!s) {
             this->error(t.fPosition, "no type named '" + t.fName + "'");
-            abort();
             return nullptr;
         }
         switch (s->fKind) {
@@ -1748,9 +1747,7 @@ bool Compiler::symbolRef(Position p, const SymbolTable& st, Symbol* symbol, IRNo
                             "'super' can only be used as part of a method call");
                 }
                 Type effectiveType = ((Field*) symbol)->fType;
-                if (target->fType.fCategory == Type::Category::GENERIC) {
-                    effectiveType = this->remapType(target->fType, ((Field*) symbol)->fType);
-                }
+                effectiveType = this->remapType(target->fType, ((Field*) symbol)->fType);
                 children.push_back(std::move(*target));
                 *out = IRNode(p, IRNode::Kind::FIELD_REFERENCE, ((Field*) symbol)->fType, symbol,
                         std::move(children));
@@ -2747,6 +2744,9 @@ void Compiler::findClassesAndResolveTypes(Class& cl) {
                 cl.fAliasTable.addAlias(u.fAlias, resolved);
             }
         }
+    }
+    for (auto& p : cl.fParameters) {
+        this->resolveType(cl.fSymbolTable, &p.fType);
     }
     this->resolveType(cl.fSymbolTable, &cl.fRawSuper);
     for (auto& intf : cl.fRawInterfaces) {
