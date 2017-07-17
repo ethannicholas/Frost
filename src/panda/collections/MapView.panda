@@ -1,0 +1,10 @@
+package panda.collections
+
+====================================================================================================
+A read-only view of the standard "Map" abstract data type, which stores key/value pairs such that no
+key appears more than once in the collection. Given a key, a `MapView` will return the corresponding
+value, and generally does so very quickly (linear or `log n` time, depending on the implementation).
+====================================================================================================
+interface MapView<K, V> {
+    function [](key:K):V?
+}

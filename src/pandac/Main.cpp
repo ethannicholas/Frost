@@ -108,6 +108,9 @@ int main(int argc, char** argv) {
     sources.push_back(PANDA_HOME + "panda/collections/CollectionView.panda");
     sources.push_back(PANDA_HOME + "panda/collections/CollectionWriter.panda");
     sources.push_back(PANDA_HOME + "panda/collections/HashMap.panda");
+    sources.push_back(PANDA_HOME + "panda/collections/Map.panda");
+    sources.push_back(PANDA_HOME + "panda/collections/MapView.panda");
+    sources.push_back(PANDA_HOME + "panda/collections/MapWriter.panda");
     sources.push_back(PANDA_HOME + "panda/collections/Iterable.panda");
     sources.push_back(PANDA_HOME + "panda/collections/Iterator.panda");
     sources.push_back(PANDA_HOME + "panda/collections/List.panda");

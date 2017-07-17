@@ -33,11 +33,11 @@ number of values can be stored in a `HashMap` and then retrieved in constant tim
     alignment["human"]  := "good"
     alignment["orc"]    := "evil"
     alignment["dragon"] := "neutral"
-    Console.writeLine(alignment["human"])
+    Console.printLine(alignment["human"])
 
 This will display the value `"good"`.
 ====================================================================================================
-class HashMap<K, V> {
+class HashMap<K, V> (Map<K, V>) {
     @private
     constant DEFAULT_BUCKET_COUNT := 16
 
@@ -92,6 +92,7 @@ class HashMap<K, V> {
         return h
     }
     
+    @override
     function [](key:K):V? {
         def index := indexFor(key)
         var e := contents[index]
@@ -115,6 +116,7 @@ class HashMap<K, V> {
         return e != null
     }
 
+    @override
     method []:=(key:K, value:V) {
         changeCount += 1
         def index := indexFor(key)
@@ -202,8 +204,7 @@ class HashMap<K, V> {
     }
 
     ================================================================================================
-    Returns `true` if `o` is a Map containing the same key/value pairs as this
-    map.
+    Returns `true` if `o` is a Map containing the same key/value pairs as this map.
 
     @param o the object to compare against
     @returns `true` if the two values are equal
