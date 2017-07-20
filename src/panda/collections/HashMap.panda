@@ -193,6 +193,7 @@ class HashMap<K, V> (Map<K, V>) {
                 contents[i] := null
             }
             threshold *= 2
+            _count := 0
             for i in 0 .. oldBucketCount {
                 var e := oldContents[i]
                 while e != null {
@@ -201,6 +202,10 @@ class HashMap<K, V> (Map<K, V>) {
                 }
             }
         }
+    }
+
+    function get_count():Int {
+        return _count
     }
 
     ================================================================================================

@@ -1,0 +1,44 @@
+class ArrayTest {
+    @class
+    method main() {
+        def a := Array<Int>()
+        for i in 1 ... 20 {
+            a.add(i)
+        }
+        Console.printLine(a)
+        for i in 19 ... 0 by -2 {
+            a.removeIndex(i)
+        }
+        Console.printLine(a)
+        a.remove(1)
+        a.remove(7)
+        Console.printLine(a)
+        def b := Array<Int>()
+        b.add(123)
+        b.add(456)
+        b.add(789)
+        a.addAll(b)
+        Console.printLine(a)
+        Console.printLine(b)
+
+        def objects := Array<Object>()
+        objects.add("Start")
+        for v in a {
+            objects.add(v)
+        }
+        objects.add("End")
+        Console.printLine(objects)
+
+        a.clear()
+        for i in 1 ... 1000 {
+            a.add(i)
+        }
+        Console.printLine(a)
+
+        for i in a {
+            if i % 100 = 0 {
+                Console.printLine(i)
+            }
+        }
+    }
+}

@@ -294,6 +294,11 @@ struct Type : public Symbol {
         return result;
     }
 
+    static Type& Iterator() {
+        static Type result = Type(Position(), Category::CLASS, "panda.collections.Iterator");
+        return result;
+    }
+
     static Type& Console() {
         static Type result = Type(Position(), Category::CLASS, "panda.io.Console");
         return result;

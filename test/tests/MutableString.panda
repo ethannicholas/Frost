@@ -1,4 +1,4 @@
-class MutableString {
+class MutableStringTest {
     @class
     method main() {
         def m := MutableString()

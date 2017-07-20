@@ -49,7 +49,7 @@ public:
      * Resolve a type to a fully-qualified name (e.g. 'Array<String>' to
      * 'panda.collections.Array<panda.core.String>').
      */
-    void resolveType(const SymbolTable& st, Type* t);
+    bool resolveType(const SymbolTable& st, Type* t, bool checkParameters = true);
 
     /**
      * Determine an 'effective' type in a particular context. For instance, panda.collections.Array
@@ -96,7 +96,7 @@ public:
     std::vector<const Field*> fFieldInitializationOrder;
 
 private:
-    Class* resolveClass(const SymbolTable& st, Type t);
+    Class* resolveClass(const SymbolTable& st, Type t, bool checkParameters = true);
 
     // for all convert methods: a true result means "successful enough to have produced output",
     // false means failure. Success may still have generated errors.

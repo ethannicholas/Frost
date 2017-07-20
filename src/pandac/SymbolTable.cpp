@@ -25,6 +25,7 @@ void SymbolTable::addAlias(String name, Symbol* symbol) {
         }
         this->error(symbol->fPosition, "duplicate symbol '" + name + "' (previous declaration "
                 "at " + found->second->fPosition.description().c_str() + ")");
+        abort();
     }
     fSymbols[name] = symbol;
 }

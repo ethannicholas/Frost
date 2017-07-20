@@ -77,7 +77,7 @@ static int required_size(uint64_t value) {
     return 64;
 }
 
-void Compiler::resolveType(const SymbolTable& st, Type* t) {
+bool Compiler::resolveType(const SymbolTable& st, Type* t, bool checkParameters) {
     switch (t->fCategory) {
         case Type::Category::CLASS: {
             Symbol* s = st[t->fName];
@@ -89,19 +89,25 @@ void Compiler::resolveType(const SymbolTable& st, Type* t) {
                         std::move(children));
                 break;
             }
-            Class* cl = this->resolveClass(st, *t);
+            Class* cl = this->resolveClass(st, *t, checkParameters);
             if (cl) {
-                *t = cl->fType;
+                *t = Type(t->fPosition, Type::Category::CLASS, cl->fName);
+            }
+            else {
+                return false;
             }
             break;
         }
         case Type::Category::GENERIC: {
             std::vector<Type> result;
             for (auto& sub : t->fSubtypes) {
-                this->resolveType(st, &sub);
+                this->resolveType(st, &sub, false);
                 result.push_back(std::move(sub));
             }
             *t = Type(std::move(result));
+            if (checkParameters) {
+                return this->resolveClass(st, *t, checkParameters);
+            }
             break;
         }
         case Type::Category::NULLABLE: {
@@ -116,6 +122,7 @@ void Compiler::resolveType(const SymbolTable& st, Type* t) {
         default:
             break;
     }
+    return true;
 }
 
 Type Compiler::remapType(const Type& context, const Type& raw) {
@@ -129,7 +136,7 @@ Type Compiler::remapType(const Type& context, const Type& raw) {
             ASSERT(context.fSubtypes.size() >= 2);
             std::map<String, Type> typeMap;
             const Type& base = context.fSubtypes[0];
-            Class* cl = this->resolveClass(*fSymbolTable, base);
+            Class* cl = this->resolveClass(*fSymbolTable, base, false);
             ASSERT(cl);
             for (int i = 1; i < context.fSubtypes.size(); ++i) {
                 typeMap[cl->fName + "." + cl->fParameters[i - 1].fName] = context.fSubtypes[i];
@@ -150,13 +157,19 @@ Class* Compiler::getClass(Type t) {
     return result;
 }
 
-Class* Compiler::resolveClass(const SymbolTable& st, Type t) {
-    if (t.fCategory == Type::Category::GENERIC || t.fCategory == Type::Category::NULLABLE) {
+Class* Compiler::resolveClass(const SymbolTable& st, Type t, bool checkParameters) {
+    if (t.fCategory == Type::Category::NULLABLE) {
         return this->resolveClass(st, t.fSubtypes[0]);
     }
     const SymbolTable* current = &st;
     std::stringstream ss;
-    ss.str(t.fName);
+    if (t.fCategory == Type::Category::GENERIC) {
+        ASSERT(t.fSubtypes.size() >= 2);
+        ss.str(t.fSubtypes[0].fName);
+    }
+    else {
+        ss.str(t.fName);
+    }
     std::string token;
     Class* result = nullptr;
     Package* p = nullptr;
@@ -190,6 +203,23 @@ Class* Compiler::resolveClass(const SymbolTable& st, Type t) {
         }
     }
     if (result) {
+        if (checkParameters) {
+            int expectedParameters = result->fParameters.size();
+            int suppliedParameters;
+            if (t.fCategory == Type::Category::GENERIC) {
+                suppliedParameters = t.fSubtypes.size() - 1;
+            }
+            else {
+                suppliedParameters = 0;
+            }
+            if (suppliedParameters != expectedParameters) {
+                this->error(t.fPosition, "'" + result->fName + "' expected " +
+                        std::to_string(expectedParameters) + " generic parameter" +
+                        (expectedParameters != 1 ? "s" : "") + ", but found " +
+                        std::to_string(suppliedParameters));
+                return nullptr;
+            }
+        }
         return result;
     }
     ASSERT(p);
@@ -1696,10 +1726,19 @@ void Compiler::addAllMethods(Position p, const SymbolTable& st, const IRNode* ta
 bool Compiler::symbolRef(Position p, const SymbolTable& st, Symbol* symbol, IRNode* out,
         IRNode* target) {
     switch (symbol->fKind) {
-        case Symbol::Kind::CLASS:
+        case Symbol::Kind::CLASS: {
+            Class* cl = (Class*) symbol;
+            int expectedParameters = cl->fParameters.size();
+            if (expectedParameters) {
+                this->error(p, "'" + cl->fName + "' expected " +
+                        std::to_string(expectedParameters) + " generic parameter" +
+                        (expectedParameters != 1 ? "s" : "") + ", but found 0");
+                return false;
+            }
             *out = IRNode(p, IRNode::Kind::TYPE_REFERENCE,
-                    Type(Position(), Type::Category::CLASS, "<type>"), &((Class*) symbol)->fType);
+                    Type(Position(), Type::Category::CLASS, "<type>"), &cl->fType);
             return true;
+        }
         case Symbol::Kind::TYPE:
             ASSERT(!target);
             *out = IRNode(p, IRNode::Kind::TYPE_REFERENCE,
@@ -2239,11 +2278,88 @@ bool Compiler::convertFor(const ASTNode& f, IRNode* out) {
         *out = IRNode(f.fPosition, IRNode::Kind::RANGE_FOR, f.fText, std::move(children));
         return true;
     }
-    else {
-        this->error(list.fPosition, "'for' loop expected a Range or Iterable, but found '" +
-                list.fType.description() + "'");
-        return false;
+    std::set<Type> interfaces = this->allInterfaces(list.fType);
+    for (Type t : interfaces) {
+        if (t.fCategory == Type::Category::GENERIC &&
+                t.fSubtypes[0].fName == "panda.collections.Iterable") {
+            // iterable for. We rewrite 'for v in list { statements }' to:
+            // def v$Iter := list.iterator()
+            // while !v$Iter.done() {
+            //     def v := v$Iter.next()
+            //     statements
+            // }
+            IRNode target;
+            Type indexType = list.fType.fSubtypes[1];
+            if (!this->convertTarget(f.fChildren[0], nullptr, &indexType, &target)) {
+                return false;
+            }
+            IRNode block;
+            this->convertBlock(f.fChildren[2], &block);
+            ASSERT(target.fKind == IRNode::Kind::VARIABLE_REFERENCE);
+            Variable* targetVar = (Variable*) target.fValue.fPtr;
+            std::vector<Type> subtypes;
+            subtypes.push_back(Type::Iterator());
+            subtypes.push_back(indexType);
+            Type iterType(subtypes);
+            Variable* iter = new Variable(f.fPosition, targetVar->fName + "$Iter", iterType);
+            fSymbolTable->add(std::unique_ptr<Symbol>(iter));
+            std::vector<IRNode> statements;
+            std::vector<IRNode> declChildren;
+            declChildren.emplace_back(f.fPosition, IRNode::Kind::VARIABLE_REFERENCE, iter->fType,
+                    iter);
+            IRNode getIterator;
+            if (!call(std::move(list), "iterator", std::vector<IRNode>(), nullptr, &getIterator)) {
+                // shouldn't ever happen
+                return false;
+            }
+            declChildren.push_back(std::move(getIterator));
+            std::vector<IRNode> varChildren;
+            varChildren.emplace_back(f.fPosition, IRNode::Kind::DECLARATION,
+                    std::move(declChildren));
+            statements.emplace_back(f.fPosition, IRNode::Kind::DEF, std::move(varChildren));
+            std::vector<IRNode> whileChildren;
+            IRNode done;
+            if (!call(IRNode(f.fPosition, IRNode::Kind::VARIABLE_REFERENCE, iter->fType, iter),
+                    "get_done", std::vector<IRNode>(), nullptr, &done)) {
+                // shouldn't ever happen
+                return false;
+            }
+            Class* bit = fClasses["panda.core.Bit"];
+            ASSERT(bit);
+            Field* value = (Field*) bit->fSymbolTable["value"];
+            std::vector<IRNode> bitChildren;
+            bitChildren.push_back(std::move(done));
+            IRNode bitValue(f.fPosition, IRNode::Kind::FIELD_REFERENCE, Type::BuiltinBit(), value,
+                    std::move(bitChildren));
+            std::vector<IRNode> notChildren;
+            notChildren.push_back(std::move(bitValue));
+            whileChildren.emplace_back(f.fPosition, IRNode::Kind::PREFIX, Type::BuiltinBit(),
+                    (uint64_t) Operator::NOT, std::move(notChildren));
+            declChildren.clear();
+            declChildren.emplace_back(f.fPosition, IRNode::Kind::VARIABLE_REFERENCE,
+                    targetVar->fType, targetVar);
+            IRNode next;
+            if (!call(IRNode(f.fPosition, IRNode::Kind::VARIABLE_REFERENCE, iter->fType, iter),
+                    "next", std::vector<IRNode>(), nullptr, &next)) {
+                // shouldn't ever happen
+                return false;
+            }
+            declChildren.push_back(std::move(next));
+            varChildren.clear();
+            varChildren.emplace_back(f.fPosition, IRNode::Kind::DECLARATION,
+                    std::move(declChildren));
+            block.fChildren.insert(block.fChildren.begin(), IRNode(f.fPosition, IRNode::Kind::DEF,
+                    std::move(varChildren)));
+            whileChildren.push_back(std::move(block));
+            statements.emplace_back(f.fPosition, IRNode::Kind::WHILE, f.fText,
+                    std::move(whileChildren));
+            *out = IRNode(f.fPosition, IRNode::Kind::BLOCK, std::move(statements));
+            return true;
+        }
     }
+    this->error(list.fPosition, "'for' loop expected an Iterable or numeric Range, "
+            "but found '" + list.fType.description() + "'");
+    return false;
 }
 
 
@@ -2576,7 +2692,9 @@ Type* Compiler::typePointer(const Type& type) {
 
 bool Compiler::convertType(const ASTNode& t, IRNode* out) {
     Type converted = fScanner.convertType(t, *fSymbolTable);
-    this->resolveType(*fSymbolTable, &converted);
+    if (!this->resolveType(*fSymbolTable, &converted)) {
+        return false;
+    }
     *out = IRNode(converted.fPosition, IRNode::Kind::TYPE_REFERENCE, Type::Class(),
             this->typePointer(converted));
     return true;
@@ -2739,7 +2857,7 @@ void Compiler::findClassesAndResolveTypes(Class& cl) {
     for (const auto& u : cl.fUses) {
         if (u.fAlias.size()) {
             Class* resolved = this->resolveClass(cl.fSymbolTable,
-                    Type(u.fPosition, Type::Category::CLASS, u.fImport));
+                    Type(u.fPosition, Type::Category::CLASS, u.fImport), false);
             if (resolved) {
                 cl.fAliasTable.addAlias(u.fAlias, resolved);
             }

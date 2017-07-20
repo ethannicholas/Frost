@@ -7,6 +7,8 @@ interface CollectionWriter<T> {
 
     method add(value:T)
 
+    method addAll(c:CollectionView<T>)
+
     method remove(value:T)
 
     method clear()

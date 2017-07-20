@@ -116,6 +116,7 @@ int main(int argc, char** argv) {
     sources.push_back(PANDA_HOME + "panda/collections/List.panda");
     sources.push_back(PANDA_HOME + "panda/collections/ListView.panda");
     sources.push_back(PANDA_HOME + "panda/collections/ListWriter.panda");
+    sources.push_back(PANDA_HOME + "panda/collections/Stack.panda");
     sources.push_back(PANDA_HOME + "panda/core/Bit.panda");
     sources.push_back(PANDA_HOME + "panda/core/Char8.panda");
     sources.push_back(PANDA_HOME + "panda/core/Class.panda");

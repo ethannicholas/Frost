@@ -1,0 +1,37 @@
+class HashMapTest {
+    @class
+    method main() {
+        def h := HashMap<Int, Int>()
+        for i in 0 .. 200 {
+            h[i] := i * i
+        }
+        h.remove(75)
+        h.remove(10)
+        for i in 0 .. 200 {
+            def value := h[i]
+            if value != null {
+                Console.printLine(h[i])
+            }
+            else {
+                Console.printLine("null")
+            }
+        }
+        Console.printLine(h.get_count())
+        Console.printLine(h[0] != null)
+        h.clear()
+        Console.printLine(h.get_count())
+        h[-12] := 124
+        Console.printLine(h[0] != null)
+        Console.printLine(h[-12])
+
+        def h2 := HashMap<Int, String>()
+        h2[0] := "Red"
+        h2[1] := "Blue"
+        h2[2] := "Green"
+        h2[3] := "Yellow"
+        Console.printLine(h2[3])
+        Console.printLine(h2[0])
+        Console.printLine(h2[2])
+        Console.printLine(h2[1])
+    }
+}

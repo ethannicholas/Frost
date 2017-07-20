@@ -13,7 +13,7 @@ class ArrayIterator<T> (Iterator<T>) {
 
     @override
     function get_done():Bit {
-        return index = array.count - 1
+        return index = array.count
     }
 
     @override
@@ -28,13 +28,17 @@ class Array<T> (List<T>) {
     var count := 0
 
     @private
-    var capacity := 16
+    var capacity:Int
 
     @private
     var data:Pointer<T>
 
     init() {
-        capacity := 16
+        init(16)
+    }
+
+    init(capacity:Int) {
+        self.capacity := capacity
         data := Pointer<T>.alloc(capacity)
     }
 
@@ -55,13 +59,28 @@ class Array<T> (List<T>) {
 
     @override
     method add(value:T) {
-        def index := count
+        ensureCapacity(count + 1)
+        data[count] := value
         count += 1
-        if count > capacity {
-            capacity *= 2
-            data := data.realloc(capacity)
+    }
+
+    @override
+    method addAll(c:CollectionView<T>) {
+        ensureCapacity(count + c.get_count())
+        for v in c {
+            data[count] := v
+            count += 1
         }
-        data[index] := value
+    }
+
+    method ensureCapacity(newCapacity:Int) {
+        if newCapacity <= capacity {
+            return
+        }
+        while capacity < newCapacity {
+            capacity *= 2
+        }
+        data := data.realloc(capacity)
     }
 
     @override
@@ -102,10 +121,10 @@ class Array<T> (List<T>) {
         def result := MutableString()
         result.append("[")
         var separator := ""
-        for i in 0 .. count {
+        for v in self {
             result.append(separator)
             separator := ", "
-            result.append(self[i].convert())
+            result.append(v)
         }
         result.append("]")
         return result.convert()

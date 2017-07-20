@@ -1,0 +1,28 @@
+package panda.collections
+
+class Stack<T> {
+    @private
+    def contents := Array<T>()
+
+    method push(v:T) {
+        contents.add(v)
+    }
+
+    method pop():T {
+        def result := contents[contents.count - 1]
+        contents.removeIndex(contents.count - 1)
+        return result
+    }
+
+    function peek():T {
+        return contents[contents.count - 1]
+    }
+
+    function peek(depth:Int):T {
+        return contents[contents.count - 1 - depth]
+    }
+
+    function get_count():Int {
+        return contents.count
+    }
+}

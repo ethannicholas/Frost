@@ -254,8 +254,18 @@ void Scanner::scanClass(String contextName, std::vector<Class::UsesDeclaration> 
     if (annotations.isOverride()) {
         this->error(cl->fPosition, "'@override' annotation may not be applied to classes");
     }
+    for (auto iter = uses.begin(); iter != uses.end();) {
+        Class::UsesDeclaration use = *iter;
+        if (use.fAlias == cl->fText) {
+            iter = uses.erase(iter);
+        }
+        else {
+            ++iter;
+        }
+    }
     Class* result = new Class(cl->fPosition, Class::ClassKind::CLASS, uses, annotations, fullName,
             parameters, parent, superclass, interfaces);
+    result->fAliasTable.addAlias(cl->fText, result);
     SymbolTable& symbols = result->fSymbolTable;
     parent->add(cl->fText, std::unique_ptr<Symbol>(result));
     bool foundInit = false;
@@ -371,9 +381,13 @@ void Scanner::scan(ASTNode* file, SymbolTable* root) {
     uses.push_back({ Position(), "panda.collections.Collection", "Collection" });
     uses.push_back({ Position(), "panda.collections.CollectionView", "CollectionView" });
     uses.push_back({ Position(), "panda.collections.CollectionWriter", "CollectionWriter" });
+    uses.push_back({ Position(), "panda.collections.HashMap", "HashMap" });
+    uses.push_back({ Position(), "panda.collections.Iterable", "Iterable" });
+    uses.push_back({ Position(), "panda.collections.Iterator", "Iterator" });
     uses.push_back({ Position(), "panda.collections.List", "List" });
     uses.push_back({ Position(), "panda.collections.ListView", "ListView" });
     uses.push_back({ Position(), "panda.collections.ListWriter", "ListWriter" });
+    uses.push_back({ Position(), "panda.collections.Stack", "Stack" });
     uses.push_back({ Position(), "panda.core.Bit", "Bit" });
     uses.push_back({ Position(), "panda.core.Char8", "Char8" });
     uses.push_back({ Position(), "panda.core.Int8", "Int8" });;
