@@ -1,3 +1,3 @@
 ParameterizedNonGeneric.panda:2:15: error: 'panda.core.String' expected 0 generic parameters, but found 1
-ParameterizedNonGeneric.panda:6:22: error: 'ParameterizedNonGeneric' expected 0 generic parameters, but found 1
+ParameterizedNonGeneric.panda:4:22: error: 'panda.core.Object' expected 0 generic parameters, but found 1
 2 errors

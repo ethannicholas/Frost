@@ -1,0 +1,6 @@
+class WrongGenericParameterType<T:Value> {
+    @class
+    method main() {
+        def w := WrongGenericParameterType<Object>()
+    }
+}

@@ -1,0 +1,6 @@
+class NonParameterizedGeneric2 { 
+    @class
+    method main() {
+        def error := List()
+    }
+}

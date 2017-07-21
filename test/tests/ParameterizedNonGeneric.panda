@@ -1,8 +1,5 @@
 class ParameterizedNonGeneric {
     def error:String<Int>
 
-    @class
-    method main() {
-        def error := ParameterizedNonGeneric<String>()
-    }
+    def error2 := 5->Object<String>
 }

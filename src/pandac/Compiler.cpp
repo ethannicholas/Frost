@@ -219,6 +219,16 @@ Class* Compiler::resolveClass(const SymbolTable& st, Type t, bool checkParameter
                         std::to_string(suppliedParameters));
                 return nullptr;
             }
+            for (int i = 0; i < suppliedParameters; ++i) {
+                if (this->coercionCost(t.fSubtypes[i + 1],
+                        result->fParameters[i].fType) == INT_MAX) {
+                    this->error(t.fPosition, "generic parameter " + std::to_string(i + 1) +
+                            " of type '" + result->fName + "' must be of type '" +
+                            result->fParameters[i].fType.fName + "', but found '" +
+                            t.fSubtypes[i + 1].fName + "'");
+                    return nullptr;
+                }
+            }
         }
         return result;
     }
@@ -1233,7 +1243,9 @@ bool Compiler::convertArrow(const ASTNode& a, IRNode* outResult) {
         return false;
     }
     Type type = fScanner.convertType(a.fChildren[1], *fSymbolTable);
-    this->resolveType(*fSymbolTable, &type);
+    if (!this->resolveType(*fSymbolTable, &type)) {
+        return false;
+    }
     switch ((Operator) a.fValue.fInt) {
         case Operator::CAST:
             if (this->coercionCost(value, type) != INT_MAX) {
@@ -2885,7 +2897,11 @@ void Compiler::findClassesAndResolveTypes(SymbolTable& symbols) {
                 break;
             case Symbol::Kind::CLASS: {
                 Class& cl = (Class&) s;
+                fCurrentClass.push(&cl);
+                fSymbolTable = &cl.fSymbolTable;
                 this->findClassesAndResolveTypes(cl);
+                fSymbolTable = nullptr;
+                fCurrentClass.pop();
                 break;
             }
             case Symbol::Kind::METHOD:
@@ -2906,12 +2922,15 @@ void Compiler::findClassesAndResolveTypes(SymbolTable& symbols) {
 }
 
 void Compiler::buildVTable(Class& cl) {
+    fCurrentClass.push(&cl);
     if (cl.fVirtualMethods.size()) {
+        fCurrentClass.pop();
         return;
     }
     if (cl.fRawSuper != Type::Void()) {
         Class* super = this->resolveClass(cl.fSymbolTable, cl.fRawSuper);
         if (!super) {
+            fCurrentClass.pop();
             return;
         }
         cl.fSymbolTable.fParents.push_back(&super->fSymbolTable);
@@ -2921,6 +2940,7 @@ void Compiler::buildVTable(Class& cl) {
     for (const auto& intfType : cl.fRawInterfaces) {
         Class* intf = this->resolveClass(cl.fSymbolTable, intfType);
         if (!intf) {
+            fCurrentClass.pop();
             return;
         }
         cl.fSymbolTable.fParents.push_back(&intf->fSymbolTable);

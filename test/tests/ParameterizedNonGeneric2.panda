@@ -1,0 +1,6 @@
+class ParameterizedNonGeneric2 {
+    @class
+    method main() {
+        def error := ParameterizedNonGeneric2<String>()
+    }
+}
