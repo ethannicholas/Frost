@@ -1,0 +1,23 @@
+package panda.io
+
+uses panda.core.Pointer
+
+class FileInputStream : InputStream {
+    @private
+    def handle:Int64
+
+    @external
+    init(file:File)
+
+    @override
+    @external
+    method cleanup()
+
+    @override
+    @external
+    method read():Int8?
+
+    @override
+    @external
+    method read(buffer:Pointer<Int8>, max:Int):Int
+}

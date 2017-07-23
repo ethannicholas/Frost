@@ -46,6 +46,14 @@ class MutableString {
         size += s.size
     }
 
+    method append(chars:Pointer<Char8>, offset:Int, count:Int) {
+        ensureCapacity(size + count)
+        for i in 0 .. count {
+            data[size + i] := chars[offset + i]
+        }
+        size += count
+    }
+
     method append(o:Object) {
         append(o.convert()->String)
     }

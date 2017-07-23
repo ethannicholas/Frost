@@ -1,9 +1,29 @@
 package panda.io
 
+uses panda.core.Pointer
+
 @abstract
 class InputStream {
     @abstract
     method read():Int8?
+
+    @abstract
+    method read(buffer:Pointer<Int8>, max:Int):Int
+
+    method readFully():String {
+        constant BUFFER_SIZE := 2048
+        def result := MutableString()
+        def buffer := Pointer<Int8>.alloc(BUFFER_SIZE)
+        loop {
+            def count := read(buffer, BUFFER_SIZE)
+            if count <= 0 {
+                break
+            }
+            result.append(buffer->Pointer<Char8>, 0, count)
+        }
+        buffer.destroy()
+        return result.convert()
+    }
 
     method read():Int16? {
         def a:Int8? := read()

@@ -137,7 +137,19 @@ static bool is_virtual(const Method& method) {
 
 void LLVMCodeGenerator::getMethodTableEntry(const Method& m, String* outName, String* outType) {
     *outName = this->methodName(m);
-    *outType = this->llvmType(m.inheritedTypeWithSelf(*fCompiler));
+    Type effective = m.inheritedTypeWithSelf(*fCompiler);
+    if (this->needsStructIndirection(m)) {
+        *outType = "void (";
+        *outType += this->llvmType(effective.fSubtypes.back());
+        *outType += "*";
+        for (int i = 0; i < effective.fSubtypes.size() - 1; ++i) {
+            *outType += ", ";
+            *outType += this->llvmType(effective.fSubtypes[i]);
+        }
+        *outType += ")*";
+        return;
+    }
+    *outType = this->llvmType(effective);
 }
 
 String LLVMCodeGenerator::getITable(const Class& cl) {
