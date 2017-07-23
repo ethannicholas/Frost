@@ -7,11 +7,8 @@ class OutputStream {
     @abstract
     method write(value:Int8)
 
-    method write(ptr:Pointer<Int8>, offset:Int, count:Int) {
-        for i in offset .. offset + count {
-            write(ptr[i])
-        }
-    }
+    @abstract
+    method write(ptr:Pointer<Int8>, offset:Int, count:Int)
 
     method write(ptr:Pointer<Char8>, offset:Int, count:Int) {
         write(ptr->Pointer<Int8>, offset, count)

@@ -1880,16 +1880,38 @@ void LLVMCodeGenerator::writeRangeFor(const IRNode& f, std::ostream& out) {
     out << "    br i1 " << direction << ", label %" << forwardEntry << ", label %" <<
             backwardEntry << "\n";
     this->createBlock(forwardEntry, out);
-    String forwardEntryTest = this->nextVar();
-    out << "    " << forwardEntryTest << " = icmp " << signPrefix << "le " << numberType << " " <<
-            start << ", " << end << "\n";
-    out << "    br i1 " << forwardEntryTest << ", label %" << loopStart << ", label %" <<
+    String forwardEntryInclusive = this->nextLabel();
+    String forwardEntryExclusive = this->nextLabel();
+    out << "    br i1 " << inclusive << ", label %" << forwardEntryInclusive << ", label %" <<
+            forwardEntryExclusive << "\n";
+    this->createBlock(forwardEntryInclusive, out);
+    String forwardEntryInclusiveTest = this->nextVar();
+    out << "    " << forwardEntryInclusiveTest << " = icmp " << signPrefix << "le " << numberType <<
+            " " << start << ", " << end << "\n";
+    out << "    br i1 " << forwardEntryInclusiveTest << ", label %" << loopStart << ", label %" <<
+            loopEnd << "\n";
+    this->createBlock(forwardEntryExclusive, out);
+    String forwardEntryExclusiveTest = this->nextVar();
+    out << "    " << forwardEntryExclusiveTest << " = icmp " << signPrefix << "lt " << numberType <<
+            " " << start << ", " << end << "\n";
+    out << "    br i1 " << forwardEntryExclusiveTest << ", label %" << loopStart << ", label %" <<
             loopEnd << "\n";
     this->createBlock(backwardEntry, out);
-    String backwardEntryTest = this->nextVar();
-    out << "    " << backwardEntryTest << " = icmp " << signPrefix << "ge " << numberType << " " <<
-            start << ", " << end << "\n";
-    out << "    br i1 " << backwardEntryTest << ", label %" << loopStart << ", label %" <<
+    String backwardEntryInclusive = this->nextLabel();
+    String backwardEntryExclusive = this->nextLabel();
+    out << "    br i1 " << inclusive << ", label %" << backwardEntryInclusive << ", label %" <<
+            backwardEntryExclusive << "\n";
+    this->createBlock(backwardEntryInclusive, out);
+    String backwardEntryInclusiveTest = this->nextVar();
+    out << "    " << backwardEntryInclusiveTest << " = icmp " << signPrefix << "ge " <<
+            numberType << " " << start << ", " << end << "\n";
+    out << "    br i1 " << backwardEntryInclusiveTest << ", label %" << loopStart << ", label %" <<
+            loopEnd << "\n";
+    this->createBlock(backwardEntryExclusive, out);
+    String backwardEntryExclusiveTest = this->nextVar();
+    out << "    " << backwardEntryExclusiveTest << " = icmp " << signPrefix << "gt " <<
+            numberType << " " << start << ", " << end << "\n";
+    out << "    br i1 " << backwardEntryExclusiveTest << ", label %" << loopStart << ", label %" <<
             loopEnd << "\n";
     this->createBlock(loopStart, out);
     String indexValue = this->nextVar();

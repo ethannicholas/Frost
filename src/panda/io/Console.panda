@@ -4,6 +4,14 @@ package panda.io
 class Console {
     @class
     @external
+    function inputStream():InputStream
+
+    @class
+    @external
+    function outputStream():OutputStream
+
+    @class
+    @external
     method print(c:Char8)
 
     @class

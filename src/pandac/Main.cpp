@@ -138,6 +138,7 @@ int main(int argc, char** argv) {
     sources.push_back(PANDA_HOME + "panda/io/File.panda");
     sources.push_back(PANDA_HOME + "panda/io/FileInputStream.panda");
     sources.push_back(PANDA_HOME + "panda/io/FileOutputStream.panda");
+    sources.push_back(PANDA_HOME + "panda/io/IndentedOutputStream.panda");
     sources.push_back(PANDA_HOME + "panda/io/InputStream.panda");
     sources.push_back(PANDA_HOME + "panda/io/OutputStream.panda");
     sources.push_back(PANDA_HOME + "panda/math/Random.panda");

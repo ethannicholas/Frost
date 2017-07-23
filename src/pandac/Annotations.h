@@ -5,12 +5,13 @@ public:
     enum Flag {
         PRIVATE   = 1 << 1,
         PROTECTED = 1 << 2,
-        CLASS     = 1 << 3,
-        OVERRIDE  = 1 << 4,
-        EXTERNAL  = 1 << 5,
-        IMPLICIT  = 1 << 6,
-        FINAL     = 1 << 7,
-        ABSTRACT  = 1 << 8
+        PACKAGE   = 1 << 3,
+        CLASS     = 1 << 4,
+        OVERRIDE  = 1 << 5,
+        EXTERNAL  = 1 << 6,
+        IMPLICIT  = 1 << 7,
+        FINAL     = 1 << 8,
+        ABSTRACT  = 1 << 9
     };
 
     Annotations()
@@ -25,6 +26,10 @@ public:
 
     bool isProtected() const {
         return (fFlags & PROTECTED) != 0;
+    }
+
+    bool isPackage() const {
+        return (fFlags & PACKAGE) != 0;
     }
 
     bool isClass() const {

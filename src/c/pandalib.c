@@ -2,6 +2,9 @@
 #include "stdlib.h"
 #include "string.h"
 
+typedef struct Class {
+} Class;
+
 typedef struct NullableChar {
     int8_t value;
     int8_t nonnull;
@@ -31,15 +34,21 @@ typedef struct FileInputStream {
     FILE* file;
 } FileInputStream;
 
+extern Class panda$io$FileInputStream$class;
+
 typedef struct FileOutputStream {
     void* cl;
     int32_t refcnt;
     FILE* file;
 } FileOutputStream;
 
+extern Class panda$io$FileOutputStream$class;
+
 void panda$core$System$exit$panda$core$Int64(int64_t code) {
     exit(code);
 }
+
+// Console
 
 void panda$io$Console$print$panda$core$Char8(char ch) {
     putchar(ch);
@@ -54,6 +63,40 @@ void panda$io$Console$read$R$panda$core$Char8$Q(NullableChar* result) {
     else {
         result->nonnull = 0;
     }
+}
+
+FileOutputStream* panda$io$Console$outputStream$R$panda$io$OutputStream() {
+    FileOutputStream* result = malloc(sizeof(FileOutputStream));
+    result->cl = &panda$io$FileOutputStream$class;
+    result->refcnt = 1;
+    result->file = stdout;
+    return result;
+}
+
+// File
+
+FileInputStream* panda$io$File$openInputStream$R$panda$io$InputStream(File* self) {
+    FileInputStream* result = malloc(sizeof(FileInputStream));
+    result->cl = &panda$io$FileInputStream$class;
+    result->refcnt = 1;
+    char* str = malloc(self->path->size + 1);
+    memcpy(str, self->path->data, self->path->size);
+    str[self->path->size] = 0;
+    result->file = fopen(str, "rb");
+    free(str);
+    return result;
+}
+
+FileOutputStream* panda$io$File$openOutputStream$R$panda$io$OutputStream(File* self) {
+    FileOutputStream* result = malloc(sizeof(FileOutputStream));
+    result->cl = &panda$io$FileOutputStream$class;
+    result->refcnt = 1;
+    char* str = malloc(self->path->size + 1);
+    memcpy(str, self->path->data, self->path->size);
+    str[self->path->size] = 0;
+    result->file = fopen(str, "wb");
+    free(str);
+    return result;
 }
 
 // FileInputStream

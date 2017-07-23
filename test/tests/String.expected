@@ -7,13 +7,13 @@ falseHello, World!
 startsWith
 true
 false
-false
+true
 true
 false
 
 endsWith
 true
-false
+true
 true
 false
 false

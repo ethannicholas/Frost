@@ -1,0 +1,61 @@
+package panda.io
+
+uses panda.core.Pointer
+
+====================================================================================================
+An output stream which indents the lines it writes. `IndentedOutputStream` sits "on top of" another
+stream, directing its output to the underlying stream.
+====================================================================================================
+class IndentedOutputStream : OutputStream {
+    ================================================================================================
+    The current indentation level, in units of `indentSize`. Each line written to the underlying
+    stream will be prefixed by `indentSize * level` spaces.
+    ================================================================================================
+    var level := 0 -- FIXME make these properties and store the indentation string
+
+    ================================================================================================
+    The number of spaces represented by each increment of `level`.
+    ================================================================================================
+    var indentSize := 4
+
+    @private
+    var atLineStart := true
+
+    @private
+    def out:OutputStream
+
+    ================================================================================================
+    Creates a new `IndentedOutputStream`.
+
+    @param out the underlying output stream
+    ================================================================================================
+    init(out:OutputStream) {
+        self.out := out
+    }
+
+    @override
+    method write(b:Int8) {
+        if b = 10 {
+            atLineStart := true
+        }
+        else {
+            indentIfNeeded()
+        }
+        out.write(b)
+    }
+
+    @override
+    method write(ptr:Pointer<Int8>, offset:Int, count:Int) {
+        for i in offset .. offset + count {
+            write(ptr[i])
+        }
+    }
+    
+    @private
+    method indentIfNeeded() {
+        if atLineStart {
+            atLineStart := false
+            print(" " * (indentSize * level))
+        }
+    }
+}

@@ -2,12 +2,15 @@ package panda.io
 
 uses panda.core.Pointer
 
+@package
 class FileOutputStream : OutputStream {
     @private
     def handle:Int64
 
-    @external
-    init(file:File)
+    @private
+    init() {
+        -- can only be constructed by native code
+    }
 
     @override
     @external

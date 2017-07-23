@@ -19,8 +19,9 @@ Annotations Scanner::convertAnnotations(const ASTNode& a) {
             flags |= Annotations::flag; \
         }
         BASIC_ANNOTATION("class", CLASS)
-        else BASIC_ANNOTATION("protected", PROTECTED)
         else BASIC_ANNOTATION("private", PRIVATE)
+        else BASIC_ANNOTATION("protected", PROTECTED)
+        else BASIC_ANNOTATION("package", PACKAGE)
         else BASIC_ANNOTATION("override", OVERRIDE)
         else BASIC_ANNOTATION("external", EXTERNAL)
         else BASIC_ANNOTATION("$implicit", IMPLICIT)
@@ -405,6 +406,7 @@ void Scanner::scan(ASTNode* file, SymbolTable* root) {
     uses.push_back({ Position(), "panda.io.File", "File" });;
     uses.push_back({ Position(), "panda.io.FileOutputStream", "FileOutputStream" });;
     uses.push_back({ Position(), "panda.io.FileInputStream", "FileInputStream" });;
+    uses.push_back({ Position(), "panda.io.IndentedOutputStream", "IndentedOutputStream" });;
     uses.push_back({ Position(), "panda.io.InputStream", "InputStream" });;
     uses.push_back({ Position(), "panda.io.OutputStream", "OutputStream" });;
     uses.push_back({ Position(), "panda.math.Random", "Random" });;

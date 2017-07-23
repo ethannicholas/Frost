@@ -4,7 +4,7 @@ class NullableValues {
         def a := Array<Int?>()
         for i in 1 ... 100 {
             def found := false
-            for j in 1 .. i {
+            for j in 1 ... i {
                 if j * j = i {
                     a.add(i)
                     found := true

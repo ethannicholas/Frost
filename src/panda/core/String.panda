@@ -63,6 +63,14 @@ class String {
         return self + other.convert()->String
     }
 
+    function *(count:Int):String {
+        def result := MutableString()
+        for i in 0 .. count {
+            result.append(self)
+        }
+        return result.convert()
+    }
+
     @class
     function +(o:Object, s:String):String {
         return o.convert() + s

@@ -900,13 +900,16 @@ bool Compiler::call(IRNode method, std::vector<IRNode> args, IRNode* out) {
                 }
                 else {
                     if (target.fKind == IRNode::Kind::VOID) {
-                        IRNode self;
                         if (fCurrentMethod.top()->fAnnotations.isClass()) {
                             this->error(method.fPosition, "cannot call instance method in a "
                                     "@class context");
                         }
-                        children.push_back(IRNode(method.fPosition, IRNode::Kind::SELF,
-                                fCurrentClass.top()->fType));
+                        IRNode self(method.fPosition, IRNode::Kind::SELF,
+                                fCurrentClass.top()->fType);
+                        if (!this->cast(target.fPosition, &self, false, m.fMethod.fOwner.fType)) {
+                            return false;
+                        }
+                        children.push_back(std::move(self));
                     }
                     else {
                         if (!m.fMethod.fAnnotations.isClass() &&
