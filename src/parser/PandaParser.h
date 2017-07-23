@@ -165,7 +165,7 @@ private:
 
     bool term(ASTNode* outResult);
 
-    bool type(ASTNode* outResult);
+    bool type(ASTNode* outResult, bool needSpeculativeParse = true);
 
     bool typeDeclaration(ASTNode* outResult);
 

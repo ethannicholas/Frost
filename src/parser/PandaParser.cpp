@@ -53,20 +53,6 @@ Token PandaParser::nextRawToken() {
     Position p(fName, fLine, fColumn);
     const char* text = pandaget_text(fScanner);
     this->advancePosition(text);
-    switch ((Token::Kind) token) {
-        case Token::Kind::BLOCK_COMMENT: {
-            Token next;
-            do {
-                next = this->nextRawToken();
-            }
-            while (next.fKind != Token::Kind::BLOCK_COMMENT_END &&
-                    next.fKind != Token::Kind::END_OF_FILE);
-            if (next.fKind == Token::Kind::END_OF_FILE) {
-                this->error(p, "unterminated comment");
-            }
-        }
-        default: break;
-    }
     if (fInSpeculative) {
         Token result = Token(p, (Token::Kind) token, String(text));
         fSpeculativeBuffer.push_back(result);
@@ -80,14 +66,44 @@ Token PandaParser::nextToken() {
     for (;;) {
         token = this->nextRawToken();
         switch (token.fKind) {
-            case Token::Kind::WHITESPACE:    // fall through
-            case Token::Kind::BLOCK_COMMENT: // fall through
-            case Token::Kind::LINE_COMMENT: break;
-            default: goto done;
+            case Token::Kind::WHITESPACE:
+                break;
+            case Token::Kind::BLOCK_COMMENT: {
+                Position p = token.fPosition;
+                Token next;
+                do {
+                    next = this->nextRawToken();
+                }
+                while (next.fKind != Token::Kind::BLOCK_COMMENT_END &&
+                        next.fKind != Token::Kind::END_OF_FILE);
+                if (next.fKind == Token::Kind::END_OF_FILE) {
+                    this->error(p, "unterminated comment");
+                }
+                break;
+            }
+            case Token::Kind::LINE_COMMENT: {
+                Token next;
+                bool done = false;
+                do {
+                    next = this->nextRawToken();
+                    if (next.fKind == Token::Kind::END_OF_FILE) {
+                        done = true;
+                    }
+                    else if (next.fKind == Token::Kind::WHITESPACE) {
+                        for (char c : next.fText) {
+                            if (c == '\n') {
+                                done = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                while (!done);
+                break;
+            }
+            default: return std::move(token);
         }
     }
-    done:
-    return std::move(token);
 }
 
 void PandaParser::pushback(Token t) {
@@ -508,14 +524,14 @@ bool PandaParser::callExpression(ASTNode* outResult) {
                     // e.g. foo(X < Y)
                     std::vector<ASTNode> types;
                     ASTNode type;
-                    if (!this->type(&type)) {
+                    if (!this->type(&type, false)) {
                         this->rewind();
                         return true;
                     }
                     types.push_back(std::move(type));
                     while (this->checkNext(Token::Kind::COMMA)) {
                         ASTNode type;
-                        if (!this->type(&type)) {
+                        if (!this->type(&type, false)) {
                             this->rewind();
                             return true;
                         }
@@ -1651,7 +1667,7 @@ bool PandaParser::term(ASTNode* outResult) {
 }
 
 // type = IDENTIFIER (DOT IDENTIFIER)* (LT type (COMMA type)*) GT)? QUESTION?
-bool PandaParser::type(ASTNode* outResult) {
+bool PandaParser::type(ASTNode* outResult, bool needSpeculativeParse) {
     Token start;
     if (!this->expect(Token::Kind::IDENTIFIER, "an identifier", &start)) {
         return false;
@@ -1666,22 +1682,45 @@ bool PandaParser::type(ASTNode* outResult) {
         name += id.fText;
     }
     *outResult = ASTNode(start.fPosition, ASTNode::Kind::CLASS_TYPE, name);
-    if (this->checkNext(Token::Kind::LT)) {
+    if (this->peek().fKind == Token::Kind::LT) {
+        // need to speculatively parse, because foo->Int8<bar looks like the start of a cast to
+        // "Int8<bar...", but is actually a cast to Int8 followed by less-than bar
+        if (needSpeculativeParse) {
+            this->startSpeculative();
+        }
+        this->nextToken();
+        std::vector<ASTNode> additionalChildren;
         ASTNode type;
-        if (!this->type(&type)) {
+        if (!this->type(&type, false)) {
+            if (needSpeculativeParse) {
+                this->rewind();
+                return true;
+            }
             return false;
         }
-        outResult->fChildren.push_back(std::move(type));
+        additionalChildren.push_back(std::move(type));
         while (this->checkNext(Token::Kind::COMMA)) {
             ASTNode type;
-            if (!this->type(&type)) {
+            if (!this->type(&type, false)) {
+                if (needSpeculativeParse) {
+                    this->rewind();
+                    return true;
+                }
                 return false;
             }
-            outResult->fChildren.push_back(std::move(type));
+            additionalChildren.push_back(std::move(type));
         }
         if (!this->expect(Token::Kind::GT, "'>'")) {
+            if (needSpeculativeParse) {
+                this->rewind();
+                return true;
+            }
             return false;
         }
+        for (ASTNode& n : additionalChildren) {
+            outResult->fChildren.push_back(std::move(n));
+        }
+        this->accept();
     }
     if (this->checkNext(Token::Kind::QUESTION)) {
         std::vector<ASTNode> children;
@@ -1696,7 +1735,7 @@ bool PandaParser::typeDeclaration(ASTNode* outResult) {
     if (!this->expect(Token::Kind::COLON, "':'")) {
         return false;
     }
-    return this->type(outResult);
+    return this->type(outResult, false);
 }
 
 // prefixExpression = (SUB | NOT | BITWISENOT)? exponentExpression

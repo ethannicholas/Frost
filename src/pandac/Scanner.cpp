@@ -402,6 +402,10 @@ void Scanner::scan(ASTNode* file, SymbolTable* root) {
     uses.push_back({ Position(), "panda.core.System", "System" });;
     uses.push_back({ Position(), "panda.core.Value", "Value" });;
     uses.push_back({ Position(), "panda.io.Console", "Console" });;
+    uses.push_back({ Position(), "panda.io.File", "File" });;
+    uses.push_back({ Position(), "panda.io.FileOutputStream", "FileOutputStream" });;
+    uses.push_back({ Position(), "panda.io.InputStream", "InputStream" });;
+    uses.push_back({ Position(), "panda.io.OutputStream", "OutputStream" });;
     uses.push_back({ Position(), "panda.math.Random", "Random" });;
     uses.push_back({ Position(), "panda.math.XorShift128Plus", "XorShift128Plus" });;
     for (auto& e : file->fChildren) {

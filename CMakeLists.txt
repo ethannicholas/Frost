@@ -9,6 +9,10 @@ include_directories(
     src/parser
 )
 
+add_library(panda
+    src/c/pandalib.c
+)
+
 add_executable(pandac
     src/parser/lex.panda.cpp
     src/parser/PandaParser.cpp

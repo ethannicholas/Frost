@@ -52,6 +52,15 @@ private:
         String fContinueLabel;
     };
 
+    String callingConvention(const Method& m) {
+        return m.fAnnotations.isExternal() ? "ccc" : "fastcc";
+    }
+
+    bool needsStructIndirection(const Method& m) {
+        return m.fAnnotations.isExternal() && m.fReturnType.isClass() &&
+                fCompiler->getClass(m.fReturnType)->isValue();
+    }
+
     void writeType(const Type& type);
 
     void writeWrapperType(const Type& type);

@@ -125,6 +125,10 @@ struct Type : public Symbol {
         return fCategory == Category::METHOD || fCategory == Category::FUNCTION;
     }
 
+    bool isPointer() const {
+        return fCategory == Category::GENERIC && fSubtypes[0].fName == "panda.core.Pointer";
+    }
+
     bool operator==(const Type& other) const {
         return fName == other.fName;
     }

@@ -1,0 +1,47 @@
+package panda.io
+
+@abstract
+class InputStream {
+    @abstract
+    method read():Int8?
+
+    method read():Int16? {
+        def a:Int8? := read()
+        if a = null {
+            return null
+        }
+        def b:Int8? := read()
+        if b = null {
+            return null
+        }
+        return (a << 8 + b).convert()
+    }
+
+    method read():Int32? {
+        def a:Int16? := read()
+        if a = null {
+            return null
+        }
+        def b:Int16? := read()
+        if b = null {
+            return null
+        }
+        return a << 16 + b
+    }
+
+    method read():Int64? {
+        def a:Int32? := read()
+        if a = null {
+            return null
+        }
+        def b:Int32? := read()
+        if b = null {
+            return null
+        }
+        return Int64(a.value->builtin_int64) << 32 + b
+    }
+
+    method read():Char8? {
+        return Char8(read())
+    }
+}

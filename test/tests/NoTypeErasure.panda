@@ -1,0 +1,24 @@
+class NoTypeErasure {
+    @class
+    method print(a:Array<String>) {
+        Console.printLine("Strings: \{a}")
+    }
+
+    @class
+    method print(a:Array<Int>) {
+        Console.printLine("Ints: \{a}")
+    }
+
+    @class
+    method main() {
+        def ints := Array<Int>()
+        ints.add(5)
+        ints.add(12)
+        ints.add(42)
+        def strings := Array<String>()
+        strings.add("Hello")
+        strings.add("Goodbye")
+        print(ints)
+        print(strings)
+    }
+}

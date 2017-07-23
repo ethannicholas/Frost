@@ -1,0 +1,17 @@
+package panda.io
+
+class File {
+    @private
+    def path:String
+
+    init(path:String) {
+        self.path := path
+    }
+
+    function resolve(path:String):File {
+        if path.startsWith("/") {
+            return File(path)
+        }
+        return File(self.path + "/" + path)
+    }
+}

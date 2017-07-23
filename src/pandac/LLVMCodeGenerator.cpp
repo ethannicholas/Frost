@@ -50,27 +50,7 @@ LLVMCodeGenerator::LLVMCodeGenerator(std::ostream* out)
     fOut << "declare void @free(i8*)\n";
 
     // temporary
-    fMethods << "declare void @exit(i64)\n";
-    fMethods << "define fastcc void @panda$core$System$exit$panda$core$Int64(%panda$core$Int64 %v) {\n";
-    fMethods << "    %1 = extractvalue %panda$core$Int64 %v, 0\n";
-    fMethods << "    call void @exit(i64 %1)\n";
-    fMethods << "    unreachable\n";
-    fMethods << "}\n";
-    fMethods << "declare i64 @putchar(i64)\n";
-    fMethods << "declare i64 @getchar()\n";
     fMethods << "declare i64 @printf(i8*, ...)\n";
-    fMethods << "define fastcc void @panda$io$Console$print$panda$core$Char8(%panda$core$Char8 %c) {\n";
-    fMethods << "    %1 = extractvalue %panda$core$Char8 %c, 0\n";
-    fMethods << "    %2 = sext i8 %1 to i64\n";
-    fMethods << "    call i64 @putchar(i64 %2)\n";
-    fMethods << "    ret void\n";
-    fMethods << "}\n";
-    fMethods << "define fastcc %panda$core$Char8$nullable @panda$io$Console$read$R$panda$core$Char8$Q() {\n";
-    fMethods << "    %1 = call i64 @getchar()\n";
-    fMethods << "    %2 = trunc i64 %1 to i8\n";
-    fMethods << "    %3 = insertvalue %panda$core$Char8$nullable { i8 undef, i1 1 }, i8 %2, 0\n";
-    fMethods << "    ret %panda$core$Char8$nullable %3\n";
-    fMethods << "}\n";
     fMethods << "@fmt = private constant [4 x i8] [i8 37, i8 100, i8 10, i8 0]\n";
     fMethods << "define fastcc void @debugPrint(i64 %value) {\n";
     fMethods << "    call i64 (i8*, ...) @printf(i8* bitcast ([4 x i8]* @fmt to i8*), i64 %value)\n";
@@ -303,8 +283,8 @@ String LLVMCodeGenerator::createWrapperShim(const Method& m, std::ostream& out) 
     else {
         returnValue = "void";
     }
-    out << "call fastcc " << this->llvmType(m.fReturnType) << " " << this->methodName(m) << "(" <<
-            unwrapped;
+    out << "call " << this->callingConvention(m) << " " << this->llvmType(m.fReturnType) << " " <<
+            this->methodName(m) << "(" << unwrapped;
     for (const auto& p : m.fParameters) {
         out << ", " << this->llvmType(p.fType) << " %" << p.fName;
     }
@@ -869,15 +849,35 @@ String LLVMCodeGenerator::getCallReference(const IRNode& call, std::ostream& out
     String target = args.size() ? args[0] : "";
     bool isSuper = call.fChildren.size() > 1 && call.fChildren[1].fKind == IRNode::Kind::SUPER;
     String methodRef = this->getMethodReference(target, *m, isSuper, out);
-    String result = this->nextVar();
-    out << "    " << result << " = call fastcc " << this->llvmType(call.fType) << " " <<
-            methodRef << "(";
+    String result;
+    String resultType = this->llvmType(call.fType);
+    bool indirect = this->needsStructIndirection(*m);
+    if (indirect) {
+        out << "    call " << this->callingConvention(*m) << " void";
+    }
+    else {
+        result = this->nextVar();
+        out << "    " << result << " = call " << this->callingConvention(*m) << " " << resultType;
+    }
+    out << " " << methodRef << "(";
     const char* separator = "";
+    String indirectVar;
+    if (indirect) {
+        indirectVar = "%$tmp" + std::to_string(++fLabels);
+        fMethodHeader << "    " << indirectVar << " = alloca " << resultType << "\n";
+        out << resultType << "* " << indirectVar;
+        separator = ", ";
+    }
     for (const auto& arg : args) {
         out << separator << arg; 
         separator = ", ";
     }
     out << ")\n";
+    if (indirect) {
+        result = this->nextVar();
+        out << "    " << result << " = load " << resultType << ", " << resultType << "* " <<
+                indirectVar << "\n";
+    }
     return result;
 }
 
@@ -1487,6 +1487,7 @@ void LLVMCodeGenerator::writeAssignment(const IRNode& a, std::ostream& out) {
 
 String LLVMCodeGenerator::getVirtualMethodReference(const String& target, const Method& m,
         std::ostream& out) {
+    out << "    ; get reference to " << m.signature() << "\n";
     const ClassConstant& cc = this->getClassConstant(m.fOwner);
     int index = -1;
     for (int i = 0; i < m.fOwner.fVirtualMethods.size(); ++i) {
@@ -1639,8 +1640,16 @@ void LLVMCodeGenerator::writeCall(const IRNode& stmt, const String& target, std:
     if (stmt.fType != Type::Void()) {
         this->nextVar();
     }
-    out << "    call fastcc " << this->llvmType(stmt.fType) << " " << methodRef << "(";
+    out << "    call " << this->callingConvention(m->fMethod) << " " <<
+            this->llvmType(stmt.fType) << " " << methodRef << "(";
     const char* separator = "";
+    if (this->needsStructIndirection(m->fMethod)) {
+        String tmpType = this->llvmType(m->fMethod.fReturnType);
+        String alloca = "%$tmp" + std::to_string(++fLabels);
+        fMethodHeader << "    " << alloca << " = alloca " << tmpType << "\n";
+        out << tmpType << "* " << alloca;
+        separator = ", ";
+    }
     if (target.size()) {
         out << separator << target;
         separator = ", ";
@@ -2202,12 +2211,24 @@ void LLVMCodeGenerator::writeMethodDeclaration(const Method& method, Compiler& c
         return;
     }
 
-    return; // temporary, until proper external support is in
+    if (method.fAnnotations.isAbstract()) {
+        return;
+    }
 
     std::ostream& out = fMethods;
-    out << "\ndeclare fastcc " << this->llvmType(method.fReturnType) << " " <<
-            this->methodName(method) << "(";
+    out << "\ndeclare ccc ";
+    if (this->needsStructIndirection(method)) {
+        out << "void";
+    }
+    else {
+        out << this->llvmType(method.fReturnType);
+    }
+    out << " " << this->methodName(method) << "(";
     const char* separator = "";
+    if (this->needsStructIndirection(method)) {
+        out << this->llvmType(method.fReturnType) << "*";
+        separator = ", ";
+    }
     if (is_instance(method)) {
         out << separator << this->selfType(method) << " %self";
         separator = ", ";

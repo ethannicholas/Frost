@@ -741,6 +741,9 @@ int Compiler::coercionCost(const IRNode& node, const Type& target) {
 }
 
 bool Compiler::canCast(const IRNode& node, const Type& target) {
+    if (node.fType.isPointer() && target.isPointer()) {
+        return true;
+    }
     if (this->coercionCost(node, target) != INT_MAX) {
         return true;
     }
@@ -787,6 +790,12 @@ int Compiler::callCost(const MethodRef& method, const std::vector<IRNode>& args,
             return INT_MAX;
         }
         result += cost;
+    }
+    // integers prefer to operate on their own sizes, i.e. we should treat Int8 + 10 as Int8 + Int8
+    // rather than complain about it being ambiguous
+    if (method.fMethod.fOwner.fType.isNumber() && args.size() == 1 &&
+            method.fMethod.fParameters[0].fType != method.fMethod.fOwner.fType) {
+        result += 1;
     }
     return result;
 }
@@ -2659,7 +2668,8 @@ bool Compiler::convertStatement(const ASTNode& s, IRNode* out) {
         case ASTNode::Kind::CONSTANT:
             return this->convertVar(s, out);
         default:
-            printf("unhandled statement: %s\n", s.description().c_str());
+            printf("unhandled statement: %s (%s)\n", s.description().c_str(),
+                    s.fPosition.description().c_str());
             abort();
     }
 }
@@ -2746,7 +2756,9 @@ void Compiler::compile(const Method& method) {
         overridden = nullptr;
     }
     if (method.fBody.fKind == ASTNode::Kind::VOID) {
-        fCodeGenerator.writeMethodDeclaration(method, *this);
+        if (fErrors.fErrorCount == 0) {
+            fCodeGenerator.writeMethodDeclaration(method, *this);
+        }
         return;
     }
     for (const auto& p : method.fParameters) {

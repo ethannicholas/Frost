@@ -79,12 +79,14 @@ void make_executable(const char* llvm, const char* dest) {
     }
     if (!pid) {
         // child
-        char* args[5];
+        char* args[7];
         args[0] = (char*) GCC_PATH;
         args[1] = (char*) assembly;
-        args[2] = (char*) "-o";
-        args[3] = (char*) dest;
-        args[4] = nullptr;
+        args[2] = (char*) "-L.";
+        args[3] = (char*) "-lpanda";
+        args[4] = (char*) "-o";
+        args[5] = (char*) dest;
+        args[6] = nullptr;
         execv(GCC_PATH, args);
         perror("gcc exec failed");
         exit(1);
@@ -133,6 +135,10 @@ int main(int argc, char** argv) {
     sources.push_back(PANDA_HOME + "panda/core/System.panda");
     sources.push_back(PANDA_HOME + "panda/core/Value.panda");
     sources.push_back(PANDA_HOME + "panda/io/Console.panda");
+    sources.push_back(PANDA_HOME + "panda/io/File.panda");
+    sources.push_back(PANDA_HOME + "panda/io/FileOutputStream.panda");
+    sources.push_back(PANDA_HOME + "panda/io/InputStream.panda");
+    sources.push_back(PANDA_HOME + "panda/io/OutputStream.panda");
     sources.push_back(PANDA_HOME + "panda/math/Random.panda");
     sources.push_back(PANDA_HOME + "panda/math/XorShift128Plus.panda");
     String dest;

@@ -20,7 +20,7 @@ LETTER [a-zA-Z_$]
     return (int) Token::Kind::FLOAT;
 }
 
---[^\n]* { return (int) Token::Kind::LINE_COMMENT; }
+"--" { return (int) Token::Kind::LINE_COMMENT; }
 
 "-*" { return (int) Token::Kind::BLOCK_COMMENT; }
 

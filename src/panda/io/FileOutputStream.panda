@@ -1,0 +1,23 @@
+package panda.io
+
+uses panda.core.Pointer
+
+class FileOutputStream : OutputStream {
+    @private
+    def handle:Int64
+
+    @external
+    init(file:File)
+
+    @override
+    @external
+    method cleanup()
+
+    @override
+    @external
+    method write(value:Int8)
+
+    @override
+    @external
+    method write(ptr:Pointer<Int8>, offset:Int, size:Int)
+}
