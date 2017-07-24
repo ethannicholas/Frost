@@ -1,7 +1,6 @@
 BadAnnotations.panda:1:1: error: unrecognized annotation '@foo'
 BadAnnotations.panda:5:1: error: duplicate annotation '@class'
 BadAnnotations.panda:7:1: error: '@class' annotation may not be applied to classes
-BadAnnotations.panda:7:1: error: '@private' annotation may not be applied to classes
 BadAnnotations.panda:7:1: error: '@protected' annotation may not be applied to classes
 BadAnnotations.panda:7:1: error: '@override' annotation may not be applied to classes
-6 errors
+5 errors

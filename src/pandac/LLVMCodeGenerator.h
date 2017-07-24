@@ -53,7 +53,13 @@ private:
     };
 
     String callingConvention(const Method& m) {
-        return m.fAnnotations.isExternal() ? "ccc" : "fastcc";
+        if (m.fMethodKind == Method::Kind::INIT) {
+            return "fastcc";
+        }
+        if (m.fAnnotations.isFinal() && !m.fAnnotations.isExternal()) {
+            return "fastcc";
+        }
+        return "ccc";
     }
 
     /**
@@ -74,8 +80,14 @@ private:
      * first parameter.
      */
     bool needsStructIndirection(const Method& m) {
-        return m.fAnnotations.isExternal() && m.fReturnType.isClass() &&
+        bool result =  m.fAnnotations.isExternal() && m.fReturnType.isClass() &&
                 fCompiler->getClass(m.fReturnType)->isValue();
+        // if a method requires struct indirection, it will have a different signature than native
+        // methods; this means it doesn't play nice with overriding. We can fix this down the road
+        // with shims, but for right now just assert that a method requiring struct indirection is
+        // not an override and cannot be overridden
+        ASSERT(!result || (!m.fAnnotations.isOverride() && m.fAnnotations.isFinal()));
+        return result;
     }
 
     void writeType(const Type& type);

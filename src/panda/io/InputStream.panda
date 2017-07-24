@@ -4,6 +4,34 @@ uses panda.core.Pointer
 
 @abstract
 class InputStream {
+    @private
+    class LineIterator (Iterator<String>) {
+        def input:InputStream
+        var _next:String?
+
+        init(input:InputStream) {
+            self.input := input
+            readNext()
+        }
+
+        @override
+        function get_done():Bit {
+            return _next = null
+        }
+
+        @override
+        method next():String {
+            assert _next != null
+            def result := _next
+            readNext()
+            return result
+        }
+
+        method readNext() {
+            _next := input.readLine()
+        }
+    }
+
     @abstract
     method read():Int8?
 
@@ -62,6 +90,32 @@ class InputStream {
     }
 
     method read():Char8? {
-        return Char8(read())
+        def result:Int8? := read()
+        if result != null {
+            return Char8(result)
+        }
+        return null
+    }
+
+    method readLine():String? {
+        def result := MutableString()
+        loop {
+            def c:Char8? := read()
+            if c = null {
+                if result.size = 0 {
+                    return null
+                }
+                break
+            }
+            if c = Char8(10) {
+                break
+            }
+            result.append(c)
+        }
+        return result.convert()
+    }
+
+    function lines():Iterator<String> {
+        return LineIterator(self)
     }
 }

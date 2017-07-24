@@ -51,7 +51,7 @@ LLVMCodeGenerator::LLVMCodeGenerator(std::ostream* out)
 
     // temporary
     fMethods << "declare i64 @printf(i8*, ...)\n";
-    fMethods << "@fmt = private constant [4 x i8] [i8 37, i8 100, i8 10, i8 0]\n";
+    fMethods << "@fmt = private constant [4 x i8] [i8 37, i8 112, i8 10, i8 0]\n";
     fMethods << "define fastcc void @debugPrint(i64 %value) {\n";
     fMethods << "    call i64 (i8*, ...) @printf(i8* bitcast ([4 x i8]* @fmt to i8*), i64 %value)\n";
     fMethods << "    ret void\n";
@@ -2107,7 +2107,7 @@ void LLVMCodeGenerator::writeAssert(const IRNode& a, std::ostream& out) {
     if (a.fChildren.size() == 2) {
         msg = this->getReference(a.fChildren[1], out);
     }
-    out << "    call fastcc void ";
+    out << "    call void ";
     if (a.fChildren.size() == 1) {
         out << "@panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64";
     }
@@ -2324,8 +2324,8 @@ void LLVMCodeGenerator::createMethodShim(const Method& raw, const Type& effectiv
     else {
         returnValue = "void";
     }
-    out << "call fastcc " << this->llvmType(raw.fReturnType) << " " << this->methodName(raw) <<
-            "(" << selfType << " %self";
+    out << "call " << this->callingConvention(raw) << " " << this->llvmType(raw.fReturnType) <<
+            " " << this->methodName(raw) << "(" << selfType << " %self";
     for (int i = 0; i < raw.fParameters.size(); ++i) {
         out << ", " << this->llvmType(raw.fParameters[i].fType) << " " << casts[i];
     }
@@ -2350,8 +2350,8 @@ void LLVMCodeGenerator::writeMethod(const Method& method, const IRNode& body, Co
     fCurrentBlock = "0";
     std::ostream& out = fMethods;
     const Type actualType = method.inheritedType(*fCompiler);
-    out << "\ndefine fastcc " << this->llvmType(actualType.fSubtypes.back()) << " " <<
-            this->methodName(method) << "(";
+    out << "\ndefine " << this->callingConvention(method) << " " <<
+            this->llvmType(actualType.fSubtypes.back()) << " " << this->methodName(method) << "(";
     const char* separator = "";
     if (is_instance(method)) {
         out << separator << this->selfType(method) << " %self";

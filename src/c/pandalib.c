@@ -83,6 +83,10 @@ FileInputStream* panda$io$File$openInputStream$R$panda$io$InputStream(File* self
     memcpy(str, self->path->data, self->path->size);
     str[self->path->size] = 0;
     result->file = fopen(str, "rb");
+    if (!result->file) {
+        printf("error opening '%s'", str);
+        exit(1);
+    }
     free(str);
     return result;
 }
@@ -95,21 +99,17 @@ FileOutputStream* panda$io$File$openOutputStream$R$panda$io$OutputStream(File* s
     memcpy(str, self->path->data, self->path->size);
     str[self->path->size] = 0;
     result->file = fopen(str, "wb");
+    if (!result->file) {
+        printf("error opening '%s'", str);
+        exit(1);
+    }
     free(str);
     return result;
 }
 
 // FileInputStream
 
-void panda$io$FileInputStream$init$panda$io$File(FileInputStream* self, File* path) {
-    char* str = malloc(path->path->size + 1);
-    memcpy(str, path->path->data, path->path->size);
-    str[path->path->size] = 0;
-    self->file = fopen(str, "rb");
-    free(str);
-}
-
-void panda$io$FileInputStream$read$R$panda$core$Int8$Q(NullableInt8* result,
+void panda$io$FileInputStream$readImpl$R$panda$core$Int8$Q(NullableInt8* result,
         FileInputStream* self) {
     int read = fgetc(self->file);
     if (read != EOF) {
@@ -121,7 +121,7 @@ void panda$io$FileInputStream$read$R$panda$core$Int8$Q(NullableInt8* result,
     }
 }
 
-int64_t panda$io$FileInputStream$read$panda$core$Pointer$LTpanda$core$Int8$GT$panda$core$Int64$R$panda$core$Int64(
+int64_t panda$io$FileInputStream$readImpl$panda$core$Pointer$LTpanda$core$Int8$GT$panda$core$Int64$R$panda$core$Int64(
         FileInputStream* self, void* buffer, int max) {
     return fread(buffer, 1, max, self->file);
 }
@@ -131,14 +131,6 @@ void panda$io$FileInputStream$cleanup(FileInputStream* self) {
 }
 
 // FileOutputStream
-
-void panda$io$FileOutputStream$init$panda$io$File(FileOutputStream* self, File* path) {
-    char* str = malloc(path->path->size + 1);
-    memcpy(str, path->path->data, path->path->size);
-    str[path->path->size] = 0;
-    self->file = fopen(str, "wb");
-    free(str);
-}
 
 void panda$io$FileOutputStream$write$panda$core$Int8(FileOutputStream* self, int8_t ch) {
     fputc(ch, self->file);

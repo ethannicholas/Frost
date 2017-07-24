@@ -2269,6 +2269,72 @@ bool Compiler::convertLoop(const ASTNode& l, IRNode* out) {
     return true;
 }
 
+bool Compiler::convertIteratorFor(String label, IRNode target, IRNode iterator, IRNode block,
+        IRNode* out) {
+    // We rewrite 'for v in <iterator> { <statements> }' to:
+    // def v$Iter := <iterator>
+    // while !v$Iter.done() {
+    //     def v := v$Iter.next()
+    //     <statements>
+    // }
+    ASSERT(target.fKind == IRNode::Kind::VARIABLE_REFERENCE);
+    Variable* targetVar = (Variable*) target.fValue.fPtr;
+    std::vector<Type> subtypes;
+    subtypes.push_back(Type::Iterator());
+    subtypes.push_back(target.fType);
+    Type iterType(subtypes);
+    Variable* iter = new Variable(iterator.fPosition, targetVar->fName + "$Iter", iterType);
+    fSymbolTable->add(std::unique_ptr<Symbol>(iter));
+    std::vector<IRNode> statements;
+    std::vector<IRNode> declChildren;
+    declChildren.emplace_back(iterator.fPosition, IRNode::Kind::VARIABLE_REFERENCE, iter->fType,
+            iter);
+    declChildren.push_back(std::move(iterator));
+    std::vector<IRNode> varChildren;
+    varChildren.emplace_back(iterator.fPosition, IRNode::Kind::DECLARATION,
+            std::move(declChildren));
+    statements.emplace_back(iterator.fPosition, IRNode::Kind::DEF, std::move(varChildren));
+    std::vector<IRNode> whileChildren;
+    IRNode done;
+    if (!call(IRNode(iterator.fPosition, IRNode::Kind::VARIABLE_REFERENCE, iter->fType, iter),
+            "get_done", std::vector<IRNode>(), nullptr, &done)) {
+        // shouldn't ever happen
+        return false;
+    }
+    Class* bit = fClasses["panda.core.Bit"];
+    ASSERT(bit);
+    Field* value = (Field*) bit->fSymbolTable["value"];
+    std::vector<IRNode> bitChildren;
+    bitChildren.push_back(std::move(done));
+    IRNode bitValue(iterator.fPosition, IRNode::Kind::FIELD_REFERENCE, Type::BuiltinBit(), value,
+            std::move(bitChildren));
+    std::vector<IRNode> notChildren;
+    notChildren.push_back(std::move(bitValue));
+    whileChildren.emplace_back(iterator.fPosition, IRNode::Kind::PREFIX, Type::BuiltinBit(),
+            (uint64_t) Operator::NOT, std::move(notChildren));
+    declChildren.clear();
+    declChildren.emplace_back(iterator.fPosition, IRNode::Kind::VARIABLE_REFERENCE,
+            targetVar->fType, targetVar);
+    IRNode next;
+    if (!call(IRNode(iterator.fPosition, IRNode::Kind::VARIABLE_REFERENCE, iter->fType, iter),
+            "next", std::vector<IRNode>(), nullptr, &next)) {
+        // shouldn't ever happen
+        return false;
+    }
+    declChildren.push_back(std::move(next));
+    varChildren.clear();
+    varChildren.emplace_back(iterator.fPosition, IRNode::Kind::DECLARATION,
+            std::move(declChildren));
+    block.fChildren.insert(block.fChildren.begin(), IRNode(iterator.fPosition, IRNode::Kind::DEF,
+            std::move(varChildren)));
+    whileChildren.push_back(std::move(block));
+    statements.emplace_back(iterator.fPosition, IRNode::Kind::WHILE, label,
+            std::move(whileChildren));
+    *out = IRNode(iterator.fPosition, IRNode::Kind::BLOCK, std::move(statements));
+    return true;
+
+}
+
 bool Compiler::convertFor(const ASTNode& f, IRNode* out) {
     ASSERT(f.fKind == ASTNode::Kind::FOR);
     ASSERT(f.fChildren.size() == 3);
@@ -2303,85 +2369,61 @@ bool Compiler::convertFor(const ASTNode& f, IRNode* out) {
         return true;
     }
     std::set<Type> interfaces = this->allInterfaces(list.fType);
+    bool haveIterator = false;
+    bool haveIterable = false;
     for (Type t : interfaces) {
         if (t.fCategory == Type::Category::GENERIC &&
                 t.fSubtypes[0].fName == "panda.collections.Iterable") {
-            // iterable for. We rewrite 'for v in list { statements }' to:
-            // def v$Iter := list.iterator()
-            // while !v$Iter.done() {
-            //     def v := v$Iter.next()
-            //     statements
-            // }
+            ASSERT(!haveIterable);
+            haveIterable = true;
+            if (haveIterator) {
+                break;
+            }
             IRNode target;
-            Type indexType = list.fType.fSubtypes[1];
+            Type indexType = t.fSubtypes[1];
             if (!this->convertTarget(f.fChildren[0], nullptr, &indexType, &target)) {
                 return false;
             }
             IRNode block;
-            this->convertBlock(f.fChildren[2], &block);
-            ASSERT(target.fKind == IRNode::Kind::VARIABLE_REFERENCE);
-            Variable* targetVar = (Variable*) target.fValue.fPtr;
-            std::vector<Type> subtypes;
-            subtypes.push_back(Type::Iterator());
-            subtypes.push_back(indexType);
-            Type iterType(subtypes);
-            Variable* iter = new Variable(f.fPosition, targetVar->fName + "$Iter", iterType);
-            fSymbolTable->add(std::unique_ptr<Symbol>(iter));
-            std::vector<IRNode> statements;
-            std::vector<IRNode> declChildren;
-            declChildren.emplace_back(f.fPosition, IRNode::Kind::VARIABLE_REFERENCE, iter->fType,
-                    iter);
+            this->convertBlock(std::move(f.fChildren[2]), &block);
             IRNode getIterator;
             if (!call(std::move(list), "iterator", std::vector<IRNode>(), nullptr, &getIterator)) {
                 // shouldn't ever happen
                 return false;
             }
-            declChildren.push_back(std::move(getIterator));
-            std::vector<IRNode> varChildren;
-            varChildren.emplace_back(f.fPosition, IRNode::Kind::DECLARATION,
-                    std::move(declChildren));
-            statements.emplace_back(f.fPosition, IRNode::Kind::DEF, std::move(varChildren));
-            std::vector<IRNode> whileChildren;
-            IRNode done;
-            if (!call(IRNode(f.fPosition, IRNode::Kind::VARIABLE_REFERENCE, iter->fType, iter),
-                    "get_done", std::vector<IRNode>(), nullptr, &done)) {
-                // shouldn't ever happen
+            this->convertIteratorFor(f.fText, std::move(target), std::move(getIterator),
+                    std::move(block), out);
+        }
+        else if (t.fCategory == Type::Category::GENERIC &&
+                t.fSubtypes[0].fName == "panda.collections.Iterator") {
+            ASSERT(!haveIterator);
+            haveIterator = true;
+            if (haveIterable) {
+                break;
+            }
+            IRNode target;
+            Type indexType = t.fSubtypes[1];
+            if (!this->convertTarget(f.fChildren[0], nullptr, &indexType, &target)) {
                 return false;
             }
-            Class* bit = fClasses["panda.core.Bit"];
-            ASSERT(bit);
-            Field* value = (Field*) bit->fSymbolTable["value"];
-            std::vector<IRNode> bitChildren;
-            bitChildren.push_back(std::move(done));
-            IRNode bitValue(f.fPosition, IRNode::Kind::FIELD_REFERENCE, Type::BuiltinBit(), value,
-                    std::move(bitChildren));
-            std::vector<IRNode> notChildren;
-            notChildren.push_back(std::move(bitValue));
-            whileChildren.emplace_back(f.fPosition, IRNode::Kind::PREFIX, Type::BuiltinBit(),
-                    (uint64_t) Operator::NOT, std::move(notChildren));
-            declChildren.clear();
-            declChildren.emplace_back(f.fPosition, IRNode::Kind::VARIABLE_REFERENCE,
-                    targetVar->fType, targetVar);
-            IRNode next;
-            if (!call(IRNode(f.fPosition, IRNode::Kind::VARIABLE_REFERENCE, iter->fType, iter),
-                    "next", std::vector<IRNode>(), nullptr, &next)) {
-                // shouldn't ever happen
+            IRNode block;
+            this->convertBlock(std::move(f.fChildren[2]), &block);
+            if (!this->coerce(&list, t)) {
                 return false;
             }
-            declChildren.push_back(std::move(next));
-            varChildren.clear();
-            varChildren.emplace_back(f.fPosition, IRNode::Kind::DECLARATION,
-                    std::move(declChildren));
-            block.fChildren.insert(block.fChildren.begin(), IRNode(f.fPosition, IRNode::Kind::DEF,
-                    std::move(varChildren)));
-            whileChildren.push_back(std::move(block));
-            statements.emplace_back(f.fPosition, IRNode::Kind::WHILE, f.fText,
-                    std::move(whileChildren));
-            *out = IRNode(f.fPosition, IRNode::Kind::BLOCK, std::move(statements));
-            return true;
+            this->convertIteratorFor(f.fText, std::move(target), std::move(list), std::move(block),
+                    out);
         }
     }
-    this->error(list.fPosition, "'for' loop expected an Iterable or numeric Range, "
+    if (haveIterator && haveIterable) {
+        this->error(list.fPosition, "ambiguous 'for' loop argument: '" + list.fType.description() +
+                "' implements both Iterator and Iterable");
+        return false;
+    }
+    if (haveIterator || haveIterable) {
+        return true;
+    }
+    this->error(list.fPosition, "'for' loop expected an Iterator, Iterable, or numeric Range, "
             "but found '" + list.fType.description() + "'");
     return false;
 }
@@ -2469,7 +2511,7 @@ bool Compiler::convertTarget(const ASTNode& t, IRNode* value, const Type* valueT
             }
             std::unique_ptr<Variable> v = std::unique_ptr<Variable>(
                     new Variable(t.fPosition, t.fText, std::move(type)));
-            *out = IRNode(t.fPosition, IRNode::Kind::VARIABLE_REFERENCE, v.get());
+            *out = IRNode(t.fPosition, IRNode::Kind::VARIABLE_REFERENCE, v->fType, v.get());
             fSymbolTable->add(std::move(v));
             return true;
         }
@@ -2978,6 +3020,11 @@ void Compiler::buildVTable(Class& cl) {
             cl.fVirtualMethods.push_back(derived);
         }
     }
+    cl.fSymbolTable.foreach([this](Symbol& s) {
+        if (s.fKind == Symbol::Kind::CLASS) {
+            this->buildVTable((Class&) s);
+        }
+    });
 }
 
 void Compiler::buildVTables(SymbolTable& symbols) {

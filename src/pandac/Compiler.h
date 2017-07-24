@@ -237,6 +237,9 @@ private:
 
     bool convertLoop(const ASTNode& l, IRNode* out);
 
+    bool convertIteratorFor(String label, IRNode target, IRNode iterator, IRNode block,
+            IRNode* out);
+
     bool convertFor(const ASTNode& f, IRNode* out);
 
     bool convertTarget(const ASTNode& t, IRNode* value, const Type* valueType, IRNode* out);

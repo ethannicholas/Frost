@@ -1,0 +1,12 @@
+class IterableFor {
+    @class
+    method main() {
+        def a := Array<Int>()
+        for i in 0 ... 20 {
+            a.add(i * i)
+        }
+        for v in a {
+            Console.printLine(v)
+        }
+    }
+}

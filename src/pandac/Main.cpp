@@ -79,14 +79,15 @@ void make_executable(const char* llvm, const char* dest) {
     }
     if (!pid) {
         // child
-        char* args[7];
+        char* args[8];
         args[0] = (char*) GCC_PATH;
         args[1] = (char*) assembly;
         args[2] = (char*) "-L.";
         args[3] = (char*) "-lpanda";
-        args[4] = (char*) "-o";
-        args[5] = (char*) dest;
-        args[6] = nullptr;
+        args[4] = (char*) "-m64";
+        args[5] = (char*) "-o";
+        args[6] = (char*) dest;
+        args[7] = nullptr;
         execv(GCC_PATH, args);
         perror("gcc exec failed");
         exit(1);

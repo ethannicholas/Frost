@@ -9,9 +9,9 @@ A simple lexical analyzer generator for Panda, used to build pandac's lexer.
 ====================================================================================================
 class PLex {
     def tokens := new HashMap<String, Regex>()
-    var out:IndentedOutputStream
+    def out:IndentedOutputStream
 
-    constructor(cfg:InputStream, out:OutputStream) {
+    init(cfg:File, out:OutputStream) {
         self.out := new IndentedOutputStream(out)
         load(cfg)
     }
@@ -20,21 +20,19 @@ class PLex {
         return s.replace(#/([+*?|.()\[\]])/#, "\\$1")
     }
 
-    method load(input:InputStream) {
-        var nfa := new NFA()
-        var line := input.readLine()
-        out.writeLine("package org.pandalanguage.pandac.parser")
-        out.writeLine("uses org.pandalanguage.pandac.tree.*")
-        out.writeLine("uses org.pandalanguage.plex.runtime.*")
-        out.writeLine()
-        out.writeLine("enum TokenType {")
+    method load(input:File) {
+        def nfa := new NFA()
+        out.printLine("package org.pandalanguage.pandac.parser")
+        out.printLine("uses org.pandalanguage.plex.runtime.*")
+        out.printLine()
+        out.printLine("choice TokenType {")
         out.level += 1
         var offset := 0
-        out.writeLine("EOF, -- 0")
+        out.printLine("EOF, -- 0")
         offset += 1
         out.write("SHIFTRIGHT")
         offset += 1
-        while line != null {
+        for line in input.lines {
             line := line.trim
             if line.length > 0 {
                 def parsed := line.parse(

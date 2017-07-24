@@ -15,6 +15,10 @@ class File {
         return File(self.path + "/" + path)
     }
 
+    function lines():Iterator<String> {
+        return openInputStream().lines()
+    }
+
     @external
     method openInputStream():InputStream
 

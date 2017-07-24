@@ -160,6 +160,9 @@ void Scanner::convertMethod(ASTNode* m, SymbolTable* st, Class* owner) {
     if (owner->fClassKind == Class::ClassKind::INTERFACE) {
         annotations.fFlags |= Annotations::Flag::ABSTRACT;
     }
+    if (annotations.isPrivate()) {
+        annotations.fFlags |= Annotations::Flag::FINAL;
+    }
     ASSERT(m->fChildren[2].fKind == ASTNode::Kind::PARAMETERS);
     std::vector<Method::Parameter> parameters;
     for (const auto& p : m->fChildren[2].fChildren) {
@@ -245,9 +248,6 @@ void Scanner::scanClass(String contextName, std::vector<Class::UsesDeclaration> 
     }
     if (annotations.isClass()) {
         this->error(cl->fPosition, "'@class' annotation may not be applied to classes");
-    }
-    if (annotations.isPrivate()) {
-        this->error(cl->fPosition, "'@private' annotation may not be applied to classes");
     }
     if (annotations.isProtected()) {
         this->error(cl->fPosition, "'@protected' annotation may not be applied to classes");
