@@ -5,6 +5,7 @@
 
 struct Symbol {
     enum class Kind {
+        ALIAS,
         CLASS,
         FIELD,
         GENERIC_PARAMETER,

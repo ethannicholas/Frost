@@ -1,5 +1,6 @@
 #include "Compiler.h"
 
+#include "Alias.h"
 #include "Class.h"
 #include "MethodRef.h"
 #include "Methods.h"
@@ -185,6 +186,17 @@ Class* Compiler::resolveClass(const SymbolTable& st, Type t, bool checkParameter
                 result = (Class*) s;
                 current = &((Class*) s)->fSymbolTable;
                 break;
+            case Symbol::Kind::ALIAS: {
+                String fullName = ((Alias*) s)->fFullName;
+                result = this->resolveClass(st, Type(t.fPosition, Type::Category::CLASS, fullName),
+                        false);
+                if (!result) {
+                    this->error(s->fPosition, "no type named '" + fullName + "'");
+                    return nullptr;
+                }
+                current = &result->fSymbolTable;
+                break;
+            }
             case Symbol::Kind::PACKAGE:
                 result = nullptr;
                 p = (Package*) s;
@@ -1750,6 +1762,13 @@ void Compiler::addAllMethods(Position p, const SymbolTable& st, const IRNode* ta
 bool Compiler::symbolRef(Position p, const SymbolTable& st, Symbol* symbol, IRNode* out,
         IRNode* target) {
     switch (symbol->fKind) {
+        case Symbol::Kind::ALIAS: {
+            Class* cl = fClasses[((Alias*) symbol)->fFullName];
+            if (!cl) {
+                return false;
+            }
+            return this->symbolRef(p, st, cl, out, target);
+        }
         case Symbol::Kind::CLASS: {
             Class* cl = (Class*) symbol;
             int expectedParameters = cl->fParameters.size();
@@ -2896,6 +2915,7 @@ void Compiler::compile(SymbolTable& symbols) {
                     fCurrentMethod.pop();
                 }
                 break;
+            case Symbol::Kind::ALIAS: // fall through
             case Symbol::Kind::FIELD: // fall through
             case Symbol::Kind::TYPE:  // fall through
             case Symbol::Kind::GENERIC_PARAMETER:
@@ -2924,13 +2944,8 @@ void Compiler::resolveType(Field* f) {
 
 void Compiler::findClassesAndResolveTypes(Class& cl) {
     for (const auto& u : cl.fUses) {
-        if (u.fAlias.size()) {
-            Class* resolved = this->resolveClass(cl.fSymbolTable,
-                    Type(u.fPosition, Type::Category::CLASS, u.fImport), false);
-            if (resolved) {
-                cl.fAliasTable.addAlias(u.fAlias, resolved);
-            }
-        }
+        cl.fAliasTable.add(u.fAlias, std::unique_ptr<Symbol>(new Alias(u.fPosition, u.fAlias,
+                u.fImport)));
     }
     for (auto& p : cl.fParameters) {
         this->resolveType(cl.fSymbolTable, &p.fType);
