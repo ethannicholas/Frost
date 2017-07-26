@@ -49,7 +49,7 @@ private:
 };
 
 void Compiler::scan(ASTNode* file) {
-    fScanner.scan(file, &fRoot);
+    fScanner.scan(file);
 }
 
 static int required_size(int64_t value) {
@@ -90,7 +90,7 @@ bool Compiler::resolveType(const SymbolTable& st, Type* t, bool checkParameters)
                         std::move(children));
                 break;
             }
-            Class* cl = this->resolveClass(st, *t, checkParameters);
+            Class* cl = this->resolveClass(*t, checkParameters);
             if (cl) {
                 *t = Type(t->fPosition, Type::Category::CLASS, cl->fName);
             }
@@ -107,7 +107,7 @@ bool Compiler::resolveType(const SymbolTable& st, Type* t, bool checkParameters)
             }
             *t = Type(std::move(result));
             if (checkParameters) {
-                return this->resolveClass(st, *t, checkParameters);
+                return this->resolveClass(*t, checkParameters);
             }
             break;
         }
@@ -137,7 +137,7 @@ Type Compiler::remapType(const Type& context, const Type& raw) {
             ASSERT(context.fSubtypes.size() >= 2);
             std::map<String, Type> typeMap;
             const Type& base = context.fSubtypes[0];
-            Class* cl = this->resolveClass(*fSymbolTable, base, false);
+            Class* cl = this->resolveClass(base, false);
             ASSERT(cl);
             for (int i = 1; i < context.fSubtypes.size(); ++i) {
                 typeMap[cl->fName + "." + cl->fParameters[i - 1].fName] = context.fSubtypes[i];
@@ -149,71 +149,68 @@ Type Compiler::remapType(const Type& context, const Type& raw) {
     }
 }
 
+void Compiler::addClass(std::unique_ptr<Class> cl) {
+    fClassMap[cl->fName] = cl.get();
+    fClassList.push_back(std::move(cl));
+}
+
+Class* Compiler::getClass(String name) {
+    auto found = fClassMap.find(name);
+    if (found != fClassMap.end()) {
+        return found->second;
+    }
+    return nullptr;
+}
+
 Class* Compiler::getClass(Type t) {
     if (t.fCategory == Type::Category::GENERIC || t.fCategory == Type::Category::NULLABLE ||
             t.fCategory == Type::Category::PARAMETER) {
         return this->getClass(t.fSubtypes[0]);
     }
-    Class* result = fClasses[t.fName];
+    return this->getClass(t.fName);
+}
+
+Class* Compiler::tryResolveClass(String name) {
+    Class* result = nullptr;
+    for (const auto& p : fCurrentClass.top()->fParameters) {
+        if (name == p.fName || name == fCurrentClass.top()->fName + "." + p.fName) {
+            return this->resolveClass(p.fType);
+        }
+    }
+    if (!result) {
+        Symbol* alias = fCurrentClass.top()->fAliasTable[name];
+        if (alias && alias->fKind == Symbol::Kind::ALIAS) {
+            result = this->getClass(((Alias*) alias)->fFullName);
+        }
+    }
+    if (!result) {
+        if (name.find(".") != std::string::npos ||
+                fCurrentClass.top()->fName.find(".") == std::string::npos) {
+            result = this->getClass(name);
+        }
+    }
+    if (!result) {
+        size_t idx = fCurrentClass.top()->fName.find_last_of(".");
+        if (idx != std::string::npos) {
+            String fullName = fCurrentClass.top()->fName.substr(0, idx + 1) + name;
+            result = this->getClass(fullName);
+        }
+    }
     return result;
 }
 
-Class* Compiler::resolveClass(const SymbolTable& st, Type t, bool checkParameters) {
+Class* Compiler::resolveClass(Type t, bool checkParameters) {
     if (t.fCategory == Type::Category::NULLABLE) {
-        return this->resolveClass(st, t.fSubtypes[0]);
+        return this->resolveClass(t.fSubtypes[0]);
     }
-    const SymbolTable* current = &st;
-    std::stringstream ss;
+    String baseName;
     if (t.fCategory == Type::Category::GENERIC) {
-        ASSERT(t.fSubtypes.size() >= 2);
-        ss.str(t.fSubtypes[0].fName);
+        baseName = t.fSubtypes[0].fName;
     }
     else {
-        ss.str(t.fName);
+        baseName = t.fName;
     }
-    std::string token;
-    Class* result = nullptr;
-    Package* p = nullptr;
-    while (std::getline(ss, token, '.')) {
-        ASSERT(current);
-        Symbol* s = (*current)[token];
-        if (!s) {
-            this->error(t.fPosition, "no type named '" + t.fName + "'");
-            return nullptr;
-        }
-        switch (s->fKind) {
-            case Symbol::Kind::CLASS:
-                result = (Class*) s;
-                current = &((Class*) s)->fSymbolTable;
-                break;
-            case Symbol::Kind::ALIAS: {
-                String fullName = ((Alias*) s)->fFullName;
-                result = this->resolveClass(st, Type(t.fPosition, Type::Category::CLASS, fullName),
-                        false);
-                if (!result) {
-                    this->error(s->fPosition, "no type named '" + fullName + "'");
-                    return nullptr;
-                }
-                current = &result->fSymbolTable;
-                break;
-            }
-            case Symbol::Kind::PACKAGE:
-                result = nullptr;
-                p = (Package*) s;
-                current = &p->fSymbolTable;
-                break;
-            case Symbol::Kind::GENERIC_PARAMETER:
-                result = this->resolveClass(st, ((Class::GenericParameter*) s)->fType);
-                if (!result) {
-                    return nullptr;
-                }
-                current = &result->fSymbolTable;
-                break;
-            default:
-                this->error(t.fPosition, "'" + t.fName + "' is not a type");
-                return nullptr;
-        }
-    }
+    Class* result = this->tryResolveClass(baseName);
     if (result) {
         if (checkParameters) {
             int expectedParameters = result->fParameters.size();
@@ -244,8 +241,7 @@ Class* Compiler::resolveClass(const SymbolTable& st, Type t, bool checkParameter
         }
         return result;
     }
-    ASSERT(p);
-    this->error(t.fPosition, "expected a type, but found package '" + p->fName + "'");
+    this->error(t.fPosition, "no type named '" + t.fName + "'");
     return nullptr;
 }
 
@@ -340,8 +336,7 @@ std::vector<const Field*> Compiler::getInstanceFields(const Class& cl) {
         }
         return std::move(result);
     }
-    std::vector<const Field*> result = this->getInstanceFields(*this->resolveClass(cl.fSymbolTable,
-            cl.fRawSuper));
+    std::vector<const Field*> result = this->getInstanceFields(*this->getClass(cl.fRawSuper));
     result.insert(result.end(), cl.fFields.begin(), cl.fFields.end());
     return result;
 }
@@ -538,7 +533,7 @@ bool Compiler::coerce(IRNode* node, const Type& target, IRNode* out) {
                 args.emplace_back(node->fPosition, IRNode::Kind::BIT, Type::BuiltinBit(),
                         node->fValue.fBool);
                 Type rangeType = Type::RangeOf(baseType);
-                Class* cl = this->resolveClass(*fSymbolTable, rangeType);
+                Class* cl = this->resolveClass(rangeType);
                 if (!cl) {
                     return false;
                 }
@@ -560,7 +555,7 @@ bool Compiler::coerce(IRNode* node, const Type& target, IRNode* out) {
     if (this->coercionCost(*node, target) != INT_MAX) {
         Position p = node->fPosition;
         if (target.isClass()) {
-            Class* cl = this->resolveClass(fCurrentClass.top()->fSymbolTable, target);
+            Class* cl = this->resolveClass(target);
             if (cl) {
                 for (const Method* m : cl->fMethods) {
                     if (m->fAnnotations.isImplicit()) {
@@ -635,7 +630,7 @@ int Compiler::coercionCost(const Type& type, const Type& target) {
     }
     if (type.isClass() && target.isClass()) {
         int cost = INT_MAX;
-        Class* cl = this->resolveClass(fCurrentClass.top()->fSymbolTable, type);
+        Class* cl = this->resolveClass(type);
         if (!cl) {
             return INT_MAX;
         }
@@ -733,7 +728,7 @@ int Compiler::coercionCost(const IRNode& node, const Type& target) {
             break;
     }
     if (target.fCategory == Type::Category::CLASS) {
-        Class* cl = this->resolveClass(fCurrentClass.top()->fSymbolTable, target);
+        Class* cl = this->resolveClass(target);
         if (cl) {
             for (const Method* m : cl->fMethods) {
                 if (m->fAnnotations.isImplicit()) {
@@ -1003,7 +998,7 @@ bool Compiler::call(IRNode method, std::vector<IRNode> args, IRNode* out) {
         }
         case IRNode::Kind::TYPE_REFERENCE: {
             Type& t = *(Type*) method.fValue.fPtr;
-            Class* cl = this->resolveClass(*fSymbolTable, t);
+            Class* cl = this->resolveClass(t);
             if (!cl) {
                 return false;
             }
@@ -1027,6 +1022,7 @@ bool Compiler::call(IRNode method, std::vector<IRNode> args, IRNode* out) {
             return false;
         }
         default:
+        printf("fail: %s\n", method.description().c_str());
             this->error(method.fPosition, "attempting to call a value which is not a method");
             return false;
     }
@@ -1034,7 +1030,7 @@ bool Compiler::call(IRNode method, std::vector<IRNode> args, IRNode* out) {
 
 bool Compiler::call(IRNode target, String methodName, std::vector<IRNode> args, Type* returnType,
         IRNode* out) {
-    Class* cl = this->resolveClass(fCurrentClass.top()->fSymbolTable, target.fType);
+    Class* cl = this->resolveClass(target.fType);
     if (!cl) {
         return false;
     }
@@ -1266,7 +1262,7 @@ bool Compiler::convertArrow(const ASTNode& a, IRNode* outResult) {
     if (!this->convertExpression(a.fChildren[0], &value)) {
         return false;
     }
-    Type type = fScanner.convertType(a.fChildren[1], *fSymbolTable);
+    Type type = fScanner.convertType(a.fChildren[1]);
     if (!this->resolveType(*fSymbolTable, &type)) {
         return false;
     }
@@ -1335,15 +1331,14 @@ int Compiler::operatorMatch(IRNode* left, Operator op, IRNode* right, const Type
         std::vector<const MethodRef*>* outResult) {
     int min = INT_MAX;
     if (left->fKind == IRNode::Kind::TYPE_REFERENCE) {
-        Class* leftClass = this->resolveClass(fCurrentClass.top()->fSymbolTable,
-                *(Type*) left->fValue.fPtr);
+        Class* leftClass = this->resolveClass(*(Type*) left->fValue.fPtr);
         if (!leftClass) {
             return false;
         }
         min = this->operatorMatchLeft(*leftClass, left, op, right, returnType, outResult);
     }
     else if (left->fType.isClass()) {
-        Class* leftClass = this->resolveClass(fCurrentClass.top()->fSymbolTable, left->fType);
+        Class* leftClass = this->resolveClass(left->fType);
         if (!leftClass) {
             return false;
         }
@@ -1351,7 +1346,7 @@ int Compiler::operatorMatch(IRNode* left, Operator op, IRNode* right, const Type
     }
     else if (left->fType.fCategory == Type::Category::UNRESOLVED) {
         for (const Type& t : left->fType.fSubtypes) {
-            Class* leftClass = this->resolveClass(fCurrentClass.top()->fSymbolTable, t);
+            Class* leftClass = this->resolveClass(t);
             if (!leftClass) {
                 return false;
             }
@@ -1370,7 +1365,7 @@ int Compiler::operatorMatch(IRNode* left, Operator op, IRNode* right, const Type
         return min;
     }
     if (right->fType.isClass()) {
-        Class* rightClass = this->resolveClass(fCurrentClass.top()->fSymbolTable, right->fType);
+        Class* rightClass = this->resolveClass(right->fType);
         if (!rightClass) {
             return false;
         }
@@ -1763,7 +1758,7 @@ bool Compiler::symbolRef(Position p, const SymbolTable& st, Symbol* symbol, IRNo
         IRNode* target) {
     switch (symbol->fKind) {
         case Symbol::Kind::ALIAS: {
-            Class* cl = fClasses[((Alias*) symbol)->fFullName];
+            Class* cl = this->getClass(((Alias*) symbol)->fFullName);
             if (!cl) {
                 return false;
             }
@@ -1863,12 +1858,15 @@ bool Compiler::convertIdentifier(const ASTNode& i, IRNode* out) {
     ASSERT(i.fKind == ASTNode::Kind::IDENTIFIER);
     ASSERT(!i.fChildren.size());
     Symbol* symbol = (*fSymbolTable)[i.fText];
+    if (!symbol) {
+        symbol = this->tryResolveClass(i.fText);
+    }
     if (symbol) {
         return this->symbolRef(i.fPosition, *fSymbolTable, symbol, out);
     }
     else {
-        this->error(i.fPosition, "unknown identifier '" + i.fText + "'");
-        return false;
+        *out = IRNode(i.fPosition, IRNode::Kind::UNRESOLVED_IDENTIFIER, Type::Any(), i.fText);
+        return true;
     }
 }
 
@@ -1892,7 +1890,7 @@ bool Compiler::convertCall(const ASTNode& c, IRNode* out) {
 bool Compiler::convertPrefix(Position p, Operator op, IRNode base, IRNode* out) {
     if (base.fType.isClass()) {
         String name = operator_text(op);
-        Class* cl = this->resolveClass(fCurrentClass.top()->fSymbolTable, base.fType);
+        Class* cl = this->resolveClass(base.fType);
         if (!cl) {
             return false;
         }
@@ -1998,7 +1996,8 @@ bool Compiler::convertDot(const ASTNode& d, IRNode* out) {
     if (!this->convertExpression(d.fChildren[0], &left)) {
         return false;
     }
-    if (left.fKind != IRNode::Kind::SUPER && !this->resolve(&left)) {
+    if (left.fKind != IRNode::Kind::SUPER && left.fKind != IRNode::Kind::UNRESOLVED_IDENTIFIER &&
+            !this->resolve(&left)) {
         return false;
     }
     String name;
@@ -2006,7 +2005,7 @@ bool Compiler::convertDot(const ASTNode& d, IRNode* out) {
     switch (left.fKind) {
         case IRNode::Kind::TYPE_REFERENCE: {
             Type& t = *((Type*) left.fValue.fPtr);
-            Class* cl = this->resolveClass(*fSymbolTable, t);
+            Class* cl = this->resolveClass(t);
             if (!cl) {
                 return false;
             }
@@ -2021,16 +2020,28 @@ bool Compiler::convertDot(const ASTNode& d, IRNode* out) {
             break;
         }
         case IRNode::Kind::SUPER: {
-            Class* super = this->resolveClass(fCurrentClass.top()->fSymbolTable,
-                    fCurrentClass.top()->fRawSuper);
+            Class* super = this->resolveClass(fCurrentClass.top()->fRawSuper);
             ASSERT(super);
             st = &super->fSymbolTable;
             name = "class " + super->fName;
             break;
         }
+        case IRNode::Kind::UNRESOLVED_IDENTIFIER: {
+            String fullName = left.fText + "." + d.fText;
+            Class* cl = this->tryResolveClass(fullName);
+            if (cl) {
+                *out = IRNode(left.fPosition, IRNode::Kind::TYPE_REFERENCE, Type::Class(),
+                        &cl->fType);
+            }
+            else {
+                *out = IRNode(left.fPosition, IRNode::Kind::UNRESOLVED_IDENTIFIER, left.fType,
+                        fullName);
+            }
+            return true;
+        }
         default:
             if (left.fType.isClass()) {
-                Class* cl = this->resolveClass(fCurrentClass.top()->fSymbolTable, left.fType);
+                Class* cl = this->resolveClass(left.fType);
                 if (!cl) {
                     return false;
                 }
@@ -2200,7 +2211,7 @@ bool Compiler::convertIf(const ASTNode& i, IRNode* out) {
         if (!this->coerce(&test, Type::Bit())) {
             return false;
         }
-        Class* bit = fClasses["panda.core.Bit"];
+        Class* bit = this->getClass("panda.core.Bit");
         ASSERT(bit);
         Field* value = (Field*) bit->fSymbolTable["value"];
         std::vector<IRNode> children;
@@ -2233,7 +2244,7 @@ bool Compiler::convertWhile(const ASTNode& w, IRNode* out) {
         if (!this->coerce(&test, Type::Bit())) {
             return false;
         }
-        Class* bit = fClasses["panda.core.Bit"];
+        Class* bit = this->getClass("panda.core.Bit");
         ASSERT(bit);
         Field* value = (Field*) bit->fSymbolTable["value"];
         std::vector<IRNode> children;
@@ -2261,7 +2272,7 @@ bool Compiler::convertDo(const ASTNode& d, IRNode* out) {
         if (!this->coerce(&test, Type::Bit())) {
             return false;
         }
-        Class* bit = fClasses["panda.core.Bit"];
+        Class* bit = this->getClass("panda.core.Bit");
         ASSERT(bit);
         Field* value = (Field*) bit->fSymbolTable["value"];
         std::vector<IRNode> children;
@@ -2320,7 +2331,7 @@ bool Compiler::convertIteratorFor(String label, IRNode target, IRNode iterator, 
         // shouldn't ever happen
         return false;
     }
-    Class* bit = fClasses["panda.core.Bit"];
+    Class* bit = this->getClass("panda.core.Bit");
     ASSERT(bit);
     Field* value = (Field*) bit->fSymbolTable["value"];
     std::vector<IRNode> bitChildren;
@@ -2481,6 +2492,9 @@ bool Compiler::resolve(IRNode* value) {
                 return false;
             }
         }
+        case IRNode::Kind::UNRESOLVED_IDENTIFIER:
+            this->error(value->fPosition, "unknown identifier");
+            return false;
         case IRNode::Kind::INT:
             return this->coerce(value, Type::Int());
         case IRNode::Kind::NEGATED_INT:
@@ -2509,7 +2523,7 @@ bool Compiler::convertTarget(const ASTNode& t, IRNode* value, const Type* valueT
         case ASTNode::Kind::IDENTIFIER: {
             Type type;
             if (t.fChildren.size() == 1) {
-                type = fScanner.convertType(t.fChildren[0], *fSymbolTable);
+                type = fScanner.convertType(t.fChildren[0]);
                 this->resolveType(*fSymbolTable, &type);
             }
             else if (value) {
@@ -2665,7 +2679,7 @@ bool Compiler::convertAssert(const ASTNode& a, IRNode* out) {
         if (!this->coerce(&test, Type::Bit())) {
             return false;
         }
-        Class* bit = fClasses["panda.core.Bit"];
+        Class* bit = this->getClass("panda.core.Bit");
         ASSERT(bit);
         Field* value = (Field*) bit->fSymbolTable["value"];
         std::vector<IRNode> children;
@@ -2777,7 +2791,7 @@ Type* Compiler::typePointer(const Type& type) {
 }
 
 bool Compiler::convertType(const ASTNode& t, IRNode* out) {
-    Type converted = fScanner.convertType(t, *fSymbolTable);
+    Type converted = fScanner.convertType(t);
     if (!this->resolveType(*fSymbolTable, &converted)) {
         return false;
     }
@@ -2889,41 +2903,11 @@ void Compiler::compile(Class& cl) {
                 break;
         }
     }
-    this->compile(cl.fSymbolTable);
-}
-
-void Compiler::compile(SymbolTable& symbols) {
-    symbols.foreach([this, &symbols](Symbol& s) {
-        switch (s.fKind) {
-            case Symbol::Kind::PACKAGE:
-                this->compile(((Package&) s).fSymbolTable);
-                break;
-            case Symbol::Kind::CLASS:
-                fCurrentClass.push((Class*) &s);
-                this->compile((Class&) s);
-                fCurrentClass.pop();
-                break;
-            case Symbol::Kind::METHOD:
-                fCurrentMethod.push((Method*) &s);
-                this->compile((Method&) s);
-                fCurrentMethod.pop();
-                break;
-            case Symbol::Kind::METHODS:
-                for (auto& m : ((Methods&) s).fMethods) {
-                    fCurrentMethod.push((Method*) m);
-                    this->compile(*(Method*) m);
-                    fCurrentMethod.pop();
-                }
-                break;
-            case Symbol::Kind::ALIAS: // fall through
-            case Symbol::Kind::FIELD: // fall through
-            case Symbol::Kind::TYPE:  // fall through
-            case Symbol::Kind::GENERIC_PARAMETER:
-                break;
-            case Symbol::Kind::VARIABLE:
-                abort();
-        }
-    });
+    for (const Method* m : cl.fMethods) {
+        fCurrentMethod.push(m);
+        this->compile(*m);
+        fCurrentMethod.pop();
+    }
 }
 
 void Compiler::resolveTypes(Method* m) {
@@ -2942,55 +2926,35 @@ void Compiler::resolveType(Field* f) {
     this->resolveType(st, &f->fType);
 }
 
-void Compiler::findClassesAndResolveTypes(Class& cl) {
-    for (const auto& u : cl.fUses) {
-        cl.fAliasTable.add(u.fAlias, std::unique_ptr<Symbol>(new Alias(u.fPosition, u.fAlias,
-                u.fImport)));
+void Compiler::resolveTypes(Class* cl) {
+    fCurrentClass.push(cl);
+    for (auto& p : cl->fParameters) {
+        this->resolveType(cl->fSymbolTable, &p.fType);
     }
-    for (auto& p : cl.fParameters) {
-        this->resolveType(cl.fSymbolTable, &p.fType);
+    this->resolveType(cl->fSymbolTable, &cl->fRawSuper);
+    for (auto& intf : cl->fRawInterfaces) {
+        this->resolveType(cl->fSymbolTable, &intf);
     }
-    this->resolveType(cl.fSymbolTable, &cl.fRawSuper);
-    for (auto& intf : cl.fRawInterfaces) {
-        this->resolveType(cl.fSymbolTable, &intf);
+    if (cl->isValue()) {
+        cl->fAnnotations.fFlags |= Annotations::Flag::FINAL;
     }
-    if (cl.isValue()) {
-        cl.fAnnotations.fFlags |= Annotations::Flag::FINAL;
+    for (Field* f : cl->fFields) {
+        this->resolveType(f);
     }
-    fClasses[cl.fName] = &cl;
-    this->findClassesAndResolveTypes(cl.fSymbolTable);
+    for (Method* m : cl->fMethods) {
+        this->resolveTypes(m);
+    }
+    for (Class* cl : cl->fInnerClasses) {
+        this->resolveTypes(cl);
+    }
+    fCurrentClass.pop();
 }
 
-void Compiler::findClassesAndResolveTypes(SymbolTable& symbols) {
-    symbols.foreach([this, &symbols](Symbol& s) {
-        switch (s.fKind) {
-            case Symbol::Kind::PACKAGE:
-                this->findClassesAndResolveTypes(((Package&) s).fSymbolTable);
-                break;
-            case Symbol::Kind::CLASS: {
-                Class& cl = (Class&) s;
-                fCurrentClass.push(&cl);
-                fSymbolTable = &cl.fSymbolTable;
-                this->findClassesAndResolveTypes(cl);
-                fSymbolTable = nullptr;
-                fCurrentClass.pop();
-                break;
-            }
-            case Symbol::Kind::METHOD:
-                this->resolveTypes((Method*) &s);
-                break;
-            case Symbol::Kind::METHODS:
-                for (const auto& m : ((Methods&) s).fMethods) {
-                    this->resolveTypes(m);
-                }
-                break;
-            case Symbol::Kind::FIELD:
-                this->resolveType((Field*) &s);
-                break;
-            default:
-                break;
-        }
-    });
+
+void Compiler::resolveTypes() {
+    for (auto& cl : fClassList) {
+        resolveTypes(cl.get());
+    }
 }
 
 void Compiler::buildVTable(Class& cl) {
@@ -3000,7 +2964,7 @@ void Compiler::buildVTable(Class& cl) {
         return;
     }
     if (cl.fRawSuper != Type::Void()) {
-        Class* super = this->resolveClass(cl.fSymbolTable, cl.fRawSuper);
+        Class* super = this->resolveClass(cl.fRawSuper);
         if (!super) {
             fCurrentClass.pop();
             return;
@@ -3010,7 +2974,7 @@ void Compiler::buildVTable(Class& cl) {
         cl.fVirtualMethods = super->fVirtualMethods;
     }
     for (const auto& intfType : cl.fRawInterfaces) {
-        Class* intf = this->resolveClass(cl.fSymbolTable, intfType);
+        Class* intf = this->resolveClass(intfType);
         if (!intf) {
             fCurrentClass.pop();
             return;
@@ -3040,21 +3004,13 @@ void Compiler::buildVTable(Class& cl) {
             this->buildVTable((Class&) s);
         }
     });
+    fCurrentClass.pop();
 }
 
-void Compiler::buildVTables(SymbolTable& symbols) {
-    symbols.foreach([this, &symbols](Symbol& s) {
-        switch (s.fKind) {
-            case Symbol::Kind::PACKAGE:
-                this->buildVTables(((Package&) s).fSymbolTable);
-                break;
-            case Symbol::Kind::CLASS:
-                this->buildVTable((Class&) s);
-                break;
-            default:
-                break;
-        }
-    });
+void Compiler::buildVTables() {
+    for (auto& cl : fClassList) {
+        this->buildVTable(*cl);
+    }
 }
 
 bool Compiler::inferFieldType(Field* field) {
@@ -3126,10 +3082,14 @@ bool Compiler::processFieldValues() {
 }
 
 void Compiler::compile() {
-    this->findClassesAndResolveTypes(fRoot);
-    this->buildVTables(fRoot);
+    this->resolveTypes();
+    this->buildVTables();
     if (this->processFieldValues()) {
-        this->compile(fRoot);
+        for (auto& cl : fClassList) {
+            fCurrentClass.push(cl.get());
+            this->compile(*cl);
+            fCurrentClass.pop();
+        }
     }
 }
 

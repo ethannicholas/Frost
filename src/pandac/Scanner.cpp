@@ -1,6 +1,7 @@
 #include "Scanner.h"
 
 #include "Class.h"
+#include "Compiler.h"
 #include "Package.h"
 #include "Type.h"
 
@@ -35,12 +36,12 @@ Annotations Scanner::convertAnnotations(const ASTNode& a) {
     return Annotations(flags);
 }
 
-Type Scanner::convertType(const ASTNode& t, const SymbolTable& st) {
+Type Scanner::convertType(const ASTNode& t) {
     switch (t.fKind) {
         case ASTNode::Kind::VOID:
             return Type::Void();
         case ASTNode::Kind::CLASS_TYPE: {
-            Symbol* s = st[t.fText];
+            Symbol* s = fCompiler.fRoot[t.fText];
             Type converted;
             if (s && s->fKind == Symbol::Kind::TYPE) {
                 converted = *(Type*) s;
@@ -52,7 +53,7 @@ Type Scanner::convertType(const ASTNode& t, const SymbolTable& st) {
                 std::vector<Type> types;
                 types.push_back(std::move(converted));
                 for (const ASTNode& child : t.fChildren) {
-                    types.push_back(this->convertType(child, st));
+                    types.push_back(this->convertType(child));
                 }
                 converted = Type(types);
             }
@@ -60,7 +61,7 @@ Type Scanner::convertType(const ASTNode& t, const SymbolTable& st) {
         }
         case ASTNode::Kind::NULLABLE_TYPE: {
             ASSERT(t.fChildren.size() == 1);
-            Type base = this->convertType(t.fChildren[0], st);
+            Type base = this->convertType(t.fChildren[0]);
             String name = base.fName + "?";
             std::vector<Type> children;
             children.push_back(std::move(base));
@@ -72,9 +73,9 @@ Type Scanner::convertType(const ASTNode& t, const SymbolTable& st) {
     }
 }
 
-Method::Parameter Scanner::convertParameter(const ASTNode& param, const SymbolTable& st) {
+Method::Parameter Scanner::convertParameter(const ASTNode& param) {
     ASSERT(param.fKind == ASTNode::Kind::PARAMETER);
-    return { param.fText, this->convertType(param.fChildren[0], st) };
+    return { param.fText, this->convertType(param.fChildren[0]) };
 }
 
 void Scanner::error(Position position, String msg) {
@@ -97,7 +98,7 @@ void Scanner::convertDeclaration(const Annotations& annotations, Field::Kind kin
         case ASTNode::Kind::IDENTIFIER: {
             Type type;
             if (target.fChildren.size() == 1) {
-                type = this->convertType(target.fChildren[0], owner->fSymbolTable);
+                type = this->convertType(target.fChildren[0]);
             }
             else {
                 ASSERT(target.fChildren.size() == 0);
@@ -136,7 +137,7 @@ void Scanner::convertDeclaration(const Annotations& annotations, Field::Kind kin
     }
 }
 
-void Scanner::convertField(ASTNode* f, SymbolTable* st, Class* owner) {
+void Scanner::convertField(ASTNode* f, Class* owner) {
     ASSERT(f->fKind == ASTNode::Kind::FIELD);
     ASSERT(f->fChildren.size() == 3);
     Annotations annotations = this->convertAnnotations(f->fChildren[1]);
@@ -153,7 +154,7 @@ void Scanner::convertField(ASTNode* f, SymbolTable* st, Class* owner) {
     }
 }
 
-void Scanner::convertMethod(ASTNode* m, SymbolTable* st, Class* owner) {
+void Scanner::convertMethod(ASTNode* m, Class* owner) {
     ASSERT(m->fText != "init");
     ASSERT(m->fChildren.size() == 6);
     Annotations annotations = this->convertAnnotations(m->fChildren[1]);
@@ -166,9 +167,9 @@ void Scanner::convertMethod(ASTNode* m, SymbolTable* st, Class* owner) {
     ASSERT(m->fChildren[2].fKind == ASTNode::Kind::PARAMETERS);
     std::vector<Method::Parameter> parameters;
     for (const auto& p : m->fChildren[2].fChildren) {
-        parameters.push_back(this->convertParameter(p, *st));
+        parameters.push_back(this->convertParameter(p));
     }
-    Type returnType = this->convertType(m->fChildren[3], *st);
+    Type returnType = this->convertType(m->fChildren[3]);
     Method::Kind kind;
     switch (m->fKind) {
         case ASTNode::Kind::METHOD:
@@ -186,25 +187,25 @@ void Scanner::convertMethod(ASTNode* m, SymbolTable* st, Class* owner) {
     Method* result = new Method(m->fPosition, owner, annotations, kind, m->fText,
             std::move(parameters), std::move(returnType), std::move(m->fChildren[4]));
     owner->fMethods.push_back(result);
-    st->add(std::unique_ptr<Method>(result));
+    owner->fSymbolTable.add(std::unique_ptr<Method>(result));
 }
 
-void Scanner::convertInit(ASTNode* i, SymbolTable* st, Class* owner) {
+void Scanner::convertInit(ASTNode* i, Class* owner) {
     ASSERT(i->fChildren.size() == 5);
     Annotations annotations = this->convertAnnotations(i->fChildren[1]);
     ASSERT(i->fChildren[2].fKind == ASTNode::Kind::PARAMETERS);
     std::vector<Method::Parameter> parameters;
     for (const auto& p : i->fChildren[2].fChildren) {
-        parameters.push_back(this->convertParameter(p, *st));
+        parameters.push_back(this->convertParameter(p));
     }
     Method* result = new Method(i->fPosition, owner, annotations, Method::Kind::INIT, "init",
             std::move(parameters), Type(), std::move(i->fChildren[3]));
     owner->fMethods.push_back(result);
-    st->add(std::unique_ptr<Method>(result));
+    owner->fSymbolTable.add(std::unique_ptr<Method>(result));
 }
 
 void Scanner::scanClass(String contextName, std::vector<Class::UsesDeclaration> uses,
-        SymbolTable* parent, ASTNode* cl) {
+        Class* owner, ASTNode* cl) {
     ASSERT(cl->fKind == ASTNode::Kind::CLASS);
     ASSERT(cl->fChildren.size() == 6);
     Annotations annotations = this->convertAnnotations(cl->fChildren[1]);
@@ -221,7 +222,7 @@ void Scanner::scanClass(String contextName, std::vector<Class::UsesDeclaration> 
             Type type;
             if (p.fChildren.size()) {
                 ASSERT(p.fChildren.size() == 1);
-                type = this->convertType(p.fChildren[0], *parent);
+                type = this->convertType(p.fChildren[0]);
             }
             else {
                 type = Type::Any();
@@ -236,13 +237,13 @@ void Scanner::scanClass(String contextName, std::vector<Class::UsesDeclaration> 
         }
     }
     else {
-        superclass = this->convertType(cl->fChildren[3], *parent);
+        superclass = this->convertType(cl->fChildren[3]);
     }
     std::vector<Type> interfaces;
     if (cl->fChildren[4].fKind != ASTNode::Kind::VOID) {
         ASSERT(cl->fChildren[4].fKind == ASTNode::Kind::TYPES);
         for (const ASTNode& node : cl->fChildren[4].fChildren) {
-            Type t = this->convertType(node, *parent);
+            Type t = this->convertType(node);
             interfaces.push_back(std::move(t));
         }
     }
@@ -265,27 +266,26 @@ void Scanner::scanClass(String contextName, std::vector<Class::UsesDeclaration> 
         }
     }
     Class* result = new Class(cl->fPosition, Class::ClassKind::CLASS, uses, annotations, fullName,
-            parameters, parent, superclass, interfaces);
-    result->fAliasTable.addAlias(cl->fText, result);
+            parameters, owner ? &owner->fSymbolTable : &fCompiler.fRoot, superclass, interfaces);
+    fCompiler.addClass(std::unique_ptr<Class>(result));
     SymbolTable& symbols = result->fSymbolTable;
-    parent->add(cl->fText, std::unique_ptr<Symbol>(result));
     bool foundInit = false;
     ASSERT(cl->fChildren[5].fKind == ASTNode::Kind::CLASS_MEMBERS);
     for (auto& child : cl->fChildren[5].fChildren) {
         switch (child.fKind) {
             case ASTNode::Kind::METHOD: // fall through
             case ASTNode::Kind::FUNCTION:
-                this->convertMethod(&child, &symbols, result);
+                this->convertMethod(&child, result);
                 break;
             case ASTNode::Kind::FIELD:
-                this->convertField(&child, &symbols, result);
+                this->convertField(&child, result);
                 break;
             case ASTNode::Kind::INIT:
-                this->convertInit(&child, &symbols, result);
+                this->convertInit(&child, result);
                 foundInit = true;
                 break;
             case ASTNode::Kind::CLASS:
-                this->scanClass(fullName, uses, &symbols, &child);
+                this->scanClass(fullName, uses, result, &child);
                 break;
             default:
                 printf("unsupported child: %s\n", child.description().c_str());
@@ -299,10 +299,17 @@ void Scanner::scanClass(String contextName, std::vector<Class::UsesDeclaration> 
         result->fMethods.push_back(defaultInit);
         symbols.add(std::unique_ptr<Method>(defaultInit));
     }
+    if (owner) {
+        owner->fInnerClasses.push_back(result);
+        owner->fAliasTable.add(std::unique_ptr<Symbol>(new Alias(result->fPosition, cl->fText,
+                result->fName)));
+        owner->fAliasTable.add(std::unique_ptr<Symbol>(new Alias(result->fPosition,
+                owner->simpleName(), owner->fName)));
+    }
 }
 
 void Scanner::scanInterface(String contextName, std::vector<Class::UsesDeclaration> uses,
-        SymbolTable* parent, ASTNode* cl) {
+        Class* owner, ASTNode* cl) {
     ASSERT(cl->fKind == ASTNode::Kind::INTERFACE);
     ASSERT(cl->fChildren.size() == 5);
     Annotations annotations = this->convertAnnotations(cl->fChildren[1]);
@@ -330,7 +337,7 @@ void Scanner::scanInterface(String contextName, std::vector<Class::UsesDeclarati
     if (cl->fChildren[3].fKind != ASTNode::Kind::VOID) {
         ASSERT(cl->fChildren[3].fKind == ASTNode::Kind::TYPES);
         for (const ASTNode& node : cl->fChildren[3].fChildren) {
-            Type t = this->convertType(node, *parent);
+            Type t = this->convertType(node);
             superinterfaces.push_back(std::move(t));
         }
     }
@@ -348,35 +355,42 @@ void Scanner::scanInterface(String contextName, std::vector<Class::UsesDeclarati
         this->error(cl->fPosition, "'@override' annotation may not be applied to interfaces");
     }
     Class* result = new Class(cl->fPosition, Class::ClassKind::INTERFACE, uses, annotations,
-            fullName, parameters, parent, Type::Object(), superinterfaces);
+            fullName, parameters, owner ? &owner->fSymbolTable : &fCompiler.fRoot, Type::Object(),
+            superinterfaces);
+    fCompiler.addClass(std::unique_ptr<Class>(result));
     SymbolTable& symbols = result->fSymbolTable;
-    parent->add(cl->fText, std::unique_ptr<Symbol>(result));
     for (auto& child : cl->fChildren[4].fChildren) {
         switch (child.fKind) {
             case ASTNode::Kind::METHOD: // fall through
             case ASTNode::Kind::FUNCTION:
-                this->convertMethod(&child, &symbols, result);
+                this->convertMethod(&child, result);
                 break;
             case ASTNode::Kind::FIELD:
-                this->convertField(&child, &symbols, result);
+                this->convertField(&child, result);
                 break;
             case ASTNode::Kind::INIT:
                 this->error(child.fPosition, "interfaces may not contain init methods");
                 break;
             case ASTNode::Kind::CLASS:
-                this->scanClass(fullName, uses, &symbols, &child);
+                this->scanClass(fullName, uses, result, &child);
                 break;
             default:
                 printf("unsupported child: %s\n", child.description().c_str());
                 abort();
         }
     }
+    if (owner) {
+        owner->fInnerClasses.push_back(result);
+        owner->fAliasTable.add(std::unique_ptr<Symbol>(new Alias(result->fPosition, cl->fText,
+                result->fName)));
+        owner->fAliasTable.add(std::unique_ptr<Symbol>(new Alias(result->fPosition,
+                owner->simpleName(), owner->fName)));
+    }
 }
 
-void Scanner::scan(ASTNode* file, SymbolTable* root) {
+void Scanner::scan(ASTNode* file) {
     ASSERT(file->fKind == ASTNode::Kind::BODY_ENTRIES);
     String contextName;
-    SymbolTable* currentTable = root;
     std::vector<Class::UsesDeclaration> uses;
     uses.push_back({ Position(), "panda.collections.Array", "Array" });
     uses.push_back({ Position(), "panda.collections.Collection", "Collection" });
@@ -391,26 +405,26 @@ void Scanner::scan(ASTNode* file, SymbolTable* root) {
     uses.push_back({ Position(), "panda.collections.Stack", "Stack" });
     uses.push_back({ Position(), "panda.core.Bit", "Bit" });
     uses.push_back({ Position(), "panda.core.Char8", "Char8" });
-    uses.push_back({ Position(), "panda.core.Int8", "Int8" });;
-    uses.push_back({ Position(), "panda.core.Int16", "Int16" });;
-    uses.push_back({ Position(), "panda.core.Int32", "Int32" });;
-    uses.push_back({ Position(), "panda.core.Int64", "Int64" });;
-    uses.push_back({ Position(), "panda.core.Int64", "Int" });;
-    uses.push_back({ Position(), "panda.core.MutableString", "MutableString" });;
-    uses.push_back({ Position(), "panda.core.Object", "Object" });;
-    uses.push_back({ Position(), "panda.core.Range", "Range" });;
-    uses.push_back({ Position(), "panda.core.String", "String" });;
-    uses.push_back({ Position(), "panda.core.System", "System" });;
-    uses.push_back({ Position(), "panda.core.Value", "Value" });;
-    uses.push_back({ Position(), "panda.io.Console", "Console" });;
-    uses.push_back({ Position(), "panda.io.File", "File" });;
-    uses.push_back({ Position(), "panda.io.FileOutputStream", "FileOutputStream" });;
-    uses.push_back({ Position(), "panda.io.FileInputStream", "FileInputStream" });;
-    uses.push_back({ Position(), "panda.io.IndentedOutputStream", "IndentedOutputStream" });;
-    uses.push_back({ Position(), "panda.io.InputStream", "InputStream" });;
-    uses.push_back({ Position(), "panda.io.OutputStream", "OutputStream" });;
-    uses.push_back({ Position(), "panda.math.Random", "Random" });;
-    uses.push_back({ Position(), "panda.math.XorShift128Plus", "XorShift128Plus" });;
+    uses.push_back({ Position(), "panda.core.Int8", "Int8" });
+    uses.push_back({ Position(), "panda.core.Int16", "Int16" });
+    uses.push_back({ Position(), "panda.core.Int32", "Int32" });
+    uses.push_back({ Position(), "panda.core.Int64", "Int64" });
+    uses.push_back({ Position(), "panda.core.Int64", "Int" });
+    uses.push_back({ Position(), "panda.core.MutableString", "MutableString" });
+    uses.push_back({ Position(), "panda.core.Object", "Object" });
+    uses.push_back({ Position(), "panda.core.Range", "Range" });
+    uses.push_back({ Position(), "panda.core.String", "String" });
+    uses.push_back({ Position(), "panda.core.System", "System" });
+    uses.push_back({ Position(), "panda.core.Value", "Value" });
+    uses.push_back({ Position(), "panda.io.Console", "Console" });
+    uses.push_back({ Position(), "panda.io.File", "File" });
+    uses.push_back({ Position(), "panda.io.FileOutputStream", "FileOutputStream" });
+    uses.push_back({ Position(), "panda.io.FileInputStream", "FileInputStream" });
+    uses.push_back({ Position(), "panda.io.IndentedOutputStream", "IndentedOutputStream" });
+    uses.push_back({ Position(), "panda.io.InputStream", "InputStream" });
+    uses.push_back({ Position(), "panda.io.OutputStream", "OutputStream" });
+    uses.push_back({ Position(), "panda.math.Random", "Random" });
+    uses.push_back({ Position(), "panda.math.XorShift128Plus", "XorShift128Plus" });
     for (auto& e : file->fChildren) {
         switch (e.fKind) {
             case ASTNode::Kind::USES: {
@@ -423,38 +437,18 @@ void Scanner::scan(ASTNode* file, SymbolTable* root) {
                 else {
                     alias = e.fText;
                 }
-                uses.push_back({ e.fPosition, e.fText, alias });;
+                uses.push_back({ e.fPosition, e.fText, alias });
                 break;
             }
             case ASTNode::Kind::PACKAGE: {
-                contextName = "";
-                currentTable = root;
-                std::stringstream ss;
-                ss.str(e.fText);
-                std::string token;
-                while (std::getline(ss, token, '.')) {
-                    String newName = contextName;
-                    if (newName.size()) {
-                        newName += ".";
-                    }
-                    newName += token;
-                    if (!(*currentTable)[token] ||
-                            (*currentTable)[token]->fKind != Symbol::Kind::PACKAGE) {
-                        (*currentTable).add(token, std::unique_ptr<Symbol>(new Package(e.fPosition,
-                                newName, currentTable)));
-                    }
-                    ASSERT((*currentTable)[token] &&
-                            (*currentTable)[token]->fKind == Symbol::Kind::PACKAGE);
-                    currentTable = &((Package*) (*currentTable)[token])->fSymbolTable;
-                    contextName = newName;
-                }
+                contextName = e.fText;
                 break;
             }
             case ASTNode::Kind::CLASS:
-                this->scanClass(contextName, uses, currentTable, &e);
+                this->scanClass(contextName, uses, nullptr, &e);
                 break;
             case ASTNode::Kind::INTERFACE:
-                this->scanInterface(contextName, uses, currentTable, &e);
+                this->scanInterface(contextName, uses, nullptr, &e);
                 break;
             default:
                 break;

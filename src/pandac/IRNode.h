@@ -101,6 +101,8 @@ struct IRNode {
         UNRESOLVED_BINARY,
         // an ambiguous method reference which could refer to multiple methods
         UNRESOLVED_CALL,
+        // an identifier which does not correspond to a known symbol
+        UNRESOLVED_IDENTIFIER,
         // a reference to a var, def, constant, or property
         UNRESOLVED_METHOD_REFERENCE,
         // an ambiguous method call, where the return type is needed to disambiguate it
@@ -329,6 +331,7 @@ struct IRNode {
             case Kind::TYPE_REFERENCE:              result += "TypeReference"; p = 1;         break;
             case Kind::UNRESOLVED_BINARY:           result += "UnresolvedBinary";             break;
             case Kind::UNRESOLVED_CALL:             result += "UnresolvedCall";               break;
+            case Kind::UNRESOLVED_IDENTIFIER:       result += "UnresolvedIdentifier";         break;
             case Kind::UNRESOLVED_INDEX:            result += "UnresolvedIndex";              break;
             case Kind::UNRESOLVED_METHOD_REFERENCE: result += "UnresolvedMethodReference";    break;
             case Kind::UNRESOLVED_RANGE:            result += "UnresolvedRange";              break;

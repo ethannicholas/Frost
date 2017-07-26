@@ -1,3 +1,5 @@
+uses panda.core.Pointer
+
 class CompoundAssignmentReuse {
     @class
     method noisyZero():Int {

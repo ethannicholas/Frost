@@ -18,7 +18,7 @@
 class Compiler {
 public:
     Compiler(CodeGenerator* codeGenerator, ErrorReporter* errors)
-    : fScanner(errors)
+    : fScanner(this, errors)
     , fCodeGenerator(*codeGenerator)
     , fErrors(*errors) {
         fRoot.add(std::unique_ptr<Symbol>(new Type(Position(), Type::Category::BUILTIN_UINT,
@@ -89,14 +89,22 @@ public:
      */
     std::vector<const Method*> interfaceMethods(const Class& cl, const Type& intf);
 
+    void addClass(std::unique_ptr<Class> cl);
+
+    Class* getClass(String name);
+
     Class* getClass(Type t);
 
     std::vector<const Field*> getInstanceFields(const Class& cl);
 
+    SymbolTable fRoot;
+
     std::vector<const Field*> fFieldInitializationOrder;
 
 private:
-    Class* resolveClass(const SymbolTable& st, Type t, bool checkParameters = true);
+    Class* tryResolveClass(String name);
+
+    Class* resolveClass(Type t, bool checkParameters = true);
 
     // for all convert methods: a true result means "successful enough to have produced output",
     // false means failure. Success may still have generated errors.
@@ -277,15 +285,13 @@ private:
 
     void resolveType(Field* f);
 
-    void findClassesAndResolveTypes(Class& cl);
+    void resolveTypes(Class* cl);
 
-    void findClassesAndResolveTypes(SymbolTable& symbols);
-
-    void resolveTypes(SymbolTable& symbols);
+    void resolveTypes();
 
     void buildVTable(Class& cl);
 
-    void buildVTables(SymbolTable& symbols);
+    void buildVTables();
 
     bool inferFieldType(Field* field);
 
@@ -296,16 +302,14 @@ private:
     void error(Position position, String msg);
 
     Scanner fScanner;
-    
+
     CodeGenerator& fCodeGenerator;
 
     ErrorReporter& fErrors;
 
-    SymbolTable fRoot;
-
     SymbolTable* fSymbolTable;
 
-    std::stack<Method*> fCurrentMethod;
+    std::stack<const Method*> fCurrentMethod;
 
     std::stack<Class*> fCurrentClass;
 
@@ -313,7 +317,9 @@ private:
 
     std::vector<String> fLoops;
 
-    std::unordered_map<String, Class*> fClasses;
+    std::vector<std::unique_ptr<Class>> fClassList;
+
+    std::unordered_map<String, Class*> fClassMap;
 
     std::unordered_map<String, std::unique_ptr<Type>> fTypes;
 

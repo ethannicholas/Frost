@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Alias.h"
 #include "Annotations.h"
 #include "IRNode.h"
 #include "SymbolTable.h"
@@ -55,9 +56,21 @@ struct Class : public Symbol {
     , fRawSuper(std::move(superclass))
     , fRawInterfaces(std::move(interfaces))
     , fType(fPosition, Type::Category::CLASS, fName) {
+        for (const auto& u : fUses) {
+            fAliasTable.add(u.fAlias, std::unique_ptr<Symbol>(new Alias(u.fPosition, u.fAlias,
+                    u.fImport)));
+        }
         for (auto& p : fParameters) {
             fSymbolTable.addAlias(p.fName, &p);
         }
+    }
+
+    String simpleName() {
+        int idx = fName.find_last_of(".");
+        if (idx == std::string::npos) {
+            return fName;
+        }
+        return fName.substr(idx + 1);
     }
 
     bool isValue() const {
@@ -77,7 +90,7 @@ struct Class : public Symbol {
     std::vector<GenericParameter> fParameters;
 
     // fields defined in this class (not including inherited fields)
-    std::vector<const Field*> fFields;
+    std::vector<Field*> fFields;
 
     // holds values assigned to fields. We have to store them in a centralized place (meaning, not
     // attached to the fields themselves) because they can be shared by multiple fields due to tuple
@@ -85,7 +98,10 @@ struct Class : public Symbol {
     std::vector<IRNode> fFieldValues;
 
     // methods defined in this class (not including inherited methods)
-    std::vector<const Method*> fMethods;
+    std::vector<Method*> fMethods;
+
+    // classes defined in this class
+    std::vector<Class*> fInnerClasses;
 
     Type fRawSuper;
 

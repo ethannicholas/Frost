@@ -8,6 +8,8 @@
 #include "SymbolTable.h"
 #include "Type.h"
 
+class Compiler;
+
 /**
  * Scans through an AST file, creating symbols for the packages, classes cand methods contained
  * within.
@@ -33,12 +35,13 @@ public:
         std::vector<int> fTupleIndices;
     };
 
-    Scanner(ErrorReporter* errors)
-    : fErrors(*errors) {}
+    Scanner(Compiler* compiler, ErrorReporter* errors)
+    : fCompiler(*compiler)
+    , fErrors(*errors) {}
 
-    void scan(ASTNode* file, SymbolTable* root);
+    void scan(ASTNode* file);
 
-    Type convertType(const ASTNode& t, const SymbolTable& st);
+    Type convertType(const ASTNode& t);
     
     std::vector<FieldValue> fFieldValues;
 
@@ -47,24 +50,26 @@ public:
 private:
     Annotations convertAnnotations(const ASTNode& a);
 
-    Method::Parameter convertParameter(const ASTNode& param, const SymbolTable& st);
+    Method::Parameter convertParameter(const ASTNode& param);
 
     void convertDeclaration(const Annotations& annotations, Field::Kind kind, const ASTNode& d,
             Class* owner, std::vector<int> tupleIndices);
 
-    void convertField(ASTNode* f, SymbolTable* st, Class* owner);
+    void convertField(ASTNode* f, Class* owner);
 
-    void convertMethod(ASTNode* m, SymbolTable* st, Class* owner);
+    void convertMethod(ASTNode* m, Class* owner);
 
-    void convertInit(ASTNode* i, SymbolTable* st, Class* owner);
+    void convertInit(ASTNode* i, Class* owner);
 
     void scanClass(String contextName, std::vector<Class::UsesDeclaration> uses,
-            SymbolTable* parent, ASTNode* cl);
+            Class* owner, ASTNode* cl);
 
     void scanInterface(String contextName, std::vector<Class::UsesDeclaration> uses,
-            SymbolTable* parent, ASTNode* cl);
+            Class* owner, ASTNode* cl);
 
     void error(Position position, String msg);
+
+    Compiler& fCompiler;
 
     ErrorReporter& fErrors;
 };
