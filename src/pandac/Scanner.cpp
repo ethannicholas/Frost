@@ -124,7 +124,7 @@ void Scanner::convertDeclaration(const Annotations& annotations, Field::Kind kin
                 }
                 if (index == -1) {
                     index = fFieldValues.size();
-                    fFieldValues.push_back({ value, IRNode(Position(), IRNode::Kind::VOID) });
+                    fFieldValues.push_back({ value, nullptr });
                 }
                 fFieldDescriptors[field] = { index, tupleIndices };
             }
@@ -267,7 +267,6 @@ void Scanner::scanClass(String contextName, std::vector<Class::UsesDeclaration> 
     }
     Class* result = new Class(cl->fPosition, Class::ClassKind::CLASS, uses, annotations, fullName,
             parameters, owner ? &owner->fSymbolTable : &fCompiler.fRoot, superclass, interfaces);
-    fCompiler.addClass(std::unique_ptr<Class>(result));
     SymbolTable& symbols = result->fSymbolTable;
     bool foundInit = false;
     ASSERT(cl->fChildren[5].fKind == ASTNode::Kind::CLASS_MEMBERS);
@@ -306,6 +305,7 @@ void Scanner::scanClass(String contextName, std::vector<Class::UsesDeclaration> 
         owner->fAliasTable.add(std::unique_ptr<Symbol>(new Alias(result->fPosition,
                 owner->simpleName(), owner->fName)));
     }
+    fCompiler.addClass(std::unique_ptr<Class>(result));
 }
 
 void Scanner::scanInterface(String contextName, std::vector<Class::UsesDeclaration> uses,
@@ -357,7 +357,6 @@ void Scanner::scanInterface(String contextName, std::vector<Class::UsesDeclarati
     Class* result = new Class(cl->fPosition, Class::ClassKind::INTERFACE, uses, annotations,
             fullName, parameters, owner ? &owner->fSymbolTable : &fCompiler.fRoot, Type::Object(),
             superinterfaces);
-    fCompiler.addClass(std::unique_ptr<Class>(result));
     SymbolTable& symbols = result->fSymbolTable;
     for (auto& child : cl->fChildren[4].fChildren) {
         switch (child.fKind) {
@@ -386,6 +385,7 @@ void Scanner::scanInterface(String contextName, std::vector<Class::UsesDeclarati
         owner->fAliasTable.add(std::unique_ptr<Symbol>(new Alias(result->fPosition,
                 owner->simpleName(), owner->fName)));
     }
+    fCompiler.addClass(std::unique_ptr<Class>(result));
 }
 
 void Scanner::scan(ASTNode* file) {

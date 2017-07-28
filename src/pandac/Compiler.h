@@ -14,12 +14,14 @@
 #include <memory>
 #include <stack>
 #include <unordered_map>
+#include <unordered_set>
 
 class Compiler {
 public:
-    Compiler(CodeGenerator* codeGenerator, ErrorReporter* errors)
+    Compiler(std::vector<String> importPaths, CodeGenerator* codeGenerator, ErrorReporter* errors)
     : fScanner(this, errors)
     , fCodeGenerator(*codeGenerator)
+    , fImportPaths(std::move(importPaths))
     , fErrors(*errors) {
         fRoot.add(std::unique_ptr<Symbol>(new Type(Position(), Type::Category::BUILTIN_UINT,
                 "builtin_bit", 1)));
@@ -41,7 +43,7 @@ public:
                 "builtin_uint64", 64)));
     }
 
-    void scan(ASTNode* file);
+    void scan(const String& file);
 
     void compile();
 
@@ -305,6 +307,8 @@ private:
 
     CodeGenerator& fCodeGenerator;
 
+    std::vector<String> fImportPaths;
+
     ErrorReporter& fErrors;
 
     SymbolTable* fSymbolTable;
@@ -317,13 +321,22 @@ private:
 
     std::vector<String> fLoops;
 
-    std::vector<std::unique_ptr<Class>> fClassList;
+    std::vector<std::unique_ptr<Class>> fClasses;
 
     std::unordered_map<String, Class*> fClassMap;
 
     std::unordered_map<String, std::unique_ptr<Type>> fTypes;
 
+    std::unordered_set<String> fLoadedFiles;
+
+    // FIXME kill this
+    std::vector<ASTNode> fParsedFiles;
+
     uint64_t fReusedValues = 0;
+
+    bool fTypesResolved = false;
+
+    bool fFieldValuesProcessed = false;
 
     friend class AutoLoop;
     friend class AutoSymbolTable;

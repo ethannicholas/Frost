@@ -19,8 +19,8 @@ public:
     struct FieldValue {
         // always defined
         const ASTNode* fUnconvertedValue;
-        // void until this value gets processed
-        IRNode fConvertedValue;
+        // null until this value gets processed
+        std::unique_ptr<IRNode> fConvertedValue;
     };
 
     /**

@@ -2099,7 +2099,12 @@ void LLVMCodeGenerator::writeAssert(const IRNode& a, std::ostream& out) {
     out << "    br i1 " << test << ", label %" << ifTrue << ", label %" << ifFalse << "\n";
     this->createBlock(ifFalse, out);
     ASSERT(a.fPosition.fName);
-    String file = this->getStringReference(*a.fPosition.fName, out);
+    String name = *a.fPosition.fName;
+    int idx = name.find_last_of("/");
+    if (idx != std::string::npos) {
+        name = name.substr(idx + 1);
+    }
+    String file = this->getStringReference(name, out);
     String line = this->nextVar();
     out << "    " << line << " = insertvalue %panda$core$Int64 { i64 undef }, i64 " <<
             a.fPosition.fLine << ", 0\n";
@@ -2241,6 +2246,7 @@ String LLVMCodeGenerator::defaultValue(const Type& type) {
 }
 
 void LLVMCodeGenerator::writeMethodDeclaration(const Method& method, Compiler& compiler) {
+    fCompiler = &compiler;
     if (method.fOwner.fName == "panda.core.Pointer") {
         return;
     }

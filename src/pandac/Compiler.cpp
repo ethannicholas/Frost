@@ -6,9 +6,11 @@
 #include "Methods.h"
 #include "Operator.h"
 #include "Package.h"
+#include "PandaParser.h"
 #include "Variable.h"
 
 #include <algorithm>
+#include <fstream>
 #include <limits.h>
 #include <set>
 
@@ -48,8 +50,22 @@ private:
     Compiler* fCompiler;
 };
 
-void Compiler::scan(ASTNode* file) {
-    fScanner.scan(file);
+void Compiler::scan(const String& path) {
+    if (fLoadedFiles.find(path) != fLoadedFiles.end()) {
+        return;
+    }
+    fLoadedFiles.insert(path);
+    std::ifstream in(path);
+    if (in.fail()) {
+        printf("error reading '%s'\n", path.c_str());
+        exit(1);
+    }
+    std::string text((std::istreambuf_iterator<char>(in)),
+                        std::istreambuf_iterator<char>());
+    fParsedFiles.emplace_back();
+    if (PandaParser(&fErrors).file(&path, text, &fParsedFiles.back())) {
+        fScanner.scan(&fParsedFiles.back());
+    }
 }
 
 static int required_size(int64_t value) {
@@ -150,14 +166,34 @@ Type Compiler::remapType(const Type& context, const Type& raw) {
 }
 
 void Compiler::addClass(std::unique_ptr<Class> cl) {
-    fClassMap[cl->fName] = cl.get();
-    fClassList.push_back(std::move(cl));
+    Class* ptr = cl.get();
+    fClassMap[cl->fName] = ptr;
+    fClasses.push_back(std::move(cl));
+    if (fTypesResolved) {
+        this->resolveTypes(ptr);
+        this->buildVTable(*ptr);
+        if (fFieldValuesProcessed) {
+            this->processFieldValues();
+        }
+    }
 }
 
 Class* Compiler::getClass(String name) {
     auto found = fClassMap.find(name);
     if (found != fClassMap.end()) {
         return found->second;
+    }
+    String suffix = name;
+    std::replace(suffix.begin(), suffix.end(), '.', '/');
+    suffix += ".panda";
+    for (const String& s : fImportPaths) {
+        // memory leak, don't care, throwing this code away
+        String* path = new String(s + "/" + suffix);
+        std::ifstream in(path->c_str());
+        if (in.good()) {
+            this->scan(*path);
+            return fClassMap[name];
+        }
     }
     return nullptr;
 }
@@ -1022,7 +1058,6 @@ bool Compiler::call(IRNode method, std::vector<IRNode> args, IRNode* out) {
             return false;
         }
         default:
-        printf("fail: %s\n", method.description().c_str());
             this->error(method.fPosition, "attempting to call a value which is not a method");
             return false;
     }
@@ -2944,17 +2979,27 @@ void Compiler::resolveTypes(Class* cl) {
     for (Method* m : cl->fMethods) {
         this->resolveTypes(m);
     }
-    for (Class* cl : cl->fInnerClasses) {
-        this->resolveTypes(cl);
+    for (Class* inner : cl->fInnerClasses) {
+        this->resolveTypes(inner);
     }
     fCurrentClass.pop();
 }
 
 
 void Compiler::resolveTypes() {
-    for (auto& cl : fClassList) {
-        resolveTypes(cl.get());
+    int lastStart = 0;
+    do {
+        std::vector<Class*> classes;
+        for (int i = lastStart; i < fClasses.size(); ++i) {
+            classes.push_back(fClasses[i].get());
+        }
+        lastStart = fClasses.size();
+        for (auto& cl : classes) {
+            resolveTypes(cl);
+        }
     }
+    while (lastStart < fClasses.size());
+    fTypesResolved = true;
 }
 
 void Compiler::buildVTable(Class& cl) {
@@ -3008,7 +3053,7 @@ void Compiler::buildVTable(Class& cl) {
 }
 
 void Compiler::buildVTables() {
-    for (auto& cl : fClassList) {
+    for (auto& cl : fClasses) {
         this->buildVTable(*cl);
     }
 }
@@ -3047,19 +3092,21 @@ bool Compiler::processFieldValue(Field* field) {
     ASSERT(desc.fValueIndex < fScanner.fFieldValues.size());
     Scanner::FieldValue& value = fScanner.fFieldValues[desc.fValueIndex];
     SymbolTable* old = fSymbolTable;
-    if (value.fConvertedValue.fKind == IRNode::Kind::VOID) {
+    if (!value.fConvertedValue) {
         fCurrentClass.push(&field->fOwner);
         fSymbolTable = &field->fOwner.fSymbolTable;
-        if (!this->convertExpression(*value.fUnconvertedValue, &value.fConvertedValue)) {
+        IRNode* converted = new IRNode();
+        if (!this->convertExpression(*value.fUnconvertedValue, converted)) {
             fCurrentClass.pop();
             fSymbolTable = old;
             return false;
         }
+        value.fConvertedValue.reset(converted);
         fCurrentClass.pop();
         fSymbolTable = old;
     }
     ASSERT(desc.fTupleIndices.size() == 0); // until tuple support is in...
-    field->fValue = &value.fConvertedValue;
+    field->fValue = value.fConvertedValue.get();
     fCurrentClass.push(&field->fOwner);
     fSymbolTable = &field->fOwner.fSymbolTable;
     if (field->fType == Type::Void()) {
@@ -3073,11 +3120,12 @@ bool Compiler::processFieldValue(Field* field) {
 }
 
 bool Compiler::processFieldValues() {
-    for (auto pair : fScanner.fFieldDescriptors) {
-        if (!this->processFieldValue(pair.first)) {
+    for (const auto& desc : fScanner.fFieldDescriptors) {
+        if (!this->processFieldValue(desc.first)) {
             return false;
         }
     }
+    fFieldValuesProcessed = true;
     return true;
 }
 
@@ -3085,11 +3133,20 @@ void Compiler::compile() {
     this->resolveTypes();
     this->buildVTables();
     if (this->processFieldValues()) {
-        for (auto& cl : fClassList) {
-            fCurrentClass.push(cl.get());
-            this->compile(*cl);
-            fCurrentClass.pop();
+        int lastStart = 0;
+        do {
+            std::vector<Class*> classes;
+            for (int i = lastStart; i < fClasses.size(); ++i) {
+                classes.push_back(fClasses[i].get());
+            }
+            lastStart = fClasses.size();
+            for (auto& cl : classes) {
+                fCurrentClass.push(cl);
+                this->compile(*cl);
+                fCurrentClass.pop();
+            }
         }
+        while (lastStart < fClasses.size());
     }
 }
 

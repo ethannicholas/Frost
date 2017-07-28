@@ -15,7 +15,12 @@ struct Position {
 
     String description() const {
         if (fName) {
-            return *fName + ":" + std::to_string(fLine) + ":" + std::to_string(fColumn);
+            String name = *fName;
+            int idx = name.find_last_of("/");
+            if (idx != std::string::npos) {
+                name = name.substr(idx + 1);
+            }
+            return name + ":" + std::to_string(fLine) + ":" + std::to_string(fColumn);
         }
         return std::to_string(fLine) + ":" + std::to_string(fColumn);
     }
