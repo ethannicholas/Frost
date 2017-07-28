@@ -107,7 +107,6 @@ int main(int argc, char** argv) {
     std::vector<String> sources;
     sources.push_back(PANDA_HOME + "panda/core/Panda.panda");
     sources.push_back(PANDA_HOME + "panda/core/System.panda");
-    sources.push_back(PANDA_HOME + "panda/io/Console.panda");
     sources.push_back(PANDA_HOME + "panda/io/FileInputStream.panda");
     sources.push_back(PANDA_HOME + "panda/io/FileOutputStream.panda");
     String dest;

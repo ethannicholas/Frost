@@ -11,16 +11,19 @@ class LLVMCodeGenerator : public CodeGenerator {
 public:
     LLVMCodeGenerator(std::ostream* out);
 
-    ~LLVMCodeGenerator() {
-        fOut << fTypeDeclarations.str();
-        fOut << fStrings.str();
-        fOut << fShims.str();
-        fOut << fMethods.str();
-    }
-
     void writeMethodDeclaration(const Method& method, Compiler& compiler) override;
 
     void writeMethod(const Method& method, const IRNode& body, Compiler& compiler) override;
+
+    void addGlobalField(Field* f) override;
+
+    void finish() override {
+        fOut << fTypeDeclarations.str();
+        fOut << fStrings.str();
+        fOut << fShims.str();
+        this->writeInitGlobals(fOut);
+        fOut << fMethods.str();
+    }
 
     enum class OpClass {
         SIGNED,
@@ -252,6 +255,8 @@ private:
 
     const LoopDescriptor& findLoop(String name);
 
+    void writeInitGlobals(std::ostream& out);
+
     int fTmpVars = 1;
 
     int fLabels = 0;
@@ -276,6 +281,8 @@ private:
 
     std::stringstream fMethods;
 
+    std::stringstream fGlobalInits;
+
     // maps method to (name, type)
     std::unordered_map<const Method*, std::pair<String, String>> fMethodShims;
 
@@ -296,6 +303,8 @@ private:
     std::unordered_map<String, String> fParameterNames;
 
     std::vector<LoopDescriptor> fLoops;
+
+    std::vector<const Field*> fFieldInitializationOrder;
 
     friend class AutoLoopDescriptor;
 };

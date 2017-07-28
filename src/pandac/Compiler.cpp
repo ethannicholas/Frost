@@ -3115,7 +3115,9 @@ bool Compiler::processFieldValue(Field* field) {
     this->coerce(field->fValue, field->fType);
     fSymbolTable = old;
     fCurrentClass.pop();
-    fFieldInitializationOrder.push_back(field);
+    if (field->fAnnotations.isClass()) {
+        fCodeGenerator.addGlobalField(field);
+    }
     return true;
 }
 
@@ -3147,6 +3149,9 @@ void Compiler::compile() {
             }
         }
         while (lastStart < fClasses.size());
+        if (!fErrors.fErrorCount) {
+            fCodeGenerator.finish();
+        }
     }
 }
 

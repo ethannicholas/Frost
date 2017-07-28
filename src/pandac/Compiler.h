@@ -101,8 +101,6 @@ public:
 
     SymbolTable fRoot;
 
-    std::vector<const Field*> fFieldInitializationOrder;
-
 private:
     Class* tryResolveClass(String name);
 

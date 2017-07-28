@@ -2386,23 +2386,15 @@ void LLVMCodeGenerator::writeMethod(const Method& method, const IRNode& body, Co
         }
     }
     fMethodHeader.str("");
-    std::stringstream init;
-    if (method.fName == "main") {
-        for (const auto f : fCompiler->fFieldInitializationOrder) {
-            if (f->fAnnotations.isClass()) {
-                String value = this->getTypedReference(*f->fValue, init);
-                init << "    store " << value << ", " << this->llvmType(f->fType) << "* " <<
-                        this->fieldName(*f) << "\n";
-            }
-        }
-    }
     std::stringstream bodyCode;
     ASSERT(body.fKind == IRNode::Kind::BLOCK);
     for (const auto& s : body.fChildren) {
         this->writeStatement(s, bodyCode);
     }
     out << fMethodHeader.str();
-    out << init.str();
+    if (method.fName == "main") {
+        out << "    call fastcc void @$initGlobals()\n";
+    }
     out << bodyCode.str();
     if (!ends_with_branch(body)) {
         if (method.fReturnType == Type::Void()) {
@@ -2416,4 +2408,26 @@ void LLVMCodeGenerator::writeMethod(const Method& method, const IRNode& body, Co
     fParameterNames.clear();
     fVariableNames.clear();
     fReusedValues.clear();
+}
+
+void LLVMCodeGenerator::addGlobalField(Field* f) {
+    fFieldInitializationOrder.push_back(f);
+}
+
+void LLVMCodeGenerator::writeInitGlobals(std::ostream& out) {
+    fTmpVars = 1;
+    fMethodHeader.str("");
+    std::stringstream code;
+    for (const auto f : fFieldInitializationOrder) {
+        if (f->fAnnotations.isClass()) {
+            String value = this->getTypedReference(*f->fValue, code);
+            code << "    store " << value << ", " << this->llvmType(f->fType) << "* " <<
+                    this->fieldName(*f) << "\n";
+        }
+    }
+    out << "define fastcc void @$initGlobals() {\n";
+    out << fMethodHeader.str();
+    out << code.str();
+    out << "    ret void\n";
+    out << "}\n";
 }
