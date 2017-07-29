@@ -14,7 +14,7 @@ class CodeGenerator {
 public:
     virtual void start(Compiler* compiler) = 0;
 
-    virtual void writeClass(const Class& cl) = 0;
+    virtual void writeClass(Class& cl) = 0;
 
     virtual void writeMethodDeclaration(const Method& method) = 0;
 

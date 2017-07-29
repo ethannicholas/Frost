@@ -174,7 +174,6 @@ void Compiler::addClass(std::unique_ptr<Class> cl) {
     fClasses.push_back(std::move(cl));
     if (fTypesResolved) {
         this->resolveTypes(ptr);
-        this->buildVTable(*ptr);
         if (fFieldValuesProcessed) {
             this->processFieldValues();
         }
@@ -2969,9 +2968,19 @@ void Compiler::resolveTypes(Class* cl) {
     for (auto& p : cl->fParameters) {
         this->resolveType(cl->fSymbolTable, &p.fType);
     }
-    this->resolveType(cl->fSymbolTable, &cl->fRawSuper);
+    if (this->resolveType(cl->fSymbolTable, &cl->fRawSuper)) {
+        Class* super = this->getClass(cl->fRawSuper);
+        if (super) {
+            cl->fSymbolTable.fParents.push_back(&super->fSymbolTable);
+        }
+    }
     for (auto& intf : cl->fRawInterfaces) {
-        this->resolveType(cl->fSymbolTable, &intf);
+        if (this->resolveType(cl->fSymbolTable, &intf)) {
+            Class* intfClass = this->getClass(intf);
+            if (intfClass) {
+                cl->fSymbolTable.fParents.push_back(&intfClass->fSymbolTable);
+            }
+        }
     }
     if (cl->isValue()) {
         cl->fAnnotations.fFlags |= Annotations::Flag::FINAL;
@@ -3005,60 +3014,38 @@ void Compiler::resolveTypes() {
     fTypesResolved = true;
 }
 
-void Compiler::buildVTable(Class& cl) {
-    fCurrentClass.push(&cl);
-    if (cl.fVirtualMethods.size()) {
-        fCurrentClass.pop();
-        return;
-    }
-    if (cl.fRawSuper != Type::Void()) {
-        Class* super = this->resolveClass(cl.fRawSuper);
-        if (!super) {
-            fCurrentClass.pop();
-            return;
+const std::vector<const Method*>& Compiler::getVTable(Class& cl) {
+    if (!cl.fVirtualMethods.size()) {
+        fCurrentClass.push(&cl);
+        if (cl.fRawSuper != Type::Void()) {
+            Class* super = this->resolveClass(cl.fRawSuper);
+            if (!super) {
+                fCurrentClass.pop();
+                return cl.fVirtualMethods;
+            }
+            cl.fSymbolTable.fParents.push_back(&super->fSymbolTable);
+            cl.fVirtualMethods = this->getVTable(*super);
         }
-        cl.fSymbolTable.fParents.push_back(&super->fSymbolTable);
-        this->buildVTable(*super);
-        cl.fVirtualMethods = super->fVirtualMethods;
-    }
-    for (const auto& intfType : cl.fRawInterfaces) {
-        Class* intf = this->resolveClass(intfType);
-        if (!intf) {
-            fCurrentClass.pop();
-            return;
-        }
-        cl.fSymbolTable.fParents.push_back(&intf->fSymbolTable);
-        this->buildVTable(*intf);
-    }
-    for (const Method* derived : cl.fMethods) {
-        if (derived->fMethodKind == Method::Kind::INIT || derived->fAnnotations.isClass()) {
-            continue;
-        }
-        bool found = false;
-        for (int i = 0; i < cl.fVirtualMethods.size(); ++i) {
-            const Method* base = cl.fVirtualMethods[i];
-            if (derived->matches(*base)) {
-                found = true;
-                cl.fVirtualMethods[i] = derived;
-                break;
+       for (const Method* derived : cl.fMethods) {
+            if (derived->fMethodKind == Method::Kind::INIT || derived->fAnnotations.isClass()) {
+                continue;
+            }
+            bool found = false;
+            for (int i = 0; i < cl.fVirtualMethods.size(); ++i) {
+                const Method* base = cl.fVirtualMethods[i];
+                if (derived->matches(*base)) {
+                    found = true;
+                    cl.fVirtualMethods[i] = derived;
+                    break;
+                }
+            }
+            if (!found) {
+                cl.fVirtualMethods.push_back(derived);
             }
         }
-        if (!found) {
-            cl.fVirtualMethods.push_back(derived);
-        }
+        fCurrentClass.pop();
     }
-    cl.fSymbolTable.foreach([this](Symbol& s) {
-        if (s.fKind == Symbol::Kind::CLASS) {
-            this->buildVTable((Class&) s);
-        }
-    });
-    fCurrentClass.pop();
-}
-
-void Compiler::buildVTables() {
-    for (auto& cl : fClasses) {
-        this->buildVTable(*cl);
-    }
+    return cl.fVirtualMethods;
 }
 
 bool Compiler::inferFieldType(Field* field) {
@@ -3137,7 +3124,6 @@ bool Compiler::processFieldValues() {
 void Compiler::compile() {
     fFinishedProcessingSources = true;
     this->resolveTypes();
-    this->buildVTables();
     if (this->processFieldValues()) {
         fCodeGenerator.start(this);
         int lastStart = 0;

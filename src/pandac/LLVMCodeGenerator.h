@@ -13,7 +13,7 @@ public:
 
     void start(Compiler* compiler) override;
 
-    void writeClass(const Class& cl) override;
+    void writeClass(Class& cl) override;
 
     void writeMethodDeclaration(const Method& method) override;
 
@@ -107,9 +107,9 @@ private:
 
     String getITable(const Class& cl);
 
-    ClassConstant& getClassConstant(const Class& cl);
+    ClassConstant& getClassConstant(Class& cl);
 
-    ClassConstant& getWrapperClassConstant(const Class& cl);
+    ClassConstant& getWrapperClassConstant(Class& cl);
 
     /**
      * For the given Value class method, creates a shim method which receives a wrapped value,

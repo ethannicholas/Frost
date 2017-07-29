@@ -99,6 +99,8 @@ public:
 
     std::vector<const Field*> getInstanceFields(const Class& cl);
 
+    const std::vector<const Method*>& getVTable(Class& cl);
+
     SymbolTable fRoot;
 
 private:
@@ -288,10 +290,6 @@ private:
     void resolveTypes(Class* cl);
 
     void resolveTypes();
-
-    void buildVTable(Class& cl);
-
-    void buildVTables();
 
     bool inferFieldType(Field* field);
 

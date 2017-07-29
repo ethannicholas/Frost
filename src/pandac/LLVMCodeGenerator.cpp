@@ -186,11 +186,12 @@ String LLVMCodeGenerator::getITable(const Class& cl) {
     return previous;
 }
 
-LLVMCodeGenerator::ClassConstant& LLVMCodeGenerator::getClassConstant(const Class& cl) {
+LLVMCodeGenerator::ClassConstant& LLVMCodeGenerator::getClassConstant(Class& cl) {
     auto found = fClassConstants.find(cl.fName);
     if (found == fClassConstants.end()) {
+        const std::vector<const Method*>& vtable = fCompiler->getVTable(cl);
         ClassConstant cc("@" + escape_type_name(cl.fType.fName) + "$class",
-                "{ i8*, " INT_T ", %$itable*, [" + std::to_string(cl.fVirtualMethods.size()) +
+                "{ i8*, " INT_T ", %$itable*, [" + std::to_string(vtable.size()) +
                 " x i8*] }");
         fClassConstants[cl.fName] = cc;
         if (cl.fExternal) {
@@ -208,10 +209,10 @@ LLVMCodeGenerator::ClassConstant& LLVMCodeGenerator::getClassConstant(const Clas
         }
         String itable = this->getITable(cl);
         String code = cc.fName + " = constant " + cc.fType + " { i8* " + super +
-                (", " INT_T " 1, ") + itable + ", [" + std::to_string(cl.fVirtualMethods.size()) +
+                (", " INT_T " 1, ") + itable + ", [" + std::to_string(vtable.size()) +
                 " x i8*] [";
         const char* separator = "";
-        for (const Method* m : cl.fVirtualMethods) {
+        for (const Method* m : vtable) {
             code += separator;
             if (m->fAnnotations.isAbstract()) {
                 code += "i8* null";
@@ -231,7 +232,7 @@ LLVMCodeGenerator::ClassConstant& LLVMCodeGenerator::getClassConstant(const Clas
     return found->second;
 }
 
-LLVMCodeGenerator::ClassConstant& LLVMCodeGenerator::getWrapperClassConstant(const Class& cl) {
+LLVMCodeGenerator::ClassConstant& LLVMCodeGenerator::getWrapperClassConstant(Class& cl) {
     // need to shim methods inherited from Value. When the class is called as itself, it is
     // unwrapped prior to the call, so they just work. But when it is called via an Object or Value
     // pointer, the callee has no idea it's dealing with a wrapper, so the wrapper doesn't
@@ -242,8 +243,10 @@ LLVMCodeGenerator::ClassConstant& LLVMCodeGenerator::getWrapperClassConstant(con
     auto found = fClassConstants.find(name);
     if (found == fClassConstants.end()) {
         Class& value = *fCompiler->getClass(Type::Value());
+        const std::vector<const Method*>& valueVTable = fCompiler->getVTable(value);
+        const std::vector<const Method*>& vtable = fCompiler->getVTable(cl);
         ClassConstant cc("@" + escape_type_name(cl.fType.fName) + "$wrapperclass",
-                "{ i8*, " INT_T ", %$itable*, [" + std::to_string(value.fVirtualMethods.size()) +
+                "{ i8*, " INT_T ", %$itable*, [" + std::to_string(valueVTable.size()) +
                 " x i8*] }");
         fClassConstants[name] = cc;
         if (cl.fExternal) {
@@ -253,19 +256,22 @@ LLVMCodeGenerator::ClassConstant& LLVMCodeGenerator::getWrapperClassConstant(con
         const ClassConstant& superCC = this->getClassConstant(*fCompiler->getClass(cl.fRawSuper));
         String super = "bitcast(" + superCC.fType + "* " + superCC.fName + " to i8*)";
         String code = cc.fName + " = constant " + cc.fType + " { i8* " + super +
-                ", " INT_T " 1, %$itable* null, [" + std::to_string(value.fVirtualMethods.size()) +
+                ", " INT_T " 1, %$itable* null, [" + std::to_string(valueVTable.size()) +
                 " x i8*] [";
         const char* separator = "";
-        for (int i = 0; i < value.fVirtualMethods.size(); ++i) {
-            const Method* m = cl.fVirtualMethods[i];
+        for (int i = 0; i < valueVTable.size(); ++i) {
+            const Method* m = vtable[i];
             String methodName;
             if (&m->fOwner == &cl) {
                 methodName = this->createWrapperShim(*m, fShims);
             }
             else {
                 methodName = this->methodName(*m);
+                if (m->fOwner.fExternal) {
+                    this->writeMethodDeclaration(*m);
+                }
             }
-            code += separator + ("i8* bitcast(" + this->llvmType(*value.fVirtualMethods[i])) + " " +
+            code += separator + ("i8* bitcast(" + this->llvmType(*valueVTable[i])) + " " +
                     methodName + " to i8*)";
             separator = ", ";
         }
@@ -319,7 +325,7 @@ bool is_constant_number(const IRNode& expr) {
             expr.fChildren[0].fChildren[1].fKind == IRNode::Kind::INT;
 }
 
-void LLVMCodeGenerator::writeClass(const Class& cl) {
+void LLVMCodeGenerator::writeClass(Class& cl) {
     if (cl.fName == "panda.core.Pointer") {
         return;
     }
@@ -432,7 +438,7 @@ String LLVMCodeGenerator::llvmType(const Type& type) {
         case Type::Category::BUILTIN_FLOAT: return "f" + std::to_string(type.fSize);
         case Type::Category::NULL_LITERAL: return "i8*";
         case Type::Category::CLASS: {
-            const Class* cl = fCompiler->getClass(type);
+            Class* cl = fCompiler->getClass(type);
             this->writeClass(*cl);
             ASSERT(cl);
             if (cl->isValue()) {
@@ -929,7 +935,7 @@ String LLVMCodeGenerator::getCallReference(const IRNode& call, std::ostream& out
 String LLVMCodeGenerator::wrapValue(const String& value, const Type& srcType, const Type& dstType,
         std::ostream& out) {
     out << "    ; wrap value\n";
-    const Class* src = fCompiler->getClass(srcType);
+    Class* src = fCompiler->getClass(srcType);
     std::vector<const Field*> fields = fCompiler->getInstanceFields(*src);
     ASSERT(src);
     if (srcType.fCategory == Type::Category::NULLABLE) {
@@ -1176,7 +1182,7 @@ String LLVMCodeGenerator::getCastReference(const IRNode& cast, std::ostream& out
 String LLVMCodeGenerator::getConstructReference(const IRNode& construct, std::ostream& out) {
     ASSERT(construct.fKind == IRNode::Kind::CONSTRUCT);
     ASSERT(construct.fChildren.size() >= 1);
-    const Class* cl = fCompiler->getClass(construct.fType);
+    Class* cl = fCompiler->getClass(construct.fType);
     ASSERT(cl);
     String type = this->llvmType(construct.fType);
     if (cl->isValue()) {
@@ -1535,8 +1541,9 @@ String LLVMCodeGenerator::getVirtualMethodReference(const String& target, const 
     out << "    ; get reference to " << m.signature() << "\n";
     const ClassConstant& cc = this->getClassConstant(m.fOwner);
     int index = -1;
-    for (int i = 0; i < m.fOwner.fVirtualMethods.size(); ++i) {
-        if (m.fOwner.fVirtualMethods[i] == &m) {
+    const std::vector<const Method*>& vtable = fCompiler->getVTable(m.fOwner);
+    for (int i = 0; i < vtable.size(); ++i) {
+        if (vtable[i] == &m) {
             index = i;
             break;
         }
@@ -1612,13 +1619,14 @@ String LLVMCodeGenerator::getInterfaceMethodReference(const String& target, cons
 
     this->createBlock(success, out);
     int index = -1;
-    for (int i = 0; i < m.fOwner.fVirtualMethods.size(); ++i) {
-        if (m.fOwner.fVirtualMethods[i] == &m) {
+    const std::vector<const Method*>& vtable = fCompiler->getVTable(m.fOwner);
+    for (int i = 0; i < vtable.size(); ++i) {
+        if (vtable[i] == &m) {
             index = i;
             break;
         }
     }
-    index -= fCompiler->getClass(Type::Object())->fVirtualMethods.size();
+    index -= fCompiler->getVTable(*fCompiler->getClass(Type::Object())).size();
     ASSERT(index != -1);
     String methodPtrPtr = this->nextVar();
     out << "    " << methodPtrPtr << " = getelementptr inbounds %$itable, %$itable* " <<

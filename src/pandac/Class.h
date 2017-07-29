@@ -109,11 +109,14 @@ struct Class : public Symbol {
 
     Type fType;
 
+    // if true, this class was merely imported and should not be compiled
+    bool fExternal = false;
+
+private:
     // virtual method table (vtable)
     std::vector<const Method*> fVirtualMethods;
 
-    // if true, this class was merely imported and should not be compiled
-    bool fExternal = false;
+    friend class Compiler;
 
     typedef Symbol INHERITED;
 };
