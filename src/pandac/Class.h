@@ -112,5 +112,8 @@ struct Class : public Symbol {
     // virtual method table (vtable)
     std::vector<const Method*> fVirtualMethods;
 
+    // if true, this class was merely imported and should not be compiled
+    bool fExternal = false;
+
     typedef Symbol INHERITED;
 };

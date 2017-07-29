@@ -10,8 +10,6 @@ static constexpr int POINTER_SIZE = 8;
 static constexpr int OBJECT_FIELD_COUNT = 2;
 #define INT_T "i64"
 #define SIZE_T "i64"
-#define SHARED_LINKAGE "weak_odr"
-
 
 class AutoLoopDescriptor {
 public:
@@ -31,7 +29,11 @@ private:
 };
 
 LLVMCodeGenerator::LLVMCodeGenerator(std::ostream* out)
-: fOut(*out) {
+: fOut(*out) {}
+
+void LLVMCodeGenerator::start(Compiler* compiler) {
+    fCompiler = compiler;
+
     fOut << "target datalayout = \"e-p:64:64:64-i1:8:8-i8:8:8-i16:16:16-i32:32:32-i64:64:64-"
             "f32:32:32-f64:64:64-v64:64:64-v128:128:128-a0:0:64-s0:64:64-f80:128:128-"
             "n8:16:32:64-S128\"\n";
@@ -43,19 +45,12 @@ LLVMCodeGenerator::LLVMCodeGenerator(std::ostream* out)
 #else
     unsupported operating system
 #endif
-    fOut << "%$itable = type { %panda$core$Class*, %$itable*, [0 x i8*] }\n";
+    fOut << "%$itable = type { " << this->llvmType(Type::Class()) << ", %$itable*, [0 x i8*] }\n";
 
+    fOut << "declare void @llvm.trap() noreturn nounwind\n";
     fOut << "declare i8* @malloc(" SIZE_T ")\n";
     fOut << "declare i8* @realloc(i8*, " SIZE_T ")\n";
     fOut << "declare void @free(i8*)\n";
-
-    // temporary
-    fMethods << "declare i64 @printf(i8*, ...)\n";
-    fMethods << "@fmt = private constant [4 x i8] [i8 37, i8 112, i8 10, i8 0]\n";
-    fMethods << "define fastcc void @debugPrint(i64 %value) {\n";
-    fMethods << "    call i64 (i8*, ...) @printf(i8* bitcast ([4 x i8]* @fmt to i8*), i64 %value)\n";
-    fMethods << "    ret void\n";
-    fMethods << "}\n";
 }
 
 size_t LLVMCodeGenerator::fieldSize(const Type& type) {
@@ -136,6 +131,9 @@ static bool is_virtual(const Method& method) {
 }
 
 void LLVMCodeGenerator::getMethodTableEntry(const Method& m, String* outName, String* outType) {
+    if (m.fOwner.fExternal) {
+        this->writeMethodDeclaration(m);
+    }
     *outName = this->methodName(m);
     Type effective = m.inheritedTypeWithSelf(*fCompiler);
     if (this->needsStructIndirection(m)) {
@@ -163,7 +161,7 @@ String LLVMCodeGenerator::getITable(const Class& cl) {
         String type = "{ " + this->llvmType(Type::Class()) + ", %$itable*, [" +
                 std::to_string(methods.size()) + " x i8*] }";
         String result;
-        result += name + " = " + SHARED_LINKAGE + " constant ";
+        result += name + " = constant ";
         result += type + " { " + this->llvmType(Type::Class()) + " bitcast(" + intfCC.fType +
                 "* " + intfCC.fName + " to " + this->llvmType(Type::Class()) + "), " + previous +
                 ", [" + std::to_string(methods.size()) + " x i8*][";
@@ -195,6 +193,10 @@ LLVMCodeGenerator::ClassConstant& LLVMCodeGenerator::getClassConstant(const Clas
                 "{ i8*, " INT_T ", %$itable*, [" + std::to_string(cl.fVirtualMethods.size()) +
                 " x i8*] }");
         fClassConstants[cl.fName] = cc;
+        if (cl.fExternal) {
+            fTypeDeclarations << cc.fName + " = external global " + cc.fType + "\n";
+            return fClassConstants[cl.fName];
+        }
         String super;
         if (cl.fRawSuper != Type::Void()) {
             const ClassConstant& superCC = this->getClassConstant(
@@ -244,6 +246,10 @@ LLVMCodeGenerator::ClassConstant& LLVMCodeGenerator::getWrapperClassConstant(con
                 "{ i8*, " INT_T ", %$itable*, [" + std::to_string(value.fVirtualMethods.size()) +
                 " x i8*] }");
         fClassConstants[name] = cc;
+        if (cl.fExternal) {
+            fTypeDeclarations << cc.fName + " = external global " + cc.fType + "\n";
+            return fClassConstants[cl.fName];
+        }
         const ClassConstant& superCC = this->getClassConstant(*fCompiler->getClass(cl.fRawSuper));
         String super = "bitcast(" + superCC.fType + "* " + superCC.fName + " to i8*)";
         String code = cc.fName + " = constant " + cc.fType + " { i8* " + super +
@@ -275,7 +281,8 @@ String LLVMCodeGenerator::createWrapperShim(const Method& m, std::ostream& out) 
     fTmpVars = 1;
     ASSERT(is_instance(m));
     String result = this->methodName(m) + "$wrappershim";
-    out << "define fastcc " << this->llvmType(m.fReturnType) << " " << result << "(";
+    out << "define ccc " << this->llvmType(m.fReturnType) << " " <<
+            result << "(";
     out << this->llvmType(Type::Object()) << " %self";
     for (const auto& p : m.fParameters) {
         out << ", " << this->llvmType(p.fType) << " %" << p.fName;
@@ -295,7 +302,7 @@ String LLVMCodeGenerator::createWrapperShim(const Method& m, std::ostream& out) 
     else {
         returnValue = "void";
     }
-    out << "call " << this->callingConvention(m) << " " << this->llvmType(m.fReturnType) << " " <<
+    out << "call " << this->callingConvention(m) << this->llvmType(m.fReturnType) << " " <<
             this->methodName(m) << "(" << unwrapped;
     for (const auto& p : m.fParameters) {
         out << ", " << this->llvmType(p.fType) << " %" << p.fName;
@@ -307,36 +314,59 @@ String LLVMCodeGenerator::createWrapperShim(const Method& m, std::ostream& out) 
     return result;
 }
 
-void LLVMCodeGenerator::writeType(const Type& type) {
-    if (fWrittenTypes.find(type.fName) == fWrittenTypes.end()) {
-        fWrittenTypes.insert(type.fName);
-        Class* cl = fCompiler->getClass(type);
-        ASSERT(cl);
-        if (cl->fName == "panda.core.Pointer") {
-            return;
-        }
-        this->getClassConstant(*cl);
-        std::vector<const Field*> fields = fCompiler->getInstanceFields(*cl);
-        std::vector<String> types;
-        for (const Field* f : fields) {
-            types.push_back(this->llvmType(f->fType));
-        }
-        fTypeDeclarations << "\n";
-        fTypeDeclarations << this->llvmTypeName(type) << " = type { ";
-        const char* separator = "";
-        for (const String& t : types) {
-            fTypeDeclarations << separator << t;
-            separator = ", ";
-        }
-        if (type == Type::Class()) {
-            fTypeDeclarations << ", %$itable*";
-        }
-        fTypeDeclarations << " }\n";
-        for (const Field* f : cl->fFields) {
-            if (f->fAnnotations.isClass()) {
-                fTypeDeclarations << this->fieldName(*f) << " = global " <<
-                        this->defaultValue(f->fType) << "\n";
+bool is_constant_number(const IRNode& expr) {
+    return expr.fKind == IRNode::Kind::CONSTRUCT && expr.fType.isNumber() &&
+            expr.fChildren[0].fChildren[1].fKind == IRNode::Kind::INT;
+}
+
+void LLVMCodeGenerator::writeClass(const Class& cl) {
+    if (cl.fName == "panda.core.Pointer") {
+        return;
+    }
+    if (fWrittenClasses.find(&cl) != fWrittenClasses.end()) {
+        return;
+    }
+    fWrittenClasses.insert(&cl);
+    this->getClassConstant(cl);
+    if (cl.isValue()) {
+        this->getWrapperClassConstant(cl);
+    }
+    const Type& type = cl.fType;
+    std::vector<const Field*> fields = fCompiler->getInstanceFields(cl);
+    std::vector<String> types;
+    for (const Field* f : fields) {
+        types.push_back(this->llvmType(f->fType));
+    }
+    fTypeDeclarations << "\n";
+    fTypeDeclarations << this->llvmTypeName(type) << " = type { ";
+    const char* separator = "";
+    for (const String& t : types) {
+        fTypeDeclarations << separator << t;
+        separator = ", ";
+    }
+    if (type == Type::Class()) {
+        fTypeDeclarations << ", %$itable*";
+    }
+    fTypeDeclarations << " }\n";
+    for (const Field* f : cl.fFields) {
+        if (f->fAnnotations.isClass()) {
+            fTypeDeclarations << this->fieldName(*f) << " = ";
+            if (cl.fExternal) {
+                fTypeDeclarations << "external ";
             }
+            fTypeDeclarations << "global " << this->llvmType(f->fType);
+            if (!cl.fExternal) {
+                if (f->fValue && is_constant_number(*f->fValue)) {
+                    fTypeDeclarations << " { " <<
+                            this->llvmType(f->fValue->fChildren[0].fChildren[1].fType) << " " <<
+                            std::to_string(f->fValue->fChildren[0].fChildren[1].fValue.fInt) <<
+                            " }";
+                }
+                else {
+                    fTypeDeclarations << " " << this->defaultValue(f->fType);
+                }
+            }
+            fTypeDeclarations << "\n";
         }
     }
 }
@@ -354,8 +384,8 @@ void LLVMCodeGenerator::writeWrapperType(const Type& type) {
             types.push_back(this->llvmType(f->fType));
         }
         fTypeDeclarations << "\n";
-        fTypeDeclarations << this->llvmTypeName(type) <<
-                "$wrapper = type { %panda$core$Class*, i32";
+        fTypeDeclarations << this->llvmTypeName(type) << "$wrapper = type { " <<
+                this->llvmType(Type::Class()) << ", i32";
         for (const String& t : types) {
             fTypeDeclarations << ", " << t;
         }
@@ -402,8 +432,8 @@ String LLVMCodeGenerator::llvmType(const Type& type) {
         case Type::Category::BUILTIN_FLOAT: return "f" + std::to_string(type.fSize);
         case Type::Category::NULL_LITERAL: return "i8*";
         case Type::Category::CLASS: {
-            this->writeType(type);
             const Class* cl = fCompiler->getClass(type);
+            this->writeClass(*cl);
             ASSERT(cl);
             if (cl->isValue()) {
                 return this->llvmTypeName(type);
@@ -682,7 +712,7 @@ String LLVMCodeGenerator::getIdentityReference(const IRNode& left, const IRNode&
     String leftRef = this->getTypedReference(left, out);
     String rightRef = this->getReference(left, out);
     String raw = this->nextVar();
-    out << "    icmp eq " << leftRef << ", " << rightRef << "\n";
+    out << "    " << raw << " = icmp eq " << leftRef << ", " << rightRef << "\n";
     String result = this->nextVar();
     out << "    " << result << " = insertvalue %panda$core$Bit { i1 undef }, i1 " << raw << ", 0\n";
     return result;
@@ -749,6 +779,9 @@ String LLVMCodeGenerator::getMethodReference(const String& target, const Method&
         }
     }
     else {
+        if (m.fOwner.fExternal) {
+            this->writeMethodDeclaration(m);
+        }
         return this->methodName(m);
     }
 }
@@ -865,11 +898,11 @@ String LLVMCodeGenerator::getCallReference(const IRNode& call, std::ostream& out
     String resultType = this->llvmType(call.fType);
     bool indirect = this->needsStructIndirection(*m);
     if (indirect) {
-        out << "    call " << this->callingConvention(*m) << " void";
+        out << "    call " << this->callingConvention(*m) << "void";
     }
     else {
         result = this->nextVar();
-        out << "    " << result << " = call " << this->callingConvention(*m) << " " << resultType;
+        out << "    " << result << " = call " << this->callingConvention(*m) << resultType;
     }
     out << " " << methodRef << "(";
     const char* separator = "";
@@ -895,13 +928,13 @@ String LLVMCodeGenerator::getCallReference(const IRNode& call, std::ostream& out
 
 String LLVMCodeGenerator::wrapValue(const String& value, const Type& srcType, const Type& dstType,
         std::ostream& out) {
-    out << "; wrap value\n";
+    out << "    ; wrap value\n";
     const Class* src = fCompiler->getClass(srcType);
     std::vector<const Field*> fields = fCompiler->getInstanceFields(*src);
     ASSERT(src);
     if (srcType.fCategory == Type::Category::NULLABLE) {
         // casting nullable value to nullable wrapper, need to special-case null
-        out << "; handle nullable-to-nullable wrap\n";
+        out << "    ; handle nullable-to-nullable wrap\n";
         String testStart = fCurrentBlock;
         String isNonNull = this->nextVar();
         out << "    " << isNonNull << " = extractvalue " << this->llvmNullableType(srcType) <<
@@ -960,12 +993,12 @@ String LLVMCodeGenerator::wrapValue(const String& value, const Type& srcType, co
 
 String LLVMCodeGenerator::unwrapValue(const String& value, const Type& srcType, const Type& dstType,
         std::ostream& out) {
-    out << "; unwrap value\n";
+    out << "    ; unwrap value\n";
     const Class* target = fCompiler->getClass(dstType);
     std::vector<const Field*> fields = fCompiler->getInstanceFields(*target);
     if (dstType.fCategory == Type::Category::NULLABLE) {
         // casting nullable wrapper to nullable value, need to special-case null
-        out << "; handle nullable-to-nullable unwrap\n";
+        out << "    ; handle nullable-to-nullable unwrap\n";
         String testStart = fCurrentBlock;
         String isNonNull = this->nextVar();
         out << "    " << isNonNull << " = icmp ne " << this->llvmType(srcType) <<
@@ -1025,7 +1058,7 @@ String LLVMCodeGenerator::unwrapValue(const String& value, const Type& srcType, 
 
 String LLVMCodeGenerator::toNullableValue(const String& value, const Type& srcType,
         const Type& dstType, std::ostream& out) {
-    out << "; to nullable\n";
+    out << "    ; to nullable\n";
     const Class* cl = fCompiler->getClass(srcType);
     ASSERT(cl);
     String nullableType = this->llvmNullableType(dstType);
@@ -1055,7 +1088,7 @@ String LLVMCodeGenerator::toNullableValue(const String& value, const Type& srcTy
 
 String LLVMCodeGenerator::toNonNullableValue(const String& value, const Type& srcType,
         const Type& dstType, std::ostream& out) {
-    out << "; to nonnullable\n";
+    out << "    ; to nonnullable\n";
     const Class* cl = fCompiler->getClass(dstType);
     ASSERT(cl);
     String nullableType = this->llvmNullableType(srcType);
@@ -1652,8 +1685,8 @@ void LLVMCodeGenerator::writeCall(const IRNode& stmt, const String& target, std:
     if (stmt.fType != Type::Void()) {
         this->nextVar();
     }
-    out << "    call " << this->callingConvention(m->fMethod) << " " <<
-            this->llvmType(stmt.fType) << " " << methodRef << "(";
+    out << "    call " << this->callingConvention(m->fMethod) << this->llvmType(stmt.fType) <<
+            " " << methodRef << "(";
     const char* separator = "";
     if (this->needsStructIndirection(m->fMethod)) {
         String tmpType = this->llvmType(m->fMethod.fReturnType);
@@ -1915,7 +1948,8 @@ void LLVMCodeGenerator::writeRangeFor(const IRNode& f, std::ostream& out) {
             loopEnd << "\n";
     this->createBlock(loopStart, out);
     String indexValue = this->nextVar();
-    out << "    load " << numberType << ", " << numberType << "* " << indexValuePtr << "\n";
+    out << "    " << indexValue << " = load " << numberType << ", " << numberType << "* " <<
+            indexValuePtr << "\n";
     this->writeStatement(block, out);
     if (!ends_with_branch(block)) {
         out << "    br label %" << loopTest << "\n";
@@ -1923,7 +1957,7 @@ void LLVMCodeGenerator::writeRangeFor(const IRNode& f, std::ostream& out) {
     this->createBlock(loopTest, out);
     String loopInc = this->nextLabel();
     // beginning of loop test, determine direction
-    out << "; direction test\n";
+    out << "    ; direction test\n";
     String forwardLabel = this->nextLabel();
     String backwardLabel = this->nextLabel();
     out << "    br i1 " << direction << ", label %" << forwardLabel << ", label %" <<
@@ -1932,7 +1966,7 @@ void LLVMCodeGenerator::writeRangeFor(const IRNode& f, std::ostream& out) {
     // forward loop; perform the test by subtracting index from end and then comparing to step, to
     // avoid overflows near the maximum value
     this->createBlock(forwardLabel, out);
-    out << "; forward test\n";
+    out << "    ; forward test\n";
     String forwardDelta = this->nextVar();
     out << "    " << forwardDelta << " = sub " << numberType << " " << end << ", " << indexValue <<
             "\n";
@@ -1945,7 +1979,7 @@ void LLVMCodeGenerator::writeRangeFor(const IRNode& f, std::ostream& out) {
 
     // forward inclusive test
     this->createBlock(forwardInclusiveLabel, out);
-    out << "; forward inclusive\n";
+    out << "    ; forward inclusive\n";
     String forwardInclusiveTest = this->nextVar();
     // always use unsigned comparison to avoid overflow; we know both the delta and the step are
     // the same sign
@@ -1957,7 +1991,7 @@ void LLVMCodeGenerator::writeRangeFor(const IRNode& f, std::ostream& out) {
 
     // forward exclusive test
     String forwardExclusiveTest = this->nextVar();
-    out << "; forward exclusive\n";
+    out << "    ; forward exclusive\n";
     out << "    " << forwardExclusiveTest << " = icmp ugt " << numberType << " " << forwardDelta <<
             ", " << step << "\n";
     out << "    br i1 " << forwardExclusiveTest << ", label %" << loopInc << ", label %" <<
@@ -1966,7 +2000,7 @@ void LLVMCodeGenerator::writeRangeFor(const IRNode& f, std::ostream& out) {
     // backward loop; perform the test by subtracting end from index and then comparing to -step, to
     // avoid overflows near the minimum value
     this->createBlock(backwardLabel, out);
-    out << "; backward test\n";
+    out << "    ; backward test\n";
     String backwardDelta = this->nextVar();
     out << "    " << backwardDelta << " = sub " << numberType << " " << indexValue << ", " << end <<
             "\n";
@@ -1981,7 +2015,7 @@ void LLVMCodeGenerator::writeRangeFor(const IRNode& f, std::ostream& out) {
 
     // backward inclusive test
     this->createBlock(backwardInclusiveLabel, out);
-    out << "; backward inclusive\n";
+    out << "    ; backward inclusive\n";
     String backwardInclusiveTest = this->nextVar();
     out << "    " << backwardInclusiveTest << " = icmp uge " << numberType << " " <<
             backwardDelta << ", " << negStep << "\n";
@@ -1991,7 +2025,7 @@ void LLVMCodeGenerator::writeRangeFor(const IRNode& f, std::ostream& out) {
 
     // backward exclusive test
     String backwardExclusiveTest = this->nextVar();
-    out << "; backward exclusive\n";
+    out << "    ; backward exclusive\n";
     out << "    " << backwardExclusiveTest << " = icmp ugt " << numberType <<
             " " << backwardDelta << ", " << negStep << "\n";
     out << "    br i1 " << backwardExclusiveTest << ", label %" << loopInc << ", label %" <<
@@ -2113,6 +2147,9 @@ void LLVMCodeGenerator::writeAssert(const IRNode& a, std::ostream& out) {
         msg = this->getReference(a.fChildren[1], out);
     }
     out << "    call void ";
+    for (const auto& m : fCompiler->getClass(Type::Panda())->fMethods) {
+        this->writeMethodDeclaration(*m);
+    }
     if (a.fChildren.size() == 1) {
         out << "@panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64";
     }
@@ -2124,6 +2161,7 @@ void LLVMCodeGenerator::writeAssert(const IRNode& a, std::ostream& out) {
         out << ", %panda$core$String* " << msg;
     }
     out << ")\n";
+    out << "    call void @llvm.trap()\n";
     out << "    unreachable\n";
     this->createBlock(ifTrue, out);
 }
@@ -2221,32 +2259,32 @@ String LLVMCodeGenerator::varName(const Variable& var) {
 }
 
 String LLVMCodeGenerator::defaultValue(const Type& type) {
-    String result = this->llvmType(type) + " ";
     if (type.isBuiltinNumber() || type == Type::BuiltinBit()) {
-        result += "0";
+        return "0";
     }
     else {
         Class* cl = fCompiler->getClass(type);
         ASSERT(cl);
         if (cl->isValue()) {
-            result += "{";
+            String result = "{";
             const char* separator = " ";
             for (const Field* f : fCompiler->getInstanceFields(*cl)) {
                 result += separator;
+                result += this->llvmType(f->fType);
+                result += " ";
                 result += this->defaultValue(f->fType);
                 separator = ", ";
             }
             result += " }";
+            return result;
         }
         else {
-            result = "null";
+            return "null";
         }
     }
-    return result;
 }
 
-void LLVMCodeGenerator::writeMethodDeclaration(const Method& method, Compiler& compiler) {
-    fCompiler = &compiler;
+void LLVMCodeGenerator::writeMethodDeclaration(const Method& method) {
     if (method.fOwner.fName == "panda.core.Pointer") {
         return;
     }
@@ -2255,8 +2293,13 @@ void LLVMCodeGenerator::writeMethodDeclaration(const Method& method, Compiler& c
         return;
     }
 
-    std::ostream& out = fMethods;
-    out << "\ndeclare ccc ";
+    if (fDeclaredMethods.find(&method) != fDeclaredMethods.end()) {
+        return;
+    }
+    fDeclaredMethods.insert(&method);
+
+    std::ostream& out = fMethodDeclarations;
+    out << "\ndeclare " << this->callingConvention(method);
     if (this->needsStructIndirection(method)) {
         out << "void";
     }
@@ -2297,7 +2340,7 @@ void LLVMCodeGenerator::createMethodShim(const Method& raw, const Type& effectiv
     ASSERT(is_instance(raw));
     String result = this->methodName(raw) + "$shim";
     *outType = this->llvmType(effective.fSubtypes.back());
-    out << "define fastcc " << *outType << " " << result << "(";
+    out << "define " << *outType << " " << result << "(";
     String selfType = this->selfType(raw);
     out << selfType << " %self";
     *outType += "(";
@@ -2330,7 +2373,7 @@ void LLVMCodeGenerator::createMethodShim(const Method& raw, const Type& effectiv
     else {
         returnValue = "void";
     }
-    out << "call " << this->callingConvention(raw) << " " << this->llvmType(raw.fReturnType) <<
+    out << "call " << this->callingConvention(raw) << this->llvmType(raw.fReturnType) <<
             " " << this->methodName(raw) << "(" << selfType << " %self";
     for (int i = 0; i < raw.fParameters.size(); ++i) {
         out << ", " << this->llvmType(raw.fParameters[i].fType) << " " << casts[i];
@@ -2348,15 +2391,14 @@ void LLVMCodeGenerator::createMethodShim(const Method& raw, const Type& effectiv
     fMethodShims[&raw] = std::make_pair(*outName, *outType);
 }
 
-void LLVMCodeGenerator::writeMethod(const Method& method, const IRNode& body, Compiler& compiler) {
+void LLVMCodeGenerator::writeMethod(const Method& method, const IRNode& body) {
     fCurrentMethod = &method;
     fCurrentClass = &method.fOwner;
-    fCompiler = &compiler;
     fTmpVars = 1;
     fCurrentBlock = "0";
     std::ostream& out = fMethods;
     const Type actualType = method.inheritedType(*fCompiler);
-    out << "\ndefine " << this->callingConvention(method) << " " <<
+    out << "\ndefine " << this->callingConvention(method) <<
             this->llvmType(actualType.fSubtypes.back()) << " " << this->methodName(method) << "(";
     const char* separator = "";
     if (is_instance(method)) {
@@ -2392,15 +2434,13 @@ void LLVMCodeGenerator::writeMethod(const Method& method, const IRNode& body, Co
         this->writeStatement(s, bodyCode);
     }
     out << fMethodHeader.str();
-    if (method.fName == "main") {
-        out << "    call fastcc void @$initGlobals()\n";
-    }
     out << bodyCode.str();
     if (!ends_with_branch(body)) {
         if (method.fReturnType == Type::Void()) {
             out << "    ret void\n";
         }
         else {
+            out << "    call void @llvm.trap()\n";
             out << "    unreachable\n";
         }
     }
@@ -2412,22 +2452,4 @@ void LLVMCodeGenerator::writeMethod(const Method& method, const IRNode& body, Co
 
 void LLVMCodeGenerator::addGlobalField(Field* f) {
     fFieldInitializationOrder.push_back(f);
-}
-
-void LLVMCodeGenerator::writeInitGlobals(std::ostream& out) {
-    fTmpVars = 1;
-    fMethodHeader.str("");
-    std::stringstream code;
-    for (const auto f : fFieldInitializationOrder) {
-        if (f->fAnnotations.isClass()) {
-            String value = this->getTypedReference(*f->fValue, code);
-            code << "    store " << value << ", " << this->llvmType(f->fType) << "* " <<
-                    this->fieldName(*f) << "\n";
-        }
-    }
-    out << "define fastcc void @$initGlobals() {\n";
-    out << fMethodHeader.str();
-    out << code.str();
-    out << "    ret void\n";
-    out << "}\n";
 }

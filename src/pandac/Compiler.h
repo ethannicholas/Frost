@@ -332,6 +332,8 @@ private:
 
     uint64_t fReusedValues = 0;
 
+    bool fFinishedProcessingSources = false;
+
     bool fTypesResolved = false;
 
     bool fFieldValuesProcessed = false;

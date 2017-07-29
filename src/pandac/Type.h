@@ -308,6 +308,11 @@ struct Type : public Symbol {
         return result;
     }
 
+    static Type& Panda() {
+        static Type result = Type(Position(), Category::CLASS, "panda.core.Panda");
+        return result;
+    }
+
     static Type& Void() {
         static Type result = Type();
         return result;

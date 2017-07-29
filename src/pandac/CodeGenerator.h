@@ -12,9 +12,13 @@ class Compiler;
 
 class CodeGenerator {
 public:
-    virtual void writeMethodDeclaration(const Method& method, Compiler& compiler) = 0;
+    virtual void start(Compiler* compiler) = 0;
 
-    virtual void writeMethod(const Method& method, const IRNode& body, Compiler& compiler) = 0;
+    virtual void writeClass(const Class& cl) = 0;
+
+    virtual void writeMethodDeclaration(const Method& method) = 0;
+
+    virtual void writeMethod(const Method& method, const IRNode& body) = 0;
 
     virtual void addGlobalField(Field* f) = 0;
 

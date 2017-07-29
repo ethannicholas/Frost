@@ -4,7 +4,7 @@ uses panda.core.Pointer
 
 @abstract
 class InputStream {
-    @private
+-*    @private
     class LineIterator (Iterator<String>) {
         def input:InputStream
         var _next:String?
@@ -30,7 +30,7 @@ class InputStream {
         method readNext() {
             _next := input.readLine()
         }
-    }
+    }*-
 
     @abstract
     method read():Int8?
@@ -116,6 +116,6 @@ class InputStream {
     }
 
     function lines():Iterator<String> {
-        return LineIterator(self)
+--        return LineIterator(self)
     }
 }

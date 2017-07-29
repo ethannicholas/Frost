@@ -14,8 +14,12 @@
 #define GCC_PATH "/usr/bin/gcc"
 #define PANDA_HOME String("../src/")
 
-void make_executable(const char* llvm, const char* dest) {
-    const char* optimized = "/tmp/output.ll.opt";
+enum class Format {
+    EXECUTABLE,
+    OBJECT
+};
+
+void optimize(const char* llvm, const char* dest) {
     pid_t pid = fork();
     if (pid < 0) {
         perror("fork failed");
@@ -30,7 +34,7 @@ void make_executable(const char* llvm, const char* dest) {
         args[3] = (char*) "-S";
         args[4] = (char*) llvm;
         args[5] = (char*) "-o";
-        args[6] = (char*) optimized;
+        args[6] = (char*) dest;
         args[7] = nullptr;
         execv(OPT_PATH, args);
         perror("opt exec failed");
@@ -40,13 +44,14 @@ void make_executable(const char* llvm, const char* dest) {
     // parent
     int status;
     waitpid(pid, &status, 0);
-    if (status) {
+    if (WEXITSTATUS(status)) {
         printf("opt failed with exit code %d\n", WEXITSTATUS(status));
         exit(1);
     }
+}
 
-    const char* assembly = "/tmp/output.s";
-    pid = fork();
+void llc(const char* llvm, const char* dest) {
+    int pid = fork();
     if (pid < 0) {
         perror("fork failed");
         exit(1);
@@ -57,7 +62,7 @@ void make_executable(const char* llvm, const char* dest) {
         args[0] = (char*) LLC_PATH;
         args[1] = (char*) llvm;
         args[2] = (char*) "-o";
-        args[3] = (char*) assembly;
+        args[3] = (char*) dest;
         args[4] = nullptr;
         execv(LLC_PATH, args);
         perror("llc exec failed");
@@ -65,13 +70,21 @@ void make_executable(const char* llvm, const char* dest) {
         exit(1);
     }
     // parent
+    int status;
     waitpid(pid, &status, 0);
-    if (status) {
+    if (WEXITSTATUS(status)) {
         printf("llc failed with exit code %d\n", WEXITSTATUS(status));
         exit(1);
     }
+}
 
-    pid = fork();
+void make_executable(const char* llvm, const char* dest) {
+    const char* optimized = "/tmp/output.ll.opt";
+    optimize(llvm, optimized);
+    const char* assembly = "/tmp/output.s";
+    llc(optimized, assembly);
+
+    int pid = fork();
     if (pid < 0) {
         perror("fork failed");
         exit(1);
@@ -92,8 +105,44 @@ void make_executable(const char* llvm, const char* dest) {
         exit(1);
     }
     // parent
+    int status;
     waitpid(pid, &status, 0);
-    if (status) {
+    if (WEXITSTATUS(status)) {
+        printf("gcc failed with exit code %d\n", status);
+        exit(1);
+    }
+}
+
+void make_object(const char* llvm, const char* dest) {
+    const char* optimized = "/tmp/output.ll.opt";
+    optimize(llvm, optimized);
+    const char* assembly = "/tmp/output.s";
+    llc(optimized, assembly);
+
+    int pid = fork();
+    if (pid < 0) {
+        perror("fork failed");
+        exit(1);
+    }
+    if (!pid) {
+    printf("creating object %s\n", dest);
+        // child
+        char* args[7];
+        args[0] = (char*) GCC_PATH;
+        args[1] = (char*) assembly;
+        args[2] = (char*) "-m64";
+        args[3] = (char*) "-c";
+        args[4] = (char*) "-o";
+        args[5] = (char*) dest;
+        args[6] = nullptr;
+        execv(GCC_PATH, args);
+        perror("gcc exec failed");
+        exit(1);
+    }
+    // parent
+    int status;
+    waitpid(pid, &status, 0);
+    if (WEXITSTATUS(status)) {
         printf("gcc failed with exit code %d\n", status);
         exit(1);
     }
@@ -105,16 +154,27 @@ void reportErrors(ErrorReporter& errors) {
 
 int main(int argc, char** argv) {
     std::vector<String> sources;
-    sources.push_back(PANDA_HOME + "panda/core/Panda.panda");
-    sources.push_back(PANDA_HOME + "panda/core/System.panda");
-    sources.push_back(PANDA_HOME + "panda/io/FileInputStream.panda");
-    sources.push_back(PANDA_HOME + "panda/io/FileOutputStream.panda");
     String dest;
+    Format format = Format::EXECUTABLE;
     for (int i = 1; i < argc; i++) {
         if (!strcmp(argv[i], "-o")) {
             ++i;
             ASSERT(i < argc);
             dest = argv[i];
+        }
+        else if (!strcmp(argv[i], "-f")) {
+            ++i;
+            ASSERT(i < argc);
+            if (!strcmp(argv[i], "exe")) {
+                format = Format::EXECUTABLE;
+            }
+            else if (!strcmp(argv[i], "o")) {
+                format = Format::OBJECT;
+            }
+            else {
+                printf("unsupported output format '%s'\n", argv[1]);
+                exit(1);
+            }
         }
         else {
             sources.push_back(argv[i]);
@@ -146,5 +206,12 @@ int main(int argc, char** argv) {
             exit(1);
         }
     }
-    make_executable(llvm, dest.c_str());
+    switch (format) {
+        case Format::EXECUTABLE:
+            make_executable(llvm, dest.c_str());
+            break;
+        case Format::OBJECT:
+            make_object(llvm, dest.c_str());
+            break;
+    }
 }

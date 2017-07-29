@@ -58,7 +58,7 @@ void panda$io$Console$read$R$panda$core$Char8$Q(NullableChar* result) {
     int read = getchar();
     if (read != EOF) {
         result->value = read;
-        result->nonnull = -1;
+        result->nonnull = 1;
     }
     else {
         result->nonnull = 0;

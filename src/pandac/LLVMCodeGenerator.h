@@ -11,9 +11,13 @@ class LLVMCodeGenerator : public CodeGenerator {
 public:
     LLVMCodeGenerator(std::ostream* out);
 
-    void writeMethodDeclaration(const Method& method, Compiler& compiler) override;
+    void start(Compiler* compiler) override;
 
-    void writeMethod(const Method& method, const IRNode& body, Compiler& compiler) override;
+    void writeClass(const Class& cl) override;
+
+    void writeMethodDeclaration(const Method& method) override;
+
+    void writeMethod(const Method& method, const IRNode& body) override;
 
     void addGlobalField(Field* f) override;
 
@@ -21,7 +25,7 @@ public:
         fOut << fTypeDeclarations.str();
         fOut << fStrings.str();
         fOut << fShims.str();
-        this->writeInitGlobals(fOut);
+        fOut << fMethodDeclarations.str();
         fOut << fMethods.str();
     }
 
@@ -57,12 +61,12 @@ private:
 
     String callingConvention(const Method& m) {
         if (m.fMethodKind == Method::Kind::INIT) {
-            return "fastcc";
+            return "fastcc ";
         }
         if (m.fAnnotations.isFinal() && !m.fAnnotations.isExternal()) {
-            return "fastcc";
+            return "fastcc ";
         }
-        return "ccc";
+        return "";
     }
 
     /**
@@ -92,8 +96,6 @@ private:
         ASSERT(!result || (!m.fAnnotations.isOverride() && m.fAnnotations.isFinal()));
         return result;
     }
-
-    void writeType(const Type& type);
 
     void writeWrapperType(const Type& type);
 
@@ -255,8 +257,6 @@ private:
 
     const LoopDescriptor& findLoop(String name);
 
-    void writeInitGlobals(std::ostream& out);
-
     int fTmpVars = 1;
 
     int fLabels = 0;
@@ -267,7 +267,7 @@ private:
 
     std::stringstream fMethodHeader;
 
-    std::unordered_set<String> fWrittenTypes;
+    std::unordered_set<const Class*> fWrittenClasses;
 
     std::unordered_set<String> fWrittenWrappers;
 
@@ -278,6 +278,8 @@ private:
     std::stringstream fStrings;
 
     std::stringstream fShims;
+
+    std::stringstream fMethodDeclarations;
 
     std::stringstream fMethods;
 
@@ -305,6 +307,8 @@ private:
     std::vector<LoopDescriptor> fLoops;
 
     std::vector<const Field*> fFieldInitializationOrder;
+
+    std::unordered_set<const Method*> fDeclaredMethods;
 
     friend class AutoLoopDescriptor;
 };

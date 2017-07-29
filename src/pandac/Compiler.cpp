@@ -167,6 +167,9 @@ Type Compiler::remapType(const Type& context, const Type& raw) {
 
 void Compiler::addClass(std::unique_ptr<Class> cl) {
     Class* ptr = cl.get();
+    if (fFinishedProcessingSources) {
+        ptr->fExternal = true;
+    }
     fClassMap[cl->fName] = ptr;
     fClasses.push_back(std::move(cl));
     if (fTypesResolved) {
@@ -2870,7 +2873,7 @@ void Compiler::compile(const Method& method) {
     }
     if (method.fBody.fKind == ASTNode::Kind::VOID) {
         if (fErrors.fErrorCount == 0) {
-            fCodeGenerator.writeMethodDeclaration(method, *this);
+            fCodeGenerator.writeMethodDeclaration(method);
         }
         return;
     }
@@ -2914,7 +2917,7 @@ void Compiler::compile(const Method& method) {
         }
     }
     if (fErrors.fErrorCount == 0) {
-        fCodeGenerator.writeMethod(method, block, *this);
+        fCodeGenerator.writeMethod(method, block);
     }
     fSymbolTable = nullptr;
 }
@@ -3132,9 +3135,11 @@ bool Compiler::processFieldValues() {
 }
 
 void Compiler::compile() {
+    fFinishedProcessingSources = true;
     this->resolveTypes();
     this->buildVTables();
     if (this->processFieldValues()) {
+        fCodeGenerator.start(this);
         int lastStart = 0;
         do {
             std::vector<Class*> classes;
@@ -3144,7 +3149,10 @@ void Compiler::compile() {
             lastStart = fClasses.size();
             for (auto& cl : classes) {
                 fCurrentClass.push(cl);
-                this->compile(*cl);
+                fCodeGenerator.writeClass(*cl);
+                if (!cl->fExternal) {
+                    this->compile(*cl);
+                }
                 fCurrentClass.pop();
             }
         }
