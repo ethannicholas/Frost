@@ -172,12 +172,6 @@ void Compiler::addClass(std::unique_ptr<Class> cl) {
     }
     fClassMap[cl->fName] = ptr;
     fClasses.push_back(std::move(cl));
-    if (fTypesResolved) {
-        this->resolveTypes(ptr);
-        if (fFieldValuesProcessed) {
-            this->processFieldValues();
-        }
-    }
 }
 
 Class* Compiler::getClass(String name) {
@@ -286,11 +280,11 @@ Class* Compiler::resolveClass(Type t, bool checkParameters) {
 std::set<Type> Compiler::allInterfaces(const Type& t) {
     Class* cl = this->getClass(t);
     std::set<Type> result;
-    if (cl->fRawSuper != Type::Void()) {
-        std::set<Type> add = this->allInterfaces(this->remapType(t, cl->fRawSuper));
+    if (cl->getRawSuper(this) != Type::Void()) {
+        std::set<Type> add = this->allInterfaces(this->remapType(t, cl->getRawSuper(this)));
         result.insert(add.begin(), add.end());
     }
-    for (const Type& intf : cl->fRawInterfaces) {
+    for (const Type& intf : cl->getRawInterfaces(this)) {
         std::set<Type> add = this->allInterfaces(this->remapType(t, intf));
         result.insert(add.begin(), add.end());
     }
@@ -307,52 +301,57 @@ static bool method_signature_match(const Type& t1, const Type& t2) {
     return t1.fSubtypes == t2.fSubtypes;
 }
 
-const Method* Compiler::findMethod(const Type& owner, const String& name, const Type& methodType,
+Method* Compiler::findMethod(const Type& owner, const String& name, const Type& methodType,
         bool checkInterfaces) {
     Class* cl = this->getClass(owner);
     ASSERT(cl);
-    for (const Method* test : cl->fMethods) {
+    for (Method* test : cl->fMethods) {
         if (test->fName == name && method_signature_match(this->remapType(owner,
                 test->declaredType()), methodType)) {
             return test;
         }
     }
     if (checkInterfaces || cl->fClassKind == Class::ClassKind::INTERFACE) {
-        for (const Type& raw : cl->fRawInterfaces) {
-            const Method* result = this->findMethod(this->remapType(owner, raw), name, methodType,
+        for (const Type& raw : cl->getRawInterfaces(this)) {
+            Method* result = this->findMethod(this->remapType(owner, raw), name, methodType,
                     checkInterfaces);
             if (result) {
                 return result;
             }
         }
     }
-    if (cl->fRawSuper != Type::Void()) {
-        return this->findMethod(this->remapType(owner, cl->fRawSuper), name, methodType,
+    if (cl->getRawSuper(this) != Type::Void()) {
+        return this->findMethod(this->remapType(owner, cl->getRawSuper(this)), name, methodType,
                 checkInterfaces);
     }
     return nullptr;
 }
 
-const Method* Compiler::getOverriddenMethod(const Method& m) {
+Method* Compiler::getOverriddenMethod(const Method& m) {
     const Type methodType = m.declaredType();
-    const Class& cl = m.fOwner;
-    for (const Type& raw : cl.fRawInterfaces) {
-        const Method* result = this->findMethod(this->remapType(cl.fType, raw), m.fName, methodType,
+    Class& cl = m.fOwner;
+    for (const Type& raw : cl.getRawInterfaces(this)) {
+        Method* result = this->findMethod(this->remapType(cl.fType, raw), m.fName, methodType,
                 true);
         if (result) {
             return result;
         }
     }
-    if (cl.fRawSuper != Type::Void()) {
-        return this->findMethod(this->remapType(cl.fType, cl.fRawSuper), m.fName, methodType, true);
+    if (cl.getRawSuper(this) != Type::Void()) {
+        return this->findMethod(this->remapType(cl.fType, cl.getRawSuper(this)), m.fName,
+                methodType, true);
     }
     return nullptr;
 }
 
-std::vector<const Method*> Compiler::interfaceMethods(const Class& cl, const Type& intf) {
-    std::vector<const Method*> result;
-    for (const Method* m : this->getClass(intf)->fMethods) {
-        const Method* found = this->findMethod(cl.fType, m->fName, this->remapType(intf,
+std::vector<Method*> Compiler::interfaceMethods(Class& cl, const Type& intf) {
+    this->resolveTypes(&cl);
+    Class* intfClass = this->getClass(intf);
+    ASSERT(intfClass);
+    this->resolveTypes(intfClass);
+    std::vector<Method*> result;
+    for (Method* m : intfClass->fMethods) {
+        Method* found = this->findMethod(cl.fType, m->fName, this->remapType(intf,
                 m->inheritedType(*this)), false);
         if (!found) {
             printf("internal error: interface method %s not found in %s", m->description().c_str(),
@@ -364,17 +363,21 @@ std::vector<const Method*> Compiler::interfaceMethods(const Class& cl, const Typ
     return std::move(result);
 }
 
-std::vector<const Field*> Compiler::getInstanceFields(const Class& cl) {
-    if (cl.fRawSuper == Type::Void() || cl.isValue()) {
-        std::vector<const Field*> result;
-        for (const Field* f : cl.fFields) {
+std::vector<Field*> Compiler::getInstanceFields(Class& cl) {
+    this->resolveTypes(&cl);
+    for (Field* f : cl.fFields) {
+        this->inferFieldType(f);
+    }
+    if (cl.getRawSuper(this) == Type::Void() || cl.isValue(this)) {
+        std::vector<Field*> result;
+        for (Field* f : cl.fFields) {
             if (!f->fAnnotations.isClass()) {
                 result.push_back(f);
             }
         }
         return std::move(result);
     }
-    std::vector<const Field*> result = this->getInstanceFields(*this->getClass(cl.fRawSuper));
+    std::vector<Field*> result = this->getInstanceFields(*this->getClass(cl.getRawSuper(this)));
     result.insert(result.end(), cl.fFields.begin(), cl.fFields.end());
     return result;
 }
@@ -672,10 +675,11 @@ int Compiler::coercionCost(const Type& type, const Type& target) {
         if (!cl) {
             return INT_MAX;
         }
-        if (cl->fRawSuper != Type::Void()) {
-            cost = std::min(cost, this->coercionCost(this->remapType(type, cl->fRawSuper), target));
+        if (cl->getRawSuper(this) != Type::Void()) {
+            cost = std::min(cost, this->coercionCost(this->remapType(type, cl->getRawSuper(this)),
+                    target));
         }
-        for (const auto& intf : cl->fRawInterfaces) {
+        for (const auto& intf : cl->getRawInterfaces(this)) {
             cost = std::min(cost, this->coercionCost(this->remapType(type, intf), target));
         }
         if (cost != INT_MAX) {
@@ -905,7 +909,7 @@ bool Compiler::call(IRNode method, std::vector<IRNode> args, IRNode* out) {
                         IRNode super(method.fPosition, IRNode::Kind::SELF,
                                 fCurrentClass.top()->fType);
                         if (!this->cast(method.fPosition, &super, false,
-                                fCurrentClass.top()->fRawSuper)) {
+                                fCurrentClass.top()->getRawSuper(this))) {
                             return false;
                         }
                         children.push_back(std::move(super));
@@ -1321,15 +1325,16 @@ bool Compiler::convertArrow(const ASTNode& a, IRNode* outResult) {
     }
 }
 
-int Compiler::operatorMatchLeft(const Class& leftClass, IRNode* left, Operator op, IRNode* right,
+int Compiler::operatorMatchLeft(Class& leftClass, IRNode* left, Operator op, IRNode* right,
         const Type* returnType, std::vector<const MethodRef*>* outResult) {
+    this->resolveTypes(&leftClass);
     int min = INT_MAX;
     ASSERT(!outResult->size());
     const Symbol* leftMethods = leftClass.fSymbolTable[operator_text(op)];
     if (leftMethods) {
         switch (leftMethods->fKind) {
             case Symbol::Kind::METHOD: {
-                MethodRef* ref = new MethodRef((const Method*) leftMethods,
+                MethodRef* ref = new MethodRef((Method*) leftMethods,
                         type_parameters(*left));
                 ((const Method*) leftMethods)->fMethodRefs.emplace_back(ref);
                 int cost = this->operatorCost(left, *ref, right, returnType);
@@ -1343,7 +1348,7 @@ int Compiler::operatorMatchLeft(const Class& leftClass, IRNode* left, Operator o
                 break;
             }
             case Symbol::Kind::METHODS: {
-                for (const Method* m : ((Methods&) *leftMethods).fMethods) {
+                for (Method* m : ((Methods&) *leftMethods).fMethods) {
                     MethodRef* ref = new MethodRef(m, type_parameters(*left));
                     m->fMethodRefs.emplace_back(ref);
                     int cost = this->operatorCost(left, *ref, right, returnType);
@@ -1406,11 +1411,12 @@ int Compiler::operatorMatch(IRNode* left, Operator op, IRNode* right, const Type
         if (!rightClass) {
             return false;
         }
+        this->resolveTypes(rightClass);
         const Symbol* rightMethods = rightClass->fSymbolTable[operator_text(op)];
         if (rightMethods) {
             switch (rightMethods->fKind) {
                 case Symbol::Kind::METHOD: {
-                    const Method& m = (const Method&) *rightMethods;
+                    Method& m = (Method&) *rightMethods;
                     if (m.fAnnotations.isClass()) {
                         MethodRef* ref = new MethodRef(&m, type_parameters(*right));
                         m.fMethodRefs.emplace_back(ref);
@@ -1426,7 +1432,7 @@ int Compiler::operatorMatch(IRNode* left, Operator op, IRNode* right, const Type
                     break;
                 }
                 case Symbol::Kind::METHODS: {
-                    for (const Method* m : ((Methods&) *rightMethods).fMethods) {
+                    for (Method* m : ((Methods&) *rightMethods).fMethods) {
                         if (m->fAnnotations.isClass()) {
                             MethodRef* ref = new MethodRef(m, type_parameters(*right));
                             m->fMethodRefs.emplace_back(ref);
@@ -1766,6 +1772,9 @@ void Compiler::addAllMethods(Position p, const SymbolTable& st, const IRNode* ta
     if (target) {
         types = type_parameters(*target);
     }
+    if (st.fClass) {
+        this->resolveTypes(st.fClass);
+    }
     for (const SymbolTable* parent : st.fParents) {
         this->addAllMethods(p, *parent, target, name, methods, startClass);
     }
@@ -1933,7 +1942,7 @@ bool Compiler::convertPrefix(Position p, Operator op, IRNode base, IRNode* out) 
         }
         Symbol* s = cl->fSymbolTable[name];
         if (s) {
-            const Method* m = nullptr;
+            Method* m = nullptr;
             switch (s->fKind) {
                 case Symbol::Kind::METHOD:
                     m = (Method*) s;
@@ -2057,7 +2066,7 @@ bool Compiler::convertDot(const ASTNode& d, IRNode* out) {
             break;
         }
         case IRNode::Kind::SUPER: {
-            Class* super = this->resolveClass(fCurrentClass.top()->fRawSuper);
+            Class* super = this->resolveClass(fCurrentClass.top()->getRawSuper(this));
             ASSERT(super);
             st = &super->fSymbolTable;
             name = "class " + super->fName;
@@ -2133,7 +2142,7 @@ bool Compiler::convertSuper(const ASTNode& s, IRNode* out) {
         this->error(s.fPosition, "cannot reference 'super' from a @class method");
         return false;
     }
-    *out = IRNode(s.fPosition, IRNode::Kind::SUPER, fCurrentClass.top()->fRawSuper);
+    *out = IRNode(s.fPosition, IRNode::Kind::SUPER, fCurrentClass.top()->getRawSuper(this));
     return true;
 }
 
@@ -2847,7 +2856,7 @@ IRNode Compiler::defaultValue(Position p, const Type& type) {
     return IRNode(p, IRNode::Kind::VOID);
 }
 
-void Compiler::compile(const Method& method) {
+void Compiler::compile(Method& method) {
     SymbolTable symbols(&method.fOwner.fSymbolTable, &method.fOwner);
     fSymbolTable = &symbols;
     const Method* overridden;
@@ -2922,16 +2931,16 @@ void Compiler::compile(const Method& method) {
 }
 
 void Compiler::compile(Class& cl) {
-    if (cl.fRawSuper != Type::Void()) {
-        switch (this->getClass(cl.fRawSuper)->fClassKind) {
+    if (cl.getRawSuper(this) != Type::Void()) {
+        switch (this->getClass(cl.getRawSuper(this))->fClassKind) {
             case Class::ClassKind::CLASS:
                 break;
             case Class::ClassKind::INTERFACE:
                 this->error(cl.fPosition, "class '" + cl.fName + "' cannot subclass interface '" +
-                        cl.fRawSuper.fName + "'");
+                        cl.getRawSuper(this).fName + "'");
         }
     }
-    for (const Type& intf : cl.fRawInterfaces) {
+    for (const Type& intf : cl.getRawInterfaces(this)) {
         switch (this->getClass(intf)->fClassKind) {
             case Class::ClassKind::CLASS:
                 this->error(cl.fPosition, "class '" + intf.fName + "' is not an interface");
@@ -2940,7 +2949,7 @@ void Compiler::compile(Class& cl) {
                 break;
         }
     }
-    for (const Method* m : cl.fMethods) {
+    for (Method* m : cl.fMethods) {
         fCurrentMethod.push(m);
         this->compile(*m);
         fCurrentMethod.pop();
@@ -2964,17 +2973,21 @@ void Compiler::resolveType(Field* f) {
 }
 
 void Compiler::resolveTypes(Class* cl) {
+    if (cl->fTypesResolved) {
+        return;
+    }
+    cl->fTypesResolved = true;
     fCurrentClass.push(cl);
     for (auto& p : cl->fParameters) {
         this->resolveType(cl->fSymbolTable, &p.fType);
     }
-    if (this->resolveType(cl->fSymbolTable, &cl->fRawSuper)) {
-        Class* super = this->getClass(cl->fRawSuper);
+    if (this->resolveType(cl->fSymbolTable, &cl->getRawSuper(this))) {
+        Class* super = this->getClass(cl->getRawSuper(this));
         if (super) {
             cl->fSymbolTable.fParents.push_back(&super->fSymbolTable);
         }
     }
-    for (auto& intf : cl->fRawInterfaces) {
+    for (auto& intf : cl->getRawInterfaces(this)) {
         if (this->resolveType(cl->fSymbolTable, &intf)) {
             Class* intfClass = this->getClass(intf);
             if (intfClass) {
@@ -2982,7 +2995,7 @@ void Compiler::resolveTypes(Class* cl) {
             }
         }
     }
-    if (cl->isValue()) {
+    if (cl->isValue(this)) {
         cl->fAnnotations.fFlags |= Annotations::Flag::FINAL;
     }
     for (Field* f : cl->fFields) {
@@ -2997,28 +3010,12 @@ void Compiler::resolveTypes(Class* cl) {
     fCurrentClass.pop();
 }
 
-
-void Compiler::resolveTypes() {
-    int lastStart = 0;
-    do {
-        std::vector<Class*> classes;
-        for (int i = lastStart; i < fClasses.size(); ++i) {
-            classes.push_back(fClasses[i].get());
-        }
-        lastStart = fClasses.size();
-        for (auto& cl : classes) {
-            resolveTypes(cl);
-        }
-    }
-    while (lastStart < fClasses.size());
-    fTypesResolved = true;
-}
-
-const std::vector<const Method*>& Compiler::getVTable(Class& cl) {
+std::vector<Method*>& Compiler::getVTable(Class& cl) {
     if (!cl.fVirtualMethods.size()) {
+        this->resolveTypes(&cl);
         fCurrentClass.push(&cl);
-        if (cl.fRawSuper != Type::Void()) {
-            Class* super = this->resolveClass(cl.fRawSuper);
+        if (cl.getRawSuper(this) != Type::Void()) {
+            Class* super = this->resolveClass(cl.getRawSuper(this));
             if (!super) {
                 fCurrentClass.pop();
                 return cl.fVirtualMethods;
@@ -3026,7 +3023,7 @@ const std::vector<const Method*>& Compiler::getVTable(Class& cl) {
             cl.fSymbolTable.fParents.push_back(&super->fSymbolTable);
             cl.fVirtualMethods = this->getVTable(*super);
         }
-       for (const Method* derived : cl.fMethods) {
+       for (Method* derived : cl.fMethods) {
             if (derived->fMethodKind == Method::Kind::INIT || derived->fAnnotations.isClass()) {
                 continue;
             }
@@ -3052,7 +3049,11 @@ bool Compiler::inferFieldType(Field* field) {
     if (field->fType != Type::Void()) {
         return true;
     }
+    if (fTypeInferenceFailed) {
+        return false;
+    }
     if (fCurrentlyInferring.find(field) != fCurrentlyInferring.end()) {
+        fTypeInferenceFailed = true;
         String msg = "unable to resolve field types due to a circular dependency involving:";
         // jump through some hoops to ensure the message is always identical, for testing purposes
         std::vector<String> lines;
@@ -3077,26 +3078,31 @@ bool Compiler::inferFieldType(Field* field) {
 }
 
 bool Compiler::processFieldValue(Field* field) {
+    this->resolveTypes(&field->fOwner);
     ASSERT(fScanner.fFieldDescriptors.find(field) != fScanner.fFieldDescriptors.end());
     Scanner::FieldDescriptor& desc = fScanner.fFieldDescriptors[field];
+    if (desc.fProcessed) {
+        return true;
+    }
     ASSERT(desc.fValueIndex < fScanner.fFieldValues.size());
-    Scanner::FieldValue& value = fScanner.fFieldValues[desc.fValueIndex];
     SymbolTable* old = fSymbolTable;
-    if (!value.fConvertedValue) {
+    if (!fScanner.fFieldValues[desc.fValueIndex].fConvertedValue) {
         fCurrentClass.push(&field->fOwner);
         fSymbolTable = &field->fOwner.fSymbolTable;
         IRNode* converted = new IRNode();
-        if (!this->convertExpression(*value.fUnconvertedValue, converted)) {
+        if (!this->convertExpression(*fScanner.fFieldValues[desc.fValueIndex].fUnconvertedValue,
+                converted)) {
             fCurrentClass.pop();
             fSymbolTable = old;
+            desc.fProcessed = true;
             return false;
         }
-        value.fConvertedValue.reset(converted);
+        fScanner.fFieldValues[desc.fValueIndex].fConvertedValue.reset(converted);
         fCurrentClass.pop();
         fSymbolTable = old;
     }
     ASSERT(desc.fTupleIndices.size() == 0); // until tuple support is in...
-    field->fValue = value.fConvertedValue.get();
+    field->fValue = fScanner.fFieldValues[desc.fValueIndex].fConvertedValue.get();
     fCurrentClass.push(&field->fOwner);
     fSymbolTable = &field->fOwner.fSymbolTable;
     if (field->fType == Type::Void()) {
@@ -3108,14 +3114,13 @@ bool Compiler::processFieldValue(Field* field) {
     if (field->fAnnotations.isClass()) {
         fCodeGenerator.addGlobalField(field);
     }
+    desc.fProcessed = true;
     return true;
 }
 
 bool Compiler::processFieldValues() {
     for (const auto& desc : fScanner.fFieldDescriptors) {
-        if (!this->processFieldValue(desc.first)) {
-            return false;
-        }
+        this->processFieldValue(desc.first);
     }
     fFieldValuesProcessed = true;
     return true;
@@ -3123,8 +3128,8 @@ bool Compiler::processFieldValues() {
 
 void Compiler::compile() {
     fFinishedProcessingSources = true;
-    this->resolveTypes();
     if (this->processFieldValues()) {
+        this->resolveTypes(getClass(Type::Class()));
         fCodeGenerator.start(this);
         int lastStart = 0;
         do {
@@ -3135,7 +3140,10 @@ void Compiler::compile() {
             lastStart = fClasses.size();
             for (auto& cl : classes) {
                 fCurrentClass.push(cl);
-                fCodeGenerator.writeClass(*cl);
+                this->resolveTypes(cl);
+                if (!fErrors.fErrorCount && this->processFieldValues()) {
+                    fCodeGenerator.writeClass(*cl);
+                }
                 if (!cl->fExternal) {
                     this->compile(*cl);
                 }

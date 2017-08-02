@@ -12,8 +12,8 @@ class FieldDependency2 {
 }
 
 class FieldDependency3 {
-    constant E := D + 1
     constant D := FieldDependency2.C + 1
+    constant E := D + 1
 }
 
 class FieldDependency4 {

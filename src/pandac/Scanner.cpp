@@ -126,7 +126,7 @@ void Scanner::convertDeclaration(const Annotations& annotations, Field::Kind kin
                     index = fFieldValues.size();
                     fFieldValues.push_back({ value, nullptr });
                 }
-                fFieldDescriptors[field] = { index, tupleIndices };
+                fFieldDescriptors[field] = { false, index, tupleIndices };
             }
             break;
         }

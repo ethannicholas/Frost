@@ -77,19 +77,19 @@ public:
      * method will have the same effective type as `methodType`, but not necessarily the same raw
      * type.
      */
-    const Method* findMethod(const Type& owner, const String& name, const Type& methodType,
+    Method* findMethod(const Type& owner, const String& name, const Type& methodType,
             bool checkInterfaces);
 
     /**
      * Searches the owner's ancestors for a method overridden by the given method.
      */
-    const Method* getOverriddenMethod(const Method& m);
+    Method* getOverriddenMethod(const Method& m);
 
     /**
      * Returns a list of the method definitions within a class responsible for implementing the
      * given interface, in the same order as the interface's methods.
      */
-    std::vector<const Method*> interfaceMethods(const Class& cl, const Type& intf);
+    std::vector<Method*> interfaceMethods(Class& cl, const Type& intf);
 
     void addClass(std::unique_ptr<Class> cl);
 
@@ -97,9 +97,15 @@ public:
 
     Class* getClass(Type t);
 
-    std::vector<const Field*> getInstanceFields(const Class& cl);
+    std::vector<Field*> getInstanceFields(Class& cl);
 
-    const std::vector<const Method*>& getVTable(Class& cl);
+    std::vector<Method*>& getVTable(Class& cl);
+
+    void resolveTypes(Method* m);
+
+    void resolveType(Field* f);
+
+    void resolveTypes(Class* cl);
 
     SymbolTable fRoot;
 
@@ -176,7 +182,7 @@ private:
 
     int operatorCost(IRNode* left, const MethodRef& m, IRNode* right, const Type* returnType);
 
-    int operatorMatchLeft(const Class& leftClass, IRNode* left, Operator op, IRNode* right,
+    int operatorMatchLeft(Class& leftClass, IRNode* left, Operator op, IRNode* right,
             const Type* returnType, std::vector<const MethodRef*>* outResult);
 
     int operatorMatch(IRNode* left, Operator op, IRNode* right, const Type* returnType,
@@ -277,19 +283,11 @@ private:
 
     IRNode defaultValue(Position p, const Type& type);
 
-    void compile(const Method& method);
+    void compile(Method& method);
 
     void compile(Class& cl);
 
     void compile(SymbolTable& symbols);
-
-    void resolveTypes(Method* m);
-
-    void resolveType(Field* f);
-
-    void resolveTypes(Class* cl);
-
-    void resolveTypes();
 
     bool inferFieldType(Field* field);
 
@@ -332,9 +330,9 @@ private:
 
     bool fFinishedProcessingSources = false;
 
-    bool fTypesResolved = false;
-
     bool fFieldValuesProcessed = false;
+
+    bool fTypeInferenceFailed = false;
 
     friend class AutoLoop;
     friend class AutoSymbolTable;

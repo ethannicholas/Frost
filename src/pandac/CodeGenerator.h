@@ -16,7 +16,7 @@ public:
 
     virtual void writeClass(Class& cl) = 0;
 
-    virtual void writeMethodDeclaration(const Method& method) = 0;
+    virtual void writeMethodDeclaration(Method& method) = 0;
 
     virtual void writeMethod(const Method& method, const IRNode& body) = 0;
 

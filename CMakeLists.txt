@@ -13,6 +13,7 @@ include_directories(
 add_executable(pandac
     src/parser/lex.panda.cpp
     src/parser/PandaParser.cpp
+    src/pandac/Class.cpp
     src/pandac/Compiler.cpp
     src/pandac/LLVMCodeGenerator.cpp
     src/pandac/Main.cpp
@@ -69,7 +70,6 @@ compile_panda_sources(panda_objects
     src/panda/core/MutableString.panda
     src/panda/core/Object.panda
     src/panda/core/Panda.panda
-    src/panda/core/Pointer.panda
     src/panda/core/Range.panda
     src/panda/core/String.panda
     src/panda/core/System.panda

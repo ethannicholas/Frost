@@ -125,7 +125,6 @@ void make_object(const char* llvm, const char* dest) {
         exit(1);
     }
     if (!pid) {
-    printf("creating object %s\n", dest);
         // child
         char* args[7];
         args[0] = (char*) GCC_PATH;

@@ -27,6 +27,8 @@ public:
      * Stores information about a field's value for type inference purposes.
      */
     struct FieldDescriptor {
+        // true if we have at least attempted to convert this field's value
+        bool fProcessed;
         // index into the fFieldValues list, from which the field's value is drawn
         int fValueIndex;
         // if this is part of a tuple destructuring, holds tuple indices

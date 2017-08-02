@@ -3,7 +3,7 @@
 #include "Class.h"
 #include "Method.h"
 
-MethodRef::MethodRef(const Method* method, std::vector<Type> types)
+MethodRef::MethodRef(Method* method, std::vector<Type> types)
 : fMethod(*method)
 , fTypes(std::move(types)) {
     for (int i = 0; i < fTypes.size(); ++i) {

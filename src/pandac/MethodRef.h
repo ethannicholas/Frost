@@ -12,7 +12,7 @@ struct Method;
  */
 struct MethodRef {
     // types for the owning class' generic parameters, followed by the method's generic parameters
-    MethodRef(const Method* method, std::vector<Type> types);
+    MethodRef(Method* method, std::vector<Type> types);
 
     Type owner() const;
 
@@ -24,7 +24,7 @@ struct MethodRef {
 
     String description() const;
 
-    const Method& fMethod;
+    Method& fMethod;
 
     std::vector<Type> fTypes;
 

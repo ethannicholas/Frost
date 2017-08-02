@@ -65,6 +65,10 @@ struct Class : public Symbol {
         }
     }
 
+    Type& getRawSuper(Compiler* compiler);
+
+    std::vector<Type>& getRawInterfaces(Compiler* compiler);
+
     String simpleName() {
         int idx = fName.find_last_of(".");
         if (idx == std::string::npos) {
@@ -73,8 +77,8 @@ struct Class : public Symbol {
         return fName.substr(idx + 1);
     }
 
-    bool isValue() const {
-        return fRawSuper.fName == "panda.core.Value";
+    bool isValue(Compiler* compiler) {
+        return getRawSuper(compiler).fName == "panda.core.Value";
     }
 
     ClassKind fClassKind;
@@ -103,20 +107,20 @@ struct Class : public Symbol {
     // classes defined in this class
     std::vector<Class*> fInnerClasses;
 
-    Type fRawSuper;
-
-    std::vector<Type> fRawInterfaces;
-
     Type fType;
+
+    // virtual method table (vtable)
+    std::vector<Method*> fVirtualMethods;
 
     // if true, this class was merely imported and should not be compiled
     bool fExternal = false;
 
-private:
-    // virtual method table (vtable)
-    std::vector<const Method*> fVirtualMethods;
+    bool fTypesResolved = false;
 
-    friend class Compiler;
+private:
+    Type fRawSuper;
+
+    std::vector<Type> fRawInterfaces;
 
     typedef Symbol INHERITED;
 };
