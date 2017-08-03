@@ -18,7 +18,7 @@ public:
 
     virtual void writeMethodDeclaration(Method& method) = 0;
 
-    virtual void writeMethod(const Method& method, const IRNode& body) = 0;
+    virtual void writeMethod(Method& method, const IRNode& body) = 0;
 
     virtual void addGlobalField(Field* f) = 0;
 

@@ -134,6 +134,7 @@ void LLVMCodeGenerator::getMethodTableEntry(Method& m, String* outName, String* 
     if (m.fOwner.fExternal) {
         this->writeMethodDeclaration(m);
     }
+    fCompiler->resolveTypes(&m);
     *outName = this->methodName(m);
     Type effective = m.inheritedTypeWithSelf(*fCompiler);
     if (this->needsStructIndirection(m)) {
@@ -189,15 +190,19 @@ String LLVMCodeGenerator::getITable(Class& cl) {
 LLVMCodeGenerator::ClassConstant& LLVMCodeGenerator::getClassConstant(Class& cl) {
     auto found = fClassConstants.find(cl.fName);
     if (found == fClassConstants.end()) {
+        String type;
+        if (cl.fExternal) {
+            ClassConstant cc("@" + escape_type_name(cl.fType.fName) + "$class",
+                    "{ i8*, " INT_T ", %$itable*, [0 x i8*] }");
+            fClassConstants[cl.fName] = cc;
+            fTypeDeclarations << cc.fName + " = external global " + cc.fType + "\n";
+            return fClassConstants[cl.fName];
+        }
         const std::vector<Method*>& vtable = fCompiler->getVTable(cl);
         ClassConstant cc("@" + escape_type_name(cl.fType.fName) + "$class",
                 "{ i8*, " INT_T ", %$itable*, [" + std::to_string(vtable.size()) +
                 " x i8*] }");
         fClassConstants[cl.fName] = cc;
-        if (cl.fExternal) {
-            fTypeDeclarations << cc.fName + " = external global " + cc.fType + "\n";
-            return fClassConstants[cl.fName];
-        }
         String super;
         if (cl.getRawSuper(fCompiler) != Type::Void()) {
             const ClassConstant& superCC = this->getClassConstant(
@@ -327,13 +332,13 @@ bool is_constant_number(const IRNode& expr) {
 }
 
 void LLVMCodeGenerator::writeClass(Class& cl) {
+    if (cl.fWritten) {
+        return;
+    }
+    cl.fWritten = true;
     if (cl.fName == "panda.core.Pointer") {
         return;
     }
-    if (fWrittenClasses.find(&cl) != fWrittenClasses.end()) {
-        return;
-    }
-    fWrittenClasses.insert(&cl);
     this->getClassConstant(cl);
     if (cl.isValue(fCompiler)) {
         this->getWrapperClassConstant(cl);
@@ -1563,7 +1568,7 @@ void LLVMCodeGenerator::writeAssignment(const IRNode& a, std::ostream& out) {
     out << "    store " << value << ", " << lvalue << "\n";
 }
 
-String LLVMCodeGenerator::getVirtualMethodReference(const String& target, const Method& m,
+String LLVMCodeGenerator::getVirtualMethodReference(const String& target, Method& m,
         std::ostream& out) {
     out << "    ; get reference to " << m.signature() << "\n";
     const ClassConstant& cc = this->getClassConstant(m.fOwner);
@@ -1596,7 +1601,7 @@ String LLVMCodeGenerator::getVirtualMethodReference(const String& target, const 
     return result;
 }
 
-String LLVMCodeGenerator::getInterfaceMethodReference(const String& target, const Method& m,
+String LLVMCodeGenerator::getInterfaceMethodReference(const String& target, Method& m,
         std::ostream& out) {
     String methodType = llvmType(m);
     // load class constant entry
@@ -2428,7 +2433,7 @@ void LLVMCodeGenerator::createMethodShim(const Method& raw, const Type& effectiv
     fMethodShims[&raw] = std::make_pair(*outName, *outType);
 }
 
-void LLVMCodeGenerator::writeMethod(const Method& method, const IRNode& body) {
+void LLVMCodeGenerator::writeMethod(Method& method, const IRNode& body) {
     fCurrentMethod = &method;
     fCurrentClass = &method.fOwner;
     fInitializedClasses.clear();

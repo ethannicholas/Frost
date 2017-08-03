@@ -17,7 +17,7 @@ public:
 
     void writeMethodDeclaration(Method& method) override;
 
-    void writeMethod(const Method& method, const IRNode& body) override;
+    void writeMethod(Method& method, const IRNode& body) override;
 
     void addGlobalField(Field* f) override;
 
@@ -161,9 +161,9 @@ private:
 
     String getPrefixReference(const IRNode& expr, std::ostream& out);
 
-    String getVirtualMethodReference(const String& target, const Method& m, std::ostream& out);
+    String getVirtualMethodReference(const String& target, Method& m, std::ostream& out);
 
-    String getInterfaceMethodReference(const String& target, const Method& m, std::ostream& out);
+    String getInterfaceMethodReference(const String& target, Method& m, std::ostream& out);
 
     String getMethodReference(const String& target, Method& m, bool isSuper,
             std::ostream& out);
@@ -260,13 +260,11 @@ private:
 
     int fLabels = 0;
 
-    const Class* fCurrentClass;
+    Class* fCurrentClass;
 
-    const Method* fCurrentMethod;
+    Method* fCurrentMethod;
 
     std::stringstream fMethodHeader;
-
-    std::unordered_set<const Class*> fWrittenClasses;
 
     std::unordered_set<String> fWrittenWrappers;
 

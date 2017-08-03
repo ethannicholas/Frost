@@ -3,6 +3,7 @@
 #include "Compiler.h"
 
 bool Method::matches(const Method& other) const {
+    ASSERT(fTypesResolved && other.fTypesResolved);
     if (fName != other.fName) {
         return false;
     }
@@ -75,20 +76,20 @@ Type Method::declaredTypeWithSelf(Type self) const {
 }
 
 
-Type Method::inheritedType(Compiler& compiler) const {
-    const Method* overridden = compiler.getOverriddenMethod(*this);
+Type Method::inheritedType(Compiler& compiler) {
+    Method* overridden = compiler.getOverriddenMethod(*this);
     if (overridden) {
         return overridden->inheritedType(compiler);
     }
     return this->declaredType();
 }
 
-Type Method::inheritedTypeWithSelf(Compiler& compiler) const {
+Type Method::inheritedTypeWithSelf(Compiler& compiler) {
     return this->inheritedTypeWithSelf(compiler, fOwner.fType);
 }
 
-Type Method::inheritedTypeWithSelf(Compiler& compiler, Type self) const {
-    const Method* overridden = compiler.getOverriddenMethod(*this);
+Type Method::inheritedTypeWithSelf(Compiler& compiler, Type self) {
+    Method* overridden = compiler.getOverriddenMethod(*this);
     if (overridden) {
         return overridden->inheritedTypeWithSelf(compiler, self);
     }

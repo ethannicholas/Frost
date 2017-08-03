@@ -117,6 +117,10 @@ struct Class : public Symbol {
 
     bool fTypesResolved = false;
 
+    bool fCompiled = false;
+
+    bool fWritten = false;
+
 private:
     Type fRawSuper;
 

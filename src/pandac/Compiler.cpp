@@ -306,6 +306,7 @@ Method* Compiler::findMethod(const Type& owner, const String& name, const Type& 
     Class* cl = this->getClass(owner);
     ASSERT(cl);
     for (Method* test : cl->fMethods) {
+        this->resolveTypes(test);
         if (test->fName == name && method_signature_match(this->remapType(owner,
                 test->declaredType()), methodType)) {
             return test;
@@ -327,7 +328,8 @@ Method* Compiler::findMethod(const Type& owner, const String& name, const Type& 
     return nullptr;
 }
 
-Method* Compiler::getOverriddenMethod(const Method& m) {
+Method* Compiler::getOverriddenMethod(Method& m) {
+    this->resolveTypes(&m);
     const Type methodType = m.declaredType();
     Class& cl = m.fOwner;
     for (const Type& raw : cl.getRawInterfaces(this)) {
@@ -825,6 +827,7 @@ int Compiler::callCost(const MethodRef& method, const std::vector<IRNode>& args,
     if (method.parameterCount() != args.size()) {
         return INT_MAX;
     }
+    this->resolveTypes(&method.fMethod);
     int result = 0;
     for (int i = 0; i < args.size(); ++i) {
         int cost = this->coercionCost(args[i], method.parameterType(i));
@@ -895,6 +898,7 @@ bool Compiler::call(IRNode method, std::vector<IRNode> args, IRNode* out) {
                         std::to_string(args.size()));
                 return false;
             }
+            this->resolveTypes(&m.fMethod);
             std::vector<IRNode> children;
             if (m.fMethod.fMethodKind == Method::Kind::INIT) {
                 ASSERT(method.fChildren.size() == 1);
@@ -2857,6 +2861,7 @@ IRNode Compiler::defaultValue(Position p, const Type& type) {
 }
 
 void Compiler::compile(Method& method) {
+    this->resolveTypes(&method);
     SymbolTable symbols(&method.fOwner.fSymbolTable, &method.fOwner);
     fSymbolTable = &symbols;
     const Method* overridden;
@@ -2957,6 +2962,11 @@ void Compiler::compile(Class& cl) {
 }
 
 void Compiler::resolveTypes(Method* m) {
+    if (m->fTypesResolved) {
+        return;
+    }
+    fCurrentClass.push(&m->fOwner);
+    m->fTypesResolved = true;
     if (m->fOwner.fAnnotations.isFinal()) {
         m->fAnnotations.fFlags |= Annotations::Flag::FINAL;
     }
@@ -2965,6 +2975,7 @@ void Compiler::resolveTypes(Method* m) {
     for (auto& p : m->fParameters) {
         this->resolveType(st, &p.fType);
     }
+    fCurrentClass.pop();
 }
 
 void Compiler::resolveType(Field* f) {
@@ -3001,12 +3012,6 @@ void Compiler::resolveTypes(Class* cl) {
     for (Field* f : cl->fFields) {
         this->resolveType(f);
     }
-    for (Method* m : cl->fMethods) {
-        this->resolveTypes(m);
-    }
-    for (Class* inner : cl->fInnerClasses) {
-        this->resolveTypes(inner);
-    }
     fCurrentClass.pop();
 }
 
@@ -3024,12 +3029,14 @@ std::vector<Method*>& Compiler::getVTable(Class& cl) {
             cl.fVirtualMethods = this->getVTable(*super);
         }
        for (Method* derived : cl.fMethods) {
+            this->resolveTypes(derived);
             if (derived->fMethodKind == Method::Kind::INIT || derived->fAnnotations.isClass()) {
                 continue;
             }
             bool found = false;
             for (int i = 0; i < cl.fVirtualMethods.size(); ++i) {
-                const Method* base = cl.fVirtualMethods[i];
+                Method* base = cl.fVirtualMethods[i];
+                this->resolveTypes(base);
                 if (derived->matches(*base)) {
                     found = true;
                     cl.fVirtualMethods[i] = derived;
@@ -3139,15 +3146,18 @@ void Compiler::compile() {
             }
             lastStart = fClasses.size();
             for (auto& cl : classes) {
-                fCurrentClass.push(cl);
-                this->resolveTypes(cl);
-                if (!fErrors.fErrorCount && this->processFieldValues()) {
-                    fCodeGenerator.writeClass(*cl);
+                if (!cl->fCompiled) {
+                    cl->fCompiled = true;
+                    fCurrentClass.push(cl);
+                    this->resolveTypes(cl);
+                    if (!fErrors.fErrorCount && this->processFieldValues()) {
+                        fCodeGenerator.writeClass(*cl);
+                    }
+                    if (!cl->fExternal) {
+                        this->compile(*cl);
+                    }
+                    fCurrentClass.pop();
                 }
-                if (!cl->fExternal) {
-                    this->compile(*cl);
-                }
-                fCurrentClass.pop();
             }
         }
         while (lastStart < fClasses.size());

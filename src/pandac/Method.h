@@ -61,12 +61,12 @@ struct Method : public Symbol {
      *
      * The inheritedType of Sub.foo is (Super.T)=>().
      */
-    Type inheritedType(Compiler& compiler) const;
+    Type inheritedType(Compiler& compiler);
 
     /**
      * As inheritedType(), but includes explicitly includes self as the first parameter.
      */
-    Type inheritedTypeWithSelf(Compiler& compiler) const;
+    Type inheritedTypeWithSelf(Compiler& compiler);
 
     String signature() const;
 
@@ -80,12 +80,13 @@ struct Method : public Symbol {
     std::vector<Parameter> fParameters;
     Type fReturnType;
     ASTNode fBody;
+    bool fTypesResolved = false;
     mutable std::vector<std::unique_ptr<const MethodRef>> fMethodRefs;
 
 private:
     Type declaredTypeWithSelf(Type self) const;
 
-    Type inheritedTypeWithSelf(Compiler& compiler, Type self) const;
+    Type inheritedTypeWithSelf(Compiler& compiler, Type self);
 
     typedef Symbol INHERITED;
 };

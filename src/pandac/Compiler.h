@@ -83,7 +83,7 @@ public:
     /**
      * Searches the owner's ancestors for a method overridden by the given method.
      */
-    Method* getOverriddenMethod(const Method& m);
+    Method* getOverriddenMethod(Method& m);
 
     /**
      * Returns a list of the method definitions within a class responsible for implementing the
