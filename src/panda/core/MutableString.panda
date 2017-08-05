@@ -1,5 +1,7 @@
 package panda.core
 
+uses panda.unsafe.Pointer
+
 class MutableString {
     @private
     constant DEFAULT_SIZE := 16
@@ -8,21 +10,21 @@ class MutableString {
     var data:Pointer<Char8>
 
     @private
-    var size:Int
+    var length:Int
 
     @private
-    var maxSize:Int
+    var maxLength:Int
 
     init() {
-        size := 0
-        maxSize := DEFAULT_SIZE
-        data := Pointer<Char8>.alloc(maxSize)
+        length := 0
+        maxLength := DEFAULT_SIZE
+        data := Pointer<Char8>.alloc(maxLength)
     }
 
     init(s:String) {
-        size := 0
-        maxSize := size + DEFAULT_SIZE
-        data := Pointer<Char8>.alloc(maxSize)
+        length := 0
+        maxLength := length + DEFAULT_SIZE
+        data := Pointer<Char8>.alloc(maxLength)
         append(s)
     }
 
@@ -33,25 +35,25 @@ class MutableString {
     }
 
     method append(c:Char8) {
-        ensureCapacity(size + 1)
-        data[size] := c
-        size += 1
+        ensureCapacity(length + 1)
+        data[length] := c
+        length += 1
     }
 
     method append(s:String) {
-        ensureCapacity(size + s.size)
-        for i in 0 .. s.size {
-            data[size + i] := s.data[i]
+        ensureCapacity(length + s.length)
+        for i in 0 .. s.length {
+            data[length + i] := s.data[i]
         }
-        size += s.size
+        length += s.length
     }
 
     method append(chars:Pointer<Char8>, offset:Int, count:Int) {
-        ensureCapacity(size + count)
+        ensureCapacity(length + count)
         for i in 0 .. count {
-            data[size + i] := chars[offset + i]
+            data[length + i] := chars[offset + i]
         }
-        size += count
+        length += count
     }
 
     method append(o:Object) {
@@ -60,21 +62,21 @@ class MutableString {
 
     @private
     method ensureCapacity(newSize:Int) {
-        if maxSize >= newSize {
+        if maxLength >= newSize {
             return
         }
-        while maxSize < newSize {
-            maxSize *= 2
+        while maxLength < newSize {
+            maxLength *= 2
         }
-        data := data.realloc(maxSize)
+        data := data.realloc(maxLength)
     }
 
     @override
     function convert():String {
-        def result := Pointer<Char8>.alloc(size)
-        for i in 0 .. size {
+        def result := Pointer<Char8>.alloc(length)
+        for i in 0 .. length {
             result[i] := data[i]
         }
-        return String(result, size)
+        return String(result, length)
     }
 }

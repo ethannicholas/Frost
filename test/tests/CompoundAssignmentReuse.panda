@@ -1,4 +1,4 @@
-uses panda.core.Pointer
+uses panda.unsafe.Pointer
 
 class CompoundAssignmentReuse {
     @class

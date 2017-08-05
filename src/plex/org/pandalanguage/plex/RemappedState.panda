@@ -1,0 +1,36 @@
+package org.pandalanguage.plex
+
+class RemappedState : State {
+    def states:ImmutableArray<Int>
+
+    -- FIXME: varargs calls should be creating Lists, not PrimitiveArrays, which means
+    -- they can pass in ImmutablePrimitiveArrays directly
+    constructor(states:Int...) {
+        super.constructor(new ImmutableArray<Int>([]))
+        self.states := new ImmutableArray<Int>(states)
+    }
+
+    constructor(states:ImmutableArray<Int>) {
+        super.constructor(new ImmutableArray<Int>([]))
+        self.states := states
+    }
+
+    @override
+    function accept(c:Char):Bit {
+        assert false
+        return false
+    }
+
+    @override
+    function ->>():String {
+        var result := new MutableString()
+        result.append("new RemappedState(")
+        for i in 0 ... states.length - 1 {
+            if i > 0
+                result.append(", ")
+            result.append(states[i])
+        }
+        result.append(")")
+        return result->>(String)
+    }    
+}

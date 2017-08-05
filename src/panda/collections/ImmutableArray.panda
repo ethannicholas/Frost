@@ -1,0 +1,78 @@
+package panda.collections
+
+uses panda.unsafe.Pointer
+
+class ImmutableArray<T> (ListView<T>) {
+    class ImmutableArrayIterator<T> (Iterator<T>) {
+        var array:ImmutableArray<T>
+
+        var index := 0
+
+        init(array:ImmutableArray<T>) {
+            self.array := array
+        }
+
+        @override
+        function get_done():Bit {
+            return index = array.count
+        }
+
+        @override
+        function next():T {
+            index += 1
+            return array[index - 1]
+        }
+    }
+
+    @private
+    def count:Int
+
+    @private
+    def data:Pointer<T>
+
+    init() {
+        self.count := 0
+    }
+
+    init(data:ListView<T>) {
+        self.count := data.get_count()
+        self.data := Pointer<T>.alloc(count)
+        for i in 0 .. count {
+            self.data[i] := data[i]
+        }
+    }
+
+    @override
+    method cleanup() {
+        data.destroy()
+    }
+
+    @override
+    function [](index:Int):T {
+        return data[index]
+    }
+
+    @override
+    function get_count():Int {
+        return count
+    }
+
+    @override
+    function iterator():Iterator<T> {
+        return ImmutableArrayIterator<T>(self)
+    }
+
+    @override
+    function convert():String {
+        def result := MutableString()
+        result.append("[")
+        var separator := ""
+        for v in self {
+            result.append(separator)
+            separator := ", "
+            result.append(v)
+        }
+        result.append("]")
+        return result.convert()
+    }
+}

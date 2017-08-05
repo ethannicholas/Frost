@@ -268,6 +268,8 @@ void Scanner::scanClass(String contextName, std::vector<Class::UsesDeclaration> 
     Class* result = new Class(cl->fPosition, Class::ClassKind::CLASS, uses, annotations, fullName,
             parameters, owner ? &owner->fSymbolTable : &fCompiler.fRoot, superclass, interfaces);
     SymbolTable& symbols = result->fSymbolTable;
+    result->fAliasTable.add(std::unique_ptr<Symbol>(new Alias(result->fPosition, cl->fText,
+            fullName)));
     bool foundInit = false;
     ASSERT(cl->fChildren[5].fKind == ASTNode::Kind::CLASS_MEMBERS);
     for (auto& child : cl->fChildren[5].fChildren) {
@@ -291,7 +293,7 @@ void Scanner::scanClass(String contextName, std::vector<Class::UsesDeclaration> 
                 abort();
         }
     }
-    if (!foundInit && result->fName != "panda.core.Pointer") {
+    if (!foundInit && result->fName != POINTER_NAME) {
         Method* defaultInit = new Method(cl->fPosition, result, Annotations(),
                 Method::Kind::INIT, "init", std::vector<Method::Parameter>(), Type(),
                 ASTNode(cl->fPosition, ASTNode::Kind::BLOCK));
@@ -302,8 +304,6 @@ void Scanner::scanClass(String contextName, std::vector<Class::UsesDeclaration> 
         owner->fInnerClasses.push_back(result);
         owner->fAliasTable.add(std::unique_ptr<Symbol>(new Alias(result->fPosition, cl->fText,
                 result->fName)));
-        owner->fAliasTable.add(std::unique_ptr<Symbol>(new Alias(result->fPosition,
-                owner->simpleName(), owner->fName)));
     }
     fCompiler.addClass(std::unique_ptr<Class>(result));
 }
@@ -358,6 +358,8 @@ void Scanner::scanInterface(String contextName, std::vector<Class::UsesDeclarati
             fullName, parameters, owner ? &owner->fSymbolTable : &fCompiler.fRoot, Type::Object(),
             superinterfaces);
     SymbolTable& symbols = result->fSymbolTable;
+    result->fAliasTable.add(std::unique_ptr<Symbol>(new Alias(result->fPosition, cl->fText,
+            fullName)));
     for (auto& child : cl->fChildren[4].fChildren) {
         switch (child.fKind) {
             case ASTNode::Kind::METHOD: // fall through
@@ -382,8 +384,6 @@ void Scanner::scanInterface(String contextName, std::vector<Class::UsesDeclarati
         owner->fInnerClasses.push_back(result);
         owner->fAliasTable.add(std::unique_ptr<Symbol>(new Alias(result->fPosition, cl->fText,
                 result->fName)));
-        owner->fAliasTable.add(std::unique_ptr<Symbol>(new Alias(result->fPosition,
-                owner->simpleName(), owner->fName)));
     }
     fCompiler.addClass(std::unique_ptr<Class>(result));
 }
@@ -397,6 +397,7 @@ void Scanner::scan(ASTNode* file) {
     uses.push_back({ Position(), "panda.collections.CollectionView", "CollectionView" });
     uses.push_back({ Position(), "panda.collections.CollectionWriter", "CollectionWriter" });
     uses.push_back({ Position(), "panda.collections.HashMap", "HashMap" });
+    uses.push_back({ Position(), "panda.collections.ImmutableArray", "ImmutableArray" });
     uses.push_back({ Position(), "panda.collections.Iterable", "Iterable" });
     uses.push_back({ Position(), "panda.collections.Iterator", "Iterator" });
     uses.push_back({ Position(), "panda.collections.List", "List" });
@@ -405,6 +406,9 @@ void Scanner::scan(ASTNode* file) {
     uses.push_back({ Position(), "panda.collections.Stack", "Stack" });
     uses.push_back({ Position(), "panda.core.Bit", "Bit" });
     uses.push_back({ Position(), "panda.core.Char8", "Char8" });
+    uses.push_back({ Position(), "panda.core.Char16", "Char16" });
+    uses.push_back({ Position(), "panda.core.Char32", "Char32" });
+    uses.push_back({ Position(), "panda.core.Immutable", "Immutable" });
     uses.push_back({ Position(), "panda.core.Int8", "Int8" });
     uses.push_back({ Position(), "panda.core.Int16", "Int16" });
     uses.push_back({ Position(), "panda.core.Int32", "Int32" });
@@ -422,6 +426,8 @@ void Scanner::scan(ASTNode* file) {
     uses.push_back({ Position(), "panda.io.FileInputStream", "FileInputStream" });
     uses.push_back({ Position(), "panda.io.IndentedOutputStream", "IndentedOutputStream" });
     uses.push_back({ Position(), "panda.io.InputStream", "InputStream" });
+    uses.push_back({ Position(), "panda.io.LineNumberInputStream", "LineNumberInputStream" });
+    uses.push_back({ Position(), "panda.io.MemoryInputStream", "MemoryInputStream" });
     uses.push_back({ Position(), "panda.io.OutputStream", "OutputStream" });
     uses.push_back({ Position(), "panda.math.Random", "Random" });
     uses.push_back({ Position(), "panda.math.XorShift128Plus", "XorShift128Plus" });

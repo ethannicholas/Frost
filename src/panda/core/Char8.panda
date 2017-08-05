@@ -1,5 +1,7 @@
 package panda.core
 
+uses panda.unsafe.Pointer
+
 class Char8 : Value {
     init(value:Int8) {
         self.value := value.value
@@ -11,6 +13,10 @@ class Char8 : Value {
 
     function !=(other:Char8):Bit {
         return value != other.value
+    }
+
+    function convert():Int8 {
+        return Int8(value)
     }
 
     @override

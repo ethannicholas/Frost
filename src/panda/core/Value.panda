@@ -1,4 +1,4 @@
 package panda.core
 
-class Value {
+class Value : Immutable {
 }

@@ -1,6 +1,6 @@
 package panda.io
 
-uses panda.core.Pointer
+uses panda.unsafe.Pointer
 
 @package
 class FileOutputStream : OutputStream {

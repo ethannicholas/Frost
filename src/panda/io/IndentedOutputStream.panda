@@ -1,6 +1,6 @@
 package panda.io
 
-uses panda.core.Pointer
+uses panda.unsafe.Pointer
 
 ====================================================================================================
 An output stream which indents the lines it writes. `IndentedOutputStream` sits "on top of" another

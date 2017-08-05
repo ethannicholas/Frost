@@ -1,16 +1,151 @@
 package panda.core
 
-class String {
+uses panda.unsafe.Pointer
+
+class String : Immutable {
+    class Index : Value {
+        @private
+        def str:String
+
+        @private
+        def value:Int
+
+        @private
+        init(str:String, value:Int) {
+            self.str := str
+            self.value := value
+        }
+
+        function +(i:Int):Index {
+            if i < 0 {
+                return self - (-i)
+            }
+            var remaining := i
+            var newValue := value
+            while newValue < str.length - 1 & remaining > 0 {
+                newValue += 1
+                while str.data[newValue].convert()->Int8[7] {
+                    newValue += 1
+                }
+                remaining -= 1
+            }
+        }
+
+        function -(i:Int):Index {
+            if i < 0 {
+                return self + (-i)
+            }
+            var remaining := i
+            var newValue := value
+            while newValue > 0 & remaining > 0 {
+                newValue -= 1
+                while str.data[newValue].convert()->Int8[7] {
+                    newValue -= 1
+                }
+                remaining -= 1
+            }
+        }
+    }
+
+    @private
+    class UTF8List (ListView<Char8>) {
+        def str:String
+
+        init(str:String) {
+            self.str := str
+        }
+
+        @override
+        function [](index:Int):Char8 {
+            return str.data[index]
+        }
+
+        @override
+        function get_count():Int {
+            return str.length
+        }
+
+        @override
+        function iterator():Iterator<Char8> {
+            return UTF8Iterator(str)
+        }
+    }
+
+    @private
+    class UTF8Iterator (Iterator<Char8>) {
+        var index := 0
+
+        def str:String
+
+        init(str:String) {
+            self.str := str
+        }
+
+        @override
+        function get_done():Bit {
+            return index = str.length
+        }
+
+        @override
+        function next():Char8 {
+            index += 1
+            return str.data[index - 1]
+        }
+    }
+
+    @private
+    class UTF16Iterator (Iterator<Char16>) {
+        var index := 0
+
+        def str:String
+
+        init(str:String) {
+            self.str := str
+        }
+
+        @override
+        function get_done():Bit {
+            return index = str.length
+        }
+
+        @override
+        function next():Char16 {
+            index += 1
+            return Char16(1)
+        }
+    }
+
+    @private
+    class UTF32Iterator (Iterator<Char32>) {
+        var index := 0
+
+        def str:String
+
+        init(str:String) {
+            self.str := str
+        }
+
+        @override
+        function get_done():Bit {
+            return index = str.length
+        }
+
+        @override
+        function next():Char32 {
+            index += 1
+            return Char32(1)
+        }
+    }
     @private
     def data:Pointer<Char8>
 
     @private
-    def size:Int
+    def length:Int
 
     @private
-    init(data:Pointer<Char8>, size:Int) {
+    init(data:Pointer<Char8>, length:Int) {
         self.data := data
-        self.size := size
+        self.length := length
     }
 
     @override
@@ -24,11 +159,23 @@ class String {
         data.destroy()
     }
 
+    function utf8():ListView<Char8> {
+        return UTF8List(self)
+    }
+
+    function utf16():Iterator<Char16> {
+        return UTF16Iterator(self)
+    }
+
+    function utf32():Iterator<Char32> {
+        return UTF32Iterator(self)
+    }
+
     function startsWith(other:String):Bit {
-        if size < other.size {
+        if length < other.length {
             return false
         }
-        for i in 0 .. other.size {
+        for i in 0 .. other.length {
             if data[i] != other.data[i] {
                 return false
             }
@@ -37,11 +184,11 @@ class String {
     }
 
     function endsWith(other:String):Bit {
-        if size < other.size {
+        if length < other.length {
             return false
         }
-        for i in 0 .. other.size {
-            if data[size - other.size + i] != other.data[i] {
+        for i in 0 .. other.length {
+            if data[length - other.length + i] != other.data[i] {
                 return false
             }
         }
@@ -49,14 +196,14 @@ class String {
     }
 
     function +(other:String):String {
-        def result := Pointer<Char8>.alloc(size + other.size)
-        for i in 0 .. size {
+        def result := Pointer<Char8>.alloc(length + other.length)
+        for i in 0 .. length {
             result[i] := data[i]
         }
-        for i in 0 .. other.size {
-            result[size + i] := other.data[i]
+        for i in 0 .. other.length {
+            result[length + i] := other.data[i]
         }
-        return String(result, size + other.size)
+        return String(result, length + other.length)
     }
 
     function +(other:Object):String {
@@ -80,10 +227,10 @@ class String {
     function =(o:Object):Bit {
         -- FIXME need to check o's class
         def other := o->String
-        if size != other.size {
+        if length != other.length {
             return false
         }
-        for i in 0 .. size {
+        for i in 0 .. length {
             if data[i]->Char8 != other.data[i]->Char8 {
                 return false
             }
@@ -91,7 +238,7 @@ class String {
         return true
     }
 
-    function [](r:Range<Int?>):String {
+    function [](r:Range<Index?>):String {
         def step:Int
         if r.step != null {
             step := r.step
@@ -102,18 +249,18 @@ class String {
 
         def start:Int
         if r.start != null {
-            start := r.start
+            start := r.start.value
         }
         else if step > 0 {
             start := 0
         }
         else {
-            start := size - 1
+            start := length - 1
         }
 
         def end:Int
         if r.end != null {
-            end := r.end
+            end := r.end.value
             if r.inclusive {
                 if step > 0 {
                     end += 1
@@ -124,7 +271,7 @@ class String {
             }
         }
         else if step > 0 {
-            end := size
+            end := length
         }
         else {
             end := -1
@@ -143,7 +290,7 @@ class String {
         def slice := Pointer<Char8>.alloc(count)
         var index := 0
         for i in start .. end by step {
-            assert index >= 0 & index < size
+            assert index >= 0 & index < length
             slice[index] := data[i]
             index += 1
         }
@@ -157,8 +304,8 @@ class String {
     @param s the string to search for
     @returns the index of the match, or `null` if not found
     ================================================================================================
-    function indexOf(s:String):Int? {
-        return indexOf(s, 0)
+    function indexOf(s:String):Index? {
+        return indexOf(s, Index(self, 0))
     }
 
     ================================================================================================
@@ -169,17 +316,17 @@ class String {
     @param start the index to begin searching from
     @returns the index of the match, or `null` if not found
     ================================================================================================
-    function indexOf(s:String, start:Int):Int? {
-        if size < s.size {
+    function indexOf(s:String, start:Index):Index? {
+        if length < s.length {
             return null
         }
-        outer: for i in start ... size - s.size {
-            for j in 0 .. s.size {
+        outer: for i in start.value ... length - s.length {
+            for j in 0 .. s.length {
                 if data[i + j] != s.data[j] {
                     continue outer
                 }
             }
-            return i
+            return Index(self, i)
         }
         return null
     }
@@ -206,10 +353,10 @@ class String {
     ================================================================================================
     function split(delimiter:String, maxResults:Int):Array<String> {
         def result := Array<String>()
-        var index := 0
+        var index := Index(self, 0)
         loop {
-            def nextIndex:Int?
-            if delimiter.size = 0 {
+            def nextIndex:Index?
+            if delimiter.length = 0 {
                 nextIndex := index + 1
             }
             else {
@@ -220,7 +367,7 @@ class String {
                 break
             }
             result.add(self[index .. nextIndex])
-            index := nextIndex + delimiter.size
+            index := nextIndex + delimiter.length
         }
         return result
     }
@@ -233,7 +380,7 @@ class String {
     @returns this string converted to a number, or `null`
     ================================================================================================
     function convert():Int64? {
-        if size = 0 {
+        if length = 0 {
             return null
         }
         var result:Int64 := 0
@@ -244,7 +391,7 @@ class String {
         else {
             start := 0
         }
-        for i in start .. size {
+        for i in start .. length {
             def digit := Int64(data[i].value->builtin_int64) - 48
             if digit < 0 | digit > 9 {
                 return null
@@ -260,10 +407,9 @@ class String {
     @override
     function hash():Int {
         var result := 0
-        for i in 0 .. size {
+        for i in 0 .. length {
             result := result * 101 + Int64(data[i].value->builtin_int64)
         }
         return result
     }
-
 }

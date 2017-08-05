@@ -336,7 +336,7 @@ void LLVMCodeGenerator::writeClass(Class& cl) {
         return;
     }
     cl.fWritten = true;
-    if (cl.fName == "panda.core.Pointer") {
+    if (cl.fName == POINTER_NAME) {
         return;
     }
     this->getClassConstant(cl);
@@ -474,7 +474,7 @@ String LLVMCodeGenerator::llvmType(const Type& type) {
         }
         case Type::Category::GENERIC:
             ASSERT(type.fSubtypes.size() >= 2);
-            if (type.fSubtypes[0].fName == "panda.core.Pointer") {
+            if (type.fSubtypes[0].fName == POINTER_NAME) {
                 String result = this->llvmType(type.fSubtypes[1]) + "*";
                 return result;
             }
@@ -895,7 +895,7 @@ String LLVMCodeGenerator::getPointerCallReference(const IRNode& call, std::ostre
 
 String LLVMCodeGenerator::getCallReference(const IRNode& call, std::ostream& out) {
     Method* m = &((MethodRef*) call.fChildren[0].fValue.fPtr)->fMethod;
-    if (m->fOwner.fName == "panda.core.Pointer") {
+    if (m->fOwner.fName == POINTER_NAME) {
         return this->getPointerCallReference(call, out);
     }
     if (m->fOwner.fName == "panda.core.Bit") {
@@ -1710,7 +1710,7 @@ void LLVMCodeGenerator::writeCall(const IRNode& stmt, const String& target, std:
     ASSERT(stmt.fKind == IRNode::Kind::CALL);
     ASSERT(stmt.fChildren.size() >= 1);
     MethodRef* m = (MethodRef*) stmt.fChildren[0].fValue.fPtr;
-    if (m->fMethod.fOwner.fName == "panda.core.Pointer") {
+    if (m->fMethod.fOwner.fName == POINTER_NAME) {
         this->writePointerCall(stmt, out);
         return;
     }
@@ -1749,10 +1749,13 @@ void LLVMCodeGenerator::writeCall(const IRNode& stmt, const String& target, std:
 void LLVMCodeGenerator::writeIf(const IRNode& s, std::ostream& out) {
     ASSERT(s.fKind == IRNode::Kind::IF);
     ASSERT(s.fChildren.size() == 2 || s.fChildren.size() == 3);
-    String test = this->getReference(s.fChildren[0], out);
+    ASSERT(s.fChildren[0].fType == Type::Bit());
+    String test = this->getTypedReference(s.fChildren[0], out);
+    String testBit = this->nextVar();
+    out << "    " << testBit << " = extractvalue " << test << ", 0\n";
     String ifTrue = this->nextLabel();
     String ifFalse = this->nextLabel();
-    out << "    br i1 " << test << ", label %" << ifTrue << ", label %" << ifFalse << "\n";
+    out << "    br i1 " << testBit << ", label %" << ifTrue << ", label %" << ifFalse << "\n";
     this->createBlock(ifTrue, out);
     this->writeStatement(s.fChildren[1], out);
     String end = s.fChildren.size() == 3 ? this->nextLabel() : ifFalse;
@@ -1772,14 +1775,17 @@ void LLVMCodeGenerator::writeIf(const IRNode& s, std::ostream& out) {
 void LLVMCodeGenerator::writeWhile(const IRNode& w, std::ostream& out) {
     ASSERT(w.fKind == IRNode::Kind::WHILE);
     ASSERT(w.fChildren.size() == 2);
+    ASSERT(w.fChildren[0].fType == Type::Bit());
     String loopStart = this->nextLabel();
     String loopBody = this->nextLabel();
     String loopEnd = this->nextLabel();
     AutoLoopDescriptor loop(this, w.fText, loopEnd, loopStart);
     out << "    br label %" << loopStart << "\n";
     this->createBlock(loopStart, out);
-    String test = this->getReference(w.fChildren[0], out);
-    out << "    br i1 " << test << ", label %" << loopBody << ", label %" << loopEnd << "\n";
+    String test = this->getTypedReference(w.fChildren[0], out);
+    String testBit = this->nextVar();
+    out << "    " << testBit << " = extractvalue " << test << ", 0\n";
+    out << "    br i1 " << testBit << ", label %" << loopBody << ", label %" << loopEnd << "\n";
     this->createBlock(loopBody, out);
     this->writeStatement(w.fChildren[1], out);
     if (!ends_with_branch(w.fChildren[1])) {
@@ -1791,14 +1797,17 @@ void LLVMCodeGenerator::writeWhile(const IRNode& w, std::ostream& out) {
 void LLVMCodeGenerator::writeDo(const IRNode& d, std::ostream& out) {
     ASSERT(d.fKind == IRNode::Kind::DO);
     ASSERT(d.fChildren.size() == 2);
+    ASSERT(d.fChildren[1].fType == Type::Bit());
     String loopStart = this->nextLabel();
     String loopBody = this->nextLabel();
     String loopEnd = this->nextLabel();
     AutoLoopDescriptor loop(this, d.fText, loopEnd, loopStart);
     out << "    br label %" << loopBody << "\n";
     this->createBlock(loopStart, out);
-    String test = this->getReference(d.fChildren[1], out);
-    out << "    br i1 " << test << ", label %" << loopBody << ", label %" << loopEnd << "\n";
+    String test = this->getTypedReference(d.fChildren[1], out);
+    String testBit = this->nextVar();
+    out << "    " << testBit << " = extractvalue " << test << ", 0\n";
+    out << "    br i1 " << testBit << ", label %" << loopBody << ", label %" << loopEnd << "\n";
     this->createBlock(loopBody, out);
     this->writeStatement(d.fChildren[0], out);
     if (!ends_with_branch(d.fChildren[0])) {
@@ -1902,31 +1911,8 @@ void LLVMCodeGenerator::writeRangeFor(const IRNode& f, std::ostream& out) {
             "* " << endFieldPtr << "\n";
 
     // extract step value from range
-    String stepPtr = this->nextVar();
-    out << "    " << stepPtr << " = extractvalue " << range << ", 2\n";
-    String stepNull = this->nextVar();
-    out << "    " << stepNull << " = icmp eq " << this->llvmType(Type::Object()) << " " <<
-            stepPtr << ", null\n";
-    String stepStart = fCurrentBlock;
-    String stepEnd = this->nextLabel();
-    String stepNonNull = this->nextLabel();
-    out << "    br i1 " << stepNull << ", label %" << stepEnd << ", label %" << stepNonNull;
-    this->createBlock(stepNonNull, out);
-    String stepPtrCast = this->nextVar();
-    out << "    " << stepPtrCast << " = bitcast " << this->llvmType(Type::Object()) << " " <<
-            stepPtr << " to " << this->llvmWrapperType(type) << "\n";
-    String stepFieldPtr = this->nextVar();
-    out << "    " << stepFieldPtr << " = getelementptr " << this->llvmWrapperTypeName(type) <<
-            ", " << this->llvmWrapperType(type) << " " << stepPtrCast << ", i64 0, i32 " <<
-            OBJECT_FIELD_COUNT << "\n";
-    String stepLoad = this->nextVar();
-    out << "    " << stepLoad << " = load " << numberType << ", " << numberType <<
-            "* " << stepFieldPtr << "\n";
-    out << "    br label %" << stepEnd << "\n";
-    this->createBlock(stepEnd, out);
     String step = this->nextVar();
-    out << "    " << step << " = phi " << numberType << " [1, %" << stepStart << "], [" <<
-            stepLoad << ", %" << stepNonNull << "]\n";
+    out << "    " << step << " = extractvalue " << range << ", 2, 0\n";
 
     // extract inclusive / exclusive from range
     String inclusive = this->nextVar();
@@ -2326,7 +2312,7 @@ String LLVMCodeGenerator::defaultValue(const Type& type) {
 
 void LLVMCodeGenerator::writeMethodDeclaration(Method& method) {
     fCompiler->resolveTypes(&method);
-    if (method.fOwner.fName == "panda.core.Pointer") {
+    if (method.fOwner.fName == POINTER_NAME) {
         return;
     }
 

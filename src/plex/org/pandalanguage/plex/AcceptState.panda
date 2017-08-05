@@ -1,0 +1,20 @@
+package org.pandalanguage.plex
+
+class AcceptState : State {
+    def token:Int
+
+    init(token:Int) {
+        super.init([])
+        self.token := token
+    }
+
+    @override
+    function accept(c:Char):Bit {
+        return false
+    }
+
+    @override
+    function ->>():String {
+        return "new AcceptState(" + token + ")"
+    }
+}

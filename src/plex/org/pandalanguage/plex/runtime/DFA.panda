@@ -1,0 +1,87 @@
+package org.pandalanguage.plex.runtime
+
+class DFA {
+    def transitions:ImmutableArray<ImmutableArray<Int>>
+
+    def accepts:ImmutableArray<Int>
+
+    var rawToken := RawToken()
+
+    var pushback := PushbackInputStream(MemoryInputStream("this is a test (there's nothing here)"))
+
+    property source:LineNumberInputStream := LineNumberInputStream(pushback)
+
+    var text := MutableString()
+
+    var line := 1
+
+    var column := 1
+
+    init(transitions:ImmutableArray<ImmutableArray<Int>>, accepts:ImmutableArray<Int>) {
+        self.transitions := transitions
+        self.accepts := accepts
+    }
+
+    method set_source(source:InputStream) {
+        self.pushback := PushbackInputStream(source)
+        self._source := LineNumberInputStream(pushback)
+        assert self.source.line = 1 & self.source.column = 1
+    }
+
+    method next():RawToken {
+        var currentState := 1
+        var hitEOF := false
+        rawToken.startLine := source.line
+        rawToken.startColumn := source.column
+        var lastLine := -1
+        var lastColumn := -1
+        var lastAccept := -1
+        var lastAcceptPosition := -1
+        loop {
+            def c := source.readChar()
+            if c = null {
+                hitEOF := true
+                break
+            }
+            if c->Int >= transitions.length {
+                Console.printLine("invalid token (" + c->Int + " > " + transitions.length +
+                        ") at " + source.line + ", " + source.column)
+                System.exit(1)
+            }
+            currentState := transitions[c->Int][currentState]
+            if currentState != 0 {
+                text.append(c)
+                var newAccept := accepts[currentState]
+                if newAccept != -1 {
+                    lastAccept := newAccept
+                    lastAcceptPosition := text.length
+                    lastLine := source.line
+                    lastColumn := source.column
+                }
+            }
+            else {
+                pushback.pushback(c)
+                break
+            }
+        }
+        if text.length > 0 {
+            if lastAccept != -1 {
+                pushback.pushback(text[lastAcceptPosition..])
+                text.remove(lastAcceptPosition, text.length)
+                source.line := lastLine
+                source.column := lastColumn
+                rawToken.type := lastAccept
+                rawToken.text := text.convert()
+                text.clear()
+                return rawToken
+            }
+        }
+        else if hitEOF {
+            rawToken.type := 0
+            rawToken.text := "<EOF>"
+            return rawToken
+        }
+        Console.printLine("invalid token", rawToken.startLine, rawToken.startColumn)
+        System.exit(1)
+    }    
+}

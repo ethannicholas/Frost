@@ -1,6 +1,6 @@
 package panda.io
 
-uses panda.core.Pointer
+uses panda.unsafe.Pointer
 
 @abstract
 class InputStream {
@@ -35,8 +35,22 @@ class InputStream {
     @abstract
     method read():Int8?
 
-    @abstract
-    method read(buffer:Pointer<Int8>, max:Int):Int
+    method read(buffer:Pointer<Int8>, max:Int):Int {
+        var i := 0
+        while i < max {
+            def next:Int8? := read()
+            if next = null {
+                break
+            }
+            buffer[i] := next
+            i += 1
+        }
+    }
+
+    @final
+    method read(buffer:Pointer<Char8>, max:Int):Int {
+        return read(buffer->Pointer<Int8>, max)
+    }
 
     method readFully():String {
         constant BUFFER_SIZE := 2048
@@ -102,7 +116,7 @@ class InputStream {
         loop {
             def c:Char8? := read()
             if c = null {
-                if result.size = 0 {
+                if result.length = 0 {
                     return null
                 }
                 break

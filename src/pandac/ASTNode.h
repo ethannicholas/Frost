@@ -99,7 +99,6 @@ struct ASTNode {
         VARS,
         VOID,
         WHEN,
-        WHENS,
         WHILE
     };
 
@@ -261,7 +260,6 @@ struct ASTNode {
             case Kind::VARS:                    result += "Vars";                  break;
             case Kind::VOID:                    result += "Void";                  break;
             case Kind::WHEN:                    result += "When";                  break;
-            case Kind::WHENS:                   result += "Whens";                 break;
             case Kind::WHILE:                   result += "While";                 break;
         }
         result += "(";

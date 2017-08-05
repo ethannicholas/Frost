@@ -247,6 +247,12 @@ private:
 
     bool convertIf(const ASTNode& i, IRNode* out);
 
+    bool convertWhenTest(const Variable* value, const ASTNode& test, IRNode* out);
+
+    bool convertWhen(const Variable* value, const ASTNode& w, IRNode* out);
+
+    bool convertMatch(const ASTNode& m, IRNode* out);
+
     bool convertWhile(const ASTNode& w, IRNode* out);
 
     bool convertDo(const ASTNode& d, IRNode* out);

@@ -1,6 +1,6 @@
 package panda.collections
 
-uses panda.core.Pointer
+uses panda.unsafe.Pointer
 
 ====================================================================================================
 A single key/value pair from a `HashMap`.

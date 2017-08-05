@@ -153,6 +153,8 @@ void reportErrors(ErrorReporter& errors) {
 
 int main(int argc, char** argv) {
     std::vector<String> sources;
+    std::vector<String> imports = { "../src" };
+    bool llc = false;
     String dest;
     Format format = Format::EXECUTABLE;
     for (int i = 1; i < argc; i++) {
@@ -160,6 +162,11 @@ int main(int argc, char** argv) {
             ++i;
             ASSERT(i < argc);
             dest = argv[i];
+        }
+        else if (!strcmp(argv[i], "-i")) {
+            ++i;
+            ASSERT(i < argc);
+            imports.push_back(argv[i]);
         }
         else if (!strcmp(argv[i], "-f")) {
             ++i;
@@ -175,18 +182,20 @@ int main(int argc, char** argv) {
                 exit(1);
             }
         }
+        else if (!strcmp(argv[i], "-llc")) {
+            llc = true;
+        }
         else {
             sources.push_back(argv[i]);
         }
     }
     std::vector<ASTNode> parsed;
     const char* llvm = "/tmp/output.ll";
-    {
+    if (!llc) {
         std::ofstream out(llvm);
         LLVMCodeGenerator codeGenerator(&out);
         ErrorReporter errors;
-        Compiler compiler({ "../src" },
-                &codeGenerator, &errors);
+        Compiler compiler(std::move(imports), &codeGenerator, &errors);
         std::vector<String> names;
         for (auto path : sources) {
             names.push_back(path.substr(path.find_last_of("/\\") + 1));

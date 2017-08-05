@@ -1,0 +1,29 @@
+package panda.core
+
+uses panda.unsafe.Pointer
+
+class Char32 : Value {
+    init(value:Int32) {
+        self.value := value.value
+    }
+
+    function =(other:Char32):Bit {
+        return value = other.value
+    }
+
+    function !=(other:Char32):Bit {
+        return value != other.value
+    }
+
+    function convert():Int32 {
+        return Int32(value)
+    }
+
+    @override
+    function convert():String {
+        return "need unicode conversion"
+    }
+
+    @private
+    def value:builtin_int32
+}

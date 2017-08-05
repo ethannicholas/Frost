@@ -132,6 +132,8 @@ private:
 
     bool loopLoop(ASTNode* outResult, String label = "");
 
+    bool when(ASTNode* outResult);
+
     bool matchStatement(ASTNode* outResult);
 
     bool methodDeclaration(ASTNode* outResult, ASTNode doccomment = ASTNode(),

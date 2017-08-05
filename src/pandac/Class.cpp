@@ -17,3 +17,10 @@ std::vector<Type>& Class::getRawInterfaces(Compiler* compiler) {
     ASSERT(fTypesResolved);
     return fRawInterfaces;
 }
+
+SymbolTable& Class::getSymbolTable(Compiler* compiler) {
+    if (!fTypesResolved) {
+        compiler->resolveTypes(this);
+    }
+    return fSymbolTable;
+}

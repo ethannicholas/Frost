@@ -16,7 +16,7 @@ class Console {
 
     @class
     method print(s:String) {
-        for i in 0 .. s.size {
+        for i in 0 .. s.length {
             Console.print(s.data[i])
         }
     }
@@ -47,7 +47,7 @@ class Console {
         loop {
             def c:Char8? := read()
             if c = null {
-                if result.size = 0 {
+                if result.length = 0 {
                     return null
                 }
                 break

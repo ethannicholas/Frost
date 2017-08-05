@@ -69,6 +69,8 @@ struct Class : public Symbol {
 
     std::vector<Type>& getRawInterfaces(Compiler* compiler);
 
+    SymbolTable& getSymbolTable(Compiler* compiler);
+
     String simpleName() {
         int idx = fName.find_last_of(".");
         if (idx == std::string::npos) {
@@ -88,8 +90,6 @@ struct Class : public Symbol {
     Annotations fAnnotations;
 
     SymbolTable fAliasTable;
-
-    SymbolTable fSymbolTable;
 
     std::vector<GenericParameter> fParameters;
 
@@ -125,6 +125,10 @@ private:
     Type fRawSuper;
 
     std::vector<Type> fRawInterfaces;
+
+    SymbolTable fSymbolTable;
+
+    friend class Scanner;
 
     typedef Symbol INHERITED;
 };

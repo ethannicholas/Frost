@@ -1152,8 +1152,129 @@ bool PandaParser::invariant(ASTNode* outResult) {
     abort();
 }
 
+// when = WHEN expression (COMMA expression)* COLON statement* terminalStatement?
+bool PandaParser::when(ASTNode* outResult) {
+    Token start;
+    if (!this->expect(Token::Kind::WHEN, "'when'", &start)) {
+        return false;
+    }
+    std::vector<ASTNode> expressions;
+    ASTNode expr;
+    if (!this->expression(&expr)) {
+        return false;
+    }
+    expressions.push_back(std::move(expr));
+    while (this->checkNext(Token::Kind::COMMA)) {
+        if (!this->expression(&expr)) {
+            return false;
+        }
+        expressions.push_back(std::move(expr));
+    }
+    std::vector<ASTNode> children;
+    children.emplace_back(start.fPosition, ASTNode::Kind::EXPRESSIONS, std::move(expressions));
+    if (!this->expect(Token::Kind::COLON, "':'")) {
+        return false;
+    }
+    for (;;) {
+        switch (this->peek().fKind) {
+            case Token::Kind::WHEN:    // fall through
+            case Token::Kind::DEFAULT: // fall through
+            case Token::Kind::RBRACE:
+                goto end;
+            case Token::Kind::BREAK:    // fall through
+            case Token::Kind::CONTINUE: // fall through
+            case Token::Kind::RETURN: {
+                ASTNode statement;
+                if (!this->terminalStatement(&statement)) {
+                    return false;
+                }
+                children.push_back(std::move(statement));
+                goto end;
+            }
+            default: {
+                ASTNode statement;
+                if (!this->statement(&statement)) {
+                    return false;
+                }
+                children.push_back(std::move(statement));
+            }
+        }
+    }
+    end:
+    *outResult = ASTNode(start.fPosition, ASTNode::Kind::WHEN, std::move(children));
+    return true;
+}
+
+// match = MATCH expression LBRACE when* (DEFAULT COLON statement*)? RBRACE
 bool PandaParser::matchStatement(ASTNode* outResult) {
-    abort();
+    Token start;
+    if (!this->expect(Token::Kind::MATCH, "'match'", &start)) {
+        return false;
+    }
+    std::vector<ASTNode> children;
+    ASTNode expr;
+    if (!this->expression(&expr)) {
+        return false;
+    }
+    children.push_back(std::move(expr));
+    if (!this->expect(Token::Kind::LBRACE, "'{'")) {
+        return false;
+    }
+    for (;;) {
+        Token next = this->peek();
+        switch (next.fKind) {
+            case Token::Kind::RBRACE:
+                goto end;
+            case Token::Kind::WHEN: {
+                ASTNode when;
+                if (!this->when(&when)) {
+                    return false;
+                }
+                children.push_back(std::move(when));
+                break;
+            }
+            case Token::Kind::DEFAULT: {
+                Token def = this->nextToken();
+                if (!this->expect(Token::Kind::COLON, "':'")) {
+                    return false;
+                }
+                std::vector<ASTNode> statements;
+                for (;;) {
+                    ASTNode statement;
+                    switch (this->peek().fKind) {
+                        case Token::Kind::RBRACE:
+                            goto defaultEnd;
+                        case Token::Kind::BREAK:    // fall through
+                        case Token::Kind::CONTINUE: // fall through
+                        case Token::Kind::RETURN: {
+                            if (!this->terminalStatement(&statement)) {
+                                return false;
+                            }
+                            statements.push_back(std::move(statement));
+                            goto defaultEnd;
+                        }
+                        default:
+                            if (!this->statement(&statement)) {
+                                return false;
+                            }
+                            statements.push_back(std::move(statement));
+                    }
+                }
+                defaultEnd:
+                children.emplace_back(def.fPosition, ASTNode::Kind::DEFAULT, std::move(statements));
+                goto end;
+            }
+            default:
+                this->error(next.fPosition, "expected 'when', 'default', or '}', but found '" +
+                        next.fText + "'");
+        }
+    }
+    end:
+    if (!this->expect(Token::Kind::RBRACE, "'}'")) {
+        return false;
+    }
+    *outResult = ASTNode(start.fPosition, ASTNode::Kind::MATCH, std::move(children));
+    return true;
 }
 
 // methodDeclaration = METHOD methodName parameters typeDeclaration? block? postconditions?
@@ -1430,18 +1551,22 @@ bool PandaParser::returnStatement(ASTNode* outResult) {
     if (!this->expect(Token::Kind::RETURN, "'return'", &start)) {
         return false;
     }
-    if (this->peek().fKind != Token::Kind::RBRACE) {
-        std::vector<ASTNode> children;
-        ASTNode child;
-        if (!this->expression(&child)) {
-            return false;
-        }
-        children.push_back(std::move(child));
-        *outResult = ASTNode(start.fPosition, ASTNode::Kind::RETURN, std::move(children));
-        return true;
+    switch (this->peek().fKind) {
+        case Token::Kind::RBRACE:  // fall through
+        case Token::Kind::WHEN:    // fall through
+        case Token::Kind::DEFAULT:
+            *outResult = ASTNode(start.fPosition, ASTNode::Kind::RETURN);
+            return true;
+        default:
+            std::vector<ASTNode> children;
+            ASTNode child;
+            if (!this->expression(&child)) {
+                return false;
+            }
+            children.push_back(std::move(child));
+            *outResult = ASTNode(start.fPosition, ASTNode::Kind::RETURN, std::move(children));
+            return true;
     }
-    *outResult = ASTNode(start.fPosition, ASTNode::Kind::RETURN);
-    return true;
 }
 
 // singleVar = target (ASSIGNMENT expression)?

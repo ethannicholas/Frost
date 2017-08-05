@@ -1,0 +1,13 @@
+package org.pandalanguage.plex
+
+@abstract
+class State : Value {
+    def next:ImmutableArray<Int>
+
+    constructor(next:ImmutableArray<Int>) {
+        self.next := next
+    }
+
+    @abstract
+    function accept(c:Char):Bit
+}

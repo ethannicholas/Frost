@@ -983,12 +983,12 @@ bool Compiler::call(IRNode method, std::vector<IRNode> args, IRNode* out) {
                 if (!this->coerce(&args[i], m.parameterType(i), &converted)) {
                     return false;
                 }
-                if (m.fMethod.fOwner.fName != "panda.core.Pointer") {
+                if (m.fMethod.fOwner.fName != POINTER_NAME) {
                     this->cast(out->fPosition, &converted, false, actualMethodType.fSubtypes[i]);
                 }
                 children.push_back(std::move(converted));
             }
-            if (m.fMethod.fOwner.fName == "panda.core.Pointer") {
+            if (m.fMethod.fOwner.fName == POINTER_NAME) {
                 *out = IRNode(method.fPosition, IRNode::Kind::CALL, m.returnType(),
                         std::move(children));
             }
@@ -1048,11 +1048,11 @@ bool Compiler::call(IRNode method, std::vector<IRNode> args, IRNode* out) {
             if (!cl) {
                 return false;
             }
-            Symbol* symbol = cl->fSymbolTable["init"];
+            Symbol* symbol = cl->getSymbolTable(this)["init"];
             ASSERT(symbol);
             IRNode target(method.fPosition, IRNode::Kind::TYPE_REFERENCE, this->typePointer(t));
             IRNode init;
-            if (!this->symbolRef(method.fPosition, cl->fSymbolTable, symbol, &init, &target)) {
+            if (!this->symbolRef(method.fPosition, cl->getSymbolTable(this), symbol, &init, &target)) {
                 return false;
             }
             IRNode initCall;
@@ -1079,7 +1079,7 @@ bool Compiler::call(IRNode target, String methodName, std::vector<IRNode> args, 
     if (!cl) {
         return false;
     }
-    Symbol* symbol = cl->fSymbolTable[methodName];
+    Symbol* symbol = cl->getSymbolTable(this)[methodName];
     if (!symbol) {
         this->error(target.fPosition, "'" + target.fType.description() +
                 "' does not have a method named '" + methodName + "'");
@@ -1087,7 +1087,7 @@ bool Compiler::call(IRNode target, String methodName, std::vector<IRNode> args, 
     }
     IRNode method;
     Position p = target.fPosition;
-    if (!this->symbolRef(p, cl->fSymbolTable, symbol, &method, &target)) {
+    if (!this->symbolRef(p, cl->getSymbolTable(this), symbol, &method, &target)) {
         return false;
     }
     return this->call(std::move(method), std::move(args), out);
@@ -1334,7 +1334,7 @@ int Compiler::operatorMatchLeft(Class& leftClass, IRNode* left, Operator op, IRN
     this->resolveTypes(&leftClass);
     int min = INT_MAX;
     ASSERT(!outResult->size());
-    const Symbol* leftMethods = leftClass.fSymbolTable[operator_text(op)];
+    const Symbol* leftMethods = leftClass.getSymbolTable(this)[operator_text(op)];
     if (leftMethods) {
         switch (leftMethods->fKind) {
             case Symbol::Kind::METHOD: {
@@ -1416,7 +1416,7 @@ int Compiler::operatorMatch(IRNode* left, Operator op, IRNode* right, const Type
             return false;
         }
         this->resolveTypes(rightClass);
-        const Symbol* rightMethods = rightClass->fSymbolTable[operator_text(op)];
+        const Symbol* rightMethods = rightClass->getSymbolTable(this)[operator_text(op)];
         if (rightMethods) {
             switch (rightMethods->fKind) {
                 case Symbol::Kind::METHOD: {
@@ -1856,7 +1856,7 @@ bool Compiler::symbolRef(Position p, const SymbolTable& st, Symbol* symbol, IRNo
         }
         case Symbol::Kind::METHODS: {
             std::vector<IRNode> children;
-            this->addAllMethods(p, st, &children[0], symbol->fName, &children, st.fClass);
+            this->addAllMethods(p, st, target, symbol->fName, &children, st.fClass);
             children.insert(children.begin(), target ? std::move(*target) :
                     IRNode(p, IRNode::Kind::VOID));
             *out = IRNode(p, IRNode::Kind::UNRESOLVED_METHOD_REFERENCE,
@@ -1944,7 +1944,7 @@ bool Compiler::convertPrefix(Position p, Operator op, IRNode base, IRNode* out) 
         if (!cl) {
             return false;
         }
-        Symbol* s = cl->fSymbolTable[name];
+        Symbol* s = cl->getSymbolTable(this)[name];
         if (s) {
             Method* m = nullptr;
             switch (s->fKind) {
@@ -2059,7 +2059,7 @@ bool Compiler::convertDot(const ASTNode& d, IRNode* out) {
             if (!cl) {
                 return false;
             }
-            st = &cl->fSymbolTable;
+            st = &cl->getSymbolTable(this);
             name = "class " + cl->fName;
             break;
         }
@@ -2072,7 +2072,7 @@ bool Compiler::convertDot(const ASTNode& d, IRNode* out) {
         case IRNode::Kind::SUPER: {
             Class* super = this->resolveClass(fCurrentClass.top()->getRawSuper(this));
             ASSERT(super);
-            st = &super->fSymbolTable;
+            st = &super->getSymbolTable(this);
             name = "class " + super->fName;
             break;
         }
@@ -2095,7 +2095,8 @@ bool Compiler::convertDot(const ASTNode& d, IRNode* out) {
                 if (!cl) {
                     return false;
                 }
-                st = &cl->fSymbolTable;
+                this->resolveTypes(cl);
+                st = &cl->getSymbolTable(this);
                 name = "class " + cl->fName;
             }
             else {
@@ -2253,21 +2254,111 @@ bool Compiler::convertExpression(const ASTNode& e, IRNode* out) {
     return result;
 }
 
+bool Compiler::convertWhenTest(const Variable* value, const ASTNode& test, IRNode* out) {
+    IRNode target(test.fPosition, IRNode::Kind::VARIABLE_REFERENCE, value->fType, value);
+    std::vector<IRNode> callChildren;
+    IRNode testValue;
+    if (!this->convertExpression(test, &testValue)) {
+        return false;
+    }
+    callChildren.push_back(std::move(testValue));
+    return this->call(std::move(target), "=", std::move(callChildren), nullptr, out);
+}
+
+bool Compiler::convertWhen(const Variable* value, const ASTNode& w, IRNode* out) {
+    ASSERT(w.fChildren.size() >= 1);
+    ASSERT(w.fChildren[0].fKind == ASTNode::Kind::EXPRESSIONS);
+    ASSERT(w.fChildren[0].fChildren.size() >= 1);
+    IRNode test;
+    if (!this->convertWhenTest(value, w.fChildren[0].fChildren[0], &test)) {
+        return false;
+    }
+    for (int i = 1; i < w.fChildren[0].fChildren.size(); ++i) {
+        IRNode nextTest;
+        if (!this->convertWhenTest(value, w.fChildren[0].fChildren[i], &nextTest)) {
+            return false;
+        }
+        std::vector<IRNode> callChildren;
+        callChildren.push_back(std::move(nextTest));
+        if (!this->call(std::move(test), "|", std::move(callChildren), nullptr, &test)) {
+            return false;
+        }
+    }
+    AutoSymbolTable st(this);
+    std::vector<IRNode> statements;
+    for (int i = 1; i < w.fChildren.size(); ++i) {
+        IRNode statement;
+        if (!this->convertStatement(w.fChildren[i], &statement)) {
+            return false;
+        }
+        statements.push_back(std::move(statement));
+    }
+    std::vector<IRNode> children;
+    children.push_back(std::move(test));
+    children.emplace_back(w.fPosition, IRNode::Kind::BLOCK, std::move(statements));
+    *out = IRNode(w.fPosition, IRNode::Kind::IF, std::move(children));
+    return true;
+}
+
+bool Compiler::convertMatch(const ASTNode& m, IRNode* out) {
+    ASSERT(m.fKind == ASTNode::Kind::MATCH);
+    ASSERT(m.fChildren.size() >= 1);
+    IRNode value;
+    if (!this->convertExpression(m.fChildren[0], &value)) {
+        return false;
+    }
+    std::vector<IRNode> children;
+    Variable* var = new Variable(m.fPosition, "$match$" + std::to_string(m.fPosition.fLine) + "$" +
+            std::to_string(m.fPosition.fColumn), value.fType);
+    std::vector<IRNode> declChildren;
+    declChildren.emplace_back(value.fPosition, IRNode::Kind::VARIABLE_REFERENCE, var->fType, var);
+    declChildren.push_back(std::move(value));
+    std::vector<IRNode> varChildren;
+    varChildren.emplace_back(var->fPosition, IRNode::Kind::DECLARATION, std::move(declChildren));
+    children.emplace_back(var->fPosition, IRNode::Kind::DEF, std::move(varChildren));
+    for (int i = 1; i < m.fChildren.size(); ++i) {
+        const ASTNode& c = m.fChildren[i];
+        switch (c.fKind) {
+            case ASTNode::Kind::WHEN: {
+                IRNode when;
+                if (!this->convertWhen(var, c, &when)) {
+                    return false;
+                }
+                children.push_back(std::move(when));
+                break;
+            }
+            case ASTNode::Kind::DEFAULT: {
+                std::vector<IRNode> statements;
+                for (int i = 0; i < c.fChildren.size(); ++i) {
+                    IRNode statement;
+                    if (!this->convertStatement(c.fChildren[i], &statement)) {
+                        return false;
+                    }
+                    statements.push_back(std::move(statement));
+                }
+                children.emplace_back(c.fPosition, IRNode::Kind::BLOCK, std::move(statements));
+                break;
+            }
+            default:
+                abort();
+        }
+    }
+    for (int i = children.size() - 1; i > 1; i--) {
+        ASSERT(children[i - 1].fKind == IRNode::Kind::IF);
+        ASSERT(children[i - 1].fChildren.size() == 2);
+        children[i - 1].fChildren.push_back(std::move(children[i]));
+        children.pop_back();
+    }
+    *out = IRNode(m.fPosition, IRNode::Kind::BLOCK, std::move(children));
+    return true;
+}
+
 bool Compiler::convertIf(const ASTNode& i, IRNode* out) {
     ASSERT(i.fKind == ASTNode::Kind::IF);
     ASSERT(i.fChildren.size() == 2 || i.fChildren.size() == 3);
     IRNode test;
-    if (this->convertExpression(i.fChildren[0], &test)) {
-        if (!this->coerce(&test, Type::Bit())) {
-            return false;
-        }
-        Class* bit = this->getClass("panda.core.Bit");
-        ASSERT(bit);
-        Field* value = (Field*) bit->fSymbolTable["value"];
-        std::vector<IRNode> children;
-        children.push_back(std::move(test));
-        test = IRNode(i.fPosition, IRNode::Kind::FIELD_REFERENCE, Type::BuiltinBit(), value,
-                std::move(children));
+    if (!this->convertExpression(i.fChildren[0], &test) || !this->coerce(&test, Type::Bit())) {
+        return false;
     }
     IRNode ifTrue;
     this->convertStatement(i.fChildren[1], &ifTrue);
@@ -2290,17 +2381,8 @@ bool Compiler::convertWhile(const ASTNode& w, IRNode* out) {
     ASSERT(w.fChildren.size() == 2);
     AutoLoop loop(this, w.fText);
     IRNode test;
-    if (this->convertExpression(w.fChildren[0], &test)) {
-        if (!this->coerce(&test, Type::Bit())) {
-            return false;
-        }
-        Class* bit = this->getClass("panda.core.Bit");
-        ASSERT(bit);
-        Field* value = (Field*) bit->fSymbolTable["value"];
-        std::vector<IRNode> children;
-        children.push_back(std::move(test));
-        test = IRNode(w.fPosition, IRNode::Kind::FIELD_REFERENCE, Type::BuiltinBit(), value,
-                std::move(children));
+    if (!this->convertExpression(w.fChildren[0], &test) || !this->coerce(&test, Type::Bit())) {
+        return false;
     }
     IRNode block;
     this->convertBlock(w.fChildren[1], &block);
@@ -2318,17 +2400,8 @@ bool Compiler::convertDo(const ASTNode& d, IRNode* out) {
     IRNode block;
     this->convertBlock(d.fChildren[0], &block);
     IRNode test;
-    if (this->convertExpression(d.fChildren[1], &test)) {
-        if (!this->coerce(&test, Type::Bit())) {
-            return false;
-        }
-        Class* bit = this->getClass("panda.core.Bit");
-        ASSERT(bit);
-        Field* value = (Field*) bit->fSymbolTable["value"];
-        std::vector<IRNode> children;
-        children.push_back(std::move(test));
-        test = IRNode(d.fPosition, IRNode::Kind::FIELD_REFERENCE, Type::BuiltinBit(), value,
-                std::move(children));
+    if (!this->convertExpression(d.fChildren[1], &test) || !this->coerce(&test, Type::Bit())) {
+        return false;
     }
     std::vector<IRNode> children;
     children.push_back(std::move(block));
@@ -2371,27 +2444,21 @@ bool Compiler::convertIteratorFor(String label, IRNode target, IRNode iterator, 
             iter);
     declChildren.push_back(std::move(iterator));
     std::vector<IRNode> varChildren;
-    varChildren.emplace_back(iterator.fPosition, IRNode::Kind::DECLARATION,
+    varChildren.emplace_back(iter->fPosition, IRNode::Kind::DECLARATION,
             std::move(declChildren));
-    statements.emplace_back(iterator.fPosition, IRNode::Kind::DEF, std::move(varChildren));
+    statements.emplace_back(iter->fPosition, IRNode::Kind::DEF, std::move(varChildren));
     std::vector<IRNode> whileChildren;
     IRNode done;
-    if (!call(IRNode(iterator.fPosition, IRNode::Kind::VARIABLE_REFERENCE, iter->fType, iter),
+    if (!call(IRNode(iter->fPosition, IRNode::Kind::VARIABLE_REFERENCE, iter->fType, iter),
             "get_done", std::vector<IRNode>(), nullptr, &done)) {
         // shouldn't ever happen
         return false;
     }
-    Class* bit = this->getClass("panda.core.Bit");
-    ASSERT(bit);
-    Field* value = (Field*) bit->fSymbolTable["value"];
-    std::vector<IRNode> bitChildren;
-    bitChildren.push_back(std::move(done));
-    IRNode bitValue(iterator.fPosition, IRNode::Kind::FIELD_REFERENCE, Type::BuiltinBit(), value,
-            std::move(bitChildren));
-    std::vector<IRNode> notChildren;
-    notChildren.push_back(std::move(bitValue));
-    whileChildren.emplace_back(iterator.fPosition, IRNode::Kind::PREFIX, Type::BuiltinBit(),
-            (uint64_t) Operator::NOT, std::move(notChildren));
+    IRNode notCall;
+    if (!call(std::move(done), "!", {}, nullptr, &notCall)) {
+        return false;
+    }
+    whileChildren.push_back(std::move(notCall));
     declChildren.clear();
     declChildren.emplace_back(iterator.fPosition, IRNode::Kind::VARIABLE_REFERENCE,
             targetVar->fType, targetVar);
@@ -2731,7 +2798,7 @@ bool Compiler::convertAssert(const ASTNode& a, IRNode* out) {
         }
         Class* bit = this->getClass("panda.core.Bit");
         ASSERT(bit);
-        Field* value = (Field*) bit->fSymbolTable["value"];
+        Field* value = (Field*) bit->getSymbolTable(this)["value"];
         std::vector<IRNode> children;
         children.push_back(std::move(test));
         test = IRNode(a.fPosition, IRNode::Kind::FIELD_REFERENCE, Type::BuiltinBit(), value,
@@ -2774,6 +2841,8 @@ bool Compiler::convertStatement(const ASTNode& s, IRNode* out) {
         }
         case ASTNode::Kind::IF:
             return this->convertIf(s, out);
+        case ASTNode::Kind::MATCH:
+            return this->convertMatch(s, out);
         case ASTNode::Kind::WHILE:
             return this->convertWhile(s, out);
         case ASTNode::Kind::DO:
@@ -2862,7 +2931,7 @@ IRNode Compiler::defaultValue(Position p, const Type& type) {
 
 void Compiler::compile(Method& method) {
     this->resolveTypes(&method);
-    SymbolTable symbols(&method.fOwner.fSymbolTable, &method.fOwner);
+    SymbolTable symbols(&method.fOwner.getSymbolTable(this), &method.fOwner);
     fSymbolTable = &symbols;
     const Method* overridden;
     if (method.fMethodKind != Method::Kind::INIT) {
@@ -2970,7 +3039,7 @@ void Compiler::resolveTypes(Method* m) {
     if (m->fOwner.fAnnotations.isFinal()) {
         m->fAnnotations.fFlags |= Annotations::Flag::FINAL;
     }
-    const SymbolTable& st = m->fOwner.fSymbolTable;
+    const SymbolTable& st = m->fOwner.getSymbolTable(this);
     this->resolveType(st, &m->fReturnType);
     for (auto& p : m->fParameters) {
         this->resolveType(st, &p.fType);
@@ -2979,7 +3048,7 @@ void Compiler::resolveTypes(Method* m) {
 }
 
 void Compiler::resolveType(Field* f) {
-    const SymbolTable& st = f->fOwner.fSymbolTable;
+    const SymbolTable& st = f->fOwner.getSymbolTable(this);
     this->resolveType(st, &f->fType);
 }
 
@@ -2990,19 +3059,19 @@ void Compiler::resolveTypes(Class* cl) {
     cl->fTypesResolved = true;
     fCurrentClass.push(cl);
     for (auto& p : cl->fParameters) {
-        this->resolveType(cl->fSymbolTable, &p.fType);
+        this->resolveType(cl->getSymbolTable(this), &p.fType);
     }
-    if (this->resolveType(cl->fSymbolTable, &cl->getRawSuper(this))) {
+    if (this->resolveType(cl->getSymbolTable(this), &cl->getRawSuper(this))) {
         Class* super = this->getClass(cl->getRawSuper(this));
         if (super) {
-            cl->fSymbolTable.fParents.push_back(&super->fSymbolTable);
+            cl->getSymbolTable(this).fParents.push_back(&super->getSymbolTable(this));
         }
     }
     for (auto& intf : cl->getRawInterfaces(this)) {
-        if (this->resolveType(cl->fSymbolTable, &intf)) {
+        if (this->resolveType(cl->getSymbolTable(this), &intf)) {
             Class* intfClass = this->getClass(intf);
             if (intfClass) {
-                cl->fSymbolTable.fParents.push_back(&intfClass->fSymbolTable);
+                cl->getSymbolTable(this).fParents.push_back(&intfClass->getSymbolTable(this));
             }
         }
     }
@@ -3025,7 +3094,7 @@ std::vector<Method*>& Compiler::getVTable(Class& cl) {
                 fCurrentClass.pop();
                 return cl.fVirtualMethods;
             }
-            cl.fSymbolTable.fParents.push_back(&super->fSymbolTable);
+            cl.getSymbolTable(this).fParents.push_back(&super->getSymbolTable(this));
             cl.fVirtualMethods = this->getVTable(*super);
         }
        for (Method* derived : cl.fMethods) {
@@ -3095,7 +3164,7 @@ bool Compiler::processFieldValue(Field* field) {
     SymbolTable* old = fSymbolTable;
     if (!fScanner.fFieldValues[desc.fValueIndex].fConvertedValue) {
         fCurrentClass.push(&field->fOwner);
-        fSymbolTable = &field->fOwner.fSymbolTable;
+        fSymbolTable = &field->fOwner.getSymbolTable(this);
         IRNode* converted = new IRNode();
         if (!this->convertExpression(*fScanner.fFieldValues[desc.fValueIndex].fUnconvertedValue,
                 converted)) {
@@ -3111,7 +3180,7 @@ bool Compiler::processFieldValue(Field* field) {
     ASSERT(desc.fTupleIndices.size() == 0); // until tuple support is in...
     field->fValue = fScanner.fFieldValues[desc.fValueIndex].fConvertedValue.get();
     fCurrentClass.push(&field->fOwner);
-    fSymbolTable = &field->fOwner.fSymbolTable;
+    fSymbolTable = &field->fOwner.getSymbolTable(this);
     if (field->fType == Type::Void()) {
         field->fType = variable_type(*field->fValue);
     }

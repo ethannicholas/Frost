@@ -1,0 +1,29 @@
+package org.pandalanguage.plex
+
+class AnyState : State {
+    constructor(next:Int...) {
+        super.constructor(new ImmutableArray<Int>(next))
+    }
+
+    constructor(next:ImmutableArray<Int>) {
+        super.constructor(next)
+    }
+
+    @override
+    function accept(c:Char):Bit {
+        return c != '\n'
+    }
+
+    @override
+    function ->>():String {
+        var result := new MutableString()
+        result.append("new AnyState(")
+        for i in 0 ... next.length - 1 {
+            if i > 0
+                result.append(", ")
+            result.append(next[i])
+        }
+        result.append(")")
+        return result->>(String)
+    }    
+}

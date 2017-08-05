@@ -8,6 +8,8 @@
 #include <set>
 #include <vector>
 
+#define POINTER_NAME "panda.unsafe.Pointer"
+
 struct Type : public Symbol {
     enum class Category {
         // no type
@@ -126,7 +128,7 @@ struct Type : public Symbol {
     }
 
     bool isPointer() const {
-        return fCategory == Category::GENERIC && fSubtypes[0].fName == "panda.core.Pointer";
+        return fCategory == Category::GENERIC && fSubtypes[0].fName == POINTER_NAME;
     }
 
     bool operator==(const Type& other) const {

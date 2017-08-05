@@ -8,20 +8,28 @@ uses org.pandalanguage.plex.runtime.DFA
 A simple lexical analyzer generator for Panda, used to build pandac's lexer.
 ====================================================================================================
 class PLex {
-    def tokens := new HashMap<String, Regex>()
+    def tokens := HashMap<String, Regex>()
     def out:IndentedOutputStream
 
-    init(cfg:File, out:OutputStream) {
-        self.out := new IndentedOutputStream(out)
+    method process(cfg:File, out:OutputStream) {
+        self.out := IndentedOutputStream(out)
         load(cfg)
+        tokens.clear()
     }
 
     function escape(s:String):String {
-        return s.replace(#/([+*?|.()\[\]])/#, "\\$1")
+        def result := MutableString()
+        for i in 0 .. s.length {
+            if "+*?|.()[]".contains(s[i]) {
+                result.append("\\")
+            }
+            result.append(s[i])
+        }
+        return result.convert()
     }
 
     method load(input:File) {
-        def nfa := new NFA()
+        def nfa := NFA()
         out.printLine("package org.pandalanguage.pandac.parser")
         out.printLine("uses org.pandalanguage.plex.runtime.*")
         out.printLine()
@@ -33,160 +41,131 @@ class PLex {
         out.write("SHIFTRIGHT")
         offset += 1
         for line in input.lines {
-            line := line.trim
-            if line.length > 0 {
-                def parsed := line.parse(
-                        #/([A-Za-z_][A-Za-z0-9_]*)\s*:=\s*(".*"|/.*/)/#)
-                if parsed != null {
-                    def regex:Regex
-                    def pattern := parsed[1]
-                    if pattern.startsWith('"') { 
-                        regex := new Regex(escape(pattern[1 ..
-                                pattern.length - 1]))
-                    }
-                    else {
-                        assert pattern.startsWith("/")
-                        regex := new Regex(pattern[1 ..
-                                pattern.length - 1])
-                    }
-                    out.writeLine(", -- \{tokens.length + 1}")
-                    out.write(parsed[0])
-                    def states := regex->(Regex).addToNFA(nfa, 
-                            nfa.addState(new AcceptState(tokens.length + 
-                            offset)))
-                    for j in 0 ... states.length - 1
-                        nfa.addStartState(states[j])
-                    tokens[parsed[0]] := regex
+            line := line.trimmed()
+            if line.contains(":=") {
+                def id := line[0 .. line.indexOf(":=")].trimmed()
+                def pattern := line[line.indexOf(":=") + 2].trimmed()
+                def regex:Regex
+                if pattern.startsWith('"') {
+                    regex := Regex(escape(pattern[1 .. pattern.length - 1]))
                 }
-                else
-                    throw new PLexException("error parsing: '" + line + "'")
+                else {
+                    assert pattern.startsWith("/") & pattern.endsWith("/")
+                    regex := Regex(pattern[1 .. pattern.length - 1])
+                }
+                out.printLine(", -- \{tokens.length + 1}")
+                out.write(parsed[0])
+                def states := regex.addToNFA(nfa, nfa.addState(AcceptState(tokens.length +
+                        offset)))
+                for j in 0 ... states.length - 1 {
+                    nfa.addStartState(states[j])
+                }
+                tokens[parsed[0]] := regex
+            }
+            else {
+                assert line.length = 0, "error parsing '\{line}'"
             }
             line := input.readLine()
         }
-        out.writeLine()
+        out.printLine()
         out.level -= 1
-        out.writeLine("}")
+        out.printLine("}")
 
-        out.writeLine()
+        out.printLine()
         writeToken(out)
-        out.writeLine()
+        out.printLine()
 
-        var dfa := new NFAtoDFA(nfa).createDFA()
+        def dfa := NFAtoDFA(nfa).createDFA()
         writeLexer(dfa, out)
-
-        out.close()
     }
 
     method writeToken(out:IndentedOutputStream) {
-        out.writeLine("class Token : Immutable {")
+        out.printLine("class Token : Immutable {")
         out.level += 1
-        out.writeLine("def type:TokenType")
-        out.writeLine("def text:String")
-        out.writeLine("def position:Position")
-        out.writeLine()
-        out.writeLine("constructor(type:TokenType, text:String, position:Position) {")
+        out.printLine("def type:TokenType")
+        out.printLine("def text:String")
+        out.printLine("def position:Position")
+        out.printLine()
+        out.printLine("constructor(type:TokenType, text:String, position:Position) {")
         out.level += 1
-        out.writeLine("self.type := type")
-        out.writeLine("self.text := text")
-        out.writeLine("self.position := position")
+        out.printLine("self.type := type")
+        out.printLine("self.text := text")
+        out.printLine("self.position := position")
         out.level -= 1
-        out.writeLine("}")
-        out.writeLine()
-        out.writeLine("@override")
-        out.writeLine("function format(fmt:String):String {")
+        out.printLine("}")
+        out.printLine()
+        out.printLine("@override")
+        out.printLine("function format(fmt:String):String {")
         out.level += 1
-        out.writeLine('return text')
+        out.printLine('return text')
         out.level -= 1
-        out.writeLine("}")
+        out.printLine("}")
         out.level -= 1
-        out.writeLine("}")
+        out.printLine("}")
     }
-    @post(@pre(out.level) = out.level)
 
     method writeLexer(dfa:DFA, out:IndentedOutputStream) {
-        out.writeLine("class Lexer {")
+        out.printLine("class Lexer {")
         out.level += 1
-        out.writeLine("var file := 'undefined'")
+        out.printLine("var file := 'undefined'")
         writeStateTable(dfa, out)
-        out.writeLine("var dfa := new DFA(transitions, accepts)")
-        out.writeLine("function source():LineNumberInputStream {")
+        out.printLine("var dfa := DFA(transitions, accepts)")
+        out.printLine("function source():LineNumberInputStream {")
         out.level += 1
-        out.writeLine("return dfa.source")
+        out.printLine("return dfa.source")
         out.level -= 1
-        out.writeLine("}")
-        out.writeLine()
-        out.writeLine("@self")
-        out.writeLine("method source:=(source:InputStream) {")
+        out.printLine("}")
+        out.printLine()
+        out.printLine("@self")
+        out.printLine("method source:=(source:InputStream) {")
         out.level += 1
-        out.writeLine("dfa.source := source")
+        out.printLine("dfa.source := source")
         out.level -= 1
-        out.writeLine("}")
-        out.writeLine()
-        out.writeLine("method next():Token {")
+        out.printLine("}")
+        out.printLine()
+        out.printLine("method next():Token {")
         out.level += 1
-        out.writeLine("def raw := dfa.next()")
-        out.writeLine("return new Token(raw.type->>(TokenType), raw.text, " +
-                "new Position(file, raw.startLine, " + 
-                "raw.startColumn))")
+        out.printLine("def raw := dfa.next()")
+        out.printLine("return Token(raw.type->>(TokenType), raw.text, Position(file, " +
+                "raw.startLine, raw.startColumn))")
         out.level -= 1
-        out.writeLine("}")
+        out.printLine("}")
         out.level -= 1
-        out.writeLine("}")
+        out.printLine("}")
     }
-    @post(@pre(out.level) = out.level)
 
     method writeStateTable(dfa:DFA, out:IndentedOutputStream) {
-        out.writeLine("@class function FIXMEconvert(a:ImmutableArray<Int>):ImmutableArray<Int> { return a }")
-        out.writeLine("@class function FIXMEconvert(a:ImmutablePrimitiveArray<Int>):ImmutableArray<Int> { def b := new Array<Int32>() for i in a b.add(i) return new ImmutableArray<Int>(b) }")
-        out.writeLine("@class function FIXMEconvert2(a:ImmutableArray<ImmutableArray<Int>>):ImmutableArray<ImmutableArray<Int>> { return a }")
-        out.writeLine("@class function FIXMEconvert2(a:ImmutablePrimitiveArray<ImmutableArray<Int>>):ImmutableArray<ImmutableArray<Int>> { def b := new Array<ImmutableArray<Int32>>() for i in a b.add(i) return new ImmutableArray<ImmutableArray<Int>>(b) }")
-        out.writeLine("constant transitions:ImmutableArray<ImmutableArray<Int>> := createTransitions()")
-        -- can't just create the thing inline because Java complains about too
-        -- much code in the method, need to break it up
-        out.writeLine("@class")
-        out.writeLine("function createTransitions():ImmutableArray<ImmutableArray<Int>> {")
+        out.printLine("constant transitions := [")
         out.level += 1
-        out.writeLine("return FIXMEconvert2([")
-        out.level += 1
-        for i in 0 .. dfa.transitions.length {
-            if i > 0
-                out.writeLine(",")
-            out.write("createTransitions" + i + "()")
-        }
-        out.level -= 1
-        out.writeLine("])")
-        out.level -= 1
-        out.writeLine("}")
-        for i, a in dfa.transitions {
-            out.writeLine("@class")
-            out.writeLine("function createTransitions" + i + "():ImmutableArray<Int> {")
-            out.level += 1
-            out.write("return FIXMEconvert([")
-            for j, t in a {
-                if j != 0
-                    out.write(", ")
+        var separator := ""
+        for a in dfa.transitions {
+            out.write(separator)
+            out.write("[")
+            var innerSeparator := ""
+            for t in a {
+                out.write(separator)
+                innerSeparator := ", "
                 out.write(t)
             }
-            out.writeLine("])")
-            out.level -= 1
-            out.writeLine("}")
-        }
-        out.writeLine("constant accepts:ImmutableArray<Int> := FIXMEconvert([")
-        out.level += 1
-        for i, a in dfa.accepts {
-            if i != 0
-                out.writeLine(", ")
-            out.write(a)
+            out.printLine("]")
+            separator := ",\n"
         }
         out.level -= 1
-        out.writeLine("])")
+        out.printLine("]")
+        out.printLine("constant accepts := [")
+        separator := ""
+        for a in dfa.accepts {
+            out.write(separator)
+            separator := ", "
+            out.write(a)
+        }
+        out.printLine("]")
     }
-    @post(@pre(out.level) = out.level)
 
     @class
-    method main(arg:PrimitiveArray<String>) {
-        var p := new PLex(new BufferedInputStream(
-                new File(arg[0]).openInputStream()),
-                new BufferedOutputStream(new File(arg[1]).openOutputStream()))
+    method main() {
+        def src := "/tmp/src"
+        def dst := "/tmp/dst"
+        PLex().process(File(src).openInputStream(), File(dst).openOutputStream())
     }
 }

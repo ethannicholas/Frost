@@ -1,0 +1,8 @@
+package org.pandalanguage.plex.runtime
+
+class RawToken {
+    var type := 0
+    var text := ""
+    var startLine := -1
+    var startColumn := -1
+}

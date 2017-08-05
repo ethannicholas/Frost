@@ -1,0 +1,463 @@
+package org.pandalanguage.plex
+
+uses org.pandalanguage.plex.AcceptState
+uses org.pandalanguage.plex.AnyState
+uses org.pandalanguage.plex.NFA
+uses org.pandalanguage.plex.RemappedState
+uses org.pandalanguage.plex.SingleCharState
+uses org.pandalanguage.plex.State
+uses org.pandalanguage.plex.TableState
+
+@abstract
+class Node {
+    @abstract
+    method makeStartStates(context:NFA, accept:ListView<Int>):Array<Int>
+
+    @abstract
+    @override
+    function convert():String
+}
+
+class Set : Node {
+    var inverse := false
+
+    var contents := Array<Object>()
+
+    @class
+    method set(table:List<Bit>, c:Char8) {
+        def i := c.convert()->Int8
+        while table.length <= i {
+            table.add(false)
+        }
+        table[i] := true
+    }
+
+    @override
+    method makeStartStates(context:NFA, accept:ListView<Int>):Array<Int> {
+        def table := Array<Bit>()
+        for i in 0 .. contents.length {
+            if contents[i]-?>SingleChar {
+                set(table, contents[i]->SingleChar.value)
+            }
+            else {
+                var r := contents[i]->CharSet
+                for j in 0 .. r.contents.length {
+                    set(table, r.contents[j])
+                }
+            }
+        }
+        return Regex.singleton(context.addState(TableState(inverse, ImmutableArray<Bit>(table),
+                accept)))
+    }
+
+    @override
+    function convert():String {
+        var result := MutableString()
+        result.append("[")
+        for c in 0 .. contents.length {
+            result.append(contents[i])
+        }
+        result.append("]")
+        return result.convert()
+    }
+}
+
+class Star : Node {
+    def contents:Node
+
+    init(contents:Node) {
+        self.contents := contents
+    }
+
+    @override
+    method makeStartStates(context:NFA, accept:ListView<Int>):Array<Int> {
+        def next := Array<Int>(accept)
+        def stateId := context.addState(RemappedState(ImmutableArray<Int>()))
+        next.add(stateId)
+        def start := contents.makeStartStates(context, next)
+        for state in accept {
+            start.add(state)
+        }
+        def newStates := Array<State>(context.states)
+        newStates[stateId] := RemappedState(ImmutableArray<Int>(start))
+        context.states := ImmutableArray<State>(newStates)
+        return start
+    }    
+
+    @override
+    function convert():String {
+        return contents + "*"
+    }
+}
+
+class Plus : Node {
+    def contents:Node
+
+    init(contents:Node) {
+        self.contents := contents
+    }
+
+    @override
+    method makeStartStates(context:NFA, accept:ListView<Int>):Array<Int> {
+        -- a lot of ugliness has crept in here over time, largely due to
+        -- having to work around the immutability of various objects when these
+        -- objects were not originally built as immutable and I didn't want to
+        -- have to completely rewrite everything. Probably should have.
+        def next := Array<Int>()
+        for state in accept {
+            next.add(state)
+        }
+        def dummy := RemappedState()
+        def index := context.addState(dummy)
+        next.add(index)
+        def start := contents.makeStartStates(context, next)
+        def remapped := RemappedState(ImmutableArray<Int>(start))
+        def newStates := Array<State>(context.states[0 .. index])
+        newStates.add(remapped)
+        newStates.addAll(Array<State>(context.states[index + 1..]))
+        context.states := ImmutableArray<State>(newStates)
+        return start
+    }    
+
+    @override
+    function convert():String {
+        return contents + "+"
+    }
+}
+
+class Option : Node {
+    def contents:Node
+
+    init(contents:Node) {
+        self.contents := contents
+    }
+
+    @override
+    method makeStartStates(context:NFA, accept:ListView<Int>):Array<Int> {
+        def states := Array<Int>()
+        for i in 0 .. accept.length {
+            states.add(accept[i])
+        }
+        def start := contents.makeStartStates(context, accept)
+        for i in 0 .. start.length {
+            states.add(start[i])
+        }
+        return states
+    }    
+
+    @override
+    function convert():String {
+        return contents + "?"
+    }
+}
+
+class Union : Node {
+    def left:Node
+
+    def right:Node
+
+    init(left:Node, right:Node) {
+        self.left := left
+        self.right := right
+    }
+
+    @override
+    method makeStartStates(context:NFA, accept:ListView<Int>):Array<Int> {
+        def result := Array<Int>()
+        result.addAll(left.makeStartStates(context, accept))
+        result.addAll(right.makeStartStates(context, accept))
+        return result
+    }    
+
+    @override
+    function convert():String {
+        return left + "|" + right
+    }
+}
+
+class SingleChar : Node {
+    def value:Char
+
+    init(value:Char) {
+        self.value := value
+    }
+
+    @override
+    method makeStartStates(context:NFA, accept:ListView<Int>):Array<Int> {
+        return Regex.singleton(context.addState(SingleCharState(value, 
+                ImmutableArray<Int>(accept))))
+    }    
+
+    @override
+    function convert():String {
+        return value.convert()
+    }
+}
+
+class CharSet : Node {
+    def contents:ListView<Char>
+
+    init(a:Char8, b:Char8) {
+        def contents := Array<Char>()
+        for c in a ... b {
+            contents.add(c)
+        }
+        self.contents := contents
+    }
+
+    init(contents:String) {
+        self.contents := contents->Array<Char>
+    }
+
+    @override
+    method makeStartStates(context:NFA, accept:ListView<Int>):Array<Int> {
+        def table := Array<Bit>()
+        for c in contents {
+            Set.set(table, c)
+        }
+        return Regex.singleton(context.addState(TableState(false, 
+                ImmutableArray<Bit>(table), accept)))
+    }    
+
+    @override
+    function convert():String {
+        return String(contents)
+    }
+}
+
+
+class Any : Node {
+    @override
+    method makeStartStates(context:NFA, accept:ListView<Int>):Array<Int> {
+        return Regex.singleton(context.addState(AnyState(ImmutableArray<Int>(accept))))
+    }    
+
+    @override
+    function convert():String {
+        return "."
+    }
+}
+
+class Concat : Node {
+    var left:Node
+
+    var right:Node
+
+    init(left:Node, right:Node) {
+        self.left := left
+        self.right := right
+    }
+
+    @override
+    method makeStartStates(context:NFA, accept:ListView<Int>):Array<Int> {
+        var rightStates := right.makeStartStates(context, accept)
+        return left.makeStartStates(context, rightStates)
+    }
+
+    @override
+    function convert():String {
+        return "(" + left + right + ")"
+    }
+}
+
+class Regex {
+    constant EOF := Char8(0)
+
+    def stack := Stack<Node>()
+    var source:String
+    var index := 0
+    var regexNode:Node
+
+    init(source:String) {
+        self.source := source
+        regex()
+        self.regexNode := stack.pop()
+    }
+
+    @private
+    function peek():Char {
+        if index = source.length {
+            return EOF
+        }
+        return source[index]
+    }
+
+    @private
+    method expect(c:Char) {
+        if peek() != c {
+            throw ParseException("expected '\{c}' at index \{index}")
+        }
+        index += 1
+    }
+
+    @private
+    method elementary() {
+        match peek() {
+            when "(": group()
+            when "[": set()
+            when ".": any()
+            default: char()
+        }
+    }
+
+    @private
+    method basic() {
+        elementary()
+        match peek() {
+            when "*":
+                stack.push(Star(stack.pop()))
+                index += 1
+            when "+":
+                stack.push(Plus(stack.pop()))
+                index += 1
+            when "?":
+                stack.push(Option(stack.pop()))
+                index += 1
+        }
+    }
+
+    @private
+    method simple() {
+        basic()
+        loop {
+            match peek() {
+                when "|", ")", EOF:
+                    break
+                default:
+                    simple()
+                    def b := stack.pop()
+                    def a := stack.pop()
+                    stack.push(Concat(a, b))
+            }
+        }
+    }
+
+    @private
+    method getEscape(c:Char):Node {
+        match c {
+            when "s": return CharSet(" \t\n\r")
+            when "n": return SingleChar("\n")
+            when "t": return SingleChar("\t")
+            when "r": return SingleChar("\r")
+            default: return SingleChar(c)
+        }
+    }
+
+    @private
+    method char() {
+        var c := peek()
+        match c {
+            when "(", ")", "+", "*", ".", "|":
+                return
+            when "\\":
+                index += 1
+                stack.push(getEscape(peek()))
+                index += 1
+            default:
+                stack.push(SingleChar(c))
+                index += 1
+        }
+    }
+
+    @private
+    method any() {
+        expect(".")
+        stack.push(Any())
+    }
+
+    @private
+    method group() {
+        expect("(")
+        regex()
+        expect(")")
+    }
+
+    @private
+    method setChar() {
+        def c := peek()
+        match c {
+            when "]":
+                return
+            when "\\":
+                index += 1
+                stack.push(getEscape(peek()))
+                index += 1
+            default:
+                stack.push(SingleChar(c))
+                index += 1
+        }
+    }
+
+    @private
+    method setItem() {
+        setChar()
+        if peek() = "-" {
+            expect("-")
+            if peek() = "]" {
+                index -= 1
+                setChar()
+                assert peek() = "]"
+            }
+            else {
+                setChar()
+                def b := stack.pop()->SingleChar.value
+                def a := stack.pop()->SingleChar.value
+                stack.push(CharSet(a, b))
+            }
+        }
+    }
+
+    @private
+    method setItems() {
+        setItem()
+        if peek() != "]" {
+            setItems()
+        }
+    }
+
+    @private
+    method set() {
+        expect("[")
+        def MARKER := SingleChar("!")
+        stack.push(MARKER)
+        def set := Set()
+        if peek() = "^" {
+            index += 1
+            set.inverse := true
+        }
+        setItems()
+        var item := stack.pop()
+        while item != MARKER {
+            set.contents.add(item)
+            item := stack.pop()
+        }
+        stack.push(set)
+        expect("]")
+    }
+
+    @class
+    function singleton(i:Int):Array<Int> {
+        def result := Array<Int>()
+        result.add(i)
+        return result
+    }
+
+    @private
+    method regex() {
+        simple()
+        match peek() {
+            when "|":
+                expect("|")
+                regex()
+                def b := stack.pop()
+                def a := stack.pop()
+                stack.push(Union(a, b))
+            when EOF:
+                return
+        }
+    }
+
+    method addToNFA(context:NFA, accept:Int):Array<Int> {
+        return regexNode.makeStartStates(context, singleton(accept))
+    }
+}

@@ -1,0 +1,49 @@
+package org.pandalanguage.plex
+
+class TableState : State {
+    def inverse:Bit
+    def acceptStates:ImmutableArray<Bit>
+
+    constructor(inverse:Bit, acceptStates:ImmutableArray<Bit>, next:Int...) {
+        super.constructor(new ImmutableArray<Int>(next))
+        self.inverse := inverse
+        self.acceptStates := acceptStates
+    }
+
+    constructor(inverse:Bit, acceptStates:ImmutableArray<Bit>, next:ListView<Int>) {
+        super.constructor(new ImmutableArray<Int>(next))
+        self.inverse := inverse
+        self.acceptStates := acceptStates
+    }
+
+    @override
+    function accept(c:Char):Bit {
+        def i := c->(Int)
+        def value:Bit
+        if i < acceptStates.length
+            value := acceptStates[i]
+        else
+            value := false
+        return value ~ inverse
+    }
+
+    @override
+    function ->>():String {
+        def result := new MutableString()
+        result.append("new TableState(")
+        result.append(inverse)
+        result.append(", new ImmutablePrimitiveArray<Bit>(")
+        for i, a in acceptStates {
+            if i > 0
+                result.append(", ")
+            result.append(a)
+        }
+        result.append(")")
+        for i, n in next {
+            result.append(", ")
+            result.append(n)
+        }
+        result.append(")")
+        return result->>(String)
+    }
+}

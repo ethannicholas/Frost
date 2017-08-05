@@ -1,0 +1,29 @@
+package panda.core
+
+uses panda.unsafe.Pointer
+
+class Char16 : Value {
+    init(value:Int16) {
+        self.value := value.value
+    }
+
+    function =(other:Char16):Bit {
+        return value = other.value
+    }
+
+    function !=(other:Char16):Bit {
+        return value != other.value
+    }
+
+    function convert():Int16 {
+        return Int16(value)
+    }
+
+    @override
+    function convert():String {
+        return "need unicode conversion"
+    }
+
+    @private
+    def value:builtin_int16
+}

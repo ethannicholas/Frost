@@ -5,6 +5,10 @@
 void SymbolTable::addAlias(String name, Symbol* symbol) {
     auto found = fSymbols.find(name);
     if (found != fSymbols.end()) {
+        if (found->second->fKind == Symbol::Kind::ALIAS && found->second->fPosition.fLine == -1) {
+            fSymbols[name] = symbol;
+            return;
+        }
         if (symbol->fKind == Symbol::Kind::METHOD) {
             switch (found->second->fKind) {
                 case Symbol::Kind::METHODS:
@@ -25,7 +29,6 @@ void SymbolTable::addAlias(String name, Symbol* symbol) {
         }
         this->error(symbol->fPosition, "duplicate symbol '" + name + "' (previous declaration "
                 "at " + found->second->fPosition.description().c_str() + ")");
-        abort();
     }
     fSymbols[name] = symbol;
 }

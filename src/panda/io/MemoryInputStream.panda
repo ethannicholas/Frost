@@ -1,0 +1,31 @@
+package panda.io
+
+====================================================================================================
+An `InputStream` which reads from an 'ImmutableArray<Int8>`.
+====================================================================================================
+class MemoryInputStream : InputStream {
+    @private
+    var data:ImmutableArray<Int8>
+
+    @private
+    var index:Int
+    
+    ================================================================================================
+    Creates a new `MemoryInputStream` which reads from an `ImmutableArray<Int8>`.
+
+    @param source the array to read from
+    ================================================================================================
+    init(source:ImmutableArray<Int8>) {
+        self.data := source
+    }
+
+    @override
+    method read():Int8? {
+        if index < data.count {
+            var result:Int8 := data[index]
+            index += 1
+            return result
+        }
+        return null
+    }
+}

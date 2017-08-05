@@ -1,0 +1,52 @@
+package org.pandalanguage.plex
+
+uses org.pandalanguage.pandac.tree.Position
+uses org.pandalanguage.plex.runtime.RawToken
+uses org.pandalanguage.plex.runtime.TokenException
+
+class NFA {
+    var states:ImmutableArray<State>
+
+    var startStates:ImmutableArray<Int>
+
+    @readonly
+    var source := new LineNumberInputStream(Console.inputStream)
+    var pushback := new PushbackInputStream(source)
+    var text := new MutableString()
+    var rawToken := new RawToken()
+    var line := 1
+    var column := 1
+
+    constructor() {
+        self.states := new ImmutableArray<State>()
+        self.startStates := new ImmutableArray<Int>()
+    }
+
+    constructor(states:ImmutableArray<State>, startStates:ImmutableArray<Int>) {
+        constructor()
+        self.states := states
+        self.startStates := startStates
+    }
+
+    @self
+    method source:=(source:LineNumberInputStream) {
+        self.source := source
+        self.pushback := new PushbackInputStream(source)
+    }
+
+    method addState(s:State):Int {
+        -- FIXME clean this up when we have proper collections
+        def newStates := new Array<State>(states)
+        def i := states.length
+        newStates.add(s)
+        states := new ImmutableArray<State>(newStates)
+        return i
+    }
+
+    method addStartState(s:Int) {
+        -- FIXME clean this up when we have proper collections
+        def newStartStates := new Array<Int>(startStates)
+        newStartStates.add(s)
+        startStates := new ImmutableArray<Int>(newStartStates)
+    }
+}

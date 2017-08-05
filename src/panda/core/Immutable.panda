@@ -1,0 +1,4 @@
+package panda.core
+
+class Immutable {
+}

@@ -1,6 +1,7 @@
-#include "stdio.h"
-#include "stdlib.h"
-#include "string.h"
+#include <inttypes.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 typedef struct Class {
 } Class;
@@ -46,6 +47,10 @@ extern Class panda$io$FileOutputStream$class;
 
 void panda$core$System$exit$panda$core$Int64(int64_t code) {
     exit(code);
+}
+
+void debugPrint(int64_t value) {
+    printf("%" PRId64 "\n", value);
 }
 
 // Console
@@ -121,7 +126,7 @@ void panda$io$FileInputStream$readImpl$R$panda$core$Int8$Q(NullableInt8* result,
     }
 }
 
-int64_t panda$io$FileInputStream$readImpl$panda$core$Pointer$LTpanda$core$Int8$GT$panda$core$Int64$R$panda$core$Int64(
+int64_t panda$io$FileInputStream$readImpl$panda$unsafe$Pointer$LTpanda$core$Int8$GT$panda$core$Int64$R$panda$core$Int64(
         FileInputStream* self, void* buffer, int max) {
     return fread(buffer, 1, max, self->file);
 }
@@ -136,7 +141,7 @@ void panda$io$FileOutputStream$write$panda$core$Int8(FileOutputStream* self, int
     fputc(ch, self->file);
 }
 
-void panda$io$FileOutputStream$write$panda$core$Pointer$LTpanda$core$Int8$GT$panda$core$Int64$panda$core$Int64(
+void panda$io$FileOutputStream$write$panda$unsafe$Pointer$LTpanda$core$Int8$GT$panda$core$Int64$panda$core$Int64(
         FileOutputStream* self, void* src, int64_t offset, int64_t count) {
     fwrite(src + offset, 1, count, self->file);
 }
