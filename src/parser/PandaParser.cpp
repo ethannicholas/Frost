@@ -1749,7 +1749,7 @@ bool PandaParser::string(ASTNode* outResult) {
     return true;
 }
 
-// term = IDENTIFIER | DECIMAL | SELF | SUPER | NULL | TRUE | FALSE | string |
+// term = IDENTIFIER | DECIMAL | BINARY | HEX | SELF | SUPER | NULL | TRUE | FALSE | string |
 //         LPAREN expression RPAREN
 bool PandaParser::term(ASTNode* outResult) {
     Token t = this->nextToken();
@@ -1759,6 +1759,14 @@ bool PandaParser::term(ASTNode* outResult) {
             return true;
         case Token::Kind::DECIMAL:
             *outResult = ASTNode(t.fPosition, ASTNode::Kind::INT, (uint64_t) std::stoul(t.fText));
+            return true;
+        case Token::Kind::BINARY:
+            *outResult = ASTNode(t.fPosition, ASTNode::Kind::INT,
+                    (uint64_t) std::stoul(t.fText.substr(2), nullptr, 2));
+            return true;
+        case Token::Kind::HEX:
+            *outResult = ASTNode(t.fPosition, ASTNode::Kind::INT,
+                    (uint64_t) std::stoul(t.fText.substr(2), nullptr, 16));
             return true;
         case Token::Kind::SELF:
             *outResult = ASTNode(t.fPosition, ASTNode::Kind::SELF);

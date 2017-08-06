@@ -46,7 +46,7 @@ class OutputStream {
     }
 
     method print(s:String) {
-        write(s.data, 0, s.length)
+        write(s.data, 0, s._length)
     }
 
     method printLine() {

@@ -429,7 +429,6 @@ static Type variable_type(const IRNode& node) {
     if (node.fKind == IRNode::Kind::UNRESOLVED_RANGE) {
         Type baseType = node.fChildren[0].fType;
         baseType = baseType.typeUnion(node.fChildren[1].fType);
-        baseType = baseType.typeUnion(node.fChildren[2].fType);
         if (baseType == Type::Null()) {
             baseType = baseType.typeUnion(Type::Int());
         }
@@ -757,13 +756,16 @@ int Compiler::coercionCost(const IRNode& node, const Type& target) {
                 ASSERT(target.fSubtypes.size() == 2);
                 const Type& rangeType = target.fSubtypes[1];
                 int total = 0;
-                for (const auto& child : node.fChildren) {
-                    int cost = this->coercionCost(child, rangeType);
-                    if (cost == INT_MAX) {
-                        return INT_MAX;
-                    }
-                    total += cost;
+                int cost = this->coercionCost(node.fChildren[0], rangeType);
+                if (cost == INT_MAX) {
+                    return INT_MAX;
                 }
+                total += cost;
+                cost = this->coercionCost(node.fChildren[1], rangeType);
+                if (cost == INT_MAX) {
+                    return INT_MAX;
+                }
+                total += cost;
                 return total;
             }
             return this->coercionCost(Type::RangeOf(Type::Any()), target);
@@ -2490,6 +2492,23 @@ bool Compiler::convertFor(const ASTNode& f, IRNode* out) {
     IRNode list;
     if (!this->convertExpression(f.fChildren[1], &list)) {
         return false;
+    }
+    if (list.fKind == IRNode::Kind::UNRESOLVED_RANGE && f.fChildren[0].fChildren.size() == 1) {
+        IRNode target;
+        if (!this->convertTarget(f.fChildren[0], nullptr, nullptr, &target)) {
+            return false;
+        }
+        if (!this->coerce(&list, Type::RangeOf(target.fType))) {
+            return false;
+        }
+        IRNode block;
+        this->convertBlock(f.fChildren[2], &block);
+        std::vector<IRNode> children;
+        children.push_back(std::move(target));
+        children.push_back(std::move(list));
+        children.push_back(std::move(block));
+        *out = IRNode(f.fPosition, IRNode::Kind::RANGE_FOR, f.fText, std::move(children));
+        return true;
     }
     if (!this->resolve(&list)) {
         return false;

@@ -280,6 +280,34 @@ class Int64 : Value {
         return value <= other.value
     }
 
+    function min(other:Int8):Int64 {
+        if value < other.value->builtin_int64 {
+            return value
+        }
+        return other.value->builtin_int64
+    }
+
+    function min(other:Int16):Int64 {
+        if value < other.value->builtin_int64 {
+            return value
+        }
+        return other.value->builtin_int64
+    }
+
+    function min(other:Int32):Int64 {
+        if value < other.value->builtin_int64 {
+            return value
+        }
+        return other.value->builtin_int64
+    }
+
+    function min(other:Int64):Int64 {
+        if value < other.value {
+            return value
+        }
+        return other.value
+    }
+
     function max(other:Int8):Int64 {
         if value > other.value->builtin_int64 {
             return value

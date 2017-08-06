@@ -55,7 +55,7 @@ void debugPrint(int64_t value) {
 
 // Console
 
-void panda$io$Console$print$panda$core$Char8(char ch) {
+void panda$io$Console$write$panda$core$Char8(char ch) {
     putchar(ch);
 }
 

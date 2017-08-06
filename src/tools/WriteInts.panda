@@ -105,10 +105,10 @@ class WriteInts {
 
     @class
     method writeMin(size:Int, out:OutputStream) {
-        writeMin( 8, out)
-        writeMin(16, out)
-        writeMin(32, out)
-        writeMin(64, out)
+        writeMin(size,  8, out)
+        writeMin(size, 16, out)
+        writeMin(size, 32, out)
+        writeMin(size, 64, out)
     }
 
     @class
@@ -142,7 +142,7 @@ class WriteInts {
         out.printLine()
         out.printLine("    @override")
         out.printLine("    function convert():String {")
-        out.printLine("        constant max := " + (min(size).convert()->String).length)
+        out.printLine("        constant max := " + (min(size).convert()->String).utf8().get_count())
         out.printLine("        def chars := Pointer<Char8>.alloc(max)")
         out.printLine("        var index := max - 1")
         out.printLine("        var value := self")
@@ -238,6 +238,7 @@ class WriteInts {
         writeComparisonOperator(">", size, out)
         writeComparisonOperator(">=", size, out)
         writeComparisonOperator("<=", size, out)
+        writeMin(size, out)
         writeMax(size, out)
         writeEqual(size, out)
         writeIndex(size, out)

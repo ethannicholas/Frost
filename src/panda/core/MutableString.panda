@@ -41,11 +41,11 @@ class MutableString {
     }
 
     method append(s:String) {
-        ensureCapacity(length + s.length)
-        for i in 0 .. s.length {
+        ensureCapacity(length + s._length)
+        for i in 0 .. s._length {
             data[length + i] := s.data[i]
         }
-        length += s.length
+        length += s._length
     }
 
     method append(chars:Pointer<Char8>, offset:Int, count:Int) {

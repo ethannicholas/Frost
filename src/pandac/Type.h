@@ -183,7 +183,7 @@ struct Type : public Symbol {
         if (isNumber() && other == IntLiteral()) {
             return *this;
         }
-        printf("union of %s and %s\n", fName.c_str(), other.fName.c_str());
+        printf("internal error: union of %s and %s\n", fName.c_str(), other.fName.c_str());
         abort();
     }
 

@@ -2,48 +2,31 @@ package panda.core
 
 uses panda.unsafe.Pointer
 
+====================================================================================================
+An immutable sequence of Unicode characters.
+====================================================================================================
 class String : Immutable {
+    ================================================================================================
+    Represents the position of a character within a String.
+    ================================================================================================
     class Index : Value {
-        @private
-        def str:String
-
         @private
         def value:Int
 
         @private
-        init(str:String, value:Int) {
-            self.str := str
+        init(value:Int) {
             self.value := value
         }
 
-        function +(i:Int):Index {
-            if i < 0 {
-                return self - (-i)
-            }
-            var remaining := i
-            var newValue := value
-            while newValue < str.length - 1 & remaining > 0 {
-                newValue += 1
-                while str.data[newValue].convert()->Int8[7] {
-                    newValue += 1
-                }
-                remaining -= 1
-            }
+        @override
+        function =(o:Object):Bit {
+            -- FIXME need to check o's class
+            return value = (o->Index).value
         }
 
-        function -(i:Int):Index {
-            if i < 0 {
-                return self + (-i)
-            }
-            var remaining := i
-            var newValue := value
-            while newValue > 0 & remaining > 0 {
-                newValue -= 1
-                while str.data[newValue].convert()->Int8[7] {
-                    newValue -= 1
-                }
-                remaining -= 1
-            }
+        @override
+        function hash():Int {
+            return value
         }
     }
 
@@ -62,7 +45,7 @@ class String : Immutable {
 
         @override
         function get_count():Int {
-            return str.length
+            return str._length
         }
 
         @override
@@ -83,7 +66,7 @@ class String : Immutable {
 
         @override
         function get_done():Bit {
-            return index = str.length
+            return index = str._length
         }
 
         @override
@@ -105,7 +88,7 @@ class String : Immutable {
 
         @override
         function get_done():Bit {
-            return index = str.length
+            return index = str._length
         }
 
         @override
@@ -127,7 +110,7 @@ class String : Immutable {
 
         @override
         function get_done():Bit {
-            return index = str.length
+            return index = str._length
         }
 
         @override
@@ -140,12 +123,12 @@ class String : Immutable {
     def data:Pointer<Char8>
 
     @private
-    def length:Int
+    def _length:Int
 
     @private
-    init(data:Pointer<Char8>, length:Int) {
+    init(data:Pointer<Char8>, _length:Int) {
         self.data := data
-        self.length := length
+        self._length := _length
     }
 
     @override
@@ -172,10 +155,10 @@ class String : Immutable {
     }
 
     function startsWith(other:String):Bit {
-        if length < other.length {
+        if _length < other._length {
             return false
         }
-        for i in 0 .. other.length {
+        for i in 0 .. other._length {
             if data[i] != other.data[i] {
                 return false
             }
@@ -184,11 +167,11 @@ class String : Immutable {
     }
 
     function endsWith(other:String):Bit {
-        if length < other.length {
+        if _length < other._length {
             return false
         }
-        for i in 0 .. other.length {
-            if data[length - other.length + i] != other.data[i] {
+        for i in 0 .. other._length {
+            if data[_length - other._length + i] != other.data[i] {
                 return false
             }
         }
@@ -196,14 +179,14 @@ class String : Immutable {
     }
 
     function +(other:String):String {
-        def result := Pointer<Char8>.alloc(length + other.length)
-        for i in 0 .. length {
+        def result := Pointer<Char8>.alloc(_length + other._length)
+        for i in 0 .. _length {
             result[i] := data[i]
         }
-        for i in 0 .. other.length {
-            result[length + i] := other.data[i]
+        for i in 0 .. other._length {
+            result[_length + i] := other.data[i]
         }
-        return String(result, length + other.length)
+        return String(result, _length + other._length)
     }
 
     function +(other:Object):String {
@@ -227,10 +210,10 @@ class String : Immutable {
     function =(o:Object):Bit {
         -- FIXME need to check o's class
         def other := o->String
-        if length != other.length {
+        if _length != other._length {
             return false
         }
-        for i in 0 .. length {
+        for i in 0 .. _length {
             if data[i]->Char8 != other.data[i]->Char8 {
                 return false
             }
@@ -238,63 +221,136 @@ class String : Immutable {
         return true
     }
 
-    function [](r:Range<Index?>):String {
-        def step:Int
-        if r.step != null {
-            step := r.step
+    function [](index:Index):Char32 {
+        def idx := index.value
+        def c := data[idx]
+        var result:Int32 := c.convert()
+        if c.value->builtin_int64 && 0xFF < 0b11000000 {
+            return Char32(result)
         }
-        else {
-            step := 1
+        if c.value->builtin_int64 && 0xFF < 0b11100000 {
+            assert idx + 1 < _length
+            result := result && 0b11111 << 6 + data[idx + 1].convert()->Int32 && 0b111111
+            return Char32(result)
         }
+        if c.value->builtin_int64 && 0xFF < 0b11110000 {
+            assert idx + 2 < _length
+            result := result && 0b1111 << 12 + data[idx + 1].convert()->Int32 && 0b111111 << 6 +
+                    data[idx + 2].convert()->Int32 && 0b111111
+            return Char32(result)
+        }
+        assert idx + 3 < _length
+        result := result && 0b111 << 18 + data[idx + 1].convert()->Int32 && 0b111111 << 12 +
+                data[idx + 2].convert()->Int32 && 0b111111 << 6 +
+                data[idx + 3].convert()->Int32 && 0b111111
+        return Char32(result)
+    }
 
-        def start:Int
+    ================================================================================================
+    Returns a substring of a string. The `Range.step` value is interpreted in terms of Unicode
+    codepoints: that is, `s[... by 2]` will return a `String` consisting of every other Unicode
+    codepoint in `s`. As some Unicode characters consist of more than one codepoint (e.g. when using
+    combining diacriticals, Emoji skin tone modifiers, or Emoji flags), this will mangle such
+    characters when the step is not `1`.
+    ================================================================================================
+    function [](r:Range<Index?>):String {
+        def step := r.step
+
+        def current:Int
         if r.start != null {
-            start := r.start.value
+            current := r.start.value
         }
         else if step > 0 {
-            start := 0
+            current := start().value
         }
         else {
-            start := length - 1
+            current := previous(end()).value
         }
 
         def end:Int
         if r.end != null {
             end := r.end.value
-            if r.inclusive {
-                if step > 0 {
-                    end += 1
-                }
-                else {
-                    end -= 1
-                }
-            }
         }
         else if step > 0 {
-            end := length
+            end := self.end().value
         }
         else {
-            end := -1
+            end := self.start().value
         }
 
-        def count:Int
-        if step = 1 {
-            count := end - start
-        }
-        else {
-            count := 0
-            for i in start .. end by step {
-                count += 1
+        def result := MutableString()
+        if r.step > 0 {
+            while current < end {
+                def c := data[current]
+                result.append(c)
+                current += 1
+                if c.value->builtin_int64 && 0xFF >= 0b11000000 {
+                    result.append(data[current])
+                    current += 1
+                }
+                if c.value->builtin_int64 && 0xFF >= 0b11100000 {
+                    result.append(data[current])
+                    current += 1
+                }
+                if c.value->builtin_int64 && 0xFF >= 0b11110000 {
+                    result.append(data[current])
+                    current += 1
+                }
+                for i in 1 .. step {
+                    if current >= end {
+                        return result.convert()
+                    }
+                    current := next(Index(current)).value
+                }
             }
         }
-        def slice := Pointer<Char8>.alloc(count)
-        var index := 0
-        for i in start .. end by step {
-            assert index >= 0 & index < length
-            slice[index] := data[i]
-            index += 1
+        else {
+            assert r.step < 0
+            while current > end {
+                def c := data[current]
+                result.append(c)
+                def old := current
+                current += 1
+                if c.value->builtin_int64 && 0xFF >= 0b11000000 {
+                    result.append(data[current])
+                    current += 1
+                }
+                if c.value->builtin_int64 && 0xFF >= 0b11100000 {
+                    result.append(data[current])
+                    current += 1
+                }
+                if c.value->builtin_int64 && 0xFF >= 0b11110000 {
+                    result.append(data[current])
+                }
+                current := old - 1
+                while data[current].value->builtin_int64 && 0xFF >= 0b10000000 & data[current].value->builtin_int64 && 0xFF < 0b11000000 {
+                    current -= 1
+                }
+                for i in -1 .. step by -1 {
+                    if current <= end {
+                        return result.convert()
+                    }
+                    current := previous(Index(current)).value
+                }
+            }
         }
-        return String(slice, count)
+        if (r.inclusive | r.end = null) & current = end & end < _length {
+            def c := data[current]
+            result.append(c)
+            current += 1
+            if c.value->builtin_int64 && 0xFF >= 0b11000000 {
+                result.append(data[current])
+                current += 1
+            }
+            if c.value->builtin_int64 && 0xFF >= 0b11100000 {
+                result.append(data[current])
+                current += 1
+            }
+            if c.value->builtin_int64 && 0xFF >= 0b11110000 {
+                result.append(data[current])
+            }
+        }
+        return result.convert()
     }
 
     ================================================================================================
@@ -305,7 +361,7 @@ class String : Immutable {
     @returns the index of the match, or `null` if not found
     ================================================================================================
     function indexOf(s:String):Index? {
-        return indexOf(s, Index(self, 0))
+        return indexOf(s, start())
     }
 
     ================================================================================================
@@ -317,18 +373,125 @@ class String : Immutable {
     @returns the index of the match, or `null` if not found
     ================================================================================================
     function indexOf(s:String, start:Index):Index? {
-        if length < s.length {
+        if _length < s._length {
             return null
         }
-        outer: for i in start.value ... length - s.length {
-            for j in 0 .. s.length {
+        outer: for i in start.value ... _length - s._length {
+            for j in 0 .. s._length {
                 if data[i + j] != s.data[j] {
                     continue outer
                 }
             }
-            return Index(self, i)
+            return Index(i)
         }
         return null
+    }
+
+    ================================================================================================
+    Returns the index of the last occurrence of the string `s` within this string, or `null` if not
+    found.
+
+    @param s the string to search for
+    @returns the index of the match, or `null` if not found
+    ================================================================================================
+    function lastIndexOf(s:String):Index? {
+        return lastIndexOf(s, end())
+    }
+
+    ================================================================================================
+    Returns the index of the last occurrence of the string `s` within this string, starting the
+    search backwards from the specified `index`, or `null` if not found.
+
+    @param s the string to search for
+    @param start the index to begin searching from
+    @returns the index of the match, or `null` if not found
+    ================================================================================================
+    function lastIndexOf(s:String, start:Index):Index? {
+        if _length < s._length {
+            return null
+        }
+        def startPos := start.value.min(_length - s._length)
+        outer: for i in startPos ... 0 by -1 {
+            for j in 0 .. s._length {
+                if data[i + j] != s.data[j] {
+                    continue outer
+                }
+            }
+            return Index(i)
+        }
+        return null
+    }
+
+    ================================================================================================
+    Returns the index of the first character in the string.
+    ================================================================================================
+    function start():Index {
+        return Index(0)
+    }
+
+    ================================================================================================
+    Returns the index just past the end of the string.
+    ================================================================================================
+    function end():Index {
+        return Index(_length)
+    }
+
+    ================================================================================================
+    Returns the index of the Unicode codepoint after the given index. It is an error to call
+    `next()` when already at the end of the string. Note that because a logical character can
+    consist of multiple Unicode codepoints (such as LATIN SMALL LETTER A followed by COMBINING ACUTE
+    ACCENT), this may return an index in the middle of such a compound character.
+    ================================================================================================
+    function next(i:Index):Index {
+        assert i.value < _length
+        def c := data[i.value].value->builtin_int64 && 0xFF
+        if c >= 0b11110000 {
+            return Index(i.value + 4)
+        }
+        if c >= 0b11100000 {
+            return Index(i.value + 3)
+        }
+        if c >= 0b11000000 {
+            return Index(i.value + 2)
+        }
+        return Index(i.value + 1)
+    }
+
+    ================================================================================================
+    Returns the index of the Unicode codepoint before the given index. It is an error to call
+    `previous()` when already at the beginning of the string. Note that because a logical character
+    can consist of multiple Unicode codepoints (such as LATIN SMALL LETTER A followed by COMBINING
+    ACUTE ACCENT), this may return an index in the middle of such a compound character.
+    ================================================================================================
+    function previous(i:Index):Index {
+        assert i.value > 0
+        var newValue := i.value - 1
+        while data[newValue].value->builtin_int64 && 0xFF >= 0b10000000 &
+                data[newValue].value->builtin_int64 && 0xFF < 0b11000000 {
+            newValue -= 1
+        }
+        return Index(newValue)
+    }
+
+    ================================================================================================
+    Returns the index offset by `offset` Unicode codepoints. It is an error to index before the
+    beginning or after the end of the string.  Note that because a logical character can consist of
+    multiple Unicode codepoints (such as LATIN SMALL LETTER A followed by COMBINING ACUTE ACCENT),
+    this may return an index in the middle of such a compound character.
+    ================================================================================================
+    function offset(index:Index, offset:Int):Index {
+        var result := index
+        if offset > 0 {
+            for i in 0 .. offset {
+                result := next(result)
+            }
+        }
+        else {
+            for i in 0 .. offset by -1 {
+                result := previous(result)
+            }
+        }
+        return result
     }
 
     ================================================================================================
@@ -353,11 +516,11 @@ class String : Immutable {
     ================================================================================================
     function split(delimiter:String, maxResults:Int):Array<String> {
         def result := Array<String>()
-        var index := Index(self, 0)
+        var index := start()
         loop {
             def nextIndex:Index?
-            if delimiter.length = 0 {
-                nextIndex := index + 1
+            if delimiter._length = 0 {
+                nextIndex := next(index)
             }
             else {
                 nextIndex := indexOf(delimiter, index)
@@ -367,7 +530,7 @@ class String : Immutable {
                 break
             }
             result.add(self[index .. nextIndex])
-            index := nextIndex + delimiter.length
+            index := offset(nextIndex, delimiter._length)
         }
         return result
     }
@@ -380,7 +543,7 @@ class String : Immutable {
     @returns this string converted to a number, or `null`
     ================================================================================================
     function convert():Int64? {
-        if length = 0 {
+        if _length = 0 {
             return null
         }
         var result:Int64 := 0
@@ -391,7 +554,7 @@ class String : Immutable {
         else {
             start := 0
         }
-        for i in start .. length {
+        for i in start .. _length {
             def digit := Int64(data[i].value->builtin_int64) - 48
             if digit < 0 | digit > 9 {
                 return null
@@ -407,7 +570,7 @@ class String : Immutable {
     @override
     function hash():Int {
         var result := 0
-        for i in 0 .. length {
+        for i in 0 .. _length {
             result := result * 101 + Int64(data[i].value->builtin_int64)
         }
         return result

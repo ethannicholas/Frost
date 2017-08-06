@@ -280,6 +280,34 @@ class Int8 : Value {
         return value->builtin_int64 <= other.value
     }
 
+    function min(other:Int8):Int8 {
+        if value < other.value {
+            return value
+        }
+        return other.value
+    }
+
+    function min(other:Int16):Int16 {
+        if value->builtin_int16 < other.value {
+            return value->builtin_int16
+        }
+        return other.value
+    }
+
+    function min(other:Int32):Int32 {
+        if value->builtin_int32 < other.value {
+            return value->builtin_int32
+        }
+        return other.value
+    }
+
+    function min(other:Int64):Int64 {
+        if value->builtin_int64 < other.value {
+            return value->builtin_int64
+        }
+        return other.value
+    }
+
     function max(other:Int8):Int8 {
         if value > other.value {
             return value

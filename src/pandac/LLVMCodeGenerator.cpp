@@ -1911,8 +1911,16 @@ void LLVMCodeGenerator::writeRangeFor(const IRNode& f, std::ostream& out) {
             "* " << endFieldPtr << "\n";
 
     // extract step value from range
-    String step = this->nextVar();
-    out << "    " << step << " = extractvalue " << range << ", 2, 0\n";
+    String rawStep = this->nextVar();
+    out << "    " << rawStep << " = extractvalue " << range << ", 2, 0\n";
+    String step;
+    if (numberType != "i64") {
+        step = this->nextVar();
+        out << "    " << step << " = trunc i64 " << rawStep << " to " << numberType << "\n";
+    }
+    else {
+        step = rawStep;
+    }
 
     // extract inclusive / exclusive from range
     String inclusive = this->nextVar();
@@ -2326,17 +2334,19 @@ void LLVMCodeGenerator::writeMethodDeclaration(Method& method) {
     fDeclaredMethods.insert(&method);
 
     std::ostream& out = fMethodDeclarations;
-    out << "\ndeclare " << this->callingConvention(method);
-    if (this->needsStructIndirection(method)) {
+    bool indirect = this->needsStructIndirection(method);
+    String cc = this->callingConvention(method);
+    String returnType = this->llvmType(method.fReturnType);
+    out << "\ndeclare " << cc;
+    if (indirect) {
         out << "void";
     }
     else {
-        String returnType = this->llvmType(method.fReturnType);
         out << returnType;
     }
     out << " " << this->methodName(method) << "(";
     const char* separator = "";
-    if (this->needsStructIndirection(method)) {
+    if (indirect) {
         out << this->llvmType(method.fReturnType) << "*";
         separator = ", ";
     }

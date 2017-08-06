@@ -2,9 +2,18 @@ package panda.core
 
 uses panda.unsafe.Pointer
 
+====================================================================================================
+Represents any Unicode codepoint in the entire range from 0 to 1,114,112.
+====================================================================================================
 class Char32 : Value {
     init(value:Int32) {
         self.value := value.value
+    }
+
+    @override
+    function =(other:Object):Bit {
+        -- FIXME need instance test
+        return value = (other->Char32).value
     }
 
     function =(other:Char32):Bit {
@@ -15,13 +24,56 @@ class Char32 : Value {
         return value != other.value
     }
 
+    @override
+    function hash():Int {
+        return convert()
+    }
+
+    function convert():Int8 {
+        return Int8(value->builtin_int8)
+    }
+
+    function convert():Int16 {
+        return Int16(value->builtin_int16)
+    }
+
     function convert():Int32 {
         return Int32(value)
     }
 
+    function convert():Int64 {
+        return Int64(value->builtin_int64)
+    }
+
+    ================================================================================================
+    Returns a single-character `String` containing this `Char32`.
+    ================================================================================================
     @override
     function convert():String {
-        return "need unicode conversion"
+        if value < 0x80 {
+            def data := Pointer<Char8>.alloc(1)
+            data[0] := Char8(Int8(value->builtin_int8))
+            return String(data, 1)
+        }
+        if value < 0x800 {
+            def data := Pointer<Char8>.alloc(2)
+            data[0] := Char8(Int8((value >> 6 || 0b11000000)->builtin_int8))
+            data[1] := Char8(Int8((value && 0b111111 || 0b10000000)->builtin_int8))
+            return String(data, 2)
+        }
+        if value < 0x10000 {
+            def data := Pointer<Char8>.alloc(3)
+            data[0] := Char8(Int8((value >> 12 || 0b11100000)->builtin_int8))
+            data[1] := Char8(Int8((value >> 6 && 0b111111 || 0b10000000)->builtin_int8))
+            data[2] := Char8(Int8((value && 0b111111 || 0b10000000)->builtin_int8))
+            return String(data, 3)
+        }
+        def data := Pointer<Char8>.alloc(4)
+        data[0] := Char8(Int8((value >> 18 || 0b11110000)->builtin_int8))
+        data[1] := Char8(Int8((value >> 12 && 0b111111 || 0b10000000)->builtin_int8))
+        data[2] := Char8(Int8((value >> 6 && 0b111111 || 0b10000000)->builtin_int8))
+        data[3] := Char8(Int8((value && 0b111111 || 0b10000000)->builtin_int8))
+        return String(data, 4)
     }
 
     @private

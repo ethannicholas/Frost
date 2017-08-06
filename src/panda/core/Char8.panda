@@ -2,9 +2,20 @@ package panda.core
 
 uses panda.unsafe.Pointer
 
+====================================================================================================
+Depending on context, represents either a Unicode codepoint in the range 0 to 255 or a single byte
+of a UTF-8 encoded string. For ASCII characters (0 to 127), there is no difference between the two
+interpretations.
+====================================================================================================
 class Char8 : Value {
     init(value:Int8) {
         self.value := value.value
+    }
+
+    @override
+    function =(other:Object):Bit {
+        -- FIXME need instance test
+        return value = (other->Char8).value
     }
 
     function =(other:Char8):Bit {
@@ -15,15 +26,45 @@ class Char8 : Value {
         return value != other.value
     }
 
+    @override
+    function hash():Int {
+        return convert()
+    }
+
     function convert():Int8 {
         return Int8(value)
     }
 
+    function convert():Int16 {
+        return Int16(value->builtin_int16 && 0xFF)
+    }
+
+    function convert():Int32 {
+        return Int32(value->builtin_int32 && 0xFF)
+    }
+
+    function convert():Int64 {
+        return Int64(value->builtin_int64 && 0xFF)
+    }
+
+    ================================================================================================
+    Interprets this character as a Unicode codepoint and converts it to a string. Note that if this
+    `Char8` represents part of a multi-byte UTF-8 sequence (e.g. it came from [String.utf8]),
+    interpreting it as a Unicode codepoint in its own right is incorrect and will lead to mangled
+    strings.
+    ================================================================================================
     @override
     function convert():String {
-        def ptr := Pointer<Char8>.alloc(1)
-        ptr[0] := self
-        return String(ptr, 1)
+        -- FIXME change to < 0x80 when uints are in
+        if value > 0 {
+            def data := Pointer<Char8>.alloc(1)
+            data[0] := Char8(Int8(value->builtin_int8))
+            return String(data, 1)
+        }
+        def data := Pointer<Char8>.alloc(2)
+        data[0] := Char8(Int8((value->builtin_int16 >> 6 || 0b11000000)->builtin_int8))
+        data[1] := Char8(Int8((value->builtin_int16 && 0b111111 || 0b10000000)->builtin_int8))
+        return String(data, 2)
     }
 
     @private
