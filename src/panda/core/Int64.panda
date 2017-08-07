@@ -32,6 +32,22 @@ class Int64 : Value {
         return value + other.value
     }
 
+    function +(other:UInt8):Int64 {
+        return value + other.value->builtin_int64
+    }
+
+    function +(other:UInt16):Int64 {
+        return value + other.value->builtin_int64
+    }
+
+    function +(other:UInt32):Int64 {
+        return value + other.value->builtin_int64
+    }
+
+    function +(other:UInt64):UInt64 {
+        return value->builtin_uint64 + other.value
+    }
+
     function -(other:Int8):Int64 {
         return value - other.value->builtin_int64
     }
@@ -46,6 +62,22 @@ class Int64 : Value {
 
     function -(other:Int64):Int64 {
         return value - other.value
+    }
+
+    function -(other:UInt8):Int64 {
+        return value - other.value->builtin_int64
+    }
+
+    function -(other:UInt16):Int64 {
+        return value - other.value->builtin_int64
+    }
+
+    function -(other:UInt32):Int64 {
+        return value - other.value->builtin_int64
+    }
+
+    function -(other:UInt64):UInt64 {
+        return value->builtin_uint64 - other.value
     }
 
     function -():Int64 {
@@ -68,6 +100,22 @@ class Int64 : Value {
         return value * other.value
     }
 
+    function *(other:UInt8):Int64 {
+        return value * other.value->builtin_int64
+    }
+
+    function *(other:UInt16):Int64 {
+        return value * other.value->builtin_int64
+    }
+
+    function *(other:UInt32):Int64 {
+        return value * other.value->builtin_int64
+    }
+
+    function *(other:UInt64):UInt64 {
+        return value->builtin_uint64 * other.value
+    }
+
     function //(other:Int8):Int64 {
         return value // other.value->builtin_int64
     }
@@ -84,6 +132,22 @@ class Int64 : Value {
         return value // other.value
     }
 
+    function //(other:UInt8):Int64 {
+        return value // other.value->builtin_int64
+    }
+
+    function //(other:UInt16):Int64 {
+        return value // other.value->builtin_int64
+    }
+
+    function //(other:UInt32):Int64 {
+        return value // other.value->builtin_int64
+    }
+
+    function //(other:UInt64):UInt64 {
+        return value->builtin_uint64 // other.value
+    }
+
     function %(other:Int8):Int64 {
         return value % other.value->builtin_int64
     }
@@ -98,6 +162,22 @@ class Int64 : Value {
 
     function %(other:Int64):Int64 {
         return value % other.value
+    }
+
+    function %(other:UInt8):Int64 {
+        return value % other.value->builtin_int64
+    }
+
+    function %(other:UInt16):Int64 {
+        return value % other.value->builtin_int64
+    }
+
+    function %(other:UInt32):Int64 {
+        return value % other.value->builtin_int64
+    }
+
+    function %(other:UInt64):UInt64 {
+        return value->builtin_uint64 % other.value
     }
 
     function !!():Int64 {
@@ -120,6 +200,22 @@ class Int64 : Value {
         return value && other.value
     }
 
+    function &&(other:UInt8):Int64 {
+        return value && other.value->builtin_int64
+    }
+
+    function &&(other:UInt16):Int64 {
+        return value && other.value->builtin_int64
+    }
+
+    function &&(other:UInt32):Int64 {
+        return value && other.value->builtin_int64
+    }
+
+    function &&(other:UInt64):UInt64 {
+        return value->builtin_uint64 && other.value
+    }
+
     function ||(other:Int8):Int64 {
         return value || other.value->builtin_int64
     }
@@ -134,6 +230,22 @@ class Int64 : Value {
 
     function ||(other:Int64):Int64 {
         return value || other.value
+    }
+
+    function ||(other:UInt8):Int64 {
+        return value || other.value->builtin_int64
+    }
+
+    function ||(other:UInt16):Int64 {
+        return value || other.value->builtin_int64
+    }
+
+    function ||(other:UInt32):Int64 {
+        return value || other.value->builtin_int64
+    }
+
+    function ||(other:UInt64):UInt64 {
+        return value->builtin_uint64 || other.value
     }
 
     function ~~(other:Int8):Int64 {
@@ -152,6 +264,22 @@ class Int64 : Value {
         return value ~~ other.value
     }
 
+    function ~~(other:UInt8):Int64 {
+        return value ~~ other.value->builtin_int64
+    }
+
+    function ~~(other:UInt16):Int64 {
+        return value ~~ other.value->builtin_int64
+    }
+
+    function ~~(other:UInt32):Int64 {
+        return value ~~ other.value->builtin_int64
+    }
+
+    function ~~(other:UInt64):UInt64 {
+        return value->builtin_uint64 ~~ other.value
+    }
+
     function <<(other:Int8):Int64 {
         return value << other.value->builtin_int64
     }
@@ -166,6 +294,22 @@ class Int64 : Value {
 
     function <<(other:Int64):Int64 {
         return value << other.value
+    }
+
+    function <<(other:UInt8):Int64 {
+        return value << other.value->builtin_int64
+    }
+
+    function <<(other:UInt16):Int64 {
+        return value << other.value->builtin_int64
+    }
+
+    function <<(other:UInt32):Int64 {
+        return value << other.value->builtin_int64
+    }
+
+    function <<(other:UInt64):UInt64 {
+        return value->builtin_uint64 << other.value
     }
 
     function >>(other:Int8):Int64 {
@@ -184,6 +328,22 @@ class Int64 : Value {
         return value >> other.value
     }
 
+    function >>(other:UInt8):Int64 {
+        return value >> other.value->builtin_int64
+    }
+
+    function >>(other:UInt16):Int64 {
+        return value >> other.value->builtin_int64
+    }
+
+    function >>(other:UInt32):Int64 {
+        return value >> other.value->builtin_int64
+    }
+
+    function >>(other:UInt64):UInt64 {
+        return value->builtin_uint64 >> other.value
+    }
+
     function =(other:Int8):Bit {
         return value = other.value->builtin_int64
     }
@@ -198,6 +358,22 @@ class Int64 : Value {
 
     function =(other:Int64):Bit {
         return value = other.value
+    }
+
+    function =(other:UInt8):Bit {
+        return value = other.value->builtin_int64
+    }
+
+    function =(other:UInt16):Bit {
+        return value = other.value->builtin_int64
+    }
+
+    function =(other:UInt32):Bit {
+        return value = other.value->builtin_int64
+    }
+
+    function =(other:UInt64):Bit {
+        return value->builtin_uint64 = other.value
     }
 
     function !=(other:Int8):Bit {
@@ -216,6 +392,22 @@ class Int64 : Value {
         return value != other.value
     }
 
+    function !=(other:UInt8):Bit {
+        return value != other.value->builtin_int64
+    }
+
+    function !=(other:UInt16):Bit {
+        return value != other.value->builtin_int64
+    }
+
+    function !=(other:UInt32):Bit {
+        return value != other.value->builtin_int64
+    }
+
+    function !=(other:UInt64):Bit {
+        return value->builtin_uint64 != other.value
+    }
+
     function <(other:Int8):Bit {
         return value < other.value->builtin_int64
     }
@@ -230,6 +422,22 @@ class Int64 : Value {
 
     function <(other:Int64):Bit {
         return value < other.value
+    }
+
+    function <(other:UInt8):Bit {
+        return value < other.value->builtin_int64
+    }
+
+    function <(other:UInt16):Bit {
+        return value < other.value->builtin_int64
+    }
+
+    function <(other:UInt32):Bit {
+        return value < other.value->builtin_int64
+    }
+
+    function <(other:UInt64):Bit {
+        return value->builtin_uint64 < other.value
     }
 
     function >(other:Int8):Bit {
@@ -248,6 +456,22 @@ class Int64 : Value {
         return value > other.value
     }
 
+    function >(other:UInt8):Bit {
+        return value > other.value->builtin_int64
+    }
+
+    function >(other:UInt16):Bit {
+        return value > other.value->builtin_int64
+    }
+
+    function >(other:UInt32):Bit {
+        return value > other.value->builtin_int64
+    }
+
+    function >(other:UInt64):Bit {
+        return value->builtin_uint64 > other.value
+    }
+
     function >=(other:Int8):Bit {
         return value >= other.value->builtin_int64
     }
@@ -264,6 +488,22 @@ class Int64 : Value {
         return value >= other.value
     }
 
+    function >=(other:UInt8):Bit {
+        return value >= other.value->builtin_int64
+    }
+
+    function >=(other:UInt16):Bit {
+        return value >= other.value->builtin_int64
+    }
+
+    function >=(other:UInt32):Bit {
+        return value >= other.value->builtin_int64
+    }
+
+    function >=(other:UInt64):Bit {
+        return value->builtin_uint64 >= other.value
+    }
+
     function <=(other:Int8):Bit {
         return value <= other.value->builtin_int64
     }
@@ -278,6 +518,22 @@ class Int64 : Value {
 
     function <=(other:Int64):Bit {
         return value <= other.value
+    }
+
+    function <=(other:UInt8):Bit {
+        return value <= other.value->builtin_int64
+    }
+
+    function <=(other:UInt16):Bit {
+        return value <= other.value->builtin_int64
+    }
+
+    function <=(other:UInt32):Bit {
+        return value <= other.value->builtin_int64
+    }
+
+    function <=(other:UInt64):Bit {
+        return value->builtin_uint64 <= other.value
     }
 
     function min(other:Int8):Int64 {
@@ -304,6 +560,34 @@ class Int64 : Value {
     function min(other:Int64):Int64 {
         if value < other.value {
             return value
+        }
+        return other.value
+    }
+
+    function min(other:UInt8):Int64 {
+        if value < other.value->builtin_int64 {
+            return value
+        }
+        return other.value->builtin_int64
+    }
+
+    function min(other:UInt16):Int64 {
+        if value < other.value->builtin_int64 {
+            return value
+        }
+        return other.value->builtin_int64
+    }
+
+    function min(other:UInt32):Int64 {
+        if value < other.value->builtin_int64 {
+            return value
+        }
+        return other.value->builtin_int64
+    }
+
+    function min(other:UInt64):UInt64 {
+        if value->builtin_uint64 < other.value {
+            return value->builtin_uint64
         }
         return other.value
     }
@@ -336,6 +620,34 @@ class Int64 : Value {
         return other.value
     }
 
+    function max(other:UInt8):Int64 {
+        if value > other.value->builtin_int64 {
+            return value
+        }
+        return other.value->builtin_int64
+    }
+
+    function max(other:UInt16):Int64 {
+        if value > other.value->builtin_int64 {
+            return value
+        }
+        return other.value->builtin_int64
+    }
+
+    function max(other:UInt32):Int64 {
+        if value > other.value->builtin_int64 {
+            return value
+        }
+        return other.value->builtin_int64
+    }
+
+    function max(other:UInt64):UInt64 {
+        if value->builtin_uint64 > other.value {
+            return value->builtin_uint64
+        }
+        return other.value
+    }
+
     @override
     function =(other:Object):Bit {
         -- FIXME need to check other's class
@@ -358,6 +670,22 @@ class Int64 : Value {
         return self && 1 << index != 0
     }
 
+    function [](index:UInt8):Bit {
+        return self && 1 << index != 0
+    }
+
+    function [](index:UInt16):Bit {
+        return self && 1 << index != 0
+    }
+
+    function [](index:UInt32):Bit {
+        return self && 1 << index != 0
+    }
+
+    function [](index:UInt64):Bit {
+        return self && 1 << index != 0
+    }
+
     function convert():Int8 {
         return Int8(value->builtin_int8)
     }
@@ -368,6 +696,22 @@ class Int64 : Value {
 
     function convert():Int32 {
         return Int32(value->builtin_int32)
+    }
+
+    function convert():UInt8 {
+        return UInt8(value->builtin_uint8)
+    }
+
+    function convert():UInt16 {
+        return UInt16(value->builtin_uint16)
+    }
+
+    function convert():UInt32 {
+        return UInt32(value->builtin_uint32)
+    }
+
+    function convert():UInt64 {
+        return UInt64(value->builtin_uint64)
     }
 
     @override

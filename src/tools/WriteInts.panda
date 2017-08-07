@@ -1,148 +1,284 @@
 class WriteInts {
+    constant INT8   := 0
+    constant INT16  := 1
+    constant INT32  := 2
+    constant INT64  := 3
+    constant UINT8  := 4
+    constant UINT16 := 5
+    constant UINT32 := 6
+    constant UINT64 := 7
+    constant INVALID := -1
+
     @class
-    function cast(size:Int, target:Int):String {
-        if size = target {
+    function builtin(type:Int):String {
+        match type {
+            when INT8:   return "builtin_int8"
+            when INT16:  return "builtin_int16"
+            when INT32:  return "builtin_int32"
+            when INT64:  return "builtin_int64"
+            when UINT8:  return "builtin_uint8"
+            when UINT16: return "builtin_uint16"
+            when UINT32: return "builtin_uint32"
+            when UINT64: return "builtin_uint64"
+        }
+    }
+
+    @class
+    function int(type:Int):String {
+        match type {
+            when INT8:   return "Int8"
+            when INT16:  return "Int16"
+            when INT32:  return "Int32"
+            when INT64:  return "Int64"
+            when UINT8:  return "UInt8"
+            when UINT16: return "UInt16"
+            when UINT32: return "UInt32"
+            when UINT64: return "UInt64"
+        }
+    }
+
+    @class
+    function max32(type:Int):Int {
+        match type {
+            when INT8,  INT16:  return INT32
+            when UINT8, UINT16: return UINT32
+            default: return type
+        }
+    }
+
+    @class
+    function signed(type:Int):Bit {
+        match type {
+            when INT8,  INT16,  INT32,  INT64:  return true
+            when UINT8, UINT16, UINT32, UINT64: return false
+        }
+    }
+
+    @class
+    function size(type:Int):Int {
+        match type {
+            when INT8,  UINT8:  return 8
+            when INT16, UINT16: return 16
+            when INT32, UINT32: return 32
+            when INT64, UINT64: return 64
+        }
+    }
+
+    @class
+    function cast(type:Int, target:Int):String {
+        if type = target {
             return ""
         }
-        return "->builtin_int\{target}"
+        return "->\{builtin(target)}"
     }
 
     @class
-    function castInt(size:Int, target:Int):String {
-        if size = target {
+    function castInt(type:Int, target:Int):String {
+        if type = target {
             return ""
         }
-        return ".convert()->Int\{target}"
+        return ".convert()->\{int(target)}"
     }
 
     @class
-    function min(size:Int):Int {
-        return -1 << (size - 1)
+    function min(type:Int):String {
+        match type {
+            when INT8:   return "-128"
+            when INT16:  return "-32768"
+            when INT32:  return "-2147483648"
+            when INT64:  return "-9223372036854775808"
+            when UINT8:  return "0"
+            when UINT16: return "0"
+            when UINT32: return "0"
+            when UINT64: return "0"
+        }
     }
 
     @class
-    function max(size:Int):Int {
-        return 1 << (size - 1) - 1
+    function max(type:Int):String {
+        match type {
+            when INT8:   return "127"
+            when INT16:  return "32767"
+            when INT32:  return "2147483647"
+            when INT64:  return "9223372036854775807"
+            when UINT8:  return "255"
+            when UINT16: return "65535"
+            when UINT32: return "4294967295"
+            when UINT64: return "18446744073709551615"
+        }
     }
 
     @class
-    method writeOperator(op:String, leftSize:Int, rightSize:Int, out:OutputStream) {
-        def resultSize := leftSize.max(rightSize).max(32)
+    function binaryType(leftType:Int, rightType:Int):Int {
+        if signed(leftType) = signed(rightType) {
+            def left32 := max32(leftType)
+            def right32 := max32(rightType)
+            if left32 = right32 {
+                return left32
+            }
+            if size(left32) > size(right32) {
+                return left32
+            }
+            return right32
+        }
+        else if size(leftType) = 8 & size(rightType) = 8 {
+            return INT16
+        }
+        else if size(leftType) <= 16 & size(rightType) <= 16 {
+            return INT32
+        }
+        else if size(leftType) <= 32 & size(rightType) <= 32 {
+            return INT64
+        }
+        else {
+            return INVALID
+        }
+    }
+
+    @class
+    method writeOperator(op:String, leftType:Int, rightType:Int, out:OutputStream) {
+        def resultType := binaryType(leftType, rightType)
+        if resultType = INVALID {
+            return
+        }
         out.printLine()
-        out.printLine("    function \{op}(other:Int\{rightSize}):Int\{resultSize} {")
-        out.printLine("        return value\{cast(leftSize, resultSize)} \{op} " +
-                "other.value\{cast(rightSize, resultSize)}")
+        out.printLine("    function \{op}(other:\{int(rightType)}):\{int(resultType)} {")
+        out.printLine("        return value\{cast(leftType, resultType)} \{op} " +
+                "other.value\{cast(rightType, resultType)}")
         out.printLine("    }")
     }
 
     @class
-    method writeOperator(op:String, size:Int, out:OutputStream) {
-        writeOperator(op, size,  8, out)
-        writeOperator(op, size, 16, out)
-        writeOperator(op, size, 32, out)
-        writeOperator(op, size, 64, out)
+    method writeOperator(op:String, type:Int, out:OutputStream) {
+        writeOperator(op, type, INT8,   out)
+        writeOperator(op, type, INT16,  out)
+        writeOperator(op, type, INT32,  out)
+        writeOperator(op, type, INT64,  out)
+        writeOperator(op, type, UINT8,  out)
+        writeOperator(op, type, UINT16, out)
+        writeOperator(op, type, UINT32, out)
+        writeOperator(op, type, UINT64, out)
     }
 
     @class
-    method writePrefixOperator(op:String, size:Int, out:OutputStream) {
+    method writePrefixOperator(op:String, type:Int, out:OutputStream) {
         out.printLine()
-        out.printLine("    function \{op}():Int\{size} {")
-        out.printLine("        return Int\{size}(\{op}value)")
+        out.printLine("    function \{op}():\{int(type)} {")
+        out.printLine("        return \{int(type)}(\{op}value)")
         out.printLine("    }")
     }
 
     @class
-    method writeComparisonOperator(op:String, leftSize:Int, rightSize:Int, out:OutputStream) {
-        def maxSize := leftSize.max(rightSize)
+    method writeComparisonOperator(op:String, leftType:Int, rightType:Int, out:OutputStream) {
+        def operandType := binaryType(leftType, rightType)
+        if operandType = INVALID {
+            return
+        }
         out.printLine()
-        out.printLine("    function \{op}(other:Int\{rightSize}):Bit {")
-        out.printLine("        return value\{cast(leftSize, maxSize)} \{op} " +
-                "other.value\{cast(rightSize, maxSize)}")
+        out.printLine("    function \{op}(other:\{int(rightType)}):Bit {")
+        out.printLine("        return value\{cast(leftType, operandType)} \{op} " +
+                "other.value\{cast(rightType, operandType)}")
         out.printLine("    }")
     }
 
     @class
-    method writeComparisonOperator(op:String, size:Int, out:OutputStream) {
-        writeComparisonOperator(op, size,  8, out)
-        writeComparisonOperator(op, size, 16, out)
-        writeComparisonOperator(op, size, 32, out)
-        writeComparisonOperator(op, size, 64, out)
+    method writeComparisonOperator(op:String, type:Int, out:OutputStream) {
+        writeComparisonOperator(op, type, INT8,   out)
+        writeComparisonOperator(op, type, INT16,  out)
+        writeComparisonOperator(op, type, INT32,  out)
+        writeComparisonOperator(op, type, INT64,  out)
+        writeComparisonOperator(op, type, UINT8,  out)
+        writeComparisonOperator(op, type, UINT16, out)
+        writeComparisonOperator(op, type, UINT32, out)
+        writeComparisonOperator(op, type, UINT64, out)
     }
 
     @class
-    method writeMax(leftSize:Int, rightSize:Int, out:OutputStream) {
+    method writeMax(leftType:Int, rightType:Int, out:OutputStream) {
         out.printLine()
-        def maxSize := leftSize.max(rightSize)
-        out.printLine("    function max(other:Int\{rightSize}):Int\{maxSize} {")
-        out.printLine("        if value\{cast(leftSize, maxSize)} > " +
-                "other.value\{cast(rightSize, maxSize)} {")
-        out.printLine("            return value\{cast(leftSize, maxSize)}")
+        def resultType := binaryType(leftType, rightType)
+        out.printLine("    function max(other:\{int(rightType)}):\{int(resultType)} {")
+        out.printLine("        if value\{cast(leftType, resultType)} > " +
+                "other.value\{cast(rightType, resultType)} {")
+        out.printLine("            return value\{cast(leftType, resultType)}")
         out.printLine("        }")
-        out.printLine("        return other.value\{cast(rightSize, maxSize)}")
+        out.printLine("        return other.value\{cast(rightType, resultType)}")
         out.printLine("    }")
     }
 
     @class
-    method writeMax(size:Int, out:OutputStream) {
-        writeMax(size,  8, out)
-        writeMax(size, 16, out)
-        writeMax(size, 32, out)
-        writeMax(size, 64, out)
+    method writeMax(type:Int, out:OutputStream) {
+        writeMax(type, INT8,   out)
+        writeMax(type, INT16,  out)
+        writeMax(type, INT32,  out)
+        writeMax(type, INT64,  out)
+        writeMax(type, UINT8,  out)
+        writeMax(type, UINT16, out)
+        writeMax(type, UINT32, out)
+        writeMax(type, UINT64, out)
     }
 
     @class
-    method writeMin(leftSize:Int, rightSize:Int, out:OutputStream) {
+    method writeMin(leftType:Int, rightType:Int, out:OutputStream) {
         out.printLine()
-        def maxSize := leftSize.max(rightSize)
-        out.printLine("    function min(other:Int\{rightSize}):Int\{maxSize} {")
-        out.printLine("        if value\{cast(leftSize, maxSize)} < " +
-                "other.value\{cast(rightSize, maxSize)} {")
-        out.printLine("            return value\{cast(leftSize, maxSize)}")
+        def resultType := binaryType(leftType, rightType)
+        out.printLine("    function min(other:\{int(rightType)}):\{int(resultType)} {")
+        out.printLine("        if value\{cast(leftType, resultType)} < " +
+                "other.value\{cast(rightType, resultType)} {")
+        out.printLine("            return value\{cast(leftType, resultType)}")
         out.printLine("        }")
-        out.printLine("        return other.value\{cast(rightSize, maxSize)}")
+        out.printLine("        return other.value\{cast(rightType, resultType)}")
         out.printLine("    }")
     }
 
     @class
-    method writeMin(size:Int, out:OutputStream) {
-        writeMin(size,  8, out)
-        writeMin(size, 16, out)
-        writeMin(size, 32, out)
-        writeMin(size, 64, out)
+    method writeMin(type:Int, out:OutputStream) {
+        writeMin(type, INT8,   out)
+        writeMin(type, INT16,  out)
+        writeMin(type, INT32,  out)
+        writeMin(type, INT64,  out)
+        writeMin(type, UINT8,  out)
+        writeMin(type, UINT16, out)
+        writeMin(type, UINT32, out)
+        writeMin(type, UINT64, out)
     }
 
     @class
-    method writeEqual(size:Int, out:OutputStream) {
+    method writeEqual(type:Int, out:OutputStream) {
         out.printLine()
         out.printLine("    @override")
         out.printLine("    function =(other:Object):Bit {")
         out.printLine("        -- FIXME need to check other's class")
-        out.printLine("        return value = (other->Int\{size}).value")
+        out.printLine("        return value = (other->\{int(type)}).value")
         out.printLine("    }")
     }
 
     @class
-    method writeIndex(leftSize:Int, rightSize:Int, out:OutputStream) {
+    method writeIndex(leftType:Int, rightType:Int, out:OutputStream) {
         out.printLine()
-        out.printLine("    function [](index:Int\{rightSize}):Bit {")
+        out.printLine("    function [](index:\{int(rightType)}):Bit {")
         out.printLine("        return self && 1 << index != 0")
         out.printLine("    }")
     }
 
     @class
-    method writeIndex(size:Int, out:OutputStream) {
-        writeIndex(size,  8, out)
-        writeIndex(size, 16, out)
-        writeIndex(size, 32, out)
-        writeIndex(size, 64, out)
+    method writeIndex(type:Int, out:OutputStream) {
+        writeIndex(type, INT8,   out)
+        writeIndex(type, INT16,  out)
+        writeIndex(type, INT32,  out)
+        writeIndex(type, INT64,  out)
+        writeIndex(type, UINT8,  out)
+        writeIndex(type, UINT16, out)
+        writeIndex(type, UINT32, out)
+        writeIndex(type, UINT64, out)
     }
 
     @class
-    method writeConvertToString(size:Int, out:OutputStream) {
+    method writeConvertToString(type:Int, out:OutputStream) {
         out.printLine()
         out.printLine("    @override")
         out.printLine("    function convert():String {")
-        out.printLine("        constant max := " + (min(size).convert()->String).utf8().get_count())
+        out.printLine("        constant max := " + (min(type).convert()->String).utf8().get_count())
         out.printLine("        def chars := Pointer<Char8>.alloc(max)")
         out.printLine("        var index := max - 1")
         out.printLine("        var value := self")
@@ -150,7 +286,7 @@ class WriteInts {
         out.printLine("            do {")
         out.printLine("                chars[index] := " +
                 "Char8((value % 10 + 48).value->builtin_int8)")
-        out.printLine("                value := (value // 10)\{castInt(size.max(32), size)}")
+        out.printLine("                value := (value // 10)\{castInt(max32(type), type)}")
         out.printLine("                index -= 1")
         out.printLine("            }")
         out.printLine("            while value > 0")
@@ -160,7 +296,7 @@ class WriteInts {
         out.printLine("            do {")
         out.printLine("                chars[index] := " +
                 "Char8((48 - value % 10).value->builtin_int8)")
-        out.printLine("                value := (value // 10)\{castInt(size.max(32), size)}")
+        out.printLine("                value := (value // 10)\{castInt(max32(type), type)}")
         out.printLine("                index -= 1")
         out.printLine("            }")
         out.printLine("            while value < 0")
@@ -177,72 +313,84 @@ class WriteInts {
     }
 
     @class
-    method writeConvert(size:Int, target:Int, out:OutputStream) {
+    method writeConvert(type:Int, target:Int, out:OutputStream) {
         out.printLine()
-        out.printLine("    function convert():Int\{target} {")
-        out.printLine("        return Int\{target}(value->builtin_int\{target})")
+        out.printLine("    function convert():\{int(target)} {")
+        out.printLine("        return \{int(target)}(value->\{builtin(target)})")
         out.printLine("    }")
     }
 
     @class
-    method writeConvert(size:Int, out:OutputStream) {
-        if size != 8 {
-            writeConvert(size, 8, out)
+    method writeConvert(type:Int, out:OutputStream) {
+        if type != INT8 {
+            writeConvert(type, INT8, out)
         }
-        if size != 16 {
-            writeConvert(size, 16, out)
+        if type != INT16 {
+            writeConvert(type, INT16, out)
         }
-        if size != 32 {
-            writeConvert(size, 32, out)
+        if type != INT32 {
+            writeConvert(type, INT32, out)
         }
-        if size != 64 {
-            writeConvert(size, 64, out)
+        if type != INT64 {
+            writeConvert(type, INT64, out)
         }
-        writeConvertToString(size, out)
+        if type != UINT8 {
+            writeConvert(type, UINT8, out)
+        }
+        if type != UINT16 {
+            writeConvert(type, UINT16, out)
+        }
+        if type != UINT32 {
+            writeConvert(type, UINT32, out)
+        }
+        if type != UINT64 {
+            writeConvert(type, UINT64, out)
+        }
+        writeConvertToString(type, out)
     }
 
     @class
-    method writeInt(size:Int, out:OutputStream) {
+    method writeInt(type:Int, out:OutputStream) {
         out.printLine("-- This file was autogenerated by 'writeints', do not modify")
         out.printLine("package panda.core")
         out.printLine()
         out.printLine("uses panda.unsafe.Pointer")
         out.printLine()
-        out.printLine("class Int\{size} : Value {")
-        out.printLine("    constant MIN:Int\{size} := \{min(size)}")
+        out.printLine("class \{int(type)} : Value {")
+        out.printLine("    constant MIN:\{int(type)} := \{min(type)}")
         out.printLine()
-        out.printLine("    constant MAX:Int\{size} := \{max(size)}")
+        out.printLine("    constant MAX:\{int(type)} := \{max(type)}")
         out.printLine()
         out.printLine("    @private")
-        out.printLine("    def value:builtin_int\{size}")
+        out.printLine("    def value:\{builtin(type)}")
         out.printLine()
         out.printLine("    @$implicit")
-        out.printLine("    init(value:builtin_int\{size}) {")
+        out.printLine("    init(value:\{builtin(type)}) {")
         out.printLine("        self.value := value")
         out.printLine("    }")
-        writeOperator("+", size, out)
-        writeOperator("-", size, out)
-        writePrefixOperator("-", size, out)
-        writeOperator("*", size, out)
-        writeOperator("//", size, out)
-        writeOperator("%", size, out)
-        writePrefixOperator("!!", size, out)
-        writeOperator("&&", size, out)
-        writeOperator("||", size, out)
-        writeOperator("~~", size, out)
-        writeOperator("<<", size, out)
-        writeOperator(">>", size, out)
-        writeComparisonOperator("=", size, out)
-        writeComparisonOperator("!=", size, out)
-        writeComparisonOperator("<", size, out)
-        writeComparisonOperator(">", size, out)
-        writeComparisonOperator(">=", size, out)
-        writeComparisonOperator("<=", size, out)
-        writeMin(size, out)
-        writeMax(size, out)
-        writeEqual(size, out)
-        writeIndex(size, out)
-        writeConvert(size, out)
+        writeOperator("+", type, out)
+        writeOperator("-", type, out)
+        writePrefixOperator("-", type, out)
+        writeOperator("*", type, out)
+        writeOperator("//", type, out)
+        writeOperator("%", type, out)
+        writePrefixOperator("!!", type, out)
+        writeOperator("&&", type, out)
+        writeOperator("||", type, out)
+        writeOperator("~~", type, out)
+        writeOperator("<<", type, out)
+        writeOperator(">>", type, out)
+        writeComparisonOperator("=", type, out)
+        writeComparisonOperator("!=", type, out)
+        writeComparisonOperator("<", type, out)
+        writeComparisonOperator(">", type, out)
+        writeComparisonOperator(">=", type, out)
+        writeComparisonOperator("<=", type, out)
+        writeMin(type, out)
+        writeMax(type, out)
+        writeEqual(type, out)
+        writeIndex(type, out)
+        writeConvert(type, out)
         out.printLine("}")
         out.cleanup()
     }
@@ -250,9 +398,13 @@ class WriteInts {
     @class
     method main() {
         def path := File("../src/panda/core")
-        writeInt(8, path.resolve("Int8.panda").openOutputStream())
-        writeInt(16, path.resolve("Int16.panda").openOutputStream())
-        writeInt(32, path.resolve("Int32.panda").openOutputStream())
-        writeInt(64, path.resolve("Int64.panda").openOutputStream())
+        writeInt(INT8, path.resolve("Int8.panda").openOutputStream())
+        writeInt(INT16, path.resolve("Int16.panda").openOutputStream())
+        writeInt(INT32, path.resolve("Int32.panda").openOutputStream())
+        writeInt(INT64, path.resolve("Int64.panda").openOutputStream())
+        writeInt(UINT8, path.resolve("UInt8.panda").openOutputStream())
+        writeInt(UINT16, path.resolve("UInt16.panda").openOutputStream())
+        writeInt(UINT32, path.resolve("UInt32.panda").openOutputStream())
+        writeInt(UINT64, path.resolve("UInt64.panda").openOutputStream())
     }
 }

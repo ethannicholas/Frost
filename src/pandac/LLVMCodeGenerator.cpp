@@ -1158,7 +1158,12 @@ String LLVMCodeGenerator::getCastReference(const String& value, const Type& src,
             op = "trunc";
         }
         else if (size1 < size2) {
-            op = "sext";
+            if (target.fCategory == Type::Category::BUILTIN_INT) {
+                op = "sext";
+            }
+            else {
+                op = "zext";
+            }
         }
         else {
             return value;
@@ -2255,7 +2260,7 @@ std::unordered_map<String, String> METHOD_NAME_MAP {
 
 String LLVMCodeGenerator::methodName(const Method& method) {
     if (method.fName == "main") {
-        return "@main";
+        return "@pandaMain";
     }
     String name = method.fName;
     auto found = METHOD_NAME_MAP.find(name);

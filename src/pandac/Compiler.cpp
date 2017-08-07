@@ -1648,6 +1648,7 @@ bool Compiler::convertBinary(Position p, IRNode* left, Operator op, IRNode* righ
         return true;
     }
     if (is_assignment(op)) {
+        // compound assignment
         if (left->fKind == IRNode::Kind::UNRESOLVED_INDEX) {
             return this->convertIndexedAssignment(p, std::move(*left), op, std::move(*right), out);
         }
@@ -1667,6 +1668,14 @@ bool Compiler::convertBinary(Position p, IRNode* left, Operator op, IRNode* righ
         IRNode reusedLeft = IRNode(leftP, IRNode::Kind::REUSED_VALUE, leftT, fReusedValues);
         if (!this->convertBinary(p, &reusedLeft, remove_assignment(op), right, right)) {
             return false;
+        }
+        // 32 bit promotion means that e.g. int8 += int8 will result in a 32 bit value that can't be
+        // stored back into the original lvalue. Special case this and convert it back to its
+        // original size.
+        if (left->fType.isNumber() && left->fType != right->fType) {
+            if (!this->call(std::move(*right), "convert", {}, &left->fType, right)) {
+                return false;
+            }
         }
         return this->convertBinary(p, left, Operator::ASSIGNMENT, right, out);
     }

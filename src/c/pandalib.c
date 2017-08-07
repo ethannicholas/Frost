@@ -45,6 +45,13 @@ typedef struct FileOutputStream {
 
 extern Class panda$io$FileOutputStream$class;
 
+void pandaMain();
+
+int main() {
+    pandaMain();
+    return 0;
+}
+
 void panda$core$System$exit$panda$core$Int64(int64_t code) {
     exit(code);
 }

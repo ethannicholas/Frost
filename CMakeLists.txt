@@ -70,6 +70,10 @@ compile_panda_sources(panda_objects
     src/panda/core/Int32.panda
     src/panda/core/Int64.panda
     src/panda/core/Int8.panda
+    src/panda/core/UInt16.panda
+    src/panda/core/UInt32.panda
+    src/panda/core/UInt64.panda
+    src/panda/core/UInt8.panda
     src/panda/core/MutableString.panda
     src/panda/core/Object.panda
     src/panda/core/Panda.panda
@@ -103,12 +107,55 @@ add_custom_command(
 )
 
 add_custom_command(
-    OUTPUT src/panda/core/Int8.panda src/panda/core/Int16.panda src/panda/core/Int32.panda src/panda/core/Int64.panda
+    OUTPUT src/panda/core/Int8.panda
+           src/panda/core/Int16.panda
+           src/panda/core/Int32.panda
+           src/panda/core/Int64.panda
+           src/panda/core/UInt8.panda
+           src/panda/core/UInt16.panda
+           src/panda/core/UInt32.panda
+           src/panda/core/UInt64.panda
     COMMAND ${CMAKE_CURRENT_BINARY_DIR}/writeInts
-    DEPENDS writeInts pandac
+    DEPENDS writeInts
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+)
+
+add_custom_command(
+    OUTPUT writeOperators
+    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/pandac -o writeOperators ${CMAKE_CURRENT_SOURCE_DIR}/src/tools/WriteOperators.panda
+    DEPENDS src/tools/WriteOperators.panda pandac
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+)
+
+add_custom_command(
+    OUTPUT test/tests/Operators.panda
+           Operators.c
+    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/writeOperators
+    DEPENDS writeOperators
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+)
+
+add_executable(operators
+    Operators.c
+)
+
+add_custom_command(
+    OUTPUT test/tests/Operators.expected
+    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/operators
+    DEPENDS operators
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
 
 add_custom_target(generate_code
-    DEPENDS src/panda/core/Int8.panda src/panda/core/Int16.panda src/panda/core/Int32.panda src/panda/core/Int64.panda
+    DEPENDS src/panda/core/Int8.panda
+            src/panda/core/Int16.panda
+            src/panda/core/Int32.panda
+            src/panda/core/Int64.panda
+            src/panda/core/UInt8.panda
+            src/panda/core/UInt16.panda
+            src/panda/core/UInt32.panda
+            src/panda/core/UInt64.panda
+            test/tests/Operators.panda
+            test/tests/Operators.expected
+            Operators.c
 )

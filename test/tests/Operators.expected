@@ -1,11 +1,98 @@
-Int64 Arithmetic
-17
-3
-70
-1
-20
+int8 Arithmetic
+21
+-3
+108
+0
+18
+4
+
+int8 Bitwise
+-10
+8
+13
 5
-Int64 Comparisons
+
+int8 Comparisons
+false
+true
+true
+false
+false
+false
+true
+false
+true
+true
+true
+false
+false
+true
+false
+true
+
+int8 Compound Assignment
+21
+9
+108
+9
+18
+9
+
+int16 Arithmetic
+393
+-645
+-65394
+0
+-252
+-63
+
+int16 Bitwise
+125
+514
+-121
+-635
+
+int16 Comparisons
+false
+true
+true
+false
+false
+false
+true
+false
+true
+true
+true
+false
+false
+true
+false
+true
+
+int16 Compound Assignment
+393
+-126
+142
+0
+0
+0
+
+int32 Arithmetic
+22806
+153442
+-1461116136
+-1
+176248
+44062
+
+int32 Bitwise
+-88125
+65560
+-42754
+-108314
+
+int32 Comparisons
 false
 true
 true
@@ -22,48 +109,211 @@ false
 false
 true
 true
-Int64 Compound Assignment
-17
-10
-70
-10
-20
-10
-Bit Logic
-noisyTrue()
-false
-noisyFalse()
-true
-noisyTrue()
-noisyTrue()
-true
-noisyTrue()
-noisyFalse()
-false
-noisyFalse()
-false
-noisyFalse()
-false
-noisyTrue()
-true
-noisyTrue()
-true
-noisyFalse()
-noisyTrue()
-true
-noisyFalse()
-noisyFalse()
-false
-Bit Compound Assignment
-noisyTrue()
-true
-noisyFalse()
-false
-false
+
+int32 Compound Assignment
+22806
+88124
+-1461116136
+22369
+44738
+22369
+
+int64 Arithmetic
+5991608953
+2009013929
+7965810219688434792
+2
+8000622882
+2000155720
+
+int64 Bitwise
+-4000311442
+1713424512
+4278184441
+2564759929
+
+int64 Comparisons
 false
 true
 true
-noisyTrue()
-true
-noisyFalse()
 false
+false
+true
+false
+true
+false
+true
+false
+true
+false
+false
+true
+true
+
+int64 Compound Assignment
+5991608953
+4000311441
+7965810219688434792
+4000311441
+8000622882
+4000311441
+
+uint8 Arithmetic
+31
+1
+240
+1
+32
+8
+
+uint8 Bitwise
+239
+0
+31
+31
+
+uint8 Comparisons
+false
+true
+true
+false
+false
+true
+false
+true
+false
+true
+false
+true
+false
+false
+true
+true
+
+uint8 Compound Assignment
+31
+16
+240
+16
+32
+16
+
+uint16 Arithmetic
+685
+511
+52026
+6
+1196
+299
+
+uint16 Bitwise
+64937
+86
+599
+513
+
+uint16 Comparisons
+false
+true
+true
+false
+false
+true
+false
+true
+false
+true
+false
+true
+false
+false
+true
+true
+
+uint16 Compound Assignment
+685
+598
+52026
+598
+1196
+598
+
+uint32 Arithmetic
+131583
+118157
+838252310
+18
+249740
+62435
+
+uint32 Bitwise
+4294842425
+512
+131071
+130559
+
+uint32 Comparisons
+false
+true
+true
+false
+false
+true
+false
+true
+false
+true
+false
+true
+false
+false
+true
+true
+
+uint32 Compound Assignment
+131583
+124870
+838252310
+124870
+249740
+124870
+
+uint64 Arithmetic
+501305767
+338759787
+34137319684793230
+5
+840065554
+210016388
+
+uint64 Bitwise
+18446744073289518838
+532488
+500773279
+500240791
+
+uint64 Comparisons
+false
+true
+true
+false
+false
+true
+false
+true
+false
+true
+false
+true
+false
+false
+true
+true
+
+uint64 Compound Assignment
+501305767
+420032777
+34137319684793230
+420032777
+840065554
+420032777

@@ -414,6 +414,11 @@ void Scanner::scan(ASTNode* file) {
     uses.push_back({ Position(), "panda.core.Int32", "Int32" });
     uses.push_back({ Position(), "panda.core.Int64", "Int64" });
     uses.push_back({ Position(), "panda.core.Int64", "Int" });
+    uses.push_back({ Position(), "panda.core.UInt8", "UInt8" });
+    uses.push_back({ Position(), "panda.core.UInt16", "UInt16" });
+    uses.push_back({ Position(), "panda.core.UInt32", "UInt32" });
+    uses.push_back({ Position(), "panda.core.UInt64", "UInt64" });
+    uses.push_back({ Position(), "panda.core.UInt64", "UInt" });
     uses.push_back({ Position(), "panda.core.MutableString", "MutableString" });
     uses.push_back({ Position(), "panda.core.Object", "Object" });
     uses.push_back({ Position(), "panda.core.Range", "Range" });
