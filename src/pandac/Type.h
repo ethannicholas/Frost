@@ -110,7 +110,8 @@ struct Type : public Symbol {
 
     bool isNumber() const {
         return !strncmp(fName.c_str(), "panda.core.Int", strlen("panda.core.Int")) ||
-                !strncmp(fName.c_str(), "panda.core.UInt", strlen("panda.core.UInt"));
+                !strncmp(fName.c_str(), "panda.core.UInt", strlen("panda.core.UInt")) ||
+                *this == IntLiteral();
     }
 
     bool isNumeric() const {

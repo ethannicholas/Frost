@@ -2301,6 +2301,9 @@ String LLVMCodeGenerator::defaultValue(const Type& type) {
     if (type.isBuiltinNumber() || type == Type::BuiltinBit()) {
         return "0";
     }
+    else if (type.fCategory == Type::Category::GENERIC && type.fSubtypes[0].fName == POINTER_NAME) {
+        return "null";
+    }
     else {
         Class* cl = fCompiler->getClass(type);
         ASSERT(cl);

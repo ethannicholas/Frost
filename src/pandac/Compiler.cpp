@@ -232,7 +232,7 @@ Class* Compiler::tryResolveClass(String name) {
 }
 
 Class* Compiler::resolveClass(Type t, bool checkParameters) {
-    if (t.fCategory == Type::Category::NULLABLE) {
+    if (t.fCategory == Type::Category::NULLABLE || t.fCategory == Type::Category::PARAMETER) {
         return this->resolveClass(t.fSubtypes[0]);
     }
     String baseName;
@@ -261,13 +261,14 @@ Class* Compiler::resolveClass(Type t, bool checkParameters) {
                 return nullptr;
             }
             for (int i = 0; i < suppliedParameters; ++i) {
-                if (this->coercionCost(t.fSubtypes[i + 1],
-                        result->fParameters[i].fType) == INT_MAX) {
-                    this->error(t.fPosition, "generic parameter " + std::to_string(i + 1) +
-                            " of type '" + result->fName + "' must be of type '" +
-                            result->fParameters[i].fType.fName + "', but found '" +
-                            t.fSubtypes[i + 1].fName + "'");
-                    return nullptr;
+                if (result->fParameters[i].fType != Type::Any()) {
+                    Type p = this->remapType(t, result->fParameters[i].fType);
+                    if (this->coercionCost(t.fSubtypes[i + 1], p) == INT_MAX) {
+                        this->error(t.fPosition, "generic parameter " + std::to_string(i + 1) +
+                                " of type '" + result->fName + "' must be of type '" +
+                                p.fName + "', but found '" + t.fSubtypes[i + 1].fName + "'");
+                        return nullptr;
+                    }
                 }
             }
         }
@@ -680,8 +681,13 @@ int Compiler::coercionCost(const Type& type, const Type& target) {
             cost = std::min(cost, this->coercionCost(this->remapType(type, cl->getRawSuper(this)),
                     target));
         }
-        for (const auto& intf : cl->getRawInterfaces(this)) {
-            cost = std::min(cost, this->coercionCost(this->remapType(type, intf), target));
+        if (cost == INT_MAX) {
+            for (const auto& intf : cl->getRawInterfaces(this)) {
+                cost = std::min(cost, this->coercionCost(this->remapType(type, intf), target));
+                if (cost != INT_MAX) {
+                    break;
+                }
+            }
         }
         if (cost != INT_MAX) {
             ++cost;
@@ -1287,6 +1293,9 @@ int Compiler::operatorCost(IRNode* left, const MethodRef& m, IRNode* right,
 }
 
 static std::vector<Type> type_parameters(Type type) {
+    if (type.fCategory == Type::Category::PARAMETER) {
+        return type_parameters(type.fSubtypes[0]);
+    }
     std::vector<Type> result;
     if (type.fCategory == Type::Category::GENERIC) {
         ASSERT(type.fSubtypes.size() >= 2);
@@ -1552,6 +1561,14 @@ bool Compiler::convertIndexedAssignment(Position p, IRNode left, Operator op, IR
     if (!this->convertBinary(p, &rhsIndex, remove_assignment(op), &right, &value)) {
         return false;
     }
+    // 32 bit promotion means that e.g. int8 += int8 will result in a 32 bit value that can't be
+    // stored back into the original lvalue. Special case this and convert it back to its
+    // original size.
+    if (rhsIndex.fType.isNumber() && right.fType.isNumber() && rhsIndex.fType != value.fType) {
+        if (!this->call(std::move(value), "convert", {}, &left.fType, &value)) {
+            return false;
+        }
+    }
     children.clear();
     children.push_back(std::move(index));
     children.push_back(std::move(value));
@@ -1559,9 +1576,13 @@ bool Compiler::convertIndexedAssignment(Position p, IRNode left, Operator op, IR
 }
 
 bool Compiler::convertBinary(Position p, IRNode* left, Operator op, IRNode* right, IRNode* out) {
-    if (left->fType.fCategory == Type::Category::INT_LITERAL &&
-            this->coercionCost(*left, right->fType) != INT_MAX) {
-        coerce(left, right->fType);
+    if (left->fType.fCategory == Type::Category::INT_LITERAL) {
+        if (!this->resolve(right)) {
+            return false;
+        }
+        if (this->coercionCost(*left, right->fType) != INT_MAX) {
+            coerce(left, right->fType);
+        }
     }
     if (right->fType.fCategory == Type::Category::INT_LITERAL &&
             this->coercionCost(*right, left->fType) != INT_MAX) {

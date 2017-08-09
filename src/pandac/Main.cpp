@@ -82,7 +82,7 @@ void make_executable(const char* llvm, const char* dest) {
     const char* optimized = "/tmp/output.ll.opt";
     optimize(llvm, optimized);
     const char* assembly = "/tmp/output.s";
-    llc(optimized, assembly);
+    llc(llvm, assembly);
 
     int pid = fork();
     if (pid < 0) {
