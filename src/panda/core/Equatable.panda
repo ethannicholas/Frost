@@ -1,0 +1,7 @@
+package panda.core
+
+interface Equatable<T> {
+    function =(other:T):Bit
+
+    function !=(other:T):Bit
+}

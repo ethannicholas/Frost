@@ -1,18 +1,6 @@
 package panda.core
 
 class Object {
-    function =(o:Object):Bit {
-        return self == o
-    }
-
-    function !=(o:Object):Bit {
-        return !(self = o)
-    }
-
-    function hash():Int {
-        return 0
-    }
-
     function convert():String {
         return "<object>"
     }

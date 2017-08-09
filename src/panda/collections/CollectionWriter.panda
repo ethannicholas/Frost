@@ -9,7 +9,5 @@ interface CollectionWriter<T> {
 
     method addAll(c:CollectionView<T>)
 
-    method remove(value:T)
-
     method clear()
 }

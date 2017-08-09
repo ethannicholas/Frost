@@ -68,6 +68,14 @@ struct Method : public Symbol {
      */
     Type inheritedTypeWithSelf(Compiler& compiler);
 
+    bool isInstance() const {
+        return !fAnnotations.isClass();
+    }
+
+    bool isVirtual() const {
+        return this->isInstance() && fMethodKind != Method::Kind::INIT && !fAnnotations.isFinal();
+    }
+
     String signature() const;
 
     String description() const {

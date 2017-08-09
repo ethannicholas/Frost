@@ -97,16 +97,6 @@ class Array<T> (List<T>) {
     }
 
     @override
-    method remove(value:T) {
-        for i in 0 .. count {
-            if self[i] = value {
-                removeIndex(i)
-                return
-            }
-        }
-    }
-
-    @override
     function iterator():Iterator<T> {
         return ArrayIterator<T>(self)
     }

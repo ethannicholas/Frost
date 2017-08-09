@@ -5,21 +5,17 @@ uses panda.unsafe.Pointer
 ====================================================================================================
 Represents any Unicode codepoint in the entire range from 0 to 1,114,112.
 ====================================================================================================
-class Char32 : Value {
+class Char32 : Value (Key<Char32>) {
     init(value:Int32) {
         self.value := value.value
     }
 
     @override
-    function =(other:Object):Bit {
-        -- FIXME need instance test
-        return value = (other->Char32).value
-    }
-
     function =(other:Char32):Bit {
         return value = other.value
     }
 
+    @override
     function !=(other:Char32):Bit {
         return value != other.value
     }

@@ -182,7 +182,7 @@ private:
 
     int operatorCost(IRNode* left, const MethodRef& m, IRNode* right, const Type* returnType);
 
-    int operatorMatchLeft(Class& leftClass, IRNode* left, Operator op, IRNode* right,
+    int operatorMatchLeft(const Type& leftType, IRNode* left, Operator op, IRNode* right,
             const Type* returnType, std::vector<const MethodRef*>* outResult);
 
     int operatorMatch(IRNode* left, Operator op, IRNode* right, const Type* returnType,

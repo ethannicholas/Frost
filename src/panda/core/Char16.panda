@@ -5,21 +5,17 @@ uses panda.unsafe.Pointer
 ====================================================================================================
 Represents a single 2-byte word of a UTF-16 encoded string.
 ====================================================================================================
-class Char16 : Value {
+class Char16 : Value (Key<Char16>) {
     init(value:Int16) {
         self.value := value.value
     }
 
     @override
-    function =(other:Object):Bit {
-        -- FIXME need instance test
-        return value = (other->Char16).value
-    }
-
     function =(other:Char16):Bit {
         return value = other.value
     }
 
+    @override
     function !=(other:Char16):Bit {
         return value != other.value
     }

@@ -245,6 +245,7 @@ Class* Compiler::resolveClass(Type t, bool checkParameters) {
     Class* result = this->tryResolveClass(baseName);
     if (result) {
         if (checkParameters) {
+            this->resolveTypes(result);
             int expectedParameters = result->fParameters.size();
             int suppliedParameters;
             if (t.fCategory == Type::Category::GENERIC) {
@@ -1340,17 +1341,21 @@ bool Compiler::convertArrow(const ASTNode& a, IRNode* outResult) {
     }
 }
 
-int Compiler::operatorMatchLeft(Class& leftClass, IRNode* left, Operator op, IRNode* right,
+int Compiler::operatorMatchLeft(const Type& leftType, IRNode* left, Operator op, IRNode* right,
         const Type* returnType, std::vector<const MethodRef*>* outResult) {
-    this->resolveTypes(&leftClass);
+    Class* cl = this->resolveClass(leftType);
+    if (!cl) {
+        return INT_MAX;
+    }
+    this->resolveTypes(cl);
     int min = INT_MAX;
     ASSERT(!outResult->size());
-    const Symbol* leftMethods = leftClass.getSymbolTable(this)[operator_text(op)];
+    const Symbol* leftMethods = cl->getSymbolTable(this)[operator_text(op)];
     if (leftMethods) {
         switch (leftMethods->fKind) {
             case Symbol::Kind::METHOD: {
                 MethodRef* ref = new MethodRef((Method*) leftMethods,
-                        type_parameters(*left));
+                        type_parameters(leftType));
                 ((const Method*) leftMethods)->fMethodRefs.emplace_back(ref);
                 int cost = this->operatorCost(left, *ref, right, returnType);
                 if (cost < min) {
@@ -1388,27 +1393,16 @@ int Compiler::operatorMatch(IRNode* left, Operator op, IRNode* right, const Type
         std::vector<const MethodRef*>* outResult) {
     int min = INT_MAX;
     if (left->fKind == IRNode::Kind::TYPE_REFERENCE) {
-        Class* leftClass = this->resolveClass(*(Type*) left->fValue.fPtr);
-        if (!leftClass) {
-            return false;
-        }
-        min = this->operatorMatchLeft(*leftClass, left, op, right, returnType, outResult);
+        min = this->operatorMatchLeft(*(Type*) left->fValue.fPtr, left, op, right, returnType,
+                outResult);
     }
     else if (left->fType.isClass()) {
-        Class* leftClass = this->resolveClass(left->fType);
-        if (!leftClass) {
-            return false;
-        }
-        min = this->operatorMatchLeft(*leftClass, left, op, right, returnType, outResult);
+        min = this->operatorMatchLeft(left->fType, left, op, right, returnType, outResult);
     }
     else if (left->fType.fCategory == Type::Category::UNRESOLVED) {
         for (const Type& t : left->fType.fSubtypes) {
-            Class* leftClass = this->resolveClass(t);
-            if (!leftClass) {
-                return false;
-            }
             std::vector<const MethodRef*> matches;
-            int cost = this->operatorMatchLeft(*leftClass, left, op, right, returnType, &matches);
+            int cost = this->operatorMatchLeft(t, left, op, right, returnType, &matches);
             if (cost < min) {
                 min = cost;
                 outResult->clear();

@@ -5,7 +5,7 @@ uses panda.unsafe.Pointer
 ====================================================================================================
 A single key/value pair from a `HashMap`.
 ====================================================================================================
-class MutableMapEntry<K, V> {
+class MutableMapEntry<K:Key<K>, V> {
     ================================================================================================
     The entry's key.
     ================================================================================================
@@ -37,7 +37,7 @@ number of values can be stored in a `HashMap` and then retrieved in constant tim
 
 This will display the value `"good"`.
 ====================================================================================================
-class HashMap<K, V> (Map<K, V>) {
+class HashMap<K:Key<K>, V> (Map<K, V>, Equatable<Map<K, V>>) {
     @private
     constant DEFAULT_BUCKET_COUNT := 16
 
@@ -204,6 +204,7 @@ class HashMap<K, V> (Map<K, V>) {
         }
     }
 
+    @override
     function get_count():Int {
         return _count
     }
@@ -215,12 +216,8 @@ class HashMap<K, V> (Map<K, V>) {
     @returns `true` if the two values are equal
     ================================================================================================
     @override
-    function =(o:Object):Bit {
--*        if o-!>Map<K, V> {
-            return false
-        }
-        var m := o->Map<K, V>
-        if count != m.count {
+    function =(other:Map<K, V>):Bit {
+-*        if count != other.get_count() {
             return false
         }
         for (key, value) in self {
@@ -230,6 +227,11 @@ class HashMap<K, V> (Map<K, V>) {
         }
         return true*-
         assert false
+    }
+
+    @override
+    function !=(other:Map<K, V>):Bit {
+        assert false -- fixme remove this method when default != is in
     }
 
     ================================================================================================

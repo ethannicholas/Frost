@@ -53,6 +53,7 @@ compile_panda_sources(panda_objects
     src/panda/collections/ImmutableArray.panda
     src/panda/collections/Iterable.panda
     src/panda/collections/Iterator.panda
+    src/panda/collections/Key.panda
     src/panda/collections/List.panda
     src/panda/collections/ListView.panda
     src/panda/collections/ListWriter.panda
@@ -65,6 +66,7 @@ compile_panda_sources(panda_objects
     src/panda/core/Char16.panda
     src/panda/core/Char32.panda
     src/panda/core/Class.panda
+    src/panda/core/Equatable.panda
     src/panda/core/Immutable.panda
     src/panda/core/Int16.panda
     src/panda/core/Int32.panda
@@ -123,7 +125,7 @@ add_custom_command(
 add_custom_command(
     OUTPUT writeOperators
     COMMAND ${CMAKE_CURRENT_BINARY_DIR}/pandac -o writeOperators ${CMAKE_CURRENT_SOURCE_DIR}/src/tools/WriteOperators.panda
-    DEPENDS src/tools/WriteOperators.panda pandac
+    DEPENDS src/tools/WriteOperators.panda pandac panda
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
 

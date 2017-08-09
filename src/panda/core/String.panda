@@ -5,11 +5,11 @@ uses panda.unsafe.Pointer
 ====================================================================================================
 An immutable sequence of Unicode characters.
 ====================================================================================================
-class String : Immutable {
+class String : Immutable (Key<String>) {
     ================================================================================================
     Represents the position of a character within a String.
     ================================================================================================
-    class Index : Value {
+    class Index : Value (Key<Index>) {
         @private
         def value:Int
 
@@ -19,9 +19,13 @@ class String : Immutable {
         }
 
         @override
-        function =(o:Object):Bit {
-            -- FIXME need to check o's class
-            return value = (o->Index).value
+        function =(other:Index):Bit {
+            return value = other.value
+        }
+
+        @override
+        function !=(other:Index):Bit {
+            return !(self = other)
         }
 
         @override
@@ -207,9 +211,7 @@ class String : Immutable {
     }
 
     @override
-    function =(o:Object):Bit {
-        -- FIXME need to check o's class
-        def other := o->String
+    function =(other:String):Bit {
         if _length != other._length {
             return false
         }
@@ -219,6 +221,11 @@ class String : Immutable {
             }
         }
         return true
+    }
+
+    @override
+    function !=(other:String):Bit {
+        return !(self = other)
     }
 
     function [](index:Index):Char32 {

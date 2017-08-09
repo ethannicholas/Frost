@@ -400,6 +400,7 @@ void Scanner::scan(ASTNode* file) {
     uses.push_back({ Position(), "panda.collections.ImmutableArray", "ImmutableArray" });
     uses.push_back({ Position(), "panda.collections.Iterable", "Iterable" });
     uses.push_back({ Position(), "panda.collections.Iterator", "Iterator" });
+    uses.push_back({ Position(), "panda.collections.Key", "Key" });
     uses.push_back({ Position(), "panda.collections.List", "List" });
     uses.push_back({ Position(), "panda.collections.ListView", "ListView" });
     uses.push_back({ Position(), "panda.collections.ListWriter", "ListWriter" });
@@ -408,6 +409,7 @@ void Scanner::scan(ASTNode* file) {
     uses.push_back({ Position(), "panda.core.Char8", "Char8" });
     uses.push_back({ Position(), "panda.core.Char16", "Char16" });
     uses.push_back({ Position(), "panda.core.Char32", "Char32" });
+    uses.push_back({ Position(), "panda.core.Equatable", "Equatable" });
     uses.push_back({ Position(), "panda.core.Immutable", "Immutable" });
     uses.push_back({ Position(), "panda.core.Int8", "Int8" });
     uses.push_back({ Position(), "panda.core.Int16", "Int16" });

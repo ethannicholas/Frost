@@ -1,0 +1,5 @@
+package panda.collections
+
+interface Key<T> : Equatable<T> {
+    function hash():Int
+}

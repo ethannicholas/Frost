@@ -648,12 +648,6 @@ class Int64 : Value {
         return other.value
     }
 
-    @override
-    function =(other:Object):Bit {
-        -- FIXME need to check other's class
-        return value = (other->Int64).value
-    }
-
     function [](index:Int8):Bit {
         return self && 1 << index != 0
     }
