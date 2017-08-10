@@ -1,0 +1,11 @@
+package panda.core
+
+interface Comparable<T> : Equatable<T> {
+    function >(other:T):Bit
+
+    function <(other:T):Bit
+
+    function >=(other:T):Bit
+
+    function <=(other:T):Bit
+}

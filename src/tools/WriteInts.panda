@@ -178,7 +178,7 @@ class WriteInts {
             return
         }
         out.printLine()
-        if (op = "=" | op = "!=") & leftType = rightType {
+        if leftType = rightType {
             out.printLine("    @override")
         }
         out.printLine("    function \{op}(other:\{int(rightType)}):Bit {")
@@ -367,7 +367,7 @@ class WriteInts {
         out.printLine()
         out.printLine("uses panda.unsafe.Pointer")
         out.printLine()
-        out.printLine("class \{int(type)} : Value (Key<\{int(type)}>) {")
+        out.printLine("class \{int(type)} : Value (Key<\{int(type)}>, Comparable<\{int(type)}>) {")
         out.printLine("    constant MIN:\{int(type)} := \{min(type)}")
         out.printLine()
         out.printLine("    constant MAX:\{int(type)} := \{max(type)}")

@@ -3,7 +3,7 @@ package panda.core
 
 uses panda.unsafe.Pointer
 
-class Int64 : Value (Key<Int64>) {
+class Int64 : Value (Key<Int64>, Comparable<Int64>) {
     constant MIN:Int64 := -9223372036854775808
 
     constant MAX:Int64 := 9223372036854775807
@@ -310,6 +310,7 @@ class Int64 : Value (Key<Int64>) {
         return value < other.value->builtin_int64
     }
 
+    @override
     function <(other:Int64):Bit {
         return value < other.value
     }
@@ -326,6 +327,7 @@ class Int64 : Value (Key<Int64>) {
         return value > other.value->builtin_int64
     }
 
+    @override
     function >(other:Int64):Bit {
         return value > other.value
     }
@@ -342,6 +344,7 @@ class Int64 : Value (Key<Int64>) {
         return value >= other.value->builtin_int64
     }
 
+    @override
     function >=(other:Int64):Bit {
         return value >= other.value
     }
@@ -358,6 +361,7 @@ class Int64 : Value (Key<Int64>) {
         return value <= other.value->builtin_int64
     }
 
+    @override
     function <=(other:Int64):Bit {
         return value <= other.value
     }

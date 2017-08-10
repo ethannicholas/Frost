@@ -66,6 +66,7 @@ compile_panda_sources(panda_objects
     src/panda/core/Char16.panda
     src/panda/core/Char32.panda
     src/panda/core/Class.panda
+    src/panda/core/Comparable.panda
     src/panda/core/Equatable.panda
     src/panda/core/Immutable.panda
     src/panda/core/Int16.panda
