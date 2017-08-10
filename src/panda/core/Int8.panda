@@ -3,7 +3,7 @@ package panda.core
 
 uses panda.unsafe.Pointer
 
-class Int8 : Value {
+class Int8 : Value (Key<Int8>) {
     constant MIN:Int8 := -128
 
     constant MAX:Int8 := 127
@@ -32,20 +32,16 @@ class Int8 : Value {
         return value->builtin_int64 + other.value
     }
 
-    function +(other:UInt8):UInt32 {
-        return value->builtin_uint32 + other.value->builtin_uint32
+    function +(other:UInt8):Int16 {
+        return value->builtin_int16 + other.value->builtin_int16
     }
 
-    function +(other:UInt16):UInt32 {
-        return value->builtin_uint32 + other.value->builtin_uint32
+    function +(other:UInt16):Int32 {
+        return value->builtin_int32 + other.value->builtin_int32
     }
 
-    function +(other:UInt32):UInt32 {
-        return value->builtin_uint32 + other.value
-    }
-
-    function +(other:UInt64):UInt64 {
-        return value->builtin_uint64 + other.value
+    function +(other:UInt32):Int64 {
+        return value->builtin_int64 + other.value->builtin_int64
     }
 
     function -(other:Int8):Int32 {
@@ -64,20 +60,16 @@ class Int8 : Value {
         return value->builtin_int64 - other.value
     }
 
-    function -(other:UInt8):UInt32 {
-        return value->builtin_uint32 - other.value->builtin_uint32
+    function -(other:UInt8):Int16 {
+        return value->builtin_int16 - other.value->builtin_int16
     }
 
-    function -(other:UInt16):UInt32 {
-        return value->builtin_uint32 - other.value->builtin_uint32
+    function -(other:UInt16):Int32 {
+        return value->builtin_int32 - other.value->builtin_int32
     }
 
-    function -(other:UInt32):UInt32 {
-        return value->builtin_uint32 - other.value
-    }
-
-    function -(other:UInt64):UInt64 {
-        return value->builtin_uint64 - other.value
+    function -(other:UInt32):Int64 {
+        return value->builtin_int64 - other.value->builtin_int64
     }
 
     function -():Int8 {
@@ -100,20 +92,16 @@ class Int8 : Value {
         return value->builtin_int64 * other.value
     }
 
-    function *(other:UInt8):UInt32 {
-        return value->builtin_uint32 * other.value->builtin_uint32
+    function *(other:UInt8):Int16 {
+        return value->builtin_int16 * other.value->builtin_int16
     }
 
-    function *(other:UInt16):UInt32 {
-        return value->builtin_uint32 * other.value->builtin_uint32
+    function *(other:UInt16):Int32 {
+        return value->builtin_int32 * other.value->builtin_int32
     }
 
-    function *(other:UInt32):UInt32 {
-        return value->builtin_uint32 * other.value
-    }
-
-    function *(other:UInt64):UInt64 {
-        return value->builtin_uint64 * other.value
+    function *(other:UInt32):Int64 {
+        return value->builtin_int64 * other.value->builtin_int64
     }
 
     function //(other:Int8):Int32 {
@@ -132,20 +120,16 @@ class Int8 : Value {
         return value->builtin_int64 // other.value
     }
 
-    function //(other:UInt8):UInt32 {
-        return value->builtin_uint32 // other.value->builtin_uint32
+    function //(other:UInt8):Int16 {
+        return value->builtin_int16 // other.value->builtin_int16
     }
 
-    function //(other:UInt16):UInt32 {
-        return value->builtin_uint32 // other.value->builtin_uint32
+    function //(other:UInt16):Int32 {
+        return value->builtin_int32 // other.value->builtin_int32
     }
 
-    function //(other:UInt32):UInt32 {
-        return value->builtin_uint32 // other.value
-    }
-
-    function //(other:UInt64):UInt64 {
-        return value->builtin_uint64 // other.value
+    function //(other:UInt32):Int64 {
+        return value->builtin_int64 // other.value->builtin_int64
     }
 
     function %(other:Int8):Int32 {
@@ -164,20 +148,16 @@ class Int8 : Value {
         return value->builtin_int64 % other.value
     }
 
-    function %(other:UInt8):UInt32 {
-        return value->builtin_uint32 % other.value->builtin_uint32
+    function %(other:UInt8):Int16 {
+        return value->builtin_int16 % other.value->builtin_int16
     }
 
-    function %(other:UInt16):UInt32 {
-        return value->builtin_uint32 % other.value->builtin_uint32
+    function %(other:UInt16):Int32 {
+        return value->builtin_int32 % other.value->builtin_int32
     }
 
-    function %(other:UInt32):UInt32 {
-        return value->builtin_uint32 % other.value
-    }
-
-    function %(other:UInt64):UInt64 {
-        return value->builtin_uint64 % other.value
+    function %(other:UInt32):Int64 {
+        return value->builtin_int64 % other.value->builtin_int64
     }
 
     function !!():Int8 {
@@ -344,6 +324,7 @@ class Int8 : Value {
         return value->builtin_uint64 >> other.value
     }
 
+    @override
     function =(other:Int8):Bit {
         return value->builtin_int32 = other.value->builtin_int32
     }
@@ -361,21 +342,18 @@ class Int8 : Value {
     }
 
     function =(other:UInt8):Bit {
-        return value->builtin_uint32 = other.value->builtin_uint32
+        return value->builtin_int16 = other.value->builtin_int16
     }
 
     function =(other:UInt16):Bit {
-        return value->builtin_uint32 = other.value->builtin_uint32
+        return value->builtin_int32 = other.value->builtin_int32
     }
 
     function =(other:UInt32):Bit {
-        return value->builtin_uint32 = other.value
+        return value->builtin_int64 = other.value->builtin_int64
     }
 
-    function =(other:UInt64):Bit {
-        return value->builtin_uint64 = other.value
-    }
-
+    @override
     function !=(other:Int8):Bit {
         return value->builtin_int32 != other.value->builtin_int32
     }
@@ -393,19 +371,15 @@ class Int8 : Value {
     }
 
     function !=(other:UInt8):Bit {
-        return value->builtin_uint32 != other.value->builtin_uint32
+        return value->builtin_int16 != other.value->builtin_int16
     }
 
     function !=(other:UInt16):Bit {
-        return value->builtin_uint32 != other.value->builtin_uint32
+        return value->builtin_int32 != other.value->builtin_int32
     }
 
     function !=(other:UInt32):Bit {
-        return value->builtin_uint32 != other.value
-    }
-
-    function !=(other:UInt64):Bit {
-        return value->builtin_uint64 != other.value
+        return value->builtin_int64 != other.value->builtin_int64
     }
 
     function <(other:Int8):Bit {
@@ -425,19 +399,15 @@ class Int8 : Value {
     }
 
     function <(other:UInt8):Bit {
-        return value->builtin_uint32 < other.value->builtin_uint32
+        return value->builtin_int16 < other.value->builtin_int16
     }
 
     function <(other:UInt16):Bit {
-        return value->builtin_uint32 < other.value->builtin_uint32
+        return value->builtin_int32 < other.value->builtin_int32
     }
 
     function <(other:UInt32):Bit {
-        return value->builtin_uint32 < other.value
-    }
-
-    function <(other:UInt64):Bit {
-        return value->builtin_uint64 < other.value
+        return value->builtin_int64 < other.value->builtin_int64
     }
 
     function >(other:Int8):Bit {
@@ -457,19 +427,15 @@ class Int8 : Value {
     }
 
     function >(other:UInt8):Bit {
-        return value->builtin_uint32 > other.value->builtin_uint32
+        return value->builtin_int16 > other.value->builtin_int16
     }
 
     function >(other:UInt16):Bit {
-        return value->builtin_uint32 > other.value->builtin_uint32
+        return value->builtin_int32 > other.value->builtin_int32
     }
 
     function >(other:UInt32):Bit {
-        return value->builtin_uint32 > other.value
-    }
-
-    function >(other:UInt64):Bit {
-        return value->builtin_uint64 > other.value
+        return value->builtin_int64 > other.value->builtin_int64
     }
 
     function >=(other:Int8):Bit {
@@ -489,19 +455,15 @@ class Int8 : Value {
     }
 
     function >=(other:UInt8):Bit {
-        return value->builtin_uint32 >= other.value->builtin_uint32
+        return value->builtin_int16 >= other.value->builtin_int16
     }
 
     function >=(other:UInt16):Bit {
-        return value->builtin_uint32 >= other.value->builtin_uint32
+        return value->builtin_int32 >= other.value->builtin_int32
     }
 
     function >=(other:UInt32):Bit {
-        return value->builtin_uint32 >= other.value
-    }
-
-    function >=(other:UInt64):Bit {
-        return value->builtin_uint64 >= other.value
+        return value->builtin_int64 >= other.value->builtin_int64
     }
 
     function <=(other:Int8):Bit {
@@ -521,19 +483,15 @@ class Int8 : Value {
     }
 
     function <=(other:UInt8):Bit {
-        return value->builtin_uint32 <= other.value->builtin_uint32
+        return value->builtin_int16 <= other.value->builtin_int16
     }
 
     function <=(other:UInt16):Bit {
-        return value->builtin_uint32 <= other.value->builtin_uint32
+        return value->builtin_int32 <= other.value->builtin_int32
     }
 
     function <=(other:UInt32):Bit {
-        return value->builtin_uint32 <= other.value
-    }
-
-    function <=(other:UInt64):Bit {
-        return value->builtin_uint64 <= other.value
+        return value->builtin_int64 <= other.value->builtin_int64
     }
 
     function min(other:Int8):Int32 {
@@ -564,33 +522,27 @@ class Int8 : Value {
         return other.value
     }
 
-    function min(other:UInt8):UInt32 {
-        if value->builtin_uint32 < other.value->builtin_uint32 {
-            return value->builtin_uint32
+    function min(other:UInt8):Int16 {
+        if value->builtin_int16 < other.value->builtin_int16 {
+            return value->builtin_int16
         }
-        return other.value->builtin_uint32
+        return other.value->builtin_int16
     }
 
-    function min(other:UInt16):UInt32 {
-        if value->builtin_uint32 < other.value->builtin_uint32 {
-            return value->builtin_uint32
+    function min(other:UInt16):Int32 {
+        if value->builtin_int32 < other.value->builtin_int32 {
+            return value->builtin_int32
         }
-        return other.value->builtin_uint32
+        return other.value->builtin_int32
     }
 
-    function min(other:UInt32):UInt32 {
-        if value->builtin_uint32 < other.value {
-            return value->builtin_uint32
+    function min(other:UInt32):Int64 {
+        if value->builtin_int64 < other.value->builtin_int64 {
+            return value->builtin_int64
         }
-        return other.value
+        return other.value->builtin_int64
     }
 
-    function min(other:UInt64):UInt64 {
-        if value->builtin_uint64 < other.value {
-            return value->builtin_uint64
-        }
-        return other.value
-    }
 
     function max(other:Int8):Int32 {
         if value->builtin_int32 > other.value->builtin_int32 {
@@ -620,64 +572,63 @@ class Int8 : Value {
         return other.value
     }
 
-    function max(other:UInt8):UInt32 {
-        if value->builtin_uint32 > other.value->builtin_uint32 {
-            return value->builtin_uint32
+    function max(other:UInt8):Int16 {
+        if value->builtin_int16 > other.value->builtin_int16 {
+            return value->builtin_int16
         }
-        return other.value->builtin_uint32
+        return other.value->builtin_int16
     }
 
-    function max(other:UInt16):UInt32 {
-        if value->builtin_uint32 > other.value->builtin_uint32 {
-            return value->builtin_uint32
+    function max(other:UInt16):Int32 {
+        if value->builtin_int32 > other.value->builtin_int32 {
+            return value->builtin_int32
         }
-        return other.value->builtin_uint32
+        return other.value->builtin_int32
     }
 
-    function max(other:UInt32):UInt32 {
-        if value->builtin_uint32 > other.value {
-            return value->builtin_uint32
+    function max(other:UInt32):Int64 {
+        if value->builtin_int64 > other.value->builtin_int64 {
+            return value->builtin_int64
         }
-        return other.value
+        return other.value->builtin_int64
     }
 
-    function max(other:UInt64):UInt64 {
-        if value->builtin_uint64 > other.value {
-            return value->builtin_uint64
-        }
-        return other.value
-    }
 
     function [](index:Int8):Bit {
-        return self && 1 << index != 0
+        return self && (1 << index) != 0
     }
 
     function [](index:Int16):Bit {
-        return self && 1 << index != 0
+        return self && (1 << index) != 0
     }
 
     function [](index:Int32):Bit {
-        return self && 1 << index != 0
+        return self && (1 << index) != 0
     }
 
     function [](index:Int64):Bit {
-        return self && 1 << index != 0
+        return self && (1 << index) != 0
     }
 
     function [](index:UInt8):Bit {
-        return self && 1 << index != 0
+        return self && (1 << index) != 0
     }
 
     function [](index:UInt16):Bit {
-        return self && 1 << index != 0
+        return self && (1 << index) != 0
     }
 
     function [](index:UInt32):Bit {
-        return self && 1 << index != 0
+        return self && (1 << index) != 0
     }
 
     function [](index:UInt64):Bit {
-        return self && 1 << index != 0
+        return self && (1 << index) != 0
+    }
+
+    @override
+    function hash():Int {
+        return Int(value->builtin_int64)
     }
 
     function convert():Int16 {

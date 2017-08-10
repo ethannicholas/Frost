@@ -21,6 +21,7 @@ class WriteInts {
             when UINT32: return "builtin_uint32"
             when UINT64: return "builtin_uint64"
         }
+        assert false, "invalid type \{type}"
     }
 
     @class
@@ -35,6 +36,7 @@ class WriteInts {
             when UINT32: return "UInt32"
             when UINT64: return "UInt64"
         }
+        assert false, "invalid type \{type}"
     }
 
     @class
@@ -109,8 +111,8 @@ class WriteInts {
     }
 
     @class
-    function binaryType(leftType:Int, rightType:Int):Int {
-        if signed(leftType) = signed(rightType) {
+    function binaryType(leftType:Int, rightType:Int, signMatters:Bit):Int {
+        if signed(leftType) = signed(rightType) | !signMatters {
             def left32 := max32(leftType)
             def right32 := max32(rightType)
             if left32 = right32 {
@@ -136,8 +138,9 @@ class WriteInts {
     }
 
     @class
-    method writeOperator(op:String, leftType:Int, rightType:Int, out:OutputStream) {
-        def resultType := binaryType(leftType, rightType)
+    method writeOperator(op:String, leftType:Int, rightType:Int, signMatters:Bit,
+            out:OutputStream) {
+        def resultType := binaryType(leftType, rightType, signMatters)
         if resultType = INVALID {
             return
         }
@@ -149,15 +152,15 @@ class WriteInts {
     }
 
     @class
-    method writeOperator(op:String, type:Int, out:OutputStream) {
-        writeOperator(op, type, INT8,   out)
-        writeOperator(op, type, INT16,  out)
-        writeOperator(op, type, INT32,  out)
-        writeOperator(op, type, INT64,  out)
-        writeOperator(op, type, UINT8,  out)
-        writeOperator(op, type, UINT16, out)
-        writeOperator(op, type, UINT32, out)
-        writeOperator(op, type, UINT64, out)
+    method writeOperator(op:String, type:Int, signMatters:Bit, out:OutputStream) {
+        writeOperator(op, type, INT8,   signMatters, out)
+        writeOperator(op, type, INT16,  signMatters, out)
+        writeOperator(op, type, INT32,  signMatters, out)
+        writeOperator(op, type, INT64,  signMatters, out)
+        writeOperator(op, type, UINT8,  signMatters, out)
+        writeOperator(op, type, UINT16, signMatters, out)
+        writeOperator(op, type, UINT32, signMatters, out)
+        writeOperator(op, type, UINT64, signMatters, out)
     }
 
     @class
@@ -170,11 +173,14 @@ class WriteInts {
 
     @class
     method writeComparisonOperator(op:String, leftType:Int, rightType:Int, out:OutputStream) {
-        def operandType := binaryType(leftType, rightType)
+        def operandType := binaryType(leftType, rightType, true)
         if operandType = INVALID {
             return
         }
         out.printLine()
+        if (op = "=" | op = "!=") & leftType = rightType {
+            out.printLine("    @override")
+        }
         out.printLine("    function \{op}(other:\{int(rightType)}):Bit {")
         out.printLine("        return value\{cast(leftType, operandType)} \{op} " +
                 "other.value\{cast(rightType, operandType)}")
@@ -196,7 +202,10 @@ class WriteInts {
     @class
     method writeMax(leftType:Int, rightType:Int, out:OutputStream) {
         out.printLine()
-        def resultType := binaryType(leftType, rightType)
+        def resultType := binaryType(leftType, rightType, true)
+        if resultType = INVALID {
+            return
+        }
         out.printLine("    function max(other:\{int(rightType)}):\{int(resultType)} {")
         out.printLine("        if value\{cast(leftType, resultType)} > " +
                 "other.value\{cast(rightType, resultType)} {")
@@ -221,7 +230,10 @@ class WriteInts {
     @class
     method writeMin(leftType:Int, rightType:Int, out:OutputStream) {
         out.printLine()
-        def resultType := binaryType(leftType, rightType)
+        def resultType := binaryType(leftType, rightType, true)
+        if resultType = INVALID {
+            return
+        }
         out.printLine("    function min(other:\{int(rightType)}):\{int(resultType)} {")
         out.printLine("        if value\{cast(leftType, resultType)} < " +
                 "other.value\{cast(rightType, resultType)} {")
@@ -244,20 +256,10 @@ class WriteInts {
     }
 
     @class
-    method writeEqual(type:Int, out:OutputStream) {
-        out.printLine()
-        out.printLine("    @override")
-        out.printLine("    function =(other:Object):Bit {")
-        out.printLine("        -- FIXME need to check other's class")
-        out.printLine("        return value = (other->\{int(type)}).value")
-        out.printLine("    }")
-    }
-
-    @class
     method writeIndex(leftType:Int, rightType:Int, out:OutputStream) {
         out.printLine()
         out.printLine("    function [](index:\{int(rightType)}):Bit {")
-        out.printLine("        return self && 1 << index != 0")
+        out.printLine("        return self && (1 << index) != 0")
         out.printLine("    }")
     }
 
@@ -271,6 +273,15 @@ class WriteInts {
         writeIndex(type, UINT16, out)
         writeIndex(type, UINT32, out)
         writeIndex(type, UINT64, out)
+    }
+
+    @class
+    method writeHash(type:Int, out:OutputStream) {
+        out.printLine()
+        out.printLine("    @override")
+        out.printLine("    function hash():Int {")
+        out.printLine("        return Int(value\{cast(type, INT64)})")
+        out.printLine("    }")
     }
 
     @class
@@ -356,7 +367,7 @@ class WriteInts {
         out.printLine()
         out.printLine("uses panda.unsafe.Pointer")
         out.printLine()
-        out.printLine("class \{int(type)} : Value {")
+        out.printLine("class \{int(type)} : Value (Key<\{int(type)}>) {")
         out.printLine("    constant MIN:\{int(type)} := \{min(type)}")
         out.printLine()
         out.printLine("    constant MAX:\{int(type)} := \{max(type)}")
@@ -368,18 +379,18 @@ class WriteInts {
         out.printLine("    init(value:\{builtin(type)}) {")
         out.printLine("        self.value := value")
         out.printLine("    }")
-        writeOperator("+", type, out)
-        writeOperator("-", type, out)
+        writeOperator("+", type, true, out)
+        writeOperator("-", type, true, out)
         writePrefixOperator("-", type, out)
-        writeOperator("*", type, out)
-        writeOperator("//", type, out)
-        writeOperator("%", type, out)
+        writeOperator("*", type, true, out)
+        writeOperator("//", type, true, out)
+        writeOperator("%", type, true, out)
         writePrefixOperator("!!", type, out)
-        writeOperator("&&", type, out)
-        writeOperator("||", type, out)
-        writeOperator("~~", type, out)
-        writeOperator("<<", type, out)
-        writeOperator(">>", type, out)
+        writeOperator("&&", type, false, out)
+        writeOperator("||", type, false, out)
+        writeOperator("~~", type, false, out)
+        writeOperator("<<", type, false, out)
+        writeOperator(">>", type, false, out)
         writeComparisonOperator("=", type, out)
         writeComparisonOperator("!=", type, out)
         writeComparisonOperator("<", type, out)
@@ -388,8 +399,8 @@ class WriteInts {
         writeComparisonOperator("<=", type, out)
         writeMin(type, out)
         writeMax(type, out)
-        writeEqual(type, out)
         writeIndex(type, out)
+        writeHash(type, out)
         writeConvert(type, out)
         out.printLine("}")
         out.cleanup()

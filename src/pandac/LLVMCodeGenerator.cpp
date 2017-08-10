@@ -228,12 +228,49 @@ LLVMCodeGenerator::ClassConstant& LLVMCodeGenerator::getClassConstant(Class& cl)
     return found->second;
 }
 
+String LLVMCodeGenerator::getWrapperITable(Class& cl) {
+    std::set<Type> interfaces = fCompiler->allInterfaces(cl.fType);
+    String previous = "%$itable* null";
+    for (const Type intfType : interfaces) {
+        Class* intf = fCompiler->getClass(intfType);
+        ClassConstant& intfCC = this->getClassConstant(*intf);
+        std::vector<Method*> methods = fCompiler->interfaceMethods(cl, intfType);
+        String name = "@" + escape_type_name(cl.fName) + "$wrapper." +
+                escape_type_name(intf->fName);
+        String type = "{ " + this->llvmType(Type::Class()) + ", %$itable*, [" +
+                std::to_string(methods.size()) + " x i8*] }";
+        String result;
+        result += name + " = constant ";
+        result += type + " { " + this->llvmType(Type::Class()) + " bitcast(" + intfCC.fType +
+                "* " + intfCC.fName + " to " + this->llvmType(Type::Class()) + "), " + previous +
+                ", [" + std::to_string(methods.size()) + " x i8*][";
+        const char* separator = "";
+        ASSERT(methods.size() == intf->fMethods.size());
+        for (Method* m : methods) {
+            result += separator;
+            separator = ", ";
+            if (m->fAnnotations.isAbstract()) {
+                result += "i8* null";
+            }
+            else {
+                String shim = this->createWrapperShim(*m, fShims);
+                result += "i8* bitcast(" + this->llvmWrapperType(*m) + " " + shim +
+                        " to i8*)";
+            }
+        }
+        result += "] }\n";
+        fTypeDeclarations << result;
+        previous = "%$itable* bitcast(" + type + "* " + name + " to %$itable*)";
+    }
+    return previous;
+}
+
 LLVMCodeGenerator::ClassConstant& LLVMCodeGenerator::getWrapperClassConstant(Class& cl) {
-    // need to shim methods inherited from Value. When the class is called as itself, it is
-    // unwrapped prior to the call, so they just work. But when it is called via an Object or Value
-    // pointer, the callee has no idea it's dealing with a wrapper, so the wrapper doesn't
-    // automatically get unwrapped as part of the call. We create shims for Value's virtual methods
-    // which unwrap the object and forward the calls on to the correct implementation.
+    // need to shim methods inherited from Value or interfaces. When the class is called as itself,
+    // it is unwrapped prior to the call, so they just work. But when it is called via a superclass
+    // or interface pointer, the callee has no idea it's dealing with a wrapper, so the wrapper
+    // doesn't automatically get unwrapped as part of the call. We create shims for these virtual
+    // methods which unwrap the object and forward the calls on to the correct implementation.
     ASSERT(cl.isValue(fCompiler));
     String name = cl.fName + "$Wrapper";
     auto found = fClassConstants.find(name);
@@ -252,8 +289,9 @@ LLVMCodeGenerator::ClassConstant& LLVMCodeGenerator::getWrapperClassConstant(Cla
         const ClassConstant& superCC = this->getClassConstant(*fCompiler->getClass(
                 cl.getRawSuper(fCompiler)));
         String super = "bitcast(" + superCC.fType + "* " + superCC.fName + " to i8*)";
+        String itable = this->getWrapperITable(cl);
         String code = cc.fName + " = constant " + cc.fType + " { i8* " + super +
-                ", " INT_T " 1, %$itable* null, [" + std::to_string(valueVTable.size()) +
+                ", " INT_T " 1, " + itable + ", [" + std::to_string(valueVTable.size()) +
                 " x i8*] [";
         const char* separator = "";
         for (int i = 0; i < valueVTable.size(); ++i) {
@@ -268,7 +306,7 @@ LLVMCodeGenerator::ClassConstant& LLVMCodeGenerator::getWrapperClassConstant(Cla
                     this->writeMethodDeclaration(*m);
                 }
             }
-            code += separator + ("i8* bitcast(" + this->llvmType(*valueVTable[i])) + " " +
+            code += separator + ("i8* bitcast(" + this->llvmWrapperType(*m)) + " " +
                     methodName + " to i8*)";
             separator = ", ";
         }
@@ -279,18 +317,20 @@ LLVMCodeGenerator::ClassConstant& LLVMCodeGenerator::getWrapperClassConstant(Cla
     return found->second;
 }
 
-String LLVMCodeGenerator::createWrapperShim(const Method& m, std::ostream& out) {
+String LLVMCodeGenerator::createWrapperShim(Method& m, std::ostream& out) {
     int oldTmpVar = fTmpVars;
     fTmpVars = 1;
     ASSERT(m.isInstance());
     String result = this->methodName(m) + "$wrappershim";
+    String selfType = "%" + escape_type_name(m.fOwner.fName) + "$wrapper*";
     out << "define ccc " << this->llvmType(m.fReturnType) << " " <<
-            result << "(";
-    out << this->llvmType(Type::Object()) << " %self";
-    for (const auto& p : m.fParameters) {
-        out << ", " << this->llvmType(p.fType) << " %" << p.fName;
+            result << "(" << selfType << " %actualSelf";
+    Type methodType = m.inheritedType(*fCompiler);
+    for (int i = 0; i < m.fParameters.size(); ++i) {
+        out << ", " << this->llvmType(methodType.fSubtypes[i]) << " %" << m.fParameters[i].fName;
     }
     out << ") {\n";
+    out << "    %self = bitcast " << selfType << " %actualSelf to %panda$core$Object*";
     std::vector<IRNode> children;
     children.push_back(IRNode(Position(), IRNode::Kind::SELF, Type::Object()));
     String unwrapped = this->getTypedReference(IRNode(Position(), IRNode::Kind::CAST,
@@ -307,8 +347,8 @@ String LLVMCodeGenerator::createWrapperShim(const Method& m, std::ostream& out) 
     }
     out << "call " << this->callingConvention(m) << this->llvmType(m.fReturnType) << " " <<
             this->methodName(m) << "(" << unwrapped;
-    for (const auto& p : m.fParameters) {
-        out << ", " << this->llvmType(p.fType) << " %" << p.fName;
+    for (int i = 0; i < m.fParameters.size(); ++i) {
+        out << ", " << this->llvmType(methodType.fSubtypes[i]) << " %" << m.fParameters[i].fName;
     }
     out << ")\n";
     out << "    ret " << returnValue << "\n";
@@ -534,6 +574,28 @@ String LLVMCodeGenerator::llvmType(const Method& m) {
     for (const auto& p : m.fParameters) {
         result += separator;
         result += this->llvmType(p.fType);
+        separator = ", ";
+    }
+    result += ")*";
+    return result;
+}
+
+String LLVMCodeGenerator::llvmWrapperType(Method& m) {
+    const Type actualType = m.inheritedType(*fCompiler);
+    String result = this->llvmType(actualType.fSubtypes.back());
+    result += "(";
+    const char* separator = "";
+    ASSERT(m.isInstance());
+    result += separator;
+    result += "%" + escape_type_name(m.fOwner.fName);
+    if (m.fOwner.isValue(fCompiler)) {
+        result += "$wrapper";
+    }
+    result += "*";
+    separator = ", ";
+    for (int i = 0; i < actualType.fSubtypes.size() - 1; ++i) {
+        result += separator;
+        result += this->llvmType(actualType.fSubtypes[i]);
         separator = ", ";
     }
     result += ")*";

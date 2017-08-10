@@ -108,6 +108,8 @@ private:
 
     ClassConstant& getClassConstant(Class& cl);
 
+    String getWrapperITable(Class& cl);
+
     ClassConstant& getWrapperClassConstant(Class& cl);
 
     /**
@@ -115,7 +117,7 @@ private:
      * unwraps it, and forwards it to the actual method implementation (which expects an unwrapped
      * 'self').
      */
-    String createWrapperShim(const Method& m, std::ostream& out);
+    String createWrapperShim(Method& m, std::ostream& out);
 
     String llvmTypeName(const Type& type);
 
@@ -128,6 +130,8 @@ private:
     String llvmNullableType(const Type& type);
 
     String llvmType(const Method& m);
+
+    String llvmWrapperType(Method& m);
 
     String selfType(const Method& m);
 

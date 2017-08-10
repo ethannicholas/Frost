@@ -10,9 +10,6 @@ class ArrayTest {
             a.removeIndex(i)
         }
         Console.printLine(a)
-        a.remove(1)
-        a.remove(7)
-        Console.printLine(a)
         def b := Array<Int>()
         b.add(123)
         b.add(456)
