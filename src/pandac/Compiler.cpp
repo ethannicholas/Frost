@@ -545,6 +545,7 @@ bool Compiler::coerce(IRNode* node, const Type& target, IRNode* out) {
             std::vector<const MethodRef*> matches;
             if (this->operatorMatch(&node->fChildren[0], Operator::INDEX, &node->fChildren[1],
                     &target, &matches) == INT_MAX) {
+                printf("matching %s[%s]\n", node->fChildren[0].description().c_str(), node->fChildren[1].description().c_str());
                 this->error(node->fPosition, "no '[]' operator on '" +
                         node->fChildren[0].fType.fName + "', '" + node->fChildren[1].fType.fName +
                         "' returns type '" + target.fName + "'");
@@ -1516,6 +1517,13 @@ bool Compiler::operatorCall(Position position, IRNode* left, Operator op, IRNode
     return true;
 }
 
+static void unwrap_cast(IRNode* node) {
+    if (node->fKind == IRNode::Kind::CAST) {
+        IRNode child = std::move(node->fChildren[0]);
+        *node = std::move(child);
+    }
+}
+
 bool Compiler::convertIndexedAssignment(Position p, IRNode left, Operator op, IRNode right,
         IRNode* out) {
     ASSERT(left.fKind == IRNode::Kind::UNRESOLVED_INDEX);
@@ -1530,18 +1538,24 @@ bool Compiler::convertIndexedAssignment(Position p, IRNode left, Operator op, IR
     // compound indexed assignment (e.g. foo[bar] += 1), which needs to get converted to
     // foo.[]:=(bar, foo.[](bar) + 1). We need to reuse both the base and the index so they're only
     // evaluated once.
-    Position basePosition = left.fChildren[0].fPosition;
-    Type baseType = left.fChildren[0].fType;
+    if (!this->resolve(&left)) {
+        return false;
+    }
+    unwrap_cast(&left);
+    ASSERT(left.fChildren.size() == 3);
+    unwrap_cast(&left.fChildren[1]);
+    Position basePosition = left.fChildren[1].fPosition;
+    Type baseType = left.fChildren[1].fType;
     std::vector<IRNode> children;
-    children.push_back(std::move(left.fChildren[0]));
+    children.push_back(std::move(left.fChildren[1]));
     uint64_t baseId = ++fReusedValues;
     IRNode base = IRNode(basePosition, IRNode::Kind::REUSED_VALUE_DEFINITION, baseType, baseId,
             std::move(children));
     children.clear();
 
-    Position indexPosition = left.fChildren[1].fPosition;
-    Type indexType = left.fChildren[1].fType;
-    children.push_back(std::move(left.fChildren[1]));
+    Position indexPosition = left.fChildren[2].fPosition;
+    Type indexType = left.fChildren[2].fType;
+    children.push_back(std::move(left.fChildren[2]));
     uint64_t indexId = ++fReusedValues;
     IRNode index = IRNode(indexPosition, IRNode::Kind::REUSED_VALUE_DEFINITION, indexType, indexId,
             std::move(children));
@@ -2222,7 +2236,6 @@ bool Compiler::convertRange(const ASTNode& r, IRNode* out) {
 }
 
 bool Compiler::doConvertExpression(const ASTNode& e, IRNode* out) {
-//    printf("convert expression: %s\n", e.description().c_str());
     switch (e.fKind) {
         case ASTNode::Kind::ARROW:
             return this->convertArrow(e, out);

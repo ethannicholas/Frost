@@ -7,26 +7,9 @@ A simple lexical analyzer generator for Panda, used to build pandac's lexer.
 ====================================================================================================
 class PLex {
     def tokens := HashMap<String, Regex>()
-    def out:IndentedOutputStream
 
-    method process(cfg:InputStream, out:OutputStream) {
-        self.out := IndentedOutputStream(out)
-        load(cfg)
-        tokens.clear()
-    }
-
-    function escape(s:String):String {
-        def result := MutableString()
-        for c in s.utf8() {
-            if "+*?|.()[]".contains(c) {
-                result.append("\\")
-            }
-            result.append(c)
-        }
-        return result.convert()
-    }
-
-    method load(input:InputStream) {
+    method process(input:InputStream, rawOut:OutputStream) {
+        def out := IndentedOutputStream(rawOut)
         def nfa := NFA()
         out.printLine("package org.pandalanguage.pandac.parser")
         out.printLine()
@@ -78,6 +61,18 @@ class PLex {
 
         def dfa := NFAtoDFA(nfa).createDFA()
         writeLexer(dfa, out)
+        tokens.clear()
+    }
+
+    function escape(s:String):String {
+        def result := MutableString()
+        for c in s.utf8() {
+            if "+*?|.()[]".contains(c) {
+                result.append("\\")
+            }
+            result.append(c)
+        }
+        return result.convert()
     }
 
     method writeToken(out:IndentedOutputStream) {
@@ -133,10 +128,10 @@ class PLex {
 
     method writeStateTable(dfa:DFA, out:IndentedOutputStream) {
         out.printLine("@class")
-        out.printLine("function zeroAlloc(count:Int):Pointer<Int> {")
+        out.printLine("function alloc(count:Int, fill:Int):Pointer<Int> {")
         out.printLine("    def result := Pointer<Int>.alloc(count)")
         out.printLine("    for i in 0 .. count {")
-        out.printLine("        result[i] := 0")
+        out.printLine("        result[i] := fill")
         out.printLine("    }")
         out.printLine("    return result")
         out.printLine("}")
@@ -147,9 +142,21 @@ class PLex {
         out.printLine("def result := Pointer<Pointer<Int>>.alloc(\{DFA.END_CHAR + 1})")
         for i in 0 ... DFA.END_CHAR.convert()->Int {
             def a := dfa.transitions[i]
-            out.printLine("result[\{i}] := zeroAlloc(\{dfa.stateCount})")
+            def counts := Array<Int>(dfa.stateCount)
             for j in 0 .. dfa.stateCount {
-                if a[j] != 0 {
+                counts.add(0)
+            }
+            var maxIndex := 0
+            for j in 0 .. dfa.stateCount {
+                counts[a[j]] += 1
+                if counts[a[j]] > counts[maxIndex] {
+                    maxIndex := a[j]
+                }
+            }
+            def fill := maxIndex
+            out.printLine("result[\{i}] := alloc(\{dfa.stateCount}, \{fill})")
+            for j in 0 .. dfa.stateCount {
+                if a[j] != fill {
                     out.printLine("result[\{i}][\{j}] := \{a[j]}")
                 }
             }
