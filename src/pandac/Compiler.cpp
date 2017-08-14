@@ -1621,6 +1621,9 @@ bool Compiler::convertBinary(Position p, IRNode* left, Operator op, IRNode* righ
     if (op == Operator::INDEX) {
         // index expressions are always unresolved at first, because it might turn out to be an
         // indexed assignment
+        if (!this->resolve(left)) {
+            return false;
+        }
         std::vector<const MethodRef*> matches;
         this->operatorMatch(left, op, right, nullptr, &matches);
         std::set<Type> types;
@@ -1836,6 +1839,7 @@ bool Compiler::symbolRef(Position p, const SymbolTable& st, Symbol* symbol, IRNo
         case Symbol::Kind::ALIAS: {
             Class* cl = this->getClass(((Alias*) symbol)->fFullName);
             if (!cl) {
+                this->error(p, "class '" + ((Alias*) symbol)->fFullName + "' not found");
                 return false;
             }
             return this->symbolRef(p, st, cl, out, target);
@@ -2218,6 +2222,7 @@ bool Compiler::convertRange(const ASTNode& r, IRNode* out) {
 }
 
 bool Compiler::doConvertExpression(const ASTNode& e, IRNode* out) {
+//    printf("convert expression: %s\n", e.description().c_str());
     switch (e.fKind) {
         case ASTNode::Kind::ARROW:
             return this->convertArrow(e, out);
@@ -2963,8 +2968,19 @@ bool Compiler::convertType(const ASTNode& t, IRNode* out) {
 }
 
 IRNode Compiler::defaultValue(Position p, const Type& type) {
-    if (type.isNumeric()) {
+    if (type.isNumber()) {
         return IRNode(p, IRNode::Kind::INT, Type::IntLiteral(), (uint64_t) 0);
+    }
+    if (type.isNumeric()) {
+        IRNode target(p, IRNode::Kind::TYPE_REFERENCE, Type::Class(),
+                    this->typePointer(type));
+        IRNode result;
+        std::vector<IRNode> args;
+        args.emplace_back(p, IRNode::Kind::INT, Type::IntLiteral(), (uint64_t) 0);
+        if (!this->call(std::move(target), std::move(args), &result)) {
+            ASSERT(false);
+        }
+        return result;
     }
     if (type == Type::Bit()) {
         return IRNode(p, IRNode::Kind::BIT, Type::BuiltinBit(), false);
@@ -3238,7 +3254,8 @@ bool Compiler::processFieldValue(Field* field) {
 }
 
 bool Compiler::processFieldValues() {
-    for (const auto& desc : fScanner.fFieldDescriptors) {
+    std::unordered_map<Field*, Scanner::FieldDescriptor> descriptors(fScanner.fFieldDescriptors);
+    for (const auto& desc : descriptors) {
         this->processFieldValue(desc.first);
     }
     fFieldValuesProcessed = true;

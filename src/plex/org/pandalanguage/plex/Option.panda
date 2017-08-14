@@ -1,0 +1,28 @@
+package org.pandalanguage.plex
+
+class Option : Node {
+    def contents:Node
+
+    init(contents:Node) {
+        super.init(OPTION)
+        self.contents := contents
+    }
+
+    @override
+    method makeStartStates(context:NFA, accept:ListView<Int>):Array<Int> {
+        def states := Array<Int>()
+        for s in accept {
+            states.add(s)
+        }
+        def start := contents.makeStartStates(context, accept)
+        for s in start {
+            states.add(s)
+        }
+        return states
+    }
+
+    @override
+    function convert():String {
+        return contents + "?"
+    }
+}

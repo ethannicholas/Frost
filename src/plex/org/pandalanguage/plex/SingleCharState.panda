@@ -1,43 +1,40 @@
 package org.pandalanguage.plex
 
 class SingleCharState : State {
-    def c:Char
+    def c:Char8
 
-    -- FIXME remove this version once I fix varargs
-    constructor(c:Char, next:Int...) {
-        super.constructor(new ImmutableArray<Int>(next))
-        self.c := c
-    }
-
-    constructor(c:Char, next:ImmutableArray<Int>) {
-        super.constructor(next)
+    init(c:Char8, next:ImmutableArray<Int>) {
+        super.init(CHAR, next)
         self.c := c
     }
 
     @override
-    function accept(c:Char):Bit {
+    function accept(c:Char8):Bit {
         return c = self.c
     }
 
     @override
-    function ->>():String {
-        def result := new MutableString()
-        result.append('new SingleCharState("')
-        if c = "\n"
+    function convert():String {
+        def result := MutableString()
+        result.append("SingleCharState(\"")
+        if c = Char8(10) { -- FIXME char literals
             result.append("\\n")
-        else if c = "\r"
+        }
+        else if c = Char8(13) {
             result.append("\\r")
+        }
         else {
-            if c = "\\" | c = '"'
+            if c = Char8(92) | c = Char8(34) {
                 result.append("\\")
+            }
             result.append(c)
         }
-        result.append('"')
-        for i in 0 ... next.length - 1 {
+        result.append("\"")
+        for s in next {
             result.append(", ")
-            result.append(next[i])
+            result.append(s)
         }
         result.append(")")
-        return result->>(String)
+        return result.convert()
     }
 }

@@ -25,7 +25,7 @@ class Sub2 : Super1 {
 class Sub3 (Intf) {
     function foo():Int {
         return 42
-    }   
+    }
 }
 
 class Sub4 : Super1 {

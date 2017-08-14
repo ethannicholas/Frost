@@ -1,0 +1,14 @@
+class Identity {
+    @class
+    method main() {
+        def s1 := "Hello, World!"
+        def s2 := s1
+        def s3 := "Hello, " + "World!"
+        Console.printLine(s1 == s1)
+        Console.printLine(s1 == s2)
+        Console.printLine(s1 == s3)
+        Console.printLine(s1 !== s1)
+        Console.printLine(s1 !== s2)
+        Console.printLine(s1 !== s3)
+    }
+}

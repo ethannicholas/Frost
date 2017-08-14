@@ -47,7 +47,7 @@ class Bit : Value (Key<Bit>) {
 
     function &(other:Bit):Bit {
         return value
-    }    
+    }
 
     function ~(other:Bit):Bit {
         return Bit(value ~ other.value)

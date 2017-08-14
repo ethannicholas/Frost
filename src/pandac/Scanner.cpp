@@ -436,6 +436,7 @@ void Scanner::scan(ASTNode* file) {
     uses.push_back({ Position(), "panda.io.LineNumberInputStream", "LineNumberInputStream" });
     uses.push_back({ Position(), "panda.io.MemoryInputStream", "MemoryInputStream" });
     uses.push_back({ Position(), "panda.io.OutputStream", "OutputStream" });
+    uses.push_back({ Position(), "panda.io.PushbackInputStream", "PushbackInputStream" });
     uses.push_back({ Position(), "panda.math.Random", "Random" });
     uses.push_back({ Position(), "panda.math.XorShift128Plus", "XorShift128Plus" });
     for (auto& e : file->fChildren) {

@@ -9,44 +9,40 @@ class NFA {
 
     var startStates:ImmutableArray<Int>
 
-    @readonly
-    var source := new LineNumberInputStream(Console.inputStream)
-    var pushback := new PushbackInputStream(source)
-    var text := new MutableString()
-    var rawToken := new RawToken()
+    def _source := LineNumberInputStream(Console.inputStream())
+    var pushback := PushbackInputStream(_source)
+    var text := MutableString()
+    var rawToken := RawToken()
     var line := 1
     var column := 1
 
-    constructor() {
-        self.states := new ImmutableArray<State>()
-        self.startStates := new ImmutableArray<Int>()
+    init() {
+        self.states := ImmutableArray<State>()
+        self.startStates := ImmutableArray<Int>()
     }
 
-    constructor(states:ImmutableArray<State>, startStates:ImmutableArray<Int>) {
-        constructor()
+    init(states:ImmutableArray<State>, startStates:ImmutableArray<Int>) {
+        init()
         self.states := states
         self.startStates := startStates
     }
 
-    @self
-    method source:=(source:LineNumberInputStream) {
-        self.source := source
-        self.pushback := new PushbackInputStream(source)
+    method set_source(source:LineNumberInputStream) {
+        self._source := source
+        self.pushback := PushbackInputStream(source)
     }
 
     method addState(s:State):Int {
-        -- FIXME clean this up when we have proper collections
-        def newStates := new Array<State>(states)
-        def i := states.length
+        def newStates := Array<State>(states)
+        def i := states.get_count()
         newStates.add(s)
-        states := new ImmutableArray<State>(newStates)
+        states := ImmutableArray<State>(newStates)
         return i
     }
 
     method addStartState(s:Int) {
-        -- FIXME clean this up when we have proper collections
-        def newStartStates := new Array<Int>(startStates)
+        def newStartStates := Array<Int>(startStates)
         newStartStates.add(s)
-        startStates := new ImmutableArray<Int>(newStartStates)
+        startStates := ImmutableArray<Int>(newStartStates)
     }
 }

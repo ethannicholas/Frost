@@ -1,15 +1,24 @@
 package org.pandalanguage.plex.runtime
 
-class DFA {
-    def transitions:ImmutableArray<ImmutableArray<Int>>
+uses panda.unsafe.Pointer
 
-    def accepts:ImmutableArray<Int>
+class DFA {
+    constant START_CHAR:Int8 := 9
+    constant END_CHAR:Int8 := 127
+
+    def stateCount:Int
+
+    def transitions:Pointer<Pointer<Int>>
+
+    def acceptCount:Int
+
+    def accepts:Pointer<Int>
 
     var rawToken := RawToken()
 
     var pushback := PushbackInputStream(MemoryInputStream("this is a test (there's nothing here)"))
 
-    property source:LineNumberInputStream := LineNumberInputStream(pushback)
+    var source:LineNumberInputStream := LineNumberInputStream(pushback)
 
     var text := MutableString()
 
@@ -17,15 +26,19 @@ class DFA {
 
     var column := 1
 
-    init(transitions:ImmutableArray<ImmutableArray<Int>>, accepts:ImmutableArray<Int>) {
-        self.transitions := transitions
-        self.accepts := accepts
+    init(stateCount:Int, transitions:Pointer<Pointer<Int>>, acceptCount:Int,
+            accepts:Pointer<Int>) {
+        init(MemoryInputStream(""), stateCount, transitions, acceptCount, accepts)
     }
 
-    method set_source(source:InputStream) {
-        self.pushback := PushbackInputStream(source)
-        self._source := LineNumberInputStream(pushback)
-        assert self.source.line = 1 & self.source.column = 1
+    init(input:InputStream, stateCount:Int, transitions:Pointer<Pointer<Int>>, acceptCount:Int,
+            accepts:Pointer<Int>) {
+        pushback := PushbackInputStream(input)
+        source := LineNumberInputStream(pushback)
+        self.stateCount := stateCount
+        self.transitions := transitions
+        self.acceptCount := acceptCount
+        self.accepts := accepts
     }
 
     method next():RawToken {
@@ -38,17 +51,17 @@ class DFA {
         var lastAccept := -1
         var lastAcceptPosition := -1
         loop {
-            def c := source.readChar()
+            def c:Char8? := source.read()
             if c = null {
                 hitEOF := true
                 break
             }
-            if c->Int >= transitions.length {
-                Console.printLine("invalid token (" + c->Int + " > " + transitions.length +
-                        ") at " + source.line + ", " + source.column)
+            if c.convert() > END_CHAR {
+                Console.printLine("invalid token (\{c.convert()->Int8} > " +
+                        "\{stateCount}) at \{source.line}, \{source.column}")
                 System.exit(1)
             }
-            currentState := transitions[c->Int][currentState]
+            currentState := transitions[c.convert()][currentState]
             if currentState != 0 {
                 text.append(c)
                 var newAccept := accepts[currentState]
@@ -66,22 +79,23 @@ class DFA {
         }
         if text.length > 0 {
             if lastAccept != -1 {
-                pushback.pushback(text[lastAcceptPosition..])
-                text.remove(lastAcceptPosition, text.length)
+                def s := text.convert()->String
+                def index := s.offset(s.start(), lastAcceptPosition)
+                pushback.pushback(s[index..])
                 source.line := lastLine
                 source.column := lastColumn
-                rawToken.type := lastAccept
-                rawToken.text := text.convert()
+                rawToken.kind := lastAccept
+                rawToken.text := s[..index]
                 text.clear()
                 return rawToken
             }
         }
         else if hitEOF {
-            rawToken.type := 0
+            rawToken.kind := 0
             rawToken.text := "<EOF>"
             return rawToken
         }
-        Console.printLine("invalid token", rawToken.startLine, rawToken.startColumn)
+        Console.printLine("invalid token at \{rawToken.startLine}:\{rawToken.startColumn}")
         System.exit(1)
-    }    
+    }
 }

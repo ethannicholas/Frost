@@ -93,6 +93,7 @@ compile_panda_sources(panda_objects
     src/panda/io/LineNumberInputStream.panda
     src/panda/io/MemoryInputStream.panda
     src/panda/io/OutputStream.panda
+    src/panda/io/PushbackInputStream.panda
     src/panda/math/Random.panda
     src/panda/math/XorShift128Plus.panda
 )
@@ -162,3 +163,90 @@ add_custom_target(generate_code
             test/tests/Operators.expected
             Operators.c
 )
+
+function(compile_plex_sources out_var)
+    set(result)
+    foreach(input ${ARGN})
+        set(input "${CMAKE_CURRENT_SOURCE_DIR}/${input}")
+        get_filename_component(output ${input} NAME_WE)
+        set(output "${CMAKE_CURRENT_BINARY_DIR}/${output}.o")
+        add_custom_command(OUTPUT ${output}
+            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/pandac -i ${CMAKE_CURRENT_SOURCE_DIR}/src/plex -f o -o ${output} ${input}
+            DEPENDS ${input} pandac
+            WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        )
+        list(APPEND result ${output})
+    endforeach()
+    set(${out_var} "${result}" PARENT_SCOPE)
+endfunction()
+
+compile_plex_sources(plex_objects
+    src/plex/org/pandalanguage/plex/AcceptState.panda
+    src/plex/org/pandalanguage/plex/Any.panda
+    src/plex/org/pandalanguage/plex/AnyState.panda
+    src/plex/org/pandalanguage/plex/CharSet.panda
+    src/plex/org/pandalanguage/plex/Concat.panda
+    src/plex/org/pandalanguage/plex/DFAState.panda
+    src/plex/org/pandalanguage/plex/DFAStateLabel.panda
+    src/plex/org/pandalanguage/plex/NFA.panda
+    src/plex/org/pandalanguage/plex/NFAtoDFA.panda
+    src/plex/org/pandalanguage/plex/Node.panda
+    src/plex/org/pandalanguage/plex/Option.panda
+    src/plex/org/pandalanguage/plex/PLex.panda
+    src/plex/org/pandalanguage/plex/Plus.panda
+    src/plex/org/pandalanguage/plex/Regex.panda
+    src/plex/org/pandalanguage/plex/RemappedState.panda
+    src/plex/org/pandalanguage/plex/SingleCharState.panda
+    src/plex/org/pandalanguage/plex/Set.panda
+    src/plex/org/pandalanguage/plex/SingleChar.panda
+    src/plex/org/pandalanguage/plex/SingleCharState.panda
+    src/plex/org/pandalanguage/plex/Star.panda
+    src/plex/org/pandalanguage/plex/State.panda
+    src/plex/org/pandalanguage/plex/TableState.panda
+    src/plex/org/pandalanguage/plex/Union.panda
+    src/plex/org/pandalanguage/plex/runtime/DFA.panda
+    src/plex/org/pandalanguage/plex/runtime/Position.panda
+    src/plex/org/pandalanguage/plex/runtime/RawToken.panda
+)
+
+add_executable(plex
+    ${plex_objects}
+)
+target_link_libraries(plex panda)
+set_target_properties(plex PROPERTIES LINKER_LANGUAGE CXX)
+
+add_custom_command(
+    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/pandac/parser/Lexer.panda
+    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/plex
+    DEPENDS plex src/plex/Panda.plex
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+)
+
+function(compile_pandac_sources out_var)
+    set(result)
+    foreach(input ${ARGN})
+        get_filename_component(output ${input} NAME_WE)
+        set(output "${CMAKE_CURRENT_BINARY_DIR}/${output}.o")
+        add_custom_command(OUTPUT ${output}
+            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/pandac -i ${CMAKE_CURRENT_SOURCE_DIR}/src/plex -i ${CMAKE_CURRENT_BINARY_DIR} -f o -o ${output} ${input}
+            DEPENDS ${input} pandac
+            WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        )
+        list(APPEND result ${output})
+    endforeach()
+    set(${out_var} "${result}" PARENT_SCOPE)
+endfunction()
+
+compile_pandac_sources(pandac_objects
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/Main.panda
+    ${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/pandac/parser/Lexer.panda
+)
+
+add_executable(pandac2
+    ${pandac_objects}
+    ${CMAKE_CURRENT_BINARY_DIR}/DFA.o
+    ${CMAKE_CURRENT_BINARY_DIR}/Position.o
+    ${CMAKE_CURRENT_BINARY_DIR}/RawToken.o
+)
+target_link_libraries(pandac2 panda)
+set_target_properties(pandac2 PROPERTIES LINKER_LANGUAGE CXX)

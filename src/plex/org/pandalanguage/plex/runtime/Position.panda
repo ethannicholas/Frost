@@ -1,0 +1,15 @@
+package org.pandalanguage.plex.runtime
+
+class Position : Immutable {
+    def file:String
+
+    def line:Int
+
+    def column:Int
+
+    init(file:String, line:Int, column:Int) {
+        self.file := file
+        self.line := line
+        self.column := column
+    }
+}

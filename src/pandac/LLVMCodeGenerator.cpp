@@ -75,6 +75,9 @@ size_t LLVMCodeGenerator::fieldSize(const Type& type) {
 }
 
 size_t LLVMCodeGenerator::sizeOf(const Type& type) {
+    if (type.isPointer()) {
+        return POINTER_SIZE;
+    }
     switch (type.fCategory) {
         case Type::Category::CLASS: {
             auto found = fSizes.find(type.fName);
@@ -795,7 +798,7 @@ String LLVMCodeGenerator::getOrReference(const IRNode& left, const IRNode& right
 String LLVMCodeGenerator::getIdentityReference(const IRNode& left, const IRNode& right,
         std::ostream& out) {
     String leftRef = this->getTypedReference(left, out);
-    String rightRef = this->getReference(left, out);
+    String rightRef = this->getReference(right, out);
     String raw = this->nextVar();
     out << "    " << raw << " = icmp eq " << leftRef << ", " << rightRef << "\n";
     String result = this->nextVar();
@@ -806,7 +809,7 @@ String LLVMCodeGenerator::getIdentityReference(const IRNode& left, const IRNode&
 String LLVMCodeGenerator::getNIdentityReference(const IRNode& left, const IRNode& right,
         std::ostream& out) {
     String leftRef = this->getTypedReference(left, out);
-    String rightRef = this->getReference(left, out);
+    String rightRef = this->getReference(right, out);
     String raw = this->nextVar();
     out << "    icmp ne " << leftRef << ", " << rightRef << "\n";
     String result = this->nextVar();
@@ -982,14 +985,6 @@ String LLVMCodeGenerator::getCallReference(const IRNode& call, std::ostream& out
     String result;
     String resultType = this->llvmType(call.fType);
     bool indirect = this->needsStructIndirection(*m);
-    out << "    ; call " << m->description() << " on (";
-    for (int i = 1; i < call.fChildren.size(); ++i) {
-        if (i != 1) {
-            out << ", ";
-        }
-        out << call.fChildren[i].fType.description();
-    }
-    out << ")\n";
     if (indirect) {
         out << "    call " << this->callingConvention(*m) << "void";
     }
@@ -1021,13 +1016,11 @@ String LLVMCodeGenerator::getCallReference(const IRNode& call, std::ostream& out
 
 String LLVMCodeGenerator::wrapValue(const String& value, const Type& srcType, const Type& dstType,
         std::ostream& out) {
-    out << "    ; wrap value\n";
     Class* src = fCompiler->getClass(srcType);
     std::vector<Field*> fields = fCompiler->getInstanceFields(*src);
     ASSERT(src);
     if (srcType.fCategory == Type::Category::NULLABLE) {
         // casting nullable value to nullable wrapper, need to special-case null
-        out << "    ; handle nullable-to-nullable wrap\n";
         String testStart = fCurrentBlock;
         String isNonNull = this->nextVar();
         out << "    " << isNonNull << " = extractvalue " << this->llvmNullableType(srcType) <<
@@ -1086,12 +1079,10 @@ String LLVMCodeGenerator::wrapValue(const String& value, const Type& srcType, co
 
 String LLVMCodeGenerator::unwrapValue(const String& value, const Type& srcType, const Type& dstType,
         std::ostream& out) {
-    out << "    ; unwrap value\n";
     Class* target = fCompiler->getClass(dstType);
     std::vector<Field*> fields = fCompiler->getInstanceFields(*target);
     if (dstType.fCategory == Type::Category::NULLABLE) {
         // casting nullable wrapper to nullable value, need to special-case null
-        out << "    ; handle nullable-to-nullable unwrap\n";
         String testStart = fCurrentBlock;
         String isNonNull = this->nextVar();
         out << "    " << isNonNull << " = icmp ne " << this->llvmType(srcType) <<
@@ -1151,7 +1142,6 @@ String LLVMCodeGenerator::unwrapValue(const String& value, const Type& srcType, 
 
 String LLVMCodeGenerator::toNullableValue(const String& value, const Type& srcType,
         const Type& dstType, std::ostream& out) {
-    out << "    ; to nullable\n";
     Class* cl = fCompiler->getClass(srcType);
     ASSERT(cl);
     String nullableType = this->llvmNullableType(dstType);
@@ -1181,7 +1171,6 @@ String LLVMCodeGenerator::toNullableValue(const String& value, const Type& srcTy
 
 String LLVMCodeGenerator::toNonNullableValue(const String& value, const Type& srcType,
         const Type& dstType, std::ostream& out) {
-    out << "    ; to nonnullable\n";
     Class* cl = fCompiler->getClass(dstType);
     ASSERT(cl);
     String nullableType = this->llvmNullableType(srcType);
@@ -1277,6 +1266,19 @@ String LLVMCodeGenerator::getConstructReference(const IRNode& construct, std::os
     Class* cl = fCompiler->getClass(construct.fType);
     ASSERT(cl);
     String type = this->llvmType(construct.fType);
+    if (construct.fType.isNumber()) {
+        ASSERT(construct.fChildren.size() == 1);
+        ASSERT(construct.fChildren[0].fChildren.size() == 2);
+        String value = this->getTypedReference(construct.fChildren[0].fChildren[1], out);
+        if (construct.fChildren[0].fChildren[1].fKind == IRNode::Kind::INT) {
+            return "{ " + value + " }";
+        }
+        String result = this->nextVar();
+        ASSERT(!cl->fFields.back()->fAnnotations.isClass());
+        out << "    " << result << " = insertvalue " << type << " { " <<
+                this->llvmType(cl->fFields.back()->fType) << " undef }, " << value << ", 0\n";
+        return result;
+    }
     if (cl->isValue(fCompiler)) {
         String alloca = "%$tmp" + std::to_string(++fLabels);
         fMethodHeader << "    " << alloca << " = alloca " << type << "\n";
@@ -1636,7 +1638,6 @@ void LLVMCodeGenerator::writeAssignment(const IRNode& a, std::ostream& out) {
 
 String LLVMCodeGenerator::getVirtualMethodReference(const String& target, Method& m,
         std::ostream& out) {
-    out << "    ; get reference to " << m.signature() << "\n";
     const ClassConstant& cc = this->getClassConstant(m.fOwner);
     int index = -1;
     std::vector<Method*>& vtable = fCompiler->getVTable(m.fOwner);
@@ -2057,7 +2058,6 @@ void LLVMCodeGenerator::writeRangeFor(const IRNode& f, std::ostream& out) {
     this->createBlock(loopTest, out);
     String loopInc = this->nextLabel();
     // beginning of loop test, determine direction
-    out << "    ; direction test\n";
     String forwardLabel = this->nextLabel();
     String backwardLabel = this->nextLabel();
     out << "    br i1 " << direction << ", label %" << forwardLabel << ", label %" <<
@@ -2066,7 +2066,6 @@ void LLVMCodeGenerator::writeRangeFor(const IRNode& f, std::ostream& out) {
     // forward loop; perform the test by subtracting index from end and then comparing to step, to
     // avoid overflows near the maximum value
     this->createBlock(forwardLabel, out);
-    out << "    ; forward test\n";
     String forwardDelta = this->nextVar();
     out << "    " << forwardDelta << " = sub " << numberType << " " << end << ", " << indexValue <<
             "\n";
@@ -2079,7 +2078,6 @@ void LLVMCodeGenerator::writeRangeFor(const IRNode& f, std::ostream& out) {
 
     // forward inclusive test
     this->createBlock(forwardInclusiveLabel, out);
-    out << "    ; forward inclusive\n";
     String forwardInclusiveTest = this->nextVar();
     // always use unsigned comparison to avoid overflow; we know both the delta and the step are
     // the same sign
@@ -2091,7 +2089,6 @@ void LLVMCodeGenerator::writeRangeFor(const IRNode& f, std::ostream& out) {
 
     // forward exclusive test
     String forwardExclusiveTest = this->nextVar();
-    out << "    ; forward exclusive\n";
     out << "    " << forwardExclusiveTest << " = icmp ugt " << numberType << " " << forwardDelta <<
             ", " << step << "\n";
     out << "    br i1 " << forwardExclusiveTest << ", label %" << loopInc << ", label %" <<
@@ -2100,7 +2097,6 @@ void LLVMCodeGenerator::writeRangeFor(const IRNode& f, std::ostream& out) {
     // backward loop; perform the test by subtracting end from index and then comparing to -step, to
     // avoid overflows near the minimum value
     this->createBlock(backwardLabel, out);
-    out << "    ; backward test\n";
     String backwardDelta = this->nextVar();
     out << "    " << backwardDelta << " = sub " << numberType << " " << indexValue << ", " << end <<
             "\n";
@@ -2115,7 +2111,6 @@ void LLVMCodeGenerator::writeRangeFor(const IRNode& f, std::ostream& out) {
 
     // backward inclusive test
     this->createBlock(backwardInclusiveLabel, out);
-    out << "    ; backward inclusive\n";
     String backwardInclusiveTest = this->nextVar();
     out << "    " << backwardInclusiveTest << " = icmp uge " << numberType << " " <<
             backwardDelta << ", " << negStep << "\n";
@@ -2125,7 +2120,6 @@ void LLVMCodeGenerator::writeRangeFor(const IRNode& f, std::ostream& out) {
 
     // backward exclusive test
     String backwardExclusiveTest = this->nextVar();
-    out << "    ; backward exclusive\n";
     out << "    " << backwardExclusiveTest << " = icmp ugt " << numberType <<
             " " << backwardDelta << ", " << negStep << "\n";
     out << "    br i1 " << backwardExclusiveTest << ", label %" << loopInc << ", label %" <<

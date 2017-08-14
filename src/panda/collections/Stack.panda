@@ -9,16 +9,19 @@ class Stack<T> {
     }
 
     method pop():T {
+        assert contents.get_count() > 0
         def result := contents[contents.count - 1]
         contents.removeIndex(contents.count - 1)
         return result
     }
 
     function peek():T {
+        assert contents.get_count() > 0
         return contents[contents.count - 1]
     }
 
     function peek(depth:Int):T {
+        assert contents.get_count() > depth
         return contents[contents.count - 1 - depth]
     }
 

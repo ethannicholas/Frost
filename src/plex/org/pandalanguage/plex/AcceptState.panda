@@ -4,17 +4,17 @@ class AcceptState : State {
     def token:Int
 
     init(token:Int) {
-        super.init([])
+        super.init(ACCEPT, ImmutableArray<Int>() -* FIXME array literal *-)
         self.token := token
     }
 
     @override
-    function accept(c:Char):Bit {
+    function accept(c:Char8):Bit {
         return false
     }
 
     @override
-    function ->>():String {
-        return "new AcceptState(" + token + ")"
+    function convert():String {
+        return "new AcceptState(\{token})"
     }
 }

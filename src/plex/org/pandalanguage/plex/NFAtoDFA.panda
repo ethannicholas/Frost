@@ -1,86 +1,25 @@
 package org.pandalanguage.plex
 
+uses panda.unsafe.Pointer
 uses org.pandalanguage.plex.AcceptState
 uses org.pandalanguage.plex.NFA
 uses org.pandalanguage.plex.RemappedState
 uses org.pandalanguage.plex.runtime.DFA
 
-class DFAStateLabel {
-    def states:List<Int>
-
-    constructor(states:List<Int>) {
-        self.states := states
-    }
-
-    @override
-    function hash():Int {
-        var result := 0
-        for s in states
-            result ~~= s
-        return result
-    }
-
-    @override
-    function =(raw:Object):Bit {
-        var other := raw->(DFAStateLabel)
-        if other.states.length != states.length
-            return false
-        for i in 0 .. states.length {
-            if other.states[i] != states[i]
-                return false
-        }
-        return true
-    }
-
-    @override
-    function ->>():String {
-        var result := "<"->>(MutableString)
-        for i, s in states {
-            if i > 0
-                result.append(", ")
-            result.append(s)
-        }
-        result.append(">")
-        return result->>(String)
-    }
-}
-
-class DFAState {
-    def id:Int
-    def label:DFAStateLabel
-    var scanned:Bit
-
-    constructor(id:Int, label:DFAStateLabel) {
-        self.id := id
-        self.label := label
-    }
-
-    @override
-    function ->>():String {
-        def result := class.name->>(MutableString)
-        result.append("<")
-        result.append(id)
-        result.append(", ")
-        result.append(label)
-        result.append(">")
-        return result->>(String)
-    }
-}
-
 class NFAtoDFA {
     var nfa:NFA
-    def states := new HashMap<DFAStateLabel, DFAState>()
-    def transitions := new Array<List<Int>>()
-    def accepts := new Array<Int>()
+    def states := HashMap<DFAStateLabel, DFAState>()
+    def transitions := Array<List<Int>>()
+    def accepts := Array<Int>()
 
-    constructor(nfa:NFA) {
+    init(nfa:NFA) {
         self.nfa := nfa
     }
 
     method getState(label:DFAStateLabel):DFAState {
         var result := states[label]
         if result = null {
-            result := new DFAState(states.length, label)
+            result := DFAState(states.get_count(), label)
             states[label] := result
         }
         return result
@@ -88,34 +27,37 @@ class NFAtoDFA {
 
     method add(nfaState:Int, states:List<Int>) {
         def state := nfa.states[nfaState]
-        if state-?>(RemappedState) {
-            def next := state->(RemappedState).states
-            for n in next
+        if state.kind = State.REMAPPED {
+            def next := (state->RemappedState).states -- FIXME remove ()
+            for n in next {
                 add(n, states)
+            }
         }
         else {
             for s in states {
-                if s = nfaState
+                if s = nfaState {
                     return
+                }
             }
             states.add(nfaState)
         }
     }
 
-    method addTransition(c:Char, start:Int, next:Int) {
-        while transitions.length <= c->(Int)
-            transitions.add(new Array<Int>())
-        var a := transitions[c->(Int)]
-        while a.length <= start
+    method addTransition(c:Char8, start:Int, next:Int) {
+        while transitions.get_count() <= c.convert() {
+            transitions.add(Array<Int>())
+        }
+        def a := transitions[c.convert()]
+        while a.get_count() <= start {
             a.add(-1)
+        }
         assert a[start] = -1
         a[start] := next
     }
 
     @private
     @class
-    @limited
-    method swap(a:List<Object>, i1:Int, i2:Int) {
+    method swap(a:List<Int>, i1:Int, i2:Int) {
         def tmp := a[i1]
         a[i1] := a[i2]
         a[i2] := tmp
@@ -123,61 +65,46 @@ class NFAtoDFA {
 
     @private
     @class
-    @limited
-    method sort(a:List<Object>, left:Int, right:Int, 
-            greater:(Object, Object)=>(Bit)) {
-        if left >= right
+    method sort(a:List<Int>, left:Int, right:Int) {
+        if left >= right {
             return
+        }
         def pivotIndex := left + (right - left) // 2
         def pivot := a[pivotIndex]
         swap(a, right, pivotIndex)
         var storeIndex := left
         for i in left ... right - 1 {
-            if !greater(a[i], pivot) {
+            if a[i] < pivot {
                 swap(a, i, storeIndex)
                 storeIndex += 1
             }
         }
         swap(a, storeIndex, right)
-        sort(a, left, storeIndex - 1, greater)
-        sort(a, storeIndex + 1, right, greater)
+        sort(a, left, storeIndex - 1)
+        sort(a, storeIndex + 1, right)
     }
 
-    ============================================================================
+    ================================================================================================
     Quick and dirty naive quicksort, until generics are done and ListView can be 
     sorted natively.
-    ============================================================================
+    ================================================================================================
     @class
-    @limited
-    method sort(a:List<Object>, greater:(Object, Object)=>(Bit)) {
-        sort(a, 0, a.length - 1, greater)
-    }    
-
-    @class
-    @limited
-    -- FIXME replace this with real sort when it's available
     method sort(a:List<Int>) {
-        def objects := new Array<Object>()
-        for i in a
-            objects.add(i)
-        sort(objects, (x, y) => x->(Int) > y->(Int))
-        a.clear()
-        for i in objects
-            a.add(i->(Int))
+        sort(a, 0, a.get_count() - 1)
     }
 
     method scanState(state:DFAState) {
         state.scanned := true
-        for c in 9->(Char) ... 127->(Char)  {
-            def next := new Array<Int>()
-            var bestAccept := Int32.MAX
+        for c:Int8 in DFA.START_CHAR ... DFA.END_CHAR  { -- FIXME iterate over Char8 directly
+            def next := Array<Int>()
+            var bestAccept := Int64.MAX
             for idx in state.label.states {
                 def nfaState := nfa.states[idx]
-                if nfaState.accept(c) {
+                if nfaState.accept(Char8(c)) {
                     outer: for nextState in nfaState.next {
-                        if nfa.states[nextState]-?>(AcceptState) {
+                        if nfa.states[nextState].kind = State.ACCEPT {
                             bestAccept := bestAccept.min(
-                                    nfa.states[nextState]->(AcceptState).token)
+                                    (nfa.states[nextState]->State->AcceptState).token) -- fixme remove redundant cast and ()
                         }
                         add(nextState, next)
                     }
@@ -185,35 +112,53 @@ class NFAtoDFA {
             }
 
             sort(next)
-            def nextState := getState(new DFAStateLabel(next))
-            addTransition(c, state.id, nextState.id)
+            def nextState := getState(DFAStateLabel(next))
+            addTransition(Char8(c), state.id, nextState.id)
             if bestAccept < Int32.MAX {
-                while accepts.length <= nextState.id
+                while accepts.get_count() <= nextState.id {
                     accepts.add(-1)
+                }
                 accepts[nextState.id] := bestAccept
             }
-            if !nextState.scanned
+            if !nextState.scanned {
                 scanState(nextState)
+            }
         }
     }
 
     method createDFA():DFA {
         -- create state 0, the "reject" state
-        getState(new DFAStateLabel(new Array<Int>()))
+        getState(DFAStateLabel(Array<Int>()))
         -- map DFA states to the set of NFA states each represents
-        def startStates := new Array<Int>()
-        for i in 0 .. nfa.startStates.length
+        def startStates := Array<Int>()
+        for i in 0 .. nfa.startStates.get_count() {
             startStates.add(nfa.startStates[i])
+        }
         sort(startStates)
         -- state 1 is the start state
-        def start := getState(new DFAStateLabel(startStates))
+        def start := getState(DFAStateLabel(startStates))
         scanState(start)
 
-        def outTransitions := new Array<ImmutableArray<Int>>()
-        for t in transitions {
-            outTransitions.add(new ImmutableArray<Int>(t))
+        var stateCount := 0
+        for i in 0 .. transitions.get_count() {
+            stateCount := stateCount.max(transitions[i].get_count())
         }
-        return new DFA(new ImmutableArray<ImmutableArray<Int>>(outTransitions), 
-                new ImmutableArray<Int>(accepts))
+        def outTransitions := Pointer<Pointer<Int>>.alloc(transitions.get_count())
+        for i in 0 ... DFA.END_CHAR.convert()->Int {
+            outTransitions[i] := Pointer<Int>.alloc(stateCount)
+            for j in 0 .. stateCount {
+                if i < transitions.get_count() & j < transitions[i].get_count() {
+                    outTransitions[i][j] := transitions[i][j]
+                }
+                else {
+                    outTransitions[i][j] := 0
+                }
+            }
+        }
+        def outAccepts := Pointer<Int>.alloc(accepts.get_count())
+        for i in 0 .. accepts.get_count() {
+            outAccepts[i] := accepts[i]
+        }
+        return DFA(stateCount, outTransitions, accepts.get_count(), outAccepts)
     }
 }

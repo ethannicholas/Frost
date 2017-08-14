@@ -71,6 +71,11 @@ class MutableString {
         data := data.realloc(maxLength)
     }
 
+    method clear() {
+        data := data.realloc(DEFAULT_SIZE)
+        length := 0
+    }
+
     @override
     function convert():String {
         def result := Pointer<Char8>.alloc(length)

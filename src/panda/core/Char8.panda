@@ -22,6 +22,10 @@ class Char8 : Value (Key<Char8>) {
         return value != other.value
     }
 
+    function isWhitespace():Bit {
+        return value = 10 | value = 13 | value = 9 | value = 32
+    }
+
     @override
     function hash():Int {
         return convert()

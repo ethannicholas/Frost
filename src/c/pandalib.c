@@ -1,7 +1,11 @@
 #include <inttypes.h>
+#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/stat.h>
+
+typedef uint8_t Bit;
 
 typedef struct Class {
 } Class;
@@ -15,6 +19,8 @@ typedef struct NullableInt8 {
     int8_t value;
     int8_t nonnull;
 } NullableInt8;
+
+extern Class panda$core$String$class;
 
 typedef struct String {
     void* cl;
@@ -60,6 +66,22 @@ void debugPrint(int64_t value) {
     printf("%" PRId64 "\n", value);
 }
 
+char* pandaGetCString(String* s) {
+    char* result = malloc(s->size + 1);
+    memcpy(result, s->data, s->size);
+    result[s->size] = 0;
+    return result;
+}
+
+String* pandaNewString(const char* s, int length) {
+    String* result = malloc(sizeof(String));
+    result->cl = &panda$core$String$class;
+    result->size = length;
+    result->data = malloc(length);
+    memcpy(result->data, s, length);
+    return result;
+}
+
 // Console
 
 void panda$io$Console$write$panda$core$Char8(char ch) {
@@ -77,6 +99,14 @@ void panda$io$Console$read$R$panda$core$Char8$Q(NullableChar* result) {
     }
 }
 
+FileInputStream* panda$io$Console$inputStream$R$panda$io$InputStream() {
+    FileInputStream* result = malloc(sizeof(FileInputStream));
+    result->cl = &panda$io$FileInputStream$class;
+    result->refcnt = 1;
+    result->file = stdin;
+    return result;
+}
+
 FileOutputStream* panda$io$Console$outputStream$R$panda$io$OutputStream() {
     FileOutputStream* result = malloc(sizeof(FileOutputStream));
     result->cl = &panda$io$FileOutputStream$class;
@@ -91,9 +121,7 @@ FileInputStream* panda$io$File$openInputStream$R$panda$io$InputStream(File* self
     FileInputStream* result = malloc(sizeof(FileInputStream));
     result->cl = &panda$io$FileInputStream$class;
     result->refcnt = 1;
-    char* str = malloc(self->path->size + 1);
-    memcpy(str, self->path->data, self->path->size);
-    str[self->path->size] = 0;
+    char* str = pandaGetCString(self->path);
     result->file = fopen(str, "rb");
     if (!result->file) {
         printf("error opening '%s'", str);
@@ -107,9 +135,7 @@ FileOutputStream* panda$io$File$openOutputStream$R$panda$io$OutputStream(File* s
     FileOutputStream* result = malloc(sizeof(FileOutputStream));
     result->cl = &panda$io$FileOutputStream$class;
     result->refcnt = 1;
-    char* str = malloc(self->path->size + 1);
-    memcpy(str, self->path->data, self->path->size);
-    str[self->path->size] = 0;
+    char* str = pandaGetCString(self->path);
     result->file = fopen(str, "wb");
     if (!result->file) {
         printf("error opening '%s'", str);
@@ -117,6 +143,44 @@ FileOutputStream* panda$io$File$openOutputStream$R$panda$io$OutputStream(File* s
     }
     free(str);
     return result;
+}
+
+String* panda$io$File$absolutePath$R$panda$core$String(File* file) {
+    char result[PATH_MAX];
+    char* rawPath = pandaGetCString(file->path);
+    realpath(rawPath, result);
+    free(rawPath);
+    return pandaNewString(result, strlen(result));
+}
+
+void panda$io$File$delete(File* file) {
+    char* path = pandaGetCString(file->path);
+    if (remove(path)) {
+        printf("failed to delete %s\n", path);
+        exit(1);
+    }
+    free(path);
+}
+
+void panda$io$File$exists$R$panda$core$Bit(Bit* result, File* file) {
+    char* path = pandaGetCString(file->path);
+    struct stat fileInfo;
+    *result = stat(path, &fileInfo) >= 0;
+    free(path);
+}
+
+void panda$io$File$isDirectory(Bit* result, File* file) {
+    char* path = pandaGetCString(file->path);
+    struct stat fileInfo;
+    stat(path, &fileInfo);
+    free(path);
+    *result = S_ISDIR(fileInfo.st_mode);
+}
+
+void panda$io$File$createDirectory(File* file) {
+    char* path = pandaGetCString(file->path);
+    mkdir(path, 0755);
+    free(path);
 }
 
 // FileInputStream

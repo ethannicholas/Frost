@@ -1,0 +1,26 @@
+package org.pandalanguage.plex
+
+class Union : Node {
+    def left:Node
+
+    def right:Node
+
+    init(left:Node, right:Node) {
+        super.init(UNION)
+        self.left := left
+        self.right := right
+    }
+
+    @override
+    method makeStartStates(context:NFA, accept:ListView<Int>):Array<Int> {
+        def result := Array<Int>()
+        result.addAll(left.makeStartStates(context, accept))
+        result.addAll(right.makeStartStates(context, accept))
+        return result
+    }
+
+    @override
+    function convert():String {
+        return left + "|" + right
+    }
+}

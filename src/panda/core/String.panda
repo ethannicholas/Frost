@@ -130,9 +130,17 @@ class String : Immutable (Key<String>) {
     def _length:Int
 
     @private
-    init(data:Pointer<Char8>, _length:Int) {
+    init(data:Pointer<Char8>, length:Int) {
         self.data := data
-        self._length := _length
+        _length := length
+    }
+
+    init(chars:ListView<Char8>) {
+        _length := chars.get_count()
+        data := Pointer<Char8>.alloc(_length)
+        for i in 0 .. _length {
+            data[i] := chars[i]
+        }
     }
 
     @override
@@ -180,6 +188,29 @@ class String : Immutable (Key<String>) {
             }
         }
         return true
+    }
+
+    ============================================================================
+    Returns a copy of this string with leading and trailing whitespace
+    characters removed.
+
+    @returns a trimmed version of this string
+    ============================================================================
+    function trimmed():String {
+        if _length = 0 {
+            return self
+        }
+        var start := 0
+        while start < _length & data[start].isWhitespace() {
+            start += 1
+        }
+
+        var end := _length - 1
+        while end >= start & data[end].isWhitespace() {
+            end -= 1
+        }
+
+        return self[Index(start) ... Index(end)]
     }
 
     function +(other:String):String {
@@ -358,6 +389,19 @@ class String : Immutable (Key<String>) {
             }
         }
         return result.convert()
+    }
+
+    function contains(c:Char8):Bit {
+        for i in 0 .. _length {
+            if data[i] = c {
+                return true
+            }
+        }
+        return false
+    }
+
+    function contains(s:String):Bit {
+        return indexOf(s) != null
     }
 
     ================================================================================================

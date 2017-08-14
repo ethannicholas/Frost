@@ -82,7 +82,7 @@ void make_executable(const char* llvm, const char* dest) {
     const char* optimized = "/tmp/output.ll.opt";
     optimize(llvm, optimized);
     const char* assembly = "/tmp/output.s";
-    llc(llvm, assembly);
+    llc(optimized, assembly);
 
     int pid = fork();
     if (pid < 0) {
@@ -178,7 +178,7 @@ int main(int argc, char** argv) {
                 format = Format::OBJECT;
             }
             else {
-                printf("unsupported output format '%s'\n", argv[1]);
+                printf("unsupported output format '%s'\n", argv[i]);
                 exit(1);
             }
         }

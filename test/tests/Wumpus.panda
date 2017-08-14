@@ -214,7 +214,7 @@ class HuntTheWumpus {
             }
             Console.printLine("!)")
             enterRoom(rooms[random.int(rooms.count)], true)
-        }    
+        }
         else if currentRoom.pit {
             if random.int(12) < 2 {
                 Console.printLine("Without conscious thought you grab for the side of the cave and manage")

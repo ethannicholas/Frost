@@ -1,6 +1,14 @@
 package panda.core
 
 class Range<T> : Value {
+    def start:T
+
+    def end:T
+
+    def step:Int
+
+    def inclusive:Bit
+
     init(start:T, end:T, step:Int?, inclusive:Bit) {
         self.start := start
         self.end := end
@@ -13,11 +21,25 @@ class Range<T> : Value {
         self.inclusive := inclusive
     }
 
-    def start:T
-
-    def end:T
-
-    def step:Int
-
-    def inclusive:Bit
+    @override
+    function convert():String {
+        def result := MutableString()
+        if start != null {
+            result.append(start)
+        }
+        if inclusive {
+            result.append("...")
+        }
+        else {
+            result.append("..")
+        }
+        if end != null {
+            result.append(end)
+        }
+        if step != 1 {
+            result.append(" by ")
+            result.append(step)
+        }
+        return result.convert()
+    }
 }

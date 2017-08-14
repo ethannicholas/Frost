@@ -1,7 +1,5 @@
 package org.pandalanguage.plex
 
-uses org.pandalanguage.plex.AcceptState
-uses org.pandalanguage.plex.NFA
 uses org.pandalanguage.plex.runtime.DFA
 
 ====================================================================================================
@@ -11,7 +9,7 @@ class PLex {
     def tokens := HashMap<String, Regex>()
     def out:IndentedOutputStream
 
-    method process(cfg:File, out:OutputStream) {
+    method process(cfg:InputStream, out:OutputStream) {
         self.out := IndentedOutputStream(out)
         load(cfg)
         tokens.clear()
@@ -19,53 +17,56 @@ class PLex {
 
     function escape(s:String):String {
         def result := MutableString()
-        for i in 0 .. s.length {
-            if "+*?|.()[]".contains(s[i]) {
+        for c in s.utf8() {
+            if "+*?|.()[]".contains(c) {
                 result.append("\\")
             }
-            result.append(s[i])
+            result.append(c)
         }
         return result.convert()
     }
 
-    method load(input:File) {
+    method load(input:InputStream) {
         def nfa := NFA()
         out.printLine("package org.pandalanguage.pandac.parser")
-        out.printLine("uses org.pandalanguage.plex.runtime.*")
         out.printLine()
-        out.printLine("choice TokenType {")
+        out.printLine("uses panda.unsafe.Pointer")
+        out.printLine("uses org.pandalanguage.plex.runtime.DFA")
+        out.printLine("uses org.pandalanguage.plex.runtime.Position")
+        out.printLine()
+        out.printLine("class TokenKind { -- FIXME use choice")
         out.level += 1
         var offset := 0
-        out.printLine("EOF, -- 0")
+        out.printLine("constant EOF := 0")
         offset += 1
-        out.write("SHIFTRIGHT")
+        out.printLine("constant SHIFTRIGHT := 1")
         offset += 1
-        for line in input.lines {
+        for line in input.lines() {
             line := line.trimmed()
             if line.contains(":=") {
-                def id := line[0 .. line.indexOf(":=")].trimmed()
-                def pattern := line[line.indexOf(":=") + 2].trimmed()
+                def id := line[line.start() .. line.indexOf(":=")].trimmed()
+                def pattern := line[line.offset(line.indexOf(":="), 2) .. line.end()].trimmed()
                 def regex:Regex
                 if pattern.startsWith('"') {
-                    regex := Regex(escape(pattern[1 .. pattern.length - 1]))
+                    regex := Regex(escape(pattern[pattern.next(pattern.start()) ..
+                            pattern.previous(pattern.end())]))
                 }
                 else {
                     assert pattern.startsWith("/") & pattern.endsWith("/")
-                    regex := Regex(pattern[1 .. pattern.length - 1])
+                    regex := Regex(pattern[pattern.next(pattern.start()) ..
+                            pattern.previous(pattern.end())])
                 }
-                out.printLine(", -- \{tokens.length + 1}")
-                out.write(parsed[0])
-                def states := regex.addToNFA(nfa, nfa.addState(AcceptState(tokens.length +
+                out.printLine("constant \{id} := \{tokens.get_count() + 2}")
+                def states := regex.addToNFA(nfa, nfa.addState(AcceptState(tokens.get_count() +
                         offset)))
-                for j in 0 ... states.length - 1 {
-                    nfa.addStartState(states[j])
+                for s in states {
+                    nfa.addStartState(s)
                 }
-                tokens[parsed[0]] := regex
+                tokens[id] := regex
             }
             else {
-                assert line.length = 0, "error parsing '\{line}'"
+                assert line.utf8().get_count() = 0, "error parsing '\{line}'"
             }
-            line := input.readLine()
         }
         out.printLine()
         out.level -= 1
@@ -82,22 +83,22 @@ class PLex {
     method writeToken(out:IndentedOutputStream) {
         out.printLine("class Token : Immutable {")
         out.level += 1
-        out.printLine("def type:TokenType")
+        out.printLine("def kind:Int")
         out.printLine("def text:String")
         out.printLine("def position:Position")
         out.printLine()
-        out.printLine("constructor(type:TokenType, text:String, position:Position) {")
+        out.printLine("init(kind:Int, text:String, position:Position) {")
         out.level += 1
-        out.printLine("self.type := type")
+        out.printLine("self.kind := kind")
         out.printLine("self.text := text")
         out.printLine("self.position := position")
         out.level -= 1
         out.printLine("}")
         out.printLine()
         out.printLine("@override")
-        out.printLine("function format(fmt:String):String {")
+        out.printLine("function convert():String {")
         out.level += 1
-        out.printLine('return text')
+        out.printLine("return text")
         out.level -= 1
         out.printLine("}")
         out.level -= 1
@@ -107,27 +108,23 @@ class PLex {
     method writeLexer(dfa:DFA, out:IndentedOutputStream) {
         out.printLine("class Lexer {")
         out.level += 1
-        out.printLine("var file := 'undefined'")
-        writeStateTable(dfa, out)
-        out.printLine("var dfa := DFA(transitions, accepts)")
-        out.printLine("function source():LineNumberInputStream {")
-        out.level += 1
-        out.printLine("return dfa.source")
-        out.level -= 1
+        out.printLine("def file:String")
+        out.printLine()
+        out.printLine("def dfa:DFA")
+        out.printLine()
+        out.printLine("init(file:String, input:InputStream) {")
+        out.printLine("    self.file := file")
+        out.printLine("    dfa := DFA(input, \{dfa.stateCount}, getTransitions(), " +
+                "\{dfa.acceptCount}, getAccepts())")
         out.printLine("}")
         out.printLine()
-        out.printLine("@self")
-        out.printLine("method source:=(source:InputStream) {")
-        out.level += 1
-        out.printLine("dfa.source := source")
-        out.level -= 1
-        out.printLine("}")
+        writeStateTable(dfa, out)
         out.printLine()
         out.printLine("method next():Token {")
         out.level += 1
         out.printLine("def raw := dfa.next()")
-        out.printLine("return Token(raw.type->>(TokenType), raw.text, Position(file, " +
-                "raw.startLine, raw.startColumn))")
+        out.printLine("return Token(raw.kind, raw.text, Position(file, raw.startLine, " +
+                "raw.startColumn))")
         out.level -= 1
         out.printLine("}")
         out.level -= 1
@@ -135,37 +132,49 @@ class PLex {
     }
 
     method writeStateTable(dfa:DFA, out:IndentedOutputStream) {
-        out.printLine("constant transitions := [")
+        out.printLine("@class")
+        out.printLine("function zeroAlloc(count:Int):Pointer<Int> {")
+        out.printLine("    def result := Pointer<Int>.alloc(count)")
+        out.printLine("    for i in 0 .. count {")
+        out.printLine("        result[i] := 0")
+        out.printLine("    }")
+        out.printLine("    return result")
+        out.printLine("}")
+        out.printLine()
+        out.printLine("@class")
+        out.printLine("function getTransitions():Pointer<Pointer<Int>> {")
         out.level += 1
-        var separator := ""
-        for a in dfa.transitions {
-            out.write(separator)
-            out.write("[")
-            var innerSeparator := ""
-            for t in a {
-                out.write(separator)
-                innerSeparator := ", "
-                out.write(t)
+        out.printLine("def result := Pointer<Pointer<Int>>.alloc(\{DFA.END_CHAR + 1})")
+        for i in 0 ... DFA.END_CHAR.convert()->Int {
+            def a := dfa.transitions[i]
+            out.printLine("result[\{i}] := zeroAlloc(\{dfa.stateCount})")
+            for j in 0 .. dfa.stateCount {
+                if a[j] != 0 {
+                    out.printLine("result[\{i}][\{j}] := \{a[j]}")
+                }
             }
-            out.printLine("]")
-            separator := ",\n"
         }
+        out.printLine("return result")
         out.level -= 1
-        out.printLine("]")
-        out.printLine("constant accepts := [")
-        separator := ""
-        for a in dfa.accepts {
-            out.write(separator)
-            separator := ", "
-            out.write(a)
+        out.printLine("}")
+        out.printLine()
+        out.printLine("@class")
+        out.printLine("function getAccepts():Pointer<Int> {")
+        out.level += 1
+        out.printLine("def result := Pointer<Int>.alloc(\{dfa.acceptCount})")
+        for i in 0 .. dfa.acceptCount {
+            out.printLine("result[\{i}] := \{dfa.accepts[i]}")
         }
-        out.printLine("]")
+        out.printLine("return result")
+        out.level -= 1
+        out.printLine("}")
     }
 
     @class
     method main() {
-        def src := "/tmp/src"
-        def dst := "/tmp/dst"
-        PLex().process(File(src).openInputStream(), File(dst).openOutputStream())
+        def src := File("../src/plex/Panda.plex")
+        def dst := File("org/pandalanguage/pandac/parser/Lexer.panda")
+        dst.parent().createDirectories()
+        PLex().process(src.openInputStream(), dst.openOutputStream())
     }
 }

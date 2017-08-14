@@ -57,6 +57,54 @@ class ImmutableArray<T> (ListView<T>) {
         return count
     }
 
+    ================================================================================================
+    Returns a slice of the array, containing all of the elements specified by the range.
+    ================================================================================================
+    function [](r:Range<Int?>):ImmutableArray<T> {
+        def step := r.step
+
+        def current:Int
+        if r.start != null {
+            current := r.start
+        }
+        else if step > 0 {
+            current := 0
+        }
+        else {
+            current := get_count() - 1
+        }
+
+        def end:Int
+        if r.end != null {
+            end := r.end
+        }
+        else if step > 0 {
+            end := get_count()
+        }
+        else {
+            end := 0
+        }
+
+        def result := Array<T>()
+        if r.step > 0 {
+            while current < end {
+                result.add(self[current])
+                current += step
+            }
+        }
+        else {
+            assert r.step < 0
+            while current > end {
+                result.add(self[current])
+                current -= step
+            }
+        }
+        if (r.inclusive | r.end = null) & current = end & end < get_count() {
+            result.add(self[current])
+        }
+        return ImmutableArray<T>(result)
+    }
+
     @override
     function iterator():Iterator<T> {
         return ImmutableArrayIterator<T>(self)

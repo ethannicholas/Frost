@@ -1,10 +1,6 @@
 package panda.collections
 
 interface CollectionWriter<T> {
-    -- property count:Int
-
-    function get_count():Int
-
     method add(value:T)
 
     method addAll(c:CollectionView<T>)

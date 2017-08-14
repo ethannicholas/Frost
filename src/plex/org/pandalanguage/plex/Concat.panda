@@ -1,0 +1,24 @@
+package org.pandalanguage.plex
+
+class Concat : Node {
+    def left:Node
+
+    def right:Node
+
+    init(left:Node, right:Node) {
+        super.init(CONCAT)
+        self.left := left
+        self.right := right
+    }
+
+    @override
+    method makeStartStates(context:NFA, accept:ListView<Int>):Array<Int> {
+        var rightStates := right.makeStartStates(context, accept)
+        return left.makeStartStates(context, rightStates)
+    }
+
+    @override
+    function convert():String {
+        return "(" + left + right + ")"
+    }
+}
