@@ -1,18 +1,17 @@
-package org.pandalanguage.pandac.Main
+package org.pandalanguage.pandac
 
 uses org.pandalanguage.pandac.parser.Lexer
+uses org.pandalanguage.pandac.parser.Parser
 uses org.pandalanguage.pandac.parser.TokenKind
 
 class Main {
     @class
     method main() {
-        def lexer := Lexer("Lexer.panda", File("../src/pandac/org/pandalanguage/pandac/Main.panda").openInputStream())
-        loop {
-            def token := lexer.next()
-            if token.kind = TokenKind.EOF {
-                break
-            }
-            Console.printLine("\{token.kind} - \{token.text}")
-        }
+        def parser := Parser(Compiler())
+        parser.start("Main.panda", File("../src/pandac/org/pandalanguage/pandac/Main.panda").readFully())
+        Console.printLine(parser.packageDeclaration())
+        Console.printLine(parser.usesDeclaration())
+        Console.printLine(parser.usesDeclaration())
+        Console.printLine(parser.usesDeclaration())
     }
 }

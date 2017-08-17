@@ -37,7 +37,7 @@ struct ASTNode {
         CONTINUE,
         DECLARATION,
         DEF,
-        DEFAULT,
+        OTHERWISE,
         DO,
         DOC_COMMENT,
         DOT,
@@ -198,7 +198,6 @@ struct ASTNode {
             case Kind::CONTINUE:                result += "Continue";              break;
             case Kind::DECLARATION:             result += "Declaration";           break;
             case Kind::DEF:                     result += "Def";                   break;
-            case Kind::DEFAULT:                 result += "Default";               break;
             case Kind::DO:                      result += "Do";                    break;
             case Kind::DOC_COMMENT:             result += "DocComment";            break;
             case Kind::DOT:                     result += "Dot";                   break;
@@ -233,6 +232,7 @@ struct ASTNode {
             case Kind::NESTED:                  result += "Nested";                break;
             case Kind::NULL_LITERAL:            result += "Null";                  break;
             case Kind::NULLABLE_TYPE:           result += "NullableType";          break;
+            case Kind::OTHERWISE:               result += "Otherwise";             break;
             case Kind::PACKAGE:                 result += "Package";               break;
             case Kind::PARAMETER:               result += "Parameter";             break;
             case Kind::PARAMETERS:              result += "Parameters";            break;

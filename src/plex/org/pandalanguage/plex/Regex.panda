@@ -38,7 +38,7 @@ class Regex {
             when Char8(40): group()
             when Char8(91): set()
             when Char8(46): any()
-            default: char()
+            otherwise: char()
         }
     }
 
@@ -65,7 +65,7 @@ class Regex {
             match peek() {
                 when Char8(124), Char8(41), EOF:
                     break
-                default:
+                otherwise:
                     simple()
                     def b := stack.pop()
                     def a := stack.pop()
@@ -81,7 +81,7 @@ class Regex {
             when Char8(110): return SingleChar(Char8(10))
             when Char8(116): return SingleChar(Char8(9))
             when Char8(114): return SingleChar(Char8(13))
-            default: return SingleChar(c)
+            otherwise: return SingleChar(c)
         }
     }
 
@@ -95,7 +95,7 @@ class Regex {
                 index += 1
                 stack.push(getEscape(peek()))
                 index += 1
-            default:
+            otherwise:
                 stack.push(SingleChar(c))
                 index += 1
         }
@@ -124,7 +124,7 @@ class Regex {
                 index += 1
                 stack.push(getEscape(peek()))
                 index += 1
-            default:
+            otherwise:
                 stack.push(SingleChar(c))
                 index += 1
         }

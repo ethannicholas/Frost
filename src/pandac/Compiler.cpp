@@ -2371,7 +2371,7 @@ bool Compiler::convertMatch(const ASTNode& m, IRNode* out) {
                 children.push_back(std::move(when));
                 break;
             }
-            case ASTNode::Kind::DEFAULT: {
+            case ASTNode::Kind::OTHERWISE: {
                 std::vector<IRNode> statements;
                 for (int i = 0; i < c.fChildren.size(); ++i) {
                     IRNode statement;

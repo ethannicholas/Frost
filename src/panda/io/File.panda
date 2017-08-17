@@ -52,6 +52,16 @@ class File {
         }
     }
 
+    function name():String {
+        def index := path.lastIndexOf("/")
+        if index != null {
+            return path[path.next(index)..]
+        }
+        else {
+            return path
+        }
+    }
+
     ============================================================================
     Returns `true` if this file exists.
 
@@ -84,6 +94,10 @@ class File {
 
     @external
     method openOutputStream():OutputStream
+
+    method readFully():String {
+        return openInputStream().readFully()
+    }
 
     ============================================================================
     Deletes the file. If the file is a directory, it must be empty or FIXME

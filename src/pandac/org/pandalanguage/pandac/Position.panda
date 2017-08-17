@@ -1,4 +1,4 @@
-package org.pandalanguage.plex.runtime
+package org.pandalanguage.pandac
 
 class Position : Immutable {
     def file:String
@@ -11,5 +11,10 @@ class Position : Immutable {
         self.file := file
         self.line := line
         self.column := column
+    }
+
+    @override
+    function convert():String {
+        return "\{file}:\{line}:\{column}"
     }
 }

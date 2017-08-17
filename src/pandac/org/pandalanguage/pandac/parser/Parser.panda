@@ -1,0 +1,145 @@
+package org.pandalanguage.pandac.parser
+
+uses org.pandalanguage.pandac.ASTNode
+uses org.pandalanguage.pandac.ErrorReporter
+uses org.pandalanguage.pandac.Position
+
+class Parser {
+    def lexer := Lexer()
+
+    def errors:ErrorReporter
+
+    var filename:String
+
+    var source:String
+
+    var _pushback := Token(Token.Kind.INVALID, -1, -1)
+
+    init(errors:ErrorReporter) {
+        self.errors := errors
+    }
+
+    method start(filename:String, source:String) {
+        lexer.start(source)
+        self.filename := filename
+        self.source := source
+    }
+
+    method rawNext():Token {
+        if _pushback.kind != Token.Kind.INVALID {
+            def result := _pushback
+            _pushback := Token(Token.Kind.INVALID, -1, -1)
+            return result
+        }
+        return lexer.next()
+    }
+
+    method next():Token {
+        loop {
+            def result := rawNext()
+            match result.kind {
+                when Token.Kind.WHITESPACE,
+                        Token.Kind.LINE_COMMENT,
+                        Token.Kind.BLOCK_COMMENT: continue
+                otherwise:
+                    return result
+            }
+        }
+    }
+
+    method pushback(token:Token) {
+        assert _pushback.kind = Token.Kind.INVALID
+        _pushback := token
+    }
+
+    method peek():Token {
+        if _pushback.kind = Token.Kind.INVALID {
+            _pushback := next()
+        }
+        return _pushback
+    }
+
+    method checkNext(kind:Int):Token? {
+        def result := next()
+        if result.kind = kind {
+            return result
+        }
+        pushback(result)
+        return null
+    }
+
+    method expect(kind:Int, expected:String):Token? {
+        def result := next()
+        if result.kind = kind {
+            return result
+        }
+        errors.error(position(result), "expected \{expected}, but found '\{text(result)}'")
+        return null
+    }
+
+    function position(token:Token):Position {
+        return Position(filename, -1, -1)
+    }
+
+    function text(token:Token):String {
+        def start := source.offset(source.start(), token.offset)
+        return source[start .. source.offset(start, token.length)]
+    }
+
+    ================================================================================================
+    packageDeclaration = PACKAGE IDENTIFIER (DOT IDENTIFIER)*
+    ================================================================================================
+    method packageDeclaration():ASTNode? {
+        def start := expect(Token.Kind.PACKAGE, "'package'")
+        if start = null {
+            return null
+        }
+        var next := expect(Token.Kind.IDENTIFIER, "an identifier")
+        if next = null {
+            return null
+        }
+        def name := MutableString(text(next))
+        loop {
+            next := checkNext(Token.Kind.DOT)
+            if next = null {
+                break
+            }
+            name.append(".")
+            next := expect(Token.Kind.IDENTIFIER, "an identifier")
+            if next = null {
+                return null
+            }
+            name.append(text(next))
+        }
+        return ASTNode(ASTNode.Kind.PACKAGE, start.offset, name)
+    }
+
+    ================================================================================================
+    usesDeclaration = USES IDENTIFIER (DOT IDENTIFIER)*
+    ================================================================================================
+    method usesDeclaration():ASTNode? {
+        def start := expect(Token.Kind.USES, "'uses'")
+        if start = null {
+            return null
+        }
+        def next := expect(Token.Kind.IDENTIFIER, "an identifier")
+        if next = null {
+            return null
+        }
+        def name := MutableString(text(next))
+        loop {
+            next := checkNext(Token.Kind.DOT)
+            if next = null {
+                break
+            }
+            name.append(".")
+            next := expect(Token.Kind.IDENTIFIER, "an identifier")
+            if next = null {
+                return null
+            }
+            name.append(text(next))
+        }
+        return ASTNode(ASTNode.Kind.USES, start.offset, name)
+    }
+
+}

@@ -205,7 +205,6 @@ compile_plex_sources(plex_objects
     src/plex/org/pandalanguage/plex/TableState.panda
     src/plex/org/pandalanguage/plex/Union.panda
     src/plex/org/pandalanguage/plex/runtime/DFA.panda
-    src/plex/org/pandalanguage/plex/runtime/Position.panda
     src/plex/org/pandalanguage/plex/runtime/RawToken.panda
 )
 
@@ -228,7 +227,7 @@ function(compile_pandac_sources out_var)
         get_filename_component(output ${input} NAME_WE)
         set(output "${CMAKE_CURRENT_BINARY_DIR}/${output}.o")
         add_custom_command(OUTPUT ${output}
-            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/pandac -i ${CMAKE_CURRENT_SOURCE_DIR}/src/plex -i ${CMAKE_CURRENT_BINARY_DIR} -f o -o ${output} ${input}
+            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/pandac -i ${CMAKE_CURRENT_SOURCE_DIR}/src/plex -i ${CMAKE_CURRENT_BINARY_DIR} -i ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac -f o -o ${output} ${input}
             DEPENDS ${input} pandac
             WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         )
@@ -238,7 +237,12 @@ function(compile_pandac_sources out_var)
 endfunction()
 
 compile_pandac_sources(pandac_objects
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/ASTNode.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/Compiler.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/ErrorReporter.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/Main.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/Position.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/parser/Parser.panda
     ${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/pandac/parser/Lexer.panda
 )
 

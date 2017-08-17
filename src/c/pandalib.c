@@ -197,9 +197,9 @@ void panda$io$FileInputStream$readImpl$R$panda$core$Int8$Q(NullableInt8* result,
     }
 }
 
-int64_t panda$io$FileInputStream$readImpl$panda$unsafe$Pointer$LTpanda$core$Int8$GT$panda$core$Int64$R$panda$core$Int64(
-        FileInputStream* self, void* buffer, int max) {
-    return fread(buffer, 1, max, self->file);
+void panda$io$FileInputStream$readImpl$panda$unsafe$Pointer$LTpanda$core$Int8$GT$panda$core$Int64$R$panda$core$Int64(
+        int64_t* result, FileInputStream* self, void* buffer, int max) {
+    *result = fread(buffer, 1, max, self->file);
 }
 
 void panda$io$FileInputStream$cleanup(FileInputStream* self) {

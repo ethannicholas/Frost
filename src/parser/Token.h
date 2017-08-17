@@ -48,7 +48,7 @@ struct Token {
         UNREACHABLE,
         MATCH,
         WHEN,
-        DEFAULT,
+        OTHERWISE,
         SELF,
         SUPER,
         PRE,

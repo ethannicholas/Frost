@@ -156,9 +156,14 @@ class NFAtoDFA {
             }
         }
         def outAccepts := Pointer<Int>.alloc(accepts.get_count())
-        for i in 0 .. accepts.get_count() {
-            outAccepts[i] := accepts[i]
+        for i in 0 .. stateCount {
+            if i >= accepts.get_count() {
+                outAccepts[i] := -1
+            }
+            else {
+                outAccepts[i] := accepts[i]
+            }
         }
-        return DFA(stateCount, outTransitions, accepts.get_count(), outAccepts)
+        return DFA(stateCount, outTransitions, outAccepts)
     }
 }

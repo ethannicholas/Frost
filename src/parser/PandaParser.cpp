@@ -385,7 +385,7 @@ bool PandaParser::block(ASTNode* outResult) {
     return true;
 }
 
-// bodyEntry = usesStatement | packageDeclaration | statement | declaration
+// bodyEntry = usesDeclaration | packageDeclaration | statement | declaration
 bool PandaParser::bodyEntry(ASTNode* outResult) {
     switch (peek().fKind) {
         case Token::Kind::USES:       return this->usesDeclaration(outResult);
@@ -1177,8 +1177,8 @@ bool PandaParser::when(ASTNode* outResult) {
     }
     for (;;) {
         switch (this->peek().fKind) {
-            case Token::Kind::WHEN:    // fall through
-            case Token::Kind::DEFAULT: // fall through
+            case Token::Kind::WHEN:      // fall through
+            case Token::Kind::OTHERWISE: // fall through
             case Token::Kind::RBRACE:
                 goto end;
             case Token::Kind::BREAK:    // fall through
@@ -1233,7 +1233,7 @@ bool PandaParser::matchStatement(ASTNode* outResult) {
                 children.push_back(std::move(when));
                 break;
             }
-            case Token::Kind::DEFAULT: {
+            case Token::Kind::OTHERWISE: {
                 Token def = this->nextToken();
                 if (!this->expect(Token::Kind::COLON, "':'")) {
                     return false;
@@ -1261,7 +1261,8 @@ bool PandaParser::matchStatement(ASTNode* outResult) {
                     }
                 }
                 defaultEnd:
-                children.emplace_back(def.fPosition, ASTNode::Kind::DEFAULT, std::move(statements));
+                children.emplace_back(def.fPosition, ASTNode::Kind::OTHERWISE,
+                        std::move(statements));
                 goto end;
             }
             default:
@@ -1554,7 +1555,7 @@ bool PandaParser::returnStatement(ASTNode* outResult) {
     switch (this->peek().fKind) {
         case Token::Kind::RBRACE:  // fall through
         case Token::Kind::WHEN:    // fall through
-        case Token::Kind::DEFAULT:
+        case Token::Kind::OTHERWISE:
             *outResult = ASTNode(start.fPosition, ASTNode::Kind::RETURN);
             return true;
         default:

@@ -1,0 +1,39 @@
+package org.pandalanguage.pandac
+
+class ASTNode : Immutable {
+    class Kind {
+        constant PACKAGE := 100
+        constant USES    := 101
+    }
+
+    def kind:Int
+
+    def offset:Int
+
+    def payload:Object?
+
+    def children:ImmutableArray<ASTNode>
+
+    init(kind:Int, offset:Int) {
+        init(kind, offset, null)
+    }
+
+    init(kind:Int, offset:Int, payload:Object?) {
+        self.kind := kind
+        self.offset := offset
+        self.payload := payload
+        children := ImmutableArray<ASTNode>()
+    }
+
+    @override
+    function convert():String {
+        match kind {
+            when Kind.PACKAGE:
+                return "package \{payload}"
+            when Kind.USES:
+                return "uses \{payload}"
+            otherwise:
+                return "<ASTNode>"
+        }
+    }
+}
