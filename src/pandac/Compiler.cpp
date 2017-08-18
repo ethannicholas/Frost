@@ -2896,7 +2896,7 @@ bool Compiler::convertStatement(const ASTNode& s, IRNode* out) {
             }
             if (out->fKind == IRNode::Kind::CAST) {
                 ASSERT(out->fChildren.size() == 1);
-                *out = std::move(out->fChildren[0]);
+                *out = out->fChildren[0].copy();
             }
             return true;
         }

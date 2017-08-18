@@ -320,6 +320,7 @@ bool PandaParser::anyLoop(ASTNode* outResult, String label) {
             return false;
     }
 }
+
 // assert = ASSERT expression (COMMA expression)?
 bool PandaParser::assertStatement(ASTNode* outResult) {
     Token start;
@@ -1266,7 +1267,8 @@ bool PandaParser::matchStatement(ASTNode* outResult) {
                 goto end;
             }
             default:
-                this->error(next.fPosition, "expected 'when', 'default', or '}', but found '" +
+                nextToken();
+                this->error(next.fPosition, "expected 'when', 'otherwise', or '}', but found '" +
                         next.fText + "'");
         }
     }
@@ -1968,7 +1970,6 @@ bool PandaParser::whileLoop(ASTNode* outResult, String label) {
     *outResult = ASTNode(start.fPosition, ASTNode::Kind::WHILE, label, std::move(children));
     return true;
 }
-
 
 bool PandaParser::doLoop(ASTNode* outResult, String label) {
     Token start;

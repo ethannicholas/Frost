@@ -268,6 +268,9 @@ struct IRNode {
         ASSERT(fKind != Kind::CAST || fChildren[0].fType.fCategory != Type::Category::NULL_LITERAL);
         ASSERT(fKind != Kind::FIELD_REFERENCE || fChildren.size() == 1);
         ASSERT(fKind != Kind::UNRESOLVED_METHOD_REFERENCE || fChildren.size() >= 2);
+        for (const auto& child : fChildren) {
+            ASSERT(child.fKind != Kind::CALL || child.fChildren.size() >= 1);
+        }
     }
 
     // copying IRNodes can be very expensive and is incredibly easy to do by accident, so we kill

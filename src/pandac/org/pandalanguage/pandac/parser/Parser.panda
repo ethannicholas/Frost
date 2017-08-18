@@ -13,7 +13,13 @@ class Parser {
 
     var source:String
 
-    var _pushback := Token(Token.Kind.INVALID, -1, -1)
+    def pushbackBuffer := Array<Token>()
+
+    def commaSeparatedExpressionContext := Stack<Bit>()
+
+    var inSpeculative := false
+
+    def speculativeBuffer := Array<Token>()
 
     init(errors:ErrorReporter) {
         self.errors := errors
@@ -26,9 +32,10 @@ class Parser {
     }
 
     method rawNext():Token {
-        if _pushback.kind != Token.Kind.INVALID {
-            def result := _pushback
-            _pushback := Token(Token.Kind.INVALID, -1, -1)
+        if pushbackBuffer.get_count() != 0 {
+            def idx := pushbackBuffer.get_count() - 1
+            def result := pushbackBuffer[idx]
+            pushbackBuffer.removeIndex(idx)
             return result
         }
         return lexer.next()
@@ -48,15 +55,14 @@ class Parser {
     }
 
     method pushback(token:Token) {
-        assert _pushback.kind = Token.Kind.INVALID
-        _pushback := token
+        pushbackBuffer.add(token)
     }
 
     method peek():Token {
-        if _pushback.kind = Token.Kind.INVALID {
-            _pushback := next()
+        if pushbackBuffer.get_count() = 0 {
+            pushback(next())
         }
-        return _pushback
+        return pushbackBuffer[pushbackBuffer.get_count() - 1]
     }
 
     method checkNext(kind:Int):Token? {
@@ -77,6 +83,24 @@ class Parser {
         return null
     }
 
+    method startSpeculative() {
+        assert !inSpeculative
+        inSpeculative := true
+        speculativeBuffer.clear()
+        speculativeBuffer.addAll(pushbackBuffer)
+    }
+
+    method accept() {
+        inSpeculative := false
+    }
+
+    method rewind() {
+        inSpeculative := false
+        for i in speculativeBuffer.get_count() - 1 ... 0 by -1 {
+            pushbackBuffer.insert(0, speculativeBuffer[i])
+        }
+    }
+
     function position(token:Token):Position {
         return Position(filename, -1, -1)
     }
@@ -84,6 +108,1230 @@ class Parser {
     function text(token:Token):String {
         def start := source.offset(source.start(), token.offset)
         return source[start .. source.offset(start, token.length)]
+    }
+
+    function addStringChunk(string:ASTNode?, chunk:ASTNode):ASTNode {
+        if string = null {
+            return chunk
+        }
+        def children := Array<ASTNode>()
+        children.add(string)
+        children.add(chunk)
+        return ASTNode(ASTNode.Kind.BINARY, string.offset, Token.Kind.ADD, children)
+    }
+
+    method string():ASTNode? {
+        def start := next()
+        if start.kind != Token.Kind.DOUBLE_QUOTE & start.kind != Token.Kind.SINGLE_QUOTE {
+            errors.error(position(start), "expected a string, but found '\{text(start)}'")
+            return null
+        }
+        var result:ASTNode? := null
+        def chunk := MutableString()
+        loop {
+            def token := rawNext()
+            if token.kind = start.kind {
+                break
+            }
+            match token.kind {
+                when Token.Kind.WHITESPACE:
+                    def str := text(token)
+                    if str.contains("\n") {
+                        errors.error(position(start), "unterminated string literal")
+                        return null
+                    }
+                    chunk.append(str)
+                when Token.Kind.EOF:
+                    errors.error(position(start), "unterminated string literal")
+                    return null
+                when Token.Kind.BACKSLASH:
+                    def escape := rawNext()
+                    if escape.kind = Token.Kind.EOF {
+                        errors.error(position(start), "unterminated string literal")
+                        return null
+                    }
+                    def escapeText := text(escape)
+                    def c := escapeText.utf8()[0]
+                    match c.convert()->String { -- FIXME match on char rather than string
+                        when "n":  chunk.append("\n")
+                        when "r":  chunk.append("\r")
+                        when "t":  chunk.append("\t")
+                        when "'":  chunk.append("'")
+                        when "\"": chunk.append("\"")
+                        when "\\": chunk.append("\\")
+                        when "{": {
+                            def expr := expression()
+                            if expr = null {
+                                return null
+                            }
+                            if expect(Token.Kind.RBRACE, "'}'") = null {
+                                return null
+                            }
+                            result := addStringChunk(result, ASTNode(ASTNode.Kind.STRING,
+                                    start.offset, chunk.convert()))
+                            chunk.clear()
+                            result := addStringChunk(result, expr)
+                        }
+                        otherwise:
+                            errors.error(position(token), "invalid string escape sequence")
+                            return null
+                    }
+                    chunk.append(escapeText[escapeText.next(escapeText.start())..])
+                otherwise:
+                    chunk.append(text(token))
+            }
+        }
+        return addStringChunk(result,
+                ASTNode(ASTNode.Kind.STRING, start.offset, chunk.convert()))
+    }
+
+    ================================================================================================
+    term = IDENTIFIER | DECIMAL | BINARY | HEX | SELF | SUPER | NULL | TRUE | FALSE | string |
+            LPAREN expression RPAREN
+    ================================================================================================
+    method term():ASTNode? {
+        def t := next()
+        match t.kind {
+            when Token.Kind.IDENTIFIER:
+                return ASTNode(ASTNode.Kind.IDENTIFIER, t.offset, text(t))
+            when Token.Kind.DECIMAL:
+                return ASTNode(ASTNode.Kind.INT, t.offset, text(t).convert()->Int?)
+            when Token.Kind.SELF:
+                return ASTNode(ASTNode.Kind.SELF, t.offset)
+            when Token.Kind.SUPER:
+                return ASTNode(ASTNode.Kind.SUPER, t.offset)
+            when Token.Kind.NULL:
+                return ASTNode(ASTNode.Kind.NULL, t.offset)
+            when Token.Kind.TRUE:
+                return ASTNode(ASTNode.Kind.BIT, t.offset, true)
+            when Token.Kind.FALSE:
+                return ASTNode(ASTNode.Kind.BIT, t.offset, false)
+            when Token.Kind.DOUBLE_QUOTE, Token.Kind.SINGLE_QUOTE:
+                pushback(t)
+                return string()
+            when Token.Kind.LPAREN:
+                def result := expression()
+                if result = null {
+                    return null
+                }
+                if expect(Token.Kind.RPAREN, "')'") = null {
+                    return null
+                }
+                return result
+            otherwise:
+                assert false
+        }
+    }
+
+    @class
+    function getClassName(expr:ASTNode):String? {
+        match expr.kind {
+            when ASTNode.Kind.IDENTIFIER:
+                return expr.payload->String
+            when ASTNode.Kind.DOT:
+                var result := getClassName(expr.children[0])
+                if result != null {
+                    result += "." + expr.payload->String
+                }
+                return result
+            otherwise:
+                return null
+        }
+    }
+
+    ================================================================================================
+    methodName = IDENTIFIER | ADD | SUB | MUL | DIV | INTDIV | POW | EQ | GT | LT | GTEQ | LTEQ |
+            REM | AND | BITWISEAND | OR | BITWISEOR | XOR | BITWISEXOR | NOT | BITWISENOT |
+            SHIFTLEFT | SHIFTRIGHT | (LBRACKET RBRACKET ASSIGNMENT?)
+    ================================================================================================
+    method methodName():String? {
+        def name := next()
+        match name.kind {
+            when Token.Kind.IDENTIFIER, Token.Kind.ADD, Token.Kind.SUB, Token.Kind.MUL,
+                    Token.Kind.DIV, Token.Kind.INTDIV, Token.Kind.POW, Token.Kind.EQ,
+                    Token.Kind.NEQ, Token.Kind.LT, Token.Kind.GTEQ, Token.Kind.LTEQ,
+                    Token.Kind.REM, Token.Kind.AND, Token.Kind.BITWISEAND, Token.Kind.OR,
+                    Token.Kind.BITWISEOR, Token.Kind.XOR, Token.Kind.BITWISEXOR, Token.Kind.NOT,
+                    Token.Kind.BITWISENOT, Token.Kind.SHIFTLEFT:
+                return text(name)
+            when Token.Kind.GT:
+                def token := rawNext()
+                if token.kind = Token.Kind.GT { -- two GT's in a row = SHIFTRIGHT
+                    return ">>"
+                }
+                else {
+                    pushback(token)
+                    return ">"
+                }
+            when Token.Kind.LBRACKET:
+                if expect(Token.Kind.RBRACKET, "']'") = null {
+                    return null
+                }
+                if checkNext(Token.Kind.ASSIGNMENT) != null {
+                    return "[]:="
+                }
+                return "[]"
+            otherwise:
+                errors.error(position(name),
+                        "expected an identifier or operator, but found '\{text(name)}'")
+                return null
+        }
+    }
+
+    method type():ASTNode? {
+        return type(true)
+    }
+
+    ================================================================================================
+    type = IDENTIFIER (DOT IDENTIFIER)* (LT type (COMMA type)*) GT)? QUESTION?
+    ================================================================================================
+    method type(needSpeculativeParse:Bit):ASTNode? {
+        def start := expect(Token.Kind.IDENTIFIER, "an identifier")
+        if start = null {
+            return null
+        }
+        def name := MutableString(text(start))
+        while checkNext(Token.Kind.DOT) != null {
+            def id := expect(Token.Kind.IDENTIFIER, "an identifier")
+            if id = null {
+                return null
+            }
+            name.append(".")
+            name.append(text(id))
+        }
+        var result := ASTNode(ASTNode.Kind.CLASS_TYPE, start.offset, name.convert())
+        if checkNext(Token.Kind.LT) != null {
+            -- may need to speculatively parse, because foo->Int8<bar looks like the start of a cast
+            -- to "Int8<bar...", but is actually a cast to Int8 followed by less-than bar
+            if needSpeculativeParse {
+                startSpeculative()
+            }
+            def finalChildren := Array<ASTNode>(result.children)
+            var t := type(false)
+            if t = null {
+                if needSpeculativeParse {
+                    rewind()
+                    return result
+                }
+                return null
+            }
+            finalChildren.add(t)
+            while checkNext(Token.Kind.COMMA) != null {
+                t := type(false)
+                if t = null {
+                    if needSpeculativeParse {
+                        rewind()
+                        return result
+                    }
+                    return null
+                }
+                finalChildren.add(t)
+            }
+            if expect(Token.Kind.GT, "'>'") = null {
+                if needSpeculativeParse {
+                    rewind()
+                    return result
+                }
+                return null
+            }
+            result := ASTNode(ASTNode.Kind.CLASS_TYPE, start.offset, name.convert(), finalChildren)
+            accept()
+        }
+        if checkNext(Token.Kind.QUESTION) != null {
+            def children := Array<ASTNode>()
+            children.add(result)
+            result := ASTNode(ASTNode.Kind.NULLABLE_TYPE, start.offset, children)
+        }
+        return result
+    }
+
+    ================================================================================================
+    callExpression = term ((LPAREN (expression (COMMA expression)*)? RPAREN |
+            DOT (methodName | INIT) | LBRACKET expression RBRACKET)* |
+            (CAST | INSTANCEOF | NINSTANCEOF) type)* |
+            (<if result so far is a valid class name> LT type (COMMA type)* GT)?
+    Note there is a great deal of special handling to deal with class names, due to ambiguities
+    between generic parameters and comparison expressions, e.g. foo(X < Y, Z > ... could be either a
+    generic type X<Y, Z> or two comparison expressions X < Y and Z > <whatever the next token is>.
+    We can't disambiguate this until we see the next token.
+    ================================================================================================
+    method callExpression():ASTNode? {
+        var result := term()
+        if result = null {
+            return null
+        }
+        loop {
+            def token := next()
+            match token.kind {
+                when Token.Kind.LPAREN:
+                    commaSeparatedExpressionContext.push(true) -- FIXME use init / cleanup to automate this
+                    def children := Array<ASTNode>()
+                    children.add(result)
+                    if checkNext(Token.Kind.RPAREN) = null {
+                        var expr := expression()
+                        if expr = null {
+                            return null
+                        }
+                        children.add(expr)
+                        while checkNext(Token.Kind.COMMA) != null {
+                            expr := expression()
+                            if expr = null {
+                                commaSeparatedExpressionContext.pop()
+                                return null
+                            }
+                            children.add(expr)
+                        }
+                        if expect(Token.Kind.RPAREN, "')'") = null {
+                            commaSeparatedExpressionContext.pop()
+                            return null
+                        }
+                    }
+                    commaSeparatedExpressionContext.pop()
+                    result := ASTNode(ASTNode.Kind.CALL, token.offset, children)
+                when Token.Kind.LBRACKET:
+                    def children := Array<ASTNode>()
+                    children.add(result)
+                    def expr := expression()
+                    if expr = null {
+                        return null
+                    }
+                    children.add(expr)
+                    if expect(Token.Kind.RBRACKET, "']'") = null {
+                        return null
+                    }
+                    result := ASTNode(ASTNode.Kind.BINARY, token.offset, Token.Kind.LBRACKET,
+                            children)
+                when Token.Kind.DOT:
+                    def name:String?
+                    if checkNext(Token.Kind.INIT) != null {
+                        name := "init"
+                    }
+                    else {
+                        name := methodName()
+                        if name = null {
+                            return null
+                        }
+                    }
+                    def children := Array<ASTNode>()
+                    children.add(result)
+                    result := ASTNode(ASTNode.Kind.DOT, token.offset, name, children)
+                when Token.Kind.CAST:
+                    def target := type()
+                    if target = null {
+                        return null
+                    }
+                    def children := Array<ASTNode>()
+                    children.add(result)
+                    children.add(target)
+                    result := ASTNode(ASTNode.Kind.CAST, token.offset, children)
+                when Token.Kind.LT:
+                    -- this is where we need to be careful. First, we make sure it makes sense to
+                    -- interpret this as the start of a generic parameter list...
+                    pushback(token)
+                    def name := getClassName(result)
+                    if name != null {
+                        startSpeculative()
+                        next()
+                        -- no matter what, we might have to backtrack, because we might not find a
+                        -- '>', e.g. foo(X < Y)
+                        def types := Array<ASTNode>()
+                        var t := type()
+                        if t = null {
+                            rewind()
+                            return result
+                        }
+                        types.add(t)
+                        while checkNext(Token.Kind.COMMA) != null {
+                            t := type()
+                            if t = null {
+                                rewind()
+                                return result
+                            }
+                            types.add(t)
+                        }
+                        if expect(Token.Kind.GT, "'>'") = null {
+                            rewind()
+                            return result
+                        }
+                        -- ok, we've successfully parsed a type... but we still might be wrong. If
+                        -- we have, say, X<Y, Z>, it's possible that was supposed to be two
+                        -- comparison expressions (which would include whatever the next token is).
+                        -- Consider the following cases:
+                        --
+                        -- var x := X<Y, Z>
+                        -- foo() -- type name followed by a method call
+                        --
+                        -- bar(X<Y, Z>foo) -- two expressions, X<Y and Z>foo
+                        --
+                        -- note that, ignoring whitespace, the sequence X<Y,Z>foo is identical in
+                        -- both cases. We can resolve the ambiguity by noting that the other
+                        -- interpretation is incorrect in both cases; there is no way for
+                        -- var x := (two expressions) to make sense, and there is no way for
+                        -- (<type name> <identifier>) to make sense in function call parameters.
+                        -- So, we keep track of whether we are in a context that expects a comma-
+                        -- separated list of expressions. If so, we need to look at the next token
+                        -- after the type, as only a very few tokens can legally follow a type name
+                        -- in an expression list. If not, we know it's a type regardless of what
+                        -- follows it, because there is no way it can resolve to multiple
+                        -- expressions.
+                        def shouldAccept:Bit
+                        if commaSeparatedExpressionContext.peek() {
+                            match peek().kind {
+                                when Token.Kind.DOT, Token.Kind.RPAREN, Token.Kind.COMMA,
+                                        Token.Kind.CAST:
+                                    shouldAccept := true
+                                otherwise:
+                                    shouldAccept := false
+                            }
+                        }
+                        else {
+                            shouldAccept := true
+                        }
+                        if shouldAccept {
+                            accept()
+                            result := ASTNode(ASTNode.Kind.CLASS_TYPE, result.offset, name, types)
+                        }
+                        else {
+                            rewind()
+                            return result
+                        }
+                    }
+                    return result
+                otherwise:
+                    pushback(token)
+                    return result
+            }
+        }
+    }
+
+    ================================================================================================
+    exponentExression = callExpression (POW callExpression)*
+    ================================================================================================
+    method exponentExpression():ASTNode? {
+        var result := callExpression()
+        if result = null {
+            return null
+        }
+        loop {
+            def op := checkNext(Token.Kind.POW)
+            if op = null {
+                break
+            }
+            def next := callExpression()
+            if next = null {
+                return null
+            }
+            -- FIXME array literal
+            def children := Array<ASTNode>()
+            children.add(result)
+            children.add(next)
+            result := ASTNode(ASTNode.Kind.BINARY, op.offset, op.kind, children)
+        }
+        return result
+    }
+
+    ================================================================================================
+    prefixExpression = (SUB | NOT | BITWISENOT)? exponentExpression
+    ================================================================================================
+    method prefixExpression():ASTNode? {
+        def op := next()
+        match op.kind {
+            when Token.Kind.SUB, Token.Kind.NOT, Token.Kind.BITWISENOT:
+                def base := exponentExpression()
+                if base = null {
+                    return null
+                }
+                def children := Array<ASTNode>()
+                children.add(base)
+                return ASTNode(ASTNode.Kind.PREFIX, op.offset, op.kind, children)
+            otherwise:
+                pushback(op)
+                return exponentExpression()
+        }
+    }
+
+    ================================================================================================
+    multiplicativeExpression = prefixExpression ((MUL | DIV | INTDIV | REM | SHIFTLEFT |
+            SHIFTRIGHT | BITWISEAND | BITWISEXOR) prefixExpression)*
+    Note that SHIFTRIGHT is handled specially, as the lexer only produces GT and we synthesize the
+    SHIFTRIGHT token here.
+    ================================================================================================
+    method multiplicativeExpression():ASTNode? {
+        var result := prefixExpression()
+        if result = null {
+            return null
+        }
+        loop {
+            def op := next()
+            match op.kind {
+                when Token.Kind.MUL, Token.Kind.DIV, Token.Kind.INTDIV, Token.Kind.REM,
+                        Token.Kind.SHIFTLEFT, Token.Kind.BITWISEAND, Token.Kind.BITWISEOR:
+                    def next := prefixExpression()
+                    if next = null {
+                        return null
+                    }
+                    def children := Array<ASTNode>() -- FIXME use literal
+                    children.add(result)
+                    children.add(next)
+                    result := ASTNode(ASTNode.Kind.BINARY, op.offset, op.kind, children)
+                when Token.Kind.GT:
+                    def nextToken := rawNext()
+                    if nextToken.kind = Token.Kind.GT {
+                        -- two GTs in a row = SHIFTRIGHT
+                        def next := prefixExpression()
+                        if next = null {
+                            return null
+                        }
+                        def children := Array<ASTNode>() -- FIXME use literal
+                        children.add(result)
+                        children.add(next)
+                        result := ASTNode(ASTNode.Kind.BINARY, op.offset, Token.Kind.SHIFTRIGHT,
+                                children)
+                    }
+                otherwise:
+                    pushback(op)
+                    return result
+            }
+        }
+    }
+
+    ================================================================================================
+    additiveExpression = multiplicativeExpression
+            ((ADD | SUB | BITWISEOR) multiplicativeExpression)*
+    ================================================================================================
+    method additiveExpression():ASTNode? {
+        var result := multiplicativeExpression()
+        if result = null {
+            return null
+        }
+        loop {
+            def op := next()
+            match op.kind {
+                when Token.Kind.ADD, Token.Kind.SUB, Token.Kind.BITWISEXOR:
+                    def next := multiplicativeExpression()
+                    if next = null {
+                        return null
+                    }
+                    def children := Array<ASTNode>() -- FIXME use literal
+                    children.add(result)
+                    children.add(next)
+                    result := ASTNode(ASTNode.Kind.BINARY, op.offset, op.kind, children)
+                otherwise:
+                    pushback(op)
+                    return result
+            }
+        }
+    }
+
+    ================================================================================================
+    rangeExpression = additiveExpression | (additiveExpression? (DOTDOT | ELLIPSIS)
+           additiveExpression? (BY additiveExpression)?)
+    ================================================================================================
+    method rangeExpression():ASTNode? {
+        var result:ASTNode?
+        match peek().kind {
+            when Token.Kind.DOTDOT, Token.Kind.ELLIPSIS:
+                result := null
+            otherwise:
+                result := additiveExpression()
+                if result = null {
+                    return null
+                }
+        }
+        def op := next()
+        match op.kind {
+            when Token.Kind.DOTDOT, Token.Kind.ELLIPSIS:
+                def next := peek()
+                def right:ASTNode?
+                if next.kind != Token.Kind.RBRACKET & next.kind != Token.Kind.RPAREN &
+                        next.kind != Token.Kind.BY {
+                    right := additiveExpression()
+                    if right = null {
+                        return null
+                    }
+                }
+                else {
+                    right := null
+                }
+                def step:ASTNode?
+                if checkNext(Token.Kind.BY) != null {
+                    step := additiveExpression()
+                    if step = null {
+                        return null
+                    }
+                }
+                else {
+                    step := null
+                }
+                def children := Array<ASTNode>()
+                children.add(result)
+                children.add(right)
+                children.add(step)
+                def kind:Int
+                if op.kind = Token.Kind.DOTDOT {
+                    kind := ASTNode.Kind.RANGE_EXCLUSIVE
+                }
+                else {
+                    kind := ASTNode.Kind.RANGE_INCLUSIVE
+                }
+                return ASTNode(kind, op.offset, children)
+            otherwise:
+                pushback(op)
+                return result
+        }
+    }
+
+    ================================================================================================
+    comparisonExpression = rangeExpression ((EQ | IDENTITY | NEQ |
+             NIDENTITY | LT | GT | LTEQ | GTEQ | IN) rangeExpression)*
+    ================================================================================================
+    method comparisonExpression():ASTNode? {
+        var result := rangeExpression()
+        if result = null {
+            return null
+        }
+        loop {
+            def op := next()
+            match op.kind {
+                when Token.Kind.EQ,
+                        Token.Kind.NEQ,
+                        Token.Kind.IDENTITY,
+                        Token.Kind.NIDENTITY,
+                        Token.Kind.LT,
+                        Token.Kind.GT,
+                        Token.Kind.LTEQ,
+                        Token.Kind.GTEQ:
+                    def next := rangeExpression()
+                    if next = null {
+                        return null
+                    }
+                    def children := Array<ASTNode>() -- FIXME use literal
+                    children.add(result)
+                    children.add(next)
+                    result := ASTNode(ASTNode.Kind.BINARY, op.offset, op.kind, children)
+                otherwise:
+                    pushback(op)
+                    return result
+            }
+        }    }
+
+    ================================================================================================
+    andExpression = comparisonExpression ((AND | XOR) comparisonExpression)*
+    ================================================================================================
+    method andExpression():ASTNode? {
+        var result := comparisonExpression()
+        if result = null {
+            return null
+        }
+        loop {
+            def op := next()
+            match op.kind {
+                when Token.Kind.AND, Token.Kind.XOR:
+                    def next := comparisonExpression()
+                    if next = null {
+                        return null
+                    }
+                    def children := Array<ASTNode>() -- FIXME use literal
+                    children.add(result)
+                    children.add(next)
+                    result := ASTNode(ASTNode.Kind.BINARY, op.offset, op.kind, children)
+                otherwise:
+                    pushback(op)
+                    return result
+            }
+        }
+    }
+
+    ================================================================================================
+    expression = andExpression (OR andExpression)*
+    ================================================================================================
+    method expression():ASTNode? {
+        var result := andExpression()
+        if result = null {
+            return null
+        }
+        loop {
+            def op := checkNext(Token.Kind.OR)
+            if op = null {
+                break
+            }
+            def next := andExpression()
+            if next = null {
+                return null
+            }
+            -- FIXME array literal
+            def children := Array<ASTNode>()
+            children.add(result)
+            children.add(next)
+            result := ASTNode(ASTNode.Kind.BINARY, op.offset, op.kind, children)
+        }
+        return result
+    }
+
+    ================================================================================================
+    ifStatement = IF expression block (else (ifStatement | block))?
+    ================================================================================================
+    method ifStatement():ASTNode? {
+        def start := expect(Token.Kind.IF, "'if'")
+        if start = null {
+            return null
+        }
+        def test := expression()
+        if test = null {
+            return null
+        }
+        def children := Array<ASTNode>()
+        children.add(test)
+        def ifTrue := block()
+        if ifTrue = null {
+            return null
+        }
+        children.add(ifTrue)
+        if checkNext(Token.Kind.ELSE) != null {
+            if peek().kind = Token.Kind.IF {
+                def ifFalse := ifStatement()
+                if ifFalse = null {
+                    return null
+                }
+                children.add(ifFalse)
+            }
+            else {
+                def ifFalse := block()
+                if ifFalse = null {
+                    return null
+                }
+                children.add(ifFalse)
+            }
+        }
+        return ASTNode(ASTNode.Kind.IF, start.offset, children)
+    }
+
+    ================================================================================================
+    typeDeclaration = COLON type
+    ================================================================================================
+    method typeDeclaration():ASTNode? {
+        if expect(Token.Kind.COLON, "':'") = null {
+            return null
+        }
+        return type(false)
+    }
+
+    ================================================================================================
+    target = IDENTIFIER (typeDeclaration?)
+    ================================================================================================
+    method target():ASTNode? {
+        def id := expect(Token.Kind.IDENTIFIER, "an identifier")
+        if id = null {
+            return null
+        }
+        if peek().kind = Token.Kind.COLON {
+            def type := typeDeclaration()
+            if type = null {
+                return null
+            }
+            def children := Array<ASTNode>()
+            children.add(type)
+            return ASTNode(ASTNode.Kind.IDENTIFIER, id.offset, text(id), children)
+        }
+        return ASTNode(ASTNode.Kind.IDENTIFIER, id.offset, text(id))
+    }
+
+    ================================================================================================
+    forLoop = FOR target IN expression block
+    ================================================================================================
+    method forLoop(label:String?):ASTNode? {
+        def start := expect(Token.Kind.FOR, "'for'")
+        if start = null {
+            return null
+        }
+        def t := target()
+        if t = null {
+            return null
+        }
+        if expect(Token.Kind.IN, "'in'") = null {
+            return null
+        }
+        def list := expression()
+        if list = null {
+            return null
+        }
+        def block := block()
+        if block = null {
+            return null
+        }
+        def children := Array<ASTNode>()
+        children.add(t)
+        children.add(list)
+        children.add(block)
+        return ASTNode(ASTNode.Kind.FOR, start.offset, label, children)
+    }
+
+    ================================================================================================
+    whileLoop = WHILE expression block
+    ================================================================================================
+    method whileLoop(label:String?):ASTNode? {
+        def start := expect(Token.Kind.WHILE, "'while'")
+        if start = null {
+            return null
+        }
+        def test := expression()
+        if test = null {
+            return null
+        }
+        def body := block()
+        if body = null {
+            return null
+        }
+        def children := Array<ASTNode>()
+        children.add(test)
+        children.add(body)
+        return ASTNode(ASTNode.Kind.WHILE, start.offset, label, children)
+    }
+
+    ================================================================================================
+    doLoop = DO block WHILE expression
+    ================================================================================================
+    method doLoop(label:String?):ASTNode? {
+        def start := expect(Token.Kind.DO, "'do'")
+        if start = null {
+            return null
+        }
+        def body := block()
+        if body = null {
+            return null
+        }
+        if expect(Token.Kind.WHILE, "'while'") = null {
+            return null
+        }
+        def test := expression()
+        if test = null {
+            return null
+        }
+        def children := Array<ASTNode>()
+        children.add(body)
+        children.add(test)
+        return ASTNode(ASTNode.Kind.WHILE, start.offset, label, children)
+    }
+
+    ================================================================================================
+    loopLoop = LOOP block
+    ================================================================================================
+    method loopLoop(label:String?):ASTNode? {
+        def start := expect(Token.Kind.LOOP, "'loop'")
+        if start = null {
+            return null
+        }
+        def body := block()
+        if body = null {
+            return null
+        }
+        def children := Array<ASTNode>()
+        children.add(body)
+        return ASTNode(ASTNode.Kind.LOOP, start.offset, label, children)
+    }
+
+    ================================================================================================
+    assertStatement = ASSERT expression (COMMA expression)?
+    ================================================================================================
+    method assertStatement():ASTNode? {
+        def start := expect(Token.Kind.ASSERT, "'assert'")
+        if start = null {
+            return null
+        }
+        def expr := expression()
+        if expr = null {
+            return null
+        }
+        def children := Array<ASTNode>()
+        children.add(expr)
+        if checkNext(Token.Kind.COMMA) != null{
+            def message := expression()
+            if message = null {
+                return null
+            }
+            children.add(message)
+        }
+        return ASTNode(ASTNode.Kind.ASSERT, start.offset, children)
+    }
+
+    ================================================================================================
+    whenClause = WHEN expression (COMMA expression)* COLON statement* terminalStatement?
+    ================================================================================================
+    method whenClause():ASTNode? {
+        def start := expect(Token.Kind.WHEN, "'when'")
+        if start = null {
+            return null
+        }
+        def expressions := Array<ASTNode>()
+        var expr := expression()
+        if expr = null {
+            return null
+        }
+        expressions.add(expr)
+        while checkNext(Token.Kind.COMMA) != null {
+            expr := expression()
+            if expr = null {
+                return null
+            }
+            expressions.add(expr)
+        }
+        def children := Array<ASTNode>()
+        children.add(ASTNode(ASTNode.Kind.EXPRESSIONS, start.offset, expressions))
+        if expect(Token.Kind.COLON, "':'") = null {
+            return null
+        }
+        loop {
+            match peek().kind {
+                when Token.Kind.WHEN, Token.Kind.OTHERWISE, Token.Kind.RBRACE:
+                    break
+                when Token.Kind.BREAK, Token.Kind.CONTINUE, Token.Kind.RETURN:
+                    def stmt := terminalStatement()
+                    if stmt = null {
+                        return null
+                    }
+                    children.add(stmt)
+                    break
+                otherwise: {
+                    def stmt := statement()
+                    if stmt = null {
+                        return null
+                    }
+                    children.add(stmt)
+                }
+            }
+        }
+        return ASTNode(ASTNode.Kind.WHEN, start.offset, children)
+    }
+
+    ================================================================================================
+    match = MATCH expression LBRACE when* (DEFAULT COLON statement*)? RBRACE
+    ================================================================================================
+    method matchStatement():ASTNode? {
+        def start := expect(Token.Kind.MATCH, "'match'")
+        if start = null {
+            return null
+        }
+        def children := Array<ASTNode>()
+        def expr := expression()
+        if expr = null {
+            return null
+        }
+        children.add(expr)
+        if expect(Token.Kind.LBRACE, "'{'") = null {
+            return null
+        }
+        loop {
+            def token := peek()
+            match token.kind {
+                when Token.Kind.RBRACE:
+                    break
+                when Token.Kind.WHEN:
+                    def w := whenClause()
+                    if w = null {
+                        return null
+                    }
+                    children.add(w)
+                when Token.Kind.OTHERWISE:
+                    def o := next()
+                    if expect(Token.Kind.COLON, "':'") = null {
+                        return null
+                    }
+                    def statements := Array<ASTNode>()
+                    loop {
+                        match peek().kind {
+                            when Token.Kind.RBRACE:
+                                break
+                            when Token.Kind.BREAK, Token.Kind.CONTINUE, Token.Kind.RETURN:
+                                def stmt := terminalStatement()
+                                if stmt = null {
+                                    return null
+                                }
+                                statements.add(stmt)
+                                break
+                            otherwise:
+                                def stmt := statement()
+                                if stmt = null {
+                                    return null
+                                }
+                                statements.add(stmt)
+                        }
+                    }
+                    children.add(ASTNode(ASTNode.Kind.OTHERWISE, o.offset, statements))
+                    break
+                otherwise:
+                    next()
+                    errors.error(position(token), "expected 'when', 'otherwise', or '}', but " +
+                            "found '\{text(token)}'")
+            }
+        }
+        if expect(Token.Kind.RBRACE, "'}'") = null {
+            return null
+        }
+        return ASTNode(ASTNode.Kind.MATCH, start.offset, children)
+    }
+
+    ================================================================================================
+    block = LBRACE statement* terminalStatement? RBRACE
+    ================================================================================================
+    method block():ASTNode? {
+        def start := expect(Token.Kind.LBRACE, "'{'")
+        if start = null {
+            return null
+        }
+        def children := Array<ASTNode>()
+        loop {
+            match peek().kind {
+                when Token.Kind.RBRACE:
+                    next()
+                    break
+                when Token.Kind.BREAK, Token.Kind.CONTINUE, Token.Kind.RETURN:
+                    def stmt := terminalStatement()
+                    if stmt = null {
+                        return null
+                    }
+                    if expect(Token.Kind.RBRACE, "'}'") = null {
+                        return null
+                    }
+                    children.add(stmt)
+                    break
+                otherwise:
+                    def stmt := statement()
+                    if stmt = null {
+                        return null
+                    }
+                    children.add(stmt)
+            }
+        }
+        return ASTNode(ASTNode.Kind.BLOCK, start.offset, children)
+    }
+
+    ================================================================================================
+    expressionOrAssignment = expression assignmentOperator expression)?
+    ================================================================================================
+    method expressionOrAssignment():ASTNode? {
+        def start := expression()
+        if start = null {
+            return null
+        }
+        match peek().kind {
+            when Token.Kind.ASSIGNMENT, Token.Kind.ADDEQ, Token.Kind.SUBEQ, Token.Kind.MULEQ,
+                    Token.Kind.DIVEQ, Token.Kind.REMEQ, Token.Kind.INTDIVEQ, Token.Kind.POWEQ,
+                    Token.Kind.OREQ, Token.Kind.BITWISEOREQ, Token.Kind.ANDEQ,
+                    Token.Kind.BITWISEANDEQ, Token.Kind.XOREQ, Token.Kind.BITWISEXOREQ,
+                    Token.Kind.SHIFTLEFTEQ, Token.Kind.SHIFTRIGHTEQ:
+                def op := next()
+                def rvalue := expression()
+                if rvalue = null {
+                    return null
+                }
+                def children := Array<ASTNode>()
+                children.add(start)
+                children.add(rvalue)
+                return ASTNode(ASTNode.Kind.BINARY, start.offset, op.kind, children)
+            otherwise:
+                return start
+        }
+    }
+
+    ================================================================================================
+    singleVar = target (ASSIGNMENT expression)?
+    ================================================================================================
+    method singleVar():ASTNode? {
+        def children := Array<ASTNode>()
+        def t := target()
+        if t = null {
+            return null
+        }
+        children.add(t)
+        if checkNext(Token.Kind.ASSIGNMENT) != null {
+            def value := expression()
+            if value != null {
+                return null
+            }
+            children.add(value)
+        }
+        return ASTNode(ASTNode.Kind.DECLARATION, t.offset, children)
+    }
+
+    ================================================================================================
+    varDeclaration = (VAR | DEF | PROPERTY | CONSTANT) singleVar (COMMA singleVar*)
+    ================================================================================================
+    method varDeclaration():ASTNode? {
+        def start := next()
+        def kind:Int
+        match start.kind {
+            when Token.Kind.VAR:
+                kind := ASTNode.Kind.VAR
+            when Token.Kind.DEF:
+                kind := ASTNode.Kind.DEF
+            when Token.Kind.PROPERTY:
+                kind := ASTNode.Kind.PROPERTY
+            when Token.Kind.CONSTANT:
+                kind := ASTNode.Kind.CONSTANT
+            otherwise:
+                errors.error(position(start), "'var', 'def', 'property', or 'constant'")
+        }
+        def children := Array<ASTNode>()
+        var child := singleVar()
+        if child = null {
+            return null
+        }
+        children.add(child)
+        while checkNext(Token.Kind.COMMA) != null {
+            var child := singleVar()
+            if child = null {
+                return null
+            }
+            children.add(child)
+        }
+        return ASTNode(kind, start.offset, children)
+    }
+    ================================================================================================
+    initCall = INIT LPAREN (expression (COMMA expression)*)? RPAREN
+    ================================================================================================
+    method initCall():ASTNode? {
+        def start := expect(Token.Kind.INIT, "'init'")
+        if start = null {
+            return null
+        }
+        if expect(Token.Kind.LPAREN, "'('") = null {
+            return null
+        }
+        commaSeparatedExpressionContext.push(true) -- FIXME use init / cleanup to automate this
+        def children := Array<ASTNode>()
+        children.add(ASTNode(ASTNode.Kind.IDENTIFIER, start.offset, text(start)))
+        if checkNext(Token.Kind.RPAREN) != null {
+            var expr := expression()
+            if expr = null {
+                commaSeparatedExpressionContext.pop()
+                return null
+            }
+            children.add(expr)
+            while checkNext(Token.Kind.COMMA) != null {
+                expr := expression()
+                if expr = null {
+                    commaSeparatedExpressionContext.pop()
+                    return null
+                }
+                children.add(expr)
+            }
+            if expect(Token.Kind.RPAREN, "')'") = null {
+                commaSeparatedExpressionContext.pop()
+                return null
+            }
+        }
+        return ASTNode(ASTNode.Kind.CALL, start.offset, children)
+    }
+
+    ================================================================================================
+    breakStatement = BREAK IDENTIFIER?
+    ================================================================================================
+    method breakStatement():ASTNode? {
+        def start := expect(Token.Kind.BREAK, "'break'")
+        if start = null {
+            return null
+        }
+        def label := checkNext(Token.Kind.IDENTIFIER)
+        if label != null {
+            return ASTNode(ASTNode.Kind.BREAK, start.offset, text(label))
+        }
+        return ASTNode(ASTNode.Kind.BREAK, start.offset)
+    }
+
+    ================================================================================================
+    continueStatement = CONTINUE IDENTIFIER?
+    ================================================================================================
+    method continueStatement():ASTNode? {
+        def start := expect(Token.Kind.CONTINUE, "'continue'")
+        if start = null {
+            return null
+        }
+        def label := checkNext(Token.Kind.IDENTIFIER)
+        if label != null {
+            return ASTNode(ASTNode.Kind.CONTINUE, start.offset, text(label))
+        }
+        return ASTNode(ASTNode.Kind.CONTINUE, start.offset)
+    }
+
+    ================================================================================================
+    returnStatement = RETURN expression?
+    ================================================================================================
+    method returnStatement():ASTNode? {
+        def start := expect(Token.Kind.RETURN, "'return'")
+        if start = null {
+            return null
+        }
+        match peek().kind {
+            when Token.Kind.RBRACE, Token.Kind.WHEN, Token.Kind.OTHERWISE:
+                return ASTNode(ASTNode.Kind.RETURN, start.offset)
+            otherwise:
+                def children := Array<ASTNode>()
+                def expr := expression()
+                if expr = null {
+                    return null
+                }
+                children.add(expr)
+                return ASTNode(ASTNode.Kind.RETURN, start.offset, children)
+        }
+    }
+
+    ================================================================================================
+    terminalStatement = breakStatement | continueStatement | returnStatement
+    ================================================================================================
+    method terminalStatement():ASTNode? {
+        match peek().kind {
+            when Token.Kind.BREAK:    return breakStatement()
+            when Token.Kind.CONTINUE: return continueStatement()
+            when Token.Kind.RETURN:   return returnStatement()
+            otherwise: assert false
+        }
+    }
+
+    method anyLoop(label:String?):ASTNode? {
+        match peek().kind {
+            when Token.Kind.DO:    return doLoop(label)
+            when Token.Kind.FOR:   return forLoop(label)
+            when Token.Kind.LOOP:  return loopLoop(label)
+            when Token.Kind.WHILE: return whileLoop(label)
+            otherwise:
+                -- trigger error
+                expect(Token.Kind.DO, "'do', 'for', 'loop', or 'while' following label")
+                return null
+        }
+    }
+
+    ================================================================================================
+    statement = ifStatement | anyLoop | expressionOrAssignment | assertStatement | matchStatement |
+            block | varDeclaration | initCall
+    ================================================================================================
+    method statement():ASTNode? {
+        match peek().kind {
+            when Token.Kind.IF:     return ifStatement()
+            when Token.Kind.FOR:    return forLoop(null)
+            when Token.Kind.WHILE:  return whileLoop(null)
+            when Token.Kind.DO:     return doLoop(null)
+            when Token.Kind.LOOP:   return loopLoop(null)
+            when Token.Kind.ASSERT: return assertStatement()
+            when Token.Kind.MATCH:  return matchStatement()
+            when Token.Kind.LBRACE: return block()
+            when Token.Kind.IDENTIFIER:
+                def id := next()
+                if checkNext(Token.Kind.COLON) != null {
+                    return anyLoop(text(id))
+                }
+                pushback(id)
+                return expressionOrAssignment()
+            when Token.Kind.SELF, Token.Kind.SUPER:
+                return expressionOrAssignment()
+            when Token.Kind.VAR, Token.Kind.DEF, Token.Kind.PROPERTY, Token.Kind.CONSTANT:
+                return varDeclaration()
+            when Token.Kind.INIT:
+                return initCall()
+            otherwise:
+                -- trigger error
+                expect(Token.Kind.IF, "a statement")
+                return null
+        }
     }
 
     ================================================================================================
@@ -111,7 +1359,7 @@ class Parser {
             }
             name.append(text(next))
         }
-        return ASTNode(ASTNode.Kind.PACKAGE, start.offset, name)
+        return ASTNode(ASTNode.Kind.PACKAGE, start.offset, name.convert())
     }
 
     ================================================================================================
@@ -139,7 +1387,68 @@ class Parser {
             }
             name.append(text(next))
         }
-        return ASTNode(ASTNode.Kind.USES, start.offset, name)
+        return ASTNode(ASTNode.Kind.USES, start.offset, name.convert())
     }
 
+-*
+    ================================================================================================
+    classDeclaration = CLASS IDENTIFIER genericsDeclaration? typeDeclaration? interfaces? LBRACE
+            declaration* RBRACE
+    ================================================================================================
+    method classDeclaration(doccomment:ASTNode, annotations:ASTNode):ASTNode? {
+        def children := Array<ASTNode>() -- FIXME use literal
+        children.add(doccomment)
+        children.add(annotations)
+        def start := expect(Token.Kind.CLASS, "'class'")
+        if start = null {
+            return null
+        }
+        def name := expect(Token.Kind.IDENTIFIER, "an identifier")
+        if name = null {
+            return null
+        }
+        if peek().kind = Token.Kind.LT {
+            def generics := genericsDeclaration()
+            if generics = null {
+                return null
+            }
+            children.add(generics)
+        }
+        else {
+            children.add(null)
+        }
+        if peek().kind = Token.Kind.COLON {
+            def superclass := typeDeclaration()
+            if superclass = null {
+                return null
+            }
+            children.add(superclass)
+        }
+        else {
+            children.add(null)
+        }
+        if peek().kind = Token.Kind.LPAREN {
+            def intfs := interfaces()
+            if intfs = null {
+                return null
+            }
+            children.add(intfs)
+        }
+        else {
+            children.add(null)
+        }
+        if expect(Token.Kind.LBRACE, "'{'") = null {
+            return null
+        }
+        def members := Array<ASTNode>()
+        while checkNext(Token.Kind.RBRACE) = null {
+            def member := declaration()
+            if member = null {
+                return null
+            }
+            members.add(member)
+        }
+        children.add(ASTNode(ASTNode.Kind.CLASS_MEMBERS, start.offset, members))
+        return ASTNode(ASTNode.Kind.CLASS, start.offset, children)
+    }*-
 }

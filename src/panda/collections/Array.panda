@@ -66,6 +66,16 @@ class Array<T> (List<T>) {
         data[index] := value
     }
 
+    @override
+    method insert(index:Int, value:T) {
+        ensureCapacity(count + 1)
+        for i in count .. index {
+            self[i] := self[i - 1]
+        }
+        self[index] := value
+        count += 1
+    }
+
     ================================================================================================
     Returns a slice of the array, containing all of the elements specified by the range. The slice
     is an independent copy of the array and elements may be added to and removed from the copy

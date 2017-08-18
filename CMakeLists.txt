@@ -216,6 +216,7 @@ set_target_properties(plex PROPERTIES LINKER_LANGUAGE CXX)
 
 add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/pandac/parser/Lexer.panda
+           ${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/pandac/parser/Token.panda
     COMMAND ${CMAKE_CURRENT_BINARY_DIR}/plex
     DEPENDS plex src/plex/Panda.plex
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
@@ -244,6 +245,7 @@ compile_pandac_sources(pandac_objects
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/Position.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/parser/Parser.panda
     ${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/pandac/parser/Lexer.panda
+    ${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/pandac/parser/Token.panda
 )
 
 add_executable(pandac2

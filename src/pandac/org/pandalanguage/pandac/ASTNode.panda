@@ -1,9 +1,60 @@
 package org.pandalanguage.pandac
 
+uses org.pandalanguage.pandac.parser.Token
+
 class ASTNode : Immutable {
     class Kind {
-        constant PACKAGE := 100
-        constant USES    := 101
+        constant PACKAGE         := 100
+        constant USES            := 101
+        constant INT             := 102
+        constant BINARY          := 103
+        constant RANGE_INCLUSIVE := 104
+        constant RANGE_EXCLUSIVE := 105
+        constant IDENTIFIER      := 106
+        constant CALL            := 107
+        constant DOT             := 108
+        constant CLASS_TYPE      := 109
+        constant NULLABLE_TYPE   := 110
+        constant CAST            := 111
+        constant PREFIX          := 112
+        constant STRING          := 113
+        constant SELF            := 114
+        constant SUPER           := 115
+        constant BIT             := 116
+        constant NULL            := 117
+        constant IF              := 118
+        constant FOR             := 119
+        constant DO              := 120
+        constant WHILE           := 121
+        constant LOOP            := 122
+        constant ASSERT          := 123
+        constant WHEN            := 124
+        constant MATCH           := 125
+        constant BLOCK           := 126
+        constant OTHERWISE       := 127
+        constant EXPRESSIONS     := 128
+        constant DECLARATION     := 129
+        constant VAR             := 130
+        constant DEF             := 131
+        constant CONSTANT        := 132
+        constant PROPERTY        := 133
+        constant BREAK           := 134
+        constant CONTINUE        := 135
+        constant RETURN          := 136
+    }
+
+    @class
+    function operatorName(op:Int):String {
+        match op {
+            when Token.Kind.ADD:    return "+"
+            when Token.Kind.AND:    return "&"
+            when Token.Kind.DIV:    return "/"
+            when Token.Kind.INTDIV: return "//"
+            when Token.Kind.MUL:    return "*"
+            when Token.Kind.SUB:    return "-"
+            when Token.Kind.OR:     return "|"
+            otherwise:              return "<operator:\{op}>"
+        }
     }
 
     def kind:Int
@@ -15,25 +66,142 @@ class ASTNode : Immutable {
     def children:ImmutableArray<ASTNode>
 
     init(kind:Int, offset:Int) {
-        init(kind, offset, null)
+        init(kind, offset, null, Array<ASTNode>())
     }
 
-    init(kind:Int, offset:Int, payload:Object?) {
+    init(kind:Int, offset:Int, payload:Int) {
+        init(kind, offset, payload, Array<ASTNode>())
+    }
+
+    init(kind:Int, offset:Int, payload:String) {
+        init(kind, offset, payload, Array<ASTNode>())
+    }
+
+    init(kind:Int, offset:Int, payload:Bit) {
+        init(kind, offset, payload, Array<ASTNode>())
+    }
+
+    init(kind:Int, offset:Int, children:ListView<ASTNode>) {
+        init(kind, offset, null, children)
+    }
+
+    init(kind:Int, offset:Int, payload:Object?, children:ListView<ASTNode>) {
         self.kind := kind
         self.offset := offset
         self.payload := payload
-        children := ImmutableArray<ASTNode>()
+        self.children := ImmutableArray<ASTNode>(children)
     }
 
     @override
     function convert():String {
         match kind {
+            when Kind.BINARY:
+                assert children.get_count() = 2
+                if payload->Int = Token.Kind.LBRACKET {
+                    return "\{children[0]}[\{children[1]}]"
+                }
+                return "(\{children[0]} \{operatorName(payload->Int)} \{children[1]})"
+            when Kind.INT:
+                return payload.convert()
+            when Kind.STRING:
+                return "'\{payload.convert()}'"
             when Kind.PACKAGE:
                 return "package \{payload}"
             when Kind.USES:
                 return "uses \{payload}"
+            when Kind.RANGE_INCLUSIVE:
+                assert children.get_count() = 3
+                def result := MutableString()
+                if children[0] != null {
+                    result.append(children[0])
+                }
+                result.append("...")
+                if children[1] != null {
+                    result.append(children[1])
+                }
+                if children[2] != null {
+                    result.append(" by ")
+                    result.append(children[2])
+                }
+                return result.convert()
+            when Kind.RANGE_EXCLUSIVE:
+                assert children.get_count() = 3
+                def result := MutableString()
+                if children[0] != null {
+                    result.append(children[0])
+                }
+                result.append("..")
+                if children[1] != null {
+                    result.append(children[1])
+                }
+                if children[2] != null {
+                    result.append(" by ")
+                    result.append(children[2])
+                }
+                return result.convert()
+            when Kind.CALL:
+                assert children.get_count() >= 1
+                def result := MutableString(children[0].convert())
+                result.append("(")
+                var separator := ""
+                for i in 1 .. children.get_count() {
+                    result.append(separator)
+                    result.append(children[i].convert())
+                    separator := ", "
+                }
+                result.append(")")
+                return result.convert()
+            when Kind.IDENTIFIER:
+                return payload.convert()
+            when Kind.DOT:
+                assert children.get_count() = 1
+                return "\{children[0]}.\{payload}"
+            when Kind.BIT:
+                return payload.convert()
+            when Kind.IF:
+                assert children.get_count() = 2 | children.get_count() = 3
+                def result := "if \{children[0]} \{children[1]}"
+                if children.get_count() = 3 {
+                    return result + " else \{children[2]}"
+                }
+                return result
+            when Kind.FOR:
+                assert children.get_count() = 3
+                return "for \{children[0]} in \{children[1]} \{children[2]}"
+            when Kind.WHILE:
+                assert children.get_count() = 2
+                return "while \{children[0]} \{children[1]}"
+            when Kind.DO:
+                assert children.get_count() = 2
+                return "do \{children[0]} while \{children[1]}"
+            when Kind.LOOP:
+                assert children.get_count() = 1
+                return "loop \{children[0]}"
+            when Kind.BREAK:
+                if payload != null {
+                    return "break \{payload}"
+                }
+                return "break"
+            when Kind.CONTINUE:
+                if payload != null {
+                    return "continue \{payload}"
+                }
+                return "continue"
+            when Kind.RETURN:
+                if children.get_count() = 1 {
+                    return "return \{children[0]}"
+                }
+                return "return"
+            when Kind.BLOCK:
+                def result := MutableString("{")
+                for child in children {
+                    result.append(" ")
+                    result.append(child)
+                }
+                result.append(" }")
+                return result.convert()
             otherwise:
-                return "<ASTNode>"
+                return "<ASTNode:\{kind}>"
         }
     }
 }

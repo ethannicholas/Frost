@@ -3,5 +3,7 @@ package panda.collections
 interface ListWriter<T> : CollectionWriter<T> {
     method []:=(index:Int, value:T)
 
+    method insert(index:Int, value:T)
+
     method removeIndex(index:Int)
 }
