@@ -4,7 +4,7 @@ HEX                      := /0x[0-9A-Fa-f]+/
 FLOAT                    := /(([0-9]*(\.[0-9]+)|[0-9]+(\.[0-9]+)?)([eE][+-]?[0-9]+)?)/
 SINGLE_QUOTE             := "'"
 DOUBLE_QUOTE             := /["]/
-LINE_COMMENT             := "--"
+LINE_COMMENT             := /--[^\n]*/
 BLOCK_COMMENT            := "-*"
 DOC_COMMENT              := /===+/
 WHITESPACE               := /\s*/
@@ -14,6 +14,7 @@ USES                     := "uses"
 AS                       := "as"
 CLASS                    := "class"
 INTERFACE                := "interface"
+CHOICE                   := "choice"
 FUNCTION                 := "function"
 METHOD                   := "method"
 INIT                     := "init"

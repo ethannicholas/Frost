@@ -4,5 +4,6 @@ class Compiler (ErrorReporter) {
     @override
     method error(pos:Position, msg:String) {
         Console.printLine("\{pos}: \{msg}")
+        assert false
     }
 }

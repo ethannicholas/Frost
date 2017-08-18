@@ -4,13 +4,11 @@ uses org.pandalanguage.pandac.parser.Lexer
 uses org.pandalanguage.pandac.parser.Parser
 uses org.pandalanguage.pandac.parser.TokenKind
 
-email Barret or whatever his name is about the meeting
-
 class Main {
     @class
     method main() {
         def parser := Parser(Compiler())
-        parser.start("Main.panda", "loop { if true { Console.printLine('Hello, World\\{3 * 3(1)}!') } }")
-        Console.printLine(parser.statement())
+        parser.start("Int16.panda", File("../src/panda/core/Int16.panda").readFully())
+        Console.printLine(parser.file())
     }
 }

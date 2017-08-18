@@ -41,19 +41,36 @@ class ASTNode : Immutable {
         constant BREAK           := 134
         constant CONTINUE        := 135
         constant RETURN          := 136
+        constant GENERICS        := 137
+        constant VOID            := 138
+        constant TYPES           := 139
+        constant CLASS_MEMBERS   := 140
+        constant DOC_COMMENT     := 141
+        constant CLASS           := 142
+        constant ANNOTATION      := 143
+        constant ANNOTATIONS     := 144
+        constant METHOD          := 145
+        constant FUNCTION        := 146
+        constant INIT            := 147
+        constant FIELD           := 148
+        constant PARAMETER       := 149
+        constant PARAMETERS      := 150
+        constant INTERFACE       := 151
+        constant FILE            := 152
     }
 
     @class
     function operatorName(op:Int):String {
         match op {
-            when Token.Kind.ADD:    return "+"
-            when Token.Kind.AND:    return "&"
-            when Token.Kind.DIV:    return "/"
-            when Token.Kind.INTDIV: return "//"
-            when Token.Kind.MUL:    return "*"
-            when Token.Kind.SUB:    return "-"
-            when Token.Kind.OR:     return "|"
-            otherwise:              return "<operator:\{op}>"
+            when Token.Kind.ADD:        return "+"
+            when Token.Kind.AND:        return "&"
+            when Token.Kind.DIV:        return "/"
+            when Token.Kind.INTDIV:     return "//"
+            when Token.Kind.MUL:        return "*"
+            when Token.Kind.SUB:        return "-"
+            when Token.Kind.OR:         return "|"
+            when Token.Kind.ASSIGNMENT: return ":="
+            otherwise:                  return "<operator:\{op}>"
         }
     }
 
@@ -95,6 +112,9 @@ class ASTNode : Immutable {
     @override
     function convert():String {
         match kind {
+            when Kind.PREFIX:
+                assert children.get_count() = 1
+                return "\{operatorName(payload->Int)}\{children[0]}"
             when Kind.BINARY:
                 assert children.get_count() = 2
                 if payload->Int = Token.Kind.LBRACKET {
@@ -102,6 +122,8 @@ class ASTNode : Immutable {
                 }
                 return "(\{children[0]} \{operatorName(payload->Int)} \{children[1]})"
             when Kind.INT:
+                return payload.convert()
+            when Kind.BIT:
                 return payload.convert()
             when Kind.STRING:
                 return "'\{payload.convert()}'"
@@ -127,14 +149,14 @@ class ASTNode : Immutable {
             when Kind.RANGE_EXCLUSIVE:
                 assert children.get_count() = 3
                 def result := MutableString()
-                if children[0] != null {
+                if children[0].kind != ASTNode.Kind.VOID {
                     result.append(children[0])
                 }
                 result.append("..")
-                if children[1] != null {
+                if children[1].kind != ASTNode.Kind.VOID {
                     result.append(children[1])
                 }
-                if children[2] != null {
+                if children[2].kind != ASTNode.Kind.VOID {
                     result.append(" by ")
                     result.append(children[2])
                 }
@@ -146,7 +168,7 @@ class ASTNode : Immutable {
                 var separator := ""
                 for i in 1 .. children.get_count() {
                     result.append(separator)
-                    result.append(children[i].convert())
+                    result.append(children[i])
                     separator := ", "
                 }
                 result.append(")")
@@ -193,13 +215,155 @@ class ASTNode : Immutable {
                 }
                 return "return"
             when Kind.BLOCK:
-                def result := MutableString("{")
+                def result := MutableString("{\n")
                 for child in children {
-                    result.append(" ")
-                    result.append(child)
+                    def c := child.convert()
+                    if c.startsWith("(") & c.endsWith(")") {
+                        result.append(c[c.next(c.start()) .. c.previous(c.end())])
+                    }
+                    else {
+                        result.append(child)
+                    }
+                    result.append("\n")
                 }
-                result.append(" }")
+                result.append("}")
                 return result.convert()
+            when Kind.CLASS_TYPE:
+                if children.get_count() = 0 {
+                    return payload.convert()
+                }
+                def result := MutableString(payload.convert())
+                result.append("<")
+                var separator := ""
+                for c in children {
+                    result.append(separator)
+                    result.append(c)
+                    separator := ", "
+                }
+                result.append(">")
+                return result.convert()
+            when Kind.TYPES:
+                def result := MutableString()
+                var separator := ""
+                for c in children {
+                    result.append(separator)
+                    result.append(c)
+                    separator := ", "
+                }
+                return result.convert()
+            when Kind.ANNOTATION:
+                return payload.convert()
+            when Kind.ANNOTATIONS:
+                def result := MutableString()
+                for c in children {
+                    result.append(c)
+                    result.append("\n")
+                }
+                return result.convert()
+            when Kind.DECLARATION:
+                if children.get_count() = 1 {
+                    return children[0].convert()
+                }
+                return "\{children[0]} := \{children[1]}"
+            when Kind.VAR:
+                def result := MutableString("var ")
+                var separator := ""
+                for c in children {
+                    result.append(separator)
+                    result.append(c)
+                    separator := ", "
+                }
+                return result.convert()
+            when Kind.DEF:
+                def result := MutableString("def ")
+                var separator := ""
+                for c in children {
+                    result.append(separator)
+                    result.append(c)
+                    separator := ", "
+                }
+                return result.convert()
+            when Kind.PROPERTY:
+                def result := MutableString("property ")
+                var separator := ""
+                for c in children {
+                    result.append(separator)
+                    result.append(c)
+                    separator := ", "
+                }
+                return result.convert()
+            when Kind.CONSTANT:
+                def result := MutableString("constant ")
+                var separator := ""
+                for c in children {
+                    result.append(separator)
+                    result.append(c)
+                    separator := ", "
+                }
+                return result.convert()
+            when Kind.FIELD:
+                assert children.get_count() = 3
+                return "\{children[0]}\{children[1]}\{children[2]}"
+            when Kind.PARAMETER:
+                assert children.get_count() = 1
+                return "\{payload}:\{children[0]}"
+            when Kind.PARAMETERS:
+                def result := MutableString("(")
+                var separator := ""
+                for c in children {
+                    result.append(separator)
+                    result.append(c)
+                    separator := ", "
+                }
+                result.append(")")
+                return result.convert()
+            when Kind.INIT:
+                assert children.get_count() = 5
+                return "\{children[0]}\{children[1]}init\{children[2]} \{children[3]}\{children[4]}"
+            when Kind.FUNCTION:
+                assert children.get_count() = 6
+                return "\{children[0]}\{children[1]}function \{payload}\{children[2]}:" +
+                        "\{children[3]} \{children[4]}\{children[5]}"
+            when Kind.CLASS_MEMBERS:
+                def result := MutableString("{\n")
+                for c in children {
+                    result.append(c)
+                    result.append("\n")
+                }
+                result.append("}")
+                return result.convert()
+            when Kind.CLASS:
+                assert children.get_count() = 6
+                def result := MutableString()
+                result.append(children[0])
+                result.append(children[1])
+                result.append("class \{payload}")
+                result.append(children[2])
+                if children[3].kind != ASTNode.Kind.VOID {
+                    result.append(" : ")
+                    result.append(children[3])
+                }
+                if children[4].kind != ASTNode.Kind.VOID {
+                    result.append(" (")
+                    result.append(children[4])
+                    result.append(")")
+                }
+                result.append(" ")
+                result.append(children[5])
+                return result.convert()
+            when Kind.FILE:
+                def result := MutableString()
+                for c in children {
+                    result.append(c)
+                    result.append("\n")
+                }
+                return result.convert()
+            when Kind.SELF:
+                return "self"
+            when Kind.SUPER:
+                return "super"
+            when Kind.VOID:
+                return ""
             otherwise:
                 return "<ASTNode:\{kind}>"
         }
