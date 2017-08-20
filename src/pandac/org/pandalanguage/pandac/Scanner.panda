@@ -1,0 +1,104 @@
+package org.pandalanguage.pandac
+
+class Scanner {
+    @private
+    def compiler:Compiler
+
+    init(compiler:Compiler) {
+        self.compiler := compiler
+    }
+
+    method convertType(type:ASTNode):Type {
+        if type.kind = ASTNode.Kind.VOID {
+            return Type.Void()
+        }
+        assert type.kind = ASTNode.Kind.TYPE | type.kind = ASTNode.Kind.NULLABLE_TYPE
+        return Type(type.payload->String, type.offset)
+    }
+
+    method scanMethod(owner:ClassDecl, m:ASTNode):MethodDecl? {
+        assert m.children.get_count() = 6
+        def name := m.payload->String
+        assert m.children[2].kind = ASTNode.Kind.PARAMETERS
+        def parameters := Array<MethodDecl.Parameter>()
+        for p in m.children[2].children {
+            assert p.kind = ASTNode.Kind.PARAMETER
+            assert p.children.get_count() = 1
+            parameters.add(MethodDecl.Parameter(p.payload->String, convertType(p.children[0])))
+        }
+        def returnType := convertType(m.children[3])
+        if m.children[4].kind = ASTNode.Kind.BLOCK {
+            return MethodDecl(owner, m.offset, name, parameters, returnType, m.children[4])
+        }
+        else {
+            return MethodDecl(owner, m.offset, name, parameters, returnType, null)        
+        }
+    }
+
+    method scanClass(aliases:MapView<String, String>, pkg:String, cl:ASTNode):ClassDecl? {
+        def fullName:String
+        if pkg != "" {
+            fullName := "\{pkg}.\{cl.payload}"
+        }
+        else {
+            fullName := cl.payload->String
+        }
+        def interfaces := Array<Type>()
+        assert cl.children.get_count() = 6
+        def supertype:Type
+        if cl.children[3].kind != ASTNode.Kind.VOID {
+            supertype := convertType(cl.children[3])
+        }
+        else {
+            supertype := Type.Object()
+        }
+        def result := ClassDecl(cl.offset, aliases, fullName, supertype, interfaces, compiler.root)
+        for c in cl.children[5].children {
+            match c.kind {
+                when ASTNode.Kind.FIELD:
+                    Console.printLine("got field: \{c}")
+                when ASTNode.Kind.INIT:
+                    Console.printLine("got init: \{c}")
+                when ASTNode.Kind.METHOD, ASTNode.Kind.FUNCTION:
+                    def m := scanMethod(result, c)
+                    if m != null {
+                        result.symbolTable.add(m)
+                        result.methods.add(m)
+                    }
+                otherwise:
+                    assert false, "unsupported class child: \{c.kind}"
+            }
+        }
+        return result
+    }
+
+    method scan(file:ASTNode):ListView<ClassDecl> {
+        def result := Array<ClassDecl>()
+        var currentPackage := ""
+        def aliases := HashMap<String, String>()
+        assert file.kind = ASTNode.Kind.FILE
+        for c in file.children {
+            match c.kind {
+                when ASTNode.Kind.PACKAGE:
+                    currentPackage := c.payload->String
+                when ASTNode.Kind.USES:
+                    def fullName := c.payload->String
+                    def idx := fullName.lastIndexOf(".")
+                    def alias:String
+                    if idx != null {
+                        alias := fullName[fullName.next(idx)..]
+                    }
+                    else {
+                        alias := fullName
+                    }
+                    aliases[alias] := fullName
+                when ASTNode.Kind.CLASS:
+                    def cl := scanClass(aliases, currentPackage, c)
+                    result.add(cl)
+                otherwise:
+                    assert false, "unsupported: \{c.kind}"
+            }
+        }
+        return result
+    }
+}

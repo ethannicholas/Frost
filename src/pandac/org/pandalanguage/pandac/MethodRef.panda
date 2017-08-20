@@ -1,0 +1,29 @@
+package org.pandalanguage.pandac
+
+class MethodRef {
+    def value:MethodDecl
+
+    def types:ListView<Type>
+
+    init(value:MethodDecl, types:ListView<Type>) {
+        assert value.resolved
+        self.value := value
+        self.types := types
+    }
+
+    function parameterCount():Int {
+        return value.parameters.get_count()
+    }
+
+    function parameter(index:Int):Type {
+        return value.parameters[index].type
+    }
+
+    function returnType():Type {
+        return value.returnType
+    }
+
+    function type():Type {
+        return Type("<method>", -1, true)
+    }
+}

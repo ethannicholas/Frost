@@ -1,0 +1,11 @@
+package org.pandalanguage.pandac
+
+class Methods : Symbol {
+    def methods:ImmutableArray<MethodDecl>
+
+    init(methods:ListView<MethodDecl>) {
+        assert methods.get_count() > 0
+        super.init(Kind.METHODS, -1, methods[0].name)
+        self.methods := ImmutableArray<MethodDecl>(methods)
+    }
+}

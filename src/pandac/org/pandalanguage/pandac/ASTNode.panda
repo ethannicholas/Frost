@@ -13,7 +13,7 @@ class ASTNode : Immutable {
         constant IDENTIFIER      := 106
         constant CALL            := 107
         constant DOT             := 108
-        constant CLASS_TYPE      := 109
+        constant TYPE            := 109
         constant NULLABLE_TYPE   := 110
         constant CAST            := 111
         constant PREFIX          := 112
@@ -86,7 +86,7 @@ class ASTNode : Immutable {
         init(kind, offset, null, Array<ASTNode>())
     }
 
-    init(kind:Int, offset:Int, payload:Int) {
+    init(kind:Int, offset:Int, payload:UInt64) {
         init(kind, offset, payload, Array<ASTNode>())
     }
 
@@ -228,7 +228,7 @@ class ASTNode : Immutable {
                 }
                 result.append("}")
                 return result.convert()
-            when Kind.CLASS_TYPE:
+            when Kind.TYPE:
                 if children.get_count() = 0 {
                     return payload.convert()
                 }
@@ -320,6 +320,10 @@ class ASTNode : Immutable {
             when Kind.INIT:
                 assert children.get_count() = 5
                 return "\{children[0]}\{children[1]}init\{children[2]} \{children[3]}\{children[4]}"
+            when Kind.METHOD:
+                assert children.get_count() = 6
+                return "\{children[0]}\{children[1]}method \{payload}\{children[2]}:" +
+                        "\{children[3]} \{children[4]}\{children[5]}"
             when Kind.FUNCTION:
                 assert children.get_count() = 6
                 return "\{children[0]}\{children[1]}function \{payload}\{children[2]}:" +

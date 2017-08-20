@@ -1,0 +1,59 @@
+package org.pandalanguage.pandac
+
+class SymbolTable {
+    @private
+    def compiler:Compiler
+
+    @private
+    def symbols := HashMap<String, Symbol>()
+
+    @private
+    def parents := Array<SymbolTable>()
+
+    init(compiler:Compiler) {
+        self.compiler := compiler
+    }
+
+    init(parent:SymbolTable) {
+        init(parent.compiler)
+        self.parents.add(parent)
+    }
+
+    method add(s:Symbol) {
+        def old := symbols[s.name]
+        if old = null {
+            symbols[s.name] := s
+            return
+        }
+        if s.kind = Symbol.Kind.METHOD {
+            match old.kind {
+                when Symbol.Kind.METHOD:
+                    def methods := Array<MethodDecl>()
+                    methods.add(s->MethodDecl)
+                    methods.add(old->MethodDecl)
+                    symbols[s.name] := Methods(methods)
+                    return
+                when Symbol.Kind.METHODS:
+                    def methods := Array<MethodDecl>()
+                    methods.add(s->MethodDecl)
+                    methods.addAll((old->Methods).methods) -- FIXME extra parentheses
+                    symbols[s.name] := Methods(methods)
+            }
+        }
+        compiler.error(s.offset, "duplicate symbol '\{s.name}' (previous declaration was at " +
+                compiler.position(old.offset))
+    }
+
+    function [](name:String):Symbol? {
+        var result := symbols[name]
+        if result = null {
+            for p in parents {
+                result := p[name]
+                if result != null {
+                    break
+                }
+            }
+        }
+        return result
+    }
+}

@@ -1,0 +1,77 @@
+package org.pandalanguage.pandac
+
+class Type (Equatable<Type>) {
+    def resolved:Bit
+
+    def name:String
+
+    def offset:Int
+
+    def subtypes:ImmutableArray<Type>
+
+    init(name:String, offset:Int) {
+        init(name, offset, false)
+    }
+
+    init(name:String, offset:Int, resolved:Bit) {
+        self.name := name
+        self.offset := offset
+        self.resolved := resolved
+        self.subtypes := ImmutableArray<Type>()
+    }
+
+    init(subtypes:ListView<Type>) {
+        self.subtypes := ImmutableArray<Type>(subtypes)
+        def name := MutableString("unresolved<")
+        var separator := ""
+        self.resolved := true
+        for t in subtypes {
+            name.append(separator)
+            name.append(t)
+            separator := "|"
+            self.resolved &= t.resolved
+        }
+        name.append(">")
+        self.name := name.convert()
+    }
+
+    @override
+    function =(other:Type):Bit {
+        return name = other.name
+    }
+
+    @override
+    function !=(other:Type):Bit {
+        return name != other.name
+    }
+
+    @class
+    method Void():Type {
+        return Type("void", -1, true)
+    }
+
+    @class
+    method Object():Type {
+        return Type("panda.core.Object", -1, true)
+    }
+
+    @class
+    method Class():Type {
+        return Type("panda.core.Class", -1, true)
+    }
+
+    @class
+    method IntLiteral():Type {
+        return Type("$int_literal", -1, true)
+    }
+
+    @class
+    method Invalid():Type {
+        return Type("<invalid>", -1, true)
+    }
+
+    @override
+    function convert():String {
+        return name
+    }
+}

@@ -1,0 +1,110 @@
+package org.pandalanguage.pandac
+
+uses org.pandalanguage.pandac.parser.Token
+
+class IRNode : Immutable {
+    class Kind {
+        constant BLOCK                       := 1000
+        constant TYPE_REFERENCE              := 1001
+        constant METHOD_REFERENCE            := 1002
+        constant UNRESOLVED_METHOD_REFERENCE := 1003
+        constant INT                         := 1004
+        constant CALL                        := 1005
+    }
+
+    def kind:Int
+
+    def offset:Int
+
+    def payload:Object?
+
+    def type:Type
+
+    def children:ImmutableArray<IRNode>
+
+    init(kind:Int, offset:Int) {
+        init(kind, offset, Type.Void(), null, Array<IRNode>())
+    }
+
+    init(kind:Int, offset:Int, payload:UInt64) {
+        init(kind, offset, Type.Void(), payload, Array<IRNode>())
+    }
+
+    init(kind:Int, offset:Int, payload:String) {
+        init(kind, offset, Type.Void(), payload, Array<IRNode>())
+    }
+
+    init(kind:Int, offset:Int, payload:Bit) {
+        init(kind, offset, Type.Void(), payload, Array<IRNode>())
+    }
+
+    init(kind:Int, offset:Int, children:ListView<IRNode>) {
+        init(kind, offset, Type.Void(), null, children)
+    }
+
+    init(kind:Int, offset:Int, payload:Object?, children:ListView<IRNode>) {
+        init(kind, offset, Type.Void(), payload, children)
+    }
+
+    init(kind:Int, offset:Int, type:Type) {
+        init(kind, offset, type, null, Array<IRNode>())
+    }
+
+    init(kind:Int, offset:Int, type:Type, payload:UInt64) {
+        init(kind, offset, type, payload, Array<IRNode>())
+    }
+
+    init(kind:Int, offset:Int, type:Type, payload:String) {
+        init(kind, offset, type, payload, Array<IRNode>())
+    }
+
+    init(kind:Int, offset:Int, type:Type, payload:Bit) {
+        init(kind, offset, type, payload, Array<IRNode>())
+    }
+
+    init(kind:Int, offset:Int, type:Type, payload:Type) {
+        init(kind, offset, type, payload, Array<IRNode>())
+    }
+
+    init(kind:Int, offset:Int, type:Type, children:ListView<IRNode>) {
+        init(kind, offset, type, null, children)
+    }
+
+    init(kind:Int, offset:Int, type:Type, payload:Object?, children:ListView<IRNode>) {
+        self.kind := kind
+        self.offset := offset
+        self.type := type
+        self.payload := payload
+        self.children := ImmutableArray<IRNode>(children)
+    }
+
+    @override
+    function convert():String {
+        match kind {
+            when Kind.BLOCK:
+                def result := MutableString("{\n")
+                for child in children {
+                    def c := child.convert()
+                    if c.startsWith("(") & c.endsWith(")") {
+                        result.append(c[c.next(c.start()) .. c.previous(c.end())])
+                    }
+                    else {
+                        result.append(child)
+                    }
+                    result.append("\n")
+                }
+                result.append("}")
+                return result.convert()
+            when Kind.METHOD_REFERENCE:
+                return "\{children[0]}.\{(payload->MethodRef).value.name}" -- FIXME parens
+            when Kind.UNRESOLVED_METHOD_REFERENCE:
+                return "\{children[0]}.\{(payload->ListView<MethodRef>)[0].value.name}" -- FIXME parens
+            when Kind.TYPE_REFERENCE:
+                return payload.convert()
+            when Kind.INT:
+                return payload.convert()
+            otherwise:
+                return "<IRNode:\{kind}>"
+        }
+    }
+}

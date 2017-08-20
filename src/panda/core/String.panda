@@ -474,6 +474,29 @@ class String : Immutable (Key<String>) {
     }
 
     ================================================================================================
+    Returns a new string with every occurrence of `search` replaced with `replacement`.
+
+    @param search the string to search for
+    @param replacement the replacement text
+    @returns a string with all matches replaced
+    ================================================================================================
+    function replace(search:String, replacement:String):String {
+        def result := MutableString()
+        var index := start()
+        loop {
+            def nextIndex := indexOf(search, index)
+            if nextIndex = null {
+                result.append(self[index..])
+                break
+            }
+            result.append(self[index .. nextIndex])
+            result.append(replacement)
+            index := Index(nextIndex.value + search._length)
+        }
+        return result.convert()
+    }
+
+    ================================================================================================
     Returns the index of the first character in the string.
     ================================================================================================
     function start():Index {
@@ -614,6 +637,27 @@ class String : Immutable (Key<String>) {
         }
         if data[0] = Char8(45) {
             result := -result
+        }
+        return result
+    }
+
+    ================================================================================================
+    Converts this string to a number. The string must be a sequence of decimal digits whose numeric
+    representation can fit into a `UInt64`. Returns `null` if the conversion fails.
+
+    @returns this string converted to a number, or `null`
+    ================================================================================================
+    function convert():UInt64? {
+        if _length = 0 {
+            return null
+        }
+        var result:UInt64 := 0
+        for i in 0 .. _length {
+            def digit := UInt64(data[i].value->builtin_uint64) - 48
+            if digit < 0 | digit > 9 {
+                return null
+            }
+            result := result * 10 + digit
         }
         return result
     }

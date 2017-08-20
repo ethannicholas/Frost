@@ -1,8 +1,402 @@
 package org.pandalanguage.pandac
 
+uses org.pandalanguage.pandac.parser.Parser
+
 class Compiler (ErrorReporter) {
+    def importDirs:ListView<File>
+
+    def parser:Parser
+
+    def scanner:Scanner
+
+    def root:SymbolTable
+
+    @private
+    def scans := HashMap<File, ListView<ClassDecl>>()
+
+    @private
+    def classes := HashMap<String, ClassDecl>()
+
+    @private
+    def currentClass := Stack<ClassDecl>()
+
+    @private
+    var symbolTable:SymbolTable
+
+    @private
+    var errorCount := 0
+
+    init(importDirs:ListView<File>) {
+        self.importDirs := importDirs
+        self.parser := Parser(self)
+        self.scanner := Scanner(self)
+        self.root := SymbolTable(self)
+        self.symbolTable := root
+        root.add(Alias("Int", "panda.core.Int64", -1))
+        root.add(Alias("Int64", "panda.core.Int64", -1))
+        root.add(Alias("Console", "panda.io.Console", -1))
+        root.add(Alias("Object", "panda.core.Object", -1))
+    }
+
+    function resolve(type:Type):Type {
+        if type.resolved {
+            return type
+        }
+        def resolved := currentClass.peek().aliases[type.name]
+        if resolved != null {
+            return Type(resolved, type.offset, true)
+        }
+        def s := symbolTable[type.name]
+        if s != null & s.kind = Symbol.Kind.ALIAS {
+            return Type((s->Alias).fullName, type.offset, true) -- FIXME parens
+        }
+        error(position(type.offset), "unknown type '\{type}'")
+        return Type.Invalid()
+    }
+
+    method resolve(cl:ClassDecl) {
+        if cl.resolved {
+            return
+        }
+        cl.rawSuper := resolve(cl.rawSuper)
+        for i in 0 .. cl.rawInterfaces.get_count() {
+            cl.rawInterfaces[i] := resolve(cl.rawInterfaces[i])
+        }
+        cl.resolved := true
+    }
+
+    method resolve(m:MethodDecl) {
+        if m.resolved {
+            return
+        }
+        for p in m.parameters {
+            p.type := resolve(p.type)
+        }
+        m.returnType := resolve(m.returnType)
+        m.resolved := true
+    }
+
+    method getClass(offset:Int, fullName:String):ClassDecl? {
+        var result := classes[fullName]
+        if result = null {
+            def suffix := fullName.replace(".", "/") + ".panda"
+            var found := false
+            for dir in importDirs {
+                def f := dir.resolve(suffix)
+                if f.exists() {
+                    found := true
+                    def oldErrorCount := errorCount
+                    scan(f)
+                    result := classes[fullName]
+                    if result = null & errorCount = oldErrorCount {
+                        error(Position(f.name(), 1, 1),
+                                "expected file '\{f}' to contain a class named '\{fullName}'")
+                    }
+                }
+            }
+            if !found {
+                error(offset, "no file named \{suffix} in any import path (\{importDirs})")
+            }
+        }
+        return result
+    }
+
+    method getClass(type:Type):ClassDecl? {
+        assert type.resolved
+        return getClass(type.offset, type.name)
+    }
+
+    method addInheritedMethods(st:SymbolTable, name:String, result:Array<MethodRef>,
+            types:Array<Type>) {
+    }
+
+    method getMethodReference(st:SymbolTable, target:IRNode?, name:String, offset:Int,
+            types:Array<Type>):IRNode {
+        def methods := Array<MethodRef>()
+        def s := st[name]
+        if s.kind = Symbol.Kind.METHOD {
+            resolve(s->MethodDecl)
+            methods.add(MethodRef(s->MethodDecl, types))
+        }
+        else {
+            assert s.kind = Symbol.Kind.METHODS
+            for m in (s->Methods).methods { -- FIXME extra parens
+                resolve(m)
+                methods.add(MethodRef(m, types))
+            }
+        }
+        for p in st.parents {
+            addInheritedMethods(p, name, methods, types)
+        }
+        def children := Array<IRNode>()
+        if target != null {
+            children.add(target)
+        }
+        if methods.get_count() = 1 {
+            return IRNode(IRNode.Kind.METHOD_REFERENCE, offset, methods[0].type(), methods[0],
+                    children)
+        }
+        else {
+            def types := Array<Type>()
+            for m in methods {
+                types.add(m.type())
+            }
+            return IRNode(IRNode.Kind.UNRESOLVED_METHOD_REFERENCE, offset, Type(types), methods,
+                    children)
+        }
+    }
+
+    method symbolRef(offset:Int, target:IRNode?, s:Symbol, st:SymbolTable):IRNode? {
+        match s.kind {
+            when Symbol.Kind.ALIAS:
+                assert target = null
+                def cl := getClass(offset, (s->Alias).fullName) -- FIXME remove extra parens
+                if cl != null {
+                    return IRNode(IRNode.Kind.TYPE_REFERENCE, offset, Type.Class(), cl.type())
+                }
+                return null
+            when Symbol.Kind.METHOD, Symbol.Kind.METHODS:
+                return getMethodReference(st, target, s.name, offset, Array<Type>())
+            otherwise:
+                assert false, "unsupported symbol kind: \{s.kind}"
+        }
+    }
+
+    function remapType(context:Type, type:Type):Type {
+        return type
+    }
+
+    function coercionCost(type:Type, target:Type):Int? {
+        assert type.resolved
+        assert target.resolved
+        if type = target {
+            return 0
+        }
+        def cl := getClass(type)
+        resolve(cl)
+        var cost := coercionCost(remapType(type, cl.rawSuper), target)
+        if cost != null {
+            return cost + 1
+        }
+        for intf in cl.rawInterfaces {
+            cost := coercionCost(remapType(type, intf), target)
+            if cost != null {
+                return cost + 1
+            }
+        }
+        return null
+    }
+
+    function coercionCost(expr:IRNode, target:Type):Int? {
+        assert expr.type != null
+        return coercionCost(expr.type, target)
+    }
+
+    method callCost(m:MethodRef, args:ListView<IRNode>, expectedReturn:Type?):Int? {
+        if m.parameterCount() != args.get_count() {
+            return null
+        }
+        var result := 0
+        for i in 0 .. m.parameterCount() {
+            def cost := coercionCost(args[i], m.parameter(i))
+            if cost = null {
+                return null
+            }
+            result += cost
+        }
+        if expectedReturn != null {
+            def cost := coercionCost(m.returnType(), expectedReturn)
+            if cost = null {
+                return null
+            }
+            result += cost
+        }
+        return result
+    }
+
+    method matchMethods(methods:Array<MethodRef>, args:ListView<IRNode>,
+            expectedReturn:Type?):Int? {
+        def result := Array<MethodRef>()
+        var best:Int? := null
+        for m in methods {
+            def cost := callCost(m, args, expectedReturn)
+            if cost = null {
+                continue
+            }
+            if best = null | cost < best {
+                result.clear()
+                best := cost
+            }
+            if cost = best {
+                result.add(m)
+            }
+        }
+        methods.clear()
+        methods.addAll(result)
+        return best
+    }
+
+    method call(m:IRNode, args:ListView<IRNode>):IRNode? {
+        match m.kind {
+            when IRNode.Kind.METHOD_REFERENCE:
+                assert false
+            when IRNode.Kind.UNRESOLVED_METHOD_REFERENCE:
+                def methods := Array<MethodRef>(m.payload->ListView<MethodRef>)
+                matchMethods(methods, args, null)
+                if methods.get_count() = 1 {
+                    return IRNode(IRNode.Kind.CALL, m.offset, methods[0].returnType(), methods[0],
+                            args)
+                }
+                assert false
+        }
+        assert false
+    }
+
+    method compileCall(c:ASTNode):IRNode? {
+        assert c.kind = ASTNode.Kind.CALL
+        def m := compileExpression(c.children[0])
+        if m != null {
+            def args := Array<IRNode>()
+            for i in 1 .. c.children.get_count() {
+                def arg := compileExpression(c.children[i])
+                if arg = null {
+                    return null
+                }
+                args.add(arg)
+            }
+            return call(m, args)
+        }
+        return null
+    }
+
+    method compileDot(d:ASTNode):IRNode? {
+        assert d.kind = ASTNode.Kind.DOT
+        assert d.children.get_count() = 1
+        def base := compileExpression(d.children[0])
+        if base = null {
+            return null
+        }
+        def cl:ClassDecl?
+        if base.kind = IRNode.Kind.TYPE_REFERENCE {
+            cl := getClass(base.payload->Type)
+        }
+        else {
+            cl := getClass(base.type)
+        }
+        if cl = null {
+            return null
+        }
+        def s := cl.symbolTable[d.payload->String]
+        if s = null {
+            error(d.offset, "value of type '\{base}' does not have a member named '\{d.payload}'")
+            return null
+        }
+        return symbolRef(d.offset, base, s, cl.symbolTable)
+    }
+
+    method compileIdentifier(i:ASTNode):IRNode? {
+        assert i.kind = ASTNode.Kind.IDENTIFIER
+        def s := symbolTable[i.payload->String]
+        if s != null {
+            return symbolRef(i.offset, null, s, symbolTable)
+        }
+        else {
+            error(i.offset, "unknown identifier '\{i.payload}'")
+            return null
+        }
+    }
+
+    method compileInt(i:ASTNode):IRNode {
+        return IRNode(IRNode.Kind.INT, i.offset, Type.IntLiteral(), i.payload->UInt64)
+    }
+
+    method compileExpression(e:ASTNode):IRNode? {
+        match e.kind {
+            when ASTNode.Kind.CALL:       return compileCall(e)
+            when ASTNode.Kind.DOT:        return compileDot(e)
+            when ASTNode.Kind.IDENTIFIER: return compileIdentifier(e)
+            when ASTNode.Kind.INT:        return compileInt(e)
+        }
+        assert false, "unsupported expression kind: \{e.kind}"
+    }
+
+    method compileBlock(b:ASTNode):IRNode? {
+        assert b.kind = ASTNode.Kind.BLOCK
+        def result := Array<IRNode>()
+        for stmt in b.children {
+            def compiled := compileStatement(stmt)
+            if compiled = null {
+                return null
+            }
+            result.add(compiled)
+        }
+        return IRNode(IRNode.Kind.BLOCK, b.offset, result)
+    }
+
+    method compileStatement(s:ASTNode):IRNode? {
+        match s.kind {
+            when ASTNode.Kind.BLOCK: return compileBlock(s)
+            when ASTNode.Kind.CALL:  return compileCall(s)
+        }
+        assert false, "unsupported statement kind: \{s.kind}"
+    }
+
+    method compile(m:MethodDecl) {
+        assert currentClass.peek() == m.owner
+        resolve(m)
+        if m.body != null {
+            def compiled := compileBlock(m.body)
+            if compiled != null {
+                Console.printLine("compiled to \{compiled}")
+            }
+        }
+    }
+
+    method compile(cl:ClassDecl) {
+        currentClass.push(cl)
+        for m in cl.methods {
+            compile(m)
+        }
+        currentClass.pop()
+    }
+
+    method scan(file:File):ListView<ClassDecl> {
+        var result := scans[file]
+        if result = null {
+            parser.start(file.name(), file.readFully())
+            def parsed := parser.file()
+            if parsed != null {
+                result := scanner.scan(parsed)
+                for cl in result {
+                    classes[cl.name] := cl
+                }
+            }
+            else {
+                result := Array<ClassDecl>()
+            }
+            scans[file] := result
+        }
+        return result
+    }
+
+    method compile(file:File) {
+        def classes := scan(file)
+        for cl in classes {
+            compile(cl)
+        }
+    }
+
+    function position(offset:Int):Position {
+        return Position("unknown", -1, -1)
+    }
+
+    method error(offset:Int, msg:String) {
+        error(position(offset), msg)
+    }
+
     @override
     method error(pos:Position, msg:String) {
+        errorCount += 1
         Console.printLine("\{pos}: \{msg}")
         assert false
     }

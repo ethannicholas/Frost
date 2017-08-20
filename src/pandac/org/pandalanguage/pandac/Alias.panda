@@ -1,0 +1,15 @@
+package org.pandalanguage.pandac
+
+class Alias : Symbol {
+    def fullName:String
+
+    init(alias:String, fullName:String, offset:Int) {
+        super.init(Kind.ALIAS, offset, alias)
+        self.fullName := fullName
+    }
+
+    @override
+    function convert():String {
+        return("Alias(\{name}->\{fullName})")
+    }
+}

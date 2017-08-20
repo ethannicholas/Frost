@@ -1,0 +1,58 @@
+package org.pandalanguage.pandac
+
+class MethodDecl : Symbol {
+    class Parameter {
+        def name:String
+
+        def type:org.pandalanguage.pandac.Type -- FIXME shouldn't have to fully qualify this
+
+        init(name:String, type:org.pandalanguage.pandac.Type) {
+            self.name := name
+            self.type := type
+        }
+
+        @override
+        function convert():String {
+            return "\{name}:\{type}"
+        }
+    }
+
+    def owner:ClassDecl
+
+    def parameters:Array<Parameter>
+
+    def returnType:Type
+
+    def body:ASTNode?
+
+    var resolved:Bit
+
+    init(owner:ClassDecl, offset:Int, name:String, parameters:Array<Parameter>, returnType:Type,
+            body:ASTNode?) {
+        super.init(Kind.METHOD, offset, name)
+        self.owner := owner
+        self.parameters := parameters
+        self.returnType := returnType
+        self.body := body
+        self.resolved := false
+    }
+
+    @override
+    function convert():String {
+        def result := MutableString("method \{name}(")
+        var separator := ""
+        for p in parameters {
+            result.append(separator)
+            result.append(p)
+            separator := ", "
+        }
+        result.append(")")
+        if returnType != Type.Void() {
+            result.append(":\{returnType}")
+        }
+        if body != null {
+            result.append(" \{body}")
+        }
+        return result.convert()
+    }
+}

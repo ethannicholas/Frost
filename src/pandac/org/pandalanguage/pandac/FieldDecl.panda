@@ -1,0 +1,15 @@
+package org.pandalanguage.pandac
+
+class FieldDecl {
+    def name:String
+
+    def type:Type
+
+    def value:ASTNode?
+
+    init(name:String, type:Type, value:ASTNode?) {
+        self.name := name
+        self.type := type
+        self.value := value
+    }
+}

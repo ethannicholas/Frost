@@ -242,32 +242,31 @@ class HashMap<K:Key<K>, V> (Map<K, V>, Equatable<Map<K, V>>) {
     ================================================================================================
     @override
     function convert():String {
--*        def result := MutableString()
+        def result := MutableString()
         result.append("{")
-        var first := true
-        for (key, value) in self {
-            if !first {
-                result.append(", ")
-            }
-            else {
-                first := false
-            }
-            if key != null {
-                result.append(key)
-            }
-            else {
-                result.append("null")
-            }
-            result.append(": ")
-            if value != null {
-                result.append(value)
-            }
-            else {
-                result.append("null")
+        var separator := ""
+        for i in 0 .. bucketCount {
+            var entry := contents[i]
+            while entry != null {
+                result.append(separator)
+                if entry.key != null {
+                    result.append(entry.key)
+                }
+                else {
+                    result.append("null")
+                }
+                result.append(":")
+                if entry.value != null {
+                    result.append(entry.value)
+                }
+                else {
+                    result.append("null")
+                }
+                entry := entry.next
+                separator := ", "
             }
         }
         result.append("}")
-        return result.convert()*-
-        assert false
+        return result.convert()
     }
 }

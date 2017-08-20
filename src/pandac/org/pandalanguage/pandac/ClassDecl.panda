@@ -1,0 +1,57 @@
+package org.pandalanguage.pandac
+
+class ClassDecl : Symbol {
+    def aliases:MapView<String, String>
+
+    def rawSuper:Type?
+
+    def rawInterfaces:Array<Type>
+
+    def fields := Array<FieldDecl>()
+
+    def methods := Array<MethodDecl>()
+
+    def symbolTable:SymbolTable
+
+    var resolved:Bit
+
+    init(offset:Int, aliases:MapView<String, String>, name:String, rawSuper:Type,
+            rawInterfaces:Array<Type>, parent:SymbolTable) {
+        super.init(Kind.CLASS, offset, name)
+        self.aliases := aliases
+        self.rawSuper := rawSuper
+        self.rawInterfaces := rawInterfaces
+        self.symbolTable := SymbolTable(parent)
+        self.resolved := false
+    }
+
+    function type():Type {
+        return Type(name, -1, true)
+    }
+
+    @override
+    function convert():String {
+        def result := MutableString("class \{name}")
+        if rawSuper != Type.Void() {
+            result.append(":\{rawSuper}")
+        }
+        if rawInterfaces.get_count() > 0 {
+            result.append(" (")
+            var separator := ""
+            for intf in rawInterfaces {
+                result.append("\{separator}\{intf}")
+                separator := ", "
+            }
+            result.append(")")
+        }
+        result.append(" {\n")
+        for f in fields {
+            result.append("\{f}\n")
+        }
+        for m in methods {
+            result.append("\{m}\n")
+        }
+        result.append("}")
+        return result.convert()
+    }
+}

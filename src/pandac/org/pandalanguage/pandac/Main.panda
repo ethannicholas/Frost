@@ -7,8 +7,9 @@ uses org.pandalanguage.pandac.parser.TokenKind
 class Main {
     @class
     method main() {
-        def parser := Parser(Compiler())
-        parser.start("Int16.panda", File("../src/panda/core/Int16.panda").readFully())
-        Console.printLine(parser.file())
+        def imports := Array<File>()
+        imports.add(File("../src"))
+        def compiler := Compiler(imports)
+        compiler.compile(File("/tmp/Test.panda"))
     }
 }

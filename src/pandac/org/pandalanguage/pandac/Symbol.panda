@@ -1,0 +1,27 @@
+package org.pandalanguage.pandac
+
+class Symbol {
+    class Kind {
+        constant ALIAS             := 200
+        constant CLASS             := 201
+        constant FIELD             := 202
+        constant GENERIC_PARAMETER := 203
+        constant METHOD            := 204
+        constant METHODS           := 205
+        constant PACKAGE           := 206
+        constant TYPE              := 207
+        constant VARIABLE          := 208
+    }
+
+    def kind:Int
+
+    def offset:Int
+
+    def name:String
+
+    init(kind:Int, offset:Int, name:String) {
+        self.kind := kind
+        self.offset := offset
+        self.name := name
+    }
+}

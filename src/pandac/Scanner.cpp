@@ -404,6 +404,8 @@ void Scanner::scan(ASTNode* file) {
     uses.push_back({ Position(), "panda.collections.List", "List" });
     uses.push_back({ Position(), "panda.collections.ListView", "ListView" });
     uses.push_back({ Position(), "panda.collections.ListWriter", "ListWriter" });
+    uses.push_back({ Position(), "panda.collections.MapView", "MapView" });
+    uses.push_back({ Position(), "panda.collections.MapWriter", "MapWriter" });
     uses.push_back({ Position(), "panda.collections.Stack", "Stack" });
     uses.push_back({ Position(), "panda.core.Bit", "Bit" });
     uses.push_back({ Position(), "panda.core.Char8", "Char8" });

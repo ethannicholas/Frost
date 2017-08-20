@@ -30,6 +30,7 @@ class Parser {
         lexer.start(source)
         self.filename := filename
         self.source := source
+        pushbackBuffer.clear()
     }
 
     method rawNext():Token {
@@ -211,7 +212,7 @@ class Parser {
             when Token.Kind.IDENTIFIER:
                 return ASTNode(ASTNode.Kind.IDENTIFIER, t.offset, text(t))
             when Token.Kind.DECIMAL:
-                return ASTNode(ASTNode.Kind.INT, t.offset, text(t).convert()->Int?)
+                return ASTNode(ASTNode.Kind.INT, t.offset, text(t).convert()->UInt64?)
             when Token.Kind.SELF:
                 return ASTNode(ASTNode.Kind.SELF, t.offset)
             when Token.Kind.SUPER:
@@ -315,7 +316,7 @@ class Parser {
             name.append(".")
             name.append(text(id))
         }
-        var result := ASTNode(ASTNode.Kind.CLASS_TYPE, start.offset, name.convert())
+        var result := ASTNode(ASTNode.Kind.TYPE, start.offset, name.convert())
         if peek().kind = Token.Kind.LT {
             -- may need to speculatively parse, because foo->Int8<bar looks like the start of a cast
             -- to "Int8<bar...", but is actually a cast to Int8 followed by less-than bar
@@ -351,7 +352,7 @@ class Parser {
                 }
                 return null
             }
-            result := ASTNode(ASTNode.Kind.CLASS_TYPE, start.offset, name.convert(), finalChildren)
+            result := ASTNode(ASTNode.Kind.TYPE, start.offset, name.convert(), finalChildren)
             accept()
         }
         if checkNext(Token.Kind.QUESTION) != null {
@@ -506,7 +507,7 @@ class Parser {
                         }
                         if shouldAccept {
                             accept()
-                            result := ASTNode(ASTNode.Kind.CLASS_TYPE, result.offset, name, types)
+                            result := ASTNode(ASTNode.Kind.TYPE, result.offset, name, types)
                             continue
                         }
                         else {

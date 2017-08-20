@@ -1,7 +1,7 @@
 package panda.io
 
 @final
-class File {
+class File (Key<File>) {
     @private
     def path:String
 
@@ -24,21 +24,20 @@ class File {
     @external
     method absolutePath():String
 
-    ============================================================================
+    ================================================================================================
     Returns a `File` representing the absolute path of this file.
 
     @returns the file's absolute path
-    ============================================================================
+    ================================================================================================
     method absolute():File {
         return File(absolutePath())
     }
 
-    ============================================================================
-    Returns the directory containing this file, or `null` if the file does not
-    have a parent.
+    ================================================================================================
+    Returns the directory containing this file, or `null` if the file does not have a parent.
 
     @returns the path to the file
-    ============================================================================
+    ================================================================================================
     method parent():File? {
         if path = "/" {
             return null
@@ -62,25 +61,25 @@ class File {
         }
     }
 
-    ============================================================================
+    ================================================================================================
     Returns `true` if this file exists.
 
     @returns `true` if this file exists
-    ============================================================================
+    ================================================================================================
     @external
     method exists():Bit
 
-    ============================================================================
-    Creates a directory at this path. It is not an error to attempt to create a
-    directory which already exists.
-    ============================================================================
+    ================================================================================================
+    Creates a directory at this path. It is not an error to attempt to create a directory which
+    already exists.
+    ================================================================================================
     @external
     method createDirectory()
 
-    ============================================================================
-    Creates a directory at this path, including all required parent directories.
-    It is not an error to attempt to create a directory which already exists.
-    ============================================================================
+    ================================================================================================
+    Creates a directory at this path, including all required parent directories. It is not an error
+    to attempt to create a directory which already exists.
+    ================================================================================================
     method createDirectories() {
         def p := parent()
         if p != null & !p.exists() {
@@ -99,14 +98,39 @@ class File {
         return openInputStream().readFully()
     }
 
-    ============================================================================
-    Deletes the file. If the file is a directory, it must be empty or FIXME
-    some sort of error will be produced just as soon as I figure out how we're
-    handling errors.
-    ============================================================================
+    ================================================================================================
+    Deletes the file. If the file is a directory, it must be empty or FIXME some sort of error will
+    be produced just as soon as I figure out how we're handling errors.
+    ================================================================================================
     @external
     method delete()
 
+    ================================================================================================
+    Returns `true` if both files represent the same path. Note that two files can refer to the same
+    physical file on disk without being the same path (e.g. `File("src/Foo.panda")` and
+    `File("src/../src/Foo.panda")`); these are considered not equal despite resolving to the same
+    physical file.
+
+    @returns true if the files refer to the same path
+    ================================================================================================
+    @override
+    function =(other:File):Bit {
+        return path = other.path
+    }
+
+    @override
+    function !=(other:File):Bit {
+        return path != other.path
+    }
+
+    @override
+    function hash():Int {
+        return path.hash()
+    }
+
+    ================================================================================================
+    Returns the path to which this file refers.
+    ================================================================================================
     @override
     function convert():String {
         return path
