@@ -1,26 +1,37 @@
 package org.pandalanguage.pandac
 
-class Type (Equatable<Type>) {
+class Type : Symbol (Equatable<Type>) {
+    class Kind {
+        constant CLASS := 10
+        constant NULLABLE := 11
+        constant BUILTIN_INT := 12
+        constant BUILTIN_UINT := 13
+        constant VOID := 14
+        constant INT_LITERAL := 15
+        constant INVALID := 16
+        constant UNRESOLVED := 17
+    }
+
     def resolved:Bit
 
-    def name:String
-
-    def offset:Int
+    def typeKind:Int
 
     def subtypes:ImmutableArray<Type>
 
-    init(name:String, offset:Int) {
-        init(name, offset, false)
+    init(name:String, typeKind:Int, offset:Int) {
+        init(name, typeKind, offset, false)
     }
 
-    init(name:String, offset:Int, resolved:Bit) {
-        self.name := name
+    init(name:String, typeKind:Int, offset:Int, resolved:Bit) {
+        self.typeKind := typeKind
         self.offset := offset
         self.resolved := resolved
         self.subtypes := ImmutableArray<Type>()
+        super.init(Symbol.Kind.TYPE, offset, name)
     }
 
     init(subtypes:ListView<Type>) {
+        self.typeKind := Kind.UNRESOLVED
         self.subtypes := ImmutableArray<Type>(subtypes)
         def name := MutableString("unresolved<")
         var separator := ""
@@ -32,7 +43,7 @@ class Type (Equatable<Type>) {
             self.resolved &= t.resolved
         }
         name.append(">")
-        self.name := name.convert()
+        super.init(Symbol.Kind.TYPE, offset, name.convert())
     }
 
     @override
@@ -47,27 +58,49 @@ class Type (Equatable<Type>) {
 
     @class
     method Void():Type {
-        return Type("void", -1, true)
+        return Type("void", Kind.VOID, -1, true)
     }
 
     @class
     method Object():Type {
-        return Type("panda.core.Object", -1, true)
+        return Type("panda.core.Object", Kind.CLASS, -1, true)
     }
 
     @class
     method Class():Type {
-        return Type("panda.core.Class", -1, true)
+        return Type("panda.core.Class", Kind.CLASS, -1, true)
+    }
+
+    @class
+    method Value():Type {
+        return Type("panda.core.Value", Kind.CLASS, -1, true)
+    }
+
+    @class
+    method Int64():Type {
+        return Type("panda.core.Int64", Kind.CLASS, -1, true)
     }
 
     @class
     method IntLiteral():Type {
-        return Type("$int_literal", -1, true)
+        return Type("$int_literal", Kind.INT_LITERAL, -1, true)
     }
 
     @class
     method Invalid():Type {
-        return Type("<invalid>", -1, true)
+        return Type("<invalid>", Kind.INVALID, -1, true)
+    }
+
+    function isNumber():Bit {
+        return name.startsWith("panda.core.Int") | name.startsWith("panda.core.UInt")
+    }
+
+    function isBuiltinNumber():Bit {
+        return typeKind = Kind.BUILTIN_INT | typeKind = Kind.BUILTIN_UINT
+    }
+
+    function isClass():Bit {
+        return !isBuiltinNumber()
     }
 
     @override

@@ -274,6 +274,8 @@ private:
 
     std::unordered_set<String> fWrittenNullables;
 
+    std::unordered_set<String> fDeclaredClassInitializers;
+
     std::stringstream fTypeDeclarations;
 
     std::stringstream fStrings;

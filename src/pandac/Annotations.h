@@ -11,7 +11,8 @@ public:
         EXTERNAL  = 1 << 6,
         IMPLICIT  = 1 << 7,
         FINAL     = 1 << 8,
-        ABSTRACT  = 1 << 9
+        ABSTRACT  = 1 << 9,
+        INLINE    = 1 << 10
     };
 
     Annotations()
@@ -54,6 +55,10 @@ public:
 
     bool isAbstract() const {
         return (fFlags & ABSTRACT) != 0;
+    }
+
+    bool isInline() const {
+        return (fFlags & INLINE) != 0;
     }
 
 private:

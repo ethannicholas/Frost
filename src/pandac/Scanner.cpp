@@ -28,6 +28,7 @@ Annotations Scanner::convertAnnotations(const ASTNode& a) {
         else BASIC_ANNOTATION("$implicit", IMPLICIT)
         else BASIC_ANNOTATION("final", FINAL)
         else BASIC_ANNOTATION("abstract", ABSTRACT)
+        else BASIC_ANNOTATION("inline", INLINE)
         else {
             this->error(sub.fPosition, "unrecognized annotation '" + sub.fText + "'");
         }
@@ -406,6 +407,7 @@ void Scanner::scan(ASTNode* file) {
     uses.push_back({ Position(), "panda.collections.ListWriter", "ListWriter" });
     uses.push_back({ Position(), "panda.collections.MapView", "MapView" });
     uses.push_back({ Position(), "panda.collections.MapWriter", "MapWriter" });
+    uses.push_back({ Position(), "panda.collections.Set", "Set" });
     uses.push_back({ Position(), "panda.collections.Stack", "Stack" });
     uses.push_back({ Position(), "panda.core.Bit", "Bit" });
     uses.push_back({ Position(), "panda.core.Char8", "Char8" });
@@ -437,6 +439,7 @@ void Scanner::scan(ASTNode* file) {
     uses.push_back({ Position(), "panda.io.InputStream", "InputStream" });
     uses.push_back({ Position(), "panda.io.LineNumberInputStream", "LineNumberInputStream" });
     uses.push_back({ Position(), "panda.io.MemoryInputStream", "MemoryInputStream" });
+    uses.push_back({ Position(), "panda.io.MemoryOutputStream", "MemoryOutputStream" });
     uses.push_back({ Position(), "panda.io.OutputStream", "OutputStream" });
     uses.push_back({ Position(), "panda.io.PushbackInputStream", "PushbackInputStream" });
     uses.push_back({ Position(), "panda.math.Random", "Random" });

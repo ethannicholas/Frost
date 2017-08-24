@@ -11,5 +11,6 @@ class Main {
         imports.add(File("../src"))
         def compiler := Compiler(imports)
         compiler.compile(File("/tmp/Test.panda"))
+        compiler.codeGenerator.finish()
     }
 }

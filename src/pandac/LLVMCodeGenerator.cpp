@@ -434,6 +434,7 @@ void LLVMCodeGenerator::writeClass(Class& cl) {
         fShims << "    br label %exit\n";
         fShims << "exit:\n";
         fShims << "    ret void\n}\n";
+        fDeclaredClassInitializers.insert(cl.fName);
     }
 }
 
@@ -1330,6 +1331,11 @@ String LLVMCodeGenerator::getFieldReference(const IRNode& fieldRef, std::ostream
         if (field->fValue && !is_constant_number(*field->fValue) &&
                     fInitializedClasses.find(&field->fOwner) == fInitializedClasses.end()) {
             fInitializedClasses.insert(&field->fOwner);
+            if (fDeclaredClassInitializers.find(field->fOwner.fName) == fDeclaredClassInitializers.end()) {
+                fMethodDeclarations << "declare fastcc void @" << escape_type_name(field->fOwner.fName) <<
+                        "$$classInit()\n";
+                fDeclaredClassInitializers.insert(field->fOwner.fName);
+            }
             fMethodHeader << "    call fastcc void @" << escape_type_name(field->fOwner.fName) <<
                     "$$classInit()\n";
         }
@@ -2261,6 +2267,8 @@ void LLVMCodeGenerator::writeAssert(const IRNode& a, std::ostream& out) {
 }
 
 void LLVMCodeGenerator::writeStatement(const IRNode& stmt, std::ostream& out) {
+    if (stmt.fPosition.fName != nullptr && *stmt.fPosition.fName == "/tmp/Test.panda")
+    out << "; " << stmt.description() << "\n";
     switch (stmt.fKind) {
         case IRNode::Kind::BINARY:    this->writeAssignment(stmt, out);              break;
         case IRNode::Kind::BLOCK:     this->writeBlock     (stmt, out);              break;

@@ -24,6 +24,9 @@ class Compiler (ErrorReporter) {
     var symbolTable:SymbolTable
 
     @private
+    def codeGenerator:CodeGenerator
+
+    @private
     var errorCount := 0
 
     init(importDirs:ListView<File>) {
@@ -32,10 +35,25 @@ class Compiler (ErrorReporter) {
         self.scanner := Scanner(self)
         self.root := SymbolTable(self)
         self.symbolTable := root
+        self.codeGenerator := LLVMCodeGenerator(self)
+        codeGenerator.start(File("/tmp/output.ll").openOutputStream())
+        root.add(Type("builtin_int8", Type.Kind.BUILTIN_INT, -1, true))
+        root.add(Type("builtin_int16", Type.Kind.BUILTIN_INT, -1, true))
+        root.add(Type("builtin_int32", Type.Kind.BUILTIN_INT, -1, true))
+        root.add(Type("builtin_int64", Type.Kind.BUILTIN_INT, -1, true))
         root.add(Alias("Int", "panda.core.Int64", -1))
-        root.add(Alias("Int64", "panda.core.Int64", -1))
-        root.add(Alias("Console", "panda.io.Console", -1))
-        root.add(Alias("Object", "panda.core.Object", -1))
+        addAlias("panda.core.Class")
+        addAlias("panda.core.Int32")
+        addAlias("panda.core.Int64")
+        addAlias("panda.core.Immutable")
+        addAlias("panda.core.Object")
+        addAlias("panda.core.Value")
+        addAlias("panda.io.Console")
+    }
+
+    @private
+    method addAlias(name:String) {
+        root.add(Alias(name[name.next(name.lastIndexOf("."))..], name, -1))
     }
 
     function resolve(type:Type):Type {
@@ -44,11 +62,16 @@ class Compiler (ErrorReporter) {
         }
         def resolved := currentClass.peek().aliases[type.name]
         if resolved != null {
-            return Type(resolved, type.offset, true)
+            return Type(resolved, Type.Kind.CLASS, type.offset, true)
         }
         def s := symbolTable[type.name]
-        if s != null & s.kind = Symbol.Kind.ALIAS {
-            return Type((s->Alias).fullName, type.offset, true) -- FIXME parens
+        if s != null {
+            match s.kind {
+                when Symbol.Kind.ALIAS:
+                    return Type((s->Alias).fullName, Type.Kind.CLASS, type.offset, true) -- FIXME parens
+                when Symbol.Kind.TYPE:
+                    return s->Type
+            }
         }
         error(position(type.offset), "unknown type '\{type}'")
         return Type.Invalid()
@@ -58,7 +81,9 @@ class Compiler (ErrorReporter) {
         if cl.resolved {
             return
         }
-        cl.rawSuper := resolve(cl.rawSuper)
+        if cl.rawSuper != null {
+            cl.rawSuper := resolve(cl.rawSuper)
+        }
         for i in 0 .. cl.rawInterfaces.get_count() {
             cl.rawInterfaces[i] := resolve(cl.rawInterfaces[i])
         }
@@ -74,6 +99,38 @@ class Compiler (ErrorReporter) {
         }
         m.returnType := resolve(m.returnType)
         m.resolved := true
+    }
+
+    method resolve(f:FieldDecl) {
+        if f.resolved {
+            return
+        }
+        f.type := resolve(f.type)
+    }
+
+    method resolve(expr:IRNode):IRNode? {
+        return expr
+    }
+
+    method isValue(cl:ClassDecl):Bit {
+        return coercionCost(cl.type(), Type.Value()) != null
+    }
+
+    method instanceFields(cl:ClassDecl):ListView<FieldDecl> {
+        resolve(cl)
+        def result := Array<FieldDecl>()
+        if !isValue(cl) & cl.rawSuper != null {
+            def s := getClass(cl.rawSuper)
+            if s != null {
+                result.addAll(instanceFields(s))
+            }
+        }
+        for f in cl.fields {
+            if !f.annotations.isClass() {
+                result.add(f)
+            }
+        }
+        return result
     }
 
     method getClass(offset:Int, fullName:String):ClassDecl? {
@@ -102,7 +159,7 @@ class Compiler (ErrorReporter) {
     }
 
     method getClass(type:Type):ClassDecl? {
-        assert type.resolved
+        assert type.resolved, "unresolved type \{type}"
         return getClass(type.offset, type.name)
     }
 
@@ -166,6 +223,17 @@ class Compiler (ErrorReporter) {
         return type
     }
 
+    function variableType(type:Type):Type {
+        if type = Type.IntLiteral() {
+            return Type.Int64()
+        }
+        return type
+    }
+
+    function variableType(expr:IRNode):Type {
+        return variableType(expr.type)
+    }
+
     function coercionCost(type:Type, target:Type):Int? {
         assert type.resolved
         assert target.resolved
@@ -173,13 +241,16 @@ class Compiler (ErrorReporter) {
             return 0
         }
         def cl := getClass(type)
+        assert cl != null
         resolve(cl)
-        var cost := coercionCost(remapType(type, cl.rawSuper), target)
-        if cost != null {
-            return cost + 1
+        if cl.rawSuper != null {
+            var cost := coercionCost(remapType(type, cl.rawSuper), target)
+            if cost != null {
+                return cost + 1
+            }
         }
         for intf in cl.rawInterfaces {
-            cost := coercionCost(remapType(type, intf), target)
+            var cost := coercionCost(remapType(type, intf), target)
             if cost != null {
                 return cost + 1
             }
@@ -188,8 +259,64 @@ class Compiler (ErrorReporter) {
     }
 
     function coercionCost(expr:IRNode, target:Type):Int? {
+        match expr.kind {
+            when IRNode.Kind.INT:
+                if target.typeKind = Type.Kind.BUILTIN_INT {
+                    return 0
+                }
+                if target.isNumber() {
+                    return 0
+                }
+                if !target.isNumber() {
+                    return coercionCost(variableType(expr), target)
+                }
+        }
         assert expr.type != null
         return coercionCost(expr.type, target)
+    }
+
+    function coerce(expr:IRNode, target:Type):IRNode? {
+        assert expr.type.resolved
+        assert target.resolved
+        if expr.type = target {
+            return expr
+        }
+        if expr.kind = IRNode.Kind.INT {
+            if target.isBuiltinNumber() {
+                return IRNode(IRNode.Kind.INT, expr.offset, target, expr.payload->UInt64)
+            }
+            if target.typeKind = Type.Kind.CLASS & !target.isNumber() {
+                def varType := coerce(expr, variableType(expr))
+                if varType != null {
+                    return coerce(varType, target)
+                }
+            }
+        }
+        if coercionCost(expr, target) != null {
+            def cl := getClass(target)
+            if cl != null {
+                for m in cl.methods {
+                    if m.annotations.isImplicit() {
+                        -- Internal use feature, sharp edges! We currently assume there's only one
+                        -- implicit method and it's a single-argument init.
+                        resolve(m)
+                        assert m.methodKind = MethodDecl.Kind.INIT
+                        assert m.parameters.get_count() = 1
+                        if coercionCost(expr, m.parameters[0].type) != null {
+                            def type := IRNode(IRNode.Kind.TYPE_REFERENCE, expr.offset,
+                                    Type.Class(), cl.type())
+                            def args := Array<IRNode>(1) -- FIXME literal
+                            args.add(expr)
+                            return call(type, args)
+                        }
+                    }
+                }
+            }
+            def children := Array<IRNode>(1) -- FIXME literal
+            children.add(expr)
+            return IRNode(IRNode.Kind.CAST, expr.offset, target, children)
+        }
+        assert false, "need to coerce \{expr} to \{target}"
     }
 
     method callCost(m:MethodRef, args:ListView<IRNode>, expectedReturn:Type?):Int? {
@@ -236,18 +363,47 @@ class Compiler (ErrorReporter) {
         return best
     }
 
+    method call(m:MethodRef, args:ListView<IRNode>):IRNode? {
+        assert m.value.resolved
+        assert m.parameterCount() = args.get_count()
+        def finalArgs := Array<IRNode>(args.get_count())
+        for i in 0 .. args.get_count() {
+            def coerced := coerce(args[i], m.parameter(i))
+            if coerced = null {
+                return null
+            }
+            finalArgs.add(coerced)
+        }
+        return IRNode(IRNode.Kind.CALL, m.value.offset, m.returnType(), m, finalArgs)
+    }
+
     method call(m:IRNode, args:ListView<IRNode>):IRNode? {
         match m.kind {
             when IRNode.Kind.METHOD_REFERENCE:
-                assert false
+                return call(m.payload->MethodRef, args)
             when IRNode.Kind.UNRESOLVED_METHOD_REFERENCE:
                 def methods := Array<MethodRef>(m.payload->ListView<MethodRef>)
                 matchMethods(methods, args, null)
                 if methods.get_count() = 1 {
-                    return IRNode(IRNode.Kind.CALL, m.offset, methods[0].returnType(), methods[0],
-                            args)
+                    return call(methods[0], args)
                 }
                 assert false
+            when IRNode.Kind.TYPE_REFERENCE:
+                def cl := getClass(m.payload->Type)
+                assert cl != null
+                def methods := getMethodReference(cl.symbolTable, null, "init", m.offset,
+                        Array<Type>())
+                def initCall := call(methods, args)
+                if initCall = null {
+                    return null
+                }
+                def resolved := resolve(initCall)
+                if resolved = null {
+                    return null
+                }
+                def children := Array<IRNode>() -- FIXME literal
+                children.add(resolved)
+                return IRNode(IRNode.Kind.CONSTRUCT, m.offset, m.payload->Type, children)
         }
         assert false
     }
@@ -347,12 +503,14 @@ class Compiler (ErrorReporter) {
         if m.body != null {
             def compiled := compileBlock(m.body)
             if compiled != null {
-                Console.printLine("compiled to \{compiled}")
+                Console.printLine("writing \{compiled}")
+                codeGenerator.write(m, compiled)
             }
         }
     }
 
     method compile(cl:ClassDecl) {
+        cl.external := false
         currentClass.push(cl)
         for m in cl.methods {
             compile(m)

@@ -60,6 +60,7 @@ compile_panda_sources(panda_objects
     src/panda/collections/Map.panda
     src/panda/collections/MapView.panda
     src/panda/collections/MapWriter.panda
+    src/panda/collections/Set.panda
     src/panda/collections/Stack.panda
     src/panda/core/Bit.panda
     src/panda/core/Char8.panda
@@ -92,6 +93,7 @@ compile_panda_sources(panda_objects
     src/panda/io/InputStream.panda
     src/panda/io/LineNumberInputStream.panda
     src/panda/io/MemoryInputStream.panda
+    src/panda/io/MemoryOutputStream.panda
     src/panda/io/OutputStream.panda
     src/panda/io/PushbackInputStream.panda
     src/panda/math/Random.panda
@@ -197,7 +199,7 @@ compile_plex_sources(plex_objects
     src/plex/org/pandalanguage/plex/Regex.panda
     src/plex/org/pandalanguage/plex/RemappedState.panda
     src/plex/org/pandalanguage/plex/SingleCharState.panda
-    src/plex/org/pandalanguage/plex/Set.panda
+    src/plex/org/pandalanguage/plex/SetNode.panda
     src/plex/org/pandalanguage/plex/SingleChar.panda
     src/plex/org/pandalanguage/plex/SingleCharState.panda
     src/plex/org/pandalanguage/plex/Star.panda
@@ -239,12 +241,15 @@ endfunction()
 
 compile_pandac_sources(pandac_objects
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/Alias.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/Annotations.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/ASTNode.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/ClassDecl.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/CodeGenerator.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/Compiler.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/ErrorReporter.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/FieldDecl.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/IRNode.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/LLVMCodeGenerator.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/Main.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/MethodDecl.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/Methods.panda

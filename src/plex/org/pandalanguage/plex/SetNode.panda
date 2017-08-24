@@ -1,6 +1,6 @@
 package org.pandalanguage.plex
 
-class Set : Node {
+class SetNode : Node {
     var inverse := false
 
     def contents := Array<Node>()

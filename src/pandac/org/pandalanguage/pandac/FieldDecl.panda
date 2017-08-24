@@ -1,15 +1,35 @@
 package org.pandalanguage.pandac
 
-class FieldDecl {
-    def name:String
+class FieldDecl : Symbol {
+    class Kind {
+        constant VAR      := 10000
+        constant DEF      := 10001
+        constant CONSTANT := 10002
+        constant PROPERTY := 10003
+    }
+
+    def owner:ClassDecl -- FIXME weak
+
+    def doccomment:String?
+
+    def annotations:Annotations
+
+    def fieldKind:Int
 
     def type:Type
 
     def value:ASTNode?
 
-    init(name:String, type:Type, value:ASTNode?) {
-        self.name := name
+    var resolved := false
+
+    init(owner:ClassDecl, offset:Int, doccomment:String?, annotations:Annotations, fieldKind:Int,
+            name:String, type:Type, value:ASTNode?) {
+        self.owner := owner
+        self.doccomment := doccomment
+        self.annotations := annotations
+        self.fieldKind := fieldKind
         self.type := type
         self.value := value
+        super.init(Symbol.Kind.FIELD, offset, name)
     }
 }

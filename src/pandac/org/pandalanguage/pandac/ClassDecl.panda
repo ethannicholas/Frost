@@ -3,6 +3,10 @@ package org.pandalanguage.pandac
 class ClassDecl : Symbol {
     def aliases:MapView<String, String>
 
+    def doccomment:String?
+
+    def annotations:Annotations
+
     def rawSuper:Type?
 
     def rawInterfaces:Array<Type>
@@ -13,12 +17,16 @@ class ClassDecl : Symbol {
 
     def symbolTable:SymbolTable
 
+    var external := true
+
     var resolved:Bit
 
-    init(offset:Int, aliases:MapView<String, String>, name:String, rawSuper:Type,
-            rawInterfaces:Array<Type>, parent:SymbolTable) {
+    init(offset:Int, aliases:MapView<String, String>, doccomment:String?, annotations:Annotations,
+            name:String, rawSuper:Type?, rawInterfaces:Array<Type>, parent:SymbolTable) {
         super.init(Kind.CLASS, offset, name)
         self.aliases := aliases
+        self.doccomment := doccomment
+        self.annotations := annotations
         self.rawSuper := rawSuper
         self.rawInterfaces := rawInterfaces
         self.symbolTable := SymbolTable(parent)
@@ -26,7 +34,7 @@ class ClassDecl : Symbol {
     }
 
     function type():Type {
-        return Type(name, -1, true)
+        return Type(name, Type.Kind.CLASS, -1, true)
     }
 
     @override

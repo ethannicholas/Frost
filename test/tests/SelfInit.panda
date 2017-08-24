@@ -11,6 +11,6 @@ class SelfInit {
 
     @class
     method main() {
-        Console.printLine(SelfInit().x)        
+        Console.printLine(SelfInit().x)
     }
 }

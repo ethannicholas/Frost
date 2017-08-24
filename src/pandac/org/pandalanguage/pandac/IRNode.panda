@@ -10,6 +10,11 @@ class IRNode : Immutable {
         constant UNRESOLVED_METHOD_REFERENCE := 1003
         constant INT                         := 1004
         constant CALL                        := 1005
+        constant BREAK                       := 1006
+        constant CONTINUE                    := 1007
+        constant RETURN                      := 1008
+        constant CAST                        := 1009
+        constant CONSTRUCT                   := 1010
     }
 
     def kind:Int
@@ -103,6 +108,8 @@ class IRNode : Immutable {
                 return payload.convert()
             when Kind.INT:
                 return payload.convert()
+            when Kind.CONSTRUCT:
+                return "\{type}(\{children[0].children.join(", ")})"
             otherwise:
                 return "<IRNode:\{kind}>"
         }

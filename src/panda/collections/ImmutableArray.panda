@@ -110,6 +110,22 @@ class ImmutableArray<T> (ListView<T>) {
         return ImmutableArrayIterator<T>(self)
     }
 
+    function join():String { -- FIXME move to ListView
+        return join(", ")
+    }
+
+    function join(separator:String):String { -- FIXME move to ListView
+        if count = 0 {
+            return ""
+        }
+        def result := MutableString(self[0].convert())
+        for i in 1 .. count {
+            result.append(separator)
+            result.append(self[i])
+        }
+        return result.convert()
+    }
+
     @override
     function convert():String {
         def result := MutableString()

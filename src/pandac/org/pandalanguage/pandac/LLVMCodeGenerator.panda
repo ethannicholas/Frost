@@ -1,0 +1,677 @@
+package org.pandalanguage.pandac
+
+class LLVMCodeGenerator (CodeGenerator) {
+    class ClassConstant : Immutable {
+        def name:String
+        def type:String
+
+        init(name:String, type:String) {
+            self.name := name
+            self.type := type
+        }
+    }
+
+    constant POINTER_SIZE := 8
+
+    def out:OutputStream
+
+    def compiler:Compiler
+
+    def declarations := MemoryOutputStream()
+
+    def types := MemoryOutputStream()
+
+    def methodsBuffer := MemoryOutputStream()
+
+    def methods := IndentedOutputStream(methodsBuffer)
+
+    def declared := Set<String>()
+
+    def writtenTypes := Set<String>()
+
+    def writtenWrappers := Set<String>()
+
+    var currentBlock:String
+
+    var varCount := 0
+
+    var labelCount := 0
+
+    init(compiler:Compiler) {
+        self.compiler := compiler
+    }
+
+    @override
+    method start(out:OutputStream) {
+        self.out := IndentedOutputStream(out)
+
+        out.printLine("target datalayout = \"e-p:64:64:64-i1:8:8-i8:8:8-i16:16:16-i32:32:32-i64:" +
+                "64:64-f32:32:32-f64:64:64-v64:64:64-v128:128:128-a0:0:64-s0:64:64-f80:128:128-" +
+                "n8:16:32:64-S128\"")
+        out.printLine("target triple = \"x86_64-apple-macosx10.8.0\"")
+        out.printLine("declare i8* @malloc(i64)")
+    }
+
+    @override
+    method finish() {
+        out.print(types.convert())
+        out.print(declarations.convert())
+        out.print(methodsBuffer.convert())
+    }
+
+    method nextVar():String {
+        varCount += 1
+        return "%\{varCount}"
+    }
+
+    method nextLabel():String {
+        labelCount += 1
+        return "$l\{labelCount}"
+    }
+
+    method createBlock(label:String, out:OutputStream) {
+        out.printLine("\n\{label}:")
+        currentBlock := label
+    }
+
+    function endsWithBranch(stmt:IRNode):Bit {
+        match stmt.kind {
+            when IRNode.Kind.BLOCK:
+                if stmt.children.get_count() = 0 {
+                    return false
+                }
+                return endsWithBranch(stmt.children[stmt.children.get_count() - 1])
+            when IRNode.Kind.BREAK, IRNode.Kind.CONTINUE, IRNode.Kind.RETURN:
+                return true
+            otherwise: return false
+        }
+    }
+
+    function fieldSize(t:Type):Int {
+        assert t.resolved
+        if t.isBuiltinNumber() {
+            if t.name.endsWith("8") {
+                return 1
+            }
+            if t.name.endsWith("16") {
+                return 2
+            }
+            if t.name.endsWith("32") {
+                return 4
+            }
+            assert t.name.endsWith("64")
+            return 8
+        }
+        def cl := compiler.getClass(t)
+        assert cl != null
+        if !compiler.isValue(cl) {
+            return POINTER_SIZE
+        }
+        var result := 0
+        for f in compiler.instanceFields(cl) {
+            if f.annotations.isClass() {
+                continue
+            }
+            compiler.resolve(f)
+            def size := fieldSize(f.type)
+            def align := result % size
+            if align != 0 {
+                result += size - align
+            }
+            assert result % size = 0
+            result += size
+        }
+        if t.typeKind = Type.Kind.NULLABLE {
+            result += 1
+        }
+        return result
+    }
+
+    function alignment(t:Type):Int {
+        return fieldSize(t).min(8)
+    }
+
+    function sizeOf(t:Type):Int {
+        if !t.isClass() {
+            return fieldSize(t)
+        }
+        def cl := compiler.getClass(t)
+        assert cl != null
+        var result := 0
+        for f in compiler.instanceFields(cl) {
+            compiler.resolve(f)
+            def size := fieldSize(f.type)
+            def align := result % size
+            if align != 0 {
+                result += size - align
+            }
+            assert result % size = 0
+            result += size
+        }
+        if compiler.isValue(cl) & t.typeKind = Type.Kind.NULLABLE {
+            result += 1
+        }
+        return result
+    }
+
+    function sizeOfWrapper(t:Type):Int {
+        def cl := compiler.getClass(t)
+        assert cl != null & compiler.isValue(cl)
+        var result := sizeOf(Type.Object())
+        for f in compiler.instanceFields(cl) {
+            compiler.resolve(f)
+            def size := fieldSize(f.type)
+            def align := result % size
+            if align != 0 {
+                result += size - align
+            }
+            assert result % size = 0
+            result += size
+        }
+        if t.typeKind = Type.Kind.NULLABLE {
+            result += 1
+        }
+        return result
+    }
+
+    method writeType(t:Type) {
+        if writtenTypes.contains(t.name) {
+            return
+        }
+        writtenTypes.add(t.name)
+        def code := MutableString("%\{escapeName(t.name)} = type { ")
+        def cl := compiler.getClass(t)
+        assert cl != null
+        var separator := ""
+        for f in compiler.instanceFields(cl) {
+            compiler.resolve(f)
+            code.append("\{separator}\{type(f.type)}")
+            separator := ", "
+        }
+        code.append(" }")
+        types.printLine(code)
+    }
+
+    method writeWrapperType(t:Type) {
+        if writtenWrappers.contains(t.name) {
+            return
+        }
+        writtenWrappers.add(t.name)
+        def code := MutableString("%\{escapeName(t.name)}$wrapper = type { ")
+        def object := compiler.getClass(Type.Object())
+        assert object != null
+        var separator := ""
+        for f in compiler.instanceFields(object) {
+            compiler.resolve(f)
+            code.append("\{separator}\{type(f.type)}")
+            separator := ", "
+        }
+        code.append(", \{type(t)}")
+        code.append(" }")
+        types.printLine(code)
+    }
+
+    method type(t:Type):String {
+        match t.typeKind {
+            when Type.Kind.VOID:
+                return "void"
+            when Type.Kind.BUILTIN_INT, Type.Kind.BUILTIN_UINT:
+                return "i\{sizeOf(t) * 8}"
+            when Type.Kind.CLASS:
+                writeType(t)
+                def name := "%\{escapeName(t.name)}"
+                if t.isClass() {
+                    def cl := compiler.getClass(t)
+                    assert cl != null
+                    if !compiler.isValue(cl) {
+                        return name + "*"
+                    }
+                }
+                return name
+            when Type.Kind.NULLABLE:
+                def cl := compiler.getClass(t)
+                assert cl != null
+                if compiler.isValue(cl) {
+                    return nullableType(t.subtypes[0])
+                }
+                return type(t.subtypes[0])
+            otherwise:
+                assert false
+        }
+    }
+
+    method wrapperTypeName(t:Type):String {
+        writeWrapperType(t)
+        return "%\{escapeName(t.name)}$wrapper"
+    }
+
+    method wrapperType(t:Type):String {
+        return wrapperTypeName(t) + "*"
+    }
+
+    method nullableType(t:Type):String {
+        return "\{wrapperTypeName(t)}$nullable"
+    }
+
+    method getWrapperClassConstant(cl:ClassDecl):ClassConstant {
+        if cl.external {
+            type(Type.Class())
+            def name := "@\{escapeName(cl.name)}$wrapperclass"
+            def type := "%panda$core$Class"
+            types.printLine("\{name} = external global \{type}")
+            return ClassConstant(name, type)
+        }
+    }
+
+    function escapeName(s:String):String {
+        return s.replace(".", "$")
+    }
+
+    function getName(m:MethodDecl):String {
+        if m.name = "main" {
+            return "@pandaMain"
+        }
+        def result := MutableString("@")
+        result.append(escapeName(m.owner.name))
+        result.append("$")
+        result.append(escapeName(m.name))
+        for p in m.parameters {
+            result.append("$\{escapeName(p.type.name)}")
+        }
+        if m.returnType != Type.Void() {
+            result.append("$R$")
+            result.append(escapeName(m.returnType.name))
+        }
+        return result.convert()
+    }
+
+    function callingConvention(m:MethodDecl):String {
+        return "fastcc "
+    }
+
+    method getCallReference(call:IRNode, out:OutputStream):String {
+        assert call.kind = IRNode.Kind.CALL
+        def result := nextVar()
+        def m := (call.payload->MethodRef).value
+        if m.owner.external {
+            writeDeclaration(m)
+        }
+        def args := Array<String>(call.children.get_count())
+        for a in call.children {
+            args.add(getTypedReference(a, out))
+        }
+        out.printLine("\{result} = call \{callingConvention(m)}\{type(call.type)} " +
+                "\{getName(m)}(\{args.join()})")
+        return result
+    }
+
+    method wrapValue(value:String, srcType:Type, dstType:Type, out:OutputStream):String {
+        def src := compiler.getClass(srcType)
+        assert src != null
+        if srcType.kind = Type.Kind.NULLABLE {
+            -- casting nullable value to nullable wrapper, need to special-case null
+            def testStart := currentBlock
+            def isNonNull := nextVar()
+            out.printLine("\{isNonNull} = extractvalue \{nullableType(srcType)} \{value}, 1")
+            def nonNullLabel := nextLabel()
+            def endLabel := nextLabel()
+            out.printLine("br i1 \{isNonNull}, label %\{nonNullLabel}, label %\{endLabel}")
+            createBlock(nonNullLabel, out)
+            def unwrapped := toNonNullableValue(value, srcType, srcType.subtypes[0], out)
+            def nonNullValue := wrapValue(unwrapped, srcType.subtypes[0], dstType, out)
+            out.printLine("br label %\{endLabel}")
+            createBlock(endLabel, out)
+            def result := nextVar()
+            out.printLine("\{result} = phi \{type(dstType)} [null, %\{testStart}], " +
+                    "[\{nonNullValue}, %\{nonNullLabel}]")
+            return result
+        }
+        def mallocRef := nextVar()
+        out.printLine("\{mallocRef} = call i8* @malloc(i64 \{sizeOfWrapper(src.type())})")
+        def wrapperTypeName := wrapperTypeName(src.type())
+        def wrapperType := wrapperType(src.type())
+        def wrapperCast := nextVar()
+        out.printLine("\{wrapperCast} = bitcast i8* \{mallocRef} to \{wrapperType}")
+        def classPtr := nextVar()
+        out.printLine("\{classPtr} = getelementptr \{wrapperTypeName}, " +
+                "\{wrapperType} \{wrapperCast}, i64 0, i32 0")
+        def cc := getWrapperClassConstant(src)
+        out.printLine("store %panda$core$Class* bitcast(\{cc.type}* \{cc.name} to " +
+                "%panda$core$Class*), %panda$core$Class** \{classPtr}")
+        def refCount := nextVar()
+        out.printLine("\{refCount} = getelementptr \{wrapperTypeName}, " +
+                "\{wrapperType} \{wrapperCast}, i64 0, i32 1, i32 0")
+        out.printLine("store i32 0, i32* \{refCount}")
+        def target := nextVar()
+        out.printLine("\{target} = getelementptr \{wrapperTypeName}, " +
+                "\{wrapperType} \{wrapperCast}, i64 0, i32 2")
+        out.printLine("store \{type(srcType)} \{value}, \{type(srcType)}* \{target}")
+        if wrapperType != type(dstType) {
+            def result := nextVar()
+            out.printLine("\{result} = bitcast \{wrapperType} \{wrapperCast} to \{type(dstType)}")
+            return result
+        }
+        return wrapperCast
+    }
+
+    method unwrapValue(value:String, srcType:Type, dstType:Type, out:OutputStream):String {
+-*        Class* target = fCompiler->getClass(dstType);
+        std::vector<Field*> fields = fCompiler->getInstanceFields(*target);
+        if (dstType.fCategory == Type::Category::NULLABLE) {
+            // casting nullable wrapper to nullable value, need to special-case null
+            String testStart = fCurrentBlock;
+            String isNonNull = this->nextVar();
+            out << "    " << isNonNull << " = icmp ne " << this->llvmType(srcType) <<
+                    " " << value << ", null\n";
+            String nonNullLabel = this->nextLabel();
+            String endLabel = this->nextLabel();
+            out << "    br i1 " << isNonNull << ", label %" << nonNullLabel << ", label %" <<
+                    endLabel << "\n";
+            this->createBlock(nonNullLabel, out);
+            String wrapped = this->unwrapValue(value, srcType, dstType.fSubtypes[0], out);
+            String nonNullValue = this->toNullableValue(wrapped, dstType.fSubtypes[0], dstType, out);
+            out << "    br label %" << endLabel << "\n";
+            this->createBlock(endLabel, out);
+            String result = this->nextVar();
+            out << "    " << result << " = phi " << this->llvmType(dstType) << " [{";
+            const char* separator = " ";
+            for (const Field* f : fields) {
+                out << separator << this->llvmType(f->fType) << " undef";
+                separator = ", ";
+            }
+            out << separator << "i1 0 }, %" << testStart << "], [" << nonNullValue << ", %" <<
+                    nonNullLabel << "]\n";
+            return result;
+        }
+        ASSERT(target);
+        String targetType = this->llvmType(dstType);
+        String wrapperTypeName = this->llvmWrapperTypeName(dstType);
+        String wrapperType = this->llvmWrapperType(dstType);
+        String srcCast = this->nextVar();
+        out << "    " << srcCast << " = bitcast " << this->llvmType(srcType) <<
+                " " << value << " to " << wrapperType << "\n";
+        String result = "{";
+        const char* separator = " ";
+        for (const Field* f : fields) {
+            result += separator;
+            result += this->llvmType(f->fType);
+            result += " undef";
+            separator = ", ";
+        }
+        result += " }";
+        for (int i = 0; i < fields.size(); ++i) {
+            String ptr = this->nextVar();
+            out << "    " << ptr << " = getelementptr " << wrapperTypeName << ", " <<
+                    wrapperType << " " << srcCast << ", i64 0, i32 " <<
+                    OBJECT_FIELD_COUNT + i << "\n";
+            String read = this->nextVar();
+            out << "    " << read << " = load " << this->llvmType(fields[i]->fType) << ", " <<
+                    this->llvmType(fields[i]->fType) << "* " << ptr << "\n";
+            String next = this->nextVar();
+            out << "    " << next << " = insertvalue " << targetType << " " << result <<
+                    ", " << this->llvmType(fields[i]->fType) << " " << read << ", " << i <<
+                    "\n";
+            result = next;
+        }
+        return result;*-
+        assert false
+    }
+
+    method toNullableValue(value:String, srcType:Type, dstType:Type, out:OutputStream):String {
+-*        Class* cl = fCompiler->getClass(srcType);
+        ASSERT(cl);
+        String nullableType = this->llvmNullableType(dstType);
+        std::vector<Field*> fields = fCompiler->getInstanceFields(*cl);
+        String result = "{";
+        const char* separator = " ";
+        for (const Field* f : fields) {
+            result += separator;
+            result += this->llvmType(f->fType);
+            result += " undef";
+            separator = ", ";
+        }
+        result += separator;
+        result += "i1 true }";
+        for (int i = 0; i < fields.size(); ++i) {
+            String fieldValue = this->nextVar();
+            out << "    " << fieldValue << " = extractvalue " << this->llvmType(srcType) << " " <<
+                    value << ", " << i << "\n";
+            String next = this->nextVar();
+            out << "    " << next << " = insertvalue " << nullableType << " " << result <<
+                    ", " << this->llvmType(fields[i]->fType) << " " << fieldValue << ", " << i <<
+                    "\n";
+            result = next;
+        }
+        return result;*-
+        assert false
+    }
+
+    method toNonNullableValue(value:String, srcType:Type, dstType:Type, out:OutputStream):String {
+-*        Class* cl = fCompiler->getClass(dstType);
+        ASSERT(cl);
+        String nullableType = this->llvmNullableType(srcType);
+        std::vector<Field*> fields = fCompiler->getInstanceFields(*cl);
+        String result = "{";
+        const char* separator = " ";
+        for (const Field* f : fields) {
+            result += separator;
+            result += this->llvmType(f->fType);
+            result += " undef";
+            separator = ", ";
+        }
+        result += " }";
+        for (int i = 0; i < fields.size(); ++i) {
+            String fieldValue = this->nextVar();
+            out << "    " << fieldValue << " = extractvalue " << nullableType << " " << value << ", " <<
+                    i << "\n";
+            String next = this->nextVar();
+            out << "    " << next << " = insertvalue " << this->llvmType(dstType) << " " << result <<
+                    ", " << this->llvmType(fields[i]->fType) << " " << fieldValue << ", " << i <<
+                    "\n";
+            result = next;
+        }
+        return result;*-
+        assert false
+    }
+
+    method getCastReference(value:String, src:Type, target:Type, out:OutputStream):String {
+        def op:String
+        if target.isBuiltinNumber() {
+            assert src.isBuiltinNumber()
+            def size1 := sizeOf(src)
+            def size2 := sizeOf(target)
+            if size1 > size2 {
+                op := "trunc"
+            }
+            else if size1 < size2 {
+                if (target.kind == Type.Kind.BUILTIN_INT) {
+                    op := "sext"
+                }
+                else {
+                    op := "zext"
+                }
+            }
+            else {
+                return value
+            }
+        }
+        else {
+            def srcClass := compiler.getClass(src)
+            assert srcClass != null
+            def targetClass := compiler.getClass(target)
+            assert targetClass != null
+            if compiler.isValue(srcClass) & !compiler.isValue(targetClass) {
+                return wrapValue(value, src, target, out)
+            }
+            else if !compiler.isValue(srcClass) & compiler.isValue(targetClass) {
+                return unwrapValue(value, src, target, out)
+            }
+            else if compiler.isValue(srcClass) & target.kind = Type.Kind.NULLABLE &
+                    target.subtypes[0] = src {
+                return toNullableValue(value, src, target, out)
+            }
+            else if compiler.isValue(targetClass) & src.kind = Type.Kind.NULLABLE &
+                    src.subtypes[0] = target {
+                return toNonNullableValue(value, src, target, out)
+            }
+            op := "bitcast"
+        }
+        def srcType := type(src)
+        def dstType := type(target)
+        if srcType = dstType {
+            return value
+        }
+        def result := nextVar()
+        out.printLine("    \{result} = \{op} \{srcType} \{value} to \{dstType}")
+        return result
+    }
+
+    method getCastReference(cast:IRNode, out:OutputStream):String {
+        assert cast.kind = IRNode.Kind.CAST
+        assert cast.children.get_count() = 1
+        def base := getReference(cast.children[0], out)
+        return getCastReference(base, cast.children[0].type, cast.type, out)
+    }
+
+    method getConstructReference(construct:IRNode, out:OutputStream):String {
+        assert construct.kind = IRNode.Kind.CONSTRUCT
+        assert construct.children.get_count() >= 1
+        def cl := compiler.getClass(construct.type)
+        assert cl != null
+        def t := type(construct.type)
+        if (construct.type.isNumber()) {
+            assert construct.children.get_count() = 1
+            assert construct.children[0].children.get_count() = 1
+            def value := getTypedReference(construct.children[0].children[0], out)
+            if construct.children[0].children[0].kind = IRNode.Kind.INT {
+                return "{ " + value + " }"
+            }
+            assert false
+-*            String result = this->nextVar();
+            ASSERT(!cl->fFields.back()->fAnnotations.isClass());
+            out << "    " << result << " = insertvalue " << type << " { " <<
+                    this->llvmType(cl->fFields.back()->fType) << " undef }, " << value << ", 0\n";
+            return result;*-
+        }
+        assert false
+-*        if (cl->isValue(fCompiler)) {
+            String alloca = "%$tmp" + std::to_string(++fLabels);
+            fMethodHeader << "    " << alloca << " = alloca " << type << "\n";
+            this->writeCall(construct.fChildren[0], type + "* " + alloca, out);
+            String result = this->nextVar();
+            out << "    " << result << " = load " << type << ", " << type << "* " << alloca << "\n";
+            return result;
+        }
+        String callRef = this->nextVar();
+        out << "    " << callRef << " = call i8* @malloc(i64 " << this->sizeOf(construct.fType) <<
+                ")\n";
+        String result = this->nextVar();
+        out << "    " << result << " = bitcast i8* " << callRef << " to " <<
+                this->llvmType(construct.fType) << "\n";
+        String classPtr = this->nextVar();
+        String className;
+        if (construct.fType.fCategory == Type::Category::GENERIC) {
+            className = this->llvmTypeName(construct.fType.fSubtypes[0]);
+        }
+        else {
+            className = this->llvmTypeName(construct.fType);
+        }
+        out << "    " << classPtr << " = getelementptr inbounds " << className << ", " << type <<
+                " " << result << ", i64 0, i32 0" << "\n";
+        const ClassConstant& cc = this->getClassConstant(*cl);
+        out << "    store %panda$core$Class* bitcast(" << cc.fType << "* " << cc.fName <<
+                " to %panda$core$Class*), %panda$core$Class** " << classPtr << "\n";
+        this->writeCall(construct.fChildren[0], type + " " + result, out);
+        return result;*-
+    }
+
+    method getIntReference(int:IRNode, out:OutputStream):String {
+        return (int.payload->Int).convert() -- FIXME parens
+    }
+
+    method getReference(expr:IRNode, out:OutputStream):String {
+        match expr.kind {
+            when IRNode.Kind.CALL:
+                return getCallReference(expr, out)
+            when IRNode.Kind.CAST:
+                return getCastReference(expr, out)
+            when IRNode.Kind.INT:
+                return getIntReference(expr, out)
+            when IRNode.Kind.CONSTRUCT:
+                return getConstructReference(expr, out)
+            otherwise:
+                assert false, "unsupported expression \{expr}"
+        }
+    }
+
+    method getTypedReference(expr:IRNode, out:OutputStream):String {
+        return "\{type(expr.type)} \{getReference(expr, out)}"
+    }
+
+    method writeCall(call:IRNode, out:OutputStream) {
+        assert call.kind = IRNode.Kind.CALL
+        def m := (call.payload->MethodRef).value
+        if m.owner.external {
+            writeDeclaration(m)
+        }
+        def args := Array<String>(call.children.get_count())
+        for a in call.children {
+            args.add(getTypedReference(a, out))
+        }
+        out.printLine("call \{callingConvention(m)}\{type(call.type)} " +
+                "\{getName(m)}(\{args.join()})")
+    }
+
+    method writeStatement(stmt:IRNode, out:OutputStream) {
+        match stmt.kind {
+            when IRNode.Kind.CALL:
+                writeCall(stmt, out)
+            otherwise:
+                assert false
+        }
+    }
+
+    method writeDeclaration(m:MethodDecl) {
+        def name := getName(m)
+        if declared.contains(name) {
+            return
+        }
+        declared.add(name)
+        declarations.print("declare \{callingConvention(m)}\{type(m.returnType)} \{getName(m)}(")
+        var separator := ""
+        for p in m.parameters {
+            declarations.print("\{separator}\{type(p.type)} %\{escapeName(p.name)}")
+            separator := ", "
+        }
+        declarations.printLine(")")
+
+    }
+
+    @override
+    method write(m:MethodDecl, body:IRNode) {
+        currentBlock := "0"
+        varCount := 0
+        methods.print("define \{type(m.returnType)} \{getName(m)}(")
+        var separator := ""
+        for p in m.parameters {
+            methods.print("\{separator}\{type(p.type)} %\{escapeName(p.name)}")
+            separator := ", "
+        }
+        methods.printLine(") {")
+        methods.level += 1
+        assert body.kind = IRNode.Kind.BLOCK
+        for s in body.children {
+            writeStatement(s, methods)
+        }
+        if !endsWithBranch(body) {
+            if m.returnType = Type.Void() {
+                methods.printLine("ret void")
+            }
+            else {
+                methods.printLine("unreachable")
+            }
+        }
+        methods.level -= 1
+        methods.printLine("}")
+    }
+}

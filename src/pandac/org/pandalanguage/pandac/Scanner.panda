@@ -13,12 +13,116 @@ class Scanner {
             return Type.Void()
         }
         assert type.kind = ASTNode.Kind.TYPE | type.kind = ASTNode.Kind.NULLABLE_TYPE
-        return Type(type.payload->String, type.offset)
+        return Type(type.payload->String, Type.Kind.CLASS, type.offset)
+    }
+
+    method convertAnnotations(a:ASTNode):Annotations {
+        assert a.kind = ASTNode.Kind.ANNOTATIONS
+        var flags := 0
+        for c in a.children {
+            assert c.kind = ASTNode.Kind.ANNOTATION
+            match c.payload->String {
+                when "@private":   flags ||= Annotations.Flag.PRIVATE
+                when "@protected": flags ||= Annotations.Flag.PROTECTED
+                when "@package":   flags ||= Annotations.Flag.PACKAGE
+                when "@class":     flags ||= Annotations.Flag.CLASS
+                when "@override":  flags ||= Annotations.Flag.OVERRIDE
+                when "@external":  flags ||= Annotations.Flag.EXTERNAL
+                when "@$implicit": flags ||= Annotations.Flag.IMPLICIT
+                when "@final":     flags ||= Annotations.Flag.FINAL
+                when "@abstract":  flags ||= Annotations.Flag.ABSTRACT
+                when "@inline":    flags ||= Annotations.Flag.INLINE
+                otherwise:
+                    compiler.error(c.offset, "unrecognized annotation '\{c.payload}'")
+            }
+        }
+        return Annotations(flags)
+    }
+
+    method scanFields(owner:ClassDecl, f:ASTNode) {
+        assert f.children.get_count() = 3
+        def doccomment:String?
+        if f.children[0].kind != ASTNode.Kind.VOID {
+            assert f.children[0].kind = ASTNode.Kind.DOC_COMMENT
+            doccomment := f.children[0].payload->String
+        }
+        else {
+            doccomment := null
+        }
+        def annotations := convertAnnotations(f.children[1])
+        def kind:Int
+        match f.children[2].kind {
+            when ASTNode.Kind.VAR:
+                kind := FieldDecl.Kind.VAR
+            when ASTNode.Kind.DEF:
+                kind := FieldDecl.Kind.DEF
+            when ASTNode.Kind.CONSTANT:
+                kind := FieldDecl.Kind.CONSTANT
+                annotations.flags ||= Annotations.Flag.CLASS
+            when ASTNode.Kind.PROPERTY:
+                kind := FieldDecl.Kind.PROPERTY
+        }
+        for decl in f.children[2].children {
+            assert decl.children[0].kind = ASTNode.Kind.IDENTIFIER
+            assert decl.children[0].children.get_count() = 1
+            def value:ASTNode?
+            if decl.children.get_count() = 2 {
+                value := decl.children[1]
+            }
+            else {
+                assert decl.children.get_count() = 1
+                value := null
+            }
+            def field := FieldDecl(owner, decl.offset, doccomment, annotations, kind,
+                    decl.children[0].payload->String, convertType(decl.children[0].children[0]),
+                    value)
+            owner.symbolTable.add(field)
+            owner.fields.add(field)
+        }
+    }
+
+    method scanInit(owner:ClassDecl, i:ASTNode):MethodDecl? {
+        assert i.children.get_count() = 5
+        def doccomment:String?
+        if i.children[0].kind != ASTNode.Kind.VOID {
+            assert i.children[0].kind = ASTNode.Kind.DOC_COMMENT
+            doccomment := i.children[0].payload->String
+        }
+        else {
+            doccomment := null
+        }
+        assert i.children[1].kind = ASTNode.Kind.ANNOTATIONS
+        def annotations := convertAnnotations(i.children[1])
+        assert i.children[2].kind = ASTNode.Kind.PARAMETERS
+        def parameters := Array<MethodDecl.Parameter>()
+        for p in i.children[2].children {
+            assert p.kind = ASTNode.Kind.PARAMETER
+            assert p.children.get_count() = 1
+            parameters.add(MethodDecl.Parameter(p.payload->String, convertType(p.children[0])))
+        }
+        return MethodDecl(owner, i.offset, doccomment, annotations, MethodDecl.Kind.INIT, "init",
+                parameters, Type.Void(), i.children[3])
     }
 
     method scanMethod(owner:ClassDecl, m:ASTNode):MethodDecl? {
         assert m.children.get_count() = 6
+        def kind:Int
+        match m.kind {
+            when ASTNode.Kind.METHOD:   kind := MethodDecl.Kind.METHOD
+            when ASTNode.Kind.FUNCTION: kind := MethodDecl.Kind.FUNCTION
+            otherwise: assert false
+        }
         def name := m.payload->String
+        def doccomment:String?
+        if m.children[0].kind != ASTNode.Kind.VOID {
+            assert m.children[0].kind = ASTNode.Kind.DOC_COMMENT
+            doccomment := m.children[0].payload->String
+        }
+        else {
+            doccomment := null
+        }
+        assert m.children[1].kind = ASTNode.Kind.ANNOTATIONS
+        def annotations := convertAnnotations(m.children[1])
         assert m.children[2].kind = ASTNode.Kind.PARAMETERS
         def parameters := Array<MethodDecl.Parameter>()
         for p in m.children[2].children {
@@ -28,10 +132,12 @@ class Scanner {
         }
         def returnType := convertType(m.children[3])
         if m.children[4].kind = ASTNode.Kind.BLOCK {
-            return MethodDecl(owner, m.offset, name, parameters, returnType, m.children[4])
+            return MethodDecl(owner, m.offset, doccomment, annotations, kind, name, parameters,
+                    returnType, m.children[4])
         }
         else {
-            return MethodDecl(owner, m.offset, name, parameters, returnType, null)        
+            return MethodDecl(owner, m.offset, doccomment, annotations, kind, name, parameters,
+                    returnType, null)
         }
     }
 
@@ -45,20 +151,38 @@ class Scanner {
         }
         def interfaces := Array<Type>()
         assert cl.children.get_count() = 6
-        def supertype:Type
+        def doccomment:String?
+        if cl.children[0].kind != ASTNode.Kind.VOID {
+            assert cl.children[0].kind = ASTNode.Kind.DOC_COMMENT
+            doccomment := cl.children[0].payload->String
+        }
+        else {
+            doccomment := null
+        }
+        assert cl.children[1].kind = ASTNode.Kind.ANNOTATIONS
+        def annotations := convertAnnotations(cl.children[1])
+        def supertype:Type?
         if cl.children[3].kind != ASTNode.Kind.VOID {
             supertype := convertType(cl.children[3])
         }
-        else {
+        else if fullName != "panda.core.Object" {
             supertype := Type.Object()
         }
-        def result := ClassDecl(cl.offset, aliases, fullName, supertype, interfaces, compiler.root)
+        else {
+            supertype := null
+        }
+        def result := ClassDecl(cl.offset, aliases, doccomment, annotations, fullName, supertype,
+                interfaces, compiler.root)
         for c in cl.children[5].children {
             match c.kind {
                 when ASTNode.Kind.FIELD:
-                    Console.printLine("got field: \{c}")
+                    scanFields(result, c)
                 when ASTNode.Kind.INIT:
-                    Console.printLine("got init: \{c}")
+                    def i := scanInit(result, c)
+                    if i != null {
+                        result.symbolTable.add(i)
+                        result.methods.add(i)
+                    }
                 when ASTNode.Kind.METHOD, ASTNode.Kind.FUNCTION:
                     def m := scanMethod(result, c)
                     if m != null {

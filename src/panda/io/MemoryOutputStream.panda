@@ -1,0 +1,19 @@
+package panda.io
+
+====================================================================================================
+An `OutputStream` which stores the data written to it in a memory buffer.
+====================================================================================================
+class MemoryOutputStream : OutputStream {
+    @private
+    var data := MutableString()
+
+    @override
+    method write(i:Int8) {
+        data.append(Char8(i))
+    }
+
+    @override
+    function convert():String {
+        return data.convert()
+    }
+}

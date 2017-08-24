@@ -1,0 +1,9 @@
+package org.pandalanguage.pandac
+
+interface CodeGenerator {
+    method start(out:OutputStream)
+
+    method write(m:MethodDecl, body:IRNode)
+
+    method finish()
+}

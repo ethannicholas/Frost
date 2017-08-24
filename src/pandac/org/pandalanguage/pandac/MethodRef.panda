@@ -24,6 +24,6 @@ class MethodRef {
     }
 
     function type():Type {
-        return Type("<method>", -1, true)
+        return Type("<method>", Type.Kind.INVALID, -1, true)
     }
 }

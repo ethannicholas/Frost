@@ -1151,6 +1151,17 @@ class Parser {
                 children.add(start)
                 children.add(rvalue)
                 return ASTNode(ASTNode.Kind.BINARY, start.offset, op.kind, children)
+            when Token.Kind.EQ:
+                error(peek(), "unexpected '=', perhaps you meant ':='?")
+                def op := next()
+                def rvalue := expression()
+                if rvalue = null {
+                    return null
+                }
+                def children := Array<ASTNode>()
+                children.add(start)
+                children.add(rvalue)
+                return ASTNode(ASTNode.Kind.BINARY, start.offset, op.kind, children)
             otherwise:
                 return start
         }
@@ -1167,6 +1178,14 @@ class Parser {
         }
         children.add(t)
         if checkNext(Token.Kind.ASSIGNMENT) != null {
+            def value := expression()
+            if value = null {
+                return null
+            }
+            children.add(value)
+        }
+        else if peek().kind = Token.Kind.EQ {
+            error(next(), "unexpected '=', perhaps you meant ':='?")
             def value := expression()
             if value = null {
                 return null

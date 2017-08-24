@@ -21,7 +21,7 @@ class CharSet : Node {
     method makeStartStates(context:NFA, accept:ListView<Int>):Array<Int> {
         def table := Array<Bit>()
         for c in contents {
-            Set.set(table, c)
+            SetNode.set(table, c)
         }
         return Regex.singleton(context.addState(TableState(false, 
                 ImmutableArray<Bit>(table), accept)))

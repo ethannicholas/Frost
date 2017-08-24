@@ -38,6 +38,7 @@ class SymbolTable {
                     methods.add(s->MethodDecl)
                     methods.addAll((old->Methods).methods) -- FIXME extra parentheses
                     symbols[s.name] := Methods(methods)
+                    return
             }
         }
         compiler.error(s.offset, "duplicate symbol '\{s.name}' (previous declaration was at " +
