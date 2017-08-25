@@ -26,4 +26,9 @@ class MethodRef {
     function type():Type {
         return Type("<method>", Type.Kind.INVALID, -1, true)
     }
+
+    @override
+    function convert():String {
+        return "MethodRef(\{value.signature()}, \{types})"
+    }
 }

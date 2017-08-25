@@ -274,7 +274,34 @@ class LLVMCodeGenerator (CodeGenerator) {
         def result := MutableString("@")
         result.append(escapeName(m.owner.name))
         result.append("$")
-        result.append(escapeName(m.name))
+        match m.name {
+            when "+":    result.append("$ADD")
+            when "-":    result.append("$SUB")
+            when "*":    result.append("$MUL")
+            when "/":    result.append("$DIV")
+            when "//":   result.append("$INTDIV")
+            when "%":    result.append("$REM")
+            when "^":    result.append("$POW")
+            when "[]":   result.append("$IDX")
+            when "[]:=": result.append("$IDXEQ")
+            when "=":    result.append("$EQ")
+            when "!=":   result.append("$NEQ")
+            when ">":    result.append("$GT")
+            when "<":    result.append("$LT")
+            when ">=":   result.append("$GE")
+            when "<=":   result.append("$LE")
+            when "|":    result.append("$OR")
+            when "||":   result.append("$BOR")
+            when "&":    result.append("$AND")
+            when "&&":   result.append("$BAND")
+            when "~":    result.append("$XOR")
+            when "~~":   result.append("$BXOR")
+            when "!":    result.append("$NOT")
+            when "!!":   result.append("$BNOT")
+            when "<<":   result.append("$SHL")
+            when ">>":   result.append("$SHR")
+            otherwise:   result.append(escapeName(m.name))
+        }
         for p in m.parameters {
             result.append("$\{escapeName(p.type.name)}")
         }
@@ -291,7 +318,6 @@ class LLVMCodeGenerator (CodeGenerator) {
 
     method getCallReference(call:IRNode, out:OutputStream):String {
         assert call.kind = IRNode.Kind.CALL
-        def result := nextVar()
         def m := (call.payload->MethodRef).value
         if m.owner.external {
             writeDeclaration(m)
@@ -300,6 +326,7 @@ class LLVMCodeGenerator (CodeGenerator) {
         for a in call.children {
             args.add(getTypedReference(a, out))
         }
+        def result := nextVar()
         out.printLine("\{result} = call \{callingConvention(m)}\{type(call.type)} " +
                 "\{getName(m)}(\{args.join()})")
         return result
@@ -639,6 +666,10 @@ class LLVMCodeGenerator (CodeGenerator) {
         declared.add(name)
         declarations.print("declare \{callingConvention(m)}\{type(m.returnType)} \{getName(m)}(")
         var separator := ""
+        if !m.annotations.isClass() {
+            declarations.print("\{type(m.owner.type())} %self")
+            separator := ", "
+        }
         for p in m.parameters {
             declarations.print("\{separator}\{type(p.type)} %\{escapeName(p.name)}")
             separator := ", "

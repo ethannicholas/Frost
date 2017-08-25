@@ -65,6 +65,7 @@ class DFA {
                 break
             }
         }
+        offset := startOffset + rawToken.length
         return rawToken
     }
 }

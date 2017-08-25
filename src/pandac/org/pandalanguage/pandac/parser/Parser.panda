@@ -236,7 +236,8 @@ class Parser {
                 }
                 return result
             otherwise:
-                assert false
+                error(t, "expected an expression, but found '\{text(t)}'")
+                return null
         }
     }
 
@@ -606,6 +607,7 @@ class Parser {
                         children.add(next)
                         result := ASTNode(ASTNode.Kind.BINARY, op.offset, Token.Kind.SHIFTRIGHT,
                                 children)
+                        return result
                     }
                     pushback(nextToken)
                     pushback(op)

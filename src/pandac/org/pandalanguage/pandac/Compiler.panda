@@ -43,6 +43,8 @@ class Compiler (ErrorReporter) {
         root.add(Type("builtin_int64", Type.Kind.BUILTIN_INT, -1, true))
         root.add(Alias("Int", "panda.core.Int64", -1))
         addAlias("panda.core.Class")
+        addAlias("panda.core.Int8")
+        addAlias("panda.core.Int16")
         addAlias("panda.core.Int32")
         addAlias("panda.core.Int64")
         addAlias("panda.core.Immutable")
@@ -109,7 +111,7 @@ class Compiler (ErrorReporter) {
     }
 
     method resolve(expr:IRNode):IRNode? {
-        return expr
+        return coerce(expr, variableType(expr))
     }
 
     method isValue(cl:ClassDecl):Bit {
@@ -264,8 +266,11 @@ class Compiler (ErrorReporter) {
                 if target.typeKind = Type.Kind.BUILTIN_INT {
                     return 0
                 }
-                if target.isNumber() {
+                if target = Type.Int64() {
                     return 0
+                }
+                if target.isNumber() {
+                    return 1
                 }
                 if !target.isNumber() {
                     return coercionCost(variableType(expr), target)
@@ -363,10 +368,13 @@ class Compiler (ErrorReporter) {
         return best
     }
 
-    method call(m:MethodRef, args:ListView<IRNode>):IRNode? {
+    method call(target:IRNode?, m:MethodRef, args:ListView<IRNode>):IRNode? {
         assert m.value.resolved
         assert m.parameterCount() = args.get_count()
-        def finalArgs := Array<IRNode>(args.get_count())
+        def finalArgs := Array<IRNode>()
+        if target != null & !m.value.annotations.isClass() {
+            finalArgs.add(coerce(target, m.value.owner.type()))
+        }
         for i in 0 .. args.get_count() {
             def coerced := coerce(args[i], m.parameter(i))
             if coerced = null {
@@ -380,13 +388,23 @@ class Compiler (ErrorReporter) {
     method call(m:IRNode, args:ListView<IRNode>):IRNode? {
         match m.kind {
             when IRNode.Kind.METHOD_REFERENCE:
-                return call(m.payload->MethodRef, args)
+                def target:IRNode?
+                return call(m.children[0], m.payload->MethodRef, args)
             when IRNode.Kind.UNRESOLVED_METHOD_REFERENCE:
                 def methods := Array<MethodRef>(m.payload->ListView<MethodRef>)
                 matchMethods(methods, args, null)
                 if methods.get_count() = 1 {
-                    return call(methods[0], args)
+                    def target:IRNode?
+                    if m.children.get_count() = 1 {
+                        target := m.children[0]
+                    }
+                    else {
+                        assert m.children.get_count() = 0
+                        target := null
+                    }
+                    return call(target, methods[0], args)
                 }
+                Console.printLine("matches: \{methods}")
                 assert false
             when IRNode.Kind.TYPE_REFERENCE:
                 def cl := getClass(m.payload->Type)
@@ -410,7 +428,7 @@ class Compiler (ErrorReporter) {
 
     method compileCall(c:ASTNode):IRNode? {
         assert c.kind = ASTNode.Kind.CALL
-        def m := compileExpression(c.children[0])
+        var m := compileExpression(c.children[0])
         if m != null {
             def args := Array<IRNode>()
             for i in 1 .. c.children.get_count() {
@@ -428,7 +446,11 @@ class Compiler (ErrorReporter) {
     method compileDot(d:ASTNode):IRNode? {
         assert d.kind = ASTNode.Kind.DOT
         assert d.children.get_count() = 1
-        def base := compileExpression(d.children[0])
+        var base := compileExpression(d.children[0])
+        if base = null {
+            return null
+        }
+        base := resolve(base)
         if base = null {
             return null
         }
@@ -473,7 +495,7 @@ class Compiler (ErrorReporter) {
             when ASTNode.Kind.IDENTIFIER: return compileIdentifier(e)
             when ASTNode.Kind.INT:        return compileInt(e)
         }
-        assert false, "unsupported expression kind: \{e.kind}"
+        assert false, "unsupported expression: \{e}"
     }
 
     method compileBlock(b:ASTNode):IRNode? {

@@ -52,8 +52,7 @@ class MethodDecl : Symbol {
         self.resolved := false
     }
 
-    @override
-    function convert():String {
+    function signature():String {
         def result := MutableString("method \{name}(")
         var separator := ""
         for p in parameters {
@@ -65,9 +64,14 @@ class MethodDecl : Symbol {
         if returnType != Type.Void() {
             result.append(":\{returnType}")
         }
-        if body != null {
-            result.append(" \{body}")
-        }
         return result.convert()
+    }
+
+    @override
+    function convert():String {
+        if body != null {
+            return "\{signature()} \{body}"
+        }
+        return signature()
     }
 }
