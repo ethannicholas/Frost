@@ -31,6 +31,8 @@ class LLVMCodeGenerator (CodeGenerator) {
 
     def writtenWrappers := Set<String>()
 
+    def classConstants := HashMap<String, ClassConstant>()
+
     var currentBlock:String
 
     var varCount := 0
@@ -101,6 +103,9 @@ class LLVMCodeGenerator (CodeGenerator) {
             }
             assert t.name.endsWith("64")
             return 8
+        }
+        if t = Type.BuiltinBit() {
+            return 1
         }
         def cl := compiler.getClass(t)
         assert cl != null
@@ -217,6 +222,8 @@ class LLVMCodeGenerator (CodeGenerator) {
                 return "void"
             when Type.Kind.BUILTIN_INT, Type.Kind.BUILTIN_UINT:
                 return "i\{sizeOf(t) * 8}"
+            when Type.Kind.BUILTIN_BIT:
+                return "i1"
             when Type.Kind.CLASS:
                 writeType(t)
                 def name := "%\{escapeName(t.name)}"
@@ -254,13 +261,21 @@ class LLVMCodeGenerator (CodeGenerator) {
     }
 
     method getWrapperClassConstant(cl:ClassDecl):ClassConstant {
-        if cl.external {
-            type(Type.Class())
-            def name := "@\{escapeName(cl.name)}$wrapperclass"
-            def type := "%panda$core$Class"
-            types.printLine("\{name} = external global \{type}")
-            return ClassConstant(name, type)
+        def name := "@\{escapeName(cl.name)}$wrapperclass"
+        var result := classConstants[name]
+        if result = null {
+            if cl.external {
+                type(Type.Class())
+                def type := "%panda$core$Class"
+                types.printLine("\{name} = external global \{type}")
+                result := ClassConstant(name, type)
+                classConstants[name] := result
+            }
+            else {
+                assert false
+            }
         }
+        return result
     }
 
     function escapeName(s:String):String {
@@ -554,6 +569,7 @@ class LLVMCodeGenerator (CodeGenerator) {
     }
 
     method getCastReference(cast:IRNode, out:OutputStream):String {
+        Console.printLine(cast)
         assert cast.kind = IRNode.Kind.CAST
         assert cast.children.get_count() = 1
         def base := getReference(cast.children[0], out)
@@ -566,11 +582,25 @@ class LLVMCodeGenerator (CodeGenerator) {
         def cl := compiler.getClass(construct.type)
         assert cl != null
         def t := type(construct.type)
-        if (construct.type.isNumber()) {
+        if construct.type.isNumber() {
             assert construct.children.get_count() = 1
             assert construct.children[0].children.get_count() = 1
             def value := getTypedReference(construct.children[0].children[0], out)
             if construct.children[0].children[0].kind = IRNode.Kind.INT {
+                return "{ " + value + " }"
+            }
+            assert false
+-*            String result = this->nextVar();
+            ASSERT(!cl->fFields.back()->fAnnotations.isClass());
+            out << "    " << result << " = insertvalue " << type << " { " <<
+                    this->llvmType(cl->fFields.back()->fType) << " undef }, " << value << ", 0\n";
+            return result;*-
+        }
+        if construct.type = Type.Bit() {
+            assert construct.children.get_count() = 1
+            assert construct.children[0].children.get_count() = 1
+            def value := getTypedReference(construct.children[0].children[0], out)
+            if construct.children[0].children[0].kind = IRNode.Kind.BIT {
                 return "{ " + value + " }"
             }
             assert false
@@ -616,6 +646,13 @@ class LLVMCodeGenerator (CodeGenerator) {
         return (int.payload->Int).convert() -- FIXME parens
     }
 
+    method getBitReference(bit:IRNode, out:OutputStream):String {
+        if bit.payload->Bit {
+            return "true"
+        }
+        return "false"
+    }
+
     method getReference(expr:IRNode, out:OutputStream):String {
         match expr.kind {
             when IRNode.Kind.CALL:
@@ -624,6 +661,8 @@ class LLVMCodeGenerator (CodeGenerator) {
                 return getCastReference(expr, out)
             when IRNode.Kind.INT:
                 return getIntReference(expr, out)
+            when IRNode.Kind.BIT:
+                return getBitReference(expr, out)
             when IRNode.Kind.CONSTRUCT:
                 return getConstructReference(expr, out)
             otherwise:
@@ -633,6 +672,13 @@ class LLVMCodeGenerator (CodeGenerator) {
 
     method getTypedReference(expr:IRNode, out:OutputStream):String {
         return "\{type(expr.type)} \{getReference(expr, out)}"
+    }
+
+    method writeBlock(block:IRNode, out:OutputStream) {
+        assert block.kind = IRNode.Kind.BLOCK
+        for s in block.children {
+            writeStatement(s, out)
+        }
     }
 
     method writeCall(call:IRNode, out:OutputStream) {
@@ -649,12 +695,48 @@ class LLVMCodeGenerator (CodeGenerator) {
                 "\{getName(m)}(\{args.join()})")
     }
 
+    method writeIf(s:IRNode, out:OutputStream) {
+        assert s.kind = IRNode.Kind.IF
+        assert s.children.get_count() = 2 | s.children.get_count() = 3
+        assert s.children[0].type = Type.Bit()
+        def test := getTypedReference(s.children[0], out)
+        def testBit := nextVar()
+        out.printLine("\{testBit} = extractvalue \{test}, 0")
+        def ifTrue := nextLabel()
+        def ifFalse := nextLabel()
+        out.printLine("br i1 \{testBit}, label %\{ifTrue}, label %\{ifFalse}")
+        createBlock(ifTrue, out)
+        writeStatement(s.children[1], out)
+        def end:String
+        if s.children.get_count() = 3 {
+            end := nextLabel()
+        }
+        else {
+            end := ifFalse
+        }
+        if !endsWithBranch(s.children[1]) {
+            out.printLine("br label %\{end}")
+        }
+        if s.children.get_count() = 3 {
+            createBlock(ifFalse, out)
+            writeStatement(s.children[2], out)
+            if !endsWithBranch(s.children[2]) {
+                out.printLine("br label %\{end}")
+            }
+        }
+        createBlock(end, out)
+    }
+
     method writeStatement(stmt:IRNode, out:OutputStream) {
         match stmt.kind {
+            when IRNode.Kind.BLOCK:
+                writeBlock(stmt, out)
             when IRNode.Kind.CALL:
                 writeCall(stmt, out)
+            when IRNode.Kind.IF:
+                writeIf(stmt, out)
             otherwise:
-                assert false
+                assert false, "unsupported statement \{stmt}"
         }
     }
 

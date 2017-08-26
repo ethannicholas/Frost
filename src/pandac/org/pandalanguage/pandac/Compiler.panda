@@ -1,6 +1,7 @@
 package org.pandalanguage.pandac
 
 uses org.pandalanguage.pandac.parser.Parser
+uses org.pandalanguage.pandac.parser.Token
 
 class Compiler (ErrorReporter) {
     def importDirs:ListView<File>
@@ -37,12 +38,14 @@ class Compiler (ErrorReporter) {
         self.symbolTable := root
         self.codeGenerator := LLVMCodeGenerator(self)
         codeGenerator.start(File("/tmp/output.ll").openOutputStream())
+        root.add(Type("builtin_bit", Type.Kind.BUILTIN_BIT, -1, true))
         root.add(Type("builtin_int8", Type.Kind.BUILTIN_INT, -1, true))
         root.add(Type("builtin_int16", Type.Kind.BUILTIN_INT, -1, true))
         root.add(Type("builtin_int32", Type.Kind.BUILTIN_INT, -1, true))
         root.add(Type("builtin_int64", Type.Kind.BUILTIN_INT, -1, true))
         root.add(Alias("Int", "panda.core.Int64", -1))
         addAlias("panda.core.Class")
+        addAlias("panda.core.Bit")
         addAlias("panda.core.Int8")
         addAlias("panda.core.Int16")
         addAlias("panda.core.Int32")
@@ -110,7 +113,10 @@ class Compiler (ErrorReporter) {
         f.type := resolve(f.type)
     }
 
-    method resolve(expr:IRNode):IRNode? {
+    method resolve(expr:IRNode?):IRNode? {
+        if expr = null {
+            return null
+        }
         return coerce(expr, variableType(expr))
     }
 
@@ -229,6 +235,9 @@ class Compiler (ErrorReporter) {
         if type = Type.IntLiteral() {
             return Type.Int64()
         }
+        if type = Type.BitLiteral() {
+            return Type.Bit()
+        }
         return type
     }
 
@@ -262,6 +271,13 @@ class Compiler (ErrorReporter) {
 
     function coercionCost(expr:IRNode, target:Type):Int? {
         match expr.kind {
+            when IRNode.Kind.BIT:
+                if target.typeKind = Type.Kind.BUILTIN_BIT {
+                    return 0
+                }
+                if target.isClass() {
+                    return coercionCost(Type.Bit(), target)
+                }
             when IRNode.Kind.INT:
                 if target.typeKind = Type.Kind.BUILTIN_INT {
                     return 0
@@ -280,7 +296,10 @@ class Compiler (ErrorReporter) {
         return coercionCost(expr.type, target)
     }
 
-    function coerce(expr:IRNode, target:Type):IRNode? {
+    function coerce(expr:IRNode?, target:Type):IRNode? {
+        if expr = null {
+            return null
+        }
         assert expr.type.resolved
         assert target.resolved
         if expr.type = target {
@@ -291,6 +310,17 @@ class Compiler (ErrorReporter) {
                 return IRNode(IRNode.Kind.INT, expr.offset, target, expr.payload->UInt64)
             }
             if target.typeKind = Type.Kind.CLASS & !target.isNumber() {
+                def varType := coerce(expr, variableType(expr))
+                if varType != null {
+                    return coerce(varType, target)
+                }
+            }
+        }
+        if expr.kind = IRNode.Kind.BIT {
+            if target = Type.BuiltinBit() {
+                return IRNode(IRNode.Kind.BIT, expr.offset, target, expr.payload->Bit)
+            }
+            if target.typeKind = Type.Kind.CLASS & target != Type.Bit() {
                 def varType := coerce(expr, variableType(expr))
                 if varType != null {
                     return coerce(varType, target)
@@ -385,6 +415,31 @@ class Compiler (ErrorReporter) {
         return IRNode(IRNode.Kind.CALL, m.value.offset, m.returnType(), m, finalArgs)
     }
 
+    method call(target:IRNode, name:String, args:ListView<IRNode>):IRNode? {
+        def resolved := resolve(target)
+        if resolved = null {
+            return null
+        }
+        def cl := getClass(resolved.type)
+        if cl = null {
+            return null
+        }
+        def s := cl.symbolTable[name]
+        if s = null {
+            error(target.offset, "class '\{cl.name}' does not have a member named '\{name}'")
+            return null
+        }
+        if s.kind != Symbol.Kind.METHOD & s.kind != Symbol.Kind.METHODS {
+            error(target.offset, "'\{cl.name}.\{name}' is not a method")
+            return null
+        }
+        def ref := symbolRef(target.offset, target, s, cl.symbolTable)
+        if ref = null {
+            return null
+        }
+        return call(ref, args)
+    }
+
     method call(m:IRNode, args:ListView<IRNode>):IRNode? {
         match m.kind {
             when IRNode.Kind.METHOD_REFERENCE:
@@ -411,19 +466,52 @@ class Compiler (ErrorReporter) {
                 assert cl != null
                 def methods := getMethodReference(cl.symbolTable, null, "init", m.offset,
                         Array<Type>())
-                def initCall := call(methods, args)
+                def initCall := resolve(call(methods, args))
                 if initCall = null {
                     return null
                 }
-                def resolved := resolve(initCall)
-                if resolved = null {
-                    return null
-                }
                 def children := Array<IRNode>() -- FIXME literal
-                children.add(resolved)
+                children.add(initCall)
                 return IRNode(IRNode.Kind.CONSTRUCT, m.offset, m.payload->Type, children)
         }
         assert false
+    }
+
+    function operatorName(op:Int):String {
+        match op {
+            when Token.Kind.ADD: return "+"
+            when Token.Kind.SUB: return "-"
+            when Token.Kind.MUL: return "*"
+            when Token.Kind.DIV: return "/"
+            when Token.Kind.INTDIV: return "//"
+            when Token.Kind.REM: return "%"
+            when Token.Kind.POW: return "^"
+            when Token.Kind.EQ: return "="
+            when Token.Kind.NEQ: return "!="
+            when Token.Kind.GT: return ">"
+            when Token.Kind.LT: return "<"
+            when Token.Kind.GTEQ: return ">="
+            when Token.Kind.LTEQ: return "<="
+            when Token.Kind.OR: return "|"
+            when Token.Kind.BITWISEOR: return "||"
+            when Token.Kind.AND: return "&"
+            when Token.Kind.BITWISEAND: return "&&"
+            when Token.Kind.XOR: return "~"
+            when Token.Kind.BITWISEXOR: return "~~"
+            when Token.Kind.NOT: return "!"
+            when Token.Kind.BITWISENOT: return "!!"
+            when Token.Kind.SHIFTLEFT: return "<<"
+            when Token.Kind.SHIFTRIGHT: return ">>"
+            otherwise: assert false
+        }
+    }
+
+    method compileBinary(b:ASTNode):IRNode? {
+        def left := compileExpression(b.children[0])
+        def right := compileExpression(b.children[1])
+        def children := Array<IRNode>()
+        children.add(right)
+        return call(left, operatorName(b.payload->Int), children)
     }
 
     method compileCall(c:ASTNode):IRNode? {
@@ -446,11 +534,7 @@ class Compiler (ErrorReporter) {
     method compileDot(d:ASTNode):IRNode? {
         assert d.kind = ASTNode.Kind.DOT
         assert d.children.get_count() = 1
-        var base := compileExpression(d.children[0])
-        if base = null {
-            return null
-        }
-        base := resolve(base)
+        def base := resolve(compileExpression(d.children[0]))
         if base = null {
             return null
         }
@@ -485,15 +569,22 @@ class Compiler (ErrorReporter) {
     }
 
     method compileInt(i:ASTNode):IRNode {
-        return IRNode(IRNode.Kind.INT, i.offset, Type.IntLiteral(), i.payload->UInt64)
     }
 
     method compileExpression(e:ASTNode):IRNode? {
         match e.kind {
-            when ASTNode.Kind.CALL:       return compileCall(e)
-            when ASTNode.Kind.DOT:        return compileDot(e)
-            when ASTNode.Kind.IDENTIFIER: return compileIdentifier(e)
-            when ASTNode.Kind.INT:        return compileInt(e)
+            when ASTNode.Kind.BINARY:
+                return compileBinary(e)
+            when ASTNode.Kind.BIT:
+                return IRNode(IRNode.Kind.BIT, e.offset, Type.BitLiteral(), e.payload->Bit)
+            when ASTNode.Kind.CALL:
+                return compileCall(e)
+            when ASTNode.Kind.DOT:
+                return compileDot(e)
+            when ASTNode.Kind.IDENTIFIER:
+                return compileIdentifier(e)
+            when ASTNode.Kind.INT:
+                return IRNode(IRNode.Kind.INT, e.offset, Type.IntLiteral(), e.payload->UInt64)
         }
         assert false, "unsupported expression: \{e}"
     }
@@ -511,10 +602,32 @@ class Compiler (ErrorReporter) {
         return IRNode(IRNode.Kind.BLOCK, b.offset, result)
     }
 
+    method compileIf(i:ASTNode):IRNode? {
+        assert i.kind = ASTNode.Kind.IF
+        assert i.children.get_count() = 2 | i.children.get_count() = 3
+        def test := coerce(compileExpression(i.children[0]), Type.Bit())
+        if test = null {
+            return null
+        }
+        def ifTrue := compileStatement(i.children[1])
+        def children := Array<IRNode>()
+        children.add(test)
+        children.add(ifTrue)
+        if i.children.get_count() = 3 {
+            def ifFalse := compileStatement(i.children[2])
+            if ifFalse = null {
+                return null
+            }
+            children.add(ifFalse)
+        }
+        return IRNode(IRNode.Kind.IF, i.offset, children)
+    }
+
     method compileStatement(s:ASTNode):IRNode? {
         match s.kind {
             when ASTNode.Kind.BLOCK: return compileBlock(s)
             when ASTNode.Kind.CALL:  return compileCall(s)
+            when ASTNode.Kind.IF:    return compileIf(s)
         }
         assert false, "unsupported statement kind: \{s.kind}"
     }

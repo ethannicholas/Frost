@@ -10,6 +10,8 @@ class Type : Symbol (Equatable<Type>) {
         constant INT_LITERAL := 15
         constant INVALID := 16
         constant UNRESOLVED := 17
+        constant BIT_LITERAL := 18
+        constant BUILTIN_BIT := 19
     }
 
     def resolved:Bit
@@ -82,8 +84,23 @@ class Type : Symbol (Equatable<Type>) {
     }
 
     @class
+    method Bit():Type {
+        return Type("panda.core.Bit", Kind.CLASS, -1, true)
+    }
+
+    @class
     method IntLiteral():Type {
         return Type("$int_literal", Kind.INT_LITERAL, -1, true)
+    }
+
+    @class
+    method BitLiteral():Type {
+        return Type("$bit_literal", Kind.BIT_LITERAL, -1, true)
+    }
+
+    @class
+    method BuiltinBit():Type {
+        return Type("builtin_bit", Type.Kind.BUILTIN_BIT, -1, true)
     }
 
     @class
