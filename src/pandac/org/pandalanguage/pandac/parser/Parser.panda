@@ -935,7 +935,7 @@ class Parser {
         def children := Array<ASTNode>()
         children.add(body)
         children.add(test)
-        return ASTNode(ASTNode.Kind.WHILE, start.offset, label, children)
+        return ASTNode(ASTNode.Kind.DO, start.offset, label, children)
     }
 
     ================================================================================================

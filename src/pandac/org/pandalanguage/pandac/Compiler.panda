@@ -28,6 +28,9 @@ class Compiler (ErrorReporter) {
     def codeGenerator:CodeGenerator
 
     @private
+    def loops := Stack<String?>()
+
+    @private
     var errorCount := 0
 
     init(importDirs:ListView<File>) {
@@ -623,11 +626,72 @@ class Compiler (ErrorReporter) {
         return IRNode(IRNode.Kind.IF, i.offset, children)
     }
 
+    method compileWhile(w:ASTNode):IRNode? {
+        assert w.kind = ASTNode.Kind.WHILE
+        assert w.children.get_count() = 2
+        loops.push(w.payload->String?) -- FIXME use AutoLoop
+        def test := coerce(compileExpression(w.children[0]), Type.Bit())
+        if test = null {
+            loops.pop()
+            return null
+        }
+        def stmt := compileStatement(w.children[1])
+        if stmt = null {
+            loops.pop()
+            return null
+        }
+        def children := Array<IRNode>(2) -- FIXME literal
+        children.add(test)
+        children.add(stmt)
+        loops.pop()
+        return IRNode(IRNode.Kind.WHILE, w.offset, w.payload, children)
+    }
+
+    method compileDo(d:ASTNode):IRNode? {
+        assert d.kind = ASTNode.Kind.DO
+        assert d.children.get_count() = 2
+        loops.push(d.payload->String?) -- FIXME use AutoLoop
+        def stmt := compileStatement(d.children[0])
+        if stmt = null {
+            loops.pop()
+            return null
+        }
+        def test := coerce(compileExpression(d.children[1]), Type.Bit())
+        if test = null {
+            loops.pop()
+            return null
+        }
+        def children := Array<IRNode>(2) -- FIXME literal
+        children.add(stmt)
+        children.add(test)
+        loops.pop()
+        return IRNode(IRNode.Kind.DO, d.offset, d.payload, children)
+    }
+
+    method compileLoop(l:ASTNode):IRNode? {
+        assert l.kind = ASTNode.Kind.LOOP
+        assert l.children.get_count() = 1
+        loops.push(l.payload->String?) -- FIXME use AutoLoop
+        def stmt := compileStatement(l.children[0])
+        if stmt = null {
+            loops.pop()
+            return null
+        }
+        def children := Array<IRNode>(1) -- FIXME literal
+        children.add(stmt)
+        loops.pop()
+        return IRNode(IRNode.Kind.LOOP, l.offset, l.payload, children)
+    }
+
+
     method compileStatement(s:ASTNode):IRNode? {
         match s.kind {
             when ASTNode.Kind.BLOCK: return compileBlock(s)
             when ASTNode.Kind.CALL:  return compileCall(s)
             when ASTNode.Kind.IF:    return compileIf(s)
+            when ASTNode.Kind.WHILE: return compileWhile(s)
+            when ASTNode.Kind.DO:    return compileDo(s)
+            when ASTNode.Kind.LOOP:  return compileLoop(s)
         }
         assert false, "unsupported statement kind: \{s.kind}"
     }

@@ -17,6 +17,9 @@ class IRNode : Immutable {
         constant CONSTRUCT                   := 1010
         constant BIT                         := 1011
         constant IF                          := 1012
+        constant WHILE                       := 1013
+        constant DO                          := 1014
+        constant LOOP                        := 1015
     }
 
     def kind:Int
