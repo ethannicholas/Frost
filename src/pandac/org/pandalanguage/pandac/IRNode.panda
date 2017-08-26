@@ -20,6 +20,13 @@ class IRNode : Immutable {
         constant WHILE                       := 1013
         constant DO                          := 1014
         constant LOOP                        := 1015
+        constant VARIABLE_REFERENCE          := 1016
+        constant VAR                         := 1017
+        constant DEF                         := 1018
+        constant CONSTANT                    := 1019
+        constant PROPERTY                    := 1020
+        constant DECLARATION                 := 1021
+        constant TUPLE_TARGET                := 1022
     }
 
     def kind:Int
@@ -73,6 +80,10 @@ class IRNode : Immutable {
     }
 
     init(kind:Int, offset:Int, type:Type, payload:Type) {
+        init(kind, offset, type, payload, Array<IRNode>())
+    }
+
+    init(kind:Int, offset:Int, type:Type, payload:Variable) {
         init(kind, offset, type, payload, Array<IRNode>())
     }
 

@@ -3,20 +3,14 @@ package panda.collections
 uses panda.unsafe.Pointer
 
 ====================================================================================================
-Standard implementation of the [Map] interface, which associates keys with  values. An arbitrary
-number of values can be stored in a `HashMap` and then retrieved in constant time:
-
-    def alignment := HashMap<String, String>()
-    alignment["human"]  := "good"
-    alignment["orc"]    := "evil"
-    alignment["dragon"] := "neutral"
-    Console.printLine(alignment["human"])
-
-This will display the value `"good"`.
+A `Map` which compares its keys using identity (`==`) instead of equality (`=`). Unlike `HashMap`,
+which requires its keys to implement the `Key` interface, any type of object may be used as a key.
+However, it is important that the key not be a subclass of `Value`, as values do not have
+well-defined identities and `IdentityMap` will therefore not function properly with value keys.
 ====================================================================================================
-class HashMap<K:Key<K>, V> (Map<K, V>, Equatable<Map<K, V>>) {
+class IdentityMap<K, V> (Map<K, V>, Equatable<Map<K, V>>) {
     @private
-    class Entry<K:Key<K>, V> {
+    class Entry<K, V> {
         ============================================================================================
         The entry's key.
         ============================================================================================
@@ -26,9 +20,9 @@ class HashMap<K:Key<K>, V> (Map<K, V>, Equatable<Map<K, V>>) {
         The entry's value.
         ============================================================================================
         var value:V
-
+        
         var next:Entry<K, V>?
-
+        
         @private
         init(key:K, value:V) {
             self.key := key
@@ -56,7 +50,7 @@ class HashMap<K:Key<K>, V> (Map<K, V>, Equatable<Map<K, V>>) {
     var changeCount := 0
     
     ================================================================================================
-    Creates a new, empty `HashMap`.
+    Creates a new, empty `IdentityMap`.
     ================================================================================================
     init() {
         changeCount += 1
@@ -74,27 +68,14 @@ class HashMap<K:Key<K>, V> (Map<K, V>, Equatable<Map<K, V>>) {
     ================================================================================================
     @private
     function indexFor(key:K):Int {
-        var h:Int
-        if key = null {
-            h := 0
-        }
-        else {
-            h := key.hash()
-        }
-        -- supplemental hash function to defend against poor hash codes, as we do not use a prime
-        -- table length
-        h ~~= (h >> 20) ~~ (h >> 12) ~~ (h >> 7) ~~ (h >> 4)
-        -- the bitwise and below is equivalent to mod if length is a power of 2, which is why we
-        -- require that
-        h &&= bucketCount - 1
-        return h
+        return panda.core.Panda.addressOf(key) % bucketCount
     }
     
     @override
     function [](key:K):V? {
         def index := indexFor(key)
         var e := contents[index]
-        while e != null & e.key != key {
+        while e != null & e.key !== key {
             e := e.next
         }
         if e != null {
@@ -108,7 +89,7 @@ class HashMap<K:Key<K>, V> (Map<K, V>, Equatable<Map<K, V>>) {
     function contains(key:K):Bit {
         def index := indexFor(key)
         var e := contents[index]
-        while e != null & e.key != key {
+        while e != null & e.key !== key {
             e := e.next
         }
         return e != null
@@ -119,7 +100,7 @@ class HashMap<K:Key<K>, V> (Map<K, V>, Equatable<Map<K, V>>) {
         changeCount += 1
         def index := indexFor(key)
         var e := contents[index]
-        while e != null & e.key != key {
+        while e != null & e.key !== key {
             e := e.next
         }
         if e = null {
@@ -143,7 +124,7 @@ class HashMap<K:Key<K>, V> (Map<K, V>, Equatable<Map<K, V>>) {
             return
         }
         -- found in the first slot, need to update the contents array
-        if e.key = key {
+        if e.key == key {
             contents[index] := e.next
             _count -= 1
             return
@@ -154,7 +135,7 @@ class HashMap<K:Key<K>, V> (Map<K, V>, Equatable<Map<K, V>>) {
                 -- not found
                 return
             }
-            if next.key = key {
+            if next.key == key {
                 -- it's the next slot in the list
                 break
             }

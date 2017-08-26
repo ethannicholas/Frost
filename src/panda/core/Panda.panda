@@ -5,6 +5,10 @@ Contains utility methods used in the internal implementation of certain language
 ====================================================================================================
 class Panda {
     @class
+    @external
+    function addressOf(o:Object):Int64
+
+    @class
     method assertionFailure(file:String, line:Int) {
         Console.printLine("assertion failure (\{file}:\{line})")
         System.exit(1)

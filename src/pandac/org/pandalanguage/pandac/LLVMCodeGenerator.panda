@@ -37,6 +37,10 @@ class LLVMCodeGenerator (CodeGenerator) {
 
     def methods := IndentedOutputStream(methodsBuffer)
 
+    def methodHeaderBuffer := MemoryOutputStream()
+
+    def methodHeader := IndentedOutputStream(methodHeaderBuffer)
+
     def declared := Set<String>()
 
     def writtenTypes := Set<String>()
@@ -44,6 +48,8 @@ class LLVMCodeGenerator (CodeGenerator) {
     def writtenWrappers := Set<String>()
 
     def classConstants := HashMap<String, ClassConstant>()
+
+    def variableNames := IdentityMap<Variable, String>()
 
     var currentBlock:String
 
@@ -257,7 +263,7 @@ class LLVMCodeGenerator (CodeGenerator) {
                 }
                 return type(t.subtypes[0])
             otherwise:
-                assert false
+                assert false, "unsupported type '\{t}'"
         }
     }
 
@@ -294,6 +300,16 @@ class LLVMCodeGenerator (CodeGenerator) {
 
     function escapeName(s:String):String {
         return s.replace(".", "$")
+    }
+
+    function getName(v:Variable):String {
+        var result := variableNames[v]
+        if result = null {
+            labelCount += 1
+            result := "%\{v.name}\{labelCount}"
+            variableNames[v] := result
+        }
+        return result
     }
 
     function getName(m:MethodDecl):String {
@@ -667,6 +683,16 @@ class LLVMCodeGenerator (CodeGenerator) {
         return "false"
     }
 
+    method getVariableReference(v:Variable, out:OutputStream):String {
+        if v.storage = Variable.Storage.PARAMETER {
+            return getName(v)
+        }
+        def result := nextVar()
+        def t := type(v.type)
+        out.printLine("\{result} = load \{t}, \{t}* \{getName(v)}")
+        return result
+    }
+
     method getReference(expr:IRNode, out:OutputStream):String {
         match expr.kind {
             when IRNode.Kind.CALL:
@@ -679,6 +705,8 @@ class LLVMCodeGenerator (CodeGenerator) {
                 return getBitReference(expr, out)
             when IRNode.Kind.CONSTRUCT:
                 return getConstructReference(expr, out)
+            when IRNode.Kind.VARIABLE_REFERENCE:
+                return getVariableReference(expr.payload->Variable, out)
             otherwise:
                 assert false, "unsupported expression \{expr}"
         }
@@ -803,6 +831,38 @@ class LLVMCodeGenerator (CodeGenerator) {
         loopDescriptors.pop()
     }
 
+    method writeVarTarget(target:IRNode, value:IRNode?, out:OutputStream) {
+        match target.kind {
+            when IRNode.Kind.VARIABLE_REFERENCE:
+                def v := target.payload->Variable
+                methodHeader.printLine("\{getName(v)} = alloca \{type(v.type)}")
+                if value != null {
+                    def ref := getTypedReference(value, out)
+                    out.printLine("store \{ref}, \{type(v.type)}* \{getName(v)}")
+                }
+            when IRNode.Kind.TUPLE_TARGET:
+                assert false
+            otherwise:
+                assert false
+        }
+    }
+
+    method writeVar(v:IRNode, out:OutputStream) {
+        assert v.kind = IRNode.Kind.VAR |
+                v.kind = IRNode.Kind.DEF |
+                v.kind = IRNode.Kind.PROPERTY |
+                v.kind = IRNode.Kind.CONSTANT
+        for decl in v.children {
+            assert decl.kind = IRNode.Kind.DECLARATION
+            if decl.children.get_count() > 1 {
+                writeVarTarget(decl.children[0], decl.children[1], out)
+            }
+            else {
+                writeVarTarget(decl.children[0], null, out)
+            }
+        }
+    }
+
     method writeStatement(stmt:IRNode, out:OutputStream) {
         match stmt.kind {
             when IRNode.Kind.BLOCK:
@@ -817,6 +877,8 @@ class LLVMCodeGenerator (CodeGenerator) {
                 writeDo(stmt, out)
             when IRNode.Kind.LOOP:
                 writeLoop(stmt, out)
+            when IRNode.Kind.VAR, IRNode.Kind.DEF, IRNode.Kind.CONSTANT, IRNode.Kind.PROPERTY:
+                writeVar(stmt, out)
             otherwise:
                 assert false, "unsupported statement \{stmt}"
         }
@@ -846,6 +908,7 @@ class LLVMCodeGenerator (CodeGenerator) {
     method write(m:MethodDecl, body:IRNode) {
         currentBlock := "0"
         varCount := 0
+        methodHeaderBuffer.clear()
         methods.print("define \{type(m.returnType)} \{getName(m)}(")
         var separator := ""
         for p in m.parameters {
@@ -855,9 +918,12 @@ class LLVMCodeGenerator (CodeGenerator) {
         methods.printLine(") {")
         methods.level += 1
         assert body.kind = IRNode.Kind.BLOCK
+        def bodyBuffer := MemoryOutputStream()
         for s in body.children {
-            writeStatement(s, methods)
+            writeStatement(s, bodyBuffer)
         }
+        methods.print(methodHeaderBuffer.convert())
+        methods.print(bodyBuffer.convert())
         if !endsWithBranch(body) {
             if m.returnType = Type.Void() {
                 methods.printLine("ret void")

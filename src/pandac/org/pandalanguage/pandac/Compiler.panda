@@ -225,6 +225,9 @@ class Compiler (ErrorReporter) {
                 return null
             when Symbol.Kind.METHOD, Symbol.Kind.METHODS:
                 return getMethodReference(st, target, s.name, offset, Array<Type>())
+            when Symbol.Kind.VARIABLE:
+                return IRNode(IRNode.Kind.VARIABLE_REFERENCE, offset, (s->Variable).type, -- FIXME parens
+                        s->Variable)
             otherwise:
                 assert false, "unsupported symbol kind: \{s.kind}"
         }
@@ -683,6 +686,104 @@ class Compiler (ErrorReporter) {
         return IRNode(IRNode.Kind.LOOP, l.offset, l.payload, children)
     }
 
+    -- FIXME use tuple
+    class CompileTargetResult {
+        def target:org.pandalanguage.pandac.IRNode
+        def value:org.pandalanguage.pandac.IRNode?
+
+        init(target:org.pandalanguage.pandac.IRNode, value:org.pandalanguage.pandac.IRNode?) {
+            self.target := target
+            self.value := value
+        }
+    }
+
+    method compileTarget(t:ASTNode, rawValue:IRNode?, valueType:Type?):CompileTargetResult? {
+        var value:IRNode? := rawValue -- FIXME use var on parameter
+        assert value = null | valueType = null
+        match t.kind {
+            when ASTNode.Kind.IDENTIFIER:
+                def type:Type
+                if t.children.get_count() = 1 {
+                    type := resolve(scanner.convertType(t.children[0]))
+                }
+                else if value != null {
+                    value := resolve(value)
+                    if value = null {
+                        return null
+                    }
+                    type := variableType(value)
+                }
+                else if valueType != null {
+                    type := valueType
+                }
+                else {
+                    error(t.offset, "declaration has neither a type nor a value")
+                    return null
+                }
+                if value != null {
+                    value := coerce(value, type)
+                    if value = null {
+                        return null
+                    }
+                }
+                def v := Variable(t.offset, t.payload->String, type)
+                symbolTable.add(v)
+                return CompileTargetResult(IRNode(IRNode.Kind.VARIABLE_REFERENCE, v.offset, v.type, v), value)
+            when ASTNode.Kind.TUPLE_TARGET:
+                assert false
+            otherwise:
+                assert false
+        }
+    }
+
+    method compileDeclaration(d:ASTNode):IRNode? {
+        assert d.kind = ASTNode.Kind.DECLARATION
+        assert d.children.get_count() = 1 | d.children.get_count() = 2
+        def value:IRNode?
+        if d.children.get_count() = 2 {
+            value := compileExpression(d.children[1])
+            if value = null {
+                return null
+            }
+        }
+        else {
+            value := null
+        }
+        def target := compileTarget(d.children[0], value, null)
+        if target = null {
+            return null
+        }
+        def children := Array<IRNode>()
+        children.add(target.target)
+        if target.value != null {
+            children.add(target.value)
+        }
+        return IRNode(IRNode.Kind.DECLARATION, d.offset, children)
+    }
+
+    method compileVar(v:ASTNode):IRNode? {
+        assert v.kind = ASTNode.Kind.VAR |
+               v.kind = ASTNode.Kind.DEF |
+               v.kind = ASTNode.Kind.PROPERTY |
+               v.kind = ASTNode.Kind.CONSTANT
+        def decls := Array<IRNode>()
+        for astDecl in v.children {
+            def decl := compileDeclaration(astDecl)
+            if decl = null {
+                return null
+            }
+            decls.add(decl)
+        }
+        def kind:Int
+        match v.kind {
+            when ASTNode.Kind.VAR:      kind := IRNode.Kind.VAR
+            when ASTNode.Kind.DEF:      kind := IRNode.Kind.DEF
+            when ASTNode.Kind.PROPERTY: kind := IRNode.Kind.PROPERTY
+            when ASTNode.Kind.CONSTANT: kind := IRNode.Kind.CONSTANT
+            otherwise: assert false
+        }
+        return IRNode(kind, v.offset, decls)
+    }
 
     method compileStatement(s:ASTNode):IRNode? {
         match s.kind {
@@ -692,6 +793,8 @@ class Compiler (ErrorReporter) {
             when ASTNode.Kind.WHILE: return compileWhile(s)
             when ASTNode.Kind.DO:    return compileDo(s)
             when ASTNode.Kind.LOOP:  return compileLoop(s)
+            when ASTNode.Kind.VAR, ASTNode.Kind.DEF, ASTNode.Kind.CONSTANT, ASTNode.Kind.PROPERTY:
+                return compileVar(s)
         }
         assert false, "unsupported statement kind: \{s.kind}"
     }

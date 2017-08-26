@@ -50,6 +50,7 @@ compile_panda_sources(panda_objects
     src/panda/collections/CollectionView.panda
     src/panda/collections/CollectionWriter.panda
     src/panda/collections/HashMap.panda
+    src/panda/collections/IdentityMap.panda
     src/panda/collections/ImmutableArray.panda
     src/panda/collections/Iterable.panda
     src/panda/collections/Iterator.panda
@@ -259,6 +260,7 @@ compile_pandac_sources(pandac_objects
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/Symbol.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/SymbolTable.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/Type.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/Variable.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/parser/Parser.panda
     ${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/pandac/parser/Lexer.panda
     ${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/pandac/parser/Token.panda

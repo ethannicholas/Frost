@@ -82,6 +82,12 @@ String* pandaNewString(const char* s, int length) {
     return result;
 }
 
+// Panda
+
+void panda$core$Panda$addressOf$panda$core$Object$R$panda$core$Int64(int64_t* result, void* o) {
+    *result = (int64_t) o;
+}
+
 // Console
 
 void panda$io$Console$write$panda$core$Char8(char ch) {

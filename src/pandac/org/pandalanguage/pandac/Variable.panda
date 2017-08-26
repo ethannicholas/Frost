@@ -1,0 +1,26 @@
+package org.pandalanguage.pandac
+
+
+====================================================================================================
+Represents a var, def, constant, or property.
+====================================================================================================
+class Variable : Symbol {
+    class Storage {
+        constant LOCAL     := 1819
+        constant PARAMETER := 1820
+    }
+
+    def type:Type
+
+    def storage:Int
+
+    init(offset:Int, name:String, type:Type) {
+        init(offset, name, type, Storage.LOCAL)
+    }
+
+    init(offset:Int, name:String, type:Type, storage:Int) {
+        self.type := type
+        self.storage := storage
+        super.init(Symbol.Kind.VARIABLE, offset, name)
+    }
+}

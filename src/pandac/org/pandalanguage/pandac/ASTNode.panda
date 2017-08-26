@@ -57,6 +57,7 @@ class ASTNode : Immutable {
         constant PARAMETERS      := 150
         constant INTERFACE       := 151
         constant FILE            := 152
+        constant TUPLE_TARGET    := 153
     }
 
     @class

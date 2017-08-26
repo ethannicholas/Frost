@@ -398,6 +398,7 @@ void Scanner::scan(ASTNode* file) {
     uses.push_back({ Position(), "panda.collections.CollectionView", "CollectionView" });
     uses.push_back({ Position(), "panda.collections.CollectionWriter", "CollectionWriter" });
     uses.push_back({ Position(), "panda.collections.HashMap", "HashMap" });
+    uses.push_back({ Position(), "panda.collections.IdentityMap", "IdentityMap" });
     uses.push_back({ Position(), "panda.collections.ImmutableArray", "ImmutableArray" });
     uses.push_back({ Position(), "panda.collections.Iterable", "Iterable" });
     uses.push_back({ Position(), "panda.collections.Iterator", "Iterator" });

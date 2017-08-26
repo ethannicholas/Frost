@@ -92,7 +92,8 @@ private:
         // methods; this means it doesn't play nice with overriding. We can fix this down the road
         // with shims, but for right now just assert that a method requiring struct indirection is
         // not an override and cannot be overridden
-        ASSERT(!result || (!m.fAnnotations.isOverride() && m.fAnnotations.isFinal()));
+        ASSERT(!result || (!m.fAnnotations.isOverride() && (m.fAnnotations.isFinal() ||
+                m.fAnnotations.isClass())));
         return result;
     }
 

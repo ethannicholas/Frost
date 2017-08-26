@@ -12,6 +12,10 @@ class MemoryOutputStream : OutputStream {
         data.append(Char8(i))
     }
 
+    method clear() {
+        data.clear()
+    }
+
     @override
     function convert():String {
         return data.convert()
