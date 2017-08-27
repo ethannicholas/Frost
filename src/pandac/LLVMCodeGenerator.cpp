@@ -1534,13 +1534,15 @@ String LLVMCodeGenerator::getLValue(const IRNode& lvalue, std::ostream& out) {
             std::vector<Field*> fields = fCompiler->getInstanceFields(*cl);
             int index = -1;
             for (int i = 0; i < fields.size(); ++i) {
-                if (fields[i] == lvalue.fValue.fPtr) {
+                // name comparison is a hack, just trying to keep this together long enough to throw
+                // it away...
+                if (fields[i]->fName == ((Field*) lvalue.fValue.fPtr)->fName) {
                     index = i;
                     break;
                 }
             }
             if (index == -1) {
-                printf("couldn't find field %s in %s\n", ((Field*) lvalue.fValue.fPtr)->fName.c_str(), lvalue.description().c_str());
+                printf("couldn't find field %s in %s(%s)\n", ((Field*) lvalue.fValue.fPtr)->fName.c_str(), lvalue.description().c_str(), lvalue.fPosition.description().c_str());
             }
             ASSERT(index != -1);
 

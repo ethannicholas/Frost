@@ -27,6 +27,12 @@ class IRNode : Immutable {
         constant PROPERTY                    := 1020
         constant DECLARATION                 := 1021
         constant TUPLE_TARGET                := 1022
+        constant BINARY                      := 1023
+        constant SUPER                       := 1024
+        constant SELF                        := 1025
+        constant FIELD_REFERENCE             := 1026
+        constant REUSED_VALUE_DEFINITION     := 1027
+        constant REUSED_VALUE                := 1028
     }
 
     def kind:Int

@@ -1,5 +1,7 @@
 package org.pandalanguage.pandac
 
+uses org.pandalanguage.pandac.parser.Token
+
 class LLVMCodeGenerator (CodeGenerator) {
     class ClassConstant : Immutable {
         def name:String
@@ -236,6 +238,10 @@ class LLVMCodeGenerator (CodeGenerator) {
         types.printLine(code)
     }
 
+    function typeName(t:Type):String {
+        return "%" + escapeName(t.name)
+    }
+
     method type(t:Type):String {
         match t.typeKind {
             when Type.Kind.VOID:
@@ -357,6 +363,111 @@ class LLVMCodeGenerator (CodeGenerator) {
         return result.convert()
     }
 
+    class OpClass {
+        constant SIGNED   := 10121
+        constant UNSIGNED := 10122
+        constant FLOAT    := 10123
+    }
+
+    function opClass(t:Type):Int {
+        match t.typeKind {
+            when Type.Kind.BUILTIN_INT:   return OpClass.SIGNED
+            when Type.Kind.BUILTIN_UINT:  return OpClass.UNSIGNED
+            when Type.Kind.BUILTIN_FLOAT: return OpClass.FLOAT
+            otherwise:
+                assert false
+        }
+    }
+
+    method getBinaryReference(cl:Int, leftRef:String, op:Int, rightRef:String,
+            out:OutputStream):String {
+        def llvmOp:String
+        match cl {
+            when OpClass.SIGNED:
+                match op {
+                    when Token.Kind.ADD:        llvmOp := "add"
+                    when Token.Kind.SUB:        llvmOp := "sub"
+                    when Token.Kind.MUL:        llvmOp := "mul"
+                    when Token.Kind.INTDIV:     llvmOp := "sdiv"
+                    when Token.Kind.REM:        llvmOp := "srem"
+                    when Token.Kind.SHIFTLEFT:  llvmOp := "shl"
+                    when Token.Kind.SHIFTRIGHT: llvmOp := "ashr"
+                    when Token.Kind.BITWISEAND: llvmOp := "and"
+                    when Token.Kind.BITWISEOR:  llvmOp := "or"
+                    when Token.Kind.XOR, Token.Kind.BITWISEXOR: 
+                                                llvmOp := "xor"
+                    when Token.Kind.EQ:         llvmOp := "icmp eq"
+                    when Token.Kind.NEQ:        llvmOp := "icmp ne"
+                    when Token.Kind.GT:         llvmOp := "icmp sgt"
+                    when Token.Kind.LT:         llvmOp := "icmp slt"
+                    when Token.Kind.GTEQ:       llvmOp := "icmp sge"
+                    when Token.Kind.LTEQ:       llvmOp := "icmp sle"
+                    otherwise:
+                        assert false
+                }
+            when OpClass.UNSIGNED:
+                match op {
+                    when Token.Kind.ADD:        llvmOp := "add"
+                    when Token.Kind.SUB:        llvmOp := "sub"
+                    when Token.Kind.MUL:        llvmOp := "mul"
+                    when Token.Kind.INTDIV:     llvmOp := "udiv"
+                    when Token.Kind.REM:        llvmOp := "urem"
+                    when Token.Kind.SHIFTLEFT:  llvmOp := "shl"
+                    when Token.Kind.SHIFTRIGHT: llvmOp := "lshr"
+                    when Token.Kind.BITWISEAND: llvmOp := "and"
+                    when Token.Kind.BITWISEOR:  llvmOp := "or"
+                    when Token.Kind.XOR, Token.Kind.BITWISEXOR: 
+                                                llvmOp := "xor"
+                    when Token.Kind.EQ:         llvmOp := "icmp eq"
+                    when Token.Kind.NEQ:        llvmOp := "icmp ne"
+                    when Token.Kind.GT:         llvmOp := "icmp ugt"
+                    when Token.Kind.LT:         llvmOp := "icmp ult"
+                    when Token.Kind.GTEQ:       llvmOp := "icmp uge"
+                    when Token.Kind.LTEQ:       llvmOp := "icmp ule"
+                    otherwise:
+                        assert false
+                }            
+            when OpClass.FLOAT:
+                match op {
+                    when Token.Kind.ADD:        llvmOp := "fadd"
+                    when Token.Kind.SUB:        llvmOp := "fsub"
+                    when Token.Kind.MUL:        llvmOp := "fmul"
+                    when Token.Kind.INTDIV:     llvmOp := "fdiv"
+                    when Token.Kind.EQ:         llvmOp := "fcmp oeq"
+                    when Token.Kind.NEQ:        llvmOp := "fcmp one"
+                    when Token.Kind.GT:         llvmOp := "fcmp ogt"
+                    when Token.Kind.LT:         llvmOp := "fcmp olt"
+                    when Token.Kind.GTEQ:       llvmOp := "fcmp oge"
+                    when Token.Kind.LTEQ:       llvmOp := "fcmp ole"
+                    otherwise:
+                        assert false
+                }
+        }
+        def result := nextVar()
+        out.printLine("\{result} = \{llvmOp} \{leftRef}, \{rightRef}")
+        return result
+    }
+
+    method getBinaryReference(left:IRNode, op:Int, right:IRNode, out:OutputStream):String {
+        assert left.type = right.type
+        match op {
+            when Token.Kind.AND:       assert false -- return getAndReference(left, right, out)
+            when Token.Kind.OR:        assert false -- return getOrReference(left, right, out)
+            when Token.Kind.IDENTITY:  assert false -- return getIdentityReference(left, right, out)
+            when Token.Kind.NIDENTITY: assert false -- return getNIdentityReference(left, right, out)
+            otherwise:
+                def leftRef := getTypedReference(left, out)
+                def rightRef := getReference(right, out)
+                return getBinaryReference(opClass(left.type), leftRef, op, rightRef, out)
+        }
+    }
+
+    method getBinaryReference(b:IRNode, out:OutputStream):String {
+        assert b.kind = IRNode.Kind.BINARY
+        assert b.children.get_count() = 2
+        return getBinaryReference(b.children[0], b.payload->Int, b.children[1], out)
+    }
+
     function callingConvention(m:MethodDecl):String {
         return "fastcc "
     }
@@ -424,6 +535,55 @@ class LLVMCodeGenerator (CodeGenerator) {
             return result
         }
         return wrapperCast
+    }
+
+    method getFieldReference(fieldRef:IRNode, out:OutputStream):String {
+        assert fieldRef.kind = IRNode.Kind.FIELD_REFERENCE
+        assert fieldRef.children.get_count() = 1
+        def field := fieldRef.payload->FieldDecl
+        def t := type(field.type)
+        if field.annotations.isClass() {
+-*            if (field->fValue && !is_constant_number(*field->fValue) &&
+                        fInitializedClasses.find(&field->fOwner) == fInitializedClasses.end()) {
+                fInitializedClasses.insert(&field->fOwner);
+                if (fDeclaredClassInitializers.find(field->fOwner.fName) == fDeclaredClassInitializers.end()) {
+                    fMethodDeclarations << "declare fastcc void @" << escape_type_name(field->fOwner.fName) <<
+                            "$$classInit()\n";
+                    fDeclaredClassInitializers.insert(field->fOwner.fName);
+                }
+                fMethodHeader << "    call fastcc void @" << escape_type_name(field->fOwner.fName) <<
+                        "$$classInit()\n";
+            }
+            String load = this->nextVar();
+            out << "    " << load << " = load " << type << ", " << type << "* " <<
+                    this->fieldName(*field) << "\n";
+            return load;*-
+            assert false
+        }
+        def cl := compiler.getClass(fieldRef.children[0].type)
+        assert cl != null
+        if compiler.isValue(cl) {
+            def base := getReference(fieldRef.children[0], out)
+            def fields := compiler.instanceFields(cl)
+            def index:Int? := null
+            for i in 0 .. fields.get_count() {
+                if fields[i]->FieldDecl == field { -- FIXME unnecessary cast
+                    index := i
+                    break
+                }
+            }
+            assert index != null
+            def result := nextVar()
+            out.printLine("\{result} = extractvalue \{type(fieldRef.children[0].type)} \{base}" +
+                    ", \{index}")
+            return result
+        }
+        -*
+        String ptr = type + "* " + this->getLValue(fieldRef, out);
+        String result = this->nextVar();
+        out << "    " << result << " = load " << type << ", " << ptr << "\n";
+        return result;*-
+        assert false
     }
 
     method unwrapValue(value:String, srcType:Type, dstType:Type, out:OutputStream):String {
@@ -619,12 +779,12 @@ class LLVMCodeGenerator (CodeGenerator) {
             if construct.children[0].children[0].kind = IRNode.Kind.INT {
                 return "{ " + value + " }"
             }
-            assert false
--*            String result = nextVar();
-            ASSERT(!cl->fFields.back()->fAnnotations.isClass());
-            out << "    " << result << " = insertvalue " << type << " { " <<
-                    llvmType(cl->fFields.back()->fType) << " undef }, " << value << ", 0\n";
-            return result;*-
+            def result := nextVar()
+            def lastField := cl.fields[cl.fields.get_count() - 1]
+            assert !lastField.annotations.isClass()
+            out.printLine("\{result} = insertvalue \{t} { \{type(lastField.type)} undef }, " +
+                    "\{value}, 0\n")
+            return result
         }
         if construct.type = Type.Bit() {
             assert construct.children.get_count() = 1
@@ -633,43 +793,42 @@ class LLVMCodeGenerator (CodeGenerator) {
             if construct.children[0].children[0].kind = IRNode.Kind.BIT {
                 return "{ " + value + " }"
             }
-            assert false
--*            String result = nextVar();
-            ASSERT(!cl->fFields.back()->fAnnotations.isClass());
-            out << "    " << result << " = insertvalue " << type << " { " <<
-                    llvmType(cl->fFields.back()->fType) << " undef }, " << value << ", 0\n";
-            return result;*-
+            def result := nextVar()
+            def lastField := cl.fields[cl.fields.get_count() - 1]
+            assert !lastField.annotations.isClass()
+            out.printLine("\{result} = insertvalue \{t} { \{type(lastField.type)} undef }, " +
+                    "\{value}, 0\n")
+            return result
         }
-        assert false
--*        if (cl->isValue(fCompiler)) {
-            String alloca = "%$tmp" + std::to_string(++fLabels);
-            fMethodHeader << "    " << alloca << " = alloca " << type << "\n";
-            writeCall(construct.fChildren[0], type + "* " + alloca, out);
-            String result = nextVar();
-            out << "    " << result << " = load " << type << ", " << type << "* " << alloca << "\n";
-            return result;
+        if compiler.isValue(cl) {
+            labelCount += 1
+            def alloca := "%$tmp\{labelCount}"
+            methodHeader.printLine("\{alloca} = alloca \{t}")
+            writeCall(construct.children[0], "\{t}* \{alloca}", out)
+            def result := nextVar()
+            out.printLine("\{result} = load \{t}, \{t}* \{alloca}")
+            return result
         }
-        String callRef = nextVar();
-        out << "    " << callRef << " = call i8* @malloc(i64 " << sizeOf(construct.fType) <<
-                ")\n";
-        String result = nextVar();
-        out << "    " << result << " = bitcast i8* " << callRef << " to " <<
-                llvmType(construct.fType) << "\n";
-        String classPtr = nextVar();
-        String className;
-        if (construct.fType.fCategory == Type::Category::GENERIC) {
-            className = llvmTypeName(construct.fType.fSubtypes[0]);
+        def callRef := nextVar()
+        out.printLine("\{callRef} = call i8* @malloc(i64 \{sizeOf(construct.type)})")
+        def result := nextVar()
+        out.printLine("\{result} = bitcast i8* \{callRef} to \{type(construct.type)}")
+        def classPtr := nextVar()
+        def className:String
+        if construct.type.typeKind = Type.Kind.GENERIC {
+            className := typeName(construct.type.subtypes[0])
         }
         else {
-            className = llvmTypeName(construct.fType);
+            className := typeName(construct.type)
         }
-        out << "    " << classPtr << " = getelementptr inbounds " << className << ", " << type <<
-                " " << result << ", i64 0, i32 0" << "\n";
-        const ClassConstant& cc = getClassConstant(*cl);
-        out << "    store %panda$core$Class* bitcast(" << cc.fType << "* " << cc.fName <<
-                " to %panda$core$Class*), %panda$core$Class** " << classPtr << "\n";
-        writeCall(construct.fChildren[0], type + " " + result, out);
-        return result;*-
+        out.printLine("\{classPtr} = getelementptr inbounds \{className}, \{t} \{result}, i64 0, " +
+                "i32 0")
+-*        def cc := getClassConstant(cl)
+        out.printLine("store %panda$core$Class* bitcast(\{cc.type}* \{cc.name} to " +
+                "%panda$core$Class*), %panda$core$Class** \{classPtr}")
+        writeCall(construct.children[0], "\{type} \{result}", out)
+        return result*-
+        assert false
     }
 
     method getIntReference(int:IRNode, out:OutputStream):String {
@@ -695,6 +854,8 @@ class LLVMCodeGenerator (CodeGenerator) {
 
     method getReference(expr:IRNode, out:OutputStream):String {
         match expr.kind {
+            when IRNode.Kind.BINARY:
+                return getBinaryReference(expr, out)
             when IRNode.Kind.CALL:
                 return getCallReference(expr, out)
             when IRNode.Kind.CAST:
@@ -707,6 +868,8 @@ class LLVMCodeGenerator (CodeGenerator) {
                 return getConstructReference(expr, out)
             when IRNode.Kind.VARIABLE_REFERENCE:
                 return getVariableReference(expr.payload->Variable, out)
+            when IRNode.Kind.FIELD_REFERENCE:
+                return getFieldReference(expr, out)
             otherwise:
                 assert false, "unsupported expression \{expr}"
         }
@@ -723,13 +886,16 @@ class LLVMCodeGenerator (CodeGenerator) {
         }
     }
 
-    method writeCall(call:IRNode, out:OutputStream) {
+    method writeCall(call:IRNode, target:String?, out:OutputStream) {
         assert call.kind = IRNode.Kind.CALL
         def m := (call.payload->MethodRef).value
         if m.owner.external {
             writeDeclaration(m)
         }
-        def args := Array<String>(call.children.get_count())
+        def args := Array<String>()
+        if target != null {
+            args.add(target)
+        }
         for a in call.children {
             args.add(getTypedReference(a, out))
         }
@@ -863,12 +1029,67 @@ class LLVMCodeGenerator (CodeGenerator) {
         }
     }
 
+    method getLValue(lvalue:IRNode, out:OutputStream):String {
+        match lvalue.kind {
+            when IRNode.Kind.VARIABLE_REFERENCE:
+                return getName(lvalue.payload->Variable)
+            otherwise:
+                assert false
+        }
+    }
+
+    method writeAssignment(a:IRNode, out:OutputStream) {
+        assert a.kind = IRNode.Kind.BINARY
+        assert a.children.get_count() = 2
+        def lvalue := "\{type(a.children[0].type)}* \{getLValue(a.children[0], out)}"
+        def value:String
+        def t := type(a.children[0].type)
+        def op := a.payload->Int
+        if op = Token.Kind.ASSIGNMENT {
+            def right := getReference(a.children[1], out)
+            value := "\{t} \{right}"
+        }
+        else {
+-*            Operator binOp;
+            switch (op) {
+                case Operator::ADDEQ:        binOp = Operator::ADD;                         break;
+                case Operator::SUBEQ:        binOp = Operator::SUB;                         break;
+                case Operator::MULEQ:        binOp = Operator::MUL;                         break;
+                case Operator::DIVEQ:        binOp = Operator::DIV;                         break;
+                case Operator::INTDIVEQ:     binOp = Operator::INTDIV;                      break;
+                case Operator::REMEQ:        binOp = Operator::REM;                         break;
+                case Operator::POWEQ:        binOp = Operator::POW;                         break;
+                case Operator::XOREQ:        binOp = Operator::XOR;                         break;
+                case Operator::BITWISEOREQ:  binOp = Operator::BITWISEOR;                   break;
+                case Operator::BITWISEANDEQ: binOp = Operator::BITWISEAND;                  break;
+                case Operator::BITWISEXOREQ: binOp = Operator::BITWISEXOR;                  break;
+                case Operator::SHIFTLEFTEQ:  binOp = Operator::SHIFTLEFT;                   break;
+                case Operator::SHIFTRIGHTEQ: binOp = Operator::SHIFTRIGHT;                  break;
+                case Operator::ANDEQ:        this->writeAndEq(lvalue, a.fChildren[1], out); return;
+                case Operator::OREQ:         this->writeOrEq(lvalue, a.fChildren[1], out);  return;
+                default: abort();
+            }
+            String left = this->nextVar();
+            out << "    " << left << " = load " << this->llvmType(a.fChildren[0].fType) << ", " <<
+                    lvalue << "\n";
+            String right = this->getReference(a.fChildren[1], out);
+            value = type + " " +
+                    this->getBinaryReference(op_class(a.fChildren[0].fType), type + " " + left, binOp,
+                            right, out);
+            *-
+            assert false
+        }
+        out.printLine("store \{value}, \{lvalue}")
+    }
+
     method writeStatement(stmt:IRNode, out:OutputStream) {
         match stmt.kind {
+            when IRNode.Kind.BINARY:
+                writeAssignment(stmt, out)
             when IRNode.Kind.BLOCK:
                 writeBlock(stmt, out)
             when IRNode.Kind.CALL:
-                writeCall(stmt, out)
+                writeCall(stmt, null, out)
             when IRNode.Kind.IF:
                 writeIf(stmt, out)
             when IRNode.Kind.WHILE:

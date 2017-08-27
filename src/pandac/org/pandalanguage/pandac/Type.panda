@@ -12,6 +12,8 @@ class Type : Symbol (Equatable<Type>) {
         constant UNRESOLVED := 17
         constant BIT_LITERAL := 18
         constant BUILTIN_BIT := 19
+        constant BUILTIN_FLOAT := 20
+        constant GENERIC := 21
     }
 
     def resolved:Bit
@@ -118,6 +120,10 @@ class Type : Symbol (Equatable<Type>) {
 
     function isClass():Bit {
         return !isBuiltinNumber()
+    }
+
+    function isPointer():Bit {
+        return name.startsWith("panda.unsafe.Pointer")
     }
 
     @override

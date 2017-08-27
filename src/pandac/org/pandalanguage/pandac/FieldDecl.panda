@@ -18,7 +18,9 @@ class FieldDecl : Symbol {
 
     def type:Type
 
-    def value:ASTNode?
+    def rawValue:ASTNode?
+
+    def value:IRNode?
 
     var resolved := false
 
@@ -29,7 +31,7 @@ class FieldDecl : Symbol {
         self.annotations := annotations
         self.fieldKind := fieldKind
         self.type := type
-        self.value := value
+        self.rawValue := value
         super.init(Symbol.Kind.FIELD, offset, name)
     }
 }
