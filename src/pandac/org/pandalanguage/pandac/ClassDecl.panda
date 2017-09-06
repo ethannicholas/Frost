@@ -1,6 +1,25 @@
 package org.pandalanguage.pandac
 
 class ClassDecl : Symbol {
+    class GenericParameter : Symbol {
+        def owner:String
+
+        def bound:org.pandalanguage.pandac.Type -- FIXME unnecessary qualification
+
+        init(offset:Int, owner:String, name:String, bound:org.pandalanguage.pandac.Type) { -- FIXME qualification
+            self.owner := owner
+            self.bound := bound
+            super.init(Kind.GENERIC_PARAMETER, offset, name)
+        }
+
+        @override
+        function convert():String {
+            return "\{owner}.\{name}:\{bound}"
+        }
+    }
+
+    def source:File
+
     def aliases:MapView<String, String>
 
     def doccomment:String?
@@ -10,6 +29,8 @@ class ClassDecl : Symbol {
     def rawSuper:Type?
 
     def rawInterfaces:Array<Type>
+
+    def parameters:ListView<GenericParameter>
 
     def fields := Array<FieldDecl>()
 
@@ -21,9 +42,11 @@ class ClassDecl : Symbol {
 
     var resolved:Bit
 
-    init(offset:Int, aliases:MapView<String, String>, doccomment:String?, annotations:Annotations,
-            name:String, rawSuper:Type?, rawInterfaces:Array<Type>, parent:SymbolTable) {
+    init(source:File, offset:Int, aliases:MapView<String, String>, doccomment:String?,
+            annotations:Annotations, name:String, rawSuper:Type?, rawInterfaces:Array<Type>,
+            parameters:ListView<GenericParameter>, parent:SymbolTable) {
         super.init(Kind.CLASS, offset, name)
+        self.source := source
         self.aliases := aliases
         self.doccomment := doccomment
         self.annotations := annotations
@@ -31,6 +54,9 @@ class ClassDecl : Symbol {
         self.rawInterfaces := rawInterfaces
         self.symbolTable := SymbolTable(parent)
         self.resolved := false
+        for p in parameters {
+            symbolTable.add(p)
+        }
     }
 
     function type():Type {

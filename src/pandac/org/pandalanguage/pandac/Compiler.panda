@@ -19,7 +19,13 @@ class Compiler (ErrorReporter) {
     def classes := HashMap<String, ClassDecl>()
 
     @private
+    def currentFile := Stack<File>()
+
+    @private
     def currentClass := Stack<ClassDecl>()
+
+    @private
+    def currentMethod := Stack<MethodDecl>()
 
     @private
     var symbolTable:SymbolTable
@@ -55,6 +61,7 @@ class Compiler (ErrorReporter) {
         addAlias("panda.core.Int64")
         addAlias("panda.core.Immutable")
         addAlias("panda.core.Object")
+        addAlias("panda.core.Range")
         addAlias("panda.core.Value")
         addAlias("panda.io.Console")
     }
@@ -68,27 +75,61 @@ class Compiler (ErrorReporter) {
         if type.resolved {
             return type
         }
-        def resolved := currentClass.peek().aliases[type.name]
-        if resolved != null {
-            return Type(resolved, Type.Kind.CLASS, type.offset, true)
+        match type.typeKind {
+            when Type.Kind.CLASS:
+                def resolved := currentClass.peek().aliases[type.name]
+                if resolved != null {
+                    return Type(resolved, Type.Kind.CLASS, type.offset, true)
+                }
+                def s := symbolTable[type.name]
+                if s != null {
+                    match s.kind {
+                        when Symbol.Kind.ALIAS:
+                            return Type((s->Alias).fullName, Type.Kind.CLASS, type.offset, true) -- FIXME parens
+                        when Symbol.Kind.GENERIC_PARAMETER:
+                            def gp := s->ClassDecl.GenericParameter
+                            resolve(getClass(type.offset, gp.owner))
+                            def subtypes := Array<Type>() -- FIXME literal
+                            subtypes.add(gp.bound)
+                            return Type(gp.owner + "." + gp.name, Type.Kind.GENERIC_PARAMETER,
+                                    type.offset, subtypes, true)
+                        when Symbol.Kind.TYPE:
+                            return s->Type
+                    }
+                }
+                error(position(type.offset), "unknown type '\{type}'")
+                return Type.Invalid()
+            when Type.Kind.NULLABLE:
+                assert type.subtypes.get_count() = 1
+                def subtypes := Array<Type>()
+                subtypes.add(resolve(type.subtypes[0]))
+                return Type(subtypes[0].name + "?", Type.Kind.NULLABLE, type.offset, subtypes, true)
+            when Type.Kind.GENERIC:
+                assert type.subtypes.get_count() >= 2
+                def subtypes := Array<Type>()
+                subtypes.add(resolve(type.subtypes[0]))
+                def name := MutableString(subtypes[0].name)
+                name.append("<")
+                var separator := ""
+                for i in 1 .. type.subtypes.get_count() {
+                    def resolved := resolve(type.subtypes[i])
+                    subtypes.add(resolved)
+                    name.append(separator)
+                    name.append(resolved.name)
+                    separator := ", "
+                }
+                name.append(">")
+                return Type(name.convert(), Type.Kind.GENERIC, type.offset, subtypes, true)
+            otherwise:
+                assert false, "cannot resolve \{type}"
         }
-        def s := symbolTable[type.name]
-        if s != null {
-            match s.kind {
-                when Symbol.Kind.ALIAS:
-                    return Type((s->Alias).fullName, Type.Kind.CLASS, type.offset, true) -- FIXME parens
-                when Symbol.Kind.TYPE:
-                    return s->Type
-            }
-        }
-        error(position(type.offset), "unknown type '\{type}'")
-        return Type.Invalid()
     }
 
     method resolve(cl:ClassDecl) {
         if cl.resolved {
             return
         }
+        currentFile.push(cl.source)
         if cl.rawSuper != null {
             cl.rawSuper := resolve(cl.rawSuper)
         }
@@ -96,17 +137,23 @@ class Compiler (ErrorReporter) {
             cl.rawInterfaces[i] := resolve(cl.rawInterfaces[i])
         }
         cl.resolved := true
+        currentFile.pop()
     }
 
     method resolve(m:MethodDecl) {
         if m.resolved {
             return
         }
+        currentFile.push(m.owner.source) -- FIXME use init / cleanup
+        def old := symbolTable
+        symbolTable := m.owner.symbolTable
         for p in m.parameters {
             p.type := resolve(p.type)
         }
         m.returnType := resolve(m.returnType)
         m.resolved := true
+        symbolTable := old
+        currentFile.pop()
     }
 
     method resolve(f:FieldDecl) {
@@ -114,20 +161,31 @@ class Compiler (ErrorReporter) {
             return
         }
         f.resolved := true
+        currentFile.push(f.owner.source) -- FIXME use init / cleanup
+        def old := symbolTable
+        symbolTable := f.owner.symbolTable
         if f.type != Type.Void() {
             f.type := resolve(f.type)
+            currentFile.pop()
+            symbolTable := old
             return
         }
         if f.rawValue = null {
             error(f.offset, "field has neither a type nor a value")
+            currentFile.pop()
+            symbolTable := old
             return
         }
         f.value := compileExpression(f.rawValue)
         if f.value = null {
+            currentFile.pop()
+            symbolTable := old
             return
         }
         f.type := variableType(f.value)
         f.value := coerce(f.value, f.type)
+        currentFile.pop()
+        symbolTable := old
     }
 
     method resolve(expr:IRNode?):IRNode? {
@@ -185,7 +243,14 @@ class Compiler (ErrorReporter) {
 
     method getClass(type:Type):ClassDecl? {
         assert type.resolved, "unresolved type \{type}"
-        return getClass(type.offset, type.name)
+        match type.typeKind {
+            when Type.Kind.CLASS:
+                return getClass(type.offset, type.name)
+            when Type.Kind.NULLABLE, Type.Kind.GENERIC, Type.Kind.GENERIC_PARAMETER:
+                return getClass(type.subtypes[0])
+            otherwise:
+                assert false
+        }
     }
 
     method addInheritedMethods(st:SymbolTable, name:String, result:Array<MethodRef>,
@@ -295,9 +360,28 @@ class Compiler (ErrorReporter) {
         if type = target {
             return 0
         }
-        if type = Type.BuiltinBit() & target = Type.Bit() {
-            return 1
+        match target.typeKind {
+            when Type.Kind.NULLABLE, Type.Kind.GENERIC_PARAMETER:
+                return coercionCost(type, target.subtypes[0])
         }
+        def targetClass := getClass(target)
+        if targetClass = null {
+            return null
+        }
+        for m in targetClass.methods {
+            if m.annotations.isImplicit() {
+                -- Internal use feature, sharp edges! We currently assume there's only one implicit
+                -- method and it's a single-argument init.
+                resolve(m)
+                assert m.methodKind = MethodDecl.Kind.INIT
+                assert m.parameters.get_count() = 1
+                def cost := coercionCost(type, m.parameters[0].type)
+                if cost != null {
+                    return cost
+                }
+            }
+        }
+
         def cl := getClass(type)
         assert cl != null
         resolve(cl)
@@ -317,6 +401,13 @@ class Compiler (ErrorReporter) {
     }
 
     function coercionCost(expr:IRNode, target:Type):Int? {
+        if expr.type = target {
+            return 0
+        }
+        match target.typeKind {
+            when Type.Kind.NULLABLE, Type.Kind.GENERIC_PARAMETER:
+                return coercionCost(expr, target.subtypes[0])
+        }
         match expr.kind {
             when IRNode.Kind.BIT:
                 if target.typeKind = Type.Kind.BUILTIN_BIT {
@@ -352,11 +443,25 @@ class Compiler (ErrorReporter) {
         if expr.type = target {
             return expr
         }
+        match target.typeKind {
+            when Type.Kind.GENERIC_PARAMETER:
+                return coerce(expr, target.subtypes[0])
+            when Type.Kind.NULLABLE:
+                if expr.type = target.subtypes[0] {
+                    def children := Array<IRNode>() -- FIXME literal
+                    children.add(expr)
+                    return IRNode(IRNode.Kind.CAST, expr.offset, target, false, children)
+                }
+                if expr.type.kind != Type.Kind.NULLABLE {
+                    def intermediate := coerce(expr, target.subtypes[0])
+                    return coerce(intermediate, target)
+                }
+        }
         if expr.kind = IRNode.Kind.INT {
             if target.isBuiltinNumber() {
                 return IRNode(IRNode.Kind.INT, expr.offset, target, expr.payload->UInt64)
             }
-            if target.typeKind = Type.Kind.CLASS & !target.isNumber() {
+            if target.isClass() & !target.isNumber() {
                 def varType := coerce(expr, variableType(expr))
                 if varType != null {
                     return coerce(varType, target)
@@ -367,7 +472,7 @@ class Compiler (ErrorReporter) {
             if target = Type.BuiltinBit() {
                 return IRNode(IRNode.Kind.BIT, expr.offset, target, expr.payload->Bit)
             }
-            if target.typeKind = Type.Kind.CLASS & target != Type.Bit() {
+            if target.isClass() & target != Type.Bit() {
                 def varType := coerce(expr, variableType(expr))
                 if varType != null {
                     return coerce(varType, target)
@@ -474,7 +579,7 @@ class Compiler (ErrorReporter) {
 
     method call(target:IRNode?, m:MethodRef, args:ListView<IRNode>):IRNode? {
         assert m.value.resolved
-        assert m.parameterCount() = args.get_count()
+        assert m.parameterCount() = args.get_count(), "invalid call: \{m} with args: \{args}"
         def finalArgs := Array<IRNode>()
         if target != null & !m.value.annotations.isClass() {
             finalArgs.add(coerce(target, m.value.owner.type()))
@@ -533,7 +638,6 @@ class Compiler (ErrorReporter) {
                     }
                     return call(target, methods[0], args)
                 }
-                Console.printLine("matches: \{methods}")
                 assert false
             when IRNode.Kind.TYPE_REFERENCE:
                 def cl := getClass(m.payload->Type)
@@ -615,7 +719,7 @@ class Compiler (ErrorReporter) {
             if right = null {
                 return null
             }
-            if (!isLValue(left)) {
+            if !isLValue(left) {
                 error(left.offset, "cannot assign to this expression")
                 return null
             }
@@ -698,6 +802,11 @@ class Compiler (ErrorReporter) {
         }
     }
 
+    method compileType(t:ASTNode):IRNode? {
+        return IRNode(IRNode.Kind.TYPE_REFERENCE, t.offset, Type.Class(),
+                resolve(scanner.convertType(t)))
+    }
+
     method compileExpression(e:ASTNode):IRNode? {
         match e.kind {
             when ASTNode.Kind.BINARY:
@@ -712,8 +821,10 @@ class Compiler (ErrorReporter) {
                 return compileIdentifier(e)
             when ASTNode.Kind.INT:
                 return IRNode(IRNode.Kind.INT, e.offset, Type.IntLiteral(), e.payload->UInt64)
+            when ASTNode.Kind.TYPE, ASTNode.Kind.GENERIC_TYPE, ASTNode.Kind.NULLABLE_TYPE:
+                return compileType(e)
         }
-        assert false, "unsupported expression: \{e}"
+        assert false, "unsupported expression: \{e} (\{e.kind})"
     }
 
     method compileBlock(b:ASTNode):IRNode? {
@@ -843,6 +954,7 @@ class Compiler (ErrorReporter) {
                 }
                 if value != null {
                     value := coerce(value, type)
+                    assert value.type = type
                     if value = null {
                         return null
                     }
@@ -882,6 +994,29 @@ class Compiler (ErrorReporter) {
         return IRNode(IRNode.Kind.DECLARATION, d.offset, children)
     }
 
+    method compileReturn(r:ASTNode):IRNode? {
+        assert r.kind = ASTNode.Kind.RETURN
+        if r.children.get_count() = 1 {
+            if currentMethod.peek().returnType = Type.Void() {
+                error(r.offset, "cannot return a value from a method with no return type")
+                return null
+            }
+            def value := coerce(compileExpression(r.children[0]), currentMethod.peek().returnType)
+            if value = null {
+                return null
+            }
+            def children := Array<IRNode>() -- FIXME literal
+            children.add(value)
+            return IRNode(IRNode.Kind.RETURN, r.offset, children)
+        }
+        assert r.children.get_count() = 0
+        if currentMethod.peek().returnType != Type.Void() {
+            error(r.offset, "expected a return value")
+            return null
+        }
+        return IRNode(IRNode.Kind.RETURN, r.offset)
+    }
+
     method compileVar(v:ASTNode):IRNode? {
         assert v.kind = ASTNode.Kind.VAR |
                v.kind = ASTNode.Kind.DEF |
@@ -915,6 +1050,7 @@ class Compiler (ErrorReporter) {
             when ASTNode.Kind.WHILE:  return compileWhile(s)
             when ASTNode.Kind.DO:     return compileDo(s)
             when ASTNode.Kind.LOOP:   return compileLoop(s)
+            when ASTNode.Kind.RETURN: return compileReturn(s)
             when ASTNode.Kind.VAR, ASTNode.Kind.DEF, ASTNode.Kind.CONSTANT, ASTNode.Kind.PROPERTY:
                 return compileVar(s)
         }
@@ -923,31 +1059,45 @@ class Compiler (ErrorReporter) {
 
     method compile(m:MethodDecl) {
         assert currentClass.peek() == m.owner
+        assert symbolTable == m.owner.symbolTable
+        currentMethod.push(m)
         resolve(m)
         if m.body != null {
+            def symbols := SymbolTable(symbolTable)
+            for p in m.parameters {
+                symbols.add(Variable(m.offset, p.name, p.type, Variable.Storage.PARAMETER))
+            }
+            symbolTable := symbols
             def compiled := compileBlock(m.body)
             if compiled != null {
                 codeGenerator.write(m, compiled)
             }
+            assert symbolTable == symbols
+            symbolTable := m.owner.symbolTable
         }
+        currentMethod.pop()
     }
 
     method compile(cl:ClassDecl) {
         cl.external := false
         currentClass.push(cl)
+        currentFile.push(cl.source)
+        symbolTable := cl.symbolTable
         for m in cl.methods {
             compile(m)
         }
+        currentFile.pop()
         currentClass.pop()
     }
 
     method scan(file:File):ListView<ClassDecl> {
         var result := scans[file]
         if result = null {
+            currentFile.push(file)
             parser.start(file.name(), file.readFully())
             def parsed := parser.file()
             if parsed != null {
-                result := scanner.scan(parsed)
+                result := scanner.scan(file, parsed)
                 for cl in result {
                     classes[cl.name] := cl
                 }
@@ -956,6 +1106,7 @@ class Compiler (ErrorReporter) {
                 result := Array<ClassDecl>()
             }
             scans[file] := result
+            currentFile.pop()
         }
         return result
     }
@@ -968,7 +1119,21 @@ class Compiler (ErrorReporter) {
     }
 
     function position(offset:Int):Position {
-        return Position("unknown", -1, -1)
+        def source := currentFile.peek().openInputStream()
+        var line := 1
+        var column := 1
+        for i in 0 .. offset {
+            match source.read()->Char8 { -- FIXME char literals
+                when Char8(10):
+                    line += 1
+                    column := 1
+                when Char8(9):
+                    column += 4 - column % 4
+                otherwise:
+                    column += 1
+            }
+        }
+        return Position(currentFile.peek().name(), line, column)
     }
 
     method error(offset:Int, msg:String) {

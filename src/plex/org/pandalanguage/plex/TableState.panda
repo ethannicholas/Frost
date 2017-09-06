@@ -26,16 +26,16 @@ class TableState : State {
     @override
     function convert():String {
         def result := MutableString()
-        result.append("TableState(")
+        result.append("Table(")
         result.append(inverse)
-        result.append(", ImmutablePrimitiveArray<Bit>(")
+        result.append(", [")
         var separator := ""
         for a in acceptStates {
             result.append(separator)
             result.append(a)
             separator := ", "
         }
-        result.append(")")
+        result.append("]")
         for n in next {
             result.append(", ")
             result.append(n)

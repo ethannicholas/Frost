@@ -665,7 +665,7 @@ class UInt16 : Value (Key<UInt16>, Comparable<UInt16>) {
 
     @override
     function convert():String {
-        constant max := 1
+        constant max := 5
         def chars := Pointer<Char8>.alloc(max)
         var index := max - 1
         var value := self

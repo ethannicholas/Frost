@@ -224,7 +224,7 @@ class LLVMCodeGenerator (CodeGenerator) {
             return
         }
         writtenWrappers.add(t.name)
-        def code := MutableString("%\{escapeName(t.name)}$wrapper = type { ")
+        def code := MutableString("\{type(t)}$wrapper = type { ")
         def object := compiler.getClass(Type.Object())
         assert object != null
         var separator := ""
@@ -236,6 +236,7 @@ class LLVMCodeGenerator (CodeGenerator) {
         code.append(", \{type(t)}")
         code.append(" }")
         types.printLine(code)
+        types.printLine("\{type(t)}$nullable = type { \{type(t)}, i1 }")
     }
 
     function typeName(t:Type):String {
@@ -265,8 +266,12 @@ class LLVMCodeGenerator (CodeGenerator) {
                 def cl := compiler.getClass(t)
                 assert cl != null
                 if compiler.isValue(cl) {
-                    return nullableType(t.subtypes[0])
+                    return nullableType(t)
                 }
+                return type(t.subtypes[0])
+            when Type.Kind.GENERIC:
+                return type(t.subtypes[0])
+            when Type.Kind.GENERIC_PARAMETER:
                 return type(t.subtypes[0])
             otherwise:
                 assert false, "unsupported type '\{t}'"
@@ -274,6 +279,9 @@ class LLVMCodeGenerator (CodeGenerator) {
     }
 
     method wrapperTypeName(t:Type):String {
+        if t.typeKind = Type.Kind.NULLABLE {
+            return wrapperTypeName(t.subtypes[0])
+        }
         writeWrapperType(t)
         return "%\{escapeName(t.name)}$wrapper"
     }
@@ -283,7 +291,8 @@ class LLVMCodeGenerator (CodeGenerator) {
     }
 
     method nullableType(t:Type):String {
-        return "\{wrapperTypeName(t)}$nullable"
+        assert t.typeKind = Type.Kind.NULLABLE, "\{t} is not nullable"
+        return "\{type(t.subtypes[0])}$nullable"
     }
 
     method getWrapperClassConstant(cl:ClassDecl):ClassConstant {
@@ -305,10 +314,13 @@ class LLVMCodeGenerator (CodeGenerator) {
     }
 
     function escapeName(s:String):String {
-        return s.replace(".", "$")
+        return s.replace(".", "$").replace("?", "$Q")
     }
 
     function getName(v:Variable):String {
+        if v.storage = Variable.Storage.PARAMETER {
+            return "%\{v.name}"
+        }
         var result := variableNames[v]
         if result = null {
             labelCount += 1
@@ -489,9 +501,10 @@ class LLVMCodeGenerator (CodeGenerator) {
     }
 
     method wrapValue(value:String, srcType:Type, dstType:Type, out:OutputStream):String {
+        out.printLine("; wrapping \{value}")
         def src := compiler.getClass(srcType)
         assert src != null
-        if srcType.kind = Type.Kind.NULLABLE {
+        if srcType.typeKind = Type.Kind.NULLABLE {
             -- casting nullable value to nullable wrapper, need to special-case null
             def testStart := currentBlock
             def isNonNull := nextVar()
@@ -650,63 +663,21 @@ class LLVMCodeGenerator (CodeGenerator) {
     }
 
     method toNullableValue(value:String, srcType:Type, dstType:Type, out:OutputStream):String {
--*        Class* cl = fCompiler->getClass(srcType);
-        ASSERT(cl);
-        String nullableType = llvmNullableType(dstType);
-        std::vector<Field*> fields = fCompiler->getInstanceFields(*cl);
-        String result = "{";
-        const char* separator = " ";
-        for (const Field* f : fields) {
-            result += separator;
-            result += llvmType(f->fType);
-            result += " undef";
-            separator = ", ";
-        }
-        result += separator;
-        result += "i1 true }";
-        for (int i = 0; i < fields.size(); ++i) {
-            String fieldValue = nextVar();
-            out << "    " << fieldValue << " = extractvalue " << llvmType(srcType) << " " <<
-                    value << ", " << i << "\n";
-            String next = nextVar();
-            out << "    " << next << " = insertvalue " << nullableType << " " << result <<
-                    ", " << llvmType(fields[i]->fType) << " " << fieldValue << ", " << i <<
-                    "\n";
-            result = next;
-        }
-        return result;*-
-        assert false
+        def nullableType := nullableType(dstType)
+        def result := nextVar()
+        out.printLine("\{result} = insertvalue \{nullableType} " +
+                "{ \{type(srcType)} undef, i1 true }, \{type(srcType)} \{value}, 0")
+        return result
     }
 
     method toNonNullableValue(value:String, srcType:Type, dstType:Type, out:OutputStream):String {
--*        Class* cl = fCompiler->getClass(dstType);
-        ASSERT(cl);
-        String nullableType = llvmNullableType(srcType);
-        std::vector<Field*> fields = fCompiler->getInstanceFields(*cl);
-        String result = "{";
-        const char* separator = " ";
-        for (const Field* f : fields) {
-            result += separator;
-            result += llvmType(f->fType);
-            result += " undef";
-            separator = ", ";
-        }
-        result += " }";
-        for (int i = 0; i < fields.size(); ++i) {
-            String fieldValue = nextVar();
-            out << "    " << fieldValue << " = extractvalue " << nullableType << " " << value << ", " <<
-                    i << "\n";
-            String next = nextVar();
-            out << "    " << next << " = insertvalue " << llvmType(dstType) << " " << result <<
-                    ", " << llvmType(fields[i]->fType) << " " << fieldValue << ", " << i <<
-                    "\n";
-            result = next;
-        }
-        return result;*-
-        assert false
+        def result := nextVar()
+        out.printLine("\{result} = extractvalue \{type(srcType)} \{value}, 0")
+        return result
     }
 
     method getCastReference(value:String, src:Type, target:Type, out:OutputStream):String {
+        out.printLine("; cast \{value} from \{src} to \{target}")
         def op:String
         if target.isBuiltinNumber() {
             assert src.isBuiltinNumber()
@@ -716,7 +687,7 @@ class LLVMCodeGenerator (CodeGenerator) {
                 op := "trunc"
             }
             else if size1 < size2 {
-                if (target.kind == Type.Kind.BUILTIN_INT) {
+                if target.typeKind = Type.Kind.BUILTIN_INT {
                     op := "sext"
                 }
                 else {
@@ -738,11 +709,11 @@ class LLVMCodeGenerator (CodeGenerator) {
             else if !compiler.isValue(srcClass) & compiler.isValue(targetClass) {
                 return unwrapValue(value, src, target, out)
             }
-            else if compiler.isValue(srcClass) & target.kind = Type.Kind.NULLABLE &
+            else if compiler.isValue(srcClass) & target.typeKind = Type.Kind.NULLABLE &
                     target.subtypes[0] = src {
                 return toNullableValue(value, src, target, out)
             }
-            else if compiler.isValue(targetClass) & src.kind = Type.Kind.NULLABLE &
+            else if compiler.isValue(targetClass) & src.typeKind = Type.Kind.NULLABLE &
                     src.subtypes[0] = target {
                 return toNonNullableValue(value, src, target, out)
             }
@@ -754,12 +725,11 @@ class LLVMCodeGenerator (CodeGenerator) {
             return value
         }
         def result := nextVar()
-        out.printLine("    \{result} = \{op} \{srcType} \{value} to \{dstType}")
+        out.printLine("\{result} = \{op} \{srcType} \{value} to \{dstType}")
         return result
     }
 
     method getCastReference(cast:IRNode, out:OutputStream):String {
-        Console.printLine(cast)
         assert cast.kind = IRNode.Kind.CAST
         assert cast.children.get_count() = 1
         def base := getReference(cast.children[0], out)
@@ -1082,6 +1052,16 @@ class LLVMCodeGenerator (CodeGenerator) {
         out.printLine("store \{value}, \{lvalue}")
     }
 
+    method writeReturn(r:IRNode, out:OutputStream) {
+        if r.children.get_count() = 1 {
+            out.printLine("ret \{getTypedReference(r.children[0], out)}")
+        }
+        else {
+            assert r.children.get_count() = 0
+            out.printLine("ret void")
+        }
+    }
+
     method writeStatement(stmt:IRNode, out:OutputStream) {
         match stmt.kind {
             when IRNode.Kind.BINARY:
@@ -1100,9 +1080,19 @@ class LLVMCodeGenerator (CodeGenerator) {
                 writeLoop(stmt, out)
             when IRNode.Kind.VAR, IRNode.Kind.DEF, IRNode.Kind.CONSTANT, IRNode.Kind.PROPERTY:
                 writeVar(stmt, out)
+            when IRNode.Kind.RETURN:
+                writeReturn(stmt, out)
             otherwise:
                 assert false, "unsupported statement \{stmt}"
         }
+    }
+
+    method selfType(m:MethodDecl):String {
+        def result := type(m.owner.type())
+        if m.methodKind = MethodDecl.Kind.INIT & !result.endsWith("*") {
+            return result + "*"
+        }
+        return result
     }
 
     method writeDeclaration(m:MethodDecl) {
@@ -1114,7 +1104,7 @@ class LLVMCodeGenerator (CodeGenerator) {
         declarations.print("declare \{callingConvention(m)}\{type(m.returnType)} \{getName(m)}(")
         var separator := ""
         if !m.annotations.isClass() {
-            declarations.print("\{type(m.owner.type())} %self")
+            declarations.print("\{selfType(m)} %self")
             separator := ", "
         }
         for p in m.parameters {

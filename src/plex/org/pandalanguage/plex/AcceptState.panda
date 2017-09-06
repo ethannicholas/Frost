@@ -15,6 +15,6 @@ class AcceptState : State {
 
     @override
     function convert():String {
-        return "new AcceptState(\{token})"
+        return "Accept(\{token})"
     }
 }

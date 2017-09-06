@@ -184,8 +184,7 @@ struct Type : public Symbol {
         if (isNumber() && other == IntLiteral()) {
             return *this;
         }
-        printf("internal error: union of %s and %s\n", fName.c_str(), other.fName.c_str());
-        abort();
+        return Type::Any();
     }
 
     Type remap(const std::map<String, Type>& types) const {

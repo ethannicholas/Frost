@@ -277,7 +277,6 @@ class Int64 : Value (Key<Int64>, Comparable<Int64>) {
     }
 
     @override
-    @inline
     function =(other:Int64):Bit {
         return value = other.value
     }

@@ -16,7 +16,7 @@ class SingleCharState : State {
     @override
     function convert():String {
         def result := MutableString()
-        result.append("SingleCharState(\"")
+        result.append("Char(\"")
         if c = Char8(10) { -- FIXME char literals
             result.append("\\n")
         }

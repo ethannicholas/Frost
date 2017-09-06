@@ -8,6 +8,7 @@ class Variable : Symbol {
     class Storage {
         constant LOCAL     := 1819
         constant PARAMETER := 1820
+        constant GLOBAL    := 1821
     }
 
     def type:Type

@@ -9,11 +9,28 @@ class Scanner {
     }
 
     method convertType(type:ASTNode):Type {
-        if type.kind = ASTNode.Kind.VOID {
-            return Type.Void()
+        match type.kind {
+            when ASTNode.Kind.VOID:
+                return Type.Void()
+            when ASTNode.Kind.TYPE:
+                assert type.children.get_count() = 0
+                return Type(type.payload->String, Type.Kind.CLASS, type.offset)
+            when ASTNode.Kind.NULLABLE_TYPE:
+                assert type.children.get_count() = 1
+                def children := Array<Type>()
+                children.add(convertType(type.children[0]))
+                return Type(children[0].name + "?", Type.Kind.NULLABLE, type.offset, children,
+                        false)
+            when ASTNode.Kind.GENERIC_TYPE:
+                assert type.children.get_count() >= 2
+                def children := Array<Type>()
+                for c in type.children {
+                    children.add(convertType(c))
+                }
+                return Type(type.payload->String, Type.Kind.GENERIC, type.offset, children, false)
+            otherwise:
+                assert false, "\{type} (\{type.kind})"
         }
-        assert type.kind = ASTNode.Kind.TYPE | type.kind = ASTNode.Kind.NULLABLE_TYPE
-        return Type(type.payload->String, Type.Kind.CLASS, type.offset)
     }
 
     method convertAnnotations(a:ASTNode):Annotations {
@@ -141,7 +158,8 @@ class Scanner {
         }
     }
 
-    method scanClass(aliases:MapView<String, String>, pkg:String, cl:ASTNode):ClassDecl? {
+    method scanClass(source:File, aliases:MapView<String, String>, pkg:String,
+            cl:ASTNode):ClassDecl? {
         def fullName:String
         if pkg != "" {
             fullName := "\{pkg}.\{cl.payload}"
@@ -149,7 +167,6 @@ class Scanner {
         else {
             fullName := cl.payload->String
         }
-        def interfaces := Array<Type>()
         assert cl.children.get_count() = 6
         def doccomment:String?
         if cl.children[0].kind != ASTNode.Kind.VOID {
@@ -161,6 +178,25 @@ class Scanner {
         }
         assert cl.children[1].kind = ASTNode.Kind.ANNOTATIONS
         def annotations := convertAnnotations(cl.children[1])
+        def parameters := Array<ClassDecl.GenericParameter>()
+        if cl.children[2].kind = ASTNode.Kind.GENERICS {
+            for p in cl.children[2].children {
+                assert p.kind = ASTNode.Kind.IDENTIFIER
+                def bound:Type
+                if p.children.get_count() = 1 {
+                    bound := convertType(p.children[0])
+                }
+                else {
+                    assert p.children.get_count() = 0
+                    bound := Type.Any()
+                }
+                parameters.add(ClassDecl.GenericParameter(p.offset, fullName, p.payload->String,
+                        bound))
+            }
+        }
+        else {
+            assert cl.children[2].kind = ASTNode.Kind.VOID
+        }
         def supertype:Type?
         if cl.children[3].kind != ASTNode.Kind.VOID {
             supertype := convertType(cl.children[3])
@@ -171,8 +207,9 @@ class Scanner {
         else {
             supertype := null
         }
-        def result := ClassDecl(cl.offset, aliases, doccomment, annotations, fullName, supertype,
-                interfaces, compiler.root)
+        def interfaces := Array<Type>()
+        def result := ClassDecl(source, cl.offset, aliases, doccomment, annotations, fullName,
+                supertype, interfaces, parameters, compiler.root)
         for c in cl.children[5].children {
             match c.kind {
                 when ASTNode.Kind.FIELD:
@@ -196,7 +233,7 @@ class Scanner {
         return result
     }
 
-    method scan(file:ASTNode):ListView<ClassDecl> {
+    method scan(source:File, file:ASTNode):ListView<ClassDecl> {
         def result := Array<ClassDecl>()
         var currentPackage := ""
         def aliases := HashMap<String, String>()
@@ -217,7 +254,7 @@ class Scanner {
                     }
                     aliases[alias] := fullName
                 when ASTNode.Kind.CLASS:
-                    def cl := scanClass(aliases, currentPackage, c)
+                    def cl := scanClass(source, aliases, currentPackage, c)
                     result.add(cl)
                 otherwise:
                     assert false, "unsupported: \{c.kind}"

@@ -57,4 +57,9 @@ class SymbolTable {
         }
         return result
     }
+
+    @override
+    function convert():String {
+        return "SymbolTable<parents=\{parents}, symbols=\{symbols}>"
+    }
 }

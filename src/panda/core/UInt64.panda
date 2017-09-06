@@ -497,7 +497,7 @@ class UInt64 : Value (Key<UInt64>, Comparable<UInt64>) {
 
     @override
     function convert():String {
-        constant max := 1
+        constant max := 20
         def chars := Pointer<Char8>.alloc(max)
         var index := max - 1
         var value := self

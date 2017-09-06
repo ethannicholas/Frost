@@ -44,7 +44,7 @@ class WriteInts {
         match type {
             when INT8,  INT16:  return INT32
             when UINT8, UINT16: return UINT32
-            default: return type
+            otherwise: return type
         }
     }
 
@@ -289,7 +289,11 @@ class WriteInts {
         out.printLine()
         out.printLine("    @override")
         out.printLine("    function convert():String {")
-        out.printLine("        constant max := " + (min(type).convert()->String).utf8().get_count())
+        var max := (max(type).convert()->String).utf8().get_count()
+        if int(type).startsWith("I") {
+            max += 1 -- for minus sign
+        }
+        out.printLine("        constant max := \{max}")
         out.printLine("        def chars := Pointer<Char8>.alloc(max)")
         out.printLine("        var index := max - 1")
         out.printLine("        var value := self")

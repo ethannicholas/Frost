@@ -103,6 +103,7 @@ class IRNode : Immutable {
         self.type := type
         self.payload := payload
         self.children := ImmutableArray<IRNode>(children)
+        assert kind != Kind.CAST | children[0].type != Type.IntLiteral()
     }
 
     @override

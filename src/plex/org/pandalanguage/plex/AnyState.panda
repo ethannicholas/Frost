@@ -13,7 +13,7 @@ class AnyState : State {
     @override
     function convert():String {
         def result := MutableString()
-        result.append("new AnyState(")
+        result.append("Dot(")
         for i in 0 .. next.get_count() {
             if i > 0 {
                 result.append(", ")

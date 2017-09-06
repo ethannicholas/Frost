@@ -58,6 +58,7 @@ class ASTNode : Immutable {
         constant INTERFACE       := 151
         constant FILE            := 152
         constant TUPLE_TARGET    := 153
+        constant GENERIC_TYPE    := 154
     }
 
     @class
@@ -175,6 +176,10 @@ class ASTNode : Immutable {
                 result.append(")")
                 return result.convert()
             when Kind.IDENTIFIER:
+                if children.get_count() = 1 {
+                    return payload + ":" + children[0]
+                }
+                assert children.get_count() = 0
                 return payload.convert()
             when Kind.DOT:
                 assert children.get_count() = 1
@@ -230,13 +235,14 @@ class ASTNode : Immutable {
                 result.append("}")
                 return result.convert()
             when Kind.TYPE:
-                if children.get_count() = 0 {
-                    return payload.convert()
-                }
-                def result := MutableString(payload.convert())
+                return payload.convert()
+            when Kind.NULLABLE_TYPE:
+                return children[0] + "?"
+            when Kind.GENERIC_TYPE:
+                def result := MutableString(children[0].convert())
                 result.append("<")
                 var separator := ""
-                for c in children {
+                for c in children[1..] {
                     result.append(separator)
                     result.append(c)
                     separator := ", "

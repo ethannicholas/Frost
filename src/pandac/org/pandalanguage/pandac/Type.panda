@@ -14,6 +14,7 @@ class Type : Symbol (Equatable<Type>) {
         constant BUILTIN_BIT := 19
         constant BUILTIN_FLOAT := 20
         constant GENERIC := 21
+        constant GENERIC_PARAMETER := 22
     }
 
     def resolved:Bit
@@ -27,10 +28,20 @@ class Type : Symbol (Equatable<Type>) {
     }
 
     init(name:String, typeKind:Int, offset:Int, resolved:Bit) {
+        assert !name.endsWith("?")
         self.typeKind := typeKind
         self.offset := offset
         self.resolved := resolved
         self.subtypes := ImmutableArray<Type>()
+        super.init(Symbol.Kind.TYPE, offset, name)
+    }
+
+    init(name:String, typeKind:Int, offset:Int, subtypes:ListView<Type>, resolved:Bit) {
+        assert (typeKind = Type.Kind.NULLABLE) = name.endsWith("?")
+        self.typeKind := typeKind
+        self.offset := offset
+        self.resolved := resolved
+        self.subtypes := ImmutableArray<Type>(subtypes)
         super.init(Symbol.Kind.TYPE, offset, name)
     }
 
@@ -68,6 +79,13 @@ class Type : Symbol (Equatable<Type>) {
     @class
     method Object():Type {
         return Type("panda.core.Object", Kind.CLASS, -1, true)
+    }
+
+    @class
+    method Any():Type {
+        def subtypes := Array<Type>()
+        subtypes.add(Object())
+        return Type("panda.core.Object?", Kind.NULLABLE, -1, subtypes, true)
     }
 
     @class
