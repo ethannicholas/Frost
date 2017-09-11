@@ -27,6 +27,8 @@ class LLVMCodeGenerator (CodeGenerator) {
 
     constant POINTER_SIZE := 8
 
+    constant OBJECT_FIELD_COUNT := 2
+
     def out:OutputStream
 
     def compiler:Compiler
@@ -438,7 +440,7 @@ class LLVMCodeGenerator (CodeGenerator) {
                     when Token.Kind.LTEQ:       llvmOp := "icmp ule"
                     otherwise:
                         assert false
-                }            
+                }
             when OpClass.FLOAT:
                 match op {
                     when Token.Kind.ADD:        llvmOp := "fadd"
@@ -567,7 +569,7 @@ class LLVMCodeGenerator (CodeGenerator) {
                 fMethodHeader << "    call fastcc void @" << escape_type_name(field->fOwner.fName) <<
                         "$$classInit()\n";
             }
-            String load = this->nextVar();
+            def load := nextVar()
             out << "    " << load << " = load " << type << ", " << type << "* " <<
                     this->fieldName(*field) << "\n";
             return load;*-
@@ -593,7 +595,7 @@ class LLVMCodeGenerator (CodeGenerator) {
         }
         -*
         String ptr = type + "* " + this->getLValue(fieldRef, out);
-        String result = this->nextVar();
+        def result := nextVar()
         out << "    " << result << " = load " << type << ", " << ptr << "\n";
         return result;*-
         assert false
@@ -601,8 +603,8 @@ class LLVMCodeGenerator (CodeGenerator) {
 
     method unwrapValue(value:String, srcType:Type, dstType:Type, out:OutputStream):String {
 -*        Class* target = fCompiler->getClass(dstType);
-        std::vector<Field*> fields = fCompiler->getInstanceFields(*target);
-        if (dstType.fCategory == Type::Category::NULLABLE) {
+        std.vector<Field*> fields = fCompiler->getInstanceFields(*target);
+        if (dstType.fCategory == Type.Category.NULLABLE) {
             // casting nullable wrapper to nullable value, need to special-case null
             String testStart = fCurrentBlock;
             String isNonNull = nextVar();
@@ -805,6 +807,10 @@ class LLVMCodeGenerator (CodeGenerator) {
         return (int.payload->Int).convert() -- FIXME parens
     }
 
+    method getNegatedIntReference(int:IRNode, out:OutputStream):String {
+        return "-" + (int.payload->Int).convert() -- FIXME parens
+    }
+
     method getBitReference(bit:IRNode, out:OutputStream):String {
         if bit.payload->Bit {
             return "true"
@@ -832,6 +838,8 @@ class LLVMCodeGenerator (CodeGenerator) {
                 return getCastReference(expr, out)
             when IRNode.Kind.INT:
                 return getIntReference(expr, out)
+            when IRNode.Kind.NEGATED_INT:
+                return getNegatedIntReference(expr, out)
             when IRNode.Kind.BIT:
                 return getBitReference(expr, out)
             when IRNode.Kind.CONSTRUCT:
@@ -903,6 +911,220 @@ class LLVMCodeGenerator (CodeGenerator) {
             }
         }
         createBlock(end, out)
+    }
+
+    method writeRangeFor(f:IRNode, out:OutputStream) {
+        -- I am acutely aware of how horrific this looks.
+        --
+        -- There's no easy way to produce clean output here, since we have to handle different step
+        -- values, different loop directions, and both inclusive and exclusive ranges, all of which
+        -- could potentially be determined at runtime. It gets even uglier when you consider the
+        -- difficulty of handling the extremes of the numeric types. You can't just add 1 and then
+        -- check to see if it's in range when the limit is MAX_INT, because you'll overflow and end
+        -- up with an infinite loop. You also can't just check for being equal to the limit before
+        -- adding the step, because with a step bigger than 1 (or smaller than -1) you might need to
+        -- stop before actually hitting the end. So you instead check the difference between the
+        -- current index and the limit, but even there you need to be careful because it could
+        -- overflow in a signed test, and we need to handle null values, and... ugh, it's
+        -- surprisingly messy and results in a ton of code.
+        --
+        -- Fortunately, we can just write incredibly awful-but-straightforward code and let LLVM
+        -- optimize it to something sensible if it turns out the values are known at compile time.
+        -- This works remarkably well, because LLVM is awesome.
+        assert f.kind = IRNode.Kind.RANGE_FOR
+        assert f.children.get_count() = 3
+        def target := f.children[0]
+        assert f.children[1].type.typeKind = Type.Kind.GENERIC
+        assert f.children[1].type.subtypes.get_count() = 2
+        assert f.children[1].type.subtypes[0].name = "panda.core.Range"
+        def range := getTypedReference(f.children[1], out)
+        def block := f.children[2]
+        def t := f.children[1].type.subtypes[1]
+        def llt := type(t)
+        def indexType:String
+        if t.typeKind == Type.Kind.NULLABLE {
+            assert t.subtypes.get_count() = 1
+            indexType := type(t.subtypes[0])
+        }
+        else {
+            indexType := llt
+        }
+        def cl := compiler.getClass(t)
+        assert cl != null
+        assert compiler.instanceFields(cl).get_count() = 1
+        def numberType := type(compiler.instanceFields(cl)[0].type)
+        assert target.kind = IRNode.Kind.VARIABLE_REFERENCE
+        def index := getName(target.payload->Variable)
+        methodHeader.printLine("\{index} = alloca \{indexType}")
+
+        -- extract start value from range
+        def startPtr := nextVar()
+        out.printLine("\{startPtr} = extractvalue \{range}, 0")
+        def startPtrCast := nextVar()
+        out.printLine("\{startPtrCast} = bitcast \{type(Type.Object())} \{startPtr} to " +
+                "\{wrapperType(t)}")
+        def startFieldPtr := nextVar()
+        out.printLine("\{startFieldPtr} = getelementptr \{wrapperTypeName(t)}, " +
+                "\{wrapperType(t)} \{startPtrCast}, i64 0, i32 \{OBJECT_FIELD_COUNT}, i32 0")
+        def start := nextVar()
+        out.printLine("\{start} = load \{numberType}, \{numberType}* \{startFieldPtr}")
+
+        -- store start value
+        def indexValuePtr := nextVar()
+        out.printLine("\{indexValuePtr} = getelementptr \{indexType}, \{indexType}* \{index}, " +
+                "i64 0, i32 0")
+        out.printLine("store \{numberType} \{start}, \{numberType}* \{indexValuePtr}")
+
+        -- extract end value from range
+        def endPtr := nextVar()
+        out.printLine("\{endPtr} = extractvalue \{range}, 1")
+        def endPtrCast := nextVar()
+        out.printLine("\{endPtrCast} = bitcast \{type(Type.Object())} \{endPtr} to " +
+                "\{wrapperType(t)}")
+        def endFieldPtr := nextVar()
+        out.printLine("\{endFieldPtr} = getelementptr \{wrapperTypeName(t)}, \{wrapperType(t)} " +
+                "\{endPtrCast}, i64 0, i32 \{OBJECT_FIELD_COUNT}, i32 0")
+        def end := nextVar()
+        out.printLine("\{end} = load \{numberType}, \{numberType}* \{endFieldPtr}")
+
+        -- extract step value from range
+        def rawStep := nextVar()
+        out.printLine("\{rawStep} = extractvalue \{range}, 2, 0")
+        def step:String
+        if numberType != "i64" {
+            step := nextVar()
+            out.printLine("\{step} = trunc i64 \{rawStep} to \{numberType}")
+        }
+        else {
+            step := rawStep
+        }
+
+        -- extract inclusive / exclusive from range
+        def inclusive := nextVar()
+        out.printLine("\{inclusive} = extractvalue \{range}, 3, 0")
+
+        -- start block
+        def loopStart := nextLabel()
+        def loopBody := nextLabel()
+        def loopEnd := nextLabel()
+        def loopTest := nextLabel()
+        loopDescriptors.push(LoopDescriptor(f.payload->String?, loopEnd, loopTest)) -- FIXME Auto
+        def forwardEntry := nextLabel()
+        def backwardEntry := nextLabel()
+        def signPrefix := "s"
+        def direction:String
+        if signPrefix = "s" {
+            direction := nextVar()
+            out.printLine("\{direction} = icmp sge \{numberType} \{step}, 0")
+        }
+        else {
+            direction := "1"
+        }
+        out.printLine("br i1 \{direction}, label %\{forwardEntry}, label %\{backwardEntry}")
+        createBlock(forwardEntry, out)
+        def forwardEntryInclusive := nextLabel()
+        def forwardEntryExclusive := nextLabel()
+        out.printLine("br i1 \{inclusive}, label %\{forwardEntryInclusive}, " +
+                "label %\{forwardEntryExclusive}")
+        createBlock(forwardEntryInclusive, out)
+        def forwardEntryInclusiveTest := nextVar()
+        out.printLine("\{forwardEntryInclusiveTest} = icmp \{signPrefix}le \{numberType} \{start}, \{end}")
+        out.printLine("br i1 \{forwardEntryInclusiveTest}, label %\{loopStart}, label %\{loopEnd}")
+        createBlock(forwardEntryExclusive, out)
+        def forwardEntryExclusiveTest := nextVar()
+        out.printLine("\{forwardEntryExclusiveTest} = icmp \{signPrefix}lt \{numberType} \{start}, \{end}")
+        out.printLine("br i1 \{forwardEntryExclusiveTest}, label %\{loopStart}, label %\{loopEnd}")
+        createBlock(backwardEntry, out)
+        def backwardEntryInclusive := nextLabel()
+        def backwardEntryExclusive := nextLabel()
+        out.printLine("br i1 \{inclusive}, label %\{backwardEntryInclusive}, " +
+                "label %\{backwardEntryExclusive}")
+        createBlock(backwardEntryInclusive, out)
+        def backwardEntryInclusiveTest := nextVar()
+        out.printLine("\{backwardEntryInclusiveTest} = icmp \{signPrefix}ge \{numberType} \{start}, \{end}")
+        out.printLine("br i1 \{backwardEntryInclusiveTest}, label %\{loopStart}, label %\{loopEnd}")
+        createBlock(backwardEntryExclusive, out)
+        def backwardEntryExclusiveTest := nextVar()
+        out.printLine("\{backwardEntryExclusiveTest} = icmp \{signPrefix}gt \{numberType} \{start}, \{end}")
+        out.printLine("br i1 \{backwardEntryExclusiveTest}, label %\{loopStart}, label %\{loopEnd}")
+        createBlock(loopStart, out)
+        def indexValue := nextVar()
+        out.printLine("\{indexValue} = load \{numberType}, \{numberType}* \{indexValuePtr}")
+        writeStatement(block, out)
+        if !endsWithBranch(block) {
+            out.printLine("br label %\{loopTest}")
+        }
+        createBlock(loopTest, out)
+        def loopInc := nextLabel()
+        -- beginning of loop test, determine direction
+        def forwardLabel := nextLabel()
+        def backwardLabel := nextLabel()
+        out.printLine("br i1 \{direction}, label %\{forwardLabel}, label %\{backwardLabel}")
+
+        -- forward loop; perform the test by subtracting index from end and then comparing to step, to
+        -- avoid overflows near the maximum value
+        createBlock(forwardLabel, out)
+        def forwardDelta := nextVar()
+        out.printLine("\{forwardDelta} = sub \{numberType} \{end}, \{indexValue}")
+
+        -- forward loop; determine inclusive / exclusive
+        def forwardInclusiveLabel := nextLabel()
+        def forwardExclusiveLabel := nextLabel()
+        out.printLine("br i1 \{inclusive}, label %\{forwardInclusiveLabel}, label %" +
+                forwardExclusiveLabel)
+
+        -- forward inclusive test
+        createBlock(forwardInclusiveLabel, out)
+        def forwardInclusiveTest := nextVar()
+        -- always use unsigned comparison to avoid overflow; we know both the delta and the step are
+        -- the same sign
+        out.printLine("\{forwardInclusiveTest} = icmp uge \{numberType} \{forwardDelta}, \{step}")
+        out.printLine("br i1 \{forwardInclusiveTest}, label %\{loopInc}, label %\{loopEnd}")
+        createBlock(forwardExclusiveLabel, out)
+
+        -- forward exclusive test
+        def forwardExclusiveTest := nextVar()
+        out.printLine("\{forwardExclusiveTest} = icmp ugt \{numberType} \{forwardDelta}, \{step}")
+        out.printLine("br i1 \{forwardExclusiveTest}, label %\{loopInc}, label %\{loopEnd}")
+
+        -- backward loop; perform the test by subtracting end from index and then comparing to -step, to
+        -- avoid overflows near the minimum value
+        createBlock(backwardLabel, out)
+        def backwardDelta := nextVar()
+        out.printLine("\{backwardDelta} = sub \{numberType} \{indexValue}, \{end}")
+        def negStep := nextVar()
+        out.printLine("\{negStep} = sub \{numberType} 0, \{step}")
+
+        -- backward loop; determine inclusive / exclusive
+        def backwardInclusiveLabel := nextLabel()
+        def backwardExclusiveLabel := nextLabel()
+        out.printLine("br i1 \{inclusive}, label %\{backwardInclusiveLabel}, label %" +
+                backwardExclusiveLabel)
+
+        -- backward inclusive test
+        createBlock(backwardInclusiveLabel, out)
+        def backwardInclusiveTest := nextVar()
+        out.printLine("\{backwardInclusiveTest} = icmp uge \{numberType} \{backwardDelta}, " +
+                negStep)
+        out.printLine("br i1 \{backwardInclusiveTest}, label %\{loopInc}, label %\{loopEnd}")
+        createBlock(backwardExclusiveLabel, out)
+
+        -- backward exclusive test
+        def backwardExclusiveTest := nextVar()
+        out.printLine("\{backwardExclusiveTest} = icmp ugt \{numberType} \{backwardDelta}, " +
+                negStep)
+        out.printLine("br i1 \{backwardExclusiveTest}, label %\{loopInc}, label %\{loopEnd}")
+
+        createBlock(loopInc, out)
+        def inc := nextVar()
+        out.printLine("\{inc} = add \{numberType} \{indexValue}, \{step}")
+        def incStruct := nextVar()
+        out.printLine("\{incStruct} = insertvalue \{indexType} { \{numberType} undef")
+        out.printLine(" }, \{numberType} \{inc}, 0")
+        out.printLine("store \{indexType} \{incStruct}, \{indexType}* \{index}")
+        out.printLine("br label %\{loopStart}")
+
+        createBlock(loopEnd, out)
     }
 
     method writeWhile(w:IRNode, out:OutputStream) {
@@ -1022,24 +1244,24 @@ class LLVMCodeGenerator (CodeGenerator) {
         else {
 -*            Operator binOp;
             switch (op) {
-                case Operator::ADDEQ:        binOp = Operator::ADD;                         break;
-                case Operator::SUBEQ:        binOp = Operator::SUB;                         break;
-                case Operator::MULEQ:        binOp = Operator::MUL;                         break;
-                case Operator::DIVEQ:        binOp = Operator::DIV;                         break;
-                case Operator::INTDIVEQ:     binOp = Operator::INTDIV;                      break;
-                case Operator::REMEQ:        binOp = Operator::REM;                         break;
-                case Operator::POWEQ:        binOp = Operator::POW;                         break;
-                case Operator::XOREQ:        binOp = Operator::XOR;                         break;
-                case Operator::BITWISEOREQ:  binOp = Operator::BITWISEOR;                   break;
-                case Operator::BITWISEANDEQ: binOp = Operator::BITWISEAND;                  break;
-                case Operator::BITWISEXOREQ: binOp = Operator::BITWISEXOR;                  break;
-                case Operator::SHIFTLEFTEQ:  binOp = Operator::SHIFTLEFT;                   break;
-                case Operator::SHIFTRIGHTEQ: binOp = Operator::SHIFTRIGHT;                  break;
-                case Operator::ANDEQ:        this->writeAndEq(lvalue, a.fChildren[1], out); return;
-                case Operator::OREQ:         this->writeOrEq(lvalue, a.fChildren[1], out);  return;
+                case Operator.ADDEQ:        binOp = Operator.ADD;                         break;
+                case Operator.SUBEQ:        binOp = Operator.SUB;                         break;
+                case Operator.MULEQ:        binOp = Operator.MUL;                         break;
+                case Operator.DIVEQ:        binOp = Operator.DIV;                         break;
+                case Operator.INTDIVEQ:     binOp = Operator.INTDIV;                      break;
+                case Operator.REMEQ:        binOp = Operator.REM;                         break;
+                case Operator.POWEQ:        binOp = Operator.POW;                         break;
+                case Operator.XOREQ:        binOp = Operator.XOR;                         break;
+                case Operator.BITWISEOREQ:  binOp = Operator.BITWISEOR;                   break;
+                case Operator.BITWISEANDEQ: binOp = Operator.BITWISEAND;                  break;
+                case Operator.BITWISEXOREQ: binOp = Operator.BITWISEXOR;                  break;
+                case Operator.SHIFTLEFTEQ:  binOp = Operator.SHIFTLEFT;                   break;
+                case Operator.SHIFTRIGHTEQ: binOp = Operator.SHIFTRIGHT;                  break;
+                case Operator.ANDEQ:        this->writeAndEq(lvalue, a.fChildren[1], out); return;
+                case Operator.OREQ:         this->writeOrEq(lvalue, a.fChildren[1], out);  return;
                 default: abort();
             }
-            String left = this->nextVar();
+            def left := nextVar()
             out << "    " << left << " = load " << this->llvmType(a.fChildren[0].fType) << ", " <<
                     lvalue << "\n";
             String right = this->getReference(a.fChildren[1], out);
@@ -1072,6 +1294,8 @@ class LLVMCodeGenerator (CodeGenerator) {
                 writeCall(stmt, null, out)
             when IRNode.Kind.IF:
                 writeIf(stmt, out)
+            when IRNode.Kind.RANGE_FOR:
+                writeRangeFor(stmt, out)
             when IRNode.Kind.WHILE:
                 writeWhile(stmt, out)
             when IRNode.Kind.DO:

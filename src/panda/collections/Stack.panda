@@ -1,6 +1,29 @@
 package panda.collections
 
-class Stack<T> {
+class Stack<T> (Iterable<T>) {
+    @private
+    class StackIterator<T> (Iterator<T>) {
+        def stack:Stack<T>
+
+        var index := 0
+
+        init(stack:Stack<T>) {
+            self.stack := stack
+        }
+
+        @override
+        function get_done():Bit {
+            return index >= stack.get_count()
+        }
+
+        @override
+        method next():T {
+            def result := stack.peek(index)
+            index += 1
+            return result
+        }
+    }
+
     @private
     def contents := Array<T>()
 
@@ -23,6 +46,11 @@ class Stack<T> {
     function peek(depth:Int):T {
         assert contents.get_count() > depth
         return contents[contents.count - 1 - depth]
+    }
+
+    @override
+    function iterator():Iterator<T> {
+        return StackIterator<T>(self)
     }
 
     function get_count():Int {

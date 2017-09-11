@@ -24,4 +24,9 @@ class Variable : Symbol {
         self.storage := storage
         super.init(Symbol.Kind.VARIABLE, offset, name)
     }
+
+    @override
+    function convert():String {
+        return name
+    }
 }

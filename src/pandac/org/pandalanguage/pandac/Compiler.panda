@@ -4,6 +4,8 @@ uses org.pandalanguage.pandac.parser.Parser
 uses org.pandalanguage.pandac.parser.Token
 
 class Compiler (ErrorReporter) {
+    constant NULLABLE_CAST_COST := 1
+
     def importDirs:ListView<File>
 
     def parser:Parser
@@ -53,6 +55,7 @@ class Compiler (ErrorReporter) {
         root.add(Type("builtin_int32", Type.Kind.BUILTIN_INT, -1, true))
         root.add(Type("builtin_int64", Type.Kind.BUILTIN_INT, -1, true))
         root.add(Alias("Int", "panda.core.Int64", -1))
+        addAlias("panda.collections.Array")
         addAlias("panda.core.Class")
         addAlias("panda.core.Bit")
         addAlias("panda.core.Int8")
@@ -62,6 +65,7 @@ class Compiler (ErrorReporter) {
         addAlias("panda.core.Immutable")
         addAlias("panda.core.Object")
         addAlias("panda.core.Range")
+        addAlias("panda.core.String")
         addAlias("panda.core.Value")
         addAlias("panda.io.Console")
     }
@@ -249,7 +253,7 @@ class Compiler (ErrorReporter) {
             when Type.Kind.NULLABLE, Type.Kind.GENERIC, Type.Kind.GENERIC_PARAMETER:
                 return getClass(type.subtypes[0])
             otherwise:
-                assert false
+                assert false, "unsupported type \{type}"
         }
     }
 
@@ -351,6 +355,11 @@ class Compiler (ErrorReporter) {
     }
 
     function variableType(expr:IRNode):Type {
+        match expr.kind {
+            when IRNode.Kind.UNRESOLVED_RANGE:
+                return Type.RangeOf(variableType(expr.children[0].type.union(
+                        expr.children[1].type)))
+        }
         return variableType(expr.type)
     }
 
@@ -361,8 +370,16 @@ class Compiler (ErrorReporter) {
             return 0
         }
         match target.typeKind {
-            when Type.Kind.NULLABLE, Type.Kind.GENERIC_PARAMETER:
+            when Type.Kind.NULLABLE:
+                def result := coercionCost(type, target.subtypes[0])
+                if result = null {
+                    return null
+                }
+                return result + NULLABLE_CAST_COST
+            when Type.Kind.GENERIC_PARAMETER:
                 return coercionCost(type, target.subtypes[0])
+            when Type.Kind.BUILTIN_INT, Type.Kind.BUILTIN_UINT:
+                return null
         }
         def targetClass := getClass(target)
         if targetClass = null {
@@ -401,11 +418,23 @@ class Compiler (ErrorReporter) {
     }
 
     function coercionCost(expr:IRNode, target:Type):Int? {
+        Console.printLine("coercionCost")
+        Console.printLine("    \{expr}")
+        Console.printLine("    \{target}")
         if expr.type = target {
             return 0
         }
         match target.typeKind {
-            when Type.Kind.NULLABLE, Type.Kind.GENERIC_PARAMETER:
+            when Type.Kind.NULLABLE:
+                def cost := coercionCost(expr, target.subtypes[0])
+                if cost = null {
+                    return null
+                }
+                if expr.type.typeKind = Type.Kind.NULLABLE {
+                    return cost
+                }
+                return cost + NULLABLE_CAST_COST
+            when Type.Kind.GENERIC_PARAMETER:
                 return coercionCost(expr, target.subtypes[0])
         }
         match expr.kind {
@@ -416,7 +445,7 @@ class Compiler (ErrorReporter) {
                 if target.isClass() {
                     return coercionCost(Type.Bit(), target)
                 }
-            when IRNode.Kind.INT:
+            when IRNode.Kind.INT, IRNode.Kind.NEGATED_INT:
                 if target.typeKind = Type.Kind.BUILTIN_INT {
                     return 0
                 }
@@ -429,6 +458,21 @@ class Compiler (ErrorReporter) {
                 if !target.isNumber() {
                     return coercionCost(variableType(expr), target)
                 }
+            when IRNode.Kind.UNRESOLVED_RANGE:
+                if target.isRange() {
+                    assert expr.children.get_count() = 3
+                    assert target.typeKind = Type.Kind.GENERIC
+                    def cost1 := coercionCost(expr.children[0], target.subtypes[1])
+                    if cost1 = null {
+                        return null
+                    }
+                    def cost2 := coercionCost(expr.children[1], target.subtypes[1])
+                    if cost2 = null {
+                        return null
+                    }
+                    return cost1 + cost2
+                }
+                return coercionCost(variableType(expr), target)
         }
         assert expr.type != null
         return coercionCost(expr.type, target)
@@ -452,14 +496,23 @@ class Compiler (ErrorReporter) {
                     children.add(expr)
                     return IRNode(IRNode.Kind.CAST, expr.offset, target, false, children)
                 }
-                if expr.type.kind != Type.Kind.NULLABLE {
+                if expr.type.typeKind != Type.Kind.NULLABLE {
                     def intermediate := coerce(expr, target.subtypes[0])
                     return coerce(intermediate, target)
                 }
         }
-        if expr.kind = IRNode.Kind.INT {
+        if expr.type.typeKind = Type.Kind.NULLABLE & target.typeKind != Type.Kind.NULLABLE {
+            if expr.type.subtypes[0] = target {
+                def children := Array<IRNode>() -- FIXME literal
+                children.add(expr)
+                return IRNode(IRNode.Kind.CAST, expr.offset, target, false, children)
+            }
+            def intermediate := coerce(expr, expr.type.subtypes[0])
+            return coerce(intermediate, target)
+        }
+        if expr.kind = IRNode.Kind.INT | expr.kind = IRNode.Kind.NEGATED_INT {
             if target.isBuiltinNumber() {
-                return IRNode(IRNode.Kind.INT, expr.offset, target, expr.payload->UInt64)
+                return IRNode(expr.kind, expr.offset, target, expr.payload->UInt64)
             }
             if target.isClass() & !target.isNumber() {
                 def varType := coerce(expr, variableType(expr))
@@ -477,6 +530,32 @@ class Compiler (ErrorReporter) {
                 if varType != null {
                     return coerce(varType, target)
                 }
+            }
+        }
+        if expr.kind = IRNode.Kind.UNRESOLVED_RANGE {
+            assert expr.children.get_count() = 3
+            if target.isRange() {
+                assert target.typeKind = Type.Kind.GENERIC
+                def param := target.subtypes[1]
+                def start := coerce(expr.children[0], param)
+                if start = null {
+                    return null
+                }
+                def end := coerce(expr.children[1], param)
+                if end = null {
+                    return null
+                }
+                def args := Array<IRNode>()
+                args.add(start)
+                args.add(end)
+                args.add(expr.children[2])
+                args.add(IRNode(IRNode.Kind.BIT, expr.offset, Type.BuiltinBit(), expr.payload->Bit))
+                def target := IRNode(IRNode.Kind.TYPE_REFERENCE, expr.offset, Type.Class(),
+                        target)
+                return call(target, args)
+            }
+            else {
+                return coerce(resolve(expr), target)
             }
         }
         if coercionCost(expr, target) != null {
@@ -503,7 +582,7 @@ class Compiler (ErrorReporter) {
             children.add(expr)
             return IRNode(IRNode.Kind.CAST, expr.offset, target, false, children)
         }
-        assert false, "need to coerce \{expr} to \{target}"
+        assert false, "need to coerce \{expr}:\{expr.type} to \{target}"
     }
 
     method canCast(node:IRNode, target:Type):Bit {
@@ -748,6 +827,124 @@ class Compiler (ErrorReporter) {
         return call(left, operatorName(b.payload->Int), children)
     }
 
+    function typeParameters(type:Type):ListView<Type> {
+        if type.kind = Type.Kind.GENERIC_PARAMETER {
+            return typeParameters(type.subtypes[0])
+        }
+        if type.typeKind = Type.Kind.GENERIC {
+            assert type.subtypes.get_count() >= 2
+            return type.subtypes[1..]
+        }
+        else {
+            return Array<Type>()
+        }
+    }
+
+    method typeParameters(node:IRNode):ListView<Type> {
+        if node.kind = IRNode.Kind.TYPE_REFERENCE {
+            return typeParameters(node.payload->Type)
+        }
+        return typeParameters(node.type)
+    }
+
+    method compilePrefix(op:Int, base:IRNode, offset:Int):IRNode? {
+        if base.type.isClass() {
+            def name := operatorName(op)
+            def cl := getClass(base.type)
+            if cl = null {
+                return null
+            }
+            def s := cl.symbolTable[name]
+            if s != null {
+                def m:MethodDecl? := null
+                match s.kind {
+                    when Symbol.Kind.METHOD:
+                        m := s->MethodDecl
+                        assert m.parameters.get_count() = 0
+                        assert !m.annotations.isClass()
+                    when Symbol.Kind.METHODS:
+                        for test in (s->Methods).methods { -- FIXME ()s
+                            if !test.annotations.isClass() & test.parameters.get_count() = 0 {
+                                m := test
+                                break
+                            }
+                        }
+                    otherwise:
+                        assert false
+                }
+                if m != null {
+                    def ref := MethodRef(m, typeParameters(base))
+                    def children := Array<IRNode>() -- FIXME literal
+                    children.add(base)
+                    def methodRef := IRNode(IRNode.Kind.METHOD_REFERENCE, offset,
+                            Type("<method>", Type.Kind.INVALID, -1, true), ref, children)
+                    def args := Array<IRNode>() -- FIXME literal
+                    return call(methodRef, args)
+                }
+            }
+        }
+        match op {
+            when Token.Kind.SUB:
+                match base.kind {
+                    when IRNode.Kind.INT:
+                        return IRNode(IRNode.Kind.NEGATED_INT, offset, base.type,
+                                base.payload->UInt64)
+                    when IRNode.Kind.NEGATED_INT:
+                        return IRNode(IRNode.Kind.INT, offset, base.type, base.payload->UInt64)
+                    otherwise:
+-*                        if (base.fType.isBuiltinNumber()) {
+                            Type type = base.fType;
+                            std::vector<IRNode> children;
+                            children.push_back(std::move(base));
+                            *out = IRNode(p, IRNode::Kind::PREFIX, type, (uint64_t) Operator::SUB,
+                                    std::move(children));
+                            return true;
+                        }*-
+                        assert false
+                }
+                error(base.offset, "expected a number, but found '\{base.type}'")
+                return null
+-*            case Operator::BITWISENOT:
+                if (base.fType.isBuiltinNumber()) {
+                    Type type = base.fType;
+                    std::vector<IRNode> children;
+                    children.push_back(std::move(base));
+                    *out = IRNode(p, IRNode::Kind::PREFIX, type, (uint64_t) op,
+                            std::move(children));
+                    return true;
+                }
+                else {
+                    this->error(base.fPosition, "expected a number, but found '" + base.fType.fName +
+                            "'");
+                    return false;
+                }
+            case Operator::NOT: {
+                if (!this->coerce(&base, Type::BuiltinBit())) {
+                    return false;
+                }
+                Type type = base.fType;
+                std::vector<IRNode> children;
+                children.push_back(std::move(base));
+                *out = IRNode(p, IRNode::Kind::PREFIX, type, (uint64_t) op,
+                        std::move(children));
+                return true;
+            }
+            default:
+                abort();*-
+        }
+        assert false
+    }
+
+    method compilePrefix(p:ASTNode):IRNode? {
+        assert p.kind = ASTNode.Kind.PREFIX
+        assert p.children.get_count() = 1
+        def base := compileExpression(p.children[0])
+        if base = null {
+            return null
+        }
+        return compilePrefix(p.payload->Int, base, p.offset)
+    }
+
     method compileCall(c:ASTNode):IRNode? {
         assert c.kind = ASTNode.Kind.CALL
         var m := compileExpression(c.children[0])
@@ -807,6 +1004,50 @@ class Compiler (ErrorReporter) {
                 resolve(scanner.convertType(t)))
     }
 
+    method compileRange(r:ASTNode):IRNode? {
+        assert r.kind = ASTNode.Kind.RANGE_EXCLUSIVE | r.kind = ASTNode.Kind.RANGE_INCLUSIVE
+        assert r.children.get_count() = 3
+        def start:IRNode?
+        if r.children[0].kind = ASTNode.Kind.VOID {
+            start := IRNode(IRNode.Kind.NULL_LITERAL, r.offset, Type.Null())
+        }
+        else {
+            start := compileExpression(r.children[0])
+            if start = null {
+                return null
+            }
+        }
+        def end:IRNode?
+        if r.children[1].kind = ASTNode.Kind.VOID {
+            end := IRNode(IRNode.Kind.NULL_LITERAL, r.offset, Type.Null())
+        }
+        else {
+            end := compileExpression(r.children[1])
+            if end = null {
+                return null
+            }
+        }
+        def step:IRNode?
+        if r.children[2].kind = ASTNode.Kind.VOID {
+            step := IRNode(IRNode.Kind.INT, r.offset, Type.IntLiteral(), 1)
+        }
+        else {
+            step := coerce(compileExpression(r.children[2]), Type.Int64())
+            if step = null {
+                return null
+            }
+        }
+        def children := Array<IRNode>() -- FIXME literal
+        children.add(start)
+        children.add(end)
+        children.add(step)
+        return IRNode(IRNode.Kind.UNRESOLVED_RANGE,
+                r.offset,
+                Type("<unresolved range>", Type.Kind.UNRESOLVED, -1, true),
+                r.kind = ASTNode.Kind.RANGE_INCLUSIVE,
+                children)
+    }
+
     method compileExpression(e:ASTNode):IRNode? {
         match e.kind {
             when ASTNode.Kind.BINARY:
@@ -821,22 +1062,30 @@ class Compiler (ErrorReporter) {
                 return compileIdentifier(e)
             when ASTNode.Kind.INT:
                 return IRNode(IRNode.Kind.INT, e.offset, Type.IntLiteral(), e.payload->UInt64)
+            when ASTNode.Kind.PREFIX:
+                return compilePrefix(e)
             when ASTNode.Kind.TYPE, ASTNode.Kind.GENERIC_TYPE, ASTNode.Kind.NULLABLE_TYPE:
                 return compileType(e)
+            when ASTNode.Kind.RANGE_INCLUSIVE, ASTNode.Kind.RANGE_EXCLUSIVE:
+                return compileRange(e)
         }
         assert false, "unsupported expression: \{e} (\{e.kind})"
     }
 
     method compileBlock(b:ASTNode):IRNode? {
         assert b.kind = ASTNode.Kind.BLOCK
+        def symbols := SymbolTable(symbolTable) -- FIXME auto
+        symbolTable := symbols
         def result := Array<IRNode>()
         for stmt in b.children {
             def compiled := compileStatement(stmt)
             if compiled = null {
+                symbolTable := symbols.parents[0]
                 return null
             }
             result.add(compiled)
         }
+        symbolTable := symbols.parents[0]
         return IRNode(IRNode.Kind.BLOCK, b.offset, result)
     }
 
@@ -859,6 +1108,54 @@ class Compiler (ErrorReporter) {
             children.add(ifFalse)
         }
         return IRNode(IRNode.Kind.IF, i.offset, children)
+    }
+
+    method compileFor(f:ASTNode):IRNode? {
+        assert f.kind = ASTNode.Kind.FOR
+        assert f.children.get_count() = 3
+        def list := compileExpression(f.children[1])
+        if list = null {
+            return null
+        }
+        if list.kind = IRNode.Kind.UNRESOLVED_RANGE {
+            list := resolve(list)
+            if list = null {
+                return null
+            }
+        }
+        def symbols := SymbolTable(symbolTable) -- FIXME auto
+        symbolTable := symbols
+        if list.type.isRange() {
+            def elementType:Type
+            if list.type.typeKind = Type.Kind.NULLABLE {
+                assert list.type.subtypes[0].typeKind = Type.Kind.GENERIC
+                elementType := list.type.subtypes[0].subtypes[1]
+            }
+            else {
+                assert list.type.typeKind = Type.Kind.GENERIC
+                elementType := list.type.subtypes[1]
+            }
+            def target := compileTarget(f.children[0], null, elementType)
+            if target = null {
+                symbolTable := symbols.parents[0]
+                return null
+            }
+            assert target.value = null
+            def body := compileStatement(f.children[2])
+            if body = null {
+                symbolTable := symbols.parents[0]
+                return null
+            }
+            def children := Array<IRNode>() -- FIXME literal
+            children.add(target.target)
+            children.add(list)
+            children.add(body)
+            symbolTable := symbols.parents[0]
+            Console.printLine("rangeFor: \{list}")
+            return IRNode(IRNode.Kind.RANGE_FOR, f.offset, children)
+        }
+        symbolTable := symbols.parents[0]
+        assert false
     }
 
     method compileWhile(w:ASTNode):IRNode? {
@@ -994,6 +1291,48 @@ class Compiler (ErrorReporter) {
         return IRNode(IRNode.Kind.DECLARATION, d.offset, children)
     }
 
+    method compileBreak(b:ASTNode):IRNode? {
+        assert b.kind = ASTNode.Kind.BREAK
+        if b.payload != null {
+            var found := false
+            for label in loops {
+                if label = b.payload->String {
+                    found := true
+                    break
+                }
+            }
+            if !found {
+                error(b.offset, "'break \{b.payload}' must be inside a loop labelled " +
+                        "'\{b.payload}:'")
+            }
+        }
+        else if loops.get_count() = 0 {
+            error(b.offset, "'break' must be inside a loop")
+        }
+        return IRNode(IRNode.Kind.BREAK, b.offset, b.payload->String)
+    }
+
+    method compileContinue(c:ASTNode):IRNode? {
+        assert c.kind = ASTNode.Kind.CONTINUE
+        if c.payload != null {
+            var found := false
+            for label in loops {
+                if label = c.payload->String {
+                    found := true
+                    break
+                }
+            }
+            if !found {
+                error(c.offset, "'continue \{c.payload}' must be inside a loop labelled " +
+                        "'\{c.payload}:'")
+            }
+        }
+        else if loops.get_count() = 0 {
+            error(c.offset, "'continue' must be inside a loop")
+        }
+        return IRNode(IRNode.Kind.CONTINUE, c.offset, c.payload->String)
+    }
+
     method compileReturn(r:ASTNode):IRNode? {
         assert r.kind = ASTNode.Kind.RETURN
         if r.children.get_count() = 1 {
@@ -1043,14 +1382,17 @@ class Compiler (ErrorReporter) {
 
     method compileStatement(s:ASTNode):IRNode? {
         match s.kind {
-            when ASTNode.Kind.BINARY: return compileBinary(s)
-            when ASTNode.Kind.BLOCK:  return compileBlock(s)
-            when ASTNode.Kind.CALL:   return compileCall(s)
-            when ASTNode.Kind.IF:     return compileIf(s)
-            when ASTNode.Kind.WHILE:  return compileWhile(s)
-            when ASTNode.Kind.DO:     return compileDo(s)
-            when ASTNode.Kind.LOOP:   return compileLoop(s)
-            when ASTNode.Kind.RETURN: return compileReturn(s)
+            when ASTNode.Kind.BINARY:   return compileBinary(s)
+            when ASTNode.Kind.BLOCK:    return compileBlock(s)
+            when ASTNode.Kind.CALL:     return compileCall(s)
+            when ASTNode.Kind.IF:       return compileIf(s)
+            when ASTNode.Kind.FOR:      return compileFor(s)
+            when ASTNode.Kind.WHILE:    return compileWhile(s)
+            when ASTNode.Kind.DO:       return compileDo(s)
+            when ASTNode.Kind.LOOP:     return compileLoop(s)
+            when ASTNode.Kind.BREAK:    return compileBreak(s)
+            when ASTNode.Kind.CONTINUE: return compileContinue(s)
+            when ASTNode.Kind.RETURN:   return compileReturn(s)
             when ASTNode.Kind.VAR, ASTNode.Kind.DEF, ASTNode.Kind.CONSTANT, ASTNode.Kind.PROPERTY:
                 return compileVar(s)
         }

@@ -15,6 +15,7 @@ class Type : Symbol (Equatable<Type>) {
         constant BUILTIN_FLOAT := 20
         constant GENERIC := 21
         constant GENERIC_PARAMETER := 22
+        constant NULL := 23
     }
 
     def resolved:Bit
@@ -37,7 +38,7 @@ class Type : Symbol (Equatable<Type>) {
     }
 
     init(name:String, typeKind:Int, offset:Int, subtypes:ListView<Type>, resolved:Bit) {
-        assert (typeKind = Type.Kind.NULLABLE) = name.endsWith("?")
+        assert (typeKind = Kind.NULLABLE) = name.endsWith("?")
         self.typeKind := typeKind
         self.offset := offset
         self.resolved := resolved
@@ -74,6 +75,11 @@ class Type : Symbol (Equatable<Type>) {
     @class
     method Void():Type {
         return Type("void", Kind.VOID, -1, true)
+    }
+
+    @class
+    method Null():Type {
+        return Type("null", Kind.NULL, -1, true)
     }
 
     @class
@@ -120,7 +126,15 @@ class Type : Symbol (Equatable<Type>) {
 
     @class
     method BuiltinBit():Type {
-        return Type("builtin_bit", Type.Kind.BUILTIN_BIT, -1, true)
+        return Type("builtin_bit", Kind.BUILTIN_BIT, -1, true)
+    }
+
+    @class
+    method RangeOf(t:Type):Type {
+        def children := Array<Type>() -- FIXME literal
+        children.add(Type("panda.core.Range", Kind.CLASS, -1, true))
+        children.add(t)
+        return Type("panda.core.Range<\{t}>", Kind.GENERIC, t.offset, children, t.resolved)
     }
 
     @class
@@ -133,7 +147,8 @@ class Type : Symbol (Equatable<Type>) {
     }
 
     function isBuiltinNumber():Bit {
-        return typeKind = Kind.BUILTIN_INT | typeKind = Kind.BUILTIN_UINT
+        return typeKind = Kind.BUILTIN_INT | typeKind = Kind.BUILTIN_UINT |
+                typeKind = Kind.INT_LITERAL
     }
 
     function isClass():Bit {
@@ -142,6 +157,47 @@ class Type : Symbol (Equatable<Type>) {
 
     function isPointer():Bit {
         return name.startsWith("panda.unsafe.Pointer")
+    }
+
+    function isRange():Bit {
+        if typeKind = Kind.NULLABLE {
+            return subtypes[0].isRange()
+        }
+        return typeKind = Kind.GENERIC & subtypes[0].name = "panda.core.Range"
+    }
+
+    function nullable():Type {
+        assert typeKind != Kind.NULLABLE
+        def subtypes := Array<Type>()
+        subtypes.add(self)
+        return Type("\{name}?", Kind.NULLABLE, -1, subtypes, true)
+    }
+
+    -- returns the narrowest type that can hold an instance of either type
+    function union(other:Type):Type {
+        if self = other {
+            return self
+        }
+        if self = Null() {
+            if other.typeKind = Kind.NULLABLE {
+                return other
+            }
+            return other.nullable()
+        }
+        if other = Null() {
+            if typeKind = Kind.NULLABLE {
+                return self
+            }
+            return nullable()
+        }
+        if self = IntLiteral() & other.isNumber() {
+            return other
+        }
+        if isNumber() & other = IntLiteral() {
+            return self
+        }
+        -- FIXME not implemented
+        return Type.Any()
     }
 
     @override

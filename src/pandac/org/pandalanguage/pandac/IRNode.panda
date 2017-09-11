@@ -33,6 +33,10 @@ class IRNode : Immutable {
         constant FIELD_REFERENCE             := 1026
         constant REUSED_VALUE_DEFINITION     := 1027
         constant REUSED_VALUE                := 1028
+        constant RANGE_FOR                   := 1029
+        constant NULL_LITERAL                := 1030
+        constant UNRESOLVED_RANGE            := 1031
+        constant NEGATED_INT                 := 1032
     }
 
     def kind:Int
@@ -137,6 +141,8 @@ class IRNode : Immutable {
                 return "\{type}(\{children[0].children.join(", ")})"
             when Kind.CAST:
                 return "\{children[0]}->\{type}"
+            when Kind.VARIABLE_REFERENCE:
+                return "\{payload->Variable}"
             otherwise:
                 return "<IRNode:\{kind}>"
         }
