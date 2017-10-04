@@ -47,6 +47,22 @@ class Char8 : Value (Key<Char8>) {
         return Int64(value->builtin_int64 && 0xFF)
     }
 
+    function convert():UInt8 {
+        return UInt8(value->builtin_uint8)
+    }
+
+    function convert():UInt16 {
+        return UInt16(value->builtin_uint16)
+    }
+
+    function convert():UInt32 {
+        return UInt32(value->builtin_uint32)
+    }
+
+    function convert():UInt64 {
+        return UInt64(value->builtin_uint64)
+    }
+
     ================================================================================================
     Interprets this character as a Unicode codepoint and converts it to a string. Note that if this
     `Char8` represents part of a multi-byte UTF-8 sequence (e.g. it came from [String.utf8]),

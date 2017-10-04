@@ -16,6 +16,8 @@ class Type : Symbol (Equatable<Type>) {
         constant GENERIC := 21
         constant GENERIC_PARAMETER := 22
         constant NULL := 23
+        constant FUNCTION := 24
+        constant METHOD := 25
     }
 
     def resolved:Bit
@@ -102,6 +104,11 @@ class Type : Symbol (Equatable<Type>) {
     @class
     method Value():Type {
         return Type("panda.core.Value", Kind.CLASS, -1, true)
+    }
+
+    @class
+    method StringType():Type {
+        return Type("panda.core.String", Kind.CLASS, -1, true)
     }
 
     @class

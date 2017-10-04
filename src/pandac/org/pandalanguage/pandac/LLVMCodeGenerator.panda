@@ -29,6 +29,8 @@ class LLVMCodeGenerator (CodeGenerator) {
 
     constant OBJECT_FIELD_COUNT := 2
 
+    constant INT_TYPE := "i64"
+
     def out:OutputStream
 
     def compiler:Compiler
@@ -44,6 +46,8 @@ class LLVMCodeGenerator (CodeGenerator) {
     def methodHeaderBuffer := MemoryOutputStream()
 
     def methodHeader := IndentedOutputStream(methodHeaderBuffer)
+
+    def strings := MemoryOutputStream()
 
     def declared := Set<String>()
 
@@ -81,6 +85,7 @@ class LLVMCodeGenerator (CodeGenerator) {
     @override
     method finish() {
         out.print(types.convert())
+        out.print(strings.convert())
         out.print(declarations.convert())
         out.print(methodsBuffer.convert())
     }
@@ -272,6 +277,9 @@ class LLVMCodeGenerator (CodeGenerator) {
                 }
                 return type(t.subtypes[0])
             when Type.Kind.GENERIC:
+                if t.subtypes[0].name = "panda.unsafe.Pointer" {
+                    return type(t.subtypes[1]) + "*"
+                }
                 return type(t.subtypes[0])
             when Type.Kind.GENERIC_PARAMETER:
                 return type(t.subtypes[0])
@@ -295,6 +303,92 @@ class LLVMCodeGenerator (CodeGenerator) {
     method nullableType(t:Type):String {
         assert t.typeKind = Type.Kind.NULLABLE, "\{t} is not nullable"
         return "\{type(t.subtypes[0])}$nullable"
+    }
+
+    method getITable(cl:ClassDecl):String {
+        return "null"
+    }
+
+    -- FIXME use tuple
+    class Pair<A, B> {
+        def first:A
+        def second:B
+
+        init(first:A, second:B) {
+            self.first := first
+            self.second := second
+        }
+    }
+
+    function needsStructIndirection(m:MethodDecl):Bit {
+        return false
+    }
+
+    method getMethodTableEntry(m:MethodDecl):Pair<String, String> -* name, type *- {
+        compiler.resolve(m)
+        if m.owner.external {
+            writeDeclaration(m)
+        }
+        def resultName := getName(m)
+        def effective := compiler.inheritedTypeWithSelf(m)
+        if needsStructIndirection(m) {
+            def resultType := MutableString("void (")
+            resultType.append(type(effective.subtypes[effective.subtypes.get_count() - 1]))
+            resultType.append("*")
+            for i in 0 .. effective.subtypes.get_count() - 1 {
+                resultType.append(", ")
+                resultType.append(type(effective.subtypes[i]))
+            }
+            resultType.append(")*")
+            return Pair<String, String>(resultName, resultType.convert())
+        }
+        return Pair<String, String>(resultName, type(effective))
+    }
+
+    method getClassConstant(cl:ClassDecl):ClassConstant {
+        var result := classConstants[cl.name]
+        if result = null {
+            compiler.resolve(cl)
+            def type:String
+            if cl.external {
+                result := ClassConstant("@\{escapeName(cl.type().name)}$class",
+                        "%panda$core$Class*")
+                classConstants[cl.name] := result
+                types.printLine("\{result.name} = external global \{result.type}")
+                return classConstants[cl.name]
+            }
+            def vtable := compiler.getVTable(cl)
+            result := ClassConstant("@\{escapeName(cl.type().name)}$class",
+                    "{ i8*, \{INT_TYPE}, %$itable*, [\{vtable.get_count()} x i8*] }")
+            classConstants[cl.name] := result
+            def superPtr:String
+            if cl.rawSuper != Type.Void() {
+                def superCC := getClassConstant(compiler.getClass(cl.rawSuper))
+                superPtr := "bitcast(\{superCC.type}* \{superCC.name} to i8*)"
+            }
+            else {
+                superPtr := "null"
+            }
+            def itable := getITable(cl)
+            def code := MutableString("\{result.name} = constant \{result.type} { " +
+                    "i8* \{super}, \{INT_TYPE} 1, \{getITable(cl)}, " +
+                    "[\{vtable.get_count()} x i8*] [")
+            var separator := ""
+            for m in vtable {
+                code.append(separator)
+                if m.annotations.isAbstract() {
+                    code.append("i8* null")
+                }
+                else {
+                    def entry := getMethodTableEntry(m)
+                    code.append("i8* bitcast(\{entry.second} \{entry.first} to i8*)")
+                }
+                separator := ", "
+            }
+            code.append("] }\n")
+            types.printLine(code)
+        }
+        return result
     }
 
     method getWrapperClassConstant(cl:ClassDecl):ClassConstant {
@@ -828,6 +922,31 @@ class LLVMCodeGenerator (CodeGenerator) {
         return result
     }
 
+    method getStringReference(s:String, out:OutputStream):String {
+        labelCount += 1
+        def chars := "@$chars\{labelCount}"
+        def charsType := "[\{s.utf8().get_count()} x i8]"
+        strings.print("\{chars} = private unnamed_addr constant \{charsType} [ ")
+        var separator := ""
+        for c in s.utf8() {
+            strings.print("\{separator}i8 \{c.convert()->Int8}")
+            separator := ", "
+        }
+        strings.printLine(" ]")
+        labelCount += 1
+        def result := "@$str\{labelCount}"
+        def string := compiler.getClass(Type.StringType())
+        assert string != null
+        def cc := getClassConstant(string)
+        strings.printLine("\{result} = private unnamed_addr constant %panda$core$String { " +
+                "%panda$core$Class* bitcast(\{cc.type}* \{cc.name} to " +
+                "%panda$core$Class*), %panda$core$Int32 insertvalue(%panda$core$Int32 " +
+                "{ i32 undef }, i32 1, 0), %panda$core$Char8* bitcast(\{charsType}* \{chars}" +
+                " to %panda$core$Char8*), %panda$core$Int64 insertvalue(%panda$core$Int64 " +
+                "{ i64 undef }, i64 \{s.utf8().get_count()}, 0) }")
+        return result
+    }
+
     method getReference(expr:IRNode, out:OutputStream):String {
         match expr.kind {
             when IRNode.Kind.BINARY:
@@ -848,6 +967,8 @@ class LLVMCodeGenerator (CodeGenerator) {
                 return getVariableReference(expr.payload->Variable, out)
             when IRNode.Kind.FIELD_REFERENCE:
                 return getFieldReference(expr, out)
+            when IRNode.Kind.STRING:
+                return getStringReference(expr.payload->String, out)
             otherwise:
                 assert false, "unsupported expression \{expr}"
         }
@@ -1336,7 +1457,6 @@ class LLVMCodeGenerator (CodeGenerator) {
             separator := ", "
         }
         declarations.printLine(")")
-
     }
 
     @override

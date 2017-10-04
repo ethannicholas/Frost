@@ -81,7 +81,6 @@ class Scanner {
         }
         for decl in f.children[2].children {
             assert decl.children[0].kind = ASTNode.Kind.IDENTIFIER
-            assert decl.children[0].children.get_count() = 1
             def value:ASTNode?
             if decl.children.get_count() = 2 {
                 value := decl.children[1]
@@ -90,9 +89,16 @@ class Scanner {
                 assert decl.children.get_count() = 1
                 value := null
             }
+            def type:Type
+            if decl.children[0].children.get_count() = 1 {
+                type := convertType(decl.children[0].children[0])
+            }
+            else {
+                assert decl.children[0].children.get_count() = 0
+                type := Type.Void()
+            }
             def field := FieldDecl(owner, decl.offset, doccomment, annotations, kind,
-                    decl.children[0].payload->String, convertType(decl.children[0].children[0]),
-                    value)
+                    decl.children[0].payload->String, type, value)
             owner.symbolTable.add(field)
             owner.fields.add(field)
         }
@@ -158,11 +164,11 @@ class Scanner {
         }
     }
 
-    method scanClass(source:File, aliases:MapView<String, String>, pkg:String,
+    method scanClass(source:File, aliases:MapView<String, String>, contextName:String,
             cl:ASTNode):ClassDecl? {
         def fullName:String
-        if pkg != "" {
-            fullName := "\{pkg}.\{cl.payload}"
+        if contextName != "" {
+            fullName := "\{contextName}.\{cl.payload}"
         }
         else {
             fullName := cl.payload->String
@@ -226,11 +232,23 @@ class Scanner {
                         result.symbolTable.add(m)
                         result.methods.add(m)
                     }
+                when ASTNode.Kind.CLASS:
+                    def cl := scanClass(source, aliases, fullName, c)
+                    if cl != null {
+                        result.classes.add(cl)
+                    }
                 otherwise:
                     assert false, "unsupported class child: \{c.kind}"
             }
         }
         return result
+    }
+
+    method addClass(cl:ClassDecl, arr:Array<ClassDecl>) {
+        arr.add(cl)
+        for inner in cl.classes {
+            addClass(inner, arr)
+        }
     }
 
     method scan(source:File, file:ASTNode):ListView<ClassDecl> {
@@ -255,7 +273,7 @@ class Scanner {
                     aliases[alias] := fullName
                 when ASTNode.Kind.CLASS:
                     def cl := scanClass(source, aliases, currentPackage, c)
-                    result.add(cl)
+                    addClass(cl, result)
                 otherwise:
                     assert false, "unsupported: \{c.kind}"
             }

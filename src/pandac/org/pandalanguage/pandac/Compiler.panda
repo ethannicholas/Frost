@@ -58,6 +58,7 @@ class Compiler (ErrorReporter) {
         addAlias("panda.collections.Array")
         addAlias("panda.core.Class")
         addAlias("panda.core.Bit")
+        addAlias("panda.core.Char8")
         addAlias("panda.core.Int8")
         addAlias("panda.core.Int16")
         addAlias("panda.core.Int32")
@@ -68,6 +69,7 @@ class Compiler (ErrorReporter) {
         addAlias("panda.core.String")
         addAlias("panda.core.Value")
         addAlias("panda.io.Console")
+        addAlias("panda.unsafe.Pointer")
     }
 
     @private
@@ -257,6 +259,50 @@ class Compiler (ErrorReporter) {
         }
     }
 
+    method getSymbolTable(cl:ClassDecl):SymbolTable {
+        return cl.symbolTable
+    }
+
+    method getVTable(cl:ClassDecl):ListView<MethodDecl> {
+        if cl.virtualMethods.get_count() = 0 {
+            resolve(cl)
+            currentClass.push(cl) -- FIXME Auto
+            currentFile.push(cl.source)
+            if cl.rawSuper != Type.Void() {
+                def superCl := getClass(cl.rawSuper)
+                if superCl = null {
+                    currentClass.pop()
+                    currentFile.pop()
+                    return cl.virtualMethods
+                }
+                getSymbolTable(cl).parents.add(getSymbolTable(superCl))
+                cl.virtualMethods.addAll(getVTable(superCl))
+            }
+            for derived in cl.methods {
+                resolve(derived)
+                if derived.methodKind = MethodDecl.Kind.INIT | derived.annotations.isClass() {
+                    continue
+                }
+                var found := false
+                for i in 0 .. cl.virtualMethods.get_count() {
+                    def base := cl.virtualMethods[i]
+                    resolve(base)
+                    if derived.matches(base) {
+                        found := true
+                        cl.virtualMethods[i] := derived
+                        break
+                    }
+                }
+                if !found {
+                    cl.virtualMethods.add(derived)
+                }
+            }
+            currentClass.pop()
+            currentFile.pop()
+        }
+        return cl.virtualMethods
+    }
+
     method addInheritedMethods(st:SymbolTable, name:String, result:Array<MethodRef>,
             types:Array<Type>) {
     }
@@ -418,9 +464,6 @@ class Compiler (ErrorReporter) {
     }
 
     function coercionCost(expr:IRNode, target:Type):Int? {
-        Console.printLine("coercionCost")
-        Console.printLine("    \{expr}")
-        Console.printLine("    \{target}")
         if expr.type = target {
             return 0
         }
@@ -732,6 +775,66 @@ class Compiler (ErrorReporter) {
                 return IRNode(IRNode.Kind.CONSTRUCT, m.offset, m.payload->Type, children)
         }
         assert false
+    }
+
+    function declaredType(m:MethodDecl):Type {
+        resolve(m)
+        def subtypes := Array<Type>()
+        def typeName := MutableString("(")
+        var separator := ""
+        for p in m.parameters {
+            typeName.append(separator)
+            typeName.append(p.type.name)
+            subtypes.add(p.type)
+            separator := ", "
+        }
+        def kind:Int
+        if m.methodKind = MethodDecl.Kind.FUNCTION {
+            typeName.append(")=>(")
+            kind := Type.Kind.FUNCTION
+        }
+        else {
+            typeName.append(")=&>(")
+            kind := Type.Kind.METHOD
+        }
+        subtypes.add(m.returnType)
+        if m.returnType != Type.Void() {
+            typeName.append(m.returnType.name)
+        }
+        typeName.append(")")
+        return Type(typeName.convert(), kind, m.offset, subtypes, true)
+    }
+
+    function declaredTypeWithSelf(m:MethodDecl, selfType:Type):Type {
+        resolve(m)
+        def subtypes := Array<Type>()
+        def typeName := MutableString("(")
+        typeName.append(selfType.name)
+        subtypes.add(selfType)
+        for p in m.parameters {
+            typeName.append(", ")
+            typeName.append(p.type.name)
+            subtypes.add(p.type)
+        }
+        def kind:Int
+        if m.methodKind = MethodDecl.Kind.FUNCTION {
+            typeName.append(")=>(")
+            kind := Type.Kind.FUNCTION
+        }
+        else {
+            typeName.append(")=&>(")
+            kind := Type.Kind.METHOD
+        }
+        subtypes.add(m.returnType)
+        if m.returnType != Type.Void() {
+            typeName.append(m.returnType.name)
+        }
+        typeName.append(")")
+        return Type(typeName.convert(), kind, m.offset, subtypes, true)
+    }
+
+    function inheritedTypeWithSelf(m:MethodDecl):Type {
+        return declaredTypeWithSelf(m, m.owner.type())
     }
 
     function operatorName(op:Int):String {
@@ -1048,6 +1151,10 @@ class Compiler (ErrorReporter) {
                 children)
     }
 
+    method compileString(s:ASTNode):IRNode? {
+        return IRNode(IRNode.Kind.STRING, s.offset, Type.StringType(), s.payload->String)
+    }
+
     method compileExpression(e:ASTNode):IRNode? {
         match e.kind {
             when ASTNode.Kind.BINARY:
@@ -1064,10 +1171,12 @@ class Compiler (ErrorReporter) {
                 return IRNode(IRNode.Kind.INT, e.offset, Type.IntLiteral(), e.payload->UInt64)
             when ASTNode.Kind.PREFIX:
                 return compilePrefix(e)
-            when ASTNode.Kind.TYPE, ASTNode.Kind.GENERIC_TYPE, ASTNode.Kind.NULLABLE_TYPE:
-                return compileType(e)
             when ASTNode.Kind.RANGE_INCLUSIVE, ASTNode.Kind.RANGE_EXCLUSIVE:
                 return compileRange(e)
+            when ASTNode.Kind.STRING:
+                return compileString(e)
+            when ASTNode.Kind.TYPE, ASTNode.Kind.GENERIC_TYPE, ASTNode.Kind.NULLABLE_TYPE:
+                return compileType(e)
         }
         assert false, "unsupported expression: \{e} (\{e.kind})"
     }

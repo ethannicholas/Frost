@@ -52,6 +52,26 @@ class MethodDecl : Symbol {
         self.resolved := false
     }
 
+    function matches(other:MethodDecl):Bit {
+        assert resolved & other.resolved
+        if name != other.name {
+            return false
+        }
+        if returnType != other.returnType {
+            return false
+        }
+        if parameters.get_count() != other.parameters.get_count() {
+            return false
+        }
+        for i in 0 .. parameters.get_count() {
+            if parameters[i].type != other.parameters[i].type {
+                return false
+            }
+        }
+        return true
+    }
+
+
     function signature():String {
         def result := MutableString("method \{name}(")
         var separator := ""

@@ -36,9 +36,13 @@ class ClassDecl : Symbol {
 
     def methods := Array<MethodDecl>()
 
+    def classes := Array<ClassDecl>()
+
     def symbolTable:SymbolTable
 
     var external := true
+
+    def virtualMethods := Array<MethodDecl>()
 
     var resolved:Bit
 

@@ -37,6 +37,7 @@ class IRNode : Immutable {
         constant NULL_LITERAL                := 1030
         constant UNRESOLVED_RANGE            := 1031
         constant NEGATED_INT                 := 1032
+        constant STRING                      := 1033
     }
 
     def kind:Int

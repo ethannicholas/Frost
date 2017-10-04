@@ -48,12 +48,22 @@ class Parser {
     }
 
     method next():Token {
-        loop {
+        outer: loop {
             def result := rawNext()
             match result.kind {
-                when Token.Kind.WHITESPACE,
-                        Token.Kind.LINE_COMMENT,
-                        Token.Kind.BLOCK_COMMENT: continue
+                when Token.Kind.WHITESPACE, Token.Kind.LINE_COMMENT:
+                    continue
+                when Token.Kind.BLOCK_COMMENT_START:
+                    loop {
+                        def next := next()
+                        match next.kind {
+                            when Token.Kind.BLOCK_COMMENT_END:
+                                continue outer
+                            when Token.Kind.EOF:
+                                error(result, "unterminated comment")
+                                return next
+                        }
+                    }
                 otherwise:
                     return result
             }
@@ -202,6 +212,25 @@ class Parser {
                 ASTNode(ASTNode.Kind.STRING, start.offset, chunk.convert()))
     }
 
+    function toUInt64(s:String, base:UInt64):UInt64 {
+        var result:UInt64 := 0
+        for c in s.utf8() {
+            result *= base
+            def i := c.convert()->UInt64
+            if i >= 48 & i <= 57 {
+                result += i - 48
+            }
+            else if i >= 65 & i <= 70 {
+                result += i - 55
+            }
+            else {
+                assert i >= 97 & i <= 102
+                result += i - 87
+            }
+        }
+        return result
+    }
+
     ================================================================================================
     term = IDENTIFIER | DECIMAL | BINARY | HEX | SELF | SUPER | NULL | TRUE | FALSE | string |
             LPAREN expression RPAREN
@@ -213,6 +242,14 @@ class Parser {
                 return ASTNode(ASTNode.Kind.IDENTIFIER, t.offset, text(t))
             when Token.Kind.DECIMAL:
                 return ASTNode(ASTNode.Kind.INT, t.offset, text(t).convert()->UInt64?)
+            when Token.Kind.BINARY:
+                def s := text(t)
+                return ASTNode(ASTNode.Kind.INT, t.offset,
+                        toUInt64(s[s.offset(s.start(), 2)..], 2))
+            when Token.Kind.HEX:
+                def s := text(t)
+                return ASTNode(ASTNode.Kind.INT, t.offset,
+                        toUInt64(s[s.offset(s.start(), 2)..], 16))
             when Token.Kind.SELF:
                 return ASTNode(ASTNode.Kind.SELF, t.offset)
             when Token.Kind.SUPER:
@@ -617,11 +654,12 @@ class Parser {
                         children.add(next)
                         result := ASTNode(ASTNode.Kind.BINARY, op.offset, Token.Kind.SHIFTRIGHT,
                                 children)
+                    }
+                    else {
+                        pushback(nextToken)
+                        pushback(op)
                         return result
                     }
-                    pushback(nextToken)
-                    pushback(op)
-                    return result
                 otherwise:
                     pushback(op)
                     return result
