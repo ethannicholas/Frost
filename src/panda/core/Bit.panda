@@ -42,11 +42,11 @@ class Bit : Value (Key<Bit>) {
     -- these operators require special support in the CodeGenerator. These implementations are
     -- therefore not often called.
     function |(other:Bit):Bit {
-        return value
+        return value | other.value
     }
 
     function &(other:Bit):Bit {
-        return value
+        return value & other.value
     }
 
     function ~(other:Bit):Bit {

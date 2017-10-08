@@ -450,6 +450,9 @@ class Compiler (ErrorReporter) {
         if type = target {
             return 0
         }
+        if type = Type.Void() {
+            return null
+        }
         match target.typeKind {
             when Type.Kind.NULLABLE:
                 def result := coercionCost(type, target.subtypes[0])
@@ -872,6 +875,7 @@ class Compiler (ErrorReporter) {
         return declaredTypeWithSelf(m, m.owner.type())
     }
 
+    @class
     function operatorName(op:Int):String {
         match op {
             when Token.Kind.ADD: return "+"
@@ -940,10 +944,22 @@ class Compiler (ErrorReporter) {
                 error(left.offset, "cannot assign to this expression")
                 return null
             }
-            def children := Array<IRNode>()
+            def children := Array<IRNode>() -- FIXME literal
             children.add(left)
             children.add(right)
             return IRNode(IRNode.Kind.BINARY, b.offset, Token.Kind.ASSIGNMENT, children)
+        }
+        if left.type = Type.BuiltinBit() {
+            if right.type = Type.BuiltinBit() & (b.payload->Int = Token.Kind.AND |
+                    b.payload->Int = Token.Kind.OR) {
+                def children := Array<IRNode>() -- FIXME literal
+                children.add(left)
+                children.add(right)
+                return IRNode(IRNode.Kind.BINARY, b.offset, left.type, b.payload->Int, children)
+            }
+            error(b.offset, "'\{operatorName(b.payload->Int)}' cannot operate on " +
+                    "'\{left.type}', '\{right.type}'")
+            return null
         }
         def children := Array<IRNode>()
         if left.type.isBuiltinNumber() & coercionCost(right, left.type) != null {

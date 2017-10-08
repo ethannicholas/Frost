@@ -144,6 +144,8 @@ class IRNode : Immutable {
                 return "\{children[0]}->\{type}"
             when Kind.VARIABLE_REFERENCE:
                 return "\{payload->Variable}"
+            when Kind.BINARY:
+                return "(\{children[0]} \{Compiler.operatorName(payload->Int)} \{children[1]})"
             otherwise:
                 return "<IRNode:\{kind}>"
         }

@@ -499,6 +499,58 @@ class LLVMCodeGenerator (CodeGenerator) {
         }
     }
 
+    method getAndReference(left:IRNode, right:IRNode, out:OutputStream):String {
+        var leftRef := getReference(left, out)
+        if left.type = Type.Bit() {
+            def leftField := nextVar()
+            out.printLine("\{leftField} = extractvalue %panda$core$Bit \{leftRef}, 0")
+            leftRef := leftField
+        }
+        def start := currentBlock
+        def ifTrue := nextLabel()
+        def ifFalse := nextLabel()
+        out.printLine("br i1 \{leftRef}, label %\{ifTrue}, label %\{ifFalse}")
+        createBlock(ifTrue, out)
+        def rightRef := getReference(right, out)
+        if right.type = Type.Bit() {
+            def rightField := nextVar()
+            out.printLine("\{rightField} = extractvalue %panda$core$Bit \{rightRef}, 0")
+            rightRef := rightField
+        }
+        def truePred := currentBlock
+        out.printLine("br label %\{ifFalse}")
+        createBlock(ifFalse, out)
+        def result := nextVar()
+        out.printLine("\{result} = phi i1 [0, %\{start}], [\{rightRef}, %\{truePred}]")
+        return result
+    }
+
+    method getOrReference(left:IRNode, right:IRNode, out:OutputStream):String {
+        var leftRef := getReference(left, out)
+        if left.type = Type.Bit() {
+            def leftField := nextVar()
+            out.printLine("\{leftField} = extractvalue %panda$core$Bit \{leftRef}, 0")
+            leftRef := leftField
+        }
+        def start := currentBlock
+        def ifTrue := nextLabel()
+        def ifFalse := nextLabel()
+        out.printLine("br i1 \{leftRef}, label %\{ifTrue}, label %\{ifFalse}")
+        createBlock(ifFalse, out)
+        def rightRef := getReference(right, out)
+        if right.type = Type.Bit() {
+            def rightField := nextVar()
+            out.printLine("\{rightField} = extractvalue %panda$core$Bit \{rightRef}, 0")
+            rightRef := rightField
+        }
+        def falsePred := currentBlock
+        out.printLine("br label %\{ifTrue}")
+        createBlock(ifTrue, out)
+        def result := nextVar()
+        out.printLine("\{result} = phi i1 [1, %\{start}], [\{rightRef}, %\{falsePred}]")
+        return result
+    }
+
     method getBinaryReference(cl:Int, leftRef:String, op:Int, rightRef:String,
             out:OutputStream):String {
         def llvmOp:String
@@ -571,8 +623,8 @@ class LLVMCodeGenerator (CodeGenerator) {
     method getBinaryReference(left:IRNode, op:Int, right:IRNode, out:OutputStream):String {
         assert left.type = right.type
         match op {
-            when Token.Kind.AND:       assert false -- return getAndReference(left, right, out)
-            when Token.Kind.OR:        assert false -- return getOrReference(left, right, out)
+            when Token.Kind.AND:       return getAndReference(left, right, out)
+            when Token.Kind.OR:        return getOrReference(left, right, out)
             when Token.Kind.IDENTITY:  assert false -- return getIdentityReference(left, right, out)
             when Token.Kind.NIDENTITY: assert false -- return getNIdentityReference(left, right, out)
             otherwise:
@@ -597,6 +649,24 @@ class LLVMCodeGenerator (CodeGenerator) {
         def m := (call.payload->MethodRef).value
         if m.owner.external {
             writeDeclaration(m)
+        }
+        if m.owner.name = "panda.core.Bit" {
+            if m.name = "&" {
+                assert call.children.get_count() = 2
+                def bit := getAndReference(call.children[0], call.children[1], out)
+                def result := nextVar()
+                out.printLine("\{result} = insertvalue %panda$core$Bit { i1 undef }, i1 " +
+                        "\{bit}, 0")
+                return result
+            }
+            if m.name = "|" {
+                assert call.children.get_count() = 2
+                def bit := getOrReference(call.children[0], call.children[1], out)
+                def result := nextVar()
+                out.printLine("\{result} = insertvalue %panda$core$Bit { i1 undef }, i1 " +
+                        "\{bit}, 0")
+                return result
+            }
         }
         def args := Array<String>(call.children.get_count())
         for a in call.children {
