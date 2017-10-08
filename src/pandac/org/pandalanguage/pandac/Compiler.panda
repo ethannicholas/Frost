@@ -77,15 +77,30 @@ class Compiler (ErrorReporter) {
         root.add(Alias(name[name.next(name.lastIndexOf("."))..], name, -1))
     }
 
+    function tryResolveClass(name:String):ClassDecl? {
+        def alias := currentClass.peek().aliases[name]
+        if alias != null {
+            return getClass(alias)
+        }
+        if name.contains(".") | !currentClass.peek().name.contains(".") {
+            return getClass(name)
+        }
+        def idx := currentClass.peek().name.lastIndexOf(".")
+        if idx != null {
+            return getClass(currentClass.peek().name[...idx] + name)
+        }
+        return null
+    }
+
     function resolve(type:Type):Type {
         if type.resolved {
             return type
         }
         match type.typeKind {
             when Type.Kind.CLASS:
-                def resolved := currentClass.peek().aliases[type.name]
+                def resolved := tryResolveClass(type.name)
                 if resolved != null {
-                    return Type(resolved, Type.Kind.CLASS, type.offset, true)
+                    return resolved.type()
                 }
                 def s := symbolTable[type.name]
                 if s != null {
@@ -222,6 +237,24 @@ class Compiler (ErrorReporter) {
         return result
     }
 
+    method getClass(fullName:String):ClassDecl? {
+        var result := classes[fullName]
+        if result = null {
+            def suffix := fullName.replace(".", "/") + ".panda"
+            var found := false
+            for dir in importDirs {
+                def f := dir.resolve(suffix)
+                if f.exists() {
+                    found := true
+                    def oldErrorCount := errorCount
+                    scan(f)
+                    result := classes[fullName]
+                }
+            }
+        }
+        return result
+    }
+
     method getClass(offset:Int, fullName:String):ClassDecl? {
         var result := classes[fullName]
         if result = null {
@@ -268,7 +301,7 @@ class Compiler (ErrorReporter) {
             resolve(cl)
             currentClass.push(cl) -- FIXME Auto
             currentFile.push(cl.source)
-            if cl.rawSuper != Type.Void() {
+            if cl.rawSuper != null {
                 def superCl := getClass(cl.rawSuper)
                 if superCl = null {
                     currentClass.pop()
@@ -352,6 +385,8 @@ class Compiler (ErrorReporter) {
                     return IRNode(IRNode.Kind.TYPE_REFERENCE, offset, Type.Class(), cl.type())
                 }
                 return null
+            when Symbol.Kind.CLASS:
+                return IRNode(IRNode.Kind.TYPE_REFERENCE, offset, Type.Class(), (s->ClassDecl).type()) -- FIXME parens
             when Symbol.Kind.METHOD, Symbol.Kind.METHODS:
                 return getMethodReference(st, target, s.name, offset, Array<Type>())
             when Symbol.Kind.VARIABLE:
@@ -1092,14 +1127,15 @@ class Compiler (ErrorReporter) {
 
     method compileIdentifier(i:ASTNode):IRNode? {
         assert i.kind = ASTNode.Kind.IDENTIFIER
-        def s := symbolTable[i.payload->String]
+        var s := symbolTable[i.payload->String]
+        if s = null {
+            s := tryResolveClass(i.payload->String)
+        }
         if s != null {
             return symbolRef(i.offset, null, s, symbolTable)
         }
-        else {
-            error(i.offset, "unknown identifier '\{i.payload}'")
-            return null
-        }
+        error(i.offset, "unknown identifier '\{i.payload}'")
+        return null
     }
 
     method compileType(t:ASTNode):IRNode? {
@@ -1260,7 +1296,6 @@ class Compiler (ErrorReporter) {
             children.add(list)
             children.add(body)
             symbolTable := symbols.parents[0]
-            Console.printLine("rangeFor: \{list}")
             return IRNode(IRNode.Kind.RANGE_FOR, f.offset, children)
         }
         symbolTable := symbols.parents[0]

@@ -80,6 +80,7 @@ class LLVMCodeGenerator (CodeGenerator) {
                 "n8:16:32:64-S128\"")
         out.printLine("target triple = \"x86_64-apple-macosx10.8.0\"")
         out.printLine("declare i8* @malloc(i64)")
+        out.printLine("%$itable = type { %panda$core$Class*, %$itable*, [0 x i8*] }")
     }
 
     @override
@@ -283,6 +284,17 @@ class LLVMCodeGenerator (CodeGenerator) {
                 return type(t.subtypes[0])
             when Type.Kind.GENERIC_PARAMETER:
                 return type(t.subtypes[0])
+            when Type.Kind.FUNCTION, Type.Kind.METHOD:
+                def result := MutableString(type(t.subtypes[t.subtypes.get_count() - 1]))
+                result.append(" (")
+                for i in 0 .. t.subtypes.get_count() - 1 {
+                    if i > 0 {
+                        result.append(", ")
+                    }
+                    result.append(type(t.subtypes[i]))
+                }
+                result.append(")*")
+                return result.convert()
             otherwise:
                 assert false, "unsupported type '\{t}'"
         }
@@ -371,7 +383,7 @@ class LLVMCodeGenerator (CodeGenerator) {
             }
             def itable := getITable(cl)
             def code := MutableString("\{result.name} = constant \{result.type} { " +
-                    "i8* \{super}, \{INT_TYPE} 1, \{getITable(cl)}, " +
+                    "i8* \{superPtr}, \{INT_TYPE} 1, %$itable* \{getITable(cl)}, " +
                     "[\{vtable.get_count()} x i8*] [")
             var separator := ""
             for m in vtable {
@@ -889,12 +901,11 @@ class LLVMCodeGenerator (CodeGenerator) {
         }
         out.printLine("\{classPtr} = getelementptr inbounds \{className}, \{t} \{result}, i64 0, " +
                 "i32 0")
--*        def cc := getClassConstant(cl)
+        def cc := getClassConstant(cl)
         out.printLine("store %panda$core$Class* bitcast(\{cc.type}* \{cc.name} to " +
                 "%panda$core$Class*), %panda$core$Class** \{classPtr}")
-        writeCall(construct.children[0], "\{type} \{result}", out)
-        return result*-
-        assert false
+        writeCall(construct.children[0], "\{t} \{result}", out)
+        return result
     }
 
     method getIntReference(int:IRNode, out:OutputStream):String {
@@ -1464,8 +1475,12 @@ class LLVMCodeGenerator (CodeGenerator) {
         currentBlock := "0"
         varCount := 0
         methodHeaderBuffer.clear()
-        methods.print("define \{type(m.returnType)} \{getName(m)}(")
+        methods.print("define \{callingConvention(m)}\{type(m.returnType)} \{getName(m)}(")
         var separator := ""
+        if !m.annotations.isClass() {
+            methods.print("\{selfType(m)} %self")
+            separator := ", "
+        }
         for p in m.parameters {
             methods.print("\{separator}\{type(p.type)} %\{escapeName(p.name)}")
             separator := ", "
