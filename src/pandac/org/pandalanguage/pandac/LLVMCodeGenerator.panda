@@ -776,10 +776,11 @@ class LLVMCodeGenerator (CodeGenerator) {
     }
 
     method unwrapValue(value:String, srcType:Type, dstType:Type, out:OutputStream):String {
--*        Class* target = fCompiler->getClass(dstType);
-        std.vector<Field*> fields = fCompiler->getInstanceFields(*target);
-        if (dstType.fCategory == Type.Category.NULLABLE) {
-            // casting nullable wrapper to nullable value, need to special-case null
+        def target := compiler.getClass(dstType)
+        assert target != null
+        if dstType.typeKind = Type.Kind.NULLABLE {
+            assert false
+-*            // casting nullable wrapper to nullable value, need to special-case null
             String testStart = fCurrentBlock;
             String isNonNull = nextVar();
             out << "    " << isNonNull << " = icmp ne " << llvmType(srcType) <<
@@ -802,40 +803,18 @@ class LLVMCodeGenerator (CodeGenerator) {
             }
             out << separator << "i1 0 }, %" << testStart << "], [" << nonNullValue << ", %" <<
                     nonNullLabel << "]\n";
-            return result;
+            return result; *-
         }
-        ASSERT(target);
-        String targetType = llvmType(dstType);
-        String wrapperTypeName = llvmWrapperTypeName(dstType);
-        String wrapperType = llvmWrapperType(dstType);
-        String srcCast = nextVar();
-        out << "    " << srcCast << " = bitcast " << llvmType(srcType) <<
-                " " << value << " to " << wrapperType << "\n";
-        String result = "{";
-        const char* separator = " ";
-        for (const Field* f : fields) {
-            result += separator;
-            result += llvmType(f->fType);
-            result += " undef";
-            separator = ", ";
-        }
-        result += " }";
-        for (int i = 0; i < fields.size(); ++i) {
-            String ptr = nextVar();
-            out << "    " << ptr << " = getelementptr " << wrapperTypeName << ", " <<
-                    wrapperType << " " << srcCast << ", i64 0, i32 " <<
-                    OBJECT_FIELD_COUNT + i << "\n";
-            String read = nextVar();
-            out << "    " << read << " = load " << llvmType(fields[i]->fType) << ", " <<
-                    llvmType(fields[i]->fType) << "* " << ptr << "\n";
-            String next = nextVar();
-            out << "    " << next << " = insertvalue " << targetType << " " << result <<
-                    ", " << llvmType(fields[i]->fType) << " " << read << ", " << i <<
-                    "\n";
-            result = next;
-        }
-        return result;*-
-        assert false
+        def targetType := type(dstType)
+        def wrapperTypeName := wrapperTypeName(dstType)
+        def wrapperType := wrapperType(dstType)
+        def srcCast := nextVar()
+        out.printLine("\{srcCast} = bitcast \{type(srcType)} \{value} to \{wrapperType}")
+        def load := nextVar()
+        out.printLine("\{load} = load \{wrapperTypeName}, \{wrapperType} \{srcCast}")
+        def result := nextVar()
+        out.printLine("\{result} = extractvalue \{wrapperTypeName} \{load}, \{OBJECT_FIELD_COUNT}")
+        return result
     }
 
     method toNullableValue(value:String, srcType:Type, dstType:Type, out:OutputStream):String {
