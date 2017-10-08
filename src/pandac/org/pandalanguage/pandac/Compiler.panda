@@ -1207,6 +1207,31 @@ class Compiler (ErrorReporter) {
         return IRNode(IRNode.Kind.STRING, s.offset, Type.StringType(), s.payload->String)
     }
 
+    method compileSelf(s:ASTNode):IRNode? {
+        assert s.kind = ASTNode.Kind.SELF
+        if currentMethod.peek().annotations.isClass() {
+            error(s.offset, "cannot reference 'self' from a @class method")
+            return null
+        }
+        def type:Type
+        def cl := currentClass.peek()
+        if cl.parameters.get_count() > 0 {
+            def subtypes := Array<Type>()
+            subtypes.add(cl.type())
+            for p in cl.parameters {
+                def pType := Array<Type>() -- FIXME literal
+                pType.add(p.type())
+                subtypes.add(Type("\{cl.name}.\{p.name}", Type.Kind.GENERIC_PARAMETER, p.offset,
+                             pType, true))
+            }
+            type := Type(subtypes)
+        }
+        else {
+            type := cl.type()
+        }
+        return IRNode(IRNode.Kind.SELF, s.offset, type)
+    }
+
     method compileExpression(e:ASTNode):IRNode? {
         match e.kind {
             when ASTNode.Kind.BINARY:
@@ -1229,6 +1254,8 @@ class Compiler (ErrorReporter) {
                 return compileString(e)
             when ASTNode.Kind.TYPE, ASTNode.Kind.GENERIC_TYPE, ASTNode.Kind.NULLABLE_TYPE:
                 return compileType(e)
+            when ASTNode.Kind.SELF:
+                return compileSelf(e)
         }
         assert false, "unsupported expression: \{e} (\{e.kind})"
     }

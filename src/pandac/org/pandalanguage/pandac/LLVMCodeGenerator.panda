@@ -769,12 +769,10 @@ class LLVMCodeGenerator (CodeGenerator) {
                     ", \{index}")
             return result
         }
-        -*
-        String ptr = type + "* " + this->getLValue(fieldRef, out);
+        def ptr := "\{t}* \{getLValue(fieldRef, out)}"
         def result := nextVar()
-        out << "    " << result << " = load " << type << ", " << ptr << "\n";
-        return result;*-
-        assert false
+        out.printLine("\{result} = load \{t}, \{ptr}")
+        return result
     }
 
     method unwrapValue(value:String, srcType:Type, dstType:Type, out:OutputStream):String {
@@ -1028,6 +1026,10 @@ class LLVMCodeGenerator (CodeGenerator) {
         return result
     }
 
+    method getSelfReference(s:IRNode, out:OutputStream):String {
+        return "%self"
+    }
+
     method getReference(expr:IRNode, out:OutputStream):String {
         match expr.kind {
             when IRNode.Kind.BINARY:
@@ -1050,6 +1052,8 @@ class LLVMCodeGenerator (CodeGenerator) {
                 return getFieldReference(expr, out)
             when IRNode.Kind.STRING:
                 return getStringReference(expr.payload->String, out)
+            when IRNode.Kind.SELF:
+                return getSelfReference(expr, out)
             otherwise:
                 assert false, "unsupported expression \{expr}"
         }
@@ -1427,6 +1431,23 @@ class LLVMCodeGenerator (CodeGenerator) {
         match lvalue.kind {
             when IRNode.Kind.VARIABLE_REFERENCE:
                 return getName(lvalue.payload->Variable)
+            when IRNode.Kind.FIELD_REFERENCE:
+                def base := getReference(lvalue.children[0], out)
+                def ptr := nextVar()
+                def cl := compiler.getClass(lvalue.children[0].type)
+                assert cl != null
+                def fields := compiler.instanceFields(cl)
+                var index := -1
+                for i in 0 .. fields.get_count() {
+                    if fields[i].name == (lvalue.payload->FieldDecl).name { -- FIXME parens
+                        index := i
+                        break
+                    }
+                }
+                assert index != -1
+                out.printLine("\{ptr} = getelementptr inbounds \{typeName(cl.type())}, " +
+                        "\{typeName(cl.type())}* \{base}, i64 0, i32 \{index}")
+                return ptr
             otherwise:
                 assert false
         }

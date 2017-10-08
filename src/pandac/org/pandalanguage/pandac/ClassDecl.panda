@@ -56,6 +56,7 @@ class ClassDecl : Symbol {
         self.annotations := annotations
         self.rawSuper := rawSuper
         self.rawInterfaces := rawInterfaces
+        self.parameters := parameters
         self.symbolTable := SymbolTable(parent)
         self.resolved := false
         for p in parameters {

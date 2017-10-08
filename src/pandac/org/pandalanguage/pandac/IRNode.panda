@@ -146,6 +146,8 @@ class IRNode : Immutable {
                 return "\{payload->Variable}"
             when Kind.BINARY:
                 return "(\{children[0]} \{Compiler.operatorName(payload->Int)} \{children[1]})"
+            when Kind.SELF:
+                return "self"
             otherwise:
                 return "<IRNode:\{kind}>"
         }
