@@ -428,6 +428,7 @@ class Parser {
                     if checkNext(Token.Kind.RPAREN) = null {
                         var expr := expression()
                         if expr = null {
+                            commaSeparatedExpressionContext.pop()
                             return null
                         }
                         children.add(expr)
@@ -1292,7 +1293,7 @@ class Parser {
         commaSeparatedExpressionContext.push(true) -- FIXME use init / cleanup to automate this
         def children := Array<ASTNode>()
         children.add(ASTNode(ASTNode.Kind.IDENTIFIER, start.offset, text(start)))
-        if checkNext(Token.Kind.RPAREN) != null {
+        if checkNext(Token.Kind.RPAREN) = null {
             var expr := expression()
             if expr = null {
                 commaSeparatedExpressionContext.pop()
@@ -1312,6 +1313,7 @@ class Parser {
                 return null
             }
         }
+        commaSeparatedExpressionContext.pop()
         return ASTNode(ASTNode.Kind.CALL, start.offset, children)
     }
 
@@ -1840,7 +1842,7 @@ class Parser {
             children.add(intfs)
         }
         else {
-            children.add(ASTNode(ASTNode.Kind.VOID, -1))
+            children.add(ASTNode(ASTNode.Kind.TYPES, -1))
         }
         if expect(Token.Kind.LBRACE, "'{'") = null {
             return null
@@ -1903,7 +1905,7 @@ class Parser {
             return null
         }
         def members := Array<ASTNode>()
-        while checkNext(Token.Kind.RBRACE) != null {
+        while checkNext(Token.Kind.RBRACE) = null {
             def member := declaration()
             if member = null {
                 return null

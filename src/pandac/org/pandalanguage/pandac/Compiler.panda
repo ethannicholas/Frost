@@ -56,6 +56,16 @@ class Compiler (ErrorReporter) {
         root.add(Type("builtin_int64", Type.Kind.BUILTIN_INT, -1, true))
         root.add(Alias("Int", "panda.core.Int64", -1))
         addAlias("panda.collections.Array")
+        addAlias("panda.collections.Collection")
+        addAlias("panda.collections.CollectionView")
+        addAlias("panda.collections.CollectionWriter")
+        addAlias("panda.collections.Comparable")
+        addAlias("panda.collections.Iterable")
+        addAlias("panda.collections.Iterator")
+        addAlias("panda.collections.Key")
+        addAlias("panda.collections.List")
+        addAlias("panda.collections.ListView")
+        addAlias("panda.collections.ListWriter")
         addAlias("panda.core.Class")
         addAlias("panda.core.Bit")
         addAlias("panda.core.Char8")
@@ -150,14 +160,17 @@ class Compiler (ErrorReporter) {
         if cl.resolved {
             return
         }
+        cl.resolved := true
         currentFile.push(cl.source)
+        def old := symbolTable
+        symbolTable := cl.symbolTable
         if cl.rawSuper != null {
             cl.rawSuper := resolve(cl.rawSuper)
         }
         for i in 0 .. cl.rawInterfaces.get_count() {
             cl.rawInterfaces[i] := resolve(cl.rawInterfaces[i])
         }
-        cl.resolved := true
+        symbolTable := old
         currentFile.pop()
     }
 
@@ -367,6 +380,7 @@ class Compiler (ErrorReporter) {
                     children)
         }
         else {
+            assert methods.get_count() > 0
             def types := Array<Type>()
             for m in methods {
                 types.add(m.type())
@@ -453,6 +467,13 @@ class Compiler (ErrorReporter) {
         if type = Type.Void() {
             return null
         }
+        if type.typeKind = Type.Kind.NULLABLE & target.typeKind != Type.Kind.NULLABLE {
+            def result := coercionCost(type.subtypes[0], target)
+            if result = null {
+                return null
+            }
+            return result + NULLABLE_CAST_COST
+        }
         match target.typeKind {
             when Type.Kind.NULLABLE:
                 def result := coercionCost(type, target.subtypes[0])
@@ -464,6 +485,15 @@ class Compiler (ErrorReporter) {
                 return coercionCost(type, target.subtypes[0])
             when Type.Kind.BUILTIN_INT, Type.Kind.BUILTIN_UINT:
                 return null
+            when Type.Kind.CLASS:
+                if type.typeKind = Type.Kind.GENERIC {
+                    return coercionCost(type.subtypes[0], target)
+                }
+            when Type.Kind.GENERIC:
+                if type.typeKind = Type.Kind.GENERIC {
+                    var cost := coercionCost(type.subtypes[0], target.subtypes[0])
+                    return cost
+                }
         }
         def targetClass := getClass(target)
         if targetClass = null {
@@ -497,6 +527,9 @@ class Compiler (ErrorReporter) {
             if cost != null {
                 return cost + 1
             }
+        }
+        if type.typeKind = Type.Kind.GENERIC_PARAMETER {
+            return coercionCost(type.subtypes[0], target)
         }
         return null
     }
@@ -663,7 +696,8 @@ class Compiler (ErrorReporter) {
             children.add(expr)
             return IRNode(IRNode.Kind.CAST, expr.offset, target, false, children)
         }
-        assert false, "need to coerce \{expr}:\{expr.type} to \{target}"
+        error(expr.offset, "expected '\{target}', but found '\{expr.type}'")
+        return null
     }
 
     method canCast(node:IRNode, target:Type):Bit {
@@ -1218,13 +1252,19 @@ class Compiler (ErrorReporter) {
         if cl.parameters.get_count() > 0 {
             def subtypes := Array<Type>()
             subtypes.add(cl.type())
+            def name := MutableString(cl.name)
+            name.append("<")
+            var separator := ""
             for p in cl.parameters {
                 def pType := Array<Type>() -- FIXME literal
-                pType.add(p.type())
-                subtypes.add(Type("\{cl.name}.\{p.name}", Type.Kind.GENERIC_PARAMETER, p.offset,
+                pType.add(p.bound)
+                def pName := "\{cl.name}.\{p.name}"
+                name.append(separator)
+                name.append(pName)
+                subtypes.add(Type(pName, Type.Kind.GENERIC_PARAMETER, p.offset,
                              pType, true))
             }
-            type := Type(subtypes)
+            type := Type(name.convert(), Type.Kind.GENERIC, s.offset, subtypes, true)
         }
         else {
             type := cl.type()
@@ -1696,6 +1736,5 @@ class Compiler (ErrorReporter) {
     method error(pos:Position, msg:String) {
         errorCount += 1
         Console.printLine("\{pos}: \{msg}")
-        assert false
     }
 }

@@ -60,6 +60,6 @@ class SymbolTable {
 
     @override
     function convert():String {
-        return "SymbolTable<parents=\{parents}, symbols=\{symbols}>"
+        return "SymbolTable<parents(\{parents.get_count()}), symbols=\{symbols}>"
     }
 }

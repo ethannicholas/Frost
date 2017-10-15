@@ -139,7 +139,7 @@ class LLVMCodeGenerator (CodeGenerator) {
         }
         def cl := compiler.getClass(t)
         assert cl != null
-        if !compiler.isValue(cl) {
+        if !compiler.isValue(cl) | cl.name = "panda.unsafe.Pointer" {
             return POINTER_SIZE
         }
         var result := 0
@@ -422,7 +422,8 @@ class LLVMCodeGenerator (CodeGenerator) {
     }
 
     function escapeName(s:String):String {
-        return s.replace(".", "$").replace("?", "$Q")
+        return s.replace(".", "$").replace("?", "$Q").replace("<", "$LT").replace(">", "$GT").
+                replace(" ", "").replace(",", "$C")
     }
 
     function getName(v:Variable):String {

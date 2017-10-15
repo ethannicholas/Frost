@@ -362,6 +362,17 @@ class ASTNode : Immutable {
                 result.append(" ")
                 result.append(children[5])
                 return result.convert()
+            when Kind.INTERFACE:
+                assert children.get_count() = 5
+                def result := MutableString()
+                result.append(children[0])
+                result.append(children[1])
+                result.append("class \{payload}")
+                result.append(children[2])
+                result.append(" ")
+                result.append(children[3])
+                result.append(children[4])
+                return result.convert()
             when Kind.FILE:
                 def result := MutableString()
                 for c in children {
