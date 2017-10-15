@@ -69,6 +69,7 @@ class Compiler (ErrorReporter) {
         addAlias("panda.core.Class")
         addAlias("panda.core.Bit")
         addAlias("panda.core.Char8")
+        addAlias("panda.core.Equatable")
         addAlias("panda.core.Int8")
         addAlias("panda.core.Int16")
         addAlias("panda.core.Int32")

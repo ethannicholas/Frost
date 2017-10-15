@@ -25,9 +25,10 @@ class LLVMCodeGenerator (CodeGenerator) {
         }
     }
 
-    constant POINTER_SIZE := 8
-
+    constant POINTER_SIZE       := 8
     constant OBJECT_FIELD_COUNT := 2
+    constant ITABLE_INDEX       := 2
+    constant VTABLE_INDEX       := 3
 
     constant INT_TYPE := "i64"
 
@@ -645,6 +646,126 @@ class LLVMCodeGenerator (CodeGenerator) {
         return "fastcc "
     }
 
+    method getVirtualMethodReference(target:String, m:MethodDecl, out:OutputStream):String {
+        def cc := getClassConstant(m.owner)
+        var index := -1
+        def vtable := compiler.getVTable(m.owner)
+        for i in 0 .. vtable.get_count() {
+            if vtable[i]->MethodDecl == m { -- FIXME unnecessary cast
+                index := i
+                break
+            }
+        }
+        assert index != -1
+        def classPtrPtr := nextVar()
+        out.printLine("\{classPtrPtr} = getelementptr inbounds \{typeName(m.owner.type())}, " +
+                "\{target}, i64 0, i32 0")
+        def classPtr := nextVar()
+        out.printLine("\{classPtr} = load %panda$core$Class*, %panda$core$Class** \{classPtrPtr}")
+        def cast := nextVar()
+        out.printLine("\{cast} = bitcast %panda$core$Class* \{classPtr} to \{cc.type}*")
+        def ptr := nextVar()
+        out.printLine("\{ptr} = getelementptr inbounds \{cc.type}, \{cc.type}* \{cast}, i64 0, " +
+                "i32 \{VTABLE_INDEX}, i64 \{index}")
+        def load := nextVar()
+        out.printLine("\{load} = load i8*, i8** \{ptr}")
+        def result := nextVar()
+        out.printLine("\{result} = bitcast i8* \{load} to " +
+                type(compiler.inheritedTypeWithSelf(m)))
+        return result
+    }
+
+    method getInterfaceMethodReference(target:String, m:MethodDecl, out:OutputStream):String {
+    -*
+        String methodType = llvmType(m);
+        // load class constant entry
+        String entry = this->nextLabel();
+        out << "    br label %" << entry << "\n";
+        this->createBlock(entry, out);
+        String classPointer = this->nextVar();
+        out << "    " << classPointer + " = getelementptr inbounds " <<
+                this->llvmTypeName(m.fOwner.fType) << ", " << target << ", " SIZE_T << " 0, i32 " <<
+                CLASS_POINTER_INDEX << "\n";
+        String loadedClass = this->nextVar();
+        String classType = this->llvmTypeName(Type::Class());
+        out << "    " << loadedClass << " = load " << classType << "*, " << classType << "** " <<
+                classPointer << "\n";
+        String itableFirst = this->nextVar();
+        out << "    " << itableFirst << " = getelementptr inbounds " << classType << ", " <<
+                classType << "* " << loadedClass << ", " << SIZE_T << " 0, i32 " << ITABLE_INDEX <<
+                "\n";
+        String next = this->nextLabel();
+        out << "    br label %" << next << "\n";
+        String leavingEntryLabel = fCurrentBlock;
+        this->createBlock(next, out);
+        String itableNext = "%$itable" + std::to_string(++fLabels);
+        String itablePtrPtr = this->nextVar();
+        String fail = this->nextLabel();
+        out << "    " << itablePtrPtr << " = phi %$itable** [ " << itableFirst + ", %" <<
+                leavingEntryLabel << "], [ " << itableNext << ", %" << fail << " ]\n";
+        String itablePtr = this->nextVar();
+        out << "    " << itablePtr << " = load %$itable*, %$itable** " << itablePtrPtr << "\n";
+        String itableClassPtr = this->nextVar();
+        out << "    " << itableClassPtr << " = getelementptr inbounds %$itable, %$itable* " <<
+                itablePtr << ", " << SIZE_T << " 0, i32 0\n";
+        String itableClass = this->nextVar();
+        out << "    " << itableClass << " = load " << classType << "*, " << classType << "** " <<
+                itableClassPtr << "\n";
+        String test = this->nextVar();
+        ClassConstant& intfCC = getClassConstant(m.fOwner);
+        out << "    " << test << " = icmp eq " << classType << "* bitcast(" << intfCC.fType << "* " <<
+                intfCC.fName << " to " << classType << "*), " << itableClass << "\n";
+        String success = this->nextLabel();
+        out << "    br i1 " << test << ", label %" << success << ", label %" << fail << "\n";
+
+        this->createBlock(fail, out);
+        out << "    " << itableNext << " = getelementptr inbounds %$itable, %$itable* " << itablePtr <<
+                ", " << SIZE_T << " 0, i32 1\n";
+        out << "    br label %" << next << "\n";
+
+        this->createBlock(success, out);
+        int index = -1;
+        std::vector<Method*>& vtable = fCompiler->getVTable(m.fOwner);
+        for (int i = 0; i < vtable.size(); ++i) {
+            if (vtable[i] == &m) {
+                index = i;
+                break;
+            }
+        }
+        index -= fCompiler->getVTable(*fCompiler->getClass(Type::Object())).size();
+        ASSERT(index != -1);
+        String methodPtrPtr = this->nextVar();
+        out << "    " << methodPtrPtr << " = getelementptr inbounds %$itable, %$itable* " <<
+                itablePtr << ", " SIZE_T " 0, i32 2, i32 " << index << "\n";
+        String cast = this->nextVar();
+        out << "    " << cast << " = bitcast i8** " << methodPtrPtr <<
+                " to " << methodType << "*\n";
+        String methodPtr = this->nextVar();
+        out << "    " << methodPtr << " = load " << methodType << ", " << methodType << "* " << cast <<
+                "\n";
+        return methodPtr;
+        *-
+        assert false
+    }
+
+    method getMethodReference(target:String?, m:MethodDecl, isSuper:Bit, out:OutputStream):String {
+        if !isSuper & m.isVirtual() {
+            assert target != null
+            if m.owner.classKind == ClassDecl.Kind.INTERFACE {
+                return getInterfaceMethodReference(target, m, out)
+            }
+            else {
+                return getVirtualMethodReference(target, m, out)
+            }
+        }
+        else {
+            if m.owner.external {
+                writeDeclaration(m)
+            }
+            return getName(m)
+        }
+    }
+
     method getCallReference(call:IRNode, out:OutputStream):String {
         assert call.kind = IRNode.Kind.CALL
         def m := (call.payload->MethodRef).value
@@ -673,9 +794,20 @@ class LLVMCodeGenerator (CodeGenerator) {
         for a in call.children {
             args.add(getTypedReference(a, out))
         }
+        def target:String?
+        if args.get_count() > 0 {
+            -- this isn't actually correct - args[0] could be the target of an instance method, or
+            -- just the first parameter to a class method. But getMethodReference ignores target for
+            -- class methods, so this works and is easier than doing it the right way.
+            target := args[0]
+        }
+        else {
+            target := null
+        }
+        def methodRef := getMethodReference(target, m, false, out)
         def result := nextVar()
         out.printLine("\{result} = call \{callingConvention(m)}\{type(call.type)} " +
-                "\{getName(m)}(\{args.join()})")
+                "\{methodRef}(\{args.join()})")
         return result
     }
 
@@ -1050,6 +1182,8 @@ class LLVMCodeGenerator (CodeGenerator) {
         }
     }
 
+    -- if target is non-null, it is inserted as a hidden first parameter to the call. This is used
+    -- for init() calls, which require a self parameter but do not have a target in the IR.
     method writeCall(call:IRNode, target:String?, out:OutputStream) {
         assert call.kind = IRNode.Kind.CALL
         def m := (call.payload->MethodRef).value
@@ -1063,8 +1197,19 @@ class LLVMCodeGenerator (CodeGenerator) {
         for a in call.children {
             args.add(getTypedReference(a, out))
         }
+        def refTarget:String?
+        if args.get_count() > 0 {
+            -- this isn't actually correct - args[0] could be the target of an instance method, or
+            -- just the first parameter to a class method. But getMethodReference ignores target for
+            -- non-virtual methods, so this works and is easier than doing it the right way.
+            refTarget := args[0]
+        }
+        else {
+            refTarget := null
+        }
+        def methodRef := getMethodReference(refTarget, m, false, out)
         out.printLine("call \{callingConvention(m)}\{type(call.type)} " +
-                "\{getName(m)}(\{args.join()})")
+                "\{methodRef}(\{args.join()})")
     }
 
     method writeIf(s:IRNode, out:OutputStream) {

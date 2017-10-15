@@ -1,6 +1,11 @@
 package org.pandalanguage.pandac
 
 class ClassDecl : Symbol {
+    class Kind {
+        constant CLASS     := 5011
+        constant INTERFACE := 5012
+    }
+
     class GenericParameter : Symbol {
         def owner:String
 
@@ -9,7 +14,7 @@ class ClassDecl : Symbol {
         init(offset:Int, owner:String, name:String, bound:org.pandalanguage.pandac.Type) { -- FIXME qualification
             self.owner := owner
             self.bound := bound
-            super.init(Kind.GENERIC_PARAMETER, offset, name)
+            super.init(Symbol.Kind.GENERIC_PARAMETER, offset, name)
         }
 
         @override
@@ -25,6 +30,8 @@ class ClassDecl : Symbol {
     def doccomment:String?
 
     def annotations:Annotations
+
+    def classKind:Int
 
     def rawSuper:Type?
 
@@ -47,13 +54,14 @@ class ClassDecl : Symbol {
     var resolved:Bit
 
     init(source:File, offset:Int, aliases:MapView<String, String>, doccomment:String?,
-            annotations:Annotations, name:String, rawSuper:Type?, rawInterfaces:Array<Type>,
-            parameters:ListView<GenericParameter>, parent:SymbolTable) {
-        super.init(Kind.CLASS, offset, name)
+            annotations:Annotations, kind:Int, name:String, rawSuper:Type?,
+            rawInterfaces:Array<Type>, parameters:ListView<GenericParameter>, parent:SymbolTable) {
+        super.init(Symbol.Kind.CLASS, offset, name)
         self.source := source
         self.aliases := aliases
         self.doccomment := doccomment
         self.annotations := annotations
+        self.classKind := kind
         self.rawSuper := rawSuper
         self.rawInterfaces := rawInterfaces
         self.parameters := parameters

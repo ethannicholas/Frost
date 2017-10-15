@@ -218,8 +218,8 @@ class Scanner {
         for intf in cl.children[4].children {
             interfaces.add(convertType(intf))
         }
-        def result := ClassDecl(source, cl.offset, aliases, doccomment, annotations, fullName,
-                supertype, interfaces, parameters, compiler.root)
+        def result := ClassDecl(source, cl.offset, aliases, doccomment, annotations,
+                ClassDecl.Kind.CLASS, fullName, supertype, interfaces, parameters, compiler.root)
         for c in cl.children[5].children {
             match c.kind {
                 when ASTNode.Kind.FIELD:
@@ -292,8 +292,9 @@ class Scanner {
         for s in intf.children[3].children {
             interfaces.add(convertType(s))
         }
-        def result := ClassDecl(source, intf.offset, aliases, doccomment, annotations, fullName,
-                Type.Object(), interfaces, parameters, compiler.root)
+        def result := ClassDecl(source, intf.offset, aliases, doccomment, annotations,
+                ClassDecl.Kind.INTERFACE, fullName, Type.Object(), interfaces, parameters,
+                compiler.root)
         for c in intf.children[4].children {
             match c.kind {
                 when ASTNode.Kind.FIELD:

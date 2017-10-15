@@ -52,6 +52,10 @@ class MethodDecl : Symbol {
         self.resolved := false
     }
 
+    function isVirtual():Bit {
+        return !annotations.isClass() & methodKind != Kind.INIT & !annotations.isFinal()
+    }
+
     function matches(other:MethodDecl):Bit {
         assert resolved & other.resolved
         if name != other.name {
@@ -70,7 +74,6 @@ class MethodDecl : Symbol {
         }
         return true
     }
-
 
     function signature():String {
         def result := MutableString("method \{name}(")
