@@ -213,6 +213,16 @@ class IdentityMap<K, V> (Map<K, V>, Equatable<Map<K, V>>) {
         assert false -- fixme remove this method when default != is in
     }
 
+    @override
+    function keys():Iterator<K> {
+        assert false, "unimplemented" -- FIXME
+    }
+
+    @override
+    function values():Iterator<V> {
+        assert false, "unimplemented" -- FIXME
+    }
+
     ================================================================================================
     Returns a string representation of the map.
 

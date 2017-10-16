@@ -25,12 +25,14 @@ class LLVMCodeGenerator (CodeGenerator) {
         }
     }
 
-    constant POINTER_SIZE       := 8
-    constant OBJECT_FIELD_COUNT := 2
-    constant ITABLE_INDEX       := 2
-    constant VTABLE_INDEX       := 3
+    constant POINTER_SIZE        := 8
+    constant OBJECT_FIELD_COUNT  := 2
+    constant CLASS_POINTER_INDEX := 0
+    constant ITABLE_INDEX        := 2
+    constant VTABLE_INDEX        := 3
 
     constant INT_TYPE := "i64"
+    constant SIZE_T   := "i64"
 
     def out:OutputStream
 
@@ -224,6 +226,9 @@ class LLVMCodeGenerator (CodeGenerator) {
             code.append("\{separator}\{type(f.type)}")
             separator := ", "
         }
+        if t = Type.Class() {
+            code.append(", %$itable*, [0 x i8*]")
+        }
         code.append(" }")
         types.printLine(code)
     }
@@ -319,7 +324,34 @@ class LLVMCodeGenerator (CodeGenerator) {
     }
 
     method getITable(cl:ClassDecl):String {
-        return "null"
+        def interfaces := compiler.allInterfaces(cl.type())
+        var previous := "%$itable* null"
+        for intfType in interfaces {
+            def intf := compiler.getClass(intfType)
+            def intfCC := getClassConstant(intf)
+            def methods := compiler.interfaceMethods(cl, intfType)
+            def name := "@\{escapeName(cl.name)}$.\{escapeName(intf.name)}"
+            def t := "{\{type(Type.Class())}, %$itable*, [\{methods.get_count()} x i8*] }"
+            def result := MutableString("\{name} = constant \{t} { \{type(Type.Class())} " +
+                    "bitcast(\{intfCC.type}* \{intfCC.name} to \{type(Type.Class())}), " +
+                    "\{previous}, [\{methods.get_count()} x i8*][")
+            var separator := ""
+            for m in methods {
+                result.append(separator)
+                separator := ", "
+                if m.annotations.isAbstract() {
+                    result.append("i8* null")
+                }
+                else {
+                    def entry := getMethodTableEntry(m)
+                    result.append("i8* bitcast(\{entry.second} \{entry.first} to i8*)")
+                }
+            }
+            result.append("] }\n")
+            types.printLine(result)
+            previous := "%$itable* bitcast(\{t}* \{name} to %$itable*)"
+        }
+        return previous
     }
 
     -- FIXME use tuple
@@ -382,9 +414,8 @@ class LLVMCodeGenerator (CodeGenerator) {
             else {
                 superPtr := "null"
             }
-            def itable := getITable(cl)
             def code := MutableString("\{result.name} = constant \{result.type} { " +
-                    "i8* \{superPtr}, \{INT_TYPE} 1, %$itable* \{getITable(cl)}, " +
+                    "i8* \{superPtr}, \{INT_TYPE} 1, \{getITable(cl)}, " +
                     "[\{vtable.get_count()} x i8*] [")
             var separator := ""
             for m in vtable {
@@ -676,82 +707,74 @@ class LLVMCodeGenerator (CodeGenerator) {
     }
 
     method getInterfaceMethodReference(target:String, m:MethodDecl, out:OutputStream):String {
-    -*
-        String methodType = llvmType(m);
-        // load class constant entry
-        String entry = this->nextLabel();
-        out << "    br label %" << entry << "\n";
-        this->createBlock(entry, out);
-        String classPointer = this->nextVar();
-        out << "    " << classPointer + " = getelementptr inbounds " <<
-                this->llvmTypeName(m.fOwner.fType) << ", " << target << ", " SIZE_T << " 0, i32 " <<
-                CLASS_POINTER_INDEX << "\n";
-        String loadedClass = this->nextVar();
-        String classType = this->llvmTypeName(Type::Class());
-        out << "    " << loadedClass << " = load " << classType << "*, " << classType << "** " <<
-                classPointer << "\n";
-        String itableFirst = this->nextVar();
-        out << "    " << itableFirst << " = getelementptr inbounds " << classType << ", " <<
-                classType << "* " << loadedClass << ", " << SIZE_T << " 0, i32 " << ITABLE_INDEX <<
-                "\n";
-        String next = this->nextLabel();
-        out << "    br label %" << next << "\n";
-        String leavingEntryLabel = fCurrentBlock;
-        this->createBlock(next, out);
-        String itableNext = "%$itable" + std::to_string(++fLabels);
-        String itablePtrPtr = this->nextVar();
-        String fail = this->nextLabel();
-        out << "    " << itablePtrPtr << " = phi %$itable** [ " << itableFirst + ", %" <<
-                leavingEntryLabel << "], [ " << itableNext << ", %" << fail << " ]\n";
-        String itablePtr = this->nextVar();
-        out << "    " << itablePtr << " = load %$itable*, %$itable** " << itablePtrPtr << "\n";
-        String itableClassPtr = this->nextVar();
-        out << "    " << itableClassPtr << " = getelementptr inbounds %$itable, %$itable* " <<
-                itablePtr << ", " << SIZE_T << " 0, i32 0\n";
-        String itableClass = this->nextVar();
-        out << "    " << itableClass << " = load " << classType << "*, " << classType << "** " <<
-                itableClassPtr << "\n";
-        String test = this->nextVar();
-        ClassConstant& intfCC = getClassConstant(m.fOwner);
-        out << "    " << test << " = icmp eq " << classType << "* bitcast(" << intfCC.fType << "* " <<
-                intfCC.fName << " to " << classType << "*), " << itableClass << "\n";
-        String success = this->nextLabel();
-        out << "    br i1 " << test << ", label %" << success << ", label %" << fail << "\n";
+        def methodType := type(compiler.inheritedTypeWithSelf(m))
+        -- load class constant entry
+        def entry := nextLabel()
+        out.printLine("br label %\{entry}")
+        createBlock(entry, out)
+        def classPointer := nextVar()
+        out.printLine("\{classPointer} = getelementptr inbounds \{typeName(m.owner.type())}, " +
+                "\{target}, \{SIZE_T} 0, i32 \{CLASS_POINTER_INDEX}")
+        def loadedClass := nextVar()
+        def classType := typeName(Type.Class())
+        out.printLine("\{loadedClass} = load \{classType}*, \{classType}** \{classPointer}")
+        def itableFirst := nextVar()
+        out.printLine("\{itableFirst} = getelementptr inbounds \{classType}, \{classType}* " +
+                "\{loadedClass}, \{SIZE_T} 0, i32 \{ITABLE_INDEX}")
+        def next := nextLabel()
+        out.printLine("br label %\{next}")
+        def leavingEntryLabel := currentBlock
+        createBlock(next, out)
+        labelCount += 1
+        def itableNext := "%$itable\{labelCount}"
+        def itablePtrPtr := nextVar()
+        def fail := nextLabel()
+        out.printLine("\{itablePtrPtr} = phi %$itable** [ \{itableFirst}, %\{leavingEntryLabel}]," +
+                " [ \{itableNext}, %\{fail} ]")
+        def itablePtr := nextVar()
+        out.printLine("\{itablePtr} = load %$itable*, %$itable** \{itablePtrPtr}")
+        def itableClassPtr := nextVar()
+        out.printLine("\{itableClassPtr} = getelementptr inbounds %$itable, %$itable* " +
+                "\{itablePtr}, \{SIZE_T} 0, i32 0")
+        def itableClass := nextVar()
+        out.printLine("\{itableClass} = load \{classType}*, \{classType}** \{itableClassPtr}")
+        def test := nextVar()
+        def intfCC := getClassConstant(m.owner)
+        out.printLine("\{test} = icmp eq \{classType}* bitcast(\{intfCC.type}* \{intfCC.name} to " +
+                "\{classType}*), \{itableClass}")
+        def success := nextLabel()
+        out.printLine("br i1 \{test}, label %\{success}, label %\{fail}")
 
-        this->createBlock(fail, out);
-        out << "    " << itableNext << " = getelementptr inbounds %$itable, %$itable* " << itablePtr <<
-                ", " << SIZE_T << " 0, i32 1\n";
-        out << "    br label %" << next << "\n";
+        createBlock(fail, out)
+        out.printLine("\{itableNext} = getelementptr inbounds %$itable, %$itable* \{itablePtr}, " +
+                "\{SIZE_T} 0, i32 1")
+        out.printLine("br label %\{next}")
 
-        this->createBlock(success, out);
-        int index = -1;
-        std::vector<Method*>& vtable = fCompiler->getVTable(m.fOwner);
-        for (int i = 0; i < vtable.size(); ++i) {
-            if (vtable[i] == &m) {
-                index = i;
-                break;
+        createBlock(success, out)
+        var index := -1
+        def vtable := compiler.getVTable(m.owner)
+        for i in 0 .. vtable.get_count() {
+            if vtable[i]->MethodDecl == m { -- FIXME unnecessary cast
+                index := i
+                break
             }
         }
-        index -= fCompiler->getVTable(*fCompiler->getClass(Type::Object())).size();
-        ASSERT(index != -1);
-        String methodPtrPtr = this->nextVar();
-        out << "    " << methodPtrPtr << " = getelementptr inbounds %$itable, %$itable* " <<
-                itablePtr << ", " SIZE_T " 0, i32 2, i32 " << index << "\n";
-        String cast = this->nextVar();
-        out << "    " << cast << " = bitcast i8** " << methodPtrPtr <<
-                " to " << methodType << "*\n";
-        String methodPtr = this->nextVar();
-        out << "    " << methodPtr << " = load " << methodType << ", " << methodType << "* " << cast <<
-                "\n";
-        return methodPtr;
-        *-
-        assert false
+        index -= compiler.getVTable(compiler.getClass(Type.Object())).get_count()
+        assert index != -1
+        def methodPtrPtr := nextVar()
+        out.printLine("\{methodPtrPtr} = getelementptr inbounds %$itable, %$itable* " +
+                "\{itablePtr}, \{SIZE_T} 0, i32 2, i32 \{index}")
+        def cast := nextVar()
+        out.printLine("\{cast} = bitcast i8** \{methodPtrPtr} to \{methodType}*")
+        def methodPtr := nextVar()
+        out.printLine("\{methodPtr} = load \{methodType}, \{methodType}* \{cast}")
+        return methodPtr
     }
 
     method getMethodReference(target:String?, m:MethodDecl, isSuper:Bit, out:OutputStream):String {
         if !isSuper & m.isVirtual() {
             assert target != null
-            if m.owner.classKind == ClassDecl.Kind.INTERFACE {
+            if m.owner.classKind = ClassDecl.Kind.INTERFACE {
                 return getInterfaceMethodReference(target, m, out)
             }
             else {

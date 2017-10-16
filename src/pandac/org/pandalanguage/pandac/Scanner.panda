@@ -308,6 +308,9 @@ class Scanner {
                 when ASTNode.Kind.METHOD, ASTNode.Kind.FUNCTION:
                     def m := scanMethod(result, c)
                     if m != null {
+                        if m.body = null {
+                            m.annotations.flags ||= Annotations.Flag.ABSTRACT
+                        }
                         result.symbolTable.add(m)
                         result.methods.add(m)
                     }

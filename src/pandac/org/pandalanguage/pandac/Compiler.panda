@@ -306,6 +306,75 @@ class Compiler (ErrorReporter) {
         }
     }
 
+    method allInterfaces(t:Type):Set<Type> {
+        def cl := getClass(t)
+        assert cl != null
+        resolve(cl)
+        def result := Set<Type>()
+        if cl.rawSuper != null {
+            result.addAll(allInterfaces(remapType(t, cl.rawSuper)))
+        }
+        for intf in cl.rawInterfaces {
+            result.addAll(allInterfaces(remapType(t, intf)))
+        }
+        if cl.classKind = ClassDecl.Kind.INTERFACE {
+            result.add(t)
+        }
+        return result
+    }
+
+    function signatureMatch(t1:Type, t2:Type):Bit {
+        assert t1.isMethod()
+        assert t2.isMethod()
+        if t1.subtypes.get_count() != t2.subtypes.get_count() {
+            return false
+        }
+        for i in 0 .. t1.subtypes.get_count() {
+            if t1.subtypes[i] != t2.subtypes[i] {
+                return false
+            }
+        }
+        return true
+    }
+
+    method findMethod(owner:Type, name:String, methodType:Type, checkInterfaces:Bit):MethodDecl? {
+        def cl := getClass(owner)
+        assert cl != null
+        for test in cl.methods {
+            if test.name = name {
+                resolve(test)
+                if signatureMatch(remapType(owner, declaredType(test)), methodType) {
+                    return test
+                }
+            }
+        }
+        if checkInterfaces | cl.classKind = ClassDecl.Kind.INTERFACE {
+            for raw in cl.rawInterfaces {
+                def result := findMethod(remapType(owner, raw), name, methodType, checkInterfaces)
+                if result != null {
+                    return result
+                }
+            }
+        }
+        if cl.rawSuper != null {
+            return findMethod(remapType(owner, cl.rawSuper), name, methodType, checkInterfaces)
+        }
+        return null
+    }
+
+    method interfaceMethods(cl:ClassDecl, intf:Type):ListView<MethodDecl> {
+        def intfClass := getClass(intf)
+        assert intfClass != null
+        def result := Array<MethodDecl>()
+        for m in intfClass.methods {
+            def found := findMethod(cl.type(), m.name, remapType(intf, inheritedType(m)), false)
+            assert found != null, "internal error: interface method \{m.signature()} not found in " +
+                    cl.name
+            result.add(found)
+        }
+        return result
+    }
+
     method getSymbolTable(cl:ClassDecl):SymbolTable {
         return cl.symbolTable
     }
@@ -904,6 +973,10 @@ class Compiler (ErrorReporter) {
         }
         typeName.append(")")
         return Type(typeName.convert(), kind, m.offset, subtypes, true)
+    }
+
+    function inheritedType(m:MethodDecl):Type {
+        return declaredType(m)
     }
 
     function inheritedTypeWithSelf(m:MethodDecl):Type {

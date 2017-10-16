@@ -1,6 +1,6 @@
 package org.pandalanguage.pandac
 
-class Type : Symbol (Equatable<Type>) {
+class Type : Symbol (Key<Type>) {
     class Kind {
         constant CLASS := 10
         constant NULLABLE := 11
@@ -162,6 +162,10 @@ class Type : Symbol (Equatable<Type>) {
         return !isBuiltinNumber()
     }
 
+    function isMethod():Bit {
+        return typeKind = Kind.METHOD | typeKind = Kind.FUNCTION
+    }
+
     function isPointer():Bit {
         return name.startsWith("panda.unsafe.Pointer")
     }
@@ -205,6 +209,11 @@ class Type : Symbol (Equatable<Type>) {
         }
         -- FIXME not implemented
         return Type.Any()
+    }
+
+    @override
+    function hash():Int {
+        return name.hash()
     }
 
     @override

@@ -37,6 +37,82 @@ class HashMap<K:Key<K>, V> (Map<K, V>, Equatable<Map<K, V>>) {
     }
 
     @private
+    class EntryIterator<K:Key<K>, V> (Iterator<Entry<K, V>>) {
+        def map:HashMap<K, V>
+        var bucket := 0
+        var entry:Entry<K, V>? := null
+
+        init(map:HashMap<K, V>) {
+            self.map := map
+            while bucket < map.bucketCount & map.contents[bucket] = null {
+                bucket += 1
+            }
+            if bucket < map.bucketCount {
+                entry := map.contents[bucket]
+            }
+        }
+
+        @override
+        function get_done():Bit {
+            return bucket = map.bucketCount & entry = null
+        }
+
+        @override
+        method next():Entry<K, V> {
+            assert entry != null
+            assert bucket < map.bucketCount
+            def result := entry
+            entry := entry.next
+            while entry = null {
+                bucket += 1
+                if bucket = map.bucketCount {
+                    break
+                }
+                entry := map.contents[bucket]
+            }
+            return result
+        }
+    }
+
+    @private
+    class KeyIterator<K:Key<K>, V> (Iterator<K>) {
+        def base:EntryIterator<K, V>
+
+        init(map:HashMap<K, V>) {
+            base := EntryIterator<K, V>(map)
+        }
+
+        @override
+        function get_done():Bit {
+            return base.get_done()
+        }
+
+        @override
+        method next():K {
+            return base.next().key
+        }
+    }
+
+    @private
+    class ValueIterator<K:Key<K>, V> (Iterator<V>) {
+        def base:EntryIterator<K, V>
+
+        init(map:HashMap<K, V>) {
+            base := EntryIterator<K, V>(map)
+        }
+
+        @override
+        function get_done():Bit {
+            return base.get_done()
+        }
+
+        @override
+        method next():V {
+            return base.next().value
+        }
+    }
+
+    @private
     constant DEFAULT_BUCKET_COUNT := 16
 
     @private
@@ -200,6 +276,16 @@ class HashMap<K:Key<K>, V> (Map<K, V>, Equatable<Map<K, V>>) {
                 }
             }
         }
+    }
+
+    @override
+    function keys():Iterator<K> {
+        return KeyIterator<K, V>(self)
+    }
+
+    @override
+    function values():Iterator<V> {
+        return ValueIterator<K, V>(self)
     }
 
     @override

@@ -30,7 +30,7 @@ class Set<T:Key<T>> (Collection<T>) {
 
     @override
     function iterator():Iterator<T> {
-        assert false -- FIXME implement this when hashmap iterators are in
+        return contents.keys()
     }
 
     function contains(value:T):Bit {

@@ -9,4 +9,8 @@ interface MapView<K, V> {
     function get_count():Int
 
     function [](key:K):V?
+
+    function keys():Iterator<K>
+
+    function values():Iterator<V>
 }
