@@ -146,6 +146,9 @@ class Scanner {
         }
         assert m.children[1].kind = ASTNode.Kind.ANNOTATIONS
         def annotations := convertAnnotations(m.children[1])
+        if owner.annotations.isFinal() {
+            annotations.flags ||= Annotations.Flag.FINAL
+        }
         assert m.children[2].kind = ASTNode.Kind.PARAMETERS
         def parameters := Array<MethodDecl.Parameter>()
         for p in m.children[2].children {
@@ -240,6 +243,15 @@ class Scanner {
                     def cl := scanClass(source, aliases, fullName, c)
                     if cl != null {
                         result.classes.add(cl)
+                        assert cl.name.startsWith(fullName + ".")
+                        result.symbolTable.add(cl, cl.name[fullName.length() + 1..])
+                    }
+                when ASTNode.Kind.INTERFACE:
+                    def cl := scanInterface(source, aliases, fullName, c)
+                    if cl != null {
+                        result.classes.add(cl)
+                        assert cl.name.startsWith(fullName + ".")
+                        result.symbolTable.add(cl, cl.name[fullName.length() + 1..])
                     }
                 otherwise:
                     assert false, "unsupported class child: \{c.kind}"
@@ -315,9 +327,18 @@ class Scanner {
                         result.methods.add(m)
                     }
                 when ASTNode.Kind.CLASS:
-                    def intf := scanClass(source, aliases, fullName, c)
-                    if intf != null {
-                        result.classes.add(intf)
+                    def cl := scanClass(source, aliases, fullName, c)
+                    if cl != null {
+                        result.classes.add(cl)
+                        assert cl.name.startsWith(fullName + ".")
+                        result.symbolTable.add(cl, cl.name[fullName.length() + 1..])
+                    }
+                when ASTNode.Kind.INTERFACE:
+                    def cl := scanInterface(source, aliases, fullName, c)
+                    if cl != null {
+                        result.classes.add(cl)
+                        assert cl.name.startsWith(fullName + ".")
+                        result.symbolTable.add(cl, cl.name[fullName.length() + 1..])
                     }
                 otherwise:
                     assert false, "unsupported class child: \{c.kind}"

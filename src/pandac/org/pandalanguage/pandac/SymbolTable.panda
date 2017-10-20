@@ -20,9 +20,13 @@ class SymbolTable {
     }
 
     method add(s:Symbol) {
-        def old := symbols[s.name]
+        add(s, s.name)
+    }
+
+    method add(s:Symbol, name:String) {
+        def old := symbols[name]
         if old = null {
-            symbols[s.name] := s
+            symbols[name] := s
             return
         }
         if s.kind = Symbol.Kind.METHOD {
@@ -31,17 +35,17 @@ class SymbolTable {
                     def methods := Array<MethodDecl>()
                     methods.add(s->MethodDecl)
                     methods.add(old->MethodDecl)
-                    symbols[s.name] := Methods(methods)
+                    symbols[name] := Methods(methods)
                     return
                 when Symbol.Kind.METHODS:
                     def methods := Array<MethodDecl>()
                     methods.add(s->MethodDecl)
                     methods.addAll((old->Methods).methods) -- FIXME extra parentheses
-                    symbols[s.name] := Methods(methods)
+                    symbols[name] := Methods(methods)
                     return
             }
         }
-        compiler.error(s.offset, "duplicate symbol '\{s.name}' (previous declaration was at " +
+        compiler.error(s.offset, "duplicate symbol '\{name}' (previous declaration was at " +
                 compiler.position(old.offset))
     }
 

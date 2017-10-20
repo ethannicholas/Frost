@@ -78,8 +78,12 @@ class Compiler (ErrorReporter) {
         addAlias("panda.core.Object")
         addAlias("panda.core.Range")
         addAlias("panda.core.String")
+        addAlias("panda.core.System")
         addAlias("panda.core.Value")
         addAlias("panda.io.Console")
+        addAlias("panda.io.File")
+        addAlias("panda.io.InputStream")
+        addAlias("panda.io.OutputStream")
         addAlias("panda.unsafe.Pointer")
     }
 
@@ -93,14 +97,17 @@ class Compiler (ErrorReporter) {
         if alias != null {
             return getClass(alias)
         }
-        if name.contains(".") | !currentClass.peek().name.contains(".") {
-            return getClass(name)
+        var result := getClass(name)
+        if result = null {
+            def idx := currentClass.peek().name.lastIndexOf(".")
+            if idx != null {
+                result := getClass(currentClass.peek().name[...idx] + name)
+            }
         }
-        def idx := currentClass.peek().name.lastIndexOf(".")
-        if idx != null {
-            return getClass(currentClass.peek().name[...idx] + name)
+        if result = null {
+            result := getClass(currentClass.peek().name + "." + name)
         }
-        return null
+        return result
     }
 
     function resolve(type:Type):Type {
@@ -127,6 +134,8 @@ class Compiler (ErrorReporter) {
                                     type.offset, subtypes, true)
                         when Symbol.Kind.TYPE:
                             return s->Type
+                        when Symbol.Kind.CLASS:
+                            return (s->ClassDecl).type() -- FIXME parens
                     }
                 }
                 error(position(type.offset), "unknown type '\{type}'")
@@ -260,7 +269,6 @@ class Compiler (ErrorReporter) {
                 def f := dir.resolve(suffix)
                 if f.exists() {
                     found := true
-                    def oldErrorCount := errorCount
                     scan(f)
                     result := classes[fullName]
                 }
@@ -1744,8 +1752,15 @@ class Compiler (ErrorReporter) {
         currentMethod.pop()
     }
 
-    method compile(cl:ClassDecl) {
+    method markNonExternal(cl:ClassDecl) {
         cl.external := false
+        for inner in cl.classes {
+            markNonExternal(inner)
+        }
+    }
+
+    method compile(cl:ClassDecl) {
+        markNonExternal(cl)
         currentClass.push(cl)
         currentFile.push(cl.source)
         symbolTable := cl.symbolTable

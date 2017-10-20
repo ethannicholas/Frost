@@ -119,8 +119,25 @@ class String : Immutable (Key<String>) {
 
         @override
         function next():Char32 {
-            index += 1
-            return Char32(1)
+            def c := str.data[index]
+            var result:Int32 := c.convert()
+            if c.value->builtin_int64 && 0xFF < 0b11000000 {
+                index += 1
+                return Char32(result)
+            }
+            if c.value->builtin_int64 && 0xFF < 0b11100000 {
+                index += 2
+                assert index + 1 < str._length
+                result := result && 0b11111 << 6 + str.data[index + 1].convert()->Int32 && 0b111111
+                return Char32(result)
+            }
+            if c.value->builtin_int64 && 0xFF < 0b11110000 {
+                index += 3
+                assert index + 2 < str._length
+                result := result && 0b1111 << 12 + str.data[index + 1].convert()->Int32 &&
+                        0b111111 << 6 + str.data[index + 2].convert()->Int32 && 0b111111
+                return Char32(result)
+            }
         }
     }
     @private
@@ -164,6 +181,22 @@ class String : Immutable (Key<String>) {
 
     function utf32():Iterator<Char32> {
         return UTF32Iterator(self)
+    }
+
+    ================================================================================================
+    Returns the number of Unicode codepoints in the string. Note that because the string is
+    internally stored in the variable-length UTF-8 encoding, determining the number of Unicode
+    codepoints in the string can be a relatively expensive operation for long strings (linear with
+    respect to the size of the string).
+    ================================================================================================
+    function length():Int {
+        var count := 0
+        def iter := utf32()
+        while !iter.get_done() {
+            count += 1
+            iter.next()
+        }
+        return count
     }
 
     function startsWith(other:String):Bit {
@@ -259,6 +292,9 @@ class String : Immutable (Key<String>) {
         return !(self = other)
     }
 
+    ================================================================================================
+    Returns the Unicode codepoint at the given offset within the string.
+    ================================================================================================
     function [](index:Index):Char32 {
         def idx := index.value
         def c := data[idx]
@@ -285,11 +321,24 @@ class String : Immutable (Key<String>) {
     }
 
     ================================================================================================
+    Returns the Unicode codepoint at the given offset within the string. This overload of the `[]`
+    operator is slower than the overload that accepts an `Index` parameter, as it must scan the
+    (internally UTF-8) string from the beginning to find the correct index.
+    ================================================================================================
+    function [](index:Int):Char32 {
+        return self[offset(start(), index)]
+    }
+
+    ================================================================================================
     Returns a substring of a string. The `Range.step` value is interpreted in terms of Unicode
     codepoints: that is, `s[... by 2]` will return a `String` consisting of every other Unicode
     codepoint in `s`. As some Unicode characters consist of more than one codepoint (e.g. when using
     combining diacriticals, Emoji skin tone modifiers, or Emoji flags), this will mangle such
     characters when the step is not `1`.
+
+    A negative range value will scan the string backwards from the starting point, thus `[.. by -1]`
+    will reverse the Unicode codepoints in the input string. Note again that this will mangle
+    Unicode characters which consist of more than one Unicode codepoint.
     ================================================================================================
     function [](r:Range<Index?>):String {
         def step := r.step
@@ -389,6 +438,29 @@ class String : Immutable (Key<String>) {
             }
         }
         return result.convert()
+    }
+
+    ================================================================================================
+    Returns a substring of a string. This version of the `[]` operator is slower than the one that
+    accepts a `Range<Index?>` parameter, as it must scan the (internally UTF-8) string from the
+    beginning to find the right offsets.
+    ================================================================================================
+    function [](r:Range<Int?>):String {
+        def start:Index?
+        if r.start != null {
+            start := offset(self.start(), r.start)
+        }
+        else {
+            start := null
+        }
+        def end:Index?
+        if r.end != null {
+            end := offset(self.start(), r.end)
+        }
+        else {
+            end := null
+        }
+        return self[Range<Index?>(start, end, r.step, r.inclusive)]
     }
 
     function contains(c:Char8):Bit {

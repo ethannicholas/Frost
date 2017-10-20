@@ -245,11 +245,11 @@ class Parser {
             when Token.Kind.BINARY:
                 def s := text(t)
                 return ASTNode(ASTNode.Kind.INT, t.offset,
-                        toUInt64(s[s.offset(s.start(), 2)..], 2))
+                        toUInt64(s[2..], 2))
             when Token.Kind.HEX:
                 def s := text(t)
                 return ASTNode(ASTNode.Kind.INT, t.offset,
-                        toUInt64(s[s.offset(s.start(), 2)..], 16))
+                        toUInt64(s[2..], 16))
             when Token.Kind.SELF:
                 return ASTNode(ASTNode.Kind.SELF, t.offset)
             when Token.Kind.SUPER:

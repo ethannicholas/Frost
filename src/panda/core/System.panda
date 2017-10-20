@@ -3,8 +3,46 @@ package panda.core
 ====================================================================================================
 Provides utility methods that interface with the operating environment.
 ====================================================================================================
+@final
 class System {
+    ================================================================================================
+    Represents a program launched by [exec].
+    ================================================================================================
+    @final
+    class Process {
+        @private
+        def pid:Int
+
+        ============================================================================================
+        An `OutputStream` which sends its output to the process' standard input stream.
+        ============================================================================================
+        def input:OutputStream
+
+        ============================================================================================
+        An `InputStream` which reads from the process' standard output stream.
+        ============================================================================================
+        def output:InputStream
+
+        ============================================================================================
+        An `InputStream` which reads from the process' standard error stream.
+        ============================================================================================
+        def error:InputStream
+
+        ============================================================================================
+        Waits for the process to finish and returns its exit status.
+        ============================================================================================
+        @external
+        method waitFor():Int
+    }
     @class
     @external
     method exit(status:Int)
+
+    ================================================================================================
+    Executes an external program with the given command line arguments. Returns the resulting
+    process, or null if the program.
+    ================================================================================================
+    @class
+    @external
+    method exec(path:File, args:ListView<String>):Process? -- FIXME variadic
 }

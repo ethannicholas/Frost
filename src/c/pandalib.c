@@ -4,11 +4,29 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <unistd.h>
 
 typedef uint8_t Bit;
 
+struct Class;
+
+typedef struct ITable {
+    struct Class* cl;
+    struct ITable* next;
+    void* methods[0];
+} ITable;
+
 typedef struct Class {
+    struct Class* cl;
+    int32_t refcnt;
+    ITable* itable;
+    void* vtable[0];
 } Class;
+
+typedef struct Object {
+    Class* cl;
+    int32_t refcnt;
+} Object;
 
 typedef struct NullableChar {
     int8_t value;
@@ -23,20 +41,20 @@ typedef struct NullableInt8 {
 extern Class panda$core$String$class;
 
 typedef struct String {
-    void* cl;
+    Class* cl;
     int32_t refcnt;
     int8_t* data;
     int64_t size;
 } String;
 
 typedef struct File {
-    void* cl;
+    Class* cl;
     int32_t refcnt;
     String* path;
 } File;
 
 typedef struct FileInputStream {
-    void* cl;
+    Class* cl;
     int32_t refcnt;
     FILE* file;
 } FileInputStream;
@@ -44,12 +62,28 @@ typedef struct FileInputStream {
 extern Class panda$io$FileInputStream$class;
 
 typedef struct FileOutputStream {
-    void* cl;
+    Class* cl;
     int32_t refcnt;
     FILE* file;
 } FileOutputStream;
 
+typedef struct Process {
+    Class* cl;
+    int32_t refcnt;
+    int64_t pid;
+    FileOutputStream* input;
+    FileInputStream* output;
+    FileInputStream* error;
+
+} Process;
+
 extern Class panda$io$FileOutputStream$class;
+
+extern Class panda$collections$CollectionView$class;
+
+extern Class panda$collections$ListView$class;
+
+extern Class panda$core$System$Process$class;
 
 void pandaMain();
 
@@ -58,14 +92,14 @@ int main() {
     return 0;
 }
 
-void panda$core$System$exit$panda$core$Int64(int64_t code) {
-    exit(code);
-}
-
 void debugPrint(int64_t value) {
     printf("%" PRId64 "\n", value);
 }
 
+/**
+ * Returns a null-terminated copy of a Panda string. The caller is responsible for freeing this
+ * memory.
+ */
 char* pandaGetCString(String* s) {
     char* result = malloc(s->size + 1);
     memcpy(result, s->data, s->size);
@@ -80,6 +114,108 @@ String* pandaNewString(const char* s, int length) {
     result->data = malloc(length);
     memcpy(result->data, s, length);
     return result;
+}
+
+void* pandaGetInterfaceMethod(Object* o, Class* intf, int index) {
+    ITable* it = o->cl->itable;
+    while (it->cl != intf) {
+        it = it->next;
+    }
+    return it->methods[index];
+}
+
+// System
+
+void panda$core$System$exit$panda$core$Int64(int64_t code) {
+    exit(code);
+}
+
+Process* panda$core$System$exec$panda$io$File$panda$collections$ListView$LTpanda$core$String$GT$R$panda$core$System$Process$Q(
+        File* path, Object* args) {
+    // FIXME need to output headers so I can kill these hardcoded interface method offsets
+    int (*get_count)(Object*) = pandaGetInterfaceMethod(args,
+                &panda$collections$CollectionView$class, 0);
+    String* (*index)(Object*, int) = pandaGetInterfaceMethod(args,
+                &panda$collections$ListView$class, 0);
+    int stdinPipe[2];
+    if (pipe(stdinPipe)) {
+        perror("error opening stdin pipe");
+        exit(1);
+    }
+    int stdoutPipe[2];
+    if (pipe(stdoutPipe)) {
+        perror("error opening stdout pipe");
+        exit(1);
+    }
+    int stderrPipe[2];
+    if (pipe(stderrPipe)) {
+        perror("error opening stderr pipe");
+        exit(1);
+    }
+    pid_t pid = fork();
+    if (pid < 0) {
+        perror("fork failed");
+        exit(1);
+    }
+    if (!pid) {
+        // child
+        close(stdinPipe[1]);
+        if (dup2(stdinPipe[0], STDIN_FILENO) == -1) {
+            perror("dup2 onto stdin failed");
+            exit(1);
+        }
+        close(stdoutPipe[0]);
+        if (dup2(stdoutPipe[1], STDOUT_FILENO) == -1) {
+            perror("dup2 onto stdout failed");
+            exit(1);
+        }
+        close(stderrPipe[0]);
+        if (dup2(stderrPipe[1], STDERR_FILENO) == -1) {
+            perror("dup2 onto stderr failed");
+            exit(1);
+        }
+        int argCount = get_count(args);
+        char** cargs = (char**) malloc((argCount + 2) * sizeof(char*));
+        cargs[0] = pandaGetCString(path->path);
+        for (int i = 0; i < argCount; ++i) {
+            cargs[i + 1] = pandaGetCString(index(args, i));
+        }
+        cargs[argCount + 1] = NULL;
+        execv(cargs[0], cargs);
+        perror("error exec'ing child process");
+        // we don't bother freeing the argument memory because we just kill the process here
+        exit(1);
+    }
+    else {
+        // parent
+        close(stdinPipe[0]);
+        close(stdoutPipe[1]);
+        close(stderrPipe[1]);
+        Process* result = malloc(sizeof(Process));
+        result->cl = &panda$core$System$Process$class;
+        result->refcnt = 1;
+        result->pid = getppid();
+        result->input = malloc(sizeof(FileOutputStream));
+        result->input->cl = &panda$io$FileOutputStream$class;
+        result->input->refcnt = 1;
+        result->input->file = fdopen(stdinPipe[1], "wb");
+        result->output = malloc(sizeof(FileInputStream));
+        result->output->cl = &panda$io$FileInputStream$class;
+        result->output->refcnt = 1;
+        result->output->file = fdopen(stdoutPipe[0], "rb");
+        result->error = malloc(sizeof(FileInputStream));
+        result->error->cl = &panda$io$FileInputStream$class;
+        result->error->refcnt = 1;
+        result->error->file = fdopen(stderrPipe[0], "rb");
+        return result;
+    }
+    return NULL;
+}
+
+void panda$core$System$Process$waitFor$R$panda$core$Int64(int64_t* result, Process* p) {
+    int status;
+    waitpid(p->pid, &status, 0);
+    *result = WEXITSTATUS(status);
 }
 
 // Panda
