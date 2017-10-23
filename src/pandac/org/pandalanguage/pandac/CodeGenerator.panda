@@ -1,7 +1,7 @@
 package org.pandalanguage.pandac
 
 interface CodeGenerator {
-    method start(out:OutputStream)
+    method setCompiler(compiler:Compiler)
 
     method write(m:MethodDecl, body:IRNode)
 

@@ -12,6 +12,10 @@ class Console {
 
     @class
     @external
+    function errorStream():OutputStream
+
+    @class
+    @external
     method write(c:Char8)
 
     @class

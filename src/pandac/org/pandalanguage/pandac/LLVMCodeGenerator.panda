@@ -70,12 +70,7 @@ class LLVMCodeGenerator (CodeGenerator) {
 
     var labelCount := 0
 
-    init(compiler:Compiler) {
-        self.compiler := compiler
-    }
-
-    @override
-    method start(out:OutputStream) {
+    init(out:OutputStream) {
         self.out := IndentedOutputStream(out)
 
         out.printLine("target datalayout = \"e-p:64:64:64-i1:8:8-i8:8:8-i16:16:16-i32:32:32-i64:" +
@@ -84,6 +79,11 @@ class LLVMCodeGenerator (CodeGenerator) {
         out.printLine("target triple = \"x86_64-apple-macosx10.8.0\"")
         out.printLine("declare i8* @malloc(i64)")
         out.printLine("%$itable = type { %panda$core$Class*, %$itable*, [0 x i8*] }")
+    }
+
+    @override
+    method setCompiler(compiler:Compiler) {
+        self.compiler := compiler
     }
 
     @override

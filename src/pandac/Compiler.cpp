@@ -382,7 +382,11 @@ std::vector<Field*> Compiler::getInstanceFields(Class& cl) {
         return std::move(result);
     }
     std::vector<Field*> result = this->getInstanceFields(*this->getClass(cl.getRawSuper(this)));
-    result.insert(result.end(), cl.fFields.begin(), cl.fFields.end());
+    for (Field* f : cl.fFields) {
+        if (!f->fAnnotations.isClass()) {
+            result.push_back(f);
+        }
+    }
     return result;
 }
 

@@ -397,11 +397,12 @@ void LLVMCodeGenerator::writeClass(Class& cl) {
     std::stringstream classInit;
     for (const Field* f : cl.fFields) {
         if (f->fAnnotations.isClass()) {
+            String type = this->llvmType(f->fType);
             fTypeDeclarations << this->fieldName(*f) << " = ";
             if (cl.fExternal) {
                 fTypeDeclarations << "external ";
             }
-            fTypeDeclarations << "global " << this->llvmType(f->fType);
+            fTypeDeclarations << "global " << type;
             if (!cl.fExternal) {
                 if (f->fValue && is_constant_number(*f->fValue)) {
                     fTypeDeclarations << " { " <<
@@ -1797,18 +1798,21 @@ void LLVMCodeGenerator::writeCall(const IRNode& stmt, const String& target, std:
     bool isSuper = stmt.fChildren.size() > 1 && stmt.fChildren[1].fKind == IRNode::Kind::SUPER;
     String methodRef = this->getMethodReference(m->fMethod.isVirtual() ? args[0] : "", m->fMethod,
             isSuper, out);
-    if (stmt.fType != Type::Void()) {
-        this->nextVar();
-    }
-    out << "    call " << this->callingConvention(m->fMethod) << this->llvmType(stmt.fType) <<
-            " " << methodRef << "(";
+    out << "    call " << this->callingConvention(m->fMethod);
     const char* separator = "";
     if (this->needsStructIndirection(m->fMethod)) {
+        out << "void " << methodRef << "(";
         String tmpType = this->llvmType(m->fMethod.fReturnType);
         String alloca = "%$tmp" + std::to_string(++fLabels);
         fMethodHeader << "    " << alloca << " = alloca " << tmpType << "\n";
         out << tmpType << "* " << alloca;
         separator = ", ";
+    }
+    else {
+        if (stmt.fType != Type::Void()) {
+            this->nextVar();
+        }
+        out << this->llvmType(stmt.fType) << " " << methodRef << "(";
     }
     if (target.size()) {
         out << separator << target;

@@ -5,17 +5,172 @@ uses org.pandalanguage.pandac.parser.Parser
 uses org.pandalanguage.pandac.parser.TokenKind
 
 class Main {
-    @class
-    method main() {
-        def imports := Array<File>()
-        imports.add(File("../src"))
-        def compiler := Compiler(imports)
-        compiler.compile(File("/tmp/Test.panda"))
+    constant LLVM_DIR := "/opt/local/libexec/llvm-4.0"
+
+    def opt:File
+    def llc:File
+    def gcc:File
+    def pandaHome:File
+
+    init() {
+        opt := File(LLVM_DIR).resolve("bin/opt")
+        llc := File(LLVM_DIR).resolve("bin/llc")
+        gcc := File("/usr/bin/gcc")
+        pandaHome := File("../src")
+    }
+
+    class Arguments {
+        @private
+        def args:ListView<String>
+
+        @private
+        def index := 1
+
+        init(args:ListView<String>) {
+            self.args := args
+        }
+
+        function get_done():Bit {
+            return index = args.get_count()
+        }
+
+        method next():String {
+            assert !get_done()
+            index += 1
+            return args[index - 1]
+        }
+
+        method next(label:String):String {
+            if get_done() {
+                Console.errorStream().printLine("expected \{label} after " +
+                        "'\{args[args.get_count() - 1]}'")
+                System.exit(1)
+            }
+            return next()
+        }
+    }
+
+    method optimize(llvm:File, level:Int):File {
+        if level = 0 {
+            return llvm
+        }
+        def dest := llvm.changeExtension(".opt")
+        def args := Array<String>() -- FIXME literal
+        args.add("-lint")
+        args.add("-O\{level}")
+        args.add("-S")
+        args.add(llvm.path)
+        args.add("-o")
+        args.add(dest.path)
+        def p := System.exec(opt, args)
+        Console.errorStream().print(p.error.readFully())
+        if p.waitFor() != 0 {
+            System.exit(1)
+        }
+        return dest
+    }
+
+    method toAssembly(llvm:File):File {
+        def dest := llvm.changeExtension(".s")
+        def args := Array<String>() -- FIXME literal
+        args.add(llvm.path)
+        args.add("-o")
+        args.add(dest.path)
+        def p := System.exec(llc, args)
+        Console.errorStream().print(p.error.readFully())
+        if p.waitFor() != 0 {
+            System.exit(1)
+        }
+        return dest
+    }
+
+    method toExecutable(assembly:File, dest:File):File {
+        def args := Array<String>() -- FIXME literal
+        args.add(assembly.path)
+        args.add("-L.")
+        args.add("-lpanda")
+        args.add("-m64")
+        args.add("-o")
+        args.add(dest.path)
+        def p := System.exec(gcc, args)
+        Console.errorStream().print(p.error.readFully())
+        if p.waitFor() != 0 {
+            System.exit(1)
+        }
+        return dest
+    }
+
+    method printUsage(out:OutputStream) {
+        out.printLine("Usage: pandac [options] <sources>")
+        out.printLine()
+        out.printLine("Source filenames must end in '.panda'.")
+        out.printLine()
+        out.printLine("Options:")
+        out.printLine("  -o <path>    output path")
+    }
+
+    method run(rawArgs:ListView<String>) {
+        def args := Arguments(rawArgs)
+        def sources := Array<File>()
+        def imports := Array<File>() -- FIXME literal
+        imports.add(pandaHome)
+        var outFile:File? := null
+        var optLevel := 3
+        def err := Console.errorStream()
+        while !args.get_done() {
+            def a := args.next()
+            match a {
+                when "-o":
+                    if outFile != null {
+                        err.printLine("'-o' may only be specified once")
+                        System.exit(1)
+                    }
+                    outFile := File(args.next("a filename"))
+                otherwise:
+                    if a.endsWith(".panda") {
+                        sources.add(File(a))
+                    }
+                    else {
+                        err.printLine("unrecognized argument '\{a}'")
+                        System.exit(1)
+                    }
+            }
+        }
+        if sources.get_count() = 0 {
+            err.printLine("no input files specified")
+            System.exit(1)
+        }
+        if outFile = null {
+            if sources.get_count() = 1 {
+                outFile := sources[0].changeExtension("")
+            }
+            else {
+                err.printLine("multiple input files specified, must use '-o' to specify output " +
+                        "file")
+                System.exit(1)
+            }
+        }
+        def llvm := File(outFile.path + ".ll")
+        def out := llvm.openOutputStream()
+        def cg := LLVMCodeGenerator(out)
+        def compiler := Compiler(cg, imports)
+        for s in sources {
+            compiler.compile(s)
+        }
         if compiler.errorCount = 0 {
             compiler.codeGenerator.finish()
+            out.cleanup() -- FIXME should be able to rely on automatic closing when memory management is in
+            def optimized := optimize(llvm, optLevel)
+            def assembly := toAssembly(optimized)
+            toExecutable(assembly, outFile)
         }
         else {
             System.exit(1)
         }
+    }
+
+    @class
+    method main(rawArgs:ListView<String>) {
+        Main().run(rawArgs)
     }
 }

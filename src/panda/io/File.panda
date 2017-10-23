@@ -62,12 +62,45 @@ class File (Key<File>) {
     }
 
     ================================================================================================
+    Returns the name of this file without its extension. The file's extension is considered to start
+    at the last period (`'.'`) it contains, so `File("/tmp/foo.bar.baz").simpleName()` returns the
+    path `"foo.bar"`. If the filename does not contain a period, this call is equivalen to `name()`.
+    ================================================================================================
+    function simpleName():String {
+        def result := name()
+        def index := result.lastIndexOf(".")
+        if index = null {
+            return result
+        }
+        return result[..index]
+    }
+
+    ================================================================================================
+    Removes the extension from this path and replaces it with a new extension. This does not alter
+    the file on disk; it merely performs string manipulation to compute a new path. The new
+    extension does not have to contain a period; it is possible to turn a path with an extension
+    into one without using this method.
+
+    Examples:
+
+        File("/tmp/foo.gif").changeExtension(".png") => /tmp/foo.png
+        File("/tmp/foo").changeExtension(".png") => /tmp/foo.png
+        File("/tmp/foo.gif").changeExtension("") => /tmp/foo
+    ================================================================================================
+    function changeExtension(ext:String):File {
+        return parent().resolve(simpleName() + ext)
+    }
+
+    ================================================================================================
     Returns `true` if this file exists.
 
     @returns `true` if this file exists
     ================================================================================================
     @external
     method exists():Bit
+
+    @external
+    method list():ListView<File>
 
     ================================================================================================
     Creates a directory at this path. It is not an error to attempt to create a directory which

@@ -41,14 +41,14 @@ class Compiler (ErrorReporter) {
     @private
     var errorCount := 0
 
-    init(importDirs:ListView<File>) {
+    init(codeGenerator:CodeGenerator, importDirs:ListView<File>) {
         self.importDirs := importDirs
         self.parser := Parser(self)
         self.scanner := Scanner(self)
         self.root := SymbolTable(self)
         self.symbolTable := root
-        self.codeGenerator := LLVMCodeGenerator(self)
-        codeGenerator.start(File("/tmp/output.ll").openOutputStream())
+        self.codeGenerator := codeGenerator
+        codeGenerator.setCompiler(self)
         root.add(Type("builtin_bit", Type.Kind.BUILTIN_BIT, -1, true))
         root.add(Type("builtin_int8", Type.Kind.BUILTIN_INT, -1, true))
         root.add(Type("builtin_int16", Type.Kind.BUILTIN_INT, -1, true))
@@ -59,7 +59,6 @@ class Compiler (ErrorReporter) {
         addAlias("panda.collections.Collection")
         addAlias("panda.collections.CollectionView")
         addAlias("panda.collections.CollectionWriter")
-        addAlias("panda.collections.Comparable")
         addAlias("panda.collections.Iterable")
         addAlias("panda.collections.Iterator")
         addAlias("panda.collections.Key")
@@ -69,6 +68,7 @@ class Compiler (ErrorReporter) {
         addAlias("panda.core.Class")
         addAlias("panda.core.Bit")
         addAlias("panda.core.Char8")
+        addAlias("panda.core.Comparable")
         addAlias("panda.core.Equatable")
         addAlias("panda.core.Int8")
         addAlias("panda.core.Int16")
@@ -1017,7 +1017,8 @@ class Compiler (ErrorReporter) {
             when Token.Kind.BITWISENOT: return "!!"
             when Token.Kind.SHIFTLEFT: return "<<"
             when Token.Kind.SHIFTRIGHT: return ">>"
-            otherwise: assert false
+            when Token.Kind.LBRACKET: return "[]"
+            otherwise: assert false, "not an operator: \{op}"
         }
     }
 
@@ -1251,7 +1252,8 @@ class Compiler (ErrorReporter) {
         }
         def s := cl.symbolTable[d.payload->String]
         if s = null {
-            error(d.offset, "value of type '\{base}' does not have a member named '\{d.payload}'")
+            error(d.offset, "value of type '\{base.type}' does not have a member named " +
+                    "'\{d.payload}'")
             return null
         }
         return symbolRef(d.offset, base, s, cl.symbolTable)

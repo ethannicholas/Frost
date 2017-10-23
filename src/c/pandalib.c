@@ -1,3 +1,4 @@
+#include <dirent.h>
 #include <inttypes.h>
 #include <limits.h>
 #include <stdio.h>
@@ -47,6 +48,14 @@ typedef struct String {
     int64_t size;
 } String;
 
+typedef struct Array {
+    Class* cl;
+    int32_t refcnt;
+    int64_t count;
+    int64_t capacity;
+    Object** data;
+} Array;
+
 typedef struct File {
     Class* cl;
     int32_t refcnt;
@@ -74,10 +83,13 @@ typedef struct Process {
     FileOutputStream* input;
     FileInputStream* output;
     FileInputStream* error;
-
 } Process;
 
+extern Class panda$io$File$class;
+
 extern Class panda$io$FileOutputStream$class;
+
+extern Class panda$collections$Array$class;
 
 extern Class panda$collections$CollectionView$class;
 
@@ -85,12 +97,7 @@ extern Class panda$collections$ListView$class;
 
 extern Class panda$core$System$Process$class;
 
-void pandaMain();
-
-int main() {
-    pandaMain();
-    return 0;
-}
+void panda$collections$Array$add$panda$collections$Array$T(Array*, Object*);
 
 void debugPrint(int64_t value) {
     printf("%" PRId64 "\n", value);
@@ -110,6 +117,7 @@ char* pandaGetCString(String* s) {
 String* pandaNewString(const char* s, int length) {
     String* result = malloc(sizeof(String));
     result->cl = &panda$core$String$class;
+    result->refcnt = 1;
     result->size = length;
     result->data = malloc(length);
     memcpy(result->data, s, length);
@@ -122,6 +130,22 @@ void* pandaGetInterfaceMethod(Object* o, Class* intf, int index) {
         it = it->next;
     }
     return it->methods[index];
+}
+
+void pandaMain(Array* args);
+
+int main(int argc, char** argv) {
+    Array* args = malloc(sizeof(Array));
+    args->cl = &panda$collections$Array$class;
+    args->refcnt = 1;
+    args->count = argc;
+    args->capacity = argc;
+    args->data = malloc(argc * sizeof(Object*));
+    for (int i = 0; i < argc; ++i) {
+        args->data[i] = (Object*) pandaNewString(argv[i], strlen(argv[i]));
+    }
+    pandaMain(args);
+    return 0;
 }
 
 // System
@@ -194,7 +218,7 @@ Process* panda$core$System$exec$panda$io$File$panda$collections$ListView$LTpanda
         Process* result = malloc(sizeof(Process));
         result->cl = &panda$core$System$Process$class;
         result->refcnt = 1;
-        result->pid = getppid();
+        result->pid = pid;
         result->input = malloc(sizeof(FileOutputStream));
         result->input->cl = &panda$io$FileOutputStream$class;
         result->input->refcnt = 1;
@@ -214,8 +238,11 @@ Process* panda$core$System$exec$panda$io$File$panda$collections$ListView$LTpanda
 
 void panda$core$System$Process$waitFor$R$panda$core$Int64(int64_t* result, Process* p) {
     int status;
+    fclose(p->input->file);
     waitpid(p->pid, &status, 0);
     *result = WEXITSTATUS(status);
+    fclose(p->output->file);
+    fclose(p->error->file);
 }
 
 // Panda
@@ -257,6 +284,14 @@ FileOutputStream* panda$io$Console$outputStream$R$panda$io$OutputStream() {
     return result;
 }
 
+FileOutputStream* panda$io$Console$errorStream$R$panda$io$OutputStream() {
+    FileOutputStream* result = malloc(sizeof(FileOutputStream));
+    result->cl = &panda$io$FileOutputStream$class;
+    result->refcnt = 1;
+    result->file = stderr;
+    return result;
+}
+
 // File
 
 FileInputStream* panda$io$File$openInputStream$R$panda$io$InputStream(File* self) {
@@ -266,7 +301,7 @@ FileInputStream* panda$io$File$openInputStream$R$panda$io$InputStream(File* self
     char* str = pandaGetCString(self->path);
     result->file = fopen(str, "rb");
     if (!result->file) {
-        printf("error opening '%s'", str);
+        printf("error opening '%s'\n", str);
         exit(1);
     }
     free(str);
@@ -280,7 +315,7 @@ FileOutputStream* panda$io$File$openOutputStream$R$panda$io$OutputStream(File* s
     char* str = pandaGetCString(self->path);
     result->file = fopen(str, "wb");
     if (!result->file) {
-        printf("error opening '%s'", str);
+        printf("error opening '%s'\n", str);
         exit(1);
     }
     free(str);
@@ -323,6 +358,40 @@ void panda$io$File$createDirectory(File* file) {
     char* path = pandaGetCString(file->path);
     mkdir(path, 0755);
     free(path);
+}
+
+Array* panda$io$File$list$R$panda$collections$ListView$LTpanda$io$File$GT(File* dir) {
+    Array* result = malloc(sizeof(Array));
+    result->cl = &panda$collections$Array$class;
+    result->refcnt = 1;
+    result->count = 0;
+    result->capacity = 16;
+    result->data = malloc(result->capacity * sizeof(Object*));
+    DIR *d;
+    struct dirent *entry;
+    char* path = pandaGetCString(dir->path);
+    #define MAX_PATH 1024
+    char buffer[MAX_PATH];
+    memcpy(buffer, path, dir->path->size);
+    buffer[dir->path->size] = '/';
+    d = opendir(path);
+    free(path);
+    if (!d) {
+        return result;
+    }
+    while ((entry = readdir(d))) {
+        size_t length =  strlen(entry->d_name);
+        memcpy(buffer + dir->path->size + 1, entry->d_name, length);
+        buffer[dir->path->size + 1 + length] = 0;
+        String* path = pandaNewString(buffer, dir->path->size + 1 + length);
+        File* file = malloc(sizeof(File));
+        file->cl = &panda$io$File$class;
+        file->refcnt = 1;
+        file->path = path;
+        panda$collections$Array$add$panda$collections$Array$T(result, (Object*) file);
+    }
+    closedir(d);
+    return result;
 }
 
 // FileInputStream
