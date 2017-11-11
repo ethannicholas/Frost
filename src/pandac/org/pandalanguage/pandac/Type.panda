@@ -137,6 +137,16 @@ class Type : Symbol (Key<Type>) {
     }
 
     @class
+    method Iterator():Type {
+        return Type("panda.collections.Iterator", Kind.CLASS, -1, true)
+    }
+
+    @class
+    method Iterable():Type {
+        return Type("panda.collections.Iterable", Kind.CLASS, -1, true)
+    }
+
+    @class
     method RangeOf(t:Type):Type {
         def children := Array<Type>() -- FIXME literal
         children.add(Type("panda.core.Range", Kind.CLASS, -1, true))

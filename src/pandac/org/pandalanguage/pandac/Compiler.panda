@@ -1609,6 +1609,96 @@ class Compiler (ErrorReporter) {
         return IRNode(IRNode.Kind.IF, i.offset, children)
     }
 
+    method compileRangeFor(offset:Int, label:String?, astTarget:ASTNode, list:IRNode,
+            body:ASTNode):IRNode? {
+        def elementType:Type
+        if list.type.typeKind = Type.Kind.NULLABLE {
+            assert list.type.subtypes[0].typeKind = Type.Kind.GENERIC
+            elementType := list.type.subtypes[0].subtypes[1]
+        }
+        else {
+            assert list.type.typeKind = Type.Kind.GENERIC
+            elementType := list.type.subtypes[1]
+        }
+        def target := compileTarget(astTarget, null, elementType)
+        if target = null {
+            return null
+        }
+        assert target.value = null
+        def body := compileStatement(body)
+        if body = null {
+            return null
+        }
+        def children := Array<IRNode>() -- FIXME literal
+        children.add(target.target)
+        children.add(list)
+        children.add(body)
+        return IRNode(IRNode.Kind.RANGE_FOR, offset, label, children)
+    }
+
+    method compileIteratorFor(offset:Int, label:String?, astTarget:ASTNode, iterator:IRNode,
+            body:ASTNode):IRNode? {
+        -- We rewrite 'for v in <iterator> { <statements> }' to:
+        -- def v$Iter := <iterator>
+        -- while !v$Iter.done() {
+        --     def v := v$Iter.next()
+        --     <statements>
+        -- }
+        assert iterator.type.typeKind = Type.Kind.GENERIC &
+                iterator.type.subtypes[0] = Type.Iterator()
+        def target := compileTarget(astTarget, null, iterator.type.subtypes[1])
+        if target = null {
+            return null
+        }
+        assert target.target.kind = IRNode.Kind.VARIABLE_REFERENCE
+        def targetVar := target.target.payload->Variable
+        def subtypes := Array<Type>() -- FIXME literal
+        subtypes.add(Type.Iterator())
+        subtypes.add(target.target.type)
+        def iterType := Type("\{subtypes[0]}<\{subtypes[1]}>", Type.Kind.GENERIC, offset, subtypes,
+                true)
+        def iter := Variable(iterator.offset, targetVar.name + "$Iter", iterType)
+        symbolTable.add(iter)
+        def statements := Array<IRNode>()
+        def declChildren := Array<IRNode>() -- FIXME literal
+        declChildren.add(IRNode(IRNode.Kind.VARIABLE_REFERENCE, iterator.offset, iter.type, iter))
+        declChildren.add(iterator)
+        def varChildren := Array<IRNode>()
+        varChildren.add(IRNode(IRNode.Kind.DECLARATION, iter.offset, declChildren))
+        statements.add(IRNode(IRNode.Kind.DEF, iter.offset, varChildren))
+        def whileChildren := Array<IRNode>()
+        def done := call(IRNode(IRNode.Kind.VARIABLE_REFERENCE, iter.offset, iter.type, iter),
+                "get_done", Array<IRNode>(), null)
+        if done = null {
+            return null
+        }
+        def notCall := call(done, "!", Array<IRNode>(), null)
+        if notCall = null {
+            return null
+        }
+        whileChildren.add(notCall)
+        def valueDeclChildren := Array<IRNode>() -- FIXME literal
+        valueDeclChildren.add(IRNode(IRNode.Kind.VARIABLE_REFERENCE, iterator.offset,
+                targetVar.type, targetVar))
+        def next := call(IRNode(IRNode.Kind.VARIABLE_REFERENCE, iterator.offset, iter.type, iter),
+                "next", Array<IRNode>(), null)
+        assert next != null
+        valueDeclChildren.add(next)
+        def valueVarChildren := Array<IRNode>() -- FIXME literal
+        valueVarChildren.add(IRNode(IRNode.Kind.DECLARATION, iterator.offset, valueDeclChildren))
+        var block := compileStatement(body)
+        if block = null {
+            return null
+        }
+        def blockChildren := Array<IRNode>()
+        blockChildren.add(IRNode(IRNode.Kind.DEF, iterator.offset, valueVarChildren))
+        blockChildren.addAll(block.children)
+        block := IRNode(IRNode.Kind.BLOCK, block.offset, blockChildren)
+        whileChildren.add(block)
+        statements.add(IRNode(IRNode.Kind.WHILE, iterator.offset, label, whileChildren))
+        return IRNode(IRNode.Kind.BLOCK, iterator.offset, statements)
+    }
+
     method compileFor(f:ASTNode):IRNode? {
         assert f.kind = ASTNode.Kind.FOR
         assert f.children.get_count() = 3
@@ -1627,39 +1717,34 @@ class Compiler (ErrorReporter) {
         }
         def symbols := SymbolTable(symbolTable) -- FIXME auto
         symbolTable := symbols
+        def result:IRNode?
         if list.type.isRange() {
-            def elementType:Type
-            if list.type.typeKind = Type.Kind.NULLABLE {
-                assert list.type.subtypes[0].typeKind = Type.Kind.GENERIC
-                elementType := list.type.subtypes[0].subtypes[1]
+            result := compileRangeFor(f.offset, f.payload->String?, f.children[0], list,
+                    f.children[2])
+        }
+        else {
+            var found := false
+            for intf in allInterfaces(list.type) {
+                if intf.typeKind = Type.Kind.GENERIC & intf.subtypes[0] = Type.Iterator() {
+                    def iterator := coerce(list, intf)
+                    result := compileIteratorFor(f.offset, f.payload->String?, f.children[0],
+                            iterator, f.children[2])
+                    found := true
+                    break
+                }
+                if intf.typeKind = Type.Kind.GENERIC & intf.subtypes[0] = Type.Iterable() {
+                    def iterable := coerce(list, intf)
+                    def iterator := call(iterable, "iterator", Array<IRNode>())
+                    result := compileIteratorFor(f.offset, f.payload->String?, f.children[0],
+                            iterator, f.children[2])
+                    found := true
+                    break
+                }
             }
-            else {
-                assert list.type.typeKind = Type.Kind.GENERIC
-                elementType := list.type.subtypes[1]
-            }
-            def target := compileTarget(f.children[0], null, elementType)
-            if target = null {
-                symbolTable := symbols.parents[0]
-                loops.pop()
-                return null
-            }
-            assert target.value = null
-            def body := compileStatement(f.children[2])
-            if body = null {
-                symbolTable := symbols.parents[0]
-                loops.pop()
-                return null
-            }
-            def children := Array<IRNode>() -- FIXME literal
-            children.add(target.target)
-            children.add(list)
-            children.add(body)
-            symbolTable := symbols.parents[0]
-            loops.pop()
-            return IRNode(IRNode.Kind.RANGE_FOR, f.offset, children)
         }
         symbolTable := symbols.parents[0]
-        assert false
+        loops.pop()
+        return result
     }
 
     method compileWhile(w:ASTNode):IRNode? {

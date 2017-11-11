@@ -1443,11 +1443,13 @@ class LLVMCodeGenerator (CodeGenerator) {
                 "label %\{forwardEntryExclusive}")
         createBlock(forwardEntryInclusive, out)
         def forwardEntryInclusiveTest := nextVar()
-        out.printLine("\{forwardEntryInclusiveTest} = icmp \{signPrefix}le \{numberType} \{start}, \{end}")
+        out.printLine("\{forwardEntryInclusiveTest} = icmp \{signPrefix}le \{numberType} " +
+                "\{start}, \{end}")
         out.printLine("br i1 \{forwardEntryInclusiveTest}, label %\{loopStart}, label %\{loopEnd}")
         createBlock(forwardEntryExclusive, out)
         def forwardEntryExclusiveTest := nextVar()
-        out.printLine("\{forwardEntryExclusiveTest} = icmp \{signPrefix}lt \{numberType} \{start}, \{end}")
+        out.printLine("\{forwardEntryExclusiveTest} = icmp \{signPrefix}lt \{numberType} " +
+                "\{start}, \{end}")
         out.printLine("br i1 \{forwardEntryExclusiveTest}, label %\{loopStart}, label %\{loopEnd}")
         createBlock(backwardEntry, out)
         def backwardEntryInclusive := nextLabel()
@@ -1456,11 +1458,13 @@ class LLVMCodeGenerator (CodeGenerator) {
                 "label %\{backwardEntryExclusive}")
         createBlock(backwardEntryInclusive, out)
         def backwardEntryInclusiveTest := nextVar()
-        out.printLine("\{backwardEntryInclusiveTest} = icmp \{signPrefix}ge \{numberType} \{start}, \{end}")
+        out.printLine("\{backwardEntryInclusiveTest} = icmp \{signPrefix}ge \{numberType} " +
+                "\{start}, \{end}")
         out.printLine("br i1 \{backwardEntryInclusiveTest}, label %\{loopStart}, label %\{loopEnd}")
         createBlock(backwardEntryExclusive, out)
         def backwardEntryExclusiveTest := nextVar()
-        out.printLine("\{backwardEntryExclusiveTest} = icmp \{signPrefix}gt \{numberType} \{start}, \{end}")
+        out.printLine("\{backwardEntryExclusiveTest} = icmp \{signPrefix}gt \{numberType} " +
+                "\{start}, \{end}")
         out.printLine("br i1 \{backwardEntryExclusiveTest}, label %\{loopStart}, label %\{loopEnd}")
         createBlock(loopStart, out)
         def indexValue := nextVar()
@@ -1476,8 +1480,8 @@ class LLVMCodeGenerator (CodeGenerator) {
         def backwardLabel := nextLabel()
         out.printLine("br i1 \{direction}, label %\{forwardLabel}, label %\{backwardLabel}")
 
-        -- forward loop; perform the test by subtracting index from end and then comparing to step, to
-        -- avoid overflows near the maximum value
+        -- forward loop; perform the test by subtracting index from end and then comparing to step,
+        -- to avoid overflows near the maximum value
         createBlock(forwardLabel, out)
         def forwardDelta := nextVar()
         out.printLine("\{forwardDelta} = sub \{numberType} \{end}, \{indexValue}")
@@ -1502,8 +1506,8 @@ class LLVMCodeGenerator (CodeGenerator) {
         out.printLine("\{forwardExclusiveTest} = icmp ugt \{numberType} \{forwardDelta}, \{step}")
         out.printLine("br i1 \{forwardExclusiveTest}, label %\{loopInc}, label %\{loopEnd}")
 
-        -- backward loop; perform the test by subtracting end from index and then comparing to -step, to
-        -- avoid overflows near the minimum value
+        -- backward loop; perform the test by subtracting end from index and then comparing to
+        -- -step, to avoid overflows near the minimum value
         createBlock(backwardLabel, out)
         def backwardDelta := nextVar()
         out.printLine("\{backwardDelta} = sub \{numberType} \{indexValue}, \{end}")
