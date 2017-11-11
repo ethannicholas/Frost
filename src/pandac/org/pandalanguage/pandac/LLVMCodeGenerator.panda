@@ -1750,6 +1750,55 @@ class LLVMCodeGenerator (CodeGenerator) {
         out.printLine("br label %\{desc.continueLabel}")
     }
 
+    method writeAssert(a:IRNode, out:OutputStream) {
+        assert a.kind = IRNode.Kind.ASSERT
+        assert a.children.get_count() = 1 | a.children.get_count() = 2
+        def test := getReference(a.children[0], out)
+        def ifTrue := nextLabel()
+        def ifFalse := nextLabel()
+        out.printLine("br i1 \{test}, label %\{ifTrue}, label %\{ifFalse}")
+        createBlock(ifFalse, out)
+        def p := compiler.position(a.offset)
+        def name:String
+        def index := p.file.lastIndexOf("/")
+        if index = null {
+            name := p.file
+        }
+        else {
+            name := p.file[index...]
+        }
+        def nameRef := getStringReference(name, out)
+        def line := "%panda$core$Int64 { i64 \{p.line} }"
+        def msg:String?
+        if a.children.get_count() = 2 {
+            msg := getReference(a.children[1], out)
+        }
+        else {
+            msg := null
+        }
+        out.print("call fastcc void ")
+        for m in compiler.getClass(Type.Panda()).methods {
+            if m.name = "assertionFailure" {
+                compiler.resolve(m)
+                writeDeclaration(m)
+            }
+        }
+        if msg != null {
+            out.print("@panda$core$Panda$assertionFailure$" +
+                    "panda$core$String$panda$core$Int64$panda$core$String")
+        }
+        else {
+            out.print("@panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64")
+        }
+        out.print("(%panda$core$String* \{nameRef}, \{line}")
+        if msg != null {
+            out.print(", %panda$core$String* \{msg}")
+        }
+        out.printLine(")")
+        out.printLine("unreachable")
+        createBlock(ifTrue, out)
+    }
+
     method writeStatement(stmt:IRNode, out:OutputStream) {
         match stmt.kind {
             when IRNode.Kind.BINARY:
@@ -1776,6 +1825,8 @@ class LLVMCodeGenerator (CodeGenerator) {
                 writeReturn(stmt, out)
             when IRNode.Kind.CONTINUE:
                 writeReturn(stmt, out)
+            when IRNode.Kind.ASSERT:
+                writeAssert(stmt, out)
             otherwise:
                 assert false, "unsupported statement \{stmt}"
         }

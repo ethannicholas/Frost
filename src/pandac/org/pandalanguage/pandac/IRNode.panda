@@ -38,6 +38,7 @@ class IRNode : Immutable {
         constant UNRESOLVED_RANGE            := 1031
         constant NEGATED_INT                 := 1032
         constant STRING                      := 1033
+        constant ASSERT                      := 1034
     }
 
     def kind:Int
@@ -154,6 +155,8 @@ class IRNode : Immutable {
                 return "\{children[0]}-* ReusedValueDefinition: \{payload} *-"
             when Kind.REUSED_VALUE:
                 return "-* ReusedValue: \{payload} *-"
+            when Kind.FIELD_REFERENCE:
+                return "\{children[0]}.\{(payload->FieldDecl).name}" -- FIXME parens
             otherwise:
                 return "<IRNode:\{kind}>"
         }

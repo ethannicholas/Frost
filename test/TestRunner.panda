@@ -13,7 +13,6 @@ class Test {
         compiler.waitFor()
         if compileResult != "" {
             if compileResult != expected {
-                Console.printLine(compileResult.hash() + " - " + expected.hash())
                 Console.printLine("error, expected:\n\{expected}\nbut received:\n\{compileResult}")
                 return false
             }

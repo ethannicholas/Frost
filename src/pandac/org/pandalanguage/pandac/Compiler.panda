@@ -1945,6 +1945,41 @@ class Compiler (ErrorReporter) {
         return IRNode(IRNode.Kind.RETURN, r.offset)
     }
 
+    method compileAssert(a:ASTNode):IRNode? {
+        assert(a.kind = ASTNode.Kind.ASSERT)
+        assert(a.children.get_count() = 1 | a.children.get_count() = 2)
+        var test := compileExpression(a.children[0])
+        if test = null {
+            return null
+        }
+        test := coerce(test, Type.Bit())
+        if test = null {
+            return null
+        }
+        def bit := getClass(Type.Bit())
+        assert bit != null
+        def value := bit.symbolTable["value"]
+        resolve(value->FieldDecl)
+        def fieldChildren := Array<IRNode>() -- FIXME literal
+        fieldChildren.add(test)
+        test := IRNode(IRNode.Kind.FIELD_REFERENCE, a.offset, Type.BuiltinBit(), value,
+                fieldChildren)
+        def children := Array<IRNode>() -- FIXME literal
+        children.add(test)
+        if a.children.get_count() = 2 {
+            var msg := compileExpression(a.children[1])
+            if msg = null {
+                return null
+            }
+            msg := coerce(msg, Type.StringType())
+            if msg = null {
+                return null
+            }
+            children.add(msg)
+        }
+        return IRNode(IRNode.Kind.ASSERT, a.offset, children)
+    }
+
     method compileVar(v:ASTNode):IRNode? {
         assert v.kind = ASTNode.Kind.VAR |
                v.kind = ASTNode.Kind.DEF |
@@ -1971,6 +2006,7 @@ class Compiler (ErrorReporter) {
 
     method compileStatement(s:ASTNode):IRNode? {
         match s.kind {
+            when ASTNode.Kind.ASSERT:   return compileAssert(s)
             when ASTNode.Kind.BINARY:   return compileBinary(s)
             when ASTNode.Kind.BLOCK:    return compileBlock(s)
             when ASTNode.Kind.CALL:     return compileCall(s)
