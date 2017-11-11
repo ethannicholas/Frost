@@ -70,6 +70,8 @@ class LLVMCodeGenerator (CodeGenerator) {
 
     var labelCount := 0
 
+    def reusedValues := HashMap<UInt64, String>()
+
     init(out:OutputStream) {
         self.out := IndentedOutputStream(out)
 
@@ -77,6 +79,7 @@ class LLVMCodeGenerator (CodeGenerator) {
                 "64:64-f32:32:32-f64:64:64-v64:64:64-v128:128:128-a0:0:64-s0:64:64-f80:128:128-" +
                 "n8:16:32:64-S128\"")
         out.printLine("target triple = \"x86_64-apple-macosx10.8.0\"")
+--        out.printLine("target triple = \"x86_64-pc-linux-gnu\"")
         out.printLine("declare i8* @malloc(i64)")
         out.printLine("%$itable = type { %panda$core$Class*, %$itable*, [0 x i8*] }")
     }
@@ -88,6 +91,7 @@ class LLVMCodeGenerator (CodeGenerator) {
 
     @override
     method finish() {
+        type(Type.Class())
         out.print(types.convert())
         out.print(strings.convert())
         out.print(declarations.convert())
@@ -1239,6 +1243,12 @@ class LLVMCodeGenerator (CodeGenerator) {
                 return getStringReference(expr.payload->String, out)
             when IRNode.Kind.SELF:
                 return getSelfReference(expr, out)
+            when IRNode.Kind.REUSED_VALUE_DEFINITION:
+                def value := getReference(expr.children[0], out)
+                reusedValues[expr.payload->UInt64] := value
+                return value
+            when IRNode.Kind.REUSED_VALUE:
+                return reusedValues[expr.payload->UInt64]
             otherwise:
                 assert false, "unsupported expression \{expr}"
         }
@@ -1647,6 +1657,13 @@ class LLVMCodeGenerator (CodeGenerator) {
                 out.printLine("\{ptr} = getelementptr inbounds \{typeName(cl.type())}, " +
                         "\{typeName(cl.type())}* \{base}, i64 0, i32 \{index}")
                 return ptr
+            when IRNode.Kind.REUSED_VALUE_DEFINITION:
+                def result := getLValue(lvalue.children[0], out)
+                def reused := nextVar()
+                out.printLine("\{reused} = load \{type(lvalue.type)}, " +
+                        "\{type(lvalue.type)}* \{result}")
+                reusedValues[lvalue.payload->UInt64] := reused
+                return result
             otherwise:
                 assert false
         }
@@ -1706,6 +1723,29 @@ class LLVMCodeGenerator (CodeGenerator) {
         }
     }
 
+    function findLoop(name:String?):LoopDescriptor {
+        assert loopDescriptors.get_count() > 0
+        if name = null {
+            return loopDescriptors.peek()
+        }
+        for i in 0 .. loopDescriptors.get_count() {
+            if loopDescriptors.peek(i).loopLabel = name {
+                return loopDescriptors.peek(i)
+            }
+        }
+        assert false
+    }
+
+    method writeBreak(b:IRNode, out:OutputStream) {
+        def desc := findLoop(b.payload->String?)
+        out.printLine("br label %\{desc.breakLabel}")
+    }
+
+    method writeContinue(c:IRNode, out:OutputStream) {
+        def desc := findLoop(c.payload->String?)
+        out.printLine("br label %\{desc.continueLabel}")
+    }
+
     method writeStatement(stmt:IRNode, out:OutputStream) {
         match stmt.kind {
             when IRNode.Kind.BINARY:
@@ -1727,6 +1767,10 @@ class LLVMCodeGenerator (CodeGenerator) {
             when IRNode.Kind.VAR, IRNode.Kind.DEF, IRNode.Kind.CONSTANT, IRNode.Kind.PROPERTY:
                 writeVar(stmt, out)
             when IRNode.Kind.RETURN:
+                writeReturn(stmt, out)
+            when IRNode.Kind.BREAK:
+                writeReturn(stmt, out)
+            when IRNode.Kind.CONTINUE:
                 writeReturn(stmt, out)
             otherwise:
                 assert false, "unsupported statement \{stmt}"

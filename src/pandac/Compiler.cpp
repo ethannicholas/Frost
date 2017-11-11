@@ -514,7 +514,11 @@ bool Compiler::coerce(IRNode* node, const Type& target, IRNode* out) {
                 IRNode method(node->fPosition, IRNode::Kind::METHOD_REFERENCE,
                         Type(Position(), Type::Category::METHOD, "<method>"), matches[0],
                         std::move(children));
-                return this->call(std::move(method), std::move(node->fChildren[1].fChildren), out);
+                IRNode c;
+                if (!this->call(std::move(method), std::move(node->fChildren[1].fChildren), &c)) {
+                    return false;
+                }
+                return this->coerce(&c, target, out);
             }
             else if (matches.size() == 0) {
                 this->reportNoMatch(node->fPosition, methods[0]->fMethod.fName,
@@ -541,15 +545,14 @@ bool Compiler::coerce(IRNode* node, const Type& target, IRNode* out) {
                 this->reportAmbiguousMatch(node->fPosition, matches, node->fChildren, &target);
                 return false;
             }
-            *out = this->operatorCall(node->fPosition, &node->fChildren[0], *matches[0],
+            IRNode c = this->operatorCall(node->fPosition, &node->fChildren[0], *matches[0],
                     &node->fChildren[1]);
-            return true;
+            return this->coerce(&c, target, out);
         }
         case IRNode::Kind::UNRESOLVED_INDEX: {
             std::vector<const MethodRef*> matches;
             if (this->operatorMatch(&node->fChildren[0], Operator::INDEX, &node->fChildren[1],
                     &target, &matches) == INT_MAX) {
-                printf("matching %s[%s]\n", node->fChildren[0].description().c_str(), node->fChildren[1].description().c_str());
                 this->error(node->fPosition, "no '[]' operator on '" +
                         node->fChildren[0].fType.fName + "', '" + node->fChildren[1].fType.fName +
                         "' returns type '" + target.fName + "'");
@@ -559,9 +562,9 @@ bool Compiler::coerce(IRNode* node, const Type& target, IRNode* out) {
                 this->reportAmbiguousMatch(node->fPosition, matches, node->fChildren, &target);
                 return false;
             }
-            *out = this->operatorCall(node->fPosition, &node->fChildren[0], *matches[0],
+            IRNode c = this->operatorCall(node->fPosition, &node->fChildren[0], *matches[0],
                     &node->fChildren[1]);
-            return true;
+            return this->coerce(&c, target, out);
         }
         case IRNode::Kind::UNRESOLVED_RANGE: {
             ASSERT(node->fChildren.size() == 3);
@@ -586,9 +589,11 @@ bool Compiler::coerce(IRNode* node, const Type& target, IRNode* out) {
                 if (!cl) {
                     return false;
                 }
-                IRNode target(node->fPosition, IRNode::Kind::TYPE_REFERENCE, Type::Class(),
+                IRNode targetNode(node->fPosition, IRNode::Kind::TYPE_REFERENCE, Type::Class(),
                             this->typePointer(rangeType));
-                return this->call(std::move(target), std::move(args), out);
+                IRNode c;
+                this->call(std::move(targetNode), std::move(args), &c);
+                return this->coerce(&c, target, out);
             }
             else {
                 if (!this->resolve(node)) {
@@ -617,7 +622,11 @@ bool Compiler::coerce(IRNode* node, const Type& target, IRNode* out) {
                                     &cl->fType);
                             std::vector<IRNode> args;
                             args.push_back(std::move(*node));
-                            return this->call(std::move(type), std::move(args), out);
+                            IRNode c;
+                            if (!this->call(std::move(type), std::move(args), &c)) {
+                                return false;
+                            }
+                            return this->coerce(&c, target, out);
                         }
                     }
                 }
@@ -990,7 +999,7 @@ bool Compiler::call(IRNode method, std::vector<IRNode> args, IRNode* out) {
                     }
                 }
             }
-            Type actualMethodType = m.fMethod.inheritedType(*this);
+            Type actualMethodType = m.fMethod.declaredType();
             ASSERT(actualMethodType.fSubtypes.size() == args.size() + 1);
             for (int i = 0; i < args.size(); i++) {
                 IRNode converted;
@@ -2799,6 +2808,7 @@ bool Compiler::convertReturn(const ASTNode& r, IRNode* out) {
         if (!this->coerce(&converted, fCurrentMethod.top()->fReturnType)) {
             return false;
         }
+        ASSERT(converted.fType == fCurrentMethod.top()->fReturnType);
         std::vector<IRNode> children;
         children.push_back(std::move(converted));
         *out = IRNode(r.fPosition, IRNode::Kind::RETURN, std::move(children));

@@ -39,6 +39,9 @@ class Compiler (ErrorReporter) {
     def loops := Stack<String?>()
 
     @private
+    var reusedValueCount:UInt64 := 0
+
+    @private
     var errorCount := 0
 
     init(codeGenerator:CodeGenerator, importDirs:ListView<File>) {
@@ -93,19 +96,23 @@ class Compiler (ErrorReporter) {
     }
 
     function tryResolveClass(name:String):ClassDecl? {
-        def alias := currentClass.peek().aliases[name]
-        if alias != null {
-            return getClass(alias)
-        }
-        var result := getClass(name)
-        if result = null {
-            def idx := currentClass.peek().name.lastIndexOf(".")
-            if idx != null {
-                result := getClass(currentClass.peek().name[...idx] + name)
+        if currentClass.get_count() > 0 {
+            def alias := currentClass.peek().aliases[name]
+            if alias != null {
+                return getClass(alias)
             }
         }
-        if result = null {
-            result := getClass(currentClass.peek().name + "." + name)
+        var result := getClass(name)
+        if currentClass.get_count() > 0 {
+            if result = null {
+                def idx := currentClass.peek().name.lastIndexOf(".")
+                if idx != null {
+                    result := getClass(currentClass.peek().name[...idx] + name)
+                }
+            }
+            if result = null {
+                result := getClass(currentClass.peek().name + "." + name)
+            }
         }
         return result
     }
@@ -176,6 +183,12 @@ class Compiler (ErrorReporter) {
         symbolTable := cl.symbolTable
         if cl.rawSuper != null {
             cl.rawSuper := resolve(cl.rawSuper)
+            if !cl.annotations.isFinal() & cl.rawSuper.name = "panda.core.Value" {
+                cl.annotations.flags ||= Annotations.Flag.FINAL
+                for m in cl.methods {
+                    m.annotations.flags ||= Annotations.Flag.FINAL
+                }
+            }
         }
         for i in 0 .. cl.rawInterfaces.get_count() {
             cl.rawInterfaces[i] := resolve(cl.rawInterfaces[i])
@@ -188,6 +201,7 @@ class Compiler (ErrorReporter) {
         if m.resolved {
             return
         }
+        resolve(m.owner)
         currentFile.push(m.owner.source) -- FIXME use init / cleanup
         def old := symbolTable
         symbolTable := m.owner.symbolTable
@@ -573,6 +587,9 @@ class Compiler (ErrorReporter) {
                     return cost
                 }
         }
+        match type.typeKind {
+            when Type.Kind.BUILTIN_BIT: return coercionCost(Type.Bit(), target)
+        }
         def targetClass := getClass(target)
         if targetClass = null {
             return null
@@ -849,7 +866,7 @@ class Compiler (ErrorReporter) {
         return best
     }
 
-    method call(target:IRNode?, m:MethodRef, args:ListView<IRNode>):IRNode? {
+    method call(offset:Int, target:IRNode?, m:MethodRef, args:ListView<IRNode>):IRNode? {
         assert m.value.resolved
         assert m.parameterCount() = args.get_count(), "invalid call: \{m} with args: \{args}"
         def finalArgs := Array<IRNode>()
@@ -863,10 +880,14 @@ class Compiler (ErrorReporter) {
             }
             finalArgs.add(coerced)
         }
-        return IRNode(IRNode.Kind.CALL, m.value.offset, m.returnType(), m, finalArgs)
+        return IRNode(IRNode.Kind.CALL, offset, m.returnType(), m, finalArgs)
     }
 
     method call(target:IRNode, name:String, args:ListView<IRNode>):IRNode? {
+        return call(target, name, args, null)
+    }
+
+    method call(target:IRNode, name:String, args:ListView<IRNode>, expectedType:Type?):IRNode? {
         def resolved := resolve(target)
         if resolved = null {
             return null
@@ -888,17 +909,21 @@ class Compiler (ErrorReporter) {
         if ref = null {
             return null
         }
-        return call(ref, args)
+        return call(ref, args, expectedType)
     }
 
     method call(m:IRNode, args:ListView<IRNode>):IRNode? {
+        return call(m, args, null)
+    }
+
+    method call(m:IRNode, args:ListView<IRNode>, expectedType:Type?):IRNode? {
         match m.kind {
             when IRNode.Kind.METHOD_REFERENCE:
                 def target:IRNode?
-                return call(m.children[0], m.payload->MethodRef, args)
+                return call(m.offset, m.children[0], m.payload->MethodRef, args)
             when IRNode.Kind.UNRESOLVED_METHOD_REFERENCE:
                 def methods := Array<MethodRef>(m.payload->ListView<MethodRef>)
-                matchMethods(methods, args, null)
+                matchMethods(methods, args, expectedType)
                 if methods.get_count() = 1 {
                     def target:IRNode?
                     if m.children.get_count() = 1 {
@@ -908,7 +933,7 @@ class Compiler (ErrorReporter) {
                         assert m.children.get_count() = 0
                         target := null
                     }
-                    return call(target, methods[0], args)
+                    return call(m.offset, target, methods[0], args)
                 }
                 assert false
             when IRNode.Kind.TYPE_REFERENCE:
@@ -1018,7 +1043,45 @@ class Compiler (ErrorReporter) {
             when Token.Kind.SHIFTLEFT: return "<<"
             when Token.Kind.SHIFTRIGHT: return ">>"
             when Token.Kind.LBRACKET: return "[]"
+            when Token.Kind.ASSIGNMENT: return ":="
             otherwise: assert false, "not an operator: \{op}"
+        }
+    }
+
+    @class
+    function isAssignment(op:Int):Bit {
+        match op {
+            when Token.Kind.ADDEQ, Token.Kind.SUBEQ, Token.Kind.MULEQ, Token.Kind.DIVEQ,
+                    Token.Kind.INTDIVEQ, Token.Kind.REMEQ, Token.Kind.POWEQ, Token.Kind.OREQ,
+                    Token.Kind.BITWISEOREQ, Token.Kind.ANDEQ, Token.Kind.BITWISEANDEQ,
+                    Token.Kind.XOREQ, Token.Kind.BITWISEXOREQ, Token.Kind.SHIFTLEFTEQ,
+                    Token.Kind.SHIFTRIGHTEQ:
+                return true
+            otherwise:
+                return false
+        }
+    }
+
+    @class
+    function removeAssignment(op:Int):Int {
+        match op {
+            when Token.Kind.ADDEQ:        return Token.Kind.ADD
+            when Token.Kind.SUBEQ:        return Token.Kind.SUB
+            when Token.Kind.MULEQ:        return Token.Kind.MUL
+            when Token.Kind.DIVEQ:        return Token.Kind.DIV
+            when Token.Kind.INTDIVEQ:     return Token.Kind.INTDIV
+            when Token.Kind.REMEQ:        return Token.Kind.REM
+            when Token.Kind.POWEQ:        return Token.Kind.POW
+            when Token.Kind.OREQ:         return Token.Kind.OR
+            when Token.Kind.BITWISEOREQ:  return Token.Kind.BITWISEOR
+            when Token.Kind.ANDEQ:        return Token.Kind.AND
+            when Token.Kind.BITWISEANDEQ: return Token.Kind.BITWISEAND
+            when Token.Kind.XOREQ:        return Token.Kind.XOR
+            when Token.Kind.BITWISEXOREQ: return Token.Kind.BITWISEXOR
+            when Token.Kind.SHIFTLEFTEQ:  return Token.Kind.SHIFTLEFT
+            when Token.Kind.SHIFTRIGHTEQ: return Token.Kind.SHIFTRIGHT
+            otherwise:
+                assert false
         }
     }
 
@@ -1039,16 +1102,11 @@ class Compiler (ErrorReporter) {
         }
     }
 
-    method compileBinary(b:ASTNode):IRNode? {
-        var left := compileExpression(b.children[0])
-        if left = null {
-            return null
-        }
-        var right := compileExpression(b.children[1])
-        if right = null {
-            return null
-        }
-        if b.payload->Int = Token.Kind.ASSIGNMENT {
+    method compileBinary(offset:Int, rawLeft:IRNode, op:Int, rawRight:IRNode):IRNode? {
+        -- FIXME use var parameters
+        var left := rawLeft
+        var right := rawRight
+        if op = Token.Kind.ASSIGNMENT {
             left := resolve(left)
             if left = null {
                 return null
@@ -1064,18 +1122,51 @@ class Compiler (ErrorReporter) {
             def children := Array<IRNode>() -- FIXME literal
             children.add(left)
             children.add(right)
-            return IRNode(IRNode.Kind.BINARY, b.offset, Token.Kind.ASSIGNMENT, children)
+            return IRNode(IRNode.Kind.BINARY, offset, Token.Kind.ASSIGNMENT, children)
+        }
+        if isAssignment(op) {
+            -- compound assignment
+            -*if left.kind = IRNode.Kind.UNRESOLVED_INDEX {
+                return convertIndexedAssignment(p, left, op, right, out)
+            }*-
+            left := resolve(left)
+            if left = null {
+                return null
+            }
+            if !isLValue(left) {
+                error(left.offset, "cannot assign to this expression")
+                return null
+            }
+            def children := Array<IRNode>() -- FIXME literal
+            children.add(left)
+            reusedValueCount += 1
+            left := IRNode(IRNode.Kind.REUSED_VALUE_DEFINITION, left.offset, left.type,
+                    reusedValueCount, children)
+            def reusedLeft := IRNode(IRNode.Kind.REUSED_VALUE, left.offset, left.type,
+                    reusedValueCount)
+            right := compileBinary(offset, reusedLeft, removeAssignment(op), right)
+            if right = null {
+                return null
+            }
+            -- 32 bit promotion means that e.g. int8 += int8 will result in a 32 bit value that can't be
+            -- stored back into the original lvalue. Special case this and convert it back to its
+            -- original size.
+            if left.type.isNumber() & left.type != right.type {
+                right := call(right, "convert", Array<IRNode>(), left.type)
+                if right = null {
+                    return null
+                }
+            }
+            return compileBinary(offset, left, Token.Kind.ASSIGNMENT, right)
         }
         if left.type = Type.BuiltinBit() {
-            if right.type = Type.BuiltinBit() & (b.payload->Int = Token.Kind.AND |
-                    b.payload->Int = Token.Kind.OR) {
+            if right.type = Type.BuiltinBit() & (op = Token.Kind.AND | op = Token.Kind.OR) {
                 def children := Array<IRNode>() -- FIXME literal
                 children.add(left)
                 children.add(right)
-                return IRNode(IRNode.Kind.BINARY, b.offset, left.type, b.payload->Int, children)
+                return IRNode(IRNode.Kind.BINARY, offset, left.type, op, children)
             }
-            error(b.offset, "'\{operatorName(b.payload->Int)}' cannot operate on " +
-                    "'\{left.type}', '\{right.type}'")
+            error(offset, "'\{operatorName(op)}' cannot operate on '\{left.type}', '\{right.type}'")
             return null
         }
         def children := Array<IRNode>()
@@ -1085,17 +1176,29 @@ class Compiler (ErrorReporter) {
             children.add(left)
             children.add(right)
             def resultType:Type
-            match b.payload->Int {
+            match op {
                 when Token.Kind.EQ, Token.Kind.NEQ, Token.Kind.GT, Token.Kind.GTEQ, Token.Kind.LT,
                         Token.Kind.LTEQ:
                     resultType := Type.BuiltinBit()
                 otherwise:
                     resultType := left.type
             }
-            return IRNode(IRNode.Kind.BINARY, b.offset, resultType, b.payload->Int, children)
+            return IRNode(IRNode.Kind.BINARY, offset, resultType, op, children)
         }
         children.add(right)
-        return call(left, operatorName(b.payload->Int), children)
+        return call(left, operatorName(op), children)
+    }
+
+    method compileBinary(b:ASTNode):IRNode? {
+        def left := compileExpression(b.children[0])
+        if left = null {
+            return null
+        }
+        def right := compileExpression(b.children[1])
+        if right = null {
+            return null
+        }
+        return compileBinary(b.offset, left, b.payload->Int, right)
     }
 
     function typeParameters(type:Type):ListView<Type> {
@@ -1448,13 +1551,16 @@ class Compiler (ErrorReporter) {
     method compileFor(f:ASTNode):IRNode? {
         assert f.kind = ASTNode.Kind.FOR
         assert f.children.get_count() = 3
+        loops.push(f.payload->String?) -- FIXME use AutoLoop
         def list := compileExpression(f.children[1])
         if list = null {
+            loops.pop()
             return null
         }
         if list.kind = IRNode.Kind.UNRESOLVED_RANGE {
             list := resolve(list)
             if list = null {
+                loops.pop()
                 return null
             }
         }
@@ -1473,12 +1579,14 @@ class Compiler (ErrorReporter) {
             def target := compileTarget(f.children[0], null, elementType)
             if target = null {
                 symbolTable := symbols.parents[0]
+                loops.pop()
                 return null
             }
             assert target.value = null
             def body := compileStatement(f.children[2])
             if body = null {
                 symbolTable := symbols.parents[0]
+                loops.pop()
                 return null
             }
             def children := Array<IRNode>() -- FIXME literal
@@ -1486,6 +1594,7 @@ class Compiler (ErrorReporter) {
             children.add(list)
             children.add(body)
             symbolTable := symbols.parents[0]
+            loops.pop()
             return IRNode(IRNode.Kind.RANGE_FOR, f.offset, children)
         }
         symbolTable := symbols.parents[0]
@@ -1630,7 +1739,7 @@ class Compiler (ErrorReporter) {
         if b.payload != null {
             var found := false
             for label in loops {
-                if label = b.payload->String {
+                if label != null & label = b.payload->String { -- FIXME shouldn't need null check
                     found := true
                     break
                 }
@@ -1651,7 +1760,7 @@ class Compiler (ErrorReporter) {
         if c.payload != null {
             var found := false
             for label in loops {
-                if label = c.payload->String {
+                if label != null & label = c.payload->String { -- FIXME shouldn't need null check
                     found := true
                     break
                 }

@@ -129,8 +129,15 @@ void LLVMCodeGenerator::getMethodTableEntry(Method& m, String* outName, String* 
         this->writeMethodDeclaration(m);
     }
     fCompiler->resolveTypes(&m);
-    *outName = this->methodName(m);
+    Type declared = m.declaredTypeWithSelf(m.fOwner.fType);
     Type effective = m.inheritedTypeWithSelf(*fCompiler);
+    if (effective != declared) {
+        this->createMethodShim(m, m.inheritedType(*fCompiler), fShims, outName, outType);
+    }
+    else {
+        *outName = this->methodName(m);
+    }
+    *outType = this->llvmType(effective);
     if (this->needsStructIndirection(m)) {
         *outType = "void (";
         *outType += this->llvmType(effective.fSubtypes.back());
@@ -140,9 +147,7 @@ void LLVMCodeGenerator::getMethodTableEntry(Method& m, String* outName, String* 
             *outType += this->llvmType(effective.fSubtypes[i]);
         }
         *outType += ")*";
-        return;
     }
-    *outType = this->llvmType(effective);
 }
 
 String LLVMCodeGenerator::getITable(Class& cl) {
@@ -256,7 +261,7 @@ String LLVMCodeGenerator::getWrapperITable(Class& cl) {
                 result += "i8* null";
             }
             else {
-                String shim = this->createWrapperShim(*m, fShims);
+                String shim = this->createWrapperShim(*m, fWrapperShims);
                 result += "i8* bitcast(" + this->llvmWrapperType(*m) + " " + shim +
                         " to i8*)";
             }
@@ -301,7 +306,7 @@ LLVMCodeGenerator::ClassConstant& LLVMCodeGenerator::getWrapperClassConstant(Cla
             Method* m = vtable[i];
             String methodName;
             if (&m->fOwner == &cl) {
-                methodName = this->createWrapperShim(*m, fShims);
+                methodName = this->createWrapperShim(*m, fWrapperShims);
             }
             else {
                 methodName = this->methodName(*m);
@@ -328,7 +333,7 @@ String LLVMCodeGenerator::createWrapperShim(Method& m, std::ostream& out) {
     String selfType = "%" + escape_type_name(m.fOwner.fName) + "$wrapper*";
     out << "define ccc " << this->llvmType(m.fReturnType) << " " <<
             result << "(" << selfType << " %actualSelf";
-    Type methodType = m.inheritedType(*fCompiler);
+    Type methodType = m.declaredType();
     for (int i = 0; i < m.fParameters.size(); ++i) {
         out << ", " << this->llvmType(methodType.fSubtypes[i]) << " %" << m.fParameters[i].fName;
     }
@@ -586,7 +591,7 @@ String LLVMCodeGenerator::llvmType(const Method& m) {
 }
 
 String LLVMCodeGenerator::llvmWrapperType(Method& m) {
-    const Type actualType = m.inheritedType(*fCompiler);
+    const Type actualType = m.declaredType();
     String result = this->llvmType(actualType.fSubtypes.back());
     result += "(";
     const char* separator = "";
@@ -976,31 +981,50 @@ String LLVMCodeGenerator::getCallReference(const IRNode& call, std::ostream& out
     }
     ASSERT(call.fKind == IRNode::Kind::CALL);
     ASSERT(call.fChildren.size() >= 1);
+    Type actualMethodType;
+    String actualResultType;
+    bool isSuper = call.fChildren.size() > 1 && call.fChildren[1].fKind == IRNode::Kind::SUPER;
+    if (!isSuper && m->isVirtual()) {
+        actualMethodType = m->inheritedType(*fCompiler);
+        actualResultType = this->llvmType(actualMethodType.fSubtypes.back());
+    }
+    else {
+        actualMethodType = m->declaredType();
+        actualResultType = this->llvmType(call.fType);
+    }
+    int offset = call.fChildren.size() - actualMethodType.fSubtypes.size() + 1;
     std::vector<String> args;
     for (int i = 1; i < call.fChildren.size(); ++i) {
-        args.push_back(this->getTypedReference(call.fChildren[i], out));
+        String param = this->getReference(call.fChildren[i], out);
+        if (i >= offset && actualMethodType.fSubtypes[i - offset] != call.fChildren[i].fType) {
+            param = this->llvmType(actualMethodType.fSubtypes[i - offset]) + " " +
+                    this->getCastReference(param, call.fChildren[i].fType,
+                        actualMethodType.fSubtypes[i - offset], out);
+        }
+        else {
+            param = this->llvmType(call.fChildren[i].fType) + " " + param;
+        }
+        args.push_back(param);
     }
     ASSERT(call.fChildren[0].fKind == IRNode::Kind::METHOD_REFERENCE);
     String target = args.size() ? args[0] : "";
-    bool isSuper = call.fChildren.size() > 1 && call.fChildren[1].fKind == IRNode::Kind::SUPER;
     String methodRef = this->getMethodReference(target, *m, isSuper, out);
     String result;
-    String resultType = this->llvmType(call.fType);
     bool indirect = this->needsStructIndirection(*m);
     if (indirect) {
         out << "    call " << this->callingConvention(*m) << "void";
     }
     else {
         result = this->nextVar();
-        out << "    " << result << " = call " << this->callingConvention(*m) << resultType;
+        out << "    " << result << " = call " << this->callingConvention(*m) << actualResultType;
     }
     out << " " << methodRef << "(";
     const char* separator = "";
     String indirectVar;
     if (indirect) {
         indirectVar = "%$tmp" + std::to_string(++fLabels);
-        fMethodHeader << "    " << indirectVar << " = alloca " << resultType << "\n";
-        out << resultType << "* " << indirectVar;
+        fMethodHeader << "    " << indirectVar << " = alloca " << actualResultType << "\n";
+        out << actualResultType << "* " << indirectVar;
         separator = ", ";
     }
     for (const auto& arg : args) {
@@ -1010,8 +1034,11 @@ String LLVMCodeGenerator::getCallReference(const IRNode& call, std::ostream& out
     out << ")\n";
     if (indirect) {
         result = this->nextVar();
-        out << "    " << result << " = load " << resultType << ", " << resultType << "* " <<
-                indirectVar << "\n";
+        out << "    " << result << " = load " << actualResultType << ", " << actualResultType <<
+                "* " << indirectVar << "\n";
+    }
+    if (actualMethodType.fSubtypes.back() != call.fType) {
+        result = this->getCastReference(result, actualMethodType.fSubtypes.back(), call.fType, out);
     }
     return result;
 }
@@ -1417,12 +1444,12 @@ String LLVMCodeGenerator::getIsNullReference(const IRNode& test, std::ostream& o
     ASSERT(test.fKind == IRNode::Kind::IS_NULL);
     ASSERT(test.fChildren.size() == 1);
     String value = this->getTypedReference(test.fChildren[0], out);
-    if (test.fChildren[0].fType.fCategory != Type::Category::NULLABLE) {
-        return "{ i1 0 }";
-    }
     Class* cl = fCompiler->getClass(test.fChildren[0].fType);
     String resultValue;
     if (cl->isValue(fCompiler)) {
+        if (test.fChildren[0].fType.fCategory != Type::Category::NULLABLE) {
+            return "{ i1 0 }";
+        }
         String field = this->nextVar();
         std::vector<Field*> fields = fCompiler->getInstanceFields(*cl);
         out << "    " << field << " = extractvalue " << value << ", " << fields.size() << "\n";
@@ -1443,12 +1470,12 @@ String LLVMCodeGenerator::getIsNonNullReference(const IRNode& test, std::ostream
     ASSERT(test.fKind == IRNode::Kind::IS_NONNULL);
     ASSERT(test.fChildren.size() == 1);
     String value = this->getTypedReference(test.fChildren[0], out);
-    if (test.fChildren[0].fType.fCategory != Type::Category::NULLABLE) {
-        return "{ i1 1 }";
-    }
     Class* cl = fCompiler->getClass(test.fChildren[0].fType);
     String resultValue;
     if (cl->isValue(fCompiler)) {
+        if (test.fChildren[0].fType.fCategory != Type::Category::NULLABLE) {
+            return "{ i1 1 }";
+        }
         resultValue = this->nextVar();
         std::vector<Field*> fields = fCompiler->getInstanceFields(*cl);
         out << "    " << resultValue << " = extractvalue " << value << ", " << fields.size() <<
@@ -1785,24 +1812,44 @@ void LLVMCodeGenerator::writePointerCall(const IRNode& stmt, std::ostream& out) 
 void LLVMCodeGenerator::writeCall(const IRNode& stmt, const String& target, std::ostream& out) {
     ASSERT(stmt.fKind == IRNode::Kind::CALL);
     ASSERT(stmt.fChildren.size() >= 1);
-    MethodRef* m = (MethodRef*) stmt.fChildren[0].fValue.fPtr;
-    if (m->fMethod.fOwner.fName == POINTER_NAME) {
+    MethodRef* mref = (MethodRef*) stmt.fChildren[0].fValue.fPtr;
+    Method& m = mref->fMethod;
+    if (m.fOwner.fName == POINTER_NAME) {
         this->writePointerCall(stmt, out);
         return;
     }
+    Type actualMethodType;
+    String actualResultType;
+    bool isSuper = stmt.fChildren.size() > 1 && stmt.fChildren[1].fKind == IRNode::Kind::SUPER;
+    if (!isSuper && m.isVirtual()) {
+        actualMethodType = m.inheritedType(*fCompiler);
+        actualResultType = this->llvmType(actualMethodType.fSubtypes.back());
+    }
+    else {
+        actualMethodType = m.declaredType();
+        actualResultType = this->llvmType(stmt.fType);
+    }
+    int offset = stmt.fChildren.size() - actualMethodType.fSubtypes.size() + 1;
     std::vector<String> args;
     for (int i = 1; i < stmt.fChildren.size(); ++i) {
-        args.push_back(this->getTypedReference(stmt.fChildren[i], out));
+        String param = this->getReference(stmt.fChildren[i], out);
+        if (i >= offset && actualMethodType.fSubtypes[i - offset] != stmt.fChildren[i].fType) {
+            param = this->llvmType(actualMethodType.fSubtypes[i - offset]) + " " +
+                    this->getCastReference(param, stmt.fChildren[i].fType,
+                        actualMethodType.fSubtypes[i - offset], out);
+        }
+        else {
+            param = this->llvmType(stmt.fChildren[i].fType) + " " + param;
+        }
+        args.push_back(param);
     }
     ASSERT(stmt.fChildren[0].fKind == IRNode::Kind::METHOD_REFERENCE);
-    bool isSuper = stmt.fChildren.size() > 1 && stmt.fChildren[1].fKind == IRNode::Kind::SUPER;
-    String methodRef = this->getMethodReference(m->fMethod.isVirtual() ? args[0] : "", m->fMethod,
-            isSuper, out);
-    out << "    call " << this->callingConvention(m->fMethod);
+    String methodRef = this->getMethodReference(m.isVirtual() ? args[0] : "", m, isSuper, out);
+    out << "    call " << this->callingConvention(m);
     const char* separator = "";
-    if (this->needsStructIndirection(m->fMethod)) {
+    if (this->needsStructIndirection(m)) {
         out << "void " << methodRef << "(";
-        String tmpType = this->llvmType(m->fMethod.fReturnType);
+        String tmpType = this->llvmType(m.fReturnType);
         String alloca = "%$tmp" + std::to_string(++fLabels);
         fMethodHeader << "    " << alloca << " = alloca " << tmpType << "\n";
         out << tmpType << "* " << alloca;
@@ -2195,11 +2242,7 @@ void LLVMCodeGenerator::writeReturn(const IRNode& r, std::ostream& out) {
     if (r.fChildren.size() == 1) {
         String ref = this->getReference(r.fChildren[0], out);
         const Type& rawType = r.fChildren[0].fType;
-        const Type actualType = fCurrentMethod->inheritedType(*fCompiler).fSubtypes.back();
-        if (rawType != actualType) {
-            ref = this->getCastReference(ref, rawType, actualType, out);
-        }
-        out << "    ret " << this->llvmType(actualType) << " " << ref << "\n";
+        out << "    ret " << this->llvmType(rawType) << " " << ref << "\n";
     }
     else {
         ASSERT(r.fChildren.size() == 0);
@@ -2410,7 +2453,7 @@ void LLVMCodeGenerator::writeMethodDeclaration(Method& method) {
     }
     fDeclaredMethods.insert(&method);
 
-    const Type actualType = method.inheritedType(*fCompiler);
+    const Type actualType = method.declaredType();
     std::ostream& out = fMethodDeclarations;
     bool indirect = this->needsStructIndirection(method);
     String cc = this->callingConvention(method);
@@ -2440,8 +2483,8 @@ void LLVMCodeGenerator::writeMethodDeclaration(Method& method) {
 }
 
 void LLVMCodeGenerator::createMethodShim(const Method& raw, const Type& effective,
-        std::ostream& out, String* outName, String* outType) {
-    abort();
+        std::ostream& rawOut, String* outName, String* outType) {
+    std::stringstream out;
     auto found = fMethodShims.find(&raw);
     if (found != fMethodShims.end()) {
         *outName = found->second.first;
@@ -2505,6 +2548,7 @@ void LLVMCodeGenerator::createMethodShim(const Method& raw, const Type& effectiv
     fTmpVars = oldTmpVar;
     *outName = result;
     fMethodShims[&raw] = std::make_pair(*outName, *outType);
+    rawOut << out.str();
 }
 
 void LLVMCodeGenerator::writeMethod(Method& method, const IRNode& body) {
@@ -2514,7 +2558,7 @@ void LLVMCodeGenerator::writeMethod(Method& method, const IRNode& body) {
     fTmpVars = 1;
     fCurrentBlock = "0";
     std::ostream& out = fMethods;
-    const Type actualType = method.inheritedType(*fCompiler);
+    const Type actualType = method.declaredType();
     out << "\ndefine " << this->callingConvention(method) <<
             this->llvmType(actualType.fSubtypes.back()) << " " << this->methodName(method) << "(";
     const char* separator = "";

@@ -51,6 +51,8 @@ struct Method : public Symbol {
      */
     Type declaredType() const;
 
+    Type declaredTypeWithSelf(Type self) const;
+
     /**
      * Returns the actual type of the method, taking inheritance into account.
      *
@@ -92,8 +94,6 @@ struct Method : public Symbol {
     mutable std::vector<std::unique_ptr<const MethodRef>> fMethodRefs;
 
 private:
-    Type declaredTypeWithSelf(Type self) const;
-
     Type inheritedTypeWithSelf(Compiler& compiler, Type self);
 
     typedef Symbol INHERITED;

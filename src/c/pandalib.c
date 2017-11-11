@@ -141,7 +141,8 @@ int main(int argc, char** argv) {
     args->count = argc;
     args->capacity = argc;
     args->data = malloc(argc * sizeof(Object*));
-    for (int i = 0; i < argc; ++i) {
+    int i;
+    for (i = 0; i < argc; ++i) {
         args->data[i] = (Object*) pandaNewString(argv[i], strlen(argv[i]));
     }
     pandaMain(args);
@@ -201,7 +202,8 @@ Process* panda$core$System$exec$panda$io$File$panda$collections$ListView$LTpanda
         int argCount = get_count(args);
         char** cargs = (char**) malloc((argCount + 2) * sizeof(char*));
         cargs[0] = pandaGetCString(path->path);
-        for (int i = 0; i < argCount; ++i) {
+        int i;
+        for (i = 0; i < argCount; ++i) {
             cargs[i + 1] = pandaGetCString(index(args, i));
         }
         cargs[argCount + 1] = NULL;

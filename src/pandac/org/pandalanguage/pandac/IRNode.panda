@@ -140,6 +140,8 @@ class IRNode : Immutable {
                 return payload.convert()
             when Kind.CONSTRUCT:
                 return "\{type}(\{children[0].children.join(", ")})"
+            when Kind.CALL:
+                return "\{(payload->MethodRef).value.name}(\{children.join(", ")})" -- FIXME parens
             when Kind.CAST:
                 return "\{children[0]}->\{type}"
             when Kind.VARIABLE_REFERENCE:
@@ -148,6 +150,10 @@ class IRNode : Immutable {
                 return "(\{children[0]} \{Compiler.operatorName(payload->Int)} \{children[1]})"
             when Kind.SELF:
                 return "self"
+            when Kind.REUSED_VALUE_DEFINITION:
+                return "\{children[0]}-* ReusedValueDefinition: \{payload} *-"
+            when Kind.REUSED_VALUE:
+                return "-* ReusedValue: \{payload} *-"
             otherwise:
                 return "<IRNode:\{kind}>"
         }

@@ -24,6 +24,7 @@ public:
     void finish() override {
         fOut << fTypeDeclarations.str();
         fOut << fStrings.str();
+        fOut << fWrapperShims.str();
         fOut << fShims.str();
         fOut << fMethodDeclarations.str();
         fOut << fMethods.str();
@@ -280,6 +281,8 @@ private:
     std::stringstream fTypeDeclarations;
 
     std::stringstream fStrings;
+
+    std::stringstream fWrapperShims;
 
     std::stringstream fShims;
 

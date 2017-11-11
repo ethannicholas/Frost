@@ -203,7 +203,12 @@ class Array<T> (List<T>) {
         for v in self {
             result.append(separator)
             separator := ", "
-            result.append(v)
+            if v != null {
+                result.append(v)
+            }
+            else {
+                result.append("<null>")
+            }
         }
         result.append("]")
         return result.convert()

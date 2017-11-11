@@ -6,6 +6,7 @@ uses org.pandalanguage.pandac.parser.TokenKind
 
 class Main {
     constant LLVM_DIR := "/opt/local/libexec/llvm-4.0"
+--    constant LLVM_DIR := "/usr"
 
     def opt:File
     def llc:File
