@@ -1102,6 +1102,63 @@ class Compiler (ErrorReporter) {
         }
     }
 
+    method foldInts(offset:Int, left:IRNode, op:Int, right:IRNode):IRNode? {
+        assert left.kind = IRNode.Kind.INT | left.kind = IRNode.Kind.NEGATED_INT
+        assert right.kind = IRNode.Kind.INT | right.kind = IRNode.Kind.NEGATED_INT
+        if left.kind = IRNode.Kind.NEGATED_INT | left.payload->UInt64 < Int64.MAX.convert() &
+                right.kind = IRNode.Kind.NEGATED_INT | right.payload->UInt64 < Int64.MAX.convert() {
+            -- both values fit into a signed Int64
+            def l:Int64 := (left.payload->UInt64).convert() -- FIXME parens
+            def r:Int64 := (right.payload->UInt64).convert() -- FIXME parens
+            match op {
+                when Token.Kind.ADD:
+                    return IRNode(IRNode.Kind.INT, offset, Type.IntLiteral(),
+                        (l + r).convert()->UInt64)
+                when Token.Kind.SUB:
+                    return IRNode(IRNode.Kind.INT, offset, Type.IntLiteral(),
+                        (l - r).convert()->UInt64)
+                when Token.Kind.MUL:
+                    return IRNode(IRNode.Kind.INT, offset, Type.IntLiteral(),
+                        (l * r).convert()->UInt64)
+                when Token.Kind.INTDIV:
+                    return IRNode(IRNode.Kind.INT, offset, Type.IntLiteral(),
+                        (l // r).convert()->UInt64)
+                when Token.Kind.REM:
+                    return IRNode(IRNode.Kind.INT, offset, Type.IntLiteral(),
+                        (l % r).convert()->UInt64)
+                when Token.Kind.EQ:
+                    return IRNode(IRNode.Kind.BIT, offset, Type.BitLiteral(), l = r)
+                when Token.Kind.NEQ:
+                    return IRNode(IRNode.Kind.BIT, offset, Type.BitLiteral(), l != r)
+                when Token.Kind.LT:
+                    return IRNode(IRNode.Kind.BIT, offset, Type.BitLiteral(), l < r)
+                when Token.Kind.GT:
+                    return IRNode(IRNode.Kind.BIT, offset, Type.BitLiteral(), l > r)
+                when Token.Kind.LTEQ:
+                    return IRNode(IRNode.Kind.BIT, offset, Type.BitLiteral(), l <= r)
+                when Token.Kind.GTEQ:
+                    return IRNode(IRNode.Kind.BIT, offset, Type.BitLiteral(), l >= r)
+                when Token.Kind.BITWISEAND:
+                    return IRNode(IRNode.Kind.INT, offset, Type.IntLiteral(),
+                        (l && r).convert()->UInt64)
+                when Token.Kind.BITWISEOR:
+                    return IRNode(IRNode.Kind.INT, offset, Type.IntLiteral(),
+                        (l || r).convert()->UInt64)
+                when Token.Kind.BITWISEXOR:
+                    return IRNode(IRNode.Kind.INT, offset, Type.IntLiteral(),
+                        (l ~~ r).convert()->UInt64)
+                when Token.Kind.SHIFTLEFT:
+                    return IRNode(IRNode.Kind.INT, offset, Type.IntLiteral(),
+                        (l << r).convert()->UInt64)
+                when Token.Kind.SHIFTRIGHT:
+                    return IRNode(IRNode.Kind.INT, offset, Type.IntLiteral(),
+                        (l >> r).convert()->UInt64)
+            }
+        }
+        error(offset, "invalid numeric operation")
+        return null
+    }
+
     method compileBinary(offset:Int, rawLeft:IRNode, op:Int, rawRight:IRNode):IRNode? {
         -- FIXME use var parameters
         var left := rawLeft
@@ -1170,6 +1227,10 @@ class Compiler (ErrorReporter) {
             return null
         }
         def children := Array<IRNode>()
+        if (left.kind = IRNode.Kind.INT | left.kind = IRNode.Kind.NEGATED_INT) &
+                (right.kind = IRNode.Kind.INT | right.kind = IRNode.Kind.NEGATED_INT) {
+            return foldInts(offset, left, op, right)
+        }
         if left.type.isBuiltinNumber() & coercionCost(right, left.type) != null {
             right := coerce(right, left.type)
             assert right != null
