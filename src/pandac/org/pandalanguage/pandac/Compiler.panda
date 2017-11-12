@@ -252,7 +252,12 @@ class Compiler (ErrorReporter) {
         if expr = null {
             return null
         }
-        return coerce(expr, variableType(expr))
+        match expr.kind {
+            when IRNode.Kind.UNRESOLVED_IDENTIFIER:
+                error(expr.offset, "unknown identifier")
+            otherwise:
+                return coerce(expr, variableType(expr))
+        }
     }
 
     method isValue(cl:ClassDecl):Bit {
@@ -1004,8 +1009,13 @@ class Compiler (ErrorReporter) {
                 def children := Array<IRNode>() -- FIXME literal
                 children.add(initCall)
                 return IRNode(IRNode.Kind.CONSTRUCT, m.offset, m.payload->Type, children)
+            otherwise:
+                def resolved := resolve(m)
+                if resolved = null {
+                    return null
+                }
+                error(resolved.offset, "value of type '\{resolved.type}' is not a method")
         }
-        assert false
     }
 
     function declaredType(m:MethodDecl):Type {
@@ -1484,16 +1494,29 @@ class Compiler (ErrorReporter) {
     method compileDot(d:ASTNode):IRNode? {
         assert d.kind = ASTNode.Kind.DOT
         assert d.children.get_count() = 1
-        def base := resolve(compileExpression(d.children[0]))
+        var base := compileExpression(d.children[0])
+        if base = null {
+            return null
+        }
+        if base.kind != IRNode.Kind.UNRESOLVED_IDENTIFIER {
+            base := resolve(base)
+        }
         if base = null {
             return null
         }
         def cl:ClassDecl?
-        if base.kind = IRNode.Kind.TYPE_REFERENCE {
-            cl := getClass(base.payload->Type)
-        }
-        else {
-            cl := getClass(base.type)
+        match base.kind {
+            when IRNode.Kind.TYPE_REFERENCE:
+                cl := getClass(base.payload->Type)
+            when IRNode.Kind.UNRESOLVED_IDENTIFIER:
+                def name := "\{base.payload}.\{d.payload}"
+                def cl := tryResolveClass(name)
+                if cl != null {
+                    return IRNode(IRNode.Kind.TYPE_REFERENCE, d.offset, Type.Class(), cl.type())
+                }
+                return IRNode(IRNode.Kind.UNRESOLVED_IDENTIFIER, d.offset, Type.Invalid(), name)
+            otherwise:
+                cl := getClass(base.type)
         }
         if cl = null {
             return null
@@ -1516,8 +1539,8 @@ class Compiler (ErrorReporter) {
         if s != null {
             return symbolRef(i.offset, null, s, symbolTable)
         }
-        error(i.offset, "unknown identifier '\{i.payload}'")
-        return null
+        return IRNode(IRNode.Kind.UNRESOLVED_IDENTIFIER, i.offset, Type.Invalid(),
+                i.payload->String)
     }
 
     method compileType(t:ASTNode):IRNode? {

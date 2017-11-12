@@ -23,6 +23,16 @@ class LLVMCodeGenerator (CodeGenerator) {
             self.breakLabel := breakLabel
             self.continueLabel := continueLabel
         }
+
+        @override
+        function convert():String {
+            if loopLabel != null {
+                return "LoopDescriptor<\{loopLabel}>"
+            }
+            else {
+                return "LoopDescriptor<>"
+            }
+        }
     }
 
     constant POINTER_SIZE        := 8
@@ -1778,7 +1788,7 @@ class LLVMCodeGenerator (CodeGenerator) {
             return loopDescriptors.peek()
         }
         for i in 0 .. loopDescriptors.get_count() {
-            if loopDescriptors.peek(i).loopLabel = name {
+            if loopDescriptors.peek(i).loopLabel != null & loopDescriptors.peek(i).loopLabel = name { -- FIXME shouldn't need null check
                 return loopDescriptors.peek(i)
             }
         }

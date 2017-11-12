@@ -41,6 +41,7 @@ class IRNode : Immutable {
         constant ASSERT                      := 1034
         constant IS_NULL                     := 1035
         constant IS_NONNULL                  := 1036
+        constant UNRESOLVED_IDENTIFIER       := 1037
     }
 
     def kind:Int
