@@ -1285,7 +1285,9 @@ class LLVMCodeGenerator (CodeGenerator) {
                 reusedValues[expr.payload->UInt64] := value
                 return value
             when IRNode.Kind.REUSED_VALUE:
-                return reusedValues[expr.payload->UInt64]
+                def result := reusedValues[expr.payload->UInt64]
+                assert result != null
+                return result
             when IRNode.Kind.NULL:
                 return "null"
             when IRNode.Kind.IS_NULL:
@@ -1865,9 +1867,9 @@ class LLVMCodeGenerator (CodeGenerator) {
             when IRNode.Kind.RETURN:
                 writeReturn(stmt, out)
             when IRNode.Kind.BREAK:
-                writeReturn(stmt, out)
+                writeBreak(stmt, out)
             when IRNode.Kind.CONTINUE:
-                writeReturn(stmt, out)
+                writeContinue(stmt, out)
             when IRNode.Kind.ASSERT:
                 writeAssert(stmt, out)
             otherwise:

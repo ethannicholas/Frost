@@ -333,12 +333,19 @@ String LLVMCodeGenerator::createWrapperShim(Method& m, std::ostream& out) {
     String selfType = "%" + escape_type_name(m.fOwner.fName) + "$wrapper*";
     out << "define ccc " << this->llvmType(m.fReturnType) << " " <<
             result << "(" << selfType << " %actualSelf";
-    Type methodType = m.declaredType();
+    Type actualMethodType = m.declaredType();
+    Type inheritedMethodType = m.inheritedType(*fCompiler);
     for (int i = 0; i < m.fParameters.size(); ++i) {
-        out << ", " << this->llvmType(methodType.fSubtypes[i]) << " %" << m.fParameters[i].fName;
+        out << ", " << this->llvmType(inheritedMethodType.fSubtypes[i]) << " %" <<
+                m.fParameters[i].fName;
     }
     out << ") {\n";
-    out << "    %self = bitcast " << selfType << " %actualSelf to %panda$core$Object*";
+    out << "    %self = bitcast " << selfType << " %actualSelf to %panda$core$Object*\n";
+    std::vector<String> parameters;
+    for (int i = 0; i < m.fParameters.size(); ++i) {
+        parameters.push_back(this->getCastReference("%" + m.fParameters[i].fName,
+                inheritedMethodType.fSubtypes[i], actualMethodType.fSubtypes[i], out));
+    }
     std::vector<IRNode> children;
     children.push_back(IRNode(Position(), IRNode::Kind::SELF, Type::Object()));
     String unwrapped = this->getTypedReference(IRNode(Position(), IRNode::Kind::CAST,
@@ -356,7 +363,7 @@ String LLVMCodeGenerator::createWrapperShim(Method& m, std::ostream& out) {
     out << "call " << this->callingConvention(m) << this->llvmType(m.fReturnType) << " " <<
             this->methodName(m) << "(" << unwrapped;
     for (int i = 0; i < m.fParameters.size(); ++i) {
-        out << ", " << this->llvmType(methodType.fSubtypes[i]) << " %" << m.fParameters[i].fName;
+        out << ", " << this->llvmType(actualMethodType.fSubtypes[i]) << parameters[i];
     }
     out << ")\n";
     out << "    ret " << returnValue << "\n";
@@ -591,8 +598,8 @@ String LLVMCodeGenerator::llvmType(const Method& m) {
 }
 
 String LLVMCodeGenerator::llvmWrapperType(Method& m) {
-    const Type actualType = m.declaredType();
-    String result = this->llvmType(actualType.fSubtypes.back());
+    const Type inheritedType = m.inheritedType(*fCompiler);
+    String result = this->llvmType(inheritedType.fSubtypes.back());
     result += "(";
     const char* separator = "";
     ASSERT(m.isInstance());
@@ -603,9 +610,9 @@ String LLVMCodeGenerator::llvmWrapperType(Method& m) {
     }
     result += "*";
     separator = ", ";
-    for (int i = 0; i < actualType.fSubtypes.size() - 1; ++i) {
+    for (int i = 0; i < inheritedType.fSubtypes.size() - 1; ++i) {
         result += separator;
-        result += this->llvmType(actualType.fSubtypes[i]);
+        result += this->llvmType(inheritedType.fSubtypes[i]);
         separator = ", ";
     }
     result += ")*";
