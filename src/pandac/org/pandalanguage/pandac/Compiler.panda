@@ -442,11 +442,11 @@ class Compiler (ErrorReporter) {
     }
 
     method addInheritedMethods(st:SymbolTable, name:String, result:Array<MethodRef>,
-            types:Array<Type>) {
+            types:ListView<Type>) {
     }
 
     method getMethodReference(st:SymbolTable, target:IRNode?, name:String, offset:Int,
-            types:Array<Type>):IRNode {
+            types:ListView<Type>):IRNode {
         def methods := Array<MethodRef>()
         def s := st[name]
         if s.kind = Symbol.Kind.METHOD {
@@ -482,6 +482,22 @@ class Compiler (ErrorReporter) {
         }
     }
 
+    function typeParameters(target:IRNode?):ListView<Type> {
+        if target != null {
+            def type:Type
+            if target.type.typeKind = Type.Kind.NULLABLE {
+                type := target.type.subtypes[0]
+            }
+            else {
+                type := target.type
+            }
+            if type.typeKind = Type.Kind.GENERIC {
+                return type.subtypes[1..]
+            }
+        }
+        return Array<Type>()
+    }
+
     method symbolRef(offset:Int, target:IRNode?, s:Symbol, st:SymbolTable):IRNode? {
         match s.kind {
             when Symbol.Kind.ALIAS:
@@ -492,9 +508,10 @@ class Compiler (ErrorReporter) {
                 }
                 return null
             when Symbol.Kind.CLASS:
-                return IRNode(IRNode.Kind.TYPE_REFERENCE, offset, Type.Class(), (s->ClassDecl).type()) -- FIXME parens
+                return IRNode(IRNode.Kind.TYPE_REFERENCE, offset, Type.Class(),
+                        (s->ClassDecl).type()) -- FIXME parens
             when Symbol.Kind.METHOD, Symbol.Kind.METHODS:
-                return getMethodReference(st, target, s.name, offset, Array<Type>())
+                return getMethodReference(st, target, s.name, offset, typeParameters(target))
             when Symbol.Kind.VARIABLE:
                 return IRNode(IRNode.Kind.VARIABLE_REFERENCE, offset, (s->Variable).type, -- FIXME parens
                         s->Variable)
@@ -527,8 +544,26 @@ class Compiler (ErrorReporter) {
         }
     }
 
-    function remapType(context:Type, type:Type):Type {
-        return type
+    function remapType(context:Type, raw:Type):Type {
+        match context.typeKind {
+            when Type.Kind.CLASS:
+                return raw
+            when Type.Kind.NULLABLE:
+                assert context.subtypes.get_count() = 1
+                return remapType(context.subtypes[0], raw)
+            when Type.Kind.GENERIC:
+                assert context.subtypes.get_count() >= 2
+                def typeMap := HashMap<String, Type>()
+                def base := context.subtypes[0]
+                def cl := tryResolveClass(base.name)
+                assert cl != null
+                for i in 1 .. context.subtypes.get_count() {
+                    typeMap[cl.name + "." + cl.parameters[i - 1].name] := context.subtypes[i]
+                }
+                return raw.remap(typeMap)
+            otherwise:
+                assert false
+        }
     }
 
     function variableType(type:Type):Type {
@@ -809,10 +844,10 @@ class Compiler (ErrorReporter) {
     }
 
     method cast(node:IRNode, offset:Int, isExplicit:Bit, target:Type):IRNode {
-        assert target != Type.Void()
         if node.type = target {
             return node
         }
+        assert target != Type.Void()
         if isExplicit & !canCast(node, target) {
             error(offset, "value of type '\{node.type}' cannot possibly be an instance of " +
                     "'\{target}'")
@@ -874,13 +909,19 @@ class Compiler (ErrorReporter) {
             finalArgs.add(coerce(target, m.value.owner.type()))
         }
         for i in 0 .. args.get_count() {
-            def coerced := coerce(args[i], m.parameter(i))
+            var coerced := coerce(args[i], m.parameter(i))
+            if coerced = null {
+                return null
+            }
+            coerced := coerce(coerced, m.value.parameters[i].type)
             if coerced = null {
                 return null
             }
             finalArgs.add(coerced)
         }
-        return IRNode(IRNode.Kind.CALL, offset, m.returnType(), m, finalArgs)
+        var result := IRNode(IRNode.Kind.CALL, offset, m.value.returnType, m, finalArgs)
+        result := cast(result, offset, true, m.returnType())
+        return result
     }
 
     method call(target:IRNode, name:String, args:ListView<IRNode>):IRNode? {
@@ -1840,14 +1881,15 @@ class Compiler (ErrorReporter) {
                 }
                 if value != null {
                     value := coerce(value, type)
-                    assert value.type = type
                     if value = null {
                         return null
                     }
+                    assert value.type = type
                 }
                 def v := Variable(t.offset, t.payload->String, type)
                 symbolTable.add(v)
-                return CompileTargetResult(IRNode(IRNode.Kind.VARIABLE_REFERENCE, v.offset, v.type, v), value)
+                return CompileTargetResult(IRNode(IRNode.Kind.VARIABLE_REFERENCE, v.offset, v.type,
+                        v), value)
             when ASTNode.Kind.TUPLE_TARGET:
                 assert false
             otherwise:

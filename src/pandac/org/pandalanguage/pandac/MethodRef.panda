@@ -5,10 +5,16 @@ class MethodRef {
 
     def types:ListView<Type>
 
+    def typeMap := HashMap<String, Type>()
+
     init(value:MethodDecl, types:ListView<Type>) {
         assert value.resolved
         self.value := value
         self.types := types
+        assert value.owner.parameters.get_count() >= types.get_count()
+        for i in 0 .. types.get_count() {
+            typeMap[value.owner.name + "." + value.owner.parameters[i].name] := types[i]
+        }
     }
 
     function parameterCount():Int {
@@ -16,11 +22,11 @@ class MethodRef {
     }
 
     function parameter(index:Int):Type {
-        return value.parameters[index].type
+        return value.parameters[index].type.remap(typeMap)
     }
 
     function returnType():Type {
-        return value.returnType
+        return value.returnType.remap(typeMap)
     }
 
     function type():Type {

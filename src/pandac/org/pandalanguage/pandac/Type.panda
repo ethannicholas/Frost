@@ -226,6 +226,63 @@ class Type : Symbol (Key<Type>) {
         return Type.Any()
     }
 
+    method remap(types:HashMap<String, Type>):Type {
+        if types.get_count() = 0 {
+            return self
+        }
+        match typeKind {
+            when Kind.GENERIC_PARAMETER:
+                def found := types[name]
+                if found != null {
+                    return found
+                }
+                return self
+            when Kind.GENERIC:
+                def remapped := Array<Type>()
+                def name := MutableString(self.name + "<")
+                var separator := ""
+                for t in subtypes {
+                    def child := t.remap(types)
+                    name.append(separator)
+                    name.append(child.name)
+                    remapped.add(child)
+                    separator := ", "
+                }
+                return Type(name.convert(), Kind.GENERIC, offset, remapped, resolved)
+            when Kind.NULLABLE:
+                return subtypes[0].remap(types).nullable()
+            when Kind.METHOD, Kind.FUNCTION:
+                def remapped := Array<Type>()
+                def name := MutableString("(")
+                var separator := ""
+                assert subtypes.get_count() >= 1
+                for i in 0 .. subtypes.get_count() {
+                    def child := subtypes[i].remap(types)
+                    name.append(separator)
+                    name.append(child.name)
+                    remapped.add(child)
+                    separator := ", "
+                }
+                if typeKind = Kind.FUNCTION {
+                    name.append(")=>(")
+                }
+                else {
+                    name.append(")=&>(")
+                }
+                if subtypes[subtypes.get_count() - 1] != Type.Void() {
+                    def child := subtypes[subtypes.get_count() - 1].remap(types)
+                    name.append(child.name)
+                    remapped.add(child)
+                }
+                else {
+                    remapped.add(Type.Void())
+                }
+                name.append(")")
+                return Type(name.convert(), typeKind, offset, remapped, resolved)
+            otherwise: return self
+        }
+    }
+
     @override
     function hash():Int {
         return name.hash()
