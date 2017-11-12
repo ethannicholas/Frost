@@ -989,31 +989,23 @@ class LLVMCodeGenerator (CodeGenerator) {
         def target := compiler.getClass(dstType)
         assert target != null
         if dstType.typeKind = Type.Kind.NULLABLE {
-            assert false
--*            // casting nullable wrapper to nullable value, need to special-case null
-            String testStart = fCurrentBlock;
-            String isNonNull = nextVar();
-            out << "    " << isNonNull << " = icmp ne " << llvmType(srcType) <<
-                    " " << value << ", null\n";
-            String nonNullLabel = nextLabel();
-            String endLabel = nextLabel();
-            out << "    br i1 " << isNonNull << ", label %" << nonNullLabel << ", label %" <<
-                    endLabel << "\n";
-            createBlock(nonNullLabel, out);
-            String wrapped = unwrapValue(value, srcType, dstType.fSubtypes[0], out);
-            String nonNullValue = toNullableValue(wrapped, dstType.fSubtypes[0], dstType, out);
-            out << "    br label %" << endLabel << "\n";
-            createBlock(endLabel, out);
-            String result = nextVar();
-            out << "    " << result << " = phi " << llvmType(dstType) << " [{";
-            const char* separator = " ";
-            for (const Field* f : fields) {
-                out << separator << llvmType(f->fType) << " undef";
-                separator = ", ";
-            }
-            out << separator << "i1 0 }, %" << testStart << "], [" << nonNullValue << ", %" <<
-                    nonNullLabel << "]\n";
-            return result; *-
+            -- casting nullable wrapper to nullable value, need to special-case null
+            def testStart := currentBlock
+            def isNonNull := nextVar()
+            out.printLine("\{isNonNull} = icmp ne \{type(srcType)} \{value}, null")
+            def nonNullLabel := nextLabel()
+            def endLabel := nextLabel()
+            out.printLine("br i1 \{isNonNull}, label %\{nonNullLabel}, label %\{endLabel}")
+            createBlock(nonNullLabel, out)
+            def wrapped := unwrapValue(value, srcType, dstType.subtypes[0], out)
+            def nonNullValue := toNullableValue(wrapped, dstType.subtypes[0], dstType, out)
+            out.printLine("br label %\{endLabel}")
+            createBlock(endLabel, out)
+            def result := nextVar()
+            out.print("\{result} = phi \{type(dstType)} " +
+                    "[{ \{type(dstType.subtypes[0])} undef, i1 0 }, " +
+                    "%\{testStart}], [\{nonNullValue}, %\{nonNullLabel}]")
+            return result
         }
         def targetType := type(dstType)
         def wrapperTypeName := wrapperTypeName(dstType)
@@ -1042,7 +1034,6 @@ class LLVMCodeGenerator (CodeGenerator) {
     }
 
     method getCastReference(value:String, src:Type, target:Type, out:OutputStream):String {
-        out.printLine("; cast \{value} from \{src} to \{target}")
         def op:String
         if target.isBuiltinNumber() {
             assert src.isBuiltinNumber()
@@ -1219,6 +1210,52 @@ class LLVMCodeGenerator (CodeGenerator) {
         return "%self"
     }
 
+    method getIsNullReference(test:IRNode, out:OutputStream):String {
+        assert test.kind = IRNode.Kind.IS_NULL
+        assert test.children.get_count() = 1
+        def value := getTypedReference(test.children[0], out)
+        def cl := compiler.getClass(test.children[0].type)
+        def resultValue:String
+        if compiler.isValue(cl) {
+            if test.children[0].type.typeKind != Type.Kind.NULLABLE {
+                return "{ i1 0 }"
+            }
+            def field := nextVar()
+            out.printLine("\{field} = extractvalue \{value}, 1")
+            resultValue := nextVar()
+            out.printLine("\{resultValue} = xor i1 \{field}, -1")
+        }
+        else {
+            resultValue := nextVar()
+            out.printLine("\{resultValue} = icmp eq \{value}, null")
+        }
+        def result := nextVar()
+        out.printLine("\{result} = insertvalue %panda$core$Bit { i1 undef }, i1 \{resultValue}, 0")
+        return result
+    }
+
+    method getIsNonNullReference(test:IRNode, out:OutputStream):String {
+        assert test.kind = IRNode.Kind.IS_NONNULL
+        assert test.children.get_count() = 1
+        def value := getTypedReference(test.children[0], out)
+        def cl := compiler.getClass(test.children[0].type)
+        def resultValue:String
+        if compiler.isValue(cl) {
+            if test.children[0].type.typeKind != Type.Kind.NULLABLE {
+                return "{ i1 1 }"
+            }
+            resultValue := nextVar()
+            out.printLine("\{resultValue} = extractvalue \{value}, 1")
+        }
+        else {
+            resultValue := nextVar()
+            out.printLine("\{resultValue} = icmp neq \{value}, null")
+        }
+        def result := nextVar()
+        out.printLine("\{result} = insertvalue %panda$core$Bit { i1 undef }, i1 \{resultValue}, 0")
+        return result
+    }
+
     method getReference(expr:IRNode, out:OutputStream):String {
         match expr.kind {
             when IRNode.Kind.BINARY:
@@ -1249,6 +1286,12 @@ class LLVMCodeGenerator (CodeGenerator) {
                 return value
             when IRNode.Kind.REUSED_VALUE:
                 return reusedValues[expr.payload->UInt64]
+            when IRNode.Kind.NULL:
+                return "null"
+            when IRNode.Kind.IS_NULL:
+                return getIsNullReference(expr, out)
+            when IRNode.Kind.IS_NONNULL:
+                return getIsNonNullReference(expr, out)
             otherwise:
                 assert false, "unsupported expression \{expr}"
         }

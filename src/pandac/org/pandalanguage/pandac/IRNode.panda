@@ -34,11 +34,13 @@ class IRNode : Immutable {
         constant REUSED_VALUE_DEFINITION     := 1027
         constant REUSED_VALUE                := 1028
         constant RANGE_FOR                   := 1029
-        constant NULL_LITERAL                := 1030
+        constant NULL                        := 1030
         constant UNRESOLVED_RANGE            := 1031
         constant NEGATED_INT                 := 1032
         constant STRING                      := 1033
         constant ASSERT                      := 1034
+        constant IS_NULL                     := 1035
+        constant IS_NONNULL                  := 1036
     }
 
     def kind:Int
@@ -130,7 +132,10 @@ class IRNode : Immutable {
                 result.append("}")
                 return result.convert()
             when Kind.METHOD_REFERENCE:
-                return "\{children[0]}.\{(payload->MethodRef).value.name}" -- FIXME parens
+                if children.get_count() > 0 {
+                    return "\{children[0]}.\{(payload->MethodRef).value.name}" -- FIXME parens
+                }
+                return (payload->MethodRef).value.name -- FIXME parens
             when Kind.UNRESOLVED_METHOD_REFERENCE:
                 return "\{children[0]}.\{(payload->ListView<MethodRef>)[0].value.name}" -- FIXME parens
             when Kind.TYPE_REFERENCE:
@@ -157,6 +162,8 @@ class IRNode : Immutable {
                 return "-* ReusedValue: \{payload} *-"
             when Kind.FIELD_REFERENCE:
                 return "\{children[0]}.\{(payload->FieldDecl).name}" -- FIXME parens
+            when Kind.NULL:
+                return "null"
             otherwise:
                 return "<IRNode:\{kind}>"
         }

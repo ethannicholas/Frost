@@ -16,6 +16,10 @@ class Annotations {
 
     def flags:Int
 
+    init() {
+        init(0)
+    }
+
     init(flags:Int) {
         self.flags := flags
     }
