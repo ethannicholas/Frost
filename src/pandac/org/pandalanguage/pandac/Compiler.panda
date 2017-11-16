@@ -241,6 +241,9 @@ class Compiler (ErrorReporter) {
         symbolTable := f.owner.symbolTable
         if f.type != Type.Void() {
             f.type := resolve(f.type)
+            if f.rawValue != null {
+                f.value := coerce(compileExpression(f.rawValue), f.type)
+            }
             currentFile.pop()
             symbolTable := old
             return
@@ -2401,8 +2404,30 @@ class Compiler (ErrorReporter) {
                 symbols.add(Variable(m.offset, p.name, p.type, Variable.Storage.PARAMETER))
             }
             symbolTable := symbols
-            def compiled := compileBlock(m.body)
+            def fieldInitializers := Array<IRNode>()
+            if m.methodKind = MethodDecl.Kind.INIT {
+                for f in currentClass.peek().fields {
+                    resolve(f)
+                    if !f.annotations.isClass() & f.value != null {
+                        def children := Array<IRNode>()
+                        children.add(IRNode(IRNode.Kind.SELF, m.offset, currentClass.peek().type()))
+                        def fieldRef := IRNode(IRNode.Kind.FIELD_REFERENCE, m.offset, f.type, f,
+                                children)
+                        children.clear()
+                        children.add(fieldRef)
+                        children.add(f.value)
+                        fieldInitializers.add(IRNode(IRNode.Kind.BINARY, f.offset,
+                                Token.Kind.ASSIGNMENT, children))
+                    }
+                }
+            }
+            var compiled := compileBlock(m.body)
             if compiled != null {
+                if fieldInitializers.get_count() != 0 {
+                    def children := Array<IRNode>(fieldInitializers)
+                    children.addAll(compiled.children)
+                    compiled := IRNode(IRNode.Kind.BLOCK, m.body.offset, children)
+                }
                 codeGenerator.write(m, compiled)
             }
             assert symbolTable == symbols
