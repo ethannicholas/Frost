@@ -49,6 +49,7 @@ class ImmutableArray<T> (ListView<T>) {
 
     @override
     function [](index:Int):T {
+        assert index >= 0 & index < count
         return data[index]
     }
 

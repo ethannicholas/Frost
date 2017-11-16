@@ -155,6 +155,12 @@ void panda$core$System$exit$panda$core$Int64(int64_t code) {
     exit(code);
 }
 
+void panda$core$System$crash() {
+    fflush(stdout);
+    fflush(stderr);
+    __builtin_trap();
+}
+
 Process* panda$core$System$exec$panda$io$File$panda$collections$ListView$LTpanda$core$String$GT$R$panda$core$System$Process$Q(
         File* path, Object* args) {
     // FIXME need to output headers so I can kill these hardcoded interface method offsets

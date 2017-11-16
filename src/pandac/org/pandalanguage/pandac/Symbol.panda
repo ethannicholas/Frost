@@ -24,4 +24,8 @@ class Symbol {
         self.offset := offset
         self.name := name
     }
+
+    function get_heritable():Bit {
+        return true
+    }
 }

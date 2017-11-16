@@ -157,6 +157,9 @@ class Scanner {
             parameters.add(MethodDecl.Parameter(p.payload->String, convertType(p.children[0])))
         }
         def returnType := convertType(m.children[3])
+        if kind = MethodDecl.Kind.FUNCTION & returnType = Type.Void() {
+            compiler.error(m.offset, "functions must have a return type")
+        }
         if m.children[4].kind = ASTNode.Kind.BLOCK {
             return MethodDecl(owner, m.offset, doccomment, annotations, kind, name, parameters,
                     returnType, m.children[4])

@@ -74,6 +74,7 @@ class MutableString {
     method clear() {
         data := data.realloc(DEFAULT_SIZE)
         length := 0
+        maxLength := DEFAULT_SIZE
     }
 
     @override

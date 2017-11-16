@@ -57,6 +57,10 @@ class Compiler (ErrorReporter) {
         root.add(Type("builtin_int16", Type.Kind.BUILTIN_INT, -1, true))
         root.add(Type("builtin_int32", Type.Kind.BUILTIN_INT, -1, true))
         root.add(Type("builtin_int64", Type.Kind.BUILTIN_INT, -1, true))
+        root.add(Type("builtin_uint8", Type.Kind.BUILTIN_UINT, -1, true))
+        root.add(Type("builtin_uint16", Type.Kind.BUILTIN_UINT, -1, true))
+        root.add(Type("builtin_uint32", Type.Kind.BUILTIN_UINT, -1, true))
+        root.add(Type("builtin_uint64", Type.Kind.BUILTIN_UINT, -1, true))
         root.add(Alias("Int", "panda.core.Int64", -1))
         addAlias("panda.collections.Array")
         addAlias("panda.collections.Collection")
@@ -68,6 +72,8 @@ class Compiler (ErrorReporter) {
         addAlias("panda.collections.List")
         addAlias("panda.collections.ListView")
         addAlias("panda.collections.ListWriter")
+        addAlias("panda.collections.HashMap")
+        addAlias("panda.collections.Map")
         addAlias("panda.collections.Stack")
         addAlias("panda.core.Class")
         addAlias("panda.core.Bit")
@@ -79,11 +85,18 @@ class Compiler (ErrorReporter) {
         addAlias("panda.core.Int32")
         addAlias("panda.core.Int64")
         addAlias("panda.core.Immutable")
+        addAlias("panda.core.MutableString")
         addAlias("panda.core.Object")
         addAlias("panda.core.Range")
         addAlias("panda.core.String")
         addAlias("panda.core.System")
+        addAlias("panda.core.UInt8")
+        addAlias("panda.core.UInt16")
+        addAlias("panda.core.UInt32")
+        addAlias("panda.core.UInt64")
         addAlias("panda.core.Value")
+        addAlias("panda.math.Random")
+        addAlias("panda.math.XorShift128Plus")
         addAlias("panda.io.Console")
         addAlias("panda.io.File")
         addAlias("panda.io.IndentedOutputStream")
@@ -181,6 +194,7 @@ class Compiler (ErrorReporter) {
         }
         cl.resolved := true
         currentFile.push(cl.source)
+        currentClass.push(cl)
         def old := symbolTable
         symbolTable := cl.symbolTable
         if cl.rawSuper != null {
@@ -196,6 +210,7 @@ class Compiler (ErrorReporter) {
             cl.rawInterfaces[i] := resolve(cl.rawInterfaces[i])
         }
         symbolTable := old
+        currentClass.pop()
         currentFile.pop()
     }
 
@@ -397,14 +412,23 @@ class Compiler (ErrorReporter) {
         def result := Array<MethodDecl>()
         for m in intfClass.methods {
             def found := findMethod(cl.type(), m.name, remapType(intf, inheritedType(m)), false)
-            assert found != null, "internal error: interface method \{m.signature()} not found in " +
-                    cl.name
+            assert found != null, "internal error: interface method \{m.signature()} not found " +
+                    "in \{cl.name}"
             result.add(found)
         }
         return result
     }
 
     method getSymbolTable(cl:ClassDecl):SymbolTable {
+        if cl.symbolTable.parents.get_count() <= 1 {
+            resolve(cl)
+            if cl.rawSuper != null {
+                def superCl := getClass(cl.rawSuper)
+                if superCl != null {
+                    cl.symbolTable.parents.add(getSymbolTable(superCl))
+                }
+            }
+        }
         return cl.symbolTable
     }
 
@@ -420,7 +444,6 @@ class Compiler (ErrorReporter) {
                     currentFile.pop()
                     return cl.virtualMethods
                 }
-                getSymbolTable(cl).parents.add(getSymbolTable(superCl))
                 cl.virtualMethods.addAll(getVTable(superCl))
             }
             for derived in cl.methods {
@@ -589,6 +612,13 @@ class Compiler (ErrorReporter) {
             when IRNode.Kind.UNRESOLVED_RANGE:
                 return Type.RangeOf(variableType(expr.children[0].type.union(
                         expr.children[1].type)))
+            when IRNode.Kind.UNRESOLVED_INDEX:
+                def args := expr.children[1..]
+                def c := call(expr.children[0], "[]", args)
+                if c = null {
+                    return Type.Any()
+                }
+                return c.type
         }
         return variableType(expr.type)
     }
@@ -637,7 +667,17 @@ class Compiler (ErrorReporter) {
                 }
         }
         match type.typeKind {
-            when Type.Kind.BUILTIN_BIT: return coercionCost(Type.Bit(), target)
+            when Type.Kind.BUILTIN_BIT:
+                return coercionCost(Type.Bit(), target)
+            when Type.Kind.UNRESOLVED:
+                var best:Int? := null
+                for t in type.subtypes {
+                    def cost := coercionCost(t, target)
+                    if best = null | cost < best {
+                        best := cost
+                    }
+                }
+                return best
         }
         def targetClass := getClass(target)
         if targetClass = null {
@@ -734,6 +774,8 @@ class Compiler (ErrorReporter) {
                     return cost1 + cost2
                 }
                 return coercionCost(variableType(expr), target)
+            when IRNode.Kind.UNRESOLVED_INDEX:
+                return coercionCost(expr.type, target)
         }
         assert expr.type != null
         return coercionCost(expr.type, target)
@@ -774,53 +816,87 @@ class Compiler (ErrorReporter) {
             def intermediate := coerce(expr, expr.type.subtypes[0])
             return coerce(intermediate, target)
         }
-        if expr.kind = IRNode.Kind.INT | expr.kind = IRNode.Kind.NEGATED_INT {
-            if target.isBuiltinNumber() {
-                return IRNode(expr.kind, expr.offset, target, expr.payload->UInt64)
-            }
-            if target.isClass() & !target.isNumber() {
-                def varType := coerce(expr, variableType(expr))
-                if varType != null {
-                    return coerce(varType, target)
+        match expr.kind {
+            when IRNode.Kind.INT, IRNode.Kind.NEGATED_INT:
+                if target.isBuiltinNumber() {
+                    return IRNode(expr.kind, expr.offset, target, expr.payload->UInt64)
                 }
-            }
-        }
-        if expr.kind = IRNode.Kind.BIT {
-            if target = Type.BuiltinBit() {
-                return IRNode(IRNode.Kind.BIT, expr.offset, target, expr.payload->Bit)
-            }
-            if target.isClass() & target != Type.Bit() {
-                def varType := coerce(expr, variableType(expr))
-                if varType != null {
-                    return coerce(varType, target)
+                if target.isClass() & !target.isNumber() {
+                    def varType := coerce(expr, variableType(expr))
+                    if varType != null {
+                        return coerce(varType, target)
+                    }
                 }
-            }
-        }
-        if expr.kind = IRNode.Kind.UNRESOLVED_RANGE {
-            assert expr.children.get_count() = 3
-            if target.isRange() {
-                assert target.typeKind = Type.Kind.GENERIC
-                def param := target.subtypes[1]
-                def start := coerce(expr.children[0], param)
-                if start = null {
-                    return null
+            when IRNode.Kind.BIT:
+                if target = Type.BuiltinBit() {
+                    return IRNode(IRNode.Kind.BIT, expr.offset, target, expr.payload->Bit)
                 }
-                def end := coerce(expr.children[1], param)
-                if end = null {
-                    return null
+                if target.isClass() & target != Type.Bit() {
+                    def varType := coerce(expr, variableType(expr))
+                    if varType != null {
+                        return coerce(varType, target)
+                    }
                 }
-                def args := Array<IRNode>()
-                args.add(start)
-                args.add(end)
-                args.add(expr.children[2])
-                args.add(IRNode(IRNode.Kind.BIT, expr.offset, Type.BuiltinBit(), expr.payload->Bit))
-                def target := IRNode(IRNode.Kind.TYPE_REFERENCE, expr.offset, Type.Class(),
-                        target)
-                return call(target, args)
-            }
-            else {
-                return coerce(resolve(expr), target)
-            }
+            when IRNode.Kind.UNRESOLVED_RANGE:
+                assert expr.children.get_count() = 3
+                if target.isRange() {
+                    assert target.typeKind = Type.Kind.GENERIC
+                    def param := target.subtypes[1]
+                    def start := coerce(expr.children[0], param)
+                    if start = null {
+                        return null
+                    }
+                    def end := coerce(expr.children[1], param)
+                    if end = null {
+                        return null
+                    }
+                    def args := Array<IRNode>()
+                    args.add(start)
+                    args.add(end)
+                    args.add(expr.children[2])
+                    args.add(IRNode(IRNode.Kind.BIT, expr.offset, Type.BuiltinBit(), expr.payload->Bit))
+                    def target := IRNode(IRNode.Kind.TYPE_REFERENCE, expr.offset, Type.Class(),
+                            target)
+                    return call(target, args)
+                }
+                else {
+                    return coerce(resolve(expr), target)
+                }
+            when IRNode.Kind.UNRESOLVED_METHOD_CALL:
+                def methods := expr.children[0].payload->ListView<MethodRef>
+                def args := expr.children[1..]
+                var best := Array<MethodRef>()
+                var bestCost:Int? := null
+                for m in methods {
+                    def cost := callCost(m, args, target)
+                    if cost = null {
+                        continue
+                    }
+                    if bestCost = null {
+                        best.add(m)
+                        bestCost := cost
+                        continue
+                    }
+                    if cost < bestCost {
+                        best.clear()
+                        bestCost = cost
+                    }
+                    if cost = bestCost {
+                        best.add(m)
+                    }
+                }
+                if best.get_count() = 1 {
+                    def callTarget:IRNode?
+                    if expr.children[0].children.get_count() > 0 {
+                        callTarget := expr.children[0].children[0]
+                    }
+                    def result := call(expr.offset, callTarget, best[0], args)
+                    return coerce(result, target)
+                }
+                assert false, "no or ambiguous match on method call"
+            when IRNode.Kind.UNRESOLVED_INDEX:
+                def args := expr.children[1..]
+                return call(expr.children[0], "[]", args, target)
         }
         if coercionCost(expr, target) != null {
             def cl := getClass(target)
@@ -850,17 +926,34 @@ class Compiler (ErrorReporter) {
         return null
     }
 
-    method canCast(node:IRNode, target:Type):Bit {
-        if node.type.isPointer() & target.isPointer() {
+    method canCast(type:Type, target:Type):Bit {
+        if type.isPointer() & target.isPointer() {
             return true
         }
+        if coercionCost(type, target) != null {
+            return true
+        }
+        if type.isBuiltinNumber() & target.isBuiltinNumber() {
+            return true
+        }
+        if type.typeKind = Type.Kind.UNRESOLVED {
+            for t in type.subtypes {
+                if coercionCost(t, target) != null{
+                    return true
+                }
+            }
+        }
+        if type.typeKind = Type.Kind.INVALID {
+            return false
+        }
+        return coercionCost(target, type) != null
+    }
+
+    method canCast(node:IRNode, target:Type):Bit {
         if coercionCost(node, target) != null {
             return true
         }
-        if node.type.isBuiltinNumber() & target.isBuiltinNumber() {
-            return true
-        }
-        return coercionCost(target, node.type) != null
+        return canCast(node.type, target)
     }
 
     method cast(node:IRNode, offset:Int, isExplicit:Bit, target:Type):IRNode {
@@ -871,6 +964,10 @@ class Compiler (ErrorReporter) {
         if isExplicit & !canCast(node, target) {
             error(offset, "value of type '\{node.type}' cannot possibly be an instance of " +
                     "'\{target}'")
+        }
+        match node.kind {
+            when IRNode.Kind.UNRESOLVED_METHOD_CALL:
+                return coerce(node, target)
         }
         def children := Array<IRNode>() -- FIXME literal
         children.add(node)
@@ -925,8 +1022,29 @@ class Compiler (ErrorReporter) {
         assert m.value.resolved
         assert m.parameterCount() = args.get_count(), "invalid call: \{m} with args: \{args}"
         def finalArgs := Array<IRNode>()
-        if target != null & !m.value.annotations.isClass() {
+        if target != null & target.kind != IRNode.Kind.CONSTRUCTED_OBJECT &
+                !m.value.annotations.isClass() {
             finalArgs.add(coerce(target, m.value.owner.type()))
+        }
+        if m.value.methodKind = MethodDecl.Kind.INIT {
+            if target = null {
+                if currentMethod.peek().methodKind = MethodDecl.Kind.INIT {
+                    finalArgs.add(IRNode(IRNode.Kind.SELF, offset, currentClass.peek().type()))
+                }
+                else {
+                    error(offset, "cannot directly call 'init' outside of an init method")
+                }
+            }
+            else if target.kind != IRNode.Kind.SELF & target.kind != IRNode.Kind.SUPER &
+                    target.kind != IRNode.Kind.CONSTRUCTED_OBJECT {
+                error(offset, "'init' may only be called on 'self' or 'super'")
+            }
+        }
+        else if m.value.isInstance() & target = null {
+            finalArgs.add(IRNode(IRNode.Kind.SELF, offset, currentClass.peek().type()))
+            if !currentMethod.peek().isInstance() {
+                error(offset, "cannot call instance \{m.value.signature()} from a class context")
+            }
         }
         for i in 0 .. args.get_count() {
             var coerced := coerce(args[i], m.parameter(i))
@@ -957,7 +1075,7 @@ class Compiler (ErrorReporter) {
         if cl = null {
             return null
         }
-        def s := cl.symbolTable[name]
+        def s := getSymbolTable(cl)[name]
         if s = null {
             error(target.offset, "class '\{cl.name}' does not have a member named '\{name}'")
             return null
@@ -966,7 +1084,7 @@ class Compiler (ErrorReporter) {
             error(target.offset, "'\{cl.name}.\{name}' is not a method")
             return null
         }
-        def ref := symbolRef(target.offset, target, s, cl.symbolTable)
+        def ref := symbolRef(target.offset, target, s, getSymbolTable(cl))
         if ref = null {
             return null
         }
@@ -981,10 +1099,32 @@ class Compiler (ErrorReporter) {
         match m.kind {
             when IRNode.Kind.METHOD_REFERENCE:
                 def target:IRNode?
-                return call(m.offset, m.children[0], m.payload->MethodRef, args)
+                if m.children.get_count() = 0 {
+                    target := null
+                }
+                else {
+                    assert m.children.get_count() = 1
+                    target := m.children[0]
+                }
+                return call(m.offset, target, m.payload->MethodRef, args)
             when IRNode.Kind.UNRESOLVED_METHOD_REFERENCE:
                 def methods := Array<MethodRef>(m.payload->ListView<MethodRef>)
                 matchMethods(methods, args, expectedType)
+                if methods.get_count() = 0 {
+                    def name := m.payload->ListView<MethodRef>[0].value.name
+                    def msg := MutableString("no match for call to '\{name}(")
+                    var separator := ""
+                    for a in args {
+                        msg.append(separator)
+                        msg.append(a.type)
+                        separator := ", "
+                    }
+                    msg.append(")'")
+                    if expectedType != null {
+                        msg.append(" with return type '\{expectedType}'")
+                    }
+                    error(m.offset, msg.convert())
+                }
                 if methods.get_count() = 1 {
                     def target:IRNode?
                     if m.children.get_count() = 1 {
@@ -996,13 +1136,18 @@ class Compiler (ErrorReporter) {
                     }
                     return call(m.offset, target, methods[0], args)
                 }
-                assert false, "failed method match: \{methods}"
+                def children := Array<IRNode>()
+                children.add(IRNode(IRNode.Kind.UNRESOLVED_METHOD_REFERENCE, m.offset,
+                        Type.Invalid(), methods, m.children))
+                children.addAll(args)
+                def types := Array<Type>()
+                for m in methods {
+                    types.add(m.returnType())
+                }
+                return IRNode(IRNode.Kind.UNRESOLVED_METHOD_CALL, m.offset, Type(types), children)
             when IRNode.Kind.TYPE_REFERENCE:
-                def cl := getClass(m.payload->Type)
-                assert cl != null
-                def methods := getMethodReference(cl.symbolTable, null, "init", m.offset,
-                        Array<Type>())
-                def initCall := resolve(call(methods, args))
+                def target := IRNode(IRNode.Kind.CONSTRUCTED_OBJECT, m.offset, m.payload->Type)
+                def initCall := resolve(call(target, "init", args))
                 if initCall = null {
                     return null
                 }
@@ -1225,6 +1370,72 @@ class Compiler (ErrorReporter) {
         return null
     }
 
+    function unwrapCast(expr:IRNode):IRNode {
+        if expr.kind = IRNode.Kind.CAST {
+            return unwrapCast(expr.children[0])
+        }
+        return expr
+    }
+
+    method compileIndexedAssignment(offset:Int, left:IRNode, op:Int, right:IRNode):IRNode? {
+        assert left.kind = IRNode.Kind.UNRESOLVED_INDEX
+        assert left.children.get_count() = 2
+        if op = Token.Kind.ASSIGNMENT {
+            def args := Array<IRNode>() -- FIXME literal
+            args.add(left.children[1])
+            args.add(right)
+            return call(left.children[0], "[]:=", args)
+        }
+        assert isAssignment(op)
+        -- compound indexed assignment (e.g. foo[bar] += 1), which needs to get converted to
+        -- foo.[]:=(bar, foo.[](bar) + 1). We need to reuse both the base and the index so they're
+        -- only evaluated once.
+        var resolved := resolve(left)
+        if resolved = null {
+            return null
+        }
+        resolved := unwrapCast(resolved)
+        assert resolved.children.get_count() = 2
+        def children := Array<IRNode>()
+        children.add(unwrapCast(resolved.children[0]))
+        reusedValueCount += 1
+        def baseId := reusedValueCount
+        def base := IRNode(IRNode.Kind.REUSED_VALUE_DEFINITION, children[0].offset,
+                children[0].type, baseId, children)
+        children.clear()
+
+        children.add(resolved.children[1])
+        reusedValueCount += 1
+        def indexId := reusedValueCount
+        def index := IRNode(IRNode.Kind.REUSED_VALUE_DEFINITION, children[0].offset,
+                children[0].type, indexId, children)
+        def baseRef := IRNode(IRNode.Kind.REUSED_VALUE, base.offset, base.type, baseId)
+        def indexRef := IRNode(IRNode.Kind.REUSED_VALUE, index.offset, index.type, indexId)
+        -- in our example, foo.[](bar)
+        def rhsIndex := compileBinary(offset, baseRef, Token.Kind.LBRACKET, indexRef)
+        if rhsIndex = null {
+            return null
+        }
+        -- in our example, foo.[](bar) + 1
+        var value := compileBinary(offset, rhsIndex, removeAssignment(op), right)
+        if value = null {
+            return null
+        }
+        -- 32 bit promotion means that e.g. int8 += int8 will result in a 32 bit value that can't be
+        -- stored back into the original lvalue. Special case this and convert it back to its
+        -- original size.
+        if rhsIndex.type.isNumber() & right.type.isNumber() & rhsIndex.type != value.type {
+            value := call(value, "convert", Array<IRNode>(), left.type) -- FIXME literal
+            if value = null {
+                return null
+            }
+        }
+        children.clear()
+        children.add(index)
+        children.add(value)
+        return call(base, "[]:=", children)
+    }
+
     method compileBinary(offset:Int, rawLeft:IRNode, op:Int, rawRight:IRNode):IRNode? {
         -- FIXME use var parameters
         var left := rawLeft
@@ -1258,6 +1469,9 @@ class Compiler (ErrorReporter) {
             }
         }
         if op = Token.Kind.ASSIGNMENT {
+            if left.kind = IRNode.Kind.UNRESOLVED_INDEX {
+                return compileIndexedAssignment(offset, left, op, right)
+            }
             left := resolve(left)
             if left = null {
                 return null
@@ -1277,9 +1491,9 @@ class Compiler (ErrorReporter) {
         }
         if isAssignment(op) {
             -- compound assignment
-            -*if left.kind = IRNode.Kind.UNRESOLVED_INDEX {
-                return convertIndexedAssignment(p, left, op, right, out)
-            }*-
+            if left.kind = IRNode.Kind.UNRESOLVED_INDEX {
+                return compileIndexedAssignment(offset, left, op, right)
+            }
             left := resolve(left)
             if left = null {
                 return null
@@ -1309,6 +1523,42 @@ class Compiler (ErrorReporter) {
                 }
             }
             return compileBinary(offset, left, Token.Kind.ASSIGNMENT, right)
+        }
+        if op = Token.Kind.LBRACKET {
+            left := resolve(left)
+            if left = null {
+                return null
+            }
+            def cl := getClass(left.type)
+            if cl = null {
+                return null
+            }
+            def parameters := typeParameters(left.type)
+            def type:Type
+            def methods := getSymbolTable(cl)["[]"]
+            if methods != null {
+                if methods.kind = Symbol.Kind.METHOD {
+                    def m := methods->MethodDecl
+                    resolve(m)
+                    type := MethodRef(m, parameters).returnType()
+                }
+                else {
+                    assert methods.kind = Symbol.Kind.METHODS
+                    def types := Array<Type>()
+                    for m in (methods->Methods).methods { -- FIXME parens
+                        resolve(m)
+                        types.add(MethodRef(m, parameters).returnType())
+                    }
+                    type := Type(types)
+                }
+            }
+            else {
+                type := Type.Invalid()
+            }
+            def children := Array<IRNode>()
+            children.add(left)
+            children.add(right)
+            return IRNode(IRNode.Kind.UNRESOLVED_INDEX, offset, type, children)
         }
         if left.type = Type.BuiltinBit() {
             if right.type = Type.BuiltinBit() & (op = Token.Kind.AND | op = Token.Kind.OR) {
@@ -1383,7 +1633,7 @@ class Compiler (ErrorReporter) {
             if cl = null {
                 return null
             }
-            def s := cl.symbolTable[name]
+            def s := getSymbolTable(cl)[name]
             if s != null {
                 def m:MethodDecl? := null
                 match s.kind {
@@ -1402,6 +1652,7 @@ class Compiler (ErrorReporter) {
                         assert false
                 }
                 if m != null {
+                    resolve(m)
                     def ref := MethodRef(m, typeParameters(base))
                     def children := Array<IRNode>() -- FIXME literal
                     children.add(base)
@@ -1521,13 +1772,13 @@ class Compiler (ErrorReporter) {
         if cl = null {
             return null
         }
-        def s := cl.symbolTable[d.payload->String]
+        def s := getSymbolTable(cl)[d.payload->String]
         if s = null {
             error(d.offset, "value of type '\{base.type}' does not have a member named " +
                     "'\{d.payload}'")
             return null
         }
-        return symbolRef(d.offset, base, s, cl.symbolTable)
+        return symbolRef(d.offset, base, s, getSymbolTable(cl))
     }
 
     method compileIdentifier(i:ASTNode):IRNode? {
@@ -2171,7 +2422,7 @@ class Compiler (ErrorReporter) {
         markNonExternal(cl)
         currentClass.push(cl)
         currentFile.push(cl.source)
-        symbolTable := cl.symbolTable
+        symbolTable := getSymbolTable(cl)
         for m in cl.methods {
             compile(m)
         }
@@ -2232,6 +2483,6 @@ class Compiler (ErrorReporter) {
     @override
     method error(pos:Position, msg:String) {
         errorCount += 1
-        Console.printLine("\{pos}: \{msg}")
+        Console.printLine("\{pos}: error: \{msg}")
     }
 }

@@ -3,14 +3,14 @@ package panda.collections
 uses panda.unsafe.Pointer
 
 ====================================================================================================
-Standard implementation of the [Map] interface, which associates keys with  values. An arbitrary
-number of values can be stored in a `HashMap` and then retrieved in constant time:
+Standard implementation of the [Map] interface, which associates keys with values. An arbitrary
+number of values can be stored in a `HashMap` and then retrieved in constant average time:
 
     def alignment := HashMap<String, String>()
-    alignment["human"]  := "good"
+    alignment["faerie"] := "good"
     alignment["orc"]    := "evil"
-    alignment["dragon"] := "neutral"
-    Console.printLine(alignment["human"])
+    alignment["golem"]  := "neutral"
+    Console.printLine(alignment["faerie"])
 
 This will display the value `"good"`.
 ====================================================================================================

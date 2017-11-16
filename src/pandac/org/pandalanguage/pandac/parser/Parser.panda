@@ -497,7 +497,7 @@ class Parser {
                         -- '>', e.g. foo(X < Y)
                         def types := Array<ASTNode>()
                         types.add(ASTNode(ASTNode.Kind.TYPE, result.offset, name))
-                        var t := type()
+                        var t := type(false)
                         if t = null {
                             rewind()
                             return result
@@ -505,7 +505,7 @@ class Parser {
                         types.add(t)
                         finalName.append(t)
                         while checkNext(Token.Kind.COMMA) != null {
-                            t := type()
+                            t := type(false)
                             if t = null {
                                 rewind()
                                 return result

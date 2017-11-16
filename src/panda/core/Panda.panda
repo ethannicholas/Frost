@@ -10,13 +10,13 @@ class Panda {
 
     @class
     method assertionFailure(file:String, line:Int) {
-        Console.printLine("assertion failure (\{file}:\{line})")
-        System.exit(1)
+        Console.errorStream().printLine("assertion failure (\{file}:\{line})")
+        System.crash()
     }
 
     @class
     method assertionFailure(file:String, line:Int, msg:String) {
-        Console.printLine("assertion failure (\{file}:\{line}): \{msg}")
-        System.exit(1)
+        Console.errorStream().printLine("assertion failure (\{file}:\{line}): \{msg}")
+        System.crash()
     }
 }

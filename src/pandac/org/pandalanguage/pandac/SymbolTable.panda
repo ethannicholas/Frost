@@ -49,15 +49,77 @@ class SymbolTable {
                 compiler.position(old.offset))
     }
 
+    @private
+    method addIfNotOverridden(m:MethodDecl, methods:List<MethodDecl>) {
+        if !m.get_heritable() {
+            return
+        }
+        def type := compiler.declaredType(m)
+        for test in methods {
+            if type = compiler.declaredType(test) {
+                return
+            }
+        }
+        methods.add(m)
+    }
+
+    @private
+    function merge(symbol:Symbol?, inherited:Symbol?):Symbol? {
+        if inherited = null {
+            return symbol
+        }
+        if symbol = null {
+            return inherited
+        }
+        if !inherited.get_heritable() {
+            return symbol
+        }
+        match symbol.kind {
+            when Symbol.Kind.METHOD:
+                match inherited.kind {
+                    when Symbol.Kind.METHODS:
+                        def methods := Array<MethodDecl>() -- FIXME literal
+                        methods.add(symbol->MethodDecl)
+                        for m in (inherited->Methods).methods {
+                            addIfNotOverridden(m, methods)
+                        }
+                        return Methods(methods)
+                    when Symbol.Kind.METHOD:
+                        if compiler.declaredType(symbol->MethodDecl) =
+                                compiler.declaredType(inherited->MethodDecl) {
+                            return symbol
+                        }
+                        def methods := Array<MethodDecl>() -- FIXME literal
+                        methods.add(symbol->MethodDecl)
+                        methods.add(inherited->MethodDecl)
+                        return Methods(methods)
+                    otherwise:
+                        return symbol
+                }
+            when Symbol.Kind.METHODS:
+                match inherited.kind {
+                    when Symbol.Kind.METHODS:
+                        def methods := Array<MethodDecl>((symbol->Methods).methods) -- FIXME parens
+                        for m in (inherited->Methods).methods {
+                            addIfNotOverridden(m, methods)
+                        }
+                        return Methods(methods)
+                    when Symbol.Kind.METHOD:
+                        def methods := Array<MethodDecl>((symbol->Methods).methods) -- FIXME parens
+                        addIfNotOverridden(inherited->MethodDecl, methods)
+                        return Methods(methods)
+                    otherwise:
+                        return symbol
+                }
+            otherwise:
+                return symbol
+        }
+    }
+
     function [](name:String):Symbol? {
         var result := symbols[name]
-        if result = null {
-            for p in parents {
-                result := p[name]
-                if result != null {
-                    break
-                }
-            }
+        for p in parents {
+            result := merge(result, p[name])
         }
         return result
     }

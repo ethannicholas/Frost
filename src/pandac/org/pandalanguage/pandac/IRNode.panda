@@ -42,6 +42,15 @@ class IRNode : Immutable {
         constant IS_NULL                     := 1035
         constant IS_NONNULL                  := 1036
         constant UNRESOLVED_IDENTIFIER       := 1037
+        -- target used for init calls during object construction, meaning "the object that was just
+        -- constructed"
+        constant CONSTRUCTED_OBJECT          := 1038
+        constant UNRESOLVED_METHOD_CALL      := 1039
+        -- index expressions (foo[bar]) always start out unresolved, because of indexed assignment.
+        -- For instance, a given object might define a "[]:=" method but not a "[]" function, or the
+        -- index types could be incompatible. Holding off on resolution allows us to handle cases
+        -- like this.
+        constant UNRESOLVED_INDEX            := 1040
     }
 
     def kind:Int
@@ -165,6 +174,15 @@ class IRNode : Immutable {
                 return "\{children[0]}.\{(payload->FieldDecl).name}" -- FIXME parens
             when Kind.NULL:
                 return "null"
+            when Kind.DECLARATION:
+                if children.get_count() == 1 {
+                    return children[0].convert()
+                }
+                return "\{children[0]} := \{children[1]}"
+            when Kind.DEF:
+                return "def \{children.join(", ")}"
+            when Kind.VAR:
+                return "var \{children.join(", ")}"
             otherwise:
                 return "<IRNode:\{kind}>"
         }

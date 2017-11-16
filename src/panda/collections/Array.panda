@@ -58,11 +58,13 @@ class Array<T> (List<T>) {
 
     @override
     function [](index:Int):T {
+        assert index >= 0 & index < count
         return data[index]
     }
 
     @override
     method []:=(index:Int, value:T) {
+        assert index >= 0 & index < count
         data[index] := value
     }
 

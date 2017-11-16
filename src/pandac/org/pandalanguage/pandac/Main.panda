@@ -166,6 +166,12 @@ class Main {
             toExecutable(assembly, outFile)
         }
         else {
+            if compiler.errorCount = 1 {
+                Console.printLine("1 error")
+            }
+            else {
+                Console.printLine("\{compiler.errorCount} errors")
+            }
             System.exit(1)
         }
     }

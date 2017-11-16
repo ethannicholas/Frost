@@ -34,13 +34,27 @@ class System {
         @external
         method waitFor():Int
     }
+
+    ================================================================================================
+    Causes the program to immediately stop running, returning the indicated exit status to the
+    operating system. Generally an exit value of 0 is taken to mean a normal exit and a non-zero
+    value is taken to mean an error occurred, but this is system-dependent. Cleanup methods are
+    **not** run when an exit is forced in this fashion.
+    ================================================================================================
     @class
     @external
     method exit(status:Int)
 
     ================================================================================================
+    Causes the program to perform an illegal operation which forces an abnormal exit.
+    ================================================================================================
+    @class
+    @external
+    method crash()
+
+    ================================================================================================
     Executes an external program with the given command line arguments. Returns the resulting
-    process, or null if the program.
+    process, or null if the program could not be started.
     ================================================================================================
     @class
     @external
