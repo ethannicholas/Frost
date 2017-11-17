@@ -24,10 +24,18 @@ class Scanner {
             when ASTNode.Kind.GENERIC_TYPE:
                 assert type.children.get_count() >= 2
                 def children := Array<Type>()
+                def name := MutableString(type.payload->String)
+                name.append("<")
+                var separator := ""
                 for c in type.children {
-                    children.add(convertType(c))
+                    def child := convertType(c)
+                    children.add(child)
+                    name.append(separator)
+                    name.append(child.name)
+                    separator := ", "
                 }
-                return Type(type.payload->String, Type.Kind.GENERIC, type.offset, children, false)
+                name.append(">")
+                return Type(name.convert(), Type.Kind.GENERIC, type.offset, children, false)
             otherwise:
                 assert false, "\{type} (\{type.kind})"
         }
@@ -368,7 +376,7 @@ class Scanner {
 
     method scan(source:File, file:ASTNode):ListView<ClassDecl> {
         def result := Array<ClassDecl>()
-        var currentPackage := ""
+        var currentPackage := "anonymous"
         def aliases := HashMap<String, String>()
         assert file.kind = ASTNode.Kind.FILE
         for c in file.children {

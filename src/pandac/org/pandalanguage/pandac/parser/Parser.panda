@@ -543,7 +543,7 @@ class Parser {
                         def shouldAccept:Bit
                         if commaSeparatedExpressionContext.peek() {
                             match peek().kind {
-                                when Token.Kind.DOT, Token.Kind.RPAREN, Token.Kind.COMMA,
+                                when Token.Kind.DOT, Token.Kind.LPAREN, Token.Kind.COMMA,
                                         Token.Kind.CAST:
                                     shouldAccept := true
                                 otherwise:

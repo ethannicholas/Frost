@@ -396,6 +396,9 @@ class LLVMCodeGenerator (CodeGenerator) {
     return structs explicitly receive a pointer to the result structure as their first parameter.
     ================================================================================================
     function needsStructIndirection(m:MethodDecl):Bit {
+        if !m.returnType.isClass() {
+            return false
+        }
         def result := m.annotations.isExternal() & m.returnType.isClass() &
                 compiler.isValue(compiler.getClass(m.returnType))
         -- if an external method requires struct indirection, it will have a different signature
@@ -887,7 +890,7 @@ class LLVMCodeGenerator (CodeGenerator) {
         if indirect {
             labelCount += 1
             indirectVar := "%$tmp" + labelCount
-            --methodHeader.printLine("\{indirectVar} = alloca \{resultType}")
+            methodHeader.printLine("\{indirectVar} = alloca \{resultType}")
             out.print("\{resultType}* \{indirectVar}")
             separator := ", "
         }
@@ -1277,6 +1280,18 @@ class LLVMCodeGenerator (CodeGenerator) {
         return result
     }
 
+    method getNullReference(expr:IRNode, out:OutputStream):String {
+        assert expr.type.typeKind = Type.Kind.NULLABLE
+        def cl := compiler.getClass(expr.type.subtypes[0])
+        assert cl != null
+        if compiler.isValue(cl) {
+            return "{ \{type(expr.type.subtypes[0])} undef, i1 0 }"
+        }
+        else {
+            return "null"
+        }
+    }
+
     method getReference(expr:IRNode, out:OutputStream):String {
         match expr.kind {
             when IRNode.Kind.BINARY:
@@ -1310,7 +1325,7 @@ class LLVMCodeGenerator (CodeGenerator) {
                 assert result != null
                 return result
             when IRNode.Kind.NULL:
-                return "null"
+                return getNullReference(expr, out)
             when IRNode.Kind.IS_NULL:
                 return getIsNullReference(expr, out)
             when IRNode.Kind.IS_NONNULL:
@@ -1347,7 +1362,6 @@ class LLVMCodeGenerator (CodeGenerator) {
             args.add(getTypedReference(a, out))
         }
         def refTarget:String?
-        assert !needsStructIndirection(m) -- FIXME unimplemented
         if args.get_count() > 0 {
             -- this isn't actually correct - args[0] could be the target of an instance method, or
             -- just the first parameter to a class method. But getMethodReference ignores target for
@@ -1358,8 +1372,26 @@ class LLVMCodeGenerator (CodeGenerator) {
             refTarget := null
         }
         def methodRef := getMethodReference(refTarget, m, false, out)
-        out.printLine("call \{callingConvention(m)}\{type(call.type)} " +
-                "\{methodRef}(\{args.join()})")
+        var separator := ""
+        if needsStructIndirection(m) {
+            labelCount += 1
+            def indirectVar := "%$tmp" + labelCount
+            def resultType := type(call.type)
+            methodHeader.printLine("\{indirectVar} = alloca \{resultType}")
+            out.print("call \{callingConvention(m)}void " +
+                    "\{methodRef}(\{resultType}* \{indirectVar}")
+            separator := ", "
+        }
+        else {
+            out.print("call \{callingConvention(m)}\{type(call.type)} " +
+                    "\{methodRef}(")
+        }
+        for a in args {
+            out.print(separator)
+            out.print(a)
+            separator := ", "
+        }
+        out.printLine(")")
     }
 
     method writeIf(s:IRNode, out:OutputStream) {

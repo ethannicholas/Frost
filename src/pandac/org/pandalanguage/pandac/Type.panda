@@ -40,7 +40,10 @@ class Type : Symbol (Key<Type>) {
     }
 
     init(name:String, typeKind:Int, offset:Int, subtypes:ListView<Type>, resolved:Bit) {
-        assert (typeKind = Kind.NULLABLE) = name.endsWith("?")
+        assert (typeKind = Kind.NULLABLE) = name.endsWith("?"),
+                "invalid type: name=\{name}, nullable=\{typeKind = Kind.NULLABLE}"
+        assert (typeKind = Kind.GENERIC) = name.endsWith(">"),
+                "invalid type: name=\{name}, generic=\{typeKind = Kind.GENERIC}"
         self.typeKind := typeKind
         self.offset := offset
         self.resolved := resolved
@@ -174,7 +177,12 @@ class Type : Symbol (Key<Type>) {
     }
 
     function isClass():Bit {
-        return !isBuiltinNumber()
+        match typeKind {
+            when Kind.CLASS, Kind.NULLABLE, Kind.GENERIC:
+                return true
+            otherwise:
+                return false
+        }
     }
 
     function isMethod():Bit {
@@ -239,15 +247,19 @@ class Type : Symbol (Key<Type>) {
                 return self
             when Kind.GENERIC:
                 def remapped := Array<Type>()
-                def name := MutableString(self.name + "<")
+                def name := MutableString(subtypes[0].name)
+                name.append("<")
                 var separator := ""
-                for t in subtypes {
-                    def child := t.remap(types)
-                    name.append(separator)
-                    name.append(child.name)
+                for i in 0 .. subtypes.get_count() {
+                    def child := subtypes[i].remap(types)
                     remapped.add(child)
-                    separator := ", "
+                    if i > 0 {
+                        name.append(separator)
+                        name.append(child.name)
+                        separator := ", "
+                    }
                 }
+                name.append(">")
                 return Type(name.convert(), Kind.GENERIC, offset, remapped, resolved)
             when Kind.NULLABLE:
                 return subtypes[0].remap(types).nullable()

@@ -147,7 +147,11 @@ class IRNode : Immutable {
                 }
                 return (payload->MethodRef).value.name -- FIXME parens
             when Kind.UNRESOLVED_METHOD_REFERENCE:
-                return "\{children[0]}.\{(payload->ListView<MethodRef>)[0].value.name}" -- FIXME parens
+                if children.get_count() = 1 {
+                    return "\{children[0]}.\{(payload->ListView<MethodRef>)[0].value.name}" -- FIXME parens
+                }
+                assert children.get_count() = 0
+                return (payload->ListView<MethodRef>)[0].value.name -- FIXME parens
             when Kind.TYPE_REFERENCE:
                 return payload.convert()
             when Kind.INT:
@@ -183,6 +187,26 @@ class IRNode : Immutable {
                 return "def \{children.join(", ")}"
             when Kind.VAR:
                 return "var \{children.join(", ")}"
+            when Kind.UNRESOLVED_RANGE:
+                def result := MutableString("unresolved_range<")
+                if children[0].kind != IRNode.Kind.NULL {
+                    result.append(children[0])
+                }
+                if payload->Bit {
+                    result.append("...")
+                }
+                else {
+                    result.append("..")
+                }
+                if children[1].kind != IRNode.Kind.NULL {
+                    result.append(children[1])
+                }
+                if children[2].kind != IRNode.Kind.NULL {
+                    result.append(" by ")
+                    result.append(children[2])
+                }
+                result.append(">")
+                return result.convert()
             otherwise:
                 return "<IRNode:\{kind}>"
         }

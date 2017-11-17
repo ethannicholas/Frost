@@ -44,6 +44,9 @@ class Compiler (ErrorReporter) {
     @private
     var errorCount := 0
 
+    @private
+    var reportErrors := true
+
     init(codeGenerator:CodeGenerator, importDirs:ListView<File>) {
         self.importDirs := importDirs
         self.parser := Parser(self)
@@ -220,6 +223,7 @@ class Compiler (ErrorReporter) {
         }
         resolve(m.owner)
         currentFile.push(m.owner.source) -- FIXME use init / cleanup
+        currentClass.push(m.owner)
         def old := symbolTable
         symbolTable := m.owner.symbolTable
         for p in m.parameters {
@@ -228,6 +232,7 @@ class Compiler (ErrorReporter) {
         m.returnType := resolve(m.returnType)
         m.resolved := true
         symbolTable := old
+        currentClass.pop()
         currentFile.pop()
     }
 
@@ -273,6 +278,8 @@ class Compiler (ErrorReporter) {
         match expr.kind {
             when IRNode.Kind.UNRESOLVED_IDENTIFIER:
                 error(expr.offset, "unknown identifier")
+            when IRNode.Kind.UNRESOLVED_METHOD_CALL:
+                error(expr.offset, "ambiguous method call \{expr.children}")
             otherwise:
                 return coerce(expr, variableType(expr))
         }
@@ -663,11 +670,6 @@ class Compiler (ErrorReporter) {
                 if type.typeKind = Type.Kind.GENERIC {
                     return coercionCost(type.subtypes[0], target)
                 }
-            when Type.Kind.GENERIC:
-                if type.typeKind = Type.Kind.GENERIC {
-                    var cost := coercionCost(type.subtypes[0], target.subtypes[0])
-                    return cost
-                }
         }
         match type.typeKind {
             when Type.Kind.BUILTIN_BIT:
@@ -681,6 +683,9 @@ class Compiler (ErrorReporter) {
                     }
                 }
                 return best
+        }
+        if !target.isClass() {
+            return null
         }
         def targetClass := getClass(target)
         if targetClass = null {
@@ -750,7 +755,8 @@ class Compiler (ErrorReporter) {
                     return coercionCost(Type.Bit(), target)
                 }
             when IRNode.Kind.INT, IRNode.Kind.NEGATED_INT:
-                if target.typeKind = Type.Kind.BUILTIN_INT {
+                if target.typeKind = Type.Kind.BUILTIN_INT |
+                        target.typeKind = Type.Kind.BUILTIN_UINT {
                     return 0
                 }
                 if target = Type.Int64() {
@@ -765,6 +771,16 @@ class Compiler (ErrorReporter) {
             when IRNode.Kind.UNRESOLVED_RANGE:
                 if target.isRange() {
                     assert expr.children.get_count() = 3
+                    if expr.children[0].kind = IRNode.Kind.NULL &
+                            expr.children[1].kind = IRNode.Kind.NULL {
+                        if target.subtypes[1] = Type.Int64() {
+                            return 0
+                        }
+                        if target.subtypes[1] = Type.Int64().nullable() {
+                            return 1
+                        }
+                        return 2
+                    }
                     assert target.typeKind = Type.Kind.GENERIC
                     def cost1 := coercionCost(expr.children[0], target.subtypes[1])
                     if cost1 = null {
@@ -896,7 +912,7 @@ class Compiler (ErrorReporter) {
                     def result := call(expr.offset, callTarget, best[0], args)
                     return coerce(result, target)
                 }
-                assert false, "no or ambiguous match on method call"
+                assert false, "no or ambiguous match on method call (\{best})"
             when IRNode.Kind.UNRESOLVED_INDEX:
                 def args := expr.children[1..]
                 return call(expr.children[0], "[]", args, target)
@@ -978,6 +994,7 @@ class Compiler (ErrorReporter) {
     }
 
     method callCost(m:MethodRef, args:ListView<IRNode>, expectedReturn:Type?):Int? {
+        assert m.value.resolved
         if m.parameterCount() != args.get_count() {
             return null
         }
@@ -1054,14 +1071,14 @@ class Compiler (ErrorReporter) {
             if coerced = null {
                 return null
             }
-            coerced := coerce(coerced, m.value.parameters[i].type)
+            coerced := cast(coerced, offset, false, m.value.parameters[i].type)
             if coerced = null {
                 return null
             }
             finalArgs.add(coerced)
         }
         var result := IRNode(IRNode.Kind.CALL, offset, m.value.returnType, m, finalArgs)
-        result := cast(result, offset, true, m.returnType())
+        result := cast(result, offset, false, m.returnType())
         return result
     }
 
@@ -1074,7 +1091,13 @@ class Compiler (ErrorReporter) {
         if resolved = null {
             return null
         }
-        def cl := getClass(resolved.type)
+        def cl:ClassDecl?
+        if resolved.kind = IRNode.Kind.TYPE_REFERENCE {
+            cl := getClass(resolved.payload->Type)
+        }
+        else {
+            cl := getClass(resolved.type)
+        }
         if cl = null {
             return null
         }
@@ -1594,7 +1617,22 @@ class Compiler (ErrorReporter) {
             return IRNode(IRNode.Kind.BINARY, offset, resultType, op, children)
         }
         children.add(right)
-        return call(left, operatorName(op), children)
+        assert reportErrors
+        reportErrors := false
+        var result := call(left, operatorName(op), children)
+        reportErrors := true
+        if result = null {
+            children.clear()
+            children.add(left)
+            def resolved := resolve(right)
+            if resolved != null & resolved.type.isClass() {
+                children.add(resolved)
+                def target := IRNode(IRNode.Kind.TYPE_REFERENCE, resolved.offset, Type.Class(),
+                        resolved.type)
+                result := call(target, operatorName(op), children)
+            }
+        }
+        return result
     }
 
     method compileBinary(b:ASTNode):IRNode? {
@@ -1777,7 +1815,7 @@ class Compiler (ErrorReporter) {
         }
         def s := getSymbolTable(cl)[d.payload->String]
         if s = null {
-            error(d.offset, "value of type '\{base.type}' does not have a member named " +
+            error(d.offset, "class '\{base.type}' does not have a member named " +
                     "'\{d.payload}'")
             return null
         }
@@ -1950,6 +1988,7 @@ class Compiler (ErrorReporter) {
                 symbolTable := symbols.parents[0]
                 return null
             }
+            assert compiled.kind != IRNode.Kind.UNRESOLVED_METHOD_CALL
             result.add(compiled)
         }
         symbolTable := symbols.parents[0]
@@ -2376,9 +2415,9 @@ class Compiler (ErrorReporter) {
     method compileStatement(s:ASTNode):IRNode? {
         match s.kind {
             when ASTNode.Kind.ASSERT:   return compileAssert(s)
-            when ASTNode.Kind.BINARY:   return compileBinary(s)
+            when ASTNode.Kind.BINARY:   return resolve(compileBinary(s))
             when ASTNode.Kind.BLOCK:    return compileBlock(s)
-            when ASTNode.Kind.CALL:     return compileCall(s)
+            when ASTNode.Kind.CALL:     return resolve(compileCall(s))
             when ASTNode.Kind.IF:       return compileIf(s)
             when ASTNode.Kind.FOR:      return compileFor(s)
             when ASTNode.Kind.WHILE:    return compileWhile(s)
@@ -2507,7 +2546,9 @@ class Compiler (ErrorReporter) {
 
     @override
     method error(pos:Position, msg:String) {
-        errorCount += 1
-        Console.printLine("\{pos}: error: \{msg}")
+        if reportErrors {
+            errorCount += 1
+            Console.printLine("\{pos}: error: \{msg}")
+        }
     }
 }

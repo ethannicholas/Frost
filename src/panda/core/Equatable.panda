@@ -1,6 +1,6 @@
 package panda.core
 
-interface Equatable<T> {
+interface Equatable<T> { -- FIXME type should be Equatable<T:Equatable<T>>
     function =(other:T):Bit
 
     function !=(other:T):Bit
