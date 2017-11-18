@@ -253,11 +253,14 @@ class Scanner {
                         result.methods.add(m)
                     }
                 when ASTNode.Kind.CLASS:
-                    def cl := scanClass(source, aliases, fullName, c)
-                    if cl != null {
-                        result.classes.add(cl)
-                        assert cl.name.startsWith(fullName + ".")
-                        result.symbolTable.add(cl, cl.name[fullName.length() + 1..])
+                    def inner := scanClass(source, aliases, fullName, c)
+                    if inner != null {
+                        inner.owner := result
+                        result.classes.add(inner)
+                        assert inner.name.startsWith(fullName + ".")
+                        result.symbolTable.add(inner, inner.name[fullName.length() + 1..])
+                        inner.symbolTable.parents.add(result.symbolTable)
+                        inner.symbolTable.add(result, cl.payload->String)
                     }
                 when ASTNode.Kind.INTERFACE:
                     def cl := scanInterface(source, aliases, fullName, c)

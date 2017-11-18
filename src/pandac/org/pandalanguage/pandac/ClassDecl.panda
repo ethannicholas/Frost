@@ -45,6 +45,8 @@ class ClassDecl : Symbol {
 
     def classes := Array<ClassDecl>()
 
+    def owner:ClassDecl?
+
     def symbolTable:SymbolTable
 
     var external := true
