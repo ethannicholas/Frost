@@ -49,6 +49,14 @@ class RangeForLoop {
         for i in 127->Int8 ... (-128)->Int8 by -10 {
             Console.printLine("    " + i)
         }
+        Console.printLine("0 ... 255")
+        for i:UInt8 in 0 ... 255 {
+            Console.printLine("    " + i)
+        }
+        Console.printLine("0 ... 255 by 10")
+        for i:UInt8 in 0 ... 255 by 10 {
+            Console.printLine("    " + i)
+        }
         Console.printLine("1 ... 10 with break at 5")
         for i in 1 ... 10 {
             Console.printLine("    " + i)

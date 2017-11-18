@@ -34,10 +34,10 @@ typedef struct NullableChar {
     int8_t nonnull;
 } NullableChar;
 
-typedef struct NullableInt8 {
-    int8_t value;
+typedef struct NullableUInt8 {
+    uint8_t value;
     int8_t nonnull;
-} NullableInt8;
+} NullableUInt8;
 
 extern Class panda$core$String$class;
 
@@ -404,7 +404,7 @@ Array* panda$io$File$list$R$panda$collections$ListView$LTpanda$io$File$GT(File* 
 
 // FileInputStream
 
-void panda$io$FileInputStream$readImpl$R$panda$core$Int8$Q(NullableInt8* result,
+void panda$io$FileInputStream$readImpl$R$panda$core$UInt8$Q(NullableUInt8* result,
         FileInputStream* self) {
     int read = fgetc(self->file);
     if (read != EOF) {
@@ -416,7 +416,7 @@ void panda$io$FileInputStream$readImpl$R$panda$core$Int8$Q(NullableInt8* result,
     }
 }
 
-void panda$io$FileInputStream$readImpl$panda$unsafe$Pointer$LTpanda$core$Int8$GT$panda$core$Int64$R$panda$core$Int64(
+void panda$io$FileInputStream$readImpl$panda$unsafe$Pointer$LTpanda$core$UInt8$GT$panda$core$Int64$R$panda$core$Int64(
         int64_t* result, FileInputStream* self, void* buffer, int max) {
     *result = fread(buffer, 1, max, self->file);
 }
@@ -427,11 +427,11 @@ void panda$io$FileInputStream$cleanup(FileInputStream* self) {
 
 // FileOutputStream
 
-void panda$io$FileOutputStream$write$panda$core$Int8(FileOutputStream* self, int8_t ch) {
+void panda$io$FileOutputStream$write$panda$core$UInt8(FileOutputStream* self, uint8_t ch) {
     fputc(ch, self->file);
 }
 
-void panda$io$FileOutputStream$write$panda$unsafe$Pointer$LTpanda$core$Int8$GT$panda$core$Int64$panda$core$Int64(
+void panda$io$FileOutputStream$write$panda$unsafe$Pointer$LTpanda$core$UInt8$GT$panda$core$Int64$panda$core$Int64(
         FileOutputStream* self, void* src, int64_t offset, int64_t count) {
     fwrite(src + offset, 1, count, self->file);
 }

@@ -949,7 +949,7 @@ bool PandaParser::functionDeclaration(ASTNode* outResult, ASTNode doccomment,
     ASTNode returnType;
     if (peek().fKind == Token::Kind::COLON && !this->typeDeclaration(&returnType)) {
         return false;
-    }    
+    }
     children.push_back(std::move(returnType));
     ASTNode block;
     if (peek().fKind == Token::Kind::LBRACE && !this->block(&block)) {
@@ -1302,7 +1302,7 @@ bool PandaParser::methodDeclaration(ASTNode* outResult, ASTNode doccomment,
     ASTNode returnType;
     if (peek().fKind == Token::Kind::COLON && !this->typeDeclaration(&returnType)) {
         return false;
-    }    
+    }
     children.push_back(std::move(returnType));
     ASTNode block;
     if (peek().fKind == Token::Kind::LBRACE && !this->block(&block)) {
@@ -2002,7 +2002,7 @@ bool PandaParser::loopLoop(ASTNode* outResult, String label) {
     ASTNode block;
     if (!this->block(&block)) {
         return false;
-    }    
+    }
     std::vector<ASTNode> children;
     children.push_back(std::move(block));
     *outResult = ASTNode(start.fPosition, ASTNode::Kind::LOOP, label, std::move(children));

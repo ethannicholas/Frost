@@ -503,7 +503,7 @@ class UInt64 : Value (Key<UInt64>, Comparable<UInt64>) {
         var value := self
         if value >= 0 {
             do {
-                chars[index] := Char8((value % 10 + 48).value->builtin_int8)
+                chars[index] := Char8((value % 10 + 48).value->builtin_uint8)
                 value := (value // 10)
                 index -= 1
             }
@@ -512,7 +512,7 @@ class UInt64 : Value (Key<UInt64>, Comparable<UInt64>) {
         }
         else {
             do {
-                chars[index] := Char8((48 - value % 10).value->builtin_int8)
+                chars[index] := Char8((48 - value % 10).value->builtin_uint8)
                 value := (value // 10)
                 index -= 1
             }

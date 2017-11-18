@@ -34,7 +34,7 @@ class IndentedOutputStream : OutputStream {
     }
 
     @override
-    method write(b:Int8) {
+    method write(b:UInt8) {
         if b = 10 {
             atLineStart := true
         }
@@ -45,7 +45,7 @@ class IndentedOutputStream : OutputStream {
     }
 
     @override
-    method write(ptr:Pointer<Int8>, offset:Int, count:Int) {
+    method write(ptr:Pointer<UInt8>, offset:Int, count:Int) {
         for i in offset .. offset + count {
             write(ptr[i])
         }

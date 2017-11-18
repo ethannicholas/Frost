@@ -17,20 +17,20 @@ class FileInputStream : InputStream {
     method cleanup()
 
     @override
-    method read():Int8? {
+    method read():UInt8? {
         return readImpl()
     }
 
     @private
     @external
-    method readImpl():Int8?
+    method readImpl():UInt8?
 
     @override
-    method read(buffer:Pointer<Int8>, max:Int):Int {
+    method read(buffer:Pointer<UInt8>, max:Int):Int {
         return readImpl(buffer, max)
     }
 
     @private
     @external
-    method readImpl(buffer:Pointer<Int8>, max:Int):Int
+    method readImpl(buffer:Pointer<UInt8>, max:Int):Int
 }

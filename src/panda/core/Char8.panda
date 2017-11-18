@@ -8,7 +8,7 @@ of a UTF-8 encoded string. For ASCII characters (0 to 127), there is no differen
 interpretations.
 ====================================================================================================
 class Char8 : Value (Key<Char8>) {
-    init(value:Int8) {
+    init(value:UInt8) {
         self.value := value.value
     }
 
@@ -32,7 +32,7 @@ class Char8 : Value (Key<Char8>) {
     }
 
     function convert():Int8 {
-        return Int8(value)
+        return Int8(value->builtin_int8)
     }
 
     function convert():Int16 {
@@ -48,7 +48,7 @@ class Char8 : Value (Key<Char8>) {
     }
 
     function convert():UInt8 {
-        return UInt8(value->builtin_uint8)
+        return UInt8(value)
     }
 
     function convert():UInt16 {
@@ -74,15 +74,15 @@ class Char8 : Value (Key<Char8>) {
         -- FIXME change to < 0x80 when uints are in
         if value > 0 {
             def data := Pointer<Char8>.alloc(1)
-            data[0] := Char8(Int8(value->builtin_int8))
+            data[0] := self
             return String(data, 1)
         }
         def data := Pointer<Char8>.alloc(2)
-        data[0] := Char8(Int8((value->builtin_int16 >> 6 || 0b11000000)->builtin_int8))
-        data[1] := Char8(Int8((value->builtin_int16 && 0b111111 || 0b10000000)->builtin_int8))
+        data[0] := Char8(UInt8((value->builtin_uint16 >> 6 || 0b11000000)->builtin_uint8))
+        data[1] := Char8(UInt8((value->builtin_uint16 && 0b111111 || 0b10000000)->builtin_uint8))
         return String(data, 2)
     }
 
     @private
-    def value:builtin_int8
+    def value:builtin_uint8
 }

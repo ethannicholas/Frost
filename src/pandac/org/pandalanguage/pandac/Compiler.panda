@@ -761,13 +761,10 @@ class Compiler (ErrorReporter) {
                     assert expr.children.get_count() = 3
                     if expr.children[0].kind = IRNode.Kind.NULL &
                             expr.children[1].kind = IRNode.Kind.NULL {
-                        if target.subtypes[1] = Type.Int64() {
+                        if !target.subtypes[1].isNumber() {
                             return 0
                         }
-                        if target.subtypes[1] = Type.Int64().nullable() {
-                            return 1
-                        }
-                        return 2
+                        return 1
                     }
                     assert target.typeKind = Type.Kind.GENERIC
                     def cost1 := coercionCost(expr.children[0], target.subtypes[1])
@@ -1053,7 +1050,7 @@ class Compiler (ErrorReporter) {
         else if m.value.isInstance() & target = null {
             finalArgs.add(IRNode(IRNode.Kind.SELF, offset, currentClass.peek().type()))
             if !currentMethod.peek().isInstance() {
-                error(offset, "cannot call instance \{m.value.signature()} from a class context")
+                error(offset, "cannot call instance \{m.value.signature()} from a @class context")
             }
         }
         for i in 0 .. args.get_count() {
@@ -2027,9 +2024,20 @@ class Compiler (ErrorReporter) {
         return IRNode(IRNode.Kind.IF, i.offset, children)
     }
 
-    method compileRangeFor(offset:Int, label:String?, astTarget:ASTNode, list:IRNode,
+    method compileRangeFor(offset:Int, label:String?, astTarget:ASTNode, rawList:IRNode,
             body:ASTNode):IRNode? {
         def elementType:Type
+        def list:IRNode?
+        if astTarget.kind = ASTNode.Kind.IDENTIFIER & astTarget.children.get_count() = 1 {
+            def t := resolve(scanner.convertType(astTarget.children[0]))
+            list := coerce(rawList, Type.RangeOf(t))
+        }
+        else {
+            list := resolve(rawList)
+        }
+        if list = null {
+            return null
+        }
         if list.type.typeKind = Type.Kind.NULLABLE {
             assert list.type.subtypes[0].typeKind = Type.Kind.GENERIC
             elementType := list.type.subtypes[0].subtypes[1]
@@ -2126,17 +2134,10 @@ class Compiler (ErrorReporter) {
             loops.pop()
             return null
         }
-        if list.kind = IRNode.Kind.UNRESOLVED_RANGE {
-            list := resolve(list)
-            if list = null {
-                loops.pop()
-                return null
-            }
-        }
         def symbols := SymbolTable(symbolTable) -- FIXME auto
         symbolTable := symbols
         def result:IRNode?
-        if list.type.isRange() {
+        if list.kind = IRNode.Kind.UNRESOLVED_RANGE | list.type.isRange() {
             result := compileRangeFor(f.offset, f.payload->String?, f.children[0], list,
                     f.children[2])
         }
@@ -2560,7 +2561,6 @@ class Compiler (ErrorReporter) {
         if reportErrors {
             errorCount += 1
             Console.printLine("\{pos}: error: \{msg}")
-            assert false
         }
     }
 }

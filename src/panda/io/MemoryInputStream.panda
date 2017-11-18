@@ -5,7 +5,7 @@ An `InputStream` which reads from an 'ImmutableArray<Int8>`.
 ====================================================================================================
 class MemoryInputStream : InputStream {
     @private
-    var data:ListView<Int8>
+    var data:ListView<UInt8>
 
     @private
     var index := 0
@@ -15,13 +15,13 @@ class MemoryInputStream : InputStream {
 
     @param source the array to read from
     ================================================================================================
-    init(source:ImmutableArray<Int8>) {
+    init(source:ImmutableArray<UInt8>) {
         self.data := source
     }
 
     init(source:String) {
         def utf8 := source.utf8()
-        def array := Array<Int8>(utf8.get_count())
+        def array := Array<UInt8>(utf8.get_count())
         for c in utf8 {
             array.add(c.convert())
         }
@@ -29,9 +29,9 @@ class MemoryInputStream : InputStream {
     }
 
     @override
-    method read():Int8? {
+    method read():UInt8? {
         if index < data.get_count() {
-            var result:Int8 := data[index]
+            var result:UInt8 := data[index]
             index += 1
             return result
         }

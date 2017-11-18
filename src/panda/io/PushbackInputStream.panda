@@ -10,7 +10,7 @@ class PushbackInputStream : InputStream {
     def source:InputStream
 
     @private
-    def pushbackBuffer := Array<Int8>()
+    def pushbackBuffer := Array<UInt8>()
 
     ================================================================================================
     Creates a new `PushbackInputStream`.
@@ -22,7 +22,7 @@ class PushbackInputStream : InputStream {
     }
 
     @override
-    method read():Int8? {
+    method read():UInt8? {
         if pushbackBuffer.get_count() > 0 {
             def result := pushbackBuffer[pushbackBuffer.get_count() - 1]
             pushbackBuffer.removeIndex(pushbackBuffer.get_count() - 1)
@@ -32,34 +32,23 @@ class PushbackInputStream : InputStream {
     }
 
     ============================================================================
-    Pushes back a single `Int8`, so that it will be the next byte read by the
-    stream.
-
-    @param v the `Int8` to push
-    ============================================================================
-    method pushback(v:Int8) {
-        pushbackBuffer.add(v)
-    }
-
-    ============================================================================
     Pushes back a single `UInt8`, so that it will be the next byte read by the
     stream.
 
     @param v the `UInt8` to push
     ============================================================================
     method pushback(v:UInt8) {
-        pushbackBuffer.add(v.convert())
+        pushbackBuffer.add(v)
     }
 
     ============================================================================
-    Pushes back a list of `Int8`s.
+    Pushes back a single `Int8`, so that it will be the next byte read by the
+    stream.
 
-    @param v the array to push
+    @param v the `Int8` to push
     ============================================================================
-    method pushback(v:ListView<Int8>) {
-        for i in v.get_count() - 1 ... 0 by -1 {
-            pushback(v[i])
-        }
+    method pushback(v:Int8) {
+        pushbackBuffer.add(v.convert())
     }
 
     ============================================================================
@@ -74,12 +63,23 @@ class PushbackInputStream : InputStream {
     }
 
     ============================================================================
+    Pushes back a list of `Int8`s.
+
+    @param v the array to push
+    ============================================================================
+    method pushback(v:ListView<Int8>) {
+        for i in v.get_count() - 1 ... 0 by -1 {
+            pushback(v[i])
+        }
+    }
+
+    ============================================================================
     Pushes back a single `Char8`.
 
     @param c the character to push
     ============================================================================
     method pushback(c:Char8) {
-        pushback(c.convert()->Int8)
+        pushback(c.convert()->UInt8)
     }
 
     ============================================================================

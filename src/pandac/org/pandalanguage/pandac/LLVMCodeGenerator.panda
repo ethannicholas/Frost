@@ -336,6 +336,7 @@ class LLVMCodeGenerator (CodeGenerator) {
 
     method nullableType(t:Type):String {
         assert t.typeKind = Type.Kind.NULLABLE, "\{t} is not nullable"
+        writeWrapperType(t.subtypes[0])
         return "\{type(t.subtypes[0])}$nullable"
     }
 
@@ -1628,7 +1629,14 @@ class LLVMCodeGenerator (CodeGenerator) {
         loopDescriptors.push(LoopDescriptor(f.payload->String?, loopEnd, loopTest)) -- FIXME Auto
         def forwardEntry := nextLabel()
         def backwardEntry := nextLabel()
-        def signPrefix := "s"
+        def signPrefix:String
+        if t.name.startsWith("panda.core.Int") {
+            signPrefix := "s"
+        }
+        else {
+            assert t.name.startsWith("panda.core.UInt")
+            signPrefix := "u"
+        }
         def direction:String
         if signPrefix = "s" {
             direction := nextVar()

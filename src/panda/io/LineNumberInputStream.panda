@@ -28,8 +28,8 @@ class LineNumberInputStream : InputStream {
     }
 
     @override
-    method read():Int8? {
-        def result:Int8? := source.read()
+    method read():UInt8? {
+        def result:UInt8? := source.read()
         if result = null {
             return null
         }

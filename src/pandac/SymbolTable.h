@@ -46,14 +46,14 @@ public:
         for (auto iter = fSymbols.begin(); iter != fSymbols.end(); ++iter) {
             fn(*iter->second);
         }
-    }    
+    }
 
     template <typename iterFunction> // f(const Symbol&)
     void foreach_const(iterFunction&& fn) const {
         for (auto iter = fSymbols.begin(); iter != fSymbols.end(); ++iter) {
             fn((const Symbol&) *iter->second);
         }
-    }    
+    }
 
     void error(Position position, String text) {
         printf("%s: %s\n", position.description().c_str(), text.c_str());

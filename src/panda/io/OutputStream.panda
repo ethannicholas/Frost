@@ -5,52 +5,57 @@ uses panda.unsafe.Pointer
 @abstract
 class OutputStream {
     @abstract
-    method write(value:Int8)
+    method write(value:UInt8)
 
-    method write(value:UInt8) {
-        write(value.convert()->Int8)
+    method write(value:Int8) {
+        write(value.convert()->UInt8)
     }
 
-    method write(ptr:Pointer<Int8>, offset:Int, count:Int) {
+    method write(ptr:Pointer<UInt8>, offset:Int, count:Int) {
         for i in offset .. offset + count {
             write(ptr[i])
         }
     }
 
     @final
-    method write(ptr:Pointer<Char8>, offset:Int, count:Int) {
-        write(ptr->Pointer<Int8>, offset, count)
+    method write(ptr:Pointer<Int8>, offset:Int, count:Int) {
+        write(ptr->Pointer<UInt8>, offset, count)
     }
 
-    method write(a:Array<Int8>, offset:Int, count:Int) {
+    @final
+    method write(ptr:Pointer<Char8>, offset:Int, count:Int) {
+        write(ptr->Pointer<UInt8>, offset, count)
+    }
+
+    method write(a:Array<UInt8>, offset:Int, count:Int) {
         write(a.data, offset, count)
     }
 
-    method write(value:Int16) {
-        write((value >> 8).convert()->Int8)
-        write(value.convert()->Int8)
-    }
-
     method write(value:UInt16) {
-        write(value.convert()->Int16)
+        write((value >> 8).convert()->UInt8)
+        write(value.convert()->UInt8)
     }
 
-    method write(value:Int32) {
-        write((value >> 16).convert()->Int16)
-        write(value.convert()->Int16)
+    method write(value:Int16) {
+        write(value.convert()->UInt16)
     }
 
     method write(value:UInt32) {
-        write(value.convert()->Int32)
+        write((value >> 16).convert()->UInt16)
+        write(value.convert()->UInt16)
     }
 
-    method write(value:Int64) {
-        write((value >> 32).convert()->Int32)
-        write(value.convert()->Int32)
+    method write(value:Int32) {
+        write(value.convert()->UInt32)
     }
 
     method write(value:UInt64) {
-        write(value.convert()->Int64)
+        write((value >> 32).convert()->UInt32)
+        write(value.convert()->UInt32)
+    }
+
+    method write(value:Int64) {
+        write(value.convert()->UInt64)
     }
 
     method write(c:Char8) {

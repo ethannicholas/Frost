@@ -8,7 +8,7 @@ class MemoryOutputStream : OutputStream {
     var data := MutableString()
 
     @override
-    method write(i:Int8) {
+    method write(i:UInt8) {
         data.append(Char8(i))
     }
 

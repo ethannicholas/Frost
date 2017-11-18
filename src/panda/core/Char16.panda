@@ -6,7 +6,7 @@ uses panda.unsafe.Pointer
 Represents a single 2-byte word of a UTF-16 encoded string.
 ====================================================================================================
 class Char16 : Value (Key<Char16>) {
-    init(value:Int16) {
+    init(value:UInt16) {
         self.value := value.value
     }
 
@@ -31,7 +31,7 @@ class Char16 : Value (Key<Char16>) {
     }
 
     function convert():Int16 {
-        return Int16(value)
+        return Int16(value->builtin_int16)
     }
 
     function convert():Int32 {
@@ -40,6 +40,22 @@ class Char16 : Value (Key<Char16>) {
 
     function convert():Int64 {
         return Int64(value->builtin_int64)
+    }
+
+    function convert():UInt8 {
+        return UInt8(value->builtin_uint8)
+    }
+
+    function convert():UInt16 {
+        return UInt16(value)
+    }
+
+    function convert():UInt32 {
+        return UInt32(value->builtin_uint32)
+    }
+
+    function convert():UInt64 {
+        return UInt64(value->builtin_uint64)
     }
 
     ================================================================================================
@@ -51,22 +67,22 @@ class Char16 : Value (Key<Char16>) {
     function convert():String {
         if value < 0x80 {
             def data := Pointer<Char8>.alloc(1)
-            data[0] := Char8(Int8(value->builtin_int8))
+            data[0] := Char8(convert()->UInt8)
             return String(data, 1)
         }
         if value < 0x800 {
             def data := Pointer<Char8>.alloc(2)
-            data[0] := Char8(Int8((value >> 6 || 0b11000000)->builtin_int8))
-            data[1] := Char8(Int8((value && 0b111111 || 0b10000000)->builtin_int8))
+            data[0] := Char8(UInt8((value >> 6 || 0b11000000)->builtin_uint8))
+            data[1] := Char8(UInt8((value && 0b111111 || 0b10000000)->builtin_uint8))
             return String(data, 2)
         }
         def data := Pointer<Char8>.alloc(3)
-        data[0] := Char8(Int8((value >> 12 || 0b11100000)->builtin_int8))
-        data[1] := Char8(Int8((value >> 6 && 0b111111 || 0b10000000)->builtin_int8))
-        data[2] := Char8(Int8((value && 0b111111 || 0b10000000)->builtin_int8))
+        data[0] := Char8(UInt8((value >> 12 || 0b11100000)->builtin_uint8))
+        data[1] := Char8(UInt8((value >> 6 && 0b111111 || 0b10000000)->builtin_uint8))
+        data[2] := Char8(UInt8((value && 0b111111 || 0b10000000)->builtin_uint8))
         return String(data, 3)
     }
 
     @private
-    def value:builtin_int16
+    def value:builtin_uint16
 }

@@ -18,9 +18,9 @@ class FileOutputStream : OutputStream {
 
     @override
     @external
-    method write(value:Int8)
+    method write(value:UInt8)
 
     @override
     @external
-    method write(ptr:Pointer<Int8>, offset:Int, size:Int)
+    method write(ptr:Pointer<UInt8>, offset:Int, size:Int)
 }

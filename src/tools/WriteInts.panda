@@ -300,7 +300,7 @@ class WriteInts {
         out.printLine("        if value >= 0 {")
         out.printLine("            do {")
         out.printLine("                chars[index] := " +
-                "Char8((value % 10 + 48).value->builtin_int8)")
+                "Char8((value % 10 + 48).value->builtin_uint8)")
         out.printLine("                value := (value // 10)\{castInt(max32(type), type)}")
         out.printLine("                index -= 1")
         out.printLine("            }")
@@ -310,7 +310,7 @@ class WriteInts {
         out.printLine("        else {")
         out.printLine("            do {")
         out.printLine("                chars[index] := " +
-                "Char8((48 - value % 10).value->builtin_int8)")
+                "Char8((48 - value % 10).value->builtin_uint8)")
         out.printLine("                value := (value // 10)\{castInt(max32(type), type)}")
         out.printLine("                index -= 1")
         out.printLine("            }")

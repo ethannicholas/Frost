@@ -3,8 +3,8 @@ package org.pandalanguage.plex.runtime
 uses panda.unsafe.Pointer
 
 class DFA {
-    constant START_CHAR:Int8 := 9
-    constant END_CHAR:Int8 := 127
+    constant START_CHAR:UInt8 := 0
+    constant END_CHAR:UInt8 := 127
 
     def stateCount:Int
 
@@ -49,7 +49,7 @@ class DFA {
         while offset < utf8.get_count() {
             def c := utf8[offset]
             if c.convert() > END_CHAR {
-                Console.printLine("invalid token \{c.convert()->Int8}")
+                Console.printLine("invalid token \{c.convert()->UInt8}")
                 System.exit(1)
             }
             state := transitions[c.convert()][state]

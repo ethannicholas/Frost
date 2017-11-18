@@ -95,7 +95,7 @@ class NFAtoDFA {
 
     method scanState(state:DFAState) {
         state.scanned := true
-        for c:Int8 in DFA.START_CHAR ... DFA.END_CHAR  { -- FIXME iterate over Char8 directly
+        for c:UInt8 in DFA.START_CHAR ... DFA.END_CHAR  { -- FIXME iterate over Char8 directly
             def next := Array<Int>()
             var bestAccept := Int64.MAX
             for idx in state.label.states {

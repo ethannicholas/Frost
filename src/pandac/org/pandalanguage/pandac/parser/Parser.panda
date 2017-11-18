@@ -127,7 +127,7 @@ class Parser {
         -- FIXME incredibly slow
         def input := LineNumberInputStream(MemoryInputStream(source))
         for i in 0 .. token.offset {
-            def c:Int8? := input.read()
+            def c:UInt8? := input.read()
         }
         return Position(filename, input.line, input.column)
     }

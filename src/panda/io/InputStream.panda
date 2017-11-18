@@ -33,12 +33,12 @@ class InputStream {
     }
 
     @abstract
-    method read():Int8?
+    method read():UInt8?
 
-    method read(buffer:Pointer<Int8>, max:Int):Int {
+    method read(buffer:Pointer<UInt8>, max:Int):Int {
         var i := 0
         while i < max {
-            def next:Int8? := read()
+            def next:UInt8? := read()
             if next = null {
                 break
             }
@@ -48,8 +48,13 @@ class InputStream {
     }
 
     @final
+    method read(buffer:Pointer<Int8>, max:Int):Int {
+        return read(buffer->Pointer<UInt8>, max)
+    }
+
+    @final
     method read(buffer:Pointer<Char8>, max:Int):Int {
-        return read(buffer->Pointer<Int8>, max)
+        return read(buffer->Pointer<UInt8>, max)
     }
 
     method readFully():String {
@@ -68,11 +73,11 @@ class InputStream {
     }
 
     method read():Int16? {
-        def a:Int8? := read()
+        def a:UInt8? := read()
         if a = null {
             return null
         }
-        def b:Int8? := read()
+        def b:UInt8? := read()
         if b = null {
             return null
         }
@@ -104,7 +109,7 @@ class InputStream {
     }
 
     method read():Char8? {
-        def result:Int8? := read()
+        def result:UInt8? := read()
         if result != null {
             return Char8(result)
         }
