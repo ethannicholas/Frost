@@ -212,6 +212,9 @@ class Compiler (ErrorReporter) {
         for i in 0 .. cl.rawInterfaces.get_count() {
             cl.rawInterfaces[i] := resolve(cl.rawInterfaces[i])
         }
+        for p in cl.parameters {
+            p.bound := resolve(p.bound)
+        }
         symbolTable := old
         currentClass.pop()
         currentFile.pop()
@@ -422,8 +425,8 @@ class Compiler (ErrorReporter) {
         def result := Array<MethodDecl>()
         for m in intfClass.methods {
             def found := findMethod(cl.type(), m.name, remapType(intf, inheritedType(m)), false)
-            assert found != null, "internal error: interface method \{m.signature()} not found " +
-                    "in \{cl.name}"
+            assert found != null, "internal error: interface \{m.signature()} not found in " +
+                    "\{cl.name}"
             result.add(found)
         }
         return result
@@ -523,22 +526,6 @@ class Compiler (ErrorReporter) {
         }
     }
 
-    function typeParameters(target:IRNode?):ListView<Type> {
-        if target != null {
-            def type:Type
-            if target.type.typeKind = Type.Kind.NULLABLE {
-                type := target.type.subtypes[0]
-            }
-            else {
-                type := target.type
-            }
-            if type.typeKind = Type.Kind.GENERIC {
-                return type.subtypes[1..]
-            }
-        }
-        return Array<Type>()
-    }
-
     method symbolRef(offset:Int, target:IRNode?, s:Symbol, st:SymbolTable):IRNode? {
         match s.kind {
             when Symbol.Kind.ALIAS:
@@ -602,8 +589,10 @@ class Compiler (ErrorReporter) {
                     typeMap[cl.name + "." + cl.parameters[i - 1].name] := context.subtypes[i]
                 }
                 return raw.remap(typeMap)
+            when Type.Kind.GENERIC_PARAMETER:
+                return raw
             otherwise:
-                assert false
+                assert false, "cannot remap type \{context}"
         }
     }
 
@@ -663,7 +652,7 @@ class Compiler (ErrorReporter) {
                 }
                 return result + NULLABLE_CAST_COST
             when Type.Kind.GENERIC_PARAMETER:
-                return coercionCost(type, target.subtypes[0])
+                return null
             when Type.Kind.BUILTIN_INT, Type.Kind.BUILTIN_UINT:
                 return null
             when Type.Kind.CLASS:
@@ -683,6 +672,8 @@ class Compiler (ErrorReporter) {
                     }
                 }
                 return best
+            when Type.Kind.GENERIC_PARAMETER:
+                return coercionCost(type.subtypes[0], target)
         }
         if !target.isClass() {
             return null
@@ -719,9 +710,6 @@ class Compiler (ErrorReporter) {
             if cost != null {
                 return cost + 1
             }
-        }
-        if type.typeKind = Type.Kind.GENERIC_PARAMETER {
-            return coercionCost(type.subtypes[0], target)
         }
         return null
     }
@@ -987,6 +975,8 @@ class Compiler (ErrorReporter) {
         match node.kind {
             when IRNode.Kind.UNRESOLVED_METHOD_CALL:
                 return coerce(node, target)
+            when IRNode.Kind.UNRESOLVED_INDEX:
+                return coerce(node, target)
         }
         def children := Array<IRNode>() -- FIXME literal
         children.add(node)
@@ -1044,7 +1034,7 @@ class Compiler (ErrorReporter) {
         def finalArgs := Array<IRNode>()
         if target != null & target.kind != IRNode.Kind.CONSTRUCTED_OBJECT &
                 !m.value.annotations.isClass() {
-            finalArgs.add(coerce(target, m.value.owner.type()))
+            finalArgs.add(cast(target, offset, false, m.owner()))
         }
         if m.value.methodKind = MethodDecl.Kind.INIT {
             if target = null {
@@ -1077,8 +1067,14 @@ class Compiler (ErrorReporter) {
             }
             finalArgs.add(coerced)
         }
-        var result := IRNode(IRNode.Kind.CALL, offset, m.value.returnType, m, finalArgs)
-        result := cast(result, offset, false, m.returnType())
+        var result:IRNode
+        if m.value.owner.name = "panda.unsafe.Pointer" {
+            result := IRNode(IRNode.Kind.CALL, offset, m.returnType(), m, finalArgs)
+        }
+        else {
+            result := IRNode(IRNode.Kind.CALL, offset, m.value.returnType, m, finalArgs)
+            result := cast(result, offset, false, m.returnType())
+        }
         return result
     }
 
@@ -1451,7 +1447,7 @@ class Compiler (ErrorReporter) {
         -- stored back into the original lvalue. Special case this and convert it back to its
         -- original size.
         if rhsIndex.type.isNumber() & right.type.isNumber() & rhsIndex.type != value.type {
-            value := call(value, "convert", Array<IRNode>(), left.type) -- FIXME literal
+            value := call(value, "convert", Array<IRNode>(), resolved.type) -- FIXME literal
             if value = null {
                 return null
             }
@@ -1560,23 +1556,23 @@ class Compiler (ErrorReporter) {
                 return null
             }
             def parameters := typeParameters(left.type)
-            def type:Type
             def methods := getSymbolTable(cl)["[]"]
+            def type:Type
             if methods != null {
+                def types := Array<Type>()
                 if methods.kind = Symbol.Kind.METHOD {
                     def m := methods->MethodDecl
                     resolve(m)
-                    type := MethodRef(m, parameters).returnType()
+                    types.add(MethodRef(m, parameters).returnType())
                 }
                 else {
                     assert methods.kind = Symbol.Kind.METHODS
-                    def types := Array<Type>()
                     for m in (methods->Methods).methods { -- FIXME parens
                         resolve(m)
                         types.add(MethodRef(m, parameters).returnType())
                     }
-                    type := Type(types)
                 }
+                type := Type(types)
             }
             else {
                 type := Type.Invalid()
@@ -1660,11 +1656,24 @@ class Compiler (ErrorReporter) {
         }
     }
 
-    method typeParameters(node:IRNode):ListView<Type> {
-        if node.kind = IRNode.Kind.TYPE_REFERENCE {
-            return typeParameters(node.payload->Type)
+
+    function typeParameters(target:IRNode?):ListView<Type> {
+        if target != null {
+            if target.kind = IRNode.Kind.TYPE_REFERENCE {
+                return typeParameters(target.payload->Type)
+            }
+            def type:Type
+            if target.type.typeKind = Type.Kind.NULLABLE {
+                type := target.type.subtypes[0]
+            }
+            else {
+                type := target.type
+            }
+            if type.typeKind = Type.Kind.GENERIC {
+                return type.subtypes[1..]
+            }
         }
-        return typeParameters(node.type)
+        return Array<Type>()
     }
 
     method compilePrefix(op:Int, base:IRNode, offset:Int):IRNode? {
@@ -1910,7 +1919,9 @@ class Compiler (ErrorReporter) {
                 name.append(pName)
                 subtypes.add(Type(pName, Type.Kind.GENERIC_PARAMETER, p.offset,
                              pType, true))
+                separator := ", "
             }
+            name.append(">")
             type := Type(name.convert(), Type.Kind.GENERIC, s.offset, subtypes, true)
         }
         else {
@@ -2549,6 +2560,7 @@ class Compiler (ErrorReporter) {
         if reportErrors {
             errorCount += 1
             Console.printLine("\{pos}: error: \{msg}")
+            assert false
         }
     }
 }

@@ -91,6 +91,8 @@ class LLVMCodeGenerator (CodeGenerator) {
         out.printLine("target triple = \"x86_64-apple-macosx10.8.0\"")
 --        out.printLine("target triple = \"x86_64-pc-linux-gnu\"")
         out.printLine("declare i8* @malloc(i64)")
+        out.printLine("declare i8* @realloc(i8*, i64)")
+        out.printLine("declare void @free(i8*)")
         out.printLine("%$itable = type { %panda$core$Class*, %$itable*, [0 x i8*] }")
     }
 
@@ -835,9 +837,75 @@ class LLVMCodeGenerator (CodeGenerator) {
         }
     }
 
+    method getPointerCallReference(call:IRNode, out:OutputStream):String {
+        def m := call.payload->MethodRef
+        match m.value.name {
+            when "alloc":
+                assert call.children.get_count() = 1
+                def countStruct := getTypedReference(call.children[0], out)
+                def count := nextVar()
+                out.printLine("\{count} = extractvalue \{countStruct}, 0")
+                def size := nextVar()
+                out.printLine("\{size} = mul \{SIZE_T} \{count}, " +
+                        "\{sizeOf(m.returnType().subtypes[1])}")
+                def malloc := nextVar()
+                out.printLine("\{malloc} = call i8* @malloc(\{SIZE_T} \{size})")
+                def result := nextVar()
+                out.printLine("\{result} = bitcast i8* \{malloc} to \{type(m.returnType())}")
+                return result
+            when "get":
+                assert call.children.get_count() = 1
+                def ptr := getTypedReference(call.children[0], out)
+                def baseType := type(m.returnType())
+                def ptrType := baseType + "*"
+                def cast := nextVar()
+                out.printLine("\{cast} = bitcast \{ptr} to \{ptrType}")
+                def load := nextVar()
+                out.printLine("\{load} = load \{baseType}, \{ptrType} \{cast}")
+                return load
+            when "[]":
+                assert call.children.get_count() = 2
+                def ptr := getTypedReference(call.children[0], out)
+                def baseType := type(m.returnType())
+                def ptrType := baseType + "*"
+                def cast := nextVar()
+                out.printLine("\{cast} = bitcast \{ptr} to \{ptrType}")
+                def indexStruct := getTypedReference(call.children[1], out)
+                def index := nextVar()
+                out.printLine("\{index} = extractvalue \{indexStruct}, 0")
+                def offsetPtr := nextVar()
+                out.printLine("\{offsetPtr} = getelementptr \{baseType}, \{ptrType} \{cast}, " +
+                        "i64 \{index}")
+                def load := nextVar()
+                out.printLine("\{load} = load \{baseType}, \{ptrType} \{offsetPtr}")
+                return load
+            when "realloc":
+                assert call.children.get_count() = 2
+                def ptr := getTypedReference(call.children[0], out)
+                def ptrCast := nextVar()
+                out.printLine("\{ptrCast} = bitcast \{ptr} to i8*")
+                def countStruct := getTypedReference(call.children[1], out)
+                def count := nextVar()
+                out.printLine("\{count} = extractvalue \{countStruct}, 0")
+                def size := nextVar()
+                out.printLine("\{size} = mul \{SIZE_T} \{count}, " +
+                        sizeOf(m.returnType().subtypes[1]))
+                def realloc := nextVar()
+                out.printLine("\{realloc} = call i8* @realloc(i8* \{ptrCast}, \{SIZE_T} \{size})")
+                def result := nextVar()
+                out.printLine("\{result} = bitcast i8* \{realloc} to \{type(m.returnType())}")
+                return result
+            otherwise:
+                assert false
+        }
+    }
+
     method getCallReference(call:IRNode, out:OutputStream):String {
         assert call.kind = IRNode.Kind.CALL
         def m := (call.payload->MethodRef).value
+        if m.owner.name = "panda.unsafe.Pointer" {
+            return getPointerCallReference(call, out)
+        }
         if m.owner.external {
             writeDeclaration(m)
         }
@@ -1331,7 +1399,7 @@ class LLVMCodeGenerator (CodeGenerator) {
             when IRNode.Kind.IS_NONNULL:
                 return getIsNonNullReference(expr, out)
             otherwise:
-                assert false, "unsupported expression \{expr}"
+                assert false, "unsupported expression \{expr}:\{compiler.position(expr.offset)}"
         }
     }
 
@@ -1346,11 +1414,47 @@ class LLVMCodeGenerator (CodeGenerator) {
         }
     }
 
+    method writePointerCall(stmt:IRNode, out:OutputStream) {
+        def m := stmt.payload->MethodRef
+        match m.value.name {
+            when "set":
+                assert stmt.children.get_count() = 2
+                def ptr := getTypedReference(stmt.children[0], out)
+                def arg := getTypedReference(compiler.unwrapCast(stmt.children[1]), out)
+                out.printLine("store \{arg}, \{ptr}")
+            when "[]:=":
+                assert stmt.children.get_count() = 3
+                assert compiler.unwrapCast(stmt.children[0]).type.subtypes.get_count() = 2
+                def baseType := compiler.unwrapCast(stmt.children[0]).type.subtypes[1]
+                def base := getTypedReference(stmt.children[0], out)
+                def indexStruct := getTypedReference(stmt.children[1], out)
+                def index := nextVar()
+                out.printLine("\{index} = extractvalue \{indexStruct}, 0")
+                def value := getTypedReference(compiler.unwrapCast(stmt.children[2]), out)
+                def ptr := nextVar()
+                out.printLine("\{ptr} = getelementptr inbounds \{type(baseType)}, \{base}, " +
+                        "\{SIZE_T} \{index}")
+                out.printLine("store \{value}, \{type(baseType)}* \{ptr}")
+            when "destroy":
+                assert stmt.children.get_count() = 1
+                def ptr := getTypedReference(stmt.children[0], out)
+                def cast := nextVar()
+                out.printLine("\{cast} = bitcast \{ptr} to i8*")
+                out.printLine("call void @free(i8* \{cast})")
+            otherwise:
+                assert false
+        }
+    }
+
     -- if 'target' is non-null, it is inserted as a hidden first parameter to the call. This is used
     -- for init() calls, which require a self parameter but do not have a target in the IR.
     method writeCall(call:IRNode, target:String?, out:OutputStream) {
         assert call.kind = IRNode.Kind.CALL
         def m := (call.payload->MethodRef).value
+        if m.owner.name = "panda.unsafe.Pointer" {
+            writePointerCall(call, out)
+            return
+        }
         if m.owner.external {
             writeDeclaration(m)
         }

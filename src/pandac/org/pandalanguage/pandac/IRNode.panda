@@ -48,8 +48,8 @@ class IRNode : Immutable {
         constant UNRESOLVED_METHOD_CALL      := 1039
         -- index expressions (foo[bar]) always start out unresolved, because of indexed assignment.
         -- For instance, a given object might define a "[]:=" method but not a "[]" function, or the
-        -- index types could be incompatible. Holding off on resolution allows us to handle cases
-        -- like this.
+        -- index types could be different between "[]" and "[]:=". Holding off on resolution allows
+        -- us to handle cases like this.
         constant UNRESOLVED_INDEX            := 1040
     }
 
@@ -122,6 +122,10 @@ class IRNode : Immutable {
         self.payload := payload
         self.children := ImmutableArray<IRNode>(children)
         assert kind != Kind.CAST | children[0].type != Type.IntLiteral()
+        assert kind != Kind.CAST | type.name != "panda.unsafe.Pointer"
+        assert kind != Kind.CAST | type.kind != Type.Kind.UNRESOLVED
+        assert kind != Kind.CAST | children[0].kind != Kind.UNRESOLVED_INDEX
+        assert kind != Kind.CAST | children[0].type.kind != Type.Kind.UNRESOLVED
     }
 
     @override

@@ -37,7 +37,7 @@ class ClassDecl : Symbol {
 
     def rawInterfaces:Array<Type>
 
-    def parameters:ListView<GenericParameter>
+    def parameters:List<GenericParameter>
 
     def fields := Array<FieldDecl>()
 
@@ -55,7 +55,7 @@ class ClassDecl : Symbol {
 
     init(source:File, offset:Int, aliases:MapView<String, String>, doccomment:String?,
             annotations:Annotations, kind:Int, name:String, rawSuper:Type?,
-            rawInterfaces:Array<Type>, parameters:ListView<GenericParameter>, parent:SymbolTable) {
+            rawInterfaces:Array<Type>, parameters:Array<GenericParameter>, parent:SymbolTable) {
         super.init(Symbol.Kind.CLASS, offset, name)
         self.source := source
         self.aliases := aliases

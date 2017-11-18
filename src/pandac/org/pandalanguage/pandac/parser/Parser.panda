@@ -1492,7 +1492,7 @@ class Parser {
         if start = null {
             return null
         }
-        def id := expect(Token.Kind.IDENTIFIER, "an identifier")
+        var id := expect(Token.Kind.IDENTIFIER, "an identifier")
         if id = null {
             return null
         }
@@ -1507,7 +1507,8 @@ class Parser {
         }
         children.add(ASTNode(ASTNode.Kind.IDENTIFIER, id.offset, text(id), idChildren))
         while checkNext(Token.Kind.COMMA) != null {
-            if expect(Token.Kind.IDENTIFIER, "an identifier") = null {
+            id := expect(Token.Kind.IDENTIFIER, "an identifier")
+            if id = null {
                 return null
             }
             idChildren.clear()

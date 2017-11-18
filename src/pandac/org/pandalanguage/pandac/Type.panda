@@ -268,7 +268,7 @@ class Type : Symbol (Key<Type>) {
                 def name := MutableString("(")
                 var separator := ""
                 assert subtypes.get_count() >= 1
-                for i in 0 .. subtypes.get_count() {
+                for i in 0 .. subtypes.get_count() - 1 {
                     def child := subtypes[i].remap(types)
                     name.append(separator)
                     name.append(child.name)

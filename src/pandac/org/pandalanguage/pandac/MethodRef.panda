@@ -17,6 +17,26 @@ class MethodRef {
         }
     }
 
+    function owner():Type {
+        if value.owner.parameters.get_count() = 0 {
+            return value.owner.type()
+        }
+        def subtypes := Array<Type>()
+        subtypes.add(value.owner.type())
+        def name := MutableString(value.owner.name)
+        name.append("<")
+        var separator := ""
+        for p in value.owner.parameters {
+            def t := Type(value.owner.name + "." + p.name, Type.Kind.GENERIC_PARAMETER, -1, true)
+            subtypes.add(t)
+            name.append(separator)
+            name.append(t.name)
+            separator := ", "
+        }
+        name.append(">")
+        return Type(name.convert(), Type.Kind.GENERIC, -1, subtypes, true).remap(typeMap)
+    }
+
     function parameterCount():Int {
         return value.parameters.get_count()
     }
