@@ -85,7 +85,6 @@ class Array<T> (List<T>) {
     to the same objects.
     ================================================================================================
     function [](r:Range<Int>):Array<T> {
-        Console.printLine("grabbing \{r} from \{get_count()}")
         def step := r.step
 
         def current:Int

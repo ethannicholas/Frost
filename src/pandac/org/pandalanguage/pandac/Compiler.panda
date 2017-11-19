@@ -55,15 +55,15 @@ class Compiler (ErrorReporter) {
         self.symbolTable := root
         self.codeGenerator := codeGenerator
         codeGenerator.setCompiler(self)
-        root.add(Type("builtin_bit", Type.Kind.BUILTIN_BIT, -1, true))
-        root.add(Type("builtin_int8", Type.Kind.BUILTIN_INT, -1, true))
-        root.add(Type("builtin_int16", Type.Kind.BUILTIN_INT, -1, true))
-        root.add(Type("builtin_int32", Type.Kind.BUILTIN_INT, -1, true))
-        root.add(Type("builtin_int64", Type.Kind.BUILTIN_INT, -1, true))
-        root.add(Type("builtin_uint8", Type.Kind.BUILTIN_UINT, -1, true))
-        root.add(Type("builtin_uint16", Type.Kind.BUILTIN_UINT, -1, true))
-        root.add(Type("builtin_uint32", Type.Kind.BUILTIN_UINT, -1, true))
-        root.add(Type("builtin_uint64", Type.Kind.BUILTIN_UINT, -1, true))
+        root.add(Type("builtin_bit", Type.Kind.BUILTIN_BIT, 1, true))
+        root.add(Type("builtin_int8", Type.Kind.BUILTIN_INT, 8, true))
+        root.add(Type("builtin_int16", Type.Kind.BUILTIN_INT, 16, true))
+        root.add(Type("builtin_int32", Type.Kind.BUILTIN_INT, 32, true))
+        root.add(Type("builtin_int64", Type.Kind.BUILTIN_INT, 64, true))
+        root.add(Type("builtin_uint8", Type.Kind.BUILTIN_UINT, 8, true))
+        root.add(Type("builtin_uint16", Type.Kind.BUILTIN_UINT, 16, true))
+        root.add(Type("builtin_uint32", Type.Kind.BUILTIN_UINT, 32, true))
+        root.add(Type("builtin_uint64", Type.Kind.BUILTIN_UINT, 64, true))
         root.add(Alias("Int", "panda.core.Int64", -1))
         addAlias("panda.collections.Array")
         addAlias("panda.collections.Collection")
@@ -81,6 +81,8 @@ class Compiler (ErrorReporter) {
         addAlias("panda.core.Class")
         addAlias("panda.core.Bit")
         addAlias("panda.core.Char8")
+        addAlias("panda.core.Char16")
+        addAlias("panda.core.Char32")
         addAlias("panda.core.Comparable")
         addAlias("panda.core.Equatable")
         addAlias("panda.core.Int8")
@@ -282,7 +284,7 @@ class Compiler (ErrorReporter) {
             when IRNode.Kind.UNRESOLVED_IDENTIFIER:
                 error(expr.offset, "unknown identifier")
             when IRNode.Kind.UNRESOLVED_METHOD_CALL:
-                error(expr.offset, "ambiguous method call \{expr.children}")
+                error(expr.offset, "ambiguous method call (\{expr.children[0].payload})")
             otherwise:
                 return coerce(expr, variableType(expr))
         }
@@ -419,6 +421,22 @@ class Compiler (ErrorReporter) {
         return null
     }
 
+    function getOverriddenMethod(m:MethodDecl):MethodDecl? {
+        resolve(m)
+        def methodType := declaredType(m)
+        def owner := m.owner.typeWithParameters()
+        for raw in m.owner.rawInterfaces {
+            def result := findMethod(remapType(owner, raw), m.name, methodType, true)
+            if result != null {
+                return result
+            }
+        }
+        if m.owner.rawSuper != null {
+            return findMethod(remapType(owner, m.owner.rawSuper), m.name, methodType, true)
+        }
+        return null
+    }
+
     method interfaceMethods(cl:ClassDecl, intf:Type):ListView<MethodDecl> {
         def intfClass := getClass(intf)
         assert intfClass != null
@@ -433,12 +451,19 @@ class Compiler (ErrorReporter) {
     }
 
     method getSymbolTable(cl:ClassDecl):SymbolTable {
-        if cl.symbolTable.parents.get_count() <= 1 {
+        if !cl.symbolTableResolved {
+            cl.symbolTableResolved := true
             resolve(cl)
             if cl.rawSuper != null {
                 def superCl := getClass(cl.rawSuper)
                 if superCl != null {
                     cl.symbolTable.parents.add(getSymbolTable(superCl))
+                }
+            }
+            for rawIntf in cl.rawInterfaces {
+                def intf := getClass(rawIntf)
+                if intf != null {
+                    cl.symbolTable.parents.add(getSymbolTable(intf))
                 }
             }
         }
@@ -678,24 +703,9 @@ class Compiler (ErrorReporter) {
         if !target.isClass() {
             return null
         }
-        def targetClass := getClass(target)
-        if targetClass = null {
+        if !type.isClass() {
             return null
         }
-        for m in targetClass.methods {
-            if m.annotations.isImplicit() {
-                -- Internal use feature, sharp edges! We currently assume there's only one implicit
-                -- method and it's a single-argument init.
-                resolve(m)
-                assert m.methodKind = MethodDecl.Kind.INIT
-                assert m.parameters.get_count() = 1
-                def cost := coercionCost(type, m.parameters[0].type)
-                if cost != null {
-                    return cost
-                }
-            }
-        }
-
         def cl := getClass(type)
         assert cl != null
         resolve(cl)
@@ -712,6 +722,32 @@ class Compiler (ErrorReporter) {
             }
         }
         return null
+    }
+
+    function requiredSize(value:Int64):Int {
+        if value >= -128 & value <= 127 {
+            return 8
+        }
+        if value >= -32768 & value <= 32767 {
+            return 16
+        }
+        if value >= -2147483648 & value <= 2147483647 {
+            return 32
+        }
+        return 64
+    }
+
+    function requiredSize(value:UInt64):Int {
+        if value <= 255 {
+            return 8
+        }
+        if value <= 65535 {
+            return 16
+        }
+        if value <= 4294967295 {
+            return 32
+        }
+        return 64
     }
 
     function coercionCost(expr:IRNode, target:Type):Int? {
@@ -742,16 +778,22 @@ class Compiler (ErrorReporter) {
                 if target.isClass() {
                     return coercionCost(Type.Bit(), target)
                 }
-            when IRNode.Kind.INT, IRNode.Kind.NEGATED_INT:
-                if target.typeKind = Type.Kind.BUILTIN_INT |
-                        target.typeKind = Type.Kind.BUILTIN_UINT {
+            when IRNode.Kind.INT:
+                if (target.typeKind = Type.Kind.BUILTIN_INT &
+                        requiredSize((expr.payload->UInt64).convert()->Int64) <= target.size()) |
+                        (target.typeKind = Type.Kind.BUILTIN_UINT &
+                        requiredSize(expr.payload->UInt64) <= target.size()) {
                     return 0
                 }
-                if target = Type.Int64() {
-                    return 0
+                if !target.isNumber() {
+                    return coercionCost(variableType(expr), target)
                 }
-                if target.isNumber() {
-                    return 1
+            when IRNode.Kind.NEGATED_INT:
+                if (target.typeKind = Type.Kind.BUILTIN_INT &
+                        requiredSize(-(expr.payload->UInt64).convert()->Int64) <= target.size()) |
+                        (target.typeKind = Type.Kind.BUILTIN_UINT &
+                        requiredSize(-(expr.payload->UInt64).convert()->Int64) <= target.size()) {
+                    return 0
                 }
                 if !target.isNumber() {
                     return coercionCost(variableType(expr), target)
@@ -780,6 +822,26 @@ class Compiler (ErrorReporter) {
                 return coercionCost(variableType(expr), target)
             when IRNode.Kind.UNRESOLVED_INDEX:
                 return coercionCost(expr.type, target)
+        }
+        if !target.isClass() {
+            return null
+        }
+        def targetClass := getClass(target)
+        if targetClass = null {
+            return null
+        }
+        for m in targetClass.methods {
+            if m.annotations.isImplicit() {
+                -- Internal use feature, sharp edges! We currently assume there's only one implicit
+                -- method and it's a single-argument init.
+                resolve(m)
+                assert m.methodKind = MethodDecl.Kind.INIT
+                assert m.parameters.get_count() = 1
+                def cost := coercionCost(expr, m.parameters[0].type)
+                if cost != null {
+                    return cost
+                }
+            }
         }
         assert expr.type != null
         return coercionCost(expr.type, target)
@@ -821,15 +883,34 @@ class Compiler (ErrorReporter) {
             return coerce(intermediate, target)
         }
         match expr.kind {
-            when IRNode.Kind.INT, IRNode.Kind.NEGATED_INT:
-                if target.isBuiltinNumber() {
-                    return IRNode(expr.kind, expr.offset, target, expr.payload->UInt64)
+            when IRNode.Kind.INT:
+                if target.typeKind = Type.Kind.BUILTIN_INT &
+                        requiredSize(expr.payload->UInt64) <= target.size() {
+                    return IRNode(IRNode.Kind.INT, expr.offset, target, expr.payload->UInt64)
                 }
-                if target.isClass() & !target.isNumber() {
-                    def varType := coerce(expr, variableType(expr))
-                    if varType != null {
-                        return coerce(varType, target)
+                else if target.typeKind = Type.Kind.BUILTIN_UINT &
+                        requiredSize(expr.payload->UInt64) <= target.size() {
+                    return IRNode(IRNode.Kind.INT, expr.offset, target, expr.payload->UInt64)
+                }
+                if target.typeKind = Type.Kind.CLASS & !target.isNumber() {
+                    def coerced := coerce(expr, variableType(expr))
+                    if coerced = null {
+                        return null
                     }
+                    return coerce(coerced, target)
+                }
+            when IRNode.Kind.NEGATED_INT:
+                if target.typeKind = Type.Kind.BUILTIN_INT &
+                        requiredSize(-((expr.payload->UInt64).convert()->Int64)) <= target.size() { -- FIXME parens
+                    return IRNode(IRNode.Kind.NEGATED_INT, expr.offset, target,
+                            expr.payload->UInt64)
+                }
+                if target.typeKind = Type.Kind.CLASS & !target.isNumber() {
+                    def coerced := coerce(expr, variableType(expr))
+                    if coerced = null {
+                        return null
+                    }
+                    return coerce(coerced, target)
                 }
             when IRNode.Kind.BIT:
                 if target = Type.BuiltinBit() {
@@ -903,6 +984,7 @@ class Compiler (ErrorReporter) {
                 return call(expr.children[0], "[]", args, target)
         }
         if coercionCost(expr, target) != null {
+            assert target.isClass(), "coercing \{expr}->\{target}"
             def cl := getClass(target)
             if cl != null {
                 for m in cl.methods {
@@ -999,6 +1081,12 @@ class Compiler (ErrorReporter) {
                 return null
             }
             result += cost
+        }
+        -- numbers prefer to operate on their own sizes, i.e. we should treat Int8 + 10 as
+        -- Int8 + Int8 rather than complain about it being ambiguous
+        if m.value.owner.type().isNumber() & args.get_count() = 1 &
+                m.value.parameters[0].type != m.value.owner.type() {
+            result += 1
         }
         return result
     }
@@ -2429,7 +2517,7 @@ class Compiler (ErrorReporter) {
             when ASTNode.Kind.ASSERT:   return compileAssert(s)
             when ASTNode.Kind.BINARY:   return resolve(compileBinary(s))
             when ASTNode.Kind.BLOCK:    return compileBlock(s)
-            when ASTNode.Kind.CALL:     return resolve(compileCall(s))
+            when ASTNode.Kind.CALL:     return unwrapCast(resolve(compileCall(s)))
             when ASTNode.Kind.IF:       return compileIf(s)
             when ASTNode.Kind.FOR:      return compileFor(s)
             when ASTNode.Kind.WHILE:    return compileWhile(s)

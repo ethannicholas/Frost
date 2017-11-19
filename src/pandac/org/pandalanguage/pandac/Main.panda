@@ -5,6 +5,11 @@ uses org.pandalanguage.pandac.parser.Parser
 uses org.pandalanguage.pandac.parser.TokenKind
 
 class Main {
+    class Format {
+        constant EXECUTABLE := 918
+        constant OBJECT     := 919
+    }
+
     constant LLVM_DIR := "/opt/local/libexec/llvm-4.0"
 --    constant LLVM_DIR := "/usr"
 
@@ -85,6 +90,21 @@ class Main {
         return dest
     }
 
+    method toObject(assembly:File, dest:File):File {
+        def args := Array<String>() -- FIXME literal
+        args.add(assembly.path)
+        args.add("-m64")
+        args.add("-c")
+        args.add("-o")
+        args.add(dest.path)
+        def p := System.exec(gcc, args)
+        Console.errorStream().print(p.error.readFully())
+        if p.waitFor() != 0 {
+            System.exit(1)
+        }
+        return dest
+    }
+
     method toExecutable(assembly:File, dest:File):File {
         def args := Array<String>() -- FIXME literal
         args.add(assembly.path)
@@ -117,6 +137,7 @@ class Main {
         imports.add(pandaHome)
         var outFile:File? := null
         var optLevel := 3
+        var format:Int? := null
         def err := Console.errorStream()
         while !args.get_done() {
             def a := args.next()
@@ -127,6 +148,19 @@ class Main {
                         System.exit(1)
                     }
                     outFile := File(args.next("a filename"))
+                when "-f":
+                    if format != null {
+                        err.printLine("'-f' may only be specified once")
+                        System.exit(1)
+                    }
+                    def f := args.next("an output format")
+                    match f {
+                        when "exe": format := Format.EXECUTABLE
+                        when "o":   format := Format.OBJECT
+                        otherwise:
+                            err.printLine("supported output formats are 'exe' and 'o'")
+                            System.exit(1)
+                    }
                 otherwise:
                     if a.endsWith(".panda") {
                         sources.add(File(a))
@@ -141,9 +175,18 @@ class Main {
             err.printLine("no input files specified")
             System.exit(1)
         }
+        if format = null {
+            format := Format.EXECUTABLE
+        }
         if outFile = null {
             if sources.get_count() = 1 {
-                outFile := sources[0].changeExtension("")
+                def extension:String
+                match format {
+                    when Format.EXECUTABLE: extension := ""
+                    when Format.OBJECT:     extension := ".o"
+                    otherwise: assert false
+                }
+                outFile := sources[0].changeExtension(extension)
             }
             else {
                 err.printLine("multiple input files specified, must use '-o' to specify output " +
@@ -163,7 +206,14 @@ class Main {
             out.cleanup() -- FIXME should be able to rely on automatic closing when memory management is in
             def optimized := optimize(llvm, optLevel)
             def assembly := toAssembly(optimized)
-            toExecutable(assembly, outFile)
+            match format {
+                when Format.EXECUTABLE:
+                    toExecutable(assembly, outFile)
+                when Format.OBJECT:
+                    toObject(assembly, outFile)
+                otherwise:
+                    assert false
+            }
         }
         else {
             if compiler.errorCount = 1 {

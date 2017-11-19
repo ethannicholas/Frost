@@ -49,6 +49,9 @@ class ClassDecl : Symbol {
 
     def symbolTable:SymbolTable
 
+    -- true if we have added all of the parent symboltables to this one
+    var symbolTableResolved := false
+
     var external := true
 
     def virtualMethods := Array<MethodDecl>()
@@ -76,6 +79,26 @@ class ClassDecl : Symbol {
 
     function type():Type {
         return Type(name, Type.Kind.CLASS, -1, true)
+    }
+
+    function typeWithParameters():Type {
+        if parameters.get_count() = 0 {
+            return type()
+        }
+        def subtypes := Array<Type>()
+        subtypes.add(type())
+        def name := MutableString(self.name)
+        name.append("<")
+        var separator := ""
+        for p in parameters {
+            def t := Type(self.name + "." + p.name, Type.Kind.GENERIC_PARAMETER, -1, true)
+            subtypes.add(t)
+            name.append(separator)
+            name.append(t.name)
+            separator := ", "
+        }
+        name.append(">")
+        return Type(name.convert(), Type.Kind.GENERIC, -1, subtypes, true)
     }
 
     @override

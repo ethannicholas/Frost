@@ -160,6 +160,8 @@ class IRNode : Immutable {
                 return payload.convert()
             when Kind.INT:
                 return payload.convert()
+            when Kind.NEGATED_INT:
+                return "-" + payload.convert()
             when Kind.BIT:
                 return payload.convert()
             when Kind.CONSTRUCT:

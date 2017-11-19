@@ -67,6 +67,11 @@ class Type : Symbol (Key<Type>) {
         super.init(Symbol.Kind.TYPE, offset, name.convert())
     }
 
+    function size():Int {
+        assert typeKind = Kind.BUILTIN_INT | typeKind = Kind.BUILTIN_UINT, "not a number: \{self}"
+        return offset
+    }
+
     @override
     function =(other:Type):Bit {
         return name = other.name

@@ -54,9 +54,8 @@ class SymbolTable {
         if !m.get_heritable() {
             return
         }
-        def type := compiler.declaredType(m)
         for test in methods {
-            if type = compiler.declaredType(test) {
+            if compiler.getOverriddenMethod(test) == m {
                 return
             }
         }
@@ -85,8 +84,8 @@ class SymbolTable {
                         }
                         return Methods(methods)
                     when Symbol.Kind.METHOD:
-                        if compiler.declaredType(symbol->MethodDecl) =
-                                compiler.declaredType(inherited->MethodDecl) {
+                        if compiler.getOverriddenMethod(symbol->MethodDecl) ==
+                                inherited->MethodDecl {
                             return symbol
                         }
                         def methods := Array<MethodDecl>() -- FIXME literal
