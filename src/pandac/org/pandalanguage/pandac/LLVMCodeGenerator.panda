@@ -13,6 +13,16 @@ class LLVMCodeGenerator (CodeGenerator) {
         }
     }
 
+    class MethodShim {
+        def name:String
+        def type:String
+
+        init(name:String, type:String) {
+            self.name := name
+            self.type := type
+        }
+    }
+
     class LoopDescriptor : Immutable {
         def loopLabel:String?
         def breakLabel:String
@@ -41,10 +51,10 @@ class LLVMCodeGenerator (CodeGenerator) {
     constant ITABLE_INDEX        := 2
     constant VTABLE_INDEX        := 3
 
-    constant INT_TYPE := "i64"
-    constant SIZE_T   := "i64"
+    constant INT_TYPE  := "i64"
+    constant SIZE_TYPE := "i64"
 
-    def out:OutputStream
+    def out:IndentedOutputStream
 
     def compiler:Compiler
 
@@ -60,6 +70,14 @@ class LLVMCodeGenerator (CodeGenerator) {
 
     def methodHeader := IndentedOutputStream(methodHeaderBuffer)
 
+    def wrapperShimsBuffer := MemoryOutputStream()
+
+    def wrapperShims := IndentedOutputStream(wrapperShimsBuffer)
+
+    def shimsBuffer := MemoryOutputStream()
+
+    def shims := IndentedOutputStream(shimsBuffer)
+
     def strings := MemoryOutputStream()
 
     def declared := Set<String>()
@@ -74,6 +92,8 @@ class LLVMCodeGenerator (CodeGenerator) {
 
     var currentBlock:String
 
+    var currentMethod:MethodDecl?
+
     def loopDescriptors := Stack<LoopDescriptor>()
 
     var varCount := 0
@@ -81,6 +101,8 @@ class LLVMCodeGenerator (CodeGenerator) {
     var labelCount := 0
 
     def reusedValues := HashMap<UInt64, String>()
+
+    def methodShims := IdentityMap<MethodDecl, MethodShim>()
 
     init(out:OutputStream) {
         self.out := IndentedOutputStream(out)
@@ -107,6 +129,8 @@ class LLVMCodeGenerator (CodeGenerator) {
         out.print(types.convert())
         out.print(strings.convert())
         out.print(declarations.convert())
+        out.print(wrapperShimsBuffer.convert())
+        out.print(shimsBuffer.convert())
         out.print(methodsBuffer.convert())
     }
 
@@ -120,7 +144,7 @@ class LLVMCodeGenerator (CodeGenerator) {
         return "$l\{labelCount}"
     }
 
-    method createBlock(label:String, out:OutputStream) {
+    method createBlock(label:String, out:IndentedOutputStream) {
         out.printLine("\n\{label}:")
         currentBlock := label
     }
@@ -247,6 +271,9 @@ class LLVMCodeGenerator (CodeGenerator) {
         }
         code.append(" }")
         types.printLine(code)
+        if compiler.isValue(cl) {
+            getWrapperClassConstant(cl)
+        }
     }
 
     method writeWrapperType(t:Type) {
@@ -334,6 +361,25 @@ class LLVMCodeGenerator (CodeGenerator) {
         return wrapperTypeName(t) + "*"
     }
 
+    method wrapperType(m:MethodDecl):String {
+        def inheritedType := compiler.inheritedType(m)
+        def result := MutableString()
+        result.append(type(inheritedType.subtypes[inheritedType.subtypes.get_count() - 1]))
+        result.append("(")
+        assert m.isInstance()
+        result.append("%\{escapeName(m.owner.name)}")
+        if compiler.isValue(m.owner) {
+            result.append("$wrapper")
+        }
+        result.append("*")
+        for i in 0 .. inheritedType.subtypes.get_count() - 1 { 
+            result.append(", ")
+            result.append(type(inheritedType.subtypes[i]))
+        }
+        result.append(")*")
+        return result.convert()
+    }
+
     method nullableType(t:Type):String {
         assert t.typeKind = Type.Kind.NULLABLE, "\{t} is not nullable"
         writeWrapperType(t.subtypes[0])
@@ -362,6 +408,148 @@ class LLVMCodeGenerator (CodeGenerator) {
                 else {
                     def entry := getMethodTableEntry(m)
                     result.append("i8* bitcast(\{entry.second} \{entry.first} to i8*)")
+                }
+            }
+            result.append("] }\n")
+            types.printLine(result)
+            previous := "%$itable* bitcast(\{t}* \{name} to %$itable*)"
+        }
+        return previous
+    }
+
+    method createMethodShim(raw:MethodDecl, effective:Type, rawOut:OutputStream):MethodShim {
+        def outBuffer := MemoryOutputStream()
+        def out := IndentedOutputStream(outBuffer)
+        def found := methodShims[raw]
+        if found != null {
+            return found
+        }
+        assert effective.isMethod()
+        assert effective.subtypes.get_count() = raw.parameters.get_count() + 1
+        assert raw.isInstance()
+        def oldVarCount := varCount
+        varCount := 0
+        def effectiveReturnType := effective.subtypes[effective.subtypes.get_count() - 1]
+        def resultName := getName(raw) + "$shim"
+        def resultType := MutableString(type(effectiveReturnType))
+        out.print("define \{resultType} \{resultName}(")
+        def self_t := selfType(raw)
+        out.print("\{self_t} %self")
+        resultType.append("(")
+        resultType.append(self_t)
+        for i in 0 .. raw.parameters.get_count() {
+            def pType := type(effective.subtypes[i])
+            resultType.append(", ")
+            resultType.append(pType)
+            out.print(", \{pType} %p\{i}")
+        }
+        out.printLine(") {")
+        resultType.append(")*")
+        def casts := Array<String>()
+        for i in 0 .. raw.parameters.get_count() {
+            def p := "%p\{i}"
+            if raw.parameters[i].type != effective.subtypes[i] {
+                casts.add(getCastReference(p, effective.subtypes[i],
+                        raw.parameters[i].type, out))
+            }
+            else {
+                casts.add(p)
+            }
+        }
+        def returnValue:String
+        if raw.returnType != Type.Void() {
+            returnValue := nextVar()
+            out.print("\{returnValue} = ")
+        }
+        else {
+            returnValue := "void"
+        }
+        out.print("call \{callingConvention(raw)}\{type(raw.returnType)} \{getName(raw)}(" +
+                "\{self_t} %self")
+        for i in 0 .. raw.parameters.get_count() {
+            out.print(", \{type(raw.parameters[i].type)} \{casts[i]}")
+        }
+        out.printLine(")")
+        if raw.returnType != Type.Void() {
+            returnValue := type(effectiveReturnType) + " " +
+                    getCastReference(returnValue, raw.returnType, effectiveReturnType, out)
+        }
+        out.printLine("ret \{returnValue}")
+        out.printLine("}")
+        varCount := oldVarCount
+        def result := MethodShim(resultName, resultType.convert())
+        methodShims[raw] := result
+        rawOut.print(outBuffer)
+        return result
+    }
+
+    method createWrapperShim(m:MethodDecl, out:IndentedOutputStream):String {
+        assert m.isInstance()
+        def oldVarCount := varCount
+        varCount := 0
+        def result := "\{getName(m)}$wrappershim"
+        def selfType := "%\{escapeName(m.owner.name)}$wrapper*"
+        out.print("define ccc \{type(m.returnType)} \{result}(\{selfType} %actualSelf")
+        def actualMethodType := compiler.declaredType(m)
+        def inheritedMethodType := compiler.inheritedType(m)
+        for i in 0 .. m.parameters.get_count() {
+            out.print(", \{type(inheritedMethodType.subtypes[i])} %\{m.parameters[i].name}")
+        }
+        out.printLine(") {")
+        out.level += 1
+        out.printLine("%self = bitcast \{selfType} %actualSelf to %panda$core$Object*")
+        def parameters := Array<String>()
+        for i in 0 .. m.parameters.get_count() {
+            parameters.add(getCastReference("%" + m.parameters[i].name,
+                    inheritedMethodType.subtypes[i], actualMethodType.subtypes[i], out))
+        }
+        def children := Array<IRNode>()
+        children.add(IRNode(IRNode.Kind.SELF, -1, Type.Object()))
+        def unwrapped := getTypedReference(IRNode(IRNode.Kind.CAST, -1, m.owner.type(), children),
+                out)
+        def returnValue:String
+        if m.returnType != Type.Void() {
+            returnValue := nextVar()
+            out.print("\{returnValue} = ")
+            returnValue := "\{type(m.returnType)} \{returnValue}"
+        }
+        else {
+            returnValue := "void"
+        }
+        out.print("call \{callingConvention(m)}\{type(m.returnType)} \{getName(m)}(\{unwrapped}")
+        for i in 0 .. m.parameters.get_count() {
+            out.print(", \{type(actualMethodType.subtypes[i])} \{parameters[i]}")
+        }
+        out.printLine(")")
+        out.printLine("ret \{returnValue}")
+        out.level -= 1
+        out.printLine("}")
+        varCount := oldVarCount
+        return result
+    }
+
+    method getWrapperITable(cl:ClassDecl):String {
+        def interfaces := compiler.allInterfaces(cl.type())
+        var previous := "%$itable* null"
+        for intfType in interfaces {
+            def intf := compiler.getClass(intfType)
+            def intfCC := getClassConstant(intf)
+            def methods := compiler.interfaceMethods(cl, intfType)
+            def name := "@\{escapeName(cl.name)}$wrapper.\{escapeName(intf.name)}"
+            def t := "{\{type(Type.Class())}, %$itable*, [\{methods.get_count()} x i8*] }"
+            def result := MutableString("\{name} = constant \{t} { \{type(Type.Class())} " +
+                    "bitcast(\{intfCC.type}* \{intfCC.name} to \{type(Type.Class())}), " +
+                    "\{previous}, [\{methods.get_count()} x i8*][")
+            var separator := ""
+            for m in methods {
+                result.append(separator)
+                separator := ", "
+                if m.annotations.isAbstract() {
+                    result.append("i8* null")
+                }
+                else {
+                    def shim := createWrapperShim(m, wrapperShims)
+                    result.append("i8* bitcast(\{wrapperType(m)} \{shim} to i8*)")
                 }
             }
             result.append("] }\n")
@@ -418,20 +606,28 @@ class LLVMCodeGenerator (CodeGenerator) {
         if m.owner.external {
             writeDeclaration(m)
         }
-        def resultName := getName(m)
-        def effective := compiler.inheritedTypeWithSelf(m)
+        def resultName:String
+        def declared := compiler.declaredTypeWithSelf(m, m.owner.type())
+        def inherited := compiler.inheritedTypeWithSelf(m)
+        if declared != inherited {
+            def shim := createMethodShim(m, compiler.inheritedType(m), shims)
+            resultName := shim.name
+        }
+        else {
+            resultName := getName(m)
+        }
         if needsStructIndirection(m) {
             def resultType := MutableString("void (")
-            resultType.append(type(effective.subtypes[effective.subtypes.get_count() - 1]))
+            resultType.append(type(inherited.subtypes[inherited.subtypes.get_count() - 1]))
             resultType.append("*")
-            for i in 0 .. effective.subtypes.get_count() - 1 {
+            for i in 0 .. inherited.subtypes.get_count() - 1 {
                 resultType.append(", ")
-                resultType.append(type(effective.subtypes[i]))
+                resultType.append(type(inherited.subtypes[i]))
             }
             resultType.append(")*")
             return Pair<String, String>(resultName, resultType.convert())
         }
-        return Pair<String, String>(resultName, type(effective))
+        return Pair<String, String>(resultName, type(inherited))
     }
 
     method getClassConstant(cl:ClassDecl):ClassConstant {
@@ -488,11 +684,39 @@ class LLVMCodeGenerator (CodeGenerator) {
                 def type := "%panda$core$Class"
                 types.printLine("\{name} = external global \{type}")
                 result := ClassConstant(name, type)
-                classConstants[name] := result
             }
             else {
-                assert false
+                def value := compiler.getClass(Type.Value())
+                def valueVTable := compiler.getVTable(value)
+                result := ClassConstant("@\{escapeName(cl.name)}$wrapperclass",
+                        "{ i8*, \{INT_TYPE}, %$itable*, [\{valueVTable.get_count()} x i8*] }")
+                def vtable := compiler.getVTable(cl)
+                def superCC := getClassConstant(compiler.getClass(cl.rawSuper))
+                def superCast := "bitcast(\{superCC.type}* \{superCC.name} to i8*)"
+                def itable := getWrapperITable(cl)
+                def code := MutableString("\{result.name} = constant \{result.type} { i8* " +
+                        "\{superCast}, \{INT_TYPE} 1, \{itable}, [\{valueVTable.get_count()} x " +
+                        "i8*] [")
+                var separator := ""
+                for i in 0 .. valueVTable.get_count() {
+                    def m := vtable[i]
+                    def methodName:String
+                    if m.owner == cl {
+                        methodName := createWrapperShim(m, wrapperShims)
+                    }
+                    else {
+                        methodName := getName(m)
+                        if m.owner.external {
+                            writeDeclaration(m)
+                        }
+                    }
+                    code.append("\{separator}i8* bitcast(\{wrapperType(m)} \{methodName} to i8*)")
+                    separator := ", "
+                }
+                code.append("] }")
+                types.print(code)
             }
+            classConstants[name] := result
         }
         return result
     }
@@ -581,7 +805,7 @@ class LLVMCodeGenerator (CodeGenerator) {
         }
     }
 
-    method getAndReference(left:IRNode, right:IRNode, out:OutputStream):String {
+    method getAndReference(left:IRNode, right:IRNode, out:IndentedOutputStream):String {
         var leftRef := getReference(left, out)
         if left.type = Type.Bit() {
             def leftField := nextVar()
@@ -607,7 +831,7 @@ class LLVMCodeGenerator (CodeGenerator) {
         return result
     }
 
-    method getOrReference(left:IRNode, right:IRNode, out:OutputStream):String {
+    method getOrReference(left:IRNode, right:IRNode, out:IndentedOutputStream):String {
         var leftRef := getReference(left, out)
         if left.type = Type.Bit() {
             def leftField := nextVar()
@@ -634,7 +858,7 @@ class LLVMCodeGenerator (CodeGenerator) {
     }
 
     method getBinaryReference(cl:Int, leftRef:String, op:Int, rightRef:String,
-            out:OutputStream):String {
+            out:IndentedOutputStream):String {
         def llvmOp:String
         match cl {
             when OpClass.SIGNED:
@@ -702,13 +926,33 @@ class LLVMCodeGenerator (CodeGenerator) {
         return result
     }
 
-    method getBinaryReference(left:IRNode, op:Int, right:IRNode, out:OutputStream):String {
+    method getIdentityReference(left:IRNode, right:IRNode, out:IndentedOutputStream):String {
+        def leftRef := getTypedReference(left, out)
+        def rightRef := getReference(right, out)
+        def raw := nextVar()
+        out.printLine("\{raw} = icmp eq \{leftRef}, \{rightRef}")
+        def result := nextVar()
+        out.printLine("\{result} = insertvalue %panda$core$Bit { i1 undef }, i1 \{raw}, 0")
+        return result
+    }
+
+    method getNIdentityReference(left:IRNode, right:IRNode, out:IndentedOutputStream):String {
+        def leftRef := getTypedReference(left, out)
+        def rightRef := getReference(right, out)
+        def raw := nextVar()
+        out.printLine("\{raw} = icmp ne \{leftRef}, \{rightRef}")
+        def result := nextVar()
+        out.printLine("\{result} = insertvalue %panda$core$Bit { i1 undef }, i1 \{raw}, 0")
+        return result
+    }
+
+    method getBinaryReference(left:IRNode, op:Int, right:IRNode, out:IndentedOutputStream):String {
         assert left.type = right.type
         match op {
             when Token.Kind.AND:       return getAndReference(left, right, out)
             when Token.Kind.OR:        return getOrReference(left, right, out)
-            when Token.Kind.IDENTITY:  assert false -- return getIdentityReference(left, right, out)
-            when Token.Kind.NIDENTITY: assert false -- return getNIdentityReference(left, right, out)
+            when Token.Kind.IDENTITY:  return getIdentityReference(left, right, out)
+            when Token.Kind.NIDENTITY: return getNIdentityReference(left, right, out)
             otherwise:
                 def leftRef := getTypedReference(left, out)
                 def rightRef := getReference(right, out)
@@ -716,7 +960,7 @@ class LLVMCodeGenerator (CodeGenerator) {
         }
     }
 
-    method getBinaryReference(b:IRNode, out:OutputStream):String {
+    method getBinaryReference(b:IRNode, out:IndentedOutputStream):String {
         assert b.kind = IRNode.Kind.BINARY
         assert b.children.get_count() = 2
         return getBinaryReference(b.children[0], b.payload->Int, b.children[1], out)
@@ -726,7 +970,7 @@ class LLVMCodeGenerator (CodeGenerator) {
         return "fastcc "
     }
 
-    method getVirtualMethodReference(target:String, m:MethodDecl, out:OutputStream):String {
+    method getVirtualMethodReference(target:String, m:MethodDecl, out:IndentedOutputStream):String {
         def cc := getClassConstant(m.owner)
         var index := -1
         def vtable := compiler.getVTable(m.owner)
@@ -755,7 +999,8 @@ class LLVMCodeGenerator (CodeGenerator) {
         return result
     }
 
-    method getInterfaceMethodReference(target:String, m:MethodDecl, out:OutputStream):String {
+    method getInterfaceMethodReference(target:String, m:MethodDecl,
+            out:IndentedOutputStream):String {
         def methodType := type(compiler.inheritedTypeWithSelf(m))
         -- load class constant entry
         def entry := nextLabel()
@@ -763,13 +1008,13 @@ class LLVMCodeGenerator (CodeGenerator) {
         createBlock(entry, out)
         def classPointer := nextVar()
         out.printLine("\{classPointer} = getelementptr inbounds \{typeName(m.owner.type())}, " +
-                "\{target}, \{SIZE_T} 0, i32 \{CLASS_POINTER_INDEX}")
+                "\{target}, \{SIZE_TYPE} 0, i32 \{CLASS_POINTER_INDEX}")
         def loadedClass := nextVar()
         def classType := typeName(Type.Class())
         out.printLine("\{loadedClass} = load \{classType}*, \{classType}** \{classPointer}")
         def itableFirst := nextVar()
         out.printLine("\{itableFirst} = getelementptr inbounds \{classType}, \{classType}* " +
-                "\{loadedClass}, \{SIZE_T} 0, i32 \{ITABLE_INDEX}")
+                "\{loadedClass}, \{SIZE_TYPE} 0, i32 \{ITABLE_INDEX}")
         def next := nextLabel()
         out.printLine("br label %\{next}")
         def leavingEntryLabel := currentBlock
@@ -784,7 +1029,7 @@ class LLVMCodeGenerator (CodeGenerator) {
         out.printLine("\{itablePtr} = load %$itable*, %$itable** \{itablePtrPtr}")
         def itableClassPtr := nextVar()
         out.printLine("\{itableClassPtr} = getelementptr inbounds %$itable, %$itable* " +
-                "\{itablePtr}, \{SIZE_T} 0, i32 0")
+                "\{itablePtr}, \{SIZE_TYPE} 0, i32 0")
         def itableClass := nextVar()
         out.printLine("\{itableClass} = load \{classType}*, \{classType}** \{itableClassPtr}")
         def test := nextVar()
@@ -796,7 +1041,7 @@ class LLVMCodeGenerator (CodeGenerator) {
 
         createBlock(fail, out)
         out.printLine("\{itableNext} = getelementptr inbounds %$itable, %$itable* \{itablePtr}, " +
-                "\{SIZE_T} 0, i32 1")
+                "\{SIZE_TYPE} 0, i32 1")
         out.printLine("br label %\{next}")
 
         createBlock(success, out)
@@ -812,7 +1057,7 @@ class LLVMCodeGenerator (CodeGenerator) {
         assert index != -1
         def methodPtrPtr := nextVar()
         out.printLine("\{methodPtrPtr} = getelementptr inbounds %$itable, %$itable* " +
-                "\{itablePtr}, \{SIZE_T} 0, i32 2, i32 \{index}")
+                "\{itablePtr}, \{SIZE_TYPE} 0, i32 2, i32 \{index}")
         def cast := nextVar()
         out.printLine("\{cast} = bitcast i8** \{methodPtrPtr} to \{methodType}*")
         def methodPtr := nextVar()
@@ -820,7 +1065,8 @@ class LLVMCodeGenerator (CodeGenerator) {
         return methodPtr
     }
 
-    method getMethodReference(target:String?, m:MethodDecl, isSuper:Bit, out:OutputStream):String {
+    method getMethodReference(target:String?, m:MethodDecl, isSuper:Bit,
+            out:IndentedOutputStream):String {
         if !isSuper & m.isVirtual() {
             assert target != null, "calling instance \{m.signature()} without a target"
             if m.owner.classKind = ClassDecl.Kind.INTERFACE {
@@ -838,7 +1084,7 @@ class LLVMCodeGenerator (CodeGenerator) {
         }
     }
 
-    method getPointerCallReference(call:IRNode, out:OutputStream):String {
+    method getPointerCallReference(call:IRNode, out:IndentedOutputStream):String {
         def m := call.payload->MethodRef
         match m.value.name {
             when "alloc":
@@ -847,10 +1093,10 @@ class LLVMCodeGenerator (CodeGenerator) {
                 def count := nextVar()
                 out.printLine("\{count} = extractvalue \{countStruct}, 0")
                 def size := nextVar()
-                out.printLine("\{size} = mul \{SIZE_T} \{count}, " +
+                out.printLine("\{size} = mul \{SIZE_TYPE} \{count}, " +
                         "\{sizeOf(m.returnType().subtypes[1])}")
                 def malloc := nextVar()
-                out.printLine("\{malloc} = call i8* @malloc(\{SIZE_T} \{size})")
+                out.printLine("\{malloc} = call i8* @malloc(\{SIZE_TYPE} \{size})")
                 def result := nextVar()
                 out.printLine("\{result} = bitcast i8* \{malloc} to \{type(m.returnType())}")
                 return result
@@ -889,10 +1135,11 @@ class LLVMCodeGenerator (CodeGenerator) {
                 def count := nextVar()
                 out.printLine("\{count} = extractvalue \{countStruct}, 0")
                 def size := nextVar()
-                out.printLine("\{size} = mul \{SIZE_T} \{count}, " +
+                out.printLine("\{size} = mul \{SIZE_TYPE} \{count}, " +
                         sizeOf(m.returnType().subtypes[1]))
                 def realloc := nextVar()
-                out.printLine("\{realloc} = call i8* @realloc(i8* \{ptrCast}, \{SIZE_T} \{size})")
+                out.printLine("\{realloc} = call i8* @realloc(i8* \{ptrCast}, \{SIZE_TYPE} " +
+                        "\{size})")
                 def result := nextVar()
                 out.printLine("\{result} = bitcast i8* \{realloc} to \{type(m.returnType())}")
                 return result
@@ -901,7 +1148,7 @@ class LLVMCodeGenerator (CodeGenerator) {
         }
     }
 
-    method getCallReference(call:IRNode, out:OutputStream):String {
+    method getCallReference(call:IRNode, out:IndentedOutputStream):String {
         assert call.kind = IRNode.Kind.CALL
         def m := (call.payload->MethodRef).value
         if m.owner.name = "panda.unsafe.Pointer" {
@@ -929,8 +1176,29 @@ class LLVMCodeGenerator (CodeGenerator) {
             }
         }
         def args := Array<String>(call.children.get_count())
-        for a in call.children {
-            args.add(getTypedReference(a, out))
+        def actualMethodType:Type
+        def actualResultType:String
+        def isSuper := call.children.get_count() >= 1 & call.children[0].kind = IRNode.Kind.SUPER
+        if !isSuper & m.isVirtual() {
+            actualMethodType := compiler.inheritedType(m)
+            actualResultType := type(actualMethodType.subtypes[actualMethodType.subtypes.get_count() - 1])
+        }
+        else {
+            actualMethodType := compiler.declaredType(m)
+            actualResultType := type(call.type)
+        }
+        def offset := call.children.get_count() - actualMethodType.subtypes.get_count() + 1
+        for i in 0 .. call.children.get_count() {
+            def arg := getReference(call.children[i], out)
+            if i >= offset & actualMethodType.subtypes[i - offset] != call.children[i].type {
+                arg := type(actualMethodType.subtypes[i - offset]) + " " +
+                        getCastReference(arg, call.children[i].type,
+                            actualMethodType.subtypes[i - offset], out)
+            }
+            else {
+                arg := type(call.children[i].type) + " " + arg
+            }
+            args.add(arg)
         }
         def target:String?
         if args.get_count() > 0 {
@@ -942,16 +1210,15 @@ class LLVMCodeGenerator (CodeGenerator) {
         else {
             target := null
         }
-        def methodRef := getMethodReference(target, m, false, out)
+        def methodRef := getMethodReference(target, m, isSuper, out)
         def result:String
-        def resultType := type(call.type)
         def indirect := needsStructIndirection(m)
         if indirect {
             out.print("call \{callingConvention(m)}void")
         }
         else {
             result := nextVar()
-            out.print("\{result} = call \{callingConvention(m)}\{resultType}")
+            out.print("\{result} = call \{callingConvention(m)}\{actualResultType}")
         }
         out.print(" \{methodRef}(")
         var separator := ""
@@ -959,24 +1226,30 @@ class LLVMCodeGenerator (CodeGenerator) {
         if indirect {
             labelCount += 1
             indirectVar := "%$tmp" + labelCount
-            methodHeader.printLine("\{indirectVar} = alloca \{resultType}")
-            out.print("\{resultType}* \{indirectVar}")
+            methodHeader.printLine("\{indirectVar} = alloca \{actualResultType}")
+            out.print("\{actualResultType}* \{indirectVar}")
             separator := ", "
         }
         for arg in args {
-            out.printLine("\{separator}\{arg}")
+            out.print("\{separator}\{arg}")
             separator := ", "
         }
         out.printLine(")")
         if indirect {
             result := nextVar()
-            out.printLine("\{result} = load \{resultType}, \{resultType}* \{indirectVar}")
+            out.printLine("\{result} = load \{actualResultType}, \{actualResultType}* " +
+                        indirectVar)
+        }
+        if type(call.type) != actualResultType {
+            return getCastReference(result, 
+                        actualMethodType.subtypes[actualMethodType.subtypes.get_count() - 1],
+                        call.type,
+                        out)
         }
         return result
     }
 
-    method wrapValue(value:String, srcType:Type, dstType:Type, out:OutputStream):String {
-        out.printLine("; wrapping \{value}")
+    method wrapValue(value:String, srcType:Type, dstType:Type, out:IndentedOutputStream):String {
         def src := compiler.getClass(srcType)
         assert src != null
         if srcType.typeKind = Type.Kind.NULLABLE {
@@ -1030,7 +1303,7 @@ class LLVMCodeGenerator (CodeGenerator) {
                 expr.children[0].children[0].kind = IRNode.Kind.INT
     }
 
-    method getFieldReference(fieldRef:IRNode, out:OutputStream):String {
+    method getFieldReference(fieldRef:IRNode, out:IndentedOutputStream):String {
         assert fieldRef.kind = IRNode.Kind.FIELD_REFERENCE
         assert fieldRef.children.get_count() = 1
         def field := fieldRef.payload->FieldDecl
@@ -1077,7 +1350,7 @@ class LLVMCodeGenerator (CodeGenerator) {
         return result
     }
 
-    method unwrapValue(value:String, srcType:Type, dstType:Type, out:OutputStream):String {
+    method unwrapValue(value:String, srcType:Type, dstType:Type, out:IndentedOutputStream):String {
         def target := compiler.getClass(dstType)
         assert target != null
         if dstType.typeKind = Type.Kind.NULLABLE {
@@ -1094,7 +1367,7 @@ class LLVMCodeGenerator (CodeGenerator) {
             out.printLine("br label %\{endLabel}")
             createBlock(endLabel, out)
             def result := nextVar()
-            out.print("\{result} = phi \{type(dstType)} " +
+            out.printLine("\{result} = phi \{type(dstType)} " +
                     "[{ \{type(dstType.subtypes[0])} undef, i1 0 }, " +
                     "%\{testStart}], [\{nonNullValue}, %\{nonNullLabel}]")
             return result
@@ -1111,7 +1384,8 @@ class LLVMCodeGenerator (CodeGenerator) {
         return result
     }
 
-    method toNullableValue(value:String, srcType:Type, dstType:Type, out:OutputStream):String {
+    method toNullableValue(value:String, srcType:Type, dstType:Type,
+            out:IndentedOutputStream):String {
         def nullableType := nullableType(dstType)
         def result := nextVar()
         out.printLine("\{result} = insertvalue \{nullableType} " +
@@ -1119,13 +1393,14 @@ class LLVMCodeGenerator (CodeGenerator) {
         return result
     }
 
-    method toNonNullableValue(value:String, srcType:Type, dstType:Type, out:OutputStream):String {
+    method toNonNullableValue(value:String, srcType:Type, dstType:Type,
+            out:IndentedOutputStream):String {
         def result := nextVar()
         out.printLine("\{result} = extractvalue \{type(srcType)} \{value}, 0")
         return result
     }
 
-    method getCastReference(value:String, src:Type, target:Type, out:OutputStream):String {
+    method getCastReference(value:String, src:Type, target:Type, out:IndentedOutputStream):String {
         def op:String
         if target.isBuiltinNumber() {
             assert src.isBuiltinNumber()
@@ -1177,14 +1452,14 @@ class LLVMCodeGenerator (CodeGenerator) {
         return result
     }
 
-    method getCastReference(cast:IRNode, out:OutputStream):String {
+    method getCastReference(cast:IRNode, out:IndentedOutputStream):String {
         assert cast.kind = IRNode.Kind.CAST
         assert cast.children.get_count() = 1
         def base := getReference(cast.children[0], out)
         return getCastReference(base, cast.children[0].type, cast.type, out)
     }
 
-    method getConstructReference(construct:IRNode, out:OutputStream):String {
+    method getConstructReference(construct:IRNode, out:IndentedOutputStream):String {
         assert construct.kind = IRNode.Kind.CONSTRUCT
         assert construct.children.get_count() >= 1
         def cl := compiler.getClass(construct.type)
@@ -1221,7 +1496,6 @@ class LLVMCodeGenerator (CodeGenerator) {
         if compiler.isValue(cl) {
             labelCount += 1
             def alloca := "%$tmp\{labelCount}"
-            methodHeader.printLine("; \{construct}")
             methodHeader.printLine("\{alloca} = alloca \{t}")
             writeCall(construct.children[0], "\{t}* \{alloca}", out)
             def result := nextVar()
@@ -1249,22 +1523,22 @@ class LLVMCodeGenerator (CodeGenerator) {
         return result
     }
 
-    method getIntReference(int:IRNode, out:OutputStream):String {
+    method getIntReference(int:IRNode, out:IndentedOutputStream):String {
         return (int.payload->Int).convert() -- FIXME parens
     }
 
-    method getNegatedIntReference(int:IRNode, out:OutputStream):String {
+    method getNegatedIntReference(int:IRNode, out:IndentedOutputStream):String {
         return "-" + (int.payload->Int).convert() -- FIXME parens
     }
 
-    method getBitReference(bit:IRNode, out:OutputStream):String {
+    method getBitReference(bit:IRNode, out:IndentedOutputStream):String {
         if bit.payload->Bit {
             return "true"
         }
         return "false"
     }
 
-    method getVariableReference(v:Variable, out:OutputStream):String {
+    method getVariableReference(v:Variable, out:IndentedOutputStream):String {
         if v.storage = Variable.Storage.PARAMETER {
             return getName(v)
         }
@@ -1274,7 +1548,7 @@ class LLVMCodeGenerator (CodeGenerator) {
         return result
     }
 
-    method getStringReference(s:String, out:OutputStream):String {
+    method getStringReference(s:String, out:IndentedOutputStream):String {
         labelCount += 1
         def chars := "@$chars\{labelCount}"
         def charsType := "[\{s.utf8().get_count()} x i8]"
@@ -1299,11 +1573,18 @@ class LLVMCodeGenerator (CodeGenerator) {
         return result
     }
 
-    method getSelfReference(s:IRNode, out:OutputStream):String {
+    method getSelfReference(s:IRNode, out:IndentedOutputStream):String {
         return "%self"
     }
 
-    method getIsNullReference(test:IRNode, out:OutputStream):String {
+    method getSuperReference(s:IRNode, out:IndentedOutputStream):String {
+        def result := nextVar()
+        out.printLine("\{result} = bitcast \{type(currentMethod.owner.type())} %self to " +
+                type(s.type))
+        return result
+    }
+
+    method getIsNullReference(test:IRNode, out:IndentedOutputStream):String {
         assert test.kind = IRNode.Kind.IS_NULL
         assert test.children.get_count() = 1
         def value := getTypedReference(test.children[0], out)
@@ -1327,7 +1608,7 @@ class LLVMCodeGenerator (CodeGenerator) {
         return result
     }
 
-    method getIsNonNullReference(test:IRNode, out:OutputStream):String {
+    method getIsNonNullReference(test:IRNode, out:IndentedOutputStream):String {
         assert test.kind = IRNode.Kind.IS_NONNULL
         assert test.children.get_count() = 1
         def value := getTypedReference(test.children[0], out)
@@ -1349,7 +1630,7 @@ class LLVMCodeGenerator (CodeGenerator) {
         return result
     }
 
-    method getNullReference(expr:IRNode, out:OutputStream):String {
+    method getNullReference(expr:IRNode, out:IndentedOutputStream):String {
         assert expr.type.typeKind = Type.Kind.NULLABLE
         def cl := compiler.getClass(expr.type.subtypes[0])
         assert cl != null
@@ -1361,7 +1642,24 @@ class LLVMCodeGenerator (CodeGenerator) {
         }
     }
 
-    method getReference(expr:IRNode, out:OutputStream):String {
+    method getPrefixReference(expr:IRNode, out:IndentedOutputStream):String {
+        assert expr.kind = IRNode.Kind.PREFIX
+        assert expr.children.get_count() = 1
+        def base := getReference(expr.children[0], out)
+        def result := nextVar()
+        match (expr.payload->UInt64).convert()->Int64 {
+            when Token.Kind.SUB:
+                out.printLine("\{result} = sub \{type(expr.type)} 0, \{base}")
+                return result
+            when Token.Kind.NOT, Token.Kind.BITWISENOT:
+                out.printLine("\{result} = xor \{type(expr.type)} -1, \{base}")
+                return result
+            otherwise:
+                assert false, expr.convert()
+        }
+    }
+
+    method getReference(expr:IRNode, out:IndentedOutputStream):String {
         match expr.kind {
             when IRNode.Kind.BINARY:
                 return getBinaryReference(expr, out)
@@ -1385,6 +1683,8 @@ class LLVMCodeGenerator (CodeGenerator) {
                 return getStringReference(expr.payload->String, out)
             when IRNode.Kind.SELF:
                 return getSelfReference(expr, out)
+            when IRNode.Kind.SUPER:
+                return getSuperReference(expr, out)
             when IRNode.Kind.REUSED_VALUE_DEFINITION:
                 def value := getReference(expr.children[0], out)
                 reusedValues[expr.payload->UInt64] := value
@@ -1399,23 +1699,27 @@ class LLVMCodeGenerator (CodeGenerator) {
                 return getIsNullReference(expr, out)
             when IRNode.Kind.IS_NONNULL:
                 return getIsNonNullReference(expr, out)
+            when IRNode.Kind.PREFIX:
+                return getPrefixReference(expr, out)
             otherwise:
                 assert false, "unsupported expression \{expr}:\{compiler.position(expr.offset)}"
         }
     }
 
-    method getTypedReference(expr:IRNode, out:OutputStream):String {
+    method getTypedReference(expr:IRNode, out:IndentedOutputStream):String {
         return "\{type(expr.type)} \{getReference(expr, out)}"
     }
 
-    method writeBlock(block:IRNode, out:OutputStream) {
+    method writeBlock(block:IRNode, out:IndentedOutputStream) {
         assert block.kind = IRNode.Kind.BLOCK
+        out.level += 1
         for s in block.children {
             writeStatement(s, out)
         }
+        out.level -= 1
     }
 
-    method writePointerCall(stmt:IRNode, out:OutputStream) {
+    method writePointerCall(stmt:IRNode, out:IndentedOutputStream) {
         def m := stmt.payload->MethodRef
         match m.value.name {
             when "set":
@@ -1434,7 +1738,7 @@ class LLVMCodeGenerator (CodeGenerator) {
                 def value := getTypedReference(compiler.unwrapCast(stmt.children[2]), out)
                 def ptr := nextVar()
                 out.printLine("\{ptr} = getelementptr inbounds \{type(baseType)}, \{base}, " +
-                        "\{SIZE_T} \{index}")
+                        "\{SIZE_TYPE} \{index}")
                 out.printLine("store \{value}, \{type(baseType)}* \{ptr}")
             when "destroy":
                 assert stmt.children.get_count() = 1
@@ -1449,7 +1753,7 @@ class LLVMCodeGenerator (CodeGenerator) {
 
     -- if 'target' is non-null, it is inserted as a hidden first parameter to the call. This is used
     -- for init() calls, which require a self parameter but do not have a target in the IR.
-    method writeCall(call:IRNode, target:String?, out:OutputStream) {
+    method writeCall(call:IRNode, target:String?, out:IndentedOutputStream) {
         assert call.kind = IRNode.Kind.CALL
         def m := (call.payload->MethodRef).value
         if m.owner.name = "panda.unsafe.Pointer" {
@@ -1459,12 +1763,33 @@ class LLVMCodeGenerator (CodeGenerator) {
         if m.owner.external {
             writeDeclaration(m)
         }
+        def actualMethodType:Type
+        def actualResultType:String
+        def isSuper := call.children.get_count() >= 1 & call.children[0].kind = IRNode.Kind.SUPER
+        if !isSuper & m.isVirtual() {
+            actualMethodType := compiler.inheritedType(m)
+            actualResultType := type(actualMethodType.subtypes[actualMethodType.subtypes.get_count() - 1])
+        }
+        else {
+            actualMethodType := compiler.declaredType(m)
+            actualResultType := type(call.type)
+        }
         def args := Array<String>()
         if target != null {
             args.add(target)
         }
-        for a in call.children {
-            args.add(getTypedReference(a, out))
+        def offset := call.children.get_count() - actualMethodType.subtypes.get_count() + 1
+        for i in 0 .. call.children.get_count() {
+            def arg := getReference(call.children[i], out)
+            if i >= offset & actualMethodType.subtypes[i - offset] != call.children[i].type {
+                arg := type(actualMethodType.subtypes[i - offset]) + " " +
+                        getCastReference(arg, call.children[i].type,
+                            actualMethodType.subtypes[i - offset], out)
+            }
+            else {
+                arg := type(call.children[i].type) + " " + arg
+            }
+            args.add(arg)
         }
         def refTarget:String?
         if args.get_count() > 0 {
@@ -1476,7 +1801,7 @@ class LLVMCodeGenerator (CodeGenerator) {
         else {
             refTarget := null
         }
-        def methodRef := getMethodReference(refTarget, m, false, out)
+        def methodRef := getMethodReference(refTarget, m, isSuper, out)
         var separator := ""
         if needsStructIndirection(m) {
             labelCount += 1
@@ -1488,6 +1813,9 @@ class LLVMCodeGenerator (CodeGenerator) {
             separator := ", "
         }
         else {
+            if call.type != Type.Void() {
+                nextVar()
+            }
             out.print("call \{callingConvention(m)}\{type(call.type)} " +
                     "\{methodRef}(")
         }
@@ -1499,7 +1827,7 @@ class LLVMCodeGenerator (CodeGenerator) {
         out.printLine(")")
     }
 
-    method writeIf(s:IRNode, out:OutputStream) {
+    method writeIf(s:IRNode, out:IndentedOutputStream) {
         assert s.kind = IRNode.Kind.IF
         assert s.children.get_count() = 2 | s.children.get_count() = 3
         assert s.children[0].type = Type.Bit()
@@ -1531,7 +1859,7 @@ class LLVMCodeGenerator (CodeGenerator) {
         createBlock(end, out)
     }
 
-    method writeRangeFor(f:IRNode, out:OutputStream) {
+    method writeRangeFor(f:IRNode, out:IndentedOutputStream) {
         -- I am acutely aware of how horrific this looks.
         --
         -- There's no easy way to produce clean output here, since we have to handle different step
@@ -1756,7 +2084,7 @@ class LLVMCodeGenerator (CodeGenerator) {
         createBlock(loopEnd, out)
     }
 
-    method writeWhile(w:IRNode, out:OutputStream) {
+    method writeWhile(w:IRNode, out:IndentedOutputStream) {
         assert w.kind = IRNode.Kind.WHILE
         assert w.children.get_count() = 2
         assert w.children[0].type = Type.Bit()
@@ -1779,7 +2107,7 @@ class LLVMCodeGenerator (CodeGenerator) {
         loopDescriptors.pop()
     }
 
-    method writeDo(d:IRNode, out:OutputStream) {
+    method writeDo(d:IRNode, out:IndentedOutputStream) {
         assert d.kind = IRNode.Kind.DO
         assert d.children.get_count() = 2
         assert d.children[1].type = Type.Bit()
@@ -1802,7 +2130,7 @@ class LLVMCodeGenerator (CodeGenerator) {
         loopDescriptors.pop()
     }
 
-    method writeLoop(l:IRNode, out:OutputStream) {
+    method writeLoop(l:IRNode, out:IndentedOutputStream) {
         assert l.kind = IRNode.Kind.LOOP
         assert l.children.get_count() = 1
         def loopStart := nextLabel()
@@ -1818,7 +2146,7 @@ class LLVMCodeGenerator (CodeGenerator) {
         loopDescriptors.pop()
     }
 
-    method writeVarTarget(target:IRNode, value:IRNode?, out:OutputStream) {
+    method writeVarTarget(target:IRNode, value:IRNode?, out:IndentedOutputStream) {
         match target.kind {
             when IRNode.Kind.VARIABLE_REFERENCE:
                 def v := target.payload->Variable
@@ -1834,7 +2162,7 @@ class LLVMCodeGenerator (CodeGenerator) {
         }
     }
 
-    method writeVar(v:IRNode, out:OutputStream) {
+    method writeVar(v:IRNode, out:IndentedOutputStream) {
         assert v.kind = IRNode.Kind.VAR |
                 v.kind = IRNode.Kind.DEF |
                 v.kind = IRNode.Kind.PROPERTY |
@@ -1850,8 +2178,10 @@ class LLVMCodeGenerator (CodeGenerator) {
         }
     }
 
-    method getLValue(lvalue:IRNode, out:OutputStream):String {
+    method getLValue(lvalue:IRNode, out:IndentedOutputStream):String {
         match lvalue.kind {
+            when IRNode.Kind.CAST:
+                return getLValue(compiler.unwrapCast(lvalue), out)
             when IRNode.Kind.VARIABLE_REFERENCE:
                 return getName(lvalue.payload->Variable)
             when IRNode.Kind.FIELD_REFERENCE:
@@ -1879,11 +2209,11 @@ class LLVMCodeGenerator (CodeGenerator) {
                 reusedValues[lvalue.payload->UInt64] := reused
                 return result
             otherwise:
-                assert false
+                assert false, "unsupported lvalue: \{lvalue}"
         }
     }
 
-    method writeAssignment(a:IRNode, out:OutputStream) {
+    method writeAssignment(a:IRNode, out:IndentedOutputStream) {
         assert a.kind = IRNode.Kind.BINARY
         assert a.children.get_count() = 2
         def lvalue := "\{type(a.children[0].type)}* \{getLValue(a.children[0], out)}"
@@ -1927,7 +2257,7 @@ class LLVMCodeGenerator (CodeGenerator) {
         out.printLine("store \{value}, \{lvalue}")
     }
 
-    method writeReturn(r:IRNode, out:OutputStream) {
+    method writeReturn(r:IRNode, out:IndentedOutputStream) {
         if r.children.get_count() = 1 {
             out.printLine("ret \{getTypedReference(r.children[0], out)}")
         }
@@ -1950,17 +2280,17 @@ class LLVMCodeGenerator (CodeGenerator) {
         assert false
     }
 
-    method writeBreak(b:IRNode, out:OutputStream) {
+    method writeBreak(b:IRNode, out:IndentedOutputStream) {
         def desc := findLoop(b.payload->String?)
         out.printLine("br label %\{desc.breakLabel}")
     }
 
-    method writeContinue(c:IRNode, out:OutputStream) {
+    method writeContinue(c:IRNode, out:IndentedOutputStream) {
         def desc := findLoop(c.payload->String?)
         out.printLine("br label %\{desc.continueLabel}")
     }
 
-    method writeAssert(a:IRNode, out:OutputStream) {
+    method writeAssert(a:IRNode, out:IndentedOutputStream) {
         assert a.kind = IRNode.Kind.ASSERT
         assert a.children.get_count() = 1 | a.children.get_count() = 2
         def test := getReference(a.children[0], out)
@@ -2009,7 +2339,7 @@ class LLVMCodeGenerator (CodeGenerator) {
         createBlock(ifTrue, out)
     }
 
-    method writeStatement(stmt:IRNode, out:OutputStream) {
+    method writeStatement(stmt:IRNode, out:IndentedOutputStream) {
         match stmt.kind {
             when IRNode.Kind.BINARY:
                 writeAssignment(stmt, out)
@@ -2083,6 +2413,7 @@ class LLVMCodeGenerator (CodeGenerator) {
 
     @override
     method write(m:MethodDecl, body:IRNode) {
+        currentMethod := m
         currentBlock := "0"
         varCount := 0
         methodHeaderBuffer.clear()
@@ -2100,8 +2431,9 @@ class LLVMCodeGenerator (CodeGenerator) {
         methods.level += 1
         assert body.kind = IRNode.Kind.BLOCK
         def bodyBuffer := MemoryOutputStream()
+        def indentedBody := IndentedOutputStream(bodyBuffer)
         for s in body.children {
-            writeStatement(s, bodyBuffer)
+            writeStatement(s, indentedBody)
         }
         methods.print(methodHeaderBuffer.convert())
         methods.print(bodyBuffer.convert())
@@ -2115,5 +2447,6 @@ class LLVMCodeGenerator (CodeGenerator) {
         }
         methods.level -= 1
         methods.printLine("}")
+        currentMethod := null
     }
 }

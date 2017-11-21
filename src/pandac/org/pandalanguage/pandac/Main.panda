@@ -161,8 +161,13 @@ class Main {
                             err.printLine("supported output formats are 'exe' and 'o'")
                             System.exit(1)
                     }
+                when "-I":
+                    imports.add(File(args.next("a path to a directory")))
                 otherwise:
-                    if a.endsWith(".panda") {
+                    if a.startsWith("-I") {
+                        imports.add(File(a[2..]))
+                    }
+                    else if a.endsWith(".panda") {
                         sources.add(File(a))
                     }
                     else {

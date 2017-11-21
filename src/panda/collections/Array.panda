@@ -84,7 +84,7 @@ class Array<T> (List<T>) {
     without affecting the original. It is not, however, a deep copy, and thus both arrays will refer
     to the same objects.
     ================================================================================================
-    function [](r:Range<Int>):Array<T> {
+    function [](r:Range<Int?>):Array<T> {
         def step := r.step
 
         def current:Int

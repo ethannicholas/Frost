@@ -69,6 +69,7 @@ class Compiler (ErrorReporter) {
         addAlias("panda.collections.Collection")
         addAlias("panda.collections.CollectionView")
         addAlias("panda.collections.CollectionWriter")
+        addAlias("panda.collections.IdentityMap")
         addAlias("panda.collections.Iterable")
         addAlias("panda.collections.Iterator")
         addAlias("panda.collections.Key")
@@ -77,6 +78,7 @@ class Compiler (ErrorReporter) {
         addAlias("panda.collections.ListWriter")
         addAlias("panda.collections.HashMap")
         addAlias("panda.collections.Map")
+        addAlias("panda.collections.Set")
         addAlias("panda.collections.Stack")
         addAlias("panda.core.Class")
         addAlias("panda.core.Bit")
@@ -106,6 +108,8 @@ class Compiler (ErrorReporter) {
         addAlias("panda.io.File")
         addAlias("panda.io.IndentedOutputStream")
         addAlias("panda.io.InputStream")
+        addAlias("panda.io.MemoryInputStream")
+        addAlias("panda.io.MemoryOutputStream")
         addAlias("panda.io.OutputStream")
         addAlias("panda.unsafe.Pointer")
     }
@@ -284,7 +288,9 @@ class Compiler (ErrorReporter) {
             when IRNode.Kind.UNRESOLVED_IDENTIFIER:
                 error(expr.offset, "unknown identifier")
             when IRNode.Kind.UNRESOLVED_METHOD_CALL:
-                error(expr.offset, "ambiguous method call (\{expr.children[0].payload})")
+                error(expr.offset, "ambiguous method call")
+            when IRNode.Kind.SUPER:
+                error(expr.offset, "'super' can only be used as part of a method call")
             otherwise:
                 return coerce(expr, variableType(expr))
         }
@@ -581,7 +587,12 @@ class Compiler (ErrorReporter) {
                         return null
                     }
                     def effectiveType := remapType(target.type, f.type)
-                    children.add(target)
+                    if f.annotations.isClass() {
+                        children.add(target)
+                    }
+                    else {
+                        children.add(coerce(target, f.owner.type()))
+                    }
                     var result := IRNode(IRNode.Kind.FIELD_REFERENCE, offset, f.type, s, children)
                     if effectiveType != result.type {
                         result := cast(result, offset, false, effectiveType)
@@ -964,7 +975,7 @@ class Compiler (ErrorReporter) {
                     }
                     if cost < bestCost {
                         best.clear()
-                        bestCost = cost
+                        bestCost := cost
                     }
                     if cost = bestCost {
                         best.add(m)
@@ -978,7 +989,7 @@ class Compiler (ErrorReporter) {
                     def result := call(expr.offset, callTarget, best[0], args)
                     return coerce(result, target)
                 }
-                assert false, "no or ambiguous match on method call (\{best})"
+                assert false, "no or ambiguous match on method call (\{position(expr.offset)}, \{methods[0].value.name}, \{best})"
             when IRNode.Kind.UNRESOLVED_INDEX:
                 def args := expr.children[1..]
                 return call(expr.children[0], "[]", args, target)
@@ -1052,9 +1063,8 @@ class Compiler (ErrorReporter) {
                     "'\{target}'")
         }
         match node.kind {
-            when IRNode.Kind.UNRESOLVED_METHOD_CALL:
-                return coerce(node, target)
-            when IRNode.Kind.UNRESOLVED_INDEX:
+            when IRNode.Kind.INT, IRNode.Kind.NEGATED_INT, IRNode.Kind.BIT,
+                    IRNode.Kind.UNRESOLVED_METHOD_CALL, IRNode.Kind.UNRESOLVED_INDEX:
                 return coerce(node, target)
         }
         def children := Array<IRNode>() -- FIXME literal
@@ -1231,6 +1241,7 @@ class Compiler (ErrorReporter) {
                         msg.append(" with return type '\{expectedType}'")
                     }
                     error(m.offset, msg.convert())
+                    return null
                 }
                 if methods.get_count() = 1 {
                     def target:IRNode?
@@ -1327,11 +1338,23 @@ class Compiler (ErrorReporter) {
     }
 
     function inheritedType(m:MethodDecl):Type {
-        return declaredType(m)
+        def inherited := getOverriddenMethod(m)
+        if inherited = null {
+            return declaredType(m)
+        }
+        return inheritedType(inherited)
     }
 
     function inheritedTypeWithSelf(m:MethodDecl):Type {
-        return declaredTypeWithSelf(m, m.owner.type())
+        return inheritedTypeWithSelf(m, m.owner.type())
+    }
+
+    function inheritedTypeWithSelf(m:MethodDecl, selfType:Type):Type {
+        def inherited := getOverriddenMethod(m)
+        if inherited = null {
+            return declaredTypeWithSelf(m, selfType)
+        }
+        return inheritedTypeWithSelf(inherited, selfType)
     }
 
     @class
@@ -1362,6 +1385,8 @@ class Compiler (ErrorReporter) {
             when Token.Kind.SHIFTRIGHT: return ">>"
             when Token.Kind.LBRACKET: return "[]"
             when Token.Kind.ASSIGNMENT: return ":="
+            when Token.Kind.IDENTITY: return "=="
+            when Token.Kind.NIDENTITY: return "!=="
             otherwise: assert false, "not an operator: \{op}"
         }
     }
@@ -1479,7 +1504,7 @@ class Compiler (ErrorReporter) {
 
     function unwrapCast(expr:IRNode):IRNode {
         if expr.kind = IRNode.Kind.CAST {
-            return unwrapCast(expr.children[0])
+            return expr.children[0]
         }
         return expr
     }
@@ -1574,6 +1599,40 @@ class Compiler (ErrorReporter) {
                 children.add(resolved)
                 return IRNode(kind, offset, Type.Bit(), children)
             }
+        }
+        if op = Token.Kind.IDENTITY | op = Token.Kind.NIDENTITY {
+            if left.type.isClass() {
+                def cl := getClass(left.type)
+                if cl = null {
+                    return null
+                }
+                if isValue(cl) {
+                    error(offset, "'\{operatorName(op)}' cannot operate on '\{left.type}', " +
+                            "'\{right.type}'")
+                }
+            }
+            if right.type.isClass() {
+                def cl := getClass(right.type)
+                if cl = null {
+                    return null
+                }
+                if isValue(cl) {
+                    error(offset, "'\{operatorName(op)}' cannot operate on '\{left.type}', " +
+                            "'\{right.type}'")
+                }
+            }
+            def finalLeft := coerce(left, Type.Object())
+            if finalLeft = null {
+                return null
+            }
+            def finalRight := coerce(right, Type.Object())
+            if finalRight = null {
+                return null
+            }
+            def children := Array<IRNode>() -- FIXME literal
+            children.add(left)
+            children.add(right)
+            return IRNode(IRNode.Kind.BINARY, offset, Type.Bit(), op, children)
         }
         if op = Token.Kind.ASSIGNMENT {
             if left.kind = IRNode.Kind.UNRESOLVED_INDEX {
@@ -1807,45 +1866,36 @@ class Compiler (ErrorReporter) {
                     when IRNode.Kind.NEGATED_INT:
                         return IRNode(IRNode.Kind.INT, offset, base.type, base.payload->UInt64)
                     otherwise:
--*                        if (base.fType.isBuiltinNumber()) {
-                            Type type = base.fType;
-                            std::vector<IRNode> children;
-                            children.push_back(std::move(base));
-                            *out = IRNode(p, IRNode::Kind::PREFIX, type, (uint64_t) Operator::SUB,
-                                    std::move(children));
-                            return true;
-                        }*-
-                        assert false
+                        if base.type.isBuiltinNumber() {
+                            def children := Array<IRNode>() -- FIXME literal
+                            children.add(base)
+                            return IRNode(IRNode.Kind.PREFIX, base.offset, base.type,
+                                    Token.Kind.SUB, children)
+                        }
                 }
                 error(base.offset, "expected a number, but found '\{base.type}'")
                 return null
--*            case Operator::BITWISENOT:
-                if (base.fType.isBuiltinNumber()) {
-                    Type type = base.fType;
-                    std::vector<IRNode> children;
-                    children.push_back(std::move(base));
-                    *out = IRNode(p, IRNode::Kind::PREFIX, type, (uint64_t) op,
-                            std::move(children));
-                    return true;
+            when Token.Kind.BITWISENOT:
+                if base.type.isBuiltinNumber() {
+                    def children := Array<IRNode>() -- FIXME literal
+                    children.add(base)
+                    return IRNode(IRNode.Kind.PREFIX, base.offset, base.type,
+                            Token.Kind.BITWISENOT, children)
                 }
                 else {
-                    this->error(base.fPosition, "expected a number, but found '" + base.fType.fName +
-                            "'");
-                    return false;
+                    error(base.offset, "expected a number, but found '\{base.type.name}'")
+                    return null
                 }
-            case Operator::NOT: {
-                if (!this->coerce(&base, Type::BuiltinBit())) {
-                    return false;
+            when Token.Kind.NOT:
+                def coerced := coerce(base, Type.BuiltinBit())
+                if coerced = null {
+                    return null
                 }
-                Type type = base.fType;
-                std::vector<IRNode> children;
-                children.push_back(std::move(base));
-                *out = IRNode(p, IRNode::Kind::PREFIX, type, (uint64_t) op,
-                        std::move(children));
-                return true;
-            }
-            default:
-                abort();*-
+                def children := Array<IRNode>() -- FIXME literal
+                children.add(coerced)
+                return IRNode(IRNode.Kind.PREFIX, base.offset, base.type, Token.Kind.NOT, children)
+            otherwise:
+                assert false
         }
         assert false
     }
@@ -1884,7 +1934,7 @@ class Compiler (ErrorReporter) {
         if base = null {
             return null
         }
-        if base.kind != IRNode.Kind.UNRESOLVED_IDENTIFIER {
+        if base.kind != IRNode.Kind.UNRESOLVED_IDENTIFIER & base.kind != IRNode.Kind.SUPER {
             base := resolve(base)
         }
         if base = null {
@@ -1901,6 +1951,8 @@ class Compiler (ErrorReporter) {
                     return IRNode(IRNode.Kind.TYPE_REFERENCE, d.offset, Type.Class(), cl.type())
                 }
                 return IRNode(IRNode.Kind.UNRESOLVED_IDENTIFIER, d.offset, Type.Invalid(), name)
+            when IRNode.Kind.SUPER:
+                cl := getClass(currentClass.peek().rawSuper)
             otherwise:
                 cl := getClass(base.type)
         }
@@ -2015,6 +2067,17 @@ class Compiler (ErrorReporter) {
         return IRNode(IRNode.Kind.SELF, s.offset, type)
     }
 
+    method compileSuper(s:ASTNode):IRNode? {
+        assert s.kind = ASTNode.Kind.SUPER
+        if currentMethod.peek().annotations.isClass() {
+            error(s.offset, "cannot reference 'super' from a @class method")
+            return null
+        }
+        def cl := currentClass.peek()
+        assert cl.resolved
+        return IRNode(IRNode.Kind.SUPER, s.offset, cl.rawSuper)
+    }
+
     method compileCast(c:ASTNode):IRNode? {
         assert c.kind = ASTNode.Kind.CAST
         assert c.children.get_count() = 2
@@ -2065,6 +2128,8 @@ class Compiler (ErrorReporter) {
                 return compileType(e)
             when ASTNode.Kind.SELF:
                 return compileSelf(e)
+            when ASTNode.Kind.SUPER:
+                return compileSuper(e)
             when ASTNode.Kind.CAST:
                 return compileCast(e)
             when ASTNode.Kind.NULL:
@@ -2512,6 +2577,101 @@ class Compiler (ErrorReporter) {
         return IRNode(kind, v.offset, decls)
     }
 
+    method compileWhenTest(value:Variable, test:ASTNode):IRNode? {
+        def target := IRNode(IRNode.Kind.VARIABLE_REFERENCE, test.offset, value.type, value)
+        def callChildren := Array<IRNode>()
+        def testValue := compileExpression(test)
+        if testValue = null {
+            return null
+        }
+        callChildren.add(testValue)
+        return call(target, "=", callChildren)
+    }
+
+    method compileWhen(value:Variable, w:ASTNode):IRNode? {
+        assert w.kind = ASTNode.Kind.WHEN
+        assert w.children.get_count() >= 1
+        assert w.children[0].kind = ASTNode.Kind.EXPRESSIONS
+        assert w.children[0].children.get_count() >= 1
+        var test := compileWhenTest(value, w.children[0].children[0])
+        if test = null {
+            return null
+        }
+        for i in 1 .. w.children[0].children.get_count() {
+            def nextTest := compileWhenTest(value, w.children[0].children[i])
+            if nextTest = null {
+                return null
+            }
+            def callChildren := Array<IRNode>() -- FIXME literal
+            callChildren.add(nextTest)
+            test := call(test, "|", callChildren)
+            if test = null {
+                return null
+            }
+        }
+        symbolTable := SymbolTable(symbolTable)
+        def statements := Array<IRNode>()
+        for i in 1 .. w.children.get_count() {
+            def statement := compileStatement(w.children[i])
+            if statement = null {
+                return null
+            }
+            statements.add(statement)
+        }
+        def children := Array<IRNode>() -- FIXME literal
+        children.add(test)
+        children.add(IRNode(IRNode.Kind.BLOCK, w.offset, statements))
+        return IRNode(IRNode.Kind.IF, w.offset, children)
+    }
+
+    method compileMatch(m:ASTNode):IRNode? {
+        assert m.kind = ASTNode.Kind.MATCH
+        assert m.children.get_count() >= 1
+        def value := resolve(compileExpression(m.children[0]))
+        if value = null {
+            return null
+        }
+        def children := Array<IRNode>()
+        def valueVar := Variable(m.offset, "$match$\{m.offset}", value.type)
+        def declChildren := Array<IRNode>() -- FIXME literal
+        declChildren.add(IRNode(IRNode.Kind.VARIABLE_REFERENCE, value.offset, valueVar.type,
+                valueVar))
+        declChildren.add(value)
+        def varChildren := Array<IRNode>()
+        varChildren.add(IRNode(IRNode.Kind.DECLARATION, valueVar.offset, declChildren))
+        children.add(IRNode(IRNode.Kind.DEF, valueVar.offset, varChildren))
+        for i in 1 .. m.children.get_count() {
+            def c := m.children[i]
+            match c.kind {
+                when ASTNode.Kind.WHEN:
+                    def w := compileWhen(valueVar, c)
+                    if w = null {
+                        return null
+                    }
+                    children.add(w)
+                when ASTNode.Kind.OTHERWISE:
+                    def statements := Array<IRNode>()
+                    for astStatement in c.children {
+                        def stmt := compileStatement(astStatement)
+                        if stmt = null {
+                            return null
+                        }
+                        statements.add(stmt)
+                    }
+                    children.add(IRNode(IRNode.Kind.BLOCK, c.offset, statements))
+                otherwise:
+                    assert false
+            }
+        }
+        for i in children.get_count() - 1 .. 1 by -1 {
+            assert children[i - 1].kind = IRNode.Kind.IF
+            assert children[i - 1].children.get_count() = 2
+            children[i - 1].children.add(children[i])
+            children.removeIndex(children.get_count() - 1)
+        }
+        return IRNode(IRNode.Kind.BLOCK, m.offset, children)
+    }
+
     method compileStatement(s:ASTNode):IRNode? {
         match s.kind {
             when ASTNode.Kind.ASSERT:   return compileAssert(s)
@@ -2523,6 +2683,7 @@ class Compiler (ErrorReporter) {
             when ASTNode.Kind.WHILE:    return compileWhile(s)
             when ASTNode.Kind.DO:       return compileDo(s)
             when ASTNode.Kind.LOOP:     return compileLoop(s)
+            when ASTNode.Kind.MATCH:    return compileMatch(s)
             when ASTNode.Kind.BREAK:    return compileBreak(s)
             when ASTNode.Kind.CONTINUE: return compileContinue(s)
             when ASTNode.Kind.RETURN:   return compileReturn(s)

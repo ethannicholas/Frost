@@ -4,6 +4,9 @@ class Test {
         Console.print("Testing \{test}...")
         def expected := workingDir.resolve(test + ".expected").readFully()
         def exe := File("/tmp/test.out")
+        if exe.exists() {
+            exe.delete()
+        }
         def args := Array<String>() -- FIXME literal
         args.add(workingDir.resolve(test + ".panda").path)
         args.add("-o")

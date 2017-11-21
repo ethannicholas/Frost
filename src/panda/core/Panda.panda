@@ -19,4 +19,9 @@ class Panda {
         Console.errorStream().printLine("assertion failure (\{file}:\{line}): \{msg}")
         System.crash()
     }
+
+    @class
+    method debugPrint(i:UInt8) {
+        Console.printLine("Debug: \{i}")
+    }
 }

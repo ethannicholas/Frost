@@ -2,7 +2,7 @@ package org.pandalanguage.pandac
 
 uses org.pandalanguage.pandac.parser.Token
 
-class IRNode : Immutable {
+class IRNode {
     class Kind {
         constant BLOCK                       := 1000
         constant TYPE_REFERENCE              := 1001
@@ -51,6 +51,7 @@ class IRNode : Immutable {
         -- index types could be different between "[]" and "[]:=". Holding off on resolution allows
         -- us to handle cases like this.
         constant UNRESOLVED_INDEX            := 1040
+        constant PREFIX                      := 1041
     }
 
     def kind:Int
@@ -61,7 +62,7 @@ class IRNode : Immutable {
 
     def type:Type
 
-    def children:ImmutableArray<IRNode>
+    def children:Array<IRNode>
 
     init(kind:Int, offset:Int) {
         init(kind, offset, Type.Void(), null, Array<IRNode>())
@@ -120,12 +121,13 @@ class IRNode : Immutable {
         self.offset := offset
         self.type := type
         self.payload := payload
-        self.children := ImmutableArray<IRNode>(children)
+        self.children := Array<IRNode>(children)
         assert kind != Kind.CAST | children[0].type != Type.IntLiteral()
         assert kind != Kind.CAST | type.name != "panda.unsafe.Pointer"
         assert kind != Kind.CAST | type.kind != Type.Kind.UNRESOLVED
         assert kind != Kind.CAST | children[0].kind != Kind.UNRESOLVED_INDEX
         assert kind != Kind.CAST | children[0].type.kind != Type.Kind.UNRESOLVED
+        assert kind != Kind.UNRESOLVED_METHOD_REFERENCE | payload->ListView<MethodRef>.get_count() > 0
     }
 
     @override
@@ -185,7 +187,7 @@ class IRNode : Immutable {
             when Kind.NULL:
                 return "null"
             when Kind.DECLARATION:
-                if children.get_count() == 1 {
+                if children.get_count() = 1 {
                     return children[0].convert()
                 }
                 return "\{children[0]} := \{children[1]}"

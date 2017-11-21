@@ -5,6 +5,7 @@ uses panda.unsafe.Pointer
 ====================================================================================================
 An immutable sequence of Unicode characters.
 ====================================================================================================
+@final
 class String : Immutable (Key<String>) {
     ================================================================================================
     Represents the position of a character within a String.
