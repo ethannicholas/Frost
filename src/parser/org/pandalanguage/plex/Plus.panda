@@ -10,10 +10,10 @@ class Plus : Node {
 
     @override
     method makeStartStates(context:NFA, accept:ListView<Int>):Array<Int> {
-        -- a lot of ugliness has crept in here over time, largely due to having to work around the
-        -- immutability of various objects when these objects were not originally built as
-        -- immutable and I didn't want to have to completely rewrite everything. Probably should
-        -- have.
+        -- a lot of ugliness has crept in here over time, largely due to
+        -- having to work around the immutability of various objects when these
+        -- objects were not originally built as immutable and I didn't want to
+        -- have to completely rewrite everything. Probably should have.
         def next := Array<Int>()
         for state in accept {
             next.add(state)

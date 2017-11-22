@@ -161,10 +161,10 @@ class Main {
                             err.printLine("supported output formats are 'exe' and 'o'")
                             System.exit(1)
                     }
-                when "-I":
+                when "-i":
                     imports.add(File(args.next("a path to a directory")))
                 otherwise:
-                    if a.startsWith("-I") {
+                    if a.startsWith("-i") {
                         imports.add(File(a[2..]))
                     }
                     else if a.endsWith(".panda") {

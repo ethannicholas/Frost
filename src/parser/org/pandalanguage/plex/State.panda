@@ -1,0 +1,23 @@
+package org.pandalanguage.plex
+
+@abstract
+class State {
+    -- fixme need to use a choice
+    constant ACCEPT := 100
+    constant ANY := 101
+    constant REMAPPED := 102
+    constant CHAR := 103
+    constant TABLE := 104
+
+    def kind:Int
+
+    def next:ImmutableArray<Int>
+
+    init(kind:Int, next:ImmutableArray<Int>) {
+        self.kind := kind
+        self.next := next
+    }
+
+    @abstract
+    function accept(c:Char8):Bit
+}

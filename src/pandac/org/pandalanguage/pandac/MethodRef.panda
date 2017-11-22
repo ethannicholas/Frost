@@ -39,6 +39,6 @@ class MethodRef {
 
     @override
     function convert():String {
-        return "MethodRef(\{value.signature()}, \{types})"
+        return "MethodRef(\{value.signature()}(\{value.owner.name}), \{types})"
     }
 }

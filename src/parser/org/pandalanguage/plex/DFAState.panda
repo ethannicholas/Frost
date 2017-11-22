@@ -1,0 +1,17 @@
+package org.pandalanguage.plex
+
+class DFAState {
+    def id:Int
+    def label:DFAStateLabel
+    var scanned:Bit
+
+    init(id:Int, label:DFAStateLabel) {
+        self.id := id
+        self.label := label
+    }
+
+    @override
+    function convert():String {
+        return "DFAState<\{id}, \{label}>"
+    }
+}

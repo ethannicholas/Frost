@@ -3,6 +3,10 @@ package org.pandalanguage.pandac
 interface CodeGenerator {
     method setCompiler(compiler:Compiler)
 
+    method write(cl:ClassDecl)
+
+    method writeDeclaration(m:MethodDecl)
+
     method write(m:MethodDecl, body:IRNode)
 
     method finish()

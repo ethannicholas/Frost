@@ -3,31 +3,6 @@ cmake_minimum_required(VERSION 2.8)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -m64")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -m64")
 
-add_definitions(-DLLVM_DIR=${LLVM_DIR})
-
-include_directories(
-    src/pandac
-    src/parser
-)
-
-add_executable(pandac
-    src/parser/lex.panda.cpp
-    src/parser/PandaParser.cpp
-    src/pandac/Class.cpp
-    src/pandac/Compiler.cpp
-    src/pandac/LLVMCodeGenerator.cpp
-    src/pandac/Main.cpp
-    src/pandac/Method.cpp
-    src/pandac/MethodRef.cpp
-    src/pandac/Operator.cpp
-    src/pandac/Scanner.cpp
-    src/pandac/SymbolTable.cpp
-)
-
-add_executable(testrunner
-    test/TestRunner.cpp
-)
-
 function(compile_panda_sources out_var)
     set(result)
     foreach(input ${ARGN})
@@ -35,8 +10,8 @@ function(compile_panda_sources out_var)
         get_filename_component(output ${input} NAME_WE)
         set(output "${CMAKE_CURRENT_BINARY_DIR}/${output}.o")
         add_custom_command(OUTPUT ${output}
-            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/pandac -f o -o ${output} ${input}
-            DEPENDS ${input} pandac
+            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/bootstrap -f o -o ${output} ${input}
+            DEPENDS ${input}
             WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         )
         list(APPEND result ${output})
@@ -108,8 +83,8 @@ add_library(panda
 
 add_custom_command(
     OUTPUT writeInts
-    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/pandac -o writeInts ${CMAKE_CURRENT_SOURCE_DIR}/src/tools/WriteInts.panda
-    DEPENDS src/tools/WriteInts.panda pandac
+    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/bootstrap -o writeInts ${CMAKE_CURRENT_SOURCE_DIR}/src/tools/WriteInts.panda
+    DEPENDS src/tools/WriteInts.panda
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
 
@@ -129,8 +104,8 @@ add_custom_command(
 
 add_custom_command(
     OUTPUT writeOperators
-    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/pandac -o writeOperators ${CMAKE_CURRENT_SOURCE_DIR}/src/tools/WriteOperators.panda
-    DEPENDS src/tools/WriteOperators.panda pandac panda
+    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/bootstrap -o writeOperators ${CMAKE_CURRENT_SOURCE_DIR}/src/tools/WriteOperators.panda
+    DEPENDS src/tools/WriteOperators.panda panda
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
 
@@ -174,8 +149,8 @@ function(compile_plex_sources out_var)
         get_filename_component(output ${input} NAME_WE)
         set(output "${CMAKE_CURRENT_BINARY_DIR}/${output}.o")
         add_custom_command(OUTPUT ${output}
-            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/pandac -i ${CMAKE_CURRENT_SOURCE_DIR}/src/plex -f o -o ${output} ${input}
-            DEPENDS ${input} pandac
+            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/bootstrap -i ${CMAKE_CURRENT_SOURCE_DIR}/src/parser -f o -o ${output} ${input}
+            DEPENDS ${input}
             WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         )
         list(APPEND result ${output})
@@ -184,31 +159,31 @@ function(compile_plex_sources out_var)
 endfunction()
 
 compile_plex_sources(plex_objects
-    src/plex/org/pandalanguage/plex/AcceptState.panda
-    src/plex/org/pandalanguage/plex/Any.panda
-    src/plex/org/pandalanguage/plex/AnyState.panda
-    src/plex/org/pandalanguage/plex/CharSet.panda
-    src/plex/org/pandalanguage/plex/Concat.panda
-    src/plex/org/pandalanguage/plex/DFAState.panda
-    src/plex/org/pandalanguage/plex/DFAStateLabel.panda
-    src/plex/org/pandalanguage/plex/NFA.panda
-    src/plex/org/pandalanguage/plex/NFAtoDFA.panda
-    src/plex/org/pandalanguage/plex/Node.panda
-    src/plex/org/pandalanguage/plex/Option.panda
-    src/plex/org/pandalanguage/plex/PLex.panda
-    src/plex/org/pandalanguage/plex/Plus.panda
-    src/plex/org/pandalanguage/plex/Regex.panda
-    src/plex/org/pandalanguage/plex/RemappedState.panda
-    src/plex/org/pandalanguage/plex/SingleCharState.panda
-    src/plex/org/pandalanguage/plex/SetNode.panda
-    src/plex/org/pandalanguage/plex/SingleChar.panda
-    src/plex/org/pandalanguage/plex/SingleCharState.panda
-    src/plex/org/pandalanguage/plex/Star.panda
-    src/plex/org/pandalanguage/plex/State.panda
-    src/plex/org/pandalanguage/plex/TableState.panda
-    src/plex/org/pandalanguage/plex/Union.panda
-    src/plex/org/pandalanguage/plex/runtime/DFA.panda
-    src/plex/org/pandalanguage/plex/runtime/RawToken.panda
+    src/parser/org/pandalanguage/plex/AcceptState.panda
+    src/parser/org/pandalanguage/plex/Any.panda
+    src/parser/org/pandalanguage/plex/AnyState.panda
+    src/parser/org/pandalanguage/plex/CharSet.panda
+    src/parser/org/pandalanguage/plex/Concat.panda
+    src/parser/org/pandalanguage/plex/DFAState.panda
+    src/parser/org/pandalanguage/plex/DFAStateLabel.panda
+    src/parser/org/pandalanguage/plex/NFA.panda
+    src/parser/org/pandalanguage/plex/NFAtoDFA.panda
+    src/parser/org/pandalanguage/plex/Node.panda
+    src/parser/org/pandalanguage/plex/Option.panda
+    src/parser/org/pandalanguage/plex/PLex.panda
+    src/parser/org/pandalanguage/plex/Plus.panda
+    src/parser/org/pandalanguage/plex/Regex.panda
+    src/parser/org/pandalanguage/plex/RemappedState.panda
+    src/parser/org/pandalanguage/plex/SingleCharState.panda
+    src/parser/org/pandalanguage/plex/SetNode.panda
+    src/parser/org/pandalanguage/plex/SingleChar.panda
+    src/parser/org/pandalanguage/plex/SingleCharState.panda
+    src/parser/org/pandalanguage/plex/Star.panda
+    src/parser/org/pandalanguage/plex/State.panda
+    src/parser/org/pandalanguage/plex/TableState.panda
+    src/parser/org/pandalanguage/plex/Union.panda
+    src/parser/org/pandalanguage/plex/runtime/DFA.panda
+    src/parser/org/pandalanguage/plex/runtime/RawToken.panda
 )
 
 add_executable(plex
@@ -221,7 +196,7 @@ add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/pandac/parser/Lexer.panda
            ${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/pandac/parser/Token.panda
     COMMAND ${CMAKE_CURRENT_BINARY_DIR}/plex
-    DEPENDS plex src/plex/Panda.plex
+    DEPENDS plex src/parser/Panda.plex
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
 
@@ -231,8 +206,8 @@ function(compile_pandac_sources out_var)
         get_filename_component(output ${input} NAME_WE)
         set(output "${CMAKE_CURRENT_BINARY_DIR}/${output}.o")
         add_custom_command(OUTPUT ${output}
-            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/pandac -i ${CMAKE_CURRENT_SOURCE_DIR}/src/plex -i ${CMAKE_CURRENT_BINARY_DIR} -i ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac -f o -o ${output} ${input}
-            DEPENDS ${input} pandac
+            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/bootstrap -i ${CMAKE_CURRENT_SOURCE_DIR}/src/parser -i ${CMAKE_CURRENT_BINARY_DIR} -i ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac -f o -o ${output} ${input}
+            DEPENDS ${input}
             WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         )
         list(APPEND result ${output})
@@ -266,11 +241,11 @@ compile_pandac_sources(pandac_objects
     ${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/pandac/parser/Token.panda
 )
 
-add_executable(pandac2
+add_executable(pandac
     ${pandac_objects}
     ${CMAKE_CURRENT_BINARY_DIR}/DFA.o
     ${CMAKE_CURRENT_BINARY_DIR}/Position.o
     ${CMAKE_CURRENT_BINARY_DIR}/RawToken.o
 )
-target_link_libraries(pandac2 panda)
-set_target_properties(pandac2 PROPERTIES LINKER_LANGUAGE CXX)
+target_link_libraries(pandac panda)
+set_target_properties(pandac PROPERTIES LINKER_LANGUAGE CXX)

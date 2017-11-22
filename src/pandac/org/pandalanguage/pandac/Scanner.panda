@@ -154,7 +154,10 @@ class Scanner {
         }
         assert m.children[1].kind = ASTNode.Kind.ANNOTATIONS
         def annotations := convertAnnotations(m.children[1])
-        if owner.annotations.isFinal() {
+        if owner.classKind = ClassDecl.Kind.INTERFACE {
+            annotations.flags ||= Annotations.Flag.ABSTRACT
+        }
+        if owner.annotations.isFinal() | annotations.isPrivate() {
             annotations.flags ||= Annotations.Flag.FINAL
         }
         assert m.children[2].kind = ASTNode.Kind.PARAMETERS

@@ -1,0 +1,30 @@
+package org.pandalanguage.plex
+
+class Star : Node {
+    def contents:Node
+
+    init(contents:Node) {
+        super.init(STAR)
+        self.contents := contents
+    }
+
+    @override
+    method makeStartStates(context:NFA, accept:ListView<Int>):Array<Int> {
+        def next := Array<Int>(accept)
+        def stateId := context.addState(RemappedState(ImmutableArray<Int>()))
+        next.add(stateId)
+        def start := contents.makeStartStates(context, next)
+        for state in accept {
+            start.add(state)
+        }
+        def newStates := Array<State>(context.states)
+        newStates[stateId] := RemappedState(ImmutableArray<Int>(start))
+        context.states := ImmutableArray<State>(newStates)
+        return start
+    }
+
+    @override
+    function convert():String {
+        return contents + "*"
+    }
+}

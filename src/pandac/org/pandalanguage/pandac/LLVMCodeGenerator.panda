@@ -649,7 +649,7 @@ class LLVMCodeGenerator (CodeGenerator) {
                     "{ i8*, \{INT_TYPE}, %$itable*, [\{vtable.get_count()} x i8*] }")
             classConstants[cl.name] := result
             def superPtr:String
-            if cl.rawSuper != Type.Void() {
+            if cl.rawSuper != null {
                 def superCC := getClassConstant(compiler.getClass(cl.rawSuper))
                 superPtr := "bitcast(\{superCC.type}* \{superCC.name} to i8*)"
             }
@@ -799,9 +799,12 @@ class LLVMCodeGenerator (CodeGenerator) {
 
     function opClass(t:Type):Int {
         match t.typeKind {
-            when Type.Kind.BUILTIN_INT:   return OpClass.SIGNED
-            when Type.Kind.BUILTIN_UINT:  return OpClass.UNSIGNED
-            when Type.Kind.BUILTIN_FLOAT: return OpClass.FLOAT
+            when Type.Kind.BUILTIN_INT:
+                return OpClass.SIGNED
+            when Type.Kind.BUILTIN_UINT, Type.Kind.BUILTIN_BIT:
+                return OpClass.UNSIGNED
+            when Type.Kind.BUILTIN_FLOAT:
+                return OpClass.FLOAT
             otherwise:
                 assert false
         }
@@ -1950,7 +1953,7 @@ class LLVMCodeGenerator (CodeGenerator) {
             signPrefix := "s"
         }
         else {
-            assert t.name.startsWith("panda.core.UInt")
+            assert t.name.startsWith("panda.core.UInt") | t.name.startsWith("panda.core.Char")
             signPrefix := "u"
         }
         def direction:String
@@ -2328,6 +2331,9 @@ class LLVMCodeGenerator (CodeGenerator) {
     }
 
     method writeStatement(stmt:IRNode, out:IndentedOutputStream) {
+        if stmt.kind != IRNode.Kind.BLOCK {
+            out.printLine("; \{stmt}")
+        }
         match stmt.kind {
             when IRNode.Kind.BINARY:
                 writeAssignment(stmt, out)
@@ -2368,6 +2374,7 @@ class LLVMCodeGenerator (CodeGenerator) {
         return result
     }
 
+    @override
     method writeDeclaration(m:MethodDecl) {
         def name := getName(m)
         if declared.contains(name) {
@@ -2437,5 +2444,11 @@ class LLVMCodeGenerator (CodeGenerator) {
         methods.level -= 1
         methods.printLine("}")
         currentMethod := null
+    }
+
+    @override
+    method write(cl:ClassDecl) {
+        writeType(cl.type())
+        getClassConstant(cl)
     }
 }

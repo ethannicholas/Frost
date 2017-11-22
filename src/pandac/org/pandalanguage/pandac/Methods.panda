@@ -5,6 +5,13 @@ class Methods : Symbol {
 
     init(methods:ListView<MethodDecl>) {
         assert methods.get_count() > 0
+        for i in 1 .. methods.get_count() {
+            for j in 0 .. i {
+                if methods[i] == methods[j] {
+                    assert false, "duplicate method: \{methods[i]}"
+                }
+            }
+        }
         super.init(Kind.METHODS, -1, methods[0].name)
         self.methods := ImmutableArray<MethodDecl>(methods)
     }

@@ -6,6 +6,13 @@ class Set<T:Key<T>> (Collection<T>) {
     @private
     def contents := HashMap<T, T>()
 
+    init() {
+    }
+
+    init(c:CollectionView<T>) {
+        addAll(c)
+    }
+
     @override
     method add(value:T) {
         contents[value] := value

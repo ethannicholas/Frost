@@ -111,9 +111,11 @@ class Compiler (ErrorReporter) {
         addAlias("panda.io.File")
         addAlias("panda.io.IndentedOutputStream")
         addAlias("panda.io.InputStream")
+        addAlias("panda.io.LineNumberInputStream")
         addAlias("panda.io.MemoryInputStream")
         addAlias("panda.io.MemoryOutputStream")
         addAlias("panda.io.OutputStream")
+        addAlias("panda.io.PushbackInputStream")
         addAlias("panda.unsafe.Pointer")
     }
 
@@ -297,10 +299,14 @@ class Compiler (ErrorReporter) {
         match expr.kind {
             when IRNode.Kind.UNRESOLVED_IDENTIFIER:
                 error(expr.offset, "unknown identifier")
+                return null
             when IRNode.Kind.UNRESOLVED_METHOD_CALL:
                 error(expr.offset, "ambiguous method call")
+                Console.printLine(expr.children[0].payload->ListView<MethodRef>)
+                return null
             when IRNode.Kind.SUPER:
                 error(expr.offset, "'super' can only be used as part of a method call")
+                return null
             otherwise:
                 return coerce(expr, variableType(expr))
         }
@@ -713,7 +719,7 @@ class Compiler (ErrorReporter) {
                 var best:Int? := null
                 for t in type.subtypes {
                     def cost := coercionCost(t, target)
-                    if best = null | cost < best {
+                    if cost != null & (best = null | cost < best) {
                         best := cost
                     }
                 }
@@ -731,13 +737,13 @@ class Compiler (ErrorReporter) {
         assert cl != null
         resolve(cl)
         if cl.rawSuper != null {
-            var cost := coercionCost(remapType(type, cl.rawSuper), target)
+            var cost := coercionCost(remapType(type, remapType(type, cl.rawSuper)), target)
             if cost != null {
                 return cost + 1
             }
         }
         for intf in cl.rawInterfaces {
-            var cost := coercionCost(remapType(type, intf), target)
+            var cost := coercionCost(remapType(type, remapType(type, intf)), target)
             if cost != null {
                 return cost + 1
             }
@@ -877,23 +883,6 @@ class Compiler (ErrorReporter) {
         if expr.type = target {
             return expr
         }
-        match target.typeKind {
-            when Type.Kind.GENERIC_PARAMETER:
-                return coerce(expr, target.subtypes[0])
-            when Type.Kind.NULLABLE:
-                if expr.kind = IRNode.Kind.NULL {
-                    return IRNode(IRNode.Kind.NULL, expr.offset, target)
-                }
-                if expr.type = target.subtypes[0] {
-                    def children := Array<IRNode>() -- FIXME literal
-                    children.add(expr)
-                    return IRNode(IRNode.Kind.CAST, expr.offset, target, false, children)
-                }
-                if expr.type.typeKind != Type.Kind.NULLABLE {
-                    def intermediate := coerce(expr, target.subtypes[0])
-                    return coerce(intermediate, target)
-                }
-        }
         if expr.type.typeKind = Type.Kind.NULLABLE & target.typeKind != Type.Kind.NULLABLE {
             if expr.type.subtypes[0] = target {
                 def children := Array<IRNode>() -- FIXME literal
@@ -996,6 +985,9 @@ class Compiler (ErrorReporter) {
                     if expr.children[0].children.get_count() > 0 {
                         callTarget := expr.children[0].children[0]
                     }
+                    else {
+                        callTarget := null
+                    }
                     def result := call(expr.offset, callTarget, best[0], args)
                     return coerce(result, target)
                 }
@@ -1004,8 +996,22 @@ class Compiler (ErrorReporter) {
                 def args := expr.children[1..]
                 return call(expr.children[0], "[]", args, target)
         }
+        if target.typeKind = Type.Kind.NULLABLE {
+            if expr.kind = IRNode.Kind.NULL {
+                return IRNode(IRNode.Kind.NULL, expr.offset, target)
+            }
+            if expr.type = target.subtypes[0] {
+                def children := Array<IRNode>() -- FIXME literal
+                children.add(expr)
+                return IRNode(IRNode.Kind.CAST, expr.offset, target, false, children)
+            }
+            if expr.type.typeKind != Type.Kind.NULLABLE {
+                def intermediate := coerce(expr, target.subtypes[0])
+                return coerce(intermediate, target)
+            }
+        }
         if coercionCost(expr, target) != null {
-            assert target.isClass(), "coercing \{expr}->\{target}"
+            assert target.isClass(), "coercing \{expr}:\{expr.type}->\{target} at \{position(expr.offset)}"
             def cl := getClass(target)
             if cl != null {
                 for m in cl.methods {
@@ -1156,7 +1162,10 @@ class Compiler (ErrorReporter) {
             }
         }
         else if m.value.isInstance() & target = null {
-            finalArgs.add(IRNode(IRNode.Kind.SELF, offset, currentClass.peek().type()))
+            var selfNode := IRNode(IRNode.Kind.SELF, offset, currentClass.peek().type())
+            selfNode := coerce(selfNode, m.value.owner.type())
+            assert selfNode != null
+            finalArgs.add(selfNode)
             if !currentMethod.peek().isInstance() {
                 error(offset, "cannot call instance \{m.value.signature()} from a @class context")
             }
@@ -1582,6 +1591,19 @@ class Compiler (ErrorReporter) {
         -- FIXME use var parameters
         var left := rawLeft
         var right := rawRight
+        if left.type.typeKind = Type.Kind.INT_LITERAL {
+            right := resolve(right)
+            if right = null {
+                return null
+            }
+            if coercionCost(left, right.type) != null {
+                left := coerce(left, right.type)
+            }
+        }
+        if right.type.typeKind = Type.Kind.INT_LITERAL &
+                coercionCost(right, left.type) != null {
+            right := coerce(right, left.type)
+        }
         if op = Token.Kind.EQ | op = Token.Kind.NEQ | op = Token.Kind.IDENTITY |
                 op = Token.Kind.NIDENTITY {
             def kind:Int
@@ -1640,8 +1662,8 @@ class Compiler (ErrorReporter) {
                 return null
             }
             def children := Array<IRNode>() -- FIXME literal
-            children.add(left)
-            children.add(right)
+            children.add(finalLeft)
+            children.add(finalRight)
             return IRNode(IRNode.Kind.BINARY, offset, Type.Bit(), op, children)
         }
         if op = Token.Kind.ASSIGNMENT {
@@ -1737,7 +1759,8 @@ class Compiler (ErrorReporter) {
             return IRNode(IRNode.Kind.UNRESOLVED_INDEX, offset, type, children)
         }
         if left.type = Type.BuiltinBit() {
-            if right.type = Type.BuiltinBit() & (op = Token.Kind.AND | op = Token.Kind.OR) {
+            if right.type = Type.BuiltinBit() & (op = Token.Kind.AND | op = Token.Kind.OR |
+                    op = Token.Kind.XOR | op = Token.Kind.EQ | op = Token.Kind.NEQ) {
                 def children := Array<IRNode>() -- FIXME literal
                 children.add(left)
                 children.add(right)
@@ -1798,7 +1821,7 @@ class Compiler (ErrorReporter) {
     }
 
     function typeParameters(type:Type):ListView<Type> {
-        if type.kind = Type.Kind.GENERIC_PARAMETER {
+        if type.typeKind = Type.Kind.GENERIC_PARAMETER {
             return typeParameters(type.subtypes[0])
         }
         if type.typeKind = Type.Kind.GENERIC {
@@ -1823,9 +1846,7 @@ class Compiler (ErrorReporter) {
             else {
                 type := target.type
             }
-            if type.typeKind = Type.Kind.GENERIC {
-                return type.subtypes[1..]
-            }
+            return typeParameters(type)
         }
         return Array<Type>()
     }
@@ -2743,6 +2764,9 @@ class Compiler (ErrorReporter) {
             assert symbolTable == symbols
             symbolTable := m.owner.symbolTable
         }
+        else {
+            codeGenerator.writeDeclaration(m)
+        }
         currentMethod.pop()
     }
 
@@ -2761,6 +2785,7 @@ class Compiler (ErrorReporter) {
         for m in cl.methods {
             compile(m)
         }
+        codeGenerator.write(cl)
         currentFile.pop()
         currentClass.pop()
     }

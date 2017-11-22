@@ -70,6 +70,9 @@ class SymbolTable {
         if symbol = null {
             return inherited
         }
+        if symbol == inherited {
+            return symbol
+        }
         if !inherited.get_heritable() {
             return symbol
         }

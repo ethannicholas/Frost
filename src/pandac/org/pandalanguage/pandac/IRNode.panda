@@ -171,7 +171,7 @@ class IRNode {
             when Kind.CALL:
                 return "\{(payload->MethodRef).value.name}(\{children.join(", ")})" -- FIXME parens
             when Kind.CAST:
-                return "\{children[0]}->\{type}"
+                return "(\{children[0]}->\{type})"
             when Kind.VARIABLE_REFERENCE:
                 return "\{payload->Variable}"
             when Kind.BINARY:

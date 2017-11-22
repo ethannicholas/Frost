@@ -51,8 +51,20 @@ class Parser {
         outer: loop {
             def result := rawNext()
             match result.kind {
-                when Token.Kind.WHITESPACE, Token.Kind.LINE_COMMENT:
+                when Token.Kind.WHITESPACE:
                     continue
+                when Token.Kind.LINE_COMMENT:
+                    loop {
+                        def next := rawNext()
+                        match next.kind {
+                            when Token.Kind.WHITESPACE:
+                                if text(next).contains("\n") {
+                                    continue outer
+                                }
+                            when Token.Kind.EOF:
+                                return next
+                        }
+                    }
                 when Token.Kind.BLOCK_COMMENT_START:
                     loop {
                         def next := next()
