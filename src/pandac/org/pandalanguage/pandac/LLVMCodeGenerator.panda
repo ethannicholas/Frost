@@ -259,6 +259,7 @@ class LLVMCodeGenerator (CodeGenerator) {
         writtenTypes.add(t.name)
         def code := MutableString("%\{escapeName(t.name)} = type { ")
         def cl := compiler.getClass(t)
+        compiler.currentClass.push(cl)
         assert cl != null
         var separator := ""
         for f in compiler.instanceFields(cl) {
@@ -274,6 +275,7 @@ class LLVMCodeGenerator (CodeGenerator) {
         if compiler.isValue(cl) {
             getWrapperClassConstant(cl)
         }
+        compiler.currentClass.pop()
     }
 
     method writeWrapperType(t:Type) {
@@ -1309,22 +1311,8 @@ class LLVMCodeGenerator (CodeGenerator) {
         def field := fieldRef.payload->FieldDecl
         def t := type(field.type)
         if field.annotations.isClass() {
-            if field.value != null & isConstantNumber(field.value) {
-                return getReference(field.value, out)
-            }-*
-                        fInitializedClasses.find(&field->fOwner) == fInitializedClasses.end()) {
-                fInitializedClasses.insert(&field->fOwner);
-                if (fDeclaredClassInitializers.find(field->fOwner.fName) == fDeclaredClassInitializers.end()) {
-                    fMethodDeclarations << "declare fastcc void @" << escape_type_name(field->fOwner.fName) <<
-                            "$$classInit()\n";
-                    fDeclaredClassInitializers.insert(field->fOwner.fName);
-                }
-                fMethodHeader << "    call fastcc void @" << escape_type_name(field->fOwner.fName) <<
-                        "$$classInit()\n";
-            }*-
-            def load := nextVar()
-            out.printLine("\{load} = load \{t}, \{t}* \{getName(field)}")
-            return load
+            assert field.value != null
+            return getReference(field.value, out)
         }
         def cl := compiler.getClass(fieldRef.children[0].type)
         assert cl != null
@@ -1888,7 +1876,7 @@ class LLVMCodeGenerator (CodeGenerator) {
         def t := f.children[1].type.subtypes[1]
         def llt := type(t)
         def indexType:String
-        if t.typeKind == Type.Kind.NULLABLE {
+        if t.typeKind = Type.Kind.NULLABLE {
             assert t.subtypes.get_count() = 1
             indexType := type(t.subtypes[0])
         }
@@ -2413,6 +2401,7 @@ class LLVMCodeGenerator (CodeGenerator) {
 
     @override
     method write(m:MethodDecl, body:IRNode) {
+        assert compiler.currentClass.peek() == m.owner
         currentMethod := m
         currentBlock := "0"
         varCount := 0

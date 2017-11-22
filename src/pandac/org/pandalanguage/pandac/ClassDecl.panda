@@ -63,7 +63,7 @@ class ClassDecl : Symbol {
             rawInterfaces:Array<Type>, parameters:Array<GenericParameter>, parent:SymbolTable) {
         super.init(Symbol.Kind.CLASS, offset, name)
         self.source := source
-        self.aliases := aliases
+        self.aliases := HashMap<String, String>(aliases)
         self.doccomment := doccomment
         self.annotations := annotations
         self.classKind := kind

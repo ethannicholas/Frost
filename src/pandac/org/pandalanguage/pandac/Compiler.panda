@@ -70,6 +70,7 @@ class Compiler (ErrorReporter) {
         addAlias("panda.collections.CollectionView")
         addAlias("panda.collections.CollectionWriter")
         addAlias("panda.collections.IdentityMap")
+        addAlias("panda.collections.ImmutableArray")
         addAlias("panda.collections.Iterable")
         addAlias("panda.collections.Iterator")
         addAlias("panda.collections.Key")
@@ -78,6 +79,8 @@ class Compiler (ErrorReporter) {
         addAlias("panda.collections.ListWriter")
         addAlias("panda.collections.HashMap")
         addAlias("panda.collections.Map")
+        addAlias("panda.collections.MapView")
+        addAlias("panda.collections.MapWriter")
         addAlias("panda.collections.Set")
         addAlias("panda.collections.Stack")
         addAlias("panda.core.Class")
@@ -119,7 +122,7 @@ class Compiler (ErrorReporter) {
         root.add(Alias(name[name.next(name.lastIndexOf("."))..], name, -1))
     }
 
-    function tryResolveClass(name:String):ClassDecl? {
+    method tryResolveClass(name:String):ClassDecl? {
         if currentClass.get_count() > 0 {
             def alias := currentClass.peek().aliases[name]
             if alias != null {
@@ -138,10 +141,16 @@ class Compiler (ErrorReporter) {
                 result := getClass(currentClass.peek().name + "." + name)
             }
         }
+        if result = null {
+            def rootAlias := root[name]
+            if rootAlias != null & rootAlias.kind = Symbol.Kind.ALIAS {
+                result := getClass((rootAlias->Alias).fullName) -- FIXME parens
+            }
+        }
         return result
     }
 
-    function resolve(type:Type):Type {
+    method resolve(type:Type):Type {
         if type.resolved {
             return type
         }
@@ -170,6 +179,7 @@ class Compiler (ErrorReporter) {
                     }
                 }
                 error(position(type.offset), "unknown type '\{type}'")
+                assert false
                 return Type.Invalid()
             when Type.Kind.NULLABLE:
                 assert type.subtypes.get_count() = 1

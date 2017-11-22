@@ -15,7 +15,7 @@ class SymbolTable {
     }
 
     init(parent:SymbolTable) {
-        init(parent.compiler)
+        self.compiler := parent.compiler
         self.parents.add(parent)
     }
 

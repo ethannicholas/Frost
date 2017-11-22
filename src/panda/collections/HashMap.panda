@@ -145,6 +145,14 @@ class HashMap<K:Key<K>, V> (Map<K, V>, Equatable<Map<K, V>>) {
         threshold := (bucketCount * 3) // 4
     }
 
+    init(map:MapView<K, V>) {
+        init() -- FIXME this should be implied
+        -- FIXME inefficient, need to iterate across entries rather than keys
+        for k in map.keys() {
+            self[k] := map[k]
+        }
+    }
+
     ================================================================================================
     Given a key, returns the bucket in which the key's entry should be stored.
     ================================================================================================
