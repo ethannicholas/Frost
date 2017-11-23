@@ -97,6 +97,7 @@ class Compiler (ErrorReporter) {
         addAlias("panda.core.Immutable")
         addAlias("panda.core.MutableString")
         addAlias("panda.core.Object")
+        addAlias("panda.core.Panda")
         addAlias("panda.core.Range")
         addAlias("panda.core.String")
         addAlias("panda.core.System")
@@ -141,6 +142,11 @@ class Compiler (ErrorReporter) {
             }
             if result = null {
                 result := getClass(currentClass.peek().name + "." + name)
+            }
+            if result = null & currentClass.peek().owner != null {
+                currentClass.push(currentClass.peek().owner)
+                result := tryResolveClass(name)
+                currentClass.pop()
             }
         }
         if result = null {
@@ -598,7 +604,7 @@ class Compiler (ErrorReporter) {
                 }
                 def children := Array<IRNode>()
                 if target != null {
-                    if target.kind == IRNode.Kind.SUPER {
+                    if target.kind = IRNode.Kind.SUPER {
                         error(target.offset, "'super' can only be used as part of a method call")
                         return null
                     }
@@ -874,7 +880,7 @@ class Compiler (ErrorReporter) {
         return coercionCost(expr.type, target)
     }
 
-    function coerce(expr:IRNode?, target:Type):IRNode? {
+    function doCoerce(expr:IRNode?, target:Type):IRNode? {
         if expr = null {
             return null
         }
@@ -994,7 +1000,7 @@ class Compiler (ErrorReporter) {
                 assert false, "no or ambiguous match on method call (\{position(expr.offset)}, \{methods[0].value.name}, \{best})"
             when IRNode.Kind.UNRESOLVED_INDEX:
                 def args := expr.children[1..]
-                return call(expr.children[0], "[]", args, target)
+                return coerce(call(expr.children[0], "[]", args, target), target)
         }
         if target.typeKind = Type.Kind.NULLABLE {
             if expr.kind = IRNode.Kind.NULL {
@@ -1037,6 +1043,14 @@ class Compiler (ErrorReporter) {
         }
         error(expr.offset, "expected '\{target}', but found '\{expr.type}'")
         return null
+    }
+
+    -- FIXME use postcondition
+    method coerce(expr:IRNode?, target:Type):IRNode? {
+        def result := doCoerce(expr, target)
+        assert result = null | result.type = target,
+                "coerce returned wrong type: \{expr}->\{target} yields \{result.type}"
+        return result
     }
 
     method canCast(type:Type, target:Type):Bit {
@@ -2313,7 +2327,7 @@ class Compiler (ErrorReporter) {
         assert f.kind = ASTNode.Kind.FOR
         assert f.children.get_count() = 3
         loops.push(f.payload->String?) -- FIXME use AutoLoop
-        def list := compileExpression(f.children[1])
+        var list := compileExpression(f.children[1])
         if list = null {
             loops.pop()
             return null
@@ -2326,6 +2340,10 @@ class Compiler (ErrorReporter) {
                     f.children[2])
         }
         else {
+            list := resolve(list)
+            if list = null {
+                return null
+            }
             var found := false
             for intf in allInterfaces(list.type) {
                 if intf.typeKind = Type.Kind.GENERIC & intf.subtypes[0] = Type.Iterator() {
@@ -2649,6 +2667,7 @@ class Compiler (ErrorReporter) {
             }
             statements.add(statement)
         }
+        symbolTable := symbolTable.parents[0]
         def children := Array<IRNode>() -- FIXME literal
         children.add(test)
         children.add(IRNode(IRNode.Kind.BLOCK, w.offset, statements))
@@ -2833,6 +2852,7 @@ class Compiler (ErrorReporter) {
                     column += 1
             }
         }
+        source.cleanup() -- FIXME
         return Position(currentFile.peek().name(), line, column)
     }
 

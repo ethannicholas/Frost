@@ -215,6 +215,9 @@ class LLVMCodeGenerator (CodeGenerator) {
         }
         def cl := compiler.getClass(t)
         assert cl != null
+        if cl.name = "panda.unsafe.Pointer" {
+            return POINTER_SIZE
+        }
         var result := 0
         for f in compiler.instanceFields(cl) {
             compiler.resolve(f)
@@ -1098,8 +1101,9 @@ class LLVMCodeGenerator (CodeGenerator) {
                 def count := nextVar()
                 out.printLine("\{count} = extractvalue \{countStruct}, 0")
                 def size := nextVar()
-                out.printLine("\{size} = mul \{SIZE_TYPE} \{count}, " +
-                        "\{sizeOf(m.returnType().subtypes[1])}")
+                def elementSize := sizeOf(m.returnType().subtypes[1])
+                assert elementSize > 0, "invalid size for type \{m.returnType().subtypes[1]}"
+                out.printLine("\{size} = mul \{SIZE_TYPE} \{count}, \{elementSize}")
                 def malloc := nextVar()
                 out.printLine("\{malloc} = call i8* @malloc(\{SIZE_TYPE} \{size})")
                 def result := nextVar()
@@ -2331,9 +2335,6 @@ class LLVMCodeGenerator (CodeGenerator) {
     }
 
     method writeStatement(stmt:IRNode, out:IndentedOutputStream) {
-        if stmt.kind != IRNode.Kind.BLOCK {
-            out.printLine("; \{stmt}")
-        }
         match stmt.kind {
             when IRNode.Kind.BINARY:
                 writeAssignment(stmt, out)
