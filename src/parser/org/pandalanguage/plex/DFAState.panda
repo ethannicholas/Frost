@@ -3,7 +3,7 @@ package org.pandalanguage.plex
 class DFAState {
     def id:Int
     def label:DFAStateLabel
-    var scanned:Bit
+    var scanned := false
 
     init(id:Int, label:DFAStateLabel) {
         self.id := id

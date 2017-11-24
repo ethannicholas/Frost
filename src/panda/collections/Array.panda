@@ -2,6 +2,7 @@ package panda.collections
 
 uses panda.unsafe.Pointer
 
+@final
 class Array<T> (List<T>) {
     constant DEFAULT_CAPACITY := 16
 
@@ -58,13 +59,13 @@ class Array<T> (List<T>) {
 
     @override
     function [](index:Int):T {
-        assert index >= 0 & index < count
+        assert index >= 0 & index < count, "index \{index} is out of bounds (count = \{count})"
         return data[index]
     }
 
     @override
     method []:=(index:Int, value:T) {
-        assert index >= 0 & index < count
+        assert index >= 0 & index < count, "index \{index} is out of bounds (count = \{count})"
         data[index] := value
     }
 

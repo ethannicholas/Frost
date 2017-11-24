@@ -217,6 +217,8 @@ class IRNode {
                 }
                 result.append(">")
                 return result.convert()
+            when Kind.STRING:
+                return "\"\{payload}\""
             otherwise:
                 return "<IRNode:\{kind}>"
         }

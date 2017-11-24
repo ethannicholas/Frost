@@ -2,6 +2,9 @@ package org.pandalanguage.pandac
 
 class Scanner {
     @private
+    constant INLINE_THRESHOLD := 50
+
+    @private
     def compiler:Compiler
 
     init(compiler:Compiler) {
@@ -135,6 +138,22 @@ class Scanner {
                 parameters, Type.Void(), i.children[3])
     }
 
+    function complexity(node:ASTNode):Int {
+        var result := 1
+        for child in node.children {
+            result += complexity(child)
+            if result > INLINE_THRESHOLD {
+                break
+            }
+        }
+        return result
+    }
+
+    function shouldInline(annotations:Annotations, body:ASTNode?):Bit {
+        return body != null & !annotations.isInline() & annotations.isFinal() &
+                complexity(body) <= INLINE_THRESHOLD
+    }
+
     method scanMethod(owner:ClassDecl, m:ASTNode):MethodDecl? {
         assert m.children.get_count() = 6
         def kind:Int
@@ -172,6 +191,9 @@ class Scanner {
             compiler.error(m.offset, "functions must have a return type")
         }
         if m.children[4].kind = ASTNode.Kind.BLOCK {
+            if shouldInline(annotations, m.children[4]) {
+                annotations.flags ||= Annotations.Flag.INLINE
+            }
             return MethodDecl(owner, m.offset, doccomment, annotations, kind, name, parameters,
                     returnType, m.children[4])
         }

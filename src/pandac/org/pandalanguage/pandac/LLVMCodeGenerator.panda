@@ -45,6 +45,45 @@ class LLVMCodeGenerator (CodeGenerator) {
         }
     }
 
+    ================================================================================================
+    Overrides features such as method arguments and return handling for use in compiling inline
+    methods.
+    ================================================================================================
+    class InlineContext {
+        ============================================================================================
+        Local variable name suffix.
+        ============================================================================================
+        def varSuffix:String
+
+        ============================================================================================
+        Reference to use instead of the normal "%self".
+        ============================================================================================
+        def selfRef:String
+
+        ============================================================================================
+        Reference to use instead of the normal method parameter names.
+        ============================================================================================
+        def argRefs:ImmutableArray<String>
+
+        ============================================================================================
+        Contains pairs of (source block, return value), which can be turned into the actual return
+        value using a phi node. Initially empty, filled in as the inline call is written.
+        ============================================================================================
+        def returns := Array<Pair<String, String>>()
+
+        ============================================================================================
+        Label to jump to after returning.
+        ============================================================================================
+        def exitLabel:String
+
+        init(varSuffix:String, selfRef:String, argRefs:ListView<String>, exitLabel:String) {
+            self.varSuffix := varSuffix
+            self.selfRef := selfRef
+            self.argRefs := ImmutableArray<String>(argRefs)
+            self.exitLabel := exitLabel
+        }
+    }
+
     constant POINTER_SIZE        := 8
     constant OBJECT_FIELD_COUNT  := 2
     constant CLASS_POINTER_INDEX := 0
@@ -103,6 +142,10 @@ class LLVMCodeGenerator (CodeGenerator) {
     def reusedValues := HashMap<UInt64, String>()
 
     def methodShims := IdentityMap<MethodDecl, MethodShim>()
+
+    def inlineContext := Stack<InlineContext>()
+
+    def currentlyInlining := IdentityMap<MethodDecl, MethodDecl>() -- FIXME need IdentitySet
 
     init(out:OutputStream) {
         self.out := IndentedOutputStream(out)
@@ -733,6 +776,14 @@ class LLVMCodeGenerator (CodeGenerator) {
 
     function getName(v:Variable):String {
         if v.storage = Variable.Storage.PARAMETER {
+            if inlineContext.get_count() > 0 {
+                for i in 0 .. currentMethod.parameters.get_count() {
+                    if v.name == currentMethod.parameters[i].name {
+                        return inlineContext.peek().argRefs[i]
+                    }
+                }
+                assert false
+            }
             return "%\{v.name}"
         }
         var result := variableNames[v]
@@ -740,6 +791,9 @@ class LLVMCodeGenerator (CodeGenerator) {
             labelCount += 1
             result := "%\{v.name}\{labelCount}"
             variableNames[v] := result
+        }
+        if inlineContext.get_count() > 0 {
+            result += inlineContext.peek().varSuffix
         }
         return result
     }
@@ -1157,6 +1211,51 @@ class LLVMCodeGenerator (CodeGenerator) {
         }
     }
 
+    method getInlineCallReference(call:IRNode, body:IRNode, out:IndentedOutputStream):String {
+        def m := (call.payload->MethodRef).value
+        compiler.currentFile.push(m.owner.source)
+        currentlyInlining[m] := m
+        def selfRef := "<inline call self error>"
+        def argStart:Int
+        if m.isInstance() {
+            argStart := 1
+            selfRef := getReference(call.children[0], out)
+        }
+        else {
+            argStart := 0
+        }
+        def args := Array<String>()
+        for i in argStart .. call.children.get_count() {
+            args.add(getReference(call.children[i], out))
+        }
+        def end := nextLabel()
+        def inline := InlineContext("$inline\{varCount}", selfRef, args, end)
+        inlineContext.push(inline)
+        def old := currentMethod
+        currentMethod := m
+        writeBlock(body, out)
+        currentMethod := old
+        inlineContext.pop()
+        if !endsWithBranch(body) {
+            out.printLine("unreachable")
+        }
+        createBlock(end, out)
+        currentlyInlining.remove(m)
+        compiler.currentFile.pop()
+        if inline.returns.get_count() = 1 {
+            return inline.returns[0].second
+        }
+        def phi := nextVar()
+        out.print("\{phi} = phi \{type(m.returnType)} ")
+        var separator := ""
+        for ret in inline.returns {
+            out.print("\{separator}[\{ret.second}, %\{ret.first}]")
+            separator := ", "
+        }
+        out.printLine()
+        return phi
+    }
+
     method getCallReference(call:IRNode, out:IndentedOutputStream):String {
         assert call.kind = IRNode.Kind.CALL
         def m := (call.payload->MethodRef).value
@@ -1183,6 +1282,13 @@ class LLVMCodeGenerator (CodeGenerator) {
                         "\{bit}, 0")
                 return result
             }
+        }
+        if m.annotations.isInline() & currentlyInlining[m] = null {
+            def block := compiler.compileBody(m)
+            if block != null {
+                return getInlineCallReference(call, block, out)
+            }
+            return "<error>"
         }
         def args := Array<String>(call.children.get_count())
         def actualMethodType:Type
@@ -1569,6 +1675,9 @@ class LLVMCodeGenerator (CodeGenerator) {
     }
 
     method getSelfReference(s:IRNode, out:IndentedOutputStream):String {
+        if inlineContext.get_count() > 0 {
+            return inlineContext.peek().selfRef
+        }
         return "%self"
     }
 
@@ -2077,6 +2186,7 @@ class LLVMCodeGenerator (CodeGenerator) {
         out.printLine("br label %\{loopStart}")
 
         createBlock(loopEnd, out)
+        loopDescriptors.pop()
     }
 
     method writeWhile(w:IRNode, out:IndentedOutputStream) {
@@ -2254,11 +2364,24 @@ class LLVMCodeGenerator (CodeGenerator) {
 
     method writeReturn(r:IRNode, out:IndentedOutputStream) {
         if r.children.get_count() = 1 {
-            out.printLine("ret \{getTypedReference(r.children[0], out)}")
+            if inlineContext.get_count() > 0 {
+                def inline := inlineContext.peek()
+                def result := getReference(r.children[0], out)
+                inline.returns.add(Pair<String, String>(currentBlock, result))
+                out.printLine("br label %\{inline.exitLabel} ; inline return (\{compiler.position(r.offset)})")
+            }
+            else {
+                out.printLine("ret \{getTypedReference(r.children[0], out)}")
+            }
         }
         else {
             assert r.children.get_count() = 0
-            out.printLine("ret void")
+            if inlineContext.get_count() > 0 {
+                out.printLine("br label %\{inlineContext.peek().exitLabel}")
+            }
+            else {
+                out.printLine("ret void")
+            }
         }
     }
 
@@ -2288,6 +2411,9 @@ class LLVMCodeGenerator (CodeGenerator) {
     method writeAssert(a:IRNode, out:IndentedOutputStream) {
         assert a.kind = IRNode.Kind.ASSERT
         assert a.children.get_count() = 1 | a.children.get_count() = 2
+        if compiler.settings.safetyLevel < 2 {
+            return
+        }
         def test := getReference(a.children[0], out)
         def ifTrue := nextLabel()
         def ifFalse := nextLabel()

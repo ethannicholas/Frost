@@ -205,12 +205,12 @@ class IdentityMap<K, V> (Map<K, V>, Equatable<Map<K, V>>) {
             }
         }
         return true*-
-        assert false
+        assert false, "IdentityMap.="
     }
 
     @override
     function !=(other:Map<K, V>):Bit {
-        assert false -- fixme remove this method when default != is in
+        assert false, "IdentityMap.!=" -- fixme remove this method when default != is in
     }
 
     @override

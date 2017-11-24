@@ -4,9 +4,23 @@ uses org.pandalanguage.pandac.parser.Parser
 uses org.pandalanguage.pandac.parser.Token
 
 class Compiler (ErrorReporter) {
+    class Settings : Immutable {
+        def importDirs:ImmutableArray<File>
+
+        def optimizationLevel:Int
+
+        def safetyLevel:Int
+
+        init(importDirs:ListView<File>, optimizationLevel:Int, safetyLevel:Int) {
+            self.importDirs := ImmutableArray<File>(importDirs)
+            self.optimizationLevel := optimizationLevel
+            self.safetyLevel := safetyLevel
+        }
+    }
+
     constant NULLABLE_CAST_COST := 1
 
-    def importDirs:ListView<File>
+    def settings:Settings
 
     def parser:Parser
 
@@ -47,8 +61,8 @@ class Compiler (ErrorReporter) {
     @private
     var reportErrors := true
 
-    init(codeGenerator:CodeGenerator, importDirs:ListView<File>) {
-        self.importDirs := importDirs
+    init(codeGenerator:CodeGenerator, settings:Settings) {
+        self.settings := settings
         self.parser := Parser(self)
         self.scanner := Scanner(self)
         self.root := SymbolTable(self)
@@ -230,6 +244,9 @@ class Compiler (ErrorReporter) {
                 cl.annotations.flags ||= Annotations.Flag.FINAL
                 for m in cl.methods {
                     m.annotations.flags ||= Annotations.Flag.FINAL
+                    if scanner.shouldInline(m.annotations, m.body) {
+                        m.annotations.flags ||= Annotations.Flag.INLINE
+                    }
                 }
             }
         }
@@ -344,7 +361,7 @@ class Compiler (ErrorReporter) {
         if result = null {
             def suffix := fullName.replace(".", "/") + ".panda"
             var found := false
-            for dir in importDirs {
+            for dir in settings.importDirs {
                 def f := dir.resolve(suffix)
                 if f.exists() {
                     found := true
@@ -361,7 +378,7 @@ class Compiler (ErrorReporter) {
         if result = null {
             def suffix := fullName.replace(".", "/") + ".panda"
             var found := false
-            for dir in importDirs {
+            for dir in settings.importDirs {
                 def f := dir.resolve(suffix)
                 if f.exists() {
                     found := true
@@ -375,7 +392,7 @@ class Compiler (ErrorReporter) {
                 }
             }
             if !found {
-                error(offset, "no file named \{suffix} in any import path (\{importDirs})")
+                error(offset, "no file named \{suffix} in any import path (\{settings.importDirs})")
             }
         }
         return result
@@ -2743,50 +2760,67 @@ class Compiler (ErrorReporter) {
         assert false, "unsupported statement kind: \{s.kind}"
     }
 
-    method compile(m:MethodDecl) {
-        assert currentClass.peek() == m.owner
-        assert symbolTable == m.owner.symbolTable
+    method compileBody(m:MethodDecl):IRNode? {
+        if m.compiledBody != null {
+            return m.compiledBody
+        }
+        currentClass.push(m.owner)
+        def old := symbolTable
+        symbolTable := getSymbolTable(m.owner)
         currentMethod.push(m)
         resolve(m)
+        assert m.body != null
+        def symbols := SymbolTable(symbolTable)
+        for p in m.parameters {
+            symbols.add(Variable(m.offset, p.name, p.type, Variable.Storage.PARAMETER))
+        }
+        symbolTable := symbols
+        def fieldInitializers := Array<IRNode>()
+        if m.methodKind = MethodDecl.Kind.INIT {
+            for f in currentClass.peek().fields {
+                resolve(f)
+                if !f.annotations.isClass() & f.value != null {
+                    def children := Array<IRNode>()
+                    children.add(IRNode(IRNode.Kind.SELF, m.offset, currentClass.peek().type()))
+                    def fieldRef := IRNode(IRNode.Kind.FIELD_REFERENCE, m.offset, f.type, f,
+                            children)
+                    children.clear()
+                    children.add(fieldRef)
+                    children.add(f.value)
+                    fieldInitializers.add(IRNode(IRNode.Kind.BINARY, f.offset,
+                            Token.Kind.ASSIGNMENT, children))
+                }
+            }
+        }
+        var compiled := compileBlock(m.body)
+        if compiled != null {
+            if fieldInitializers.get_count() != 0 {
+                def children := Array<IRNode>(fieldInitializers)
+                children.addAll(compiled.children)
+                compiled := IRNode(IRNode.Kind.BLOCK, m.body.offset, children)
+            }
+        }
+        assert symbolTable == symbols
+        symbolTable := old
+        currentMethod.pop()
+        currentClass.pop()
+        if m.annotations.isInline() {
+            m.compiledBody := compiled
+        }
+        return compiled
+    }
+
+    method compile(m:MethodDecl) {
         if m.body != null {
-            def symbols := SymbolTable(symbolTable)
-            for p in m.parameters {
-                symbols.add(Variable(m.offset, p.name, p.type, Variable.Storage.PARAMETER))
-            }
-            symbolTable := symbols
-            def fieldInitializers := Array<IRNode>()
-            if m.methodKind = MethodDecl.Kind.INIT {
-                for f in currentClass.peek().fields {
-                    resolve(f)
-                    if !f.annotations.isClass() & f.value != null {
-                        def children := Array<IRNode>()
-                        children.add(IRNode(IRNode.Kind.SELF, m.offset, currentClass.peek().type()))
-                        def fieldRef := IRNode(IRNode.Kind.FIELD_REFERENCE, m.offset, f.type, f,
-                                children)
-                        children.clear()
-                        children.add(fieldRef)
-                        children.add(f.value)
-                        fieldInitializers.add(IRNode(IRNode.Kind.BINARY, f.offset,
-                                Token.Kind.ASSIGNMENT, children))
-                    }
-                }
-            }
-            var compiled := compileBlock(m.body)
+            def compiled := compileBody(m)
             if compiled != null {
-                if fieldInitializers.get_count() != 0 {
-                    def children := Array<IRNode>(fieldInitializers)
-                    children.addAll(compiled.children)
-                    compiled := IRNode(IRNode.Kind.BLOCK, m.body.offset, children)
-                }
                 codeGenerator.write(m, compiled)
             }
-            assert symbolTable == symbols
-            symbolTable := m.owner.symbolTable
         }
         else {
+            resolve(m)
             codeGenerator.writeDeclaration(m)
         }
-        currentMethod.pop()
     }
 
     method markNonExternal(cl:ClassDecl) {

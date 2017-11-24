@@ -318,12 +318,12 @@ class HashMap<K:Key<K>, V> (Map<K, V>, Equatable<Map<K, V>>) {
             }
         }
         return true*-
-        assert false
+        assert false, "HashMap.="
     }
 
     @override
     function !=(other:Map<K, V>):Bit {
-        assert false -- fixme remove this method when default != is in
+        assert false, "HashMap.!=" -- fixme remove this method when default != is in
     }
 
     ================================================================================================

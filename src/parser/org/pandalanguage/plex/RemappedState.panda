@@ -14,7 +14,7 @@ class RemappedState : State {
 
     @override
     function accept(c:Char8):Bit {
-        assert false -- FIXME unreachable
+        assert false, "RemappedState.accept"
         return false
     }
 

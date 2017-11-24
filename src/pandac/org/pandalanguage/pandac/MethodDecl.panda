@@ -37,6 +37,9 @@ class MethodDecl : Symbol {
 
     def body:ASTNode?
 
+    -- only set for @inline methods
+    def compiledBody:IRNode? := null
+
     var resolved:Bit
 
     init(owner:ClassDecl, offset:Int, doccomment:String?, annotations:Annotations, methodKind:Int,
