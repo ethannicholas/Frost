@@ -8,6 +8,8 @@ class Main {
     class Format {
         constant EXECUTABLE := 918
         constant OBJECT     := 919
+        constant C_HEADER   := 920
+        constant C          := 921
     }
 
     constant LLVM_DIR := "/opt/local/libexec/llvm-4.0"
@@ -149,6 +151,7 @@ class Main {
                         System.exit(1)
                     }
                     outFile := File(args.next("a filename"))
+                    outFile.parent().createDirectories()
                 when "-O":
                     def level := args.next("a number from 0-3")
                     optimizationLevel := level.convert()->Int
@@ -172,8 +175,10 @@ class Main {
                     match f {
                         when "exe": format := Format.EXECUTABLE
                         when "o":   format := Format.OBJECT
+                        when "h":   format := Format.C_HEADER
+                        when "c":   format := Format.C
                         otherwise:
-                            err.printLine("supported output formats are 'exe' and 'o'")
+                            err.printLine("unsupported output format '\{f}'")
                             System.exit(1)
                     }
                 when "-i":
@@ -201,6 +206,8 @@ class Main {
                 match format {
                     when Format.EXECUTABLE: extension := ""
                     when Format.OBJECT:     extension := ".o"
+                    when Format.C_HEADER:   extension := ".h"
+                    when Format.C:          extension := ".c"
                     otherwise: assert false
                 }
                 outFile := sources[0].changeExtension(extension)
@@ -211,26 +218,33 @@ class Main {
                 System.exit(1)
             }
         }
-        def llvm := File(outFile.path + ".ll")
-        def out := llvm.openOutputStream()
-        def cg := LLVMCodeGenerator(out)
-        def settings := Compiler.Settings(imports, optimizationLevel, safetyLevel)
+        def cg:CodeGenerator
+        match format {
+            when Format.EXECUTABLE, Format.OBJECT:
+                cg := LLVMCodeGenerator(outFile.changeExtension(".ll").openOutputStream())
+            when Format.C_HEADER:
+                cg := HCodeGenerator(outFile.openOutputStream())
+            when Format.C:
+                cg := CCodeGenerator(outFile.openOutputStream())
+            otherwise:
+                assert false
+        }
+        def settings := Compiler.Settings(pandaHome, imports, optimizationLevel, safetyLevel)
         def compiler := Compiler(cg, settings)
         for s in sources {
             compiler.compile(s)
         }
         if compiler.errorCount = 0 {
             compiler.codeGenerator.finish()
-            out.cleanup() -- FIXME should be able to rely on automatic closing when memory management is in
-            def optimized := optimize(llvm, optimizationLevel)
-            def assembly := toAssembly(optimized)
             match format {
                 when Format.EXECUTABLE:
+                    def optimized := optimize(outFile.changeExtension(".ll"), optimizationLevel)
+                    def assembly := toAssembly(optimized)
                     toExecutable(assembly, outFile)
                 when Format.OBJECT:
+                    def optimized := optimize(outFile.changeExtension(".ll"), optimizationLevel)
+                    def assembly := toAssembly(optimized)
                     toObject(assembly, outFile)
-                otherwise:
-                    assert false
             }
         }
         else {
@@ -245,7 +259,7 @@ class Main {
     }
 
     @class
-    method main(rawArgs:ListView<String>) {
-        Main().run(rawArgs)
+    method main(args:ListView<String>) {
+        Main().run(args)
     }
 }

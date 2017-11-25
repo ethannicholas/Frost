@@ -45,7 +45,7 @@ class ClassDecl : Symbol {
 
     def classes := Array<ClassDecl>()
 
-    def owner:ClassDecl?
+    def owner:ClassDecl? := null
 
     def symbolTable:SymbolTable
 

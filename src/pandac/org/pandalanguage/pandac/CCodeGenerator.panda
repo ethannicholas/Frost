@@ -2,7 +2,54 @@ package org.pandalanguage.pandac
 
 uses org.pandalanguage.pandac.parser.Token
 
-class LLVMCodeGenerator (CodeGenerator) {
+class CCodeGenerator (CodeGenerator) {
+    var compiler:Compiler?
+
+    def out:IndentedOutputStream
+
+    def imports := Set<String>()
+
+    def hCodeGen := HCodeGenerator(MemoryOutputStream())
+
+    init(out:OutputStream) {
+        self.out := IndentedOutputStream(out)
+    }
+
+    function escapeName(s:String):String {
+        return hCodeGen.escapeName(s)
+    }
+
+    function getName(m:MethodDecl):String {
+        return hCodeGen.getName(m)
+    }
+
+    function sizeOf(t:Type):Int {
+        return hCodeGen.sizeOf(t)
+    }
+
+    method writeImport(cl:ClassDecl) {
+        def includePath := hCodeGen.getIncludePath(cl)
+        if !imports.contains(includePath) {
+            out.printLine("#include \"\{includePath}\"")
+            imports.add(includePath)
+        }
+    }
+
+    method type(t:Type):String {
+        if t.isClass() {
+            def cl := compiler.getClass(t)
+            assert cl != null
+            writeImport(cl)
+        }
+        return hCodeGen.type(t)
+    }
+
+    @override
+    method setCompiler(compiler:Compiler) {
+        self.compiler := compiler
+        hCodeGen.setCompiler(compiler)
+    }
+
     class ClassConstant : Immutable {
         def name:String
         def type:String
@@ -93,10 +140,6 @@ class LLVMCodeGenerator (CodeGenerator) {
     constant INT_TYPE  := "i64"
     constant SIZE_TYPE := "i64"
 
-    def out:IndentedOutputStream
-
-    def compiler:Compiler
-
     def declarations := MemoryOutputStream()
 
     def types := MemoryOutputStream()
@@ -146,37 +189,6 @@ class LLVMCodeGenerator (CodeGenerator) {
     def inlineContext := Stack<InlineContext>()
 
     def currentlyInlining := IdentityMap<MethodDecl, MethodDecl>() -- FIXME need IdentitySet
-
-    init(out:OutputStream) {
-        self.out := IndentedOutputStream(out)
-
-        out.printLine("target datalayout = \"e-p:64:64:64-i1:8:8-i8:8:8-i16:16:16-i32:32:32-i64:" +
-                "64:64-f32:32:32-f64:64:64-v64:64:64-v128:128:128-a0:0:64-s0:64:64-f80:128:128-" +
-                "n8:16:32:64-S128\"")
-        out.printLine("target triple = \"x86_64-apple-macosx10.8.0\"")
---        out.printLine("target triple = \"x86_64-pc-linux-gnu\"")
-        out.printLine("declare i8* @malloc(i64)")
-        out.printLine("declare i8* @realloc(i8*, i64)")
-        out.printLine("declare void @free(i8*)")
-        out.printLine("%$itable = type { %panda$core$Class*, %$itable*, [0 x i8*] }")
-    }
-
-    @override
-    method setCompiler(compiler:Compiler) {
-        self.compiler := compiler
-    }
-
-    @override
-    method finish() {
-        type(Type.Class())
-        out.print(types.convert())
-        out.print(strings.convert())
-        out.print(declarations.convert())
-        out.print(wrapperShimsBuffer.convert())
-        out.print(shimsBuffer.convert())
-        out.print(methodsBuffer.convert())
-        out.cleanup() -- FIXME this should be automatic when memory management is in
-    }
 
     method nextVar():String {
         varCount += 1
@@ -253,32 +265,6 @@ class LLVMCodeGenerator (CodeGenerator) {
         return fieldSize(t).min(8)
     }
 
-    function sizeOf(t:Type):Int {
-        if !t.isClass() {
-            return fieldSize(t)
-        }
-        def cl := compiler.getClass(t)
-        assert cl != null
-        if cl.name = "panda.unsafe.Pointer" {
-            return POINTER_SIZE
-        }
-        var result := 0
-        for f in compiler.instanceFields(cl) {
-            compiler.resolve(f)
-            def size := fieldSize(f.type)
-            def align := result % size
-            if align != 0 {
-                result += size - align
-            }
-            assert result % size = 0
-            result += size
-        }
-        if compiler.isValue(cl) & t.typeKind = Type.Kind.NULLABLE {
-            result += 1
-        }
-        return result
-    }
-
     function sizeOfWrapper(t:Type):Int {
         def cl := compiler.getClass(t)
         assert cl != null & compiler.isValue(cl)
@@ -347,53 +333,6 @@ class LLVMCodeGenerator (CodeGenerator) {
 
     function typeName(t:Type):String {
         return "%" + escapeName(t.name)
-    }
-
-    method type(t:Type):String {
-        match t.typeKind {
-            when Type.Kind.VOID:
-                return "void"
-            when Type.Kind.BUILTIN_INT, Type.Kind.BUILTIN_UINT:
-                return "i\{sizeOf(t) * 8}"
-            when Type.Kind.BUILTIN_BIT:
-                return "i1"
-            when Type.Kind.CLASS:
-                writeType(t)
-                def name := "%\{escapeName(t.name)}"
-                def cl := compiler.getClass(t)
-                assert cl != null
-                if !compiler.isValue(cl) {
-                    return name + "*"
-                }
-                return name
-            when Type.Kind.NULLABLE:
-                def cl := compiler.getClass(t)
-                assert cl != null
-                if compiler.isValue(cl) {
-                    return nullableType(t)
-                }
-                return type(t.subtypes[0])
-            when Type.Kind.GENERIC:
-                if t.subtypes[0].name = "panda.unsafe.Pointer" {
-                    return type(t.subtypes[1]) + "*"
-                }
-                return type(t.subtypes[0])
-            when Type.Kind.GENERIC_PARAMETER:
-                return type(t.subtypes[0])
-            when Type.Kind.FUNCTION, Type.Kind.METHOD:
-                def result := MutableString(type(t.subtypes[t.subtypes.get_count() - 1]))
-                result.append(" (")
-                for i in 0 .. t.subtypes.get_count() - 1 {
-                    if i > 0 {
-                        result.append(", ")
-                    }
-                    result.append(type(t.subtypes[i]))
-                }
-                result.append(")*")
-                return result.convert()
-            otherwise:
-                assert false, "unsupported type '\{t}'"
-        }
     }
 
     method wrapperTypeName(t:Type):String {
@@ -511,7 +450,7 @@ class LLVMCodeGenerator (CodeGenerator) {
         else {
             returnValue := "void"
         }
-        out.print("call \{callingConvention(raw)}\{type(raw.returnType)} \{getName(raw)}(" +
+        out.print("call \{type(raw.returnType)} \{getName(raw)}(" +
                 "\{self_t} %self")
         for i in 0 .. raw.parameters.get_count() {
             out.print(", \{type(raw.parameters[i].type)} \{casts[i]}")
@@ -563,7 +502,7 @@ class LLVMCodeGenerator (CodeGenerator) {
         else {
             returnValue := "void"
         }
-        out.print("call \{callingConvention(m)}\{type(m.returnType)} \{getName(m)}(\{unwrapped}")
+        out.print("call \{type(m.returnType)} \{getName(m)}(\{unwrapped}")
         for i in 0 .. m.parameters.get_count() {
             out.print(", \{type(actualMethodType.subtypes[i])} \{parameters[i]}")
         }
@@ -768,11 +707,6 @@ class LLVMCodeGenerator (CodeGenerator) {
         return result
     }
 
-    function escapeName(s:String):String {
-        return s.replace(".", "$").replace("?", "$Q").replace("<", "$LT").replace(">", "$GT").
-                replace(" ", "").replace(",", "$C")
-    }
-
     function getName(v:Variable):String {
         if v.storage = Variable.Storage.PARAMETER {
             if inlineContext.get_count() > 0 {
@@ -795,51 +729,6 @@ class LLVMCodeGenerator (CodeGenerator) {
             result += inlineContext.peek().varSuffix
         }
         return result
-    }
-
-    function getName(m:MethodDecl):String {
-        if m.name = "main" {
-            return "@pandaMain"
-        }
-        def result := MutableString("@")
-        result.append(escapeName(m.owner.name))
-        result.append("$")
-        match m.name {
-            when "+":    result.append("$ADD")
-            when "-":    result.append("$SUB")
-            when "*":    result.append("$MUL")
-            when "/":    result.append("$DIV")
-            when "//":   result.append("$INTDIV")
-            when "%":    result.append("$REM")
-            when "^":    result.append("$POW")
-            when "[]":   result.append("$IDX")
-            when "[]:=": result.append("$IDXEQ")
-            when "=":    result.append("$EQ")
-            when "!=":   result.append("$NEQ")
-            when ">":    result.append("$GT")
-            when "<":    result.append("$LT")
-            when ">=":   result.append("$GE")
-            when "<=":   result.append("$LE")
-            when "|":    result.append("$OR")
-            when "||":   result.append("$BOR")
-            when "&":    result.append("$AND")
-            when "&&":   result.append("$BAND")
-            when "~":    result.append("$XOR")
-            when "~~":   result.append("$BXOR")
-            when "!":    result.append("$NOT")
-            when "!!":   result.append("$BNOT")
-            when "<<":   result.append("$SHL")
-            when ">>":   result.append("$SHR")
-            otherwise:   result.append(escapeName(m.name))
-        }
-        for p in m.parameters {
-            result.append("$\{escapeName(p.type.name)}")
-        }
-        if m.returnType != Type.Void() {
-            result.append("$R$")
-            result.append(escapeName(m.returnType.name))
-        }
-        return result.convert()
     }
 
     function getName(f:FieldDecl):String {
@@ -1025,10 +914,6 @@ class LLVMCodeGenerator (CodeGenerator) {
         assert b.kind = IRNode.Kind.BINARY
         assert b.children.get_count() = 2
         return getBinaryReference(b.children[0], b.payload->Int, b.children[1], out)
-    }
-
-    function callingConvention(m:MethodDecl):String {
-        return "fastcc "
     }
 
     method getVirtualMethodReference(target:String, m:MethodDecl, out:IndentedOutputStream):String {
@@ -1328,11 +1213,11 @@ class LLVMCodeGenerator (CodeGenerator) {
         def result:String
         def indirect := needsStructIndirection(m)
         if indirect {
-            out.print("call \{callingConvention(m)}void")
+            out.print("call void")
         }
         else {
             result := nextVar()
-            out.print("\{result} = call \{callingConvention(m)}\{actualResultType}")
+            out.print("\{result} = call \{actualResultType}")
         }
         out.print(" \{methodRef}(")
         var separator := ""
@@ -1547,9 +1432,7 @@ class LLVMCodeGenerator (CodeGenerator) {
         if srcType = dstType {
             return value
         }
-        def result := nextVar()
-        out.printLine("\{result} = \{op} \{srcType} \{value} to \{dstType}")
-        return result
+        return "((\{dstType}) \{value})"
     }
 
     method getCastReference(cast:IRNode, out:IndentedOutputStream):String {
@@ -1649,35 +1532,30 @@ class LLVMCodeGenerator (CodeGenerator) {
     }
 
     method getStringReference(s:String, out:IndentedOutputStream):String {
-        labelCount += 1
-        def chars := "@$chars\{labelCount}"
-        def charsType := "[\{s.utf8().get_count()} x i8]"
-        strings.print("\{chars} = private unnamed_addr constant \{charsType} [ ")
-        var separator := ""
-        for c in s.utf8() {
-            strings.print("\{separator}i8 \{c.convert()->Int8}")
-            separator := ", "
+        varCount += 1
+        def result := "$s\{varCount}"
+        out.print("panda$core$String \{result} = { &panda$core$String$class, 2, " +
+                "(panda$core$Char8*) \"")
+        for raw in s.utf8() {
+            def c := raw.convert()->UInt8
+            if c = 34 { -- FIXME char literal
+                out.print("\"")
+            }
+            else if c < 32 | c > 126 {
+                out.print("\\x")
+                out.print("0123456789ABCDEF".utf8()[(c // 16).convert()])
+                out.print("0123456789ABCDEF".utf8()[(c % 16).convert()])
+            }
+            else {
+                out.print(raw)
+            }
         }
-        strings.printLine(" ]")
-        labelCount += 1
-        def result := "@$str\{labelCount}"
-        def string := compiler.getClass(Type.StringType())
-        assert string != null
-        def cc := getClassConstant(string)
-        strings.printLine("\{result} = private unnamed_addr constant %panda$core$String { " +
-                "%panda$core$Class* bitcast(\{cc.type}* \{cc.name} to " +
-                "%panda$core$Class*), %panda$core$Int32 insertvalue(%panda$core$Int32 " +
-                "{ i32 undef }, i32 1, 0), %panda$core$Char8* bitcast(\{charsType}* \{chars}" +
-                " to %panda$core$Char8*), %panda$core$Int64 insertvalue(%panda$core$Int64 " +
-                "{ i64 undef }, i64 \{s.utf8().get_count()}, 0) }")
-        return result
+        out.printLine("\", \{s.utf8().get_count()} };")
+        return "&\{result}"
     }
 
     method getSelfReference(s:IRNode, out:IndentedOutputStream):String {
-        if inlineContext.get_count() > 0 {
-            return inlineContext.peek().selfRef
-        }
-        return "%self"
+        return "self"
     }
 
     method getSuperReference(s:IRNode, out:IndentedOutputStream):String {
@@ -1883,14 +1761,10 @@ class LLVMCodeGenerator (CodeGenerator) {
         }
         def offset := call.children.get_count() - actualMethodType.subtypes.get_count() + 1
         for i in 0 .. call.children.get_count() {
-            def arg := getReference(call.children[i], out)
+            var arg := getReference(call.children[i], out)
             if i >= offset & actualMethodType.subtypes[i - offset] != call.children[i].type {
-                arg := type(actualMethodType.subtypes[i - offset]) + " " +
-                        getCastReference(arg, call.children[i].type,
+                arg := getCastReference(arg, call.children[i].type,
                             actualMethodType.subtypes[i - offset], out)
-            }
-            else {
-                arg := type(call.children[i].type) + " " + arg
             }
             args.add(arg)
         }
@@ -1910,24 +1784,19 @@ class LLVMCodeGenerator (CodeGenerator) {
             labelCount += 1
             def indirectVar := "%$tmp" + labelCount
             def resultType := type(call.type)
-            methodHeader.printLine("\{indirectVar} = alloca \{resultType}")
-            out.print("call \{callingConvention(m)}void " +
-                    "\{methodRef}(\{resultType}* \{indirectVar}")
+            methodHeader.printLine("\{resultType} \{indirectVar};")
+            out.print("\{methodRef}(\{resultType}* \{indirectVar}")
             separator := ", "
         }
         else {
-            if call.type != Type.Void() {
-                nextVar()
-            }
-            out.print("call \{callingConvention(m)}\{type(call.type)} " +
-                    "\{methodRef}(")
+            out.print("\{methodRef}(")
         }
         for a in args {
             out.print(separator)
             out.print(a)
             separator := ", "
         }
-        out.printLine(")")
+        out.printLine(");")
     }
 
     method writeIf(s:IRNode, out:IndentedOutputStream) {
@@ -2370,7 +2239,7 @@ class LLVMCodeGenerator (CodeGenerator) {
                 out.printLine("br label %\{inline.exitLabel} ; inline return (\{compiler.position(r.offset)})")
             }
             else {
-                out.printLine("ret \{getTypedReference(r.children[0], out)}")
+                out.printLine("return \{getReference(r.children[0], out)};")
             }
         }
         else {
@@ -2379,7 +2248,7 @@ class LLVMCodeGenerator (CodeGenerator) {
                 out.printLine("br label %\{inlineContext.peek().exitLabel}")
             }
             else {
-                out.printLine("ret void")
+                out.printLine("return;")
             }
         }
     }
@@ -2502,34 +2371,7 @@ class LLVMCodeGenerator (CodeGenerator) {
 
     @override
     method writeDeclaration(m:MethodDecl) {
-        def name := getName(m)
-        if declared.contains(name) {
-            return
-        }
-        declared.add(name)
-        declarations.print("declare \{callingConvention(m)}")
-        def needsIndirection := needsStructIndirection(m)
-        if needsIndirection {
-            declarations.print("void")
-        }
-        else {
-            declarations.print(type(m.returnType))
-        }
-        declarations.print(" \{getName(m)}(")
-        var separator := ""
-        if needsIndirection {
-            declarations.print("\{type(m.returnType)}*")
-            separator := ", "
-        }
-        if !m.annotations.isClass() {
-            declarations.print("\{separator}\{selfType(m)} %self")
-            separator := ", "
-        }
-        for p in m.parameters {
-            declarations.print("\{separator}\{type(p.type)} %\{escapeName(p.name)}")
-            separator := ", "
-        }
-        declarations.printLine(")")
+        writeImport(m.owner)
     }
 
     @override
@@ -2539,10 +2381,10 @@ class LLVMCodeGenerator (CodeGenerator) {
         currentBlock := "0"
         varCount := 0
         methodHeaderBuffer.clear()
-        methods.print("define \{callingConvention(m)}\{type(m.returnType)} \{getName(m)}(")
+        methods.print("\{type(m.returnType)} \{getName(m)}(")
         var separator := ""
         if !m.annotations.isClass() {
-            methods.print("\{selfType(m)} %self")
+            methods.print("\{selfType(m)} self")
             separator := ", "
         }
         for p in m.parameters {
@@ -2559,14 +2401,6 @@ class LLVMCodeGenerator (CodeGenerator) {
         }
         methods.print(methodHeaderBuffer.convert())
         methods.print(bodyBuffer.convert())
-        if !endsWithBranch(body) {
-            if m.returnType = Type.Void() {
-                methods.printLine("ret void")
-            }
-            else {
-                methods.printLine("unreachable")
-            }
-        }
         methods.level -= 1
         methods.printLine("}")
         currentMethod := null
@@ -2574,7 +2408,11 @@ class LLVMCodeGenerator (CodeGenerator) {
 
     @override
     method write(cl:ClassDecl) {
-        writeType(cl.type())
-        getClassConstant(cl)
+    }
+
+    @override
+    method finish() {
+        out.printLine(methodsBuffer)
+        out.cleanup() -- FIXME shouldn't be necessary
     }
 }

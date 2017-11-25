@@ -42,6 +42,9 @@ class File (Key<File>) {
         if path = "/" {
             return null
         }
+        if path = "" {
+            return File(".").parent()
+        }
         def index := path.lastIndexOf("/")
         if index != null {
             return File(path[..index])

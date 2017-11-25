@@ -1,0 +1,148 @@
+package org.pandalanguage.pandac
+
+class HCodeGenerator (CodeGenerator) {
+    var compiler:Compiler?
+
+    def typeImportStream := MemoryOutputStream()
+
+    def typesBuffer := MemoryOutputStream()
+
+    def types := IndentedOutputStream(typesBuffer)
+
+    def bodyImportStream := MemoryOutputStream()
+
+    def bodyBuffer := MemoryOutputStream()
+
+    def body := IndentedOutputStream(bodyBuffer)
+
+    def typeImports := Set<String>()
+
+    def bodyImports := Set<String>()
+
+    def imports := typeImports
+
+    def importStream := typeImportStream
+
+    def out:IndentedOutputStream
+
+    def llvmCodeGen := LLVMCodeGenerator(MemoryOutputStream())
+
+    init(out:OutputStream) {
+        self.out := IndentedOutputStream(out)
+        out.printLine("#pragma once")
+        out.printLine("#include <inttypes.h>")
+        out.printLine("#include <stdbool.h>")
+        out.printLine("#define PANDA_TYPESONLY")
+    }
+
+    function escapeName(s:String):String {
+        return llvmCodeGen.escapeName(s)
+    }
+
+    function getName(m:MethodDecl):String {
+        def llvmName := llvmCodeGen.getName(m)
+        assert llvmName.startsWith("@")
+        return llvmName[1..]
+    }
+
+    function sizeOf(t:Type):Int {
+        return llvmCodeGen.sizeOf(t)
+    }
+
+    function getIncludePath(cl:ClassDecl):String {
+        var path := cl.source.path
+        if path.startsWith(compiler.settings.pandaHome.path + "/") {
+            path := path[compiler.settings.pandaHome.path.length() + 1..]
+        }
+        return path.replace(".panda", ".h")
+    }
+
+    method type(t:Type):String {
+        match t.typeKind {
+            when Type.Kind.VOID:
+                return "void"
+            when Type.Kind.BUILTIN_INT, Type.Kind.BUILTIN_UINT:
+                return "int\{sizeOf(t) * 8}_t"
+            when Type.Kind.BUILTIN_BIT:
+                return "bool"
+            when Type.Kind.CLASS:
+                def name := "\{escapeName(t.name)}"
+                def cl := compiler.getClass(t)
+                assert cl != null
+                if !compiler.isValue(cl) {
+                    if !imports.contains(name) {
+                        importStream.printLine("typedef struct \{name} \{name};")
+                        imports.add(name)
+                    }
+                    return name + "*"
+                }
+                def includePath := getIncludePath(cl)
+                if !imports.contains(includePath) {
+                    importStream.printLine("#include \"\{includePath}\"")
+                    imports.add(includePath)
+                }
+                return name
+            when Type.Kind.NULLABLE:
+                return type(t.subtypes[0])
+            when Type.Kind.GENERIC:
+                if t.subtypes[0].name = "panda.unsafe.Pointer" {
+                    return type(t.subtypes[1]) + "*"
+                }
+                return type(t.subtypes[0])
+            when Type.Kind.GENERIC_PARAMETER:
+                return type(t.subtypes[0])
+            otherwise:
+                assert false, "unsupported type '\{t}'"
+        }
+    }
+
+    @override
+    method setCompiler(compiler:Compiler) {
+        self.compiler := compiler
+        llvmCodeGen.setCompiler(compiler)
+    }
+
+    @override
+    method write(cl:ClassDecl) {
+        importStream := typeImportStream
+        imports := typeImports
+        types.printLine("typedef struct \{escapeName(cl.name)} {")
+        types.level += 1
+        for f in compiler.instanceFields(cl) {
+            compiler.resolve(f)
+            types.printLine("\{type(f.type)} \{f.name};")
+        }
+        types.level -= 1
+        types.printLine("} \{escapeName(cl.name)};")
+        types.printLine("extern panda$core$Class \{escapeName(cl.name)}$class;")
+    }
+
+    @override
+    method writeDeclaration(m:MethodDecl) {
+        importStream := bodyImportStream
+        imports := bodyImports
+        body.print("\{type(m.returnType)} \{getName(m)}(")
+        var separator := ""
+        for p in m.parameters {
+            body.print("\{separator}\{type(p.type)} \{escapeName(p.name)}")
+            separator := ", "
+        }
+        body.printLine(");")
+    }
+
+    @override
+    method write(m:MethodDecl, body:IRNode) {
+        writeDeclaration(m)
+    }
+
+    @override
+    method finish() {
+        out.printLine("#undef PANDA_TYPESONLY")
+        out.printLine(typeImportStream)
+        out.printLine(typesBuffer)
+        out.printLine("#ifndef PANDA_TYPESONLY")
+        out.printLine(bodyImportStream)
+        out.printLine(bodyBuffer)
+        out.printLine("#endif")
+    }
+}

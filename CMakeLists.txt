@@ -219,11 +219,13 @@ compile_pandac_sources(pandac_objects
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/Alias.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/Annotations.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/ASTNode.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/CCodeGenerator.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/ClassDecl.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/CodeGenerator.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/Compiler.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/ErrorReporter.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/FieldDecl.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/HCodeGenerator.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/IRNode.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/LLVMCodeGenerator.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/Main.panda
@@ -249,3 +251,81 @@ add_executable(pandac
 )
 target_link_libraries(pandac panda)
 set_target_properties(pandac PROPERTIES LINKER_LANGUAGE CXX)
+
+function(create_headers out_var)
+    set(result)
+    foreach(rawInput ${ARGN})
+        file(RELATIVE_PATH input "${CMAKE_CURRENT_SOURCE_DIR}/src" ${rawInput})
+        get_filename_component(outputDir ${input} DIRECTORY)
+        get_filename_component(outputName ${input} NAME_WE)
+        set(output "${CMAKE_CURRENT_BINARY_DIR}/include/${outputDir}/${outputName}.h")
+        add_custom_command(OUTPUT ${output}
+            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/pandac -f h -o ${output} ${input}
+            DEPENDS ${rawInput} pandac
+            WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src
+        )
+        list(APPEND result ${output})
+    endforeach()
+    set(${out_var} "${result}" PARENT_SCOPE)
+endfunction()
+
+create_headers(pandac_headers
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/Array.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/Collection.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/CollectionView.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/CollectionWriter.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/HashMap.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/IdentityMap.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/ImmutableArray.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/Iterable.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/Iterator.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/Key.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/List.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/ListView.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/ListWriter.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/Map.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/MapView.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/MapWriter.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/Set.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/Stack.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Bit.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Char8.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Char16.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Char32.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Class.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Comparable.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Equatable.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Immutable.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Int16.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Int32.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Int64.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Int8.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/UInt16.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/UInt32.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/UInt64.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/UInt8.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/MutableString.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Object.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Panda.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Range.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/String.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/System.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Value.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/io/Console.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/io/File.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/io/FileInputStream.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/io/FileOutputStream.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/io/IndentedOutputStream.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/io/InputStream.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/io/LineNumberInputStream.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/io/MemoryInputStream.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/io/MemoryOutputStream.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/io/OutputStream.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/io/PushbackInputStream.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/math/Random.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/math/XorShift128Plus.panda
+)
+
+add_custom_target(bootstrap
+    DEPENDS ${pandac_headers}
+)

@@ -5,13 +5,16 @@ uses org.pandalanguage.pandac.parser.Token
 
 class Compiler (ErrorReporter) {
     class Settings : Immutable {
+        def pandaHome:File
+
         def importDirs:ImmutableArray<File>
 
         def optimizationLevel:Int
 
         def safetyLevel:Int
 
-        init(importDirs:ListView<File>, optimizationLevel:Int, safetyLevel:Int) {
+        init(pandaHome:File, importDirs:ListView<File>, optimizationLevel:Int, safetyLevel:Int) {
+            self.pandaHome := pandaHome
             self.importDirs := ImmutableArray<File>(importDirs)
             self.optimizationLevel := optimizationLevel
             self.safetyLevel := safetyLevel

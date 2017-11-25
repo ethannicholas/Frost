@@ -309,7 +309,7 @@ FileInputStream* panda$io$File$openInputStream$R$panda$io$InputStream(File* self
     char* str = pandaGetCString(self->path);
     result->file = fopen(str, "rb");
     if (!result->file) {
-        printf("error opening '%s'\n", str);
+        printf("error opening '%s' for reading\n", str);
         exit(1);
     }
     free(str);
@@ -323,7 +323,7 @@ FileOutputStream* panda$io$File$openOutputStream$R$panda$io$OutputStream(File* s
     char* str = pandaGetCString(self->path);
     result->file = fopen(str, "wb");
     if (!result->file) {
-        printf("error opening '%s'\n", str);
+        printf("error opening '%s' for writing\n", str);
         exit(1);
     }
     free(str);
