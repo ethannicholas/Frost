@@ -21,7 +21,7 @@ class Panda {
     }
 
     @class
-    method debugPrint(i:UInt8) {
+    method debugPrint(i:UInt64) {
         Console.printLine("Debug: \{i}")
     }
 }

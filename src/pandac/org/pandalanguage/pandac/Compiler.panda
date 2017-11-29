@@ -339,7 +339,8 @@ class Compiler (ErrorReporter) {
     }
 
     method isValue(cl:ClassDecl):Bit {
-        return coercionCost(cl.type(), Type.Value()) != null
+        resolve(cl)
+        return cl.rawSuper != null & coercionCost(cl.rawSuper, Type.Value()) != null
     }
 
     method instanceFields(cl:ClassDecl):ListView<FieldDecl> {

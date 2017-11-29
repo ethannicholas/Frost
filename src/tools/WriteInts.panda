@@ -407,7 +407,7 @@ class WriteInts {
         writeHash(type, out)
         writeConvert(type, out)
         out.printLine("}")
-        out.cleanup()
+        out.out.cleanup()
     }
 
     @class

@@ -128,6 +128,7 @@ class IRNode {
         assert kind != Kind.CAST | children[0].kind != Kind.UNRESOLVED_INDEX
         assert kind != Kind.CAST | children[0].type.kind != Type.Kind.UNRESOLVED
         assert kind != Kind.UNRESOLVED_METHOD_REFERENCE | payload->ListView<MethodRef>.get_count() > 0
+        assert type.resolved
     }
 
     @override

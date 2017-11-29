@@ -30,8 +30,7 @@ class HCodeGenerator (CodeGenerator) {
     init(out:OutputStream) {
         self.out := IndentedOutputStream(out)
         out.printLine("#pragma once")
-        out.printLine("#include <inttypes.h>")
-        out.printLine("#include <stdbool.h>")
+        out.printLine("#include \"panda_c.h\"")
         out.printLine("#define PANDA_TYPESONLY")
     }
 
@@ -83,6 +82,11 @@ class HCodeGenerator (CodeGenerator) {
                 }
                 return name
             when Type.Kind.NULLABLE:
+                def cl := compiler.getClass(t)
+                assert cl != null
+                if compiler.isValue(cl) {
+                    return type(t.subtypes[0]) + "$nullable"
+                }
                 return type(t.subtypes[0])
             when Type.Kind.GENERIC:
                 if t.subtypes[0].name = "panda.unsafe.Pointer" {
@@ -112,9 +116,53 @@ class HCodeGenerator (CodeGenerator) {
             compiler.resolve(f)
             types.printLine("\{type(f.type)} \{f.name};")
         }
+        if cl.name = "panda.core.Class" {
+            types.printLine("ITable itable;")
+            types.printLine("void** vtable;")
+        }
         types.level -= 1
         types.printLine("} \{escapeName(cl.name)};")
-        types.printLine("extern panda$core$Class \{escapeName(cl.name)}$class;")
+        types.printLine("#define PANDA_TYPESONLY")
+        types.printLine("#include \"panda/core/Class.h\"")
+        types.printLine("#undef PANDA_TYPESONLY")
+        types.printLine("typedef struct { panda$core$Class* cl; int32_t refCount; " +
+                "\{type(Type.Class())} super; ITable* itable; " +
+                "void* methods[\{compiler.getVTable(cl).get_count()}]; } " +
+                "\{escapeName(cl.name)}$class_type;")
+        types.printLine("extern \{escapeName(cl.name)}$class_type \{escapeName(cl.name)}$class;")
+        if compiler.isValue(cl) {
+            types.printLine("typedef struct \{escapeName(cl.name)}$wrapper {")
+            types.level += 1
+            types.printLine("panda$core$Class* cl;")
+            types.printLine("int32_t refCount;")
+            types.printLine("\{type(cl.type())} value;")
+            types.level -= 1
+            types.printLine("} \{escapeName(cl.name)}$wrapper;")
+            types.printLine("typedef struct \{escapeName(cl.name)}$nullable {")
+            types.level += 1
+            types.printLine("\{escapeName(cl.name)} value;")
+            types.printLine("bool nonnull;")
+            types.level -= 1
+            types.printLine("} \{escapeName(cl.name)}$nullable;")
+            def value := compiler.getClass(Type.Value())
+            def valueVTable := compiler.getVTable(value)
+            types.printLine("typedef struct { panda$core$Class* cl; int32_t refCount; " +
+                    "panda$core$Class* super; ITable* itable; " +
+                    "void* methods[\{valueVTable.get_count()}]; } " +
+                    "\{escapeName(cl.name)}$wrapperclass_type;")
+            types.printLine("extern \{escapeName(cl.name)}$wrapperclass_type " +
+                    "\{escapeName(cl.name)}$wrapperclass;")
+            types.printLine("\{escapeName(cl.name)}$wrapper* wrap_\{escapeName(cl.name)}(" +
+                    "\{escapeName(cl.name)} self);")
+        }
+    }
+
+    method selfType(m:MethodDecl):String {
+        def result := type(m.owner.type())
+        if m.methodKind = MethodDecl.Kind.INIT & !result.endsWith("*") {
+            return result + "*"
+        }
+        return result
     }
 
     @override
@@ -123,6 +171,10 @@ class HCodeGenerator (CodeGenerator) {
         imports := bodyImports
         body.print("\{type(m.returnType)} \{getName(m)}(")
         var separator := ""
+        if !m.annotations.isClass() {
+            body.print("\{separator}\{selfType(m)} self")
+            separator := ", "
+        }
         for p in m.parameters {
             body.print("\{separator}\{type(p.type)} \{escapeName(p.name)}")
             separator := ", "

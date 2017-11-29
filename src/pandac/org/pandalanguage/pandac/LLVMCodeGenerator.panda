@@ -87,8 +87,8 @@ class LLVMCodeGenerator (CodeGenerator) {
     constant POINTER_SIZE        := 8
     constant OBJECT_FIELD_COUNT  := 2
     constant CLASS_POINTER_INDEX := 0
-    constant ITABLE_INDEX        := 2
-    constant VTABLE_INDEX        := 3
+    constant ITABLE_INDEX        := 3
+    constant VTABLE_INDEX        := 4
 
     constant INT_TYPE  := "i64"
     constant SIZE_TYPE := "i64"
@@ -175,7 +175,7 @@ class LLVMCodeGenerator (CodeGenerator) {
         out.print(wrapperShimsBuffer.convert())
         out.print(shimsBuffer.convert())
         out.print(methodsBuffer.convert())
-        out.cleanup() -- FIXME this should be automatic when memory management is in
+        out.out.cleanup() -- FIXME this should be automatic when memory management is in
     }
 
     method nextVar():String {
@@ -315,7 +315,7 @@ class LLVMCodeGenerator (CodeGenerator) {
             separator := ", "
         }
         if t = Type.Class() {
-            code.append(", %$itable*, [0 x i8*]")
+            code.append(", %panda$core$Class*, %$itable*, [0 x i8*]")
         }
         code.append(" }")
         types.printLine(code)
@@ -691,19 +691,22 @@ class LLVMCodeGenerator (CodeGenerator) {
             }
             def vtable := compiler.getVTable(cl)
             result := ClassConstant("@\{escapeName(cl.type().name)}$class",
-                    "{ i8*, \{INT_TYPE}, %$itable*, [\{vtable.get_count()} x i8*] }")
+                    "{ %panda$core$Class*, \{INT_TYPE}, %panda$core$Class*, %$itable*, " +
+                    "[\{vtable.get_count()} x i8*] }")
             classConstants[cl.name] := result
             def superPtr:String
             if cl.rawSuper != null {
                 def superCC := getClassConstant(compiler.getClass(cl.rawSuper))
-                superPtr := "bitcast(\{superCC.type}* \{superCC.name} to i8*)"
+                superPtr := "bitcast(\{superCC.type}* \{superCC.name} to %panda$core$Class*)"
             }
             else {
                 superPtr := "null"
             }
+            def clConstant := getClassConstant(compiler.getClass(Type.Class()))
             def code := MutableString("\{result.name} = constant \{result.type} { " +
-                    "i8* \{superPtr}, \{INT_TYPE} 1, \{getITable(cl)}, " +
-                    "[\{vtable.get_count()} x i8*] [")
+                    "%panda$core$Class* bitcast(\{clConstant.type}* \{clConstant.name} to " +
+                    "%panda$core$Class*), \{INT_TYPE} 1, %panda$core$Class* \{superPtr}, " +
+                    "\{getITable(cl)}, [\{vtable.get_count()} x i8*] [")
             var separator := ""
             for m in vtable {
                 code.append(separator)
@@ -736,14 +739,17 @@ class LLVMCodeGenerator (CodeGenerator) {
                 def value := compiler.getClass(Type.Value())
                 def valueVTable := compiler.getVTable(value)
                 result := ClassConstant("@\{escapeName(cl.name)}$wrapperclass",
-                        "{ i8*, \{INT_TYPE}, %$itable*, [\{valueVTable.get_count()} x i8*] }")
+                        "{ %panda$core$Class*, \{INT_TYPE}, %panda$core$Class*, %$itable*, " +
+                        "[\{valueVTable.get_count()} x i8*] }")
                 def vtable := compiler.getVTable(cl)
                 def superCC := getClassConstant(compiler.getClass(cl.rawSuper))
-                def superCast := "bitcast(\{superCC.type}* \{superCC.name} to i8*)"
+                def superCast := "bitcast(\{superCC.type}* \{superCC.name} to %panda$core$Class*)"
                 def itable := getWrapperITable(cl)
-                def code := MutableString("\{result.name} = constant \{result.type} { i8* " +
-                        "\{superCast}, \{INT_TYPE} 1, \{itable}, [\{valueVTable.get_count()} x " +
-                        "i8*] [")
+                def clConstant := getClassConstant(compiler.getClass(Type.Class()))
+                def code := MutableString("\{result.name} = constant \{result.type} { " +
+                        "%panda$core$Class* bitcast(\{clConstant.type}* \{clConstant.name} to " +
+                        "%panda$core$Class*), \{INT_TYPE} 1, \{type(Type.Class())} \{superCast}, " +
+                        "\{itable}, [\{valueVTable.get_count()} x i8*] [")
                 var separator := ""
                 for i in 0 .. valueVTable.get_count() {
                     def m := vtable[i]
@@ -1028,7 +1034,7 @@ class LLVMCodeGenerator (CodeGenerator) {
     }
 
     function callingConvention(m:MethodDecl):String {
-        return "fastcc "
+        return "ccc "
     }
 
     method getVirtualMethodReference(target:String, m:MethodDecl, out:IndentedOutputStream):String {
@@ -2436,7 +2442,7 @@ class LLVMCodeGenerator (CodeGenerator) {
         else {
             msg := null
         }
-        out.print("call fastcc void ")
+        out.print("call ccc void ")
         for m in compiler.getClass(Type.Panda()).methods {
             if m.name = "assertionFailure" {
                 compiler.resolve(m)
