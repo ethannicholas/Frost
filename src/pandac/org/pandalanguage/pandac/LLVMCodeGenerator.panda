@@ -1418,11 +1418,6 @@ class LLVMCodeGenerator (CodeGenerator) {
         return wrapperCast
     }
 
-    function isConstantNumber(expr:IRNode):Bit {
-        return expr.kind = IRNode.Kind.CONSTRUCT & expr.type.isNumber() &
-                expr.children[0].children[0].kind = IRNode.Kind.INT
-    }
-
     method getFieldReference(fieldRef:IRNode, out:IndentedOutputStream):String {
         assert fieldRef.kind = IRNode.Kind.FIELD_REFERENCE
         assert fieldRef.children.get_count() = 1

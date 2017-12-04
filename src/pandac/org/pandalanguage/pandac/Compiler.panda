@@ -289,6 +289,7 @@ class Compiler (ErrorReporter) {
         }
         f.resolved := true
         currentFile.push(f.owner.source) -- FIXME use init / cleanup
+        currentClass.push(f.owner)
         def old := symbolTable
         symbolTable := f.owner.symbolTable
         if f.type != Type.Void() {
@@ -296,24 +297,28 @@ class Compiler (ErrorReporter) {
             if f.rawValue != null {
                 f.value := coerce(compileExpression(f.rawValue), f.type)
             }
+            currentClass.pop()
             currentFile.pop()
             symbolTable := old
             return
         }
         if f.rawValue = null {
             error(f.offset, "field has neither a type nor a value")
+            currentClass.pop()
             currentFile.pop()
             symbolTable := old
             return
         }
         f.value := compileExpression(f.rawValue)
         if f.value = null {
+            currentClass.pop()
             currentFile.pop()
             symbolTable := old
             return
         }
         f.type := variableType(f.value)
         f.value := coerce(f.value, f.type)
+        currentClass.pop()
         currentFile.pop()
         symbolTable := old
     }

@@ -71,7 +71,7 @@ class String : Immutable (Key<String>) {
 
         @override
         function get_done():Bit {
-            return index = str._length
+            return index >= str._length
         }
 
         @override
@@ -93,7 +93,7 @@ class String : Immutable (Key<String>) {
 
         @override
         function get_done():Bit {
-            return index = str._length
+            return index >= str._length
         }
 
         @override
@@ -115,30 +115,37 @@ class String : Immutable (Key<String>) {
 
         @override
         function get_done():Bit {
-            return index = str._length
+            return index >= str._length
         }
 
         @override
         function next():Char32 {
+            assert index < str._length
             def c := str.data[index]
             var result:Int32 := c.convert()
-            if c.value->builtin_int64 && 0xFF < 0b11000000 {
+            if c.value->builtin_int64 && 0xFF < 0b10000000 {
                 index += 1
                 return Char32(result)
             }
-            if c.value->builtin_int64 && 0xFF < 0b11100000 {
-                index += 2
+            if c.value->builtin_int64 && 0xFF < 0b11000000 {
                 assert index + 1 < str._length
                 result := result && 0b11111 << 6 + str.data[index + 1].convert()->Int32 && 0b111111
+                index += 2
                 return Char32(result)
             }
-            if c.value->builtin_int64 && 0xFF < 0b11110000 {
-                index += 3
+            if c.value->builtin_int64 && 0xFF < 0b11100000 {
                 assert index + 2 < str._length
                 result := result && 0b1111 << 12 + str.data[index + 1].convert()->Int32 &&
                         0b111111 << 6 + str.data[index + 2].convert()->Int32 && 0b111111
+                index += 3
                 return Char32(result)
             }
+            assert index + 3 < str._length
+            result := result && 0b111 << 18 + str.data[index + 1].convert()->Int32 &&
+                    0b111111 << 12 + str.data[index + 2].convert()->Int32 && 0b111111 << 6 +
+                    str.data[index + 3].convert()->Int32 && 0b111111
+            index += 4
+            return Char32(result)
         }
     }
     @private

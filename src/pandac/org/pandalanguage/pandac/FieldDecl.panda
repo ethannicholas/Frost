@@ -32,6 +32,7 @@ class FieldDecl : Symbol {
         self.fieldKind := fieldKind
         self.type := type
         self.rawValue := value
+        self.value := null
         super.init(Symbol.Kind.FIELD, offset, name)
     }
 }

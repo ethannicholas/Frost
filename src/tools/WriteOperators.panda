@@ -93,7 +93,7 @@ class WriteOperators {
         indented.level -= 1
         indented.printLine("}")
         indented.level -= 1
-        out.printLine("}")
+        indented.printLine("}")
     }
 
     @class

@@ -75,8 +75,8 @@ class Array<T> (List<T>) {
         for i in count .. index by -1 {
             self[i] := self[i - 1]
         }
-        self[index] := value
         count += 1
+        self[index] := value
     }
 
     ================================================================================================

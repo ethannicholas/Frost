@@ -4,10 +4,10 @@
 #include <inttypes.h>
 #include <stdbool.h>
 
-typedef struct panda$core$ClassDecl panda$core$ClassDecl;
+typedef struct panda$core$Class panda$core$Class;
 
 typedef struct ITable {
-    panda$core$ClassDecl* $class;
+    panda$core$Class* $class;
     struct ITable* next;
-    void** methods;
+    void* methods[];
 } ITable;

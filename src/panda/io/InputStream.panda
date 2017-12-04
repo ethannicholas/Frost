@@ -45,6 +45,7 @@ class InputStream {
             buffer[i] := next
             i += 1
         }
+        return i
     }
 
     @final

@@ -20,6 +20,7 @@ typedef struct ITable {
 typedef struct Class {
     struct Class* cl;
     int32_t refcnt;
+    struct Class* super;
     ITable* itable;
     void* vtable[0];
 } Class;
