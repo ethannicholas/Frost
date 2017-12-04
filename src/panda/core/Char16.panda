@@ -68,19 +68,19 @@ class Char16 : Value (Key<Char16>) {
         if value < 0x80 {
             def data := Pointer<Char8>.alloc(1)
             data[0] := Char8(convert()->UInt8)
-            return String(data, 1)
+            return String(data, 1, true)
         }
         if value < 0x800 {
             def data := Pointer<Char8>.alloc(2)
             data[0] := Char8(UInt8((value >> 6 || 0b11000000)->builtin_uint8))
             data[1] := Char8(UInt8((value && 0b111111 || 0b10000000)->builtin_uint8))
-            return String(data, 2)
+            return String(data, 2, true)
         }
         def data := Pointer<Char8>.alloc(3)
         data[0] := Char8(UInt8((value >> 12 || 0b11100000)->builtin_uint8))
         data[1] := Char8(UInt8((value >> 6 && 0b111111 || 0b10000000)->builtin_uint8))
         data[2] := Char8(UInt8((value && 0b111111 || 0b10000000)->builtin_uint8))
-        return String(data, 3)
+        return String(data, 3, true)
     }
 
     @private

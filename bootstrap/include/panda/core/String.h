@@ -6,6 +6,7 @@ typedef struct panda$core$Class panda$core$Class;
 #include "panda/core/Int32.h"
 #include "panda/core/Char8.h"
 #include "panda/core/Int64.h"
+#include "panda/core/Bit.h"
 #include "panda/core/String.h"
 typedef struct panda$core$String panda$core$String;
 
@@ -14,6 +15,7 @@ typedef struct panda$core$String {
     panda$core$Int32 refCount;
     panda$core$Char8* data;
     panda$core$Int64 _length;
+    panda$core$Bit owned;
 } panda$core$String;
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"
@@ -88,9 +90,9 @@ extern panda$core$String$UTF32Iterator$class_type panda$core$String$UTF32Iterato
 typedef struct panda$core$String panda$core$String;
 #include "panda/core/Char8.h"
 #include "panda/core/Int64.h"
+#include "panda/core/Bit.h"
 typedef struct panda$collections$ListView panda$collections$ListView;
 typedef struct panda$collections$Iterator panda$collections$Iterator;
-#include "panda/core/Bit.h"
 typedef struct panda$core$Object panda$core$Object;
 #include "panda/core/Char32.h"
 #include "panda/core/String.h"
@@ -103,7 +105,7 @@ typedef struct panda$core$String$UTF16Iterator panda$core$String$UTF16Iterator;
 #include "panda/core/Char16.h"
 typedef struct panda$core$String$UTF32Iterator panda$core$String$UTF32Iterator;
 
-void panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64(panda$core$String* self, panda$core$Char8* p_data, panda$core$Int64 p_length);
+void panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64$panda$core$Bit(panda$core$String* self, panda$core$Char8* p_data, panda$core$Int64 p_length, panda$core$Bit p_owned);
 void panda$core$String$init$panda$collections$ListView$LTpanda$core$Char8$GT(panda$core$String* self, panda$collections$ListView* p_chars);
 panda$core$String* panda$core$String$convert$R$panda$core$String(panda$core$String* self);
 void panda$core$String$cleanup(panda$core$String* self);

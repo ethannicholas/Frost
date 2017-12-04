@@ -49,11 +49,11 @@ typedef panda$core$Bit (*$fn143)(panda$collections$Iterator*);
 typedef panda$core$Object* (*$fn149)(panda$collections$Iterator*);
 typedef org$pandalanguage$pandac$Symbol* (*$fn151)(org$pandalanguage$pandac$SymbolTable*, panda$core$String*);
 
-static panda$core$String $s30 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x64\x75\x70\x6C\x69\x63\x61\x74\x65\x20\x73\x79\x6D\x62\x6F\x6C\x20\x27", 18 };
-static panda$core$String $s32 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27\x20\x28\x70\x72\x65\x76\x69\x6F\x75\x73\x20\x64\x65\x63\x6C\x61\x72\x61\x74\x69\x6F\x6E\x20\x77\x61\x73\x20\x61\x74\x20", 31 };
-static panda$core$String $s154 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x53\x79\x6D\x62\x6F\x6C\x54\x61\x62\x6C\x65\x3C\x70\x61\x72\x65\x6E\x74\x73\x28", 20 };
-static panda$core$String $s157 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x29\x2C\x20\x73\x79\x6D\x62\x6F\x6C\x73\x3D", 11 };
-static panda$core$String $s160 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x3E", 1 };
+static panda$core$String $s30 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x64\x75\x70\x6C\x69\x63\x61\x74\x65\x20\x73\x79\x6D\x62\x6F\x6C\x20\x27", 18, 1 };
+static panda$core$String $s32 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27\x20\x28\x70\x72\x65\x76\x69\x6F\x75\x73\x20\x64\x65\x63\x6C\x61\x72\x61\x74\x69\x6F\x6E\x20\x77\x61\x73\x20\x61\x74\x20", 31, 1 };
+static panda$core$String $s154 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x53\x79\x6D\x62\x6F\x6C\x54\x61\x62\x6C\x65\x3C\x70\x61\x72\x65\x6E\x74\x73\x28", 20, 1 };
+static panda$core$String $s157 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x29\x2C\x20\x73\x79\x6D\x62\x6F\x6C\x73\x3D", 11, 1 };
+static panda$core$String $s160 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x3E", 1, 1 };
 
 void org$pandalanguage$pandac$SymbolTable$init$org$pandalanguage$pandac$Compiler(org$pandalanguage$pandac$SymbolTable* self, org$pandalanguage$pandac$Compiler* p_compiler) {
     panda$collections$HashMap* $tmp1 = (panda$collections$HashMap*) malloc(56);

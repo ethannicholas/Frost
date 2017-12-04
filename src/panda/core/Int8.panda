@@ -693,6 +693,6 @@ class Int8 : Value (Key<Int8>, Comparable<Int8>) {
             result[i - index] := chars[i]
         }
         chars.destroy()
-        return String(result, size)
+        return String(result, size, true)
     }
 }

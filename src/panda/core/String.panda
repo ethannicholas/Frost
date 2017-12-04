@@ -148,16 +148,24 @@ class String : Immutable (Key<String>) {
             return Char32(result)
         }
     }
+
     @private
     def data:Pointer<Char8>
 
     @private
     def _length:Int
 
+    ================================================================================================
+    True if this string owns the pointer to its data and should free it on cleanup.
+    ================================================================================================
     @private
-    init(data:Pointer<Char8>, length:Int) {
+    def owned:Bit
+
+    @private
+    init(data:Pointer<Char8>, length:Int, owned:Bit) {
         self.data := data
         _length := length
+        self.owned := owned
     }
 
     init(chars:ListView<Char8>) {
@@ -262,7 +270,7 @@ class String : Immutable (Key<String>) {
         for i in 0 .. other._length {
             result[_length + i] := other.data[i]
         }
-        return String(result, _length + other._length)
+        return String(result, _length + other._length, true)
     }
 
     function +(other:Object):String {

@@ -145,8 +145,7 @@ class Parser {
     }
 
     function text(token:Token):String {
-        def start := source.offset(source.start(), token.offset)
-        return source[start .. source.offset(start, token.length)]
+        return String(source.data.offset(token.offset), token.length, false)
     }
 
     function addStringChunk(string:ASTNode?, chunk:ASTNode):ASTNode {

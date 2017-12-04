@@ -15,7 +15,7 @@ panda$io$IndentedOutputStream$class_type panda$io$IndentedOutputStream$class = {
 typedef void (*$fn23)(panda$io$IndentedOutputStream*, panda$core$UInt8);
 typedef void (*$fn38)(panda$io$OutputStream*, panda$core$String*);
 
-static panda$core$String $s35 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x20", 1 };
+static panda$core$String $s35 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x20", 1, 1 };
 
 void panda$io$IndentedOutputStream$init$panda$io$OutputStream(panda$io$IndentedOutputStream* self, panda$io$OutputStream* p_out) {
     self->level = ((panda$core$Int64) { 0 });

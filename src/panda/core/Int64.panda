@@ -525,6 +525,6 @@ class Int64 : Value (Key<Int64>, Comparable<Int64>) {
             result[i - index] := chars[i]
         }
         chars.destroy()
-        return String(result, size)
+        return String(result, size, true)
     }
 }

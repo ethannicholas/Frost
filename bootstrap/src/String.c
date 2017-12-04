@@ -1,9 +1,9 @@
 #include "panda/core/String.h"
 #include "panda/core/Int64.h"
+#include "panda/core/Bit.h"
 #include "panda/collections/ListView.h"
 #include "panda/collections/CollectionView.h"
 #include "panda/core/Range.h"
-#include "panda/core/Bit.h"
 #include "panda/collections/Iterator.h"
 #include "panda/core/Char8.h"
 #include "panda/core/Object.h"
@@ -139,9 +139,10 @@ panda$core$String$UTF32Iterator$class_type panda$core$String$UTF32Iterator$class
 
 
 
-void panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64(panda$core$String* self, panda$core$Char8* p_data, panda$core$Int64 p_length) {
+void panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64$panda$core$Bit(panda$core$String* self, panda$core$Char8* p_data, panda$core$Int64 p_length, panda$core$Bit p_owned) {
     self->data = p_data;
     self->_length = p_length;
+    self->owned = p_owned;
 }
 void panda$core$String$init$panda$collections$ListView$LTpanda$core$Char8$GT(panda$core$String* self, panda$collections$ListView* p_chars) {
     panda$core$Range $tmp5;
@@ -526,11 +527,11 @@ panda$core$String* panda$core$String$$ADD$panda$core$String$R$panda$core$String(
     i182.value += $tmp186;
     goto $l188;
     $l190:;
-    panda$core$String* $tmp212 = (panda$core$String*) malloc(32);
+    panda$core$String* $tmp212 = (panda$core$String*) malloc(33);
     $tmp212->$class = (panda$core$Class*) &panda$core$String$class;
     $tmp212->refCount.value = 1;
     panda$core$Int64 $tmp214 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->_length, p_other->_length);
-    panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp212, result149, $tmp214);
+    panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64$panda$core$Bit($tmp212, result149, $tmp214, ((panda$core$Bit) { true }));
     return $tmp212;
 }
 panda$core$String* panda$core$String$$ADD$panda$core$Object$R$panda$core$String(panda$core$String* self, panda$core$Object* p_other) {

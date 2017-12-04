@@ -287,7 +287,6 @@ class Compiler (ErrorReporter) {
         if f.resolved {
             return
         }
-        Console.printLine("resolving: \{f}")
         f.resolved := true
         currentFile.push(f.owner.source) -- FIXME use init / cleanup
         currentClass.push(f.owner)
@@ -322,7 +321,6 @@ class Compiler (ErrorReporter) {
         currentClass.pop()
         currentFile.pop()
         symbolTable := old
-        Console.printLine("finished resolving: \{f}")
     }
 
     method resolve(expr:IRNode?):IRNode? {

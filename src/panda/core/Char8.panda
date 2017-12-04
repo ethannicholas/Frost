@@ -75,12 +75,12 @@ class Char8 : Value (Key<Char8>) {
         if value > 0 {
             def data := Pointer<Char8>.alloc(1)
             data[0] := self
-            return String(data, 1)
+            return String(data, 1, true)
         }
         def data := Pointer<Char8>.alloc(2)
         data[0] := Char8(UInt8((value->builtin_uint16 >> 6 || 0b11000000)->builtin_uint8))
         data[1] := Char8(UInt8((value->builtin_uint16 && 0b111111 || 0b10000000)->builtin_uint8))
-        return String(data, 2)
+        return String(data, 2, true)
     }
 
     @private

@@ -872,6 +872,11 @@ class CCodeGenerator (CodeGenerator) {
                 assert m.returnType().subtypes.get_count() = 2
                 def elementSize := sizeOf(m.returnType().subtypes[1])
                 return "((\{type(call.type)}) realloc(\{ptr}, \{count}.value * \{elementSize}))"
+            when "offset":
+                assert call.children.get_count() = 2
+                def ptr := getReference(call.children[0], out)
+                def offset := getReference(call.children[1], out)
+                return "(\{ptr} + \{offset}.value)"
             otherwise:
                 assert false
         }
@@ -1122,7 +1127,7 @@ class CCodeGenerator (CodeGenerator) {
             strings.print("0123456789ABCDEF".utf8()[(c // 16).convert()])
             strings.print("0123456789ABCDEF".utf8()[(c % 16).convert()])
         }
-        strings.printLine("\", \{s.utf8().get_count()} };")
+        strings.printLine("\", \{s.utf8().get_count()}, 1 };")
         return "&\{result}"
     }
 

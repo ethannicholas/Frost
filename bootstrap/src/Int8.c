@@ -871,10 +871,10 @@ panda$core$String* panda$core$Int8$convert$R$panda$core$String(panda$core$Int8 s
     goto $l194;
     $l196:;
     free(chars159);
-    panda$core$String* $tmp218 = (panda$core$String*) malloc(32);
+    panda$core$String* $tmp218 = (panda$core$String*) malloc(33);
     $tmp218->$class = (panda$core$Class*) &panda$core$String$class;
     $tmp218->refCount.value = 1;
-    panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp218, result186, size184);
+    panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64$panda$core$Bit($tmp218, result186, size184, ((panda$core$Bit) { true }));
     return $tmp218;
 }
 

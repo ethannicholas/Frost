@@ -27,9 +27,9 @@ typedef panda$core$String* (*$fn14)(panda$core$MutableString*);
 panda$core$Range$class_type panda$core$Range$class = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Value$class, NULL, { panda$core$Range$convert$R$panda$core$String, panda$core$Object$cleanup} };
 
 panda$core$Range$wrapperclass_type panda$core$Range$wrapperclass = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Value$class, NULL, { panda$core$Range$convert$R$panda$core$String$wrappershim, panda$core$Object$cleanup} };
-static panda$core$String $s5 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2E\x2E\x2E", 3 };
-static panda$core$String $s7 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2E\x2E", 2 };
-static panda$core$String $s11 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x20\x62\x79\x20", 4 };
+static panda$core$String $s5 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2E\x2E\x2E", 3, 1 };
+static panda$core$String $s7 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2E\x2E", 2, 1 };
+static panda$core$String $s11 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x20\x62\x79\x20", 4, 1 };
 
 void panda$core$Range$init$panda$core$Range$T$panda$core$Range$T$panda$core$Int64$Q$panda$core$Bit(panda$core$Range* self, panda$core$Object* p_start, panda$core$Object* p_end, panda$core$Int64$nullable p_step, panda$core$Bit p_inclusive) {
     self->start = p_start;

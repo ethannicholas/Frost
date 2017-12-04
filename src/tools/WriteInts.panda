@@ -323,7 +323,7 @@ class WriteInts {
         out.printLine("            result[i - index] := chars[i]")
         out.printLine("        }")
         out.printLine("        chars.destroy()")
-        out.printLine("        return String(result, size)")
+        out.printLine("        return String(result, size, true)")
         out.printLine("    }")
     }
 

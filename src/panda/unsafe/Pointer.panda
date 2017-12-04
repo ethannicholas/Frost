@@ -22,5 +22,8 @@ class Pointer<T> : Value {
     method realloc(count:Int):Pointer<T>
 
     @external
+    method offset(count:Int):Pointer<T>
+
+    @external
     method destroy()
 }

@@ -1211,6 +1211,16 @@ class LLVMCodeGenerator (CodeGenerator) {
                 def result := nextVar()
                 out.printLine("\{result} = bitcast i8* \{realloc} to \{type(m.returnType())}")
                 return result
+            when "offset":
+                assert call.children.get_count() = 2
+                def ptr := getTypedReference(call.children[0], out)
+                def baseType := type(call.children[0].type.subtypes[1])
+                def offsetStruct := getTypedReference(call.children[1], out)
+                def offset := nextVar()
+                out.printLine("\{offset} = extractvalue \{offsetStruct}, 0")
+                def result := nextVar()
+                out.printLine("\{result} = getelementptr \{baseType}, \{ptr}, i64 \{offset}")
+                return result
             otherwise:
                 assert false
         }
@@ -1669,8 +1679,8 @@ class LLVMCodeGenerator (CodeGenerator) {
                 "%panda$core$Class* bitcast(\{cc.type}* \{cc.name} to " +
                 "%panda$core$Class*), %panda$core$Int32 insertvalue(%panda$core$Int32 " +
                 "{ i32 undef }, i32 1, 0), %panda$core$Char8* bitcast(\{charsType}* \{chars}" +
-                " to %panda$core$Char8*), %panda$core$Int64 insertvalue(%panda$core$Int64 " +
-                "{ i64 undef }, i64 \{s.utf8().get_count()}, 0) }")
+                " to %panda$core$Char8*), %panda$core$Int64 { i64 \{s.utf8().get_count()} }, " +
+                "%panda$core$Bit { i1 1 } }")
         return result
     }
 

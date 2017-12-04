@@ -183,6 +183,9 @@ class Main {
                     }
                 when "-i":
                     imports.add(File(args.next("a path to a directory")))
+                when "-pause":
+                    Console.printLine("Press enter to continue...")
+                    Console.readLine()
                 otherwise:
                     if a.endsWith(".panda") {
                         sources.add(File(a))
