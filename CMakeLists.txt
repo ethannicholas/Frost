@@ -5,6 +5,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -m64")
 
 include_directories(
     bootstrap/include
+    src/c
 )
 
 add_executable(bootstrap
@@ -366,7 +367,7 @@ function(create_headers out_var)
         endif()
         get_filename_component(outputDir ${input} DIRECTORY)
         get_filename_component(outputName ${input} NAME_WE)
-        set(output "bootstrap/include/${outputDir}/${outputName}.h")
+        set(output "${CMAKE_CURRENT_BINARY_DIR}/updated_bootstrap/include/${outputDir}/${outputName}.h")
         file(RELATIVE_PATH pandacInc ${working} "${CMAKE_CURRENT_SOURCE_DIR}/src/pandac")
         if (pandacInc STREQUAL "")
             set(pandacInc ".")
@@ -389,7 +390,7 @@ function(create_headers out_var)
     set(${out_var} "${result}" PARENT_SCOPE)
 endfunction()
 
-create_headers(pandac_headers
+create_headers(updated_pandac_headers
     ${core_source}
     ${pandac_source}
     ${CMAKE_CURRENT_SOURCE_DIR}/src/parser/org/pandalanguage/plex/runtime/DFA.panda
@@ -413,7 +414,7 @@ function(compile_panda_sources_to_c out_var)
             set(working "${CMAKE_CURRENT_BINARY_DIR}")
         endif()
         get_filename_component(output ${input} NAME_WE)
-        set(output "bootstrap/src/${output}.c")
+        set(output "${CMAKE_CURRENT_BINARY_DIR}/updated_bootstrap/src/${output}.c")
         file(RELATIVE_PATH pandacInc ${working} "${CMAKE_CURRENT_SOURCE_DIR}/src/pandac")
         if (pandacInc STREQUAL "")
             set(pandacInc ".")
@@ -443,11 +444,12 @@ compile_panda_sources_to_c(updated_pandac_c
     ${CMAKE_CURRENT_SOURCE_DIR}/src/parser/org/pandalanguage/plex/runtime/RawToken.panda
 )
 
-add_custom_target(clean_bootstrap
-    file(REMOVE_RECURSE bootstrap)
-    file(MAKE_DIRECTORY bootstrap/src bootstrap/include)
+add_custom_target(update_bootstrap
+    DEPENDS ${updated_pandac_headers} ${updated_pandac_c}
 )
 
-add_custom_target(update_bootstrap
-    DEPENDS clean_boostrap ${updated_pandac_headers} ${updated_pandac_c}
+add_custom_command(
+    TARGET update_bootstrap POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E remove_directory ${CMAKE_CURRENT_SOURCE_DIR}/bootstrap
+    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_BINARY_DIR}/updated_bootstrap ${CMAKE_CURRENT_SOURCE_DIR}/bootstrap
 )
