@@ -162,9 +162,9 @@ class Type : Symbol (Key<Type>) {
     @class
     method RangeOf(t:Type):Type {
         def children := Array<Type>() -- FIXME literal
-        children.add(Type("panda.core.Range", Kind.CLASS, -1, true))
+        children.add(Type(Compiler.RANGE_NAME, Kind.CLASS, -1, true))
         children.add(t)
-        return Type("panda.core.Range<\{t}>", Kind.GENERIC, t.offset, children, t.resolved)
+        return Type("\{Compiler.RANGE_NAME}<\{t}>", Kind.GENERIC, t.offset, children, t.resolved)
     }
 
     @class
@@ -202,7 +202,7 @@ class Type : Symbol (Key<Type>) {
         if typeKind = Kind.NULLABLE {
             return subtypes[0].isRange()
         }
-        return typeKind = Kind.GENERIC & subtypes[0].name = "panda.core.Range"
+        return typeKind = Kind.GENERIC & subtypes[0].name = Compiler.RANGE_NAME
     }
 
     function nullable():Type {

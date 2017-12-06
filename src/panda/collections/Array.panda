@@ -215,4 +215,8 @@ class Array<T> (List<T>) {
         result.append("]")
         return result.convert()
     }
+
+    function [](r:panda.core.SpecializedRange<Int?>):Array<T> {
+        return self[Range<Int?>(r.start, r.end, r.step, r.inclusive)]
+    }
 }

@@ -4,6 +4,8 @@ uses org.pandalanguage.pandac.parser.Parser
 uses org.pandalanguage.pandac.parser.Token
 
 class Compiler (ErrorReporter) {
+    constant RANGE_NAME := "panda.core.SpecializedRange"
+
     class Settings : Immutable {
         def pandaHome:File
 
@@ -409,6 +411,7 @@ class Compiler (ErrorReporter) {
     }
 
     method specialize(cl:ClassDecl, rawType:Type):ClassDecl {
+        assert !rawType.name.contains("$int_literal")
         def type := resolve(rawType)
         if type.typeKind = Type.Kind.NULLABLE {
             return specialize(cl, type.subtypes[0])
@@ -749,8 +752,8 @@ class Compiler (ErrorReporter) {
     function variableType(expr:IRNode):Type {
         match expr.kind {
             when IRNode.Kind.UNRESOLVED_RANGE:
-                return Type.RangeOf(variableType(expr.children[0].type.union(
-                        expr.children[1].type)))
+                return Type.RangeOf(variableType(variableType(expr.children[0].type).union(
+                        variableType(expr.children[1].type))))
             when IRNode.Kind.UNRESOLVED_INDEX:
                 def args := expr.children[1..]
                 def c := call(expr.children[0], "[]", args)
@@ -1343,8 +1346,9 @@ class Compiler (ErrorReporter) {
                 def methods := Array<MethodRef>(m.payload->ListView<MethodRef>)
                 matchMethods(methods, args, expectedType)
                 if methods.get_count() = 0 {
-                    def name := m.payload->ListView<MethodRef>[0].value.name
-                    def msg := MutableString("no match for call to '\{name}(")
+                    def first := m.payload->ListView<MethodRef>[0].value
+                    def msg := MutableString("no match for call to '\{first.owner.name}." +
+                            "\{first.name}(")
                     var separator := ""
                     for a in args {
                         msg.append(separator)
@@ -2903,11 +2907,13 @@ class Compiler (ErrorReporter) {
         }
         currentClass.push(cl)
         currentFile.push(cl.source)
+        def old := symbolTable
         symbolTable := getSymbolTable(cl)
         for m in cl.methods {
             compile(m)
         }
         codeGenerator.write(cl)
+        symbolTable := old
         currentFile.pop()
         currentClass.pop()
     }

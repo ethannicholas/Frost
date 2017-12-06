@@ -47,7 +47,6 @@ add_executable(bootstrap
     bootstrap/src/Object.c
     bootstrap/src/Panda.c
     bootstrap/src/Range.c
-    bootstrap/src/SpecializedRange.c
     bootstrap/src/String.c
     bootstrap/src/System.c
     bootstrap/src/Value.c
@@ -431,7 +430,7 @@ function(compile_panda_sources_to_c out_var)
         endif()
         add_custom_command(OUTPUT ${output}
             COMMAND ${CMAKE_CURRENT_BINARY_DIR}/pandac -f c -i ${CMAKE_CURRENT_SOURCE_DIR}/src -i ${pandacInc} -i ${parserInc} -i ${buildInc} -o ${output} ${input}
-            DEPENDS ${rawInput}
+            DEPENDS ${rawInput} pandac
             WORKING_DIRECTORY ${working}
         )
         list(APPEND result ${output})

@@ -758,4 +758,12 @@ class String : Immutable (Key<String>) {
         }
         return result
     }
+
+    function [](r:SpecializedRange<Index?>):String {
+        return self[Range<Index?>(r.start, r.end, r.step, r.inclusive)]
+    }
+
+    function [](r:SpecializedRange<Int?>):String {
+        return self[Range<Int?>(r.start, r.end, r.step, r.inclusive)]
+    }
 }

@@ -2008,7 +2008,7 @@ class LLVMCodeGenerator (CodeGenerator) {
         def target := f.children[0]
         assert f.children[1].type.typeKind = Type.Kind.GENERIC
         assert f.children[1].type.subtypes.get_count() = 2
-        assert f.children[1].type.subtypes[0].name = "panda.core.Range"
+        assert f.children[1].type.subtypes[0].name = Compiler.RANGE_NAME
         def range := getTypedReference(f.children[1], out)
         def block := f.children[2]
         def t := f.children[1].type.subtypes[1]
@@ -2030,16 +2030,8 @@ class LLVMCodeGenerator (CodeGenerator) {
         methodHeader.printLine("\{index} = alloca \{indexType}")
 
         -- extract start value from range
-        def startPtr := nextVar()
-        out.printLine("\{startPtr} = extractvalue \{range}, 0")
-        def startPtrCast := nextVar()
-        out.printLine("\{startPtrCast} = bitcast \{type(Type.Object())} \{startPtr} to " +
-                "\{wrapperType(t)}")
-        def startFieldPtr := nextVar()
-        out.printLine("\{startFieldPtr} = getelementptr \{wrapperTypeName(t)}, " +
-                "\{wrapperType(t)} \{startPtrCast}, i64 0, i32 \{OBJECT_FIELD_COUNT}, i32 0")
         def start := nextVar()
-        out.printLine("\{start} = load \{numberType}, \{numberType}* \{startFieldPtr}")
+        out.printLine("\{start} = extractvalue \{range}, 0, 0")
 
         -- store start value
         def indexValuePtr := nextVar()
@@ -2048,16 +2040,8 @@ class LLVMCodeGenerator (CodeGenerator) {
         out.printLine("store \{numberType} \{start}, \{numberType}* \{indexValuePtr}")
 
         -- extract end value from range
-        def endPtr := nextVar()
-        out.printLine("\{endPtr} = extractvalue \{range}, 1")
-        def endPtrCast := nextVar()
-        out.printLine("\{endPtrCast} = bitcast \{type(Type.Object())} \{endPtr} to " +
-                "\{wrapperType(t)}")
-        def endFieldPtr := nextVar()
-        out.printLine("\{endFieldPtr} = getelementptr \{wrapperTypeName(t)}, \{wrapperType(t)} " +
-                "\{endPtrCast}, i64 0, i32 \{OBJECT_FIELD_COUNT}, i32 0")
         def end := nextVar()
-        out.printLine("\{end} = load \{numberType}, \{numberType}* \{endFieldPtr}")
+        out.printLine("\{end} = extractvalue \{range}, 1, 0")
 
         -- extract step value from range
         def rawStep := nextVar()

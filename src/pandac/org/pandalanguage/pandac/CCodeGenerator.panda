@@ -1385,7 +1385,7 @@ class CCodeGenerator (CodeGenerator) {
         def target := f.children[0]
         assert f.children[1].type.typeKind = Type.Kind.GENERIC
         assert f.children[1].type.subtypes.get_count() = 2
-        assert f.children[1].type.subtypes[0].name = "panda.core.Range"
+        assert f.children[1].type.subtypes[0].name = Compiler.RANGE_NAME
         def range := getTypedReference(f.children[1], out)
         def block := f.children[2]
         def t := f.children[1].type.subtypes[1]
