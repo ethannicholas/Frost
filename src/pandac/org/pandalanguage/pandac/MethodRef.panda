@@ -11,8 +11,7 @@ class MethodRef {
         assert value.resolved
         self.value := value
         self.types := types
-        assert value.owner.parameters.get_count() >= types.get_count()
-        for i in 0 .. types.get_count() {
+        for i in 0 .. value.owner.parameters.get_count() {
             typeMap[value.owner.name + "." + value.owner.parameters[i].name] := types[i]
         }
     }

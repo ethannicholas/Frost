@@ -116,6 +116,7 @@ class Compiler (ErrorReporter) {
         addAlias("panda.core.Object")
         addAlias("panda.core.Panda")
         addAlias("panda.core.Range")
+        addAlias("panda.core.SpecializedRange")
         addAlias("panda.core.String")
         addAlias("panda.core.System")
         addAlias("panda.core.UInt8")
@@ -407,16 +408,71 @@ class Compiler (ErrorReporter) {
         return result
     }
 
+    method specialize(cl:ClassDecl, rawType:Type):ClassDecl {
+        def type := resolve(rawType)
+        if type.typeKind = Type.Kind.NULLABLE {
+            return specialize(cl, type.subtypes[0])
+        }
+        if type.typeKind = Type.Kind.CLASS {
+            return cl
+        }
+        assert type.typeKind = Type.Kind.GENERIC
+        def result:ClassDecl? := classes[type.name]
+        if result = null {
+            currentClass.push(cl)
+            def annotations := Annotations(cl.annotations.flags && !!Annotations.Flag.SPECIALIZE)
+            def supertype := remapType(type, cl.rawSuper)
+            def interfaces := Array<Type>()
+            for intf in cl.rawInterfaces { -- FIXME use map
+                interfaces.add(remapType(type, intf))
+            }
+            def aliases := HashMap<String, String>(cl.aliases)
+            for i in 0 .. cl.parameters.get_count() {
+                aliases[cl.parameters[i].name] := type.subtypes[i + 1].name
+            }
+            result := ClassDecl(cl.source, cl.offset, aliases, cl.doccomment, annotations,
+                    cl.classKind, type.name, supertype, interfaces,
+                    Array<ClassDecl.GenericParameter>(), cl.symbolTable.parents[0])
+            for m in cl.methods {
+                resolve(m)
+                def parameters := Array<MethodDecl.Parameter>() -- FIXME use map
+                for p in m.parameters {
+                    parameters.add(MethodDecl.Parameter(p.name, remapType(type, p.type)))
+                }
+                def clone := MethodDecl(result, m.offset, m.doccomment, m.annotations,
+                        m.methodKind, m.name, parameters, m.returnType, m.body)
+                result.methods.add(clone)
+                result.symbolTable.add(clone)
+            }
+            for f in cl.fields {
+                resolve(f)
+                def clone := FieldDecl(result, f.offset, f.doccomment, f.annotations, f.fieldKind,
+                        f.name, remapType(type, f.type), f.rawValue)
+                result.fields.add(clone)
+                result.symbolTable.add(clone)
+            }
+            classes[result.name] := result
+            compile(result)
+            currentClass.pop()
+        }
+        return result
+    }
+
     method getClass(type:Type):ClassDecl? {
         assert type.resolved, "unresolved type \{type}"
+        var result:ClassDecl
         match type.typeKind {
             when Type.Kind.CLASS:
-                return getClass(type.offset, type.name)
+                result := getClass(type.offset, type.name)
             when Type.Kind.NULLABLE, Type.Kind.GENERIC, Type.Kind.GENERIC_PARAMETER:
-                return getClass(type.subtypes[0])
+                result := getClass(type.subtypes[0])
             otherwise:
                 assert false, "unsupported type \{type}"
         }
+        if result.annotations.isSpecialize() {
+            result := specialize(result, type)
+        }
+        return result
     }
 
     method allInterfaces(t:Type):Set<Type> {
@@ -910,8 +966,8 @@ class Compiler (ErrorReporter) {
         if expr = null {
             return null
         }
-        assert expr.type.resolved
-        assert target.resolved
+        assert expr.type.resolved, "unresolved type '\{expr.type}'"
+        assert target.resolved, "unresolved type '\{target}'"
         if expr.type = target {
             return expr
         }
@@ -1043,7 +1099,6 @@ class Compiler (ErrorReporter) {
             }
         }
         if coercionCost(expr, target) != null {
-            assert target.isClass(), "coercing \{expr}:\{expr.type}->\{target} at \{position(expr.offset)}"
             def cl := getClass(target)
             if cl != null {
                 for m in cl.methods {
@@ -1068,6 +1123,7 @@ class Compiler (ErrorReporter) {
             return IRNode(IRNode.Kind.CAST, expr.offset, target, false, children)
         }
         error(expr.offset, "expected '\{target}', but found '\{expr.type}'")
+        assert false
         return null
     }
 
@@ -2841,6 +2897,10 @@ class Compiler (ErrorReporter) {
 
     method compile(cl:ClassDecl) {
         markNonExternal(cl)
+        if cl.annotations.isSpecialize() {
+            codeGenerator.write(cl)
+            return
+        }
         currentClass.push(cl)
         currentFile.push(cl.source)
         symbolTable := getSymbolTable(cl)

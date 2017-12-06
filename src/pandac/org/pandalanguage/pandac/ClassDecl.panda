@@ -101,6 +101,10 @@ class ClassDecl : Symbol {
         return Type(name.convert(), Type.Kind.GENERIC, -1, subtypes, true)
     }
 
+    function isSpecialization():Bit {
+        return name.contains("<")
+    }
+
     @override
     function convert():String {
         def result := MutableString("class \{name}")

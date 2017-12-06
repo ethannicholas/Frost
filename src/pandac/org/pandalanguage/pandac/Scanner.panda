@@ -50,16 +50,17 @@ class Scanner {
         for c in a.children {
             assert c.kind = ASTNode.Kind.ANNOTATION
             match c.payload->String {
-                when "@private":   flags ||= Annotations.Flag.PRIVATE
-                when "@protected": flags ||= Annotations.Flag.PROTECTED
-                when "@package":   flags ||= Annotations.Flag.PACKAGE
-                when "@class":     flags ||= Annotations.Flag.CLASS
-                when "@override":  flags ||= Annotations.Flag.OVERRIDE
-                when "@external":  flags ||= Annotations.Flag.EXTERNAL
-                when "@$implicit": flags ||= Annotations.Flag.IMPLICIT
-                when "@final":     flags ||= Annotations.Flag.FINAL
-                when "@abstract":  flags ||= Annotations.Flag.ABSTRACT
-                when "@inline":    flags ||= Annotations.Flag.INLINE
+                when "@private":    flags ||= Annotations.Flag.PRIVATE
+                when "@protected":  flags ||= Annotations.Flag.PROTECTED
+                when "@package":    flags ||= Annotations.Flag.PACKAGE
+                when "@class":      flags ||= Annotations.Flag.CLASS
+                when "@override":   flags ||= Annotations.Flag.OVERRIDE
+                when "@external":   flags ||= Annotations.Flag.EXTERNAL
+                when "@$implicit":  flags ||= Annotations.Flag.IMPLICIT
+                when "@final":      flags ||= Annotations.Flag.FINAL
+                when "@abstract":   flags ||= Annotations.Flag.ABSTRACT
+                when "@inline":     flags ||= Annotations.Flag.INLINE
+                when "@specialize": flags ||= Annotations.Flag.SPECIALIZE
                 otherwise:
                     compiler.error(c.offset, "unrecognized annotation '\{c.payload}'")
             }

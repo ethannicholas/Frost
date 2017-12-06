@@ -1,0 +1,46 @@
+package panda.core
+
+@specialize
+class SpecializedRange<T> : Value {
+    def start:T
+
+    def end:T
+
+    def step:Int
+
+    def inclusive:Bit
+
+    init(start:T, end:T, step:Int?, inclusive:Bit) {
+        self.start := start
+        self.end := end
+        if step != null {
+            self.step := step
+        }
+        else {
+            self.step := 1
+        }
+        self.inclusive := inclusive
+    }
+
+    @override
+    function convert():String {
+        def result := MutableString()
+        if start != null {
+            result.append(start)
+        }
+        if inclusive {
+            result.append("...")
+        }
+        else {
+            result.append("..")
+        }
+        if end != null {
+            result.append(end)
+        }
+        if step != 1 {
+            result.append(" by ")
+            result.append(step)
+        }
+        return result.convert()
+    }
+}

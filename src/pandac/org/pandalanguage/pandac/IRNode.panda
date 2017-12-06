@@ -169,6 +169,8 @@ class IRNode {
                 return payload.convert()
             when Kind.CONSTRUCT:
                 return "\{type}(\{children[0].children.join(", ")})"
+            when Kind.CONSTRUCTED_OBJECT:
+                return "-* constructed object: \{type} *-"
             when Kind.CALL:
                 return "\{(payload->MethodRef).value.name}(\{children.join(", ")})" -- FIXME parens
             when Kind.CAST:

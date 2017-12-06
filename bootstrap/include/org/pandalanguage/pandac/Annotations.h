@@ -14,7 +14,7 @@ typedef struct org$pandalanguage$pandac$Annotations {
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"
 #undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[12]; } org$pandalanguage$pandac$Annotations$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[13]; } org$pandalanguage$pandac$Annotations$class_type;
 extern org$pandalanguage$pandac$Annotations$class_type org$pandalanguage$pandac$Annotations$class;
 typedef struct org$pandalanguage$pandac$Annotations$Flag {
     panda$core$Class* $class;
@@ -44,6 +44,7 @@ panda$core$Bit org$pandalanguage$pandac$Annotations$isImplicit$R$panda$core$Bit(
 panda$core$Bit org$pandalanguage$pandac$Annotations$isFinal$R$panda$core$Bit(org$pandalanguage$pandac$Annotations* self);
 panda$core$Bit org$pandalanguage$pandac$Annotations$isAbstract$R$panda$core$Bit(org$pandalanguage$pandac$Annotations* self);
 panda$core$Bit org$pandalanguage$pandac$Annotations$isInline$R$panda$core$Bit(org$pandalanguage$pandac$Annotations* self);
+panda$core$Bit org$pandalanguage$pandac$Annotations$isSpecialize$R$panda$core$Bit(org$pandalanguage$pandac$Annotations* self);
 void org$pandalanguage$pandac$Annotations$Flag$init(org$pandalanguage$pandac$Annotations$Flag* self);
 
 #endif

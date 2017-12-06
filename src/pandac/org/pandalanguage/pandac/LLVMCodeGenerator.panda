@@ -304,8 +304,9 @@ class LLVMCodeGenerator (CodeGenerator) {
             return
         }
         writtenTypes.add(t.name)
-        def code := MutableString("%\{escapeName(t.name)} = type { ")
         def cl := compiler.getClass(t)
+        assert !cl.annotations.isSpecialize()
+        def code := MutableString("%\{escapeName(t.name)} = type { ")
         compiler.currentClass.push(cl)
         assert cl != null
         var separator := ""
@@ -376,6 +377,16 @@ class LLVMCodeGenerator (CodeGenerator) {
             when Type.Kind.GENERIC:
                 if t.subtypes[0].name = "panda.unsafe.Pointer" {
                     return type(t.subtypes[1]) + "*"
+                }
+                def cl := compiler.getClass(t)
+                if cl.isSpecialization() {
+                    def name := "%\{escapeName(t.name)}"
+                    def cl := compiler.getClass(t)
+                    assert cl != null
+                    if !compiler.isValue(cl) {
+                        return name + "*"
+                    }
+                    return name
                 }
                 return type(t.subtypes[0])
             when Type.Kind.GENERIC_PARAMETER:
@@ -678,6 +689,7 @@ class LLVMCodeGenerator (CodeGenerator) {
     }
 
     method getClassConstant(cl:ClassDecl):ClassConstant {
+        assert !cl.annotations.isSpecialize()
         var result := classConstants[cl.name]
         if result = null {
             compiler.resolve(cl)
@@ -1619,7 +1631,7 @@ class LLVMCodeGenerator (CodeGenerator) {
         out.printLine("\{result} = bitcast i8* \{callRef} to \{type(construct.type)}")
         def classPtr := nextVar()
         def className:String
-        if construct.type.typeKind = Type.Kind.GENERIC {
+        if construct.type.typeKind = Type.Kind.GENERIC & !cl.isSpecialization() {
             className := typeName(construct.type.subtypes[0])
         }
         else {
@@ -2585,6 +2597,9 @@ class LLVMCodeGenerator (CodeGenerator) {
 
     @override
     method write(cl:ClassDecl) {
+        if cl.annotations.isSpecialize() {
+            return
+        }
         writeType(cl.type())
         getClassConstant(cl)
     }

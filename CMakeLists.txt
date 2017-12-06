@@ -47,6 +47,7 @@ add_executable(bootstrap
     bootstrap/src/Object.c
     bootstrap/src/Panda.c
     bootstrap/src/Range.c
+    bootstrap/src/SpecializedRange.c
     bootstrap/src/String.c
     bootstrap/src/System.c
     bootstrap/src/Value.c
@@ -147,6 +148,7 @@ set(core_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Object.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Panda.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Range.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/SpecializedRange.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/String.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/System.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Value.panda
