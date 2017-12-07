@@ -1,13 +1,38 @@
 package org.pandalanguage.pandac
 
+====================================================================================================
+A compiler backend, responsible for producing the compiler's output code.
+====================================================================================================
 interface CodeGenerator {
+    ================================================================================================
+    Called by the compiler prior to writing anything.
+    ================================================================================================
     method setCompiler(compiler:Compiler)
 
-    method write(cl:ClassDecl)
+    ================================================================================================
+    Begin writing a class. This will be called prior to writing any of the class' methods. The
+    compiler will not call `start()` again without first calling `end()`.
+    ================================================================================================
+    method start(cl:ClassDecl)
 
+    ================================================================================================
+    Writes the declaration (i.e. no method body) of a method.
+    ================================================================================================
     method writeDeclaration(m:MethodDecl)
 
+    ================================================================================================
+    Writes a method with a compiled body,
+    ================================================================================================
     method write(m:MethodDecl, body:IRNode)
 
+    ================================================================================================
+    Informs the code generator that this class is complete and no more methods will be written.
+    ================================================================================================
+    method end(cl:ClassDecl)
+
+    ================================================================================================
+    Informs the code generator that the entire compilation is complete and nothing more will be
+    written.
+    ================================================================================================
     method finish()
 }

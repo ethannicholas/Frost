@@ -7,8 +7,6 @@ typedef struct panda$core$Class panda$core$Class;
 #include "panda/core/Char8.h"
 #include "panda/core/Int64.h"
 #include "panda/core/Bit.h"
-#include "panda/core/String.h"
-typedef struct panda$core$String panda$core$String;
 
 typedef struct panda$core$String {
     panda$core$Class* $class;
@@ -20,71 +18,8 @@ typedef struct panda$core$String {
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"
 #undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[35]; } panda$core$String$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[37]; } panda$core$String$class_type;
 extern panda$core$String$class_type panda$core$String$class;
-typedef struct panda$core$String$Index {
-    panda$core$Int64 value;
-} panda$core$String$Index;
-#define PANDA_TYPESONLY
-#include "panda/core/Class.h"
-#undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[5]; } panda$core$String$Index$class_type;
-extern panda$core$String$Index$class_type panda$core$String$Index$class;
-typedef struct panda$core$String$Index$wrapper {
-    panda$core$Class* cl;
-    int32_t refCount;
-    panda$core$String$Index value;
-} panda$core$String$Index$wrapper;
-typedef struct panda$core$String$Index$nullable {
-    panda$core$String$Index value;
-    bool nonnull;
-} panda$core$String$Index$nullable;
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[2]; } panda$core$String$Index$wrapperclass_type;
-extern panda$core$String$Index$wrapperclass_type panda$core$String$Index$wrapperclass;
-panda$core$String$Index$wrapper* wrap_panda$core$String$Index(panda$core$String$Index self);
-typedef struct panda$core$String$UTF8List {
-    panda$core$Class* $class;
-    panda$core$Int32 refCount;
-    panda$core$String* str;
-} panda$core$String$UTF8List;
-#define PANDA_TYPESONLY
-#include "panda/core/Class.h"
-#undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[5]; } panda$core$String$UTF8List$class_type;
-extern panda$core$String$UTF8List$class_type panda$core$String$UTF8List$class;
-typedef struct panda$core$String$UTF8Iterator {
-    panda$core$Class* $class;
-    panda$core$Int32 refCount;
-    panda$core$Int64 index;
-    panda$core$String* str;
-} panda$core$String$UTF8Iterator;
-#define PANDA_TYPESONLY
-#include "panda/core/Class.h"
-#undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[4]; } panda$core$String$UTF8Iterator$class_type;
-extern panda$core$String$UTF8Iterator$class_type panda$core$String$UTF8Iterator$class;
-typedef struct panda$core$String$UTF16Iterator {
-    panda$core$Class* $class;
-    panda$core$Int32 refCount;
-    panda$core$Int64 index;
-    panda$core$String* str;
-} panda$core$String$UTF16Iterator;
-#define PANDA_TYPESONLY
-#include "panda/core/Class.h"
-#undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[4]; } panda$core$String$UTF16Iterator$class_type;
-extern panda$core$String$UTF16Iterator$class_type panda$core$String$UTF16Iterator$class;
-typedef struct panda$core$String$UTF32Iterator {
-    panda$core$Class* $class;
-    panda$core$Int32 refCount;
-    panda$core$Int64 index;
-    panda$core$String* str;
-} panda$core$String$UTF32Iterator;
-#define PANDA_TYPESONLY
-#include "panda/core/Class.h"
-#undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[4]; } panda$core$String$UTF32Iterator$class_type;
-extern panda$core$String$UTF32Iterator$class_type panda$core$String$UTF32Iterator$class;
 
 #ifndef PANDA_TYPESONLY
 typedef struct panda$core$String panda$core$String;
@@ -95,15 +30,12 @@ typedef struct panda$collections$ListView panda$collections$ListView;
 typedef struct panda$collections$Iterator panda$collections$Iterator;
 typedef struct panda$core$Object panda$core$Object;
 #include "panda/core/Char32.h"
-#include "panda/core/String.h"
+#include "panda/core/String/Index.h"
 #include "panda/core/Range.h"
 typedef struct panda$collections$Array panda$collections$Array;
 #include "panda/core/UInt64.h"
-typedef struct panda$core$String$UTF8List panda$core$String$UTF8List;
-typedef struct panda$core$String$UTF8Iterator panda$core$String$UTF8Iterator;
-typedef struct panda$core$String$UTF16Iterator panda$core$String$UTF16Iterator;
-#include "panda/core/Char16.h"
-typedef struct panda$core$String$UTF32Iterator panda$core$String$UTF32Iterator;
+#include "panda/core/SpecializedRange.LTpanda/core/String/Index.Q.GT.h"
+#include "panda/core/SpecializedRange.LTpanda/core/Int64.Q.GT.h"
 
 void panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64$panda$core$Bit(panda$core$String* self, panda$core$Char8* p_data, panda$core$Int64 p_length, panda$core$Bit p_owned);
 void panda$core$String$init$panda$collections$ListView$LTpanda$core$Char8$GT(panda$core$String* self, panda$collections$ListView* p_chars);
@@ -143,22 +75,7 @@ panda$collections$Array* panda$core$String$split$panda$core$String$panda$core$In
 panda$core$Int64$nullable panda$core$String$convert$R$panda$core$Int64$Q(panda$core$String* self);
 panda$core$UInt64$nullable panda$core$String$convert$R$panda$core$UInt64$Q(panda$core$String* self);
 panda$core$Int64 panda$core$String$hash$R$panda$core$Int64(panda$core$String* self);
-void panda$core$String$Index$init$panda$core$Int64(panda$core$String$Index* self, panda$core$Int64 p_value);
-panda$core$Bit panda$core$String$Index$$EQ$panda$core$String$Index$R$panda$core$Bit(panda$core$String$Index self, panda$core$String$Index p_other);
-panda$core$Bit panda$core$String$Index$$NEQ$panda$core$String$Index$R$panda$core$Bit(panda$core$String$Index self, panda$core$String$Index p_other);
-panda$core$Int64 panda$core$String$Index$hash$R$panda$core$Int64(panda$core$String$Index self);
-void panda$core$String$UTF8List$init$panda$core$String(panda$core$String$UTF8List* self, panda$core$String* p_str);
-panda$core$Char8 panda$core$String$UTF8List$$IDX$panda$core$Int64$R$panda$core$Char8(panda$core$String$UTF8List* self, panda$core$Int64 p_index);
-panda$core$Int64 panda$core$String$UTF8List$get_count$R$panda$core$Int64(panda$core$String$UTF8List* self);
-panda$collections$Iterator* panda$core$String$UTF8List$iterator$R$panda$collections$Iterator$LTpanda$core$Char8$GT(panda$core$String$UTF8List* self);
-void panda$core$String$UTF8Iterator$init$panda$core$String(panda$core$String$UTF8Iterator* self, panda$core$String* p_str);
-panda$core$Bit panda$core$String$UTF8Iterator$get_done$R$panda$core$Bit(panda$core$String$UTF8Iterator* self);
-panda$core$Char8 panda$core$String$UTF8Iterator$next$R$panda$core$Char8(panda$core$String$UTF8Iterator* self);
-void panda$core$String$UTF16Iterator$init$panda$core$String(panda$core$String$UTF16Iterator* self, panda$core$String* p_str);
-panda$core$Bit panda$core$String$UTF16Iterator$get_done$R$panda$core$Bit(panda$core$String$UTF16Iterator* self);
-panda$core$Char16 panda$core$String$UTF16Iterator$next$R$panda$core$Char16(panda$core$String$UTF16Iterator* self);
-void panda$core$String$UTF32Iterator$init$panda$core$String(panda$core$String$UTF32Iterator* self, panda$core$String* p_str);
-panda$core$Bit panda$core$String$UTF32Iterator$get_done$R$panda$core$Bit(panda$core$String$UTF32Iterator* self);
-panda$core$Char32 panda$core$String$UTF32Iterator$next$R$panda$core$Char32(panda$core$String$UTF32Iterator* self);
+panda$core$String* panda$core$String$$IDX$panda$core$SpecializedRange$LTpanda$core$String$Index$Q$GT$R$panda$core$String(panda$core$String* self, panda$core$SpecializedRange$LTpanda$core$String$Index$Q$GT p_r);
+panda$core$String* panda$core$String$$IDX$panda$core$SpecializedRange$LTpanda$core$Int64$Q$GT$R$panda$core$String(panda$core$String* self, panda$core$SpecializedRange$LTpanda$core$Int64$Q$GT p_r);
 
 #endif

@@ -23,15 +23,6 @@ typedef struct org$pandalanguage$pandac$IRNode {
 #undef PANDA_TYPESONLY
 typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[2]; } org$pandalanguage$pandac$IRNode$class_type;
 extern org$pandalanguage$pandac$IRNode$class_type org$pandalanguage$pandac$IRNode$class;
-typedef struct org$pandalanguage$pandac$IRNode$Kind {
-    panda$core$Class* $class;
-    panda$core$Int32 refCount;
-} org$pandalanguage$pandac$IRNode$Kind;
-#define PANDA_TYPESONLY
-#include "panda/core/Class.h"
-#undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[2]; } org$pandalanguage$pandac$IRNode$Kind$class_type;
-extern org$pandalanguage$pandac$IRNode$Kind$class_type org$pandalanguage$pandac$IRNode$Kind$class;
 
 #ifndef PANDA_TYPESONLY
 typedef struct org$pandalanguage$pandac$IRNode org$pandalanguage$pandac$IRNode;
@@ -43,7 +34,6 @@ typedef struct panda$collections$ListView panda$collections$ListView;
 typedef struct panda$core$Object panda$core$Object;
 typedef struct org$pandalanguage$pandac$Type org$pandalanguage$pandac$Type;
 typedef struct org$pandalanguage$pandac$Variable org$pandalanguage$pandac$Variable;
-typedef struct org$pandalanguage$pandac$IRNode$Kind org$pandalanguage$pandac$IRNode$Kind;
 
 void org$pandalanguage$pandac$IRNode$init$panda$core$Int64$panda$core$Int64(org$pandalanguage$pandac$IRNode* self, panda$core$Int64 p_kind, panda$core$Int64 p_offset);
 void org$pandalanguage$pandac$IRNode$init$panda$core$Int64$panda$core$Int64$panda$core$UInt64(org$pandalanguage$pandac$IRNode* self, panda$core$Int64 p_kind, panda$core$Int64 p_offset, panda$core$UInt64 p_payload);
@@ -60,6 +50,5 @@ void org$pandalanguage$pandac$IRNode$init$panda$core$Int64$panda$core$Int64$org$
 void org$pandalanguage$pandac$IRNode$init$panda$core$Int64$panda$core$Int64$org$pandalanguage$pandac$Type$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT(org$pandalanguage$pandac$IRNode* self, panda$core$Int64 p_kind, panda$core$Int64 p_offset, org$pandalanguage$pandac$Type* p_type, panda$collections$ListView* p_children);
 void org$pandalanguage$pandac$IRNode$init$panda$core$Int64$panda$core$Int64$org$pandalanguage$pandac$Type$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT(org$pandalanguage$pandac$IRNode* self, panda$core$Int64 p_kind, panda$core$Int64 p_offset, org$pandalanguage$pandac$Type* p_type, panda$core$Object* p_payload, panda$collections$ListView* p_children);
 panda$core$String* org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(org$pandalanguage$pandac$IRNode* self);
-void org$pandalanguage$pandac$IRNode$Kind$init(org$pandalanguage$pandac$IRNode$Kind* self);
 
 #endif

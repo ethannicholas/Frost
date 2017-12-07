@@ -33,6 +33,10 @@ class Compiler (ErrorReporter) {
 
     def root:SymbolTable
 
+    var compiling:ClassDecl? := null
+
+    var compilationQueue := Array<ClassDecl>()
+
     @private
     def scans := HashMap<File, ListView<ClassDecl>>()
 
@@ -436,6 +440,7 @@ class Compiler (ErrorReporter) {
             result := ClassDecl(cl.source, cl.offset, aliases, cl.doccomment, annotations,
                     cl.classKind, type.name, supertype, interfaces,
                     Array<ClassDecl.GenericParameter>(), cl.symbolTable.parents[0])
+            result.external := false
             for m in cl.methods {
                 resolve(m)
                 def parameters := Array<MethodDecl.Parameter>() -- FIXME use map
@@ -455,7 +460,7 @@ class Compiler (ErrorReporter) {
                 result.symbolTable.add(clone)
             }
             classes[result.name] := result
-            compile(result)
+            compilationQueue.add(result)
             currentClass.pop()
         }
         return result
@@ -2900,22 +2905,35 @@ class Compiler (ErrorReporter) {
     }
 
     method compile(cl:ClassDecl) {
+        assert compiling = null,
+                "starting compilation of \{cl.name} while already compiling \{compiling.name}"
+        compiling := cl
         markNonExternal(cl)
         if cl.annotations.isSpecialize() {
-            codeGenerator.write(cl)
+            codeGenerator.start(cl)
+            codeGenerator.end(cl)
             return
         }
         currentClass.push(cl)
         currentFile.push(cl.source)
         def old := symbolTable
         symbolTable := getSymbolTable(cl)
+        codeGenerator.start(cl)
         for m in cl.methods {
             compile(m)
         }
-        codeGenerator.write(cl)
+        codeGenerator.end(cl)
         symbolTable := old
         currentFile.pop()
         currentClass.pop()
+        compiling := null
+
+        if compilationQueue.get_count() > 0 {
+            def next := compilationQueue[0]
+            compilationQueue.removeIndex(0)
+            compile(next)
+        }
+        assert compilationQueue.get_count() = 0
     }
 
     method scan(file:File):ListView<ClassDecl> {
@@ -2975,5 +2993,9 @@ class Compiler (ErrorReporter) {
             errorCount += 1
             Console.printLine("\{pos}: error: \{msg}")
         }
+    }
+
+    method finish() {
+        codeGenerator.finish()
     }
 }

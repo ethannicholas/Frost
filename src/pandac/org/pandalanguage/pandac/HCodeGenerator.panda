@@ -24,15 +24,17 @@ class HCodeGenerator (CodeGenerator) {
 
     def importStream := typeImportStream
 
-    def out:IndentedOutputStream
+    def outDir:File
+
+    var out:IndentedOutputStream
 
     def llvmCodeGen := LLVMCodeGenerator(MemoryOutputStream())
 
-    init(out:OutputStream) {
-        self.out := IndentedOutputStream(out)
-        out.printLine("#pragma once")
-        out.printLine("#include \"panda_c.h\"")
-        out.printLine("#define PANDA_TYPESONLY")
+    var inClass := false
+
+    init(outDir:File) {
+        self.outDir := outDir
+        self.out := IndentedOutputStream(MemoryOutputStream())
     }
 
     function escapeName(s:String):String {
@@ -49,20 +51,9 @@ class HCodeGenerator (CodeGenerator) {
         return llvmCodeGen.sizeOf(t)
     }
 
-    function getIncludePath(cl:ClassDecl):String {
-        var path := cl.source.path
-        def longestFound:String? := null
-        for imp in compiler.settings.importDirs {
-            if path.startsWith(imp.path + "/") {
-                if longestFound = null | imp.path.length() > longestFound.length() {
-                    longestFound := imp.path
-                }
-            }
-        }
-        if longestFound != null {
-            path := path[longestFound.length() + 1..]
-        }
-        return path.replace(".panda", ".h")
+    function getRelativePath(cl:ClassDecl, extension:String):String {
+        return cl.name.replace(".", "/").replace("<", ".LT").replace(">", ".GT")
+                .replace("?", ".Q") + extension
     }
 
     method type(t:Type):String {
@@ -84,7 +75,7 @@ class HCodeGenerator (CodeGenerator) {
                     }
                     return name + "*"
                 }
-                def includePath := getIncludePath(cl)
+                def includePath := getRelativePath(cl, ".h")
                 if !imports.contains(includePath) {
                     importStream.printLine("#include \"\{includePath}\"")
                     imports.add(includePath)
@@ -101,6 +92,25 @@ class HCodeGenerator (CodeGenerator) {
                 if t.subtypes[0].name = "panda.unsafe.Pointer" {
                     return type(t.subtypes[1]) + "*"
                 }
+                def cl := compiler.getClass(t)
+                if cl.isSpecialization() {
+                    def name := "\{escapeName(t.name)}"
+                    def cl := compiler.getClass(t)
+                    assert cl != null
+                    if !compiler.isValue(cl) {
+                        if !imports.contains(name) {
+                            importStream.printLine("typedef struct \{name} \{name};")
+                            imports.add(name)
+                        }
+                        return name + "*"
+                    }
+                    def includePath := getRelativePath(cl, ".h")
+                    if !imports.contains(includePath) {
+                        importStream.printLine("#include \"\{includePath}\"")
+                        imports.add(includePath)
+                    }
+                    return name
+                }
                 return type(t.subtypes[0])
             when Type.Kind.GENERIC_PARAMETER:
                 return type(t.subtypes[0])
@@ -115,8 +125,28 @@ class HCodeGenerator (CodeGenerator) {
         llvmCodeGen.setCompiler(compiler)
     }
 
+    function getPath(cl:ClassDecl, extension:String):File {
+        return outDir.resolve(getRelativePath(cl, extension))
+    }
+
     @override
-    method write(cl:ClassDecl) {
+    method start(cl:ClassDecl) {
+        if inClass {
+            finish()
+        }
+        typeImportStream.clear()
+        typesBuffer.clear()
+        bodyImportStream.clear()
+        bodyBuffer.clear()
+        typeImports.clear()
+        bodyImports.clear()
+        inClass := true
+        def path := getPath(cl, ".h")
+        path.parent().createDirectories()
+        self.out := IndentedOutputStream(path.openOutputStream())
+        out.printLine("#pragma once")
+        out.printLine("#include \"panda_c.h\"")
+        out.printLine("#define PANDA_TYPESONLY")
         importStream := typeImportStream
         imports := typeImports
         types.printLine("typedef struct \{escapeName(cl.name)} {")
@@ -174,7 +204,6 @@ class HCodeGenerator (CodeGenerator) {
         }
         return result
     }
-
 
     ================================================================================================
     Returns true if this is an external method returning a struct.
@@ -236,7 +265,7 @@ class HCodeGenerator (CodeGenerator) {
     }
 
     @override
-    method finish() {
+    method end(cl:ClassDecl) {
         out.printLine("#undef PANDA_TYPESONLY")
         out.printLine(typeImportStream)
         out.printLine(typesBuffer)
@@ -244,5 +273,9 @@ class HCodeGenerator (CodeGenerator) {
         out.printLine(bodyImportStream)
         out.printLine(bodyBuffer)
         out.printLine("#endif")
+    }
+
+    @override
+    method finish() {
     }
 }

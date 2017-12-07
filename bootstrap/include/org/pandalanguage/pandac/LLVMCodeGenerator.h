@@ -14,9 +14,6 @@ typedef struct panda$core$String panda$core$String;
 typedef struct org$pandalanguage$pandac$MethodDecl org$pandalanguage$pandac$MethodDecl;
 typedef struct panda$collections$Stack panda$collections$Stack;
 #include "panda/core/Int64.h"
-typedef struct panda$collections$ImmutableArray panda$collections$ImmutableArray;
-typedef struct panda$collections$Array panda$collections$Array;
-typedef struct panda$core$Object panda$core$Object;
 
 typedef struct org$pandalanguage$pandac$LLVMCodeGenerator {
     panda$core$Class* $class;
@@ -52,76 +49,8 @@ typedef struct org$pandalanguage$pandac$LLVMCodeGenerator {
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"
 #undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[90]; } org$pandalanguage$pandac$LLVMCodeGenerator$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[91]; } org$pandalanguage$pandac$LLVMCodeGenerator$class_type;
 extern org$pandalanguage$pandac$LLVMCodeGenerator$class_type org$pandalanguage$pandac$LLVMCodeGenerator$class;
-typedef struct org$pandalanguage$pandac$LLVMCodeGenerator$ClassConstant {
-    panda$core$Class* $class;
-    panda$core$Int32 refCount;
-    panda$core$String* name;
-    panda$core$String* type;
-} org$pandalanguage$pandac$LLVMCodeGenerator$ClassConstant;
-#define PANDA_TYPESONLY
-#include "panda/core/Class.h"
-#undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[2]; } org$pandalanguage$pandac$LLVMCodeGenerator$ClassConstant$class_type;
-extern org$pandalanguage$pandac$LLVMCodeGenerator$ClassConstant$class_type org$pandalanguage$pandac$LLVMCodeGenerator$ClassConstant$class;
-typedef struct org$pandalanguage$pandac$LLVMCodeGenerator$MethodShim {
-    panda$core$Class* $class;
-    panda$core$Int32 refCount;
-    panda$core$String* name;
-    panda$core$String* type;
-} org$pandalanguage$pandac$LLVMCodeGenerator$MethodShim;
-#define PANDA_TYPESONLY
-#include "panda/core/Class.h"
-#undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[2]; } org$pandalanguage$pandac$LLVMCodeGenerator$MethodShim$class_type;
-extern org$pandalanguage$pandac$LLVMCodeGenerator$MethodShim$class_type org$pandalanguage$pandac$LLVMCodeGenerator$MethodShim$class;
-typedef struct org$pandalanguage$pandac$LLVMCodeGenerator$LoopDescriptor {
-    panda$core$Class* $class;
-    panda$core$Int32 refCount;
-    panda$core$String* loopLabel;
-    panda$core$String* breakLabel;
-    panda$core$String* continueLabel;
-} org$pandalanguage$pandac$LLVMCodeGenerator$LoopDescriptor;
-#define PANDA_TYPESONLY
-#include "panda/core/Class.h"
-#undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[2]; } org$pandalanguage$pandac$LLVMCodeGenerator$LoopDescriptor$class_type;
-extern org$pandalanguage$pandac$LLVMCodeGenerator$LoopDescriptor$class_type org$pandalanguage$pandac$LLVMCodeGenerator$LoopDescriptor$class;
-typedef struct org$pandalanguage$pandac$LLVMCodeGenerator$InlineContext {
-    panda$core$Class* $class;
-    panda$core$Int32 refCount;
-    panda$core$String* varSuffix;
-    panda$core$String* selfRef;
-    panda$collections$ImmutableArray* argRefs;
-    panda$collections$Array* returns;
-    panda$core$String* exitLabel;
-} org$pandalanguage$pandac$LLVMCodeGenerator$InlineContext;
-#define PANDA_TYPESONLY
-#include "panda/core/Class.h"
-#undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[2]; } org$pandalanguage$pandac$LLVMCodeGenerator$InlineContext$class_type;
-extern org$pandalanguage$pandac$LLVMCodeGenerator$InlineContext$class_type org$pandalanguage$pandac$LLVMCodeGenerator$InlineContext$class;
-typedef struct org$pandalanguage$pandac$LLVMCodeGenerator$Pair {
-    panda$core$Class* $class;
-    panda$core$Int32 refCount;
-    panda$core$Object* first;
-    panda$core$Object* second;
-} org$pandalanguage$pandac$LLVMCodeGenerator$Pair;
-#define PANDA_TYPESONLY
-#include "panda/core/Class.h"
-#undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[2]; } org$pandalanguage$pandac$LLVMCodeGenerator$Pair$class_type;
-extern org$pandalanguage$pandac$LLVMCodeGenerator$Pair$class_type org$pandalanguage$pandac$LLVMCodeGenerator$Pair$class;
-typedef struct org$pandalanguage$pandac$LLVMCodeGenerator$OpClass {
-    panda$core$Class* $class;
-    panda$core$Int32 refCount;
-} org$pandalanguage$pandac$LLVMCodeGenerator$OpClass;
-#define PANDA_TYPESONLY
-#include "panda/core/Class.h"
-#undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[2]; } org$pandalanguage$pandac$LLVMCodeGenerator$OpClass$class_type;
-extern org$pandalanguage$pandac$LLVMCodeGenerator$OpClass$class_type org$pandalanguage$pandac$LLVMCodeGenerator$OpClass$class;
 
 #ifndef PANDA_TYPESONLY
 typedef struct org$pandalanguage$pandac$LLVMCodeGenerator org$pandalanguage$pandac$LLVMCodeGenerator;
@@ -141,10 +70,6 @@ typedef struct org$pandalanguage$pandac$LLVMCodeGenerator$ClassConstant org$pand
 typedef struct org$pandalanguage$pandac$Variable org$pandalanguage$pandac$Variable;
 typedef struct org$pandalanguage$pandac$FieldDecl org$pandalanguage$pandac$FieldDecl;
 typedef struct org$pandalanguage$pandac$LLVMCodeGenerator$LoopDescriptor org$pandalanguage$pandac$LLVMCodeGenerator$LoopDescriptor;
-typedef struct org$pandalanguage$pandac$LLVMCodeGenerator$InlineContext org$pandalanguage$pandac$LLVMCodeGenerator$InlineContext;
-typedef struct panda$collections$ListView panda$collections$ListView;
-typedef struct panda$core$Object panda$core$Object;
-typedef struct org$pandalanguage$pandac$LLVMCodeGenerator$OpClass org$pandalanguage$pandac$LLVMCodeGenerator$OpClass;
 
 void org$pandalanguage$pandac$LLVMCodeGenerator$init$panda$io$OutputStream(org$pandalanguage$pandac$LLVMCodeGenerator* self, panda$io$OutputStream* p_out);
 void org$pandalanguage$pandac$LLVMCodeGenerator$setCompiler$org$pandalanguage$pandac$Compiler(org$pandalanguage$pandac$LLVMCodeGenerator* self, org$pandalanguage$pandac$Compiler* p_compiler);
@@ -234,13 +159,7 @@ void org$pandalanguage$pandac$LLVMCodeGenerator$writeStatement$org$pandalanguage
 panda$core$String* org$pandalanguage$pandac$LLVMCodeGenerator$selfType$org$pandalanguage$pandac$MethodDecl$R$panda$core$String(org$pandalanguage$pandac$LLVMCodeGenerator* self, org$pandalanguage$pandac$MethodDecl* p_m);
 void org$pandalanguage$pandac$LLVMCodeGenerator$writeDeclaration$org$pandalanguage$pandac$MethodDecl(org$pandalanguage$pandac$LLVMCodeGenerator* self, org$pandalanguage$pandac$MethodDecl* p_m);
 void org$pandalanguage$pandac$LLVMCodeGenerator$write$org$pandalanguage$pandac$MethodDecl$org$pandalanguage$pandac$IRNode(org$pandalanguage$pandac$LLVMCodeGenerator* self, org$pandalanguage$pandac$MethodDecl* p_m, org$pandalanguage$pandac$IRNode* p_body);
-void org$pandalanguage$pandac$LLVMCodeGenerator$write$org$pandalanguage$pandac$ClassDecl(org$pandalanguage$pandac$LLVMCodeGenerator* self, org$pandalanguage$pandac$ClassDecl* p_cl);
-void org$pandalanguage$pandac$LLVMCodeGenerator$ClassConstant$init$panda$core$String$panda$core$String(org$pandalanguage$pandac$LLVMCodeGenerator$ClassConstant* self, panda$core$String* p_name, panda$core$String* p_type);
-void org$pandalanguage$pandac$LLVMCodeGenerator$MethodShim$init$panda$core$String$panda$core$String(org$pandalanguage$pandac$LLVMCodeGenerator$MethodShim* self, panda$core$String* p_name, panda$core$String* p_type);
-void org$pandalanguage$pandac$LLVMCodeGenerator$LoopDescriptor$init$panda$core$String$Q$panda$core$String$panda$core$String(org$pandalanguage$pandac$LLVMCodeGenerator$LoopDescriptor* self, panda$core$String* p_loopLabel, panda$core$String* p_breakLabel, panda$core$String* p_continueLabel);
-panda$core$String* org$pandalanguage$pandac$LLVMCodeGenerator$LoopDescriptor$convert$R$panda$core$String(org$pandalanguage$pandac$LLVMCodeGenerator$LoopDescriptor* self);
-void org$pandalanguage$pandac$LLVMCodeGenerator$InlineContext$init$panda$core$String$panda$core$String$panda$collections$ListView$LTpanda$core$String$GT$panda$core$String(org$pandalanguage$pandac$LLVMCodeGenerator$InlineContext* self, panda$core$String* p_varSuffix, panda$core$String* p_selfRef, panda$collections$ListView* p_argRefs, panda$core$String* p_exitLabel);
-void org$pandalanguage$pandac$LLVMCodeGenerator$Pair$init$org$pandalanguage$pandac$LLVMCodeGenerator$Pair$A$org$pandalanguage$pandac$LLVMCodeGenerator$Pair$B(org$pandalanguage$pandac$LLVMCodeGenerator$Pair* self, panda$core$Object* p_first, panda$core$Object* p_second);
-void org$pandalanguage$pandac$LLVMCodeGenerator$OpClass$init(org$pandalanguage$pandac$LLVMCodeGenerator$OpClass* self);
+void org$pandalanguage$pandac$LLVMCodeGenerator$start$org$pandalanguage$pandac$ClassDecl(org$pandalanguage$pandac$LLVMCodeGenerator* self, org$pandalanguage$pandac$ClassDecl* p_cl);
+void org$pandalanguage$pandac$LLVMCodeGenerator$end$org$pandalanguage$pandac$ClassDecl(org$pandalanguage$pandac$LLVMCodeGenerator* self, org$pandalanguage$pandac$ClassDecl* p_cl);
 
 #endif

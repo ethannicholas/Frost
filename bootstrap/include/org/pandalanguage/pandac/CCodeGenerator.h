@@ -5,28 +5,29 @@
 typedef struct panda$core$Class panda$core$Class;
 #include "panda/core/Int32.h"
 typedef struct org$pandalanguage$pandac$Compiler org$pandalanguage$pandac$Compiler;
+typedef struct panda$io$File panda$io$File;
 typedef struct panda$io$IndentedOutputStream panda$io$IndentedOutputStream;
 typedef struct panda$io$MemoryOutputStream panda$io$MemoryOutputStream;
 typedef struct panda$collections$Set panda$collections$Set;
 typedef struct org$pandalanguage$pandac$HCodeGenerator org$pandalanguage$pandac$HCodeGenerator;
+typedef struct org$pandalanguage$pandac$ClassDecl org$pandalanguage$pandac$ClassDecl;
 typedef struct panda$collections$HashMap panda$collections$HashMap;
 typedef struct panda$collections$IdentityMap panda$collections$IdentityMap;
 typedef struct panda$core$String panda$core$String;
 typedef struct org$pandalanguage$pandac$MethodDecl org$pandalanguage$pandac$MethodDecl;
 typedef struct panda$collections$Stack panda$collections$Stack;
 #include "panda/core/Int64.h"
-typedef struct panda$collections$ImmutableArray panda$collections$ImmutableArray;
-typedef struct panda$collections$Array panda$collections$Array;
-typedef struct panda$core$Object panda$core$Object;
 
 typedef struct org$pandalanguage$pandac$CCodeGenerator {
     panda$core$Class* $class;
     panda$core$Int32 refCount;
     org$pandalanguage$pandac$Compiler* compiler;
+    panda$io$File* outDir;
     panda$io$IndentedOutputStream* out;
     panda$io$MemoryOutputStream* strings;
     panda$collections$Set* imports;
     org$pandalanguage$pandac$HCodeGenerator* hCodeGen;
+    org$pandalanguage$pandac$ClassDecl* currentClass;
     panda$io$MemoryOutputStream* declarations;
     panda$io$MemoryOutputStream* types;
     panda$io$MemoryOutputStream* methodsBuffer;
@@ -54,104 +55,33 @@ typedef struct org$pandalanguage$pandac$CCodeGenerator {
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"
 #undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[88]; } org$pandalanguage$pandac$CCodeGenerator$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[90]; } org$pandalanguage$pandac$CCodeGenerator$class_type;
 extern org$pandalanguage$pandac$CCodeGenerator$class_type org$pandalanguage$pandac$CCodeGenerator$class;
-typedef struct org$pandalanguage$pandac$CCodeGenerator$ClassConstant {
-    panda$core$Class* $class;
-    panda$core$Int32 refCount;
-    panda$core$String* name;
-    panda$core$String* type;
-} org$pandalanguage$pandac$CCodeGenerator$ClassConstant;
-#define PANDA_TYPESONLY
-#include "panda/core/Class.h"
-#undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[2]; } org$pandalanguage$pandac$CCodeGenerator$ClassConstant$class_type;
-extern org$pandalanguage$pandac$CCodeGenerator$ClassConstant$class_type org$pandalanguage$pandac$CCodeGenerator$ClassConstant$class;
-typedef struct org$pandalanguage$pandac$CCodeGenerator$MethodShim {
-    panda$core$Class* $class;
-    panda$core$Int32 refCount;
-    panda$core$String* name;
-    panda$core$String* type;
-} org$pandalanguage$pandac$CCodeGenerator$MethodShim;
-#define PANDA_TYPESONLY
-#include "panda/core/Class.h"
-#undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[2]; } org$pandalanguage$pandac$CCodeGenerator$MethodShim$class_type;
-extern org$pandalanguage$pandac$CCodeGenerator$MethodShim$class_type org$pandalanguage$pandac$CCodeGenerator$MethodShim$class;
-typedef struct org$pandalanguage$pandac$CCodeGenerator$LoopDescriptor {
-    panda$core$Class* $class;
-    panda$core$Int32 refCount;
-    panda$core$String* loopLabel;
-    panda$core$String* breakLabel;
-    panda$core$String* continueLabel;
-} org$pandalanguage$pandac$CCodeGenerator$LoopDescriptor;
-#define PANDA_TYPESONLY
-#include "panda/core/Class.h"
-#undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[2]; } org$pandalanguage$pandac$CCodeGenerator$LoopDescriptor$class_type;
-extern org$pandalanguage$pandac$CCodeGenerator$LoopDescriptor$class_type org$pandalanguage$pandac$CCodeGenerator$LoopDescriptor$class;
-typedef struct org$pandalanguage$pandac$CCodeGenerator$InlineContext {
-    panda$core$Class* $class;
-    panda$core$Int32 refCount;
-    panda$core$String* varSuffix;
-    panda$core$String* selfRef;
-    panda$collections$ImmutableArray* argRefs;
-    panda$collections$Array* returns;
-    panda$core$String* exitLabel;
-} org$pandalanguage$pandac$CCodeGenerator$InlineContext;
-#define PANDA_TYPESONLY
-#include "panda/core/Class.h"
-#undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[2]; } org$pandalanguage$pandac$CCodeGenerator$InlineContext$class_type;
-extern org$pandalanguage$pandac$CCodeGenerator$InlineContext$class_type org$pandalanguage$pandac$CCodeGenerator$InlineContext$class;
-typedef struct org$pandalanguage$pandac$CCodeGenerator$Pair {
-    panda$core$Class* $class;
-    panda$core$Int32 refCount;
-    panda$core$Object* first;
-    panda$core$Object* second;
-} org$pandalanguage$pandac$CCodeGenerator$Pair;
-#define PANDA_TYPESONLY
-#include "panda/core/Class.h"
-#undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[2]; } org$pandalanguage$pandac$CCodeGenerator$Pair$class_type;
-extern org$pandalanguage$pandac$CCodeGenerator$Pair$class_type org$pandalanguage$pandac$CCodeGenerator$Pair$class;
-typedef struct org$pandalanguage$pandac$CCodeGenerator$OpClass {
-    panda$core$Class* $class;
-    panda$core$Int32 refCount;
-} org$pandalanguage$pandac$CCodeGenerator$OpClass;
-#define PANDA_TYPESONLY
-#include "panda/core/Class.h"
-#undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[2]; } org$pandalanguage$pandac$CCodeGenerator$OpClass$class_type;
-extern org$pandalanguage$pandac$CCodeGenerator$OpClass$class_type org$pandalanguage$pandac$CCodeGenerator$OpClass$class;
 
 #ifndef PANDA_TYPESONLY
 typedef struct org$pandalanguage$pandac$CCodeGenerator org$pandalanguage$pandac$CCodeGenerator;
-typedef struct panda$io$OutputStream panda$io$OutputStream;
+typedef struct panda$io$File panda$io$File;
 typedef struct panda$core$String panda$core$String;
 typedef struct org$pandalanguage$pandac$MethodDecl org$pandalanguage$pandac$MethodDecl;
 #include "panda/core/Int64.h"
 typedef struct org$pandalanguage$pandac$Type org$pandalanguage$pandac$Type;
+#include "panda/core/Bit.h"
 typedef struct org$pandalanguage$pandac$ClassDecl org$pandalanguage$pandac$ClassDecl;
 typedef struct org$pandalanguage$pandac$Compiler org$pandalanguage$pandac$Compiler;
 typedef struct panda$io$IndentedOutputStream panda$io$IndentedOutputStream;
-#include "panda/core/Bit.h"
 typedef struct org$pandalanguage$pandac$IRNode org$pandalanguage$pandac$IRNode;
 typedef struct org$pandalanguage$pandac$CCodeGenerator$MethodShim org$pandalanguage$pandac$CCodeGenerator$MethodShim;
+typedef struct panda$io$OutputStream panda$io$OutputStream;
 typedef struct org$pandalanguage$pandac$CCodeGenerator$ClassConstant org$pandalanguage$pandac$CCodeGenerator$ClassConstant;
 typedef struct org$pandalanguage$pandac$Variable org$pandalanguage$pandac$Variable;
 typedef struct org$pandalanguage$pandac$FieldDecl org$pandalanguage$pandac$FieldDecl;
 typedef struct org$pandalanguage$pandac$CCodeGenerator$LoopDescriptor org$pandalanguage$pandac$CCodeGenerator$LoopDescriptor;
-typedef struct org$pandalanguage$pandac$CCodeGenerator$InlineContext org$pandalanguage$pandac$CCodeGenerator$InlineContext;
-typedef struct panda$collections$ListView panda$collections$ListView;
-typedef struct org$pandalanguage$pandac$CCodeGenerator$Pair org$pandalanguage$pandac$CCodeGenerator$Pair;
-typedef struct panda$core$Object panda$core$Object;
-typedef struct org$pandalanguage$pandac$CCodeGenerator$OpClass org$pandalanguage$pandac$CCodeGenerator$OpClass;
 
-void org$pandalanguage$pandac$CCodeGenerator$init$panda$io$OutputStream(org$pandalanguage$pandac$CCodeGenerator* self, panda$io$OutputStream* p_out);
+void org$pandalanguage$pandac$CCodeGenerator$init$panda$io$File(org$pandalanguage$pandac$CCodeGenerator* self, panda$io$File* p_outDir);
 panda$core$String* org$pandalanguage$pandac$CCodeGenerator$escapeName$panda$core$String$R$panda$core$String(org$pandalanguage$pandac$CCodeGenerator* self, panda$core$String* p_s);
 panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getName$org$pandalanguage$pandac$MethodDecl$R$panda$core$String(org$pandalanguage$pandac$CCodeGenerator* self, org$pandalanguage$pandac$MethodDecl* p_m);
 panda$core$Int64 org$pandalanguage$pandac$CCodeGenerator$sizeOf$org$pandalanguage$pandac$Type$R$panda$core$Int64(org$pandalanguage$pandac$CCodeGenerator* self, org$pandalanguage$pandac$Type* p_t);
+panda$core$Bit org$pandalanguage$pandac$CCodeGenerator$isExternal$org$pandalanguage$pandac$ClassDecl$R$panda$core$Bit(org$pandalanguage$pandac$CCodeGenerator* self, org$pandalanguage$pandac$ClassDecl* p_cl);
 void org$pandalanguage$pandac$CCodeGenerator$writeImport$org$pandalanguage$pandac$ClassDecl(org$pandalanguage$pandac$CCodeGenerator* self, org$pandalanguage$pandac$ClassDecl* p_cl);
 panda$core$String* org$pandalanguage$pandac$CCodeGenerator$type$org$pandalanguage$pandac$Type$R$panda$core$String(org$pandalanguage$pandac$CCodeGenerator* self, org$pandalanguage$pandac$Type* p_t);
 void org$pandalanguage$pandac$CCodeGenerator$setCompiler$org$pandalanguage$pandac$Compiler(org$pandalanguage$pandac$CCodeGenerator* self, org$pandalanguage$pandac$Compiler* p_compiler);
@@ -233,14 +163,8 @@ void org$pandalanguage$pandac$CCodeGenerator$writeStatement$org$pandalanguage$pa
 panda$core$String* org$pandalanguage$pandac$CCodeGenerator$selfType$org$pandalanguage$pandac$MethodDecl$R$panda$core$String(org$pandalanguage$pandac$CCodeGenerator* self, org$pandalanguage$pandac$MethodDecl* p_m);
 void org$pandalanguage$pandac$CCodeGenerator$writeDeclaration$org$pandalanguage$pandac$MethodDecl(org$pandalanguage$pandac$CCodeGenerator* self, org$pandalanguage$pandac$MethodDecl* p_m);
 void org$pandalanguage$pandac$CCodeGenerator$write$org$pandalanguage$pandac$MethodDecl$org$pandalanguage$pandac$IRNode(org$pandalanguage$pandac$CCodeGenerator* self, org$pandalanguage$pandac$MethodDecl* p_m, org$pandalanguage$pandac$IRNode* p_body);
-void org$pandalanguage$pandac$CCodeGenerator$write$org$pandalanguage$pandac$ClassDecl(org$pandalanguage$pandac$CCodeGenerator* self, org$pandalanguage$pandac$ClassDecl* p_cl);
+void org$pandalanguage$pandac$CCodeGenerator$start$org$pandalanguage$pandac$ClassDecl(org$pandalanguage$pandac$CCodeGenerator* self, org$pandalanguage$pandac$ClassDecl* p_cl);
+void org$pandalanguage$pandac$CCodeGenerator$end$org$pandalanguage$pandac$ClassDecl(org$pandalanguage$pandac$CCodeGenerator* self, org$pandalanguage$pandac$ClassDecl* p_cl);
 void org$pandalanguage$pandac$CCodeGenerator$finish(org$pandalanguage$pandac$CCodeGenerator* self);
-void org$pandalanguage$pandac$CCodeGenerator$ClassConstant$init$panda$core$String$panda$core$String(org$pandalanguage$pandac$CCodeGenerator$ClassConstant* self, panda$core$String* p_name, panda$core$String* p_type);
-void org$pandalanguage$pandac$CCodeGenerator$MethodShim$init$panda$core$String$panda$core$String(org$pandalanguage$pandac$CCodeGenerator$MethodShim* self, panda$core$String* p_name, panda$core$String* p_type);
-void org$pandalanguage$pandac$CCodeGenerator$LoopDescriptor$init$panda$core$String$Q$panda$core$String$panda$core$String(org$pandalanguage$pandac$CCodeGenerator$LoopDescriptor* self, panda$core$String* p_loopLabel, panda$core$String* p_breakLabel, panda$core$String* p_continueLabel);
-panda$core$String* org$pandalanguage$pandac$CCodeGenerator$LoopDescriptor$convert$R$panda$core$String(org$pandalanguage$pandac$CCodeGenerator$LoopDescriptor* self);
-void org$pandalanguage$pandac$CCodeGenerator$InlineContext$init$panda$core$String$panda$core$String$panda$collections$ListView$LTpanda$core$String$GT$panda$core$String(org$pandalanguage$pandac$CCodeGenerator$InlineContext* self, panda$core$String* p_varSuffix, panda$core$String* p_selfRef, panda$collections$ListView* p_argRefs, panda$core$String* p_exitLabel);
-void org$pandalanguage$pandac$CCodeGenerator$Pair$init$org$pandalanguage$pandac$CCodeGenerator$Pair$A$org$pandalanguage$pandac$CCodeGenerator$Pair$B(org$pandalanguage$pandac$CCodeGenerator$Pair* self, panda$core$Object* p_first, panda$core$Object* p_second);
-void org$pandalanguage$pandac$CCodeGenerator$OpClass$init(org$pandalanguage$pandac$CCodeGenerator$OpClass* self);
 
 #endif

@@ -8,15 +8,14 @@ typedef struct org$pandalanguage$pandac$Compiler$Settings org$pandalanguage$pand
 typedef struct org$pandalanguage$pandac$parser$Parser org$pandalanguage$pandac$parser$Parser;
 typedef struct org$pandalanguage$pandac$Scanner org$pandalanguage$pandac$Scanner;
 typedef struct org$pandalanguage$pandac$SymbolTable org$pandalanguage$pandac$SymbolTable;
+typedef struct org$pandalanguage$pandac$ClassDecl org$pandalanguage$pandac$ClassDecl;
+typedef struct panda$collections$Array panda$collections$Array;
 typedef struct panda$collections$HashMap panda$collections$HashMap;
 typedef struct panda$collections$Stack panda$collections$Stack;
 typedef struct org$pandalanguage$pandac$CodeGenerator org$pandalanguage$pandac$CodeGenerator;
 #include "panda/core/UInt64.h"
 #include "panda/core/Int64.h"
 #include "panda/core/Bit.h"
-typedef struct panda$io$File panda$io$File;
-typedef struct panda$collections$ImmutableArray panda$collections$ImmutableArray;
-typedef struct org$pandalanguage$pandac$IRNode org$pandalanguage$pandac$IRNode;
 
 typedef struct org$pandalanguage$pandac$Compiler {
     panda$core$Class* $class;
@@ -25,6 +24,8 @@ typedef struct org$pandalanguage$pandac$Compiler {
     org$pandalanguage$pandac$parser$Parser* parser;
     org$pandalanguage$pandac$Scanner* scanner;
     org$pandalanguage$pandac$SymbolTable* root;
+    org$pandalanguage$pandac$ClassDecl* compiling;
+    panda$collections$Array* compilationQueue;
     panda$collections$HashMap* scans;
     panda$collections$HashMap* classes;
     panda$collections$Stack* currentFile;
@@ -40,32 +41,8 @@ typedef struct org$pandalanguage$pandac$Compiler {
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"
 #undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[97]; } org$pandalanguage$pandac$Compiler$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[99]; } org$pandalanguage$pandac$Compiler$class_type;
 extern org$pandalanguage$pandac$Compiler$class_type org$pandalanguage$pandac$Compiler$class;
-typedef struct org$pandalanguage$pandac$Compiler$Settings {
-    panda$core$Class* $class;
-    panda$core$Int32 refCount;
-    panda$io$File* pandaHome;
-    panda$collections$ImmutableArray* importDirs;
-    panda$core$Int64 optimizationLevel;
-    panda$core$Int64 safetyLevel;
-} org$pandalanguage$pandac$Compiler$Settings;
-#define PANDA_TYPESONLY
-#include "panda/core/Class.h"
-#undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[2]; } org$pandalanguage$pandac$Compiler$Settings$class_type;
-extern org$pandalanguage$pandac$Compiler$Settings$class_type org$pandalanguage$pandac$Compiler$Settings$class;
-typedef struct org$pandalanguage$pandac$Compiler$CompileTargetResult {
-    panda$core$Class* $class;
-    panda$core$Int32 refCount;
-    org$pandalanguage$pandac$IRNode* target;
-    org$pandalanguage$pandac$IRNode* value;
-} org$pandalanguage$pandac$Compiler$CompileTargetResult;
-#define PANDA_TYPESONLY
-#include "panda/core/Class.h"
-#undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[2]; } org$pandalanguage$pandac$Compiler$CompileTargetResult$class_type;
-extern org$pandalanguage$pandac$Compiler$CompileTargetResult$class_type org$pandalanguage$pandac$Compiler$CompileTargetResult$class;
 
 #ifndef PANDA_TYPESONLY
 typedef struct org$pandalanguage$pandac$Compiler org$pandalanguage$pandac$Compiler;
@@ -104,6 +81,7 @@ panda$core$Bit org$pandalanguage$pandac$Compiler$isValue$org$pandalanguage$panda
 panda$collections$ListView* org$pandalanguage$pandac$Compiler$instanceFields$org$pandalanguage$pandac$ClassDecl$R$panda$collections$ListView$LTorg$pandalanguage$pandac$FieldDecl$GT(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$ClassDecl* p_cl);
 org$pandalanguage$pandac$ClassDecl* org$pandalanguage$pandac$Compiler$getClass$panda$core$String$R$org$pandalanguage$pandac$ClassDecl$Q(org$pandalanguage$pandac$Compiler* self, panda$core$String* p_fullName);
 org$pandalanguage$pandac$ClassDecl* org$pandalanguage$pandac$Compiler$getClass$panda$core$Int64$panda$core$String$R$org$pandalanguage$pandac$ClassDecl$Q(org$pandalanguage$pandac$Compiler* self, panda$core$Int64 p_offset, panda$core$String* p_fullName);
+org$pandalanguage$pandac$ClassDecl* org$pandalanguage$pandac$Compiler$specialize$org$pandalanguage$pandac$ClassDecl$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$ClassDecl(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$ClassDecl* p_cl, org$pandalanguage$pandac$Type* p_rawType);
 org$pandalanguage$pandac$ClassDecl* org$pandalanguage$pandac$Compiler$getClass$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$ClassDecl$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Type* p_type);
 panda$collections$Set* org$pandalanguage$pandac$Compiler$allInterfaces$org$pandalanguage$pandac$Type$R$panda$collections$Set$LTorg$pandalanguage$pandac$Type$GT(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Type* p_t);
 panda$core$Bit org$pandalanguage$pandac$Compiler$signatureMatch$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Type$R$panda$core$Bit(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Type* p_t1, org$pandalanguage$pandac$Type* p_t2);
@@ -191,7 +169,6 @@ void org$pandalanguage$pandac$Compiler$compile$panda$io$File(org$pandalanguage$p
 org$pandalanguage$pandac$Position* org$pandalanguage$pandac$Compiler$position$panda$core$Int64$R$org$pandalanguage$pandac$Position(org$pandalanguage$pandac$Compiler* self, panda$core$Int64 p_offset);
 void org$pandalanguage$pandac$Compiler$error$panda$core$Int64$panda$core$String(org$pandalanguage$pandac$Compiler* self, panda$core$Int64 p_offset, panda$core$String* p_msg);
 void org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position* p_pos, panda$core$String* p_msg);
-void org$pandalanguage$pandac$Compiler$Settings$init$panda$io$File$panda$collections$ListView$LTpanda$io$File$GT$panda$core$Int64$panda$core$Int64(org$pandalanguage$pandac$Compiler$Settings* self, panda$io$File* p_pandaHome, panda$collections$ListView* p_importDirs, panda$core$Int64 p_optimizationLevel, panda$core$Int64 p_safetyLevel);
-void org$pandalanguage$pandac$Compiler$CompileTargetResult$init$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler$CompileTargetResult* self, org$pandalanguage$pandac$IRNode* p_target, org$pandalanguage$pandac$IRNode* p_value);
+void org$pandalanguage$pandac$Compiler$finish(org$pandalanguage$pandac$Compiler* self);
 
 #endif

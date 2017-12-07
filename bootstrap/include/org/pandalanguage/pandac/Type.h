@@ -24,15 +24,6 @@ typedef struct org$pandalanguage$pandac$Type {
 #undef PANDA_TYPESONLY
 typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[16]; } org$pandalanguage$pandac$Type$class_type;
 extern org$pandalanguage$pandac$Type$class_type org$pandalanguage$pandac$Type$class;
-typedef struct org$pandalanguage$pandac$Type$Kind {
-    panda$core$Class* $class;
-    panda$core$Int32 refCount;
-} org$pandalanguage$pandac$Type$Kind;
-#define PANDA_TYPESONLY
-#include "panda/core/Class.h"
-#undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[2]; } org$pandalanguage$pandac$Type$Kind$class_type;
-extern org$pandalanguage$pandac$Type$Kind$class_type org$pandalanguage$pandac$Type$Kind$class;
 
 #ifndef PANDA_TYPESONLY
 typedef struct org$pandalanguage$pandac$Type org$pandalanguage$pandac$Type;
@@ -41,7 +32,6 @@ typedef struct panda$core$String panda$core$String;
 #include "panda/core/Bit.h"
 typedef struct panda$collections$ListView panda$collections$ListView;
 typedef struct panda$collections$HashMap panda$collections$HashMap;
-typedef struct org$pandalanguage$pandac$Type$Kind org$pandalanguage$pandac$Type$Kind;
 
 void org$pandalanguage$pandac$Type$init$panda$core$String$panda$core$Int64$panda$core$Int64(org$pandalanguage$pandac$Type* self, panda$core$String* p_name, panda$core$Int64 p_typeKind, panda$core$Int64 p_offset);
 void org$pandalanguage$pandac$Type$init$panda$core$String$panda$core$Int64$panda$core$Int64$panda$core$Bit(org$pandalanguage$pandac$Type* self, panda$core$String* p_name, panda$core$Int64 p_typeKind, panda$core$Int64 p_offset, panda$core$Bit p_resolved);
@@ -78,6 +68,5 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$union$org$pandalang
 org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$remap$panda$collections$HashMap$LTpanda$core$String$Corg$pandalanguage$pandac$Type$GT$R$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$Type* self, panda$collections$HashMap* p_types);
 panda$core$Int64 org$pandalanguage$pandac$Type$hash$R$panda$core$Int64(org$pandalanguage$pandac$Type* self);
 panda$core$String* org$pandalanguage$pandac$Type$convert$R$panda$core$String(org$pandalanguage$pandac$Type* self);
-void org$pandalanguage$pandac$Type$Kind$init(org$pandalanguage$pandac$Type$Kind* self);
 
 #endif

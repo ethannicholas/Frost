@@ -490,7 +490,11 @@ class LLVMCodeGenerator (CodeGenerator) {
         def effectiveReturnType := effective.subtypes[effective.subtypes.get_count() - 1]
         def resultName := getName(raw) + "$shim"
         def resultType := MutableString(type(effectiveReturnType))
-        out.print("define \{resultType} \{resultName}(")
+        out.print("define ")
+        if raw.owner.isSpecialization() {
+            out.print("linkonce_odr ")
+        }
+        out.print("\{resultType} \{resultName}(")
         def self_t := selfType(raw)
         out.print("\{self_t} %self")
         resultType.append("(")
@@ -547,7 +551,11 @@ class LLVMCodeGenerator (CodeGenerator) {
         varCount := 0
         def result := "\{getName(m)}$wrappershim"
         def selfType := "%\{escapeName(m.owner.name)}$wrapper*"
-        out.print("define ccc \{type(m.returnType)} \{result}(\{selfType} %actualSelf")
+        out.print("define ")
+        if m.owner.isSpecialization() {
+            out.print("linkonce_odr ")
+        }
+        out.print("\{type(m.returnType)} \{result}(\{selfType} %actualSelf")
         def actualMethodType := compiler.declaredType(m)
         def inheritedMethodType := compiler.inheritedType(m)
         for i in 0 .. m.parameters.get_count() {
@@ -715,7 +723,11 @@ class LLVMCodeGenerator (CodeGenerator) {
                 superPtr := "null"
             }
             def clConstant := getClassConstant(compiler.getClass(Type.Class()))
-            def code := MutableString("\{result.name} = constant \{result.type} { " +
+            def code := MutableString("\{result.name} = ")
+            if cl.isSpecialization() {
+                code.append("linkonce_odr ")
+            }
+            code.append("constant \{result.type} { " +
                     "%panda$core$Class* bitcast(\{clConstant.type}* \{clConstant.name} to " +
                     "%panda$core$Class*), \{INT_TYPE} 1, %panda$core$Class* \{superPtr}, " +
                     "\{getITable(cl)}, [\{vtable.get_count()} x i8*] [")
@@ -758,7 +770,11 @@ class LLVMCodeGenerator (CodeGenerator) {
                 def superCast := "bitcast(\{superCC.type}* \{superCC.name} to %panda$core$Class*)"
                 def itable := getWrapperITable(cl)
                 def clConstant := getClassConstant(compiler.getClass(Type.Class()))
-                def code := MutableString("\{result.name} = constant \{result.type} { " +
+                def code := MutableString("\{result.name} = ")
+                if cl.isSpecialization() {
+                    code.append("linkonce_odr ")
+                }
+                code.append("constant \{result.type} { " +
                         "%panda$core$Class* bitcast(\{clConstant.type}* \{clConstant.name} to " +
                         "%panda$core$Class*), \{INT_TYPE} 1, \{type(Type.Class())} \{superCast}, " +
                         "\{itable}, [\{valueVTable.get_count()} x i8*] [")
@@ -1046,7 +1062,7 @@ class LLVMCodeGenerator (CodeGenerator) {
     }
 
     function callingConvention(m:MethodDecl):String {
-        return "ccc "
+        return ""
     }
 
     method getVirtualMethodReference(target:String, m:MethodDecl, out:IndentedOutputStream):String {
@@ -2443,7 +2459,7 @@ class LLVMCodeGenerator (CodeGenerator) {
         else {
             msg := null
         }
-        out.print("call ccc void ")
+        out.print("call void ")
         for m in compiler.getClass(Type.Panda()).methods {
             if m.name = "assertionFailure" {
                 compiler.resolve(m)
@@ -2541,12 +2557,18 @@ class LLVMCodeGenerator (CodeGenerator) {
 
     @override
     method write(m:MethodDecl, body:IRNode) {
-        assert compiler.currentClass.peek() == m.owner
+        assert compiler.currentClass.peek() == m.owner,
+                "compiling \{m.owner.name}.\{m.signature()} from within " +
+                compiler.currentClass.peek().name
         currentMethod := m
         currentBlock := "0"
         varCount := 0
         methodHeaderBuffer.clear()
-        methods.print("define \{callingConvention(m)}\{type(m.returnType)} \{getName(m)}(")
+        methods.print("define ")
+        if m.owner.isSpecialization() {
+            methods.print("linkonce_odr ")
+        }
+        methods.print("\{callingConvention(m)}\{type(m.returnType)} \{getName(m)}(")
         var separator := ""
         if !m.annotations.isClass() {
             methods.print("\{selfType(m)} %self")
@@ -2580,11 +2602,15 @@ class LLVMCodeGenerator (CodeGenerator) {
     }
 
     @override
-    method write(cl:ClassDecl) {
+    method start(cl:ClassDecl) {
         if cl.annotations.isSpecialize() {
             return
         }
         writeType(cl.type())
         getClassConstant(cl)
+    }
+
+    @override
+    method end(cl:ClassDecl) {
     }
 }

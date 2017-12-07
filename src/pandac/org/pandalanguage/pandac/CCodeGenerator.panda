@@ -6,16 +6,22 @@ uses org.pandalanguage.pandac.parser.Token
 class CCodeGenerator (CodeGenerator) {
     var compiler:Compiler?
 
+    def outDir:File
+
     def out:IndentedOutputStream
 
     def strings := MemoryOutputStream()
 
     def imports := Set<String>()
 
-    def hCodeGen := HCodeGenerator(MemoryOutputStream())
+    def hCodeGen:HCodeGenerator
 
-    init(out:OutputStream) {
-        self.out := IndentedOutputStream(out)
+    var currentClass:ClassDecl? := null
+
+    init(outDir:File) {
+        self.outDir := outDir
+        self.out := IndentedOutputStream(MemoryOutputStream())
+        self.hCodeGen := HCodeGenerator(outDir)
     }
 
     function escapeName(s:String):String {
@@ -30,11 +36,15 @@ class CCodeGenerator (CodeGenerator) {
         return hCodeGen.sizeOf(t)
     }
 
+    function isExternal(cl:ClassDecl):Bit {
+        return cl !== currentClass
+    }
+
     method writeImport(cl:ClassDecl) {
         if cl.name = "panda.unsafe.Pointer" {
             return
         }
-        def includePath := hCodeGen.getIncludePath(cl)
+        def includePath := hCodeGen.getRelativePath(cl, ".h")
         if !imports.contains(includePath) {
             out.printLine("#include \"\{includePath}\"")
             imports.add(includePath)
@@ -518,7 +528,7 @@ class CCodeGenerator (CodeGenerator) {
 
     method getMethodTableEntry(m:MethodDecl):String {
         compiler.resolve(m)
-        if m.owner.external {
+        if isExternal(m.owner) {
             writeDeclaration(m)
         }
         def result:String
@@ -540,7 +550,7 @@ class CCodeGenerator (CodeGenerator) {
             writeImport(cl)
             compiler.resolve(cl)
             def type:String
-            if cl.external {
+            if isExternal(cl) {
                 result := ClassConstant("\{escapeName(cl.type().name)}$class",
                         "%panda$core$Class")
                 classConstants[cl.name] := result
@@ -583,7 +593,7 @@ class CCodeGenerator (CodeGenerator) {
         def name := "\{escapeName(cl.name)}$wrapperclass"
         var result := classConstants[name]
         if result = null {
-            if cl.external {
+            if isExternal(cl) {
                 type(Type.Class())
                 def type := "%panda$core$Class"
                 types.printLine("\{name} = external global \{type}")
@@ -609,7 +619,7 @@ class CCodeGenerator (CodeGenerator) {
                     }
                     else {
                         methodName := getName(m)
-                        if m.owner.external {
+                        if isExternal(m.owner) {
                             writeDeclaration(m)
                         }
                     }
@@ -840,7 +850,7 @@ class CCodeGenerator (CodeGenerator) {
             }
         }
         else {
-            if m.owner.external {
+            if isExternal(m.owner) {
                 writeDeclaration(m)
             }
             return getName(m)
@@ -888,7 +898,7 @@ class CCodeGenerator (CodeGenerator) {
         if m.owner.name = "panda.unsafe.Pointer" {
             return getPointerCallReference(call, out)
         }
-        if m.owner.external {
+        if isExternal(m.owner) {
             writeDeclaration(m)
         }
         if m.owner.name = "panda.core.Bit" {
@@ -989,6 +999,7 @@ class CCodeGenerator (CodeGenerator) {
             return getReference(field.value, out)
         }
         def cl := compiler.getClass(fieldRef.children[0].type)
+        writeImport(cl)
         def base := getReference(fieldRef.children[0], out)
         assert cl != null
         if compiler.isValue(cl) {
@@ -1302,7 +1313,7 @@ class CCodeGenerator (CodeGenerator) {
             writePointerCall(call, out)
             return
         }
-        if m.owner.external {
+        if isExternal(m.owner) {
             writeDeclaration(m)
         }
         def actualMethodType:Type
@@ -1409,7 +1420,7 @@ class CCodeGenerator (CodeGenerator) {
 
         -- extract start value from range
         def start := nextVar()
-        out.printLine("\{numberType} \{start} = ((\{wrapperType(t)}) \{range}.start)->value.value;")
+        out.printLine("\{numberType} \{start} = \{range}.start.value;")
 
         -- store start value
         def indexValuePtr := nextVar()
@@ -1417,7 +1428,7 @@ class CCodeGenerator (CodeGenerator) {
 
         -- extract end value from range
         def end := nextVar()
-        out.printLine("\{numberType} \{end} = ((\{wrapperType(t)}) \{range}.end)->value.value;")
+        out.printLine("\{numberType} \{end} = \{range}.end.value;")
 
         -- extract step value from range
         def step := nextVar()
@@ -1784,7 +1795,27 @@ class CCodeGenerator (CodeGenerator) {
     }
 
     @override
-    method write(cl:ClassDecl) {
+    method start(cl:ClassDecl) {
+        assert currentClass = null
+        currentClass := cl
+        imports.clear()
+        strings.clear()
+        declarations.clear()
+        types.clear()
+        methodsBuffer.clear()
+        wrapperShimsBuffer.clear()
+        shimsBuffer.clear()
+        declared.clear()
+        writtenTypes.clear()
+        writtenWrappers.clear()
+        classConstants.clear()
+        variableNames.clear()
+        varCount := 0
+        reusedValues.clear()
+        methodShims.clear()
+        def path := hCodeGen.getPath(cl, ".c")
+        path.parent().createDirectories()
+        out := IndentedOutputStream(path.openOutputStream())
         getClassConstant(cl)
         if compiler.isValue(cl) {
             getWrapperClassConstant(cl)
@@ -1798,6 +1829,12 @@ class CCodeGenerator (CodeGenerator) {
             out.printLine("    return result;")
             out.printLine("}")
         }
+    }
+
+    @override
+    method end(cl:ClassDecl) {
+        finish()
+        currentClass := null
     }
 
     @override
