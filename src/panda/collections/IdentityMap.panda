@@ -8,6 +8,7 @@ which requires its keys to implement the `Key` interface, any type of object may
 However, it is important that the key not be a subclass of `Value`, as values do not have
 well-defined identities and `IdentityMap` will therefore not function properly with value keys.
 ====================================================================================================
+@final
 class IdentityMap<K, V> (Map<K, V>, Equatable<Map<K, V>>) {
     @private
     class Entry<K, V> {

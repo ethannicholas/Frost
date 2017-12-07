@@ -1,4 +1,5 @@
 package panda.core
 
+@final
 class Class {
 }

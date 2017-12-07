@@ -371,6 +371,7 @@ class WriteInts {
         out.printLine()
         out.printLine("uses panda.unsafe.Pointer")
         out.printLine()
+        out.printLine("@final")
         out.printLine("class \{int(type)} : Value (Key<\{int(type)}>, Comparable<\{int(type)}>) {")
         out.printLine("    constant MIN:\{int(type)} := \{min(type)}")
         out.printLine()

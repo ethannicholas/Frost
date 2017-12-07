@@ -1,5 +1,6 @@
 package org.pandalanguage.pandac
 
+@final
 class Methods : Symbol {
     def methods:ImmutableArray<MethodDecl>
 

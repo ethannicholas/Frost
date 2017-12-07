@@ -2,6 +2,7 @@ package org.pandalanguage.plex.runtime
 
 uses panda.unsafe.Pointer
 
+@final
 class DFA {
     constant START_CHAR:UInt8 := 0
     constant END_CHAR:UInt8 := 127

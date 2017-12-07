@@ -12,7 +12,6 @@
 
 org$pandalanguage$pandac$parser$Lexer$class_type org$pandalanguage$pandac$parser$Lexer$class = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Object$class, NULL, { panda$core$Object$convert$R$panda$core$String, panda$core$Object$cleanup, org$pandalanguage$pandac$parser$Lexer$start$panda$core$String, org$pandalanguage$pandac$parser$Lexer$next$R$org$pandalanguage$pandac$parser$Token} };
 
-typedef org$pandalanguage$plex$runtime$RawToken* (*$fn167)(org$pandalanguage$plex$runtime$DFA*);
 
 
 void org$pandalanguage$pandac$parser$Lexer$start$panda$core$String(org$pandalanguage$pandac$parser$Lexer* self, panda$core$String* p_source) {
@@ -6336,11 +6335,11 @@ panda$core$Int64* org$pandalanguage$pandac$parser$Lexer$getAccepts$R$panda$unsaf
 }
 org$pandalanguage$pandac$parser$Token org$pandalanguage$pandac$parser$Lexer$next$R$org$pandalanguage$pandac$parser$Token(org$pandalanguage$pandac$parser$Lexer* self) {
     org$pandalanguage$plex$runtime$RawToken* raw166;
-    org$pandalanguage$pandac$parser$Token $tmp169;
-    org$pandalanguage$plex$runtime$RawToken* $tmp168 = (($fn167) self->dfa->$class->vtable[2])(self->dfa);
-    raw166 = $tmp168;
-    org$pandalanguage$pandac$parser$Token$init$panda$core$Int64$panda$core$Int64$panda$core$Int64(&$tmp169, raw166->kind, raw166->offset, raw166->length);
-    return $tmp169;
+    org$pandalanguage$pandac$parser$Token $tmp168;
+    org$pandalanguage$plex$runtime$RawToken* $tmp167 = org$pandalanguage$plex$runtime$DFA$next$R$org$pandalanguage$plex$runtime$RawToken(self->dfa);
+    raw166 = $tmp167;
+    org$pandalanguage$pandac$parser$Token$init$panda$core$Int64$panda$core$Int64$panda$core$Int64(&$tmp168, raw166->kind, raw166->offset, raw166->length);
+    return $tmp168;
 }
 void org$pandalanguage$pandac$parser$Lexer$init(org$pandalanguage$pandac$parser$Lexer* self) {
 }

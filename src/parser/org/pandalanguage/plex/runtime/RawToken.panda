@@ -1,5 +1,6 @@
 package org.pandalanguage.plex.runtime
 
+@final
 class RawToken {
     var kind := 0
     var offset := 0

@@ -1,5 +1,6 @@
 package org.pandalanguage.pandac
 
+@final
 class Annotations {
     class Flag {
         constant PRIVATE    := 1 << 1

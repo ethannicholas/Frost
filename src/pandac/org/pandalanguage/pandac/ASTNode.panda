@@ -2,6 +2,7 @@ package org.pandalanguage.pandac
 
 uses org.pandalanguage.pandac.parser.Token
 
+@final
 class ASTNode : Immutable {
     class Kind {
         constant PACKAGE         := 100

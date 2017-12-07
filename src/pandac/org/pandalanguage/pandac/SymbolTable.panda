@@ -1,5 +1,6 @@
 package org.pandalanguage.pandac
 
+@final
 class SymbolTable {
     @private
     def compiler:Compiler

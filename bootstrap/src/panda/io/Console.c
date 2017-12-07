@@ -14,8 +14,6 @@ panda$io$Console$class_type panda$io$Console$class = { (panda$core$Class*) &pand
 
 typedef panda$core$String* (*$fn31)(panda$core$Object*);
 typedef panda$core$String* (*$fn33)(panda$core$Object*);
-typedef void (*$fn46)(panda$core$MutableString*, panda$core$Char8);
-typedef panda$core$String* (*$fn47)(panda$core$MutableString*);
 
 
 void panda$io$Console$print$panda$core$String(panda$core$String* p_s) {
@@ -112,12 +110,12 @@ panda$core$String* panda$io$Console$readLine$R$panda$core$String$Q() {
             goto $l40;
         }
         }
-        (($fn46) result36->$class->vtable[2])(result36, ((panda$core$Char8) c41.value));
+        panda$core$MutableString$append$panda$core$Char8(result36, ((panda$core$Char8) c41.value));
     }
     }
     $l40:;
-    panda$core$String* $tmp48 = (($fn47) result36->$class->vtable[0])(result36);
-    return $tmp48;
+    panda$core$String* $tmp46 = panda$core$MutableString$convert$R$panda$core$String(result36);
+    return $tmp46;
 }
 void panda$io$Console$init(panda$io$Console* self) {
 }

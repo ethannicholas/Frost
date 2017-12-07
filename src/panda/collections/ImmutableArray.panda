@@ -2,6 +2,7 @@ package panda.collections
 
 uses panda.unsafe.Pointer
 
+@final
 class ImmutableArray<T> (ListView<T>) {
     class ImmutableArrayIterator<T> (Iterator<T>) {
         var array:ImmutableArray<T>

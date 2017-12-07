@@ -2,6 +2,7 @@ package org.pandalanguage.pandac
 
 uses org.pandalanguage.pandac.parser.Token
 
+@final
 class LLVMCodeGenerator (CodeGenerator) {
     class ClassConstant : Immutable {
         def name:String
@@ -1287,6 +1288,10 @@ class LLVMCodeGenerator (CodeGenerator) {
         compiler.currentFile.pop()
         if inline.returns.get_count() = 1 {
             return inline.returns[0].second
+        }
+        if inline.returns.get_count() = 0 {
+            out.print("unreachable")
+            return "undef"
         }
         def phi := nextVar()
         out.print("\{phi} = phi \{type(m.returnType)} ")

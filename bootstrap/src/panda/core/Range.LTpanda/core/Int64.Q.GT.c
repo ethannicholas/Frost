@@ -19,17 +19,10 @@ panda$core$String* panda$core$Range$LTpanda$core$Int64$Q$GT$convert$R$panda$core
 
 panda$core$Range$LTpanda$core$Int64$Q$GT$class_type panda$core$Range$LTpanda$core$Int64$Q$GT$class = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Value$class, NULL, { panda$core$Range$LTpanda$core$Int64$Q$GT$convert$R$panda$core$String, panda$core$Object$cleanup} };
 
-panda$core$Range$LTpanda$core$Int64$Q$GT$wrapperclass_type panda$core$Range$LTpanda$core$Int64$Q$GT$wrapperclass = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Value$class, NULL, { panda$core$Range$LTpanda$core$Int64$Q$GT$convert$R$panda$core$String$wrappershim, panda$core$Object$cleanup} };typedef void (*$fn4)(panda$core$MutableString*, panda$core$Object*);
-typedef void (*$fn6)(panda$core$MutableString*, panda$core$String*);
-typedef void (*$fn8)(panda$core$MutableString*, panda$core$String*);
-typedef void (*$fn9)(panda$core$MutableString*, panda$core$Object*);
-typedef void (*$fn12)(panda$core$MutableString*, panda$core$String*);
-typedef void (*$fn13)(panda$core$MutableString*, panda$core$Object*);
-typedef panda$core$String* (*$fn14)(panda$core$MutableString*);
-
-static panda$core$String $s5 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2E\x2E\x2E", 3, 1 };
-static panda$core$String $s7 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2E\x2E", 2, 1 };
-static panda$core$String $s11 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x20\x62\x79\x20", 4, 1 };
+panda$core$Range$LTpanda$core$Int64$Q$GT$wrapperclass_type panda$core$Range$LTpanda$core$Int64$Q$GT$wrapperclass = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Value$class, NULL, { panda$core$Range$LTpanda$core$Int64$Q$GT$convert$R$panda$core$String$wrappershim, panda$core$Object$cleanup} };
+static panda$core$String $s4 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2E\x2E\x2E", 3, 1 };
+static panda$core$String $s5 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2E\x2E", 2, 1 };
+static panda$core$String $s7 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x20\x62\x79\x20", 4, 1 };
 
 void panda$core$Range$LTpanda$core$Int64$Q$GT$init$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Bit(panda$core$Range$LTpanda$core$Int64$Q$GT* self, panda$core$Int64$nullable p_start, panda$core$Int64$nullable p_end, panda$core$Int64$nullable p_step, panda$core$Bit p_inclusive) {
     self->start = p_start;
@@ -55,32 +48,32 @@ panda$core$String* panda$core$Range$LTpanda$core$Int64$Q$GT$convert$R$panda$core
     result1 = $tmp2;
     if (((panda$core$Bit) { self.start.nonnull }).value) {
     {
-        (($fn4) result1->$class->vtable[5])(result1, ((panda$core$Object*) wrap_panda$core$Int64(((panda$core$Int64) self.start.value))));
+        panda$core$MutableString$append$panda$core$Object(result1, ((panda$core$Object*) wrap_panda$core$Int64(((panda$core$Int64) self.start.value))));
     }
     }
     if (self.inclusive.value) {
     {
-        (($fn6) result1->$class->vtable[3])(result1, &$s5);
+        panda$core$MutableString$append$panda$core$String(result1, &$s4);
     }
     }
     else {
     {
-        (($fn8) result1->$class->vtable[3])(result1, &$s7);
+        panda$core$MutableString$append$panda$core$String(result1, &$s5);
     }
     }
     if (((panda$core$Bit) { self.end.nonnull }).value) {
     {
-        (($fn9) result1->$class->vtable[5])(result1, ((panda$core$Object*) wrap_panda$core$Int64(((panda$core$Int64) self.end.value))));
+        panda$core$MutableString$append$panda$core$Object(result1, ((panda$core$Object*) wrap_panda$core$Int64(((panda$core$Int64) self.end.value))));
     }
     }
-    panda$core$Bit $tmp10 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit(self.step, ((panda$core$Int64) { 1 }));
-    if ($tmp10.value) {
+    panda$core$Bit $tmp6 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit(self.step, ((panda$core$Int64) { 1 }));
+    if ($tmp6.value) {
     {
-        (($fn12) result1->$class->vtable[3])(result1, &$s11);
-        (($fn13) result1->$class->vtable[5])(result1, ((panda$core$Object*) wrap_panda$core$Int64(self.step)));
+        panda$core$MutableString$append$panda$core$String(result1, &$s7);
+        panda$core$MutableString$append$panda$core$Object(result1, ((panda$core$Object*) wrap_panda$core$Int64(self.step)));
     }
     }
-    panda$core$String* $tmp15 = (($fn14) result1->$class->vtable[0])(result1);
-    return $tmp15;
+    panda$core$String* $tmp8 = panda$core$MutableString$convert$R$panda$core$String(result1);
+    return $tmp8;
 }
 

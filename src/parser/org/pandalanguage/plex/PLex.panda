@@ -14,6 +14,7 @@ class PLex {
         def nfa := NFA()
         token.printLine("package org.pandalanguage.pandac.parser")
         token.printLine()
+        token.printLine("@final")
         token.printLine("class Token : Value {")
         token.level += 1
         token.printLine("class Kind { -- FIXME use choice")
@@ -91,6 +92,7 @@ class PLex {
         out.printLine("uses panda.unsafe.Pointer")
         out.printLine("uses org.pandalanguage.plex.runtime.DFA")
         out.printLine()
+        out.printLine("@final")
         out.printLine("class Lexer {")
         out.level += 1
         out.printLine("def dfa:DFA")

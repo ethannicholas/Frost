@@ -1,5 +1,6 @@
 package org.pandalanguage.pandac
 
+@final
 class ClassDecl : Symbol {
     class Kind {
         constant CLASS     := 5011

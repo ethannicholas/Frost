@@ -2,6 +2,7 @@ package org.pandalanguage.pandac
 
 uses org.pandalanguage.pandac.parser.Token
 
+@final
 class IRNode {
     class Kind {
         constant BLOCK                       := 1000

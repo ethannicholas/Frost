@@ -19,18 +19,14 @@ panda$io$InputStream$class_type panda$io$InputStream$class = { (panda$core$Class
 typedef panda$core$UInt8$nullable (*$fn6)(panda$io$InputStream*);
 typedef panda$core$Int64 (*$fn9)(panda$io$InputStream*, panda$core$UInt8*, panda$core$Int64);
 typedef panda$core$Int64 (*$fn11)(panda$io$InputStream*, panda$core$UInt8*, panda$core$Int64);
-typedef void (*$fn23)(panda$core$MutableString*, panda$core$Char8*, panda$core$Int64, panda$core$Int64);
-typedef panda$core$String* (*$fn24)(panda$core$MutableString*);
-typedef panda$core$UInt8$nullable (*$fn27)(panda$io$InputStream*);
-typedef panda$core$UInt8$nullable (*$fn30)(panda$io$InputStream*);
-typedef panda$core$Int16$nullable (*$fn36)(panda$io$InputStream*);
-typedef panda$core$Int16$nullable (*$fn39)(panda$io$InputStream*);
-typedef panda$core$Int32$nullable (*$fn44)(panda$io$InputStream*);
-typedef panda$core$Int32$nullable (*$fn47)(panda$io$InputStream*);
-typedef panda$core$UInt8$nullable (*$fn52)(panda$io$InputStream*);
-typedef panda$core$Char8$nullable (*$fn61)(panda$io$InputStream*);
-typedef void (*$fn66)(panda$core$MutableString*, panda$core$Char8);
-typedef panda$core$String* (*$fn67)(panda$core$MutableString*);
+typedef panda$core$UInt8$nullable (*$fn25)(panda$io$InputStream*);
+typedef panda$core$UInt8$nullable (*$fn28)(panda$io$InputStream*);
+typedef panda$core$Int16$nullable (*$fn34)(panda$io$InputStream*);
+typedef panda$core$Int16$nullable (*$fn37)(panda$io$InputStream*);
+typedef panda$core$Int32$nullable (*$fn42)(panda$io$InputStream*);
+typedef panda$core$Int32$nullable (*$fn45)(panda$io$InputStream*);
+typedef panda$core$UInt8$nullable (*$fn50)(panda$io$InputStream*);
+typedef panda$core$Char8$nullable (*$fn59)(panda$io$InputStream*);
 
 
 panda$core$Int64 panda$io$InputStream$read$panda$unsafe$Pointer$LTpanda$core$UInt8$GT$panda$core$Int64$R$panda$core$Int64(panda$io$InputStream* self, panda$core$UInt8* p_buffer, panda$core$Int64 p_max) {
@@ -87,136 +83,136 @@ panda$core$String* panda$io$InputStream$readFully$R$panda$core$String(panda$io$I
             goto $l19;
         }
         }
-        (($fn23) result14->$class->vtable[4])(result14, ((panda$core$Char8*) buffer17), ((panda$core$Int64) { 0 }), count20);
+        panda$core$MutableString$append$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64$panda$core$Int64(result14, ((panda$core$Char8*) buffer17), ((panda$core$Int64) { 0 }), count20);
     }
     }
     $l19:;
     free(buffer17);
-    panda$core$String* $tmp25 = (($fn24) result14->$class->vtable[0])(result14);
-    return $tmp25;
+    panda$core$String* $tmp23 = panda$core$MutableString$convert$R$panda$core$String(result14);
+    return $tmp23;
 }
 panda$core$Int16$nullable panda$io$InputStream$read$R$panda$core$Int16$Q(panda$io$InputStream* self) {
-    panda$core$UInt8$nullable a26;
-    panda$core$UInt8$nullable b29;
-    panda$core$UInt8$nullable $tmp28 = (($fn27) self->$class->vtable[2])(self);
-    a26 = $tmp28;
-    if (((panda$core$Bit) { !a26.nonnull }).value) {
+    panda$core$UInt8$nullable a24;
+    panda$core$UInt8$nullable b27;
+    panda$core$UInt8$nullable $tmp26 = (($fn25) self->$class->vtable[2])(self);
+    a24 = $tmp26;
+    if (((panda$core$Bit) { !a24.nonnull }).value) {
     {
         return ((panda$core$Int16$nullable) { .nonnull = false });
     }
     }
-    panda$core$UInt8$nullable $tmp31 = (($fn30) self->$class->vtable[2])(self);
-    b29 = $tmp31;
-    if (((panda$core$Bit) { !b29.nonnull }).value) {
+    panda$core$UInt8$nullable $tmp29 = (($fn28) self->$class->vtable[2])(self);
+    b27 = $tmp29;
+    if (((panda$core$Bit) { !b27.nonnull }).value) {
     {
         return ((panda$core$Int16$nullable) { .nonnull = false });
     }
     }
-    panda$core$UInt32 $tmp32 = panda$core$UInt8$$SHL$panda$core$UInt8$R$panda$core$UInt32(((panda$core$UInt8) a26.value), ((panda$core$UInt8) ((panda$core$UInt8$nullable) { ((panda$core$UInt8) { 8 }), true }).value));
-    panda$core$UInt32 $tmp33 = panda$core$UInt32$$ADD$panda$core$UInt8$R$panda$core$UInt32($tmp32, ((panda$core$UInt8) b29.value));
-    panda$core$Int16 $tmp34 = panda$core$UInt32$convert$R$panda$core$Int16($tmp33);
-    return ((panda$core$Int16$nullable) { $tmp34, true });
+    panda$core$UInt32 $tmp30 = panda$core$UInt8$$SHL$panda$core$UInt8$R$panda$core$UInt32(((panda$core$UInt8) a24.value), ((panda$core$UInt8) ((panda$core$UInt8$nullable) { ((panda$core$UInt8) { 8 }), true }).value));
+    panda$core$UInt32 $tmp31 = panda$core$UInt32$$ADD$panda$core$UInt8$R$panda$core$UInt32($tmp30, ((panda$core$UInt8) b27.value));
+    panda$core$Int16 $tmp32 = panda$core$UInt32$convert$R$panda$core$Int16($tmp31);
+    return ((panda$core$Int16$nullable) { $tmp32, true });
 }
 panda$core$Int32$nullable panda$io$InputStream$read$R$panda$core$Int32$Q(panda$io$InputStream* self) {
-    panda$core$Int16$nullable a35;
-    panda$core$Int16$nullable b38;
-    panda$core$Int16$nullable $tmp37 = (($fn36) self->$class->vtable[7])(self);
-    a35 = $tmp37;
-    if (((panda$core$Bit) { !a35.nonnull }).value) {
+    panda$core$Int16$nullable a33;
+    panda$core$Int16$nullable b36;
+    panda$core$Int16$nullable $tmp35 = (($fn34) self->$class->vtable[7])(self);
+    a33 = $tmp35;
+    if (((panda$core$Bit) { !a33.nonnull }).value) {
     {
         return ((panda$core$Int32$nullable) { .nonnull = false });
     }
     }
-    panda$core$Int16$nullable $tmp40 = (($fn39) self->$class->vtable[7])(self);
-    b38 = $tmp40;
-    if (((panda$core$Bit) { !b38.nonnull }).value) {
+    panda$core$Int16$nullable $tmp38 = (($fn37) self->$class->vtable[7])(self);
+    b36 = $tmp38;
+    if (((panda$core$Bit) { !b36.nonnull }).value) {
     {
         return ((panda$core$Int32$nullable) { .nonnull = false });
     }
     }
-    panda$core$Int32 $tmp41 = panda$core$Int16$$SHL$panda$core$Int16$R$panda$core$Int32(((panda$core$Int16) a35.value), ((panda$core$Int16) ((panda$core$Int16$nullable) { ((panda$core$Int16) { 16 }), true }).value));
-    panda$core$Int32 $tmp42 = panda$core$Int32$$ADD$panda$core$Int16$R$panda$core$Int32($tmp41, ((panda$core$Int16) b38.value));
-    return ((panda$core$Int32$nullable) { $tmp42, true });
+    panda$core$Int32 $tmp39 = panda$core$Int16$$SHL$panda$core$Int16$R$panda$core$Int32(((panda$core$Int16) a33.value), ((panda$core$Int16) ((panda$core$Int16$nullable) { ((panda$core$Int16) { 16 }), true }).value));
+    panda$core$Int32 $tmp40 = panda$core$Int32$$ADD$panda$core$Int16$R$panda$core$Int32($tmp39, ((panda$core$Int16) b36.value));
+    return ((panda$core$Int32$nullable) { $tmp40, true });
 }
 panda$core$Int64$nullable panda$io$InputStream$read$R$panda$core$Int64$Q(panda$io$InputStream* self) {
-    panda$core$Int32$nullable a43;
-    panda$core$Int32$nullable b46;
-    panda$core$Int32$nullable $tmp45 = (($fn44) self->$class->vtable[8])(self);
-    a43 = $tmp45;
-    if (((panda$core$Bit) { !a43.nonnull }).value) {
+    panda$core$Int32$nullable a41;
+    panda$core$Int32$nullable b44;
+    panda$core$Int32$nullable $tmp43 = (($fn42) self->$class->vtable[8])(self);
+    a41 = $tmp43;
+    if (((panda$core$Bit) { !a41.nonnull }).value) {
     {
         return ((panda$core$Int64$nullable) { .nonnull = false });
     }
     }
-    panda$core$Int32$nullable $tmp48 = (($fn47) self->$class->vtable[8])(self);
-    b46 = $tmp48;
-    if (((panda$core$Bit) { !b46.nonnull }).value) {
+    panda$core$Int32$nullable $tmp46 = (($fn45) self->$class->vtable[8])(self);
+    b44 = $tmp46;
+    if (((panda$core$Bit) { !b44.nonnull }).value) {
     {
         return ((panda$core$Int64$nullable) { .nonnull = false });
     }
     }
-    panda$core$Int64 $tmp49 = panda$core$Int64$$SHL$panda$core$Int64$R$panda$core$Int64(((panda$core$Int64) { ((int64_t) ((panda$core$Int32) a43.value).value) }), ((panda$core$Int64) { 32 }));
-    panda$core$Int64 $tmp50 = panda$core$Int64$$ADD$panda$core$Int32$R$panda$core$Int64($tmp49, ((panda$core$Int32) b46.value));
-    return ((panda$core$Int64$nullable) { $tmp50, true });
+    panda$core$Int64 $tmp47 = panda$core$Int64$$SHL$panda$core$Int64$R$panda$core$Int64(((panda$core$Int64) { ((int64_t) ((panda$core$Int32) a41.value).value) }), ((panda$core$Int64) { 32 }));
+    panda$core$Int64 $tmp48 = panda$core$Int64$$ADD$panda$core$Int32$R$panda$core$Int64($tmp47, ((panda$core$Int32) b44.value));
+    return ((panda$core$Int64$nullable) { $tmp48, true });
 }
 panda$core$Char8$nullable panda$io$InputStream$read$R$panda$core$Char8$Q(panda$io$InputStream* self) {
-    panda$core$UInt8$nullable result51;
-    panda$core$Char8 $tmp54;
-    panda$core$UInt8$nullable $tmp53 = (($fn52) self->$class->vtable[2])(self);
-    result51 = $tmp53;
-    if (((panda$core$Bit) { result51.nonnull }).value) {
+    panda$core$UInt8$nullable result49;
+    panda$core$Char8 $tmp52;
+    panda$core$UInt8$nullable $tmp51 = (($fn50) self->$class->vtable[2])(self);
+    result49 = $tmp51;
+    if (((panda$core$Bit) { result49.nonnull }).value) {
     {
-        panda$core$Char8$init$panda$core$UInt8(&$tmp54, ((panda$core$UInt8) result51.value));
-        return ((panda$core$Char8$nullable) { $tmp54, true });
+        panda$core$Char8$init$panda$core$UInt8(&$tmp52, ((panda$core$UInt8) result49.value));
+        return ((panda$core$Char8$nullable) { $tmp52, true });
     }
     }
     return ((panda$core$Char8$nullable) { .nonnull = false });
 }
 panda$core$String* panda$io$InputStream$readLine$R$panda$core$String$Q(panda$io$InputStream* self) {
-    panda$core$MutableString* result55;
-    panda$core$Char8$nullable c60;
-    panda$core$Char8 $tmp64;
-    panda$core$MutableString* $tmp56 = (panda$core$MutableString*) malloc(40);
-    $tmp56->$class = (panda$core$Class*) &panda$core$MutableString$class;
-    $tmp56->refCount.value = 1;
-    panda$core$MutableString$init($tmp56);
-    result55 = $tmp56;
-    $l58:;
+    panda$core$MutableString* result53;
+    panda$core$Char8$nullable c58;
+    panda$core$Char8 $tmp62;
+    panda$core$MutableString* $tmp54 = (panda$core$MutableString*) malloc(40);
+    $tmp54->$class = (panda$core$Class*) &panda$core$MutableString$class;
+    $tmp54->refCount.value = 1;
+    panda$core$MutableString$init($tmp54);
+    result53 = $tmp54;
+    $l56:;
     while (true) {
     {
-        panda$core$Char8$nullable $tmp62 = (($fn61) self->$class->vtable[10])(self);
-        c60 = $tmp62;
-        if (((panda$core$Bit) { !c60.nonnull }).value) {
+        panda$core$Char8$nullable $tmp60 = (($fn59) self->$class->vtable[10])(self);
+        c58 = $tmp60;
+        if (((panda$core$Bit) { !c58.nonnull }).value) {
         {
-            panda$core$Bit $tmp63 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(result55->length, ((panda$core$Int64) { 0 }));
-            if ($tmp63.value) {
+            panda$core$Bit $tmp61 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(result53->length, ((panda$core$Int64) { 0 }));
+            if ($tmp61.value) {
             {
                 return NULL;
             }
             }
-            goto $l59;
+            goto $l57;
         }
         }
-        panda$core$Char8$init$panda$core$UInt8(&$tmp64, ((panda$core$UInt8) { 10 }));
-        panda$core$Bit $tmp65 = panda$core$Char8$$EQ$panda$core$Char8$R$panda$core$Bit(((panda$core$Char8) c60.value), $tmp64);
-        if ($tmp65.value) {
+        panda$core$Char8$init$panda$core$UInt8(&$tmp62, ((panda$core$UInt8) { 10 }));
+        panda$core$Bit $tmp63 = panda$core$Char8$$EQ$panda$core$Char8$R$panda$core$Bit(((panda$core$Char8) c58.value), $tmp62);
+        if ($tmp63.value) {
         {
-            goto $l59;
+            goto $l57;
         }
         }
-        (($fn66) result55->$class->vtable[2])(result55, ((panda$core$Char8) c60.value));
+        panda$core$MutableString$append$panda$core$Char8(result53, ((panda$core$Char8) c58.value));
     }
     }
-    $l59:;
-    panda$core$String* $tmp68 = (($fn67) result55->$class->vtable[0])(result55);
-    return $tmp68;
+    $l57:;
+    panda$core$String* $tmp64 = panda$core$MutableString$convert$R$panda$core$String(result53);
+    return $tmp64;
 }
 panda$collections$Iterator* panda$io$InputStream$lines$R$panda$collections$Iterator$LTpanda$core$String$GT(panda$io$InputStream* self) {
-    panda$io$InputStream$LineIterator* $tmp69 = (panda$io$InputStream$LineIterator*) malloc(32);
-    $tmp69->$class = (panda$core$Class*) &panda$io$InputStream$LineIterator$class;
-    $tmp69->refCount.value = 1;
-    panda$io$InputStream$LineIterator$init$panda$io$InputStream($tmp69, self);
-    return ((panda$collections$Iterator*) $tmp69);
+    panda$io$InputStream$LineIterator* $tmp65 = (panda$io$InputStream$LineIterator*) malloc(32);
+    $tmp65->$class = (panda$core$Class*) &panda$io$InputStream$LineIterator$class;
+    $tmp65->refCount.value = 1;
+    panda$io$InputStream$LineIterator$init$panda$io$InputStream($tmp65, self);
+    return ((panda$collections$Iterator*) $tmp65);
 }
 void panda$io$InputStream$init(panda$io$InputStream* self) {
 }

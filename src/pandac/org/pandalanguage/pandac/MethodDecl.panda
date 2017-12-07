@@ -1,5 +1,6 @@
 package org.pandalanguage.pandac
 
+@final
 class MethodDecl : Symbol {
     class Parameter {
         def name:String

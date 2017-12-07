@@ -1,6 +1,7 @@
 package panda.unsafe
 
 -* Pointer is implemented directly by the CodeGenerator; there is no actual code backing it *-
+@final
 class Pointer<T> : Value {
     @class
     @external

@@ -1,9 +1,9 @@
 package org.pandalanguage.pandac
 
-
 ====================================================================================================
 Represents a var, def, constant, or property.
 ====================================================================================================
+@final
 class Variable : Symbol {
     class Storage {
         constant LOCAL     := 1819

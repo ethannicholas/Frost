@@ -1,5 +1,6 @@
 package panda.core
 
+@final
 class Bit : Value (Key<Bit>) {
     @$implicit
     init(value:builtin_bit) {

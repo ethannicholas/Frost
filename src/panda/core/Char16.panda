@@ -5,6 +5,7 @@ uses panda.unsafe.Pointer
 ====================================================================================================
 Represents a single 2-byte word of a UTF-16 encoded string.
 ====================================================================================================
+@final
 class Char16 : Value (Key<Char16>) {
     init(value:UInt16) {
         self.value := value.value

@@ -15,7 +15,6 @@ struct { panda$core$Class* cl; ITable* next; void* methods[2]; } panda$collectio
 
 panda$collections$ImmutableArray$ImmutableArrayIterator$class_type panda$collections$ImmutableArray$ImmutableArrayIterator$class = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Object$class, (ITable*) &panda$collections$ImmutableArray$ImmutableArrayIterator$_panda$collections$Iterator, { panda$core$Object$convert$R$panda$core$String, panda$core$Object$cleanup, panda$collections$ImmutableArray$ImmutableArrayIterator$get_done$R$panda$core$Bit, panda$collections$ImmutableArray$ImmutableArrayIterator$next$R$panda$collections$ImmutableArray$ImmutableArrayIterator$T$shim} };
 
-typedef panda$core$Object* (*$fn4)(panda$collections$ImmutableArray*, panda$core$Int64);
 
 
 void panda$collections$ImmutableArray$ImmutableArrayIterator$init$panda$collections$ImmutableArray$LTpanda$collections$ImmutableArray$ImmutableArrayIterator$T$GT(panda$collections$ImmutableArray$ImmutableArrayIterator* self, panda$collections$ImmutableArray* p_array) {
@@ -30,7 +29,7 @@ panda$core$Object* panda$collections$ImmutableArray$ImmutableArrayIterator$next$
     panda$core$Int64 $tmp2 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 1 }));
     self->index = $tmp2;
     panda$core$Int64 $tmp3 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 1 }));
-    panda$core$Object* $tmp5 = (($fn4) self->array->$class->vtable[2])(self->array, $tmp3);
-    return $tmp5;
+    panda$core$Object* $tmp4 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(self->array, $tmp3);
+    return $tmp4;
 }
 

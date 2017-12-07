@@ -1,5 +1,6 @@
 package panda.collections
 
+@final
 class Stack<T> (Iterable<T>) {
     @private
     class StackIterator<T> (Iterator<T>) {

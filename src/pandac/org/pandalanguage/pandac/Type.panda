@@ -1,5 +1,6 @@
 package org.pandalanguage.pandac
 
+@final
 class Type : Symbol (Key<Type>) {
     class Kind {
         constant CLASS := 10

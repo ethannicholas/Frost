@@ -3,6 +3,7 @@ package panda.core
 
 uses panda.unsafe.Pointer
 
+@final
 class UInt32 : Value (Key<UInt32>, Comparable<UInt32>) {
     constant MIN:UInt32 := 0
 

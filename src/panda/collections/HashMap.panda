@@ -14,6 +14,7 @@ number of values can be stored in a `HashMap` and then retrieved in constant ave
 
 This will display the value `"good"`.
 ====================================================================================================
+@final
 class HashMap<K:Key<K>, V> (Map<K, V>, Equatable<Map<K, V>>) {
     @private
     class Entry<K:Key<K>, V> {

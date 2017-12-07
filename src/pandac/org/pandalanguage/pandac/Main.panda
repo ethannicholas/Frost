@@ -4,6 +4,7 @@ uses org.pandalanguage.pandac.parser.Lexer
 uses org.pandalanguage.pandac.parser.Parser
 uses org.pandalanguage.pandac.parser.TokenKind
 
+@final
 class Main {
     class Format {
         constant EXECUTABLE := 918

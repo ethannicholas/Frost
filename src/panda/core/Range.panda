@@ -1,5 +1,6 @@
 package panda.core
 
+@final
 @specialize
 class Range<T> : Value {
     def start:T

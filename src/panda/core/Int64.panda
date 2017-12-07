@@ -3,6 +3,7 @@ package panda.core
 
 uses panda.unsafe.Pointer
 
+@final
 class Int64 : Value (Key<Int64>, Comparable<Int64>) {
     constant MIN:Int64 := -9223372036854775808
 

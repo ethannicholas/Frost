@@ -2,6 +2,7 @@ package panda.core
 
 uses panda.unsafe.Pointer
 
+@final
 class MutableString {
     @private
     constant DEFAULT_SIZE := 16

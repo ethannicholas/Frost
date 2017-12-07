@@ -1,5 +1,6 @@
 package org.pandalanguage.pandac
 
+@final
 class Scanner {
     @private
     constant INLINE_THRESHOLD := 50

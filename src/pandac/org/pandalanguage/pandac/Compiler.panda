@@ -3,6 +3,7 @@ package org.pandalanguage.pandac
 uses org.pandalanguage.pandac.parser.Parser
 uses org.pandalanguage.pandac.parser.Token
 
+@final
 class Compiler (ErrorReporter) {
     constant RANGE_NAME := "panda.core.Range"
 

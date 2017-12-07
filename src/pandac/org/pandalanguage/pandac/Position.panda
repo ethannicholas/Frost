@@ -1,5 +1,6 @@
 package org.pandalanguage.pandac
 
+@final
 class Position : Immutable {
     def file:String
 

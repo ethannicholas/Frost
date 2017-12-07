@@ -1,5 +1,6 @@
 package org.pandalanguage.pandac
 
+@final
 class FieldDecl : Symbol {
     class Kind {
         constant VAR      := 10000

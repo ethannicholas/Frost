@@ -1,5 +1,6 @@
 package org.pandalanguage.pandac
 
+@final
 class Alias : Symbol {
     def fullName:String
 
