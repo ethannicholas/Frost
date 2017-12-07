@@ -360,6 +360,7 @@ void panda$collections$HashMap$remove$panda$collections$HashMap$K(panda$collecti
     }
     $l120:;
     next126 = e113->next;
+    PANDA_ASSERT(((panda$core$Bit) { next126 != NULL }).value);
     e113->next = next126->next;
     panda$core$Int64 $tmp127 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(self->_count, ((panda$core$Int64) { 1 }));
     self->_count = $tmp127;
@@ -556,8 +557,10 @@ panda$core$Int64 panda$collections$HashMap$get_count$R$panda$core$Int64(panda$co
     return self->_count;
 }
 panda$core$Bit panda$collections$HashMap$$EQ$panda$collections$Map$LTpanda$collections$HashMap$K$Cpanda$collections$HashMap$V$GT$R$panda$core$Bit(panda$collections$HashMap* self, panda$collections$Map* p_other) {
+    PANDA_ASSERT(((panda$core$Bit) { false }).value);
 }
 panda$core$Bit panda$collections$HashMap$$NEQ$panda$collections$Map$LTpanda$collections$HashMap$K$Cpanda$collections$HashMap$V$GT$R$panda$core$Bit(panda$collections$HashMap* self, panda$collections$Map* p_other) {
+    PANDA_ASSERT(((panda$core$Bit) { false }).value);
 }
 panda$core$String* panda$collections$HashMap$convert$R$panda$core$String(panda$collections$HashMap* self) {
     panda$core$MutableString* result234;

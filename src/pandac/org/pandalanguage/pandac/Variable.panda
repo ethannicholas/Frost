@@ -5,21 +5,33 @@ Represents a var, def, constant, or property.
 ====================================================================================================
 @final
 class Variable : Symbol {
+    class Kind {
+        constant VAR      := 10000
+        constant DEF      := 10001
+        constant CONSTANT := 10002
+        constant PROPERTY := 10003
+    }
+
     class Storage {
         constant LOCAL     := 1819
         constant PARAMETER := 1820
         constant GLOBAL    := 1821
     }
 
+    def varKind:Int
+
     def type:Type
 
     def storage:Int
 
-    init(offset:Int, name:String, type:Type) {
-        init(offset, name, type, Storage.LOCAL)
+    def initialValue:IRNode? := null
+
+    init(offset:Int, kind:Int, name:String, type:Type) {
+        init(offset, kind, name, type, Storage.LOCAL)
     }
 
-    init(offset:Int, name:String, type:Type, storage:Int) {
+    init(offset:Int, kind:Int, name:String, type:Type, storage:Int) {
+        self.varKind := kind
         self.type := type
         self.storage := storage
         super.init(Symbol.Kind.VARIABLE, offset, name)

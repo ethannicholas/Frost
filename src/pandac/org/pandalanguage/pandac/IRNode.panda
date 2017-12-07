@@ -53,6 +53,11 @@ class IRNode {
         -- us to handle cases like this.
         constant UNRESOLVED_INDEX            := 1040
         constant PREFIX                      := 1041
+        -- [value, when0, when1...]
+        constant MATCH                       := 1042
+        -- [value0, value1, ..., block]
+        constant WHEN                        := 1042
+        constant OTHERWISE                   := 1043
     }
 
     def kind:Int

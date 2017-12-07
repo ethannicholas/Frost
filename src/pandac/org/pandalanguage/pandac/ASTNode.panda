@@ -185,8 +185,6 @@ class ASTNode : Immutable {
             when Kind.DOT:
                 assert children.get_count() = 1
                 return "\{children[0]}.\{payload}"
-            when Kind.BIT:
-                return payload.convert()
             when Kind.IF:
                 assert children.get_count() = 2 | children.get_count() = 3
                 def result := "if \{children[0]} \{children[1]}"

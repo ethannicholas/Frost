@@ -250,6 +250,7 @@ void panda$collections$IdentityMap$remove$panda$collections$IdentityMap$K(panda$
     }
     $l70:;
     next72 = e67->next;
+    PANDA_ASSERT(((panda$core$Bit) { next72 != NULL }).value);
     e67->next = next72->next;
     panda$core$Int64 $tmp73 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(self->_count, ((panda$core$Int64) { 1 }));
     self->_count = $tmp73;
@@ -432,12 +433,16 @@ panda$core$Int64 panda$collections$IdentityMap$get_count$R$panda$core$Int64(pand
     return self->_count;
 }
 panda$core$Bit panda$collections$IdentityMap$$EQ$panda$collections$Map$LTpanda$collections$IdentityMap$K$Cpanda$collections$IdentityMap$V$GT$R$panda$core$Bit(panda$collections$IdentityMap* self, panda$collections$Map* p_other) {
+    PANDA_ASSERT(((panda$core$Bit) { false }).value);
 }
 panda$core$Bit panda$collections$IdentityMap$$NEQ$panda$collections$Map$LTpanda$collections$IdentityMap$K$Cpanda$collections$IdentityMap$V$GT$R$panda$core$Bit(panda$collections$IdentityMap* self, panda$collections$Map* p_other) {
+    PANDA_ASSERT(((panda$core$Bit) { false }).value);
 }
 panda$collections$Iterator* panda$collections$IdentityMap$keys$R$panda$collections$Iterator$LTpanda$collections$IdentityMap$K$GT(panda$collections$IdentityMap* self) {
+    PANDA_ASSERT(((panda$core$Bit) { false }).value);
 }
 panda$collections$Iterator* panda$collections$IdentityMap$values$R$panda$collections$Iterator$LTpanda$collections$IdentityMap$V$GT(panda$collections$IdentityMap* self) {
+    PANDA_ASSERT(((panda$core$Bit) { false }).value);
 }
 panda$core$String* panda$collections$IdentityMap$convert$R$panda$core$String(panda$collections$IdentityMap* self) {
     panda$core$MutableString* result176;

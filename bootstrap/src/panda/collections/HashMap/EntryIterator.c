@@ -53,24 +53,27 @@ panda$core$Bit panda$collections$HashMap$EntryIterator$get_done$R$panda$core$Bit
     return $tmp12;
 }
 panda$collections$HashMap$Entry* panda$collections$HashMap$EntryIterator$next$R$panda$collections$HashMap$Entry$LTpanda$collections$HashMap$EntryIterator$K$Cpanda$collections$HashMap$EntryIterator$V$GT(panda$collections$HashMap$EntryIterator* self) {
-    panda$collections$HashMap$Entry* result13;
-    result13 = self->entry;
+    panda$collections$HashMap$Entry* result14;
+    PANDA_ASSERT(((panda$core$Bit) { self->entry != NULL }).value);
+    panda$core$Bit $tmp13 = panda$core$Int64$$LT$panda$core$Int64$R$panda$core$Bit(self->bucket, self->map->bucketCount);
+    PANDA_ASSERT($tmp13.value);
+    result14 = self->entry;
     self->entry = self->entry->next;
-    $l14:;
-    if (!((panda$core$Bit) { self->entry == NULL }).value) goto $l15;
+    $l15:;
+    if (!((panda$core$Bit) { self->entry == NULL }).value) goto $l16;
     {
-        panda$core$Int64 $tmp16 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->bucket, ((panda$core$Int64) { 1 }));
-        self->bucket = $tmp16;
-        panda$core$Bit $tmp17 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(self->bucket, self->map->bucketCount);
-        if ($tmp17.value) {
+        panda$core$Int64 $tmp17 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->bucket, ((panda$core$Int64) { 1 }));
+        self->bucket = $tmp17;
+        panda$core$Bit $tmp18 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(self->bucket, self->map->bucketCount);
+        if ($tmp18.value) {
         {
-            goto $l15;
+            goto $l16;
         }
         }
         self->entry = self->map->contents[self->bucket.value];
     }
-    goto $l14;
-    $l15:;
-    return result13;
+    goto $l15;
+    $l16:;
+    return result14;
 }
 

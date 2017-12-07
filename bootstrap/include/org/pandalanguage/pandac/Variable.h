@@ -7,6 +7,7 @@ typedef struct panda$core$Class panda$core$Class;
 #include "panda/core/Int64.h"
 typedef struct panda$core$String panda$core$String;
 typedef struct org$pandalanguage$pandac$Type org$pandalanguage$pandac$Type;
+typedef struct org$pandalanguage$pandac$IRNode org$pandalanguage$pandac$IRNode;
 
 typedef struct org$pandalanguage$pandac$Variable {
     panda$core$Class* $class;
@@ -14,8 +15,10 @@ typedef struct org$pandalanguage$pandac$Variable {
     panda$core$Int64 kind;
     panda$core$Int64 offset;
     panda$core$String* name;
+    panda$core$Int64 varKind;
     org$pandalanguage$pandac$Type* type;
     panda$core$Int64 storage;
+    org$pandalanguage$pandac$IRNode* initialValue;
 } org$pandalanguage$pandac$Variable;
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"
@@ -29,8 +32,8 @@ typedef struct org$pandalanguage$pandac$Variable org$pandalanguage$pandac$Variab
 typedef struct panda$core$String panda$core$String;
 typedef struct org$pandalanguage$pandac$Type org$pandalanguage$pandac$Type;
 
-void org$pandalanguage$pandac$Variable$init$panda$core$Int64$panda$core$String$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$Variable* self, panda$core$Int64 p_offset, panda$core$String* p_name, org$pandalanguage$pandac$Type* p_type);
-void org$pandalanguage$pandac$Variable$init$panda$core$Int64$panda$core$String$org$pandalanguage$pandac$Type$panda$core$Int64(org$pandalanguage$pandac$Variable* self, panda$core$Int64 p_offset, panda$core$String* p_name, org$pandalanguage$pandac$Type* p_type, panda$core$Int64 p_storage);
+void org$pandalanguage$pandac$Variable$init$panda$core$Int64$panda$core$Int64$panda$core$String$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$Variable* self, panda$core$Int64 p_offset, panda$core$Int64 p_kind, panda$core$String* p_name, org$pandalanguage$pandac$Type* p_type);
+void org$pandalanguage$pandac$Variable$init$panda$core$Int64$panda$core$Int64$panda$core$String$org$pandalanguage$pandac$Type$panda$core$Int64(org$pandalanguage$pandac$Variable* self, panda$core$Int64 p_offset, panda$core$Int64 p_kind, panda$core$String* p_name, org$pandalanguage$pandac$Type* p_type, panda$core$Int64 p_storage);
 panda$core$String* org$pandalanguage$pandac$Variable$convert$R$panda$core$String(org$pandalanguage$pandac$Variable* self);
 
 #endif

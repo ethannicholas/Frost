@@ -1273,6 +1273,10 @@ class LLVMCodeGenerator (CodeGenerator) {
             args.add(getReference(call.children[i], out))
         }
         def end := nextLabel()
+        if args.get_count() != m.parameters.get_count() {
+            Console.printLine("parameter count mismatch in \{call}")
+            System.crash()
+        }
         def inline := InlineContext("$inline\{varCount}", selfRef, args, end)
         inlineContext.push(inline)
         def old := currentMethod
@@ -2487,6 +2491,57 @@ class LLVMCodeGenerator (CodeGenerator) {
         createBlock(ifTrue, out)
     }
 
+    method writeMatch(m:IRNode, out:IndentedOutputStream) {
+        assert m.kind = IRNode.Kind.MATCH
+        def valueStruct := getTypedReference(m.children[0], out)
+        def numberClass := compiler.getClass(m.children[0].type)
+        def value := nextVar()
+        out.printLine("\{value} = extractvalue \{valueStruct}, 0")
+        def f := numberClass.symbolTable["value"]->Symbol->FieldDecl
+        compiler.resolve(f)
+        def switchType := type(f.type)
+        out.print("switch \{switchType} \{value}, ")
+        def endLabel := nextLabel()
+        def whenLabels := Array<String>()
+        def otherwiseLabel:String
+        if m.children[m.children.get_count() - 1].kind = IRNode.Kind.OTHERWISE {
+            otherwiseLabel := nextLabel()
+        }
+        else {
+            otherwiseLabel := endLabel
+        }
+        out.printLine("label %\{otherwiseLabel} [")
+        for i in 1 .. m.children.get_count() {
+            def w := m.children[i]
+            if w.kind = IRNode.Kind.OTHERWISE {
+                continue
+            }
+            assert w.kind = IRNode.Kind.WHEN
+            def label := nextLabel()
+            whenLabels.add(label)
+            for i in 0 .. w.children.get_count() - 1 {
+                def number := compiler.getConstantInt(w.children[i])
+                out.printLine("        \{switchType} \{number}, label %\{label}")
+            }
+        }
+        out.printLine("    ]")
+        for i in 1 .. m.children.get_count() {
+            def w := m.children[i]
+            def block := w.children[w.children.get_count() - 1]
+            if i - 1 >= whenLabels.get_count() {
+                createBlock(otherwiseLabel, out)
+            }
+            else {
+                createBlock(whenLabels[i - 1], out)
+            }
+            writeBlock(block, out)
+            if !endsWithBranch(block) {
+                out.printLine("br label %\{endLabel}")
+            }
+        }
+        createBlock(endLabel, out)
+    }
+
     method writeStatement(stmt:IRNode, out:IndentedOutputStream) {
         match stmt.kind {
             when IRNode.Kind.BINARY:
@@ -2515,6 +2570,8 @@ class LLVMCodeGenerator (CodeGenerator) {
                 writeContinue(stmt, out)
             when IRNode.Kind.ASSERT:
                 writeAssert(stmt, out)
+            when IRNode.Kind.MATCH:
+                writeMatch(stmt, out)
             otherwise:
                 assert false, "unsupported statement \{stmt}"
         }

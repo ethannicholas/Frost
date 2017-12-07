@@ -4,12 +4,12 @@
 #include "org/pandalanguage/pandac/MethodDecl.h"
 #include "panda/collections/ListView.h"
 #include "panda/collections/HashMap.h"
+#include "panda/core/Bit.h"
 #include "panda/core/Range.LTpanda/core/Int64.GT.h"
 #include "panda/core/Int64.h"
 #include "panda/collections/CollectionView.h"
 #include "org/pandalanguage/pandac/ClassDecl.h"
 #include "panda/collections/List.h"
-#include "panda/core/Bit.h"
 #include "panda/core/String.h"
 #include "org/pandalanguage/pandac/Symbol.h"
 #include "org/pandalanguage/pandac/ClassDecl/GenericParameter.h"
@@ -39,6 +39,7 @@ void org$pandalanguage$pandac$MethodRef$init$org$pandalanguage$pandac$MethodDecl
     $tmp1->refCount.value = 1;
     panda$collections$HashMap$init($tmp1);
     self->typeMap = $tmp1;
+    PANDA_ASSERT(p_value->resolved.value);
     self->value = p_value;
     self->types = p_types;
     ITable* $tmp4 = ((panda$collections$CollectionView*) p_value->owner->parameters)->$class->itable;

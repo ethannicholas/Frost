@@ -1715,6 +1715,30 @@ class CCodeGenerator (CodeGenerator) {
     method writeAssert(a:IRNode, out:IndentedOutputStream) {
         assert a.kind = IRNode.Kind.ASSERT
         assert a.children.get_count() = 1 | a.children.get_count() = 2
+        out.printLine("PANDA_ASSERT(\{getReference(a.children[0], out)});")
+    }
+
+    method writeMatch(m:IRNode, out:IndentedOutputStream) {
+        out.printLine("switch (\{getReference(m.children[0], out)}.value) {")
+        out.level += 1
+        for i in 1 .. m.children.get_count() {
+            def w := m.children[i]
+            if w.kind = IRNode.Kind.WHEN {
+                for j in 0 .. w.children.get_count() - 1 {
+                    out.printLine("case \{compiler.getConstantInt(w.children[j])}:")
+                }
+                writeBlock(w.children[w.children.get_count() - 1], out)
+                out.printLine("break;")
+            }
+            else {
+                assert w.kind = IRNode.Kind.OTHERWISE
+                assert w.children.get_count() = 1
+                out.printLine("default:")
+                writeBlock(w.children[0], out)
+            }
+        }
+        out.level -= 1
+        out.printLine("}")
     }
 
     method writeStatement(stmt:IRNode, out:IndentedOutputStream) {
@@ -1745,8 +1769,10 @@ class CCodeGenerator (CodeGenerator) {
                 writeContinue(stmt, out)
             when IRNode.Kind.ASSERT:
                 writeAssert(stmt, out)
+            when IRNode.Kind.MATCH:
+                writeMatch(stmt, out)
             otherwise:
-                assert false, "unsupported statement \{stmt}"
+                assert false, "unsupported statement \{stmt.kind}"
         }
     }
 

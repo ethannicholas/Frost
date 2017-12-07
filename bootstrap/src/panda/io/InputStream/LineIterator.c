@@ -29,6 +29,7 @@ panda$core$Bit panda$io$InputStream$LineIterator$get_done$R$panda$core$Bit(panda
 }
 panda$core$String* panda$io$InputStream$LineIterator$next$R$panda$core$String(panda$io$InputStream$LineIterator* self) {
     panda$core$String* result2;
+    PANDA_ASSERT(((panda$core$Bit) { self->_next != NULL }).value);
     result2 = self->_next;
     (($fn3) self->$class->vtable[4])(self);
     return result2;

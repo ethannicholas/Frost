@@ -2335,7 +2335,7 @@ class Compiler (ErrorReporter) {
             assert list.type.typeKind = Type.Kind.GENERIC
             elementType := list.type.subtypes[1]
         }
-        def target := compileTarget(astTarget, null, elementType)
+        def target := compileTarget(astTarget, Variable.Kind.DEF, null, elementType)
         if target = null {
             return null
         }
@@ -2361,7 +2361,7 @@ class Compiler (ErrorReporter) {
         -- }
         assert iterator.type.typeKind = Type.Kind.GENERIC &
                 iterator.type.subtypes[0] = Type.Iterator()
-        def target := compileTarget(astTarget, null, iterator.type.subtypes[1])
+        def target := compileTarget(astTarget, Variable.Kind.DEF, null, iterator.type.subtypes[1])
         if target = null {
             return null
         }
@@ -2372,7 +2372,7 @@ class Compiler (ErrorReporter) {
         subtypes.add(target.target.type)
         def iterType := Type("\{subtypes[0]}<\{subtypes[1]}>", Type.Kind.GENERIC, offset, subtypes,
                 true)
-        def iter := Variable(iterator.offset, targetVar.name + "$Iter", iterType)
+        def iter := Variable(iterator.offset, Variable.Kind.DEF, targetVar.name + "$Iter", iterType)
         symbolTable.add(iter)
         def statements := Array<IRNode>()
         def declChildren := Array<IRNode>() -- FIXME literal
@@ -2527,7 +2527,8 @@ class Compiler (ErrorReporter) {
         }
     }
 
-    method compileTarget(t:ASTNode, rawValue:IRNode?, valueType:Type?):CompileTargetResult? {
+    method compileTarget(t:ASTNode, kind:Int-*Variable.Kind*-, rawValue:IRNode?,
+            valueType:Type?):CompileTargetResult? {
         var value:IRNode? := rawValue -- FIXME use var on parameter
         assert value = null | valueType = null
         match t.kind {
@@ -2557,7 +2558,7 @@ class Compiler (ErrorReporter) {
                     }
                     assert value.type = type
                 }
-                def v := Variable(t.offset, t.payload->String, type)
+                def v := Variable(t.offset, kind, t.payload->String, type)
                 symbolTable.add(v)
                 return CompileTargetResult(IRNode(IRNode.Kind.VARIABLE_REFERENCE, v.offset, v.type,
                         v), value)
@@ -2568,7 +2569,7 @@ class Compiler (ErrorReporter) {
         }
     }
 
-    method compileDeclaration(d:ASTNode):IRNode? {
+    method compileDeclaration(d:ASTNode, varKind:Int):IRNode? {
         assert d.kind = ASTNode.Kind.DECLARATION
         assert d.children.get_count() = 1 | d.children.get_count() = 2
         def value:IRNode?
@@ -2581,13 +2582,16 @@ class Compiler (ErrorReporter) {
         else {
             value := null
         }
-        def target := compileTarget(d.children[0], value, null)
+        def target := compileTarget(d.children[0], varKind, value, null)
         if target = null {
             return null
         }
         def children := Array<IRNode>()
         children.add(target.target)
         if target.value != null {
+            assert target.target.kind = IRNode.Kind.VARIABLE_REFERENCE
+            def v := target.target.payload->Variable
+            v.initialValue := target.value -- FIXME parens
             children.add(target.value)
         }
         return IRNode(IRNode.Kind.DECLARATION, d.offset, children)
@@ -2698,23 +2702,32 @@ class Compiler (ErrorReporter) {
                v.kind = ASTNode.Kind.DEF |
                v.kind = ASTNode.Kind.PROPERTY |
                v.kind = ASTNode.Kind.CONSTANT
+        def nodeKind:Int
+        def varKind:Int
+        match v.kind {
+            when ASTNode.Kind.VAR:
+                nodeKind := IRNode.Kind.VAR
+                varKind := Variable.Kind.VAR
+            when ASTNode.Kind.DEF:
+                nodeKind := IRNode.Kind.DEF
+                varKind := Variable.Kind.DEF
+            when ASTNode.Kind.CONSTANT:
+                nodeKind := IRNode.Kind.CONSTANT
+                varKind := Variable.Kind.CONSTANT
+            when ASTNode.Kind.PROPERTY:
+                nodeKind := IRNode.Kind.PROPERTY
+                varKind := Variable.Kind.PROPERTY
+            otherwise: assert false
+        }
         def decls := Array<IRNode>()
         for astDecl in v.children {
-            def decl := compileDeclaration(astDecl)
+            def decl := compileDeclaration(astDecl, varKind)
             if decl = null {
                 return null
             }
             decls.add(decl)
         }
-        def kind:Int
-        match v.kind {
-            when ASTNode.Kind.VAR:      kind := IRNode.Kind.VAR
-            when ASTNode.Kind.DEF:      kind := IRNode.Kind.DEF
-            when ASTNode.Kind.PROPERTY: kind := IRNode.Kind.PROPERTY
-            when ASTNode.Kind.CONSTANT: kind := IRNode.Kind.CONSTANT
-            otherwise: assert false
-        }
-        return IRNode(kind, v.offset, decls)
+        return IRNode(nodeKind, v.offset, decls)
     }
 
     method compileWhenTest(value:Variable, test:ASTNode):IRNode? {
@@ -2728,7 +2741,7 @@ class Compiler (ErrorReporter) {
         return call(target, "=", callChildren)
     }
 
-    method compileWhen(value:Variable, w:ASTNode):IRNode? {
+    method compileChainedIfWhen(value:Variable, w:ASTNode):IRNode? {
         assert w.kind = ASTNode.Kind.WHEN
         assert w.children.get_count() >= 1
         assert w.children[0].kind = ASTNode.Kind.EXPRESSIONS
@@ -2765,15 +2778,9 @@ class Compiler (ErrorReporter) {
         return IRNode(IRNode.Kind.IF, w.offset, children)
     }
 
-    method compileMatch(m:ASTNode):IRNode? {
-        assert m.kind = ASTNode.Kind.MATCH
-        assert m.children.get_count() >= 1
-        def value := resolve(compileExpression(m.children[0]))
-        if value = null {
-            return null
-        }
+    method compileChainedIfMatch(m:ASTNode, value:IRNode):IRNode? {
         def children := Array<IRNode>()
-        def valueVar := Variable(m.offset, "$match$\{m.offset}", value.type)
+        def valueVar := Variable(m.offset, Variable.Kind.DEF, "$match$\{m.offset}", value.type)
         def declChildren := Array<IRNode>() -- FIXME literal
         declChildren.add(IRNode(IRNode.Kind.VARIABLE_REFERENCE, value.offset, valueVar.type,
                 valueVar))
@@ -2785,7 +2792,7 @@ class Compiler (ErrorReporter) {
             def c := m.children[i]
             match c.kind {
                 when ASTNode.Kind.WHEN:
-                    def w := compileWhen(valueVar, c)
+                    def w := compileChainedIfWhen(valueVar, c)
                     if w = null {
                         return null
                     }
@@ -2811,6 +2818,123 @@ class Compiler (ErrorReporter) {
             children.removeIndex(children.get_count() - 1)
         }
         return IRNode(IRNode.Kind.BLOCK, m.offset, children)
+    }
+
+    method compileWhen(type:Type, w:ASTNode):IRNode? {
+        assert w.kind = ASTNode.Kind.WHEN
+        assert w.children.get_count() >= 1
+        assert w.children[0].kind = ASTNode.Kind.EXPRESSIONS
+        assert w.children[0].children.get_count() >= 1
+        def children := Array<IRNode>()
+        for expr in w.children[0].children {
+            def compiled := coerce(compileExpression(expr), type)
+            if compiled = null {
+                return null
+            }
+            children.add(compiled)
+        }
+        symbolTable := SymbolTable(symbolTable)
+        def statements := Array<IRNode>()
+        for i in 1 .. w.children.get_count() {
+            def statement := compileStatement(w.children[i])
+            if statement = null {
+                return null
+            }
+            statements.add(statement)
+        }
+        symbolTable := symbolTable.parents[0]
+        children.add(IRNode(IRNode.Kind.BLOCK, w.offset, statements))
+        return IRNode(IRNode.Kind.WHEN, w.offset, children)
+    }
+
+    method compileOtherwise(o:ASTNode):IRNode? {
+        assert o.kind = ASTNode.Kind.OTHERWISE
+        def children := Array<IRNode>()
+        symbolTable := SymbolTable(symbolTable)
+        def statements := Array<IRNode>()
+        for s in o.children {
+            def statement := compileStatement(s)
+            if statement = null {
+                return null
+            }
+            statements.add(statement)
+        }
+        symbolTable := symbolTable.parents[0]
+        children.add(IRNode(IRNode.Kind.BLOCK, o.offset, statements))
+        return IRNode(IRNode.Kind.OTHERWISE, o.offset, children)
+    }
+
+    function isConstantInt(expr:IRNode):Bit {
+        match expr.kind {
+            when IRNode.Kind.INT:
+                return true
+            when IRNode.Kind.CONSTRUCT:
+                return expr.type.isNumber() & isConstantInt(expr.children[0].children[0])
+            when IRNode.Kind.FIELD_REFERENCE:
+                def f := expr.payload->FieldDecl
+                assert f.resolved
+                return f.fieldKind = FieldDecl.Kind.CONSTANT & f.value != null &
+                        isConstantInt(f.value)
+            when IRNode.Kind.VARIABLE_REFERENCE:
+                def v := expr.payload->Variable
+                return v.varKind = Variable.Kind.DEF | v.varKind = Variable.Kind.CONSTANT &
+                        v.initialValue != null & isConstantInt(v.initialValue)
+            otherwise:
+                return false
+        }
+    }
+
+
+    function getConstantInt(expr:IRNode):UInt64 {
+        assert isConstantInt(expr)
+        match expr.kind {
+            when IRNode.Kind.INT:
+                return expr.payload->UInt64
+            when IRNode.Kind.CONSTRUCT:
+                return getConstantInt(expr.children[0].children[0])
+            when IRNode.Kind.FIELD_REFERENCE:
+                def f := expr.payload->FieldDecl
+                return getConstantInt(f.value)
+            when IRNode.Kind.VARIABLE_REFERENCE:
+                def v := expr.payload->Variable
+                return getConstantInt(v.initialValue)
+            otherwise:
+               assert false
+        }        
+    }
+
+
+    method compileMatch(m:ASTNode):IRNode? {
+        assert m.kind = ASTNode.Kind.MATCH
+        assert m.children.get_count() >= 1
+        def value := resolve(compileExpression(m.children[0]))
+        if value = null {
+            return null
+        }
+        if !value.type.isNumber() {
+            return compileChainedIfMatch(m, value)
+        }
+        def children := Array<IRNode>()
+        children.add(value)
+        for rawWhen in m.children[1..] {
+            if rawWhen.kind = ASTNode.Kind.OTHERWISE {
+                def o := compileOtherwise(rawWhen)
+                if o = null {
+                    return null
+                }
+                children.add(o)
+                continue
+            }
+            def w := compileWhen(value.type, rawWhen)
+            if w = null {
+                return null
+            }
+            if !isConstantInt(w.children[0]) {
+                return compileChainedIfMatch(m, value)
+            }
+            children.add(w)
+        }
+        return IRNode(IRNode.Kind.MATCH, m.offset, children)
     }
 
     method compileStatement(s:ASTNode):IRNode? {
@@ -2846,7 +2970,8 @@ class Compiler (ErrorReporter) {
         assert m.body != null
         def symbols := SymbolTable(symbolTable)
         for p in m.parameters {
-            symbols.add(Variable(m.offset, p.name, p.type, Variable.Storage.PARAMETER))
+            symbols.add(Variable(m.offset, Variable.Kind.DEF, p.name, p.type,
+                    Variable.Storage.PARAMETER))
         }
         symbolTable := symbols
         def fieldInitializers := Array<IRNode>()

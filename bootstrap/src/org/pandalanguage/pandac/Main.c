@@ -563,6 +563,7 @@ void org$pandalanguage$pandac$Main$run$panda$collections$ListView$LTpanda$core$S
                 }
                 else {
                 {
+                    PANDA_ASSERT(((panda$core$Bit) { false }).value);
                 }
                 }
                 }
@@ -627,6 +628,7 @@ void org$pandalanguage$pandac$Main$run$panda$collections$ListView$LTpanda$core$S
         }
         else {
         {
+            PANDA_ASSERT(((panda$core$Bit) { false }).value);
         }
         }
         }
