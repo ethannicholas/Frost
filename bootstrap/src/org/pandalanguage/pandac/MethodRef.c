@@ -4,7 +4,7 @@
 #include "org/pandalanguage/pandac/MethodDecl.h"
 #include "panda/collections/ListView.h"
 #include "panda/collections/HashMap.h"
-#include "panda/core/SpecializedRange.LTpanda/core/Int64.GT.h"
+#include "panda/core/Range.LTpanda/core/Int64.GT.h"
 #include "panda/core/Int64.h"
 #include "panda/collections/CollectionView.h"
 #include "org/pandalanguage/pandac/ClassDecl.h"
@@ -39,7 +39,7 @@ static panda$core$String $s74 = { (panda$core$Class*) &panda$core$String$class, 
 static panda$core$String $s77 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x29", 1, 1 };
 
 void org$pandalanguage$pandac$MethodRef$init$org$pandalanguage$pandac$MethodDecl$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT(org$pandalanguage$pandac$MethodRef* self, org$pandalanguage$pandac$MethodDecl* p_value, panda$collections$ListView* p_types) {
-    panda$core$SpecializedRange$LTpanda$core$Int64$GT $tmp3;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp3;
     panda$collections$HashMap* $tmp1 = (panda$collections$HashMap*) malloc(56);
     $tmp1->$class = (panda$core$Class*) &panda$collections$HashMap$class;
     $tmp1->refCount.value = 1;
@@ -60,7 +60,7 @@ void org$pandalanguage$pandac$MethodRef$init$org$pandalanguage$pandac$MethodDecl
     $fn10 $tmp9 = $tmp8->methods[0];
     panda$core$Int64 $tmp11 = $tmp9(((panda$collections$CollectionView*) p_types));
     panda$core$Int64 $tmp12 = panda$core$Int64$min$panda$core$Int64$R$panda$core$Int64($tmp7, $tmp11);
-    panda$core$SpecializedRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp3, ((panda$core$Int64) { 0 }), $tmp12, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp3, ((panda$core$Int64) { 0 }), $tmp12, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
     int64_t $tmp14 = $tmp3.start.value;
     panda$core$Int64 i13 = { $tmp14 };
     int64_t $tmp16 = $tmp3.end.value;

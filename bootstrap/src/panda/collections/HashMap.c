@@ -8,7 +8,7 @@
 #include "panda/core/Bit.h"
 #include "panda/collections/Map.h"
 #include "panda/core/Int64.h"
-#include "panda/core/SpecializedRange.LTpanda/core/Int64.GT.h"
+#include "panda/core/Range.LTpanda/core/Int64.GT.h"
 #include "panda/collections/Key.h"
 #include "panda/collections/HashMap/Entry.h"
 #include "panda/collections/HashMap/KeyIterator.h"
@@ -81,14 +81,14 @@ static panda$core$String $s274 = { (panda$core$Class*) &panda$core$String$class,
 static panda$core$String $s286 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x7D", 1, 1 };
 
 void panda$collections$HashMap$init(panda$collections$HashMap* self) {
-    panda$core$SpecializedRange$LTpanda$core$Int64$GT $tmp2;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp2;
     self->changeCount = ((panda$core$Int64) { 0 });
     panda$core$Int64 $tmp1 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->changeCount, ((panda$core$Int64) { 1 }));
     self->changeCount = $tmp1;
     self->_count = ((panda$core$Int64) { 0 });
     self->bucketCount = ((panda$core$Int64) { 16 });
     self->contents = ((panda$collections$HashMap$Entry**) malloc(self->bucketCount.value * 40));
-    panda$core$SpecializedRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp2, ((panda$core$Int64) { 0 }), self->bucketCount, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp2, ((panda$core$Int64) { 0 }), self->bucketCount, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
     int64_t $tmp4 = $tmp2.start.value;
     panda$core$Int64 i3 = { $tmp4 };
     int64_t $tmp6 = $tmp2.end.value;
@@ -376,14 +376,14 @@ void panda$collections$HashMap$remove$panda$collections$HashMap$K(panda$collecti
     self->_count = $tmp128;
 }
 void panda$collections$HashMap$clear(panda$collections$HashMap* self) {
-    panda$core$SpecializedRange$LTpanda$core$Int64$GT $tmp130;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp130;
     panda$core$Int64 $tmp129 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->changeCount, ((panda$core$Int64) { 1 }));
     self->changeCount = $tmp129;
     self->_count = ((panda$core$Int64) { 0 });
     free(self->contents);
     self->bucketCount = ((panda$core$Int64) { 16 });
     self->contents = ((panda$collections$HashMap$Entry**) malloc(self->bucketCount.value * 40));
-    panda$core$SpecializedRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp130, ((panda$core$Int64) { 0 }), self->bucketCount, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp130, ((panda$core$Int64) { 0 }), self->bucketCount, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
     int64_t $tmp132 = $tmp130.start.value;
     panda$core$Int64 i131 = { $tmp132 };
     int64_t $tmp134 = $tmp130.end.value;
@@ -434,8 +434,8 @@ void panda$collections$HashMap$clear(panda$collections$HashMap* self) {
 void panda$collections$HashMap$incrementCount(panda$collections$HashMap* self) {
     panda$collections$HashMap$Entry** oldContents164;
     panda$core$Int64 oldBucketCount165;
-    panda$core$SpecializedRange$LTpanda$core$Int64$GT $tmp167;
-    panda$core$SpecializedRange$LTpanda$core$Int64$GT $tmp198;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp167;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp198;
     panda$collections$HashMap$Entry* e217;
     panda$core$Int64 $tmp162 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->_count, ((panda$core$Int64) { 1 }));
     self->_count = $tmp162;
@@ -447,7 +447,7 @@ void panda$collections$HashMap$incrementCount(panda$collections$HashMap* self) {
         panda$core$Int64 $tmp166 = panda$core$Int64$$MUL$panda$core$Int64$R$panda$core$Int64(self->bucketCount, ((panda$core$Int64) { 2 }));
         self->bucketCount = $tmp166;
         self->contents = ((panda$collections$HashMap$Entry**) malloc(self->bucketCount.value * 40));
-        panda$core$SpecializedRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp167, ((panda$core$Int64) { 0 }), self->bucketCount, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
+        panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp167, ((panda$core$Int64) { 0 }), self->bucketCount, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
         int64_t $tmp169 = $tmp167.start.value;
         panda$core$Int64 i168 = { $tmp169 };
         int64_t $tmp171 = $tmp167.end.value;
@@ -494,7 +494,7 @@ void panda$collections$HashMap$incrementCount(panda$collections$HashMap* self) {
         panda$core$Int64 $tmp197 = panda$core$Int64$$MUL$panda$core$Int64$R$panda$core$Int64(self->threshold, ((panda$core$Int64) { 2 }));
         self->threshold = $tmp197;
         self->_count = ((panda$core$Int64) { 0 });
-        panda$core$SpecializedRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp198, ((panda$core$Int64) { 0 }), oldBucketCount165, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
+        panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp198, ((panda$core$Int64) { 0 }), oldBucketCount165, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
         int64_t $tmp200 = $tmp198.start.value;
         panda$core$Int64 i199 = { $tmp200 };
         int64_t $tmp202 = $tmp198.end.value;
@@ -573,7 +573,7 @@ panda$core$Bit panda$collections$HashMap$$NEQ$panda$collections$Map$LTpanda$coll
 panda$core$String* panda$collections$HashMap$convert$R$panda$core$String(panda$collections$HashMap* self) {
     panda$core$MutableString* result236;
     panda$core$String* separator241;
-    panda$core$SpecializedRange$LTpanda$core$Int64$GT $tmp243;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp243;
     panda$collections$HashMap$Entry* entry262;
     panda$core$MutableString* $tmp237 = (panda$core$MutableString*) malloc(40);
     $tmp237->$class = (panda$core$Class*) &panda$core$MutableString$class;
@@ -582,7 +582,7 @@ panda$core$String* panda$collections$HashMap$convert$R$panda$core$String(panda$c
     result236 = $tmp237;
     (($fn240) result236->$class->vtable[3])(result236, &$s239);
     separator241 = &$s242;
-    panda$core$SpecializedRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp243, ((panda$core$Int64) { 0 }), self->bucketCount, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp243, ((panda$core$Int64) { 0 }), self->bucketCount, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
     int64_t $tmp245 = $tmp243.start.value;
     panda$core$Int64 i244 = { $tmp245 };
     int64_t $tmp247 = $tmp243.end.value;

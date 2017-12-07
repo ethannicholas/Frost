@@ -23,10 +23,10 @@
 #include "panda/io/File.h"
 #include "panda/collections/MapView.h"
 #include "org/pandalanguage/pandac/ClassDecl/GenericParameter.h"
-#include "panda/core/SpecializedRange.LTpanda/core/Int64.Q.GT.h"
+#include "panda/core/Range.LTpanda/core/Int64.Q.GT.h"
 #include "panda/collections/HashMap.h"
 #include "panda/core/String/Index.h"
-#include "panda/core/SpecializedRange.LTpanda/core/String/Index.Q.GT.h"
+#include "panda/core/Range.LTpanda/core/String/Index.Q.GT.h"
 
 
 org$pandalanguage$pandac$Scanner$class_type org$pandalanguage$pandac$Scanner$class = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Object$class, NULL, { panda$core$Object$convert$R$panda$core$String, panda$core$Object$cleanup, org$pandalanguage$pandac$Scanner$convertType$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$Type, org$pandalanguage$pandac$Scanner$convertAnnotations$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$Annotations, org$pandalanguage$pandac$Scanner$scanFields$org$pandalanguage$pandac$ClassDecl$org$pandalanguage$pandac$ASTNode, org$pandalanguage$pandac$Scanner$scanInit$org$pandalanguage$pandac$ClassDecl$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$MethodDecl$Q, org$pandalanguage$pandac$Scanner$complexity$org$pandalanguage$pandac$ASTNode$R$panda$core$Int64, org$pandalanguage$pandac$Scanner$shouldInline$org$pandalanguage$pandac$Annotations$org$pandalanguage$pandac$ASTNode$Q$R$panda$core$Bit, org$pandalanguage$pandac$Scanner$scanMethod$org$pandalanguage$pandac$ClassDecl$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$MethodDecl$Q, org$pandalanguage$pandac$Scanner$scanClass$panda$io$File$panda$collections$MapView$LTpanda$core$String$Cpanda$core$String$GT$panda$core$String$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$ClassDecl$Q, org$pandalanguage$pandac$Scanner$scanInterface$panda$io$File$panda$collections$MapView$LTpanda$core$String$Cpanda$core$String$GT$panda$core$String$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$ClassDecl$Q, org$pandalanguage$pandac$Scanner$addClass$org$pandalanguage$pandac$ClassDecl$panda$collections$Array$LTorg$pandalanguage$pandac$ClassDecl$GT, org$pandalanguage$pandac$Scanner$scan$panda$io$File$org$pandalanguage$pandac$ASTNode$R$panda$collections$ListView$LTorg$pandalanguage$pandac$ClassDecl$GT} };
@@ -946,9 +946,9 @@ org$pandalanguage$pandac$ClassDecl* org$pandalanguage$pandac$Scanner$scanClass$p
     org$pandalanguage$pandac$MethodDecl* i483;
     org$pandalanguage$pandac$MethodDecl* m492;
     org$pandalanguage$pandac$ClassDecl* inner497;
-    panda$core$SpecializedRange$LTpanda$core$Int64$Q$GT $tmp500;
+    panda$core$Range$LTpanda$core$Int64$Q$GT $tmp500;
     org$pandalanguage$pandac$ClassDecl* cl507;
-    panda$core$SpecializedRange$LTpanda$core$Int64$Q$GT $tmp510;
+    panda$core$Range$LTpanda$core$Int64$Q$GT $tmp510;
     org$pandalanguage$pandac$MethodDecl* defaultInit521;
     panda$core$Bit $tmp366 = panda$core$String$$NEQ$panda$core$String$R$panda$core$Bit(p_contextName, &$s365);
     if ($tmp366.value) {
@@ -1193,8 +1193,8 @@ org$pandalanguage$pandac$ClassDecl* org$pandalanguage$pandac$Scanner$scanClass$p
                         panda$collections$Array$add$panda$collections$Array$T(result456->classes, ((panda$core$Object*) inner497));
                         panda$core$Int64 $tmp501 = panda$core$String$length$R$panda$core$Int64(fullName364);
                         panda$core$Int64 $tmp502 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64($tmp501, ((panda$core$Int64) { 1 }));
-                        panda$core$SpecializedRange$LTpanda$core$Int64$Q$GT$init$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Bit(&$tmp500, ((panda$core$Int64$nullable) { $tmp502, true }), ((panda$core$Int64$nullable) { .nonnull = false }), ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
-                        panda$core$String* $tmp503 = panda$core$String$$IDX$panda$core$SpecializedRange$LTpanda$core$Int64$Q$GT$R$panda$core$String(((org$pandalanguage$pandac$Symbol*) inner497)->name, $tmp500);
+                        panda$core$Range$LTpanda$core$Int64$Q$GT$init$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Bit(&$tmp500, ((panda$core$Int64$nullable) { $tmp502, true }), ((panda$core$Int64$nullable) { .nonnull = false }), ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
+                        panda$core$String* $tmp503 = panda$core$String$$IDX$panda$core$Range$LTpanda$core$Int64$Q$GT$R$panda$core$String(((org$pandalanguage$pandac$Symbol*) inner497)->name, $tmp500);
                         (($fn504) result456->symbolTable->$class->vtable[3])(result456->symbolTable, ((org$pandalanguage$pandac$Symbol*) inner497), $tmp503);
                         panda$collections$Array$add$panda$collections$Array$T(inner497->symbolTable->parents, ((panda$core$Object*) result456->symbolTable));
                         (($fn505) inner497->symbolTable->$class->vtable[3])(inner497->symbolTable, ((org$pandalanguage$pandac$Symbol*) result456), ((panda$core$String*) p_cl->payload));
@@ -1213,8 +1213,8 @@ org$pandalanguage$pandac$ClassDecl* org$pandalanguage$pandac$Scanner$scanClass$p
                         panda$collections$Array$add$panda$collections$Array$T(result456->classes, ((panda$core$Object*) cl507));
                         panda$core$Int64 $tmp511 = panda$core$String$length$R$panda$core$Int64(fullName364);
                         panda$core$Int64 $tmp512 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64($tmp511, ((panda$core$Int64) { 1 }));
-                        panda$core$SpecializedRange$LTpanda$core$Int64$Q$GT$init$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Bit(&$tmp510, ((panda$core$Int64$nullable) { $tmp512, true }), ((panda$core$Int64$nullable) { .nonnull = false }), ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
-                        panda$core$String* $tmp513 = panda$core$String$$IDX$panda$core$SpecializedRange$LTpanda$core$Int64$Q$GT$R$panda$core$String(((org$pandalanguage$pandac$Symbol*) cl507)->name, $tmp510);
+                        panda$core$Range$LTpanda$core$Int64$Q$GT$init$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Bit(&$tmp510, ((panda$core$Int64$nullable) { $tmp512, true }), ((panda$core$Int64$nullable) { .nonnull = false }), ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
+                        panda$core$String* $tmp513 = panda$core$String$$IDX$panda$core$Range$LTpanda$core$Int64$Q$GT$R$panda$core$String(((org$pandalanguage$pandac$Symbol*) cl507)->name, $tmp510);
                         (($fn514) result456->symbolTable->$class->vtable[3])(result456->symbolTable, ((org$pandalanguage$pandac$Symbol*) cl507), $tmp513);
                     }
                     }
@@ -1284,9 +1284,9 @@ org$pandalanguage$pandac$ClassDecl* org$pandalanguage$pandac$Scanner$scanInterfa
     org$pandalanguage$pandac$MethodDecl* i641;
     org$pandalanguage$pandac$MethodDecl* m650;
     org$pandalanguage$pandac$ClassDecl* cl657;
-    panda$core$SpecializedRange$LTpanda$core$Int64$Q$GT $tmp660;
+    panda$core$Range$LTpanda$core$Int64$Q$GT $tmp660;
     org$pandalanguage$pandac$ClassDecl* cl666;
-    panda$core$SpecializedRange$LTpanda$core$Int64$Q$GT $tmp669;
+    panda$core$Range$LTpanda$core$Int64$Q$GT $tmp669;
     panda$core$Bit $tmp535 = panda$core$String$$NEQ$panda$core$String$R$panda$core$Bit(p_contextName, &$s534);
     if ($tmp535.value) {
     {
@@ -1512,8 +1512,8 @@ org$pandalanguage$pandac$ClassDecl* org$pandalanguage$pandac$Scanner$scanInterfa
                         panda$collections$Array$add$panda$collections$Array$T(result614->classes, ((panda$core$Object*) cl657));
                         panda$core$Int64 $tmp661 = panda$core$String$length$R$panda$core$Int64(fullName533);
                         panda$core$Int64 $tmp662 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64($tmp661, ((panda$core$Int64) { 1 }));
-                        panda$core$SpecializedRange$LTpanda$core$Int64$Q$GT$init$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Bit(&$tmp660, ((panda$core$Int64$nullable) { $tmp662, true }), ((panda$core$Int64$nullable) { .nonnull = false }), ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
-                        panda$core$String* $tmp663 = panda$core$String$$IDX$panda$core$SpecializedRange$LTpanda$core$Int64$Q$GT$R$panda$core$String(((org$pandalanguage$pandac$Symbol*) cl657)->name, $tmp660);
+                        panda$core$Range$LTpanda$core$Int64$Q$GT$init$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Bit(&$tmp660, ((panda$core$Int64$nullable) { $tmp662, true }), ((panda$core$Int64$nullable) { .nonnull = false }), ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
+                        panda$core$String* $tmp663 = panda$core$String$$IDX$panda$core$Range$LTpanda$core$Int64$Q$GT$R$panda$core$String(((org$pandalanguage$pandac$Symbol*) cl657)->name, $tmp660);
                         (($fn664) result614->symbolTable->$class->vtable[3])(result614->symbolTable, ((org$pandalanguage$pandac$Symbol*) cl657), $tmp663);
                     }
                     }
@@ -1530,8 +1530,8 @@ org$pandalanguage$pandac$ClassDecl* org$pandalanguage$pandac$Scanner$scanInterfa
                         panda$collections$Array$add$panda$collections$Array$T(result614->classes, ((panda$core$Object*) cl666));
                         panda$core$Int64 $tmp670 = panda$core$String$length$R$panda$core$Int64(fullName533);
                         panda$core$Int64 $tmp671 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64($tmp670, ((panda$core$Int64) { 1 }));
-                        panda$core$SpecializedRange$LTpanda$core$Int64$Q$GT$init$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Bit(&$tmp669, ((panda$core$Int64$nullable) { $tmp671, true }), ((panda$core$Int64$nullable) { .nonnull = false }), ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
-                        panda$core$String* $tmp672 = panda$core$String$$IDX$panda$core$SpecializedRange$LTpanda$core$Int64$Q$GT$R$panda$core$String(((org$pandalanguage$pandac$Symbol*) cl666)->name, $tmp669);
+                        panda$core$Range$LTpanda$core$Int64$Q$GT$init$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Bit(&$tmp669, ((panda$core$Int64$nullable) { $tmp671, true }), ((panda$core$Int64$nullable) { .nonnull = false }), ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
+                        panda$core$String* $tmp672 = panda$core$String$$IDX$panda$core$Range$LTpanda$core$Int64$Q$GT$R$panda$core$String(((org$pandalanguage$pandac$Symbol*) cl666)->name, $tmp669);
                         (($fn673) result614->symbolTable->$class->vtable[3])(result614->symbolTable, ((org$pandalanguage$pandac$Symbol*) cl666), $tmp672);
                     }
                     }
@@ -1597,7 +1597,7 @@ panda$collections$ListView* org$pandalanguage$pandac$Scanner$scan$panda$io$File$
     panda$core$String* fullName720;
     panda$core$String$Index$nullable idx721;
     panda$core$String* alias724;
-    panda$core$SpecializedRange$LTpanda$core$String$Index$Q$GT $tmp725;
+    panda$core$Range$LTpanda$core$String$Index$Q$GT $tmp725;
     org$pandalanguage$pandac$ClassDecl* cl730;
     org$pandalanguage$pandac$ClassDecl* cl735;
     panda$collections$Array* $tmp693 = (panda$collections$Array*) malloc(40);
@@ -1654,8 +1654,8 @@ panda$collections$ListView* org$pandalanguage$pandac$Scanner$scan$panda$io$File$
                     if (((panda$core$Bit) { idx721.nonnull }).value) {
                     {
                         panda$core$String$Index $tmp726 = panda$core$String$next$panda$core$String$Index$R$panda$core$String$Index(fullName720, ((panda$core$String$Index) idx721.value));
-                        panda$core$SpecializedRange$LTpanda$core$String$Index$Q$GT$init$panda$core$String$Index$Q$panda$core$String$Index$Q$panda$core$Int64$Q$panda$core$Bit(&$tmp725, ((panda$core$String$Index$nullable) { $tmp726, true }), ((panda$core$String$Index$nullable) { .nonnull = false }), ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
-                        panda$core$String* $tmp727 = panda$core$String$$IDX$panda$core$SpecializedRange$LTpanda$core$String$Index$Q$GT$R$panda$core$String(fullName720, $tmp725);
+                        panda$core$Range$LTpanda$core$String$Index$Q$GT$init$panda$core$String$Index$Q$panda$core$String$Index$Q$panda$core$Int64$Q$panda$core$Bit(&$tmp725, ((panda$core$String$Index$nullable) { $tmp726, true }), ((panda$core$String$Index$nullable) { .nonnull = false }), ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
+                        panda$core$String* $tmp727 = panda$core$String$$IDX$panda$core$Range$LTpanda$core$String$Index$Q$GT$R$panda$core$String(fullName720, $tmp725);
                         alias724 = $tmp727;
                     }
                     }

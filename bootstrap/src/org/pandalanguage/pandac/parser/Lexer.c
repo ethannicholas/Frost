@@ -4,7 +4,7 @@
 #include "panda/core/String.h"
 #include "org/pandalanguage/plex/runtime/DFA.h"
 #include "panda/core/Int64.h"
-#include "panda/core/SpecializedRange.LTpanda/core/Int64.GT.h"
+#include "panda/core/Range.LTpanda/core/Int64.GT.h"
 #include "panda/core/Bit.h"
 #include "org/pandalanguage/pandac/parser/Token.h"
 #include "org/pandalanguage/plex/runtime/RawToken.h"
@@ -26,9 +26,9 @@ void org$pandalanguage$pandac$parser$Lexer$start$panda$core$String(org$pandalang
 }
 panda$core$Int64* org$pandalanguage$pandac$parser$Lexer$alloc$panda$core$Int64$panda$core$Int64$R$panda$unsafe$Pointer$LTpanda$core$Int64$GT(panda$core$Int64 p_count, panda$core$Int64 p_fill) {
     panda$core$Int64* result5;
-    panda$core$SpecializedRange$LTpanda$core$Int64$GT $tmp6;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp6;
     result5 = ((panda$core$Int64*) malloc(p_count.value * 8));
-    panda$core$SpecializedRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp6, ((panda$core$Int64) { 0 }), p_count, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp6, ((panda$core$Int64) { 0 }), p_count, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
     int64_t $tmp8 = $tmp6.start.value;
     panda$core$Int64 i7 = { $tmp8 };
     int64_t $tmp10 = $tmp6.end.value;

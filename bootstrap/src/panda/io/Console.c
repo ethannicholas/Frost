@@ -2,7 +2,7 @@
 #include "panda/core/Object.h"
 #include "panda/core/Class.h"
 #include "panda/core/String.h"
-#include "panda/core/SpecializedRange.LTpanda/core/Int64.GT.h"
+#include "panda/core/Range.LTpanda/core/Int64.GT.h"
 #include "panda/core/Int64.h"
 #include "panda/core/Bit.h"
 #include "panda/core/Char8.h"
@@ -19,8 +19,8 @@ typedef panda$core$String* (*$fn47)(panda$core$MutableString*);
 
 
 void panda$io$Console$print$panda$core$String(panda$core$String* p_s) {
-    panda$core$SpecializedRange$LTpanda$core$Int64$GT $tmp1;
-    panda$core$SpecializedRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp1, ((panda$core$Int64) { 0 }), p_s->_length, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
+    panda$core$Range$LTpanda$core$Int64$GT $tmp1;
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp1, ((panda$core$Int64) { 0 }), p_s->_length, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
     int64_t $tmp3 = $tmp1.start.value;
     panda$core$Int64 i2 = { $tmp3 };
     int64_t $tmp5 = $tmp1.end.value;

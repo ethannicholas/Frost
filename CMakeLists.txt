@@ -9,90 +9,6 @@ include_directories(
 )
 
 add_executable(bootstrap
-#    bootstrap/src/Array.c
-#    bootstrap/src/Collection.c
-#    bootstrap/src/CollectionView.c
-#    bootstrap/src/CollectionWriter.c
-#    bootstrap/src/HashMap.c
-#    bootstrap/src/IdentityMap.c
-#    bootstrap/src/ImmutableArray.c
-#    bootstrap/src/Iterable.c
-#    bootstrap/src/Iterator.c
-#    bootstrap/src/Key.c
-#    bootstrap/src/List.c
-#    bootstrap/src/ListView.c
-#    bootstrap/src/ListWriter.c
-#    bootstrap/src/Map.c
-#    bootstrap/src/MapView.c
-#    bootstrap/src/MapWriter.c
-#    bootstrap/src/Set.c
-#    bootstrap/src/Stack.c
-#    bootstrap/src/Bit.c
-#    bootstrap/src/Char8.c
-#    bootstrap/src/Char16.c
-#    bootstrap/src/Char32.c
-#    bootstrap/src/Class.c
-#    bootstrap/src/Comparable.c
-#    bootstrap/src/Equatable.c
-#    bootstrap/src/Immutable.c
-#    bootstrap/src/Int16.c
-#    bootstrap/src/Int32.c
-#    bootstrap/src/Int64.c
-#    bootstrap/src/Int8.c
-#    bootstrap/src/UInt16.c
-#    bootstrap/src/UInt32.c
-#    bootstrap/src/UInt64.c
-#    bootstrap/src/UInt8.c
-#    bootstrap/src/MutableString.c
-#    bootstrap/src/Object.c
-#    bootstrap/src/Panda.c
-#    bootstrap/src/Range.c
-#    bootstrap/src/String.c
-#    bootstrap/src/System.c
-#    bootstrap/src/Value.c
-#    bootstrap/src/Console.c
-#    bootstrap/src/File.c
-#    bootstrap/src/FileInputStream.c
-#    bootstrap/src/FileOutputStream.c
-#    bootstrap/src/IndentedOutputStream.c
-#    bootstrap/src/InputStream.c
-#    bootstrap/src/LineNumberInputStream.c
-#    bootstrap/src/MemoryInputStream.c
-#    bootstrap/src/MemoryOutputStream.c
-#    bootstrap/src/OutputStream.c
-#    bootstrap/src/PushbackInputStream.c
-#    bootstrap/src/Random.c
-#    bootstrap/src/XorShift128Plus.c
-#    bootstrap/src/Alias.c
-#    bootstrap/src/Annotations.c
-#    bootstrap/src/ASTNode.c
-#    bootstrap/src/CCodeGenerator.c
-#    bootstrap/src/ClassDecl.c
-#    bootstrap/src/CodeGenerator.c
-#    bootstrap/src/Compiler.c
-#    bootstrap/src/ErrorReporter.c
-#    bootstrap/src/FieldDecl.c
-#    bootstrap/src/HCodeGenerator.c
-#    bootstrap/src/IRNode.c
-#    bootstrap/src/LLVMCodeGenerator.c
-#    bootstrap/src/Main.c
-#    bootstrap/src/MethodDecl.c
-#    bootstrap/src/Methods.c
-#    bootstrap/src/MethodRef.c
-#    bootstrap/src/Position.c
-#    bootstrap/src/Scanner.c
-#    bootstrap/src/Symbol.c
-#    bootstrap/src/SymbolTable.c
-#    bootstrap/src/Type.c
-#    bootstrap/src/Variable.c
-#    bootstrap/src/Parser.c
-#    bootstrap/src/Lexer.c
-#    bootstrap/src/Token.c
-#    bootstrap/src/DFA.c
-#    bootstrap/src/RawToken.c
-#    src/c/pandalib.c
-
-
     bootstrap/src/panda/collections/Array.c
     bootstrap/src/panda/collections/Array/ArrayIterator.c
     bootstrap/src/panda/collections/Collection.c
@@ -138,12 +54,9 @@ add_executable(bootstrap
     bootstrap/src/panda/core/MutableString.c
     bootstrap/src/panda/core/Object.c
     bootstrap/src/panda/core/Panda.c
-    bootstrap/src/panda/core/Range.c
-    bootstrap/src/panda/core/SpecializedRange.LTpanda/core/String/Index.GT.c
-    bootstrap/src/panda/core/SpecializedRange.LTpanda/core/String/Index.Q.GT.c
-    bootstrap/src/panda/core/SpecializedRange.LTpanda/core/Int64.GT.c
-    bootstrap/src/panda/core/SpecializedRange.LTpanda/core/Int64.Q.GT.c
-    bootstrap/src/panda/core/SpecializedRange.LTpanda/core/Object.Q.GT.c
+    bootstrap/src/panda/core/Range.LTpanda/core/String/Index.Q.GT.c
+    bootstrap/src/panda/core/Range.LTpanda/core/Int64.GT.c
+    bootstrap/src/panda/core/Range.LTpanda/core/Int64.Q.GT.c
     bootstrap/src/panda/core/String.c
     bootstrap/src/panda/core/String/Index.c
     bootstrap/src/panda/core/String/UTF8Iterator.c
@@ -263,8 +176,6 @@ set(core_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/MutableString.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Object.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Panda.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Range.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/SpecializedRange.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/String.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/System.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Value.panda

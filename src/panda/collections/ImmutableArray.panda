@@ -140,8 +140,4 @@ class ImmutableArray<T> (ListView<T>) {
         result.append("]")
         return result.convert()
     }
-
-    function [](r:panda.core.SpecializedRange<Int?>):ImmutableArray<T> {
-        return self[Range<Int?>(r.start, r.end, r.step, r.inclusive)]
-    }
 }

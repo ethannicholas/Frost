@@ -8,7 +8,7 @@
 #include "panda/collections/Iterator.h"
 #include "panda/io/InputStream.h"
 #include "panda/core/String/Index.h"
-#include "panda/core/SpecializedRange.LTpanda/core/String/Index.Q.GT.h"
+#include "panda/core/Range.LTpanda/core/String/Index.Q.GT.h"
 #include "panda/core/Int64.h"
 panda$core$Bit panda$io$File$$EQ$panda$io$File$R$panda$core$Bit$shim(panda$io$File* self, panda$core$Object* p0) {
     panda$core$Bit result = panda$io$File$$EQ$panda$io$File$R$panda$core$Bit(self, ((panda$io$File*) p0));
@@ -75,7 +75,7 @@ panda$io$File* panda$io$File$absolute$R$panda$io$File(panda$io$File* self) {
 }
 panda$io$File* panda$io$File$parent$R$panda$io$File$Q(panda$io$File* self) {
     panda$core$String$Index$nullable index24;
-    panda$core$SpecializedRange$LTpanda$core$String$Index$Q$GT $tmp29;
+    panda$core$Range$LTpanda$core$String$Index$Q$GT $tmp29;
     panda$core$Bit $tmp17 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit(self->path, &$s16);
     if ($tmp17.value) {
     {
@@ -100,8 +100,8 @@ panda$io$File* panda$io$File$parent$R$panda$io$File$Q(panda$io$File* self) {
         panda$io$File* $tmp27 = (panda$io$File*) malloc(24);
         $tmp27->$class = (panda$core$Class*) &panda$io$File$class;
         $tmp27->refCount.value = 1;
-        panda$core$SpecializedRange$LTpanda$core$String$Index$Q$GT$init$panda$core$String$Index$Q$panda$core$String$Index$Q$panda$core$Int64$Q$panda$core$Bit(&$tmp29, ((panda$core$String$Index$nullable) { .nonnull = false }), index24, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
-        panda$core$String* $tmp30 = panda$core$String$$IDX$panda$core$SpecializedRange$LTpanda$core$String$Index$Q$GT$R$panda$core$String(self->path, $tmp29);
+        panda$core$Range$LTpanda$core$String$Index$Q$GT$init$panda$core$String$Index$Q$panda$core$String$Index$Q$panda$core$Int64$Q$panda$core$Bit(&$tmp29, ((panda$core$String$Index$nullable) { .nonnull = false }), index24, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
+        panda$core$String* $tmp30 = panda$core$String$$IDX$panda$core$Range$LTpanda$core$String$Index$Q$GT$R$panda$core$String(self->path, $tmp29);
         panda$io$File$init$panda$core$String($tmp27, $tmp30);
         return $tmp27;
     }
@@ -116,14 +116,14 @@ panda$io$File* panda$io$File$parent$R$panda$io$File$Q(panda$io$File* self) {
 }
 panda$core$String* panda$io$File$name$R$panda$core$String(panda$io$File* self) {
     panda$core$String$Index$nullable index33;
-    panda$core$SpecializedRange$LTpanda$core$String$Index$Q$GT $tmp36;
+    panda$core$Range$LTpanda$core$String$Index$Q$GT $tmp36;
     panda$core$String$Index$nullable $tmp35 = panda$core$String$lastIndexOf$panda$core$String$R$panda$core$String$Index$Q(self->path, &$s34);
     index33 = $tmp35;
     if (((panda$core$Bit) { index33.nonnull }).value) {
     {
         panda$core$String$Index $tmp37 = panda$core$String$next$panda$core$String$Index$R$panda$core$String$Index(self->path, ((panda$core$String$Index) index33.value));
-        panda$core$SpecializedRange$LTpanda$core$String$Index$Q$GT$init$panda$core$String$Index$Q$panda$core$String$Index$Q$panda$core$Int64$Q$panda$core$Bit(&$tmp36, ((panda$core$String$Index$nullable) { $tmp37, true }), ((panda$core$String$Index$nullable) { .nonnull = false }), ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
-        panda$core$String* $tmp38 = panda$core$String$$IDX$panda$core$SpecializedRange$LTpanda$core$String$Index$Q$GT$R$panda$core$String(self->path, $tmp36);
+        panda$core$Range$LTpanda$core$String$Index$Q$GT$init$panda$core$String$Index$Q$panda$core$String$Index$Q$panda$core$Int64$Q$panda$core$Bit(&$tmp36, ((panda$core$String$Index$nullable) { $tmp37, true }), ((panda$core$String$Index$nullable) { .nonnull = false }), ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
+        panda$core$String* $tmp38 = panda$core$String$$IDX$panda$core$Range$LTpanda$core$String$Index$Q$GT$R$panda$core$String(self->path, $tmp36);
         return $tmp38;
     }
     }
@@ -136,7 +136,7 @@ panda$core$String* panda$io$File$name$R$panda$core$String(panda$io$File* self) {
 panda$core$String* panda$io$File$simpleName$R$panda$core$String(panda$io$File* self) {
     panda$core$String* result39;
     panda$core$String$Index$nullable index41;
-    panda$core$SpecializedRange$LTpanda$core$String$Index$Q$GT $tmp44;
+    panda$core$Range$LTpanda$core$String$Index$Q$GT $tmp44;
     panda$core$String* $tmp40 = panda$io$File$name$R$panda$core$String(self);
     result39 = $tmp40;
     panda$core$String$Index$nullable $tmp43 = panda$core$String$lastIndexOf$panda$core$String$R$panda$core$String$Index$Q(result39, &$s42);
@@ -146,8 +146,8 @@ panda$core$String* panda$io$File$simpleName$R$panda$core$String(panda$io$File* s
         return result39;
     }
     }
-    panda$core$SpecializedRange$LTpanda$core$String$Index$Q$GT$init$panda$core$String$Index$Q$panda$core$String$Index$Q$panda$core$Int64$Q$panda$core$Bit(&$tmp44, ((panda$core$String$Index$nullable) { .nonnull = false }), index41, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
-    panda$core$String* $tmp45 = panda$core$String$$IDX$panda$core$SpecializedRange$LTpanda$core$String$Index$Q$GT$R$panda$core$String(result39, $tmp44);
+    panda$core$Range$LTpanda$core$String$Index$Q$GT$init$panda$core$String$Index$Q$panda$core$String$Index$Q$panda$core$Int64$Q$panda$core$Bit(&$tmp44, ((panda$core$String$Index$nullable) { .nonnull = false }), index41, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
+    panda$core$String* $tmp45 = panda$core$String$$IDX$panda$core$Range$LTpanda$core$String$Index$Q$GT$R$panda$core$String(result39, $tmp44);
     return $tmp45;
 }
 panda$io$File* panda$io$File$changeExtension$panda$core$String$R$panda$io$File(panda$io$File* self, panda$core$String* p_ext) {

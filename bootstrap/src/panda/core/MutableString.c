@@ -4,7 +4,7 @@
 #include "panda/core/Int64.h"
 #include "panda/core/String.h"
 #include "panda/core/Char8.h"
-#include "panda/core/SpecializedRange.LTpanda/core/Int64.GT.h"
+#include "panda/core/Range.LTpanda/core/Int64.GT.h"
 #include "panda/core/Bit.h"
 
 
@@ -38,10 +38,10 @@ void panda$core$MutableString$append$panda$core$Char8(panda$core$MutableString* 
     self->length = $tmp4;
 }
 void panda$core$MutableString$append$panda$core$String(panda$core$MutableString* self, panda$core$String* p_s) {
-    panda$core$SpecializedRange$LTpanda$core$Int64$GT $tmp6;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp6;
     panda$core$Int64 $tmp5 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->length, p_s->_length);
     panda$core$MutableString$ensureCapacity$panda$core$Int64(self, $tmp5);
-    panda$core$SpecializedRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp6, ((panda$core$Int64) { 0 }), p_s->_length, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp6, ((panda$core$Int64) { 0 }), p_s->_length, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
     int64_t $tmp8 = $tmp6.start.value;
     panda$core$Int64 i7 = { $tmp8 };
     int64_t $tmp10 = $tmp6.end.value;
@@ -90,10 +90,10 @@ void panda$core$MutableString$append$panda$core$String(panda$core$MutableString*
     self->length = $tmp37;
 }
 void panda$core$MutableString$append$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64$panda$core$Int64(panda$core$MutableString* self, panda$core$Char8* p_chars, panda$core$Int64 p_offset, panda$core$Int64 p_count) {
-    panda$core$SpecializedRange$LTpanda$core$Int64$GT $tmp39;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp39;
     panda$core$Int64 $tmp38 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->length, p_count);
     panda$core$MutableString$ensureCapacity$panda$core$Int64(self, $tmp38);
-    panda$core$SpecializedRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp39, ((panda$core$Int64) { 0 }), p_count, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp39, ((panda$core$Int64) { 0 }), p_count, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
     int64_t $tmp41 = $tmp39.start.value;
     panda$core$Int64 i40 = { $tmp41 };
     int64_t $tmp43 = $tmp39.end.value;
@@ -171,9 +171,9 @@ void panda$core$MutableString$clear(panda$core$MutableString* self) {
 }
 panda$core$String* panda$core$MutableString$convert$R$panda$core$String(panda$core$MutableString* self) {
     panda$core$Char8* result80;
-    panda$core$SpecializedRange$LTpanda$core$Int64$GT $tmp81;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp81;
     result80 = ((panda$core$Char8*) malloc(self->length.value * 1));
-    panda$core$SpecializedRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp81, ((panda$core$Int64) { 0 }), self->length, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp81, ((panda$core$Int64) { 0 }), self->length, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
     int64_t $tmp83 = $tmp81.start.value;
     panda$core$Int64 i82 = { $tmp83 };
     int64_t $tmp85 = $tmp81.end.value;

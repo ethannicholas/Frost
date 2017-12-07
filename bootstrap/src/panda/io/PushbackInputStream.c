@@ -8,7 +8,7 @@
 #include "panda/core/Bit.h"
 #include "panda/core/Int8.h"
 #include "panda/collections/ListView.h"
-#include "panda/core/SpecializedRange.LTpanda/core/Int64.GT.h"
+#include "panda/core/Range.LTpanda/core/Int64.GT.h"
 #include "panda/collections/CollectionView.h"
 #include "panda/core/Char8.h"
 #include "panda/core/String.h"
@@ -65,7 +65,7 @@ void panda$io$PushbackInputStream$pushback$panda$core$Int8(panda$io$PushbackInpu
     panda$collections$Array$add$panda$collections$Array$T(self->pushbackBuffer, ((panda$core$Object*) wrap_panda$core$UInt8($tmp13)));
 }
 void panda$io$PushbackInputStream$pushback$panda$collections$ListView$LTpanda$core$UInt8$GT(panda$io$PushbackInputStream* self, panda$collections$ListView* p_v) {
-    panda$core$SpecializedRange$LTpanda$core$Int64$GT $tmp14;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp14;
     ITable* $tmp15 = ((panda$collections$CollectionView*) p_v)->$class->itable;
     while ($tmp15->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
         $tmp15 = $tmp15->next;
@@ -73,7 +73,7 @@ void panda$io$PushbackInputStream$pushback$panda$collections$ListView$LTpanda$co
     $fn17 $tmp16 = $tmp15->methods[0];
     panda$core$Int64 $tmp18 = $tmp16(((panda$collections$CollectionView*) p_v));
     panda$core$Int64 $tmp19 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64($tmp18, ((panda$core$Int64) { 1 }));
-    panda$core$SpecializedRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp14, $tmp19, ((panda$core$Int64) { 0 }), ((panda$core$Int64$nullable) { ((panda$core$Int64) { -1 }), true }), ((panda$core$Bit) { true }));
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp14, $tmp19, ((panda$core$Int64) { 0 }), ((panda$core$Int64$nullable) { ((panda$core$Int64) { -1 }), true }), ((panda$core$Bit) { true }));
     int64_t $tmp21 = $tmp14.start.value;
     panda$core$Int64 i20 = { $tmp21 };
     int64_t $tmp23 = $tmp14.end.value;
@@ -125,7 +125,7 @@ void panda$io$PushbackInputStream$pushback$panda$collections$ListView$LTpanda$co
     $l28:;
 }
 void panda$io$PushbackInputStream$pushback$panda$collections$ListView$LTpanda$core$Int8$GT(panda$io$PushbackInputStream* self, panda$collections$ListView* p_v) {
-    panda$core$SpecializedRange$LTpanda$core$Int64$GT $tmp54;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp54;
     ITable* $tmp55 = ((panda$collections$CollectionView*) p_v)->$class->itable;
     while ($tmp55->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
         $tmp55 = $tmp55->next;
@@ -133,7 +133,7 @@ void panda$io$PushbackInputStream$pushback$panda$collections$ListView$LTpanda$co
     $fn57 $tmp56 = $tmp55->methods[0];
     panda$core$Int64 $tmp58 = $tmp56(((panda$collections$CollectionView*) p_v));
     panda$core$Int64 $tmp59 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64($tmp58, ((panda$core$Int64) { 1 }));
-    panda$core$SpecializedRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp54, $tmp59, ((panda$core$Int64) { 0 }), ((panda$core$Int64$nullable) { ((panda$core$Int64) { -1 }), true }), ((panda$core$Bit) { true }));
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp54, $tmp59, ((panda$core$Int64) { 0 }), ((panda$core$Int64$nullable) { ((panda$core$Int64) { -1 }), true }), ((panda$core$Bit) { true }));
     int64_t $tmp61 = $tmp54.start.value;
     panda$core$Int64 i60 = { $tmp61 };
     int64_t $tmp63 = $tmp54.end.value;
@@ -189,7 +189,7 @@ void panda$io$PushbackInputStream$pushback$panda$core$Char8(panda$io$PushbackInp
     (($fn95) self->$class->vtable[13])(self, $tmp94);
 }
 void panda$io$PushbackInputStream$pushback$panda$collections$ListView$LTpanda$core$Char8$GT(panda$io$PushbackInputStream* self, panda$collections$ListView* p_c) {
-    panda$core$SpecializedRange$LTpanda$core$Int64$GT $tmp96;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp96;
     ITable* $tmp97 = ((panda$collections$CollectionView*) p_c)->$class->itable;
     while ($tmp97->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
         $tmp97 = $tmp97->next;
@@ -197,7 +197,7 @@ void panda$io$PushbackInputStream$pushback$panda$collections$ListView$LTpanda$co
     $fn99 $tmp98 = $tmp97->methods[0];
     panda$core$Int64 $tmp100 = $tmp98(((panda$collections$CollectionView*) p_c));
     panda$core$Int64 $tmp101 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64($tmp100, ((panda$core$Int64) { 1 }));
-    panda$core$SpecializedRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp96, $tmp101, ((panda$core$Int64) { 0 }), ((panda$core$Int64$nullable) { ((panda$core$Int64) { -1 }), true }), ((panda$core$Bit) { true }));
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp96, $tmp101, ((panda$core$Int64) { 0 }), ((panda$core$Int64$nullable) { ((panda$core$Int64) { -1 }), true }), ((panda$core$Bit) { true }));
     int64_t $tmp103 = $tmp96.start.value;
     panda$core$Int64 i102 = { $tmp103 };
     int64_t $tmp105 = $tmp96.end.value;

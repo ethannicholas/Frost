@@ -3,7 +3,7 @@
 #include "panda/core/Class.h"
 #include "panda/core/Object.h"
 #include "panda/collections/ListView.h"
-#include "panda/core/SpecializedRange.LTpanda/core/Int64.GT.h"
+#include "panda/core/Range.LTpanda/core/Int64.GT.h"
 #include "panda/core/Int64.h"
 #include "panda/collections/CollectionView.h"
 #include "panda/core/Bit.h"
@@ -20,15 +20,15 @@ typedef panda$core$Object* (*$fn75)(panda$collections$ListView*, panda$core$Int6
 
 
 void org$pandalanguage$pandac$Methods$init$panda$collections$ListView$LTorg$pandalanguage$pandac$MethodDecl$GT(org$pandalanguage$pandac$Methods* self, panda$collections$ListView* p_methods) {
-    panda$core$SpecializedRange$LTpanda$core$Int64$GT $tmp1;
-    panda$core$SpecializedRange$LTpanda$core$Int64$GT $tmp24;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp1;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp24;
     ITable* $tmp2 = ((panda$collections$CollectionView*) p_methods)->$class->itable;
     while ($tmp2->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
         $tmp2 = $tmp2->next;
     }
     $fn4 $tmp3 = $tmp2->methods[0];
     panda$core$Int64 $tmp5 = $tmp3(((panda$collections$CollectionView*) p_methods));
-    panda$core$SpecializedRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp1, ((panda$core$Int64) { 1 }), $tmp5, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp1, ((panda$core$Int64) { 1 }), $tmp5, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
     int64_t $tmp7 = $tmp1.start.value;
     panda$core$Int64 i6 = { $tmp7 };
     int64_t $tmp9 = $tmp1.end.value;
@@ -50,7 +50,7 @@ void org$pandalanguage$pandac$Methods$init$panda$collections$ListView$LTorg$pand
     if ($tmp7 > $tmp9) goto $l12; else goto $l14;
     $l12:;
     {
-        panda$core$SpecializedRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp24, ((panda$core$Int64) { 0 }), i6, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
+        panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp24, ((panda$core$Int64) { 0 }), i6, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
         int64_t $tmp26 = $tmp24.start.value;
         panda$core$Int64 j25 = { $tmp26 };
         int64_t $tmp28 = $tmp24.end.value;

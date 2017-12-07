@@ -21,7 +21,7 @@ panda$core$UInt16$wrapper* wrap_panda$core$UInt16(panda$core$UInt16 self) {
 #include "panda/core/UInt8.h"
 #include "panda/core/UInt64.h"
 #include "panda/core/Char8.h"
-#include "panda/core/SpecializedRange.LTpanda/core/Int64.GT.h"
+#include "panda/core/Range.LTpanda/core/Int64.GT.h"
 panda$core$Bit panda$core$UInt16$$EQ$panda$core$UInt16$R$panda$core$Bit$shim(panda$core$UInt16 self, panda$core$Object* p0) {
     panda$core$Bit result = panda$core$UInt16$$EQ$panda$core$UInt16$R$panda$core$Bit(self, ((panda$core$UInt16$wrapper*) p0)->value);
     return result;
@@ -773,7 +773,7 @@ panda$core$String* panda$core$UInt16$convert$R$panda$core$String(panda$core$UInt
     panda$core$Char8 $tmp183;
     panda$core$Int64 size184;
     panda$core$Char8* result186;
-    panda$core$SpecializedRange$LTpanda$core$Int64$GT $tmp187;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp187;
     max158 = ((panda$core$Int64) { 5 });
     chars159 = ((panda$core$Char8*) malloc(max158.value * 1));
     panda$core$Int64 $tmp161 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(max158, ((panda$core$Int64) { 1 }));
@@ -825,7 +825,7 @@ panda$core$String* panda$core$UInt16$convert$R$panda$core$String(panda$core$UInt
     panda$core$Int64 $tmp185 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(max158, index160);
     size184 = $tmp185;
     result186 = ((panda$core$Char8*) malloc(size184.value * 1));
-    panda$core$SpecializedRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp187, index160, max158, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp187, index160, max158, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
     int64_t $tmp189 = $tmp187.start.value;
     panda$core$Int64 i188 = { $tmp189 };
     int64_t $tmp191 = $tmp187.end.value;

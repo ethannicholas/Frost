@@ -11,12 +11,11 @@
 #include "panda/collections/ListView.h"
 #include "panda/collections/Collection.h"
 #include "panda/core/Bit.h"
-#include "panda/core/SpecializedRange.LTpanda/core/Int64.GT.h"
-#include "panda/core/Range.h"
+#include "panda/core/Range.LTpanda/core/Int64.GT.h"
+#include "panda/core/Range.LTpanda/core/Int64.Q.GT.h"
 #include "panda/collections/Array/ArrayIterator.h"
 #include "panda/core/String.h"
 #include "panda/core/MutableString.h"
-#include "panda/core/SpecializedRange.LTpanda/core/Int64.Q.GT.h"
 panda$collections$Iterator* panda$collections$Array$iterator$R$panda$collections$Iterator$LTpanda$collections$Array$T$GT$shim(panda$collections$Array* self) {
     panda$collections$Iterator* result = panda$collections$Array$iterator$R$panda$collections$Iterator$LTpanda$collections$Array$T$GT(self);
     return result;
@@ -53,7 +52,7 @@ struct { panda$core$Class* cl; ITable* next; void* methods[0]; } panda$collectio
 
 struct { panda$core$Class* cl; ITable* next; void* methods[1]; } panda$collections$Array$_panda$collections$CollectionView = { (panda$core$Class*) &panda$collections$CollectionView$class, (ITable*) &panda$collections$Array$_panda$collections$Collection, { panda$collections$Array$get_count$R$panda$core$Int64} };
 
-panda$collections$Array$class_type panda$collections$Array$class = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Object$class, (ITable*) &panda$collections$Array$_panda$collections$CollectionView, { panda$collections$Array$convert$R$panda$core$String, panda$collections$Array$cleanup, panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T$shim, panda$collections$Array$$IDXEQ$panda$core$Int64$panda$collections$Array$T$shim, panda$collections$Array$insert$panda$core$Int64$panda$collections$Array$T$shim, panda$collections$Array$$IDX$panda$core$Range$LTpanda$core$Int64$Q$GT$R$panda$collections$Array$LTpanda$collections$Array$T$GT, panda$collections$Array$add$panda$collections$Array$T$shim, panda$collections$Array$addAll$panda$collections$CollectionView$LTpanda$collections$Array$T$GT$shim, panda$collections$Array$ensureCapacity$panda$core$Int64, panda$collections$Array$get_count$R$panda$core$Int64, panda$collections$Array$removeIndex$panda$core$Int64, panda$collections$Array$iterator$R$panda$collections$Iterator$LTpanda$collections$Array$T$GT$shim, panda$collections$Array$clear, panda$collections$Array$join$R$panda$core$String, panda$collections$Array$join$panda$core$String$R$panda$core$String, panda$collections$Array$$IDX$panda$core$SpecializedRange$LTpanda$core$Int64$Q$GT$R$panda$collections$Array$LTpanda$collections$Array$T$GT} };
+panda$collections$Array$class_type panda$collections$Array$class = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Object$class, (ITable*) &panda$collections$Array$_panda$collections$CollectionView, { panda$collections$Array$convert$R$panda$core$String, panda$collections$Array$cleanup, panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T$shim, panda$collections$Array$$IDXEQ$panda$core$Int64$panda$collections$Array$T$shim, panda$collections$Array$insert$panda$core$Int64$panda$collections$Array$T$shim, panda$collections$Array$$IDX$panda$core$Range$LTpanda$core$Int64$Q$GT$R$panda$collections$Array$LTpanda$collections$Array$T$GT, panda$collections$Array$add$panda$collections$Array$T$shim, panda$collections$Array$addAll$panda$collections$CollectionView$LTpanda$collections$Array$T$GT$shim, panda$collections$Array$ensureCapacity$panda$core$Int64, panda$collections$Array$get_count$R$panda$core$Int64, panda$collections$Array$removeIndex$panda$core$Int64, panda$collections$Array$iterator$R$panda$collections$Iterator$LTpanda$collections$Array$T$GT$shim, panda$collections$Array$clear, panda$collections$Array$join$R$panda$core$String, panda$collections$Array$join$panda$core$String$R$panda$core$String} };
 
 typedef panda$core$Int64 (*$fn3)(panda$collections$CollectionView*);
 typedef panda$collections$Iterator* (*$fn9)(panda$collections$Iterable*);
@@ -147,10 +146,10 @@ void panda$collections$Array$$IDXEQ$panda$core$Int64$panda$collections$Array$T(p
     self->data[p_index.value] = p_value;
 }
 void panda$collections$Array$insert$panda$core$Int64$panda$collections$Array$T(panda$collections$Array* self, panda$core$Int64 p_index, panda$core$Object* p_value) {
-    panda$core$SpecializedRange$LTpanda$core$Int64$GT $tmp24;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp24;
     panda$core$Int64 $tmp23 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->count, ((panda$core$Int64) { 1 }));
     panda$collections$Array$ensureCapacity$panda$core$Int64(self, $tmp23);
-    panda$core$SpecializedRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp24, self->count, p_index, ((panda$core$Int64$nullable) { ((panda$core$Int64) { -1 }), true }), ((panda$core$Bit) { false }));
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp24, self->count, p_index, ((panda$core$Int64$nullable) { ((panda$core$Int64) { -1 }), true }), ((panda$core$Bit) { false }));
     int64_t $tmp26 = $tmp24.start.value;
     panda$core$Int64 i25 = { $tmp26 };
     int64_t $tmp28 = $tmp24.end.value;
@@ -200,15 +199,15 @@ void panda$collections$Array$insert$panda$core$Int64$panda$collections$Array$T(p
     self->count = $tmp56;
     panda$collections$Array$$IDXEQ$panda$core$Int64$panda$collections$Array$T(self, p_index, p_value);
 }
-panda$collections$Array* panda$collections$Array$$IDX$panda$core$Range$LTpanda$core$Int64$Q$GT$R$panda$collections$Array$LTpanda$collections$Array$T$GT(panda$collections$Array* self, panda$core$Range p_r) {
+panda$collections$Array* panda$collections$Array$$IDX$panda$core$Range$LTpanda$core$Int64$Q$GT$R$panda$collections$Array$LTpanda$collections$Array$T$GT(panda$collections$Array* self, panda$core$Range$LTpanda$core$Int64$Q$GT p_r) {
     panda$core$Int64 step57;
     panda$core$Int64 current58;
     panda$core$Int64 end62;
     panda$collections$Array* result65;
     step57 = p_r.step;
-    if (((panda$core$Bit) { (p_r.start != NULL ? ((panda$core$Int64$nullable) { ((panda$core$Int64$wrapper*) p_r.start)->value, true }) : (panda$core$Int64$nullable) { .nonnull = 0 }).nonnull }).value) {
+    if (((panda$core$Bit) { p_r.start.nonnull }).value) {
     {
-        current58 = ((panda$core$Int64) (p_r.start != NULL ? ((panda$core$Int64$nullable) { ((panda$core$Int64$wrapper*) p_r.start)->value, true }) : (panda$core$Int64$nullable) { .nonnull = 0 }).value);
+        current58 = ((panda$core$Int64) p_r.start.value);
     }
     }
     else {
@@ -226,9 +225,9 @@ panda$collections$Array* panda$collections$Array$$IDX$panda$core$Range$LTpanda$c
     }
     }
     }
-    if (((panda$core$Bit) { (p_r.end != NULL ? ((panda$core$Int64$nullable) { ((panda$core$Int64$wrapper*) p_r.end)->value, true }) : (panda$core$Int64$nullable) { .nonnull = 0 }).nonnull }).value) {
+    if (((panda$core$Bit) { p_r.end.nonnull }).value) {
     {
-        end62 = ((panda$core$Int64) (p_r.end != NULL ? ((panda$core$Int64$nullable) { ((panda$core$Int64$wrapper*) p_r.end)->value, true }) : (panda$core$Int64$nullable) { .nonnull = 0 }).value);
+        end62 = ((panda$core$Int64) p_r.end.value);
     }
     }
     else {
@@ -283,7 +282,7 @@ panda$collections$Array* panda$collections$Array$$IDX$panda$core$Range$LTpanda$c
     }
     bool $tmp81 = p_r.inclusive.value;
     if ($tmp81) goto $l82;
-    $tmp81 = ((panda$core$Bit) { !(p_r.end != NULL ? ((panda$core$Int64$nullable) { ((panda$core$Int64$wrapper*) p_r.end)->value, true }) : (panda$core$Int64$nullable) { .nonnull = 0 }).nonnull }).value;
+    $tmp81 = ((panda$core$Bit) { !p_r.end.nonnull }).value;
     $l82:;
     panda$core$Bit $tmp83 = { $tmp81 };
     bool $tmp80 = $tmp83.value;
@@ -380,9 +379,9 @@ panda$core$Int64 panda$collections$Array$get_count$R$panda$core$Int64(panda$coll
     return self->count;
 }
 void panda$collections$Array$removeIndex$panda$core$Int64(panda$collections$Array* self, panda$core$Int64 p_index) {
-    panda$core$SpecializedRange$LTpanda$core$Int64$GT $tmp122;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp122;
     panda$core$Int64 $tmp123 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(self->count, ((panda$core$Int64) { 1 }));
-    panda$core$SpecializedRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp122, p_index, $tmp123, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp122, p_index, $tmp123, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
     int64_t $tmp125 = $tmp122.start.value;
     panda$core$Int64 i124 = { $tmp125 };
     int64_t $tmp127 = $tmp122.end.value;
@@ -447,7 +446,7 @@ panda$core$String* panda$collections$Array$join$R$panda$core$String(panda$collec
 }
 panda$core$String* panda$collections$Array$join$panda$core$String$R$panda$core$String(panda$collections$Array* self, panda$core$String* p_separator) {
     panda$core$MutableString* result162;
-    panda$core$SpecializedRange$LTpanda$core$Int64$GT $tmp168;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp168;
     panda$core$Bit $tmp160 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(self->count, ((panda$core$Int64) { 0 }));
     if ($tmp160.value) {
     {
@@ -461,7 +460,7 @@ panda$core$String* panda$collections$Array$join$panda$core$String$R$panda$core$S
     panda$core$String* $tmp167 = (($fn166) $tmp165->$class->vtable[0])($tmp165);
     panda$core$MutableString$init$panda$core$String($tmp163, $tmp167);
     result162 = $tmp163;
-    panda$core$SpecializedRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp168, ((panda$core$Int64) { 1 }), self->count, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp168, ((panda$core$Int64) { 1 }), self->count, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
     int64_t $tmp170 = $tmp168.start.value;
     panda$core$Int64 i169 = { $tmp170 };
     int64_t $tmp172 = $tmp168.end.value;
@@ -566,11 +565,5 @@ panda$core$String* panda$collections$Array$convert$R$panda$core$String(panda$col
     (($fn233) result203->$class->vtable[3])(result203, &$s232);
     panda$core$String* $tmp235 = (($fn234) result203->$class->vtable[0])(result203);
     return $tmp235;
-}
-panda$collections$Array* panda$collections$Array$$IDX$panda$core$SpecializedRange$LTpanda$core$Int64$Q$GT$R$panda$collections$Array$LTpanda$collections$Array$T$GT(panda$collections$Array* self, panda$core$SpecializedRange$LTpanda$core$Int64$Q$GT p_r) {
-    panda$core$Range $tmp236;
-    panda$core$Range$init$panda$core$Range$T$panda$core$Range$T$panda$core$Int64$Q$panda$core$Bit(&$tmp236, (p_r.start.nonnull ? ((panda$core$Object*) wrap_panda$core$Int64(((panda$core$Int64) p_r.start.value))) : NULL), (p_r.end.nonnull ? ((panda$core$Object*) wrap_panda$core$Int64(((panda$core$Int64) p_r.end.value))) : NULL), ((panda$core$Int64$nullable) { p_r.step, true }), p_r.inclusive);
-    panda$collections$Array* $tmp237 = panda$collections$Array$$IDX$panda$core$Range$LTpanda$core$Int64$Q$GT$R$panda$collections$Array$LTpanda$collections$Array$T$GT(self, $tmp236);
-    return $tmp237;
 }
 

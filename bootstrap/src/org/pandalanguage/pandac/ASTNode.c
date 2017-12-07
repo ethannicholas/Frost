@@ -10,12 +10,12 @@
 #include "panda/core/UInt64.h"
 #include "panda/collections/ImmutableArray.h"
 #include "panda/core/MutableString.h"
-#include "panda/core/SpecializedRange.LTpanda/core/Int64.GT.h"
+#include "panda/core/Range.LTpanda/core/Int64.GT.h"
 #include "panda/collections/Iterator.h"
 #include "panda/collections/Iterable.h"
-#include "panda/core/SpecializedRange.LTpanda/core/String/Index.Q.GT.h"
+#include "panda/core/Range.LTpanda/core/String/Index.Q.GT.h"
 #include "panda/core/String/Index.h"
-#include "panda/core/SpecializedRange.LTpanda/core/Int64.Q.GT.h"
+#include "panda/core/Range.LTpanda/core/Int64.Q.GT.h"
 
 
 org$pandalanguage$pandac$ASTNode$class_type org$pandalanguage$pandac$ASTNode$class = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Immutable$class, NULL, { org$pandalanguage$pandac$ASTNode$convert$R$panda$core$String, panda$core$Object$cleanup} };
@@ -94,7 +94,7 @@ typedef panda$core$Object* (*$fn369)(panda$collections$ImmutableArray*, panda$co
 typedef panda$core$Object* (*$fn377)(panda$collections$ImmutableArray*, panda$core$Int64);
 typedef panda$core$String* (*$fn379)(org$pandalanguage$pandac$ASTNode*);
 typedef void (*$fn382)(panda$core$MutableString*, panda$core$String*);
-typedef panda$collections$ImmutableArray* (*$fn387)(panda$collections$ImmutableArray*, panda$core$SpecializedRange$LTpanda$core$Int64$Q$GT);
+typedef panda$collections$ImmutableArray* (*$fn387)(panda$collections$ImmutableArray*, panda$core$Range$LTpanda$core$Int64$Q$GT);
 typedef panda$collections$Iterator* (*$fn391)(panda$collections$Iterable*);
 typedef panda$core$Bit (*$fn397)(panda$collections$Iterator*);
 typedef panda$core$Object* (*$fn403)(panda$collections$Iterator*);
@@ -487,17 +487,17 @@ panda$core$String* org$pandalanguage$pandac$ASTNode$convert$R$panda$core$String(
     panda$core$MutableString* result121;
     panda$core$MutableString* result149;
     panda$core$String* separator158;
-    panda$core$SpecializedRange$LTpanda$core$Int64$GT $tmp160;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp160;
     panda$core$String* result226;
     panda$core$MutableString* result320;
     panda$collections$Iterator* child$Iter324;
     org$pandalanguage$pandac$ASTNode* child336;
     panda$core$String* c341;
-    panda$core$SpecializedRange$LTpanda$core$String$Index$Q$GT $tmp351;
+    panda$core$Range$LTpanda$core$String$Index$Q$GT $tmp351;
     panda$core$MutableString* result374;
     panda$core$String* separator383;
     panda$collections$Iterator* c$Iter385;
-    panda$core$SpecializedRange$LTpanda$core$Int64$Q$GT $tmp386;
+    panda$core$Range$LTpanda$core$Int64$Q$GT $tmp386;
     org$pandalanguage$pandac$ASTNode* c400;
     panda$core$MutableString* result413;
     panda$core$String* separator416;
@@ -709,7 +709,7 @@ panda$core$String* org$pandalanguage$pandac$ASTNode$convert$R$panda$core$String(
             (($fn157) result149->$class->vtable[3])(result149, &$s156);
             separator158 = &$s159;
             panda$core$Int64 $tmp162 = (($fn161) self->children->$class->vtable[3])(self->children);
-            panda$core$SpecializedRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp160, ((panda$core$Int64) { 1 }), $tmp162, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
+            panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp160, ((panda$core$Int64) { 1 }), $tmp162, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
             int64_t $tmp164 = $tmp160.start.value;
             panda$core$Int64 i163 = { $tmp164 };
             int64_t $tmp166 = $tmp160.end.value;
@@ -970,8 +970,8 @@ panda$core$String* org$pandalanguage$pandac$ASTNode$convert$R$panda$core$String(
                         panda$core$String$Index $tmp353 = panda$core$String$next$panda$core$String$Index$R$panda$core$String$Index(c341, $tmp352);
                         panda$core$String$Index $tmp354 = panda$core$String$end$R$panda$core$String$Index(c341);
                         panda$core$String$Index $tmp355 = panda$core$String$previous$panda$core$String$Index$R$panda$core$String$Index(c341, $tmp354);
-                        panda$core$SpecializedRange$LTpanda$core$String$Index$Q$GT$init$panda$core$String$Index$Q$panda$core$String$Index$Q$panda$core$Int64$Q$panda$core$Bit(&$tmp351, ((panda$core$String$Index$nullable) { $tmp353, true }), ((panda$core$String$Index$nullable) { $tmp355, true }), ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
-                        panda$core$String* $tmp356 = panda$core$String$$IDX$panda$core$SpecializedRange$LTpanda$core$String$Index$Q$GT$R$panda$core$String(c341, $tmp351);
+                        panda$core$Range$LTpanda$core$String$Index$Q$GT$init$panda$core$String$Index$Q$panda$core$String$Index$Q$panda$core$Int64$Q$panda$core$Bit(&$tmp351, ((panda$core$String$Index$nullable) { $tmp353, true }), ((panda$core$String$Index$nullable) { $tmp355, true }), ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
+                        panda$core$String* $tmp356 = panda$core$String$$IDX$panda$core$Range$LTpanda$core$String$Index$Q$GT$R$panda$core$String(c341, $tmp351);
                         (($fn357) result320->$class->vtable[3])(result320, $tmp356);
                     }
                     }
@@ -1021,8 +1021,8 @@ panda$core$String* org$pandalanguage$pandac$ASTNode$convert$R$panda$core$String(
             (($fn382) result374->$class->vtable[3])(result374, &$s381);
             separator383 = &$s384;
             {
-                panda$core$SpecializedRange$LTpanda$core$Int64$Q$GT$init$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Bit(&$tmp386, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Int64$nullable) { .nonnull = false }), ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
-                panda$collections$ImmutableArray* $tmp388 = (($fn387) self->children->$class->vtable[8])(self->children, $tmp386);
+                panda$core$Range$LTpanda$core$Int64$Q$GT$init$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Bit(&$tmp386, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Int64$nullable) { .nonnull = false }), ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
+                panda$collections$ImmutableArray* $tmp388 = (($fn387) self->children->$class->vtable[4])(self->children, $tmp386);
                 ITable* $tmp389 = ((panda$collections$Iterable*) $tmp388)->$class->itable;
                 while ($tmp389->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
                     $tmp389 = $tmp389->next;

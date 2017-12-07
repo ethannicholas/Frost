@@ -5,7 +5,7 @@
 #include "panda/core/Int64.h"
 #include "panda/core/Bit.h"
 #include "panda/core/UInt8.h"
-#include "panda/core/SpecializedRange.LTpanda/core/Int64.GT.h"
+#include "panda/core/Range.LTpanda/core/Int64.GT.h"
 #include "panda/core/String.h"
 
 
@@ -38,9 +38,9 @@ void panda$io$IndentedOutputStream$write$panda$core$UInt8(panda$io$IndentedOutpu
     (($fn2) self->out->$class->vtable[2])(self->out, p_b);
 }
 void panda$io$IndentedOutputStream$write$panda$unsafe$Pointer$LTpanda$core$UInt8$GT$panda$core$Int64$panda$core$Int64(panda$io$IndentedOutputStream* self, panda$core$UInt8* p_ptr, panda$core$Int64 p_offset, panda$core$Int64 p_count) {
-    panda$core$SpecializedRange$LTpanda$core$Int64$GT $tmp3;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp3;
     panda$core$Int64 $tmp4 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(p_offset, p_count);
-    panda$core$SpecializedRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp3, p_offset, $tmp4, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp3, p_offset, $tmp4, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
     int64_t $tmp6 = $tmp3.start.value;
     panda$core$Int64 i5 = { $tmp6 };
     int64_t $tmp8 = $tmp3.end.value;

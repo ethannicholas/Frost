@@ -12,7 +12,7 @@
 #include "panda/core/MutableString.h"
 #include "panda/collections/Iterator.h"
 #include "panda/collections/Iterable.h"
-#include "panda/core/SpecializedRange.LTpanda/core/String/Index.Q.GT.h"
+#include "panda/core/Range.LTpanda/core/String/Index.Q.GT.h"
 #include "panda/core/String/Index.h"
 #include "org/pandalanguage/pandac/Symbol.h"
 #include "org/pandalanguage/pandac/MethodRef.h"
@@ -212,7 +212,7 @@ panda$core$String* org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(o
     panda$collections$Iterator* child$Iter35;
     org$pandalanguage$pandac$IRNode* child47;
     panda$core$String* c52;
-    panda$core$SpecializedRange$LTpanda$core$String$Index$Q$GT $tmp62;
+    panda$core$Range$LTpanda$core$String$Index$Q$GT $tmp62;
     panda$core$MutableString* result237;
     {
         $match$533129 = self->kind;
@@ -264,8 +264,8 @@ panda$core$String* org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(o
                         panda$core$String$Index $tmp64 = panda$core$String$next$panda$core$String$Index$R$panda$core$String$Index(c52, $tmp63);
                         panda$core$String$Index $tmp65 = panda$core$String$end$R$panda$core$String$Index(c52);
                         panda$core$String$Index $tmp66 = panda$core$String$previous$panda$core$String$Index$R$panda$core$String$Index(c52, $tmp65);
-                        panda$core$SpecializedRange$LTpanda$core$String$Index$Q$GT$init$panda$core$String$Index$Q$panda$core$String$Index$Q$panda$core$Int64$Q$panda$core$Bit(&$tmp62, ((panda$core$String$Index$nullable) { $tmp64, true }), ((panda$core$String$Index$nullable) { $tmp66, true }), ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
-                        panda$core$String* $tmp67 = panda$core$String$$IDX$panda$core$SpecializedRange$LTpanda$core$String$Index$Q$GT$R$panda$core$String(c52, $tmp62);
+                        panda$core$Range$LTpanda$core$String$Index$Q$GT$init$panda$core$String$Index$Q$panda$core$String$Index$Q$panda$core$Int64$Q$panda$core$Bit(&$tmp62, ((panda$core$String$Index$nullable) { $tmp64, true }), ((panda$core$String$Index$nullable) { $tmp66, true }), ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
+                        panda$core$String* $tmp67 = panda$core$String$$IDX$panda$core$Range$LTpanda$core$String$Index$Q$GT$R$panda$core$String(c52, $tmp62);
                         (($fn68) result31->$class->vtable[3])(result31, $tmp67);
                     }
                     }

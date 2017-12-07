@@ -11,7 +11,7 @@
 #include "org/pandalanguage/pandac/ASTNode.h"
 #include "org/pandalanguage/pandac/IRNode.h"
 #include "panda/core/Bit.h"
-#include "panda/core/SpecializedRange.LTpanda/core/Int64.GT.h"
+#include "panda/core/Range.LTpanda/core/Int64.GT.h"
 #include "org/pandalanguage/pandac/MethodDecl/Parameter.h"
 #include "panda/core/MutableString.h"
 #include "panda/collections/Iterator.h"
@@ -88,7 +88,7 @@ panda$core$Bit org$pandalanguage$pandac$MethodDecl$isInstance$R$panda$core$Bit(o
     return $tmp17;
 }
 panda$core$Bit org$pandalanguage$pandac$MethodDecl$matches$org$pandalanguage$pandac$MethodDecl$R$panda$core$Bit(org$pandalanguage$pandac$MethodDecl* self, org$pandalanguage$pandac$MethodDecl* p_other) {
-    panda$core$SpecializedRange$LTpanda$core$Int64$GT $tmp24;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp24;
     panda$core$Bit $tmp18 = panda$core$String$$NEQ$panda$core$String$R$panda$core$Bit(self->name, ((org$pandalanguage$pandac$Symbol*) p_other)->name);
     if ($tmp18.value) {
     {
@@ -110,7 +110,7 @@ panda$core$Bit org$pandalanguage$pandac$MethodDecl$matches$org$pandalanguage$pan
     }
     }
     panda$core$Int64 $tmp25 = panda$collections$Array$get_count$R$panda$core$Int64(self->parameters);
-    panda$core$SpecializedRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp24, ((panda$core$Int64) { 0 }), $tmp25, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp24, ((panda$core$Int64) { 0 }), $tmp25, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
     int64_t $tmp27 = $tmp24.start.value;
     panda$core$Int64 i26 = { $tmp27 };
     int64_t $tmp29 = $tmp24.end.value;

@@ -1,11 +1,11 @@
-#include "panda/core/SpecializedRange.LTpanda/core/Int64.Q.GT.h"
+#include "panda/core/Range.LTpanda/core/Int64.Q.GT.h"
 #include "panda/core/Value.h"
 #include "panda/core/Class.h"
 #include "panda/core/Object.h"
 #include "panda/core/String.h"
-panda$core$SpecializedRange$LTpanda$core$Int64$Q$GT$wrapper* wrap_panda$core$SpecializedRange$LTpanda$core$Int64$Q$GT(panda$core$SpecializedRange$LTpanda$core$Int64$Q$GT self) {
-    panda$core$SpecializedRange$LTpanda$core$Int64$Q$GT$wrapper* result = (panda$core$SpecializedRange$LTpanda$core$Int64$Q$GT$wrapper*) malloc(49);
-    result->cl = (panda$core$Class*) &panda$core$SpecializedRange$LTpanda$core$Int64$Q$GT$wrapperclass;
+panda$core$Range$LTpanda$core$Int64$Q$GT$wrapper* wrap_panda$core$Range$LTpanda$core$Int64$Q$GT(panda$core$Range$LTpanda$core$Int64$Q$GT self) {
+    panda$core$Range$LTpanda$core$Int64$Q$GT$wrapper* result = (panda$core$Range$LTpanda$core$Int64$Q$GT$wrapper*) malloc(49);
+    result->cl = (panda$core$Class*) &panda$core$Range$LTpanda$core$Int64$Q$GT$wrapperclass;
     result->value = self;
     return result;
 }
@@ -13,13 +13,13 @@ panda$core$SpecializedRange$LTpanda$core$Int64$Q$GT$wrapper* wrap_panda$core$Spe
 #include "panda/core/Bit.h"
 #include "panda/core/MutableString.h"
 
-panda$core$String* panda$core$SpecializedRange$LTpanda$core$Int64$Q$GT$convert$R$panda$core$String$wrappershim(panda$core$SpecializedRange$LTpanda$core$Int64$Q$GT$wrapper* self) {
-    return panda$core$SpecializedRange$LTpanda$core$Int64$Q$GT$convert$R$panda$core$String(self->value);
+panda$core$String* panda$core$Range$LTpanda$core$Int64$Q$GT$convert$R$panda$core$String$wrappershim(panda$core$Range$LTpanda$core$Int64$Q$GT$wrapper* self) {
+    return panda$core$Range$LTpanda$core$Int64$Q$GT$convert$R$panda$core$String(self->value);
 }
 
-panda$core$SpecializedRange$LTpanda$core$Int64$Q$GT$class_type panda$core$SpecializedRange$LTpanda$core$Int64$Q$GT$class = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Value$class, NULL, { panda$core$SpecializedRange$LTpanda$core$Int64$Q$GT$convert$R$panda$core$String, panda$core$Object$cleanup} };
+panda$core$Range$LTpanda$core$Int64$Q$GT$class_type panda$core$Range$LTpanda$core$Int64$Q$GT$class = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Value$class, NULL, { panda$core$Range$LTpanda$core$Int64$Q$GT$convert$R$panda$core$String, panda$core$Object$cleanup} };
 
-panda$core$SpecializedRange$LTpanda$core$Int64$Q$GT$wrapperclass_type panda$core$SpecializedRange$LTpanda$core$Int64$Q$GT$wrapperclass = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Value$class, NULL, { panda$core$SpecializedRange$LTpanda$core$Int64$Q$GT$convert$R$panda$core$String$wrappershim, panda$core$Object$cleanup} };typedef void (*$fn4)(panda$core$MutableString*, panda$core$Object*);
+panda$core$Range$LTpanda$core$Int64$Q$GT$wrapperclass_type panda$core$Range$LTpanda$core$Int64$Q$GT$wrapperclass = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Value$class, NULL, { panda$core$Range$LTpanda$core$Int64$Q$GT$convert$R$panda$core$String$wrappershim, panda$core$Object$cleanup} };typedef void (*$fn4)(panda$core$MutableString*, panda$core$Object*);
 typedef void (*$fn6)(panda$core$MutableString*, panda$core$String*);
 typedef void (*$fn8)(panda$core$MutableString*, panda$core$String*);
 typedef void (*$fn9)(panda$core$MutableString*, panda$core$Object*);
@@ -31,7 +31,7 @@ static panda$core$String $s5 = { (panda$core$Class*) &panda$core$String$class, 2
 static panda$core$String $s7 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2E\x2E", 2, 1 };
 static panda$core$String $s11 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x20\x62\x79\x20", 4, 1 };
 
-void panda$core$SpecializedRange$LTpanda$core$Int64$Q$GT$init$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Bit(panda$core$SpecializedRange$LTpanda$core$Int64$Q$GT* self, panda$core$Int64$nullable p_start, panda$core$Int64$nullable p_end, panda$core$Int64$nullable p_step, panda$core$Bit p_inclusive) {
+void panda$core$Range$LTpanda$core$Int64$Q$GT$init$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Bit(panda$core$Range$LTpanda$core$Int64$Q$GT* self, panda$core$Int64$nullable p_start, panda$core$Int64$nullable p_end, panda$core$Int64$nullable p_step, panda$core$Bit p_inclusive) {
     self->start = p_start;
     self->end = p_end;
     if (((panda$core$Bit) { p_step.nonnull }).value) {
@@ -46,7 +46,7 @@ void panda$core$SpecializedRange$LTpanda$core$Int64$Q$GT$init$panda$core$Int64$Q
     }
     self->inclusive = p_inclusive;
 }
-panda$core$String* panda$core$SpecializedRange$LTpanda$core$Int64$Q$GT$convert$R$panda$core$String(panda$core$SpecializedRange$LTpanda$core$Int64$Q$GT self) {
+panda$core$String* panda$core$Range$LTpanda$core$Int64$Q$GT$convert$R$panda$core$String(panda$core$Range$LTpanda$core$Int64$Q$GT self) {
     panda$core$MutableString* result1;
     panda$core$MutableString* $tmp2 = (panda$core$MutableString*) malloc(40);
     $tmp2->$class = (panda$core$Class*) &panda$core$MutableString$class;
