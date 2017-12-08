@@ -313,6 +313,9 @@ class LLVMCodeGenerator (CodeGenerator) {
         var separator := ""
         for f in compiler.instanceFields(cl) {
             compiler.resolve(f)
+            if !f.type.resolved {
+                return
+            }
             code.append("\{separator}\{type(f.type)}")
             separator := ", "
         }
@@ -1274,7 +1277,7 @@ class LLVMCodeGenerator (CodeGenerator) {
         }
         def end := nextLabel()
         if args.get_count() != m.parameters.get_count() {
-            Console.printLine("parameter count mismatch in \{call}")
+            Console.printLine("parameter count mismatch in \{call}") -- FIXME use assert
             System.crash()
         }
         def inline := InlineContext("$inline\{varCount}", selfRef, args, end)

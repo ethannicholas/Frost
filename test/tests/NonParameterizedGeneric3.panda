@@ -1,0 +1,2 @@
+class NonParameterizedGeneric3 : Array {
+}

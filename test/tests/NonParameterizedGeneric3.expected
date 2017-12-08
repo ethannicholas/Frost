@@ -1,0 +1,2 @@
+NonParameterizedGeneric3.panda:1:34: error: 'panda.collections.Array' expected 1 generic parameter, but found 0
+1 error

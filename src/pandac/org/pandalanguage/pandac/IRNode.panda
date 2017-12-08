@@ -128,13 +128,8 @@ class IRNode {
         self.type := type
         self.payload := payload
         self.children := Array<IRNode>(children)
-        assert kind != Kind.CAST | children[0].type != Type.IntLiteral()
-        assert kind != Kind.CAST | type.name != "panda.unsafe.Pointer"
-        assert kind != Kind.CAST | type.kind != Type.Kind.UNRESOLVED
-        assert kind != Kind.CAST | children[0].kind != Kind.UNRESOLVED_INDEX
-        assert kind != Kind.CAST | children[0].type.kind != Type.Kind.UNRESOLVED
-        assert kind != Kind.UNRESOLVED_METHOD_REFERENCE | payload->ListView<MethodRef>.get_count() > 0
         assert type.resolved
+        assert kind != Kind.TYPE_REFERENCE | (payload != null & (payload->Type).resolved)
     }
 
     @override

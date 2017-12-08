@@ -182,7 +182,36 @@ class Compiler (ErrorReporter) {
         return result
     }
 
-    method resolve(type:Type):Type {
+    function genericParameterCount(type:Type):Int {
+        match type.typeKind {
+            when Type.Kind.GENERIC:
+                return type.subtypes.get_count() - 1
+            when Type.Kind.NULLABLE:
+                return genericParameterCount(type.subtypes[0])
+            otherwise:
+                return 0
+        }
+    }
+
+    method checkGenericParameters(offset:Int, cl:ClassDecl, type:Type):Bit {
+        def expected := cl.parameters.get_count()
+        def found := genericParameterCount(type)
+        if expected != found {
+            def s:String
+            if expected = 1 {
+                s := ""
+            }
+            else {
+                s := "s"
+            }
+            error(offset, "'\{cl.name}' expected \{expected} generic parameter\{s}, but found " +
+                    found)
+            return false
+        }
+        return true
+    }
+
+    method resolve(type:Type, checkParameters:Bit):Type? {
         if type.resolved {
             return type
         }
@@ -190,6 +219,11 @@ class Compiler (ErrorReporter) {
             when Type.Kind.CLASS:
                 def resolved := tryResolveClass(type.name)
                 if resolved != null {
+                    if checkParameters {
+                        if !checkGenericParameters(type.offset, resolved, type) {
+                            return null
+                        }
+                    }
                     return resolved.type()
                 }
                 def s := symbolTable[type.name]
@@ -211,32 +245,52 @@ class Compiler (ErrorReporter) {
                     }
                 }
                 error(position(type.offset), "unknown type '\{type}'")
-                assert false
-                return Type.Invalid()
+                return null
             when Type.Kind.NULLABLE:
                 assert type.subtypes.get_count() = 1
                 def subtypes := Array<Type>()
-                subtypes.add(resolve(type.subtypes[0]))
+                def sub := resolve(type.subtypes[0])
+                if sub = null {
+                    return null
+                }
+                subtypes.add(sub)
                 return Type(subtypes[0].name + "?", Type.Kind.NULLABLE, type.offset, subtypes, true)
             when Type.Kind.GENERIC:
                 assert type.subtypes.get_count() >= 2
                 def subtypes := Array<Type>()
-                subtypes.add(resolve(type.subtypes[0]))
+                def base := resolve(type.subtypes[0], false)
+                if base = null {
+                    return null
+                }
+                subtypes.add(base)
                 def name := MutableString(subtypes[0].name)
                 name.append("<")
                 var separator := ""
                 for i in 1 .. type.subtypes.get_count() {
                     def resolved := resolve(type.subtypes[i])
+                    if resolved = null {
+                        return null
+                    }
                     subtypes.add(resolved)
                     name.append(separator)
                     name.append(resolved.name)
                     separator := ", "
                 }
                 name.append(">")
-                return Type(name.convert(), Type.Kind.GENERIC, type.offset, subtypes, true)
+                def result := Type(name.convert(), Type.Kind.GENERIC, type.offset, subtypes, true)
+                if checkParameters {
+                    if !checkGenericParameters(type.offset, getClass(result.subtypes[0]), result) {
+                        return null
+                    }
+                }
+                return result
             otherwise:
                 assert false, "cannot resolve \{type}"
         }
+    }
+
+    method resolve(type:Type):Type? {
+        return resolve(type, true)
     }
 
     method resolve(cl:ClassDecl) {
@@ -250,7 +304,8 @@ class Compiler (ErrorReporter) {
         symbolTable := cl.symbolTable
         if cl.rawSuper != null {
             cl.rawSuper := resolve(cl.rawSuper)
-            if !cl.annotations.isFinal() & cl.rawSuper.name = "panda.core.Value" {
+            if cl.rawSuper != null & !cl.annotations.isFinal() &
+                    cl.rawSuper.name = "panda.core.Value" {
                 cl.annotations.flags ||= Annotations.Flag.FINAL
                 for m in cl.methods {
                     m.annotations.flags ||= Annotations.Flag.FINAL
@@ -261,7 +316,10 @@ class Compiler (ErrorReporter) {
             }
         }
         for i in 0 .. cl.rawInterfaces.get_count() {
-            cl.rawInterfaces[i] := resolve(cl.rawInterfaces[i])
+            def resolved := resolve(cl.rawInterfaces[i])
+            if resolved != null {
+                cl.rawInterfaces[i] := resolved
+            }
         }
         for p in cl.parameters {
             p.bound := resolve(p.bound)
@@ -300,9 +358,12 @@ class Compiler (ErrorReporter) {
         def old := symbolTable
         symbolTable := f.owner.symbolTable
         if f.type != Type.Void() {
-            f.type := resolve(f.type)
-            if f.rawValue != null {
-                f.value := coerce(compileExpression(f.rawValue), f.type)
+            def resolved := resolve(f.type)
+            if resolved != null {
+                f.type := resolved
+                if f.rawValue != null {
+                    f.value := coerce(compileExpression(f.rawValue), f.type)
+                }
             }
             currentClass.pop()
             currentFile.pop()
@@ -675,10 +736,12 @@ class Compiler (ErrorReporter) {
                 assert target = null
                 def cl := getClass(offset, (s->Alias).fullName) -- FIXME remove extra parens
                 if cl != null {
+                    checkGenericParameters(offset, cl, cl.type()) -- FIXME parens
                     return IRNode(IRNode.Kind.TYPE_REFERENCE, offset, Type.Class(), cl.type())
                 }
                 return null
             when Symbol.Kind.CLASS:
+                checkGenericParameters(offset, s->ClassDecl, (s->ClassDecl).type()) -- FIXME parens
                 return IRNode(IRNode.Kind.TYPE_REFERENCE, offset, Type.Class(),
                         (s->ClassDecl).type()) -- FIXME parens
             when Symbol.Kind.METHOD, Symbol.Kind.METHODS:
@@ -2124,8 +2187,11 @@ class Compiler (ErrorReporter) {
     }
 
     method compileType(t:ASTNode):IRNode? {
-        return IRNode(IRNode.Kind.TYPE_REFERENCE, t.offset, Type.Class(),
-                resolve(scanner.convertType(t)))
+        def resolved := resolve(scanner.convertType(t))
+        if resolved = null {
+            return null
+        }
+        return IRNode(IRNode.Kind.TYPE_REFERENCE, t.offset, Type.Class(), resolved)
     }
 
     method compileRange(r:ASTNode):IRNode? {
@@ -2228,6 +2294,9 @@ class Compiler (ErrorReporter) {
             return null
         }
         def type := resolve(scanner.convertType(c.children[1]))
+        if type = null {
+            return null
+        }
         if coercionCost(value, type) != null {
             return coerce(value, type)
         }
