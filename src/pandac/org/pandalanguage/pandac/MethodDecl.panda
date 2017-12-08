@@ -89,7 +89,7 @@ class MethodDecl : Symbol {
     }
 
     function signature():String {
-        def result := MutableString("method \{name}(")
+        def result := MutableString("\{name}(")
         var separator := ""
         for p in parameters {
             result.append(separator)
@@ -101,6 +101,17 @@ class MethodDecl : Symbol {
             result.append(":\{returnType}")
         }
         return result.convert()
+    }
+
+    function declaration():String {
+        match methodKind {
+            when Kind.METHOD:
+                return("method \{owner.name}.\{signature()}")
+            when Kind.FUNCTION:
+                return("function \{owner.name}.\{signature()}")
+            when Kind.INIT:
+                return("\{owner.name}.\{signature()}")
+        }
     }
 
     @override

@@ -1131,7 +1131,6 @@ class Compiler (ErrorReporter) {
             return IRNode(IRNode.Kind.CAST, expr.offset, target, false, children)
         }
         error(expr.offset, "expected '\{target}', but found '\{expr.type}'")
-        assert false
         return null
     }
 
@@ -2254,7 +2253,14 @@ class Compiler (ErrorReporter) {
             when ASTNode.Kind.BIT:
                 return IRNode(IRNode.Kind.BIT, e.offset, Type.BitLiteral(), e.payload->Bit)
             when ASTNode.Kind.CALL:
-                return compileCall(e)
+                def result := compileCall(e)
+                if result != null & result.type = Type.Void() {
+                    assert result.kind = IRNode.Kind.CALL
+                    error(result.offset, (result.payload->MethodRef).value.declaration() + -- FIXME parens
+                            " does not return a value")
+                    return null
+                }
+                return result
             when ASTNode.Kind.DOT:
                 return compileDot(e)
             when ASTNode.Kind.IDENTIFIER:
@@ -2953,7 +2959,6 @@ class Compiler (ErrorReporter) {
             when ASTNode.Kind.ASSERT:   return compileAssert(s)
             when ASTNode.Kind.BINARY:   return resolve(compileBinary(s))
             when ASTNode.Kind.BLOCK:    return compileBlock(s)
-            when ASTNode.Kind.CALL:     return unwrapCast(resolve(compileCall(s)))
             when ASTNode.Kind.IF:       return compileIf(s)
             when ASTNode.Kind.FOR:      return compileFor(s)
             when ASTNode.Kind.WHILE:    return compileWhile(s)
@@ -2963,6 +2968,12 @@ class Compiler (ErrorReporter) {
             when ASTNode.Kind.BREAK:    return compileBreak(s)
             when ASTNode.Kind.CONTINUE: return compileContinue(s)
             when ASTNode.Kind.RETURN:   return compileReturn(s)
+            when ASTNode.Kind.CALL:
+                var result := resolve(compileCall(s))
+                if result != null {
+                    result := unwrapCast(result)
+                }
+                return result
             when ASTNode.Kind.VAR, ASTNode.Kind.DEF, ASTNode.Kind.CONSTANT, ASTNode.Kind.PROPERTY:
                 return compileVar(s)
         }

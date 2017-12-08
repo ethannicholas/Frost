@@ -2,7 +2,19 @@ class VoidExpression {
     method foo() {
     }
 
-    method test() {
+    method bar(i:Int) {
+    }
+
+    method test1() {
         def value := foo()
+    }
+
+    method test2() {
+        bar(foo())
+    }
+
+    method test3() {
+        var i := 5
+        i := bar(i)
     }
 }
