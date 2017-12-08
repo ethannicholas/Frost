@@ -143,7 +143,7 @@ void org$pandalanguage$pandac$ClassDecl$init$panda$io$File$panda$core$Int64$pand
     }
 }
 org$pandalanguage$pandac$Type* org$pandalanguage$pandac$ClassDecl$type$R$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$ClassDecl* self) {
-    org$pandalanguage$pandac$Type* $tmp30 = (org$pandalanguage$pandac$Type*) malloc(64);
+    org$pandalanguage$pandac$Type* $tmp30 = (org$pandalanguage$pandac$Type*) malloc(80);
     $tmp30->$class = (panda$core$Class*) &org$pandalanguage$pandac$Type$class;
     $tmp30->refCount.value = 1;
     org$pandalanguage$pandac$Type$init$panda$core$String$panda$core$Int64$panda$core$Int64$panda$core$Bit($tmp30, self->name, ((panda$core$Int64) { 10 }), ((panda$core$Int64) { -1 }), ((panda$core$Bit) { true }));
@@ -208,7 +208,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$ClassDecl$typeWithParame
             $fn63 $tmp62 = $tmp61->methods[1];
             panda$core$Object* $tmp64 = $tmp62(p$Iter48);
             p60 = ((org$pandalanguage$pandac$ClassDecl$GenericParameter*) $tmp64);
-            org$pandalanguage$pandac$Type* $tmp66 = (org$pandalanguage$pandac$Type*) malloc(64);
+            org$pandalanguage$pandac$Type* $tmp66 = (org$pandalanguage$pandac$Type*) malloc(80);
             $tmp66->$class = (panda$core$Class*) &org$pandalanguage$pandac$Type$class;
             $tmp66->refCount.value = 1;
             panda$core$String* $tmp69 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(((org$pandalanguage$pandac$Symbol*) self)->name, &$s68);
@@ -224,7 +224,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$ClassDecl$typeWithParame
         $l54:;
     }
     panda$core$MutableString$append$panda$core$String(name42, &$s72);
-    org$pandalanguage$pandac$Type* $tmp73 = (org$pandalanguage$pandac$Type*) malloc(64);
+    org$pandalanguage$pandac$Type* $tmp73 = (org$pandalanguage$pandac$Type*) malloc(80);
     $tmp73->$class = (panda$core$Class*) &org$pandalanguage$pandac$Type$class;
     $tmp73->refCount.value = 1;
     panda$core$String* $tmp75 = panda$core$MutableString$convert$R$panda$core$String(name42);

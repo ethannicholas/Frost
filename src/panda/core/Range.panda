@@ -2,7 +2,7 @@ package panda.core
 
 @final
 @specialize
-class Range<T> : Value {
+class Range<T:Value?> : Value {
     def start:T
 
     def end:T

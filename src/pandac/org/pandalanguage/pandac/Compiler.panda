@@ -182,32 +182,37 @@ class Compiler (ErrorReporter) {
         return result
     }
 
-    function genericParameterCount(type:Type):Int {
-        match type.typeKind {
-            when Type.Kind.GENERIC:
-                return type.subtypes.get_count() - 1
-            when Type.Kind.NULLABLE:
-                return genericParameterCount(type.subtypes[0])
-            otherwise:
-                return 0
-        }
-    }
-
     method checkGenericParameters(offset:Int, cl:ClassDecl, type:Type):Bit {
-        def expected := cl.parameters.get_count()
-        def found := genericParameterCount(type)
-        if expected != found {
+        resolve(cl)
+        assert type.resolved
+        def expectedCount := cl.parameters.get_count()
+        def foundTypes := typeParameters(type)
+        def foundCount := foundTypes.get_count()
+        if expectedCount != foundCount {
             def s:String
-            if expected = 1 {
+            if expectedCount = 1 {
                 s := ""
             }
             else {
                 s := "s"
             }
-            error(offset, "'\{cl.name}' expected \{expected} generic parameter\{s}, but found " +
-                    found)
+            error(offset, "'\{cl.name}' expected \{expectedCount} generic parameter\{s}, but " +
+                    "found \{foundCount}")
             return false
         }
+        currentClass.push(cl)
+        currentFile.push(cl.source)
+        for i in 0 .. expectedCount {
+            if coercionCost(foundTypes[i], remapType(type, cl.parameters[i].bound)) = null {
+                error(offset, "generic parameter '\{cl.name}.\{cl.parameters[i].name}' must be " +
+                        "of type '\{cl.parameters[i].bound}', but found '\{foundTypes[i]}'")
+                currentFile.pop()
+                currentClass.pop()
+                return false
+            }
+        }
+        currentFile.pop()
+        currentClass.pop()
         return true
     }
 
@@ -219,12 +224,13 @@ class Compiler (ErrorReporter) {
             when Type.Kind.CLASS:
                 def resolved := tryResolveClass(type.name)
                 if resolved != null {
+                    def result := resolved.type()
                     if checkParameters {
-                        if !checkGenericParameters(type.offset, resolved, type) {
+                        if !checkGenericParameters(type.offset, resolved, result) {
                             return null
                         }
                     }
-                    return resolved.type()
+                    return result
                 }
                 def s := symbolTable[type.name]
                 if s != null {
@@ -234,10 +240,7 @@ class Compiler (ErrorReporter) {
                         when Symbol.Kind.GENERIC_PARAMETER:
                             def gp := s->ClassDecl.GenericParameter
                             resolve(getClass(type.offset, gp.owner))
-                            def subtypes := Array<Type>() -- FIXME literal
-                            subtypes.add(gp.bound)
-                            return Type(gp.owner + "." + gp.name, Type.Kind.GENERIC_PARAMETER,
-                                    type.offset, subtypes, true)
+                            return Type(gp)
                         when Symbol.Kind.TYPE:
                             return s->Type
                         when Symbol.Kind.CLASS:
@@ -302,6 +305,12 @@ class Compiler (ErrorReporter) {
         currentClass.push(cl)
         def old := symbolTable
         symbolTable := cl.symbolTable
+        for p in cl.parameters {
+            def resolved := resolve(p.bound, false)
+            if resolved != null {
+                p.bound := resolved
+            }
+        }
         if cl.rawSuper != null {
             cl.rawSuper := resolve(cl.rawSuper)
             if cl.rawSuper != null & !cl.annotations.isFinal() &
@@ -322,7 +331,10 @@ class Compiler (ErrorReporter) {
             }
         }
         for p in cl.parameters {
-            p.bound := resolve(p.bound)
+            def cl := getClass(p.bound)
+            if cl != null {
+                checkGenericParameters(cl.offset, cl, p.bound)
+            }
         }
         symbolTable := old
         currentClass.pop()
@@ -447,6 +459,15 @@ class Compiler (ErrorReporter) {
                 }
             }
         }
+        if result = null {
+            def index := fullName.lastIndexOf(".")
+            if index != null {
+                def parent := getClass(fullName[..index])
+                if parent != null {
+                    result := classes[fullName]
+                }
+            }
+        }
         return result
     }
 
@@ -533,8 +554,10 @@ class Compiler (ErrorReporter) {
         match type.typeKind {
             when Type.Kind.CLASS:
                 result := getClass(type.offset, type.name)
-            when Type.Kind.NULLABLE, Type.Kind.GENERIC, Type.Kind.GENERIC_PARAMETER:
+            when Type.Kind.NULLABLE, Type.Kind.GENERIC:
                 result := getClass(type.subtypes[0])
+            when Type.Kind.GENERIC_PARAMETER:
+                return getClass(type.parameter.bound)
             otherwise:
                 assert false, "unsupported type \{type}"
         }
@@ -834,8 +857,8 @@ class Compiler (ErrorReporter) {
     }
 
     function coercionCost(type:Type, target:Type):Int? {
-        assert type.resolved
-        assert target.resolved
+        assert type.resolved, "unresolved type '\{type}'"
+        assert target.resolved, "unresolved type '\{target}'"
         if type = target {
             return 0
         }
@@ -884,7 +907,7 @@ class Compiler (ErrorReporter) {
                 }
                 return best
             when Type.Kind.GENERIC_PARAMETER:
-                return coercionCost(type.subtypes[0], target)
+                return coercionCost(type.parameter.bound, target)
         }
         if !target.isClass() {
             return null
@@ -954,7 +977,7 @@ class Compiler (ErrorReporter) {
                 }
                 return cost + NULLABLE_CAST_COST
             when Type.Kind.GENERIC_PARAMETER:
-                return coercionCost(expr, target.subtypes[0])
+                return coercionCost(expr, target.parameter.bound)
         }
         match expr.kind {
             when IRNode.Kind.BIT:
@@ -1995,32 +2018,25 @@ class Compiler (ErrorReporter) {
     }
 
     function typeParameters(type:Type):ListView<Type> {
-        if type.typeKind = Type.Kind.GENERIC_PARAMETER {
-            return typeParameters(type.subtypes[0])
-        }
-        if type.typeKind = Type.Kind.GENERIC {
-            assert type.subtypes.get_count() >= 2
-            return type.subtypes[1..]
-        }
-        else {
-            return Array<Type>()
+        match type.typeKind {
+            when Type.Kind.GENERIC_PARAMETER:
+                return typeParameters(type.parameter.bound)
+            when Type.Kind.GENERIC:
+                assert type.subtypes.get_count() >= 2
+                return type.subtypes[1..]
+            when Type.Kind.NULLABLE:
+                return typeParameters(type.subtypes[0])
+            otherwise:
+                return Array<Type>()
         }
     }
-
 
     function typeParameters(target:IRNode?):ListView<Type> {
         if target != null {
             if target.kind = IRNode.Kind.TYPE_REFERENCE {
                 return typeParameters(target.payload->Type)
             }
-            def type:Type
-            if target.type.typeKind = Type.Kind.NULLABLE {
-                type := target.type.subtypes[0]
-            }
-            else {
-                type := target.type
-            }
-            return typeParameters(type)
+            return typeParameters(target.type)
         }
         return Array<Type>()
     }
@@ -2262,8 +2278,7 @@ class Compiler (ErrorReporter) {
                 def pName := "\{cl.name}.\{p.name}"
                 name.append(separator)
                 name.append(pName)
-                subtypes.add(Type(pName, Type.Kind.GENERIC_PARAMETER, p.offset,
-                             pType, true))
+                subtypes.add(Type(p))
                 separator := ", "
             }
             name.append(">")

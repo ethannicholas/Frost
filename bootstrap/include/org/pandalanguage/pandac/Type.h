@@ -8,6 +8,8 @@ typedef struct panda$core$Class panda$core$Class;
 typedef struct panda$core$String panda$core$String;
 #include "panda/core/Bit.h"
 typedef struct panda$collections$ImmutableArray panda$collections$ImmutableArray;
+typedef struct org$pandalanguage$pandac$ClassDecl org$pandalanguage$pandac$ClassDecl;
+typedef struct org$pandalanguage$pandac$ClassDecl$GenericParameter org$pandalanguage$pandac$ClassDecl$GenericParameter;
 
 typedef struct org$pandalanguage$pandac$Type {
     panda$core$Class* $class;
@@ -18,6 +20,8 @@ typedef struct org$pandalanguage$pandac$Type {
     panda$core$Bit resolved;
     panda$core$Int64 typeKind;
     panda$collections$ImmutableArray* subtypes;
+    org$pandalanguage$pandac$ClassDecl* test;
+    org$pandalanguage$pandac$ClassDecl$GenericParameter* parameter;
 } org$pandalanguage$pandac$Type;
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"
@@ -31,12 +35,14 @@ typedef struct panda$core$String panda$core$String;
 #include "panda/core/Int64.h"
 #include "panda/core/Bit.h"
 typedef struct panda$collections$ListView panda$collections$ListView;
+typedef struct org$pandalanguage$pandac$ClassDecl$GenericParameter org$pandalanguage$pandac$ClassDecl$GenericParameter;
 typedef struct panda$collections$HashMap panda$collections$HashMap;
 
 void org$pandalanguage$pandac$Type$init$panda$core$String$panda$core$Int64$panda$core$Int64(org$pandalanguage$pandac$Type* self, panda$core$String* p_name, panda$core$Int64 p_typeKind, panda$core$Int64 p_offset);
 void org$pandalanguage$pandac$Type$init$panda$core$String$panda$core$Int64$panda$core$Int64$panda$core$Bit(org$pandalanguage$pandac$Type* self, panda$core$String* p_name, panda$core$Int64 p_typeKind, panda$core$Int64 p_offset, panda$core$Bit p_resolved);
 void org$pandalanguage$pandac$Type$init$panda$core$String$panda$core$Int64$panda$core$Int64$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT$panda$core$Bit(org$pandalanguage$pandac$Type* self, panda$core$String* p_name, panda$core$Int64 p_typeKind, panda$core$Int64 p_offset, panda$collections$ListView* p_subtypes, panda$core$Bit p_resolved);
 void org$pandalanguage$pandac$Type$init$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT(org$pandalanguage$pandac$Type* self, panda$collections$ListView* p_subtypes);
+void org$pandalanguage$pandac$Type$init$org$pandalanguage$pandac$ClassDecl$GenericParameter(org$pandalanguage$pandac$Type* self, org$pandalanguage$pandac$ClassDecl$GenericParameter* p_param);
 panda$core$Int64 org$pandalanguage$pandac$Type$size$R$panda$core$Int64(org$pandalanguage$pandac$Type* self);
 panda$core$Bit org$pandalanguage$pandac$Type$$EQ$org$pandalanguage$pandac$Type$R$panda$core$Bit(org$pandalanguage$pandac$Type* self, org$pandalanguage$pandac$Type* p_other);
 panda$core$Bit org$pandalanguage$pandac$Type$$NEQ$org$pandalanguage$pandac$Type$R$panda$core$Bit(org$pandalanguage$pandac$Type* self, org$pandalanguage$pandac$Type* p_other);

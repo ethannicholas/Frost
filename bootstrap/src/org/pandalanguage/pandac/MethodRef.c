@@ -133,7 +133,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$MethodRef$returnType$R$o
     return $tmp58;
 }
 org$pandalanguage$pandac$Type* org$pandalanguage$pandac$MethodRef$type$R$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$MethodRef* self) {
-    org$pandalanguage$pandac$Type* $tmp59 = (org$pandalanguage$pandac$Type*) malloc(64);
+    org$pandalanguage$pandac$Type* $tmp59 = (org$pandalanguage$pandac$Type*) malloc(80);
     $tmp59->$class = (panda$core$Class*) &org$pandalanguage$pandac$Type$class;
     $tmp59->refCount.value = 1;
     org$pandalanguage$pandac$Type$init$panda$core$String$panda$core$Int64$panda$core$Int64$panda$core$Bit($tmp59, &$s61, ((panda$core$Int64) { 16 }), ((panda$core$Int64) { -1 }), ((panda$core$Bit) { true }));

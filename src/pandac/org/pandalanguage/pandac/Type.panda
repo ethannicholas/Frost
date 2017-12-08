@@ -27,6 +27,10 @@ class Type : Symbol (Key<Type>) {
 
     def subtypes:ImmutableArray<Type>
 
+    def test:ClassDecl
+
+    def parameter:ClassDecl.GenericParameter? := null
+
     init(name:String, typeKind:Int, offset:Int) {
         init(name, typeKind, offset, false)
     }
@@ -45,6 +49,7 @@ class Type : Symbol (Key<Type>) {
                 "invalid type: name=\{name}, nullable=\{typeKind = Kind.NULLABLE}"
         assert (typeKind = Kind.GENERIC) = name.endsWith(">"),
                 "invalid type: name=\{name}, generic=\{typeKind = Kind.GENERIC}"
+        assert typeKind != Kind.GENERIC_PARAMETER
         self.typeKind := typeKind
         self.offset := offset
         self.resolved := resolved
@@ -66,6 +71,13 @@ class Type : Symbol (Key<Type>) {
         }
         name.append(">")
         super.init(Symbol.Kind.TYPE, offset, name.convert())
+    }
+
+    init(param:ClassDecl.GenericParameter) {
+        self.name := "\{param.owner}.\{param.name}"
+        self.typeKind := Kind.GENERIC_PARAMETER
+        self.parameter := param
+        self.resolved := true
     }
 
     function size():Int {

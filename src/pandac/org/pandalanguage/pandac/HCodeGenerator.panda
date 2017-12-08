@@ -113,7 +113,7 @@ class HCodeGenerator (CodeGenerator) {
                 }
                 return type(t.subtypes[0])
             when Type.Kind.GENERIC_PARAMETER:
-                return type(t.subtypes[0])
+                return type(t.parameter.bound)
             otherwise:
                 assert false, "unsupported type '\{t}'"
         }

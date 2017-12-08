@@ -369,6 +369,7 @@ class Parser {
         if peek().kind = Token.Kind.LT {
             -- may need to speculatively parse, because foo->Int8<bar looks like the start of a cast
             -- to "Int8<bar...", but is actually a cast to Int8 followed by less-than bar
+            name.append("<")
             if needSpeculativeParse {
                 startSpeculative()
             }
@@ -384,6 +385,7 @@ class Parser {
                 return null
             }
             children.add(t)
+            name.append(t)
             while checkNext(Token.Kind.COMMA) != null {
                 t := type(false)
                 if t = null {
@@ -394,6 +396,8 @@ class Parser {
                     return null
                 }
                 children.add(t)
+                name.append(", ")
+                name.append(t)
             }
             if expect(Token.Kind.GT, "'>'") = null {
                 if needSpeculativeParse {
@@ -402,6 +406,7 @@ class Parser {
                 }
                 return null
             }
+            name.append(">")
             result := ASTNode(ASTNode.Kind.GENERIC_TYPE, start.offset, name.convert(),
                     children)
             accept()

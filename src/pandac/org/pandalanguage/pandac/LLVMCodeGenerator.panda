@@ -394,7 +394,7 @@ class LLVMCodeGenerator (CodeGenerator) {
                 }
                 return type(t.subtypes[0])
             when Type.Kind.GENERIC_PARAMETER:
-                return type(t.subtypes[0])
+                return type(t.parameter.bound)
             when Type.Kind.FUNCTION, Type.Kind.METHOD:
                 def result := MutableString(type(t.subtypes[t.subtypes.get_count() - 1]))
                 result.append(" (")
@@ -1675,11 +1675,11 @@ class LLVMCodeGenerator (CodeGenerator) {
     }
 
     method getIntReference(int:IRNode, out:IndentedOutputStream):String {
-        return (int.payload->Int).convert() -- FIXME parens
+        return (int.payload->UInt64).convert() -- FIXME parens
     }
 
     method getNegatedIntReference(int:IRNode, out:IndentedOutputStream):String {
-        return "-" + (int.payload->Int).convert() -- FIXME parens
+        return "-" + (int.payload->UInt64).convert() -- FIXME parens
     }
 
     method getBitReference(bit:IRNode, out:IndentedOutputStream):String {
