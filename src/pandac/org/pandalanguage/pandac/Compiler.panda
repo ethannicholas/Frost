@@ -1153,13 +1153,6 @@ class Compiler (ErrorReporter) {
         if type.isBuiltinNumber() & target.isBuiltinNumber() {
             return true
         }
-        if type.typeKind = Type.Kind.UNRESOLVED {
-            for t in type.subtypes {
-                if coercionCost(t, target) != null{
-                    return true
-                }
-            }
-        }
         if type.typeKind = Type.Kind.INVALID {
             return false
         }
@@ -1170,7 +1163,14 @@ class Compiler (ErrorReporter) {
         if coercionCost(node, target) != null {
             return true
         }
-        return canCast(node.type, target)
+        var result := canCast(node.type, target)
+        if !result & node.type.typeKind = Type.Kind.UNRESOLVED {
+            def resolved := resolve(node)
+            if resolved != null {
+                result := canCast(resolved, target)
+            }
+        }
+        return result
     }
 
     method cast(node:IRNode, offset:Int, isExplicit:Bit, target:Type):IRNode {
@@ -1183,9 +1183,16 @@ class Compiler (ErrorReporter) {
                     "'\{target}'")
         }
         match node.kind {
-            when IRNode.Kind.INT, IRNode.Kind.NEGATED_INT, IRNode.Kind.BIT,
-                    IRNode.Kind.UNRESOLVED_METHOD_CALL, IRNode.Kind.UNRESOLVED_INDEX:
+            when IRNode.Kind.INT, IRNode.Kind.NEGATED_INT, IRNode.Kind.BIT:
                 return coerce(node, target)
+            when IRNode.Kind.UNRESOLVED_METHOD_CALL, IRNode.Kind.UNRESOLVED_INDEX:
+                if coercionCost(node, target) != null {
+                    return coerce(node, target)
+                }
+                def resolved := resolve(node)
+                if resolved != null {
+                    return cast(resolved, offset, isExplicit, target)
+                }
         }
         def children := Array<IRNode>() -- FIXME literal
         children.add(node)
@@ -2452,6 +2459,10 @@ class Compiler (ErrorReporter) {
                     found := true
                     break
                 }
+            }
+            if !found {
+                error(list.offset, "expected an Iterable or Iterator, but found '\{list.type}'")
+                return null
             }
         }
         symbolTable := symbols.parents[0]

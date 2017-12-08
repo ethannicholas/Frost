@@ -128,7 +128,8 @@ function(compile_panda_sources out_var)
     foreach(input ${ARGN})
         get_filename_component(output ${input} NAME_WE)
         set(output "${CMAKE_CURRENT_BINARY_DIR}/${output}.o")
-        add_custom_command(OUTPUT ${output}
+        add_custom_command(
+            OUTPUT ${output}
             COMMAND ${CMAKE_CURRENT_BINARY_DIR}/bootstrap -f o -o ${output} ${input}
             DEPENDS ${input} bootstrap
             WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
@@ -270,7 +271,8 @@ function(compile_plex_sources out_var)
         set(input "${CMAKE_CURRENT_SOURCE_DIR}/${input}")
         get_filename_component(output ${input} NAME_WE)
         set(output "${CMAKE_CURRENT_BINARY_DIR}/${output}.o")
-        add_custom_command(OUTPUT ${output}
+        add_custom_command(
+            OUTPUT ${output}
             COMMAND ${CMAKE_CURRENT_BINARY_DIR}/bootstrap -i ${CMAKE_CURRENT_SOURCE_DIR}/src/parser -f o -o ${output} ${input}
             DEPENDS bootstrap ${input}
             WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
@@ -327,7 +329,8 @@ function(compile_pandac_sources out_var)
     foreach(input ${ARGN})
         get_filename_component(output ${input} NAME_WE)
         set(output "${CMAKE_CURRENT_BINARY_DIR}/${output}.o")
-        add_custom_command(OUTPUT ${output}
+        add_custom_command(
+            OUTPUT ${output}
             COMMAND ${CMAKE_CURRENT_BINARY_DIR}/bootstrap -i ${CMAKE_CURRENT_SOURCE_DIR}/src/parser -i ${CMAKE_CURRENT_BINARY_DIR} -i ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac -f o -o ${output} ${input}
             DEPENDS bootstrap ${input}
             WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
@@ -409,7 +412,8 @@ function(create_headers out_var)
         if (buildInc STREQUAL "")
             set(buildInc ".")
         endif()
-        add_custom_command(OUTPUT ${output}
+        add_custom_command(
+            OUTPUT ${output}
             COMMAND ${CMAKE_CURRENT_BINARY_DIR}/pandac -f h -i ${CMAKE_CURRENT_SOURCE_DIR}/src -i ${pandacInc} -i ${parserInc} -i ${buildInc} -o ${CMAKE_CURRENT_BINARY_DIR}/updated_bootstrap/include ${input}
             DEPENDS ${rawInput} pandac
             WORKING_DIRECTORY ${working}
@@ -456,7 +460,8 @@ function(compile_panda_sources_to_c out_var)
         if (buildInc STREQUAL "")
             set(buildInc ".")
         endif()
-        add_custom_command(OUTPUT ${output}
+        add_custom_command(
+            OUTPUT ${output}
             COMMAND ${CMAKE_CURRENT_BINARY_DIR}/pandac -f c -i ${CMAKE_CURRENT_SOURCE_DIR}/src -i ${pandacInc} -i ${parserInc} -i ${buildInc} -o ${CMAKE_CURRENT_BINARY_DIR}/updated_bootstrap/src ${input}
             DEPENDS ${rawInput} pandac
             WORKING_DIRECTORY ${working}
@@ -481,4 +486,19 @@ add_custom_command(
     TARGET update_bootstrap POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E remove_directory ${CMAKE_CURRENT_SOURCE_DIR}/bootstrap
     COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_BINARY_DIR}/updated_bootstrap ${CMAKE_CURRENT_SOURCE_DIR}/bootstrap
+)
+
+add_custom_command(
+    OUTPUT TestRunner
+    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/pandac ${CMAKE_CURRENT_SOURCE_DIR}/test/TestRunner.panda -o ${CMAKE_CURRENT_BINARY_DIR}/TestRunner
+    DEPENDS pandac test/TestRunner.panda
+)
+
+add_custom_target(run_tests
+    DEPENDS TestRunner
+)
+
+add_custom_command(
+    TARGET run_tests POST_BUILD
+    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/TestRunner ${CMAKE_CURRENT_BINARY_DIR}/pandac ${CMAKE_CURRENT_SOURCE_DIR}/test/tests
 )

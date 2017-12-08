@@ -2497,7 +2497,7 @@ class LLVMCodeGenerator (CodeGenerator) {
         def numberClass := compiler.getClass(m.children[0].type)
         def value := nextVar()
         out.printLine("\{value} = extractvalue \{valueStruct}, 0")
-        def f := numberClass.symbolTable["value"]->Symbol->FieldDecl
+        def f := numberClass.symbolTable["value"]->FieldDecl
         compiler.resolve(f)
         def switchType := type(f.type)
         out.print("switch \{switchType} \{value}, ")
