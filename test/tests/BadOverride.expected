@@ -1,3 +1,3 @@
-BadOverride.panda:9:5: error: method foo():panda.core.Int64 is marked @override, but no matching method exists among its ancestors
-BadOverride.panda:16:5: error: method foo():panda.core.String overrides function foo():panda.core.String (BadOverride.panda:2:5), but is not a function
+BadOverride.panda:9:5: error: method anonymous.Sub1.foo():panda.core.Int64 is marked @override, but no matching method exists among its ancestors
+BadOverride.panda:16:5: error: method anonymous.Sub2.foo():panda.core.String overrides function anonymous.Super.foo():panda.core.String, but methods cannot override functions
 2 errors

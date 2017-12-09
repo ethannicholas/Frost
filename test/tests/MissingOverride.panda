@@ -22,7 +22,7 @@ class Sub2 : Super1 {
     }
 }
 
-class Sub3 (Intf) {
+class Sub3 : Intf {
     function foo():Int {
         return 42
     }

@@ -377,6 +377,22 @@ class Compiler : ErrorReporter {
         }
         m.returnType := resolve(m.returnType)
         m.resolved := true
+        def overridden := getOverriddenMethod(m)
+        if overridden != null {
+            if !m.annotations.isOverride() {
+                error(m.offset, "\{m.declaration()} overrides \{overridden.declaration()}, but " +
+                        "is not marked @override")
+            }
+            if m.methodKind = MethodDecl.Kind.METHOD &
+                    overridden.methodKind = MethodDecl.Kind.FUNCTION {
+                error(m.offset, "\{m.declaration()} overrides \{overridden.declaration()}, but " +
+                        "methods cannot override functions")
+            }
+        }
+        else if m.annotations.isOverride() {
+            error(m.offset, "\{m.declaration()} is marked @override, but no matching method " +
+                    "exists among its ancestors")
+        }
         symbolTable := old
         currentClass.pop()
         currentFile.pop()
@@ -648,6 +664,9 @@ class Compiler : ErrorReporter {
     }
 
     function getOverriddenMethod(m:MethodDecl):MethodDecl? {
+        if m.methodKind = MethodDecl.Kind.INIT {
+            return null
+        }
         resolve(m)
         def methodType := declaredType(m)
         def owner := m.owner.typeWithParameters()
