@@ -46,8 +46,8 @@ class SymbolTable {
                     return
             }
         }
-        compiler.error(s.offset, "duplicate symbol '\{name}' (previous declaration was at " +
-                compiler.position(old.offset))
+        compiler.error(s.position, "duplicate symbol '\{name}' (previous declaration was at " +
+                old.position)
     }
 
     @private

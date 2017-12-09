@@ -62,7 +62,7 @@ class IRNode {
 
     def kind:Int
 
-    def offset:Int
+    def position:Position
 
     def payload:Object?
 
@@ -70,61 +70,61 @@ class IRNode {
 
     def children:Array<IRNode>
 
-    init(kind:Int, offset:Int) {
-        init(kind, offset, Type.Void(), null, Array<IRNode>())
+    init(kind:Int, position:Position) {
+        init(kind, position, Type.Void(), null, Array<IRNode>())
     }
 
-    init(kind:Int, offset:Int, payload:UInt64) {
-        init(kind, offset, Type.Void(), payload, Array<IRNode>())
+    init(kind:Int, position:Position, payload:UInt64) {
+        init(kind, position, Type.Void(), payload, Array<IRNode>())
     }
 
-    init(kind:Int, offset:Int, payload:String) {
-        init(kind, offset, Type.Void(), payload, Array<IRNode>())
+    init(kind:Int, position:Position, payload:String) {
+        init(kind, position, Type.Void(), payload, Array<IRNode>())
     }
 
-    init(kind:Int, offset:Int, payload:Bit) {
-        init(kind, offset, Type.Void(), payload, Array<IRNode>())
+    init(kind:Int, position:Position, payload:Bit) {
+        init(kind, position, Type.Void(), payload, Array<IRNode>())
     }
 
-    init(kind:Int, offset:Int, children:ListView<IRNode>) {
-        init(kind, offset, Type.Void(), null, children)
+    init(kind:Int, position:Position, children:ListView<IRNode>) {
+        init(kind, position, Type.Void(), null, children)
     }
 
-    init(kind:Int, offset:Int, payload:Object?, children:ListView<IRNode>) {
-        init(kind, offset, Type.Void(), payload, children)
+    init(kind:Int, position:Position, payload:Object?, children:ListView<IRNode>) {
+        init(kind, position, Type.Void(), payload, children)
     }
 
-    init(kind:Int, offset:Int, type:Type) {
-        init(kind, offset, type, null, Array<IRNode>())
+    init(kind:Int, position:Position, type:Type) {
+        init(kind, position, type, null, Array<IRNode>())
     }
 
-    init(kind:Int, offset:Int, type:Type, payload:UInt64) {
-        init(kind, offset, type, payload, Array<IRNode>())
+    init(kind:Int, position:Position, type:Type, payload:UInt64) {
+        init(kind, position, type, payload, Array<IRNode>())
     }
 
-    init(kind:Int, offset:Int, type:Type, payload:String) {
-        init(kind, offset, type, payload, Array<IRNode>())
+    init(kind:Int, position:Position, type:Type, payload:String) {
+        init(kind, position, type, payload, Array<IRNode>())
     }
 
-    init(kind:Int, offset:Int, type:Type, payload:Bit) {
-        init(kind, offset, type, payload, Array<IRNode>())
+    init(kind:Int, position:Position, type:Type, payload:Bit) {
+        init(kind, position, type, payload, Array<IRNode>())
     }
 
-    init(kind:Int, offset:Int, type:Type, payload:Type) {
-        init(kind, offset, type, payload, Array<IRNode>())
+    init(kind:Int, position:Position, type:Type, payload:Type) {
+        init(kind, position, type, payload, Array<IRNode>())
     }
 
-    init(kind:Int, offset:Int, type:Type, payload:Variable) {
-        init(kind, offset, type, payload, Array<IRNode>())
+    init(kind:Int, position:Position, type:Type, payload:Variable) {
+        init(kind, position, type, payload, Array<IRNode>())
     }
 
-    init(kind:Int, offset:Int, type:Type, children:ListView<IRNode>) {
-        init(kind, offset, type, null, children)
+    init(kind:Int, position:Position, type:Type, children:ListView<IRNode>) {
+        init(kind, position, type, null, children)
     }
 
-    init(kind:Int, offset:Int, type:Type, payload:Object?, children:ListView<IRNode>) {
+    init(kind:Int, position:Position, type:Type, payload:Object?, children:ListView<IRNode>) {
         self.kind := kind
-        self.offset := offset
+        self.position := position
         self.type := type
         self.payload := payload
         self.children := Array<IRNode>(children)

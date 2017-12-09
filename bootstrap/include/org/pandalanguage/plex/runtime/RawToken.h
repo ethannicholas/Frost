@@ -12,6 +12,8 @@ typedef struct org$pandalanguage$plex$runtime$RawToken {
     panda$core$Int64 kind;
     panda$core$Int64 offset;
     panda$core$Int64 length;
+    panda$core$Int64 line;
+    panda$core$Int64 column;
 } org$pandalanguage$plex$runtime$RawToken;
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"

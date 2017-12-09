@@ -15,13 +15,13 @@ class Symbol {
 
     def kind:Int
 
-    def offset:Int
+    def position:Position
 
     def name:String
 
-    init(kind:Int, offset:Int, name:String) {
+    init(kind:Int, position:Position, name:String) {
         self.kind := kind
-        self.offset := offset
+        self.position := position
         self.name := name
     }
 

@@ -5,6 +5,7 @@
 typedef struct panda$core$Class panda$core$Class;
 #include "panda/core/Int32.h"
 #include "panda/core/Int64.h"
+#include "org/pandalanguage/pandac/Position.h"
 typedef struct panda$core$String panda$core$String;
 typedef struct org$pandalanguage$pandac$ClassDecl org$pandalanguage$pandac$ClassDecl;
 typedef struct org$pandalanguage$pandac$Annotations org$pandalanguage$pandac$Annotations;
@@ -17,7 +18,7 @@ typedef struct org$pandalanguage$pandac$FieldDecl {
     panda$core$Class* $class;
     panda$core$Int32 refCount;
     panda$core$Int64 kind;
-    panda$core$Int64 offset;
+    org$pandalanguage$pandac$Position position;
     panda$core$String* name;
     org$pandalanguage$pandac$ClassDecl* owner;
     panda$core$String* doccomment;
@@ -37,12 +38,13 @@ extern org$pandalanguage$pandac$FieldDecl$class_type org$pandalanguage$pandac$Fi
 #ifndef PANDA_TYPESONLY
 typedef struct org$pandalanguage$pandac$FieldDecl org$pandalanguage$pandac$FieldDecl;
 typedef struct org$pandalanguage$pandac$ClassDecl org$pandalanguage$pandac$ClassDecl;
-#include "panda/core/Int64.h"
+#include "org/pandalanguage/pandac/Position.h"
 typedef struct panda$core$String panda$core$String;
 typedef struct org$pandalanguage$pandac$Annotations org$pandalanguage$pandac$Annotations;
+#include "panda/core/Int64.h"
 typedef struct org$pandalanguage$pandac$Type org$pandalanguage$pandac$Type;
 typedef struct org$pandalanguage$pandac$ASTNode org$pandalanguage$pandac$ASTNode;
 
-void org$pandalanguage$pandac$FieldDecl$init$org$pandalanguage$pandac$ClassDecl$panda$core$Int64$panda$core$String$Q$org$pandalanguage$pandac$Annotations$panda$core$Int64$panda$core$String$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$ASTNode$Q(org$pandalanguage$pandac$FieldDecl* self, org$pandalanguage$pandac$ClassDecl* p_owner, panda$core$Int64 p_offset, panda$core$String* p_doccomment, org$pandalanguage$pandac$Annotations* p_annotations, panda$core$Int64 p_fieldKind, panda$core$String* p_name, org$pandalanguage$pandac$Type* p_type, org$pandalanguage$pandac$ASTNode* p_value);
+void org$pandalanguage$pandac$FieldDecl$init$org$pandalanguage$pandac$ClassDecl$org$pandalanguage$pandac$Position$panda$core$String$Q$org$pandalanguage$pandac$Annotations$panda$core$Int64$panda$core$String$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$ASTNode$Q(org$pandalanguage$pandac$FieldDecl* self, org$pandalanguage$pandac$ClassDecl* p_owner, org$pandalanguage$pandac$Position p_position, panda$core$String* p_doccomment, org$pandalanguage$pandac$Annotations* p_annotations, panda$core$Int64 p_fieldKind, panda$core$String* p_name, org$pandalanguage$pandac$Type* p_type, org$pandalanguage$pandac$ASTNode* p_value);
 
 #endif

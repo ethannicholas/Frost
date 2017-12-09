@@ -8,6 +8,7 @@
 #include "panda/collections/CollectionView.h"
 #include "panda/core/Range.LTpanda/core/Int64.GT.h"
 #include "org/pandalanguage/pandac/MethodDecl.h"
+#include "org/pandalanguage/pandac/Position.h"
 #include "panda/collections/ImmutableArray.h"
 
 
@@ -17,12 +18,13 @@ typedef panda$core$Int64 (*$fn3)(panda$collections$CollectionView*);
 typedef panda$core$Int64 (*$fn9)(panda$collections$CollectionView*);
 typedef panda$core$Object* (*$fn50)(panda$collections$ListView*, panda$core$Int64);
 typedef panda$core$Object* (*$fn54)(panda$collections$ListView*, panda$core$Int64);
-typedef panda$core$Object* (*$fn80)(panda$collections$ListView*, panda$core$Int64);
+typedef panda$core$Object* (*$fn81)(panda$collections$ListView*, panda$core$Int64);
 
 
 void org$pandalanguage$pandac$Methods$init$panda$collections$ListView$LTorg$pandalanguage$pandac$MethodDecl$GT(org$pandalanguage$pandac$Methods* self, panda$collections$ListView* p_methods) {
     panda$core$Range$LTpanda$core$Int64$GT $tmp6;
     panda$core$Range$LTpanda$core$Int64$GT $tmp29;
+    org$pandalanguage$pandac$Position $tmp78;
     ITable* $tmp1 = ((panda$collections$CollectionView*) p_methods)->$class->itable;
     while ($tmp1->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
         $tmp1 = $tmp1->next;
@@ -140,17 +142,18 @@ void org$pandalanguage$pandac$Methods$init$panda$collections$ListView$LTorg$pand
     i11.value += $tmp15;
     goto $l17;
     $l19:;
-    ITable* $tmp78 = p_methods->$class->itable;
-    while ($tmp78->$class != (panda$core$Class*) &panda$collections$ListView$class) {
-        $tmp78 = $tmp78->next;
+    org$pandalanguage$pandac$Position$init(&$tmp78);
+    ITable* $tmp79 = p_methods->$class->itable;
+    while ($tmp79->$class != (panda$core$Class*) &panda$collections$ListView$class) {
+        $tmp79 = $tmp79->next;
     }
-    $fn80 $tmp79 = $tmp78->methods[0];
-    panda$core$Object* $tmp81 = $tmp79(p_methods, ((panda$core$Int64) { 0 }));
-    org$pandalanguage$pandac$Symbol$init$panda$core$Int64$panda$core$Int64$panda$core$String(((org$pandalanguage$pandac$Symbol*) self), ((panda$core$Int64) { 205 }), ((panda$core$Int64) { -1 }), ((org$pandalanguage$pandac$Symbol*) ((org$pandalanguage$pandac$MethodDecl*) $tmp81))->name);
-    panda$collections$ImmutableArray* $tmp82 = (panda$collections$ImmutableArray*) malloc(32);
-    $tmp82->$class = (panda$core$Class*) &panda$collections$ImmutableArray$class;
-    $tmp82->refCount.value = 1;
-    panda$collections$ImmutableArray$init$panda$collections$ListView$LTpanda$collections$ImmutableArray$T$GT($tmp82, p_methods);
-    self->methods = $tmp82;
+    $fn81 $tmp80 = $tmp79->methods[0];
+    panda$core$Object* $tmp82 = $tmp80(p_methods, ((panda$core$Int64) { 0 }));
+    org$pandalanguage$pandac$Symbol$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$String(((org$pandalanguage$pandac$Symbol*) self), ((panda$core$Int64) { 205 }), $tmp78, ((org$pandalanguage$pandac$Symbol*) ((org$pandalanguage$pandac$MethodDecl*) $tmp82))->name);
+    panda$collections$ImmutableArray* $tmp83 = (panda$collections$ImmutableArray*) malloc(32);
+    $tmp83->$class = (panda$core$Class*) &panda$collections$ImmutableArray$class;
+    $tmp83->refCount.value = 1;
+    panda$collections$ImmutableArray$init$panda$collections$ListView$LTpanda$collections$ImmutableArray$T$GT($tmp83, p_methods);
+    self->methods = $tmp83;
 }
 

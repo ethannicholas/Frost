@@ -19,6 +19,8 @@ typedef struct org$pandalanguage$plex$runtime$DFA {
     panda$core$String* source;
     panda$collections$ListView* utf8;
     panda$core$Int64 offset;
+    panda$core$Int64 line;
+    panda$core$Int64 column;
 } org$pandalanguage$plex$runtime$DFA;
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"

@@ -5,4 +5,6 @@ class RawToken {
     var kind := 0
     var offset := 0
     var length := 0
+    var line := 0
+    var column := 0
 }

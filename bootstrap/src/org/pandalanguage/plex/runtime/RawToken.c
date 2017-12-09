@@ -12,5 +12,7 @@ void org$pandalanguage$plex$runtime$RawToken$init(org$pandalanguage$plex$runtime
     self->kind = ((panda$core$Int64) { 0 });
     self->offset = ((panda$core$Int64) { 0 });
     self->length = ((panda$core$Int64) { 0 });
+    self->line = ((panda$core$Int64) { 0 });
+    self->column = ((panda$core$Int64) { 0 });
 }
 

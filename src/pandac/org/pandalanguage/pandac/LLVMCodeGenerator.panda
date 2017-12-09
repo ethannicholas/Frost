@@ -574,9 +574,9 @@ class LLVMCodeGenerator : CodeGenerator {
                     inheritedMethodType.subtypes[i], actualMethodType.subtypes[i], out))
         }
         def children := Array<IRNode>()
-        children.add(IRNode(IRNode.Kind.SELF, -1, Type.Object()))
-        def unwrapped := getTypedReference(IRNode(IRNode.Kind.CAST, -1, m.owner.type(), children),
-                out)
+        children.add(IRNode(IRNode.Kind.SELF, Position(), Type.Object()))
+        def unwrapped := getTypedReference(IRNode(IRNode.Kind.CAST, Position(), m.owner.type(),
+                children), out)
         def returnValue:String
         if m.returnType != Type.Void() {
             returnValue := nextVar()
@@ -1857,7 +1857,7 @@ class LLVMCodeGenerator : CodeGenerator {
             when IRNode.Kind.PREFIX:
                 return getPrefixReference(expr, out)
             otherwise:
-                assert false, "unsupported expression \{expr}:\{compiler.position(expr.offset)}"
+                assert false, "unsupported expression \{expr}:\{expr.position}"
         }
     }
 
@@ -2403,7 +2403,7 @@ class LLVMCodeGenerator : CodeGenerator {
                 def inline := inlineContext.peek()
                 def result := getReference(r.children[0], out)
                 inline.returns.add(Pair<String, String>(currentBlock, result))
-                out.printLine("br label %\{inline.exitLabel} ; inline return (\{compiler.position(r.offset)})")
+                out.printLine("br label %\{inline.exitLabel}")
             }
             else {
                 out.printLine("ret \{getTypedReference(r.children[0], out)}")
@@ -2454,17 +2454,17 @@ class LLVMCodeGenerator : CodeGenerator {
         def ifFalse := nextLabel()
         out.printLine("br i1 \{test}, label %\{ifTrue}, label %\{ifFalse}")
         createBlock(ifFalse, out)
-        def p := compiler.position(a.offset)
         def name:String
-        def index := p.file.lastIndexOf("/")
+        def path := compiler.currentFile.peek().path
+        def index := path.lastIndexOf("/")
         if index = null {
-            name := p.file
+            name := path
         }
         else {
-            name := p.file[index...]
+            name := path[index...]
         }
         def nameRef := getStringReference(name, out)
-        def line := "%panda$core$Int64 { i64 \{p.line} }"
+        def line := "%panda$core$Int64 { i64 \{a.position.line} }"
         def msg:String?
         if a.children.get_count() = 2 {
             msg := getReference(a.children[1], out)

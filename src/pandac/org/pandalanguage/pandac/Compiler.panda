@@ -79,16 +79,16 @@ class Compiler : ErrorReporter {
         self.symbolTable := root
         self.codeGenerator := codeGenerator
         codeGenerator.setCompiler(self)
-        root.add(Type("builtin_bit", Type.Kind.BUILTIN_BIT, 1, true))
-        root.add(Type("builtin_int8", Type.Kind.BUILTIN_INT, 8, true))
-        root.add(Type("builtin_int16", Type.Kind.BUILTIN_INT, 16, true))
-        root.add(Type("builtin_int32", Type.Kind.BUILTIN_INT, 32, true))
-        root.add(Type("builtin_int64", Type.Kind.BUILTIN_INT, 64, true))
-        root.add(Type("builtin_uint8", Type.Kind.BUILTIN_UINT, 8, true))
-        root.add(Type("builtin_uint16", Type.Kind.BUILTIN_UINT, 16, true))
-        root.add(Type("builtin_uint32", Type.Kind.BUILTIN_UINT, 32, true))
-        root.add(Type("builtin_uint64", Type.Kind.BUILTIN_UINT, 64, true))
-        root.add(Alias("Int", "panda.core.Int64", -1))
+        root.add(Type("builtin_bit", Type.Kind.BUILTIN_BIT, 1))
+        root.add(Type("builtin_int8", Type.Kind.BUILTIN_INT, 8))
+        root.add(Type("builtin_int16", Type.Kind.BUILTIN_INT, 16))
+        root.add(Type("builtin_int32", Type.Kind.BUILTIN_INT, 32))
+        root.add(Type("builtin_int64", Type.Kind.BUILTIN_INT, 64))
+        root.add(Type("builtin_uint8", Type.Kind.BUILTIN_UINT, 8))
+        root.add(Type("builtin_uint16", Type.Kind.BUILTIN_UINT, 16))
+        root.add(Type("builtin_uint32", Type.Kind.BUILTIN_UINT, 32))
+        root.add(Type("builtin_uint64", Type.Kind.BUILTIN_UINT, 64))
+        root.add(Alias("Int", "panda.core.Int64", Position()))
         addAlias("panda.collections.Array")
         addAlias("panda.collections.Collection")
         addAlias("panda.collections.CollectionView")
@@ -146,7 +146,7 @@ class Compiler : ErrorReporter {
 
     @private
     method addAlias(name:String) {
-        root.add(Alias(name[name.next(name.lastIndexOf("."))..], name, -1))
+        root.add(Alias(name[name.next(name.lastIndexOf("."))..], name, Position()))
     }
 
     method tryResolveClass(name:String):ClassDecl? {
@@ -182,7 +182,7 @@ class Compiler : ErrorReporter {
         return result
     }
 
-    method checkGenericParameters(offset:Int, cl:ClassDecl, type:Type):Bit {
+    method checkGenericParameters(position:Position, cl:ClassDecl, type:Type):Bit {
         resolve(cl)
         assert type.resolved
         def expectedCount := cl.parameters.get_count()
@@ -196,13 +196,13 @@ class Compiler : ErrorReporter {
             else {
                 s := "s"
             }
-            error(offset, "'\{cl.name}' expected \{expectedCount} generic parameter\{s}, but " +
+            error(position, "'\{cl.name}' expected \{expectedCount} generic parameter\{s}, but " +
                     "found \{foundCount}")
             return false
         }
         for i in 0 .. expectedCount {
             if coercionCost(foundTypes[i], remapType(type, cl.parameters[i].bound)) = null {
-                error(offset, "generic parameter '\{cl.name}.\{cl.parameters[i].name}' must be " +
+                error(position, "generic parameter '\{cl.name}.\{cl.parameters[i].name}' must be " +
                         "of type '\{cl.parameters[i].bound}', but found '\{foundTypes[i]}'")
                 return false
             }
@@ -220,7 +220,7 @@ class Compiler : ErrorReporter {
                 if resolved != null {
                     def result := resolved.type()
                     if checkParameters {
-                        if !checkGenericParameters(type.offset, resolved, result) {
+                        if !checkGenericParameters(type.position, resolved, result) {
                             return null
                         }
                     }
@@ -230,10 +230,10 @@ class Compiler : ErrorReporter {
                 if s != null {
                     match s.kind {
                         when Symbol.Kind.ALIAS:
-                            return Type((s->Alias).fullName, Type.Kind.CLASS, type.offset, true) -- FIXME parens
+                            return Type((s->Alias).fullName, Type.Kind.CLASS, type.position, true) -- FIXME parens
                         when Symbol.Kind.GENERIC_PARAMETER:
                             def gp := s->ClassDecl.GenericParameter
-                            resolve(getClass(type.offset, gp.owner))
+                            resolve(getClass(type.position, gp.owner))
                             return Type(gp)
                         when Symbol.Kind.TYPE:
                             return s->Type
@@ -241,7 +241,7 @@ class Compiler : ErrorReporter {
                             return (s->ClassDecl).type() -- FIXME parens
                     }
                 }
-                error(position(type.offset), "unknown type '\{type}'")
+                error(type.position, "unknown type '\{type}'")
                 return null
             when Type.Kind.NULLABLE:
                 assert type.subtypes.get_count() = 1
@@ -251,7 +251,7 @@ class Compiler : ErrorReporter {
                     return null
                 }
                 subtypes.add(sub)
-                return Type(subtypes[0].name + "?", Type.Kind.NULLABLE, type.offset, subtypes, true)
+                return Type(subtypes[0].name + "?", Type.Kind.NULLABLE, type.position, subtypes, true)
             when Type.Kind.GENERIC:
                 assert type.subtypes.get_count() >= 2
                 def subtypes := Array<Type>()
@@ -274,9 +274,9 @@ class Compiler : ErrorReporter {
                     separator := ", "
                 }
                 name.append(">")
-                def result := Type(name.convert(), Type.Kind.GENERIC, type.offset, subtypes, true)
+                def result := Type(name.convert(), Type.Kind.GENERIC, type.position, subtypes, true)
                 if checkParameters {
-                    if !checkGenericParameters(type.offset, getClass(result.subtypes[0]), result) {
+                    if !checkGenericParameters(type.position, getClass(result.subtypes[0]), result) {
                         return null
                     }
                 }
@@ -312,18 +312,18 @@ class Compiler : ErrorReporter {
                 if sClass != null {
                     if sClass.classKind = ClassDecl.Kind.CLASS {
                         if cl.classKind = ClassDecl.Kind.INTERFACE {
-                            error(s.offset, "interface '\{cl.name}' cannot extend class " +
+                            error(s.position, "interface '\{cl.name}' cannot extend class " +
                                     "'\{s.name}'")
                         }
                         if cl.rawSuper = null {
                             cl.rawSuper := s
                             if cl.rawInterfaces.get_count() > 0 {
-                                error(s.offset, "superclass '\{s}' of class '\{cl.name}' must be " +
+                                error(s.position, "superclass '\{s}' of class '\{cl.name}' must be " +
                                         "listed before any superinterfaces")
                             }
                         }
                         else {
-                            error(s.offset, "class '\{cl.name}' has more than one superclass")
+                            error(s.position, "class '\{cl.name}' has more than one superclass")
                         }
                     }
                     else {
@@ -347,15 +347,15 @@ class Compiler : ErrorReporter {
             }
         }
         if cl.rawSuper != null {
-            checkGenericParameters(cl.offset, getClass(cl.rawSuper), cl.rawSuper)
+            checkGenericParameters(cl.position, getClass(cl.rawSuper), cl.rawSuper)
         }
         for intf in cl.rawInterfaces {
-            checkGenericParameters(cl.offset, getClass(intf), intf)
+            checkGenericParameters(cl.position, getClass(intf), intf)
         }
         for p in cl.parameters {
             def cl := getClass(p.bound)
             if cl != null {
-                checkGenericParameters(cl.offset, cl, p.bound)
+                checkGenericParameters(cl.position, cl, p.bound)
             }
         }
         symbolTable := old
@@ -380,17 +380,17 @@ class Compiler : ErrorReporter {
         def overridden := getOverriddenMethod(m)
         if overridden != null {
             if !m.annotations.isOverride() {
-                error(m.offset, "\{m.declaration()} overrides \{overridden.declaration()}, but " +
+                error(m.position, "\{m.declaration()} overrides \{overridden.declaration()}, but " +
                         "is not marked @override")
             }
             if m.methodKind = MethodDecl.Kind.METHOD &
                     overridden.methodKind = MethodDecl.Kind.FUNCTION {
-                error(m.offset, "\{m.declaration()} overrides \{overridden.declaration()}, but " +
+                error(m.position, "\{m.declaration()} overrides \{overridden.declaration()}, but " +
                         "methods cannot override functions")
             }
         }
         else if m.annotations.isOverride() {
-            error(m.offset, "\{m.declaration()} is marked @override, but no matching method " +
+            error(m.position, "\{m.declaration()} is marked @override, but no matching method " +
                     "exists among its ancestors")
         }
         symbolTable := old
@@ -421,7 +421,7 @@ class Compiler : ErrorReporter {
             return
         }
         if f.rawValue = null {
-            error(f.offset, "field has neither a type nor a value")
+            error(f.position, "field has neither a type nor a value")
             currentClass.pop()
             currentFile.pop()
             symbolTable := old
@@ -447,14 +447,14 @@ class Compiler : ErrorReporter {
         }
         match expr.kind {
             when IRNode.Kind.UNRESOLVED_IDENTIFIER:
-                error(expr.offset, "unknown identifier")
+                error(expr.position, "unknown identifier")
                 return null
             when IRNode.Kind.UNRESOLVED_METHOD_CALL:
-                error(expr.offset, "ambiguous method call")
+                error(expr.position, "ambiguous method call")
                 Console.printLine(expr.children[0].payload->ListView<MethodRef>)
                 return null
             when IRNode.Kind.SUPER:
-                error(expr.offset, "'super' can only be used as part of a method call")
+                error(expr.position, "'super' can only be used as part of a method call")
                 return null
             otherwise:
                 return coerce(expr, variableType(expr))
@@ -509,7 +509,7 @@ class Compiler : ErrorReporter {
         return result
     }
 
-    method getClass(offset:Int, fullName:String):ClassDecl? {
+    method getClass(position:Position, fullName:String):ClassDecl? {
         var result := classes[fullName]
         if result = null {
             def suffix := fullName.replace(".", "/") + ".panda"
@@ -522,13 +522,13 @@ class Compiler : ErrorReporter {
                     scan(f)
                     result := classes[fullName]
                     if result = null & errorCount = oldErrorCount {
-                        error(Position(f.name(), 1, 1),
+                        error(f, Position(1, 1),
                                 "expected file '\{f}' to contain a class named '\{fullName}'")
                     }
                 }
             }
             if !found {
-                error(offset, "no file named \{suffix} in any import path (\{settings.importDirs})")
+                error(position, "no file named \{suffix} in any import path (\{settings.importDirs})")
             }
         }
         return result
@@ -558,7 +558,7 @@ class Compiler : ErrorReporter {
             for i in 0 .. cl.parameters.get_count() {
                 aliases[cl.parameters[i].name] := type.subtypes[i + 1].name
             }
-            result := ClassDecl(cl.source, cl.offset, aliases, cl.doccomment, annotations,
+            result := ClassDecl(cl.source, cl.position, aliases, cl.doccomment, annotations,
                     cl.classKind, type.name, supertypes, Array<ClassDecl.GenericParameter>(),
                     cl.symbolTable.parents[0])
             result.external := false
@@ -568,14 +568,14 @@ class Compiler : ErrorReporter {
                 for p in m.parameters {
                     parameters.add(MethodDecl.Parameter(p.name, remapType(type, p.type)))
                 }
-                def clone := MethodDecl(result, m.offset, m.doccomment, m.annotations,
+                def clone := MethodDecl(result, m.position, m.doccomment, m.annotations,
                         m.methodKind, m.name, parameters, m.returnType, m.body)
                 result.methods.add(clone)
                 result.symbolTable.add(clone)
             }
             for f in cl.fields {
                 resolve(f)
-                def clone := FieldDecl(result, f.offset, f.doccomment, f.annotations, f.fieldKind,
+                def clone := FieldDecl(result, f.position, f.doccomment, f.annotations, f.fieldKind,
                         f.name, remapType(type, f.type), f.rawValue)
                 result.fields.add(clone)
                 result.symbolTable.add(clone)
@@ -592,7 +592,7 @@ class Compiler : ErrorReporter {
         var result:ClassDecl
         match type.typeKind {
             when Type.Kind.CLASS:
-                result := getClass(type.offset, type.name)
+                result := getClass(type.position, type.name)
             when Type.Kind.NULLABLE, Type.Kind.GENERIC:
                 result := getClass(type.subtypes[0])
             when Type.Kind.GENERIC_PARAMETER:
@@ -759,7 +759,7 @@ class Compiler : ErrorReporter {
             types:ListView<Type>) {
     }
 
-    method getMethodReference(st:SymbolTable, target:IRNode?, name:String, offset:Int,
+    method getMethodReference(st:SymbolTable, target:IRNode?, name:String, position:Position,
             types:ListView<Type>):IRNode {
         def methods := Array<MethodRef>()
         def s := st[name]
@@ -783,7 +783,7 @@ class Compiler : ErrorReporter {
             children.add(target)
         }
         if methods.get_count() = 1 {
-            return IRNode(IRNode.Kind.METHOD_REFERENCE, offset, methods[0].type(), methods[0],
+            return IRNode(IRNode.Kind.METHOD_REFERENCE, position, methods[0].type(), methods[0],
                     children)
         }
         else {
@@ -792,29 +792,29 @@ class Compiler : ErrorReporter {
             for m in methods {
                 types.add(m.type())
             }
-            return IRNode(IRNode.Kind.UNRESOLVED_METHOD_REFERENCE, offset, Type(types), methods,
+            return IRNode(IRNode.Kind.UNRESOLVED_METHOD_REFERENCE, position, Type(types), methods,
                     children)
         }
     }
 
-    method symbolRef(offset:Int, target:IRNode?, s:Symbol, st:SymbolTable):IRNode? {
+    method symbolRef(position:Position, target:IRNode?, s:Symbol, st:SymbolTable):IRNode? {
         match s.kind {
             when Symbol.Kind.ALIAS:
                 assert target = null
-                def cl := getClass(offset, (s->Alias).fullName) -- FIXME remove extra parens
+                def cl := getClass(position, (s->Alias).fullName) -- FIXME remove extra parens
                 if cl != null {
-                    checkGenericParameters(offset, cl, cl.type()) -- FIXME parens
-                    return IRNode(IRNode.Kind.TYPE_REFERENCE, offset, Type.Class(), cl.type())
+                    checkGenericParameters(position, cl, cl.type()) -- FIXME parens
+                    return IRNode(IRNode.Kind.TYPE_REFERENCE, position, Type.Class(), cl.type())
                 }
                 return null
             when Symbol.Kind.CLASS:
-                checkGenericParameters(offset, s->ClassDecl, (s->ClassDecl).type()) -- FIXME parens
-                return IRNode(IRNode.Kind.TYPE_REFERENCE, offset, Type.Class(),
+                checkGenericParameters(position, s->ClassDecl, (s->ClassDecl).type()) -- FIXME parens
+                return IRNode(IRNode.Kind.TYPE_REFERENCE, position, Type.Class(),
                         (s->ClassDecl).type()) -- FIXME parens
             when Symbol.Kind.METHOD, Symbol.Kind.METHODS:
-                return getMethodReference(st, target, s.name, offset, typeParameters(target))
+                return getMethodReference(st, target, s.name, position, typeParameters(target))
             when Symbol.Kind.VARIABLE:
-                return IRNode(IRNode.Kind.VARIABLE_REFERENCE, offset, (s->Variable).type, -- FIXME parens
+                return IRNode(IRNode.Kind.VARIABLE_REFERENCE, position, (s->Variable).type, -- FIXME parens
                         s->Variable)
             when Symbol.Kind.FIELD:
                 def f := s->FieldDecl
@@ -825,7 +825,7 @@ class Compiler : ErrorReporter {
                 def children := Array<IRNode>()
                 if target != null {
                     if target.kind = IRNode.Kind.SUPER {
-                        error(target.offset, "'super' can only be used as part of a method call")
+                        error(target.position, "'super' can only be used as part of a method call")
                         return null
                     }
                     def effectiveType := remapType(target.type, f.type)
@@ -835,15 +835,15 @@ class Compiler : ErrorReporter {
                     else {
                         children.add(coerce(target, f.owner.type()))
                     }
-                    var result := IRNode(IRNode.Kind.FIELD_REFERENCE, offset, f.type, s, children)
+                    var result := IRNode(IRNode.Kind.FIELD_REFERENCE, position, f.type, s, children)
                     if effectiveType != result.type {
-                        result := cast(result, offset, false, effectiveType)
+                        result := cast(result, position, false, effectiveType)
                     }
                     return result
                 }
                 else {
-                    children.add(IRNode(IRNode.Kind.SELF, offset, currentClass.peek().type()))
-                    return IRNode(IRNode.Kind.FIELD_REFERENCE, offset, f.type, s, children)
+                    children.add(IRNode(IRNode.Kind.SELF, position, currentClass.peek().type()))
+                    return IRNode(IRNode.Kind.FIELD_REFERENCE, position, f.type, s, children)
                 }
             otherwise:
                 assert false, "unsupported symbol kind: \{s.kind}"
@@ -1113,7 +1113,7 @@ class Compiler : ErrorReporter {
             if expr.type.subtypes[0] = target {
                 def children := Array<IRNode>() -- FIXME literal
                 children.add(expr)
-                return IRNode(IRNode.Kind.CAST, expr.offset, target, false, children)
+                return IRNode(IRNode.Kind.CAST, expr.position, target, false, children)
             }
             def intermediate := coerce(expr, expr.type.subtypes[0])
             return coerce(intermediate, target)
@@ -1122,11 +1122,11 @@ class Compiler : ErrorReporter {
             when IRNode.Kind.INT:
                 if target.typeKind = Type.Kind.BUILTIN_INT &
                         requiredSize(expr.payload->UInt64) <= target.size() {
-                    return IRNode(IRNode.Kind.INT, expr.offset, target, expr.payload->UInt64)
+                    return IRNode(IRNode.Kind.INT, expr.position, target, expr.payload->UInt64)
                 }
                 else if target.typeKind = Type.Kind.BUILTIN_UINT &
                         requiredSize(expr.payload->UInt64) <= target.size() {
-                    return IRNode(IRNode.Kind.INT, expr.offset, target, expr.payload->UInt64)
+                    return IRNode(IRNode.Kind.INT, expr.position, target, expr.payload->UInt64)
                 }
                 if target.typeKind = Type.Kind.CLASS & !target.isNumber() {
                     def coerced := coerce(expr, variableType(expr))
@@ -1138,7 +1138,7 @@ class Compiler : ErrorReporter {
             when IRNode.Kind.NEGATED_INT:
                 if target.typeKind = Type.Kind.BUILTIN_INT &
                         requiredSize(-((expr.payload->UInt64).convert()->Int64)) <= target.size() { -- FIXME parens
-                    return IRNode(IRNode.Kind.NEGATED_INT, expr.offset, target,
+                    return IRNode(IRNode.Kind.NEGATED_INT, expr.position, target,
                             expr.payload->UInt64)
                 }
                 if target.typeKind = Type.Kind.CLASS & !target.isNumber() {
@@ -1150,7 +1150,7 @@ class Compiler : ErrorReporter {
                 }
             when IRNode.Kind.BIT:
                 if target = Type.BuiltinBit() {
-                    return IRNode(IRNode.Kind.BIT, expr.offset, target, expr.payload->Bit)
+                    return IRNode(IRNode.Kind.BIT, expr.position, target, expr.payload->Bit)
                 }
                 if target.isClass() & target != Type.Bit() {
                     def varType := coerce(expr, variableType(expr))
@@ -1175,8 +1175,8 @@ class Compiler : ErrorReporter {
                     args.add(start)
                     args.add(end)
                     args.add(expr.children[2])
-                    args.add(IRNode(IRNode.Kind.BIT, expr.offset, Type.BuiltinBit(), expr.payload->Bit))
-                    def target := IRNode(IRNode.Kind.TYPE_REFERENCE, expr.offset, Type.Class(),
+                    args.add(IRNode(IRNode.Kind.BIT, expr.position, Type.BuiltinBit(), expr.payload->Bit))
+                    def target := IRNode(IRNode.Kind.TYPE_REFERENCE, expr.position, Type.Class(),
                             target)
                     return call(target, args)
                 }
@@ -1214,22 +1214,22 @@ class Compiler : ErrorReporter {
                     else {
                         callTarget := null
                     }
-                    def result := call(expr.offset, callTarget, best[0], args)
+                    def result := call(expr.position, callTarget, best[0], args)
                     return coerce(result, target)
                 }
-                assert false, "no or ambiguous match on method call (\{position(expr.offset)}, \{methods[0].value.name}, \{best})"
+                assert false, "no or ambiguous match on method call (\{expr.position}, \{methods[0].value.name}, \{best})"
             when IRNode.Kind.UNRESOLVED_INDEX:
                 def args := expr.children[1..]
                 return coerce(call(expr.children[0], "[]", args, target), target)
         }
         if target.typeKind = Type.Kind.NULLABLE {
             if expr.kind = IRNode.Kind.NULL {
-                return IRNode(IRNode.Kind.NULL, expr.offset, target)
+                return IRNode(IRNode.Kind.NULL, expr.position, target)
             }
             if expr.type = target.subtypes[0] {
                 def children := Array<IRNode>() -- FIXME literal
                 children.add(expr)
-                return IRNode(IRNode.Kind.CAST, expr.offset, target, false, children)
+                return IRNode(IRNode.Kind.CAST, expr.position, target, false, children)
             }
             if expr.type.typeKind != Type.Kind.NULLABLE {
                 def intermediate := coerce(expr, target.subtypes[0])
@@ -1247,7 +1247,7 @@ class Compiler : ErrorReporter {
                         assert m.methodKind = MethodDecl.Kind.INIT
                         assert m.parameters.get_count() = 1
                         if coercionCost(expr, m.parameters[0].type) != null {
-                            def type := IRNode(IRNode.Kind.TYPE_REFERENCE, expr.offset,
+                            def type := IRNode(IRNode.Kind.TYPE_REFERENCE, expr.position,
                                     Type.Class(), cl.type())
                             def args := Array<IRNode>(1) -- FIXME literal
                             args.add(expr)
@@ -1258,9 +1258,9 @@ class Compiler : ErrorReporter {
             }
             def children := Array<IRNode>(1) -- FIXME literal
             children.add(expr)
-            return IRNode(IRNode.Kind.CAST, expr.offset, target, false, children)
+            return IRNode(IRNode.Kind.CAST, expr.position, target, false, children)
         }
-        error(expr.offset, "expected '\{target}', but found '\{expr.type}'")
+        error(expr.position, "expected '\{target}', but found '\{expr.type}'")
         return null
     }
 
@@ -1302,13 +1302,13 @@ class Compiler : ErrorReporter {
         return result
     }
 
-    method cast(node:IRNode, offset:Int, isExplicit:Bit, target:Type):IRNode {
+    method cast(node:IRNode, position:Position, isExplicit:Bit, target:Type):IRNode {
         if node.type = target {
             return node
         }
         assert target != Type.Void()
         if isExplicit & !canCast(node, target) {
-            error(offset, "value of type '\{node.type}' cannot possibly be an instance of " +
+            error(position, "value of type '\{node.type}' cannot possibly be an instance of " +
                     "'\{target}'")
         }
         match node.kind {
@@ -1320,12 +1320,12 @@ class Compiler : ErrorReporter {
                 }
                 def resolved := resolve(node)
                 if resolved != null {
-                    return cast(resolved, offset, isExplicit, target)
+                    return cast(resolved, position, isExplicit, target)
                 }
         }
         def children := Array<IRNode>() -- FIXME literal
         children.add(node)
-        return IRNode(IRNode.Kind.CAST, offset, target, isExplicit, children)
+        return IRNode(IRNode.Kind.CAST, position, target, isExplicit, children)
     }
 
     method callCost(m:MethodRef, args:ListView<IRNode>, expectedReturn:Type?):Int? {
@@ -1379,7 +1379,7 @@ class Compiler : ErrorReporter {
         return best
     }
 
-    method call(offset:Int, target:IRNode?, m:MethodRef, args:ListView<IRNode>):IRNode? {
+    method call(position:Position, target:IRNode?, m:MethodRef, args:ListView<IRNode>):IRNode? {
         assert m.value.resolved
         if m.parameterCount() != args.get_count() {
             def s:String
@@ -1389,47 +1389,47 @@ class Compiler : ErrorReporter {
             else {
                 s := "s"
             }
-            error(offset, "\{m.value.declaration()} expected \{m.parameterCount()} argument\{s}, " +
+            error(position, "\{m.value.declaration()} expected \{m.parameterCount()} argument\{s}, " +
                     "but received \{args.get_count()}")
             return null
         }
         def finalArgs := Array<IRNode>()
         if target != null & target.kind != IRNode.Kind.CONSTRUCTED_OBJECT &
                 !m.value.annotations.isClass() {
-            finalArgs.add(cast(target, offset, false, m.owner()))
+            finalArgs.add(cast(target, position, false, m.owner()))
         }
         if m.value.methodKind = MethodDecl.Kind.INIT {
             if target = null {
                 if currentMethod.peek().methodKind = MethodDecl.Kind.INIT {
-                    finalArgs.add(IRNode(IRNode.Kind.SELF, offset, currentClass.peek().type()))
+                    finalArgs.add(IRNode(IRNode.Kind.SELF, position, currentClass.peek().type()))
                 }
                 else {
-                    error(offset, "cannot directly call 'init' outside of an init method")
+                    error(position, "cannot directly call 'init' outside of an init method")
                 }
             }
             else if target.kind != IRNode.Kind.SELF & target.kind != IRNode.Kind.SUPER &
                     target.kind != IRNode.Kind.CONSTRUCTED_OBJECT {
-                error(offset, "'init' may only be called on 'self' or 'super'")
+                error(position, "'init' may only be called on 'self' or 'super'")
             }
         }
         else if m.value.isInstance() & target = null {
-            var selfNode := IRNode(IRNode.Kind.SELF, offset, currentClass.peek().type())
+            var selfNode := IRNode(IRNode.Kind.SELF, position, currentClass.peek().type())
             selfNode := coerce(selfNode, m.value.owner.type())
             assert selfNode != null
             finalArgs.add(selfNode)
             if !currentMethod.peek().isInstance() {
-                error(offset, "cannot call instance \{m.value.declaration()} from a @class context")
+                error(position, "cannot call instance \{m.value.declaration()} from a @class context")
             }
         }
         else if !m.value.isInstance() & target != null & target.kind != IRNode.Kind.TYPE_REFERENCE {
-            error(offset, "cannot call class \{m.value.declaration()} on an instance")
+            error(position, "cannot call class \{m.value.declaration()} on an instance")
         }
         for i in 0 .. args.get_count() {
             var coerced := coerce(args[i], m.parameter(i))
             if coerced = null {
                 return null
             }
-            coerced := cast(coerced, offset, false, m.value.parameters[i].type)
+            coerced := cast(coerced, position, false, m.value.parameters[i].type)
             if coerced = null {
                 return null
             }
@@ -1437,11 +1437,11 @@ class Compiler : ErrorReporter {
         }
         var result:IRNode
         if m.value.owner.name = "panda.unsafe.Pointer" {
-            result := IRNode(IRNode.Kind.CALL, offset, m.returnType(), m, finalArgs)
+            result := IRNode(IRNode.Kind.CALL, position, m.returnType(), m, finalArgs)
         }
         else {
-            result := IRNode(IRNode.Kind.CALL, offset, m.value.returnType, m, finalArgs)
-            result := cast(result, offset, false, m.returnType())
+            result := IRNode(IRNode.Kind.CALL, position, m.value.returnType, m, finalArgs)
+            result := cast(result, position, false, m.returnType())
         }
         return result
     }
@@ -1467,14 +1467,14 @@ class Compiler : ErrorReporter {
         }
         def s := getSymbolTable(cl)[name]
         if s = null {
-            error(target.offset, "class '\{cl.name}' does not have a member named '\{name}'")
+            error(target.position, "class '\{cl.name}' does not have a member named '\{name}'")
             return null
         }
         if s.kind != Symbol.Kind.METHOD & s.kind != Symbol.Kind.METHODS {
-            error(target.offset, "'\{cl.name}.\{name}' is not a method")
+            error(target.position, "'\{cl.name}.\{name}' is not a method")
             return null
         }
-        def ref := symbolRef(target.offset, target, s, getSymbolTable(cl))
+        def ref := symbolRef(target.position, target, s, getSymbolTable(cl))
         if ref = null {
             return null
         }
@@ -1496,7 +1496,7 @@ class Compiler : ErrorReporter {
                     assert m.children.get_count() = 1
                     target := m.children[0]
                 }
-                return call(m.offset, target, m.payload->MethodRef, args)
+                return call(m.position, target, m.payload->MethodRef, args)
             when IRNode.Kind.UNRESOLVED_METHOD_REFERENCE:
                 def methods := Array<MethodRef>(m.payload->ListView<MethodRef>)
                 matchMethods(methods, args, expectedType)
@@ -1514,7 +1514,7 @@ class Compiler : ErrorReporter {
                     if expectedType != null {
                         msg.append(" with return type '\{expectedType}'")
                     }
-                    error(m.offset, msg.convert())
+                    error(m.position, msg.convert())
                     return null
                 }
                 if methods.get_count() = 1 {
@@ -1526,32 +1526,32 @@ class Compiler : ErrorReporter {
                         assert m.children.get_count() = 0
                         target := null
                     }
-                    return call(m.offset, target, methods[0], args)
+                    return call(m.position, target, methods[0], args)
                 }
                 def children := Array<IRNode>()
-                children.add(IRNode(IRNode.Kind.UNRESOLVED_METHOD_REFERENCE, m.offset,
+                children.add(IRNode(IRNode.Kind.UNRESOLVED_METHOD_REFERENCE, m.position,
                         Type.Invalid(), methods, m.children))
                 children.addAll(args)
                 def types := Array<Type>()
                 for m in methods {
                     types.add(m.returnType())
                 }
-                return IRNode(IRNode.Kind.UNRESOLVED_METHOD_CALL, m.offset, Type(types), children)
+                return IRNode(IRNode.Kind.UNRESOLVED_METHOD_CALL, m.position, Type(types), children)
             when IRNode.Kind.TYPE_REFERENCE:
-                def target := IRNode(IRNode.Kind.CONSTRUCTED_OBJECT, m.offset, m.payload->Type)
+                def target := IRNode(IRNode.Kind.CONSTRUCTED_OBJECT, m.position, m.payload->Type)
                 def initCall := resolve(call(target, "init", args))
                 if initCall = null {
                     return null
                 }
                 def children := Array<IRNode>() -- FIXME literal
                 children.add(initCall)
-                return IRNode(IRNode.Kind.CONSTRUCT, m.offset, m.payload->Type, children)
+                return IRNode(IRNode.Kind.CONSTRUCT, m.position, m.payload->Type, children)
             otherwise:
                 def resolved := resolve(m)
                 if resolved = null {
                     return null
                 }
-                error(resolved.offset, "value of type '\{resolved.type}' is not a method")
+                error(resolved.position, "value of type '\{resolved.type}' is not a method")
         }
     }
 
@@ -1580,7 +1580,7 @@ class Compiler : ErrorReporter {
             typeName.append(m.returnType.name)
         }
         typeName.append(")")
-        return Type(typeName.convert(), kind, m.offset, subtypes, true)
+        return Type(typeName.convert(), kind, m.position, subtypes, true)
     }
 
     function declaredTypeWithSelf(m:MethodDecl, selfType:Type):Type {
@@ -1608,7 +1608,7 @@ class Compiler : ErrorReporter {
             typeName.append(m.returnType.name)
         }
         typeName.append(")")
-        return Type(typeName.convert(), kind, m.offset, subtypes, true)
+        return Type(typeName.convert(), kind, m.position, subtypes, true)
     }
 
     function inheritedType(m:MethodDecl):Type {
@@ -1719,7 +1719,7 @@ class Compiler : ErrorReporter {
         }
     }
 
-    method foldInts(offset:Int, left:IRNode, op:Int, right:IRNode):IRNode? {
+    method foldInts(position:Position, left:IRNode, op:Int, right:IRNode):IRNode? {
         assert left.kind = IRNode.Kind.INT | left.kind = IRNode.Kind.NEGATED_INT
         assert right.kind = IRNode.Kind.INT | right.kind = IRNode.Kind.NEGATED_INT
         if left.kind = IRNode.Kind.NEGATED_INT | left.payload->UInt64 < Int64.MAX.convert() &
@@ -1729,50 +1729,50 @@ class Compiler : ErrorReporter {
             def r:Int64 := (right.payload->UInt64).convert() -- FIXME parens
             match op {
                 when Token.Kind.ADD:
-                    return IRNode(IRNode.Kind.INT, offset, Type.IntLiteral(),
+                    return IRNode(IRNode.Kind.INT, position, Type.IntLiteral(),
                         (l + r).convert()->UInt64)
                 when Token.Kind.SUB:
-                    return IRNode(IRNode.Kind.INT, offset, Type.IntLiteral(),
+                    return IRNode(IRNode.Kind.INT, position, Type.IntLiteral(),
                         (l - r).convert()->UInt64)
                 when Token.Kind.MUL:
-                    return IRNode(IRNode.Kind.INT, offset, Type.IntLiteral(),
+                    return IRNode(IRNode.Kind.INT, position, Type.IntLiteral(),
                         (l * r).convert()->UInt64)
                 when Token.Kind.INTDIV:
-                    return IRNode(IRNode.Kind.INT, offset, Type.IntLiteral(),
+                    return IRNode(IRNode.Kind.INT, position, Type.IntLiteral(),
                         (l // r).convert()->UInt64)
                 when Token.Kind.REM:
-                    return IRNode(IRNode.Kind.INT, offset, Type.IntLiteral(),
+                    return IRNode(IRNode.Kind.INT, position, Type.IntLiteral(),
                         (l % r).convert()->UInt64)
                 when Token.Kind.EQ:
-                    return IRNode(IRNode.Kind.BIT, offset, Type.BitLiteral(), l = r)
+                    return IRNode(IRNode.Kind.BIT, position, Type.BitLiteral(), l = r)
                 when Token.Kind.NEQ:
-                    return IRNode(IRNode.Kind.BIT, offset, Type.BitLiteral(), l != r)
+                    return IRNode(IRNode.Kind.BIT, position, Type.BitLiteral(), l != r)
                 when Token.Kind.LT:
-                    return IRNode(IRNode.Kind.BIT, offset, Type.BitLiteral(), l < r)
+                    return IRNode(IRNode.Kind.BIT, position, Type.BitLiteral(), l < r)
                 when Token.Kind.GT:
-                    return IRNode(IRNode.Kind.BIT, offset, Type.BitLiteral(), l > r)
+                    return IRNode(IRNode.Kind.BIT, position, Type.BitLiteral(), l > r)
                 when Token.Kind.LTEQ:
-                    return IRNode(IRNode.Kind.BIT, offset, Type.BitLiteral(), l <= r)
+                    return IRNode(IRNode.Kind.BIT, position, Type.BitLiteral(), l <= r)
                 when Token.Kind.GTEQ:
-                    return IRNode(IRNode.Kind.BIT, offset, Type.BitLiteral(), l >= r)
+                    return IRNode(IRNode.Kind.BIT, position, Type.BitLiteral(), l >= r)
                 when Token.Kind.BITWISEAND:
-                    return IRNode(IRNode.Kind.INT, offset, Type.IntLiteral(),
+                    return IRNode(IRNode.Kind.INT, position, Type.IntLiteral(),
                         (l && r).convert()->UInt64)
                 when Token.Kind.BITWISEOR:
-                    return IRNode(IRNode.Kind.INT, offset, Type.IntLiteral(),
+                    return IRNode(IRNode.Kind.INT, position, Type.IntLiteral(),
                         (l || r).convert()->UInt64)
                 when Token.Kind.BITWISEXOR:
-                    return IRNode(IRNode.Kind.INT, offset, Type.IntLiteral(),
+                    return IRNode(IRNode.Kind.INT, position, Type.IntLiteral(),
                         (l ~~ r).convert()->UInt64)
                 when Token.Kind.SHIFTLEFT:
-                    return IRNode(IRNode.Kind.INT, offset, Type.IntLiteral(),
+                    return IRNode(IRNode.Kind.INT, position, Type.IntLiteral(),
                         (l << r).convert()->UInt64)
                 when Token.Kind.SHIFTRIGHT:
-                    return IRNode(IRNode.Kind.INT, offset, Type.IntLiteral(),
+                    return IRNode(IRNode.Kind.INT, position, Type.IntLiteral(),
                         (l >> r).convert()->UInt64)
             }
         }
-        error(offset, "invalid numeric operation")
+        error(position, "invalid numeric operation")
         return null
     }
 
@@ -1783,7 +1783,7 @@ class Compiler : ErrorReporter {
         return expr
     }
 
-    method compileIndexedAssignment(offset:Int, left:IRNode, op:Int, right:IRNode):IRNode? {
+    method compileIndexedAssignment(position:Position, left:IRNode, op:Int, right:IRNode):IRNode? {
         assert left.kind = IRNode.Kind.UNRESOLVED_INDEX
         assert left.children.get_count() = 2
         if op = Token.Kind.ASSIGNMENT {
@@ -1806,24 +1806,24 @@ class Compiler : ErrorReporter {
         children.add(unwrapCast(resolved.children[0]))
         reusedValueCount += 1
         def baseId := reusedValueCount
-        def base := IRNode(IRNode.Kind.REUSED_VALUE_DEFINITION, children[0].offset,
+        def base := IRNode(IRNode.Kind.REUSED_VALUE_DEFINITION, children[0].position,
                 children[0].type, baseId, children)
         children.clear()
 
         children.add(resolved.children[1])
         reusedValueCount += 1
         def indexId := reusedValueCount
-        def index := IRNode(IRNode.Kind.REUSED_VALUE_DEFINITION, children[0].offset,
+        def index := IRNode(IRNode.Kind.REUSED_VALUE_DEFINITION, children[0].position,
                 children[0].type, indexId, children)
-        def baseRef := IRNode(IRNode.Kind.REUSED_VALUE, base.offset, base.type, baseId)
-        def indexRef := IRNode(IRNode.Kind.REUSED_VALUE, index.offset, index.type, indexId)
+        def baseRef := IRNode(IRNode.Kind.REUSED_VALUE, base.position, base.type, baseId)
+        def indexRef := IRNode(IRNode.Kind.REUSED_VALUE, index.position, index.type, indexId)
         -- in our example, foo.[](bar)
-        def rhsIndex := compileBinary(offset, baseRef, Token.Kind.LBRACKET, indexRef)
+        def rhsIndex := compileBinary(position, baseRef, Token.Kind.LBRACKET, indexRef)
         if rhsIndex = null {
             return null
         }
         -- in our example, foo.[](bar) + 1
-        var value := compileBinary(offset, rhsIndex, removeAssignment(op), right)
+        var value := compileBinary(position, rhsIndex, removeAssignment(op), right)
         if value = null {
             return null
         }
@@ -1842,7 +1842,7 @@ class Compiler : ErrorReporter {
         return call(base, "[]:=", children)
     }
 
-    method compileBinary(offset:Int, rawLeft:IRNode, op:Int, rawRight:IRNode):IRNode? {
+    method compileBinary(position:Position, rawLeft:IRNode, op:Int, rawRight:IRNode):IRNode? {
         -- FIXME use var parameters
         var left := rawLeft
         var right := rawRight
@@ -1875,7 +1875,7 @@ class Compiler : ErrorReporter {
                 }
                 def children := Array<IRNode>() -- FIXME literal
                 children.add(resolved)
-                return IRNode(kind, offset, Type.Bit(), children)
+                return IRNode(kind, position, Type.Bit(), children)
             }
             if right.kind = IRNode.Kind.NULL {
                 def resolved := resolve(left)
@@ -1884,7 +1884,7 @@ class Compiler : ErrorReporter {
                 }
                 def children := Array<IRNode>() -- FIXME literal
                 children.add(resolved)
-                return IRNode(kind, offset, Type.Bit(), children)
+                return IRNode(kind, position, Type.Bit(), children)
             }
         }
         if op = Token.Kind.IDENTITY | op = Token.Kind.NIDENTITY {
@@ -1894,7 +1894,7 @@ class Compiler : ErrorReporter {
                     return null
                 }
                 if isValue(cl) {
-                    error(offset, "'\{operatorName(op)}' cannot operate on '\{left.type}', " +
+                    error(position, "'\{operatorName(op)}' cannot operate on '\{left.type}', " +
                             "'\{right.type}'")
                 }
             }
@@ -1904,7 +1904,7 @@ class Compiler : ErrorReporter {
                     return null
                 }
                 if isValue(cl) {
-                    error(offset, "'\{operatorName(op)}' cannot operate on '\{left.type}', " +
+                    error(position, "'\{operatorName(op)}' cannot operate on '\{left.type}', " +
                             "'\{right.type}'")
                 }
             }
@@ -1919,11 +1919,11 @@ class Compiler : ErrorReporter {
             def children := Array<IRNode>() -- FIXME literal
             children.add(finalLeft)
             children.add(finalRight)
-            return IRNode(IRNode.Kind.BINARY, offset, Type.Bit(), op, children)
+            return IRNode(IRNode.Kind.BINARY, position, Type.Bit(), op, children)
         }
         if op = Token.Kind.ASSIGNMENT {
             if left.kind = IRNode.Kind.UNRESOLVED_INDEX {
-                return compileIndexedAssignment(offset, left, op, right)
+                return compileIndexedAssignment(position, left, op, right)
             }
             left := resolve(left)
             if left = null {
@@ -1934,35 +1934,35 @@ class Compiler : ErrorReporter {
                 return null
             }
             if !isLValue(left) {
-                error(left.offset, "cannot assign to this expression")
+                error(left.position, "cannot assign to this expression")
                 return null
             }
             def children := Array<IRNode>() -- FIXME literal
             children.add(left)
             children.add(right)
-            return IRNode(IRNode.Kind.BINARY, offset, Token.Kind.ASSIGNMENT, children)
+            return IRNode(IRNode.Kind.BINARY, position, Token.Kind.ASSIGNMENT, children)
         }
         if isAssignment(op) {
             -- compound assignment
             if left.kind = IRNode.Kind.UNRESOLVED_INDEX {
-                return compileIndexedAssignment(offset, left, op, right)
+                return compileIndexedAssignment(position, left, op, right)
             }
             left := resolve(left)
             if left = null {
                 return null
             }
             if !isLValue(left) {
-                error(left.offset, "cannot assign to this expression")
+                error(left.position, "cannot assign to this expression")
                 return null
             }
             def children := Array<IRNode>() -- FIXME literal
             children.add(left)
             reusedValueCount += 1
-            left := IRNode(IRNode.Kind.REUSED_VALUE_DEFINITION, left.offset, left.type,
+            left := IRNode(IRNode.Kind.REUSED_VALUE_DEFINITION, left.position, left.type,
                     reusedValueCount, children)
-            def reusedLeft := IRNode(IRNode.Kind.REUSED_VALUE, left.offset, left.type,
+            def reusedLeft := IRNode(IRNode.Kind.REUSED_VALUE, left.position, left.type,
                     reusedValueCount)
-            right := compileBinary(offset, reusedLeft, removeAssignment(op), right)
+            right := compileBinary(position, reusedLeft, removeAssignment(op), right)
             if right = null {
                 return null
             }
@@ -1975,7 +1975,7 @@ class Compiler : ErrorReporter {
                     return null
                 }
             }
-            return compileBinary(offset, left, Token.Kind.ASSIGNMENT, right)
+            return compileBinary(position, left, Token.Kind.ASSIGNMENT, right)
         }
         if op = Token.Kind.LBRACKET {
             left := resolve(left)
@@ -2011,7 +2011,7 @@ class Compiler : ErrorReporter {
             def children := Array<IRNode>()
             children.add(left)
             children.add(right)
-            return IRNode(IRNode.Kind.UNRESOLVED_INDEX, offset, type, children)
+            return IRNode(IRNode.Kind.UNRESOLVED_INDEX, position, type, children)
         }
         if left.type = Type.BuiltinBit() {
             if right.type = Type.BuiltinBit() & (op = Token.Kind.AND | op = Token.Kind.OR |
@@ -2019,15 +2019,15 @@ class Compiler : ErrorReporter {
                 def children := Array<IRNode>() -- FIXME literal
                 children.add(left)
                 children.add(right)
-                return IRNode(IRNode.Kind.BINARY, offset, left.type, op, children)
+                return IRNode(IRNode.Kind.BINARY, position, left.type, op, children)
             }
-            error(offset, "'\{operatorName(op)}' cannot operate on '\{left.type}', '\{right.type}'")
+            error(position, "'\{operatorName(op)}' cannot operate on '\{left.type}', '\{right.type}'")
             return null
         }
         def children := Array<IRNode>()
         if (left.kind = IRNode.Kind.INT | left.kind = IRNode.Kind.NEGATED_INT) &
                 (right.kind = IRNode.Kind.INT | right.kind = IRNode.Kind.NEGATED_INT) {
-            return foldInts(offset, left, op, right)
+            return foldInts(position, left, op, right)
         }
         if left.type.isBuiltinNumber() & coercionCost(right, left.type) != null {
             right := coerce(right, left.type)
@@ -2042,7 +2042,7 @@ class Compiler : ErrorReporter {
                 otherwise:
                     resultType := left.type
             }
-            return IRNode(IRNode.Kind.BINARY, offset, resultType, op, children)
+            return IRNode(IRNode.Kind.BINARY, position, resultType, op, children)
         }
         children.add(right)
         assert reportErrors
@@ -2055,7 +2055,7 @@ class Compiler : ErrorReporter {
             def resolved := resolve(right)
             if resolved != null & resolved.type.isClass() {
                 children.add(resolved)
-                def target := IRNode(IRNode.Kind.TYPE_REFERENCE, resolved.offset, Type.Class(),
+                def target := IRNode(IRNode.Kind.TYPE_REFERENCE, resolved.position, Type.Class(),
                         resolved.type)
                 result := call(target, operatorName(op), children)
             }
@@ -2072,7 +2072,7 @@ class Compiler : ErrorReporter {
         if right = null {
             return null
         }
-        return compileBinary(b.offset, left, b.payload->Int, right)
+        return compileBinary(b.position, left, b.payload->Int, right)
     }
 
     function typeParameters(type:Type):ListView<Type> {
@@ -2099,7 +2099,7 @@ class Compiler : ErrorReporter {
         return Array<Type>()
     }
 
-    method compilePrefix(op:Int, base:IRNode, offset:Int):IRNode? {
+    method compilePrefix(op:Int, base:IRNode, position:Position):IRNode? {
         if base.type.isClass() {
             def name := operatorName(op)
             def cl := getClass(base.type)
@@ -2129,8 +2129,8 @@ class Compiler : ErrorReporter {
                     def ref := MethodRef(m, typeParameters(base))
                     def children := Array<IRNode>() -- FIXME literal
                     children.add(base)
-                    def methodRef := IRNode(IRNode.Kind.METHOD_REFERENCE, offset,
-                            Type("<method>", Type.Kind.INVALID, -1, true), ref, children)
+                    def methodRef := IRNode(IRNode.Kind.METHOD_REFERENCE, position,
+                            Type("<method>", Type.Kind.INVALID, Position(), true), ref, children)
                     def args := Array<IRNode>() -- FIXME literal
                     return call(methodRef, args)
                 }
@@ -2140,29 +2140,29 @@ class Compiler : ErrorReporter {
             when Token.Kind.SUB:
                 match base.kind {
                     when IRNode.Kind.INT:
-                        return IRNode(IRNode.Kind.NEGATED_INT, offset, base.type,
+                        return IRNode(IRNode.Kind.NEGATED_INT, position, base.type,
                                 base.payload->UInt64)
                     when IRNode.Kind.NEGATED_INT:
-                        return IRNode(IRNode.Kind.INT, offset, base.type, base.payload->UInt64)
+                        return IRNode(IRNode.Kind.INT, position, base.type, base.payload->UInt64)
                     otherwise:
                         if base.type.isBuiltinNumber() {
                             def children := Array<IRNode>() -- FIXME literal
                             children.add(base)
-                            return IRNode(IRNode.Kind.PREFIX, base.offset, base.type,
+                            return IRNode(IRNode.Kind.PREFIX, base.position, base.type,
                                     Token.Kind.SUB, children)
                         }
                 }
-                error(base.offset, "expected a number, but found '\{base.type}'")
+                error(base.position, "expected a number, but found '\{base.type}'")
                 return null
             when Token.Kind.BITWISENOT:
                 if base.type.isBuiltinNumber() {
                     def children := Array<IRNode>() -- FIXME literal
                     children.add(base)
-                    return IRNode(IRNode.Kind.PREFIX, base.offset, base.type,
+                    return IRNode(IRNode.Kind.PREFIX, base.position, base.type,
                             Token.Kind.BITWISENOT, children)
                 }
                 else {
-                    error(base.offset, "expected a number, but found '\{base.type.name}'")
+                    error(base.position, "expected a number, but found '\{base.type.name}'")
                     return null
                 }
             when Token.Kind.NOT:
@@ -2172,7 +2172,7 @@ class Compiler : ErrorReporter {
                 }
                 def children := Array<IRNode>() -- FIXME literal
                 children.add(coerced)
-                return IRNode(IRNode.Kind.PREFIX, base.offset, base.type, Token.Kind.NOT, children)
+                return IRNode(IRNode.Kind.PREFIX, base.position, base.type, Token.Kind.NOT, children)
             otherwise:
                 assert false
         }
@@ -2186,7 +2186,7 @@ class Compiler : ErrorReporter {
         if base = null {
             return null
         }
-        return compilePrefix(p.payload->Int, base, p.offset)
+        return compilePrefix(p.payload->Int, base, p.position)
     }
 
     method compileCall(c:ASTNode):IRNode? {
@@ -2227,9 +2227,9 @@ class Compiler : ErrorReporter {
                 def name := "\{base.payload}.\{d.payload}"
                 def cl := tryResolveClass(name)
                 if cl != null {
-                    return IRNode(IRNode.Kind.TYPE_REFERENCE, d.offset, Type.Class(), cl.type())
+                    return IRNode(IRNode.Kind.TYPE_REFERENCE, d.position, Type.Class(), cl.type())
                 }
-                return IRNode(IRNode.Kind.UNRESOLVED_IDENTIFIER, d.offset, Type.Invalid(), name)
+                return IRNode(IRNode.Kind.UNRESOLVED_IDENTIFIER, d.position, Type.Invalid(), name)
             when IRNode.Kind.SUPER:
                 resolve(currentClass.peek())
                 cl := getClass(currentClass.peek().rawSuper)
@@ -2241,11 +2241,11 @@ class Compiler : ErrorReporter {
         }
         def s := getSymbolTable(cl)[d.payload->String]
         if s = null {
-            error(d.offset, "class '\{base.type}' does not have a member named " +
+            error(d.position, "class '\{base.type}' does not have a member named " +
                     "'\{d.payload}'")
             return null
         }
-        return symbolRef(d.offset, base, s, getSymbolTable(cl))
+        return symbolRef(d.position, base, s, getSymbolTable(cl))
     }
 
     method compileIdentifier(i:ASTNode):IRNode? {
@@ -2255,9 +2255,9 @@ class Compiler : ErrorReporter {
             s := tryResolveClass(i.payload->String)
         }
         if s != null {
-            return symbolRef(i.offset, null, s, symbolTable)
+            return symbolRef(i.position, null, s, symbolTable)
         }
-        return IRNode(IRNode.Kind.UNRESOLVED_IDENTIFIER, i.offset, Type.Invalid(),
+        return IRNode(IRNode.Kind.UNRESOLVED_IDENTIFIER, i.position, Type.Invalid(),
                 i.payload->String)
     }
 
@@ -2266,7 +2266,7 @@ class Compiler : ErrorReporter {
         if resolved = null {
             return null
         }
-        return IRNode(IRNode.Kind.TYPE_REFERENCE, t.offset, Type.Class(), resolved)
+        return IRNode(IRNode.Kind.TYPE_REFERENCE, t.position, Type.Class(), resolved)
     }
 
     method compileRange(r:ASTNode):IRNode? {
@@ -2274,7 +2274,7 @@ class Compiler : ErrorReporter {
         assert r.children.get_count() = 3
         def start:IRNode?
         if r.children[0].kind = ASTNode.Kind.VOID {
-            start := IRNode(IRNode.Kind.NULL, r.offset, Type.Null())
+            start := IRNode(IRNode.Kind.NULL, r.position, Type.Null())
         }
         else {
             start := compileExpression(r.children[0])
@@ -2284,7 +2284,7 @@ class Compiler : ErrorReporter {
         }
         def end:IRNode?
         if r.children[1].kind = ASTNode.Kind.VOID {
-            end := IRNode(IRNode.Kind.NULL, r.offset, Type.Null())
+            end := IRNode(IRNode.Kind.NULL, r.position, Type.Null())
         }
         else {
             end := compileExpression(r.children[1])
@@ -2294,7 +2294,7 @@ class Compiler : ErrorReporter {
         }
         def step:IRNode?
         if r.children[2].kind = ASTNode.Kind.VOID {
-            step := IRNode(IRNode.Kind.INT, r.offset, Type.IntLiteral(), 1)
+            step := IRNode(IRNode.Kind.INT, r.position, Type.IntLiteral(), 1)
         }
         else {
             step := coerce(compileExpression(r.children[2]), Type.Int64())
@@ -2307,20 +2307,20 @@ class Compiler : ErrorReporter {
         children.add(end)
         children.add(step)
         return IRNode(IRNode.Kind.UNRESOLVED_RANGE,
-                r.offset,
-                Type("<unresolved range>", Type.Kind.UNRESOLVED, -1, true),
+                r.position,
+                Type("<unresolved range>", Type.Kind.UNRESOLVED, Position(), true),
                 r.kind = ASTNode.Kind.RANGE_INCLUSIVE,
                 children)
     }
 
     method compileString(s:ASTNode):IRNode? {
-        return IRNode(IRNode.Kind.STRING, s.offset, Type.StringType(), s.payload->String)
+        return IRNode(IRNode.Kind.STRING, s.position, Type.StringType(), s.payload->String)
     }
 
     method compileSelf(s:ASTNode):IRNode? {
         assert s.kind = ASTNode.Kind.SELF
         if currentMethod.peek().annotations.isClass() {
-            error(s.offset, "cannot reference 'self' from a @class method")
+            error(s.position, "cannot reference 'self' from a @class method")
             return null
         }
         def type:Type
@@ -2341,23 +2341,23 @@ class Compiler : ErrorReporter {
                 separator := ", "
             }
             name.append(">")
-            type := Type(name.convert(), Type.Kind.GENERIC, s.offset, subtypes, true)
+            type := Type(name.convert(), Type.Kind.GENERIC, s.position, subtypes, true)
         }
         else {
             type := cl.type()
         }
-        return IRNode(IRNode.Kind.SELF, s.offset, type)
+        return IRNode(IRNode.Kind.SELF, s.position, type)
     }
 
     method compileSuper(s:ASTNode):IRNode? {
         assert s.kind = ASTNode.Kind.SUPER
         if currentMethod.peek().annotations.isClass() {
-            error(s.offset, "cannot reference 'super' from a @class method")
+            error(s.position, "cannot reference 'super' from a @class method")
             return null
         }
         def cl := currentClass.peek()
         assert cl.resolved
-        return IRNode(IRNode.Kind.SUPER, s.offset, cl.rawSuper)
+        return IRNode(IRNode.Kind.SUPER, s.position, cl.rawSuper)
     }
 
     method compileCast(c:ASTNode):IRNode? {
@@ -2375,10 +2375,10 @@ class Compiler : ErrorReporter {
             return coerce(value, type)
         }
         if canCast(value, type) {
-            return cast(value, c.offset, true, type)
+            return cast(value, c.position, true, type)
         }
         else {
-            error(c.offset, "value of type '\{value.type}' cannot possibly be an " +
+            error(c.position, "value of type '\{value.type}' cannot possibly be an " +
                     "instance of '\{type}'")
             return null
         }
@@ -2386,7 +2386,7 @@ class Compiler : ErrorReporter {
 
     method compileNull(n:ASTNode):IRNode {
         assert n.kind = ASTNode.Kind.NULL
-        return IRNode(IRNode.Kind.NULL, n.offset, Type.Null())
+        return IRNode(IRNode.Kind.NULL, n.position, Type.Null())
     }
 
     method compileExpression(e:ASTNode):IRNode? {
@@ -2394,12 +2394,12 @@ class Compiler : ErrorReporter {
             when ASTNode.Kind.BINARY:
                 return compileBinary(e)
             when ASTNode.Kind.BIT:
-                return IRNode(IRNode.Kind.BIT, e.offset, Type.BitLiteral(), e.payload->Bit)
+                return IRNode(IRNode.Kind.BIT, e.position, Type.BitLiteral(), e.payload->Bit)
             when ASTNode.Kind.CALL:
                 def result := compileCall(e)
                 if result != null & result.type = Type.Void() {
                     assert result.kind = IRNode.Kind.CALL
-                    error(result.offset, (result.payload->MethodRef).value.declaration() + -- FIXME parens
+                    error(result.position, (result.payload->MethodRef).value.declaration() + -- FIXME parens
                             " does not return a value")
                     return null
                 }
@@ -2409,7 +2409,7 @@ class Compiler : ErrorReporter {
             when ASTNode.Kind.IDENTIFIER:
                 return compileIdentifier(e)
             when ASTNode.Kind.INT:
-                return IRNode(IRNode.Kind.INT, e.offset, Type.IntLiteral(), e.payload->UInt64)
+                return IRNode(IRNode.Kind.INT, e.position, Type.IntLiteral(), e.payload->UInt64)
             when ASTNode.Kind.PREFIX:
                 return compilePrefix(e)
             when ASTNode.Kind.RANGE_INCLUSIVE, ASTNode.Kind.RANGE_EXCLUSIVE:
@@ -2445,7 +2445,7 @@ class Compiler : ErrorReporter {
             result.add(compiled)
         }
         symbolTable := symbols.parents[0]
-        return IRNode(IRNode.Kind.BLOCK, b.offset, result)
+        return IRNode(IRNode.Kind.BLOCK, b.position, result)
     }
 
     method compileIf(i:ASTNode):IRNode? {
@@ -2469,10 +2469,10 @@ class Compiler : ErrorReporter {
             }
             children.add(ifFalse)
         }
-        return IRNode(IRNode.Kind.IF, i.offset, children)
+        return IRNode(IRNode.Kind.IF, i.position, children)
     }
 
-    method compileRangeFor(offset:Int, label:String?, astTarget:ASTNode, rawList:IRNode,
+    method compileRangeFor(position:Position, label:String?, astTarget:ASTNode, rawList:IRNode,
             body:ASTNode):IRNode? {
         def elementType:Type
         def list:IRNode?
@@ -2507,10 +2507,10 @@ class Compiler : ErrorReporter {
         children.add(target.target)
         children.add(list)
         children.add(body)
-        return IRNode(IRNode.Kind.RANGE_FOR, offset, label, children)
+        return IRNode(IRNode.Kind.RANGE_FOR, position, label, children)
     }
 
-    method compileIteratorFor(offset:Int, label:String?, astTarget:ASTNode, iterator:IRNode,
+    method compileIteratorFor(position:Position, label:String?, astTarget:ASTNode, iterator:IRNode,
             body:ASTNode):IRNode? {
         -- We rewrite 'for v in <iterator> { <statements> }' to:
         -- def v$Iter := <iterator>
@@ -2529,19 +2529,20 @@ class Compiler : ErrorReporter {
         def subtypes := Array<Type>() -- FIXME literal
         subtypes.add(Type.Iterator())
         subtypes.add(target.target.type)
-        def iterType := Type("\{subtypes[0]}<\{subtypes[1]}>", Type.Kind.GENERIC, offset, subtypes,
+        def iterType := Type("\{subtypes[0]}<\{subtypes[1]}>", Type.Kind.GENERIC, position, subtypes,
                 true)
-        def iter := Variable(iterator.offset, Variable.Kind.DEF, targetVar.name + "$Iter", iterType)
+        def iter := Variable(iterator.position, Variable.Kind.DEF, targetVar.name + "$Iter",
+                iterType)
         symbolTable.add(iter)
         def statements := Array<IRNode>()
         def declChildren := Array<IRNode>() -- FIXME literal
-        declChildren.add(IRNode(IRNode.Kind.VARIABLE_REFERENCE, iterator.offset, iter.type, iter))
+        declChildren.add(IRNode(IRNode.Kind.VARIABLE_REFERENCE, iterator.position, iter.type, iter))
         declChildren.add(iterator)
         def varChildren := Array<IRNode>()
-        varChildren.add(IRNode(IRNode.Kind.DECLARATION, iter.offset, declChildren))
-        statements.add(IRNode(IRNode.Kind.DEF, iter.offset, varChildren))
+        varChildren.add(IRNode(IRNode.Kind.DECLARATION, iter.position, declChildren))
+        statements.add(IRNode(IRNode.Kind.DEF, iter.position, varChildren))
         def whileChildren := Array<IRNode>()
-        def done := call(IRNode(IRNode.Kind.VARIABLE_REFERENCE, iter.offset, iter.type, iter),
+        def done := call(IRNode(IRNode.Kind.VARIABLE_REFERENCE, iter.position, iter.type, iter),
                 "get_done", Array<IRNode>(), null)
         if done = null {
             return null
@@ -2552,25 +2553,25 @@ class Compiler : ErrorReporter {
         }
         whileChildren.add(notCall)
         def valueDeclChildren := Array<IRNode>() -- FIXME literal
-        valueDeclChildren.add(IRNode(IRNode.Kind.VARIABLE_REFERENCE, iterator.offset,
+        valueDeclChildren.add(IRNode(IRNode.Kind.VARIABLE_REFERENCE, iterator.position,
                 targetVar.type, targetVar))
-        def next := call(IRNode(IRNode.Kind.VARIABLE_REFERENCE, iterator.offset, iter.type, iter),
+        def next := call(IRNode(IRNode.Kind.VARIABLE_REFERENCE, iterator.position, iter.type, iter),
                 "next", Array<IRNode>(), null)
         assert next != null
         valueDeclChildren.add(next)
         def valueVarChildren := Array<IRNode>() -- FIXME literal
-        valueVarChildren.add(IRNode(IRNode.Kind.DECLARATION, iterator.offset, valueDeclChildren))
+        valueVarChildren.add(IRNode(IRNode.Kind.DECLARATION, iterator.position, valueDeclChildren))
         var block := compileStatement(body)
         if block = null {
             return null
         }
         def blockChildren := Array<IRNode>()
-        blockChildren.add(IRNode(IRNode.Kind.DEF, iterator.offset, valueVarChildren))
+        blockChildren.add(IRNode(IRNode.Kind.DEF, iterator.position, valueVarChildren))
         blockChildren.addAll(block.children)
-        block := IRNode(IRNode.Kind.BLOCK, block.offset, blockChildren)
+        block := IRNode(IRNode.Kind.BLOCK, block.position, blockChildren)
         whileChildren.add(block)
-        statements.add(IRNode(IRNode.Kind.WHILE, iterator.offset, label, whileChildren))
-        return IRNode(IRNode.Kind.BLOCK, iterator.offset, statements)
+        statements.add(IRNode(IRNode.Kind.WHILE, iterator.position, label, whileChildren))
+        return IRNode(IRNode.Kind.BLOCK, iterator.position, statements)
     }
 
     method compileFor(f:ASTNode):IRNode? {
@@ -2586,7 +2587,7 @@ class Compiler : ErrorReporter {
         symbolTable := symbols
         def result:IRNode?
         if list.kind = IRNode.Kind.UNRESOLVED_RANGE | list.type.isRange() {
-            result := compileRangeFor(f.offset, f.payload->String?, f.children[0], list,
+            result := compileRangeFor(f.position, f.payload->String?, f.children[0], list,
                     f.children[2])
         }
         else {
@@ -2598,7 +2599,7 @@ class Compiler : ErrorReporter {
             for intf in allInterfaces(list.type) {
                 if intf.typeKind = Type.Kind.GENERIC & intf.subtypes[0] = Type.Iterator() {
                     def iterator := coerce(list, intf)
-                    result := compileIteratorFor(f.offset, f.payload->String?, f.children[0],
+                    result := compileIteratorFor(f.position, f.payload->String?, f.children[0],
                             iterator, f.children[2])
                     found := true
                     break
@@ -2606,14 +2607,14 @@ class Compiler : ErrorReporter {
                 if intf.typeKind = Type.Kind.GENERIC & intf.subtypes[0] = Type.Iterable() {
                     def iterable := coerce(list, intf)
                     def iterator := call(iterable, "iterator", Array<IRNode>())
-                    result := compileIteratorFor(f.offset, f.payload->String?, f.children[0],
+                    result := compileIteratorFor(f.position, f.payload->String?, f.children[0],
                             iterator, f.children[2])
                     found := true
                     break
                 }
             }
             if !found {
-                error(list.offset, "expected an Iterable or Iterator, but found '\{list.type}'")
+                error(list.position, "expected an Iterable or Iterator, but found '\{list.type}'")
                 return null
             }
         }
@@ -2640,7 +2641,7 @@ class Compiler : ErrorReporter {
         children.add(test)
         children.add(stmt)
         loops.pop()
-        return IRNode(IRNode.Kind.WHILE, w.offset, w.payload, children)
+        return IRNode(IRNode.Kind.WHILE, w.position, w.payload, children)
     }
 
     method compileDo(d:ASTNode):IRNode? {
@@ -2661,7 +2662,7 @@ class Compiler : ErrorReporter {
         children.add(stmt)
         children.add(test)
         loops.pop()
-        return IRNode(IRNode.Kind.DO, d.offset, d.payload, children)
+        return IRNode(IRNode.Kind.DO, d.position, d.payload, children)
     }
 
     method compileLoop(l:ASTNode):IRNode? {
@@ -2676,7 +2677,7 @@ class Compiler : ErrorReporter {
         def children := Array<IRNode>(1) -- FIXME literal
         children.add(stmt)
         loops.pop()
-        return IRNode(IRNode.Kind.LOOP, l.offset, l.payload, children)
+        return IRNode(IRNode.Kind.LOOP, l.position, l.payload, children)
     }
 
     -- FIXME use tuple
@@ -2711,7 +2712,7 @@ class Compiler : ErrorReporter {
                     type := valueType
                 }
                 else {
-                    error(t.offset, "declaration has neither a type nor a value")
+                    error(t.position, "declaration has neither a type nor a value")
                     return null
                 }
                 if value != null {
@@ -2721,9 +2722,9 @@ class Compiler : ErrorReporter {
                     }
                     assert value.type = type
                 }
-                def v := Variable(t.offset, kind, t.payload->String, type)
+                def v := Variable(t.position, kind, t.payload->String, type)
                 symbolTable.add(v)
-                return CompileTargetResult(IRNode(IRNode.Kind.VARIABLE_REFERENCE, v.offset, v.type,
+                return CompileTargetResult(IRNode(IRNode.Kind.VARIABLE_REFERENCE, v.position, v.type,
                         v), value)
             when ASTNode.Kind.TUPLE_TARGET:
                 assert false
@@ -2757,7 +2758,7 @@ class Compiler : ErrorReporter {
             v.initialValue := target.value -- FIXME parens
             children.add(target.value)
         }
-        return IRNode(IRNode.Kind.DECLARATION, d.offset, children)
+        return IRNode(IRNode.Kind.DECLARATION, d.position, children)
     }
 
     method compileBreak(b:ASTNode):IRNode? {
@@ -2771,14 +2772,14 @@ class Compiler : ErrorReporter {
                 }
             }
             if !found {
-                error(b.offset, "'break \{b.payload}' must be inside a loop labelled " +
+                error(b.position, "'break \{b.payload}' must be inside a loop labelled " +
                         "'\{b.payload}:'")
             }
         }
         else if loops.get_count() = 0 {
-            error(b.offset, "'break' must be inside a loop")
+            error(b.position, "'break' must be inside a loop")
         }
-        return IRNode(IRNode.Kind.BREAK, b.offset, b.payload->String)
+        return IRNode(IRNode.Kind.BREAK, b.position, b.payload->String)
     }
 
     method compileContinue(c:ASTNode):IRNode? {
@@ -2792,21 +2793,21 @@ class Compiler : ErrorReporter {
                 }
             }
             if !found {
-                error(c.offset, "'continue \{c.payload}' must be inside a loop labelled " +
+                error(c.position, "'continue \{c.payload}' must be inside a loop labelled " +
                         "'\{c.payload}:'")
             }
         }
         else if loops.get_count() = 0 {
-            error(c.offset, "'continue' must be inside a loop")
+            error(c.position, "'continue' must be inside a loop")
         }
-        return IRNode(IRNode.Kind.CONTINUE, c.offset, c.payload->String)
+        return IRNode(IRNode.Kind.CONTINUE, c.position, c.payload->String)
     }
 
     method compileReturn(r:ASTNode):IRNode? {
         assert r.kind = ASTNode.Kind.RETURN
         if r.children.get_count() = 1 {
             if currentMethod.peek().returnType = Type.Void() {
-                error(r.offset, "cannot return a value from a method with no return type")
+                error(r.position, "cannot return a value from a method with no return type")
                 return null
             }
             def value := coerce(compileExpression(r.children[0]), currentMethod.peek().returnType)
@@ -2815,14 +2816,14 @@ class Compiler : ErrorReporter {
             }
             def children := Array<IRNode>() -- FIXME literal
             children.add(value)
-            return IRNode(IRNode.Kind.RETURN, r.offset, children)
+            return IRNode(IRNode.Kind.RETURN, r.position, children)
         }
         assert r.children.get_count() = 0
         if currentMethod.peek().returnType != Type.Void() {
-            error(r.offset, "expected a return value")
+            error(r.position, "expected a return value")
             return null
         }
-        return IRNode(IRNode.Kind.RETURN, r.offset)
+        return IRNode(IRNode.Kind.RETURN, r.position)
     }
 
     method compileAssert(a:ASTNode):IRNode? {
@@ -2842,7 +2843,7 @@ class Compiler : ErrorReporter {
         resolve(value->FieldDecl)
         def fieldChildren := Array<IRNode>() -- FIXME literal
         fieldChildren.add(test)
-        test := IRNode(IRNode.Kind.FIELD_REFERENCE, a.offset, Type.BuiltinBit(), value,
+        test := IRNode(IRNode.Kind.FIELD_REFERENCE, a.position, Type.BuiltinBit(), value,
                 fieldChildren)
         def children := Array<IRNode>() -- FIXME literal
         children.add(test)
@@ -2857,7 +2858,7 @@ class Compiler : ErrorReporter {
             }
             children.add(msg)
         }
-        return IRNode(IRNode.Kind.ASSERT, a.offset, children)
+        return IRNode(IRNode.Kind.ASSERT, a.position, children)
     }
 
     method compileVar(v:ASTNode):IRNode? {
@@ -2890,11 +2891,11 @@ class Compiler : ErrorReporter {
             }
             decls.add(decl)
         }
-        return IRNode(nodeKind, v.offset, decls)
+        return IRNode(nodeKind, v.position, decls)
     }
 
     method compileWhenTest(value:Variable, test:ASTNode):IRNode? {
-        def target := IRNode(IRNode.Kind.VARIABLE_REFERENCE, test.offset, value.type, value)
+        def target := IRNode(IRNode.Kind.VARIABLE_REFERENCE, test.position, value.type, value)
         def callChildren := Array<IRNode>()
         def testValue := compileExpression(test)
         if testValue = null {
@@ -2937,20 +2938,21 @@ class Compiler : ErrorReporter {
         symbolTable := symbolTable.parents[0]
         def children := Array<IRNode>() -- FIXME literal
         children.add(test)
-        children.add(IRNode(IRNode.Kind.BLOCK, w.offset, statements))
-        return IRNode(IRNode.Kind.IF, w.offset, children)
+        children.add(IRNode(IRNode.Kind.BLOCK, w.position, statements))
+        return IRNode(IRNode.Kind.IF, w.position, children)
     }
 
     method compileChainedIfMatch(m:ASTNode, value:IRNode):IRNode? {
         def children := Array<IRNode>()
-        def valueVar := Variable(m.offset, Variable.Kind.DEF, "$match$\{m.offset}", value.type)
+        def valueVar := Variable(m.position, Variable.Kind.DEF,
+                "$match$\{m.position.line}_\{m.position.column}", value.type)
         def declChildren := Array<IRNode>() -- FIXME literal
-        declChildren.add(IRNode(IRNode.Kind.VARIABLE_REFERENCE, value.offset, valueVar.type,
+        declChildren.add(IRNode(IRNode.Kind.VARIABLE_REFERENCE, value.position, valueVar.type,
                 valueVar))
         declChildren.add(value)
         def varChildren := Array<IRNode>()
-        varChildren.add(IRNode(IRNode.Kind.DECLARATION, valueVar.offset, declChildren))
-        children.add(IRNode(IRNode.Kind.DEF, valueVar.offset, varChildren))
+        varChildren.add(IRNode(IRNode.Kind.DECLARATION, valueVar.position, declChildren))
+        children.add(IRNode(IRNode.Kind.DEF, valueVar.position, varChildren))
         for i in 1 .. m.children.get_count() {
             def c := m.children[i]
             match c.kind {
@@ -2969,7 +2971,7 @@ class Compiler : ErrorReporter {
                         }
                         statements.add(stmt)
                     }
-                    children.add(IRNode(IRNode.Kind.BLOCK, c.offset, statements))
+                    children.add(IRNode(IRNode.Kind.BLOCK, c.position, statements))
                 otherwise:
                     assert false
             }
@@ -2980,7 +2982,7 @@ class Compiler : ErrorReporter {
             children[i - 1].children.add(children[i])
             children.removeIndex(children.get_count() - 1)
         }
-        return IRNode(IRNode.Kind.BLOCK, m.offset, children)
+        return IRNode(IRNode.Kind.BLOCK, m.position, children)
     }
 
     method compileWhen(type:Type, w:ASTNode):IRNode? {
@@ -3006,8 +3008,8 @@ class Compiler : ErrorReporter {
             statements.add(statement)
         }
         symbolTable := symbolTable.parents[0]
-        children.add(IRNode(IRNode.Kind.BLOCK, w.offset, statements))
-        return IRNode(IRNode.Kind.WHEN, w.offset, children)
+        children.add(IRNode(IRNode.Kind.BLOCK, w.position, statements))
+        return IRNode(IRNode.Kind.WHEN, w.position, children)
     }
 
     method compileOtherwise(o:ASTNode):IRNode? {
@@ -3023,8 +3025,8 @@ class Compiler : ErrorReporter {
             statements.add(statement)
         }
         symbolTable := symbolTable.parents[0]
-        children.add(IRNode(IRNode.Kind.BLOCK, o.offset, statements))
-        return IRNode(IRNode.Kind.OTHERWISE, o.offset, children)
+        children.add(IRNode(IRNode.Kind.BLOCK, o.position, statements))
+        return IRNode(IRNode.Kind.OTHERWISE, o.position, children)
     }
 
     function isConstantInt(expr:IRNode):Bit {
@@ -3097,7 +3099,7 @@ class Compiler : ErrorReporter {
             }
             children.add(w)
         }
-        return IRNode(IRNode.Kind.MATCH, m.offset, children)
+        return IRNode(IRNode.Kind.MATCH, m.position, children)
     }
 
     method compileStatement(s:ASTNode):IRNode? {
@@ -3138,7 +3140,7 @@ class Compiler : ErrorReporter {
         assert m.body != null
         def symbols := SymbolTable(symbolTable)
         for p in m.parameters {
-            symbols.add(Variable(m.offset, Variable.Kind.DEF, p.name, p.type,
+            symbols.add(Variable(m.position, Variable.Kind.DEF, p.name, p.type,
                     Variable.Storage.PARAMETER))
         }
         symbolTable := symbols
@@ -3148,13 +3150,13 @@ class Compiler : ErrorReporter {
                 resolve(f)
                 if !f.annotations.isClass() & f.value != null {
                     def children := Array<IRNode>()
-                    children.add(IRNode(IRNode.Kind.SELF, m.offset, currentClass.peek().type()))
-                    def fieldRef := IRNode(IRNode.Kind.FIELD_REFERENCE, m.offset, f.type, f,
+                    children.add(IRNode(IRNode.Kind.SELF, m.position, currentClass.peek().type()))
+                    def fieldRef := IRNode(IRNode.Kind.FIELD_REFERENCE, m.position, f.type, f,
                             children)
                     children.clear()
                     children.add(fieldRef)
                     children.add(f.value)
-                    fieldInitializers.add(IRNode(IRNode.Kind.BINARY, f.offset,
+                    fieldInitializers.add(IRNode(IRNode.Kind.BINARY, f.position,
                             Token.Kind.ASSIGNMENT, children))
                 }
             }
@@ -3164,7 +3166,7 @@ class Compiler : ErrorReporter {
             if fieldInitializers.get_count() != 0 {
                 def children := Array<IRNode>(fieldInitializers)
                 children.addAll(compiled.children)
-                compiled := IRNode(IRNode.Kind.BLOCK, m.body.offset, children)
+                compiled := IRNode(IRNode.Kind.BLOCK, m.body.position, children)
             }
         }
         assert symbolTable == symbols
@@ -3233,7 +3235,7 @@ class Compiler : ErrorReporter {
         var result := scans[file]
         if result = null {
             currentFile.push(file)
-            parser.start(file.name(), file.readFully())
+            parser.start(file, file.readFully())
             def parsed := parser.file()
             if parsed != null {
                 result := scanner.scan(file, parsed)
@@ -3257,34 +3259,15 @@ class Compiler : ErrorReporter {
         }
     }
 
-    function position(offset:Int):Position {
-        def source := currentFile.peek().openInputStream()
-        var line := 1
-        var column := 1
-        for i in 0 .. offset {
-            match source.read()->Char8 { -- FIXME char literals
-                when Char8(10):
-                    line += 1
-                    column := 1
-                when Char8(9):
-                    column += 4 - column % 4
-                otherwise:
-                    column += 1
-            }
-        }
-        source.cleanup() -- FIXME
-        return Position(currentFile.peek().name(), line, column)
-    }
-
-    method error(offset:Int, msg:String) {
-        error(position(offset), msg)
+    method error(position:Position, msg:String) {
+        error(currentFile.peek(), position, msg)
     }
 
     @override
-    method error(pos:Position, msg:String) {
+    method error(file:File, pos:Position, msg:String) {
         if reportErrors {
             errorCount += 1
-            Console.printLine("\{pos}: error: \{msg}")
+            Console.printLine("\{file.name()}:\{pos}: error: \{msg}")
         }
     }
 

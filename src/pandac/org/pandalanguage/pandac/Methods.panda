@@ -13,7 +13,7 @@ class Methods : Symbol {
                 }
             }
         }
-        super.init(Kind.METHODS, -1, methods[0].name)
+        super.init(Kind.METHODS, Position(), methods[0].name)
         self.methods := ImmutableArray<MethodDecl>(methods)
     }
 }

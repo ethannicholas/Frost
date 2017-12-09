@@ -26,15 +26,15 @@ class Variable : Symbol {
 
     def initialValue:IRNode? := null
 
-    init(offset:Int, kind:Int, name:String, type:Type) {
-        init(offset, kind, name, type, Storage.LOCAL)
+    init(position:Position, kind:Int, name:String, type:Type) {
+        init(position, kind, name, type, Storage.LOCAL)
     }
 
-    init(offset:Int, kind:Int, name:String, type:Type, storage:Int) {
+    init(position:Position, kind:Int, name:String, type:Type, storage:Int) {
         self.varKind := kind
         self.type := type
         self.storage := storage
-        super.init(Symbol.Kind.VARIABLE, offset, name)
+        super.init(Symbol.Kind.VARIABLE, position, name)
     }
 
     @override

@@ -14,6 +14,8 @@ class PLex {
         def nfa := NFA()
         token.printLine("package org.pandalanguage.pandac.parser")
         token.printLine()
+        token.printLine("uses org.pandalanguage.pandac.Position")
+        token.printLine()
         token.printLine("@final")
         token.printLine("class Token : Value {")
         token.level += 1
@@ -58,12 +60,14 @@ class PLex {
         token.printLine("def kind:Int")
         token.printLine("def offset:Int")
         token.printLine("def length:Int")
+        token.printLine("def position:Position")
         token.printLine()
-        token.printLine("init(kind:Int, offset:Int, length:Int) {")
+        token.printLine("init(kind:Int, offset:Int, length:Int, position:Position) {")
         token.level += 1
         token.printLine("self.kind := kind")
         token.printLine("self.offset := offset")
         token.printLine("self.length := length")
+        token.printLine("self.position := position")
         token.level -= 1
         token.printLine("}")
         token.level -= 1
@@ -91,6 +95,7 @@ class PLex {
         out.printLine()
         out.printLine("uses panda.unsafe.Pointer")
         out.printLine("uses org.pandalanguage.plex.runtime.DFA")
+        out.printLine("uses org.pandalanguage.pandac.Position")
         out.printLine()
         out.printLine("@final")
         out.printLine("class Lexer {")
@@ -106,7 +111,8 @@ class PLex {
         out.printLine("method next():Token {")
         out.level += 1
         out.printLine("def raw := dfa.next()")
-        out.printLine("return Token(raw.kind, raw.offset, raw.length)")
+        out.printLine("return Token(raw.kind, raw.offset, raw.length, Position(raw.line, " +
+                "raw.column))")
         out.level -= 1
         out.printLine("}")
         out.level -= 1

@@ -79,35 +79,35 @@ class ASTNode : Immutable {
 
     def kind:Int
 
-    def offset:Int
+    def position:Position
 
     def payload:Object?
 
     def children:ImmutableArray<ASTNode>
 
-    init(kind:Int, offset:Int) {
-        init(kind, offset, null, Array<ASTNode>())
+    init(kind:Int, position:Position) {
+        init(kind, position, null, Array<ASTNode>())
     }
 
-    init(kind:Int, offset:Int, payload:UInt64) {
-        init(kind, offset, payload, Array<ASTNode>())
+    init(kind:Int, position:Position, payload:UInt64) {
+        init(kind, position, payload, Array<ASTNode>())
     }
 
-    init(kind:Int, offset:Int, payload:String) {
-        init(kind, offset, payload, Array<ASTNode>())
+    init(kind:Int, position:Position, payload:String) {
+        init(kind, position, payload, Array<ASTNode>())
     }
 
-    init(kind:Int, offset:Int, payload:Bit) {
-        init(kind, offset, payload, Array<ASTNode>())
+    init(kind:Int, position:Position, payload:Bit) {
+        init(kind, position, payload, Array<ASTNode>())
     }
 
-    init(kind:Int, offset:Int, children:ListView<ASTNode>) {
-        init(kind, offset, null, children)
+    init(kind:Int, position:Position, children:ListView<ASTNode>) {
+        init(kind, position, null, children)
     }
 
-    init(kind:Int, offset:Int, payload:Object?, children:ListView<ASTNode>) {
+    init(kind:Int, position:Position, payload:Object?, children:ListView<ASTNode>) {
         self.kind := kind
-        self.offset := offset
+        self.position := position
         self.payload := payload
         self.children := ImmutableArray<ASTNode>(children)
     }

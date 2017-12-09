@@ -1,5 +1,5 @@
 package org.pandalanguage.pandac
 
 interface ErrorReporter {
-    method error(pos:Position, msg:String)
+    method error(file:File, pos:Position, msg:String)
 }

@@ -4,8 +4,8 @@ package org.pandalanguage.pandac
 class Alias : Symbol {
     def fullName:String
 
-    init(alias:String, fullName:String, offset:Int) {
-        super.init(Kind.ALIAS, offset, alias)
+    init(alias:String, fullName:String, position:Position) {
+        super.init(Kind.ALIAS, position, alias)
         self.fullName := fullName
     }
 

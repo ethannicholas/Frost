@@ -21,6 +21,10 @@ class DFA {
 
     var offset := 0
 
+    var line := 1
+
+    var column := 1
+
     init(stateCount:Int, transitions:Pointer<Pointer<Int>>, accepts:Pointer<Int>) {
         init("", stateCount, transitions, accepts)
     }
@@ -42,11 +46,15 @@ class DFA {
             rawToken.kind := 0
             rawToken.offset := startOffset
             rawToken.length := 0
+            rawToken.line := line
+            rawToken.column := column
             return rawToken
         }
         rawToken.kind := -1
         rawToken.offset := startOffset
         rawToken.length := 1
+        rawToken.line := line
+        rawToken.column := column
         while offset < utf8.get_count() {
             def c := utf8[offset]
             if c.convert()->UInt8 > END_CHAR {
@@ -56,6 +64,15 @@ class DFA {
             state := transitions[c.convert()][state]
             if state != 0 {
                 offset += 1
+                match c.convert()->UInt8 {
+                    when 10:
+                        line += 1
+                        column := 1
+                    when 9:
+                        column += 4 - column % 4
+                    otherwise:
+                        column += 1
+                }
                 def newAccept := accepts[state]
                 if newAccept != -1 {
                     rawToken.kind := newAccept

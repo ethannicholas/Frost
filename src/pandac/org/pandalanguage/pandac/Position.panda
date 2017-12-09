@@ -1,21 +1,23 @@
 package org.pandalanguage.pandac
 
 @final
-class Position : Immutable {
-    def file:String
-
+class Position : Value {
     def line:Int
 
     def column:Int
 
-    init(file:String, line:Int, column:Int) {
-        self.file := file
+    init() {
+        self.line := 1
+        self.column := 1
+    }
+
+    init(line:Int, column:Int) {
         self.line := line
         self.column := column
     }
 
     @override
     function convert():String {
-        return "\{file}:\{line}:\{column}"
+        return "\{line}:\{column}"
     }
 }

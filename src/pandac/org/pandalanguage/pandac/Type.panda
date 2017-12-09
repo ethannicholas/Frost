@@ -31,30 +31,39 @@ class Type : Symbol, Key<Type> {
 
     def parameter:ClassDecl.GenericParameter? := null
 
-    init(name:String, typeKind:Int, offset:Int) {
-        init(name, typeKind, offset, false)
+    init(name:String, typeKind:Int, position:Position) {
+        init(name, typeKind, position, false)
     }
 
-    init(name:String, typeKind:Int, offset:Int, resolved:Bit) {
+    init(name:String, typeKind:Int, position:Position, resolved:Bit) {
         assert !name.endsWith("?")
         self.typeKind := typeKind
-        self.offset := offset
+        self.position := position
         self.resolved := resolved
         self.subtypes := ImmutableArray<Type>()
-        super.init(Symbol.Kind.TYPE, offset, name)
+        super.init(Symbol.Kind.TYPE, position, name)
     }
 
-    init(name:String, typeKind:Int, offset:Int, subtypes:ListView<Type>, resolved:Bit) {
+    init(name:String, typeKind:Int, size:Int) {
+        assert !name.endsWith("?")
+        self.typeKind := typeKind
+        self.position := Position(size, size)
+        self.resolved := true
+        self.subtypes := ImmutableArray<Type>()
+        super.init(Symbol.Kind.TYPE, position, name)
+    }
+
+    init(name:String, typeKind:Int, position:Position, subtypes:ListView<Type>, resolved:Bit) {
         assert (typeKind = Kind.NULLABLE) = name.endsWith("?"),
                 "invalid type: name=\{name}, nullable=\{typeKind = Kind.NULLABLE}"
         assert (typeKind = Kind.GENERIC) = name.endsWith(">"),
                 "invalid type: name=\{name}, generic=\{typeKind = Kind.GENERIC}"
         assert typeKind != Kind.GENERIC_PARAMETER
         self.typeKind := typeKind
-        self.offset := offset
+        self.position := position
         self.resolved := resolved
         self.subtypes := ImmutableArray<Type>(subtypes)
-        super.init(Symbol.Kind.TYPE, offset, name)
+        super.init(Symbol.Kind.TYPE, position, name)
     }
 
     init(subtypes:ListView<Type>) {
@@ -70,7 +79,7 @@ class Type : Symbol, Key<Type> {
             self.resolved &= t.resolved
         }
         name.append(">")
-        super.init(Symbol.Kind.TYPE, offset, name.convert())
+        super.init(Symbol.Kind.TYPE, position, name.convert())
     }
 
     init(param:ClassDecl.GenericParameter) {
@@ -82,7 +91,7 @@ class Type : Symbol, Key<Type> {
 
     function size():Int {
         assert typeKind = Kind.BUILTIN_INT | typeKind = Kind.BUILTIN_UINT, "not a number: \{self}"
-        return offset
+        return position.line
     }
 
     @override
@@ -97,92 +106,92 @@ class Type : Symbol, Key<Type> {
 
     @class
     method Void():Type {
-        return Type("void", Kind.VOID, -1, true)
+        return Type("void", Kind.VOID, Position(), true)
     }
 
     @class
     method Null():Type {
-        return Type("null", Kind.NULL, -1, true)
+        return Type("null", Kind.NULL, Position(), true)
     }
 
     @class
     method Object():Type {
-        return Type("panda.core.Object", Kind.CLASS, -1, true)
+        return Type("panda.core.Object", Kind.CLASS, Position(), true)
     }
 
     @class
     method Any():Type {
         def subtypes := Array<Type>()
         subtypes.add(Object())
-        return Type("panda.core.Object?", Kind.NULLABLE, -1, subtypes, true)
+        return Type("panda.core.Object?", Kind.NULLABLE, Position(), subtypes, true)
     }
 
     @class
     method Class():Type {
-        return Type("panda.core.Class", Kind.CLASS, -1, true)
+        return Type("panda.core.Class", Kind.CLASS, Position(), true)
     }
 
     @class
     method Value():Type {
-        return Type("panda.core.Value", Kind.CLASS, -1, true)
+        return Type("panda.core.Value", Kind.CLASS, Position(), true)
     }
 
     @class
     method StringType():Type {
-        return Type("panda.core.String", Kind.CLASS, -1, true)
+        return Type("panda.core.String", Kind.CLASS, Position(), true)
     }
 
     @class
     method Int64():Type {
-        return Type("panda.core.Int64", Kind.CLASS, -1, true)
+        return Type("panda.core.Int64", Kind.CLASS, Position(), true)
     }
 
     @class
     method Bit():Type {
-        return Type("panda.core.Bit", Kind.CLASS, -1, true)
+        return Type("panda.core.Bit", Kind.CLASS, Position(), true)
     }
 
     @class
     method IntLiteral():Type {
-        return Type("$int_literal", Kind.INT_LITERAL, -1, true)
+        return Type("$int_literal", Kind.INT_LITERAL, Position(), true)
     }
 
     @class
     method BitLiteral():Type {
-        return Type("$bit_literal", Kind.BIT_LITERAL, -1, true)
+        return Type("$bit_literal", Kind.BIT_LITERAL, Position(), true)
     }
 
     @class
     method BuiltinBit():Type {
-        return Type("builtin_bit", Kind.BUILTIN_BIT, -1, true)
+        return Type("builtin_bit", Kind.BUILTIN_BIT, Position(), true)
     }
 
     @class
     method Iterator():Type {
-        return Type("panda.collections.Iterator", Kind.CLASS, -1, true)
+        return Type("panda.collections.Iterator", Kind.CLASS, Position(), true)
     }
 
     @class
     method Iterable():Type {
-        return Type("panda.collections.Iterable", Kind.CLASS, -1, true)
+        return Type("panda.collections.Iterable", Kind.CLASS, Position(), true)
     }
 
     @class
     method Panda():Type {
-        return Type("panda.core.Panda", Kind.CLASS, -1, true)
+        return Type("panda.core.Panda", Kind.CLASS, Position(), true)
     }
 
     @class
     method RangeOf(t:Type):Type {
         def children := Array<Type>() -- FIXME literal
-        children.add(Type(Compiler.RANGE_NAME, Kind.CLASS, -1, true))
+        children.add(Type(Compiler.RANGE_NAME, Kind.CLASS, Position(), true))
         children.add(t)
-        return Type("\{Compiler.RANGE_NAME}<\{t}>", Kind.GENERIC, t.offset, children, t.resolved)
+        return Type("\{Compiler.RANGE_NAME}<\{t}>", Kind.GENERIC, t.position, children, t.resolved)
     }
 
     @class
     method Invalid():Type {
-        return Type("<invalid>", Kind.INVALID, -1, true)
+        return Type("<invalid>", Kind.INVALID, Position(), true)
     }
 
     function isNumber():Bit {
@@ -222,7 +231,7 @@ class Type : Symbol, Key<Type> {
         assert typeKind != Kind.NULLABLE
         def subtypes := Array<Type>()
         subtypes.add(self)
-        return Type("\{name}?", Kind.NULLABLE, -1, subtypes, true)
+        return Type("\{name}?", Kind.NULLABLE, Position(), subtypes, true)
     }
 
     -- returns the narrowest type that can hold an instance of either type
@@ -278,7 +287,7 @@ class Type : Symbol, Key<Type> {
                     }
                 }
                 name.append(">")
-                return Type(name.convert(), Kind.GENERIC, offset, remapped, resolved)
+                return Type(name.convert(), Kind.GENERIC, position, remapped, resolved)
             when Kind.NULLABLE:
                 return subtypes[0].remap(types).nullable()
             when Kind.METHOD, Kind.FUNCTION:
@@ -308,7 +317,7 @@ class Type : Symbol, Key<Type> {
                     remapped.add(Type.Void())
                 }
                 name.append(")")
-                return Type(name.convert(), typeKind, offset, remapped, resolved)
+                return Type(name.convert(), typeKind, position, remapped, resolved)
             otherwise: return self
         }
     }

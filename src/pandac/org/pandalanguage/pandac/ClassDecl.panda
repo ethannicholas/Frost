@@ -12,10 +12,10 @@ class ClassDecl : Symbol {
 
         def bound:org.pandalanguage.pandac.Type -- FIXME unnecessary qualification
 
-        init(offset:Int, owner:String, name:String, bound:org.pandalanguage.pandac.Type) { -- FIXME qualification
+        init(position:Position, owner:String, name:String, bound:org.pandalanguage.pandac.Type) { -- FIXME qualification
             self.owner := owner
             self.bound := bound
-            super.init(Symbol.Kind.GENERIC_PARAMETER, offset, name)
+            super.init(Symbol.Kind.GENERIC_PARAMETER, position, name)
         }
 
         @override
@@ -79,10 +79,10 @@ class ClassDecl : Symbol {
 
     var resolved:Bit
 
-    init(source:File, offset:Int, aliases:MapView<String, String>, doccomment:String?,
+    init(source:File, position:Position, aliases:MapView<String, String>, doccomment:String?,
             annotations:Annotations, kind:Int, name:String, declaredSupers:ListView<Type>,
             parameters:Array<GenericParameter>, parent:SymbolTable) {
-        super.init(Symbol.Kind.CLASS, offset, name)
+        super.init(Symbol.Kind.CLASS, position, name)
         self.source := source
         self.aliases := HashMap<String, String>(aliases)
         self.doccomment := doccomment
@@ -98,7 +98,7 @@ class ClassDecl : Symbol {
     }
 
     function type():Type {
-        return Type(name, Type.Kind.CLASS, -1, true)
+        return Type(name, Type.Kind.CLASS, Position(), true)
     }
 
     function typeWithParameters():Type {
@@ -111,14 +111,14 @@ class ClassDecl : Symbol {
         name.append("<")
         var separator := ""
         for p in parameters {
-            def t := Type(self.name + "." + p.name, Type.Kind.GENERIC_PARAMETER, -1, true)
+            def t := Type(self.name + "." + p.name, Type.Kind.GENERIC_PARAMETER, Position(), true)
             subtypes.add(t)
             name.append(separator)
             name.append(t.name)
             separator := ", "
         }
         name.append(">")
-        return Type(name.convert(), Type.Kind.GENERIC, -1, subtypes, true)
+        return Type(name.convert(), Type.Kind.GENERIC, Position(), subtypes, true)
     }
 
     function isSpecialization():Bit {

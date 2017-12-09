@@ -467,7 +467,7 @@ class CCodeGenerator : CodeGenerator {
                     actualMethodType.subtypes[i], out))
         }
         def children := Array<IRNode>()
-        children.add(IRNode(IRNode.Kind.SELF, -1, Type.Object()))
+        children.add(IRNode(IRNode.Kind.SELF, Position(), Type.Object()))
         if m.returnType != Type.Void() {
             out.print("return ")
         }
@@ -1262,7 +1262,7 @@ class CCodeGenerator : CodeGenerator {
             when IRNode.Kind.PREFIX:
                 return getPrefixReference(expr, out)
             otherwise:
-                assert false, "unsupported expression \{expr}:\{compiler.position(expr.offset)}"
+                assert false, "unsupported expression \{expr}:\{expr.position}"
         }
     }
 

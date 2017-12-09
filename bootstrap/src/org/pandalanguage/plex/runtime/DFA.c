@@ -24,21 +24,25 @@ static panda$core$String $s28 = { (panda$core$Class*) &panda$core$String$class, 
 static panda$core$String $s31 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1 };
 
 void org$pandalanguage$plex$runtime$DFA$init$panda$core$Int64$panda$unsafe$Pointer$LTpanda$unsafe$Pointer$LTpanda$core$Int64$GT$GT$panda$unsafe$Pointer$LTpanda$core$Int64$GT(org$pandalanguage$plex$runtime$DFA* self, panda$core$Int64 p_stateCount, panda$core$Int64** p_transitions, panda$core$Int64* p_accepts) {
-    org$pandalanguage$plex$runtime$RawToken* $tmp1 = (org$pandalanguage$plex$runtime$RawToken*) malloc(40);
+    org$pandalanguage$plex$runtime$RawToken* $tmp1 = (org$pandalanguage$plex$runtime$RawToken*) malloc(56);
     $tmp1->$class = (panda$core$Class*) &org$pandalanguage$plex$runtime$RawToken$class;
     $tmp1->refCount.value = 1;
     org$pandalanguage$plex$runtime$RawToken$init($tmp1);
     self->rawToken = $tmp1;
     self->offset = ((panda$core$Int64) { 0 });
+    self->line = ((panda$core$Int64) { 1 });
+    self->column = ((panda$core$Int64) { 1 });
     org$pandalanguage$plex$runtime$DFA$init$panda$core$String$panda$core$Int64$panda$unsafe$Pointer$LTpanda$unsafe$Pointer$LTpanda$core$Int64$GT$GT$panda$unsafe$Pointer$LTpanda$core$Int64$GT(self, &$s3, p_stateCount, p_transitions, p_accepts);
 }
 void org$pandalanguage$plex$runtime$DFA$init$panda$core$String$panda$core$Int64$panda$unsafe$Pointer$LTpanda$unsafe$Pointer$LTpanda$core$Int64$GT$GT$panda$unsafe$Pointer$LTpanda$core$Int64$GT(org$pandalanguage$plex$runtime$DFA* self, panda$core$String* p_source, panda$core$Int64 p_stateCount, panda$core$Int64** p_transitions, panda$core$Int64* p_accepts) {
-    org$pandalanguage$plex$runtime$RawToken* $tmp4 = (org$pandalanguage$plex$runtime$RawToken*) malloc(40);
+    org$pandalanguage$plex$runtime$RawToken* $tmp4 = (org$pandalanguage$plex$runtime$RawToken*) malloc(56);
     $tmp4->$class = (panda$core$Class*) &org$pandalanguage$plex$runtime$RawToken$class;
     $tmp4->refCount.value = 1;
     org$pandalanguage$plex$runtime$RawToken$init($tmp4);
     self->rawToken = $tmp4;
     self->offset = ((panda$core$Int64) { 0 });
+    self->line = ((panda$core$Int64) { 1 });
+    self->column = ((panda$core$Int64) { 1 });
     self->source = p_source;
     panda$collections$ListView* $tmp6 = panda$core$String$utf8$R$panda$collections$ListView$LTpanda$core$Char8$GT(p_source);
     self->utf8 = $tmp6;

@@ -43,9 +43,10 @@ class MethodDecl : Symbol {
 
     var resolved:Bit
 
-    init(owner:ClassDecl, offset:Int, doccomment:String?, annotations:Annotations, methodKind:Int,
-            name:String, parameters:Array<Parameter>, returnType:Type, body:ASTNode?) {
-        super.init(Symbol.Kind.METHOD, offset, name)
+    init(owner:ClassDecl, position:Position, doccomment:String?, annotations:Annotations,
+            methodKind:Int, name:String, parameters:Array<Parameter>, returnType:Type,
+            body:ASTNode?) {
+        super.init(Symbol.Kind.METHOD, position, name)
         self.owner := owner
         self.doccomment := doccomment
         self.annotations := annotations

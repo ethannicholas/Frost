@@ -3,6 +3,7 @@
 #include "panda/core/Class.h"
 #include "panda/core/Object.h"
 #include "panda/core/String.h"
+#include "org/pandalanguage/pandac/Position.h"
 #include "panda/core/Int64.h"
 
 
@@ -13,8 +14,8 @@ static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, 2
 static panda$core$String $s3 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2D\x3E", 2, 1 };
 static panda$core$String $s6 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x29", 1, 1 };
 
-void org$pandalanguage$pandac$Alias$init$panda$core$String$panda$core$String$panda$core$Int64(org$pandalanguage$pandac$Alias* self, panda$core$String* p_alias, panda$core$String* p_fullName, panda$core$Int64 p_offset) {
-    org$pandalanguage$pandac$Symbol$init$panda$core$Int64$panda$core$Int64$panda$core$String(((org$pandalanguage$pandac$Symbol*) self), ((panda$core$Int64) { 200 }), p_offset, p_alias);
+void org$pandalanguage$pandac$Alias$init$panda$core$String$panda$core$String$org$pandalanguage$pandac$Position(org$pandalanguage$pandac$Alias* self, panda$core$String* p_alias, panda$core$String* p_fullName, org$pandalanguage$pandac$Position p_position) {
+    org$pandalanguage$pandac$Symbol$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$String(((org$pandalanguage$pandac$Symbol*) self), ((panda$core$Int64) { 200 }), p_position, p_alias);
     self->fullName = p_fullName;
 }
 panda$core$String* org$pandalanguage$pandac$Alias$convert$R$panda$core$String(org$pandalanguage$pandac$Alias* self) {

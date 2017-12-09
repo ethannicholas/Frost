@@ -38,7 +38,7 @@ class LineNumberInputStream : InputStream {
                 line += 1
                 column := 1
             when 9:
-                line += 4 - column % 4
+                column += 4 - column % 4
             otherwise:
                 column += 1
         }

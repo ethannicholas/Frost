@@ -25,8 +25,8 @@ class FieldDecl : Symbol {
 
     var resolved := false
 
-    init(owner:ClassDecl, offset:Int, doccomment:String?, annotations:Annotations, fieldKind:Int,
-            name:String, type:Type, value:ASTNode?) {
+    init(owner:ClassDecl, position:Position, doccomment:String?, annotations:Annotations,
+            fieldKind:Int, name:String, type:Type, value:ASTNode?) {
         self.owner := owner
         self.doccomment := doccomment
         self.annotations := annotations
@@ -34,6 +34,6 @@ class FieldDecl : Symbol {
         self.type := type
         self.rawValue := value
         self.value := null
-        super.init(Symbol.Kind.FIELD, offset, name)
+        super.init(Symbol.Kind.FIELD, position, name)
     }
 }

@@ -13,7 +13,6 @@
 #include "panda/collections/ListView.h"
 #include "panda/collections/ImmutableArray.h"
 #include "panda/collections/CollectionView.h"
-#include "org/pandalanguage/pandac/Position.h"
 #include "panda/collections/List.h"
 #include "panda/collections/Iterator.h"
 #include "panda/collections/Iterable.h"
@@ -22,26 +21,26 @@
 
 org$pandalanguage$pandac$SymbolTable$class_type org$pandalanguage$pandac$SymbolTable$class = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Object$class, NULL, { org$pandalanguage$pandac$SymbolTable$convert$R$panda$core$String, panda$core$Object$cleanup, org$pandalanguage$pandac$SymbolTable$add$org$pandalanguage$pandac$Symbol, org$pandalanguage$pandac$SymbolTable$add$org$pandalanguage$pandac$Symbol$panda$core$String, org$pandalanguage$pandac$SymbolTable$addIfNotOverridden$org$pandalanguage$pandac$MethodDecl$panda$collections$List$LTorg$pandalanguage$pandac$MethodDecl$GT, org$pandalanguage$pandac$SymbolTable$merge$org$pandalanguage$pandac$Symbol$Q$org$pandalanguage$pandac$Symbol$Q$R$org$pandalanguage$pandac$Symbol$Q, org$pandalanguage$pandac$SymbolTable$$IDX$panda$core$String$R$org$pandalanguage$pandac$Symbol$Q} };
 
-typedef panda$collections$Iterator* (*$fn33)(panda$collections$Iterable*);
-typedef panda$core$Bit (*$fn39)(panda$collections$Iterator*);
-typedef panda$core$Object* (*$fn45)(panda$collections$Iterator*);
-typedef void (*$fn50)(panda$collections$CollectionWriter*, panda$core$Object*);
-typedef panda$core$Bit (*$fn51)(org$pandalanguage$pandac$Symbol*);
-typedef panda$collections$Iterator* (*$fn60)(panda$collections$Iterable*);
-typedef panda$core$Bit (*$fn66)(panda$collections$Iterator*);
-typedef panda$core$Object* (*$fn72)(panda$collections$Iterator*);
-typedef panda$collections$Iterator* (*$fn88)(panda$collections$Iterable*);
-typedef panda$core$Bit (*$fn94)(panda$collections$Iterator*);
-typedef panda$core$Object* (*$fn100)(panda$collections$Iterator*);
-typedef panda$collections$Iterator* (*$fn114)(panda$collections$Iterable*);
-typedef panda$core$Bit (*$fn120)(panda$collections$Iterator*);
-typedef panda$core$Object* (*$fn126)(panda$collections$Iterator*);
+typedef panda$collections$Iterator* (*$fn32)(panda$collections$Iterable*);
+typedef panda$core$Bit (*$fn38)(panda$collections$Iterator*);
+typedef panda$core$Object* (*$fn44)(panda$collections$Iterator*);
+typedef void (*$fn49)(panda$collections$CollectionWriter*, panda$core$Object*);
+typedef panda$core$Bit (*$fn50)(org$pandalanguage$pandac$Symbol*);
+typedef panda$collections$Iterator* (*$fn59)(panda$collections$Iterable*);
+typedef panda$core$Bit (*$fn65)(panda$collections$Iterator*);
+typedef panda$core$Object* (*$fn71)(panda$collections$Iterator*);
+typedef panda$collections$Iterator* (*$fn87)(panda$collections$Iterable*);
+typedef panda$core$Bit (*$fn93)(panda$collections$Iterator*);
+typedef panda$core$Object* (*$fn99)(panda$collections$Iterator*);
+typedef panda$collections$Iterator* (*$fn113)(panda$collections$Iterable*);
+typedef panda$core$Bit (*$fn119)(panda$collections$Iterator*);
+typedef panda$core$Object* (*$fn125)(panda$collections$Iterator*);
 
 static panda$core$String $s22 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x64\x75\x70\x6C\x69\x63\x61\x74\x65\x20\x73\x79\x6D\x62\x6F\x6C\x20\x27", 18, 1 };
 static panda$core$String $s24 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27\x20\x28\x70\x72\x65\x76\x69\x6F\x75\x73\x20\x64\x65\x63\x6C\x61\x72\x61\x74\x69\x6F\x6E\x20\x77\x61\x73\x20\x61\x74\x20", 31, 1 };
-static panda$core$String $s130 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x53\x79\x6D\x62\x6F\x6C\x54\x61\x62\x6C\x65\x3C\x70\x61\x72\x65\x6E\x74\x73\x28", 20, 1 };
-static panda$core$String $s133 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x29\x2C\x20\x73\x79\x6D\x62\x6F\x6C\x73\x3D", 11, 1 };
-static panda$core$String $s136 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x3E", 1, 1 };
+static panda$core$String $s129 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x53\x79\x6D\x62\x6F\x6C\x54\x61\x62\x6C\x65\x3C\x70\x61\x72\x65\x6E\x74\x73\x28", 20, 1 };
+static panda$core$String $s132 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x29\x2C\x20\x73\x79\x6D\x62\x6F\x6C\x73\x3D", 11, 1 };
+static panda$core$String $s135 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x3E", 1, 1 };
 
 void org$pandalanguage$pandac$SymbolTable$init$org$pandalanguage$pandac$Compiler(org$pandalanguage$pandac$SymbolTable* self, org$pandalanguage$pandac$Compiler* p_compiler) {
     panda$collections$HashMap* $tmp1 = (panda$collections$HashMap*) malloc(56);
@@ -98,7 +97,7 @@ void org$pandalanguage$pandac$SymbolTable$add$org$pandalanguage$pandac$Symbol$pa
                 methods12 = $tmp13;
                 panda$collections$Array$add$panda$collections$Array$T(methods12, ((panda$core$Object*) ((org$pandalanguage$pandac$MethodDecl*) p_s)));
                 panda$collections$Array$add$panda$collections$Array$T(methods12, ((panda$core$Object*) ((org$pandalanguage$pandac$MethodDecl*) old9)));
-                org$pandalanguage$pandac$Methods* $tmp15 = (org$pandalanguage$pandac$Methods*) malloc(48);
+                org$pandalanguage$pandac$Methods* $tmp15 = (org$pandalanguage$pandac$Methods*) malloc(64);
                 $tmp15->$class = (panda$core$Class*) &org$pandalanguage$pandac$Methods$class;
                 $tmp15->refCount.value = 1;
                 org$pandalanguage$pandac$Methods$init$panda$collections$ListView$LTorg$pandalanguage$pandac$MethodDecl$GT($tmp15, ((panda$collections$ListView*) methods12));
@@ -115,7 +114,7 @@ void org$pandalanguage$pandac$SymbolTable$add$org$pandalanguage$pandac$Symbol$pa
                 methods17 = $tmp18;
                 panda$collections$Array$add$panda$collections$Array$T(methods17, ((panda$core$Object*) ((org$pandalanguage$pandac$MethodDecl*) p_s)));
                 panda$collections$Array$addAll$panda$collections$CollectionView$LTpanda$collections$Array$T$GT(methods17, ((panda$collections$CollectionView*) ((org$pandalanguage$pandac$Methods*) old9)->methods));
-                org$pandalanguage$pandac$Methods* $tmp20 = (org$pandalanguage$pandac$Methods*) malloc(48);
+                org$pandalanguage$pandac$Methods* $tmp20 = (org$pandalanguage$pandac$Methods*) malloc(64);
                 $tmp20->$class = (panda$core$Class*) &org$pandalanguage$pandac$Methods$class;
                 $tmp20->refCount.value = 1;
                 org$pandalanguage$pandac$Methods$init$panda$collections$ListView$LTorg$pandalanguage$pandac$MethodDecl$GT($tmp20, ((panda$collections$ListView*) methods17));
@@ -128,71 +127,70 @@ void org$pandalanguage$pandac$SymbolTable$add$org$pandalanguage$pandac$Symbol$pa
     }
     panda$core$String* $tmp23 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s22, p_name);
     panda$core$String* $tmp25 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp23, &$s24);
-    org$pandalanguage$pandac$Position* $tmp26 = org$pandalanguage$pandac$Compiler$position$panda$core$Int64$R$org$pandalanguage$pandac$Position(self->compiler, old9->offset);
-    panda$core$String* $tmp27 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp25, ((panda$core$Object*) $tmp26));
-    org$pandalanguage$pandac$Compiler$error$panda$core$Int64$panda$core$String(self->compiler, p_s->offset, $tmp27);
+    panda$core$String* $tmp26 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp25, ((panda$core$Object*) wrap_org$pandalanguage$pandac$Position(old9->position)));
+    org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self->compiler, p_s->position, $tmp26);
 }
 void org$pandalanguage$pandac$SymbolTable$addIfNotOverridden$org$pandalanguage$pandac$MethodDecl$panda$collections$List$LTorg$pandalanguage$pandac$MethodDecl$GT(org$pandalanguage$pandac$SymbolTable* self, org$pandalanguage$pandac$MethodDecl* p_m, panda$collections$List* p_methods) {
-    panda$collections$Iterator* test$Iter30;
-    org$pandalanguage$pandac$MethodDecl* test42;
-    panda$core$Bit $tmp28 = org$pandalanguage$pandac$MethodDecl$get_heritable$R$panda$core$Bit(p_m);
-    panda$core$Bit $tmp29 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp28);
-    if ($tmp29.value) {
+    panda$collections$Iterator* test$Iter29;
+    org$pandalanguage$pandac$MethodDecl* test41;
+    panda$core$Bit $tmp27 = org$pandalanguage$pandac$MethodDecl$get_heritable$R$panda$core$Bit(p_m);
+    panda$core$Bit $tmp28 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp27);
+    if ($tmp28.value) {
     {
         return;
     }
     }
     {
-        ITable* $tmp31 = ((panda$collections$Iterable*) p_methods)->$class->itable;
-        while ($tmp31->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
-            $tmp31 = $tmp31->next;
+        ITable* $tmp30 = ((panda$collections$Iterable*) p_methods)->$class->itable;
+        while ($tmp30->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
+            $tmp30 = $tmp30->next;
         }
-        $fn33 $tmp32 = $tmp31->methods[0];
-        panda$collections$Iterator* $tmp34 = $tmp32(((panda$collections$Iterable*) p_methods));
-        test$Iter30 = $tmp34;
-        $l35:;
-        ITable* $tmp37 = test$Iter30->$class->itable;
-        while ($tmp37->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-            $tmp37 = $tmp37->next;
+        $fn32 $tmp31 = $tmp30->methods[0];
+        panda$collections$Iterator* $tmp33 = $tmp31(((panda$collections$Iterable*) p_methods));
+        test$Iter29 = $tmp33;
+        $l34:;
+        ITable* $tmp36 = test$Iter29->$class->itable;
+        while ($tmp36->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+            $tmp36 = $tmp36->next;
         }
-        $fn39 $tmp38 = $tmp37->methods[0];
-        panda$core$Bit $tmp40 = $tmp38(test$Iter30);
-        panda$core$Bit $tmp41 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp40);
-        if (!$tmp41.value) goto $l36;
+        $fn38 $tmp37 = $tmp36->methods[0];
+        panda$core$Bit $tmp39 = $tmp37(test$Iter29);
+        panda$core$Bit $tmp40 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp39);
+        if (!$tmp40.value) goto $l35;
         {
-            ITable* $tmp43 = test$Iter30->$class->itable;
-            while ($tmp43->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-                $tmp43 = $tmp43->next;
+            ITable* $tmp42 = test$Iter29->$class->itable;
+            while ($tmp42->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+                $tmp42 = $tmp42->next;
             }
-            $fn45 $tmp44 = $tmp43->methods[1];
-            panda$core$Object* $tmp46 = $tmp44(test$Iter30);
-            test42 = ((org$pandalanguage$pandac$MethodDecl*) $tmp46);
-            org$pandalanguage$pandac$MethodDecl* $tmp47 = org$pandalanguage$pandac$Compiler$getOverriddenMethod$org$pandalanguage$pandac$MethodDecl$R$org$pandalanguage$pandac$MethodDecl$Q(self->compiler, test42);
-            if (((panda$core$Bit) { ((panda$core$Object*) $tmp47) == ((panda$core$Object*) p_m) }).value) {
+            $fn44 $tmp43 = $tmp42->methods[1];
+            panda$core$Object* $tmp45 = $tmp43(test$Iter29);
+            test41 = ((org$pandalanguage$pandac$MethodDecl*) $tmp45);
+            org$pandalanguage$pandac$MethodDecl* $tmp46 = org$pandalanguage$pandac$Compiler$getOverriddenMethod$org$pandalanguage$pandac$MethodDecl$R$org$pandalanguage$pandac$MethodDecl$Q(self->compiler, test41);
+            if (((panda$core$Bit) { ((panda$core$Object*) $tmp46) == ((panda$core$Object*) p_m) }).value) {
             {
                 return;
             }
             }
         }
-        goto $l35;
-        $l36:;
+        goto $l34;
+        $l35:;
     }
-    ITable* $tmp48 = ((panda$collections$CollectionWriter*) p_methods)->$class->itable;
-    while ($tmp48->$class != (panda$core$Class*) &panda$collections$CollectionWriter$class) {
-        $tmp48 = $tmp48->next;
+    ITable* $tmp47 = ((panda$collections$CollectionWriter*) p_methods)->$class->itable;
+    while ($tmp47->$class != (panda$core$Class*) &panda$collections$CollectionWriter$class) {
+        $tmp47 = $tmp47->next;
     }
-    $fn50 $tmp49 = $tmp48->methods[0];
-    $tmp49(((panda$collections$CollectionWriter*) p_methods), ((panda$core$Object*) p_m));
+    $fn49 $tmp48 = $tmp47->methods[0];
+    $tmp48(((panda$collections$CollectionWriter*) p_methods), ((panda$core$Object*) p_m));
 }
 org$pandalanguage$pandac$Symbol* org$pandalanguage$pandac$SymbolTable$merge$org$pandalanguage$pandac$Symbol$Q$org$pandalanguage$pandac$Symbol$Q$R$org$pandalanguage$pandac$Symbol$Q(org$pandalanguage$pandac$SymbolTable* self, org$pandalanguage$pandac$Symbol* p_symbol, org$pandalanguage$pandac$Symbol* p_inherited) {
-    panda$collections$Array* methods54;
-    panda$collections$Iterator* m$Iter57;
-    org$pandalanguage$pandac$MethodDecl* m69;
-    panda$collections$Array* methods77;
-    panda$collections$Array* methods82;
-    panda$collections$Iterator* m$Iter85;
-    org$pandalanguage$pandac$MethodDecl* m97;
-    panda$collections$Array* methods104;
+    panda$collections$Array* methods53;
+    panda$collections$Iterator* m$Iter56;
+    org$pandalanguage$pandac$MethodDecl* m68;
+    panda$collections$Array* methods76;
+    panda$collections$Array* methods81;
+    panda$collections$Iterator* m$Iter84;
+    org$pandalanguage$pandac$MethodDecl* m96;
+    panda$collections$Array* methods103;
     if (((panda$core$Bit) { p_inherited == NULL }).value) {
     {
         return p_symbol;
@@ -208,9 +206,9 @@ org$pandalanguage$pandac$Symbol* org$pandalanguage$pandac$SymbolTable$merge$org$
         return p_symbol;
     }
     }
-    panda$core$Bit $tmp52 = (($fn51) p_inherited->$class->vtable[2])(p_inherited);
-    panda$core$Bit $tmp53 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp52);
-    if ($tmp53.value) {
+    panda$core$Bit $tmp51 = (($fn50) p_inherited->$class->vtable[2])(p_inherited);
+    panda$core$Bit $tmp52 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp51);
+    if ($tmp52.value) {
     {
         return p_symbol;
     }
@@ -221,69 +219,69 @@ org$pandalanguage$pandac$Symbol* org$pandalanguage$pandac$SymbolTable$merge$org$
             switch (p_inherited->kind.value) {
                 case 205:
                 {
-                    panda$collections$Array* $tmp55 = (panda$collections$Array*) malloc(40);
-                    $tmp55->$class = (panda$core$Class*) &panda$collections$Array$class;
-                    $tmp55->refCount.value = 1;
-                    panda$collections$Array$init($tmp55);
-                    methods54 = $tmp55;
-                    panda$collections$Array$add$panda$collections$Array$T(methods54, ((panda$core$Object*) ((org$pandalanguage$pandac$MethodDecl*) p_symbol)));
+                    panda$collections$Array* $tmp54 = (panda$collections$Array*) malloc(40);
+                    $tmp54->$class = (panda$core$Class*) &panda$collections$Array$class;
+                    $tmp54->refCount.value = 1;
+                    panda$collections$Array$init($tmp54);
+                    methods53 = $tmp54;
+                    panda$collections$Array$add$panda$collections$Array$T(methods53, ((panda$core$Object*) ((org$pandalanguage$pandac$MethodDecl*) p_symbol)));
                     {
-                        ITable* $tmp58 = ((panda$collections$Iterable*) ((org$pandalanguage$pandac$Methods*) p_inherited)->methods)->$class->itable;
-                        while ($tmp58->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
-                            $tmp58 = $tmp58->next;
+                        ITable* $tmp57 = ((panda$collections$Iterable*) ((org$pandalanguage$pandac$Methods*) p_inherited)->methods)->$class->itable;
+                        while ($tmp57->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
+                            $tmp57 = $tmp57->next;
                         }
-                        $fn60 $tmp59 = $tmp58->methods[0];
-                        panda$collections$Iterator* $tmp61 = $tmp59(((panda$collections$Iterable*) ((org$pandalanguage$pandac$Methods*) p_inherited)->methods));
-                        m$Iter57 = $tmp61;
-                        $l62:;
-                        ITable* $tmp64 = m$Iter57->$class->itable;
-                        while ($tmp64->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-                            $tmp64 = $tmp64->next;
+                        $fn59 $tmp58 = $tmp57->methods[0];
+                        panda$collections$Iterator* $tmp60 = $tmp58(((panda$collections$Iterable*) ((org$pandalanguage$pandac$Methods*) p_inherited)->methods));
+                        m$Iter56 = $tmp60;
+                        $l61:;
+                        ITable* $tmp63 = m$Iter56->$class->itable;
+                        while ($tmp63->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+                            $tmp63 = $tmp63->next;
                         }
-                        $fn66 $tmp65 = $tmp64->methods[0];
-                        panda$core$Bit $tmp67 = $tmp65(m$Iter57);
-                        panda$core$Bit $tmp68 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp67);
-                        if (!$tmp68.value) goto $l63;
+                        $fn65 $tmp64 = $tmp63->methods[0];
+                        panda$core$Bit $tmp66 = $tmp64(m$Iter56);
+                        panda$core$Bit $tmp67 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp66);
+                        if (!$tmp67.value) goto $l62;
                         {
-                            ITable* $tmp70 = m$Iter57->$class->itable;
-                            while ($tmp70->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-                                $tmp70 = $tmp70->next;
+                            ITable* $tmp69 = m$Iter56->$class->itable;
+                            while ($tmp69->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+                                $tmp69 = $tmp69->next;
                             }
-                            $fn72 $tmp71 = $tmp70->methods[1];
-                            panda$core$Object* $tmp73 = $tmp71(m$Iter57);
-                            m69 = ((org$pandalanguage$pandac$MethodDecl*) $tmp73);
-                            org$pandalanguage$pandac$SymbolTable$addIfNotOverridden$org$pandalanguage$pandac$MethodDecl$panda$collections$List$LTorg$pandalanguage$pandac$MethodDecl$GT(self, m69, ((panda$collections$List*) methods54));
+                            $fn71 $tmp70 = $tmp69->methods[1];
+                            panda$core$Object* $tmp72 = $tmp70(m$Iter56);
+                            m68 = ((org$pandalanguage$pandac$MethodDecl*) $tmp72);
+                            org$pandalanguage$pandac$SymbolTable$addIfNotOverridden$org$pandalanguage$pandac$MethodDecl$panda$collections$List$LTorg$pandalanguage$pandac$MethodDecl$GT(self, m68, ((panda$collections$List*) methods53));
                         }
-                        goto $l62;
-                        $l63:;
+                        goto $l61;
+                        $l62:;
                     }
-                    org$pandalanguage$pandac$Methods* $tmp74 = (org$pandalanguage$pandac$Methods*) malloc(48);
-                    $tmp74->$class = (panda$core$Class*) &org$pandalanguage$pandac$Methods$class;
-                    $tmp74->refCount.value = 1;
-                    org$pandalanguage$pandac$Methods$init$panda$collections$ListView$LTorg$pandalanguage$pandac$MethodDecl$GT($tmp74, ((panda$collections$ListView*) methods54));
-                    return ((org$pandalanguage$pandac$Symbol*) $tmp74);
+                    org$pandalanguage$pandac$Methods* $tmp73 = (org$pandalanguage$pandac$Methods*) malloc(64);
+                    $tmp73->$class = (panda$core$Class*) &org$pandalanguage$pandac$Methods$class;
+                    $tmp73->refCount.value = 1;
+                    org$pandalanguage$pandac$Methods$init$panda$collections$ListView$LTorg$pandalanguage$pandac$MethodDecl$GT($tmp73, ((panda$collections$ListView*) methods53));
+                    return ((org$pandalanguage$pandac$Symbol*) $tmp73);
                 }
                 break;
                 case 204:
                 {
-                    org$pandalanguage$pandac$MethodDecl* $tmp76 = org$pandalanguage$pandac$Compiler$getOverriddenMethod$org$pandalanguage$pandac$MethodDecl$R$org$pandalanguage$pandac$MethodDecl$Q(self->compiler, ((org$pandalanguage$pandac$MethodDecl*) p_symbol));
-                    if (((panda$core$Bit) { ((panda$core$Object*) $tmp76) == ((panda$core$Object*) ((org$pandalanguage$pandac$MethodDecl*) p_inherited)) }).value) {
+                    org$pandalanguage$pandac$MethodDecl* $tmp75 = org$pandalanguage$pandac$Compiler$getOverriddenMethod$org$pandalanguage$pandac$MethodDecl$R$org$pandalanguage$pandac$MethodDecl$Q(self->compiler, ((org$pandalanguage$pandac$MethodDecl*) p_symbol));
+                    if (((panda$core$Bit) { ((panda$core$Object*) $tmp75) == ((panda$core$Object*) ((org$pandalanguage$pandac$MethodDecl*) p_inherited)) }).value) {
                     {
                         return p_symbol;
                     }
                     }
-                    panda$collections$Array* $tmp78 = (panda$collections$Array*) malloc(40);
-                    $tmp78->$class = (panda$core$Class*) &panda$collections$Array$class;
-                    $tmp78->refCount.value = 1;
-                    panda$collections$Array$init($tmp78);
-                    methods77 = $tmp78;
-                    panda$collections$Array$add$panda$collections$Array$T(methods77, ((panda$core$Object*) ((org$pandalanguage$pandac$MethodDecl*) p_symbol)));
-                    panda$collections$Array$add$panda$collections$Array$T(methods77, ((panda$core$Object*) ((org$pandalanguage$pandac$MethodDecl*) p_inherited)));
-                    org$pandalanguage$pandac$Methods* $tmp80 = (org$pandalanguage$pandac$Methods*) malloc(48);
-                    $tmp80->$class = (panda$core$Class*) &org$pandalanguage$pandac$Methods$class;
-                    $tmp80->refCount.value = 1;
-                    org$pandalanguage$pandac$Methods$init$panda$collections$ListView$LTorg$pandalanguage$pandac$MethodDecl$GT($tmp80, ((panda$collections$ListView*) methods77));
-                    return ((org$pandalanguage$pandac$Symbol*) $tmp80);
+                    panda$collections$Array* $tmp77 = (panda$collections$Array*) malloc(40);
+                    $tmp77->$class = (panda$core$Class*) &panda$collections$Array$class;
+                    $tmp77->refCount.value = 1;
+                    panda$collections$Array$init($tmp77);
+                    methods76 = $tmp77;
+                    panda$collections$Array$add$panda$collections$Array$T(methods76, ((panda$core$Object*) ((org$pandalanguage$pandac$MethodDecl*) p_symbol)));
+                    panda$collections$Array$add$panda$collections$Array$T(methods76, ((panda$core$Object*) ((org$pandalanguage$pandac$MethodDecl*) p_inherited)));
+                    org$pandalanguage$pandac$Methods* $tmp79 = (org$pandalanguage$pandac$Methods*) malloc(64);
+                    $tmp79->$class = (panda$core$Class*) &org$pandalanguage$pandac$Methods$class;
+                    $tmp79->refCount.value = 1;
+                    org$pandalanguage$pandac$Methods$init$panda$collections$ListView$LTorg$pandalanguage$pandac$MethodDecl$GT($tmp79, ((panda$collections$ListView*) methods76));
+                    return ((org$pandalanguage$pandac$Symbol*) $tmp79);
                 }
                 break;
                 default:
@@ -298,61 +296,61 @@ org$pandalanguage$pandac$Symbol* org$pandalanguage$pandac$SymbolTable$merge$org$
             switch (p_inherited->kind.value) {
                 case 205:
                 {
-                    panda$collections$Array* $tmp83 = (panda$collections$Array*) malloc(40);
-                    $tmp83->$class = (panda$core$Class*) &panda$collections$Array$class;
-                    $tmp83->refCount.value = 1;
-                    panda$collections$Array$init$panda$collections$ListView$LTpanda$collections$Array$T$GT($tmp83, ((panda$collections$ListView*) ((org$pandalanguage$pandac$Methods*) p_symbol)->methods));
-                    methods82 = $tmp83;
+                    panda$collections$Array* $tmp82 = (panda$collections$Array*) malloc(40);
+                    $tmp82->$class = (panda$core$Class*) &panda$collections$Array$class;
+                    $tmp82->refCount.value = 1;
+                    panda$collections$Array$init$panda$collections$ListView$LTpanda$collections$Array$T$GT($tmp82, ((panda$collections$ListView*) ((org$pandalanguage$pandac$Methods*) p_symbol)->methods));
+                    methods81 = $tmp82;
                     {
-                        ITable* $tmp86 = ((panda$collections$Iterable*) ((org$pandalanguage$pandac$Methods*) p_inherited)->methods)->$class->itable;
-                        while ($tmp86->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
-                            $tmp86 = $tmp86->next;
+                        ITable* $tmp85 = ((panda$collections$Iterable*) ((org$pandalanguage$pandac$Methods*) p_inherited)->methods)->$class->itable;
+                        while ($tmp85->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
+                            $tmp85 = $tmp85->next;
                         }
-                        $fn88 $tmp87 = $tmp86->methods[0];
-                        panda$collections$Iterator* $tmp89 = $tmp87(((panda$collections$Iterable*) ((org$pandalanguage$pandac$Methods*) p_inherited)->methods));
-                        m$Iter85 = $tmp89;
-                        $l90:;
-                        ITable* $tmp92 = m$Iter85->$class->itable;
-                        while ($tmp92->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-                            $tmp92 = $tmp92->next;
+                        $fn87 $tmp86 = $tmp85->methods[0];
+                        panda$collections$Iterator* $tmp88 = $tmp86(((panda$collections$Iterable*) ((org$pandalanguage$pandac$Methods*) p_inherited)->methods));
+                        m$Iter84 = $tmp88;
+                        $l89:;
+                        ITable* $tmp91 = m$Iter84->$class->itable;
+                        while ($tmp91->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+                            $tmp91 = $tmp91->next;
                         }
-                        $fn94 $tmp93 = $tmp92->methods[0];
-                        panda$core$Bit $tmp95 = $tmp93(m$Iter85);
-                        panda$core$Bit $tmp96 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp95);
-                        if (!$tmp96.value) goto $l91;
+                        $fn93 $tmp92 = $tmp91->methods[0];
+                        panda$core$Bit $tmp94 = $tmp92(m$Iter84);
+                        panda$core$Bit $tmp95 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp94);
+                        if (!$tmp95.value) goto $l90;
                         {
-                            ITable* $tmp98 = m$Iter85->$class->itable;
-                            while ($tmp98->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-                                $tmp98 = $tmp98->next;
+                            ITable* $tmp97 = m$Iter84->$class->itable;
+                            while ($tmp97->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+                                $tmp97 = $tmp97->next;
                             }
-                            $fn100 $tmp99 = $tmp98->methods[1];
-                            panda$core$Object* $tmp101 = $tmp99(m$Iter85);
-                            m97 = ((org$pandalanguage$pandac$MethodDecl*) $tmp101);
-                            org$pandalanguage$pandac$SymbolTable$addIfNotOverridden$org$pandalanguage$pandac$MethodDecl$panda$collections$List$LTorg$pandalanguage$pandac$MethodDecl$GT(self, m97, ((panda$collections$List*) methods82));
+                            $fn99 $tmp98 = $tmp97->methods[1];
+                            panda$core$Object* $tmp100 = $tmp98(m$Iter84);
+                            m96 = ((org$pandalanguage$pandac$MethodDecl*) $tmp100);
+                            org$pandalanguage$pandac$SymbolTable$addIfNotOverridden$org$pandalanguage$pandac$MethodDecl$panda$collections$List$LTorg$pandalanguage$pandac$MethodDecl$GT(self, m96, ((panda$collections$List*) methods81));
                         }
-                        goto $l90;
-                        $l91:;
+                        goto $l89;
+                        $l90:;
                     }
-                    org$pandalanguage$pandac$Methods* $tmp102 = (org$pandalanguage$pandac$Methods*) malloc(48);
-                    $tmp102->$class = (panda$core$Class*) &org$pandalanguage$pandac$Methods$class;
-                    $tmp102->refCount.value = 1;
-                    org$pandalanguage$pandac$Methods$init$panda$collections$ListView$LTorg$pandalanguage$pandac$MethodDecl$GT($tmp102, ((panda$collections$ListView*) methods82));
-                    return ((org$pandalanguage$pandac$Symbol*) $tmp102);
+                    org$pandalanguage$pandac$Methods* $tmp101 = (org$pandalanguage$pandac$Methods*) malloc(64);
+                    $tmp101->$class = (panda$core$Class*) &org$pandalanguage$pandac$Methods$class;
+                    $tmp101->refCount.value = 1;
+                    org$pandalanguage$pandac$Methods$init$panda$collections$ListView$LTorg$pandalanguage$pandac$MethodDecl$GT($tmp101, ((panda$collections$ListView*) methods81));
+                    return ((org$pandalanguage$pandac$Symbol*) $tmp101);
                 }
                 break;
                 case 204:
                 {
-                    panda$collections$Array* $tmp105 = (panda$collections$Array*) malloc(40);
-                    $tmp105->$class = (panda$core$Class*) &panda$collections$Array$class;
-                    $tmp105->refCount.value = 1;
-                    panda$collections$Array$init$panda$collections$ListView$LTpanda$collections$Array$T$GT($tmp105, ((panda$collections$ListView*) ((org$pandalanguage$pandac$Methods*) p_symbol)->methods));
-                    methods104 = $tmp105;
-                    org$pandalanguage$pandac$SymbolTable$addIfNotOverridden$org$pandalanguage$pandac$MethodDecl$panda$collections$List$LTorg$pandalanguage$pandac$MethodDecl$GT(self, ((org$pandalanguage$pandac$MethodDecl*) p_inherited), ((panda$collections$List*) methods104));
-                    org$pandalanguage$pandac$Methods* $tmp107 = (org$pandalanguage$pandac$Methods*) malloc(48);
-                    $tmp107->$class = (panda$core$Class*) &org$pandalanguage$pandac$Methods$class;
-                    $tmp107->refCount.value = 1;
-                    org$pandalanguage$pandac$Methods$init$panda$collections$ListView$LTorg$pandalanguage$pandac$MethodDecl$GT($tmp107, ((panda$collections$ListView*) methods104));
-                    return ((org$pandalanguage$pandac$Symbol*) $tmp107);
+                    panda$collections$Array* $tmp104 = (panda$collections$Array*) malloc(40);
+                    $tmp104->$class = (panda$core$Class*) &panda$collections$Array$class;
+                    $tmp104->refCount.value = 1;
+                    panda$collections$Array$init$panda$collections$ListView$LTpanda$collections$Array$T$GT($tmp104, ((panda$collections$ListView*) ((org$pandalanguage$pandac$Methods*) p_symbol)->methods));
+                    methods103 = $tmp104;
+                    org$pandalanguage$pandac$SymbolTable$addIfNotOverridden$org$pandalanguage$pandac$MethodDecl$panda$collections$List$LTorg$pandalanguage$pandac$MethodDecl$GT(self, ((org$pandalanguage$pandac$MethodDecl*) p_inherited), ((panda$collections$List*) methods103));
+                    org$pandalanguage$pandac$Methods* $tmp106 = (org$pandalanguage$pandac$Methods*) malloc(64);
+                    $tmp106->$class = (panda$core$Class*) &org$pandalanguage$pandac$Methods$class;
+                    $tmp106->refCount.value = 1;
+                    org$pandalanguage$pandac$Methods$init$panda$collections$ListView$LTorg$pandalanguage$pandac$MethodDecl$GT($tmp106, ((panda$collections$ListView*) methods103));
+                    return ((org$pandalanguage$pandac$Symbol*) $tmp106);
                 }
                 break;
                 default:
@@ -369,51 +367,51 @@ org$pandalanguage$pandac$Symbol* org$pandalanguage$pandac$SymbolTable$merge$org$
     }
 }
 org$pandalanguage$pandac$Symbol* org$pandalanguage$pandac$SymbolTable$$IDX$panda$core$String$R$org$pandalanguage$pandac$Symbol$Q(org$pandalanguage$pandac$SymbolTable* self, panda$core$String* p_name) {
-    org$pandalanguage$pandac$Symbol* result109;
-    panda$collections$Iterator* p$Iter111;
-    org$pandalanguage$pandac$SymbolTable* p123;
-    panda$core$Object* $tmp110 = panda$collections$HashMap$$IDX$panda$collections$HashMap$K$R$panda$collections$HashMap$V$Q(self->symbols, ((panda$collections$Key*) p_name));
-    result109 = ((org$pandalanguage$pandac$Symbol*) $tmp110);
+    org$pandalanguage$pandac$Symbol* result108;
+    panda$collections$Iterator* p$Iter110;
+    org$pandalanguage$pandac$SymbolTable* p122;
+    panda$core$Object* $tmp109 = panda$collections$HashMap$$IDX$panda$collections$HashMap$K$R$panda$collections$HashMap$V$Q(self->symbols, ((panda$collections$Key*) p_name));
+    result108 = ((org$pandalanguage$pandac$Symbol*) $tmp109);
     {
-        ITable* $tmp112 = ((panda$collections$Iterable*) self->parents)->$class->itable;
-        while ($tmp112->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
-            $tmp112 = $tmp112->next;
+        ITable* $tmp111 = ((panda$collections$Iterable*) self->parents)->$class->itable;
+        while ($tmp111->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
+            $tmp111 = $tmp111->next;
         }
-        $fn114 $tmp113 = $tmp112->methods[0];
-        panda$collections$Iterator* $tmp115 = $tmp113(((panda$collections$Iterable*) self->parents));
-        p$Iter111 = $tmp115;
-        $l116:;
-        ITable* $tmp118 = p$Iter111->$class->itable;
-        while ($tmp118->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-            $tmp118 = $tmp118->next;
+        $fn113 $tmp112 = $tmp111->methods[0];
+        panda$collections$Iterator* $tmp114 = $tmp112(((panda$collections$Iterable*) self->parents));
+        p$Iter110 = $tmp114;
+        $l115:;
+        ITable* $tmp117 = p$Iter110->$class->itable;
+        while ($tmp117->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+            $tmp117 = $tmp117->next;
         }
-        $fn120 $tmp119 = $tmp118->methods[0];
-        panda$core$Bit $tmp121 = $tmp119(p$Iter111);
-        panda$core$Bit $tmp122 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp121);
-        if (!$tmp122.value) goto $l117;
+        $fn119 $tmp118 = $tmp117->methods[0];
+        panda$core$Bit $tmp120 = $tmp118(p$Iter110);
+        panda$core$Bit $tmp121 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp120);
+        if (!$tmp121.value) goto $l116;
         {
-            ITable* $tmp124 = p$Iter111->$class->itable;
-            while ($tmp124->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-                $tmp124 = $tmp124->next;
+            ITable* $tmp123 = p$Iter110->$class->itable;
+            while ($tmp123->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+                $tmp123 = $tmp123->next;
             }
-            $fn126 $tmp125 = $tmp124->methods[1];
-            panda$core$Object* $tmp127 = $tmp125(p$Iter111);
-            p123 = ((org$pandalanguage$pandac$SymbolTable*) $tmp127);
-            org$pandalanguage$pandac$Symbol* $tmp128 = org$pandalanguage$pandac$SymbolTable$$IDX$panda$core$String$R$org$pandalanguage$pandac$Symbol$Q(p123, p_name);
-            org$pandalanguage$pandac$Symbol* $tmp129 = org$pandalanguage$pandac$SymbolTable$merge$org$pandalanguage$pandac$Symbol$Q$org$pandalanguage$pandac$Symbol$Q$R$org$pandalanguage$pandac$Symbol$Q(self, result109, $tmp128);
-            result109 = $tmp129;
+            $fn125 $tmp124 = $tmp123->methods[1];
+            panda$core$Object* $tmp126 = $tmp124(p$Iter110);
+            p122 = ((org$pandalanguage$pandac$SymbolTable*) $tmp126);
+            org$pandalanguage$pandac$Symbol* $tmp127 = org$pandalanguage$pandac$SymbolTable$$IDX$panda$core$String$R$org$pandalanguage$pandac$Symbol$Q(p122, p_name);
+            org$pandalanguage$pandac$Symbol* $tmp128 = org$pandalanguage$pandac$SymbolTable$merge$org$pandalanguage$pandac$Symbol$Q$org$pandalanguage$pandac$Symbol$Q$R$org$pandalanguage$pandac$Symbol$Q(self, result108, $tmp127);
+            result108 = $tmp128;
         }
-        goto $l116;
-        $l117:;
+        goto $l115;
+        $l116:;
     }
-    return result109;
+    return result108;
 }
 panda$core$String* org$pandalanguage$pandac$SymbolTable$convert$R$panda$core$String(org$pandalanguage$pandac$SymbolTable* self) {
-    panda$core$Int64 $tmp131 = panda$collections$Array$get_count$R$panda$core$Int64(self->parents);
-    panda$core$String* $tmp132 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s130, ((panda$core$Object*) wrap_panda$core$Int64($tmp131)));
-    panda$core$String* $tmp134 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp132, &$s133);
-    panda$core$String* $tmp135 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp134, ((panda$core$Object*) self->symbols));
-    panda$core$String* $tmp137 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp135, &$s136);
-    return $tmp137;
+    panda$core$Int64 $tmp130 = panda$collections$Array$get_count$R$panda$core$Int64(self->parents);
+    panda$core$String* $tmp131 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s129, ((panda$core$Object*) wrap_panda$core$Int64($tmp130)));
+    panda$core$String* $tmp133 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp131, &$s132);
+    panda$core$String* $tmp134 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp133, ((panda$core$Object*) self->symbols));
+    panda$core$String* $tmp136 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp134, &$s135);
+    return $tmp136;
 }
 

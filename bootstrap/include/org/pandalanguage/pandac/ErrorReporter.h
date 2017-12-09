@@ -17,9 +17,10 @@ extern org$pandalanguage$pandac$ErrorReporter$class_type org$pandalanguage$panda
 
 #ifndef PANDA_TYPESONLY
 typedef struct org$pandalanguage$pandac$ErrorReporter org$pandalanguage$pandac$ErrorReporter;
-typedef struct org$pandalanguage$pandac$Position org$pandalanguage$pandac$Position;
+typedef struct panda$io$File panda$io$File;
+#include "org/pandalanguage/pandac/Position.h"
 typedef struct panda$core$String panda$core$String;
 
-void org$pandalanguage$pandac$ErrorReporter$error$org$pandalanguage$pandac$Position$panda$core$String(org$pandalanguage$pandac$ErrorReporter* self, org$pandalanguage$pandac$Position* p_pos, panda$core$String* p_msg);
+void org$pandalanguage$pandac$ErrorReporter$error$panda$io$File$org$pandalanguage$pandac$Position$panda$core$String(org$pandalanguage$pandac$ErrorReporter* self, panda$io$File* p_file, org$pandalanguage$pandac$Position p_pos, panda$core$String* p_msg);
 
 #endif
