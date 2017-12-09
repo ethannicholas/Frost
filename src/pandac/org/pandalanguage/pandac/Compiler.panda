@@ -2456,6 +2456,9 @@ class Compiler : ErrorReporter {
             return null
         }
         def ifTrue := compileStatement(i.children[1])
+        if ifTrue = null {
+            return null
+        }
         def children := Array<IRNode>()
         children.add(test)
         children.add(ifTrue)

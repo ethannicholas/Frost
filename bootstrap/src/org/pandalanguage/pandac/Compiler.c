@@ -7974,6 +7974,11 @@ org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileIf$org
     panda$core$Object* $tmp3181 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_i->children, ((panda$core$Int64) { 1 }));
     org$pandalanguage$pandac$IRNode* $tmp3182 = org$pandalanguage$pandac$Compiler$compileStatement$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, ((org$pandalanguage$pandac$ASTNode*) $tmp3181));
     ifTrue3180 = $tmp3182;
+    if (((panda$core$Bit) { ifTrue3180 == NULL }).value) {
+    {
+        return NULL;
+    }
+    }
     panda$collections$Array* $tmp3184 = (panda$collections$Array*) malloc(40);
     $tmp3184->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp3184->refCount.value = 1;
@@ -10524,7 +10529,7 @@ org$pandalanguage$pandac$Position* org$pandalanguage$pandac$Compiler$position$pa
     panda$core$Int64 line4285;
     panda$core$Int64 column4286;
     panda$core$Range$LTpanda$core$Int64$GT $tmp4287;
-    panda$core$Char8 $match$1242514306;
+    panda$core$Char8 $match$1243124306;
     panda$core$Char8 $tmp4309;
     panda$core$Char8 $tmp4312;
     panda$core$Object* $tmp4283 = panda$collections$Stack$peek$R$panda$collections$Stack$T(self->currentFile);
@@ -10556,9 +10561,9 @@ org$pandalanguage$pandac$Position* org$pandalanguage$pandac$Compiler$position$pa
     {
         {
             panda$core$Char8$nullable $tmp4308 = (($fn4307) source4282->$class->vtable[10])(source4282);
-            $match$1242514306 = ((panda$core$Char8) $tmp4308.value);
+            $match$1243124306 = ((panda$core$Char8) $tmp4308.value);
             panda$core$Char8$init$panda$core$UInt8(&$tmp4309, ((panda$core$UInt8) { 10 }));
-            panda$core$Bit $tmp4310 = panda$core$Char8$$EQ$panda$core$Char8$R$panda$core$Bit($match$1242514306, $tmp4309);
+            panda$core$Bit $tmp4310 = panda$core$Char8$$EQ$panda$core$Char8$R$panda$core$Bit($match$1243124306, $tmp4309);
             if ($tmp4310.value) {
             {
                 panda$core$Int64 $tmp4311 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(line4285, ((panda$core$Int64) { 1 }));
@@ -10568,7 +10573,7 @@ org$pandalanguage$pandac$Position* org$pandalanguage$pandac$Compiler$position$pa
             }
             else {
             panda$core$Char8$init$panda$core$UInt8(&$tmp4312, ((panda$core$UInt8) { 9 }));
-            panda$core$Bit $tmp4313 = panda$core$Char8$$EQ$panda$core$Char8$R$panda$core$Bit($match$1242514306, $tmp4312);
+            panda$core$Bit $tmp4313 = panda$core$Char8$$EQ$panda$core$Char8$R$panda$core$Bit($match$1243124306, $tmp4312);
             if ($tmp4313.value) {
             {
                 panda$core$Int64 $tmp4314 = panda$core$Int64$$REM$panda$core$Int64$R$panda$core$Int64(column4286, ((panda$core$Int64) { 4 }));
