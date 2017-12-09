@@ -4,7 +4,7 @@ package panda.core
 uses panda.unsafe.Pointer
 
 @final
-class UInt8 : Value (Key<UInt8>, Comparable<UInt8>) {
+class UInt8 : Value, Key<UInt8>, Comparable<UInt8> {
     constant MIN:UInt8 := 0
 
     constant MAX:UInt8 := 255

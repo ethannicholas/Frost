@@ -1544,10 +1544,10 @@ class Parser {
     }
 
     ================================================================================================
-    interfaces = LPAREN type (COMMA type)* RPAREN
+    supertypes = COLON type (COMMA type)*
     ================================================================================================
-    method interfaces():ASTNode? {
-        def start := expect(Token.Kind.LPAREN, "'('")
+    method supertypes():ASTNode? {
+        def start := expect(Token.Kind.COLON, "':'")
         if start = null {
             return null
         }
@@ -1563,9 +1563,6 @@ class Parser {
                 return null
             }
             children.add(t)
-        }
-        if expect(Token.Kind.RPAREN, "')'") = null {
-            return null
         }
         return ASTNode(ASTNode.Kind.TYPES, start.offset, children)
     }
@@ -1816,8 +1813,7 @@ class Parser {
     }
 
     ================================================================================================
-    classDeclaration = CLASS IDENTIFIER genericsDeclaration? typeDeclaration? interfaces? LBRACE
-            declaration* RBRACE
+    classDeclaration = CLASS IDENTIFIER genericsDeclaration? supertypes? LBRACE declaration* RBRACE
     ================================================================================================
     method classDeclaration(doccomment:ASTNode, annotations:ASTNode):ASTNode? {
         def children := Array<ASTNode>() -- FIXME use literal
@@ -1842,21 +1838,11 @@ class Parser {
             children.add(ASTNode(ASTNode.Kind.VOID, -1))
         }
         if peek().kind = Token.Kind.COLON {
-            def superclass := typeDeclaration()
-            if superclass = null {
+            def stypes := supertypes()
+            if stypes = null {
                 return null
             }
-            children.add(superclass)
-        }
-        else {
-            children.add(ASTNode(ASTNode.Kind.VOID, -1))
-        }
-        if peek().kind = Token.Kind.LPAREN {
-            def intfs := interfaces()
-            if intfs = null {
-                return null
-            }
-            children.add(intfs)
+            children.add(stypes)
         }
         else {
             children.add(ASTNode(ASTNode.Kind.TYPES, -1))

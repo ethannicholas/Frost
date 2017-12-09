@@ -3,7 +3,7 @@ package panda.collections
 uses panda.unsafe.Pointer
 
 @final
-class Set<T:Key<T>> (Collection<T>) {
+class Set<T:Key<T>> : Collection<T> {
     @private
     def contents := HashMap<T, T>()
 

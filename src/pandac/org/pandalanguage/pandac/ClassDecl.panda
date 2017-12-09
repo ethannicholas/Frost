@@ -26,6 +26,10 @@ class ClassDecl : Symbol {
 
     def source:File
 
+    ================================================================================================
+    Maps simple class names to fully-qualified class names. This is populated from "uses" statements
+    which were in effect when this class was parsed as well as built-in implicit aliases.
+    ================================================================================================
     def aliases:MapView<String, String>
 
     def doccomment:String?
@@ -34,9 +38,25 @@ class ClassDecl : Symbol {
 
     def classKind:Int
 
-    def rawSuper:Type?
+    ================================================================================================
+    All declared superclasses / superinterfaces as listed in the source code. These are always
+    unresolved; the resolved supertypes are used to populate rawSuper and rawInterfaces.
+    ================================================================================================
+    def declaredSupers:Array<Type>
 
-    def rawInterfaces:Array<Type>
+    ================================================================================================
+    "Raw" in the sense that it has not yet been remapped. For example, the rawSuper of HashMap is
+    Map<HashMap.K, HashMap.V>, which is then remapped to figure out the supertype of a particular
+    instantiation of HashMap.
+
+    This remains null until the class is resolved.
+    ================================================================================================
+    def rawSuper:Type? := null
+
+    ================================================================================================
+    Comments from rawSuper apply.
+    ================================================================================================
+    def rawInterfaces := Array<Type>()
 
     def parameters:List<GenericParameter>
 
@@ -60,16 +80,15 @@ class ClassDecl : Symbol {
     var resolved:Bit
 
     init(source:File, offset:Int, aliases:MapView<String, String>, doccomment:String?,
-            annotations:Annotations, kind:Int, name:String, rawSuper:Type?,
-            rawInterfaces:Array<Type>, parameters:Array<GenericParameter>, parent:SymbolTable) {
+            annotations:Annotations, kind:Int, name:String, declaredSupers:ListView<Type>,
+            parameters:Array<GenericParameter>, parent:SymbolTable) {
         super.init(Symbol.Kind.CLASS, offset, name)
         self.source := source
         self.aliases := HashMap<String, String>(aliases)
         self.doccomment := doccomment
         self.annotations := annotations
         self.classKind := kind
-        self.rawSuper := rawSuper
-        self.rawInterfaces := rawInterfaces
+        self.declaredSupers := Array<Type>(declaredSupers)
         self.parameters := parameters
         self.symbolTable := SymbolTable(parent)
         self.resolved := false

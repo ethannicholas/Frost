@@ -1,9 +1,9 @@
 package panda.collections
 
 @final
-class Stack<T> (Iterable<T>) {
+class Stack<T> : Iterable<T> {
     @private
-    class StackIterator<T> (Iterator<T>) {
+    class StackIterator<T> : Iterator<T> {
         def stack:Stack<T>
 
         var index := 0

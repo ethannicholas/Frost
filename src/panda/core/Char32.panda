@@ -6,7 +6,7 @@ uses panda.unsafe.Pointer
 Represents any Unicode codepoint in the entire range from 0 to 1,114,112.
 ====================================================================================================
 @final
-class Char32 : Value (Key<Char32>) {
+class Char32 : Value, Key<Char32> {
     init(value:Int32) {
         self.value := value.value
     }

@@ -2,7 +2,7 @@ interface Generic1<T> {
     function getValue():T
 }
 
-class Test1 (Generic1<String>) {
+class Test1 : Generic1<String> {
     @override
     function getValue():String {
         return "Test1"
@@ -13,7 +13,7 @@ interface Generic2<U> : Generic1<U> {
     function convertValue(v:U):U
 }
 
-class Test2 (Generic2<Int>) {
+class Test2 : Generic2<Int> {
     @override
     function getValue():Int {
         return 42

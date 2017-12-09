@@ -15,7 +15,7 @@ number of values can be stored in a `HashMap` and then retrieved in constant ave
 This will display the value `"good"`.
 ====================================================================================================
 @final
-class HashMap<K:Key<K>, V> (Map<K, V>, Equatable<Map<K, V>>) {
+class HashMap<K:Key<K>, V> : Map<K, V>, Equatable<Map<K, V>> {
     @private
     class Entry<K:Key<K>, V> {
         ============================================================================================
@@ -38,7 +38,7 @@ class HashMap<K:Key<K>, V> (Map<K, V>, Equatable<Map<K, V>>) {
     }
 
     @private
-    class EntryIterator<K:Key<K>, V> (Iterator<Entry<K, V>>) {
+    class EntryIterator<K:Key<K>, V> : Iterator<Entry<K, V>> {
         def map:HashMap<K, V>
         var bucket := 0
         var entry:Entry<K, V>? := null
@@ -76,7 +76,7 @@ class HashMap<K:Key<K>, V> (Map<K, V>, Equatable<Map<K, V>>) {
     }
 
     @private
-    class KeyIterator<K:Key<K>, V> (Iterator<K>) {
+    class KeyIterator<K:Key<K>, V> : Iterator<K> {
         def base:EntryIterator<K, V>
 
         init(map:HashMap<K, V>) {
@@ -95,7 +95,7 @@ class HashMap<K:Key<K>, V> (Map<K, V>, Equatable<Map<K, V>>) {
     }
 
     @private
-    class ValueIterator<K:Key<K>, V> (Iterator<V>) {
+    class ValueIterator<K:Key<K>, V> : Iterator<V> {
         def base:EntryIterator<K, V>
 
         init(map:HashMap<K, V>) {

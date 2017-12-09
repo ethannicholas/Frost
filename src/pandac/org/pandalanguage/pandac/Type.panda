@@ -1,7 +1,7 @@
 package org.pandalanguage.pandac
 
 @final
-class Type : Symbol (Key<Type>) {
+class Type : Symbol, Key<Type> {
     class Kind {
         constant CLASS := 10
         constant NULLABLE := 11

@@ -6,11 +6,11 @@ uses panda.unsafe.Pointer
 An immutable sequence of Unicode characters.
 ====================================================================================================
 @final
-class String : Immutable (Key<String>) {
+class String : Immutable, Key<String> {
     ================================================================================================
     Represents the position of a character within a String.
     ================================================================================================
-    class Index : Value (Key<Index>) {
+    class Index : Value, Key<Index> {
         @private
         def value:Int
 
@@ -36,7 +36,7 @@ class String : Immutable (Key<String>) {
     }
 
     @private
-    class UTF8List (ListView<Char8>) {
+    class UTF8List : ListView<Char8> {
         def str:String
 
         init(str:String) {
@@ -60,7 +60,7 @@ class String : Immutable (Key<String>) {
     }
 
     @private
-    class UTF8Iterator (Iterator<Char8>) {
+    class UTF8Iterator : Iterator<Char8> {
         var index := 0
 
         def str:String
@@ -82,7 +82,7 @@ class String : Immutable (Key<String>) {
     }
 
     @private
-    class UTF16Iterator (Iterator<Char16>) {
+    class UTF16Iterator : Iterator<Char16> {
         var index := 0
 
         def str:String
@@ -104,7 +104,7 @@ class String : Immutable (Key<String>) {
     }
 
     @private
-    class UTF32Iterator (Iterator<Char32>) {
+    class UTF32Iterator : Iterator<Char32> {
         var index := 0
 
         def str:String

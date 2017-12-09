@@ -8,7 +8,7 @@ of a UTF-8 encoded string. For ASCII characters (0 to 127), there is no differen
 interpretations.
 ====================================================================================================
 @final
-class Char8 : Value (Key<Char8>) {
+class Char8 : Value, Key<Char8> {
     init(value:UInt8) {
         self.value := value.value
     }

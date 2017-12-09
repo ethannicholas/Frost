@@ -3,7 +3,7 @@ package org.pandalanguage.pandac
 uses org.pandalanguage.pandac.parser.Token
 
 @final
-class LLVMCodeGenerator (CodeGenerator) {
+class LLVMCodeGenerator : CodeGenerator {
     class ClassConstant : Immutable {
         def name:String
         def type:String
@@ -754,6 +754,7 @@ class LLVMCodeGenerator (CodeGenerator) {
     }
 
     method getWrapperClassConstant(cl:ClassDecl):ClassConstant {
+        assert cl.resolved
         def name := "@\{escapeName(cl.name)}$wrapperclass"
         var result := classConstants[name]
         if result = null {

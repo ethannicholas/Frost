@@ -5,7 +5,7 @@ uses panda.unsafe.Pointer
 @abstract
 class InputStream {
     @private
-    class LineIterator (Iterator<String>) {
+    class LineIterator : Iterator<String> {
         def input:InputStream
         var _next:String?
 

@@ -4,7 +4,7 @@ uses org.pandalanguage.pandac.parser.Parser
 uses org.pandalanguage.pandac.parser.Token
 
 @final
-class Compiler (ErrorReporter) {
+class Compiler : ErrorReporter {
     constant RANGE_NAME := "panda.core.Range"
 
     class Settings : Immutable {
@@ -200,19 +200,13 @@ class Compiler (ErrorReporter) {
                     "found \{foundCount}")
             return false
         }
-        currentClass.push(cl)
-        currentFile.push(cl.source)
         for i in 0 .. expectedCount {
             if coercionCost(foundTypes[i], remapType(type, cl.parameters[i].bound)) = null {
                 error(offset, "generic parameter '\{cl.name}.\{cl.parameters[i].name}' must be " +
                         "of type '\{cl.parameters[i].bound}', but found '\{foundTypes[i]}'")
-                currentFile.pop()
-                currentClass.pop()
                 return false
             }
         }
-        currentFile.pop()
-        currentClass.pop()
         return true
     }
 
@@ -311,24 +305,48 @@ class Compiler (ErrorReporter) {
                 p.bound := resolved
             }
         }
-        if cl.rawSuper != null {
-            cl.rawSuper := resolve(cl.rawSuper)
-            if cl.rawSuper != null & !cl.annotations.isFinal() &
-                    cl.rawSuper.name = "panda.core.Value" {
-                cl.annotations.flags ||= Annotations.Flag.FINAL
-                for m in cl.methods {
-                    m.annotations.flags ||= Annotations.Flag.FINAL
-                    if scanner.shouldInline(m.annotations, m.body) {
-                        m.annotations.flags ||= Annotations.Flag.INLINE
+        for rawS in cl.declaredSupers {
+            def s := resolve(rawS, false)
+            if s != null {
+                def sClass := getClass(s)
+                if sClass != null {
+                    if sClass.classKind = ClassDecl.Kind.CLASS {
+                        if cl.rawSuper = null {
+                            cl.rawSuper := s
+                            if cl.rawInterfaces.get_count() > 0 {
+                                error(s.offset, "superclass '\{s}' of class '\{cl.name}' must be " +
+                                        "listed before any superinterfaces")
+                            }
+                        }
+                        else {
+                            error(s.offset, "class '\{cl.name}' has more than one superclass")
+                        }
+                    }
+                    else {
+                        assert sClass.classKind = ClassDecl.Kind.INTERFACE
+                        cl.rawInterfaces.add(s)
                     }
                 }
             }
         }
-        for i in 0 .. cl.rawInterfaces.get_count() {
-            def resolved := resolve(cl.rawInterfaces[i])
-            if resolved != null {
-                cl.rawInterfaces[i] := resolved
+        if cl.rawSuper = null & cl.name != "panda.core.Object" {
+            cl.rawSuper := Type.Object()
+        }
+        if cl.rawSuper != null & !cl.annotations.isFinal() &
+                cl.rawSuper.name = "panda.core.Value" {
+            cl.annotations.flags ||= Annotations.Flag.FINAL
+            for m in cl.methods {
+                m.annotations.flags ||= Annotations.Flag.FINAL
+                if scanner.shouldInline(m.annotations, m.body) {
+                    m.annotations.flags ||= Annotations.Flag.INLINE
+                }
             }
+        }
+        if cl.rawSuper != null {
+            checkGenericParameters(cl.offset, getClass(cl.rawSuper), cl.rawSuper)
+        }
+        for intf in cl.rawInterfaces {
+            checkGenericParameters(cl.offset, getClass(intf), intf)
         }
         for p in cl.parameters {
             def cl := getClass(p.bound)
@@ -497,6 +515,7 @@ class Compiler (ErrorReporter) {
     }
 
     method specialize(cl:ClassDecl, rawType:Type):ClassDecl {
+        resolve(cl)
         assert !rawType.name.contains("$int_literal")
         def type := resolve(rawType)
         if type.typeKind = Type.Kind.NULLABLE {
@@ -510,18 +529,18 @@ class Compiler (ErrorReporter) {
         if result = null {
             currentClass.push(cl)
             def annotations := Annotations(cl.annotations.flags && !!Annotations.Flag.SPECIALIZE)
-            def supertype := remapType(type, cl.rawSuper)
-            def interfaces := Array<Type>()
+            def supertypes := Array<Type>()
+            supertypes.add(remapType(type, cl.rawSuper))
             for intf in cl.rawInterfaces { -- FIXME use map
-                interfaces.add(remapType(type, intf))
+            supertypes.add(remapType(type, intf))
             }
             def aliases := HashMap<String, String>(cl.aliases)
             for i in 0 .. cl.parameters.get_count() {
                 aliases[cl.parameters[i].name] := type.subtypes[i + 1].name
             }
             result := ClassDecl(cl.source, cl.offset, aliases, cl.doccomment, annotations,
-                    cl.classKind, type.name, supertype, interfaces,
-                    Array<ClassDecl.GenericParameter>(), cl.symbolTable.parents[0])
+                    cl.classKind, type.name, supertypes, Array<ClassDecl.GenericParameter>(),
+                    cl.symbolTable.parents[0])
             result.external := false
             for m in cl.methods {
                 resolve(m)
@@ -601,6 +620,7 @@ class Compiler (ErrorReporter) {
     method findMethod(owner:Type, name:String, methodType:Type, checkInterfaces:Bit):MethodDecl? {
         def cl := getClass(owner)
         assert cl != null
+        resolve(cl)
         for test in cl.methods {
             if test.name = name {
                 resolve(test)
@@ -633,6 +653,7 @@ class Compiler (ErrorReporter) {
                 return result
             }
         }
+        resolve(m.owner)
         if m.owner.rawSuper != null {
             return findMethod(remapType(owner, m.owner.rawSuper), m.name, methodType, true)
         }
@@ -1337,7 +1358,18 @@ class Compiler (ErrorReporter) {
 
     method call(offset:Int, target:IRNode?, m:MethodRef, args:ListView<IRNode>):IRNode? {
         assert m.value.resolved
-        assert m.parameterCount() = args.get_count(), "invalid call: \{m} with args: \{args}"
+        if m.parameterCount() != args.get_count() {
+            def s:String
+            if m.parameterCount() = 1 {
+                s := ""
+            }
+            else {
+                s := "s"
+            }
+            error(offset, "\{m.value.declaration()} expected \{m.parameterCount()} argument\{s}, " +
+                    "but received \{args.get_count()}")
+            return null
+        }
         def finalArgs := Array<IRNode>()
         if target != null & target.kind != IRNode.Kind.CONSTRUCTED_OBJECT &
                 !m.value.annotations.isClass() {
@@ -2173,6 +2205,7 @@ class Compiler (ErrorReporter) {
                 }
                 return IRNode(IRNode.Kind.UNRESOLVED_IDENTIFIER, d.offset, Type.Invalid(), name)
             when IRNode.Kind.SUPER:
+                resolve(currentClass.peek())
                 cl := getClass(currentClass.peek().rawSuper)
             otherwise:
                 cl := getClass(base.type)

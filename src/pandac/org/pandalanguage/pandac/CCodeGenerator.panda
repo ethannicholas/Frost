@@ -3,7 +3,7 @@ package org.pandalanguage.pandac
 uses org.pandalanguage.pandac.parser.Token
 
 @final
-class CCodeGenerator (CodeGenerator) {
+class CCodeGenerator : CodeGenerator {
     var compiler:Compiler?
 
     def outDir:File

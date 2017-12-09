@@ -1,6 +1,6 @@
 package org.pandalanguage.plex
 
-class DFAStateLabel (Key<DFAStateLabel>) {
+class DFAStateLabel : Key<DFAStateLabel> {
     def states:List<Int>
 
     init(states:List<Int>) {
