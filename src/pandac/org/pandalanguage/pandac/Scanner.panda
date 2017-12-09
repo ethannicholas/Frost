@@ -244,6 +244,7 @@ class Scanner {
         }
         def result := ClassDecl(source, cl.position, aliases, doccomment, annotations,
                 ClassDecl.Kind.CLASS, fullName, supertypes, parameters, compiler.root)
+        compiler.currentClass.push(result)
         var foundInit := false
         for c in cl.children[4].children {
             match c.kind {
@@ -290,6 +291,7 @@ class Scanner {
             result.methods.add(defaultInit)
             result.symbolTable.add(defaultInit)
         }
+        compiler.currentClass.pop()
         return result
     }
 

@@ -45,9 +45,6 @@ class Compiler : ErrorReporter {
     def classes := HashMap<String, ClassDecl>()
 
     @private
-    def currentFile := Stack<File>()
-
-    @private
     def currentClass := Stack<ClassDecl>()
 
     @private
@@ -295,7 +292,6 @@ class Compiler : ErrorReporter {
             return
         }
         cl.resolved := true
-        currentFile.push(cl.source)
         currentClass.push(cl)
         def old := symbolTable
         symbolTable := cl.symbolTable
@@ -360,7 +356,6 @@ class Compiler : ErrorReporter {
         }
         symbolTable := old
         currentClass.pop()
-        currentFile.pop()
     }
 
     method resolve(m:MethodDecl) {
@@ -368,7 +363,6 @@ class Compiler : ErrorReporter {
             return
         }
         resolve(m.owner)
-        currentFile.push(m.owner.source) -- FIXME use init / cleanup
         currentClass.push(m.owner)
         def old := symbolTable
         symbolTable := m.owner.symbolTable
@@ -395,7 +389,6 @@ class Compiler : ErrorReporter {
         }
         symbolTable := old
         currentClass.pop()
-        currentFile.pop()
     }
 
     method resolve(f:FieldDecl) {
@@ -403,7 +396,6 @@ class Compiler : ErrorReporter {
             return
         }
         f.resolved := true
-        currentFile.push(f.owner.source) -- FIXME use init / cleanup
         currentClass.push(f.owner)
         def old := symbolTable
         symbolTable := f.owner.symbolTable
@@ -416,28 +408,24 @@ class Compiler : ErrorReporter {
                 }
             }
             currentClass.pop()
-            currentFile.pop()
             symbolTable := old
             return
         }
         if f.rawValue = null {
             error(f.position, "field has neither a type nor a value")
             currentClass.pop()
-            currentFile.pop()
             symbolTable := old
             return
         }
         f.value := compileExpression(f.rawValue)
         if f.value = null {
             currentClass.pop()
-            currentFile.pop()
             symbolTable := old
             return
         }
         f.type := variableType(f.value)
         f.value := coerce(f.value, f.type)
         currentClass.pop()
-        currentFile.pop()
         symbolTable := old
     }
 
@@ -720,12 +708,10 @@ class Compiler : ErrorReporter {
         if cl.virtualMethods.get_count() = 0 {
             resolve(cl)
             currentClass.push(cl) -- FIXME Auto
-            currentFile.push(cl.source)
             if cl.rawSuper != null {
                 def superCl := getClass(cl.rawSuper)
                 if superCl = null {
                     currentClass.pop()
-                    currentFile.pop()
                     return cl.virtualMethods
                 }
                 cl.virtualMethods.addAll(getVTable(superCl))
@@ -750,7 +736,6 @@ class Compiler : ErrorReporter {
                 }
             }
             currentClass.pop()
-            currentFile.pop()
         }
         return cl.virtualMethods
     }
@@ -3203,14 +3188,14 @@ class Compiler : ErrorReporter {
         assert compiling = null,
                 "starting compilation of \{cl.name} while already compiling \{compiling.name}"
         compiling := cl
+        currentClass.push(cl)
         markNonExternal(cl)
         if cl.annotations.isSpecialize() {
             codeGenerator.start(cl)
             codeGenerator.end(cl)
+            currentClass.pop()
             return
         }
-        currentClass.push(cl)
-        currentFile.push(cl.source)
         def old := symbolTable
         symbolTable := getSymbolTable(cl)
         codeGenerator.start(cl)
@@ -3219,7 +3204,6 @@ class Compiler : ErrorReporter {
         }
         codeGenerator.end(cl)
         symbolTable := old
-        currentFile.pop()
         currentClass.pop()
         compiling := null
 
@@ -3234,7 +3218,6 @@ class Compiler : ErrorReporter {
     method scan(file:File):ListView<ClassDecl> {
         var result := scans[file]
         if result = null {
-            currentFile.push(file)
             parser.start(file, file.readFully())
             def parsed := parser.file()
             if parsed != null {
@@ -3247,7 +3230,6 @@ class Compiler : ErrorReporter {
                 result := Array<ClassDecl>()
             }
             scans[file] := result
-            currentFile.pop()
         }
         return result
     }
@@ -3260,7 +3242,7 @@ class Compiler : ErrorReporter {
     }
 
     method error(position:Position, msg:String) {
-        error(currentFile.peek(), position, msg)
+        error(currentClass.peek().source, position, msg)
     }
 
     @override

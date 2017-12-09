@@ -1261,7 +1261,7 @@ class LLVMCodeGenerator : CodeGenerator {
 
     method getInlineCallReference(call:IRNode, body:IRNode, out:IndentedOutputStream):String {
         def m := (call.payload->MethodRef).value
-        compiler.currentFile.push(m.owner.source)
+        compiler.currentClass.push(m.owner)
         currentlyInlining[m] := m
         def selfRef := "<inline call self error>"
         def argStart:Int
@@ -1293,7 +1293,7 @@ class LLVMCodeGenerator : CodeGenerator {
         }
         createBlock(end, out)
         currentlyInlining.remove(m)
-        compiler.currentFile.pop()
+        compiler.currentClass.pop()
         if inline.returns.get_count() = 1 {
             return inline.returns[0].second
         }
@@ -2455,7 +2455,7 @@ class LLVMCodeGenerator : CodeGenerator {
         out.printLine("br i1 \{test}, label %\{ifTrue}, label %\{ifFalse}")
         createBlock(ifFalse, out)
         def name:String
-        def path := compiler.currentFile.peek().path
+        def path := compiler.currentClass.peek().source.path
         def index := path.lastIndexOf("/")
         if index = null {
             name := path
