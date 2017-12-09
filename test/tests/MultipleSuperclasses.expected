@@ -1,0 +1,2 @@
+MultipleSuperclasses.panda:1:1: error: class 'anonymous.MultipleSuperclasses' has more than one superclass
+1 error

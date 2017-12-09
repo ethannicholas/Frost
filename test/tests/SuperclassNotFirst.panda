@@ -1,0 +1,8 @@
+interface Interface {
+}
+
+class Super {
+}
+
+class SuperclassNotFirst : Interface, Super {
+}

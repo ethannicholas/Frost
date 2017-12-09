@@ -1,5 +1,0 @@
-interface Intf {
-}
-
-class SubclassInterface : Intf {
-}

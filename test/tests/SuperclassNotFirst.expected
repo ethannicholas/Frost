@@ -1,0 +1,2 @@
+SuperclassNotFirst.panda:1:1: error: superclass 'anonymous.Super' of class 'anonymous.SuperclassNotFirst' must be listed before any superinterfaces
+1 error

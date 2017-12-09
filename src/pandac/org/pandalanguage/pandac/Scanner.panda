@@ -333,7 +333,6 @@ class Scanner {
             assert intf.children[2].kind = ASTNode.Kind.VOID
         }
         def supertypes := Array<Type>()
-        supertypes.add(Type.Object())
         assert intf.children[3].kind = ASTNode.Kind.TYPES
         for s in intf.children[3].children {
             supertypes.add(convertType(s))

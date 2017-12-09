@@ -1,0 +1,2 @@
+class MultipleSuperclasses : Object, Value {
+}

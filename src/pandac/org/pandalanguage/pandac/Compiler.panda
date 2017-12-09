@@ -311,6 +311,10 @@ class Compiler : ErrorReporter {
                 def sClass := getClass(s)
                 if sClass != null {
                     if sClass.classKind = ClassDecl.Kind.CLASS {
+                        if cl.classKind = ClassDecl.Kind.INTERFACE {
+                            error(s.offset, "interface '\{cl.name}' cannot extend class " +
+                                    "'\{s.name}'")
+                        }
                         if cl.rawSuper = null {
                             cl.rawSuper := s
                             if cl.rawInterfaces.get_count() > 0 {
@@ -1395,8 +1399,11 @@ class Compiler : ErrorReporter {
             assert selfNode != null
             finalArgs.add(selfNode)
             if !currentMethod.peek().isInstance() {
-                error(offset, "cannot call instance \{m.value.signature()} from a @class context")
+                error(offset, "cannot call instance \{m.value.declaration()} from a @class context")
             }
+        }
+        else if !m.value.isInstance() & target != null & target.kind != IRNode.Kind.TYPE_REFERENCE {
+            error(offset, "cannot call class \{m.value.declaration()} on an instance")
         }
         for i in 0 .. args.get_count() {
             var coerced := coerce(args[i], m.parameter(i))

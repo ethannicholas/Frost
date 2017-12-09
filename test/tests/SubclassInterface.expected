@@ -1,2 +1,0 @@
-SubclassInterface.panda:4:1: error: class 'SubclassInterface' cannot subclass interface 'Intf'
-1 error

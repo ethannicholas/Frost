@@ -1,5 +1,0 @@
-class NotIntf {
-}
-
-class ImplementClass (NotIntf) {
-}
