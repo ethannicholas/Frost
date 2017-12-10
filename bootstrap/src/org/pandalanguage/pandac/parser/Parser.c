@@ -16,18 +16,18 @@
 #include "panda/io/LineNumberInputStream.h"
 #include "panda/io/MemoryInputStream.h"
 #include "panda/io/InputStream.h"
-#include "panda/core/SimpleRange.LTpanda/core/Int64.GT.h"
+#include "panda/core/Range.LTpanda/core/Int64.GT.h"
 #include "panda/core/UInt8.h"
 #include "org/pandalanguage/pandac/ASTNode.h"
 #include "panda/collections/ListView.h"
 #include "panda/core/MutableString.h"
 #include "panda/core/Char8.h"
-#include "panda/core/SimpleRange.LTpanda/core/String/Index.Q.GT.h"
+#include "panda/core/Range.LTpanda/core/String/Index.Q.GT.h"
 #include "panda/core/String/Index.h"
 #include "panda/core/UInt64.h"
 #include "panda/collections/Iterator.h"
 #include "panda/collections/Iterable.h"
-#include "panda/core/SimpleRange.LTpanda/core/Int64.Q.GT.h"
+#include "panda/core/Range.LTpanda/core/Int64.Q.GT.h"
 #include "panda/collections/ImmutableArray.h"
 
 
@@ -774,7 +774,7 @@ void org$pandalanguage$pandac$parser$Parser$rewind(org$pandalanguage$pandac$pars
 }
 org$pandalanguage$pandac$Position org$pandalanguage$pandac$parser$Parser$position$org$pandalanguage$pandac$parser$Token$R$org$pandalanguage$pandac$Position(org$pandalanguage$pandac$parser$Parser* self, org$pandalanguage$pandac$parser$Token p_token) {
     panda$io$LineNumberInputStream* input106;
-    panda$core$SimpleRange$LTpanda$core$Int64$GT $tmp111;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp111;
     panda$core$UInt8$nullable c129;
     org$pandalanguage$pandac$Position $tmp143;
     panda$io$LineNumberInputStream* $tmp107 = (panda$io$LineNumberInputStream*) malloc(40);
@@ -786,7 +786,7 @@ org$pandalanguage$pandac$Position org$pandalanguage$pandac$parser$Parser$positio
     panda$io$MemoryInputStream$init$panda$core$String($tmp109, self->source);
     panda$io$LineNumberInputStream$init$panda$io$InputStream($tmp107, ((panda$io$InputStream*) $tmp109));
     input106 = $tmp107;
-    panda$core$SimpleRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp111, ((panda$core$Int64) { 0 }), p_token.offset, ((panda$core$Bit) { false }));
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp111, ((panda$core$Int64) { 0 }), p_token.offset, ((panda$core$Bit) { false }));
     int64_t $tmp113 = $tmp111.min.value;
     panda$core$Int64 i112 = { $tmp113 };
     int64_t $tmp115 = $tmp111.max.value;
@@ -871,7 +871,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$string$
     panda$core$Char8 c194;
     panda$core$String* $match$193_21200;
     org$pandalanguage$pandac$ASTNode* expr222;
-    panda$core$SimpleRange$LTpanda$core$String$Index$Q$GT $tmp237;
+    panda$core$Range$LTpanda$core$String$Index$Q$GT $tmp237;
     org$pandalanguage$pandac$parser$Token $tmp153 = (($fn152) self->$class->vtable[4])(self);
     start151 = $tmp153;
     panda$core$Bit $tmp155 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit(start151.kind, ((panda$core$Int64) { 7 }));
@@ -1039,8 +1039,8 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$string$
                 }
                 panda$core$String$Index $tmp238 = panda$core$String$start$R$panda$core$String$Index(escapeText191);
                 panda$core$String$Index $tmp239 = panda$core$String$next$panda$core$String$Index$R$panda$core$String$Index(escapeText191, $tmp238);
-                panda$core$SimpleRange$LTpanda$core$String$Index$Q$GT$init$panda$core$String$Index$Q$panda$core$String$Index$Q$panda$core$Bit(&$tmp237, ((panda$core$String$Index$nullable) { $tmp239, true }), ((panda$core$String$Index$nullable) { .nonnull = false }), ((panda$core$Bit) { false }));
-                panda$core$String* $tmp240 = panda$core$String$$IDX$panda$core$SimpleRange$LTpanda$core$String$Index$Q$GT$R$panda$core$String(escapeText191, $tmp237);
+                panda$core$Range$LTpanda$core$String$Index$Q$GT$init$panda$core$String$Index$Q$panda$core$String$Index$Q$panda$core$Bit(&$tmp237, ((panda$core$String$Index$nullable) { $tmp239, true }), ((panda$core$String$Index$nullable) { .nonnull = false }), ((panda$core$Bit) { false }));
+                panda$core$String* $tmp240 = panda$core$String$$IDX$panda$core$Range$LTpanda$core$String$Index$Q$GT$R$panda$core$String(escapeText191, $tmp237);
                 panda$core$MutableString$append$panda$core$String(chunk167, $tmp240);
             }
             break;
@@ -1151,9 +1151,9 @@ panda$core$UInt64 org$pandalanguage$pandac$parser$Parser$toUInt64$panda$core$Str
 org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$term$R$org$pandalanguage$pandac$ASTNode$Q(org$pandalanguage$pandac$parser$Parser* self) {
     org$pandalanguage$pandac$parser$Token t291;
     panda$core$String* s303;
-    panda$core$SimpleRange$LTpanda$core$Int64$Q$GT $tmp308;
+    panda$core$Range$LTpanda$core$Int64$Q$GT $tmp308;
     panda$core$String* s312;
-    panda$core$SimpleRange$LTpanda$core$Int64$Q$GT $tmp317;
+    panda$core$Range$LTpanda$core$Int64$Q$GT $tmp317;
     org$pandalanguage$pandac$ASTNode* result334;
     org$pandalanguage$pandac$parser$Token $tmp293 = (($fn292) self->$class->vtable[4])(self);
     t291 = $tmp293;
@@ -1186,8 +1186,8 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$term$R$
             org$pandalanguage$pandac$ASTNode* $tmp306 = (org$pandalanguage$pandac$ASTNode*) malloc(64);
             $tmp306->$class = (panda$core$Class*) &org$pandalanguage$pandac$ASTNode$class;
             $tmp306->refCount.value = 1;
-            panda$core$SimpleRange$LTpanda$core$Int64$Q$GT$init$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Bit(&$tmp308, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 2 }), true }), ((panda$core$Int64$nullable) { .nonnull = false }), ((panda$core$Bit) { false }));
-            panda$core$String* $tmp309 = panda$core$String$$IDX$panda$core$SimpleRange$LTpanda$core$Int64$Q$GT$R$panda$core$String(s303, $tmp308);
+            panda$core$Range$LTpanda$core$Int64$Q$GT$init$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Bit(&$tmp308, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 2 }), true }), ((panda$core$Int64$nullable) { .nonnull = false }), ((panda$core$Bit) { false }));
+            panda$core$String* $tmp309 = panda$core$String$$IDX$panda$core$Range$LTpanda$core$Int64$Q$GT$R$panda$core$String(s303, $tmp308);
             panda$core$UInt64 $tmp311 = (($fn310) self->$class->vtable[17])(self, $tmp309, ((panda$core$UInt64) { 2 }));
             org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$UInt64($tmp306, ((panda$core$Int64) { 102 }), t291.position, $tmp311);
             return $tmp306;
@@ -1200,8 +1200,8 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$term$R$
             org$pandalanguage$pandac$ASTNode* $tmp315 = (org$pandalanguage$pandac$ASTNode*) malloc(64);
             $tmp315->$class = (panda$core$Class*) &org$pandalanguage$pandac$ASTNode$class;
             $tmp315->refCount.value = 1;
-            panda$core$SimpleRange$LTpanda$core$Int64$Q$GT$init$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Bit(&$tmp317, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 2 }), true }), ((panda$core$Int64$nullable) { .nonnull = false }), ((panda$core$Bit) { false }));
-            panda$core$String* $tmp318 = panda$core$String$$IDX$panda$core$SimpleRange$LTpanda$core$Int64$Q$GT$R$panda$core$String(s312, $tmp317);
+            panda$core$Range$LTpanda$core$Int64$Q$GT$init$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Bit(&$tmp317, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 2 }), true }), ((panda$core$Int64$nullable) { .nonnull = false }), ((panda$core$Bit) { false }));
+            panda$core$String* $tmp318 = panda$core$String$$IDX$panda$core$Range$LTpanda$core$Int64$Q$GT$R$panda$core$String(s312, $tmp317);
             panda$core$UInt64 $tmp320 = (($fn319) self->$class->vtable[17])(self, $tmp318, ((panda$core$UInt64) { 16 }));
             org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$UInt64($tmp315, ((panda$core$Int64) { 102 }), t291.position, $tmp320);
             return $tmp315;

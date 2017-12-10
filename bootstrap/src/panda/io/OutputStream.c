@@ -4,7 +4,7 @@
 #include "panda/core/Int8.h"
 #include "panda/core/UInt8.h"
 #include "panda/core/Int64.h"
-#include "panda/core/SimpleRange.LTpanda/core/Int64.GT.h"
+#include "panda/core/Range.LTpanda/core/Int64.GT.h"
 #include "panda/core/Bit.h"
 #include "panda/collections/Array.h"
 #include "panda/core/UInt16.h"
@@ -47,9 +47,9 @@ void panda$io$OutputStream$write$panda$core$Int8(panda$io$OutputStream* self, pa
     (($fn2) self->$class->vtable[2])(self, $tmp1);
 }
 void panda$io$OutputStream$write$panda$unsafe$Pointer$LTpanda$core$UInt8$GT$panda$core$Int64$panda$core$Int64(panda$io$OutputStream* self, panda$core$UInt8* p_ptr, panda$core$Int64 p_offset, panda$core$Int64 p_count) {
-    panda$core$SimpleRange$LTpanda$core$Int64$GT $tmp3;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp3;
     panda$core$Int64 $tmp4 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(p_offset, p_count);
-    panda$core$SimpleRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp3, p_offset, $tmp4, ((panda$core$Bit) { false }));
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp3, p_offset, $tmp4, ((panda$core$Bit) { false }));
     int64_t $tmp6 = $tmp3.min.value;
     panda$core$Int64 i5 = { $tmp6 };
     int64_t $tmp8 = $tmp3.max.value;

@@ -3,31 +3,23 @@ package panda.core
 @final
 @specialize
 class Range<T:Value?> : Value {
-    def start:T
+    def min:T
 
-    def end:T
-
-    def step:Int
+    def max:T
 
     def inclusive:Bit
 
-    init(start:T, end:T, step:Int, inclusive:Bit) {
-        self.start := start
-        self.end := end
-        if step != null {
-            self.step := step
-        }
-        else {
-            self.step := 1
-        }
+    init(min:T, max:T, inclusive:Bit) {
+        self.min := min
+        self.max := max
         self.inclusive := inclusive
     }
 
     @override
     function convert():String {
         def result := MutableString()
-        if start != null {
-            result.append(start)
+        if min != null {
+            result.append(min)
         }
         if inclusive {
             result.append("...")
@@ -35,12 +27,8 @@ class Range<T:Value?> : Value {
         else {
             result.append("..")
         }
-        if end != null {
-            result.append(end)
-        }
-        if step != null {
-            result.append(" by ")
-            result.append(step)
+        if max != null {
+            result.append(max)
         }
         return result.convert()
     }

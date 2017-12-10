@@ -56,6 +56,7 @@ add_executable(bootstrap
     bootstrap/src/panda/core/Panda.c
     bootstrap/src/panda/core/Range.LTpanda/core/String/Index.Q.GT.c
     bootstrap/src/panda/core/Range.LTpanda/core/Int64.Q.GT.c
+    bootstrap/src/panda/core/Range.LTpanda/core/Int64.GT.c
     bootstrap/src/panda/core/SimpleRange.LTpanda/core/String/Index.Q.GT.c
     bootstrap/src/panda/core/SimpleRange.LTpanda/core/Int64.GT.c
     bootstrap/src/panda/core/SimpleRange.LTpanda/core/Int64.Q.GT.c

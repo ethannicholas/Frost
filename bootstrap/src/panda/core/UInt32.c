@@ -21,7 +21,7 @@ panda$core$UInt32$wrapper* wrap_panda$core$UInt32(panda$core$UInt32 self) {
 #include "panda/core/UInt16.h"
 #include "panda/core/UInt64.h"
 #include "panda/core/Char8.h"
-#include "panda/core/SimpleRange.LTpanda/core/Int64.GT.h"
+#include "panda/core/Range.LTpanda/core/Int64.GT.h"
 panda$core$Bit panda$core$UInt32$$GT$panda$core$UInt32$R$panda$core$Bit$shim(panda$core$UInt32 self, panda$core$Object* p0) {
     panda$core$Bit result = panda$core$UInt32$$GT$panda$core$UInt32$R$panda$core$Bit(self, ((panda$core$UInt32$wrapper*) p0)->value);
     return result;
@@ -773,7 +773,7 @@ panda$core$String* panda$core$UInt32$convert$R$panda$core$String(panda$core$UInt
     panda$core$Char8 $tmp181;
     panda$core$Int64 size182;
     panda$core$Char8* result184;
-    panda$core$SimpleRange$LTpanda$core$Int64$GT $tmp185;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp185;
     max158 = ((panda$core$Int64) { 10 });
     chars159 = ((panda$core$Char8*) malloc(max158.value * 1));
     panda$core$Int64 $tmp161 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(max158, ((panda$core$Int64) { 1 }));
@@ -823,7 +823,7 @@ panda$core$String* panda$core$UInt32$convert$R$panda$core$String(panda$core$UInt
     panda$core$Int64 $tmp183 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(max158, index160);
     size182 = $tmp183;
     result184 = ((panda$core$Char8*) malloc(size182.value * 1));
-    panda$core$SimpleRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp185, index160, max158, ((panda$core$Bit) { false }));
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp185, index160, max158, ((panda$core$Bit) { false }));
     int64_t $tmp187 = $tmp185.min.value;
     panda$core$Int64 i186 = { $tmp187 };
     int64_t $tmp189 = $tmp185.max.value;

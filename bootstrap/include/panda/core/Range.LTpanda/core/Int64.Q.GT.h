@@ -8,9 +8,8 @@ typedef struct panda$core$Class panda$core$Class;
 #include "panda/core/Range.LTpanda/core/Int64.Q.GT.h"
 
 typedef struct panda$core$Range$LTpanda$core$Int64$Q$GT {
-    panda$core$Int64$nullable start;
-    panda$core$Int64$nullable end;
-    panda$core$Int64 step;
+    panda$core$Int64$nullable min;
+    panda$core$Int64$nullable max;
     panda$core$Bit inclusive;
 } panda$core$Range$LTpanda$core$Int64$Q$GT;
 #define PANDA_TYPESONLY
@@ -37,7 +36,7 @@ panda$core$Range$LTpanda$core$Int64$Q$GT$wrapper* wrap_panda$core$Range$LTpanda$
 #include "panda/core/Bit.h"
 typedef struct panda$core$String panda$core$String;
 
-void panda$core$Range$LTpanda$core$Int64$Q$GT$init$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Int64$panda$core$Bit(panda$core$Range$LTpanda$core$Int64$Q$GT* self, panda$core$Int64$nullable p_start, panda$core$Int64$nullable p_end, panda$core$Int64 p_step, panda$core$Bit p_inclusive);
+void panda$core$Range$LTpanda$core$Int64$Q$GT$init$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Bit(panda$core$Range$LTpanda$core$Int64$Q$GT* self, panda$core$Int64$nullable p_min, panda$core$Int64$nullable p_max, panda$core$Bit p_inclusive);
 panda$core$String* panda$core$Range$LTpanda$core$Int64$Q$GT$convert$R$panda$core$String(panda$core$Range$LTpanda$core$Int64$Q$GT self);
 
 #endif

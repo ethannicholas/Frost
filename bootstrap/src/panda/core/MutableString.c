@@ -4,7 +4,7 @@
 #include "panda/core/Int64.h"
 #include "panda/core/String.h"
 #include "panda/core/Char8.h"
-#include "panda/core/SimpleRange.LTpanda/core/Int64.GT.h"
+#include "panda/core/Range.LTpanda/core/Int64.GT.h"
 #include "panda/core/Bit.h"
 
 
@@ -36,10 +36,10 @@ void panda$core$MutableString$append$panda$core$Char8(panda$core$MutableString* 
     self->length = $tmp3;
 }
 void panda$core$MutableString$append$panda$core$String(panda$core$MutableString* self, panda$core$String* p_s) {
-    panda$core$SimpleRange$LTpanda$core$Int64$GT $tmp5;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp5;
     panda$core$Int64 $tmp4 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->length, p_s->_length);
     panda$core$MutableString$ensureCapacity$panda$core$Int64(self, $tmp4);
-    panda$core$SimpleRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp5, ((panda$core$Int64) { 0 }), p_s->_length, ((panda$core$Bit) { false }));
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp5, ((panda$core$Int64) { 0 }), p_s->_length, ((panda$core$Bit) { false }));
     int64_t $tmp7 = $tmp5.min.value;
     panda$core$Int64 i6 = { $tmp7 };
     int64_t $tmp9 = $tmp5.max.value;
@@ -87,10 +87,10 @@ void panda$core$MutableString$append$panda$core$String(panda$core$MutableString*
     self->length = $tmp35;
 }
 void panda$core$MutableString$append$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64$panda$core$Int64(panda$core$MutableString* self, panda$core$Char8* p_chars, panda$core$Int64 p_offset, panda$core$Int64 p_count) {
-    panda$core$SimpleRange$LTpanda$core$Int64$GT $tmp37;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp37;
     panda$core$Int64 $tmp36 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->length, p_count);
     panda$core$MutableString$ensureCapacity$panda$core$Int64(self, $tmp36);
-    panda$core$SimpleRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp37, ((panda$core$Int64) { 0 }), p_count, ((panda$core$Bit) { false }));
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp37, ((panda$core$Int64) { 0 }), p_count, ((panda$core$Bit) { false }));
     int64_t $tmp39 = $tmp37.min.value;
     panda$core$Int64 i38 = { $tmp39 };
     int64_t $tmp41 = $tmp37.max.value;
@@ -167,9 +167,9 @@ void panda$core$MutableString$clear(panda$core$MutableString* self) {
 }
 panda$core$String* panda$core$MutableString$convert$R$panda$core$String(panda$core$MutableString* self) {
     panda$core$Char8* result76;
-    panda$core$SimpleRange$LTpanda$core$Int64$GT $tmp77;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp77;
     result76 = ((panda$core$Char8*) malloc(self->length.value * 1));
-    panda$core$SimpleRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp77, ((panda$core$Int64) { 0 }), self->length, ((panda$core$Bit) { false }));
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp77, ((panda$core$Int64) { 0 }), self->length, ((panda$core$Bit) { false }));
     int64_t $tmp79 = $tmp77.min.value;
     panda$core$Int64 i78 = { $tmp79 };
     int64_t $tmp81 = $tmp77.max.value;

@@ -11,7 +11,7 @@
 #include "panda/core/Bit.h"
 #include "panda/core/String.h"
 #include "org/pandalanguage/pandac/MethodDecl.h"
-#include "panda/core/SimpleRange.LTpanda/core/Int64.Q.GT.h"
+#include "panda/core/Range.LTpanda/core/Int64.Q.GT.h"
 #include "panda/core/Int64.h"
 #include "org/pandalanguage/pandac/Type.h"
 #include "org/pandalanguage/pandac/ClassDecl.h"
@@ -278,13 +278,13 @@ panda$core$String* org$pandalanguage$pandac$HCodeGenerator$escapeName$panda$core
 }
 panda$core$String* org$pandalanguage$pandac$HCodeGenerator$getName$org$pandalanguage$pandac$MethodDecl$R$panda$core$String(org$pandalanguage$pandac$HCodeGenerator* self, org$pandalanguage$pandac$MethodDecl* p_m) {
     panda$core$String* llvmName26;
-    panda$core$SimpleRange$LTpanda$core$Int64$Q$GT $tmp30;
+    panda$core$Range$LTpanda$core$Int64$Q$GT $tmp30;
     panda$core$String* $tmp27 = org$pandalanguage$pandac$LLVMCodeGenerator$getName$org$pandalanguage$pandac$MethodDecl$R$panda$core$String(self->llvmCodeGen, p_m);
     llvmName26 = $tmp27;
     panda$core$Bit $tmp29 = panda$core$String$startsWith$panda$core$String$R$panda$core$Bit(llvmName26, &$s28);
     PANDA_ASSERT($tmp29.value);
-    panda$core$SimpleRange$LTpanda$core$Int64$Q$GT$init$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Bit(&$tmp30, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Int64$nullable) { .nonnull = false }), ((panda$core$Bit) { false }));
-    panda$core$String* $tmp31 = panda$core$String$$IDX$panda$core$SimpleRange$LTpanda$core$Int64$Q$GT$R$panda$core$String(llvmName26, $tmp30);
+    panda$core$Range$LTpanda$core$Int64$Q$GT$init$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Bit(&$tmp30, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Int64$nullable) { .nonnull = false }), ((panda$core$Bit) { false }));
+    panda$core$String* $tmp31 = panda$core$String$$IDX$panda$core$Range$LTpanda$core$Int64$Q$GT$R$panda$core$String(llvmName26, $tmp30);
     return $tmp31;
 }
 panda$core$Int64 org$pandalanguage$pandac$HCodeGenerator$sizeOf$org$pandalanguage$pandac$Type$R$panda$core$Int64(org$pandalanguage$pandac$HCodeGenerator* self, org$pandalanguage$pandac$Type* p_t) {

@@ -21,7 +21,7 @@
 #include "org/pandalanguage/pandac/Compiler.h"
 #include "panda/core/MutableString.h"
 #include "panda/collections/Array.h"
-#include "panda/core/SimpleRange.LTpanda/core/Int64.GT.h"
+#include "panda/core/Range.LTpanda/core/Int64.GT.h"
 #include "org/pandalanguage/pandac/IRNode.h"
 #include "panda/collections/Iterator.h"
 #include "panda/collections/Iterable.h"
@@ -695,7 +695,7 @@ static panda$core$String $s2467 = { (panda$core$Class*) &panda$core$String$class
 static panda$core$String $s2471 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x7D", 1, 1 };
 static panda$core$String $s2475 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x65\x6C\x73\x65\x20\x7B", 6, 1 };
 static panda$core$String $s2478 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x7D", 1, 1 };
-static panda$core$String $s2492 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x70\x61\x6E\x64\x61\x2E\x63\x6F\x72\x65\x2E\x53\x69\x6D\x70\x6C\x65\x52\x61\x6E\x67\x65", 22, 1 };
+static panda$core$String $s2492 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x70\x61\x6E\x64\x61\x2E\x63\x6F\x72\x65\x2E\x52\x61\x6E\x67\x65", 16, 1 };
 static panda$core$String $s2531 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1 };
 static panda$core$String $s2533 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x20", 1, 1 };
 static panda$core$String $s2536 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x20\x3D\x20", 3, 1 };
@@ -1161,7 +1161,7 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$type$org$pandalanguag
     panda$core$String* result75;
     panda$core$MutableString* code80;
     panda$core$String* separator90;
-    panda$core$SimpleRange$LTpanda$core$Int64$GT $tmp92;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp92;
     panda$core$Bit $tmp66 = org$pandalanguage$pandac$Type$isClass$R$panda$core$Bit(p_t);
     if ($tmp66.value) {
     {
@@ -1201,7 +1201,7 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$type$org$pandalanguag
         separator90 = &$s91;
         panda$core$Int64 $tmp93 = panda$collections$Array$get_count$R$panda$core$Int64(p_t->subtypes);
         panda$core$Int64 $tmp94 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64($tmp93, ((panda$core$Int64) { 1 }));
-        panda$core$SimpleRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp92, ((panda$core$Int64) { 0 }), $tmp94, ((panda$core$Bit) { false }));
+        panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp92, ((panda$core$Int64) { 0 }), $tmp94, ((panda$core$Bit) { false }));
         int64_t $tmp96 = $tmp92.min.value;
         panda$core$Int64 i95 = { $tmp96 };
         int64_t $tmp98 = $tmp92.max.value;
@@ -1547,7 +1547,7 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$wrapperType$org$panda
 panda$core$String* org$pandalanguage$pandac$CCodeGenerator$wrapperType$org$pandalanguage$pandac$MethodDecl$R$panda$core$String(org$pandalanguage$pandac$CCodeGenerator* self, org$pandalanguage$pandac$MethodDecl* p_m) {
     org$pandalanguage$pandac$Type* inheritedType256;
     panda$core$MutableString* result258;
-    panda$core$SimpleRange$LTpanda$core$Int64$GT $tmp275;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp275;
     org$pandalanguage$pandac$Type* $tmp257 = org$pandalanguage$pandac$Compiler$inheritedType$org$pandalanguage$pandac$MethodDecl$R$org$pandalanguage$pandac$Type(self->compiler, p_m);
     inheritedType256 = $tmp257;
     panda$core$MutableString* $tmp259 = (panda$core$MutableString*) malloc(40);
@@ -1576,7 +1576,7 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$wrapperType$org$panda
     panda$core$MutableString$append$panda$core$String(result258, &$s274);
     panda$core$Int64 $tmp276 = panda$collections$Array$get_count$R$panda$core$Int64(inheritedType256->subtypes);
     panda$core$Int64 $tmp277 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64($tmp276, ((panda$core$Int64) { 1 }));
-    panda$core$SimpleRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp275, ((panda$core$Int64) { 0 }), $tmp277, ((panda$core$Bit) { false }));
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp275, ((panda$core$Int64) { 0 }), $tmp277, ((panda$core$Bit) { false }));
     int64_t $tmp279 = $tmp275.min.value;
     panda$core$Int64 i278 = { $tmp279 };
     int64_t $tmp281 = $tmp275.max.value;
@@ -1778,12 +1778,12 @@ org$pandalanguage$pandac$CCodeGenerator$MethodShim* org$pandalanguage$pandac$CCo
     panda$core$String* resultName432;
     panda$core$MutableString* resultType436;
     panda$core$String* self_t448;
-    panda$core$SimpleRange$LTpanda$core$Int64$GT $tmp456;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp456;
     panda$core$String* pType475;
     panda$collections$Array* casts502;
-    panda$core$SimpleRange$LTpanda$core$Int64$GT $tmp505;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp505;
     panda$core$String* p524;
-    panda$core$SimpleRange$LTpanda$core$Int64$GT $tmp560;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp560;
     org$pandalanguage$pandac$CCodeGenerator$MethodShim* result610;
     panda$io$MemoryOutputStream* $tmp415 = (panda$io$MemoryOutputStream*) malloc(24);
     $tmp415->$class = (panda$core$Class*) &panda$io$MemoryOutputStream$class;
@@ -1837,7 +1837,7 @@ org$pandalanguage$pandac$CCodeGenerator$MethodShim* org$pandalanguage$pandac$CCo
     panda$core$MutableString$append$panda$core$String(resultType436, &$s455);
     panda$core$MutableString$append$panda$core$String(resultType436, self_t448);
     panda$core$Int64 $tmp457 = panda$collections$Array$get_count$R$panda$core$Int64(p_raw->parameters);
-    panda$core$SimpleRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp456, ((panda$core$Int64) { 0 }), $tmp457, ((panda$core$Bit) { false }));
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp456, ((panda$core$Int64) { 0 }), $tmp457, ((panda$core$Bit) { false }));
     int64_t $tmp459 = $tmp456.min.value;
     panda$core$Int64 i458 = { $tmp459 };
     int64_t $tmp461 = $tmp456.max.value;
@@ -1899,7 +1899,7 @@ org$pandalanguage$pandac$CCodeGenerator$MethodShim* org$pandalanguage$pandac$CCo
     panda$collections$Array$init($tmp503);
     casts502 = $tmp503;
     panda$core$Int64 $tmp506 = panda$collections$Array$get_count$R$panda$core$Int64(p_raw->parameters);
-    panda$core$SimpleRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp505, ((panda$core$Int64) { 0 }), $tmp506, ((panda$core$Bit) { false }));
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp505, ((panda$core$Int64) { 0 }), $tmp506, ((panda$core$Bit) { false }));
     int64_t $tmp508 = $tmp505.min.value;
     panda$core$Int64 i507 = { $tmp508 };
     int64_t $tmp510 = $tmp505.max.value;
@@ -1975,7 +1975,7 @@ org$pandalanguage$pandac$CCodeGenerator$MethodShim* org$pandalanguage$pandac$CCo
     panda$core$String* $tmp558 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp556, &$s557);
     (($fn559) ((panda$io$OutputStream*) out417)->$class->vtable[16])(((panda$io$OutputStream*) out417), $tmp558);
     panda$core$Int64 $tmp561 = panda$collections$Array$get_count$R$panda$core$Int64(p_raw->parameters);
-    panda$core$SimpleRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp560, ((panda$core$Int64) { 0 }), $tmp561, ((panda$core$Bit) { false }));
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp560, ((panda$core$Int64) { 0 }), $tmp561, ((panda$core$Bit) { false }));
     int64_t $tmp563 = $tmp560.min.value;
     panda$core$Int64 i562 = { $tmp563 };
     int64_t $tmp565 = $tmp560.max.value;
@@ -2051,12 +2051,12 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$createWrapperShim$org
     panda$core$String* selfType623;
     org$pandalanguage$pandac$Type* actualMethodType641;
     org$pandalanguage$pandac$Type* inheritedMethodType643;
-    panda$core$SimpleRange$LTpanda$core$Int64$GT $tmp645;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp645;
     panda$collections$Array* parameters689;
-    panda$core$SimpleRange$LTpanda$core$Int64$GT $tmp692;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp692;
     panda$collections$Array* children726;
     org$pandalanguage$pandac$Position $tmp731;
-    panda$core$SimpleRange$LTpanda$core$Int64$GT $tmp743;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp743;
     panda$core$Bit $tmp615 = org$pandalanguage$pandac$MethodDecl$isInstance$R$panda$core$Bit(p_m);
     PANDA_ASSERT($tmp615.value);
     oldMethod616 = self->currentMethod;
@@ -2082,7 +2082,7 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$createWrapperShim$org
     org$pandalanguage$pandac$Type* $tmp644 = org$pandalanguage$pandac$Compiler$inheritedType$org$pandalanguage$pandac$MethodDecl$R$org$pandalanguage$pandac$Type(self->compiler, p_m);
     inheritedMethodType643 = $tmp644;
     panda$core$Int64 $tmp646 = panda$collections$Array$get_count$R$panda$core$Int64(p_m->parameters);
-    panda$core$SimpleRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp645, ((panda$core$Int64) { 0 }), $tmp646, ((panda$core$Bit) { false }));
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp645, ((panda$core$Int64) { 0 }), $tmp646, ((panda$core$Bit) { false }));
     int64_t $tmp648 = $tmp645.min.value;
     panda$core$Int64 i647 = { $tmp648 };
     int64_t $tmp650 = $tmp645.max.value;
@@ -2141,7 +2141,7 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$createWrapperShim$org
     panda$collections$Array$init($tmp690);
     parameters689 = $tmp690;
     panda$core$Int64 $tmp693 = panda$collections$Array$get_count$R$panda$core$Int64(p_m->parameters);
-    panda$core$SimpleRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp692, ((panda$core$Int64) { 0 }), $tmp693, ((panda$core$Bit) { false }));
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp692, ((panda$core$Int64) { 0 }), $tmp693, ((panda$core$Bit) { false }));
     int64_t $tmp695 = $tmp692.min.value;
     panda$core$Int64 i694 = { $tmp695 };
     int64_t $tmp697 = $tmp692.max.value;
@@ -2212,7 +2212,7 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$createWrapperShim$org
     panda$core$String* $tmp741 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp739, &$s740);
     (($fn742) ((panda$io$OutputStream*) p_out)->$class->vtable[16])(((panda$io$OutputStream*) p_out), $tmp741);
     panda$core$Int64 $tmp744 = panda$collections$Array$get_count$R$panda$core$Int64(p_m->parameters);
-    panda$core$SimpleRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp743, ((panda$core$Int64) { 0 }), $tmp744, ((panda$core$Bit) { false }));
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp743, ((panda$core$Int64) { 0 }), $tmp744, ((panda$core$Bit) { false }));
     int64_t $tmp746 = $tmp743.min.value;
     panda$core$Int64 i745 = { $tmp746 };
     int64_t $tmp748 = $tmp743.max.value;
@@ -2589,7 +2589,7 @@ org$pandalanguage$pandac$CCodeGenerator$ClassConstant* org$pandalanguage$pandac$
     org$pandalanguage$pandac$CCodeGenerator$ClassConstant* clConstant1030;
     panda$core$MutableString* code1034;
     panda$core$String* separator1055;
-    panda$core$SimpleRange$LTpanda$core$Int64$GT $tmp1057;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp1057;
     org$pandalanguage$pandac$MethodDecl* m1079;
     panda$core$String* methodName1084;
     panda$core$String* $tmp985 = org$pandalanguage$pandac$CCodeGenerator$escapeName$panda$core$String$R$panda$core$String(self, ((org$pandalanguage$pandac$Symbol*) p_cl)->name);
@@ -2670,7 +2670,7 @@ org$pandalanguage$pandac$CCodeGenerator$ClassConstant* org$pandalanguage$pandac$
             }
             $fn1060 $tmp1059 = $tmp1058->methods[0];
             panda$core$Int64 $tmp1061 = $tmp1059(((panda$collections$CollectionView*) valueVTable1008));
-            panda$core$SimpleRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp1057, ((panda$core$Int64) { 0 }), $tmp1061, ((panda$core$Bit) { false }));
+            panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp1057, ((panda$core$Int64) { 0 }), $tmp1061, ((panda$core$Bit) { false }));
             int64_t $tmp1063 = $tmp1057.min.value;
             panda$core$Int64 i1062 = { $tmp1063 };
             int64_t $tmp1065 = $tmp1057.max.value;
@@ -3118,7 +3118,7 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getVirtualMethodRefer
     org$pandalanguage$pandac$CCodeGenerator$ClassConstant* cc1295;
     panda$core$Int64 index1297;
     panda$collections$ListView* vtable1298;
-    panda$core$SimpleRange$LTpanda$core$Int64$GT $tmp1300;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp1300;
     org$pandalanguage$pandac$CCodeGenerator$ClassConstant* $tmp1296 = org$pandalanguage$pandac$CCodeGenerator$getClassConstant$org$pandalanguage$pandac$ClassDecl$R$org$pandalanguage$pandac$CCodeGenerator$ClassConstant(self, p_m->owner);
     cc1295 = $tmp1296;
     index1297 = ((panda$core$Int64) { -1 });
@@ -3130,7 +3130,7 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getVirtualMethodRefer
     }
     $fn1303 $tmp1302 = $tmp1301->methods[0];
     panda$core$Int64 $tmp1304 = $tmp1302(((panda$collections$CollectionView*) vtable1298));
-    panda$core$SimpleRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp1300, ((panda$core$Int64) { 0 }), $tmp1304, ((panda$core$Bit) { false }));
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp1300, ((panda$core$Int64) { 0 }), $tmp1304, ((panda$core$Bit) { false }));
     int64_t $tmp1306 = $tmp1300.min.value;
     panda$core$Int64 i1305 = { $tmp1306 };
     int64_t $tmp1308 = $tmp1300.max.value;
@@ -3201,7 +3201,7 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getInterfaceMethodRef
     panda$core$String* itable1352;
     panda$core$Int64 index1382;
     panda$collections$ListView* vtable1383;
-    panda$core$SimpleRange$LTpanda$core$Int64$GT $tmp1385;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp1385;
     panda$core$String* result1431;
     panda$core$String* methodType1433;
     org$pandalanguage$pandac$CCodeGenerator$ClassConstant* $tmp1351 = org$pandalanguage$pandac$CCodeGenerator$getClassConstant$org$pandalanguage$pandac$ClassDecl$R$org$pandalanguage$pandac$CCodeGenerator$ClassConstant(self, p_m->owner);
@@ -3237,7 +3237,7 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getInterfaceMethodRef
     }
     $fn1388 $tmp1387 = $tmp1386->methods[0];
     panda$core$Int64 $tmp1389 = $tmp1387(((panda$collections$CollectionView*) vtable1383));
-    panda$core$SimpleRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp1385, ((panda$core$Int64) { 0 }), $tmp1389, ((panda$core$Bit) { false }));
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp1385, ((panda$core$Int64) { 0 }), $tmp1389, ((panda$core$Bit) { false }));
     int64_t $tmp1391 = $tmp1385.min.value;
     panda$core$Int64 i1390 = { $tmp1391 };
     int64_t $tmp1393 = $tmp1385.max.value;
@@ -3512,7 +3512,7 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getCallReference$org$
     panda$core$String* actualResultType1612;
     panda$core$Bit isSuper1613;
     panda$core$Int64 offset1633;
-    panda$core$SimpleRange$LTpanda$core$Int64$GT $tmp1638;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp1638;
     panda$core$String* arg1657;
     panda$core$String* target1683;
     panda$core$String* methodRef1687;
@@ -3631,7 +3631,7 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getCallReference$org$
     panda$core$Int64 $tmp1637 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64($tmp1636, ((panda$core$Int64) { 1 }));
     offset1633 = $tmp1637;
     panda$core$Int64 $tmp1639 = panda$collections$Array$get_count$R$panda$core$Int64(p_call->children);
-    panda$core$SimpleRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp1638, ((panda$core$Int64) { 0 }), $tmp1639, ((panda$core$Bit) { false }));
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp1638, ((panda$core$Int64) { 0 }), $tmp1639, ((panda$core$Bit) { false }));
     int64_t $tmp1641 = $tmp1638.min.value;
     panda$core$Int64 i1640 = { $tmp1641 };
     int64_t $tmp1643 = $tmp1638.max.value;
@@ -4701,7 +4701,7 @@ void org$pandalanguage$pandac$CCodeGenerator$writeCall$org$pandalanguage$pandac$
     panda$core$Bit isSuper2316;
     panda$collections$Array* args2336;
     panda$core$Int64 offset2339;
-    panda$core$SimpleRange$LTpanda$core$Int64$GT $tmp2344;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp2344;
     panda$core$String* arg2363;
     panda$core$String* refTarget2389;
     panda$core$String* methodRef2393;
@@ -4778,7 +4778,7 @@ void org$pandalanguage$pandac$CCodeGenerator$writeCall$org$pandalanguage$pandac$
     panda$core$Int64 $tmp2343 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64($tmp2342, ((panda$core$Int64) { 1 }));
     offset2339 = $tmp2343;
     panda$core$Int64 $tmp2345 = panda$collections$Array$get_count$R$panda$core$Int64(p_call->children);
-    panda$core$SimpleRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp2344, ((panda$core$Int64) { 0 }), $tmp2345, ((panda$core$Bit) { false }));
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp2344, ((panda$core$Int64) { 0 }), $tmp2345, ((panda$core$Bit) { false }));
     int64_t $tmp2347 = $tmp2344.min.value;
     panda$core$Int64 i2346 = { $tmp2347 };
     int64_t $tmp2349 = $tmp2344.max.value;
@@ -6092,7 +6092,7 @@ void org$pandalanguage$pandac$CCodeGenerator$writeReturn$org$pandalanguage$panda
     }
 }
 org$pandalanguage$pandac$CCodeGenerator$LoopDescriptor* org$pandalanguage$pandac$CCodeGenerator$findLoop$panda$core$String$Q$R$org$pandalanguage$pandac$CCodeGenerator$LoopDescriptor(org$pandalanguage$pandac$CCodeGenerator* self, panda$core$String* p_name) {
-    panda$core$SimpleRange$LTpanda$core$Int64$GT $tmp3472;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp3472;
     panda$core$Int64 $tmp3469 = panda$collections$Stack$get_count$R$panda$core$Int64(self->loopDescriptors);
     panda$core$Bit $tmp3470 = panda$core$Int64$$GT$panda$core$Int64$R$panda$core$Bit($tmp3469, ((panda$core$Int64) { 0 }));
     PANDA_ASSERT($tmp3470.value);
@@ -6103,7 +6103,7 @@ org$pandalanguage$pandac$CCodeGenerator$LoopDescriptor* org$pandalanguage$pandac
     }
     }
     panda$core$Int64 $tmp3473 = panda$collections$Stack$get_count$R$panda$core$Int64(self->loopDescriptors);
-    panda$core$SimpleRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp3472, ((panda$core$Int64) { 0 }), $tmp3473, ((panda$core$Bit) { false }));
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp3472, ((panda$core$Int64) { 0 }), $tmp3473, ((panda$core$Bit) { false }));
     int64_t $tmp3475 = $tmp3472.min.value;
     panda$core$Int64 i3474 = { $tmp3475 };
     int64_t $tmp3477 = $tmp3472.max.value;
@@ -6197,9 +6197,9 @@ void org$pandalanguage$pandac$CCodeGenerator$writeAssert$org$pandalanguage$panda
     (($fn3537) ((panda$io$OutputStream*) p_out)->$class->vtable[19])(((panda$io$OutputStream*) p_out), $tmp3536);
 }
 void org$pandalanguage$pandac$CCodeGenerator$writeMatch$org$pandalanguage$pandac$IRNode$panda$io$IndentedOutputStream(org$pandalanguage$pandac$CCodeGenerator* self, org$pandalanguage$pandac$IRNode* p_m, panda$io$IndentedOutputStream* p_out) {
-    panda$core$SimpleRange$LTpanda$core$Int64$GT $tmp3546;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp3546;
     org$pandalanguage$pandac$IRNode* w3565;
-    panda$core$SimpleRange$LTpanda$core$Int64$GT $tmp3568;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp3568;
     panda$core$Object* $tmp3539 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(p_m->children, ((panda$core$Int64) { 0 }));
     panda$core$String* $tmp3540 = org$pandalanguage$pandac$CCodeGenerator$getReference$org$pandalanguage$pandac$IRNode$panda$io$IndentedOutputStream$R$panda$core$String(self, ((org$pandalanguage$pandac$IRNode*) $tmp3539), p_out);
     panda$core$String* $tmp3541 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s3538, $tmp3540);
@@ -6208,7 +6208,7 @@ void org$pandalanguage$pandac$CCodeGenerator$writeMatch$org$pandalanguage$pandac
     panda$core$Int64 $tmp3545 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(p_out->level, ((panda$core$Int64) { 1 }));
     p_out->level = $tmp3545;
     panda$core$Int64 $tmp3547 = panda$collections$Array$get_count$R$panda$core$Int64(p_m->children);
-    panda$core$SimpleRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp3546, ((panda$core$Int64) { 1 }), $tmp3547, ((panda$core$Bit) { false }));
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp3546, ((panda$core$Int64) { 1 }), $tmp3547, ((panda$core$Bit) { false }));
     int64_t $tmp3549 = $tmp3546.min.value;
     panda$core$Int64 i3548 = { $tmp3549 };
     int64_t $tmp3551 = $tmp3546.max.value;
@@ -6236,7 +6236,7 @@ void org$pandalanguage$pandac$CCodeGenerator$writeMatch$org$pandalanguage$pandac
         {
             panda$core$Int64 $tmp3569 = panda$collections$Array$get_count$R$panda$core$Int64(w3565->children);
             panda$core$Int64 $tmp3570 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64($tmp3569, ((panda$core$Int64) { 1 }));
-            panda$core$SimpleRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp3568, ((panda$core$Int64) { 0 }), $tmp3570, ((panda$core$Bit) { false }));
+            panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp3568, ((panda$core$Int64) { 0 }), $tmp3570, ((panda$core$Bit) { false }));
             int64_t $tmp3572 = $tmp3568.min.value;
             panda$core$Int64 j3571 = { $tmp3572 };
             int64_t $tmp3574 = $tmp3568.max.value;

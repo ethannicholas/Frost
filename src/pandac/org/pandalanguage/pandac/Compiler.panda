@@ -5,7 +5,7 @@ uses org.pandalanguage.pandac.parser.Token
 
 @final
 class Compiler : ErrorReporter {
-    constant RANGE_NAME := "panda.core.SimpleRange"
+    constant RANGE_NAME := "panda.core.Range"
     constant STEPPED_RANGE_NAME := "panda.core.SteppedRange"
 
     class Settings : Immutable {

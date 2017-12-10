@@ -6,7 +6,7 @@
 #include "panda/core/Bit.h"
 #include "panda/core/Int64.h"
 #include "panda/collections/CollectionView.h"
-#include "panda/core/SimpleRange.LTpanda/core/Int64.GT.h"
+#include "panda/core/Range.LTpanda/core/Int64.GT.h"
 #include "org/pandalanguage/pandac/MethodDecl.h"
 #include "org/pandalanguage/pandac/Position.h"
 #include "panda/collections/ImmutableArray.h"
@@ -22,8 +22,8 @@ typedef panda$core$Object* (*$fn79)(panda$collections$ListView*, panda$core$Int6
 
 
 void org$pandalanguage$pandac$Methods$init$panda$collections$ListView$LTorg$pandalanguage$pandac$MethodDecl$GT(org$pandalanguage$pandac$Methods* self, panda$collections$ListView* p_methods) {
-    panda$core$SimpleRange$LTpanda$core$Int64$GT $tmp6;
-    panda$core$SimpleRange$LTpanda$core$Int64$GT $tmp28;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp6;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp28;
     org$pandalanguage$pandac$Position $tmp76;
     ITable* $tmp1 = ((panda$collections$CollectionView*) p_methods)->$class->itable;
     while ($tmp1->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
@@ -39,7 +39,7 @@ void org$pandalanguage$pandac$Methods$init$panda$collections$ListView$LTorg$pand
     }
     $fn9 $tmp8 = $tmp7->methods[0];
     panda$core$Int64 $tmp10 = $tmp8(((panda$collections$CollectionView*) p_methods));
-    panda$core$SimpleRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp6, ((panda$core$Int64) { 1 }), $tmp10, ((panda$core$Bit) { false }));
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp6, ((panda$core$Int64) { 1 }), $tmp10, ((panda$core$Bit) { false }));
     int64_t $tmp12 = $tmp6.min.value;
     panda$core$Int64 i11 = { $tmp12 };
     int64_t $tmp14 = $tmp6.max.value;
@@ -60,7 +60,7 @@ void org$pandalanguage$pandac$Methods$init$panda$collections$ListView$LTorg$pand
     if ($tmp12 > $tmp14) goto $l16; else goto $l18;
     $l16:;
     {
-        panda$core$SimpleRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp28, ((panda$core$Int64) { 0 }), i11, ((panda$core$Bit) { false }));
+        panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp28, ((panda$core$Int64) { 0 }), i11, ((panda$core$Bit) { false }));
         int64_t $tmp30 = $tmp28.min.value;
         panda$core$Int64 j29 = { $tmp30 };
         int64_t $tmp32 = $tmp28.max.value;

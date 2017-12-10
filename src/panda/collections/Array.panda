@@ -1,7 +1,5 @@
 package panda.collections
 
-uses panda.core.SimpleRange
-uses panda.core.SteppedRange
 uses panda.unsafe.Pointer
 
 @final
@@ -88,57 +86,6 @@ class Array<T> : List<T> {
     to the same objects.
     ================================================================================================
     function [](r:Range<Int?>):Array<T> {
-        def step := r.step
-
-        def current:Int
-        if r.start != null {
-            current := r.start
-        }
-        else if step > 0 {
-            current := 0
-        }
-        else {
-            current := get_count() - 1
-        }
-
-        def end:Int
-        if r.end != null {
-            end := r.end
-        }
-        else if step > 0 {
-            end := get_count()
-        }
-        else {
-            end := 0
-        }
-
-        def result := Array<T>()
-        if r.step > 0 {
-            while current < end {
-                result.add(self[current])
-                current += step
-            }
-        }
-        else {
-            assert r.step < 0
-            while current > end {
-                result.add(self[current])
-                current -= step
-            }
-        }
-        if (r.inclusive | r.end = null) & current = end & end < get_count() {
-            result.add(self[current])
-        }
-        return result
-    }
-
-    ================================================================================================
-    Returns a slice of the array, containing all of the elements specified by the range. The slice
-    is an independent copy of the array and elements may be added to and removed from the copy
-    without affecting the original. It is not, however, a deep copy, and thus both arrays will refer
-    to the same objects.
-    ================================================================================================
-    function [](r:SimpleRange<Int?>):Array<T> {
         def step := 1
 
         def current:Int

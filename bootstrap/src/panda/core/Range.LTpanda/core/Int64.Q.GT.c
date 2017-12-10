@@ -4,7 +4,7 @@
 #include "panda/core/Object.h"
 #include "panda/core/String.h"
 panda$core$Range$LTpanda$core$Int64$Q$GT$wrapper* wrap_panda$core$Range$LTpanda$core$Int64$Q$GT(panda$core$Range$LTpanda$core$Int64$Q$GT self) {
-    panda$core$Range$LTpanda$core$Int64$Q$GT$wrapper* result = (panda$core$Range$LTpanda$core$Int64$Q$GT$wrapper*) malloc(49);
+    panda$core$Range$LTpanda$core$Int64$Q$GT$wrapper* result = (panda$core$Range$LTpanda$core$Int64$Q$GT$wrapper*) malloc(37);
     result->cl = (panda$core$Class*) &panda$core$Range$LTpanda$core$Int64$Q$GT$wrapperclass;
     result->value = self;
     return result;
@@ -22,21 +22,10 @@ panda$core$Range$LTpanda$core$Int64$Q$GT$class_type panda$core$Range$LTpanda$cor
 panda$core$Range$LTpanda$core$Int64$Q$GT$wrapperclass_type panda$core$Range$LTpanda$core$Int64$Q$GT$wrapperclass = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Value$class, NULL, { panda$core$Range$LTpanda$core$Int64$Q$GT$convert$R$panda$core$String$wrappershim, panda$core$Object$cleanup} };
 static panda$core$String $s4 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2E\x2E\x2E", 3, 1 };
 static panda$core$String $s5 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2E\x2E", 2, 1 };
-static panda$core$String $s6 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x20\x62\x79\x20", 4, 1 };
 
-void panda$core$Range$LTpanda$core$Int64$Q$GT$init$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Int64$panda$core$Bit(panda$core$Range$LTpanda$core$Int64$Q$GT* self, panda$core$Int64$nullable p_start, panda$core$Int64$nullable p_end, panda$core$Int64 p_step, panda$core$Bit p_inclusive) {
-    self->start = p_start;
-    self->end = p_end;
-    if (((panda$core$Bit) { true }).value) {
-    {
-        self->step = p_step;
-    }
-    }
-    else {
-    {
-        self->step = ((panda$core$Int64) { 1 });
-    }
-    }
+void panda$core$Range$LTpanda$core$Int64$Q$GT$init$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Bit(panda$core$Range$LTpanda$core$Int64$Q$GT* self, panda$core$Int64$nullable p_min, panda$core$Int64$nullable p_max, panda$core$Bit p_inclusive) {
+    self->min = p_min;
+    self->max = p_max;
     self->inclusive = p_inclusive;
 }
 panda$core$String* panda$core$Range$LTpanda$core$Int64$Q$GT$convert$R$panda$core$String(panda$core$Range$LTpanda$core$Int64$Q$GT self) {
@@ -46,9 +35,9 @@ panda$core$String* panda$core$Range$LTpanda$core$Int64$Q$GT$convert$R$panda$core
     $tmp2->refCount.value = 1;
     panda$core$MutableString$init($tmp2);
     result1 = $tmp2;
-    if (((panda$core$Bit) { self.start.nonnull }).value) {
+    if (((panda$core$Bit) { self.min.nonnull }).value) {
     {
-        panda$core$MutableString$append$panda$core$Object(result1, ((panda$core$Object*) wrap_panda$core$Int64(((panda$core$Int64) self.start.value))));
+        panda$core$MutableString$append$panda$core$Object(result1, ((panda$core$Object*) wrap_panda$core$Int64(((panda$core$Int64) self.min.value))));
     }
     }
     if (self.inclusive.value) {
@@ -61,18 +50,12 @@ panda$core$String* panda$core$Range$LTpanda$core$Int64$Q$GT$convert$R$panda$core
         panda$core$MutableString$append$panda$core$String(result1, &$s5);
     }
     }
-    if (((panda$core$Bit) { self.end.nonnull }).value) {
+    if (((panda$core$Bit) { self.max.nonnull }).value) {
     {
-        panda$core$MutableString$append$panda$core$Object(result1, ((panda$core$Object*) wrap_panda$core$Int64(((panda$core$Int64) self.end.value))));
+        panda$core$MutableString$append$panda$core$Object(result1, ((panda$core$Object*) wrap_panda$core$Int64(((panda$core$Int64) self.max.value))));
     }
     }
-    if (((panda$core$Bit) { true }).value) {
-    {
-        panda$core$MutableString$append$panda$core$String(result1, &$s6);
-        panda$core$MutableString$append$panda$core$Object(result1, ((panda$core$Object*) wrap_panda$core$Int64(self.step)));
-    }
-    }
-    panda$core$String* $tmp7 = panda$core$MutableString$convert$R$panda$core$String(result1);
-    return $tmp7;
+    panda$core$String* $tmp6 = panda$core$MutableString$convert$R$panda$core$String(result1);
+    return $tmp6;
 }
 
