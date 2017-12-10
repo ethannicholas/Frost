@@ -1138,7 +1138,7 @@ class CCodeGenerator : CodeGenerator {
             strings.print("0123456789ABCDEF".utf8()[(c // 16).convert()])
             strings.print("0123456789ABCDEF".utf8()[(c % 16).convert()])
         }
-        strings.printLine("\", \{s.utf8().get_count()}, 1 };")
+        strings.printLine("\", \{s.utf8().get_count()}, NULL };")
         return "&\{result}"
     }
 

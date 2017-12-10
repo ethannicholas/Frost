@@ -694,6 +694,6 @@ class UInt32 : Value, Key<UInt32>, Comparable<UInt32> {
             result[i - index] := chars[i]
         }
         chars.destroy()
-        return String(result, size, true)
+        return String(result, size)
     }
 }

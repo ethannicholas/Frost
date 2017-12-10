@@ -694,6 +694,6 @@ class UInt8 : Value, Key<UInt8>, Comparable<UInt8> {
             result[i - index] := chars[i]
         }
         chars.destroy()
-        return String(result, size, true)
+        return String(result, size)
     }
 }

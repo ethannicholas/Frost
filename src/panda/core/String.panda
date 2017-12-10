@@ -159,13 +159,19 @@ class String : Immutable, Key<String> {
     True if this string owns the pointer to its data and should free it on cleanup.
     ================================================================================================
     @private
-    def owned:Bit
+    def owner:String?
 
-    @private
-    init(data:Pointer<Char8>, length:Int, owned:Bit) {
+    init(data:Pointer<Char8>, length:Int) {
         self.data := data
         _length := length
-        self.owned := owned
+        self.owner := null
+    }
+
+    @private
+    init(data:Pointer<Char8>, length:Int, owner:String) {
+        self.data := data
+        _length := length
+        self.owner := owner
     }
 
     init(chars:ListView<Char8>) {
@@ -174,6 +180,7 @@ class String : Immutable, Key<String> {
         for i in 0 .. _length {
             data[i] := chars[i]
         }
+        owner := null
     }
 
     @override
@@ -270,7 +277,7 @@ class String : Immutable, Key<String> {
         for i in 0 .. other._length {
             result[_length + i] := other.data[i]
         }
-        return String(result, _length + other._length, true)
+        return String(result, _length + other._length)
     }
 
     function +(other:Object):String {
@@ -343,6 +350,53 @@ class String : Immutable, Key<String> {
     ================================================================================================
     function [](index:Int):Char32 {
         return self[offset(start(), index)]
+    }
+
+    ================================================================================================
+    Returns a 'dependent' substring of a string. `string.substring(range)` behaves exactly the same
+    as the more-common `string[range]`, except that `substring` does not copy the characters into a
+    new memory buffer, instead referring directly to the memory held by the original string. This
+    means that the original string will remain in memory as long as any of its substrings do.
+
+    `string.substring(range)` is therefore much more efficient than `string[range]`, provided that
+    forcing the original string to remain in memory is acceptable.
+    ================================================================================================
+    function substring(r:Range<Index>):String {
+        return String(data.offset(r.min.value), r.max.value - r.min.value, self)
+    }
+
+    ================================================================================================
+    Returns a 'dependent' substring of a string. `string.substring(range)` behaves exactly the same
+    as the more-common `string[range]`, except that `substring` does not copy the characters into a
+    new memory buffer, instead referring directly to the memory held by the original string. This
+    means that the original string will remain in memory as long as any of its substrings do.
+
+    `string.substring(range)` is therefore much more efficient than `string[range]`, provided that
+    forcing the original string to remain in memory is acceptable.
+
+    As with other `Range` methods, a null `min` starts at the beginning of the string, and a null
+    `max` ends at the end of the string.
+    ================================================================================================
+    function substring(r:Range<Index?>):String {
+        def min:Index
+        if r.min != null {
+            min := r.min
+        }
+        else {
+            min := start()
+        }
+
+        def max:Index
+        if r.max != null {
+            max := r.max
+        }
+        else {
+            max := self.end()
+            if r.inclusive {
+                max := offset(max, -1)
+            }
+        }
+        return substring(Range<Index>(min, max, r.inclusive))
     }
 
     ================================================================================================

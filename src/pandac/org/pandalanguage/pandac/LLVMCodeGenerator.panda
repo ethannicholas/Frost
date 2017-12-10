@@ -1721,7 +1721,7 @@ class LLVMCodeGenerator : CodeGenerator {
                 "%panda$core$Class*), %panda$core$Int32 insertvalue(%panda$core$Int32 " +
                 "{ i32 undef }, i32 1, 0), %panda$core$Char8* bitcast(\{charsType}* \{chars}" +
                 " to %panda$core$Char8*), %panda$core$Int64 { i64 \{s.utf8().get_count()} }, " +
-                "%panda$core$Bit { i1 1 } }")
+                "%panda$core$String* null }")
         return result
     }
 

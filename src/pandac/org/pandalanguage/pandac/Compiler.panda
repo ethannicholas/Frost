@@ -3174,7 +3174,6 @@ class Compiler : ErrorReporter {
         }
     }
 
-
     function getConstantInt(expr:IRNode):UInt64 {
         assert isConstantInt(expr)
         match expr.kind {
@@ -3192,7 +3191,6 @@ class Compiler : ErrorReporter {
                assert false
         }
     }
-
 
     method compileMatch(m:ASTNode):IRNode? {
         assert m.kind = ASTNode.Kind.MATCH

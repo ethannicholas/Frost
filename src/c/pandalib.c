@@ -47,6 +47,7 @@ typedef struct String {
     int32_t refcnt;
     int8_t* data;
     int64_t size;
+    struct String* owner;
 } String;
 
 typedef struct Array {

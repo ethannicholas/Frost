@@ -526,6 +526,6 @@ class UInt64 : Value, Key<UInt64>, Comparable<UInt64> {
             result[i - index] := chars[i]
         }
         chars.destroy()
-        return String(result, size, true)
+        return String(result, size)
     }
 }

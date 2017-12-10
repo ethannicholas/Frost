@@ -84,6 +84,6 @@ class MutableString {
         for i in 0 .. length {
             result[i] := data[i]
         }
-        return String(result, length, true)
+        return String(result, length)
     }
 }
