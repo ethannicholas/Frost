@@ -13,13 +13,11 @@ class DFA {
 
     def accepts:Pointer<Int>
 
-    var rawToken := RawToken()
+    var rawToken:RawToken
 
     var source:String
 
-    var utf8:ListView<Char8>
-
-    var offset := 0
+    var offset:String.Index
 
     var line := 1
 
@@ -32,38 +30,38 @@ class DFA {
     init(source:String, stateCount:Int, transitions:Pointer<Pointer<Int>>,
             accepts:Pointer<Int>) {
         self.source := source
-        self.utf8 := source.utf8()
-        self.offset := 0
+        self.offset := source.start()
         self.stateCount := stateCount
         self.transitions := transitions
         self.accepts := accepts
+        self.rawToken := RawToken(source)
     }
 
     method next():RawToken {
         var state := 1
         var startOffset := offset
-        if offset = utf8.get_count() {
+        if offset = source.end() {
             rawToken.kind := 0
-            rawToken.offset := startOffset
-            rawToken.length := 0
+            rawToken.start := startOffset
+            rawToken.end := startOffset
             rawToken.line := line
             rawToken.column := column
             return rawToken
         }
         rawToken.kind := -1
-        rawToken.offset := startOffset
-        rawToken.length := 1
+        rawToken.start := startOffset
+        rawToken.end := startOffset
         rawToken.line := line
         rawToken.column := column
-        while offset < utf8.get_count() {
-            def c := utf8[offset]
+        while offset != source.end() {
+            def c := source[offset]
             if c.convert()->UInt8 > END_CHAR {
                 Console.printLine("invalid token \{c.convert()->UInt8}")
                 System.exit(1)
             }
             state := transitions[c.convert()][state]
             if state != 0 {
-                offset += 1
+                offset := source.offset(offset, 1)
                 match c.convert()->UInt8 {
                     when 10:
                         line += 1
@@ -76,14 +74,14 @@ class DFA {
                 def newAccept := accepts[state]
                 if newAccept != -1 {
                     rawToken.kind := newAccept
-                    rawToken.length := offset - startOffset
+                    rawToken.end := offset
                 }
             }
             else {
                 break
             }
         }
-        offset := startOffset + rawToken.length
+        offset := rawToken.end
         return rawToken
     }
 }

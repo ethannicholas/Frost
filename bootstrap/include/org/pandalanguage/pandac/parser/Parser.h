@@ -27,7 +27,7 @@ typedef struct org$pandalanguage$pandac$parser$Parser {
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"
 #undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[69]; } org$pandalanguage$pandac$parser$Parser$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[68]; } org$pandalanguage$pandac$parser$Parser$class_type;
 extern org$pandalanguage$pandac$parser$Parser$class_type org$pandalanguage$pandac$parser$Parser$class;
 
 #ifndef PANDA_TYPESONLY
@@ -37,7 +37,6 @@ typedef struct panda$io$File panda$io$File;
 typedef struct panda$core$String panda$core$String;
 #include "org/pandalanguage/pandac/parser/Token.h"
 #include "panda/core/Int64.h"
-#include "org/pandalanguage/pandac/Position.h"
 typedef struct org$pandalanguage$pandac$ASTNode org$pandalanguage$pandac$ASTNode;
 #include "panda/core/UInt64.h"
 #include "panda/core/Bit.h"
@@ -54,7 +53,6 @@ void org$pandalanguage$pandac$parser$Parser$error$org$pandalanguage$pandac$parse
 void org$pandalanguage$pandac$parser$Parser$startSpeculative(org$pandalanguage$pandac$parser$Parser* self);
 void org$pandalanguage$pandac$parser$Parser$accept(org$pandalanguage$pandac$parser$Parser* self);
 void org$pandalanguage$pandac$parser$Parser$rewind(org$pandalanguage$pandac$parser$Parser* self);
-org$pandalanguage$pandac$Position org$pandalanguage$pandac$parser$Parser$position$org$pandalanguage$pandac$parser$Token$R$org$pandalanguage$pandac$Position(org$pandalanguage$pandac$parser$Parser* self, org$pandalanguage$pandac$parser$Token p_token);
 panda$core$String* org$pandalanguage$pandac$parser$Parser$text$org$pandalanguage$pandac$parser$Token$R$panda$core$String(org$pandalanguage$pandac$parser$Parser* self, org$pandalanguage$pandac$parser$Token p_token);
 org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$addStringChunk$org$pandalanguage$pandac$ASTNode$Q$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$ASTNode(org$pandalanguage$pandac$parser$Parser* self, org$pandalanguage$pandac$ASTNode* p_string, org$pandalanguage$pandac$ASTNode* p_chunk);
 org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$string$R$org$pandalanguage$pandac$ASTNode$Q(org$pandalanguage$pandac$parser$Parser* self);

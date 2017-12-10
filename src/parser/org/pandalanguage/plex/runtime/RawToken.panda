@@ -3,8 +3,13 @@ package org.pandalanguage.plex.runtime
 @final
 class RawToken {
     var kind := 0
-    var offset := 0
-    var length := 0
+    var start:String.Index
+    var end:String.Index
     var line := 0
     var column := 0
+
+    init(source:String) {
+        start := source.start()
+        end := start
+    }
 }

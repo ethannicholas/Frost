@@ -16,7 +16,7 @@ org$pandalanguage$pandac$parser$Lexer$class_type org$pandalanguage$pandac$parser
 
 
 void org$pandalanguage$pandac$parser$Lexer$start$panda$core$String(org$pandalanguage$pandac$parser$Lexer* self, panda$core$String* p_source) {
-    org$pandalanguage$plex$runtime$DFA* $tmp1 = (org$pandalanguage$plex$runtime$DFA*) malloc(88);
+    org$pandalanguage$plex$runtime$DFA* $tmp1 = (org$pandalanguage$plex$runtime$DFA*) malloc(80);
     $tmp1->$class = (panda$core$Class*) &org$pandalanguage$plex$runtime$DFA$class;
     $tmp1->refCount.value = 1;
     panda$core$Int64** $tmp3 = org$pandalanguage$pandac$parser$Lexer$getTransitions$R$panda$unsafe$Pointer$LTpanda$unsafe$Pointer$LTpanda$core$Int64$GT$GT();
@@ -6340,7 +6340,7 @@ org$pandalanguage$pandac$parser$Token org$pandalanguage$pandac$parser$Lexer$next
     org$pandalanguage$plex$runtime$RawToken* $tmp166 = org$pandalanguage$plex$runtime$DFA$next$R$org$pandalanguage$plex$runtime$RawToken(self->dfa);
     raw165 = $tmp166;
     org$pandalanguage$pandac$Position$init$panda$core$Int64$panda$core$Int64(&$tmp168, raw165->line, raw165->column);
-    org$pandalanguage$pandac$parser$Token$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$org$pandalanguage$pandac$Position(&$tmp167, raw165->kind, raw165->offset, raw165->length, $tmp168);
+    org$pandalanguage$pandac$parser$Token$init$panda$core$Int64$panda$core$String$Index$panda$core$String$Index$org$pandalanguage$pandac$Position(&$tmp167, raw165->kind, raw165->start, raw165->end, $tmp168);
     return $tmp167;
 }
 void org$pandalanguage$pandac$parser$Lexer$init(org$pandalanguage$pandac$parser$Lexer* self) {

@@ -3,14 +3,15 @@
 #define PANDA_TYPESONLY
 #undef PANDA_TYPESONLY
 #include "panda/core/Int64.h"
+#include "panda/core/String/Index.h"
 #include "org/pandalanguage/pandac/Position.h"
 typedef struct panda$core$Class panda$core$Class;
 #include "org/pandalanguage/pandac/parser/Token.h"
 
 typedef struct org$pandalanguage$pandac$parser$Token {
     panda$core$Int64 kind;
-    panda$core$Int64 offset;
-    panda$core$Int64 length;
+    panda$core$String$Index start;
+    panda$core$String$Index end;
     org$pandalanguage$pandac$Position position;
 } org$pandalanguage$pandac$parser$Token;
 #define PANDA_TYPESONLY
@@ -34,8 +35,9 @@ org$pandalanguage$pandac$parser$Token$wrapper* wrap_org$pandalanguage$pandac$par
 #ifndef PANDA_TYPESONLY
 #include "org/pandalanguage/pandac/parser/Token.h"
 #include "panda/core/Int64.h"
+#include "panda/core/String/Index.h"
 #include "org/pandalanguage/pandac/Position.h"
 
-void org$pandalanguage$pandac$parser$Token$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$org$pandalanguage$pandac$Position(org$pandalanguage$pandac$parser$Token* self, panda$core$Int64 p_kind, panda$core$Int64 p_offset, panda$core$Int64 p_length, org$pandalanguage$pandac$Position p_position);
+void org$pandalanguage$pandac$parser$Token$init$panda$core$Int64$panda$core$String$Index$panda$core$String$Index$org$pandalanguage$pandac$Position(org$pandalanguage$pandac$parser$Token* self, panda$core$Int64 p_kind, panda$core$String$Index p_start, panda$core$String$Index p_end, org$pandalanguage$pandac$Position p_position);
 
 #endif

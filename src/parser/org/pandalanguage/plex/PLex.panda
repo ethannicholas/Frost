@@ -58,15 +58,15 @@ class PLex {
         token.printLine("}")
         token.printLine()
         token.printLine("def kind:Int")
-        token.printLine("def offset:Int")
-        token.printLine("def length:Int")
+        token.printLine("def start:String.Index")
+        token.printLine("def end:String.Index")
         token.printLine("def position:Position")
         token.printLine()
-        token.printLine("init(kind:Int, offset:Int, length:Int, position:Position) {")
+        token.printLine("init(kind:Int, start:String.Index, end:String.Index, position:Position) {")
         token.level += 1
         token.printLine("self.kind := kind")
-        token.printLine("self.offset := offset")
-        token.printLine("self.length := length")
+        token.printLine("self.start := start")
+        token.printLine("self.end := end")
         token.printLine("self.position := position")
         token.level -= 1
         token.printLine("}")
@@ -111,7 +111,7 @@ class PLex {
         out.printLine("method next():Token {")
         out.level += 1
         out.printLine("def raw := dfa.next()")
-        out.printLine("return Token(raw.kind, raw.offset, raw.length, Position(raw.line, " +
+        out.printLine("return Token(raw.kind, raw.start, raw.end, Position(raw.line, " +
                 "raw.column))")
         out.level -= 1
         out.printLine("}")

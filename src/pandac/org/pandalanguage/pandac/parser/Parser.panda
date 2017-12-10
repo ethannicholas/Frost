@@ -113,7 +113,7 @@ class Parser {
 
     method error(token:Token, msg:String) {
         if !inSpeculative {
-            errors.error(path, position(token), msg)
+            errors.error(path, token.position, msg)
         }
     }
 
@@ -135,17 +135,8 @@ class Parser {
         }
     }
 
-    function position(token:Token):Position {
-        -- FIXME incredibly slow
-        def input := LineNumberInputStream(MemoryInputStream(source))
-        for i in 0 .. token.offset {
-            def c:UInt8? := input.read()
-        }
-        return Position(input.line, input.column)
-    }
-
     function text(token:Token):String {
-        return String(source.data.offset(token.offset), token.length, source)
+        return source.substring(token.start .. token.end)
     }
 
     function addStringChunk(string:ASTNode?, chunk:ASTNode):ASTNode {

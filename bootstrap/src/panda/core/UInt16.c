@@ -870,10 +870,10 @@ panda$core$String* panda$core$UInt16$convert$R$panda$core$String(panda$core$UInt
     goto $l193;
     $l195:;
     free(chars159);
-    panda$core$String* $tmp217 = (panda$core$String*) malloc(33);
+    panda$core$String* $tmp217 = (panda$core$String*) malloc(40);
     $tmp217->$class = (panda$core$Class*) &panda$core$String$class;
     $tmp217->refCount.value = 1;
-    panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64$panda$core$Bit($tmp217, result186, size184, ((panda$core$Bit) { true }));
+    panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp217, result186, size184);
     return $tmp217;
 }
 

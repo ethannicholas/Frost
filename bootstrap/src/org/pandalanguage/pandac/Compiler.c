@@ -10763,7 +10763,7 @@ panda$collections$ListView* org$pandalanguage$pandac$Compiler$scan$panda$io$File
     {
         panda$core$String* $tmp4380 = panda$io$File$readFully$R$panda$core$String(p_file);
         (($fn4381) self->parser->$class->vtable[2])(self->parser, p_file, $tmp4380);
-        org$pandalanguage$pandac$ASTNode* $tmp4384 = (($fn4383) self->parser->$class->vtable[68])(self->parser);
+        org$pandalanguage$pandac$ASTNode* $tmp4384 = (($fn4383) self->parser->$class->vtable[67])(self->parser);
         parsed4382 = $tmp4384;
         if (((panda$core$Bit) { parsed4382 != NULL }).value) {
         {

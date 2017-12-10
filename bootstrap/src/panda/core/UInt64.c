@@ -682,10 +682,10 @@ panda$core$String* panda$core$UInt64$convert$R$panda$core$String(panda$core$UInt
     goto $l152;
     $l154:;
     free(chars120);
-    panda$core$String* $tmp176 = (panda$core$String*) malloc(33);
+    panda$core$String* $tmp176 = (panda$core$String*) malloc(40);
     $tmp176->$class = (panda$core$Class*) &panda$core$String$class;
     $tmp176->refCount.value = 1;
-    panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64$panda$core$Bit($tmp176, result145, size143, ((panda$core$Bit) { true }));
+    panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp176, result145, size143);
     return $tmp176;
 }
 

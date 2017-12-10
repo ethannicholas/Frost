@@ -51,10 +51,15 @@ typedef panda$core$String* (*$fn210)(panda$core$Object*);
 typedef panda$core$String* (*$fn246)(panda$core$Object*);
 
 
-void panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64$panda$core$Bit(panda$core$String* self, panda$core$Char8* p_data, panda$core$Int64 p_length, panda$core$Bit p_owned) {
+void panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64(panda$core$String* self, panda$core$Char8* p_data, panda$core$Int64 p_length) {
     self->data = p_data;
     self->_length = p_length;
-    self->owned = p_owned;
+    self->owner = NULL;
+}
+void panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64$panda$core$String(panda$core$String* self, panda$core$Char8* p_data, panda$core$Int64 p_length, panda$core$String* p_owner) {
+    self->data = p_data;
+    self->_length = p_length;
+    self->owner = p_owner;
 }
 void panda$core$String$init$panda$collections$ListView$LTpanda$core$Char8$GT(panda$core$String* self, panda$collections$ListView* p_chars) {
     panda$core$Range$LTpanda$core$Int64$GT $tmp5;
@@ -115,6 +120,7 @@ void panda$core$String$init$panda$collections$ListView$LTpanda$core$Char8$GT(pan
     i6.value += 1;
     goto $l11;
     $l13:;
+    self->owner = NULL;
 }
 panda$core$String* panda$core$String$convert$R$panda$core$String(panda$core$String* self) {
     return self;
@@ -434,11 +440,11 @@ panda$core$String* panda$core$String$$ADD$panda$core$String$R$panda$core$String(
     i178.value += 1;
     goto $l183;
     $l185:;
-    panda$core$String* $tmp207 = (panda$core$String*) malloc(33);
+    panda$core$String* $tmp207 = (panda$core$String*) malloc(40);
     $tmp207->$class = (panda$core$Class*) &panda$core$String$class;
     $tmp207->refCount.value = 1;
     panda$core$Int64 $tmp209 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->_length, p_other->_length);
-    panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64$panda$core$Bit($tmp207, result146, $tmp209, ((panda$core$Bit) { true }));
+    panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp207, result146, $tmp209);
     return $tmp207;
 }
 panda$core$String* panda$core$String$$ADD$panda$core$Object$R$panda$core$String(panda$core$String* self, panda$core$Object* p_other) {
@@ -659,11 +665,11 @@ panda$core$Char32 panda$core$String$$IDX$panda$core$Int64$R$panda$core$Char32(pa
     return $tmp337;
 }
 panda$core$String* panda$core$String$substring$panda$core$Range$LTpanda$core$String$Index$GT$R$panda$core$String(panda$core$String* self, panda$core$Range$LTpanda$core$String$Index$GT p_r) {
-    panda$core$String* $tmp338 = (panda$core$String*) malloc(33);
+    panda$core$String* $tmp338 = (panda$core$String*) malloc(40);
     $tmp338->$class = (panda$core$Class*) &panda$core$String$class;
     $tmp338->refCount.value = 1;
     panda$core$Int64 $tmp340 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(p_r.max.value, p_r.min.value);
-    panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64$panda$core$Bit($tmp338, (self->data + p_r.min.value.value), $tmp340, ((panda$core$Bit) { false }));
+    panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64$panda$core$String($tmp338, (self->data + p_r.min.value.value), $tmp340, self);
     return $tmp338;
 }
 panda$core$String* panda$core$String$substring$panda$core$Range$LTpanda$core$String$Index$Q$GT$R$panda$core$String(panda$core$String* self, panda$core$Range$LTpanda$core$String$Index$Q$GT p_r) {
