@@ -482,6 +482,7 @@ panda$core$Bit org$pandalanguage$pandac$Type$isClass$R$panda$core$Bit(org$pandal
         case 10:
         case 11:
         case 21:
+        case 22:
         {
             return ((panda$core$Bit) { true });
         }

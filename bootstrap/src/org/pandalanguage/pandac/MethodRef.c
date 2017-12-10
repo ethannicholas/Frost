@@ -13,6 +13,7 @@
 #include "panda/core/String.h"
 #include "org/pandalanguage/pandac/Symbol.h"
 #include "org/pandalanguage/pandac/ClassDecl/GenericParameter.h"
+#include "panda/collections/Key.h"
 #include "org/pandalanguage/pandac/Type.h"
 #include "panda/collections/Array.h"
 #include "org/pandalanguage/pandac/MethodDecl/Parameter.h"

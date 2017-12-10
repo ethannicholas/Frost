@@ -3,8 +3,8 @@
 #include "panda/core/Class.h"
 #include "panda/core/Equatable.h"
 #include "panda/core/Bit.h"
-#include "panda/collections/Key.h"
 #include "panda/core/Object.h"
+#include "panda/collections/Key.h"
 #include "panda/core/Int64.h"
 #include "panda/core/String.h"
 panda$core$Char16$wrapper* wrap_panda$core$Char16(panda$core$Char16 self) {

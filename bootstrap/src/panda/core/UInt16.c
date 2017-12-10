@@ -3,9 +3,9 @@
 #include "panda/core/Class.h"
 #include "panda/core/Equatable.h"
 #include "panda/core/Bit.h"
+#include "panda/core/Object.h"
 #include "panda/core/Comparable.h"
 #include "panda/collections/Key.h"
-#include "panda/core/Object.h"
 #include "panda/core/Int64.h"
 #include "panda/core/String.h"
 panda$core$UInt16$wrapper* wrap_panda$core$UInt16(panda$core$UInt16 self) {

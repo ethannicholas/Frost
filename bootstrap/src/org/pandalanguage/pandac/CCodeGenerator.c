@@ -18,6 +18,7 @@
 #include "org/pandalanguage/pandac/Type.h"
 #include "panda/core/Bit.h"
 #include "org/pandalanguage/pandac/Symbol.h"
+#include "panda/collections/Key.h"
 #include "org/pandalanguage/pandac/Compiler.h"
 #include "panda/core/MutableString.h"
 #include "panda/collections/Array.h"

@@ -1,6 +1,7 @@
 #include "panda/collections/HashMap/Entry.h"
 #include "panda/core/Object.h"
 #include "panda/core/Class.h"
+#include "panda/collections/Key.h"
 
 
 panda$collections$HashMap$Entry$class_type panda$collections$HashMap$Entry$class = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Object$class, NULL, { panda$core$Object$convert$R$panda$core$String, panda$core$Object$cleanup} };

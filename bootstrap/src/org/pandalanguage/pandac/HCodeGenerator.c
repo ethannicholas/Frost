@@ -17,6 +17,7 @@
 #include "org/pandalanguage/pandac/ClassDecl.h"
 #include "org/pandalanguage/pandac/Symbol.h"
 #include "org/pandalanguage/pandac/Compiler.h"
+#include "panda/collections/Key.h"
 #include "panda/collections/Array.h"
 #include "org/pandalanguage/pandac/ClassDecl/GenericParameter.h"
 #include "panda/collections/Iterator.h"

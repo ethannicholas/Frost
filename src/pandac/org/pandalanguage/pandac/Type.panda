@@ -215,7 +215,7 @@ class Type : Symbol, Key<Type> {
 
     function isClass():Bit {
         match typeKind {
-            when Kind.CLASS, Kind.NULLABLE, Kind.GENERIC:
+            when Kind.CLASS, Kind.NULLABLE, Kind.GENERIC, Kind.GENERIC_PARAMETER:
                 return true
             otherwise:
                 return false

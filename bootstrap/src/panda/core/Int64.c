@@ -3,9 +3,9 @@
 #include "panda/core/Class.h"
 #include "panda/core/Equatable.h"
 #include "panda/core/Bit.h"
+#include "panda/core/Object.h"
 #include "panda/collections/Key.h"
 #include "panda/core/Comparable.h"
-#include "panda/core/Object.h"
 #include "panda/core/String.h"
 panda$core$Int64$wrapper* wrap_panda$core$Int64(panda$core$Int64 self) {
     panda$core$Int64$wrapper* result = (panda$core$Int64$wrapper*) malloc(24);

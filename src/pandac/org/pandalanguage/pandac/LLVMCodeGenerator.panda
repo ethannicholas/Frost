@@ -316,6 +316,19 @@ class LLVMCodeGenerator : CodeGenerator {
             if !f.type.resolved {
                 return
             }
+            if f.type.isClass() {
+                def fCl := compiler.getClass(f.type)
+                if !compiler.isValue(fCl) {
+                    -- If we write the correct type definition here, we end up loading and parsing a
+                    -- ton of otherwise-unused classes, for no other reason than to figure out their
+                    -- type definitions (which we likely never use for anything else). Handling all
+                    -- pointers as opaque i8* pointers massively reduces the number of files we need
+                    -- to parse.
+                    code.append("\{separator}i8*")
+                    separator := ", "
+                    continue
+                }
+            }
             code.append("\{separator}\{type(f.type)}")
             separator := ", "
         }
@@ -1085,9 +1098,9 @@ class LLVMCodeGenerator : CodeGenerator {
         out.printLine("\{classPtrPtr} = getelementptr inbounds \{typeName(m.owner.type())}, " +
                 "\{target}, i64 0, i32 0")
         def classPtr := nextVar()
-        out.printLine("\{classPtr} = load %panda$core$Class*, %panda$core$Class** \{classPtrPtr}")
+        out.printLine("\{classPtr} = load i8*, i8** \{classPtrPtr}")
         def cast := nextVar()
-        out.printLine("\{cast} = bitcast %panda$core$Class* \{classPtr} to \{cc.type}*")
+        out.printLine("\{cast} = bitcast i8* \{classPtr} to \{cc.type}*")
         def ptr := nextVar()
         out.printLine("\{ptr} = getelementptr inbounds \{cc.type}, \{cc.type}* \{cast}, i64 0, " +
                 "i32 \{VTABLE_INDEX}, i64 \{index}")
@@ -1106,11 +1119,13 @@ class LLVMCodeGenerator : CodeGenerator {
         def entry := nextLabel()
         out.printLine("br label %\{entry}")
         createBlock(entry, out)
-        def classPointer := nextVar()
-        out.printLine("\{classPointer} = getelementptr inbounds \{typeName(m.owner.type())}, " +
+        def rawClassPointer := nextVar()
+        out.printLine("\{rawClassPointer} = getelementptr inbounds \{typeName(m.owner.type())}, " +
                 "\{target}, \{SIZE_TYPE} 0, i32 \{CLASS_POINTER_INDEX}")
-        def loadedClass := nextVar()
+        def classPointer := nextVar()
         def classType := typeName(Type.Class())
+        out.printLine("\{classPointer} = bitcast i8** \{rawClassPointer} to \{classType}**")
+        def loadedClass := nextVar()
         out.printLine("\{loadedClass} = load \{classType}*, \{classType}** \{classPointer}")
         def itableFirst := nextVar()
         out.printLine("\{itableFirst} = getelementptr inbounds \{classType}, \{classType}* " +
@@ -1669,8 +1684,8 @@ class LLVMCodeGenerator : CodeGenerator {
         out.printLine("\{classPtr} = getelementptr inbounds \{className}, \{t} \{result}, i64 0, " +
                 "i32 0")
         def cc := getClassConstant(cl)
-        out.printLine("store %panda$core$Class* bitcast(\{cc.type}* \{cc.name} to " +
-                "%panda$core$Class*), %panda$core$Class** \{classPtr}")
+        out.printLine("store i8* bitcast(\{cc.type}* \{cc.name} to " +
+                "i8*), i8** \{classPtr}")
         writeCall(construct.children[0], "\{t} \{result}", out)
         return result
     }
@@ -1717,11 +1732,11 @@ class LLVMCodeGenerator : CodeGenerator {
         assert string != null
         def cc := getClassConstant(string)
         strings.printLine("\{result} = private unnamed_addr constant %panda$core$String { " +
-                "%panda$core$Class* bitcast(\{cc.type}* \{cc.name} to " +
-                "%panda$core$Class*), %panda$core$Int32 insertvalue(%panda$core$Int32 " +
+                "i8* bitcast(\{cc.type}* \{cc.name} to " +
+                "i8*), %panda$core$Int32 insertvalue(%panda$core$Int32 " +
                 "{ i32 undef }, i32 1, 0), %panda$core$Char8* bitcast(\{charsType}* \{chars}" +
                 " to %panda$core$Char8*), %panda$core$Int64 { i64 \{s.utf8().get_count()} }, " +
-                "%panda$core$String* null }")
+                "i8* null }")
         return result
     }
 
@@ -2460,21 +2475,28 @@ class LLVMCodeGenerator : CodeGenerator {
                 return getName(lvalue.payload->Variable)
             when IRNode.Kind.FIELD_REFERENCE:
                 def base := getReference(lvalue.children[0], out)
-                def ptr := nextVar()
+                def raw := nextVar()
                 def cl := compiler.getClass(lvalue.children[0].type)
                 assert cl != null
+                def f := lvalue.payload->FieldDecl
                 def fields := compiler.instanceFields(cl)
                 var index := -1
                 for i in 0 .. fields.get_count() {
-                    if fields[i].name == (lvalue.payload->FieldDecl).name { -- FIXME parens
+                    if fields[i].name == f.name {
                         index := i
                         break
                     }
                 }
                 assert index != -1
-                out.printLine("\{ptr} = getelementptr inbounds \{typeName(cl.type())}, " +
+                out.printLine("\{raw} = getelementptr inbounds \{typeName(cl.type())}, " +
                         "\{typeName(cl.type())}* \{base}, i64 0, i32 \{index}")
-                return ptr
+                if compiler.isValue(f.owner) | (f.type.isClass() &
+                        compiler.isValue(compiler.getClass(f.type))) {
+                    return raw
+                }
+                def result := nextVar()
+                out.printLine("\{result} = bitcast i8** \{raw} to \{type(lvalue.type)}*")
+                return result
             when IRNode.Kind.REUSED_VALUE_DEFINITION:
                 def result := getLValue(lvalue.children[0], out)
                 def reused := nextVar()

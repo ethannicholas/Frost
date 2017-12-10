@@ -2,6 +2,7 @@
 #include "panda/core/Object.h"
 #include "panda/core/Class.h"
 #include "panda/collections/CollectionWriter.h"
+#include "panda/collections/Key.h"
 #include "panda/collections/CollectionView.h"
 #include "panda/collections/Iterable.h"
 #include "panda/collections/Iterator.h"

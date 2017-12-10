@@ -3,8 +3,8 @@
 #include "panda/core/Class.h"
 #include "panda/core/Equatable.h"
 #include "panda/core/Bit.h"
-#include "panda/collections/Key.h"
 #include "panda/core/Object.h"
+#include "panda/collections/Key.h"
 #include "panda/core/Int64.h"
 panda$core$String$Index$wrapper* wrap_panda$core$String$Index(panda$core$String$Index self) {
     panda$core$String$Index$wrapper* result = (panda$core$String$Index$wrapper*) malloc(24);

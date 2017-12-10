@@ -58,7 +58,7 @@ void panda$collections$ImmutableArray$init$panda$collections$ListView$LTpanda$co
     $fn3 $tmp2 = $tmp1->methods[0];
     panda$core$Int64 $tmp4 = $tmp2(((panda$collections$CollectionView*) p_data));
     self->count = $tmp4;
-    self->data = ((panda$core$Object**) malloc(self->count.value * 8));
+    self->data = ((panda$core$Object**) malloc(self->count.value * 12));
     panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp5, ((panda$core$Int64) { 0 }), self->count, ((panda$core$Bit) { false }));
     int64_t $tmp7 = $tmp5.min.value;
     panda$core$Int64 i6 = { $tmp7 };
@@ -126,7 +126,7 @@ panda$collections$ImmutableArray* panda$collections$ImmutableArray$$IDX$panda$co
     }
     panda$core$Int64 $tmp37 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(max34, p_r.min);
     count36 = $tmp37;
-    result38 = ((panda$core$Object**) malloc(count36.value * 8));
+    result38 = ((panda$core$Object**) malloc(count36.value * 12));
     panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp39, ((panda$core$Int64) { 0 }), count36, ((panda$core$Bit) { false }));
     int64_t $tmp41 = $tmp39.min.value;
     panda$core$Int64 i40 = { $tmp41 };

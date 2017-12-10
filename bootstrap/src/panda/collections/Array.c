@@ -84,7 +84,7 @@ void panda$collections$Array$init(panda$collections$Array* self) {
 void panda$collections$Array$init$panda$core$Int64(panda$collections$Array* self, panda$core$Int64 p_capacity) {
     self->count = ((panda$core$Int64) { 0 });
     self->capacity = p_capacity;
-    self->data = ((panda$core$Object**) malloc(p_capacity.value * 8));
+    self->data = ((panda$core$Object**) malloc(p_capacity.value * 12));
 }
 void panda$collections$Array$init$panda$collections$ListView$LTpanda$collections$Array$T$GT(panda$collections$Array* self, panda$collections$ListView* p_list) {
     panda$collections$Iterator* v$Iter6;
@@ -228,7 +228,7 @@ panda$collections$Array* panda$collections$Array$$IDX$panda$core$Range$LTpanda$c
     }
     panda$core$Int64 $tmp70 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(max67, p_r.min);
     count69 = $tmp70;
-    result71 = ((panda$core$Object**) malloc(count69.value * 8));
+    result71 = ((panda$core$Object**) malloc(count69.value * 12));
     panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp72, ((panda$core$Int64) { 0 }), count69, ((panda$core$Bit) { false }));
     int64_t $tmp74 = $tmp72.min.value;
     panda$core$Int64 i73 = { $tmp74 };
@@ -475,7 +475,7 @@ void panda$collections$Array$ensureCapacity$panda$core$Int64(panda$collections$A
     }
     goto $l165;
     $l166:;
-    self->data = ((panda$core$Object**) realloc(self->data, self->capacity.value * 8));
+    self->data = ((panda$core$Object**) realloc(self->data, self->capacity.value * 12));
 }
 panda$core$Int64 panda$collections$Array$get_count$R$panda$core$Int64(panda$collections$Array* self) {
     return self->count;

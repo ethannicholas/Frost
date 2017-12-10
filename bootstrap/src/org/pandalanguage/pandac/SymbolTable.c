@@ -6,6 +6,7 @@
 #include "panda/collections/Array.h"
 #include "org/pandalanguage/pandac/Symbol.h"
 #include "panda/core/String.h"
+#include "panda/collections/Key.h"
 #include "panda/core/Int64.h"
 #include "panda/core/Bit.h"
 #include "org/pandalanguage/pandac/MethodDecl.h"

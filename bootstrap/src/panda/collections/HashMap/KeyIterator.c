@@ -2,6 +2,7 @@
 #include "panda/core/Object.h"
 #include "panda/core/Class.h"
 #include "panda/collections/Iterator.h"
+#include "panda/collections/Key.h"
 #include "panda/collections/HashMap.h"
 #include "panda/collections/HashMap/EntryIterator.h"
 #include "panda/core/Bit.h"

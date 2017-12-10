@@ -37,6 +37,7 @@
 #include "org/pandalanguage/pandac/IRNode.h"
 #include "org/pandalanguage/pandac/ASTNode.h"
 #include "panda/io/Console.h"
+#include "panda/collections/Key.h"
 #include "panda/collections/ImmutableArray.h"
 #include "panda/io/File.h"
 #include "panda/collections/Set.h"

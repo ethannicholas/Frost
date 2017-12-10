@@ -4,8 +4,8 @@
 #include "panda/collections/Key.h"
 #include "panda/core/Comparable.h"
 #include "panda/core/Bit.h"
-#include "panda/core/Equatable.h"
 #include "panda/core/Object.h"
+#include "panda/core/Equatable.h"
 #include "panda/core/Int64.h"
 #include "panda/core/String.h"
 panda$core$Int32$wrapper* wrap_panda$core$Int32(panda$core$Int32 self) {
