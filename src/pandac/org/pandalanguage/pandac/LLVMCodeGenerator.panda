@@ -2015,23 +2015,8 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     method writeSimpleRangeFor(f:IRNode, out:IndentedOutputStream) {
-        -- I am acutely aware of how horrific this looks.
-        --
-        -- There's no easy way to produce clean output here, since we have to handle different step
-        -- values, different loop directions, and both inclusive and exclusive ranges, all of which
-        -- could potentially be determined at runtime. It gets even uglier when you consider the
-        -- difficulty of handling the extremes of the numeric types. You can't just add 1 and then
-        -- check to see if it's in range when the limit is MAX_INT, because you'll overflow and end
-        -- up with an infinite loop. You also can't just check for being equal to the limit before
-        -- adding the step, because with a step bigger than 1 (or smaller than -1) you might need to
-        -- stop before actually hitting the end. So you instead check the difference between the
-        -- current index and the limit, but even there you need to be careful because it could
-        -- overflow in a signed test, and we need to handle null values, and... ugh, it's
-        -- surprisingly messy and results in a ton of code.
-        --
-        -- Fortunately, we can just write incredibly awful-but-straightforward code and let LLVM
-        -- optimize it to something sensible if it turns out the values are known at compile time.
-        -- This works remarkably well, because LLVM is awesome.
+        -- this could probably be simplified quite a bit; it's just a cut-down version of
+        -- writeSteppedRangeFor
         assert f.kind = IRNode.Kind.RANGE_FOR
         assert f.children.get_count() = 3
         def target := f.children[0]
@@ -2072,9 +2057,6 @@ class LLVMCodeGenerator : CodeGenerator {
         def end := nextVar()
         out.printLine("\{end} = extractvalue \{range}, 1, 0")
 
-        -- extract step value from range
-        def step := "1"
-
         -- extract inclusive / exclusive from range
         def inclusive := nextVar()
         out.printLine("\{inclusive} = extractvalue \{range}, 2, 0")
@@ -2095,16 +2077,6 @@ class LLVMCodeGenerator : CodeGenerator {
             assert t.name.startsWith("panda.core.UInt") | t.name.startsWith("panda.core.Char")
             signPrefix := "u"
         }
-        def direction:String
-        if signPrefix = "s" {
-            direction := nextVar()
-            out.printLine("\{direction} = icmp sge \{numberType} \{step}, 0")
-        }
-        else {
-            direction := "1"
-        }
-        out.printLine("br i1 \{direction}, label %\{forwardEntry}, label %\{backwardEntry}")
-        createBlock(forwardEntry, out)
         def forwardEntryInclusive := nextLabel()
         def forwardEntryExclusive := nextLabel()
         out.printLine("br i1 \{inclusive}, label %\{forwardEntryInclusive}, " +
@@ -2119,21 +2091,6 @@ class LLVMCodeGenerator : CodeGenerator {
         out.printLine("\{forwardEntryExclusiveTest} = icmp \{signPrefix}lt \{numberType} " +
                 "\{start}, \{end}")
         out.printLine("br i1 \{forwardEntryExclusiveTest}, label %\{loopStart}, label %\{loopEnd}")
-        createBlock(backwardEntry, out)
-        def backwardEntryInclusive := nextLabel()
-        def backwardEntryExclusive := nextLabel()
-        out.printLine("br i1 \{inclusive}, label %\{backwardEntryInclusive}, " +
-                "label %\{backwardEntryExclusive}")
-        createBlock(backwardEntryInclusive, out)
-        def backwardEntryInclusiveTest := nextVar()
-        out.printLine("\{backwardEntryInclusiveTest} = icmp \{signPrefix}ge \{numberType} " +
-                "\{start}, \{end}")
-        out.printLine("br i1 \{backwardEntryInclusiveTest}, label %\{loopStart}, label %\{loopEnd}")
-        createBlock(backwardEntryExclusive, out)
-        def backwardEntryExclusiveTest := nextVar()
-        out.printLine("\{backwardEntryExclusiveTest} = icmp \{signPrefix}gt \{numberType} " +
-                "\{start}, \{end}")
-        out.printLine("br i1 \{backwardEntryExclusiveTest}, label %\{loopStart}, label %\{loopEnd}")
         createBlock(loopStart, out)
         def indexValue := nextVar()
         out.printLine("\{indexValue} = load \{numberType}, \{numberType}* \{indexValuePtr}")
@@ -2143,14 +2100,6 @@ class LLVMCodeGenerator : CodeGenerator {
         }
         createBlock(loopTest, out)
         def loopInc := nextLabel()
-        -- beginning of loop test, determine direction
-        def forwardLabel := nextLabel()
-        def backwardLabel := nextLabel()
-        out.printLine("br i1 \{direction}, label %\{forwardLabel}, label %\{backwardLabel}")
-
-        -- forward loop; perform the test by subtracting index from end and then comparing to step,
-        -- to avoid overflows near the maximum value
-        createBlock(forwardLabel, out)
         def forwardDelta := nextVar()
         out.printLine("\{forwardDelta} = sub \{numberType} \{end}, \{indexValue}")
 
@@ -2165,46 +2114,18 @@ class LLVMCodeGenerator : CodeGenerator {
         def forwardInclusiveTest := nextVar()
         -- always use unsigned comparison to avoid overflow; we know both the delta and the step are
         -- the same sign
-        out.printLine("\{forwardInclusiveTest} = icmp uge \{numberType} \{forwardDelta}, \{step}")
+        out.printLine("\{forwardInclusiveTest} = icmp uge \{numberType} \{forwardDelta}, 1")
         out.printLine("br i1 \{forwardInclusiveTest}, label %\{loopInc}, label %\{loopEnd}")
         createBlock(forwardExclusiveLabel, out)
 
         -- forward exclusive test
         def forwardExclusiveTest := nextVar()
-        out.printLine("\{forwardExclusiveTest} = icmp ugt \{numberType} \{forwardDelta}, \{step}")
+        out.printLine("\{forwardExclusiveTest} = icmp ugt \{numberType} \{forwardDelta}, 1")
         out.printLine("br i1 \{forwardExclusiveTest}, label %\{loopInc}, label %\{loopEnd}")
-
-        -- backward loop; perform the test by subtracting end from index and then comparing to
-        -- -step, to avoid overflows near the minimum value
-        createBlock(backwardLabel, out)
-        def backwardDelta := nextVar()
-        out.printLine("\{backwardDelta} = sub \{numberType} \{indexValue}, \{end}")
-        def negStep := nextVar()
-        out.printLine("\{negStep} = sub \{numberType} 0, \{step}")
-
-        -- backward loop; determine inclusive / exclusive
-        def backwardInclusiveLabel := nextLabel()
-        def backwardExclusiveLabel := nextLabel()
-        out.printLine("br i1 \{inclusive}, label %\{backwardInclusiveLabel}, label %" +
-                backwardExclusiveLabel)
-
-        -- backward inclusive test
-        createBlock(backwardInclusiveLabel, out)
-        def backwardInclusiveTest := nextVar()
-        out.printLine("\{backwardInclusiveTest} = icmp uge \{numberType} \{backwardDelta}, " +
-                negStep)
-        out.printLine("br i1 \{backwardInclusiveTest}, label %\{loopInc}, label %\{loopEnd}")
-        createBlock(backwardExclusiveLabel, out)
-
-        -- backward exclusive test
-        def backwardExclusiveTest := nextVar()
-        out.printLine("\{backwardExclusiveTest} = icmp ugt \{numberType} \{backwardDelta}, " +
-                negStep)
-        out.printLine("br i1 \{backwardExclusiveTest}, label %\{loopInc}, label %\{loopEnd}")
 
         createBlock(loopInc, out)
         def inc := nextVar()
-        out.printLine("\{inc} = add \{numberType} \{indexValue}, \{step}")
+        out.printLine("\{inc} = add \{numberType} \{indexValue}, 1")
         def incStruct := nextVar()
         out.printLine("\{incStruct} = insertvalue \{indexType} { \{numberType} undef")
         out.printLine(" }, \{numberType} \{inc}, 0")

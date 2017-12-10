@@ -10,7 +10,7 @@
 
 panda$core$MutableString$class_type panda$core$MutableString$class = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Object$class, NULL, { panda$core$MutableString$convert$R$panda$core$String, panda$core$MutableString$cleanup, panda$core$MutableString$append$panda$core$Char8, panda$core$MutableString$append$panda$core$String, panda$core$MutableString$append$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64$panda$core$Int64, panda$core$MutableString$append$panda$core$Object, panda$core$MutableString$ensureCapacity$panda$core$Int64, panda$core$MutableString$clear} };
 
-typedef panda$core$String* (*$fn69)(panda$core$Object*);
+typedef panda$core$String* (*$fn51)(panda$core$Object*);
 
 
 void panda$core$MutableString$init(panda$core$MutableString* self) {
@@ -44,120 +44,84 @@ void panda$core$MutableString$append$panda$core$String(panda$core$MutableString*
     panda$core$Int64 i6 = { $tmp7 };
     int64_t $tmp9 = $tmp5.max.value;
     bool $tmp10 = $tmp5.inclusive.value;
-    bool $tmp17 = 1 > 0;
-    if ($tmp17) goto $l15; else goto $l16;
-    $l15:;
-    if ($tmp10) goto $l18; else goto $l19;
-    $l18:;
+    if ($tmp10) goto $l17; else goto $l18;
+    $l17:;
     if ($tmp7 <= $tmp9) goto $l11; else goto $l13;
-    $l19:;
+    $l18:;
     if ($tmp7 < $tmp9) goto $l11; else goto $l13;
-    $l16:;
-    if ($tmp10) goto $l20; else goto $l21;
-    $l20:;
-    if ($tmp7 >= $tmp9) goto $l11; else goto $l13;
-    $l21:;
-    if ($tmp7 > $tmp9) goto $l11; else goto $l13;
     $l11:;
     {
-        panda$core$Int64 $tmp23 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->length, i6);
-        self->data[$tmp23.value] = p_s->data[i6.value];
+        panda$core$Int64 $tmp19 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->length, i6);
+        self->data[$tmp19.value] = p_s->data[i6.value];
     }
     $l14:;
-    if ($tmp17) goto $l25; else goto $l26;
-    $l25:;
-    int64_t $tmp27 = $tmp9 - i6.value;
-    if ($tmp10) goto $l28; else goto $l29;
-    $l28:;
-    if ($tmp27 >= 1) goto $l24; else goto $l13;
-    $l29:;
-    if ($tmp27 > 1) goto $l24; else goto $l13;
-    $l26:;
-    int64_t $tmp31 = i6.value - $tmp9;
-    if ($tmp10) goto $l32; else goto $l33;
-    $l32:;
-    if ($tmp31 >= -1) goto $l24; else goto $l13;
-    $l33:;
-    if ($tmp31 > -1) goto $l24; else goto $l13;
-    $l24:;
+    int64_t $tmp21 = $tmp9 - i6.value;
+    if ($tmp10) goto $l22; else goto $l23;
+    $l22:;
+    if ($tmp21 >= 1) goto $l20; else goto $l13;
+    $l23:;
+    if ($tmp21 > 1) goto $l20; else goto $l13;
+    $l20:;
     i6.value += 1;
     goto $l11;
     $l13:;
-    panda$core$Int64 $tmp35 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->length, p_s->_length);
-    self->length = $tmp35;
+    panda$core$Int64 $tmp26 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->length, p_s->_length);
+    self->length = $tmp26;
 }
 void panda$core$MutableString$append$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64$panda$core$Int64(panda$core$MutableString* self, panda$core$Char8* p_chars, panda$core$Int64 p_offset, panda$core$Int64 p_count) {
-    panda$core$Range$LTpanda$core$Int64$GT $tmp37;
-    panda$core$Int64 $tmp36 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->length, p_count);
-    panda$core$MutableString$ensureCapacity$panda$core$Int64(self, $tmp36);
-    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp37, ((panda$core$Int64) { 0 }), p_count, ((panda$core$Bit) { false }));
-    int64_t $tmp39 = $tmp37.min.value;
-    panda$core$Int64 i38 = { $tmp39 };
-    int64_t $tmp41 = $tmp37.max.value;
-    bool $tmp42 = $tmp37.inclusive.value;
-    bool $tmp49 = 1 > 0;
-    if ($tmp49) goto $l47; else goto $l48;
-    $l47:;
-    if ($tmp42) goto $l50; else goto $l51;
-    $l50:;
-    if ($tmp39 <= $tmp41) goto $l43; else goto $l45;
-    $l51:;
-    if ($tmp39 < $tmp41) goto $l43; else goto $l45;
-    $l48:;
-    if ($tmp42) goto $l52; else goto $l53;
-    $l52:;
-    if ($tmp39 >= $tmp41) goto $l43; else goto $l45;
-    $l53:;
-    if ($tmp39 > $tmp41) goto $l43; else goto $l45;
-    $l43:;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp28;
+    panda$core$Int64 $tmp27 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->length, p_count);
+    panda$core$MutableString$ensureCapacity$panda$core$Int64(self, $tmp27);
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp28, ((panda$core$Int64) { 0 }), p_count, ((panda$core$Bit) { false }));
+    int64_t $tmp30 = $tmp28.min.value;
+    panda$core$Int64 i29 = { $tmp30 };
+    int64_t $tmp32 = $tmp28.max.value;
+    bool $tmp33 = $tmp28.inclusive.value;
+    if ($tmp33) goto $l40; else goto $l41;
+    $l40:;
+    if ($tmp30 <= $tmp32) goto $l34; else goto $l36;
+    $l41:;
+    if ($tmp30 < $tmp32) goto $l34; else goto $l36;
+    $l34:;
     {
-        panda$core$Int64 $tmp55 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->length, i38);
-        panda$core$Int64 $tmp56 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(p_offset, i38);
-        self->data[$tmp55.value] = p_chars[$tmp56.value];
+        panda$core$Int64 $tmp42 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->length, i29);
+        panda$core$Int64 $tmp43 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(p_offset, i29);
+        self->data[$tmp42.value] = p_chars[$tmp43.value];
     }
+    $l37:;
+    int64_t $tmp45 = $tmp32 - i29.value;
+    if ($tmp33) goto $l46; else goto $l47;
     $l46:;
-    if ($tmp49) goto $l58; else goto $l59;
-    $l58:;
-    int64_t $tmp60 = $tmp41 - i38.value;
-    if ($tmp42) goto $l61; else goto $l62;
-    $l61:;
-    if ($tmp60 >= 1) goto $l57; else goto $l45;
-    $l62:;
-    if ($tmp60 > 1) goto $l57; else goto $l45;
-    $l59:;
-    int64_t $tmp64 = i38.value - $tmp41;
-    if ($tmp42) goto $l65; else goto $l66;
-    $l65:;
-    if ($tmp64 >= -1) goto $l57; else goto $l45;
-    $l66:;
-    if ($tmp64 > -1) goto $l57; else goto $l45;
-    $l57:;
-    i38.value += 1;
-    goto $l43;
-    $l45:;
-    panda$core$Int64 $tmp68 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->length, p_count);
-    self->length = $tmp68;
+    if ($tmp45 >= 1) goto $l44; else goto $l36;
+    $l47:;
+    if ($tmp45 > 1) goto $l44; else goto $l36;
+    $l44:;
+    i29.value += 1;
+    goto $l34;
+    $l36:;
+    panda$core$Int64 $tmp50 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->length, p_count);
+    self->length = $tmp50;
 }
 void panda$core$MutableString$append$panda$core$Object(panda$core$MutableString* self, panda$core$Object* p_o) {
-    panda$core$String* $tmp70 = (($fn69) p_o->$class->vtable[0])(p_o);
-    panda$core$MutableString$append$panda$core$String(self, $tmp70);
+    panda$core$String* $tmp52 = (($fn51) p_o->$class->vtable[0])(p_o);
+    panda$core$MutableString$append$panda$core$String(self, $tmp52);
 }
 void panda$core$MutableString$ensureCapacity$panda$core$Int64(panda$core$MutableString* self, panda$core$Int64 p_newSize) {
-    panda$core$Bit $tmp71 = panda$core$Int64$$GE$panda$core$Int64$R$panda$core$Bit(self->maxLength, p_newSize);
-    if ($tmp71.value) {
+    panda$core$Bit $tmp53 = panda$core$Int64$$GE$panda$core$Int64$R$panda$core$Bit(self->maxLength, p_newSize);
+    if ($tmp53.value) {
     {
         return;
     }
     }
-    $l72:;
-    panda$core$Bit $tmp74 = panda$core$Int64$$LT$panda$core$Int64$R$panda$core$Bit(self->maxLength, p_newSize);
-    if (!$tmp74.value) goto $l73;
+    $l54:;
+    panda$core$Bit $tmp56 = panda$core$Int64$$LT$panda$core$Int64$R$panda$core$Bit(self->maxLength, p_newSize);
+    if (!$tmp56.value) goto $l55;
     {
-        panda$core$Int64 $tmp75 = panda$core$Int64$$MUL$panda$core$Int64$R$panda$core$Int64(self->maxLength, ((panda$core$Int64) { 2 }));
-        self->maxLength = $tmp75;
+        panda$core$Int64 $tmp57 = panda$core$Int64$$MUL$panda$core$Int64$R$panda$core$Int64(self->maxLength, ((panda$core$Int64) { 2 }));
+        self->maxLength = $tmp57;
     }
-    goto $l72;
-    $l73:;
+    goto $l54;
+    $l55:;
     self->data = ((panda$core$Char8*) realloc(self->data, self->maxLength.value * 1));
 }
 void panda$core$MutableString$clear(panda$core$MutableString* self) {
@@ -166,56 +130,38 @@ void panda$core$MutableString$clear(panda$core$MutableString* self) {
     self->maxLength = ((panda$core$Int64) { 16 });
 }
 panda$core$String* panda$core$MutableString$convert$R$panda$core$String(panda$core$MutableString* self) {
-    panda$core$Char8* result76;
-    panda$core$Range$LTpanda$core$Int64$GT $tmp77;
-    result76 = ((panda$core$Char8*) malloc(self->length.value * 1));
-    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp77, ((panda$core$Int64) { 0 }), self->length, ((panda$core$Bit) { false }));
-    int64_t $tmp79 = $tmp77.min.value;
-    panda$core$Int64 i78 = { $tmp79 };
-    int64_t $tmp81 = $tmp77.max.value;
-    bool $tmp82 = $tmp77.inclusive.value;
-    bool $tmp89 = 1 > 0;
-    if ($tmp89) goto $l87; else goto $l88;
-    $l87:;
-    if ($tmp82) goto $l90; else goto $l91;
-    $l90:;
-    if ($tmp79 <= $tmp81) goto $l83; else goto $l85;
-    $l91:;
-    if ($tmp79 < $tmp81) goto $l83; else goto $l85;
-    $l88:;
-    if ($tmp82) goto $l92; else goto $l93;
-    $l92:;
-    if ($tmp79 >= $tmp81) goto $l83; else goto $l85;
-    $l93:;
-    if ($tmp79 > $tmp81) goto $l83; else goto $l85;
-    $l83:;
+    panda$core$Char8* result58;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp59;
+    result58 = ((panda$core$Char8*) malloc(self->length.value * 1));
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp59, ((panda$core$Int64) { 0 }), self->length, ((panda$core$Bit) { false }));
+    int64_t $tmp61 = $tmp59.min.value;
+    panda$core$Int64 i60 = { $tmp61 };
+    int64_t $tmp63 = $tmp59.max.value;
+    bool $tmp64 = $tmp59.inclusive.value;
+    if ($tmp64) goto $l71; else goto $l72;
+    $l71:;
+    if ($tmp61 <= $tmp63) goto $l65; else goto $l67;
+    $l72:;
+    if ($tmp61 < $tmp63) goto $l65; else goto $l67;
+    $l65:;
     {
-        result76[i78.value] = self->data[i78.value];
+        result58[i60.value] = self->data[i60.value];
     }
-    $l86:;
-    if ($tmp89) goto $l96; else goto $l97;
-    $l96:;
-    int64_t $tmp98 = $tmp81 - i78.value;
-    if ($tmp82) goto $l99; else goto $l100;
-    $l99:;
-    if ($tmp98 >= 1) goto $l95; else goto $l85;
-    $l100:;
-    if ($tmp98 > 1) goto $l95; else goto $l85;
-    $l97:;
-    int64_t $tmp102 = i78.value - $tmp81;
-    if ($tmp82) goto $l103; else goto $l104;
-    $l103:;
-    if ($tmp102 >= -1) goto $l95; else goto $l85;
-    $l104:;
-    if ($tmp102 > -1) goto $l95; else goto $l85;
-    $l95:;
-    i78.value += 1;
-    goto $l83;
-    $l85:;
-    panda$core$String* $tmp106 = (panda$core$String*) malloc(40);
-    $tmp106->$class = (panda$core$Class*) &panda$core$String$class;
-    $tmp106->refCount.value = 1;
-    panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp106, result76, self->length);
-    return $tmp106;
+    $l68:;
+    int64_t $tmp74 = $tmp63 - i60.value;
+    if ($tmp64) goto $l75; else goto $l76;
+    $l75:;
+    if ($tmp74 >= 1) goto $l73; else goto $l67;
+    $l76:;
+    if ($tmp74 > 1) goto $l73; else goto $l67;
+    $l73:;
+    i60.value += 1;
+    goto $l65;
+    $l67:;
+    panda$core$String* $tmp79 = (panda$core$String*) malloc(40);
+    $tmp79->$class = (panda$core$Class*) &panda$core$String$class;
+    $tmp79->refCount.value = 1;
+    panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp79, result58, self->length);
+    return $tmp79;
 }
 
