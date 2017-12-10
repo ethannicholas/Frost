@@ -52,6 +52,13 @@ class Array<T> : List<T> {
         }
     }
 
+    @private
+    init(data:Pointer<T>, count:Int) {
+        self.data := data
+        self.count := count
+        self.capacity := count
+    }
+
     @override
     method cleanup() {
         data.destroy()
@@ -85,49 +92,49 @@ class Array<T> : List<T> {
     without affecting the original. It is not, however, a deep copy, and thus both arrays will refer
     to the same objects.
     ================================================================================================
-    function [](r:Range<Int?>):Array<T> {
-        def step := 1
-
-        def current:Int
-        if r.min != null {
-            current := r.min
+    function [](r:Range<Int>):Array<T> {
+        var max := r.max
+        if r.inclusive {
+            max += 1
         }
-        else if step > 0 {
-            current := 0
+        def count := max - r.min
+        def result := Pointer<T>.alloc(count)
+        for i in 0 .. count {
+            result[i] := self[r.min + i]
+        }
+        return Array<T>(result, count)
+
+    }
+
+    ================================================================================================
+    Returns a slice of the array, containing all of the elements specified by the range. The slice
+    is an independent copy of the array and elements may be added to and removed from the copy
+    without affecting the original. It is not, however, a deep copy, and thus both arrays will refer
+    to the same objects.
+
+    As usual for `Range`, a null `min` starts from the beginning of the array, and a null `max` ends
+    at the end of the array.
+    ================================================================================================
+    function [](r:Range<Int?>):Array<T> {
+        def start:Int
+        if r.min != null {
+            start := r.min
         }
         else {
-            current := get_count() - 1
+            start := 0
         }
 
-        def end:Int
+        var end:Int
         if r.max != null {
             end := r.max
         }
-        else if step > 0 {
+        else {
             end := get_count()
-        }
-        else {
-            end := 0
-        }
-
-        def result := Array<T>()
-        if step > 0 {
-            while current < end {
-                result.add(self[current])
-                current += step
+            if r.inclusive {
+                end -= 1
             }
         }
-        else {
-            assert step < 0
-            while current > end {
-                result.add(self[current])
-                current -= step
-            }
-        }
-        if (r.inclusive | r.max = null) & current = end & end < get_count() {
-            result.add(self[current])
-        }
-        return result
+        return self[Range<Int>(start, end, r.inclusive)]
     }
 
     ================================================================================================
