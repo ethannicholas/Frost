@@ -14,7 +14,7 @@
 #include "panda/core/Range.LTpanda/core/Int64.GT.h"
 #include "panda/collections/Iterator.h"
 #include "panda/collections/Iterable.h"
-#include "panda/core/Range.LTpanda/core/String/Index.Q.GT.h"
+#include "panda/core/Range.LTpanda/core/String/Index.GT.h"
 #include "panda/core/String/Index.h"
 #include "panda/core/Range.LTpanda/core/Int64.Q.GT.h"
 
@@ -309,7 +309,7 @@ panda$core$String* org$pandalanguage$pandac$ASTNode$convert$R$panda$core$String(
     panda$collections$Iterator* child$Iter263;
     org$pandalanguage$pandac$ASTNode* child275;
     panda$core$String* c280;
-    panda$core$Range$LTpanda$core$String$Index$Q$GT $tmp289;
+    panda$core$Range$LTpanda$core$String$Index$GT $tmp289;
     panda$core$MutableString* result303;
     panda$core$String* separator309;
     panda$collections$Iterator* c$Iter311;
@@ -778,8 +778,8 @@ panda$core$String* org$pandalanguage$pandac$ASTNode$convert$R$panda$core$String(
                         panda$core$String$Index $tmp291 = panda$core$String$next$panda$core$String$Index$R$panda$core$String$Index(c280, $tmp290);
                         panda$core$String$Index $tmp292 = panda$core$String$end$R$panda$core$String$Index(c280);
                         panda$core$String$Index $tmp293 = panda$core$String$previous$panda$core$String$Index$R$panda$core$String$Index(c280, $tmp292);
-                        panda$core$Range$LTpanda$core$String$Index$Q$GT$init$panda$core$String$Index$Q$panda$core$String$Index$Q$panda$core$Bit(&$tmp289, ((panda$core$String$Index$nullable) { $tmp291, true }), ((panda$core$String$Index$nullable) { $tmp293, true }), ((panda$core$Bit) { false }));
-                        panda$core$String* $tmp294 = panda$core$String$$IDX$panda$core$Range$LTpanda$core$String$Index$Q$GT$R$panda$core$String(c280, $tmp289);
+                        panda$core$Range$LTpanda$core$String$Index$GT$init$panda$core$String$Index$panda$core$String$Index$panda$core$Bit(&$tmp289, $tmp291, $tmp293, ((panda$core$Bit) { false }));
+                        panda$core$String* $tmp294 = panda$core$String$$IDX$panda$core$Range$LTpanda$core$String$Index$GT$R$panda$core$String(c280, $tmp289);
                         panda$core$MutableString$append$panda$core$String(result259, $tmp294);
                     }
                     }

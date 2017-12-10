@@ -25,7 +25,8 @@ class Compiler : ErrorReporter {
         }
     }
 
-    constant NULLABLE_CAST_COST := 1
+    constant NONNULLABLE_TO_NULLABLE_CAST_COST := 1
+    constant NULLABLE_TO_NONNULLABLE_CAST_COST := 2
 
     def settings:Settings
 
@@ -149,6 +150,10 @@ class Compiler : ErrorReporter {
         root.add(Alias(name[name.next(name.lastIndexOf("."))..], name, Position()))
     }
 
+    ================================================================================================
+    Attempts to locate a class with the given, possibly not-fully-qualified, class name. Returns
+    null and does not report any errors on failure.
+    ================================================================================================
     method tryResolveClass(name:String):ClassDecl? {
         if currentClass.get_count() > 0 {
             def alias := currentClass.peek().aliases[name]
@@ -179,9 +184,23 @@ class Compiler : ErrorReporter {
                 result := getClass((rootAlias->Alias).fullName) -- FIXME parens
             }
         }
+        if result = null {
+            def index := name.lastIndexOf(".")
+            if index != null {
+                -- could be an inner class name; see if we can locate an enclosing class
+                def parent := tryResolveClass(name[..index])
+                if parent != null {
+                    result := getClass(parent.name + name[index..])
+                }
+            }
+        }
         return result
     }
 
+    ================================================================================================
+    Verifies that a type uses the correct number and kind of generic parameters for the class it
+    refers to. Reports error(s) and returns false if the type is not valid.
+    ================================================================================================
     method checkGenericParameters(position:Position, cl:ClassDecl, type:Type):Bit {
         resolve(cl)
         assert type.resolved
@@ -474,6 +493,10 @@ class Compiler : ErrorReporter {
         return result
     }
 
+    ================================================================================================
+    Attempts to load the class with the given fully-qualified name. Returns null on failure, without
+    reporting an error.
+    ================================================================================================
     method getClass(fullName:String):ClassDecl? {
         var result := classes[fullName]
         if result = null {
@@ -934,7 +957,7 @@ class Compiler : ErrorReporter {
             if result = null {
                 return null
             }
-            return result + NULLABLE_CAST_COST
+            return result + NULLABLE_TO_NONNULLABLE_CAST_COST
         }
         match target.typeKind {
             when Type.Kind.NULLABLE:
@@ -942,7 +965,7 @@ class Compiler : ErrorReporter {
                 if result = null {
                     return null
                 }
-                return result + NULLABLE_CAST_COST
+                return result + NONNULLABLE_TO_NULLABLE_CAST_COST
             when Type.Kind.GENERIC_PARAMETER:
                 return null
             when Type.Kind.BUILTIN_INT, Type.Kind.BUILTIN_UINT:
@@ -1033,7 +1056,7 @@ class Compiler : ErrorReporter {
                 if expr.type.typeKind = Type.Kind.NULLABLE {
                     return cost
                 }
-                return cost + NULLABLE_CAST_COST
+                return cost + NONNULLABLE_TO_NULLABLE_CAST_COST
             when Type.Kind.GENERIC_PARAMETER:
                 return coercionCost(expr, target.parameter.bound)
         }
@@ -1072,10 +1095,13 @@ class Compiler : ErrorReporter {
                     }
                     if expr.children[0].kind = IRNode.Kind.NULL &
                             expr.children[1].kind = IRNode.Kind.NULL {
-                        if !target.subtypes[1].isNumber() {
-                            return 0
+                        if target.subtypes[1].typeKind = Type.Kind.NULLABLE {
+                            if target.subtypes[1].subtypes[0].isNumber() {
+                                return 0
+                            }
+                            return 1
                         }
-                        return 1
+                        return null
                     }
                     assert target.typeKind = Type.Kind.GENERIC
                     def cost1 := coercionCost(expr.children[0], target.subtypes[1])
@@ -1092,23 +1118,38 @@ class Compiler : ErrorReporter {
                     if expr.children.get_count() != 3 {
                         return null
                     }
+                    var cost:Int
                     if expr.children[0].kind = IRNode.Kind.NULL &
                             expr.children[1].kind = IRNode.Kind.NULL {
-                        if !target.subtypes[1].isNumber() {
-                            return 0
+                        if target.subtypes[1].typeKind = Type.Kind.NULLABLE {
+                            if target.subtypes[1].subtypes[0].isNumber() {
+                                cost := 0
+                            }
+                            else {
+                                cost := 1
+                            }
                         }
-                        return 1
+                        else {
+                            return null
+                        }
                     }
-                    assert target.typeKind = Type.Kind.GENERIC
-                    def cost1 := coercionCost(expr.children[0], target.subtypes[1])
-                    if cost1 = null {
+                    else {
+                        assert target.typeKind = Type.Kind.GENERIC
+                        def cost1 := coercionCost(expr.children[0], target.subtypes[1])
+                        if cost1 = null {
+                            return null
+                        }
+                        def cost2 := coercionCost(expr.children[1], target.subtypes[1])
+                        if cost2 = null {
+                            return null
+                        }
+                        cost := cost1 + cost2
+                    }
+                    def cost3 := coercionCost(expr.children[2], target.subtypes[2])
+                    if cost3 = null {
                         return null
                     }
-                    def cost2 := coercionCost(expr.children[1], target.subtypes[1])
-                    if cost2 = null {
-                        return null
-                    }
-                    return cost1 + cost2
+                    return cost + cost3
                 }
                 return coercionCost(variableType(expr), target)
             when IRNode.Kind.UNRESOLVED_INDEX:
@@ -3149,7 +3190,7 @@ class Compiler : ErrorReporter {
                 return getConstantInt(v.initialValue)
             otherwise:
                assert false
-        }        
+        }
     }
 
 

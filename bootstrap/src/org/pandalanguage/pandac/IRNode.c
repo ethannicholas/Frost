@@ -13,7 +13,7 @@
 #include "panda/core/MutableString.h"
 #include "panda/collections/Iterator.h"
 #include "panda/collections/Iterable.h"
-#include "panda/core/Range.LTpanda/core/String/Index.Q.GT.h"
+#include "panda/core/Range.LTpanda/core/String/Index.GT.h"
 #include "panda/core/String/Index.h"
 #include "org/pandalanguage/pandac/Symbol.h"
 #include "org/pandalanguage/pandac/MethodRef.h"
@@ -210,7 +210,7 @@ panda$core$String* org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(o
     panda$collections$Iterator* child$Iter40;
     org$pandalanguage$pandac$IRNode* child52;
     panda$core$String* c57;
-    panda$core$Range$LTpanda$core$String$Index$Q$GT $tmp66;
+    panda$core$Range$LTpanda$core$String$Index$GT $tmp66;
     panda$core$MutableString* result215;
     switch (self->kind.value) {
         case 1000:
@@ -260,8 +260,8 @@ panda$core$String* org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(o
                         panda$core$String$Index $tmp68 = panda$core$String$next$panda$core$String$Index$R$panda$core$String$Index(c57, $tmp67);
                         panda$core$String$Index $tmp69 = panda$core$String$end$R$panda$core$String$Index(c57);
                         panda$core$String$Index $tmp70 = panda$core$String$previous$panda$core$String$Index$R$panda$core$String$Index(c57, $tmp69);
-                        panda$core$Range$LTpanda$core$String$Index$Q$GT$init$panda$core$String$Index$Q$panda$core$String$Index$Q$panda$core$Bit(&$tmp66, ((panda$core$String$Index$nullable) { $tmp68, true }), ((panda$core$String$Index$nullable) { $tmp70, true }), ((panda$core$Bit) { false }));
-                        panda$core$String* $tmp71 = panda$core$String$$IDX$panda$core$Range$LTpanda$core$String$Index$Q$GT$R$panda$core$String(c57, $tmp66);
+                        panda$core$Range$LTpanda$core$String$Index$GT$init$panda$core$String$Index$panda$core$String$Index$panda$core$Bit(&$tmp66, $tmp68, $tmp70, ((panda$core$Bit) { false }));
+                        panda$core$String* $tmp71 = panda$core$String$$IDX$panda$core$Range$LTpanda$core$String$Index$GT$R$panda$core$String(c57, $tmp66);
                         panda$core$MutableString$append$panda$core$String(result36, $tmp71);
                     }
                     }
@@ -527,8 +527,8 @@ panda$core$String* org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(o
                 panda$core$MutableString$append$panda$core$Object(result215, ((panda$core$Object*) ((org$pandalanguage$pandac$IRNode*) $tmp226)));
             }
             }
-            panda$core$Object* $tmp227 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(self->children, ((panda$core$Int64) { 2 }));
-            panda$core$Bit $tmp228 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit(((org$pandalanguage$pandac$IRNode*) $tmp227)->kind, ((panda$core$Int64) { 1030 }));
+            panda$core$Int64 $tmp227 = panda$collections$Array$get_count$R$panda$core$Int64(self->children);
+            panda$core$Bit $tmp228 = panda$core$Int64$$GT$panda$core$Int64$R$panda$core$Bit($tmp227, ((panda$core$Int64) { 2 }));
             if ($tmp228.value) {
             {
                 panda$core$MutableString$append$panda$core$String(result215, &$s229);

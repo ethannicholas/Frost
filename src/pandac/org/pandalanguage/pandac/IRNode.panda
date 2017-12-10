@@ -215,7 +215,7 @@ class IRNode {
                 if children[1].kind != IRNode.Kind.NULL {
                     result.append(children[1])
                 }
-                if children[2].kind != IRNode.Kind.NULL {
+                if children.get_count() > 2 {
                     result.append(" by ")
                     result.append(children[2])
                 }

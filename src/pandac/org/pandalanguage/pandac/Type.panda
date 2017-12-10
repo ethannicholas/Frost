@@ -276,6 +276,12 @@ class Type : Symbol, Key<Type> {
         if isNumber() & other = IntLiteral() {
             return self
         }
+        if typeKind = Kind.NULLABLE {
+            return subtypes[0].union(other).nullable()
+        }
+        if other.typeKind = Kind.NULLABLE {
+            return union(other.subtypes[0]).nullable()
+        }
         -- FIXME not implemented
         return Type.Any()
     }
