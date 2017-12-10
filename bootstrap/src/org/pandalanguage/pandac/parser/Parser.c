@@ -869,7 +869,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$string$
     org$pandalanguage$pandac$parser$Token escape186;
     panda$core$String* escapeText192;
     panda$core$Char8 c195;
-    panda$core$String* $match$0_0201;
+    panda$core$String* $match$193_21201;
     org$pandalanguage$pandac$ASTNode* expr223;
     panda$core$Range$LTpanda$core$String$Index$Q$GT $tmp238;
     org$pandalanguage$pandac$parser$Token $tmp154 = (($fn153) self->$class->vtable[4])(self);
@@ -951,50 +951,50 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$string$
                 c195 = ((panda$core$Char8$wrapper*) $tmp200)->value;
                 {
                     panda$core$String* $tmp202 = panda$core$Char8$convert$R$panda$core$String(c195);
-                    $match$0_0201 = $tmp202;
-                    panda$core$Bit $tmp204 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit($match$0_0201, &$s203);
+                    $match$193_21201 = $tmp202;
+                    panda$core$Bit $tmp204 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit($match$193_21201, &$s203);
                     if ($tmp204.value) {
                     {
                         panda$core$MutableString$append$panda$core$String(chunk168, &$s205);
                     }
                     }
                     else {
-                    panda$core$Bit $tmp207 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit($match$0_0201, &$s206);
+                    panda$core$Bit $tmp207 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit($match$193_21201, &$s206);
                     if ($tmp207.value) {
                     {
                         panda$core$MutableString$append$panda$core$String(chunk168, &$s208);
                     }
                     }
                     else {
-                    panda$core$Bit $tmp210 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit($match$0_0201, &$s209);
+                    panda$core$Bit $tmp210 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit($match$193_21201, &$s209);
                     if ($tmp210.value) {
                     {
                         panda$core$MutableString$append$panda$core$String(chunk168, &$s211);
                     }
                     }
                     else {
-                    panda$core$Bit $tmp213 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit($match$0_0201, &$s212);
+                    panda$core$Bit $tmp213 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit($match$193_21201, &$s212);
                     if ($tmp213.value) {
                     {
                         panda$core$MutableString$append$panda$core$String(chunk168, &$s214);
                     }
                     }
                     else {
-                    panda$core$Bit $tmp216 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit($match$0_0201, &$s215);
+                    panda$core$Bit $tmp216 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit($match$193_21201, &$s215);
                     if ($tmp216.value) {
                     {
                         panda$core$MutableString$append$panda$core$String(chunk168, &$s217);
                     }
                     }
                     else {
-                    panda$core$Bit $tmp219 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit($match$0_0201, &$s218);
+                    panda$core$Bit $tmp219 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit($match$193_21201, &$s218);
                     if ($tmp219.value) {
                     {
                         panda$core$MutableString$append$panda$core$String(chunk168, &$s220);
                     }
                     }
                     else {
-                    panda$core$Bit $tmp222 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit($match$0_0201, &$s221);
+                    panda$core$Bit $tmp222 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit($match$193_21201, &$s221);
                     if ($tmp222.value) {
                     {
                         {

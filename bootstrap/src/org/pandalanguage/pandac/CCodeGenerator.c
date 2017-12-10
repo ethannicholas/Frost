@@ -3238,7 +3238,7 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getMethodReference$pa
 }
 panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getPointerCallReference$org$pandalanguage$pandac$IRNode$panda$io$IndentedOutputStream$R$panda$core$String(org$pandalanguage$pandac$CCodeGenerator* self, org$pandalanguage$pandac$IRNode* p_call, panda$io$IndentedOutputStream* p_out) {
     org$pandalanguage$pandac$MethodRef* m1471;
-    panda$core$String* $match$0_01472;
+    panda$core$String* $match$862_91472;
     panda$core$String* count1477;
     panda$core$Int64 elementSize1483;
     panda$core$String* ptr1502;
@@ -3251,8 +3251,8 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getPointerCallReferen
     panda$core$String* offset1564;
     m1471 = ((org$pandalanguage$pandac$MethodRef*) p_call->payload);
     {
-        $match$0_01472 = ((org$pandalanguage$pandac$Symbol*) m1471->value)->name;
-        panda$core$Bit $tmp1474 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit($match$0_01472, &$s1473);
+        $match$862_91472 = ((org$pandalanguage$pandac$Symbol*) m1471->value)->name;
+        panda$core$Bit $tmp1474 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit($match$862_91472, &$s1473);
         if ($tmp1474.value) {
         {
             panda$core$Int64 $tmp1475 = panda$collections$Array$get_count$R$panda$core$Int64(p_call->children);
@@ -3280,7 +3280,7 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getPointerCallReferen
         }
         }
         else {
-        panda$core$Bit $tmp1499 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit($match$0_01472, &$s1498);
+        panda$core$Bit $tmp1499 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit($match$862_91472, &$s1498);
         if ($tmp1499.value) {
         {
             panda$core$Int64 $tmp1500 = panda$collections$Array$get_count$R$panda$core$Int64(p_call->children);
@@ -3295,7 +3295,7 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getPointerCallReferen
         }
         }
         else {
-        panda$core$Bit $tmp1510 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit($match$0_01472, &$s1509);
+        panda$core$Bit $tmp1510 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit($match$862_91472, &$s1509);
         if ($tmp1510.value) {
         {
             panda$core$Int64 $tmp1511 = panda$collections$Array$get_count$R$panda$core$Int64(p_call->children);
@@ -3315,7 +3315,7 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getPointerCallReferen
         }
         }
         else {
-        panda$core$Bit $tmp1527 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit($match$0_01472, &$s1526);
+        panda$core$Bit $tmp1527 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit($match$862_91472, &$s1526);
         if ($tmp1527.value) {
         {
             panda$core$Int64 $tmp1528 = panda$collections$Array$get_count$R$panda$core$Int64(p_call->children);
@@ -3348,7 +3348,7 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getPointerCallReferen
         }
         }
         else {
-        panda$core$Bit $tmp1558 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit($match$0_01472, &$s1557);
+        panda$core$Bit $tmp1558 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit($match$862_91472, &$s1557);
         if ($tmp1558.value) {
         {
             panda$core$Int64 $tmp1559 = panda$collections$Array$get_count$R$panda$core$Int64(p_call->children);
@@ -4489,7 +4489,7 @@ void org$pandalanguage$pandac$CCodeGenerator$writeBlock$org$pandalanguage$pandac
 }
 void org$pandalanguage$pandac$CCodeGenerator$writePointerCall$org$pandalanguage$pandac$IRNode$panda$io$IndentedOutputStream(org$pandalanguage$pandac$CCodeGenerator* self, org$pandalanguage$pandac$IRNode* p_stmt, panda$io$IndentedOutputStream* p_out) {
     org$pandalanguage$pandac$MethodRef* m2260;
-    panda$core$String* $match$0_02261;
+    panda$core$String* $match$1286_92261;
     panda$core$String* ptr2266;
     panda$core$String* arg2269;
     panda$core$String* base2289;
@@ -4497,8 +4497,8 @@ void org$pandalanguage$pandac$CCodeGenerator$writePointerCall$org$pandalanguage$
     panda$core$String* value2295;
     m2260 = ((org$pandalanguage$pandac$MethodRef*) p_stmt->payload);
     {
-        $match$0_02261 = ((org$pandalanguage$pandac$Symbol*) m2260->value)->name;
-        panda$core$Bit $tmp2263 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit($match$0_02261, &$s2262);
+        $match$1286_92261 = ((org$pandalanguage$pandac$Symbol*) m2260->value)->name;
+        panda$core$Bit $tmp2263 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit($match$1286_92261, &$s2262);
         if ($tmp2263.value) {
         {
             panda$core$Int64 $tmp2264 = panda$collections$Array$get_count$R$panda$core$Int64(p_stmt->children);
@@ -4519,7 +4519,7 @@ void org$pandalanguage$pandac$CCodeGenerator$writePointerCall$org$pandalanguage$
         }
         }
         else {
-        panda$core$Bit $tmp2282 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit($match$0_02261, &$s2281);
+        panda$core$Bit $tmp2282 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit($match$1286_92261, &$s2281);
         if ($tmp2282.value) {
         {
             panda$core$Int64 $tmp2283 = panda$collections$Array$get_count$R$panda$core$Int64(p_stmt->children);
@@ -4550,7 +4550,7 @@ void org$pandalanguage$pandac$CCodeGenerator$writePointerCall$org$pandalanguage$
         }
         }
         else {
-        panda$core$Bit $tmp2311 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit($match$0_02261, &$s2310);
+        panda$core$Bit $tmp2311 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit($match$1286_92261, &$s2310);
         if ($tmp2311.value) {
         {
             panda$core$Int64 $tmp2312 = panda$collections$Array$get_count$R$panda$core$Int64(p_stmt->children);

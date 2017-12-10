@@ -19,7 +19,7 @@ void panda$io$LineNumberInputStream$init$panda$io$InputStream(panda$io$LineNumbe
 }
 panda$core$UInt8$nullable panda$io$LineNumberInputStream$read$R$panda$core$UInt8$Q(panda$io$LineNumberInputStream* self) {
     panda$core$UInt8$nullable result1;
-    panda$core$UInt8$nullable $match$0_04;
+    panda$core$UInt8$nullable $match$36_94;
     panda$core$UInt8$nullable $tmp3 = (($fn2) self->source->$class->vtable[2])(self->source);
     result1 = $tmp3;
     if (((panda$core$Bit) { !result1.nonnull }).value) {
@@ -28,8 +28,8 @@ panda$core$UInt8$nullable panda$io$LineNumberInputStream$read$R$panda$core$UInt8
     }
     }
     {
-        $match$0_04 = result1;
-        panda$core$Bit $tmp5 = panda$core$UInt8$$EQ$panda$core$UInt8$R$panda$core$Bit(((panda$core$UInt8) $match$0_04.value), ((panda$core$UInt8) { 10 }));
+        $match$36_94 = result1;
+        panda$core$Bit $tmp5 = panda$core$UInt8$$EQ$panda$core$UInt8$R$panda$core$Bit(((panda$core$UInt8) $match$36_94.value), ((panda$core$UInt8) { 10 }));
         if ($tmp5.value) {
         {
             panda$core$Int64 $tmp6 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->line, ((panda$core$Int64) { 1 }));
@@ -38,13 +38,13 @@ panda$core$UInt8$nullable panda$io$LineNumberInputStream$read$R$panda$core$UInt8
         }
         }
         else {
-        panda$core$Bit $tmp7 = panda$core$UInt8$$EQ$panda$core$UInt8$R$panda$core$Bit(((panda$core$UInt8) $match$0_04.value), ((panda$core$UInt8) { 9 }));
+        panda$core$Bit $tmp7 = panda$core$UInt8$$EQ$panda$core$UInt8$R$panda$core$Bit(((panda$core$UInt8) $match$36_94.value), ((panda$core$UInt8) { 9 }));
         if ($tmp7.value) {
         {
             panda$core$Int64 $tmp8 = panda$core$Int64$$REM$panda$core$Int64$R$panda$core$Int64(self->column, ((panda$core$Int64) { 4 }));
             panda$core$Int64 $tmp9 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(((panda$core$Int64) { 4 }), $tmp8);
-            panda$core$Int64 $tmp10 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->line, $tmp9);
-            self->line = $tmp10;
+            panda$core$Int64 $tmp10 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->column, $tmp9);
+            self->column = $tmp10;
         }
         }
         else {

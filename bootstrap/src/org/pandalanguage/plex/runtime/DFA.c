@@ -55,7 +55,7 @@ org$pandalanguage$plex$runtime$RawToken* org$pandalanguage$plex$runtime$DFA$next
     panda$core$Int64 state7;
     panda$core$Int64 startOffset8;
     panda$core$Char8 c21;
-    panda$core$Int64 newAccept36;
+    panda$core$Int64 newAccept42;
     state7 = ((panda$core$Int64) { 1 });
     startOffset8 = self->offset;
     ITable* $tmp9 = ((panda$collections$CollectionView*) self->utf8)->$class->itable;
@@ -70,12 +70,16 @@ org$pandalanguage$plex$runtime$RawToken* org$pandalanguage$plex$runtime$DFA$next
         self->rawToken->kind = ((panda$core$Int64) { 0 });
         self->rawToken->offset = startOffset8;
         self->rawToken->length = ((panda$core$Int64) { 0 });
+        self->rawToken->line = self->line;
+        self->rawToken->column = self->column;
         return self->rawToken;
     }
     }
     self->rawToken->kind = ((panda$core$Int64) { -1 });
     self->rawToken->offset = startOffset8;
     self->rawToken->length = ((panda$core$Int64) { 1 });
+    self->rawToken->line = self->line;
+    self->rawToken->column = self->column;
     $l14:;
     ITable* $tmp16 = ((panda$collections$CollectionView*) self->utf8)->$class->itable;
     while ($tmp16->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
@@ -111,13 +115,36 @@ org$pandalanguage$plex$runtime$RawToken* org$pandalanguage$plex$runtime$DFA$next
         {
             panda$core$Int64 $tmp35 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->offset, ((panda$core$Int64) { 1 }));
             self->offset = $tmp35;
-            newAccept36 = self->accepts[state7.value];
-            panda$core$Bit $tmp37 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit(newAccept36, ((panda$core$Int64) { -1 }));
-            if ($tmp37.value) {
+            panda$core$UInt8 $tmp36 = panda$core$Char8$convert$R$panda$core$UInt8(c21);
+            switch ($tmp36.value) {
+                case 10:
+                {
+                    panda$core$Int64 $tmp37 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->line, ((panda$core$Int64) { 1 }));
+                    self->line = $tmp37;
+                    self->column = ((panda$core$Int64) { 1 });
+                }
+                break;
+                case 9:
+                {
+                    panda$core$Int64 $tmp38 = panda$core$Int64$$REM$panda$core$Int64$R$panda$core$Int64(self->column, ((panda$core$Int64) { 4 }));
+                    panda$core$Int64 $tmp39 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(((panda$core$Int64) { 4 }), $tmp38);
+                    panda$core$Int64 $tmp40 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->column, $tmp39);
+                    self->column = $tmp40;
+                }
+                break;
+                default:
+                {
+                    panda$core$Int64 $tmp41 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->column, ((panda$core$Int64) { 1 }));
+                    self->column = $tmp41;
+                }
+            }
+            newAccept42 = self->accepts[state7.value];
+            panda$core$Bit $tmp43 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit(newAccept42, ((panda$core$Int64) { -1 }));
+            if ($tmp43.value) {
             {
-                self->rawToken->kind = newAccept36;
-                panda$core$Int64 $tmp38 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(self->offset, startOffset8);
-                self->rawToken->length = $tmp38;
+                self->rawToken->kind = newAccept42;
+                panda$core$Int64 $tmp44 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(self->offset, startOffset8);
+                self->rawToken->length = $tmp44;
             }
             }
         }
@@ -130,8 +157,8 @@ org$pandalanguage$plex$runtime$RawToken* org$pandalanguage$plex$runtime$DFA$next
     }
     goto $l14;
     $l15:;
-    panda$core$Int64 $tmp39 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(startOffset8, self->rawToken->length);
-    self->offset = $tmp39;
+    panda$core$Int64 $tmp45 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(startOffset8, self->rawToken->length);
+    self->offset = $tmp45;
     return self->rawToken;
 }
 

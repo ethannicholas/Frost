@@ -3,7 +3,7 @@ package org.pandalanguage.pandac
 @final
 class Scanner {
     @private
-    constant INLINE_THRESHOLD := 50
+    constant INLINE_THRESHOLD := 10
 
     @private
     def compiler:Compiler

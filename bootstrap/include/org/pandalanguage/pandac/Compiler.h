@@ -28,7 +28,6 @@ typedef struct org$pandalanguage$pandac$Compiler {
     panda$collections$Array* compilationQueue;
     panda$collections$HashMap* scans;
     panda$collections$HashMap* classes;
-    panda$collections$Stack* currentFile;
     panda$collections$Stack* currentClass;
     panda$collections$Stack* currentMethod;
     org$pandalanguage$pandac$SymbolTable* symbolTable;
