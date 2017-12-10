@@ -267,11 +267,11 @@ class HCodeGenerator : CodeGenerator {
     @override
     method end(cl:ClassDecl) {
         out.printLine("#undef PANDA_TYPESONLY")
-        out.printLine(typeImportStream)
-        out.printLine(typesBuffer)
+        out.printLine(typeImportStream.finish())
+        out.printLine(typesBuffer.finish())
         out.printLine("#ifndef PANDA_TYPESONLY")
-        out.printLine(bodyImportStream)
-        out.printLine(bodyBuffer)
+        out.printLine(bodyImportStream.finish())
+        out.printLine(bodyBuffer.finish())
         out.printLine("#endif")
     }
 

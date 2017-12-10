@@ -148,7 +148,7 @@ class IRNode {
                     result.append("\n")
                 }
                 result.append("}")
-                return result.convert()
+                return result.finish()
             when Kind.METHOD_REFERENCE:
                 if children.get_count() > 0 {
                     return "\{children[0]}.\{(payload->MethodRef).value.name}" -- FIXME parens
@@ -220,7 +220,7 @@ class IRNode {
                     result.append(children[2])
                 }
                 result.append(">")
-                return result.convert()
+                return result.finish()
             when Kind.STRING:
                 return "\"\{payload}\""
             otherwise:

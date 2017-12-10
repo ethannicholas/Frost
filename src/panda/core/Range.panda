@@ -30,6 +30,6 @@ class Range<T:Value?> : Value {
         if max != null {
             result.append(max)
         }
-        return result.convert()
+        return result.finish()
     }
 }

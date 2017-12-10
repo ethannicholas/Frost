@@ -360,6 +360,6 @@ class HashMap<K:Key<K>, V> : Map<K, V>, Equatable<Map<K, V>> {
             }
         }
         result.append("}")
-        return result.convert()
+        return result.finish()
     }
 }

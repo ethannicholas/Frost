@@ -118,7 +118,7 @@ class ClassDecl : Symbol {
             separator := ", "
         }
         name.append(">")
-        return Type(name.convert(), Type.Kind.GENERIC, Position(), subtypes, true)
+        return Type(name.finish(), Type.Kind.GENERIC, Position(), subtypes, true)
     }
 
     function isSpecialization():Bit {
@@ -148,6 +148,6 @@ class ClassDecl : Symbol {
             result.append("\{m}\n")
         }
         result.append("}")
-        return result.convert()
+        return result.finish()
     }
 }

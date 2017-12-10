@@ -79,7 +79,7 @@ class Type : Symbol, Key<Type> {
             self.resolved &= t.resolved
         }
         name.append(">")
-        super.init(Symbol.Kind.TYPE, position, name.convert())
+        super.init(Symbol.Kind.TYPE, position, name.finish())
     }
 
     init(param:ClassDecl.GenericParameter) {
@@ -312,7 +312,7 @@ class Type : Symbol, Key<Type> {
                     }
                 }
                 name.append(">")
-                return Type(name.convert(), Kind.GENERIC, position, remapped, resolved)
+                return Type(name.finish(), Kind.GENERIC, position, remapped, resolved)
             when Kind.NULLABLE:
                 return subtypes[0].remap(types).nullable()
             when Kind.METHOD, Kind.FUNCTION:
@@ -342,7 +342,7 @@ class Type : Symbol, Key<Type> {
                     remapped.add(Type.Void())
                 }
                 name.append(")")
-                return Type(name.convert(), typeKind, position, remapped, resolved)
+                return Type(name.finish(), typeKind, position, remapped, resolved)
             otherwise: return self
         }
     }

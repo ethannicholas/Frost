@@ -55,7 +55,7 @@ panda$core$String* panda$core$Range$LTpanda$core$Int64$Q$GT$convert$R$panda$core
         panda$core$MutableString$append$panda$core$Object(result1, ((panda$core$Object*) wrap_panda$core$Int64(((panda$core$Int64) self.max.value))));
     }
     }
-    panda$core$String* $tmp6 = panda$core$MutableString$convert$R$panda$core$String(result1);
+    panda$core$String* $tmp6 = panda$core$MutableString$finish$R$panda$core$String(result1);
     return $tmp6;
 }
 

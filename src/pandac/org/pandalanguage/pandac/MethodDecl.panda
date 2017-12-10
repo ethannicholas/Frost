@@ -101,7 +101,7 @@ class MethodDecl : Symbol {
         if returnType != Type.Void() {
             result.append(":\{returnType}")
         }
-        return result.convert()
+        return result.finish()
     }
 
     function declaration():String {

@@ -242,7 +242,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$ClassDecl$typeWithParame
     org$pandalanguage$pandac$Type* $tmp79 = (org$pandalanguage$pandac$Type*) malloc(96);
     $tmp79->$class = (panda$core$Class*) &org$pandalanguage$pandac$Type$class;
     $tmp79->refCount.value = 1;
-    panda$core$String* $tmp81 = panda$core$MutableString$convert$R$panda$core$String(name47);
+    panda$core$String* $tmp81 = panda$core$MutableString$finish$R$panda$core$String(name47);
     org$pandalanguage$pandac$Position$init(&$tmp82);
     org$pandalanguage$pandac$Type$init$panda$core$String$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT$panda$core$Bit($tmp79, $tmp81, ((panda$core$Int64) { 21 }), $tmp82, ((panda$collections$ListView*) subtypes43), ((panda$core$Bit) { true }));
     return $tmp79;
@@ -386,7 +386,7 @@ panda$core$String* org$pandalanguage$pandac$ClassDecl$convert$R$panda$core$Strin
         $l157:;
     }
     panda$core$MutableString$append$panda$core$String(result85, &$s172);
-    panda$core$String* $tmp173 = panda$core$MutableString$convert$R$panda$core$String(result85);
+    panda$core$String* $tmp173 = panda$core$MutableString$finish$R$panda$core$String(result85);
     return $tmp173;
 }
 

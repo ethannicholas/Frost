@@ -436,7 +436,7 @@ panda$core$String* panda$collections$IdentityMap$convert$R$panda$core$String(pan
     goto $l148;
     $l150:;
     panda$core$MutableString$append$panda$core$String(result136, &$s169);
-    panda$core$String* $tmp170 = panda$core$MutableString$convert$R$panda$core$String(result136);
+    panda$core$String* $tmp170 = panda$core$MutableString$finish$R$panda$core$String(result136);
     return $tmp170;
 }
 

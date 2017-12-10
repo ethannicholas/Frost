@@ -987,7 +987,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$string$
     org$pandalanguage$pandac$ASTNode* $tmp203 = (org$pandalanguage$pandac$ASTNode*) malloc(64);
     $tmp203->$class = (panda$core$Class*) &org$pandalanguage$pandac$ASTNode$class;
     $tmp203->refCount.value = 1;
-    panda$core$String* $tmp205 = panda$core$MutableString$convert$R$panda$core$String(chunk127);
+    panda$core$String* $tmp205 = panda$core$MutableString$finish$R$panda$core$String(chunk127);
     org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$String($tmp203, ((panda$core$Int64) { 113 }), start111.position, $tmp205);
     org$pandalanguage$pandac$ASTNode* $tmp207 = (($fn206) self->$class->vtable[14])(self, result126, $tmp203);
     return $tmp207;
@@ -1445,7 +1445,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$type$pa
         org$pandalanguage$pandac$ASTNode* $tmp391 = (org$pandalanguage$pandac$ASTNode*) malloc(64);
         $tmp391->$class = (panda$core$Class*) &org$pandalanguage$pandac$ASTNode$class;
         $tmp391->refCount.value = 1;
-        panda$core$String* $tmp393 = panda$core$MutableString$convert$R$panda$core$String(name345);
+        panda$core$String* $tmp393 = panda$core$MutableString$finish$R$panda$core$String(name345);
         org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT($tmp391, ((panda$core$Int64) { 154 }), ((org$pandalanguage$pandac$parser$Token) start341.value).position, ((panda$core$Object*) $tmp393), ((panda$collections$ListView*) children371));
         result361 = $tmp391;
         (($fn394) self->$class->vtable[11])(self);
@@ -3538,7 +3538,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$package
     org$pandalanguage$pandac$ASTNode* $tmp1152 = (org$pandalanguage$pandac$ASTNode*) malloc(64);
     $tmp1152->$class = (panda$core$Class*) &org$pandalanguage$pandac$ASTNode$class;
     $tmp1152->refCount.value = 1;
-    panda$core$String* $tmp1154 = panda$core$MutableString$convert$R$panda$core$String(name1137);
+    panda$core$String* $tmp1154 = panda$core$MutableString$finish$R$panda$core$String(name1137);
     org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$String($tmp1152, ((panda$core$Int64) { 100 }), ((org$pandalanguage$pandac$parser$Token) start1129.value).position, $tmp1154);
     return $tmp1152;
 }
@@ -3592,7 +3592,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$usesDec
     org$pandalanguage$pandac$ASTNode* $tmp1178 = (org$pandalanguage$pandac$ASTNode*) malloc(64);
     $tmp1178->$class = (panda$core$Class*) &org$pandalanguage$pandac$ASTNode$class;
     $tmp1178->refCount.value = 1;
-    panda$core$String* $tmp1180 = panda$core$MutableString$convert$R$panda$core$String(name1163);
+    panda$core$String* $tmp1180 = panda$core$MutableString$finish$R$panda$core$String(name1163);
     org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$String($tmp1178, ((panda$core$Int64) { 101 }), ((org$pandalanguage$pandac$parser$Token) start1155.value).position, $tmp1180);
     return $tmp1178;
 }
@@ -3814,7 +3814,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$doccomm
     org$pandalanguage$pandac$ASTNode* $tmp1276 = (org$pandalanguage$pandac$ASTNode*) malloc(64);
     $tmp1276->$class = (panda$core$Class*) &org$pandalanguage$pandac$ASTNode$class;
     $tmp1276->refCount.value = 1;
-    panda$core$String* $tmp1278 = panda$core$MutableString$convert$R$panda$core$String(result1262);
+    panda$core$String* $tmp1278 = panda$core$MutableString$finish$R$panda$core$String(result1262);
     org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$String($tmp1276, ((panda$core$Int64) { 141 }), ((org$pandalanguage$pandac$parser$Token) start1258.value).position, $tmp1278);
     return $tmp1276;
 }

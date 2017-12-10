@@ -289,7 +289,7 @@ class String : Immutable, Key<String> {
         for i in 0 .. count {
             result.append(self)
         }
-        return result.convert()
+        return result.finish()
     }
 
     @class
@@ -427,7 +427,7 @@ class String : Immutable, Key<String> {
                 current += 1
             }
         }
-        return result.convert()
+        return result.finish()
     }
 
     ================================================================================================
@@ -566,7 +566,7 @@ class String : Immutable, Key<String> {
                 result.append(data[current])
             }
         }
-        return result.convert()
+        return result.finish()
     }
 
     ================================================================================================
@@ -717,7 +717,7 @@ class String : Immutable, Key<String> {
             result.append(replacement)
             index := Index(nextIndex.value + search._length)
         }
-        return result.convert()
+        return result.finish()
     }
 
     ================================================================================================

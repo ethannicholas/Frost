@@ -362,7 +362,7 @@ panda$core$String* panda$collections$ImmutableArray$join$panda$core$String$R$pan
     i120.value += 1;
     goto $l125;
     $l127:;
-    panda$core$String* $tmp140 = panda$core$MutableString$convert$R$panda$core$String(result113);
+    panda$core$String* $tmp140 = panda$core$MutableString$finish$R$panda$core$String(result113);
     return $tmp140;
 }
 panda$core$String* panda$collections$ImmutableArray$convert$R$panda$core$String(panda$collections$ImmutableArray* self) {
@@ -410,7 +410,7 @@ panda$core$String* panda$collections$ImmutableArray$convert$R$panda$core$String(
         $l153:;
     }
     panda$core$MutableString$append$panda$core$String(result141, &$s165);
-    panda$core$String* $tmp166 = panda$core$MutableString$convert$R$panda$core$String(result141);
+    panda$core$String* $tmp166 = panda$core$MutableString$finish$R$panda$core$String(result141);
     return $tmp166;
 }
 

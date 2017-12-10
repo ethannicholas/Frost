@@ -17,7 +17,7 @@ typedef struct panda$core$MutableString {
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"
 #undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[8]; } panda$core$MutableString$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[10]; } panda$core$MutableString$class_type;
 extern panda$core$MutableString$class_type panda$core$MutableString$class;
 
 #ifndef PANDA_TYPESONLY
@@ -26,6 +26,7 @@ typedef struct panda$core$String panda$core$String;
 #include "panda/core/Char8.h"
 #include "panda/core/Int64.h"
 typedef struct panda$core$Object panda$core$Object;
+#include "panda/core/Bit.h"
 
 void panda$core$MutableString$init(panda$core$MutableString* self);
 void panda$core$MutableString$init$panda$core$String(panda$core$MutableString* self, panda$core$String* p_s);
@@ -37,5 +38,7 @@ void panda$core$MutableString$append$panda$core$Object(panda$core$MutableString*
 void panda$core$MutableString$ensureCapacity$panda$core$Int64(panda$core$MutableString* self, panda$core$Int64 p_newSize);
 void panda$core$MutableString$clear(panda$core$MutableString* self);
 panda$core$String* panda$core$MutableString$convert$R$panda$core$String(panda$core$MutableString* self);
+panda$core$String* panda$core$MutableString$finish$R$panda$core$String(panda$core$MutableString* self);
+panda$core$Bit panda$core$MutableString$valid$R$panda$core$Bit(panda$core$MutableString* self);
 
 #endif

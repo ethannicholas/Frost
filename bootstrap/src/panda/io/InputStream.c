@@ -88,7 +88,7 @@ panda$core$String* panda$io$InputStream$readFully$R$panda$core$String(panda$io$I
     }
     $l19:;
     free(buffer17);
-    panda$core$String* $tmp23 = panda$core$MutableString$convert$R$panda$core$String(result14);
+    panda$core$String* $tmp23 = panda$core$MutableString$finish$R$panda$core$String(result14);
     return $tmp23;
 }
 panda$core$Int16$nullable panda$io$InputStream$read$R$panda$core$Int16$Q(panda$io$InputStream* self) {
@@ -204,7 +204,7 @@ panda$core$String* panda$io$InputStream$readLine$R$panda$core$String$Q(panda$io$
     }
     }
     $l57:;
-    panda$core$String* $tmp64 = panda$core$MutableString$convert$R$panda$core$String(result53);
+    panda$core$String* $tmp64 = panda$core$MutableString$finish$R$panda$core$String(result53);
     return $tmp64;
 }
 panda$collections$Iterator* panda$io$InputStream$lines$R$panda$collections$Iterator$LTpanda$core$String$GT(panda$io$InputStream* self) {

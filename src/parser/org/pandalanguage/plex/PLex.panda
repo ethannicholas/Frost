@@ -87,7 +87,7 @@ class PLex {
             }
             result.append(c)
         }
-        return result.convert()
+        return result.finish()
     }
 
     method writeLexer(dfa:DFA, out:IndentedOutputStream) {

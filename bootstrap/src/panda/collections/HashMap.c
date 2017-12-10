@@ -554,7 +554,7 @@ panda$core$String* panda$collections$HashMap$convert$R$panda$core$String(panda$c
     goto $l206;
     $l208:;
     panda$core$MutableString$append$panda$core$String(result194, &$s227);
-    panda$core$String* $tmp228 = panda$core$MutableString$convert$R$panda$core$String(result194);
+    panda$core$String* $tmp228 = panda$core$MutableString$finish$R$panda$core$String(result194);
     return $tmp228;
 }
 

@@ -28,6 +28,6 @@ class RemappedState : State {
             separator := ", "
         }
         result.append(")")
-        return result.convert()
+        return result.finish()
     }
 }

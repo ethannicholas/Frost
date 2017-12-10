@@ -21,6 +21,6 @@ class AnyState : State {
             result.append(next[i])
         }
         result.append(")")
-        return result.convert()
+        return result.finish()
     }
 }

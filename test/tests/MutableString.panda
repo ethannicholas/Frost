@@ -7,10 +7,10 @@ class MutableStringTest {
         for i in 0 ... 100 {
             m.append(i)
         }
-        Console.printLine(m)
+        Console.printLine(m.finish())
 
         def m2 := MutableString("Hello ")
         m2.append("again!")
-        Console.printLine(m2)
+        Console.printLine(m2.finish())
     }
 }

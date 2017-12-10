@@ -170,12 +170,12 @@ class LLVMCodeGenerator : CodeGenerator {
     @override
     method finish() {
         type(Type.Class())
-        out.print(types.convert())
-        out.print(strings.convert())
-        out.print(declarations.convert())
-        out.print(wrapperShimsBuffer.convert())
-        out.print(shimsBuffer.convert())
-        out.print(methodsBuffer.convert())
+        out.print(types.finish())
+        out.print(strings.finish())
+        out.print(declarations.finish())
+        out.print(wrapperShimsBuffer.finish())
+        out.print(shimsBuffer.finish())
+        out.print(methodsBuffer.finish())
         out.out.cleanup() -- FIXME this should be automatic when memory management is in
     }
 
@@ -323,7 +323,7 @@ class LLVMCodeGenerator : CodeGenerator {
             code.append(", %panda$core$Class*, %$itable*, [0 x i8*]")
         }
         code.append(" }")
-        types.printLine(code)
+        types.printLine(code.finish())
         if compiler.isValue(cl) {
             getWrapperClassConstant(cl)
         }
@@ -346,7 +346,7 @@ class LLVMCodeGenerator : CodeGenerator {
         }
         code.append(", \{type(t)}")
         code.append(" }")
-        types.printLine(code)
+        types.printLine(code.finish())
         types.printLine("\{type(t)}$nullable = type { \{type(t)}, i1 }")
     }
 
@@ -405,7 +405,7 @@ class LLVMCodeGenerator : CodeGenerator {
                     result.append(type(t.subtypes[i]))
                 }
                 result.append(")*")
-                return result.convert()
+                return result.finish()
             otherwise:
                 assert false, "unsupported type '\{t}'"
         }
@@ -439,7 +439,7 @@ class LLVMCodeGenerator : CodeGenerator {
             result.append(type(inheritedType.subtypes[i]))
         }
         result.append(")*")
-        return result.convert()
+        return result.finish()
     }
 
     method nullableType(t:Type):String {
@@ -473,7 +473,7 @@ class LLVMCodeGenerator : CodeGenerator {
                 }
             }
             result.append("] }\n")
-            types.printLine(result)
+            types.printLine(result.finish())
             previous := "%$itable* bitcast(\{t}* \{name} to %$itable*)"
         }
         return previous
@@ -543,9 +543,9 @@ class LLVMCodeGenerator : CodeGenerator {
         out.printLine("ret \{returnValue}")
         out.printLine("}")
         varCount := oldVarCount
-        def result := MethodShim(resultName, resultType.convert())
+        def result := MethodShim(resultName, resultType.finish())
         methodShims[raw] := result
-        rawOut.print(outBuffer)
+        rawOut.print(outBuffer.finish())
         return result
     }
 
@@ -623,7 +623,7 @@ class LLVMCodeGenerator : CodeGenerator {
                 }
             }
             result.append("] }\n")
-            types.printLine(result)
+            types.printLine(result.finish())
             previous := "%$itable* bitcast(\{t}* \{name} to %$itable*)"
         }
         return previous
@@ -695,7 +695,7 @@ class LLVMCodeGenerator : CodeGenerator {
                 resultType.append(type(inherited.subtypes[i]))
             }
             resultType.append(")*")
-            return Pair<String, String>(resultName, resultType.convert())
+            return Pair<String, String>(resultName, resultType.finish())
         }
         return Pair<String, String>(resultName, type(inherited))
     }
@@ -748,7 +748,7 @@ class LLVMCodeGenerator : CodeGenerator {
                 separator := ", "
             }
             code.append("] }\n")
-            types.printLine(code)
+            types.printLine(code.finish())
         }
         return result
     }
@@ -800,7 +800,7 @@ class LLVMCodeGenerator : CodeGenerator {
                     separator := ", "
                 }
                 code.append("] }")
-                types.print(code)
+                types.print(code.finish())
             }
             classConstants[name] := result
         }
@@ -878,7 +878,7 @@ class LLVMCodeGenerator : CodeGenerator {
             result.append("$R$")
             result.append(escapeName(m.returnType.name))
         }
-        return result.convert()
+        return result.finish()
     }
 
     function getName(f:FieldDecl):String {
@@ -2786,8 +2786,8 @@ class LLVMCodeGenerator : CodeGenerator {
         for s in body.children {
             writeStatement(s, indentedBody)
         }
-        methods.print(methodHeaderBuffer.convert())
-        methods.print(bodyBuffer.convert())
+        methods.print(methodHeaderBuffer.finish())
+        methods.print(bodyBuffer.finish())
         if !endsWithBranch(body) {
             if m.returnType = Type.Void() {
                 methods.printLine("ret void")

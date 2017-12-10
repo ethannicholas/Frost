@@ -1150,7 +1150,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Compiler$resolve$org$pan
             org$pandalanguage$pandac$Type* $tmp331 = (org$pandalanguage$pandac$Type*) malloc(96);
             $tmp331->$class = (panda$core$Class*) &org$pandalanguage$pandac$Type$class;
             $tmp331->refCount.value = 1;
-            panda$core$String* $tmp333 = panda$core$MutableString$convert$R$panda$core$String(name297);
+            panda$core$String* $tmp333 = panda$core$MutableString$finish$R$panda$core$String(name297);
             org$pandalanguage$pandac$Type$init$panda$core$String$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT$panda$core$Bit($tmp331, $tmp333, ((panda$core$Int64) { 21 }), ((org$pandalanguage$pandac$Symbol*) p_type)->position, ((panda$collections$ListView*) subtypes291), ((panda$core$Bit) { true }));
             result330 = $tmp331;
             if (p_checkParameters.value) {
@@ -5362,7 +5362,7 @@ org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$call$org$pand
                     panda$core$MutableString$append$panda$core$String(msg2147, $tmp2183);
                 }
                 }
-                panda$core$String* $tmp2184 = panda$core$MutableString$convert$R$panda$core$String(msg2147);
+                panda$core$String* $tmp2184 = panda$core$MutableString$finish$R$panda$core$String(msg2147);
                 org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, p_m->position, $tmp2184);
                 return NULL;
             }
@@ -5571,7 +5571,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Compiler$declaredType$or
     org$pandalanguage$pandac$Type* $tmp2278 = (org$pandalanguage$pandac$Type*) malloc(96);
     $tmp2278->$class = (panda$core$Class*) &org$pandalanguage$pandac$Type$class;
     $tmp2278->refCount.value = 1;
-    panda$core$String* $tmp2280 = panda$core$MutableString$convert$R$panda$core$String(typeName2247);
+    panda$core$String* $tmp2280 = panda$core$MutableString$finish$R$panda$core$String(typeName2247);
     org$pandalanguage$pandac$Type$init$panda$core$String$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT$panda$core$Bit($tmp2278, $tmp2280, kind2271, ((org$pandalanguage$pandac$Symbol*) p_m)->position, ((panda$collections$ListView*) subtypes2244), ((panda$core$Bit) { true }));
     return $tmp2278;
 }
@@ -5651,7 +5651,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Compiler$declaredTypeWit
     org$pandalanguage$pandac$Type* $tmp2313 = (org$pandalanguage$pandac$Type*) malloc(96);
     $tmp2313->$class = (panda$core$Class*) &org$pandalanguage$pandac$Type$class;
     $tmp2313->refCount.value = 1;
-    panda$core$String* $tmp2315 = panda$core$MutableString$convert$R$panda$core$String(typeName2284);
+    panda$core$String* $tmp2315 = panda$core$MutableString$finish$R$panda$core$String(typeName2284);
     org$pandalanguage$pandac$Type$init$panda$core$String$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT$panda$core$Bit($tmp2313, $tmp2315, kind2306, ((org$pandalanguage$pandac$Symbol*) p_m)->position, ((panda$collections$ListView*) subtypes2281), ((panda$core$Bit) { true }));
     return $tmp2313;
 }
@@ -7772,7 +7772,7 @@ org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileSelf$o
         org$pandalanguage$pandac$Type* $tmp3107 = (org$pandalanguage$pandac$Type*) malloc(96);
         $tmp3107->$class = (panda$core$Class*) &org$pandalanguage$pandac$Type$class;
         $tmp3107->refCount.value = 1;
-        panda$core$String* $tmp3109 = panda$core$MutableString$convert$R$panda$core$String(name3069);
+        panda$core$String* $tmp3109 = panda$core$MutableString$finish$R$panda$core$String(name3069);
         org$pandalanguage$pandac$Type$init$panda$core$String$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT$panda$core$Bit($tmp3107, $tmp3109, ((panda$core$Int64) { 21 }), p_s->position, ((panda$collections$ListView*) subtypes3065), ((panda$core$Bit) { true }));
         type3057 = $tmp3107;
     }

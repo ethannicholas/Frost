@@ -46,9 +46,22 @@ class IndentedOutputStream : OutputStream {
 
     @override
     method write(ptr:Pointer<UInt8>, offset:Int, count:Int) {
-        for i in offset .. offset + count {
-            write(ptr[i])
+        var start := offset
+        var current := start
+        while current < offset + count {
+            if ptr[current] = 10 {
+                out.write(ptr, start, current - start)
+                start := current
+                atLineStart := true
+            }
+            else if atLineStart {
+                out.write(ptr, start, current - start)
+                start := current
+                indentIfNeeded()
+            }
+            current += 1
         }
+        out.write(ptr, start, current - start)
     }
     
     @private

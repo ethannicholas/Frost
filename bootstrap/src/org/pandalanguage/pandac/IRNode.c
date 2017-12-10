@@ -276,7 +276,7 @@ panda$core$String* org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(o
                 $l46:;
             }
             panda$core$MutableString$append$panda$core$String(result36, &$s73);
-            panda$core$String* $tmp74 = panda$core$MutableString$convert$R$panda$core$String(result36);
+            panda$core$String* $tmp74 = panda$core$MutableString$finish$R$panda$core$String(result36);
             return $tmp74;
         }
         break;
@@ -537,7 +537,7 @@ panda$core$String* org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(o
             }
             }
             panda$core$MutableString$append$panda$core$String(result215, &$s231);
-            panda$core$String* $tmp232 = panda$core$MutableString$convert$R$panda$core$String(result215);
+            panda$core$String* $tmp232 = panda$core$MutableString$finish$R$panda$core$String(result215);
             return $tmp232;
         }
         break;

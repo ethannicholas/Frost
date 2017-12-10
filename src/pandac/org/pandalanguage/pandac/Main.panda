@@ -240,7 +240,6 @@ class Main {
         }
         compiler.finish()
         if compiler.errorCount = 0 {
-            compiler.codeGenerator.finish()
             match format {
                 when Format.EXECUTABLE:
                     def optimized := optimize(outFile.changeExtension(".ll"), optimizationLevel)

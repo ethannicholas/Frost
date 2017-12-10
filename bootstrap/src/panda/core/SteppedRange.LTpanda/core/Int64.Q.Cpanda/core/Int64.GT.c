@@ -59,7 +59,7 @@ panda$core$String* panda$core$SteppedRange$LTpanda$core$Int64$Q$Cpanda$core$Int6
     }
     panda$core$MutableString$append$panda$core$String(result1, &$s6);
     panda$core$MutableString$append$panda$core$Object(result1, ((panda$core$Object*) wrap_panda$core$Int64(self.step)));
-    panda$core$String* $tmp7 = panda$core$MutableString$convert$R$panda$core$String(result1);
+    panda$core$String* $tmp7 = panda$core$MutableString$finish$R$panda$core$String(result1);
     return $tmp7;
 }
 

@@ -251,7 +251,7 @@ class Array<T> : List<T> {
             result.append(separator)
             result.append(self[i])
         }
-        return result.convert()
+        return result.finish()
 
     }
 
@@ -271,6 +271,6 @@ class Array<T> : List<T> {
             }
         }
         result.append("]")
-        return result.convert()
+        return result.finish()
     }
 }

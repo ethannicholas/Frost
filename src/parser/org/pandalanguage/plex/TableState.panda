@@ -41,6 +41,6 @@ class TableState : State {
             result.append(n)
         }
         result.append(")")
-        return result.convert()
+        return result.finish()
     }
 }

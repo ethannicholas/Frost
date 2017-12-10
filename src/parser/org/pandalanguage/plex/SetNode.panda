@@ -44,6 +44,6 @@ class SetNode : Node {
             result.append(c)
         }
         result.append("]")
-        return result.convert()
+        return result.finish()
     }
 }

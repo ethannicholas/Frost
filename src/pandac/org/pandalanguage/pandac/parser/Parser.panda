@@ -211,7 +211,7 @@ class Parser {
             }
         }
         return addStringChunk(result,
-                ASTNode(ASTNode.Kind.STRING, start.position, chunk.convert()))
+                ASTNode(ASTNode.Kind.STRING, start.position, chunk.finish()))
     }
 
     function toUInt64(s:String, base:UInt64):UInt64 {
@@ -398,7 +398,7 @@ class Parser {
                 return null
             }
             name.append(">")
-            result := ASTNode(ASTNode.Kind.GENERIC_TYPE, start.position, name.convert(),
+            result := ASTNode(ASTNode.Kind.GENERIC_TYPE, start.position, name.finish(),
                     children)
             accept()
         }
@@ -1460,7 +1460,7 @@ class Parser {
             }
             name.append(text(next))
         }
-        return ASTNode(ASTNode.Kind.PACKAGE, start.position, name.convert())
+        return ASTNode(ASTNode.Kind.PACKAGE, start.position, name.finish())
     }
 
     ================================================================================================
@@ -1488,7 +1488,7 @@ class Parser {
             }
             name.append(text(next))
         }
-        return ASTNode(ASTNode.Kind.USES, start.position, name.convert())
+        return ASTNode(ASTNode.Kind.USES, start.position, name.finish())
     }
 
     ================================================================================================
@@ -1590,7 +1590,7 @@ class Parser {
             }
             result.append(text(next))
         }
-        return ASTNode(ASTNode.Kind.DOC_COMMENT, start.position, result.convert())
+        return ASTNode(ASTNode.Kind.DOC_COMMENT, start.position, result.finish())
     }
 
     ================================================================================================

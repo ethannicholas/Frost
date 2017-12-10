@@ -61,6 +61,6 @@ class Console {
             }
             result.append(c)
         }
-        return result.convert()
+        return result.finish()
     }
 }

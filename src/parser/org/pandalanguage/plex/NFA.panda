@@ -11,7 +11,6 @@ class NFA {
 
     def _source := LineNumberInputStream(Console.inputStream())
     var pushback := PushbackInputStream(_source)
-    var text := MutableString()
     var rawToken := RawToken("")
     var line := 1
     var column := 1

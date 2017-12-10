@@ -208,7 +208,7 @@ void org$pandalanguage$pandac$Type$init$panda$collections$ListView$LTorg$pandala
         $l37:;
     }
     panda$core$MutableString$append$panda$core$String(name25, &$s52);
-    panda$core$String* $tmp53 = panda$core$MutableString$convert$R$panda$core$String(name25);
+    panda$core$String* $tmp53 = panda$core$MutableString$finish$R$panda$core$String(name25);
     org$pandalanguage$pandac$Symbol$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$String(((org$pandalanguage$pandac$Symbol*) self), ((panda$core$Int64) { 207 }), self->position, $tmp53);
 }
 void org$pandalanguage$pandac$Type$init$org$pandalanguage$pandac$ClassDecl$GenericParameter(org$pandalanguage$pandac$Type* self, org$pandalanguage$pandac$ClassDecl$GenericParameter* p_param) {
@@ -739,7 +739,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$remap$panda$collect
             org$pandalanguage$pandac$Type* $tmp301 = (org$pandalanguage$pandac$Type*) malloc(96);
             $tmp301->$class = (panda$core$Class*) &org$pandalanguage$pandac$Type$class;
             $tmp301->refCount.value = 1;
-            panda$core$String* $tmp303 = panda$core$MutableString$convert$R$panda$core$String(name267);
+            panda$core$String* $tmp303 = panda$core$MutableString$finish$R$panda$core$String(name267);
             org$pandalanguage$pandac$Type$init$panda$core$String$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT$panda$core$Bit($tmp301, $tmp303, ((panda$core$Int64) { 21 }), self->position, ((panda$collections$ListView*) remapped264), self->resolved);
             return $tmp301;
         }
@@ -839,7 +839,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$remap$panda$collect
             org$pandalanguage$pandac$Type* $tmp359 = (org$pandalanguage$pandac$Type*) malloc(96);
             $tmp359->$class = (panda$core$Class*) &org$pandalanguage$pandac$Type$class;
             $tmp359->refCount.value = 1;
-            panda$core$String* $tmp361 = panda$core$MutableString$convert$R$panda$core$String(name310);
+            panda$core$String* $tmp361 = panda$core$MutableString$finish$R$panda$core$String(name310);
             org$pandalanguage$pandac$Type$init$panda$core$String$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT$panda$core$Bit($tmp359, $tmp361, self->typeKind, self->position, ((panda$collections$ListView*) remapped307), self->resolved);
             return $tmp359;
         }

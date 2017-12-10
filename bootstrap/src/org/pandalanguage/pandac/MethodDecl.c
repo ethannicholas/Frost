@@ -202,7 +202,7 @@ panda$core$String* org$pandalanguage$pandac$MethodDecl$signature$R$panda$core$St
         panda$core$MutableString$append$panda$core$String(result47, $tmp80);
     }
     }
-    panda$core$String* $tmp81 = panda$core$MutableString$convert$R$panda$core$String(result47);
+    panda$core$String* $tmp81 = panda$core$MutableString$finish$R$panda$core$String(result47);
     return $tmp81;
 }
 panda$core$String* org$pandalanguage$pandac$MethodDecl$declaration$R$panda$core$String(org$pandalanguage$pandac$MethodDecl* self) {

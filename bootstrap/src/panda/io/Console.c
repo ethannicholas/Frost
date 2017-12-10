@@ -95,7 +95,7 @@ panda$core$String* panda$io$Console$readLine$R$panda$core$String$Q() {
     }
     }
     $l30:;
-    panda$core$String* $tmp36 = panda$core$MutableString$convert$R$panda$core$String(result26);
+    panda$core$String* $tmp36 = panda$core$MutableString$finish$R$panda$core$String(result26);
     return $tmp36;
 }
 void panda$io$Console$init(panda$io$Console* self) {

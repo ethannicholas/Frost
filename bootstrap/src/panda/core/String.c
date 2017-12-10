@@ -395,7 +395,7 @@ panda$core$String* panda$core$String$$MUL$panda$core$Int64$R$panda$core$String(p
     i172.value += 1;
     goto $l177;
     $l179:;
-    panda$core$String* $tmp191 = panda$core$MutableString$convert$R$panda$core$String(result168);
+    panda$core$String* $tmp191 = panda$core$MutableString$finish$R$panda$core$String(result168);
     return $tmp191;
 }
 panda$core$String* panda$core$String$$ADD$panda$core$Object$panda$core$String$R$panda$core$String(panda$core$Object* p_o, panda$core$String* p_s) {
@@ -638,7 +638,7 @@ panda$core$String* panda$core$String$$IDX$panda$core$Range$LTpanda$core$String$I
     }
     goto $l291;
     $l292:;
-    panda$core$String* $tmp305 = panda$core$MutableString$convert$R$panda$core$String(result286);
+    panda$core$String* $tmp305 = panda$core$MutableString$finish$R$panda$core$String(result286);
     return $tmp305;
 }
 panda$core$String* panda$core$String$$IDX$panda$core$Range$LTpanda$core$String$Index$Q$GT$R$panda$core$String(panda$core$String* self, panda$core$Range$LTpanda$core$String$Index$Q$GT p_r) {
@@ -978,7 +978,7 @@ panda$core$String* panda$core$String$$IDX$panda$core$SteppedRange$LTpanda$core$S
         }
     }
     }
-    panda$core$String* $tmp445 = panda$core$MutableString$convert$R$panda$core$String(result323);
+    panda$core$String* $tmp445 = panda$core$MutableString$finish$R$panda$core$String(result323);
     return $tmp445;
 }
 panda$core$String* panda$core$String$$IDX$panda$core$Range$LTpanda$core$Int64$Q$GT$R$panda$core$String(panda$core$String* self, panda$core$Range$LTpanda$core$Int64$Q$GT p_r) {
@@ -1292,7 +1292,7 @@ panda$core$String* panda$core$String$replace$panda$core$String$panda$core$String
     }
     }
     $l596:;
-    panda$core$String* $tmp605 = panda$core$MutableString$convert$R$panda$core$String(result590);
+    panda$core$String* $tmp605 = panda$core$MutableString$finish$R$panda$core$String(result590);
     return $tmp605;
 }
 panda$core$String$Index panda$core$String$start$R$panda$core$String$Index(panda$core$String* self) {

@@ -570,7 +570,7 @@ panda$core$String* panda$collections$Array$join$panda$core$String$R$panda$core$S
     i206.value += 1;
     goto $l211;
     $l213:;
-    panda$core$String* $tmp226 = panda$core$MutableString$convert$R$panda$core$String(result199);
+    panda$core$String* $tmp226 = panda$core$MutableString$finish$R$panda$core$String(result199);
     return $tmp226;
 }
 panda$core$String* panda$collections$Array$convert$R$panda$core$String(panda$collections$Array* self) {
@@ -627,7 +627,7 @@ panda$core$String* panda$collections$Array$convert$R$panda$core$String(panda$col
         $l239:;
     }
     panda$core$MutableString$append$panda$core$String(result227, &$s252);
-    panda$core$String* $tmp253 = panda$core$MutableString$convert$R$panda$core$String(result227);
+    panda$core$String* $tmp253 = panda$core$MutableString$finish$R$panda$core$String(result227);
     return $tmp253;
 }
 

@@ -44,6 +44,6 @@ class DFAStateLabel : Key<DFAStateLabel> {
             separator := ", "
         }
         result.append(">")
-        return result.convert()
+        return result.finish()
     }
 }

@@ -257,6 +257,6 @@ class IdentityMap<K, V> : Map<K, V>, Equatable<Map<K, V>> {
             }
         }
         result.append("}")
-        return result.convert()
+        return result.finish()
     }
 }

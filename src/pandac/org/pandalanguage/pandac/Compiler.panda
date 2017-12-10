@@ -293,9 +293,10 @@ class Compiler : ErrorReporter {
                     separator := ", "
                 }
                 name.append(">")
-                def result := Type(name.convert(), Type.Kind.GENERIC, type.position, subtypes, true)
+                def result := Type(name.finish(), Type.Kind.GENERIC, type.position, subtypes, true)
                 if checkParameters {
-                    if !checkGenericParameters(type.position, getClass(result.subtypes[0]), result) {
+                    if !checkGenericParameters(type.position, getClass(result.subtypes[0]),
+                            result) {
                         return null
                     }
                 }
@@ -1619,7 +1620,7 @@ class Compiler : ErrorReporter {
                     if expectedType != null {
                         msg.append(" with return type '\{expectedType}'")
                     }
-                    error(m.position, msg.convert())
+                    error(m.position, msg.finish())
                     return null
                 }
                 if methods.get_count() = 1 {
@@ -1685,7 +1686,7 @@ class Compiler : ErrorReporter {
             typeName.append(m.returnType.name)
         }
         typeName.append(")")
-        return Type(typeName.convert(), kind, m.position, subtypes, true)
+        return Type(typeName.finish(), kind, m.position, subtypes, true)
     }
 
     function declaredTypeWithSelf(m:MethodDecl, selfType:Type):Type {
@@ -1713,7 +1714,7 @@ class Compiler : ErrorReporter {
             typeName.append(m.returnType.name)
         }
         typeName.append(")")
-        return Type(typeName.convert(), kind, m.position, subtypes, true)
+        return Type(typeName.finish(), kind, m.position, subtypes, true)
     }
 
     function inheritedType(m:MethodDecl):Type {
@@ -2448,7 +2449,7 @@ class Compiler : ErrorReporter {
                 separator := ", "
             }
             name.append(">")
-            type := Type(name.convert(), Type.Kind.GENERIC, s.position, subtypes, true)
+            type := Type(name.finish(), Type.Kind.GENERIC, s.position, subtypes, true)
         }
         else {
             type := cl.type()

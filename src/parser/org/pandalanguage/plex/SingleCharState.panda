@@ -35,6 +35,6 @@ class SingleCharState : State {
             result.append(s)
         }
         result.append(")")
-        return result.convert()
+        return result.finish()
     }
 }

@@ -175,7 +175,7 @@ class ImmutableArray<T> : ListView<T> {
             result.append(separator)
             result.append(self[i])
         }
-        return result.convert()
+        return result.finish()
     }
 
     @override
@@ -189,6 +189,6 @@ class ImmutableArray<T> : ListView<T> {
             result.append(v)
         }
         result.append("]")
-        return result.convert()
+        return result.finish()
     }
 }

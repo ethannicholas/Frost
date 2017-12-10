@@ -35,6 +35,6 @@ class SteppedRange<EndPoint:Value?, Step:Value> : Value {
         }
         result.append(" by ")
         result.append(step)
-        return result.convert()
+        return result.finish()
     }
 }

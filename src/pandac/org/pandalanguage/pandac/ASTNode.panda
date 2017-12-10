@@ -148,7 +148,7 @@ class ASTNode : Immutable {
                     result.append(" by ")
                     result.append(children[2])
                 }
-                return result.convert()
+                return result.finish()
             when Kind.RANGE_EXCLUSIVE:
                 assert children.get_count() = 3
                 def result := MutableString()
@@ -163,7 +163,7 @@ class ASTNode : Immutable {
                     result.append(" by ")
                     result.append(children[2])
                 }
-                return result.convert()
+                return result.finish()
             when Kind.CALL:
                 assert children.get_count() >= 1
                 def result := MutableString(children[0].convert())
@@ -175,7 +175,7 @@ class ASTNode : Immutable {
                     separator := ", "
                 }
                 result.append(")")
-                return result.convert()
+                return result.finish()
             when Kind.IDENTIFIER:
                 if children.get_count() = 1 {
                     return payload + ":" + children[0]
@@ -232,7 +232,7 @@ class ASTNode : Immutable {
                     result.append("\n")
                 }
                 result.append("}")
-                return result.convert()
+                return result.finish()
             when Kind.TYPE:
                 return payload.convert()
             when Kind.NULLABLE_TYPE:
@@ -247,7 +247,7 @@ class ASTNode : Immutable {
                     separator := ", "
                 }
                 result.append(">")
-                return result.convert()
+                return result.finish()
             when Kind.TYPES:
                 def result := MutableString()
                 var separator := ""
@@ -256,7 +256,7 @@ class ASTNode : Immutable {
                     result.append(c)
                     separator := ", "
                 }
-                return result.convert()
+                return result.finish()
             when Kind.ANNOTATION:
                 return payload.convert()
             when Kind.ANNOTATIONS:
@@ -265,7 +265,7 @@ class ASTNode : Immutable {
                     result.append(c)
                     result.append("\n")
                 }
-                return result.convert()
+                return result.finish()
             when Kind.DECLARATION:
                 if children.get_count() = 1 {
                     return children[0].convert()
@@ -279,7 +279,7 @@ class ASTNode : Immutable {
                     result.append(c)
                     separator := ", "
                 }
-                return result.convert()
+                return result.finish()
             when Kind.DEF:
                 def result := MutableString("def ")
                 var separator := ""
@@ -288,7 +288,7 @@ class ASTNode : Immutable {
                     result.append(c)
                     separator := ", "
                 }
-                return result.convert()
+                return result.finish()
             when Kind.PROPERTY:
                 def result := MutableString("property ")
                 var separator := ""
@@ -297,7 +297,7 @@ class ASTNode : Immutable {
                     result.append(c)
                     separator := ", "
                 }
-                return result.convert()
+                return result.finish()
             when Kind.CONSTANT:
                 def result := MutableString("constant ")
                 var separator := ""
@@ -306,7 +306,7 @@ class ASTNode : Immutable {
                     result.append(c)
                     separator := ", "
                 }
-                return result.convert()
+                return result.finish()
             when Kind.FIELD:
                 assert children.get_count() = 3
                 return "\{children[0]}\{children[1]}\{children[2]}"
@@ -322,7 +322,7 @@ class ASTNode : Immutable {
                     separator := ", "
                 }
                 result.append(")")
-                return result.convert()
+                return result.finish()
             when Kind.INIT:
                 assert children.get_count() = 5
                 return "\{children[0]}\{children[1]}init\{children[2]} \{children[3]}\{children[4]}"
@@ -341,7 +341,7 @@ class ASTNode : Immutable {
                     result.append("\n")
                 }
                 result.append("}")
-                return result.convert()
+                return result.finish()
             when Kind.CLASS:
                 assert children.get_count() = 6
                 def result := MutableString()
@@ -360,7 +360,7 @@ class ASTNode : Immutable {
                 }
                 result.append(" ")
                 result.append(children[5])
-                return result.convert()
+                return result.finish()
             when Kind.INTERFACE:
                 assert children.get_count() = 5
                 def result := MutableString()
@@ -371,14 +371,14 @@ class ASTNode : Immutable {
                 result.append(" ")
                 result.append(children[3])
                 result.append(children[4])
-                return result.convert()
+                return result.finish()
             when Kind.FILE:
                 def result := MutableString()
                 for c in children {
                     result.append(c)
                     result.append("\n")
                 }
-                return result.convert()
+                return result.finish()
             when Kind.SELF:
                 return "self"
             when Kind.SUPER:

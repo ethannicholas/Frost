@@ -461,7 +461,7 @@ panda$core$String* org$pandalanguage$pandac$ASTNode$convert$R$panda$core$String(
                 panda$core$MutableString$append$panda$core$Object(result79, ((panda$core$Object*) ((org$pandalanguage$pandac$ASTNode*) $tmp89)));
             }
             }
-            panda$core$String* $tmp90 = panda$core$MutableString$convert$R$panda$core$String(result79);
+            panda$core$String* $tmp90 = panda$core$MutableString$finish$R$panda$core$String(result79);
             return $tmp90;
         }
         break;
@@ -501,7 +501,7 @@ panda$core$String* org$pandalanguage$pandac$ASTNode$convert$R$panda$core$String(
                 panda$core$MutableString$append$panda$core$Object(result93, ((panda$core$Object*) ((org$pandalanguage$pandac$ASTNode*) $tmp106)));
             }
             }
-            panda$core$String* $tmp107 = panda$core$MutableString$convert$R$panda$core$String(result93);
+            panda$core$String* $tmp107 = panda$core$MutableString$finish$R$panda$core$String(result93);
             return $tmp107;
         }
         break;
@@ -549,7 +549,7 @@ panda$core$String* org$pandalanguage$pandac$ASTNode$convert$R$panda$core$String(
             goto $l125;
             $l127:;
             panda$core$MutableString$append$panda$core$String(result110, &$s141);
-            panda$core$String* $tmp142 = panda$core$MutableString$convert$R$panda$core$String(result110);
+            panda$core$String* $tmp142 = panda$core$MutableString$finish$R$panda$core$String(result110);
             return $tmp142;
         }
         break;
@@ -776,7 +776,7 @@ panda$core$String* org$pandalanguage$pandac$ASTNode$convert$R$panda$core$String(
                 $l260:;
             }
             panda$core$MutableString$append$panda$core$String(result250, &$s287);
-            panda$core$String* $tmp288 = panda$core$MutableString$convert$R$panda$core$String(result250);
+            panda$core$String* $tmp288 = panda$core$MutableString$finish$R$panda$core$String(result250);
             return $tmp288;
         }
         break;
@@ -839,7 +839,7 @@ panda$core$String* org$pandalanguage$pandac$ASTNode$convert$R$panda$core$String(
                 $l310:;
             }
             panda$core$MutableString$append$panda$core$String(result294, &$s322);
-            panda$core$String* $tmp323 = panda$core$MutableString$convert$R$panda$core$String(result294);
+            panda$core$String* $tmp323 = panda$core$MutableString$finish$R$panda$core$String(result294);
             return $tmp323;
         }
         break;
@@ -883,7 +883,7 @@ panda$core$String* org$pandalanguage$pandac$ASTNode$convert$R$panda$core$String(
                 goto $l334;
                 $l335:;
             }
-            panda$core$String* $tmp347 = panda$core$MutableString$convert$R$panda$core$String(result324);
+            panda$core$String* $tmp347 = panda$core$MutableString$finish$R$panda$core$String(result324);
             return $tmp347;
         }
         break;
@@ -931,7 +931,7 @@ panda$core$String* org$pandalanguage$pandac$ASTNode$convert$R$panda$core$String(
                 goto $l358;
                 $l359:;
             }
-            panda$core$String* $tmp371 = panda$core$MutableString$convert$R$panda$core$String(result350);
+            panda$core$String* $tmp371 = panda$core$MutableString$finish$R$panda$core$String(result350);
             return $tmp371;
         }
         break;
@@ -995,7 +995,7 @@ panda$core$String* org$pandalanguage$pandac$ASTNode$convert$R$panda$core$String(
                 goto $l396;
                 $l397:;
             }
-            panda$core$String* $tmp409 = panda$core$MutableString$convert$R$panda$core$String(result385);
+            panda$core$String* $tmp409 = panda$core$MutableString$finish$R$panda$core$String(result385);
             return $tmp409;
         }
         break;
@@ -1039,7 +1039,7 @@ panda$core$String* org$pandalanguage$pandac$ASTNode$convert$R$panda$core$String(
                 goto $l421;
                 $l422:;
             }
-            panda$core$String* $tmp434 = panda$core$MutableString$convert$R$panda$core$String(result410);
+            panda$core$String* $tmp434 = panda$core$MutableString$finish$R$panda$core$String(result410);
             return $tmp434;
         }
         break;
@@ -1083,7 +1083,7 @@ panda$core$String* org$pandalanguage$pandac$ASTNode$convert$R$panda$core$String(
                 goto $l446;
                 $l447:;
             }
-            panda$core$String* $tmp459 = panda$core$MutableString$convert$R$panda$core$String(result435);
+            panda$core$String* $tmp459 = panda$core$MutableString$finish$R$panda$core$String(result435);
             return $tmp459;
         }
         break;
@@ -1127,7 +1127,7 @@ panda$core$String* org$pandalanguage$pandac$ASTNode$convert$R$panda$core$String(
                 goto $l471;
                 $l472:;
             }
-            panda$core$String* $tmp484 = panda$core$MutableString$convert$R$panda$core$String(result460);
+            panda$core$String* $tmp484 = panda$core$MutableString$finish$R$panda$core$String(result460);
             return $tmp484;
         }
         break;
@@ -1202,7 +1202,7 @@ panda$core$String* org$pandalanguage$pandac$ASTNode$convert$R$panda$core$String(
                 $l522:;
             }
             panda$core$MutableString$append$panda$core$String(result510, &$s534);
-            panda$core$String* $tmp535 = panda$core$MutableString$convert$R$panda$core$String(result510);
+            panda$core$String* $tmp535 = panda$core$MutableString$finish$R$panda$core$String(result510);
             return $tmp535;
         }
         break;
@@ -1326,7 +1326,7 @@ panda$core$String* org$pandalanguage$pandac$ASTNode$convert$R$panda$core$String(
                 $l633:;
             }
             panda$core$MutableString$append$panda$core$String(result623, &$s645);
-            panda$core$String* $tmp646 = panda$core$MutableString$convert$R$panda$core$String(result623);
+            panda$core$String* $tmp646 = panda$core$MutableString$finish$R$panda$core$String(result623);
             return $tmp646;
         }
         break;
@@ -1371,7 +1371,7 @@ panda$core$String* org$pandalanguage$pandac$ASTNode$convert$R$panda$core$String(
             panda$core$MutableString$append$panda$core$String(result649, &$s668);
             panda$core$Object* $tmp669 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(self->children, ((panda$core$Int64) { 5 }));
             panda$core$MutableString$append$panda$core$Object(result649, ((panda$core$Object*) ((org$pandalanguage$pandac$ASTNode*) $tmp669)));
-            panda$core$String* $tmp670 = panda$core$MutableString$convert$R$panda$core$String(result649);
+            panda$core$String* $tmp670 = panda$core$MutableString$finish$R$panda$core$String(result649);
             return $tmp670;
         }
         break;
@@ -1399,7 +1399,7 @@ panda$core$String* org$pandalanguage$pandac$ASTNode$convert$R$panda$core$String(
             panda$core$MutableString$append$panda$core$Object(result673, ((panda$core$Object*) ((org$pandalanguage$pandac$ASTNode*) $tmp684)));
             panda$core$Object* $tmp685 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(self->children, ((panda$core$Int64) { 4 }));
             panda$core$MutableString$append$panda$core$Object(result673, ((panda$core$Object*) ((org$pandalanguage$pandac$ASTNode*) $tmp685)));
-            panda$core$String* $tmp686 = panda$core$MutableString$convert$R$panda$core$String(result673);
+            panda$core$String* $tmp686 = panda$core$MutableString$finish$R$panda$core$String(result673);
             return $tmp686;
         }
         break;
@@ -1441,7 +1441,7 @@ panda$core$String* org$pandalanguage$pandac$ASTNode$convert$R$panda$core$String(
                 goto $l695;
                 $l696:;
             }
-            panda$core$String* $tmp708 = panda$core$MutableString$convert$R$panda$core$String(result687);
+            panda$core$String* $tmp708 = panda$core$MutableString$finish$R$panda$core$String(result687);
             return $tmp708;
         }
         break;

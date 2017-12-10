@@ -70,7 +70,7 @@ class InputStream {
             result.append(buffer->Pointer<Char8>, 0, count)
         }
         buffer.destroy()
-        return result.convert()
+        return result.finish()
     }
 
     method read():Int16? {
@@ -132,7 +132,7 @@ class InputStream {
             }
             result.append(c)
         }
-        return result.convert()
+        return result.finish()
     }
 
     function lines():Iterator<String> {

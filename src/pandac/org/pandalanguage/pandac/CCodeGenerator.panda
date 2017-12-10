@@ -72,7 +72,7 @@ class CCodeGenerator : CodeGenerator {
                 separator := ", "
             }
             code.append(");")
-            types.printLine(code)
+            types.printLine(code.finish())
             return result
         }
         return hCodeGen.type(t)
@@ -352,7 +352,7 @@ class CCodeGenerator : CodeGenerator {
             result.append(type(inheritedType.subtypes[i]))
         }
         result.append(")*")
-        return result.convert()
+        return result.finish()
     }
 
     method nullableType(t:Type):String {
@@ -383,7 +383,7 @@ class CCodeGenerator : CodeGenerator {
                 }
             }
             result.append("} };\n")
-            types.printLine(result)
+            types.printLine(result.finish())
             previous := "(ITable*) &\{name}"
         }
         return previous
@@ -441,9 +441,9 @@ class CCodeGenerator : CodeGenerator {
         }
         out.level -= 1
         out.printLine("}")
-        def result := MethodShim(resultName, resultType.convert())
+        def result := MethodShim(resultName, resultType.finish())
         methodShims[raw] := result
-        rawOut.print(outBuffer)
+        rawOut.print(outBuffer.finish())
         return result
     }
 
@@ -505,7 +505,7 @@ class CCodeGenerator : CodeGenerator {
                 }
             }
             result.append("} };\n")
-            types.printLine(result)
+            types.printLine(result.finish())
             previous := "(ITable*) &\{name}"
         }
         return previous
@@ -583,7 +583,7 @@ class CCodeGenerator : CodeGenerator {
                 separator := ", "
             }
             code.append("} };\n")
-            types.printLine(code)
+            types.printLine(code.finish())
             compiler.currentClass.pop()
         }
         return result
@@ -627,7 +627,7 @@ class CCodeGenerator : CodeGenerator {
                     separator := ", "
                 }
                 code.append("} };")
-                types.print(code)
+                types.print(code.finish())
             }
             classConstants[name] := result
         }
@@ -1929,8 +1929,8 @@ class CCodeGenerator : CodeGenerator {
         for s in body.children {
             writeStatement(s, indentedBody)
         }
-        methods.print(methodHeaderBuffer.convert())
-        methods.print(bodyBuffer.convert())
+        methods.print(methodHeaderBuffer.finish())
+        methods.print(bodyBuffer.finish())
         methods.level -= 1
         methods.printLine("}")
         currentMethod := null
@@ -1981,11 +1981,16 @@ class CCodeGenerator : CodeGenerator {
 
     @override
     method finish() {
-        out.printLine(shimsBuffer)
-        out.printLine(wrapperShimsBuffer)
-        out.printLine(types)
-        out.printLine(strings)
-        out.printLine(methodsBuffer)
+        out.printLine(shimsBuffer.finish())
+        shimsBuffer.clear()
+        out.printLine(wrapperShimsBuffer.finish())
+        wrapperShimsBuffer.clear()
+        out.printLine(types.finish())
+        types.clear()
+        out.printLine(strings.finish())
+        strings.clear()
+        out.printLine(methodsBuffer.finish())
+        methodsBuffer.clear()
         out.out.cleanup() -- FIXME shouldn't be necessary
     }
 }
