@@ -1,0 +1,35 @@
+package panda.core
+
+@final
+@specialize
+class SimpleRange<T:Value?> : Value {
+    def min:T
+
+    def max:T
+
+    def inclusive:Bit
+
+    init(min:T, max:T, inclusive:Bit) {
+        self.min := min
+        self.max := max
+        self.inclusive := inclusive
+    }
+
+    @override
+    function convert():String {
+        def result := MutableString()
+        if min != null {
+            result.append(min)
+        }
+        if inclusive {
+            result.append("...")
+        }
+        else {
+            result.append("..")
+        }
+        if max != null {
+            result.append(max)
+        }
+        return result.convert()
+    }
+}

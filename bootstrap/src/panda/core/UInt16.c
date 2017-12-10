@@ -21,7 +21,7 @@ panda$core$UInt16$wrapper* wrap_panda$core$UInt16(panda$core$UInt16 self) {
 #include "panda/core/UInt8.h"
 #include "panda/core/UInt64.h"
 #include "panda/core/Char8.h"
-#include "panda/core/Range.LTpanda/core/Int64.GT.h"
+#include "panda/core/SimpleRange.LTpanda/core/Int64.GT.h"
 panda$core$Bit panda$core$UInt16$$EQ$panda$core$UInt16$R$panda$core$Bit$shim(panda$core$UInt16 self, panda$core$Object* p0) {
     panda$core$Bit result = panda$core$UInt16$$EQ$panda$core$UInt16$R$panda$core$Bit(self, ((panda$core$UInt16$wrapper*) p0)->value);
     return result;
@@ -773,7 +773,7 @@ panda$core$String* panda$core$UInt16$convert$R$panda$core$String(panda$core$UInt
     panda$core$Char8 $tmp183;
     panda$core$Int64 size184;
     panda$core$Char8* result186;
-    panda$core$Range$LTpanda$core$Int64$GT $tmp187;
+    panda$core$SimpleRange$LTpanda$core$Int64$GT $tmp187;
     max158 = ((panda$core$Int64) { 5 });
     chars159 = ((panda$core$Char8*) malloc(max158.value * 1));
     panda$core$Int64 $tmp161 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(max158, ((panda$core$Int64) { 1 }));
@@ -825,56 +825,55 @@ panda$core$String* panda$core$UInt16$convert$R$panda$core$String(panda$core$UInt
     panda$core$Int64 $tmp185 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(max158, index160);
     size184 = $tmp185;
     result186 = ((panda$core$Char8*) malloc(size184.value * 1));
-    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp187, index160, max158, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
-    int64_t $tmp189 = $tmp187.start.value;
+    panda$core$SimpleRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp187, index160, max158, ((panda$core$Bit) { false }));
+    int64_t $tmp189 = $tmp187.min.value;
     panda$core$Int64 i188 = { $tmp189 };
-    int64_t $tmp191 = $tmp187.end.value;
-    int64_t $tmp192 = $tmp187.step.value;
-    bool $tmp193 = $tmp187.inclusive.value;
-    bool $tmp200 = $tmp192 > 0;
-    if ($tmp200) goto $l198; else goto $l199;
-    $l198:;
-    if ($tmp193) goto $l201; else goto $l202;
-    $l201:;
-    if ($tmp189 <= $tmp191) goto $l194; else goto $l196;
-    $l202:;
-    if ($tmp189 < $tmp191) goto $l194; else goto $l196;
-    $l199:;
-    if ($tmp193) goto $l203; else goto $l204;
-    $l203:;
-    if ($tmp189 >= $tmp191) goto $l194; else goto $l196;
-    $l204:;
-    if ($tmp189 > $tmp191) goto $l194; else goto $l196;
-    $l194:;
-    {
-        panda$core$Int64 $tmp206 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(i188, index160);
-        result186[$tmp206.value] = chars159[i188.value];
-    }
+    int64_t $tmp191 = $tmp187.max.value;
+    bool $tmp192 = $tmp187.inclusive.value;
+    bool $tmp199 = 1 > 0;
+    if ($tmp199) goto $l197; else goto $l198;
     $l197:;
-    if ($tmp200) goto $l208; else goto $l209;
-    $l208:;
-    int64_t $tmp210 = $tmp191 - i188.value;
-    if ($tmp193) goto $l211; else goto $l212;
-    $l211:;
-    if ($tmp210 >= $tmp192) goto $l207; else goto $l196;
-    $l212:;
-    if ($tmp210 > $tmp192) goto $l207; else goto $l196;
-    $l209:;
-    int64_t $tmp214 = i188.value - $tmp191;
-    if ($tmp193) goto $l215; else goto $l216;
-    $l215:;
-    if ($tmp214 >= -$tmp192) goto $l207; else goto $l196;
-    $l216:;
-    if ($tmp214 > -$tmp192) goto $l207; else goto $l196;
-    $l207:;
-    i188.value += $tmp192;
-    goto $l194;
+    if ($tmp192) goto $l200; else goto $l201;
+    $l200:;
+    if ($tmp189 <= $tmp191) goto $l193; else goto $l195;
+    $l201:;
+    if ($tmp189 < $tmp191) goto $l193; else goto $l195;
+    $l198:;
+    if ($tmp192) goto $l202; else goto $l203;
+    $l202:;
+    if ($tmp189 >= $tmp191) goto $l193; else goto $l195;
+    $l203:;
+    if ($tmp189 > $tmp191) goto $l193; else goto $l195;
+    $l193:;
+    {
+        panda$core$Int64 $tmp205 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(i188, index160);
+        result186[$tmp205.value] = chars159[i188.value];
+    }
     $l196:;
+    if ($tmp199) goto $l207; else goto $l208;
+    $l207:;
+    int64_t $tmp209 = $tmp191 - i188.value;
+    if ($tmp192) goto $l210; else goto $l211;
+    $l210:;
+    if ($tmp209 >= 1) goto $l206; else goto $l195;
+    $l211:;
+    if ($tmp209 > 1) goto $l206; else goto $l195;
+    $l208:;
+    int64_t $tmp213 = i188.value - $tmp191;
+    if ($tmp192) goto $l214; else goto $l215;
+    $l214:;
+    if ($tmp213 >= -1) goto $l206; else goto $l195;
+    $l215:;
+    if ($tmp213 > -1) goto $l206; else goto $l195;
+    $l206:;
+    i188.value += 1;
+    goto $l193;
+    $l195:;
     free(chars159);
-    panda$core$String* $tmp218 = (panda$core$String*) malloc(33);
-    $tmp218->$class = (panda$core$Class*) &panda$core$String$class;
-    $tmp218->refCount.value = 1;
-    panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64$panda$core$Bit($tmp218, result186, size184, ((panda$core$Bit) { true }));
-    return $tmp218;
+    panda$core$String* $tmp217 = (panda$core$String*) malloc(33);
+    $tmp217->$class = (panda$core$Class*) &panda$core$String$class;
+    $tmp217->refCount.value = 1;
+    panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64$panda$core$Bit($tmp217, result186, size184, ((panda$core$Bit) { true }));
+    return $tmp217;
 }
 

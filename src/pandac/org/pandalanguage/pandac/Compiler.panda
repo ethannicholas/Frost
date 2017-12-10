@@ -5,7 +5,8 @@ uses org.pandalanguage.pandac.parser.Token
 
 @final
 class Compiler : ErrorReporter {
-    constant RANGE_NAME := "panda.core.Range"
+    constant RANGE_NAME := "panda.core.SimpleRange"
+    constant STEPPED_RANGE_NAME := "panda.core.SteppedRange"
 
     class Settings : Immutable {
         def pandaHome:File
@@ -120,6 +121,8 @@ class Compiler : ErrorReporter {
         addAlias("panda.core.Object")
         addAlias("panda.core.Panda")
         addAlias("panda.core.Range")
+        addAlias("panda.core.SimpleRange")
+        addAlias("panda.core.SteppedRange")
         addAlias("panda.core.String")
         addAlias("panda.core.System")
         addAlias("panda.core.UInt8")
@@ -866,14 +869,40 @@ class Compiler : ErrorReporter {
         if type = Type.BitLiteral() {
             return Type.Bit()
         }
+        if type.typeKind = Type.Kind.NULL {
+            return Type.Any()
+        }
         return type
     }
 
     function variableType(expr:IRNode):Type {
         match expr.kind {
             when IRNode.Kind.UNRESOLVED_RANGE:
-                return Type.RangeOf(variableType(variableType(expr.children[0].type).union(
-                        variableType(expr.children[1].type))))
+                if expr.children.get_count() = 2 {
+                    if expr.children[0].kind = IRNode.Kind.NULL {
+                        if expr.children[1].kind = IRNode.Kind.NULL {
+                            return Type.RangeOf(Type.Int64().nullable())
+                        }
+                        return Type.RangeOf(variableType(expr.children[1].type).nullable())
+                    }
+                    if expr.children[1].kind = IRNode.Kind.NULL {
+                        return Type.RangeOf(variableType(expr.children[0].type).nullable())
+                    }
+                    return Type.RangeOf(variableType(variableType(expr.children[0].type).union(
+                            variableType(expr.children[1].type))))
+                }
+                def step := variableType(expr.children[2].type)
+                if expr.children[0].kind = IRNode.Kind.NULL {
+                    if expr.children[1].kind = IRNode.Kind.NULL {
+                        return Type.SteppedRangeOf(Type.Int64().nullable(), step)
+                    }
+                    return Type.SteppedRangeOf(variableType(expr.children[1].type).nullable(), step)
+                }
+                if expr.children[1].kind = IRNode.Kind.NULL {
+                    return Type.SteppedRangeOf(variableType(expr.children[0].type).nullable(), step)
+                }
+                return Type.SteppedRangeOf(variableType(variableType(expr.children[0].type).union(
+                        variableType(expr.children[1].type))), step)
             when IRNode.Kind.UNRESOLVED_INDEX:
                 def args := expr.children[1..]
                 def c := call(expr.children[0], "[]", args)
@@ -1038,7 +1067,31 @@ class Compiler : ErrorReporter {
                 }
             when IRNode.Kind.UNRESOLVED_RANGE:
                 if target.isRange() {
-                    assert expr.children.get_count() = 3
+                    if expr.children.get_count() != 2 {
+                        return null
+                    }
+                    if expr.children[0].kind = IRNode.Kind.NULL &
+                            expr.children[1].kind = IRNode.Kind.NULL {
+                        if !target.subtypes[1].isNumber() {
+                            return 0
+                        }
+                        return 1
+                    }
+                    assert target.typeKind = Type.Kind.GENERIC
+                    def cost1 := coercionCost(expr.children[0], target.subtypes[1])
+                    if cost1 = null {
+                        return null
+                    }
+                    def cost2 := coercionCost(expr.children[1], target.subtypes[1])
+                    if cost2 = null {
+                        return null
+                    }
+                    return cost1 + cost2
+                }
+                if target.isSteppedRange() {
+                    if expr.children.get_count() != 3 {
+                        return null
+                    }
                     if expr.children[0].kind = IRNode.Kind.NULL &
                             expr.children[1].kind = IRNode.Kind.NULL {
                         if !target.subtypes[1].isNumber() {
@@ -1144,8 +1197,11 @@ class Compiler : ErrorReporter {
                     }
                 }
             when IRNode.Kind.UNRESOLVED_RANGE:
-                assert expr.children.get_count() = 3
                 if target.isRange() {
+                    if expr.children.get_count() != 2 {
+                        error(expr.position, "expected '\{target}', but found '\{expr}'")
+                        return null
+                    }
                     assert target.typeKind = Type.Kind.GENERIC
                     def param := target.subtypes[1]
                     def start := coerce(expr.children[0], param)
@@ -1159,8 +1215,31 @@ class Compiler : ErrorReporter {
                     def args := Array<IRNode>()
                     args.add(start)
                     args.add(end)
-                    args.add(expr.children[2])
-                    args.add(IRNode(IRNode.Kind.BIT, expr.position, Type.BuiltinBit(), expr.payload->Bit))
+                    args.add(IRNode(IRNode.Kind.BIT, expr.position, Type.BuiltinBit(),
+                            expr.payload->Bit))
+                    def target := IRNode(IRNode.Kind.TYPE_REFERENCE, expr.position, Type.Class(),
+                            target)
+                    return call(target, args)
+                }
+                else if target.isSteppedRange() {
+                    if expr.children.get_count() != 3 {
+                        error(expr.position, "expected '\{target}', but found '\{expr}'")
+                        return null
+                    }
+                    assert target.typeKind = Type.Kind.GENERIC
+                    def endPoint := target.subtypes[1]
+                    def start := coerce(expr.children[0], endPoint)
+                    if start = null {
+                        return null
+                    }
+                    def end := coerce(expr.children[1], endPoint)
+                    def step := coerce(expr.children[2], target.subtypes[2])
+                    def args := Array<IRNode>()
+                    args.add(start)
+                    args.add(end)
+                    args.add(step)
+                    args.add(IRNode(IRNode.Kind.BIT, expr.position, Type.BuiltinBit(),
+                            expr.payload->Bit))
                     def target := IRNode(IRNode.Kind.TYPE_REFERENCE, expr.position, Type.Class(),
                             target)
                     return call(target, args)
@@ -2279,7 +2358,7 @@ class Compiler : ErrorReporter {
         }
         def step:IRNode?
         if r.children[2].kind = ASTNode.Kind.VOID {
-            step := IRNode(IRNode.Kind.INT, r.position, Type.IntLiteral(), 1)
+            step := null
         }
         else {
             step := coerce(compileExpression(r.children[2]), Type.Int64())
@@ -2290,7 +2369,9 @@ class Compiler : ErrorReporter {
         def children := Array<IRNode>() -- FIXME literal
         children.add(start)
         children.add(end)
-        children.add(step)
+        if step != null {
+            children.add(step)
+        }
         return IRNode(IRNode.Kind.UNRESOLVED_RANGE,
                 r.position,
                 Type("<unresolved range>", Type.Kind.UNRESOLVED, Position(), true),
@@ -2463,7 +2544,24 @@ class Compiler : ErrorReporter {
         def list:IRNode?
         if astTarget.kind = ASTNode.Kind.IDENTIFIER & astTarget.children.get_count() = 1 {
             def t := resolve(scanner.convertType(astTarget.children[0]))
-            list := coerce(rawList, Type.RangeOf(t))
+            if rawList.kind = IRNode.Kind.UNRESOLVED_RANGE {
+                if rawList.children.get_count() = 2 {
+                    list := coerce(rawList, Type.RangeOf(t))
+                }
+                else {
+                    assert rawList.children.get_count() = 3
+                    list := coerce(rawList, Type.SteppedRangeOf(t, Type.Int64()))
+                }
+            }
+            else if rawList.type.isSteppedRange() {
+                list := coerce(rawList, Type.SteppedRangeOf(t, rawList.type.subtypes[2]))
+            }
+            else if coercionCost(rawList, Type.RangeOf(t)) != null {
+                list := coerce(rawList, Type.RangeOf(t))
+            }
+            else {
+                list := coerce(rawList, Type.SteppedRangeOf(t, Type.Int64()))
+            }
         }
         else {
             list := resolve(rawList)
@@ -2571,7 +2669,8 @@ class Compiler : ErrorReporter {
         def symbols := SymbolTable(symbolTable) -- FIXME auto
         symbolTable := symbols
         def result:IRNode?
-        if list.kind = IRNode.Kind.UNRESOLVED_RANGE | list.type.isRange() {
+        if list.kind = IRNode.Kind.UNRESOLVED_RANGE | list.type.isRange() |
+                list.type.isSteppedRange() {
             result := compileRangeFor(f.position, f.payload->String?, f.children[0], list,
                     f.children[2])
         }

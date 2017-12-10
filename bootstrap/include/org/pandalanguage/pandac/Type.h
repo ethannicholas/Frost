@@ -8,7 +8,7 @@ typedef struct panda$core$Class panda$core$Class;
 #include "org/pandalanguage/pandac/Position.h"
 typedef struct panda$core$String panda$core$String;
 #include "panda/core/Bit.h"
-typedef struct panda$collections$ImmutableArray panda$collections$ImmutableArray;
+typedef struct panda$collections$Array panda$collections$Array;
 typedef struct org$pandalanguage$pandac$ClassDecl org$pandalanguage$pandac$ClassDecl;
 typedef struct org$pandalanguage$pandac$ClassDecl$GenericParameter org$pandalanguage$pandac$ClassDecl$GenericParameter;
 
@@ -20,14 +20,14 @@ typedef struct org$pandalanguage$pandac$Type {
     panda$core$String* name;
     panda$core$Bit resolved;
     panda$core$Int64 typeKind;
-    panda$collections$ImmutableArray* subtypes;
+    panda$collections$Array* subtypes;
     org$pandalanguage$pandac$ClassDecl* test;
     org$pandalanguage$pandac$ClassDecl$GenericParameter* parameter;
 } org$pandalanguage$pandac$Type;
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"
 #undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[16]; } org$pandalanguage$pandac$Type$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[17]; } org$pandalanguage$pandac$Type$class_type;
 extern org$pandalanguage$pandac$Type$class_type org$pandalanguage$pandac$Type$class;
 
 #ifndef PANDA_TYPESONLY
@@ -65,6 +65,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$Iterator$R$org$pand
 org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$Iterable$R$org$pandalanguage$pandac$Type();
 org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$Panda$R$org$pandalanguage$pandac$Type();
 org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$RangeOf$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$Type* p_t);
+org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$SteppedRangeOf$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$Type* p_endPoint, org$pandalanguage$pandac$Type* p_step);
 org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$Invalid$R$org$pandalanguage$pandac$Type();
 panda$core$Bit org$pandalanguage$pandac$Type$isNumber$R$panda$core$Bit(org$pandalanguage$pandac$Type* self);
 panda$core$Bit org$pandalanguage$pandac$Type$isBuiltinNumber$R$panda$core$Bit(org$pandalanguage$pandac$Type* self);
@@ -72,6 +73,7 @@ panda$core$Bit org$pandalanguage$pandac$Type$isClass$R$panda$core$Bit(org$pandal
 panda$core$Bit org$pandalanguage$pandac$Type$isMethod$R$panda$core$Bit(org$pandalanguage$pandac$Type* self);
 panda$core$Bit org$pandalanguage$pandac$Type$isPointer$R$panda$core$Bit(org$pandalanguage$pandac$Type* self);
 panda$core$Bit org$pandalanguage$pandac$Type$isRange$R$panda$core$Bit(org$pandalanguage$pandac$Type* self);
+panda$core$Bit org$pandalanguage$pandac$Type$isSteppedRange$R$panda$core$Bit(org$pandalanguage$pandac$Type* self);
 org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$nullable$R$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$Type* self);
 org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$union$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$Type* self, org$pandalanguage$pandac$Type* p_other);
 org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$remap$panda$collections$HashMap$LTpanda$core$String$Corg$pandalanguage$pandac$Type$GT$R$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$Type* self, panda$collections$HashMap* p_types);

@@ -5,17 +5,17 @@
 #include "panda/core/Int64.h"
 #include "panda/core/Bit.h"
 #include "panda/core/UInt8.h"
-#include "panda/core/Range.LTpanda/core/Int64.GT.h"
+#include "panda/core/SimpleRange.LTpanda/core/Int64.GT.h"
 #include "panda/core/String.h"
 
 
 panda$io$IndentedOutputStream$class_type panda$io$IndentedOutputStream$class = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$io$OutputStream$class, NULL, { panda$core$Object$convert$R$panda$core$String, panda$core$Object$cleanup, panda$io$IndentedOutputStream$write$panda$core$UInt8, panda$io$OutputStream$write$panda$core$Int8, panda$io$IndentedOutputStream$write$panda$unsafe$Pointer$LTpanda$core$UInt8$GT$panda$core$Int64$panda$core$Int64, panda$io$OutputStream$write$panda$unsafe$Pointer$LTpanda$core$Int8$GT$panda$core$Int64$panda$core$Int64, panda$io$OutputStream$write$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64$panda$core$Int64, panda$io$OutputStream$write$panda$collections$Array$LTpanda$core$UInt8$GT$panda$core$Int64$panda$core$Int64, panda$io$OutputStream$write$panda$core$UInt16, panda$io$OutputStream$write$panda$core$Int16, panda$io$OutputStream$write$panda$core$UInt32, panda$io$OutputStream$write$panda$core$Int32, panda$io$OutputStream$write$panda$core$UInt64, panda$io$OutputStream$write$panda$core$Int64, panda$io$OutputStream$write$panda$core$Char8, panda$io$OutputStream$print$panda$core$Object, panda$io$OutputStream$print$panda$core$String, panda$io$OutputStream$printLine, panda$io$OutputStream$printLine$panda$core$Object, panda$io$OutputStream$printLine$panda$core$String, panda$io$IndentedOutputStream$indentIfNeeded} };
 
 typedef void (*$fn2)(panda$io$OutputStream*, panda$core$UInt8);
-typedef void (*$fn23)(panda$io$IndentedOutputStream*, panda$core$UInt8);
-typedef void (*$fn38)(panda$io$OutputStream*, panda$core$String*);
+typedef void (*$fn22)(panda$io$IndentedOutputStream*, panda$core$UInt8);
+typedef void (*$fn37)(panda$io$OutputStream*, panda$core$String*);
 
-static panda$core$String $s35 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x20", 1, 1 };
+static panda$core$String $s34 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x20", 1, 1 };
 
 void panda$io$IndentedOutputStream$init$panda$io$OutputStream(panda$io$IndentedOutputStream* self, panda$io$OutputStream* p_out) {
     self->level = ((panda$core$Int64) { 0 });
@@ -38,60 +38,59 @@ void panda$io$IndentedOutputStream$write$panda$core$UInt8(panda$io$IndentedOutpu
     (($fn2) self->out->$class->vtable[2])(self->out, p_b);
 }
 void panda$io$IndentedOutputStream$write$panda$unsafe$Pointer$LTpanda$core$UInt8$GT$panda$core$Int64$panda$core$Int64(panda$io$IndentedOutputStream* self, panda$core$UInt8* p_ptr, panda$core$Int64 p_offset, panda$core$Int64 p_count) {
-    panda$core$Range$LTpanda$core$Int64$GT $tmp3;
+    panda$core$SimpleRange$LTpanda$core$Int64$GT $tmp3;
     panda$core$Int64 $tmp4 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(p_offset, p_count);
-    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$Q$panda$core$Bit(&$tmp3, p_offset, $tmp4, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
-    int64_t $tmp6 = $tmp3.start.value;
+    panda$core$SimpleRange$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp3, p_offset, $tmp4, ((panda$core$Bit) { false }));
+    int64_t $tmp6 = $tmp3.min.value;
     panda$core$Int64 i5 = { $tmp6 };
-    int64_t $tmp8 = $tmp3.end.value;
-    int64_t $tmp9 = $tmp3.step.value;
-    bool $tmp10 = $tmp3.inclusive.value;
-    bool $tmp17 = $tmp9 > 0;
-    if ($tmp17) goto $l15; else goto $l16;
-    $l15:;
-    if ($tmp10) goto $l18; else goto $l19;
-    $l18:;
-    if ($tmp6 <= $tmp8) goto $l11; else goto $l13;
-    $l19:;
-    if ($tmp6 < $tmp8) goto $l11; else goto $l13;
-    $l16:;
-    if ($tmp10) goto $l20; else goto $l21;
-    $l20:;
-    if ($tmp6 >= $tmp8) goto $l11; else goto $l13;
-    $l21:;
-    if ($tmp6 > $tmp8) goto $l11; else goto $l13;
-    $l11:;
-    {
-        (($fn23) self->$class->vtable[2])(self, p_ptr[i5.value]);
-    }
+    int64_t $tmp8 = $tmp3.max.value;
+    bool $tmp9 = $tmp3.inclusive.value;
+    bool $tmp16 = 1 > 0;
+    if ($tmp16) goto $l14; else goto $l15;
     $l14:;
-    if ($tmp17) goto $l25; else goto $l26;
-    $l25:;
-    int64_t $tmp27 = $tmp8 - i5.value;
-    if ($tmp10) goto $l28; else goto $l29;
-    $l28:;
-    if ($tmp27 >= $tmp9) goto $l24; else goto $l13;
-    $l29:;
-    if ($tmp27 > $tmp9) goto $l24; else goto $l13;
-    $l26:;
-    int64_t $tmp31 = i5.value - $tmp8;
-    if ($tmp10) goto $l32; else goto $l33;
-    $l32:;
-    if ($tmp31 >= -$tmp9) goto $l24; else goto $l13;
-    $l33:;
-    if ($tmp31 > -$tmp9) goto $l24; else goto $l13;
-    $l24:;
-    i5.value += $tmp9;
-    goto $l11;
+    if ($tmp9) goto $l17; else goto $l18;
+    $l17:;
+    if ($tmp6 <= $tmp8) goto $l10; else goto $l12;
+    $l18:;
+    if ($tmp6 < $tmp8) goto $l10; else goto $l12;
+    $l15:;
+    if ($tmp9) goto $l19; else goto $l20;
+    $l19:;
+    if ($tmp6 >= $tmp8) goto $l10; else goto $l12;
+    $l20:;
+    if ($tmp6 > $tmp8) goto $l10; else goto $l12;
+    $l10:;
+    {
+        (($fn22) self->$class->vtable[2])(self, p_ptr[i5.value]);
+    }
     $l13:;
+    if ($tmp16) goto $l24; else goto $l25;
+    $l24:;
+    int64_t $tmp26 = $tmp8 - i5.value;
+    if ($tmp9) goto $l27; else goto $l28;
+    $l27:;
+    if ($tmp26 >= 1) goto $l23; else goto $l12;
+    $l28:;
+    if ($tmp26 > 1) goto $l23; else goto $l12;
+    $l25:;
+    int64_t $tmp30 = i5.value - $tmp8;
+    if ($tmp9) goto $l31; else goto $l32;
+    $l31:;
+    if ($tmp30 >= -1) goto $l23; else goto $l12;
+    $l32:;
+    if ($tmp30 > -1) goto $l23; else goto $l12;
+    $l23:;
+    i5.value += 1;
+    goto $l10;
+    $l12:;
 }
 void panda$io$IndentedOutputStream$indentIfNeeded(panda$io$IndentedOutputStream* self) {
     if (self->atLineStart.value) {
     {
         self->atLineStart = ((panda$core$Bit) { false });
-        panda$core$Int64 $tmp36 = panda$core$Int64$$MUL$panda$core$Int64$R$panda$core$Int64(self->indentSize, self->level);
-        panda$core$String* $tmp37 = panda$core$String$$MUL$panda$core$Int64$R$panda$core$String(&$s35, $tmp36);
-        (($fn38) ((panda$io$OutputStream*) self)->$class->vtable[16])(((panda$io$OutputStream*) self), $tmp37);
+        panda$core$Int64 $tmp35 = panda$core$Int64$$MUL$panda$core$Int64$R$panda$core$Int64(self->indentSize, self->level);
+        panda$core$String* $tmp36 = panda$core$String$$MUL$panda$core$Int64$R$panda$core$String(&$s34, $tmp35);
+        (($fn37) ((panda$io$OutputStream*) self)->$class->vtable[16])(((panda$io$OutputStream*) self), $tmp36);
     }
     }
 }

@@ -1386,7 +1386,7 @@ class CCodeGenerator : CodeGenerator {
         }
     }
 
-    method writeRangeFor(f:IRNode, out:IndentedOutputStream) {
+    method writeSimpleRangeFor(f:IRNode, out:IndentedOutputStream) {
         -- See LLVMCodeGenerator.writeRangeFor for an overview of why this code is so terrible.
         -- Here, we double down on the awful by keeping the LLVM structure completely intact and
         -- using gotos instead of anything resembling idiomatic C code, mostly to help ensure the
@@ -1397,6 +1397,161 @@ class CCodeGenerator : CodeGenerator {
         assert f.children[1].type.typeKind = Type.Kind.GENERIC
         assert f.children[1].type.subtypes.get_count() = 2
         assert f.children[1].type.subtypes[0].name = Compiler.RANGE_NAME
+        def range := getTypedReference(f.children[1], out)
+        def block := f.children[2]
+        def t := f.children[1].type.subtypes[1]
+        def llt := type(t)
+        def indexType:String
+        if t.typeKind = Type.Kind.NULLABLE {
+            assert t.subtypes.get_count() = 1
+            indexType := type(t.subtypes[0])
+        }
+        else {
+            indexType := llt
+        }
+        def cl := compiler.getClass(t)
+        assert cl != null
+        assert compiler.instanceFields(cl).get_count() = 1
+        def field := compiler.instanceFields(cl)[0]
+        compiler.resolve(field)
+        def numberType := type(field.type)
+        assert target.kind = IRNode.Kind.VARIABLE_REFERENCE
+        def index := getName(target.payload->Variable)
+
+        -- extract start value from range
+        def start := nextVar()
+        out.printLine("\{numberType} \{start} = \{range}.min.value;")
+
+        -- store start value
+        def indexValuePtr := nextVar()
+        out.printLine("\{type(cl.type())} \{index} = { \{start} };")
+
+        -- extract end value from range
+        def end := nextVar()
+        out.printLine("\{numberType} \{end} = \{range}.max.value;")
+
+        -- extract step value from range
+        def step := "1"
+
+        -- extract inclusive / exclusive from range
+        def inclusive := nextVar()
+        out.printLine("bool \{inclusive} = \{range}.inclusive.value;")
+
+        -- start block
+        def loopStart := nextLabel()
+        def loopBody := nextLabel()
+        def loopEnd := nextLabel()
+        def loopTest := nextLabel()
+        loopDescriptors.push(LoopDescriptor(f.payload->String?, loopEnd, loopTest)) -- FIXME Auto
+        def forwardEntry := nextLabel()
+        def backwardEntry := nextLabel()
+        def signPrefix:String
+        if t.name.startsWith("panda.core.Int") {
+            signPrefix := "s"
+        }
+        else {
+            assert t.name.startsWith("panda.core.UInt") | t.name.startsWith("panda.core.Char")
+            signPrefix := "u"
+        }
+        def direction:String
+        if signPrefix = "s" {
+            direction := nextVar()
+            out.printLine("bool \{direction} = \{step} > 0;")
+        }
+        else {
+            direction := "true"
+        }
+        out.printLine("if (\{direction}) goto \{forwardEntry}; else goto \{backwardEntry};")
+        createBlock(forwardEntry, out)
+        def forwardEntryInclusive := nextLabel()
+        def forwardEntryExclusive := nextLabel()
+        out.printLine("if (\{inclusive}) goto \{forwardEntryInclusive}; else goto " +
+                "\{forwardEntryExclusive};")
+        createBlock(forwardEntryInclusive, out)
+        out.printLine("if (\{start} <= \{end}) goto \{loopStart}; else goto \{loopEnd};")
+        createBlock(forwardEntryExclusive, out)
+        out.printLine("if (\{start} < \{end}) goto \{loopStart}; else goto \{loopEnd};")
+        createBlock(backwardEntry, out)
+        def backwardEntryInclusive := nextLabel()
+        def backwardEntryExclusive := nextLabel()
+        out.printLine("if (\{inclusive}) goto \{backwardEntryInclusive}; else goto " +
+                "\{backwardEntryExclusive};")
+        createBlock(backwardEntryInclusive, out)
+        out.printLine("if (\{start} >= \{end}) goto \{loopStart}; else goto \{loopEnd};")
+        createBlock(backwardEntryExclusive, out)
+        def backwardEntryExclusiveTest := nextVar()
+        out.printLine("if (\{start} > \{end}) goto \{loopStart}; else goto \{loopEnd};")
+        createBlock(loopStart, out)
+        writeStatement(block, out)
+        createBlock(loopTest, out)
+        def loopInc := nextLabel()
+        -- beginning of loop test, determine direction
+        def forwardLabel := nextLabel()
+        def backwardLabel := nextLabel()
+        out.printLine("if (\{direction}) goto \{forwardLabel}; else goto \{backwardLabel};")
+
+        -- forward loop; perform the test by subtracting index from end and then comparing to step,
+        -- to avoid overflows near the maximum value
+        createBlock(forwardLabel, out)
+        def forwardDelta := nextVar()
+        out.printLine("\{numberType} \{forwardDelta} = \{end} - \{index}.value;")
+
+        -- forward loop; determine inclusive / exclusive
+        def forwardInclusiveLabel := nextLabel()
+        def forwardExclusiveLabel := nextLabel()
+        out.printLine("if (\{inclusive}) goto \{forwardInclusiveLabel}; else goto " +
+                "\{forwardExclusiveLabel};")
+
+        -- forward inclusive test
+        createBlock(forwardInclusiveLabel, out)
+        -- always use unsigned comparison to avoid overflow; we know both the delta and the step are
+        -- the same sign
+        out.printLine("if (\{forwardDelta} >= \{step}) goto \{loopInc}; else goto \{loopEnd};")
+
+        -- forward exclusive test
+        createBlock(forwardExclusiveLabel, out)
+        def forwardExclusiveTest := nextVar()
+        out.printLine("if (\{forwardDelta} > \{step}) goto \{loopInc}; else goto \{loopEnd};")
+
+        -- backward loop; perform the test by subtracting end from index and then comparing to
+        -- -step, to avoid overflows near the minimum value
+        createBlock(backwardLabel, out)
+        def backwardDelta := nextVar()
+        out.printLine("\{numberType} \{backwardDelta} = \{index}.value - \{end};")
+
+        -- backward loop; determine inclusive / exclusive
+        def backwardInclusiveLabel := nextLabel()
+        def backwardExclusiveLabel := nextLabel()
+        out.printLine("if (\{inclusive}) goto \{backwardInclusiveLabel}; else goto " +
+                "\{backwardExclusiveLabel};")
+
+        -- backward inclusive test
+        createBlock(backwardInclusiveLabel, out)
+        out.printLine("if (\{backwardDelta} >= -\{step}) goto \{loopInc}; else goto \{loopEnd};")
+
+        -- backward exclusive test
+        createBlock(backwardExclusiveLabel, out)
+        out.printLine("if (\{backwardDelta} > -\{step}) goto \{loopInc}; else goto \{loopEnd};")
+
+        createBlock(loopInc, out)
+        def inc := nextVar()
+        out.printLine("\{index}.value += \{step};")
+        out.printLine("goto \{loopStart};")
+        createBlock(loopEnd, out)
+        loopDescriptors.pop()
+    }
+
+    method writeSteppedRangeFor(f:IRNode, out:IndentedOutputStream) {
+        -- See LLVMCodeGenerator.writeRangeFor for an overview of why this code is so terrible.
+        -- Here, we double down on the awful by keeping the LLVM structure completely intact and
+        -- using gotos instead of anything resembling idiomatic C code, mostly to help ensure the
+        -- behavior is identical.
+        assert f.kind = IRNode.Kind.RANGE_FOR
+        assert f.children.get_count() = 3
+        def target := f.children[0]
+        assert f.children[1].type.typeKind = Type.Kind.GENERIC
+        assert f.children[1].type.subtypes.get_count() = 3
+        assert f.children[1].type.subtypes[0].name = Compiler.STEPPED_RANGE_NAME
         def range := getTypedReference(f.children[1], out)
         def block := f.children[2]
         def t := f.children[1].type.subtypes[1]
@@ -1540,6 +1695,18 @@ class CCodeGenerator : CodeGenerator {
         out.printLine("goto \{loopStart};")
         createBlock(loopEnd, out)
         loopDescriptors.pop()
+    }
+
+    method writeRangeFor(f:IRNode, out:IndentedOutputStream) {
+        if f.children[1].type.isRange() {
+            writeSimpleRangeFor(f, out)
+        }
+        else if f.children[1].type.isSteppedRange() {
+            writeSteppedRangeFor(f, out)
+        }
+        else {
+            assert false
+        }
     }
 
     method writeWhile(w:IRNode, out:IndentedOutputStream) {

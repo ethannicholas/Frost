@@ -53,7 +53,7 @@ class HCodeGenerator : CodeGenerator {
 
     function getRelativePath(cl:ClassDecl, extension:String):String {
         return cl.name.replace(".", "/").replace("<", ".LT").replace(">", ".GT")
-                .replace("?", ".Q") + extension
+                .replace("?", ".Q").replace(",", ".C").replace(" ", "") + extension
     }
 
     method type(t:Type):String {

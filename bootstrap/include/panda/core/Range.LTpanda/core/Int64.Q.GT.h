@@ -37,7 +37,7 @@ panda$core$Range$LTpanda$core$Int64$Q$GT$wrapper* wrap_panda$core$Range$LTpanda$
 #include "panda/core/Bit.h"
 typedef struct panda$core$String panda$core$String;
 
-void panda$core$Range$LTpanda$core$Int64$Q$GT$init$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Bit(panda$core$Range$LTpanda$core$Int64$Q$GT* self, panda$core$Int64$nullable p_start, panda$core$Int64$nullable p_end, panda$core$Int64$nullable p_step, panda$core$Bit p_inclusive);
+void panda$core$Range$LTpanda$core$Int64$Q$GT$init$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Int64$panda$core$Bit(panda$core$Range$LTpanda$core$Int64$Q$GT* self, panda$core$Int64$nullable p_start, panda$core$Int64$nullable p_end, panda$core$Int64 p_step, panda$core$Bit p_inclusive);
 panda$core$String* panda$core$Range$LTpanda$core$Int64$Q$GT$convert$R$panda$core$String(panda$core$Range$LTpanda$core$Int64$Q$GT self);
 
 #endif

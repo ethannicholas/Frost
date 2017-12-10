@@ -356,7 +356,197 @@ class String : Immutable, Key<String> {
     will reverse the Unicode codepoints in the input string. Note again that this will mangle
     Unicode characters which consist of more than one Unicode codepoint.
     ================================================================================================
+    function [](r:SimpleRange<Index?>):String {
+        def step := 1
+
+        def current:Int
+        if r.min != null {
+            current := r.min.value
+        }
+        else if step > 0 {
+            current := start().value
+        }
+        else {
+            current := previous(end()).value
+        }
+
+        def end:Int
+        if r.max != null {
+            end := r.max.value
+        }
+        else if step > 0 {
+            end := self.end().value
+        }
+        else {
+            end := self.start().value
+        }
+
+        def result := MutableString()
+        while current < end {
+            def c := data[current]
+            result.append(c)
+            current += 1
+            if c.value->builtin_int64 && 0xFF >= 0b11000000 {
+                result.append(data[current])
+                current += 1
+            }
+            if c.value->builtin_int64 && 0xFF >= 0b11100000 {
+                result.append(data[current])
+                current += 1
+            }
+            if c.value->builtin_int64 && 0xFF >= 0b11110000 {
+                result.append(data[current])
+                current += 1
+            }
+            for i in 1 .. step {
+                if current >= end {
+                    return result.convert()
+                }
+                current := next(Index(current)).value
+            }
+        }
+        if (r.inclusive | r.max = null) & current = end & end < _length {
+            def c := data[current]
+            result.append(c)
+            current += 1
+            if c.value->builtin_int64 && 0xFF >= 0b11000000 {
+                result.append(data[current])
+                current += 1
+            }
+            if c.value->builtin_int64 && 0xFF >= 0b11100000 {
+                result.append(data[current])
+                current += 1
+            }
+            if c.value->builtin_int64 && 0xFF >= 0b11110000 {
+                result.append(data[current])
+            }
+        }
+        return result.convert()
+    }    
+
+    ================================================================================================
+    Returns a substring of a string. The `Range.step` value is interpreted in terms of Unicode
+    codepoints: that is, `s[... by 2]` will return a `String` consisting of every other Unicode
+    codepoint in `s`. As some Unicode characters consist of more than one codepoint (e.g. when using
+    combining diacriticals, Emoji skin tone modifiers, or Emoji flags), this will mangle such
+    characters when the step is not `1`.
+
+    A negative range value will scan the string backwards from the starting point, thus `[.. by -1]`
+    will reverse the Unicode codepoints in the input string. Note again that this will mangle
+    Unicode characters which consist of more than one Unicode codepoint.
+    ================================================================================================
     function [](r:Range<Index?>):String {
+        def step := r.step
+
+        def current:Int
+        if r.start != null {
+            current := r.start.value
+        }
+        else if step > 0 {
+            current := start().value
+        }
+        else {
+            current := previous(end()).value
+        }
+
+        def end:Int
+        if r.end != null {
+            end := r.end.value
+        }
+        else if step > 0 {
+            end := self.end().value
+        }
+        else {
+            end := self.start().value
+        }
+
+        def result := MutableString()
+        if r.step > 0 {
+            while current < end {
+                def c := data[current]
+                result.append(c)
+                current += 1
+                if c.value->builtin_int64 && 0xFF >= 0b11000000 {
+                    result.append(data[current])
+                    current += 1
+                }
+                if c.value->builtin_int64 && 0xFF >= 0b11100000 {
+                    result.append(data[current])
+                    current += 1
+                }
+                if c.value->builtin_int64 && 0xFF >= 0b11110000 {
+                    result.append(data[current])
+                    current += 1
+                }
+                for i in 1 .. step {
+                    if current >= end {
+                        return result.convert()
+                    }
+                    current := next(Index(current)).value
+                }
+            }
+        }
+        else {
+            assert r.step < 0
+            while current > end {
+                def c := data[current]
+                result.append(c)
+                def old := current
+                current += 1
+                if c.value->builtin_int64 && 0xFF >= 0b11000000 {
+                    result.append(data[current])
+                    current += 1
+                }
+                if c.value->builtin_int64 && 0xFF >= 0b11100000 {
+                    result.append(data[current])
+                    current += 1
+                }
+                if c.value->builtin_int64 && 0xFF >= 0b11110000 {
+                    result.append(data[current])
+                }
+                current := old - 1
+                while data[current].value->builtin_int64 && 0xFF >= 0b10000000 & data[current].value->builtin_int64 && 0xFF < 0b11000000 {
+                    current -= 1
+                }
+                for i in -1 .. step by -1 {
+                    if current <= end {
+                        return result.convert()
+                    }
+                    current := previous(Index(current)).value
+                }
+            }
+        }
+        if (r.inclusive | r.end = null) & current = end & end < _length {
+            def c := data[current]
+            result.append(c)
+            current += 1
+            if c.value->builtin_int64 && 0xFF >= 0b11000000 {
+                result.append(data[current])
+                current += 1
+            }
+            if c.value->builtin_int64 && 0xFF >= 0b11100000 {
+                result.append(data[current])
+                current += 1
+            }
+            if c.value->builtin_int64 && 0xFF >= 0b11110000 {
+                result.append(data[current])
+            }
+        }
+        return result.convert()
+    }
+
+    ================================================================================================
+    Returns a substring of a string. The `Range.step` value is interpreted in terms of Unicode
+    codepoints: that is, `s[... by 2]` will return a `String` consisting of every other Unicode
+    codepoint in `s`. As some Unicode characters consist of more than one codepoint (e.g. when using
+    combining diacriticals, Emoji skin tone modifiers, or Emoji flags), this will mangle such
+    characters when the step is not `1`.
+
+    A negative range value will scan the string backwards from the starting point, thus `[.. by -1]`
+    will reverse the Unicode codepoints in the input string. Note again that this will mangle
+    Unicode characters which consist of more than one Unicode codepoint.
+    ================================================================================================
+    function [](r:SteppedRange<Index?, Int>):String {
         def step := r.step
 
         def current:Int
@@ -461,7 +651,53 @@ class String : Immutable, Key<String> {
     accepts a `Range<Index?>` parameter, as it must scan the (internally UTF-8) string from the
     beginning to find the right offsets.
     ================================================================================================
+    function [](r:SimpleRange<Int?>):String {
+        def start:Index?
+        if r.min != null {
+            start := offset(self.start(), r.min)
+        }
+        else {
+            start := null
+        }
+        def end:Index?
+        if r.max != null {
+            end := offset(self.start(), r.max)
+        }
+        else {
+            end := null
+        }
+        return self[Range<Index?>(start, end, 1, r.inclusive)]
+    }
+
+    ================================================================================================
+    Returns a substring of a string. This version of the `[]` operator is slower than the one that
+    accepts a `Range<Index?>` parameter, as it must scan the (internally UTF-8) string from the
+    beginning to find the right offsets.
+    ================================================================================================
     function [](r:Range<Int?>):String {
+        def start:Index?
+        if r.start != null {
+            start := offset(self.start(), r.start)
+        }
+        else {
+            start := null
+        }
+        def end:Index?
+        if r.end != null {
+            end := offset(self.start(), r.end)
+        }
+        else {
+            end := null
+        }
+        return self[Range<Index?>(start, end, r.step, r.inclusive)]
+    }
+
+    ================================================================================================
+    Returns a substring of a string. This version of the `[]` operator is slower than the one that
+    accepts a `Range<Index?>` parameter, as it must scan the (internally UTF-8) string from the
+    beginning to find the right offsets.
+    ================================================================================================
+    function [](r:SteppedRange<Int?, Int>):String {
         def start:Index?
         if r.start != null {
             start := offset(self.start(), r.start)

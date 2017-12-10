@@ -13,7 +13,7 @@
 #include "panda/core/MutableString.h"
 #include "panda/collections/Iterator.h"
 #include "panda/collections/Iterable.h"
-#include "panda/core/Range.LTpanda/core/String/Index.Q.GT.h"
+#include "panda/core/SimpleRange.LTpanda/core/String/Index.Q.GT.h"
 #include "panda/core/String/Index.h"
 #include "org/pandalanguage/pandac/Symbol.h"
 #include "org/pandalanguage/pandac/MethodRef.h"
@@ -210,7 +210,7 @@ panda$core$String* org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(o
     panda$collections$Iterator* child$Iter40;
     org$pandalanguage$pandac$IRNode* child52;
     panda$core$String* c57;
-    panda$core$Range$LTpanda$core$String$Index$Q$GT $tmp66;
+    panda$core$SimpleRange$LTpanda$core$String$Index$Q$GT $tmp66;
     panda$core$MutableString* result215;
     switch (self->kind.value) {
         case 1000:
@@ -260,8 +260,8 @@ panda$core$String* org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(o
                         panda$core$String$Index $tmp68 = panda$core$String$next$panda$core$String$Index$R$panda$core$String$Index(c57, $tmp67);
                         panda$core$String$Index $tmp69 = panda$core$String$end$R$panda$core$String$Index(c57);
                         panda$core$String$Index $tmp70 = panda$core$String$previous$panda$core$String$Index$R$panda$core$String$Index(c57, $tmp69);
-                        panda$core$Range$LTpanda$core$String$Index$Q$GT$init$panda$core$String$Index$Q$panda$core$String$Index$Q$panda$core$Int64$Q$panda$core$Bit(&$tmp66, ((panda$core$String$Index$nullable) { $tmp68, true }), ((panda$core$String$Index$nullable) { $tmp70, true }), ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Bit) { false }));
-                        panda$core$String* $tmp71 = panda$core$String$$IDX$panda$core$Range$LTpanda$core$String$Index$Q$GT$R$panda$core$String(c57, $tmp66);
+                        panda$core$SimpleRange$LTpanda$core$String$Index$Q$GT$init$panda$core$String$Index$Q$panda$core$String$Index$Q$panda$core$Bit(&$tmp66, ((panda$core$String$Index$nullable) { $tmp68, true }), ((panda$core$String$Index$nullable) { $tmp70, true }), ((panda$core$Bit) { false }));
+                        panda$core$String* $tmp71 = panda$core$String$$IDX$panda$core$SimpleRange$LTpanda$core$String$Index$Q$GT$R$panda$core$String(c57, $tmp66);
                         panda$core$MutableString$append$panda$core$String(result36, $tmp71);
                     }
                     }

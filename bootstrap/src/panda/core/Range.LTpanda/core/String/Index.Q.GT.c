@@ -23,14 +23,14 @@ panda$core$Range$LTpanda$core$String$Index$Q$GT$class_type panda$core$Range$LTpa
 panda$core$Range$LTpanda$core$String$Index$Q$GT$wrapperclass_type panda$core$Range$LTpanda$core$String$Index$Q$GT$wrapperclass = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Value$class, NULL, { panda$core$Range$LTpanda$core$String$Index$Q$GT$convert$R$panda$core$String$wrappershim, panda$core$Object$cleanup} };
 static panda$core$String $s4 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2E\x2E\x2E", 3, 1 };
 static panda$core$String $s5 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2E\x2E", 2, 1 };
-static panda$core$String $s7 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x20\x62\x79\x20", 4, 1 };
+static panda$core$String $s6 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x20\x62\x79\x20", 4, 1 };
 
-void panda$core$Range$LTpanda$core$String$Index$Q$GT$init$panda$core$String$Index$Q$panda$core$String$Index$Q$panda$core$Int64$Q$panda$core$Bit(panda$core$Range$LTpanda$core$String$Index$Q$GT* self, panda$core$String$Index$nullable p_start, panda$core$String$Index$nullable p_end, panda$core$Int64$nullable p_step, panda$core$Bit p_inclusive) {
+void panda$core$Range$LTpanda$core$String$Index$Q$GT$init$panda$core$String$Index$Q$panda$core$String$Index$Q$panda$core$Int64$panda$core$Bit(panda$core$Range$LTpanda$core$String$Index$Q$GT* self, panda$core$String$Index$nullable p_start, panda$core$String$Index$nullable p_end, panda$core$Int64 p_step, panda$core$Bit p_inclusive) {
     self->start = p_start;
     self->end = p_end;
-    if (((panda$core$Bit) { p_step.nonnull }).value) {
+    if (((panda$core$Bit) { true }).value) {
     {
-        self->step = ((panda$core$Int64) p_step.value);
+        self->step = p_step;
     }
     }
     else {
@@ -67,14 +67,13 @@ panda$core$String* panda$core$Range$LTpanda$core$String$Index$Q$GT$convert$R$pan
         panda$core$MutableString$append$panda$core$Object(result1, ((panda$core$Object*) wrap_panda$core$String$Index(((panda$core$String$Index) self.end.value))));
     }
     }
-    panda$core$Bit $tmp6 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit(self.step, ((panda$core$Int64) { 1 }));
-    if ($tmp6.value) {
+    if (((panda$core$Bit) { true }).value) {
     {
-        panda$core$MutableString$append$panda$core$String(result1, &$s7);
+        panda$core$MutableString$append$panda$core$String(result1, &$s6);
         panda$core$MutableString$append$panda$core$Object(result1, ((panda$core$Object*) wrap_panda$core$Int64(self.step)));
     }
     }
-    panda$core$String* $tmp8 = panda$core$MutableString$convert$R$panda$core$String(result1);
-    return $tmp8;
+    panda$core$String* $tmp7 = panda$core$MutableString$convert$R$panda$core$String(result1);
+    return $tmp7;
 }
 

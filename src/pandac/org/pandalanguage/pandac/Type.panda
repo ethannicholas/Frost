@@ -25,7 +25,7 @@ class Type : Symbol, Key<Type> {
 
     def typeKind:Int
 
-    def subtypes:ImmutableArray<Type>
+    def subtypes:Array<Type>
 
     def test:ClassDecl
 
@@ -40,7 +40,7 @@ class Type : Symbol, Key<Type> {
         self.typeKind := typeKind
         self.position := position
         self.resolved := resolved
-        self.subtypes := ImmutableArray<Type>()
+        self.subtypes := Array<Type>()
         super.init(Symbol.Kind.TYPE, position, name)
     }
 
@@ -49,7 +49,7 @@ class Type : Symbol, Key<Type> {
         self.typeKind := typeKind
         self.position := Position(size, size)
         self.resolved := true
-        self.subtypes := ImmutableArray<Type>()
+        self.subtypes := Array<Type>()
         super.init(Symbol.Kind.TYPE, position, name)
     }
 
@@ -62,13 +62,13 @@ class Type : Symbol, Key<Type> {
         self.typeKind := typeKind
         self.position := position
         self.resolved := resolved
-        self.subtypes := ImmutableArray<Type>(subtypes)
+        self.subtypes := Array<Type>(subtypes)
         super.init(Symbol.Kind.TYPE, position, name)
     }
 
     init(subtypes:ListView<Type>) {
         self.typeKind := Kind.UNRESOLVED
-        self.subtypes := ImmutableArray<Type>(subtypes)
+        self.subtypes := Array<Type>(subtypes)
         def name := MutableString("unresolved<")
         var separator := ""
         self.resolved := true
@@ -190,6 +190,16 @@ class Type : Symbol, Key<Type> {
     }
 
     @class
+    method SteppedRangeOf(endPoint:Type, step:Type):Type {
+        def children := Array<Type>() -- FIXME literal
+        children.add(Type(Compiler.STEPPED_RANGE_NAME, Kind.CLASS, Position(), true))
+        children.add(endPoint)
+        children.add(step)
+        return Type("\{Compiler.STEPPED_RANGE_NAME}<\{endPoint}, \{step}>", Kind.GENERIC,
+                endPoint.position, children, endPoint.resolved & step.resolved)
+    }
+
+    @class
     method Invalid():Type {
         return Type("<invalid>", Kind.INVALID, Position(), true)
     }
@@ -227,8 +237,17 @@ class Type : Symbol, Key<Type> {
         return typeKind = Kind.GENERIC & subtypes[0].name = Compiler.RANGE_NAME
     }
 
+    function isSteppedRange():Bit {
+        if typeKind = Kind.NULLABLE {
+            return subtypes[0].isSteppedRange()
+        }
+        return typeKind = Kind.GENERIC & subtypes[0].name = Compiler.STEPPED_RANGE_NAME
+    }
+
     function nullable():Type {
-        assert typeKind != Kind.NULLABLE
+        if typeKind = Kind.NULLABLE {
+            return self
+        }
         def subtypes := Array<Type>()
         subtypes.add(self)
         return Type("\{name}?", Kind.NULLABLE, Position(), subtypes, true)
