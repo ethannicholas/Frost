@@ -511,7 +511,7 @@ static panda$core$String $s1531 = { (panda$core$Class*) &panda$core$String$class
 static panda$core$String $s1559 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27\x7B\x27", 3, 1440602, NULL };
 
 void org$pandalanguage$pandac$parser$Parser$init$org$pandalanguage$pandac$ErrorReporter(org$pandalanguage$pandac$parser$Parser* self, org$pandalanguage$pandac$ErrorReporter* p_errors) {
-    org$pandalanguage$pandac$parser$Lexer* $tmp1 = (org$pandalanguage$pandac$parser$Lexer*) malloc(24);
+    org$pandalanguage$pandac$parser$Lexer* $tmp1 = (org$pandalanguage$pandac$parser$Lexer*) malloc(40);
     $tmp1->$class = (panda$core$Class*) &org$pandalanguage$pandac$parser$Lexer$class;
     $tmp1->refCount.value = 1;
     org$pandalanguage$pandac$parser$Lexer$init($tmp1);

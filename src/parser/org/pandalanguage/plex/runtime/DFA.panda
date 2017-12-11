@@ -19,6 +19,8 @@ class DFA {
 
     var offset:String.Index
 
+    var end:String.Index
+
     var line := 1
 
     var column := 1
@@ -31,6 +33,7 @@ class DFA {
             accepts:Pointer<Int>) {
         self.source := source
         self.offset := source.start()
+        self.end := source.end()
         self.stateCount := stateCount
         self.transitions := transitions
         self.accepts := accepts
@@ -53,7 +56,7 @@ class DFA {
         rawToken.end := startOffset
         rawToken.line := line
         rawToken.column := column
-        while offset != source.end() {
+        while offset != end {
             def c := source[offset]
             if c.convert()->UInt8 > END_CHAR {
                 Console.printLine("invalid token \{c.convert()->UInt8}")

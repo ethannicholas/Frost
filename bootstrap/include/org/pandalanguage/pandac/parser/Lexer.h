@@ -5,11 +5,14 @@
 typedef struct panda$core$Class panda$core$Class;
 #include "panda/core/Int32.h"
 typedef struct org$pandalanguage$plex$runtime$DFA org$pandalanguage$plex$runtime$DFA;
+#include "panda/core/Int64.h"
 
 typedef struct org$pandalanguage$pandac$parser$Lexer {
     panda$core$Class* $class;
     panda$core$Int32 refCount;
     org$pandalanguage$plex$runtime$DFA* dfa;
+    panda$core$Int64** transitions;
+    panda$core$Int64* accepts;
 } org$pandalanguage$pandac$parser$Lexer;
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"

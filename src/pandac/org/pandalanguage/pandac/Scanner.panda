@@ -147,8 +147,8 @@ class Scanner {
     }
 
     function shouldInline(annotations:Annotations, body:ASTNode?):Bit {
-        return body != null & !annotations.isInline() & annotations.isFinal() &
-                complexity(body) <= INLINE_THRESHOLD
+        return compiler.settings.optimizationLevel > 0 & body != null & !annotations.isInline() &
+                annotations.isFinal() & complexity(body) <= INLINE_THRESHOLD
     }
 
     method scanMethod(owner:ClassDecl, m:ASTNode):MethodDecl? {

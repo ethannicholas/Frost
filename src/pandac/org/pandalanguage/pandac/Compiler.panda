@@ -418,21 +418,23 @@ class Compiler : ErrorReporter {
         }
         m.returnType := resolve(m.returnType)
         m.resolved := true
-        def overridden := getOverriddenMethod(m)
-        if overridden != null {
-            if !m.annotations.isOverride() {
-                error(m.position, "\{m.declaration()} overrides \{overridden.declaration()}, but " +
-                        "is not marked @override")
+        if !m.owner.external {
+            def overridden := getOverriddenMethod(m)
+            if overridden != null {
+                if !m.annotations.isOverride() {
+                    error(m.position, "\{m.declaration()} overrides \{overridden.declaration()}, " +
+                            "but is not marked @override")
+                }
+                if m.methodKind = MethodDecl.Kind.METHOD &
+                        overridden.methodKind = MethodDecl.Kind.FUNCTION {
+                    error(m.position, "\{m.declaration()} overrides \{overridden.declaration()}, " +
+                            "but methods cannot override functions")
+                }
             }
-            if m.methodKind = MethodDecl.Kind.METHOD &
-                    overridden.methodKind = MethodDecl.Kind.FUNCTION {
-                error(m.position, "\{m.declaration()} overrides \{overridden.declaration()}, but " +
-                        "methods cannot override functions")
+            else if m.annotations.isOverride() {
+                error(m.position, "\{m.declaration()} is marked @override, but no matching " +
+                        "method exists among its ancestors")
             }
-        }
-        else if m.annotations.isOverride() {
-            error(m.position, "\{m.declaration()} is marked @override, but no matching method " +
-                    "exists among its ancestors")
         }
         symbolTable := old
         currentClass.pop()
@@ -641,7 +643,7 @@ class Compiler : ErrorReporter {
             def supertypes := Array<Type>()
             supertypes.add(remapType(type, cl.rawSuper))
             for intf in cl.rawInterfaces { -- FIXME use map
-            supertypes.add(remapType(type, intf))
+                supertypes.add(remapType(type, intf))
             }
             def aliases := HashMap<String, String>(cl.aliases)
             for i in 0 .. cl.parameters.get_count() {
@@ -753,7 +755,11 @@ class Compiler : ErrorReporter {
     }
 
     function getOverriddenMethod(m:MethodDecl):MethodDecl? {
+        if m.overrideKnown {
+            return m.overridden
+        }
         if m.methodKind = MethodDecl.Kind.INIT {
+            m.overrideKnown := true
             return null
         }
         resolve(m)
@@ -762,13 +768,19 @@ class Compiler : ErrorReporter {
         for raw in m.owner.rawInterfaces {
             def result := findMethod(remapType(owner, raw), m.name, methodType, true)
             if result != null {
+                m.overrideKnown := true
+                m.overridden := result
                 return result
             }
         }
         resolve(m.owner)
         if m.owner.rawSuper != null {
-            return findMethod(remapType(owner, m.owner.rawSuper), m.name, methodType, true)
+            def result := findMethod(remapType(owner, m.owner.rawSuper), m.name, methodType, true)
+            m.overrideKnown := true
+            m.overridden := result
+            return result
         }
+        m.overrideKnown := true
         return null
     }
 
@@ -937,6 +949,11 @@ class Compiler : ErrorReporter {
     }
 
     function remapType(context:Type, raw:Type):Type {
+        match raw.typeKind {
+            when Type.Kind.CLASS, Type.Kind.BUILTIN_INT, Type.Kind.BUILTIN_UINT,
+                    Type.Kind.BUILTIN_BIT:
+                return raw
+        }
         match context.typeKind {
             when Type.Kind.CLASS:
                 return raw
@@ -3316,8 +3333,9 @@ class Compiler : ErrorReporter {
                     Variable.Storage.PARAMETER))
         }
         symbolTable := symbols
-        def fieldInitializers := Array<IRNode>()
+        def fieldInitializers:Array<IRNode>? := null
         if m.methodKind = MethodDecl.Kind.INIT {
+            fieldInitializers := Array<IRNode>()
             for f in currentClass.peek().fields {
                 resolve(f)
                 if !f.annotations.isClass() & f.value != null {
@@ -3335,7 +3353,7 @@ class Compiler : ErrorReporter {
         }
         var compiled := compileBlock(m.body)
         if compiled != null {
-            if fieldInitializers.get_count() != 0 {
+            if fieldInitializers != null {
                 def children := Array<IRNode>(fieldInitializers)
                 children.addAll(compiled.children)
                 compiled := IRNode(IRNode.Kind.BLOCK, m.body.position, children)

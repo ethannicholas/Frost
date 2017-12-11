@@ -102,8 +102,12 @@ class PLex {
         out.level += 1
         out.printLine("def dfa:DFA")
         out.printLine()
+        out.printLine("def transitions := getTransitions()")
+        out.printLine()
+        out.printLine("def accepts := getAccepts()")
+        out.printLine()
         out.printLine("method start(source:String) {")
-        out.printLine("    dfa := DFA(source, \{dfa.stateCount}, getTransitions(), getAccepts())")
+        out.printLine("    dfa := DFA(source, \{dfa.stateCount}, transitions, accepts)")
         out.printLine("}")
         out.printLine()
         writeStateTable(dfa, out)

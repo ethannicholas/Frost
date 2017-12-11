@@ -14,6 +14,7 @@ typedef struct org$pandalanguage$pandac$Type org$pandalanguage$pandac$Type;
 typedef struct org$pandalanguage$pandac$ASTNode org$pandalanguage$pandac$ASTNode;
 typedef struct org$pandalanguage$pandac$IRNode org$pandalanguage$pandac$IRNode;
 #include "panda/core/Bit.h"
+typedef struct org$pandalanguage$pandac$MethodDecl org$pandalanguage$pandac$MethodDecl;
 
 typedef struct org$pandalanguage$pandac$MethodDecl {
     panda$core$Class* $class;
@@ -30,6 +31,8 @@ typedef struct org$pandalanguage$pandac$MethodDecl {
     org$pandalanguage$pandac$ASTNode* body;
     org$pandalanguage$pandac$IRNode* compiledBody;
     panda$core$Bit resolved;
+    panda$core$Bit overrideKnown;
+    org$pandalanguage$pandac$MethodDecl* overridden;
 } org$pandalanguage$pandac$MethodDecl;
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"

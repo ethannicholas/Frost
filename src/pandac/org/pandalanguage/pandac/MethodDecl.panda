@@ -43,6 +43,10 @@ class MethodDecl : Symbol {
 
     var resolved:Bit
 
+    var overrideKnown := false
+
+    var overridden:MethodDecl? := null
+
     init(owner:ClassDecl, position:Position, doccomment:String?, annotations:Annotations,
             methodKind:Int, name:String, parameters:Array<Parameter>, returnType:Type,
             body:ASTNode?) {

@@ -30,43 +30,44 @@ void org$pandalanguage$plex$runtime$DFA$init$panda$core$String$panda$core$Int64$
     self->source = p_source;
     panda$core$String$Index $tmp2 = panda$core$String$start$R$panda$core$String$Index(p_source);
     self->offset = $tmp2;
+    panda$core$String$Index $tmp3 = panda$core$String$end$R$panda$core$String$Index(p_source);
+    self->end = $tmp3;
     self->stateCount = p_stateCount;
     self->transitions = p_transitions;
     self->accepts = p_accepts;
-    org$pandalanguage$plex$runtime$RawToken* $tmp3 = (org$pandalanguage$plex$runtime$RawToken*) malloc(56);
-    $tmp3->$class = (panda$core$Class*) &org$pandalanguage$plex$runtime$RawToken$class;
-    $tmp3->refCount.value = 1;
-    org$pandalanguage$plex$runtime$RawToken$init$panda$core$String($tmp3, p_source);
-    self->rawToken = $tmp3;
+    org$pandalanguage$plex$runtime$RawToken* $tmp4 = (org$pandalanguage$plex$runtime$RawToken*) malloc(56);
+    $tmp4->$class = (panda$core$Class*) &org$pandalanguage$plex$runtime$RawToken$class;
+    $tmp4->refCount.value = 1;
+    org$pandalanguage$plex$runtime$RawToken$init$panda$core$String($tmp4, p_source);
+    self->rawToken = $tmp4;
 }
 org$pandalanguage$plex$runtime$RawToken* org$pandalanguage$plex$runtime$DFA$next$R$org$pandalanguage$plex$runtime$RawToken(org$pandalanguage$plex$runtime$DFA* self) {
-    panda$core$Int64 state5;
-    panda$core$String$Index startOffset6;
+    panda$core$Int64 state6;
+    panda$core$String$Index startOffset7;
     panda$core$Char32 c13;
     panda$core$Int64 newAccept31;
-    state5 = ((panda$core$Int64) { 1 });
-    startOffset6 = self->offset;
-    panda$core$String$Index $tmp7 = panda$core$String$end$R$panda$core$String$Index(self->source);
-    panda$core$Bit $tmp8 = panda$core$String$Index$$EQ$panda$core$String$Index$R$panda$core$Bit(self->offset, $tmp7);
-    if ($tmp8.value) {
+    state6 = ((panda$core$Int64) { 1 });
+    startOffset7 = self->offset;
+    panda$core$String$Index $tmp8 = panda$core$String$end$R$panda$core$String$Index(self->source);
+    panda$core$Bit $tmp9 = panda$core$String$Index$$EQ$panda$core$String$Index$R$panda$core$Bit(self->offset, $tmp8);
+    if ($tmp9.value) {
     {
         self->rawToken->kind = ((panda$core$Int64) { 0 });
-        self->rawToken->start = startOffset6;
-        self->rawToken->end = startOffset6;
+        self->rawToken->start = startOffset7;
+        self->rawToken->end = startOffset7;
         self->rawToken->line = self->line;
         self->rawToken->column = self->column;
         return self->rawToken;
     }
     }
     self->rawToken->kind = ((panda$core$Int64) { -1 });
-    self->rawToken->start = startOffset6;
-    self->rawToken->end = startOffset6;
+    self->rawToken->start = startOffset7;
+    self->rawToken->end = startOffset7;
     self->rawToken->line = self->line;
     self->rawToken->column = self->column;
-    $l9:;
-    panda$core$String$Index $tmp11 = panda$core$String$end$R$panda$core$String$Index(self->source);
-    panda$core$Bit $tmp12 = panda$core$String$Index$$NEQ$panda$core$String$Index$R$panda$core$Bit(self->offset, $tmp11);
-    if (!$tmp12.value) goto $l10;
+    $l10:;
+    panda$core$Bit $tmp12 = panda$core$String$Index$$NEQ$panda$core$String$Index$R$panda$core$Bit(self->offset, self->end);
+    if (!$tmp12.value) goto $l11;
     {
         panda$core$Char32 $tmp14 = panda$core$String$$IDX$panda$core$String$Index$R$panda$core$Char32(self->source, self->offset);
         c13 = $tmp14;
@@ -82,8 +83,8 @@ org$pandalanguage$plex$runtime$RawToken* org$pandalanguage$plex$runtime$DFA$next
         }
         }
         panda$core$Int64 $tmp22 = panda$core$Char32$convert$R$panda$core$Int64(c13);
-        state5 = self->transitions[$tmp22.value][state5.value];
-        panda$core$Bit $tmp23 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit(state5, ((panda$core$Int64) { 0 }));
+        state6 = self->transitions[$tmp22.value][state6.value];
+        panda$core$Bit $tmp23 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit(state6, ((panda$core$Int64) { 0 }));
         if ($tmp23.value) {
         {
             panda$core$String$Index $tmp24 = panda$core$String$offset$panda$core$String$Index$panda$core$Int64$R$panda$core$String$Index(self->source, self->offset, ((panda$core$Int64) { 1 }));
@@ -111,7 +112,7 @@ org$pandalanguage$plex$runtime$RawToken* org$pandalanguage$plex$runtime$DFA$next
                     self->column = $tmp30;
                 }
             }
-            newAccept31 = self->accepts[state5.value];
+            newAccept31 = self->accepts[state6.value];
             panda$core$Bit $tmp32 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit(newAccept31, ((panda$core$Int64) { -1 }));
             if ($tmp32.value) {
             {
@@ -123,12 +124,12 @@ org$pandalanguage$plex$runtime$RawToken* org$pandalanguage$plex$runtime$DFA$next
         }
         else {
         {
-            goto $l10;
+            goto $l11;
         }
         }
     }
-    goto $l9;
-    $l10:;
+    goto $l10;
+    $l11:;
     self->offset = self->rawToken->end;
     return self->rawToken;
 }

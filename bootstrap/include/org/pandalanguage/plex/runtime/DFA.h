@@ -18,6 +18,7 @@ typedef struct org$pandalanguage$plex$runtime$DFA {
     org$pandalanguage$plex$runtime$RawToken* rawToken;
     panda$core$String* source;
     panda$core$String$Index offset;
+    panda$core$String$Index end;
     panda$core$Int64 line;
     panda$core$Int64 column;
 } org$pandalanguage$plex$runtime$DFA;
