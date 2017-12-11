@@ -2569,7 +2569,8 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     method writeReturn(r:IRNode, out:IndentedOutputStream) {
-        if r.children.get_count() = 1 {
+        if r.children != null & r.children.get_count() > 0 {
+            assert r.children.get_count() = 1
             if inlineContext.get_count() > 0 {
                 def inline := inlineContext.peek()
                 def result := getReference(r.children[0], out)
@@ -2581,7 +2582,6 @@ class LLVMCodeGenerator : CodeGenerator {
             }
         }
         else {
-            assert r.children.get_count() = 0
             if inlineContext.get_count() > 0 {
                 out.printLine("br label %\{inlineContext.peek().exitLabel}")
             }

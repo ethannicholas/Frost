@@ -17,7 +17,7 @@ class Scanner {
             when ASTNode.Kind.VOID:
                 return Type.Void()
             when ASTNode.Kind.TYPE:
-                assert type.children.get_count() = 0
+                assert type.children = null
                 return Type(type.payload->String, Type.Kind.CLASS, type.position)
             when ASTNode.Kind.NULLABLE_TYPE:
                 assert type.children.get_count() = 1
@@ -96,11 +96,11 @@ class Scanner {
                 value := null
             }
             def type:Type
-            if decl.children[0].children.get_count() = 1 {
+            if decl.children[0].children != null {
+                assert decl.children[0].children.get_count() = 1
                 type := convertType(decl.children[0].children[0])
             }
             else {
-                assert decl.children[0].children.get_count() = 0
                 type := Type.Void()
             }
             def field := FieldDecl(owner, decl.position, doccomment, annotations, kind,
@@ -135,10 +135,12 @@ class Scanner {
 
     function complexity(node:ASTNode):Int {
         var result := 1
-        for child in node.children {
-            result += complexity(child)
-            if result > INLINE_THRESHOLD {
-                break
+        if node.children != null {
+            for child in node.children {
+                result += complexity(child)
+                if result > INLINE_THRESHOLD {
+                    break
+                }
             }
         }
         return result
@@ -223,11 +225,11 @@ class Scanner {
             for p in cl.children[2].children {
                 assert p.kind = ASTNode.Kind.IDENTIFIER
                 def bound:Type
-                if p.children.get_count() = 1 {
+                if p.children != null & p.children.get_count() != 0{
+                    assert p.children.get_count() = 1
                     bound := convertType(p.children[0])
                 }
                 else {
-                    assert p.children.get_count() = 0
                     bound := Type.Any()
                 }
                 parameters.add(ClassDecl.GenericParameter(p.position, fullName, p.payload->String,
@@ -239,49 +241,53 @@ class Scanner {
         }
         def supertypes := Array<Type>()
         assert cl.children[3].kind = ASTNode.Kind.TYPES
-        for intf in cl.children[3].children {
-            supertypes.add(convertType(intf))
+        if cl.children[3].children != null {
+            for intf in cl.children[3].children {
+                supertypes.add(convertType(intf))
+            }
         }
         def result := ClassDecl(source, cl.position, aliases, doccomment, annotations,
                 ClassDecl.Kind.CLASS, fullName, supertypes, parameters, compiler.root)
         compiler.currentClass.push(result)
         var foundInit := false
-        for c in cl.children[4].children {
-            match c.kind {
-                when ASTNode.Kind.FIELD:
-                    scanFields(result, c)
-                when ASTNode.Kind.INIT:
-                    def i := scanInit(result, c)
-                    if i != null {
-                        result.symbolTable.add(i)
-                        result.methods.add(i)
-                    }
-                    foundInit := true
-                when ASTNode.Kind.METHOD, ASTNode.Kind.FUNCTION:
-                    def m := scanMethod(result, c)
-                    if m != null {
-                        result.symbolTable.add(m)
-                        result.methods.add(m)
-                    }
-                when ASTNode.Kind.CLASS:
-                    def inner := scanClass(source, aliases, fullName, c)
-                    if inner != null {
-                        inner.owner := result
-                        result.classes.add(inner)
-                        assert inner.name.startsWith(fullName + ".")
-                        result.symbolTable.add(inner, inner.name[fullName.length() + 1..])
-                        inner.symbolTable.parents.add(result.symbolTable)
-                        inner.symbolTable.add(result, cl.payload->String)
-                    }
-                when ASTNode.Kind.INTERFACE:
-                    def cl := scanInterface(source, aliases, fullName, c)
-                    if cl != null {
-                        result.classes.add(cl)
-                        assert cl.name.startsWith(fullName + ".")
-                        result.symbolTable.add(cl, cl.name[fullName.length() + 1..])
-                    }
-                otherwise:
-                    assert false, "unsupported class child: \{c.kind}"
+        if cl.children[4] != null {
+            for c in cl.children[4].children {
+                match c.kind {
+                    when ASTNode.Kind.FIELD:
+                        scanFields(result, c)
+                    when ASTNode.Kind.INIT:
+                        def i := scanInit(result, c)
+                        if i != null {
+                            result.symbolTable.add(i)
+                            result.methods.add(i)
+                        }
+                        foundInit := true
+                    when ASTNode.Kind.METHOD, ASTNode.Kind.FUNCTION:
+                        def m := scanMethod(result, c)
+                        if m != null {
+                            result.symbolTable.add(m)
+                            result.methods.add(m)
+                        }
+                    when ASTNode.Kind.CLASS:
+                        def inner := scanClass(source, aliases, fullName, c)
+                        if inner != null {
+                            inner.owner := result
+                            result.classes.add(inner)
+                            assert inner.name.startsWith(fullName + ".")
+                            result.symbolTable.add(inner, inner.name[fullName.length() + 1..])
+                            inner.symbolTable.parents.add(result.symbolTable)
+                            inner.symbolTable.add(result, cl.payload->String)
+                        }
+                    when ASTNode.Kind.INTERFACE:
+                        def cl := scanInterface(source, aliases, fullName, c)
+                        if cl != null {
+                            result.classes.add(cl)
+                            assert cl.name.startsWith(fullName + ".")
+                            result.symbolTable.add(cl, cl.name[fullName.length() + 1..])
+                        }
+                    otherwise:
+                        assert false, "unsupported class child: \{c.kind}"
+                }
             }
         }
         if !foundInit & result.name != "panda.unsafe.Pointer" {

@@ -791,7 +791,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$addStri
     org$pandalanguage$pandac$ASTNode* $tmp109 = (org$pandalanguage$pandac$ASTNode*) malloc(64);
     $tmp109->$class = (panda$core$Class*) &org$pandalanguage$pandac$ASTNode$class;
     $tmp109->refCount.value = 1;
-    org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT($tmp109, ((panda$core$Int64) { 103 }), p_string->position, ((panda$core$Object*) wrap_panda$core$Int64(((panda$core$Int64) { 51 }))), ((panda$collections$ListView*) children106));
+    org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$Q($tmp109, ((panda$core$Int64) { 103 }), p_string->position, ((panda$core$Object*) wrap_panda$core$Int64(((panda$core$Int64) { 51 }))), ((panda$collections$ListView*) children106));
     return $tmp109;
 }
 org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$string$R$org$pandalanguage$pandac$ASTNode$Q(org$pandalanguage$pandac$parser$Parser* self) {
@@ -983,7 +983,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$string$
                                 org$pandalanguage$pandac$ASTNode* $tmp205 = (org$pandalanguage$pandac$ASTNode*) malloc(64);
                                 $tmp205->$class = (panda$core$Class*) &org$pandalanguage$pandac$ASTNode$class;
                                 $tmp205->refCount.value = 1;
-                                org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT($tmp205, ((panda$core$Int64) { 108 }), expr182->position, ((panda$core$Object*) &$s207), ((panda$collections$ListView*) dotChildren201));
+                                org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$Q($tmp205, ((panda$core$Int64) { 108 }), expr182->position, ((panda$core$Object*) &$s207), ((panda$collections$ListView*) dotChildren201));
                                 dot204 = $tmp205;
                                 panda$collections$Array* $tmp209 = (panda$collections$Array*) malloc(40);
                                 $tmp209->$class = (panda$core$Class*) &panda$collections$Array$class;
@@ -1508,7 +1508,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$type$pa
         $tmp418->$class = (panda$core$Class*) &org$pandalanguage$pandac$ASTNode$class;
         $tmp418->refCount.value = 1;
         panda$core$String* $tmp420 = panda$core$MutableString$finish$R$panda$core$String(name372);
-        org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT($tmp418, ((panda$core$Int64) { 154 }), ((org$pandalanguage$pandac$parser$Token) start368.value).position, ((panda$core$Object*) $tmp420), ((panda$collections$ListView*) children398));
+        org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$Q($tmp418, ((panda$core$Int64) { 154 }), ((org$pandalanguage$pandac$parser$Token) start368.value).position, ((panda$core$Object*) $tmp420), ((panda$collections$ListView*) children398));
         result388 = $tmp418;
         (($fn421) self->$class->vtable[11])(self);
     }
@@ -1639,7 +1639,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$callExp
                 org$pandalanguage$pandac$ASTNode* $tmp465 = (org$pandalanguage$pandac$ASTNode*) malloc(64);
                 $tmp465->$class = (panda$core$Class*) &org$pandalanguage$pandac$ASTNode$class;
                 $tmp465->refCount.value = 1;
-                org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT($tmp465, ((panda$core$Int64) { 103 }), token434.position, ((panda$core$Object*) wrap_panda$core$Int64(((panda$core$Int64) { 101 }))), ((panda$collections$ListView*) children456));
+                org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$Q($tmp465, ((panda$core$Int64) { 103 }), token434.position, ((panda$core$Object*) wrap_panda$core$Int64(((panda$core$Int64) { 101 }))), ((panda$collections$ListView*) children456));
                 result429 = $tmp465;
             }
             break;
@@ -1671,7 +1671,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$callExp
                 org$pandalanguage$pandac$ASTNode* $tmp476 = (org$pandalanguage$pandac$ASTNode*) malloc(64);
                 $tmp476->$class = (panda$core$Class*) &org$pandalanguage$pandac$ASTNode$class;
                 $tmp476->refCount.value = 1;
-                org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT($tmp476, ((panda$core$Int64) { 108 }), token434.position, ((panda$core$Object*) name467), ((panda$collections$ListView*) children473));
+                org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$Q($tmp476, ((panda$core$Int64) { 108 }), token434.position, ((panda$core$Object*) name467), ((panda$collections$ListView*) children473));
                 result429 = $tmp476;
             }
             break;
@@ -1791,7 +1791,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$callExp
                         $tmp522->$class = (panda$core$Class*) &org$pandalanguage$pandac$ASTNode$class;
                         $tmp522->refCount.value = 1;
                         panda$core$String* $tmp524 = panda$core$MutableString$convert$R$panda$core$String(finalName489);
-                        org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT($tmp522, ((panda$core$Int64) { 154 }), result429->position, ((panda$core$Object*) $tmp524), ((panda$collections$ListView*) types495));
+                        org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$Q($tmp522, ((panda$core$Int64) { 154 }), result429->position, ((panda$core$Object*) $tmp524), ((panda$collections$ListView*) types495));
                         result429 = $tmp522;
                         goto $l432;
                     }
@@ -1856,7 +1856,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$exponen
         org$pandalanguage$pandac$ASTNode* $tmp541 = (org$pandalanguage$pandac$ASTNode*) malloc(64);
         $tmp541->$class = (panda$core$Class*) &org$pandalanguage$pandac$ASTNode$class;
         $tmp541->refCount.value = 1;
-        org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT($tmp541, ((panda$core$Int64) { 103 }), ((org$pandalanguage$pandac$parser$Token) op532.value).position, ((panda$core$Object*) wrap_panda$core$Int64(((org$pandalanguage$pandac$parser$Token) op532.value).kind)), ((panda$collections$ListView*) children538));
+        org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$Q($tmp541, ((panda$core$Int64) { 103 }), ((org$pandalanguage$pandac$parser$Token) op532.value).position, ((panda$core$Object*) wrap_panda$core$Int64(((org$pandalanguage$pandac$parser$Token) op532.value).kind)), ((panda$collections$ListView*) children538));
         result527 = $tmp541;
     }
     }
@@ -1890,7 +1890,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$prefixE
             org$pandalanguage$pandac$ASTNode* $tmp552 = (org$pandalanguage$pandac$ASTNode*) malloc(64);
             $tmp552->$class = (panda$core$Class*) &org$pandalanguage$pandac$ASTNode$class;
             $tmp552->refCount.value = 1;
-            org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT($tmp552, ((panda$core$Int64) { 112 }), op543.position, ((panda$core$Object*) wrap_panda$core$Int64(op543.kind)), ((panda$collections$ListView*) children549));
+            org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$Q($tmp552, ((panda$core$Int64) { 112 }), op543.position, ((panda$core$Object*) wrap_panda$core$Int64(op543.kind)), ((panda$collections$ListView*) children549));
             return $tmp552;
         }
         break;
@@ -1948,7 +1948,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$multipl
                 org$pandalanguage$pandac$ASTNode* $tmp571 = (org$pandalanguage$pandac$ASTNode*) malloc(64);
                 $tmp571->$class = (panda$core$Class*) &org$pandalanguage$pandac$ASTNode$class;
                 $tmp571->refCount.value = 1;
-                org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT($tmp571, ((panda$core$Int64) { 103 }), op562.position, ((panda$core$Object*) wrap_panda$core$Int64(op562.kind)), ((panda$collections$ListView*) children568));
+                org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$Q($tmp571, ((panda$core$Int64) { 103 }), op562.position, ((panda$core$Object*) wrap_panda$core$Int64(op562.kind)), ((panda$collections$ListView*) children568));
                 result557 = $tmp571;
             }
             break;
@@ -1976,7 +1976,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$multipl
                     org$pandalanguage$pandac$ASTNode* $tmp583 = (org$pandalanguage$pandac$ASTNode*) malloc(64);
                     $tmp583->$class = (panda$core$Class*) &org$pandalanguage$pandac$ASTNode$class;
                     $tmp583->refCount.value = 1;
-                    org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT($tmp583, ((panda$core$Int64) { 103 }), op562.position, ((panda$core$Object*) wrap_panda$core$Int64(((panda$core$Int64) { 1 }))), ((panda$collections$ListView*) children580));
+                    org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$Q($tmp583, ((panda$core$Int64) { 103 }), op562.position, ((panda$core$Object*) wrap_panda$core$Int64(((panda$core$Int64) { 1 }))), ((panda$collections$ListView*) children580));
                     result557 = $tmp583;
                 }
                 }
@@ -2038,7 +2038,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$additiv
                 org$pandalanguage$pandac$ASTNode* $tmp602 = (org$pandalanguage$pandac$ASTNode*) malloc(64);
                 $tmp602->$class = (panda$core$Class*) &org$pandalanguage$pandac$ASTNode$class;
                 $tmp602->refCount.value = 1;
-                org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT($tmp602, ((panda$core$Int64) { 103 }), op593.position, ((panda$core$Object*) wrap_panda$core$Int64(op593.kind)), ((panda$collections$ListView*) children599));
+                org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$Q($tmp602, ((panda$core$Int64) { 103 }), op593.position, ((panda$core$Object*) wrap_panda$core$Int64(op593.kind)), ((panda$collections$ListView*) children599));
                 result588 = $tmp602;
             }
             break;
@@ -2228,7 +2228,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$compari
                 org$pandalanguage$pandac$ASTNode* $tmp664 = (org$pandalanguage$pandac$ASTNode*) malloc(64);
                 $tmp664->$class = (panda$core$Class*) &org$pandalanguage$pandac$ASTNode$class;
                 $tmp664->refCount.value = 1;
-                org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT($tmp664, ((panda$core$Int64) { 103 }), op655.position, ((panda$core$Object*) wrap_panda$core$Int64(op655.kind)), ((panda$collections$ListView*) children661));
+                org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$Q($tmp664, ((panda$core$Int64) { 103 }), op655.position, ((panda$core$Object*) wrap_panda$core$Int64(op655.kind)), ((panda$collections$ListView*) children661));
                 result650 = $tmp664;
             }
             break;
@@ -2280,7 +2280,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$andExpr
                 org$pandalanguage$pandac$ASTNode* $tmp681 = (org$pandalanguage$pandac$ASTNode*) malloc(64);
                 $tmp681->$class = (panda$core$Class*) &org$pandalanguage$pandac$ASTNode$class;
                 $tmp681->refCount.value = 1;
-                org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT($tmp681, ((panda$core$Int64) { 103 }), op672.position, ((panda$core$Object*) wrap_panda$core$Int64(op672.kind)), ((panda$collections$ListView*) children678));
+                org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$Q($tmp681, ((panda$core$Int64) { 103 }), op672.position, ((panda$core$Object*) wrap_panda$core$Int64(op672.kind)), ((panda$collections$ListView*) children678));
                 result667 = $tmp681;
             }
             break;
@@ -2333,7 +2333,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$express
         org$pandalanguage$pandac$ASTNode* $tmp698 = (org$pandalanguage$pandac$ASTNode*) malloc(64);
         $tmp698->$class = (panda$core$Class*) &org$pandalanguage$pandac$ASTNode$class;
         $tmp698->refCount.value = 1;
-        org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT($tmp698, ((panda$core$Int64) { 103 }), ((org$pandalanguage$pandac$parser$Token) op689.value).position, ((panda$core$Object*) wrap_panda$core$Int64(((org$pandalanguage$pandac$parser$Token) op689.value).kind)), ((panda$collections$ListView*) children695));
+        org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$Q($tmp698, ((panda$core$Int64) { 103 }), ((org$pandalanguage$pandac$parser$Token) op689.value).position, ((panda$core$Object*) wrap_panda$core$Int64(((org$pandalanguage$pandac$parser$Token) op689.value).kind)), ((panda$collections$ListView*) children695));
         result684 = $tmp698;
     }
     }
@@ -2454,7 +2454,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$target$
         $tmp744->$class = (panda$core$Class*) &org$pandalanguage$pandac$ASTNode$class;
         $tmp744->refCount.value = 1;
         panda$core$String* $tmp747 = (($fn746) self->$class->vtable[13])(self, ((org$pandalanguage$pandac$parser$Token) id731.value));
-        org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT($tmp744, ((panda$core$Int64) { 106 }), ((org$pandalanguage$pandac$parser$Token) id731.value).position, ((panda$core$Object*) $tmp747), ((panda$collections$ListView*) children741));
+        org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$Q($tmp744, ((panda$core$Int64) { 106 }), ((org$pandalanguage$pandac$parser$Token) id731.value).position, ((panda$core$Object*) $tmp747), ((panda$collections$ListView*) children741));
         return $tmp744;
     }
     }
@@ -2516,7 +2516,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$forLoop
     org$pandalanguage$pandac$ASTNode* $tmp771 = (org$pandalanguage$pandac$ASTNode*) malloc(64);
     $tmp771->$class = (panda$core$Class*) &org$pandalanguage$pandac$ASTNode$class;
     $tmp771->refCount.value = 1;
-    org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT($tmp771, ((panda$core$Int64) { 119 }), ((org$pandalanguage$pandac$parser$Token) start752.value).position, ((panda$core$Object*) p_label), ((panda$collections$ListView*) children768));
+    org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$Q($tmp771, ((panda$core$Int64) { 119 }), ((org$pandalanguage$pandac$parser$Token) start752.value).position, ((panda$core$Object*) p_label), ((panda$collections$ListView*) children768));
     return $tmp771;
 }
 org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$whileLoop$panda$core$String$Q$R$org$pandalanguage$pandac$ASTNode$Q(org$pandalanguage$pandac$parser$Parser* self, panda$core$String* p_label) {
@@ -2555,7 +2555,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$whileLo
     org$pandalanguage$pandac$ASTNode* $tmp786 = (org$pandalanguage$pandac$ASTNode*) malloc(64);
     $tmp786->$class = (panda$core$Class*) &org$pandalanguage$pandac$ASTNode$class;
     $tmp786->refCount.value = 1;
-    org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT($tmp786, ((panda$core$Int64) { 121 }), ((org$pandalanguage$pandac$parser$Token) start773.value).position, ((panda$core$Object*) p_label), ((panda$collections$ListView*) children783));
+    org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$Q($tmp786, ((panda$core$Int64) { 121 }), ((org$pandalanguage$pandac$parser$Token) start773.value).position, ((panda$core$Object*) p_label), ((panda$collections$ListView*) children783));
     return $tmp786;
 }
 org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$doLoop$panda$core$String$Q$R$org$pandalanguage$pandac$ASTNode$Q(org$pandalanguage$pandac$parser$Parser* self, panda$core$String* p_label) {
@@ -2600,7 +2600,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$doLoop$
     org$pandalanguage$pandac$ASTNode* $tmp804 = (org$pandalanguage$pandac$ASTNode*) malloc(64);
     $tmp804->$class = (panda$core$Class*) &org$pandalanguage$pandac$ASTNode$class;
     $tmp804->refCount.value = 1;
-    org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT($tmp804, ((panda$core$Int64) { 120 }), ((org$pandalanguage$pandac$parser$Token) start788.value).position, ((panda$core$Object*) p_label), ((panda$collections$ListView*) children801));
+    org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$Q($tmp804, ((panda$core$Int64) { 120 }), ((org$pandalanguage$pandac$parser$Token) start788.value).position, ((panda$core$Object*) p_label), ((panda$collections$ListView*) children801));
     return $tmp804;
 }
 org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$loopLoop$panda$core$String$Q$R$org$pandalanguage$pandac$ASTNode$Q(org$pandalanguage$pandac$parser$Parser* self, panda$core$String* p_label) {
@@ -2630,7 +2630,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$loopLoo
     org$pandalanguage$pandac$ASTNode* $tmp816 = (org$pandalanguage$pandac$ASTNode*) malloc(64);
     $tmp816->$class = (panda$core$Class*) &org$pandalanguage$pandac$ASTNode$class;
     $tmp816->refCount.value = 1;
-    org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT($tmp816, ((panda$core$Int64) { 122 }), ((org$pandalanguage$pandac$parser$Token) start806.value).position, ((panda$core$Object*) p_label), ((panda$collections$ListView*) children813));
+    org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$Q($tmp816, ((panda$core$Int64) { 122 }), ((org$pandalanguage$pandac$parser$Token) start806.value).position, ((panda$core$Object*) p_label), ((panda$collections$ListView*) children813));
     return $tmp816;
 }
 org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$assertStatement$R$org$pandalanguage$pandac$ASTNode$Q(org$pandalanguage$pandac$parser$Parser* self) {
@@ -3055,7 +3055,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$express
             org$pandalanguage$pandac$ASTNode* $tmp965 = (org$pandalanguage$pandac$ASTNode*) malloc(64);
             $tmp965->$class = (panda$core$Class*) &org$pandalanguage$pandac$ASTNode$class;
             $tmp965->refCount.value = 1;
-            org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT($tmp965, ((panda$core$Int64) { 103 }), start951->position, ((panda$core$Object*) wrap_panda$core$Int64(op956.kind)), ((panda$collections$ListView*) children962));
+            org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$Q($tmp965, ((panda$core$Int64) { 103 }), start951->position, ((panda$core$Object*) wrap_panda$core$Int64(op956.kind)), ((panda$collections$ListView*) children962));
             return $tmp965;
         }
         break;
@@ -3082,7 +3082,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$express
             org$pandalanguage$pandac$ASTNode* $tmp980 = (org$pandalanguage$pandac$ASTNode*) malloc(64);
             $tmp980->$class = (panda$core$Class*) &org$pandalanguage$pandac$ASTNode$class;
             $tmp980->refCount.value = 1;
-            org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT($tmp980, ((panda$core$Int64) { 103 }), start951->position, ((panda$core$Object*) wrap_panda$core$Int64(op971.kind)), ((panda$collections$ListView*) children977));
+            org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$Q($tmp980, ((panda$core$Int64) { 103 }), start951->position, ((panda$core$Object*) wrap_panda$core$Int64(op971.kind)), ((panda$collections$ListView*) children977));
             return $tmp980;
         }
         break;
@@ -3706,7 +3706,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$generic
     $tmp1227->$class = (panda$core$Class*) &org$pandalanguage$pandac$ASTNode$class;
     $tmp1227->refCount.value = 1;
     panda$core$String* $tmp1230 = (($fn1229) self->$class->vtable[13])(self, ((org$pandalanguage$pandac$parser$Token) id1212.value));
-    org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT($tmp1227, ((panda$core$Int64) { 106 }), ((org$pandalanguage$pandac$parser$Token) id1212.value).position, ((panda$core$Object*) $tmp1230), ((panda$collections$ListView*) idChildren1219));
+    org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$Q($tmp1227, ((panda$core$Int64) { 106 }), ((org$pandalanguage$pandac$parser$Token) id1212.value).position, ((panda$core$Object*) $tmp1230), ((panda$collections$ListView*) idChildren1219));
     panda$collections$Array$add$panda$collections$Array$T(children1216, ((panda$core$Object*) $tmp1227));
     $l1231:;
     org$pandalanguage$pandac$parser$Token$nullable $tmp1234 = (($fn1233) self->$class->vtable[7])(self, ((panda$core$Int64) { 105 }));
@@ -3737,7 +3737,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$generic
         $tmp1243->$class = (panda$core$Class*) &org$pandalanguage$pandac$ASTNode$class;
         $tmp1243->refCount.value = 1;
         panda$core$String* $tmp1246 = (($fn1245) self->$class->vtable[13])(self, ((org$pandalanguage$pandac$parser$Token) id1212.value));
-        org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT($tmp1243, ((panda$core$Int64) { 106 }), ((org$pandalanguage$pandac$parser$Token) id1212.value).position, ((panda$core$Object*) $tmp1246), ((panda$collections$ListView*) idChildren1219));
+        org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$Q($tmp1243, ((panda$core$Int64) { 106 }), ((org$pandalanguage$pandac$parser$Token) id1212.value).position, ((panda$core$Object*) $tmp1246), ((panda$collections$ListView*) idChildren1219));
         panda$collections$Array$add$panda$collections$Array$T(children1216, ((panda$core$Object*) $tmp1243));
     }
     goto $l1231;
@@ -3908,7 +3908,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$paramet
     $tmp1316->$class = (panda$core$Class*) &org$pandalanguage$pandac$ASTNode$class;
     $tmp1316->refCount.value = 1;
     panda$core$String* $tmp1319 = (($fn1318) self->$class->vtable[13])(self, ((org$pandalanguage$pandac$parser$Token) id1306.value));
-    org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT($tmp1316, ((panda$core$Int64) { 149 }), ((org$pandalanguage$pandac$parser$Token) id1306.value).position, ((panda$core$Object*) $tmp1319), ((panda$collections$ListView*) children1313));
+    org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$Q($tmp1316, ((panda$core$Int64) { 149 }), ((org$pandalanguage$pandac$parser$Token) id1306.value).position, ((panda$core$Object*) $tmp1319), ((panda$collections$ListView*) children1313));
     return $tmp1316;
 }
 org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$parameters$R$org$pandalanguage$pandac$ASTNode$Q(org$pandalanguage$pandac$parser$Parser* self) {
@@ -4115,7 +4115,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$methodD
     org$pandalanguage$pandac$ASTNode* $tmp1400 = (org$pandalanguage$pandac$ASTNode*) malloc(64);
     $tmp1400->$class = (panda$core$Class*) &org$pandalanguage$pandac$ASTNode$class;
     $tmp1400->refCount.value = 1;
-    org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT($tmp1400, kind1343, ((org$pandalanguage$pandac$parser$Token) start1344.value).position, ((panda$core$Object*) name1350), ((panda$collections$ListView*) children1353));
+    org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$Q($tmp1400, kind1343, ((org$pandalanguage$pandac$parser$Token) start1344.value).position, ((panda$core$Object*) name1350), ((panda$collections$ListView*) children1353));
     return $tmp1400;
 }
 org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$initDeclaration$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$ASTNode$Q(org$pandalanguage$pandac$parser$Parser* self, org$pandalanguage$pandac$ASTNode* p_doccomment, org$pandalanguage$pandac$ASTNode* p_annotations) {
@@ -4419,7 +4419,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$classDe
     $tmp1519->$class = (panda$core$Class*) &org$pandalanguage$pandac$ASTNode$class;
     $tmp1519->refCount.value = 1;
     panda$core$String* $tmp1522 = (($fn1521) self->$class->vtable[13])(self, ((org$pandalanguage$pandac$parser$Token) name1482.value));
-    org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT($tmp1519, ((panda$core$Int64) { 142 }), ((org$pandalanguage$pandac$parser$Token) start1478.value).position, ((panda$core$Object*) $tmp1522), ((panda$collections$ListView*) children1475));
+    org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$Q($tmp1519, ((panda$core$Int64) { 142 }), ((org$pandalanguage$pandac$parser$Token) start1478.value).position, ((panda$core$Object*) $tmp1522), ((panda$collections$ListView*) children1475));
     return $tmp1519;
 }
 org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$interfaceDeclaration$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$ASTNode$Q(org$pandalanguage$pandac$parser$Parser* self, org$pandalanguage$pandac$ASTNode* p_doccomment, org$pandalanguage$pandac$ASTNode* p_annotations) {
@@ -4550,7 +4550,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$interfa
     $tmp1574->$class = (panda$core$Class*) &org$pandalanguage$pandac$ASTNode$class;
     $tmp1574->refCount.value = 1;
     panda$core$String* $tmp1577 = (($fn1576) self->$class->vtable[13])(self, ((org$pandalanguage$pandac$parser$Token) name1530.value));
-    org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT($tmp1574, ((panda$core$Int64) { 151 }), ((org$pandalanguage$pandac$parser$Token) start1526.value).position, ((panda$core$Object*) $tmp1577), ((panda$collections$ListView*) children1523));
+    org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$Q($tmp1574, ((panda$core$Int64) { 151 }), ((org$pandalanguage$pandac$parser$Token) start1526.value).position, ((panda$core$Object*) $tmp1577), ((panda$collections$ListView*) children1523));
     return $tmp1574;
 }
 org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$bodyEntry$R$org$pandalanguage$pandac$ASTNode$Q(org$pandalanguage$pandac$parser$Parser* self) {

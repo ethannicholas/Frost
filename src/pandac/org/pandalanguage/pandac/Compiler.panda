@@ -2558,14 +2558,16 @@ class Compiler : ErrorReporter {
         def symbols := SymbolTable(symbolTable) -- FIXME auto
         symbolTable := symbols
         def result := Array<IRNode>()
-        for stmt in b.children {
-            def compiled := compileStatement(stmt)
-            if compiled = null {
-                symbolTable := symbols.parents[0]
-                return null
+        if b.children != null {
+            for stmt in b.children {
+                def compiled := compileStatement(stmt)
+                if compiled = null {
+                    symbolTable := symbols.parents[0]
+                    return null
+                }
+                assert compiled.kind != IRNode.Kind.UNRESOLVED_METHOD_CALL
+                result.add(compiled)
             }
-            assert compiled.kind != IRNode.Kind.UNRESOLVED_METHOD_CALL
-            result.add(compiled)
         }
         symbolTable := symbols.parents[0]
         return IRNode(IRNode.Kind.BLOCK, b.position, result)
@@ -2599,7 +2601,9 @@ class Compiler : ErrorReporter {
             body:ASTNode):IRNode? {
         def elementType:Type
         def list:IRNode?
-        if astTarget.kind = ASTNode.Kind.IDENTIFIER & astTarget.children.get_count() = 1 {
+        if astTarget.kind = ASTNode.Kind.IDENTIFIER & astTarget.children != null &
+                astTarget.children.get_count() > 0 {
+            assert astTarget.children.get_count() = 1
             def t := resolve(scanner.convertType(astTarget.children[0]))
             if rawList.kind = IRNode.Kind.UNRESOLVED_RANGE {
                 if rawList.children.get_count() = 2 {
@@ -2839,7 +2843,8 @@ class Compiler : ErrorReporter {
         match t.kind {
             when ASTNode.Kind.IDENTIFIER:
                 def type:Type
-                if t.children.get_count() = 1 {
+                if t.children != null & t.children.get_count() != 0 {
+                    assert t.children.get_count() = 1
                     type := resolve(scanner.convertType(t.children[0]))
                 }
                 else if value != null {
@@ -2946,7 +2951,8 @@ class Compiler : ErrorReporter {
 
     method compileReturn(r:ASTNode):IRNode? {
         assert r.kind = ASTNode.Kind.RETURN
-        if r.children.get_count() = 1 {
+        if r.children != null & r.children.get_count() > 0 {
+            assert r.children.get_count() = 1
             if currentMethod.peek().returnType = Type.Void() {
                 error(r.position, "cannot return a value from a method with no return type")
                 return null
@@ -2959,7 +2965,6 @@ class Compiler : ErrorReporter {
             children.add(value)
             return IRNode(IRNode.Kind.RETURN, r.position, children)
         }
-        assert r.children.get_count() = 0
         if currentMethod.peek().returnType != Type.Void() {
             error(r.position, "expected a return value")
             return null

@@ -238,7 +238,7 @@ class CCodeGenerator : CodeGenerator {
     function endsWithBranch(stmt:IRNode):Bit {
         match stmt.kind {
             when IRNode.Kind.BLOCK:
-                if stmt.children.get_count() = 0 {
+                if stmt.children = null | stmt.children.get_count() = 0 {
                     return false
                 }
                 return endsWithBranch(stmt.children[stmt.children.get_count() - 1])
@@ -1796,11 +1796,11 @@ class CCodeGenerator : CodeGenerator {
     }
 
     method writeReturn(r:IRNode, out:IndentedOutputStream) {
-        if r.children.get_count() = 1 {
+        if r.children != null & r.children.get_count() != 0 {
+            assert r.children.get_count() = 1
             out.printLine("return \{getReference(r.children[0], out)};")
         }
         else {
-            assert r.children.get_count() = 0
             out.printLine("return;")
         }
     }
