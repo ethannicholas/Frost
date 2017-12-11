@@ -47,6 +47,7 @@ typedef struct String {
     int32_t refcnt;
     int8_t* data;
     int64_t size;
+    int64_t hash;
     struct String* owner;
 } String;
 
@@ -122,6 +123,8 @@ String* pandaNewString(const char* s, int length) {
     result->refcnt = 1;
     result->size = length;
     result->data = malloc(length);
+    result->hash = 0;
+    result->owner = 0;
     memcpy(result->data, s, length);
     return result;
 }

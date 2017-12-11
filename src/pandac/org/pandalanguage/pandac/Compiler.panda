@@ -70,6 +70,9 @@ class Compiler : ErrorReporter {
     @private
     var reportErrors := true
 
+    @private
+    var existenceCache := HashMap<File, Bit>()
+
     init(codeGenerator:CodeGenerator, settings:Settings) {
         self.settings := settings
         self.parser := Parser(self)
@@ -155,25 +158,38 @@ class Compiler : ErrorReporter {
     null and does not report any errors on failure.
     ================================================================================================
     method tryResolveClass(name:String):ClassDecl? {
+        def current:ClassDecl?
         if currentClass.get_count() > 0 {
-            def alias := currentClass.peek().aliases[name]
+            current := currentClass.peek()
+        }
+        else {
+            current := null
+        }
+        if current != null {
+            var result := current.classResolutionCache[name]
+            if result != null {
+                return result.value
+            }
+            def alias := current.aliases[name]
             if alias != null {
-                return getClass(alias)
+                result := ClassDecl.Resolution(getClass(alias))
+                current.classResolutionCache[name] := result
+                return result.value
             }
         }
         var result := getClass(name)
-        if currentClass.get_count() > 0 {
+        if current != null {
             if result = null {
-                def idx := currentClass.peek().name.lastIndexOf(".")
+                def idx := current.name.lastIndexOf(".")
                 if idx != null {
-                    result := getClass(currentClass.peek().name[...idx] + name)
+                    result := getClass(current.name[...idx] + name)
                 }
             }
             if result = null {
-                result := getClass(currentClass.peek().name + "." + name)
+                result := getClass(current.name + "." + name)
             }
-            if result = null & currentClass.peek().owner != null {
-                currentClass.push(currentClass.peek().owner)
+            if result = null & current.owner != null {
+                currentClass.push(current.owner)
                 result := tryResolveClass(name)
                 currentClass.pop()
             }
@@ -193,6 +209,9 @@ class Compiler : ErrorReporter {
                     result := getClass(parent.name + name[index..])
                 }
             }
+        }
+        if current != null {
+            current.classResolutionCache[name] := ClassDecl.Resolution(result)
         }
         return result
     }
@@ -540,6 +559,15 @@ class Compiler : ErrorReporter {
         return result
     }
 
+    method exists(f:File):Bit {
+        var result := existenceCache[f]
+        if result = null {
+            result := f.exists()
+            existenceCache[f] := result
+        }
+        return result
+    }
+
     ================================================================================================
     Attempts to load the class with the given fully-qualified name. Returns null on failure, without
     reporting an error.
@@ -551,7 +579,7 @@ class Compiler : ErrorReporter {
             var found := false
             for dir in settings.importDirs {
                 def f := dir.resolve(suffix)
-                if f.exists() {
+                if exists(f) {
                     found := true
                     scan(f)
                     result := classes[fullName]
@@ -577,7 +605,7 @@ class Compiler : ErrorReporter {
             var found := false
             for dir in settings.importDirs {
                 def f := dir.resolve(suffix)
-                if f.exists() {
+                if exists(f) {
                     found := true
                     def oldErrorCount := errorCount
                     scan(f)

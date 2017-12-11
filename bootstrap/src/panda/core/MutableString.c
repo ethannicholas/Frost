@@ -276,7 +276,7 @@ panda$core$String* panda$core$MutableString$convert$R$panda$core$String(panda$co
     i113.value += 1;
     goto $l118;
     $l120:;
-    panda$core$String* $tmp132 = (panda$core$String*) malloc(40);
+    panda$core$String* $tmp132 = (panda$core$String*) malloc(48);
     $tmp132->$class = (panda$core$Class*) &panda$core$String$class;
     $tmp132->refCount.value = 1;
     panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp132, result111, self->length);
@@ -284,7 +284,7 @@ panda$core$String* panda$core$MutableString$convert$R$panda$core$String(panda$co
 }
 panda$core$String* panda$core$MutableString$finish$R$panda$core$String(panda$core$MutableString* self) {
     panda$core$String* result134;
-    panda$core$String* $tmp135 = (panda$core$String*) malloc(40);
+    panda$core$String* $tmp135 = (panda$core$String*) malloc(48);
     $tmp135->$class = (panda$core$Class*) &panda$core$String$class;
     $tmp135->refCount.value = 1;
     panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp135, self->data, self->length);

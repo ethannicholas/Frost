@@ -93,6 +93,7 @@ add_executable(bootstrap
     bootstrap/src/org/pandalanguage/pandac/CCodeGenerator/MethodShim.c
     bootstrap/src/org/pandalanguage/pandac/ClassDecl.c
     bootstrap/src/org/pandalanguage/pandac/ClassDecl/GenericParameter.c
+    bootstrap/src/org/pandalanguage/pandac/ClassDecl/Resolution.c
     bootstrap/src/org/pandalanguage/pandac/CodeGenerator.c
     bootstrap/src/org/pandalanguage/pandac/Compiler.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/CompileTargetResult.c

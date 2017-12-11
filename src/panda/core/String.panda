@@ -155,6 +155,9 @@ class String : Immutable, Key<String> {
     @private
     def _length:Int
 
+    @private
+    def _hash := 0
+
     ================================================================================================
     For dependent substrings, points to the parent String.
     ================================================================================================
@@ -895,10 +898,13 @@ class String : Immutable, Key<String> {
 
     @override
     function hash():Int {
-        var result := 0
-        for i in 0 .. _length {
-            result := result * 101 + Int64(data[i].value->builtin_int64)
+        if _hash = 0 {
+            var h := 1
+            for i in 0 .. _length {
+                h := h * 101 + Int64(data[i].value->builtin_int64)
+            }
+            _hash := h
         }
-        return result
+        return _hash
     }
 }

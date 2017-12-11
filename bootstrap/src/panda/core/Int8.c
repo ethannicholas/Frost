@@ -1,10 +1,10 @@
 #include "panda/core/Int8.h"
 #include "panda/core/Value.h"
 #include "panda/core/Class.h"
-#include "panda/core/Comparable.h"
+#include "panda/core/Equatable.h"
 #include "panda/core/Bit.h"
 #include "panda/core/Object.h"
-#include "panda/core/Equatable.h"
+#include "panda/core/Comparable.h"
 #include "panda/collections/Key.h"
 #include "panda/core/Int64.h"
 #include "panda/core/String.h"
@@ -22,6 +22,14 @@ panda$core$Int8$wrapper* wrap_panda$core$Int8(panda$core$Int8 self) {
 #include "panda/core/UInt64.h"
 #include "panda/core/Char8.h"
 #include "panda/core/Range.LTpanda/core/Int64.GT.h"
+panda$core$Bit panda$core$Int8$$EQ$panda$core$Int8$R$panda$core$Bit$shim(panda$core$Int8 self, panda$core$Object* p0) {
+    panda$core$Bit result = panda$core$Int8$$EQ$panda$core$Int8$R$panda$core$Bit(self, ((panda$core$Int8$wrapper*) p0)->value);
+    return result;
+}
+panda$core$Bit panda$core$Int8$$NEQ$panda$core$Int8$R$panda$core$Bit$shim(panda$core$Int8 self, panda$core$Object* p0) {
+    panda$core$Bit result = panda$core$Int8$$NEQ$panda$core$Int8$R$panda$core$Bit(self, ((panda$core$Int8$wrapper*) p0)->value);
+    return result;
+}
 panda$core$Bit panda$core$Int8$$GT$panda$core$Int8$R$panda$core$Bit$shim(panda$core$Int8 self, panda$core$Object* p0) {
     panda$core$Bit result = panda$core$Int8$$GT$panda$core$Int8$R$panda$core$Bit(self, ((panda$core$Int8$wrapper*) p0)->value);
     return result;
@@ -38,15 +46,13 @@ panda$core$Bit panda$core$Int8$$LE$panda$core$Int8$R$panda$core$Bit$shim(panda$c
     panda$core$Bit result = panda$core$Int8$$LE$panda$core$Int8$R$panda$core$Bit(self, ((panda$core$Int8$wrapper*) p0)->value);
     return result;
 }
-panda$core$Bit panda$core$Int8$$EQ$panda$core$Int8$R$panda$core$Bit$shim(panda$core$Int8 self, panda$core$Object* p0) {
-    panda$core$Bit result = panda$core$Int8$$EQ$panda$core$Int8$R$panda$core$Bit(self, ((panda$core$Int8$wrapper*) p0)->value);
-    return result;
-}
-panda$core$Bit panda$core$Int8$$NEQ$panda$core$Int8$R$panda$core$Bit$shim(panda$core$Int8 self, panda$core$Object* p0) {
-    panda$core$Bit result = panda$core$Int8$$NEQ$panda$core$Int8$R$panda$core$Bit(self, ((panda$core$Int8$wrapper*) p0)->value);
-    return result;
-}
 
+panda$core$Bit panda$core$Int8$$EQ$panda$core$Int8$R$panda$core$Bit$wrappershim(panda$core$Int8$wrapper* self, panda$core$Object* other) {
+    return panda$core$Int8$$EQ$panda$core$Int8$R$panda$core$Bit(self->value, ((panda$core$Int8$wrapper*) other)->value);
+}
+panda$core$Bit panda$core$Int8$$NEQ$panda$core$Int8$R$panda$core$Bit$wrappershim(panda$core$Int8$wrapper* self, panda$core$Object* other) {
+    return panda$core$Int8$$NEQ$panda$core$Int8$R$panda$core$Bit(self->value, ((panda$core$Int8$wrapper*) other)->value);
+}
 panda$core$Bit panda$core$Int8$$GT$panda$core$Int8$R$panda$core$Bit$wrappershim(panda$core$Int8$wrapper* self, panda$core$Object* other) {
     return panda$core$Int8$$GT$panda$core$Int8$R$panda$core$Bit(self->value, ((panda$core$Int8$wrapper*) other)->value);
 }
@@ -59,12 +65,6 @@ panda$core$Bit panda$core$Int8$$GE$panda$core$Int8$R$panda$core$Bit$wrappershim(
 panda$core$Bit panda$core$Int8$$LE$panda$core$Int8$R$panda$core$Bit$wrappershim(panda$core$Int8$wrapper* self, panda$core$Object* other) {
     return panda$core$Int8$$LE$panda$core$Int8$R$panda$core$Bit(self->value, ((panda$core$Int8$wrapper*) other)->value);
 }
-panda$core$Bit panda$core$Int8$$EQ$panda$core$Int8$R$panda$core$Bit$wrappershim(panda$core$Int8$wrapper* self, panda$core$Object* other) {
-    return panda$core$Int8$$EQ$panda$core$Int8$R$panda$core$Bit(self->value, ((panda$core$Int8$wrapper*) other)->value);
-}
-panda$core$Bit panda$core$Int8$$NEQ$panda$core$Int8$R$panda$core$Bit$wrappershim(panda$core$Int8$wrapper* self, panda$core$Object* other) {
-    return panda$core$Int8$$NEQ$panda$core$Int8$R$panda$core$Bit(self->value, ((panda$core$Int8$wrapper*) other)->value);
-}
 panda$core$Int64 panda$core$Int8$hash$R$panda$core$Int64$wrappershim(panda$core$Int8$wrapper* self) {
     return panda$core$Int8$hash$R$panda$core$Int64(self->value);
 }
@@ -72,19 +72,19 @@ panda$core$String* panda$core$Int8$convert$R$panda$core$String$wrappershim(panda
     return panda$core$Int8$convert$R$panda$core$String(self->value);
 }
 
-struct { panda$core$Class* cl; ITable* next; void* methods[4]; } panda$core$Int8$_panda$core$Comparable = { (panda$core$Class*) &panda$core$Comparable$class, NULL, { panda$core$Int8$$GT$panda$core$Int8$R$panda$core$Bit$shim, panda$core$Int8$$LT$panda$core$Int8$R$panda$core$Bit$shim, panda$core$Int8$$GE$panda$core$Int8$R$panda$core$Bit$shim, panda$core$Int8$$LE$panda$core$Int8$R$panda$core$Bit$shim} };
+struct { panda$core$Class* cl; ITable* next; void* methods[2]; } panda$core$Int8$_panda$core$Equatable = { (panda$core$Class*) &panda$core$Equatable$class, NULL, { panda$core$Int8$$EQ$panda$core$Int8$R$panda$core$Bit$shim, panda$core$Int8$$NEQ$panda$core$Int8$R$panda$core$Bit$shim} };
 
-struct { panda$core$Class* cl; ITable* next; void* methods[2]; } panda$core$Int8$_panda$core$Equatable = { (panda$core$Class*) &panda$core$Equatable$class, (ITable*) &panda$core$Int8$_panda$core$Comparable, { panda$core$Int8$$EQ$panda$core$Int8$R$panda$core$Bit$shim, panda$core$Int8$$NEQ$panda$core$Int8$R$panda$core$Bit$shim} };
+struct { panda$core$Class* cl; ITable* next; void* methods[4]; } panda$core$Int8$_panda$core$Comparable = { (panda$core$Class*) &panda$core$Comparable$class, (ITable*) &panda$core$Int8$_panda$core$Equatable, { panda$core$Int8$$GT$panda$core$Int8$R$panda$core$Bit$shim, panda$core$Int8$$LT$panda$core$Int8$R$panda$core$Bit$shim, panda$core$Int8$$GE$panda$core$Int8$R$panda$core$Bit$shim, panda$core$Int8$$LE$panda$core$Int8$R$panda$core$Bit$shim} };
 
-struct { panda$core$Class* cl; ITable* next; void* methods[1]; } panda$core$Int8$_panda$collections$Key = { (panda$core$Class*) &panda$collections$Key$class, (ITable*) &panda$core$Int8$_panda$core$Equatable, { panda$core$Int8$hash$R$panda$core$Int64} };
+struct { panda$core$Class* cl; ITable* next; void* methods[1]; } panda$core$Int8$_panda$collections$Key = { (panda$core$Class*) &panda$collections$Key$class, (ITable*) &panda$core$Int8$_panda$core$Comparable, { panda$core$Int8$hash$R$panda$core$Int64} };
 
 panda$core$Int8$class_type panda$core$Int8$class = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Value$class, (ITable*) &panda$core$Int8$_panda$collections$Key, { panda$core$Int8$convert$R$panda$core$String, panda$core$Object$cleanup, panda$core$Int8$$ADD$panda$core$Int8$R$panda$core$Int32, panda$core$Int8$$ADD$panda$core$Int16$R$panda$core$Int32, panda$core$Int8$$ADD$panda$core$Int32$R$panda$core$Int32, panda$core$Int8$$ADD$panda$core$Int64$R$panda$core$Int64, panda$core$Int8$$ADD$panda$core$UInt8$R$panda$core$Int16, panda$core$Int8$$ADD$panda$core$UInt16$R$panda$core$Int32, panda$core$Int8$$ADD$panda$core$UInt32$R$panda$core$Int64, panda$core$Int8$$SUB$panda$core$Int8$R$panda$core$Int32, panda$core$Int8$$SUB$panda$core$Int16$R$panda$core$Int32, panda$core$Int8$$SUB$panda$core$Int32$R$panda$core$Int32, panda$core$Int8$$SUB$panda$core$Int64$R$panda$core$Int64, panda$core$Int8$$SUB$panda$core$UInt8$R$panda$core$Int16, panda$core$Int8$$SUB$panda$core$UInt16$R$panda$core$Int32, panda$core$Int8$$SUB$panda$core$UInt32$R$panda$core$Int64, panda$core$Int8$$SUB$R$panda$core$Int8, panda$core$Int8$$MUL$panda$core$Int8$R$panda$core$Int32, panda$core$Int8$$MUL$panda$core$Int16$R$panda$core$Int32, panda$core$Int8$$MUL$panda$core$Int32$R$panda$core$Int32, panda$core$Int8$$MUL$panda$core$Int64$R$panda$core$Int64, panda$core$Int8$$MUL$panda$core$UInt8$R$panda$core$Int16, panda$core$Int8$$MUL$panda$core$UInt16$R$panda$core$Int32, panda$core$Int8$$MUL$panda$core$UInt32$R$panda$core$Int64, panda$core$Int8$$INTDIV$panda$core$Int8$R$panda$core$Int32, panda$core$Int8$$INTDIV$panda$core$Int16$R$panda$core$Int32, panda$core$Int8$$INTDIV$panda$core$Int32$R$panda$core$Int32, panda$core$Int8$$INTDIV$panda$core$Int64$R$panda$core$Int64, panda$core$Int8$$INTDIV$panda$core$UInt8$R$panda$core$Int16, panda$core$Int8$$INTDIV$panda$core$UInt16$R$panda$core$Int32, panda$core$Int8$$INTDIV$panda$core$UInt32$R$panda$core$Int64, panda$core$Int8$$REM$panda$core$Int8$R$panda$core$Int32, panda$core$Int8$$REM$panda$core$Int16$R$panda$core$Int32, panda$core$Int8$$REM$panda$core$Int32$R$panda$core$Int32, panda$core$Int8$$REM$panda$core$Int64$R$panda$core$Int64, panda$core$Int8$$REM$panda$core$UInt8$R$panda$core$Int16, panda$core$Int8$$REM$panda$core$UInt16$R$panda$core$Int32, panda$core$Int8$$REM$panda$core$UInt32$R$panda$core$Int64, panda$core$Int8$$BNOT$R$panda$core$Int8, panda$core$Int8$$BAND$panda$core$Int8$R$panda$core$Int32, panda$core$Int8$$BAND$panda$core$Int16$R$panda$core$Int32, panda$core$Int8$$BAND$panda$core$Int32$R$panda$core$Int32, panda$core$Int8$$BAND$panda$core$Int64$R$panda$core$Int64, panda$core$Int8$$BAND$panda$core$UInt8$R$panda$core$UInt32, panda$core$Int8$$BAND$panda$core$UInt16$R$panda$core$UInt32, panda$core$Int8$$BAND$panda$core$UInt32$R$panda$core$UInt32, panda$core$Int8$$BAND$panda$core$UInt64$R$panda$core$UInt64, panda$core$Int8$$BOR$panda$core$Int8$R$panda$core$Int32, panda$core$Int8$$BOR$panda$core$Int16$R$panda$core$Int32, panda$core$Int8$$BOR$panda$core$Int32$R$panda$core$Int32, panda$core$Int8$$BOR$panda$core$Int64$R$panda$core$Int64, panda$core$Int8$$BOR$panda$core$UInt8$R$panda$core$UInt32, panda$core$Int8$$BOR$panda$core$UInt16$R$panda$core$UInt32, panda$core$Int8$$BOR$panda$core$UInt32$R$panda$core$UInt32, panda$core$Int8$$BOR$panda$core$UInt64$R$panda$core$UInt64, panda$core$Int8$$BXOR$panda$core$Int8$R$panda$core$Int32, panda$core$Int8$$BXOR$panda$core$Int16$R$panda$core$Int32, panda$core$Int8$$BXOR$panda$core$Int32$R$panda$core$Int32, panda$core$Int8$$BXOR$panda$core$Int64$R$panda$core$Int64, panda$core$Int8$$BXOR$panda$core$UInt8$R$panda$core$UInt32, panda$core$Int8$$BXOR$panda$core$UInt16$R$panda$core$UInt32, panda$core$Int8$$BXOR$panda$core$UInt32$R$panda$core$UInt32, panda$core$Int8$$BXOR$panda$core$UInt64$R$panda$core$UInt64, panda$core$Int8$$SHL$panda$core$Int8$R$panda$core$Int32, panda$core$Int8$$SHL$panda$core$Int16$R$panda$core$Int32, panda$core$Int8$$SHL$panda$core$Int32$R$panda$core$Int32, panda$core$Int8$$SHL$panda$core$Int64$R$panda$core$Int64, panda$core$Int8$$SHL$panda$core$UInt8$R$panda$core$UInt32, panda$core$Int8$$SHL$panda$core$UInt16$R$panda$core$UInt32, panda$core$Int8$$SHL$panda$core$UInt32$R$panda$core$UInt32, panda$core$Int8$$SHL$panda$core$UInt64$R$panda$core$UInt64, panda$core$Int8$$SHR$panda$core$Int8$R$panda$core$Int32, panda$core$Int8$$SHR$panda$core$Int16$R$panda$core$Int32, panda$core$Int8$$SHR$panda$core$Int32$R$panda$core$Int32, panda$core$Int8$$SHR$panda$core$Int64$R$panda$core$Int64, panda$core$Int8$$SHR$panda$core$UInt8$R$panda$core$UInt32, panda$core$Int8$$SHR$panda$core$UInt16$R$panda$core$UInt32, panda$core$Int8$$SHR$panda$core$UInt32$R$panda$core$UInt32, panda$core$Int8$$SHR$panda$core$UInt64$R$panda$core$UInt64, panda$core$Int8$$EQ$panda$core$Int8$R$panda$core$Bit$shim, panda$core$Int8$$EQ$panda$core$Int16$R$panda$core$Bit, panda$core$Int8$$EQ$panda$core$Int32$R$panda$core$Bit, panda$core$Int8$$EQ$panda$core$Int64$R$panda$core$Bit, panda$core$Int8$$EQ$panda$core$UInt8$R$panda$core$Bit, panda$core$Int8$$EQ$panda$core$UInt16$R$panda$core$Bit, panda$core$Int8$$EQ$panda$core$UInt32$R$panda$core$Bit, panda$core$Int8$$NEQ$panda$core$Int8$R$panda$core$Bit$shim, panda$core$Int8$$NEQ$panda$core$Int16$R$panda$core$Bit, panda$core$Int8$$NEQ$panda$core$Int32$R$panda$core$Bit, panda$core$Int8$$NEQ$panda$core$Int64$R$panda$core$Bit, panda$core$Int8$$NEQ$panda$core$UInt8$R$panda$core$Bit, panda$core$Int8$$NEQ$panda$core$UInt16$R$panda$core$Bit, panda$core$Int8$$NEQ$panda$core$UInt32$R$panda$core$Bit, panda$core$Int8$$LT$panda$core$Int8$R$panda$core$Bit$shim, panda$core$Int8$$LT$panda$core$Int16$R$panda$core$Bit, panda$core$Int8$$LT$panda$core$Int32$R$panda$core$Bit, panda$core$Int8$$LT$panda$core$Int64$R$panda$core$Bit, panda$core$Int8$$LT$panda$core$UInt8$R$panda$core$Bit, panda$core$Int8$$LT$panda$core$UInt16$R$panda$core$Bit, panda$core$Int8$$LT$panda$core$UInt32$R$panda$core$Bit, panda$core$Int8$$GT$panda$core$Int8$R$panda$core$Bit$shim, panda$core$Int8$$GT$panda$core$Int16$R$panda$core$Bit, panda$core$Int8$$GT$panda$core$Int32$R$panda$core$Bit, panda$core$Int8$$GT$panda$core$Int64$R$panda$core$Bit, panda$core$Int8$$GT$panda$core$UInt8$R$panda$core$Bit, panda$core$Int8$$GT$panda$core$UInt16$R$panda$core$Bit, panda$core$Int8$$GT$panda$core$UInt32$R$panda$core$Bit, panda$core$Int8$$GE$panda$core$Int8$R$panda$core$Bit$shim, panda$core$Int8$$GE$panda$core$Int16$R$panda$core$Bit, panda$core$Int8$$GE$panda$core$Int32$R$panda$core$Bit, panda$core$Int8$$GE$panda$core$Int64$R$panda$core$Bit, panda$core$Int8$$GE$panda$core$UInt8$R$panda$core$Bit, panda$core$Int8$$GE$panda$core$UInt16$R$panda$core$Bit, panda$core$Int8$$GE$panda$core$UInt32$R$panda$core$Bit, panda$core$Int8$$LE$panda$core$Int8$R$panda$core$Bit$shim, panda$core$Int8$$LE$panda$core$Int16$R$panda$core$Bit, panda$core$Int8$$LE$panda$core$Int32$R$panda$core$Bit, panda$core$Int8$$LE$panda$core$Int64$R$panda$core$Bit, panda$core$Int8$$LE$panda$core$UInt8$R$panda$core$Bit, panda$core$Int8$$LE$panda$core$UInt16$R$panda$core$Bit, panda$core$Int8$$LE$panda$core$UInt32$R$panda$core$Bit, panda$core$Int8$min$panda$core$Int8$R$panda$core$Int32, panda$core$Int8$min$panda$core$Int16$R$panda$core$Int32, panda$core$Int8$min$panda$core$Int32$R$panda$core$Int32, panda$core$Int8$min$panda$core$Int64$R$panda$core$Int64, panda$core$Int8$min$panda$core$UInt8$R$panda$core$Int16, panda$core$Int8$min$panda$core$UInt16$R$panda$core$Int32, panda$core$Int8$min$panda$core$UInt32$R$panda$core$Int64, panda$core$Int8$max$panda$core$Int8$R$panda$core$Int32, panda$core$Int8$max$panda$core$Int16$R$panda$core$Int32, panda$core$Int8$max$panda$core$Int32$R$panda$core$Int32, panda$core$Int8$max$panda$core$Int64$R$panda$core$Int64, panda$core$Int8$max$panda$core$UInt8$R$panda$core$Int16, panda$core$Int8$max$panda$core$UInt16$R$panda$core$Int32, panda$core$Int8$max$panda$core$UInt32$R$panda$core$Int64, panda$core$Int8$$IDX$panda$core$Int8$R$panda$core$Bit, panda$core$Int8$$IDX$panda$core$Int16$R$panda$core$Bit, panda$core$Int8$$IDX$panda$core$Int32$R$panda$core$Bit, panda$core$Int8$$IDX$panda$core$Int64$R$panda$core$Bit, panda$core$Int8$$IDX$panda$core$UInt8$R$panda$core$Bit, panda$core$Int8$$IDX$panda$core$UInt16$R$panda$core$Bit, panda$core$Int8$$IDX$panda$core$UInt32$R$panda$core$Bit, panda$core$Int8$$IDX$panda$core$UInt64$R$panda$core$Bit, panda$core$Int8$hash$R$panda$core$Int64, panda$core$Int8$convert$R$panda$core$Int16, panda$core$Int8$convert$R$panda$core$Int32, panda$core$Int8$convert$R$panda$core$Int64, panda$core$Int8$convert$R$panda$core$UInt8, panda$core$Int8$convert$R$panda$core$UInt16, panda$core$Int8$convert$R$panda$core$UInt32, panda$core$Int8$convert$R$panda$core$UInt64} };
 
-struct { panda$core$Class* cl; ITable* itable; void* methods[4]; } panda$core$Int8$wrapper_panda$core$Comparable = { (panda$core$Class*) &panda$core$Comparable$class, NULL, { panda$core$Int8$$GT$panda$core$Int8$R$panda$core$Bit$wrappershim, panda$core$Int8$$LT$panda$core$Int8$R$panda$core$Bit$wrappershim, panda$core$Int8$$GE$panda$core$Int8$R$panda$core$Bit$wrappershim, panda$core$Int8$$LE$panda$core$Int8$R$panda$core$Bit$wrappershim} };
+struct { panda$core$Class* cl; ITable* itable; void* methods[2]; } panda$core$Int8$wrapper_panda$core$Equatable = { (panda$core$Class*) &panda$core$Equatable$class, NULL, { panda$core$Int8$$EQ$panda$core$Int8$R$panda$core$Bit$wrappershim, panda$core$Int8$$NEQ$panda$core$Int8$R$panda$core$Bit$wrappershim} };
 
-struct { panda$core$Class* cl; ITable* itable; void* methods[2]; } panda$core$Int8$wrapper_panda$core$Equatable = { (panda$core$Class*) &panda$core$Equatable$class, (ITable*) &panda$core$Int8$wrapper_panda$core$Comparable, { panda$core$Int8$$EQ$panda$core$Int8$R$panda$core$Bit$wrappershim, panda$core$Int8$$NEQ$panda$core$Int8$R$panda$core$Bit$wrappershim} };
+struct { panda$core$Class* cl; ITable* itable; void* methods[4]; } panda$core$Int8$wrapper_panda$core$Comparable = { (panda$core$Class*) &panda$core$Comparable$class, (ITable*) &panda$core$Int8$wrapper_panda$core$Equatable, { panda$core$Int8$$GT$panda$core$Int8$R$panda$core$Bit$wrappershim, panda$core$Int8$$LT$panda$core$Int8$R$panda$core$Bit$wrappershim, panda$core$Int8$$GE$panda$core$Int8$R$panda$core$Bit$wrappershim, panda$core$Int8$$LE$panda$core$Int8$R$panda$core$Bit$wrappershim} };
 
-struct { panda$core$Class* cl; ITable* itable; void* methods[1]; } panda$core$Int8$wrapper_panda$collections$Key = { (panda$core$Class*) &panda$collections$Key$class, (ITable*) &panda$core$Int8$wrapper_panda$core$Equatable, { panda$core$Int8$hash$R$panda$core$Int64$wrappershim} };
+struct { panda$core$Class* cl; ITable* itable; void* methods[1]; } panda$core$Int8$wrapper_panda$collections$Key = { (panda$core$Class*) &panda$collections$Key$class, (ITable*) &panda$core$Int8$wrapper_panda$core$Comparable, { panda$core$Int8$hash$R$panda$core$Int64$wrappershim} };
 
 panda$core$Int8$wrapperclass_type panda$core$Int8$wrapperclass = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Value$class, (ITable*) &panda$core$Int8$wrapper_panda$collections$Key, { panda$core$Int8$convert$R$panda$core$String$wrappershim, panda$core$Object$cleanup} };
 
@@ -852,7 +852,7 @@ panda$core$String* panda$core$Int8$convert$R$panda$core$String(panda$core$Int8 s
     goto $l193;
     $l195:;
     free(chars159);
-    panda$core$String* $tmp208 = (panda$core$String*) malloc(40);
+    panda$core$String* $tmp208 = (panda$core$String*) malloc(48);
     $tmp208->$class = (panda$core$Class*) &panda$core$String$class;
     $tmp208->refCount.value = 1;
     panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp208, result186, size184);

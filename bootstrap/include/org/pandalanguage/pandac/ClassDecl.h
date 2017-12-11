@@ -16,6 +16,7 @@ typedef struct panda$collections$List panda$collections$List;
 typedef struct org$pandalanguage$pandac$ClassDecl org$pandalanguage$pandac$ClassDecl;
 typedef struct org$pandalanguage$pandac$SymbolTable org$pandalanguage$pandac$SymbolTable;
 #include "panda/core/Bit.h"
+typedef struct panda$collections$HashMap panda$collections$HashMap;
 
 typedef struct org$pandalanguage$pandac$ClassDecl {
     panda$core$Class* $class;
@@ -40,6 +41,7 @@ typedef struct org$pandalanguage$pandac$ClassDecl {
     panda$core$Bit symbolTableResolved;
     panda$core$Bit external;
     panda$collections$Array* virtualMethods;
+    panda$collections$HashMap* classResolutionCache;
     panda$core$Bit resolved;
 } org$pandalanguage$pandac$ClassDecl;
 #define PANDA_TYPESONLY

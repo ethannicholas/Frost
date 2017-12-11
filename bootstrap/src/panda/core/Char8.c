@@ -125,7 +125,7 @@ panda$core$String* panda$core$Char8$convert$R$panda$core$String(panda$core$Char8
     {
         data18 = ((panda$core$Char8*) malloc(((panda$core$Int64) { 1 }).value * 1));
         data18[((panda$core$Int64) { 0 }).value] = self;
-        panda$core$String* $tmp19 = (panda$core$String*) malloc(40);
+        panda$core$String* $tmp19 = (panda$core$String*) malloc(48);
         $tmp19->$class = (panda$core$Class*) &panda$core$String$class;
         $tmp19->refCount.value = 1;
         panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp19, data18, ((panda$core$Int64) { 1 }));
@@ -141,7 +141,7 @@ panda$core$String* panda$core$Char8$convert$R$panda$core$String(panda$core$Char8
     int16_t $tmp27 = $tmp26 | 128;
     panda$core$Char8$init$panda$core$UInt8(&$tmp25, ((panda$core$UInt8) { ((int8_t) $tmp27) }));
     data21[((panda$core$Int64) { 1 }).value] = $tmp25;
-    panda$core$String* $tmp28 = (panda$core$String*) malloc(40);
+    panda$core$String* $tmp28 = (panda$core$String*) malloc(48);
     $tmp28->$class = (panda$core$Class*) &panda$core$String$class;
     $tmp28->refCount.value = 1;
     panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp28, data21, ((panda$core$Int64) { 2 }));

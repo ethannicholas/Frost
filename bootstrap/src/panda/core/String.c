@@ -52,17 +52,20 @@ typedef panda$core$String* (*$fn192)(panda$core$Object*);
 
 
 void panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64(panda$core$String* self, panda$core$Char8* p_data, panda$core$Int64 p_length) {
+    self->_hash = ((panda$core$Int64) { 0 });
     self->data = p_data;
     self->_length = p_length;
     self->owner = NULL;
 }
 void panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64$panda$core$String(panda$core$String* self, panda$core$Char8* p_data, panda$core$Int64 p_length, panda$core$String* p_owner) {
+    self->_hash = ((panda$core$Int64) { 0 });
     self->data = p_data;
     self->_length = p_length;
     self->owner = p_owner;
 }
 void panda$core$String$init$panda$collections$ListView$LTpanda$core$Char8$GT(panda$core$String* self, panda$collections$ListView* p_chars) {
     panda$core$Range$LTpanda$core$Int64$GT $tmp5;
+    self->_hash = ((panda$core$Int64) { 0 });
     ITable* $tmp1 = ((panda$collections$CollectionView*) p_chars)->$class->itable;
     while ($tmp1->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
         $tmp1 = $tmp1->next;
@@ -353,7 +356,7 @@ panda$core$String* panda$core$String$$ADD$panda$core$String$R$panda$core$String(
     i142.value += 1;
     goto $l147;
     $l149:;
-    panda$core$String* $tmp162 = (panda$core$String*) malloc(40);
+    panda$core$String* $tmp162 = (panda$core$String*) malloc(48);
     $tmp162->$class = (panda$core$Class*) &panda$core$String$class;
     $tmp162->refCount.value = 1;
     panda$core$Int64 $tmp164 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->_length, p_other->_length);
@@ -542,7 +545,7 @@ panda$core$Char32 panda$core$String$$IDX$panda$core$Int64$R$panda$core$Char32(pa
     return $tmp274;
 }
 panda$core$String* panda$core$String$substring$panda$core$Range$LTpanda$core$String$Index$GT$R$panda$core$String(panda$core$String* self, panda$core$Range$LTpanda$core$String$Index$GT p_r) {
-    panda$core$String* $tmp275 = (panda$core$String*) malloc(40);
+    panda$core$String* $tmp275 = (panda$core$String*) malloc(48);
     $tmp275->$class = (panda$core$Class*) &panda$core$String$class;
     $tmp275->refCount.value = 1;
     panda$core$Int64 $tmp277 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(p_r.max.value, p_r.min.value);
@@ -1649,36 +1652,42 @@ panda$core$UInt64$nullable panda$core$String$convert$R$panda$core$UInt64$Q(panda
     return ((panda$core$UInt64$nullable) { result749, true });
 }
 panda$core$Int64 panda$core$String$hash$R$panda$core$Int64(panda$core$String* self) {
-    panda$core$Int64 result779;
-    panda$core$Range$LTpanda$core$Int64$GT $tmp780;
-    result779 = ((panda$core$Int64) { 0 });
-    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp780, ((panda$core$Int64) { 0 }), self->_length, ((panda$core$Bit) { false }));
-    int64_t $tmp782 = $tmp780.min.value;
-    panda$core$Int64 i781 = { $tmp782 };
-    int64_t $tmp784 = $tmp780.max.value;
-    bool $tmp785 = $tmp780.inclusive.value;
-    if ($tmp785) goto $l792; else goto $l793;
-    $l792:;
-    if ($tmp782 <= $tmp784) goto $l786; else goto $l788;
-    $l793:;
-    if ($tmp782 < $tmp784) goto $l786; else goto $l788;
-    $l786:;
+    panda$core$Int64 h780;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp781;
+    panda$core$Bit $tmp779 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(self->_hash, ((panda$core$Int64) { 0 }));
+    if ($tmp779.value) {
     {
-        panda$core$Int64 $tmp794 = panda$core$Int64$$MUL$panda$core$Int64$R$panda$core$Int64(result779, ((panda$core$Int64) { 101 }));
-        panda$core$Int64 $tmp795 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64($tmp794, ((panda$core$Int64) { ((int64_t) self->data[i781.value].value) }));
-        result779 = $tmp795;
+        h780 = ((panda$core$Int64) { 1 });
+        panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp781, ((panda$core$Int64) { 0 }), self->_length, ((panda$core$Bit) { false }));
+        int64_t $tmp783 = $tmp781.min.value;
+        panda$core$Int64 i782 = { $tmp783 };
+        int64_t $tmp785 = $tmp781.max.value;
+        bool $tmp786 = $tmp781.inclusive.value;
+        if ($tmp786) goto $l793; else goto $l794;
+        $l793:;
+        if ($tmp783 <= $tmp785) goto $l787; else goto $l789;
+        $l794:;
+        if ($tmp783 < $tmp785) goto $l787; else goto $l789;
+        $l787:;
+        {
+            panda$core$Int64 $tmp795 = panda$core$Int64$$MUL$panda$core$Int64$R$panda$core$Int64(h780, ((panda$core$Int64) { 101 }));
+            panda$core$Int64 $tmp796 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64($tmp795, ((panda$core$Int64) { ((int64_t) self->data[i782.value].value) }));
+            h780 = $tmp796;
+        }
+        $l790:;
+        int64_t $tmp798 = $tmp785 - i782.value;
+        if ($tmp786) goto $l799; else goto $l800;
+        $l799:;
+        if ($tmp798 >= 1) goto $l797; else goto $l789;
+        $l800:;
+        if ($tmp798 > 1) goto $l797; else goto $l789;
+        $l797:;
+        i782.value += 1;
+        goto $l787;
+        $l789:;
+        self->_hash = h780;
     }
-    $l789:;
-    int64_t $tmp797 = $tmp784 - i781.value;
-    if ($tmp785) goto $l798; else goto $l799;
-    $l798:;
-    if ($tmp797 >= 1) goto $l796; else goto $l788;
-    $l799:;
-    if ($tmp797 > 1) goto $l796; else goto $l788;
-    $l796:;
-    i781.value += 1;
-    goto $l786;
-    $l788:;
-    return result779;
+    }
+    return self->_hash;
 }
 

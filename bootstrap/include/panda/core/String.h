@@ -13,6 +13,7 @@ typedef struct panda$core$String {
     panda$core$Int32 refCount;
     panda$core$Char8* data;
     panda$core$Int64 _length;
+    panda$core$Int64 _hash;
     panda$core$String* owner;
 } panda$core$String;
 #define PANDA_TYPESONLY

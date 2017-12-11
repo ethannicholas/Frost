@@ -36,11 +36,12 @@ typedef struct org$pandalanguage$pandac$Compiler {
     panda$core$UInt64 reusedValueCount;
     panda$core$Int64 errorCount;
     panda$core$Bit reportErrors;
+    panda$collections$HashMap* existenceCache;
 } org$pandalanguage$pandac$Compiler;
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"
 #undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[106]; } org$pandalanguage$pandac$Compiler$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[107]; } org$pandalanguage$pandac$Compiler$class_type;
 extern org$pandalanguage$pandac$Compiler$class_type org$pandalanguage$pandac$Compiler$class;
 
 #ifndef PANDA_TYPESONLY
@@ -56,6 +57,7 @@ typedef struct org$pandalanguage$pandac$MethodDecl org$pandalanguage$pandac$Meth
 typedef struct org$pandalanguage$pandac$FieldDecl org$pandalanguage$pandac$FieldDecl;
 typedef struct org$pandalanguage$pandac$IRNode org$pandalanguage$pandac$IRNode;
 typedef struct panda$collections$ListView panda$collections$ListView;
+typedef struct panda$io$File panda$io$File;
 typedef struct panda$collections$Set panda$collections$Set;
 typedef struct org$pandalanguage$pandac$SymbolTable org$pandalanguage$pandac$SymbolTable;
 typedef struct panda$collections$Array panda$collections$Array;
@@ -66,7 +68,6 @@ typedef struct org$pandalanguage$pandac$MethodRef org$pandalanguage$pandac$Metho
 typedef struct org$pandalanguage$pandac$ASTNode org$pandalanguage$pandac$ASTNode;
 typedef struct org$pandalanguage$pandac$Compiler$CompileTargetResult org$pandalanguage$pandac$Compiler$CompileTargetResult;
 typedef struct org$pandalanguage$pandac$Variable org$pandalanguage$pandac$Variable;
-typedef struct panda$io$File panda$io$File;
 
 void org$pandalanguage$pandac$Compiler$init$org$pandalanguage$pandac$CodeGenerator$org$pandalanguage$pandac$Compiler$Settings(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$CodeGenerator* p_codeGenerator, org$pandalanguage$pandac$Compiler$Settings* p_settings);
 void org$pandalanguage$pandac$Compiler$addAlias$panda$core$String(org$pandalanguage$pandac$Compiler* self, panda$core$String* p_name);
@@ -81,6 +82,7 @@ org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$resolveMethod
 org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$IRNode$Q$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$IRNode* p_expr);
 panda$core$Bit org$pandalanguage$pandac$Compiler$isValue$org$pandalanguage$pandac$ClassDecl$R$panda$core$Bit(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$ClassDecl* p_cl);
 panda$collections$ListView* org$pandalanguage$pandac$Compiler$instanceFields$org$pandalanguage$pandac$ClassDecl$R$panda$collections$ListView$LTorg$pandalanguage$pandac$FieldDecl$GT(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$ClassDecl* p_cl);
+panda$core$Bit org$pandalanguage$pandac$Compiler$exists$panda$io$File$R$panda$core$Bit(org$pandalanguage$pandac$Compiler* self, panda$io$File* p_f);
 org$pandalanguage$pandac$ClassDecl* org$pandalanguage$pandac$Compiler$getClass$panda$core$String$R$org$pandalanguage$pandac$ClassDecl$Q(org$pandalanguage$pandac$Compiler* self, panda$core$String* p_fullName);
 org$pandalanguage$pandac$ClassDecl* org$pandalanguage$pandac$Compiler$getClass$org$pandalanguage$pandac$Position$panda$core$String$R$org$pandalanguage$pandac$ClassDecl$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position p_position, panda$core$String* p_fullName);
 org$pandalanguage$pandac$ClassDecl* org$pandalanguage$pandac$Compiler$specialize$org$pandalanguage$pandac$ClassDecl$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$ClassDecl(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$ClassDecl* p_cl, org$pandalanguage$pandac$Type* p_rawType);

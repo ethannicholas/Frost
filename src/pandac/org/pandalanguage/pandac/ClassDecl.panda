@@ -24,6 +24,14 @@ class ClassDecl : Symbol {
         }
     }
 
+    class Resolution : Immutable {
+        def value:ClassDecl?
+
+        init(value:ClassDecl?) {
+            self.value := value
+        }
+    }
+
     def source:File
 
     ================================================================================================
@@ -76,6 +84,8 @@ class ClassDecl : Symbol {
     var external := true
 
     def virtualMethods := Array<MethodDecl>()
+
+    def classResolutionCache := HashMap<String, Resolution>()
 
     var resolved:Bit
 
