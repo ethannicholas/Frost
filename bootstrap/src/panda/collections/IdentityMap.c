@@ -373,7 +373,7 @@ panda$core$String* panda$collections$IdentityMap$convert$R$panda$core$String(pan
     panda$core$String* separator140;
     panda$core$Range$LTpanda$core$Int64$GT $tmp142;
     panda$collections$IdentityMap$Entry* entry156;
-    panda$core$MutableString* $tmp137 = (panda$core$MutableString*) malloc(40);
+    panda$core$MutableString* $tmp137 = (panda$core$MutableString*) malloc(48);
     $tmp137->$class = (panda$core$Class*) &panda$core$MutableString$class;
     $tmp137->refCount.value = 1;
     panda$core$MutableString$init($tmp137);

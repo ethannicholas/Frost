@@ -17,7 +17,7 @@ void panda$io$MemoryOutputStream$init(panda$io$MemoryOutputStream* self) {
     panda$io$MemoryOutputStream$init$panda$core$Int64(self, ((panda$core$Int64) { 1024 }));
 }
 void panda$io$MemoryOutputStream$init$panda$core$Int64(panda$io$MemoryOutputStream* self, panda$core$Int64 p_capacity) {
-    panda$core$MutableString* $tmp1 = (panda$core$MutableString*) malloc(40);
+    panda$core$MutableString* $tmp1 = (panda$core$MutableString*) malloc(48);
     $tmp1->$class = (panda$core$Class*) &panda$core$MutableString$class;
     $tmp1->refCount.value = 1;
     panda$core$MutableString$init$panda$core$Int64($tmp1, p_capacity);

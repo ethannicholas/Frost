@@ -193,7 +193,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$ClassDecl$typeWithParame
     subtypes45 = $tmp46;
     org$pandalanguage$pandac$Type* $tmp48 = org$pandalanguage$pandac$ClassDecl$type$R$org$pandalanguage$pandac$Type(self);
     panda$collections$Array$add$panda$collections$Array$T(subtypes45, ((panda$core$Object*) $tmp48));
-    panda$core$MutableString* $tmp50 = (panda$core$MutableString*) malloc(40);
+    panda$core$MutableString* $tmp50 = (panda$core$MutableString*) malloc(48);
     $tmp50->$class = (panda$core$Class*) &panda$core$MutableString$class;
     $tmp50->refCount.value = 1;
     panda$core$MutableString$init$panda$core$String($tmp50, ((org$pandalanguage$pandac$Symbol*) self)->name);
@@ -263,7 +263,7 @@ panda$core$String* org$pandalanguage$pandac$ClassDecl$convert$R$panda$core$Strin
     org$pandalanguage$pandac$FieldDecl* f143;
     panda$collections$Iterator* m$Iter152;
     org$pandalanguage$pandac$MethodDecl* m164;
-    panda$core$MutableString* $tmp88 = (panda$core$MutableString*) malloc(40);
+    panda$core$MutableString* $tmp88 = (panda$core$MutableString*) malloc(48);
     $tmp88->$class = (panda$core$Class*) &panda$core$MutableString$class;
     $tmp88->refCount.value = 1;
     panda$core$String* $tmp91 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s90, self->name);

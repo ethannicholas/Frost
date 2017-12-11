@@ -151,7 +151,7 @@ panda$core$String* org$pandalanguage$pandac$MethodDecl$signature$R$panda$core$St
     panda$core$String* separator53;
     panda$collections$Iterator* p$Iter55;
     org$pandalanguage$pandac$MethodDecl$Parameter* p67;
-    panda$core$MutableString* $tmp48 = (panda$core$MutableString*) malloc(40);
+    panda$core$MutableString* $tmp48 = (panda$core$MutableString*) malloc(48);
     $tmp48->$class = (panda$core$Class*) &panda$core$MutableString$class;
     $tmp48->refCount.value = 1;
     panda$core$String* $tmp50 = panda$core$String$convert$R$panda$core$String(self->name);

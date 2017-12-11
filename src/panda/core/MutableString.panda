@@ -2,6 +2,13 @@ package panda.core
 
 uses panda.unsafe.Pointer
 
+---------------
+-- IMPORTANT --
+------------------------------------------------------------------------------
+-- String and MutableString are assumed to have a compatible memory layout! --
+-- See MutableString.finish().                                              --
+------------------------------------------------------------------------------
+
 @final
 class MutableString {
     @private
@@ -15,6 +22,10 @@ class MutableString {
 
     @private
     var maxLength:Int
+
+    -- for binary compatibility with String
+    @private
+    var dummy:String?
 
     init() {
         init(DEFAULT_SIZE)
@@ -107,12 +118,7 @@ class MutableString {
     }
 
     method clear() {
-        if valid() {
-            data := data.realloc(DEFAULT_SIZE)
-        }
-        else {
-            data := Pointer<Char8>.alloc(DEFAULT_SIZE)
-        }
+        data := data.realloc(DEFAULT_SIZE)
         length := 0
         maxLength := DEFAULT_SIZE
     }
@@ -132,17 +138,16 @@ class MutableString {
 
     ================================================================================================
     Invalidates this `MutableString` and returns its contents as an immutable `String`. This is
-    generally preferable to [convert()], as it does not copy the string's contents. Interacting with
-    a `MutableString` after `finish`ing it, without first issuing a [clear()], violates its
-    preconditions.
+    generally preferable to [convert()], as it does not copy the string's contents. Interacting in
+    any way with a `MutableString` after `finish`ing will cause precondition violations.
     ================================================================================================
     method finish():String {
-        def result := String(data, length)
-        maxLength := -1
-        return result
-    }
-
-    function valid():Bit {
-        return maxLength >= 0
+        -- FIXME this transformation is only safe at -S0
+        data := data.realloc(length)
+        maxLength := 0 -- maxLength and hash live at the same address, zero the hash
+        self.$class := "".$class
+        return self->Object->String
+--        maxLength := -1
+--        return String(data, length)
     }
 }

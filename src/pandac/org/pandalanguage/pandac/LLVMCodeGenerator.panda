@@ -94,7 +94,7 @@ class LLVMCodeGenerator : CodeGenerator {
     constant INT_TYPE  := "i64"
     constant SIZE_TYPE := "i64"
 
-    def out:IndentedOutputStream
+    def out:OutputStream
 
     def compiler:Compiler
 
@@ -102,21 +102,13 @@ class LLVMCodeGenerator : CodeGenerator {
 
     def types := MemoryOutputStream()
 
-    def methodsBuffer := MemoryOutputStream()
+    def methods := MemoryOutputStream()
 
-    def methods := IndentedOutputStream(methodsBuffer)
+    def methodHeader := MemoryOutputStream()
 
-    def methodHeaderBuffer := MemoryOutputStream()
+    def wrapperShims := MemoryOutputStream()
 
-    def methodHeader := IndentedOutputStream(methodHeaderBuffer)
-
-    def wrapperShimsBuffer := MemoryOutputStream()
-
-    def wrapperShims := IndentedOutputStream(wrapperShimsBuffer)
-
-    def shimsBuffer := MemoryOutputStream()
-
-    def shims := IndentedOutputStream(shimsBuffer)
+    def shims := MemoryOutputStream()
 
     def strings := MemoryOutputStream()
 
@@ -149,7 +141,7 @@ class LLVMCodeGenerator : CodeGenerator {
     def currentlyInlining := IdentityMap<MethodDecl, MethodDecl>() -- FIXME need IdentitySet
 
     init(out:OutputStream) {
-        self.out := IndentedOutputStream(out)
+        self.out := out
 
         out.printLine("target datalayout = \"e-p:64:64:64-i1:8:8-i8:8:8-i16:16:16-i32:32:32-i64:" +
                 "64:64-f32:32:32-f64:64:64-v64:64:64-v128:128:128-a0:0:64-s0:64:64-f80:128:128-" +
@@ -173,10 +165,10 @@ class LLVMCodeGenerator : CodeGenerator {
         out.print(types.finish())
         out.print(strings.finish())
         out.print(declarations.finish())
-        out.print(wrapperShimsBuffer.finish())
-        out.print(shimsBuffer.finish())
-        out.print(methodsBuffer.finish())
-        out.out.cleanup() -- FIXME this should be automatic when memory management is in
+        out.print(wrapperShims.finish())
+        out.print(shims.finish())
+        out.print(methods.finish())
+        out.cleanup() -- FIXME this should be automatic when memory management is in
     }
 
     method nextVar():String {
@@ -189,7 +181,7 @@ class LLVMCodeGenerator : CodeGenerator {
         return "$l\{labelCount}"
     }
 
-    method createBlock(label:String, out:IndentedOutputStream) {
+    method createBlock(label:String, out:OutputStream) {
         out.printLine("\n\{label}:")
         currentBlock := label
     }
@@ -493,8 +485,7 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     method createMethodShim(raw:MethodDecl, effective:Type, rawOut:OutputStream):MethodShim {
-        def outBuffer := MemoryOutputStream()
-        def out := IndentedOutputStream(outBuffer)
+        def out := MemoryOutputStream()
         def found := methodShims[raw]
         if found != null {
             return found
@@ -558,11 +549,11 @@ class LLVMCodeGenerator : CodeGenerator {
         varCount := oldVarCount
         def result := MethodShim(resultName, resultType.finish())
         methodShims[raw] := result
-        rawOut.print(outBuffer.finish())
+        rawOut.print(out.finish())
         return result
     }
 
-    method createWrapperShim(m:MethodDecl, out:IndentedOutputStream):String {
+    method createWrapperShim(m:MethodDecl, out:OutputStream):String {
         assert m.isInstance()
         def oldVarCount := varCount
         varCount := 0
@@ -579,7 +570,6 @@ class LLVMCodeGenerator : CodeGenerator {
             out.print(", \{type(inheritedMethodType.subtypes[i])} %\{m.parameters[i].name}")
         }
         out.printLine(") {")
-        out.level += 1
         out.printLine("%self = bitcast \{selfType} %actualSelf to %panda$core$Object*")
         def parameters := Array<String>()
         for i in 0 .. m.parameters.get_count() {
@@ -605,7 +595,6 @@ class LLVMCodeGenerator : CodeGenerator {
         }
         out.printLine(")")
         out.printLine("ret \{returnValue}")
-        out.level -= 1
         out.printLine("}")
         varCount := oldVarCount
         return result
@@ -933,7 +922,7 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method getAndReference(left:IRNode, right:IRNode, out:IndentedOutputStream):String {
+    method getAndReference(left:IRNode, right:IRNode, out:OutputStream):String {
         var leftRef := getReference(left, out)
         if left.type = Type.Bit() {
             def leftField := nextVar()
@@ -959,7 +948,7 @@ class LLVMCodeGenerator : CodeGenerator {
         return result
     }
 
-    method getOrReference(left:IRNode, right:IRNode, out:IndentedOutputStream):String {
+    method getOrReference(left:IRNode, right:IRNode, out:OutputStream):String {
         var leftRef := getReference(left, out)
         if left.type = Type.Bit() {
             def leftField := nextVar()
@@ -986,7 +975,7 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     method getBinaryReference(cl:Int, leftRef:String, op:Int, rightRef:String,
-            out:IndentedOutputStream):String {
+            out:OutputStream):String {
         def llvmOp:String
         match cl {
             when OpClass.SIGNED:
@@ -1054,7 +1043,7 @@ class LLVMCodeGenerator : CodeGenerator {
         return result
     }
 
-    method getIdentityReference(left:IRNode, right:IRNode, out:IndentedOutputStream):String {
+    method getIdentityReference(left:IRNode, right:IRNode, out:OutputStream):String {
         def leftRef := getTypedReference(left, out)
         def rightRef := getReference(right, out)
         def raw := nextVar()
@@ -1064,7 +1053,7 @@ class LLVMCodeGenerator : CodeGenerator {
         return result
     }
 
-    method getNIdentityReference(left:IRNode, right:IRNode, out:IndentedOutputStream):String {
+    method getNIdentityReference(left:IRNode, right:IRNode, out:OutputStream):String {
         def leftRef := getTypedReference(left, out)
         def rightRef := getReference(right, out)
         def raw := nextVar()
@@ -1074,7 +1063,7 @@ class LLVMCodeGenerator : CodeGenerator {
         return result
     }
 
-    method getBinaryReference(left:IRNode, op:Int, right:IRNode, out:IndentedOutputStream):String {
+    method getBinaryReference(left:IRNode, op:Int, right:IRNode, out:OutputStream):String {
         assert left.type = right.type
         match op {
             when Token.Kind.AND:       return getAndReference(left, right, out)
@@ -1088,7 +1077,7 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method getBinaryReference(b:IRNode, out:IndentedOutputStream):String {
+    method getBinaryReference(b:IRNode, out:OutputStream):String {
         assert b.kind = IRNode.Kind.BINARY
         assert b.children.get_count() = 2
         return getBinaryReference(b.children[0], b.payload->Int, b.children[1], out)
@@ -1098,7 +1087,7 @@ class LLVMCodeGenerator : CodeGenerator {
         return ""
     }
 
-    method getVirtualMethodReference(target:String, m:MethodDecl, out:IndentedOutputStream):String {
+    method getVirtualMethodReference(target:String, m:MethodDecl, out:OutputStream):String {
         def cc := getClassConstant(m.owner)
         var index := -1
         def vtable := compiler.getVTable(m.owner)
@@ -1128,7 +1117,7 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     method getInterfaceMethodReference(target:String, m:MethodDecl,
-            out:IndentedOutputStream):String {
+            out:OutputStream):String {
         def methodType := type(compiler.inheritedTypeWithSelf(m))
         -- load class constant entry
         def entry := nextLabel()
@@ -1196,7 +1185,7 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     method getMethodReference(target:String?, m:MethodDecl, isSuper:Bit,
-            out:IndentedOutputStream):String {
+            out:OutputStream):String {
         if !isSuper & m.isVirtual() {
             assert target != null, "calling instance \{m.signature()} without a target"
             if m.owner.classKind = ClassDecl.Kind.INTERFACE {
@@ -1214,7 +1203,7 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method getPointerCallReference(call:IRNode, out:IndentedOutputStream):String {
+    method getPointerCallReference(call:IRNode, out:OutputStream):String {
         def m := call.payload->MethodRef
         match m.value.name {
             when "alloc":
@@ -1289,7 +1278,7 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method getInlineCallReference(call:IRNode, body:IRNode, out:IndentedOutputStream):String {
+    method getInlineCallReference(call:IRNode, body:IRNode, out:OutputStream):String {
         def m := (call.payload->MethodRef).value
         compiler.currentClass.push(m.owner)
         currentlyInlining[m] := m
@@ -1342,7 +1331,7 @@ class LLVMCodeGenerator : CodeGenerator {
         return phi
     }
 
-    method getCallReference(call:IRNode, out:IndentedOutputStream):String {
+    method getCallReference(call:IRNode, out:OutputStream):String {
         assert call.kind = IRNode.Kind.CALL
         def m := (call.payload->MethodRef).value
         if m.owner.name = "panda.unsafe.Pointer" {
@@ -1450,7 +1439,7 @@ class LLVMCodeGenerator : CodeGenerator {
         return result
     }
 
-    method wrapValue(value:String, srcType:Type, dstType:Type, out:IndentedOutputStream):String {
+    method wrapValue(value:String, srcType:Type, dstType:Type, out:OutputStream):String {
         def src := compiler.getClass(srcType)
         assert src != null
         if srcType.typeKind = Type.Kind.NULLABLE {
@@ -1499,7 +1488,7 @@ class LLVMCodeGenerator : CodeGenerator {
         return wrapperCast
     }
 
-    method getFieldReference(fieldRef:IRNode, out:IndentedOutputStream):String {
+    method getFieldReference(fieldRef:IRNode, out:OutputStream):String {
         assert fieldRef.kind = IRNode.Kind.FIELD_REFERENCE
         assert fieldRef.children.get_count() = 1
         def field := fieldRef.payload->FieldDecl
@@ -1532,7 +1521,7 @@ class LLVMCodeGenerator : CodeGenerator {
         return result
     }
 
-    method unwrapValue(value:String, srcType:Type, dstType:Type, out:IndentedOutputStream):String {
+    method unwrapValue(value:String, srcType:Type, dstType:Type, out:OutputStream):String {
         def target := compiler.getClass(dstType)
         assert target != null
         if dstType.typeKind = Type.Kind.NULLABLE {
@@ -1567,7 +1556,7 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     method toNullableValue(value:String, srcType:Type, dstType:Type,
-            out:IndentedOutputStream):String {
+            out:OutputStream):String {
         def nullableType := nullableType(dstType)
         def result := nextVar()
         out.printLine("\{result} = insertvalue \{nullableType} " +
@@ -1576,13 +1565,13 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     method toNonNullableValue(value:String, srcType:Type, dstType:Type,
-            out:IndentedOutputStream):String {
+            out:OutputStream):String {
         def result := nextVar()
         out.printLine("\{result} = extractvalue \{type(srcType)} \{value}, 0")
         return result
     }
 
-    method getCastReference(value:String, src:Type, target:Type, out:IndentedOutputStream):String {
+    method getCastReference(value:String, src:Type, target:Type, out:OutputStream):String {
         def op:String
         if target.isBuiltinNumber() {
             assert src.isBuiltinNumber()
@@ -1634,14 +1623,14 @@ class LLVMCodeGenerator : CodeGenerator {
         return result
     }
 
-    method getCastReference(cast:IRNode, out:IndentedOutputStream):String {
+    method getCastReference(cast:IRNode, out:OutputStream):String {
         assert cast.kind = IRNode.Kind.CAST
         assert cast.children.get_count() = 1
         def base := getReference(cast.children[0], out)
         return getCastReference(base, cast.children[0].type, cast.type, out)
     }
 
-    method getConstructReference(construct:IRNode, out:IndentedOutputStream):String {
+    method getConstructReference(construct:IRNode, out:OutputStream):String {
         assert construct.kind = IRNode.Kind.CONSTRUCT
         assert construct.children.get_count() >= 1
         def cl := compiler.getClass(construct.type)
@@ -1705,22 +1694,22 @@ class LLVMCodeGenerator : CodeGenerator {
         return result
     }
 
-    method getIntReference(int:IRNode, out:IndentedOutputStream):String {
+    method getIntReference(int:IRNode, out:OutputStream):String {
         return (int.payload->UInt64).convert() -- FIXME parens
     }
 
-    method getNegatedIntReference(int:IRNode, out:IndentedOutputStream):String {
+    method getNegatedIntReference(int:IRNode, out:OutputStream):String {
         return "-" + (int.payload->UInt64).convert() -- FIXME parens
     }
 
-    method getBitReference(bit:IRNode, out:IndentedOutputStream):String {
+    method getBitReference(bit:IRNode, out:OutputStream):String {
         if bit.payload->Bit {
             return "true"
         }
         return "false"
     }
 
-    method getVariableReference(v:Variable, out:IndentedOutputStream):String {
+    method getVariableReference(v:Variable, out:OutputStream):String {
         if v.storage = Variable.Storage.PARAMETER {
             return getName(v)
         }
@@ -1730,7 +1719,7 @@ class LLVMCodeGenerator : CodeGenerator {
         return result
     }
 
-    method getStringReference(s:String, out:IndentedOutputStream):String {
+    method getStringReference(s:String, out:OutputStream):String {
         labelCount += 1
         def chars := "@$chars\{labelCount}"
         def charsType := "[\{s.utf8().get_count()} x i8]"
@@ -1755,21 +1744,21 @@ class LLVMCodeGenerator : CodeGenerator {
         return result
     }
 
-    method getSelfReference(s:IRNode, out:IndentedOutputStream):String {
+    method getSelfReference(s:IRNode, out:OutputStream):String {
         if inlineContext.get_count() > 0 {
             return inlineContext.peek().selfRef
         }
         return "%self"
     }
 
-    method getSuperReference(s:IRNode, out:IndentedOutputStream):String {
+    method getSuperReference(s:IRNode, out:OutputStream):String {
         def result := nextVar()
         out.printLine("\{result} = bitcast \{type(currentMethod.owner.type())} %self to " +
                 type(s.type))
         return result
     }
 
-    method getIsNullReference(test:IRNode, out:IndentedOutputStream):String {
+    method getIsNullReference(test:IRNode, out:OutputStream):String {
         assert test.kind = IRNode.Kind.IS_NULL
         assert test.children.get_count() = 1
         def value := getTypedReference(test.children[0], out)
@@ -1793,7 +1782,7 @@ class LLVMCodeGenerator : CodeGenerator {
         return result
     }
 
-    method getIsNonNullReference(test:IRNode, out:IndentedOutputStream):String {
+    method getIsNonNullReference(test:IRNode, out:OutputStream):String {
         assert test.kind = IRNode.Kind.IS_NONNULL
         assert test.children.get_count() = 1
         def value := getTypedReference(test.children[0], out)
@@ -1815,7 +1804,7 @@ class LLVMCodeGenerator : CodeGenerator {
         return result
     }
 
-    method getNullReference(expr:IRNode, out:IndentedOutputStream):String {
+    method getNullReference(expr:IRNode, out:OutputStream):String {
         assert expr.type.typeKind = Type.Kind.NULLABLE
         def cl := compiler.getClass(expr.type.subtypes[0])
         assert cl != null
@@ -1827,7 +1816,7 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method getPrefixReference(expr:IRNode, out:IndentedOutputStream):String {
+    method getPrefixReference(expr:IRNode, out:OutputStream):String {
         assert expr.kind = IRNode.Kind.PREFIX
         assert expr.children.get_count() = 1
         def base := getReference(expr.children[0], out)
@@ -1844,7 +1833,7 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method getReference(expr:IRNode, out:IndentedOutputStream):String {
+    method getReference(expr:IRNode, out:OutputStream):String {
         match expr.kind {
             when IRNode.Kind.BINARY:
                 return getBinaryReference(expr, out)
@@ -1891,20 +1880,18 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method getTypedReference(expr:IRNode, out:IndentedOutputStream):String {
+    method getTypedReference(expr:IRNode, out:OutputStream):String {
         return "\{type(expr.type)} \{getReference(expr, out)}"
     }
 
-    method writeBlock(block:IRNode, out:IndentedOutputStream) {
+    method writeBlock(block:IRNode, out:OutputStream) {
         assert block.kind = IRNode.Kind.BLOCK
-        out.level += 1
         for s in block.children {
             writeStatement(s, out)
         }
-        out.level -= 1
     }
 
-    method writePointerCall(stmt:IRNode, out:IndentedOutputStream) {
+    method writePointerCall(stmt:IRNode, out:OutputStream) {
         def m := stmt.payload->MethodRef
         match m.value.name {
             when "set":
@@ -1938,7 +1925,7 @@ class LLVMCodeGenerator : CodeGenerator {
 
     -- if 'target' is non-null, it is inserted as a hidden first parameter to the call. This is used
     -- for init() calls, which require a self parameter but do not have a target in the IR.
-    method writeCall(call:IRNode, target:String?, out:IndentedOutputStream) {
+    method writeCall(call:IRNode, target:String?, out:OutputStream) {
         assert call.kind = IRNode.Kind.CALL
         def m := (call.payload->MethodRef).value
         if m.owner.name = "panda.unsafe.Pointer" {
@@ -2012,7 +1999,7 @@ class LLVMCodeGenerator : CodeGenerator {
         out.printLine(")")
     }
 
-    method writeIf(s:IRNode, out:IndentedOutputStream) {
+    method writeIf(s:IRNode, out:OutputStream) {
         assert s.kind = IRNode.Kind.IF
         assert s.children.get_count() = 2 | s.children.get_count() = 3
         assert s.children[0].type = Type.Bit()
@@ -2044,7 +2031,7 @@ class LLVMCodeGenerator : CodeGenerator {
         createBlock(end, out)
     }
 
-    method writeSimpleRangeFor(f:IRNode, out:IndentedOutputStream) {
+    method writeSimpleRangeFor(f:IRNode, out:OutputStream) {
         -- this could probably be simplified quite a bit; it's just a cut-down version of
         -- writeSteppedRangeFor
         assert f.kind = IRNode.Kind.RANGE_FOR
@@ -2166,7 +2153,7 @@ class LLVMCodeGenerator : CodeGenerator {
         loopDescriptors.pop()
     }
 
-    method writeSteppedRangeFor(f:IRNode, out:IndentedOutputStream) {
+    method writeSteppedRangeFor(f:IRNode, out:OutputStream) {
         -- I am acutely aware of how horrific this looks.
         --
         -- There's no easy way to produce clean output here, since we have to handle different step
@@ -2376,7 +2363,7 @@ class LLVMCodeGenerator : CodeGenerator {
         loopDescriptors.pop()
     }
 
-    method writeRangeFor(f:IRNode, out:IndentedOutputStream) {
+    method writeRangeFor(f:IRNode, out:OutputStream) {
         if f.children[1].type.isRange() {
             writeSimpleRangeFor(f, out)
         }
@@ -2388,7 +2375,7 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method writeWhile(w:IRNode, out:IndentedOutputStream) {
+    method writeWhile(w:IRNode, out:OutputStream) {
         assert w.kind = IRNode.Kind.WHILE
         assert w.children.get_count() = 2
         assert w.children[0].type = Type.Bit()
@@ -2411,7 +2398,7 @@ class LLVMCodeGenerator : CodeGenerator {
         loopDescriptors.pop()
     }
 
-    method writeDo(d:IRNode, out:IndentedOutputStream) {
+    method writeDo(d:IRNode, out:OutputStream) {
         assert d.kind = IRNode.Kind.DO
         assert d.children.get_count() = 2
         assert d.children[1].type = Type.Bit()
@@ -2434,7 +2421,7 @@ class LLVMCodeGenerator : CodeGenerator {
         loopDescriptors.pop()
     }
 
-    method writeLoop(l:IRNode, out:IndentedOutputStream) {
+    method writeLoop(l:IRNode, out:OutputStream) {
         assert l.kind = IRNode.Kind.LOOP
         assert l.children.get_count() = 1
         def loopStart := nextLabel()
@@ -2450,7 +2437,7 @@ class LLVMCodeGenerator : CodeGenerator {
         loopDescriptors.pop()
     }
 
-    method writeVarTarget(target:IRNode, value:IRNode?, out:IndentedOutputStream) {
+    method writeVarTarget(target:IRNode, value:IRNode?, out:OutputStream) {
         match target.kind {
             when IRNode.Kind.VARIABLE_REFERENCE:
                 def v := target.payload->Variable
@@ -2466,7 +2453,7 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method writeVar(v:IRNode, out:IndentedOutputStream) {
+    method writeVar(v:IRNode, out:OutputStream) {
         assert v.kind = IRNode.Kind.VAR |
                 v.kind = IRNode.Kind.DEF |
                 v.kind = IRNode.Kind.PROPERTY |
@@ -2482,7 +2469,7 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method getLValue(lvalue:IRNode, out:IndentedOutputStream):String {
+    method getLValue(lvalue:IRNode, out:OutputStream):String {
         match lvalue.kind {
             when IRNode.Kind.CAST:
                 return getLValue(compiler.unwrapCast(lvalue), out)
@@ -2524,7 +2511,7 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method writeAssignment(a:IRNode, out:IndentedOutputStream) {
+    method writeAssignment(a:IRNode, out:OutputStream) {
         assert a.kind = IRNode.Kind.BINARY
         assert a.children.get_count() = 2
         def lvalue := "\{type(a.children[0].type)}* \{getLValue(a.children[0], out)}"
@@ -2568,7 +2555,7 @@ class LLVMCodeGenerator : CodeGenerator {
         out.printLine("store \{value}, \{lvalue}")
     }
 
-    method writeReturn(r:IRNode, out:IndentedOutputStream) {
+    method writeReturn(r:IRNode, out:OutputStream) {
         if r.children != null & r.children.get_count() > 0 {
             assert r.children.get_count() = 1
             if inlineContext.get_count() > 0 {
@@ -2604,17 +2591,17 @@ class LLVMCodeGenerator : CodeGenerator {
         assert false
     }
 
-    method writeBreak(b:IRNode, out:IndentedOutputStream) {
+    method writeBreak(b:IRNode, out:OutputStream) {
         def desc := findLoop(b.payload->String?)
         out.printLine("br label %\{desc.breakLabel}")
     }
 
-    method writeContinue(c:IRNode, out:IndentedOutputStream) {
+    method writeContinue(c:IRNode, out:OutputStream) {
         def desc := findLoop(c.payload->String?)
         out.printLine("br label %\{desc.continueLabel}")
     }
 
-    method writeAssert(a:IRNode, out:IndentedOutputStream) {
+    method writeAssert(a:IRNode, out:OutputStream) {
         assert a.kind = IRNode.Kind.ASSERT
         assert a.children.get_count() = 1 | a.children.get_count() = 2
         if compiler.settings.safetyLevel < 2 {
@@ -2666,7 +2653,7 @@ class LLVMCodeGenerator : CodeGenerator {
         createBlock(ifTrue, out)
     }
 
-    method writeMatch(m:IRNode, out:IndentedOutputStream) {
+    method writeMatch(m:IRNode, out:OutputStream) {
         assert m.kind = IRNode.Kind.MATCH
         def valueStruct := getTypedReference(m.children[0], out)
         def numberClass := compiler.getClass(m.children[0].type)
@@ -2717,7 +2704,7 @@ class LLVMCodeGenerator : CodeGenerator {
         createBlock(endLabel, out)
     }
 
-    method writeStatement(stmt:IRNode, out:IndentedOutputStream) {
+    method writeStatement(stmt:IRNode, out:OutputStream) {
         match stmt.kind {
             when IRNode.Kind.BINARY:
                 writeAssignment(stmt, out)
@@ -2800,7 +2787,7 @@ class LLVMCodeGenerator : CodeGenerator {
         currentMethod := m
         currentBlock := "0"
         varCount := 0
-        methodHeaderBuffer.clear()
+        methodHeader := MemoryOutputStream()
         methods.print("define ")
         if m.owner.isSpecialization() {
             methods.print("linkonce_odr ")
@@ -2816,14 +2803,12 @@ class LLVMCodeGenerator : CodeGenerator {
             separator := ", "
         }
         methods.printLine(") {")
-        methods.level += 1
         assert body.kind = IRNode.Kind.BLOCK
         def bodyBuffer := MemoryOutputStream()
-        def indentedBody := IndentedOutputStream(bodyBuffer)
         for s in body.children {
-            writeStatement(s, indentedBody)
+            writeStatement(s, bodyBuffer)
         }
-        methods.print(methodHeaderBuffer.finish())
+        methods.print(methodHeader.finish())
         methods.print(bodyBuffer.finish())
         if !endsWithBranch(body) {
             if m.returnType = Type.Void() {
@@ -2833,7 +2818,6 @@ class LLVMCodeGenerator : CodeGenerator {
                 methods.printLine("unreachable")
             }
         }
-        methods.level -= 1
         methods.printLine("}")
         currentMethod := null
     }

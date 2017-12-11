@@ -371,7 +371,7 @@ panda$core$String* panda$core$String$$ADD$panda$core$Object$R$panda$core$String(
 panda$core$String* panda$core$String$$MUL$panda$core$Int64$R$panda$core$String(panda$core$String* self, panda$core$Int64 p_count) {
     panda$core$MutableString* result168;
     panda$core$Range$LTpanda$core$Int64$GT $tmp171;
-    panda$core$MutableString* $tmp169 = (panda$core$MutableString*) malloc(40);
+    panda$core$MutableString* $tmp169 = (panda$core$MutableString*) malloc(48);
     $tmp169->$class = (panda$core$Class*) &panda$core$MutableString$class;
     $tmp169->refCount.value = 1;
     panda$core$MutableString$init($tmp169);
@@ -594,7 +594,7 @@ panda$core$String* panda$core$String$$IDX$panda$core$Range$LTpanda$core$String$I
     panda$core$Int64 max289;
     panda$core$Char8 c294;
     current285 = p_r.min.value;
-    panda$core$MutableString* $tmp287 = (panda$core$MutableString*) malloc(40);
+    panda$core$MutableString* $tmp287 = (panda$core$MutableString*) malloc(48);
     $tmp287->$class = (panda$core$Class*) &panda$core$MutableString$class;
     $tmp287->refCount.value = 1;
     panda$core$MutableString$init($tmp287);
@@ -738,7 +738,7 @@ panda$core$String* panda$core$String$$IDX$panda$core$SteppedRange$LTpanda$core$S
     }
     }
     }
-    panda$core$MutableString* $tmp324 = (panda$core$MutableString*) malloc(40);
+    panda$core$MutableString* $tmp324 = (panda$core$MutableString*) malloc(48);
     $tmp324->$class = (panda$core$Class*) &panda$core$MutableString$class;
     $tmp324->refCount.value = 1;
     panda$core$MutableString$init($tmp324);
@@ -1268,7 +1268,7 @@ panda$core$String* panda$core$String$replace$panda$core$String$panda$core$String
     panda$core$Range$LTpanda$core$String$Index$Q$GT $tmp599;
     panda$core$Range$LTpanda$core$String$Index$GT $tmp601;
     panda$core$String$Index $tmp603;
-    panda$core$MutableString* $tmp591 = (panda$core$MutableString*) malloc(40);
+    panda$core$MutableString* $tmp591 = (panda$core$MutableString*) malloc(48);
     $tmp591->$class = (panda$core$Class*) &panda$core$MutableString$class;
     $tmp591->refCount.value = 1;
     panda$core$MutableString$init($tmp591);

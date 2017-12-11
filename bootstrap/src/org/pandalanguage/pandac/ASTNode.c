@@ -417,7 +417,7 @@ panda$core$String* org$pandalanguage$pandac$ASTNode$convert$R$panda$core$String(
             panda$core$Int64 $tmp67 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(self->children);
             panda$core$Bit $tmp68 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp67, ((panda$core$Int64) { 3 }));
             PANDA_ASSERT($tmp68.value);
-            panda$core$MutableString* $tmp70 = (panda$core$MutableString*) malloc(40);
+            panda$core$MutableString* $tmp70 = (panda$core$MutableString*) malloc(48);
             $tmp70->$class = (panda$core$Class*) &panda$core$MutableString$class;
             $tmp70->refCount.value = 1;
             panda$core$MutableString$init($tmp70);
@@ -454,7 +454,7 @@ panda$core$String* org$pandalanguage$pandac$ASTNode$convert$R$panda$core$String(
             panda$core$Int64 $tmp81 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(self->children);
             panda$core$Bit $tmp82 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp81, ((panda$core$Int64) { 3 }));
             PANDA_ASSERT($tmp82.value);
-            panda$core$MutableString* $tmp84 = (panda$core$MutableString*) malloc(40);
+            panda$core$MutableString* $tmp84 = (panda$core$MutableString*) malloc(48);
             $tmp84->$class = (panda$core$Class*) &panda$core$MutableString$class;
             $tmp84->refCount.value = 1;
             panda$core$MutableString$init($tmp84);
@@ -494,7 +494,7 @@ panda$core$String* org$pandalanguage$pandac$ASTNode$convert$R$panda$core$String(
             panda$core$Int64 $tmp98 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(self->children);
             panda$core$Bit $tmp99 = panda$core$Int64$$GE$panda$core$Int64$R$panda$core$Bit($tmp98, ((panda$core$Int64) { 1 }));
             PANDA_ASSERT($tmp99.value);
-            panda$core$MutableString* $tmp101 = (panda$core$MutableString*) malloc(40);
+            panda$core$MutableString* $tmp101 = (panda$core$MutableString*) malloc(48);
             $tmp101->$class = (panda$core$Class*) &panda$core$MutableString$class;
             $tmp101->refCount.value = 1;
             panda$core$Object* $tmp103 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(self->children, ((panda$core$Int64) { 0 }));
@@ -699,7 +699,7 @@ panda$core$String* org$pandalanguage$pandac$ASTNode$convert$R$panda$core$String(
         break;
         case 126:
         {
-            panda$core$MutableString* $tmp240 = (panda$core$MutableString*) malloc(40);
+            panda$core$MutableString* $tmp240 = (panda$core$MutableString*) malloc(48);
             $tmp240->$class = (panda$core$Class*) &panda$core$MutableString$class;
             $tmp240->refCount.value = 1;
             panda$core$MutableString$init$panda$core$String($tmp240, &$s242);
@@ -779,7 +779,7 @@ panda$core$String* org$pandalanguage$pandac$ASTNode$convert$R$panda$core$String(
         break;
         case 154:
         {
-            panda$core$MutableString* $tmp284 = (panda$core$MutableString*) malloc(40);
+            panda$core$MutableString* $tmp284 = (panda$core$MutableString*) malloc(48);
             $tmp284->$class = (panda$core$Class*) &panda$core$MutableString$class;
             $tmp284->refCount.value = 1;
             panda$core$Object* $tmp286 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(self->children, ((panda$core$Int64) { 0 }));
@@ -829,7 +829,7 @@ panda$core$String* org$pandalanguage$pandac$ASTNode$convert$R$panda$core$String(
         break;
         case 139:
         {
-            panda$core$MutableString* $tmp314 = (panda$core$MutableString*) malloc(40);
+            panda$core$MutableString* $tmp314 = (panda$core$MutableString*) malloc(48);
             $tmp314->$class = (panda$core$Class*) &panda$core$MutableString$class;
             $tmp314->refCount.value = 1;
             panda$core$MutableString$init($tmp314);
@@ -879,7 +879,7 @@ panda$core$String* org$pandalanguage$pandac$ASTNode$convert$R$panda$core$String(
         break;
         case 144:
         {
-            panda$core$MutableString* $tmp340 = (panda$core$MutableString*) malloc(40);
+            panda$core$MutableString* $tmp340 = (panda$core$MutableString*) malloc(48);
             $tmp340->$class = (panda$core$Class*) &panda$core$MutableString$class;
             $tmp340->refCount.value = 1;
             panda$core$MutableString$init($tmp340);
@@ -941,7 +941,7 @@ panda$core$String* org$pandalanguage$pandac$ASTNode$convert$R$panda$core$String(
         break;
         case 130:
         {
-            panda$core$MutableString* $tmp374 = (panda$core$MutableString*) malloc(40);
+            panda$core$MutableString* $tmp374 = (panda$core$MutableString*) malloc(48);
             $tmp374->$class = (panda$core$Class*) &panda$core$MutableString$class;
             $tmp374->refCount.value = 1;
             panda$core$MutableString$init$panda$core$String($tmp374, &$s376);
@@ -985,7 +985,7 @@ panda$core$String* org$pandalanguage$pandac$ASTNode$convert$R$panda$core$String(
         break;
         case 131:
         {
-            panda$core$MutableString* $tmp399 = (panda$core$MutableString*) malloc(40);
+            panda$core$MutableString* $tmp399 = (panda$core$MutableString*) malloc(48);
             $tmp399->$class = (panda$core$Class*) &panda$core$MutableString$class;
             $tmp399->refCount.value = 1;
             panda$core$MutableString$init$panda$core$String($tmp399, &$s401);
@@ -1029,7 +1029,7 @@ panda$core$String* org$pandalanguage$pandac$ASTNode$convert$R$panda$core$String(
         break;
         case 133:
         {
-            panda$core$MutableString* $tmp424 = (panda$core$MutableString*) malloc(40);
+            panda$core$MutableString* $tmp424 = (panda$core$MutableString*) malloc(48);
             $tmp424->$class = (panda$core$Class*) &panda$core$MutableString$class;
             $tmp424->refCount.value = 1;
             panda$core$MutableString$init$panda$core$String($tmp424, &$s426);
@@ -1073,7 +1073,7 @@ panda$core$String* org$pandalanguage$pandac$ASTNode$convert$R$panda$core$String(
         break;
         case 132:
         {
-            panda$core$MutableString* $tmp449 = (panda$core$MutableString*) malloc(40);
+            panda$core$MutableString* $tmp449 = (panda$core$MutableString*) malloc(48);
             $tmp449->$class = (panda$core$Class*) &panda$core$MutableString$class;
             $tmp449->refCount.value = 1;
             panda$core$MutableString$init$panda$core$String($tmp449, &$s451);
@@ -1147,7 +1147,7 @@ panda$core$String* org$pandalanguage$pandac$ASTNode$convert$R$panda$core$String(
         break;
         case 150:
         {
-            panda$core$MutableString* $tmp498 = (panda$core$MutableString*) malloc(40);
+            panda$core$MutableString* $tmp498 = (panda$core$MutableString*) malloc(48);
             $tmp498->$class = (panda$core$Class*) &panda$core$MutableString$class;
             $tmp498->refCount.value = 1;
             panda$core$MutableString$init$panda$core$String($tmp498, &$s500);
@@ -1273,7 +1273,7 @@ panda$core$String* org$pandalanguage$pandac$ASTNode$convert$R$panda$core$String(
         break;
         case 140:
         {
-            panda$core$MutableString* $tmp606 = (panda$core$MutableString*) malloc(40);
+            panda$core$MutableString* $tmp606 = (panda$core$MutableString*) malloc(48);
             $tmp606->$class = (panda$core$Class*) &panda$core$MutableString$class;
             $tmp606->refCount.value = 1;
             panda$core$MutableString$init$panda$core$String($tmp606, &$s608);
@@ -1319,7 +1319,7 @@ panda$core$String* org$pandalanguage$pandac$ASTNode$convert$R$panda$core$String(
             panda$core$Int64 $tmp629 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(self->children);
             panda$core$Bit $tmp630 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp629, ((panda$core$Int64) { 6 }));
             PANDA_ASSERT($tmp630.value);
-            panda$core$MutableString* $tmp632 = (panda$core$MutableString*) malloc(40);
+            panda$core$MutableString* $tmp632 = (panda$core$MutableString*) malloc(48);
             $tmp632->$class = (panda$core$Class*) &panda$core$MutableString$class;
             $tmp632->refCount.value = 1;
             panda$core$MutableString$init($tmp632);
@@ -1364,7 +1364,7 @@ panda$core$String* org$pandalanguage$pandac$ASTNode$convert$R$panda$core$String(
             panda$core$Int64 $tmp653 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(self->children);
             panda$core$Bit $tmp654 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp653, ((panda$core$Int64) { 5 }));
             PANDA_ASSERT($tmp654.value);
-            panda$core$MutableString* $tmp656 = (panda$core$MutableString*) malloc(40);
+            panda$core$MutableString* $tmp656 = (panda$core$MutableString*) malloc(48);
             $tmp656->$class = (panda$core$Class*) &panda$core$MutableString$class;
             $tmp656->refCount.value = 1;
             panda$core$MutableString$init($tmp656);
@@ -1389,7 +1389,7 @@ panda$core$String* org$pandalanguage$pandac$ASTNode$convert$R$panda$core$String(
         break;
         case 152:
         {
-            panda$core$MutableString* $tmp670 = (panda$core$MutableString*) malloc(40);
+            panda$core$MutableString* $tmp670 = (panda$core$MutableString*) malloc(48);
             $tmp670->$class = (panda$core$Class*) &panda$core$MutableString$class;
             $tmp670->refCount.value = 1;
             panda$core$MutableString$init($tmp670);

@@ -63,7 +63,7 @@ panda$core$String* panda$io$Console$readLine$R$panda$core$String$Q() {
     panda$core$Char8$nullable c31;
     panda$core$Char8$nullable $tmp32;
     panda$core$Char8 $tmp34;
-    panda$core$MutableString* $tmp27 = (panda$core$MutableString*) malloc(40);
+    panda$core$MutableString* $tmp27 = (panda$core$MutableString*) malloc(48);
     $tmp27->$class = (panda$core$Class*) &panda$core$MutableString$class;
     $tmp27->refCount.value = 1;
     panda$core$MutableString$init($tmp27);

@@ -32,7 +32,7 @@ void panda$core$SteppedRange$LTpanda$core$Int64$Q$Cpanda$core$Int64$GT$init$pand
 }
 panda$core$String* panda$core$SteppedRange$LTpanda$core$Int64$Q$Cpanda$core$Int64$GT$convert$R$panda$core$String(panda$core$SteppedRange$LTpanda$core$Int64$Q$Cpanda$core$Int64$GT self) {
     panda$core$MutableString* result1;
-    panda$core$MutableString* $tmp2 = (panda$core$MutableString*) malloc(40);
+    panda$core$MutableString* $tmp2 = (panda$core$MutableString*) malloc(48);
     $tmp2->$class = (panda$core$Class*) &panda$core$MutableString$class;
     $tmp2->refCount.value = 1;
     panda$core$MutableString$init($tmp2);

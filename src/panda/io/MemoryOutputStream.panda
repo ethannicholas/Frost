@@ -44,9 +44,8 @@ class MemoryOutputStream : OutputStream {
 
     ================================================================================================
     Invalidates this stream and returns its contents as an immutable `String`. This is generally
-    preferable to [convert()], as it does not copy the stream's contents. Interacting with a
-    `MemoryOutputStream` after `finish`ing it, without first issuing a [clear()], violates its
-    preconditions.
+    preferable to [convert()], as it does not copy the stream's contents. Interacting in any way
+    with a `MemoryOutputStream` after `finish`ing it will cause precondition violations.
     ================================================================================================
     method finish():String {
         return data.finish()

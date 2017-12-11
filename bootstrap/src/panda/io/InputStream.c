@@ -66,7 +66,7 @@ panda$core$String* panda$io$InputStream$readFully$R$panda$core$String(panda$io$I
     panda$core$Int8* buffer17;
     panda$core$Int64 count20;
     BUFFER_SIZE13 = ((panda$core$Int64) { 2048 });
-    panda$core$MutableString* $tmp15 = (panda$core$MutableString*) malloc(40);
+    panda$core$MutableString* $tmp15 = (panda$core$MutableString*) malloc(48);
     $tmp15->$class = (panda$core$Class*) &panda$core$MutableString$class;
     $tmp15->refCount.value = 1;
     panda$core$MutableString$init($tmp15);
@@ -172,7 +172,7 @@ panda$core$String* panda$io$InputStream$readLine$R$panda$core$String$Q(panda$io$
     panda$core$MutableString* result53;
     panda$core$Char8$nullable c58;
     panda$core$Char8 $tmp62;
-    panda$core$MutableString* $tmp54 = (panda$core$MutableString*) malloc(40);
+    panda$core$MutableString* $tmp54 = (panda$core$MutableString*) malloc(48);
     $tmp54->$class = (panda$core$Class*) &panda$core$MutableString$class;
     $tmp54->refCount.value = 1;
     panda$core$MutableString$init($tmp54);

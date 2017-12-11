@@ -491,7 +491,7 @@ panda$core$String* panda$collections$HashMap$convert$R$panda$core$String(panda$c
     panda$core$String* separator198;
     panda$core$Range$LTpanda$core$Int64$GT $tmp200;
     panda$collections$HashMap$Entry* entry214;
-    panda$core$MutableString* $tmp195 = (panda$core$MutableString*) malloc(40);
+    panda$core$MutableString* $tmp195 = (panda$core$MutableString*) malloc(48);
     $tmp195->$class = (panda$core$Class*) &panda$core$MutableString$class;
     $tmp195->refCount.value = 1;
     panda$core$MutableString$init($tmp195);

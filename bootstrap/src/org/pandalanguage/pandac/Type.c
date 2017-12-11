@@ -150,7 +150,7 @@ void org$pandalanguage$pandac$Type$init$panda$collections$ListView$LTorg$pandala
     $tmp19->refCount.value = 1;
     panda$collections$Array$init$panda$collections$ListView$LTpanda$collections$Array$T$GT($tmp19, p_subtypes);
     self->subtypes = $tmp19;
-    panda$core$MutableString* $tmp22 = (panda$core$MutableString*) malloc(40);
+    panda$core$MutableString* $tmp22 = (panda$core$MutableString*) malloc(48);
     $tmp22->$class = (panda$core$Class*) &panda$core$MutableString$class;
     $tmp22->refCount.value = 1;
     panda$core$MutableString$init$panda$core$String($tmp22, &$s24);
@@ -680,7 +680,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$remap$panda$collect
             $tmp257->refCount.value = 1;
             panda$collections$Array$init($tmp257);
             remapped256 = $tmp257;
-            panda$core$MutableString* $tmp260 = (panda$core$MutableString*) malloc(40);
+            panda$core$MutableString* $tmp260 = (panda$core$MutableString*) malloc(48);
             $tmp260->$class = (panda$core$Class*) &panda$core$MutableString$class;
             $tmp260->refCount.value = 1;
             panda$core$Object* $tmp262 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(self->subtypes, ((panda$core$Int64) { 0 }));
@@ -750,7 +750,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$remap$panda$collect
             $tmp300->refCount.value = 1;
             panda$collections$Array$init($tmp300);
             remapped299 = $tmp300;
-            panda$core$MutableString* $tmp303 = (panda$core$MutableString*) malloc(40);
+            panda$core$MutableString* $tmp303 = (panda$core$MutableString*) malloc(48);
             $tmp303->$class = (panda$core$Class*) &panda$core$MutableString$class;
             $tmp303->refCount.value = 1;
             panda$core$MutableString$init$panda$core$String($tmp303, &$s305);

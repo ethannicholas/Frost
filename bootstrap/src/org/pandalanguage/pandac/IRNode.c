@@ -187,7 +187,7 @@ panda$core$String* org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(o
     switch (self->kind.value) {
         case 1000:
         {
-            panda$core$MutableString* $tmp17 = (panda$core$MutableString*) malloc(40);
+            panda$core$MutableString* $tmp17 = (panda$core$MutableString*) malloc(48);
             $tmp17->$class = (panda$core$Class*) &panda$core$MutableString$class;
             $tmp17->refCount.value = 1;
             panda$core$MutableString$init$panda$core$String($tmp17, &$s19);
@@ -494,7 +494,7 @@ panda$core$String* org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(o
         break;
         case 1031:
         {
-            panda$core$MutableString* $tmp212 = (panda$core$MutableString*) malloc(40);
+            panda$core$MutableString* $tmp212 = (panda$core$MutableString*) malloc(48);
             $tmp212->$class = (panda$core$Class*) &panda$core$MutableString$class;
             $tmp212->refCount.value = 1;
             panda$core$MutableString$init$panda$core$String($tmp212, &$s214);

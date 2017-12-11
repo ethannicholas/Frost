@@ -1040,7 +1040,7 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$type$org$pandalanguag
         panda$core$String* $tmp77 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s76, ((panda$core$Object*) wrap_panda$core$Int64(self->varCount)));
         panda$core$String* $tmp79 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp77, &$s78);
         result75 = $tmp79;
-        panda$core$MutableString* $tmp81 = (panda$core$MutableString*) malloc(40);
+        panda$core$MutableString* $tmp81 = (panda$core$MutableString*) malloc(48);
         $tmp81->$class = (panda$core$Class*) &panda$core$MutableString$class;
         $tmp81->refCount.value = 1;
         panda$core$MutableString$init$panda$core$String($tmp81, &$s83);
@@ -1393,7 +1393,7 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$wrapperType$org$panda
     panda$core$Range$LTpanda$core$Int64$GT $tmp267;
     org$pandalanguage$pandac$Type* $tmp250 = org$pandalanguage$pandac$Compiler$inheritedType$org$pandalanguage$pandac$MethodDecl$R$org$pandalanguage$pandac$Type(self->compiler, p_m);
     inheritedType249 = $tmp250;
-    panda$core$MutableString* $tmp252 = (panda$core$MutableString*) malloc(40);
+    panda$core$MutableString* $tmp252 = (panda$core$MutableString*) malloc(48);
     $tmp252->$class = (panda$core$Class*) &panda$core$MutableString$class;
     $tmp252->refCount.value = 1;
     panda$core$MutableString$init($tmp252);
@@ -1515,7 +1515,7 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getITable$org$pandala
             panda$core$String* $tmp334 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp332, $tmp333);
             panda$core$String* $tmp336 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp334, &$s335);
             name328 = $tmp336;
-            panda$core$MutableString* $tmp338 = (panda$core$MutableString*) malloc(40);
+            panda$core$MutableString* $tmp338 = (panda$core$MutableString*) malloc(48);
             $tmp338->$class = (panda$core$Class*) &panda$core$MutableString$class;
             $tmp338->refCount.value = 1;
             org$pandalanguage$pandac$Type* $tmp341 = org$pandalanguage$pandac$Type$Class$R$org$pandalanguage$pandac$Type();
@@ -1644,7 +1644,7 @@ org$pandalanguage$pandac$CCodeGenerator$MethodShim* org$pandalanguage$pandac$CCo
     panda$core$String* $tmp415 = org$pandalanguage$pandac$CCodeGenerator$getName$org$pandalanguage$pandac$MethodDecl$R$panda$core$String(self, p_raw);
     panda$core$String* $tmp417 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp415, &$s416);
     resultName414 = $tmp417;
-    panda$core$MutableString* $tmp419 = (panda$core$MutableString*) malloc(40);
+    panda$core$MutableString* $tmp419 = (panda$core$MutableString*) malloc(48);
     $tmp419->$class = (panda$core$Class*) &panda$core$MutableString$class;
     $tmp419->refCount.value = 1;
     panda$core$String* $tmp421 = org$pandalanguage$pandac$CCodeGenerator$type$org$pandalanguage$pandac$Type$R$panda$core$String(self, effectiveReturnType410);
@@ -2039,7 +2039,7 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getWrapperITable$org$
             panda$core$String* $tmp739 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp737, $tmp738);
             panda$core$String* $tmp741 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp739, &$s740);
             name733 = $tmp741;
-            panda$core$MutableString* $tmp743 = (panda$core$MutableString*) malloc(40);
+            panda$core$MutableString* $tmp743 = (panda$core$MutableString*) malloc(48);
             $tmp743->$class = (panda$core$Class*) &panda$core$MutableString$class;
             $tmp743->refCount.value = 1;
             org$pandalanguage$pandac$Type* $tmp746 = org$pandalanguage$pandac$Type$Class$R$org$pandalanguage$pandac$Type();
@@ -2228,7 +2228,7 @@ org$pandalanguage$pandac$CCodeGenerator$ClassConstant* org$pandalanguage$pandac$
         org$pandalanguage$pandac$ClassDecl* $tmp853 = org$pandalanguage$pandac$Compiler$getClass$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$ClassDecl$Q(self->compiler, $tmp852);
         org$pandalanguage$pandac$CCodeGenerator$ClassConstant* $tmp854 = org$pandalanguage$pandac$CCodeGenerator$getClassConstant$org$pandalanguage$pandac$ClassDecl$R$org$pandalanguage$pandac$CCodeGenerator$ClassConstant(self, $tmp853);
         clConstant851 = $tmp854;
-        panda$core$MutableString* $tmp856 = (panda$core$MutableString*) malloc(40);
+        panda$core$MutableString* $tmp856 = (panda$core$MutableString*) malloc(48);
         $tmp856->$class = (panda$core$Class*) &panda$core$MutableString$class;
         $tmp856->refCount.value = 1;
         panda$core$String* $tmp858 = panda$core$String$convert$R$panda$core$String(result819->name);
@@ -2368,7 +2368,7 @@ org$pandalanguage$pandac$CCodeGenerator$ClassConstant* org$pandalanguage$pandac$
             org$pandalanguage$pandac$ClassDecl* $tmp948 = org$pandalanguage$pandac$Compiler$getClass$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$ClassDecl$Q(self->compiler, $tmp947);
             org$pandalanguage$pandac$CCodeGenerator$ClassConstant* $tmp949 = org$pandalanguage$pandac$CCodeGenerator$getClassConstant$org$pandalanguage$pandac$ClassDecl$R$org$pandalanguage$pandac$CCodeGenerator$ClassConstant(self, $tmp948);
             clConstant946 = $tmp949;
-            panda$core$MutableString* $tmp951 = (panda$core$MutableString*) malloc(40);
+            panda$core$MutableString* $tmp951 = (panda$core$MutableString*) malloc(48);
             $tmp951->$class = (panda$core$Class*) &panda$core$MutableString$class;
             $tmp951->refCount.value = 1;
             panda$core$String* $tmp953 = panda$core$String$convert$R$panda$core$String(result907->name);

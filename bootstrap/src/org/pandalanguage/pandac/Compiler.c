@@ -1157,7 +1157,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Compiler$resolve$org$pan
             }
             }
             panda$collections$Array$add$panda$collections$Array$T(subtypes306, ((panda$core$Object*) base309));
-            panda$core$MutableString* $tmp313 = (panda$core$MutableString*) malloc(40);
+            panda$core$MutableString* $tmp313 = (panda$core$MutableString*) malloc(48);
             $tmp313->$class = (panda$core$Class*) &panda$core$MutableString$class;
             $tmp313->refCount.value = 1;
             panda$core$Object* $tmp315 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(subtypes306, ((panda$core$Int64) { 0 }));
@@ -5439,7 +5439,7 @@ org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$call$org$pand
                 $fn2183 $tmp2182 = $tmp2181->methods[0];
                 panda$core$Object* $tmp2184 = $tmp2182(((panda$collections$ListView*) p_m->payload), ((panda$core$Int64) { 0 }));
                 first2180 = ((org$pandalanguage$pandac$MethodRef*) $tmp2184)->value;
-                panda$core$MutableString* $tmp2186 = (panda$core$MutableString*) malloc(40);
+                panda$core$MutableString* $tmp2186 = (panda$core$MutableString*) malloc(48);
                 $tmp2186->$class = (panda$core$Class*) &panda$core$MutableString$class;
                 $tmp2186->refCount.value = 1;
                 panda$core$String* $tmp2189 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s2188, ((org$pandalanguage$pandac$Symbol*) first2180->owner)->name);
@@ -5635,7 +5635,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Compiler$declaredType$or
     $tmp2282->refCount.value = 1;
     panda$collections$Array$init($tmp2282);
     subtypes2281 = $tmp2282;
-    panda$core$MutableString* $tmp2285 = (panda$core$MutableString*) malloc(40);
+    panda$core$MutableString* $tmp2285 = (panda$core$MutableString*) malloc(48);
     $tmp2285->$class = (panda$core$Class*) &panda$core$MutableString$class;
     $tmp2285->refCount.value = 1;
     panda$core$MutableString$init$panda$core$String($tmp2285, &$s2287);
@@ -5715,7 +5715,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Compiler$declaredTypeWit
     $tmp2319->refCount.value = 1;
     panda$collections$Array$init($tmp2319);
     subtypes2318 = $tmp2319;
-    panda$core$MutableString* $tmp2322 = (panda$core$MutableString*) malloc(40);
+    panda$core$MutableString* $tmp2322 = (panda$core$MutableString*) malloc(48);
     $tmp2322->$class = (panda$core$Class*) &panda$core$MutableString$class;
     $tmp2322->refCount.value = 1;
     panda$core$MutableString$init$panda$core$String($tmp2322, &$s2324);
@@ -7841,7 +7841,7 @@ org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileSelf$o
         subtypes3102 = $tmp3103;
         org$pandalanguage$pandac$Type* $tmp3105 = org$pandalanguage$pandac$ClassDecl$type$R$org$pandalanguage$pandac$Type(cl3095);
         panda$collections$Array$add$panda$collections$Array$T(subtypes3102, ((panda$core$Object*) $tmp3105));
-        panda$core$MutableString* $tmp3107 = (panda$core$MutableString*) malloc(40);
+        panda$core$MutableString* $tmp3107 = (panda$core$MutableString*) malloc(48);
         $tmp3107->$class = (panda$core$Class*) &panda$core$MutableString$class;
         $tmp3107->refCount.value = 1;
         panda$core$MutableString$init$panda$core$String($tmp3107, ((org$pandalanguage$pandac$Symbol*) cl3095)->name);

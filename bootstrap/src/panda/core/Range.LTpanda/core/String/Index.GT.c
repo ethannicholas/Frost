@@ -30,7 +30,7 @@ void panda$core$Range$LTpanda$core$String$Index$GT$init$panda$core$String$Index$
 }
 panda$core$String* panda$core$Range$LTpanda$core$String$Index$GT$convert$R$panda$core$String(panda$core$Range$LTpanda$core$String$Index$GT self) {
     panda$core$MutableString* result1;
-    panda$core$MutableString* $tmp2 = (panda$core$MutableString*) malloc(40);
+    panda$core$MutableString* $tmp2 = (panda$core$MutableString*) malloc(48);
     $tmp2->$class = (panda$core$Class*) &panda$core$MutableString$class;
     $tmp2->refCount.value = 1;
     panda$core$MutableString$init($tmp2);

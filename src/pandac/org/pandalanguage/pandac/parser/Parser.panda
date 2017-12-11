@@ -197,7 +197,7 @@ class Parser {
                                 return null
                             }
                             def text := chunk.finish()
-                            chunk.clear()
+                            chunk := MutableString()
                             if text != "" | result != null {
                                 result := addStringChunk(result, ASTNode(ASTNode.Kind.STRING,
                                         start.position, text))

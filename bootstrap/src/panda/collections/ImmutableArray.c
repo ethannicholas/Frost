@@ -328,7 +328,7 @@ panda$core$String* panda$collections$ImmutableArray$join$panda$core$String$R$pan
         return &$s112;
     }
     }
-    panda$core$MutableString* $tmp114 = (panda$core$MutableString*) malloc(40);
+    panda$core$MutableString* $tmp114 = (panda$core$MutableString*) malloc(48);
     $tmp114->$class = (panda$core$Class*) &panda$core$MutableString$class;
     $tmp114->refCount.value = 1;
     panda$core$Object* $tmp116 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(self, ((panda$core$Int64) { 0 }));
@@ -370,7 +370,7 @@ panda$core$String* panda$collections$ImmutableArray$convert$R$panda$core$String(
     panda$core$String* separator145;
     panda$collections$Iterator* v$Iter147;
     panda$core$Object* v159;
-    panda$core$MutableString* $tmp142 = (panda$core$MutableString*) malloc(40);
+    panda$core$MutableString* $tmp142 = (panda$core$MutableString*) malloc(48);
     $tmp142->$class = (panda$core$Class*) &panda$core$MutableString$class;
     $tmp142->refCount.value = 1;
     panda$core$MutableString$init($tmp142);
