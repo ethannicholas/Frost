@@ -19,9 +19,8 @@ panda$core$String* org$pandalanguage$pandac$Position$convert$R$panda$core$String
 org$pandalanguage$pandac$Position$class_type org$pandalanguage$pandac$Position$class = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Value$class, NULL, { org$pandalanguage$pandac$Position$convert$R$panda$core$String, panda$core$Object$cleanup} };
 
 org$pandalanguage$pandac$Position$wrapperclass_type org$pandalanguage$pandac$Position$wrapperclass = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Value$class, NULL, { org$pandalanguage$pandac$Position$convert$R$panda$core$String$wrappershim, panda$core$Object$cleanup} };
-static panda$core$String $s6 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, NULL };
-static panda$core$String $s8 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x3A", 1, NULL };
-static panda$core$String $s11 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, NULL };
+static panda$core$String $s7 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x3A", 1, NULL };
+static panda$core$String $s10 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, NULL };
 
 void org$pandalanguage$pandac$Position$init(org$pandalanguage$pandac$Position* self) {
     self->line = ((panda$core$Int64) { 1 });
@@ -40,10 +39,10 @@ void org$pandalanguage$pandac$Position$init$panda$core$Int64$panda$core$Int64(or
     self->column = p_column;
 }
 panda$core$String* org$pandalanguage$pandac$Position$convert$R$panda$core$String(org$pandalanguage$pandac$Position self) {
-    panda$core$String* $tmp7 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s6, ((panda$core$Object*) wrap_panda$core$Int64(self.line)));
-    panda$core$String* $tmp9 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp7, &$s8);
-    panda$core$String* $tmp10 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp9, ((panda$core$Object*) wrap_panda$core$Int64(self.column)));
-    panda$core$String* $tmp12 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp10, &$s11);
-    return $tmp12;
+    panda$core$String* $tmp6 = panda$core$Int64$convert$R$panda$core$String(self.line);
+    panda$core$String* $tmp8 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp6, &$s7);
+    panda$core$String* $tmp9 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp8, ((panda$core$Object*) wrap_panda$core$Int64(self.column)));
+    panda$core$String* $tmp11 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp9, &$s10);
+    return $tmp11;
 }
 

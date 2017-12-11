@@ -5,6 +5,7 @@ An input stream which allows data to be "pushed back" into it, so that it may be
 useful in situations such as parsing, in which you may wish to read until you encounter a delimiter
 and then push the delimiter back into the stream so that it can be handled by other code.
 ====================================================================================================
+@final
 class PushbackInputStream : InputStream {
     @private
     def source:InputStream

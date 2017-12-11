@@ -7,6 +7,7 @@ uses org.pandalanguage.pandac.parser.TokenKind
 @final
 class Main {
     class Format {
+        constant LLVM       := 917
         constant EXECUTABLE := 918
         constant OBJECT     := 919
         constant C_HEADER   := 920
@@ -176,6 +177,7 @@ class Main {
                     match f {
                         when "exe": format := Format.EXECUTABLE
                         when "o":   format := Format.OBJECT
+                        when "ll":  format := Format.LLVM
                         when "h":   format := Format.C_HEADER
                         when "c":   format := Format.C
                         otherwise:
@@ -224,7 +226,7 @@ class Main {
         }
         def cg:CodeGenerator
         match format {
-            when Format.EXECUTABLE, Format.OBJECT:
+            when Format.LLVM, Format.EXECUTABLE, Format.OBJECT:
                 cg := LLVMCodeGenerator(outFile.changeExtension(".ll").openOutputStream())
             when Format.C_HEADER:
                 cg := HCodeGenerator(outFile)

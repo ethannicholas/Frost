@@ -6,6 +6,7 @@ uses panda.unsafe.Pointer
 An output stream which indents the lines it writes. `IndentedOutputStream` sits "on top of" another
 stream, directing its output to the underlying stream.
 ====================================================================================================
+@final
 class IndentedOutputStream : OutputStream {
     ================================================================================================
     The current indentation level, in units of `indentSize`. Each line written to the underlying
@@ -17,6 +18,9 @@ class IndentedOutputStream : OutputStream {
     The number of spaces represented by each increment of `level`.
     ================================================================================================
     var indentSize := 4
+
+    @private
+    var indent := ""
 
     @private
     var atLineStart := true
@@ -68,7 +72,10 @@ class IndentedOutputStream : OutputStream {
     method indentIfNeeded() {
         if atLineStart {
             atLineStart := false
-            print(" " * (indentSize * level))
+            if indent._length != indentSize * level {
+                indent := " " * (indentSize * level)
+            }
+            print(indent)
         }
     }
 }

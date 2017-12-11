@@ -15,12 +15,12 @@ typedef panda$core$String* (*$fn51)(panda$core$Object*);
 
 void panda$core$MutableString$init(panda$core$MutableString* self) {
     self->length = ((panda$core$Int64) { 0 });
-    self->maxLength = ((panda$core$Int64) { 16 });
+    self->maxLength = ((panda$core$Int64) { 32 });
     self->data = ((panda$core$Char8*) malloc(self->maxLength.value * 1));
 }
 void panda$core$MutableString$init$panda$core$String(panda$core$MutableString* self, panda$core$String* p_s) {
     self->length = ((panda$core$Int64) { 0 });
-    panda$core$Int64 $tmp1 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->length, ((panda$core$Int64) { 16 }));
+    panda$core$Int64 $tmp1 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->length, ((panda$core$Int64) { 32 }));
     self->maxLength = $tmp1;
     self->data = ((panda$core$Char8*) malloc(self->maxLength.value * 1));
     panda$core$MutableString$append$panda$core$String(self, p_s);
@@ -128,16 +128,16 @@ void panda$core$MutableString$clear(panda$core$MutableString* self) {
     panda$core$Bit $tmp58 = panda$core$MutableString$valid$R$panda$core$Bit(self);
     if ($tmp58.value) {
     {
-        self->data = ((panda$core$Char8*) realloc(self->data, ((panda$core$Int64) { 16 }).value * 1));
+        self->data = ((panda$core$Char8*) realloc(self->data, ((panda$core$Int64) { 32 }).value * 1));
     }
     }
     else {
     {
-        self->data = ((panda$core$Char8*) malloc(((panda$core$Int64) { 16 }).value * 1));
+        self->data = ((panda$core$Char8*) malloc(((panda$core$Int64) { 32 }).value * 1));
     }
     }
     self->length = ((panda$core$Int64) { 0 });
-    self->maxLength = ((panda$core$Int64) { 16 });
+    self->maxLength = ((panda$core$Int64) { 32 });
 }
 panda$core$String* panda$core$MutableString$convert$R$panda$core$String(panda$core$MutableString* self) {
     panda$core$Char8* result59;

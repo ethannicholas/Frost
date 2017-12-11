@@ -5,6 +5,7 @@
 typedef struct panda$core$Class panda$core$Class;
 #include "panda/core/Int32.h"
 #include "panda/core/Int64.h"
+typedef struct panda$core$String panda$core$String;
 #include "panda/core/Bit.h"
 typedef struct panda$io$OutputStream panda$io$OutputStream;
 
@@ -13,6 +14,7 @@ typedef struct panda$io$IndentedOutputStream {
     panda$core$Int32 refCount;
     panda$core$Int64 level;
     panda$core$Int64 indentSize;
+    panda$core$String* indent;
     panda$core$Bit atLineStart;
     panda$io$OutputStream* out;
 } panda$io$IndentedOutputStream;

@@ -19,15 +19,10 @@ panda$io$PushbackInputStream$class_type panda$io$PushbackInputStream$class = { (
 typedef panda$core$UInt8$nullable (*$fn11)(panda$io$InputStream*);
 typedef panda$core$Int64 (*$fn17)(panda$collections$CollectionView*);
 typedef panda$core$Object* (*$fn40)(panda$collections$ListView*, panda$core$Int64);
-typedef void (*$fn42)(panda$io$PushbackInputStream*, panda$core$UInt8);
-typedef panda$core$Int64 (*$fn57)(panda$collections$CollectionView*);
-typedef panda$core$Object* (*$fn80)(panda$collections$ListView*, panda$core$Int64);
-typedef void (*$fn82)(panda$io$PushbackInputStream*, panda$core$Int8);
-typedef void (*$fn95)(panda$io$PushbackInputStream*, panda$core$UInt8);
-typedef panda$core$Int64 (*$fn99)(panda$collections$CollectionView*);
-typedef panda$core$Object* (*$fn122)(panda$collections$ListView*, panda$core$Int64);
-typedef void (*$fn124)(panda$io$PushbackInputStream*, panda$core$Char8);
-typedef void (*$fn137)(panda$io$PushbackInputStream*, panda$collections$ListView*);
+typedef panda$core$Int64 (*$fn56)(panda$collections$CollectionView*);
+typedef panda$core$Object* (*$fn79)(panda$collections$ListView*, panda$core$Int64);
+typedef panda$core$Int64 (*$fn96)(panda$collections$CollectionView*);
+typedef panda$core$Object* (*$fn119)(panda$collections$ListView*, panda$core$Int64);
 
 
 void panda$io$PushbackInputStream$init$panda$io$InputStream(panda$io$PushbackInputStream* self, panda$io$InputStream* p_source) {
@@ -101,155 +96,155 @@ void panda$io$PushbackInputStream$pushback$panda$collections$ListView$LTpanda$co
         }
         $fn40 $tmp39 = $tmp38->methods[0];
         panda$core$Object* $tmp41 = $tmp39(p_v, i20);
-        (($fn42) self->$class->vtable[13])(self, ((panda$core$UInt8$wrapper*) $tmp41)->value);
+        panda$io$PushbackInputStream$pushback$panda$core$UInt8(self, ((panda$core$UInt8$wrapper*) $tmp41)->value);
     }
     $l29:;
-    if ($tmp32) goto $l44; else goto $l45;
-    $l44:;
-    int64_t $tmp46 = $tmp23 - i20.value;
-    if ($tmp25) goto $l47; else goto $l48;
-    $l47:;
-    if ($tmp46 >= $tmp24) goto $l43; else goto $l28;
-    $l48:;
-    if ($tmp46 > $tmp24) goto $l43; else goto $l28;
-    $l45:;
-    int64_t $tmp50 = i20.value - $tmp23;
-    if ($tmp25) goto $l51; else goto $l52;
-    $l51:;
-    if ($tmp50 >= -$tmp24) goto $l43; else goto $l28;
-    $l52:;
-    if ($tmp50 > -$tmp24) goto $l43; else goto $l28;
+    if ($tmp32) goto $l43; else goto $l44;
     $l43:;
+    int64_t $tmp45 = $tmp23 - i20.value;
+    if ($tmp25) goto $l46; else goto $l47;
+    $l46:;
+    if ($tmp45 >= $tmp24) goto $l42; else goto $l28;
+    $l47:;
+    if ($tmp45 > $tmp24) goto $l42; else goto $l28;
+    $l44:;
+    int64_t $tmp49 = i20.value - $tmp23;
+    if ($tmp25) goto $l50; else goto $l51;
+    $l50:;
+    if ($tmp49 >= -$tmp24) goto $l42; else goto $l28;
+    $l51:;
+    if ($tmp49 > -$tmp24) goto $l42; else goto $l28;
+    $l42:;
     i20.value += $tmp24;
     goto $l26;
     $l28:;
 }
 void panda$io$PushbackInputStream$pushback$panda$collections$ListView$LTpanda$core$Int8$GT(panda$io$PushbackInputStream* self, panda$collections$ListView* p_v) {
-    panda$core$SteppedRange$LTpanda$core$Int64$Cpanda$core$Int64$GT $tmp54;
-    ITable* $tmp55 = ((panda$collections$CollectionView*) p_v)->$class->itable;
-    while ($tmp55->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
-        $tmp55 = $tmp55->next;
+    panda$core$SteppedRange$LTpanda$core$Int64$Cpanda$core$Int64$GT $tmp53;
+    ITable* $tmp54 = ((panda$collections$CollectionView*) p_v)->$class->itable;
+    while ($tmp54->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
+        $tmp54 = $tmp54->next;
     }
-    $fn57 $tmp56 = $tmp55->methods[0];
-    panda$core$Int64 $tmp58 = $tmp56(((panda$collections$CollectionView*) p_v));
-    panda$core$Int64 $tmp59 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64($tmp58, ((panda$core$Int64) { 1 }));
-    panda$core$SteppedRange$LTpanda$core$Int64$Cpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp54, $tmp59, ((panda$core$Int64) { 0 }), ((panda$core$Int64) { -1 }), ((panda$core$Bit) { true }));
-    int64_t $tmp61 = $tmp54.start.value;
-    panda$core$Int64 i60 = { $tmp61 };
-    int64_t $tmp63 = $tmp54.end.value;
-    int64_t $tmp64 = $tmp54.step.value;
-    bool $tmp65 = $tmp54.inclusive.value;
-    bool $tmp72 = $tmp64 > 0;
-    if ($tmp72) goto $l70; else goto $l71;
-    $l70:;
-    if ($tmp65) goto $l73; else goto $l74;
-    $l73:;
-    if ($tmp61 <= $tmp63) goto $l66; else goto $l68;
-    $l74:;
-    if ($tmp61 < $tmp63) goto $l66; else goto $l68;
-    $l71:;
-    if ($tmp65) goto $l75; else goto $l76;
-    $l75:;
-    if ($tmp61 >= $tmp63) goto $l66; else goto $l68;
-    $l76:;
-    if ($tmp61 > $tmp63) goto $l66; else goto $l68;
-    $l66:;
-    {
-        ITable* $tmp78 = p_v->$class->itable;
-        while ($tmp78->$class != (panda$core$Class*) &panda$collections$ListView$class) {
-            $tmp78 = $tmp78->next;
-        }
-        $fn80 $tmp79 = $tmp78->methods[0];
-        panda$core$Object* $tmp81 = $tmp79(p_v, i60);
-        (($fn82) self->$class->vtable[14])(self, ((panda$core$Int8$wrapper*) $tmp81)->value);
-    }
+    $fn56 $tmp55 = $tmp54->methods[0];
+    panda$core$Int64 $tmp57 = $tmp55(((panda$collections$CollectionView*) p_v));
+    panda$core$Int64 $tmp58 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64($tmp57, ((panda$core$Int64) { 1 }));
+    panda$core$SteppedRange$LTpanda$core$Int64$Cpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp53, $tmp58, ((panda$core$Int64) { 0 }), ((panda$core$Int64) { -1 }), ((panda$core$Bit) { true }));
+    int64_t $tmp60 = $tmp53.start.value;
+    panda$core$Int64 i59 = { $tmp60 };
+    int64_t $tmp62 = $tmp53.end.value;
+    int64_t $tmp63 = $tmp53.step.value;
+    bool $tmp64 = $tmp53.inclusive.value;
+    bool $tmp71 = $tmp63 > 0;
+    if ($tmp71) goto $l69; else goto $l70;
     $l69:;
-    if ($tmp72) goto $l84; else goto $l85;
-    $l84:;
-    int64_t $tmp86 = $tmp63 - i60.value;
-    if ($tmp65) goto $l87; else goto $l88;
-    $l87:;
-    if ($tmp86 >= $tmp64) goto $l83; else goto $l68;
-    $l88:;
-    if ($tmp86 > $tmp64) goto $l83; else goto $l68;
-    $l85:;
-    int64_t $tmp90 = i60.value - $tmp63;
-    if ($tmp65) goto $l91; else goto $l92;
-    $l91:;
-    if ($tmp90 >= -$tmp64) goto $l83; else goto $l68;
-    $l92:;
-    if ($tmp90 > -$tmp64) goto $l83; else goto $l68;
-    $l83:;
-    i60.value += $tmp64;
-    goto $l66;
+    if ($tmp64) goto $l72; else goto $l73;
+    $l72:;
+    if ($tmp60 <= $tmp62) goto $l65; else goto $l67;
+    $l73:;
+    if ($tmp60 < $tmp62) goto $l65; else goto $l67;
+    $l70:;
+    if ($tmp64) goto $l74; else goto $l75;
+    $l74:;
+    if ($tmp60 >= $tmp62) goto $l65; else goto $l67;
+    $l75:;
+    if ($tmp60 > $tmp62) goto $l65; else goto $l67;
+    $l65:;
+    {
+        ITable* $tmp77 = p_v->$class->itable;
+        while ($tmp77->$class != (panda$core$Class*) &panda$collections$ListView$class) {
+            $tmp77 = $tmp77->next;
+        }
+        $fn79 $tmp78 = $tmp77->methods[0];
+        panda$core$Object* $tmp80 = $tmp78(p_v, i59);
+        panda$io$PushbackInputStream$pushback$panda$core$Int8(self, ((panda$core$Int8$wrapper*) $tmp80)->value);
+    }
     $l68:;
+    if ($tmp71) goto $l82; else goto $l83;
+    $l82:;
+    int64_t $tmp84 = $tmp62 - i59.value;
+    if ($tmp64) goto $l85; else goto $l86;
+    $l85:;
+    if ($tmp84 >= $tmp63) goto $l81; else goto $l67;
+    $l86:;
+    if ($tmp84 > $tmp63) goto $l81; else goto $l67;
+    $l83:;
+    int64_t $tmp88 = i59.value - $tmp62;
+    if ($tmp64) goto $l89; else goto $l90;
+    $l89:;
+    if ($tmp88 >= -$tmp63) goto $l81; else goto $l67;
+    $l90:;
+    if ($tmp88 > -$tmp63) goto $l81; else goto $l67;
+    $l81:;
+    i59.value += $tmp63;
+    goto $l65;
+    $l67:;
 }
 void panda$io$PushbackInputStream$pushback$panda$core$Char8(panda$io$PushbackInputStream* self, panda$core$Char8 p_c) {
-    panda$core$UInt8 $tmp94 = panda$core$Char8$convert$R$panda$core$UInt8(p_c);
-    (($fn95) self->$class->vtable[13])(self, $tmp94);
+    panda$core$UInt8 $tmp92 = panda$core$Char8$convert$R$panda$core$UInt8(p_c);
+    panda$io$PushbackInputStream$pushback$panda$core$UInt8(self, $tmp92);
 }
 void panda$io$PushbackInputStream$pushback$panda$collections$ListView$LTpanda$core$Char8$GT(panda$io$PushbackInputStream* self, panda$collections$ListView* p_c) {
-    panda$core$SteppedRange$LTpanda$core$Int64$Cpanda$core$Int64$GT $tmp96;
-    ITable* $tmp97 = ((panda$collections$CollectionView*) p_c)->$class->itable;
-    while ($tmp97->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
-        $tmp97 = $tmp97->next;
+    panda$core$SteppedRange$LTpanda$core$Int64$Cpanda$core$Int64$GT $tmp93;
+    ITable* $tmp94 = ((panda$collections$CollectionView*) p_c)->$class->itable;
+    while ($tmp94->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
+        $tmp94 = $tmp94->next;
     }
-    $fn99 $tmp98 = $tmp97->methods[0];
-    panda$core$Int64 $tmp100 = $tmp98(((panda$collections$CollectionView*) p_c));
-    panda$core$Int64 $tmp101 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64($tmp100, ((panda$core$Int64) { 1 }));
-    panda$core$SteppedRange$LTpanda$core$Int64$Cpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp96, $tmp101, ((panda$core$Int64) { 0 }), ((panda$core$Int64) { -1 }), ((panda$core$Bit) { true }));
-    int64_t $tmp103 = $tmp96.start.value;
-    panda$core$Int64 i102 = { $tmp103 };
-    int64_t $tmp105 = $tmp96.end.value;
-    int64_t $tmp106 = $tmp96.step.value;
-    bool $tmp107 = $tmp96.inclusive.value;
-    bool $tmp114 = $tmp106 > 0;
-    if ($tmp114) goto $l112; else goto $l113;
+    $fn96 $tmp95 = $tmp94->methods[0];
+    panda$core$Int64 $tmp97 = $tmp95(((panda$collections$CollectionView*) p_c));
+    panda$core$Int64 $tmp98 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64($tmp97, ((panda$core$Int64) { 1 }));
+    panda$core$SteppedRange$LTpanda$core$Int64$Cpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp93, $tmp98, ((panda$core$Int64) { 0 }), ((panda$core$Int64) { -1 }), ((panda$core$Bit) { true }));
+    int64_t $tmp100 = $tmp93.start.value;
+    panda$core$Int64 i99 = { $tmp100 };
+    int64_t $tmp102 = $tmp93.end.value;
+    int64_t $tmp103 = $tmp93.step.value;
+    bool $tmp104 = $tmp93.inclusive.value;
+    bool $tmp111 = $tmp103 > 0;
+    if ($tmp111) goto $l109; else goto $l110;
+    $l109:;
+    if ($tmp104) goto $l112; else goto $l113;
     $l112:;
-    if ($tmp107) goto $l115; else goto $l116;
-    $l115:;
-    if ($tmp103 <= $tmp105) goto $l108; else goto $l110;
-    $l116:;
-    if ($tmp103 < $tmp105) goto $l108; else goto $l110;
+    if ($tmp100 <= $tmp102) goto $l105; else goto $l107;
     $l113:;
-    if ($tmp107) goto $l117; else goto $l118;
-    $l117:;
-    if ($tmp103 >= $tmp105) goto $l108; else goto $l110;
-    $l118:;
-    if ($tmp103 > $tmp105) goto $l108; else goto $l110;
-    $l108:;
-    {
-        ITable* $tmp120 = p_c->$class->itable;
-        while ($tmp120->$class != (panda$core$Class*) &panda$collections$ListView$class) {
-            $tmp120 = $tmp120->next;
-        }
-        $fn122 $tmp121 = $tmp120->methods[0];
-        panda$core$Object* $tmp123 = $tmp121(p_c, i102);
-        (($fn124) self->$class->vtable[17])(self, ((panda$core$Char8$wrapper*) $tmp123)->value);
-    }
-    $l111:;
-    if ($tmp114) goto $l126; else goto $l127;
-    $l126:;
-    int64_t $tmp128 = $tmp105 - i102.value;
-    if ($tmp107) goto $l129; else goto $l130;
-    $l129:;
-    if ($tmp128 >= $tmp106) goto $l125; else goto $l110;
-    $l130:;
-    if ($tmp128 > $tmp106) goto $l125; else goto $l110;
-    $l127:;
-    int64_t $tmp132 = i102.value - $tmp105;
-    if ($tmp107) goto $l133; else goto $l134;
-    $l133:;
-    if ($tmp132 >= -$tmp106) goto $l125; else goto $l110;
-    $l134:;
-    if ($tmp132 > -$tmp106) goto $l125; else goto $l110;
-    $l125:;
-    i102.value += $tmp106;
-    goto $l108;
+    if ($tmp100 < $tmp102) goto $l105; else goto $l107;
     $l110:;
+    if ($tmp104) goto $l114; else goto $l115;
+    $l114:;
+    if ($tmp100 >= $tmp102) goto $l105; else goto $l107;
+    $l115:;
+    if ($tmp100 > $tmp102) goto $l105; else goto $l107;
+    $l105:;
+    {
+        ITable* $tmp117 = p_c->$class->itable;
+        while ($tmp117->$class != (panda$core$Class*) &panda$collections$ListView$class) {
+            $tmp117 = $tmp117->next;
+        }
+        $fn119 $tmp118 = $tmp117->methods[0];
+        panda$core$Object* $tmp120 = $tmp118(p_c, i99);
+        panda$io$PushbackInputStream$pushback$panda$core$Char8(self, ((panda$core$Char8$wrapper*) $tmp120)->value);
+    }
+    $l108:;
+    if ($tmp111) goto $l122; else goto $l123;
+    $l122:;
+    int64_t $tmp124 = $tmp102 - i99.value;
+    if ($tmp104) goto $l125; else goto $l126;
+    $l125:;
+    if ($tmp124 >= $tmp103) goto $l121; else goto $l107;
+    $l126:;
+    if ($tmp124 > $tmp103) goto $l121; else goto $l107;
+    $l123:;
+    int64_t $tmp128 = i99.value - $tmp102;
+    if ($tmp104) goto $l129; else goto $l130;
+    $l129:;
+    if ($tmp128 >= -$tmp103) goto $l121; else goto $l107;
+    $l130:;
+    if ($tmp128 > -$tmp103) goto $l121; else goto $l107;
+    $l121:;
+    i99.value += $tmp103;
+    goto $l105;
+    $l107:;
 }
 void panda$io$PushbackInputStream$pushback$panda$core$String(panda$io$PushbackInputStream* self, panda$core$String* p_s) {
-    panda$collections$ListView* $tmp136 = panda$core$String$utf8$R$panda$collections$ListView$LTpanda$core$Char8$GT(p_s);
-    (($fn137) self->$class->vtable[18])(self, $tmp136);
+    panda$collections$ListView* $tmp132 = panda$core$String$utf8$R$panda$collections$ListView$LTpanda$core$Char8$GT(p_s);
+    panda$io$PushbackInputStream$pushback$panda$collections$ListView$LTpanda$core$Char8$GT(self, $tmp132);
 }
 

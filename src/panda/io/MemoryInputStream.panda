@@ -3,6 +3,7 @@ package panda.io
 ====================================================================================================
 An `InputStream` which reads from an 'ImmutableArray<Int8>`.
 ====================================================================================================
+@final
 class MemoryInputStream : InputStream {
     @private
     var data:ListView<UInt8>

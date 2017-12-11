@@ -196,10 +196,27 @@ class Parser {
                             if expect(Token.Kind.RBRACE, "'}'") = null {
                                 return null
                             }
-                            result := addStringChunk(result, ASTNode(ASTNode.Kind.STRING,
-                                    start.position, chunk.convert()))
+                            def text := chunk.finish()
                             chunk.clear()
-                            result := addStringChunk(result, expr)
+                            if text != "" | result != null {
+                                result := addStringChunk(result, ASTNode(ASTNode.Kind.STRING,
+                                        start.position, text))
+                                result := addStringChunk(result, expr)
+                            }
+                            else {
+                                def dotChildren := Array<ASTNode>() -- FIXME literal
+                                dotChildren.add(expr)
+                                def dot := ASTNode(ASTNode.Kind.DOT, expr.position, "convert",
+                                        dotChildren)
+                                def callChildren := Array<ASTNode>() -- FIXME literal
+                                callChildren.add(dot)
+                                def call := ASTNode(ASTNode.Kind.CALL, expr.position, callChildren)
+                                def castChildren := Array<ASTNode>() -- FIXME literal
+                                castChildren.add(call)
+                                castChildren.add(ASTNode(ASTNode.Kind.TYPE, expr.position,
+                                        "panda.core.String"))
+                                result := ASTNode(ASTNode.Kind.CAST, expr.position, castChildren)
+                            }
                         }
                         otherwise:
                             error(token, "invalid string escape sequence")

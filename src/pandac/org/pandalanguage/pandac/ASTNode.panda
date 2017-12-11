@@ -385,6 +385,8 @@ class ASTNode : Immutable {
                 return "super"
             when Kind.VOID:
                 return ""
+            when Kind.CAST:
+                return "\{children[0]}->\{children[1]}"
             otherwise:
                 return "<ASTNode:\{kind}>"
         }

@@ -3,6 +3,7 @@ package panda.io
 ====================================================================================================
 An `OutputStream` which stores the data written to it in a memory buffer.
 ====================================================================================================
+@final
 class MemoryOutputStream : OutputStream {
     @private
     var data := MutableString()

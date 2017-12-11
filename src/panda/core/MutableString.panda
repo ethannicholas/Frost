@@ -5,7 +5,7 @@ uses panda.unsafe.Pointer
 @final
 class MutableString {
     @private
-    constant DEFAULT_SIZE := 16
+    constant DEFAULT_SIZE := 32
 
     @private
     var data:Pointer<Char8>
