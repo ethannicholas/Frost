@@ -18,7 +18,7 @@ typedef struct panda$core$String {
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"
 #undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[40]; } panda$core$String$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[41]; } panda$core$String$class_type;
 extern panda$core$String$class_type panda$core$String$class;
 
 #ifndef PANDA_TYPESONLY
@@ -48,6 +48,7 @@ panda$collections$ListView* panda$core$String$utf8$R$panda$collections$ListView$
 panda$collections$Iterator* panda$core$String$utf16$R$panda$collections$Iterator$LTpanda$core$Char16$GT(panda$core$String* self);
 panda$collections$Iterator* panda$core$String$utf32$R$panda$collections$Iterator$LTpanda$core$Char32$GT(panda$core$String* self);
 panda$core$Int64 panda$core$String$length$R$panda$core$Int64(panda$core$String* self);
+panda$core$Int64 panda$core$String$byteLength$R$panda$core$Int64(panda$core$String* self);
 panda$core$Bit panda$core$String$startsWith$panda$core$String$R$panda$core$Bit(panda$core$String* self, panda$core$String* p_other);
 panda$core$Bit panda$core$String$endsWith$panda$core$String$R$panda$core$Bit(panda$core$String* self, panda$core$String* p_other);
 panda$core$String* panda$core$String$trimmed$R$panda$core$String(panda$core$String* self);

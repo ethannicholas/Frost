@@ -30,9 +30,8 @@ typedef panda$core$Object* (*$fn35)(panda$collections$ListView*, panda$core$Int6
 static panda$core$String $s26 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2E", 1, NULL };
 static panda$core$String $s51 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x3C\x6D\x65\x74\x68\x6F\x64\x3E", 8, NULL };
 static panda$core$String $s53 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x4D\x65\x74\x68\x6F\x64\x52\x65\x66\x28", 10, NULL };
-static panda$core$String $s56 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x28", 1, NULL };
-static panda$core$String $s59 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x29\x2C\x20", 3, NULL };
-static panda$core$String $s62 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x29", 1, NULL };
+static panda$core$String $s56 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2C\x20", 2, NULL };
+static panda$core$String $s59 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x29", 1, NULL };
 
 void org$pandalanguage$pandac$MethodRef$init$org$pandalanguage$pandac$MethodDecl$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT(org$pandalanguage$pandac$MethodRef* self, org$pandalanguage$pandac$MethodDecl* p_value, panda$collections$ListView* p_types) {
     panda$core$Range$LTpanda$core$Int64$GT $tmp3;
@@ -125,13 +124,11 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$MethodRef$type$R$org$pan
     return $tmp49;
 }
 panda$core$String* org$pandalanguage$pandac$MethodRef$convert$R$panda$core$String(org$pandalanguage$pandac$MethodRef* self) {
-    panda$core$String* $tmp54 = org$pandalanguage$pandac$MethodDecl$signature$R$panda$core$String(self->value);
+    panda$core$String* $tmp54 = org$pandalanguage$pandac$MethodDecl$declaration$R$panda$core$String(self->value);
     panda$core$String* $tmp55 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s53, $tmp54);
     panda$core$String* $tmp57 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp55, &$s56);
-    panda$core$String* $tmp58 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp57, ((org$pandalanguage$pandac$Symbol*) self->value->owner)->name);
+    panda$core$String* $tmp58 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp57, ((panda$core$Object*) self->types));
     panda$core$String* $tmp60 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp58, &$s59);
-    panda$core$String* $tmp61 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp60, ((panda$core$Object*) self->types));
-    panda$core$String* $tmp63 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp61, &$s62);
-    return $tmp63;
+    return $tmp60;
 }
 

@@ -821,8 +821,23 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     function escapeName(s:String):String {
-        return s.replace(".", "$").replace("?", "$Q").replace("<", "$LT").replace(">", "$GT").
-                replace(" ", "").replace(",", "$C")
+        def result := MutableString(s.byteLength() * 2)
+        var current := s.start()
+        def end := s.end()
+        while current != end {
+            def c := s[current]
+            match c.convert()->Int32 { -- FIXME char literals
+                when 46:   result.append(Char8(36))
+                when 63:   result.append("$Q")
+                when 60:   result.append("$LT")
+                when 62:   result.append("$GT")
+                when 32:   { }
+                when 44:   result.append("$C")
+                otherwise: result.append(c)
+            }
+            current := s.offset(current, 1)
+        }
+        return result.finish()
     }
 
     function getName(v:Variable):String {

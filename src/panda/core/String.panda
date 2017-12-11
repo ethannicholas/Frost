@@ -222,6 +222,13 @@ class String : Immutable, Key<String> {
         return count
     }
 
+    ================================================================================================
+    Returns the number of bytes of storage taken up by this string's internal UTF-8 encoding.
+    ================================================================================================
+    function byteLength():Int {
+        return _length
+    }
+
     function startsWith(other:String):Bit {
         if _length < other._length {
             return false

@@ -219,8 +219,13 @@ class Compiler : ErrorReporter {
                     "found \{foundCount}")
             return false
         }
+        def object := Type.Object()
         for i in 0 .. expectedCount {
-            if coercionCost(foundTypes[i], remapType(type, cl.parameters[i].bound)) = null {
+            def bound := cl.parameters[i].bound
+            if bound = object | (bound.typeKind = Type.Kind.NULLABLE & bound.subtypes[0] = object) {
+                continue
+            }
+            if coercionCost(foundTypes[i], remapType(type, bound)) = null {
                 error(position, "generic parameter '\{cl.name}.\{cl.parameters[i].name}' must be " +
                         "of type '\{cl.parameters[i].bound}', but found '\{foundTypes[i]}'")
                 return false
@@ -452,6 +457,49 @@ class Compiler : ErrorReporter {
         symbolTable := old
     }
 
+    method resolveMethodCall(expr:IRNode, target:Type?):IRNode? {
+        assert expr.kind = IRNode.Kind.UNRESOLVED_METHOD_CALL
+        def methods := expr.children[0].payload->ListView<MethodRef>
+        def args := expr.children[1..]
+        var best := Array<MethodRef>()
+        var bestCost:Int? := null
+        for m in methods {
+            def cost := callCost(m, args, target)
+            if cost = null {
+                continue
+            }
+            if bestCost = null {
+                best.add(m)
+                bestCost := cost
+                continue
+            }
+            if cost < bestCost {
+                best.clear()
+                bestCost := cost
+            }
+            if cost = bestCost {
+                best.add(m)
+            }
+        }
+        if best.get_count() = 1 {
+            def callTarget:IRNode?
+            if expr.children[0].children.get_count() > 0 {
+                callTarget := expr.children[0].children[0]
+            }
+            else {
+                callTarget := null
+            }
+            var result := call(expr.position, callTarget, best[0], args)
+            if target != null {
+                result := coerce(result, target)
+            }
+            return result
+        }
+        Console.printLine("no or ambiguous match on method call (\{expr.position}, \{methods[0].value.name}, \{best})")
+        assert false
+        return null
+    }
+
     method resolve(expr:IRNode?):IRNode? {
         if expr = null {
             return null
@@ -461,9 +509,7 @@ class Compiler : ErrorReporter {
                 error(expr.position, "unknown identifier")
                 return null
             when IRNode.Kind.UNRESOLVED_METHOD_CALL:
-                error(expr.position, "ambiguous method call")
-                Console.printLine(expr.children[0].payload->ListView<MethodRef>)
-                return null
+                return resolveMethodCall(expr, null)
             when IRNode.Kind.SUPER:
                 error(expr.position, "'super' can only be used as part of a method call")
                 return null
@@ -474,7 +520,7 @@ class Compiler : ErrorReporter {
 
     method isValue(cl:ClassDecl):Bit {
         resolve(cl)
-        return cl.rawSuper != null & coercionCost(cl.rawSuper, Type.Value()) != null
+        return cl.rawSuper != null & cl.rawSuper.name = "panda.core.Value"
     }
 
     method instanceFields(cl:ClassDecl):ListView<FieldDecl> {
@@ -1154,7 +1200,9 @@ class Compiler : ErrorReporter {
                 }
                 return coercionCost(variableType(expr), target)
             when IRNode.Kind.UNRESOLVED_INDEX:
-                return coercionCost(expr.type, target)
+                def args := Array<IRNode>() -- FIXME literal
+                args.add(expr.children[1])
+                return coercionCost(call(expr.children[0], "[]", args), target)
         }
         if !target.isClass() {
             return null
@@ -1290,40 +1338,7 @@ class Compiler : ErrorReporter {
                     return coerce(resolve(expr), target)
                 }
             when IRNode.Kind.UNRESOLVED_METHOD_CALL:
-                def methods := expr.children[0].payload->ListView<MethodRef>
-                def args := expr.children[1..]
-                var best := Array<MethodRef>()
-                var bestCost:Int? := null
-                for m in methods {
-                    def cost := callCost(m, args, target)
-                    if cost = null {
-                        continue
-                    }
-                    if bestCost = null {
-                        best.add(m)
-                        bestCost := cost
-                        continue
-                    }
-                    if cost < bestCost {
-                        best.clear()
-                        bestCost := cost
-                    }
-                    if cost = bestCost {
-                        best.add(m)
-                    }
-                }
-                if best.get_count() = 1 {
-                    def callTarget:IRNode?
-                    if expr.children[0].children.get_count() > 0 {
-                        callTarget := expr.children[0].children[0]
-                    }
-                    else {
-                        callTarget := null
-                    }
-                    def result := call(expr.position, callTarget, best[0], args)
-                    return coerce(result, target)
-                }
-                assert false, "no or ambiguous match on method call (\{expr.position}, \{methods[0].value.name}, \{best})"
+                return resolveMethodCall(expr, target)
             when IRNode.Kind.UNRESOLVED_INDEX:
                 def args := expr.children[1..]
                 return coerce(call(expr.children[0], "[]", args, target), target)

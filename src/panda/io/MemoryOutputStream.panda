@@ -6,7 +6,18 @@ An `OutputStream` which stores the data written to it in a memory buffer.
 @final
 class MemoryOutputStream : OutputStream {
     @private
-    var data := MutableString()
+    constant DEFAULT_CAPACITY := 1024
+
+    @private
+    var data:MutableString
+
+    init() {
+        init(DEFAULT_CAPACITY)
+    }
+
+    init(capacity:Int) {
+        data := MutableString(capacity)
+    }
 
     @override
     method write(i:UInt8) {
