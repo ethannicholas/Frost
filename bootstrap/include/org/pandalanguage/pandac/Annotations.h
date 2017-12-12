@@ -21,6 +21,7 @@ extern org$pandalanguage$pandac$Annotations$class_type org$pandalanguage$pandac$
 typedef struct org$pandalanguage$pandac$Annotations org$pandalanguage$pandac$Annotations;
 #include "panda/core/Int64.h"
 #include "panda/core/Bit.h"
+typedef struct panda$core$String panda$core$String;
 
 void org$pandalanguage$pandac$Annotations$init(org$pandalanguage$pandac$Annotations* self);
 void org$pandalanguage$pandac$Annotations$init$panda$core$Int64(org$pandalanguage$pandac$Annotations* self, panda$core$Int64 p_flags);
@@ -35,5 +36,6 @@ panda$core$Bit org$pandalanguage$pandac$Annotations$isFinal$R$panda$core$Bit(org
 panda$core$Bit org$pandalanguage$pandac$Annotations$isAbstract$R$panda$core$Bit(org$pandalanguage$pandac$Annotations* self);
 panda$core$Bit org$pandalanguage$pandac$Annotations$isInline$R$panda$core$Bit(org$pandalanguage$pandac$Annotations* self);
 panda$core$Bit org$pandalanguage$pandac$Annotations$isSpecialize$R$panda$core$Bit(org$pandalanguage$pandac$Annotations* self);
+panda$core$String* org$pandalanguage$pandac$Annotations$convert$R$panda$core$String(org$pandalanguage$pandac$Annotations* self);
 
 #endif

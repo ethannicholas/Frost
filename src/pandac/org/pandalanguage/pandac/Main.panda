@@ -214,6 +214,7 @@ class Main {
                     when Format.OBJECT:     extension := ".o"
                     when Format.C_HEADER:   extension := ".h"
                     when Format.C:          extension := ".c"
+                    when Format.LLVM:       extension := ".ll"
                     otherwise: assert false
                 }
                 outFile := sources[0].changeExtension(extension)

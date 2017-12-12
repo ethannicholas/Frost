@@ -8,7 +8,7 @@ typedef struct org$pandalanguage$pandac$parser$Lexer org$pandalanguage$pandac$pa
 typedef struct org$pandalanguage$pandac$ErrorReporter org$pandalanguage$pandac$ErrorReporter;
 typedef struct panda$io$File panda$io$File;
 typedef struct panda$core$String panda$core$String;
-typedef struct panda$collections$Array panda$collections$Array;
+typedef struct panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT;
 typedef struct panda$collections$Stack panda$collections$Stack;
 #include "panda/core/Bit.h"
 
@@ -19,10 +19,10 @@ typedef struct org$pandalanguage$pandac$parser$Parser {
     org$pandalanguage$pandac$ErrorReporter* errors;
     panda$io$File* path;
     panda$core$String* source;
-    panda$collections$Array* pushbackBuffer;
+    panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT* pushbackBuffer;
     panda$collections$Stack* commaSeparatedExpressionContext;
     panda$core$Bit inSpeculative;
-    panda$collections$Array* speculativeBuffer;
+    panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT* speculativeBuffer;
 } org$pandalanguage$pandac$parser$Parser;
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"

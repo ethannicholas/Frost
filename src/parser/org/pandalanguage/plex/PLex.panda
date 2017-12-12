@@ -27,10 +27,10 @@ class PLex {
         token.printLine("constant SHIFTRIGHT := 1")
         offset += 1
         for line in input.lines() {
-            line := line.trimmed()
+            line := line.trim()
             if line.contains(":=") {
-                def id := line[line.start() .. line.indexOf(":=")].trimmed()
-                def pattern := line[line.offset(line.indexOf(":="), 2) .. line.end()].trimmed()
+                def id := line[line.start() .. line.indexOf(":=")].trim()
+                def pattern := line[line.offset(line.indexOf(":="), 2) .. line.end()].trim()
                 def regex:Regex
                 if pattern.startsWith('"') {
                     regex := Regex(escape(pattern[pattern.next(pattern.start()) ..

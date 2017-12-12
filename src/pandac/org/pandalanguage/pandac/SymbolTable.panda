@@ -9,6 +9,9 @@ class SymbolTable {
     def symbols := HashMap<String, Symbol>()
 
     @private
+    def merged := HashMap<String, Symbol>()
+
+    @private
     def parents := Array<SymbolTable>()
 
     init(compiler:Compiler) {
@@ -25,6 +28,7 @@ class SymbolTable {
     }
 
     method add(s:Symbol, name:String) {
+        merged.remove(name)
         def old := symbols[name]
         if old = null {
             symbols[name] := s
@@ -120,9 +124,13 @@ class SymbolTable {
     }
 
     function [](name:String):Symbol? {
-        var result := symbols[name]
-        for p in parents {
-            result := merge(result, p[name])
+        var result := merged[name]
+        if result = null {
+            result := symbols[name]
+            for p in parents {
+                result := merge(result, p[name])
+            }
+            merged[name] := result
         }
         return result
     }

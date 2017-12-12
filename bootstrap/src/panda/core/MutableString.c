@@ -274,6 +274,7 @@ panda$core$String* panda$core$MutableString$convert$R$panda$core$String(panda$co
     return $tmp131;
 }
 panda$core$String* panda$core$MutableString$finish$R$panda$core$String(panda$core$MutableString* self) {
+    self->data = ((panda$core$Char8*) realloc(self->data, self->length.value * 1));
     self->maxLength = ((panda$core$Int64) { 0 });
     ((panda$core$Object*) self)->$class = ((panda$core$Object*) &$s133)->$class;
     return ((panda$core$String*) ((panda$core$Object*) self));

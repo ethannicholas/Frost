@@ -1,0 +1,280 @@
+package panda.collections
+
+uses panda.unsafe.Pointer
+
+@private
+@final
+@specialize
+class SpecializedArrayIterator<T> : Iterator<T> {
+    var array:SpecializedArray<T>
+
+    var index := 0
+
+    init(array:SpecializedArray<T>) {
+        self.array := array
+    }
+
+    @override
+    function get_done():Bit {
+        return index = array.count
+    }
+
+    @override
+    function next():T {
+        index += 1
+        return array[index - 1]
+    }
+}
+
+@final
+@specialize
+class SpecializedArray<T> : List<T> {
+    constant DEFAULT_CAPACITY := 16
+
+    @private
+    var count := 0
+
+    @private
+    var capacity:Int
+
+    @private
+    var data:Pointer<T>
+
+    init() {
+        init(DEFAULT_CAPACITY)
+    }
+
+    init(capacity:Int) {
+        self.capacity := capacity
+        data := Pointer<T>.alloc(capacity)
+    }
+
+    init(list:ListView<T>) {
+        init(list.get_count().max(DEFAULT_CAPACITY))
+        for v in list {
+            add(v)
+        }
+    }
+
+    @private
+    init(data:Pointer<T>, count:Int) {
+        self.data := data
+        self.count := count
+        self.capacity := count
+    }
+
+    @override
+    method cleanup() {
+        data.destroy()
+    }
+
+    @override
+    function [](index:Int):T {
+        assert index >= 0 & index < count, "index \{index} is out of bounds (count = \{count})"
+        return data[index]
+    }
+
+    @override
+    method []:=(index:Int, value:T) {
+        assert index >= 0 & index < count, "index \{index} is out of bounds (count = \{count})"
+        data[index] := value
+    }
+
+    @override
+    method insert(index:Int, value:T) {
+        ensureCapacity(count + 1)
+        for i in count .. index by -1 {
+            self[i] := self[i - 1]
+        }
+        count += 1
+        self[index] := value
+    }
+
+    ================================================================================================
+    Returns a slice of the array, containing all of the elements specified by the range. The slice
+    is an independent copy of the array and elements may be added to and removed from the copy
+    without affecting the original. It is not, however, a deep copy, and thus both arrays will refer
+    to the same objects.
+    ================================================================================================
+    function [](r:Range<Int>):SpecializedArray<T> {
+        var max := r.max
+        if r.inclusive {
+            max += 1
+        }
+        def count := max - r.min
+        def result := Pointer<T>.alloc(count)
+        for i in 0 .. count {
+            result[i] := self[r.min + i]
+        }
+        return SpecializedArray<T>(result, count)
+
+    }
+
+    ================================================================================================
+    Returns a slice of the array, containing all of the elements specified by the range. The slice
+    is an independent copy of the array and elements may be added to and removed from the copy
+    without affecting the original. It is not, however, a deep copy, and thus both arrays will refer
+    to the same objects.
+
+    As usual for `Range`, a null `min` starts from the beginning of the array, and a null `max` ends
+    at the end of the array.
+    ================================================================================================
+    function [](r:Range<Int?>):SpecializedArray<T> {
+        def start:Int
+        if r.min != null {
+            start := r.min
+        }
+        else {
+            start := 0
+        }
+
+        var end:Int
+        if r.max != null {
+            end := r.max
+        }
+        else {
+            end := get_count()
+            if r.inclusive {
+                end -= 1
+            }
+        }
+        return self[Range<Int>(start, end, r.inclusive)]
+    }
+
+    ================================================================================================
+    Returns a slice of the array, containing all of the elements specified by the range. The slice
+    is an independent copy of the array and elements may be added to and removed from the copy
+    without affecting the original. It is not, however, a deep copy, and thus both arrays will refer
+    to the same objects.
+    ================================================================================================
+    function [](r:SteppedRange<Int?, Int>):SpecializedArray<T> {
+        def step := r.step
+
+        def current:Int
+        if r.start != null {
+            current := r.start
+        }
+        else if step > 0 {
+            current := 0
+        }
+        else {
+            current := get_count() - 1
+        }
+
+        def end:Int
+        if r.end != null {
+            end := r.end
+        }
+        else if step > 0 {
+            end := get_count()
+        }
+        else {
+            end := 0
+        }
+
+        def result := SpecializedArray<T>()
+        if r.step > 0 {
+            while current < end {
+                result.add(self[current])
+                current += step
+            }
+        }
+        else {
+            assert r.step < 0
+            while current > end {
+                result.add(self[current])
+                current -= step
+            }
+        }
+        if (r.inclusive | r.end = null) & current = end & end < get_count() {
+            result.add(self[current])
+        }
+        return result
+    }
+
+    @override
+    method add(value:T) {
+        ensureCapacity(count + 1)
+        data[count] := value
+        count += 1
+    }
+
+    @override
+    method addAll(c:CollectionView<T>) {
+        ensureCapacity(count + c.get_count())
+        for v in c {
+            data[count] := v
+            count += 1
+        }
+    }
+
+    method ensureCapacity(newCapacity:Int) {
+        assert capacity > 0
+        if newCapacity <= capacity {
+            return
+        }
+        while capacity < newCapacity {
+            capacity *= 2
+        }
+        data := data.realloc(capacity)
+    }
+
+    @override
+    function get_count():Int {
+        return count
+    }
+
+    @override
+    method removeIndex(index:Int) {
+        for i in index .. count - 1 {
+            self[i] := self[i + 1]
+        }
+        count -= 1
+    }
+
+    @override
+    function iterator():Iterator<T> {
+        return panda.collections.SpecializedArrayIterator<T>(self)
+    }
+
+    @override
+    method clear() {
+        count := 0
+    }
+
+    function join():String { -- FIXME move to ListView
+        return join(", ")
+    }
+
+    function join(separator:String):String { -- FIXME move to ListView
+        if count = 0 {
+            return ""
+        }
+        def result := MutableString(self[0].convert())
+        for i in 1 .. count {
+            result.append(separator)
+            result.append(self[i])
+        }
+        return result.finish()
+
+    }
+
+    @override
+    function convert():String {
+        def result := MutableString()
+        result.append("[")
+        var separator := ""
+        for v in self {
+            result.append(separator)
+            separator := ", "
+            if v != null {
+                result.append(v)
+            }
+            else {
+                result.append("<null>")
+            }
+        }
+        result.append("]")
+        return result.finish()
+    }
+}

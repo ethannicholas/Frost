@@ -137,20 +137,20 @@ class ClassDecl : Symbol {
 
     @override
     function convert():String {
-        def result := MutableString("class \{name}")
-        if rawSuper != Type.Void() {
-            result.append(":\{rawSuper}")
+        def result := MutableString("\{annotations}class \{name}")
+        var separator := " : "
+        if rawSuper != null {
+            result.append("\{separator}\{rawSuper}")
+            separator := ", "
         }
-        if rawInterfaces.get_count() > 0 {
-            result.append(" (")
-            var separator := ""
-            for intf in rawInterfaces {
-                result.append("\{separator}\{intf}")
-                separator := ", "
-            }
-            result.append(")")
+        for intf in rawInterfaces {
+            result.append("\{separator}\{intf}")
+            separator := ", "
         }
         result.append(" {\n")
+        for cl in classes {
+            result.append("\{cl}\n")
+        }
         for f in fields {
             result.append("\{f}\n")
         }

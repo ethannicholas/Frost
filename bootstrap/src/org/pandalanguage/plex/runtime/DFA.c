@@ -87,7 +87,7 @@ org$pandalanguage$plex$runtime$RawToken* org$pandalanguage$plex$runtime$DFA$next
         panda$core$Bit $tmp23 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit(state6, ((panda$core$Int64) { 0 }));
         if ($tmp23.value) {
         {
-            panda$core$String$Index $tmp24 = panda$core$String$offset$panda$core$String$Index$panda$core$Int64$R$panda$core$String$Index(self->source, self->offset, ((panda$core$Int64) { 1 }));
+            panda$core$String$Index $tmp24 = panda$core$String$next$panda$core$String$Index$R$panda$core$String$Index(self->source, self->offset);
             self->offset = $tmp24;
             panda$core$UInt8 $tmp25 = panda$core$Char32$convert$R$panda$core$UInt8(c13);
             switch ($tmp25.value) {

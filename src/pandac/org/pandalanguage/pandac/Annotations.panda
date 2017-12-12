@@ -69,4 +69,43 @@ class Annotations {
     function isSpecialize():Bit {
         return flags && Flag.SPECIALIZE != 0
     }
+
+    @override
+    function convert():String {
+        def result := MutableString()
+        if isPrivate() {
+            result.append("@private\n")
+        }
+        if isProtected() {
+            result.append("@protected\n")
+        }
+        if isPackage() {
+            result.append("@package\n")
+        }
+        if isClass() {
+            result.append("@class\n")
+        }
+        if isOverride() {
+            result.append("@override\n")
+        }
+        if isExternal() {
+            result.append("@external\n")
+        }
+        if isImplicit() {
+            result.append("@$implicit\n")
+        }
+        if isFinal() {
+            result.append("@final\n")
+        }
+        if isAbstract() {
+            result.append("@abstract\n")
+        }
+        if isInline() {
+            result.append("@inline\n")
+        }
+        if isSpecialize() {
+            result.append("@specialize\n")
+        }
+        return result.finish()
+    }
 }

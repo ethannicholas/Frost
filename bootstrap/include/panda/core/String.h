@@ -47,12 +47,12 @@ panda$core$String* panda$core$String$convert$R$panda$core$String(panda$core$Stri
 void panda$core$String$cleanup(panda$core$String* self);
 panda$collections$ListView* panda$core$String$utf8$R$panda$collections$ListView$LTpanda$core$Char8$GT(panda$core$String* self);
 panda$collections$Iterator* panda$core$String$utf16$R$panda$collections$Iterator$LTpanda$core$Char16$GT(panda$core$String* self);
-panda$collections$Iterator* panda$core$String$utf32$R$panda$collections$Iterator$LTpanda$core$Char32$GT(panda$core$String* self);
+panda$collections$Iterator* panda$core$String$iterator$R$panda$collections$Iterator$LTpanda$core$Char32$GT(panda$core$String* self);
 panda$core$Int64 panda$core$String$length$R$panda$core$Int64(panda$core$String* self);
 panda$core$Int64 panda$core$String$byteLength$R$panda$core$Int64(panda$core$String* self);
 panda$core$Bit panda$core$String$startsWith$panda$core$String$R$panda$core$Bit(panda$core$String* self, panda$core$String* p_other);
 panda$core$Bit panda$core$String$endsWith$panda$core$String$R$panda$core$Bit(panda$core$String* self, panda$core$String* p_other);
-panda$core$String* panda$core$String$trimmed$R$panda$core$String(panda$core$String* self);
+panda$core$String* panda$core$String$trim$R$panda$core$String(panda$core$String* self);
 panda$core$String* panda$core$String$$ADD$panda$core$String$R$panda$core$String(panda$core$String* self, panda$core$String* p_other);
 panda$core$String* panda$core$String$$ADD$panda$core$Object$R$panda$core$String(panda$core$String* self, panda$core$Object* p_other);
 panda$core$String* panda$core$String$$MUL$panda$core$Int64$R$panda$core$String(panda$core$String* self, panda$core$Int64 p_count);

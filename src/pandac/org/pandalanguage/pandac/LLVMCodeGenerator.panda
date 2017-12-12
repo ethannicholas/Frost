@@ -462,9 +462,19 @@ class LLVMCodeGenerator : CodeGenerator {
             def methods := compiler.interfaceMethods(cl, intfType)
             def name := "@\{escapeName(cl.name)}$.\{escapeName(intf.name)}"
             def t := "{\{type(Type.Class())}, %$itable*, [\{methods.get_count()} x i8*] }"
-            def result := MutableString("\{name} = constant \{t} { \{type(Type.Class())} " +
-                    "bitcast(\{intfCC.type}* \{intfCC.name} to \{type(Type.Class())}), " +
-                    "\{previous}, [\{methods.get_count()} x i8*][")
+            def intfCCCast:String
+            if intfCC.type != type(Type.Class()) {
+                intfCCCast := "bitcast(\{intfCC.type}* \{intfCC.name} to \{type(Type.Class())})"
+            }
+            else {
+                intfCCCast := intfCC.name
+            }
+            def result := MutableString("\{name} = ")
+            if cl.isSpecialization() {
+                result.append("linkonce_odr ")
+            }
+            result.append("constant \{t} { \{type(Type.Class())} \{intfCCCast}, \{previous}, " +
+                    "[\{methods.get_count()} x i8*][")
             var separator := ""
             for m in methods {
                 result.append(separator)
@@ -609,9 +619,19 @@ class LLVMCodeGenerator : CodeGenerator {
             def methods := compiler.interfaceMethods(cl, intfType)
             def name := "@\{escapeName(cl.name)}$wrapper.\{escapeName(intf.name)}"
             def t := "{\{type(Type.Class())}, %$itable*, [\{methods.get_count()} x i8*] }"
-            def result := MutableString("\{name} = constant \{t} { \{type(Type.Class())} " +
-                    "bitcast(\{intfCC.type}* \{intfCC.name} to \{type(Type.Class())}), " +
-                    "\{previous}, [\{methods.get_count()} x i8*][")
+            def intfCCCast:String
+            if intfCC.type != type(Type.Class()) {
+                intfCCCast := "bitcast(\{intfCC.type}* \{intfCC.name} to \{type(Type.Class())})"
+            }
+            else {
+                intfCCCast := intfCC.name
+            }
+            def result := MutableString("\{name} = ")
+            if cl.isSpecialization() {
+                result.append("linkonce_odr ")
+            }
+            result.append("constant \{t} { \{type(Type.Class())} \{intfCCCast}, \{previous}, " +
+                    "[\{methods.get_count()} x i8*][")
             var separator := ""
             for m in methods {
                 result.append(separator)
@@ -774,7 +794,13 @@ class LLVMCodeGenerator : CodeGenerator {
                         "[\{valueVTable.get_count()} x i8*] }")
                 def vtable := compiler.getVTable(cl)
                 def superCC := getClassConstant(compiler.getClass(cl.rawSuper))
-                def superCast := "bitcast(\{superCC.type}* \{superCC.name} to %panda$core$Class*)"
+                def superCast:String
+                if superCC.type != type(Type.Class()) {
+                    superCast := "bitcast(\{superCC.type}* \{superCC.name} to %panda$core$Class*)"
+                }
+                else {
+                    superCast := superCC.name
+                }
                 def itable := getWrapperITable(cl)
                 def clConstant := getClassConstant(compiler.getClass(Type.Class()))
                 def code := MutableString("\{result.name} = ")
@@ -1084,6 +1110,9 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     function callingConvention(m:MethodDecl):String {
+        if m.annotations.isFinal() & !m.annotations.isOverride() & !m.annotations.isExternal() {
+            return "fastcc "
+        }
         return ""
     }
 
@@ -1470,8 +1499,14 @@ class LLVMCodeGenerator : CodeGenerator {
         out.printLine("\{classPtr} = getelementptr \{wrapperTypeName}, " +
                 "\{wrapperType} \{wrapperCast}, i64 0, i32 0")
         def cc := getWrapperClassConstant(src)
-        out.printLine("store %panda$core$Class* bitcast(\{cc.type}* \{cc.name} to " +
-                "%panda$core$Class*), %panda$core$Class** \{classPtr}")
+        def ccCast:String
+        if cc.type != "%panda$core$Class" {
+            ccCast := "bitcast(\{cc.type}* \{cc.name} to %panda$core$Class*)"
+        }
+        else {
+            ccCast := cc.name
+        }
+        out.printLine("store %panda$core$Class* \{ccCast}, %panda$core$Class** \{classPtr}")
         def refCount := nextVar()
         out.printLine("\{refCount} = getelementptr \{wrapperTypeName}, " +
                 "\{wrapperType} \{wrapperCast}, i64 0, i32 1, i32 0")
@@ -2630,7 +2665,7 @@ class LLVMCodeGenerator : CodeGenerator {
         else {
             msg := null
         }
-        out.print("call void ")
+        out.print("call fastcc void ")
         for m in compiler.getClass(Type.Panda()).methods {
             if m.name = "assertionFailure" {
                 compiler.resolve(m)

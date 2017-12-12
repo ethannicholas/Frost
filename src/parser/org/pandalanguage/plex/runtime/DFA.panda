@@ -64,7 +64,7 @@ class DFA {
             }
             state := transitions[c.convert()][state]
             if state != 0 {
-                offset := source.offset(offset, 1)
+                offset := source.next(offset)
                 match c.convert()->UInt8 {
                     when 10:
                         line += 1

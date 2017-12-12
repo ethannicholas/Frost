@@ -108,6 +108,7 @@ class Compiler : ErrorReporter {
         addAlias("panda.collections.MapView")
         addAlias("panda.collections.MapWriter")
         addAlias("panda.collections.Set")
+        addAlias("panda.collections.SpecializedArray")
         addAlias("panda.collections.Stack")
         addAlias("panda.core.Class")
         addAlias("panda.core.Bit")
@@ -352,6 +353,7 @@ class Compiler : ErrorReporter {
             def s := resolve(rawS, false)
             if s != null {
                 def sClass := getClass(s)
+                resolve(sClass)
                 if sClass != null {
                     if sClass.classKind = ClassDecl.Kind.CLASS {
                         if cl.classKind = ClassDecl.Kind.INTERFACE {
@@ -660,7 +662,7 @@ class Compiler : ErrorReporter {
                     parameters.add(MethodDecl.Parameter(p.name, remapType(type, p.type)))
                 }
                 def clone := MethodDecl(result, m.position, m.doccomment, m.annotations,
-                        m.methodKind, m.name, parameters, m.returnType, m.body)
+                        m.methodKind, m.name, parameters, remapType(type, m.returnType), m.body)
                 result.methods.add(clone)
                 result.symbolTable.add(clone)
             }
@@ -674,6 +676,7 @@ class Compiler : ErrorReporter {
             classes[result.name] := result
             compilationQueue.add(result)
             currentClass.pop()
+            resolve(result)
         }
         return result
     }
@@ -790,7 +793,7 @@ class Compiler : ErrorReporter {
         def result := Array<MethodDecl>()
         for m in intfClass.methods {
             def found := findMethod(cl.type(), m.name, remapType(intf, inheritedType(m)), false)
-            assert found != null, "internal error: interface \{m.signature()} not found in " +
+            assert found != null, "internal error: interface \{m.declaration()} not found in " +
                     "\{cl.name}"
             result.add(found)
         }

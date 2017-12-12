@@ -3,7 +3,7 @@
 #include "panda/core/Class.h"
 #include "org/pandalanguage/pandac/ErrorReporter.h"
 #include "org/pandalanguage/pandac/parser/Lexer.h"
-#include "panda/collections/Array.h"
+#include "panda/collections/SpecializedArray.LTorg/pandalanguage/pandac/parser/Token.GT.h"
 #include "panda/collections/Stack.h"
 #include "panda/core/Bit.h"
 #include "panda/io/File.h"
@@ -15,6 +15,7 @@
 #include "panda/core/SteppedRange.LTpanda/core/Int64.Cpanda/core/Int64.GT.h"
 #include "panda/core/Range.LTpanda/core/String/Index.GT.h"
 #include "org/pandalanguage/pandac/ASTNode.h"
+#include "panda/collections/Array.h"
 #include "panda/collections/ListView.h"
 #include "panda/core/MutableString.h"
 #include "panda/core/Char8.h"
@@ -516,10 +517,10 @@ void org$pandalanguage$pandac$parser$Parser$init$org$pandalanguage$pandac$ErrorR
     $tmp1->refCount.value = 1;
     org$pandalanguage$pandac$parser$Lexer$init($tmp1);
     self->lexer = $tmp1;
-    panda$collections$Array* $tmp3 = (panda$collections$Array*) malloc(40);
-    $tmp3->$class = (panda$core$Class*) &panda$collections$Array$class;
+    panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT* $tmp3 = (panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT*) malloc(40);
+    $tmp3->$class = (panda$core$Class*) &panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$class;
     $tmp3->refCount.value = 1;
-    panda$collections$Array$init($tmp3);
+    panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$init($tmp3);
     self->pushbackBuffer = $tmp3;
     panda$collections$Stack* $tmp5 = (panda$collections$Stack*) malloc(24);
     $tmp5->$class = (panda$core$Class*) &panda$collections$Stack$class;
@@ -527,10 +528,10 @@ void org$pandalanguage$pandac$parser$Parser$init$org$pandalanguage$pandac$ErrorR
     panda$collections$Stack$init($tmp5);
     self->commaSeparatedExpressionContext = $tmp5;
     self->inSpeculative = ((panda$core$Bit) { false });
-    panda$collections$Array* $tmp7 = (panda$collections$Array*) malloc(40);
-    $tmp7->$class = (panda$core$Class*) &panda$collections$Array$class;
+    panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT* $tmp7 = (panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT*) malloc(40);
+    $tmp7->$class = (panda$core$Class*) &panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$class;
     $tmp7->refCount.value = 1;
-    panda$collections$Array$init($tmp7);
+    panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$init($tmp7);
     self->speculativeBuffer = $tmp7;
     self->errors = p_errors;
     panda$collections$Stack$push$panda$collections$Stack$T(self->commaSeparatedExpressionContext, ((panda$core$Object*) wrap_panda$core$Bit(((panda$core$Bit) { false }))));
@@ -539,22 +540,22 @@ void org$pandalanguage$pandac$parser$Parser$start$panda$io$File$panda$core$Strin
     org$pandalanguage$pandac$parser$Lexer$start$panda$core$String(self->lexer, p_source);
     self->path = p_path;
     self->source = p_source;
-    panda$collections$Array$clear(self->pushbackBuffer);
+    panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$clear(self->pushbackBuffer);
 }
 org$pandalanguage$pandac$parser$Token org$pandalanguage$pandac$parser$Parser$rawNext$R$org$pandalanguage$pandac$parser$Token(org$pandalanguage$pandac$parser$Parser* self) {
     panda$core$Int64 idx11;
     org$pandalanguage$pandac$parser$Token result14;
     org$pandalanguage$pandac$parser$Token result16;
-    panda$core$Int64 $tmp9 = panda$collections$Array$get_count$R$panda$core$Int64(self->pushbackBuffer);
+    panda$core$Int64 $tmp9 = panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$get_count$R$panda$core$Int64(self->pushbackBuffer);
     panda$core$Bit $tmp10 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit($tmp9, ((panda$core$Int64) { 0 }));
     if ($tmp10.value) {
     {
-        panda$core$Int64 $tmp12 = panda$collections$Array$get_count$R$panda$core$Int64(self->pushbackBuffer);
+        panda$core$Int64 $tmp12 = panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$get_count$R$panda$core$Int64(self->pushbackBuffer);
         panda$core$Int64 $tmp13 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64($tmp12, ((panda$core$Int64) { 1 }));
         idx11 = $tmp13;
-        panda$core$Object* $tmp15 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(self->pushbackBuffer, idx11);
-        result14 = ((org$pandalanguage$pandac$parser$Token$wrapper*) $tmp15)->value;
-        panda$collections$Array$removeIndex$panda$core$Int64(self->pushbackBuffer, idx11);
+        org$pandalanguage$pandac$parser$Token $tmp15 = panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$$IDX$panda$core$Int64$R$org$pandalanguage$pandac$parser$Token(self->pushbackBuffer, idx11);
+        result14 = $tmp15;
+        panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$removeIndex$panda$core$Int64(self->pushbackBuffer, idx11);
         return result14;
     }
     }
@@ -562,7 +563,7 @@ org$pandalanguage$pandac$parser$Token org$pandalanguage$pandac$parser$Parser$raw
     result16 = $tmp17;
     if (self->inSpeculative.value) {
     {
-        panda$collections$Array$add$panda$collections$Array$T(self->speculativeBuffer, ((panda$core$Object*) wrap_org$pandalanguage$pandac$parser$Token(result16)));
+        panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$add$org$pandalanguage$pandac$parser$Token(self->speculativeBuffer, result16);
     }
     }
     return result16;
@@ -647,10 +648,10 @@ org$pandalanguage$pandac$parser$Token org$pandalanguage$pandac$parser$Parser$nex
     $l19:;
 }
 void org$pandalanguage$pandac$parser$Parser$pushback$org$pandalanguage$pandac$parser$Token(org$pandalanguage$pandac$parser$Parser* self, org$pandalanguage$pandac$parser$Token p_token) {
-    panda$collections$Array$add$panda$collections$Array$T(self->pushbackBuffer, ((panda$core$Object*) wrap_org$pandalanguage$pandac$parser$Token(p_token)));
+    panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$add$org$pandalanguage$pandac$parser$Token(self->pushbackBuffer, p_token);
 }
 org$pandalanguage$pandac$parser$Token org$pandalanguage$pandac$parser$Parser$peek$R$org$pandalanguage$pandac$parser$Token(org$pandalanguage$pandac$parser$Parser* self) {
-    panda$core$Int64 $tmp39 = panda$collections$Array$get_count$R$panda$core$Int64(self->pushbackBuffer);
+    panda$core$Int64 $tmp39 = panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$get_count$R$panda$core$Int64(self->pushbackBuffer);
     panda$core$Bit $tmp40 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp39, ((panda$core$Int64) { 0 }));
     if ($tmp40.value) {
     {
@@ -658,10 +659,10 @@ org$pandalanguage$pandac$parser$Token org$pandalanguage$pandac$parser$Parser$pee
         (($fn43) self->$class->vtable[5])(self, $tmp42);
     }
     }
-    panda$core$Int64 $tmp44 = panda$collections$Array$get_count$R$panda$core$Int64(self->pushbackBuffer);
+    panda$core$Int64 $tmp44 = panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$get_count$R$panda$core$Int64(self->pushbackBuffer);
     panda$core$Int64 $tmp45 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64($tmp44, ((panda$core$Int64) { 1 }));
-    panda$core$Object* $tmp46 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(self->pushbackBuffer, $tmp45);
-    return ((org$pandalanguage$pandac$parser$Token$wrapper*) $tmp46)->value;
+    org$pandalanguage$pandac$parser$Token $tmp46 = panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$$IDX$panda$core$Int64$R$org$pandalanguage$pandac$parser$Token(self->pushbackBuffer, $tmp45);
+    return $tmp46;
 }
 org$pandalanguage$pandac$parser$Token$nullable org$pandalanguage$pandac$parser$Parser$checkNext$panda$core$Int64$R$org$pandalanguage$pandac$parser$Token$Q(org$pandalanguage$pandac$parser$Parser* self, panda$core$Int64 p_kind) {
     org$pandalanguage$pandac$parser$Token result47;
@@ -711,8 +712,8 @@ void org$pandalanguage$pandac$parser$Parser$startSpeculative(org$pandalanguage$p
     panda$core$Bit $tmp70 = panda$core$Bit$$NOT$R$panda$core$Bit(self->inSpeculative);
     PANDA_ASSERT($tmp70.value);
     self->inSpeculative = ((panda$core$Bit) { true });
-    panda$collections$Array$clear(self->speculativeBuffer);
-    panda$collections$Array$addAll$panda$collections$CollectionView$LTpanda$collections$Array$T$GT(self->speculativeBuffer, ((panda$collections$CollectionView*) self->pushbackBuffer));
+    panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$clear(self->speculativeBuffer);
+    panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$addAll$panda$collections$CollectionView$LTorg$pandalanguage$pandac$parser$Token$GT(self->speculativeBuffer, ((panda$collections$CollectionView*) self->pushbackBuffer));
 }
 void org$pandalanguage$pandac$parser$Parser$accept(org$pandalanguage$pandac$parser$Parser* self) {
     self->inSpeculative = ((panda$core$Bit) { false });
@@ -720,7 +721,7 @@ void org$pandalanguage$pandac$parser$Parser$accept(org$pandalanguage$pandac$pars
 void org$pandalanguage$pandac$parser$Parser$rewind(org$pandalanguage$pandac$parser$Parser* self) {
     panda$core$SteppedRange$LTpanda$core$Int64$Cpanda$core$Int64$GT $tmp71;
     self->inSpeculative = ((panda$core$Bit) { false });
-    panda$core$Int64 $tmp72 = panda$collections$Array$get_count$R$panda$core$Int64(self->speculativeBuffer);
+    panda$core$Int64 $tmp72 = panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$get_count$R$panda$core$Int64(self->speculativeBuffer);
     panda$core$Int64 $tmp73 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64($tmp72, ((panda$core$Int64) { 1 }));
     panda$core$SteppedRange$LTpanda$core$Int64$Cpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp71, $tmp73, ((panda$core$Int64) { 0 }), ((panda$core$Int64) { -1 }), ((panda$core$Bit) { true }));
     int64_t $tmp75 = $tmp71.start.value;
@@ -744,8 +745,8 @@ void org$pandalanguage$pandac$parser$Parser$rewind(org$pandalanguage$pandac$pars
     if ($tmp75 > $tmp77) goto $l80; else goto $l82;
     $l80:;
     {
-        panda$core$Object* $tmp92 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(self->speculativeBuffer, i74);
-        panda$collections$Array$add$panda$collections$Array$T(self->pushbackBuffer, ((panda$core$Object*) wrap_org$pandalanguage$pandac$parser$Token(((org$pandalanguage$pandac$parser$Token$wrapper*) $tmp92)->value)));
+        org$pandalanguage$pandac$parser$Token $tmp92 = panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$$IDX$panda$core$Int64$R$org$pandalanguage$pandac$parser$Token(self->speculativeBuffer, i74);
+        panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$add$org$pandalanguage$pandac$parser$Token(self->pushbackBuffer, $tmp92);
     }
     $l83:;
     if ($tmp86) goto $l94; else goto $l95;

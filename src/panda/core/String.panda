@@ -13,7 +13,7 @@ uses panda.unsafe.Pointer
 An immutable sequence of Unicode codepoints.
 ====================================================================================================
 @final
-class String : Immutable, Key<String> {
+class String : Immutable, Key<String>, Iterable<Char32> {
     ================================================================================================
     Represents the position of a Unicode codepoint within a String.
     ================================================================================================
@@ -212,7 +212,8 @@ class String : Immutable, Key<String> {
         return UTF16Iterator(self)
     }
 
-    function utf32():Iterator<Char32> {
+    @override
+    function iterator():Iterator<Char32> {
         return UTF32Iterator(self)
     }
 
@@ -224,7 +225,7 @@ class String : Immutable, Key<String> {
     ================================================================================================
     function length():Int {
         var count := 0
-        def iter := utf32()
+        def iter := iterator()
         while !iter.get_done() {
             count += 1
             iter.next()
@@ -263,13 +264,12 @@ class String : Immutable, Key<String> {
         return true
     }
 
-    ============================================================================
-    Returns a copy of this string with leading and trailing whitespace
-    characters removed.
+    ================================================================================================
+    Returns a copy of this string with leading and trailing whitespace characters removed.
 
     @returns a trimmed version of this string
-    ============================================================================
-    function trimmed():String {
+    ================================================================================================
+    function trim():String {
         if _length = 0 {
             return self
         }

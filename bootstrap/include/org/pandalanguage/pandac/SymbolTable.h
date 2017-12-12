@@ -13,6 +13,7 @@ typedef struct org$pandalanguage$pandac$SymbolTable {
     panda$core$Int32 refCount;
     org$pandalanguage$pandac$Compiler* compiler;
     panda$collections$HashMap* symbols;
+    panda$collections$HashMap* merged;
     panda$collections$Array* parents;
 } org$pandalanguage$pandac$SymbolTable;
 #define PANDA_TYPESONLY

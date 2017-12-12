@@ -35,6 +35,8 @@ add_executable(bootstrap
     bootstrap/src/panda/collections/Set.c
     bootstrap/src/panda/collections/Stack.c
     bootstrap/src/panda/collections/Stack/StackIterator.c
+    bootstrap/src/panda/collections/SpecializedArray.LTorg/pandalanguage/pandac/parser/Token.GT.c
+    bootstrap/src/panda/collections/SpecializedArrayIterator.LTorg/pandalanguage/pandac/parser/Token.GT.c
     bootstrap/src/panda/core/Bit.c
     bootstrap/src/panda/core/Char8.c
     bootstrap/src/panda/core/Char16.c

@@ -71,8 +71,20 @@ class ASTNode : Immutable {
             when Token.Kind.INTDIV:     return "//"
             when Token.Kind.MUL:        return "*"
             when Token.Kind.SUB:        return "-"
+            when Token.Kind.ADDEQ:      return "+="
+            when Token.Kind.ANDEQ:      return "&="
+            when Token.Kind.DIVEQ:      return "/="
+            when Token.Kind.INTDIVEQ:   return "//="
+            when Token.Kind.MULEQ:      return "*="
+            when Token.Kind.SUBEQ:      return "-="
             when Token.Kind.OR:         return "|"
             when Token.Kind.ASSIGNMENT: return ":="
+            when Token.Kind.EQ:         return "="
+            when Token.Kind.NEQ:        return "!="
+            when Token.Kind.GT:         return ">"
+            when Token.Kind.GTEQ:       return ">="
+            when Token.Kind.LT:         return "<"
+            when Token.Kind.LTEQ:       return "<="
             otherwise:                  return "<operator:\{op}>"
         }
     }
@@ -182,10 +194,10 @@ class ASTNode : Immutable {
                 result.append(")")
                 return result.finish()
             when Kind.IDENTIFIER:
-                if children.get_count() = 1 {
+                if children != null {
+                    assert children.get_count() = 1
                     return payload + ":" + children[0]
                 }
-                assert children.get_count() = 0
                 return payload.convert()
             when Kind.DOT:
                 assert children.get_count() = 1
@@ -220,7 +232,8 @@ class ASTNode : Immutable {
                 }
                 return "continue"
             when Kind.RETURN:
-                if children.get_count() = 1 {
+                if children != null {
+                    assert children.get_count() = 1
                     return "return \{children[0]}"
                 }
                 return "return"
@@ -390,8 +403,16 @@ class ASTNode : Immutable {
                 return "super"
             when Kind.VOID:
                 return ""
+            when Kind.NULL:
+                return "null"
             when Kind.CAST:
                 return "\{children[0]}->\{children[1]}"
+            when Kind.ASSERT:
+                if children.get_count() = 1 {
+                    return "assert \{children[0]}"
+                }
+                assert children.get_count() = 2
+                return "assert \{children[0]}, \{children[1]}"
             otherwise:
                 return "<ASTNode:\{kind}>"
         }

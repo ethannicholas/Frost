@@ -13,13 +13,13 @@ class Parser {
 
     var source:String
 
-    def pushbackBuffer := Array<Token>()
+    def pushbackBuffer := SpecializedArray<Token>()
 
     def commaSeparatedExpressionContext := Stack<Bit>()
 
     var inSpeculative := false
 
-    def speculativeBuffer := Array<Token>()
+    def speculativeBuffer := SpecializedArray<Token>()
 
     init(errors:ErrorReporter) {
         self.errors := errors
