@@ -17,14 +17,14 @@ class SingleCharState : State {
     function convert():String {
         def result := MutableString()
         result.append("Char('")
-        if c = Char8(10) { -- FIXME char literals
+        if c = "\n" {
             result.append("\\n")
         }
-        else if c = Char8(13) {
+        else if c = "\r" {
             result.append("\\r")
         }
         else {
-            if c = Char8(92) | c = Char8(34) {
+            if c = "\\" | c = "\"" {
                 result.append("\\")
             }
             result.append(c)

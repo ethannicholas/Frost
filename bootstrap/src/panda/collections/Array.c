@@ -18,6 +18,8 @@
 #include "panda/collections/Array/ArrayIterator.h"
 #include "panda/core/String.h"
 #include "panda/core/MutableString.h"
+#include "panda/core/Char8.h"
+#include "panda/core/UInt8.h"
 panda$collections$Iterator* panda$collections$Array$iterator$R$panda$collections$Iterator$LTpanda$collections$Array$T$GT$shim(panda$collections$Array* self) {
     panda$collections$Iterator* result = panda$collections$Array$iterator$R$panda$collections$Iterator$LTpanda$collections$Array$T$GT(self);
     return result;
@@ -71,11 +73,9 @@ typedef panda$core$Object* (*$fn248)(panda$collections$Iterator*);
 
 static panda$core$String $s195 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2C\x20", 2, 14677, NULL };
 static panda$core$String $s198 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
-static panda$core$String $s230 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x5B", 1, 192, NULL };
 static panda$core$String $s232 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
 static panda$core$String $s250 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2C\x20", 2, 14677, NULL };
 static panda$core$String $s251 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x3C\x6E\x75\x6C\x6C\x3E", 6, 1703694482666, NULL };
-static panda$core$String $s252 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x5D", 1, 194, NULL };
 
 void panda$collections$Array$init(panda$collections$Array* self) {
     self->count = ((panda$core$Int64) { 0 });
@@ -575,15 +575,18 @@ panda$core$String* panda$collections$Array$join$panda$core$String$R$panda$core$S
 }
 panda$core$String* panda$collections$Array$convert$R$panda$core$String(panda$collections$Array* self) {
     panda$core$MutableString* result227;
+    panda$core$Char8 $tmp230;
     panda$core$String* separator231;
     panda$collections$Iterator* v$Iter233;
     panda$core$Object* v245;
+    panda$core$Char8 $tmp252;
     panda$core$MutableString* $tmp228 = (panda$core$MutableString*) malloc(48);
     $tmp228->$class = (panda$core$Class*) &panda$core$MutableString$class;
     $tmp228->refCount.value = 1;
     panda$core$MutableString$init($tmp228);
     result227 = $tmp228;
-    panda$core$MutableString$append$panda$core$String(result227, &$s230);
+    panda$core$Char8$init$panda$core$UInt8(&$tmp230, ((panda$core$UInt8) { 91 }));
+    panda$core$MutableString$append$panda$core$Char8(result227, $tmp230);
     separator231 = &$s232;
     {
         ITable* $tmp234 = ((panda$collections$Iterable*) self)->$class->itable;
@@ -626,7 +629,8 @@ panda$core$String* panda$collections$Array$convert$R$panda$core$String(panda$col
         goto $l238;
         $l239:;
     }
-    panda$core$MutableString$append$panda$core$String(result227, &$s252);
+    panda$core$Char8$init$panda$core$UInt8(&$tmp252, ((panda$core$UInt8) { 93 }));
+    panda$core$MutableString$append$panda$core$Char8(result227, $tmp252);
     panda$core$String* $tmp253 = panda$core$MutableString$finish$R$panda$core$String(result227);
     return $tmp253;
 }

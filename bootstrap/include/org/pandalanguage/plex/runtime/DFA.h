@@ -5,7 +5,6 @@
 typedef struct panda$core$Class panda$core$Class;
 #include "panda/core/Int32.h"
 #include "panda/core/Int64.h"
-typedef struct org$pandalanguage$plex$runtime$RawToken org$pandalanguage$plex$runtime$RawToken;
 typedef struct panda$core$String panda$core$String;
 #include "panda/core/String/Index.h"
 
@@ -15,10 +14,9 @@ typedef struct org$pandalanguage$plex$runtime$DFA {
     panda$core$Int64 stateCount;
     panda$core$Int64** transitions;
     panda$core$Int64* accepts;
-    org$pandalanguage$plex$runtime$RawToken* rawToken;
     panda$core$String* source;
     panda$core$String$Index offset;
-    panda$core$String$Index end;
+    panda$core$String$Index sourceEnd;
     panda$core$Int64 line;
     panda$core$Int64 column;
 } org$pandalanguage$plex$runtime$DFA;
@@ -32,10 +30,10 @@ extern org$pandalanguage$plex$runtime$DFA$class_type org$pandalanguage$plex$runt
 typedef struct org$pandalanguage$plex$runtime$DFA org$pandalanguage$plex$runtime$DFA;
 #include "panda/core/Int64.h"
 typedef struct panda$core$String panda$core$String;
-typedef struct org$pandalanguage$plex$runtime$RawToken org$pandalanguage$plex$runtime$RawToken;
+#include "org/pandalanguage/plex/runtime/RawToken.h"
 
 void org$pandalanguage$plex$runtime$DFA$init$panda$core$Int64$panda$unsafe$Pointer$LTpanda$unsafe$Pointer$LTpanda$core$Int64$GT$GT$panda$unsafe$Pointer$LTpanda$core$Int64$GT(org$pandalanguage$plex$runtime$DFA* self, panda$core$Int64 p_stateCount, panda$core$Int64** p_transitions, panda$core$Int64* p_accepts);
 void org$pandalanguage$plex$runtime$DFA$init$panda$core$String$panda$core$Int64$panda$unsafe$Pointer$LTpanda$unsafe$Pointer$LTpanda$core$Int64$GT$GT$panda$unsafe$Pointer$LTpanda$core$Int64$GT(org$pandalanguage$plex$runtime$DFA* self, panda$core$String* p_source, panda$core$Int64 p_stateCount, panda$core$Int64** p_transitions, panda$core$Int64* p_accepts);
-org$pandalanguage$plex$runtime$RawToken* org$pandalanguage$plex$runtime$DFA$next$R$org$pandalanguage$plex$runtime$RawToken(org$pandalanguage$plex$runtime$DFA* self);
+org$pandalanguage$plex$runtime$RawToken org$pandalanguage$plex$runtime$DFA$next$R$org$pandalanguage$plex$runtime$RawToken(org$pandalanguage$plex$runtime$DFA* self);
 
 #endif

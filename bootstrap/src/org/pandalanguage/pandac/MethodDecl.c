@@ -17,6 +17,8 @@
 #include "panda/core/MutableString.h"
 #include "panda/collections/Iterator.h"
 #include "panda/collections/Iterable.h"
+#include "panda/core/Char8.h"
+#include "panda/core/UInt8.h"
 
 
 org$pandalanguage$pandac$MethodDecl$class_type org$pandalanguage$pandac$MethodDecl$class = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &org$pandalanguage$pandac$Symbol$class, NULL, { org$pandalanguage$pandac$MethodDecl$convert$R$panda$core$String, panda$core$Object$cleanup, org$pandalanguage$pandac$MethodDecl$get_heritable$R$panda$core$Bit, org$pandalanguage$pandac$MethodDecl$isVirtual$R$panda$core$Bit, org$pandalanguage$pandac$MethodDecl$isInstance$R$panda$core$Bit, org$pandalanguage$pandac$MethodDecl$matches$org$pandalanguage$pandac$MethodDecl$R$panda$core$Bit, org$pandalanguage$pandac$MethodDecl$signature$R$panda$core$String, org$pandalanguage$pandac$MethodDecl$declaration$R$panda$core$String} };
@@ -28,7 +30,6 @@ typedef panda$core$Object* (*$fn70)(panda$collections$Iterator*);
 static panda$core$String $s51 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x28", 1, 141, NULL };
 static panda$core$String $s54 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
 static panda$core$String $s72 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2C\x20", 2, 14677, NULL };
-static panda$core$String $s73 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x29", 1, 142, NULL };
 static panda$core$String $s76 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x3A", 1, 159, NULL };
 static panda$core$String $s78 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
 static panda$core$String $s81 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x6D\x65\x74\x68\x6F\x64\x20", 7, 223992931077074, NULL };
@@ -151,6 +152,7 @@ panda$core$String* org$pandalanguage$pandac$MethodDecl$signature$R$panda$core$St
     panda$core$String* separator53;
     panda$collections$Iterator* p$Iter55;
     org$pandalanguage$pandac$MethodDecl$Parameter* p67;
+    panda$core$Char8 $tmp73;
     panda$core$MutableString* $tmp48 = (panda$core$MutableString*) malloc(48);
     $tmp48->$class = (panda$core$Class*) &panda$core$MutableString$class;
     $tmp48->refCount.value = 1;
@@ -191,7 +193,8 @@ panda$core$String* org$pandalanguage$pandac$MethodDecl$signature$R$panda$core$St
         goto $l60;
         $l61:;
     }
-    panda$core$MutableString$append$panda$core$String(result47, &$s73);
+    panda$core$Char8$init$panda$core$UInt8(&$tmp73, ((panda$core$UInt8) { 41 }));
+    panda$core$MutableString$append$panda$core$Char8(result47, $tmp73);
     org$pandalanguage$pandac$Type* $tmp74 = org$pandalanguage$pandac$Type$Void$R$org$pandalanguage$pandac$Type();
     panda$core$Bit $tmp75 = org$pandalanguage$pandac$Type$$NEQ$org$pandalanguage$pandac$Type$R$panda$core$Bit(self->returnType, $tmp74);
     if ($tmp75.value) {

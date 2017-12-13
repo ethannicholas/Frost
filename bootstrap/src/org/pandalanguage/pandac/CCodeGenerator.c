@@ -30,6 +30,8 @@
 #include "panda/collections/ListView.h"
 #include "org/pandalanguage/pandac/FieldDecl.h"
 #include "org/pandalanguage/pandac/Annotations.h"
+#include "panda/core/Char8.h"
+#include "panda/core/UInt8.h"
 #include "org/pandalanguage/pandac/CCodeGenerator/ClassConstant.h"
 #include "panda/collections/CollectionView.h"
 #include "org/pandalanguage/pandac/CCodeGenerator/MethodShim.h"
@@ -37,8 +39,6 @@
 #include "org/pandalanguage/pandac/Position.h"
 #include "org/pandalanguage/pandac/Variable.h"
 #include "org/pandalanguage/pandac/MethodRef.h"
-#include "panda/core/Char8.h"
-#include "panda/core/UInt8.h"
 #include "panda/core/UInt32.h"
 #include "panda/core/UInt64.h"
 #include "org/pandalanguage/pandac/CCodeGenerator/LoopDescriptor.h"
@@ -277,10 +277,8 @@ static panda$core$String $s151 = { (panda$core$Class*) &panda$core$String$class,
 static panda$core$String $s161 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x70\x61\x6E\x64\x61\x2E\x75\x6E\x73\x61\x66\x65\x2E\x50\x6F\x69\x6E\x74\x65\x72", 20, -4756656308298712568, NULL };
 static panda$core$String $s244 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x24\x77\x72\x61\x70\x70\x65\x72", 8, 14815783583650106, NULL };
 static panda$core$String $s247 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2A", 1, 143, NULL };
-static panda$core$String $s258 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x28", 1, 141, NULL };
 static panda$core$String $s262 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
 static panda$core$String $s265 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x24\x77\x72\x61\x70\x70\x65\x72", 8, 14815783583650106, NULL };
-static panda$core$String $s266 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2A", 1, 143, NULL };
 static panda$core$String $s283 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2C\x20", 2, 14677, NULL };
 static panda$core$String $s292 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x29\x2A", 2, 14384, NULL };
 static panda$core$String $s298 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x24\x6E\x75\x6C\x6C\x61\x62\x6C\x65", 9, 1495432519871594484, NULL };
@@ -305,7 +303,6 @@ static panda$core$String $s416 = { (panda$core$Class*) &panda$core$String$class,
 static panda$core$String $s423 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x20", 1, 133, NULL };
 static panda$core$String $s426 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x28", 1, 141, NULL };
 static panda$core$String $s432 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x20\x73\x65\x6C\x66", 5, 13959559259, NULL };
-static panda$core$String $s435 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x28", 1, 141, NULL };
 static panda$core$String $s454 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2C\x20", 2, 14677, NULL };
 static panda$core$String $s455 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2C\x20", 2, 14677, NULL };
 static panda$core$String $s457 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x20\x70", 2, 13545, NULL };
@@ -1391,6 +1388,8 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$wrapperType$org$panda
 panda$core$String* org$pandalanguage$pandac$CCodeGenerator$wrapperType$org$pandalanguage$pandac$MethodDecl$R$panda$core$String(org$pandalanguage$pandac$CCodeGenerator* self, org$pandalanguage$pandac$MethodDecl* p_m) {
     org$pandalanguage$pandac$Type* inheritedType249;
     panda$core$MutableString* result251;
+    panda$core$Char8 $tmp258;
+    panda$core$Char8 $tmp266;
     panda$core$Range$LTpanda$core$Int64$GT $tmp267;
     org$pandalanguage$pandac$Type* $tmp250 = org$pandalanguage$pandac$Compiler$inheritedType$org$pandalanguage$pandac$MethodDecl$R$org$pandalanguage$pandac$Type(self->compiler, p_m);
     inheritedType249 = $tmp250;
@@ -1404,7 +1403,8 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$wrapperType$org$panda
     panda$core$Object* $tmp256 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(inheritedType249->subtypes, $tmp255);
     panda$core$String* $tmp257 = org$pandalanguage$pandac$CCodeGenerator$type$org$pandalanguage$pandac$Type$R$panda$core$String(self, ((org$pandalanguage$pandac$Type*) $tmp256));
     panda$core$MutableString$append$panda$core$String(result251, $tmp257);
-    panda$core$MutableString$append$panda$core$String(result251, &$s258);
+    panda$core$Char8$init$panda$core$UInt8(&$tmp258, ((panda$core$UInt8) { 40 }));
+    panda$core$MutableString$append$panda$core$Char8(result251, $tmp258);
     panda$core$Bit $tmp259 = org$pandalanguage$pandac$MethodDecl$isInstance$R$panda$core$Bit(p_m);
     PANDA_ASSERT($tmp259.value);
     panda$core$String* $tmp260 = org$pandalanguage$pandac$CCodeGenerator$escapeName$panda$core$String$R$panda$core$String(self, ((org$pandalanguage$pandac$Symbol*) p_m->owner)->name);
@@ -1417,7 +1417,8 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$wrapperType$org$panda
         panda$core$MutableString$append$panda$core$String(result251, &$s265);
     }
     }
-    panda$core$MutableString$append$panda$core$String(result251, &$s266);
+    panda$core$Char8$init$panda$core$UInt8(&$tmp266, ((panda$core$UInt8) { 42 }));
+    panda$core$MutableString$append$panda$core$Char8(result251, $tmp266);
     panda$core$Int64 $tmp268 = panda$collections$Array$get_count$R$panda$core$Int64(inheritedType249->subtypes);
     panda$core$Int64 $tmp269 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64($tmp268, ((panda$core$Int64) { 1 }));
     panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp267, ((panda$core$Int64) { 0 }), $tmp269, ((panda$core$Bit) { false }));
@@ -1605,6 +1606,7 @@ org$pandalanguage$pandac$CCodeGenerator$MethodShim* org$pandalanguage$pandac$CCo
     panda$core$String* resultName414;
     panda$core$MutableString* resultType418;
     panda$core$String* self_t429;
+    panda$core$Char8 $tmp435;
     panda$core$Range$LTpanda$core$Int64$GT $tmp436;
     panda$core$String* pType451;
     panda$collections$Array* casts473;
@@ -1661,7 +1663,8 @@ org$pandalanguage$pandac$CCodeGenerator$MethodShim* org$pandalanguage$pandac$CCo
     panda$core$String* $tmp431 = panda$core$String$convert$R$panda$core$String(self_t429);
     panda$core$String* $tmp433 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp431, &$s432);
     (($fn434) ((panda$io$OutputStream*) out399)->$class->vtable[16])(((panda$io$OutputStream*) out399), $tmp433);
-    panda$core$MutableString$append$panda$core$String(resultType418, &$s435);
+    panda$core$Char8$init$panda$core$UInt8(&$tmp435, ((panda$core$UInt8) { 40 }));
+    panda$core$MutableString$append$panda$core$Char8(resultType418, $tmp435);
     panda$core$MutableString$append$panda$core$String(resultType418, self_t429);
     panda$core$Int64 $tmp437 = panda$collections$Array$get_count$R$panda$core$Int64(p_raw->parameters);
     panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp436, ((panda$core$Int64) { 0 }), $tmp437, ((panda$core$Bit) { false }));

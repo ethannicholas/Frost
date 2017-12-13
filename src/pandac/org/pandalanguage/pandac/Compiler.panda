@@ -82,14 +82,14 @@ class Compiler : ErrorReporter {
         self.codeGenerator := codeGenerator
         codeGenerator.setCompiler(self)
         root.add(Type("builtin_bit", Type.Kind.BUILTIN_BIT, 1))
-        root.add(Type("builtin_int8", Type.Kind.BUILTIN_INT, 8))
-        root.add(Type("builtin_int16", Type.Kind.BUILTIN_INT, 16))
-        root.add(Type("builtin_int32", Type.Kind.BUILTIN_INT, 32))
-        root.add(Type("builtin_int64", Type.Kind.BUILTIN_INT, 64))
-        root.add(Type("builtin_uint8", Type.Kind.BUILTIN_UINT, 8))
-        root.add(Type("builtin_uint16", Type.Kind.BUILTIN_UINT, 16))
-        root.add(Type("builtin_uint32", Type.Kind.BUILTIN_UINT, 32))
-        root.add(Type("builtin_uint64", Type.Kind.BUILTIN_UINT, 64))
+        root.add(Type.BuiltinInt8())
+        root.add(Type.BuiltinInt16())
+        root.add(Type.BuiltinInt32())
+        root.add(Type.BuiltinInt64())
+        root.add(Type.BuiltinUInt8())
+        root.add(Type.BuiltinUInt16())
+        root.add(Type.BuiltinUInt32())
+        root.add(Type.BuiltinUInt64())
         root.add(Alias("Int", "panda.core.Int64", Position()))
         addAlias("panda.collections.Array")
         addAlias("panda.collections.Collection")
@@ -1136,29 +1136,36 @@ class Compiler : ErrorReporter {
     }
 
     function coercionCost(expr:IRNode, target:Type):Int? {
+        var base := 0
+        if expr.kind = IRNode.Kind.STRING & !target.isChar() &
+                (expr.payload->String).length() = 1 {
+            -- prefer coercing single-char literals to chars rather than strings
+            base := 3
+        }
         if expr.type = target {
-            return 0
+            return base
         }
         match target.typeKind {
             when Type.Kind.NULLABLE:
                 if expr.kind = IRNode.Kind.NULL {
-                    return 0
+                    return base
                 }
                 def cost := coercionCost(expr, target.subtypes[0])
                 if cost = null {
                     return null
                 }
                 if expr.type.typeKind = Type.Kind.NULLABLE {
-                    return cost
+                    return base + cost
                 }
-                return cost + NONNULLABLE_TO_NULLABLE_CAST_COST
+                return base + cost + NONNULLABLE_TO_NULLABLE_CAST_COST
             when Type.Kind.GENERIC_PARAMETER:
+                assert base = 0
                 return coercionCost(expr, target.parameter.bound)
         }
         match expr.kind {
             when IRNode.Kind.BIT:
                 if target.typeKind = Type.Kind.BUILTIN_BIT {
-                    return 0
+                    return base
                 }
                 if target.isClass() {
                     return coercionCost(Type.Bit(), target)
@@ -1168,9 +1175,10 @@ class Compiler : ErrorReporter {
                         requiredSize((expr.payload->UInt64).convert()->Int64) <= target.size()) |
                         (target.typeKind = Type.Kind.BUILTIN_UINT &
                         requiredSize(expr.payload->UInt64) <= target.size()) {
-                    return 0
+                    return base
                 }
                 if !target.isNumber() {
+                    assert base = 0
                     return coercionCost(variableType(expr), target)
                 }
             when IRNode.Kind.NEGATED_INT:
@@ -1178,10 +1186,35 @@ class Compiler : ErrorReporter {
                         requiredSize(-(expr.payload->UInt64).convert()->Int64) <= target.size()) |
                         (target.typeKind = Type.Kind.BUILTIN_UINT &
                         requiredSize(-(expr.payload->UInt64).convert()->Int64) <= target.size()) {
-                    return 0
+                    return base
                 }
                 if !target.isNumber() {
+                    assert base = 0
                     return coercionCost(variableType(expr), target)
+                }
+            when IRNode.Kind.STRING:
+                if target = Type.Char8() {
+                    if (expr.payload->String).utf8().get_count() = 1 { -- FIXME parens
+                        return base
+                    }
+                    return null
+                }
+                if target = Type.Char16() {
+                    def utf16 := (expr.payload->String).utf16() -- FIXME parens
+                    if utf16.get_done() {
+                        return null
+                    }
+                    utf16.next()
+                    if utf16.get_done() {
+                        return base + 1
+                    }
+                    return null
+                }
+                if target = Type.Char32() {
+                    if (expr.payload->String).length() = 1 { -- FIXME parens
+                        return base + 2
+                    }
+                    return null
                 }
             when IRNode.Kind.UNRESOLVED_RANGE:
                 if target.isRange() {
@@ -1192,9 +1225,9 @@ class Compiler : ErrorReporter {
                             expr.children[1].kind = IRNode.Kind.NULL {
                         if target.subtypes[1].typeKind = Type.Kind.NULLABLE {
                             if target.subtypes[1].subtypes[0].isNumber() {
-                                return 0
+                                return base
                             }
-                            return 1
+                            return base + 1
                         }
                         return null
                     }
@@ -1207,7 +1240,7 @@ class Compiler : ErrorReporter {
                     if cost2 = null {
                         return null
                     }
-                    return cost1 + cost2
+                    return base + cost1 + cost2
                 }
                 if target.isSteppedRange() {
                     if expr.children.get_count() != 3 {
@@ -1244,12 +1277,13 @@ class Compiler : ErrorReporter {
                     if cost3 = null {
                         return null
                     }
-                    return cost + cost3
+                    return base + cost + cost3
                 }
                 return coercionCost(variableType(expr), target)
             when IRNode.Kind.UNRESOLVED_INDEX:
                 def args := Array<IRNode>() -- FIXME literal
                 args.add(expr.children[1])
+                assert base = 0
                 return coercionCost(call(expr.children[0], "[]", args), target)
         }
         if !target.isClass() {
@@ -1268,12 +1302,16 @@ class Compiler : ErrorReporter {
                 assert m.parameters.get_count() = 1
                 def cost := coercionCost(expr, m.parameters[0].type)
                 if cost != null {
-                    return cost
+                    return base + cost
                 }
             }
         }
         assert expr.type != null
-        return coercionCost(expr.type, target)
+        def cost := coercionCost(expr.type, target)
+        if cost != null {
+            return base + cost
+        }
+        return null
     }
 
     function doCoerce(expr:IRNode?, target:Type):IRNode? {
@@ -1333,6 +1371,31 @@ class Compiler : ErrorReporter {
                     if varType != null {
                         return coerce(varType, target)
                     }
+                }
+            when IRNode.Kind.STRING:
+                if target = Type.Char8() & coercionCost(expr, target) != null {
+                    def args := Array<IRNode>() -- FIXME literal
+                    args.add(IRNode(IRNode.Kind.INT, expr.position, Type.BuiltinUInt8(),
+                            (expr.payload->String).utf8()[0].convert()->UInt64))
+                    def target := IRNode(IRNode.Kind.TYPE_REFERENCE, expr.position, Type.Class(),
+                            target)
+                    return call(target, args)
+                }
+                if target = Type.Char16() & coercionCost(expr, target) != null {
+                    def args := Array<IRNode>() -- FIXME literal
+                    args.add(IRNode(IRNode.Kind.INT, expr.position, Type.BuiltinUInt16(),
+                            (expr.payload->String).utf16().next().convert()->UInt64))
+                    def target := IRNode(IRNode.Kind.TYPE_REFERENCE, expr.position, Type.Class(),
+                            target)
+                    return call(target, args)
+                }
+                if target = Type.Char32() & coercionCost(expr, target) != null {
+                    def args := Array<IRNode>() -- FIXME literal
+                    args.add(IRNode(IRNode.Kind.INT, expr.position, Type.BuiltinUInt32(),
+                            (expr.payload->String)[0].convert()->UInt64))
+                    def target := IRNode(IRNode.Kind.TYPE_REFERENCE, expr.position, Type.Class(),
+                            target)
+                    return call(target, args)
                 }
             when IRNode.Kind.UNRESOLVED_RANGE:
                 if target.isRange() {

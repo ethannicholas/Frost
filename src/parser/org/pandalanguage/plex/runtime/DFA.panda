@@ -13,13 +13,11 @@ class DFA {
 
     def accepts:Pointer<Int>
 
-    var rawToken:RawToken
-
     var source:String
 
     var offset:String.Index
 
-    var end:String.Index
+    var sourceEnd:String.Index
 
     var line := 1
 
@@ -33,30 +31,23 @@ class DFA {
             accepts:Pointer<Int>) {
         self.source := source
         self.offset := source.start()
-        self.end := source.end()
+        self.sourceEnd := source.end()
         self.stateCount := stateCount
         self.transitions := transitions
         self.accepts := accepts
-        self.rawToken := RawToken(source)
     }
 
     method next():RawToken {
         var state := 1
-        var startOffset := offset
         if offset = source.end() {
-            rawToken.kind := 0
-            rawToken.start := startOffset
-            rawToken.end := startOffset
-            rawToken.line := line
-            rawToken.column := column
-            return rawToken
+            return RawToken(0, offset, offset, line, column)
         }
-        rawToken.kind := -1
-        rawToken.start := startOffset
-        rawToken.end := startOffset
-        rawToken.line := line
-        rawToken.column := column
-        while offset != end {
+        var kind := -1
+        def start := offset
+        var end := offset
+        def startLine := line
+        def startColumn := column
+        while offset != sourceEnd {
             def c := source[offset]
             if c.convert()->UInt8 > END_CHAR {
                 Console.printLine("invalid token \{c.convert()->UInt8}")
@@ -76,15 +67,15 @@ class DFA {
                 }
                 def newAccept := accepts[state]
                 if newAccept != -1 {
-                    rawToken.kind := newAccept
-                    rawToken.end := offset
+                    kind := newAccept
+                    end := offset
                 }
             }
             else {
                 break
             }
         }
-        offset := rawToken.end
-        return rawToken
+        offset := end
+        return RawToken(kind, start, end, startLine, startColumn)
     }
 }

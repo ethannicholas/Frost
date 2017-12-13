@@ -32,10 +32,12 @@ class MutableString {
     }
 
     init(s:String) {
-        length := 0
+        length := s._length
         maxLength := length + DEFAULT_SIZE
         data := Pointer<Char8>.alloc(maxLength)
-        append(s)
+        for i in 0 .. s._length {
+            data[i] := s.data[i]
+        }
     }
 
     init(capacity:Int) {

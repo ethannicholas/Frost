@@ -13,6 +13,8 @@
 #include "panda/collections/IdentityMap/Entry.h"
 #include "panda/core/String.h"
 #include "panda/core/MutableString.h"
+#include "panda/core/Char8.h"
+#include "panda/core/UInt8.h"
 void panda$collections$IdentityMap$$IDXEQ$panda$collections$IdentityMap$K$panda$collections$IdentityMap$V$shim(panda$collections$IdentityMap* self, panda$core$Object* p0, panda$core$Object* p1) {
     panda$collections$IdentityMap$$IDXEQ$panda$collections$IdentityMap$K$panda$collections$IdentityMap$V(self, p0, p1);
 }
@@ -49,13 +51,10 @@ struct { panda$core$Class* cl; ITable* next; void* methods[2]; } panda$collectio
 panda$collections$IdentityMap$class_type panda$collections$IdentityMap$class = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Object$class, (ITable*) &panda$collections$IdentityMap$_panda$core$Equatable, { panda$collections$IdentityMap$convert$R$panda$core$String, panda$core$Object$cleanup, panda$collections$IdentityMap$indexFor$panda$collections$IdentityMap$K$R$panda$core$Int64, panda$collections$IdentityMap$$IDX$panda$collections$IdentityMap$K$R$panda$collections$IdentityMap$V$Q$shim, panda$collections$IdentityMap$contains$panda$collections$IdentityMap$K$R$panda$core$Bit, panda$collections$IdentityMap$$IDXEQ$panda$collections$IdentityMap$K$panda$collections$IdentityMap$V$shim, panda$collections$IdentityMap$remove$panda$collections$IdentityMap$K, panda$collections$IdentityMap$clear, panda$collections$IdentityMap$incrementCount, panda$collections$IdentityMap$get_count$R$panda$core$Int64, panda$collections$IdentityMap$$EQ$panda$collections$Map$LTpanda$collections$IdentityMap$K$Cpanda$collections$IdentityMap$V$GT$R$panda$core$Bit$shim, panda$collections$IdentityMap$$NEQ$panda$collections$Map$LTpanda$collections$IdentityMap$K$Cpanda$collections$IdentityMap$V$GT$R$panda$core$Bit$shim, panda$collections$IdentityMap$keys$R$panda$collections$Iterator$LTpanda$collections$IdentityMap$K$GT$shim, panda$collections$IdentityMap$values$R$panda$collections$Iterator$LTpanda$collections$IdentityMap$V$GT$shim} };
 
 
-static panda$core$String $s139 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x7B", 1, 224, NULL };
 static panda$core$String $s141 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
 static panda$core$String $s159 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x6E\x75\x6C\x6C", 4, 218598044, NULL };
-static panda$core$String $s160 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x3A", 1, 159, NULL };
 static panda$core$String $s161 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x6E\x75\x6C\x6C", 4, 218598044, NULL };
 static panda$core$String $s162 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2C\x20", 2, 14677, NULL };
-static panda$core$String $s169 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x7D", 1, 226, NULL };
 
 void panda$collections$IdentityMap$init(panda$collections$IdentityMap* self) {
     panda$core$Range$LTpanda$core$Int64$GT $tmp2;
@@ -370,15 +369,19 @@ panda$collections$Iterator* panda$collections$IdentityMap$values$R$panda$collect
 }
 panda$core$String* panda$collections$IdentityMap$convert$R$panda$core$String(panda$collections$IdentityMap* self) {
     panda$core$MutableString* result136;
+    panda$core$Char8 $tmp139;
     panda$core$String* separator140;
     panda$core$Range$LTpanda$core$Int64$GT $tmp142;
     panda$collections$IdentityMap$Entry* entry156;
+    panda$core$Char8 $tmp160;
+    panda$core$Char8 $tmp169;
     panda$core$MutableString* $tmp137 = (panda$core$MutableString*) malloc(48);
     $tmp137->$class = (panda$core$Class*) &panda$core$MutableString$class;
     $tmp137->refCount.value = 1;
     panda$core$MutableString$init($tmp137);
     result136 = $tmp137;
-    panda$core$MutableString$append$panda$core$String(result136, &$s139);
+    panda$core$Char8$init$panda$core$UInt8(&$tmp139, ((panda$core$UInt8) { 123 }));
+    panda$core$MutableString$append$panda$core$Char8(result136, $tmp139);
     separator140 = &$s141;
     panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp142, ((panda$core$Int64) { 0 }), self->bucketCount, ((panda$core$Bit) { false }));
     int64_t $tmp144 = $tmp142.min.value;
@@ -407,7 +410,8 @@ panda$core$String* panda$collections$IdentityMap$convert$R$panda$core$String(pan
                 panda$core$MutableString$append$panda$core$String(result136, &$s159);
             }
             }
-            panda$core$MutableString$append$panda$core$String(result136, &$s160);
+            panda$core$Char8$init$panda$core$UInt8(&$tmp160, ((panda$core$UInt8) { 58 }));
+            panda$core$MutableString$append$panda$core$Char8(result136, $tmp160);
             if (((panda$core$Bit) { entry156->value != NULL }).value) {
             {
                 panda$core$MutableString$append$panda$core$Object(result136, entry156->value);
@@ -435,7 +439,8 @@ panda$core$String* panda$collections$IdentityMap$convert$R$panda$core$String(pan
     i143.value += 1;
     goto $l148;
     $l150:;
-    panda$core$MutableString$append$panda$core$String(result136, &$s169);
+    panda$core$Char8$init$panda$core$UInt8(&$tmp169, ((panda$core$UInt8) { 125 }));
+    panda$core$MutableString$append$panda$core$Char8(result136, $tmp169);
     panda$core$String* $tmp170 = panda$core$MutableString$finish$R$panda$core$String(result136);
     return $tmp170;
 }

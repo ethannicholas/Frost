@@ -120,7 +120,7 @@ panda$core$String* panda$core$Char8$convert$R$panda$core$String(panda$core$Char8
     panda$core$Char8* data21;
     panda$core$Char8 $tmp22;
     panda$core$Char8 $tmp25;
-    bool $tmp17 = self.value > 0;
+    bool $tmp17 = self.value < 128;
     if (((panda$core$Bit) { $tmp17 }).value) {
     {
         data18 = ((panda$core$Char8*) malloc(((panda$core$Int64) { 1 }).value * 1));

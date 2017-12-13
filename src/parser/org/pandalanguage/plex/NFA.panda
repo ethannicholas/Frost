@@ -1,7 +1,6 @@
 package org.pandalanguage.plex
 
 uses org.pandalanguage.pandac.tree.Position
-uses org.pandalanguage.plex.runtime.RawToken
 uses org.pandalanguage.plex.runtime.TokenException
 
 class NFA {
@@ -11,7 +10,6 @@ class NFA {
 
     def _source := LineNumberInputStream(Console.inputStream())
     var pushback := PushbackInputStream(_source)
-    var rawToken := RawToken("")
     var line := 1
     var column := 1
 

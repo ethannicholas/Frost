@@ -12,6 +12,8 @@
 #include "panda/core/Bit.h"
 #include "org/pandalanguage/pandac/IRNode.h"
 #include "panda/core/MutableString.h"
+#include "panda/core/Char8.h"
+#include "panda/core/UInt8.h"
 
 
 org$pandalanguage$pandac$FieldDecl$class_type org$pandalanguage$pandac$FieldDecl$class = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &org$pandalanguage$pandac$Symbol$class, NULL, { org$pandalanguage$pandac$FieldDecl$convert$R$panda$core$String, panda$core$Object$cleanup, org$pandalanguage$pandac$Symbol$get_heritable$R$panda$core$Bit} };
@@ -21,7 +23,6 @@ static panda$core$String $s5 = { (panda$core$Class*) &panda$core$String$class, 2
 static panda$core$String $s6 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x64\x65\x66\x20", 4, 208131136, NULL };
 static panda$core$String $s7 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x63\x6F\x6E\x73\x74\x61\x6E\x74\x20", 9, 2177732101714751307, NULL };
 static panda$core$String $s8 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x70\x72\x6F\x70\x65\x72\x74\x79\x20", 9, 2318826142498553734, NULL };
-static panda$core$String $s9 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x3A", 1, 159, NULL };
 static panda$core$String $s10 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x20\x3A\x3D\x20", 4, 137627884, NULL };
 static panda$core$String $s11 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x20\x3A\x3D\x20", 4, 137627884, NULL };
 
@@ -38,6 +39,7 @@ void org$pandalanguage$pandac$FieldDecl$init$org$pandalanguage$pandac$ClassDecl$
 }
 panda$core$String* org$pandalanguage$pandac$FieldDecl$convert$R$panda$core$String(org$pandalanguage$pandac$FieldDecl* self) {
     panda$core$MutableString* result1;
+    panda$core$Char8 $tmp9;
     panda$core$MutableString* $tmp2 = (panda$core$MutableString*) malloc(48);
     $tmp2->$class = (panda$core$Class*) &panda$core$MutableString$class;
     $tmp2->refCount.value = 1;
@@ -67,7 +69,8 @@ panda$core$String* org$pandalanguage$pandac$FieldDecl$convert$R$panda$core$Strin
         break;
     }
     panda$core$MutableString$append$panda$core$String(result1, self->name);
-    panda$core$MutableString$append$panda$core$String(result1, &$s9);
+    panda$core$Char8$init$panda$core$UInt8(&$tmp9, ((panda$core$UInt8) { 58 }));
+    panda$core$MutableString$append$panda$core$Char8(result1, $tmp9);
     panda$core$MutableString$append$panda$core$Object(result1, ((panda$core$Object*) self->type));
     if (((panda$core$Bit) { self->value != NULL }).value) {
     {

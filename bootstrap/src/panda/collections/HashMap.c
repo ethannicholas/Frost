@@ -15,6 +15,8 @@
 #include "panda/collections/HashMap/ValueIterator.h"
 #include "panda/core/String.h"
 #include "panda/core/MutableString.h"
+#include "panda/core/Char8.h"
+#include "panda/core/UInt8.h"
 panda$core$Bit panda$collections$HashMap$$EQ$panda$collections$Map$LTpanda$collections$HashMap$K$Cpanda$collections$HashMap$V$GT$R$panda$core$Bit$shim(panda$collections$HashMap* self, panda$core$Object* p0) {
     panda$core$Bit result = panda$collections$HashMap$$EQ$panda$collections$Map$LTpanda$collections$HashMap$K$Cpanda$collections$HashMap$V$GT$R$panda$core$Bit(self, ((panda$collections$Map*) p0));
     return result;
@@ -61,13 +63,10 @@ typedef panda$core$Bit (*$fn94)(panda$core$Equatable*, panda$core$Object*);
 typedef panda$core$Bit (*$fn106)(panda$core$Equatable*, panda$core$Object*);
 typedef panda$core$Bit (*$fn114)(panda$core$Equatable*, panda$core$Object*);
 
-static panda$core$String $s197 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x7B", 1, 224, NULL };
 static panda$core$String $s199 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
 static panda$core$String $s217 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x6E\x75\x6C\x6C", 4, 218598044, NULL };
-static panda$core$String $s218 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x3A", 1, 159, NULL };
 static panda$core$String $s219 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x6E\x75\x6C\x6C", 4, 218598044, NULL };
 static panda$core$String $s220 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2C\x20", 2, 14677, NULL };
-static panda$core$String $s227 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x7D", 1, 226, NULL };
 
 void panda$collections$HashMap$init(panda$collections$HashMap* self) {
     panda$core$Range$LTpanda$core$Int64$GT $tmp2;
@@ -488,15 +487,19 @@ panda$core$Bit panda$collections$HashMap$$NEQ$panda$collections$Map$LTpanda$coll
 }
 panda$core$String* panda$collections$HashMap$convert$R$panda$core$String(panda$collections$HashMap* self) {
     panda$core$MutableString* result194;
+    panda$core$Char8 $tmp197;
     panda$core$String* separator198;
     panda$core$Range$LTpanda$core$Int64$GT $tmp200;
     panda$collections$HashMap$Entry* entry214;
+    panda$core$Char8 $tmp218;
+    panda$core$Char8 $tmp227;
     panda$core$MutableString* $tmp195 = (panda$core$MutableString*) malloc(48);
     $tmp195->$class = (panda$core$Class*) &panda$core$MutableString$class;
     $tmp195->refCount.value = 1;
     panda$core$MutableString$init($tmp195);
     result194 = $tmp195;
-    panda$core$MutableString$append$panda$core$String(result194, &$s197);
+    panda$core$Char8$init$panda$core$UInt8(&$tmp197, ((panda$core$UInt8) { 123 }));
+    panda$core$MutableString$append$panda$core$Char8(result194, $tmp197);
     separator198 = &$s199;
     panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp200, ((panda$core$Int64) { 0 }), self->bucketCount, ((panda$core$Bit) { false }));
     int64_t $tmp202 = $tmp200.min.value;
@@ -525,7 +528,8 @@ panda$core$String* panda$collections$HashMap$convert$R$panda$core$String(panda$c
                 panda$core$MutableString$append$panda$core$String(result194, &$s217);
             }
             }
-            panda$core$MutableString$append$panda$core$String(result194, &$s218);
+            panda$core$Char8$init$panda$core$UInt8(&$tmp218, ((panda$core$UInt8) { 58 }));
+            panda$core$MutableString$append$panda$core$Char8(result194, $tmp218);
             if (((panda$core$Bit) { entry214->value != NULL }).value) {
             {
                 panda$core$MutableString$append$panda$core$Object(result194, entry214->value);
@@ -553,7 +557,8 @@ panda$core$String* panda$collections$HashMap$convert$R$panda$core$String(panda$c
     i201.value += 1;
     goto $l206;
     $l208:;
-    panda$core$MutableString$append$panda$core$String(result194, &$s227);
+    panda$core$Char8$init$panda$core$UInt8(&$tmp227, ((panda$core$UInt8) { 125 }));
+    panda$core$MutableString$append$panda$core$Char8(result194, $tmp227);
     panda$core$String* $tmp228 = panda$core$MutableString$finish$R$panda$core$String(result194);
     return $tmp228;
 }

@@ -143,8 +143,98 @@ class Type : Symbol, Key<Type> {
     }
 
     @class
+    method BuiltinInt8():Type {
+        return Type("builtin_int8", Type.Kind.BUILTIN_INT, 8)
+    }
+
+    @class
+    method BuiltinInt16():Type {
+        return Type("builtin_int16", Type.Kind.BUILTIN_INT, 16)
+    }
+
+    @class
+    method BuiltinInt32():Type {
+        return Type("builtin_int32", Type.Kind.BUILTIN_INT, 32)
+    }
+
+    @class
+    method BuiltinInt64():Type {
+        return Type("builtin_int64", Type.Kind.BUILTIN_INT, 64)
+    }
+
+    @class
+    method BuiltinUInt8():Type {
+        return Type("builtin_uint8", Type.Kind.BUILTIN_UINT, 8)
+    }
+
+    @class
+    method BuiltinUInt16():Type {
+        return Type("builtin_uint16", Type.Kind.BUILTIN_UINT, 16)
+    }
+
+    @class
+    method BuiltinUInt32():Type {
+        return Type("builtin_uint32", Type.Kind.BUILTIN_UINT, 32)
+    }
+
+    @class
+    method BuiltinUInt64():Type {
+        return Type("builtin_uint64", Type.Kind.BUILTIN_UINT, 64)
+    }
+
+    @class
+    method Int8():Type {
+        return Type("panda.core.Int8", Kind.CLASS, Position(), true)
+    }
+
+    @class
+    method Int16():Type {
+        return Type("panda.core.Int16", Kind.CLASS, Position(), true)
+    }
+
+    @class
+    method Int32():Type {
+        return Type("panda.core.Int32", Kind.CLASS, Position(), true)
+    }
+
+    @class
     method Int64():Type {
         return Type("panda.core.Int64", Kind.CLASS, Position(), true)
+    }
+
+    @class
+    method UInt8():Type {
+        return Type("panda.core.UInt8", Kind.CLASS, Position(), true)
+    }
+
+    @class
+    method UInt16():Type {
+        return Type("panda.core.UInt16", Kind.CLASS, Position(), true)
+    }
+
+    @class
+    method UInt32():Type {
+        return Type("panda.core.UInt32", Kind.CLASS, Position(), true)
+    }
+
+    @class
+    method UInt64():Type {
+        return Type("panda.core.UInt64", Kind.CLASS, Position(), true)
+    }
+
+    @class
+    method Char8():Type {
+        return Type("panda.core.Char8", Kind.CLASS, Position(), true)
+    }
+
+    @class
+    method Char16():Type {
+        return Type("panda.core.Char16", Kind.CLASS, Position(), true)
+    }
+
+    @class
+    method Char32():Type {
+        return Type("panda.core.Char32", Kind.CLASS, Position(), true)
     }
 
     @class
@@ -212,6 +302,10 @@ class Type : Symbol, Key<Type> {
     function isBuiltinNumber():Bit {
         return typeKind = Kind.BUILTIN_INT | typeKind = Kind.BUILTIN_UINT |
                 typeKind = Kind.INT_LITERAL
+    }
+
+    function isChar():Bit {
+        return name.startsWith("panda.core.Char")
     }
 
     function isClass():Bit {

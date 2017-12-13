@@ -72,8 +72,7 @@ class Char8 : Value, Key<Char8> {
     ================================================================================================
     @override
     function convert():String {
-        -- FIXME change to < 0x80 when uints are in
-        if value > 0 {
+        if value < 0x80 {
             def data := Pointer<Char8>.alloc(1)
             data[0] := self
             return String(data, 1)

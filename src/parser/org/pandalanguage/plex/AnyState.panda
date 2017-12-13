@@ -7,7 +7,7 @@ class AnyState : State {
 
     @override
     function accept(c:Char8):Bit {
-        return c != Char8(10) -- FIXME char literal
+        return c != "\n"
     }
 
     @override

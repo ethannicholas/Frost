@@ -20,6 +20,8 @@
 #include "org/pandalanguage/pandac/ClassDecl/GenericParameter.h"
 #include "panda/collections/CollectionView.h"
 #include "panda/core/MutableString.h"
+#include "panda/core/Char8.h"
+#include "panda/core/UInt8.h"
 #include "org/pandalanguage/pandac/FieldDecl.h"
 #include "org/pandalanguage/pandac/MethodDecl.h"
 
@@ -46,12 +48,9 @@ typedef panda$collections$Iterator* (*$fn173)(panda$collections$Iterable*);
 typedef panda$core$Bit (*$fn179)(panda$collections$Iterator*);
 typedef panda$core$Object* (*$fn185)(panda$collections$Iterator*);
 
-static panda$core$String $s52 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x3C", 1, 161, NULL };
 static panda$core$String $s54 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
 static panda$core$String $s75 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2E", 1, 147, NULL };
 static panda$core$String $s79 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2C\x20", 2, 14677, NULL };
-static panda$core$String $s80 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x3E", 1, 163, NULL };
-static panda$core$String $s85 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x3C", 1, 161, NULL };
 static panda$core$String $s91 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x63\x6C\x61\x73\x73\x20", 6, 2113359747467, NULL };
 static panda$core$String $s94 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
 static panda$core$String $s97 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x20\x3A\x20", 3, 1362623, NULL };
@@ -65,7 +64,6 @@ static panda$core$String $s129 = { (panda$core$Class*) &panda$core$String$class,
 static panda$core$String $s148 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x0A", 1, 111, NULL };
 static panda$core$String $s168 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x0A", 1, 111, NULL };
 static panda$core$String $s188 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x0A", 1, 111, NULL };
-static panda$core$String $s190 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x7D", 1, 226, NULL };
 
 void org$pandalanguage$pandac$ClassDecl$init$panda$io$File$org$pandalanguage$pandac$Position$panda$collections$MapView$LTpanda$core$String$Cpanda$core$String$GT$panda$core$String$Q$org$pandalanguage$pandac$Annotations$panda$core$Int64$panda$core$String$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT$panda$collections$Array$LTorg$pandalanguage$pandac$ClassDecl$GenericParameter$GT$org$pandalanguage$pandac$SymbolTable(org$pandalanguage$pandac$ClassDecl* self, panda$io$File* p_source, org$pandalanguage$pandac$Position p_position, panda$collections$MapView* p_aliases, panda$core$String* p_doccomment, org$pandalanguage$pandac$Annotations* p_annotations, panda$core$Int64 p_kind, panda$core$String* p_name, panda$collections$ListView* p_declaredSupers, panda$collections$Array* p_parameters, org$pandalanguage$pandac$SymbolTable* p_parent) {
     panda$collections$Iterator* p$Iter19;
@@ -169,11 +167,13 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$ClassDecl$type$R$org$pan
 org$pandalanguage$pandac$Type* org$pandalanguage$pandac$ClassDecl$typeWithParameters$R$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$ClassDecl* self) {
     panda$collections$Array* subtypes45;
     panda$core$MutableString* name49;
+    panda$core$Char8 $tmp52;
     panda$core$String* separator53;
     panda$collections$Iterator* p$Iter55;
     org$pandalanguage$pandac$ClassDecl$GenericParameter* p67;
     org$pandalanguage$pandac$Type* t72;
     org$pandalanguage$pandac$Position $tmp78;
+    panda$core$Char8 $tmp80;
     org$pandalanguage$pandac$Position $tmp84;
     ITable* $tmp39 = ((panda$collections$CollectionView*) self->parameters)->$class->itable;
     while ($tmp39->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
@@ -200,7 +200,8 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$ClassDecl$typeWithParame
     $tmp50->refCount.value = 1;
     panda$core$MutableString$init$panda$core$String($tmp50, ((org$pandalanguage$pandac$Symbol*) self)->name);
     name49 = $tmp50;
-    panda$core$MutableString$append$panda$core$String(name49, &$s52);
+    panda$core$Char8$init$panda$core$UInt8(&$tmp52, ((panda$core$UInt8) { 60 }));
+    panda$core$MutableString$append$panda$core$Char8(name49, $tmp52);
     separator53 = &$s54;
     {
         ITable* $tmp56 = ((panda$collections$Iterable*) self->parameters)->$class->itable;
@@ -243,7 +244,8 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$ClassDecl$typeWithParame
         goto $l60;
         $l61:;
     }
-    panda$core$MutableString$append$panda$core$String(name49, &$s80);
+    panda$core$Char8$init$panda$core$UInt8(&$tmp80, ((panda$core$UInt8) { 62 }));
+    panda$core$MutableString$append$panda$core$Char8(name49, $tmp80);
     org$pandalanguage$pandac$Type* $tmp81 = (org$pandalanguage$pandac$Type*) malloc(96);
     $tmp81->$class = (panda$core$Class*) &org$pandalanguage$pandac$Type$class;
     $tmp81->refCount.value = 1;
@@ -253,7 +255,9 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$ClassDecl$typeWithParame
     return $tmp81;
 }
 panda$core$Bit org$pandalanguage$pandac$ClassDecl$isSpecialization$R$panda$core$Bit(org$pandalanguage$pandac$ClassDecl* self) {
-    panda$core$Bit $tmp86 = panda$core$String$contains$panda$core$String$R$panda$core$Bit(self->name, &$s85);
+    panda$core$Char8 $tmp85;
+    panda$core$Char8$init$panda$core$UInt8(&$tmp85, ((panda$core$UInt8) { 60 }));
+    panda$core$Bit $tmp86 = panda$core$String$contains$panda$core$Char8$R$panda$core$Bit(self->name, $tmp85);
     return $tmp86;
 }
 panda$core$String* org$pandalanguage$pandac$ClassDecl$convert$R$panda$core$String(org$pandalanguage$pandac$ClassDecl* self) {
@@ -267,6 +271,7 @@ panda$core$String* org$pandalanguage$pandac$ClassDecl$convert$R$panda$core$Strin
     org$pandalanguage$pandac$FieldDecl* f162;
     panda$collections$Iterator* m$Iter170;
     org$pandalanguage$pandac$MethodDecl* m182;
+    panda$core$Char8 $tmp190;
     panda$core$MutableString* $tmp88 = (panda$core$MutableString*) malloc(48);
     $tmp88->$class = (panda$core$Class*) &panda$core$MutableString$class;
     $tmp88->refCount.value = 1;
@@ -419,7 +424,8 @@ panda$core$String* org$pandalanguage$pandac$ClassDecl$convert$R$panda$core$Strin
         goto $l175;
         $l176:;
     }
-    panda$core$MutableString$append$panda$core$String(result87, &$s190);
+    panda$core$Char8$init$panda$core$UInt8(&$tmp190, ((panda$core$UInt8) { 125 }));
+    panda$core$MutableString$append$panda$core$Char8(result87, $tmp190);
     panda$core$String* $tmp191 = panda$core$MutableString$finish$R$panda$core$String(result87);
     return $tmp191;
 }

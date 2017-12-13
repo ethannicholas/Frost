@@ -16,7 +16,7 @@ org$pandalanguage$pandac$parser$Lexer$class_type org$pandalanguage$pandac$parser
 
 
 void org$pandalanguage$pandac$parser$Lexer$start$panda$core$String(org$pandalanguage$pandac$parser$Lexer* self, panda$core$String* p_source) {
-    org$pandalanguage$plex$runtime$DFA* $tmp1 = (org$pandalanguage$plex$runtime$DFA*) malloc(88);
+    org$pandalanguage$plex$runtime$DFA* $tmp1 = (org$pandalanguage$plex$runtime$DFA*) malloc(80);
     $tmp1->$class = (panda$core$Class*) &org$pandalanguage$plex$runtime$DFA$class;
     $tmp1->refCount.value = 1;
     org$pandalanguage$plex$runtime$DFA$init$panda$core$String$panda$core$Int64$panda$unsafe$Pointer$LTpanda$unsafe$Pointer$LTpanda$core$Int64$GT$GT$panda$unsafe$Pointer$LTpanda$core$Int64$GT($tmp1, p_source, ((panda$core$Int64) { 239 }), self->transitions, self->accepts);
@@ -6314,13 +6314,13 @@ panda$core$Int64* org$pandalanguage$pandac$parser$Lexer$getAccepts$R$panda$unsaf
     return result153;
 }
 org$pandalanguage$pandac$parser$Token org$pandalanguage$pandac$parser$Lexer$next$R$org$pandalanguage$pandac$parser$Token(org$pandalanguage$pandac$parser$Lexer* self) {
-    org$pandalanguage$plex$runtime$RawToken* raw154;
+    org$pandalanguage$plex$runtime$RawToken raw154;
     org$pandalanguage$pandac$parser$Token $tmp156;
     org$pandalanguage$pandac$Position $tmp157;
-    org$pandalanguage$plex$runtime$RawToken* $tmp155 = org$pandalanguage$plex$runtime$DFA$next$R$org$pandalanguage$plex$runtime$RawToken(self->dfa);
+    org$pandalanguage$plex$runtime$RawToken $tmp155 = org$pandalanguage$plex$runtime$DFA$next$R$org$pandalanguage$plex$runtime$RawToken(self->dfa);
     raw154 = $tmp155;
-    org$pandalanguage$pandac$Position$init$panda$core$Int64$panda$core$Int64(&$tmp157, raw154->line, raw154->column);
-    org$pandalanguage$pandac$parser$Token$init$panda$core$Int64$panda$core$String$Index$panda$core$String$Index$org$pandalanguage$pandac$Position(&$tmp156, raw154->kind, raw154->start, raw154->end, $tmp157);
+    org$pandalanguage$pandac$Position$init$panda$core$Int64$panda$core$Int64(&$tmp157, raw154.line, raw154.column);
+    org$pandalanguage$pandac$parser$Token$init$panda$core$Int64$panda$core$String$Index$panda$core$String$Index$org$pandalanguage$pandac$Position(&$tmp156, raw154.kind, raw154.start, raw154.end, $tmp157);
     return $tmp156;
 }
 void org$pandalanguage$pandac$parser$Lexer$init(org$pandalanguage$pandac$parser$Lexer* self) {

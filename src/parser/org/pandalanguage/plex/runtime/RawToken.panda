@@ -1,15 +1,18 @@
 package org.pandalanguage.plex.runtime
 
 @final
-class RawToken {
-    var kind := 0
+class RawToken : Value {
+    var kind:Int
     var start:String.Index
     var end:String.Index
-    var line := 0
-    var column := 0
+    var line:Int
+    var column:Int
 
-    init(source:String) {
-        start := source.start()
-        end := start
+    init(kind:Int, start:String.Index, end:String.Index, line:Int, column:Int) {
+        self.kind := kind
+        self.start := start
+        self.end := end
+        self.line := line
+        self.column := column
     }
 }

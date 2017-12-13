@@ -14,6 +14,8 @@
 #include "panda/collections/ImmutableArray/ImmutableArrayIterator.h"
 #include "panda/core/String.h"
 #include "panda/core/MutableString.h"
+#include "panda/core/Char8.h"
+#include "panda/core/UInt8.h"
 panda$collections$Iterator* panda$collections$ImmutableArray$iterator$R$panda$collections$Iterator$LTpanda$collections$ImmutableArray$T$GT$shim(panda$collections$ImmutableArray* self) {
     panda$collections$Iterator* result = panda$collections$ImmutableArray$iterator$R$panda$collections$Iterator$LTpanda$collections$ImmutableArray$T$GT(self);
     return result;
@@ -41,10 +43,8 @@ typedef panda$core$Object* (*$fn162)(panda$collections$Iterator*);
 
 static panda$core$String $s109 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2C\x20", 2, 14677, NULL };
 static panda$core$String $s112 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
-static panda$core$String $s144 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x5B", 1, 192, NULL };
 static panda$core$String $s146 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
 static panda$core$String $s164 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2C\x20", 2, 14677, NULL };
-static panda$core$String $s165 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x5D", 1, 194, NULL };
 
 void panda$collections$ImmutableArray$init(panda$collections$ImmutableArray* self) {
     self->count = ((panda$core$Int64) { 0 });
@@ -367,15 +367,18 @@ panda$core$String* panda$collections$ImmutableArray$join$panda$core$String$R$pan
 }
 panda$core$String* panda$collections$ImmutableArray$convert$R$panda$core$String(panda$collections$ImmutableArray* self) {
     panda$core$MutableString* result141;
+    panda$core$Char8 $tmp144;
     panda$core$String* separator145;
     panda$collections$Iterator* v$Iter147;
     panda$core$Object* v159;
+    panda$core$Char8 $tmp165;
     panda$core$MutableString* $tmp142 = (panda$core$MutableString*) malloc(48);
     $tmp142->$class = (panda$core$Class*) &panda$core$MutableString$class;
     $tmp142->refCount.value = 1;
     panda$core$MutableString$init($tmp142);
     result141 = $tmp142;
-    panda$core$MutableString$append$panda$core$String(result141, &$s144);
+    panda$core$Char8$init$panda$core$UInt8(&$tmp144, ((panda$core$UInt8) { 91 }));
+    panda$core$MutableString$append$panda$core$Char8(result141, $tmp144);
     separator145 = &$s146;
     {
         ITable* $tmp148 = ((panda$collections$Iterable*) self)->$class->itable;
@@ -409,7 +412,8 @@ panda$core$String* panda$collections$ImmutableArray$convert$R$panda$core$String(
         goto $l152;
         $l153:;
     }
-    panda$core$MutableString$append$panda$core$String(result141, &$s165);
+    panda$core$Char8$init$panda$core$UInt8(&$tmp165, ((panda$core$UInt8) { 93 }));
+    panda$core$MutableString$append$panda$core$Char8(result141, $tmp165);
     panda$core$String* $tmp166 = panda$core$MutableString$finish$R$panda$core$String(result141);
     return $tmp166;
 }

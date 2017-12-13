@@ -1,21 +1,26 @@
 #include "org/pandalanguage/plex/runtime/RawToken.h"
-#include "panda/core/Object.h"
+#include "panda/core/Value.h"
 #include "panda/core/Class.h"
-#include "panda/core/String.h"
+#include "panda/core/Object.h"
+org$pandalanguage$plex$runtime$RawToken$wrapper* wrap_org$pandalanguage$plex$runtime$RawToken(org$pandalanguage$plex$runtime$RawToken self) {
+    org$pandalanguage$plex$runtime$RawToken$wrapper* result = (org$pandalanguage$plex$runtime$RawToken$wrapper*) malloc(56);
+    result->cl = (panda$core$Class*) &org$pandalanguage$plex$runtime$RawToken$wrapperclass;
+    result->value = self;
+    return result;
+}
 #include "panda/core/Int64.h"
 #include "panda/core/String/Index.h"
 
 
-org$pandalanguage$plex$runtime$RawToken$class_type org$pandalanguage$plex$runtime$RawToken$class = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Object$class, NULL, { panda$core$Object$convert$R$panda$core$String, panda$core$Object$cleanup} };
+org$pandalanguage$plex$runtime$RawToken$class_type org$pandalanguage$plex$runtime$RawToken$class = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Value$class, NULL, { panda$core$Object$convert$R$panda$core$String, panda$core$Object$cleanup} };
 
+org$pandalanguage$plex$runtime$RawToken$wrapperclass_type org$pandalanguage$plex$runtime$RawToken$wrapperclass = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Value$class, NULL, { panda$core$Object$convert$R$panda$core$String, panda$core$Object$cleanup} };
 
-
-void org$pandalanguage$plex$runtime$RawToken$init$panda$core$String(org$pandalanguage$plex$runtime$RawToken* self, panda$core$String* p_source) {
-    self->kind = ((panda$core$Int64) { 0 });
-    self->line = ((panda$core$Int64) { 0 });
-    self->column = ((panda$core$Int64) { 0 });
-    panda$core$String$Index $tmp1 = panda$core$String$start$R$panda$core$String$Index(p_source);
-    self->start = $tmp1;
-    self->end = self->start;
+void org$pandalanguage$plex$runtime$RawToken$init$panda$core$Int64$panda$core$String$Index$panda$core$String$Index$panda$core$Int64$panda$core$Int64(org$pandalanguage$plex$runtime$RawToken* self, panda$core$Int64 p_kind, panda$core$String$Index p_start, panda$core$String$Index p_end, panda$core$Int64 p_line, panda$core$Int64 p_column) {
+    self->kind = p_kind;
+    self->start = p_start;
+    self->end = p_end;
+    self->line = p_line;
+    self->column = p_column;
 }
 
