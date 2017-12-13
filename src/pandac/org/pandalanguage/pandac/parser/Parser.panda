@@ -181,7 +181,7 @@ class Parser {
                     }
                     def escapeText := text(escape)
                     def c := escapeText.utf8()[0]
-                    match c.convert()->String { -- FIXME match on char rather than string
+                    match c {
                         when "n":  chunk.append("\n")
                         when "r":  chunk.append("\r")
                         when "t":  chunk.append("\t")

@@ -198,7 +198,7 @@ class Compiler : ErrorReporter {
         if result = null {
             def rootAlias := root[name]
             if rootAlias != null & rootAlias.kind = Symbol.Kind.ALIAS {
-                result := getClass((rootAlias->Alias).fullName) -- FIXME parens
+                result := getClass(rootAlias->Alias.fullName)
             }
         }
         if result = null {
@@ -274,7 +274,7 @@ class Compiler : ErrorReporter {
                 if s != null {
                     match s.kind {
                         when Symbol.Kind.ALIAS:
-                            return Type((s->Alias).fullName, Type.Kind.CLASS, type.position, true) -- FIXME parens
+                            return Type(s->Alias.fullName, Type.Kind.CLASS, type.position, true)
                         when Symbol.Kind.GENERIC_PARAMETER:
                             def gp := s->ClassDecl.GenericParameter
                             resolve(getClass(type.position, gp.owner))
@@ -282,7 +282,7 @@ class Compiler : ErrorReporter {
                         when Symbol.Kind.TYPE:
                             return s->Type
                         when Symbol.Kind.CLASS:
-                            return (s->ClassDecl).type() -- FIXME parens
+                            return s->ClassDecl.type()
                     }
                 }
                 error(type.position, "unknown type '\{type}'")
@@ -871,7 +871,7 @@ class Compiler : ErrorReporter {
         }
         else {
             assert s.kind = Symbol.Kind.METHODS
-            for m in (s->Methods).methods { -- FIXME extra parens
+            for m in s->Methods.methods {
                 resolve(m)
                 methods.add(MethodRef(m, types))
             }
@@ -902,20 +902,20 @@ class Compiler : ErrorReporter {
         match s.kind {
             when Symbol.Kind.ALIAS:
                 assert target = null
-                def cl := getClass(position, (s->Alias).fullName) -- FIXME remove extra parens
+                def cl := getClass(position, s->Alias.fullName)
                 if cl != null {
-                    checkGenericParameters(position, cl, cl.type()) -- FIXME parens
+                    checkGenericParameters(position, cl, cl.type())
                     return IRNode(IRNode.Kind.TYPE_REFERENCE, position, Type.Class(), cl.type())
                 }
                 return null
             when Symbol.Kind.CLASS:
-                checkGenericParameters(position, s->ClassDecl, (s->ClassDecl).type()) -- FIXME parens
+                checkGenericParameters(position, s->ClassDecl, s->ClassDecl.type())
                 return IRNode(IRNode.Kind.TYPE_REFERENCE, position, Type.Class(),
                         (s->ClassDecl).type()) -- FIXME parens
             when Symbol.Kind.METHOD, Symbol.Kind.METHODS:
                 return getMethodReference(st, target, s.name, position, typeParameters(target))
             when Symbol.Kind.VARIABLE:
-                return IRNode(IRNode.Kind.VARIABLE_REFERENCE, position, (s->Variable).type, -- FIXME parens
+                return IRNode(IRNode.Kind.VARIABLE_REFERENCE, position, s->Variable.type,
                         s->Variable)
             when Symbol.Kind.FIELD:
                 def f := s->FieldDecl
@@ -1194,13 +1194,13 @@ class Compiler : ErrorReporter {
                 }
             when IRNode.Kind.STRING:
                 if target = Type.Char8() {
-                    if (expr.payload->String).utf8().get_count() = 1 { -- FIXME parens
+                    if expr.payload->String.utf8().get_count() = 1 {
                         return base
                     }
                     return null
                 }
                 if target = Type.Char16() {
-                    def utf16 := (expr.payload->String).utf16() -- FIXME parens
+                    def utf16 := expr.payload->String.utf16()
                     if utf16.get_done() {
                         return null
                     }
@@ -1211,7 +1211,7 @@ class Compiler : ErrorReporter {
                     return null
                 }
                 if target = Type.Char32() {
-                    if (expr.payload->String).length() = 1 { -- FIXME parens
+                    if expr.payload->String.length() = 1 {
                         return base + 2
                     }
                     return null
@@ -1351,7 +1351,7 @@ class Compiler : ErrorReporter {
                 }
             when IRNode.Kind.NEGATED_INT:
                 if target.typeKind = Type.Kind.BUILTIN_INT &
-                        requiredSize(-((expr.payload->UInt64).convert()->Int64)) <= target.size() { -- FIXME parens
+                        requiredSize(-expr.payload->UInt64.convert()->Int64) <= target.size() {
                     return IRNode(IRNode.Kind.NEGATED_INT, expr.position, target,
                             expr.payload->UInt64)
                 }
@@ -1957,8 +1957,8 @@ class Compiler : ErrorReporter {
         if left.kind = IRNode.Kind.NEGATED_INT | left.payload->UInt64 < Int64.MAX.convert() &
                 right.kind = IRNode.Kind.NEGATED_INT | right.payload->UInt64 < Int64.MAX.convert() {
             -- both values fit into a signed Int64
-            def l:Int64 := (left.payload->UInt64).convert() -- FIXME parens
-            def r:Int64 := (right.payload->UInt64).convert() -- FIXME parens
+            def l:Int64 := left.payload->UInt64.convert()
+            def r:Int64 := right.payload->UInt64.convert()
             match op {
                 when Token.Kind.ADD:
                     return IRNode(IRNode.Kind.INT, position, Type.IntLiteral(),
@@ -2230,7 +2230,7 @@ class Compiler : ErrorReporter {
                 }
                 else {
                     assert methods.kind = Symbol.Kind.METHODS
-                    for m in (methods->Methods).methods { -- FIXME parens
+                    for m in methods->Methods.methods {
                         resolve(m)
                         types.add(MethodRef(m, parameters).returnType())
                     }
@@ -2347,7 +2347,7 @@ class Compiler : ErrorReporter {
                         assert m.parameters.get_count() = 0
                         assert !m.annotations.isClass()
                     when Symbol.Kind.METHODS:
-                        for test in (s->Methods).methods { -- FIXME ()s
+                        for test in s->Methods.methods {
                             if !test.annotations.isClass() & test.parameters.get_count() = 0 {
                                 m := test
                                 break
@@ -2438,6 +2438,36 @@ class Compiler : ErrorReporter {
         return null
     }
 
+    method compileDot(position:Position, base:IRNode, name:String):IRNode? {
+        def cl:ClassDecl?
+        match base.kind {
+            when IRNode.Kind.TYPE_REFERENCE:
+                cl := getClass(base.payload->Type)
+            when IRNode.Kind.UNRESOLVED_IDENTIFIER:
+                def name := "\{base.payload}.\{name}"
+                def cl := tryResolveClass(name)
+                if cl != null {
+                    return IRNode(IRNode.Kind.TYPE_REFERENCE, position, Type.Class(), cl.type())
+                }
+                return IRNode(IRNode.Kind.UNRESOLVED_IDENTIFIER, position, Type.Invalid(), name)
+            when IRNode.Kind.SUPER:
+                resolve(currentClass.peek())
+                cl := getClass(currentClass.peek().rawSuper)
+            otherwise:
+                cl := getClass(base.type)
+        }
+        if cl = null {
+            return null
+        }
+        def st := getSymbolTable(cl)
+        def s := st[name]
+        if s = null {
+            error(position, "class '\{base.type}' does not have a member named '\{name}'")
+            return null
+        }
+        return symbolRef(position, base, s, st)
+    }
+
     method compileDot(d:ASTNode):IRNode? {
         assert d.kind = ASTNode.Kind.DOT
         assert d.children.get_count() = 1
@@ -2451,33 +2481,7 @@ class Compiler : ErrorReporter {
         if base = null {
             return null
         }
-        def cl:ClassDecl?
-        match base.kind {
-            when IRNode.Kind.TYPE_REFERENCE:
-                cl := getClass(base.payload->Type)
-            when IRNode.Kind.UNRESOLVED_IDENTIFIER:
-                def name := "\{base.payload}.\{d.payload}"
-                def cl := tryResolveClass(name)
-                if cl != null {
-                    return IRNode(IRNode.Kind.TYPE_REFERENCE, d.position, Type.Class(), cl.type())
-                }
-                return IRNode(IRNode.Kind.UNRESOLVED_IDENTIFIER, d.position, Type.Invalid(), name)
-            when IRNode.Kind.SUPER:
-                resolve(currentClass.peek())
-                cl := getClass(currentClass.peek().rawSuper)
-            otherwise:
-                cl := getClass(base.type)
-        }
-        if cl = null {
-            return null
-        }
-        def s := getSymbolTable(cl)[d.payload->String]
-        if s = null {
-            error(d.position, "class '\{base.type}' does not have a member named " +
-                    "'\{d.payload}'")
-            return null
-        }
-        return symbolRef(d.position, base, s, getSymbolTable(cl))
+        return compileDot(d.position, base, d.payload->String)
     }
 
     method compileIdentifier(i:ASTNode):IRNode? {
@@ -2594,14 +2598,31 @@ class Compiler : ErrorReporter {
         return IRNode(IRNode.Kind.SUPER, s.position, cl.rawSuper)
     }
 
-    method compileCast(c:ASTNode):IRNode? {
-        assert c.kind = ASTNode.Kind.CAST
-        assert c.children.get_count() = 2
-        def value := compileExpression(c.children[0])
+    method compileCast(position:Position, expr:ASTNode, rawType:Type):IRNode? {
+        def value := compileExpression(expr)
         if value = null {
             return null
         }
-        def type := resolve(scanner.convertType(c.children[1]))
+        def index := rawType.name.lastIndexOf(".")
+        if rawType.typeKind = Type.Kind.CLASS & index != null {
+            -- we have a dotted name which might not be entirely a type - for example we might have
+            -- 'o->String.length'. This is obviously meant to be a cast to String followed by a
+            -- call to get_length(), but syntactically it could just as easily be a cast to a class
+            -- named String.length. We need to disambiguate these cases here.
+            assert reportErrors
+            reportErrors := false
+            def type := resolve(rawType)
+            reportErrors := true
+            if type = null {
+                def base := compileCast(position, expr,
+                        Type(rawType.name[..index], Type.Kind.CLASS, position))
+                if base = null {
+                    return null
+                }
+                return compileDot(position, base, rawType.name[rawType.name.next(index)..])
+            }
+        }
+        def type := resolve(rawType)
         if type = null {
             return null
         }
@@ -2609,14 +2630,20 @@ class Compiler : ErrorReporter {
             return coerce(value, type)
         }
         if canCast(value, type) {
-            return cast(value, c.position, true, type)
+            return cast(value, position, true, type)
         }
         else {
-            error(c.position, "value of type '\{value.type}' cannot possibly be an " +
-                    "instance of '\{type}'")
+            error(position, "value of type '\{value.type}' cannot possibly be an instance of " +
+                    "'\{type}'")
             return null
         }
     }
+
+    method compileCast(c:ASTNode):IRNode? {
+        assert c.kind = ASTNode.Kind.CAST
+        assert c.children.get_count() = 2
+        return compileCast(c.position, c.children[0], scanner.convertType(c.children[1]))
+    }    
 
     method compileNull(n:ASTNode):IRNode {
         assert n.kind = ASTNode.Kind.NULL
@@ -2633,7 +2660,7 @@ class Compiler : ErrorReporter {
                 def result := compileCall(e)
                 if result != null & result.type = Type.Void() {
                     assert result.kind = IRNode.Kind.CALL
-                    error(result.position, (result.payload->MethodRef).value.declaration() + -- FIXME parens
+                    error(result.position, result.payload->MethodRef.value.declaration() +
                             " does not return a value")
                     return null
                 }
@@ -3012,7 +3039,7 @@ class Compiler : ErrorReporter {
         if target.value != null {
             assert target.target.kind = IRNode.Kind.VARIABLE_REFERENCE
             def v := target.target.payload->Variable
-            v.initialValue := target.value -- FIXME parens
+            v.initialValue := target.value
             children.add(target.value)
         }
         return IRNode(IRNode.Kind.DECLARATION, d.position, children)

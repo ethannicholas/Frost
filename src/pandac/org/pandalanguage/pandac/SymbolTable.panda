@@ -45,7 +45,7 @@ class SymbolTable {
                 when Symbol.Kind.METHODS:
                     def methods := Array<MethodDecl>()
                     methods.add(s->MethodDecl)
-                    methods.addAll((old->Methods).methods) -- FIXME extra parentheses
+                    methods.addAll(old->Methods.methods)
                     symbols[name] := Methods(methods)
                     return
             }
@@ -106,13 +106,13 @@ class SymbolTable {
             when Symbol.Kind.METHODS:
                 match inherited.kind {
                     when Symbol.Kind.METHODS:
-                        def methods := Array<MethodDecl>((symbol->Methods).methods) -- FIXME parens
+                        def methods := Array<MethodDecl>(symbol->Methods.methods)
                         for m in (inherited->Methods).methods {
                             addIfNotOverridden(m, methods)
                         }
                         return Methods(methods)
                     when Symbol.Kind.METHOD:
-                        def methods := Array<MethodDecl>((symbol->Methods).methods) -- FIXME parens
+                        def methods := Array<MethodDecl>(symbol->Methods.methods)
                         addIfNotOverridden(inherited->MethodDecl, methods)
                         return Methods(methods)
                     otherwise:

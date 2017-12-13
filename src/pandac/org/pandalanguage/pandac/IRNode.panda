@@ -156,15 +156,15 @@ class IRNode {
                 return result.finish()
             when Kind.METHOD_REFERENCE:
                 if children.get_count() > 0 {
-                    return "\{children[0]}.\{(payload->MethodRef).value.name}" -- FIXME parens
+                    return "\{children[0]}.\{payload->MethodRef.value.name}"
                 }
-                return (payload->MethodRef).value.name -- FIXME parens
+                return payload->MethodRef.value.name
             when Kind.UNRESOLVED_METHOD_REFERENCE:
                 if children.get_count() = 1 {
-                    return "\{children[0]}.\{(payload->ListView<MethodRef>)[0].value.name}" -- FIXME parens
+                    return "\{children[0]}.\{payload->ListView<MethodRef>[0].value.name}"
                 }
                 assert children.get_count() = 0
-                return (payload->ListView<MethodRef>)[0].value.name -- FIXME parens
+                return payload->ListView<MethodRef>[0].value.name
             when Kind.TYPE_REFERENCE:
                 return payload.convert()
             when Kind.INT:
@@ -178,7 +178,7 @@ class IRNode {
             when Kind.CONSTRUCTED_OBJECT:
                 return "-* constructed object: \{type} *-"
             when Kind.CALL:
-                return "\{(payload->MethodRef).value.name}(\{children.join(", ")})" -- FIXME parens
+                return "\{payload->MethodRef.value.name}(\{children.join(", ")})"
             when Kind.UNRESOLVED_METHOD_CALL:
                 return "\{children[0].payload}(\{children[1..].join(", ")})"
             when Kind.UNRESOLVED_INDEX:
@@ -196,7 +196,7 @@ class IRNode {
             when Kind.REUSED_VALUE:
                 return "-* ReusedValue: \{payload} *-"
             when Kind.FIELD_REFERENCE:
-                return "\{children[0]}.\{(payload->FieldDecl).name}" -- FIXME parens
+                return "\{children[0]}.\{payload->FieldDecl.name}"
             when Kind.NULL:
                 return "null"
             when Kind.DECLARATION:

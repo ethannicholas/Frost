@@ -5,7 +5,7 @@ class MethodDecl : Symbol {
     class Parameter {
         def name:String
 
-        def type:org.pandalanguage.pandac.Type -- FIXME shouldn't have to fully qualify this
+        def type:Type
 
         init(name:String, type:org.pandalanguage.pandac.Type) {
             self.name := name

@@ -1108,11 +1108,11 @@ class CCodeGenerator : CodeGenerator {
     }
 
     method getIntReference(int:IRNode, out:IndentedOutputStream):String {
-        return (int.payload->Int).convert() -- FIXME parens
+        return int.payload->Int.convert()
     }
 
     method getNegatedIntReference(int:IRNode, out:IndentedOutputStream):String {
-        return "-" + (int.payload->Int).convert() -- FIXME parens
+        return "-" + int.payload->Int.convert()
     }
 
     method getBitReference(bit:IRNode, out:IndentedOutputStream):String {
@@ -1741,7 +1741,7 @@ class CCodeGenerator : CodeGenerator {
                 return getName(lvalue.payload->Variable)
             when IRNode.Kind.FIELD_REFERENCE:
                 def base := getReference(lvalue.children[0], out)
-                return "\{base}->\{(lvalue.payload->FieldDecl).name}" -- FIXME parens
+                return "\{base}->\{lvalue.payload->FieldDecl.name}"
             when IRNode.Kind.REUSED_VALUE_DEFINITION:
                 def result := getLValue(lvalue.children[0], out)
                 reusedValues[lvalue.payload->UInt64] := result

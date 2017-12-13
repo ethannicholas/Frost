@@ -1,4 +1,9 @@
 package panda.core
 
+====================================================================================================
+Represents objects whose fields cannot be modified after creation. `Immutable` objects may not
+contain `var` fields or fields which are not themselves `Immutable`.
+====================================================================================================
+@abstract
 class Immutable {
 }
