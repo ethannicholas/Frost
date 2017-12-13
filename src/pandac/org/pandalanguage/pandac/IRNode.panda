@@ -68,7 +68,7 @@ class IRNode {
 
     def type:Type
 
-    def children:Array<IRNode>?
+    def children:ImmutableArray<IRNode>?
 
     init(kind:Int, position:Position) {
         init(kind, position, Type.Void(), null, null)
@@ -128,7 +128,7 @@ class IRNode {
         self.type := type
         self.payload := payload
         if children != null {
-            self.children := Array<IRNode>(children)
+            self.children := ImmutableArray<IRNode>(children)
         }
         else {
             self.children := null

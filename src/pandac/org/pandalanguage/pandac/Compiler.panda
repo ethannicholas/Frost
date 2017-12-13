@@ -3173,7 +3173,9 @@ class Compiler : ErrorReporter {
         for i in children.get_count() - 1 .. 1 by -1 {
             assert children[i - 1].kind = IRNode.Kind.IF
             assert children[i - 1].children.get_count() = 2
-            children[i - 1].children.add(children[i])
+            def newChildren := Array<IRNode>(children[i - 1].children)
+            newChildren.add(children[i])
+            children[i - 1] := IRNode(children[i - 1].kind, children[i - 1].position, newChildren)
             children.removeIndex(children.get_count() - 1)
         }
         return IRNode(IRNode.Kind.BLOCK, m.position, children)

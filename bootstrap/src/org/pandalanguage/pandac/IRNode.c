@@ -9,7 +9,7 @@
 #include "panda/core/Bit.h"
 #include "panda/collections/ListView.h"
 #include "org/pandalanguage/pandac/Variable.h"
-#include "panda/collections/Array.h"
+#include "panda/collections/ImmutableArray.h"
 #include "panda/core/MutableString.h"
 #include "panda/collections/Iterator.h"
 #include "panda/collections/Iterable.h"
@@ -149,10 +149,10 @@ void org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pan
     self->payload = p_payload;
     if (((panda$core$Bit) { p_children != NULL }).value) {
     {
-        panda$collections$Array* $tmp7 = (panda$collections$Array*) malloc(40);
-        $tmp7->$class = (panda$core$Class*) &panda$collections$Array$class;
+        panda$collections$ImmutableArray* $tmp7 = (panda$collections$ImmutableArray*) malloc(32);
+        $tmp7->$class = (panda$core$Class*) &panda$collections$ImmutableArray$class;
         $tmp7->refCount.value = 1;
-        panda$collections$Array$init$panda$collections$ListView$LTpanda$collections$Array$T$GT($tmp7, p_children);
+        panda$collections$ImmutableArray$init$panda$collections$ListView$LTpanda$collections$ImmutableArray$T$GT($tmp7, p_children);
         self->children = $tmp7;
     }
     }
@@ -254,11 +254,11 @@ panda$core$String* org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(o
         break;
         case 1002:
         {
-            panda$core$Int64 $tmp55 = panda$collections$Array$get_count$R$panda$core$Int64(self->children);
+            panda$core$Int64 $tmp55 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(self->children);
             panda$core$Bit $tmp56 = panda$core$Int64$$GT$panda$core$Int64$R$panda$core$Bit($tmp55, ((panda$core$Int64) { 0 }));
             if ($tmp56.value) {
             {
-                panda$core$Object* $tmp57 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(self->children, ((panda$core$Int64) { 0 }));
+                panda$core$Object* $tmp57 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(self->children, ((panda$core$Int64) { 0 }));
                 panda$core$String* $tmp58 = org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(((org$pandalanguage$pandac$IRNode*) $tmp57));
                 panda$core$String* $tmp60 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp58, &$s59);
                 panda$core$String* $tmp61 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp60, ((org$pandalanguage$pandac$Symbol*) ((org$pandalanguage$pandac$MethodRef*) self->payload)->value)->name);
@@ -271,11 +271,11 @@ panda$core$String* org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(o
         break;
         case 1003:
         {
-            panda$core$Int64 $tmp64 = panda$collections$Array$get_count$R$panda$core$Int64(self->children);
+            panda$core$Int64 $tmp64 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(self->children);
             panda$core$Bit $tmp65 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp64, ((panda$core$Int64) { 1 }));
             if ($tmp65.value) {
             {
-                panda$core$Object* $tmp66 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(self->children, ((panda$core$Int64) { 0 }));
+                panda$core$Object* $tmp66 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(self->children, ((panda$core$Int64) { 0 }));
                 panda$core$String* $tmp67 = org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(((org$pandalanguage$pandac$IRNode*) $tmp66));
                 panda$core$String* $tmp69 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp67, &$s68);
                 ITable* $tmp70 = ((panda$collections$ListView*) self->payload)->$class->itable;
@@ -289,7 +289,7 @@ panda$core$String* org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(o
                 return $tmp76;
             }
             }
-            panda$core$Int64 $tmp77 = panda$collections$Array$get_count$R$panda$core$Int64(self->children);
+            panda$core$Int64 $tmp77 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(self->children);
             panda$core$Bit $tmp78 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp77, ((panda$core$Int64) { 0 }));
             PANDA_ASSERT($tmp78.value);
             ITable* $tmp79 = ((panda$collections$ListView*) self->payload)->$class->itable;
@@ -330,8 +330,8 @@ panda$core$String* org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(o
         {
             panda$core$String* $tmp93 = org$pandalanguage$pandac$Type$convert$R$panda$core$String(self->type);
             panda$core$String* $tmp95 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp93, &$s94);
-            panda$core$Object* $tmp96 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(self->children, ((panda$core$Int64) { 0 }));
-            panda$core$String* $tmp98 = panda$collections$Array$join$panda$core$String$R$panda$core$String(((org$pandalanguage$pandac$IRNode*) $tmp96)->children, &$s97);
+            panda$core$Object* $tmp96 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(self->children, ((panda$core$Int64) { 0 }));
+            panda$core$String* $tmp98 = panda$collections$ImmutableArray$join$panda$core$String$R$panda$core$String(((org$pandalanguage$pandac$IRNode*) $tmp96)->children, &$s97);
             panda$core$String* $tmp99 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp95, $tmp98);
             panda$core$String* $tmp101 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp99, &$s100);
             return $tmp101;
@@ -348,7 +348,7 @@ panda$core$String* org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(o
         {
             panda$core$String* $tmp106 = panda$core$String$convert$R$panda$core$String(((org$pandalanguage$pandac$Symbol*) ((org$pandalanguage$pandac$MethodRef*) self->payload)->value)->name);
             panda$core$String* $tmp108 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp106, &$s107);
-            panda$core$String* $tmp110 = panda$collections$Array$join$panda$core$String$R$panda$core$String(self->children, &$s109);
+            panda$core$String* $tmp110 = panda$collections$ImmutableArray$join$panda$core$String$R$panda$core$String(self->children, &$s109);
             panda$core$String* $tmp111 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp108, $tmp110);
             panda$core$String* $tmp113 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp111, &$s112);
             return $tmp113;
@@ -356,12 +356,12 @@ panda$core$String* org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(o
         break;
         case 1039:
         {
-            panda$core$Object* $tmp114 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(self->children, ((panda$core$Int64) { 0 }));
+            panda$core$Object* $tmp114 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(self->children, ((panda$core$Int64) { 0 }));
             panda$core$String* $tmp116 = (($fn115) ((org$pandalanguage$pandac$IRNode*) $tmp114)->payload->$class->vtable[0])(((org$pandalanguage$pandac$IRNode*) $tmp114)->payload);
             panda$core$String* $tmp118 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp116, &$s117);
             panda$core$Range$LTpanda$core$Int64$Q$GT$init$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Bit(&$tmp119, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Int64$nullable) { .nonnull = false }), ((panda$core$Bit) { false }));
-            panda$collections$Array* $tmp120 = panda$collections$Array$$IDX$panda$core$Range$LTpanda$core$Int64$Q$GT$R$panda$collections$Array$LTpanda$collections$Array$T$GT(self->children, $tmp119);
-            panda$core$String* $tmp122 = panda$collections$Array$join$panda$core$String$R$panda$core$String($tmp120, &$s121);
+            panda$collections$ImmutableArray* $tmp120 = panda$collections$ImmutableArray$$IDX$panda$core$Range$LTpanda$core$Int64$Q$GT$R$panda$collections$ImmutableArray$LTpanda$collections$ImmutableArray$T$GT(self->children, $tmp119);
+            panda$core$String* $tmp122 = panda$collections$ImmutableArray$join$panda$core$String$R$panda$core$String($tmp120, &$s121);
             panda$core$String* $tmp123 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp118, $tmp122);
             panda$core$String* $tmp125 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp123, &$s124);
             return $tmp125;
@@ -369,12 +369,12 @@ panda$core$String* org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(o
         break;
         case 1040:
         {
-            panda$core$Object* $tmp127 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(self->children, ((panda$core$Int64) { 0 }));
+            panda$core$Object* $tmp127 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(self->children, ((panda$core$Int64) { 0 }));
             panda$core$String* $tmp128 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s126, ((panda$core$Object*) ((org$pandalanguage$pandac$IRNode*) $tmp127)));
             panda$core$String* $tmp130 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp128, &$s129);
             panda$core$Range$LTpanda$core$Int64$Q$GT$init$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Bit(&$tmp131, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Int64$nullable) { .nonnull = false }), ((panda$core$Bit) { false }));
-            panda$collections$Array* $tmp132 = panda$collections$Array$$IDX$panda$core$Range$LTpanda$core$Int64$Q$GT$R$panda$collections$Array$LTpanda$collections$Array$T$GT(self->children, $tmp131);
-            panda$core$String* $tmp134 = panda$collections$Array$join$panda$core$String$R$panda$core$String($tmp132, &$s133);
+            panda$collections$ImmutableArray* $tmp132 = panda$collections$ImmutableArray$$IDX$panda$core$Range$LTpanda$core$Int64$Q$GT$R$panda$collections$ImmutableArray$LTpanda$collections$ImmutableArray$T$GT(self->children, $tmp131);
+            panda$core$String* $tmp134 = panda$collections$ImmutableArray$join$panda$core$String$R$panda$core$String($tmp132, &$s133);
             panda$core$String* $tmp135 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp130, $tmp134);
             panda$core$String* $tmp137 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp135, &$s136);
             return $tmp137;
@@ -382,7 +382,7 @@ panda$core$String* org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(o
         break;
         case 1009:
         {
-            panda$core$Object* $tmp139 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(self->children, ((panda$core$Int64) { 0 }));
+            panda$core$Object* $tmp139 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(self->children, ((panda$core$Int64) { 0 }));
             panda$core$String* $tmp140 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s138, ((panda$core$Object*) ((org$pandalanguage$pandac$IRNode*) $tmp139)));
             panda$core$String* $tmp142 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp140, &$s141);
             panda$core$String* $tmp143 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp142, ((panda$core$Object*) self->type));
@@ -399,13 +399,13 @@ panda$core$String* org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(o
         break;
         case 1023:
         {
-            panda$core$Object* $tmp150 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(self->children, ((panda$core$Int64) { 0 }));
+            panda$core$Object* $tmp150 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(self->children, ((panda$core$Int64) { 0 }));
             panda$core$String* $tmp151 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s149, ((panda$core$Object*) ((org$pandalanguage$pandac$IRNode*) $tmp150)));
             panda$core$String* $tmp153 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp151, &$s152);
             panda$core$String* $tmp154 = org$pandalanguage$pandac$Compiler$operatorName$panda$core$Int64$R$panda$core$String(((panda$core$Int64$wrapper*) self->payload)->value);
             panda$core$String* $tmp155 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp153, $tmp154);
             panda$core$String* $tmp157 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp155, &$s156);
-            panda$core$Object* $tmp158 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(self->children, ((panda$core$Int64) { 1 }));
+            panda$core$Object* $tmp158 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(self->children, ((panda$core$Int64) { 1 }));
             panda$core$String* $tmp159 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp157, ((panda$core$Object*) ((org$pandalanguage$pandac$IRNode*) $tmp158)));
             panda$core$String* $tmp161 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp159, &$s160);
             return $tmp161;
@@ -418,7 +418,7 @@ panda$core$String* org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(o
         break;
         case 1027:
         {
-            panda$core$Object* $tmp163 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(self->children, ((panda$core$Int64) { 0 }));
+            panda$core$Object* $tmp163 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(self->children, ((panda$core$Int64) { 0 }));
             panda$core$String* $tmp164 = org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(((org$pandalanguage$pandac$IRNode*) $tmp163));
             panda$core$String* $tmp166 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp164, &$s165);
             panda$core$String* $tmp167 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp166, self->payload);
@@ -435,7 +435,7 @@ panda$core$String* org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(o
         break;
         case 1026:
         {
-            panda$core$Object* $tmp174 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(self->children, ((panda$core$Int64) { 0 }));
+            panda$core$Object* $tmp174 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(self->children, ((panda$core$Int64) { 0 }));
             panda$core$String* $tmp175 = org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(((org$pandalanguage$pandac$IRNode*) $tmp174));
             panda$core$String* $tmp177 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp175, &$s176);
             panda$core$String* $tmp178 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp177, ((org$pandalanguage$pandac$Symbol*) ((org$pandalanguage$pandac$FieldDecl*) self->payload))->name);
@@ -450,19 +450,19 @@ panda$core$String* org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(o
         break;
         case 1021:
         {
-            panda$core$Int64 $tmp182 = panda$collections$Array$get_count$R$panda$core$Int64(self->children);
+            panda$core$Int64 $tmp182 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(self->children);
             panda$core$Bit $tmp183 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp182, ((panda$core$Int64) { 1 }));
             if ($tmp183.value) {
             {
-                panda$core$Object* $tmp184 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(self->children, ((panda$core$Int64) { 0 }));
+                panda$core$Object* $tmp184 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(self->children, ((panda$core$Int64) { 0 }));
                 panda$core$String* $tmp185 = org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(((org$pandalanguage$pandac$IRNode*) $tmp184));
                 return $tmp185;
             }
             }
-            panda$core$Object* $tmp186 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(self->children, ((panda$core$Int64) { 0 }));
+            panda$core$Object* $tmp186 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(self->children, ((panda$core$Int64) { 0 }));
             panda$core$String* $tmp187 = org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(((org$pandalanguage$pandac$IRNode*) $tmp186));
             panda$core$String* $tmp189 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp187, &$s188);
-            panda$core$Object* $tmp190 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(self->children, ((panda$core$Int64) { 1 }));
+            panda$core$Object* $tmp190 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(self->children, ((panda$core$Int64) { 1 }));
             panda$core$String* $tmp191 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp189, ((panda$core$Object*) ((org$pandalanguage$pandac$IRNode*) $tmp190)));
             panda$core$String* $tmp193 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp191, &$s192);
             return $tmp193;
@@ -470,7 +470,7 @@ panda$core$String* org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(o
         break;
         case 1018:
         {
-            panda$core$String* $tmp196 = panda$collections$Array$join$panda$core$String$R$panda$core$String(self->children, &$s195);
+            panda$core$String* $tmp196 = panda$collections$ImmutableArray$join$panda$core$String$R$panda$core$String(self->children, &$s195);
             panda$core$String* $tmp197 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s194, $tmp196);
             panda$core$String* $tmp199 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp197, &$s198);
             return $tmp199;
@@ -478,7 +478,7 @@ panda$core$String* org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(o
         break;
         case 1017:
         {
-            panda$core$String* $tmp202 = panda$collections$Array$join$panda$core$String$R$panda$core$String(self->children, &$s201);
+            panda$core$String* $tmp202 = panda$collections$ImmutableArray$join$panda$core$String$R$panda$core$String(self->children, &$s201);
             panda$core$String* $tmp203 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s200, $tmp202);
             panda$core$String* $tmp205 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp203, &$s204);
             return $tmp205;
@@ -486,7 +486,7 @@ panda$core$String* org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(o
         break;
         case 1008:
         {
-            panda$core$String* $tmp207 = panda$collections$Array$join$R$panda$core$String(self->children);
+            panda$core$String* $tmp207 = panda$collections$ImmutableArray$join$R$panda$core$String(self->children);
             panda$core$String* $tmp208 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s206, $tmp207);
             panda$core$String* $tmp210 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp208, &$s209);
             return $tmp210;
@@ -499,11 +499,11 @@ panda$core$String* org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(o
             $tmp212->refCount.value = 1;
             panda$core$MutableString$init$panda$core$String($tmp212, &$s214);
             result211 = $tmp212;
-            panda$core$Object* $tmp215 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(self->children, ((panda$core$Int64) { 0 }));
+            panda$core$Object* $tmp215 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(self->children, ((panda$core$Int64) { 0 }));
             panda$core$Bit $tmp216 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit(((org$pandalanguage$pandac$IRNode*) $tmp215)->kind, ((panda$core$Int64) { 1030 }));
             if ($tmp216.value) {
             {
-                panda$core$Object* $tmp217 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(self->children, ((panda$core$Int64) { 0 }));
+                panda$core$Object* $tmp217 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(self->children, ((panda$core$Int64) { 0 }));
                 panda$core$MutableString$append$panda$core$Object(result211, ((panda$core$Object*) ((org$pandalanguage$pandac$IRNode*) $tmp217)));
             }
             }
@@ -517,20 +517,20 @@ panda$core$String* org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(o
                 panda$core$MutableString$append$panda$core$String(result211, &$s219);
             }
             }
-            panda$core$Object* $tmp220 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(self->children, ((panda$core$Int64) { 1 }));
+            panda$core$Object* $tmp220 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(self->children, ((panda$core$Int64) { 1 }));
             panda$core$Bit $tmp221 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit(((org$pandalanguage$pandac$IRNode*) $tmp220)->kind, ((panda$core$Int64) { 1030 }));
             if ($tmp221.value) {
             {
-                panda$core$Object* $tmp222 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(self->children, ((panda$core$Int64) { 1 }));
+                panda$core$Object* $tmp222 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(self->children, ((panda$core$Int64) { 1 }));
                 panda$core$MutableString$append$panda$core$Object(result211, ((panda$core$Object*) ((org$pandalanguage$pandac$IRNode*) $tmp222)));
             }
             }
-            panda$core$Int64 $tmp223 = panda$collections$Array$get_count$R$panda$core$Int64(self->children);
+            panda$core$Int64 $tmp223 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(self->children);
             panda$core$Bit $tmp224 = panda$core$Int64$$GT$panda$core$Int64$R$panda$core$Bit($tmp223, ((panda$core$Int64) { 2 }));
             if ($tmp224.value) {
             {
                 panda$core$MutableString$append$panda$core$String(result211, &$s225);
-                panda$core$Object* $tmp226 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(self->children, ((panda$core$Int64) { 2 }));
+                panda$core$Object* $tmp226 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(self->children, ((panda$core$Int64) { 2 }));
                 panda$core$MutableString$append$panda$core$Object(result211, ((panda$core$Object*) ((org$pandalanguage$pandac$IRNode*) $tmp226)));
             }
             }

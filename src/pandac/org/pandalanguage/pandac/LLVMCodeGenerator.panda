@@ -1311,11 +1311,19 @@ class LLVMCodeGenerator : CodeGenerator {
         def m := (call.payload->MethodRef).value
         compiler.currentClass.push(m.owner)
         currentlyInlining[m] := m
-        def selfRef := "<inline call self error>"
+        var selfRef := "<inline call self error>"
         def argStart:Int
         if m.isInstance() {
             argStart := 1
             selfRef := getReference(call.children[0], out)
+            if currentMethod.methodKind = MethodDecl.Kind.INIT &
+                    call.children[0].kind = IRNode.Kind.SELF &
+                    compiler.isValue(currentMethod.owner) {
+                def selfLoad := nextVar()
+                def t := type(currentMethod.owner.type())
+                out.printLine("\{selfLoad} = load \{t}, \{t}* \{selfRef}")
+                selfRef := selfLoad
+            }
         }
         else {
             argStart := 0
@@ -1534,7 +1542,8 @@ class LLVMCodeGenerator : CodeGenerator {
         }
         def cl := compiler.getClass(fieldRef.children[0].type)
         assert cl != null
-        if compiler.isValue(cl) {
+        if compiler.isValue(cl) & (fieldRef.children[0].kind != IRNode.Kind.SELF |
+                currentMethod.methodKind != MethodDecl.Kind.INIT) {
             def base := getReference(fieldRef.children[0], out)
             def fields := compiler.instanceFields(cl)
             def index:Int? := null
@@ -1545,9 +1554,14 @@ class LLVMCodeGenerator : CodeGenerator {
                 }
             }
             assert index != null
-            def result := nextVar()
-            out.printLine("\{result} = extractvalue \{type(fieldRef.children[0].type)} \{base}" +
-                    ", \{index}")
+            var result := nextVar()
+            out.printLine("\{result} = extractvalue \{type(fieldRef.children[0].type)} \{base}, " +
+                    index)
+            if field.type.isClass() & !compiler.isValue(compiler.getClass(field.type)) {
+                def cast := nextVar()
+                out.printLine("\{cast} = bitcast i8* \{result} to \{type(fieldRef.type)}")
+                result := cast
+            }
             return result
         }
         def ptr := "\{t}* \{getLValue(fieldRef, out)}"
@@ -1788,8 +1802,8 @@ class LLVMCodeGenerator : CodeGenerator {
 
     method getSuperReference(s:IRNode, out:OutputStream):String {
         def result := nextVar()
-        out.printLine("\{result} = bitcast \{type(currentMethod.owner.type())} %self to " +
-                type(s.type))
+        def ref := getSelfReference(s, out)
+        out.printLine("\{result} = bitcast \{selfType(currentMethod)} \{ref} to \{type(s.type)}")
         return result
     }
 
@@ -1916,6 +1930,9 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     method getTypedReference(expr:IRNode, out:OutputStream):String {
+        if expr.kind = IRNode.Kind.SELF {
+            return "\{selfType(currentMethod)} \{getSelfReference(expr, out)}"
+        }
         return "\{type(expr.type)} \{getReference(expr, out)}"
     }
 
@@ -1987,6 +2004,10 @@ class LLVMCodeGenerator : CodeGenerator {
         }
         def offset := call.children.get_count() - actualMethodType.subtypes.get_count() + 1
         for i in 0 .. call.children.get_count() {
+            if call.children[i].kind = IRNode.Kind.SELF {
+                args.add(getTypedReference(call.children[i], out))
+                continue
+            }
             def arg := getReference(call.children[i], out)
             if i >= offset & actualMethodType.subtypes[i - offset] != call.children[i].type {
                 arg := type(actualMethodType.subtypes[i - offset]) + " " +
@@ -2527,8 +2548,7 @@ class LLVMCodeGenerator : CodeGenerator {
                 assert index != -1
                 out.printLine("\{raw} = getelementptr inbounds \{typeName(cl.type())}, " +
                         "\{typeName(cl.type())}* \{base}, i64 0, i32 \{index}")
-                if compiler.isValue(f.owner) | (f.type.isClass() &
-                        compiler.isValue(compiler.getClass(f.type))) {
+                if !f.type.isClass() | compiler.isValue(compiler.getClass(f.type)) {
                     return raw
                 }
                 def result := nextVar()

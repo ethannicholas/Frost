@@ -8,7 +8,7 @@ typedef struct panda$core$Class panda$core$Class;
 #include "org/pandalanguage/pandac/Position.h"
 typedef struct panda$core$Object panda$core$Object;
 typedef struct org$pandalanguage$pandac$Type org$pandalanguage$pandac$Type;
-typedef struct panda$collections$Array panda$collections$Array;
+typedef struct panda$collections$ImmutableArray panda$collections$ImmutableArray;
 
 typedef struct org$pandalanguage$pandac$IRNode {
     panda$core$Class* $class;
@@ -17,7 +17,7 @@ typedef struct org$pandalanguage$pandac$IRNode {
     org$pandalanguage$pandac$Position position;
     panda$core$Object* payload;
     org$pandalanguage$pandac$Type* type;
-    panda$collections$Array* children;
+    panda$collections$ImmutableArray* children;
 } org$pandalanguage$pandac$IRNode;
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"

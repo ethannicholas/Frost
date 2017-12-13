@@ -1,0 +1,29 @@
+class ValueInit : Value {
+    def x:Int
+
+    def y:Int
+
+    def s:String
+
+    init() {
+        init(10)
+    }
+
+    init(x:Int) {
+        self.x := x
+        self.y := self.x * 2
+        self.s := "Hello"
+        super.init()
+        y := total() + self.s.length()
+    }
+
+    function total():Int {
+        return x + y
+    }
+
+    @class
+    method main() {
+        def v := ValueInit()
+        Console.printLine("(\{v.x}, \{v.y}, \{v.s})")
+    }
+}
