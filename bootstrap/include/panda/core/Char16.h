@@ -6,7 +6,7 @@ typedef struct panda$core$Class panda$core$Class;
 #include "panda/core/Char16.h"
 
 typedef struct panda$core$Char16 {
-    int16_t value;
+    uint16_t value;
 } panda$core$Char16;
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"

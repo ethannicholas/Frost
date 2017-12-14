@@ -58,6 +58,8 @@ class IRNode {
         -- [value0, value1, ..., block]
         constant WHEN                        := 1042
         constant OTHERWISE                   := 1043
+        -- C-style ternary expression. Not supported in Panda source code, but used internally.
+        constant TERNARY                     := 1044
     }
 
     def kind:Int
@@ -232,6 +234,8 @@ class IRNode {
                 return result.finish()
             when Kind.STRING:
                 return "\"\{payload}\""
+            when Kind.TERNARY:
+                return "(\{children[0]} ? \{children[1]} : \{children[2]})"
             otherwise:
                 return "<IRNode:\{kind}>"
         }

@@ -60,8 +60,10 @@ class HCodeGenerator : CodeGenerator {
         match t.typeKind {
             when Type.Kind.VOID:
                 return "void"
-            when Type.Kind.BUILTIN_INT, Type.Kind.BUILTIN_UINT:
+            when Type.Kind.BUILTIN_INT:
                 return "int\{sizeOf(t) * 8}_t"
+            when Type.Kind.BUILTIN_UINT:
+                return "uint\{sizeOf(t) * 8}_t"
             when Type.Kind.BUILTIN_BIT:
                 return "bool"
             when Type.Kind.CLASS:

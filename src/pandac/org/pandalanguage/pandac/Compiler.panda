@@ -2120,6 +2120,33 @@ class Compiler : ErrorReporter {
                 return IRNode(kind, position, Type.Bit(), children)
             }
         }
+        if (op = Token.Kind.EQ | op = Token.Kind.NEQ) & left.type.typeKind = Type.Kind.NULLABLE {
+            -- transform 'left = right' into 'left != null ? left = right : false'
+            assert right.kind != IRNode.Kind.NULL -- foo = null should have been handled above
+            reusedValueCount += 1
+            def children := Array<IRNode>() -- FIXME literal
+            children.add(left)
+            left := IRNode(IRNode.Kind.REUSED_VALUE_DEFINITION, left.position, left.type,
+                    reusedValueCount, children)
+            def reusedLeft := IRNode(IRNode.Kind.REUSED_VALUE, left.position, left.type,
+                    reusedValueCount)
+            def toNonNullable := coerce(reusedLeft, left.type.subtypes[0])
+            def comparison := compileBinary(position, toNonNullable, op, right)
+            if comparison = null {
+                return null
+            }
+            def nullCheck := compileBinary(position, left, Token.Kind.NEQ,
+                    IRNode(IRNode.Kind.NULL, position, Type.Null()))
+            if nullCheck = null {
+                return null
+            }
+            children.clear()
+            children.add(nullCheck)
+            children.add(comparison)
+            children.add(coerce(IRNode(IRNode.Kind.BIT, position, Type.BitLiteral(),
+                    op = Token.Kind.NEQ), Type.Bit()))
+            return IRNode(IRNode.Kind.TERNARY, position, Type.Bit(), children)
+        }
         if op = Token.Kind.IDENTITY | op = Token.Kind.NIDENTITY {
             if left.type.isClass() {
                 def cl := getClass(left.type)

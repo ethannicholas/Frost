@@ -803,7 +803,7 @@ class CCodeGenerator : CodeGenerator {
         var index := -1
         def vtable := compiler.getVTable(m.owner)
         for i in 0 .. vtable.get_count() {
-            if vtable[i]->MethodDecl == m { -- FIXME unnecessary cast
+            if vtable[i]->MethodDecl == m {
                 index := i
                 break
             }
@@ -825,7 +825,7 @@ class CCodeGenerator : CodeGenerator {
         var index := -1
         def vtable := compiler.getVTable(m.owner)
         for i in 0 .. vtable.get_count() {
-            if vtable[i]->MethodDecl == m { -- FIXME unnecessary cast
+            if vtable[i]->MethodDecl == m {
                 index := i
                 break
             }
@@ -1219,6 +1219,28 @@ class CCodeGenerator : CodeGenerator {
         }
     }
 
+    method getTernaryReference(t:IRNode, out:IndentedOutputStream):String {
+        assert t.kind = IRNode.Kind.TERNARY
+        assert t.children.get_count() = 3
+        assert t.children[0].type = Type.Bit()
+        assert t.children[1].type = t.children[2].type
+        def test := getTypedReference(t.children[0], out)
+        var trueLabel := nextLabel()
+        var falseLabel := nextLabel()
+        def merge := nextLabel()
+        def result := nextVar()
+        out.printLine("\{type(t.children[1].type)} \{result};")
+        out.printLine("if (\{test}.value) goto \{trueLabel}; else goto \{falseLabel};")
+        createBlock(trueLabel, out)
+        out.printLine("\{result} = \{getReference(t.children[1], out)};")
+        out.printLine("goto \{merge};")
+        createBlock(falseLabel, out)
+        out.printLine("\{result} = \{getReference(t.children[2], out)};")
+        out.printLine("goto \{merge};")
+        createBlock(merge, out)
+        return result
+    }
+
     method getReference(expr:IRNode, out:IndentedOutputStream):String {
         match expr.kind {
             when IRNode.Kind.BINARY:
@@ -1261,6 +1283,8 @@ class CCodeGenerator : CodeGenerator {
                 return getIsNonNullReference(expr, out)
             when IRNode.Kind.PREFIX:
                 return getPrefixReference(expr, out)
+            when IRNode.Kind.TERNARY:
+                return getTernaryReference(expr, out)
             otherwise:
                 assert false, "unsupported expression \{expr}:\{expr.position}"
         }
@@ -1811,7 +1835,7 @@ class CCodeGenerator : CodeGenerator {
             return loopDescriptors.peek()
         }
         for i in 0 .. loopDescriptors.get_count() {
-            if loopDescriptors.peek(i).loopLabel != null & loopDescriptors.peek(i).loopLabel = name { -- FIXME shouldn't need null check
+            if loopDescriptors.peek(i).loopLabel = name {
                 return loopDescriptors.peek(i)
             }
         }

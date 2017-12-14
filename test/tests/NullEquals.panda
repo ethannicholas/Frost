@@ -1,0 +1,44 @@
+class NullEquals {
+    @class
+    method main() {
+        var nullable:String? := null
+        Console.printLine("nullable := null")
+        Console.printLine(nullable = null)
+        Console.printLine(nullable != null)
+        Console.printLine(nullable = "Hello")
+        Console.printLine(nullable != "Hello")
+        nullable := "Hello"
+        Console.printLine("nullable := \"Hello\"")
+        Console.printLine(nullable = null)
+        Console.printLine(nullable != null)
+        Console.printLine(nullable = "Hello")
+        Console.printLine(nullable != "Hello")
+
+        var nonnullable := "Hello"
+        Console.printLine("nonnullable := \"Hello\"")
+        Console.printLine(nonnullable = null)
+        Console.printLine(nonnullable != null)
+        Console.printLine(nonnullable = "Hello")
+        Console.printLine(nonnullable != "Hello")
+
+        var nullableValue:Int? := null
+        Console.printLine("nullableValue := null")
+        Console.printLine(nullableValue = null)
+        Console.printLine(nullableValue != null)
+        Console.printLine(nullableValue = 5)
+        Console.printLine(nullableValue != 5)
+        nullableValue := 5
+        Console.printLine("nullableValue := 5")
+        Console.printLine(nullableValue = null)
+        Console.printLine(nullableValue != null)
+        Console.printLine(nullableValue = 5)
+        Console.printLine(nullableValue != 5)
+
+        var nonnullableValue := 5
+        Console.printLine("nonnullableValue := 5")
+        Console.printLine(nonnullableValue = null)
+        Console.printLine(nonnullableValue != null)
+        Console.printLine(nonnullableValue = 5)
+        Console.printLine(nonnullableValue != 5)
+    }
+}

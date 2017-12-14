@@ -171,7 +171,7 @@ panda$core$Char8$nullable panda$io$InputStream$read$R$panda$core$Char8$Q(panda$i
 panda$core$String* panda$io$InputStream$readLine$R$panda$core$String$Q(panda$io$InputStream* self) {
     panda$core$MutableString* result53;
     panda$core$Char8$nullable c58;
-    panda$core$Char8 $tmp62;
+    panda$core$Char8 $tmp66;
     panda$core$MutableString* $tmp54 = (panda$core$MutableString*) malloc(48);
     $tmp54->$class = (panda$core$Class*) &panda$core$MutableString$class;
     $tmp54->refCount.value = 1;
@@ -193,9 +193,18 @@ panda$core$String* panda$io$InputStream$readLine$R$panda$core$String$Q(panda$io$
             goto $l57;
         }
         }
-        panda$core$Char8$init$panda$core$UInt8(&$tmp62, ((panda$core$UInt8) { 10 }));
-        panda$core$Bit $tmp63 = panda$core$Char8$$EQ$panda$core$Char8$R$panda$core$Bit(((panda$core$Char8) c58.value), $tmp62);
-        if ($tmp63.value) {
+        panda$core$Bit $tmp65;
+        if (((panda$core$Bit) { c58.nonnull }).value) goto $l62; else goto $l63;
+        $l62:;
+        panda$core$Char8$init$panda$core$UInt8(&$tmp66, ((panda$core$UInt8) { 10 }));
+        panda$core$Bit $tmp67 = panda$core$Char8$$EQ$panda$core$Char8$R$panda$core$Bit(((panda$core$Char8) c58.value), $tmp66);
+        $tmp65 = $tmp67;
+        goto $l64;
+        $l63:;
+        $tmp65 = ((panda$core$Bit) { false });
+        goto $l64;
+        $l64:;
+        if ($tmp65.value) {
         {
             goto $l57;
         }
@@ -204,15 +213,15 @@ panda$core$String* panda$io$InputStream$readLine$R$panda$core$String$Q(panda$io$
     }
     }
     $l57:;
-    panda$core$String* $tmp64 = panda$core$MutableString$finish$R$panda$core$String(result53);
-    return $tmp64;
+    panda$core$String* $tmp68 = panda$core$MutableString$finish$R$panda$core$String(result53);
+    return $tmp68;
 }
 panda$collections$Iterator* panda$io$InputStream$lines$R$panda$collections$Iterator$LTpanda$core$String$GT(panda$io$InputStream* self) {
-    panda$io$InputStream$LineIterator* $tmp65 = (panda$io$InputStream$LineIterator*) malloc(32);
-    $tmp65->$class = (panda$core$Class*) &panda$io$InputStream$LineIterator$class;
-    $tmp65->refCount.value = 1;
-    panda$io$InputStream$LineIterator$init$panda$io$InputStream($tmp65, self);
-    return ((panda$collections$Iterator*) $tmp65);
+    panda$io$InputStream$LineIterator* $tmp69 = (panda$io$InputStream$LineIterator*) malloc(32);
+    $tmp69->$class = (panda$core$Class*) &panda$io$InputStream$LineIterator$class;
+    $tmp69->refCount.value = 1;
+    panda$io$InputStream$LineIterator$init$panda$io$InputStream($tmp69, self);
+    return ((panda$collections$Iterator*) $tmp69);
 }
 void panda$io$InputStream$init(panda$io$InputStream* self) {
 }

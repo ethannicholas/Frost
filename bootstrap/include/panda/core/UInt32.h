@@ -6,7 +6,7 @@ typedef struct panda$core$Class panda$core$Class;
 #include "panda/core/UInt32.h"
 
 typedef struct panda$core$UInt32 {
-    int32_t value;
+    uint32_t value;
 } panda$core$UInt32;
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"
@@ -38,7 +38,7 @@ panda$core$UInt32$wrapper* wrap_panda$core$UInt32(panda$core$UInt32 self);
 #include "panda/core/Bit.h"
 typedef struct panda$core$String panda$core$String;
 
-void panda$core$UInt32$init$builtin_uint32(panda$core$UInt32* self, int32_t p_value);
+void panda$core$UInt32$init$builtin_uint32(panda$core$UInt32* self, uint32_t p_value);
 panda$core$Int64 panda$core$UInt32$$ADD$panda$core$Int8$R$panda$core$Int64(panda$core$UInt32 self, panda$core$Int8 p_other);
 panda$core$Int64 panda$core$UInt32$$ADD$panda$core$Int16$R$panda$core$Int64(panda$core$UInt32 self, panda$core$Int16 p_other);
 panda$core$Int64 panda$core$UInt32$$ADD$panda$core$Int32$R$panda$core$Int64(panda$core$UInt32 self, panda$core$Int32 p_other);

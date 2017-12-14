@@ -62,7 +62,7 @@ panda$core$String* panda$io$Console$readLine$R$panda$core$String$Q() {
     panda$core$MutableString* result26;
     panda$core$Char8$nullable c31;
     panda$core$Char8$nullable $tmp32;
-    panda$core$Char8 $tmp34;
+    panda$core$Char8 $tmp38;
     panda$core$MutableString* $tmp27 = (panda$core$MutableString*) malloc(48);
     $tmp27->$class = (panda$core$Class*) &panda$core$MutableString$class;
     $tmp27->refCount.value = 1;
@@ -84,9 +84,18 @@ panda$core$String* panda$io$Console$readLine$R$panda$core$String$Q() {
             goto $l30;
         }
         }
-        panda$core$Char8$init$panda$core$UInt8(&$tmp34, ((panda$core$UInt8) { 10 }));
-        panda$core$Bit $tmp35 = panda$core$Char8$$EQ$panda$core$Char8$R$panda$core$Bit(((panda$core$Char8) c31.value), $tmp34);
-        if ($tmp35.value) {
+        panda$core$Bit $tmp37;
+        if (((panda$core$Bit) { c31.nonnull }).value) goto $l34; else goto $l35;
+        $l34:;
+        panda$core$Char8$init$panda$core$UInt8(&$tmp38, ((panda$core$UInt8) { 10 }));
+        panda$core$Bit $tmp39 = panda$core$Char8$$EQ$panda$core$Char8$R$panda$core$Bit(((panda$core$Char8) c31.value), $tmp38);
+        $tmp37 = $tmp39;
+        goto $l36;
+        $l35:;
+        $tmp37 = ((panda$core$Bit) { false });
+        goto $l36;
+        $l36:;
+        if ($tmp37.value) {
         {
             goto $l30;
         }
@@ -95,8 +104,8 @@ panda$core$String* panda$io$Console$readLine$R$panda$core$String$Q() {
     }
     }
     $l30:;
-    panda$core$String* $tmp36 = panda$core$MutableString$finish$R$panda$core$String(result26);
-    return $tmp36;
+    panda$core$String* $tmp40 = panda$core$MutableString$finish$R$panda$core$String(result26);
+    return $tmp40;
 }
 void panda$io$Console$init(panda$io$Console* self) {
 }

@@ -107,13 +107,13 @@ panda$core$UInt8 panda$core$Char8$convert$R$panda$core$UInt8(panda$core$Char8 se
     return ((panda$core$UInt8) { self.value });
 }
 panda$core$UInt16 panda$core$Char8$convert$R$panda$core$UInt16(panda$core$Char8 self) {
-    return ((panda$core$UInt16) { ((int16_t) self.value) });
+    return ((panda$core$UInt16) { ((uint16_t) self.value) });
 }
 panda$core$UInt32 panda$core$Char8$convert$R$panda$core$UInt32(panda$core$Char8 self) {
-    return ((panda$core$UInt32) { ((int32_t) self.value) });
+    return ((panda$core$UInt32) { ((uint32_t) self.value) });
 }
 panda$core$UInt64 panda$core$Char8$convert$R$panda$core$UInt64(panda$core$Char8 self) {
-    return ((panda$core$UInt64) { ((int64_t) self.value) });
+    return ((panda$core$UInt64) { ((uint64_t) self.value) });
 }
 panda$core$String* panda$core$Char8$convert$R$panda$core$String(panda$core$Char8 self) {
     panda$core$Char8* data18;
@@ -133,13 +133,13 @@ panda$core$String* panda$core$Char8$convert$R$panda$core$String(panda$core$Char8
     }
     }
     data21 = ((panda$core$Char8*) malloc(((panda$core$Int64) { 2 }).value * 1));
-    int16_t $tmp23 = ((int16_t) self.value) >> 6;
-    int16_t $tmp24 = $tmp23 | 192;
-    panda$core$Char8$init$panda$core$UInt8(&$tmp22, ((panda$core$UInt8) { ((int8_t) $tmp24) }));
+    uint16_t $tmp23 = ((uint16_t) self.value) >> 6;
+    uint16_t $tmp24 = $tmp23 | 192;
+    panda$core$Char8$init$panda$core$UInt8(&$tmp22, ((panda$core$UInt8) { ((uint8_t) $tmp24) }));
     data21[((panda$core$Int64) { 0 }).value] = $tmp22;
-    int16_t $tmp26 = ((int16_t) self.value) & 63;
-    int16_t $tmp27 = $tmp26 | 128;
-    panda$core$Char8$init$panda$core$UInt8(&$tmp25, ((panda$core$UInt8) { ((int8_t) $tmp27) }));
+    uint16_t $tmp26 = ((uint16_t) self.value) & 63;
+    uint16_t $tmp27 = $tmp26 | 128;
+    panda$core$Char8$init$panda$core$UInt8(&$tmp25, ((panda$core$UInt8) { ((uint8_t) $tmp27) }));
     data21[((panda$core$Int64) { 1 }).value] = $tmp25;
     panda$core$String* $tmp28 = (panda$core$String*) malloc(48);
     $tmp28->$class = (panda$core$Class*) &panda$core$String$class;

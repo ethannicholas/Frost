@@ -5,8 +5,7 @@
 typedef struct panda$core$Class panda$core$Class;
 #include "panda/core/Int32.h"
 #include "panda/core/Int64.h"
-typedef struct panda$core$String panda$core$String;
-#include "panda/core/String/Index.h"
+typedef struct panda$collections$ListView panda$collections$ListView;
 
 typedef struct org$pandalanguage$plex$runtime$DFA {
     panda$core$Class* $class;
@@ -14,9 +13,9 @@ typedef struct org$pandalanguage$plex$runtime$DFA {
     panda$core$Int64 stateCount;
     panda$core$Int64** transitions;
     panda$core$Int64* accepts;
-    panda$core$String* source;
-    panda$core$String$Index offset;
-    panda$core$String$Index sourceEnd;
+    panda$collections$ListView* source;
+    panda$core$Int64 offset;
+    panda$core$Int64 sourceEnd;
     panda$core$Int64 line;
     panda$core$Int64 column;
 } org$pandalanguage$plex$runtime$DFA;

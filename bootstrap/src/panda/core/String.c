@@ -1627,7 +1627,7 @@ panda$core$UInt64$nullable panda$core$String$convert$R$panda$core$UInt64$Q(panda
     if ($tmp752 < $tmp754) goto $l756; else goto $l758;
     $l756:;
     {
-        panda$core$UInt64 $tmp765 = panda$core$UInt64$$SUB$panda$core$UInt64$R$panda$core$UInt64(((panda$core$UInt64) { ((int64_t) self->data[i751.value].value) }), ((panda$core$UInt64) { 48 }));
+        panda$core$UInt64 $tmp765 = panda$core$UInt64$$SUB$panda$core$UInt64$R$panda$core$UInt64(((panda$core$UInt64) { ((uint64_t) self->data[i751.value].value) }), ((panda$core$UInt64) { 48 }));
         digit764 = $tmp765;
         panda$core$Bit $tmp767 = panda$core$UInt64$$LT$panda$core$UInt64$R$panda$core$Bit(digit764, ((panda$core$UInt64) { 0 }));
         bool $tmp766 = $tmp767.value;
