@@ -2446,6 +2446,8 @@ class Compiler : ErrorReporter {
                                 base.payload->UInt64)
                     when IRNode.Kind.NEGATED_INT:
                         return IRNode(IRNode.Kind.INT, position, base.type, base.payload->UInt64)
+                    when IRNode.Kind.REAL:
+                        return IRNode(IRNode.Kind.REAL, position, base.type, -base.payload->Real64)
                     otherwise:
                         if base.type.isBuiltinNumber() {
                             def children := Array<IRNode>() -- FIXME literal

@@ -39,18 +39,18 @@ int8 Compound Assignment
 9
 
 int16 Arithmetic
-393
--645
--65394
+645
+-393
+65394
 0
--252
--63
+252
+63
 
 int16 Bitwise
-125
-514
--121
--635
+-127
+6
+639
+633
 
 int16 Comparisons
 false
@@ -71,26 +71,26 @@ false
 true
 
 int16 Compound Assignment
-393
--126
-142
+645
+126
+-142
 0
 0
 0
 
 int32 Arithmetic
-22806
 153442
--1461116136
--1
+22806
+1461116136
+1
 176248
 44062
 
 int32 Bitwise
 -88125
-65560
--42754
--108314
+22564
+130878
+108314
 
 int32 Comparisons
 false
@@ -111,9 +111,9 @@ true
 true
 
 int32 Compound Assignment
-22806
+153442
 88124
--1461116136
+1461116136
 22369
 44738
 22369

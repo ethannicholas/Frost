@@ -1006,10 +1006,10 @@ class LLVMCodeGenerator : CodeGenerator {
         return result
     }
 
-    method getBinaryReference(cl:Int, leftRef:String, op:Int, rightRef:String,
+    method getBinaryReference(t:Type, leftRef:String, op:Int, rightRef:String,
             out:OutputStream):String {
         def llvmOp:String
-        match cl {
+        match opClass(t) {
             when OpClass.SIGNED:
                 match op {
                     when Token.Kind.ADD:        llvmOp := "add"
@@ -1071,7 +1071,8 @@ class LLVMCodeGenerator : CodeGenerator {
                 }
         }
         def result := nextVar()
-        out.printLine("\{result} = \{llvmOp} \{leftRef}, \{rightRef}")
+        def typeString := type(t)
+        out.printLine("\{result} = \{llvmOp} \{typeString} \{leftRef}, \{rightRef}")
         return result
     }
 
@@ -1103,9 +1104,9 @@ class LLVMCodeGenerator : CodeGenerator {
             when Token.Kind.IDENTITY:  return getIdentityReference(left, right, out)
             when Token.Kind.NIDENTITY: return getNIdentityReference(left, right, out)
             otherwise:
-                def leftRef := getTypedReference(left, out)
+                def leftRef := getReference(left, out)
                 def rightRef := getReference(right, out)
-                return getBinaryReference(opClass(left.type), leftRef, op, rightRef, out)
+                return getBinaryReference(left.type, leftRef, op, rightRef, out)
         }
     }
 
@@ -1826,8 +1827,13 @@ class LLVMCodeGenerator : CodeGenerator {
         }
         var bits := Panda.floatToIntBits(r64)
         def result := MutableString()
-        while bits != 0 {
-            result.append("0123456789ABCDEF"[bits % 16])
+        for i in 0 .. 16 {
+            if bits >= 0 {
+                result.append("0123456789ABCDEF"[bits % 16])
+            }
+            else {
+                result.append("0123456789ABCDEF"[15 + bits % 16])
+            }
             bits //= 16
         }
         return "0x" + result.finish()[.. by -1]
@@ -2766,7 +2772,7 @@ class LLVMCodeGenerator : CodeGenerator {
             name := path
         }
         else {
-            name := path[index...]
+            name := path[path.next(index)...]
         }
         def nameRef := getStringReference(name, out)
         def line := "%panda$core$Int64 { i64 \{a.position.line} }"

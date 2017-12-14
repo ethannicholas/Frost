@@ -367,6 +367,13 @@ class Int64 : Value, Key<Int64>, Comparable<Int64> {
         return value <= other.value
     }
 
+    function abs():Int64 {
+        if self < 0 {
+            return -self
+        }
+        return self
+    }
+
     function min(other:Int8):Int64 {
         if value < other.value->builtin_int64 {
             return value

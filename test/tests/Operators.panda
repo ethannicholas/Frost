@@ -52,7 +52,7 @@ class Operators {
     }
     @class
     method int16() {
-        def x:Int16 := -126
+        def x:Int16 := 126
         def y:Int16 := 519
         Console.printLine("int16 Arithmetic")
         Console.printLine(x + y)
@@ -103,7 +103,7 @@ class Operators {
     @class
     method int32() {
         def x:Int32 := 88124
-        def y:Int32 := -65318
+        def y:Int32 := 65318
         Console.printLine("int32 Arithmetic")
         Console.printLine(x + y)
         Console.printLine(x - y)

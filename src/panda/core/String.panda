@@ -454,6 +454,9 @@ class String : Immutable, Key<String>, Iterable<Char32> {
     empty.
     ================================================================================================
     function [](r:Range<Index?>):String {
+        if _length = 0 {
+            return ""
+        }
         def min:Index
         if r.min != null {
             min := r.min
@@ -469,7 +472,7 @@ class String : Immutable, Key<String>, Iterable<Char32> {
         else {
             max := self.end()
             if r.inclusive {
-                max := offset(max, -1)
+                max := previous(max)
             }
         }
         return self[Range<Index>(min, max, r.inclusive)]
@@ -487,6 +490,9 @@ class String : Immutable, Key<String>, Iterable<Char32> {
     Unicode characters which consist of more than one Unicode codepoint.
     ================================================================================================
     function [](r:SteppedRange<Index?, Int>):String {
+        if _length = 0 {
+            return ""
+        }
         def step := r.step
 
         def current:Int

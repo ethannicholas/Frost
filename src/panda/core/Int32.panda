@@ -499,6 +499,13 @@ class Int32 : Value, Key<Int32>, Comparable<Int32> {
         return value->builtin_int64 <= other.value->builtin_int64
     }
 
+    function abs():Int32 {
+        if self < 0 {
+            return -self
+        }
+        return self
+    }
+
     function min(other:Int8):Int32 {
         if value < other.value->builtin_int32 {
             return value
