@@ -3,8 +3,17 @@ package panda.core
 ====================================================================================================
 Contains utility methods used in the internal implementation of certain language features.
 ====================================================================================================
+@package
 @final
 class Panda {
+    @class
+    @external
+    function toReal64(s:String):Real64
+
+    @class
+    @external
+    function floatToIntBits(r:Real64):Int64
+
     @class
     @external
     function addressOf(o:Object):Int64

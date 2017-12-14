@@ -4,6 +4,7 @@ uses org.pandalanguage.pandac.ASTNode
 uses org.pandalanguage.pandac.ErrorReporter
 uses org.pandalanguage.pandac.Position
 
+@final
 class Parser {
     def lexer := Lexer()
 
@@ -251,8 +252,8 @@ class Parser {
     }
 
     ================================================================================================
-    term = IDENTIFIER | DECIMAL | BINARY | HEX | SELF | SUPER | NULL | TRUE | FALSE | string |
-            LPAREN expression RPAREN
+    term = IDENTIFIER | DECIMAL | BINARY | HEX | REAL | SELF | SUPER | NULL | TRUE | FALSE |
+            string | LPAREN expression RPAREN
     ================================================================================================
     method term():ASTNode? {
         def t := next()
@@ -262,13 +263,11 @@ class Parser {
             when Token.Kind.DECIMAL:
                 return ASTNode(ASTNode.Kind.INT, t.position, text(t).convert()->UInt64?)
             when Token.Kind.BINARY:
-                def s := text(t)
-                return ASTNode(ASTNode.Kind.INT, t.position,
-                        toUInt64(s[2..], 2))
+                return ASTNode(ASTNode.Kind.INT, t.position, toUInt64(text(t)[2..], 2))
             when Token.Kind.HEX:
-                def s := text(t)
-                return ASTNode(ASTNode.Kind.INT, t.position,
-                        toUInt64(s[2..], 16))
+                return ASTNode(ASTNode.Kind.INT, t.position, toUInt64(text(t)[2..], 16))
+            when Token.Kind.REAL:
+                return ASTNode(ASTNode.Kind.REAL, t.position, Panda.toReal64(text(t)))
             when Token.Kind.SELF:
                 return ASTNode(ASTNode.Kind.SELF, t.position)
             when Token.Kind.SUPER:
@@ -1658,6 +1657,7 @@ class Parser {
 
     method postconditions():ASTNode? {
         assert false
+        return null
     }
 
     ================================================================================================
@@ -1780,6 +1780,143 @@ class Parser {
     }
 
     ================================================================================================
+    choiceEntry = IDENTIFIER (LPAREN (type (COMMA type)*)? RPAREN)?
+    ================================================================================================
+    method choiceEntry(doccomment:ASTNode):ASTNode? {
+        def name := expect(Token.Kind.IDENTIFIER, "an identifier")
+        if name = null {
+            return null
+        }
+        def types := Array<ASTNode>()
+        if checkNext(Token.Kind.LPAREN) != null {
+            if peek().kind != Token.Kind.RPAREN {
+                var t := type()
+                if t = null {
+                    return null
+                }
+                types.add(t)
+                while checkNext(Token.Kind.COMMA) != null {
+                    t := type()
+                    if t = null {
+                        return null
+                    }
+                    types.add(t)
+                }
+            }
+        }
+        if expect(Token.Kind.RPAREN, "')'") = null {
+            return null
+        }
+        return ASTNode(ASTNode.Kind.CHOICE_ENTRY, name.position, text(name), types)
+    }
+
+    ================================================================================================
+    choiceDeclaration = CHOICE IDENTIFIER LBRACE choiceEntry* declaration* RBRACE
+    ================================================================================================
+    method choiceDeclaration(choiceDoccomment:ASTNode, choiceAnnotations:ASTNode):ASTNode? {
+        def start := expect(Token.Kind.CHOICE, "'choice'")
+        if start = null {
+            return null
+        }
+        def name := expect(Token.Kind.IDENTIFIER, "an identifier")
+        if name = null {
+            return null
+        }
+        if expect(Token.Kind.LBRACE, "'{'") = null {
+            return null
+        }
+        def members := Array<ASTNode>()
+        var dc := ASTNode(ASTNode.Kind.VOID, Position())
+        loop {
+            def next := peek()
+            match next.kind {
+                when Token.Kind.CLASS, Token.Kind.INTERFACE, Token.Kind.CHOICE, Token.Kind.METHOD,
+                        Token.Kind.FUNCTION, Token.Kind.ANNOTATION, Token.Kind.VAR, Token.Kind.DEF,
+                        Token.Kind.PROPERTY, Token.Kind.CONSTANT:
+                    break
+                when Token.Kind.DOC_COMMENT:
+                    if dc.kind != ASTNode.Kind.VOID {
+                        error(next, "expected a declaration, but found '\{text(next)}'")
+                    }
+                    dc := doccomment()
+                when Token.Kind.IDENTIFIER:
+                    def c := choiceEntry(dc)
+                    if c = null {
+                        return null
+                    }
+                    members.add(c)
+                    dc := ASTNode(ASTNode.Kind.VOID, Position())
+            }
+        }
+        var a := ASTNode(ASTNode.Kind.VOID, Position())
+        loop {
+            def next := peek()
+            match next.kind {
+                when Token.Kind.ANNOTATION:
+                    if a.kind != ASTNode.Kind.VOID {
+                        error(next, "expected a declaration, but found '\{text(next)}'")
+                        return null
+                    }
+                    a := annotations()
+                when Token.Kind.DOC_COMMENT:
+                    if dc.kind != ASTNode.Kind.VOID | a.kind != ASTNode.Kind.VOID {
+                        error(next, "expected a declaration, but found '\{text(next)}'")
+                        return null
+                    }
+                    dc := doccomment()
+                when Token.Kind.CLASS:
+                    def decl := classDeclaration(dc, a)
+                    if decl = null {
+                        return null
+                    }
+                    members.add(decl)
+                    dc := ASTNode(ASTNode.Kind.VOID, Position())
+                    a := ASTNode(ASTNode.Kind.VOID, Position())
+                when Token.Kind.INTERFACE:
+                    def decl := interfaceDeclaration(dc, a)
+                    if decl = null {
+                        return null
+                    }
+                    members.add(decl)
+                    dc := ASTNode(ASTNode.Kind.VOID, Position())
+                    a := ASTNode(ASTNode.Kind.VOID, Position())
+                when Token.Kind.CHOICE:
+                    def decl := choiceDeclaration(dc, a)
+                    if decl = null {
+                        return null
+                    }
+                    members.add(decl)
+                    dc := ASTNode(ASTNode.Kind.VOID, Position())
+                    a := ASTNode(ASTNode.Kind.VOID, Position())
+                when Token.Kind.METHOD, Token.Kind.FUNCTION:
+                    def decl := methodDeclaration(dc, a)
+                    if decl = null {
+                        return null
+                    }
+                    members.add(decl)
+                    dc := ASTNode(ASTNode.Kind.VOID, Position())
+                    a := ASTNode(ASTNode.Kind.VOID, Position())
+                when Token.Kind.VAR, Token.Kind.DEF, Token.Kind.PROPERTY, Token.Kind.CONSTANT:
+                    def decl := fieldDeclaration(dc, a)
+                    if decl = null {
+                        return null
+                    }
+                    members.add(decl)
+                    dc := ASTNode(ASTNode.Kind.VOID, Position())
+                    a := ASTNode(ASTNode.Kind.VOID, Position())
+                when Token.Kind.RBRACE:
+                    expect(Token.Kind.RBRACE, "'}'")
+                    break
+            }
+        }
+        def children := Array<ASTNode>()
+        children.add(choiceDoccomment)
+        children.add(choiceAnnotations)
+        children.add(ASTNode(ASTNode.Kind.CLASS_MEMBERS, start.position, members))
+        return ASTNode(ASTNode.Kind.CHOICE, start.position, text(name), children)
+    }
+
+    ================================================================================================
     declaration = invariant | (doccomment? annotations) (classDeclaration | interfaceDeclaration |
             choiceDeclaration | methodDeclaration | functionDeclaration | initDeclaration |
             fieldDeclaration)
@@ -1805,8 +1942,8 @@ class Parser {
                 return classDeclaration(dc, a)
             when Token.Kind.INTERFACE:
                 return interfaceDeclaration(dc, a)
---            when Token.Kind.CHOICE:
---                return choiceDeclaration(dc, a)
+            when Token.Kind.CHOICE:
+                return choiceDeclaration(dc, a)
             when Token.Kind.METHOD, Token.Kind.FUNCTION:
                 return methodDeclaration(dc, a)
             when Token.Kind.INIT:

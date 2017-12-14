@@ -19,6 +19,7 @@ class Type : Symbol, Key<Type> {
         constant NULL := 23
         constant FUNCTION := 24
         constant METHOD := 25
+        constant REAL_LITERAL := 26
     }
 
     def resolved:Bit
@@ -91,7 +92,8 @@ class Type : Symbol, Key<Type> {
     }
 
     function size():Int {
-        assert typeKind = Kind.BUILTIN_INT | typeKind = Kind.BUILTIN_UINT, "not a number: \{self}"
+        assert typeKind = Kind.BUILTIN_INT | typeKind = Kind.BUILTIN_UINT |
+                typeKind = Kind.BUILTIN_FLOAT, "not a number: \{self}"
         return position.line
     }
 
@@ -183,6 +185,16 @@ class Type : Symbol, Key<Type> {
     }
 
     @class
+    method BuiltinFloat32():Type {
+        return Type("builtin_float32", Type.Kind.BUILTIN_FLOAT, 32)
+    }
+
+    @class
+    method BuiltinFloat64():Type {
+        return Type("builtin_float64", Type.Kind.BUILTIN_FLOAT, 64)
+    }
+
+    @class
     method Int8():Type {
         return Type("panda.core.Int8", Kind.CLASS, Position(), true)
     }
@@ -223,6 +235,11 @@ class Type : Symbol, Key<Type> {
     }
 
     @class
+    method Real64():Type {
+        return Type("panda.core.Real64", Kind.CLASS, Position(), true)
+    }
+
+    @class
     method Char8():Type {
         return Type("panda.core.Char8", Kind.CLASS, Position(), true)
     }
@@ -245,6 +262,11 @@ class Type : Symbol, Key<Type> {
     @class
     method IntLiteral():Type {
         return Type("$int_literal", Kind.INT_LITERAL, Position(), true)
+    }
+
+    @class
+    method RealLiteral():Type {
+        return Type("$real_literal", Kind.REAL_LITERAL, Position(), true)
     }
 
     @class
@@ -296,12 +318,13 @@ class Type : Symbol, Key<Type> {
     }
 
     function isNumber():Bit {
-        return name.startsWith("panda.core.Int") | name.startsWith("panda.core.UInt")
+        return name.startsWith("panda.core.Int") | name.startsWith("panda.core.UInt") |
+                name.startsWith("panda.core.Real")
     }
 
     function isBuiltinNumber():Bit {
         return typeKind = Kind.BUILTIN_INT | typeKind = Kind.BUILTIN_UINT |
-                typeKind = Kind.INT_LITERAL
+                typeKind = Kind.BUILTIN_FLOAT | typeKind = Kind.INT_LITERAL
     }
 
     function isChar():Bit {

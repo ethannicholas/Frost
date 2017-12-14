@@ -11,7 +11,7 @@ typedef struct panda$core$Int16 {
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"
 #undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[151]; } panda$core$Int16$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[153]; } panda$core$Int16$class_type;
 extern panda$core$Int16$class_type panda$core$Int16$class;
 typedef struct panda$core$Int16$wrapper {
     panda$core$Class* cl;
@@ -36,6 +36,8 @@ panda$core$Int16$wrapper* wrap_panda$core$Int16(panda$core$Int16 self);
 #include "panda/core/UInt32.h"
 #include "panda/core/UInt64.h"
 #include "panda/core/Bit.h"
+#include "panda/core/Real32.h"
+#include "panda/core/Real64.h"
 typedef struct panda$core$String panda$core$String;
 
 void panda$core$Int16$init$builtin_int16(panda$core$Int16* self, int16_t p_value);
@@ -188,6 +190,8 @@ panda$core$UInt8 panda$core$Int16$convert$R$panda$core$UInt8(panda$core$Int16 se
 panda$core$UInt16 panda$core$Int16$convert$R$panda$core$UInt16(panda$core$Int16 self);
 panda$core$UInt32 panda$core$Int16$convert$R$panda$core$UInt32(panda$core$Int16 self);
 panda$core$UInt64 panda$core$Int16$convert$R$panda$core$UInt64(panda$core$Int16 self);
+panda$core$Real32 panda$core$Int16$convert$R$panda$core$Real32(panda$core$Int16 self);
+panda$core$Real64 panda$core$Int16$convert$R$panda$core$Real64(panda$core$Int16 self);
 panda$core$String* panda$core$Int16$convert$R$panda$core$String(panda$core$Int16 self);
 
 #endif

@@ -249,7 +249,12 @@ class Array<T> : List<T> {
         def result := MutableString(self[0].convert())
         for i in 1 .. count {
             result.append(separator)
-            result.append(self[i])
+            if self[i] != null {
+                result.append(self[i])
+            }
+            else {
+                result.append("<null>")
+            }
         }
         return result.finish()
 

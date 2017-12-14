@@ -664,6 +664,14 @@ class Int8 : Value, Key<Int8>, Comparable<Int8> {
         return UInt64(value->builtin_uint64)
     }
 
+    function convert():Real32 {
+        return Real32(value->builtin_float32)
+    }
+
+    function convert():Real64 {
+        return Real64(value->builtin_float64)
+    }
+
     @override
     function convert():String {
         constant max := 4

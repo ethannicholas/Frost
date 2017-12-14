@@ -66,6 +66,12 @@ class HCodeGenerator : CodeGenerator {
                 return "uint\{sizeOf(t) * 8}_t"
             when Type.Kind.BUILTIN_BIT:
                 return "bool"
+            when Type.Kind.BUILTIN_FLOAT:
+                match sizeOf(t) {
+                    when 4: return "float"
+                    when 8: return "double"
+                    otherwise: assert false
+                }
             when Type.Kind.CLASS:
                 def name := "\{escapeName(t.name)}"
                 def cl := compiler.getClass(t)

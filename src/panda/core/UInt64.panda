@@ -496,6 +496,14 @@ class UInt64 : Value, Key<UInt64>, Comparable<UInt64> {
         return UInt32(value->builtin_uint32)
     }
 
+    function convert():Real32 {
+        return Real32(value->builtin_float32)
+    }
+
+    function convert():Real64 {
+        return Real64(value->builtin_float64)
+    }
+
     @override
     function convert():String {
         constant max := 20

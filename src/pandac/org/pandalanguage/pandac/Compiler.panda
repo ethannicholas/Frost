@@ -90,7 +90,11 @@ class Compiler : ErrorReporter {
         root.add(Type.BuiltinUInt16())
         root.add(Type.BuiltinUInt32())
         root.add(Type.BuiltinUInt64())
+        root.add(Type.BuiltinFloat32())
+        root.add(Type.BuiltinFloat64())
         root.add(Alias("Int", "panda.core.Int64", Position()))
+        root.add(Alias("UInt", "panda.core.UInt64", Position()))
+        root.add(Alias("Real", "panda.core.Real64", Position()))
         addAlias("panda.collections.Array")
         addAlias("panda.collections.Collection")
         addAlias("panda.collections.CollectionView")
@@ -126,6 +130,8 @@ class Compiler : ErrorReporter {
         addAlias("panda.core.Object")
         addAlias("panda.core.Panda")
         addAlias("panda.core.Range")
+        addAlias("panda.core.Real32")
+        addAlias("panda.core.Real64")
         addAlias("panda.core.SimpleRange")
         addAlias("panda.core.SteppedRange")
         addAlias("panda.core.String")
@@ -984,6 +990,9 @@ class Compiler : ErrorReporter {
         if type = Type.IntLiteral() {
             return Type.Int64()
         }
+        if type = Type.RealLiteral() {
+            return Type.Real64()
+        }
         if type = Type.BitLiteral() {
             return Type.Bit()
         }
@@ -1177,6 +1186,9 @@ class Compiler : ErrorReporter {
                         requiredSize(expr.payload->UInt64) <= target.size()) {
                     return base
                 }
+                if target.typeKind = Type.Kind.BUILTIN_FLOAT {
+                    return 1
+                }
                 if !target.isNumber() {
                     assert base = 0
                     return coercionCost(variableType(expr), target)
@@ -1186,6 +1198,17 @@ class Compiler : ErrorReporter {
                         requiredSize(-(expr.payload->UInt64).convert()->Int64) <= target.size()) |
                         (target.typeKind = Type.Kind.BUILTIN_UINT &
                         requiredSize(-(expr.payload->UInt64).convert()->Int64) <= target.size()) {
+                    return base
+                }
+                if target.typeKind = Type.Kind.BUILTIN_FLOAT {
+                    return 1
+                }
+                if !target.isNumber() {
+                    assert base = 0
+                    return coercionCost(variableType(expr), target)
+                }
+            when IRNode.Kind.REAL:
+                if target.typeKind = Type.Kind.BUILTIN_FLOAT {
                     return base
                 }
                 if !target.isNumber() {
@@ -1343,6 +1366,10 @@ class Compiler : ErrorReporter {
                         requiredSize(expr.payload->UInt64) <= target.size() {
                     return IRNode(IRNode.Kind.INT, expr.position, target, expr.payload->UInt64)
                 }
+                else if target.typeKind = Type.Kind.BUILTIN_FLOAT {
+                    return IRNode(IRNode.Kind.REAL, expr.position, target,
+                            expr.payload->UInt64.convert()->Real64)
+                }
                 if target.typeKind = Type.Kind.CLASS & !target.isNumber() {
                     def coerced := coerce(expr, variableType(expr))
                     if coerced = null {
@@ -1355,6 +1382,21 @@ class Compiler : ErrorReporter {
                         requiredSize(-expr.payload->UInt64.convert()->Int64) <= target.size() {
                     return IRNode(IRNode.Kind.NEGATED_INT, expr.position, target,
                             expr.payload->UInt64)
+                }
+                else if target.typeKind = Type.Kind.BUILTIN_FLOAT {
+                    return IRNode(IRNode.Kind.REAL, expr.position, target,
+                            -expr.payload->UInt64.convert()->Real64)
+                }
+                if target.typeKind = Type.Kind.CLASS & !target.isNumber() {
+                    def coerced := coerce(expr, variableType(expr))
+                    if coerced = null {
+                        return null
+                    }
+                    return coerce(coerced, target)
+                }
+            when IRNode.Kind.REAL:
+                if target.typeKind = Type.Kind.BUILTIN_FLOAT {
+                    return IRNode(IRNode.Kind.REAL, expr.position, target, expr.payload->Real64)
                 }
                 if target.typeKind = Type.Kind.CLASS & !target.isNumber() {
                     def coerced := coerce(expr, variableType(expr))
@@ -2699,6 +2741,8 @@ class Compiler : ErrorReporter {
                 return compileIdentifier(e)
             when ASTNode.Kind.INT:
                 return IRNode(IRNode.Kind.INT, e.position, Type.IntLiteral(), e.payload->UInt64)
+            when ASTNode.Kind.REAL:
+                return IRNode(IRNode.Kind.REAL, e.position, Type.RealLiteral(), e.payload->Real64)
             when ASTNode.Kind.PREFIX:
                 return compilePrefix(e)
             when ASTNode.Kind.RANGE_INCLUSIVE, ASTNode.Kind.RANGE_EXCLUSIVE:
@@ -2716,7 +2760,7 @@ class Compiler : ErrorReporter {
             when ASTNode.Kind.NULL:
                 return compileNull(e)
         }
-        assert false, "unsupported expression: \{e} (\{e.kind})"
+        assert false, "unsupported expression: \{e} (\{e.position})"
     }
 
     method compileBlock(b:ASTNode):IRNode? {
@@ -3437,7 +3481,8 @@ class Compiler : ErrorReporter {
             when ASTNode.Kind.VAR, ASTNode.Kind.DEF, ASTNode.Kind.CONSTANT, ASTNode.Kind.PROPERTY:
                 return compileVar(s)
         }
-        assert false, "unsupported statement kind: \{s.kind}"
+        assert false, "unsupported statement kind: \{s.kind} at " +
+                "\{currentClass.peek().source}:\{s.position}"
     }
 
     method compileBody(m:MethodDecl):IRNode? {

@@ -1115,6 +1115,14 @@ class CCodeGenerator : CodeGenerator {
         return "-" + int.payload->Int.convert()
     }
 
+    method getRealReference(real:IRNode, out:OutputStream):String {
+        def result := real.payload->Real64.convert()->String
+        if result.contains(".") {
+            return result
+        }
+        return result + ".0"
+    }
+
     method getBitReference(bit:IRNode, out:IndentedOutputStream):String {
         if bit.payload->Bit {
             return "true"
@@ -1253,6 +1261,8 @@ class CCodeGenerator : CodeGenerator {
                 return getIntReference(expr, out)
             when IRNode.Kind.NEGATED_INT:
                 return getNegatedIntReference(expr, out)
+            when IRNode.Kind.REAL:
+                return getRealReference(expr, out)
             when IRNode.Kind.BIT:
                 return getBitReference(expr, out)
             when IRNode.Kind.CONSTRUCT:

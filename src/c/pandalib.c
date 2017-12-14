@@ -264,6 +264,24 @@ void panda$core$Panda$addressOf$panda$core$Object$R$panda$core$Int64(int64_t* re
     *result = (int64_t) o;
 }
 
+void panda$core$Panda$toReal64$panda$core$String$R$panda$core$Real64(double* result, String* s) {
+    char* cstr = pandaGetCString(s);
+    *result = atof(cstr);
+    free(cstr);
+}
+
+String* panda$core$Real64$convert$R$panda$core$String(double d) {
+    size_t len = snprintf(NULL, 0, "%g", d);
+    char* result = (char*) malloc(len + 1);
+    snprintf(result, len + 1, "%g", d);
+    return pandaNewString(result, len);
+}
+
+void panda$core$Panda$floatToIntBits$panda$core$Real64$R$panda$core$Int64(int64_t* result,
+        double d) {
+    *result = *((int64_t*) &d);
+}
+
 // Console
 
 void panda$io$Console$write$panda$core$Char8(char ch) {

@@ -60,6 +60,7 @@ class IRNode {
         constant OTHERWISE                   := 1043
         -- C-style ternary expression. Not supported in Panda source code, but used internally.
         constant TERNARY                     := 1044
+        constant REAL                        := 1045
     }
 
     def kind:Int
@@ -101,6 +102,10 @@ class IRNode {
     }
 
     init(kind:Int, position:Position, type:Type, payload:UInt64) {
+        init(kind, position, type, payload, null)
+    }
+
+    init(kind:Int, position:Position, type:Type, payload:Real64) {
         init(kind, position, type, payload, null)
     }
 

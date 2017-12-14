@@ -60,6 +60,9 @@ class ASTNode : Immutable {
         constant FILE            := 152
         constant TUPLE_TARGET    := 153
         constant GENERIC_TYPE    := 154
+        constant CHOICE          := 155
+        constant CHOICE_ENTRY    := 156
+        constant REAL            := 157
     }
 
     @class
@@ -102,6 +105,10 @@ class ASTNode : Immutable {
     }
 
     init(kind:Int, position:Position, payload:UInt64) {
+        init(kind, position, payload, null)
+    }
+
+    init(kind:Int, position:Position, payload:panda.core.Real64) {
         init(kind, position, payload, null)
     }
 
@@ -350,6 +357,9 @@ class ASTNode : Immutable {
                         "\{children[3]} \{children[4]}\{children[5]}"
             when Kind.FUNCTION:
                 assert children.get_count() = 6
+                for c in children {
+                    Console.printLine(c)
+                }
                 return "\{children[0]}\{children[1]}function \{payload}\{children[2]}:" +
                         "\{children[3]} \{children[4]}\{children[5]}"
             when Kind.CLASS_MEMBERS:

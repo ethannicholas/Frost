@@ -7,6 +7,8 @@ class WriteInts {
     constant UINT16 := 5
     constant UINT32 := 6
     constant UINT64 := 7
+    constant REAL32 := 8
+    constant REAL64 := 9
     constant INVALID := -1
 
     @class
@@ -20,12 +22,14 @@ class WriteInts {
             when UINT16: return "builtin_uint16"
             when UINT32: return "builtin_uint32"
             when UINT64: return "builtin_uint64"
+            when REAL32: return "builtin_float32"
+            when REAL64: return "builtin_float64"
         }
         assert false, "invalid type \{type}"
     }
 
     @class
-    function int(type:Int):String {
+    function object(type:Int):String {
         match type {
             when INT8:   return "Int8"
             when INT16:  return "Int16"
@@ -35,6 +39,8 @@ class WriteInts {
             when UINT16: return "UInt16"
             when UINT32: return "UInt32"
             when UINT64: return "UInt64"
+            when REAL32: return "Real32"
+            when REAL64: return "Real64"
         }
         assert false, "invalid type \{type}"
     }
@@ -79,7 +85,7 @@ class WriteInts {
         if type = target {
             return ""
         }
-        return ".convert()->\{int(target)}"
+        return ".convert()->\{object(target)}"
     }
 
     @class
@@ -145,7 +151,7 @@ class WriteInts {
             return
         }
         out.printLine()
-        out.printLine("    function \{op}(other:\{int(rightType)}):\{int(resultType)} {")
+        out.printLine("    function \{op}(other:\{object(rightType)}):\{object(resultType)} {")
         out.printLine("        return value\{cast(leftType, resultType)} \{op} " +
                 "other.value\{cast(rightType, resultType)}")
         out.printLine("    }")
@@ -166,8 +172,8 @@ class WriteInts {
     @class
     method writePrefixOperator(op:String, type:Int, out:OutputStream) {
         out.printLine()
-        out.printLine("    function \{op}():\{int(type)} {")
-        out.printLine("        return \{int(type)}(\{op}value)")
+        out.printLine("    function \{op}():\{object(type)} {")
+        out.printLine("        return \{object(type)}(\{op}value)")
         out.printLine("    }")
     }
 
@@ -181,7 +187,7 @@ class WriteInts {
         if leftType = rightType {
             out.printLine("    @override")
         }
-        out.printLine("    function \{op}(other:\{int(rightType)}):Bit {")
+        out.printLine("    function \{op}(other:\{object(rightType)}):Bit {")
         out.printLine("        return value\{cast(leftType, operandType)} \{op} " +
                 "other.value\{cast(rightType, operandType)}")
         out.printLine("    }")
@@ -206,7 +212,7 @@ class WriteInts {
         if resultType = INVALID {
             return
         }
-        out.printLine("    function max(other:\{int(rightType)}):\{int(resultType)} {")
+        out.printLine("    function max(other:\{object(rightType)}):\{object(resultType)} {")
         out.printLine("        if value\{cast(leftType, resultType)} > " +
                 "other.value\{cast(rightType, resultType)} {")
         out.printLine("            return value\{cast(leftType, resultType)}")
@@ -234,7 +240,7 @@ class WriteInts {
         if resultType = INVALID {
             return
         }
-        out.printLine("    function min(other:\{int(rightType)}):\{int(resultType)} {")
+        out.printLine("    function min(other:\{object(rightType)}):\{object(resultType)} {")
         out.printLine("        if value\{cast(leftType, resultType)} < " +
                 "other.value\{cast(rightType, resultType)} {")
         out.printLine("            return value\{cast(leftType, resultType)}")
@@ -258,7 +264,7 @@ class WriteInts {
     @class
     method writeIndex(leftType:Int, rightType:Int, out:OutputStream) {
         out.printLine()
-        out.printLine("    function [](index:\{int(rightType)}):Bit {")
+        out.printLine("    function [](index:\{object(rightType)}):Bit {")
         out.printLine("        return self && (1 << index) != 0")
         out.printLine("    }")
     }
@@ -290,7 +296,7 @@ class WriteInts {
         out.printLine("    @override")
         out.printLine("    function convert():String {")
         var max := (max(type).convert()->String).utf8().get_count()
-        if int(type).startsWith("I") {
+        if object(type).startsWith("I") {
             max += 1 -- for minus sign
         }
         out.printLine("        constant max := \{max}")
@@ -330,8 +336,8 @@ class WriteInts {
     @class
     method writeConvert(type:Int, target:Int, out:OutputStream) {
         out.printLine()
-        out.printLine("    function convert():\{int(target)} {")
-        out.printLine("        return \{int(target)}(value->\{builtin(target)})")
+        out.printLine("    function convert():\{object(target)} {")
+        out.printLine("        return \{object(target)}(value->\{builtin(target)})")
         out.printLine("    }")
     }
 
@@ -361,6 +367,8 @@ class WriteInts {
         if type != UINT64 {
             writeConvert(type, UINT64, out)
         }
+        writeConvert(type, REAL32, out)
+        writeConvert(type, REAL64, out)
         writeConvertToString(type, out)
     }
 
@@ -372,10 +380,11 @@ class WriteInts {
         out.printLine("uses panda.unsafe.Pointer")
         out.printLine()
         out.printLine("@final")
-        out.printLine("class \{int(type)} : Value (Key<\{int(type)}>, Comparable<\{int(type)}>) {")
-        out.printLine("    constant MIN:\{int(type)} := \{min(type)}")
+        out.printLine("class \{object(type)} : Value, Key<\{object(type)}>, " +
+                "Comparable<\{object(type)}> {")
+        out.printLine("    constant MIN:\{object(type)} := \{min(type)}")
         out.printLine()
-        out.printLine("    constant MAX:\{int(type)} := \{max(type)}")
+        out.printLine("    constant MAX:\{object(type)} := \{max(type)}")
         out.printLine()
         out.printLine("    @private")
         out.printLine("    def value:\{builtin(type)}")

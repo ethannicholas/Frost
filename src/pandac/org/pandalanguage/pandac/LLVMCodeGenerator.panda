@@ -367,6 +367,12 @@ class LLVMCodeGenerator : CodeGenerator {
                 return "i\{sizeOf(t) * 8}"
             when Type.Kind.BUILTIN_BIT:
                 return "i1"
+            when Type.Kind.BUILTIN_FLOAT:
+                match sizeOf(t) {
+                    when 4: return "float"
+                    when 8: return "double"
+                    otherwise: assert false
+                }
             when Type.Kind.CLASS:
                 writeType(t)
                 def name := "%\{escapeName(t.name)}"
@@ -1053,7 +1059,7 @@ class LLVMCodeGenerator : CodeGenerator {
                     when Token.Kind.ADD:        llvmOp := "fadd"
                     when Token.Kind.SUB:        llvmOp := "fsub"
                     when Token.Kind.MUL:        llvmOp := "fmul"
-                    when Token.Kind.INTDIV:     llvmOp := "fdiv"
+                    when Token.Kind.DIV:        llvmOp := "fdiv"
                     when Token.Kind.EQ:         llvmOp := "fcmp oeq"
                     when Token.Kind.NEQ:        llvmOp := "fcmp one"
                     when Token.Kind.GT:         llvmOp := "fcmp ogt"
@@ -1381,7 +1387,8 @@ class LLVMCodeGenerator : CodeGenerator {
             return inline.returns[0].second
         }
         if inline.returns.get_count() = 0 {
-            out.print("unreachable")
+            assert false, "no return from inline method \{m.declaration()}"
+            out.printLine("unreachable")
             return "undef"
         }
         def phi := nextVar()
@@ -1653,19 +1660,50 @@ class LLVMCodeGenerator : CodeGenerator {
             assert src.isBuiltinNumber()
             def size1 := sizeOf(src)
             def size2 := sizeOf(target)
-            if size1 > size2 {
-                op := "trunc"
-            }
-            else if size1 < size2 {
-                if src.typeKind = Type.Kind.BUILTIN_INT {
-                    op := "sext"
+            if src.typeKind = Type.Kind.BUILTIN_FLOAT {
+                if target.typeKind = Type.Kind.BUILTIN_FLOAT {
+                    if size1 > size2 {
+                        op := "fptrunc"
+                    }
+                    else if size1 < size2 {
+                        op := "fpext"
+                    }
+                    else {
+                        return value
+                    }
+                }
+                else if target.typeKind = Type.Kind.BUILTIN_INT {
+                    op := "fptosi"
                 }
                 else {
-                    op := "zext"
+                    assert target.typeKind = Type.Kind.BUILTIN_UINT
+                    op := "fptoui"
+                }
+            }
+            else if target.typeKind = Type.Kind.BUILTIN_FLOAT {
+                if src.typeKind = Type.Kind.BUILTIN_INT {
+                    op := "sitofp"
+                }
+                else {
+                    assert src.typeKind = Type.Kind.BUILTIN_UINT
+                    op := "uitofp"
                 }
             }
             else {
-                return value
+                if size1 > size2 {
+                    op := "trunc"
+                }
+                else if size1 < size2 {
+                    if src.typeKind = Type.Kind.BUILTIN_INT {
+                        op := "sext"
+                    }
+                    else {
+                        op := "zext"
+                    }                    
+                }
+                else {
+                    return value
+                }
             }
         }
         else {
@@ -1776,6 +1814,23 @@ class LLVMCodeGenerator : CodeGenerator {
 
     method getNegatedIntReference(int:IRNode, out:OutputStream):String {
         return "-" + int.payload->UInt64.convert()
+    }
+
+    method getRealReference(real:IRNode, out:OutputStream):String {
+        var r64 := real.payload->Real64
+        if real.type.size() = 32 {
+            -- LLVM has a bizarre representation of float. You still use a double, but must ensure
+            -- that said double is exactly representable as a float. We convert through Real32 to
+            -- ensure this.
+            r64 := r64.convert()->panda.core.Real32.convert()->Real64
+        }
+        var bits := Panda.floatToIntBits(r64)
+        def result := MutableString()
+        while bits != 0 {
+            result.append("0123456789ABCDEF"[bits % 16])
+            bits //= 16
+        }
+        return "0x" + result.finish()[.. by -1]
     }
 
     method getBitReference(bit:IRNode, out:OutputStream):String {
@@ -1899,7 +1954,13 @@ class LLVMCodeGenerator : CodeGenerator {
         def result := nextVar()
         match (expr.payload->UInt64).convert()->Int64 {
             when Token.Kind.SUB:
-                out.printLine("\{result} = sub \{type(expr.type)} 0, \{base}")
+                def zero:String
+                if expr.type.typeKind = Type.Kind.BUILTIN_FLOAT {
+                    out.printLine("\{result} = fsub \{type(expr.type)} 0.0, \{base}")                    
+                }
+                else {
+                    out.printLine("\{result} = sub \{type(expr.type)} 0, \{base}")                    
+                }
                 return result
             when Token.Kind.NOT, Token.Kind.BITWISENOT:
                 out.printLine("\{result} = xor \{type(expr.type)} -1, \{base}")
@@ -1923,6 +1984,8 @@ class LLVMCodeGenerator : CodeGenerator {
                 return getIntReference(expr, out)
             when IRNode.Kind.NEGATED_INT:
                 return getNegatedIntReference(expr, out)
+            when IRNode.Kind.REAL:
+                return getRealReference(expr, out)
             when IRNode.Kind.BIT:
                 return getBitReference(expr, out)
             when IRNode.Kind.CONSTRUCT:

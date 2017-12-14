@@ -1,0 +1,121 @@
+package panda.core
+
+@final
+class Real64 : Value, Key<Real64>, Comparable<Real64> {
+    @private
+    def value:builtin_float64
+
+    @$implicit
+    init(value:builtin_float64) {
+        self.value := value
+    }
+
+    function +(other:Real64):Real64 {
+        return value + other.value
+    }
+
+    function -(other:Real64):Real64 {
+        return value - other.value
+    }
+
+    function -():Real64 {
+        return Real64(-value)
+    }
+
+    function *(other:Real64):Real64 {
+        return value * other.value
+    }
+
+    function /(other:Real64):Real64 {
+        return value / other.value
+    }
+
+    @override
+    function =(other:Real64):Bit {
+        return value = other.value
+    }
+
+    @override
+    function !=(other:Real64):Bit {
+        return value != other.value
+    }
+
+    @override
+    function <(other:Real64):Bit {
+        return value < other.value
+    }
+
+    @override
+    function >(other:Real64):Bit {
+        return value > other.value
+    }
+
+    @override
+    function >=(other:Real64):Bit {
+        return value >= other.value
+    }
+
+    @override
+    function <=(other:Real64):Bit {
+        return value <= other.value
+    }
+
+    function min(other:Real64):Real64 {
+        if value < other.value {
+            return value
+        }
+        return other.value
+    }
+
+    function max(other:Real64):Real64 {
+        if value > other.value {
+            return value
+        }
+        return other.value
+    }
+
+    @override
+    function hash():Int {
+        return Panda.floatToIntBits(self)
+    }
+
+    function convert():Int8 {
+        return Int8(value->builtin_int8)
+    }
+
+    function convert():Int16 {
+        return Int16(value->builtin_int16)
+    }
+
+    function convert():Int32 {
+        return Int32(value->builtin_int32)
+    }
+
+    function convert():Int64 {
+        return Int64(value->builtin_int64)
+    }
+
+    function convert():UInt8 {
+        return UInt8(value->builtin_uint8)
+    }
+
+    function convert():UInt16 {
+        return UInt16(value->builtin_uint16)
+    }
+
+    function convert():UInt32 {
+        return UInt32(value->builtin_uint32)
+    }
+
+    function convert():UInt64 {
+        return UInt64(value->builtin_uint64)
+    }
+
+    function convert():Real32 {
+        return Real32(value->builtin_float32)
+    }
+
+    @override
+    @external
+    function convert():String
+}

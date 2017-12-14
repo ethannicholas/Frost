@@ -51,10 +51,8 @@ add_executable(bootstrap
     bootstrap/src/panda/core/Int32.c
     bootstrap/src/panda/core/Int64.c
     bootstrap/src/panda/core/Int8.c
-    bootstrap/src/panda/core/UInt16.c
-    bootstrap/src/panda/core/UInt32.c
-    bootstrap/src/panda/core/UInt64.c
-    bootstrap/src/panda/core/UInt8.c
+    bootstrap/src/panda/core/Real32.c
+    bootstrap/src/panda/core/Real64.c
     bootstrap/src/panda/core/MutableString.c
     bootstrap/src/panda/core/Object.c
     bootstrap/src/panda/core/Panda.c
@@ -73,6 +71,10 @@ add_executable(bootstrap
     bootstrap/src/panda/core/String/UTF8List.c
     bootstrap/src/panda/core/System.c
     bootstrap/src/panda/core/System/Process.c
+    bootstrap/src/panda/core/UInt16.c
+    bootstrap/src/panda/core/UInt32.c
+    bootstrap/src/panda/core/UInt64.c
+    bootstrap/src/panda/core/UInt8.c
     bootstrap/src/panda/core/Value.c
     bootstrap/src/panda/io/Console.c
     bootstrap/src/panda/io/File.c
@@ -186,6 +188,8 @@ set(core_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/MutableString.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Object.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Panda.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Real32.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Real64.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/String.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/System.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Value.panda
