@@ -136,7 +136,7 @@ class PLex {
         out.printLine("@class")
         out.printLine("function getTransitions():Pointer<Pointer<Int>> {")
         out.level += 1
-        out.printLine("def result := Pointer<Pointer<Int>>.alloc(\{DFA.END_CHAR + 1})")
+        out.printLine("def result := Pointer<Pointer<Int>>.alloc(\{DFA.END_CHAR} + 1)")
         for i in 0 ... DFA.END_CHAR.convert()->Int {
             def a := dfa.transitions[i]
             def counts := Array<Int>(dfa.stateCount)

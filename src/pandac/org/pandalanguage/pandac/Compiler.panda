@@ -1194,7 +1194,8 @@ class Compiler : ErrorReporter {
                 }
             when IRNode.Kind.STRING:
                 if target = Type.Char8() {
-                    if expr.payload->String.utf8().get_count() = 1 {
+                    def s := expr.payload->String
+                    if s.length() = 1 & s[0].convert()->UInt32 <= 255 {
                         return base
                     }
                     return null
@@ -1376,7 +1377,7 @@ class Compiler : ErrorReporter {
                 if target = Type.Char8() & coercionCost(expr, target) != null {
                     def args := Array<IRNode>() -- FIXME literal
                     args.add(IRNode(IRNode.Kind.INT, expr.position, Type.BuiltinUInt8(),
-                            (expr.payload->String).utf8()[0].convert()->UInt64))
+                            expr.payload->String[0].convert()->UInt64))
                     def target := IRNode(IRNode.Kind.TYPE_REFERENCE, expr.position, Type.Class(),
                             target)
                     return call(target, args)

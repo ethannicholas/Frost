@@ -4,6 +4,11 @@ uses panda.unsafe.Pointer
 
 ====================================================================================================
 Represents a single 2-byte word of a UTF-16 encoded string.
+
+A single-codepoint string literal whose single codepoint fits into a `Char16` (that is, Unicode
+codepoints 0 to 65535) may be used wherever a `Char16` is expected. That is, it is legal to write:
+
+    def c:Char16 := "A"
 ====================================================================================================
 @final
 class Char16 : Value, Key<Char16> {

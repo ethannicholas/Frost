@@ -6841,7 +6841,7 @@ panda$core$String* org$pandalanguage$pandac$LLVMCodeGenerator$getCastReference$p
         panda$core$Bit $tmp3549 = panda$core$Int64$$LT$panda$core$Int64$R$panda$core$Bit(size13543, size23545);
         if ($tmp3549.value) {
         {
-            panda$core$Bit $tmp3550 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_target->typeKind, ((panda$core$Int64) { 12 }));
+            panda$core$Bit $tmp3550 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_src->typeKind, ((panda$core$Int64) { 12 }));
             if ($tmp3550.value) {
             {
                 op3540 = &$s3551;

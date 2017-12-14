@@ -5,7 +5,7 @@ uses panda.unsafe.Pointer
 @final
 class DFA {
     constant START_CHAR:UInt8 := 0
-    constant END_CHAR:UInt8 := 127
+    constant END_CHAR:UInt8 := 255
 
     def stateCount:Int
 
@@ -13,11 +13,11 @@ class DFA {
 
     def accepts:Pointer<Int>
 
-    var source:String
+    var source:ListView<Char8>
 
-    var offset:String.Index
+    var offset:Int
 
-    var sourceEnd:String.Index
+    var sourceEnd:Int
 
     var line := 1
 
@@ -29,9 +29,9 @@ class DFA {
 
     init(source:String, stateCount:Int, transitions:Pointer<Pointer<Int>>,
             accepts:Pointer<Int>) {
-        self.source := source
-        self.offset := source.start()
-        self.sourceEnd := source.end()
+        self.source := source.utf8()
+        self.offset := 0
+        self.sourceEnd := self.source.get_count()
         self.stateCount := stateCount
         self.transitions := transitions
         self.accepts := accepts
@@ -39,8 +39,8 @@ class DFA {
 
     method next():RawToken {
         var state := 1
-        if offset = source.end() {
-            return RawToken(0, offset, offset, line, column)
+        if offset = sourceEnd {
+            return RawToken(0, String.Index(offset), String.Index(offset), line, column)
         }
         var kind := -1
         def start := offset
@@ -55,7 +55,7 @@ class DFA {
             }
             state := transitions[c.convert()][state]
             if state != 0 {
-                offset := source.next(offset)
+                offset += 1
                 match c.convert()->UInt8 {
                     when 10:
                         line += 1
@@ -76,6 +76,6 @@ class DFA {
             }
         }
         offset := end
-        return RawToken(kind, start, end, startLine, startColumn)
+        return RawToken(kind, String.Index(start), String.Index(end), startLine, startColumn)
     }
 }

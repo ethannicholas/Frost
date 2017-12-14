@@ -1630,7 +1630,7 @@ class LLVMCodeGenerator : CodeGenerator {
                 op := "trunc"
             }
             else if size1 < size2 {
-                if target.typeKind = Type.Kind.BUILTIN_INT {
+                if src.typeKind = Type.Kind.BUILTIN_INT {
                     op := "sext"
                 }
                 else {
@@ -1744,11 +1744,11 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     method getIntReference(int:IRNode, out:OutputStream):String {
-        return (int.payload->UInt64).convert() -- FIXME parens
+        return int.payload->UInt64.convert()
     }
 
     method getNegatedIntReference(int:IRNode, out:OutputStream):String {
-        return "-" + (int.payload->UInt64).convert() -- FIXME parens
+        return "-" + int.payload->UInt64.convert()
     }
 
     method getBitReference(bit:IRNode, out:OutputStream):String {
