@@ -2186,24 +2186,96 @@ class LLVMCodeGenerator : CodeGenerator {
         createBlock(end, out)
     }
 
+    method writeSimpleRealRangeFor(f:IRNode, out:OutputStream) {
+        -- this could probably be simplified quite a bit; it's just a cut-down version of
+        -- writeSteppedRealRangeFor
+        assert f.kind = IRNode.Kind.RANGE_FOR
+        assert f.children.get_count() = 3
+        def target := f.children[0]
+        assert f.children[1].type.typeKind = Type.Kind.GENERIC
+        assert f.children[1].type.subtypes.get_count() = 2
+        assert f.children[1].type.subtypes[0].name = Compiler.RANGE_NAME
+        def range := getTypedReference(f.children[1], out)
+        def block := f.children[2]
+        def t := f.children[1].type.subtypes[1]
+        def llt := type(t)
+        def indexType:String
+        if t.typeKind = Type.Kind.NULLABLE {
+            assert t.subtypes.get_count() = 1
+            indexType := type(t.subtypes[0])
+        }
+        else {
+            indexType := llt
+        }
+        def cl := compiler.getClass(t)
+        assert cl != null
+        assert compiler.instanceFields(cl).get_count() = 1
+        def numberType := type(compiler.instanceFields(cl)[0].type)
+        assert target.kind = IRNode.Kind.VARIABLE_REFERENCE
+        def index := getName(target.payload->Variable)
+        methodHeader.printLine("\{index} = alloca \{indexType}")
+
+        -- extract start value from range
+        def start := nextVar()
+        out.printLine("\{start} = extractvalue \{range}, 0, 0")
+
+        -- store start value
+        def indexValuePtr := nextVar()
+        out.printLine("\{indexValuePtr} = getelementptr \{indexType}, \{indexType}* \{index}, " +
+                "i64 0, i32 0")
+        out.printLine("store \{numberType} \{start}, \{numberType}* \{indexValuePtr}")
+
+        -- extract end value from range
+        def end := nextVar()
+        out.printLine("\{end} = extractvalue \{range}, 1, 0")
+
+        -- extract inclusive / exclusive from range
+        def inclusive := nextVar()
+        out.printLine("\{inclusive} = extractvalue \{range}, 2, 0")
+
+        -- start block
+        def loopStart := nextLabel()
+        def loopBody := nextLabel()
+        def loopEnd := nextLabel()
+        def loopInc := nextLabel()
+        loopDescriptors.push(LoopDescriptor(f.payload->String?, loopEnd, loopInc)) -- FIXME Auto
+        def forward := nextLabel()
+        def backward := nextLabel()
+        out.printLine("br label %\{loopStart}")
+        createBlock(loopStart, out)
+        def indexValue := nextVar()
+        out.printLine("\{indexValue} = load \{numberType}, \{numberType}* \{indexValuePtr}")
+        def forwardInclusive := nextLabel()
+        def forwardExclusive := nextLabel()
+        out.printLine("br i1 \{inclusive}, label %\{forwardInclusive}, " +
+                "label %\{forwardExclusive}")
+        createBlock(forwardInclusive, out)
+        def forwardInclusiveTest := nextVar()
+        out.printLine("\{forwardInclusiveTest} = fcmp ole \{numberType} \{indexValue}, \{end}")
+        out.printLine("br i1 \{forwardInclusiveTest}, label %\{loopBody}, label %\{loopEnd}")
+        createBlock(forwardExclusive, out)
+        def forwardExclusiveTest := nextVar()
+        out.printLine("\{forwardExclusiveTest} = fcmp olt \{numberType} \{indexValue}, \{end}")
+        out.printLine("br i1 \{forwardExclusiveTest}, label %\{loopBody}, label %\{loopEnd}")
+        createBlock(loopBody, out)
+        writeStatement(block, out)
+        if !endsWithBranch(block) {
+            out.printLine("br label %\{loopInc}")
+        }
+        createBlock(loopInc, out)
+        def inc := nextVar()
+        out.printLine("\{inc} = fadd \{numberType} \{indexValue}, 1.0")
+        def incStruct := nextVar()
+        out.printLine("\{incStruct} = insertvalue \{indexType} { \{numberType} undef")
+        out.printLine(" }, \{numberType} \{inc}, 0")
+        out.printLine("store \{indexType} \{incStruct}, \{indexType}* \{index}")
+        out.printLine("br label %\{loopStart}")
+
+        createBlock(loopEnd, out)
+        loopDescriptors.pop()
+    }
+
     method writeSteppedRealRangeFor(f:IRNode, out:OutputStream) {
-        -- I am acutely aware of how horrific this looks.
-        --
-        -- There's no easy way to produce clean output here, since we have to handle different step
-        -- values, different loop directions, and both inclusive and exclusive ranges, all of which
-        -- could potentially be determined at runtime. It gets even uglier when you consider the
-        -- difficulty of handling the extremes of the numeric types. You can't just add 1 and then
-        -- check to see if it's in range when the limit is MAX_INT, because you'll overflow and end
-        -- up with an infinite loop. You also can't just check for being equal to the limit before
-        -- adding the step, because with a step bigger than 1 (or smaller than -1) you might need to
-        -- stop before actually hitting the end. So you instead check the difference between the
-        -- current index and the limit, but even there you need to be careful because it could
-        -- overflow in a signed test, and we need to handle null values, and... ugh, it's
-        -- surprisingly messy and results in a ton of code.
-        --
-        -- Fortunately, we can just write incredibly awful-but-straightforward code and let LLVM
-        -- optimize it to something sensible if it turns out the values are known at compile time.
-        -- This works remarkably well, because LLVM is awesome.
         assert f.kind = IRNode.Kind.RANGE_FOR
         assert f.children.get_count() = 3
         def target := f.children[0]
@@ -2311,7 +2383,6 @@ class LLVMCodeGenerator : CodeGenerator {
         createBlock(loopEnd, out)
         loopDescriptors.pop()
     }
-
 
     method writeSimpleRangeFor(f:IRNode, out:OutputStream) {
         -- this could probably be simplified quite a bit; it's just a cut-down version of
@@ -2462,6 +2533,7 @@ class LLVMCodeGenerator : CodeGenerator {
         def range := getTypedReference(f.children[1], out)
         def block := f.children[2]
         def t := f.children[1].type.subtypes[1]
+        def stepType := f.children[1].type.subtypes[2]
         def llt := type(t)
         def indexType:String
         if t.typeKind = Type.Kind.NULLABLE {
@@ -2510,11 +2582,12 @@ class LLVMCodeGenerator : CodeGenerator {
         def forwardEntry := nextLabel()
         def backwardEntry := nextLabel()
         def signPrefix:String
-        if t.name.startsWith("panda.core.Int") {
+        if stepType.name.startsWith("panda.core.Int") {
             signPrefix := "s"
         }
         else {
-            assert t.name.startsWith("panda.core.UInt") | t.name.startsWith("panda.core.Char")
+            assert stepType.name.startsWith("panda.core.UInt") |
+                    stepType.name.startsWith("panda.core.Char")
             signPrefix := "u"
         }
         def direction:String
@@ -2639,18 +2712,18 @@ class LLVMCodeGenerator : CodeGenerator {
 
     method writeRangeFor(f:IRNode, out:OutputStream) {
         if f.children[1].type.subtypes[1].isReal() {
-            if f.children[1].type.isSteppedRange() {
+            if f.children[1].type.isRange() {
+                writeSimpleRealRangeFor(f, out)
+            }
+            else {
                 writeSteppedRealRangeFor(f, out)
-            } 
+            }
         }
         else if f.children[1].type.isRange() {
             writeSimpleRangeFor(f, out)
         }
-        else if f.children[1].type.isSteppedRange() {
-            writeSteppedRangeFor(f, out)
-        }
         else {
-            assert false
+            writeSteppedRangeFor(f, out)
         }
     }
 

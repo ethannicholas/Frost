@@ -1001,12 +1001,69 @@ class Compiler : ErrorReporter {
         return type
     }
 
+    ================================================================================================
+    Given a single-character string literal, returns the size in bits of the smallest Char type that
+    can hold the literal.
+    ================================================================================================
+    function smallestCharSize(char:IRNode):Int {
+        assert char.kind = IRNode.Kind.STRING
+        assert char.payload->String.length() = 1
+        def c := char.payload->String[0].convert()->Int32
+        if c <= 255 {
+            return 8
+        }
+        if c <= 65535 {
+            return 16
+        }
+        return 32
+    }
+
+    ================================================================================================
+    Given one endpoint of a range that is a single-character string literal, returns the inferred
+    type of the literal. We choose the smallest char type that holds both endpoints (assuming the
+    other endpoint is likewise a char).
+    ================================================================================================
+    function rangeCharType(char:IRNode, other:IRNode):Type {
+        var result := smallestCharSize(char)
+        if other.kind = IRNode.Kind.STRING & other.payload->String.length() = 1 {
+            result := result.max(smallestCharSize(other))
+        }
+        match other.type {
+            when Type.Char16(): result := result.max(16)
+            when Type.Char32(): result := result.max(32)
+        }
+        match result {
+            when 8: return Type.Char8()
+            when 16: return Type.Char16()
+            when 32: return Type.Char32()
+            otherwise: assert false
+        }
+    }
+
+    ================================================================================================
+    Returns the type that a variable initialized from a given expression should be inferred to have.
+    Often this is simply the type of the expression itself, but we need to pick a type for
+    unresolved expressions.
+    ================================================================================================
     function variableType(expr:IRNode):Type {
         match expr.kind {
             when IRNode.Kind.UNRESOLVED_RANGE:
-
-                def start := expr.children[0].type
-                def end := expr.children[1].type
+                def start:Type
+                if expr.children[0].kind = IRNode.Kind.STRING &
+                        expr.children[0].payload->String.length() = 1 {
+                    start := rangeCharType(expr.children[0], expr.children[1])
+                }
+                else {
+                    start := expr.children[0].type
+                }
+                def end:Type
+                if expr.children[1].kind = IRNode.Kind.STRING &
+                        expr.children[1].payload->String.length() = 1 {
+                    end := rangeCharType(expr.children[1], expr.children[0])
+                }
+                else {
+                    end := expr.children[1].type
+                }
                 if expr.children.get_count() = 2 {
                     if expr.children[0].kind = IRNode.Kind.NULL {
                         if expr.children[1].kind = IRNode.Kind.NULL {
@@ -1017,19 +1074,28 @@ class Compiler : ErrorReporter {
                     if expr.children[1].kind = IRNode.Kind.NULL {
                         return Type.RangeOf(variableType(start).nullable())
                     }
-                    return Type.RangeOf(variableType(start.union(end)))
+                    return Type.RangeOf(variableType(start.union(self, end)))
                 }
                 var step := expr.children[2].type.nonnullable()
                 if expr.children[0].kind = IRNode.Kind.NULL {
                     if expr.children[1].kind = IRNode.Kind.NULL {
                         return Type.SteppedRangeOf(variableType(step).nullable())
                     }
-                    return Type.SteppedRangeOf(variableType(end.union(step)).nullable())
+                    if end.isChar() {
+                        return Type.SteppedRangeOf(variableType(end).nullable())
+                    }
+                    return Type.SteppedRangeOf(variableType(end.union(self, step)).nullable())
                 }
                 if expr.children[1].kind = IRNode.Kind.NULL {
-                    return Type.SteppedRangeOf(variableType(start.union(step)).nullable())
+                    if start.isChar() {
+                        return Type.SteppedRangeOf(variableType(start).nullable())
+                    }
+                    return Type.SteppedRangeOf(variableType(start.union(self, step)).nullable())
                 }
-                return Type.SteppedRangeOf(variableType(start.union(end).union(step)))
+                if start.isChar() & end.isChar() {
+                    return Type.SteppedRangeOf(variableType(start.union(self, end)))
+                }
+                return Type.SteppedRangeOf(variableType(start.union(self, end).union(self, step)))
             when IRNode.Kind.UNRESOLVED_INDEX:
                 def args := expr.children[1..]
                 def c := call(expr.children[0], "[]", args)
@@ -2847,6 +2913,9 @@ class Compiler : ErrorReporter {
             assert list.type.typeKind = Type.Kind.GENERIC
             elementType := list.type.subtypes[1]
         }
+        if !elementType.isNumeric() {
+            error(list.position, "for loop expected a numeric range, but found '\{list.type}'")
+        }
         def target := compileTarget(astTarget, Variable.Kind.DEF, null, elementType)
         if target = null {
             return null
@@ -3539,7 +3608,7 @@ class Compiler : ErrorReporter {
     method compile(m:MethodDecl) {
         if m.body != null {
             def compiled := compileBody(m)
-            if compiled != null {
+            if errorCount = 0 & compiled != null {
                 codeGenerator.write(m, compiled)
             }
         }

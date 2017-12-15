@@ -1,0 +1,67 @@
+class RangeForLoop {
+    @class
+    method run(range:Range<Int>) {
+        Console.printLine(range)
+        for i in range {
+            Console.printLine("    \{i}")
+        }
+    }
+
+    @class
+    method run8(range:Range<Int8>) {
+        Console.printLine(range)
+        for i in range {
+            Console.printLine("    \{i}")
+        }
+    }
+
+    @class
+    method runU8(range:Range<UInt8>) {
+        Console.printLine(range)
+        for i in range {
+            Console.printLine("    \{i}")
+        }
+    }
+
+    @class
+    method run(range:SteppedRange<Int, Int>) {
+        Console.printLine(range)
+        for i in range {
+            Console.printLine("    \{i}")
+        }
+    }
+
+    @class
+    method run8(range:SteppedRange<Int8, Int8>) {
+        Console.printLine(range)
+        for i in range {
+            Console.printLine("    \{i}")
+        }
+    }
+
+    @class
+    method runU8(range:SteppedRange<UInt8, UInt8>) {
+        Console.printLine(range)
+        for i in range {
+            Console.printLine("    \{i}")
+        }
+    }
+
+    @class
+    method main() {
+        run(0 .. 0)
+        run(0 ... 0)
+        run(0 .. 0 by -1)
+        run(0 ... 0 by -1)
+        run8(-128 ... 127)
+        run8(-128 .. 127)
+        run8(127 ... -128)
+        run8(-128 ... 127 by -1)
+        run8(127 ... -128 by -1)
+        run8(127 .. -128 by -1)
+        run8(-128 ... 127 by 10)
+        run8(127 ... -128 by -10)
+        runU8(0 ... 255)
+        runU8(0 ... 255 by 10)
+    }
+}

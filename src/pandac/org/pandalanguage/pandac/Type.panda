@@ -317,7 +317,18 @@ class Type : Symbol, Key<Type> {
         def children := Array<Type>() -- FIXME literal
         children.add(Type(Compiler.STEPPED_RANGE_NAME, Kind.CLASS, Position(), true))
         children.add(t)
-        children.add(t.nonnullable())
+        if t = Char8() {
+            children.add(Int8())
+        }
+        else if t = Char16() {
+            children.add(Int16())
+        }
+        else if t = Char32() {
+            children.add(Int32())
+        }
+        else {
+            children.add(t.nonnullable())
+        }
         return Type("\{Compiler.STEPPED_RANGE_NAME}<\{t}, \{t.nonnullable()}>", Kind.GENERIC,
                 t.position, children, t.resolved)
     }
@@ -344,6 +355,10 @@ class Type : Symbol, Key<Type> {
 
     function isChar():Bit {
         return name.startsWith("panda.core.Char")
+    }
+
+    function isNumeric():Bit {
+        return isNumber() | isChar()
     }
 
     function isClass():Bit {
@@ -394,7 +409,7 @@ class Type : Symbol, Key<Type> {
     }
 
     -- returns the narrowest type that can hold an instance of either type
-    function union(other:Type):Type {
+    function union(compiler:Compiler, other:Type):Type {
         if self = other {
             return self
         }
@@ -417,7 +432,7 @@ class Type : Symbol, Key<Type> {
             return self
         }
         if isReal() {
-            if other.typeKind = Kind.INT_LITERAL {
+            if other.typeKind = Kind.INT_LITERAL | other.typeKind = Kind.REAL_LITERAL {
                 return self
             }
             if other.isNumber() {
@@ -428,7 +443,7 @@ class Type : Symbol, Key<Type> {
             }
         }
         if other.isReal() {
-            if typeKind = Kind.INT_LITERAL {
+            if typeKind = Kind.INT_LITERAL | typeKind = Kind.REAL_LITERAL {
                 return other
             }
             if isNumber() {
@@ -439,13 +454,43 @@ class Type : Symbol, Key<Type> {
             }
         }
         if typeKind = Kind.NULLABLE {
-            return subtypes[0].union(other).nullable()
+            return subtypes[0].union(compiler, other).nullable()
         }
         if other.typeKind = Kind.NULLABLE {
-            return union(other.subtypes[0]).nullable()
+            return union(compiler, other.subtypes[0]).nullable()
         }
-        -- FIXME not implemented
-        return Type.Any()
+        def t1 := compiler.variableType(self)
+        def t2 := compiler.variableType(other)
+        if t1.isClass() & t2.isClass() {
+            def ancestors := Set<Type>()
+            var t := self
+            var cl := compiler.getClass(t1)
+            while cl != null {
+                ancestors.add(t)
+                if cl.rawSuper != null {
+                    t := compiler.remapType(t, cl.rawSuper)
+                    cl := compiler.getClass(t)
+                }
+                else {
+                    cl := null
+                }
+            }
+            t := other
+            cl := compiler.getClass(t2)
+            while cl != null {
+                if ancestors.contains(t) {
+                    return t
+                }
+                if cl.rawSuper != null {
+                    t := compiler.remapType(t, cl.rawSuper)
+                    cl := compiler.getClass(t)
+                }
+                else {
+                    cl := null
+                }
+            }
+        }
+        return Type.Object()
     }
 
     method remap(types:HashMap<String, Type>):Type {

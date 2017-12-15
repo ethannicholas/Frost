@@ -1,7 +1,7 @@
-class RangeTypeMismatch {
+class RangeTypeMismatch2 {
     @class
     method main() {
-        for i:UInt8 in 255 .. 0 by -1 {
+        for i in 255 .. "Hello" by -1 {
             Console.printLine(i)
         }
     }

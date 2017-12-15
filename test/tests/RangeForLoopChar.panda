@@ -1,0 +1,84 @@
+class RangeForLoopChar {
+    @class
+    method main() {
+        Console.printLine("\"A\" .. \"E\"")
+        for c in "A" .. "E" {
+            Console.printLine(c)
+        }
+        Console.printLine()
+
+        Console.printLine("\"A\" .. \"E\" by 1")
+        for c in "A" .. "E" by 1 {
+            Console.printLine(c)
+        }
+        Console.printLine()
+
+        Console.printLine("\"A\" .. \"E\" by 2")
+        for c in "A" .. "E" by 2 {
+            Console.printLine(c)
+        }
+        Console.printLine()
+
+        Console.printLine("\"E\" .. \"A\" by -1")
+        for c in "E" .. "A" by -1 {
+            Console.printLine(c)
+        }
+        Console.printLine()
+
+        Console.printLine("\"A\" .. \"E\" by -2")
+        for c in "E" .. "A" by -2 {
+            Console.printLine(c)
+        }
+        Console.printLine()
+
+        Console.printLine("\"A\" ... \"E\"")
+        for c in "A" ... "E" {
+            Console.printLine(c)
+        }
+        Console.printLine()
+
+        Console.printLine("\"A\" ... \"E\" by 1")
+        for c in "A" ... "E" by 1 {
+            Console.printLine(c)
+        }
+        Console.printLine()
+
+        Console.printLine("\"A\" ... \"E\" by 2")
+        for c in "A" ... "E" by 2 {
+            Console.printLine(c)
+        }
+        Console.printLine()
+
+        Console.printLine("\"E\" ... \"A\" by -1")
+        for c in "E" ... "A" by -1 {
+            Console.printLine(c)
+        }
+        Console.printLine()
+
+        Console.printLine("\"A\" ... \"E\" by -2")
+        for c in "E" ... "A" by -2 {
+            Console.printLine(c)
+        }
+        Console.printLine()
+
+        def a:Char8 := "A"
+        def e:Char8 := "E"
+        Console.printLine("\"A\" ... e")
+        for c in "A" ... e {
+            Console.printLine(c)
+        }
+        Console.printLine()
+
+        Console.printLine("a ... \"E\"")
+        for c in a ... "E" {
+            Console.printLine(c)
+        }
+        Console.printLine()
+
+        Console.printLine("a ... e")
+        for c in a ... e {
+            Console.printLine(c)
+        }
+        Console.printLine()
+    }
+}

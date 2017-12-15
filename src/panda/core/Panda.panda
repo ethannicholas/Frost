@@ -31,7 +31,7 @@ class Panda {
     }
 
     @class
-    method debugPrint(r:builtin_float64) {
-        Console.printLine("Debug: \{Real64(r)}")
+    method debugPrint(i:builtin_int64) {
+        Console.printLine("Debug: \{Int64(i)}")
     }
 }

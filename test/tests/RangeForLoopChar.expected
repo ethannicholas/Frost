@@ -1,0 +1,78 @@
+"A" .. "E"
+A
+B
+C
+D
+
+"A" .. "E" by 1
+A
+B
+C
+D
+
+"A" .. "E" by 2
+A
+C
+
+"E" .. "A" by -1
+E
+D
+C
+B
+
+"A" .. "E" by -2
+E
+C
+
+"A" ... "E"
+A
+B
+C
+D
+E
+
+"A" ... "E" by 1
+A
+B
+C
+D
+E
+
+"A" ... "E" by 2
+A
+C
+E
+
+"E" ... "A" by -1
+E
+D
+C
+B
+A
+
+"A" ... "E" by -2
+E
+C
+A
+
+"A" ... e
+A
+B
+C
+D
+E
+
+a ... "E"
+A
+B
+C
+D
+E
+
+a ... e
+A
+B
+C
+D
+E
+
