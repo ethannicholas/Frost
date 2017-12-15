@@ -241,7 +241,7 @@ add_custom_command(
 add_custom_command(
     OUTPUT writeOperators
     COMMAND ${CMAKE_CURRENT_BINARY_DIR}/bootstrap -O ${OPTIMIZATION} -S ${SAFETY} -o writeOperators ${CMAKE_CURRENT_SOURCE_DIR}/src/tools/WriteOperators.panda
-    DEPENDS bootstrap src/tools/WriteOperators.panda panda
+    DEPENDS src/tools/WriteOperators.panda pandac
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
 

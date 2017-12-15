@@ -235,6 +235,11 @@ class Type : Symbol, Key<Type> {
     }
 
     @class
+    method Real32():Type {
+        return Type("panda.core.Real32", Kind.CLASS, Position(), true)
+    }
+
+    @class
     method Real64():Type {
         return Type("panda.core.Real64", Kind.CLASS, Position(), true)
     }
@@ -260,13 +265,18 @@ class Type : Symbol, Key<Type> {
     }
 
     @class
-    method IntLiteral():Type {
-        return Type("$int_literal", Kind.INT_LITERAL, Position(), true)
+    method IntLiteral(value:UInt64):Type {
+        return Type(value.convert(), Kind.INT_LITERAL, Position(), true)
     }
 
     @class
-    method RealLiteral():Type {
-        return Type("$real_literal", Kind.REAL_LITERAL, Position(), true)
+    method NegatedIntLiteral(value:UInt64):Type {
+        return Type("-" + value.convert(), Kind.INT_LITERAL, Position(), true)
+    }
+
+    @class
+    method RealLiteral(value:Real64):Type {
+        return Type(value.convert(), Kind.REAL_LITERAL, Position(), true)
     }
 
     @class
@@ -303,13 +313,13 @@ class Type : Symbol, Key<Type> {
     }
 
     @class
-    method SteppedRangeOf(endPoint:Type, step:Type):Type {
+    method SteppedRangeOf(t:Type):Type {
         def children := Array<Type>() -- FIXME literal
         children.add(Type(Compiler.STEPPED_RANGE_NAME, Kind.CLASS, Position(), true))
-        children.add(endPoint)
-        children.add(step)
-        return Type("\{Compiler.STEPPED_RANGE_NAME}<\{endPoint}, \{step}>", Kind.GENERIC,
-                endPoint.position, children, endPoint.resolved & step.resolved)
+        children.add(t)
+        children.add(t.nonnullable())
+        return Type("\{Compiler.STEPPED_RANGE_NAME}<\{t}, \{t.nonnullable()}>", Kind.GENERIC,
+                t.position, children, t.resolved)
     }
 
     @class
@@ -319,12 +329,17 @@ class Type : Symbol, Key<Type> {
 
     function isNumber():Bit {
         return name.startsWith("panda.core.Int") | name.startsWith("panda.core.UInt") |
-                name.startsWith("panda.core.Real")
+                name.startsWith("panda.core.Real") | typeKind = Kind.INT_LITERAL |
+                typeKind = Kind.REAL_LITERAL
     }
 
     function isBuiltinNumber():Bit {
         return typeKind = Kind.BUILTIN_INT | typeKind = Kind.BUILTIN_UINT |
                 typeKind = Kind.BUILTIN_FLOAT | typeKind = Kind.INT_LITERAL
+    }
+
+    function isReal():Bit {
+        return typeKind = Kind.REAL_LITERAL | name.startsWith("panda.core.Real")
     }
 
     function isChar():Bit {
@@ -371,6 +386,13 @@ class Type : Symbol, Key<Type> {
         return Type("\{name}?", Kind.NULLABLE, Position(), subtypes, true)
     }
 
+    function nonnullable():Type {
+        if typeKind != Kind.NULLABLE {
+            return self
+        }
+        return subtypes[0]
+    }
+
     -- returns the narrowest type that can hold an instance of either type
     function union(other:Type):Type {
         if self = other {
@@ -388,11 +410,33 @@ class Type : Symbol, Key<Type> {
             }
             return nullable()
         }
-        if self = IntLiteral() & other.isNumber() {
+        if typeKind = Kind.INT_LITERAL & other.isNumber() {
             return other
         }
-        if isNumber() & other = IntLiteral() {
+        if isNumber() & other.typeKind = Kind.INT_LITERAL {
             return self
+        }
+        if isReal() {
+            if other.typeKind = Kind.INT_LITERAL {
+                return self
+            }
+            if other.isNumber() {
+                if other.name.endsWith("64") {
+                    return Real64()
+                }
+                return Real32()
+            }
+        }
+        if other.isReal() {
+            if typeKind = Kind.INT_LITERAL {
+                return other
+            }
+            if isNumber() {
+                if name.endsWith("64") {
+                    return Real64()
+                }
+                return Real32()
+            }
         }
         if typeKind = Kind.NULLABLE {
             return subtypes[0].union(other).nullable()

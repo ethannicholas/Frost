@@ -10,6 +10,11 @@ class Real64 : Value, Key<Real64>, Comparable<Real64> {
         self.value := value
     }
 
+    @$implicit
+    init(value:Int64) {
+        self.value := value.value->builtin_float64
+    }
+
     function +(other:Real64):Real64 {
         return value + other.value
     }

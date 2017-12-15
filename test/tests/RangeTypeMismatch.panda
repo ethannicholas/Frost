@@ -1,0 +1,8 @@
+class RangeMismatch {
+    @class
+    method main() {
+        for i:UInt8 in 255 .. 0 by -1 {
+            Console.printLine(i)
+        }
+    }
+}

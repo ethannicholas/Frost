@@ -144,6 +144,22 @@ class WriteInts {
     }
 
     @class
+    method writeConstructor(type:Int, other:Int, out:OutputStream) {
+        out.printLine()
+        out.printLine("    @$implicit")
+        out.printLine("    init(value:\{object(other)}) {")
+        out.printLine("        self.value := value.value\{cast(other, type)}")
+        out.printLine("    }")
+    }
+
+    @class
+    method writeConstructors(type:Int, out:OutputStream) {
+        if size(type) > size(INT8) & signed(type) {
+            writeConstructor(type, INT8, out)
+        }
+    }
+
+    @class
     method writeOperator(op:String, leftType:Int, rightType:Int, signMatters:Bit,
             out:OutputStream) {
         def resultType := binaryType(leftType, rightType, signMatters)
@@ -404,6 +420,7 @@ class WriteInts {
         out.printLine("    init(value:\{builtin(type)}) {")
         out.printLine("        self.value := value")
         out.printLine("    }")
+        writeConstructors(type, out)
         writeOperator("+", type, true, out)
         writeOperator("-", type, true, out)
         writePrefixOperator("-", type, out)

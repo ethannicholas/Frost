@@ -635,7 +635,6 @@ class Compiler : ErrorReporter {
 
     method specialize(cl:ClassDecl, rawType:Type):ClassDecl {
         resolve(cl)
-        assert !rawType.name.contains("$int_literal")
         def type := resolve(rawType)
         if type.typeKind = Type.Kind.NULLABLE {
             return specialize(cl, type.subtypes[0])
@@ -698,7 +697,7 @@ class Compiler : ErrorReporter {
             when Type.Kind.GENERIC_PARAMETER:
                 return getClass(type.parameter.bound)
             otherwise:
-                assert false, "unsupported type \{type}"
+                assert false, "type '\{type}' is not a class"
         }
         if result.annotations.isSpecialize() {
             result := specialize(result, type)
@@ -987,10 +986,10 @@ class Compiler : ErrorReporter {
     }
 
     function variableType(type:Type):Type {
-        if type = Type.IntLiteral() {
+        if type.typeKind = Type.Kind.INT_LITERAL {
             return Type.Int64()
         }
-        if type = Type.RealLiteral() {
+        if type.typeKind = Type.Kind.REAL_LITERAL {
             return Type.Real64()
         }
         if type = Type.BitLiteral() {
@@ -1005,31 +1004,32 @@ class Compiler : ErrorReporter {
     function variableType(expr:IRNode):Type {
         match expr.kind {
             when IRNode.Kind.UNRESOLVED_RANGE:
+
+                def start := expr.children[0].type
+                def end := expr.children[1].type
                 if expr.children.get_count() = 2 {
                     if expr.children[0].kind = IRNode.Kind.NULL {
                         if expr.children[1].kind = IRNode.Kind.NULL {
                             return Type.RangeOf(Type.Int64().nullable())
                         }
-                        return Type.RangeOf(variableType(expr.children[1].type).nullable())
+                        return Type.RangeOf(variableType(end).nullable())
                     }
                     if expr.children[1].kind = IRNode.Kind.NULL {
-                        return Type.RangeOf(variableType(expr.children[0].type).nullable())
+                        return Type.RangeOf(variableType(start).nullable())
                     }
-                    return Type.RangeOf(variableType(variableType(expr.children[0].type).union(
-                            variableType(expr.children[1].type))))
+                    return Type.RangeOf(variableType(start.union(end)))
                 }
-                def step := variableType(expr.children[2].type)
+                var step := expr.children[2].type.nonnullable()
                 if expr.children[0].kind = IRNode.Kind.NULL {
                     if expr.children[1].kind = IRNode.Kind.NULL {
-                        return Type.SteppedRangeOf(Type.Int64().nullable(), step)
+                        return Type.SteppedRangeOf(variableType(step).nullable())
                     }
-                    return Type.SteppedRangeOf(variableType(expr.children[1].type).nullable(), step)
+                    return Type.SteppedRangeOf(variableType(end.union(step)).nullable())
                 }
                 if expr.children[1].kind = IRNode.Kind.NULL {
-                    return Type.SteppedRangeOf(variableType(expr.children[0].type).nullable(), step)
+                    return Type.SteppedRangeOf(variableType(start.union(step)).nullable())
                 }
-                return Type.SteppedRangeOf(variableType(variableType(expr.children[0].type).union(
-                        variableType(expr.children[1].type))), step)
+                return Type.SteppedRangeOf(variableType(start.union(end).union(step)))
             when IRNode.Kind.UNRESOLVED_INDEX:
                 def args := expr.children[1..]
                 def c := call(expr.children[0], "[]", args)
@@ -1195,8 +1195,6 @@ class Compiler : ErrorReporter {
                 }
             when IRNode.Kind.NEGATED_INT:
                 if (target.typeKind = Type.Kind.BUILTIN_INT &
-                        requiredSize(-(expr.payload->UInt64).convert()->Int64) <= target.size()) |
-                        (target.typeKind = Type.Kind.BUILTIN_UINT &
                         requiredSize(-(expr.payload->UInt64).convert()->Int64) <= target.size()) {
                     return base
                 }
@@ -1319,14 +1317,12 @@ class Compiler : ErrorReporter {
         }
         for m in targetClass.methods {
             if m.annotations.isImplicit() {
-                -- Internal use feature, sharp edges! We currently assume there's only one implicit
-                -- method and it's a single-argument init.
                 resolve(m)
-                assert m.methodKind = MethodDecl.Kind.INIT
-                assert m.parameters.get_count() = 1
-                def cost := coercionCost(expr, m.parameters[0].type)
-                if cost != null {
-                    return base + cost
+                if m.methodKind = MethodDecl.Kind.INIT & m.parameters.get_count() = 1 {
+                    def cost := coercionCost(expr, m.parameters[0].type)
+                    if cost != null {
+                        return base + cost + 2
+                    }
                 }
             }
         }
@@ -1516,17 +1512,14 @@ class Compiler : ErrorReporter {
             if cl != null {
                 for m in cl.methods {
                     if m.annotations.isImplicit() {
-                        -- Internal use feature, sharp edges! We currently assume there's only one
-                        -- implicit method and it's a single-argument init.
                         resolve(m)
-                        assert m.methodKind = MethodDecl.Kind.INIT
-                        assert m.parameters.get_count() = 1
-                        if coercionCost(expr, m.parameters[0].type) != null {
+                        if m.methodKind = MethodDecl.Kind.INIT & m.parameters.get_count() = 1 &
+                                coercionCost(expr, m.parameters[0].type) != null {
                             def type := IRNode(IRNode.Kind.TYPE_REFERENCE, expr.position,
                                     Type.Class(), cl.type())
                             def args := Array<IRNode>(1) -- FIXME literal
                             args.add(expr)
-                            return call(type, args)
+                            return coerce(call(type, args), target)
                         }
                     }
                 }
@@ -2004,20 +1997,20 @@ class Compiler : ErrorReporter {
             def r:Int64 := right.payload->UInt64.convert()
             match op {
                 when Token.Kind.ADD:
-                    return IRNode(IRNode.Kind.INT, position, Type.IntLiteral(),
-                        (l + r).convert()->UInt64)
+                    def v := (l + r).convert()->UInt64
+                    return IRNode(IRNode.Kind.INT, position, Type.IntLiteral(v), v)
                 when Token.Kind.SUB:
-                    return IRNode(IRNode.Kind.INT, position, Type.IntLiteral(),
-                        (l - r).convert()->UInt64)
+                    def v := (l - r).convert()->UInt64
+                    return IRNode(IRNode.Kind.INT, position, Type.IntLiteral(v), v)
                 when Token.Kind.MUL:
-                    return IRNode(IRNode.Kind.INT, position, Type.IntLiteral(),
-                        (l * r).convert()->UInt64)
+                    def v := (l * r).convert()->UInt64
+                    return IRNode(IRNode.Kind.INT, position, Type.IntLiteral(v), v)
                 when Token.Kind.INTDIV:
-                    return IRNode(IRNode.Kind.INT, position, Type.IntLiteral(),
-                        (l // r).convert()->UInt64)
+                    def v := (l // r).convert()->UInt64
+                    return IRNode(IRNode.Kind.INT, position, Type.IntLiteral(v), v)
                 when Token.Kind.REM:
-                    return IRNode(IRNode.Kind.INT, position, Type.IntLiteral(),
-                        (l % r).convert()->UInt64)
+                    def v := (l % r).convert()->UInt64
+                    return IRNode(IRNode.Kind.INT, position, Type.IntLiteral(v), v)
                 when Token.Kind.EQ:
                     return IRNode(IRNode.Kind.BIT, position, Type.BitLiteral(), l = r)
                 when Token.Kind.NEQ:
@@ -2031,20 +2024,20 @@ class Compiler : ErrorReporter {
                 when Token.Kind.GTEQ:
                     return IRNode(IRNode.Kind.BIT, position, Type.BitLiteral(), l >= r)
                 when Token.Kind.BITWISEAND:
-                    return IRNode(IRNode.Kind.INT, position, Type.IntLiteral(),
-                        (l && r).convert()->UInt64)
+                    def v := (l && r).convert()->UInt64
+                    return IRNode(IRNode.Kind.INT, position, Type.IntLiteral(v), v)
                 when Token.Kind.BITWISEOR:
-                    return IRNode(IRNode.Kind.INT, position, Type.IntLiteral(),
-                        (l || r).convert()->UInt64)
+                    def v := (l || r).convert()->UInt64
+                    return IRNode(IRNode.Kind.INT, position, Type.IntLiteral(v), v)
                 when Token.Kind.BITWISEXOR:
-                    return IRNode(IRNode.Kind.INT, position, Type.IntLiteral(),
-                        (l ~~ r).convert()->UInt64)
+                    def v := (l ~~ r).convert()->UInt64
+                    return IRNode(IRNode.Kind.INT, position, Type.IntLiteral(v), v)
                 when Token.Kind.SHIFTLEFT:
-                    return IRNode(IRNode.Kind.INT, position, Type.IntLiteral(),
-                        (l << r).convert()->UInt64)
+                    def v := (l << r).convert()->UInt64
+                    return IRNode(IRNode.Kind.INT, position, Type.IntLiteral(v), v)
                 when Token.Kind.SHIFTRIGHT:
-                    return IRNode(IRNode.Kind.INT, position, Type.IntLiteral(),
-                        (l >> r).convert()->UInt64)
+                    def v := (l >> r).convert()->UInt64
+                    return IRNode(IRNode.Kind.INT, position, Type.IntLiteral(v), v)
             }
         }
         error(position, "invalid numeric operation")
@@ -2442,12 +2435,14 @@ class Compiler : ErrorReporter {
             when Token.Kind.SUB:
                 match base.kind {
                     when IRNode.Kind.INT:
-                        return IRNode(IRNode.Kind.NEGATED_INT, position, base.type,
-                                base.payload->UInt64)
+                        return IRNode(IRNode.Kind.NEGATED_INT, position,
+                                Type.NegatedIntLiteral(base.payload->UInt64), base.payload->UInt64)
                     when IRNode.Kind.NEGATED_INT:
-                        return IRNode(IRNode.Kind.INT, position, base.type, base.payload->UInt64)
+                        return IRNode(IRNode.Kind.INT, position,
+                                Type.NegatedIntLiteral(base.payload->UInt64), base.payload->UInt64)
                     when IRNode.Kind.REAL:
-                        return IRNode(IRNode.Kind.REAL, position, base.type, -base.payload->Real64)
+                        return IRNode(IRNode.Kind.REAL, position,
+                                Type.RealLiteral(-base.payload->Real64), -base.payload->Real64)
                     otherwise:
                         if base.type.isBuiltinNumber() {
                             def children := Array<IRNode>() -- FIXME literal
@@ -2605,7 +2600,7 @@ class Compiler : ErrorReporter {
             step := null
         }
         else {
-            step := coerce(compileExpression(r.children[2]), Type.Int64())
+            step := compileExpression(r.children[2])
             if step = null {
                 return null
             }
@@ -2742,9 +2737,11 @@ class Compiler : ErrorReporter {
             when ASTNode.Kind.IDENTIFIER:
                 return compileIdentifier(e)
             when ASTNode.Kind.INT:
-                return IRNode(IRNode.Kind.INT, e.position, Type.IntLiteral(), e.payload->UInt64)
+                return IRNode(IRNode.Kind.INT, e.position, Type.IntLiteral(e.payload->UInt64),
+                        e.payload->UInt64)
             when ASTNode.Kind.REAL:
-                return IRNode(IRNode.Kind.REAL, e.position, Type.RealLiteral(), e.payload->Real64)
+                return IRNode(IRNode.Kind.REAL, e.position, Type.RealLiteral(e.payload->Real64),
+                        e.payload->Real64)
             when ASTNode.Kind.PREFIX:
                 return compilePrefix(e)
             when ASTNode.Kind.RANGE_INCLUSIVE, ASTNode.Kind.RANGE_EXCLUSIVE:
@@ -2823,17 +2820,17 @@ class Compiler : ErrorReporter {
                 }
                 else {
                     assert rawList.children.get_count() = 3
-                    list := coerce(rawList, Type.SteppedRangeOf(t, Type.Int64()))
+                    list := coerce(rawList, Type.SteppedRangeOf(t))
                 }
             }
             else if rawList.type.isSteppedRange() {
-                list := coerce(rawList, Type.SteppedRangeOf(t, rawList.type.subtypes[2]))
+                list := coerce(rawList, Type.SteppedRangeOf(t))
             }
             else if coercionCost(rawList, Type.RangeOf(t)) != null {
                 list := coerce(rawList, Type.RangeOf(t))
             }
             else {
-                list := coerce(rawList, Type.SteppedRangeOf(t, Type.Int64()))
+                list := coerce(rawList, Type.SteppedRangeOf(t))
             }
         }
         else {

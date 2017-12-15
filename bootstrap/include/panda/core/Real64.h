@@ -28,8 +28,8 @@ panda$core$Real64$wrapper* wrap_panda$core$Real64(panda$core$Real64 self);
 
 #ifndef PANDA_TYPESONLY
 #include "panda/core/Real64.h"
-#include "panda/core/Bit.h"
 #include "panda/core/Int64.h"
+#include "panda/core/Bit.h"
 #include "panda/core/Int8.h"
 #include "panda/core/Int16.h"
 #include "panda/core/Int32.h"
@@ -41,6 +41,7 @@ panda$core$Real64$wrapper* wrap_panda$core$Real64(panda$core$Real64 self);
 typedef struct panda$core$String panda$core$String;
 
 void panda$core$Real64$init$builtin_float64(panda$core$Real64* self, double p_value);
+void panda$core$Real64$init$panda$core$Int64(panda$core$Real64* self, panda$core$Int64 p_value);
 panda$core$Real64 panda$core$Real64$$ADD$panda$core$Real64$R$panda$core$Real64(panda$core$Real64 self, panda$core$Real64 p_other);
 panda$core$Real64 panda$core$Real64$$SUB$panda$core$Real64$R$panda$core$Real64(panda$core$Real64 self, panda$core$Real64 p_other);
 panda$core$Real64 panda$core$Real64$$SUB$R$panda$core$Real64(panda$core$Real64 self);

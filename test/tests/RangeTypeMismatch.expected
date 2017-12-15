@@ -1,0 +1,2 @@
+RangeTypeMismatch.panda:4:36: error: expected 'panda.core.UInt8', but found '-1'
+1 error

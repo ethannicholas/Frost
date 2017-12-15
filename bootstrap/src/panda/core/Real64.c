@@ -92,6 +92,9 @@ panda$core$Real64$wrapperclass_type panda$core$Real64$wrapperclass = { (panda$co
 void panda$core$Real64$init$builtin_float64(panda$core$Real64* self, double p_value) {
     self->value = p_value;
 }
+void panda$core$Real64$init$panda$core$Int64(panda$core$Real64* self, panda$core$Int64 p_value) {
+    self->value = ((double) p_value.value);
+}
 panda$core$Real64 panda$core$Real64$$ADD$panda$core$Real64$R$panda$core$Real64(panda$core$Real64 self, panda$core$Real64 p_other) {
     double $tmp1 = self.value + p_other.value;
     return ((panda$core$Real64) { $tmp1 });

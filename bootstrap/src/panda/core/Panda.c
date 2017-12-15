@@ -6,7 +6,7 @@
 #include "panda/io/OutputStream.h"
 #include "panda/io/Console.h"
 #include "panda/core/System.h"
-#include "panda/core/UInt64.h"
+#include "panda/core/Real64.h"
 
 
 panda$core$Panda$class_type panda$core$Panda$class = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Object$class, NULL, { panda$core$Object$convert$R$panda$core$String, panda$core$Object$cleanup} };
@@ -44,8 +44,8 @@ void panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$
     (($fn21) $tmp10->$class->vtable[19])($tmp10, $tmp20);
     panda$core$System$crash();
 }
-void panda$core$Panda$debugPrint$panda$core$UInt64(panda$core$UInt64 p_i) {
-    panda$core$String* $tmp23 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s22, ((panda$core$Object*) wrap_panda$core$UInt64(p_i)));
+void panda$core$Panda$debugPrint$builtin_float64(double p_r) {
+    panda$core$String* $tmp23 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s22, ((panda$core$Object*) wrap_panda$core$Real64(((panda$core$Real64) { p_r }))));
     panda$core$String* $tmp25 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp23, &$s24);
     panda$io$Console$printLine$panda$core$Object(((panda$core$Object*) $tmp25));
 }
