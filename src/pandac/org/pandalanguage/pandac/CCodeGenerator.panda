@@ -1140,11 +1140,8 @@ class CCodeGenerator : CodeGenerator {
         type(Type.StringType())
         strings.print("static panda$core$String \{result} = { " +
                 "(panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) \"")
-        for raw in s.utf8() {
-            def c := raw.convert()->UInt8
-            strings.print("\\x")
-            strings.print("0123456789ABCDEF".utf8()[(c // 16).convert()])
-            strings.print("0123456789ABCDEF".utf8()[(c % 16).convert()])
+        for c in s.utf8() {
+            strings.print("\\x\{c.convert()->UInt8,0>2:x}")
         }
         strings.printLine("\", \{s.utf8().get_count()}, \{s.hash()}, NULL };")
         return "&\{result}"

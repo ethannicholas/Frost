@@ -150,6 +150,7 @@ class NumberConversion {
         printU64(v)
         Console.printLine()
     }
+
     @class
     method main() {
         printAll(Int8.MIN)

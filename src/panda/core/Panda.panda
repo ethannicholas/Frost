@@ -44,7 +44,7 @@ class Panda {
         assert specifier.length() >= 2, "invalid alignment string '\{specifier}'"
         var index := specifier.next(specifier.start())
         match specifier[index] {
-            when "<", "^", ">": { }
+            when "<", "^", ">": -- do nothing
             otherwise:
                 index := specifier.start()
         }
@@ -80,14 +80,11 @@ class Panda {
         var digits := "0123456789abcdef".utf8()
         if index < fmt.end() {
             match fmt[index] {
-                when "b":
-                when "B":
+                when "b", "B":
                     base := 2
-                when "o":
-                when "O":
+                when "o", "O":
                     base := 8
-                when "d":
-                when "D":
+                when "d", "D":
                     base := 10
                 when "x":
                     base := 16

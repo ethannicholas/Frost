@@ -46,6 +46,7 @@ add_executable(bootstrap
     bootstrap/src/panda/core/Class.c
     bootstrap/src/panda/core/Comparable.c
     bootstrap/src/panda/core/Equatable.c
+    bootstrap/src/panda/core/Formattable.c
     bootstrap/src/panda/core/Immutable.c
     bootstrap/src/panda/core/Int16.c
     bootstrap/src/panda/core/Int32.c

@@ -855,7 +855,7 @@ class LLVMCodeGenerator : CodeGenerator {
                 when "?": result.append("$Q")
                 when "<": result.append("$LT")
                 when ">": result.append("$GT")
-                when " ": { }
+                when " ": -- do nothing
                 when ",": result.append("$C")
                 otherwise: result.append(c)
             }
@@ -1821,18 +1821,7 @@ class LLVMCodeGenerator : CodeGenerator {
             -- ensure this.
             r64 := r64.convert()->panda.core.Real32.convert()->Real64
         }
-        var bits := Panda.floatToIntBits(r64)
-        def result := MutableString()
-        for i in 0 .. 16 {
-            if bits >= 0 {
-                result.append("0123456789ABCDEF"[bits % 16])
-            }
-            else {
-                result.append("0123456789ABCDEF"[15 + bits % 16])
-            }
-            bits //= 16
-        }
-        return "0x" + result.finish()[.. by -1]
+        return "0x\{Panda.floatToIntBits(r64):x}"
     }
 
     method getBitReference(bit:IRNode, out:OutputStream):String {
