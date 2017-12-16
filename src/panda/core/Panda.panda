@@ -30,6 +30,62 @@ class Panda {
         System.crash()
     }
 
+    ================================================================================================
+    Used to implement the various number classes' format methods.
+
+    @param sign true if the number is negative
+    @param rawValue the number's absolute value
+    @param mask a bit mask representing the actual size of the number
+    @param fmt the format string
+    ================================================================================================
+    @class
+    method format(sign:Bit, rawValue:UInt64, mask:UInt64, fmt:String):String {
+        var index := fmt.start()
+        var base:UInt64 := 10
+        var digits := "0123456789abcdef".utf8()
+        if index < fmt.end() {
+            match fmt[index] {
+                when "b":
+                    base := 2
+                when "o":
+                    base := 8
+                when "x":
+                    base := 16
+                when "X":
+                    base := 16
+                    digits := "0123456789ABCDEF".utf8()
+                otherwise:
+                    assert false, "invalid format string"
+            }
+        }
+        var value:UInt64 -- FIXME make rawValue a var parameter
+        if sign & base != 10 {
+            value := (-rawValue.convert()->Int64).convert()->UInt64 && mask
+        }
+        else {
+            value := rawValue
+        }
+        constant max := 64
+        def chars := Pointer<Char8>.alloc(max)
+        var charIndex := max - 1
+        do {
+            chars[charIndex] := digits[(value % base).convert()]
+            value //= base
+            charIndex -= 1
+        }
+        while value > 0
+        if sign & base = 10 {
+            chars[charIndex] := "-"
+            charIndex -= 1
+        }
+        charIndex += 1
+        def size := max - charIndex
+        for i in 0 .. size {
+            chars[i] := chars[i + charIndex]
+        }
+        return String(chars, size)
+    }
+
     @class
     method debugPrint(i:builtin_int64) {
         Console.printLine("Debug: \{Int64(i)}")

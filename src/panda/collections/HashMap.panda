@@ -147,7 +147,7 @@ class HashMap<K:Key<K>, V> : Map<K, V>, Equatable<Map<K, V>> {
     }
 
     init(map:MapView<K, V>) {
-        init() -- FIXME this should be implied
+        init()
         -- FIXME inefficient, need to iterate across entries rather than keys
         for k in map.keys() {
             self[k] := map[k]

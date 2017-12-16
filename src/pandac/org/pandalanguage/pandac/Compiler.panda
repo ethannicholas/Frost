@@ -1643,7 +1643,7 @@ class Compiler : ErrorReporter {
         var result := canCast(node.type, target)
         if !result & node.type.typeKind = Type.Kind.UNRESOLVED {
             def resolved := resolve(node)
-            if resolved != null {
+            if resolved != null & resolved !== node {
                 result := canCast(resolved, target)
             }
         }
@@ -2607,6 +2607,10 @@ class Compiler : ErrorReporter {
                 resolve(currentClass.peek())
                 cl := getClass(currentClass.peek().rawSuper)
             otherwise:
+                if !base.type.isClass() {
+                    error(position, "type '\{base.type}' is not a class")
+                    return null
+                }
                 cl := getClass(base.type)
         }
         if cl = null {

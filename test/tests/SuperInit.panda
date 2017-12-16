@@ -10,15 +10,19 @@ class Super {
     var x:Int
 }
 
-class Sub : Super {
+class Sub1 : Super {
     init() {
         super.init(456)
     }
 }
 
+class Sub2 : Super {
+}
+
 class SuperInit {
     @class
     method main() {
-        Console.printLine(Sub().x)
+        Console.printLine(Sub1().x)
+        Console.printLine(Sub2().x)
     }
 }

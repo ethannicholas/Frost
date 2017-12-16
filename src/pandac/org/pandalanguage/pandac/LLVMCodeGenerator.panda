@@ -3031,7 +3031,9 @@ class LLVMCodeGenerator : CodeGenerator {
         for m in compiler.getClass(Type.Panda()).methods {
             if m.name = "assertionFailure" {
                 compiler.resolve(m)
-                writeDeclaration(m)
+                if m.owner.external {
+                    writeDeclaration(m)
+                }
             }
         }
         if msg != null {

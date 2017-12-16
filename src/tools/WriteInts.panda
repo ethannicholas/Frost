@@ -326,8 +326,8 @@ class WriteInts {
         out.printLine()
         out.printLine("    @override")
         out.printLine("    function convert():String {")
-        var max := (max(type).convert()->String).utf8().get_count()
-        if object(type).startsWith("I") {
+        var max := max(type).convert()->String.length()
+        if signed(type) {
             max += 1 -- for minus sign
         }
         out.printLine("        constant max := \{max}")
@@ -336,8 +336,7 @@ class WriteInts {
         out.printLine("        var value := self")
         out.printLine("        if value >= 0 {")
         out.printLine("            do {")
-        out.printLine("                chars[index] := " +
-                "Char8((value % 10 + 48).value->builtin_uint8)")
+        out.printLine("                chars[index] := Char8((value % 10 + 48).convert())")
         out.printLine("                value := (value // 10)\{castInt(max32(type), type)}")
         out.printLine("                index -= 1")
         out.printLine("            }")
@@ -346,21 +345,18 @@ class WriteInts {
         out.printLine("        }")
         out.printLine("        else {")
         out.printLine("            do {")
-        out.printLine("                chars[index] := " +
-                "Char8((48 - value % 10).value->builtin_uint8)")
+        out.printLine("                chars[index] := Char8((48 - value % 10).convert())")
         out.printLine("                value := (value // 10)\{castInt(max32(type), type)}")
         out.printLine("                index -= 1")
         out.printLine("            }")
         out.printLine("            while value < 0")
-        out.printLine("            chars[index] := Char8(45) -- \"-\"")
+        out.printLine("            chars[index] := \"-\"")
         out.printLine("        }")
         out.printLine("        def size := max - index")
-        out.printLine("        def result := Pointer<Char8>.alloc(size)")
-        out.printLine("        for i in index .. max {")
-        out.printLine("            result[i - index] := chars[i]")
+        out.printLine("        for i in 0 .. size {")
+        out.printLine("            chars[i] := chars[i + index]")
         out.printLine("        }")
-        out.printLine("        chars.destroy()")
-        out.printLine("        return String(result, size)")
+        out.printLine("        return String(chars, size)")
         out.printLine("    }")
     }
 
@@ -404,6 +400,28 @@ class WriteInts {
     }
 
     @class
+    method writeFormat(type:Int, out:OutputStream) {
+        out.printLine()
+        def mask:String
+        match size(type) {
+            when  8: mask := "0xFF"
+            when 16: mask := "0xFFFF"
+            when 32: mask := "0xFFFFFFFF"
+            when 64: mask := "0xFFFFFFFFFFFFFFFF"
+        }
+        out.printLine("    @override")
+        out.printLine("    function format(fmt:String):String {")
+        if signed(type) {
+            out.printLine("        return Panda.format(value < 0, abs().convert(), \{mask}, fmt)")
+        }
+        else {
+            out.printLine("        return Panda.format(false, self\{castInt(type, UINT64)}, " +
+                    "\{mask}, fmt)")
+        }
+        out.printLine("    }")
+    }
+
+    @class
     method writeAbs(type:Int, out:OutputStream) {
         out.printLine()
         out.printLine("    function abs():\{object(type)} {")
@@ -423,7 +441,7 @@ class WriteInts {
         out.printLine()
         out.printLine("@final")
         out.printLine("class \{object(type)} : Value, Key<\{object(type)}>, " +
-                "Comparable<\{object(type)}> {")
+                "Comparable<\{object(type)}>, Formattable {")
         out.printLine("    constant MIN:\{object(type)} := \{min(type)}")
         out.printLine()
         out.printLine("    constant MAX:\{object(type)} := \{max(type)}")
@@ -463,6 +481,7 @@ class WriteInts {
         writeIndex(type, out)
         writeHash(type, out)
         writeConvert(type, out)
+        writeFormat(type, out)
         out.printLine("}")
         out.cleanup()
     }

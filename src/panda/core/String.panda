@@ -17,7 +17,7 @@ class String : Immutable, Key<String>, Iterable<Char32> {
     ================================================================================================
     Represents the position of a Unicode codepoint within a String.
     ================================================================================================
-    class Index : Value, Key<Index> {
+    class Index : Value, Key<Index>, Comparable<Index> {
         @private
         def value:Int
 
@@ -34,6 +34,26 @@ class String : Immutable, Key<String>, Iterable<Char32> {
         @override
         function !=(other:Index):Bit {
             return !(self = other)
+        }
+
+        @override
+        function <(other:Index):Bit {
+            return value < other.value
+        }
+
+        @override
+        function >(other:Index):Bit {
+            return value > other.value
+        }
+
+        @override
+        function <=(other:Index):Bit {
+            return value <= other.value
+        }
+
+        @override
+        function >=(other:Index):Bit {
+            return value >= other.value
         }
 
         @override
@@ -813,6 +833,103 @@ class String : Immutable, Key<String>, Iterable<Char32> {
             }
         }
         return result
+    }
+
+    ================================================================================================
+    Returns a new string consisting of this string left-justified in a field of at least `width`
+    characters. If this string has a length greater than or equal to `width`, this string is
+    returned. If this string is shorter than `width`, space characters are appended until the
+    resulting string is `width` characters long.
+
+    @param width the minimum width of the string
+    @returns a string at least `width` characters long
+    ================================================================================================
+    function leftAlign(width:Int):String {
+        return leftAlign(width, " ")
+    }
+
+    ================================================================================================
+    Returns a new string consisting of this string left-justified in a field of at least `width`
+    characters, filled with the specified character. If this string has a length greater than or
+    equal to `width`, this string is returned. If this string is shorter than `width`, `fill`
+    characters are appended until the resulting string is `width` characters long.
+
+    @param width the minimum width of the string
+    @param fill the fill character
+    @returns a string at least `width` characters long
+    ============================================================================
+    function leftAlign(width:Int, fill:Char32):String {
+        if length() >= width {
+            return self
+        }
+        return self + fill * (width - length())
+    }
+
+    ================================================================================================
+    Returns a new string consisting of this string right-justified in a field of at least `width`
+    characters. If this string has a length greater than or equal to `width`, this string is
+    returned. If this string is shorter than `width`, space characters are prepended until the
+    resulting string is `width` characters long.
+
+    @param width the minimum width of the string
+    @returns a string at least `width` characters long
+    ================================================================================================
+    function rightAlign(width:Int):String {
+        return rightAlign(width, " ")
+    }
+
+    ================================================================================================
+    Returns a new string consisting of this string right-justified in a field of at least `width`
+    characters, filled with the specified character. If this string has a length greater than or
+    equal to `width`, this string is returned. If this string is shorter than `width`, `fill`
+    characters are prepended until the resulting string is `width` characters long.
+
+    @param width the minimum width of the string
+    @param fill the fill character
+    @returns a string at least `width` characters long
+    ================================================================================================
+    function rightAlign(width:Int, fill:Char32):String {
+        if length() >= width {
+            return self
+        }
+        return fill * (width - length()) + self
+    }
+
+    ================================================================================================
+    Returns a new string consisting of this string centered in a field of at least `width`
+    characters. If this string has a length greater than or equal to `width`, this string is
+    returned. If this string is shorter than `width`, space characters are added as equally as
+    possible to the left and right until the resulting string is `width` characters long. If the
+    number of characters to be added is odd, the right side of the string will receive one more
+    space than the left side.
+
+    @param width the minimum width of the string
+    @returns a string at least `width` characters long
+    ================================================================================================
+    function centerAlign(width:Int):String {
+        return centerAlign(width, " ")
+    }
+
+    ================================================================================================
+    Returns a new string consisting of this string centered in a field of at least `width`
+    characters, filled with the specified character. If this string has a length greater than or
+    equal to `width`, this string is returned. If this string is shorter than `width`, `fill`
+    characters are added as equally as possible to the left and right until the resulting string is
+    `width` characters long. If the number of characters to be added is odd, the right side of the
+    string will receive one more `fill` character than the left side.
+
+    @param width the minimum width of the string
+    @param fill the fill character
+    @returns a string at least `width` characters long
+    ================================================================================================
+    function centerAlign(width:Int, fill:Char32):String {
+        if length() >= width {
+            return self
+        }
+        def pad := width - length()
+        def left := pad // 2
+        def right := pad - left
+        return fill * left + self + fill * right
     }
 
     ================================================================================================

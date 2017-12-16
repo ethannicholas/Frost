@@ -150,6 +150,50 @@ class Parser {
         return ASTNode(ASTNode.Kind.BINARY, string.position, Token.Kind.ADD, children)
     }
 
+    method formatString(start:Token):String? {
+        def result := MutableString()
+        loop {
+            def token := rawNext()
+            match token.kind {
+                when Token.Kind.WHITESPACE:
+                    def str := text(token)
+                    if str.contains("\n") {
+                        error(token, "unterminated string literal")
+                        return null
+                    }
+                    result.append(str)
+                when Token.Kind.EOF:
+                    error(token, "unterminated string literal")
+                    return null
+                when Token.Kind.BACKSLASH:
+                    def escape := rawNext()
+                    if escape.kind = Token.Kind.EOF {
+                        error(token, "unterminated string literal")
+                        return null
+                    }
+                    def escapeText := text(escape)
+                    def c := escapeText.utf8()[0]
+                    match c {
+                        when "n":  result.append("\n")
+                        when "r":  result.append("\r")
+                        when "t":  result.append("\t")
+                        when "'":  result.append("'")
+                        when "\"": result.append("\"")
+                        when "\\": result.append("\\")
+                        otherwise:
+                            error(token, "invalid format string escape sequence")
+                            return null
+                    }
+                    result.append(escapeText[escapeText.next(escapeText.start())..])
+                when Token.Kind.RBRACE:
+                    pushback(token)
+                    return result.finish()
+                otherwise:
+                    result.append(text(token))
+            }
+        }
+    }
+
     method string():ASTNode? {
         def start := next()
         if start.kind != Token.Kind.DOUBLE_QUOTE & start.kind != Token.Kind.SINGLE_QUOTE {
@@ -190,9 +234,30 @@ class Parser {
                         when "\"": chunk.append("\"")
                         when "\\": chunk.append("\\")
                         when "{": {
-                            def expr := expression()
+                            var expr := expression()
                             if expr = null {
                                 return null
+                            }
+                            def format:String? := null
+                            if checkNext(Token.Kind.COLON) != null {
+                                format := formatString(start)
+                                if format = null {
+                                    return null
+                                }
+                                def castChildren := Array<ASTNode>() -- FIXME literal
+                                castChildren.add(expr)
+                                castChildren.add(ASTNode(ASTNode.Kind.TYPE, expr.position,
+                                        "panda.core.Formattable"))
+                                def cast := ASTNode(ASTNode.Kind.CAST, expr.position, castChildren)
+                                def dotChildren := Array<ASTNode>() -- FIXME literal
+                                dotChildren.add(cast)
+                                def dot := ASTNode(ASTNode.Kind.DOT, expr.position, "format",
+                                        dotChildren)
+                                def callChildren := Array<ASTNode>() -- FIXME literal
+                                callChildren.add(dot)
+                                callChildren.add(ASTNode(ASTNode.Kind.STRING, start.position,
+                                        format))
+                                expr := ASTNode(ASTNode.Kind.CALL, expr.position, callChildren)
                             }
                             if expect(Token.Kind.RBRACE, "'}'") = null {
                                 return null

@@ -29,7 +29,31 @@ class Char8 : Value, Key<Char8> {
     }
 
     function isWhitespace():Bit {
-        return value = 10 | value = 13 | value = 9 | value = 32
+        match self {
+            when "\n", "\r", "\t", " ":
+                return true
+            otherwise:
+                return false
+        }
+    }
+
+    ================================================================================================
+    Returns a string consisting of `count` copies of this character.
+    ================================================================================================
+    function *(count:Int):String {
+        def result := MutableString()
+        for i in 0 .. count {
+            result.append(self)
+        }
+        return result.finish()
+    }
+
+    ================================================================================================
+    Returns a string consisting of `count` copies of the given character.
+    ================================================================================================
+    @class
+    function *(count:Int, char:Char8):String {
+        return char * count
     }
 
     @override

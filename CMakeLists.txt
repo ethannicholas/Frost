@@ -176,6 +176,7 @@ set(core_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Class.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Comparable.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Equatable.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Formattable.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Immutable.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Int16.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Int32.panda

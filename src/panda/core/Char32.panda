@@ -29,6 +29,25 @@ class Char32 : Value, Key<Char32> {
         return value != other.value
     }
 
+    ================================================================================================
+    Returns a string consisting of `count` copies of this character.
+    ================================================================================================
+    function *(count:Int):String {
+        def result := MutableString()
+        for i in 0 .. count {
+            result.append(self)
+        }
+        return result.finish()
+    }
+
+    ================================================================================================
+    Returns a string consisting of `count` copies of the given character.
+    ================================================================================================
+    @class
+    function *(count:Int, char:Char32):String {
+        return char * count
+    }
+
     @override
     function hash():Int {
         return convert()

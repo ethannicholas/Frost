@@ -4,7 +4,7 @@ package panda.core
 uses panda.unsafe.Pointer
 
 @final
-class Int64 : Value, Key<Int64>, Comparable<Int64> {
+class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable {
     constant MIN:Int64 := -9223372036854775808
 
     constant MAX:Int64 := 9223372036854775807
@@ -550,7 +550,7 @@ class Int64 : Value, Key<Int64>, Comparable<Int64> {
         var value := self
         if value >= 0 {
             do {
-                chars[index] := Char8((value % 10 + 48).value->builtin_uint8)
+                chars[index] := Char8((value % 10 + 48).convert())
                 value := (value // 10)
                 index -= 1
             }
@@ -559,19 +559,22 @@ class Int64 : Value, Key<Int64>, Comparable<Int64> {
         }
         else {
             do {
-                chars[index] := Char8((48 - value % 10).value->builtin_uint8)
+                chars[index] := Char8((48 - value % 10).convert())
                 value := (value // 10)
                 index -= 1
             }
             while value < 0
-            chars[index] := Char8(45) -- "-"
+            chars[index] := "-"
         }
         def size := max - index
-        def result := Pointer<Char8>.alloc(size)
-        for i in index .. max {
-            result[i - index] := chars[i]
+        for i in 0 .. size {
+            chars[i] := chars[i + index]
         }
-        chars.destroy()
-        return String(result, size)
+        return String(chars, size)
+    }
+
+    @override
+    function format(fmt:String):String {
+        return Panda.format(value < 0, abs().convert(), 0xFFFFFFFFFFFFFFFF, fmt)
     }
 }

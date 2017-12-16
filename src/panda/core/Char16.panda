@@ -26,11 +26,29 @@ class Char16 : Value, Key<Char16> {
         return value != other.value
     }
 
+    ================================================================================================
+    Returns a string consisting of `count` copies of this character.
+    ================================================================================================
+    function *(count:Int):String {
+        def result := MutableString()
+        for i in 0 .. count {
+            result.append(self)
+        }
+        return result.finish()
+    }
+
+    ================================================================================================
+    Returns a string consisting of `count` copies of the given character.
+    ================================================================================================
+    @class
+    function *(count:Int, char:Char16):String {
+        return char * count
+    }
+
     @override
     function hash():Int {
         return convert()
     }
-
 
     function convert():Int8 {
         return Int8(value->builtin_int8)

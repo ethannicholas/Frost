@@ -11195,7 +11195,11 @@ void org$pandalanguage$pandac$LLVMCodeGenerator$writeAssert$org$pandalanguage$pa
             if ($tmp6828.value) {
             {
                 org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$MethodDecl(self->compiler, m6822);
-                org$pandalanguage$pandac$LLVMCodeGenerator$writeDeclaration$org$pandalanguage$pandac$MethodDecl(self, m6822);
+                if (m6822->owner->external.value) {
+                {
+                    org$pandalanguage$pandac$LLVMCodeGenerator$writeDeclaration$org$pandalanguage$pandac$MethodDecl(self, m6822);
+                }
+                }
             }
             }
         }
