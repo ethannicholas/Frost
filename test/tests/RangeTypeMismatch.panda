@@ -1,7 +1,18 @@
 class RangeTypeMismatch {
-    @class
-    method main() {
+    method test1() {
         for i:UInt8 in 255 .. 0 by -1 {
+            Console.printLine(i)
+        }
+    }
+
+    method test2() {
+        for i in SteppedRange<UInt64, Int64>(10, 0, -1, true) {
+            Console.printLine(i)
+        }
+    }
+
+    method test3() {
+        for i:Int8 in Range<Int64>(0, 10, true) {
             Console.printLine(i)
         }
     }

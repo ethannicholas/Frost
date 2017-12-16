@@ -2900,6 +2900,18 @@ class Compiler : ErrorReporter {
         return IRNode(IRNode.Kind.IF, i.position, children)
     }
 
+    method checkSteppedRangeTypes(position:Position, type:Type):Bit {
+        if type.typeKind = Type.Kind.NULLABLE {
+            return checkSteppedRangeTypes(position, type.subtypes[0])
+        }
+        if type.isSteppedRange() & type.subtypes[1].nonnullable() != type.subtypes[2] {
+            error(position, "for loop cannot iterate over '\{type}'; endpoint and step types " +
+                    "are not compatible")
+            return false
+        }
+        return true
+    }
+
     method compileRangeFor(position:Position, label:String?, astTarget:ASTNode, rawList:IRNode,
             body:ASTNode):IRNode? {
         def elementType:Type
@@ -2949,6 +2961,9 @@ class Compiler : ErrorReporter {
             list := coerce(rawList, listType)
         }
         if list = null {
+            return null
+        }
+        if !checkSteppedRangeTypes(list.position, list.type) {
             return null
         }
         if list.type.typeKind = Type.Kind.NULLABLE {
