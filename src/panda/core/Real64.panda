@@ -84,6 +84,11 @@ class Real64 : Value, Key<Real64>, Comparable<Real64> {
         return Panda.floatToIntBits(self)
     }
 
+    @class
+    function parse(s:String):Real64? {
+        return Panda.toReal64(s)
+    }
+
     function convert():Int8 {
         return Int8(value->builtin_int8)
     }

@@ -644,6 +644,24 @@ class Int8 : Value, Key<Int8>, Comparable<Int8>, Formattable {
         return Int(value->builtin_int64)
     }
 
+    @class
+    function parse(str:String, radix:Int):Int8? {
+        if str.startsWith("-") {
+            def abs := Panda.parse(str[1..], radix)
+            if abs = null {
+                return null
+            }
+            return -(abs.convert()->Int8)
+        }
+        else {
+            def result := Panda.parse(str, radix)
+            if result = null {
+                return null
+            }
+            return result.convert()->Int8
+        }
+    }
+
     function convert():Int16 {
         return Int16(value->builtin_int16)
     }

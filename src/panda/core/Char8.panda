@@ -13,7 +13,7 @@ codepoints 0 to 255) may be used wherever a `Char8` is expected. That is, it is 
     def c:Char8 := "A"
 ====================================================================================================
 @final
-class Char8 : Value, Key<Char8> {
+class Char8 : Value, Key<Char8>, Comparable<Char8> {
     init(value:UInt8) {
         self.value := value.value
     }
@@ -26,6 +26,26 @@ class Char8 : Value, Key<Char8> {
     @override
     function !=(other:Char8):Bit {
         return value != other.value
+    }
+
+    @override
+    function <(other:Char8):Bit {
+        return value < other.value
+    }
+
+    @override
+    function >(other:Char8):Bit {
+        return value > other.value
+    }
+
+    @override
+    function <=(other:Char8):Bit {
+        return value <= other.value
+    }
+
+    @override
+    function >=(other:Char8):Bit {
+        return value >= other.value
     }
 
     function isWhitespace():Bit {

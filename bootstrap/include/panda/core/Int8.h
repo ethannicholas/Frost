@@ -36,9 +36,9 @@ panda$core$Int8$wrapper* wrap_panda$core$Int8(panda$core$Int8 self);
 #include "panda/core/UInt32.h"
 #include "panda/core/UInt64.h"
 #include "panda/core/Bit.h"
+typedef struct panda$core$String panda$core$String;
 #include "panda/core/Real32.h"
 #include "panda/core/Real64.h"
-typedef struct panda$core$String panda$core$String;
 
 void panda$core$Int8$init$builtin_int8(panda$core$Int8* self, int8_t p_value);
 panda$core$Int32 panda$core$Int8$$ADD$panda$core$Int8$R$panda$core$Int32(panda$core$Int8 self, panda$core$Int8 p_other);
@@ -184,6 +184,7 @@ panda$core$Bit panda$core$Int8$$IDX$panda$core$UInt16$R$panda$core$Bit(panda$cor
 panda$core$Bit panda$core$Int8$$IDX$panda$core$UInt32$R$panda$core$Bit(panda$core$Int8 self, panda$core$UInt32 p_index);
 panda$core$Bit panda$core$Int8$$IDX$panda$core$UInt64$R$panda$core$Bit(panda$core$Int8 self, panda$core$UInt64 p_index);
 panda$core$Int64 panda$core$Int8$hash$R$panda$core$Int64(panda$core$Int8 self);
+panda$core$Int8$nullable panda$core$Int8$parse$panda$core$String$panda$core$Int64$R$panda$core$Int8$Q(panda$core$String* p_str, panda$core$Int64 p_radix);
 panda$core$Int16 panda$core$Int8$convert$R$panda$core$Int16(panda$core$Int8 self);
 panda$core$Int32 panda$core$Int8$convert$R$panda$core$Int32(panda$core$Int8 self);
 panda$core$Int64 panda$core$Int8$convert$R$panda$core$Int64(panda$core$Int8 self);

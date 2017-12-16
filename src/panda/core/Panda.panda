@@ -30,6 +30,42 @@ class Panda {
         System.crash()
     }
 
+    @class
+    function digit(c:Char32):UInt64? {
+        if c >= "0" & c <= "9" {
+            return c.convert()->UInt64 - "0"->Char8.convert()->UInt64
+        }
+        if c >= "A" & c <= "Z" {
+            return c.convert()->UInt64 - "A"->Char8.convert()->UInt64 + 10
+        }
+        if c >= "a" & c <= "z" {
+            return c.convert()->UInt64 - "a"->Char8.convert()->UInt64 + 10
+        }
+        return null
+    }
+
+    ================================================================================================
+    Used to implement the various number classes' radix parse methods.
+    ================================================================================================
+    @class
+    function parse(str:String, rawRadix:Int):UInt64? {
+        if str = "" {
+            return null
+        }
+        var result:UInt64 := 0
+        def radix := rawRadix.convert()->UInt64
+        var index := str.start()
+        while index != str.end() {
+            def value := digit(str[index])
+            if value = null | value >= radix {
+                return null
+            }
+            result := result * radix + value
+            index := str.next(index)
+        }
+        return result
+    }
+
     ================================================================================================
     Used to implement alignment specifiers during string interpolation. The alignment specifier must
     be of the form `[<fill>]<direction><width>`, where the optional `<fill>` is a single character

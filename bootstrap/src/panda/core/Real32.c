@@ -159,6 +159,18 @@ panda$core$Int64 panda$core$Real32$hash$R$panda$core$Int64(panda$core$Real32 sel
     panda$core$Panda$floatToIntBits$panda$core$Real64$R$panda$core$Int64(&$tmp15, $tmp14);
     return $tmp15;
 }
+panda$core$Real32$nullable panda$core$Real32$parse$panda$core$String$R$panda$core$Real32$Q(panda$core$String* p_s) {
+    panda$core$Real64$nullable result16;
+    panda$core$Real64$nullable $tmp17 = panda$core$Real64$parse$panda$core$String$R$panda$core$Real64$Q(p_s);
+    result16 = $tmp17;
+    if (((panda$core$Bit) { !result16.nonnull }).value) {
+    {
+        return ((panda$core$Real32$nullable) { .nonnull = false });
+    }
+    }
+    panda$core$Real32 $tmp18 = panda$core$Real64$convert$R$panda$core$Real32(((panda$core$Real64) result16.value));
+    return ((panda$core$Real32$nullable) { $tmp18, true });
+}
 panda$core$Int8 panda$core$Real32$convert$R$panda$core$Int8(panda$core$Real32 self) {
     return ((panda$core$Int8) { ((int8_t) self.value) });
 }
@@ -187,8 +199,8 @@ panda$core$Real64 panda$core$Real32$convert$R$panda$core$Real64(panda$core$Real3
     return ((panda$core$Real64) { ((double) self.value) });
 }
 panda$core$String* panda$core$Real32$convert$R$panda$core$String(panda$core$Real32 self) {
-    panda$core$Real64 $tmp16 = panda$core$Real32$convert$R$panda$core$Real64(self);
-    panda$core$String* $tmp17 = panda$core$Real64$convert$R$panda$core$String($tmp16);
-    return $tmp17;
+    panda$core$Real64 $tmp19 = panda$core$Real32$convert$R$panda$core$Real64(self);
+    panda$core$String* $tmp20 = panda$core$Real64$convert$R$panda$core$String($tmp19);
+    return $tmp20;
 }
 

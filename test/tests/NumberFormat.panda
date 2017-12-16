@@ -1,5 +1,5 @@
 class NumberFormat {
-   @class
+    @class
     method main() {
         Console.printLine("\{0:b}")
         Console.printLine("\{0:o}")

@@ -161,6 +161,11 @@ panda$core$Int64 panda$core$Real64$hash$R$panda$core$Int64(panda$core$Real64 sel
     panda$core$Panda$floatToIntBits$panda$core$Real64$R$panda$core$Int64(&$tmp14, self);
     return $tmp14;
 }
+panda$core$Real64$nullable panda$core$Real64$parse$panda$core$String$R$panda$core$Real64$Q(panda$core$String* p_s) {
+    panda$core$Real64 $tmp15;
+    panda$core$Panda$toReal64$panda$core$String$R$panda$core$Real64(&$tmp15, p_s);
+    return ((panda$core$Real64$nullable) { $tmp15, true });
+}
 panda$core$Int8 panda$core$Real64$convert$R$panda$core$Int8(panda$core$Real64 self) {
     return ((panda$core$Int8) { ((int8_t) self.value) });
 }

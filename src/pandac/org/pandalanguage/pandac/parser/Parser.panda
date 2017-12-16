@@ -373,25 +373,6 @@ class Parser {
                 ASTNode(ASTNode.Kind.STRING, start.position, chunk.finish()))
     }
 
-    function toUInt64(s:String, base:UInt64):UInt64 {
-        var result:UInt64 := 0
-        for c in s.utf8() {
-            result *= base
-            def i := c.convert()->UInt64
-            if i >= 48 & i <= 57 {
-                result += i - 48
-            }
-            else if i >= 65 & i <= 70 {
-                result += i - 55
-            }
-            else {
-                assert i >= 97 & i <= 102
-                result += i - 87
-            }
-        }
-        return result
-    }
-
     ================================================================================================
     term = IDENTIFIER | DECIMAL | BINARY | HEX | REAL | SELF | SUPER | NULL | TRUE | FALSE |
             string | LPAREN expression RPAREN
@@ -404,11 +385,11 @@ class Parser {
             when Token.Kind.DECIMAL:
                 return ASTNode(ASTNode.Kind.INT, t.position, text(t).convert()->UInt64?)
             when Token.Kind.BINARY:
-                return ASTNode(ASTNode.Kind.INT, t.position, toUInt64(text(t)[2..], 2))
+                return ASTNode(ASTNode.Kind.INT, t.position, UInt64.parse(text(t)[2..], 2))
             when Token.Kind.HEX:
-                return ASTNode(ASTNode.Kind.INT, t.position, toUInt64(text(t)[2..], 16))
+                return ASTNode(ASTNode.Kind.INT, t.position, UInt64.parse(text(t)[2..], 16))
             when Token.Kind.REAL:
-                return ASTNode(ASTNode.Kind.REAL, t.position, Panda.toReal64(text(t)))
+                return ASTNode(ASTNode.Kind.REAL, t.position, Real64.parse(text(t)))
             when Token.Kind.SELF:
                 return ASTNode(ASTNode.Kind.SELF, t.position)
             when Token.Kind.SUPER:

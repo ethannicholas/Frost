@@ -647,6 +647,15 @@ class UInt32 : Value, Key<UInt32>, Comparable<UInt32>, Formattable {
         return Int(value->builtin_int64)
     }
 
+    @class
+    function parse(str:String, radix:Int):UInt32? {
+        def result := Panda.parse(str, radix)
+        if result = null {
+            return null
+        }
+        return result.convert()->UInt32
+    }
+
     function convert():Int8 {
         return Int8(value->builtin_int8)
     }

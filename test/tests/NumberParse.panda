@@ -1,0 +1,40 @@
+class NumberFormat {
+    @class
+    method parse64(s:String, radix:Int) {
+        def result := Int64.parse(s, radix)
+        if result != null {
+            Console.printLine(result)
+        }
+        else {
+            Console.printLine("<null>")
+        }
+    }
+
+    @class
+    method main() {
+        parse64("0", 2)
+        parse64("0", 8)
+        parse64("0", 10)
+        parse64("0", 16)
+        parse64("-1", 2)
+        parse64("-1", 8)
+        parse64("-1", 10)
+        parse64("-1", 16)
+        parse64("", 2)
+        parse64("", 8)
+        parse64("", 10)
+        parse64("", 16)
+        parse64("1ABC", 2)
+        parse64("1ABC", 8)
+        parse64("1ABC", 10)
+        parse64("1ABC", 16)
+        parse64("1011", 2)
+        parse64("1011", 8)
+        parse64("1011", 10)
+        parse64("1011", 16)
+        parse64("-1011", 2)
+        parse64("-1011", 8)
+        parse64("-1011", 10)
+        parse64("-1011", 16)
+    }
+}
