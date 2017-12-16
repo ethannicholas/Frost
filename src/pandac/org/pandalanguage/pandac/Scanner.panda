@@ -50,7 +50,8 @@ class Scanner {
                 when "@class":      flags ||= Annotations.Flag.CLASS
                 when "@override":   flags ||= Annotations.Flag.OVERRIDE
                 when "@external":   flags ||= Annotations.Flag.EXTERNAL
-                when "@$implicit":  flags ||= Annotations.Flag.IMPLICIT
+                when "@implicit":  flags ||= Annotations.Flag.IMPLICIT
+                when "@implicit":   flags ||= Annotations.Flag.IMPLICIT
                 when "@final":      flags ||= Annotations.Flag.FINAL
                 when "@abstract":   flags ||= Annotations.Flag.ABSTRACT
                 when "@inline":     flags ||= Annotations.Flag.INLINE

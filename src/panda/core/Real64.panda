@@ -5,12 +5,12 @@ class Real64 : Value, Key<Real64>, Comparable<Real64> {
     @private
     def value:builtin_float64
 
-    @$implicit
+    @implicit
     init(value:builtin_float64) {
         self.value := value
     }
 
-    @$implicit
+    @implicit
     init(value:Int64) {
         self.value := value.value->builtin_float64
     }

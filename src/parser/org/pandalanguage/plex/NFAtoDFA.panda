@@ -28,7 +28,7 @@ class NFAtoDFA {
     method add(nfaState:Int, states:List<Int>) {
         def state := nfa.states[nfaState]
         if state.kind = State.REMAPPED {
-            def next := (state->RemappedState).states -- FIXME remove ()
+            def next := state->RemappedState.states
             for n in next {
                 add(n, states)
             }

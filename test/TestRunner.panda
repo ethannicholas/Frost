@@ -11,6 +11,8 @@ class Test {
         args.add(workingDir.resolve(test + ".panda").path)
         args.add("-o")
         args.add(exe.path)
+        args.add("-O")
+        args.add("3")
         def compiler := System.exec(pandac, args)
         def compileResult := compiler.output.readFully() -- FIXME use error stream instead
         compiler.waitFor()

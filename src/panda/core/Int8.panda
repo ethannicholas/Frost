@@ -12,7 +12,8 @@ class Int8 : Value, Key<Int8>, Comparable<Int8> {
     @private
     def value:builtin_int8
 
-    @$implicit
+    @private
+    @implicit
     init(value:builtin_int8) {
         self.value := value
     }

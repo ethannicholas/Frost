@@ -12,9 +12,20 @@ class UInt32 : Value, Key<UInt32>, Comparable<UInt32> {
     @private
     def value:builtin_uint32
 
-    @$implicit
+    @private
+    @implicit
     init(value:builtin_uint32) {
         self.value := value
+    }
+
+    @implicit
+    init(value:UInt8) {
+        self.value := value.value->builtin_uint32
+    }
+
+    @implicit
+    init(value:UInt16) {
+        self.value := value.value->builtin_uint32
     }
 
     function +(other:Int8):Int64 {

@@ -41,6 +41,12 @@ panda$core$Int64$wrapper* wrap_panda$core$Int64(panda$core$Int64 self);
 typedef struct panda$core$String panda$core$String;
 
 void panda$core$Int64$init$builtin_int64(panda$core$Int64* self, int64_t p_value);
+void panda$core$Int64$init$panda$core$Int8(panda$core$Int64* self, panda$core$Int8 p_value);
+void panda$core$Int64$init$panda$core$Int16(panda$core$Int64* self, panda$core$Int16 p_value);
+void panda$core$Int64$init$panda$core$Int32(panda$core$Int64* self, panda$core$Int32 p_value);
+void panda$core$Int64$init$panda$core$UInt8(panda$core$Int64* self, panda$core$UInt8 p_value);
+void panda$core$Int64$init$panda$core$UInt16(panda$core$Int64* self, panda$core$UInt16 p_value);
+void panda$core$Int64$init$panda$core$UInt32(panda$core$Int64* self, panda$core$UInt32 p_value);
 panda$core$Int64 panda$core$Int64$$ADD$panda$core$Int8$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int8 p_other);
 panda$core$Int64 panda$core$Int64$$ADD$panda$core$Int16$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int16 p_other);
 panda$core$Int64 panda$core$Int64$$ADD$panda$core$Int32$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int32 p_other);

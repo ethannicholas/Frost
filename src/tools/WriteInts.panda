@@ -146,7 +146,7 @@ class WriteInts {
     @class
     method writeConstructor(type:Int, other:Int, out:OutputStream) {
         out.printLine()
-        out.printLine("    @$implicit")
+        out.printLine("    @implicit")
         out.printLine("    init(value:\{object(other)}) {")
         out.printLine("        self.value := value.value\{cast(other, type)}")
         out.printLine("    }")
@@ -156,6 +156,21 @@ class WriteInts {
     method writeConstructors(type:Int, out:OutputStream) {
         if size(type) > size(INT8) & signed(type) {
             writeConstructor(type, INT8, out)
+        }
+        if size(type) > size(INT16) & signed(type) {
+            writeConstructor(type, INT16, out)
+        }
+        if size(type) > size(INT32) & signed(type) {
+            writeConstructor(type, INT32, out)
+        }
+        if size(type) > size(UINT8) {
+            writeConstructor(type, UINT8, out)
+        }
+        if size(type) > size(UINT16) {
+            writeConstructor(type, UINT16, out)
+        }
+        if size(type) > size(UINT32) {
+            writeConstructor(type, UINT32, out)
         }
     }
 
@@ -416,7 +431,8 @@ class WriteInts {
         out.printLine("    @private")
         out.printLine("    def value:\{builtin(type)}")
         out.printLine()
-        out.printLine("    @$implicit")
+        out.printLine("    @private")
+        out.printLine("    @implicit")
         out.printLine("    init(value:\{builtin(type)}) {")
         out.printLine("        self.value := value")
         out.printLine("    }")

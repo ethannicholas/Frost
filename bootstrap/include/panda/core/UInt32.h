@@ -28,12 +28,12 @@ panda$core$UInt32$wrapper* wrap_panda$core$UInt32(panda$core$UInt32 self);
 
 #ifndef PANDA_TYPESONLY
 #include "panda/core/UInt32.h"
+#include "panda/core/UInt8.h"
+#include "panda/core/UInt16.h"
 #include "panda/core/Int64.h"
 #include "panda/core/Int8.h"
 #include "panda/core/Int16.h"
 #include "panda/core/Int32.h"
-#include "panda/core/UInt8.h"
-#include "panda/core/UInt16.h"
 #include "panda/core/UInt64.h"
 #include "panda/core/Bit.h"
 #include "panda/core/Real32.h"
@@ -41,6 +41,8 @@ panda$core$UInt32$wrapper* wrap_panda$core$UInt32(panda$core$UInt32 self);
 typedef struct panda$core$String panda$core$String;
 
 void panda$core$UInt32$init$builtin_uint32(panda$core$UInt32* self, uint32_t p_value);
+void panda$core$UInt32$init$panda$core$UInt8(panda$core$UInt32* self, panda$core$UInt8 p_value);
+void panda$core$UInt32$init$panda$core$UInt16(panda$core$UInt32* self, panda$core$UInt16 p_value);
 panda$core$Int64 panda$core$UInt32$$ADD$panda$core$Int8$R$panda$core$Int64(panda$core$UInt32 self, panda$core$Int8 p_other);
 panda$core$Int64 panda$core$UInt32$$ADD$panda$core$Int16$R$panda$core$Int64(panda$core$UInt32 self, panda$core$Int16 p_other);
 panda$core$Int64 panda$core$UInt32$$ADD$panda$core$Int32$R$panda$core$Int64(panda$core$UInt32 self, panda$core$Int32 p_other);

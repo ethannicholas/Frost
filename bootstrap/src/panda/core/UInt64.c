@@ -93,6 +93,15 @@ panda$core$UInt64$wrapperclass_type panda$core$UInt64$wrapperclass = { (panda$co
 void panda$core$UInt64$init$builtin_uint64(panda$core$UInt64* self, uint64_t p_value) {
     self->value = p_value;
 }
+void panda$core$UInt64$init$panda$core$UInt8(panda$core$UInt64* self, panda$core$UInt8 p_value) {
+    self->value = ((uint64_t) p_value.value);
+}
+void panda$core$UInt64$init$panda$core$UInt16(panda$core$UInt64* self, panda$core$UInt16 p_value) {
+    self->value = ((uint64_t) p_value.value);
+}
+void panda$core$UInt64$init$panda$core$UInt32(panda$core$UInt64* self, panda$core$UInt32 p_value) {
+    self->value = ((uint64_t) p_value.value);
+}
 panda$core$UInt64 panda$core$UInt64$$ADD$panda$core$UInt8$R$panda$core$UInt64(panda$core$UInt64 self, panda$core$UInt8 p_other) {
     uint64_t $tmp1 = self.value + ((uint64_t) p_other.value);
     return ((panda$core$UInt64) { $tmp1 });

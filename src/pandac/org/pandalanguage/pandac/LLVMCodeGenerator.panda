@@ -570,6 +570,8 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     method createWrapperShim(m:MethodDecl, out:OutputStream):String {
+        def oldMethod := currentMethod
+        currentMethod := m
         assert m.isInstance()
         def oldVarCount := varCount
         varCount := 0
@@ -613,6 +615,7 @@ class LLVMCodeGenerator : CodeGenerator {
         out.printLine("ret \{returnValue}")
         out.printLine("}")
         varCount := oldVarCount
+        currentMethod := oldMethod
         return result
     }
 
@@ -1350,14 +1353,6 @@ class LLVMCodeGenerator : CodeGenerator {
         if m.isInstance() {
             argStart := 1
             selfRef := getReference(call.children[0], out)
-            if currentMethod.methodKind = MethodDecl.Kind.INIT &
-                    call.children[0].kind = IRNode.Kind.SELF &
-                    compiler.isValue(currentMethod.owner) {
-                def selfLoad := nextVar()
-                def t := type(currentMethod.owner.type())
-                out.printLine("\{selfLoad} = load \{t}, \{t}* \{selfRef}")
-                selfRef := selfLoad
-            }
         }
         else {
             argStart := 0
@@ -1882,16 +1877,55 @@ class LLVMCodeGenerator : CodeGenerator {
         return result
     }
 
-    method getSelfReference(s:IRNode, out:OutputStream):String {
+    ================================================================================================
+    In init methods, %self must be a pointer rather than a value, so that we can modify our fields.
+    This returns true if our current %self is a pointer to a value.
+    ================================================================================================
+    function haveSelfValuePointer():Bit {
+        return currentMethod.methodKind = MethodDecl.Kind.INIT &
+                compiler.isValue(currentMethod.owner)
+    }
+
+    ================================================================================================
+    Returns the current %self, as a pointer. For values, this pointer is only available from within
+    init methods.
+    ================================================================================================
+    method getSelfPointer():String {
+        assert currentMethod.methodKind = MethodDecl.Kind.INIT |
+                !compiler.isValue(currentMethod.owner),
+                "self pointer for values is only accessible from init methods " +
+                "(in \{currentMethod.declaration()})"
         if inlineContext.get_count() > 0 {
             return inlineContext.peek().selfRef
         }
         return "%self"
     }
 
+    ================================================================================================
+    Returns the current %self, as a value if the current object is a value. For non-value objects
+    %self is always a pointer.
+    ================================================================================================
+    method getSelfValue(out:OutputStream):String {
+        assert currentMethod != null
+        if haveSelfValuePointer() {
+            def load := nextVar()
+            out.printLine("\{load} = load \{type(currentMethod.owner.type())}, " +
+                    "\{type(currentMethod.owner.type())}* \{getSelfPointer()}")
+            return load
+        }
+        if inlineContext.get_count() > 0 {
+            return inlineContext.peek().selfRef
+        }
+        return "%self"
+    }
+
+    method getSelfReference(s:IRNode, out:OutputStream):String {
+        return getSelfValue(out)
+    }
+
     method getSuperReference(s:IRNode, out:OutputStream):String {
-        def result := nextVar()
         def ref := getSelfReference(s, out)
+        def result := nextVar()
         out.printLine("\{result} = bitcast \{selfType(currentMethod)} \{ref} to \{type(s.type)}")
         return result
     }
@@ -2029,9 +2063,6 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     method getTypedReference(expr:IRNode, out:OutputStream):String {
-        if expr.kind = IRNode.Kind.SELF {
-            return "\{selfType(currentMethod)} \{getSelfReference(expr, out)}"
-        }
         return "\{type(expr.type)} \{getReference(expr, out)}"
     }
 
@@ -2103,8 +2134,17 @@ class LLVMCodeGenerator : CodeGenerator {
         }
         def offset := call.children.get_count() - actualMethodType.subtypes.get_count() + 1
         for i in 0 .. call.children.get_count() {
-            if call.children[i].kind = IRNode.Kind.SELF {
-                args.add(getTypedReference(call.children[i], out))
+            if target = null & i = 0 & call.children[i].kind = IRNode.Kind.SELF &
+                    m.methodKind = MethodDecl.Kind.INIT {
+                args.add("\{selfType(m)} \{getSelfPointer()}")
+                continue
+            }
+            if target = null & i = 0 & call.children[i].kind = IRNode.Kind.SUPER &
+                    m.methodKind = MethodDecl.Kind.INIT {
+                def cast := nextVar()
+                out.printLine("\{cast} = bitcast \{selfType(currentMethod)} \{getSelfPointer()} " +
+                        " to \{type(call.children[i].type)}")
+                args.add("\{type(call.children[i].type)} \{cast}")
                 continue
             }
             def arg := getReference(call.children[i], out)
@@ -2828,7 +2868,13 @@ class LLVMCodeGenerator : CodeGenerator {
             when IRNode.Kind.VARIABLE_REFERENCE:
                 return getName(lvalue.payload->Variable)
             when IRNode.Kind.FIELD_REFERENCE:
-                def base := getReference(lvalue.children[0], out)
+                def base:String
+                if lvalue.children[0].kind = IRNode.Kind.SELF {
+                    base := getSelfPointer()
+                }
+                else {
+                    base := getReference(lvalue.children[0], out)
+                }
                 def raw := nextVar()
                 def cl := compiler.getClass(lvalue.children[0].type)
                 assert cl != null

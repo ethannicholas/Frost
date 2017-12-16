@@ -92,7 +92,7 @@ class Annotations {
             result.append("@external\n")
         }
         if isImplicit() {
-            result.append("@$implicit\n")
+            result.append("@implicit\n")
         }
         if isFinal() {
             result.append("@final\n")

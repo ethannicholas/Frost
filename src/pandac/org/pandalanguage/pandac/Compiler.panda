@@ -1304,6 +1304,20 @@ class Compiler : ErrorReporter {
                     }
                     return null
                 }
+            when IRNode.Kind.UNRESOLVED_METHOD_CALL:
+                def methods := expr.children[0].payload->ListView<MethodRef>
+                def args := expr.children[1..]
+                var bestCost:Int? := null
+                for m in methods {
+                    def cost := callCost(m, args, target)
+                    if cost = null {
+                        continue
+                    }
+                    if bestCost = null | cost < bestCost {
+                        bestCost := cost
+                    }
+                }
+                return bestCost
             when IRNode.Kind.UNRESOLVED_RANGE:
                 if target.isRange() {
                     if expr.children.get_count() != 2 {
@@ -1794,6 +1808,10 @@ class Compiler : ErrorReporter {
             cl := getClass(resolved.payload->Type)
         }
         else {
+            if !resolved.type.isClass() {
+                error(target.position, "cannot call a method on non-class type '\{resolved.type}'")
+                return null
+            }
             cl := getClass(resolved.type)
         }
         if cl = null {
@@ -2343,36 +2361,38 @@ class Compiler : ErrorReporter {
             if left = null {
                 return null
             }
-            def cl := getClass(left.type)
-            if cl = null {
-                return null
-            }
-            def parameters := typeParameters(left.type)
-            def methods := getSymbolTable(cl)["[]"]
-            def type:Type
-            if methods != null {
-                def types := Array<Type>()
-                if methods.kind = Symbol.Kind.METHOD {
-                    def m := methods->MethodDecl
-                    resolve(m)
-                    types.add(MethodRef(m, parameters).returnType())
+            if left.type.isClass() {
+                def cl := getClass(left.type)
+                if cl = null {
+                    return null
                 }
-                else {
-                    assert methods.kind = Symbol.Kind.METHODS
-                    for m in methods->Methods.methods {
+                def parameters := typeParameters(left.type)
+                def methods := getSymbolTable(cl)["[]"]
+                def type:Type
+                if methods != null {
+                    def types := Array<Type>()
+                    if methods.kind = Symbol.Kind.METHOD {
+                        def m := methods->MethodDecl
                         resolve(m)
                         types.add(MethodRef(m, parameters).returnType())
                     }
+                    else {
+                        assert methods.kind = Symbol.Kind.METHODS
+                        for m in methods->Methods.methods {
+                            resolve(m)
+                            types.add(MethodRef(m, parameters).returnType())
+                        }
+                    }
+                    type := Type(types)
                 }
-                type := Type(types)
+                else {
+                    type := Type.Invalid()
+                }
+                def children := Array<IRNode>()
+                children.add(left)
+                children.add(right)
+                return IRNode(IRNode.Kind.UNRESOLVED_INDEX, position, type, children)
             }
-            else {
-                type := Type.Invalid()
-            }
-            def children := Array<IRNode>()
-            children.add(left)
-            children.add(right)
-            return IRNode(IRNode.Kind.UNRESOLVED_INDEX, position, type, children)
         }
         if left.type = Type.BuiltinBit() {
             if right.type = Type.BuiltinBit() & (op = Token.Kind.AND | op = Token.Kind.OR |
@@ -2670,6 +2690,10 @@ class Compiler : ErrorReporter {
             if step = null {
                 return null
             }
+            if step.kind = IRNode.Kind.NULL {
+                error(step.position, "range step cannot be null")
+                return null
+            }
         }
         def children := Array<IRNode>() -- FIXME literal
         children.add(start)
@@ -2880,6 +2904,14 @@ class Compiler : ErrorReporter {
                 astTarget.children.get_count() > 0 {
             assert astTarget.children.get_count() = 1
             def t := resolve(scanner.convertType(astTarget.children[0]))
+            if t.typeKind = Type.Kind.NULLABLE {
+                error(astTarget.position, "for loop variable cannot have nullable type '\{t}'")
+                return null
+            }
+            if !t.isNumeric() {
+                error(astTarget.position, "for loop variable cannot have non-numeric type '\{t}'")
+                return null
+            }
             if rawList.kind = IRNode.Kind.UNRESOLVED_RANGE {
                 if rawList.children.get_count() = 2 {
                     list := coerce(rawList, Type.RangeOf(t))
@@ -2900,7 +2932,17 @@ class Compiler : ErrorReporter {
             }
         }
         else {
-            list := resolve(rawList)
+            var listType := variableType(rawList)
+            assert listType.isRange() | listType.isSteppedRange()
+            if listType.subtypes[1].typeKind = Type.Kind.NULLABLE {
+                if listType.isRange() {
+                    listType := Type.RangeOf(listType.subtypes[1].nonnullable())
+                }
+                else {
+                    listType := Type.SteppedRangeOf(listType.subtypes[1].nonnullable())
+                }
+            }
+            list := coerce(rawList, listType)
         }
         if list = null {
             return null

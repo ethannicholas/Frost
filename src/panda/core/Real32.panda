@@ -5,7 +5,7 @@ class Real32 : Value, Key<Real32>, Comparable<Real32> {
     @private
     def value:builtin_float32
 
-    @$implicit
+    @implicit
     init(value:builtin_float32) {
         self.value := value
     }

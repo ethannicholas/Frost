@@ -14,11 +14,11 @@ panda$core$UInt16$wrapper* wrap_panda$core$UInt16(panda$core$UInt16 self) {
     result->value = self;
     return result;
 }
+#include "panda/core/UInt8.h"
 #include "panda/core/Int32.h"
 #include "panda/core/Int8.h"
 #include "panda/core/Int16.h"
 #include "panda/core/UInt32.h"
-#include "panda/core/UInt8.h"
 #include "panda/core/UInt64.h"
 #include "panda/core/Real32.h"
 #include "panda/core/Real64.h"
@@ -92,6 +92,9 @@ panda$core$UInt16$wrapperclass_type panda$core$UInt16$wrapperclass = { (panda$co
 
 void panda$core$UInt16$init$builtin_uint16(panda$core$UInt16* self, uint16_t p_value) {
     self->value = p_value;
+}
+void panda$core$UInt16$init$panda$core$UInt8(panda$core$UInt16* self, panda$core$UInt8 p_value) {
+    self->value = ((uint16_t) p_value.value);
 }
 panda$core$Int32 panda$core$UInt16$$ADD$panda$core$Int8$R$panda$core$Int32(panda$core$UInt16 self, panda$core$Int8 p_other) {
     int32_t $tmp1 = ((int32_t) self.value) + ((int32_t) p_other.value);

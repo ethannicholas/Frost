@@ -93,6 +93,24 @@ panda$core$Int64$wrapperclass_type panda$core$Int64$wrapperclass = { (panda$core
 void panda$core$Int64$init$builtin_int64(panda$core$Int64* self, int64_t p_value) {
     self->value = p_value;
 }
+void panda$core$Int64$init$panda$core$Int8(panda$core$Int64* self, panda$core$Int8 p_value) {
+    self->value = ((int64_t) p_value.value);
+}
+void panda$core$Int64$init$panda$core$Int16(panda$core$Int64* self, panda$core$Int16 p_value) {
+    self->value = ((int64_t) p_value.value);
+}
+void panda$core$Int64$init$panda$core$Int32(panda$core$Int64* self, panda$core$Int32 p_value) {
+    self->value = ((int64_t) p_value.value);
+}
+void panda$core$Int64$init$panda$core$UInt8(panda$core$Int64* self, panda$core$UInt8 p_value) {
+    self->value = ((int64_t) p_value.value);
+}
+void panda$core$Int64$init$panda$core$UInt16(panda$core$Int64* self, panda$core$UInt16 p_value) {
+    self->value = ((int64_t) p_value.value);
+}
+void panda$core$Int64$init$panda$core$UInt32(panda$core$Int64* self, panda$core$UInt32 p_value) {
+    self->value = ((int64_t) p_value.value);
+}
 panda$core$Int64 panda$core$Int64$$ADD$panda$core$Int8$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int8 p_other) {
     int64_t $tmp1 = self.value + ((int64_t) p_other.value);
     return ((panda$core$Int64) { $tmp1 });

@@ -12,9 +12,30 @@ class Int32 : Value, Key<Int32>, Comparable<Int32> {
     @private
     def value:builtin_int32
 
-    @$implicit
+    @private
+    @implicit
     init(value:builtin_int32) {
         self.value := value
+    }
+
+    @implicit
+    init(value:Int8) {
+        self.value := value.value->builtin_int32
+    }
+
+    @implicit
+    init(value:Int16) {
+        self.value := value.value->builtin_int32
+    }
+
+    @implicit
+    init(value:UInt8) {
+        self.value := value.value->builtin_int32
+    }
+
+    @implicit
+    init(value:UInt16) {
+        self.value := value.value->builtin_int32
     }
 
     function +(other:Int8):Int32 {

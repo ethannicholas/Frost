@@ -1,0 +1,16 @@
+class RangeForLoopNull {
+    method test1() {
+        for i in 0 .. null {
+        }
+    }
+
+    method test2() {
+        for i in null .. 10 {
+        }
+    }
+
+    method test3() {
+        for i in 0 .. 10 by null {
+        }
+    }
+}
