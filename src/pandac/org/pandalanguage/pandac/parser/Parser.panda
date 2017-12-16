@@ -180,6 +180,7 @@ class Parser {
                         when "'":  result.append("'")
                         when "\"": result.append("\"")
                         when "\\": result.append("\\")
+                        when "}":  result.append("}")
                         otherwise:
                             error(token, "invalid format string escape sequence")
                             return null
@@ -192,6 +193,71 @@ class Parser {
                     result.append(text(token))
             }
         }
+    }
+
+    method alignmentString(start:Token):String? {
+        def result := MutableString()
+        loop {
+            def token := rawNext()
+            match token.kind {
+                when Token.Kind.WHITESPACE:
+                    def str := text(token)
+                    if str.contains("\n") {
+                        error(token, "unterminated string literal")
+                        return null
+                    }
+                    result.append(str)
+                when Token.Kind.EOF:
+                    error(token, "unterminated string literal")
+                    return null
+                when Token.Kind.BACKSLASH:
+                    def escape := rawNext()
+                    if escape.kind = Token.Kind.EOF {
+                        error(token, "unterminated string literal")
+                        return null
+                    }
+                    def escapeText := text(escape)
+                    def c := escapeText.utf8()[0]
+                    match c {
+                        when "n":  result.append("\n")
+                        when "r":  result.append("\r")
+                        when "t":  result.append("\t")
+                        when "'":  result.append("'")
+                        when "\"": result.append("\"")
+                        when "\\": result.append("\\")
+                        when ":":  result.append(":")
+                        when "}":  result.append("}")
+                        otherwise:
+                            error(token, "invalid format string escape sequence")
+                            return null
+                    }
+                    result.append(escapeText[escapeText.next(escapeText.start())..])
+                when Token.Kind.COLON:
+                    pushback(token)
+                    return result.finish()
+                when Token.Kind.RBRACE:
+                    pushback(token)
+                    return result.finish()
+                otherwise:
+                    result.append(text(token))
+            }
+        }
+    }
+
+    @private
+    function convertToString(expr:ASTNode):ASTNode {
+        def dotChildren := Array<ASTNode>() -- FIXME literal
+        dotChildren.add(expr)
+        def dot := ASTNode(ASTNode.Kind.DOT, expr.position, "convert",
+                dotChildren)
+        def callChildren := Array<ASTNode>() -- FIXME literal
+        callChildren.add(dot)
+        def call := ASTNode(ASTNode.Kind.CALL, expr.position, callChildren)
+        def castChildren := Array<ASTNode>() -- FIXME literal
+        castChildren.add(call)
+        castChildren.add(ASTNode(ASTNode.Kind.TYPE, expr.position,
+                "panda.core.String"))
+        return ASTNode(ASTNode.Kind.CAST, expr.position, castChildren)
     }
 
     method string():ASTNode? {
@@ -234,11 +300,16 @@ class Parser {
                         when "\"": chunk.append("\"")
                         when "\\": chunk.append("\\")
                         when "{": {
+                            -- handle string interpolation
                             var expr := expression()
                             if expr = null {
                                 return null
                             }
+                            def align:String? := null
                             def format:String? := null
+                            if checkNext(Token.Kind.COMMA) != null {
+                                align := alignmentString(start)
+                            }
                             if checkNext(Token.Kind.COLON) != null {
                                 format := formatString(start)
                                 if format = null {
@@ -262,6 +333,22 @@ class Parser {
                             if expect(Token.Kind.RBRACE, "'}'") = null {
                                 return null
                             }
+                            if align != null {
+                                if format = null {
+                                    expr := convertToString(expr)
+                                }
+                                def callTargetChildren := Array<ASTNode>()
+                                callTargetChildren.add(ASTNode(ASTNode.Kind.TYPE, expr.position,
+                                        "panda.core.Panda"))
+                                def callTarget := ASTNode(ASTNode.Kind.DOT, expr.position,
+                                        "align", callTargetChildren)
+                                def callChildren := Array<ASTNode>()
+                                callChildren.add(callTarget)
+                                callChildren.add(expr)
+                                callChildren.add(ASTNode(ASTNode.Kind.STRING, start.position,
+                                        align))
+                                expr := ASTNode(ASTNode.Kind.CALL, expr.position, callChildren)
+                            }
                             def text := chunk.finish()
                             chunk := MutableString()
                             if text != "" | result != null {
@@ -270,18 +357,7 @@ class Parser {
                                 result := addStringChunk(result, expr)
                             }
                             else {
-                                def dotChildren := Array<ASTNode>() -- FIXME literal
-                                dotChildren.add(expr)
-                                def dot := ASTNode(ASTNode.Kind.DOT, expr.position, "convert",
-                                        dotChildren)
-                                def callChildren := Array<ASTNode>() -- FIXME literal
-                                callChildren.add(dot)
-                                def call := ASTNode(ASTNode.Kind.CALL, expr.position, callChildren)
-                                def castChildren := Array<ASTNode>() -- FIXME literal
-                                castChildren.add(call)
-                                castChildren.add(ASTNode(ASTNode.Kind.TYPE, expr.position,
-                                        "panda.core.String"))
-                                result := ASTNode(ASTNode.Kind.CAST, expr.position, castChildren)
+                                result := convertToString(expr)
                             }
                         }
                         otherwise:

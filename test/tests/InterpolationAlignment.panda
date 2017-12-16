@@ -1,0 +1,15 @@
+class InterpolationAlignment {
+    @class
+    method main() {
+        Console.printLine("\{0,>4:x}")
+        Console.printLine("\{"Hello!",#^14}")
+        Console.printLine("\{"Hello!",#^15}")
+        Console.printLine("\{7 * 8,\}<5}")
+        Console.printLine("\{true,\">5}")
+        Console.printLine("\{true,\:^5}")
+        Console.printLine("\{true,\:<2}")
+        Console.printLine("\{true,\:^1}")
+        Console.printLine("\{true,\:>0}")
+        Console.printLine("\{"",🐼^6}")
+    }
+}

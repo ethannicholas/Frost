@@ -31,6 +31,41 @@ class Panda {
     }
 
     ================================================================================================
+    Used to implement alignment specifiers during string interpolation. The alignment specifier must
+    be of the form `[<fill>]<direction><width>`, where the optional `<fill>` is a single character
+    to fill the string width, `<direction>` is `"<"` (left), `"^"` (center), or `">"` (right), and
+    width is a positive integer specifying the minimum length of the resulting string.
+
+    @param str the string to align
+    @param specifier an alignment specifier such as `"0>6"`
+    ================================================================================================
+    @class
+    function align(str:String, specifier:String):String {
+        assert specifier.length() >= 2, "invalid alignment string '\{specifier}'"
+        var index := specifier.next(specifier.start())
+        match specifier[index] {
+            when "<", "^", ">": { }
+            otherwise:
+                index := specifier.start()
+        }
+        def width := specifier[specifier.next(index)..].convert()->Int
+        def fill:Char32
+        if index = specifier.start() {
+            fill := " "
+        }
+        else {
+            fill := specifier[specifier.start()]
+        }
+        match specifier[index] {
+            when "<": return str.leftAlign(width, fill)
+            when "^": return str.centerAlign(width, fill)
+            when ">": return str.rightAlign(width, fill)
+            otherwise:
+                assert false, "invalid alignment string '\{specifier}'"
+        }
+    }
+
+    ================================================================================================
     Used to implement the various number classes' format methods.
 
     @param sign true if the number is negative
@@ -39,16 +74,21 @@ class Panda {
     @param fmt the format string
     ================================================================================================
     @class
-    method format(sign:Bit, rawValue:UInt64, mask:UInt64, fmt:String):String {
+    function format(sign:Bit, rawValue:UInt64, mask:UInt64, fmt:String):String {
         var index := fmt.start()
         var base:UInt64 := 10
         var digits := "0123456789abcdef".utf8()
         if index < fmt.end() {
             match fmt[index] {
                 when "b":
+                when "B":
                     base := 2
                 when "o":
+                when "O":
                     base := 8
+                when "d":
+                when "D":
+                    base := 10
                 when "x":
                     base := 16
                 when "X":
