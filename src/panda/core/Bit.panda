@@ -1,7 +1,7 @@
 package panda.core
 
 @final
-class Bit : Value, Key<Bit> {
+class Bit : Value, Key<Bit>, Formattable {
     @implicit
     init(value:builtin_bit) {
         self.value := value
@@ -41,7 +41,8 @@ class Bit : Value, Key<Bit> {
 
     -- note that the '|' and '&' functions do not have any way to provide for short circuiting, so
     -- these operators require special support in the CodeGenerator. These implementations are
-    -- therefore not often called.
+    -- therefore only actually called in unusual circumstances, such as via dynamic method
+    -- references.
     function |(other:Bit):Bit {
         return value | other.value
     }
@@ -52,6 +53,21 @@ class Bit : Value, Key<Bit> {
 
     function ~(other:Bit):Bit {
         return Bit(value ~ other.value)
+    }
+
+    ================================================================================================
+    Chooses one of two strings based on the value of this `Bit`. The format string must be of the
+    form `trueString|falseString`, and the result will be `trueString` if this `Bit` is true,
+    otherwise `falseString`.
+    ================================================================================================
+    @override
+    function format(fmt:String):String {
+        def s := fmt.split("|")
+        assert s.get_count() = 2, "invalid format string '\{fmt}'"
+        if self {
+            return s[0]
+        }
+        return s[1]
     }
 
     @private

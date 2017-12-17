@@ -1,5 +1,7 @@
 package org.pandalanguage.pandac
 
+uses org.pandalanguage.pandac.parser.Token
+
 @final
 class Scanner {
     @private
@@ -201,6 +203,117 @@ class Scanner {
         }
     }
 
+    method scanClassChild(cl:ClassDecl, node:ASTNode) {
+        match node.kind {
+            when ASTNode.Kind.FIELD:
+                scanFields(cl, node)
+            when ASTNode.Kind.INIT:
+                def i := scanInit(cl, node)
+                if i != null {
+                    cl.symbolTable.add(i)
+                    cl.methods.add(i)
+                }
+            when ASTNode.Kind.METHOD, ASTNode.Kind.FUNCTION:
+                def m := scanMethod(cl, node)
+                if m != null {
+                    cl.symbolTable.add(m)
+                    cl.methods.add(m)
+                }
+            when ASTNode.Kind.CLASS:
+                def inner := scanClass(cl.source, cl.aliases, cl.name, node)
+                if inner != null {
+                    inner.owner := cl
+                    cl.classes.add(inner)
+                    assert inner.name.startsWith(cl.name + ".")
+                    cl.symbolTable.add(inner, inner.name[cl.name.length() + 1..])
+                    inner.symbolTable.parents.add(cl.symbolTable)
+                    inner.symbolTable.add(cl, cl.simpleName())
+                }
+            when ASTNode.Kind.INTERFACE:
+                def inner := scanInterface(cl.source, cl.aliases, cl.name, node)
+                if inner != null {
+                    inner.owner := cl
+                    cl.classes.add(inner)
+                    assert inner.name.startsWith(cl.name + ".")
+                    cl.symbolTable.add(inner, inner.name[cl.name.length() + 1..])
+                    inner.symbolTable.parents.add(cl.symbolTable)
+                    inner.symbolTable.add(cl, cl.simpleName())
+                }
+            when ASTNode.Kind.CHOICE:
+                def inner := scanChoice(cl.source, cl.aliases, cl.name, node)
+                if inner != null {
+                    inner.owner := cl
+                    cl.classes.add(inner)
+                    assert inner.name.startsWith(cl.name + ".")
+                    cl.symbolTable.add(inner, inner.name[cl.name.length() + 1..])
+                    inner.symbolTable.parents.add(cl.symbolTable)
+                    inner.symbolTable.add(cl, cl.simpleName())
+                }
+            otherwise:
+                assert false, "unsupported class child: \{node.kind}"
+        }
+    }
+
+    method scanChoiceEntry(cl:ClassDecl, entry:ASTNode) {
+        def doccomment:String?
+        if entry.children[0].kind != ASTNode.Kind.VOID {
+            assert entry.children[0].kind = ASTNode.Kind.DOC_COMMENT
+            doccomment := entry.children[0].payload->String
+        }
+        else {
+            doccomment := null
+        }
+        def types := Array<Type>()
+        for t in entry.children[1].children {
+            types.add(convertType(t))
+        }
+        def entry := ChoiceEntry(cl, entry.position, entry.payload->String, doccomment,
+                cl.choiceEntries.get_count(), types)
+        cl.choiceEntries.add(entry)
+        cl.symbolTable.add(entry)
+        var found := false
+        outer: for m in cl.methods {
+            assert m.methodKind = MethodDecl.Kind.INIT
+            if m.parameters.get_count() != types.get_count() + 1 {
+                continue
+            }
+            assert m.parameters[0].type = Type.Int64()
+            for i in 0 .. types.get_count() {
+                if types[i] != m.parameters[i + 1].type {
+                    continue outer
+                }
+            }
+            found := true
+            break
+        }
+        if !found {
+            -- need a synthetic init for this particular combination of parameters
+            def parameters := Array<MethodDecl.Parameter>()
+            parameters.add(MethodDecl.Parameter("rv", Type.Int64()))
+            def statements := Array<ASTNode>()
+            def children := Array<ASTNode>()
+            children.add(ASTNode(ASTNode.Kind.IDENTIFIER, cl.position, ClassDecl.RAW_VALUE_NAME))
+            children.add(ASTNode(ASTNode.Kind.IDENTIFIER, cl.position, "rv"))
+            statements.add(ASTNode(ASTNode.Kind.BINARY, cl.position, Token.Kind.ASSIGNMENT,
+                    children))
+            for i in 0 .. types.get_count() {
+                def name := "p\{i}"
+                parameters.add(MethodDecl.Parameter(name, types[i]))
+                children.clear()
+                children.add(ASTNode(ASTNode.Kind.CHOICE_FIELD_REFERENCE, cl.position,
+                        Pair<ChoiceEntry, Int>(entry, i)))
+                children.add(ASTNode(ASTNode.Kind.IDENTIFIER, cl.position, name))
+                statements.add(ASTNode(ASTNode.Kind.BINARY, cl.position, Token.Kind.ASSIGNMENT,
+                        children))
+            }
+            def synthetic := MethodDecl(cl, cl.position, null, Annotations(),
+                    MethodDecl.Kind.INIT, "init", parameters, Type.Void(),
+                    ASTNode(ASTNode.Kind.BLOCK, cl.position, statements))
+            cl.methods.add(synthetic)
+            cl.symbolTable.add(synthetic)
+        }
+    }
+
     method scanClass(source:File, aliases:MapView<String, String>, contextName:String,
             cl:ASTNode):ClassDecl? {
         def fullName:String
@@ -250,45 +363,16 @@ class Scanner {
         def result := ClassDecl(source, cl.position, aliases, doccomment, annotations,
                 ClassDecl.Kind.CLASS, fullName, supertypes, parameters, compiler.root)
         compiler.currentClass.push(result)
-        var foundInit := false
         if cl.children[4] != null {
             for c in cl.children[4].children {
-                match c.kind {
-                    when ASTNode.Kind.FIELD:
-                        scanFields(result, c)
-                    when ASTNode.Kind.INIT:
-                        def i := scanInit(result, c)
-                        if i != null {
-                            result.symbolTable.add(i)
-                            result.methods.add(i)
-                        }
-                        foundInit := true
-                    when ASTNode.Kind.METHOD, ASTNode.Kind.FUNCTION:
-                        def m := scanMethod(result, c)
-                        if m != null {
-                            result.symbolTable.add(m)
-                            result.methods.add(m)
-                        }
-                    when ASTNode.Kind.CLASS:
-                        def inner := scanClass(source, aliases, fullName, c)
-                        if inner != null {
-                            inner.owner := result
-                            result.classes.add(inner)
-                            assert inner.name.startsWith(fullName + ".")
-                            result.symbolTable.add(inner, inner.name[fullName.length() + 1..])
-                            inner.symbolTable.parents.add(result.symbolTable)
-                            inner.symbolTable.add(result, cl.payload->String)
-                        }
-                    when ASTNode.Kind.INTERFACE:
-                        def cl := scanInterface(source, aliases, fullName, c)
-                        if cl != null {
-                            result.classes.add(cl)
-                            assert cl.name.startsWith(fullName + ".")
-                            result.symbolTable.add(cl, cl.name[fullName.length() + 1..])
-                        }
-                    otherwise:
-                        assert false, "unsupported class child: \{c.kind}"
-                }
+                scanClassChild(result, c)
+            }
+        }
+        var foundInit := false
+        for m in result.methods {
+            if m.methodKind = MethodDecl.Kind.INIT {
+                foundInit := true
+                break
             }
         }
         if !foundInit & result.name != "panda.unsafe.Pointer" {
@@ -349,42 +433,71 @@ class Scanner {
         def result := ClassDecl(source, intf.position, aliases, doccomment, annotations,
                 ClassDecl.Kind.INTERFACE, fullName, supertypes, parameters, compiler.root)
         for c in intf.children[4].children {
-            match c.kind {
-                when ASTNode.Kind.FIELD:
-                    scanFields(result, c)
-                when ASTNode.Kind.INIT:
-                    def i := scanInit(result, c)
-                    if i != null {
-                        result.symbolTable.add(i)
-                        result.methods.add(i)
-                    }
-                when ASTNode.Kind.METHOD, ASTNode.Kind.FUNCTION:
-                    def m := scanMethod(result, c)
-                    if m != null {
-                        if m.body = null {
-                            m.annotations.flags ||= Annotations.Flag.ABSTRACT
-                        }
-                        result.symbolTable.add(m)
-                        result.methods.add(m)
-                    }
-                when ASTNode.Kind.CLASS:
-                    def cl := scanClass(source, aliases, fullName, c)
-                    if cl != null {
-                        result.classes.add(cl)
-                        assert cl.name.startsWith(fullName + ".")
-                        result.symbolTable.add(cl, cl.name[fullName.length() + 1..])
-                    }
-                when ASTNode.Kind.INTERFACE:
-                    def cl := scanInterface(source, aliases, fullName, c)
-                    if cl != null {
-                        result.classes.add(cl)
-                        assert cl.name.startsWith(fullName + ".")
-                        result.symbolTable.add(cl, cl.name[fullName.length() + 1..])
-                    }
-                otherwise:
-                    assert false, "unsupported class child: \{c.kind}"
+            scanClassChild(result, c)
+        }
+        return result
+    }
+
+    ================================================================================================
+    Scans a `choice`. Choices are internally structured much as ordinary classes, with a few
+    exceptions.
+
+    Choices always have a `$rawValue` instance field, which distinguishes which choice entry an
+    instance belongs to. All of their other fields are "fake" - they allocate single field big
+    enough to hold any variant of the choice, and then use the special CHOICE_FIELD_REFERENCE node
+    to access them, rather than a normal FIELD_REFERENCE.
+
+    For each different combination of choice values, a choice will have a synthetic init() method
+    taking the $rawValue and choice values. There is always a synthetic no-arg private init() method
+    to prevent inadvertent creation.
+    ================================================================================================
+    method scanChoice(source:File, aliases:MapView<String, String>, contextName:String,
+            cl:ASTNode):ClassDecl? {
+        def fullName:String
+        if contextName != "" {
+            fullName := "\{contextName}.\{cl.payload}"
+        }
+        else {
+            fullName := cl.payload->String
+        }
+        assert cl.children.get_count() = 3
+        def doccomment:String?
+        if cl.children[0].kind != ASTNode.Kind.VOID {
+            assert cl.children[0].kind = ASTNode.Kind.DOC_COMMENT
+            doccomment := cl.children[0].payload->String
+        }
+        else {
+            doccomment := null
+        }
+        assert cl.children[1].kind = ASTNode.Kind.ANNOTATIONS
+        def annotations := convertAnnotations(cl.children[1])
+        def parameters := Array<ClassDecl.GenericParameter>()
+        def supertypes := Array<Type>()
+        supertypes.add(Type.Value())
+        def result := ClassDecl(source, cl.position, aliases, doccomment, annotations,
+                ClassDecl.Kind.CHOICE, fullName, supertypes, parameters, compiler.root)
+        def rawValue := FieldDecl(result, result.position, null, Annotations(), FieldDecl.Kind.DEF,
+                    ClassDecl.RAW_VALUE_NAME, Type.Int64(), null)
+        result.fields.add(rawValue)
+        result.symbolTable.add(rawValue)
+        compiler.currentClass.push(result)
+        if cl.children[2] != null {
+            for c in cl.children[2].children {
+                if c.kind = ASTNode.Kind.CHOICE_ENTRY {
+                    scanChoiceEntry(result, c)
+                }
+                else {
+                    scanClassChild(result, c)
+                }
             }
         }
+        def defaultInit := MethodDecl(result, cl.position, null,
+                Annotations(Annotations.Flag.PRIVATE), MethodDecl.Kind.INIT, "init",
+                Array<MethodDecl.Parameter>(), Type.Void(),
+                ASTNode(ASTNode.Kind.BLOCK, cl.position, Array<ASTNode>()))
+        result.methods.add(defaultInit)
+        result.symbolTable.add(defaultInit)
+        compiler.currentClass.pop()
         return result
     }
 
@@ -422,6 +535,11 @@ class Scanner {
                     }
                 when ASTNode.Kind.INTERFACE:
                     def cl := scanInterface(source, aliases, currentPackage, c)
+                    if cl != null {
+                        addClass(cl, result)
+                    }
+                when ASTNode.Kind.CHOICE:
+                    def cl := scanChoice(source, aliases, currentPackage, c)
                     if cl != null {
                         addClass(cl, result)
                     }

@@ -511,17 +511,6 @@ class CCodeGenerator : CodeGenerator {
         return previous
     }
 
-    -- FIXME use tuple
-    class Pair<A, B> {
-        def first:A
-        def second:B
-
-        init(first:A, second:B) {
-            self.first := first
-            self.second := second
-        }
-    }
-
     function needsStructIndirection(m:MethodDecl):Bit {
         return hCodeGen.needsStructIndirection(m)
     }

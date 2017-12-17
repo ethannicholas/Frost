@@ -11,6 +11,7 @@ class Symbol {
         constant PACKAGE           := 206
         constant TYPE              := 207
         constant VARIABLE          := 208
+        constant CHOICE_ENTRY      := 209
     }
 
     def kind:Int

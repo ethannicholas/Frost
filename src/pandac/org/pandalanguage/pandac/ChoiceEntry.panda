@@ -1,0 +1,32 @@
+package org.pandalanguage.pandac
+
+@final
+class ChoiceEntry : Symbol {
+    def owner:ClassDecl -- FIXME weak
+
+    def doccomment:String?
+
+    def types:ImmutableArray<Type>
+
+    def rawValue:Int
+
+    var resolved := false
+
+    init(owner:ClassDecl, position:Position, name:String, doccomment:String?, rawValue:Int,
+            types:ListView<Type>) {
+        self.owner := owner
+        self.doccomment := doccomment
+        self.rawValue := rawValue
+        self.types := ImmutableArray<Type>(types)
+        super.init(Symbol.Kind.CHOICE_ENTRY, position, name)
+    }
+
+    @override
+    function convert():String {
+        def result := MutableString("\{owner.name}.\{name}")
+        if types.get_count() != 0 {
+            result.append("(\{types.join()})")
+        }
+        return result.finish()
+    }
+}

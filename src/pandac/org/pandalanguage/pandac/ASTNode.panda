@@ -5,64 +5,65 @@ uses org.pandalanguage.pandac.parser.Token
 @final
 class ASTNode : Immutable {
     class Kind {
-        constant PACKAGE         := 100
-        constant USES            := 101
-        constant INT             := 102
-        constant BINARY          := 103
-        constant RANGE_INCLUSIVE := 104
-        constant RANGE_EXCLUSIVE := 105
-        constant IDENTIFIER      := 106
-        constant CALL            := 107
-        constant DOT             := 108
-        constant TYPE            := 109
-        constant NULLABLE_TYPE   := 110
-        constant CAST            := 111
-        constant PREFIX          := 112
-        constant STRING          := 113
-        constant SELF            := 114
-        constant SUPER           := 115
-        constant BIT             := 116
-        constant NULL            := 117
-        constant IF              := 118
-        constant FOR             := 119
-        constant DO              := 120
-        constant WHILE           := 121
-        constant LOOP            := 122
-        constant ASSERT          := 123
-        constant WHEN            := 124
-        constant MATCH           := 125
-        constant BLOCK           := 126
-        constant OTHERWISE       := 127
-        constant EXPRESSIONS     := 128
-        constant DECLARATION     := 129
-        constant VAR             := 130
-        constant DEF             := 131
-        constant CONSTANT        := 132
-        constant PROPERTY        := 133
-        constant BREAK           := 134
-        constant CONTINUE        := 135
-        constant RETURN          := 136
-        constant GENERICS        := 137
-        constant VOID            := 138
-        constant TYPES           := 139
-        constant CLASS_MEMBERS   := 140
-        constant DOC_COMMENT     := 141
-        constant CLASS           := 142
-        constant ANNOTATION      := 143
-        constant ANNOTATIONS     := 144
-        constant METHOD          := 145
-        constant FUNCTION        := 146
-        constant INIT            := 147
-        constant FIELD           := 148
-        constant PARAMETER       := 149
-        constant PARAMETERS      := 150
-        constant INTERFACE       := 151
-        constant FILE            := 152
-        constant TUPLE_TARGET    := 153
-        constant GENERIC_TYPE    := 154
-        constant CHOICE          := 155
-        constant CHOICE_ENTRY    := 156
-        constant REAL            := 157
+        constant PACKAGE                := 100
+        constant USES                   := 101
+        constant INT                    := 102
+        constant BINARY                 := 103
+        constant RANGE_INCLUSIVE        := 104
+        constant RANGE_EXCLUSIVE        := 105
+        constant IDENTIFIER             := 106
+        constant CALL                   := 107
+        constant DOT                    := 108
+        constant TYPE                   := 109
+        constant NULLABLE_TYPE          := 110
+        constant CAST                   := 111
+        constant PREFIX                 := 112
+        constant STRING                 := 113
+        constant SELF                   := 114
+        constant SUPER                  := 115
+        constant BIT                    := 116
+        constant NULL                   := 117
+        constant IF                     := 118
+        constant FOR                    := 119
+        constant DO                     := 120
+        constant WHILE                  := 121
+        constant LOOP                   := 122
+        constant ASSERT                 := 123
+        constant WHEN                   := 124
+        constant MATCH                  := 125
+        constant BLOCK                  := 126
+        constant OTHERWISE              := 127
+        constant EXPRESSIONS            := 128
+        constant DECLARATION            := 129
+        constant VAR                    := 130
+        constant DEF                    := 131
+        constant CONSTANT               := 132
+        constant PROPERTY               := 133
+        constant BREAK                  := 134
+        constant CONTINUE               := 135
+        constant RETURN                 := 136
+        constant GENERICS               := 137
+        constant VOID                   := 138
+        constant TYPES                  := 139
+        constant CLASS_MEMBERS          := 140
+        constant DOC_COMMENT            := 141
+        constant CLASS                  := 142
+        constant ANNOTATION             := 143
+        constant ANNOTATIONS            := 144
+        constant METHOD                 := 145
+        constant FUNCTION               := 146
+        constant INIT                   := 147
+        constant FIELD                  := 148
+        constant PARAMETER              := 149
+        constant PARAMETERS             := 150
+        constant INTERFACE              := 151
+        constant FILE                   := 152
+        constant TUPLE_TARGET           := 153
+        constant GENERIC_TYPE           := 154
+        constant CHOICE                 := 155
+        constant CHOICE_ENTRY           := 156
+        constant REAL                   := 157
+        constant CHOICE_FIELD_REFERENCE := 158
     }
 
     @class
@@ -117,6 +118,10 @@ class ASTNode : Immutable {
     }
 
     init(kind:Int, position:Position, payload:Bit) {
+        init(kind, position, payload, null)
+    }
+
+    init(kind:Int, position:Position, payload:Pair<ChoiceEntry, Int>) {
         init(kind, position, payload, null)
     }
 

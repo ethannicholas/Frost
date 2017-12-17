@@ -234,15 +234,8 @@ class Compiler : ErrorReporter {
         def foundTypes := typeParameters(type)
         def foundCount := foundTypes.get_count()
         if expectedCount != foundCount {
-            def s:String
-            if expectedCount = 1 {
-                s := ""
-            }
-            else {
-                s := "s"
-            }
-            error(position, "'\{cl.name}' expected \{expectedCount} generic parameter\{s}, but " +
-                    "found \{foundCount}")
+            error(position, "'\{cl.name}' expected \{expectedCount} generic " +
+                    "parameter\{expectedCount = 1:|s}, but found \{foundCount}")
             return false
         }
         def object := Type.Object()
@@ -541,6 +534,19 @@ class Compiler : ErrorReporter {
                 return resolveMethodCall(expr, null)
             when IRNode.Kind.SUPER:
                 error(expr.position, "'super' can only be used as part of a method call")
+                return null
+            when IRNode.Kind.CHOICE_ENTRY_REFERENCE:
+                def c := expr.payload->ChoiceEntry
+                if c.types.get_count() = 0 {
+                    def owner := IRNode(IRNode.Kind.TYPE_REFERENCE, expr.position, Type.Class(),
+                            c.owner.type())
+                    def args := Array<IRNode>()
+                    def value := c.rawValue.convert()->UInt64
+                    args.add(IRNode(IRNode.Kind.INT, expr.position, Type.IntLiteral(value), value))
+                    return call(owner, args)
+                }
+                error(expr.position, "choice '\{expr}' requires \{c.types.get_count()} " +
+                        "argument\{c.types.get_count() = 1:|s}, but found 0")
                 return null
             otherwise:
                 return coerce(expr, variableType(expr))
@@ -951,6 +957,8 @@ class Compiler : ErrorReporter {
                     children.add(IRNode(IRNode.Kind.SELF, position, currentClass.peek().type()))
                     return IRNode(IRNode.Kind.FIELD_REFERENCE, position, f.type, s, children)
                 }
+            when Symbol.Kind.CHOICE_ENTRY:
+                return IRNode(IRNode.Kind.CHOICE_ENTRY_REFERENCE, position, Type.Invalid(), s)
             otherwise:
                 assert false, "unsupported symbol kind: \{s.kind}"
         }
@@ -1730,15 +1738,8 @@ class Compiler : ErrorReporter {
     method call(position:Position, target:IRNode?, m:MethodRef, args:ListView<IRNode>):IRNode? {
         assert m.value.resolved
         if m.parameterCount() != args.get_count() {
-            def s:String
-            if m.parameterCount() = 1 {
-                s := ""
-            }
-            else {
-                s := "s"
-            }
-            error(position, "\{m.value.declaration()} expected \{m.parameterCount()} argument\{s}, " +
-                    "but received \{args.get_count()}")
+            error(position, "\{m.value.declaration()} expected \{m.parameterCount()} argument" +
+                    "\{m.parameterCount() = 1:|s}, but received \{args.get_count()}")
             return null
         }
         def finalArgs := Array<IRNode>()
@@ -1798,6 +1799,23 @@ class Compiler : ErrorReporter {
         return call(target, name, args, null)
     }
 
+    method compileChoiceComparison(rawLeft:IRNode, name:String, rawRight:IRNode):IRNode? {
+        var left := rawLeft
+        var right := resolve(rawRight)
+        if right = null {
+            return null
+        }
+        right := coerce(right, left.type)
+        if right = null {
+            return null
+        }
+        left := compileDot(rawLeft.position, rawLeft, ClassDecl.RAW_VALUE_NAME)
+        right := compileDot(right.position, right, ClassDecl.RAW_VALUE_NAME)
+        def args := Array<IRNode>()
+        args.add(right)
+        return call(left, name, args)
+    }
+
     method call(target:IRNode, name:String, args:ListView<IRNode>, expectedType:Type?):IRNode? {
         def resolved := resolve(target)
         if resolved = null {
@@ -1819,6 +1837,10 @@ class Compiler : ErrorReporter {
         }
         def s := getSymbolTable(cl)[name]
         if s = null {
+            if name = "=" | name = "!=" & cl.classKind = ClassDecl.Kind.CHOICE &
+                    args.get_count() = 1 {
+                return compileChoiceComparison(target, name, args[0])
+            }
             error(target.position, "class '\{cl.name}' does not have a member named '\{name}'")
             return null
         }
@@ -1904,6 +1926,7 @@ class Compiler : ErrorReporter {
                     return null
                 }
                 error(resolved.position, "value of type '\{resolved.type}' is not a method")
+                return null
         }
     }
 
@@ -2904,7 +2927,16 @@ class Compiler : ErrorReporter {
         if type.typeKind = Type.Kind.NULLABLE {
             return checkSteppedRangeTypes(position, type.subtypes[0])
         }
-        if type.isSteppedRange() & type.subtypes[1].nonnullable() != type.subtypes[2] {
+        if type.isSteppedRange() {
+            def type1 := type.subtypes[1].nonnullable()
+            def type2 := type.subtypes[2]
+            if type1 = type2 {
+                return true
+            }
+            if type1.isChar() & type2.name.startsWith("panda.core.Int") &
+                    type1.name.endsWith(type2.name["panda.core.Int".length()..]) {
+                return true
+            }
             error(position, "for loop cannot iterate over '\{type}'; endpoint and step types " +
                     "are not compatible")
             return false

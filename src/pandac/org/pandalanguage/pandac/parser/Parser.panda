@@ -1925,11 +1925,14 @@ class Parser {
                     types.add(t)
                 }
             }
+            if expect(Token.Kind.RPAREN, "')'") = null {
+                return null
+            }
         }
-        if expect(Token.Kind.RPAREN, "')'") = null {
-            return null
-        }
-        return ASTNode(ASTNode.Kind.CHOICE_ENTRY, name.position, text(name), types)
+        def children := Array<ASTNode>()
+        children.add(doccomment)
+        children.add(ASTNode(ASTNode.Kind.TYPES, name.position, types))
+        return ASTNode(ASTNode.Kind.CHOICE_ENTRY, name.position, text(name), children)
     }
 
     ================================================================================================
@@ -1968,20 +1971,22 @@ class Parser {
                     }
                     members.add(c)
                     dc := ASTNode(ASTNode.Kind.VOID, Position())
+                otherwise:
+                    break
             }
         }
-        var a := ASTNode(ASTNode.Kind.VOID, Position())
+        var a := ASTNode(ASTNode.Kind.ANNOTATIONS, Position(), Array<ASTNode>()) -- FIXME literal
         loop {
             def next := peek()
             match next.kind {
                 when Token.Kind.ANNOTATION:
-                    if a.kind != ASTNode.Kind.VOID {
+                    if a.children.get_count() > 0 {
                         error(next, "expected a declaration, but found '\{text(next)}'")
                         return null
                     }
                     a := annotations()
                 when Token.Kind.DOC_COMMENT:
-                    if dc.kind != ASTNode.Kind.VOID | a.kind != ASTNode.Kind.VOID {
+                    if dc.kind != ASTNode.Kind.VOID | a.children.get_count() > 0 {
                         error(next, "expected a declaration, but found '\{text(next)}'")
                         return null
                     }
@@ -1993,7 +1998,7 @@ class Parser {
                     }
                     members.add(decl)
                     dc := ASTNode(ASTNode.Kind.VOID, Position())
-                    a := ASTNode(ASTNode.Kind.VOID, Position())
+                    a := ASTNode(ASTNode.Kind.ANNOTATIONS, Position(), Array<ASTNode>())
                 when Token.Kind.INTERFACE:
                     def decl := interfaceDeclaration(dc, a)
                     if decl = null {
@@ -2001,7 +2006,7 @@ class Parser {
                     }
                     members.add(decl)
                     dc := ASTNode(ASTNode.Kind.VOID, Position())
-                    a := ASTNode(ASTNode.Kind.VOID, Position())
+                    a := ASTNode(ASTNode.Kind.ANNOTATIONS, Position(), Array<ASTNode>())
                 when Token.Kind.CHOICE:
                     def decl := choiceDeclaration(dc, a)
                     if decl = null {
@@ -2009,7 +2014,7 @@ class Parser {
                     }
                     members.add(decl)
                     dc := ASTNode(ASTNode.Kind.VOID, Position())
-                    a := ASTNode(ASTNode.Kind.VOID, Position())
+                    a := ASTNode(ASTNode.Kind.ANNOTATIONS, Position(), Array<ASTNode>())
                 when Token.Kind.METHOD, Token.Kind.FUNCTION:
                     def decl := methodDeclaration(dc, a)
                     if decl = null {
@@ -2017,7 +2022,7 @@ class Parser {
                     }
                     members.add(decl)
                     dc := ASTNode(ASTNode.Kind.VOID, Position())
-                    a := ASTNode(ASTNode.Kind.VOID, Position())
+                    a := ASTNode(ASTNode.Kind.ANNOTATIONS, Position(), Array<ASTNode>())
                 when Token.Kind.VAR, Token.Kind.DEF, Token.Kind.PROPERTY, Token.Kind.CONSTANT:
                     def decl := fieldDeclaration(dc, a)
                     if decl = null {
@@ -2025,7 +2030,7 @@ class Parser {
                     }
                     members.add(decl)
                     dc := ASTNode(ASTNode.Kind.VOID, Position())
-                    a := ASTNode(ASTNode.Kind.VOID, Position())
+                    a := ASTNode(ASTNode.Kind.ANNOTATIONS, Position(), Array<ASTNode>())
                 when Token.Kind.RBRACE:
                     expect(Token.Kind.RBRACE, "'}'")
                     break

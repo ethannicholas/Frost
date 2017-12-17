@@ -660,17 +660,6 @@ class LLVMCodeGenerator : CodeGenerator {
         return previous
     }
 
-    -- FIXME use tuple
-    class Pair<A, B> {
-        def first:A
-        def second:B
-
-        init(first:A, second:B) {
-            self.first := first
-            self.second := second
-        }
-    }
-
     ================================================================================================
     Returns true if this is an external method returning a struct.
 
