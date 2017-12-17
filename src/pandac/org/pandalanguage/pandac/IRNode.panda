@@ -61,7 +61,10 @@ class IRNode {
         -- C-style ternary expression. Not supported in Panda source code, but used internally.
         constant TERNARY                     := 1044
         constant REAL                        := 1045
+        -- a choice entry, like IRNode.Kind.STRING
         constant CHOICE_ENTRY_REFERENCE      := 1046
+        -- a field of a choice entry, like IRNode.Kind.STRING[0]
+        constant CHOICE_FIELD_REFERENCE      := 1047
     }
 
     def kind:Int
@@ -127,6 +130,10 @@ class IRNode {
     }
 
     init(kind:Int, position:Position, type:Type, payload:Symbol) {
+        init(kind, position, type, payload, null)
+    }
+
+    init(kind:Int, position:Position, type:Type, payload:Pair<ChoiceEntry, Int>) {
         init(kind, position, type, payload, null)
     }
 
@@ -248,6 +255,9 @@ class IRNode {
                 return "(\{children[0]} ? \{children[1]} : \{children[2]})"
             when Kind.CHOICE_ENTRY_REFERENCE:
                 return payload.convert()
+            when Kind.CHOICE_FIELD_REFERENCE:
+                def pair := payload->Pair<ChoiceEntry, Int>
+                return "\{pair.first}[\{pair.second}]"
             otherwise:
                 return "<IRNode:\{kind}>"
         }

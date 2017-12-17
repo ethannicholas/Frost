@@ -64,6 +64,7 @@ class ASTNode : Immutable {
         constant CHOICE_ENTRY           := 156
         constant REAL                   := 157
         constant CHOICE_FIELD_REFERENCE := 158
+        constant CHOICE_FIELDS          := 159
     }
 
     @class

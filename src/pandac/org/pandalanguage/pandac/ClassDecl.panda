@@ -9,9 +9,15 @@ class ClassDecl : Symbol {
     }
 
     ================================================================================================
-    Field which holds the value of choice entries.
+    Field which holds the numeric value of choice instances.
     ================================================================================================
     constant RAW_VALUE_NAME := "$rawValue"
+
+    ================================================================================================
+    Placeholder field for the data associated with choice entries. The CodeGenerator will make this
+    field big enough to hold the biggest choice entry.
+    ================================================================================================
+    constant CHOICE_DATA_NAME := "$data"
 
     class GenericParameter : Symbol {
         def owner:String

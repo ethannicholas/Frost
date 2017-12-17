@@ -617,7 +617,7 @@ void org$pandalanguage$pandac$Main$run$panda$collections$ListView$LTpanda$core$S
         panda$core$Bit $tmp234 = { $tmp226 };
         if ($tmp234.value) {
         {
-            org$pandalanguage$pandac$LLVMCodeGenerator* $tmp235 = (org$pandalanguage$pandac$LLVMCodeGenerator*) malloc(200);
+            org$pandalanguage$pandac$LLVMCodeGenerator* $tmp235 = (org$pandalanguage$pandac$LLVMCodeGenerator*) malloc(216);
             $tmp235->$class = (panda$core$Class*) &org$pandalanguage$pandac$LLVMCodeGenerator$class;
             $tmp235->refCount.value = 1;
             panda$io$File* $tmp238 = panda$io$File$changeExtension$panda$core$String$R$panda$io$File(outFile102, &$s237);

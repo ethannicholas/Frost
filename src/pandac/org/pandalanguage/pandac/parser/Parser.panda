@@ -1902,27 +1902,40 @@ class Parser {
     }
 
     ================================================================================================
-    choiceEntry = IDENTIFIER (LPAREN (type (COMMA type)*)? RPAREN)?
+    choiceEntry = IDENTIFIER (LPAREN (IDENTIFIER typeDeclaration (COMMA typeDeclaration)*)? RPAREN)?
     ================================================================================================
     method choiceEntry(doccomment:ASTNode):ASTNode? {
         def name := expect(Token.Kind.IDENTIFIER, "an identifier")
         if name = null {
             return null
         }
-        def types := Array<ASTNode>()
+        def fields := Array<ASTNode>()
         if checkNext(Token.Kind.LPAREN) != null {
             if peek().kind != Token.Kind.RPAREN {
-                var t := type()
+                var field := expect(Token.Kind.IDENTIFIER, "an identifier")
+                if field = null {
+                    return null
+                }
+                var t := typeDeclaration()
                 if t = null {
                     return null
                 }
-                types.add(t)
+                var children := Array<ASTNode>()
+                children.add(t)
+                fields.add(ASTNode(ASTNode.Kind.IDENTIFIER, field.position, text(field), children))
                 while checkNext(Token.Kind.COMMA) != null {
-                    t := type()
+                    field := expect(Token.Kind.IDENTIFIER, "an identifier")
+                    if field = null {
+                        return null
+                    }
+                    t := typeDeclaration()
                     if t = null {
                         return null
                     }
-                    types.add(t)
+                    children := Array<ASTNode>()
+                    children.add(t)
+                    fields.add(ASTNode(ASTNode.Kind.IDENTIFIER, field.position, text(field),
+                            children))
                 }
             }
             if expect(Token.Kind.RPAREN, "')'") = null {
@@ -1931,7 +1944,7 @@ class Parser {
         }
         def children := Array<ASTNode>()
         children.add(doccomment)
-        children.add(ASTNode(ASTNode.Kind.TYPES, name.position, types))
+        children.add(ASTNode(ASTNode.Kind.CHOICE_FIELDS, name.position, fields))
         return ASTNode(ASTNode.Kind.CHOICE_ENTRY, name.position, text(name), children)
     }
 

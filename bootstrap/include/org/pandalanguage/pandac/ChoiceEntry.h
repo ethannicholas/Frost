@@ -8,7 +8,7 @@ typedef struct panda$core$Class panda$core$Class;
 #include "org/pandalanguage/pandac/Position.h"
 typedef struct panda$core$String panda$core$String;
 typedef struct org$pandalanguage$pandac$ClassDecl org$pandalanguage$pandac$ClassDecl;
-typedef struct panda$collections$ImmutableArray panda$collections$ImmutableArray;
+typedef struct panda$collections$Array panda$collections$Array;
 #include "panda/core/Bit.h"
 
 typedef struct org$pandalanguage$pandac$ChoiceEntry {
@@ -19,7 +19,7 @@ typedef struct org$pandalanguage$pandac$ChoiceEntry {
     panda$core$String* name;
     org$pandalanguage$pandac$ClassDecl* owner;
     panda$core$String* doccomment;
-    panda$collections$ImmutableArray* types;
+    panda$collections$Array* fields;
     panda$core$Int64 rawValue;
     panda$core$Bit resolved;
 } org$pandalanguage$pandac$ChoiceEntry;
@@ -37,7 +37,7 @@ typedef struct panda$core$String panda$core$String;
 #include "panda/core/Int64.h"
 typedef struct panda$collections$ListView panda$collections$ListView;
 
-void org$pandalanguage$pandac$ChoiceEntry$init$org$pandalanguage$pandac$ClassDecl$org$pandalanguage$pandac$Position$panda$core$String$panda$core$String$Q$panda$core$Int64$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT(org$pandalanguage$pandac$ChoiceEntry* self, org$pandalanguage$pandac$ClassDecl* p_owner, org$pandalanguage$pandac$Position p_position, panda$core$String* p_name, panda$core$String* p_doccomment, panda$core$Int64 p_rawValue, panda$collections$ListView* p_types);
+void org$pandalanguage$pandac$ChoiceEntry$init$org$pandalanguage$pandac$ClassDecl$org$pandalanguage$pandac$Position$panda$core$String$panda$core$String$Q$panda$core$Int64$panda$collections$ListView$LTorg$pandalanguage$pandac$Pair$LTpanda$core$String$Corg$pandalanguage$pandac$Type$GT$GT(org$pandalanguage$pandac$ChoiceEntry* self, org$pandalanguage$pandac$ClassDecl* p_owner, org$pandalanguage$pandac$Position p_position, panda$core$String* p_name, panda$core$String* p_doccomment, panda$core$Int64 p_rawValue, panda$collections$ListView* p_fields);
 panda$core$String* org$pandalanguage$pandac$ChoiceEntry$convert$R$panda$core$String(org$pandalanguage$pandac$ChoiceEntry* self);
 
 #endif

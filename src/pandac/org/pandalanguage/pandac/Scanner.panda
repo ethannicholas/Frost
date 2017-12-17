@@ -263,23 +263,23 @@ class Scanner {
         else {
             doccomment := null
         }
-        def types := Array<Type>()
+        def fields := Array<Pair<String, Type>>()
         for t in entry.children[1].children {
-            types.add(convertType(t))
+            fields.add(Pair<String, Type>(t.payload->String, convertType(t.children[0])))
         }
         def entry := ChoiceEntry(cl, entry.position, entry.payload->String, doccomment,
-                cl.choiceEntries.get_count(), types)
+                cl.choiceEntries.get_count(), fields)
         cl.choiceEntries.add(entry)
         cl.symbolTable.add(entry)
         var found := false
         outer: for m in cl.methods {
             assert m.methodKind = MethodDecl.Kind.INIT
-            if m.parameters.get_count() != types.get_count() + 1 {
+            if m.parameters.get_count() != fields.get_count() + 1 {
                 continue
             }
             assert m.parameters[0].type = Type.Int64()
-            for i in 0 .. types.get_count() {
-                if types[i] != m.parameters[i + 1].type {
+            for i in 0 .. fields.get_count() {
+                if fields[i].second != m.parameters[i + 1].type {
                     continue outer
                 }
             }
@@ -296,13 +296,14 @@ class Scanner {
             children.add(ASTNode(ASTNode.Kind.IDENTIFIER, cl.position, "rv"))
             statements.add(ASTNode(ASTNode.Kind.BINARY, cl.position, Token.Kind.ASSIGNMENT,
                     children))
-            for i in 0 .. types.get_count() {
-                def name := "p\{i}"
-                parameters.add(MethodDecl.Parameter(name, types[i]))
+            for i in 0 .. fields.get_count() {
+                parameters.add(MethodDecl.Parameter(fields[i].first, fields[i].second))
                 children.clear()
+                def fieldRefChildren := Array<ASTNode>() -- FIXME literal
+                fieldRefChildren.add(ASTNode(ASTNode.Kind.SELF, cl.position))
                 children.add(ASTNode(ASTNode.Kind.CHOICE_FIELD_REFERENCE, cl.position,
-                        Pair<ChoiceEntry, Int>(entry, i)))
-                children.add(ASTNode(ASTNode.Kind.IDENTIFIER, cl.position, name))
+                        Pair<ChoiceEntry, Int>(entry, i), fieldRefChildren))
+                children.add(ASTNode(ASTNode.Kind.IDENTIFIER, cl.position, fields[i].first))
                 statements.add(ASTNode(ASTNode.Kind.BINARY, cl.position, Token.Kind.ASSIGNMENT,
                         children))
             }
@@ -473,23 +474,34 @@ class Scanner {
         def annotations := convertAnnotations(cl.children[1])
         def parameters := Array<ClassDecl.GenericParameter>()
         def supertypes := Array<Type>()
-        supertypes.add(Type.Value())
         def result := ClassDecl(source, cl.position, aliases, doccomment, annotations,
                 ClassDecl.Kind.CHOICE, fullName, supertypes, parameters, compiler.root)
         def rawValue := FieldDecl(result, result.position, null, Annotations(), FieldDecl.Kind.DEF,
                     ClassDecl.RAW_VALUE_NAME, Type.Int64(), null)
         result.fields.add(rawValue)
         result.symbolTable.add(rawValue)
+        def data := FieldDecl(result, result.position, null, Annotations(), FieldDecl.Kind.DEF,
+                    ClassDecl.CHOICE_DATA_NAME, Type.ChoiceData(), null)
+        result.fields.add(data)
+        result.symbolTable.add(data)
         compiler.currentClass.push(result)
+        var haveFields := false
         if cl.children[2] != null {
             for c in cl.children[2].children {
                 if c.kind = ASTNode.Kind.CHOICE_ENTRY {
+                    haveFields |= c.children[1].children.get_count() > 0
                     scanChoiceEntry(result, c)
                 }
                 else {
                     scanClassChild(result, c)
                 }
             }
+        }
+        if haveFields {
+            supertypes.add(Type.Value())
+        }
+        else {
+            supertypes.add(Type.Object())
         }
         def defaultInit := MethodDecl(result, cl.position, null,
                 Annotations(Annotations.Flag.PRIVATE), MethodDecl.Kind.INIT, "init",

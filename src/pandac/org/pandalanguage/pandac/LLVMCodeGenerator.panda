@@ -140,6 +140,10 @@ class LLVMCodeGenerator : CodeGenerator {
 
     def currentlyInlining := IdentityMap<MethodDecl, MethodDecl>() -- FIXME need IdentitySet
 
+    def sizes := IdentityMap<ClassDecl, Int>()
+
+    def choiceDataSizes := IdentityMap<ClassDecl, Int>()
+
     init(out:OutputStream) {
         self.out := out
 
@@ -255,20 +259,30 @@ class LLVMCodeGenerator : CodeGenerator {
         if cl.name = "panda.unsafe.Pointer" {
             return POINTER_SIZE
         }
+        var cached := sizes[cl]
+        if cached != null {
+            return cached
+        }
         var result := 0
         for f in compiler.instanceFields(cl) {
             compiler.resolve(f)
-            def size := fieldSize(f.type)
-            def align := result % size
-            if align != 0 {
-                result += size - align
+            if f.type = Type.ChoiceData() {
+                result += getChoiceDataSize(cl)
             }
-            assert result % size = 0
-            result += size
+            else {
+                def size := fieldSize(f.type)
+                def align := result % size
+                if align != 0 {
+                    result += size - align
+                }
+                assert result % size = 0
+                result += size
+            }
         }
         if compiler.isValue(cl) & t.typeKind = Type.Kind.NULLABLE {
             result += 1
         }
+        sizes[cl] := result
         return result
     }
 
@@ -288,6 +302,23 @@ class LLVMCodeGenerator : CodeGenerator {
         }
         if t.typeKind = Type.Kind.NULLABLE {
             result += 1
+        }
+        return result
+    }
+
+    method getChoiceDataSize(cl:ClassDecl):Int {
+        var result := choiceDataSizes[cl]
+        if result = null {
+            result := 0
+            for entry in cl.choiceEntries {
+                compiler.resolve(entry)
+                var current := 0
+                for f in entry.fields {
+                    current += fieldSize(f.second)
+                }
+                result := result.max(current)
+            }
+            choiceDataSizes[cl] := result
         }
         return result
     }
@@ -320,6 +351,11 @@ class LLVMCodeGenerator : CodeGenerator {
                     separator := ", "
                     continue
                 }
+            }
+            if f.type = Type.ChoiceData() {
+                code.append("\{separator}[\{getChoiceDataSize(cl)} x i8]")
+                separator := ", "
+                continue
             }
             code.append("\{separator}\{type(f.type)}")
             separator := ", "
@@ -417,6 +453,7 @@ class LLVMCodeGenerator : CodeGenerator {
                 }
                 result.append(")*")
                 return result.finish()
+
             otherwise:
                 assert false, "unsupported type '\{t}'"
         }
@@ -1989,6 +2026,13 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
+    method getChoiceFieldReference(expr:IRNode, out:OutputStream):String {
+        def lvalue := getLValue(expr, out)
+        def load := nextVar()
+        out.printLine("\{load} = load \{type(expr.type)}, \{type(expr.type)}* \{lvalue}")
+        return load
+    }
+
     method getReference(expr:IRNode, out:OutputStream):String {
         match expr.kind {
             when IRNode.Kind.BINARY:
@@ -2035,6 +2079,8 @@ class LLVMCodeGenerator : CodeGenerator {
                 return getIsNonNullReference(expr, out)
             when IRNode.Kind.PREFIX:
                 return getPrefixReference(expr, out)
+            when IRNode.Kind.CHOICE_FIELD_REFERENCE:
+                return getChoiceFieldReference(expr, out)
             otherwise:
                 assert false, "unsupported expression \{expr}:\{expr.position}"
         }
@@ -2839,6 +2885,14 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
+    method getChoiceFieldOffset(e:ChoiceEntry, index:Int):Int {
+        var result := 0
+        for i in 0 .. index {
+            result += fieldSize(e.fields[i].second)
+        }
+        return result
+    }
+
     method getLValue(lvalue:IRNode, out:OutputStream):String {
         match lvalue.kind {
             when IRNode.Kind.CAST:
@@ -2881,6 +2935,22 @@ class LLVMCodeGenerator : CodeGenerator {
                         "\{type(lvalue.type)}* \{result}")
                 reusedValues[lvalue.payload->UInt64] := reused
                 return result
+            when IRNode.Kind.CHOICE_FIELD_REFERENCE:
+                assert lvalue.children != null & lvalue.children.get_count() = 1
+                def f := lvalue.payload->Pair<ChoiceEntry, Int>
+                def c := f.first
+                def data := c.owner.fields[1]
+                assert data.name = ClassDecl.CHOICE_DATA_NAME
+                def fieldRef := IRNode(IRNode.Kind.FIELD_REFERENCE, lvalue.position,
+                        data.type, data, lvalue.children)
+                def base := getLValue(fieldRef, out)
+                def offset := nextVar()
+                def size := getChoiceDataSize(c.owner)
+                out.printLine("\{offset} = getelementptr [\{size} x i8], [\{size} x i8]* \{base}," +
+                        " i64 0, i64 \{getChoiceFieldOffset(c, f.second)}")
+                def cast := nextVar()
+                out.printLine("\{cast} = bitcast i8* \{offset} to \{type(lvalue.type)}*")
+                return cast
             otherwise:
                 assert false, "unsupported lvalue: \{lvalue}"
         }

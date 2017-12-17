@@ -1,0 +1,30 @@
+choice Color {
+    RED
+    WHITE
+    BLACK
+}
+
+class SimpleChoice {
+    @class
+    method printColor(c:Color) {
+        match c {
+            when Color.RED:   Console.printLine("red")
+            when Color.WHITE: Console.printLine("white")
+            when Color.BLACK: Console.printLine("black")
+        }
+    }
+
+    @class
+    method main() {
+        def a := Color.RED
+        Console.printLine(a = Color.RED)
+        Console.printLine(a != Color.RED)
+        Console.printLine(a = Color.BLACK)
+        Console.printLine(a != Color.BLACK)
+        Console.printLine(a = Color.WHITE)
+        Console.printLine(a != Color.WHITE)
+        printColor(a)
+        printColor(Color.WHITE)
+        printColor(Color.BLACK)
+    }
+}

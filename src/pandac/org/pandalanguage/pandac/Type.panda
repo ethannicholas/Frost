@@ -334,6 +334,11 @@ class Type : Symbol, Key<Type> {
     }
 
     @class
+    method ChoiceData():Type {
+        return Type("<choice data>", Kind.INVALID, Position(), true)
+    }
+
+    @class
     method Invalid():Type {
         return Type("<invalid>", Kind.INVALID, Position(), true)
     }

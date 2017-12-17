@@ -161,7 +161,12 @@ class HCodeGenerator : CodeGenerator {
         types.level += 1
         for f in compiler.instanceFields(cl) {
             compiler.resolve(f)
-            types.printLine("\{type(f.type)} \{f.name};")
+            if f.type = Type.ChoiceData() {
+                types.printLine("int8_t \{f.name}[\{llvmCodeGen.getChoiceDataSize(cl)}];")
+            }
+            else {
+                types.printLine("\{type(f.type)} \{f.name};")
+            }
         }
         if cl.name = "panda.core.Class" {
             types.printLine("panda$core$Class* super;")

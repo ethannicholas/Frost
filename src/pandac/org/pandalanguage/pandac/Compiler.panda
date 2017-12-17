@@ -479,6 +479,24 @@ class Compiler : ErrorReporter {
         symbolTable := old
     }
 
+    method resolve(c:ChoiceEntry) {
+        if c.resolved {
+            return
+        }
+        c.resolved := true
+        if c.fields.get_count() = 0 {
+            return
+        }
+        currentClass.push(c.owner)
+        def old := symbolTable
+        symbolTable := c.owner.symbolTable
+        for i in 0 .. c.fields.get_count() {
+            c.fields[i] := Pair<String, Type>(c.fields[i].first, resolve(c.fields[i].second))
+        }
+        symbolTable := old
+        currentClass.pop()        
+    }
+
     method resolveMethodCall(expr:IRNode, target:Type?):IRNode? {
         assert expr.kind = IRNode.Kind.UNRESOLVED_METHOD_CALL
         def methods := expr.children[0].payload->ListView<MethodRef>
@@ -1573,7 +1591,7 @@ class Compiler : ErrorReporter {
                 return coerce(call(expr.children[0], "[]", args, target), target)
             when IRNode.Kind.CHOICE_ENTRY_REFERENCE:
                 def c := expr.payload->ChoiceEntry
-                if c.types.get_count() = 0 {
+                if c.fields.get_count() = 0 {
                     def owner := IRNode(IRNode.Kind.TYPE_REFERENCE, expr.position, Type.Class(),
                             c.owner.type())
                     def args := Array<IRNode>()
@@ -1581,8 +1599,8 @@ class Compiler : ErrorReporter {
                     args.add(IRNode(IRNode.Kind.INT, expr.position, Type.IntLiteral(value), value))
                     return coerce(call(owner, args), target)
                 }
-                error(expr.position, "choice '\{expr}' requires \{c.types.get_count()} " +
-                        "argument\{c.types.get_count() = 1:|s}, but found 0")
+                error(expr.position, "choice '\{expr}' requires \{c.fields.get_count()} " +
+                        "argument\{c.fields.get_count() = 1:|s}, but found 0")
                 return null
         }
         if target.typeKind = Type.Kind.NULLABLE {
@@ -1803,22 +1821,20 @@ class Compiler : ErrorReporter {
         return call(target, name, args, null)
     }
 
-    method compileChoiceComparison(rawLeft:IRNode, name:String, rawRight:IRNode):IRNode? {
-        var left := rawLeft
-        var right := resolve(rawRight)
-        if right = null {
-            return null
-        }
-        right := coerce(right, left.type)
-        if right = null {
-            return null
-        }
-        left := compileDot(rawLeft.position, rawLeft, ClassDecl.RAW_VALUE_NAME)
-        right := compileDot(right.position, right, ClassDecl.RAW_VALUE_NAME)
+    method compileChoiceComparison(left:IRNode, name:String, right:IRNode):IRNode? {
         def args := Array<IRNode>()
+        if right.kind = IRNode.Kind.CHOICE_ENTRY_REFERENCE {
+            def rightEntry := right.payload->ChoiceEntry
+            def leftValue := compileDot(left.position, left, ClassDecl.RAW_VALUE_NAME)
+            def rightValue := rightEntry.rawValue.convert()->UInt64
+            args.add(IRNode(IRNode.Kind.INT, right.position, Type.IntLiteral(rightValue),
+                    rightValue))            
+            return call(leftValue, name, args)
+        }
         args.add(right)
-        return call(left, name, args)
+        return call(left, name, args) -- force an error
     }
+
 
     method call(target:IRNode, name:String, args:ListView<IRNode>, expectedType:Type?):IRNode? {
         def resolved := resolve(target)
@@ -1924,6 +1940,27 @@ class Compiler : ErrorReporter {
                 def children := Array<IRNode>() -- FIXME literal
                 children.add(initCall)
                 return IRNode(IRNode.Kind.CONSTRUCT, m.position, m.payload->Type, children)
+            when IRNode.Kind.CHOICE_ENTRY_REFERENCE:
+                def c := m.payload->ChoiceEntry
+                if c.fields.get_count() != args.get_count() {
+                    error(m.position, "choice '\{m}' requires \{c.fields.get_count()} " +
+                            "argument\{c.fields.get_count() = 1:|s}, but found \{args.get_count()}")
+                    return null
+                }
+                resolve(c)
+                def finalArgs := Array<IRNode>()
+                def value := c.rawValue.convert()->UInt64
+                finalArgs.add(IRNode(IRNode.Kind.INT, m.position, Type.IntLiteral(value), value))
+                for i in 0 .. args.get_count() {
+                    def arg := coerce(args[i], c.fields[i].second)
+                    if arg = null {
+                        return null
+                    }
+                    finalArgs.add(arg)
+                }
+                def owner := IRNode(IRNode.Kind.TYPE_REFERENCE, m.position, Type.Class(),
+                        c.owner.type())
+                return call(owner, finalArgs)
             otherwise:
                 def resolved := resolve(m)
                 if resolved = null {
@@ -2089,7 +2126,8 @@ class Compiler : ErrorReporter {
                     return isLValue(expr.children[0])
                 }
                 return false
-            when IRNode.Kind.FIELD_REFERENCE, IRNode.Kind.VARIABLE_REFERENCE:
+            when IRNode.Kind.FIELD_REFERENCE, IRNode.Kind.VARIABLE_REFERENCE,
+                    IRNode.Kind.CHOICE_FIELD_REFERENCE:
                 return true
             when IRNode.Kind.REUSED_VALUE_DEFINITION:
                 return isLValue(expr.children[0])
@@ -2838,6 +2876,20 @@ class Compiler : ErrorReporter {
         return IRNode(IRNode.Kind.NULL, n.position, Type.Null())
     }
 
+    method compileChoiceFieldReference(f:ASTNode):IRNode? {
+        def cf := f.payload->Pair<ChoiceEntry, Int>
+        resolve(cf.first)
+        assert f.children != null & f.children.get_count() = 1
+        def children := Array<IRNode>()
+        def base := compileExpression(f.children[0])
+        if base = null {
+            return null
+        }
+        children.add(base)
+        return IRNode(IRNode.Kind.CHOICE_FIELD_REFERENCE, f.position,
+                cf.first.fields[cf.second].second, cf, children)
+    }
+
     method compileExpression(e:ASTNode):IRNode? {
         match e.kind {
             when ASTNode.Kind.BINARY:
@@ -2879,6 +2931,8 @@ class Compiler : ErrorReporter {
                 return compileCast(e)
             when ASTNode.Kind.NULL:
                 return compileNull(e)
+            when ASTNode.Kind.CHOICE_FIELD_REFERENCE:
+                return compileChoiceFieldReference(e)
         }
         assert false, "unsupported expression: \{e} (\{e.position})"
     }
@@ -3417,11 +3471,11 @@ class Compiler : ErrorReporter {
 
     method compileWhenTest(value:Variable, test:ASTNode):IRNode? {
         def target := IRNode(IRNode.Kind.VARIABLE_REFERENCE, test.position, value.type, value)
-        def callChildren := Array<IRNode>()
         def testValue := compileExpression(test)
         if testValue = null {
             return null
         }
+        def callChildren := Array<IRNode>()
         callChildren.add(testValue)
         return call(target, "=", callChildren)
     }
@@ -3431,6 +3485,73 @@ class Compiler : ErrorReporter {
         assert w.children.get_count() >= 1
         assert w.children[0].kind = ASTNode.Kind.EXPRESSIONS
         assert w.children[0].children.get_count() >= 1
+        if w.children[0].children.get_count() = 1 {
+            def test := w.children[0].children[0]
+            if test.kind = ASTNode.Kind.CALL & value.type.isClass() {
+                def cl := getClass(value.type)
+                if cl.classKind = ClassDecl.Kind.CHOICE {
+                    def base := compileExpression(test.children[0])
+                    if base = null {
+                        return null
+                    }
+                    if base.kind = IRNode.Kind.CHOICE_ENTRY_REFERENCE {
+                        def callChildren := Array<IRNode>()
+                        callChildren.add(base)
+                        def target := IRNode(IRNode.Kind.VARIABLE_REFERENCE, test.position,
+                                value.type, value)
+                        def check := call(target, "=", callChildren)
+                        if check = null {
+                            return null
+                        }
+                        def entry := base.payload->ChoiceEntry
+                        def requiredCount := entry.fields.get_count()
+                        def actualCount := test.children.get_count() - 1
+                        if actualCount != requiredCount {
+                            error(test.position, "'\{base.payload}' requires \{requiredCount} " +
+                                    "argument\{requiredCount = 1:|s}, but found \{actualCount}")
+                            return null
+                        }
+                        symbolTable := SymbolTable(symbolTable)
+                        def statements := Array<IRNode>()
+                        for i in 1 .. test.children.get_count() {
+                            if test.children[i].kind != ASTNode.Kind.IDENTIFIER {
+                                error(test.children[i].position, "expected an identifier")
+                                return null
+                            }
+                            def variable := Variable(test.children[i].position, Variable.Kind.DEF,
+                                    test.children[i].payload->String, entry.fields[i - 1].second)
+                            symbolTable.add(variable)
+                            def declChildren := Array<IRNode>() -- FIXME literal
+                            declChildren.add(IRNode(IRNode.Kind.VARIABLE_REFERENCE,
+                                    variable.position, variable.type, variable))
+                            def fieldRefChildren := Array<IRNode>() -- FIXME literal
+                            fieldRefChildren.add(IRNode(IRNode.Kind.VARIABLE_REFERENCE,
+                                    test.position, value.type, value))
+                            declChildren.add(IRNode(IRNode.Kind.CHOICE_FIELD_REFERENCE,
+                                    variable.position, variable.type,
+                                    Pair<ChoiceEntry, Int>(entry, i - 1), fieldRefChildren))
+                            def varChildren := Array<IRNode>()
+                            varChildren.add(IRNode(IRNode.Kind.DECLARATION, variable.position,
+                                    declChildren))
+                            statements.add(IRNode(IRNode.Kind.DEF, variable.position, varChildren))
+                        }
+                        for i in 1 .. w.children.get_count() {
+                            def statement := compileStatement(w.children[i])
+                            if statement = null {
+                                return null
+                            }
+                            statements.add(statement)
+                        }
+                        symbolTable := symbolTable.parents[0]
+                        def children := Array<IRNode>() -- FIXME literal
+                        children.add(check)
+                        children.add(IRNode(IRNode.Kind.BLOCK, w.position, statements))
+                        return IRNode(IRNode.Kind.IF, w.position, children)
+                    }
+                }
+            }
+        }
+
         var test := compileWhenTest(value, w.children[0].children[0])
         if test = null {
             return null

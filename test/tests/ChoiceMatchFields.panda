@@ -1,0 +1,45 @@
+choice Expression {
+    NUMBER(v:Int)
+    ADD(a:Expression, b:Expression)
+    SUB(a:Expression, b:Expression)
+    MUL(a:Expression, b:Expression)
+    DIV(a:Expression, b:Expression)
+    NEGATE(v:Expression)
+
+    @override
+    function convert():String {
+        match self {
+            when NUMBER(v): return v.convert()
+            when ADD(a, b): return "(\{a} + \{b})"
+            when SUB(a, b): return "(\{a} - \{b})"
+            when MUL(a, b): return "(\{a} * \{b})"
+            when DIV(a, b): return "(\{a} / \{b})"
+            when NEGATE(v): return "-\{v}"
+        }
+    }
+
+    function evaluate():Int {
+        match self {
+            when NUMBER(v): return v
+            when ADD(a, b): return a.evaluate() + b.evaluate()
+            when SUB(a, b): return a.evaluate() - b.evaluate()
+            when MUL(a, b): return a.evaluate() * b.evaluate()
+            when DIV(a, b): return a.evaluate() // b.evaluate()
+            when NEGATE(v): return -v.evaluate()
+        }        
+    }
+
+    @class
+    method printExpression(expr:Expression) {
+        Console.printLine("\{expr} = \{expr.evaluate()}")
+    }
+
+    @class
+    method main() {
+        def five := Expression.NUMBER(5)
+        def twelve := Expression.NUMBER(12)
+        printExpression(Expression.ADD(five, twelve))
+        printExpression(Expression.MUL(Expression.SUB(five, twelve),
+                Expression.NEGATE(Expression.NUMBER(6))))
+    }
+}
