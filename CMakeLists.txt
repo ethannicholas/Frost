@@ -98,8 +98,11 @@ add_executable(bootstrap
     bootstrap/src/org/pandalanguage/pandac/CCodeGenerator/ClassConstant.c
     bootstrap/src/org/pandalanguage/pandac/CCodeGenerator/LoopDescriptor.c
     bootstrap/src/org/pandalanguage/pandac/CCodeGenerator/MethodShim.c
+    bootstrap/src/org/pandalanguage/pandac/CCodeGenerator/OpClass.c
+    bootstrap/src/org/pandalanguage/pandac/ChoiceEntry.c
     bootstrap/src/org/pandalanguage/pandac/ClassDecl.c
     bootstrap/src/org/pandalanguage/pandac/ClassDecl/GenericParameter.c
+    bootstrap/src/org/pandalanguage/pandac/ClassDecl/Kind.c
     bootstrap/src/org/pandalanguage/pandac/ClassDecl/Resolution.c
     bootstrap/src/org/pandalanguage/pandac/CodeGenerator.c
     bootstrap/src/org/pandalanguage/pandac/Compiler.c
@@ -118,15 +121,19 @@ add_executable(bootstrap
     bootstrap/src/org/pandalanguage/pandac/Main.c
     bootstrap/src/org/pandalanguage/pandac/Main/Arguments.c
     bootstrap/src/org/pandalanguage/pandac/MethodDecl.c
+    bootstrap/src/org/pandalanguage/pandac/MethodDecl/Kind.c
     bootstrap/src/org/pandalanguage/pandac/MethodDecl/Parameter.c
     bootstrap/src/org/pandalanguage/pandac/Methods.c
     bootstrap/src/org/pandalanguage/pandac/MethodRef.c
+    bootstrap/src/org/pandalanguage/pandac/Pair.c
     bootstrap/src/org/pandalanguage/pandac/Position.c
     bootstrap/src/org/pandalanguage/pandac/Scanner.c
     bootstrap/src/org/pandalanguage/pandac/Symbol.c
     bootstrap/src/org/pandalanguage/pandac/SymbolTable.c
     bootstrap/src/org/pandalanguage/pandac/Type.c
     bootstrap/src/org/pandalanguage/pandac/Variable.c
+    bootstrap/src/org/pandalanguage/pandac/Variable/Kind.c
+    bootstrap/src/org/pandalanguage/pandac/Variable/Storage.c
     bootstrap/src/org/pandalanguage/pandac/parser/Parser.c
     bootstrap/src/org/pandalanguage/pandac/parser/Lexer.c
     bootstrap/src/org/pandalanguage/pandac/parser/Token.c

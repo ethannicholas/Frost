@@ -10,6 +10,7 @@
 #include "panda/collections/ListView.h"
 #include "panda/core/Real64.h"
 #include "org/pandalanguage/pandac/Variable.h"
+#include "org/pandalanguage/pandac/Symbol.h"
 #include "panda/collections/ImmutableArray.h"
 #include "panda/core/MutableString.h"
 #include "panda/collections/Iterator.h"
@@ -18,7 +19,6 @@
 #include "panda/core/String/Index.h"
 #include "panda/core/Char8.h"
 #include "panda/core/UInt8.h"
-#include "org/pandalanguage/pandac/Symbol.h"
 #include "org/pandalanguage/pandac/MethodRef.h"
 #include "org/pandalanguage/pandac/MethodDecl.h"
 #include "panda/core/Range.LTpanda/core/Int64.Q.GT.h"
@@ -38,6 +38,7 @@ typedef panda$core$String* (*$fn85)(panda$core$Object*);
 typedef panda$core$String* (*$fn88)(panda$core$Object*);
 typedef panda$core$String* (*$fn91)(panda$core$Object*);
 typedef panda$core$String* (*$fn115)(panda$core$Object*);
+typedef panda$core$String* (*$fn246)(panda$core$Object*);
 
 static panda$core$String $s19 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x7b\x0a", 2, 22634, NULL };
 static panda$core$String $s40 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x28", 1, 141, NULL };
@@ -98,8 +99,8 @@ static panda$core$String $s233 = { (panda$core$Class*) &panda$core$String$class,
 static panda$core$String $s236 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x20\x3f\x20", 3, 1363128, NULL };
 static panda$core$String $s240 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x20\x3a\x20", 3, 1362623, NULL };
 static panda$core$String $s244 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x29", 1, 142, NULL };
-static panda$core$String $s246 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x3c\x49\x52\x4e\x6f\x64\x65\x3a", 8, 17339740200262864, NULL };
-static panda$core$String $s248 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x3e", 1, 163, NULL };
+static panda$core$String $s248 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x3c\x49\x52\x4e\x6f\x64\x65\x3a", 8, 17339740200262864, NULL };
+static panda$core$String $s250 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x3e", 1, 163, NULL };
 
 void org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position(org$pandalanguage$pandac$IRNode* self, panda$core$Int64 p_kind, org$pandalanguage$pandac$Position p_position) {
     org$pandalanguage$pandac$Type* $tmp1 = org$pandalanguage$pandac$Type$Void$R$org$pandalanguage$pandac$Type();
@@ -144,6 +145,9 @@ void org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pan
     org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$Q(self, p_kind, p_position, p_type, ((panda$core$Object*) p_payload), NULL);
 }
 void org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Variable(org$pandalanguage$pandac$IRNode* self, panda$core$Int64 p_kind, org$pandalanguage$pandac$Position p_position, org$pandalanguage$pandac$Type* p_type, org$pandalanguage$pandac$Variable* p_payload) {
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$Q(self, p_kind, p_position, p_type, ((panda$core$Object*) p_payload), NULL);
+}
+void org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Symbol(org$pandalanguage$pandac$IRNode* self, panda$core$Int64 p_kind, org$pandalanguage$pandac$Position p_position, org$pandalanguage$pandac$Type* p_type, org$pandalanguage$pandac$Symbol* p_payload) {
     org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$Q(self, p_kind, p_position, p_type, ((panda$core$Object*) p_payload), NULL);
 }
 void org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT(org$pandalanguage$pandac$IRNode* self, panda$core$Int64 p_kind, org$pandalanguage$pandac$Position p_position, org$pandalanguage$pandac$Type* p_type, panda$collections$ListView* p_children) {
@@ -573,11 +577,17 @@ panda$core$String* org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(o
             return $tmp245;
         }
         break;
+        case 1046:
+        {
+            panda$core$String* $tmp247 = (($fn246) self->payload->$class->vtable[0])(self->payload);
+            return $tmp247;
+        }
+        break;
         default:
         {
-            panda$core$String* $tmp247 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s246, ((panda$core$Object*) wrap_panda$core$Int64(self->kind)));
-            panda$core$String* $tmp249 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp247, &$s248);
-            return $tmp249;
+            panda$core$String* $tmp249 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s248, ((panda$core$Object*) wrap_panda$core$Int64(self->kind)));
+            panda$core$String* $tmp251 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp249, &$s250);
+            return $tmp251;
         }
     }
 }

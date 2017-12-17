@@ -11,7 +11,7 @@ typedef struct panda$core$Bit {
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"
 #undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[9]; } panda$core$Bit$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[10]; } panda$core$Bit$class_type;
 extern panda$core$Bit$class_type panda$core$Bit$class;
 typedef struct panda$core$Bit$wrapper {
     panda$core$Class* cl;
@@ -40,5 +40,6 @@ panda$core$Bit panda$core$Bit$$NOT$R$panda$core$Bit(panda$core$Bit self);
 panda$core$Bit panda$core$Bit$$OR$panda$core$Bit$R$panda$core$Bit(panda$core$Bit self, panda$core$Bit p_other);
 panda$core$Bit panda$core$Bit$$AND$panda$core$Bit$R$panda$core$Bit(panda$core$Bit self, panda$core$Bit p_other);
 panda$core$Bit panda$core$Bit$$XOR$panda$core$Bit$R$panda$core$Bit(panda$core$Bit self, panda$core$Bit p_other);
+panda$core$String* panda$core$Bit$format$panda$core$String$R$panda$core$String(panda$core$Bit self, panda$core$String* p_fmt);
 
 #endif

@@ -18,10 +18,10 @@ class MethodDecl : Symbol {
         }
     }
 
-    class Kind {
-        constant METHOD   := 57
-        constant FUNCTION := 58
-        constant INIT     := 59
+    choice Kind {
+        METHOD
+        FUNCTION
+        INIT
     }
 
     def owner:ClassDecl -- FIXME weak
@@ -30,7 +30,7 @@ class MethodDecl : Symbol {
 
     def annotations:Annotations
 
-    def methodKind:Int
+    def methodKind:Kind
 
     def parameters:Array<Parameter>
 
@@ -48,7 +48,7 @@ class MethodDecl : Symbol {
     var overridden:MethodDecl? := null
 
     init(owner:ClassDecl, position:Position, doccomment:String?, annotations:Annotations,
-            methodKind:Int, name:String, parameters:Array<Parameter>, returnType:Type,
+            methodKind:Kind, name:String, parameters:Array<Parameter>, returnType:Type,
             body:ASTNode?) {
         super.init(Symbol.Kind.METHOD, position, name)
         self.owner := owner

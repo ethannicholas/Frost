@@ -535,19 +535,6 @@ class Compiler : ErrorReporter {
             when IRNode.Kind.SUPER:
                 error(expr.position, "'super' can only be used as part of a method call")
                 return null
-            when IRNode.Kind.CHOICE_ENTRY_REFERENCE:
-                def c := expr.payload->ChoiceEntry
-                if c.types.get_count() = 0 {
-                    def owner := IRNode(IRNode.Kind.TYPE_REFERENCE, expr.position, Type.Class(),
-                            c.owner.type())
-                    def args := Array<IRNode>()
-                    def value := c.rawValue.convert()->UInt64
-                    args.add(IRNode(IRNode.Kind.INT, expr.position, Type.IntLiteral(value), value))
-                    return call(owner, args)
-                }
-                error(expr.position, "choice '\{expr}' requires \{c.types.get_count()} " +
-                        "argument\{c.types.get_count() = 1:|s}, but found 0")
-                return null
             otherwise:
                 return coerce(expr, variableType(expr))
         }
@@ -1111,6 +1098,8 @@ class Compiler : ErrorReporter {
                     return Type.Any()
                 }
                 return c.type
+            when IRNode.Kind.CHOICE_ENTRY_REFERENCE:
+                return expr.payload->ChoiceEntry.owner.type()
         }
         return variableType(expr.type)
     }
@@ -1395,6 +1384,8 @@ class Compiler : ErrorReporter {
                 args.add(expr.children[1])
                 assert base = 0
                 return coercionCost(call(expr.children[0], "[]", args), target)
+            when IRNode.Kind.CHOICE_ENTRY_REFERENCE:
+                return coercionCost(expr.payload->ChoiceEntry.owner.type(), target)
         }
         if !target.isClass() {
             return null
@@ -1580,6 +1571,19 @@ class Compiler : ErrorReporter {
             when IRNode.Kind.UNRESOLVED_INDEX:
                 def args := expr.children[1..]
                 return coerce(call(expr.children[0], "[]", args, target), target)
+            when IRNode.Kind.CHOICE_ENTRY_REFERENCE:
+                def c := expr.payload->ChoiceEntry
+                if c.types.get_count() = 0 {
+                    def owner := IRNode(IRNode.Kind.TYPE_REFERENCE, expr.position, Type.Class(),
+                            c.owner.type())
+                    def args := Array<IRNode>()
+                    def value := c.rawValue.convert()->UInt64
+                    args.add(IRNode(IRNode.Kind.INT, expr.position, Type.IntLiteral(value), value))
+                    return coerce(call(owner, args), target)
+                }
+                error(expr.position, "choice '\{expr}' requires \{c.types.get_count()} " +
+                        "argument\{c.types.get_count() = 1:|s}, but found 0")
+                return null
         }
         if target.typeKind = Type.Kind.NULLABLE {
             if expr.kind = IRNode.Kind.NULL {
@@ -3207,7 +3211,7 @@ class Compiler : ErrorReporter {
         }
     }
 
-    method compileTarget(t:ASTNode, kind:Int-*Variable.Kind*-, rawValue:IRNode?,
+    method compileTarget(t:ASTNode, kind:Variable.Kind, rawValue:IRNode?,
             valueType:Type?):CompileTargetResult? {
         var value:IRNode? := rawValue -- FIXME use var on parameter
         assert value = null | valueType = null
@@ -3250,7 +3254,7 @@ class Compiler : ErrorReporter {
         }
     }
 
-    method compileDeclaration(d:ASTNode, varKind:Int):IRNode? {
+    method compileDeclaration(d:ASTNode, varKind:Variable.Kind):IRNode? {
         assert d.kind = ASTNode.Kind.DECLARATION
         assert d.children.get_count() = 1 | d.children.get_count() = 2
         def value:IRNode?
@@ -3384,7 +3388,7 @@ class Compiler : ErrorReporter {
                v.kind = ASTNode.Kind.PROPERTY |
                v.kind = ASTNode.Kind.CONSTANT
         def nodeKind:Int
-        def varKind:Int
+        def varKind:Variable.Kind
         match v.kind {
             when ASTNode.Kind.VAR:
                 nodeKind := IRNode.Kind.VAR

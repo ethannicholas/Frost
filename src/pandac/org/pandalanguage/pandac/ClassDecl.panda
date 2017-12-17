@@ -2,10 +2,10 @@ package org.pandalanguage.pandac
 
 @final
 class ClassDecl : Symbol {    
-    class Kind {
-        constant CLASS     := 5011
-        constant INTERFACE := 5012
-        constant CHOICE    := 5013
+    choice Kind {
+        CLASS
+        INTERFACE
+        CHOICE
     }
 
     ================================================================================================
@@ -50,7 +50,7 @@ class ClassDecl : Symbol {
 
     def annotations:Annotations
 
-    def classKind:Int
+    def classKind:Kind
 
     ================================================================================================
     All declared superclasses / superinterfaces as listed in the source code. These are always
@@ -98,7 +98,7 @@ class ClassDecl : Symbol {
     var resolved:Bit
 
     init(source:File, position:Position, aliases:MapView<String, String>, doccomment:String?,
-            annotations:Annotations, kind:Int, name:String, declaredSupers:ListView<Type>,
+            annotations:Annotations, kind:Kind, name:String, declaredSupers:ListView<Type>,
             parameters:Array<GenericParameter>, parent:SymbolTable) {
         super.init(Symbol.Kind.CLASS, position, name)
         self.source := source

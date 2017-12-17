@@ -156,7 +156,7 @@ class Scanner {
 
     method scanMethod(owner:ClassDecl, m:ASTNode):MethodDecl? {
         assert m.children.get_count() = 6
-        def kind:Int
+        def kind:MethodDecl.Kind
         match m.kind {
             when ASTNode.Kind.METHOD:   kind := MethodDecl.Kind.METHOD
             when ASTNode.Kind.FUNCTION: kind := MethodDecl.Kind.FUNCTION

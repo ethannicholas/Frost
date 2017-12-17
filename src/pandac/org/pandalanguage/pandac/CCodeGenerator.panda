@@ -641,13 +641,13 @@ class CCodeGenerator : CodeGenerator {
         return "\{escapeName(f.owner.name)}$\{f.name}"
     }
 
-    class OpClass {
-        constant SIGNED   := 10121
-        constant UNSIGNED := 10122
-        constant FLOAT    := 10123
+    choice OpClass {
+        SIGNED
+        UNSIGNED
+        FLOAT
     }
 
-    function opClass(t:Type):Int {
+    function opClass(t:Type):OpClass {
         match t.typeKind {
             when Type.Kind.BUILTIN_INT:
                 return OpClass.SIGNED
