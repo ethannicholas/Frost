@@ -26,7 +26,6 @@ typedef struct org$pandalanguage$pandac$Position$nullable {
 } org$pandalanguage$pandac$Position$nullable;
 typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[2]; } org$pandalanguage$pandac$Position$wrapperclass_type;
 extern org$pandalanguage$pandac$Position$wrapperclass_type org$pandalanguage$pandac$Position$wrapperclass;
-org$pandalanguage$pandac$Position$wrapper* wrap_org$pandalanguage$pandac$Position(org$pandalanguage$pandac$Position self);
 
 #ifndef PANDA_TYPESONLY
 #include "org/pandalanguage/pandac/Position.h"

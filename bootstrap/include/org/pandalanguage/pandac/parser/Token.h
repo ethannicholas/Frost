@@ -30,7 +30,6 @@ typedef struct org$pandalanguage$pandac$parser$Token$nullable {
 } org$pandalanguage$pandac$parser$Token$nullable;
 typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[2]; } org$pandalanguage$pandac$parser$Token$wrapperclass_type;
 extern org$pandalanguage$pandac$parser$Token$wrapperclass_type org$pandalanguage$pandac$parser$Token$wrapperclass;
-org$pandalanguage$pandac$parser$Token$wrapper* wrap_org$pandalanguage$pandac$parser$Token(org$pandalanguage$pandac$parser$Token self);
 
 #ifndef PANDA_TYPESONLY
 #include "org/pandalanguage/pandac/parser/Token.h"

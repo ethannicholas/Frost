@@ -14,7 +14,7 @@ typedef struct panda$io$File {
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"
 #undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[21]; } panda$io$File$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[22]; } panda$io$File$class_type;
 extern panda$io$File$class_type panda$io$File$class;
 
 #ifndef PANDA_TYPESONLY
@@ -37,6 +37,7 @@ panda$core$String* panda$io$File$name$R$panda$core$String(panda$io$File* self);
 panda$core$String* panda$io$File$simpleName$R$panda$core$String(panda$io$File* self);
 panda$io$File* panda$io$File$changeExtension$panda$core$String$R$panda$io$File(panda$io$File* self, panda$core$String* p_ext);
 void panda$io$File$exists$R$panda$core$Bit(panda$core$Bit* result, panda$io$File* self);
+void panda$io$File$isDirectory$R$panda$core$Bit(panda$core$Bit* result, panda$io$File* self);
 panda$collections$ListView* panda$io$File$list$R$panda$collections$ListView$LTpanda$io$File$GT(panda$io$File* self);
 void panda$io$File$createDirectory(panda$io$File* self);
 void panda$io$File$createDirectories(panda$io$File* self);

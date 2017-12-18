@@ -24,7 +24,6 @@ typedef struct panda$core$Int8$nullable {
 } panda$core$Int8$nullable;
 typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[2]; } panda$core$Int8$wrapperclass_type;
 extern panda$core$Int8$wrapperclass_type panda$core$Int8$wrapperclass;
-panda$core$Int8$wrapper* wrap_panda$core$Int8(panda$core$Int8 self);
 
 #ifndef PANDA_TYPESONLY
 #include "panda/core/Int8.h"

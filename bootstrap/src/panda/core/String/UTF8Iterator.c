@@ -8,7 +8,12 @@
 #include "panda/core/Bit.h"
 panda$core$Object* panda$core$String$UTF8Iterator$next$R$panda$core$Char8$shim(panda$core$String$UTF8Iterator* self) {
     panda$core$Char8 result = panda$core$String$UTF8Iterator$next$R$panda$core$Char8(self);
-    return ((panda$core$Object*) wrap_panda$core$Char8(result));
+    panda$core$Char8$wrapper* $tmp1;
+    $tmp1 = (panda$core$Char8$wrapper*) malloc(13);
+    $tmp1->cl = (panda$core$Class*) &panda$core$Char8$wrapperclass;
+    $tmp1->refCount = 1;
+    $tmp1->value = result;
+    return ((panda$core$Object*) $tmp1);
 }
 
 
@@ -23,13 +28,13 @@ void panda$core$String$UTF8Iterator$init$panda$core$String(panda$core$String$UTF
     self->str = p_str;
 }
 panda$core$Bit panda$core$String$UTF8Iterator$get_done$R$panda$core$Bit(panda$core$String$UTF8Iterator* self) {
-    panda$core$Bit $tmp1 = panda$core$Int64$$GE$panda$core$Int64$R$panda$core$Bit(self->index, self->str->_length);
-    return $tmp1;
+    panda$core$Bit $tmp2 = panda$core$Int64$$GE$panda$core$Int64$R$panda$core$Bit(self->index, self->str->_length);
+    return $tmp2;
 }
 panda$core$Char8 panda$core$String$UTF8Iterator$next$R$panda$core$Char8(panda$core$String$UTF8Iterator* self) {
-    panda$core$Int64 $tmp2 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 1 }));
-    self->index = $tmp2;
-    panda$core$Int64 $tmp3 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 1 }));
-    return self->str->data[$tmp3.value];
+    panda$core$Int64 $tmp3 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 1 }));
+    self->index = $tmp3;
+    panda$core$Int64 $tmp4 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 1 }));
+    return self->str->data[$tmp4.value];
 }
 

@@ -24,7 +24,6 @@ typedef struct panda$core$Char32$nullable {
 } panda$core$Char32$nullable;
 typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[2]; } panda$core$Char32$wrapperclass_type;
 extern panda$core$Char32$wrapperclass_type panda$core$Char32$wrapperclass;
-panda$core$Char32$wrapper* wrap_panda$core$Char32(panda$core$Char32 self);
 
 #ifndef PANDA_TYPESONLY
 #include "panda/core/Char32.h"

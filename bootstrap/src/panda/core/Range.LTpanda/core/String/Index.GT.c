@@ -3,12 +3,6 @@
 #include "panda/core/Class.h"
 #include "panda/core/Object.h"
 #include "panda/core/String.h"
-panda$core$Range$LTpanda$core$String$Index$GT$wrapper* wrap_panda$core$Range$LTpanda$core$String$Index$GT(panda$core$Range$LTpanda$core$String$Index$GT self) {
-    panda$core$Range$LTpanda$core$String$Index$GT$wrapper* result = (panda$core$Range$LTpanda$core$String$Index$GT$wrapper*) malloc(33);
-    result->cl = (panda$core$Class*) &panda$core$Range$LTpanda$core$String$Index$GT$wrapperclass;
-    result->value = self;
-    return result;
-}
 #include "panda/core/String/Index.h"
 #include "panda/core/Bit.h"
 #include "panda/core/MutableString.h"
@@ -20,8 +14,8 @@ panda$core$String* panda$core$Range$LTpanda$core$String$Index$GT$convert$R$panda
 panda$core$Range$LTpanda$core$String$Index$GT$class_type panda$core$Range$LTpanda$core$String$Index$GT$class = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Value$class, NULL, { panda$core$Range$LTpanda$core$String$Index$GT$convert$R$panda$core$String, panda$core$Object$cleanup} };
 
 panda$core$Range$LTpanda$core$String$Index$GT$wrapperclass_type panda$core$Range$LTpanda$core$String$Index$GT$wrapperclass = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Value$class, NULL, { panda$core$Range$LTpanda$core$String$Index$GT$convert$R$panda$core$String$wrappershim, panda$core$Object$cleanup} };
-static panda$core$String $s4 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2e\x2e\x2e", 3, 1504239, NULL };
-static panda$core$String $s5 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2e\x2e", 2, 14893, NULL };
+static panda$core$String $s5 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2e\x2e\x2e", 3, 1504239, NULL };
+static panda$core$String $s6 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2e\x2e", 2, 14893, NULL };
 
 void panda$core$Range$LTpanda$core$String$Index$GT$init$panda$core$String$Index$panda$core$String$Index$panda$core$Bit(panda$core$Range$LTpanda$core$String$Index$GT* self, panda$core$String$Index p_min, panda$core$String$Index p_max, panda$core$Bit p_inclusive) {
     self->min = p_min;
@@ -37,25 +31,35 @@ panda$core$String* panda$core$Range$LTpanda$core$String$Index$GT$convert$R$panda
     result1 = $tmp2;
     if (((panda$core$Bit) { true }).value) {
     {
-        panda$core$MutableString$append$panda$core$Object(result1, ((panda$core$Object*) wrap_panda$core$String$Index(self.min)));
+        panda$core$String$Index$wrapper* $tmp4;
+        $tmp4 = (panda$core$String$Index$wrapper*) malloc(24);
+        $tmp4->cl = (panda$core$Class*) &panda$core$String$Index$wrapperclass;
+        $tmp4->refCount = 1;
+        $tmp4->value = self.min;
+        panda$core$MutableString$append$panda$core$Object(result1, ((panda$core$Object*) $tmp4));
     }
     }
     if (self.inclusive.value) {
     {
-        panda$core$MutableString$append$panda$core$String(result1, &$s4);
+        panda$core$MutableString$append$panda$core$String(result1, &$s5);
     }
     }
     else {
     {
-        panda$core$MutableString$append$panda$core$String(result1, &$s5);
+        panda$core$MutableString$append$panda$core$String(result1, &$s6);
     }
     }
     if (((panda$core$Bit) { true }).value) {
     {
-        panda$core$MutableString$append$panda$core$Object(result1, ((panda$core$Object*) wrap_panda$core$String$Index(self.max)));
+        panda$core$String$Index$wrapper* $tmp7;
+        $tmp7 = (panda$core$String$Index$wrapper*) malloc(24);
+        $tmp7->cl = (panda$core$Class*) &panda$core$String$Index$wrapperclass;
+        $tmp7->refCount = 1;
+        $tmp7->value = self.max;
+        panda$core$MutableString$append$panda$core$Object(result1, ((panda$core$Object*) $tmp7));
     }
     }
-    panda$core$String* $tmp6 = panda$core$MutableString$finish$R$panda$core$String(result1);
-    return $tmp6;
+    panda$core$String* $tmp8 = panda$core$MutableString$finish$R$panda$core$String(result1);
+    return $tmp8;
 }
 

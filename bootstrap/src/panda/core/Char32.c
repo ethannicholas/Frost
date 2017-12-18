@@ -8,12 +8,6 @@
 #include "panda/core/Comparable.h"
 #include "panda/core/Int64.h"
 #include "panda/core/String.h"
-panda$core$Char32$wrapper* wrap_panda$core$Char32(panda$core$Char32 self) {
-    panda$core$Char32$wrapper* result = (panda$core$Char32$wrapper*) malloc(16);
-    result->cl = (panda$core$Class*) &panda$core$Char32$wrapperclass;
-    result->value = self;
-    return result;
-}
 #include "panda/core/Int32.h"
 #include "panda/core/MutableString.h"
 #include "panda/core/Range.LTpanda/core/Int64.GT.h"

@@ -30,7 +30,6 @@ typedef struct org$pandalanguage$plex$runtime$RawToken$nullable {
 } org$pandalanguage$plex$runtime$RawToken$nullable;
 typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[2]; } org$pandalanguage$plex$runtime$RawToken$wrapperclass_type;
 extern org$pandalanguage$plex$runtime$RawToken$wrapperclass_type org$pandalanguage$plex$runtime$RawToken$wrapperclass;
-org$pandalanguage$plex$runtime$RawToken$wrapper* wrap_org$pandalanguage$plex$runtime$RawToken(org$pandalanguage$plex$runtime$RawToken self);
 
 #ifndef PANDA_TYPESONLY
 #include "org/pandalanguage/plex/runtime/RawToken.h"

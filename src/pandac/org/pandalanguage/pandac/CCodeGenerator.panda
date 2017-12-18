@@ -2,6 +2,8 @@ package org.pandalanguage.pandac
 
 uses org.pandalanguage.pandac.parser.Token
 
+-- Note that the C code produced by this CodeGenerator is not quite compatible with the output of
+-- the LLVM code generator due to slight ABI differences in how structures are passed.
 @final
 class CCodeGenerator : CodeGenerator {
     var compiler:Compiler?
@@ -971,12 +973,28 @@ class CCodeGenerator : CodeGenerator {
             def nonNullValue := wrapValue(unwrapped, srcType.subtypes[0], dstType, out)
             return "(\{value}.nonnull ? \{nonNullValue} : NULL)"
         }
-        def wrapped := "((\{type(dstType)}) wrap_\{escapeName(compiler.getClass(srcType).name)}" +
-                "(\{value}))"
+        def wrapped := nextVar()
+        out.printLine("\{wrapperType(srcType)} \{wrapped};")
         if srcType.typeKind = Type.Kind.NULLABLE {
-            return "(\{value}.nonnull ? \{wrapped} : NULL)"
+            out.printLine("if (\{value}.nonnull) {")
+            out.level += 1
         }
-        return wrapped
+        out.printLine("\{wrapped} = (\{wrapperType(srcType)}) " +
+                "malloc(\{sizeOfWrapper(srcType)});")
+        out.printLine("\{wrapped}->cl = (panda$core$Class*) " +
+                "&\{escapeName(srcType.name)}$wrapperclass;")
+        out.printLine("\{wrapped}->refCount = 1;")
+        out.printLine("\{wrapped}->value = \{value};")
+        if srcType.typeKind = Type.Kind.NULLABLE {
+            out.level -= 1
+            out.printLine("}")
+            out.printLine("else {")
+            out.level += 1
+            out.printLine("\{wrapped} = NULL;")
+            out.level -= 1
+            out.printLine("}")
+        }
+        return "((\{type(dstType)}) \{wrapped})"
     }
 
     method getFieldReference(fieldRef:IRNode, out:IndentedOutputStream):String {
@@ -1524,6 +1542,7 @@ class CCodeGenerator : CodeGenerator {
         def range := getTypedReference(f.children[1], out)
         def block := f.children[2]
         def t := f.children[1].type.subtypes[1]
+        def stepType := f.children[1].type.subtypes[2]
         def llt := type(t)
         def indexType:String
         if t.typeKind = Type.Kind.NULLABLE {
@@ -1556,7 +1575,12 @@ class CCodeGenerator : CodeGenerator {
 
         -- extract step value from range
         def step := nextVar()
-        out.printLine("\{numberType} \{step} = \{range}.step.value;")
+        def stepCl := compiler.getClass(stepType)
+        assert stepCl != null
+        assert compiler.instanceFields(stepCl).get_count() = 1
+        def stepField := compiler.instanceFields(stepCl)[0]
+        compiler.resolve(stepField)
+        out.printLine("\{type(stepField.type)} \{step} = \{range}.step.value;")
 
         -- extract inclusive / exclusive from range
         def inclusive := nextVar()
@@ -1571,11 +1595,12 @@ class CCodeGenerator : CodeGenerator {
         def forwardEntry := nextLabel()
         def backwardEntry := nextLabel()
         def signPrefix:String
-        if t.name.startsWith("panda.core.Int") {
+        if stepType.name.startsWith("panda.core.Int") {
             signPrefix := "s"
         }
         else {
-            assert t.name.startsWith("panda.core.UInt") | t.name.startsWith("panda.core.Char")
+            assert stepType.name.startsWith("panda.core.UInt") |
+                    stepType.name.startsWith("panda.core.Char")
             signPrefix := "u"
         }
         def direction:String
@@ -1981,15 +2006,6 @@ class CCodeGenerator : CodeGenerator {
         getClassConstant(cl)
         if compiler.isValue(cl) {
             getWrapperClassConstant(cl)
-            out.printLine("\{escapeName(cl.name)}$wrapper* wrap_\{escapeName(cl.name)}(" +
-                    "\{escapeName(cl.name)} self) {")
-            out.printLine("    \{escapeName(cl.name)}$wrapper* result = " +
-                    "(\{escapeName(cl.name)}$wrapper*) malloc(\{sizeOfWrapper(cl.type())});")
-            out.printLine("    result->cl = (panda$core$Class*) " +
-                    "&\{escapeName(cl.name)}$wrapperclass;")
-            out.printLine("    result->value = self;")
-            out.printLine("    return result;")
-            out.printLine("}")
         }
     }
 

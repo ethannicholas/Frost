@@ -9,7 +9,12 @@
 #include "panda/core/UInt16.h"
 panda$core$Object* panda$core$String$UTF16Iterator$next$R$panda$core$Char16$shim(panda$core$String$UTF16Iterator* self) {
     panda$core$Char16 result = panda$core$String$UTF16Iterator$next$R$panda$core$Char16(self);
-    return ((panda$core$Object*) wrap_panda$core$Char16(result));
+    panda$core$Char16$wrapper* $tmp1;
+    $tmp1 = (panda$core$Char16$wrapper*) malloc(14);
+    $tmp1->cl = (panda$core$Class*) &panda$core$Char16$wrapperclass;
+    $tmp1->refCount = 1;
+    $tmp1->value = result;
+    return ((panda$core$Object*) $tmp1);
 }
 
 
@@ -24,14 +29,14 @@ void panda$core$String$UTF16Iterator$init$panda$core$String(panda$core$String$UT
     self->str = p_str;
 }
 panda$core$Bit panda$core$String$UTF16Iterator$get_done$R$panda$core$Bit(panda$core$String$UTF16Iterator* self) {
-    panda$core$Bit $tmp1 = panda$core$Int64$$GE$panda$core$Int64$R$panda$core$Bit(self->index, self->str->_length);
-    return $tmp1;
+    panda$core$Bit $tmp2 = panda$core$Int64$$GE$panda$core$Int64$R$panda$core$Bit(self->index, self->str->_length);
+    return $tmp2;
 }
 panda$core$Char16 panda$core$String$UTF16Iterator$next$R$panda$core$Char16(panda$core$String$UTF16Iterator* self) {
-    panda$core$Char16 $tmp3;
-    panda$core$Int64 $tmp2 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 1 }));
-    self->index = $tmp2;
-    panda$core$Char16$init$panda$core$UInt16(&$tmp3, ((panda$core$UInt16) { 1 }));
-    return $tmp3;
+    panda$core$Char16 $tmp4;
+    panda$core$Int64 $tmp3 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 1 }));
+    self->index = $tmp3;
+    panda$core$Char16$init$panda$core$UInt16(&$tmp4, ((panda$core$UInt16) { 1 }));
+    return $tmp4;
 }
 

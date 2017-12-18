@@ -377,7 +377,7 @@ void panda$io$File$exists$R$panda$core$Bit(Bit* result, File* file) {
     free(path);
 }
 
-void panda$io$File$isDirectory(Bit* result, File* file) {
+void panda$io$File$isDirectory$R$panda$core$Bit(Bit* result, File* file) {
     char* path = pandaGetCString(file->path);
     struct stat fileInfo;
     stat(path, &fileInfo);
@@ -411,7 +411,10 @@ Array* panda$io$File$list$R$panda$collections$ListView$LTpanda$io$File$GT(File* 
         return result;
     }
     while ((entry = readdir(d))) {
-        size_t length =  strlen(entry->d_name);
+        if (!strcmp(entry->d_name, ".") || !strcmp(entry->d_name, "..")) {
+            continue;
+        }
+        size_t length = strlen(entry->d_name);
         memcpy(buffer + dir->path->size + 1, entry->d_name, length);
         buffer[dir->path->size + 1 + length] = 0;
         String* path = pandaNewString(buffer, dir->path->size + 1 + length);

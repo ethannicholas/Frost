@@ -1,7 +1,141 @@
-class Test {
-    @class
-    method runTest(pandac:File, workingDir:File, test:String):Bit {
-        Console.print("Testing \{test}...")
+class TestRunner {
+    choice Mode {
+        O0
+        O3
+        C
+
+        @override
+        function convert():String {
+            match self {
+                when O0: return "-O0"
+                when O3: return "-O3"
+                when C:  return "C"
+            }
+        }
+    }
+
+    def pandaHome:File
+    def buildDir:File
+    def cCompiler:File
+
+    init(pandaHome:File, buildDir:File, cCompiler:File) {
+        self.pandaHome := pandaHome
+        self.buildDir := buildDir
+        self.cCompiler := cCompiler
+    }
+
+    method deleteTree(file:File) {
+        if file.isDirectory() {
+            def list := file.list()
+            for f in list {
+                deleteTree(f)
+            }
+        }
+        file.delete()
+    }
+
+    method findCFiles(path:File, result:Array<File>) {
+        if path.path.endsWith(".c") {
+            result.add(path)
+        }
+        else if path.isDirectory() {
+            def list := path.list()
+            for f in list {
+                findCFiles(f, result)
+            }
+        }
+    }
+
+    method compileCFiles(outPath:File, exe:File):Bit {
+        def files := Array<File>()
+        findCFiles(outPath, files)
+        def args := Array<String>()
+        args.add("-L\{buildDir}")
+        args.add("-lc_panda")
+        args.add("-I../bootstrap/include")
+        args.add("-I\{outPath}")
+        args.add("-I\{pandaHome}/src/c")
+        for f in files {
+            args.add(f.path)
+        }
+        args.add("-o")
+        args.add(exe.path)
+        var compiler := System.exec(cCompiler, args)
+        if compiler.waitFor() != 0 {
+            Console.printLine("C compiler error")
+            return false
+        }
+        return true
+    }
+
+    method runTestC(pandac:File, workingDir:File, test:String):Bit {
+        def expected := workingDir.resolve(test + ".expected").readFully()
+        def exe := File("/tmp/test.out")
+        if exe.exists() {
+            exe.delete()
+        }
+        def outPath := File("/tmp/test.cout")
+        if outPath.exists() {
+            deleteTree(outPath)
+        }
+        def args := Array<String>() -- FIXME literal
+        args.add(workingDir.resolve(test + ".panda").path)
+        args.add("-o")
+        args.add(outPath.path)
+        args.add("-f")
+        args.add("h")
+        var compiler := System.exec(pandac, args)
+        var compileResult := compiler.output.readFully() -- FIXME use error stream instead
+        compiler.waitFor()
+        if compileResult != "" {
+            if compileResult != expected {
+                Console.printLine("error, expected:\n\{expected}\nbut received:\n\{compileResult}")
+                return false
+            }
+            Console.printLine("success")
+            return true
+        }
+        args.clear()
+        args.add(workingDir.resolve(test + ".panda").path)
+        args.add("-o")
+        args.add(outPath.path)
+        args.add("-f")
+        args.add("c")
+        compiler := System.exec(pandac, args)
+        compileResult := compiler.output.readFully() -- FIXME use error stream instead
+        compiler.waitFor()
+        if !compileCFiles(outPath, exe) {
+            return false
+        }
+        if compileResult != "" {
+            if compileResult != expected {
+                Console.printLine("error, expected:\n\{expected}\nbut received:\n\{compileResult}")
+                return false
+            }
+            Console.printLine("success")
+            return true
+        }
+        def child := System.exec(exe, Array<String>())
+        def input := workingDir.resolve(test + ".in")
+        if input.exists() {
+            child.input.print(input.readFully())
+            child.input.cleanup()
+        }
+        def childResult := child.output.readFully()
+        child.waitFor()
+        if childResult != expected {
+            Console.printLine("error, expected:\n\{expected}\nbut received:\n\{childResult}")
+            return false
+        }
+        Console.printLine("success")
+        return true        
+    }
+
+    method runTest(pandac:File, workingDir:File, test:String, mode:Mode):Bit {
+        Console.print("Testing \{test} (\{mode})...")
+        if mode = Mode.C {
+            return runTestC(pandac, workingDir, test)
+        }
         def expected := workingDir.resolve(test + ".expected").readFully()
         def exe := File("/tmp/test.out")
         if exe.exists() {
@@ -11,8 +145,14 @@ class Test {
         args.add(workingDir.resolve(test + ".panda").path)
         args.add("-o")
         args.add(exe.path)
-        args.add("-O")
-        args.add("3")
+        match mode {
+            when Mode.O0:
+                args.add("-O")
+                args.add("0")
+            when Mode.O3:
+                args.add("-O")
+                args.add("3")
+        }
         def compiler := System.exec(pandac, args)
         def compileResult := compiler.output.readFully() -- FIXME use error stream instead
         compiler.waitFor()
@@ -40,26 +180,41 @@ class Test {
         return true
     }
 
-    @class
-    method main(args:Array<String>) {
-        if args.get_count() != 3 {
-            Console.printLine("usage: testrunner <pandac path> <test dir>")
-            System.exit(1)
-        }
-        def pandac := File(args[1])
-        def tests := File(args[2])
+    method run() {
+        def pandac := buildDir.resolve("pandac")
+        def tests := pandaHome.resolve("test/tests")
         def files := tests.list()
         var total := 0
         var success := 0
         for file in files {
             if file.path.endsWith(".panda") {
+                def name := file.changeExtension("").name()
                 total += 1
-                def name := file.name()[0 .. file.name().length() - ".panda".length()]
-                if runTest(pandac, tests, name) {
+                if runTest(pandac, tests, name, Mode.O0) {
+                    success += 1
+                }
+                total += 1
+                if runTest(pandac, tests, name, Mode.O3) {
+                    success += 1
+                }
+                total += 1
+                if runTest(pandac, tests, name, Mode.C) {
                     success += 1
                 }
             }
         }
-        Console.printLine("Passed \{success} / \{total} tests.")
+        Console.printLine("Passed \{success} / \{total} tests.")    
+    }
+
+    @class
+    method main(args:Array<String>) {
+        if args.get_count() != 4 {
+            Console.printLine("usage: testrunner <panda home> <build path> <c compiler>")
+            System.exit(1)
+        }
+        def pandaHome := File(args[1])
+        def buildDir := File(args[2])
+        def cCompiler := File(args[3])
+        TestRunner(pandaHome, buildDir, cCompiler).run()
     }
 }

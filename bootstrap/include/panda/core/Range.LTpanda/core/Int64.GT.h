@@ -28,7 +28,6 @@ typedef struct panda$core$Range$LTpanda$core$Int64$GT$nullable {
 } panda$core$Range$LTpanda$core$Int64$GT$nullable;
 typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[2]; } panda$core$Range$LTpanda$core$Int64$GT$wrapperclass_type;
 extern panda$core$Range$LTpanda$core$Int64$GT$wrapperclass_type panda$core$Range$LTpanda$core$Int64$GT$wrapperclass;
-panda$core$Range$LTpanda$core$Int64$GT$wrapper* wrap_panda$core$Range$LTpanda$core$Int64$GT(panda$core$Range$LTpanda$core$Int64$GT self);
 
 #ifndef PANDA_TYPESONLY
 #include "panda/core/Range.LTpanda/core/Int64.GT.h"

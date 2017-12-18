@@ -7,12 +7,6 @@
 #include "panda/collections/Key.h"
 #include "panda/core/Equatable.h"
 #include "panda/core/Int64.h"
-panda$core$String$Index$wrapper* wrap_panda$core$String$Index(panda$core$String$Index self) {
-    panda$core$String$Index$wrapper* result = (panda$core$String$Index$wrapper*) malloc(24);
-    result->cl = (panda$core$Class*) &panda$core$String$Index$wrapperclass;
-    result->value = self;
-    return result;
-}
 panda$core$Bit panda$core$String$Index$$GT$panda$core$String$Index$R$panda$core$Bit$shim(panda$core$String$Index self, panda$core$Object* p0) {
     panda$core$Bit result = panda$core$String$Index$$GT$panda$core$String$Index$R$panda$core$Bit(self, ((panda$core$String$Index$wrapper*) p0)->value);
     return result;

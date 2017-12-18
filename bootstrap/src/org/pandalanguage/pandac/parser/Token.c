@@ -2,12 +2,6 @@
 #include "panda/core/Value.h"
 #include "panda/core/Class.h"
 #include "panda/core/Object.h"
-org$pandalanguage$pandac$parser$Token$wrapper* wrap_org$pandalanguage$pandac$parser$Token(org$pandalanguage$pandac$parser$Token self) {
-    org$pandalanguage$pandac$parser$Token$wrapper* result = (org$pandalanguage$pandac$parser$Token$wrapper*) malloc(64);
-    result->cl = (panda$core$Class*) &org$pandalanguage$pandac$parser$Token$wrapperclass;
-    result->value = self;
-    return result;
-}
 #include "panda/core/Int64.h"
 #include "panda/core/String/Index.h"
 #include "org/pandalanguage/pandac/Position.h"

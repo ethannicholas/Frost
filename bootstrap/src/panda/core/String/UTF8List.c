@@ -15,7 +15,12 @@ panda$collections$Iterator* panda$core$String$UTF8List$iterator$R$panda$collecti
 }
 panda$core$Object* panda$core$String$UTF8List$$IDX$panda$core$Int64$R$panda$core$Char8$shim(panda$core$String$UTF8List* self, panda$core$Int64 p0) {
     panda$core$Char8 result = panda$core$String$UTF8List$$IDX$panda$core$Int64$R$panda$core$Char8(self, p0);
-    return ((panda$core$Object*) wrap_panda$core$Char8(result));
+    panda$core$Char8$wrapper* $tmp1;
+    $tmp1 = (panda$core$Char8$wrapper*) malloc(13);
+    $tmp1->cl = (panda$core$Class*) &panda$core$Char8$wrapperclass;
+    $tmp1->refCount = 1;
+    $tmp1->value = result;
+    return ((panda$core$Object*) $tmp1);
 }
 
 
@@ -39,10 +44,10 @@ panda$core$Int64 panda$core$String$UTF8List$get_count$R$panda$core$Int64(panda$c
     return self->str->_length;
 }
 panda$collections$Iterator* panda$core$String$UTF8List$iterator$R$panda$collections$Iterator$LTpanda$core$Char8$GT(panda$core$String$UTF8List* self) {
-    panda$core$String$UTF8Iterator* $tmp1 = (panda$core$String$UTF8Iterator*) malloc(32);
-    $tmp1->$class = (panda$core$Class*) &panda$core$String$UTF8Iterator$class;
-    $tmp1->refCount.value = 1;
-    panda$core$String$UTF8Iterator$init$panda$core$String($tmp1, self->str);
-    return ((panda$collections$Iterator*) $tmp1);
+    panda$core$String$UTF8Iterator* $tmp2 = (panda$core$String$UTF8Iterator*) malloc(32);
+    $tmp2->$class = (panda$core$Class*) &panda$core$String$UTF8Iterator$class;
+    $tmp2->refCount.value = 1;
+    panda$core$String$UTF8Iterator$init$panda$core$String($tmp2, self->str);
+    return ((panda$collections$Iterator*) $tmp2);
 }
 

@@ -24,7 +24,6 @@ typedef struct panda$core$Bit$nullable {
 } panda$core$Bit$nullable;
 typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[2]; } panda$core$Bit$wrapperclass_type;
 extern panda$core$Bit$wrapperclass_type panda$core$Bit$wrapperclass;
-panda$core$Bit$wrapper* wrap_panda$core$Bit(panda$core$Bit self);
 
 #ifndef PANDA_TYPESONLY
 #include "panda/core/Bit.h"

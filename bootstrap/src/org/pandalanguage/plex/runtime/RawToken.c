@@ -2,12 +2,6 @@
 #include "panda/core/Value.h"
 #include "panda/core/Class.h"
 #include "panda/core/Object.h"
-org$pandalanguage$plex$runtime$RawToken$wrapper* wrap_org$pandalanguage$plex$runtime$RawToken(org$pandalanguage$plex$runtime$RawToken self) {
-    org$pandalanguage$plex$runtime$RawToken$wrapper* result = (org$pandalanguage$plex$runtime$RawToken$wrapper*) malloc(56);
-    result->cl = (panda$core$Class*) &org$pandalanguage$plex$runtime$RawToken$wrapperclass;
-    result->value = self;
-    return result;
-}
 #include "panda/core/Int64.h"
 #include "panda/core/String/Index.h"
 

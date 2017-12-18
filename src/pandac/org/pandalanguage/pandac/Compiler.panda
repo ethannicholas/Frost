@@ -1828,11 +1828,11 @@ class Compiler : ErrorReporter {
             def leftValue := compileDot(left.position, left, ClassDecl.RAW_VALUE_NAME)
             def rightValue := rightEntry.rawValue.convert()->UInt64
             args.add(IRNode(IRNode.Kind.INT, right.position, Type.IntLiteral(rightValue),
-                    rightValue))            
+                    rightValue))    
             return call(leftValue, name, args)
         }
-        args.add(right)
-        return call(left, name, args) -- force an error
+        error(left.position, "'\{name}' cannot operate on '\{left.type}', '\{right.type}'")
+        return null
     }
 
 

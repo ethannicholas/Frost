@@ -9,12 +9,6 @@
 #include "panda/collections/Key.h"
 #include "panda/core/String.h"
 #include "panda/core/Int64.h"
-panda$core$Int8$wrapper* wrap_panda$core$Int8(panda$core$Int8 self) {
-    panda$core$Int8$wrapper* result = (panda$core$Int8$wrapper*) malloc(13);
-    result->cl = (panda$core$Class*) &panda$core$Int8$wrapperclass;
-    result->value = self;
-    return result;
-}
 #include "panda/core/Int32.h"
 #include "panda/core/Int16.h"
 #include "panda/core/UInt8.h"

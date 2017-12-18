@@ -30,7 +30,6 @@ typedef struct panda$core$SteppedRange$LTpanda$core$String$Index$Q$Cpanda$core$I
 } panda$core$SteppedRange$LTpanda$core$String$Index$Q$Cpanda$core$Int64$GT$nullable;
 typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[2]; } panda$core$SteppedRange$LTpanda$core$String$Index$Q$Cpanda$core$Int64$GT$wrapperclass_type;
 extern panda$core$SteppedRange$LTpanda$core$String$Index$Q$Cpanda$core$Int64$GT$wrapperclass_type panda$core$SteppedRange$LTpanda$core$String$Index$Q$Cpanda$core$Int64$GT$wrapperclass;
-panda$core$SteppedRange$LTpanda$core$String$Index$Q$Cpanda$core$Int64$GT$wrapper* wrap_panda$core$SteppedRange$LTpanda$core$String$Index$Q$Cpanda$core$Int64$GT(panda$core$SteppedRange$LTpanda$core$String$Index$Q$Cpanda$core$Int64$GT self);
 
 #ifndef PANDA_TYPESONLY
 #include "panda/core/SteppedRange.LTpanda/core/String/Index.Q.Cpanda/core/Int64.GT.h"

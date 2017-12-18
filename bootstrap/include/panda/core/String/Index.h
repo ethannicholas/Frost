@@ -25,7 +25,6 @@ typedef struct panda$core$String$Index$nullable {
 } panda$core$String$Index$nullable;
 typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[2]; } panda$core$String$Index$wrapperclass_type;
 extern panda$core$String$Index$wrapperclass_type panda$core$String$Index$wrapperclass;
-panda$core$String$Index$wrapper* wrap_panda$core$String$Index(panda$core$String$Index self);
 
 #ifndef PANDA_TYPESONLY
 #include "panda/core/String/Index.h"

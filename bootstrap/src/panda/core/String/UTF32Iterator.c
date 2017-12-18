@@ -10,7 +10,12 @@
 #include "panda/core/Int32.h"
 panda$core$Object* panda$core$String$UTF32Iterator$next$R$panda$core$Char32$shim(panda$core$String$UTF32Iterator* self) {
     panda$core$Char32 result = panda$core$String$UTF32Iterator$next$R$panda$core$Char32(self);
-    return ((panda$core$Object*) wrap_panda$core$Char32(result));
+    panda$core$Char32$wrapper* $tmp1;
+    $tmp1 = (panda$core$Char32$wrapper*) malloc(16);
+    $tmp1->cl = (panda$core$Class*) &panda$core$Char32$wrapperclass;
+    $tmp1->refCount = 1;
+    $tmp1->value = result;
+    return ((panda$core$Object*) $tmp1);
 }
 
 
@@ -25,99 +30,99 @@ void panda$core$String$UTF32Iterator$init$panda$core$String(panda$core$String$UT
     self->str = p_str;
 }
 panda$core$Bit panda$core$String$UTF32Iterator$get_done$R$panda$core$Bit(panda$core$String$UTF32Iterator* self) {
-    panda$core$Bit $tmp1 = panda$core$Int64$$GE$panda$core$Int64$R$panda$core$Bit(self->index, self->str->_length);
-    return $tmp1;
+    panda$core$Bit $tmp2 = panda$core$Int64$$GE$panda$core$Int64$R$panda$core$Bit(self->index, self->str->_length);
+    return $tmp2;
 }
 panda$core$Char32 panda$core$String$UTF32Iterator$next$R$panda$core$Char32(panda$core$String$UTF32Iterator* self) {
-    panda$core$Char8 c3;
-    panda$core$Int32 result4;
-    panda$core$Char32 $tmp9;
-    panda$core$Char32 $tmp21;
-    panda$core$Char32 $tmp38;
-    panda$core$Char32 $tmp58;
-    panda$core$Bit $tmp2 = panda$core$Int64$$LT$panda$core$Int64$R$panda$core$Bit(self->index, self->str->_length);
-    PANDA_ASSERT($tmp2.value);
-    c3 = self->str->data[self->index.value];
-    panda$core$Int32 $tmp5 = panda$core$Char8$convert$R$panda$core$Int32(c3);
-    result4 = $tmp5;
-    int64_t $tmp6 = ((int64_t) c3.value) & 255;
-    bool $tmp7 = $tmp6 < 128;
-    if (((panda$core$Bit) { $tmp7 }).value) {
+    panda$core$Char8 c4;
+    panda$core$Int32 result5;
+    panda$core$Char32 $tmp10;
+    panda$core$Char32 $tmp22;
+    panda$core$Char32 $tmp39;
+    panda$core$Char32 $tmp59;
+    panda$core$Bit $tmp3 = panda$core$Int64$$LT$panda$core$Int64$R$panda$core$Bit(self->index, self->str->_length);
+    PANDA_ASSERT($tmp3.value);
+    c4 = self->str->data[self->index.value];
+    panda$core$Int32 $tmp6 = panda$core$Char8$convert$R$panda$core$Int32(c4);
+    result5 = $tmp6;
+    int64_t $tmp7 = ((int64_t) c4.value) & 255;
+    bool $tmp8 = $tmp7 < 128;
+    if (((panda$core$Bit) { $tmp8 }).value) {
     {
-        panda$core$Int64 $tmp8 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 1 }));
-        self->index = $tmp8;
-        panda$core$Char32$init$panda$core$Int32(&$tmp9, result4);
-        return $tmp9;
+        panda$core$Int64 $tmp9 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 1 }));
+        self->index = $tmp9;
+        panda$core$Char32$init$panda$core$Int32(&$tmp10, result5);
+        return $tmp10;
     }
     }
-    int64_t $tmp10 = ((int64_t) c3.value) & 255;
-    bool $tmp11 = $tmp10 < 192;
-    if (((panda$core$Bit) { $tmp11 }).value) {
+    int64_t $tmp11 = ((int64_t) c4.value) & 255;
+    bool $tmp12 = $tmp11 < 192;
+    if (((panda$core$Bit) { $tmp12 }).value) {
     {
-        panda$core$Int64 $tmp12 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 1 }));
-        panda$core$Bit $tmp13 = panda$core$Int64$$LT$panda$core$Int64$R$panda$core$Bit($tmp12, self->str->_length);
-        PANDA_ASSERT($tmp13.value);
-        panda$core$Int32 $tmp14 = panda$core$Int32$$BAND$panda$core$Int32$R$panda$core$Int32(result4, ((panda$core$Int32) { 31 }));
-        panda$core$Int32 $tmp15 = panda$core$Int32$$SHL$panda$core$Int32$R$panda$core$Int32($tmp14, ((panda$core$Int32) { 6 }));
-        panda$core$Int64 $tmp16 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 1 }));
-        panda$core$Int32 $tmp17 = panda$core$Char8$convert$R$panda$core$Int32(self->str->data[$tmp16.value]);
-        panda$core$Int32 $tmp18 = panda$core$Int32$$BAND$panda$core$Int32$R$panda$core$Int32($tmp17, ((panda$core$Int32) { 63 }));
-        panda$core$Int32 $tmp19 = panda$core$Int32$$ADD$panda$core$Int32$R$panda$core$Int32($tmp15, $tmp18);
-        result4 = $tmp19;
-        panda$core$Int64 $tmp20 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 2 }));
-        self->index = $tmp20;
-        panda$core$Char32$init$panda$core$Int32(&$tmp21, result4);
-        return $tmp21;
+        panda$core$Int64 $tmp13 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 1 }));
+        panda$core$Bit $tmp14 = panda$core$Int64$$LT$panda$core$Int64$R$panda$core$Bit($tmp13, self->str->_length);
+        PANDA_ASSERT($tmp14.value);
+        panda$core$Int32 $tmp15 = panda$core$Int32$$BAND$panda$core$Int32$R$panda$core$Int32(result5, ((panda$core$Int32) { 31 }));
+        panda$core$Int32 $tmp16 = panda$core$Int32$$SHL$panda$core$Int32$R$panda$core$Int32($tmp15, ((panda$core$Int32) { 6 }));
+        panda$core$Int64 $tmp17 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 1 }));
+        panda$core$Int32 $tmp18 = panda$core$Char8$convert$R$panda$core$Int32(self->str->data[$tmp17.value]);
+        panda$core$Int32 $tmp19 = panda$core$Int32$$BAND$panda$core$Int32$R$panda$core$Int32($tmp18, ((panda$core$Int32) { 63 }));
+        panda$core$Int32 $tmp20 = panda$core$Int32$$ADD$panda$core$Int32$R$panda$core$Int32($tmp16, $tmp19);
+        result5 = $tmp20;
+        panda$core$Int64 $tmp21 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 2 }));
+        self->index = $tmp21;
+        panda$core$Char32$init$panda$core$Int32(&$tmp22, result5);
+        return $tmp22;
     }
     }
-    int64_t $tmp22 = ((int64_t) c3.value) & 255;
-    bool $tmp23 = $tmp22 < 224;
-    if (((panda$core$Bit) { $tmp23 }).value) {
+    int64_t $tmp23 = ((int64_t) c4.value) & 255;
+    bool $tmp24 = $tmp23 < 224;
+    if (((panda$core$Bit) { $tmp24 }).value) {
     {
-        panda$core$Int64 $tmp24 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 2 }));
-        panda$core$Bit $tmp25 = panda$core$Int64$$LT$panda$core$Int64$R$panda$core$Bit($tmp24, self->str->_length);
-        PANDA_ASSERT($tmp25.value);
-        panda$core$Int32 $tmp26 = panda$core$Int32$$BAND$panda$core$Int32$R$panda$core$Int32(result4, ((panda$core$Int32) { 15 }));
-        panda$core$Int32 $tmp27 = panda$core$Int32$$SHL$panda$core$Int32$R$panda$core$Int32($tmp26, ((panda$core$Int32) { 12 }));
-        panda$core$Int64 $tmp28 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 1 }));
-        panda$core$Int32 $tmp29 = panda$core$Char8$convert$R$panda$core$Int32(self->str->data[$tmp28.value]);
-        panda$core$Int32 $tmp30 = panda$core$Int32$$BAND$panda$core$Int32$R$panda$core$Int32($tmp29, ((panda$core$Int32) { 63 }));
-        panda$core$Int32 $tmp31 = panda$core$Int32$$SHL$panda$core$Int32$R$panda$core$Int32($tmp30, ((panda$core$Int32) { 6 }));
-        panda$core$Int32 $tmp32 = panda$core$Int32$$ADD$panda$core$Int32$R$panda$core$Int32($tmp27, $tmp31);
-        panda$core$Int64 $tmp33 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 2 }));
-        panda$core$Int32 $tmp34 = panda$core$Char8$convert$R$panda$core$Int32(self->str->data[$tmp33.value]);
-        panda$core$Int32 $tmp35 = panda$core$Int32$$BAND$panda$core$Int32$R$panda$core$Int32($tmp34, ((panda$core$Int32) { 63 }));
-        panda$core$Int32 $tmp36 = panda$core$Int32$$ADD$panda$core$Int32$R$panda$core$Int32($tmp32, $tmp35);
-        result4 = $tmp36;
-        panda$core$Int64 $tmp37 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 3 }));
-        self->index = $tmp37;
-        panda$core$Char32$init$panda$core$Int32(&$tmp38, result4);
-        return $tmp38;
+        panda$core$Int64 $tmp25 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 2 }));
+        panda$core$Bit $tmp26 = panda$core$Int64$$LT$panda$core$Int64$R$panda$core$Bit($tmp25, self->str->_length);
+        PANDA_ASSERT($tmp26.value);
+        panda$core$Int32 $tmp27 = panda$core$Int32$$BAND$panda$core$Int32$R$panda$core$Int32(result5, ((panda$core$Int32) { 15 }));
+        panda$core$Int32 $tmp28 = panda$core$Int32$$SHL$panda$core$Int32$R$panda$core$Int32($tmp27, ((panda$core$Int32) { 12 }));
+        panda$core$Int64 $tmp29 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 1 }));
+        panda$core$Int32 $tmp30 = panda$core$Char8$convert$R$panda$core$Int32(self->str->data[$tmp29.value]);
+        panda$core$Int32 $tmp31 = panda$core$Int32$$BAND$panda$core$Int32$R$panda$core$Int32($tmp30, ((panda$core$Int32) { 63 }));
+        panda$core$Int32 $tmp32 = panda$core$Int32$$SHL$panda$core$Int32$R$panda$core$Int32($tmp31, ((panda$core$Int32) { 6 }));
+        panda$core$Int32 $tmp33 = panda$core$Int32$$ADD$panda$core$Int32$R$panda$core$Int32($tmp28, $tmp32);
+        panda$core$Int64 $tmp34 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 2 }));
+        panda$core$Int32 $tmp35 = panda$core$Char8$convert$R$panda$core$Int32(self->str->data[$tmp34.value]);
+        panda$core$Int32 $tmp36 = panda$core$Int32$$BAND$panda$core$Int32$R$panda$core$Int32($tmp35, ((panda$core$Int32) { 63 }));
+        panda$core$Int32 $tmp37 = panda$core$Int32$$ADD$panda$core$Int32$R$panda$core$Int32($tmp33, $tmp36);
+        result5 = $tmp37;
+        panda$core$Int64 $tmp38 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 3 }));
+        self->index = $tmp38;
+        panda$core$Char32$init$panda$core$Int32(&$tmp39, result5);
+        return $tmp39;
     }
     }
-    panda$core$Int64 $tmp39 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 3 }));
-    panda$core$Bit $tmp40 = panda$core$Int64$$LT$panda$core$Int64$R$panda$core$Bit($tmp39, self->str->_length);
-    PANDA_ASSERT($tmp40.value);
-    panda$core$Int32 $tmp41 = panda$core$Int32$$BAND$panda$core$Int32$R$panda$core$Int32(result4, ((panda$core$Int32) { 7 }));
-    panda$core$Int32 $tmp42 = panda$core$Int32$$SHL$panda$core$Int32$R$panda$core$Int32($tmp41, ((panda$core$Int32) { 18 }));
-    panda$core$Int64 $tmp43 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 1 }));
-    panda$core$Int32 $tmp44 = panda$core$Char8$convert$R$panda$core$Int32(self->str->data[$tmp43.value]);
-    panda$core$Int32 $tmp45 = panda$core$Int32$$BAND$panda$core$Int32$R$panda$core$Int32($tmp44, ((panda$core$Int32) { 63 }));
-    panda$core$Int32 $tmp46 = panda$core$Int32$$SHL$panda$core$Int32$R$panda$core$Int32($tmp45, ((panda$core$Int32) { 12 }));
-    panda$core$Int32 $tmp47 = panda$core$Int32$$ADD$panda$core$Int32$R$panda$core$Int32($tmp42, $tmp46);
-    panda$core$Int64 $tmp48 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 2 }));
-    panda$core$Int32 $tmp49 = panda$core$Char8$convert$R$panda$core$Int32(self->str->data[$tmp48.value]);
-    panda$core$Int32 $tmp50 = panda$core$Int32$$BAND$panda$core$Int32$R$panda$core$Int32($tmp49, ((panda$core$Int32) { 63 }));
-    panda$core$Int32 $tmp51 = panda$core$Int32$$SHL$panda$core$Int32$R$panda$core$Int32($tmp50, ((panda$core$Int32) { 6 }));
-    panda$core$Int32 $tmp52 = panda$core$Int32$$ADD$panda$core$Int32$R$panda$core$Int32($tmp47, $tmp51);
-    panda$core$Int64 $tmp53 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 3 }));
-    panda$core$Int32 $tmp54 = panda$core$Char8$convert$R$panda$core$Int32(self->str->data[$tmp53.value]);
-    panda$core$Int32 $tmp55 = panda$core$Int32$$BAND$panda$core$Int32$R$panda$core$Int32($tmp54, ((panda$core$Int32) { 63 }));
-    panda$core$Int32 $tmp56 = panda$core$Int32$$ADD$panda$core$Int32$R$panda$core$Int32($tmp52, $tmp55);
-    result4 = $tmp56;
-    panda$core$Int64 $tmp57 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 4 }));
-    self->index = $tmp57;
-    panda$core$Char32$init$panda$core$Int32(&$tmp58, result4);
-    return $tmp58;
+    panda$core$Int64 $tmp40 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 3 }));
+    panda$core$Bit $tmp41 = panda$core$Int64$$LT$panda$core$Int64$R$panda$core$Bit($tmp40, self->str->_length);
+    PANDA_ASSERT($tmp41.value);
+    panda$core$Int32 $tmp42 = panda$core$Int32$$BAND$panda$core$Int32$R$panda$core$Int32(result5, ((panda$core$Int32) { 7 }));
+    panda$core$Int32 $tmp43 = panda$core$Int32$$SHL$panda$core$Int32$R$panda$core$Int32($tmp42, ((panda$core$Int32) { 18 }));
+    panda$core$Int64 $tmp44 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 1 }));
+    panda$core$Int32 $tmp45 = panda$core$Char8$convert$R$panda$core$Int32(self->str->data[$tmp44.value]);
+    panda$core$Int32 $tmp46 = panda$core$Int32$$BAND$panda$core$Int32$R$panda$core$Int32($tmp45, ((panda$core$Int32) { 63 }));
+    panda$core$Int32 $tmp47 = panda$core$Int32$$SHL$panda$core$Int32$R$panda$core$Int32($tmp46, ((panda$core$Int32) { 12 }));
+    panda$core$Int32 $tmp48 = panda$core$Int32$$ADD$panda$core$Int32$R$panda$core$Int32($tmp43, $tmp47);
+    panda$core$Int64 $tmp49 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 2 }));
+    panda$core$Int32 $tmp50 = panda$core$Char8$convert$R$panda$core$Int32(self->str->data[$tmp49.value]);
+    panda$core$Int32 $tmp51 = panda$core$Int32$$BAND$panda$core$Int32$R$panda$core$Int32($tmp50, ((panda$core$Int32) { 63 }));
+    panda$core$Int32 $tmp52 = panda$core$Int32$$SHL$panda$core$Int32$R$panda$core$Int32($tmp51, ((panda$core$Int32) { 6 }));
+    panda$core$Int32 $tmp53 = panda$core$Int32$$ADD$panda$core$Int32$R$panda$core$Int32($tmp48, $tmp52);
+    panda$core$Int64 $tmp54 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 3 }));
+    panda$core$Int32 $tmp55 = panda$core$Char8$convert$R$panda$core$Int32(self->str->data[$tmp54.value]);
+    panda$core$Int32 $tmp56 = panda$core$Int32$$BAND$panda$core$Int32$R$panda$core$Int32($tmp55, ((panda$core$Int32) { 63 }));
+    panda$core$Int32 $tmp57 = panda$core$Int32$$ADD$panda$core$Int32$R$panda$core$Int32($tmp53, $tmp56);
+    result5 = $tmp57;
+    panda$core$Int64 $tmp58 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 4 }));
+    self->index = $tmp58;
+    panda$core$Char32$init$panda$core$Int32(&$tmp59, result5);
+    return $tmp59;
 }
 

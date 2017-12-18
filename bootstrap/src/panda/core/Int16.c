@@ -9,12 +9,6 @@
 #include "panda/core/Equatable.h"
 #include "panda/core/String.h"
 #include "panda/core/Int64.h"
-panda$core$Int16$wrapper* wrap_panda$core$Int16(panda$core$Int16 self) {
-    panda$core$Int16$wrapper* result = (panda$core$Int16$wrapper*) malloc(14);
-    result->cl = (panda$core$Class*) &panda$core$Int16$wrapperclass;
-    result->value = self;
-    return result;
-}
 #include "panda/core/Int8.h"
 #include "panda/core/UInt8.h"
 #include "panda/core/Int32.h"

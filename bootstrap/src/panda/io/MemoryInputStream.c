@@ -21,8 +21,8 @@ typedef panda$core$Int64 (*$fn8)(panda$collections$CollectionView*);
 typedef panda$collections$Iterator* (*$fn13)(panda$collections$Iterable*);
 typedef panda$core$Bit (*$fn19)(panda$collections$Iterator*);
 typedef panda$core$Object* (*$fn25)(panda$collections$Iterator*);
-typedef panda$core$Int64 (*$fn30)(panda$collections$CollectionView*);
-typedef panda$core$Object* (*$fn36)(panda$collections$ListView*, panda$core$Int64);
+typedef panda$core$Int64 (*$fn31)(panda$collections$CollectionView*);
+typedef panda$core$Object* (*$fn37)(panda$collections$ListView*, panda$core$Int64);
 
 
 void panda$io$MemoryInputStream$init$panda$collections$ImmutableArray$LTpanda$core$UInt8$GT(panda$io$MemoryInputStream* self, panda$collections$ImmutableArray* p_source) {
@@ -74,7 +74,12 @@ void panda$io$MemoryInputStream$init$panda$core$String(panda$io$MemoryInputStrea
             panda$core$Object* $tmp26 = $tmp24(c$Iter10);
             c22 = ((panda$core$Char8$wrapper*) $tmp26)->value;
             panda$core$UInt8 $tmp27 = panda$core$Char8$convert$R$panda$core$UInt8(c22);
-            panda$collections$Array$add$panda$collections$Array$T(array3, ((panda$core$Object*) wrap_panda$core$UInt8($tmp27)));
+            panda$core$UInt8$wrapper* $tmp28;
+            $tmp28 = (panda$core$UInt8$wrapper*) malloc(13);
+            $tmp28->cl = (panda$core$Class*) &panda$core$UInt8$wrapperclass;
+            $tmp28->refCount = 1;
+            $tmp28->value = $tmp27;
+            panda$collections$Array$add$panda$collections$Array$T(array3, ((panda$core$Object*) $tmp28));
         }
         goto $l15;
         $l16:;
@@ -82,26 +87,26 @@ void panda$io$MemoryInputStream$init$panda$core$String(panda$io$MemoryInputStrea
     self->data = ((panda$collections$ListView*) array3);
 }
 panda$core$UInt8$nullable panda$io$MemoryInputStream$read$R$panda$core$UInt8$Q(panda$io$MemoryInputStream* self) {
-    panda$core$UInt8 result33;
-    ITable* $tmp28 = ((panda$collections$CollectionView*) self->data)->$class->itable;
-    while ($tmp28->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
-        $tmp28 = $tmp28->next;
+    panda$core$UInt8 result34;
+    ITable* $tmp29 = ((panda$collections$CollectionView*) self->data)->$class->itable;
+    while ($tmp29->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
+        $tmp29 = $tmp29->next;
     }
-    $fn30 $tmp29 = $tmp28->methods[0];
-    panda$core$Int64 $tmp31 = $tmp29(((panda$collections$CollectionView*) self->data));
-    panda$core$Bit $tmp32 = panda$core$Int64$$LT$panda$core$Int64$R$panda$core$Bit(self->index, $tmp31);
-    if ($tmp32.value) {
+    $fn31 $tmp30 = $tmp29->methods[0];
+    panda$core$Int64 $tmp32 = $tmp30(((panda$collections$CollectionView*) self->data));
+    panda$core$Bit $tmp33 = panda$core$Int64$$LT$panda$core$Int64$R$panda$core$Bit(self->index, $tmp32);
+    if ($tmp33.value) {
     {
-        ITable* $tmp34 = self->data->$class->itable;
-        while ($tmp34->$class != (panda$core$Class*) &panda$collections$ListView$class) {
-            $tmp34 = $tmp34->next;
+        ITable* $tmp35 = self->data->$class->itable;
+        while ($tmp35->$class != (panda$core$Class*) &panda$collections$ListView$class) {
+            $tmp35 = $tmp35->next;
         }
-        $fn36 $tmp35 = $tmp34->methods[0];
-        panda$core$Object* $tmp37 = $tmp35(self->data, self->index);
-        result33 = ((panda$core$UInt8$wrapper*) $tmp37)->value;
-        panda$core$Int64 $tmp38 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 1 }));
-        self->index = $tmp38;
-        return ((panda$core$UInt8$nullable) { result33, true });
+        $fn37 $tmp36 = $tmp35->methods[0];
+        panda$core$Object* $tmp38 = $tmp36(self->data, self->index);
+        result34 = ((panda$core$UInt8$wrapper*) $tmp38)->value;
+        panda$core$Int64 $tmp39 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 1 }));
+        self->index = $tmp39;
+        return ((panda$core$UInt8$nullable) { result34, true });
     }
     }
     return ((panda$core$UInt8$nullable) { .nonnull = false });

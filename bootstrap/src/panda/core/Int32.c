@@ -9,12 +9,6 @@
 #include "panda/core/Comparable.h"
 #include "panda/core/String.h"
 #include "panda/core/Int64.h"
-panda$core$Int32$wrapper* wrap_panda$core$Int32(panda$core$Int32 self) {
-    panda$core$Int32$wrapper* result = (panda$core$Int32$wrapper*) malloc(16);
-    result->cl = (panda$core$Class*) &panda$core$Int32$wrapperclass;
-    result->value = self;
-    return result;
-}
 #include "panda/core/Int8.h"
 #include "panda/core/Int16.h"
 #include "panda/core/UInt8.h"

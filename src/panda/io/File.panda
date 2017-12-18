@@ -103,6 +103,9 @@ class File : Key<File> {
     method exists():Bit
 
     @external
+    method isDirectory():Bit
+
+    @external
     method list():ListView<File>
 
     ================================================================================================

@@ -10,7 +10,7 @@ include_directories(
     src/c
 )
 
-add_executable(bootstrap
+add_library(c_panda
     bootstrap/src/panda/collections/Array.c
     bootstrap/src/panda/collections/Array/ArrayIterator.c
     bootstrap/src/panda/collections/Collection.c
@@ -91,6 +91,10 @@ add_executable(bootstrap
     bootstrap/src/panda/io/PushbackInputStream.c
     bootstrap/src/panda/math/Random.c
     bootstrap/src/panda/math/XorShift128Plus.c
+    src/c/pandalib.c
+)
+
+add_executable(bootstrap
     bootstrap/src/org/pandalanguage/pandac/Alias.c
     bootstrap/src/org/pandalanguage/pandac/Annotations.c
     bootstrap/src/org/pandalanguage/pandac/ASTNode.c
@@ -117,7 +121,6 @@ add_executable(bootstrap
     bootstrap/src/org/pandalanguage/pandac/LLVMCodeGenerator/InlineContext.c
     bootstrap/src/org/pandalanguage/pandac/LLVMCodeGenerator/LoopDescriptor.c
     bootstrap/src/org/pandalanguage/pandac/LLVMCodeGenerator/MethodShim.c
-    bootstrap/src/org/pandalanguage/pandac/LLVMCodeGenerator/Pair.c
     bootstrap/src/org/pandalanguage/pandac/Main.c
     bootstrap/src/org/pandalanguage/pandac/Main/Arguments.c
     bootstrap/src/org/pandalanguage/pandac/MethodDecl.c
@@ -139,8 +142,9 @@ add_executable(bootstrap
     bootstrap/src/org/pandalanguage/pandac/parser/Token.c
     bootstrap/src/org/pandalanguage/plex/runtime/DFA.c
     bootstrap/src/org/pandalanguage/plex/runtime/RawToken.c
-    src/c/pandalib.c
 )
+target_link_libraries(bootstrap c_panda)
+set_target_properties(bootstrap PROPERTIES LINKER_LANGUAGE CXX)
 
 function(compile_panda_sources out_var)
     set(result)
@@ -524,5 +528,5 @@ add_custom_target(run_tests
 
 add_custom_command(
     TARGET run_tests POST_BUILD
-    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/TestRunner ${CMAKE_CURRENT_BINARY_DIR}/pandac ${CMAKE_CURRENT_SOURCE_DIR}/test/tests
+    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/TestRunner ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_C_COMPILER}
 )

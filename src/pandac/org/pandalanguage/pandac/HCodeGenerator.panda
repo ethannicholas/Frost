@@ -205,8 +205,6 @@ class HCodeGenerator : CodeGenerator {
                     "\{escapeName(cl.name)}$wrapperclass_type;")
             types.printLine("extern \{escapeName(cl.name)}$wrapperclass_type " +
                     "\{escapeName(cl.name)}$wrapperclass;")
-            types.printLine("\{escapeName(cl.name)}$wrapper* wrap_\{escapeName(cl.name)}(" +
-                    "\{escapeName(cl.name)} self);")
         }
     }
 
