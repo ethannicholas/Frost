@@ -870,9 +870,9 @@ panda$core$String* panda$core$UInt16$convert$R$panda$core$String(panda$core$UInt
     int64_t $tmp207 = $tmp195 - i192.value;
     if ($tmp196) goto $l208; else goto $l209;
     $l208:;
-    if ($tmp207 >= 1) goto $l206; else goto $l199;
+    if ((uint64_t) $tmp207 >= 1) goto $l206; else goto $l199;
     $l209:;
-    if ($tmp207 > 1) goto $l206; else goto $l199;
+    if ((uint64_t) $tmp207 > 1) goto $l206; else goto $l199;
     $l206:;
     i192.value += 1;
     goto $l197;

@@ -179,9 +179,9 @@ panda$core$String* panda$core$Char8$$MUL$panda$core$Int64$R$panda$core$String(pa
     int64_t $tmp43 = $tmp32 - i29.value;
     if ($tmp33) goto $l44; else goto $l45;
     $l44:;
-    if ($tmp43 >= 1) goto $l42; else goto $l36;
+    if ((uint64_t) $tmp43 >= 1) goto $l42; else goto $l36;
     $l45:;
-    if ($tmp43 > 1) goto $l42; else goto $l36;
+    if ((uint64_t) $tmp43 > 1) goto $l42; else goto $l36;
     $l42:;
     i29.value += 1;
     goto $l34;

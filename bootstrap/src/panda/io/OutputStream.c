@@ -67,9 +67,9 @@ void panda$io$OutputStream$write$panda$unsafe$Pointer$LTpanda$core$UInt8$GT$pand
     int64_t $tmp20 = $tmp8 - i5.value;
     if ($tmp9) goto $l21; else goto $l22;
     $l21:;
-    if ($tmp20 >= 1) goto $l19; else goto $l12;
+    if ((uint64_t) $tmp20 >= 1) goto $l19; else goto $l12;
     $l22:;
-    if ($tmp20 > 1) goto $l19; else goto $l12;
+    if ((uint64_t) $tmp20 > 1) goto $l19; else goto $l12;
     $l19:;
     i5.value += 1;
     goto $l10;

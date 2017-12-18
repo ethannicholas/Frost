@@ -88,9 +88,9 @@ void org$pandalanguage$pandac$MethodRef$init$org$pandalanguage$pandac$MethodDecl
     int64_t $tmp38 = $tmp16 - i13.value;
     if ($tmp17) goto $l39; else goto $l40;
     $l39:;
-    if ($tmp38 >= 1) goto $l37; else goto $l20;
+    if ((uint64_t) $tmp38 >= 1) goto $l37; else goto $l20;
     $l40:;
-    if ($tmp38 > 1) goto $l37; else goto $l20;
+    if ((uint64_t) $tmp38 > 1) goto $l37; else goto $l20;
     $l37:;
     i13.value += 1;
     goto $l18;

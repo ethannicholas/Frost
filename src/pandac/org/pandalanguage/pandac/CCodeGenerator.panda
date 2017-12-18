@@ -3,7 +3,10 @@ package org.pandalanguage.pandac
 uses org.pandalanguage.pandac.parser.Token
 
 -- Note that the C code produced by this CodeGenerator is not quite compatible with the output of
--- the LLVM code generator due to slight ABI differences in how structures are passed.
+-- the LLVM code generator due to slight ABI differences in how structures are passed and the use
+-- of fastcc on the LLVM side of things. As this CodeGenerator is only intended to produce the
+-- bootstrap compiler and does not interoperate in any way with LLVM code, this should not present
+-- any problems, but is still something to be aware of.
 @final
 class CCodeGenerator : CodeGenerator {
     var compiler:Compiler?
@@ -1481,12 +1484,15 @@ class CCodeGenerator : CodeGenerator {
         def forwardEntry := nextLabel()
         def backwardEntry := nextLabel()
         def signPrefix:String
+        def unsigned:String
         if t.name.startsWith("panda.core.Int") {
             signPrefix := "s"
+            unsigned := "u" + numberType
         }
         else {
             assert t.name.startsWith("panda.core.UInt") | t.name.startsWith("panda.core.Char")
             signPrefix := "u"
+            unsigned := numberType
         }
         def forwardEntryInclusive := nextLabel()
         def forwardEntryExclusive := nextLabel()
@@ -1513,12 +1519,14 @@ class CCodeGenerator : CodeGenerator {
         createBlock(forwardInclusiveLabel, out)
         -- always use unsigned comparison to avoid overflow; we know both the delta and the step are
         -- the same sign
-        out.printLine("if (\{forwardDelta} >= 1) goto \{loopInc}; else goto \{loopEnd};")
+        out.printLine("if ((\{unsigned}) \{forwardDelta} >= 1) goto \{loopInc}; else goto " +
+                "\{loopEnd};")
 
         -- forward exclusive test
         createBlock(forwardExclusiveLabel, out)
         def forwardExclusiveTest := nextVar()
-        out.printLine("if (\{forwardDelta} > 1) goto \{loopInc}; else goto \{loopEnd};")
+        out.printLine("if ((\{unsigned}) \{forwardDelta} > 1) goto \{loopInc}; else goto " +
+                "\{loopEnd};")
 
         createBlock(loopInc, out)
         def inc := nextVar()
@@ -1594,14 +1602,17 @@ class CCodeGenerator : CodeGenerator {
         loopDescriptors.push(LoopDescriptor(f.payload->String?, loopEnd, loopTest)) -- FIXME Auto
         def forwardEntry := nextLabel()
         def backwardEntry := nextLabel()
+        def unsigned:String
         def signPrefix:String
         if stepType.name.startsWith("panda.core.Int") {
             signPrefix := "s"
+            unsigned := "u" + numberType
         }
         else {
             assert stepType.name.startsWith("panda.core.UInt") |
                     stepType.name.startsWith("panda.core.Char")
             signPrefix := "u"
+            unsigned := numberType
         }
         def direction:String
         if signPrefix = "s" {
@@ -1656,12 +1667,14 @@ class CCodeGenerator : CodeGenerator {
         createBlock(forwardInclusiveLabel, out)
         -- always use unsigned comparison to avoid overflow; we know both the delta and the step are
         -- the same sign
-        out.printLine("if (\{forwardDelta} >= \{step}) goto \{loopInc}; else goto \{loopEnd};")
+        out.printLine("if ((\{unsigned}) \{forwardDelta} >= \{step}) goto \{loopInc}; else goto " +
+                "\{loopEnd};")
 
         -- forward exclusive test
         createBlock(forwardExclusiveLabel, out)
         def forwardExclusiveTest := nextVar()
-        out.printLine("if (\{forwardDelta} > \{step}) goto \{loopInc}; else goto \{loopEnd};")
+        out.printLine("if ((\{unsigned}) \{forwardDelta} > \{step}) goto \{loopInc}; else goto " +
+                "\{loopEnd};")
 
         -- backward loop; perform the test by subtracting end from index and then comparing to
         -- -step, to avoid overflows near the minimum value
@@ -1677,11 +1690,13 @@ class CCodeGenerator : CodeGenerator {
 
         -- backward inclusive test
         createBlock(backwardInclusiveLabel, out)
-        out.printLine("if (\{backwardDelta} >= -\{step}) goto \{loopInc}; else goto \{loopEnd};")
+        out.printLine("if ((\{unsigned}) \{backwardDelta} >= -\{step}) goto \{loopInc}; else " +
+                "goto \{loopEnd};")
 
         -- backward exclusive test
         createBlock(backwardExclusiveLabel, out)
-        out.printLine("if (\{backwardDelta} > -\{step}) goto \{loopInc}; else goto \{loopEnd};")
+        out.printLine("if ((\{unsigned}) \{backwardDelta} > -\{step}) goto \{loopInc}; else " +
+                "goto \{loopEnd};")
 
         createBlock(loopInc, out)
         def inc := nextVar()

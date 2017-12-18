@@ -732,9 +732,9 @@ panda$core$String* panda$core$Int64$convert$R$panda$core$String(panda$core$Int64
     int64_t $tmp176 = $tmp164 - i161.value;
     if ($tmp165) goto $l177; else goto $l178;
     $l177:;
-    if ($tmp176 >= 1) goto $l175; else goto $l168;
+    if ((uint64_t) $tmp176 >= 1) goto $l175; else goto $l168;
     $l178:;
-    if ($tmp176 > 1) goto $l175; else goto $l168;
+    if ((uint64_t) $tmp176 > 1) goto $l175; else goto $l168;
     $l175:;
     i161.value += 1;
     goto $l166;

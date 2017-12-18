@@ -83,9 +83,9 @@ void panda$collections$ImmutableArray$init$panda$collections$ListView$LTpanda$co
     int64_t $tmp24 = $tmp9 - i6.value;
     if ($tmp10) goto $l25; else goto $l26;
     $l25:;
-    if ($tmp24 >= 1) goto $l23; else goto $l13;
+    if ((uint64_t) $tmp24 >= 1) goto $l23; else goto $l13;
     $l26:;
-    if ($tmp24 > 1) goto $l23; else goto $l13;
+    if ((uint64_t) $tmp24 > 1) goto $l23; else goto $l13;
     $l23:;
     i6.value += 1;
     goto $l11;
@@ -147,9 +147,9 @@ panda$collections$ImmutableArray* panda$collections$ImmutableArray$$IDX$panda$co
     int64_t $tmp56 = $tmp43 - i40.value;
     if ($tmp44) goto $l57; else goto $l58;
     $l57:;
-    if ($tmp56 >= 1) goto $l55; else goto $l47;
+    if ((uint64_t) $tmp56 >= 1) goto $l55; else goto $l47;
     $l58:;
-    if ($tmp56 > 1) goto $l55; else goto $l47;
+    if ((uint64_t) $tmp56 > 1) goto $l55; else goto $l47;
     $l55:;
     i40.value += 1;
     goto $l45;
@@ -355,9 +355,9 @@ panda$core$String* panda$collections$ImmutableArray$join$panda$core$String$R$pan
     int64_t $tmp135 = $tmp123 - i120.value;
     if ($tmp124) goto $l136; else goto $l137;
     $l136:;
-    if ($tmp135 >= 1) goto $l134; else goto $l127;
+    if ((uint64_t) $tmp135 >= 1) goto $l134; else goto $l127;
     $l137:;
-    if ($tmp135 > 1) goto $l134; else goto $l127;
+    if ((uint64_t) $tmp135 > 1) goto $l134; else goto $l127;
     $l134:;
     i120.value += 1;
     goto $l125;

@@ -640,9 +640,9 @@ panda$core$String* org$pandalanguage$pandac$ASTNode$convert$R$panda$core$String(
             int64_t $tmp142 = $tmp129 - i126.value;
             if ($tmp130) goto $l143; else goto $l144;
             $l143:;
-            if ($tmp142 >= 1) goto $l141; else goto $l133;
+            if ((uint64_t) $tmp142 >= 1) goto $l141; else goto $l133;
             $l144:;
-            if ($tmp142 > 1) goto $l141; else goto $l133;
+            if ((uint64_t) $tmp142 > 1) goto $l141; else goto $l133;
             $l141:;
             i126.value += 1;
             goto $l131;

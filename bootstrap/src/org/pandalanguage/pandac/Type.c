@@ -1193,9 +1193,9 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$remap$panda$collect
             int64_t $tmp468 = $tmp452 - i449.value;
             if ($tmp453) goto $l469; else goto $l470;
             $l469:;
-            if ($tmp468 >= 1) goto $l467; else goto $l456;
+            if ((uint64_t) $tmp468 >= 1) goto $l467; else goto $l456;
             $l470:;
-            if ($tmp468 > 1) goto $l467; else goto $l456;
+            if ((uint64_t) $tmp468 > 1) goto $l467; else goto $l456;
             $l467:;
             i449.value += 1;
             goto $l454;
@@ -1261,9 +1261,9 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$remap$panda$collect
             int64_t $tmp512 = $tmp497 - i494.value;
             if ($tmp498) goto $l513; else goto $l514;
             $l513:;
-            if ($tmp512 >= 1) goto $l511; else goto $l501;
+            if ((uint64_t) $tmp512 >= 1) goto $l511; else goto $l501;
             $l514:;
-            if ($tmp512 > 1) goto $l511; else goto $l501;
+            if ((uint64_t) $tmp512 > 1) goto $l511; else goto $l501;
             $l511:;
             i494.value += 1;
             goto $l499;

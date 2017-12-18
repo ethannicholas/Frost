@@ -871,9 +871,9 @@ panda$core$String* panda$core$UInt32$convert$R$panda$core$String(panda$core$UInt
     int64_t $tmp205 = $tmp193 - i190.value;
     if ($tmp194) goto $l206; else goto $l207;
     $l206:;
-    if ($tmp205 >= 1) goto $l204; else goto $l197;
+    if ((uint64_t) $tmp205 >= 1) goto $l204; else goto $l197;
     $l207:;
-    if ($tmp205 > 1) goto $l204; else goto $l197;
+    if ((uint64_t) $tmp205 > 1) goto $l204; else goto $l197;
     $l204:;
     i190.value += 1;
     goto $l195;

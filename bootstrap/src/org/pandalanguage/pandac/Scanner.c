@@ -1158,9 +1158,9 @@ void org$pandalanguage$pandac$Scanner$scanChoiceEntry$org$pandalanguage$pandac$C
             int64_t $tmp455 = $tmp440 - i437.value;
             if ($tmp441) goto $l456; else goto $l457;
             $l456:;
-            if ($tmp455 >= 1) goto $l454; else goto $l444;
+            if ((uint64_t) $tmp455 >= 1) goto $l454; else goto $l444;
             $l457:;
-            if ($tmp455 > 1) goto $l454; else goto $l444;
+            if ((uint64_t) $tmp455 > 1) goto $l454; else goto $l444;
             $l454:;
             i437.value += 1;
             goto $l442;
@@ -1281,9 +1281,9 @@ void org$pandalanguage$pandac$Scanner$scanChoiceEntry$org$pandalanguage$pandac$C
         int64_t $tmp519 = $tmp488 - i485.value;
         if ($tmp489) goto $l520; else goto $l521;
         $l520:;
-        if ($tmp519 >= 1) goto $l518; else goto $l492;
+        if ((uint64_t) $tmp519 >= 1) goto $l518; else goto $l492;
         $l521:;
-        if ($tmp519 > 1) goto $l518; else goto $l492;
+        if ((uint64_t) $tmp519 > 1) goto $l518; else goto $l492;
         $l518:;
         i485.value += 1;
         goto $l490;

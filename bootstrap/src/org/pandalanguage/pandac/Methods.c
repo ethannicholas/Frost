@@ -85,9 +85,9 @@ void org$pandalanguage$pandac$Methods$init$panda$collections$ListView$LTorg$pand
         int64_t $tmp47 = $tmp28 - j25.value;
         if ($tmp29) goto $l48; else goto $l49;
         $l48:;
-        if ($tmp47 >= 1) goto $l46; else goto $l32;
+        if ((uint64_t) $tmp47 >= 1) goto $l46; else goto $l32;
         $l49:;
-        if ($tmp47 > 1) goto $l46; else goto $l32;
+        if ((uint64_t) $tmp47 > 1) goto $l46; else goto $l32;
         $l46:;
         j25.value += 1;
         goto $l30;
@@ -97,9 +97,9 @@ void org$pandalanguage$pandac$Methods$init$panda$collections$ListView$LTorg$pand
     int64_t $tmp53 = $tmp14 - i11.value;
     if ($tmp15) goto $l54; else goto $l55;
     $l54:;
-    if ($tmp53 >= 1) goto $l52; else goto $l18;
+    if ((uint64_t) $tmp53 >= 1) goto $l52; else goto $l18;
     $l55:;
-    if ($tmp53 > 1) goto $l52; else goto $l18;
+    if ((uint64_t) $tmp53 > 1) goto $l52; else goto $l18;
     $l52:;
     i11.value += 1;
     goto $l16;

@@ -474,9 +474,9 @@ panda$core$String* panda$core$Panda$format$panda$core$Bit$panda$core$UInt64$pand
     int64_t $tmp208 = $tmp196 - i193.value;
     if ($tmp197) goto $l209; else goto $l210;
     $l209:;
-    if ($tmp208 >= 1) goto $l207; else goto $l200;
+    if ((uint64_t) $tmp208 >= 1) goto $l207; else goto $l200;
     $l210:;
-    if ($tmp208 > 1) goto $l207; else goto $l200;
+    if ((uint64_t) $tmp208 > 1) goto $l207; else goto $l200;
     $l207:;
     i193.value += 1;
     goto $l198;

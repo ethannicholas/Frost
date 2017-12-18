@@ -912,9 +912,9 @@ panda$core$String* panda$core$Int32$convert$R$panda$core$String(panda$core$Int32
     int64_t $tmp215 = $tmp203 - i200.value;
     if ($tmp204) goto $l216; else goto $l217;
     $l216:;
-    if ($tmp215 >= 1) goto $l214; else goto $l207;
+    if ((uint64_t) $tmp215 >= 1) goto $l214; else goto $l207;
     $l217:;
-    if ($tmp215 > 1) goto $l214; else goto $l207;
+    if ((uint64_t) $tmp215 > 1) goto $l214; else goto $l207;
     $l214:;
     i200.value += 1;
     goto $l205;

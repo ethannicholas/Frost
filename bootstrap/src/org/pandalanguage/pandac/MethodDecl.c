@@ -139,9 +139,9 @@ panda$core$Bit org$pandalanguage$pandac$MethodDecl$matches$org$pandalanguage$pan
     int64_t $tmp42 = $tmp28 - i25.value;
     if ($tmp29) goto $l43; else goto $l44;
     $l43:;
-    if ($tmp42 >= 1) goto $l41; else goto $l32;
+    if ((uint64_t) $tmp42 >= 1) goto $l41; else goto $l32;
     $l44:;
-    if ($tmp42 > 1) goto $l41; else goto $l32;
+    if ((uint64_t) $tmp42 > 1) goto $l41; else goto $l32;
     $l41:;
     i25.value += 1;
     goto $l30;

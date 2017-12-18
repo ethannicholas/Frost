@@ -137,9 +137,9 @@ panda$core$String* panda$core$Char32$$MUL$panda$core$Int64$R$panda$core$String(p
     int64_t $tmp25 = $tmp14 - i11.value;
     if ($tmp15) goto $l26; else goto $l27;
     $l26:;
-    if ($tmp25 >= 1) goto $l24; else goto $l18;
+    if ((uint64_t) $tmp25 >= 1) goto $l24; else goto $l18;
     $l27:;
-    if ($tmp25 > 1) goto $l24; else goto $l18;
+    if ((uint64_t) $tmp25 > 1) goto $l24; else goto $l18;
     $l24:;
     i11.value += 1;
     goto $l16;

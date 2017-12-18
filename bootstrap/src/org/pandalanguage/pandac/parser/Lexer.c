@@ -44,9 +44,9 @@ panda$core$Int64* org$pandalanguage$pandac$parser$Lexer$alloc$panda$core$Int64$p
     int64_t $tmp19 = $tmp8 - i5.value;
     if ($tmp9) goto $l20; else goto $l21;
     $l20:;
-    if ($tmp19 >= 1) goto $l18; else goto $l12;
+    if ((uint64_t) $tmp19 >= 1) goto $l18; else goto $l12;
     $l21:;
-    if ($tmp19 > 1) goto $l18; else goto $l12;
+    if ((uint64_t) $tmp19 > 1) goto $l18; else goto $l12;
     $l18:;
     i5.value += 1;
     goto $l10;

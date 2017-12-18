@@ -43,9 +43,9 @@ void panda$core$MutableString$init$panda$core$String(panda$core$MutableString* s
     int64_t $tmp17 = $tmp6 - i3.value;
     if ($tmp7) goto $l18; else goto $l19;
     $l18:;
-    if ($tmp17 >= 1) goto $l16; else goto $l10;
+    if ((uint64_t) $tmp17 >= 1) goto $l16; else goto $l10;
     $l19:;
-    if ($tmp17 > 1) goto $l16; else goto $l10;
+    if ((uint64_t) $tmp17 > 1) goto $l16; else goto $l10;
     $l16:;
     i3.value += 1;
     goto $l8;
@@ -192,9 +192,9 @@ void panda$core$MutableString$append$panda$core$String(panda$core$MutableString*
     int64_t $tmp93 = $tmp81 - i78.value;
     if ($tmp82) goto $l94; else goto $l95;
     $l94:;
-    if ($tmp93 >= 1) goto $l92; else goto $l85;
+    if ((uint64_t) $tmp93 >= 1) goto $l92; else goto $l85;
     $l95:;
-    if ($tmp93 > 1) goto $l92; else goto $l85;
+    if ((uint64_t) $tmp93 > 1) goto $l92; else goto $l85;
     $l92:;
     i78.value += 1;
     goto $l83;
@@ -226,9 +226,9 @@ void panda$core$MutableString$append$panda$unsafe$Pointer$LTpanda$core$Char8$GT$
     int64_t $tmp117 = $tmp104 - i101.value;
     if ($tmp105) goto $l118; else goto $l119;
     $l118:;
-    if ($tmp117 >= 1) goto $l116; else goto $l108;
+    if ((uint64_t) $tmp117 >= 1) goto $l116; else goto $l108;
     $l119:;
-    if ($tmp117 > 1) goto $l116; else goto $l108;
+    if ((uint64_t) $tmp117 > 1) goto $l116; else goto $l108;
     $l116:;
     i101.value += 1;
     goto $l106;
@@ -285,9 +285,9 @@ panda$core$String* panda$core$MutableString$convert$R$panda$core$String(panda$co
     int64_t $tmp146 = $tmp135 - i132.value;
     if ($tmp136) goto $l147; else goto $l148;
     $l147:;
-    if ($tmp146 >= 1) goto $l145; else goto $l139;
+    if ((uint64_t) $tmp146 >= 1) goto $l145; else goto $l139;
     $l148:;
-    if ($tmp146 > 1) goto $l145; else goto $l139;
+    if ((uint64_t) $tmp146 > 1) goto $l145; else goto $l139;
     $l145:;
     i132.value += 1;
     goto $l137;

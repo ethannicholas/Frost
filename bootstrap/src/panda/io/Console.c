@@ -36,9 +36,9 @@ void panda$io$Console$print$panda$core$String(panda$core$String* p_s) {
     int64_t $tmp16 = $tmp5 - i2.value;
     if ($tmp6) goto $l17; else goto $l18;
     $l17:;
-    if ($tmp16 >= 1) goto $l15; else goto $l9;
+    if ((uint64_t) $tmp16 >= 1) goto $l15; else goto $l9;
     $l18:;
-    if ($tmp16 > 1) goto $l15; else goto $l9;
+    if ((uint64_t) $tmp16 > 1) goto $l15; else goto $l9;
     $l15:;
     i2.value += 1;
     goto $l7;
