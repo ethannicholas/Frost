@@ -1256,6 +1256,10 @@ class CCodeGenerator : CodeGenerator {
         return result
     }
 
+    method getChoiceFieldReference(expr:IRNode, out:IndentedOutputStream):String {
+        return getLValue(expr, out)
+    }
+
     method getReference(expr:IRNode, out:IndentedOutputStream):String {
         match expr.kind {
             when IRNode.Kind.BINARY:
@@ -1302,6 +1306,8 @@ class CCodeGenerator : CodeGenerator {
                 return getPrefixReference(expr, out)
             when IRNode.Kind.TERNARY:
                 return getTernaryReference(expr, out)
+            when IRNode.Kind.CHOICE_FIELD_REFERENCE:
+                return getChoiceFieldReference(expr, out)
             otherwise:
                 assert false, "unsupported expression \{expr}:\{expr.position}"
         }
@@ -1806,6 +1812,21 @@ class CCodeGenerator : CodeGenerator {
                 def result := getLValue(lvalue.children[0], out)
                 reusedValues[lvalue.payload->UInt64] := result
                 return result
+            when IRNode.Kind.CHOICE_FIELD_REFERENCE:
+                assert lvalue.children != null & lvalue.children.get_count() = 1
+                def f := lvalue.payload->Pair<ChoiceEntry, Int>
+                def c := f.first
+                def data := c.owner.fields[1]
+                assert data.name = ClassDecl.CHOICE_DATA_NAME
+                def fieldRef := IRNode(IRNode.Kind.FIELD_REFERENCE, lvalue.position,
+                        data.type, data, lvalue.children)
+                def base := getLValue(fieldRef, out)
+                def size := hCodeGen.llvmCodeGen.getChoiceDataSize(c.owner)
+                def offset := hCodeGen.llvmCodeGen.getChoiceFieldOffset(c, f.second)
+                def result := nextVar()
+                out.printLine("\{type(lvalue.type)}* \{result} = ((\{type(lvalue.type)}*) " +
+                        "((char*) \{base} + \{offset}));")
+                return "*\{result}"
             otherwise:
                 assert false, "unsupported lvalue: \{lvalue}"
         }
