@@ -312,7 +312,7 @@ class LLVMCodeGenerator : CodeGenerator {
                 compiler.resolve(entry)
                 var current := 0
                 for f in entry.fields {
-                    current += fieldSize(f.second)
+                    current += fieldSize(f)
                 }
                 result := result.max(current)
             }
@@ -1033,7 +1033,7 @@ class LLVMCodeGenerator : CodeGenerator {
         return result
     }
 
-    method getBinaryReference(t:Type, leftRef:String, op:Int, rightRef:String,
+    method getBinaryReference(t:Type, leftRef:String, op:Token.Kind, rightRef:String,
             out:OutputStream):String {
         def llvmOp:String
         match opClass(t) {
@@ -1123,7 +1123,7 @@ class LLVMCodeGenerator : CodeGenerator {
         return result
     }
 
-    method getBinaryReference(left:IRNode, op:Int, right:IRNode, out:OutputStream):String {
+    method getBinaryReference(left:IRNode, op:Token.Kind, right:IRNode, out:OutputStream):String {
         assert left.type = right.type
         match op {
             when Token.Kind.AND:       return getAndReference(left, right, out)
@@ -1140,7 +1140,7 @@ class LLVMCodeGenerator : CodeGenerator {
     method getBinaryReference(b:IRNode, out:OutputStream):String {
         assert b.kind = IRNode.Kind.BINARY
         assert b.children.get_count() = 2
-        return getBinaryReference(b.children[0], b.payload->Int, b.children[1], out)
+        return getBinaryReference(b.children[0], b.payload->Token.Kind, b.children[1], out)
     }
 
     method getTernaryReference(t:IRNode, out:OutputStream):String {
@@ -2006,7 +2006,7 @@ class LLVMCodeGenerator : CodeGenerator {
         assert expr.children.get_count() = 1
         def base := getReference(expr.children[0], out)
         def result := nextVar()
-        match (expr.payload->UInt64).convert()->Int64 {
+        match expr.payload->Token.Kind {
             when Token.Kind.SUB:
                 def zero:String
                 if expr.type.typeKind = Type.Kind.BUILTIN_FLOAT {
@@ -2886,7 +2886,7 @@ class LLVMCodeGenerator : CodeGenerator {
     method getChoiceFieldOffset(e:ChoiceEntry, index:Int):Int {
         var result := 0
         for i in 0 .. index {
-            result += fieldSize(e.fields[i].second)
+            result += fieldSize(e.fields[i])
         }
         return result
     }
@@ -2960,7 +2960,7 @@ class LLVMCodeGenerator : CodeGenerator {
         def lvalue := "\{type(a.children[0].type)}* \{getLValue(a.children[0], out)}"
         def value:String
         def t := type(a.children[0].type)
-        def op := a.payload->Int
+        def op := a.payload->Token.Kind
         if op = Token.Kind.ASSIGNMENT {
             def right := getReference(a.children[1], out)
             value := "\{t} \{right}"

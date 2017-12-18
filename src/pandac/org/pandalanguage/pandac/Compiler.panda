@@ -491,7 +491,7 @@ class Compiler : ErrorReporter {
         def old := symbolTable
         symbolTable := c.owner.symbolTable
         for i in 0 .. c.fields.get_count() {
-            c.fields[i] := Pair<String, Type>(c.fields[i].first, resolve(c.fields[i].second))
+            c.fields[i] := resolve(c.fields[i])
         }
         symbolTable := old
         currentClass.pop()        
@@ -1960,7 +1960,7 @@ class Compiler : ErrorReporter {
                 def value := c.rawValue.convert()->UInt64
                 finalArgs.add(IRNode(IRNode.Kind.INT, m.position, Type.IntLiteral(value), value))
                 for i in 0 .. args.get_count() {
-                    def arg := coerce(args[i], c.fields[i].second)
+                    def arg := coerce(args[i], c.fields[i])
                     if arg = null {
                         return null
                     }
@@ -2056,41 +2056,42 @@ class Compiler : ErrorReporter {
     }
 
     @class
-    function operatorName(op:Int):String {
+    function operatorName(op:Token.Kind):String {
         match op {
-            when Token.Kind.ADD: return "+"
-            when Token.Kind.SUB: return "-"
-            when Token.Kind.MUL: return "*"
-            when Token.Kind.DIV: return "/"
-            when Token.Kind.INTDIV: return "//"
-            when Token.Kind.REM: return "%"
-            when Token.Kind.POW: return "^"
-            when Token.Kind.EQ: return "="
-            when Token.Kind.NEQ: return "!="
-            when Token.Kind.GT: return ">"
-            when Token.Kind.LT: return "<"
-            when Token.Kind.GTEQ: return ">="
-            when Token.Kind.LTEQ: return "<="
-            when Token.Kind.OR: return "|"
-            when Token.Kind.BITWISEOR: return "||"
-            when Token.Kind.AND: return "&"
+            when Token.Kind.ADD:        return "+"
+            when Token.Kind.SUB:        return "-"
+            when Token.Kind.MUL:        return "*"
+            when Token.Kind.DIV:        return "/"
+            when Token.Kind.INTDIV:     return "//"
+            when Token.Kind.REM:        return "%"
+            when Token.Kind.POW:        return "^"
+            when Token.Kind.EQ:         return "="
+            when Token.Kind.NEQ:        return "!="
+            when Token.Kind.GT:         return ">"
+            when Token.Kind.LT:         return "<"
+            when Token.Kind.GTEQ:       return ">="
+            when Token.Kind.LTEQ:       return "<="
+            when Token.Kind.OR:         return "|"
+            when Token.Kind.BITWISEOR:  return "||"
+            when Token.Kind.AND:        return "&"
             when Token.Kind.BITWISEAND: return "&&"
-            when Token.Kind.XOR: return "~"
+            when Token.Kind.XOR:        return "~"
             when Token.Kind.BITWISEXOR: return "~~"
-            when Token.Kind.NOT: return "!"
+            when Token.Kind.NOT:        return "!"
             when Token.Kind.BITWISENOT: return "!!"
-            when Token.Kind.SHIFTLEFT: return "<<"
+            when Token.Kind.SHIFTLEFT:  return "<<"
             when Token.Kind.SHIFTRIGHT: return ">>"
-            when Token.Kind.LBRACKET: return "[]"
+            when Token.Kind.LBRACKET:   return "[]"
             when Token.Kind.ASSIGNMENT: return ":="
-            when Token.Kind.IDENTITY: return "=="
-            when Token.Kind.NIDENTITY: return "!=="
-            otherwise: assert false, "not an operator: \{op}"
+            when Token.Kind.IDENTITY:   return "=="
+            when Token.Kind.NIDENTITY:  return "!=="
+            otherwise:
+                assert false, "not an operator: \{op}"
         }
     }
 
     @class
-    function isAssignment(op:Int):Bit {
+    function isAssignment(op:Token.Kind):Bit {
         match op {
             when Token.Kind.ADDEQ, Token.Kind.SUBEQ, Token.Kind.MULEQ, Token.Kind.DIVEQ,
                     Token.Kind.INTDIVEQ, Token.Kind.REMEQ, Token.Kind.POWEQ, Token.Kind.OREQ,
@@ -2104,7 +2105,7 @@ class Compiler : ErrorReporter {
     }
 
     @class
-    function removeAssignment(op:Int):Int {
+    function removeAssignment(op:Token.Kind):Token.Kind {
         match op {
             when Token.Kind.ADDEQ:        return Token.Kind.ADD
             when Token.Kind.SUBEQ:        return Token.Kind.SUB
@@ -2144,7 +2145,7 @@ class Compiler : ErrorReporter {
         }
     }
 
-    method foldInts(position:Position, left:IRNode, op:Int, right:IRNode):IRNode? {
+    method foldInts(position:Position, left:IRNode, op:Token.Kind, right:IRNode):IRNode? {
         assert left.kind = IRNode.Kind.INT | left.kind = IRNode.Kind.NEGATED_INT
         assert right.kind = IRNode.Kind.INT | right.kind = IRNode.Kind.NEGATED_INT
         if left.kind = IRNode.Kind.NEGATED_INT | left.payload->UInt64 < Int64.MAX.convert() &
@@ -2208,7 +2209,8 @@ class Compiler : ErrorReporter {
         return expr
     }
 
-    method compileIndexedAssignment(position:Position, left:IRNode, op:Int, right:IRNode):IRNode? {
+    method compileIndexedAssignment(position:Position, left:IRNode, op:Token.Kind,
+            right:IRNode):IRNode? {
         assert left.kind = IRNode.Kind.UNRESOLVED_INDEX
         assert left.children.get_count() = 2
         if op = Token.Kind.ASSIGNMENT {
@@ -2267,7 +2269,8 @@ class Compiler : ErrorReporter {
         return call(base, "[]:=", children)
     }
 
-    method compileBinary(position:Position, rawLeft:IRNode, op:Int, rawRight:IRNode):IRNode? {
+    method compileBinary(position:Position, rawLeft:IRNode, op:Token.Kind,
+            rawRight:IRNode):IRNode? {
         -- FIXME use var parameters
         var left := rawLeft
         var right := rawRight
@@ -2526,7 +2529,7 @@ class Compiler : ErrorReporter {
         if right = null {
             return null
         }
-        return compileBinary(b.position, left, b.payload->Int, right)
+        return compileBinary(b.position, left, b.payload->Token.Kind, right)
     }
 
     function typeParameters(type:Type):ListView<Type> {
@@ -2553,7 +2556,7 @@ class Compiler : ErrorReporter {
         return Array<Type>()
     }
 
-    method compilePrefix(op:Int, base:IRNode, position:Position):IRNode? {
+    method compilePrefix(op:Token.Kind, base:IRNode, position:Position):IRNode? {
         if base.type.isClass() {
             def name := operatorName(op)
             def cl := getClass(base.type)
@@ -2644,7 +2647,7 @@ class Compiler : ErrorReporter {
         if base = null {
             return null
         }
-        return compilePrefix(p.payload->Int, base, p.position)
+        return compilePrefix(p.payload->Token.Kind, base, p.position)
     }
 
     method compileCall(c:ASTNode):IRNode? {
@@ -2895,7 +2898,7 @@ class Compiler : ErrorReporter {
         }
         children.add(base)
         return IRNode(IRNode.Kind.CHOICE_FIELD_REFERENCE, f.position,
-                cf.first.fields[cf.second].second, cf, children)
+                cf.first.fields[cf.second], cf, children)
     }
 
     method compileExpression(e:ASTNode):IRNode? {
@@ -3527,7 +3530,7 @@ class Compiler : ErrorReporter {
                                 return null
                             }
                             def variable := Variable(test.children[i].position, Variable.Kind.DEF,
-                                    test.children[i].payload->String, entry.fields[i - 1].second)
+                                    test.children[i].payload->String, entry.fields[i - 1])
                             symbolTable.add(variable)
                             def declChildren := Array<IRNode>() -- FIXME literal
                             declChildren.add(IRNode(IRNode.Kind.VARIABLE_REFERENCE,

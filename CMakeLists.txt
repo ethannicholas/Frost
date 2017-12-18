@@ -140,6 +140,7 @@ add_executable(bootstrap
     bootstrap/src/org/pandalanguage/pandac/parser/Parser.c
     bootstrap/src/org/pandalanguage/pandac/parser/Lexer.c
     bootstrap/src/org/pandalanguage/pandac/parser/Token.c
+    bootstrap/src/org/pandalanguage/pandac/parser/Token/Kind.c
     bootstrap/src/org/pandalanguage/plex/runtime/DFA.c
     bootstrap/src/org/pandalanguage/plex/runtime/RawToken.c
 )

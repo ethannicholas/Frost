@@ -263,9 +263,9 @@ class Scanner {
         else {
             doccomment := null
         }
-        def fields := Array<Pair<String, Type>>()
+        def fields := Array<Type>()
         for t in entry.children[1].children {
-            fields.add(Pair<String, Type>(t.payload->String, convertType(t.children[0])))
+            fields.add(convertType(t))
         }
         def entry := ChoiceEntry(cl, entry.position, entry.payload->String, doccomment,
                 cl.choiceEntries.get_count(), fields)
@@ -279,7 +279,7 @@ class Scanner {
             }
             assert m.parameters[0].type = Type.Int64()
             for i in 0 .. fields.get_count() {
-                if fields[i].second != m.parameters[i + 1].type {
+                if fields[i] != m.parameters[i + 1].type {
                     continue outer
                 }
             }
@@ -297,13 +297,13 @@ class Scanner {
             statements.add(ASTNode(ASTNode.Kind.BINARY, cl.position, Token.Kind.ASSIGNMENT,
                     children))
             for i in 0 .. fields.get_count() {
-                parameters.add(MethodDecl.Parameter(fields[i].first, fields[i].second))
+                parameters.add(MethodDecl.Parameter("f\{i}", fields[i]))
                 children.clear()
                 def fieldRefChildren := Array<ASTNode>() -- FIXME literal
                 fieldRefChildren.add(ASTNode(ASTNode.Kind.SELF, cl.position))
                 children.add(ASTNode(ASTNode.Kind.CHOICE_FIELD_REFERENCE, cl.position,
                         Pair<ChoiceEntry, Int>(entry, i), fieldRefChildren))
-                children.add(ASTNode(ASTNode.Kind.IDENTIFIER, cl.position, fields[i].first))
+                children.add(ASTNode(ASTNode.Kind.IDENTIFIER, cl.position, "f\{i}"))
                 statements.add(ASTNode(ASTNode.Kind.BINARY, cl.position, Token.Kind.ASSIGNMENT,
                         children))
             }

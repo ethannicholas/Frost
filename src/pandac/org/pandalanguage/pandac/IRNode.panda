@@ -207,7 +207,8 @@ class IRNode {
             when Kind.VARIABLE_REFERENCE:
                 return "\{payload->Variable}"
             when Kind.BINARY:
-                return "(\{children[0]} \{Compiler.operatorName(payload->Int)} \{children[1]})"
+                return "(\{children[0]} \{Compiler.operatorName(payload->Token.Kind)} " +
+                        "\{children[1]})"
             when Kind.SELF:
                 return "self"
             when Kind.REUSED_VALUE_DEFINITION:

@@ -68,30 +68,8 @@ class ASTNode : Immutable {
     }
 
     @class
-    function operatorName(op:Int):String {
-        match op {
-            when Token.Kind.ADD:        return "+"
-            when Token.Kind.AND:        return "&"
-            when Token.Kind.DIV:        return "/"
-            when Token.Kind.INTDIV:     return "//"
-            when Token.Kind.MUL:        return "*"
-            when Token.Kind.SUB:        return "-"
-            when Token.Kind.ADDEQ:      return "+="
-            when Token.Kind.ANDEQ:      return "&="
-            when Token.Kind.DIVEQ:      return "/="
-            when Token.Kind.INTDIVEQ:   return "//="
-            when Token.Kind.MULEQ:      return "*="
-            when Token.Kind.SUBEQ:      return "-="
-            when Token.Kind.OR:         return "|"
-            when Token.Kind.ASSIGNMENT: return ":="
-            when Token.Kind.EQ:         return "="
-            when Token.Kind.NEQ:        return "!="
-            when Token.Kind.GT:         return ">"
-            when Token.Kind.GTEQ:       return ">="
-            when Token.Kind.LT:         return "<"
-            when Token.Kind.LTEQ:       return "<="
-            otherwise:                  return "<operator:\{op}>"
-        }
+    function operatorName(op:Token.Kind):String {
+        return Compiler.operatorName(op)
     }
 
     def kind:Int
@@ -147,13 +125,13 @@ class ASTNode : Immutable {
         match kind {
             when Kind.PREFIX:
                 assert children.get_count() = 1
-                return "\{operatorName(payload->Int)}\{children[0]}"
+                return "\{operatorName(payload->Token.Kind)}\{children[0]}"
             when Kind.BINARY:
                 assert children.get_count() = 2
-                if payload->Int = Token.Kind.LBRACKET {
+                if payload->Token.Kind = Token.Kind.LBRACKET {
                     return "\{children[0]}[\{children[1]}]"
                 }
-                return "(\{children[0]} \{operatorName(payload->Int)} \{children[1]})"
+                return "(\{children[0]} \{operatorName(payload->Token.Kind)} \{children[1]})"
             when Kind.INT:
                 return payload.convert()
             when Kind.BIT:

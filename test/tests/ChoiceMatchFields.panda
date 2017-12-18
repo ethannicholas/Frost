@@ -1,10 +1,10 @@
 choice Expression {
-    NUMBER(v:Int)
-    ADD(a:Expression, b:Expression)
-    SUB(a:Expression, b:Expression)
-    MUL(a:Expression, b:Expression)
-    DIV(a:Expression, b:Expression)
-    NEGATE(v:Expression)
+    NUMBER(Int)
+    ADD(Expression, Expression)
+    SUB(Expression, Expression)
+    MUL(Expression, Expression)
+    DIV(Expression, Expression)
+    NEGATE(Expression)
 
     @override
     function convert():String {

@@ -19,12 +19,12 @@ class PLex {
         token.printLine("@final")
         token.printLine("class Token : Value {")
         token.level += 1
-        token.printLine("class Kind { -- FIXME use choice")
+        token.printLine("choice Kind { -- FIXME use choice")
         token.level += 1
         var offset := 0
-        token.printLine("constant EOF := 0")
+        token.printLine("EOF")
         offset += 1
-        token.printLine("constant SHIFTRIGHT := 1")
+        token.printLine("SHIFTRIGHT")
         offset += 1
         for line in input.lines() {
             line := line.trim()
@@ -41,7 +41,7 @@ class PLex {
                     regex := Regex(pattern[pattern.next(pattern.start()) ..
                             pattern.previous(pattern.end())])
                 }
-                token.printLine("constant \{id} := \{tokens.get_count() + 2}")
+                token.printLine(id)
                 def states := regex.addToNFA(nfa, nfa.addState(AcceptState(tokens.get_count() +
                         offset)))
                 for s in states {
@@ -53,16 +53,16 @@ class PLex {
                 assert line.utf8().get_count() = 0, "error parsing '\{line}'"
             }
         }
-        token.printLine()
         token.level -= 1
         token.printLine("}")
         token.printLine()
-        token.printLine("def kind:Int")
+        token.printLine("def kind:Token.Kind")
         token.printLine("def start:String.Index")
         token.printLine("def end:String.Index")
         token.printLine("def position:Position")
         token.printLine()
-        token.printLine("init(kind:Int, start:String.Index, end:String.Index, position:Position) {")
+        token.printLine("init(kind:Token.Kind, start:String.Index, end:String.Index, " +
+                "position:Position) {")
         token.level += 1
         token.printLine("self.kind := kind")
         token.printLine("self.start := start")
@@ -115,7 +115,7 @@ class PLex {
         out.printLine("method next():Token {")
         out.level += 1
         out.printLine("def raw := dfa.next()")
-        out.printLine("return Token(raw.kind, raw.start, raw.end, Position(raw.line, " +
+        out.printLine("return Token(Token.Kind(raw.kind), raw.start, raw.end, Position(raw.line, " +
                 "raw.column))")
         out.level -= 1
         out.printLine("}")

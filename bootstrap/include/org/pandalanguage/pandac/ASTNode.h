@@ -25,8 +25,9 @@ extern org$pandalanguage$pandac$ASTNode$class_type org$pandalanguage$pandac$ASTN
 
 #ifndef PANDA_TYPESONLY
 typedef struct panda$core$String panda$core$String;
-#include "panda/core/Int64.h"
+typedef struct org$pandalanguage$pandac$parser$Token$Kind org$pandalanguage$pandac$parser$Token$Kind;
 typedef struct org$pandalanguage$pandac$ASTNode org$pandalanguage$pandac$ASTNode;
+#include "panda/core/Int64.h"
 #include "org/pandalanguage/pandac/Position.h"
 #include "panda/core/UInt64.h"
 #include "panda/core/Real64.h"
@@ -35,7 +36,7 @@ typedef struct org$pandalanguage$pandac$Pair org$pandalanguage$pandac$Pair;
 typedef struct panda$collections$ListView panda$collections$ListView;
 typedef struct panda$core$Object panda$core$Object;
 
-panda$core$String* org$pandalanguage$pandac$ASTNode$operatorName$panda$core$Int64$R$panda$core$String(panda$core$Int64 p_op);
+panda$core$String* org$pandalanguage$pandac$ASTNode$operatorName$org$pandalanguage$pandac$parser$Token$Kind$R$panda$core$String(org$pandalanguage$pandac$parser$Token$Kind* p_op);
 void org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position(org$pandalanguage$pandac$ASTNode* self, panda$core$Int64 p_kind, org$pandalanguage$pandac$Position p_position);
 void org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$UInt64(org$pandalanguage$pandac$ASTNode* self, panda$core$Int64 p_kind, org$pandalanguage$pandac$Position p_position, panda$core$UInt64 p_payload);
 void org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Real64(org$pandalanguage$pandac$ASTNode* self, panda$core$Int64 p_kind, org$pandalanguage$pandac$Position p_position, panda$core$Real64 p_payload);

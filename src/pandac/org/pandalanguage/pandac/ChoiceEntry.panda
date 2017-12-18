@@ -6,18 +6,18 @@ class ChoiceEntry : Symbol {
 
     def doccomment:String?
 
-    def fields:Array<Pair<String, Type>>
+    def fields:Array<Type>
 
     def rawValue:Int
 
     var resolved := false
 
     init(owner:ClassDecl, position:Position, name:String, doccomment:String?, rawValue:Int,
-            fields:ListView<Pair<String, Type>>) {
+            fields:ListView<Type>) {
         self.owner := owner
         self.doccomment := doccomment
         self.rawValue := rawValue
-        self.fields := Array<Pair<String, Type>>(fields)
+        self.fields := Array<Type>(fields)
         super.init(Symbol.Kind.CHOICE_ENTRY, position, name)
     }
 

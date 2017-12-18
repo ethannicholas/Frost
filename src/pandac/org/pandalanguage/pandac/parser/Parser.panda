@@ -94,7 +94,7 @@ class Parser {
         return pushbackBuffer[pushbackBuffer.get_count() - 1]
     }
 
-    method checkNext(kind:Int):Token? {
+    method checkNext(kind:Token.Kind):Token? {
         def result := next()
         if result.kind = kind {
             return result
@@ -103,7 +103,7 @@ class Parser {
         return null
     }
 
-    method expect(kind:Int, expected:String):Token? {
+    method expect(kind:Token.Kind, expected:String):Token? {
         def result := next()
         if result.kind = kind {
             return result
@@ -1902,7 +1902,7 @@ class Parser {
     }
 
     ================================================================================================
-    choiceEntry = IDENTIFIER (LPAREN (IDENTIFIER typeDeclaration (COMMA typeDeclaration)*)? RPAREN)?
+    choiceEntry = IDENTIFIER (LPAREN (type (COMMA type)*)? RPAREN)?
     ================================================================================================
     method choiceEntry(doccomment:ASTNode):ASTNode? {
         def name := expect(Token.Kind.IDENTIFIER, "an identifier")
@@ -1912,30 +1912,17 @@ class Parser {
         def fields := Array<ASTNode>()
         if checkNext(Token.Kind.LPAREN) != null {
             if peek().kind != Token.Kind.RPAREN {
-                var field := expect(Token.Kind.IDENTIFIER, "an identifier")
+                var field := type()
                 if field = null {
                     return null
                 }
-                var t := typeDeclaration()
-                if t = null {
-                    return null
-                }
-                var children := Array<ASTNode>()
-                children.add(t)
-                fields.add(ASTNode(ASTNode.Kind.IDENTIFIER, field.position, text(field), children))
+                fields.add(field)
                 while checkNext(Token.Kind.COMMA) != null {
-                    field := expect(Token.Kind.IDENTIFIER, "an identifier")
+                    field := type()
                     if field = null {
                         return null
                     }
-                    t := typeDeclaration()
-                    if t = null {
-                        return null
-                    }
-                    children := Array<ASTNode>()
-                    children.add(t)
-                    fields.add(ASTNode(ASTNode.Kind.IDENTIFIER, field.position, text(field),
-                            children))
+                    fields.add(field)
                 }
             }
             if expect(Token.Kind.RPAREN, "')'") = null {
