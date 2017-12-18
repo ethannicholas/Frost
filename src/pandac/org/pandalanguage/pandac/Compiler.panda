@@ -1831,6 +1831,14 @@ class Compiler : ErrorReporter {
                     rightValue))    
             return call(leftValue, name, args)
         }
+        if right.type.nonnullable() = left.type.nonnullable() {
+            def leftValue := compileDot(left.position, left, ClassDecl.RAW_VALUE_NAME)
+            assert leftValue != null
+            def rightValue := compileDot(right.position, right, ClassDecl.RAW_VALUE_NAME)
+            assert rightValue != null
+            args.add(rightValue)
+            return call(leftValue, name, args)
+        }
         error(left.position, "'\{name}' cannot operate on '\{left.type}', '\{right.type}'")
         return null
     }
