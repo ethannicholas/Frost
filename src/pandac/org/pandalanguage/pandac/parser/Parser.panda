@@ -2034,6 +2034,10 @@ class Parser {
                 when Token.Kind.RBRACE:
                     expect(Token.Kind.RBRACE, "'}'")
                     break
+                otherwise:
+                    error(next, "expected a declaration, but found '\{text(next)}'")
+                    self.next()
+                    return null
             }
         }
         def children := Array<ASTNode>()
