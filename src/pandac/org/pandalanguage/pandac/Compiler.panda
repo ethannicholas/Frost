@@ -2085,6 +2085,7 @@ class Compiler : ErrorReporter {
             when Token.Kind.ASSIGNMENT: return ":="
             when Token.Kind.IDENTITY:   return "=="
             when Token.Kind.NIDENTITY:  return "!=="
+            when Token.Kind.CAST:       return "->"
             otherwise:
                 assert false, "not an operator: \{op}"
         }
@@ -2520,16 +2521,20 @@ class Compiler : ErrorReporter {
         return result
     }
 
-    method compileBinary(b:ASTNode):IRNode? {
-        def left := compileExpression(b.children[0])
+    method compileBinary(position:Position, rawLeft:ASTNode, op:Token.Kind,
+            rawRight:ASTNode):IRNode? {
+        if op = Token.Kind.CAST {
+            return compileCast(position, rawLeft, scanner.convertType(rawRight))
+        }
+        def left := compileExpression(rawLeft)
         if left = null {
             return null
         }
-        def right := compileExpression(b.children[1])
+        def right := compileExpression(rawRight)
         if right = null {
             return null
         }
-        return compileBinary(b.position, left, b.payload->Token.Kind, right)
+        return compileBinary(position, left, op, right)
     }
 
     function typeParameters(type:Type):ListView<Type> {
@@ -2556,7 +2561,7 @@ class Compiler : ErrorReporter {
         return Array<Type>()
     }
 
-    method compilePrefix(op:Token.Kind, base:IRNode, position:Position):IRNode? {
+    method compilePrefix(position:Position, op:Token.Kind, base:IRNode):IRNode? {
         if base.type.isClass() {
             def name := operatorName(op)
             def cl := getClass(base.type)
@@ -2640,31 +2645,29 @@ class Compiler : ErrorReporter {
         assert false
     }
 
-    method compilePrefix(p:ASTNode):IRNode? {
-        assert p.kind = ASTNode.Kind.PREFIX
-        assert p.children.get_count() = 1
-        def base := compileExpression(p.children[0])
+    method compilePrefix(position:Position, op:Token.Kind, rawBase:ASTNode):IRNode? {
+        def base := compileExpression(rawBase)
         if base = null {
             return null
         }
-        return compilePrefix(p.payload->Token.Kind, base, p.position)
+        return compilePrefix(position, op, base)
     }
 
-    method compileCall(c:ASTNode):IRNode? {
-        assert c.kind = ASTNode.Kind.CALL
-        var m := compileExpression(c.children[0])
-        if m != null {
-            def args := Array<IRNode>()
-            for i in 1 .. c.children.get_count() {
-                def arg := compileExpression(c.children[i])
-                if arg = null {
-                    return null
-                }
-                args.add(arg)
-            }
-            return call(m, args)
+    method compileCall(position:Position, rawTarget:ASTNode,
+            rawArgs:ImmutableArray<ASTNode>):IRNode? {
+        def target := compileExpression(rawTarget)
+        if target = null {
+            return null
         }
-        return null
+        def args := Array<IRNode>()
+        for arg in rawArgs {
+            def compiled := compileExpression(arg)
+            if compiled = null {
+                return null
+            }
+            args.add(compiled)
+        }
+        return call(target, args)
     }
 
     method compileDot(position:Position, base:IRNode, name:String):IRNode? {
@@ -2701,10 +2704,8 @@ class Compiler : ErrorReporter {
         return symbolRef(position, base, s, st)
     }
 
-    method compileDot(d:ASTNode):IRNode? {
-        assert d.kind = ASTNode.Kind.DOT
-        assert d.children.get_count() = 1
-        var base := compileExpression(d.children[0])
+    method compileDot(position:Position, rawBase:ASTNode, field:String):IRNode? {
+        var base := compileExpression(rawBase)
         if base = null {
             return null
         }
@@ -2714,59 +2715,53 @@ class Compiler : ErrorReporter {
         if base = null {
             return null
         }
-        return compileDot(d.position, base, d.payload->String)
+        return compileDot(position, base, field)
     }
 
-    method compileIdentifier(i:ASTNode):IRNode? {
-        assert i.kind = ASTNode.Kind.IDENTIFIER
-        var s := symbolTable[i.payload->String]
+    method compileIdentifier(position:Position, name:String):IRNode? {
+        var s := symbolTable[name]
         if s = null {
-            s := tryResolveClass(i.payload->String)
+            s := tryResolveClass(name)
         }
         if s != null {
-            return symbolRef(i.position, null, s, symbolTable)
+            return symbolRef(position, null, s, symbolTable)
         }
-        return IRNode(IRNode.Kind.UNRESOLVED_IDENTIFIER, i.position, Type.Invalid(),
-                i.payload->String)
+        return IRNode(IRNode.Kind.UNRESOLVED_IDENTIFIER, position, Type.Invalid(), name)
     }
 
-    method compileType(t:ASTNode):IRNode? {
-        def resolved := resolve(scanner.convertType(t))
+    method compileType(type:ASTNode):IRNode? {
+        def resolved := resolve(scanner.convertType(type))
         if resolved = null {
             return null
         }
-        return IRNode(IRNode.Kind.TYPE_REFERENCE, t.position, Type.Class(), resolved)
+        return IRNode(IRNode.Kind.TYPE_REFERENCE, type.position(), Type.Class(), resolved)
     }
 
-    method compileRange(r:ASTNode):IRNode? {
-        assert r.kind = ASTNode.Kind.RANGE_EXCLUSIVE | r.kind = ASTNode.Kind.RANGE_INCLUSIVE
-        assert r.children.get_count() = 3
+    method compileRange(position:Position, rawStart:ASTNode?, rawEnd:ASTNode?, inclusive:Bit,
+            rawStep:ASTNode?):IRNode? {
         def start:IRNode?
-        if r.children[0].kind = ASTNode.Kind.VOID {
-            start := IRNode(IRNode.Kind.NULL, r.position, Type.Null())
-        }
-        else {
-            start := compileExpression(r.children[0])
+        if rawStart != null {
+            start := compileExpression(rawStart)
             if start = null {
                 return null
             }
         }
-        def end:IRNode?
-        if r.children[1].kind = ASTNode.Kind.VOID {
-            end := IRNode(IRNode.Kind.NULL, r.position, Type.Null())
-        }
         else {
-            end := compileExpression(r.children[1])
+            start := IRNode(IRNode.Kind.NULL, position, Type.Null())
+        }
+        def end:IRNode?
+        if rawEnd != null {
+            end := compileExpression(rawEnd)
             if end = null {
                 return null
             }
         }
-        def step:IRNode?
-        if r.children[2].kind = ASTNode.Kind.VOID {
-            step := null
-        }
         else {
-            step := compileExpression(r.children[2])
+            end := IRNode(IRNode.Kind.NULL, position, Type.Null())
+        }
+        def step:IRNode?
+        if rawStep != null {
+            step := compileExpression(rawStep)
             if step = null {
                 return null
             }
@@ -2775,6 +2770,9 @@ class Compiler : ErrorReporter {
                 return null
             }
         }
+        else {
+            step := null
+        }
         def children := Array<IRNode>() -- FIXME literal
         children.add(start)
         children.add(end)
@@ -2782,20 +2780,19 @@ class Compiler : ErrorReporter {
             children.add(step)
         }
         return IRNode(IRNode.Kind.UNRESOLVED_RANGE,
-                r.position,
+                position,
                 Type("<unresolved range>", Type.Kind.UNRESOLVED, Position(), true),
-                r.kind = ASTNode.Kind.RANGE_INCLUSIVE,
+                inclusive,
                 children)
     }
 
-    method compileString(s:ASTNode):IRNode? {
-        return IRNode(IRNode.Kind.STRING, s.position, Type.StringType(), s.payload->String)
+    method compileString(position:Position, s:String):IRNode? {
+        return IRNode(IRNode.Kind.STRING, position, Type.StringType(), s)
     }
 
-    method compileSelf(s:ASTNode):IRNode? {
-        assert s.kind = ASTNode.Kind.SELF
+    method compileSelf(position:Position):IRNode? {
         if currentMethod.peek().annotations.isClass() {
-            error(s.position, "cannot reference 'self' from a @class method")
+            error(position, "cannot reference 'self' from a @class method")
             return null
         }
         def type:Type
@@ -2816,23 +2813,22 @@ class Compiler : ErrorReporter {
                 separator := ", "
             }
             name.append(">")
-            type := Type(name.finish(), Type.Kind.GENERIC, s.position, subtypes, true)
+            type := Type(name.finish(), Type.Kind.GENERIC, position, subtypes, true)
         }
         else {
             type := cl.type()
         }
-        return IRNode(IRNode.Kind.SELF, s.position, type)
+        return IRNode(IRNode.Kind.SELF, position, type)
     }
 
-    method compileSuper(s:ASTNode):IRNode? {
-        assert s.kind = ASTNode.Kind.SUPER
+    method compileSuper(position:Position):IRNode? {
         if currentMethod.peek().annotations.isClass() {
-            error(s.position, "cannot reference 'super' from a @class method")
+            error(position, "cannot reference 'super' from a @class method")
             return null
         }
         def cl := currentClass.peek()
         assert cl.resolved
-        return IRNode(IRNode.Kind.SUPER, s.position, cl.rawSuper)
+        return IRNode(IRNode.Kind.SUPER, position, cl.rawSuper)
     }
 
     method compileCast(position:Position, expr:ASTNode, rawType:Type):IRNode? {
@@ -2876,39 +2872,31 @@ class Compiler : ErrorReporter {
         }
     }
 
-    method compileCast(c:ASTNode):IRNode? {
-        assert c.kind = ASTNode.Kind.CAST
-        assert c.children.get_count() = 2
-        return compileCast(c.position, c.children[0], scanner.convertType(c.children[1]))
-    }    
-
-    method compileNull(n:ASTNode):IRNode {
-        assert n.kind = ASTNode.Kind.NULL
-        return IRNode(IRNode.Kind.NULL, n.position, Type.Null())
+    method compileNull(position:Position):IRNode {
+        return IRNode(IRNode.Kind.NULL, position, Type.Null())
     }
 
-    method compileChoiceFieldReference(f:ASTNode):IRNode? {
-        def cf := f.payload->Pair<ChoiceEntry, Int>
-        resolve(cf.first)
-        assert f.children != null & f.children.get_count() = 1
+    method compileChoiceFieldReference(position:Position, rawBase:ASTNode, ce:ChoiceEntry,
+            field:Int):IRNode? {
+        resolve(ce)
         def children := Array<IRNode>()
-        def base := compileExpression(f.children[0])
+        def base := compileExpression(rawBase)
         if base = null {
             return null
         }
         children.add(base)
-        return IRNode(IRNode.Kind.CHOICE_FIELD_REFERENCE, f.position,
-                cf.first.fields[cf.second], cf, children)
+        return IRNode(IRNode.Kind.CHOICE_FIELD_REFERENCE, position, ce.fields[field],
+                Pair<ChoiceEntry, Int>(ce, field), children)
     }
 
     method compileExpression(e:ASTNode):IRNode? {
-        match e.kind {
-            when ASTNode.Kind.BINARY:
-                return compileBinary(e)
-            when ASTNode.Kind.BIT:
-                return IRNode(IRNode.Kind.BIT, e.position, Type.BitLiteral(), e.payload->Bit)
-            when ASTNode.Kind.CALL:
-                def result := compileCall(e)
+        match e {
+            when ASTNode.BINARY(position, left, op, right):
+                return compileBinary(position, left, op, right)
+            when ASTNode.BIT(position, value):
+                return IRNode(IRNode.Kind.BIT, position, Type.BitLiteral(), value)
+            when ASTNode.CALL(position, target, args):
+                def result := compileCall(position, target, args)
                 if result != null & result.type = Type.Void() {
                     assert result.kind = IRNode.Kind.CALL
                     error(result.position, result.payload->MethodRef.value.declaration() +
@@ -2916,80 +2904,72 @@ class Compiler : ErrorReporter {
                     return null
                 }
                 return result
-            when ASTNode.Kind.DOT:
-                return compileDot(e)
-            when ASTNode.Kind.IDENTIFIER:
-                return compileIdentifier(e)
-            when ASTNode.Kind.INT:
-                return IRNode(IRNode.Kind.INT, e.position, Type.IntLiteral(e.payload->UInt64),
-                        e.payload->UInt64)
-            when ASTNode.Kind.REAL:
-                return IRNode(IRNode.Kind.REAL, e.position, Type.RealLiteral(e.payload->Real64),
-                        e.payload->Real64)
-            when ASTNode.Kind.PREFIX:
-                return compilePrefix(e)
-            when ASTNode.Kind.RANGE_INCLUSIVE, ASTNode.Kind.RANGE_EXCLUSIVE:
-                return compileRange(e)
-            when ASTNode.Kind.STRING:
-                return compileString(e)
-            when ASTNode.Kind.TYPE, ASTNode.Kind.GENERIC_TYPE, ASTNode.Kind.NULLABLE_TYPE:
+            when ASTNode.DOT(position, base, field):
+                return compileDot(position, base, field)
+            when ASTNode.IDENTIFIER(position, name):
+                return compileIdentifier(position, name)
+            when ASTNode.INT(position, value):
+                return IRNode(IRNode.Kind.INT, position, Type.IntLiteral(value), value)
+            when ASTNode.REAL(position, value):
+                return IRNode(IRNode.Kind.REAL, position, Type.RealLiteral(value), value)
+            when ASTNode.PREFIX(position, op, base):
+                return compilePrefix(position, op, base)
+            when ASTNode.RANGE(position, start, end, inclusive, step):
+                return compileRange(position, start, end, inclusive, step)
+            when ASTNode.STRING(position, str):
+                return compileString(position, str)
+            when ASTNode.TYPE, ASTNode.GENERIC_TYPE, ASTNode.NULLABLE_TYPE:
                 return compileType(e)
-            when ASTNode.Kind.SELF:
-                return compileSelf(e)
-            when ASTNode.Kind.SUPER:
-                return compileSuper(e)
-            when ASTNode.Kind.CAST:
-                return compileCast(e)
-            when ASTNode.Kind.NULL:
-                return compileNull(e)
-            when ASTNode.Kind.CHOICE_FIELD_REFERENCE:
-                return compileChoiceFieldReference(e)
+            when ASTNode.SELF(position):
+                return compileSelf(position)
+            when ASTNode.SUPER(position):
+                return compileSuper(position)
+            when ASTNode.NULL(position):
+                return compileNull(position)
+            when ASTNode.CHOICE_FIELD_REFERENCE(position, base, ce, field):
+                return compileChoiceFieldReference(position, base, ce, field)
         }
-        assert false, "unsupported expression: \{e} (\{e.position})"
+        assert false, "unsupported expression: \{e} (\{e.position()})"
     }
 
-    method compileBlock(b:ASTNode):IRNode? {
-        assert b.kind = ASTNode.Kind.BLOCK
+    method compileBlock(position:Position, statements:ListView<ASTNode>):IRNode? {
         def symbols := SymbolTable(symbolTable) -- FIXME auto
         symbolTable := symbols
         def result := Array<IRNode>()
-        if b.children != null {
-            for stmt in b.children {
-                def compiled := compileStatement(stmt)
-                if compiled = null {
-                    symbolTable := symbols.parents[0]
-                    return null
-                }
-                assert compiled.kind != IRNode.Kind.UNRESOLVED_METHOD_CALL
-                result.add(compiled)
+        for stmt in statements {
+            def compiled := compileStatement(stmt)
+            if compiled = null {
+                symbolTable := symbols.parents[0]
+                return null
             }
+            assert compiled.kind != IRNode.Kind.UNRESOLVED_METHOD_CALL
+            result.add(compiled)
         }
         symbolTable := symbols.parents[0]
-        return IRNode(IRNode.Kind.BLOCK, b.position, result)
+        return IRNode(IRNode.Kind.BLOCK, position, result)
     }
 
-    method compileIf(i:ASTNode):IRNode? {
-        assert i.kind = ASTNode.Kind.IF
-        assert i.children.get_count() = 2 | i.children.get_count() = 3
-        def test := coerce(compileExpression(i.children[0]), Type.Bit())
+    method compileIf(position:Position, rawTest:ASTNode, rawIfTrue:ListView<ASTNode>,
+            rawIfFalse:ASTNode?):IRNode? {
+        def test := coerce(compileExpression(rawTest), Type.Bit())
         if test = null {
             return null
         }
-        def ifTrue := compileStatement(i.children[1])
+        def ifTrue := compileBlock(position, rawIfTrue)
         if ifTrue = null {
             return null
         }
         def children := Array<IRNode>()
         children.add(test)
         children.add(ifTrue)
-        if i.children.get_count() = 3 {
-            def ifFalse := compileStatement(i.children[2])
+        if rawIfFalse != null {
+            def ifFalse := compileStatement(rawIfFalse)
             if ifFalse = null {
                 return null
             }
             children.add(ifFalse)
         }
-        return IRNode(IRNode.Kind.IF, i.position, children)
+        return IRNode(IRNode.Kind.IF, position, children)
     }
 
     method checkSteppedRangeTypes(position:Position, type:Type):Bit {
@@ -3014,52 +2994,50 @@ class Compiler : ErrorReporter {
     }
 
     method compileRangeFor(position:Position, label:String?, astTarget:ASTNode, rawList:IRNode,
-            body:ASTNode):IRNode? {
+            rawBody:ListView<ASTNode>):IRNode? {
         def elementType:Type
         def list:IRNode?
-        if astTarget.kind = ASTNode.Kind.IDENTIFIER & astTarget.children != null &
-                astTarget.children.get_count() > 0 {
-            assert astTarget.children.get_count() = 1
-            def t := resolve(scanner.convertType(astTarget.children[0]))
-            if t.typeKind = Type.Kind.NULLABLE {
-                error(astTarget.position, "for loop variable cannot have nullable type '\{t}'")
-                return null
-            }
-            if !t.isNumeric() {
-                error(astTarget.position, "for loop variable cannot have non-numeric type '\{t}'")
-                return null
-            }
-            if rawList.kind = IRNode.Kind.UNRESOLVED_RANGE {
-                if rawList.children.get_count() = 2 {
+        match astTarget {
+            when ASTNode.TYPED_IDENTIFIER(position, _, type):
+                def t := resolve(scanner.convertType(type))
+                if t.typeKind = Type.Kind.NULLABLE {
+                    error(position, "for loop variable cannot have nullable type '\{t}'")
+                    return null
+                }
+                if !t.isNumeric() {
+                    error(position, "for loop variable cannot have non-numeric type '\{t}'")
+                    return null
+                }
+                if rawList.kind = IRNode.Kind.UNRESOLVED_RANGE {
+                    if rawList.children.get_count() = 2 {
+                        list := coerce(rawList, Type.RangeOf(t))
+                    }
+                    else {
+                        assert rawList.children.get_count() = 3
+                        list := coerce(rawList, Type.SteppedRangeOf(t))
+                    }
+                }
+                else if rawList.type.isSteppedRange() {
+                    list := coerce(rawList, Type.SteppedRangeOf(t))
+                }
+                else if coercionCost(rawList, Type.RangeOf(t)) != null {
                     list := coerce(rawList, Type.RangeOf(t))
                 }
                 else {
-                    assert rawList.children.get_count() = 3
                     list := coerce(rawList, Type.SteppedRangeOf(t))
                 }
-            }
-            else if rawList.type.isSteppedRange() {
-                list := coerce(rawList, Type.SteppedRangeOf(t))
-            }
-            else if coercionCost(rawList, Type.RangeOf(t)) != null {
-                list := coerce(rawList, Type.RangeOf(t))
-            }
-            else {
-                list := coerce(rawList, Type.SteppedRangeOf(t))
-            }
-        }
-        else {
-            var listType := variableType(rawList)
-            assert listType.isRange() | listType.isSteppedRange()
-            if listType.subtypes[1].typeKind = Type.Kind.NULLABLE {
-                if listType.isRange() {
-                    listType := Type.RangeOf(listType.subtypes[1].nonnullable())
+            otherwise:
+                var listType := variableType(rawList)
+                assert listType.isRange() | listType.isSteppedRange()
+                if listType.subtypes[1].typeKind = Type.Kind.NULLABLE {
+                    if listType.isRange() {
+                        listType := Type.RangeOf(listType.subtypes[1].nonnullable())
+                    }
+                    else {
+                        listType := Type.SteppedRangeOf(listType.subtypes[1].nonnullable())
+                    }
                 }
-                else {
-                    listType := Type.SteppedRangeOf(listType.subtypes[1].nonnullable())
-                }
-            }
-            list := coerce(rawList, listType)
+                list := coerce(rawList, listType)
         }
         if list = null {
             return null
@@ -3083,7 +3061,7 @@ class Compiler : ErrorReporter {
             return null
         }
         assert target.value = null
-        def body := compileStatement(body)
+        def body := compileBlock(position, rawBody)
         if body = null {
             return null
         }
@@ -3095,7 +3073,7 @@ class Compiler : ErrorReporter {
     }
 
     method compileIteratorFor(position:Position, label:String?, astTarget:ASTNode, iterator:IRNode,
-            body:ASTNode):IRNode? {
+            body:ListView<ASTNode>):IRNode? {
         -- We rewrite 'for v in <iterator> { <statements> }' to:
         -- def v$Iter := <iterator>
         -- while !v$Iter.done() {
@@ -3145,7 +3123,7 @@ class Compiler : ErrorReporter {
         valueDeclChildren.add(next)
         def valueVarChildren := Array<IRNode>() -- FIXME literal
         valueVarChildren.add(IRNode(IRNode.Kind.DECLARATION, iterator.position, valueDeclChildren))
-        var block := compileStatement(body)
+        var block := compileBlock(position, body)
         if block = null {
             return null
         }
@@ -3158,11 +3136,10 @@ class Compiler : ErrorReporter {
         return IRNode(IRNode.Kind.BLOCK, iterator.position, statements)
     }
 
-    method compileFor(f:ASTNode):IRNode? {
-        assert f.kind = ASTNode.Kind.FOR
-        assert f.children.get_count() = 3
-        loops.push(f.payload->String?) -- FIXME use AutoLoop
-        var list := compileExpression(f.children[1])
+    method compileFor(position:Position, label:String?, rawTarget:ASTNode, rawList:ASTNode,
+            statements:ListView<ASTNode>):IRNode? {
+        loops.push(label) -- FIXME use AutoLoop
+        var list := compileExpression(rawList)
         if list = null {
             loops.pop()
             return null
@@ -3172,8 +3149,7 @@ class Compiler : ErrorReporter {
         def result:IRNode?
         if list.kind = IRNode.Kind.UNRESOLVED_RANGE | list.type.isRange() |
                 list.type.isSteppedRange() {
-            result := compileRangeFor(f.position, f.payload->String?, f.children[0], list,
-                    f.children[2])
+            result := compileRangeFor(position, label, rawTarget, list, statements)
         }
         else {
             list := resolve(list)
@@ -3184,16 +3160,14 @@ class Compiler : ErrorReporter {
             for intf in allInterfaces(list.type) {
                 if intf.typeKind = Type.Kind.GENERIC & intf.subtypes[0] = Type.Iterator() {
                     def iterator := coerce(list, intf)
-                    result := compileIteratorFor(f.position, f.payload->String?, f.children[0],
-                            iterator, f.children[2])
+                    result := compileIteratorFor(position, label, rawTarget, iterator, statements)
                     found := true
                     break
                 }
                 if intf.typeKind = Type.Kind.GENERIC & intf.subtypes[0] = Type.Iterable() {
                     def iterable := coerce(list, intf)
                     def iterator := call(iterable, "iterator", Array<IRNode>())
-                    result := compileIteratorFor(f.position, f.payload->String?, f.children[0],
-                            iterator, f.children[2])
+                    result := compileIteratorFor(position, label, rawTarget, iterator, statements)
                     found := true
                     break
                 }
@@ -3208,61 +3182,57 @@ class Compiler : ErrorReporter {
         return result
     }
 
-    method compileWhile(w:ASTNode):IRNode? {
-        assert w.kind = ASTNode.Kind.WHILE
-        assert w.children.get_count() = 2
-        loops.push(w.payload->String?) -- FIXME use AutoLoop
-        def test := coerce(compileExpression(w.children[0]), Type.Bit())
+    method compileWhile(position:Position, label:String?, rawTest:ASTNode,
+            statements:ListView<ASTNode>):IRNode? {
+        loops.push(label) -- FIXME use AutoLoop
+        def test := coerce(compileExpression(rawTest), Type.Bit())
         if test = null {
             loops.pop()
             return null
         }
-        def stmt := compileStatement(w.children[1])
-        if stmt = null {
+        def block := compileBlock(position, statements)
+        if block = null {
             loops.pop()
             return null
         }
         def children := Array<IRNode>(2) -- FIXME literal
         children.add(test)
-        children.add(stmt)
+        children.add(block)
         loops.pop()
-        return IRNode(IRNode.Kind.WHILE, w.position, w.payload, children)
+        return IRNode(IRNode.Kind.WHILE, position, label, children)
     }
 
-    method compileDo(d:ASTNode):IRNode? {
-        assert d.kind = ASTNode.Kind.DO
-        assert d.children.get_count() = 2
-        loops.push(d.payload->String?) -- FIXME use AutoLoop
-        def stmt := compileStatement(d.children[0])
-        if stmt = null {
+    method compileDo(position:Position, label:String?, statements:ListView<ASTNode>,
+            rawTest:ASTNode):IRNode? {
+        loops.push(label) -- FIXME use AutoLoop
+        def block := compileBlock(position, statements)
+        if block = null {
             loops.pop()
             return null
         }
-        def test := coerce(compileExpression(d.children[1]), Type.Bit())
+        def test := coerce(compileExpression(rawTest), Type.Bit())
         if test = null {
             loops.pop()
             return null
         }
         def children := Array<IRNode>(2) -- FIXME literal
-        children.add(stmt)
+        children.add(block)
         children.add(test)
         loops.pop()
-        return IRNode(IRNode.Kind.DO, d.position, d.payload, children)
+        return IRNode(IRNode.Kind.DO, position, label, children)
     }
 
-    method compileLoop(l:ASTNode):IRNode? {
-        assert l.kind = ASTNode.Kind.LOOP
-        assert l.children.get_count() = 1
-        loops.push(l.payload->String?) -- FIXME use AutoLoop
-        def stmt := compileStatement(l.children[0])
-        if stmt = null {
+    method compileLoop(position:Position, label:String?, statements:ListView<ASTNode>):IRNode? {
+        loops.push(label) -- FIXME use AutoLoop
+        def block := compileBlock(position, statements)
+        if block = null {
             loops.pop()
             return null
         }
         def children := Array<IRNode>(1) -- FIXME literal
-        children.add(stmt)
+        children.add(block)
         loops.pop()
-        return IRNode(IRNode.Kind.LOOP, l.position, l.payload, children)
+        return IRNode(IRNode.Kind.LOOP, position, label, children)
     }
 
     -- FIXME use tuple
@@ -3280,14 +3250,10 @@ class Compiler : ErrorReporter {
             valueType:Type?):CompileTargetResult? {
         var value:IRNode? := rawValue -- FIXME use var on parameter
         assert value = null | valueType = null
-        match t.kind {
-            when ASTNode.Kind.IDENTIFIER:
+        match t {
+            when ASTNode.IDENTIFIER(position, name):
                 def type:Type
-                if t.children != null & t.children.get_count() != 0 {
-                    assert t.children.get_count() = 1
-                    type := resolve(scanner.convertType(t.children[0]))
-                }
-                else if value != null {
+                if value != null {
                     value := resolve(value)
                     if value = null {
                         return null
@@ -3298,7 +3264,7 @@ class Compiler : ErrorReporter {
                     type := valueType
                 }
                 else {
-                    error(t.position, "declaration has neither a type nor a value")
+                    error(position, "declaration has neither a type nor a value")
                     return null
                 }
                 if value != null {
@@ -3308,23 +3274,33 @@ class Compiler : ErrorReporter {
                     }
                     assert value.type = type
                 }
-                def v := Variable(t.position, kind, t.payload->String, type)
+                def v := Variable(position, kind, name, type)
                 symbolTable.add(v)
-                return CompileTargetResult(IRNode(IRNode.Kind.VARIABLE_REFERENCE, v.position, v.type,
-                        v), value)
-            when ASTNode.Kind.TUPLE_TARGET:
-                assert false
+                return CompileTargetResult(IRNode(IRNode.Kind.VARIABLE_REFERENCE, v.position,
+                        v.type, v), value)
+            when ASTNode.TYPED_IDENTIFIER(position, name, rawType):
+                def type := resolve(scanner.convertType(rawType))
+                if value != null {
+                    value := coerce(value, type)
+                    if value = null {
+                        return null
+                    }
+                    assert value.type = type
+                }
+                def v := Variable(position, kind, name, type)
+                symbolTable.add(v)
+                return CompileTargetResult(IRNode(IRNode.Kind.VARIABLE_REFERENCE, v.position,
+                        v.type, v), value)
             otherwise:
                 assert false
         }
     }
 
-    method compileDeclaration(d:ASTNode, varKind:Variable.Kind):IRNode? {
-        assert d.kind = ASTNode.Kind.DECLARATION
-        assert d.children.get_count() = 1 | d.children.get_count() = 2
+    method compileDeclaration(position:Position, target:ASTNode, rawValue:ASTNode?,
+            varKind:Variable.Kind):IRNode? {
         def value:IRNode?
-        if d.children.get_count() = 2 {
-            value := compileExpression(d.children[1])
+        if rawValue != null {
+            value := compileExpression(rawValue)
             if value = null {
                 return null
             }
@@ -3332,7 +3308,7 @@ class Compiler : ErrorReporter {
         else {
             value := null
         }
-        def target := compileTarget(d.children[0], varKind, value, null)
+        def target := compileTarget(target, varKind, value, null)
         if target = null {
             return null
         }
@@ -3344,78 +3320,70 @@ class Compiler : ErrorReporter {
             v.initialValue := target.value
             children.add(target.value)
         }
-        return IRNode(IRNode.Kind.DECLARATION, d.position, children)
+        return IRNode(IRNode.Kind.DECLARATION, position, children)
     }
 
-    method compileBreak(b:ASTNode):IRNode? {
-        assert b.kind = ASTNode.Kind.BREAK
-        if b.payload != null {
+    method compileBreak(position:Position, label:String?):IRNode? {
+        if label != null {
             var found := false
-            for label in loops {
-                if label != null & label = b.payload->String { -- FIXME shouldn't need null check
+            for loopLabel in loops {
+                if loopLabel != null & label = loopLabel { -- FIXME shouldn't need null check
                     found := true
                     break
                 }
             }
             if !found {
-                error(b.position, "'break \{b.payload}' must be inside a loop labelled " +
-                        "'\{b.payload}:'")
+                error(position, "'break \{label}' must be inside a loop labelled '\{label}:'")
             }
         }
         else if loops.get_count() = 0 {
-            error(b.position, "'break' must be inside a loop")
+            error(position, "'break' must be inside a loop")
         }
-        return IRNode(IRNode.Kind.BREAK, b.position, b.payload->String)
+        return IRNode(IRNode.Kind.BREAK, position, label)
     }
 
-    method compileContinue(c:ASTNode):IRNode? {
-        assert c.kind = ASTNode.Kind.CONTINUE
-        if c.payload != null {
+    method compileContinue(position:Position, label:String?):IRNode? {
+        if label != null {
             var found := false
-            for label in loops {
-                if label != null & label = c.payload->String { -- FIXME shouldn't need null check
+            for loopLabel in loops {
+                if loopLabel != null & label = loopLabel { -- FIXME shouldn't need null check
                     found := true
                     break
                 }
             }
             if !found {
-                error(c.position, "'continue \{c.payload}' must be inside a loop labelled " +
-                        "'\{c.payload}:'")
+                error(position, "'continue \{label}' must be inside a loop labelled '\{label}:'")
             }
         }
         else if loops.get_count() = 0 {
-            error(c.position, "'continue' must be inside a loop")
+            error(position, "'continue' must be inside a loop")
         }
-        return IRNode(IRNode.Kind.CONTINUE, c.position, c.payload->String)
+        return IRNode(IRNode.Kind.CONTINUE, position, label)
     }
 
-    method compileReturn(r:ASTNode):IRNode? {
-        assert r.kind = ASTNode.Kind.RETURN
-        if r.children != null & r.children.get_count() > 0 {
-            assert r.children.get_count() = 1
+    method compileReturn(position:Position, rawValue:ASTNode?):IRNode? {
+        if rawValue != null {
             if currentMethod.peek().returnType = Type.Void() {
-                error(r.position, "cannot return a value from a method with no return type")
+                error(position, "cannot return a value from a method with no return type")
                 return null
             }
-            def value := coerce(compileExpression(r.children[0]), currentMethod.peek().returnType)
+            def value := coerce(compileExpression(rawValue), currentMethod.peek().returnType)
             if value = null {
                 return null
             }
             def children := Array<IRNode>() -- FIXME literal
             children.add(value)
-            return IRNode(IRNode.Kind.RETURN, r.position, children)
+            return IRNode(IRNode.Kind.RETURN, position, children)
         }
         if currentMethod.peek().returnType != Type.Void() {
-            error(r.position, "expected a return value")
+            error(position, "expected a return value")
             return null
         }
-        return IRNode(IRNode.Kind.RETURN, r.position)
+        return IRNode(IRNode.Kind.RETURN, position)
     }
 
-    method compileAssert(a:ASTNode):IRNode? {
-        assert(a.kind = ASTNode.Kind.ASSERT)
-        assert(a.children.get_count() = 1 | a.children.get_count() = 2)
-        var test := compileExpression(a.children[0])
+    method compileAssert(position:Position, rawTest:ASTNode, rawMessage:ASTNode?):IRNode? {
+        var test := compileExpression(rawTest)
         if test = null {
             return null
         }
@@ -3429,59 +3397,56 @@ class Compiler : ErrorReporter {
         resolve(value->FieldDecl)
         def fieldChildren := Array<IRNode>() -- FIXME literal
         fieldChildren.add(test)
-        test := IRNode(IRNode.Kind.FIELD_REFERENCE, a.position, Type.BuiltinBit(), value,
+        test := IRNode(IRNode.Kind.FIELD_REFERENCE, position, Type.BuiltinBit(), value,
                 fieldChildren)
         def children := Array<IRNode>() -- FIXME literal
         children.add(test)
-        if a.children.get_count() = 2 {
-            var msg := compileExpression(a.children[1])
-            if msg = null {
+        if rawMessage != null {
+            var message := compileExpression(rawMessage)
+            if message = null {
                 return null
             }
-            msg := coerce(msg, Type.StringType())
-            if msg = null {
+            message := coerce(message, Type.StringType())
+            if message = null {
                 return null
             }
-            children.add(msg)
+            children.add(message)
         }
-        return IRNode(IRNode.Kind.ASSERT, a.position, children)
+        return IRNode(IRNode.Kind.ASSERT, position, children)
     }
 
-    method compileVar(v:ASTNode):IRNode? {
-        assert v.kind = ASTNode.Kind.VAR |
-               v.kind = ASTNode.Kind.DEF |
-               v.kind = ASTNode.Kind.PROPERTY |
-               v.kind = ASTNode.Kind.CONSTANT
+    method compileVar(position:Position, kind:Variable.Kind,
+            declarations:ImmutableArray<ASTNode>):IRNode? {
         def nodeKind:Int
-        def varKind:Variable.Kind
-        match v.kind {
-            when ASTNode.Kind.VAR:
+        match kind {
+            when Variable.Kind.VAR:
                 nodeKind := IRNode.Kind.VAR
-                varKind := Variable.Kind.VAR
-            when ASTNode.Kind.DEF:
+            when Variable.Kind.DEF:
                 nodeKind := IRNode.Kind.DEF
-                varKind := Variable.Kind.DEF
-            when ASTNode.Kind.CONSTANT:
+            when Variable.Kind.CONSTANT:
                 nodeKind := IRNode.Kind.CONSTANT
-                varKind := Variable.Kind.CONSTANT
-            when ASTNode.Kind.PROPERTY:
+            when Variable.Kind.PROPERTY:
                 nodeKind := IRNode.Kind.PROPERTY
-                varKind := Variable.Kind.PROPERTY
             otherwise: assert false
         }
         def decls := Array<IRNode>()
-        for astDecl in v.children {
-            def decl := compileDeclaration(astDecl, varKind)
-            if decl = null {
-                return null
+        for astDecl in declarations {
+            match astDecl {
+                when ASTNode.DECLARATION(position, target, rawValue):
+                    def decl := compileDeclaration(position, target, rawValue, kind)
+                    if decl = null {
+                        return null
+                    }
+                    decls.add(decl)
+                otherwise:
+                    assert false
             }
-            decls.add(decl)
         }
-        return IRNode(nodeKind, v.position, decls)
+        return IRNode(nodeKind, position, decls)
     }
 
     method compileWhenTest(value:Variable, test:ASTNode):IRNode? {
-        def target := IRNode(IRNode.Kind.VARIABLE_REFERENCE, test.position, value.type, value)
+        def target := IRNode(IRNode.Kind.VARIABLE_REFERENCE, test.position(), value.type, value)
         def testValue := compileExpression(test)
         if testValue = null {
             return null
@@ -3491,84 +3456,92 @@ class Compiler : ErrorReporter {
         return call(target, "=", callChildren)
     }
 
-    method compileChainedIfWhen(value:Variable, w:ASTNode):IRNode? {
-        assert w.kind = ASTNode.Kind.WHEN
-        assert w.children.get_count() >= 1
-        assert w.children[0].kind = ASTNode.Kind.EXPRESSIONS
-        assert w.children[0].children.get_count() >= 1
-        if w.children[0].children.get_count() = 1 {
-            def test := w.children[0].children[0]
-            if test.kind = ASTNode.Kind.CALL & value.type.isClass() {
-                def cl := getClass(value.type)
-                if cl.classKind = ClassDecl.Kind.CHOICE {
-                    def base := compileExpression(test.children[0])
-                    if base = null {
-                        return null
-                    }
-                    if base.kind = IRNode.Kind.CHOICE_ENTRY_REFERENCE {
-                        def callChildren := Array<IRNode>()
-                        callChildren.add(base)
-                        def target := IRNode(IRNode.Kind.VARIABLE_REFERENCE, test.position,
-                                value.type, value)
-                        def check := call(target, "=", callChildren)
-                        if check = null {
-                            return null
-                        }
-                        def entry := base.payload->ChoiceEntry
-                        def requiredCount := entry.fields.get_count()
-                        def actualCount := test.children.get_count() - 1
-                        if actualCount != requiredCount {
-                            error(test.position, "'\{base.payload}' requires \{requiredCount} " +
-                                    "argument\{requiredCount = 1:|s}, but found \{actualCount}")
-                            return null
-                        }
-                        symbolTable := SymbolTable(symbolTable)
-                        def statements := Array<IRNode>()
-                        for i in 1 .. test.children.get_count() {
-                            if test.children[i].kind != ASTNode.Kind.IDENTIFIER {
-                                error(test.children[i].position, "expected an identifier")
+    method compileChainedIfWhen(value:Variable, position:Position, tests:ImmutableArray<ASTNode>,
+                     rawStatements:ImmutableArray<ASTNode>):IRNode? {
+        if tests.get_count() = 1 {
+            def test := tests[0]
+            if value.type.isClass() {
+                match test {
+                    when ASTNode.CALL(testPosition, rawBase, args):
+                        def cl := getClass(value.type)
+                        if cl.classKind = ClassDecl.Kind.CHOICE {
+                            def base := compileExpression(rawBase)
+                            if base = null {
                                 return null
                             }
-                            def variable := Variable(test.children[i].position, Variable.Kind.DEF,
-                                    test.children[i].payload->String, entry.fields[i - 1])
-                            symbolTable.add(variable)
-                            def declChildren := Array<IRNode>() -- FIXME literal
-                            declChildren.add(IRNode(IRNode.Kind.VARIABLE_REFERENCE,
-                                    variable.position, variable.type, variable))
-                            def fieldRefChildren := Array<IRNode>() -- FIXME literal
-                            fieldRefChildren.add(IRNode(IRNode.Kind.VARIABLE_REFERENCE,
-                                    test.position, value.type, value))
-                            declChildren.add(IRNode(IRNode.Kind.CHOICE_FIELD_REFERENCE,
-                                    variable.position, variable.type,
-                                    Pair<ChoiceEntry, Int>(entry, i - 1), fieldRefChildren))
-                            def varChildren := Array<IRNode>()
-                            varChildren.add(IRNode(IRNode.Kind.DECLARATION, variable.position,
-                                    declChildren))
-                            statements.add(IRNode(IRNode.Kind.DEF, variable.position, varChildren))
-                        }
-                        for i in 1 .. w.children.get_count() {
-                            def statement := compileStatement(w.children[i])
-                            if statement = null {
-                                return null
+                            if base.kind = IRNode.Kind.CHOICE_ENTRY_REFERENCE {
+                                def callChildren := Array<IRNode>()
+                                callChildren.add(base)
+                                def target := IRNode(IRNode.Kind.VARIABLE_REFERENCE, testPosition,
+                                        value.type, value)
+                                def check := call(target, "=", callChildren)
+                                if check = null {
+                                    return null
+                                }
+                                def entry := base.payload->ChoiceEntry
+                                resolve(entry)
+                                def requiredCount := entry.fields.get_count()
+                                def actualCount := args.get_count()
+                                if actualCount != requiredCount {
+                                    error(testPosition, "'\{base.payload}' requires " +
+                                            "\{requiredCount} argument\{requiredCount = 1:|s}, " +
+                                            "but found \{actualCount}")
+                                    return null
+                                }
+                                symbolTable := SymbolTable(symbolTable)
+                                def statements := Array<IRNode>()
+                                for i in 0 .. actualCount {
+                                    match args[i] {
+                                        when ASTNode.IDENTIFIER(position, name):
+                                            def variable := Variable(position, Variable.Kind.DEF,
+                                                    name, entry.fields[i])
+                                            symbolTable.add(variable)
+                                            def declChildren := Array<IRNode>() -- FIXME literal
+                                            declChildren.add(IRNode(IRNode.Kind.VARIABLE_REFERENCE,
+                                                    variable.position, variable.type, variable))
+                                            def fieldRefChildren := Array<IRNode>() -- FIXME literal
+                                            fieldRefChildren.add(IRNode(
+                                                    IRNode.Kind.VARIABLE_REFERENCE, position,
+                                                    value.type, value))
+                                            declChildren.add(IRNode(
+                                                    IRNode.Kind.CHOICE_FIELD_REFERENCE,
+                                                    variable.position, variable.type,
+                                                    Pair<ChoiceEntry, Int>(entry, i),
+                                                    fieldRefChildren))
+                                            def varChildren := Array<IRNode>()
+                                            varChildren.add(IRNode(IRNode.Kind.DECLARATION,
+                                                    variable.position, declChildren))
+                                            statements.add(IRNode(IRNode.Kind.DEF,
+                                                    variable.position, varChildren))
+                                        otherwise:
+                                            error(args[i].position(), "expected an identifier")
+                                            return null
+                                    }
+                                }
+                                for rawStatement in rawStatements {
+                                    def statement := compileStatement(rawStatement)
+                                    if statement = null {
+                                        return null
+                                    }
+                                    statements.add(statement)
+                                }
+                                symbolTable := symbolTable.parents[0]
+                                def children := Array<IRNode>() -- FIXME literal
+                                children.add(check)
+                                children.add(IRNode(IRNode.Kind.BLOCK, position, statements))
+                                return IRNode(IRNode.Kind.IF, position, children)
                             }
-                            statements.add(statement)
-                        }
-                        symbolTable := symbolTable.parents[0]
-                        def children := Array<IRNode>() -- FIXME literal
-                        children.add(check)
-                        children.add(IRNode(IRNode.Kind.BLOCK, w.position, statements))
-                        return IRNode(IRNode.Kind.IF, w.position, children)
                     }
                 }
             }
         }
 
-        var test := compileWhenTest(value, w.children[0].children[0])
+        var test := compileWhenTest(value, tests[0])
         if test = null {
             return null
         }
-        for i in 1 .. w.children[0].children.get_count() {
-            def nextTest := compileWhenTest(value, w.children[0].children[i])
+        for i in 1 .. tests.get_count() {
+            def nextTest := compileWhenTest(value, tests[i])
             if nextTest = null {
                 return null
             }
@@ -3581,8 +3554,8 @@ class Compiler : ErrorReporter {
         }
         symbolTable := SymbolTable(symbolTable)
         def statements := Array<IRNode>()
-        for i in 1 .. w.children.get_count() {
-            def statement := compileStatement(w.children[i])
+        for rawStatement in rawStatements {
+            def statement := compileStatement(rawStatement)
             if statement = null {
                 return null
             }
@@ -3591,14 +3564,15 @@ class Compiler : ErrorReporter {
         symbolTable := symbolTable.parents[0]
         def children := Array<IRNode>() -- FIXME literal
         children.add(test)
-        children.add(IRNode(IRNode.Kind.BLOCK, w.position, statements))
-        return IRNode(IRNode.Kind.IF, w.position, children)
+        children.add(IRNode(IRNode.Kind.BLOCK, position, statements))
+        return IRNode(IRNode.Kind.IF, position, children)
     }
 
-    method compileChainedIfMatch(m:ASTNode, value:IRNode):IRNode? {
+    method compileChainedIfMatch(position:Position, value:IRNode, whens:ImmutableArray<ASTNode>,
+                     other:ImmutableArray<ASTNode>?):IRNode? {
         def children := Array<IRNode>()
-        def valueVar := Variable(m.position, Variable.Kind.DEF,
-                "$match$\{m.position.line}_\{m.position.column}", value.type)
+        def valueVar := Variable(position, Variable.Kind.DEF,
+                "$match$\{position.line}_\{position.column}", value.type)
         def declChildren := Array<IRNode>() -- FIXME literal
         declChildren.add(IRNode(IRNode.Kind.VARIABLE_REFERENCE, value.position, valueVar.type,
                 valueVar))
@@ -3606,28 +3580,28 @@ class Compiler : ErrorReporter {
         def varChildren := Array<IRNode>()
         varChildren.add(IRNode(IRNode.Kind.DECLARATION, valueVar.position, declChildren))
         children.add(IRNode(IRNode.Kind.DEF, valueVar.position, varChildren))
-        for i in 1 .. m.children.get_count() {
-            def c := m.children[i]
-            match c.kind {
-                when ASTNode.Kind.WHEN:
-                    def w := compileChainedIfWhen(valueVar, c)
+        for rawWhen in whens {
+            match rawWhen {
+                when ASTNode.WHEN(whenPosition, tests, statements):
+                    def w := compileChainedIfWhen(valueVar, whenPosition, tests, statements)
                     if w = null {
                         return null
                     }
                     children.add(w)
-                when ASTNode.Kind.OTHERWISE:
-                    def statements := Array<IRNode>()
-                    for astStatement in c.children {
-                        def stmt := compileStatement(astStatement)
-                        if stmt = null {
-                            return null
-                        }
-                        statements.add(stmt)
-                    }
-                    children.add(IRNode(IRNode.Kind.BLOCK, c.position, statements))
                 otherwise:
                     assert false
             }
+        }
+        if other != null {
+            def statements := Array<IRNode>()
+            for raw in other {
+                def stmt := compileStatement(raw)
+                if stmt = null {
+                    return null
+                }
+                statements.add(stmt)
+            }
+            children.add(IRNode(IRNode.Kind.BLOCK, position, statements))
         }
         for i in children.get_count() - 1 .. 1 by -1 {
             assert children[i - 1].kind = IRNode.Kind.IF
@@ -3637,16 +3611,13 @@ class Compiler : ErrorReporter {
             children[i - 1] := IRNode(children[i - 1].kind, children[i - 1].position, newChildren)
             children.removeIndex(children.get_count() - 1)
         }
-        return IRNode(IRNode.Kind.BLOCK, m.position, children)
+        return IRNode(IRNode.Kind.BLOCK, position, children)
     }
 
-    method compileWhen(type:Type, w:ASTNode):IRNode? {
-        assert w.kind = ASTNode.Kind.WHEN
-        assert w.children.get_count() >= 1
-        assert w.children[0].kind = ASTNode.Kind.EXPRESSIONS
-        assert w.children[0].children.get_count() >= 1
+    method compileWhen(type:Type, position:Position, tests:ImmutableArray<ASTNode>,
+                rawStatements:ImmutableArray<ASTNode>):IRNode? {
         def children := Array<IRNode>()
-        for expr in w.children[0].children {
+        for expr in tests {
             def compiled := coerce(compileExpression(expr), type)
             if compiled = null {
                 return null
@@ -3655,33 +3626,32 @@ class Compiler : ErrorReporter {
         }
         symbolTable := SymbolTable(symbolTable)
         def statements := Array<IRNode>()
-        for i in 1 .. w.children.get_count() {
-            def statement := compileStatement(w.children[i])
+        for rawStatement in rawStatements {
+            def statement := compileStatement(rawStatement)
             if statement = null {
                 return null
             }
             statements.add(statement)
         }
         symbolTable := symbolTable.parents[0]
-        children.add(IRNode(IRNode.Kind.BLOCK, w.position, statements))
-        return IRNode(IRNode.Kind.WHEN, w.position, children)
+        children.add(IRNode(IRNode.Kind.BLOCK, position, statements))
+        return IRNode(IRNode.Kind.WHEN, position, children)
     }
 
-    method compileOtherwise(o:ASTNode):IRNode? {
-        assert o.kind = ASTNode.Kind.OTHERWISE
+    method compileOtherwise(rawStatements:ImmutableArray<ASTNode>):IRNode? {
         def children := Array<IRNode>()
         symbolTable := SymbolTable(symbolTable)
         def statements := Array<IRNode>()
-        for s in o.children {
-            def statement := compileStatement(s)
+        for rawStatement in rawStatements {
+            def statement := compileStatement(rawStatement)
             if statement = null {
                 return null
             }
             statements.add(statement)
         }
         symbolTable := symbolTable.parents[0]
-        children.add(IRNode(IRNode.Kind.BLOCK, o.position, statements))
-        return IRNode(IRNode.Kind.OTHERWISE, o.position, children)
+        children.add(IRNode(IRNode.Kind.BLOCK, Position(), statements))
+        return IRNode(IRNode.Kind.OTHERWISE, Position(), children)
     }
 
     function isConstantInt(expr:IRNode):Bit {
@@ -3722,64 +3692,78 @@ class Compiler : ErrorReporter {
         }
     }
 
-    method compileMatch(m:ASTNode):IRNode? {
-        assert m.kind = ASTNode.Kind.MATCH
-        assert m.children.get_count() >= 1
-        def value := resolve(compileExpression(m.children[0]))
+    method compileMatch(position:Position, rawValue:ASTNode, whens:ImmutableArray<ASTNode>,
+                other:ImmutableArray<ASTNode>?):IRNode? {
+        def value := resolve(compileExpression(rawValue))
         if value = null {
             return null
         }
         if !value.type.isNumber() {
-            return compileChainedIfMatch(m, value)
+            return compileChainedIfMatch(position, value, whens, other)
         }
         def children := Array<IRNode>()
         children.add(value)
-        for rawWhen in m.children[1..] {
-            if rawWhen.kind = ASTNode.Kind.OTHERWISE {
-                def o := compileOtherwise(rawWhen)
-                if o = null {
-                    return null
-                }
-                children.add(o)
-                continue
+        for rawWhen in whens {
+            match rawWhen {
+                when ASTNode.WHEN(position, tests, statements):
+                    def w := compileWhen(value.type, position, tests, statements)
+                    if w = null {
+                        return null
+                    }
+                    if !isConstantInt(w.children[0]) {
+                        return compileChainedIfMatch(position, value, whens, other)
+                    }
+                    children.add(w)
+                otherwise:
+                    assert false
             }
-            def w := compileWhen(value.type, rawWhen)
-            if w = null {
+        }
+        if other != null {
+            def o := compileOtherwise(other)
+            if o = null {
                 return null
             }
-            if !isConstantInt(w.children[0]) {
-                return compileChainedIfMatch(m, value)
-            }
-            children.add(w)
+            children.add(o)
         }
-        return IRNode(IRNode.Kind.MATCH, m.position, children)
+        return IRNode(IRNode.Kind.MATCH, position, children)
     }
 
     method compileStatement(s:ASTNode):IRNode? {
-        match s.kind {
-            when ASTNode.Kind.ASSERT:   return compileAssert(s)
-            when ASTNode.Kind.BINARY:   return resolve(compileBinary(s))
-            when ASTNode.Kind.BLOCK:    return compileBlock(s)
-            when ASTNode.Kind.IF:       return compileIf(s)
-            when ASTNode.Kind.FOR:      return compileFor(s)
-            when ASTNode.Kind.WHILE:    return compileWhile(s)
-            when ASTNode.Kind.DO:       return compileDo(s)
-            when ASTNode.Kind.LOOP:     return compileLoop(s)
-            when ASTNode.Kind.MATCH:    return compileMatch(s)
-            when ASTNode.Kind.BREAK:    return compileBreak(s)
-            when ASTNode.Kind.CONTINUE: return compileContinue(s)
-            when ASTNode.Kind.RETURN:   return compileReturn(s)
-            when ASTNode.Kind.CALL:
-                var result := resolve(compileCall(s))
+        match s {
+            when ASTNode.ASSERT(position, test, msg):
+                return compileAssert(position, test, msg)
+            when ASTNode.BINARY(position, left, op, right):
+                return resolve(compileBinary(position, left, op, right))
+            when ASTNode.BLOCK(position, statements):
+                return compileBlock(position, statements)
+            when ASTNode.IF(position, test, ifTrue, ifFalse):
+                return compileIf(position, test, ifTrue, ifFalse)
+            when ASTNode.FOR(position, label, target, list, statements):
+                return compileFor(position, label, target, list, statements)
+            when ASTNode.WHILE(position, label, test, statements):
+                return compileWhile(position, label, test, statements)
+            when ASTNode.DO(position, label, statements, test):
+                return compileDo(position, label, statements, test)
+            when ASTNode.LOOP(position, label, statements):
+                return compileLoop(position, label, statements)
+            when ASTNode.MATCH(position, value, whens, other):
+                return compileMatch(position, value, whens, other)
+            when ASTNode.BREAK(position, label):
+                return compileBreak(position, label)
+            when ASTNode.CONTINUE(position, label):
+                return compileContinue(position, label)
+            when ASTNode.RETURN(position, value):
+                return compileReturn(position, value)
+            when ASTNode.CALL(position, target, args):
+                var result := resolve(compileCall(position, target, args))
                 if result != null {
                     result := unwrapCast(result)
                 }
                 return result
-            when ASTNode.Kind.VAR, ASTNode.Kind.DEF, ASTNode.Kind.CONSTANT, ASTNode.Kind.PROPERTY:
-                return compileVar(s)
+            when ASTNode.VAR(position, kind, declarations):
+                return compileVar(position, kind, declarations)
         }
-        assert false, "unsupported statement kind: \{s.kind} at " +
-                "\{currentClass.peek().source}:\{s.position}"
+        assert false, "unsupported statement: \{s}"
     }
 
     method compileBody(m:MethodDecl):IRNode? {
@@ -3816,12 +3800,12 @@ class Compiler : ErrorReporter {
                 }
             }
         }
-        var compiled := compileBlock(m.body)
+        var compiled := compileBlock(m.position, m.body)
         if compiled != null {
             if fieldInitializers != null {
                 def children := Array<IRNode>(fieldInitializers)
                 children.addAll(compiled.children)
-                compiled := IRNode(IRNode.Kind.BLOCK, m.body.position, children)
+                compiled := IRNode(IRNode.Kind.BLOCK, m.position, children)
             }
         }
         assert symbolTable == symbols

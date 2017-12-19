@@ -2,14 +2,14 @@
 #include "panda_c.h"
 #define PANDA_TYPESONLY
 #undef PANDA_TYPESONLY
-typedef struct org$pandalanguage$pandac$parser$Token$Kind org$pandalanguage$pandac$parser$Token$Kind;
+#include "org/pandalanguage/pandac/parser/Token/Kind.h"
 #include "panda/core/String/Index.h"
 #include "org/pandalanguage/pandac/Position.h"
 typedef struct panda$core$Class panda$core$Class;
 #include "org/pandalanguage/pandac/parser/Token.h"
 
 typedef struct org$pandalanguage$pandac$parser$Token {
-    org$pandalanguage$pandac$parser$Token$Kind* kind;
+    org$pandalanguage$pandac$parser$Token$Kind kind;
     panda$core$String$Index start;
     panda$core$String$Index end;
     org$pandalanguage$pandac$Position position;
@@ -33,10 +33,10 @@ extern org$pandalanguage$pandac$parser$Token$wrapperclass_type org$pandalanguage
 
 #ifndef PANDA_TYPESONLY
 #include "org/pandalanguage/pandac/parser/Token.h"
-typedef struct org$pandalanguage$pandac$parser$Token$Kind org$pandalanguage$pandac$parser$Token$Kind;
+#include "org/pandalanguage/pandac/parser/Token/Kind.h"
 #include "panda/core/String/Index.h"
 #include "org/pandalanguage/pandac/Position.h"
 
-void org$pandalanguage$pandac$parser$Token$init$org$pandalanguage$pandac$parser$Token$Kind$panda$core$String$Index$panda$core$String$Index$org$pandalanguage$pandac$Position(org$pandalanguage$pandac$parser$Token* self, org$pandalanguage$pandac$parser$Token$Kind* p_kind, panda$core$String$Index p_start, panda$core$String$Index p_end, org$pandalanguage$pandac$Position p_position);
+void org$pandalanguage$pandac$parser$Token$init$org$pandalanguage$pandac$parser$Token$Kind$panda$core$String$Index$panda$core$String$Index$org$pandalanguage$pandac$Position(org$pandalanguage$pandac$parser$Token* self, org$pandalanguage$pandac$parser$Token$Kind p_kind, panda$core$String$Index p_start, panda$core$String$Index p_end, org$pandalanguage$pandac$Position p_position);
 
 #endif

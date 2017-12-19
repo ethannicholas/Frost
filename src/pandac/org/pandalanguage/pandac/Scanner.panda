@@ -15,212 +15,330 @@ class Scanner {
     }
 
     method convertType(type:ASTNode):Type {
-        match type.kind {
-            when ASTNode.Kind.VOID:
-                return Type.Void()
-            when ASTNode.Kind.TYPE:
-                assert type.children = null
-                return Type(type.payload->String, Type.Kind.CLASS, type.position)
-            when ASTNode.Kind.NULLABLE_TYPE:
-                assert type.children.get_count() = 1
-                def children := Array<Type>()
-                children.add(convertType(type.children[0]))
-                return Type(children[0].name + "?", Type.Kind.NULLABLE, type.position, children,
-                        false)
-            when ASTNode.Kind.GENERIC_TYPE:
-                assert type.children.get_count() >= 2
-                def children := Array<Type>()
-                for c in type.children {
-                    def child := convertType(c)
-                    children.add(child)
+        match type {
+            when ASTNode.TYPE(position, name):
+                return Type(name, Type.Kind.CLASS, position)
+            when ASTNode.NULLABLE_TYPE(position, base):
+                def subtypes := Array<Type>()
+                subtypes.add(convertType(base))
+                return Type(subtypes[0].name + "?", Type.Kind.NULLABLE, position, subtypes, false)
+            when ASTNode.GENERIC_TYPE(position, base, args):
+                def subtypes := Array<Type>()
+                def name := MutableString(base)
+                name.append("<")
+                var separator := ""
+                for arg in args {
+                    def subtype := convertType(arg)
+                    subtypes.add(subtype)
+                    name.append(separator)
+                    name.append(subtype.name)
+                    separator := ", "
                 }
-                return Type(type.payload->String, Type.Kind.GENERIC, type.position, children, false)
+                name.append(">")
+                return Type(name.finish(), Type.Kind.GENERIC, position, subtypes, false)
             otherwise:
-                assert false, "\{type} (\{type.kind})"
+                assert false, "unsupported type \{type}"
         }
     }
 
-    method convertAnnotations(a:ASTNode):Annotations {
-        assert a.kind = ASTNode.Kind.ANNOTATIONS
+    method convertAnnotations(a:ImmutableArray<ASTNode>):Annotations {
         var flags := 0
-        for c in a.children {
-            assert c.kind = ASTNode.Kind.ANNOTATION
-            match c.payload->String {
-                when "@private":    flags ||= Annotations.Flag.PRIVATE
-                when "@protected":  flags ||= Annotations.Flag.PROTECTED
-                when "@package":    flags ||= Annotations.Flag.PACKAGE
-                when "@class":      flags ||= Annotations.Flag.CLASS
-                when "@override":   flags ||= Annotations.Flag.OVERRIDE
-                when "@external":   flags ||= Annotations.Flag.EXTERNAL
-                when "@implicit":  flags ||= Annotations.Flag.IMPLICIT
-                when "@implicit":   flags ||= Annotations.Flag.IMPLICIT
-                when "@final":      flags ||= Annotations.Flag.FINAL
-                when "@abstract":   flags ||= Annotations.Flag.ABSTRACT
-                when "@inline":     flags ||= Annotations.Flag.INLINE
-                when "@specialize": flags ||= Annotations.Flag.SPECIALIZE
+        for c in a {
+            match c {
+                when ASTNode.ANNOTATION(position, text):
+                    match text {
+                        when "@private":    flags ||= Annotations.Flag.PRIVATE
+                        when "@protected":  flags ||= Annotations.Flag.PROTECTED
+                        when "@package":    flags ||= Annotations.Flag.PACKAGE
+                        when "@class":      flags ||= Annotations.Flag.CLASS
+                        when "@override":   flags ||= Annotations.Flag.OVERRIDE
+                        when "@external":   flags ||= Annotations.Flag.EXTERNAL
+                        when "@implicit":   flags ||= Annotations.Flag.IMPLICIT
+                        when "@final":      flags ||= Annotations.Flag.FINAL
+                        when "@abstract":   flags ||= Annotations.Flag.ABSTRACT
+                        when "@inline":     flags ||= Annotations.Flag.INLINE
+                        when "@specialize": flags ||= Annotations.Flag.SPECIALIZE
+                        otherwise:
+                            compiler.error(position, "unrecognized annotation '\{text}'")
+                    }
                 otherwise:
-                    compiler.error(c.position, "unrecognized annotation '\{c.payload}'")
+                    assert false
             }
         }
         return Annotations(flags)
     }
 
-    method scanFields(owner:ClassDecl, f:ASTNode) {
-        assert f.children.get_count() = 3
+    method scanFields(owner:ClassDecl, position:Position, rawDoccomment:ASTNode?,
+                rawAnnotations:ImmutableArray<ASTNode>, varDecl:ASTNode) {
         def doccomment:String?
-        if f.children[0].kind != ASTNode.Kind.VOID {
-            assert f.children[0].kind = ASTNode.Kind.DOC_COMMENT
-            doccomment := f.children[0].payload->String
-        }
-        else {
+        -- FIXME should be able to match against null too
+        if rawDoccomment = null {
             doccomment := null
         }
-        def annotations := convertAnnotations(f.children[1])
-        def kind:Int
-        match f.children[2].kind {
-            when ASTNode.Kind.VAR:
-                kind := FieldDecl.Kind.VAR
-            when ASTNode.Kind.DEF:
-                kind := FieldDecl.Kind.DEF
-            when ASTNode.Kind.CONSTANT:
-                kind := FieldDecl.Kind.CONSTANT
-                annotations.flags ||= Annotations.Flag.CLASS
-            when ASTNode.Kind.PROPERTY:
-                kind := FieldDecl.Kind.PROPERTY
-        }
-        for decl in f.children[2].children {
-            assert decl.children[0].kind = ASTNode.Kind.IDENTIFIER
-            def value:ASTNode?
-            if decl.children.get_count() = 2 {
-                value := decl.children[1]
-            }
-            else {
-                assert decl.children.get_count() = 1
-                value := null
-            }
-            def type:Type
-            if decl.children[0].children != null {
-                assert decl.children[0].children.get_count() = 1
-                type := convertType(decl.children[0].children[0])
-            }
-            else {
-                type := Type.Void()
-            }
-            def field := FieldDecl(owner, decl.position, doccomment, annotations, kind,
-                    decl.children[0].payload->String, type, value)
-            owner.symbolTable.add(field)
-            owner.fields.add(field)
-        }
-    }
-
-    method scanInit(owner:ClassDecl, i:ASTNode):MethodDecl? {
-        assert i.children.get_count() = 5
-        def doccomment:String?
-        if i.children[0].kind != ASTNode.Kind.VOID {
-            assert i.children[0].kind = ASTNode.Kind.DOC_COMMENT
-            doccomment := i.children[0].payload->String
-        }
         else {
-            doccomment := null
+            match rawDoccomment {
+                when ASTNode.STRING(position, text):
+                    doccomment := text
+                otherwise:
+                    assert false
+            }
         }
-        assert i.children[1].kind = ASTNode.Kind.ANNOTATIONS
-        def annotations := convertAnnotations(i.children[1])
-        assert i.children[2].kind = ASTNode.Kind.PARAMETERS
-        def parameters := Array<MethodDecl.Parameter>()
-        for p in i.children[2].children {
-            assert p.kind = ASTNode.Kind.PARAMETER
-            assert p.children.get_count() = 1
-            parameters.add(MethodDecl.Parameter(p.payload->String, convertType(p.children[0])))
+        def annotations := convertAnnotations(rawAnnotations)
+        def fieldKind:FieldDecl.Kind
+        match varDecl {
+            when ASTNode.VAR(_, kind, decls):
+                match kind {
+                    when Variable.Kind.VAR:
+                        fieldKind := FieldDecl.Kind.VAR
+                    when Variable.Kind.DEF:
+                        fieldKind := FieldDecl.Kind.DEF
+                    when Variable.Kind.CONSTANT:
+                        fieldKind := FieldDecl.Kind.CONSTANT
+                        annotations.flags ||= Annotations.Flag.CLASS
+                    when Variable.Kind.PROPERTY:
+                        fieldKind := FieldDecl.Kind.PROPERTY
+                }
+                for decl in decls {
+                    match decl {
+                        when ASTNode.DECLARATION(declPosition, target, value):
+                            def name:String
+                            def type:Type
+                            match target {
+                                when ASTNode.IDENTIFIER(_, id):
+                                    name := id
+                                    type := Type.Void()
+                                when ASTNode.TYPED_IDENTIFIER(_, id, idType):
+                                    name := id
+                                    type := convertType(idType)
+                                otherwise:
+                                    assert false
+                            }
+                            def field := FieldDecl(owner, declPosition, doccomment, annotations,
+                                    fieldKind, name, type, value)
+                            owner.symbolTable.add(field)
+                            owner.fields.add(field)
+                        otherwise:
+                            assert false
+                    }
+                }
+            otherwise:
+                assert false
         }
-        return MethodDecl(owner, i.position, doccomment, annotations, MethodDecl.Kind.INIT, "init",
-                parameters, Type.Void(), i.children[3])
     }
 
     function complexity(node:ASTNode):Int {
-        var result := 1
-        if node.children != null {
-            for child in node.children {
-                result += complexity(child)
-                if result > INLINE_THRESHOLD {
-                    break
+        -- FIXME provide a visitor in ASTNode when lambdas are in so I can eliminate this mess
+        match node {
+            when ASTNode.ASSERT(_, test, msg):
+                return complexity(test)
+            when ASTNode.BINARY(_, left, op, right):
+                return 1 + complexity(left) + complexity(right)
+            when ASTNode.BIT:
+                return 1
+            when ASTNode.BLOCK(_, statements):
+                var result := 0
+                for s in statements {
+                    result += complexity(s)
+                }
+                return result
+            when ASTNode.BREAK:
+                return 1
+            when ASTNode.CALL(_, target, args):
+                var result := complexity(target)
+                for a in args {
+                    result += complexity(a)
+                }
+                return result
+            when ASTNode.CHOICE_FIELD_REFERENCE(_, base, ce, f):
+                return complexity(base)
+            when ASTNode.CONTINUE:
+                return 1
+            when ASTNode.DECLARATION(_, target, value):
+                if value = null {
+                    return 0
+                }
+                return complexity(value)
+            when ASTNode.DO(_, label, statements, test):
+                var result := complexity(test)
+                for s in statements {
+                    result += complexity(s)
+                }
+                return result
+            when ASTNode.DOT(_, base, field):
+                return complexity(base)
+            when ASTNode.FOR(_, label, target, list, statements):
+                var result := complexity(list)
+                for s in statements {
+                    result += complexity(s)
+                }
+                return result
+            when ASTNode.GENERIC_TYPE:
+                return 0
+            when ASTNode.IDENTIFIER(_, text):
+                return 1
+            when ASTNode.IF(_, test, ifTrue, ifFalse):
+                var result := complexity(test)
+                for s in ifTrue {
+                    result += complexity(s)
+                }
+                if ifFalse != null {
+                    result += complexity(ifFalse)
+                }
+                return result
+            when ASTNode.INT:
+                return 1
+            when ASTNode.LOOP(_, label, statements):
+                var result := 0
+                for s in statements {
+                    result += complexity(s)
+                }
+                return result
+            when ASTNode.MATCH(_, value, whens, other):
+                var result := complexity(value)
+                for w in whens {
+                    result += complexity(w)
+                }
+                if other != null {
+                    for s in other {
+                        result += complexity(s)
+                    }
+                }
+                return result
+            when ASTNode.NULL:
+                return 1
+            when ASTNode.NULLABLE_TYPE:
+                return 0
+            when ASTNode.PREFIX(_, op, base):
+                return 1 + complexity(base)
+            when ASTNode.RANGE:
+                return 1
+            when ASTNode.REAL:
+                return 1
+            when ASTNode.RETURN(_, value):
+                if value = null {
+                    return 0
+                }
+                return complexity(value)
+            when ASTNode.SELF:
+                return 1
+            when ASTNode.STRING:
+                return 1
+            when ASTNode.SUPER:
+                return 1
+            when ASTNode.TYPE:
+                return 0
+            when ASTNode.VAR(_, kind, decls):
+                var result := 0
+                for decl in decls {
+                    result += complexity(decl)
+                }
+                return result
+            when ASTNode.WHEN(_, tests, statements):
+                var result := 0
+                for test in tests {
+                    result += complexity(test)
+                }
+                for s in statements {
+                    result += complexity(s)
+                }
+                return result
+            when ASTNode.WHILE(_, label, test, statements):
+                var result := complexity(test)
+                for s in statements {
+                    result += complexity(s)
+                }
+                return result
+            otherwise:
+                assert false, "unsupported node: \{node}"
+        }
+    }
+
+    function shouldInline(annotations:Annotations, statements:ImmutableArray<ASTNode>):Bit {
+        if compiler.settings.optimizationLevel > 0 & !annotations.isInline() &
+                annotations.isFinal() {
+            var c := 0
+            for s in statements {
+                c += complexity(s)
+                if c > INLINE_THRESHOLD {
+                    return false
                 }
             }
+            return true
         }
-        return result
+        return false
     }
 
-    function shouldInline(annotations:Annotations, body:ASTNode?):Bit {
-        return compiler.settings.optimizationLevel > 0 & body != null & !annotations.isInline() &
-                annotations.isFinal() & complexity(body) <= INLINE_THRESHOLD
-    }
-
-    method scanMethod(owner:ClassDecl, m:ASTNode):MethodDecl? {
-        assert m.children.get_count() = 6
-        def kind:MethodDecl.Kind
-        match m.kind {
-            when ASTNode.Kind.METHOD:   kind := MethodDecl.Kind.METHOD
-            when ASTNode.Kind.FUNCTION: kind := MethodDecl.Kind.FUNCTION
-            otherwise: assert false
-        }
-        def name := m.payload->String
+    method scanMethod(owner:ClassDecl, position:Position, rawDoccomment:ASTNode?,
+            rawAnnotations:ImmutableArray<ASTNode>, kind:MethodDecl.Kind, name:String,
+            rawParameters:ImmutableArray<ASTNode>, rawReturnType:ASTNode?,
+            statements:ImmutableArray<ASTNode>?):MethodDecl? {
         def doccomment:String?
-        if m.children[0].kind != ASTNode.Kind.VOID {
-            assert m.children[0].kind = ASTNode.Kind.DOC_COMMENT
-            doccomment := m.children[0].payload->String
-        }
-        else {
+        -- FIXME should be able to match against null too
+        if rawDoccomment = null {
             doccomment := null
         }
-        assert m.children[1].kind = ASTNode.Kind.ANNOTATIONS
-        def annotations := convertAnnotations(m.children[1])
-        if owner.classKind = ClassDecl.Kind.INTERFACE {
-            annotations.flags ||= Annotations.Flag.ABSTRACT
+        else {
+            match rawDoccomment {
+                when ASTNode.STRING(position, text):
+                    doccomment := text
+                otherwise:
+                    assert false
+            }
         }
-        if owner.annotations.isFinal() | annotations.isPrivate() {
+        def annotations := convertAnnotations(rawAnnotations)
+        if kind != MethodDecl.Kind.INIT & owner.annotations.isFinal() | annotations.isPrivate() {
             annotations.flags ||= Annotations.Flag.FINAL
         }
-        assert m.children[2].kind = ASTNode.Kind.PARAMETERS
         def parameters := Array<MethodDecl.Parameter>()
-        for p in m.children[2].children {
-            assert p.kind = ASTNode.Kind.PARAMETER
-            assert p.children.get_count() = 1
-            parameters.add(MethodDecl.Parameter(p.payload->String, convertType(p.children[0])))
-        }
-        def returnType := convertType(m.children[3])
-        if kind = MethodDecl.Kind.FUNCTION & returnType = Type.Void() {
-            compiler.error(m.position, "functions must have a return type")
-        }
-        if m.children[4].kind = ASTNode.Kind.BLOCK {
-            if shouldInline(annotations, m.children[4]) {
-                annotations.flags ||= Annotations.Flag.INLINE
+        for p in rawParameters {
+            match p {
+                when ASTNode.PARAMETER(_, name, type):
+                    parameters.add(MethodDecl.Parameter(name, convertType(type)))
+                otherwise:
+                    assert false
             }
-            return MethodDecl(owner, m.position, doccomment, annotations, kind, name, parameters,
-                    returnType, m.children[4])
+        }
+        def returnType:Type
+        if rawReturnType != null{
+            returnType := convertType(rawReturnType)
         }
         else {
-            return MethodDecl(owner, m.position, doccomment, annotations, kind, name, parameters,
-                    returnType, null)
+            returnType := Type.Void()
         }
+        if kind = MethodDecl.Kind.FUNCTION & returnType = Type.Void() {
+            compiler.error(position, "functions must have a return type")
+        }
+        if statements != null & shouldInline(annotations, statements) {
+            annotations.flags ||= Annotations.Flag.INLINE
+        }
+        if statements = null {
+            if owner.classKind = ClassDecl.Kind.INTERFACE {
+                annotations.flags ||= Annotations.Flag.ABSTRACT
+            }
+            else if annotations.flags || Annotations.Flag.ABSTRACT = 0 {
+                compiler.error(position, "expected non-abstract method '\{name}' to have a body")
+            }
+        }
+        return MethodDecl(owner, position, doccomment, annotations, kind, name, parameters,
+                returnType, statements)
     }
 
     method scanClassChild(cl:ClassDecl, node:ASTNode) {
-        match node.kind {
-            when ASTNode.Kind.FIELD:
-                scanFields(cl, node)
-            when ASTNode.Kind.INIT:
-                def i := scanInit(cl, node)
-                if i != null {
-                    cl.symbolTable.add(i)
-                    cl.methods.add(i)
-                }
-            when ASTNode.Kind.METHOD, ASTNode.Kind.FUNCTION:
-                def m := scanMethod(cl, node)
+        match node {
+            when ASTNode.FIELD(position, dc, annotations, varDecl):
+                scanFields(cl, position, dc, annotations, varDecl)
+            when ASTNode.METHOD(position, dc, annotations, kind, name, parameters, rawReturnType,
+                    statements):
+                def m := scanMethod(cl, position, dc, annotations, kind, name, parameters,
+                        rawReturnType, statements)
                 if m != null {
                     cl.symbolTable.add(m)
                     cl.methods.add(m)
                 }
-            when ASTNode.Kind.CLASS:
-                def inner := scanClass(cl.source, cl.aliases, cl.name, node)
+            when ASTNode.CLASS(position, dc, annotations, kind, name, generics, supertypes,
+                    members):
+                def inner := scanClass(cl.source, cl.aliases, cl.name, position, dc, annotations,
+                        kind, name, generics, supertypes, members)
                 if inner != null {
                     inner.owner := cl
                     cl.classes.add(inner)
@@ -229,46 +347,34 @@ class Scanner {
                     inner.symbolTable.parents.add(cl.symbolTable)
                     inner.symbolTable.add(cl, cl.simpleName())
                 }
-            when ASTNode.Kind.INTERFACE:
-                def inner := scanInterface(cl.source, cl.aliases, cl.name, node)
-                if inner != null {
-                    inner.owner := cl
-                    cl.classes.add(inner)
-                    assert inner.name.startsWith(cl.name + ".")
-                    cl.symbolTable.add(inner, inner.name[cl.name.length() + 1..])
-                    inner.symbolTable.parents.add(cl.symbolTable)
-                    inner.symbolTable.add(cl, cl.simpleName())
-                }
-            when ASTNode.Kind.CHOICE:
-                def inner := scanChoice(cl.source, cl.aliases, cl.name, node)
-                if inner != null {
-                    inner.owner := cl
-                    cl.classes.add(inner)
-                    assert inner.name.startsWith(cl.name + ".")
-                    cl.symbolTable.add(inner, inner.name[cl.name.length() + 1..])
-                    inner.symbolTable.parents.add(cl.symbolTable)
-                    inner.symbolTable.add(cl, cl.simpleName())
-                }
+            when ASTNode.CHOICE_ENTRY(position, dc, name, fields):
+                scanChoiceEntry(cl, position, dc, name, fields)
             otherwise:
-                assert false, "unsupported class child: \{node.kind}"
+                assert false, "unsupported class child: \{node}"
         }
     }
 
-    method scanChoiceEntry(cl:ClassDecl, entry:ASTNode) {
+    method scanChoiceEntry(cl:ClassDecl, position:Position, rawDoccomment:ASTNode?, name:String,
+            rawFields:ImmutableArray<ASTNode>?) {
         def doccomment:String?
-        if entry.children[0].kind != ASTNode.Kind.VOID {
-            assert entry.children[0].kind = ASTNode.Kind.DOC_COMMENT
-            doccomment := entry.children[0].payload->String
-        }
-        else {
+        -- FIXME should be able to match against null too
+        if rawDoccomment = null {
             doccomment := null
         }
+        else {
+            match rawDoccomment {
+                when ASTNode.STRING(position, text):
+                    doccomment := text
+                otherwise:
+                    assert false
+            }
+        }
         def fields := Array<Type>()
-        for t in entry.children[1].children {
+        for t in rawFields {
             fields.add(convertType(t))
         }
-        def entry := ChoiceEntry(cl, entry.position, entry.payload->String, doccomment,
-                cl.choiceEntries.get_count(), fields)
+        def entry := ChoiceEntry(cl, position, name, doccomment, cl.choiceEntries.get_count(),
+                fields)
         cl.choiceEntries.add(entry)
         cl.symbolTable.add(entry)
         var found := false
@@ -291,83 +397,112 @@ class Scanner {
             def parameters := Array<MethodDecl.Parameter>()
             parameters.add(MethodDecl.Parameter("rv", Type.Int64()))
             def statements := Array<ASTNode>()
-            def children := Array<ASTNode>()
-            children.add(ASTNode(ASTNode.Kind.IDENTIFIER, cl.position, ClassDecl.RAW_VALUE_NAME))
-            children.add(ASTNode(ASTNode.Kind.IDENTIFIER, cl.position, "rv"))
-            statements.add(ASTNode(ASTNode.Kind.BINARY, cl.position, Token.Kind.ASSIGNMENT,
-                    children))
+            statements.add(ASTNode.BINARY(cl.position,
+                    ASTNode.IDENTIFIER(cl.position, ClassDecl.RAW_VALUE_NAME),
+                    Token.Kind.ASSIGNMENT,
+                    ASTNode.IDENTIFIER(cl.position, "rv")))
             for i in 0 .. fields.get_count() {
                 parameters.add(MethodDecl.Parameter("f\{i}", fields[i]))
-                children.clear()
-                def fieldRefChildren := Array<ASTNode>() -- FIXME literal
-                fieldRefChildren.add(ASTNode(ASTNode.Kind.SELF, cl.position))
-                children.add(ASTNode(ASTNode.Kind.CHOICE_FIELD_REFERENCE, cl.position,
-                        Pair<ChoiceEntry, Int>(entry, i), fieldRefChildren))
-                children.add(ASTNode(ASTNode.Kind.IDENTIFIER, cl.position, "f\{i}"))
-                statements.add(ASTNode(ASTNode.Kind.BINARY, cl.position, Token.Kind.ASSIGNMENT,
-                        children))
+                statements.add(ASTNode.BINARY(cl.position,
+                        ASTNode.CHOICE_FIELD_REFERENCE(cl.position,
+                            ASTNode.SELF(cl.position),
+                            entry,
+                            i),
+                        Token.Kind.ASSIGNMENT,
+                        ASTNode.IDENTIFIER(cl.position, "f\{i}")))
             }
-            def synthetic := MethodDecl(cl, cl.position, null, Annotations(),
-                    MethodDecl.Kind.INIT, "init", parameters, Type.Void(),
-                    ASTNode(ASTNode.Kind.BLOCK, cl.position, statements))
+            def synthetic := MethodDecl(cl, cl.position, null, Annotations(), MethodDecl.Kind.INIT,
+                    "init", parameters, Type.Void(), statements.finish())
             cl.methods.add(synthetic)
             cl.symbolTable.add(synthetic)
         }
     }
 
     method scanClass(source:File, aliases:MapView<String, String>, contextName:String,
-            cl:ASTNode):ClassDecl? {
+            position:Position, rawDoccomment:ASTNode?, rawAnnotations:ImmutableArray<ASTNode>,
+            kind:ClassDecl.Kind, name:String, generics:ImmutableArray<ASTNode>?,
+            rawSupertypes:ImmutableArray<ASTNode>?, members:ImmutableArray<ASTNode>):ClassDecl? {
         def fullName:String
         if contextName != "" {
-            fullName := "\{contextName}.\{cl.payload}"
+            fullName := "\{contextName}.\{name}"
         }
         else {
-            fullName := cl.payload->String
+            fullName := name
         }
-        assert cl.children.get_count() = 5
         def doccomment:String?
-        if cl.children[0].kind != ASTNode.Kind.VOID {
-            assert cl.children[0].kind = ASTNode.Kind.DOC_COMMENT
-            doccomment := cl.children[0].payload->String
-        }
-        else {
+        -- FIXME should be able to match against null too
+        if rawDoccomment = null {
             doccomment := null
         }
-        assert cl.children[1].kind = ASTNode.Kind.ANNOTATIONS
-        def annotations := convertAnnotations(cl.children[1])
-        def parameters := Array<ClassDecl.GenericParameter>()
-        if cl.children[2].kind = ASTNode.Kind.GENERICS {
-            for p in cl.children[2].children {
-                assert p.kind = ASTNode.Kind.IDENTIFIER
-                def bound:Type
-                if p.children != null & p.children.get_count() != 0{
-                    assert p.children.get_count() = 1
-                    bound := convertType(p.children[0])
-                }
-                else {
-                    bound := Type.Any()
-                }
-                parameters.add(ClassDecl.GenericParameter(p.position, fullName, p.payload->String,
-                        bound))
+        else {
+            match rawDoccomment {
+                when ASTNode.STRING(position, text):
+                    doccomment := text
+                otherwise:
+                    assert false
             }
         }
-        else {
-            assert cl.children[2].kind = ASTNode.Kind.VOID
+        def annotations := convertAnnotations(rawAnnotations)
+        def parameters := Array<ClassDecl.GenericParameter>()
+        if generics != null {
+            for p in generics {
+                def name:String
+                def bound:Type
+                match p {
+                    when ASTNode.IDENTIFIER(_, id):
+                        name := id
+                        bound := Type.Any()
+                    when ASTNode.TYPED_IDENTIFIER(_, id, type):
+                        name := id
+                        bound := convertType(type)
+                    otherwise:
+                        assert false
+                }
+                parameters.add(ClassDecl.GenericParameter(p.position(), fullName, name, bound))
+            }
+            if kind = ClassDecl.Kind.CHOICE {
+                compiler.error(position, "choices may not have generic parameters")
+            }
         }
         def supertypes := Array<Type>()
-        assert cl.children[3].kind = ASTNode.Kind.TYPES
-        if cl.children[3].children != null {
-            for intf in cl.children[3].children {
-                supertypes.add(convertType(intf))
+        if rawSupertypes != null {
+            if kind = ClassDecl.Kind.CHOICE {
+                compiler.error(position, "choices may not specify supertypes")
+            }
+            for s in rawSupertypes {
+                supertypes.add(convertType(s))
             }
         }
-        def result := ClassDecl(source, cl.position, aliases, doccomment, annotations,
-                ClassDecl.Kind.CLASS, fullName, supertypes, parameters, compiler.root)
+        def result := ClassDecl(source, position, aliases, doccomment, annotations, kind, fullName,
+                supertypes, parameters, compiler.root)
         compiler.currentClass.push(result)
-        if cl.children[4] != null {
-            for c in cl.children[4].children {
-                scanClassChild(result, c)
+        if kind = ClassDecl.Kind.CHOICE {
+            def rawValue := FieldDecl(result, result.position, null, Annotations(),
+                        FieldDecl.Kind.DEF, ClassDecl.RAW_VALUE_NAME, Type.Int64(), null)
+            result.fields.add(rawValue)
+            result.symbolTable.add(rawValue)
+            def data := FieldDecl(result, result.position, null, Annotations(), FieldDecl.Kind.DEF,
+                        ClassDecl.CHOICE_DATA_NAME, Type.ChoiceData(), null)
+            result.fields.add(data)
+            result.symbolTable.add(data)
+        }
+        for m in members {
+            match m {
+                when ASTNode.METHOD(mPosition, dc, annotations, methodKind, name, parameters, rawReturnType, -- FIXME replace unused values with '_'
+                        statements):
+                    if methodKind = MethodDecl.Kind.INIT {
+                        match kind {
+                            when ClassDecl.Kind.CLASS: -- do nothing
+                            when ClassDecl.Kind.INTERFACE:
+                                compiler.error(mPosition, "interfaces may not have 'init' methods")
+                            when ClassDecl.Kind.CHOICE:
+                                compiler.error(mPosition, "choices may not have 'init' methods")
+                        }
+                    }
+                otherwise:
+                    -- do nothing
             }
+            scanClassChild(result, m)
         }
         var foundInit := false
         for m in result.methods {
@@ -376,139 +511,25 @@ class Scanner {
                 break
             }
         }
-        if !foundInit & result.name != "panda.unsafe.Pointer" {
-            def defaultInit := MethodDecl(result, cl.position, null, Annotations(),
+        if !foundInit & kind = ClassDecl.Kind.CLASS & result.name != "panda.unsafe.Pointer" {
+            def defaultInit := MethodDecl(result, position, null, Annotations(),
                     MethodDecl.Kind.INIT, "init", Array<MethodDecl.Parameter>(), Type.Void(),
-                    ASTNode(ASTNode.Kind.BLOCK, cl.position))
+                    ImmutableArray<ASTNode>())
             result.methods.add(defaultInit)
             result.symbolTable.add(defaultInit)
         }
-        compiler.currentClass.pop()
-        return result
-    }
-
-    method scanInterface(source:File, aliases:MapView<String, String>, contextName:String,
-            intf:ASTNode):ClassDecl? {
-        def fullName:String
-        if contextName != "" {
-            fullName := "\{contextName}.\{intf.payload}"
-        }
-        else {
-            fullName := intf.payload->String
-        }
-        assert intf.children.get_count() = 5
-        def doccomment:String?
-        if intf.children[0].kind != ASTNode.Kind.VOID {
-            assert intf.children[0].kind = ASTNode.Kind.DOC_COMMENT
-            doccomment := intf.children[0].payload->String
-        }
-        else {
-            doccomment := null
-        }
-        assert intf.children[1].kind = ASTNode.Kind.ANNOTATIONS
-        def annotations := convertAnnotations(intf.children[1])
-        def parameters := Array<ClassDecl.GenericParameter>()
-        if intf.children[2].kind = ASTNode.Kind.GENERICS {
-            for p in intf.children[2].children {
-                assert p.kind = ASTNode.Kind.IDENTIFIER
-                def bound:Type
-                if p.children.get_count() = 1 {
-                    bound := convertType(p.children[0])
-                }
-                else {
-                    assert p.children.get_count() = 0
-                    bound := Type.Any()
-                }
-                parameters.add(ClassDecl.GenericParameter(p.position, fullName, p.payload->String,
-                        bound))
-            }
-        }
-        else {
-            assert intf.children[2].kind = ASTNode.Kind.VOID
-        }
-        def supertypes := Array<Type>()
-        assert intf.children[3].kind = ASTNode.Kind.TYPES
-        for s in intf.children[3].children {
-            supertypes.add(convertType(s))
-        }
-        def result := ClassDecl(source, intf.position, aliases, doccomment, annotations,
-                ClassDecl.Kind.INTERFACE, fullName, supertypes, parameters, compiler.root)
-        for c in intf.children[4].children {
-            scanClassChild(result, c)
-        }
-        return result
-    }
-
-    ================================================================================================
-    Scans a `choice`. Choices are internally structured much as ordinary classes, with a few
-    exceptions.
-
-    Choices always have a `$rawValue` instance field, which distinguishes which choice entry an
-    instance belongs to. All of their other fields are "fake" - they allocate single field big
-    enough to hold any variant of the choice, and then use the special CHOICE_FIELD_REFERENCE node
-    to access them, rather than a normal FIELD_REFERENCE.
-
-    For each different combination of choice values, a choice will have a synthetic init() method
-    taking the $rawValue and choice values. There is always a synthetic no-arg private init() method
-    to prevent inadvertent creation.
-    ================================================================================================
-    method scanChoice(source:File, aliases:MapView<String, String>, contextName:String,
-            cl:ASTNode):ClassDecl? {
-        def fullName:String
-        if contextName != "" {
-            fullName := "\{contextName}.\{cl.payload}"
-        }
-        else {
-            fullName := cl.payload->String
-        }
-        assert cl.children.get_count() = 3
-        def doccomment:String?
-        if cl.children[0].kind != ASTNode.Kind.VOID {
-            assert cl.children[0].kind = ASTNode.Kind.DOC_COMMENT
-            doccomment := cl.children[0].payload->String
-        }
-        else {
-            doccomment := null
-        }
-        assert cl.children[1].kind = ASTNode.Kind.ANNOTATIONS
-        def annotations := convertAnnotations(cl.children[1])
-        def parameters := Array<ClassDecl.GenericParameter>()
-        def supertypes := Array<Type>()
-        def result := ClassDecl(source, cl.position, aliases, doccomment, annotations,
-                ClassDecl.Kind.CHOICE, fullName, supertypes, parameters, compiler.root)
-        def rawValue := FieldDecl(result, result.position, null, Annotations(), FieldDecl.Kind.DEF,
-                    ClassDecl.RAW_VALUE_NAME, Type.Int64(), null)
-        result.fields.add(rawValue)
-        result.symbolTable.add(rawValue)
-        def data := FieldDecl(result, result.position, null, Annotations(), FieldDecl.Kind.DEF,
-                    ClassDecl.CHOICE_DATA_NAME, Type.ChoiceData(), null)
-        result.fields.add(data)
-        result.symbolTable.add(data)
-        compiler.currentClass.push(result)
-        var haveFields := false
-        if cl.children[2] != null {
-            for c in cl.children[2].children {
-                if c.kind = ASTNode.Kind.CHOICE_ENTRY {
-                    haveFields |= c.children[1].children.get_count() > 0
-                    scanChoiceEntry(result, c)
-                }
-                else {
-                    scanClassChild(result, c)
+        if kind = ClassDecl.Kind.CHOICE {
+            var haveFields := false
+            for e in result.choiceEntries {
+                if e.fields.get_count() > 0 {
+                    haveFields := true
+                    break
                 }
             }
+            if !haveFields {
+                result.rawSuper := Type.Value()
+            }
         }
-        if haveFields {
-            supertypes.add(Type.Value())
-        }
-        else {
-            supertypes.add(Type.Object())
-        }
-        def defaultInit := MethodDecl(result, cl.position, null,
-                Annotations(Annotations.Flag.PRIVATE), MethodDecl.Kind.INIT, "init",
-                Array<MethodDecl.Parameter>(), Type.Void(),
-                ASTNode(ASTNode.Kind.BLOCK, cl.position, Array<ASTNode>()))
-        result.methods.add(defaultInit)
-        result.symbolTable.add(defaultInit)
         compiler.currentClass.pop()
         return result
     }
@@ -521,44 +542,39 @@ class Scanner {
     }
 
     method scan(source:File, file:ASTNode):ListView<ClassDecl> {
-        def result := Array<ClassDecl>()
-        var currentPackage := "anonymous"
-        def aliases := HashMap<String, String>()
-        assert file.kind = ASTNode.Kind.FILE
-        for c in file.children {
-            match c.kind {
-                when ASTNode.Kind.PACKAGE:
-                    currentPackage := c.payload->String
-                when ASTNode.Kind.USES:
-                    def fullName := c.payload->String
-                    def idx := fullName.lastIndexOf(".")
-                    def alias:String
-                    if idx != null {
-                        alias := fullName[fullName.next(idx)..]
+        match file {
+            when ASTNode.FILE(entries):
+                def result := Array<ClassDecl>()
+                var currentPackage := "anonymous"
+                def aliases := HashMap<String, String>()
+                for e in entries {
+                    match e {
+                        when ASTNode.PACKAGE(_, name):
+                            currentPackage := name
+                        when ASTNode.USES(_, fullName):
+                            def idx := fullName.lastIndexOf(".")
+                            def alias:String
+                            if idx != null {
+                                alias := fullName[fullName.next(idx)..]
+                            }
+                            else {
+                                alias := fullName
+                            }
+                            aliases[alias] := fullName
+                        when ASTNode.CLASS(position, dc, annotations, kind, name, generics,
+                                supertypes, members):
+                            def cl := scanClass(source, aliases, currentPackage, position, dc,
+                                    annotations, kind, name, generics, supertypes, members)
+                            if cl != null {
+                                addClass(cl, result)
+                            }
+                        otherwise:
+                            assert false, "unsupported: \{e}"
                     }
-                    else {
-                        alias := fullName
-                    }
-                    aliases[alias] := fullName
-                when ASTNode.Kind.CLASS:
-                    def cl := scanClass(source, aliases, currentPackage, c)
-                    if cl != null {
-                        addClass(cl, result)
-                    }
-                when ASTNode.Kind.INTERFACE:
-                    def cl := scanInterface(source, aliases, currentPackage, c)
-                    if cl != null {
-                        addClass(cl, result)
-                    }
-                when ASTNode.Kind.CHOICE:
-                    def cl := scanChoice(source, aliases, currentPackage, c)
-                    if cl != null {
-                        addClass(cl, result)
-                    }
-                otherwise:
-                    assert false, "unsupported: \{c.kind}"
-            }
-        }
-        return result
+                }
+                return result
+            otherwise:
+                assert false
+        }            
     }
 }

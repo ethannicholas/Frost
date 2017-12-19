@@ -1,8 +1,11 @@
 package org.pandalanguage.pandac.parser
 
 uses org.pandalanguage.pandac.ASTNode
+uses org.pandalanguage.pandac.ClassDecl -- FIXME should be able to import ClassDecl.Kind directly
 uses org.pandalanguage.pandac.ErrorReporter
+uses org.pandalanguage.pandac.MethodDecl -- FIXME should be able to import MethodDecl.Kind directly
 uses org.pandalanguage.pandac.Position
+uses org.pandalanguage.pandac.Variable -- FIXME should be able to import Variable.Kind directly
 
 @final
 class Parser {
@@ -144,10 +147,7 @@ class Parser {
         if string = null {
             return chunk
         }
-        def children := Array<ASTNode>()
-        children.add(string)
-        children.add(chunk)
-        return ASTNode(ASTNode.Kind.BINARY, string.position, Token.Kind.ADD, children)
+        return ASTNode.BINARY(string.position(), string, Token.Kind.ADD, chunk)
     }
 
     method formatString(start:Token):String? {
@@ -246,18 +246,10 @@ class Parser {
 
     @private
     function convertToString(expr:ASTNode):ASTNode {
-        def dotChildren := Array<ASTNode>() -- FIXME literal
-        dotChildren.add(expr)
-        def dot := ASTNode(ASTNode.Kind.DOT, expr.position, "convert",
-                dotChildren)
-        def callChildren := Array<ASTNode>() -- FIXME literal
-        callChildren.add(dot)
-        def call := ASTNode(ASTNode.Kind.CALL, expr.position, callChildren)
-        def castChildren := Array<ASTNode>() -- FIXME literal
-        castChildren.add(call)
-        castChildren.add(ASTNode(ASTNode.Kind.TYPE, expr.position,
-                "panda.core.String"))
-        return ASTNode(ASTNode.Kind.CAST, expr.position, castChildren)
+        def dot := ASTNode.DOT(expr.position(), expr, "convert")
+        def call := ASTNode.CALL(expr.position(), dot, ImmutableArray<ASTNode>())
+        def stringType := ASTNode.TYPE(expr.position(), "panda.core.String")
+        return ASTNode.BINARY(expr.position(), call, Token.Kind.CAST, stringType)
     }
 
     method string():ASTNode? {
@@ -315,20 +307,14 @@ class Parser {
                                 if format = null {
                                     return null
                                 }
-                                def castChildren := Array<ASTNode>() -- FIXME literal
-                                castChildren.add(expr)
-                                castChildren.add(ASTNode(ASTNode.Kind.TYPE, expr.position,
-                                        "panda.core.Formattable"))
-                                def cast := ASTNode(ASTNode.Kind.CAST, expr.position, castChildren)
-                                def dotChildren := Array<ASTNode>() -- FIXME literal
-                                dotChildren.add(cast)
-                                def dot := ASTNode(ASTNode.Kind.DOT, expr.position, "format",
-                                        dotChildren)
-                                def callChildren := Array<ASTNode>() -- FIXME literal
-                                callChildren.add(dot)
-                                callChildren.add(ASTNode(ASTNode.Kind.STRING, start.position,
-                                        format))
-                                expr := ASTNode(ASTNode.Kind.CALL, expr.position, callChildren)
+                                def formattable := ASTNode.TYPE(expr.position(),
+                                        "panda.core.Formattable")
+                                def cast := ASTNode.BINARY(expr.position(), expr, Token.Kind.CAST,
+                                        formattable)
+                                def dot := ASTNode.DOT(expr.position(), cast, "format")
+                                def callArgs := Array<ASTNode>() -- FIXME literal
+                                callArgs.add(ASTNode.STRING(start.position, format))
+                                expr := ASTNode.CALL(expr.position(), dot, callArgs.finish())
                             }
                             if expect(Token.Kind.RBRACE, "'}'") = null {
                                 return null
@@ -337,23 +323,18 @@ class Parser {
                                 if format = null {
                                     expr := convertToString(expr)
                                 }
-                                def callTargetChildren := Array<ASTNode>()
-                                callTargetChildren.add(ASTNode(ASTNode.Kind.TYPE, expr.position,
-                                        "panda.core.Panda"))
-                                def callTarget := ASTNode(ASTNode.Kind.DOT, expr.position,
-                                        "align", callTargetChildren)
-                                def callChildren := Array<ASTNode>()
-                                callChildren.add(callTarget)
-                                callChildren.add(expr)
-                                callChildren.add(ASTNode(ASTNode.Kind.STRING, start.position,
-                                        align))
-                                expr := ASTNode(ASTNode.Kind.CALL, expr.position, callChildren)
+                                def pandaType := ASTNode.TYPE(expr.position(), "panda.core.Panda")
+                                def callTarget := ASTNode.DOT(expr.position(), pandaType, "align")
+                                def callArgs := Array<ASTNode>()
+                                callArgs.add(expr)
+                                callArgs.add(ASTNode.STRING(start.position, align))
+                                expr := ASTNode.CALL(expr.position(), callTarget, callArgs.finish())
                             }
                             def text := chunk.finish()
                             chunk := MutableString()
                             if text != "" | result != null {
-                                result := addStringChunk(result, ASTNode(ASTNode.Kind.STRING,
-                                        start.position, text))
+                                result := addStringChunk(result, ASTNode.STRING(start.position,
+                                        text))
                                 result := addStringChunk(result, expr)
                             }
                             else {
@@ -369,8 +350,7 @@ class Parser {
                     chunk.append(text(token))
             }
         }
-        return addStringChunk(result,
-                ASTNode(ASTNode.Kind.STRING, start.position, chunk.finish()))
+        return addStringChunk(result, ASTNode.STRING(start.position, chunk.finish()))
     }
 
     ================================================================================================
@@ -381,25 +361,25 @@ class Parser {
         def t := next()
         match t.kind {
             when Token.Kind.IDENTIFIER:
-                return ASTNode(ASTNode.Kind.IDENTIFIER, t.position, text(t))
+                return ASTNode.IDENTIFIER(t.position, text(t))
             when Token.Kind.DECIMAL:
-                return ASTNode(ASTNode.Kind.INT, t.position, text(t).convert()->UInt64?)
+                return ASTNode.INT(t.position, text(t).convert())
             when Token.Kind.BINARY:
-                return ASTNode(ASTNode.Kind.INT, t.position, UInt64.parse(text(t)[2..], 2))
+                return ASTNode.INT(t.position, UInt64.parse(text(t)[2..], 2))
             when Token.Kind.HEX:
-                return ASTNode(ASTNode.Kind.INT, t.position, UInt64.parse(text(t)[2..], 16))
+                return ASTNode.INT(t.position, UInt64.parse(text(t)[2..], 16))
             when Token.Kind.REAL:
-                return ASTNode(ASTNode.Kind.REAL, t.position, Real64.parse(text(t)))
+                return ASTNode.REAL(t.position, Real64.parse(text(t)))
             when Token.Kind.SELF:
-                return ASTNode(ASTNode.Kind.SELF, t.position)
+                return ASTNode.SELF(t.position)
             when Token.Kind.SUPER:
-                return ASTNode(ASTNode.Kind.SUPER, t.position)
+                return ASTNode.SUPER(t.position)
             when Token.Kind.NULL:
-                return ASTNode(ASTNode.Kind.NULL, t.position)
+                return ASTNode.NULL(t.position)
             when Token.Kind.TRUE:
-                return ASTNode(ASTNode.Kind.BIT, t.position, true)
+                return ASTNode.BIT(t.position, true)
             when Token.Kind.FALSE:
-                return ASTNode(ASTNode.Kind.BIT, t.position, false)
+                return ASTNode.BIT(t.position, false)
             when Token.Kind.DOUBLE_QUOTE, Token.Kind.SINGLE_QUOTE:
                 pushback(t)
                 return string()
@@ -420,13 +400,12 @@ class Parser {
 
     @class
     function getClassName(expr:ASTNode):String? {
-        match expr.kind {
-            when ASTNode.Kind.IDENTIFIER:
-                return expr.payload->String
-            when ASTNode.Kind.DOT:
-                var result := getClassName(expr.children[0])
+        match expr {
+            when ASTNode.IDENTIFIER(_, text): return text
+            when ASTNode.DOT(_, base, field):
+                var result := getClassName(base)
                 if result != null {
-                    result += "." + expr.payload->String
+                    result += "." + field
                 }
                 return result
             otherwise:
@@ -494,11 +473,11 @@ class Parser {
             name.append(".")
             name.append(text(id))
         }
-        var result := ASTNode(ASTNode.Kind.TYPE, start.position, name.convert())
+        def finalName := name.finish()
+        var result := ASTNode.TYPE(start.position, finalName)
         if peek().kind = Token.Kind.LT {
             -- may need to speculatively parse, because foo->Int8<bar looks like the start of a cast
             -- to "Int8<bar...", but is actually a cast to Int8 followed by less-than bar
-            name.append("<")
             if needSpeculativeParse {
                 startSpeculative()
             }
@@ -514,7 +493,6 @@ class Parser {
                 return null
             }
             children.add(t)
-            name.append(t)
             while checkNext(Token.Kind.COMMA) != null {
                 t := type(false)
                 if t = null {
@@ -525,8 +503,6 @@ class Parser {
                     return null
                 }
                 children.add(t)
-                name.append(", ")
-                name.append(t)
             }
             if expect(Token.Kind.GT, "'>'") = null {
                 if needSpeculativeParse {
@@ -535,15 +511,11 @@ class Parser {
                 }
                 return null
             }
-            name.append(">")
-            result := ASTNode(ASTNode.Kind.GENERIC_TYPE, start.position, name.finish(),
-                    children)
+            result := ASTNode.GENERIC_TYPE(start.position, finalName, children.finish())
             accept()
         }
         if checkNext(Token.Kind.QUESTION) != null {
-            def children := Array<ASTNode>()
-            children.add(result)
-            result := ASTNode(ASTNode.Kind.NULLABLE_TYPE, start.position, children)
+            result := ASTNode.NULLABLE_TYPE(start.position, result)
         }
         return result
     }
@@ -568,22 +540,21 @@ class Parser {
             match token.kind {
                 when Token.Kind.LPAREN:
                     commaSeparatedExpressionContext.push(true) -- FIXME use init / cleanup to automate this
-                    def children := Array<ASTNode>()
-                    children.add(result)
+                    def args := Array<ASTNode>()
                     if checkNext(Token.Kind.RPAREN) = null {
                         var expr := expression()
                         if expr = null {
                             commaSeparatedExpressionContext.pop()
                             return null
                         }
-                        children.add(expr)
+                        args.add(expr)
                         while checkNext(Token.Kind.COMMA) != null {
                             expr := expression()
                             if expr = null {
                                 commaSeparatedExpressionContext.pop()
                                 return null
                             }
-                            children.add(expr)
+                            args.add(expr)
                         }
                         if expect(Token.Kind.RPAREN, "')'") = null {
                             commaSeparatedExpressionContext.pop()
@@ -591,20 +562,16 @@ class Parser {
                         }
                     }
                     commaSeparatedExpressionContext.pop()
-                    result := ASTNode(ASTNode.Kind.CALL, token.position, children)
+                    result := ASTNode.CALL(token.position, result, args.finish())
                 when Token.Kind.LBRACKET:
-                    def children := Array<ASTNode>()
-                    children.add(result)
-                    def expr := expression()
-                    if expr = null {
+                    def arg := expression()
+                    if arg = null {
                         return null
                     }
-                    children.add(expr)
                     if expect(Token.Kind.RBRACKET, "']'") = null {
                         return null
                     }
-                    result := ASTNode(ASTNode.Kind.BINARY, token.position, Token.Kind.LBRACKET,
-                            children)
+                    result := ASTNode.BINARY(token.position, result, Token.Kind.LBRACKET, arg)
                 when Token.Kind.DOT:
                     def name:String?
                     if checkNext(Token.Kind.INIT) != null {
@@ -616,18 +583,13 @@ class Parser {
                             return null
                         }
                     }
-                    def children := Array<ASTNode>()
-                    children.add(result)
-                    result := ASTNode(ASTNode.Kind.DOT, token.position, name, children)
+                    result := ASTNode.DOT(token.position, result, name)
                 when Token.Kind.CAST:
                     def target := type()
                     if target = null {
                         return null
                     }
-                    def children := Array<ASTNode>()
-                    children.add(result)
-                    children.add(target)
-                    result := ASTNode(ASTNode.Kind.CAST, token.position, children)
+                    result := ASTNode.BINARY(token.position, result, Token.Kind.CAST, target)
                 when Token.Kind.LT:
                     -- this is where we need to be careful. First, we make sure it makes sense to
                     -- interpret this as the start of a generic parameter list...
@@ -641,7 +603,7 @@ class Parser {
                         -- no matter what, we might have to backtrack, because we might not find a
                         -- '>', e.g. foo(X < Y)
                         def types := Array<ASTNode>()
-                        types.add(ASTNode(ASTNode.Kind.TYPE, result.position, name))
+                        types.add(ASTNode.TYPE(result.position(), name))
                         var t := type(false)
                         if t = null {
                             rewind()
@@ -700,8 +662,8 @@ class Parser {
                         }
                         if shouldAccept {
                             accept()
-                            result := ASTNode(ASTNode.Kind.GENERIC_TYPE, result.position,
-                                    finalName.convert(), types)
+                            result := ASTNode.GENERIC_TYPE(result.position(), finalName.finish(),
+                                    types.finish())
                             continue
                         }
                         else {
@@ -734,11 +696,7 @@ class Parser {
             if next = null {
                 return null
             }
-            -- FIXME array literal
-            def children := Array<ASTNode>()
-            children.add(result)
-            children.add(next)
-            result := ASTNode(ASTNode.Kind.BINARY, op.position, op.kind, children)
+            result := ASTNode.BINARY(op.position, result, op.kind, next)
         }
         return result
     }
@@ -754,9 +712,7 @@ class Parser {
                 if base = null {
                     return null
                 }
-                def children := Array<ASTNode>()
-                children.add(base)
-                return ASTNode(ASTNode.Kind.PREFIX, op.position, op.kind, children)
+                return ASTNode.PREFIX(op.position, op.kind, base)
             otherwise:
                 pushback(op)
                 return exponentExpression()
@@ -783,10 +739,7 @@ class Parser {
                     if next = null {
                         return null
                     }
-                    def children := Array<ASTNode>() -- FIXME use literal
-                    children.add(result)
-                    children.add(next)
-                    result := ASTNode(ASTNode.Kind.BINARY, op.position, op.kind, children)
+                    result := ASTNode.BINARY(op.position, result, op.kind, next)
                 when Token.Kind.GT:
                     def nextToken := rawNext()
                     if nextToken.kind = Token.Kind.GT {
@@ -795,11 +748,7 @@ class Parser {
                         if next = null {
                             return null
                         }
-                        def children := Array<ASTNode>() -- FIXME use literal
-                        children.add(result)
-                        children.add(next)
-                        result := ASTNode(ASTNode.Kind.BINARY, op.position, Token.Kind.SHIFTRIGHT,
-                                children)
+                        result := ASTNode.BINARY(op.position, result, Token.Kind.SHIFTRIGHT, next)
                     }
                     else {
                         pushback(nextToken)
@@ -830,10 +779,7 @@ class Parser {
                     if next = null {
                         return null
                     }
-                    def children := Array<ASTNode>() -- FIXME use literal
-                    children.add(result)
-                    children.add(next)
-                    result := ASTNode(ASTNode.Kind.BINARY, op.position, op.kind, children)
+                    result := ASTNode.BINARY(op.position, result, op.kind, next)
                 otherwise:
                     pushback(op)
                     return result
@@ -849,7 +795,7 @@ class Parser {
         var result:ASTNode?
         match peek().kind {
             when Token.Kind.DOTDOT, Token.Kind.ELLIPSIS:
-                result := ASTNode(ASTNode.Kind.VOID, Position())
+                result := null
             otherwise:
                 result := additiveExpression()
                 if result = null {
@@ -869,7 +815,7 @@ class Parser {
                     }
                 }
                 else {
-                    right := ASTNode(ASTNode.Kind.VOID, Position())
+                    right := null
                 }
                 def step:ASTNode?
                 if checkNext(Token.Kind.BY) != null {
@@ -879,20 +825,10 @@ class Parser {
                     }
                 }
                 else {
-                    step := ASTNode(ASTNode.Kind.VOID, Position())
+                    step := null
                 }
-                def children := Array<ASTNode>()
-                children.add(result)
-                children.add(right)
-                children.add(step)
-                def kind:Int
-                if op.kind = Token.Kind.DOTDOT {
-                    kind := ASTNode.Kind.RANGE_EXCLUSIVE
-                }
-                else {
-                    kind := ASTNode.Kind.RANGE_INCLUSIVE
-                }
-                return ASTNode(kind, op.position, children)
+                return ASTNode.RANGE(op.position, result, right, op.kind = Token.Kind.ELLIPSIS,
+                        step)
             otherwise:
                 pushback(op)
                 return result
@@ -923,10 +859,7 @@ class Parser {
                     if next = null {
                         return null
                     }
-                    def children := Array<ASTNode>() -- FIXME use literal
-                    children.add(result)
-                    children.add(next)
-                    result := ASTNode(ASTNode.Kind.BINARY, op.position, op.kind, children)
+                    result := ASTNode.BINARY(op.position, result, op.kind, next)
                 otherwise:
                     pushback(op)
                     return result
@@ -950,10 +883,7 @@ class Parser {
                     if next = null {
                         return null
                     }
-                    def children := Array<ASTNode>() -- FIXME use literal
-                    children.add(result)
-                    children.add(next)
-                    result := ASTNode(ASTNode.Kind.BINARY, op.position, op.kind, children)
+                    result := ASTNode.BINARY(op.position, result, op.kind, next)
                 otherwise:
                     pushback(op)
                     return result
@@ -978,11 +908,7 @@ class Parser {
             if next = null {
                 return null
             }
-            -- FIXME array literal
-            def children := Array<ASTNode>()
-            children.add(result)
-            children.add(next)
-            result := ASTNode(ASTNode.Kind.BINARY, op.position, op.kind, children)
+            result := ASTNode.BINARY(op.position, result, op.kind, next)
         }
         return result
     }
@@ -999,30 +925,29 @@ class Parser {
         if test = null {
             return null
         }
-        def children := Array<ASTNode>()
-        children.add(test)
-        def ifTrue := block()
+        def ifTrue := blockStatements()
         if ifTrue = null {
             return null
         }
-        children.add(ifTrue)
+        var ifFalse:ASTNode?
         if checkNext(Token.Kind.ELSE) != null {
             if peek().kind = Token.Kind.IF {
-                def ifFalse := ifStatement()
+                ifFalse := ifStatement()
                 if ifFalse = null {
                     return null
                 }
-                children.add(ifFalse)
             }
             else {
-                def ifFalse := block()
+                ifFalse := block()
                 if ifFalse = null {
                     return null
                 }
-                children.add(ifFalse)
             }
         }
-        return ASTNode(ASTNode.Kind.IF, start.position, children)
+        else {
+            ifFalse := null
+        }
+        return ASTNode.IF(start.position, test, ifTrue, ifFalse)
     }
 
     ================================================================================================
@@ -1048,11 +973,9 @@ class Parser {
             if type = null {
                 return null
             }
-            def children := Array<ASTNode>()
-            children.add(type)
-            return ASTNode(ASTNode.Kind.IDENTIFIER, id.position, text(id), children)
+            return ASTNode.TYPED_IDENTIFIER(id.position, text(id), type)
         }
-        return ASTNode(ASTNode.Kind.IDENTIFIER, id.position, text(id))
+        return ASTNode.IDENTIFIER(id.position, text(id))
     }
 
     ================================================================================================
@@ -1074,15 +997,11 @@ class Parser {
         if list = null {
             return null
         }
-        def block := block()
+        def block := blockStatements()
         if block = null {
             return null
         }
-        def children := Array<ASTNode>()
-        children.add(t)
-        children.add(list)
-        children.add(block)
-        return ASTNode(ASTNode.Kind.FOR, start.position, label, children)
+        return ASTNode.FOR(start.position, label, t, list, block)
     }
 
     ================================================================================================
@@ -1097,14 +1016,11 @@ class Parser {
         if test = null {
             return null
         }
-        def body := block()
+        def body := blockStatements()
         if body = null {
             return null
         }
-        def children := Array<ASTNode>()
-        children.add(test)
-        children.add(body)
-        return ASTNode(ASTNode.Kind.WHILE, start.position, label, children)
+        return ASTNode.WHILE(start.position, label, test, body)
     }
 
     ================================================================================================
@@ -1115,7 +1031,7 @@ class Parser {
         if start = null {
             return null
         }
-        def body := block()
+        def body := blockStatements()
         if body = null {
             return null
         }
@@ -1126,10 +1042,7 @@ class Parser {
         if test = null {
             return null
         }
-        def children := Array<ASTNode>()
-        children.add(body)
-        children.add(test)
-        return ASTNode(ASTNode.Kind.DO, start.position, label, children)
+        return ASTNode.DO(start.position, label, body, test)
     }
 
     ================================================================================================
@@ -1140,13 +1053,11 @@ class Parser {
         if start = null {
             return null
         }
-        def body := block()
+        def body := blockStatements()
         if body = null {
             return null
         }
-        def children := Array<ASTNode>()
-        children.add(body)
-        return ASTNode(ASTNode.Kind.LOOP, start.position, label, children)
+        return ASTNode.LOOP(start.position, label, body)
     }
 
     ================================================================================================
@@ -1161,16 +1072,17 @@ class Parser {
         if expr = null {
             return null
         }
-        def children := Array<ASTNode>()
-        children.add(expr)
+        def message:ASTNode?
         if checkNext(Token.Kind.COMMA) != null{
-            def message := expression()
+            message := expression()
             if message = null {
                 return null
             }
-            children.add(message)
         }
-        return ASTNode(ASTNode.Kind.ASSERT, start.position, children)
+        else {
+            message := null
+        }
+        return ASTNode.ASSERT(start.position, expr, message)
     }
 
     ================================================================================================
@@ -1194,11 +1106,10 @@ class Parser {
             }
             expressions.add(expr)
         }
-        def children := Array<ASTNode>()
-        children.add(ASTNode(ASTNode.Kind.EXPRESSIONS, start.position, expressions))
         if expect(Token.Kind.COLON, "':'") = null {
             return null
         }
+        def statements := Array<ASTNode>()
         loop {
             match peek().kind {
                 when Token.Kind.WHEN, Token.Kind.OTHERWISE, Token.Kind.RBRACE:
@@ -1208,18 +1119,18 @@ class Parser {
                     if stmt = null {
                         return null
                     }
-                    children.add(stmt)
+                    statements.add(stmt)
                     break
                 otherwise: {
                     def stmt := statement()
                     if stmt = null {
                         return null
                     }
-                    children.add(stmt)
+                    statements.add(stmt)
                 }
             }
         }
-        return ASTNode(ASTNode.Kind.WHEN, start.position, children)
+        return ASTNode.WHEN(start.position, expressions.finish(), statements.finish())
     }
 
     ================================================================================================
@@ -1230,15 +1141,15 @@ class Parser {
         if start = null {
             return null
         }
-        def children := Array<ASTNode>()
         def expr := expression()
         if expr = null {
             return null
         }
-        children.add(expr)
         if expect(Token.Kind.LBRACE, "'{'") = null {
             return null
         }
+        def whens := Array<ASTNode>()
+        var other:Array<ASTNode>? := null
         loop {
             def token := peek()
             match token.kind {
@@ -1249,13 +1160,13 @@ class Parser {
                     if w = null {
                         return null
                     }
-                    children.add(w)
+                    whens.add(w)
                 when Token.Kind.OTHERWISE:
                     def o := next()
                     if expect(Token.Kind.COLON, "':'") = null {
                         return null
                     }
-                    def statements := Array<ASTNode>()
+                    other := Array<ASTNode>()
                     loop {
                         match peek().kind {
                             when Token.Kind.RBRACE:
@@ -1265,17 +1176,16 @@ class Parser {
                                 if stmt = null {
                                     return null
                                 }
-                                statements.add(stmt)
+                                other.add(stmt)
                                 break
                             otherwise:
                                 def stmt := statement()
                                 if stmt = null {
                                     return null
                                 }
-                                statements.add(stmt)
+                                other.add(stmt)
                         }
                     }
-                    children.add(ASTNode(ASTNode.Kind.OTHERWISE, o.position, statements))
                     break
                 otherwise:
                     next()
@@ -1286,18 +1196,21 @@ class Parser {
         if expect(Token.Kind.RBRACE, "'}'") = null {
             return null
         }
-        return ASTNode(ASTNode.Kind.MATCH, start.position, children)
+        if other != null {
+            return ASTNode.MATCH(start.position, expr, whens.finish(), other.finish())
+        }
+        return ASTNode.MATCH(start.position, expr, whens.finish(), null)
     }
 
     ================================================================================================
-    block = LBRACE statement* terminalStatement? RBRACE
+    blockStatements = LBRACE statement* terminalStatement? RBRACE
     ================================================================================================
-    method block():ASTNode? {
+    method blockStatements():ImmutableArray<ASTNode>? {
         def start := expect(Token.Kind.LBRACE, "'{'")
         if start = null {
             return null
         }
-        def children := Array<ASTNode>()
+        def result := Array<ASTNode>()
         loop {
             match peek().kind {
                 when Token.Kind.RBRACE:
@@ -1311,17 +1224,28 @@ class Parser {
                     if expect(Token.Kind.RBRACE, "'}'") = null {
                         return null
                     }
-                    children.add(stmt)
+                    result.add(stmt)
                     break
                 otherwise:
                     def stmt := statement()
                     if stmt = null {
                         return null
                     }
-                    children.add(stmt)
+                    result.add(stmt)
             }
         }
-        return ASTNode(ASTNode.Kind.BLOCK, start.position, children)
+        return result.finish()
+    }
+
+    ================================================================================================
+    block = blockStatements
+    ================================================================================================
+    method block():ASTNode? {
+        def statements := blockStatements()
+        if statements = null {
+            return null
+        }
+        return ASTNode.BLOCK(Position(), statements)
     }
 
     ================================================================================================
@@ -1343,10 +1267,7 @@ class Parser {
                 if rvalue = null {
                     return null
                 }
-                def children := Array<ASTNode>()
-                children.add(start)
-                children.add(rvalue)
-                return ASTNode(ASTNode.Kind.BINARY, start.position, op.kind, children)
+                return ASTNode.BINARY(start.position(), start, op.kind, rvalue)
             when Token.Kind.EQ:
                 error(peek(), "unexpected '=', perhaps you meant ':='?")
                 def op := next()
@@ -1354,10 +1275,7 @@ class Parser {
                 if rvalue = null {
                     return null
                 }
-                def children := Array<ASTNode>()
-                children.add(start)
-                children.add(rvalue)
-                return ASTNode(ASTNode.Kind.BINARY, start.position, op.kind, children)
+                return ASTNode.BINARY(start.position(), start, op.kind, rvalue)
             otherwise:
                 return start
         }
@@ -1367,28 +1285,28 @@ class Parser {
     singleVar = target (ASSIGNMENT expression)?
     ================================================================================================
     method singleVar():ASTNode? {
-        def children := Array<ASTNode>()
         def t := target()
         if t = null {
             return null
         }
-        children.add(t)
+        def value:ASTNode?
         if checkNext(Token.Kind.ASSIGNMENT) != null {
-            def value := expression()
+            value := expression()
             if value = null {
                 return null
             }
-            children.add(value)
         }
         else if peek().kind = Token.Kind.EQ {
             error(next(), "unexpected '=', perhaps you meant ':='?")
-            def value := expression()
+            value := expression()
             if value = null {
                 return null
             }
-            children.add(value)
         }
-        return ASTNode(ASTNode.Kind.DECLARATION, t.position, children)
+        else {
+            value := null
+        }
+        return ASTNode.DECLARATION(t.position(), t, value)
     }
 
     ================================================================================================
@@ -1396,34 +1314,35 @@ class Parser {
     ================================================================================================
     method varDeclaration():ASTNode? {
         def start := next()
-        def kind:Int
+        def kind:Variable.Kind
         match start.kind {
             when Token.Kind.VAR:
-                kind := ASTNode.Kind.VAR
+                kind := Variable.Kind.VAR
             when Token.Kind.DEF:
-                kind := ASTNode.Kind.DEF
+                kind := Variable.Kind.DEF
             when Token.Kind.PROPERTY:
-                kind := ASTNode.Kind.PROPERTY
+                kind := Variable.Kind.PROPERTY
             when Token.Kind.CONSTANT:
-                kind := ASTNode.Kind.CONSTANT
+                kind := Variable.Kind.CONSTANT
             otherwise:
-                error(start, "'var', 'def', 'property', or 'constant'")
+                error(start, "expected 'var', 'def', 'property', or 'constant'")
         }
-        def children := Array<ASTNode>()
-        var child := singleVar()
-        if child = null {
+        def declarations := Array<ASTNode>()
+        var decl := singleVar()
+        if decl = null {
             return null
         }
-        children.add(child)
+        declarations.add(decl)
         while checkNext(Token.Kind.COMMA) != null {
-            var child := singleVar()
-            if child = null {
+            var decl := singleVar()
+            if decl = null {
                 return null
             }
-            children.add(child)
+            declarations.add(decl)
         }
-        return ASTNode(kind, start.position, children)
+        return ASTNode.VAR(start.position, kind, declarations.finish())
     }
+
     ================================================================================================
     initCall = INIT LPAREN (expression (COMMA expression)*)? RPAREN
     ================================================================================================
@@ -1436,22 +1355,22 @@ class Parser {
             return null
         }
         commaSeparatedExpressionContext.push(true) -- FIXME use init / cleanup to automate this
-        def children := Array<ASTNode>()
-        children.add(ASTNode(ASTNode.Kind.IDENTIFIER, start.position, text(start)))
+        def target := ASTNode.IDENTIFIER(start.position, text(start))
+        def args := Array<ASTNode>()
         if checkNext(Token.Kind.RPAREN) = null {
             var expr := expression()
             if expr = null {
                 commaSeparatedExpressionContext.pop()
                 return null
             }
-            children.add(expr)
+            args.add(expr)
             while checkNext(Token.Kind.COMMA) != null {
                 expr := expression()
                 if expr = null {
                     commaSeparatedExpressionContext.pop()
                     return null
                 }
-                children.add(expr)
+                args.add(expr)
             }
             if expect(Token.Kind.RPAREN, "')'") = null {
                 commaSeparatedExpressionContext.pop()
@@ -1459,7 +1378,7 @@ class Parser {
             }
         }
         commaSeparatedExpressionContext.pop()
-        return ASTNode(ASTNode.Kind.CALL, start.position, children)
+        return ASTNode.CALL(start.position, target, args.finish())
     }
 
     ================================================================================================
@@ -1472,9 +1391,10 @@ class Parser {
         }
         def label := checkNext(Token.Kind.IDENTIFIER)
         if label != null {
-            return ASTNode(ASTNode.Kind.BREAK, start.position, text(label))
+            return ASTNode.BREAK(start.position, text(label))
         }
-        return ASTNode(ASTNode.Kind.BREAK, start.position)
+        def s:String? := null
+        return ASTNode.BREAK(start.position, s) -- FIXME should just be able to use null directly
     }
 
     ================================================================================================
@@ -1487,9 +1407,10 @@ class Parser {
         }
         def label := checkNext(Token.Kind.IDENTIFIER)
         if label != null {
-            return ASTNode(ASTNode.Kind.CONTINUE, start.position, text(label))
+            return ASTNode.CONTINUE(start.position, text(label))
         }
-        return ASTNode(ASTNode.Kind.CONTINUE, start.position)
+        def s:String? := null
+        return ASTNode.CONTINUE(start.position, s) -- FIXME should just be able to use null directly
     }
 
     ================================================================================================
@@ -1502,7 +1423,8 @@ class Parser {
         }
         match peek().kind {
             when Token.Kind.RBRACE, Token.Kind.WHEN, Token.Kind.OTHERWISE:
-                return ASTNode(ASTNode.Kind.RETURN, start.position)
+                def v:ASTNode? := null
+                return ASTNode.RETURN(start.position, v)  -- FIXME should just be able to use null directly
             otherwise:
                 def children := Array<ASTNode>()
                 def expr := expression()
@@ -1510,7 +1432,7 @@ class Parser {
                     return null
                 }
                 children.add(expr)
-                return ASTNode(ASTNode.Kind.RETURN, start.position, children)
+                return ASTNode.RETURN(start.position, expr)
         }
     }
 
@@ -1598,7 +1520,7 @@ class Parser {
             }
             name.append(text(next))
         }
-        return ASTNode(ASTNode.Kind.PACKAGE, start.position, name.finish())
+        return ASTNode.PACKAGE(start.position, name.finish())
     }
 
     ================================================================================================
@@ -1626,13 +1548,13 @@ class Parser {
             }
             name.append(text(next))
         }
-        return ASTNode(ASTNode.Kind.USES, start.position, name.finish())
+        return ASTNode.USES(start.position, name.finish())
     }
 
     ================================================================================================
     genericsDeclaration = LT IDENTIFIER typeDeclaration? (COMMA IDENTIFIER typeDeclaration?)* GT
     ================================================================================================
-    method genericsDeclaration():ASTNode? {
+    method genericsDeclaration():ImmutableArray<ASTNode>? {
         def start := expect(Token.Kind.LT, "'<'")
         if start = null {
             return null
@@ -1641,74 +1563,76 @@ class Parser {
         if id = null {
             return null
         }
-        def children := Array<ASTNode>()
-        def idChildren := Array<ASTNode>()
+        def parameters := Array<ASTNode>()
         if checkNext(Token.Kind.COLON) != null {
             def t := type()
             if t = null {
                 return null
             }
-            idChildren.add(t)
+            parameters.add(ASTNode.TYPED_IDENTIFIER(id.position, text(id), t))
         }
-        children.add(ASTNode(ASTNode.Kind.IDENTIFIER, id.position, text(id), idChildren))
+        else {
+            parameters.add(ASTNode.IDENTIFIER(id.position, text(id)))
+        }
         while checkNext(Token.Kind.COMMA) != null {
             id := expect(Token.Kind.IDENTIFIER, "an identifier")
             if id = null {
                 return null
             }
-            idChildren.clear()
             if checkNext(Token.Kind.COLON) != null {
                 def t := type()
                 if t = null {
                     return null
                 }
-                idChildren.add(t)
+                parameters.add(ASTNode.TYPED_IDENTIFIER(id.position, text(id), t))
             }
-            children.add(ASTNode(ASTNode.Kind.IDENTIFIER, id.position, text(id), idChildren))
+            else {
+                parameters.add(ASTNode.IDENTIFIER(id.position, text(id)))
+            }
         }
         if expect(Token.Kind.GT, "'>'") = null {
             return null
         }
-        return ASTNode(ASTNode.Kind.GENERICS, start.position, children)
+        return parameters.finish()
     }
 
     ================================================================================================
     supertypes = COLON type (COMMA type)*
     ================================================================================================
-    method supertypes():ASTNode? {
+    method supertypes():ImmutableArray<ASTNode>? {
         def start := expect(Token.Kind.COLON, "':'")
         if start = null {
             return null
         }
-        def children := Array<ASTNode>()
+        def result := Array<ASTNode>()
         var t := type()
         if t = null {
             return null
         }
-        children.add(t)
+        result.add(t)
         while checkNext(Token.Kind.COMMA) != null {
             t := type()
             if t = null {
                 return null
             }
-            children.add(t)
+            result.add(t)
         }
-        return ASTNode(ASTNode.Kind.TYPES, start.position, children)
+        return result.finish()
     }
 
     ================================================================================================
     annotations = ANNOTATION*
     ================================================================================================
-    method annotations():ASTNode? {
-        def children := Array<ASTNode>()
+    method annotations():ImmutableArray<ASTNode> {
+        def result := Array<ASTNode>()
         loop {
             def next := checkNext(Token.Kind.ANNOTATION)
             if next = null {
                 break
             }
-            children.add(ASTNode(ASTNode.Kind.ANNOTATION, next.position, text(next)))
+            result.add(ASTNode.ANNOTATION(next.position, text(next)))
         }
-        return ASTNode(ASTNode.Kind.ANNOTATIONS, Position(), children)
+        return result.finish()
     }
 
     method doccomment():ASTNode? {
@@ -1728,7 +1652,7 @@ class Parser {
             }
             result.append(text(next))
         }
-        return ASTNode(ASTNode.Kind.DOC_COMMENT, start.position, result.finish())
+        return ASTNode.STRING(start.position, result.finish())
     }
 
     ================================================================================================
@@ -1743,38 +1667,36 @@ class Parser {
         if t = null {
             return null
         }
-        def children := Array<ASTNode>()
-        children.add(t)
-        return ASTNode(ASTNode.Kind.PARAMETER, id.position, text(id), children)
+        return ASTNode.PARAMETER(id.position, text(id), t)
     }
 
     ================================================================================================
     parameters = LPAREN (parameter (COMMA parameter)*)? RPAREN
     ================================================================================================
-    method parameters():ASTNode? {
+    method parameters():ImmutableArray<ASTNode>? {
         def start := expect(Token.Kind.LPAREN, "'('")
         if start = null {
             return null
         }
-        def children := Array<ASTNode>()
+        def result := Array<ASTNode>()
         if checkNext(Token.Kind.RPAREN) = null {
             def param := parameter()
             if param = null {
                 return null
             }
-            children.add(param)
+            result.add(param)
             while checkNext(Token.Kind.COMMA) != null {
                 param := parameter()
                 if param = null {
                     return null
                 }
-                children.add(param)
+                result.add(param)
             }
             if expect(Token.Kind.RPAREN, "')'") = null {
                 return null
             }
         }
-        return ASTNode(ASTNode.Kind.PARAMETERS, start.position, children)
+        return result.finish()
     }
 
     method postconditions():ASTNode? {
@@ -1786,50 +1708,46 @@ class Parser {
     methodDeclaration = (METHOD | FUNCTION) methodName parameters typeDeclaration? block?
             postconditions?
     ================================================================================================
-    method methodDeclaration(doccomment:ASTNode, annotations:ASTNode):ASTNode? {
-        def kind:Int
+    method methodDeclaration(doccomment:ASTNode?, annotations:ImmutableArray<ASTNode>):ASTNode? {
+        def kind:MethodDecl.Kind
         def start := checkNext(Token.Kind.FUNCTION)
         if start = null {
             start := expect(Token.Kind.METHOD, "'method' or 'function'")
             if start = null {
                 return null
             }
-            kind := ASTNode.Kind.METHOD
+            kind := MethodDecl.Kind.METHOD
         }
         else {
-            kind := ASTNode.Kind.FUNCTION
+            kind := MethodDecl.Kind.FUNCTION
         }
         def name := methodName()
         if name = null {
             return null
         }
-        def children := Array<ASTNode>()
-        children.add(doccomment)
-        children.add(annotations)
         def params := parameters()
         if params = null {
             return null
         }
-        children.add(params)
+        def returnType:ASTNode?
         if peek().kind = Token.Kind.COLON {
-            def returnType := typeDeclaration()
+            returnType := typeDeclaration()
             if returnType = null {
                 return null
             }
-            children.add(returnType)
         }
         else {
-            children.add(ASTNode(ASTNode.Kind.VOID, Position()))
+            returnType := null
         }
+        def body:ImmutableArray<ASTNode>?
         if peek().kind = Token.Kind.LBRACE {
-            def b := block()
-            if b = null {
+            body := blockStatements()
+            if body = null {
                 return null
             }
-            children.add(b)
         }
         else {
-            children.add(ASTNode(ASTNode.Kind.VOID, Position()))
+            body := null
         }
         def token := peek()
         def tokenText := text(token)
@@ -1839,36 +1757,27 @@ class Parser {
             if post = null {
                 return null
             }
-            children.add(post)
         }
-        else {
-            children.add(ASTNode(ASTNode.Kind.VOID, Position()))
-        }
-
-        return ASTNode(kind, start.position, name, children)
+        return ASTNode.METHOD(start.position, doccomment, annotations, kind, name, params,
+                returnType, body)
     }
 
     ================================================================================================
     initDeclaration = INIT parameters block postconditions?
     ================================================================================================
-    method initDeclaration(doccomment:ASTNode, annotations:ASTNode):ASTNode? {
+    method initDeclaration(doccomment:ASTNode?, annotations:ImmutableArray<ASTNode>):ASTNode? {
         def start := expect(Token.Kind.INIT, "'init'")
         if start = null {
             return null
         }
-        def children := Array<ASTNode>()
-        children.add(doccomment)
-        children.add(annotations)
         def params := parameters()
         if params = null {
             return null
         }
-        children.add(params)
-        def b := block()
+        def b := blockStatements()
         if b = null {
             return null
         }
-        children.add(b)
         def token := peek()
         def tokenText := text(token)
         if token.kind = Token.Kind.ANNOTATION &
@@ -1877,34 +1786,27 @@ class Parser {
             if post = null {
                 return null
             }
-            children.add(post)
-        }
-        else {
-            children.add(ASTNode(ASTNode.Kind.VOID, Position()))
         }
 
-        return ASTNode(ASTNode.Kind.INIT, start.position, children)
+        return ASTNode.METHOD(start.position, doccomment, annotations, MethodDecl.Kind.INIT, "init",
+                params, null, b)
     }
 
     ================================================================================================
     fieldDeclaration = varDeclaration
     ================================================================================================
-    method fieldDeclaration(doccomment:ASTNode, annotations:ASTNode):ASTNode? {
+    method fieldDeclaration(doccomment:ASTNode?, annotations:ImmutableArray<ASTNode>):ASTNode? {
         def decl := varDeclaration()
         if decl = null {
             return null
         }
-        def children := Array<ASTNode>()
-        children.add(doccomment)
-        children.add(annotations)
-        children.add(decl)
-        return ASTNode(ASTNode.Kind.FIELD, decl.position, children)
+        return ASTNode.FIELD(decl.position(), doccomment, annotations, decl)
     }
 
     ================================================================================================
     choiceEntry = IDENTIFIER (LPAREN (type (COMMA type)*)? RPAREN)?
     ================================================================================================
-    method choiceEntry(doccomment:ASTNode):ASTNode? {
+    method choiceEntry(doccomment:ASTNode?):ASTNode? {
         def name := expect(Token.Kind.IDENTIFIER, "an identifier")
         if name = null {
             return null
@@ -1929,16 +1831,14 @@ class Parser {
                 return null
             }
         }
-        def children := Array<ASTNode>()
-        children.add(doccomment)
-        children.add(ASTNode(ASTNode.Kind.CHOICE_FIELDS, name.position, fields))
-        return ASTNode(ASTNode.Kind.CHOICE_ENTRY, name.position, text(name), children)
+        return ASTNode.CHOICE_ENTRY(name.position, doccomment, text(name), fields.finish())
     }
 
     ================================================================================================
     choiceDeclaration = CHOICE IDENTIFIER LBRACE choiceEntry* declaration* RBRACE
     ================================================================================================
-    method choiceDeclaration(choiceDoccomment:ASTNode, choiceAnnotations:ASTNode):ASTNode? {
+    method choiceDeclaration(choiceDoccomment:ASTNode?,
+            choiceAnnotations:ImmutableArray<ASTNode>):ASTNode? {
         def start := expect(Token.Kind.CHOICE, "'choice'")
         if start = null {
             return null
@@ -1951,7 +1851,7 @@ class Parser {
             return null
         }
         def members := Array<ASTNode>()
-        var dc := ASTNode(ASTNode.Kind.VOID, Position())
+        var dc:ASTNode? := null
         loop {
             def next := peek()
             match next.kind {
@@ -1960,7 +1860,7 @@ class Parser {
                         Token.Kind.PROPERTY, Token.Kind.CONSTANT:
                     break
                 when Token.Kind.DOC_COMMENT:
-                    if dc.kind != ASTNode.Kind.VOID {
+                    if dc != null {
                         error(next, "expected a declaration, but found '\{text(next)}'")
                     }
                     dc := doccomment()
@@ -1970,23 +1870,23 @@ class Parser {
                         return null
                     }
                     members.add(c)
-                    dc := ASTNode(ASTNode.Kind.VOID, Position())
+                    dc := null
                 otherwise:
                     break
             }
         }
-        var a := ASTNode(ASTNode.Kind.ANNOTATIONS, Position(), Array<ASTNode>()) -- FIXME literal
+        var a := ImmutableArray<ASTNode>() -- FIXME literal
         loop {
             def next := peek()
             match next.kind {
                 when Token.Kind.ANNOTATION:
-                    if a.children.get_count() > 0 {
+                    if a.get_count() > 0 {
                         error(next, "expected a declaration, but found '\{text(next)}'")
                         return null
                     }
                     a := annotations()
                 when Token.Kind.DOC_COMMENT:
-                    if dc.kind != ASTNode.Kind.VOID | a.children.get_count() > 0 {
+                    if dc != null | a.get_count() > 0 {
                         error(next, "expected a declaration, but found '\{text(next)}'")
                         return null
                     }
@@ -1997,40 +1897,40 @@ class Parser {
                         return null
                     }
                     members.add(decl)
-                    dc := ASTNode(ASTNode.Kind.VOID, Position())
-                    a := ASTNode(ASTNode.Kind.ANNOTATIONS, Position(), Array<ASTNode>())
+                    dc := null
+                    a := ImmutableArray<ASTNode>()
                 when Token.Kind.INTERFACE:
                     def decl := interfaceDeclaration(dc, a)
                     if decl = null {
                         return null
                     }
                     members.add(decl)
-                    dc := ASTNode(ASTNode.Kind.VOID, Position())
-                    a := ASTNode(ASTNode.Kind.ANNOTATIONS, Position(), Array<ASTNode>())
+                    dc := null
+                    a := ImmutableArray<ASTNode>()
                 when Token.Kind.CHOICE:
                     def decl := choiceDeclaration(dc, a)
                     if decl = null {
                         return null
                     }
                     members.add(decl)
-                    dc := ASTNode(ASTNode.Kind.VOID, Position())
-                    a := ASTNode(ASTNode.Kind.ANNOTATIONS, Position(), Array<ASTNode>())
+                    dc := null
+                    a := ImmutableArray<ASTNode>()
                 when Token.Kind.METHOD, Token.Kind.FUNCTION:
                     def decl := methodDeclaration(dc, a)
                     if decl = null {
                         return null
                     }
                     members.add(decl)
-                    dc := ASTNode(ASTNode.Kind.VOID, Position())
-                    a := ASTNode(ASTNode.Kind.ANNOTATIONS, Position(), Array<ASTNode>())
+                    dc := null
+                    a := ImmutableArray<ASTNode>()
                 when Token.Kind.VAR, Token.Kind.DEF, Token.Kind.PROPERTY, Token.Kind.CONSTANT:
                     def decl := fieldDeclaration(dc, a)
                     if decl = null {
                         return null
                     }
                     members.add(decl)
-                    dc := ASTNode(ASTNode.Kind.VOID, Position())
-                    a := ASTNode(ASTNode.Kind.ANNOTATIONS, Position(), Array<ASTNode>())
+                    dc := null
+                    a := ImmutableArray<ASTNode>()
                 when Token.Kind.RBRACE:
                     expect(Token.Kind.RBRACE, "'}'")
                     break
@@ -2040,21 +1940,17 @@ class Parser {
                     return null
             }
         }
-        def children := Array<ASTNode>()
-        children.add(choiceDoccomment)
-        children.add(choiceAnnotations)
-        children.add(ASTNode(ASTNode.Kind.CLASS_MEMBERS, start.position, members))
-        return ASTNode(ASTNode.Kind.CHOICE, start.position, text(name), children)
+        return ASTNode.CLASS(start.position, choiceDoccomment, choiceAnnotations,
+                ClassDecl.Kind.CHOICE, text(name), null, null, members.finish())
     }
 
     ================================================================================================
     declaration = invariant | (doccomment? annotations) (classDeclaration | interfaceDeclaration |
-            choiceDeclaration | methodDeclaration | functionDeclaration | initDeclaration |
-            fieldDeclaration)
+            choiceDeclaration | methodDeclaration | initDeclaration | fieldDeclaration)
     ================================================================================================
     method declaration():ASTNode? {
         def start := peek()
-        def dc:ASTNode
+        def dc:ASTNode?
         if start.kind = Token.Kind.DOC_COMMENT {
             dc := doccomment()
             if dc = null {
@@ -2062,7 +1958,7 @@ class Parser {
             }
         }
         else {
-            dc := ASTNode(ASTNode.Kind.VOID, Position())
+            dc := null
         }
         def a := annotations()
         if a = null {
@@ -2091,10 +1987,7 @@ class Parser {
     ================================================================================================
     classDeclaration = CLASS IDENTIFIER genericsDeclaration? supertypes? LBRACE declaration* RBRACE
     ================================================================================================
-    method classDeclaration(doccomment:ASTNode, annotations:ASTNode):ASTNode? {
-        def children := Array<ASTNode>() -- FIXME use literal
-        children.add(doccomment)
-        children.add(annotations)
+    method classDeclaration(doccomment:ASTNode?, annotations:ImmutableArray<ASTNode>):ASTNode? {
         def start := expect(Token.Kind.CLASS, "'class'")
         if start = null {
             return null
@@ -2103,25 +1996,25 @@ class Parser {
         if name = null {
             return null
         }
+        def generics:ImmutableArray<ASTNode>?
         if peek().kind = Token.Kind.LT {
-            def generics := genericsDeclaration()
+            generics := genericsDeclaration()
             if generics = null {
                 return null
             }
-            children.add(generics)
         }
         else {
-            children.add(ASTNode(ASTNode.Kind.VOID, Position()))
+            generics := null
         }
+        def stypes:ImmutableArray<ASTNode>?
         if peek().kind = Token.Kind.COLON {
-            def stypes := supertypes()
+            stypes := supertypes()
             if stypes = null {
                 return null
             }
-            children.add(stypes)
         }
         else {
-            children.add(ASTNode(ASTNode.Kind.TYPES, Position()))
+            stypes := null
         }
         if expect(Token.Kind.LBRACE, "'{'") = null {
             return null
@@ -2134,18 +2027,15 @@ class Parser {
             }
             members.add(member)
         }
-        children.add(ASTNode(ASTNode.Kind.CLASS_MEMBERS, start.position, members))
-        return ASTNode(ASTNode.Kind.CLASS, start.position, text(name), children)
+        return ASTNode.CLASS(start.position, doccomment, annotations, ClassDecl.Kind.CLASS,
+                text(name), generics, stypes, members.finish())
     }
 
     ================================================================================================
     interfaceDeclaration = INTERFACE IDENTIFIER genericsDeclaration? (COLON type (COMMA type)*)?
             LBRACE declaration* RBRACE
     ================================================================================================
-    method interfaceDeclaration(doccomment:ASTNode, annotations:ASTNode):ASTNode? {
-        def children := Array<ASTNode>()
-        children.add(doccomment)
-        children.add(annotations)
+    method interfaceDeclaration(doccomment:ASTNode?, annotations:ImmutableArray<ASTNode>):ASTNode? {
         def start := expect(Token.Kind.INTERFACE, "'interface'")
         if start = null {
             return null
@@ -2154,15 +2044,15 @@ class Parser {
         if name = null {
             return null
         }
+        def generics:ImmutableArray<ASTNode>?
         if peek().kind = Token.Kind.LT {
-            def generics := genericsDeclaration()
+            generics := genericsDeclaration()
             if generics = null {
                 return null
             }
-            children.add(generics)
         }
         else {
-            children.add(ASTNode(ASTNode.Kind.VOID, Position()))
+            generics := ImmutableArray<ASTNode>()
         }
         def intfs := Array<ASTNode>()
         if checkNext(Token.Kind.COLON) != null {
@@ -2179,7 +2069,6 @@ class Parser {
                 intfs.add(t)
             }
         }
-        children.add(ASTNode(ASTNode.Kind.TYPES, start.position, intfs))
         if expect(Token.Kind.LBRACE, "'{'") = null {
             return null
         }
@@ -2191,8 +2080,8 @@ class Parser {
             }
             members.add(member)
         }
-        children.add(ASTNode(ASTNode.Kind.CLASS_MEMBERS, start.position, members))
-        return ASTNode(ASTNode.Kind.INTERFACE, start.position, text(name), children)
+        return ASTNode.CLASS(start.position, doccomment, annotations, ClassDecl.Kind.INTERFACE,
+                text(name), generics, intfs.finish(), members.finish())
     }
 
     ================================================================================================
@@ -2226,6 +2115,13 @@ class Parser {
             assert !inSpeculative
             entries.add(entry)
         }
-        return ASTNode(ASTNode.Kind.FILE, Position(1, 1), entries)
+        return ASTNode.FILE(entries.finish())
+    }
+
+    class Errors : ErrorReporter {
+        @override
+        method error(file:File, pos:Position, msg:String) {
+            Console.printLine("\{pos}: \{msg}")
+        }
     }
 }

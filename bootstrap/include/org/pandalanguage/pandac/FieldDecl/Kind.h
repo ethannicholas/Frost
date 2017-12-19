@@ -2,22 +2,35 @@
 #include "panda_c.h"
 #define PANDA_TYPESONLY
 #undef PANDA_TYPESONLY
+#include "panda/core/Int64.h"
 typedef struct panda$core$Class panda$core$Class;
-#include "panda/core/Int32.h"
+#include "org/pandalanguage/pandac/FieldDecl/Kind.h"
 
 typedef struct org$pandalanguage$pandac$FieldDecl$Kind {
-    panda$core$Class* $class;
-    panda$core$Int32 refCount;
+    panda$core$Int64 $rawValue;
+    int8_t $data[0];
 } org$pandalanguage$pandac$FieldDecl$Kind;
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"
 #undef PANDA_TYPESONLY
 typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[2]; } org$pandalanguage$pandac$FieldDecl$Kind$class_type;
 extern org$pandalanguage$pandac$FieldDecl$Kind$class_type org$pandalanguage$pandac$FieldDecl$Kind$class;
+typedef struct org$pandalanguage$pandac$FieldDecl$Kind$wrapper {
+    panda$core$Class* cl;
+    int32_t refCount;
+    org$pandalanguage$pandac$FieldDecl$Kind value;
+} org$pandalanguage$pandac$FieldDecl$Kind$wrapper;
+typedef struct org$pandalanguage$pandac$FieldDecl$Kind$nullable {
+    org$pandalanguage$pandac$FieldDecl$Kind value;
+    bool nonnull;
+} org$pandalanguage$pandac$FieldDecl$Kind$nullable;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[2]; } org$pandalanguage$pandac$FieldDecl$Kind$wrapperclass_type;
+extern org$pandalanguage$pandac$FieldDecl$Kind$wrapperclass_type org$pandalanguage$pandac$FieldDecl$Kind$wrapperclass;
 
 #ifndef PANDA_TYPESONLY
-typedef struct org$pandalanguage$pandac$FieldDecl$Kind org$pandalanguage$pandac$FieldDecl$Kind;
+#include "org/pandalanguage/pandac/FieldDecl/Kind.h"
+#include "panda/core/Int64.h"
 
-void org$pandalanguage$pandac$FieldDecl$Kind$init(org$pandalanguage$pandac$FieldDecl$Kind* self);
+void org$pandalanguage$pandac$FieldDecl$Kind$init$panda$core$Int64(org$pandalanguage$pandac$FieldDecl$Kind* self, panda$core$Int64 p_rv);
 
 #endif

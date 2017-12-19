@@ -11,6 +11,7 @@ typedef struct panda$collections$ImmutableArray {
     panda$core$Class* $class;
     panda$core$Int32 refCount;
     panda$core$Int64 count;
+    panda$core$Int64 dummy;
     panda$core$Object** data;
 } panda$collections$ImmutableArray;
 #define PANDA_TYPESONLY

@@ -114,6 +114,7 @@ add_executable(bootstrap
     bootstrap/src/org/pandalanguage/pandac/Compiler/Settings.c
     bootstrap/src/org/pandalanguage/pandac/ErrorReporter.c
     bootstrap/src/org/pandalanguage/pandac/FieldDecl.c
+    bootstrap/src/org/pandalanguage/pandac/FieldDecl/Kind.c
     bootstrap/src/org/pandalanguage/pandac/HCodeGenerator.c
     bootstrap/src/org/pandalanguage/pandac/IRNode.c
     bootstrap/src/org/pandalanguage/pandac/LLVMCodeGenerator.c

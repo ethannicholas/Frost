@@ -29,6 +29,9 @@ class ImmutableArray<T> : ListView<T> {
     def count:Int
 
     @private
+    def dummy:Int -- for binary compatibility with Array
+
+    @private
     def data:Pointer<T>
 
     init() {

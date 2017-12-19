@@ -154,7 +154,7 @@ panda$collections$ImmutableArray* panda$collections$ImmutableArray$$IDX$panda$co
     i40.value += 1;
     goto $l45;
     $l47:;
-    panda$collections$ImmutableArray* $tmp61 = (panda$collections$ImmutableArray*) malloc(32);
+    panda$collections$ImmutableArray* $tmp61 = (panda$collections$ImmutableArray*) malloc(40);
     $tmp61->$class = (panda$core$Class*) &panda$collections$ImmutableArray$class;
     $tmp61->refCount.value = 1;
     panda$collections$ImmutableArray$init$panda$unsafe$Pointer$LTpanda$collections$ImmutableArray$T$GT$panda$core$Int64($tmp61, result38, count36);
@@ -302,7 +302,7 @@ panda$collections$ImmutableArray* panda$collections$ImmutableArray$$IDX$panda$co
         panda$collections$Array$add$panda$collections$Array$T(result77, $tmp104);
     }
     }
-    panda$collections$ImmutableArray* $tmp105 = (panda$collections$ImmutableArray*) malloc(32);
+    panda$collections$ImmutableArray* $tmp105 = (panda$collections$ImmutableArray*) malloc(40);
     $tmp105->$class = (panda$core$Class*) &panda$collections$ImmutableArray$class;
     $tmp105->refCount.value = 1;
     panda$collections$ImmutableArray$init$panda$collections$ListView$LTpanda$collections$ImmutableArray$T$GT($tmp105, ((panda$collections$ListView*) result77));

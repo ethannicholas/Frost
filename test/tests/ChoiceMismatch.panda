@@ -1,0 +1,14 @@
+choice A {
+    FOO
+}
+
+choice B {
+    BAR
+}
+
+class ChoiceMismatch {
+    @class
+    method main() {
+        Console.printLine(A.FOO = B.BAR)
+    }
+}

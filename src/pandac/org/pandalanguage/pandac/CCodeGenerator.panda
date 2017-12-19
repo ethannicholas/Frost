@@ -282,13 +282,19 @@ class CCodeGenerator : CodeGenerator {
                 continue
             }
             compiler.resolve(f)
-            def size := fieldSize(f.type)
-            def align := result % size
-            if align != 0 {
-                result += size - align
+            if f.type = Type.ChoiceData() {
+                -- FIXME need to respect alignment!
+                result += hCodeGen.llvmCodeGen.getChoiceDataSize(cl)
             }
-            assert result % size = 0
-            result += size
+            else {
+                def size := fieldSize(f.type)
+                def align := result % size
+                if align != 0 {
+                    result += size - align
+                }
+                assert result % size = 0
+                result += size
+            }
         }
         if t.typeKind = Type.Kind.NULLABLE {
             result += 1
@@ -306,13 +312,19 @@ class CCodeGenerator : CodeGenerator {
         var result := sizeOf(Type.Object())
         for f in compiler.instanceFields(cl) {
             compiler.resolve(f)
-            def size := fieldSize(f.type)
-            def align := result % size
-            if align != 0 {
-                result += size - align
+            if f.type = Type.ChoiceData() {
+                -- FIXME need to respect alignment!
+                result += hCodeGen.llvmCodeGen.getChoiceDataSize(cl)
             }
-            assert result % size = 0
-            result += size
+            else {
+                def size := fieldSize(f.type)
+                def align := result % size
+                if align != 0 {
+                    result += size - align
+                }
+                assert result % size = 0
+                result += size
+            }
         }
         if t.typeKind = Type.Kind.NULLABLE {
             result += 1

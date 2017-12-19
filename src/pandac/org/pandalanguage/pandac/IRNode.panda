@@ -152,7 +152,7 @@ class IRNode {
         else {
             self.children := null
         }
-        assert type.resolved
+        assert type.resolved, "node \{self}:\{position} has unresolved type"
         assert kind != Kind.TYPE_REFERENCE | (payload != null & (payload->Type).resolved)
     }
 

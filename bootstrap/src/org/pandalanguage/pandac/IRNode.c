@@ -24,7 +24,6 @@
 #include "org/pandalanguage/pandac/MethodDecl.h"
 #include "panda/core/Range.LTpanda/core/Int64.Q.GT.h"
 #include "org/pandalanguage/pandac/Compiler.h"
-#include "org/pandalanguage/pandac/parser/Token/Kind.h"
 #include "org/pandalanguage/pandac/FieldDecl.h"
 #include "org/pandalanguage/pandac/ChoiceEntry.h"
 
@@ -193,7 +192,7 @@ void org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pan
     self->payload = p_payload;
     if (((panda$core$Bit) { p_children != NULL }).value) {
     {
-        panda$collections$ImmutableArray* $tmp12 = (panda$collections$ImmutableArray*) malloc(32);
+        panda$collections$ImmutableArray* $tmp12 = (panda$collections$ImmutableArray*) malloc(40);
         $tmp12->$class = (panda$core$Class*) &panda$collections$ImmutableArray$class;
         $tmp12->refCount.value = 1;
         panda$collections$ImmutableArray$init$panda$collections$ListView$LTpanda$collections$ImmutableArray$T$GT($tmp12, p_children);
@@ -452,7 +451,7 @@ panda$core$String* org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(o
             panda$core$Object* $tmp155 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(self->children, ((panda$core$Int64) { 0 }));
             panda$core$String* $tmp156 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s154, ((panda$core$Object*) ((org$pandalanguage$pandac$IRNode*) $tmp155)));
             panda$core$String* $tmp158 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp156, &$s157);
-            panda$core$String* $tmp159 = org$pandalanguage$pandac$Compiler$operatorName$org$pandalanguage$pandac$parser$Token$Kind$R$panda$core$String(((org$pandalanguage$pandac$parser$Token$Kind*) self->payload));
+            panda$core$String* $tmp159 = org$pandalanguage$pandac$Compiler$operatorName$org$pandalanguage$pandac$parser$Token$Kind$R$panda$core$String(((org$pandalanguage$pandac$parser$Token$Kind$wrapper*) self->payload)->value);
             panda$core$String* $tmp160 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp158, $tmp159);
             panda$core$String* $tmp162 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp160, &$s161);
             panda$core$Object* $tmp163 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(self->children, ((panda$core$Int64) { 1 }));

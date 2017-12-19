@@ -732,7 +732,7 @@ panda$core$String* org$pandalanguage$pandac$HCodeGenerator$selfType$org$pandalan
     org$pandalanguage$pandac$Type* $tmp352 = org$pandalanguage$pandac$ClassDecl$type$R$org$pandalanguage$pandac$Type(p_m->owner);
     panda$core$String* $tmp353 = org$pandalanguage$pandac$HCodeGenerator$type$org$pandalanguage$pandac$Type$R$panda$core$String(self, $tmp352);
     result351 = $tmp353;
-    panda$core$Bit $tmp355 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_m->methodKind->$rawValue, ((panda$core$Int64) { 2 }));
+    panda$core$Bit $tmp355 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_m->methodKind.$rawValue, ((panda$core$Int64) { 2 }));
     bool $tmp354 = $tmp355.value;
     if (!$tmp354) goto $l356;
     panda$core$Bit $tmp358 = panda$core$String$endsWith$panda$core$String$R$panda$core$Bit(result351, &$s357);

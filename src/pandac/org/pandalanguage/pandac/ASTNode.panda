@@ -2,413 +2,422 @@ package org.pandalanguage.pandac
 
 uses org.pandalanguage.pandac.parser.Token
 
-@final
-class ASTNode : Immutable {
-    class Kind {
-        constant PACKAGE                := 100
-        constant USES                   := 101
-        constant INT                    := 102
-        constant BINARY                 := 103
-        constant RANGE_INCLUSIVE        := 104
-        constant RANGE_EXCLUSIVE        := 105
-        constant IDENTIFIER             := 106
-        constant CALL                   := 107
-        constant DOT                    := 108
-        constant TYPE                   := 109
-        constant NULLABLE_TYPE          := 110
-        constant CAST                   := 111
-        constant PREFIX                 := 112
-        constant STRING                 := 113
-        constant SELF                   := 114
-        constant SUPER                  := 115
-        constant BIT                    := 116
-        constant NULL                   := 117
-        constant IF                     := 118
-        constant FOR                    := 119
-        constant DO                     := 120
-        constant WHILE                  := 121
-        constant LOOP                   := 122
-        constant ASSERT                 := 123
-        constant WHEN                   := 124
-        constant MATCH                  := 125
-        constant BLOCK                  := 126
-        constant OTHERWISE              := 127
-        constant EXPRESSIONS            := 128
-        constant DECLARATION            := 129
-        constant VAR                    := 130
-        constant DEF                    := 131
-        constant CONSTANT               := 132
-        constant PROPERTY               := 133
-        constant BREAK                  := 134
-        constant CONTINUE               := 135
-        constant RETURN                 := 136
-        constant GENERICS               := 137
-        constant VOID                   := 138
-        constant TYPES                  := 139
-        constant CLASS_MEMBERS          := 140
-        constant DOC_COMMENT            := 141
-        constant CLASS                  := 142
-        constant ANNOTATION             := 143
-        constant ANNOTATIONS            := 144
-        constant METHOD                 := 145
-        constant FUNCTION               := 146
-        constant INIT                   := 147
-        constant FIELD                  := 148
-        constant PARAMETER              := 149
-        constant PARAMETERS             := 150
-        constant INTERFACE              := 151
-        constant FILE                   := 152
-        constant TUPLE_TARGET           := 153
-        constant GENERIC_TYPE           := 154
-        constant CHOICE                 := 155
-        constant CHOICE_ENTRY           := 156
-        constant REAL                   := 157
-        constant CHOICE_FIELD_REFERENCE := 158
-        constant CHOICE_FIELDS          := 159
-    }
+choice ASTNode {
+    ANNOTATION      (Position, String)
+    ASSERT          (Position, ASTNode, ASTNode?)
+    BINARY          (Position, ASTNode, Token.Kind, ASTNode)
+    BIT             (Position, Bit)
+    BLOCK           (Position, ImmutableArray<ASTNode>)
+    BREAK           (Position, String?)
+    CALL            (Position, ASTNode, ImmutableArray<ASTNode>)
+    CHOICE_ENTRY    (Position,
+                     ASTNode?                 -* Doccomment (STRING) *-,
+                     String                   -* name *-,
+                     ImmutableArray<ASTNode>? -* field TYPEs *-)
+    CHOICE_FIELD_REFERENCE
+                    (Position, ASTNode -* base *-, ChoiceEntry, Int -* field index *-)
+    CLASS           (Position,
+                     ASTNode?                 -* Doccomment (STRING) *-,
+                     ImmutableArray<ASTNode>  -* ANNOTATIONs *-,
+                     ClassDecl.Kind,
+                     String,
+                     ImmutableArray<ASTNode>? -* Generics (TYPED_IDENTIFIERs) *-,
+                     ImmutableArray<ASTNode>? -* Supertypes (TYPEs)) *-,
+                     ImmutableArray<ASTNode>  -* Members *-)
+    CONTINUE        (Position, String?)
+    DECLARATION     (Position, ASTNode -* target *-, ASTNode? -* initializer *-)
+    DO              (Position, String?, ImmutableArray<ASTNode>, ASTNode)
+    DOT             (Position, ASTNode, String)
+    FIELD           (Position,
+                     ASTNode?                 -* Doccomment (STRING) *-,
+                     ImmutableArray<ASTNode>  -* ANNOTATIONs *-,
+                     ASTNode                  -* VAR *-)
+    FILE            (ImmutableArray<ASTNode>)
+    FOR             (Position, String?, ASTNode, ASTNode, ImmutableArray<ASTNode>)
+    GENERIC_TYPE    (Position, String, ImmutableArray<ASTNode> -* types *-)
+    IDENTIFIER      (Position, String)
+    IF              (Position, ASTNode, ImmutableArray<ASTNode> -* ifTrue *-,
+                     ASTNode -* ifFalse *-)
+    INT             (Position, UInt64)
+    LOOP            (Position, String?, ImmutableArray<ASTNode>)
+    MATCH           (Position,
+                     ASTNode                  -* value *-,
+                     ImmutableArray<ASTNode>  -* whens *-,
+                     ImmutableArray<ASTNode>? -* otherwise *-)
+    METHOD          (Position,
+                     ASTNode?                 -* Doccomment (STRING) *-,
+                     ImmutableArray<ASTNode>  -* ANNOTATIONs *-,
+                     MethodDecl.Kind,
+                     String                   -* name *-,
+                     ImmutableArray<ASTNode>  -* PARAMETERs *-,
+                     ASTNode?                 -* return type *-,
+                     ImmutableArray<ASTNode>? -* statements *-)
+    NULL            (Position)
+    NULLABLE_TYPE   (Position, ASTNode -* type *-)
+    PACKAGE         (Position, String)
+    PARAMETER       (Position, String, ASTNode -* type *-)
+    PREFIX          (Position, Token.Kind, ASTNode)
+    RANGE           (Position, ASTNode?, ASTNode?, Bit, ASTNode?)
+    REAL            (Position, Real64)
+    RETURN          (Position, ASTNode?)
+    SELF            (Position)
+    STRING          (Position, String)
+    SUPER           (Position)
+    TYPE            (Position, String)
+    TYPED_IDENTIFIER(Position, String, ASTNode?)
+    USES            (Position, String)
+    VAR             (Position, Variable.Kind, ImmutableArray<ASTNode> -* DECLARATIONs *-)
+    WHEN            (Position,
+                     ImmutableArray<ASTNode> -* tests *-,
+                     ImmutableArray<ASTNode> -* statements *-)
+    WHILE           (Position, String?, ASTNode, ImmutableArray<ASTNode>)
 
-    @class
-    function operatorName(op:Token.Kind):String {
-        return Compiler.operatorName(op)
-    }
-
-    def kind:Int
-
-    def position:Position
-
-    def payload:Object?
-
-    def children:ImmutableArray<ASTNode>?
-
-    init(kind:Int, position:Position) {
-        init(kind, position, null, null)
-    }
-
-    init(kind:Int, position:Position, payload:UInt64) {
-        init(kind, position, payload, null)
-    }
-
-    init(kind:Int, position:Position, payload:panda.core.Real64) {
-        init(kind, position, payload, null)
-    }
-
-    init(kind:Int, position:Position, payload:String) {
-        init(kind, position, payload, null)
-    }
-
-    init(kind:Int, position:Position, payload:Bit) {
-        init(kind, position, payload, null)
-    }
-
-    init(kind:Int, position:Position, payload:Pair<ChoiceEntry, Int>) {
-        init(kind, position, payload, null)
-    }
-
-    init(kind:Int, position:Position, children:ListView<ASTNode>) {
-        init(kind, position, null, children)
-    }
-
-    init(kind:Int, position:Position, payload:Object?, children:ListView<ASTNode>?) {
-        self.kind := kind
-        self.position := position
-        self.payload := payload
-        if children != null {
-            self.children := ImmutableArray<ASTNode>(children)
-        }
-        else {
-            self.children := null
+    function position():Position {
+        match self {
+            when ANNOTATION(position, name):
+                return position
+            when ASSERT(position, test, msg):
+                return position
+            when BINARY(position, left, op, right):
+                return position
+            when BIT(position, value):
+                return position
+            when BLOCK(position, statements):
+                return position
+            when BREAK(position, label):
+                return position
+            when CALL(position, target, args):
+                return position
+            when CHOICE_ENTRY(position, dc, name, fields):
+                return position
+            when CHOICE_FIELD_REFERENCE(position, base, ce, index):
+                return position
+            when CLASS(position, dc, annotations, kind, name, generics, supertypes, members):
+                return position
+            when CONTINUE(position, label):
+                return position
+            when DECLARATION(position, target, value):
+                return position
+            when DO(position, label, statements, test):
+                return position
+            when DOT(position, base, field):
+                return position
+            when FIELD(position, dc, annotations, decl):
+                return position
+            when FILE(_):
+                return Position()
+            when FOR(position, label, target, list, statements):
+                return position
+            when GENERIC_TYPE(position, name, subtypes):
+                return position
+            when IDENTIFIER(position, name):
+                return position
+            when IF(position, test, ifTrue, ifFalse):
+                return position
+            when INT(position, value):
+                return position
+            when LOOP(position, label, statements):
+                return position
+            when MATCH(position, value, whens, other):
+                return position
+            when METHOD(position, dc, annotations, kind, name, parameters, returnType, statements):
+                return position
+            when NULL(position):
+                return position
+            when NULLABLE_TYPE(position, base):
+                return position
+            when PACKAGE(position, name):
+                return position
+            when PARAMETER(position, name, type):
+                return position
+            when PREFIX(position, kind, base):
+                return position
+            when RANGE(position, start, end, inclusive, step):
+                return position
+            when REAL(position, value):
+                return position
+            when RETURN(position, value):
+                return position
+            when SELF(position):
+                return position
+            when STRING(position, str):
+                return position
+            when SUPER(position):
+                return position
+            when TYPE(position, name):
+                return position
+            when TYPED_IDENTIFIER(position, name, type):
+                return position
+            when USES(position, name):
+                return position
+            when VAR(position, kind, decls):
+                return position
+            when WHEN(position, tests, statements):
+                return position
+            when WHILE(position, label, test, statements):
+                return position
+            otherwise: assert false
         }
     }
 
     @override
     function convert():String {
-        match kind {
-            when Kind.PREFIX:
-                assert children.get_count() = 1
-                return "\{operatorName(payload->Token.Kind)}\{children[0]}"
-            when Kind.BINARY:
-                assert children.get_count() = 2
-                if payload->Token.Kind = Token.Kind.LBRACKET {
-                    return "\{children[0]}[\{children[1]}]"
+        match self {
+            when ANNOTATION(_, name):
+                return name
+            when ASSERT(_, test, msg):
+                if msg = null {
+                    return "assert \{test}"
                 }
-                return "(\{children[0]} \{operatorName(payload->Token.Kind)} \{children[1]})"
-            when Kind.INT:
-                return payload.convert()
-            when Kind.BIT:
-                return payload.convert()
-            when Kind.STRING:
-                return "'\{payload.convert()}'"
-            when Kind.PACKAGE:
-                return "package \{payload}"
-            when Kind.USES:
-                return "uses \{payload}"
-            when Kind.RANGE_INCLUSIVE:
-                assert children.get_count() = 3
-                def result := MutableString()
-                if children[0] != null {
-                    result.append(children[0])
+                return "assert \{test}, \{msg}"
+            when BINARY(_, left, op, right):
+                return "\{left} \{op} \{right}"
+            when BIT(_, value):
+                return value.convert()
+            when BLOCK(_, statements):
+                def result := MutableString("{\n")
+                for s in statements {
+                    result.append(s + "\n")
                 }
-                result.append("...")
-                if children[1] != null {
-                    result.append(children[1])
-                }
-                if children[2] != null {
-                    result.append(" by ")
-                    result.append(children[2])
-                }
+                result.append("}")
                 return result.finish()
-            when Kind.RANGE_EXCLUSIVE:
-                assert children.get_count() = 3
-                def result := MutableString()
-                if children[0].kind != ASTNode.Kind.VOID {
-                    result.append(children[0])
-                }
-                result.append("..")
-                if children[1].kind != ASTNode.Kind.VOID {
-                    result.append(children[1])
-                }
-                if children[2].kind != ASTNode.Kind.VOID {
-                    result.append(" by ")
-                    result.append(children[2])
-                }
-                return result.finish()
-            when Kind.CALL:
-                assert children.get_count() >= 1
-                def result := MutableString(children[0].convert())
-                result.append("(")
-                var separator := ""
-                for i in 1 .. children.get_count() {
-                    result.append(separator)
-                    result.append(children[i])
-                    separator := ", "
-                }
-                result.append(")")
-                return result.finish()
-            when Kind.IDENTIFIER:
-                if children != null {
-                    assert children.get_count() = 1
-                    return payload + ":" + children[0]
-                }
-                return payload.convert()
-            when Kind.DOT:
-                assert children.get_count() = 1
-                return "\{children[0]}.\{payload}"
-            when Kind.IF:
-                assert children.get_count() = 2 | children.get_count() = 3
-                def result := "if \{children[0]} \{children[1]}"
-                if children.get_count() = 3 {
-                    return result + " else \{children[2]}"
-                }
-                return result
-            when Kind.FOR:
-                assert children.get_count() = 3
-                return "for \{children[0]} in \{children[1]} \{children[2]}"
-            when Kind.WHILE:
-                assert children.get_count() = 2
-                return "while \{children[0]} \{children[1]}"
-            when Kind.DO:
-                assert children.get_count() = 2
-                return "do \{children[0]} while \{children[1]}"
-            when Kind.LOOP:
-                assert children.get_count() = 1
-                return "loop \{children[0]}"
-            when Kind.BREAK:
-                if payload != null {
-                    return "break \{payload}"
+            when BREAK(_, label):
+                if label != null {
+                    return "break \{label}"
                 }
                 return "break"
-            when Kind.CONTINUE:
-                if payload != null {
-                    return "continue \{payload}"
+            when CALL(_, target, args):
+                return "\{target}(\{args.join()})"
+            when CHOICE_ENTRY(_, dc, name, fields):
+                def result := MutableString()
+                if dc != null {
+                    result.append(dc + "\n")
+                }
+                result.append("\{name}(\{fields.join()})")
+                return result.finish()
+            when CHOICE_FIELD_REFERENCE(_, base, ce, index):
+                return "\{base}.\{ce}(\{index})"
+            when CLASS(_, dc, annotations, kind, name, generics, supertypes, members):
+                def result := MutableString()
+                if dc != null {
+                    result.append(dc + "\n")
+                }
+                for a in annotations {
+                    result.append(a + "\n")
+                }
+                match kind {
+                    when ClassDecl.Kind.CLASS:     result.append("class ")
+                    when ClassDecl.Kind.INTERFACE: result.append("interface ")
+                    when ClassDecl.Kind.CHOICE:    result.append("choice ")
+                }
+                result.append(name)
+                if generics != null {
+                    result.append("<\{generics.join()}>")
+                }
+                if supertypes != null {
+                    result.append(": \{supertypes.join()}")
+                }
+                result.append(" {\n")
+                for m in members {
+                    result.append(m + "\n")
+                }
+                result.append("}")
+                return result.finish()
+            when CONTINUE(_, label):
+                if label != null {
+                    return "continue \{label}"
                 }
                 return "continue"
-            when Kind.RETURN:
-                if children != null {
-                    assert children.get_count() = 1
-                    return "return \{children[0]}"
+            when DECLARATION(_, target, value):
+                if value != null {
+                    return "\{target} := \{value}"
+                }
+                return target.convert()
+            when DO(_, label, statements, test):
+                def result := MutableString()
+                if label != null {
+                    result.append("\{label}:")
+                }
+                result.append("do {\n")
+                for s in statements {
+                    result.append(s + "\n")
+                }
+                result.append("}\nwhile \{test}")
+                return result.finish()
+            when DOT(_, base, field):
+                return "\{base}.\{field}"
+            when FIELD(_, dc, annotations, decl):
+                def result := MutableString()
+                if dc != null {
+                    result.append(dc + "\n")
+                }
+                for a in annotations {
+                    result.append(a + "\n")
+                }
+                result.append(decl)
+                return result.finish()                
+            when FILE(entries):
+                def result := MutableString()
+                for e in entries {
+                    result.append(e + "\n")
+                }
+                return result.finish()
+            when FOR(_, label, target, list, statements):
+                def result := MutableString()
+                if label != null {
+                    result.append(label + ": ")
+                }
+                result.append("for \{target} in \{list} {\n")
+                for s in statements {
+                    result.append(s + "\n")
+                }
+                result.append("}")
+                return result.finish()
+            when GENERIC_TYPE(_, name, subtypes):
+                return "\{name}<\{subtypes.join()}>"
+            when IDENTIFIER(_, name):
+                return name
+            when IF(_, test, ifTrue, ifFalse):
+                def result := MutableString("if \{test} {\n")
+                for s in ifTrue {
+                    result.append(s + "\n")
+                }
+                result.append("}")
+                if ifFalse != null {
+                    result.append("\nelse \{ifFalse}")
+                }
+                return result.finish()
+            when INT(_, value):
+                return value.convert()
+            when LOOP(_, label, statements):
+                def result := MutableString()
+                if label != null {
+                    result.append("\{label}:")
+                }
+                result.append("loop {\n")
+                for s in statements {
+                    result.append(s + "\n")
+                }
+                result.append("}")
+                return result.finish()
+            when MATCH(_, value, whens, other):
+                def result := MutableString("match \{value} {\n")
+                for w in whens {
+                    result.append(w + "\n")
+                }
+                if other != null {
+                    result.append(other + "\n")
+                }
+                result.append("}")
+                return result.finish()
+            when METHOD(_, dc, annotations, kind, name, parameters, returnType, statements):
+                def result := MutableString()
+                if dc != null {
+                    result.append(dc + "\n")
+                }
+                for a in annotations {
+                    result.append(a + "\n")
+                }
+                match kind {
+                    when MethodDecl.Kind.METHOD:   result.append("method ")
+                    when MethodDecl.Kind.FUNCTION: result.append("function ")
+                    when MethodDecl.Kind.INIT:     -- do nothing
+                }
+                result.append("\{name}(\{parameters.join()})")
+                if returnType != null {
+                    result.append(":\{returnType}")
+                }
+                if statements != null {
+                    result.append(" {\n")
+                    for s in statements {
+                        result.append(s + "\n")
+                    }
+                    result.append("}")
+                }
+                return result.finish()
+            when NULL:
+                return "null"
+            when NULLABLE_TYPE(_, base):
+                return base + "?"
+            when PACKAGE(_, name):
+                return name
+            when PARAMETER(_, name, type):
+                return "\{name}:\{type}"
+            when PREFIX(_, kind, base):
+                return "\{kind}\{base}"
+            when RANGE(_, start, end, inclusive, step):
+                def result := MutableString()
+                if start != NULL {
+                    result.append(start)
+                }
+                if inclusive {
+                    result.append("...")
+                }
+                else {
+                    result.append("..")
+                }
+                if end != NULL {
+                    result.append(end)
+                }
+                if step != NULL {
+                    result.append(" by " + step)
+                }
+                return result.finish()
+            when REAL(_, value):
+                return value.convert()
+            when RETURN(_, value):
+                if value != null {
+                    return "return \{value}"
                 }
                 return "return"
-            when Kind.BLOCK:
-                def result := MutableString("{\n")
-                for child in children {
-                    def c := child.convert()
-                    if c.startsWith("(") & c.endsWith(")") {
-                        result.append(c[c.next(c.start()) .. c.previous(c.end())])
-                    }
-                    else {
-                        result.append(child)
-                    }
-                    result.append("\n")
-                }
-                result.append("}")
-                return result.finish()
-            when Kind.TYPE:
-                return payload.convert()
-            when Kind.NULLABLE_TYPE:
-                return children[0] + "?"
-            when Kind.GENERIC_TYPE:
-                def result := MutableString(children[0].convert())
-                result.append("<")
-                var separator := ""
-                for c in children[1..] {
-                    result.append(separator)
-                    result.append(c)
-                    separator := ", "
-                }
-                result.append(">")
-                return result.finish()
-            when Kind.TYPES:
-                def result := MutableString()
-                var separator := ""
-                for c in children {
-                    result.append(separator)
-                    result.append(c)
-                    separator := ", "
-                }
-                return result.finish()
-            when Kind.ANNOTATION:
-                return payload.convert()
-            when Kind.ANNOTATIONS:
-                def result := MutableString()
-                for c in children {
-                    result.append(c)
-                    result.append("\n")
-                }
-                return result.finish()
-            when Kind.DECLARATION:
-                if children.get_count() = 1 {
-                    return children[0].convert()
-                }
-                return "\{children[0]} := \{children[1]}"
-            when Kind.VAR:
-                def result := MutableString("var ")
-                var separator := ""
-                for c in children {
-                    result.append(separator)
-                    result.append(c)
-                    separator := ", "
-                }
-                return result.finish()
-            when Kind.DEF:
-                def result := MutableString("def ")
-                var separator := ""
-                for c in children {
-                    result.append(separator)
-                    result.append(c)
-                    separator := ", "
-                }
-                return result.finish()
-            when Kind.PROPERTY:
-                def result := MutableString("property ")
-                var separator := ""
-                for c in children {
-                    result.append(separator)
-                    result.append(c)
-                    separator := ", "
-                }
-                return result.finish()
-            when Kind.CONSTANT:
-                def result := MutableString("constant ")
-                var separator := ""
-                for c in children {
-                    result.append(separator)
-                    result.append(c)
-                    separator := ", "
-                }
-                return result.finish()
-            when Kind.FIELD:
-                assert children.get_count() = 3
-                return "\{children[0]}\{children[1]}\{children[2]}"
-            when Kind.PARAMETER:
-                assert children.get_count() = 1
-                return "\{payload}:\{children[0]}"
-            when Kind.PARAMETERS:
-                def result := MutableString("(")
-                var separator := ""
-                for c in children {
-                    result.append(separator)
-                    result.append(c)
-                    separator := ", "
-                }
-                result.append(")")
-                return result.finish()
-            when Kind.INIT:
-                assert children.get_count() = 5
-                return "\{children[0]}\{children[1]}init\{children[2]} \{children[3]}\{children[4]}"
-            when Kind.METHOD:
-                assert children.get_count() = 6
-                return "\{children[0]}\{children[1]}method \{payload}\{children[2]}:" +
-                        "\{children[3]} \{children[4]}\{children[5]}"
-            when Kind.FUNCTION:
-                assert children.get_count() = 6
-                for c in children {
-                    Console.printLine(c)
-                }
-                return "\{children[0]}\{children[1]}function \{payload}\{children[2]}:" +
-                        "\{children[3]} \{children[4]}\{children[5]}"
-            when Kind.CLASS_MEMBERS:
-                def result := MutableString("{\n")
-                for c in children {
-                    result.append(c)
-                    result.append("\n")
-                }
-                result.append("}")
-                return result.finish()
-            when Kind.CLASS:
-                assert children.get_count() = 6
-                def result := MutableString()
-                result.append(children[0])
-                result.append(children[1])
-                result.append("class \{payload}")
-                result.append(children[2])
-                if children[3].kind != ASTNode.Kind.VOID {
-                    result.append(" : ")
-                    result.append(children[3])
-                }
-                if children[4].kind != ASTNode.Kind.VOID {
-                    result.append(" (")
-                    result.append(children[4])
-                    result.append(")")
-                }
-                result.append(" ")
-                result.append(children[5])
-                return result.finish()
-            when Kind.INTERFACE:
-                assert children.get_count() = 5
-                def result := MutableString()
-                result.append(children[0])
-                result.append(children[1])
-                result.append("class \{payload}")
-                result.append(children[2])
-                result.append(" ")
-                result.append(children[3])
-                result.append(children[4])
-                return result.finish()
-            when Kind.FILE:
-                def result := MutableString()
-                for c in children {
-                    result.append(c)
-                    result.append("\n")
-                }
-                return result.finish()
-            when Kind.SELF:
+            when SELF:
                 return "self"
-            when Kind.SUPER:
+            when STRING(_, str):
+                return str
+            when SUPER:
                 return "super"
-            when Kind.VOID:
-                return ""
-            when Kind.NULL:
-                return "null"
-            when Kind.CAST:
-                return "\{children[0]}->\{children[1]}"
-            when Kind.ASSERT:
-                if children.get_count() = 1 {
-                    return "assert \{children[0]}"
+            when TYPE(_, name):
+                return name
+            when TYPED_IDENTIFIER(_, name, type):
+                if type != null {
+                    return "\{name}:\{type}"
                 }
-                assert children.get_count() = 2
-                return "assert \{children[0]}, \{children[1]}"
-            otherwise:
-                return "<ASTNode:\{kind}>"
+                return name
+            when USES(_, name):
+                return name
+            when VAR(_, kind, decls):
+                def result := MutableString()
+                match kind {
+                    when Variable.Kind.VAR:      result.append("var ")
+                    when Variable.Kind.DEF:      result.append("def ")
+                    when Variable.Kind.CONSTANT: result.append("constant ")
+                    when Variable.Kind.PROPERTY: result.append("property ")
+                }
+                result.append(decls.join())
+                return result.finish()
+            when WHEN(_, tests, statements):
+                def result := MutableString("when ")
+                var separator := ""
+                for t in tests {
+                    result.append("\{separator}\{t}")
+                }
+                result.append(":")
+                for s in statements {
+                    result.append("\n" + s)
+                }
+                return result.finish()
+            when WHILE(_, label, test, statements):
+                def result := MutableString()
+                if label != null {
+                    result.append("\{label}:")
+                }
+                result.append("while \{test} {\n")
+                for s in statements {
+                    result.append(s + "\n")
+                }
+                result.append("}")
+                return result.finish()            
+            otherwise: assert false
         }
     }
 }

@@ -19,7 +19,7 @@ void org$pandalanguage$pandac$LLVMCodeGenerator$InlineContext$init$panda$core$St
     self->returns = $tmp1;
     self->varSuffix = p_varSuffix;
     self->selfRef = p_selfRef;
-    panda$collections$ImmutableArray* $tmp3 = (panda$collections$ImmutableArray*) malloc(32);
+    panda$collections$ImmutableArray* $tmp3 = (panda$collections$ImmutableArray*) malloc(40);
     $tmp3->$class = (panda$core$Class*) &panda$collections$ImmutableArray$class;
     $tmp3->refCount.value = 1;
     panda$collections$ImmutableArray$init$panda$collections$ListView$LTpanda$collections$ImmutableArray$T$GT($tmp3, p_argRefs);

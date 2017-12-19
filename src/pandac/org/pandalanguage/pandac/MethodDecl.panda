@@ -2,6 +2,12 @@ package org.pandalanguage.pandac
 
 @final
 class MethodDecl : Symbol {
+    choice Kind {
+        METHOD
+        FUNCTION
+        INIT
+    }
+
     class Parameter {
         def name:String
 
@@ -18,11 +24,6 @@ class MethodDecl : Symbol {
         }
     }
 
-    choice Kind {
-        METHOD
-        FUNCTION
-        INIT
-    }
 
     def owner:ClassDecl -- FIXME weak
 
@@ -36,7 +37,7 @@ class MethodDecl : Symbol {
 
     def returnType:Type
 
-    def body:ASTNode?
+    def body:ImmutableArray<ASTNode>?
 
     -- only set for @inline methods
     def compiledBody:IRNode? := null
@@ -49,7 +50,7 @@ class MethodDecl : Symbol {
 
     init(owner:ClassDecl, position:Position, doccomment:String?, annotations:Annotations,
             methodKind:Kind, name:String, parameters:Array<Parameter>, returnType:Type,
-            body:ASTNode?) {
+            body:ImmutableArray<ASTNode>?) {
         super.init(Symbol.Kind.METHOD, position, name)
         self.owner := owner
         self.doccomment := doccomment

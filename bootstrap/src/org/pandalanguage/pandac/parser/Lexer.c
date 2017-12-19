@@ -3329,21 +3329,19 @@ panda$core$Int64* org$pandalanguage$pandac$parser$Lexer$getAccepts$R$panda$unsaf
 org$pandalanguage$pandac$parser$Token org$pandalanguage$pandac$parser$Lexer$next$R$org$pandalanguage$pandac$parser$Token(org$pandalanguage$pandac$parser$Lexer* self) {
     org$pandalanguage$plex$runtime$RawToken raw86;
     org$pandalanguage$pandac$parser$Token $tmp88;
-    org$pandalanguage$pandac$Position $tmp91;
+    org$pandalanguage$pandac$parser$Token$Kind $tmp89;
+    org$pandalanguage$pandac$Position $tmp90;
     org$pandalanguage$plex$runtime$RawToken $tmp87 = org$pandalanguage$plex$runtime$DFA$next$R$org$pandalanguage$plex$runtime$RawToken(self->dfa);
     raw86 = $tmp87;
-    org$pandalanguage$pandac$parser$Token$Kind* $tmp89 = (org$pandalanguage$pandac$parser$Token$Kind*) malloc(24);
-    $tmp89->$class = (panda$core$Class*) &org$pandalanguage$pandac$parser$Token$Kind$class;
-    $tmp89->refCount.value = 1;
-    org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64($tmp89, raw86.kind);
-    org$pandalanguage$pandac$Position$init$panda$core$Int64$panda$core$Int64(&$tmp91, raw86.line, raw86.column);
-    org$pandalanguage$pandac$parser$Token$init$org$pandalanguage$pandac$parser$Token$Kind$panda$core$String$Index$panda$core$String$Index$org$pandalanguage$pandac$Position(&$tmp88, $tmp89, raw86.start, raw86.end, $tmp91);
+    org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64(&$tmp89, raw86.kind);
+    org$pandalanguage$pandac$Position$init$panda$core$Int64$panda$core$Int64(&$tmp90, raw86.line, raw86.column);
+    org$pandalanguage$pandac$parser$Token$init$org$pandalanguage$pandac$parser$Token$Kind$panda$core$String$Index$panda$core$String$Index$org$pandalanguage$pandac$Position(&$tmp88, $tmp89, raw86.start, raw86.end, $tmp90);
     return $tmp88;
 }
 void org$pandalanguage$pandac$parser$Lexer$init(org$pandalanguage$pandac$parser$Lexer* self) {
-    panda$core$Int64** $tmp92 = org$pandalanguage$pandac$parser$Lexer$getTransitions$R$panda$unsafe$Pointer$LTpanda$unsafe$Pointer$LTpanda$core$Int64$GT$GT();
-    self->transitions = $tmp92;
-    panda$core$Int64* $tmp93 = org$pandalanguage$pandac$parser$Lexer$getAccepts$R$panda$unsafe$Pointer$LTpanda$core$Int64$GT();
-    self->accepts = $tmp93;
+    panda$core$Int64** $tmp91 = org$pandalanguage$pandac$parser$Lexer$getTransitions$R$panda$unsafe$Pointer$LTpanda$unsafe$Pointer$LTpanda$core$Int64$GT$GT();
+    self->transitions = $tmp91;
+    panda$core$Int64* $tmp92 = org$pandalanguage$pandac$parser$Lexer$getAccepts$R$panda$unsafe$Pointer$LTpanda$core$Int64$GT();
+    self->accepts = $tmp92;
 }
 

@@ -112,7 +112,7 @@ void org$pandalanguage$pandac$Methods$init$panda$collections$ListView$LTorg$pand
     $fn61 $tmp60 = $tmp59->methods[0];
     panda$core$Object* $tmp62 = $tmp60(p_methods, ((panda$core$Int64) { 0 }));
     org$pandalanguage$pandac$Symbol$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$String(((org$pandalanguage$pandac$Symbol*) self), ((panda$core$Int64) { 205 }), $tmp58, ((org$pandalanguage$pandac$Symbol*) ((org$pandalanguage$pandac$MethodDecl*) $tmp62))->name);
-    panda$collections$ImmutableArray* $tmp63 = (panda$collections$ImmutableArray*) malloc(32);
+    panda$collections$ImmutableArray* $tmp63 = (panda$collections$ImmutableArray*) malloc(40);
     $tmp63->$class = (panda$core$Class*) &panda$collections$ImmutableArray$class;
     $tmp63->refCount.value = 1;
     panda$collections$ImmutableArray$init$panda$collections$ListView$LTpanda$collections$ImmutableArray$T$GT($tmp63, p_methods);

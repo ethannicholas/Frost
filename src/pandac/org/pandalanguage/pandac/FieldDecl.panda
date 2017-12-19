@@ -2,11 +2,11 @@ package org.pandalanguage.pandac
 
 @final
 class FieldDecl : Symbol {
-    class Kind {
-        constant VAR      := 10000
-        constant DEF      := 10001
-        constant CONSTANT := 10002
-        constant PROPERTY := 10003
+    choice Kind {
+        VAR
+        DEF
+        CONSTANT
+        PROPERTY
     }
 
     def owner:ClassDecl -- FIXME weak
@@ -15,7 +15,7 @@ class FieldDecl : Symbol {
 
     def annotations:Annotations
 
-    def fieldKind:Int
+    def fieldKind:Kind
 
     def type:Type
 
@@ -26,7 +26,7 @@ class FieldDecl : Symbol {
     var resolved := false
 
     init(owner:ClassDecl, position:Position, doccomment:String?, annotations:Annotations,
-            fieldKind:Int, name:String, type:Type, value:ASTNode?) {
+            fieldKind:Kind, name:String, type:Type, value:ASTNode?) {
         self.owner := owner
         self.doccomment := doccomment
         self.annotations := annotations

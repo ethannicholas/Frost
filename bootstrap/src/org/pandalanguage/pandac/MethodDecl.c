@@ -9,7 +9,7 @@
 #include "org/pandalanguage/pandac/MethodDecl/Kind.h"
 #include "panda/collections/Array.h"
 #include "org/pandalanguage/pandac/Type.h"
-#include "org/pandalanguage/pandac/ASTNode.h"
+#include "panda/collections/ImmutableArray.h"
 #include "org/pandalanguage/pandac/IRNode.h"
 #include "panda/core/Bit.h"
 #include "panda/core/Int64.h"
@@ -44,7 +44,7 @@ static panda$core$String $s106 = { (panda$core$Class*) &panda$core$String$class,
 static panda$core$String $s110 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x20", 1, 133, NULL };
 static panda$core$String $s113 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
 
-void org$pandalanguage$pandac$MethodDecl$init$org$pandalanguage$pandac$ClassDecl$org$pandalanguage$pandac$Position$panda$core$String$Q$org$pandalanguage$pandac$Annotations$org$pandalanguage$pandac$MethodDecl$Kind$panda$core$String$panda$collections$Array$LTorg$pandalanguage$pandac$MethodDecl$Parameter$GT$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$ASTNode$Q(org$pandalanguage$pandac$MethodDecl* self, org$pandalanguage$pandac$ClassDecl* p_owner, org$pandalanguage$pandac$Position p_position, panda$core$String* p_doccomment, org$pandalanguage$pandac$Annotations* p_annotations, org$pandalanguage$pandac$MethodDecl$Kind* p_methodKind, panda$core$String* p_name, panda$collections$Array* p_parameters, org$pandalanguage$pandac$Type* p_returnType, org$pandalanguage$pandac$ASTNode* p_body) {
+void org$pandalanguage$pandac$MethodDecl$init$org$pandalanguage$pandac$ClassDecl$org$pandalanguage$pandac$Position$panda$core$String$Q$org$pandalanguage$pandac$Annotations$org$pandalanguage$pandac$MethodDecl$Kind$panda$core$String$panda$collections$Array$LTorg$pandalanguage$pandac$MethodDecl$Parameter$GT$org$pandalanguage$pandac$Type$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$Q(org$pandalanguage$pandac$MethodDecl* self, org$pandalanguage$pandac$ClassDecl* p_owner, org$pandalanguage$pandac$Position p_position, panda$core$String* p_doccomment, org$pandalanguage$pandac$Annotations* p_annotations, org$pandalanguage$pandac$MethodDecl$Kind p_methodKind, panda$core$String* p_name, panda$collections$Array* p_parameters, org$pandalanguage$pandac$Type* p_returnType, panda$collections$ImmutableArray* p_body) {
     self->compiledBody = NULL;
     self->overrideKnown = ((panda$core$Bit) { false });
     self->overridden = NULL;
@@ -59,7 +59,7 @@ void org$pandalanguage$pandac$MethodDecl$init$org$pandalanguage$pandac$ClassDecl
     self->resolved = ((panda$core$Bit) { false });
 }
 panda$core$Bit org$pandalanguage$pandac$MethodDecl$get_heritable$R$panda$core$Bit(org$pandalanguage$pandac$MethodDecl* self) {
-    panda$core$Bit $tmp1 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit(self->methodKind->$rawValue, ((panda$core$Int64) { 2 }));
+    panda$core$Bit $tmp1 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit(self->methodKind.$rawValue, ((panda$core$Int64) { 2 }));
     return $tmp1;
 }
 panda$core$Bit org$pandalanguage$pandac$MethodDecl$isVirtual$R$panda$core$Bit(org$pandalanguage$pandac$MethodDecl* self) {
@@ -67,7 +67,7 @@ panda$core$Bit org$pandalanguage$pandac$MethodDecl$isVirtual$R$panda$core$Bit(or
     panda$core$Bit $tmp5 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp4);
     bool $tmp3 = $tmp5.value;
     if (!$tmp3) goto $l6;
-    panda$core$Bit $tmp7 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit(self->methodKind->$rawValue, ((panda$core$Int64) { 2 }));
+    panda$core$Bit $tmp7 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit(self->methodKind.$rawValue, ((panda$core$Int64) { 2 }));
     $tmp3 = $tmp7.value;
     $l6:;
     panda$core$Bit $tmp8 = { $tmp3 };
@@ -209,10 +209,10 @@ panda$core$String* org$pandalanguage$pandac$MethodDecl$signature$R$panda$core$St
     return $tmp80;
 }
 panda$core$String* org$pandalanguage$pandac$MethodDecl$declaration$R$panda$core$String(org$pandalanguage$pandac$MethodDecl* self) {
-    org$pandalanguage$pandac$MethodDecl$Kind* $match$112_981;
+    org$pandalanguage$pandac$MethodDecl$Kind $match$113_981;
     {
-        $match$112_981 = self->methodKind;
-        panda$core$Bit $tmp82 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$112_981->$rawValue, ((panda$core$Int64) { 0 }));
+        $match$113_981 = self->methodKind;
+        panda$core$Bit $tmp82 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$113_981.$rawValue, ((panda$core$Int64) { 0 }));
         if ($tmp82.value) {
         {
             panda$core$String* $tmp84 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s83, ((org$pandalanguage$pandac$Symbol*) self->owner)->name);
@@ -224,7 +224,7 @@ panda$core$String* org$pandalanguage$pandac$MethodDecl$declaration$R$panda$core$
         }
         }
         else {
-        panda$core$Bit $tmp91 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$112_981->$rawValue, ((panda$core$Int64) { 1 }));
+        panda$core$Bit $tmp91 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$113_981.$rawValue, ((panda$core$Int64) { 1 }));
         if ($tmp91.value) {
         {
             panda$core$String* $tmp93 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s92, ((org$pandalanguage$pandac$Symbol*) self->owner)->name);
@@ -236,7 +236,7 @@ panda$core$String* org$pandalanguage$pandac$MethodDecl$declaration$R$panda$core$
         }
         }
         else {
-        panda$core$Bit $tmp100 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$112_981->$rawValue, ((panda$core$Int64) { 2 }));
+        panda$core$Bit $tmp100 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$113_981.$rawValue, ((panda$core$Int64) { 2 }));
         if ($tmp100.value) {
         {
             panda$core$String* $tmp101 = panda$core$String$convert$R$panda$core$String(((org$pandalanguage$pandac$Symbol*) self->owner)->name);

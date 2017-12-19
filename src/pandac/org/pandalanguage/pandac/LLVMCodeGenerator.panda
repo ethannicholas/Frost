@@ -230,13 +230,19 @@ class LLVMCodeGenerator : CodeGenerator {
                 continue
             }
             compiler.resolve(f)
-            def size := fieldSize(f.type)
-            def align := result % size
-            if align != 0 {
-                result += size - align
+            if f.type = Type.ChoiceData() {
+                -- FIXME need to respect alignment!
+                result += getChoiceDataSize(cl)
             }
-            assert result % size = 0
-            result += size
+            else {
+                def size := fieldSize(f.type)
+                def align := result % size
+                if align != 0 {
+                    result += size - align
+                }
+                assert result % size = 0
+                result += size
+            }
         }
         if t.typeKind = Type.Kind.NULLABLE {
             result += 1
@@ -265,6 +271,7 @@ class LLVMCodeGenerator : CodeGenerator {
         for f in compiler.instanceFields(cl) {
             compiler.resolve(f)
             if f.type = Type.ChoiceData() {
+                -- FIXME need to respect alignment!
                 result += getChoiceDataSize(cl)
             }
             else {
@@ -290,13 +297,19 @@ class LLVMCodeGenerator : CodeGenerator {
         var result := sizeOf(Type.Object())
         for f in compiler.instanceFields(cl) {
             compiler.resolve(f)
-            def size := fieldSize(f.type)
-            def align := result % size
-            if align != 0 {
-                result += size - align
+            if f.type = Type.ChoiceData() {
+                 -- FIXME need to respect alignment!
+                result += getChoiceDataSize(cl)
             }
-            assert result % size = 0
-            result += size
+            else {
+                def size := fieldSize(f.type)
+                def align := result % size
+                if align != 0 {
+                    result += size - align
+                }
+                assert result % size = 0
+                result += size
+            }
         }
         if t.typeKind = Type.Kind.NULLABLE {
             result += 1
@@ -312,6 +325,7 @@ class LLVMCodeGenerator : CodeGenerator {
                 compiler.resolve(entry)
                 var current := 0
                 for f in entry.fields {
+                    -- FIXME need to respect alignment!
                     current += fieldSize(f)
                 }
                 result := result.max(current)
@@ -2886,6 +2900,7 @@ class LLVMCodeGenerator : CodeGenerator {
     method getChoiceFieldOffset(e:ChoiceEntry, index:Int):Int {
         var result := 0
         for i in 0 .. index {
+            -- FIXME need to respect alignment!
             result += fieldSize(e.fields[i])
         }
         return result

@@ -38,13 +38,13 @@
 #include "org/pandalanguage/pandac/ClassDecl/Kind.h"
 #include "org/pandalanguage/pandac/Annotations.h"
 #include "org/pandalanguage/pandac/MethodDecl.h"
+#include "panda/collections/ImmutableArray.h"
 #include "org/pandalanguage/pandac/MethodDecl/Parameter.h"
 #include "org/pandalanguage/pandac/MethodDecl/Kind.h"
 #include "org/pandalanguage/pandac/FieldDecl.h"
 #include "org/pandalanguage/pandac/IRNode.h"
 #include "org/pandalanguage/pandac/ASTNode.h"
 #include "org/pandalanguage/pandac/ChoiceEntry.h"
-#include "panda/collections/ImmutableArray.h"
 #include "panda/core/Range.LTpanda/core/Int64.Q.GT.h"
 #include "org/pandalanguage/pandac/MethodRef.h"
 #include "panda/io/Console.h"
@@ -62,12 +62,13 @@
 #include "org/pandalanguage/pandac/Compiler/CompileTargetResult.h"
 #include "org/pandalanguage/pandac/Variable/Kind.h"
 #include "panda/core/SteppedRange.LTpanda/core/Int64.Cpanda/core/Int64.GT.h"
+#include "org/pandalanguage/pandac/FieldDecl/Kind.h"
 #include "org/pandalanguage/pandac/Variable/Storage.h"
 
 
 struct { panda$core$Class* cl; ITable* next; void* methods[1]; } org$pandalanguage$pandac$Compiler$_org$pandalanguage$pandac$ErrorReporter = { (panda$core$Class*) &org$pandalanguage$pandac$ErrorReporter$class, NULL, { org$pandalanguage$pandac$Compiler$error$panda$io$File$org$pandalanguage$pandac$Position$panda$core$String} };
 
-org$pandalanguage$pandac$Compiler$class_type org$pandalanguage$pandac$Compiler$class = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Object$class, (ITable*) &org$pandalanguage$pandac$Compiler$_org$pandalanguage$pandac$ErrorReporter, { panda$core$Object$convert$R$panda$core$String, panda$core$Object$cleanup, org$pandalanguage$pandac$Compiler$addAlias$panda$core$String, org$pandalanguage$pandac$Compiler$tryResolveClass$panda$core$String$R$org$pandalanguage$pandac$ClassDecl$Q, org$pandalanguage$pandac$Compiler$checkGenericParameters$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ClassDecl$org$pandalanguage$pandac$Type$R$panda$core$Bit, org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$Type$panda$core$Bit$R$org$pandalanguage$pandac$Type$Q, org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type$Q, org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$ClassDecl, org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$MethodDecl, org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$FieldDecl, org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$ChoiceEntry, org$pandalanguage$pandac$Compiler$resolveMethodCall$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$Type$Q$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$IRNode$Q$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$isValue$org$pandalanguage$pandac$ClassDecl$R$panda$core$Bit, org$pandalanguage$pandac$Compiler$instanceFields$org$pandalanguage$pandac$ClassDecl$R$panda$collections$ListView$LTorg$pandalanguage$pandac$FieldDecl$GT, org$pandalanguage$pandac$Compiler$exists$panda$io$File$R$panda$core$Bit, org$pandalanguage$pandac$Compiler$getClass$panda$core$String$R$org$pandalanguage$pandac$ClassDecl$Q, org$pandalanguage$pandac$Compiler$getClass$org$pandalanguage$pandac$Position$panda$core$String$R$org$pandalanguage$pandac$ClassDecl$Q, org$pandalanguage$pandac$Compiler$specialize$org$pandalanguage$pandac$ClassDecl$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$ClassDecl, org$pandalanguage$pandac$Compiler$getClass$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$ClassDecl$Q, org$pandalanguage$pandac$Compiler$allInterfaces$org$pandalanguage$pandac$Type$R$panda$collections$Set$LTorg$pandalanguage$pandac$Type$GT, org$pandalanguage$pandac$Compiler$signatureMatch$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Type$R$panda$core$Bit, org$pandalanguage$pandac$Compiler$findMethod$org$pandalanguage$pandac$Type$panda$core$String$org$pandalanguage$pandac$Type$panda$core$Bit$R$org$pandalanguage$pandac$MethodDecl$Q, org$pandalanguage$pandac$Compiler$getOverriddenMethod$org$pandalanguage$pandac$MethodDecl$R$org$pandalanguage$pandac$MethodDecl$Q, org$pandalanguage$pandac$Compiler$interfaceMethods$org$pandalanguage$pandac$ClassDecl$org$pandalanguage$pandac$Type$R$panda$collections$ListView$LTorg$pandalanguage$pandac$MethodDecl$GT, org$pandalanguage$pandac$Compiler$getSymbolTable$org$pandalanguage$pandac$ClassDecl$R$org$pandalanguage$pandac$SymbolTable, org$pandalanguage$pandac$Compiler$getVTable$org$pandalanguage$pandac$ClassDecl$R$panda$collections$ListView$LTorg$pandalanguage$pandac$MethodDecl$GT, org$pandalanguage$pandac$Compiler$addInheritedMethods$org$pandalanguage$pandac$SymbolTable$panda$core$String$panda$collections$Array$LTorg$pandalanguage$pandac$MethodRef$GT$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT, org$pandalanguage$pandac$Compiler$getMethodReference$org$pandalanguage$pandac$SymbolTable$org$pandalanguage$pandac$IRNode$Q$panda$core$String$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT$R$org$pandalanguage$pandac$IRNode, org$pandalanguage$pandac$Compiler$symbolRef$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Symbol$org$pandalanguage$pandac$SymbolTable$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$remapType$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type, org$pandalanguage$pandac$Compiler$variableType$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type, org$pandalanguage$pandac$Compiler$smallestCharSize$org$pandalanguage$pandac$IRNode$R$panda$core$Int64, org$pandalanguage$pandac$Compiler$rangeCharType$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$Type, org$pandalanguage$pandac$Compiler$variableType$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$Type, org$pandalanguage$pandac$Compiler$coercionCost$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Type$R$panda$core$Int64$Q, org$pandalanguage$pandac$Compiler$requiredSize$panda$core$Int64$R$panda$core$Int64, org$pandalanguage$pandac$Compiler$requiredSize$panda$core$UInt64$R$panda$core$Int64, org$pandalanguage$pandac$Compiler$coercionCost$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$Type$R$panda$core$Int64$Q, org$pandalanguage$pandac$Compiler$doCoerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$canCast$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Type$R$panda$core$Bit, org$pandalanguage$pandac$Compiler$canCast$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$Type$R$panda$core$Bit, org$pandalanguage$pandac$Compiler$cast$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$Position$panda$core$Bit$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode, org$pandalanguage$pandac$Compiler$callCost$org$pandalanguage$pandac$MethodRef$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$org$pandalanguage$pandac$Type$Q$R$panda$core$Int64$Q, org$pandalanguage$pandac$Compiler$matchMethods$panda$collections$Array$LTorg$pandalanguage$pandac$MethodRef$GT$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$org$pandalanguage$pandac$Type$Q$R$panda$core$Int64$Q, org$pandalanguage$pandac$Compiler$call$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$MethodRef$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$call$org$pandalanguage$pandac$IRNode$panda$core$String$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileChoiceComparison$org$pandalanguage$pandac$IRNode$panda$core$String$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$call$org$pandalanguage$pandac$IRNode$panda$core$String$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$org$pandalanguage$pandac$Type$Q$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$call$org$pandalanguage$pandac$IRNode$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$call$org$pandalanguage$pandac$IRNode$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$org$pandalanguage$pandac$Type$Q$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$declaredType$org$pandalanguage$pandac$MethodDecl$R$org$pandalanguage$pandac$Type, org$pandalanguage$pandac$Compiler$declaredTypeWithSelf$org$pandalanguage$pandac$MethodDecl$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type, org$pandalanguage$pandac$Compiler$inheritedType$org$pandalanguage$pandac$MethodDecl$R$org$pandalanguage$pandac$Type, org$pandalanguage$pandac$Compiler$inheritedTypeWithSelf$org$pandalanguage$pandac$MethodDecl$R$org$pandalanguage$pandac$Type, org$pandalanguage$pandac$Compiler$inheritedTypeWithSelf$org$pandalanguage$pandac$MethodDecl$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type, org$pandalanguage$pandac$Compiler$isLValue$org$pandalanguage$pandac$IRNode$R$panda$core$Bit, org$pandalanguage$pandac$Compiler$foldInts$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$unwrapCast$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode, org$pandalanguage$pandac$Compiler$compileIndexedAssignment$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileBinary$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileBinary$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$typeParameters$org$pandalanguage$pandac$Type$R$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT, org$pandalanguage$pandac$Compiler$typeParameters$org$pandalanguage$pandac$IRNode$Q$R$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT, org$pandalanguage$pandac$Compiler$compilePrefix$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$Position$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compilePrefix$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileCall$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileDot$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$panda$core$String$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileDot$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileIdentifier$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileType$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileRange$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileString$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileSelf$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileSuper$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileCast$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileCast$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileNull$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode, org$pandalanguage$pandac$Compiler$compileChoiceFieldReference$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileBlock$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileIf$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$checkSteppedRangeTypes$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$R$panda$core$Bit, org$pandalanguage$pandac$Compiler$compileRangeFor$org$pandalanguage$pandac$Position$panda$core$String$Q$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileIteratorFor$org$pandalanguage$pandac$Position$panda$core$String$Q$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileFor$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileWhile$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileDo$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileLoop$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileTarget$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$Variable$Kind$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$Q$R$org$pandalanguage$pandac$Compiler$CompileTargetResult$Q, org$pandalanguage$pandac$Compiler$compileDeclaration$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$Variable$Kind$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileBreak$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileContinue$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileReturn$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileAssert$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileVar$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileWhenTest$org$pandalanguage$pandac$Variable$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileChainedIfWhen$org$pandalanguage$pandac$Variable$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileChainedIfMatch$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileWhen$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileOtherwise$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$isConstantInt$org$pandalanguage$pandac$IRNode$R$panda$core$Bit, org$pandalanguage$pandac$Compiler$getConstantInt$org$pandalanguage$pandac$IRNode$R$panda$core$UInt64, org$pandalanguage$pandac$Compiler$compileMatch$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileStatement$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileBody$org$pandalanguage$pandac$MethodDecl$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compile$org$pandalanguage$pandac$MethodDecl, org$pandalanguage$pandac$Compiler$markNonExternal$org$pandalanguage$pandac$ClassDecl, org$pandalanguage$pandac$Compiler$compile$org$pandalanguage$pandac$ClassDecl, org$pandalanguage$pandac$Compiler$scan$panda$io$File$R$panda$collections$ListView$LTorg$pandalanguage$pandac$ClassDecl$GT, org$pandalanguage$pandac$Compiler$compile$panda$io$File, org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String, org$pandalanguage$pandac$Compiler$error$panda$io$File$org$pandalanguage$pandac$Position$panda$core$String, org$pandalanguage$pandac$Compiler$finish} };
+org$pandalanguage$pandac$Compiler$class_type org$pandalanguage$pandac$Compiler$class = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Object$class, (ITable*) &org$pandalanguage$pandac$Compiler$_org$pandalanguage$pandac$ErrorReporter, { panda$core$Object$convert$R$panda$core$String, panda$core$Object$cleanup, org$pandalanguage$pandac$Compiler$addAlias$panda$core$String, org$pandalanguage$pandac$Compiler$tryResolveClass$panda$core$String$R$org$pandalanguage$pandac$ClassDecl$Q, org$pandalanguage$pandac$Compiler$checkGenericParameters$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ClassDecl$org$pandalanguage$pandac$Type$R$panda$core$Bit, org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$Type$panda$core$Bit$R$org$pandalanguage$pandac$Type$Q, org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type$Q, org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$ClassDecl, org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$MethodDecl, org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$FieldDecl, org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$ChoiceEntry, org$pandalanguage$pandac$Compiler$resolveMethodCall$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$Type$Q$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$IRNode$Q$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$isValue$org$pandalanguage$pandac$ClassDecl$R$panda$core$Bit, org$pandalanguage$pandac$Compiler$instanceFields$org$pandalanguage$pandac$ClassDecl$R$panda$collections$ListView$LTorg$pandalanguage$pandac$FieldDecl$GT, org$pandalanguage$pandac$Compiler$exists$panda$io$File$R$panda$core$Bit, org$pandalanguage$pandac$Compiler$getClass$panda$core$String$R$org$pandalanguage$pandac$ClassDecl$Q, org$pandalanguage$pandac$Compiler$getClass$org$pandalanguage$pandac$Position$panda$core$String$R$org$pandalanguage$pandac$ClassDecl$Q, org$pandalanguage$pandac$Compiler$specialize$org$pandalanguage$pandac$ClassDecl$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$ClassDecl, org$pandalanguage$pandac$Compiler$getClass$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$ClassDecl$Q, org$pandalanguage$pandac$Compiler$allInterfaces$org$pandalanguage$pandac$Type$R$panda$collections$Set$LTorg$pandalanguage$pandac$Type$GT, org$pandalanguage$pandac$Compiler$signatureMatch$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Type$R$panda$core$Bit, org$pandalanguage$pandac$Compiler$findMethod$org$pandalanguage$pandac$Type$panda$core$String$org$pandalanguage$pandac$Type$panda$core$Bit$R$org$pandalanguage$pandac$MethodDecl$Q, org$pandalanguage$pandac$Compiler$getOverriddenMethod$org$pandalanguage$pandac$MethodDecl$R$org$pandalanguage$pandac$MethodDecl$Q, org$pandalanguage$pandac$Compiler$interfaceMethods$org$pandalanguage$pandac$ClassDecl$org$pandalanguage$pandac$Type$R$panda$collections$ListView$LTorg$pandalanguage$pandac$MethodDecl$GT, org$pandalanguage$pandac$Compiler$getSymbolTable$org$pandalanguage$pandac$ClassDecl$R$org$pandalanguage$pandac$SymbolTable, org$pandalanguage$pandac$Compiler$getVTable$org$pandalanguage$pandac$ClassDecl$R$panda$collections$ListView$LTorg$pandalanguage$pandac$MethodDecl$GT, org$pandalanguage$pandac$Compiler$addInheritedMethods$org$pandalanguage$pandac$SymbolTable$panda$core$String$panda$collections$Array$LTorg$pandalanguage$pandac$MethodRef$GT$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT, org$pandalanguage$pandac$Compiler$getMethodReference$org$pandalanguage$pandac$SymbolTable$org$pandalanguage$pandac$IRNode$Q$panda$core$String$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT$R$org$pandalanguage$pandac$IRNode, org$pandalanguage$pandac$Compiler$symbolRef$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Symbol$org$pandalanguage$pandac$SymbolTable$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$remapType$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type, org$pandalanguage$pandac$Compiler$variableType$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type, org$pandalanguage$pandac$Compiler$smallestCharSize$org$pandalanguage$pandac$IRNode$R$panda$core$Int64, org$pandalanguage$pandac$Compiler$rangeCharType$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$Type, org$pandalanguage$pandac$Compiler$variableType$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$Type, org$pandalanguage$pandac$Compiler$coercionCost$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Type$R$panda$core$Int64$Q, org$pandalanguage$pandac$Compiler$requiredSize$panda$core$Int64$R$panda$core$Int64, org$pandalanguage$pandac$Compiler$requiredSize$panda$core$UInt64$R$panda$core$Int64, org$pandalanguage$pandac$Compiler$coercionCost$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$Type$R$panda$core$Int64$Q, org$pandalanguage$pandac$Compiler$doCoerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$canCast$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Type$R$panda$core$Bit, org$pandalanguage$pandac$Compiler$canCast$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$Type$R$panda$core$Bit, org$pandalanguage$pandac$Compiler$cast$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$Position$panda$core$Bit$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode, org$pandalanguage$pandac$Compiler$callCost$org$pandalanguage$pandac$MethodRef$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$org$pandalanguage$pandac$Type$Q$R$panda$core$Int64$Q, org$pandalanguage$pandac$Compiler$matchMethods$panda$collections$Array$LTorg$pandalanguage$pandac$MethodRef$GT$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$org$pandalanguage$pandac$Type$Q$R$panda$core$Int64$Q, org$pandalanguage$pandac$Compiler$call$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$MethodRef$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$call$org$pandalanguage$pandac$IRNode$panda$core$String$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileChoiceComparison$org$pandalanguage$pandac$IRNode$panda$core$String$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$call$org$pandalanguage$pandac$IRNode$panda$core$String$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$org$pandalanguage$pandac$Type$Q$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$call$org$pandalanguage$pandac$IRNode$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$call$org$pandalanguage$pandac$IRNode$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$org$pandalanguage$pandac$Type$Q$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$declaredType$org$pandalanguage$pandac$MethodDecl$R$org$pandalanguage$pandac$Type, org$pandalanguage$pandac$Compiler$declaredTypeWithSelf$org$pandalanguage$pandac$MethodDecl$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type, org$pandalanguage$pandac$Compiler$inheritedType$org$pandalanguage$pandac$MethodDecl$R$org$pandalanguage$pandac$Type, org$pandalanguage$pandac$Compiler$inheritedTypeWithSelf$org$pandalanguage$pandac$MethodDecl$R$org$pandalanguage$pandac$Type, org$pandalanguage$pandac$Compiler$inheritedTypeWithSelf$org$pandalanguage$pandac$MethodDecl$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type, org$pandalanguage$pandac$Compiler$isLValue$org$pandalanguage$pandac$IRNode$R$panda$core$Bit, org$pandalanguage$pandac$Compiler$foldInts$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$unwrapCast$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode, org$pandalanguage$pandac$Compiler$compileIndexedAssignment$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileBinary$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileBinary$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$typeParameters$org$pandalanguage$pandac$Type$R$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT, org$pandalanguage$pandac$Compiler$typeParameters$org$pandalanguage$pandac$IRNode$Q$R$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT, org$pandalanguage$pandac$Compiler$compilePrefix$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compilePrefix$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileCall$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileDot$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$panda$core$String$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileDot$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$panda$core$String$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileIdentifier$org$pandalanguage$pandac$Position$panda$core$String$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileType$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileRange$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$Q$org$pandalanguage$pandac$ASTNode$Q$panda$core$Bit$org$pandalanguage$pandac$ASTNode$Q$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileString$org$pandalanguage$pandac$Position$panda$core$String$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileSelf$org$pandalanguage$pandac$Position$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileSuper$org$pandalanguage$pandac$Position$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileCast$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileNull$org$pandalanguage$pandac$Position$R$org$pandalanguage$pandac$IRNode, org$pandalanguage$pandac$Compiler$compileChoiceFieldReference$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$ChoiceEntry$panda$core$Int64$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileBlock$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileIf$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$org$pandalanguage$pandac$ASTNode$Q$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$checkSteppedRangeTypes$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$R$panda$core$Bit, org$pandalanguage$pandac$Compiler$compileRangeFor$org$pandalanguage$pandac$Position$panda$core$String$Q$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$IRNode$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileIteratorFor$org$pandalanguage$pandac$Position$panda$core$String$Q$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$IRNode$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileFor$org$pandalanguage$pandac$Position$panda$core$String$Q$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$ASTNode$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileWhile$org$pandalanguage$pandac$Position$panda$core$String$Q$org$pandalanguage$pandac$ASTNode$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileDo$org$pandalanguage$pandac$Position$panda$core$String$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileLoop$org$pandalanguage$pandac$Position$panda$core$String$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileTarget$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$Variable$Kind$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$Q$R$org$pandalanguage$pandac$Compiler$CompileTargetResult$Q, org$pandalanguage$pandac$Compiler$compileDeclaration$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$ASTNode$Q$org$pandalanguage$pandac$Variable$Kind$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileBreak$org$pandalanguage$pandac$Position$panda$core$String$Q$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileContinue$org$pandalanguage$pandac$Position$panda$core$String$Q$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileReturn$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$Q$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileAssert$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$ASTNode$Q$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileVar$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Variable$Kind$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileWhenTest$org$pandalanguage$pandac$Variable$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileChainedIfWhen$org$pandalanguage$pandac$Variable$org$pandalanguage$pandac$Position$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileChainedIfMatch$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$Q$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileWhen$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Position$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileOtherwise$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$isConstantInt$org$pandalanguage$pandac$IRNode$R$panda$core$Bit, org$pandalanguage$pandac$Compiler$getConstantInt$org$pandalanguage$pandac$IRNode$R$panda$core$UInt64, org$pandalanguage$pandac$Compiler$compileMatch$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$Q$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileStatement$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compileBody$org$pandalanguage$pandac$MethodDecl$R$org$pandalanguage$pandac$IRNode$Q, org$pandalanguage$pandac$Compiler$compile$org$pandalanguage$pandac$MethodDecl, org$pandalanguage$pandac$Compiler$markNonExternal$org$pandalanguage$pandac$ClassDecl, org$pandalanguage$pandac$Compiler$compile$org$pandalanguage$pandac$ClassDecl, org$pandalanguage$pandac$Compiler$scan$panda$io$File$R$panda$collections$ListView$LTorg$pandalanguage$pandac$ClassDecl$GT, org$pandalanguage$pandac$Compiler$compile$panda$io$File, org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String, org$pandalanguage$pandac$Compiler$error$panda$io$File$org$pandalanguage$pandac$Position$panda$core$String, org$pandalanguage$pandac$Compiler$finish} };
 
 typedef void (*$fn23)(org$pandalanguage$pandac$CodeGenerator*, org$pandalanguage$pandac$Compiler*);
 typedef panda$core$Object* (*$fn127)(panda$collections$MapView*, panda$core$Object*);
@@ -206,70 +207,88 @@ typedef panda$core$Object* (*$fn2783)(panda$collections$Iterator*);
 typedef panda$collections$Iterator* (*$fn2806)(panda$collections$Iterable*);
 typedef panda$core$Bit (*$fn2812)(panda$collections$Iterator*);
 typedef panda$core$Object* (*$fn2818)(panda$collections$Iterator*);
-typedef panda$collections$Iterator* (*$fn3418)(panda$collections$Iterable*);
-typedef panda$core$Bit (*$fn3424)(panda$collections$Iterator*);
-typedef panda$core$Object* (*$fn3430)(panda$collections$Iterator*);
-typedef panda$collections$Iterator* (*$fn3584)(panda$collections$Iterable*);
-typedef panda$core$Bit (*$fn3590)(panda$collections$Iterator*);
-typedef panda$core$Object* (*$fn3596)(panda$collections$Iterator*);
-typedef panda$core$String* (*$fn3714)(panda$core$Object*);
-typedef panda$core$Int64 (*$fn3832)(panda$collections$CollectionView*);
-typedef panda$collections$Iterator* (*$fn3848)(panda$collections$Iterable*);
-typedef panda$core$Bit (*$fn3854)(panda$collections$Iterator*);
-typedef panda$core$Object* (*$fn3860)(panda$collections$Iterator*);
-typedef panda$collections$Iterator* (*$fn3994)(panda$collections$Iterable*);
-typedef panda$core$Bit (*$fn4000)(panda$collections$Iterator*);
-typedef panda$core$Object* (*$fn4006)(panda$collections$Iterator*);
-typedef panda$collections$Iterator* (*$fn4284)(panda$collections$Iterable*);
-typedef panda$core$Bit (*$fn4290)(panda$collections$Iterator*);
-typedef panda$core$Object* (*$fn4296)(panda$collections$Iterator*);
-typedef panda$collections$Iterator* (*$fn4431)(panda$collections$Iterable*);
-typedef panda$core$Bit (*$fn4437)(panda$collections$Iterator*);
-typedef panda$core$Object* (*$fn4443)(panda$collections$Iterator*);
-typedef panda$collections$Iterator* (*$fn4473)(panda$collections$Iterable*);
-typedef panda$core$Bit (*$fn4479)(panda$collections$Iterator*);
-typedef panda$core$Object* (*$fn4485)(panda$collections$Iterator*);
-typedef panda$collections$Iterator* (*$fn4604)(panda$collections$Iterable*);
-typedef panda$core$Bit (*$fn4610)(panda$collections$Iterator*);
-typedef panda$core$Object* (*$fn4616)(panda$collections$Iterator*);
-typedef panda$core$String* (*$fn4688)(panda$core$Formattable*, panda$core$String*);
-typedef panda$collections$Iterator* (*$fn4918)(panda$collections$Iterable*);
-typedef panda$core$Bit (*$fn4924)(panda$collections$Iterator*);
-typedef panda$core$Object* (*$fn4930)(panda$collections$Iterator*);
-typedef panda$collections$Iterator* (*$fn5013)(panda$collections$Iterable*);
-typedef panda$core$Bit (*$fn5019)(panda$collections$Iterator*);
-typedef panda$core$Object* (*$fn5025)(panda$collections$Iterator*);
-typedef panda$collections$Iterator* (*$fn5076)(panda$collections$Iterable*);
-typedef panda$core$Bit (*$fn5082)(panda$collections$Iterator*);
-typedef panda$core$Object* (*$fn5088)(panda$collections$Iterator*);
-typedef panda$collections$Iterator* (*$fn5152)(panda$collections$Iterable*);
-typedef panda$core$Bit (*$fn5158)(panda$collections$Iterator*);
-typedef panda$core$Object* (*$fn5164)(panda$collections$Iterator*);
-typedef panda$collections$Iterator* (*$fn5203)(panda$collections$Iterable*);
-typedef panda$core$Bit (*$fn5209)(panda$collections$Iterator*);
-typedef panda$core$Object* (*$fn5215)(panda$collections$Iterator*);
-typedef panda$collections$Iterator* (*$fn5231)(panda$collections$Iterable*);
-typedef panda$core$Bit (*$fn5237)(panda$collections$Iterator*);
-typedef panda$core$Object* (*$fn5243)(panda$collections$Iterator*);
-typedef void (*$fn5280)(org$pandalanguage$pandac$CodeGenerator*, org$pandalanguage$pandac$MethodDecl*, org$pandalanguage$pandac$IRNode*);
-typedef void (*$fn5283)(org$pandalanguage$pandac$CodeGenerator*, org$pandalanguage$pandac$MethodDecl*);
-typedef panda$collections$Iterator* (*$fn5287)(panda$collections$Iterable*);
-typedef panda$core$Bit (*$fn5293)(panda$collections$Iterator*);
-typedef panda$core$Object* (*$fn5299)(panda$collections$Iterator*);
-typedef void (*$fn5304)(org$pandalanguage$pandac$CodeGenerator*, org$pandalanguage$pandac$ClassDecl*);
-typedef void (*$fn5307)(org$pandalanguage$pandac$CodeGenerator*, org$pandalanguage$pandac$ClassDecl*);
-typedef void (*$fn5312)(org$pandalanguage$pandac$CodeGenerator*, org$pandalanguage$pandac$ClassDecl*);
-typedef panda$collections$Iterator* (*$fn5316)(panda$collections$Iterable*);
-typedef panda$core$Bit (*$fn5322)(panda$collections$Iterator*);
-typedef panda$core$Object* (*$fn5328)(panda$collections$Iterator*);
-typedef void (*$fn5332)(org$pandalanguage$pandac$CodeGenerator*, org$pandalanguage$pandac$ClassDecl*);
+typedef panda$collections$Iterator* (*$fn3403)(panda$collections$Iterable*);
+typedef panda$core$Bit (*$fn3409)(panda$collections$Iterator*);
+typedef panda$core$Object* (*$fn3415)(panda$collections$Iterator*);
+typedef panda$collections$Iterator* (*$fn3572)(panda$collections$Iterable*);
+typedef panda$core$Bit (*$fn3578)(panda$collections$Iterator*);
+typedef panda$core$Object* (*$fn3584)(panda$collections$Iterator*);
+typedef panda$collections$Iterator* (*$fn3671)(panda$collections$Iterable*);
+typedef panda$core$Bit (*$fn3677)(panda$collections$Iterator*);
+typedef panda$core$Object* (*$fn3683)(panda$collections$Iterator*);
+typedef panda$core$String* (*$fn3691)(panda$core$Object*);
+typedef org$pandalanguage$pandac$Position (*$fn3750)(org$pandalanguage$pandac$ASTNode*);
+typedef panda$core$Int64 (*$fn3788)(panda$collections$CollectionView*);
+typedef panda$collections$Iterator* (*$fn3804)(panda$collections$Iterable*);
+typedef panda$core$Bit (*$fn3810)(panda$collections$Iterator*);
+typedef panda$core$Object* (*$fn3816)(panda$collections$Iterator*);
+typedef panda$collections$Iterator* (*$fn4029)(panda$collections$Iterable*);
+typedef panda$core$Bit (*$fn4035)(panda$collections$Iterator*);
+typedef panda$core$Object* (*$fn4041)(panda$collections$Iterator*);
+typedef panda$collections$Iterator* (*$fn4293)(panda$collections$Iterable*);
+typedef panda$core$Bit (*$fn4299)(panda$collections$Iterator*);
+typedef panda$core$Object* (*$fn4305)(panda$collections$Iterator*);
+typedef panda$collections$Iterator* (*$fn4424)(panda$collections$Iterable*);
+typedef panda$core$Bit (*$fn4430)(panda$collections$Iterator*);
+typedef panda$core$Object* (*$fn4436)(panda$collections$Iterator*);
+typedef panda$collections$Iterator* (*$fn4463)(panda$collections$Iterable*);
+typedef panda$core$Bit (*$fn4469)(panda$collections$Iterator*);
+typedef panda$core$Object* (*$fn4475)(panda$collections$Iterator*);
+typedef panda$collections$Iterator* (*$fn4554)(panda$collections$Iterable*);
+typedef panda$core$Bit (*$fn4560)(panda$collections$Iterator*);
+typedef panda$core$Object* (*$fn4566)(panda$collections$Iterator*);
+typedef org$pandalanguage$pandac$Position (*$fn4583)(org$pandalanguage$pandac$ASTNode*);
+typedef panda$core$String* (*$fn4638)(panda$core$Formattable*, panda$core$String*);
+typedef org$pandalanguage$pandac$Position (*$fn4704)(org$pandalanguage$pandac$ASTNode*);
+typedef panda$collections$Iterator* (*$fn4716)(panda$collections$Iterable*);
+typedef panda$core$Bit (*$fn4722)(panda$collections$Iterator*);
+typedef panda$core$Object* (*$fn4728)(panda$collections$Iterator*);
+typedef panda$collections$Iterator* (*$fn4780)(panda$collections$Iterable*);
+typedef panda$core$Bit (*$fn4786)(panda$collections$Iterator*);
+typedef panda$core$Object* (*$fn4792)(panda$collections$Iterator*);
+typedef panda$collections$Iterator* (*$fn4835)(panda$collections$Iterable*);
+typedef panda$core$Bit (*$fn4841)(panda$collections$Iterator*);
+typedef panda$core$Object* (*$fn4847)(panda$collections$Iterator*);
+typedef panda$collections$Iterator* (*$fn4865)(panda$collections$Iterable*);
+typedef panda$core$Bit (*$fn4871)(panda$collections$Iterator*);
+typedef panda$core$Object* (*$fn4877)(panda$collections$Iterator*);
+typedef panda$collections$Iterator* (*$fn4945)(panda$collections$Iterable*);
+typedef panda$core$Bit (*$fn4951)(panda$collections$Iterator*);
+typedef panda$core$Object* (*$fn4957)(panda$collections$Iterator*);
+typedef panda$collections$Iterator* (*$fn4970)(panda$collections$Iterable*);
+typedef panda$core$Bit (*$fn4976)(panda$collections$Iterator*);
+typedef panda$core$Object* (*$fn4982)(panda$collections$Iterator*);
+typedef panda$collections$Iterator* (*$fn5002)(panda$collections$Iterable*);
+typedef panda$core$Bit (*$fn5008)(panda$collections$Iterator*);
+typedef panda$core$Object* (*$fn5014)(panda$collections$Iterator*);
+typedef panda$collections$Iterator* (*$fn5074)(panda$collections$Iterable*);
+typedef panda$core$Bit (*$fn5080)(panda$collections$Iterator*);
+typedef panda$core$Object* (*$fn5086)(panda$collections$Iterator*);
+typedef panda$collections$Iterator* (*$fn5237)(panda$collections$Iterable*);
+typedef panda$core$Bit (*$fn5243)(panda$collections$Iterator*);
+typedef panda$core$Object* (*$fn5249)(panda$collections$Iterator*);
+typedef panda$collections$Iterator* (*$fn5263)(panda$collections$Iterable*);
+typedef panda$core$Bit (*$fn5269)(panda$collections$Iterator*);
+typedef panda$core$Object* (*$fn5275)(panda$collections$Iterator*);
+typedef void (*$fn5312)(org$pandalanguage$pandac$CodeGenerator*, org$pandalanguage$pandac$MethodDecl*, org$pandalanguage$pandac$IRNode*);
+typedef void (*$fn5315)(org$pandalanguage$pandac$CodeGenerator*, org$pandalanguage$pandac$MethodDecl*);
+typedef panda$collections$Iterator* (*$fn5319)(panda$collections$Iterable*);
+typedef panda$core$Bit (*$fn5325)(panda$collections$Iterator*);
+typedef panda$core$Object* (*$fn5331)(panda$collections$Iterator*);
+typedef void (*$fn5336)(org$pandalanguage$pandac$CodeGenerator*, org$pandalanguage$pandac$ClassDecl*);
+typedef void (*$fn5339)(org$pandalanguage$pandac$CodeGenerator*, org$pandalanguage$pandac$ClassDecl*);
+typedef void (*$fn5344)(org$pandalanguage$pandac$CodeGenerator*, org$pandalanguage$pandac$ClassDecl*);
 typedef panda$collections$Iterator* (*$fn5348)(panda$collections$Iterable*);
 typedef panda$core$Bit (*$fn5354)(panda$collections$Iterator*);
 typedef panda$core$Object* (*$fn5360)(panda$collections$Iterator*);
-typedef panda$collections$Iterator* (*$fn5369)(panda$collections$Iterable*);
-typedef panda$core$Bit (*$fn5375)(panda$collections$Iterator*);
-typedef panda$core$Object* (*$fn5381)(panda$collections$Iterator*);
-typedef void (*$fn5398)(org$pandalanguage$pandac$CodeGenerator*);
+typedef void (*$fn5364)(org$pandalanguage$pandac$CodeGenerator*, org$pandalanguage$pandac$ClassDecl*);
+typedef panda$collections$Iterator* (*$fn5380)(panda$collections$Iterable*);
+typedef panda$core$Bit (*$fn5386)(panda$collections$Iterator*);
+typedef panda$core$Object* (*$fn5392)(panda$collections$Iterator*);
+typedef panda$collections$Iterator* (*$fn5401)(panda$collections$Iterable*);
+typedef panda$core$Bit (*$fn5407)(panda$collections$Iterator*);
+typedef panda$core$Object* (*$fn5413)(panda$collections$Iterator*);
+typedef void (*$fn5430)(org$pandalanguage$pandac$CodeGenerator*);
 
 static panda$core$String $s26 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x62\x75\x69\x6c\x74\x69\x6e\x5f\x62\x69\x74", 11, -6555968936556617710, NULL };
 static panda$core$String $s39 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x49\x6e\x74", 3, 1786200, NULL };
@@ -506,105 +525,104 @@ static panda$core$String $s2889 = { (panda$core$Class*) &panda$core$String$class
 static panda$core$String $s2891 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x3a\x3d", 2, 16120, NULL };
 static panda$core$String $s2893 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x3d\x3d", 2, 16423, NULL };
 static panda$core$String $s2895 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x21\x3d\x3d", 3, 1373156, NULL };
-static panda$core$String $s3137 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x69\x6e\x76\x61\x6c\x69\x64\x20\x6e\x75\x6d\x65\x72\x69\x63\x20\x6f\x70\x65\x72\x61\x74\x69\x6f\x6e", 25, 9019145596080302696, NULL };
-static panda$core$String $s3149 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x5b\x5d\x3a\x3d", 4, 198772404, NULL };
-static panda$core$String $s3201 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x63\x6f\x6e\x76\x65\x72\x74", 7, 213482220537370, NULL };
-static panda$core$String $s3205 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x5b\x5d\x3a\x3d", 4, 198772404, NULL };
-static panda$core$String $s3306 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27", 1, 140, NULL };
-static panda$core$String $s3309 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27\x20\x63\x61\x6e\x6e\x6f\x74\x20\x6f\x70\x65\x72\x61\x74\x65\x20\x6f\x6e\x20\x27", 21, -3266050109438970469, NULL };
-static panda$core$String $s3312 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27\x2c\x20", 3, 1432616, NULL };
-static panda$core$String $s3314 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27", 1, 140, NULL };
+static panda$core$String $s2897 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2d\x3e", 2, 14808, NULL };
+static panda$core$String $s3124 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x69\x6e\x76\x61\x6c\x69\x64\x20\x6e\x75\x6d\x65\x72\x69\x63\x20\x6f\x70\x65\x72\x61\x74\x69\x6f\x6e", 25, 9019145596080302696, NULL };
+static panda$core$String $s3136 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x5b\x5d\x3a\x3d", 4, 198772404, NULL };
+static panda$core$String $s3187 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x63\x6f\x6e\x76\x65\x72\x74", 7, 213482220537370, NULL };
+static panda$core$String $s3191 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x5b\x5d\x3a\x3d", 4, 198772404, NULL };
+static panda$core$String $s3291 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27", 1, 140, NULL };
+static panda$core$String $s3294 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27\x20\x63\x61\x6e\x6e\x6f\x74\x20\x6f\x70\x65\x72\x61\x74\x65\x20\x6f\x6e\x20\x27", 21, -3266050109438970469, NULL };
+static panda$core$String $s3297 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27\x2c\x20", 3, 1432616, NULL };
+static panda$core$String $s3299 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27", 1, 140, NULL };
+static panda$core$String $s3301 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27", 1, 140, NULL };
+static panda$core$String $s3308 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27", 1, 140, NULL };
+static panda$core$String $s3311 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27\x20\x63\x61\x6e\x6e\x6f\x74\x20\x6f\x70\x65\x72\x61\x74\x65\x20\x6f\x6e\x20\x27", 21, -3266050109438970469, NULL };
+static panda$core$String $s3314 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27\x2c\x20", 3, 1432616, NULL };
 static panda$core$String $s3316 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27", 1, 140, NULL };
-static panda$core$String $s3323 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27", 1, 140, NULL };
-static panda$core$String $s3326 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27\x20\x63\x61\x6e\x6e\x6f\x74\x20\x6f\x70\x65\x72\x61\x74\x65\x20\x6f\x6e\x20\x27", 21, -3266050109438970469, NULL };
-static panda$core$String $s3329 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27\x2c\x20", 3, 1432616, NULL };
-static panda$core$String $s3331 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27", 1, 140, NULL };
-static panda$core$String $s3333 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27", 1, 140, NULL };
+static panda$core$String $s3318 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27", 1, 140, NULL };
+static panda$core$String $s3341 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x63\x61\x6e\x6e\x6f\x74\x20\x61\x73\x73\x69\x67\x6e\x20\x74\x6f\x20\x74\x68\x69\x73\x20\x65\x78\x70\x72\x65\x73\x73\x69\x6f\x6e", 32, -4891466264852316840, NULL };
 static panda$core$String $s3355 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x63\x61\x6e\x6e\x6f\x74\x20\x61\x73\x73\x69\x67\x6e\x20\x74\x6f\x20\x74\x68\x69\x73\x20\x65\x78\x70\x72\x65\x73\x73\x69\x6f\x6e", 32, -4891466264852316840, NULL };
-static panda$core$String $s3369 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x63\x61\x6e\x6e\x6f\x74\x20\x61\x73\x73\x69\x67\x6e\x20\x74\x6f\x20\x74\x68\x69\x73\x20\x65\x78\x70\x72\x65\x73\x73\x69\x6f\x6e", 32, -4891466264852316840, NULL };
-static panda$core$String $s3387 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x63\x6f\x6e\x76\x65\x72\x74", 7, 213482220537370, NULL };
-static panda$core$String $s3403 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x5b\x5d", 2, 19485, NULL };
-static panda$core$String $s3472 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27", 1, 140, NULL };
-static panda$core$String $s3475 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27\x20\x63\x61\x6e\x6e\x6f\x74\x20\x6f\x70\x65\x72\x61\x74\x65\x20\x6f\x6e\x20\x27", 21, -3266050109438970469, NULL };
-static panda$core$String $s3478 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27\x2c\x20\x27", 4, 144694255, NULL };
-static panda$core$String $s3481 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27", 1, 140, NULL };
-static panda$core$String $s3617 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x3c\x6d\x65\x74\x68\x6f\x64\x3e", 8, 17378158564789264, NULL };
-static panda$core$String $s3644 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x65\x78\x70\x65\x63\x74\x65\x64\x20\x61\x20\x6e\x75\x6d\x62\x65\x72\x2c\x20\x62\x75\x74\x20\x66\x6f\x75\x6e\x64\x20\x27", 30, 5304221197101987767, NULL };
-static panda$core$String $s3646 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27", 1, 140, NULL };
-static panda$core$String $s3657 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x65\x78\x70\x65\x63\x74\x65\x64\x20\x61\x20\x6e\x75\x6d\x62\x65\x72\x2c\x20\x62\x75\x74\x20\x66\x6f\x75\x6e\x64\x20\x27", 30, 5304221197101987767, NULL };
-static panda$core$String $s3659 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27", 1, 140, NULL };
-static panda$core$String $s3716 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2e", 1, 147, NULL };
-static panda$core$String $s3719 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
-static panda$core$String $s3735 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x74\x79\x70\x65\x20\x27", 6, 2293399544522, NULL };
-static panda$core$String $s3737 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27\x20\x69\x73\x20\x6e\x6f\x74\x20\x61\x20\x63\x6c\x61\x73\x73", 16, 3306529650949529468, NULL };
-static panda$core$String $s3744 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x63\x6c\x61\x73\x73\x20\x27", 7, 213449334494206, NULL };
-static panda$core$String $s3746 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27\x20\x64\x6f\x65\x73\x20\x6e\x6f\x74\x20\x68\x61\x76\x65\x20\x61\x20\x6d\x65\x6d\x62\x65\x72\x20\x6e\x61\x6d\x65\x64\x20\x27", 32, -5677460192622646983, NULL };
-static panda$core$String $s3749 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27", 1, 140, NULL };
-static panda$core$String $s3808 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x72\x61\x6e\x67\x65\x20\x73\x74\x65\x70\x20\x63\x61\x6e\x6e\x6f\x74\x20\x62\x65\x20\x6e\x75\x6c\x6c", 25, 4479279434458851015, NULL };
-static panda$core$String $s3816 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x3c\x75\x6e\x72\x65\x73\x6f\x6c\x76\x65\x64\x20\x72\x61\x6e\x67\x65\x3e", 18, -1293962867859660245, NULL };
-static panda$core$String $s3826 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x63\x61\x6e\x6e\x6f\x74\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x27\x73\x65\x6c\x66\x27\x20\x66\x72\x6f\x6d\x20\x61\x20\x40\x63\x6c\x61\x73\x73\x20\x6d\x65\x74\x68\x6f\x64", 44, -511889306060728385, NULL };
-static panda$core$String $s3844 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
-static panda$core$String $s3867 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2e", 1, 147, NULL };
-static panda$core$String $s3870 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
-static panda$core$String $s3874 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2c\x20", 2, 14677, NULL };
-static panda$core$String $s3885 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x63\x61\x6e\x6e\x6f\x74\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x27\x73\x75\x70\x65\x72\x27\x20\x66\x72\x6f\x6d\x20\x61\x20\x40\x63\x6c\x61\x73\x73\x20\x6d\x65\x74\x68\x6f\x64", 45, 3734810722724983720, NULL };
-static panda$core$String $s3893 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2e", 1, 147, NULL };
-static panda$core$String $s3917 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x76\x61\x6c\x75\x65\x20\x6f\x66\x20\x74\x79\x70\x65\x20\x27", 15, -1620219380461029456, NULL };
-static panda$core$String $s3919 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27\x20\x63\x61\x6e\x6e\x6f\x74\x20\x70\x6f\x73\x73\x69\x62\x6c\x79\x20\x62\x65\x20\x61\x6e\x20\x69\x6e\x73\x74\x61\x6e\x63\x65\x20\x6f\x66\x20", 36, -427166674877421096, NULL };
-static panda$core$String $s3921 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27", 1, 140, NULL };
-static panda$core$String $s3923 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27", 1, 140, NULL };
-static panda$core$String $s3965 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x20\x64\x6f\x65\x73\x20\x6e\x6f\x74\x20\x72\x65\x74\x75\x72\x6e\x20\x61\x20\x76\x61\x6c\x75\x65", 24, -3977552604268313933, NULL };
-static panda$core$String $s4055 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74", 14, -8202984937925645851, NULL };
-static panda$core$String $s4060 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74", 14, -8202984937925645851, NULL };
-static panda$core$String $s4065 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x66\x6f\x72\x20\x6c\x6f\x6f\x70\x20\x63\x61\x6e\x6e\x6f\x74\x20\x69\x74\x65\x72\x61\x74\x65\x20\x6f\x76\x65\x72\x20\x27", 30, 8038560140840973662, NULL };
-static panda$core$String $s4067 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27\x3b\x20\x65\x6e\x64\x70\x6f\x69\x6e\x74\x20\x61\x6e\x64\x20\x73\x74\x65\x70\x20\x74\x79\x70\x65\x73\x20", 27, 6843179484913102436, NULL };
-static panda$core$String $s4069 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x61\x72\x65\x20\x6e\x6f\x74\x20\x63\x6f\x6d\x70\x61\x74\x69\x62\x6c\x65", 18, -4303734005461819726, NULL };
-static panda$core$String $s4089 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x66\x6f\x72\x20\x6c\x6f\x6f\x70\x20\x76\x61\x72\x69\x61\x62\x6c\x65\x20\x63\x61\x6e\x6e\x6f\x74\x20\x68\x61\x76\x65\x20\x6e\x75\x6c\x6c\x61\x62\x6c\x65\x20\x74\x79\x70\x65\x20\x27", 45, 3211461562751374179, NULL };
-static panda$core$String $s4091 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27", 1, 140, NULL };
-static panda$core$String $s4095 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x66\x6f\x72\x20\x6c\x6f\x6f\x70\x20\x76\x61\x72\x69\x61\x62\x6c\x65\x20\x63\x61\x6e\x6e\x6f\x74\x20\x68\x61\x76\x65\x20\x6e\x6f\x6e\x2d\x6e\x75\x6d\x65\x72\x69\x63\x20\x74\x79\x70\x65\x20\x27", 48, 6391877092008549907, NULL };
-static panda$core$String $s4097 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27", 1, 140, NULL };
-static panda$core$String $s4145 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x66\x6f\x72\x20\x6c\x6f\x6f\x70\x20\x65\x78\x70\x65\x63\x74\x65\x64\x20\x61\x20\x6e\x75\x6d\x65\x72\x69\x63\x20\x72\x61\x6e\x67\x65\x2c\x20\x62\x75\x74\x20\x66\x6f\x75\x6e\x64\x20\x27", 46, 6859502832880265551, NULL };
-static panda$core$String $s4147 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27", 1, 140, NULL };
-static panda$core$String $s4183 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x3c", 1, 161, NULL };
-static panda$core$String $s4187 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x3e", 1, 163, NULL };
-static panda$core$String $s4194 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x24\x49\x74\x65\x72", 5, 14332680541, NULL };
-static panda$core$String $s4217 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x67\x65\x74\x5f\x64\x6f\x6e\x65", 8, 21980003879763538, NULL };
-static panda$core$String $s4222 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x21", 1, 134, NULL };
-static panda$core$String $s4234 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x6e\x65\x78\x74", 4, 218436048, NULL };
-static panda$core$String $s4320 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x69\x74\x65\x72\x61\x74\x6f\x72", 8, 22210198075044275, NULL };
-static panda$core$String $s4328 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x65\x78\x70\x65\x63\x74\x65\x64\x20\x61\x6e\x20\x49\x74\x65\x72\x61\x62\x6c\x65\x20\x6f\x72\x20\x49\x74\x65\x72\x61\x74\x6f\x72\x2c\x20\x62\x75\x74\x20\x66\x6f\x75\x6e\x64\x20\x27", 45, 562271959045909027, NULL };
-static panda$core$String $s4330 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27", 1, 140, NULL };
-static panda$core$String $s4393 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x64\x65\x63\x6c\x61\x72\x61\x74\x69\x6f\x6e\x20\x68\x61\x73\x20\x6e\x65\x69\x74\x68\x65\x72\x20\x61\x20\x74\x79\x70\x65\x20\x6e\x6f\x72\x20\x61\x20\x76\x61\x6c\x75\x65", 42, 71025131614347466, NULL };
-static panda$core$String $s4454 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27\x62\x72\x65\x61\x6b\x20", 7, 149654778879689, NULL };
-static panda$core$String $s4456 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27\x20\x6d\x75\x73\x74\x20\x62\x65\x20\x69\x6e\x73\x69\x64\x65\x20\x61\x20\x6c\x6f\x6f\x70\x20\x6c\x61\x62\x65\x6c\x6c\x65\x64\x20", 33, 5869484791969643332, NULL };
-static panda$core$String $s4458 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27", 1, 140, NULL };
-static panda$core$String $s4460 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x3a\x27", 2, 16098, NULL };
-static panda$core$String $s4465 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27\x62\x72\x65\x61\x6b\x27\x20\x6d\x75\x73\x74\x20\x62\x65\x20\x69\x6e\x73\x69\x64\x65\x20\x61\x20\x6c\x6f\x6f\x70", 29, -2107280000252113069, NULL };
-static panda$core$String $s4496 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27\x63\x6f\x6e\x74\x69\x6e\x75\x65\x20", 10, 6626032424543403513, NULL };
-static panda$core$String $s4498 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27\x20\x6d\x75\x73\x74\x20\x62\x65\x20\x69\x6e\x73\x69\x64\x65\x20\x61\x20\x6c\x6f\x6f\x70\x20\x6c\x61\x62\x65\x6c\x6c\x65\x64\x20", 33, 5869484791969643332, NULL };
-static panda$core$String $s4500 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27", 1, 140, NULL };
-static panda$core$String $s4502 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x3a\x27", 2, 16098, NULL };
-static panda$core$String $s4507 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27\x63\x6f\x6e\x74\x69\x6e\x75\x65\x27\x20\x6d\x75\x73\x74\x20\x62\x65\x20\x69\x6e\x73\x69\x64\x65\x20\x61\x20\x6c\x6f\x6f\x70", 32, -6048052453244835837, NULL };
-static panda$core$String $s4521 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x63\x61\x6e\x6e\x6f\x74\x20\x72\x65\x74\x75\x72\x6e\x20\x61\x20\x76\x61\x6c\x75\x65\x20\x66\x72\x6f\x6d\x20\x61\x20\x6d\x65\x74\x68\x6f\x64\x20\x77\x69\x74\x68\x20\x6e\x6f\x20\x72\x65\x74\x75\x72\x6e\x20\x74\x79\x70\x65", 55, -6755143087675264705, NULL };
-static panda$core$String $s4535 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x65\x78\x70\x65\x63\x74\x65\x64\x20\x61\x20\x72\x65\x74\x75\x72\x6e\x20\x76\x61\x6c\x75\x65", 23, 6159277012237708805, NULL };
-static panda$core$String $s4555 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x76\x61\x6c\x75\x65", 5, 22890280642, NULL };
-static panda$core$String $s4630 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x3d", 1, 162, NULL };
-static panda$core$String $s4665 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x3d", 1, 162, NULL };
-static panda$core$String $s4674 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27", 1, 140, NULL };
-static panda$core$String $s4676 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27\x20\x72\x65\x71\x75\x69\x72\x65\x73\x20", 11, 5688068970715238544, NULL };
-static panda$core$String $s4680 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x20", 1, 133, NULL };
-static panda$core$String $s4682 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x61\x72\x67\x75\x6d\x65\x6e\x74", 8, 21350388097650168, NULL };
-static panda$core$String $s4685 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x7c\x73", 2, 22840, NULL };
-static panda$core$String $s4691 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2c\x20\x62\x75\x74\x20\x66\x6f\x75\x6e\x64\x20", 12, 4230422288613720608, NULL };
-static panda$core$String $s4695 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
-static panda$core$String $s4721 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x65\x78\x70\x65\x63\x74\x65\x64\x20\x61\x6e\x20\x69\x64\x65\x6e\x74\x69\x66\x69\x65\x72", 22, 417303976175476333, NULL };
-static panda$core$String $s4819 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x7c", 1, 225, NULL };
-static panda$core$String $s4872 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x24\x6d\x61\x74\x63\x68\x24", 7, 146584075981198, NULL };
-static panda$core$String $s4875 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x5f", 1, 196, NULL };
-static panda$core$String $s4879 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
-static panda$core$String $s5387 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x3a", 1, 159, NULL };
-static panda$core$String $s5391 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x3a\x20\x65\x72\x72\x6f\x72\x3a\x20", 9, 1725281418740475535, NULL };
-static panda$core$String $s5394 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
+static panda$core$String $s3373 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x63\x6f\x6e\x76\x65\x72\x74", 7, 213482220537370, NULL };
+static panda$core$String $s3388 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x5b\x5d", 2, 19485, NULL };
+static panda$core$String $s3458 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27", 1, 140, NULL };
+static panda$core$String $s3461 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27\x20\x63\x61\x6e\x6e\x6f\x74\x20\x6f\x70\x65\x72\x61\x74\x65\x20\x6f\x6e\x20\x27", 21, -3266050109438970469, NULL };
+static panda$core$String $s3464 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27\x2c\x20\x27", 4, 144694255, NULL };
+static panda$core$String $s3467 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27", 1, 140, NULL };
+static panda$core$String $s3605 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x3c\x6d\x65\x74\x68\x6f\x64\x3e", 8, 17378158564789264, NULL };
+static panda$core$String $s3632 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x65\x78\x70\x65\x63\x74\x65\x64\x20\x61\x20\x6e\x75\x6d\x62\x65\x72\x2c\x20\x62\x75\x74\x20\x66\x6f\x75\x6e\x64\x20\x27", 30, 5304221197101987767, NULL };
+static panda$core$String $s3634 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27", 1, 140, NULL };
+static panda$core$String $s3645 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x65\x78\x70\x65\x63\x74\x65\x64\x20\x61\x20\x6e\x75\x6d\x62\x65\x72\x2c\x20\x62\x75\x74\x20\x66\x6f\x75\x6e\x64\x20\x27", 30, 5304221197101987767, NULL };
+static panda$core$String $s3647 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27", 1, 140, NULL };
+static panda$core$String $s3693 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2e", 1, 147, NULL };
+static panda$core$String $s3696 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
+static panda$core$String $s3712 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x74\x79\x70\x65\x20\x27", 6, 2293399544522, NULL };
+static panda$core$String $s3714 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27\x20\x69\x73\x20\x6e\x6f\x74\x20\x61\x20\x63\x6c\x61\x73\x73", 16, 3306529650949529468, NULL };
+static panda$core$String $s3721 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x63\x6c\x61\x73\x73\x20\x27", 7, 213449334494206, NULL };
+static panda$core$String $s3723 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27\x20\x64\x6f\x65\x73\x20\x6e\x6f\x74\x20\x68\x61\x76\x65\x20\x61\x20\x6d\x65\x6d\x62\x65\x72\x20\x6e\x61\x6d\x65\x64\x20\x27", 32, -5677460192622646983, NULL };
+static panda$core$String $s3726 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27", 1, 140, NULL };
+static panda$core$String $s3766 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x72\x61\x6e\x67\x65\x20\x73\x74\x65\x70\x20\x63\x61\x6e\x6e\x6f\x74\x20\x62\x65\x20\x6e\x75\x6c\x6c", 25, 4479279434458851015, NULL };
+static panda$core$String $s3774 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x3c\x75\x6e\x72\x65\x73\x6f\x6c\x76\x65\x64\x20\x72\x61\x6e\x67\x65\x3e", 18, -1293962867859660245, NULL };
+static panda$core$String $s3782 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x63\x61\x6e\x6e\x6f\x74\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x27\x73\x65\x6c\x66\x27\x20\x66\x72\x6f\x6d\x20\x61\x20\x40\x63\x6c\x61\x73\x73\x20\x6d\x65\x74\x68\x6f\x64", 44, -511889306060728385, NULL };
+static panda$core$String $s3800 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
+static panda$core$String $s3823 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2e", 1, 147, NULL };
+static panda$core$String $s3826 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
+static panda$core$String $s3830 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2c\x20", 2, 14677, NULL };
+static panda$core$String $s3840 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x63\x61\x6e\x6e\x6f\x74\x20\x72\x65\x66\x65\x72\x65\x6e\x63\x65\x20\x27\x73\x75\x70\x65\x72\x27\x20\x66\x72\x6f\x6d\x20\x61\x20\x40\x63\x6c\x61\x73\x73\x20\x6d\x65\x74\x68\x6f\x64", 45, 3734810722724983720, NULL };
+static panda$core$String $s3848 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2e", 1, 147, NULL };
+static panda$core$String $s3872 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x76\x61\x6c\x75\x65\x20\x6f\x66\x20\x74\x79\x70\x65\x20\x27", 15, -1620219380461029456, NULL };
+static panda$core$String $s3874 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27\x20\x63\x61\x6e\x6e\x6f\x74\x20\x70\x6f\x73\x73\x69\x62\x6c\x79\x20\x62\x65\x20\x61\x6e\x20\x69\x6e\x73\x74\x61\x6e\x63\x65\x20\x6f\x66\x20", 36, -427166674877421096, NULL };
+static panda$core$String $s3876 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27", 1, 140, NULL };
+static panda$core$String $s3878 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27", 1, 140, NULL };
+static panda$core$String $s3930 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x20\x64\x6f\x65\x73\x20\x6e\x6f\x74\x20\x72\x65\x74\x75\x72\x6e\x20\x61\x20\x76\x61\x6c\x75\x65", 24, -3977552604268313933, NULL };
+static panda$core$String $s4077 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74", 14, -8202984937925645851, NULL };
+static panda$core$String $s4082 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74", 14, -8202984937925645851, NULL };
+static panda$core$String $s4087 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x66\x6f\x72\x20\x6c\x6f\x6f\x70\x20\x63\x61\x6e\x6e\x6f\x74\x20\x69\x74\x65\x72\x61\x74\x65\x20\x6f\x76\x65\x72\x20\x27", 30, 8038560140840973662, NULL };
+static panda$core$String $s4089 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27\x3b\x20\x65\x6e\x64\x70\x6f\x69\x6e\x74\x20\x61\x6e\x64\x20\x73\x74\x65\x70\x20\x74\x79\x70\x65\x73\x20", 27, 6843179484913102436, NULL };
+static panda$core$String $s4091 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x61\x72\x65\x20\x6e\x6f\x74\x20\x63\x6f\x6d\x70\x61\x74\x69\x62\x6c\x65", 18, -4303734005461819726, NULL };
+static panda$core$String $s4107 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x66\x6f\x72\x20\x6c\x6f\x6f\x70\x20\x76\x61\x72\x69\x61\x62\x6c\x65\x20\x63\x61\x6e\x6e\x6f\x74\x20\x68\x61\x76\x65\x20\x6e\x75\x6c\x6c\x61\x62\x6c\x65\x20\x74\x79\x70\x65\x20\x27", 45, 3211461562751374179, NULL };
+static panda$core$String $s4109 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27", 1, 140, NULL };
+static panda$core$String $s4113 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x66\x6f\x72\x20\x6c\x6f\x6f\x70\x20\x76\x61\x72\x69\x61\x62\x6c\x65\x20\x63\x61\x6e\x6e\x6f\x74\x20\x68\x61\x76\x65\x20\x6e\x6f\x6e\x2d\x6e\x75\x6d\x65\x72\x69\x63\x20\x74\x79\x70\x65\x20\x27", 48, 6391877092008549907, NULL };
+static panda$core$String $s4115 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27", 1, 140, NULL };
+static panda$core$String $s4163 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x66\x6f\x72\x20\x6c\x6f\x6f\x70\x20\x65\x78\x70\x65\x63\x74\x65\x64\x20\x61\x20\x6e\x75\x6d\x65\x72\x69\x63\x20\x72\x61\x6e\x67\x65\x2c\x20\x62\x75\x74\x20\x66\x6f\x75\x6e\x64\x20\x27", 46, 6859502832880265551, NULL };
+static panda$core$String $s4165 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27", 1, 140, NULL };
+static panda$core$String $s4199 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x3c", 1, 161, NULL };
+static panda$core$String $s4203 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x3e", 1, 163, NULL };
+static panda$core$String $s4209 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x24\x49\x74\x65\x72", 5, 14332680541, NULL };
+static panda$core$String $s4232 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x67\x65\x74\x5f\x64\x6f\x6e\x65", 8, 21980003879763538, NULL };
+static panda$core$String $s4237 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x21", 1, 134, NULL };
+static panda$core$String $s4249 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x6e\x65\x78\x74", 4, 218436048, NULL };
+static panda$core$String $s4327 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x69\x74\x65\x72\x61\x74\x6f\x72", 8, 22210198075044275, NULL };
+static panda$core$String $s4333 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x65\x78\x70\x65\x63\x74\x65\x64\x20\x61\x6e\x20\x49\x74\x65\x72\x61\x62\x6c\x65\x20\x6f\x72\x20\x49\x74\x65\x72\x61\x74\x6f\x72\x2c\x20\x62\x75\x74\x20\x66\x6f\x75\x6e\x64\x20\x27", 45, 562271959045909027, NULL };
+static panda$core$String $s4335 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27", 1, 140, NULL };
+static panda$core$String $s4380 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x64\x65\x63\x6c\x61\x72\x61\x74\x69\x6f\x6e\x20\x68\x61\x73\x20\x6e\x65\x69\x74\x68\x65\x72\x20\x61\x20\x74\x79\x70\x65\x20\x6e\x6f\x72\x20\x61\x20\x76\x61\x6c\x75\x65", 42, 71025131614347466, NULL };
+static panda$core$String $s4447 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27\x62\x72\x65\x61\x6b\x20", 7, 149654778879689, NULL };
+static panda$core$String $s4449 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27\x20\x6d\x75\x73\x74\x20\x62\x65\x20\x69\x6e\x73\x69\x64\x65\x20\x61\x20\x6c\x6f\x6f\x70\x20\x6c\x61\x62\x65\x6c\x6c\x65\x64\x20\x27", 34, 2522153630228324859, NULL };
+static panda$core$String $s4452 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x3a\x27", 2, 16098, NULL };
+static panda$core$String $s4456 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27\x62\x72\x65\x61\x6b\x27\x20\x6d\x75\x73\x74\x20\x62\x65\x20\x69\x6e\x73\x69\x64\x65\x20\x61\x20\x6c\x6f\x6f\x70", 29, -2107280000252113069, NULL };
+static panda$core$String $s4486 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27\x63\x6f\x6e\x74\x69\x6e\x75\x65\x20", 10, 6626032424543403513, NULL };
+static panda$core$String $s4488 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27\x20\x6d\x75\x73\x74\x20\x62\x65\x20\x69\x6e\x73\x69\x64\x65\x20\x61\x20\x6c\x6f\x6f\x70\x20\x6c\x61\x62\x65\x6c\x6c\x65\x64\x20\x27", 34, 2522153630228324859, NULL };
+static panda$core$String $s4491 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x3a\x27", 2, 16098, NULL };
+static panda$core$String $s4495 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27\x63\x6f\x6e\x74\x69\x6e\x75\x65\x27\x20\x6d\x75\x73\x74\x20\x62\x65\x20\x69\x6e\x73\x69\x64\x65\x20\x61\x20\x6c\x6f\x6f\x70", 32, -6048052453244835837, NULL };
+static panda$core$String $s4501 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x63\x61\x6e\x6e\x6f\x74\x20\x72\x65\x74\x75\x72\x6e\x20\x61\x20\x76\x61\x6c\x75\x65\x20\x66\x72\x6f\x6d\x20\x61\x20\x6d\x65\x74\x68\x6f\x64\x20\x77\x69\x74\x68\x20\x6e\x6f\x20\x72\x65\x74\x75\x72\x6e\x20\x74\x79\x70\x65", 55, -6755143087675264705, NULL };
+static panda$core$String $s4514 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x65\x78\x70\x65\x63\x74\x65\x64\x20\x61\x20\x72\x65\x74\x75\x72\x6e\x20\x76\x61\x6c\x75\x65", 23, 6159277012237708805, NULL };
+static panda$core$String $s4525 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x76\x61\x6c\x75\x65", 5, 22890280642, NULL };
+static panda$core$String $s4590 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x3d", 1, 162, NULL };
+static panda$core$String $s4618 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x3d", 1, 162, NULL };
+static panda$core$String $s4626 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27", 1, 140, NULL };
+static panda$core$String $s4628 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x27\x20\x72\x65\x71\x75\x69\x72\x65\x73\x20", 11, 5688068970715238544, NULL };
+static panda$core$String $s4631 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x20\x61\x72\x67\x75\x6d\x65\x6e\x74", 9, 1450721239526715900, NULL };
+static panda$core$String $s4635 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x7c\x73", 2, 22840, NULL };
+static panda$core$String $s4641 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2c\x20", 2, 14677, NULL };
+static panda$core$String $s4644 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x62\x75\x74\x20\x66\x6f\x75\x6e\x64\x20", 10, -2438145452310052756, NULL };
+static panda$core$String $s4647 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
+static panda$core$String $s4706 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x65\x78\x70\x65\x63\x74\x65\x64\x20\x61\x6e\x20\x69\x64\x65\x6e\x74\x69\x66\x69\x65\x72", 22, 417303976175476333, NULL };
+static panda$core$String $s4764 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x7c", 1, 225, NULL };
+static panda$core$String $s4811 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x24\x6d\x61\x74\x63\x68\x24", 7, 146584075981198, NULL };
+static panda$core$String $s4814 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x5f", 1, 196, NULL };
+static panda$core$String $s4818 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
+static panda$core$String $s5419 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x3a", 1, 159, NULL };
+static panda$core$String $s5423 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x3a\x20\x65\x72\x72\x6f\x72\x3a\x20", 9, 1725281418740475535, NULL };
+static panda$core$String $s5426 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
 
 void org$pandalanguage$pandac$Compiler$init$org$pandalanguage$pandac$CodeGenerator$org$pandalanguage$pandac$Compiler$Settings(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$CodeGenerator* p_codeGenerator, org$pandalanguage$pandac$Compiler$Settings* p_settings) {
     org$pandalanguage$pandac$Position $tmp41;
@@ -1408,10 +1426,10 @@ void org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$ClassDec
                 org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$ClassDecl(self, sClass397);
                 if (((panda$core$Bit) { sClass397 != NULL }).value) {
                 {
-                    panda$core$Bit $tmp399 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(sClass397->classKind->$rawValue, ((panda$core$Int64) { 0 }));
+                    panda$core$Bit $tmp399 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(sClass397->classKind.$rawValue, ((panda$core$Int64) { 0 }));
                     if ($tmp399.value) {
                     {
-                        panda$core$Bit $tmp400 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_cl->classKind->$rawValue, ((panda$core$Int64) { 1 }));
+                        panda$core$Bit $tmp400 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_cl->classKind.$rawValue, ((panda$core$Int64) { 1 }));
                         if ($tmp400.value) {
                         {
                             panda$core$String* $tmp402 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s401, ((org$pandalanguage$pandac$Symbol*) p_cl)->name);
@@ -1450,7 +1468,7 @@ void org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$ClassDec
                     }
                     else {
                     {
-                        panda$core$Bit $tmp425 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(sClass397->classKind->$rawValue, ((panda$core$Int64) { 1 }));
+                        panda$core$Bit $tmp425 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(sClass397->classKind.$rawValue, ((panda$core$Int64) { 1 }));
                         PANDA_ASSERT($tmp425.value);
                         panda$collections$Array$add$panda$collections$Array$T(p_cl->rawInterfaces, ((panda$core$Object*) s395));
                     }
@@ -1521,7 +1539,7 @@ void org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$ClassDec
                 panda$core$Int64 $tmp461 = panda$core$Int64$$SHL$panda$core$Int64$R$panda$core$Int64(((panda$core$Int64) { 1 }), ((panda$core$Int64) { 8 }));
                 panda$core$Int64 $tmp462 = panda$core$Int64$$BOR$panda$core$Int64$R$panda$core$Int64(m456->annotations->flags, $tmp461);
                 m456->annotations->flags = $tmp462;
-                panda$core$Bit $tmp463 = org$pandalanguage$pandac$Scanner$shouldInline$org$pandalanguage$pandac$Annotations$org$pandalanguage$pandac$ASTNode$Q$R$panda$core$Bit(self->scanner, m456->annotations, m456->body);
+                panda$core$Bit $tmp463 = org$pandalanguage$pandac$Scanner$shouldInline$org$pandalanguage$pandac$Annotations$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$R$panda$core$Bit(self->scanner, m456->annotations, m456->body);
                 if ($tmp463.value) {
                 {
                     panda$core$Int64 $tmp464 = panda$core$Int64$$SHL$panda$core$Int64$R$panda$core$Int64(((panda$core$Int64) { 1 }), ((panda$core$Int64) { 10 }));
@@ -1680,10 +1698,10 @@ void org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$MethodDe
                 org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, ((org$pandalanguage$pandac$Symbol*) p_m)->position, $tmp538);
             }
             }
-            panda$core$Bit $tmp540 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_m->methodKind->$rawValue, ((panda$core$Int64) { 0 }));
+            panda$core$Bit $tmp540 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_m->methodKind.$rawValue, ((panda$core$Int64) { 0 }));
             bool $tmp539 = $tmp540.value;
             if (!$tmp539) goto $l541;
-            panda$core$Bit $tmp542 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(overridden525->methodKind->$rawValue, ((panda$core$Int64) { 1 }));
+            panda$core$Bit $tmp542 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(overridden525->methodKind.$rawValue, ((panda$core$Int64) { 1 }));
             $tmp539 = $tmp542.value;
             $l541:;
             panda$core$Bit $tmp543 = { $tmp539 };
@@ -2481,7 +2499,7 @@ org$pandalanguage$pandac$ClassDecl* org$pandalanguage$pandac$Compiler$specialize
                 $tmp909->$class = (panda$core$Class*) &org$pandalanguage$pandac$MethodDecl$class;
                 $tmp909->refCount.value = 1;
                 org$pandalanguage$pandac$Type* $tmp911 = org$pandalanguage$pandac$Compiler$remapType$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type(self, type793, m880->returnType);
-                org$pandalanguage$pandac$MethodDecl$init$org$pandalanguage$pandac$ClassDecl$org$pandalanguage$pandac$Position$panda$core$String$Q$org$pandalanguage$pandac$Annotations$org$pandalanguage$pandac$MethodDecl$Kind$panda$core$String$panda$collections$Array$LTorg$pandalanguage$pandac$MethodDecl$Parameter$GT$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$ASTNode$Q($tmp909, result800, ((org$pandalanguage$pandac$Symbol*) m880)->position, m880->doccomment, m880->annotations, m880->methodKind, ((org$pandalanguage$pandac$Symbol*) m880)->name, parameters885, $tmp911, m880->body);
+                org$pandalanguage$pandac$MethodDecl$init$org$pandalanguage$pandac$ClassDecl$org$pandalanguage$pandac$Position$panda$core$String$Q$org$pandalanguage$pandac$Annotations$org$pandalanguage$pandac$MethodDecl$Kind$panda$core$String$panda$collections$Array$LTorg$pandalanguage$pandac$MethodDecl$Parameter$GT$org$pandalanguage$pandac$Type$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$Q($tmp909, result800, ((org$pandalanguage$pandac$Symbol*) m880)->position, m880->doccomment, m880->annotations, m880->methodKind, ((org$pandalanguage$pandac$Symbol*) m880)->name, parameters885, $tmp911, m880->body);
                 clone908 = $tmp909;
                 panda$collections$Array$add$panda$collections$Array$T(result800->methods, ((panda$core$Object*) clone908));
                 org$pandalanguage$pandac$SymbolTable$add$org$pandalanguage$pandac$Symbol(result800->symbolTable, ((org$pandalanguage$pandac$Symbol*) clone908));
@@ -2519,7 +2537,7 @@ org$pandalanguage$pandac$ClassDecl* org$pandalanguage$pandac$Compiler$specialize
                 $tmp930->$class = (panda$core$Class*) &org$pandalanguage$pandac$FieldDecl$class;
                 $tmp930->refCount.value = 1;
                 org$pandalanguage$pandac$Type* $tmp932 = org$pandalanguage$pandac$Compiler$remapType$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type(self, type793, f924->type);
-                org$pandalanguage$pandac$FieldDecl$init$org$pandalanguage$pandac$ClassDecl$org$pandalanguage$pandac$Position$panda$core$String$Q$org$pandalanguage$pandac$Annotations$panda$core$Int64$panda$core$String$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$ASTNode$Q($tmp930, result800, ((org$pandalanguage$pandac$Symbol*) f924)->position, f924->doccomment, f924->annotations, f924->fieldKind, ((org$pandalanguage$pandac$Symbol*) f924)->name, $tmp932, f924->rawValue);
+                org$pandalanguage$pandac$FieldDecl$init$org$pandalanguage$pandac$ClassDecl$org$pandalanguage$pandac$Position$panda$core$String$Q$org$pandalanguage$pandac$Annotations$org$pandalanguage$pandac$FieldDecl$Kind$panda$core$String$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$ASTNode$Q($tmp930, result800, ((org$pandalanguage$pandac$Symbol*) f924)->position, f924->doccomment, f924->annotations, f924->fieldKind, ((org$pandalanguage$pandac$Symbol*) f924)->name, $tmp932, f924->rawValue);
                 clone929 = $tmp930;
                 panda$collections$Array$add$panda$collections$Array$T(result800->fields, ((panda$core$Object*) clone929));
                 org$pandalanguage$pandac$SymbolTable$add$org$pandalanguage$pandac$Symbol(result800->symbolTable, ((org$pandalanguage$pandac$Symbol*) clone929));
@@ -2626,7 +2644,7 @@ panda$collections$Set* org$pandalanguage$pandac$Compiler$allInterfaces$org$panda
         goto $l952;
         $l953:;
     }
-    panda$core$Bit $tmp966 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(cl940->classKind->$rawValue, ((panda$core$Int64) { 1 }));
+    panda$core$Bit $tmp966 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(cl940->classKind.$rawValue, ((panda$core$Int64) { 1 }));
     if ($tmp966.value) {
     {
         panda$collections$Set$add$panda$collections$Set$T(result942, ((panda$collections$Key*) p_t));
@@ -2739,7 +2757,7 @@ org$pandalanguage$pandac$MethodDecl* org$pandalanguage$pandac$Compiler$findMetho
     }
     bool $tmp1019 = p_checkInterfaces.value;
     if ($tmp1019) goto $l1020;
-    panda$core$Bit $tmp1021 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(cl996->classKind->$rawValue, ((panda$core$Int64) { 1 }));
+    panda$core$Bit $tmp1021 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(cl996->classKind.$rawValue, ((panda$core$Int64) { 1 }));
     $tmp1019 = $tmp1021.value;
     $l1020:;
     panda$core$Bit $tmp1022 = { $tmp1019 };
@@ -2805,7 +2823,7 @@ org$pandalanguage$pandac$MethodDecl* org$pandalanguage$pandac$Compiler$getOverri
         return p_m->overridden;
     }
     }
-    panda$core$Bit $tmp1045 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_m->methodKind->$rawValue, ((panda$core$Int64) { 2 }));
+    panda$core$Bit $tmp1045 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_m->methodKind.$rawValue, ((panda$core$Int64) { 2 }));
     if ($tmp1045.value) {
     {
         p_m->overrideKnown = ((panda$core$Bit) { true });
@@ -3038,7 +3056,7 @@ panda$collections$ListView* org$pandalanguage$pandac$Compiler$getVTable$org$pand
                 panda$core$Object* $tmp1145 = $tmp1143(derived$Iter1129);
                 derived1141 = ((org$pandalanguage$pandac$MethodDecl*) $tmp1145);
                 org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$MethodDecl(self, derived1141);
-                panda$core$Bit $tmp1147 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(derived1141->methodKind->$rawValue, ((panda$core$Int64) { 2 }));
+                panda$core$Bit $tmp1147 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(derived1141->methodKind.$rawValue, ((panda$core$Int64) { 2 }));
                 bool $tmp1146 = $tmp1147.value;
                 if ($tmp1146) goto $l1148;
                 panda$core$Bit $tmp1149 = org$pandalanguage$pandac$Annotations$isClass$R$panda$core$Bit(derived1141->annotations);
@@ -4729,7 +4747,7 @@ panda$core$Int64$nullable org$pandalanguage$pandac$Compiler$coercionCost$org$pan
             if ($tmp1807.value) {
             {
                 org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$MethodDecl(self, m1802);
-                panda$core$Bit $tmp1809 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(m1802->methodKind->$rawValue, ((panda$core$Int64) { 2 }));
+                panda$core$Bit $tmp1809 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(m1802->methodKind.$rawValue, ((panda$core$Int64) { 2 }));
                 bool $tmp1808 = $tmp1809.value;
                 if (!$tmp1808) goto $l1810;
                 panda$core$Int64 $tmp1811 = panda$collections$Array$get_count$R$panda$core$Int64(m1802->parameters);
@@ -5468,7 +5486,7 @@ org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$doCoerce$org$
                     if ($tmp2137.value) {
                     {
                         org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$MethodDecl(self, m2132);
-                        panda$core$Bit $tmp2140 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(m2132->methodKind->$rawValue, ((panda$core$Int64) { 2 }));
+                        panda$core$Bit $tmp2140 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(m2132->methodKind.$rawValue, ((panda$core$Int64) { 2 }));
                         bool $tmp2139 = $tmp2140.value;
                         if (!$tmp2139) goto $l2141;
                         panda$core$Int64 $tmp2142 = panda$collections$Array$get_count$R$panda$core$Int64(m2132->parameters);
@@ -5972,13 +5990,13 @@ org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$call$org$pand
         panda$collections$Array$add$panda$collections$Array$T(finalArgs2358, ((panda$core$Object*) $tmp2371));
     }
     }
-    panda$core$Bit $tmp2372 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_m->value->methodKind->$rawValue, ((panda$core$Int64) { 2 }));
+    panda$core$Bit $tmp2372 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_m->value->methodKind.$rawValue, ((panda$core$Int64) { 2 }));
     if ($tmp2372.value) {
     {
         if (((panda$core$Bit) { p_target == NULL }).value) {
         {
             panda$core$Object* $tmp2373 = panda$collections$Stack$peek$R$panda$collections$Stack$T(self->currentMethod);
-            panda$core$Bit $tmp2374 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(((org$pandalanguage$pandac$MethodDecl*) $tmp2373)->methodKind->$rawValue, ((panda$core$Int64) { 2 }));
+            panda$core$Bit $tmp2374 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(((org$pandalanguage$pandac$MethodDecl*) $tmp2373)->methodKind.$rawValue, ((panda$core$Int64) { 2 }));
             if ($tmp2374.value) {
             {
                 org$pandalanguage$pandac$IRNode* $tmp2375 = (org$pandalanguage$pandac$IRNode*) malloc(72);
@@ -6265,7 +6283,7 @@ org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$call$org$pand
         panda$core$Bit $tmp2523 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit(p_name, &$s2522);
         bool $tmp2521 = $tmp2523.value;
         if (!$tmp2521) goto $l2524;
-        panda$core$Bit $tmp2525 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(cl2503->classKind->$rawValue, ((panda$core$Int64) { 2 }));
+        panda$core$Bit $tmp2525 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(cl2503->classKind.$rawValue, ((panda$core$Int64) { 2 }));
         $tmp2521 = $tmp2525.value;
         $l2524:;
         panda$core$Bit $tmp2526 = { $tmp2521 };
@@ -6764,7 +6782,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Compiler$declaredType$or
         goto $l2773;
         $l2774:;
     }
-    panda$core$Bit $tmp2787 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_m->methodKind->$rawValue, ((panda$core$Int64) { 1 }));
+    panda$core$Bit $tmp2787 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_m->methodKind.$rawValue, ((panda$core$Int64) { 1 }));
     if ($tmp2787.value) {
     {
         panda$core$MutableString$append$panda$core$String(typeName2762, &$s2788);
@@ -6846,7 +6864,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Compiler$declaredTypeWit
         goto $l2808;
         $l2809:;
     }
-    panda$core$Bit $tmp2822 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_m->methodKind->$rawValue, ((panda$core$Int64) { 1 }));
+    panda$core$Bit $tmp2822 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_m->methodKind.$rawValue, ((panda$core$Int64) { 1 }));
     if ($tmp2822.value) {
     {
         panda$core$MutableString$append$panda$core$String(typeName2799, &$s2823);
@@ -6907,196 +6925,203 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Compiler$inheritedTypeWi
     org$pandalanguage$pandac$Type* $tmp2840 = org$pandalanguage$pandac$Compiler$inheritedTypeWithSelf$org$pandalanguage$pandac$MethodDecl$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type(self, inherited2837, p_selfType);
     return $tmp2840;
 }
-panda$core$String* org$pandalanguage$pandac$Compiler$operatorName$org$pandalanguage$pandac$parser$Token$Kind$R$panda$core$String(org$pandalanguage$pandac$parser$Token$Kind* p_op) {
-    org$pandalanguage$pandac$parser$Token$Kind* $match$2060_92841;
+panda$core$String* org$pandalanguage$pandac$Compiler$operatorName$org$pandalanguage$pandac$parser$Token$Kind$R$panda$core$String(org$pandalanguage$pandac$parser$Token$Kind p_op) {
+    org$pandalanguage$pandac$parser$Token$Kind $match$2060_92841;
     {
         $match$2060_92841 = p_op;
-        panda$core$Bit $tmp2842 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841->$rawValue, ((panda$core$Int64) { 51 }));
+        panda$core$Bit $tmp2842 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841.$rawValue, ((panda$core$Int64) { 51 }));
         if ($tmp2842.value) {
         {
             return &$s2843;
         }
         }
         else {
-        panda$core$Bit $tmp2844 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841->$rawValue, ((panda$core$Int64) { 52 }));
+        panda$core$Bit $tmp2844 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841.$rawValue, ((panda$core$Int64) { 52 }));
         if ($tmp2844.value) {
         {
             return &$s2845;
         }
         }
         else {
-        panda$core$Bit $tmp2846 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841->$rawValue, ((panda$core$Int64) { 53 }));
+        panda$core$Bit $tmp2846 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841.$rawValue, ((panda$core$Int64) { 53 }));
         if ($tmp2846.value) {
         {
             return &$s2847;
         }
         }
         else {
-        panda$core$Bit $tmp2848 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841->$rawValue, ((panda$core$Int64) { 54 }));
+        panda$core$Bit $tmp2848 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841.$rawValue, ((panda$core$Int64) { 54 }));
         if ($tmp2848.value) {
         {
             return &$s2849;
         }
         }
         else {
-        panda$core$Bit $tmp2850 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841->$rawValue, ((panda$core$Int64) { 55 }));
+        panda$core$Bit $tmp2850 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841.$rawValue, ((panda$core$Int64) { 55 }));
         if ($tmp2850.value) {
         {
             return &$s2851;
         }
         }
         else {
-        panda$core$Bit $tmp2852 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841->$rawValue, ((panda$core$Int64) { 56 }));
+        panda$core$Bit $tmp2852 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841.$rawValue, ((panda$core$Int64) { 56 }));
         if ($tmp2852.value) {
         {
             return &$s2853;
         }
         }
         else {
-        panda$core$Bit $tmp2854 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841->$rawValue, ((panda$core$Int64) { 57 }));
+        panda$core$Bit $tmp2854 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841.$rawValue, ((panda$core$Int64) { 57 }));
         if ($tmp2854.value) {
         {
             return &$s2855;
         }
         }
         else {
-        panda$core$Bit $tmp2856 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841->$rawValue, ((panda$core$Int64) { 58 }));
+        panda$core$Bit $tmp2856 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841.$rawValue, ((panda$core$Int64) { 58 }));
         if ($tmp2856.value) {
         {
             return &$s2857;
         }
         }
         else {
-        panda$core$Bit $tmp2858 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841->$rawValue, ((panda$core$Int64) { 59 }));
+        panda$core$Bit $tmp2858 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841.$rawValue, ((panda$core$Int64) { 59 }));
         if ($tmp2858.value) {
         {
             return &$s2859;
         }
         }
         else {
-        panda$core$Bit $tmp2860 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841->$rawValue, ((panda$core$Int64) { 63 }));
+        panda$core$Bit $tmp2860 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841.$rawValue, ((panda$core$Int64) { 63 }));
         if ($tmp2860.value) {
         {
             return &$s2861;
         }
         }
         else {
-        panda$core$Bit $tmp2862 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841->$rawValue, ((panda$core$Int64) { 62 }));
+        panda$core$Bit $tmp2862 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841.$rawValue, ((panda$core$Int64) { 62 }));
         if ($tmp2862.value) {
         {
             return &$s2863;
         }
         }
         else {
-        panda$core$Bit $tmp2864 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841->$rawValue, ((panda$core$Int64) { 65 }));
+        panda$core$Bit $tmp2864 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841.$rawValue, ((panda$core$Int64) { 65 }));
         if ($tmp2864.value) {
         {
             return &$s2865;
         }
         }
         else {
-        panda$core$Bit $tmp2866 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841->$rawValue, ((panda$core$Int64) { 64 }));
+        panda$core$Bit $tmp2866 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841.$rawValue, ((panda$core$Int64) { 64 }));
         if ($tmp2866.value) {
         {
             return &$s2867;
         }
         }
         else {
-        panda$core$Bit $tmp2868 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841->$rawValue, ((panda$core$Int64) { 68 }));
+        panda$core$Bit $tmp2868 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841.$rawValue, ((panda$core$Int64) { 68 }));
         if ($tmp2868.value) {
         {
             return &$s2869;
         }
         }
         else {
-        panda$core$Bit $tmp2870 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841->$rawValue, ((panda$core$Int64) { 69 }));
+        panda$core$Bit $tmp2870 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841.$rawValue, ((panda$core$Int64) { 69 }));
         if ($tmp2870.value) {
         {
             return &$s2871;
         }
         }
         else {
-        panda$core$Bit $tmp2872 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841->$rawValue, ((panda$core$Int64) { 66 }));
+        panda$core$Bit $tmp2872 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841.$rawValue, ((panda$core$Int64) { 66 }));
         if ($tmp2872.value) {
         {
             return &$s2873;
         }
         }
         else {
-        panda$core$Bit $tmp2874 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841->$rawValue, ((panda$core$Int64) { 67 }));
+        panda$core$Bit $tmp2874 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841.$rawValue, ((panda$core$Int64) { 67 }));
         if ($tmp2874.value) {
         {
             return &$s2875;
         }
         }
         else {
-        panda$core$Bit $tmp2876 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841->$rawValue, ((panda$core$Int64) { 70 }));
+        panda$core$Bit $tmp2876 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841.$rawValue, ((panda$core$Int64) { 70 }));
         if ($tmp2876.value) {
         {
             return &$s2877;
         }
         }
         else {
-        panda$core$Bit $tmp2878 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841->$rawValue, ((panda$core$Int64) { 71 }));
+        panda$core$Bit $tmp2878 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841.$rawValue, ((panda$core$Int64) { 71 }));
         if ($tmp2878.value) {
         {
             return &$s2879;
         }
         }
         else {
-        panda$core$Bit $tmp2880 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841->$rawValue, ((panda$core$Int64) { 49 }));
+        panda$core$Bit $tmp2880 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841.$rawValue, ((panda$core$Int64) { 49 }));
         if ($tmp2880.value) {
         {
             return &$s2881;
         }
         }
         else {
-        panda$core$Bit $tmp2882 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841->$rawValue, ((panda$core$Int64) { 50 }));
+        panda$core$Bit $tmp2882 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841.$rawValue, ((panda$core$Int64) { 50 }));
         if ($tmp2882.value) {
         {
             return &$s2883;
         }
         }
         else {
-        panda$core$Bit $tmp2884 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841->$rawValue, ((panda$core$Int64) { 72 }));
+        panda$core$Bit $tmp2884 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841.$rawValue, ((panda$core$Int64) { 72 }));
         if ($tmp2884.value) {
         {
             return &$s2885;
         }
         }
         else {
-        panda$core$Bit $tmp2886 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841->$rawValue, ((panda$core$Int64) { 1 }));
+        panda$core$Bit $tmp2886 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841.$rawValue, ((panda$core$Int64) { 1 }));
         if ($tmp2886.value) {
         {
             return &$s2887;
         }
         }
         else {
-        panda$core$Bit $tmp2888 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841->$rawValue, ((panda$core$Int64) { 101 }));
+        panda$core$Bit $tmp2888 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841.$rawValue, ((panda$core$Int64) { 101 }));
         if ($tmp2888.value) {
         {
             return &$s2889;
         }
         }
         else {
-        panda$core$Bit $tmp2890 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841->$rawValue, ((panda$core$Int64) { 73 }));
+        panda$core$Bit $tmp2890 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841.$rawValue, ((panda$core$Int64) { 73 }));
         if ($tmp2890.value) {
         {
             return &$s2891;
         }
         }
         else {
-        panda$core$Bit $tmp2892 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841->$rawValue, ((panda$core$Int64) { 60 }));
+        panda$core$Bit $tmp2892 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841.$rawValue, ((panda$core$Int64) { 60 }));
         if ($tmp2892.value) {
         {
             return &$s2893;
         }
         }
         else {
-        panda$core$Bit $tmp2894 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841->$rawValue, ((panda$core$Int64) { 61 }));
+        panda$core$Bit $tmp2894 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841.$rawValue, ((panda$core$Int64) { 61 }));
         if ($tmp2894.value) {
         {
             return &$s2895;
+        }
+        }
+        else {
+        panda$core$Bit $tmp2896 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2060_92841.$rawValue, ((panda$core$Int64) { 89 }));
+        if ($tmp2896.value) {
+        {
+            return &$s2897;
         }
         }
         else {
@@ -7130,98 +7155,99 @@ panda$core$String* org$pandalanguage$pandac$Compiler$operatorName$org$pandalangu
         }
         }
         }
+        }
     }
 }
-panda$core$Bit org$pandalanguage$pandac$Compiler$isAssignment$org$pandalanguage$pandac$parser$Token$Kind$R$panda$core$Bit(org$pandalanguage$pandac$parser$Token$Kind* p_op) {
-    org$pandalanguage$pandac$parser$Token$Kind* $match$2095_92896;
+panda$core$Bit org$pandalanguage$pandac$Compiler$isAssignment$org$pandalanguage$pandac$parser$Token$Kind$R$panda$core$Bit(org$pandalanguage$pandac$parser$Token$Kind p_op) {
+    org$pandalanguage$pandac$parser$Token$Kind $match$2096_92898;
     {
-        $match$2095_92896 = p_op;
-        panda$core$Bit $tmp2911 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2095_92896->$rawValue, ((panda$core$Int64) { 74 }));
-        bool $tmp2910 = $tmp2911.value;
-        if ($tmp2910) goto $l2912;
-        panda$core$Bit $tmp2913 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2095_92896->$rawValue, ((panda$core$Int64) { 75 }));
-        $tmp2910 = $tmp2913.value;
-        $l2912:;
-        panda$core$Bit $tmp2914 = { $tmp2910 };
-        bool $tmp2909 = $tmp2914.value;
-        if ($tmp2909) goto $l2915;
-        panda$core$Bit $tmp2916 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2095_92896->$rawValue, ((panda$core$Int64) { 76 }));
-        $tmp2909 = $tmp2916.value;
-        $l2915:;
-        panda$core$Bit $tmp2917 = { $tmp2909 };
-        bool $tmp2908 = $tmp2917.value;
-        if ($tmp2908) goto $l2918;
-        panda$core$Bit $tmp2919 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2095_92896->$rawValue, ((panda$core$Int64) { 77 }));
-        $tmp2908 = $tmp2919.value;
-        $l2918:;
-        panda$core$Bit $tmp2920 = { $tmp2908 };
-        bool $tmp2907 = $tmp2920.value;
-        if ($tmp2907) goto $l2921;
-        panda$core$Bit $tmp2922 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2095_92896->$rawValue, ((panda$core$Int64) { 79 }));
-        $tmp2907 = $tmp2922.value;
-        $l2921:;
-        panda$core$Bit $tmp2923 = { $tmp2907 };
-        bool $tmp2906 = $tmp2923.value;
-        if ($tmp2906) goto $l2924;
-        panda$core$Bit $tmp2925 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2095_92896->$rawValue, ((panda$core$Int64) { 78 }));
-        $tmp2906 = $tmp2925.value;
-        $l2924:;
-        panda$core$Bit $tmp2926 = { $tmp2906 };
-        bool $tmp2905 = $tmp2926.value;
-        if ($tmp2905) goto $l2927;
-        panda$core$Bit $tmp2928 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2095_92896->$rawValue, ((panda$core$Int64) { 80 }));
-        $tmp2905 = $tmp2928.value;
-        $l2927:;
-        panda$core$Bit $tmp2929 = { $tmp2905 };
-        bool $tmp2904 = $tmp2929.value;
-        if ($tmp2904) goto $l2930;
-        panda$core$Bit $tmp2931 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2095_92896->$rawValue, ((panda$core$Int64) { 81 }));
-        $tmp2904 = $tmp2931.value;
-        $l2930:;
-        panda$core$Bit $tmp2932 = { $tmp2904 };
-        bool $tmp2903 = $tmp2932.value;
-        if ($tmp2903) goto $l2933;
-        panda$core$Bit $tmp2934 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2095_92896->$rawValue, ((panda$core$Int64) { 82 }));
-        $tmp2903 = $tmp2934.value;
-        $l2933:;
-        panda$core$Bit $tmp2935 = { $tmp2903 };
-        bool $tmp2902 = $tmp2935.value;
-        if ($tmp2902) goto $l2936;
-        panda$core$Bit $tmp2937 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2095_92896->$rawValue, ((panda$core$Int64) { 83 }));
-        $tmp2902 = $tmp2937.value;
-        $l2936:;
-        panda$core$Bit $tmp2938 = { $tmp2902 };
-        bool $tmp2901 = $tmp2938.value;
-        if ($tmp2901) goto $l2939;
-        panda$core$Bit $tmp2940 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2095_92896->$rawValue, ((panda$core$Int64) { 84 }));
-        $tmp2901 = $tmp2940.value;
-        $l2939:;
-        panda$core$Bit $tmp2941 = { $tmp2901 };
-        bool $tmp2900 = $tmp2941.value;
-        if ($tmp2900) goto $l2942;
-        panda$core$Bit $tmp2943 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2095_92896->$rawValue, ((panda$core$Int64) { 85 }));
-        $tmp2900 = $tmp2943.value;
-        $l2942:;
-        panda$core$Bit $tmp2944 = { $tmp2900 };
-        bool $tmp2899 = $tmp2944.value;
-        if ($tmp2899) goto $l2945;
-        panda$core$Bit $tmp2946 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2095_92896->$rawValue, ((panda$core$Int64) { 86 }));
-        $tmp2899 = $tmp2946.value;
-        $l2945:;
-        panda$core$Bit $tmp2947 = { $tmp2899 };
-        bool $tmp2898 = $tmp2947.value;
-        if ($tmp2898) goto $l2948;
-        panda$core$Bit $tmp2949 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2095_92896->$rawValue, ((panda$core$Int64) { 87 }));
-        $tmp2898 = $tmp2949.value;
-        $l2948:;
-        panda$core$Bit $tmp2950 = { $tmp2898 };
-        bool $tmp2897 = $tmp2950.value;
-        if ($tmp2897) goto $l2951;
-        panda$core$Bit $tmp2952 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2095_92896->$rawValue, ((panda$core$Int64) { 88 }));
-        $tmp2897 = $tmp2952.value;
-        $l2951:;
-        panda$core$Bit $tmp2953 = { $tmp2897 };
-        if ($tmp2953.value) {
+        $match$2096_92898 = p_op;
+        panda$core$Bit $tmp2913 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2096_92898.$rawValue, ((panda$core$Int64) { 74 }));
+        bool $tmp2912 = $tmp2913.value;
+        if ($tmp2912) goto $l2914;
+        panda$core$Bit $tmp2915 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2096_92898.$rawValue, ((panda$core$Int64) { 75 }));
+        $tmp2912 = $tmp2915.value;
+        $l2914:;
+        panda$core$Bit $tmp2916 = { $tmp2912 };
+        bool $tmp2911 = $tmp2916.value;
+        if ($tmp2911) goto $l2917;
+        panda$core$Bit $tmp2918 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2096_92898.$rawValue, ((panda$core$Int64) { 76 }));
+        $tmp2911 = $tmp2918.value;
+        $l2917:;
+        panda$core$Bit $tmp2919 = { $tmp2911 };
+        bool $tmp2910 = $tmp2919.value;
+        if ($tmp2910) goto $l2920;
+        panda$core$Bit $tmp2921 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2096_92898.$rawValue, ((panda$core$Int64) { 77 }));
+        $tmp2910 = $tmp2921.value;
+        $l2920:;
+        panda$core$Bit $tmp2922 = { $tmp2910 };
+        bool $tmp2909 = $tmp2922.value;
+        if ($tmp2909) goto $l2923;
+        panda$core$Bit $tmp2924 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2096_92898.$rawValue, ((panda$core$Int64) { 79 }));
+        $tmp2909 = $tmp2924.value;
+        $l2923:;
+        panda$core$Bit $tmp2925 = { $tmp2909 };
+        bool $tmp2908 = $tmp2925.value;
+        if ($tmp2908) goto $l2926;
+        panda$core$Bit $tmp2927 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2096_92898.$rawValue, ((panda$core$Int64) { 78 }));
+        $tmp2908 = $tmp2927.value;
+        $l2926:;
+        panda$core$Bit $tmp2928 = { $tmp2908 };
+        bool $tmp2907 = $tmp2928.value;
+        if ($tmp2907) goto $l2929;
+        panda$core$Bit $tmp2930 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2096_92898.$rawValue, ((panda$core$Int64) { 80 }));
+        $tmp2907 = $tmp2930.value;
+        $l2929:;
+        panda$core$Bit $tmp2931 = { $tmp2907 };
+        bool $tmp2906 = $tmp2931.value;
+        if ($tmp2906) goto $l2932;
+        panda$core$Bit $tmp2933 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2096_92898.$rawValue, ((panda$core$Int64) { 81 }));
+        $tmp2906 = $tmp2933.value;
+        $l2932:;
+        panda$core$Bit $tmp2934 = { $tmp2906 };
+        bool $tmp2905 = $tmp2934.value;
+        if ($tmp2905) goto $l2935;
+        panda$core$Bit $tmp2936 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2096_92898.$rawValue, ((panda$core$Int64) { 82 }));
+        $tmp2905 = $tmp2936.value;
+        $l2935:;
+        panda$core$Bit $tmp2937 = { $tmp2905 };
+        bool $tmp2904 = $tmp2937.value;
+        if ($tmp2904) goto $l2938;
+        panda$core$Bit $tmp2939 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2096_92898.$rawValue, ((panda$core$Int64) { 83 }));
+        $tmp2904 = $tmp2939.value;
+        $l2938:;
+        panda$core$Bit $tmp2940 = { $tmp2904 };
+        bool $tmp2903 = $tmp2940.value;
+        if ($tmp2903) goto $l2941;
+        panda$core$Bit $tmp2942 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2096_92898.$rawValue, ((panda$core$Int64) { 84 }));
+        $tmp2903 = $tmp2942.value;
+        $l2941:;
+        panda$core$Bit $tmp2943 = { $tmp2903 };
+        bool $tmp2902 = $tmp2943.value;
+        if ($tmp2902) goto $l2944;
+        panda$core$Bit $tmp2945 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2096_92898.$rawValue, ((panda$core$Int64) { 85 }));
+        $tmp2902 = $tmp2945.value;
+        $l2944:;
+        panda$core$Bit $tmp2946 = { $tmp2902 };
+        bool $tmp2901 = $tmp2946.value;
+        if ($tmp2901) goto $l2947;
+        panda$core$Bit $tmp2948 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2096_92898.$rawValue, ((panda$core$Int64) { 86 }));
+        $tmp2901 = $tmp2948.value;
+        $l2947:;
+        panda$core$Bit $tmp2949 = { $tmp2901 };
+        bool $tmp2900 = $tmp2949.value;
+        if ($tmp2900) goto $l2950;
+        panda$core$Bit $tmp2951 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2096_92898.$rawValue, ((panda$core$Int64) { 87 }));
+        $tmp2900 = $tmp2951.value;
+        $l2950:;
+        panda$core$Bit $tmp2952 = { $tmp2900 };
+        bool $tmp2899 = $tmp2952.value;
+        if ($tmp2899) goto $l2953;
+        panda$core$Bit $tmp2954 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2096_92898.$rawValue, ((panda$core$Int64) { 88 }));
+        $tmp2899 = $tmp2954.value;
+        $l2953:;
+        panda$core$Bit $tmp2955 = { $tmp2899 };
+        if ($tmp2955.value) {
         {
             return ((panda$core$Bit) { true });
         }
@@ -7233,172 +7259,142 @@ panda$core$Bit org$pandalanguage$pandac$Compiler$isAssignment$org$pandalanguage$
         }
     }
 }
-org$pandalanguage$pandac$parser$Token$Kind* org$pandalanguage$pandac$Compiler$removeAssignment$org$pandalanguage$pandac$parser$Token$Kind$R$org$pandalanguage$pandac$parser$Token$Kind(org$pandalanguage$pandac$parser$Token$Kind* p_op) {
-    org$pandalanguage$pandac$parser$Token$Kind* $match$2109_92954;
+org$pandalanguage$pandac$parser$Token$Kind org$pandalanguage$pandac$Compiler$removeAssignment$org$pandalanguage$pandac$parser$Token$Kind$R$org$pandalanguage$pandac$parser$Token$Kind(org$pandalanguage$pandac$parser$Token$Kind p_op) {
+    org$pandalanguage$pandac$parser$Token$Kind $match$2110_92956;
+    org$pandalanguage$pandac$parser$Token$Kind $tmp2958;
+    org$pandalanguage$pandac$parser$Token$Kind $tmp2960;
+    org$pandalanguage$pandac$parser$Token$Kind $tmp2962;
+    org$pandalanguage$pandac$parser$Token$Kind $tmp2964;
+    org$pandalanguage$pandac$parser$Token$Kind $tmp2966;
+    org$pandalanguage$pandac$parser$Token$Kind $tmp2968;
+    org$pandalanguage$pandac$parser$Token$Kind $tmp2970;
+    org$pandalanguage$pandac$parser$Token$Kind $tmp2972;
+    org$pandalanguage$pandac$parser$Token$Kind $tmp2974;
+    org$pandalanguage$pandac$parser$Token$Kind $tmp2976;
+    org$pandalanguage$pandac$parser$Token$Kind $tmp2978;
+    org$pandalanguage$pandac$parser$Token$Kind $tmp2980;
+    org$pandalanguage$pandac$parser$Token$Kind $tmp2982;
+    org$pandalanguage$pandac$parser$Token$Kind $tmp2984;
+    org$pandalanguage$pandac$parser$Token$Kind $tmp2986;
     {
-        $match$2109_92954 = p_op;
-        panda$core$Bit $tmp2955 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2109_92954->$rawValue, ((panda$core$Int64) { 74 }));
-        if ($tmp2955.value) {
+        $match$2110_92956 = p_op;
+        panda$core$Bit $tmp2957 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2110_92956.$rawValue, ((panda$core$Int64) { 74 }));
+        if ($tmp2957.value) {
         {
-            org$pandalanguage$pandac$parser$Token$Kind* $tmp2956 = (org$pandalanguage$pandac$parser$Token$Kind*) malloc(24);
-            $tmp2956->$class = (panda$core$Class*) &org$pandalanguage$pandac$parser$Token$Kind$class;
-            $tmp2956->refCount.value = 1;
-            org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64($tmp2956, ((panda$core$Int64) { 51 }));
-            return $tmp2956;
+            org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64(&$tmp2958, ((panda$core$Int64) { 51 }));
+            return $tmp2958;
         }
         }
         else {
-        panda$core$Bit $tmp2958 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2109_92954->$rawValue, ((panda$core$Int64) { 75 }));
-        if ($tmp2958.value) {
+        panda$core$Bit $tmp2959 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2110_92956.$rawValue, ((panda$core$Int64) { 75 }));
+        if ($tmp2959.value) {
         {
-            org$pandalanguage$pandac$parser$Token$Kind* $tmp2959 = (org$pandalanguage$pandac$parser$Token$Kind*) malloc(24);
-            $tmp2959->$class = (panda$core$Class*) &org$pandalanguage$pandac$parser$Token$Kind$class;
-            $tmp2959->refCount.value = 1;
-            org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64($tmp2959, ((panda$core$Int64) { 52 }));
-            return $tmp2959;
+            org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64(&$tmp2960, ((panda$core$Int64) { 52 }));
+            return $tmp2960;
         }
         }
         else {
-        panda$core$Bit $tmp2961 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2109_92954->$rawValue, ((panda$core$Int64) { 76 }));
+        panda$core$Bit $tmp2961 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2110_92956.$rawValue, ((panda$core$Int64) { 76 }));
         if ($tmp2961.value) {
         {
-            org$pandalanguage$pandac$parser$Token$Kind* $tmp2962 = (org$pandalanguage$pandac$parser$Token$Kind*) malloc(24);
-            $tmp2962->$class = (panda$core$Class*) &org$pandalanguage$pandac$parser$Token$Kind$class;
-            $tmp2962->refCount.value = 1;
-            org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64($tmp2962, ((panda$core$Int64) { 53 }));
+            org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64(&$tmp2962, ((panda$core$Int64) { 53 }));
             return $tmp2962;
         }
         }
         else {
-        panda$core$Bit $tmp2964 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2109_92954->$rawValue, ((panda$core$Int64) { 77 }));
-        if ($tmp2964.value) {
+        panda$core$Bit $tmp2963 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2110_92956.$rawValue, ((panda$core$Int64) { 77 }));
+        if ($tmp2963.value) {
         {
-            org$pandalanguage$pandac$parser$Token$Kind* $tmp2965 = (org$pandalanguage$pandac$parser$Token$Kind*) malloc(24);
-            $tmp2965->$class = (panda$core$Class*) &org$pandalanguage$pandac$parser$Token$Kind$class;
-            $tmp2965->refCount.value = 1;
-            org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64($tmp2965, ((panda$core$Int64) { 54 }));
-            return $tmp2965;
+            org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64(&$tmp2964, ((panda$core$Int64) { 54 }));
+            return $tmp2964;
         }
         }
         else {
-        panda$core$Bit $tmp2967 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2109_92954->$rawValue, ((panda$core$Int64) { 79 }));
+        panda$core$Bit $tmp2965 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2110_92956.$rawValue, ((panda$core$Int64) { 79 }));
+        if ($tmp2965.value) {
+        {
+            org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64(&$tmp2966, ((panda$core$Int64) { 55 }));
+            return $tmp2966;
+        }
+        }
+        else {
+        panda$core$Bit $tmp2967 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2110_92956.$rawValue, ((panda$core$Int64) { 78 }));
         if ($tmp2967.value) {
         {
-            org$pandalanguage$pandac$parser$Token$Kind* $tmp2968 = (org$pandalanguage$pandac$parser$Token$Kind*) malloc(24);
-            $tmp2968->$class = (panda$core$Class*) &org$pandalanguage$pandac$parser$Token$Kind$class;
-            $tmp2968->refCount.value = 1;
-            org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64($tmp2968, ((panda$core$Int64) { 55 }));
+            org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64(&$tmp2968, ((panda$core$Int64) { 56 }));
             return $tmp2968;
         }
         }
         else {
-        panda$core$Bit $tmp2970 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2109_92954->$rawValue, ((panda$core$Int64) { 78 }));
-        if ($tmp2970.value) {
+        panda$core$Bit $tmp2969 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2110_92956.$rawValue, ((panda$core$Int64) { 80 }));
+        if ($tmp2969.value) {
         {
-            org$pandalanguage$pandac$parser$Token$Kind* $tmp2971 = (org$pandalanguage$pandac$parser$Token$Kind*) malloc(24);
-            $tmp2971->$class = (panda$core$Class*) &org$pandalanguage$pandac$parser$Token$Kind$class;
-            $tmp2971->refCount.value = 1;
-            org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64($tmp2971, ((panda$core$Int64) { 56 }));
-            return $tmp2971;
+            org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64(&$tmp2970, ((panda$core$Int64) { 57 }));
+            return $tmp2970;
         }
         }
         else {
-        panda$core$Bit $tmp2973 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2109_92954->$rawValue, ((panda$core$Int64) { 80 }));
+        panda$core$Bit $tmp2971 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2110_92956.$rawValue, ((panda$core$Int64) { 81 }));
+        if ($tmp2971.value) {
+        {
+            org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64(&$tmp2972, ((panda$core$Int64) { 68 }));
+            return $tmp2972;
+        }
+        }
+        else {
+        panda$core$Bit $tmp2973 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2110_92956.$rawValue, ((panda$core$Int64) { 82 }));
         if ($tmp2973.value) {
         {
-            org$pandalanguage$pandac$parser$Token$Kind* $tmp2974 = (org$pandalanguage$pandac$parser$Token$Kind*) malloc(24);
-            $tmp2974->$class = (panda$core$Class*) &org$pandalanguage$pandac$parser$Token$Kind$class;
-            $tmp2974->refCount.value = 1;
-            org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64($tmp2974, ((panda$core$Int64) { 57 }));
+            org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64(&$tmp2974, ((panda$core$Int64) { 69 }));
             return $tmp2974;
         }
         }
         else {
-        panda$core$Bit $tmp2976 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2109_92954->$rawValue, ((panda$core$Int64) { 81 }));
-        if ($tmp2976.value) {
+        panda$core$Bit $tmp2975 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2110_92956.$rawValue, ((panda$core$Int64) { 83 }));
+        if ($tmp2975.value) {
         {
-            org$pandalanguage$pandac$parser$Token$Kind* $tmp2977 = (org$pandalanguage$pandac$parser$Token$Kind*) malloc(24);
-            $tmp2977->$class = (panda$core$Class*) &org$pandalanguage$pandac$parser$Token$Kind$class;
-            $tmp2977->refCount.value = 1;
-            org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64($tmp2977, ((panda$core$Int64) { 68 }));
-            return $tmp2977;
+            org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64(&$tmp2976, ((panda$core$Int64) { 66 }));
+            return $tmp2976;
         }
         }
         else {
-        panda$core$Bit $tmp2979 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2109_92954->$rawValue, ((panda$core$Int64) { 82 }));
+        panda$core$Bit $tmp2977 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2110_92956.$rawValue, ((panda$core$Int64) { 84 }));
+        if ($tmp2977.value) {
+        {
+            org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64(&$tmp2978, ((panda$core$Int64) { 67 }));
+            return $tmp2978;
+        }
+        }
+        else {
+        panda$core$Bit $tmp2979 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2110_92956.$rawValue, ((panda$core$Int64) { 85 }));
         if ($tmp2979.value) {
         {
-            org$pandalanguage$pandac$parser$Token$Kind* $tmp2980 = (org$pandalanguage$pandac$parser$Token$Kind*) malloc(24);
-            $tmp2980->$class = (panda$core$Class*) &org$pandalanguage$pandac$parser$Token$Kind$class;
-            $tmp2980->refCount.value = 1;
-            org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64($tmp2980, ((panda$core$Int64) { 69 }));
+            org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64(&$tmp2980, ((panda$core$Int64) { 70 }));
             return $tmp2980;
         }
         }
         else {
-        panda$core$Bit $tmp2982 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2109_92954->$rawValue, ((panda$core$Int64) { 83 }));
-        if ($tmp2982.value) {
+        panda$core$Bit $tmp2981 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2110_92956.$rawValue, ((panda$core$Int64) { 86 }));
+        if ($tmp2981.value) {
         {
-            org$pandalanguage$pandac$parser$Token$Kind* $tmp2983 = (org$pandalanguage$pandac$parser$Token$Kind*) malloc(24);
-            $tmp2983->$class = (panda$core$Class*) &org$pandalanguage$pandac$parser$Token$Kind$class;
-            $tmp2983->refCount.value = 1;
-            org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64($tmp2983, ((panda$core$Int64) { 66 }));
-            return $tmp2983;
+            org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64(&$tmp2982, ((panda$core$Int64) { 71 }));
+            return $tmp2982;
         }
         }
         else {
-        panda$core$Bit $tmp2985 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2109_92954->$rawValue, ((panda$core$Int64) { 84 }));
+        panda$core$Bit $tmp2983 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2110_92956.$rawValue, ((panda$core$Int64) { 87 }));
+        if ($tmp2983.value) {
+        {
+            org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64(&$tmp2984, ((panda$core$Int64) { 72 }));
+            return $tmp2984;
+        }
+        }
+        else {
+        panda$core$Bit $tmp2985 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2110_92956.$rawValue, ((panda$core$Int64) { 88 }));
         if ($tmp2985.value) {
         {
-            org$pandalanguage$pandac$parser$Token$Kind* $tmp2986 = (org$pandalanguage$pandac$parser$Token$Kind*) malloc(24);
-            $tmp2986->$class = (panda$core$Class*) &org$pandalanguage$pandac$parser$Token$Kind$class;
-            $tmp2986->refCount.value = 1;
-            org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64($tmp2986, ((panda$core$Int64) { 67 }));
+            org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64(&$tmp2986, ((panda$core$Int64) { 1 }));
             return $tmp2986;
-        }
-        }
-        else {
-        panda$core$Bit $tmp2988 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2109_92954->$rawValue, ((panda$core$Int64) { 85 }));
-        if ($tmp2988.value) {
-        {
-            org$pandalanguage$pandac$parser$Token$Kind* $tmp2989 = (org$pandalanguage$pandac$parser$Token$Kind*) malloc(24);
-            $tmp2989->$class = (panda$core$Class*) &org$pandalanguage$pandac$parser$Token$Kind$class;
-            $tmp2989->refCount.value = 1;
-            org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64($tmp2989, ((panda$core$Int64) { 70 }));
-            return $tmp2989;
-        }
-        }
-        else {
-        panda$core$Bit $tmp2991 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2109_92954->$rawValue, ((panda$core$Int64) { 86 }));
-        if ($tmp2991.value) {
-        {
-            org$pandalanguage$pandac$parser$Token$Kind* $tmp2992 = (org$pandalanguage$pandac$parser$Token$Kind*) malloc(24);
-            $tmp2992->$class = (panda$core$Class*) &org$pandalanguage$pandac$parser$Token$Kind$class;
-            $tmp2992->refCount.value = 1;
-            org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64($tmp2992, ((panda$core$Int64) { 71 }));
-            return $tmp2992;
-        }
-        }
-        else {
-        panda$core$Bit $tmp2994 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2109_92954->$rawValue, ((panda$core$Int64) { 87 }));
-        if ($tmp2994.value) {
-        {
-            org$pandalanguage$pandac$parser$Token$Kind* $tmp2995 = (org$pandalanguage$pandac$parser$Token$Kind*) malloc(24);
-            $tmp2995->$class = (panda$core$Class*) &org$pandalanguage$pandac$parser$Token$Kind$class;
-            $tmp2995->refCount.value = 1;
-            org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64($tmp2995, ((panda$core$Int64) { 72 }));
-            return $tmp2995;
-        }
-        }
-        else {
-        panda$core$Bit $tmp2997 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2109_92954->$rawValue, ((panda$core$Int64) { 88 }));
-        if ($tmp2997.value) {
-        {
-            org$pandalanguage$pandac$parser$Token$Kind* $tmp2998 = (org$pandalanguage$pandac$parser$Token$Kind*) malloc(24);
-            $tmp2998->$class = (panda$core$Class*) &org$pandalanguage$pandac$parser$Token$Kind$class;
-            $tmp2998->refCount.value = 1;
-            org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64($tmp2998, ((panda$core$Int64) { 1 }));
-            return $tmp2998;
         }
         }
         else {
@@ -7426,15 +7422,15 @@ panda$core$Bit org$pandalanguage$pandac$Compiler$isLValue$org$pandalanguage$pand
     switch (p_expr->kind.value) {
         case 1009:
         {
-            panda$core$Int64 $tmp3000 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(p_expr->children);
-            panda$core$Bit $tmp3001 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp3000, ((panda$core$Int64) { 1 }));
-            PANDA_ASSERT($tmp3001.value);
-            panda$core$Bit $tmp3002 = panda$core$Bit$$NOT$R$panda$core$Bit(((panda$core$Bit$wrapper*) p_expr->payload)->value);
-            if ($tmp3002.value) {
+            panda$core$Int64 $tmp2987 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(p_expr->children);
+            panda$core$Bit $tmp2988 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp2987, ((panda$core$Int64) { 1 }));
+            PANDA_ASSERT($tmp2988.value);
+            panda$core$Bit $tmp2989 = panda$core$Bit$$NOT$R$panda$core$Bit(((panda$core$Bit$wrapper*) p_expr->payload)->value);
+            if ($tmp2989.value) {
             {
-                panda$core$Object* $tmp3003 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_expr->children, ((panda$core$Int64) { 0 }));
-                panda$core$Bit $tmp3004 = org$pandalanguage$pandac$Compiler$isLValue$org$pandalanguage$pandac$IRNode$R$panda$core$Bit(self, ((org$pandalanguage$pandac$IRNode*) $tmp3003));
-                return $tmp3004;
+                panda$core$Object* $tmp2990 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_expr->children, ((panda$core$Int64) { 0 }));
+                panda$core$Bit $tmp2991 = org$pandalanguage$pandac$Compiler$isLValue$org$pandalanguage$pandac$IRNode$R$panda$core$Bit(self, ((org$pandalanguage$pandac$IRNode*) $tmp2990));
+                return $tmp2991;
             }
             }
             return ((panda$core$Bit) { false });
@@ -7449,9 +7445,9 @@ panda$core$Bit org$pandalanguage$pandac$Compiler$isLValue$org$pandalanguage$pand
         break;
         case 1027:
         {
-            panda$core$Object* $tmp3005 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_expr->children, ((panda$core$Int64) { 0 }));
-            panda$core$Bit $tmp3006 = org$pandalanguage$pandac$Compiler$isLValue$org$pandalanguage$pandac$IRNode$R$panda$core$Bit(self, ((org$pandalanguage$pandac$IRNode*) $tmp3005));
-            return $tmp3006;
+            panda$core$Object* $tmp2992 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_expr->children, ((panda$core$Int64) { 0 }));
+            panda$core$Bit $tmp2993 = org$pandalanguage$pandac$Compiler$isLValue$org$pandalanguage$pandac$IRNode$R$panda$core$Bit(self, ((org$pandalanguage$pandac$IRNode*) $tmp2992));
+            return $tmp2993;
         }
         break;
         default:
@@ -7460,290 +7456,290 @@ panda$core$Bit org$pandalanguage$pandac$Compiler$isLValue$org$pandalanguage$pand
         }
     }
 }
-org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$foldInts$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position p_position, org$pandalanguage$pandac$IRNode* p_left, org$pandalanguage$pandac$parser$Token$Kind* p_op, org$pandalanguage$pandac$IRNode* p_right) {
-    panda$core$Int64 l3032;
-    panda$core$Int64 r3034;
-    org$pandalanguage$pandac$parser$Token$Kind* $match$2156_133036;
-    panda$core$UInt64 v3038;
-    panda$core$UInt64 v3045;
-    panda$core$UInt64 v3052;
-    panda$core$UInt64 v3059;
-    panda$core$UInt64 v3066;
-    panda$core$UInt64 v3103;
-    panda$core$UInt64 v3110;
-    panda$core$UInt64 v3117;
-    panda$core$UInt64 v3124;
-    panda$core$UInt64 v3131;
-    panda$core$Bit $tmp3008 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_left->kind, ((panda$core$Int64) { 1004 }));
-    bool $tmp3007 = $tmp3008.value;
-    if ($tmp3007) goto $l3009;
-    panda$core$Bit $tmp3010 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_left->kind, ((panda$core$Int64) { 1032 }));
-    $tmp3007 = $tmp3010.value;
-    $l3009:;
-    panda$core$Bit $tmp3011 = { $tmp3007 };
-    PANDA_ASSERT($tmp3011.value);
-    panda$core$Bit $tmp3013 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_right->kind, ((panda$core$Int64) { 1004 }));
-    bool $tmp3012 = $tmp3013.value;
-    if ($tmp3012) goto $l3014;
-    panda$core$Bit $tmp3015 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_right->kind, ((panda$core$Int64) { 1032 }));
-    $tmp3012 = $tmp3015.value;
-    $l3014:;
-    panda$core$Bit $tmp3016 = { $tmp3012 };
-    PANDA_ASSERT($tmp3016.value);
-    panda$core$Bit $tmp3019 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_left->kind, ((panda$core$Int64) { 1032 }));
-    bool $tmp3018 = $tmp3019.value;
-    if ($tmp3018) goto $l3020;
-    panda$core$UInt64 $tmp3022 = panda$core$Int64$convert$R$panda$core$UInt64(((panda$core$Int64) { 9223372036854775807 }));
-    panda$core$Bit $tmp3023 = panda$core$UInt64$$LT$panda$core$UInt64$R$panda$core$Bit(((panda$core$UInt64$wrapper*) p_left->payload)->value, $tmp3022);
-    bool $tmp3021 = $tmp3023.value;
-    if (!$tmp3021) goto $l3024;
-    panda$core$Bit $tmp3025 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_right->kind, ((panda$core$Int64) { 1032 }));
-    $tmp3021 = $tmp3025.value;
-    $l3024:;
-    panda$core$Bit $tmp3026 = { $tmp3021 };
-    $tmp3018 = $tmp3026.value;
-    $l3020:;
-    panda$core$Bit $tmp3027 = { $tmp3018 };
-    bool $tmp3017 = $tmp3027.value;
-    if ($tmp3017) goto $l3028;
-    panda$core$UInt64 $tmp3029 = panda$core$Int64$convert$R$panda$core$UInt64(((panda$core$Int64) { 9223372036854775807 }));
-    panda$core$Bit $tmp3030 = panda$core$UInt64$$LT$panda$core$UInt64$R$panda$core$Bit(((panda$core$UInt64$wrapper*) p_right->payload)->value, $tmp3029);
-    $tmp3017 = $tmp3030.value;
-    $l3028:;
-    panda$core$Bit $tmp3031 = { $tmp3017 };
-    if ($tmp3031.value) {
+org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$foldInts$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position p_position, org$pandalanguage$pandac$IRNode* p_left, org$pandalanguage$pandac$parser$Token$Kind p_op, org$pandalanguage$pandac$IRNode* p_right) {
+    panda$core$Int64 l3019;
+    panda$core$Int64 r3021;
+    org$pandalanguage$pandac$parser$Token$Kind $match$2157_133023;
+    panda$core$UInt64 v3025;
+    panda$core$UInt64 v3032;
+    panda$core$UInt64 v3039;
+    panda$core$UInt64 v3046;
+    panda$core$UInt64 v3053;
+    panda$core$UInt64 v3090;
+    panda$core$UInt64 v3097;
+    panda$core$UInt64 v3104;
+    panda$core$UInt64 v3111;
+    panda$core$UInt64 v3118;
+    panda$core$Bit $tmp2995 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_left->kind, ((panda$core$Int64) { 1004 }));
+    bool $tmp2994 = $tmp2995.value;
+    if ($tmp2994) goto $l2996;
+    panda$core$Bit $tmp2997 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_left->kind, ((panda$core$Int64) { 1032 }));
+    $tmp2994 = $tmp2997.value;
+    $l2996:;
+    panda$core$Bit $tmp2998 = { $tmp2994 };
+    PANDA_ASSERT($tmp2998.value);
+    panda$core$Bit $tmp3000 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_right->kind, ((panda$core$Int64) { 1004 }));
+    bool $tmp2999 = $tmp3000.value;
+    if ($tmp2999) goto $l3001;
+    panda$core$Bit $tmp3002 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_right->kind, ((panda$core$Int64) { 1032 }));
+    $tmp2999 = $tmp3002.value;
+    $l3001:;
+    panda$core$Bit $tmp3003 = { $tmp2999 };
+    PANDA_ASSERT($tmp3003.value);
+    panda$core$Bit $tmp3006 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_left->kind, ((panda$core$Int64) { 1032 }));
+    bool $tmp3005 = $tmp3006.value;
+    if ($tmp3005) goto $l3007;
+    panda$core$UInt64 $tmp3009 = panda$core$Int64$convert$R$panda$core$UInt64(((panda$core$Int64) { 9223372036854775807 }));
+    panda$core$Bit $tmp3010 = panda$core$UInt64$$LT$panda$core$UInt64$R$panda$core$Bit(((panda$core$UInt64$wrapper*) p_left->payload)->value, $tmp3009);
+    bool $tmp3008 = $tmp3010.value;
+    if (!$tmp3008) goto $l3011;
+    panda$core$Bit $tmp3012 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_right->kind, ((panda$core$Int64) { 1032 }));
+    $tmp3008 = $tmp3012.value;
+    $l3011:;
+    panda$core$Bit $tmp3013 = { $tmp3008 };
+    $tmp3005 = $tmp3013.value;
+    $l3007:;
+    panda$core$Bit $tmp3014 = { $tmp3005 };
+    bool $tmp3004 = $tmp3014.value;
+    if ($tmp3004) goto $l3015;
+    panda$core$UInt64 $tmp3016 = panda$core$Int64$convert$R$panda$core$UInt64(((panda$core$Int64) { 9223372036854775807 }));
+    panda$core$Bit $tmp3017 = panda$core$UInt64$$LT$panda$core$UInt64$R$panda$core$Bit(((panda$core$UInt64$wrapper*) p_right->payload)->value, $tmp3016);
+    $tmp3004 = $tmp3017.value;
+    $l3015:;
+    panda$core$Bit $tmp3018 = { $tmp3004 };
+    if ($tmp3018.value) {
     {
-        panda$core$Int64 $tmp3033 = panda$core$UInt64$convert$R$panda$core$Int64(((panda$core$UInt64$wrapper*) p_left->payload)->value);
-        l3032 = $tmp3033;
-        panda$core$Int64 $tmp3035 = panda$core$UInt64$convert$R$panda$core$Int64(((panda$core$UInt64$wrapper*) p_right->payload)->value);
-        r3034 = $tmp3035;
+        panda$core$Int64 $tmp3020 = panda$core$UInt64$convert$R$panda$core$Int64(((panda$core$UInt64$wrapper*) p_left->payload)->value);
+        l3019 = $tmp3020;
+        panda$core$Int64 $tmp3022 = panda$core$UInt64$convert$R$panda$core$Int64(((panda$core$UInt64$wrapper*) p_right->payload)->value);
+        r3021 = $tmp3022;
         {
-            $match$2156_133036 = p_op;
-            panda$core$Bit $tmp3037 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2156_133036->$rawValue, ((panda$core$Int64) { 51 }));
-            if ($tmp3037.value) {
+            $match$2157_133023 = p_op;
+            panda$core$Bit $tmp3024 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2157_133023.$rawValue, ((panda$core$Int64) { 51 }));
+            if ($tmp3024.value) {
             {
-                panda$core$Int64 $tmp3039 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(l3032, r3034);
-                panda$core$UInt64 $tmp3040 = panda$core$Int64$convert$R$panda$core$UInt64($tmp3039);
-                v3038 = $tmp3040;
-                org$pandalanguage$pandac$IRNode* $tmp3041 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-                $tmp3041->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-                $tmp3041->refCount.value = 1;
-                org$pandalanguage$pandac$Type* $tmp3043 = org$pandalanguage$pandac$Type$IntLiteral$panda$core$UInt64$R$org$pandalanguage$pandac$Type(v3038);
-                org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$UInt64($tmp3041, ((panda$core$Int64) { 1004 }), p_position, $tmp3043, v3038);
-                return $tmp3041;
+                panda$core$Int64 $tmp3026 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(l3019, r3021);
+                panda$core$UInt64 $tmp3027 = panda$core$Int64$convert$R$panda$core$UInt64($tmp3026);
+                v3025 = $tmp3027;
+                org$pandalanguage$pandac$IRNode* $tmp3028 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+                $tmp3028->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+                $tmp3028->refCount.value = 1;
+                org$pandalanguage$pandac$Type* $tmp3030 = org$pandalanguage$pandac$Type$IntLiteral$panda$core$UInt64$R$org$pandalanguage$pandac$Type(v3025);
+                org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$UInt64($tmp3028, ((panda$core$Int64) { 1004 }), p_position, $tmp3030, v3025);
+                return $tmp3028;
             }
             }
             else {
-            panda$core$Bit $tmp3044 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2156_133036->$rawValue, ((panda$core$Int64) { 52 }));
-            if ($tmp3044.value) {
+            panda$core$Bit $tmp3031 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2157_133023.$rawValue, ((panda$core$Int64) { 52 }));
+            if ($tmp3031.value) {
             {
-                panda$core$Int64 $tmp3046 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(l3032, r3034);
-                panda$core$UInt64 $tmp3047 = panda$core$Int64$convert$R$panda$core$UInt64($tmp3046);
-                v3045 = $tmp3047;
-                org$pandalanguage$pandac$IRNode* $tmp3048 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-                $tmp3048->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-                $tmp3048->refCount.value = 1;
-                org$pandalanguage$pandac$Type* $tmp3050 = org$pandalanguage$pandac$Type$IntLiteral$panda$core$UInt64$R$org$pandalanguage$pandac$Type(v3045);
-                org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$UInt64($tmp3048, ((panda$core$Int64) { 1004 }), p_position, $tmp3050, v3045);
-                return $tmp3048;
+                panda$core$Int64 $tmp3033 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(l3019, r3021);
+                panda$core$UInt64 $tmp3034 = panda$core$Int64$convert$R$panda$core$UInt64($tmp3033);
+                v3032 = $tmp3034;
+                org$pandalanguage$pandac$IRNode* $tmp3035 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+                $tmp3035->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+                $tmp3035->refCount.value = 1;
+                org$pandalanguage$pandac$Type* $tmp3037 = org$pandalanguage$pandac$Type$IntLiteral$panda$core$UInt64$R$org$pandalanguage$pandac$Type(v3032);
+                org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$UInt64($tmp3035, ((panda$core$Int64) { 1004 }), p_position, $tmp3037, v3032);
+                return $tmp3035;
             }
             }
             else {
-            panda$core$Bit $tmp3051 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2156_133036->$rawValue, ((panda$core$Int64) { 53 }));
-            if ($tmp3051.value) {
+            panda$core$Bit $tmp3038 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2157_133023.$rawValue, ((panda$core$Int64) { 53 }));
+            if ($tmp3038.value) {
             {
-                panda$core$Int64 $tmp3053 = panda$core$Int64$$MUL$panda$core$Int64$R$panda$core$Int64(l3032, r3034);
-                panda$core$UInt64 $tmp3054 = panda$core$Int64$convert$R$panda$core$UInt64($tmp3053);
-                v3052 = $tmp3054;
-                org$pandalanguage$pandac$IRNode* $tmp3055 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-                $tmp3055->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-                $tmp3055->refCount.value = 1;
-                org$pandalanguage$pandac$Type* $tmp3057 = org$pandalanguage$pandac$Type$IntLiteral$panda$core$UInt64$R$org$pandalanguage$pandac$Type(v3052);
-                org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$UInt64($tmp3055, ((panda$core$Int64) { 1004 }), p_position, $tmp3057, v3052);
-                return $tmp3055;
+                panda$core$Int64 $tmp3040 = panda$core$Int64$$MUL$panda$core$Int64$R$panda$core$Int64(l3019, r3021);
+                panda$core$UInt64 $tmp3041 = panda$core$Int64$convert$R$panda$core$UInt64($tmp3040);
+                v3039 = $tmp3041;
+                org$pandalanguage$pandac$IRNode* $tmp3042 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+                $tmp3042->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+                $tmp3042->refCount.value = 1;
+                org$pandalanguage$pandac$Type* $tmp3044 = org$pandalanguage$pandac$Type$IntLiteral$panda$core$UInt64$R$org$pandalanguage$pandac$Type(v3039);
+                org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$UInt64($tmp3042, ((panda$core$Int64) { 1004 }), p_position, $tmp3044, v3039);
+                return $tmp3042;
             }
             }
             else {
-            panda$core$Bit $tmp3058 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2156_133036->$rawValue, ((panda$core$Int64) { 55 }));
-            if ($tmp3058.value) {
+            panda$core$Bit $tmp3045 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2157_133023.$rawValue, ((panda$core$Int64) { 55 }));
+            if ($tmp3045.value) {
             {
-                panda$core$Int64 $tmp3060 = panda$core$Int64$$INTDIV$panda$core$Int64$R$panda$core$Int64(l3032, r3034);
-                panda$core$UInt64 $tmp3061 = panda$core$Int64$convert$R$panda$core$UInt64($tmp3060);
-                v3059 = $tmp3061;
-                org$pandalanguage$pandac$IRNode* $tmp3062 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-                $tmp3062->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-                $tmp3062->refCount.value = 1;
-                org$pandalanguage$pandac$Type* $tmp3064 = org$pandalanguage$pandac$Type$IntLiteral$panda$core$UInt64$R$org$pandalanguage$pandac$Type(v3059);
-                org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$UInt64($tmp3062, ((panda$core$Int64) { 1004 }), p_position, $tmp3064, v3059);
-                return $tmp3062;
+                panda$core$Int64 $tmp3047 = panda$core$Int64$$INTDIV$panda$core$Int64$R$panda$core$Int64(l3019, r3021);
+                panda$core$UInt64 $tmp3048 = panda$core$Int64$convert$R$panda$core$UInt64($tmp3047);
+                v3046 = $tmp3048;
+                org$pandalanguage$pandac$IRNode* $tmp3049 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+                $tmp3049->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+                $tmp3049->refCount.value = 1;
+                org$pandalanguage$pandac$Type* $tmp3051 = org$pandalanguage$pandac$Type$IntLiteral$panda$core$UInt64$R$org$pandalanguage$pandac$Type(v3046);
+                org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$UInt64($tmp3049, ((panda$core$Int64) { 1004 }), p_position, $tmp3051, v3046);
+                return $tmp3049;
             }
             }
             else {
-            panda$core$Bit $tmp3065 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2156_133036->$rawValue, ((panda$core$Int64) { 56 }));
-            if ($tmp3065.value) {
+            panda$core$Bit $tmp3052 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2157_133023.$rawValue, ((panda$core$Int64) { 56 }));
+            if ($tmp3052.value) {
             {
-                panda$core$Int64 $tmp3067 = panda$core$Int64$$REM$panda$core$Int64$R$panda$core$Int64(l3032, r3034);
-                panda$core$UInt64 $tmp3068 = panda$core$Int64$convert$R$panda$core$UInt64($tmp3067);
-                v3066 = $tmp3068;
-                org$pandalanguage$pandac$IRNode* $tmp3069 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-                $tmp3069->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-                $tmp3069->refCount.value = 1;
-                org$pandalanguage$pandac$Type* $tmp3071 = org$pandalanguage$pandac$Type$IntLiteral$panda$core$UInt64$R$org$pandalanguage$pandac$Type(v3066);
-                org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$UInt64($tmp3069, ((panda$core$Int64) { 1004 }), p_position, $tmp3071, v3066);
-                return $tmp3069;
+                panda$core$Int64 $tmp3054 = panda$core$Int64$$REM$panda$core$Int64$R$panda$core$Int64(l3019, r3021);
+                panda$core$UInt64 $tmp3055 = panda$core$Int64$convert$R$panda$core$UInt64($tmp3054);
+                v3053 = $tmp3055;
+                org$pandalanguage$pandac$IRNode* $tmp3056 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+                $tmp3056->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+                $tmp3056->refCount.value = 1;
+                org$pandalanguage$pandac$Type* $tmp3058 = org$pandalanguage$pandac$Type$IntLiteral$panda$core$UInt64$R$org$pandalanguage$pandac$Type(v3053);
+                org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$UInt64($tmp3056, ((panda$core$Int64) { 1004 }), p_position, $tmp3058, v3053);
+                return $tmp3056;
             }
             }
             else {
-            panda$core$Bit $tmp3072 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2156_133036->$rawValue, ((panda$core$Int64) { 58 }));
-            if ($tmp3072.value) {
+            panda$core$Bit $tmp3059 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2157_133023.$rawValue, ((panda$core$Int64) { 58 }));
+            if ($tmp3059.value) {
             {
-                org$pandalanguage$pandac$IRNode* $tmp3073 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-                $tmp3073->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-                $tmp3073->refCount.value = 1;
-                org$pandalanguage$pandac$Type* $tmp3075 = org$pandalanguage$pandac$Type$BitLiteral$R$org$pandalanguage$pandac$Type();
-                panda$core$Bit $tmp3076 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(l3032, r3034);
-                org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Bit($tmp3073, ((panda$core$Int64) { 1011 }), p_position, $tmp3075, $tmp3076);
-                return $tmp3073;
+                org$pandalanguage$pandac$IRNode* $tmp3060 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+                $tmp3060->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+                $tmp3060->refCount.value = 1;
+                org$pandalanguage$pandac$Type* $tmp3062 = org$pandalanguage$pandac$Type$BitLiteral$R$org$pandalanguage$pandac$Type();
+                panda$core$Bit $tmp3063 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(l3019, r3021);
+                org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Bit($tmp3060, ((panda$core$Int64) { 1011 }), p_position, $tmp3062, $tmp3063);
+                return $tmp3060;
             }
             }
             else {
-            panda$core$Bit $tmp3077 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2156_133036->$rawValue, ((panda$core$Int64) { 59 }));
-            if ($tmp3077.value) {
+            panda$core$Bit $tmp3064 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2157_133023.$rawValue, ((panda$core$Int64) { 59 }));
+            if ($tmp3064.value) {
             {
-                org$pandalanguage$pandac$IRNode* $tmp3078 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-                $tmp3078->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-                $tmp3078->refCount.value = 1;
-                org$pandalanguage$pandac$Type* $tmp3080 = org$pandalanguage$pandac$Type$BitLiteral$R$org$pandalanguage$pandac$Type();
-                panda$core$Bit $tmp3081 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit(l3032, r3034);
-                org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Bit($tmp3078, ((panda$core$Int64) { 1011 }), p_position, $tmp3080, $tmp3081);
-                return $tmp3078;
+                org$pandalanguage$pandac$IRNode* $tmp3065 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+                $tmp3065->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+                $tmp3065->refCount.value = 1;
+                org$pandalanguage$pandac$Type* $tmp3067 = org$pandalanguage$pandac$Type$BitLiteral$R$org$pandalanguage$pandac$Type();
+                panda$core$Bit $tmp3068 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit(l3019, r3021);
+                org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Bit($tmp3065, ((panda$core$Int64) { 1011 }), p_position, $tmp3067, $tmp3068);
+                return $tmp3065;
             }
             }
             else {
-            panda$core$Bit $tmp3082 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2156_133036->$rawValue, ((panda$core$Int64) { 62 }));
-            if ($tmp3082.value) {
+            panda$core$Bit $tmp3069 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2157_133023.$rawValue, ((panda$core$Int64) { 62 }));
+            if ($tmp3069.value) {
             {
-                org$pandalanguage$pandac$IRNode* $tmp3083 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-                $tmp3083->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-                $tmp3083->refCount.value = 1;
-                org$pandalanguage$pandac$Type* $tmp3085 = org$pandalanguage$pandac$Type$BitLiteral$R$org$pandalanguage$pandac$Type();
-                panda$core$Bit $tmp3086 = panda$core$Int64$$LT$panda$core$Int64$R$panda$core$Bit(l3032, r3034);
-                org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Bit($tmp3083, ((panda$core$Int64) { 1011 }), p_position, $tmp3085, $tmp3086);
-                return $tmp3083;
+                org$pandalanguage$pandac$IRNode* $tmp3070 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+                $tmp3070->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+                $tmp3070->refCount.value = 1;
+                org$pandalanguage$pandac$Type* $tmp3072 = org$pandalanguage$pandac$Type$BitLiteral$R$org$pandalanguage$pandac$Type();
+                panda$core$Bit $tmp3073 = panda$core$Int64$$LT$panda$core$Int64$R$panda$core$Bit(l3019, r3021);
+                org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Bit($tmp3070, ((panda$core$Int64) { 1011 }), p_position, $tmp3072, $tmp3073);
+                return $tmp3070;
             }
             }
             else {
-            panda$core$Bit $tmp3087 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2156_133036->$rawValue, ((panda$core$Int64) { 63 }));
-            if ($tmp3087.value) {
+            panda$core$Bit $tmp3074 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2157_133023.$rawValue, ((panda$core$Int64) { 63 }));
+            if ($tmp3074.value) {
             {
-                org$pandalanguage$pandac$IRNode* $tmp3088 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-                $tmp3088->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-                $tmp3088->refCount.value = 1;
-                org$pandalanguage$pandac$Type* $tmp3090 = org$pandalanguage$pandac$Type$BitLiteral$R$org$pandalanguage$pandac$Type();
-                panda$core$Bit $tmp3091 = panda$core$Int64$$GT$panda$core$Int64$R$panda$core$Bit(l3032, r3034);
-                org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Bit($tmp3088, ((panda$core$Int64) { 1011 }), p_position, $tmp3090, $tmp3091);
-                return $tmp3088;
+                org$pandalanguage$pandac$IRNode* $tmp3075 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+                $tmp3075->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+                $tmp3075->refCount.value = 1;
+                org$pandalanguage$pandac$Type* $tmp3077 = org$pandalanguage$pandac$Type$BitLiteral$R$org$pandalanguage$pandac$Type();
+                panda$core$Bit $tmp3078 = panda$core$Int64$$GT$panda$core$Int64$R$panda$core$Bit(l3019, r3021);
+                org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Bit($tmp3075, ((panda$core$Int64) { 1011 }), p_position, $tmp3077, $tmp3078);
+                return $tmp3075;
             }
             }
             else {
-            panda$core$Bit $tmp3092 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2156_133036->$rawValue, ((panda$core$Int64) { 64 }));
-            if ($tmp3092.value) {
+            panda$core$Bit $tmp3079 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2157_133023.$rawValue, ((panda$core$Int64) { 64 }));
+            if ($tmp3079.value) {
             {
+                org$pandalanguage$pandac$IRNode* $tmp3080 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+                $tmp3080->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+                $tmp3080->refCount.value = 1;
+                org$pandalanguage$pandac$Type* $tmp3082 = org$pandalanguage$pandac$Type$BitLiteral$R$org$pandalanguage$pandac$Type();
+                panda$core$Bit $tmp3083 = panda$core$Int64$$LE$panda$core$Int64$R$panda$core$Bit(l3019, r3021);
+                org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Bit($tmp3080, ((panda$core$Int64) { 1011 }), p_position, $tmp3082, $tmp3083);
+                return $tmp3080;
+            }
+            }
+            else {
+            panda$core$Bit $tmp3084 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2157_133023.$rawValue, ((panda$core$Int64) { 65 }));
+            if ($tmp3084.value) {
+            {
+                org$pandalanguage$pandac$IRNode* $tmp3085 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+                $tmp3085->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+                $tmp3085->refCount.value = 1;
+                org$pandalanguage$pandac$Type* $tmp3087 = org$pandalanguage$pandac$Type$BitLiteral$R$org$pandalanguage$pandac$Type();
+                panda$core$Bit $tmp3088 = panda$core$Int64$$GE$panda$core$Int64$R$panda$core$Bit(l3019, r3021);
+                org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Bit($tmp3085, ((panda$core$Int64) { 1011 }), p_position, $tmp3087, $tmp3088);
+                return $tmp3085;
+            }
+            }
+            else {
+            panda$core$Bit $tmp3089 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2157_133023.$rawValue, ((panda$core$Int64) { 67 }));
+            if ($tmp3089.value) {
+            {
+                panda$core$Int64 $tmp3091 = panda$core$Int64$$BAND$panda$core$Int64$R$panda$core$Int64(l3019, r3021);
+                panda$core$UInt64 $tmp3092 = panda$core$Int64$convert$R$panda$core$UInt64($tmp3091);
+                v3090 = $tmp3092;
                 org$pandalanguage$pandac$IRNode* $tmp3093 = (org$pandalanguage$pandac$IRNode*) malloc(72);
                 $tmp3093->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
                 $tmp3093->refCount.value = 1;
-                org$pandalanguage$pandac$Type* $tmp3095 = org$pandalanguage$pandac$Type$BitLiteral$R$org$pandalanguage$pandac$Type();
-                panda$core$Bit $tmp3096 = panda$core$Int64$$LE$panda$core$Int64$R$panda$core$Bit(l3032, r3034);
-                org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Bit($tmp3093, ((panda$core$Int64) { 1011 }), p_position, $tmp3095, $tmp3096);
+                org$pandalanguage$pandac$Type* $tmp3095 = org$pandalanguage$pandac$Type$IntLiteral$panda$core$UInt64$R$org$pandalanguage$pandac$Type(v3090);
+                org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$UInt64($tmp3093, ((panda$core$Int64) { 1004 }), p_position, $tmp3095, v3090);
                 return $tmp3093;
             }
             }
             else {
-            panda$core$Bit $tmp3097 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2156_133036->$rawValue, ((panda$core$Int64) { 65 }));
-            if ($tmp3097.value) {
+            panda$core$Bit $tmp3096 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2157_133023.$rawValue, ((panda$core$Int64) { 69 }));
+            if ($tmp3096.value) {
             {
-                org$pandalanguage$pandac$IRNode* $tmp3098 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-                $tmp3098->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-                $tmp3098->refCount.value = 1;
-                org$pandalanguage$pandac$Type* $tmp3100 = org$pandalanguage$pandac$Type$BitLiteral$R$org$pandalanguage$pandac$Type();
-                panda$core$Bit $tmp3101 = panda$core$Int64$$GE$panda$core$Int64$R$panda$core$Bit(l3032, r3034);
-                org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Bit($tmp3098, ((panda$core$Int64) { 1011 }), p_position, $tmp3100, $tmp3101);
-                return $tmp3098;
+                panda$core$Int64 $tmp3098 = panda$core$Int64$$BOR$panda$core$Int64$R$panda$core$Int64(l3019, r3021);
+                panda$core$UInt64 $tmp3099 = panda$core$Int64$convert$R$panda$core$UInt64($tmp3098);
+                v3097 = $tmp3099;
+                org$pandalanguage$pandac$IRNode* $tmp3100 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+                $tmp3100->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+                $tmp3100->refCount.value = 1;
+                org$pandalanguage$pandac$Type* $tmp3102 = org$pandalanguage$pandac$Type$IntLiteral$panda$core$UInt64$R$org$pandalanguage$pandac$Type(v3097);
+                org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$UInt64($tmp3100, ((panda$core$Int64) { 1004 }), p_position, $tmp3102, v3097);
+                return $tmp3100;
             }
             }
             else {
-            panda$core$Bit $tmp3102 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2156_133036->$rawValue, ((panda$core$Int64) { 67 }));
-            if ($tmp3102.value) {
+            panda$core$Bit $tmp3103 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2157_133023.$rawValue, ((panda$core$Int64) { 71 }));
+            if ($tmp3103.value) {
             {
-                panda$core$Int64 $tmp3104 = panda$core$Int64$$BAND$panda$core$Int64$R$panda$core$Int64(l3032, r3034);
-                panda$core$UInt64 $tmp3105 = panda$core$Int64$convert$R$panda$core$UInt64($tmp3104);
-                v3103 = $tmp3105;
-                org$pandalanguage$pandac$IRNode* $tmp3106 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-                $tmp3106->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-                $tmp3106->refCount.value = 1;
-                org$pandalanguage$pandac$Type* $tmp3108 = org$pandalanguage$pandac$Type$IntLiteral$panda$core$UInt64$R$org$pandalanguage$pandac$Type(v3103);
-                org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$UInt64($tmp3106, ((panda$core$Int64) { 1004 }), p_position, $tmp3108, v3103);
-                return $tmp3106;
+                panda$core$Int64 $tmp3105 = panda$core$Int64$$BXOR$panda$core$Int64$R$panda$core$Int64(l3019, r3021);
+                panda$core$UInt64 $tmp3106 = panda$core$Int64$convert$R$panda$core$UInt64($tmp3105);
+                v3104 = $tmp3106;
+                org$pandalanguage$pandac$IRNode* $tmp3107 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+                $tmp3107->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+                $tmp3107->refCount.value = 1;
+                org$pandalanguage$pandac$Type* $tmp3109 = org$pandalanguage$pandac$Type$IntLiteral$panda$core$UInt64$R$org$pandalanguage$pandac$Type(v3104);
+                org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$UInt64($tmp3107, ((panda$core$Int64) { 1004 }), p_position, $tmp3109, v3104);
+                return $tmp3107;
             }
             }
             else {
-            panda$core$Bit $tmp3109 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2156_133036->$rawValue, ((panda$core$Int64) { 69 }));
-            if ($tmp3109.value) {
+            panda$core$Bit $tmp3110 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2157_133023.$rawValue, ((panda$core$Int64) { 72 }));
+            if ($tmp3110.value) {
             {
-                panda$core$Int64 $tmp3111 = panda$core$Int64$$BOR$panda$core$Int64$R$panda$core$Int64(l3032, r3034);
-                panda$core$UInt64 $tmp3112 = panda$core$Int64$convert$R$panda$core$UInt64($tmp3111);
-                v3110 = $tmp3112;
-                org$pandalanguage$pandac$IRNode* $tmp3113 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-                $tmp3113->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-                $tmp3113->refCount.value = 1;
-                org$pandalanguage$pandac$Type* $tmp3115 = org$pandalanguage$pandac$Type$IntLiteral$panda$core$UInt64$R$org$pandalanguage$pandac$Type(v3110);
-                org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$UInt64($tmp3113, ((panda$core$Int64) { 1004 }), p_position, $tmp3115, v3110);
-                return $tmp3113;
+                panda$core$Int64 $tmp3112 = panda$core$Int64$$SHL$panda$core$Int64$R$panda$core$Int64(l3019, r3021);
+                panda$core$UInt64 $tmp3113 = panda$core$Int64$convert$R$panda$core$UInt64($tmp3112);
+                v3111 = $tmp3113;
+                org$pandalanguage$pandac$IRNode* $tmp3114 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+                $tmp3114->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+                $tmp3114->refCount.value = 1;
+                org$pandalanguage$pandac$Type* $tmp3116 = org$pandalanguage$pandac$Type$IntLiteral$panda$core$UInt64$R$org$pandalanguage$pandac$Type(v3111);
+                org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$UInt64($tmp3114, ((panda$core$Int64) { 1004 }), p_position, $tmp3116, v3111);
+                return $tmp3114;
             }
             }
             else {
-            panda$core$Bit $tmp3116 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2156_133036->$rawValue, ((panda$core$Int64) { 71 }));
-            if ($tmp3116.value) {
+            panda$core$Bit $tmp3117 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2157_133023.$rawValue, ((panda$core$Int64) { 1 }));
+            if ($tmp3117.value) {
             {
-                panda$core$Int64 $tmp3118 = panda$core$Int64$$BXOR$panda$core$Int64$R$panda$core$Int64(l3032, r3034);
-                panda$core$UInt64 $tmp3119 = panda$core$Int64$convert$R$panda$core$UInt64($tmp3118);
-                v3117 = $tmp3119;
-                org$pandalanguage$pandac$IRNode* $tmp3120 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-                $tmp3120->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-                $tmp3120->refCount.value = 1;
-                org$pandalanguage$pandac$Type* $tmp3122 = org$pandalanguage$pandac$Type$IntLiteral$panda$core$UInt64$R$org$pandalanguage$pandac$Type(v3117);
-                org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$UInt64($tmp3120, ((panda$core$Int64) { 1004 }), p_position, $tmp3122, v3117);
-                return $tmp3120;
-            }
-            }
-            else {
-            panda$core$Bit $tmp3123 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2156_133036->$rawValue, ((panda$core$Int64) { 72 }));
-            if ($tmp3123.value) {
-            {
-                panda$core$Int64 $tmp3125 = panda$core$Int64$$SHL$panda$core$Int64$R$panda$core$Int64(l3032, r3034);
-                panda$core$UInt64 $tmp3126 = panda$core$Int64$convert$R$panda$core$UInt64($tmp3125);
-                v3124 = $tmp3126;
-                org$pandalanguage$pandac$IRNode* $tmp3127 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-                $tmp3127->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-                $tmp3127->refCount.value = 1;
-                org$pandalanguage$pandac$Type* $tmp3129 = org$pandalanguage$pandac$Type$IntLiteral$panda$core$UInt64$R$org$pandalanguage$pandac$Type(v3124);
-                org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$UInt64($tmp3127, ((panda$core$Int64) { 1004 }), p_position, $tmp3129, v3124);
-                return $tmp3127;
-            }
-            }
-            else {
-            panda$core$Bit $tmp3130 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2156_133036->$rawValue, ((panda$core$Int64) { 1 }));
-            if ($tmp3130.value) {
-            {
-                panda$core$Int64 $tmp3132 = panda$core$Int64$$SHR$panda$core$Int64$R$panda$core$Int64(l3032, r3034);
-                panda$core$UInt64 $tmp3133 = panda$core$Int64$convert$R$panda$core$UInt64($tmp3132);
-                v3131 = $tmp3133;
-                org$pandalanguage$pandac$IRNode* $tmp3134 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-                $tmp3134->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-                $tmp3134->refCount.value = 1;
-                org$pandalanguage$pandac$Type* $tmp3136 = org$pandalanguage$pandac$Type$IntLiteral$panda$core$UInt64$R$org$pandalanguage$pandac$Type(v3131);
-                org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$UInt64($tmp3134, ((panda$core$Int64) { 1004 }), p_position, $tmp3136, v3131);
-                return $tmp3134;
+                panda$core$Int64 $tmp3119 = panda$core$Int64$$SHR$panda$core$Int64$R$panda$core$Int64(l3019, r3021);
+                panda$core$UInt64 $tmp3120 = panda$core$Int64$convert$R$panda$core$UInt64($tmp3119);
+                v3118 = $tmp3120;
+                org$pandalanguage$pandac$IRNode* $tmp3121 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+                $tmp3121->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+                $tmp3121->refCount.value = 1;
+                org$pandalanguage$pandac$Type* $tmp3123 = org$pandalanguage$pandac$Type$IntLiteral$panda$core$UInt64$R$org$pandalanguage$pandac$Type(v3118);
+                org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$UInt64($tmp3121, ((panda$core$Int64) { 1004 }), p_position, $tmp3123, v3118);
+                return $tmp3121;
             }
             }
             }
@@ -7764,489 +7760,539 @@ org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$foldInts$org$
         }
     }
     }
-    org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, p_position, &$s3137);
+    org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, p_position, &$s3124);
     return NULL;
 }
 org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$unwrapCast$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$IRNode* p_expr) {
-    panda$core$Bit $tmp3138 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_expr->kind, ((panda$core$Int64) { 1009 }));
-    if ($tmp3138.value) {
+    panda$core$Bit $tmp3125 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_expr->kind, ((panda$core$Int64) { 1009 }));
+    if ($tmp3125.value) {
     {
-        panda$core$Object* $tmp3139 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_expr->children, ((panda$core$Int64) { 0 }));
-        return ((org$pandalanguage$pandac$IRNode*) $tmp3139);
+        panda$core$Object* $tmp3126 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_expr->children, ((panda$core$Int64) { 0 }));
+        return ((org$pandalanguage$pandac$IRNode*) $tmp3126);
     }
     }
     return p_expr;
 }
-org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileIndexedAssignment$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position p_position, org$pandalanguage$pandac$IRNode* p_left, org$pandalanguage$pandac$parser$Token$Kind* p_op, org$pandalanguage$pandac$IRNode* p_right) {
-    panda$collections$Array* args3144;
-    org$pandalanguage$pandac$IRNode* resolved3152;
-    panda$collections$Array* children3157;
-    panda$core$UInt64 baseId3163;
-    org$pandalanguage$pandac$IRNode* base3164;
-    panda$core$UInt64 indexId3172;
-    org$pandalanguage$pandac$IRNode* index3173;
-    org$pandalanguage$pandac$IRNode* baseRef3179;
-    org$pandalanguage$pandac$IRNode* indexRef3182;
-    org$pandalanguage$pandac$IRNode* rhsIndex3185;
-    org$pandalanguage$pandac$IRNode* value3189;
-    panda$core$Bit $tmp3140 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_left->kind, ((panda$core$Int64) { 1040 }));
-    PANDA_ASSERT($tmp3140.value);
-    panda$core$Int64 $tmp3141 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(p_left->children);
-    panda$core$Bit $tmp3142 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp3141, ((panda$core$Int64) { 2 }));
-    PANDA_ASSERT($tmp3142.value);
-    panda$core$Bit $tmp3143 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_op->$rawValue, ((panda$core$Int64) { 73 }));
-    if ($tmp3143.value) {
+org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileIndexedAssignment$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position p_position, org$pandalanguage$pandac$IRNode* p_left, org$pandalanguage$pandac$parser$Token$Kind p_op, org$pandalanguage$pandac$IRNode* p_right) {
+    panda$collections$Array* args3131;
+    org$pandalanguage$pandac$IRNode* resolved3139;
+    panda$collections$Array* children3144;
+    panda$core$UInt64 baseId3150;
+    org$pandalanguage$pandac$IRNode* base3151;
+    panda$core$UInt64 indexId3159;
+    org$pandalanguage$pandac$IRNode* index3160;
+    org$pandalanguage$pandac$IRNode* baseRef3166;
+    org$pandalanguage$pandac$IRNode* indexRef3169;
+    org$pandalanguage$pandac$IRNode* rhsIndex3172;
+    org$pandalanguage$pandac$parser$Token$Kind $tmp3173;
+    org$pandalanguage$pandac$IRNode* value3175;
+    panda$core$Bit $tmp3127 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_left->kind, ((panda$core$Int64) { 1040 }));
+    PANDA_ASSERT($tmp3127.value);
+    panda$core$Int64 $tmp3128 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(p_left->children);
+    panda$core$Bit $tmp3129 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp3128, ((panda$core$Int64) { 2 }));
+    PANDA_ASSERT($tmp3129.value);
+    panda$core$Bit $tmp3130 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_op.$rawValue, ((panda$core$Int64) { 73 }));
+    if ($tmp3130.value) {
     {
-        panda$collections$Array* $tmp3145 = (panda$collections$Array*) malloc(40);
-        $tmp3145->$class = (panda$core$Class*) &panda$collections$Array$class;
-        $tmp3145->refCount.value = 1;
-        panda$collections$Array$init($tmp3145);
-        args3144 = $tmp3145;
-        panda$core$Object* $tmp3147 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_left->children, ((panda$core$Int64) { 1 }));
-        panda$collections$Array$add$panda$collections$Array$T(args3144, ((panda$core$Object*) ((org$pandalanguage$pandac$IRNode*) $tmp3147)));
-        panda$collections$Array$add$panda$collections$Array$T(args3144, ((panda$core$Object*) p_right));
-        panda$core$Object* $tmp3148 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_left->children, ((panda$core$Int64) { 0 }));
-        org$pandalanguage$pandac$IRNode* $tmp3150 = org$pandalanguage$pandac$Compiler$call$org$pandalanguage$pandac$IRNode$panda$core$String$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$R$org$pandalanguage$pandac$IRNode$Q(self, ((org$pandalanguage$pandac$IRNode*) $tmp3148), &$s3149, ((panda$collections$ListView*) args3144));
-        return $tmp3150;
+        panda$collections$Array* $tmp3132 = (panda$collections$Array*) malloc(40);
+        $tmp3132->$class = (panda$core$Class*) &panda$collections$Array$class;
+        $tmp3132->refCount.value = 1;
+        panda$collections$Array$init($tmp3132);
+        args3131 = $tmp3132;
+        panda$core$Object* $tmp3134 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_left->children, ((panda$core$Int64) { 1 }));
+        panda$collections$Array$add$panda$collections$Array$T(args3131, ((panda$core$Object*) ((org$pandalanguage$pandac$IRNode*) $tmp3134)));
+        panda$collections$Array$add$panda$collections$Array$T(args3131, ((panda$core$Object*) p_right));
+        panda$core$Object* $tmp3135 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_left->children, ((panda$core$Int64) { 0 }));
+        org$pandalanguage$pandac$IRNode* $tmp3137 = org$pandalanguage$pandac$Compiler$call$org$pandalanguage$pandac$IRNode$panda$core$String$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$R$org$pandalanguage$pandac$IRNode$Q(self, ((org$pandalanguage$pandac$IRNode*) $tmp3135), &$s3136, ((panda$collections$ListView*) args3131));
+        return $tmp3137;
     }
     }
-    panda$core$Bit $tmp3151 = org$pandalanguage$pandac$Compiler$isAssignment$org$pandalanguage$pandac$parser$Token$Kind$R$panda$core$Bit(p_op);
-    PANDA_ASSERT($tmp3151.value);
-    org$pandalanguage$pandac$IRNode* $tmp3153 = org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$IRNode$Q$R$org$pandalanguage$pandac$IRNode$Q(self, p_left);
-    resolved3152 = $tmp3153;
-    if (((panda$core$Bit) { resolved3152 == NULL }).value) {
-    {
-        return NULL;
-    }
-    }
-    org$pandalanguage$pandac$IRNode* $tmp3154 = org$pandalanguage$pandac$Compiler$unwrapCast$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode(self, resolved3152);
-    resolved3152 = $tmp3154;
-    panda$core$Int64 $tmp3155 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(resolved3152->children);
-    panda$core$Bit $tmp3156 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp3155, ((panda$core$Int64) { 2 }));
-    PANDA_ASSERT($tmp3156.value);
-    panda$collections$Array* $tmp3158 = (panda$collections$Array*) malloc(40);
-    $tmp3158->$class = (panda$core$Class*) &panda$collections$Array$class;
-    $tmp3158->refCount.value = 1;
-    panda$collections$Array$init($tmp3158);
-    children3157 = $tmp3158;
-    panda$core$Object* $tmp3160 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(resolved3152->children, ((panda$core$Int64) { 0 }));
-    org$pandalanguage$pandac$IRNode* $tmp3161 = org$pandalanguage$pandac$Compiler$unwrapCast$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode(self, ((org$pandalanguage$pandac$IRNode*) $tmp3160));
-    panda$collections$Array$add$panda$collections$Array$T(children3157, ((panda$core$Object*) $tmp3161));
-    panda$core$UInt64 $tmp3162 = panda$core$UInt64$$ADD$panda$core$UInt64$R$panda$core$UInt64(self->reusedValueCount, ((panda$core$UInt64) { 1 }));
-    self->reusedValueCount = $tmp3162;
-    baseId3163 = self->reusedValueCount;
-    org$pandalanguage$pandac$IRNode* $tmp3165 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-    $tmp3165->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-    $tmp3165->refCount.value = 1;
-    panda$core$Object* $tmp3167 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(children3157, ((panda$core$Int64) { 0 }));
-    panda$core$Object* $tmp3168 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(children3157, ((panda$core$Int64) { 0 }));
-    panda$core$UInt64$wrapper* $tmp3169;
-    $tmp3169 = (panda$core$UInt64$wrapper*) malloc(24);
-    $tmp3169->cl = (panda$core$Class*) &panda$core$UInt64$wrapperclass;
-    $tmp3169->refCount = 1;
-    $tmp3169->value = baseId3163;
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$Q($tmp3165, ((panda$core$Int64) { 1027 }), ((org$pandalanguage$pandac$IRNode*) $tmp3167)->position, ((org$pandalanguage$pandac$IRNode*) $tmp3168)->type, ((panda$core$Object*) $tmp3169), ((panda$collections$ListView*) children3157));
-    base3164 = $tmp3165;
-    panda$collections$Array$clear(children3157);
-    panda$core$Object* $tmp3170 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(resolved3152->children, ((panda$core$Int64) { 1 }));
-    panda$collections$Array$add$panda$collections$Array$T(children3157, ((panda$core$Object*) ((org$pandalanguage$pandac$IRNode*) $tmp3170)));
-    panda$core$UInt64 $tmp3171 = panda$core$UInt64$$ADD$panda$core$UInt64$R$panda$core$UInt64(self->reusedValueCount, ((panda$core$UInt64) { 1 }));
-    self->reusedValueCount = $tmp3171;
-    indexId3172 = self->reusedValueCount;
-    org$pandalanguage$pandac$IRNode* $tmp3174 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-    $tmp3174->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-    $tmp3174->refCount.value = 1;
-    panda$core$Object* $tmp3176 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(children3157, ((panda$core$Int64) { 0 }));
-    panda$core$Object* $tmp3177 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(children3157, ((panda$core$Int64) { 0 }));
-    panda$core$UInt64$wrapper* $tmp3178;
-    $tmp3178 = (panda$core$UInt64$wrapper*) malloc(24);
-    $tmp3178->cl = (panda$core$Class*) &panda$core$UInt64$wrapperclass;
-    $tmp3178->refCount = 1;
-    $tmp3178->value = indexId3172;
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$Q($tmp3174, ((panda$core$Int64) { 1027 }), ((org$pandalanguage$pandac$IRNode*) $tmp3176)->position, ((org$pandalanguage$pandac$IRNode*) $tmp3177)->type, ((panda$core$Object*) $tmp3178), ((panda$collections$ListView*) children3157));
-    index3173 = $tmp3174;
-    org$pandalanguage$pandac$IRNode* $tmp3180 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-    $tmp3180->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-    $tmp3180->refCount.value = 1;
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$UInt64($tmp3180, ((panda$core$Int64) { 1028 }), base3164->position, base3164->type, baseId3163);
-    baseRef3179 = $tmp3180;
-    org$pandalanguage$pandac$IRNode* $tmp3183 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-    $tmp3183->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-    $tmp3183->refCount.value = 1;
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$UInt64($tmp3183, ((panda$core$Int64) { 1028 }), index3173->position, index3173->type, indexId3172);
-    indexRef3182 = $tmp3183;
-    org$pandalanguage$pandac$parser$Token$Kind* $tmp3186 = (org$pandalanguage$pandac$parser$Token$Kind*) malloc(24);
-    $tmp3186->$class = (panda$core$Class*) &org$pandalanguage$pandac$parser$Token$Kind$class;
-    $tmp3186->refCount.value = 1;
-    org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64($tmp3186, ((panda$core$Int64) { 101 }));
-    org$pandalanguage$pandac$IRNode* $tmp3188 = org$pandalanguage$pandac$Compiler$compileBinary$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_position, baseRef3179, $tmp3186, indexRef3182);
-    rhsIndex3185 = $tmp3188;
-    if (((panda$core$Bit) { rhsIndex3185 == NULL }).value) {
+    panda$core$Bit $tmp3138 = org$pandalanguage$pandac$Compiler$isAssignment$org$pandalanguage$pandac$parser$Token$Kind$R$panda$core$Bit(p_op);
+    PANDA_ASSERT($tmp3138.value);
+    org$pandalanguage$pandac$IRNode* $tmp3140 = org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$IRNode$Q$R$org$pandalanguage$pandac$IRNode$Q(self, p_left);
+    resolved3139 = $tmp3140;
+    if (((panda$core$Bit) { resolved3139 == NULL }).value) {
     {
         return NULL;
     }
     }
-    org$pandalanguage$pandac$parser$Token$Kind* $tmp3190 = org$pandalanguage$pandac$Compiler$removeAssignment$org$pandalanguage$pandac$parser$Token$Kind$R$org$pandalanguage$pandac$parser$Token$Kind(p_op);
-    org$pandalanguage$pandac$IRNode* $tmp3191 = org$pandalanguage$pandac$Compiler$compileBinary$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_position, rhsIndex3185, $tmp3190, p_right);
-    value3189 = $tmp3191;
-    if (((panda$core$Bit) { value3189 == NULL }).value) {
+    org$pandalanguage$pandac$IRNode* $tmp3141 = org$pandalanguage$pandac$Compiler$unwrapCast$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode(self, resolved3139);
+    resolved3139 = $tmp3141;
+    panda$core$Int64 $tmp3142 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(resolved3139->children);
+    panda$core$Bit $tmp3143 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp3142, ((panda$core$Int64) { 2 }));
+    PANDA_ASSERT($tmp3143.value);
+    panda$collections$Array* $tmp3145 = (panda$collections$Array*) malloc(40);
+    $tmp3145->$class = (panda$core$Class*) &panda$collections$Array$class;
+    $tmp3145->refCount.value = 1;
+    panda$collections$Array$init($tmp3145);
+    children3144 = $tmp3145;
+    panda$core$Object* $tmp3147 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(resolved3139->children, ((panda$core$Int64) { 0 }));
+    org$pandalanguage$pandac$IRNode* $tmp3148 = org$pandalanguage$pandac$Compiler$unwrapCast$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode(self, ((org$pandalanguage$pandac$IRNode*) $tmp3147));
+    panda$collections$Array$add$panda$collections$Array$T(children3144, ((panda$core$Object*) $tmp3148));
+    panda$core$UInt64 $tmp3149 = panda$core$UInt64$$ADD$panda$core$UInt64$R$panda$core$UInt64(self->reusedValueCount, ((panda$core$UInt64) { 1 }));
+    self->reusedValueCount = $tmp3149;
+    baseId3150 = self->reusedValueCount;
+    org$pandalanguage$pandac$IRNode* $tmp3152 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+    $tmp3152->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    $tmp3152->refCount.value = 1;
+    panda$core$Object* $tmp3154 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(children3144, ((panda$core$Int64) { 0 }));
+    panda$core$Object* $tmp3155 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(children3144, ((panda$core$Int64) { 0 }));
+    panda$core$UInt64$wrapper* $tmp3156;
+    $tmp3156 = (panda$core$UInt64$wrapper*) malloc(24);
+    $tmp3156->cl = (panda$core$Class*) &panda$core$UInt64$wrapperclass;
+    $tmp3156->refCount = 1;
+    $tmp3156->value = baseId3150;
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$Q($tmp3152, ((panda$core$Int64) { 1027 }), ((org$pandalanguage$pandac$IRNode*) $tmp3154)->position, ((org$pandalanguage$pandac$IRNode*) $tmp3155)->type, ((panda$core$Object*) $tmp3156), ((panda$collections$ListView*) children3144));
+    base3151 = $tmp3152;
+    panda$collections$Array$clear(children3144);
+    panda$core$Object* $tmp3157 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(resolved3139->children, ((panda$core$Int64) { 1 }));
+    panda$collections$Array$add$panda$collections$Array$T(children3144, ((panda$core$Object*) ((org$pandalanguage$pandac$IRNode*) $tmp3157)));
+    panda$core$UInt64 $tmp3158 = panda$core$UInt64$$ADD$panda$core$UInt64$R$panda$core$UInt64(self->reusedValueCount, ((panda$core$UInt64) { 1 }));
+    self->reusedValueCount = $tmp3158;
+    indexId3159 = self->reusedValueCount;
+    org$pandalanguage$pandac$IRNode* $tmp3161 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+    $tmp3161->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    $tmp3161->refCount.value = 1;
+    panda$core$Object* $tmp3163 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(children3144, ((panda$core$Int64) { 0 }));
+    panda$core$Object* $tmp3164 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(children3144, ((panda$core$Int64) { 0 }));
+    panda$core$UInt64$wrapper* $tmp3165;
+    $tmp3165 = (panda$core$UInt64$wrapper*) malloc(24);
+    $tmp3165->cl = (panda$core$Class*) &panda$core$UInt64$wrapperclass;
+    $tmp3165->refCount = 1;
+    $tmp3165->value = indexId3159;
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$Q($tmp3161, ((panda$core$Int64) { 1027 }), ((org$pandalanguage$pandac$IRNode*) $tmp3163)->position, ((org$pandalanguage$pandac$IRNode*) $tmp3164)->type, ((panda$core$Object*) $tmp3165), ((panda$collections$ListView*) children3144));
+    index3160 = $tmp3161;
+    org$pandalanguage$pandac$IRNode* $tmp3167 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+    $tmp3167->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    $tmp3167->refCount.value = 1;
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$UInt64($tmp3167, ((panda$core$Int64) { 1028 }), base3151->position, base3151->type, baseId3150);
+    baseRef3166 = $tmp3167;
+    org$pandalanguage$pandac$IRNode* $tmp3170 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+    $tmp3170->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    $tmp3170->refCount.value = 1;
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$UInt64($tmp3170, ((panda$core$Int64) { 1028 }), index3160->position, index3160->type, indexId3159);
+    indexRef3169 = $tmp3170;
+    org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64(&$tmp3173, ((panda$core$Int64) { 101 }));
+    org$pandalanguage$pandac$IRNode* $tmp3174 = org$pandalanguage$pandac$Compiler$compileBinary$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_position, baseRef3166, $tmp3173, indexRef3169);
+    rhsIndex3172 = $tmp3174;
+    if (((panda$core$Bit) { rhsIndex3172 == NULL }).value) {
     {
         return NULL;
     }
     }
-    panda$core$Bit $tmp3194 = org$pandalanguage$pandac$Type$isNumber$R$panda$core$Bit(rhsIndex3185->type);
-    bool $tmp3193 = $tmp3194.value;
-    if (!$tmp3193) goto $l3195;
-    panda$core$Bit $tmp3196 = org$pandalanguage$pandac$Type$isNumber$R$panda$core$Bit(p_right->type);
-    $tmp3193 = $tmp3196.value;
-    $l3195:;
-    panda$core$Bit $tmp3197 = { $tmp3193 };
-    bool $tmp3192 = $tmp3197.value;
-    if (!$tmp3192) goto $l3198;
-    panda$core$Bit $tmp3199 = org$pandalanguage$pandac$Type$$NEQ$org$pandalanguage$pandac$Type$R$panda$core$Bit(rhsIndex3185->type, value3189->type);
-    $tmp3192 = $tmp3199.value;
-    $l3198:;
-    panda$core$Bit $tmp3200 = { $tmp3192 };
-    if ($tmp3200.value) {
+    org$pandalanguage$pandac$parser$Token$Kind $tmp3176 = org$pandalanguage$pandac$Compiler$removeAssignment$org$pandalanguage$pandac$parser$Token$Kind$R$org$pandalanguage$pandac$parser$Token$Kind(p_op);
+    org$pandalanguage$pandac$IRNode* $tmp3177 = org$pandalanguage$pandac$Compiler$compileBinary$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_position, rhsIndex3172, $tmp3176, p_right);
+    value3175 = $tmp3177;
+    if (((panda$core$Bit) { value3175 == NULL }).value) {
     {
-        panda$collections$Array* $tmp3202 = (panda$collections$Array*) malloc(40);
-        $tmp3202->$class = (panda$core$Class*) &panda$collections$Array$class;
-        $tmp3202->refCount.value = 1;
-        panda$collections$Array$init($tmp3202);
-        org$pandalanguage$pandac$IRNode* $tmp3204 = org$pandalanguage$pandac$Compiler$call$org$pandalanguage$pandac$IRNode$panda$core$String$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$org$pandalanguage$pandac$Type$Q$R$org$pandalanguage$pandac$IRNode$Q(self, value3189, &$s3201, ((panda$collections$ListView*) $tmp3202), resolved3152->type);
-        value3189 = $tmp3204;
-        if (((panda$core$Bit) { value3189 == NULL }).value) {
+        return NULL;
+    }
+    }
+    panda$core$Bit $tmp3180 = org$pandalanguage$pandac$Type$isNumber$R$panda$core$Bit(rhsIndex3172->type);
+    bool $tmp3179 = $tmp3180.value;
+    if (!$tmp3179) goto $l3181;
+    panda$core$Bit $tmp3182 = org$pandalanguage$pandac$Type$isNumber$R$panda$core$Bit(p_right->type);
+    $tmp3179 = $tmp3182.value;
+    $l3181:;
+    panda$core$Bit $tmp3183 = { $tmp3179 };
+    bool $tmp3178 = $tmp3183.value;
+    if (!$tmp3178) goto $l3184;
+    panda$core$Bit $tmp3185 = org$pandalanguage$pandac$Type$$NEQ$org$pandalanguage$pandac$Type$R$panda$core$Bit(rhsIndex3172->type, value3175->type);
+    $tmp3178 = $tmp3185.value;
+    $l3184:;
+    panda$core$Bit $tmp3186 = { $tmp3178 };
+    if ($tmp3186.value) {
+    {
+        panda$collections$Array* $tmp3188 = (panda$collections$Array*) malloc(40);
+        $tmp3188->$class = (panda$core$Class*) &panda$collections$Array$class;
+        $tmp3188->refCount.value = 1;
+        panda$collections$Array$init($tmp3188);
+        org$pandalanguage$pandac$IRNode* $tmp3190 = org$pandalanguage$pandac$Compiler$call$org$pandalanguage$pandac$IRNode$panda$core$String$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$org$pandalanguage$pandac$Type$Q$R$org$pandalanguage$pandac$IRNode$Q(self, value3175, &$s3187, ((panda$collections$ListView*) $tmp3188), resolved3139->type);
+        value3175 = $tmp3190;
+        if (((panda$core$Bit) { value3175 == NULL }).value) {
         {
             return NULL;
         }
         }
     }
     }
-    panda$collections$Array$clear(children3157);
-    panda$collections$Array$add$panda$collections$Array$T(children3157, ((panda$core$Object*) index3173));
-    panda$collections$Array$add$panda$collections$Array$T(children3157, ((panda$core$Object*) value3189));
-    org$pandalanguage$pandac$IRNode* $tmp3206 = org$pandalanguage$pandac$Compiler$call$org$pandalanguage$pandac$IRNode$panda$core$String$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$R$org$pandalanguage$pandac$IRNode$Q(self, base3164, &$s3205, ((panda$collections$ListView*) children3157));
-    return $tmp3206;
+    panda$collections$Array$clear(children3144);
+    panda$collections$Array$add$panda$collections$Array$T(children3144, ((panda$core$Object*) index3160));
+    panda$collections$Array$add$panda$collections$Array$T(children3144, ((panda$core$Object*) value3175));
+    org$pandalanguage$pandac$IRNode* $tmp3192 = org$pandalanguage$pandac$Compiler$call$org$pandalanguage$pandac$IRNode$panda$core$String$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$R$org$pandalanguage$pandac$IRNode$Q(self, base3151, &$s3191, ((panda$collections$ListView*) children3144));
+    return $tmp3192;
 }
-org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileBinary$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position p_position, org$pandalanguage$pandac$IRNode* p_rawLeft, org$pandalanguage$pandac$parser$Token$Kind* p_op, org$pandalanguage$pandac$IRNode* p_rawRight) {
-    org$pandalanguage$pandac$IRNode* left3207;
-    org$pandalanguage$pandac$IRNode* right3208;
-    panda$core$Int64 kind3232;
-    org$pandalanguage$pandac$IRNode* resolved3239;
-    panda$collections$Array* children3241;
-    org$pandalanguage$pandac$IRNode* resolved3248;
-    panda$collections$Array* children3250;
-    panda$collections$Array* children3267;
-    org$pandalanguage$pandac$IRNode* reusedLeft3273;
-    org$pandalanguage$pandac$IRNode* toNonNullable3276;
-    org$pandalanguage$pandac$IRNode* comparison3279;
-    org$pandalanguage$pandac$IRNode* nullCheck3281;
-    org$pandalanguage$pandac$ClassDecl* cl3303;
-    org$pandalanguage$pandac$ClassDecl* cl3320;
-    org$pandalanguage$pandac$IRNode* finalLeft3336;
-    org$pandalanguage$pandac$IRNode* finalRight3339;
+org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileBinary$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position p_position, org$pandalanguage$pandac$IRNode* p_rawLeft, org$pandalanguage$pandac$parser$Token$Kind p_op, org$pandalanguage$pandac$IRNode* p_rawRight) {
+    org$pandalanguage$pandac$IRNode* left3193;
+    org$pandalanguage$pandac$IRNode* right3194;
+    panda$core$Int64 kind3218;
+    org$pandalanguage$pandac$IRNode* resolved3225;
+    panda$collections$Array* children3227;
+    org$pandalanguage$pandac$IRNode* resolved3234;
+    panda$collections$Array* children3236;
+    panda$collections$Array* children3253;
+    org$pandalanguage$pandac$IRNode* reusedLeft3259;
+    org$pandalanguage$pandac$IRNode* toNonNullable3262;
+    org$pandalanguage$pandac$IRNode* comparison3265;
+    org$pandalanguage$pandac$IRNode* nullCheck3267;
+    org$pandalanguage$pandac$parser$Token$Kind $tmp3268;
+    org$pandalanguage$pandac$ClassDecl* cl3288;
+    org$pandalanguage$pandac$ClassDecl* cl3305;
+    org$pandalanguage$pandac$IRNode* finalLeft3321;
+    org$pandalanguage$pandac$IRNode* finalRight3324;
+    panda$collections$Array* children3327;
     panda$collections$Array* children3342;
+    org$pandalanguage$pandac$parser$Token$Kind $tmp3347;
     panda$collections$Array* children3356;
-    panda$collections$Array* children3370;
-    org$pandalanguage$pandac$IRNode* reusedLeft3377;
-    org$pandalanguage$pandac$ClassDecl* cl3397;
-    panda$collections$ListView* parameters3399;
-    org$pandalanguage$pandac$Symbol* methods3401;
-    org$pandalanguage$pandac$Type* type3405;
-    panda$collections$Array* types3406;
-    org$pandalanguage$pandac$MethodDecl* m3410;
-    panda$collections$Iterator* m$Iter3415;
-    org$pandalanguage$pandac$MethodDecl* m3427;
-    panda$collections$Array* children3438;
-    panda$collections$Array* children3467;
-    panda$collections$Array* children3483;
-    org$pandalanguage$pandac$Type* resultType3506;
-    org$pandalanguage$pandac$parser$Token$Kind* $match$2495_133507;
-    org$pandalanguage$pandac$IRNode* result3532;
-    org$pandalanguage$pandac$IRNode* resolved3535;
-    org$pandalanguage$pandac$IRNode* target3541;
-    left3207 = p_rawLeft;
-    right3208 = p_rawRight;
-    panda$core$Bit $tmp3209 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(left3207->type->typeKind, ((panda$core$Int64) { 15 }));
-    if ($tmp3209.value) {
+    org$pandalanguage$pandac$IRNode* reusedLeft3363;
+    org$pandalanguage$pandac$parser$Token$Kind $tmp3377;
+    org$pandalanguage$pandac$ClassDecl* cl3382;
+    panda$collections$ListView* parameters3384;
+    org$pandalanguage$pandac$Symbol* methods3386;
+    org$pandalanguage$pandac$Type* type3390;
+    panda$collections$Array* types3391;
+    org$pandalanguage$pandac$MethodDecl* m3395;
+    panda$collections$Iterator* m$Iter3400;
+    org$pandalanguage$pandac$MethodDecl* m3412;
+    panda$collections$Array* children3423;
+    panda$collections$Array* children3452;
+    panda$collections$Array* children3469;
+    org$pandalanguage$pandac$Type* resultType3492;
+    org$pandalanguage$pandac$parser$Token$Kind $match$2496_133493;
+    org$pandalanguage$pandac$IRNode* result3519;
+    org$pandalanguage$pandac$IRNode* resolved3522;
+    org$pandalanguage$pandac$IRNode* target3528;
+    left3193 = p_rawLeft;
+    right3194 = p_rawRight;
+    panda$core$Bit $tmp3195 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(left3193->type->typeKind, ((panda$core$Int64) { 15 }));
+    if ($tmp3195.value) {
     {
-        org$pandalanguage$pandac$IRNode* $tmp3210 = org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$IRNode$Q$R$org$pandalanguage$pandac$IRNode$Q(self, right3208);
-        right3208 = $tmp3210;
-        if (((panda$core$Bit) { right3208 == NULL }).value) {
+        org$pandalanguage$pandac$IRNode* $tmp3196 = org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$IRNode$Q$R$org$pandalanguage$pandac$IRNode$Q(self, right3194);
+        right3194 = $tmp3196;
+        if (((panda$core$Bit) { right3194 == NULL }).value) {
         {
             return NULL;
         }
         }
-        panda$core$Int64$nullable $tmp3211 = org$pandalanguage$pandac$Compiler$coercionCost$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$Type$R$panda$core$Int64$Q(self, left3207, right3208->type);
-        if (((panda$core$Bit) { $tmp3211.nonnull }).value) {
+        panda$core$Int64$nullable $tmp3197 = org$pandalanguage$pandac$Compiler$coercionCost$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$Type$R$panda$core$Int64$Q(self, left3193, right3194->type);
+        if (((panda$core$Bit) { $tmp3197.nonnull }).value) {
         {
-            org$pandalanguage$pandac$IRNode* $tmp3212 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, left3207, right3208->type);
-            left3207 = $tmp3212;
+            org$pandalanguage$pandac$IRNode* $tmp3198 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, left3193, right3194->type);
+            left3193 = $tmp3198;
         }
         }
     }
     }
-    panda$core$Bit $tmp3214 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(right3208->type->typeKind, ((panda$core$Int64) { 15 }));
-    bool $tmp3213 = $tmp3214.value;
-    if (!$tmp3213) goto $l3215;
-    panda$core$Int64$nullable $tmp3216 = org$pandalanguage$pandac$Compiler$coercionCost$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$Type$R$panda$core$Int64$Q(self, right3208, left3207->type);
-    $tmp3213 = ((panda$core$Bit) { $tmp3216.nonnull }).value;
+    panda$core$Bit $tmp3200 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(right3194->type->typeKind, ((panda$core$Int64) { 15 }));
+    bool $tmp3199 = $tmp3200.value;
+    if (!$tmp3199) goto $l3201;
+    panda$core$Int64$nullable $tmp3202 = org$pandalanguage$pandac$Compiler$coercionCost$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$Type$R$panda$core$Int64$Q(self, right3194, left3193->type);
+    $tmp3199 = ((panda$core$Bit) { $tmp3202.nonnull }).value;
+    $l3201:;
+    panda$core$Bit $tmp3203 = { $tmp3199 };
+    if ($tmp3203.value) {
+    {
+        org$pandalanguage$pandac$IRNode* $tmp3204 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, right3194, left3193->type);
+        right3194 = $tmp3204;
+    }
+    }
+    panda$core$Bit $tmp3208 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_op.$rawValue, ((panda$core$Int64) { 58 }));
+    bool $tmp3207 = $tmp3208.value;
+    if ($tmp3207) goto $l3209;
+    panda$core$Bit $tmp3210 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_op.$rawValue, ((panda$core$Int64) { 59 }));
+    $tmp3207 = $tmp3210.value;
+    $l3209:;
+    panda$core$Bit $tmp3211 = { $tmp3207 };
+    bool $tmp3206 = $tmp3211.value;
+    if ($tmp3206) goto $l3212;
+    panda$core$Bit $tmp3213 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_op.$rawValue, ((panda$core$Int64) { 60 }));
+    $tmp3206 = $tmp3213.value;
+    $l3212:;
+    panda$core$Bit $tmp3214 = { $tmp3206 };
+    bool $tmp3205 = $tmp3214.value;
+    if ($tmp3205) goto $l3215;
+    panda$core$Bit $tmp3216 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_op.$rawValue, ((panda$core$Int64) { 61 }));
+    $tmp3205 = $tmp3216.value;
     $l3215:;
-    panda$core$Bit $tmp3217 = { $tmp3213 };
+    panda$core$Bit $tmp3217 = { $tmp3205 };
     if ($tmp3217.value) {
     {
-        org$pandalanguage$pandac$IRNode* $tmp3218 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, right3208, left3207->type);
-        right3208 = $tmp3218;
-    }
-    }
-    panda$core$Bit $tmp3222 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_op->$rawValue, ((panda$core$Int64) { 58 }));
-    bool $tmp3221 = $tmp3222.value;
-    if ($tmp3221) goto $l3223;
-    panda$core$Bit $tmp3224 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_op->$rawValue, ((panda$core$Int64) { 59 }));
-    $tmp3221 = $tmp3224.value;
-    $l3223:;
-    panda$core$Bit $tmp3225 = { $tmp3221 };
-    bool $tmp3220 = $tmp3225.value;
-    if ($tmp3220) goto $l3226;
-    panda$core$Bit $tmp3227 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_op->$rawValue, ((panda$core$Int64) { 60 }));
-    $tmp3220 = $tmp3227.value;
-    $l3226:;
-    panda$core$Bit $tmp3228 = { $tmp3220 };
-    bool $tmp3219 = $tmp3228.value;
-    if ($tmp3219) goto $l3229;
-    panda$core$Bit $tmp3230 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_op->$rawValue, ((panda$core$Int64) { 61 }));
-    $tmp3219 = $tmp3230.value;
-    $l3229:;
-    panda$core$Bit $tmp3231 = { $tmp3219 };
-    if ($tmp3231.value) {
-    {
-        panda$core$Bit $tmp3234 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_op->$rawValue, ((panda$core$Int64) { 58 }));
-        bool $tmp3233 = $tmp3234.value;
-        if ($tmp3233) goto $l3235;
-        panda$core$Bit $tmp3236 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_op->$rawValue, ((panda$core$Int64) { 60 }));
-        $tmp3233 = $tmp3236.value;
-        $l3235:;
-        panda$core$Bit $tmp3237 = { $tmp3233 };
-        if ($tmp3237.value) {
+        panda$core$Bit $tmp3220 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_op.$rawValue, ((panda$core$Int64) { 58 }));
+        bool $tmp3219 = $tmp3220.value;
+        if ($tmp3219) goto $l3221;
+        panda$core$Bit $tmp3222 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_op.$rawValue, ((panda$core$Int64) { 60 }));
+        $tmp3219 = $tmp3222.value;
+        $l3221:;
+        panda$core$Bit $tmp3223 = { $tmp3219 };
+        if ($tmp3223.value) {
         {
-            kind3232 = ((panda$core$Int64) { 1035 });
+            kind3218 = ((panda$core$Int64) { 1035 });
         }
         }
         else {
         {
-            kind3232 = ((panda$core$Int64) { 1036 });
+            kind3218 = ((panda$core$Int64) { 1036 });
         }
         }
-        panda$core$Bit $tmp3238 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(left3207->kind, ((panda$core$Int64) { 1030 }));
-        if ($tmp3238.value) {
+        panda$core$Bit $tmp3224 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(left3193->kind, ((panda$core$Int64) { 1030 }));
+        if ($tmp3224.value) {
         {
-            org$pandalanguage$pandac$IRNode* $tmp3240 = org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$IRNode$Q$R$org$pandalanguage$pandac$IRNode$Q(self, right3208);
-            resolved3239 = $tmp3240;
-            if (((panda$core$Bit) { resolved3239 == NULL }).value) {
+            org$pandalanguage$pandac$IRNode* $tmp3226 = org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$IRNode$Q$R$org$pandalanguage$pandac$IRNode$Q(self, right3194);
+            resolved3225 = $tmp3226;
+            if (((panda$core$Bit) { resolved3225 == NULL }).value) {
             {
                 return NULL;
             }
             }
-            panda$collections$Array* $tmp3242 = (panda$collections$Array*) malloc(40);
-            $tmp3242->$class = (panda$core$Class*) &panda$collections$Array$class;
-            $tmp3242->refCount.value = 1;
-            panda$collections$Array$init($tmp3242);
-            children3241 = $tmp3242;
-            panda$collections$Array$add$panda$collections$Array$T(children3241, ((panda$core$Object*) resolved3239));
-            org$pandalanguage$pandac$IRNode* $tmp3244 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-            $tmp3244->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-            $tmp3244->refCount.value = 1;
-            org$pandalanguage$pandac$Type* $tmp3246 = org$pandalanguage$pandac$Type$Bit$R$org$pandalanguage$pandac$Type();
-            org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp3244, kind3232, p_position, $tmp3246, ((panda$collections$ListView*) children3241));
-            return $tmp3244;
+            panda$collections$Array* $tmp3228 = (panda$collections$Array*) malloc(40);
+            $tmp3228->$class = (panda$core$Class*) &panda$collections$Array$class;
+            $tmp3228->refCount.value = 1;
+            panda$collections$Array$init($tmp3228);
+            children3227 = $tmp3228;
+            panda$collections$Array$add$panda$collections$Array$T(children3227, ((panda$core$Object*) resolved3225));
+            org$pandalanguage$pandac$IRNode* $tmp3230 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+            $tmp3230->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+            $tmp3230->refCount.value = 1;
+            org$pandalanguage$pandac$Type* $tmp3232 = org$pandalanguage$pandac$Type$Bit$R$org$pandalanguage$pandac$Type();
+            org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp3230, kind3218, p_position, $tmp3232, ((panda$collections$ListView*) children3227));
+            return $tmp3230;
         }
         }
-        panda$core$Bit $tmp3247 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(right3208->kind, ((panda$core$Int64) { 1030 }));
-        if ($tmp3247.value) {
+        panda$core$Bit $tmp3233 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(right3194->kind, ((panda$core$Int64) { 1030 }));
+        if ($tmp3233.value) {
         {
-            org$pandalanguage$pandac$IRNode* $tmp3249 = org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$IRNode$Q$R$org$pandalanguage$pandac$IRNode$Q(self, left3207);
-            resolved3248 = $tmp3249;
-            if (((panda$core$Bit) { resolved3248 == NULL }).value) {
+            org$pandalanguage$pandac$IRNode* $tmp3235 = org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$IRNode$Q$R$org$pandalanguage$pandac$IRNode$Q(self, left3193);
+            resolved3234 = $tmp3235;
+            if (((panda$core$Bit) { resolved3234 == NULL }).value) {
             {
                 return NULL;
             }
             }
-            panda$collections$Array* $tmp3251 = (panda$collections$Array*) malloc(40);
-            $tmp3251->$class = (panda$core$Class*) &panda$collections$Array$class;
-            $tmp3251->refCount.value = 1;
-            panda$collections$Array$init($tmp3251);
-            children3250 = $tmp3251;
-            panda$collections$Array$add$panda$collections$Array$T(children3250, ((panda$core$Object*) resolved3248));
-            org$pandalanguage$pandac$IRNode* $tmp3253 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-            $tmp3253->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-            $tmp3253->refCount.value = 1;
-            org$pandalanguage$pandac$Type* $tmp3255 = org$pandalanguage$pandac$Type$Bit$R$org$pandalanguage$pandac$Type();
-            org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp3253, kind3232, p_position, $tmp3255, ((panda$collections$ListView*) children3250));
-            return $tmp3253;
+            panda$collections$Array* $tmp3237 = (panda$collections$Array*) malloc(40);
+            $tmp3237->$class = (panda$core$Class*) &panda$collections$Array$class;
+            $tmp3237->refCount.value = 1;
+            panda$collections$Array$init($tmp3237);
+            children3236 = $tmp3237;
+            panda$collections$Array$add$panda$collections$Array$T(children3236, ((panda$core$Object*) resolved3234));
+            org$pandalanguage$pandac$IRNode* $tmp3239 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+            $tmp3239->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+            $tmp3239->refCount.value = 1;
+            org$pandalanguage$pandac$Type* $tmp3241 = org$pandalanguage$pandac$Type$Bit$R$org$pandalanguage$pandac$Type();
+            org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp3239, kind3218, p_position, $tmp3241, ((panda$collections$ListView*) children3236));
+            return $tmp3239;
         }
         }
     }
     }
-    panda$core$Bit $tmp3258 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_op->$rawValue, ((panda$core$Int64) { 58 }));
-    bool $tmp3257 = $tmp3258.value;
-    if ($tmp3257) goto $l3259;
-    panda$core$Bit $tmp3260 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_op->$rawValue, ((panda$core$Int64) { 59 }));
-    $tmp3257 = $tmp3260.value;
-    $l3259:;
-    panda$core$Bit $tmp3261 = { $tmp3257 };
-    bool $tmp3256 = $tmp3261.value;
-    if (!$tmp3256) goto $l3262;
-    panda$core$Bit $tmp3263 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(left3207->type->typeKind, ((panda$core$Int64) { 11 }));
-    $tmp3256 = $tmp3263.value;
-    $l3262:;
-    panda$core$Bit $tmp3264 = { $tmp3256 };
-    if ($tmp3264.value) {
+    panda$core$Bit $tmp3244 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_op.$rawValue, ((panda$core$Int64) { 58 }));
+    bool $tmp3243 = $tmp3244.value;
+    if ($tmp3243) goto $l3245;
+    panda$core$Bit $tmp3246 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_op.$rawValue, ((panda$core$Int64) { 59 }));
+    $tmp3243 = $tmp3246.value;
+    $l3245:;
+    panda$core$Bit $tmp3247 = { $tmp3243 };
+    bool $tmp3242 = $tmp3247.value;
+    if (!$tmp3242) goto $l3248;
+    panda$core$Bit $tmp3249 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(left3193->type->typeKind, ((panda$core$Int64) { 11 }));
+    $tmp3242 = $tmp3249.value;
+    $l3248:;
+    panda$core$Bit $tmp3250 = { $tmp3242 };
+    if ($tmp3250.value) {
     {
-        panda$core$Bit $tmp3265 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit(right3208->kind, ((panda$core$Int64) { 1030 }));
-        PANDA_ASSERT($tmp3265.value);
-        panda$core$UInt64 $tmp3266 = panda$core$UInt64$$ADD$panda$core$UInt64$R$panda$core$UInt64(self->reusedValueCount, ((panda$core$UInt64) { 1 }));
-        self->reusedValueCount = $tmp3266;
-        panda$collections$Array* $tmp3268 = (panda$collections$Array*) malloc(40);
-        $tmp3268->$class = (panda$core$Class*) &panda$collections$Array$class;
-        $tmp3268->refCount.value = 1;
-        panda$collections$Array$init($tmp3268);
-        children3267 = $tmp3268;
-        panda$collections$Array$add$panda$collections$Array$T(children3267, ((panda$core$Object*) left3207));
-        org$pandalanguage$pandac$IRNode* $tmp3270 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-        $tmp3270->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-        $tmp3270->refCount.value = 1;
-        panda$core$UInt64$wrapper* $tmp3272;
-        $tmp3272 = (panda$core$UInt64$wrapper*) malloc(24);
-        $tmp3272->cl = (panda$core$Class*) &panda$core$UInt64$wrapperclass;
-        $tmp3272->refCount = 1;
-        $tmp3272->value = self->reusedValueCount;
-        org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$Q($tmp3270, ((panda$core$Int64) { 1027 }), left3207->position, left3207->type, ((panda$core$Object*) $tmp3272), ((panda$collections$ListView*) children3267));
-        left3207 = $tmp3270;
-        org$pandalanguage$pandac$IRNode* $tmp3274 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-        $tmp3274->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-        $tmp3274->refCount.value = 1;
-        org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$UInt64($tmp3274, ((panda$core$Int64) { 1028 }), left3207->position, left3207->type, self->reusedValueCount);
-        reusedLeft3273 = $tmp3274;
-        panda$core$Object* $tmp3277 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(left3207->type->subtypes, ((panda$core$Int64) { 0 }));
-        org$pandalanguage$pandac$IRNode* $tmp3278 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, reusedLeft3273, ((org$pandalanguage$pandac$Type*) $tmp3277));
-        toNonNullable3276 = $tmp3278;
-        org$pandalanguage$pandac$IRNode* $tmp3280 = org$pandalanguage$pandac$Compiler$compileBinary$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_position, toNonNullable3276, p_op, right3208);
-        comparison3279 = $tmp3280;
-        if (((panda$core$Bit) { comparison3279 == NULL }).value) {
+        panda$core$Bit $tmp3251 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit(right3194->kind, ((panda$core$Int64) { 1030 }));
+        PANDA_ASSERT($tmp3251.value);
+        panda$core$UInt64 $tmp3252 = panda$core$UInt64$$ADD$panda$core$UInt64$R$panda$core$UInt64(self->reusedValueCount, ((panda$core$UInt64) { 1 }));
+        self->reusedValueCount = $tmp3252;
+        panda$collections$Array* $tmp3254 = (panda$collections$Array*) malloc(40);
+        $tmp3254->$class = (panda$core$Class*) &panda$collections$Array$class;
+        $tmp3254->refCount.value = 1;
+        panda$collections$Array$init($tmp3254);
+        children3253 = $tmp3254;
+        panda$collections$Array$add$panda$collections$Array$T(children3253, ((panda$core$Object*) left3193));
+        org$pandalanguage$pandac$IRNode* $tmp3256 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+        $tmp3256->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+        $tmp3256->refCount.value = 1;
+        panda$core$UInt64$wrapper* $tmp3258;
+        $tmp3258 = (panda$core$UInt64$wrapper*) malloc(24);
+        $tmp3258->cl = (panda$core$Class*) &panda$core$UInt64$wrapperclass;
+        $tmp3258->refCount = 1;
+        $tmp3258->value = self->reusedValueCount;
+        org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$Q($tmp3256, ((panda$core$Int64) { 1027 }), left3193->position, left3193->type, ((panda$core$Object*) $tmp3258), ((panda$collections$ListView*) children3253));
+        left3193 = $tmp3256;
+        org$pandalanguage$pandac$IRNode* $tmp3260 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+        $tmp3260->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+        $tmp3260->refCount.value = 1;
+        org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$UInt64($tmp3260, ((panda$core$Int64) { 1028 }), left3193->position, left3193->type, self->reusedValueCount);
+        reusedLeft3259 = $tmp3260;
+        panda$core$Object* $tmp3263 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(left3193->type->subtypes, ((panda$core$Int64) { 0 }));
+        org$pandalanguage$pandac$IRNode* $tmp3264 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, reusedLeft3259, ((org$pandalanguage$pandac$Type*) $tmp3263));
+        toNonNullable3262 = $tmp3264;
+        org$pandalanguage$pandac$IRNode* $tmp3266 = org$pandalanguage$pandac$Compiler$compileBinary$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_position, toNonNullable3262, p_op, right3194);
+        comparison3265 = $tmp3266;
+        if (((panda$core$Bit) { comparison3265 == NULL }).value) {
         {
             return NULL;
         }
         }
-        org$pandalanguage$pandac$parser$Token$Kind* $tmp3282 = (org$pandalanguage$pandac$parser$Token$Kind*) malloc(24);
-        $tmp3282->$class = (panda$core$Class*) &org$pandalanguage$pandac$parser$Token$Kind$class;
-        $tmp3282->refCount.value = 1;
-        org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64($tmp3282, ((panda$core$Int64) { 59 }));
-        org$pandalanguage$pandac$IRNode* $tmp3284 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-        $tmp3284->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-        $tmp3284->refCount.value = 1;
-        org$pandalanguage$pandac$Type* $tmp3286 = org$pandalanguage$pandac$Type$Null$R$org$pandalanguage$pandac$Type();
-        org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type($tmp3284, ((panda$core$Int64) { 1030 }), p_position, $tmp3286);
-        org$pandalanguage$pandac$IRNode* $tmp3287 = org$pandalanguage$pandac$Compiler$compileBinary$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_position, left3207, $tmp3282, $tmp3284);
-        nullCheck3281 = $tmp3287;
-        if (((panda$core$Bit) { nullCheck3281 == NULL }).value) {
+        org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64(&$tmp3268, ((panda$core$Int64) { 59 }));
+        org$pandalanguage$pandac$IRNode* $tmp3269 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+        $tmp3269->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+        $tmp3269->refCount.value = 1;
+        org$pandalanguage$pandac$Type* $tmp3271 = org$pandalanguage$pandac$Type$Null$R$org$pandalanguage$pandac$Type();
+        org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type($tmp3269, ((panda$core$Int64) { 1030 }), p_position, $tmp3271);
+        org$pandalanguage$pandac$IRNode* $tmp3272 = org$pandalanguage$pandac$Compiler$compileBinary$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_position, left3193, $tmp3268, $tmp3269);
+        nullCheck3267 = $tmp3272;
+        if (((panda$core$Bit) { nullCheck3267 == NULL }).value) {
         {
             return NULL;
         }
         }
-        panda$collections$Array$clear(children3267);
-        panda$collections$Array$add$panda$collections$Array$T(children3267, ((panda$core$Object*) nullCheck3281));
-        panda$collections$Array$add$panda$collections$Array$T(children3267, ((panda$core$Object*) comparison3279));
-        org$pandalanguage$pandac$IRNode* $tmp3288 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-        $tmp3288->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-        $tmp3288->refCount.value = 1;
-        org$pandalanguage$pandac$Type* $tmp3290 = org$pandalanguage$pandac$Type$BitLiteral$R$org$pandalanguage$pandac$Type();
-        panda$core$Bit $tmp3291 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_op->$rawValue, ((panda$core$Int64) { 59 }));
-        org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Bit($tmp3288, ((panda$core$Int64) { 1011 }), p_position, $tmp3290, $tmp3291);
-        org$pandalanguage$pandac$Type* $tmp3292 = org$pandalanguage$pandac$Type$Bit$R$org$pandalanguage$pandac$Type();
-        org$pandalanguage$pandac$IRNode* $tmp3293 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, $tmp3288, $tmp3292);
-        panda$collections$Array$add$panda$collections$Array$T(children3267, ((panda$core$Object*) $tmp3293));
-        org$pandalanguage$pandac$IRNode* $tmp3294 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-        $tmp3294->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-        $tmp3294->refCount.value = 1;
-        org$pandalanguage$pandac$Type* $tmp3296 = org$pandalanguage$pandac$Type$Bit$R$org$pandalanguage$pandac$Type();
-        org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp3294, ((panda$core$Int64) { 1044 }), p_position, $tmp3296, ((panda$collections$ListView*) children3267));
-        return $tmp3294;
+        panda$collections$Array$clear(children3253);
+        panda$collections$Array$add$panda$collections$Array$T(children3253, ((panda$core$Object*) nullCheck3267));
+        panda$collections$Array$add$panda$collections$Array$T(children3253, ((panda$core$Object*) comparison3265));
+        org$pandalanguage$pandac$IRNode* $tmp3273 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+        $tmp3273->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+        $tmp3273->refCount.value = 1;
+        org$pandalanguage$pandac$Type* $tmp3275 = org$pandalanguage$pandac$Type$BitLiteral$R$org$pandalanguage$pandac$Type();
+        panda$core$Bit $tmp3276 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_op.$rawValue, ((panda$core$Int64) { 59 }));
+        org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Bit($tmp3273, ((panda$core$Int64) { 1011 }), p_position, $tmp3275, $tmp3276);
+        org$pandalanguage$pandac$Type* $tmp3277 = org$pandalanguage$pandac$Type$Bit$R$org$pandalanguage$pandac$Type();
+        org$pandalanguage$pandac$IRNode* $tmp3278 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, $tmp3273, $tmp3277);
+        panda$collections$Array$add$panda$collections$Array$T(children3253, ((panda$core$Object*) $tmp3278));
+        org$pandalanguage$pandac$IRNode* $tmp3279 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+        $tmp3279->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+        $tmp3279->refCount.value = 1;
+        org$pandalanguage$pandac$Type* $tmp3281 = org$pandalanguage$pandac$Type$Bit$R$org$pandalanguage$pandac$Type();
+        org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp3279, ((panda$core$Int64) { 1044 }), p_position, $tmp3281, ((panda$collections$ListView*) children3253));
+        return $tmp3279;
     }
     }
-    panda$core$Bit $tmp3298 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_op->$rawValue, ((panda$core$Int64) { 60 }));
-    bool $tmp3297 = $tmp3298.value;
-    if ($tmp3297) goto $l3299;
-    panda$core$Bit $tmp3300 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_op->$rawValue, ((panda$core$Int64) { 61 }));
-    $tmp3297 = $tmp3300.value;
-    $l3299:;
-    panda$core$Bit $tmp3301 = { $tmp3297 };
-    if ($tmp3301.value) {
+    panda$core$Bit $tmp3283 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_op.$rawValue, ((panda$core$Int64) { 60 }));
+    bool $tmp3282 = $tmp3283.value;
+    if ($tmp3282) goto $l3284;
+    panda$core$Bit $tmp3285 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_op.$rawValue, ((panda$core$Int64) { 61 }));
+    $tmp3282 = $tmp3285.value;
+    $l3284:;
+    panda$core$Bit $tmp3286 = { $tmp3282 };
+    if ($tmp3286.value) {
     {
-        panda$core$Bit $tmp3302 = org$pandalanguage$pandac$Type$isClass$R$panda$core$Bit(left3207->type);
-        if ($tmp3302.value) {
+        panda$core$Bit $tmp3287 = org$pandalanguage$pandac$Type$isClass$R$panda$core$Bit(left3193->type);
+        if ($tmp3287.value) {
         {
-            org$pandalanguage$pandac$ClassDecl* $tmp3304 = org$pandalanguage$pandac$Compiler$getClass$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$ClassDecl$Q(self, left3207->type);
-            cl3303 = $tmp3304;
-            if (((panda$core$Bit) { cl3303 == NULL }).value) {
+            org$pandalanguage$pandac$ClassDecl* $tmp3289 = org$pandalanguage$pandac$Compiler$getClass$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$ClassDecl$Q(self, left3193->type);
+            cl3288 = $tmp3289;
+            if (((panda$core$Bit) { cl3288 == NULL }).value) {
             {
                 return NULL;
             }
             }
-            panda$core$Bit $tmp3305 = org$pandalanguage$pandac$Compiler$isValue$org$pandalanguage$pandac$ClassDecl$R$panda$core$Bit(self, cl3303);
-            if ($tmp3305.value) {
+            panda$core$Bit $tmp3290 = org$pandalanguage$pandac$Compiler$isValue$org$pandalanguage$pandac$ClassDecl$R$panda$core$Bit(self, cl3288);
+            if ($tmp3290.value) {
             {
-                panda$core$String* $tmp3307 = org$pandalanguage$pandac$Compiler$operatorName$org$pandalanguage$pandac$parser$Token$Kind$R$panda$core$String(p_op);
-                panda$core$String* $tmp3308 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s3306, $tmp3307);
-                panda$core$String* $tmp3310 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3308, &$s3309);
-                panda$core$String* $tmp3311 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp3310, ((panda$core$Object*) left3207->type));
-                panda$core$String* $tmp3313 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3311, &$s3312);
-                panda$core$String* $tmp3315 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s3314, ((panda$core$Object*) right3208->type));
-                panda$core$String* $tmp3317 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3315, &$s3316);
-                panda$core$String* $tmp3318 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3313, $tmp3317);
-                org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, p_position, $tmp3318);
+                panda$core$String* $tmp3292 = org$pandalanguage$pandac$Compiler$operatorName$org$pandalanguage$pandac$parser$Token$Kind$R$panda$core$String(p_op);
+                panda$core$String* $tmp3293 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s3291, $tmp3292);
+                panda$core$String* $tmp3295 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3293, &$s3294);
+                panda$core$String* $tmp3296 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp3295, ((panda$core$Object*) left3193->type));
+                panda$core$String* $tmp3298 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3296, &$s3297);
+                panda$core$String* $tmp3300 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s3299, ((panda$core$Object*) right3194->type));
+                panda$core$String* $tmp3302 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3300, &$s3301);
+                panda$core$String* $tmp3303 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3298, $tmp3302);
+                org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, p_position, $tmp3303);
             }
             }
         }
         }
-        panda$core$Bit $tmp3319 = org$pandalanguage$pandac$Type$isClass$R$panda$core$Bit(right3208->type);
-        if ($tmp3319.value) {
+        panda$core$Bit $tmp3304 = org$pandalanguage$pandac$Type$isClass$R$panda$core$Bit(right3194->type);
+        if ($tmp3304.value) {
         {
-            org$pandalanguage$pandac$ClassDecl* $tmp3321 = org$pandalanguage$pandac$Compiler$getClass$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$ClassDecl$Q(self, right3208->type);
-            cl3320 = $tmp3321;
-            if (((panda$core$Bit) { cl3320 == NULL }).value) {
+            org$pandalanguage$pandac$ClassDecl* $tmp3306 = org$pandalanguage$pandac$Compiler$getClass$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$ClassDecl$Q(self, right3194->type);
+            cl3305 = $tmp3306;
+            if (((panda$core$Bit) { cl3305 == NULL }).value) {
             {
                 return NULL;
             }
             }
-            panda$core$Bit $tmp3322 = org$pandalanguage$pandac$Compiler$isValue$org$pandalanguage$pandac$ClassDecl$R$panda$core$Bit(self, cl3320);
-            if ($tmp3322.value) {
+            panda$core$Bit $tmp3307 = org$pandalanguage$pandac$Compiler$isValue$org$pandalanguage$pandac$ClassDecl$R$panda$core$Bit(self, cl3305);
+            if ($tmp3307.value) {
             {
-                panda$core$String* $tmp3324 = org$pandalanguage$pandac$Compiler$operatorName$org$pandalanguage$pandac$parser$Token$Kind$R$panda$core$String(p_op);
-                panda$core$String* $tmp3325 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s3323, $tmp3324);
-                panda$core$String* $tmp3327 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3325, &$s3326);
-                panda$core$String* $tmp3328 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp3327, ((panda$core$Object*) left3207->type));
-                panda$core$String* $tmp3330 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3328, &$s3329);
-                panda$core$String* $tmp3332 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s3331, ((panda$core$Object*) right3208->type));
-                panda$core$String* $tmp3334 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3332, &$s3333);
-                panda$core$String* $tmp3335 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3330, $tmp3334);
-                org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, p_position, $tmp3335);
+                panda$core$String* $tmp3309 = org$pandalanguage$pandac$Compiler$operatorName$org$pandalanguage$pandac$parser$Token$Kind$R$panda$core$String(p_op);
+                panda$core$String* $tmp3310 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s3308, $tmp3309);
+                panda$core$String* $tmp3312 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3310, &$s3311);
+                panda$core$String* $tmp3313 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp3312, ((panda$core$Object*) left3193->type));
+                panda$core$String* $tmp3315 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3313, &$s3314);
+                panda$core$String* $tmp3317 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s3316, ((panda$core$Object*) right3194->type));
+                panda$core$String* $tmp3319 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3317, &$s3318);
+                panda$core$String* $tmp3320 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3315, $tmp3319);
+                org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, p_position, $tmp3320);
             }
             }
         }
         }
-        org$pandalanguage$pandac$Type* $tmp3337 = org$pandalanguage$pandac$Type$Object$R$org$pandalanguage$pandac$Type();
-        org$pandalanguage$pandac$IRNode* $tmp3338 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, left3207, $tmp3337);
-        finalLeft3336 = $tmp3338;
-        if (((panda$core$Bit) { finalLeft3336 == NULL }).value) {
+        org$pandalanguage$pandac$Type* $tmp3322 = org$pandalanguage$pandac$Type$Object$R$org$pandalanguage$pandac$Type();
+        org$pandalanguage$pandac$IRNode* $tmp3323 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, left3193, $tmp3322);
+        finalLeft3321 = $tmp3323;
+        if (((panda$core$Bit) { finalLeft3321 == NULL }).value) {
         {
             return NULL;
         }
         }
-        org$pandalanguage$pandac$Type* $tmp3340 = org$pandalanguage$pandac$Type$Object$R$org$pandalanguage$pandac$Type();
-        org$pandalanguage$pandac$IRNode* $tmp3341 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, right3208, $tmp3340);
-        finalRight3339 = $tmp3341;
-        if (((panda$core$Bit) { finalRight3339 == NULL }).value) {
+        org$pandalanguage$pandac$Type* $tmp3325 = org$pandalanguage$pandac$Type$Object$R$org$pandalanguage$pandac$Type();
+        org$pandalanguage$pandac$IRNode* $tmp3326 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, right3194, $tmp3325);
+        finalRight3324 = $tmp3326;
+        if (((panda$core$Bit) { finalRight3324 == NULL }).value) {
         {
+            return NULL;
+        }
+        }
+        panda$collections$Array* $tmp3328 = (panda$collections$Array*) malloc(40);
+        $tmp3328->$class = (panda$core$Class*) &panda$collections$Array$class;
+        $tmp3328->refCount.value = 1;
+        panda$collections$Array$init($tmp3328);
+        children3327 = $tmp3328;
+        panda$collections$Array$add$panda$collections$Array$T(children3327, ((panda$core$Object*) finalLeft3321));
+        panda$collections$Array$add$panda$collections$Array$T(children3327, ((panda$core$Object*) finalRight3324));
+        org$pandalanguage$pandac$IRNode* $tmp3330 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+        $tmp3330->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+        $tmp3330->refCount.value = 1;
+        org$pandalanguage$pandac$Type* $tmp3332 = org$pandalanguage$pandac$Type$Bit$R$org$pandalanguage$pandac$Type();
+        org$pandalanguage$pandac$parser$Token$Kind$wrapper* $tmp3333;
+        $tmp3333 = (org$pandalanguage$pandac$parser$Token$Kind$wrapper*) malloc(24);
+        $tmp3333->cl = (panda$core$Class*) &org$pandalanguage$pandac$parser$Token$Kind$wrapperclass;
+        $tmp3333->refCount = 1;
+        $tmp3333->value = p_op;
+        org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$Q($tmp3330, ((panda$core$Int64) { 1023 }), p_position, $tmp3332, ((panda$core$Object*) $tmp3333), ((panda$collections$ListView*) children3327));
+        return $tmp3330;
+    }
+    }
+    panda$core$Bit $tmp3334 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_op.$rawValue, ((panda$core$Int64) { 73 }));
+    if ($tmp3334.value) {
+    {
+        panda$core$Bit $tmp3335 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(left3193->kind, ((panda$core$Int64) { 1040 }));
+        if ($tmp3335.value) {
+        {
+            org$pandalanguage$pandac$IRNode* $tmp3336 = org$pandalanguage$pandac$Compiler$compileIndexedAssignment$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_position, left3193, p_op, right3194);
+            return $tmp3336;
+        }
+        }
+        org$pandalanguage$pandac$IRNode* $tmp3337 = org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$IRNode$Q$R$org$pandalanguage$pandac$IRNode$Q(self, left3193);
+        left3193 = $tmp3337;
+        if (((panda$core$Bit) { left3193 == NULL }).value) {
+        {
+            return NULL;
+        }
+        }
+        org$pandalanguage$pandac$IRNode* $tmp3338 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, right3194, left3193->type);
+        right3194 = $tmp3338;
+        if (((panda$core$Bit) { right3194 == NULL }).value) {
+        {
+            return NULL;
+        }
+        }
+        panda$core$Bit $tmp3339 = org$pandalanguage$pandac$Compiler$isLValue$org$pandalanguage$pandac$IRNode$R$panda$core$Bit(self, left3193);
+        panda$core$Bit $tmp3340 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp3339);
+        if ($tmp3340.value) {
+        {
+            org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, left3193->position, &$s3341);
             return NULL;
         }
         }
@@ -8255,45 +8301,43 @@ org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileBinary
         $tmp3343->refCount.value = 1;
         panda$collections$Array$init($tmp3343);
         children3342 = $tmp3343;
-        panda$collections$Array$add$panda$collections$Array$T(children3342, ((panda$core$Object*) finalLeft3336));
-        panda$collections$Array$add$panda$collections$Array$T(children3342, ((panda$core$Object*) finalRight3339));
+        panda$collections$Array$add$panda$collections$Array$T(children3342, ((panda$core$Object*) left3193));
+        panda$collections$Array$add$panda$collections$Array$T(children3342, ((panda$core$Object*) right3194));
         org$pandalanguage$pandac$IRNode* $tmp3345 = (org$pandalanguage$pandac$IRNode*) malloc(72);
         $tmp3345->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
         $tmp3345->refCount.value = 1;
-        org$pandalanguage$pandac$Type* $tmp3347 = org$pandalanguage$pandac$Type$Bit$R$org$pandalanguage$pandac$Type();
-        org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$Q($tmp3345, ((panda$core$Int64) { 1023 }), p_position, $tmp3347, ((panda$core$Object*) p_op), ((panda$collections$ListView*) children3342));
+        org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64(&$tmp3347, ((panda$core$Int64) { 73 }));
+        org$pandalanguage$pandac$parser$Token$Kind$wrapper* $tmp3348;
+        $tmp3348 = (org$pandalanguage$pandac$parser$Token$Kind$wrapper*) malloc(24);
+        $tmp3348->cl = (panda$core$Class*) &org$pandalanguage$pandac$parser$Token$Kind$wrapperclass;
+        $tmp3348->refCount = 1;
+        $tmp3348->value = $tmp3347;
+        org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp3345, ((panda$core$Int64) { 1023 }), p_position, ((panda$core$Object*) $tmp3348), ((panda$collections$ListView*) children3342));
         return $tmp3345;
     }
     }
-    panda$core$Bit $tmp3348 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_op->$rawValue, ((panda$core$Int64) { 73 }));
-    if ($tmp3348.value) {
+    panda$core$Bit $tmp3349 = org$pandalanguage$pandac$Compiler$isAssignment$org$pandalanguage$pandac$parser$Token$Kind$R$panda$core$Bit(p_op);
+    if ($tmp3349.value) {
     {
-        panda$core$Bit $tmp3349 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(left3207->kind, ((panda$core$Int64) { 1040 }));
-        if ($tmp3349.value) {
+        panda$core$Bit $tmp3350 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(left3193->kind, ((panda$core$Int64) { 1040 }));
+        if ($tmp3350.value) {
         {
-            org$pandalanguage$pandac$IRNode* $tmp3350 = org$pandalanguage$pandac$Compiler$compileIndexedAssignment$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_position, left3207, p_op, right3208);
-            return $tmp3350;
+            org$pandalanguage$pandac$IRNode* $tmp3351 = org$pandalanguage$pandac$Compiler$compileIndexedAssignment$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_position, left3193, p_op, right3194);
+            return $tmp3351;
         }
         }
-        org$pandalanguage$pandac$IRNode* $tmp3351 = org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$IRNode$Q$R$org$pandalanguage$pandac$IRNode$Q(self, left3207);
-        left3207 = $tmp3351;
-        if (((panda$core$Bit) { left3207 == NULL }).value) {
-        {
-            return NULL;
-        }
-        }
-        org$pandalanguage$pandac$IRNode* $tmp3352 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, right3208, left3207->type);
-        right3208 = $tmp3352;
-        if (((panda$core$Bit) { right3208 == NULL }).value) {
+        org$pandalanguage$pandac$IRNode* $tmp3352 = org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$IRNode$Q$R$org$pandalanguage$pandac$IRNode$Q(self, left3193);
+        left3193 = $tmp3352;
+        if (((panda$core$Bit) { left3193 == NULL }).value) {
         {
             return NULL;
         }
         }
-        panda$core$Bit $tmp3353 = org$pandalanguage$pandac$Compiler$isLValue$org$pandalanguage$pandac$IRNode$R$panda$core$Bit(self, left3207);
+        panda$core$Bit $tmp3353 = org$pandalanguage$pandac$Compiler$isLValue$org$pandalanguage$pandac$IRNode$R$panda$core$Bit(self, left3193);
         panda$core$Bit $tmp3354 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp3353);
         if ($tmp3354.value) {
         {
-            org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, left3207->position, &$s3355);
+            org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, left3193->position, &$s3355);
             return NULL;
         }
         }
@@ -8302,587 +8346,560 @@ org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileBinary
         $tmp3357->refCount.value = 1;
         panda$collections$Array$init($tmp3357);
         children3356 = $tmp3357;
-        panda$collections$Array$add$panda$collections$Array$T(children3356, ((panda$core$Object*) left3207));
-        panda$collections$Array$add$panda$collections$Array$T(children3356, ((panda$core$Object*) right3208));
-        org$pandalanguage$pandac$IRNode* $tmp3359 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-        $tmp3359->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-        $tmp3359->refCount.value = 1;
-        org$pandalanguage$pandac$parser$Token$Kind* $tmp3361 = (org$pandalanguage$pandac$parser$Token$Kind*) malloc(24);
-        $tmp3361->$class = (panda$core$Class*) &org$pandalanguage$pandac$parser$Token$Kind$class;
-        $tmp3361->refCount.value = 1;
-        org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64($tmp3361, ((panda$core$Int64) { 73 }));
-        org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp3359, ((panda$core$Int64) { 1023 }), p_position, ((panda$core$Object*) $tmp3361), ((panda$collections$ListView*) children3356));
-        return $tmp3359;
-    }
-    }
-    panda$core$Bit $tmp3363 = org$pandalanguage$pandac$Compiler$isAssignment$org$pandalanguage$pandac$parser$Token$Kind$R$panda$core$Bit(p_op);
-    if ($tmp3363.value) {
-    {
-        panda$core$Bit $tmp3364 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(left3207->kind, ((panda$core$Int64) { 1040 }));
-        if ($tmp3364.value) {
-        {
-            org$pandalanguage$pandac$IRNode* $tmp3365 = org$pandalanguage$pandac$Compiler$compileIndexedAssignment$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_position, left3207, p_op, right3208);
-            return $tmp3365;
-        }
-        }
-        org$pandalanguage$pandac$IRNode* $tmp3366 = org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$IRNode$Q$R$org$pandalanguage$pandac$IRNode$Q(self, left3207);
-        left3207 = $tmp3366;
-        if (((panda$core$Bit) { left3207 == NULL }).value) {
+        panda$collections$Array$add$panda$collections$Array$T(children3356, ((panda$core$Object*) left3193));
+        panda$core$UInt64 $tmp3359 = panda$core$UInt64$$ADD$panda$core$UInt64$R$panda$core$UInt64(self->reusedValueCount, ((panda$core$UInt64) { 1 }));
+        self->reusedValueCount = $tmp3359;
+        org$pandalanguage$pandac$IRNode* $tmp3360 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+        $tmp3360->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+        $tmp3360->refCount.value = 1;
+        panda$core$UInt64$wrapper* $tmp3362;
+        $tmp3362 = (panda$core$UInt64$wrapper*) malloc(24);
+        $tmp3362->cl = (panda$core$Class*) &panda$core$UInt64$wrapperclass;
+        $tmp3362->refCount = 1;
+        $tmp3362->value = self->reusedValueCount;
+        org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$Q($tmp3360, ((panda$core$Int64) { 1027 }), left3193->position, left3193->type, ((panda$core$Object*) $tmp3362), ((panda$collections$ListView*) children3356));
+        left3193 = $tmp3360;
+        org$pandalanguage$pandac$IRNode* $tmp3364 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+        $tmp3364->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+        $tmp3364->refCount.value = 1;
+        org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$UInt64($tmp3364, ((panda$core$Int64) { 1028 }), left3193->position, left3193->type, self->reusedValueCount);
+        reusedLeft3363 = $tmp3364;
+        org$pandalanguage$pandac$parser$Token$Kind $tmp3366 = org$pandalanguage$pandac$Compiler$removeAssignment$org$pandalanguage$pandac$parser$Token$Kind$R$org$pandalanguage$pandac$parser$Token$Kind(p_op);
+        org$pandalanguage$pandac$IRNode* $tmp3367 = org$pandalanguage$pandac$Compiler$compileBinary$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_position, reusedLeft3363, $tmp3366, right3194);
+        right3194 = $tmp3367;
+        if (((panda$core$Bit) { right3194 == NULL }).value) {
         {
             return NULL;
         }
         }
-        panda$core$Bit $tmp3367 = org$pandalanguage$pandac$Compiler$isLValue$org$pandalanguage$pandac$IRNode$R$panda$core$Bit(self, left3207);
-        panda$core$Bit $tmp3368 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp3367);
-        if ($tmp3368.value) {
+        panda$core$Bit $tmp3369 = org$pandalanguage$pandac$Type$isNumber$R$panda$core$Bit(left3193->type);
+        bool $tmp3368 = $tmp3369.value;
+        if (!$tmp3368) goto $l3370;
+        panda$core$Bit $tmp3371 = org$pandalanguage$pandac$Type$$NEQ$org$pandalanguage$pandac$Type$R$panda$core$Bit(left3193->type, right3194->type);
+        $tmp3368 = $tmp3371.value;
+        $l3370:;
+        panda$core$Bit $tmp3372 = { $tmp3368 };
+        if ($tmp3372.value) {
         {
-            org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, left3207->position, &$s3369);
-            return NULL;
-        }
-        }
-        panda$collections$Array* $tmp3371 = (panda$collections$Array*) malloc(40);
-        $tmp3371->$class = (panda$core$Class*) &panda$collections$Array$class;
-        $tmp3371->refCount.value = 1;
-        panda$collections$Array$init($tmp3371);
-        children3370 = $tmp3371;
-        panda$collections$Array$add$panda$collections$Array$T(children3370, ((panda$core$Object*) left3207));
-        panda$core$UInt64 $tmp3373 = panda$core$UInt64$$ADD$panda$core$UInt64$R$panda$core$UInt64(self->reusedValueCount, ((panda$core$UInt64) { 1 }));
-        self->reusedValueCount = $tmp3373;
-        org$pandalanguage$pandac$IRNode* $tmp3374 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-        $tmp3374->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-        $tmp3374->refCount.value = 1;
-        panda$core$UInt64$wrapper* $tmp3376;
-        $tmp3376 = (panda$core$UInt64$wrapper*) malloc(24);
-        $tmp3376->cl = (panda$core$Class*) &panda$core$UInt64$wrapperclass;
-        $tmp3376->refCount = 1;
-        $tmp3376->value = self->reusedValueCount;
-        org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$Q($tmp3374, ((panda$core$Int64) { 1027 }), left3207->position, left3207->type, ((panda$core$Object*) $tmp3376), ((panda$collections$ListView*) children3370));
-        left3207 = $tmp3374;
-        org$pandalanguage$pandac$IRNode* $tmp3378 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-        $tmp3378->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-        $tmp3378->refCount.value = 1;
-        org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$UInt64($tmp3378, ((panda$core$Int64) { 1028 }), left3207->position, left3207->type, self->reusedValueCount);
-        reusedLeft3377 = $tmp3378;
-        org$pandalanguage$pandac$parser$Token$Kind* $tmp3380 = org$pandalanguage$pandac$Compiler$removeAssignment$org$pandalanguage$pandac$parser$Token$Kind$R$org$pandalanguage$pandac$parser$Token$Kind(p_op);
-        org$pandalanguage$pandac$IRNode* $tmp3381 = org$pandalanguage$pandac$Compiler$compileBinary$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_position, reusedLeft3377, $tmp3380, right3208);
-        right3208 = $tmp3381;
-        if (((panda$core$Bit) { right3208 == NULL }).value) {
-        {
-            return NULL;
-        }
-        }
-        panda$core$Bit $tmp3383 = org$pandalanguage$pandac$Type$isNumber$R$panda$core$Bit(left3207->type);
-        bool $tmp3382 = $tmp3383.value;
-        if (!$tmp3382) goto $l3384;
-        panda$core$Bit $tmp3385 = org$pandalanguage$pandac$Type$$NEQ$org$pandalanguage$pandac$Type$R$panda$core$Bit(left3207->type, right3208->type);
-        $tmp3382 = $tmp3385.value;
-        $l3384:;
-        panda$core$Bit $tmp3386 = { $tmp3382 };
-        if ($tmp3386.value) {
-        {
-            panda$collections$Array* $tmp3388 = (panda$collections$Array*) malloc(40);
-            $tmp3388->$class = (panda$core$Class*) &panda$collections$Array$class;
-            $tmp3388->refCount.value = 1;
-            panda$collections$Array$init($tmp3388);
-            org$pandalanguage$pandac$IRNode* $tmp3390 = org$pandalanguage$pandac$Compiler$call$org$pandalanguage$pandac$IRNode$panda$core$String$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$org$pandalanguage$pandac$Type$Q$R$org$pandalanguage$pandac$IRNode$Q(self, right3208, &$s3387, ((panda$collections$ListView*) $tmp3388), left3207->type);
-            right3208 = $tmp3390;
-            if (((panda$core$Bit) { right3208 == NULL }).value) {
+            panda$collections$Array* $tmp3374 = (panda$collections$Array*) malloc(40);
+            $tmp3374->$class = (panda$core$Class*) &panda$collections$Array$class;
+            $tmp3374->refCount.value = 1;
+            panda$collections$Array$init($tmp3374);
+            org$pandalanguage$pandac$IRNode* $tmp3376 = org$pandalanguage$pandac$Compiler$call$org$pandalanguage$pandac$IRNode$panda$core$String$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$org$pandalanguage$pandac$Type$Q$R$org$pandalanguage$pandac$IRNode$Q(self, right3194, &$s3373, ((panda$collections$ListView*) $tmp3374), left3193->type);
+            right3194 = $tmp3376;
+            if (((panda$core$Bit) { right3194 == NULL }).value) {
             {
                 return NULL;
             }
             }
         }
         }
-        org$pandalanguage$pandac$parser$Token$Kind* $tmp3391 = (org$pandalanguage$pandac$parser$Token$Kind*) malloc(24);
-        $tmp3391->$class = (panda$core$Class*) &org$pandalanguage$pandac$parser$Token$Kind$class;
-        $tmp3391->refCount.value = 1;
-        org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64($tmp3391, ((panda$core$Int64) { 73 }));
-        org$pandalanguage$pandac$IRNode* $tmp3393 = org$pandalanguage$pandac$Compiler$compileBinary$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_position, left3207, $tmp3391, right3208);
-        return $tmp3393;
+        org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64(&$tmp3377, ((panda$core$Int64) { 73 }));
+        org$pandalanguage$pandac$IRNode* $tmp3378 = org$pandalanguage$pandac$Compiler$compileBinary$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_position, left3193, $tmp3377, right3194);
+        return $tmp3378;
     }
     }
-    panda$core$Bit $tmp3394 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_op->$rawValue, ((panda$core$Int64) { 101 }));
-    if ($tmp3394.value) {
+    panda$core$Bit $tmp3379 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_op.$rawValue, ((panda$core$Int64) { 101 }));
+    if ($tmp3379.value) {
     {
-        org$pandalanguage$pandac$IRNode* $tmp3395 = org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$IRNode$Q$R$org$pandalanguage$pandac$IRNode$Q(self, left3207);
-        left3207 = $tmp3395;
-        if (((panda$core$Bit) { left3207 == NULL }).value) {
+        org$pandalanguage$pandac$IRNode* $tmp3380 = org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$IRNode$Q$R$org$pandalanguage$pandac$IRNode$Q(self, left3193);
+        left3193 = $tmp3380;
+        if (((panda$core$Bit) { left3193 == NULL }).value) {
         {
             return NULL;
         }
         }
-        panda$core$Bit $tmp3396 = org$pandalanguage$pandac$Type$isClass$R$panda$core$Bit(left3207->type);
-        if ($tmp3396.value) {
+        panda$core$Bit $tmp3381 = org$pandalanguage$pandac$Type$isClass$R$panda$core$Bit(left3193->type);
+        if ($tmp3381.value) {
         {
-            org$pandalanguage$pandac$ClassDecl* $tmp3398 = org$pandalanguage$pandac$Compiler$getClass$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$ClassDecl$Q(self, left3207->type);
-            cl3397 = $tmp3398;
-            if (((panda$core$Bit) { cl3397 == NULL }).value) {
+            org$pandalanguage$pandac$ClassDecl* $tmp3383 = org$pandalanguage$pandac$Compiler$getClass$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$ClassDecl$Q(self, left3193->type);
+            cl3382 = $tmp3383;
+            if (((panda$core$Bit) { cl3382 == NULL }).value) {
             {
                 return NULL;
             }
             }
-            panda$collections$ListView* $tmp3400 = org$pandalanguage$pandac$Compiler$typeParameters$org$pandalanguage$pandac$Type$R$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT(self, left3207->type);
-            parameters3399 = $tmp3400;
-            org$pandalanguage$pandac$SymbolTable* $tmp3402 = org$pandalanguage$pandac$Compiler$getSymbolTable$org$pandalanguage$pandac$ClassDecl$R$org$pandalanguage$pandac$SymbolTable(self, cl3397);
-            org$pandalanguage$pandac$Symbol* $tmp3404 = org$pandalanguage$pandac$SymbolTable$$IDX$panda$core$String$R$org$pandalanguage$pandac$Symbol$Q($tmp3402, &$s3403);
-            methods3401 = $tmp3404;
-            if (((panda$core$Bit) { methods3401 != NULL }).value) {
+            panda$collections$ListView* $tmp3385 = org$pandalanguage$pandac$Compiler$typeParameters$org$pandalanguage$pandac$Type$R$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT(self, left3193->type);
+            parameters3384 = $tmp3385;
+            org$pandalanguage$pandac$SymbolTable* $tmp3387 = org$pandalanguage$pandac$Compiler$getSymbolTable$org$pandalanguage$pandac$ClassDecl$R$org$pandalanguage$pandac$SymbolTable(self, cl3382);
+            org$pandalanguage$pandac$Symbol* $tmp3389 = org$pandalanguage$pandac$SymbolTable$$IDX$panda$core$String$R$org$pandalanguage$pandac$Symbol$Q($tmp3387, &$s3388);
+            methods3386 = $tmp3389;
+            if (((panda$core$Bit) { methods3386 != NULL }).value) {
             {
-                panda$collections$Array* $tmp3407 = (panda$collections$Array*) malloc(40);
-                $tmp3407->$class = (panda$core$Class*) &panda$collections$Array$class;
-                $tmp3407->refCount.value = 1;
-                panda$collections$Array$init($tmp3407);
-                types3406 = $tmp3407;
-                panda$core$Bit $tmp3409 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(methods3401->kind, ((panda$core$Int64) { 204 }));
-                if ($tmp3409.value) {
+                panda$collections$Array* $tmp3392 = (panda$collections$Array*) malloc(40);
+                $tmp3392->$class = (panda$core$Class*) &panda$collections$Array$class;
+                $tmp3392->refCount.value = 1;
+                panda$collections$Array$init($tmp3392);
+                types3391 = $tmp3392;
+                panda$core$Bit $tmp3394 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(methods3386->kind, ((panda$core$Int64) { 204 }));
+                if ($tmp3394.value) {
                 {
-                    m3410 = ((org$pandalanguage$pandac$MethodDecl*) methods3401);
-                    org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$MethodDecl(self, m3410);
-                    org$pandalanguage$pandac$MethodRef* $tmp3411 = (org$pandalanguage$pandac$MethodRef*) malloc(40);
-                    $tmp3411->$class = (panda$core$Class*) &org$pandalanguage$pandac$MethodRef$class;
-                    $tmp3411->refCount.value = 1;
-                    org$pandalanguage$pandac$MethodRef$init$org$pandalanguage$pandac$MethodDecl$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT($tmp3411, m3410, parameters3399);
-                    org$pandalanguage$pandac$Type* $tmp3413 = org$pandalanguage$pandac$MethodRef$returnType$R$org$pandalanguage$pandac$Type($tmp3411);
-                    panda$collections$Array$add$panda$collections$Array$T(types3406, ((panda$core$Object*) $tmp3413));
+                    m3395 = ((org$pandalanguage$pandac$MethodDecl*) methods3386);
+                    org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$MethodDecl(self, m3395);
+                    org$pandalanguage$pandac$MethodRef* $tmp3396 = (org$pandalanguage$pandac$MethodRef*) malloc(40);
+                    $tmp3396->$class = (panda$core$Class*) &org$pandalanguage$pandac$MethodRef$class;
+                    $tmp3396->refCount.value = 1;
+                    org$pandalanguage$pandac$MethodRef$init$org$pandalanguage$pandac$MethodDecl$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT($tmp3396, m3395, parameters3384);
+                    org$pandalanguage$pandac$Type* $tmp3398 = org$pandalanguage$pandac$MethodRef$returnType$R$org$pandalanguage$pandac$Type($tmp3396);
+                    panda$collections$Array$add$panda$collections$Array$T(types3391, ((panda$core$Object*) $tmp3398));
                 }
                 }
                 else {
                 {
-                    panda$core$Bit $tmp3414 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(methods3401->kind, ((panda$core$Int64) { 205 }));
-                    PANDA_ASSERT($tmp3414.value);
+                    panda$core$Bit $tmp3399 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(methods3386->kind, ((panda$core$Int64) { 205 }));
+                    PANDA_ASSERT($tmp3399.value);
                     {
-                        ITable* $tmp3416 = ((panda$collections$Iterable*) ((org$pandalanguage$pandac$Methods*) methods3401)->methods)->$class->itable;
-                        while ($tmp3416->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
-                            $tmp3416 = $tmp3416->next;
+                        ITable* $tmp3401 = ((panda$collections$Iterable*) ((org$pandalanguage$pandac$Methods*) methods3386)->methods)->$class->itable;
+                        while ($tmp3401->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
+                            $tmp3401 = $tmp3401->next;
                         }
-                        $fn3418 $tmp3417 = $tmp3416->methods[0];
-                        panda$collections$Iterator* $tmp3419 = $tmp3417(((panda$collections$Iterable*) ((org$pandalanguage$pandac$Methods*) methods3401)->methods));
-                        m$Iter3415 = $tmp3419;
-                        $l3420:;
-                        ITable* $tmp3422 = m$Iter3415->$class->itable;
-                        while ($tmp3422->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-                            $tmp3422 = $tmp3422->next;
+                        $fn3403 $tmp3402 = $tmp3401->methods[0];
+                        panda$collections$Iterator* $tmp3404 = $tmp3402(((panda$collections$Iterable*) ((org$pandalanguage$pandac$Methods*) methods3386)->methods));
+                        m$Iter3400 = $tmp3404;
+                        $l3405:;
+                        ITable* $tmp3407 = m$Iter3400->$class->itable;
+                        while ($tmp3407->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+                            $tmp3407 = $tmp3407->next;
                         }
-                        $fn3424 $tmp3423 = $tmp3422->methods[0];
-                        panda$core$Bit $tmp3425 = $tmp3423(m$Iter3415);
-                        panda$core$Bit $tmp3426 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp3425);
-                        if (!$tmp3426.value) goto $l3421;
+                        $fn3409 $tmp3408 = $tmp3407->methods[0];
+                        panda$core$Bit $tmp3410 = $tmp3408(m$Iter3400);
+                        panda$core$Bit $tmp3411 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp3410);
+                        if (!$tmp3411.value) goto $l3406;
                         {
-                            ITable* $tmp3428 = m$Iter3415->$class->itable;
-                            while ($tmp3428->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-                                $tmp3428 = $tmp3428->next;
+                            ITable* $tmp3413 = m$Iter3400->$class->itable;
+                            while ($tmp3413->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+                                $tmp3413 = $tmp3413->next;
                             }
-                            $fn3430 $tmp3429 = $tmp3428->methods[1];
-                            panda$core$Object* $tmp3431 = $tmp3429(m$Iter3415);
-                            m3427 = ((org$pandalanguage$pandac$MethodDecl*) $tmp3431);
-                            org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$MethodDecl(self, m3427);
-                            org$pandalanguage$pandac$MethodRef* $tmp3432 = (org$pandalanguage$pandac$MethodRef*) malloc(40);
-                            $tmp3432->$class = (panda$core$Class*) &org$pandalanguage$pandac$MethodRef$class;
-                            $tmp3432->refCount.value = 1;
-                            org$pandalanguage$pandac$MethodRef$init$org$pandalanguage$pandac$MethodDecl$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT($tmp3432, m3427, parameters3399);
-                            org$pandalanguage$pandac$Type* $tmp3434 = org$pandalanguage$pandac$MethodRef$returnType$R$org$pandalanguage$pandac$Type($tmp3432);
-                            panda$collections$Array$add$panda$collections$Array$T(types3406, ((panda$core$Object*) $tmp3434));
+                            $fn3415 $tmp3414 = $tmp3413->methods[1];
+                            panda$core$Object* $tmp3416 = $tmp3414(m$Iter3400);
+                            m3412 = ((org$pandalanguage$pandac$MethodDecl*) $tmp3416);
+                            org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$MethodDecl(self, m3412);
+                            org$pandalanguage$pandac$MethodRef* $tmp3417 = (org$pandalanguage$pandac$MethodRef*) malloc(40);
+                            $tmp3417->$class = (panda$core$Class*) &org$pandalanguage$pandac$MethodRef$class;
+                            $tmp3417->refCount.value = 1;
+                            org$pandalanguage$pandac$MethodRef$init$org$pandalanguage$pandac$MethodDecl$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT($tmp3417, m3412, parameters3384);
+                            org$pandalanguage$pandac$Type* $tmp3419 = org$pandalanguage$pandac$MethodRef$returnType$R$org$pandalanguage$pandac$Type($tmp3417);
+                            panda$collections$Array$add$panda$collections$Array$T(types3391, ((panda$core$Object*) $tmp3419));
                         }
-                        goto $l3420;
-                        $l3421:;
+                        goto $l3405;
+                        $l3406:;
                     }
                 }
                 }
-                org$pandalanguage$pandac$Type* $tmp3435 = (org$pandalanguage$pandac$Type*) malloc(96);
-                $tmp3435->$class = (panda$core$Class*) &org$pandalanguage$pandac$Type$class;
-                $tmp3435->refCount.value = 1;
-                org$pandalanguage$pandac$Type$init$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT($tmp3435, ((panda$collections$ListView*) types3406));
-                type3405 = $tmp3435;
+                org$pandalanguage$pandac$Type* $tmp3420 = (org$pandalanguage$pandac$Type*) malloc(96);
+                $tmp3420->$class = (panda$core$Class*) &org$pandalanguage$pandac$Type$class;
+                $tmp3420->refCount.value = 1;
+                org$pandalanguage$pandac$Type$init$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT($tmp3420, ((panda$collections$ListView*) types3391));
+                type3390 = $tmp3420;
             }
             }
             else {
             {
-                org$pandalanguage$pandac$Type* $tmp3437 = org$pandalanguage$pandac$Type$Invalid$R$org$pandalanguage$pandac$Type();
-                type3405 = $tmp3437;
+                org$pandalanguage$pandac$Type* $tmp3422 = org$pandalanguage$pandac$Type$Invalid$R$org$pandalanguage$pandac$Type();
+                type3390 = $tmp3422;
             }
             }
-            panda$collections$Array* $tmp3439 = (panda$collections$Array*) malloc(40);
-            $tmp3439->$class = (panda$core$Class*) &panda$collections$Array$class;
-            $tmp3439->refCount.value = 1;
-            panda$collections$Array$init($tmp3439);
-            children3438 = $tmp3439;
-            panda$collections$Array$add$panda$collections$Array$T(children3438, ((panda$core$Object*) left3207));
-            panda$collections$Array$add$panda$collections$Array$T(children3438, ((panda$core$Object*) right3208));
-            org$pandalanguage$pandac$IRNode* $tmp3441 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-            $tmp3441->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-            $tmp3441->refCount.value = 1;
-            org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp3441, ((panda$core$Int64) { 1040 }), p_position, type3405, ((panda$collections$ListView*) children3438));
-            return $tmp3441;
+            panda$collections$Array* $tmp3424 = (panda$collections$Array*) malloc(40);
+            $tmp3424->$class = (panda$core$Class*) &panda$collections$Array$class;
+            $tmp3424->refCount.value = 1;
+            panda$collections$Array$init($tmp3424);
+            children3423 = $tmp3424;
+            panda$collections$Array$add$panda$collections$Array$T(children3423, ((panda$core$Object*) left3193));
+            panda$collections$Array$add$panda$collections$Array$T(children3423, ((panda$core$Object*) right3194));
+            org$pandalanguage$pandac$IRNode* $tmp3426 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+            $tmp3426->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+            $tmp3426->refCount.value = 1;
+            org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp3426, ((panda$core$Int64) { 1040 }), p_position, type3390, ((panda$collections$ListView*) children3423));
+            return $tmp3426;
         }
         }
     }
     }
-    org$pandalanguage$pandac$Type* $tmp3443 = org$pandalanguage$pandac$Type$BuiltinBit$R$org$pandalanguage$pandac$Type();
-    panda$core$Bit $tmp3444 = org$pandalanguage$pandac$Type$$EQ$org$pandalanguage$pandac$Type$R$panda$core$Bit(left3207->type, $tmp3443);
-    if ($tmp3444.value) {
+    org$pandalanguage$pandac$Type* $tmp3428 = org$pandalanguage$pandac$Type$BuiltinBit$R$org$pandalanguage$pandac$Type();
+    panda$core$Bit $tmp3429 = org$pandalanguage$pandac$Type$$EQ$org$pandalanguage$pandac$Type$R$panda$core$Bit(left3193->type, $tmp3428);
+    if ($tmp3429.value) {
     {
-        org$pandalanguage$pandac$Type* $tmp3446 = org$pandalanguage$pandac$Type$BuiltinBit$R$org$pandalanguage$pandac$Type();
-        panda$core$Bit $tmp3447 = org$pandalanguage$pandac$Type$$EQ$org$pandalanguage$pandac$Type$R$panda$core$Bit(right3208->type, $tmp3446);
-        bool $tmp3445 = $tmp3447.value;
-        if (!$tmp3445) goto $l3448;
-        panda$core$Bit $tmp3453 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_op->$rawValue, ((panda$core$Int64) { 66 }));
-        bool $tmp3452 = $tmp3453.value;
-        if ($tmp3452) goto $l3454;
-        panda$core$Bit $tmp3455 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_op->$rawValue, ((panda$core$Int64) { 68 }));
-        $tmp3452 = $tmp3455.value;
-        $l3454:;
-        panda$core$Bit $tmp3456 = { $tmp3452 };
-        bool $tmp3451 = $tmp3456.value;
-        if ($tmp3451) goto $l3457;
-        panda$core$Bit $tmp3458 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_op->$rawValue, ((panda$core$Int64) { 70 }));
-        $tmp3451 = $tmp3458.value;
-        $l3457:;
-        panda$core$Bit $tmp3459 = { $tmp3451 };
-        bool $tmp3450 = $tmp3459.value;
-        if ($tmp3450) goto $l3460;
-        panda$core$Bit $tmp3461 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_op->$rawValue, ((panda$core$Int64) { 58 }));
-        $tmp3450 = $tmp3461.value;
-        $l3460:;
-        panda$core$Bit $tmp3462 = { $tmp3450 };
-        bool $tmp3449 = $tmp3462.value;
-        if ($tmp3449) goto $l3463;
-        panda$core$Bit $tmp3464 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_op->$rawValue, ((panda$core$Int64) { 59 }));
-        $tmp3449 = $tmp3464.value;
-        $l3463:;
-        panda$core$Bit $tmp3465 = { $tmp3449 };
-        $tmp3445 = $tmp3465.value;
+        org$pandalanguage$pandac$Type* $tmp3431 = org$pandalanguage$pandac$Type$BuiltinBit$R$org$pandalanguage$pandac$Type();
+        panda$core$Bit $tmp3432 = org$pandalanguage$pandac$Type$$EQ$org$pandalanguage$pandac$Type$R$panda$core$Bit(right3194->type, $tmp3431);
+        bool $tmp3430 = $tmp3432.value;
+        if (!$tmp3430) goto $l3433;
+        panda$core$Bit $tmp3438 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_op.$rawValue, ((panda$core$Int64) { 66 }));
+        bool $tmp3437 = $tmp3438.value;
+        if ($tmp3437) goto $l3439;
+        panda$core$Bit $tmp3440 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_op.$rawValue, ((panda$core$Int64) { 68 }));
+        $tmp3437 = $tmp3440.value;
+        $l3439:;
+        panda$core$Bit $tmp3441 = { $tmp3437 };
+        bool $tmp3436 = $tmp3441.value;
+        if ($tmp3436) goto $l3442;
+        panda$core$Bit $tmp3443 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_op.$rawValue, ((panda$core$Int64) { 70 }));
+        $tmp3436 = $tmp3443.value;
+        $l3442:;
+        panda$core$Bit $tmp3444 = { $tmp3436 };
+        bool $tmp3435 = $tmp3444.value;
+        if ($tmp3435) goto $l3445;
+        panda$core$Bit $tmp3446 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_op.$rawValue, ((panda$core$Int64) { 58 }));
+        $tmp3435 = $tmp3446.value;
+        $l3445:;
+        panda$core$Bit $tmp3447 = { $tmp3435 };
+        bool $tmp3434 = $tmp3447.value;
+        if ($tmp3434) goto $l3448;
+        panda$core$Bit $tmp3449 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_op.$rawValue, ((panda$core$Int64) { 59 }));
+        $tmp3434 = $tmp3449.value;
         $l3448:;
-        panda$core$Bit $tmp3466 = { $tmp3445 };
-        if ($tmp3466.value) {
+        panda$core$Bit $tmp3450 = { $tmp3434 };
+        $tmp3430 = $tmp3450.value;
+        $l3433:;
+        panda$core$Bit $tmp3451 = { $tmp3430 };
+        if ($tmp3451.value) {
         {
-            panda$collections$Array* $tmp3468 = (panda$collections$Array*) malloc(40);
-            $tmp3468->$class = (panda$core$Class*) &panda$collections$Array$class;
-            $tmp3468->refCount.value = 1;
-            panda$collections$Array$init($tmp3468);
-            children3467 = $tmp3468;
-            panda$collections$Array$add$panda$collections$Array$T(children3467, ((panda$core$Object*) left3207));
-            panda$collections$Array$add$panda$collections$Array$T(children3467, ((panda$core$Object*) right3208));
-            org$pandalanguage$pandac$IRNode* $tmp3470 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-            $tmp3470->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-            $tmp3470->refCount.value = 1;
-            org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$Q($tmp3470, ((panda$core$Int64) { 1023 }), p_position, left3207->type, ((panda$core$Object*) p_op), ((panda$collections$ListView*) children3467));
-            return $tmp3470;
+            panda$collections$Array* $tmp3453 = (panda$collections$Array*) malloc(40);
+            $tmp3453->$class = (panda$core$Class*) &panda$collections$Array$class;
+            $tmp3453->refCount.value = 1;
+            panda$collections$Array$init($tmp3453);
+            children3452 = $tmp3453;
+            panda$collections$Array$add$panda$collections$Array$T(children3452, ((panda$core$Object*) left3193));
+            panda$collections$Array$add$panda$collections$Array$T(children3452, ((panda$core$Object*) right3194));
+            org$pandalanguage$pandac$IRNode* $tmp3455 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+            $tmp3455->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+            $tmp3455->refCount.value = 1;
+            org$pandalanguage$pandac$parser$Token$Kind$wrapper* $tmp3457;
+            $tmp3457 = (org$pandalanguage$pandac$parser$Token$Kind$wrapper*) malloc(24);
+            $tmp3457->cl = (panda$core$Class*) &org$pandalanguage$pandac$parser$Token$Kind$wrapperclass;
+            $tmp3457->refCount = 1;
+            $tmp3457->value = p_op;
+            org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$Q($tmp3455, ((panda$core$Int64) { 1023 }), p_position, left3193->type, ((panda$core$Object*) $tmp3457), ((panda$collections$ListView*) children3452));
+            return $tmp3455;
         }
         }
-        panda$core$String* $tmp3473 = org$pandalanguage$pandac$Compiler$operatorName$org$pandalanguage$pandac$parser$Token$Kind$R$panda$core$String(p_op);
-        panda$core$String* $tmp3474 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s3472, $tmp3473);
-        panda$core$String* $tmp3476 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3474, &$s3475);
-        panda$core$String* $tmp3477 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp3476, ((panda$core$Object*) left3207->type));
-        panda$core$String* $tmp3479 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3477, &$s3478);
-        panda$core$String* $tmp3480 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp3479, ((panda$core$Object*) right3208->type));
-        panda$core$String* $tmp3482 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3480, &$s3481);
-        org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, p_position, $tmp3482);
+        panda$core$String* $tmp3459 = org$pandalanguage$pandac$Compiler$operatorName$org$pandalanguage$pandac$parser$Token$Kind$R$panda$core$String(p_op);
+        panda$core$String* $tmp3460 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s3458, $tmp3459);
+        panda$core$String* $tmp3462 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3460, &$s3461);
+        panda$core$String* $tmp3463 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp3462, ((panda$core$Object*) left3193->type));
+        panda$core$String* $tmp3465 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3463, &$s3464);
+        panda$core$String* $tmp3466 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp3465, ((panda$core$Object*) right3194->type));
+        panda$core$String* $tmp3468 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3466, &$s3467);
+        org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, p_position, $tmp3468);
         return NULL;
     }
     }
-    panda$collections$Array* $tmp3484 = (panda$collections$Array*) malloc(40);
-    $tmp3484->$class = (panda$core$Class*) &panda$collections$Array$class;
-    $tmp3484->refCount.value = 1;
-    panda$collections$Array$init($tmp3484);
-    children3483 = $tmp3484;
-    panda$core$Bit $tmp3488 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(left3207->kind, ((panda$core$Int64) { 1004 }));
-    bool $tmp3487 = $tmp3488.value;
-    if ($tmp3487) goto $l3489;
-    panda$core$Bit $tmp3490 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(left3207->kind, ((panda$core$Int64) { 1032 }));
-    $tmp3487 = $tmp3490.value;
-    $l3489:;
-    panda$core$Bit $tmp3491 = { $tmp3487 };
-    bool $tmp3486 = $tmp3491.value;
-    if (!$tmp3486) goto $l3492;
-    panda$core$Bit $tmp3494 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(right3208->kind, ((panda$core$Int64) { 1004 }));
-    bool $tmp3493 = $tmp3494.value;
-    if ($tmp3493) goto $l3495;
-    panda$core$Bit $tmp3496 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(right3208->kind, ((panda$core$Int64) { 1032 }));
-    $tmp3493 = $tmp3496.value;
-    $l3495:;
-    panda$core$Bit $tmp3497 = { $tmp3493 };
-    $tmp3486 = $tmp3497.value;
-    $l3492:;
-    panda$core$Bit $tmp3498 = { $tmp3486 };
-    if ($tmp3498.value) {
+    panda$collections$Array* $tmp3470 = (panda$collections$Array*) malloc(40);
+    $tmp3470->$class = (panda$core$Class*) &panda$collections$Array$class;
+    $tmp3470->refCount.value = 1;
+    panda$collections$Array$init($tmp3470);
+    children3469 = $tmp3470;
+    panda$core$Bit $tmp3474 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(left3193->kind, ((panda$core$Int64) { 1004 }));
+    bool $tmp3473 = $tmp3474.value;
+    if ($tmp3473) goto $l3475;
+    panda$core$Bit $tmp3476 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(left3193->kind, ((panda$core$Int64) { 1032 }));
+    $tmp3473 = $tmp3476.value;
+    $l3475:;
+    panda$core$Bit $tmp3477 = { $tmp3473 };
+    bool $tmp3472 = $tmp3477.value;
+    if (!$tmp3472) goto $l3478;
+    panda$core$Bit $tmp3480 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(right3194->kind, ((panda$core$Int64) { 1004 }));
+    bool $tmp3479 = $tmp3480.value;
+    if ($tmp3479) goto $l3481;
+    panda$core$Bit $tmp3482 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(right3194->kind, ((panda$core$Int64) { 1032 }));
+    $tmp3479 = $tmp3482.value;
+    $l3481:;
+    panda$core$Bit $tmp3483 = { $tmp3479 };
+    $tmp3472 = $tmp3483.value;
+    $l3478:;
+    panda$core$Bit $tmp3484 = { $tmp3472 };
+    if ($tmp3484.value) {
     {
-        org$pandalanguage$pandac$IRNode* $tmp3499 = org$pandalanguage$pandac$Compiler$foldInts$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_position, left3207, p_op, right3208);
-        return $tmp3499;
+        org$pandalanguage$pandac$IRNode* $tmp3485 = org$pandalanguage$pandac$Compiler$foldInts$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_position, left3193, p_op, right3194);
+        return $tmp3485;
     }
     }
-    panda$core$Bit $tmp3501 = org$pandalanguage$pandac$Type$isBuiltinNumber$R$panda$core$Bit(left3207->type);
-    bool $tmp3500 = $tmp3501.value;
-    if (!$tmp3500) goto $l3502;
-    panda$core$Int64$nullable $tmp3503 = org$pandalanguage$pandac$Compiler$coercionCost$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$Type$R$panda$core$Int64$Q(self, right3208, left3207->type);
-    $tmp3500 = ((panda$core$Bit) { $tmp3503.nonnull }).value;
-    $l3502:;
-    panda$core$Bit $tmp3504 = { $tmp3500 };
-    if ($tmp3504.value) {
+    panda$core$Bit $tmp3487 = org$pandalanguage$pandac$Type$isBuiltinNumber$R$panda$core$Bit(left3193->type);
+    bool $tmp3486 = $tmp3487.value;
+    if (!$tmp3486) goto $l3488;
+    panda$core$Int64$nullable $tmp3489 = org$pandalanguage$pandac$Compiler$coercionCost$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$Type$R$panda$core$Int64$Q(self, right3194, left3193->type);
+    $tmp3486 = ((panda$core$Bit) { $tmp3489.nonnull }).value;
+    $l3488:;
+    panda$core$Bit $tmp3490 = { $tmp3486 };
+    if ($tmp3490.value) {
     {
-        org$pandalanguage$pandac$IRNode* $tmp3505 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, right3208, left3207->type);
-        right3208 = $tmp3505;
-        PANDA_ASSERT(((panda$core$Bit) { right3208 != NULL }).value);
-        panda$collections$Array$add$panda$collections$Array$T(children3483, ((panda$core$Object*) left3207));
-        panda$collections$Array$add$panda$collections$Array$T(children3483, ((panda$core$Object*) right3208));
+        org$pandalanguage$pandac$IRNode* $tmp3491 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, right3194, left3193->type);
+        right3194 = $tmp3491;
+        PANDA_ASSERT(((panda$core$Bit) { right3194 != NULL }).value);
+        panda$collections$Array$add$panda$collections$Array$T(children3469, ((panda$core$Object*) left3193));
+        panda$collections$Array$add$panda$collections$Array$T(children3469, ((panda$core$Object*) right3194));
         {
-            $match$2495_133507 = p_op;
-            panda$core$Bit $tmp3513 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2495_133507->$rawValue, ((panda$core$Int64) { 58 }));
-            bool $tmp3512 = $tmp3513.value;
-            if ($tmp3512) goto $l3514;
-            panda$core$Bit $tmp3515 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2495_133507->$rawValue, ((panda$core$Int64) { 59 }));
-            $tmp3512 = $tmp3515.value;
-            $l3514:;
-            panda$core$Bit $tmp3516 = { $tmp3512 };
-            bool $tmp3511 = $tmp3516.value;
-            if ($tmp3511) goto $l3517;
-            panda$core$Bit $tmp3518 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2495_133507->$rawValue, ((panda$core$Int64) { 63 }));
-            $tmp3511 = $tmp3518.value;
-            $l3517:;
-            panda$core$Bit $tmp3519 = { $tmp3511 };
-            bool $tmp3510 = $tmp3519.value;
-            if ($tmp3510) goto $l3520;
-            panda$core$Bit $tmp3521 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2495_133507->$rawValue, ((panda$core$Int64) { 65 }));
-            $tmp3510 = $tmp3521.value;
-            $l3520:;
-            panda$core$Bit $tmp3522 = { $tmp3510 };
-            bool $tmp3509 = $tmp3522.value;
-            if ($tmp3509) goto $l3523;
-            panda$core$Bit $tmp3524 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2495_133507->$rawValue, ((panda$core$Int64) { 62 }));
-            $tmp3509 = $tmp3524.value;
-            $l3523:;
-            panda$core$Bit $tmp3525 = { $tmp3509 };
-            bool $tmp3508 = $tmp3525.value;
-            if ($tmp3508) goto $l3526;
-            panda$core$Bit $tmp3527 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2495_133507->$rawValue, ((panda$core$Int64) { 64 }));
-            $tmp3508 = $tmp3527.value;
-            $l3526:;
-            panda$core$Bit $tmp3528 = { $tmp3508 };
-            if ($tmp3528.value) {
+            $match$2496_133493 = p_op;
+            panda$core$Bit $tmp3499 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2496_133493.$rawValue, ((panda$core$Int64) { 58 }));
+            bool $tmp3498 = $tmp3499.value;
+            if ($tmp3498) goto $l3500;
+            panda$core$Bit $tmp3501 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2496_133493.$rawValue, ((panda$core$Int64) { 59 }));
+            $tmp3498 = $tmp3501.value;
+            $l3500:;
+            panda$core$Bit $tmp3502 = { $tmp3498 };
+            bool $tmp3497 = $tmp3502.value;
+            if ($tmp3497) goto $l3503;
+            panda$core$Bit $tmp3504 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2496_133493.$rawValue, ((panda$core$Int64) { 63 }));
+            $tmp3497 = $tmp3504.value;
+            $l3503:;
+            panda$core$Bit $tmp3505 = { $tmp3497 };
+            bool $tmp3496 = $tmp3505.value;
+            if ($tmp3496) goto $l3506;
+            panda$core$Bit $tmp3507 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2496_133493.$rawValue, ((panda$core$Int64) { 65 }));
+            $tmp3496 = $tmp3507.value;
+            $l3506:;
+            panda$core$Bit $tmp3508 = { $tmp3496 };
+            bool $tmp3495 = $tmp3508.value;
+            if ($tmp3495) goto $l3509;
+            panda$core$Bit $tmp3510 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2496_133493.$rawValue, ((panda$core$Int64) { 62 }));
+            $tmp3495 = $tmp3510.value;
+            $l3509:;
+            panda$core$Bit $tmp3511 = { $tmp3495 };
+            bool $tmp3494 = $tmp3511.value;
+            if ($tmp3494) goto $l3512;
+            panda$core$Bit $tmp3513 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2496_133493.$rawValue, ((panda$core$Int64) { 64 }));
+            $tmp3494 = $tmp3513.value;
+            $l3512:;
+            panda$core$Bit $tmp3514 = { $tmp3494 };
+            if ($tmp3514.value) {
             {
-                org$pandalanguage$pandac$Type* $tmp3529 = org$pandalanguage$pandac$Type$BuiltinBit$R$org$pandalanguage$pandac$Type();
-                resultType3506 = $tmp3529;
+                org$pandalanguage$pandac$Type* $tmp3515 = org$pandalanguage$pandac$Type$BuiltinBit$R$org$pandalanguage$pandac$Type();
+                resultType3492 = $tmp3515;
             }
             }
             else {
             {
-                resultType3506 = left3207->type;
+                resultType3492 = left3193->type;
             }
             }
         }
-        org$pandalanguage$pandac$IRNode* $tmp3530 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-        $tmp3530->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-        $tmp3530->refCount.value = 1;
-        org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$Q($tmp3530, ((panda$core$Int64) { 1023 }), p_position, resultType3506, ((panda$core$Object*) p_op), ((panda$collections$ListView*) children3483));
-        return $tmp3530;
+        org$pandalanguage$pandac$IRNode* $tmp3516 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+        $tmp3516->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+        $tmp3516->refCount.value = 1;
+        org$pandalanguage$pandac$parser$Token$Kind$wrapper* $tmp3518;
+        $tmp3518 = (org$pandalanguage$pandac$parser$Token$Kind$wrapper*) malloc(24);
+        $tmp3518->cl = (panda$core$Class*) &org$pandalanguage$pandac$parser$Token$Kind$wrapperclass;
+        $tmp3518->refCount = 1;
+        $tmp3518->value = p_op;
+        org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$Q($tmp3516, ((panda$core$Int64) { 1023 }), p_position, resultType3492, ((panda$core$Object*) $tmp3518), ((panda$collections$ListView*) children3469));
+        return $tmp3516;
     }
     }
-    panda$collections$Array$add$panda$collections$Array$T(children3483, ((panda$core$Object*) right3208));
+    panda$collections$Array$add$panda$collections$Array$T(children3469, ((panda$core$Object*) right3194));
     PANDA_ASSERT(self->reportErrors.value);
     self->reportErrors = ((panda$core$Bit) { false });
-    panda$core$String* $tmp3533 = org$pandalanguage$pandac$Compiler$operatorName$org$pandalanguage$pandac$parser$Token$Kind$R$panda$core$String(p_op);
-    org$pandalanguage$pandac$IRNode* $tmp3534 = org$pandalanguage$pandac$Compiler$call$org$pandalanguage$pandac$IRNode$panda$core$String$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$R$org$pandalanguage$pandac$IRNode$Q(self, left3207, $tmp3533, ((panda$collections$ListView*) children3483));
-    result3532 = $tmp3534;
+    panda$core$String* $tmp3520 = org$pandalanguage$pandac$Compiler$operatorName$org$pandalanguage$pandac$parser$Token$Kind$R$panda$core$String(p_op);
+    org$pandalanguage$pandac$IRNode* $tmp3521 = org$pandalanguage$pandac$Compiler$call$org$pandalanguage$pandac$IRNode$panda$core$String$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$R$org$pandalanguage$pandac$IRNode$Q(self, left3193, $tmp3520, ((panda$collections$ListView*) children3469));
+    result3519 = $tmp3521;
     self->reportErrors = ((panda$core$Bit) { true });
-    if (((panda$core$Bit) { result3532 == NULL }).value) {
+    if (((panda$core$Bit) { result3519 == NULL }).value) {
     {
-        panda$collections$Array$clear(children3483);
-        panda$collections$Array$add$panda$collections$Array$T(children3483, ((panda$core$Object*) left3207));
-        org$pandalanguage$pandac$IRNode* $tmp3536 = org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$IRNode$Q$R$org$pandalanguage$pandac$IRNode$Q(self, right3208);
-        resolved3535 = $tmp3536;
-        bool $tmp3537 = ((panda$core$Bit) { resolved3535 != NULL }).value;
-        if (!$tmp3537) goto $l3538;
-        panda$core$Bit $tmp3539 = org$pandalanguage$pandac$Type$isClass$R$panda$core$Bit(resolved3535->type);
-        $tmp3537 = $tmp3539.value;
-        $l3538:;
-        panda$core$Bit $tmp3540 = { $tmp3537 };
-        if ($tmp3540.value) {
+        panda$collections$Array$clear(children3469);
+        panda$collections$Array$add$panda$collections$Array$T(children3469, ((panda$core$Object*) left3193));
+        org$pandalanguage$pandac$IRNode* $tmp3523 = org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$IRNode$Q$R$org$pandalanguage$pandac$IRNode$Q(self, right3194);
+        resolved3522 = $tmp3523;
+        bool $tmp3524 = ((panda$core$Bit) { resolved3522 != NULL }).value;
+        if (!$tmp3524) goto $l3525;
+        panda$core$Bit $tmp3526 = org$pandalanguage$pandac$Type$isClass$R$panda$core$Bit(resolved3522->type);
+        $tmp3524 = $tmp3526.value;
+        $l3525:;
+        panda$core$Bit $tmp3527 = { $tmp3524 };
+        if ($tmp3527.value) {
         {
-            panda$collections$Array$add$panda$collections$Array$T(children3483, ((panda$core$Object*) resolved3535));
-            org$pandalanguage$pandac$IRNode* $tmp3542 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-            $tmp3542->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-            $tmp3542->refCount.value = 1;
-            org$pandalanguage$pandac$Type* $tmp3544 = org$pandalanguage$pandac$Type$Class$R$org$pandalanguage$pandac$Type();
-            org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Type($tmp3542, ((panda$core$Int64) { 1001 }), resolved3535->position, $tmp3544, resolved3535->type);
-            target3541 = $tmp3542;
-            panda$core$String* $tmp3545 = org$pandalanguage$pandac$Compiler$operatorName$org$pandalanguage$pandac$parser$Token$Kind$R$panda$core$String(p_op);
-            org$pandalanguage$pandac$IRNode* $tmp3546 = org$pandalanguage$pandac$Compiler$call$org$pandalanguage$pandac$IRNode$panda$core$String$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$R$org$pandalanguage$pandac$IRNode$Q(self, target3541, $tmp3545, ((panda$collections$ListView*) children3483));
-            result3532 = $tmp3546;
+            panda$collections$Array$add$panda$collections$Array$T(children3469, ((panda$core$Object*) resolved3522));
+            org$pandalanguage$pandac$IRNode* $tmp3529 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+            $tmp3529->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+            $tmp3529->refCount.value = 1;
+            org$pandalanguage$pandac$Type* $tmp3531 = org$pandalanguage$pandac$Type$Class$R$org$pandalanguage$pandac$Type();
+            org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Type($tmp3529, ((panda$core$Int64) { 1001 }), resolved3522->position, $tmp3531, resolved3522->type);
+            target3528 = $tmp3529;
+            panda$core$String* $tmp3532 = org$pandalanguage$pandac$Compiler$operatorName$org$pandalanguage$pandac$parser$Token$Kind$R$panda$core$String(p_op);
+            org$pandalanguage$pandac$IRNode* $tmp3533 = org$pandalanguage$pandac$Compiler$call$org$pandalanguage$pandac$IRNode$panda$core$String$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$R$org$pandalanguage$pandac$IRNode$Q(self, target3528, $tmp3532, ((panda$collections$ListView*) children3469));
+            result3519 = $tmp3533;
         }
         }
     }
     }
-    return result3532;
+    return result3519;
 }
-org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileBinary$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$ASTNode* p_b) {
-    org$pandalanguage$pandac$IRNode* left3547;
-    org$pandalanguage$pandac$IRNode* right3550;
-    panda$core$Object* $tmp3548 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_b->children, ((panda$core$Int64) { 0 }));
-    org$pandalanguage$pandac$IRNode* $tmp3549 = org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, ((org$pandalanguage$pandac$ASTNode*) $tmp3548));
-    left3547 = $tmp3549;
-    if (((panda$core$Bit) { left3547 == NULL }).value) {
+org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileBinary$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position p_position, org$pandalanguage$pandac$ASTNode* p_rawLeft, org$pandalanguage$pandac$parser$Token$Kind p_op, org$pandalanguage$pandac$ASTNode* p_rawRight) {
+    org$pandalanguage$pandac$IRNode* left3537;
+    org$pandalanguage$pandac$IRNode* right3539;
+    panda$core$Bit $tmp3534 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_op.$rawValue, ((panda$core$Int64) { 89 }));
+    if ($tmp3534.value) {
+    {
+        org$pandalanguage$pandac$Type* $tmp3535 = org$pandalanguage$pandac$Scanner$convertType$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$Type(self->scanner, p_rawRight);
+        org$pandalanguage$pandac$IRNode* $tmp3536 = org$pandalanguage$pandac$Compiler$compileCast$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, p_position, p_rawLeft, $tmp3535);
+        return $tmp3536;
+    }
+    }
+    org$pandalanguage$pandac$IRNode* $tmp3538 = org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_rawLeft);
+    left3537 = $tmp3538;
+    if (((panda$core$Bit) { left3537 == NULL }).value) {
     {
         return NULL;
     }
     }
-    panda$core$Object* $tmp3551 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_b->children, ((panda$core$Int64) { 1 }));
-    org$pandalanguage$pandac$IRNode* $tmp3552 = org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, ((org$pandalanguage$pandac$ASTNode*) $tmp3551));
-    right3550 = $tmp3552;
-    if (((panda$core$Bit) { right3550 == NULL }).value) {
+    org$pandalanguage$pandac$IRNode* $tmp3540 = org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_rawRight);
+    right3539 = $tmp3540;
+    if (((panda$core$Bit) { right3539 == NULL }).value) {
     {
         return NULL;
     }
     }
-    org$pandalanguage$pandac$IRNode* $tmp3553 = org$pandalanguage$pandac$Compiler$compileBinary$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_b->position, left3547, ((org$pandalanguage$pandac$parser$Token$Kind*) p_b->payload), right3550);
-    return $tmp3553;
+    org$pandalanguage$pandac$IRNode* $tmp3541 = org$pandalanguage$pandac$Compiler$compileBinary$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_position, left3537, p_op, right3539);
+    return $tmp3541;
 }
 panda$collections$ListView* org$pandalanguage$pandac$Compiler$typeParameters$org$pandalanguage$pandac$Type$R$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Type* p_type) {
-    panda$core$Range$LTpanda$core$Int64$Q$GT $tmp3557;
+    panda$core$Range$LTpanda$core$Int64$Q$GT $tmp3545;
     switch (p_type->typeKind.value) {
         case 22:
         {
-            panda$collections$ListView* $tmp3554 = org$pandalanguage$pandac$Compiler$typeParameters$org$pandalanguage$pandac$Type$R$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT(self, p_type->parameter->bound);
-            return $tmp3554;
+            panda$collections$ListView* $tmp3542 = org$pandalanguage$pandac$Compiler$typeParameters$org$pandalanguage$pandac$Type$R$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT(self, p_type->parameter->bound);
+            return $tmp3542;
         }
         break;
         case 21:
         {
-            panda$core$Int64 $tmp3555 = panda$collections$Array$get_count$R$panda$core$Int64(p_type->subtypes);
-            panda$core$Bit $tmp3556 = panda$core$Int64$$GE$panda$core$Int64$R$panda$core$Bit($tmp3555, ((panda$core$Int64) { 2 }));
-            PANDA_ASSERT($tmp3556.value);
-            panda$core$Range$LTpanda$core$Int64$Q$GT$init$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Bit(&$tmp3557, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Int64$nullable) { .nonnull = false }), ((panda$core$Bit) { false }));
-            panda$collections$Array* $tmp3558 = panda$collections$Array$$IDX$panda$core$Range$LTpanda$core$Int64$Q$GT$R$panda$collections$Array$LTpanda$collections$Array$T$GT(p_type->subtypes, $tmp3557);
-            return ((panda$collections$ListView*) $tmp3558);
+            panda$core$Int64 $tmp3543 = panda$collections$Array$get_count$R$panda$core$Int64(p_type->subtypes);
+            panda$core$Bit $tmp3544 = panda$core$Int64$$GE$panda$core$Int64$R$panda$core$Bit($tmp3543, ((panda$core$Int64) { 2 }));
+            PANDA_ASSERT($tmp3544.value);
+            panda$core$Range$LTpanda$core$Int64$Q$GT$init$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Bit(&$tmp3545, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Int64$nullable) { .nonnull = false }), ((panda$core$Bit) { false }));
+            panda$collections$Array* $tmp3546 = panda$collections$Array$$IDX$panda$core$Range$LTpanda$core$Int64$Q$GT$R$panda$collections$Array$LTpanda$collections$Array$T$GT(p_type->subtypes, $tmp3545);
+            return ((panda$collections$ListView*) $tmp3546);
         }
         break;
         case 11:
         {
-            panda$core$Object* $tmp3559 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(p_type->subtypes, ((panda$core$Int64) { 0 }));
-            panda$collections$ListView* $tmp3560 = org$pandalanguage$pandac$Compiler$typeParameters$org$pandalanguage$pandac$Type$R$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT(self, ((org$pandalanguage$pandac$Type*) $tmp3559));
-            return $tmp3560;
+            panda$core$Object* $tmp3547 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(p_type->subtypes, ((panda$core$Int64) { 0 }));
+            panda$collections$ListView* $tmp3548 = org$pandalanguage$pandac$Compiler$typeParameters$org$pandalanguage$pandac$Type$R$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT(self, ((org$pandalanguage$pandac$Type*) $tmp3547));
+            return $tmp3548;
         }
         break;
         default:
         {
-            panda$collections$Array* $tmp3561 = (panda$collections$Array*) malloc(40);
-            $tmp3561->$class = (panda$core$Class*) &panda$collections$Array$class;
-            $tmp3561->refCount.value = 1;
-            panda$collections$Array$init($tmp3561);
-            return ((panda$collections$ListView*) $tmp3561);
+            panda$collections$Array* $tmp3549 = (panda$collections$Array*) malloc(40);
+            $tmp3549->$class = (panda$core$Class*) &panda$collections$Array$class;
+            $tmp3549->refCount.value = 1;
+            panda$collections$Array$init($tmp3549);
+            return ((panda$collections$ListView*) $tmp3549);
         }
     }
 }
 panda$collections$ListView* org$pandalanguage$pandac$Compiler$typeParameters$org$pandalanguage$pandac$IRNode$Q$R$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$IRNode* p_target) {
     if (((panda$core$Bit) { p_target != NULL }).value) {
     {
-        panda$core$Bit $tmp3563 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_target->kind, ((panda$core$Int64) { 1001 }));
-        if ($tmp3563.value) {
+        panda$core$Bit $tmp3551 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_target->kind, ((panda$core$Int64) { 1001 }));
+        if ($tmp3551.value) {
         {
-            panda$collections$ListView* $tmp3564 = org$pandalanguage$pandac$Compiler$typeParameters$org$pandalanguage$pandac$Type$R$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT(self, ((org$pandalanguage$pandac$Type*) p_target->payload));
-            return $tmp3564;
+            panda$collections$ListView* $tmp3552 = org$pandalanguage$pandac$Compiler$typeParameters$org$pandalanguage$pandac$Type$R$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT(self, ((org$pandalanguage$pandac$Type*) p_target->payload));
+            return $tmp3552;
         }
         }
-        panda$collections$ListView* $tmp3565 = org$pandalanguage$pandac$Compiler$typeParameters$org$pandalanguage$pandac$Type$R$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT(self, p_target->type);
-        return $tmp3565;
+        panda$collections$ListView* $tmp3553 = org$pandalanguage$pandac$Compiler$typeParameters$org$pandalanguage$pandac$Type$R$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT(self, p_target->type);
+        return $tmp3553;
     }
     }
-    panda$collections$Array* $tmp3566 = (panda$collections$Array*) malloc(40);
-    $tmp3566->$class = (panda$core$Class*) &panda$collections$Array$class;
-    $tmp3566->refCount.value = 1;
-    panda$collections$Array$init($tmp3566);
-    return ((panda$collections$ListView*) $tmp3566);
+    panda$collections$Array* $tmp3554 = (panda$collections$Array*) malloc(40);
+    $tmp3554->$class = (panda$core$Class*) &panda$collections$Array$class;
+    $tmp3554->refCount.value = 1;
+    panda$collections$Array$init($tmp3554);
+    return ((panda$collections$ListView*) $tmp3554);
 }
-org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compilePrefix$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$Position$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$parser$Token$Kind* p_op, org$pandalanguage$pandac$IRNode* p_base, org$pandalanguage$pandac$Position p_position) {
-    panda$core$String* name3569;
-    org$pandalanguage$pandac$ClassDecl* cl3571;
-    org$pandalanguage$pandac$Symbol* s3573;
-    org$pandalanguage$pandac$MethodDecl* m3576;
-    panda$collections$Iterator* test$Iter3581;
-    org$pandalanguage$pandac$MethodDecl* test3593;
-    org$pandalanguage$pandac$MethodRef* ref3605;
-    panda$collections$Array* children3609;
-    org$pandalanguage$pandac$IRNode* methodRef3612;
-    org$pandalanguage$pandac$Position $tmp3618;
-    panda$collections$Array* args3619;
-    org$pandalanguage$pandac$parser$Token$Kind* $match$2596_93623;
-    panda$collections$Array* children3637;
-    panda$collections$Array* children3650;
-    org$pandalanguage$pandac$IRNode* coerced3662;
-    panda$collections$Array* children3665;
-    panda$core$Bit $tmp3568 = org$pandalanguage$pandac$Type$isClass$R$panda$core$Bit(p_base->type);
-    if ($tmp3568.value) {
+org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compilePrefix$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position p_position, org$pandalanguage$pandac$parser$Token$Kind p_op, org$pandalanguage$pandac$IRNode* p_base) {
+    panda$core$String* name3557;
+    org$pandalanguage$pandac$ClassDecl* cl3559;
+    org$pandalanguage$pandac$Symbol* s3561;
+    org$pandalanguage$pandac$MethodDecl* m3564;
+    panda$collections$Iterator* test$Iter3569;
+    org$pandalanguage$pandac$MethodDecl* test3581;
+    org$pandalanguage$pandac$MethodRef* ref3593;
+    panda$collections$Array* children3597;
+    org$pandalanguage$pandac$IRNode* methodRef3600;
+    org$pandalanguage$pandac$Position $tmp3606;
+    panda$collections$Array* args3607;
+    org$pandalanguage$pandac$parser$Token$Kind $match$2601_93611;
+    panda$collections$Array* children3625;
+    org$pandalanguage$pandac$parser$Token$Kind $tmp3630;
+    panda$collections$Array* children3638;
+    org$pandalanguage$pandac$parser$Token$Kind $tmp3643;
+    org$pandalanguage$pandac$IRNode* coerced3650;
+    panda$collections$Array* children3653;
+    org$pandalanguage$pandac$parser$Token$Kind $tmp3658;
+    panda$core$Bit $tmp3556 = org$pandalanguage$pandac$Type$isClass$R$panda$core$Bit(p_base->type);
+    if ($tmp3556.value) {
     {
-        panda$core$String* $tmp3570 = org$pandalanguage$pandac$Compiler$operatorName$org$pandalanguage$pandac$parser$Token$Kind$R$panda$core$String(p_op);
-        name3569 = $tmp3570;
-        org$pandalanguage$pandac$ClassDecl* $tmp3572 = org$pandalanguage$pandac$Compiler$getClass$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$ClassDecl$Q(self, p_base->type);
-        cl3571 = $tmp3572;
-        if (((panda$core$Bit) { cl3571 == NULL }).value) {
+        panda$core$String* $tmp3558 = org$pandalanguage$pandac$Compiler$operatorName$org$pandalanguage$pandac$parser$Token$Kind$R$panda$core$String(p_op);
+        name3557 = $tmp3558;
+        org$pandalanguage$pandac$ClassDecl* $tmp3560 = org$pandalanguage$pandac$Compiler$getClass$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$ClassDecl$Q(self, p_base->type);
+        cl3559 = $tmp3560;
+        if (((panda$core$Bit) { cl3559 == NULL }).value) {
         {
             return NULL;
         }
         }
-        org$pandalanguage$pandac$SymbolTable* $tmp3574 = org$pandalanguage$pandac$Compiler$getSymbolTable$org$pandalanguage$pandac$ClassDecl$R$org$pandalanguage$pandac$SymbolTable(self, cl3571);
-        org$pandalanguage$pandac$Symbol* $tmp3575 = org$pandalanguage$pandac$SymbolTable$$IDX$panda$core$String$R$org$pandalanguage$pandac$Symbol$Q($tmp3574, name3569);
-        s3573 = $tmp3575;
-        if (((panda$core$Bit) { s3573 != NULL }).value) {
+        org$pandalanguage$pandac$SymbolTable* $tmp3562 = org$pandalanguage$pandac$Compiler$getSymbolTable$org$pandalanguage$pandac$ClassDecl$R$org$pandalanguage$pandac$SymbolTable(self, cl3559);
+        org$pandalanguage$pandac$Symbol* $tmp3563 = org$pandalanguage$pandac$SymbolTable$$IDX$panda$core$String$R$org$pandalanguage$pandac$Symbol$Q($tmp3562, name3557);
+        s3561 = $tmp3563;
+        if (((panda$core$Bit) { s3561 != NULL }).value) {
         {
-            m3576 = NULL;
-            switch (s3573->kind.value) {
+            m3564 = NULL;
+            switch (s3561->kind.value) {
                 case 204:
                 {
-                    m3576 = ((org$pandalanguage$pandac$MethodDecl*) s3573);
-                    panda$core$Int64 $tmp3577 = panda$collections$Array$get_count$R$panda$core$Int64(m3576->parameters);
-                    panda$core$Bit $tmp3578 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp3577, ((panda$core$Int64) { 0 }));
-                    PANDA_ASSERT($tmp3578.value);
-                    panda$core$Bit $tmp3579 = org$pandalanguage$pandac$Annotations$isClass$R$panda$core$Bit(m3576->annotations);
-                    panda$core$Bit $tmp3580 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp3579);
-                    PANDA_ASSERT($tmp3580.value);
+                    m3564 = ((org$pandalanguage$pandac$MethodDecl*) s3561);
+                    panda$core$Int64 $tmp3565 = panda$collections$Array$get_count$R$panda$core$Int64(m3564->parameters);
+                    panda$core$Bit $tmp3566 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp3565, ((panda$core$Int64) { 0 }));
+                    PANDA_ASSERT($tmp3566.value);
+                    panda$core$Bit $tmp3567 = org$pandalanguage$pandac$Annotations$isClass$R$panda$core$Bit(m3564->annotations);
+                    panda$core$Bit $tmp3568 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp3567);
+                    PANDA_ASSERT($tmp3568.value);
                 }
                 break;
                 case 205:
                 {
                     {
-                        ITable* $tmp3582 = ((panda$collections$Iterable*) ((org$pandalanguage$pandac$Methods*) s3573)->methods)->$class->itable;
-                        while ($tmp3582->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
-                            $tmp3582 = $tmp3582->next;
+                        ITable* $tmp3570 = ((panda$collections$Iterable*) ((org$pandalanguage$pandac$Methods*) s3561)->methods)->$class->itable;
+                        while ($tmp3570->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
+                            $tmp3570 = $tmp3570->next;
                         }
-                        $fn3584 $tmp3583 = $tmp3582->methods[0];
-                        panda$collections$Iterator* $tmp3585 = $tmp3583(((panda$collections$Iterable*) ((org$pandalanguage$pandac$Methods*) s3573)->methods));
-                        test$Iter3581 = $tmp3585;
-                        $l3586:;
-                        ITable* $tmp3588 = test$Iter3581->$class->itable;
-                        while ($tmp3588->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-                            $tmp3588 = $tmp3588->next;
+                        $fn3572 $tmp3571 = $tmp3570->methods[0];
+                        panda$collections$Iterator* $tmp3573 = $tmp3571(((panda$collections$Iterable*) ((org$pandalanguage$pandac$Methods*) s3561)->methods));
+                        test$Iter3569 = $tmp3573;
+                        $l3574:;
+                        ITable* $tmp3576 = test$Iter3569->$class->itable;
+                        while ($tmp3576->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+                            $tmp3576 = $tmp3576->next;
                         }
-                        $fn3590 $tmp3589 = $tmp3588->methods[0];
-                        panda$core$Bit $tmp3591 = $tmp3589(test$Iter3581);
-                        panda$core$Bit $tmp3592 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp3591);
-                        if (!$tmp3592.value) goto $l3587;
+                        $fn3578 $tmp3577 = $tmp3576->methods[0];
+                        panda$core$Bit $tmp3579 = $tmp3577(test$Iter3569);
+                        panda$core$Bit $tmp3580 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp3579);
+                        if (!$tmp3580.value) goto $l3575;
                         {
-                            ITable* $tmp3594 = test$Iter3581->$class->itable;
-                            while ($tmp3594->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-                                $tmp3594 = $tmp3594->next;
+                            ITable* $tmp3582 = test$Iter3569->$class->itable;
+                            while ($tmp3582->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+                                $tmp3582 = $tmp3582->next;
                             }
-                            $fn3596 $tmp3595 = $tmp3594->methods[1];
-                            panda$core$Object* $tmp3597 = $tmp3595(test$Iter3581);
-                            test3593 = ((org$pandalanguage$pandac$MethodDecl*) $tmp3597);
-                            panda$core$Bit $tmp3599 = org$pandalanguage$pandac$Annotations$isClass$R$panda$core$Bit(test3593->annotations);
-                            panda$core$Bit $tmp3600 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp3599);
-                            bool $tmp3598 = $tmp3600.value;
-                            if (!$tmp3598) goto $l3601;
-                            panda$core$Int64 $tmp3602 = panda$collections$Array$get_count$R$panda$core$Int64(test3593->parameters);
-                            panda$core$Bit $tmp3603 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp3602, ((panda$core$Int64) { 0 }));
-                            $tmp3598 = $tmp3603.value;
-                            $l3601:;
-                            panda$core$Bit $tmp3604 = { $tmp3598 };
-                            if ($tmp3604.value) {
+                            $fn3584 $tmp3583 = $tmp3582->methods[1];
+                            panda$core$Object* $tmp3585 = $tmp3583(test$Iter3569);
+                            test3581 = ((org$pandalanguage$pandac$MethodDecl*) $tmp3585);
+                            panda$core$Bit $tmp3587 = org$pandalanguage$pandac$Annotations$isClass$R$panda$core$Bit(test3581->annotations);
+                            panda$core$Bit $tmp3588 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp3587);
+                            bool $tmp3586 = $tmp3588.value;
+                            if (!$tmp3586) goto $l3589;
+                            panda$core$Int64 $tmp3590 = panda$collections$Array$get_count$R$panda$core$Int64(test3581->parameters);
+                            panda$core$Bit $tmp3591 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp3590, ((panda$core$Int64) { 0 }));
+                            $tmp3586 = $tmp3591.value;
+                            $l3589:;
+                            panda$core$Bit $tmp3592 = { $tmp3586 };
+                            if ($tmp3592.value) {
                             {
-                                m3576 = test3593;
-                                goto $l3587;
+                                m3564 = test3581;
+                                goto $l3575;
                             }
                             }
                         }
-                        goto $l3586;
-                        $l3587:;
+                        goto $l3574;
+                        $l3575:;
                     }
                 }
                 break;
@@ -8891,38 +8908,38 @@ org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compilePrefix
                     PANDA_ASSERT(((panda$core$Bit) { false }).value);
                 }
             }
-            if (((panda$core$Bit) { m3576 != NULL }).value) {
+            if (((panda$core$Bit) { m3564 != NULL }).value) {
             {
-                org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$MethodDecl(self, m3576);
-                org$pandalanguage$pandac$MethodRef* $tmp3606 = (org$pandalanguage$pandac$MethodRef*) malloc(40);
-                $tmp3606->$class = (panda$core$Class*) &org$pandalanguage$pandac$MethodRef$class;
-                $tmp3606->refCount.value = 1;
-                panda$collections$ListView* $tmp3608 = org$pandalanguage$pandac$Compiler$typeParameters$org$pandalanguage$pandac$IRNode$Q$R$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT(self, p_base);
-                org$pandalanguage$pandac$MethodRef$init$org$pandalanguage$pandac$MethodDecl$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT($tmp3606, m3576, $tmp3608);
-                ref3605 = $tmp3606;
-                panda$collections$Array* $tmp3610 = (panda$collections$Array*) malloc(40);
-                $tmp3610->$class = (panda$core$Class*) &panda$collections$Array$class;
-                $tmp3610->refCount.value = 1;
-                panda$collections$Array$init($tmp3610);
-                children3609 = $tmp3610;
-                panda$collections$Array$add$panda$collections$Array$T(children3609, ((panda$core$Object*) p_base));
-                org$pandalanguage$pandac$IRNode* $tmp3613 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-                $tmp3613->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-                $tmp3613->refCount.value = 1;
-                org$pandalanguage$pandac$Type* $tmp3615 = (org$pandalanguage$pandac$Type*) malloc(96);
-                $tmp3615->$class = (panda$core$Class*) &org$pandalanguage$pandac$Type$class;
-                $tmp3615->refCount.value = 1;
-                org$pandalanguage$pandac$Position$init(&$tmp3618);
-                org$pandalanguage$pandac$Type$init$panda$core$String$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Bit($tmp3615, &$s3617, ((panda$core$Int64) { 16 }), $tmp3618, ((panda$core$Bit) { true }));
-                org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$Q($tmp3613, ((panda$core$Int64) { 1002 }), p_position, $tmp3615, ((panda$core$Object*) ref3605), ((panda$collections$ListView*) children3609));
-                methodRef3612 = $tmp3613;
-                panda$collections$Array* $tmp3620 = (panda$collections$Array*) malloc(40);
-                $tmp3620->$class = (panda$core$Class*) &panda$collections$Array$class;
-                $tmp3620->refCount.value = 1;
-                panda$collections$Array$init($tmp3620);
-                args3619 = $tmp3620;
-                org$pandalanguage$pandac$IRNode* $tmp3622 = org$pandalanguage$pandac$Compiler$call$org$pandalanguage$pandac$IRNode$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$R$org$pandalanguage$pandac$IRNode$Q(self, methodRef3612, ((panda$collections$ListView*) args3619));
-                return $tmp3622;
+                org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$MethodDecl(self, m3564);
+                org$pandalanguage$pandac$MethodRef* $tmp3594 = (org$pandalanguage$pandac$MethodRef*) malloc(40);
+                $tmp3594->$class = (panda$core$Class*) &org$pandalanguage$pandac$MethodRef$class;
+                $tmp3594->refCount.value = 1;
+                panda$collections$ListView* $tmp3596 = org$pandalanguage$pandac$Compiler$typeParameters$org$pandalanguage$pandac$IRNode$Q$R$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT(self, p_base);
+                org$pandalanguage$pandac$MethodRef$init$org$pandalanguage$pandac$MethodDecl$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT($tmp3594, m3564, $tmp3596);
+                ref3593 = $tmp3594;
+                panda$collections$Array* $tmp3598 = (panda$collections$Array*) malloc(40);
+                $tmp3598->$class = (panda$core$Class*) &panda$collections$Array$class;
+                $tmp3598->refCount.value = 1;
+                panda$collections$Array$init($tmp3598);
+                children3597 = $tmp3598;
+                panda$collections$Array$add$panda$collections$Array$T(children3597, ((panda$core$Object*) p_base));
+                org$pandalanguage$pandac$IRNode* $tmp3601 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+                $tmp3601->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+                $tmp3601->refCount.value = 1;
+                org$pandalanguage$pandac$Type* $tmp3603 = (org$pandalanguage$pandac$Type*) malloc(96);
+                $tmp3603->$class = (panda$core$Class*) &org$pandalanguage$pandac$Type$class;
+                $tmp3603->refCount.value = 1;
+                org$pandalanguage$pandac$Position$init(&$tmp3606);
+                org$pandalanguage$pandac$Type$init$panda$core$String$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Bit($tmp3603, &$s3605, ((panda$core$Int64) { 16 }), $tmp3606, ((panda$core$Bit) { true }));
+                org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$Q($tmp3601, ((panda$core$Int64) { 1002 }), p_position, $tmp3603, ((panda$core$Object*) ref3593), ((panda$collections$ListView*) children3597));
+                methodRef3600 = $tmp3601;
+                panda$collections$Array* $tmp3608 = (panda$collections$Array*) malloc(40);
+                $tmp3608->$class = (panda$core$Class*) &panda$collections$Array$class;
+                $tmp3608->refCount.value = 1;
+                panda$collections$Array$init($tmp3608);
+                args3607 = $tmp3608;
+                org$pandalanguage$pandac$IRNode* $tmp3610 = org$pandalanguage$pandac$Compiler$call$org$pandalanguage$pandac$IRNode$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$R$org$pandalanguage$pandac$IRNode$Q(self, methodRef3600, ((panda$collections$ListView*) args3607));
+                return $tmp3610;
             }
             }
         }
@@ -8930,134 +8947,140 @@ org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compilePrefix
     }
     }
     {
-        $match$2596_93623 = p_op;
-        panda$core$Bit $tmp3624 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2596_93623->$rawValue, ((panda$core$Int64) { 52 }));
-        if ($tmp3624.value) {
+        $match$2601_93611 = p_op;
+        panda$core$Bit $tmp3612 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2601_93611.$rawValue, ((panda$core$Int64) { 52 }));
+        if ($tmp3612.value) {
         {
             switch (p_base->kind.value) {
                 case 1004:
                 {
-                    org$pandalanguage$pandac$IRNode* $tmp3625 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-                    $tmp3625->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-                    $tmp3625->refCount.value = 1;
-                    org$pandalanguage$pandac$Type* $tmp3627 = org$pandalanguage$pandac$Type$NegatedIntLiteral$panda$core$UInt64$R$org$pandalanguage$pandac$Type(((panda$core$UInt64$wrapper*) p_base->payload)->value);
-                    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$UInt64($tmp3625, ((panda$core$Int64) { 1032 }), p_position, $tmp3627, ((panda$core$UInt64$wrapper*) p_base->payload)->value);
-                    return $tmp3625;
+                    org$pandalanguage$pandac$IRNode* $tmp3613 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+                    $tmp3613->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+                    $tmp3613->refCount.value = 1;
+                    org$pandalanguage$pandac$Type* $tmp3615 = org$pandalanguage$pandac$Type$NegatedIntLiteral$panda$core$UInt64$R$org$pandalanguage$pandac$Type(((panda$core$UInt64$wrapper*) p_base->payload)->value);
+                    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$UInt64($tmp3613, ((panda$core$Int64) { 1032 }), p_position, $tmp3615, ((panda$core$UInt64$wrapper*) p_base->payload)->value);
+                    return $tmp3613;
                 }
                 break;
                 case 1032:
                 {
-                    org$pandalanguage$pandac$IRNode* $tmp3628 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-                    $tmp3628->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-                    $tmp3628->refCount.value = 1;
-                    org$pandalanguage$pandac$Type* $tmp3630 = org$pandalanguage$pandac$Type$NegatedIntLiteral$panda$core$UInt64$R$org$pandalanguage$pandac$Type(((panda$core$UInt64$wrapper*) p_base->payload)->value);
-                    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$UInt64($tmp3628, ((panda$core$Int64) { 1004 }), p_position, $tmp3630, ((panda$core$UInt64$wrapper*) p_base->payload)->value);
-                    return $tmp3628;
+                    org$pandalanguage$pandac$IRNode* $tmp3616 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+                    $tmp3616->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+                    $tmp3616->refCount.value = 1;
+                    org$pandalanguage$pandac$Type* $tmp3618 = org$pandalanguage$pandac$Type$NegatedIntLiteral$panda$core$UInt64$R$org$pandalanguage$pandac$Type(((panda$core$UInt64$wrapper*) p_base->payload)->value);
+                    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$UInt64($tmp3616, ((panda$core$Int64) { 1004 }), p_position, $tmp3618, ((panda$core$UInt64$wrapper*) p_base->payload)->value);
+                    return $tmp3616;
                 }
                 break;
                 case 1045:
                 {
-                    org$pandalanguage$pandac$IRNode* $tmp3631 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-                    $tmp3631->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-                    $tmp3631->refCount.value = 1;
-                    panda$core$Real64 $tmp3633 = panda$core$Real64$$SUB$R$panda$core$Real64(((panda$core$Real64$wrapper*) p_base->payload)->value);
-                    org$pandalanguage$pandac$Type* $tmp3634 = org$pandalanguage$pandac$Type$RealLiteral$panda$core$Real64$R$org$pandalanguage$pandac$Type($tmp3633);
-                    panda$core$Real64 $tmp3635 = panda$core$Real64$$SUB$R$panda$core$Real64(((panda$core$Real64$wrapper*) p_base->payload)->value);
-                    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Real64($tmp3631, ((panda$core$Int64) { 1045 }), p_position, $tmp3634, $tmp3635);
-                    return $tmp3631;
+                    org$pandalanguage$pandac$IRNode* $tmp3619 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+                    $tmp3619->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+                    $tmp3619->refCount.value = 1;
+                    panda$core$Real64 $tmp3621 = panda$core$Real64$$SUB$R$panda$core$Real64(((panda$core$Real64$wrapper*) p_base->payload)->value);
+                    org$pandalanguage$pandac$Type* $tmp3622 = org$pandalanguage$pandac$Type$RealLiteral$panda$core$Real64$R$org$pandalanguage$pandac$Type($tmp3621);
+                    panda$core$Real64 $tmp3623 = panda$core$Real64$$SUB$R$panda$core$Real64(((panda$core$Real64$wrapper*) p_base->payload)->value);
+                    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Real64($tmp3619, ((panda$core$Int64) { 1045 }), p_position, $tmp3622, $tmp3623);
+                    return $tmp3619;
                 }
                 break;
                 default:
                 {
-                    panda$core$Bit $tmp3636 = org$pandalanguage$pandac$Type$isBuiltinNumber$R$panda$core$Bit(p_base->type);
-                    if ($tmp3636.value) {
+                    panda$core$Bit $tmp3624 = org$pandalanguage$pandac$Type$isBuiltinNumber$R$panda$core$Bit(p_base->type);
+                    if ($tmp3624.value) {
                     {
-                        panda$collections$Array* $tmp3638 = (panda$collections$Array*) malloc(40);
-                        $tmp3638->$class = (panda$core$Class*) &panda$collections$Array$class;
-                        $tmp3638->refCount.value = 1;
-                        panda$collections$Array$init($tmp3638);
-                        children3637 = $tmp3638;
-                        panda$collections$Array$add$panda$collections$Array$T(children3637, ((panda$core$Object*) p_base));
-                        org$pandalanguage$pandac$IRNode* $tmp3640 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-                        $tmp3640->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-                        $tmp3640->refCount.value = 1;
-                        org$pandalanguage$pandac$parser$Token$Kind* $tmp3642 = (org$pandalanguage$pandac$parser$Token$Kind*) malloc(24);
-                        $tmp3642->$class = (panda$core$Class*) &org$pandalanguage$pandac$parser$Token$Kind$class;
-                        $tmp3642->refCount.value = 1;
-                        org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64($tmp3642, ((panda$core$Int64) { 52 }));
-                        org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$Q($tmp3640, ((panda$core$Int64) { 1041 }), p_base->position, p_base->type, ((panda$core$Object*) $tmp3642), ((panda$collections$ListView*) children3637));
-                        return $tmp3640;
+                        panda$collections$Array* $tmp3626 = (panda$collections$Array*) malloc(40);
+                        $tmp3626->$class = (panda$core$Class*) &panda$collections$Array$class;
+                        $tmp3626->refCount.value = 1;
+                        panda$collections$Array$init($tmp3626);
+                        children3625 = $tmp3626;
+                        panda$collections$Array$add$panda$collections$Array$T(children3625, ((panda$core$Object*) p_base));
+                        org$pandalanguage$pandac$IRNode* $tmp3628 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+                        $tmp3628->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+                        $tmp3628->refCount.value = 1;
+                        org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64(&$tmp3630, ((panda$core$Int64) { 52 }));
+                        org$pandalanguage$pandac$parser$Token$Kind$wrapper* $tmp3631;
+                        $tmp3631 = (org$pandalanguage$pandac$parser$Token$Kind$wrapper*) malloc(24);
+                        $tmp3631->cl = (panda$core$Class*) &org$pandalanguage$pandac$parser$Token$Kind$wrapperclass;
+                        $tmp3631->refCount = 1;
+                        $tmp3631->value = $tmp3630;
+                        org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$Q($tmp3628, ((panda$core$Int64) { 1041 }), p_base->position, p_base->type, ((panda$core$Object*) $tmp3631), ((panda$collections$ListView*) children3625));
+                        return $tmp3628;
                     }
                     }
                 }
             }
-            panda$core$String* $tmp3645 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s3644, ((panda$core$Object*) p_base->type));
-            panda$core$String* $tmp3647 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3645, &$s3646);
-            org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, p_base->position, $tmp3647);
+            panda$core$String* $tmp3633 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s3632, ((panda$core$Object*) p_base->type));
+            panda$core$String* $tmp3635 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3633, &$s3634);
+            org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, p_base->position, $tmp3635);
             return NULL;
         }
         }
         else {
-        panda$core$Bit $tmp3648 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2596_93623->$rawValue, ((panda$core$Int64) { 50 }));
-        if ($tmp3648.value) {
+        panda$core$Bit $tmp3636 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2601_93611.$rawValue, ((panda$core$Int64) { 50 }));
+        if ($tmp3636.value) {
         {
-            panda$core$Bit $tmp3649 = org$pandalanguage$pandac$Type$isBuiltinNumber$R$panda$core$Bit(p_base->type);
-            if ($tmp3649.value) {
+            panda$core$Bit $tmp3637 = org$pandalanguage$pandac$Type$isBuiltinNumber$R$panda$core$Bit(p_base->type);
+            if ($tmp3637.value) {
             {
-                panda$collections$Array* $tmp3651 = (panda$collections$Array*) malloc(40);
-                $tmp3651->$class = (panda$core$Class*) &panda$collections$Array$class;
-                $tmp3651->refCount.value = 1;
-                panda$collections$Array$init($tmp3651);
-                children3650 = $tmp3651;
-                panda$collections$Array$add$panda$collections$Array$T(children3650, ((panda$core$Object*) p_base));
-                org$pandalanguage$pandac$IRNode* $tmp3653 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-                $tmp3653->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-                $tmp3653->refCount.value = 1;
-                org$pandalanguage$pandac$parser$Token$Kind* $tmp3655 = (org$pandalanguage$pandac$parser$Token$Kind*) malloc(24);
-                $tmp3655->$class = (panda$core$Class*) &org$pandalanguage$pandac$parser$Token$Kind$class;
-                $tmp3655->refCount.value = 1;
-                org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64($tmp3655, ((panda$core$Int64) { 50 }));
-                org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$Q($tmp3653, ((panda$core$Int64) { 1041 }), p_base->position, p_base->type, ((panda$core$Object*) $tmp3655), ((panda$collections$ListView*) children3650));
-                return $tmp3653;
+                panda$collections$Array* $tmp3639 = (panda$collections$Array*) malloc(40);
+                $tmp3639->$class = (panda$core$Class*) &panda$collections$Array$class;
+                $tmp3639->refCount.value = 1;
+                panda$collections$Array$init($tmp3639);
+                children3638 = $tmp3639;
+                panda$collections$Array$add$panda$collections$Array$T(children3638, ((panda$core$Object*) p_base));
+                org$pandalanguage$pandac$IRNode* $tmp3641 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+                $tmp3641->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+                $tmp3641->refCount.value = 1;
+                org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64(&$tmp3643, ((panda$core$Int64) { 50 }));
+                org$pandalanguage$pandac$parser$Token$Kind$wrapper* $tmp3644;
+                $tmp3644 = (org$pandalanguage$pandac$parser$Token$Kind$wrapper*) malloc(24);
+                $tmp3644->cl = (panda$core$Class*) &org$pandalanguage$pandac$parser$Token$Kind$wrapperclass;
+                $tmp3644->refCount = 1;
+                $tmp3644->value = $tmp3643;
+                org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$Q($tmp3641, ((panda$core$Int64) { 1041 }), p_base->position, p_base->type, ((panda$core$Object*) $tmp3644), ((panda$collections$ListView*) children3638));
+                return $tmp3641;
             }
             }
             else {
             {
-                panda$core$String* $tmp3658 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s3657, ((org$pandalanguage$pandac$Symbol*) p_base->type)->name);
-                panda$core$String* $tmp3660 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3658, &$s3659);
-                org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, p_base->position, $tmp3660);
+                panda$core$String* $tmp3646 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s3645, ((org$pandalanguage$pandac$Symbol*) p_base->type)->name);
+                panda$core$String* $tmp3648 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3646, &$s3647);
+                org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, p_base->position, $tmp3648);
                 return NULL;
             }
             }
         }
         }
         else {
-        panda$core$Bit $tmp3661 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2596_93623->$rawValue, ((panda$core$Int64) { 49 }));
-        if ($tmp3661.value) {
+        panda$core$Bit $tmp3649 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2601_93611.$rawValue, ((panda$core$Int64) { 49 }));
+        if ($tmp3649.value) {
         {
-            org$pandalanguage$pandac$Type* $tmp3663 = org$pandalanguage$pandac$Type$BuiltinBit$R$org$pandalanguage$pandac$Type();
-            org$pandalanguage$pandac$IRNode* $tmp3664 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, p_base, $tmp3663);
-            coerced3662 = $tmp3664;
-            if (((panda$core$Bit) { coerced3662 == NULL }).value) {
+            org$pandalanguage$pandac$Type* $tmp3651 = org$pandalanguage$pandac$Type$BuiltinBit$R$org$pandalanguage$pandac$Type();
+            org$pandalanguage$pandac$IRNode* $tmp3652 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, p_base, $tmp3651);
+            coerced3650 = $tmp3652;
+            if (((panda$core$Bit) { coerced3650 == NULL }).value) {
             {
                 return NULL;
             }
             }
-            panda$collections$Array* $tmp3666 = (panda$collections$Array*) malloc(40);
-            $tmp3666->$class = (panda$core$Class*) &panda$collections$Array$class;
-            $tmp3666->refCount.value = 1;
-            panda$collections$Array$init($tmp3666);
-            children3665 = $tmp3666;
-            panda$collections$Array$add$panda$collections$Array$T(children3665, ((panda$core$Object*) coerced3662));
-            org$pandalanguage$pandac$IRNode* $tmp3668 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-            $tmp3668->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-            $tmp3668->refCount.value = 1;
-            org$pandalanguage$pandac$parser$Token$Kind* $tmp3670 = (org$pandalanguage$pandac$parser$Token$Kind*) malloc(24);
-            $tmp3670->$class = (panda$core$Class*) &org$pandalanguage$pandac$parser$Token$Kind$class;
-            $tmp3670->refCount.value = 1;
-            org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64($tmp3670, ((panda$core$Int64) { 49 }));
-            org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$Q($tmp3668, ((panda$core$Int64) { 1041 }), p_base->position, p_base->type, ((panda$core$Object*) $tmp3670), ((panda$collections$ListView*) children3665));
-            return $tmp3668;
+            panda$collections$Array* $tmp3654 = (panda$collections$Array*) malloc(40);
+            $tmp3654->$class = (panda$core$Class*) &panda$collections$Array$class;
+            $tmp3654->refCount.value = 1;
+            panda$collections$Array$init($tmp3654);
+            children3653 = $tmp3654;
+            panda$collections$Array$add$panda$collections$Array$T(children3653, ((panda$core$Object*) coerced3650));
+            org$pandalanguage$pandac$IRNode* $tmp3656 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+            $tmp3656->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+            $tmp3656->refCount.value = 1;
+            org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64(&$tmp3658, ((panda$core$Int64) { 49 }));
+            org$pandalanguage$pandac$parser$Token$Kind$wrapper* $tmp3659;
+            $tmp3659 = (org$pandalanguage$pandac$parser$Token$Kind$wrapper*) malloc(24);
+            $tmp3659->cl = (panda$core$Class*) &org$pandalanguage$pandac$parser$Token$Kind$wrapperclass;
+            $tmp3659->refCount = 1;
+            $tmp3659->value = $tmp3658;
+            org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$Q($tmp3656, ((panda$core$Int64) { 1041 }), p_base->position, p_base->type, ((panda$core$Object*) $tmp3659), ((panda$collections$ListView*) children3653));
+            return $tmp3656;
         }
         }
         else {
@@ -9070,1582 +9093,1631 @@ org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compilePrefix
     }
     PANDA_ASSERT(((panda$core$Bit) { false }).value);
 }
-org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compilePrefix$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$ASTNode* p_p) {
-    org$pandalanguage$pandac$IRNode* base3675;
-    panda$core$Bit $tmp3672 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_p->kind, ((panda$core$Int64) { 112 }));
-    PANDA_ASSERT($tmp3672.value);
-    panda$core$Int64 $tmp3673 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(p_p->children);
-    panda$core$Bit $tmp3674 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp3673, ((panda$core$Int64) { 1 }));
-    PANDA_ASSERT($tmp3674.value);
-    panda$core$Object* $tmp3676 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_p->children, ((panda$core$Int64) { 0 }));
-    org$pandalanguage$pandac$IRNode* $tmp3677 = org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, ((org$pandalanguage$pandac$ASTNode*) $tmp3676));
-    base3675 = $tmp3677;
-    if (((panda$core$Bit) { base3675 == NULL }).value) {
+org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compilePrefix$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position p_position, org$pandalanguage$pandac$parser$Token$Kind p_op, org$pandalanguage$pandac$ASTNode* p_rawBase) {
+    org$pandalanguage$pandac$IRNode* base3660;
+    org$pandalanguage$pandac$IRNode* $tmp3661 = org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_rawBase);
+    base3660 = $tmp3661;
+    if (((panda$core$Bit) { base3660 == NULL }).value) {
     {
         return NULL;
     }
     }
-    org$pandalanguage$pandac$IRNode* $tmp3678 = org$pandalanguage$pandac$Compiler$compilePrefix$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$Position$R$org$pandalanguage$pandac$IRNode$Q(self, ((org$pandalanguage$pandac$parser$Token$Kind*) p_p->payload), base3675, p_p->position);
-    return $tmp3678;
+    org$pandalanguage$pandac$IRNode* $tmp3662 = org$pandalanguage$pandac$Compiler$compilePrefix$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_position, p_op, base3660);
+    return $tmp3662;
 }
-org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileCall$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$ASTNode* p_c) {
-    org$pandalanguage$pandac$IRNode* m3680;
-    panda$collections$Array* args3683;
-    panda$core$Range$LTpanda$core$Int64$GT $tmp3686;
-    org$pandalanguage$pandac$IRNode* arg3701;
-    panda$core$Bit $tmp3679 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_c->kind, ((panda$core$Int64) { 107 }));
-    PANDA_ASSERT($tmp3679.value);
-    panda$core$Object* $tmp3681 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_c->children, ((panda$core$Int64) { 0 }));
-    org$pandalanguage$pandac$IRNode* $tmp3682 = org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, ((org$pandalanguage$pandac$ASTNode*) $tmp3681));
-    m3680 = $tmp3682;
-    if (((panda$core$Bit) { m3680 != NULL }).value) {
+org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileCall$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position p_position, org$pandalanguage$pandac$ASTNode* p_rawTarget, panda$collections$ImmutableArray* p_rawArgs) {
+    org$pandalanguage$pandac$IRNode* target3663;
+    panda$collections$Array* args3665;
+    panda$collections$Iterator* arg$Iter3668;
+    org$pandalanguage$pandac$ASTNode* arg3680;
+    org$pandalanguage$pandac$IRNode* compiled3685;
+    org$pandalanguage$pandac$IRNode* $tmp3664 = org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_rawTarget);
+    target3663 = $tmp3664;
+    if (((panda$core$Bit) { target3663 == NULL }).value) {
     {
-        panda$collections$Array* $tmp3684 = (panda$collections$Array*) malloc(40);
-        $tmp3684->$class = (panda$core$Class*) &panda$collections$Array$class;
-        $tmp3684->refCount.value = 1;
-        panda$collections$Array$init($tmp3684);
-        args3683 = $tmp3684;
-        panda$core$Int64 $tmp3687 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(p_c->children);
-        panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp3686, ((panda$core$Int64) { 1 }), $tmp3687, ((panda$core$Bit) { false }));
-        int64_t $tmp3689 = $tmp3686.min.value;
-        panda$core$Int64 i3688 = { $tmp3689 };
-        int64_t $tmp3691 = $tmp3686.max.value;
-        bool $tmp3692 = $tmp3686.inclusive.value;
-        if ($tmp3692) goto $l3699; else goto $l3700;
-        $l3699:;
-        if ($tmp3689 <= $tmp3691) goto $l3693; else goto $l3695;
-        $l3700:;
-        if ($tmp3689 < $tmp3691) goto $l3693; else goto $l3695;
-        $l3693:;
+        return NULL;
+    }
+    }
+    panda$collections$Array* $tmp3666 = (panda$collections$Array*) malloc(40);
+    $tmp3666->$class = (panda$core$Class*) &panda$collections$Array$class;
+    $tmp3666->refCount.value = 1;
+    panda$collections$Array$init($tmp3666);
+    args3665 = $tmp3666;
+    {
+        ITable* $tmp3669 = ((panda$collections$Iterable*) p_rawArgs)->$class->itable;
+        while ($tmp3669->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
+            $tmp3669 = $tmp3669->next;
+        }
+        $fn3671 $tmp3670 = $tmp3669->methods[0];
+        panda$collections$Iterator* $tmp3672 = $tmp3670(((panda$collections$Iterable*) p_rawArgs));
+        arg$Iter3668 = $tmp3672;
+        $l3673:;
+        ITable* $tmp3675 = arg$Iter3668->$class->itable;
+        while ($tmp3675->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+            $tmp3675 = $tmp3675->next;
+        }
+        $fn3677 $tmp3676 = $tmp3675->methods[0];
+        panda$core$Bit $tmp3678 = $tmp3676(arg$Iter3668);
+        panda$core$Bit $tmp3679 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp3678);
+        if (!$tmp3679.value) goto $l3674;
         {
-            panda$core$Object* $tmp3702 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_c->children, i3688);
-            org$pandalanguage$pandac$IRNode* $tmp3703 = org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, ((org$pandalanguage$pandac$ASTNode*) $tmp3702));
-            arg3701 = $tmp3703;
-            if (((panda$core$Bit) { arg3701 == NULL }).value) {
+            ITable* $tmp3681 = arg$Iter3668->$class->itable;
+            while ($tmp3681->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+                $tmp3681 = $tmp3681->next;
+            }
+            $fn3683 $tmp3682 = $tmp3681->methods[1];
+            panda$core$Object* $tmp3684 = $tmp3682(arg$Iter3668);
+            arg3680 = ((org$pandalanguage$pandac$ASTNode*) $tmp3684);
+            org$pandalanguage$pandac$IRNode* $tmp3686 = org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, arg3680);
+            compiled3685 = $tmp3686;
+            if (((panda$core$Bit) { compiled3685 == NULL }).value) {
             {
                 return NULL;
             }
             }
-            panda$collections$Array$add$panda$collections$Array$T(args3683, ((panda$core$Object*) arg3701));
+            panda$collections$Array$add$panda$collections$Array$T(args3665, ((panda$core$Object*) compiled3685));
         }
-        $l3696:;
-        int64_t $tmp3705 = $tmp3691 - i3688.value;
-        if ($tmp3692) goto $l3706; else goto $l3707;
-        $l3706:;
-        if ((uint64_t) $tmp3705 >= 1) goto $l3704; else goto $l3695;
-        $l3707:;
-        if ((uint64_t) $tmp3705 > 1) goto $l3704; else goto $l3695;
-        $l3704:;
-        i3688.value += 1;
-        goto $l3693;
-        $l3695:;
-        org$pandalanguage$pandac$IRNode* $tmp3710 = org$pandalanguage$pandac$Compiler$call$org$pandalanguage$pandac$IRNode$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$R$org$pandalanguage$pandac$IRNode$Q(self, m3680, ((panda$collections$ListView*) args3683));
-        return $tmp3710;
+        goto $l3673;
+        $l3674:;
     }
-    }
-    return NULL;
+    org$pandalanguage$pandac$IRNode* $tmp3687 = org$pandalanguage$pandac$Compiler$call$org$pandalanguage$pandac$IRNode$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$R$org$pandalanguage$pandac$IRNode$Q(self, target3663, ((panda$collections$ListView*) args3665));
+    return $tmp3687;
 }
 org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileDot$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$panda$core$String$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position p_position, org$pandalanguage$pandac$IRNode* p_base, panda$core$String* p_name) {
-    org$pandalanguage$pandac$ClassDecl* cl3711;
-    panda$core$String* name3713;
-    org$pandalanguage$pandac$ClassDecl* cl3721;
-    org$pandalanguage$pandac$SymbolTable* st3740;
-    org$pandalanguage$pandac$Symbol* s3742;
+    org$pandalanguage$pandac$ClassDecl* cl3688;
+    panda$core$String* name3690;
+    org$pandalanguage$pandac$ClassDecl* cl3698;
+    org$pandalanguage$pandac$SymbolTable* st3717;
+    org$pandalanguage$pandac$Symbol* s3719;
     switch (p_base->kind.value) {
         case 1001:
         {
-            org$pandalanguage$pandac$ClassDecl* $tmp3712 = org$pandalanguage$pandac$Compiler$getClass$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$ClassDecl$Q(self, ((org$pandalanguage$pandac$Type*) p_base->payload));
-            cl3711 = $tmp3712;
+            org$pandalanguage$pandac$ClassDecl* $tmp3689 = org$pandalanguage$pandac$Compiler$getClass$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$ClassDecl$Q(self, ((org$pandalanguage$pandac$Type*) p_base->payload));
+            cl3688 = $tmp3689;
         }
         break;
         case 1037:
         {
-            panda$core$String* $tmp3715 = (($fn3714) p_base->payload->$class->vtable[0])(p_base->payload);
-            panda$core$String* $tmp3717 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3715, &$s3716);
-            panda$core$String* $tmp3718 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3717, p_name);
-            panda$core$String* $tmp3720 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3718, &$s3719);
-            name3713 = $tmp3720;
-            org$pandalanguage$pandac$ClassDecl* $tmp3722 = org$pandalanguage$pandac$Compiler$tryResolveClass$panda$core$String$R$org$pandalanguage$pandac$ClassDecl$Q(self, name3713);
-            cl3721 = $tmp3722;
-            if (((panda$core$Bit) { cl3721 != NULL }).value) {
+            panda$core$String* $tmp3692 = (($fn3691) p_base->payload->$class->vtable[0])(p_base->payload);
+            panda$core$String* $tmp3694 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3692, &$s3693);
+            panda$core$String* $tmp3695 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3694, p_name);
+            panda$core$String* $tmp3697 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3695, &$s3696);
+            name3690 = $tmp3697;
+            org$pandalanguage$pandac$ClassDecl* $tmp3699 = org$pandalanguage$pandac$Compiler$tryResolveClass$panda$core$String$R$org$pandalanguage$pandac$ClassDecl$Q(self, name3690);
+            cl3698 = $tmp3699;
+            if (((panda$core$Bit) { cl3698 != NULL }).value) {
             {
-                org$pandalanguage$pandac$IRNode* $tmp3723 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-                $tmp3723->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-                $tmp3723->refCount.value = 1;
-                org$pandalanguage$pandac$Type* $tmp3725 = org$pandalanguage$pandac$Type$Class$R$org$pandalanguage$pandac$Type();
-                org$pandalanguage$pandac$Type* $tmp3726 = org$pandalanguage$pandac$ClassDecl$type$R$org$pandalanguage$pandac$Type(cl3721);
-                org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Type($tmp3723, ((panda$core$Int64) { 1001 }), p_position, $tmp3725, $tmp3726);
-                return $tmp3723;
+                org$pandalanguage$pandac$IRNode* $tmp3700 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+                $tmp3700->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+                $tmp3700->refCount.value = 1;
+                org$pandalanguage$pandac$Type* $tmp3702 = org$pandalanguage$pandac$Type$Class$R$org$pandalanguage$pandac$Type();
+                org$pandalanguage$pandac$Type* $tmp3703 = org$pandalanguage$pandac$ClassDecl$type$R$org$pandalanguage$pandac$Type(cl3698);
+                org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Type($tmp3700, ((panda$core$Int64) { 1001 }), p_position, $tmp3702, $tmp3703);
+                return $tmp3700;
             }
             }
-            org$pandalanguage$pandac$IRNode* $tmp3727 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-            $tmp3727->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-            $tmp3727->refCount.value = 1;
-            org$pandalanguage$pandac$Type* $tmp3729 = org$pandalanguage$pandac$Type$Invalid$R$org$pandalanguage$pandac$Type();
-            org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$String($tmp3727, ((panda$core$Int64) { 1037 }), p_position, $tmp3729, name3713);
-            return $tmp3727;
+            org$pandalanguage$pandac$IRNode* $tmp3704 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+            $tmp3704->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+            $tmp3704->refCount.value = 1;
+            org$pandalanguage$pandac$Type* $tmp3706 = org$pandalanguage$pandac$Type$Invalid$R$org$pandalanguage$pandac$Type();
+            org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$String($tmp3704, ((panda$core$Int64) { 1037 }), p_position, $tmp3706, name3690);
+            return $tmp3704;
         }
         break;
         case 1024:
         {
-            panda$core$Object* $tmp3730 = panda$collections$Stack$peek$R$panda$collections$Stack$T(self->currentClass);
-            org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$ClassDecl(self, ((org$pandalanguage$pandac$ClassDecl*) $tmp3730));
-            panda$core$Object* $tmp3731 = panda$collections$Stack$peek$R$panda$collections$Stack$T(self->currentClass);
-            org$pandalanguage$pandac$ClassDecl* $tmp3732 = org$pandalanguage$pandac$Compiler$getClass$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$ClassDecl$Q(self, ((org$pandalanguage$pandac$ClassDecl*) $tmp3731)->rawSuper);
-            cl3711 = $tmp3732;
+            panda$core$Object* $tmp3707 = panda$collections$Stack$peek$R$panda$collections$Stack$T(self->currentClass);
+            org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$ClassDecl(self, ((org$pandalanguage$pandac$ClassDecl*) $tmp3707));
+            panda$core$Object* $tmp3708 = panda$collections$Stack$peek$R$panda$collections$Stack$T(self->currentClass);
+            org$pandalanguage$pandac$ClassDecl* $tmp3709 = org$pandalanguage$pandac$Compiler$getClass$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$ClassDecl$Q(self, ((org$pandalanguage$pandac$ClassDecl*) $tmp3708)->rawSuper);
+            cl3688 = $tmp3709;
         }
         break;
         default:
         {
-            panda$core$Bit $tmp3733 = org$pandalanguage$pandac$Type$isClass$R$panda$core$Bit(p_base->type);
-            panda$core$Bit $tmp3734 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp3733);
-            if ($tmp3734.value) {
+            panda$core$Bit $tmp3710 = org$pandalanguage$pandac$Type$isClass$R$panda$core$Bit(p_base->type);
+            panda$core$Bit $tmp3711 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp3710);
+            if ($tmp3711.value) {
             {
-                panda$core$String* $tmp3736 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s3735, ((panda$core$Object*) p_base->type));
-                panda$core$String* $tmp3738 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3736, &$s3737);
-                org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, p_position, $tmp3738);
+                panda$core$String* $tmp3713 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s3712, ((panda$core$Object*) p_base->type));
+                panda$core$String* $tmp3715 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3713, &$s3714);
+                org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, p_position, $tmp3715);
                 return NULL;
             }
             }
-            org$pandalanguage$pandac$ClassDecl* $tmp3739 = org$pandalanguage$pandac$Compiler$getClass$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$ClassDecl$Q(self, p_base->type);
-            cl3711 = $tmp3739;
+            org$pandalanguage$pandac$ClassDecl* $tmp3716 = org$pandalanguage$pandac$Compiler$getClass$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$ClassDecl$Q(self, p_base->type);
+            cl3688 = $tmp3716;
         }
     }
-    if (((panda$core$Bit) { cl3711 == NULL }).value) {
+    if (((panda$core$Bit) { cl3688 == NULL }).value) {
     {
         return NULL;
     }
     }
-    org$pandalanguage$pandac$SymbolTable* $tmp3741 = org$pandalanguage$pandac$Compiler$getSymbolTable$org$pandalanguage$pandac$ClassDecl$R$org$pandalanguage$pandac$SymbolTable(self, cl3711);
-    st3740 = $tmp3741;
-    org$pandalanguage$pandac$Symbol* $tmp3743 = org$pandalanguage$pandac$SymbolTable$$IDX$panda$core$String$R$org$pandalanguage$pandac$Symbol$Q(st3740, p_name);
-    s3742 = $tmp3743;
-    if (((panda$core$Bit) { s3742 == NULL }).value) {
+    org$pandalanguage$pandac$SymbolTable* $tmp3718 = org$pandalanguage$pandac$Compiler$getSymbolTable$org$pandalanguage$pandac$ClassDecl$R$org$pandalanguage$pandac$SymbolTable(self, cl3688);
+    st3717 = $tmp3718;
+    org$pandalanguage$pandac$Symbol* $tmp3720 = org$pandalanguage$pandac$SymbolTable$$IDX$panda$core$String$R$org$pandalanguage$pandac$Symbol$Q(st3717, p_name);
+    s3719 = $tmp3720;
+    if (((panda$core$Bit) { s3719 == NULL }).value) {
     {
-        panda$core$String* $tmp3745 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s3744, ((panda$core$Object*) p_base->type));
-        panda$core$String* $tmp3747 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3745, &$s3746);
-        panda$core$String* $tmp3748 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3747, p_name);
-        panda$core$String* $tmp3750 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3748, &$s3749);
-        org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, p_position, $tmp3750);
+        panda$core$String* $tmp3722 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s3721, ((panda$core$Object*) p_base->type));
+        panda$core$String* $tmp3724 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3722, &$s3723);
+        panda$core$String* $tmp3725 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3724, p_name);
+        panda$core$String* $tmp3727 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3725, &$s3726);
+        org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, p_position, $tmp3727);
         return NULL;
     }
     }
-    org$pandalanguage$pandac$IRNode* $tmp3751 = org$pandalanguage$pandac$Compiler$symbolRef$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Symbol$org$pandalanguage$pandac$SymbolTable$R$org$pandalanguage$pandac$IRNode$Q(self, p_position, p_base, s3742, st3740);
-    return $tmp3751;
+    org$pandalanguage$pandac$IRNode* $tmp3728 = org$pandalanguage$pandac$Compiler$symbolRef$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Symbol$org$pandalanguage$pandac$SymbolTable$R$org$pandalanguage$pandac$IRNode$Q(self, p_position, p_base, s3719, st3717);
+    return $tmp3728;
 }
-org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileDot$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$ASTNode* p_d) {
-    org$pandalanguage$pandac$IRNode* base3755;
-    panda$core$Bit $tmp3752 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_d->kind, ((panda$core$Int64) { 108 }));
-    PANDA_ASSERT($tmp3752.value);
-    panda$core$Int64 $tmp3753 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(p_d->children);
-    panda$core$Bit $tmp3754 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp3753, ((panda$core$Int64) { 1 }));
-    PANDA_ASSERT($tmp3754.value);
-    panda$core$Object* $tmp3756 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_d->children, ((panda$core$Int64) { 0 }));
-    org$pandalanguage$pandac$IRNode* $tmp3757 = org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, ((org$pandalanguage$pandac$ASTNode*) $tmp3756));
-    base3755 = $tmp3757;
-    if (((panda$core$Bit) { base3755 == NULL }).value) {
+org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileDot$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$panda$core$String$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position p_position, org$pandalanguage$pandac$ASTNode* p_rawBase, panda$core$String* p_field) {
+    org$pandalanguage$pandac$IRNode* base3729;
+    org$pandalanguage$pandac$IRNode* $tmp3730 = org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_rawBase);
+    base3729 = $tmp3730;
+    if (((panda$core$Bit) { base3729 == NULL }).value) {
     {
         return NULL;
     }
     }
-    panda$core$Bit $tmp3759 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit(base3755->kind, ((panda$core$Int64) { 1037 }));
-    bool $tmp3758 = $tmp3759.value;
-    if (!$tmp3758) goto $l3760;
-    panda$core$Bit $tmp3761 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit(base3755->kind, ((panda$core$Int64) { 1024 }));
-    $tmp3758 = $tmp3761.value;
-    $l3760:;
-    panda$core$Bit $tmp3762 = { $tmp3758 };
-    if ($tmp3762.value) {
+    panda$core$Bit $tmp3732 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit(base3729->kind, ((panda$core$Int64) { 1037 }));
+    bool $tmp3731 = $tmp3732.value;
+    if (!$tmp3731) goto $l3733;
+    panda$core$Bit $tmp3734 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit(base3729->kind, ((panda$core$Int64) { 1024 }));
+    $tmp3731 = $tmp3734.value;
+    $l3733:;
+    panda$core$Bit $tmp3735 = { $tmp3731 };
+    if ($tmp3735.value) {
     {
-        org$pandalanguage$pandac$IRNode* $tmp3763 = org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$IRNode$Q$R$org$pandalanguage$pandac$IRNode$Q(self, base3755);
-        base3755 = $tmp3763;
+        org$pandalanguage$pandac$IRNode* $tmp3736 = org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$IRNode$Q$R$org$pandalanguage$pandac$IRNode$Q(self, base3729);
+        base3729 = $tmp3736;
     }
     }
-    if (((panda$core$Bit) { base3755 == NULL }).value) {
+    if (((panda$core$Bit) { base3729 == NULL }).value) {
     {
         return NULL;
     }
     }
-    org$pandalanguage$pandac$IRNode* $tmp3764 = org$pandalanguage$pandac$Compiler$compileDot$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$panda$core$String$R$org$pandalanguage$pandac$IRNode$Q(self, p_d->position, base3755, ((panda$core$String*) p_d->payload));
-    return $tmp3764;
+    org$pandalanguage$pandac$IRNode* $tmp3737 = org$pandalanguage$pandac$Compiler$compileDot$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$panda$core$String$R$org$pandalanguage$pandac$IRNode$Q(self, p_position, base3729, p_field);
+    return $tmp3737;
 }
-org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileIdentifier$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$ASTNode* p_i) {
-    org$pandalanguage$pandac$Symbol* s3766;
-    panda$core$Bit $tmp3765 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_i->kind, ((panda$core$Int64) { 106 }));
-    PANDA_ASSERT($tmp3765.value);
-    org$pandalanguage$pandac$Symbol* $tmp3767 = org$pandalanguage$pandac$SymbolTable$$IDX$panda$core$String$R$org$pandalanguage$pandac$Symbol$Q(self->symbolTable, ((panda$core$String*) p_i->payload));
-    s3766 = $tmp3767;
-    if (((panda$core$Bit) { s3766 == NULL }).value) {
+org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileIdentifier$org$pandalanguage$pandac$Position$panda$core$String$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position p_position, panda$core$String* p_name) {
+    org$pandalanguage$pandac$Symbol* s3738;
+    org$pandalanguage$pandac$Symbol* $tmp3739 = org$pandalanguage$pandac$SymbolTable$$IDX$panda$core$String$R$org$pandalanguage$pandac$Symbol$Q(self->symbolTable, p_name);
+    s3738 = $tmp3739;
+    if (((panda$core$Bit) { s3738 == NULL }).value) {
     {
-        org$pandalanguage$pandac$ClassDecl* $tmp3768 = org$pandalanguage$pandac$Compiler$tryResolveClass$panda$core$String$R$org$pandalanguage$pandac$ClassDecl$Q(self, ((panda$core$String*) p_i->payload));
-        s3766 = ((org$pandalanguage$pandac$Symbol*) $tmp3768);
+        org$pandalanguage$pandac$ClassDecl* $tmp3740 = org$pandalanguage$pandac$Compiler$tryResolveClass$panda$core$String$R$org$pandalanguage$pandac$ClassDecl$Q(self, p_name);
+        s3738 = ((org$pandalanguage$pandac$Symbol*) $tmp3740);
     }
     }
-    if (((panda$core$Bit) { s3766 != NULL }).value) {
+    if (((panda$core$Bit) { s3738 != NULL }).value) {
     {
-        org$pandalanguage$pandac$IRNode* $tmp3769 = org$pandalanguage$pandac$Compiler$symbolRef$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Symbol$org$pandalanguage$pandac$SymbolTable$R$org$pandalanguage$pandac$IRNode$Q(self, p_i->position, NULL, s3766, self->symbolTable);
-        return $tmp3769;
+        org$pandalanguage$pandac$IRNode* $tmp3741 = org$pandalanguage$pandac$Compiler$symbolRef$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Symbol$org$pandalanguage$pandac$SymbolTable$R$org$pandalanguage$pandac$IRNode$Q(self, p_position, NULL, s3738, self->symbolTable);
+        return $tmp3741;
+    }
+    }
+    org$pandalanguage$pandac$IRNode* $tmp3742 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+    $tmp3742->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    $tmp3742->refCount.value = 1;
+    org$pandalanguage$pandac$Type* $tmp3744 = org$pandalanguage$pandac$Type$Invalid$R$org$pandalanguage$pandac$Type();
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$String($tmp3742, ((panda$core$Int64) { 1037 }), p_position, $tmp3744, p_name);
+    return $tmp3742;
+}
+org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileType$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$ASTNode* p_type) {
+    org$pandalanguage$pandac$Type* resolved3745;
+    org$pandalanguage$pandac$Type* $tmp3746 = org$pandalanguage$pandac$Scanner$convertType$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$Type(self->scanner, p_type);
+    org$pandalanguage$pandac$Type* $tmp3747 = org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type$Q(self, $tmp3746);
+    resolved3745 = $tmp3747;
+    if (((panda$core$Bit) { resolved3745 == NULL }).value) {
+    {
+        return NULL;
+    }
+    }
+    org$pandalanguage$pandac$IRNode* $tmp3748 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+    $tmp3748->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    $tmp3748->refCount.value = 1;
+    org$pandalanguage$pandac$Position $tmp3751 = (($fn3750) p_type->$class->vtable[2])(p_type);
+    org$pandalanguage$pandac$Type* $tmp3752 = org$pandalanguage$pandac$Type$Class$R$org$pandalanguage$pandac$Type();
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Type($tmp3748, ((panda$core$Int64) { 1001 }), $tmp3751, $tmp3752, resolved3745);
+    return $tmp3748;
+}
+org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileRange$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$Q$org$pandalanguage$pandac$ASTNode$Q$panda$core$Bit$org$pandalanguage$pandac$ASTNode$Q$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position p_position, org$pandalanguage$pandac$ASTNode* p_rawStart, org$pandalanguage$pandac$ASTNode* p_rawEnd, panda$core$Bit p_inclusive, org$pandalanguage$pandac$ASTNode* p_rawStep) {
+    org$pandalanguage$pandac$IRNode* start3753;
+    org$pandalanguage$pandac$IRNode* end3758;
+    org$pandalanguage$pandac$IRNode* step3763;
+    panda$collections$Array* children3767;
+    org$pandalanguage$pandac$Position $tmp3775;
+    if (((panda$core$Bit) { p_rawStart != NULL }).value) {
+    {
+        org$pandalanguage$pandac$IRNode* $tmp3754 = org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_rawStart);
+        start3753 = $tmp3754;
+        if (((panda$core$Bit) { start3753 == NULL }).value) {
+        {
+            return NULL;
+        }
+        }
+    }
+    }
+    else {
+    {
+        org$pandalanguage$pandac$IRNode* $tmp3755 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+        $tmp3755->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+        $tmp3755->refCount.value = 1;
+        org$pandalanguage$pandac$Type* $tmp3757 = org$pandalanguage$pandac$Type$Null$R$org$pandalanguage$pandac$Type();
+        org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type($tmp3755, ((panda$core$Int64) { 1030 }), p_position, $tmp3757);
+        start3753 = $tmp3755;
+    }
+    }
+    if (((panda$core$Bit) { p_rawEnd != NULL }).value) {
+    {
+        org$pandalanguage$pandac$IRNode* $tmp3759 = org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_rawEnd);
+        end3758 = $tmp3759;
+        if (((panda$core$Bit) { end3758 == NULL }).value) {
+        {
+            return NULL;
+        }
+        }
+    }
+    }
+    else {
+    {
+        org$pandalanguage$pandac$IRNode* $tmp3760 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+        $tmp3760->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+        $tmp3760->refCount.value = 1;
+        org$pandalanguage$pandac$Type* $tmp3762 = org$pandalanguage$pandac$Type$Null$R$org$pandalanguage$pandac$Type();
+        org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type($tmp3760, ((panda$core$Int64) { 1030 }), p_position, $tmp3762);
+        end3758 = $tmp3760;
+    }
+    }
+    if (((panda$core$Bit) { p_rawStep != NULL }).value) {
+    {
+        org$pandalanguage$pandac$IRNode* $tmp3764 = org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_rawStep);
+        step3763 = $tmp3764;
+        if (((panda$core$Bit) { step3763 == NULL }).value) {
+        {
+            return NULL;
+        }
+        }
+        panda$core$Bit $tmp3765 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(step3763->kind, ((panda$core$Int64) { 1030 }));
+        if ($tmp3765.value) {
+        {
+            org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, step3763->position, &$s3766);
+            return NULL;
+        }
+        }
+    }
+    }
+    else {
+    {
+        step3763 = NULL;
+    }
+    }
+    panda$collections$Array* $tmp3768 = (panda$collections$Array*) malloc(40);
+    $tmp3768->$class = (panda$core$Class*) &panda$collections$Array$class;
+    $tmp3768->refCount.value = 1;
+    panda$collections$Array$init($tmp3768);
+    children3767 = $tmp3768;
+    panda$collections$Array$add$panda$collections$Array$T(children3767, ((panda$core$Object*) start3753));
+    panda$collections$Array$add$panda$collections$Array$T(children3767, ((panda$core$Object*) end3758));
+    if (((panda$core$Bit) { step3763 != NULL }).value) {
+    {
+        panda$collections$Array$add$panda$collections$Array$T(children3767, ((panda$core$Object*) step3763));
     }
     }
     org$pandalanguage$pandac$IRNode* $tmp3770 = (org$pandalanguage$pandac$IRNode*) malloc(72);
     $tmp3770->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
     $tmp3770->refCount.value = 1;
-    org$pandalanguage$pandac$Type* $tmp3772 = org$pandalanguage$pandac$Type$Invalid$R$org$pandalanguage$pandac$Type();
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$String($tmp3770, ((panda$core$Int64) { 1037 }), p_i->position, $tmp3772, ((panda$core$String*) p_i->payload));
+    org$pandalanguage$pandac$Type* $tmp3772 = (org$pandalanguage$pandac$Type*) malloc(96);
+    $tmp3772->$class = (panda$core$Class*) &org$pandalanguage$pandac$Type$class;
+    $tmp3772->refCount.value = 1;
+    org$pandalanguage$pandac$Position$init(&$tmp3775);
+    org$pandalanguage$pandac$Type$init$panda$core$String$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Bit($tmp3772, &$s3774, ((panda$core$Int64) { 17 }), $tmp3775, ((panda$core$Bit) { true }));
+    panda$core$Bit$wrapper* $tmp3776;
+    $tmp3776 = (panda$core$Bit$wrapper*) malloc(13);
+    $tmp3776->cl = (panda$core$Class*) &panda$core$Bit$wrapperclass;
+    $tmp3776->refCount = 1;
+    $tmp3776->value = p_inclusive;
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$Q($tmp3770, ((panda$core$Int64) { 1031 }), p_position, $tmp3772, ((panda$core$Object*) $tmp3776), ((panda$collections$ListView*) children3767));
     return $tmp3770;
 }
-org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileType$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$ASTNode* p_t) {
-    org$pandalanguage$pandac$Type* resolved3773;
-    org$pandalanguage$pandac$Type* $tmp3774 = org$pandalanguage$pandac$Scanner$convertType$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$Type(self->scanner, p_t);
-    org$pandalanguage$pandac$Type* $tmp3775 = org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type$Q(self, $tmp3774);
-    resolved3773 = $tmp3775;
-    if (((panda$core$Bit) { resolved3773 == NULL }).value) {
+org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileString$org$pandalanguage$pandac$Position$panda$core$String$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position p_position, panda$core$String* p_s) {
+    org$pandalanguage$pandac$IRNode* $tmp3777 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+    $tmp3777->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    $tmp3777->refCount.value = 1;
+    org$pandalanguage$pandac$Type* $tmp3779 = org$pandalanguage$pandac$Type$StringType$R$org$pandalanguage$pandac$Type();
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$String($tmp3777, ((panda$core$Int64) { 1033 }), p_position, $tmp3779, p_s);
+    return $tmp3777;
+}
+org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileSelf$org$pandalanguage$pandac$Position$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position p_position) {
+    org$pandalanguage$pandac$Type* type3783;
+    org$pandalanguage$pandac$ClassDecl* cl3784;
+    panda$collections$Array* subtypes3791;
+    panda$core$MutableString* name3795;
+    panda$core$Char8 $tmp3798;
+    panda$core$String* separator3799;
+    panda$collections$Iterator* p$Iter3801;
+    org$pandalanguage$pandac$ClassDecl$GenericParameter* p3813;
+    panda$collections$Array* pType3818;
+    panda$core$String* pName3821;
+    panda$core$Char8 $tmp3831;
+    panda$core$Object* $tmp3780 = panda$collections$Stack$peek$R$panda$collections$Stack$T(self->currentMethod);
+    panda$core$Bit $tmp3781 = org$pandalanguage$pandac$Annotations$isClass$R$panda$core$Bit(((org$pandalanguage$pandac$MethodDecl*) $tmp3780)->annotations);
+    if ($tmp3781.value) {
     {
+        org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, p_position, &$s3782);
         return NULL;
     }
     }
-    org$pandalanguage$pandac$IRNode* $tmp3776 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-    $tmp3776->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-    $tmp3776->refCount.value = 1;
-    org$pandalanguage$pandac$Type* $tmp3778 = org$pandalanguage$pandac$Type$Class$R$org$pandalanguage$pandac$Type();
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Type($tmp3776, ((panda$core$Int64) { 1001 }), p_t->position, $tmp3778, resolved3773);
-    return $tmp3776;
-}
-org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileRange$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$ASTNode* p_r) {
-    org$pandalanguage$pandac$IRNode* start3786;
-    org$pandalanguage$pandac$IRNode* end3794;
-    org$pandalanguage$pandac$IRNode* step3802;
-    panda$collections$Array* children3809;
-    org$pandalanguage$pandac$Position $tmp3817;
-    panda$core$Bit $tmp3780 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_r->kind, ((panda$core$Int64) { 105 }));
-    bool $tmp3779 = $tmp3780.value;
-    if ($tmp3779) goto $l3781;
-    panda$core$Bit $tmp3782 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_r->kind, ((panda$core$Int64) { 104 }));
-    $tmp3779 = $tmp3782.value;
-    $l3781:;
-    panda$core$Bit $tmp3783 = { $tmp3779 };
-    PANDA_ASSERT($tmp3783.value);
-    panda$core$Int64 $tmp3784 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(p_r->children);
-    panda$core$Bit $tmp3785 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp3784, ((panda$core$Int64) { 3 }));
-    PANDA_ASSERT($tmp3785.value);
-    panda$core$Object* $tmp3787 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_r->children, ((panda$core$Int64) { 0 }));
-    panda$core$Bit $tmp3788 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(((org$pandalanguage$pandac$ASTNode*) $tmp3787)->kind, ((panda$core$Int64) { 138 }));
-    if ($tmp3788.value) {
-    {
-        org$pandalanguage$pandac$IRNode* $tmp3789 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-        $tmp3789->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-        $tmp3789->refCount.value = 1;
-        org$pandalanguage$pandac$Type* $tmp3791 = org$pandalanguage$pandac$Type$Null$R$org$pandalanguage$pandac$Type();
-        org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type($tmp3789, ((panda$core$Int64) { 1030 }), p_r->position, $tmp3791);
-        start3786 = $tmp3789;
+    panda$core$Object* $tmp3785 = panda$collections$Stack$peek$R$panda$collections$Stack$T(self->currentClass);
+    cl3784 = ((org$pandalanguage$pandac$ClassDecl*) $tmp3785);
+    ITable* $tmp3786 = ((panda$collections$CollectionView*) cl3784->parameters)->$class->itable;
+    while ($tmp3786->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
+        $tmp3786 = $tmp3786->next;
     }
-    }
-    else {
+    $fn3788 $tmp3787 = $tmp3786->methods[0];
+    panda$core$Int64 $tmp3789 = $tmp3787(((panda$collections$CollectionView*) cl3784->parameters));
+    panda$core$Bit $tmp3790 = panda$core$Int64$$GT$panda$core$Int64$R$panda$core$Bit($tmp3789, ((panda$core$Int64) { 0 }));
+    if ($tmp3790.value) {
     {
-        panda$core$Object* $tmp3792 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_r->children, ((panda$core$Int64) { 0 }));
-        org$pandalanguage$pandac$IRNode* $tmp3793 = org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, ((org$pandalanguage$pandac$ASTNode*) $tmp3792));
-        start3786 = $tmp3793;
-        if (((panda$core$Bit) { start3786 == NULL }).value) {
+        panda$collections$Array* $tmp3792 = (panda$collections$Array*) malloc(40);
+        $tmp3792->$class = (panda$core$Class*) &panda$collections$Array$class;
+        $tmp3792->refCount.value = 1;
+        panda$collections$Array$init($tmp3792);
+        subtypes3791 = $tmp3792;
+        org$pandalanguage$pandac$Type* $tmp3794 = org$pandalanguage$pandac$ClassDecl$type$R$org$pandalanguage$pandac$Type(cl3784);
+        panda$collections$Array$add$panda$collections$Array$T(subtypes3791, ((panda$core$Object*) $tmp3794));
+        panda$core$MutableString* $tmp3796 = (panda$core$MutableString*) malloc(48);
+        $tmp3796->$class = (panda$core$Class*) &panda$core$MutableString$class;
+        $tmp3796->refCount.value = 1;
+        panda$core$MutableString$init$panda$core$String($tmp3796, ((org$pandalanguage$pandac$Symbol*) cl3784)->name);
+        name3795 = $tmp3796;
+        panda$core$Char8$init$panda$core$UInt8(&$tmp3798, ((panda$core$UInt8) { 60 }));
+        panda$core$MutableString$append$panda$core$Char8(name3795, $tmp3798);
+        separator3799 = &$s3800;
         {
-            return NULL;
-        }
-        }
-    }
-    }
-    panda$core$Object* $tmp3795 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_r->children, ((panda$core$Int64) { 1 }));
-    panda$core$Bit $tmp3796 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(((org$pandalanguage$pandac$ASTNode*) $tmp3795)->kind, ((panda$core$Int64) { 138 }));
-    if ($tmp3796.value) {
-    {
-        org$pandalanguage$pandac$IRNode* $tmp3797 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-        $tmp3797->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-        $tmp3797->refCount.value = 1;
-        org$pandalanguage$pandac$Type* $tmp3799 = org$pandalanguage$pandac$Type$Null$R$org$pandalanguage$pandac$Type();
-        org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type($tmp3797, ((panda$core$Int64) { 1030 }), p_r->position, $tmp3799);
-        end3794 = $tmp3797;
-    }
-    }
-    else {
-    {
-        panda$core$Object* $tmp3800 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_r->children, ((panda$core$Int64) { 1 }));
-        org$pandalanguage$pandac$IRNode* $tmp3801 = org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, ((org$pandalanguage$pandac$ASTNode*) $tmp3800));
-        end3794 = $tmp3801;
-        if (((panda$core$Bit) { end3794 == NULL }).value) {
-        {
-            return NULL;
-        }
-        }
-    }
-    }
-    panda$core$Object* $tmp3803 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_r->children, ((panda$core$Int64) { 2 }));
-    panda$core$Bit $tmp3804 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(((org$pandalanguage$pandac$ASTNode*) $tmp3803)->kind, ((panda$core$Int64) { 138 }));
-    if ($tmp3804.value) {
-    {
-        step3802 = NULL;
-    }
-    }
-    else {
-    {
-        panda$core$Object* $tmp3805 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_r->children, ((panda$core$Int64) { 2 }));
-        org$pandalanguage$pandac$IRNode* $tmp3806 = org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, ((org$pandalanguage$pandac$ASTNode*) $tmp3805));
-        step3802 = $tmp3806;
-        if (((panda$core$Bit) { step3802 == NULL }).value) {
-        {
-            return NULL;
-        }
-        }
-        panda$core$Bit $tmp3807 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(step3802->kind, ((panda$core$Int64) { 1030 }));
-        if ($tmp3807.value) {
-        {
-            org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, step3802->position, &$s3808);
-            return NULL;
-        }
-        }
-    }
-    }
-    panda$collections$Array* $tmp3810 = (panda$collections$Array*) malloc(40);
-    $tmp3810->$class = (panda$core$Class*) &panda$collections$Array$class;
-    $tmp3810->refCount.value = 1;
-    panda$collections$Array$init($tmp3810);
-    children3809 = $tmp3810;
-    panda$collections$Array$add$panda$collections$Array$T(children3809, ((panda$core$Object*) start3786));
-    panda$collections$Array$add$panda$collections$Array$T(children3809, ((panda$core$Object*) end3794));
-    if (((panda$core$Bit) { step3802 != NULL }).value) {
-    {
-        panda$collections$Array$add$panda$collections$Array$T(children3809, ((panda$core$Object*) step3802));
-    }
-    }
-    org$pandalanguage$pandac$IRNode* $tmp3812 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-    $tmp3812->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-    $tmp3812->refCount.value = 1;
-    org$pandalanguage$pandac$Type* $tmp3814 = (org$pandalanguage$pandac$Type*) malloc(96);
-    $tmp3814->$class = (panda$core$Class*) &org$pandalanguage$pandac$Type$class;
-    $tmp3814->refCount.value = 1;
-    org$pandalanguage$pandac$Position$init(&$tmp3817);
-    org$pandalanguage$pandac$Type$init$panda$core$String$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Bit($tmp3814, &$s3816, ((panda$core$Int64) { 17 }), $tmp3817, ((panda$core$Bit) { true }));
-    panda$core$Bit $tmp3818 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_r->kind, ((panda$core$Int64) { 104 }));
-    panda$core$Bit$wrapper* $tmp3819;
-    $tmp3819 = (panda$core$Bit$wrapper*) malloc(13);
-    $tmp3819->cl = (panda$core$Class*) &panda$core$Bit$wrapperclass;
-    $tmp3819->refCount = 1;
-    $tmp3819->value = $tmp3818;
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$Q($tmp3812, ((panda$core$Int64) { 1031 }), p_r->position, $tmp3814, ((panda$core$Object*) $tmp3819), ((panda$collections$ListView*) children3809));
-    return $tmp3812;
-}
-org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileString$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$ASTNode* p_s) {
-    org$pandalanguage$pandac$IRNode* $tmp3820 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-    $tmp3820->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-    $tmp3820->refCount.value = 1;
-    org$pandalanguage$pandac$Type* $tmp3822 = org$pandalanguage$pandac$Type$StringType$R$org$pandalanguage$pandac$Type();
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$String($tmp3820, ((panda$core$Int64) { 1033 }), p_s->position, $tmp3822, ((panda$core$String*) p_s->payload));
-    return $tmp3820;
-}
-org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileSelf$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$ASTNode* p_s) {
-    org$pandalanguage$pandac$Type* type3827;
-    org$pandalanguage$pandac$ClassDecl* cl3828;
-    panda$collections$Array* subtypes3835;
-    panda$core$MutableString* name3839;
-    panda$core$Char8 $tmp3842;
-    panda$core$String* separator3843;
-    panda$collections$Iterator* p$Iter3845;
-    org$pandalanguage$pandac$ClassDecl$GenericParameter* p3857;
-    panda$collections$Array* pType3862;
-    panda$core$String* pName3865;
-    panda$core$Char8 $tmp3875;
-    panda$core$Bit $tmp3823 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_s->kind, ((panda$core$Int64) { 114 }));
-    PANDA_ASSERT($tmp3823.value);
-    panda$core$Object* $tmp3824 = panda$collections$Stack$peek$R$panda$collections$Stack$T(self->currentMethod);
-    panda$core$Bit $tmp3825 = org$pandalanguage$pandac$Annotations$isClass$R$panda$core$Bit(((org$pandalanguage$pandac$MethodDecl*) $tmp3824)->annotations);
-    if ($tmp3825.value) {
-    {
-        org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, p_s->position, &$s3826);
-        return NULL;
-    }
-    }
-    panda$core$Object* $tmp3829 = panda$collections$Stack$peek$R$panda$collections$Stack$T(self->currentClass);
-    cl3828 = ((org$pandalanguage$pandac$ClassDecl*) $tmp3829);
-    ITable* $tmp3830 = ((panda$collections$CollectionView*) cl3828->parameters)->$class->itable;
-    while ($tmp3830->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
-        $tmp3830 = $tmp3830->next;
-    }
-    $fn3832 $tmp3831 = $tmp3830->methods[0];
-    panda$core$Int64 $tmp3833 = $tmp3831(((panda$collections$CollectionView*) cl3828->parameters));
-    panda$core$Bit $tmp3834 = panda$core$Int64$$GT$panda$core$Int64$R$panda$core$Bit($tmp3833, ((panda$core$Int64) { 0 }));
-    if ($tmp3834.value) {
-    {
-        panda$collections$Array* $tmp3836 = (panda$collections$Array*) malloc(40);
-        $tmp3836->$class = (panda$core$Class*) &panda$collections$Array$class;
-        $tmp3836->refCount.value = 1;
-        panda$collections$Array$init($tmp3836);
-        subtypes3835 = $tmp3836;
-        org$pandalanguage$pandac$Type* $tmp3838 = org$pandalanguage$pandac$ClassDecl$type$R$org$pandalanguage$pandac$Type(cl3828);
-        panda$collections$Array$add$panda$collections$Array$T(subtypes3835, ((panda$core$Object*) $tmp3838));
-        panda$core$MutableString* $tmp3840 = (panda$core$MutableString*) malloc(48);
-        $tmp3840->$class = (panda$core$Class*) &panda$core$MutableString$class;
-        $tmp3840->refCount.value = 1;
-        panda$core$MutableString$init$panda$core$String($tmp3840, ((org$pandalanguage$pandac$Symbol*) cl3828)->name);
-        name3839 = $tmp3840;
-        panda$core$Char8$init$panda$core$UInt8(&$tmp3842, ((panda$core$UInt8) { 60 }));
-        panda$core$MutableString$append$panda$core$Char8(name3839, $tmp3842);
-        separator3843 = &$s3844;
-        {
-            ITable* $tmp3846 = ((panda$collections$Iterable*) cl3828->parameters)->$class->itable;
-            while ($tmp3846->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
-                $tmp3846 = $tmp3846->next;
+            ITable* $tmp3802 = ((panda$collections$Iterable*) cl3784->parameters)->$class->itable;
+            while ($tmp3802->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
+                $tmp3802 = $tmp3802->next;
             }
-            $fn3848 $tmp3847 = $tmp3846->methods[0];
-            panda$collections$Iterator* $tmp3849 = $tmp3847(((panda$collections$Iterable*) cl3828->parameters));
-            p$Iter3845 = $tmp3849;
-            $l3850:;
-            ITable* $tmp3852 = p$Iter3845->$class->itable;
-            while ($tmp3852->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-                $tmp3852 = $tmp3852->next;
+            $fn3804 $tmp3803 = $tmp3802->methods[0];
+            panda$collections$Iterator* $tmp3805 = $tmp3803(((panda$collections$Iterable*) cl3784->parameters));
+            p$Iter3801 = $tmp3805;
+            $l3806:;
+            ITable* $tmp3808 = p$Iter3801->$class->itable;
+            while ($tmp3808->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+                $tmp3808 = $tmp3808->next;
             }
-            $fn3854 $tmp3853 = $tmp3852->methods[0];
-            panda$core$Bit $tmp3855 = $tmp3853(p$Iter3845);
-            panda$core$Bit $tmp3856 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp3855);
-            if (!$tmp3856.value) goto $l3851;
+            $fn3810 $tmp3809 = $tmp3808->methods[0];
+            panda$core$Bit $tmp3811 = $tmp3809(p$Iter3801);
+            panda$core$Bit $tmp3812 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp3811);
+            if (!$tmp3812.value) goto $l3807;
             {
-                ITable* $tmp3858 = p$Iter3845->$class->itable;
-                while ($tmp3858->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-                    $tmp3858 = $tmp3858->next;
+                ITable* $tmp3814 = p$Iter3801->$class->itable;
+                while ($tmp3814->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+                    $tmp3814 = $tmp3814->next;
                 }
-                $fn3860 $tmp3859 = $tmp3858->methods[1];
-                panda$core$Object* $tmp3861 = $tmp3859(p$Iter3845);
-                p3857 = ((org$pandalanguage$pandac$ClassDecl$GenericParameter*) $tmp3861);
-                panda$collections$Array* $tmp3863 = (panda$collections$Array*) malloc(40);
-                $tmp3863->$class = (panda$core$Class*) &panda$collections$Array$class;
-                $tmp3863->refCount.value = 1;
-                panda$collections$Array$init($tmp3863);
-                pType3862 = $tmp3863;
-                panda$collections$Array$add$panda$collections$Array$T(pType3862, ((panda$core$Object*) p3857->bound));
-                panda$core$String* $tmp3866 = panda$core$String$convert$R$panda$core$String(((org$pandalanguage$pandac$Symbol*) cl3828)->name);
-                panda$core$String* $tmp3868 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3866, &$s3867);
-                panda$core$String* $tmp3869 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3868, ((org$pandalanguage$pandac$Symbol*) p3857)->name);
-                panda$core$String* $tmp3871 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3869, &$s3870);
-                pName3865 = $tmp3871;
-                panda$core$MutableString$append$panda$core$String(name3839, separator3843);
-                panda$core$MutableString$append$panda$core$String(name3839, pName3865);
-                org$pandalanguage$pandac$Type* $tmp3872 = (org$pandalanguage$pandac$Type*) malloc(96);
-                $tmp3872->$class = (panda$core$Class*) &org$pandalanguage$pandac$Type$class;
-                $tmp3872->refCount.value = 1;
-                org$pandalanguage$pandac$Type$init$org$pandalanguage$pandac$ClassDecl$GenericParameter($tmp3872, p3857);
-                panda$collections$Array$add$panda$collections$Array$T(subtypes3835, ((panda$core$Object*) $tmp3872));
-                separator3843 = &$s3874;
+                $fn3816 $tmp3815 = $tmp3814->methods[1];
+                panda$core$Object* $tmp3817 = $tmp3815(p$Iter3801);
+                p3813 = ((org$pandalanguage$pandac$ClassDecl$GenericParameter*) $tmp3817);
+                panda$collections$Array* $tmp3819 = (panda$collections$Array*) malloc(40);
+                $tmp3819->$class = (panda$core$Class*) &panda$collections$Array$class;
+                $tmp3819->refCount.value = 1;
+                panda$collections$Array$init($tmp3819);
+                pType3818 = $tmp3819;
+                panda$collections$Array$add$panda$collections$Array$T(pType3818, ((panda$core$Object*) p3813->bound));
+                panda$core$String* $tmp3822 = panda$core$String$convert$R$panda$core$String(((org$pandalanguage$pandac$Symbol*) cl3784)->name);
+                panda$core$String* $tmp3824 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3822, &$s3823);
+                panda$core$String* $tmp3825 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3824, ((org$pandalanguage$pandac$Symbol*) p3813)->name);
+                panda$core$String* $tmp3827 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3825, &$s3826);
+                pName3821 = $tmp3827;
+                panda$core$MutableString$append$panda$core$String(name3795, separator3799);
+                panda$core$MutableString$append$panda$core$String(name3795, pName3821);
+                org$pandalanguage$pandac$Type* $tmp3828 = (org$pandalanguage$pandac$Type*) malloc(96);
+                $tmp3828->$class = (panda$core$Class*) &org$pandalanguage$pandac$Type$class;
+                $tmp3828->refCount.value = 1;
+                org$pandalanguage$pandac$Type$init$org$pandalanguage$pandac$ClassDecl$GenericParameter($tmp3828, p3813);
+                panda$collections$Array$add$panda$collections$Array$T(subtypes3791, ((panda$core$Object*) $tmp3828));
+                separator3799 = &$s3830;
             }
-            goto $l3850;
-            $l3851:;
+            goto $l3806;
+            $l3807:;
         }
-        panda$core$Char8$init$panda$core$UInt8(&$tmp3875, ((panda$core$UInt8) { 62 }));
-        panda$core$MutableString$append$panda$core$Char8(name3839, $tmp3875);
-        org$pandalanguage$pandac$Type* $tmp3876 = (org$pandalanguage$pandac$Type*) malloc(96);
-        $tmp3876->$class = (panda$core$Class*) &org$pandalanguage$pandac$Type$class;
-        $tmp3876->refCount.value = 1;
-        panda$core$String* $tmp3878 = panda$core$MutableString$finish$R$panda$core$String(name3839);
-        org$pandalanguage$pandac$Type$init$panda$core$String$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT$panda$core$Bit($tmp3876, $tmp3878, ((panda$core$Int64) { 21 }), p_s->position, ((panda$collections$ListView*) subtypes3835), ((panda$core$Bit) { true }));
-        type3827 = $tmp3876;
+        panda$core$Char8$init$panda$core$UInt8(&$tmp3831, ((panda$core$UInt8) { 62 }));
+        panda$core$MutableString$append$panda$core$Char8(name3795, $tmp3831);
+        org$pandalanguage$pandac$Type* $tmp3832 = (org$pandalanguage$pandac$Type*) malloc(96);
+        $tmp3832->$class = (panda$core$Class*) &org$pandalanguage$pandac$Type$class;
+        $tmp3832->refCount.value = 1;
+        panda$core$String* $tmp3834 = panda$core$MutableString$finish$R$panda$core$String(name3795);
+        org$pandalanguage$pandac$Type$init$panda$core$String$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT$panda$core$Bit($tmp3832, $tmp3834, ((panda$core$Int64) { 21 }), p_position, ((panda$collections$ListView*) subtypes3791), ((panda$core$Bit) { true }));
+        type3783 = $tmp3832;
     }
     }
     else {
     {
-        org$pandalanguage$pandac$Type* $tmp3879 = org$pandalanguage$pandac$ClassDecl$type$R$org$pandalanguage$pandac$Type(cl3828);
-        type3827 = $tmp3879;
+        org$pandalanguage$pandac$Type* $tmp3835 = org$pandalanguage$pandac$ClassDecl$type$R$org$pandalanguage$pandac$Type(cl3784);
+        type3783 = $tmp3835;
     }
     }
-    org$pandalanguage$pandac$IRNode* $tmp3880 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-    $tmp3880->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-    $tmp3880->refCount.value = 1;
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type($tmp3880, ((panda$core$Int64) { 1025 }), p_s->position, type3827);
-    return $tmp3880;
+    org$pandalanguage$pandac$IRNode* $tmp3836 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+    $tmp3836->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    $tmp3836->refCount.value = 1;
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type($tmp3836, ((panda$core$Int64) { 1025 }), p_position, type3783);
+    return $tmp3836;
 }
-org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileSuper$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$ASTNode* p_s) {
-    org$pandalanguage$pandac$ClassDecl* cl3886;
-    panda$core$Bit $tmp3882 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_s->kind, ((panda$core$Int64) { 115 }));
-    PANDA_ASSERT($tmp3882.value);
-    panda$core$Object* $tmp3883 = panda$collections$Stack$peek$R$panda$collections$Stack$T(self->currentMethod);
-    panda$core$Bit $tmp3884 = org$pandalanguage$pandac$Annotations$isClass$R$panda$core$Bit(((org$pandalanguage$pandac$MethodDecl*) $tmp3883)->annotations);
-    if ($tmp3884.value) {
+org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileSuper$org$pandalanguage$pandac$Position$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position p_position) {
+    org$pandalanguage$pandac$ClassDecl* cl3841;
+    panda$core$Object* $tmp3838 = panda$collections$Stack$peek$R$panda$collections$Stack$T(self->currentMethod);
+    panda$core$Bit $tmp3839 = org$pandalanguage$pandac$Annotations$isClass$R$panda$core$Bit(((org$pandalanguage$pandac$MethodDecl*) $tmp3838)->annotations);
+    if ($tmp3839.value) {
     {
-        org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, p_s->position, &$s3885);
+        org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, p_position, &$s3840);
         return NULL;
     }
     }
-    panda$core$Object* $tmp3887 = panda$collections$Stack$peek$R$panda$collections$Stack$T(self->currentClass);
-    cl3886 = ((org$pandalanguage$pandac$ClassDecl*) $tmp3887);
-    PANDA_ASSERT(cl3886->resolved.value);
-    org$pandalanguage$pandac$IRNode* $tmp3888 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-    $tmp3888->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-    $tmp3888->refCount.value = 1;
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type($tmp3888, ((panda$core$Int64) { 1024 }), p_s->position, cl3886->rawSuper);
-    return $tmp3888;
+    panda$core$Object* $tmp3842 = panda$collections$Stack$peek$R$panda$collections$Stack$T(self->currentClass);
+    cl3841 = ((org$pandalanguage$pandac$ClassDecl*) $tmp3842);
+    PANDA_ASSERT(cl3841->resolved.value);
+    org$pandalanguage$pandac$IRNode* $tmp3843 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+    $tmp3843->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    $tmp3843->refCount.value = 1;
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type($tmp3843, ((panda$core$Int64) { 1024 }), p_position, cl3841->rawSuper);
+    return $tmp3843;
 }
 org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileCast$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position p_position, org$pandalanguage$pandac$ASTNode* p_expr, org$pandalanguage$pandac$Type* p_rawType) {
-    org$pandalanguage$pandac$IRNode* value3890;
-    panda$core$String$Index$nullable index3892;
-    org$pandalanguage$pandac$Type* type3899;
-    org$pandalanguage$pandac$IRNode* base3901;
-    panda$core$Range$LTpanda$core$String$Index$Q$GT $tmp3904;
-    panda$core$Range$LTpanda$core$String$Index$Q$GT $tmp3907;
-    org$pandalanguage$pandac$Type* type3911;
-    org$pandalanguage$pandac$IRNode* $tmp3891 = org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_expr);
-    value3890 = $tmp3891;
-    if (((panda$core$Bit) { value3890 == NULL }).value) {
+    org$pandalanguage$pandac$IRNode* value3845;
+    panda$core$String$Index$nullable index3847;
+    org$pandalanguage$pandac$Type* type3854;
+    org$pandalanguage$pandac$IRNode* base3856;
+    panda$core$Range$LTpanda$core$String$Index$Q$GT $tmp3859;
+    panda$core$Range$LTpanda$core$String$Index$Q$GT $tmp3862;
+    org$pandalanguage$pandac$Type* type3866;
+    org$pandalanguage$pandac$IRNode* $tmp3846 = org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_expr);
+    value3845 = $tmp3846;
+    if (((panda$core$Bit) { value3845 == NULL }).value) {
     {
         return NULL;
     }
     }
-    panda$core$String$Index$nullable $tmp3894 = panda$core$String$lastIndexOf$panda$core$String$R$panda$core$String$Index$Q(((org$pandalanguage$pandac$Symbol*) p_rawType)->name, &$s3893);
-    index3892 = $tmp3894;
-    panda$core$Bit $tmp3896 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_rawType->typeKind, ((panda$core$Int64) { 10 }));
-    bool $tmp3895 = $tmp3896.value;
-    if (!$tmp3895) goto $l3897;
-    $tmp3895 = ((panda$core$Bit) { index3892.nonnull }).value;
-    $l3897:;
-    panda$core$Bit $tmp3898 = { $tmp3895 };
-    if ($tmp3898.value) {
+    panda$core$String$Index$nullable $tmp3849 = panda$core$String$lastIndexOf$panda$core$String$R$panda$core$String$Index$Q(((org$pandalanguage$pandac$Symbol*) p_rawType)->name, &$s3848);
+    index3847 = $tmp3849;
+    panda$core$Bit $tmp3851 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_rawType->typeKind, ((panda$core$Int64) { 10 }));
+    bool $tmp3850 = $tmp3851.value;
+    if (!$tmp3850) goto $l3852;
+    $tmp3850 = ((panda$core$Bit) { index3847.nonnull }).value;
+    $l3852:;
+    panda$core$Bit $tmp3853 = { $tmp3850 };
+    if ($tmp3853.value) {
     {
         PANDA_ASSERT(self->reportErrors.value);
         self->reportErrors = ((panda$core$Bit) { false });
-        org$pandalanguage$pandac$Type* $tmp3900 = org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type$Q(self, p_rawType);
-        type3899 = $tmp3900;
+        org$pandalanguage$pandac$Type* $tmp3855 = org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type$Q(self, p_rawType);
+        type3854 = $tmp3855;
         self->reportErrors = ((panda$core$Bit) { true });
-        if (((panda$core$Bit) { type3899 == NULL }).value) {
+        if (((panda$core$Bit) { type3854 == NULL }).value) {
         {
-            org$pandalanguage$pandac$Type* $tmp3902 = (org$pandalanguage$pandac$Type*) malloc(96);
-            $tmp3902->$class = (panda$core$Class*) &org$pandalanguage$pandac$Type$class;
-            $tmp3902->refCount.value = 1;
-            panda$core$Range$LTpanda$core$String$Index$Q$GT$init$panda$core$String$Index$Q$panda$core$String$Index$Q$panda$core$Bit(&$tmp3904, ((panda$core$String$Index$nullable) { .nonnull = false }), index3892, ((panda$core$Bit) { false }));
-            panda$core$String* $tmp3905 = panda$core$String$$IDX$panda$core$Range$LTpanda$core$String$Index$Q$GT$R$panda$core$String(((org$pandalanguage$pandac$Symbol*) p_rawType)->name, $tmp3904);
-            org$pandalanguage$pandac$Type$init$panda$core$String$panda$core$Int64$org$pandalanguage$pandac$Position($tmp3902, $tmp3905, ((panda$core$Int64) { 10 }), p_position);
-            org$pandalanguage$pandac$IRNode* $tmp3906 = org$pandalanguage$pandac$Compiler$compileCast$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, p_position, p_expr, $tmp3902);
-            base3901 = $tmp3906;
-            if (((panda$core$Bit) { base3901 == NULL }).value) {
+            org$pandalanguage$pandac$Type* $tmp3857 = (org$pandalanguage$pandac$Type*) malloc(96);
+            $tmp3857->$class = (panda$core$Class*) &org$pandalanguage$pandac$Type$class;
+            $tmp3857->refCount.value = 1;
+            panda$core$Range$LTpanda$core$String$Index$Q$GT$init$panda$core$String$Index$Q$panda$core$String$Index$Q$panda$core$Bit(&$tmp3859, ((panda$core$String$Index$nullable) { .nonnull = false }), index3847, ((panda$core$Bit) { false }));
+            panda$core$String* $tmp3860 = panda$core$String$$IDX$panda$core$Range$LTpanda$core$String$Index$Q$GT$R$panda$core$String(((org$pandalanguage$pandac$Symbol*) p_rawType)->name, $tmp3859);
+            org$pandalanguage$pandac$Type$init$panda$core$String$panda$core$Int64$org$pandalanguage$pandac$Position($tmp3857, $tmp3860, ((panda$core$Int64) { 10 }), p_position);
+            org$pandalanguage$pandac$IRNode* $tmp3861 = org$pandalanguage$pandac$Compiler$compileCast$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, p_position, p_expr, $tmp3857);
+            base3856 = $tmp3861;
+            if (((panda$core$Bit) { base3856 == NULL }).value) {
             {
                 return NULL;
             }
             }
-            panda$core$String$Index $tmp3908 = panda$core$String$next$panda$core$String$Index$R$panda$core$String$Index(((org$pandalanguage$pandac$Symbol*) p_rawType)->name, ((panda$core$String$Index) index3892.value));
-            panda$core$Range$LTpanda$core$String$Index$Q$GT$init$panda$core$String$Index$Q$panda$core$String$Index$Q$panda$core$Bit(&$tmp3907, ((panda$core$String$Index$nullable) { $tmp3908, true }), ((panda$core$String$Index$nullable) { .nonnull = false }), ((panda$core$Bit) { false }));
-            panda$core$String* $tmp3909 = panda$core$String$$IDX$panda$core$Range$LTpanda$core$String$Index$Q$GT$R$panda$core$String(((org$pandalanguage$pandac$Symbol*) p_rawType)->name, $tmp3907);
-            org$pandalanguage$pandac$IRNode* $tmp3910 = org$pandalanguage$pandac$Compiler$compileDot$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$panda$core$String$R$org$pandalanguage$pandac$IRNode$Q(self, p_position, base3901, $tmp3909);
-            return $tmp3910;
+            panda$core$String$Index $tmp3863 = panda$core$String$next$panda$core$String$Index$R$panda$core$String$Index(((org$pandalanguage$pandac$Symbol*) p_rawType)->name, ((panda$core$String$Index) index3847.value));
+            panda$core$Range$LTpanda$core$String$Index$Q$GT$init$panda$core$String$Index$Q$panda$core$String$Index$Q$panda$core$Bit(&$tmp3862, ((panda$core$String$Index$nullable) { $tmp3863, true }), ((panda$core$String$Index$nullable) { .nonnull = false }), ((panda$core$Bit) { false }));
+            panda$core$String* $tmp3864 = panda$core$String$$IDX$panda$core$Range$LTpanda$core$String$Index$Q$GT$R$panda$core$String(((org$pandalanguage$pandac$Symbol*) p_rawType)->name, $tmp3862);
+            org$pandalanguage$pandac$IRNode* $tmp3865 = org$pandalanguage$pandac$Compiler$compileDot$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$panda$core$String$R$org$pandalanguage$pandac$IRNode$Q(self, p_position, base3856, $tmp3864);
+            return $tmp3865;
         }
         }
     }
     }
-    org$pandalanguage$pandac$Type* $tmp3912 = org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type$Q(self, p_rawType);
-    type3911 = $tmp3912;
-    if (((panda$core$Bit) { type3911 == NULL }).value) {
+    org$pandalanguage$pandac$Type* $tmp3867 = org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type$Q(self, p_rawType);
+    type3866 = $tmp3867;
+    if (((panda$core$Bit) { type3866 == NULL }).value) {
     {
         return NULL;
     }
     }
-    panda$core$Int64$nullable $tmp3913 = org$pandalanguage$pandac$Compiler$coercionCost$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$Type$R$panda$core$Int64$Q(self, value3890, type3911);
-    if (((panda$core$Bit) { $tmp3913.nonnull }).value) {
+    panda$core$Int64$nullable $tmp3868 = org$pandalanguage$pandac$Compiler$coercionCost$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$Type$R$panda$core$Int64$Q(self, value3845, type3866);
+    if (((panda$core$Bit) { $tmp3868.nonnull }).value) {
     {
-        org$pandalanguage$pandac$IRNode* $tmp3914 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, value3890, type3911);
-        return $tmp3914;
+        org$pandalanguage$pandac$IRNode* $tmp3869 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, value3845, type3866);
+        return $tmp3869;
     }
     }
-    panda$core$Bit $tmp3915 = org$pandalanguage$pandac$Compiler$canCast$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$Type$R$panda$core$Bit(self, value3890, type3911);
-    if ($tmp3915.value) {
+    panda$core$Bit $tmp3870 = org$pandalanguage$pandac$Compiler$canCast$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$Type$R$panda$core$Bit(self, value3845, type3866);
+    if ($tmp3870.value) {
     {
-        org$pandalanguage$pandac$IRNode* $tmp3916 = org$pandalanguage$pandac$Compiler$cast$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$Position$panda$core$Bit$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode(self, value3890, p_position, ((panda$core$Bit) { true }), type3911);
-        return $tmp3916;
+        org$pandalanguage$pandac$IRNode* $tmp3871 = org$pandalanguage$pandac$Compiler$cast$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$Position$panda$core$Bit$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode(self, value3845, p_position, ((panda$core$Bit) { true }), type3866);
+        return $tmp3871;
     }
     }
     else {
     {
-        panda$core$String* $tmp3918 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s3917, ((panda$core$Object*) value3890->type));
-        panda$core$String* $tmp3920 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3918, &$s3919);
-        panda$core$String* $tmp3922 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s3921, ((panda$core$Object*) type3911));
-        panda$core$String* $tmp3924 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3922, &$s3923);
-        panda$core$String* $tmp3925 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3920, $tmp3924);
-        org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, p_position, $tmp3925);
+        panda$core$String* $tmp3873 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s3872, ((panda$core$Object*) value3845->type));
+        panda$core$String* $tmp3875 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3873, &$s3874);
+        panda$core$String* $tmp3877 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s3876, ((panda$core$Object*) type3866));
+        panda$core$String* $tmp3879 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3877, &$s3878);
+        panda$core$String* $tmp3880 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3875, $tmp3879);
+        org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, p_position, $tmp3880);
         return NULL;
     }
     }
 }
-org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileCast$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$ASTNode* p_c) {
-    panda$core$Bit $tmp3926 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_c->kind, ((panda$core$Int64) { 111 }));
-    PANDA_ASSERT($tmp3926.value);
-    panda$core$Int64 $tmp3927 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(p_c->children);
-    panda$core$Bit $tmp3928 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp3927, ((panda$core$Int64) { 2 }));
-    PANDA_ASSERT($tmp3928.value);
-    panda$core$Object* $tmp3929 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_c->children, ((panda$core$Int64) { 0 }));
-    panda$core$Object* $tmp3930 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_c->children, ((panda$core$Int64) { 1 }));
-    org$pandalanguage$pandac$Type* $tmp3931 = org$pandalanguage$pandac$Scanner$convertType$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$Type(self->scanner, ((org$pandalanguage$pandac$ASTNode*) $tmp3930));
-    org$pandalanguage$pandac$IRNode* $tmp3932 = org$pandalanguage$pandac$Compiler$compileCast$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, p_c->position, ((org$pandalanguage$pandac$ASTNode*) $tmp3929), $tmp3931);
-    return $tmp3932;
+org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileNull$org$pandalanguage$pandac$Position$R$org$pandalanguage$pandac$IRNode(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position p_position) {
+    org$pandalanguage$pandac$IRNode* $tmp3881 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+    $tmp3881->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    $tmp3881->refCount.value = 1;
+    org$pandalanguage$pandac$Type* $tmp3883 = org$pandalanguage$pandac$Type$Null$R$org$pandalanguage$pandac$Type();
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type($tmp3881, ((panda$core$Int64) { 1030 }), p_position, $tmp3883);
+    return $tmp3881;
 }
-org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileNull$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$ASTNode* p_n) {
-    panda$core$Bit $tmp3933 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_n->kind, ((panda$core$Int64) { 117 }));
-    PANDA_ASSERT($tmp3933.value);
-    org$pandalanguage$pandac$IRNode* $tmp3934 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-    $tmp3934->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-    $tmp3934->refCount.value = 1;
-    org$pandalanguage$pandac$Type* $tmp3936 = org$pandalanguage$pandac$Type$Null$R$org$pandalanguage$pandac$Type();
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type($tmp3934, ((panda$core$Int64) { 1030 }), p_n->position, $tmp3936);
-    return $tmp3934;
-}
-org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileChoiceFieldReference$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$ASTNode* p_f) {
-    org$pandalanguage$pandac$Pair* cf3937;
-    panda$collections$Array* children3943;
-    org$pandalanguage$pandac$IRNode* base3946;
-    cf3937 = ((org$pandalanguage$pandac$Pair*) p_f->payload);
-    org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$ChoiceEntry(self, ((org$pandalanguage$pandac$ChoiceEntry*) cf3937->first));
-    bool $tmp3938 = ((panda$core$Bit) { p_f->children != NULL }).value;
-    if (!$tmp3938) goto $l3939;
-    panda$core$Int64 $tmp3940 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(p_f->children);
-    panda$core$Bit $tmp3941 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp3940, ((panda$core$Int64) { 1 }));
-    $tmp3938 = $tmp3941.value;
-    $l3939:;
-    panda$core$Bit $tmp3942 = { $tmp3938 };
-    PANDA_ASSERT($tmp3942.value);
-    panda$collections$Array* $tmp3944 = (panda$collections$Array*) malloc(40);
-    $tmp3944->$class = (panda$core$Class*) &panda$collections$Array$class;
-    $tmp3944->refCount.value = 1;
-    panda$collections$Array$init($tmp3944);
-    children3943 = $tmp3944;
-    panda$core$Object* $tmp3947 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_f->children, ((panda$core$Int64) { 0 }));
-    org$pandalanguage$pandac$IRNode* $tmp3948 = org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, ((org$pandalanguage$pandac$ASTNode*) $tmp3947));
-    base3946 = $tmp3948;
-    if (((panda$core$Bit) { base3946 == NULL }).value) {
+org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileChoiceFieldReference$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$ChoiceEntry$panda$core$Int64$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position p_position, org$pandalanguage$pandac$ASTNode* p_rawBase, org$pandalanguage$pandac$ChoiceEntry* p_ce, panda$core$Int64 p_field) {
+    panda$collections$Array* children3884;
+    org$pandalanguage$pandac$IRNode* base3887;
+    org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$ChoiceEntry(self, p_ce);
+    panda$collections$Array* $tmp3885 = (panda$collections$Array*) malloc(40);
+    $tmp3885->$class = (panda$core$Class*) &panda$collections$Array$class;
+    $tmp3885->refCount.value = 1;
+    panda$collections$Array$init($tmp3885);
+    children3884 = $tmp3885;
+    org$pandalanguage$pandac$IRNode* $tmp3888 = org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_rawBase);
+    base3887 = $tmp3888;
+    if (((panda$core$Bit) { base3887 == NULL }).value) {
     {
         return NULL;
     }
     }
-    panda$collections$Array$add$panda$collections$Array$T(children3943, ((panda$core$Object*) base3946));
-    org$pandalanguage$pandac$IRNode* $tmp3949 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-    $tmp3949->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-    $tmp3949->refCount.value = 1;
-    panda$core$Object* $tmp3951 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(((org$pandalanguage$pandac$ChoiceEntry*) cf3937->first)->fields, ((panda$core$Int64$wrapper*) cf3937->second)->value);
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$Q($tmp3949, ((panda$core$Int64) { 1047 }), p_f->position, ((org$pandalanguage$pandac$Type*) $tmp3951), ((panda$core$Object*) cf3937), ((panda$collections$ListView*) children3943));
-    return $tmp3949;
+    panda$collections$Array$add$panda$collections$Array$T(children3884, ((panda$core$Object*) base3887));
+    org$pandalanguage$pandac$IRNode* $tmp3889 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+    $tmp3889->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    $tmp3889->refCount.value = 1;
+    panda$core$Object* $tmp3891 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(p_ce->fields, p_field);
+    org$pandalanguage$pandac$Pair* $tmp3892 = (org$pandalanguage$pandac$Pair*) malloc(32);
+    $tmp3892->$class = (panda$core$Class*) &org$pandalanguage$pandac$Pair$class;
+    $tmp3892->refCount.value = 1;
+    panda$core$Int64$wrapper* $tmp3894;
+    $tmp3894 = (panda$core$Int64$wrapper*) malloc(24);
+    $tmp3894->cl = (panda$core$Class*) &panda$core$Int64$wrapperclass;
+    $tmp3894->refCount = 1;
+    $tmp3894->value = p_field;
+    org$pandalanguage$pandac$Pair$init$org$pandalanguage$pandac$Pair$A$org$pandalanguage$pandac$Pair$B($tmp3892, ((panda$core$Object*) p_ce), ((panda$core$Object*) $tmp3894));
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$Q($tmp3889, ((panda$core$Int64) { 1047 }), p_position, ((org$pandalanguage$pandac$Type*) $tmp3891), ((panda$core$Object*) $tmp3892), ((panda$collections$ListView*) children3884));
+    return $tmp3889;
 }
 org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$ASTNode* p_e) {
-    org$pandalanguage$pandac$IRNode* result3956;
-    switch (p_e->kind.value) {
-        case 103:
+    org$pandalanguage$pandac$ASTNode* $match$2893_93895;
+    org$pandalanguage$pandac$Position position3897;
+    org$pandalanguage$pandac$ASTNode* left3899;
+    org$pandalanguage$pandac$parser$Token$Kind op3901;
+    org$pandalanguage$pandac$ASTNode* right3903;
+    org$pandalanguage$pandac$Position position3907;
+    panda$core$Bit value3909;
+    org$pandalanguage$pandac$Position position3915;
+    org$pandalanguage$pandac$ASTNode* target3917;
+    panda$collections$ImmutableArray* args3919;
+    org$pandalanguage$pandac$IRNode* result3921;
+    org$pandalanguage$pandac$Position position3933;
+    org$pandalanguage$pandac$ASTNode* base3935;
+    panda$core$String* field3937;
+    org$pandalanguage$pandac$Position position3941;
+    panda$core$String* name3943;
+    org$pandalanguage$pandac$Position position3947;
+    panda$core$UInt64 value3949;
+    org$pandalanguage$pandac$Position position3955;
+    panda$core$Real64 value3957;
+    org$pandalanguage$pandac$Position position3963;
+    org$pandalanguage$pandac$parser$Token$Kind op3965;
+    org$pandalanguage$pandac$ASTNode* base3967;
+    org$pandalanguage$pandac$Position position3971;
+    org$pandalanguage$pandac$ASTNode* start3973;
+    org$pandalanguage$pandac$ASTNode* end3975;
+    panda$core$Bit inclusive3977;
+    org$pandalanguage$pandac$ASTNode* step3979;
+    org$pandalanguage$pandac$Position position3983;
+    panda$core$String* str3985;
+    org$pandalanguage$pandac$Position position3999;
+    org$pandalanguage$pandac$Position position4003;
+    org$pandalanguage$pandac$Position position4007;
+    org$pandalanguage$pandac$Position position4011;
+    org$pandalanguage$pandac$ASTNode* base4013;
+    org$pandalanguage$pandac$ChoiceEntry* ce4015;
+    panda$core$Int64 field4017;
+    {
+        $match$2893_93895 = p_e;
+        panda$core$Bit $tmp3896 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2893_93895->$rawValue, ((panda$core$Int64) { 2 }));
+        if ($tmp3896.value) {
         {
-            org$pandalanguage$pandac$IRNode* $tmp3952 = org$pandalanguage$pandac$Compiler$compileBinary$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_e);
-            return $tmp3952;
+            org$pandalanguage$pandac$Position* $tmp3898 = ((org$pandalanguage$pandac$Position*) ((char*) $match$2893_93895->$data + 0));
+            position3897 = *$tmp3898;
+            org$pandalanguage$pandac$ASTNode** $tmp3900 = ((org$pandalanguage$pandac$ASTNode**) ((char*) $match$2893_93895->$data + 16));
+            left3899 = *$tmp3900;
+            org$pandalanguage$pandac$parser$Token$Kind* $tmp3902 = ((org$pandalanguage$pandac$parser$Token$Kind*) ((char*) $match$2893_93895->$data + 24));
+            op3901 = *$tmp3902;
+            org$pandalanguage$pandac$ASTNode** $tmp3904 = ((org$pandalanguage$pandac$ASTNode**) ((char*) $match$2893_93895->$data + 32));
+            right3903 = *$tmp3904;
+            org$pandalanguage$pandac$IRNode* $tmp3905 = org$pandalanguage$pandac$Compiler$compileBinary$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, position3897, left3899, op3901, right3903);
+            return $tmp3905;
         }
-        break;
-        case 116:
-        {
-            org$pandalanguage$pandac$IRNode* $tmp3953 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-            $tmp3953->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-            $tmp3953->refCount.value = 1;
-            org$pandalanguage$pandac$Type* $tmp3955 = org$pandalanguage$pandac$Type$BitLiteral$R$org$pandalanguage$pandac$Type();
-            org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Bit($tmp3953, ((panda$core$Int64) { 1011 }), p_e->position, $tmp3955, ((panda$core$Bit$wrapper*) p_e->payload)->value);
-            return $tmp3953;
         }
-        break;
-        case 107:
+        else {
+        panda$core$Bit $tmp3906 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2893_93895->$rawValue, ((panda$core$Int64) { 3 }));
+        if ($tmp3906.value) {
         {
-            org$pandalanguage$pandac$IRNode* $tmp3957 = org$pandalanguage$pandac$Compiler$compileCall$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_e);
-            result3956 = $tmp3957;
-            bool $tmp3958 = ((panda$core$Bit) { result3956 != NULL }).value;
-            if (!$tmp3958) goto $l3959;
-            org$pandalanguage$pandac$Type* $tmp3960 = org$pandalanguage$pandac$Type$Void$R$org$pandalanguage$pandac$Type();
-            panda$core$Bit $tmp3961 = org$pandalanguage$pandac$Type$$EQ$org$pandalanguage$pandac$Type$R$panda$core$Bit(result3956->type, $tmp3960);
-            $tmp3958 = $tmp3961.value;
-            $l3959:;
-            panda$core$Bit $tmp3962 = { $tmp3958 };
-            if ($tmp3962.value) {
+            org$pandalanguage$pandac$Position* $tmp3908 = ((org$pandalanguage$pandac$Position*) ((char*) $match$2893_93895->$data + 0));
+            position3907 = *$tmp3908;
+            panda$core$Bit* $tmp3910 = ((panda$core$Bit*) ((char*) $match$2893_93895->$data + 16));
+            value3909 = *$tmp3910;
+            org$pandalanguage$pandac$IRNode* $tmp3911 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+            $tmp3911->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+            $tmp3911->refCount.value = 1;
+            org$pandalanguage$pandac$Type* $tmp3913 = org$pandalanguage$pandac$Type$BitLiteral$R$org$pandalanguage$pandac$Type();
+            org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Bit($tmp3911, ((panda$core$Int64) { 1011 }), position3907, $tmp3913, value3909);
+            return $tmp3911;
+        }
+        }
+        else {
+        panda$core$Bit $tmp3914 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2893_93895->$rawValue, ((panda$core$Int64) { 6 }));
+        if ($tmp3914.value) {
+        {
+            org$pandalanguage$pandac$Position* $tmp3916 = ((org$pandalanguage$pandac$Position*) ((char*) $match$2893_93895->$data + 0));
+            position3915 = *$tmp3916;
+            org$pandalanguage$pandac$ASTNode** $tmp3918 = ((org$pandalanguage$pandac$ASTNode**) ((char*) $match$2893_93895->$data + 16));
+            target3917 = *$tmp3918;
+            panda$collections$ImmutableArray** $tmp3920 = ((panda$collections$ImmutableArray**) ((char*) $match$2893_93895->$data + 24));
+            args3919 = *$tmp3920;
+            org$pandalanguage$pandac$IRNode* $tmp3922 = org$pandalanguage$pandac$Compiler$compileCall$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$R$org$pandalanguage$pandac$IRNode$Q(self, position3915, target3917, args3919);
+            result3921 = $tmp3922;
+            bool $tmp3923 = ((panda$core$Bit) { result3921 != NULL }).value;
+            if (!$tmp3923) goto $l3924;
+            org$pandalanguage$pandac$Type* $tmp3925 = org$pandalanguage$pandac$Type$Void$R$org$pandalanguage$pandac$Type();
+            panda$core$Bit $tmp3926 = org$pandalanguage$pandac$Type$$EQ$org$pandalanguage$pandac$Type$R$panda$core$Bit(result3921->type, $tmp3925);
+            $tmp3923 = $tmp3926.value;
+            $l3924:;
+            panda$core$Bit $tmp3927 = { $tmp3923 };
+            if ($tmp3927.value) {
             {
-                panda$core$Bit $tmp3963 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(result3956->kind, ((panda$core$Int64) { 1005 }));
-                PANDA_ASSERT($tmp3963.value);
-                panda$core$String* $tmp3964 = org$pandalanguage$pandac$MethodDecl$declaration$R$panda$core$String(((org$pandalanguage$pandac$MethodRef*) result3956->payload)->value);
-                panda$core$String* $tmp3966 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3964, &$s3965);
-                org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, result3956->position, $tmp3966);
+                panda$core$Bit $tmp3928 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(result3921->kind, ((panda$core$Int64) { 1005 }));
+                PANDA_ASSERT($tmp3928.value);
+                panda$core$String* $tmp3929 = org$pandalanguage$pandac$MethodDecl$declaration$R$panda$core$String(((org$pandalanguage$pandac$MethodRef*) result3921->payload)->value);
+                panda$core$String* $tmp3931 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3929, &$s3930);
+                org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, result3921->position, $tmp3931);
                 return NULL;
             }
             }
-            return result3956;
+            return result3921;
         }
-        break;
-        case 108:
-        {
-            org$pandalanguage$pandac$IRNode* $tmp3967 = org$pandalanguage$pandac$Compiler$compileDot$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_e);
-            return $tmp3967;
         }
-        break;
-        case 106:
+        else {
+        panda$core$Bit $tmp3932 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2893_93895->$rawValue, ((panda$core$Int64) { 13 }));
+        if ($tmp3932.value) {
         {
-            org$pandalanguage$pandac$IRNode* $tmp3968 = org$pandalanguage$pandac$Compiler$compileIdentifier$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_e);
-            return $tmp3968;
+            org$pandalanguage$pandac$Position* $tmp3934 = ((org$pandalanguage$pandac$Position*) ((char*) $match$2893_93895->$data + 0));
+            position3933 = *$tmp3934;
+            org$pandalanguage$pandac$ASTNode** $tmp3936 = ((org$pandalanguage$pandac$ASTNode**) ((char*) $match$2893_93895->$data + 16));
+            base3935 = *$tmp3936;
+            panda$core$String** $tmp3938 = ((panda$core$String**) ((char*) $match$2893_93895->$data + 24));
+            field3937 = *$tmp3938;
+            org$pandalanguage$pandac$IRNode* $tmp3939 = org$pandalanguage$pandac$Compiler$compileDot$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$panda$core$String$R$org$pandalanguage$pandac$IRNode$Q(self, position3933, base3935, field3937);
+            return $tmp3939;
         }
-        break;
-        case 102:
+        }
+        else {
+        panda$core$Bit $tmp3940 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2893_93895->$rawValue, ((panda$core$Int64) { 18 }));
+        if ($tmp3940.value) {
         {
-            org$pandalanguage$pandac$IRNode* $tmp3969 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-            $tmp3969->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-            $tmp3969->refCount.value = 1;
-            org$pandalanguage$pandac$Type* $tmp3971 = org$pandalanguage$pandac$Type$IntLiteral$panda$core$UInt64$R$org$pandalanguage$pandac$Type(((panda$core$UInt64$wrapper*) p_e->payload)->value);
-            org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$UInt64($tmp3969, ((panda$core$Int64) { 1004 }), p_e->position, $tmp3971, ((panda$core$UInt64$wrapper*) p_e->payload)->value);
+            org$pandalanguage$pandac$Position* $tmp3942 = ((org$pandalanguage$pandac$Position*) ((char*) $match$2893_93895->$data + 0));
+            position3941 = *$tmp3942;
+            panda$core$String** $tmp3944 = ((panda$core$String**) ((char*) $match$2893_93895->$data + 16));
+            name3943 = *$tmp3944;
+            org$pandalanguage$pandac$IRNode* $tmp3945 = org$pandalanguage$pandac$Compiler$compileIdentifier$org$pandalanguage$pandac$Position$panda$core$String$R$org$pandalanguage$pandac$IRNode$Q(self, position3941, name3943);
+            return $tmp3945;
+        }
+        }
+        else {
+        panda$core$Bit $tmp3946 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2893_93895->$rawValue, ((panda$core$Int64) { 20 }));
+        if ($tmp3946.value) {
+        {
+            org$pandalanguage$pandac$Position* $tmp3948 = ((org$pandalanguage$pandac$Position*) ((char*) $match$2893_93895->$data + 0));
+            position3947 = *$tmp3948;
+            panda$core$UInt64* $tmp3950 = ((panda$core$UInt64*) ((char*) $match$2893_93895->$data + 16));
+            value3949 = *$tmp3950;
+            org$pandalanguage$pandac$IRNode* $tmp3951 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+            $tmp3951->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+            $tmp3951->refCount.value = 1;
+            org$pandalanguage$pandac$Type* $tmp3953 = org$pandalanguage$pandac$Type$IntLiteral$panda$core$UInt64$R$org$pandalanguage$pandac$Type(value3949);
+            org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$UInt64($tmp3951, ((panda$core$Int64) { 1004 }), position3947, $tmp3953, value3949);
+            return $tmp3951;
+        }
+        }
+        else {
+        panda$core$Bit $tmp3954 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2893_93895->$rawValue, ((panda$core$Int64) { 30 }));
+        if ($tmp3954.value) {
+        {
+            org$pandalanguage$pandac$Position* $tmp3956 = ((org$pandalanguage$pandac$Position*) ((char*) $match$2893_93895->$data + 0));
+            position3955 = *$tmp3956;
+            panda$core$Real64* $tmp3958 = ((panda$core$Real64*) ((char*) $match$2893_93895->$data + 16));
+            value3957 = *$tmp3958;
+            org$pandalanguage$pandac$IRNode* $tmp3959 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+            $tmp3959->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+            $tmp3959->refCount.value = 1;
+            org$pandalanguage$pandac$Type* $tmp3961 = org$pandalanguage$pandac$Type$RealLiteral$panda$core$Real64$R$org$pandalanguage$pandac$Type(value3957);
+            org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Real64($tmp3959, ((panda$core$Int64) { 1045 }), position3955, $tmp3961, value3957);
+            return $tmp3959;
+        }
+        }
+        else {
+        panda$core$Bit $tmp3962 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2893_93895->$rawValue, ((panda$core$Int64) { 28 }));
+        if ($tmp3962.value) {
+        {
+            org$pandalanguage$pandac$Position* $tmp3964 = ((org$pandalanguage$pandac$Position*) ((char*) $match$2893_93895->$data + 0));
+            position3963 = *$tmp3964;
+            org$pandalanguage$pandac$parser$Token$Kind* $tmp3966 = ((org$pandalanguage$pandac$parser$Token$Kind*) ((char*) $match$2893_93895->$data + 16));
+            op3965 = *$tmp3966;
+            org$pandalanguage$pandac$ASTNode** $tmp3968 = ((org$pandalanguage$pandac$ASTNode**) ((char*) $match$2893_93895->$data + 24));
+            base3967 = *$tmp3968;
+            org$pandalanguage$pandac$IRNode* $tmp3969 = org$pandalanguage$pandac$Compiler$compilePrefix$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, position3963, op3965, base3967);
             return $tmp3969;
         }
-        break;
-        case 157:
-        {
-            org$pandalanguage$pandac$IRNode* $tmp3972 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-            $tmp3972->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-            $tmp3972->refCount.value = 1;
-            org$pandalanguage$pandac$Type* $tmp3974 = org$pandalanguage$pandac$Type$RealLiteral$panda$core$Real64$R$org$pandalanguage$pandac$Type(((panda$core$Real64$wrapper*) p_e->payload)->value);
-            org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Real64($tmp3972, ((panda$core$Int64) { 1045 }), p_e->position, $tmp3974, ((panda$core$Real64$wrapper*) p_e->payload)->value);
-            return $tmp3972;
         }
-        break;
-        case 112:
+        else {
+        panda$core$Bit $tmp3970 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2893_93895->$rawValue, ((panda$core$Int64) { 29 }));
+        if ($tmp3970.value) {
         {
-            org$pandalanguage$pandac$IRNode* $tmp3975 = org$pandalanguage$pandac$Compiler$compilePrefix$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_e);
-            return $tmp3975;
-        }
-        break;
-        case 104:
-        case 105:
-        {
-            org$pandalanguage$pandac$IRNode* $tmp3976 = org$pandalanguage$pandac$Compiler$compileRange$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_e);
-            return $tmp3976;
-        }
-        break;
-        case 113:
-        {
-            org$pandalanguage$pandac$IRNode* $tmp3977 = org$pandalanguage$pandac$Compiler$compileString$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_e);
-            return $tmp3977;
-        }
-        break;
-        case 109:
-        case 154:
-        case 110:
-        {
-            org$pandalanguage$pandac$IRNode* $tmp3978 = org$pandalanguage$pandac$Compiler$compileType$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_e);
-            return $tmp3978;
-        }
-        break;
-        case 114:
-        {
-            org$pandalanguage$pandac$IRNode* $tmp3979 = org$pandalanguage$pandac$Compiler$compileSelf$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_e);
-            return $tmp3979;
-        }
-        break;
-        case 115:
-        {
-            org$pandalanguage$pandac$IRNode* $tmp3980 = org$pandalanguage$pandac$Compiler$compileSuper$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_e);
-            return $tmp3980;
-        }
-        break;
-        case 111:
-        {
-            org$pandalanguage$pandac$IRNode* $tmp3981 = org$pandalanguage$pandac$Compiler$compileCast$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_e);
+            org$pandalanguage$pandac$Position* $tmp3972 = ((org$pandalanguage$pandac$Position*) ((char*) $match$2893_93895->$data + 0));
+            position3971 = *$tmp3972;
+            org$pandalanguage$pandac$ASTNode** $tmp3974 = ((org$pandalanguage$pandac$ASTNode**) ((char*) $match$2893_93895->$data + 16));
+            start3973 = *$tmp3974;
+            org$pandalanguage$pandac$ASTNode** $tmp3976 = ((org$pandalanguage$pandac$ASTNode**) ((char*) $match$2893_93895->$data + 24));
+            end3975 = *$tmp3976;
+            panda$core$Bit* $tmp3978 = ((panda$core$Bit*) ((char*) $match$2893_93895->$data + 32));
+            inclusive3977 = *$tmp3978;
+            org$pandalanguage$pandac$ASTNode** $tmp3980 = ((org$pandalanguage$pandac$ASTNode**) ((char*) $match$2893_93895->$data + 33));
+            step3979 = *$tmp3980;
+            org$pandalanguage$pandac$IRNode* $tmp3981 = org$pandalanguage$pandac$Compiler$compileRange$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$Q$org$pandalanguage$pandac$ASTNode$Q$panda$core$Bit$org$pandalanguage$pandac$ASTNode$Q$R$org$pandalanguage$pandac$IRNode$Q(self, position3971, start3973, end3975, inclusive3977, step3979);
             return $tmp3981;
         }
-        break;
-        case 117:
-        {
-            org$pandalanguage$pandac$IRNode* $tmp3982 = org$pandalanguage$pandac$Compiler$compileNull$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode(self, p_e);
-            return $tmp3982;
         }
-        break;
-        case 158:
+        else {
+        panda$core$Bit $tmp3982 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2893_93895->$rawValue, ((panda$core$Int64) { 33 }));
+        if ($tmp3982.value) {
         {
-            org$pandalanguage$pandac$IRNode* $tmp3983 = org$pandalanguage$pandac$Compiler$compileChoiceFieldReference$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_e);
-            return $tmp3983;
+            org$pandalanguage$pandac$Position* $tmp3984 = ((org$pandalanguage$pandac$Position*) ((char*) $match$2893_93895->$data + 0));
+            position3983 = *$tmp3984;
+            panda$core$String** $tmp3986 = ((panda$core$String**) ((char*) $match$2893_93895->$data + 16));
+            str3985 = *$tmp3986;
+            org$pandalanguage$pandac$IRNode* $tmp3987 = org$pandalanguage$pandac$Compiler$compileString$org$pandalanguage$pandac$Position$panda$core$String$R$org$pandalanguage$pandac$IRNode$Q(self, position3983, str3985);
+            return $tmp3987;
         }
-        break;
+        }
+        else {
+        panda$core$Bit $tmp3990 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2893_93895->$rawValue, ((panda$core$Int64) { 35 }));
+        bool $tmp3989 = $tmp3990.value;
+        if ($tmp3989) goto $l3991;
+        panda$core$Bit $tmp3992 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2893_93895->$rawValue, ((panda$core$Int64) { 17 }));
+        $tmp3989 = $tmp3992.value;
+        $l3991:;
+        panda$core$Bit $tmp3993 = { $tmp3989 };
+        bool $tmp3988 = $tmp3993.value;
+        if ($tmp3988) goto $l3994;
+        panda$core$Bit $tmp3995 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2893_93895->$rawValue, ((panda$core$Int64) { 25 }));
+        $tmp3988 = $tmp3995.value;
+        $l3994:;
+        panda$core$Bit $tmp3996 = { $tmp3988 };
+        if ($tmp3996.value) {
+        {
+            org$pandalanguage$pandac$IRNode* $tmp3997 = org$pandalanguage$pandac$Compiler$compileType$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_e);
+            return $tmp3997;
+        }
+        }
+        else {
+        panda$core$Bit $tmp3998 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2893_93895->$rawValue, ((panda$core$Int64) { 32 }));
+        if ($tmp3998.value) {
+        {
+            org$pandalanguage$pandac$Position* $tmp4000 = ((org$pandalanguage$pandac$Position*) ((char*) $match$2893_93895->$data + 0));
+            position3999 = *$tmp4000;
+            org$pandalanguage$pandac$IRNode* $tmp4001 = org$pandalanguage$pandac$Compiler$compileSelf$org$pandalanguage$pandac$Position$R$org$pandalanguage$pandac$IRNode$Q(self, position3999);
+            return $tmp4001;
+        }
+        }
+        else {
+        panda$core$Bit $tmp4002 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2893_93895->$rawValue, ((panda$core$Int64) { 34 }));
+        if ($tmp4002.value) {
+        {
+            org$pandalanguage$pandac$Position* $tmp4004 = ((org$pandalanguage$pandac$Position*) ((char*) $match$2893_93895->$data + 0));
+            position4003 = *$tmp4004;
+            org$pandalanguage$pandac$IRNode* $tmp4005 = org$pandalanguage$pandac$Compiler$compileSuper$org$pandalanguage$pandac$Position$R$org$pandalanguage$pandac$IRNode$Q(self, position4003);
+            return $tmp4005;
+        }
+        }
+        else {
+        panda$core$Bit $tmp4006 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2893_93895->$rawValue, ((panda$core$Int64) { 24 }));
+        if ($tmp4006.value) {
+        {
+            org$pandalanguage$pandac$Position* $tmp4008 = ((org$pandalanguage$pandac$Position*) ((char*) $match$2893_93895->$data + 0));
+            position4007 = *$tmp4008;
+            org$pandalanguage$pandac$IRNode* $tmp4009 = org$pandalanguage$pandac$Compiler$compileNull$org$pandalanguage$pandac$Position$R$org$pandalanguage$pandac$IRNode(self, position4007);
+            return $tmp4009;
+        }
+        }
+        else {
+        panda$core$Bit $tmp4010 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2893_93895->$rawValue, ((panda$core$Int64) { 8 }));
+        if ($tmp4010.value) {
+        {
+            org$pandalanguage$pandac$Position* $tmp4012 = ((org$pandalanguage$pandac$Position*) ((char*) $match$2893_93895->$data + 0));
+            position4011 = *$tmp4012;
+            org$pandalanguage$pandac$ASTNode** $tmp4014 = ((org$pandalanguage$pandac$ASTNode**) ((char*) $match$2893_93895->$data + 16));
+            base4013 = *$tmp4014;
+            org$pandalanguage$pandac$ChoiceEntry** $tmp4016 = ((org$pandalanguage$pandac$ChoiceEntry**) ((char*) $match$2893_93895->$data + 24));
+            ce4015 = *$tmp4016;
+            panda$core$Int64* $tmp4018 = ((panda$core$Int64*) ((char*) $match$2893_93895->$data + 32));
+            field4017 = *$tmp4018;
+            org$pandalanguage$pandac$IRNode* $tmp4019 = org$pandalanguage$pandac$Compiler$compileChoiceFieldReference$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$ChoiceEntry$panda$core$Int64$R$org$pandalanguage$pandac$IRNode$Q(self, position4011, base4013, ce4015, field4017);
+            return $tmp4019;
+        }
+        }
+        }
+        }
+        }
+        }
+        }
+        }
+        }
+        }
+        }
+        }
+        }
+        }
+        }
+        }
     }
     PANDA_ASSERT(((panda$core$Bit) { false }).value);
 }
-org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileBlock$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$ASTNode* p_b) {
-    org$pandalanguage$pandac$SymbolTable* symbols3985;
-    panda$collections$Array* result3988;
-    panda$collections$Iterator* stmt$Iter3991;
-    org$pandalanguage$pandac$ASTNode* stmt4003;
-    org$pandalanguage$pandac$IRNode* compiled4008;
-    panda$core$Bit $tmp3984 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_b->kind, ((panda$core$Int64) { 126 }));
-    PANDA_ASSERT($tmp3984.value);
-    org$pandalanguage$pandac$SymbolTable* $tmp3986 = (org$pandalanguage$pandac$SymbolTable*) malloc(48);
-    $tmp3986->$class = (panda$core$Class*) &org$pandalanguage$pandac$SymbolTable$class;
-    $tmp3986->refCount.value = 1;
-    org$pandalanguage$pandac$SymbolTable$init$org$pandalanguage$pandac$SymbolTable($tmp3986, self->symbolTable);
-    symbols3985 = $tmp3986;
-    self->symbolTable = symbols3985;
-    panda$collections$Array* $tmp3989 = (panda$collections$Array*) malloc(40);
-    $tmp3989->$class = (panda$core$Class*) &panda$collections$Array$class;
-    $tmp3989->refCount.value = 1;
-    panda$collections$Array$init($tmp3989);
-    result3988 = $tmp3989;
-    if (((panda$core$Bit) { p_b->children != NULL }).value) {
+org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileBlock$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position p_position, panda$collections$ListView* p_statements) {
+    org$pandalanguage$pandac$SymbolTable* symbols4020;
+    panda$collections$Array* result4023;
+    panda$collections$Iterator* stmt$Iter4026;
+    org$pandalanguage$pandac$ASTNode* stmt4038;
+    org$pandalanguage$pandac$IRNode* compiled4043;
+    org$pandalanguage$pandac$SymbolTable* $tmp4021 = (org$pandalanguage$pandac$SymbolTable*) malloc(48);
+    $tmp4021->$class = (panda$core$Class*) &org$pandalanguage$pandac$SymbolTable$class;
+    $tmp4021->refCount.value = 1;
+    org$pandalanguage$pandac$SymbolTable$init$org$pandalanguage$pandac$SymbolTable($tmp4021, self->symbolTable);
+    symbols4020 = $tmp4021;
+    self->symbolTable = symbols4020;
+    panda$collections$Array* $tmp4024 = (panda$collections$Array*) malloc(40);
+    $tmp4024->$class = (panda$core$Class*) &panda$collections$Array$class;
+    $tmp4024->refCount.value = 1;
+    panda$collections$Array$init($tmp4024);
+    result4023 = $tmp4024;
     {
-        {
-            ITable* $tmp3992 = ((panda$collections$Iterable*) p_b->children)->$class->itable;
-            while ($tmp3992->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
-                $tmp3992 = $tmp3992->next;
-            }
-            $fn3994 $tmp3993 = $tmp3992->methods[0];
-            panda$collections$Iterator* $tmp3995 = $tmp3993(((panda$collections$Iterable*) p_b->children));
-            stmt$Iter3991 = $tmp3995;
-            $l3996:;
-            ITable* $tmp3998 = stmt$Iter3991->$class->itable;
-            while ($tmp3998->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-                $tmp3998 = $tmp3998->next;
-            }
-            $fn4000 $tmp3999 = $tmp3998->methods[0];
-            panda$core$Bit $tmp4001 = $tmp3999(stmt$Iter3991);
-            panda$core$Bit $tmp4002 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp4001);
-            if (!$tmp4002.value) goto $l3997;
-            {
-                ITable* $tmp4004 = stmt$Iter3991->$class->itable;
-                while ($tmp4004->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-                    $tmp4004 = $tmp4004->next;
-                }
-                $fn4006 $tmp4005 = $tmp4004->methods[1];
-                panda$core$Object* $tmp4007 = $tmp4005(stmt$Iter3991);
-                stmt4003 = ((org$pandalanguage$pandac$ASTNode*) $tmp4007);
-                org$pandalanguage$pandac$IRNode* $tmp4009 = org$pandalanguage$pandac$Compiler$compileStatement$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, stmt4003);
-                compiled4008 = $tmp4009;
-                if (((panda$core$Bit) { compiled4008 == NULL }).value) {
-                {
-                    panda$core$Object* $tmp4010 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(symbols3985->parents, ((panda$core$Int64) { 0 }));
-                    self->symbolTable = ((org$pandalanguage$pandac$SymbolTable*) $tmp4010);
-                    return NULL;
-                }
-                }
-                panda$core$Bit $tmp4011 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit(compiled4008->kind, ((panda$core$Int64) { 1039 }));
-                PANDA_ASSERT($tmp4011.value);
-                panda$collections$Array$add$panda$collections$Array$T(result3988, ((panda$core$Object*) compiled4008));
-            }
-            goto $l3996;
-            $l3997:;
+        ITable* $tmp4027 = ((panda$collections$Iterable*) p_statements)->$class->itable;
+        while ($tmp4027->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
+            $tmp4027 = $tmp4027->next;
         }
+        $fn4029 $tmp4028 = $tmp4027->methods[0];
+        panda$collections$Iterator* $tmp4030 = $tmp4028(((panda$collections$Iterable*) p_statements));
+        stmt$Iter4026 = $tmp4030;
+        $l4031:;
+        ITable* $tmp4033 = stmt$Iter4026->$class->itable;
+        while ($tmp4033->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+            $tmp4033 = $tmp4033->next;
+        }
+        $fn4035 $tmp4034 = $tmp4033->methods[0];
+        panda$core$Bit $tmp4036 = $tmp4034(stmt$Iter4026);
+        panda$core$Bit $tmp4037 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp4036);
+        if (!$tmp4037.value) goto $l4032;
+        {
+            ITable* $tmp4039 = stmt$Iter4026->$class->itable;
+            while ($tmp4039->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+                $tmp4039 = $tmp4039->next;
+            }
+            $fn4041 $tmp4040 = $tmp4039->methods[1];
+            panda$core$Object* $tmp4042 = $tmp4040(stmt$Iter4026);
+            stmt4038 = ((org$pandalanguage$pandac$ASTNode*) $tmp4042);
+            org$pandalanguage$pandac$IRNode* $tmp4044 = org$pandalanguage$pandac$Compiler$compileStatement$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, stmt4038);
+            compiled4043 = $tmp4044;
+            if (((panda$core$Bit) { compiled4043 == NULL }).value) {
+            {
+                panda$core$Object* $tmp4045 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(symbols4020->parents, ((panda$core$Int64) { 0 }));
+                self->symbolTable = ((org$pandalanguage$pandac$SymbolTable*) $tmp4045);
+                return NULL;
+            }
+            }
+            panda$core$Bit $tmp4046 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit(compiled4043->kind, ((panda$core$Int64) { 1039 }));
+            PANDA_ASSERT($tmp4046.value);
+            panda$collections$Array$add$panda$collections$Array$T(result4023, ((panda$core$Object*) compiled4043));
+        }
+        goto $l4031;
+        $l4032:;
     }
-    }
-    panda$core$Object* $tmp4012 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(symbols3985->parents, ((panda$core$Int64) { 0 }));
-    self->symbolTable = ((org$pandalanguage$pandac$SymbolTable*) $tmp4012);
-    org$pandalanguage$pandac$IRNode* $tmp4013 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-    $tmp4013->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-    $tmp4013->refCount.value = 1;
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4013, ((panda$core$Int64) { 1000 }), p_b->position, ((panda$collections$ListView*) result3988));
-    return $tmp4013;
+    panda$core$Object* $tmp4047 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(symbols4020->parents, ((panda$core$Int64) { 0 }));
+    self->symbolTable = ((org$pandalanguage$pandac$SymbolTable*) $tmp4047);
+    org$pandalanguage$pandac$IRNode* $tmp4048 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+    $tmp4048->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    $tmp4048->refCount.value = 1;
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4048, ((panda$core$Int64) { 1000 }), p_position, ((panda$collections$ListView*) result4023));
+    return $tmp4048;
 }
-org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileIf$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$ASTNode* p_i) {
-    org$pandalanguage$pandac$IRNode* test4023;
-    org$pandalanguage$pandac$IRNode* ifTrue4028;
-    panda$collections$Array* children4031;
-    org$pandalanguage$pandac$IRNode* ifFalse4036;
-    panda$core$Bit $tmp4015 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_i->kind, ((panda$core$Int64) { 118 }));
-    PANDA_ASSERT($tmp4015.value);
-    panda$core$Int64 $tmp4017 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(p_i->children);
-    panda$core$Bit $tmp4018 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp4017, ((panda$core$Int64) { 2 }));
-    bool $tmp4016 = $tmp4018.value;
-    if ($tmp4016) goto $l4019;
-    panda$core$Int64 $tmp4020 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(p_i->children);
-    panda$core$Bit $tmp4021 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp4020, ((panda$core$Int64) { 3 }));
-    $tmp4016 = $tmp4021.value;
-    $l4019:;
-    panda$core$Bit $tmp4022 = { $tmp4016 };
-    PANDA_ASSERT($tmp4022.value);
-    panda$core$Object* $tmp4024 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_i->children, ((panda$core$Int64) { 0 }));
-    org$pandalanguage$pandac$IRNode* $tmp4025 = org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, ((org$pandalanguage$pandac$ASTNode*) $tmp4024));
-    org$pandalanguage$pandac$Type* $tmp4026 = org$pandalanguage$pandac$Type$Bit$R$org$pandalanguage$pandac$Type();
-    org$pandalanguage$pandac$IRNode* $tmp4027 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, $tmp4025, $tmp4026);
-    test4023 = $tmp4027;
-    if (((panda$core$Bit) { test4023 == NULL }).value) {
+org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileIf$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$org$pandalanguage$pandac$ASTNode$Q$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position p_position, org$pandalanguage$pandac$ASTNode* p_rawTest, panda$collections$ListView* p_rawIfTrue, org$pandalanguage$pandac$ASTNode* p_rawIfFalse) {
+    org$pandalanguage$pandac$IRNode* test4050;
+    org$pandalanguage$pandac$IRNode* ifTrue4054;
+    panda$collections$Array* children4056;
+    org$pandalanguage$pandac$IRNode* ifFalse4059;
+    org$pandalanguage$pandac$IRNode* $tmp4051 = org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_rawTest);
+    org$pandalanguage$pandac$Type* $tmp4052 = org$pandalanguage$pandac$Type$Bit$R$org$pandalanguage$pandac$Type();
+    org$pandalanguage$pandac$IRNode* $tmp4053 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, $tmp4051, $tmp4052);
+    test4050 = $tmp4053;
+    if (((panda$core$Bit) { test4050 == NULL }).value) {
     {
         return NULL;
     }
     }
-    panda$core$Object* $tmp4029 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_i->children, ((panda$core$Int64) { 1 }));
-    org$pandalanguage$pandac$IRNode* $tmp4030 = org$pandalanguage$pandac$Compiler$compileStatement$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, ((org$pandalanguage$pandac$ASTNode*) $tmp4029));
-    ifTrue4028 = $tmp4030;
-    if (((panda$core$Bit) { ifTrue4028 == NULL }).value) {
+    org$pandalanguage$pandac$IRNode* $tmp4055 = org$pandalanguage$pandac$Compiler$compileBlock$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$R$org$pandalanguage$pandac$IRNode$Q(self, p_position, p_rawIfTrue);
+    ifTrue4054 = $tmp4055;
+    if (((panda$core$Bit) { ifTrue4054 == NULL }).value) {
     {
         return NULL;
     }
     }
-    panda$collections$Array* $tmp4032 = (panda$collections$Array*) malloc(40);
-    $tmp4032->$class = (panda$core$Class*) &panda$collections$Array$class;
-    $tmp4032->refCount.value = 1;
-    panda$collections$Array$init($tmp4032);
-    children4031 = $tmp4032;
-    panda$collections$Array$add$panda$collections$Array$T(children4031, ((panda$core$Object*) test4023));
-    panda$collections$Array$add$panda$collections$Array$T(children4031, ((panda$core$Object*) ifTrue4028));
-    panda$core$Int64 $tmp4034 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(p_i->children);
-    panda$core$Bit $tmp4035 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp4034, ((panda$core$Int64) { 3 }));
-    if ($tmp4035.value) {
+    panda$collections$Array* $tmp4057 = (panda$collections$Array*) malloc(40);
+    $tmp4057->$class = (panda$core$Class*) &panda$collections$Array$class;
+    $tmp4057->refCount.value = 1;
+    panda$collections$Array$init($tmp4057);
+    children4056 = $tmp4057;
+    panda$collections$Array$add$panda$collections$Array$T(children4056, ((panda$core$Object*) test4050));
+    panda$collections$Array$add$panda$collections$Array$T(children4056, ((panda$core$Object*) ifTrue4054));
+    if (((panda$core$Bit) { p_rawIfFalse != NULL }).value) {
     {
-        panda$core$Object* $tmp4037 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_i->children, ((panda$core$Int64) { 2 }));
-        org$pandalanguage$pandac$IRNode* $tmp4038 = org$pandalanguage$pandac$Compiler$compileStatement$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, ((org$pandalanguage$pandac$ASTNode*) $tmp4037));
-        ifFalse4036 = $tmp4038;
-        if (((panda$core$Bit) { ifFalse4036 == NULL }).value) {
+        org$pandalanguage$pandac$IRNode* $tmp4060 = org$pandalanguage$pandac$Compiler$compileStatement$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_rawIfFalse);
+        ifFalse4059 = $tmp4060;
+        if (((panda$core$Bit) { ifFalse4059 == NULL }).value) {
         {
             return NULL;
         }
         }
-        panda$collections$Array$add$panda$collections$Array$T(children4031, ((panda$core$Object*) ifFalse4036));
+        panda$collections$Array$add$panda$collections$Array$T(children4056, ((panda$core$Object*) ifFalse4059));
     }
     }
-    org$pandalanguage$pandac$IRNode* $tmp4039 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-    $tmp4039->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-    $tmp4039->refCount.value = 1;
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4039, ((panda$core$Int64) { 1012 }), p_i->position, ((panda$collections$ListView*) children4031));
-    return $tmp4039;
+    org$pandalanguage$pandac$IRNode* $tmp4061 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+    $tmp4061->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    $tmp4061->refCount.value = 1;
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4061, ((panda$core$Int64) { 1012 }), p_position, ((panda$collections$ListView*) children4056));
+    return $tmp4061;
 }
 panda$core$Bit org$pandalanguage$pandac$Compiler$checkSteppedRangeTypes$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$R$panda$core$Bit(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position p_position, org$pandalanguage$pandac$Type* p_type) {
-    org$pandalanguage$pandac$Type* type14045;
-    org$pandalanguage$pandac$Type* type24048;
-    panda$core$Range$LTpanda$core$Int64$Q$GT $tmp4059;
-    panda$core$Bit $tmp4041 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_type->typeKind, ((panda$core$Int64) { 11 }));
-    if ($tmp4041.value) {
+    org$pandalanguage$pandac$Type* type14067;
+    org$pandalanguage$pandac$Type* type24070;
+    panda$core$Range$LTpanda$core$Int64$Q$GT $tmp4081;
+    panda$core$Bit $tmp4063 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_type->typeKind, ((panda$core$Int64) { 11 }));
+    if ($tmp4063.value) {
     {
-        panda$core$Object* $tmp4042 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(p_type->subtypes, ((panda$core$Int64) { 0 }));
-        panda$core$Bit $tmp4043 = org$pandalanguage$pandac$Compiler$checkSteppedRangeTypes$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$R$panda$core$Bit(self, p_position, ((org$pandalanguage$pandac$Type*) $tmp4042));
-        return $tmp4043;
+        panda$core$Object* $tmp4064 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(p_type->subtypes, ((panda$core$Int64) { 0 }));
+        panda$core$Bit $tmp4065 = org$pandalanguage$pandac$Compiler$checkSteppedRangeTypes$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$R$panda$core$Bit(self, p_position, ((org$pandalanguage$pandac$Type*) $tmp4064));
+        return $tmp4065;
     }
     }
-    panda$core$Bit $tmp4044 = org$pandalanguage$pandac$Type$isSteppedRange$R$panda$core$Bit(p_type);
-    if ($tmp4044.value) {
+    panda$core$Bit $tmp4066 = org$pandalanguage$pandac$Type$isSteppedRange$R$panda$core$Bit(p_type);
+    if ($tmp4066.value) {
     {
-        panda$core$Object* $tmp4046 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(p_type->subtypes, ((panda$core$Int64) { 1 }));
-        org$pandalanguage$pandac$Type* $tmp4047 = org$pandalanguage$pandac$Type$nonnullable$R$org$pandalanguage$pandac$Type(((org$pandalanguage$pandac$Type*) $tmp4046));
-        type14045 = $tmp4047;
-        panda$core$Object* $tmp4049 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(p_type->subtypes, ((panda$core$Int64) { 2 }));
-        type24048 = ((org$pandalanguage$pandac$Type*) $tmp4049);
-        panda$core$Bit $tmp4050 = org$pandalanguage$pandac$Type$$EQ$org$pandalanguage$pandac$Type$R$panda$core$Bit(type14045, type24048);
-        if ($tmp4050.value) {
+        panda$core$Object* $tmp4068 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(p_type->subtypes, ((panda$core$Int64) { 1 }));
+        org$pandalanguage$pandac$Type* $tmp4069 = org$pandalanguage$pandac$Type$nonnullable$R$org$pandalanguage$pandac$Type(((org$pandalanguage$pandac$Type*) $tmp4068));
+        type14067 = $tmp4069;
+        panda$core$Object* $tmp4071 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(p_type->subtypes, ((panda$core$Int64) { 2 }));
+        type24070 = ((org$pandalanguage$pandac$Type*) $tmp4071);
+        panda$core$Bit $tmp4072 = org$pandalanguage$pandac$Type$$EQ$org$pandalanguage$pandac$Type$R$panda$core$Bit(type14067, type24070);
+        if ($tmp4072.value) {
         {
             return ((panda$core$Bit) { true });
         }
         }
-        panda$core$Bit $tmp4053 = org$pandalanguage$pandac$Type$isChar$R$panda$core$Bit(type14045);
-        bool $tmp4052 = $tmp4053.value;
-        if (!$tmp4052) goto $l4054;
-        panda$core$Bit $tmp4056 = panda$core$String$startsWith$panda$core$String$R$panda$core$Bit(((org$pandalanguage$pandac$Symbol*) type24048)->name, &$s4055);
-        $tmp4052 = $tmp4056.value;
-        $l4054:;
-        panda$core$Bit $tmp4057 = { $tmp4052 };
-        bool $tmp4051 = $tmp4057.value;
-        if (!$tmp4051) goto $l4058;
-        panda$core$Int64 $tmp4061 = panda$core$String$length$R$panda$core$Int64(&$s4060);
-        panda$core$Range$LTpanda$core$Int64$Q$GT$init$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Bit(&$tmp4059, ((panda$core$Int64$nullable) { $tmp4061, true }), ((panda$core$Int64$nullable) { .nonnull = false }), ((panda$core$Bit) { false }));
-        panda$core$String* $tmp4062 = panda$core$String$$IDX$panda$core$Range$LTpanda$core$Int64$Q$GT$R$panda$core$String(((org$pandalanguage$pandac$Symbol*) type24048)->name, $tmp4059);
-        panda$core$Bit $tmp4063 = panda$core$String$endsWith$panda$core$String$R$panda$core$Bit(((org$pandalanguage$pandac$Symbol*) type14045)->name, $tmp4062);
-        $tmp4051 = $tmp4063.value;
-        $l4058:;
-        panda$core$Bit $tmp4064 = { $tmp4051 };
-        if ($tmp4064.value) {
+        panda$core$Bit $tmp4075 = org$pandalanguage$pandac$Type$isChar$R$panda$core$Bit(type14067);
+        bool $tmp4074 = $tmp4075.value;
+        if (!$tmp4074) goto $l4076;
+        panda$core$Bit $tmp4078 = panda$core$String$startsWith$panda$core$String$R$panda$core$Bit(((org$pandalanguage$pandac$Symbol*) type24070)->name, &$s4077);
+        $tmp4074 = $tmp4078.value;
+        $l4076:;
+        panda$core$Bit $tmp4079 = { $tmp4074 };
+        bool $tmp4073 = $tmp4079.value;
+        if (!$tmp4073) goto $l4080;
+        panda$core$Int64 $tmp4083 = panda$core$String$length$R$panda$core$Int64(&$s4082);
+        panda$core$Range$LTpanda$core$Int64$Q$GT$init$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Bit(&$tmp4081, ((panda$core$Int64$nullable) { $tmp4083, true }), ((panda$core$Int64$nullable) { .nonnull = false }), ((panda$core$Bit) { false }));
+        panda$core$String* $tmp4084 = panda$core$String$$IDX$panda$core$Range$LTpanda$core$Int64$Q$GT$R$panda$core$String(((org$pandalanguage$pandac$Symbol*) type24070)->name, $tmp4081);
+        panda$core$Bit $tmp4085 = panda$core$String$endsWith$panda$core$String$R$panda$core$Bit(((org$pandalanguage$pandac$Symbol*) type14067)->name, $tmp4084);
+        $tmp4073 = $tmp4085.value;
+        $l4080:;
+        panda$core$Bit $tmp4086 = { $tmp4073 };
+        if ($tmp4086.value) {
         {
             return ((panda$core$Bit) { true });
         }
         }
-        panda$core$String* $tmp4066 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s4065, ((panda$core$Object*) p_type));
-        panda$core$String* $tmp4068 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4066, &$s4067);
-        panda$core$String* $tmp4070 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4068, &$s4069);
-        org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, p_position, $tmp4070);
+        panda$core$String* $tmp4088 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s4087, ((panda$core$Object*) p_type));
+        panda$core$String* $tmp4090 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4088, &$s4089);
+        panda$core$String* $tmp4092 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4090, &$s4091);
+        org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, p_position, $tmp4092);
         return ((panda$core$Bit) { false });
     }
     }
     return ((panda$core$Bit) { true });
 }
-org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileRangeFor$org$pandalanguage$pandac$Position$panda$core$String$Q$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position p_position, panda$core$String* p_label, org$pandalanguage$pandac$ASTNode* p_astTarget, org$pandalanguage$pandac$IRNode* p_rawList, org$pandalanguage$pandac$ASTNode* p_body) {
-    org$pandalanguage$pandac$Type* elementType4071;
-    org$pandalanguage$pandac$IRNode* list4072;
-    org$pandalanguage$pandac$Type* t4084;
-    org$pandalanguage$pandac$Type* listType4117;
-    org$pandalanguage$pandac$Compiler$CompileTargetResult* target4149;
-    org$pandalanguage$pandac$IRNode* body4153;
-    panda$collections$Array* children4155;
-    panda$core$Bit $tmp4075 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_astTarget->kind, ((panda$core$Int64) { 106 }));
-    bool $tmp4074 = $tmp4075.value;
-    if (!$tmp4074) goto $l4076;
-    $tmp4074 = ((panda$core$Bit) { p_astTarget->children != NULL }).value;
-    $l4076:;
-    panda$core$Bit $tmp4077 = { $tmp4074 };
-    bool $tmp4073 = $tmp4077.value;
-    if (!$tmp4073) goto $l4078;
-    panda$core$Int64 $tmp4079 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(p_astTarget->children);
-    panda$core$Bit $tmp4080 = panda$core$Int64$$GT$panda$core$Int64$R$panda$core$Bit($tmp4079, ((panda$core$Int64) { 0 }));
-    $tmp4073 = $tmp4080.value;
-    $l4078:;
-    panda$core$Bit $tmp4081 = { $tmp4073 };
-    if ($tmp4081.value) {
+org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileRangeFor$org$pandalanguage$pandac$Position$panda$core$String$Q$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$IRNode$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position p_position, panda$core$String* p_label, org$pandalanguage$pandac$ASTNode* p_astTarget, org$pandalanguage$pandac$IRNode* p_rawList, panda$collections$ListView* p_rawBody) {
+    org$pandalanguage$pandac$Type* elementType4093;
+    org$pandalanguage$pandac$IRNode* list4094;
+    org$pandalanguage$pandac$ASTNode* $match$3000_94095;
+    org$pandalanguage$pandac$Position position4097;
+    panda$core$String* _4099;
+    org$pandalanguage$pandac$ASTNode* type4101;
+    org$pandalanguage$pandac$Type* t4103;
+    org$pandalanguage$pandac$Type* listType4135;
+    org$pandalanguage$pandac$Compiler$CompileTargetResult* target4167;
+    org$pandalanguage$pandac$Variable$Kind $tmp4168;
+    org$pandalanguage$pandac$IRNode* body4170;
+    panda$collections$Array* children4172;
     {
-        panda$core$Int64 $tmp4082 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(p_astTarget->children);
-        panda$core$Bit $tmp4083 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp4082, ((panda$core$Int64) { 1 }));
-        PANDA_ASSERT($tmp4083.value);
-        panda$core$Object* $tmp4085 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_astTarget->children, ((panda$core$Int64) { 0 }));
-        org$pandalanguage$pandac$Type* $tmp4086 = org$pandalanguage$pandac$Scanner$convertType$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$Type(self->scanner, ((org$pandalanguage$pandac$ASTNode*) $tmp4085));
-        org$pandalanguage$pandac$Type* $tmp4087 = org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type$Q(self, $tmp4086);
-        t4084 = $tmp4087;
-        panda$core$Bit $tmp4088 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(t4084->typeKind, ((panda$core$Int64) { 11 }));
-        if ($tmp4088.value) {
+        $match$3000_94095 = p_astTarget;
+        panda$core$Bit $tmp4096 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$3000_94095->$rawValue, ((panda$core$Int64) { 36 }));
+        if ($tmp4096.value) {
         {
-            panda$core$String* $tmp4090 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s4089, ((panda$core$Object*) t4084));
-            panda$core$String* $tmp4092 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4090, &$s4091);
-            org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, p_astTarget->position, $tmp4092);
-            return NULL;
-        }
-        }
-        panda$core$Bit $tmp4093 = org$pandalanguage$pandac$Type$isNumeric$R$panda$core$Bit(t4084);
-        panda$core$Bit $tmp4094 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp4093);
-        if ($tmp4094.value) {
-        {
-            panda$core$String* $tmp4096 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s4095, ((panda$core$Object*) t4084));
-            panda$core$String* $tmp4098 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4096, &$s4097);
-            org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, p_astTarget->position, $tmp4098);
-            return NULL;
-        }
-        }
-        panda$core$Bit $tmp4099 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_rawList->kind, ((panda$core$Int64) { 1031 }));
-        if ($tmp4099.value) {
-        {
-            panda$core$Int64 $tmp4100 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(p_rawList->children);
-            panda$core$Bit $tmp4101 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp4100, ((panda$core$Int64) { 2 }));
-            if ($tmp4101.value) {
+            org$pandalanguage$pandac$Position* $tmp4098 = ((org$pandalanguage$pandac$Position*) ((char*) $match$3000_94095->$data + 0));
+            position4097 = *$tmp4098;
+            panda$core$String** $tmp4100 = ((panda$core$String**) ((char*) $match$3000_94095->$data + 16));
+            _4099 = *$tmp4100;
+            org$pandalanguage$pandac$ASTNode** $tmp4102 = ((org$pandalanguage$pandac$ASTNode**) ((char*) $match$3000_94095->$data + 24));
+            type4101 = *$tmp4102;
+            org$pandalanguage$pandac$Type* $tmp4104 = org$pandalanguage$pandac$Scanner$convertType$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$Type(self->scanner, type4101);
+            org$pandalanguage$pandac$Type* $tmp4105 = org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type$Q(self, $tmp4104);
+            t4103 = $tmp4105;
+            panda$core$Bit $tmp4106 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(t4103->typeKind, ((panda$core$Int64) { 11 }));
+            if ($tmp4106.value) {
             {
-                org$pandalanguage$pandac$Type* $tmp4102 = org$pandalanguage$pandac$Type$RangeOf$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type(t4084);
-                org$pandalanguage$pandac$IRNode* $tmp4103 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, p_rawList, $tmp4102);
-                list4072 = $tmp4103;
+                panda$core$String* $tmp4108 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s4107, ((panda$core$Object*) t4103));
+                panda$core$String* $tmp4110 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4108, &$s4109);
+                org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, position4097, $tmp4110);
+                return NULL;
+            }
+            }
+            panda$core$Bit $tmp4111 = org$pandalanguage$pandac$Type$isNumeric$R$panda$core$Bit(t4103);
+            panda$core$Bit $tmp4112 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp4111);
+            if ($tmp4112.value) {
+            {
+                panda$core$String* $tmp4114 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s4113, ((panda$core$Object*) t4103));
+                panda$core$String* $tmp4116 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4114, &$s4115);
+                org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, position4097, $tmp4116);
+                return NULL;
+            }
+            }
+            panda$core$Bit $tmp4117 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_rawList->kind, ((panda$core$Int64) { 1031 }));
+            if ($tmp4117.value) {
+            {
+                panda$core$Int64 $tmp4118 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(p_rawList->children);
+                panda$core$Bit $tmp4119 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp4118, ((panda$core$Int64) { 2 }));
+                if ($tmp4119.value) {
+                {
+                    org$pandalanguage$pandac$Type* $tmp4120 = org$pandalanguage$pandac$Type$RangeOf$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type(t4103);
+                    org$pandalanguage$pandac$IRNode* $tmp4121 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, p_rawList, $tmp4120);
+                    list4094 = $tmp4121;
+                }
+                }
+                else {
+                {
+                    panda$core$Int64 $tmp4122 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(p_rawList->children);
+                    panda$core$Bit $tmp4123 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp4122, ((panda$core$Int64) { 3 }));
+                    PANDA_ASSERT($tmp4123.value);
+                    org$pandalanguage$pandac$Type* $tmp4124 = org$pandalanguage$pandac$Type$SteppedRangeOf$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type(t4103);
+                    org$pandalanguage$pandac$IRNode* $tmp4125 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, p_rawList, $tmp4124);
+                    list4094 = $tmp4125;
+                }
+                }
             }
             }
             else {
-            {
-                panda$core$Int64 $tmp4104 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(p_rawList->children);
-                panda$core$Bit $tmp4105 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp4104, ((panda$core$Int64) { 3 }));
-                PANDA_ASSERT($tmp4105.value);
-                org$pandalanguage$pandac$Type* $tmp4106 = org$pandalanguage$pandac$Type$SteppedRangeOf$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type(t4084);
-                org$pandalanguage$pandac$IRNode* $tmp4107 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, p_rawList, $tmp4106);
-                list4072 = $tmp4107;
-            }
-            }
-        }
-        }
-        else {
-        panda$core$Bit $tmp4108 = org$pandalanguage$pandac$Type$isSteppedRange$R$panda$core$Bit(p_rawList->type);
-        if ($tmp4108.value) {
-        {
-            org$pandalanguage$pandac$Type* $tmp4109 = org$pandalanguage$pandac$Type$SteppedRangeOf$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type(t4084);
-            org$pandalanguage$pandac$IRNode* $tmp4110 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, p_rawList, $tmp4109);
-            list4072 = $tmp4110;
-        }
-        }
-        else {
-        org$pandalanguage$pandac$Type* $tmp4111 = org$pandalanguage$pandac$Type$RangeOf$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type(t4084);
-        panda$core$Int64$nullable $tmp4112 = org$pandalanguage$pandac$Compiler$coercionCost$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$Type$R$panda$core$Int64$Q(self, p_rawList, $tmp4111);
-        if (((panda$core$Bit) { $tmp4112.nonnull }).value) {
-        {
-            org$pandalanguage$pandac$Type* $tmp4113 = org$pandalanguage$pandac$Type$RangeOf$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type(t4084);
-            org$pandalanguage$pandac$IRNode* $tmp4114 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, p_rawList, $tmp4113);
-            list4072 = $tmp4114;
-        }
-        }
-        else {
-        {
-            org$pandalanguage$pandac$Type* $tmp4115 = org$pandalanguage$pandac$Type$SteppedRangeOf$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type(t4084);
-            org$pandalanguage$pandac$IRNode* $tmp4116 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, p_rawList, $tmp4115);
-            list4072 = $tmp4116;
-        }
-        }
-        }
-        }
-    }
-    }
-    else {
-    {
-        org$pandalanguage$pandac$Type* $tmp4118 = org$pandalanguage$pandac$Compiler$variableType$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$Type(self, p_rawList);
-        listType4117 = $tmp4118;
-        panda$core$Bit $tmp4120 = org$pandalanguage$pandac$Type$isRange$R$panda$core$Bit(listType4117);
-        bool $tmp4119 = $tmp4120.value;
-        if ($tmp4119) goto $l4121;
-        panda$core$Bit $tmp4122 = org$pandalanguage$pandac$Type$isSteppedRange$R$panda$core$Bit(listType4117);
-        $tmp4119 = $tmp4122.value;
-        $l4121:;
-        panda$core$Bit $tmp4123 = { $tmp4119 };
-        PANDA_ASSERT($tmp4123.value);
-        panda$core$Object* $tmp4124 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(listType4117->subtypes, ((panda$core$Int64) { 1 }));
-        panda$core$Bit $tmp4125 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(((org$pandalanguage$pandac$Type*) $tmp4124)->typeKind, ((panda$core$Int64) { 11 }));
-        if ($tmp4125.value) {
-        {
-            panda$core$Bit $tmp4126 = org$pandalanguage$pandac$Type$isRange$R$panda$core$Bit(listType4117);
+            panda$core$Bit $tmp4126 = org$pandalanguage$pandac$Type$isSteppedRange$R$panda$core$Bit(p_rawList->type);
             if ($tmp4126.value) {
             {
-                panda$core$Object* $tmp4127 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(listType4117->subtypes, ((panda$core$Int64) { 1 }));
-                org$pandalanguage$pandac$Type* $tmp4128 = org$pandalanguage$pandac$Type$nonnullable$R$org$pandalanguage$pandac$Type(((org$pandalanguage$pandac$Type*) $tmp4127));
-                org$pandalanguage$pandac$Type* $tmp4129 = org$pandalanguage$pandac$Type$RangeOf$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type($tmp4128);
-                listType4117 = $tmp4129;
+                org$pandalanguage$pandac$Type* $tmp4127 = org$pandalanguage$pandac$Type$SteppedRangeOf$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type(t4103);
+                org$pandalanguage$pandac$IRNode* $tmp4128 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, p_rawList, $tmp4127);
+                list4094 = $tmp4128;
+            }
+            }
+            else {
+            org$pandalanguage$pandac$Type* $tmp4129 = org$pandalanguage$pandac$Type$RangeOf$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type(t4103);
+            panda$core$Int64$nullable $tmp4130 = org$pandalanguage$pandac$Compiler$coercionCost$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$Type$R$panda$core$Int64$Q(self, p_rawList, $tmp4129);
+            if (((panda$core$Bit) { $tmp4130.nonnull }).value) {
+            {
+                org$pandalanguage$pandac$Type* $tmp4131 = org$pandalanguage$pandac$Type$RangeOf$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type(t4103);
+                org$pandalanguage$pandac$IRNode* $tmp4132 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, p_rawList, $tmp4131);
+                list4094 = $tmp4132;
             }
             }
             else {
             {
-                panda$core$Object* $tmp4130 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(listType4117->subtypes, ((panda$core$Int64) { 1 }));
-                org$pandalanguage$pandac$Type* $tmp4131 = org$pandalanguage$pandac$Type$nonnullable$R$org$pandalanguage$pandac$Type(((org$pandalanguage$pandac$Type*) $tmp4130));
-                org$pandalanguage$pandac$Type* $tmp4132 = org$pandalanguage$pandac$Type$SteppedRangeOf$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type($tmp4131);
-                listType4117 = $tmp4132;
+                org$pandalanguage$pandac$Type* $tmp4133 = org$pandalanguage$pandac$Type$SteppedRangeOf$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type(t4103);
+                org$pandalanguage$pandac$IRNode* $tmp4134 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, p_rawList, $tmp4133);
+                list4094 = $tmp4134;
+            }
+            }
             }
             }
         }
         }
-        org$pandalanguage$pandac$IRNode* $tmp4133 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, p_rawList, listType4117);
-        list4072 = $tmp4133;
+        else {
+        {
+            org$pandalanguage$pandac$Type* $tmp4136 = org$pandalanguage$pandac$Compiler$variableType$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$Type(self, p_rawList);
+            listType4135 = $tmp4136;
+            panda$core$Bit $tmp4138 = org$pandalanguage$pandac$Type$isRange$R$panda$core$Bit(listType4135);
+            bool $tmp4137 = $tmp4138.value;
+            if ($tmp4137) goto $l4139;
+            panda$core$Bit $tmp4140 = org$pandalanguage$pandac$Type$isSteppedRange$R$panda$core$Bit(listType4135);
+            $tmp4137 = $tmp4140.value;
+            $l4139:;
+            panda$core$Bit $tmp4141 = { $tmp4137 };
+            PANDA_ASSERT($tmp4141.value);
+            panda$core$Object* $tmp4142 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(listType4135->subtypes, ((panda$core$Int64) { 1 }));
+            panda$core$Bit $tmp4143 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(((org$pandalanguage$pandac$Type*) $tmp4142)->typeKind, ((panda$core$Int64) { 11 }));
+            if ($tmp4143.value) {
+            {
+                panda$core$Bit $tmp4144 = org$pandalanguage$pandac$Type$isRange$R$panda$core$Bit(listType4135);
+                if ($tmp4144.value) {
+                {
+                    panda$core$Object* $tmp4145 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(listType4135->subtypes, ((panda$core$Int64) { 1 }));
+                    org$pandalanguage$pandac$Type* $tmp4146 = org$pandalanguage$pandac$Type$nonnullable$R$org$pandalanguage$pandac$Type(((org$pandalanguage$pandac$Type*) $tmp4145));
+                    org$pandalanguage$pandac$Type* $tmp4147 = org$pandalanguage$pandac$Type$RangeOf$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type($tmp4146);
+                    listType4135 = $tmp4147;
+                }
+                }
+                else {
+                {
+                    panda$core$Object* $tmp4148 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(listType4135->subtypes, ((panda$core$Int64) { 1 }));
+                    org$pandalanguage$pandac$Type* $tmp4149 = org$pandalanguage$pandac$Type$nonnullable$R$org$pandalanguage$pandac$Type(((org$pandalanguage$pandac$Type*) $tmp4148));
+                    org$pandalanguage$pandac$Type* $tmp4150 = org$pandalanguage$pandac$Type$SteppedRangeOf$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type($tmp4149);
+                    listType4135 = $tmp4150;
+                }
+                }
+            }
+            }
+            org$pandalanguage$pandac$IRNode* $tmp4151 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, p_rawList, listType4135);
+            list4094 = $tmp4151;
+        }
+        }
     }
-    }
-    if (((panda$core$Bit) { list4072 == NULL }).value) {
+    if (((panda$core$Bit) { list4094 == NULL }).value) {
     {
         return NULL;
     }
     }
-    panda$core$Bit $tmp4134 = org$pandalanguage$pandac$Compiler$checkSteppedRangeTypes$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$R$panda$core$Bit(self, list4072->position, list4072->type);
-    panda$core$Bit $tmp4135 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp4134);
-    if ($tmp4135.value) {
+    panda$core$Bit $tmp4152 = org$pandalanguage$pandac$Compiler$checkSteppedRangeTypes$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$R$panda$core$Bit(self, list4094->position, list4094->type);
+    panda$core$Bit $tmp4153 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp4152);
+    if ($tmp4153.value) {
     {
         return NULL;
     }
     }
-    panda$core$Bit $tmp4136 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(list4072->type->typeKind, ((panda$core$Int64) { 11 }));
-    if ($tmp4136.value) {
+    panda$core$Bit $tmp4154 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(list4094->type->typeKind, ((panda$core$Int64) { 11 }));
+    if ($tmp4154.value) {
     {
-        panda$core$Object* $tmp4137 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(list4072->type->subtypes, ((panda$core$Int64) { 0 }));
-        panda$core$Bit $tmp4138 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(((org$pandalanguage$pandac$Type*) $tmp4137)->typeKind, ((panda$core$Int64) { 21 }));
-        PANDA_ASSERT($tmp4138.value);
-        panda$core$Object* $tmp4139 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(list4072->type->subtypes, ((panda$core$Int64) { 0 }));
-        panda$core$Object* $tmp4140 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(((org$pandalanguage$pandac$Type*) $tmp4139)->subtypes, ((panda$core$Int64) { 1 }));
-        elementType4071 = ((org$pandalanguage$pandac$Type*) $tmp4140);
+        panda$core$Object* $tmp4155 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(list4094->type->subtypes, ((panda$core$Int64) { 0 }));
+        panda$core$Bit $tmp4156 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(((org$pandalanguage$pandac$Type*) $tmp4155)->typeKind, ((panda$core$Int64) { 21 }));
+        PANDA_ASSERT($tmp4156.value);
+        panda$core$Object* $tmp4157 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(list4094->type->subtypes, ((panda$core$Int64) { 0 }));
+        panda$core$Object* $tmp4158 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(((org$pandalanguage$pandac$Type*) $tmp4157)->subtypes, ((panda$core$Int64) { 1 }));
+        elementType4093 = ((org$pandalanguage$pandac$Type*) $tmp4158);
     }
     }
     else {
     {
-        panda$core$Bit $tmp4141 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(list4072->type->typeKind, ((panda$core$Int64) { 21 }));
-        PANDA_ASSERT($tmp4141.value);
-        panda$core$Object* $tmp4142 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(list4072->type->subtypes, ((panda$core$Int64) { 1 }));
-        elementType4071 = ((org$pandalanguage$pandac$Type*) $tmp4142);
+        panda$core$Bit $tmp4159 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(list4094->type->typeKind, ((panda$core$Int64) { 21 }));
+        PANDA_ASSERT($tmp4159.value);
+        panda$core$Object* $tmp4160 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(list4094->type->subtypes, ((panda$core$Int64) { 1 }));
+        elementType4093 = ((org$pandalanguage$pandac$Type*) $tmp4160);
     }
     }
-    panda$core$Bit $tmp4143 = org$pandalanguage$pandac$Type$isNumeric$R$panda$core$Bit(elementType4071);
-    panda$core$Bit $tmp4144 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp4143);
-    if ($tmp4144.value) {
+    panda$core$Bit $tmp4161 = org$pandalanguage$pandac$Type$isNumeric$R$panda$core$Bit(elementType4093);
+    panda$core$Bit $tmp4162 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp4161);
+    if ($tmp4162.value) {
     {
-        panda$core$String* $tmp4146 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s4145, ((panda$core$Object*) list4072->type));
-        panda$core$String* $tmp4148 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4146, &$s4147);
-        org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, list4072->position, $tmp4148);
+        panda$core$String* $tmp4164 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s4163, ((panda$core$Object*) list4094->type));
+        panda$core$String* $tmp4166 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4164, &$s4165);
+        org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, list4094->position, $tmp4166);
     }
     }
-    org$pandalanguage$pandac$Variable$Kind* $tmp4150 = (org$pandalanguage$pandac$Variable$Kind*) malloc(24);
-    $tmp4150->$class = (panda$core$Class*) &org$pandalanguage$pandac$Variable$Kind$class;
-    $tmp4150->refCount.value = 1;
-    org$pandalanguage$pandac$Variable$Kind$init$panda$core$Int64($tmp4150, ((panda$core$Int64) { 1 }));
-    org$pandalanguage$pandac$Compiler$CompileTargetResult* $tmp4152 = org$pandalanguage$pandac$Compiler$compileTarget$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$Variable$Kind$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$Q$R$org$pandalanguage$pandac$Compiler$CompileTargetResult$Q(self, p_astTarget, $tmp4150, NULL, elementType4071);
-    target4149 = $tmp4152;
-    if (((panda$core$Bit) { target4149 == NULL }).value) {
-    {
-        return NULL;
-    }
-    }
-    PANDA_ASSERT(((panda$core$Bit) { target4149->value == NULL }).value);
-    org$pandalanguage$pandac$IRNode* $tmp4154 = org$pandalanguage$pandac$Compiler$compileStatement$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_body);
-    body4153 = $tmp4154;
-    if (((panda$core$Bit) { body4153 == NULL }).value) {
-    {
-        return NULL;
-    }
-    }
-    panda$collections$Array* $tmp4156 = (panda$collections$Array*) malloc(40);
-    $tmp4156->$class = (panda$core$Class*) &panda$collections$Array$class;
-    $tmp4156->refCount.value = 1;
-    panda$collections$Array$init($tmp4156);
-    children4155 = $tmp4156;
-    panda$collections$Array$add$panda$collections$Array$T(children4155, ((panda$core$Object*) target4149->target));
-    panda$collections$Array$add$panda$collections$Array$T(children4155, ((panda$core$Object*) list4072));
-    panda$collections$Array$add$panda$collections$Array$T(children4155, ((panda$core$Object*) body4153));
-    org$pandalanguage$pandac$IRNode* $tmp4158 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-    $tmp4158->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-    $tmp4158->refCount.value = 1;
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4158, ((panda$core$Int64) { 1029 }), p_position, ((panda$core$Object*) p_label), ((panda$collections$ListView*) children4155));
-    return $tmp4158;
-}
-org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileIteratorFor$org$pandalanguage$pandac$Position$panda$core$String$Q$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position p_position, panda$core$String* p_label, org$pandalanguage$pandac$ASTNode* p_astTarget, org$pandalanguage$pandac$IRNode* p_iterator, org$pandalanguage$pandac$ASTNode* p_body) {
-    org$pandalanguage$pandac$Compiler$CompileTargetResult* target4167;
-    org$pandalanguage$pandac$Variable* targetVar4173;
-    panda$collections$Array* subtypes4174;
-    org$pandalanguage$pandac$Type* iterType4178;
-    org$pandalanguage$pandac$Variable* iter4189;
-    panda$collections$Array* statements4196;
-    panda$collections$Array* declChildren4199;
-    panda$collections$Array* varChildren4204;
-    panda$collections$Array* whileChildren4211;
-    org$pandalanguage$pandac$IRNode* done4214;
-    org$pandalanguage$pandac$IRNode* notCall4221;
-    panda$collections$Array* valueDeclChildren4226;
-    org$pandalanguage$pandac$IRNode* next4231;
-    panda$collections$Array* valueVarChildren4238;
-    org$pandalanguage$pandac$IRNode* block4243;
-    panda$collections$Array* blockChildren4245;
-    panda$core$Bit $tmp4161 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_iterator->type->typeKind, ((panda$core$Int64) { 21 }));
-    bool $tmp4160 = $tmp4161.value;
-    if (!$tmp4160) goto $l4162;
-    panda$core$Object* $tmp4163 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(p_iterator->type->subtypes, ((panda$core$Int64) { 0 }));
-    org$pandalanguage$pandac$Type* $tmp4164 = org$pandalanguage$pandac$Type$Iterator$R$org$pandalanguage$pandac$Type();
-    panda$core$Bit $tmp4165 = org$pandalanguage$pandac$Type$$EQ$org$pandalanguage$pandac$Type$R$panda$core$Bit(((org$pandalanguage$pandac$Type*) $tmp4163), $tmp4164);
-    $tmp4160 = $tmp4165.value;
-    $l4162:;
-    panda$core$Bit $tmp4166 = { $tmp4160 };
-    PANDA_ASSERT($tmp4166.value);
-    org$pandalanguage$pandac$Variable$Kind* $tmp4168 = (org$pandalanguage$pandac$Variable$Kind*) malloc(24);
-    $tmp4168->$class = (panda$core$Class*) &org$pandalanguage$pandac$Variable$Kind$class;
-    $tmp4168->refCount.value = 1;
-    org$pandalanguage$pandac$Variable$Kind$init$panda$core$Int64($tmp4168, ((panda$core$Int64) { 1 }));
-    panda$core$Object* $tmp4170 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(p_iterator->type->subtypes, ((panda$core$Int64) { 1 }));
-    org$pandalanguage$pandac$Compiler$CompileTargetResult* $tmp4171 = org$pandalanguage$pandac$Compiler$compileTarget$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$Variable$Kind$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$Q$R$org$pandalanguage$pandac$Compiler$CompileTargetResult$Q(self, p_astTarget, $tmp4168, NULL, ((org$pandalanguage$pandac$Type*) $tmp4170));
-    target4167 = $tmp4171;
+    org$pandalanguage$pandac$Variable$Kind$init$panda$core$Int64(&$tmp4168, ((panda$core$Int64) { 1 }));
+    org$pandalanguage$pandac$Compiler$CompileTargetResult* $tmp4169 = org$pandalanguage$pandac$Compiler$compileTarget$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$Variable$Kind$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$Q$R$org$pandalanguage$pandac$Compiler$CompileTargetResult$Q(self, p_astTarget, $tmp4168, NULL, elementType4093);
+    target4167 = $tmp4169;
     if (((panda$core$Bit) { target4167 == NULL }).value) {
     {
         return NULL;
     }
     }
-    panda$core$Bit $tmp4172 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(target4167->target->kind, ((panda$core$Int64) { 1016 }));
-    PANDA_ASSERT($tmp4172.value);
-    targetVar4173 = ((org$pandalanguage$pandac$Variable*) target4167->target->payload);
-    panda$collections$Array* $tmp4175 = (panda$collections$Array*) malloc(40);
-    $tmp4175->$class = (panda$core$Class*) &panda$collections$Array$class;
+    PANDA_ASSERT(((panda$core$Bit) { target4167->value == NULL }).value);
+    org$pandalanguage$pandac$IRNode* $tmp4171 = org$pandalanguage$pandac$Compiler$compileBlock$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$R$org$pandalanguage$pandac$IRNode$Q(self, p_position, p_rawBody);
+    body4170 = $tmp4171;
+    if (((panda$core$Bit) { body4170 == NULL }).value) {
+    {
+        return NULL;
+    }
+    }
+    panda$collections$Array* $tmp4173 = (panda$collections$Array*) malloc(40);
+    $tmp4173->$class = (panda$core$Class*) &panda$collections$Array$class;
+    $tmp4173->refCount.value = 1;
+    panda$collections$Array$init($tmp4173);
+    children4172 = $tmp4173;
+    panda$collections$Array$add$panda$collections$Array$T(children4172, ((panda$core$Object*) target4167->target));
+    panda$collections$Array$add$panda$collections$Array$T(children4172, ((panda$core$Object*) list4094));
+    panda$collections$Array$add$panda$collections$Array$T(children4172, ((panda$core$Object*) body4170));
+    org$pandalanguage$pandac$IRNode* $tmp4175 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+    $tmp4175->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
     $tmp4175->refCount.value = 1;
-    panda$collections$Array$init($tmp4175);
-    subtypes4174 = $tmp4175;
-    org$pandalanguage$pandac$Type* $tmp4177 = org$pandalanguage$pandac$Type$Iterator$R$org$pandalanguage$pandac$Type();
-    panda$collections$Array$add$panda$collections$Array$T(subtypes4174, ((panda$core$Object*) $tmp4177));
-    panda$collections$Array$add$panda$collections$Array$T(subtypes4174, ((panda$core$Object*) target4167->target->type));
-    org$pandalanguage$pandac$Type* $tmp4179 = (org$pandalanguage$pandac$Type*) malloc(96);
-    $tmp4179->$class = (panda$core$Class*) &org$pandalanguage$pandac$Type$class;
-    $tmp4179->refCount.value = 1;
-    panda$core$Object* $tmp4181 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(subtypes4174, ((panda$core$Int64) { 0 }));
-    panda$core$String* $tmp4182 = org$pandalanguage$pandac$Type$convert$R$panda$core$String(((org$pandalanguage$pandac$Type*) $tmp4181));
-    panda$core$String* $tmp4184 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4182, &$s4183);
-    panda$core$Object* $tmp4185 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(subtypes4174, ((panda$core$Int64) { 1 }));
-    panda$core$String* $tmp4186 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp4184, ((panda$core$Object*) ((org$pandalanguage$pandac$Type*) $tmp4185)));
-    panda$core$String* $tmp4188 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4186, &$s4187);
-    org$pandalanguage$pandac$Type$init$panda$core$String$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT$panda$core$Bit($tmp4179, $tmp4188, ((panda$core$Int64) { 21 }), p_position, ((panda$collections$ListView*) subtypes4174), ((panda$core$Bit) { true }));
-    iterType4178 = $tmp4179;
-    org$pandalanguage$pandac$Variable* $tmp4190 = (org$pandalanguage$pandac$Variable*) malloc(88);
-    $tmp4190->$class = (panda$core$Class*) &org$pandalanguage$pandac$Variable$class;
-    $tmp4190->refCount.value = 1;
-    org$pandalanguage$pandac$Variable$Kind* $tmp4192 = (org$pandalanguage$pandac$Variable$Kind*) malloc(24);
-    $tmp4192->$class = (panda$core$Class*) &org$pandalanguage$pandac$Variable$Kind$class;
-    $tmp4192->refCount.value = 1;
-    org$pandalanguage$pandac$Variable$Kind$init$panda$core$Int64($tmp4192, ((panda$core$Int64) { 1 }));
-    panda$core$String* $tmp4195 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(((org$pandalanguage$pandac$Symbol*) targetVar4173)->name, &$s4194);
-    org$pandalanguage$pandac$Variable$init$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Variable$Kind$panda$core$String$org$pandalanguage$pandac$Type($tmp4190, p_iterator->position, $tmp4192, $tmp4195, iterType4178);
-    iter4189 = $tmp4190;
-    org$pandalanguage$pandac$SymbolTable$add$org$pandalanguage$pandac$Symbol(self->symbolTable, ((org$pandalanguage$pandac$Symbol*) iter4189));
-    panda$collections$Array* $tmp4197 = (panda$collections$Array*) malloc(40);
-    $tmp4197->$class = (panda$core$Class*) &panda$collections$Array$class;
-    $tmp4197->refCount.value = 1;
-    panda$collections$Array$init($tmp4197);
-    statements4196 = $tmp4197;
-    panda$collections$Array* $tmp4200 = (panda$collections$Array*) malloc(40);
-    $tmp4200->$class = (panda$core$Class*) &panda$collections$Array$class;
-    $tmp4200->refCount.value = 1;
-    panda$collections$Array$init($tmp4200);
-    declChildren4199 = $tmp4200;
-    org$pandalanguage$pandac$IRNode* $tmp4202 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-    $tmp4202->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-    $tmp4202->refCount.value = 1;
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Variable($tmp4202, ((panda$core$Int64) { 1016 }), p_iterator->position, iter4189->type, iter4189);
-    panda$collections$Array$add$panda$collections$Array$T(declChildren4199, ((panda$core$Object*) $tmp4202));
-    panda$collections$Array$add$panda$collections$Array$T(declChildren4199, ((panda$core$Object*) p_iterator));
-    panda$collections$Array* $tmp4205 = (panda$collections$Array*) malloc(40);
-    $tmp4205->$class = (panda$core$Class*) &panda$collections$Array$class;
-    $tmp4205->refCount.value = 1;
-    panda$collections$Array$init($tmp4205);
-    varChildren4204 = $tmp4205;
-    org$pandalanguage$pandac$IRNode* $tmp4207 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-    $tmp4207->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-    $tmp4207->refCount.value = 1;
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4207, ((panda$core$Int64) { 1021 }), ((org$pandalanguage$pandac$Symbol*) iter4189)->position, ((panda$collections$ListView*) declChildren4199));
-    panda$collections$Array$add$panda$collections$Array$T(varChildren4204, ((panda$core$Object*) $tmp4207));
-    org$pandalanguage$pandac$IRNode* $tmp4209 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-    $tmp4209->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-    $tmp4209->refCount.value = 1;
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4209, ((panda$core$Int64) { 1018 }), ((org$pandalanguage$pandac$Symbol*) iter4189)->position, ((panda$collections$ListView*) varChildren4204));
-    panda$collections$Array$add$panda$collections$Array$T(statements4196, ((panda$core$Object*) $tmp4209));
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4175, ((panda$core$Int64) { 1029 }), p_position, ((panda$core$Object*) p_label), ((panda$collections$ListView*) children4172));
+    return $tmp4175;
+}
+org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileIteratorFor$org$pandalanguage$pandac$Position$panda$core$String$Q$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$IRNode$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position p_position, panda$core$String* p_label, org$pandalanguage$pandac$ASTNode* p_astTarget, org$pandalanguage$pandac$IRNode* p_iterator, panda$collections$ListView* p_body) {
+    org$pandalanguage$pandac$Compiler$CompileTargetResult* target4184;
+    org$pandalanguage$pandac$Variable$Kind $tmp4185;
+    org$pandalanguage$pandac$Variable* targetVar4189;
+    panda$collections$Array* subtypes4190;
+    org$pandalanguage$pandac$Type* iterType4194;
+    org$pandalanguage$pandac$Variable* iter4205;
+    org$pandalanguage$pandac$Variable$Kind $tmp4208;
+    panda$collections$Array* statements4211;
+    panda$collections$Array* declChildren4214;
+    panda$collections$Array* varChildren4219;
+    panda$collections$Array* whileChildren4226;
+    org$pandalanguage$pandac$IRNode* done4229;
+    org$pandalanguage$pandac$IRNode* notCall4236;
+    panda$collections$Array* valueDeclChildren4241;
+    org$pandalanguage$pandac$IRNode* next4246;
+    panda$collections$Array* valueVarChildren4253;
+    org$pandalanguage$pandac$IRNode* block4258;
+    panda$collections$Array* blockChildren4260;
+    panda$core$Bit $tmp4178 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_iterator->type->typeKind, ((panda$core$Int64) { 21 }));
+    bool $tmp4177 = $tmp4178.value;
+    if (!$tmp4177) goto $l4179;
+    panda$core$Object* $tmp4180 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(p_iterator->type->subtypes, ((panda$core$Int64) { 0 }));
+    org$pandalanguage$pandac$Type* $tmp4181 = org$pandalanguage$pandac$Type$Iterator$R$org$pandalanguage$pandac$Type();
+    panda$core$Bit $tmp4182 = org$pandalanguage$pandac$Type$$EQ$org$pandalanguage$pandac$Type$R$panda$core$Bit(((org$pandalanguage$pandac$Type*) $tmp4180), $tmp4181);
+    $tmp4177 = $tmp4182.value;
+    $l4179:;
+    panda$core$Bit $tmp4183 = { $tmp4177 };
+    PANDA_ASSERT($tmp4183.value);
+    org$pandalanguage$pandac$Variable$Kind$init$panda$core$Int64(&$tmp4185, ((panda$core$Int64) { 1 }));
+    panda$core$Object* $tmp4186 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(p_iterator->type->subtypes, ((panda$core$Int64) { 1 }));
+    org$pandalanguage$pandac$Compiler$CompileTargetResult* $tmp4187 = org$pandalanguage$pandac$Compiler$compileTarget$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$Variable$Kind$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$Q$R$org$pandalanguage$pandac$Compiler$CompileTargetResult$Q(self, p_astTarget, $tmp4185, NULL, ((org$pandalanguage$pandac$Type*) $tmp4186));
+    target4184 = $tmp4187;
+    if (((panda$core$Bit) { target4184 == NULL }).value) {
+    {
+        return NULL;
+    }
+    }
+    panda$core$Bit $tmp4188 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(target4184->target->kind, ((panda$core$Int64) { 1016 }));
+    PANDA_ASSERT($tmp4188.value);
+    targetVar4189 = ((org$pandalanguage$pandac$Variable*) target4184->target->payload);
+    panda$collections$Array* $tmp4191 = (panda$collections$Array*) malloc(40);
+    $tmp4191->$class = (panda$core$Class*) &panda$collections$Array$class;
+    $tmp4191->refCount.value = 1;
+    panda$collections$Array$init($tmp4191);
+    subtypes4190 = $tmp4191;
+    org$pandalanguage$pandac$Type* $tmp4193 = org$pandalanguage$pandac$Type$Iterator$R$org$pandalanguage$pandac$Type();
+    panda$collections$Array$add$panda$collections$Array$T(subtypes4190, ((panda$core$Object*) $tmp4193));
+    panda$collections$Array$add$panda$collections$Array$T(subtypes4190, ((panda$core$Object*) target4184->target->type));
+    org$pandalanguage$pandac$Type* $tmp4195 = (org$pandalanguage$pandac$Type*) malloc(96);
+    $tmp4195->$class = (panda$core$Class*) &org$pandalanguage$pandac$Type$class;
+    $tmp4195->refCount.value = 1;
+    panda$core$Object* $tmp4197 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(subtypes4190, ((panda$core$Int64) { 0 }));
+    panda$core$String* $tmp4198 = org$pandalanguage$pandac$Type$convert$R$panda$core$String(((org$pandalanguage$pandac$Type*) $tmp4197));
+    panda$core$String* $tmp4200 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4198, &$s4199);
+    panda$core$Object* $tmp4201 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(subtypes4190, ((panda$core$Int64) { 1 }));
+    panda$core$String* $tmp4202 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp4200, ((panda$core$Object*) ((org$pandalanguage$pandac$Type*) $tmp4201)));
+    panda$core$String* $tmp4204 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4202, &$s4203);
+    org$pandalanguage$pandac$Type$init$panda$core$String$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT$panda$core$Bit($tmp4195, $tmp4204, ((panda$core$Int64) { 21 }), p_position, ((panda$collections$ListView*) subtypes4190), ((panda$core$Bit) { true }));
+    iterType4194 = $tmp4195;
+    org$pandalanguage$pandac$Variable* $tmp4206 = (org$pandalanguage$pandac$Variable*) malloc(88);
+    $tmp4206->$class = (panda$core$Class*) &org$pandalanguage$pandac$Variable$class;
+    $tmp4206->refCount.value = 1;
+    org$pandalanguage$pandac$Variable$Kind$init$panda$core$Int64(&$tmp4208, ((panda$core$Int64) { 1 }));
+    panda$core$String* $tmp4210 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(((org$pandalanguage$pandac$Symbol*) targetVar4189)->name, &$s4209);
+    org$pandalanguage$pandac$Variable$init$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Variable$Kind$panda$core$String$org$pandalanguage$pandac$Type($tmp4206, p_iterator->position, $tmp4208, $tmp4210, iterType4194);
+    iter4205 = $tmp4206;
+    org$pandalanguage$pandac$SymbolTable$add$org$pandalanguage$pandac$Symbol(self->symbolTable, ((org$pandalanguage$pandac$Symbol*) iter4205));
     panda$collections$Array* $tmp4212 = (panda$collections$Array*) malloc(40);
     $tmp4212->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp4212->refCount.value = 1;
     panda$collections$Array$init($tmp4212);
-    whileChildren4211 = $tmp4212;
-    org$pandalanguage$pandac$IRNode* $tmp4215 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-    $tmp4215->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    statements4211 = $tmp4212;
+    panda$collections$Array* $tmp4215 = (panda$collections$Array*) malloc(40);
+    $tmp4215->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp4215->refCount.value = 1;
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Variable($tmp4215, ((panda$core$Int64) { 1016 }), ((org$pandalanguage$pandac$Symbol*) iter4189)->position, iter4189->type, iter4189);
-    panda$collections$Array* $tmp4218 = (panda$collections$Array*) malloc(40);
-    $tmp4218->$class = (panda$core$Class*) &panda$collections$Array$class;
-    $tmp4218->refCount.value = 1;
-    panda$collections$Array$init($tmp4218);
-    org$pandalanguage$pandac$IRNode* $tmp4220 = org$pandalanguage$pandac$Compiler$call$org$pandalanguage$pandac$IRNode$panda$core$String$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$org$pandalanguage$pandac$Type$Q$R$org$pandalanguage$pandac$IRNode$Q(self, $tmp4215, &$s4217, ((panda$collections$ListView*) $tmp4218), NULL);
-    done4214 = $tmp4220;
-    if (((panda$core$Bit) { done4214 == NULL }).value) {
-    {
-        return NULL;
-    }
-    }
-    panda$collections$Array* $tmp4223 = (panda$collections$Array*) malloc(40);
-    $tmp4223->$class = (panda$core$Class*) &panda$collections$Array$class;
-    $tmp4223->refCount.value = 1;
-    panda$collections$Array$init($tmp4223);
-    org$pandalanguage$pandac$IRNode* $tmp4225 = org$pandalanguage$pandac$Compiler$call$org$pandalanguage$pandac$IRNode$panda$core$String$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$org$pandalanguage$pandac$Type$Q$R$org$pandalanguage$pandac$IRNode$Q(self, done4214, &$s4222, ((panda$collections$ListView*) $tmp4223), NULL);
-    notCall4221 = $tmp4225;
-    if (((panda$core$Bit) { notCall4221 == NULL }).value) {
-    {
-        return NULL;
-    }
-    }
-    panda$collections$Array$add$panda$collections$Array$T(whileChildren4211, ((panda$core$Object*) notCall4221));
+    panda$collections$Array$init($tmp4215);
+    declChildren4214 = $tmp4215;
+    org$pandalanguage$pandac$IRNode* $tmp4217 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+    $tmp4217->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    $tmp4217->refCount.value = 1;
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Variable($tmp4217, ((panda$core$Int64) { 1016 }), p_iterator->position, iter4205->type, iter4205);
+    panda$collections$Array$add$panda$collections$Array$T(declChildren4214, ((panda$core$Object*) $tmp4217));
+    panda$collections$Array$add$panda$collections$Array$T(declChildren4214, ((panda$core$Object*) p_iterator));
+    panda$collections$Array* $tmp4220 = (panda$collections$Array*) malloc(40);
+    $tmp4220->$class = (panda$core$Class*) &panda$collections$Array$class;
+    $tmp4220->refCount.value = 1;
+    panda$collections$Array$init($tmp4220);
+    varChildren4219 = $tmp4220;
+    org$pandalanguage$pandac$IRNode* $tmp4222 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+    $tmp4222->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    $tmp4222->refCount.value = 1;
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4222, ((panda$core$Int64) { 1021 }), ((org$pandalanguage$pandac$Symbol*) iter4205)->position, ((panda$collections$ListView*) declChildren4214));
+    panda$collections$Array$add$panda$collections$Array$T(varChildren4219, ((panda$core$Object*) $tmp4222));
+    org$pandalanguage$pandac$IRNode* $tmp4224 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+    $tmp4224->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    $tmp4224->refCount.value = 1;
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4224, ((panda$core$Int64) { 1018 }), ((org$pandalanguage$pandac$Symbol*) iter4205)->position, ((panda$collections$ListView*) varChildren4219));
+    panda$collections$Array$add$panda$collections$Array$T(statements4211, ((panda$core$Object*) $tmp4224));
     panda$collections$Array* $tmp4227 = (panda$collections$Array*) malloc(40);
     $tmp4227->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp4227->refCount.value = 1;
     panda$collections$Array$init($tmp4227);
-    valueDeclChildren4226 = $tmp4227;
-    org$pandalanguage$pandac$IRNode* $tmp4229 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-    $tmp4229->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-    $tmp4229->refCount.value = 1;
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Variable($tmp4229, ((panda$core$Int64) { 1016 }), p_iterator->position, targetVar4173->type, targetVar4173);
-    panda$collections$Array$add$panda$collections$Array$T(valueDeclChildren4226, ((panda$core$Object*) $tmp4229));
-    org$pandalanguage$pandac$IRNode* $tmp4232 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-    $tmp4232->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-    $tmp4232->refCount.value = 1;
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Variable($tmp4232, ((panda$core$Int64) { 1016 }), p_iterator->position, iter4189->type, iter4189);
-    panda$collections$Array* $tmp4235 = (panda$collections$Array*) malloc(40);
-    $tmp4235->$class = (panda$core$Class*) &panda$collections$Array$class;
-    $tmp4235->refCount.value = 1;
-    panda$collections$Array$init($tmp4235);
-    org$pandalanguage$pandac$IRNode* $tmp4237 = org$pandalanguage$pandac$Compiler$call$org$pandalanguage$pandac$IRNode$panda$core$String$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$org$pandalanguage$pandac$Type$Q$R$org$pandalanguage$pandac$IRNode$Q(self, $tmp4232, &$s4234, ((panda$collections$ListView*) $tmp4235), NULL);
-    next4231 = $tmp4237;
-    PANDA_ASSERT(((panda$core$Bit) { next4231 != NULL }).value);
-    panda$collections$Array$add$panda$collections$Array$T(valueDeclChildren4226, ((panda$core$Object*) next4231));
-    panda$collections$Array* $tmp4239 = (panda$collections$Array*) malloc(40);
-    $tmp4239->$class = (panda$core$Class*) &panda$collections$Array$class;
-    $tmp4239->refCount.value = 1;
-    panda$collections$Array$init($tmp4239);
-    valueVarChildren4238 = $tmp4239;
-    org$pandalanguage$pandac$IRNode* $tmp4241 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-    $tmp4241->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-    $tmp4241->refCount.value = 1;
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4241, ((panda$core$Int64) { 1021 }), p_iterator->position, ((panda$collections$ListView*) valueDeclChildren4226));
-    panda$collections$Array$add$panda$collections$Array$T(valueVarChildren4238, ((panda$core$Object*) $tmp4241));
-    org$pandalanguage$pandac$IRNode* $tmp4244 = org$pandalanguage$pandac$Compiler$compileStatement$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_body);
-    block4243 = $tmp4244;
-    if (((panda$core$Bit) { block4243 == NULL }).value) {
+    whileChildren4226 = $tmp4227;
+    org$pandalanguage$pandac$IRNode* $tmp4230 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+    $tmp4230->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    $tmp4230->refCount.value = 1;
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Variable($tmp4230, ((panda$core$Int64) { 1016 }), ((org$pandalanguage$pandac$Symbol*) iter4205)->position, iter4205->type, iter4205);
+    panda$collections$Array* $tmp4233 = (panda$collections$Array*) malloc(40);
+    $tmp4233->$class = (panda$core$Class*) &panda$collections$Array$class;
+    $tmp4233->refCount.value = 1;
+    panda$collections$Array$init($tmp4233);
+    org$pandalanguage$pandac$IRNode* $tmp4235 = org$pandalanguage$pandac$Compiler$call$org$pandalanguage$pandac$IRNode$panda$core$String$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$org$pandalanguage$pandac$Type$Q$R$org$pandalanguage$pandac$IRNode$Q(self, $tmp4230, &$s4232, ((panda$collections$ListView*) $tmp4233), NULL);
+    done4229 = $tmp4235;
+    if (((panda$core$Bit) { done4229 == NULL }).value) {
     {
         return NULL;
     }
     }
-    panda$collections$Array* $tmp4246 = (panda$collections$Array*) malloc(40);
-    $tmp4246->$class = (panda$core$Class*) &panda$collections$Array$class;
-    $tmp4246->refCount.value = 1;
-    panda$collections$Array$init($tmp4246);
-    blockChildren4245 = $tmp4246;
-    org$pandalanguage$pandac$IRNode* $tmp4248 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-    $tmp4248->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-    $tmp4248->refCount.value = 1;
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4248, ((panda$core$Int64) { 1018 }), p_iterator->position, ((panda$collections$ListView*) valueVarChildren4238));
-    panda$collections$Array$add$panda$collections$Array$T(blockChildren4245, ((panda$core$Object*) $tmp4248));
-    panda$collections$Array$addAll$panda$collections$CollectionView$LTpanda$collections$Array$T$GT(blockChildren4245, ((panda$collections$CollectionView*) block4243->children));
-    org$pandalanguage$pandac$IRNode* $tmp4250 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-    $tmp4250->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    panda$collections$Array* $tmp4238 = (panda$collections$Array*) malloc(40);
+    $tmp4238->$class = (panda$core$Class*) &panda$collections$Array$class;
+    $tmp4238->refCount.value = 1;
+    panda$collections$Array$init($tmp4238);
+    org$pandalanguage$pandac$IRNode* $tmp4240 = org$pandalanguage$pandac$Compiler$call$org$pandalanguage$pandac$IRNode$panda$core$String$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$org$pandalanguage$pandac$Type$Q$R$org$pandalanguage$pandac$IRNode$Q(self, done4229, &$s4237, ((panda$collections$ListView*) $tmp4238), NULL);
+    notCall4236 = $tmp4240;
+    if (((panda$core$Bit) { notCall4236 == NULL }).value) {
+    {
+        return NULL;
+    }
+    }
+    panda$collections$Array$add$panda$collections$Array$T(whileChildren4226, ((panda$core$Object*) notCall4236));
+    panda$collections$Array* $tmp4242 = (panda$collections$Array*) malloc(40);
+    $tmp4242->$class = (panda$core$Class*) &panda$collections$Array$class;
+    $tmp4242->refCount.value = 1;
+    panda$collections$Array$init($tmp4242);
+    valueDeclChildren4241 = $tmp4242;
+    org$pandalanguage$pandac$IRNode* $tmp4244 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+    $tmp4244->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    $tmp4244->refCount.value = 1;
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Variable($tmp4244, ((panda$core$Int64) { 1016 }), p_iterator->position, targetVar4189->type, targetVar4189);
+    panda$collections$Array$add$panda$collections$Array$T(valueDeclChildren4241, ((panda$core$Object*) $tmp4244));
+    org$pandalanguage$pandac$IRNode* $tmp4247 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+    $tmp4247->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    $tmp4247->refCount.value = 1;
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Variable($tmp4247, ((panda$core$Int64) { 1016 }), p_iterator->position, iter4205->type, iter4205);
+    panda$collections$Array* $tmp4250 = (panda$collections$Array*) malloc(40);
+    $tmp4250->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp4250->refCount.value = 1;
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4250, ((panda$core$Int64) { 1000 }), block4243->position, ((panda$collections$ListView*) blockChildren4245));
-    block4243 = $tmp4250;
-    panda$collections$Array$add$panda$collections$Array$T(whileChildren4211, ((panda$core$Object*) block4243));
-    org$pandalanguage$pandac$IRNode* $tmp4252 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-    $tmp4252->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-    $tmp4252->refCount.value = 1;
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4252, ((panda$core$Int64) { 1013 }), p_iterator->position, ((panda$core$Object*) p_label), ((panda$collections$ListView*) whileChildren4211));
-    panda$collections$Array$add$panda$collections$Array$T(statements4196, ((panda$core$Object*) $tmp4252));
-    org$pandalanguage$pandac$IRNode* $tmp4254 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-    $tmp4254->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    panda$collections$Array$init($tmp4250);
+    org$pandalanguage$pandac$IRNode* $tmp4252 = org$pandalanguage$pandac$Compiler$call$org$pandalanguage$pandac$IRNode$panda$core$String$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$org$pandalanguage$pandac$Type$Q$R$org$pandalanguage$pandac$IRNode$Q(self, $tmp4247, &$s4249, ((panda$collections$ListView*) $tmp4250), NULL);
+    next4246 = $tmp4252;
+    PANDA_ASSERT(((panda$core$Bit) { next4246 != NULL }).value);
+    panda$collections$Array$add$panda$collections$Array$T(valueDeclChildren4241, ((panda$core$Object*) next4246));
+    panda$collections$Array* $tmp4254 = (panda$collections$Array*) malloc(40);
+    $tmp4254->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp4254->refCount.value = 1;
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4254, ((panda$core$Int64) { 1000 }), p_iterator->position, ((panda$collections$ListView*) statements4196));
-    return $tmp4254;
+    panda$collections$Array$init($tmp4254);
+    valueVarChildren4253 = $tmp4254;
+    org$pandalanguage$pandac$IRNode* $tmp4256 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+    $tmp4256->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    $tmp4256->refCount.value = 1;
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4256, ((panda$core$Int64) { 1021 }), p_iterator->position, ((panda$collections$ListView*) valueDeclChildren4241));
+    panda$collections$Array$add$panda$collections$Array$T(valueVarChildren4253, ((panda$core$Object*) $tmp4256));
+    org$pandalanguage$pandac$IRNode* $tmp4259 = org$pandalanguage$pandac$Compiler$compileBlock$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$R$org$pandalanguage$pandac$IRNode$Q(self, p_position, p_body);
+    block4258 = $tmp4259;
+    if (((panda$core$Bit) { block4258 == NULL }).value) {
+    {
+        return NULL;
+    }
+    }
+    panda$collections$Array* $tmp4261 = (panda$collections$Array*) malloc(40);
+    $tmp4261->$class = (panda$core$Class*) &panda$collections$Array$class;
+    $tmp4261->refCount.value = 1;
+    panda$collections$Array$init($tmp4261);
+    blockChildren4260 = $tmp4261;
+    org$pandalanguage$pandac$IRNode* $tmp4263 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+    $tmp4263->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    $tmp4263->refCount.value = 1;
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4263, ((panda$core$Int64) { 1018 }), p_iterator->position, ((panda$collections$ListView*) valueVarChildren4253));
+    panda$collections$Array$add$panda$collections$Array$T(blockChildren4260, ((panda$core$Object*) $tmp4263));
+    panda$collections$Array$addAll$panda$collections$CollectionView$LTpanda$collections$Array$T$GT(blockChildren4260, ((panda$collections$CollectionView*) block4258->children));
+    org$pandalanguage$pandac$IRNode* $tmp4265 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+    $tmp4265->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    $tmp4265->refCount.value = 1;
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4265, ((panda$core$Int64) { 1000 }), block4258->position, ((panda$collections$ListView*) blockChildren4260));
+    block4258 = $tmp4265;
+    panda$collections$Array$add$panda$collections$Array$T(whileChildren4226, ((panda$core$Object*) block4258));
+    org$pandalanguage$pandac$IRNode* $tmp4267 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+    $tmp4267->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    $tmp4267->refCount.value = 1;
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4267, ((panda$core$Int64) { 1013 }), p_iterator->position, ((panda$core$Object*) p_label), ((panda$collections$ListView*) whileChildren4226));
+    panda$collections$Array$add$panda$collections$Array$T(statements4211, ((panda$core$Object*) $tmp4267));
+    org$pandalanguage$pandac$IRNode* $tmp4269 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+    $tmp4269->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    $tmp4269->refCount.value = 1;
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4269, ((panda$core$Int64) { 1000 }), p_iterator->position, ((panda$collections$ListView*) statements4211));
+    return $tmp4269;
 }
-org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileFor$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$ASTNode* p_f) {
-    org$pandalanguage$pandac$IRNode* list4259;
-    org$pandalanguage$pandac$SymbolTable* symbols4262;
-    org$pandalanguage$pandac$IRNode* result4265;
-    panda$core$Bit found4279;
-    panda$collections$Iterator* intf$Iter4280;
-    org$pandalanguage$pandac$Type* intf4293;
-    org$pandalanguage$pandac$IRNode* iterator4305;
-    org$pandalanguage$pandac$IRNode* iterable4317;
-    org$pandalanguage$pandac$IRNode* iterator4319;
-    panda$core$Bit $tmp4256 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_f->kind, ((panda$core$Int64) { 119 }));
-    PANDA_ASSERT($tmp4256.value);
-    panda$core$Int64 $tmp4257 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(p_f->children);
-    panda$core$Bit $tmp4258 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp4257, ((panda$core$Int64) { 3 }));
-    PANDA_ASSERT($tmp4258.value);
-    panda$collections$Stack$push$panda$collections$Stack$T(self->loops, ((panda$core$Object*) ((panda$core$String*) p_f->payload)));
-    panda$core$Object* $tmp4260 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_f->children, ((panda$core$Int64) { 1 }));
-    org$pandalanguage$pandac$IRNode* $tmp4261 = org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, ((org$pandalanguage$pandac$ASTNode*) $tmp4260));
-    list4259 = $tmp4261;
-    if (((panda$core$Bit) { list4259 == NULL }).value) {
+org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileFor$org$pandalanguage$pandac$Position$panda$core$String$Q$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$ASTNode$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position p_position, panda$core$String* p_label, org$pandalanguage$pandac$ASTNode* p_rawTarget, org$pandalanguage$pandac$ASTNode* p_rawList, panda$collections$ListView* p_statements) {
+    org$pandalanguage$pandac$IRNode* list4271;
+    org$pandalanguage$pandac$SymbolTable* symbols4273;
+    org$pandalanguage$pandac$IRNode* result4276;
+    panda$core$Bit found4288;
+    panda$collections$Iterator* intf$Iter4289;
+    org$pandalanguage$pandac$Type* intf4302;
+    org$pandalanguage$pandac$IRNode* iterator4314;
+    org$pandalanguage$pandac$IRNode* iterable4324;
+    org$pandalanguage$pandac$IRNode* iterator4326;
+    panda$collections$Stack$push$panda$collections$Stack$T(self->loops, ((panda$core$Object*) p_label));
+    org$pandalanguage$pandac$IRNode* $tmp4272 = org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_rawList);
+    list4271 = $tmp4272;
+    if (((panda$core$Bit) { list4271 == NULL }).value) {
     {
         panda$collections$Stack$pop$R$panda$collections$Stack$T(self->loops);
         return NULL;
     }
     }
-    org$pandalanguage$pandac$SymbolTable* $tmp4263 = (org$pandalanguage$pandac$SymbolTable*) malloc(48);
-    $tmp4263->$class = (panda$core$Class*) &org$pandalanguage$pandac$SymbolTable$class;
-    $tmp4263->refCount.value = 1;
-    org$pandalanguage$pandac$SymbolTable$init$org$pandalanguage$pandac$SymbolTable($tmp4263, self->symbolTable);
-    symbols4262 = $tmp4263;
-    self->symbolTable = symbols4262;
-    panda$core$Bit $tmp4268 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(list4259->kind, ((panda$core$Int64) { 1031 }));
-    bool $tmp4267 = $tmp4268.value;
-    if ($tmp4267) goto $l4269;
-    panda$core$Bit $tmp4270 = org$pandalanguage$pandac$Type$isRange$R$panda$core$Bit(list4259->type);
-    $tmp4267 = $tmp4270.value;
-    $l4269:;
-    panda$core$Bit $tmp4271 = { $tmp4267 };
-    bool $tmp4266 = $tmp4271.value;
-    if ($tmp4266) goto $l4272;
-    panda$core$Bit $tmp4273 = org$pandalanguage$pandac$Type$isSteppedRange$R$panda$core$Bit(list4259->type);
-    $tmp4266 = $tmp4273.value;
-    $l4272:;
-    panda$core$Bit $tmp4274 = { $tmp4266 };
-    if ($tmp4274.value) {
+    org$pandalanguage$pandac$SymbolTable* $tmp4274 = (org$pandalanguage$pandac$SymbolTable*) malloc(48);
+    $tmp4274->$class = (panda$core$Class*) &org$pandalanguage$pandac$SymbolTable$class;
+    $tmp4274->refCount.value = 1;
+    org$pandalanguage$pandac$SymbolTable$init$org$pandalanguage$pandac$SymbolTable($tmp4274, self->symbolTable);
+    symbols4273 = $tmp4274;
+    self->symbolTable = symbols4273;
+    panda$core$Bit $tmp4279 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(list4271->kind, ((panda$core$Int64) { 1031 }));
+    bool $tmp4278 = $tmp4279.value;
+    if ($tmp4278) goto $l4280;
+    panda$core$Bit $tmp4281 = org$pandalanguage$pandac$Type$isRange$R$panda$core$Bit(list4271->type);
+    $tmp4278 = $tmp4281.value;
+    $l4280:;
+    panda$core$Bit $tmp4282 = { $tmp4278 };
+    bool $tmp4277 = $tmp4282.value;
+    if ($tmp4277) goto $l4283;
+    panda$core$Bit $tmp4284 = org$pandalanguage$pandac$Type$isSteppedRange$R$panda$core$Bit(list4271->type);
+    $tmp4277 = $tmp4284.value;
+    $l4283:;
+    panda$core$Bit $tmp4285 = { $tmp4277 };
+    if ($tmp4285.value) {
     {
-        panda$core$Object* $tmp4275 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_f->children, ((panda$core$Int64) { 0 }));
-        panda$core$Object* $tmp4276 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_f->children, ((panda$core$Int64) { 2 }));
-        org$pandalanguage$pandac$IRNode* $tmp4277 = org$pandalanguage$pandac$Compiler$compileRangeFor$org$pandalanguage$pandac$Position$panda$core$String$Q$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_f->position, ((panda$core$String*) p_f->payload), ((org$pandalanguage$pandac$ASTNode*) $tmp4275), list4259, ((org$pandalanguage$pandac$ASTNode*) $tmp4276));
-        result4265 = $tmp4277;
+        org$pandalanguage$pandac$IRNode* $tmp4286 = org$pandalanguage$pandac$Compiler$compileRangeFor$org$pandalanguage$pandac$Position$panda$core$String$Q$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$IRNode$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$R$org$pandalanguage$pandac$IRNode$Q(self, p_position, p_label, p_rawTarget, list4271, p_statements);
+        result4276 = $tmp4286;
     }
     }
     else {
     {
-        org$pandalanguage$pandac$IRNode* $tmp4278 = org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$IRNode$Q$R$org$pandalanguage$pandac$IRNode$Q(self, list4259);
-        list4259 = $tmp4278;
-        if (((panda$core$Bit) { list4259 == NULL }).value) {
+        org$pandalanguage$pandac$IRNode* $tmp4287 = org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$IRNode$Q$R$org$pandalanguage$pandac$IRNode$Q(self, list4271);
+        list4271 = $tmp4287;
+        if (((panda$core$Bit) { list4271 == NULL }).value) {
         {
             return NULL;
         }
         }
-        found4279 = ((panda$core$Bit) { false });
+        found4288 = ((panda$core$Bit) { false });
         {
-            panda$collections$Set* $tmp4281 = org$pandalanguage$pandac$Compiler$allInterfaces$org$pandalanguage$pandac$Type$R$panda$collections$Set$LTorg$pandalanguage$pandac$Type$GT(self, list4259->type);
-            ITable* $tmp4282 = ((panda$collections$Iterable*) $tmp4281)->$class->itable;
-            while ($tmp4282->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
-                $tmp4282 = $tmp4282->next;
+            panda$collections$Set* $tmp4290 = org$pandalanguage$pandac$Compiler$allInterfaces$org$pandalanguage$pandac$Type$R$panda$collections$Set$LTorg$pandalanguage$pandac$Type$GT(self, list4271->type);
+            ITable* $tmp4291 = ((panda$collections$Iterable*) $tmp4290)->$class->itable;
+            while ($tmp4291->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
+                $tmp4291 = $tmp4291->next;
             }
-            $fn4284 $tmp4283 = $tmp4282->methods[0];
-            panda$collections$Iterator* $tmp4285 = $tmp4283(((panda$collections$Iterable*) $tmp4281));
-            intf$Iter4280 = $tmp4285;
-            $l4286:;
-            ITable* $tmp4288 = intf$Iter4280->$class->itable;
-            while ($tmp4288->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-                $tmp4288 = $tmp4288->next;
+            $fn4293 $tmp4292 = $tmp4291->methods[0];
+            panda$collections$Iterator* $tmp4294 = $tmp4292(((panda$collections$Iterable*) $tmp4290));
+            intf$Iter4289 = $tmp4294;
+            $l4295:;
+            ITable* $tmp4297 = intf$Iter4289->$class->itable;
+            while ($tmp4297->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+                $tmp4297 = $tmp4297->next;
             }
-            $fn4290 $tmp4289 = $tmp4288->methods[0];
-            panda$core$Bit $tmp4291 = $tmp4289(intf$Iter4280);
-            panda$core$Bit $tmp4292 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp4291);
-            if (!$tmp4292.value) goto $l4287;
+            $fn4299 $tmp4298 = $tmp4297->methods[0];
+            panda$core$Bit $tmp4300 = $tmp4298(intf$Iter4289);
+            panda$core$Bit $tmp4301 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp4300);
+            if (!$tmp4301.value) goto $l4296;
             {
-                ITable* $tmp4294 = intf$Iter4280->$class->itable;
-                while ($tmp4294->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-                    $tmp4294 = $tmp4294->next;
+                ITable* $tmp4303 = intf$Iter4289->$class->itable;
+                while ($tmp4303->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+                    $tmp4303 = $tmp4303->next;
                 }
-                $fn4296 $tmp4295 = $tmp4294->methods[1];
-                panda$core$Object* $tmp4297 = $tmp4295(intf$Iter4280);
-                intf4293 = ((org$pandalanguage$pandac$Type*) $tmp4297);
-                panda$core$Bit $tmp4299 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(intf4293->typeKind, ((panda$core$Int64) { 21 }));
-                bool $tmp4298 = $tmp4299.value;
-                if (!$tmp4298) goto $l4300;
-                panda$core$Object* $tmp4301 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(intf4293->subtypes, ((panda$core$Int64) { 0 }));
-                org$pandalanguage$pandac$Type* $tmp4302 = org$pandalanguage$pandac$Type$Iterator$R$org$pandalanguage$pandac$Type();
-                panda$core$Bit $tmp4303 = org$pandalanguage$pandac$Type$$EQ$org$pandalanguage$pandac$Type$R$panda$core$Bit(((org$pandalanguage$pandac$Type*) $tmp4301), $tmp4302);
-                $tmp4298 = $tmp4303.value;
-                $l4300:;
-                panda$core$Bit $tmp4304 = { $tmp4298 };
-                if ($tmp4304.value) {
+                $fn4305 $tmp4304 = $tmp4303->methods[1];
+                panda$core$Object* $tmp4306 = $tmp4304(intf$Iter4289);
+                intf4302 = ((org$pandalanguage$pandac$Type*) $tmp4306);
+                panda$core$Bit $tmp4308 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(intf4302->typeKind, ((panda$core$Int64) { 21 }));
+                bool $tmp4307 = $tmp4308.value;
+                if (!$tmp4307) goto $l4309;
+                panda$core$Object* $tmp4310 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(intf4302->subtypes, ((panda$core$Int64) { 0 }));
+                org$pandalanguage$pandac$Type* $tmp4311 = org$pandalanguage$pandac$Type$Iterator$R$org$pandalanguage$pandac$Type();
+                panda$core$Bit $tmp4312 = org$pandalanguage$pandac$Type$$EQ$org$pandalanguage$pandac$Type$R$panda$core$Bit(((org$pandalanguage$pandac$Type*) $tmp4310), $tmp4311);
+                $tmp4307 = $tmp4312.value;
+                $l4309:;
+                panda$core$Bit $tmp4313 = { $tmp4307 };
+                if ($tmp4313.value) {
                 {
-                    org$pandalanguage$pandac$IRNode* $tmp4306 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, list4259, intf4293);
-                    iterator4305 = $tmp4306;
-                    panda$core$Object* $tmp4307 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_f->children, ((panda$core$Int64) { 0 }));
-                    panda$core$Object* $tmp4308 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_f->children, ((panda$core$Int64) { 2 }));
-                    org$pandalanguage$pandac$IRNode* $tmp4309 = org$pandalanguage$pandac$Compiler$compileIteratorFor$org$pandalanguage$pandac$Position$panda$core$String$Q$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_f->position, ((panda$core$String*) p_f->payload), ((org$pandalanguage$pandac$ASTNode*) $tmp4307), iterator4305, ((org$pandalanguage$pandac$ASTNode*) $tmp4308));
-                    result4265 = $tmp4309;
-                    found4279 = ((panda$core$Bit) { true });
-                    goto $l4287;
+                    org$pandalanguage$pandac$IRNode* $tmp4315 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, list4271, intf4302);
+                    iterator4314 = $tmp4315;
+                    org$pandalanguage$pandac$IRNode* $tmp4316 = org$pandalanguage$pandac$Compiler$compileIteratorFor$org$pandalanguage$pandac$Position$panda$core$String$Q$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$IRNode$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$R$org$pandalanguage$pandac$IRNode$Q(self, p_position, p_label, p_rawTarget, iterator4314, p_statements);
+                    result4276 = $tmp4316;
+                    found4288 = ((panda$core$Bit) { true });
+                    goto $l4296;
                 }
                 }
-                panda$core$Bit $tmp4311 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(intf4293->typeKind, ((panda$core$Int64) { 21 }));
-                bool $tmp4310 = $tmp4311.value;
-                if (!$tmp4310) goto $l4312;
-                panda$core$Object* $tmp4313 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(intf4293->subtypes, ((panda$core$Int64) { 0 }));
-                org$pandalanguage$pandac$Type* $tmp4314 = org$pandalanguage$pandac$Type$Iterable$R$org$pandalanguage$pandac$Type();
-                panda$core$Bit $tmp4315 = org$pandalanguage$pandac$Type$$EQ$org$pandalanguage$pandac$Type$R$panda$core$Bit(((org$pandalanguage$pandac$Type*) $tmp4313), $tmp4314);
-                $tmp4310 = $tmp4315.value;
-                $l4312:;
-                panda$core$Bit $tmp4316 = { $tmp4310 };
-                if ($tmp4316.value) {
+                panda$core$Bit $tmp4318 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(intf4302->typeKind, ((panda$core$Int64) { 21 }));
+                bool $tmp4317 = $tmp4318.value;
+                if (!$tmp4317) goto $l4319;
+                panda$core$Object* $tmp4320 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(intf4302->subtypes, ((panda$core$Int64) { 0 }));
+                org$pandalanguage$pandac$Type* $tmp4321 = org$pandalanguage$pandac$Type$Iterable$R$org$pandalanguage$pandac$Type();
+                panda$core$Bit $tmp4322 = org$pandalanguage$pandac$Type$$EQ$org$pandalanguage$pandac$Type$R$panda$core$Bit(((org$pandalanguage$pandac$Type*) $tmp4320), $tmp4321);
+                $tmp4317 = $tmp4322.value;
+                $l4319:;
+                panda$core$Bit $tmp4323 = { $tmp4317 };
+                if ($tmp4323.value) {
                 {
-                    org$pandalanguage$pandac$IRNode* $tmp4318 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, list4259, intf4293);
-                    iterable4317 = $tmp4318;
-                    panda$collections$Array* $tmp4321 = (panda$collections$Array*) malloc(40);
-                    $tmp4321->$class = (panda$core$Class*) &panda$collections$Array$class;
-                    $tmp4321->refCount.value = 1;
-                    panda$collections$Array$init($tmp4321);
-                    org$pandalanguage$pandac$IRNode* $tmp4323 = org$pandalanguage$pandac$Compiler$call$org$pandalanguage$pandac$IRNode$panda$core$String$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$R$org$pandalanguage$pandac$IRNode$Q(self, iterable4317, &$s4320, ((panda$collections$ListView*) $tmp4321));
-                    iterator4319 = $tmp4323;
-                    panda$core$Object* $tmp4324 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_f->children, ((panda$core$Int64) { 0 }));
-                    panda$core$Object* $tmp4325 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_f->children, ((panda$core$Int64) { 2 }));
-                    org$pandalanguage$pandac$IRNode* $tmp4326 = org$pandalanguage$pandac$Compiler$compileIteratorFor$org$pandalanguage$pandac$Position$panda$core$String$Q$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_f->position, ((panda$core$String*) p_f->payload), ((org$pandalanguage$pandac$ASTNode*) $tmp4324), iterator4319, ((org$pandalanguage$pandac$ASTNode*) $tmp4325));
-                    result4265 = $tmp4326;
-                    found4279 = ((panda$core$Bit) { true });
-                    goto $l4287;
+                    org$pandalanguage$pandac$IRNode* $tmp4325 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, list4271, intf4302);
+                    iterable4324 = $tmp4325;
+                    panda$collections$Array* $tmp4328 = (panda$collections$Array*) malloc(40);
+                    $tmp4328->$class = (panda$core$Class*) &panda$collections$Array$class;
+                    $tmp4328->refCount.value = 1;
+                    panda$collections$Array$init($tmp4328);
+                    org$pandalanguage$pandac$IRNode* $tmp4330 = org$pandalanguage$pandac$Compiler$call$org$pandalanguage$pandac$IRNode$panda$core$String$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$R$org$pandalanguage$pandac$IRNode$Q(self, iterable4324, &$s4327, ((panda$collections$ListView*) $tmp4328));
+                    iterator4326 = $tmp4330;
+                    org$pandalanguage$pandac$IRNode* $tmp4331 = org$pandalanguage$pandac$Compiler$compileIteratorFor$org$pandalanguage$pandac$Position$panda$core$String$Q$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$IRNode$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$R$org$pandalanguage$pandac$IRNode$Q(self, p_position, p_label, p_rawTarget, iterator4326, p_statements);
+                    result4276 = $tmp4331;
+                    found4288 = ((panda$core$Bit) { true });
+                    goto $l4296;
                 }
                 }
             }
-            goto $l4286;
-            $l4287:;
+            goto $l4295;
+            $l4296:;
         }
-        panda$core$Bit $tmp4327 = panda$core$Bit$$NOT$R$panda$core$Bit(found4279);
-        if ($tmp4327.value) {
+        panda$core$Bit $tmp4332 = panda$core$Bit$$NOT$R$panda$core$Bit(found4288);
+        if ($tmp4332.value) {
         {
-            panda$core$String* $tmp4329 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s4328, ((panda$core$Object*) list4259->type));
-            panda$core$String* $tmp4331 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4329, &$s4330);
-            org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, list4259->position, $tmp4331);
+            panda$core$String* $tmp4334 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s4333, ((panda$core$Object*) list4271->type));
+            panda$core$String* $tmp4336 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4334, &$s4335);
+            org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, list4271->position, $tmp4336);
             return NULL;
         }
         }
     }
     }
-    panda$core$Object* $tmp4332 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(symbols4262->parents, ((panda$core$Int64) { 0 }));
-    self->symbolTable = ((org$pandalanguage$pandac$SymbolTable*) $tmp4332);
+    panda$core$Object* $tmp4337 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(symbols4273->parents, ((panda$core$Int64) { 0 }));
+    self->symbolTable = ((org$pandalanguage$pandac$SymbolTable*) $tmp4337);
     panda$collections$Stack$pop$R$panda$collections$Stack$T(self->loops);
-    return result4265;
+    return result4276;
 }
-org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileWhile$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$ASTNode* p_w) {
-    org$pandalanguage$pandac$IRNode* test4336;
-    org$pandalanguage$pandac$IRNode* stmt4341;
+org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileWhile$org$pandalanguage$pandac$Position$panda$core$String$Q$org$pandalanguage$pandac$ASTNode$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position p_position, panda$core$String* p_label, org$pandalanguage$pandac$ASTNode* p_rawTest, panda$collections$ListView* p_statements) {
+    org$pandalanguage$pandac$IRNode* test4338;
+    org$pandalanguage$pandac$IRNode* block4342;
     panda$collections$Array* children4344;
-    panda$core$Bit $tmp4333 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_w->kind, ((panda$core$Int64) { 121 }));
-    PANDA_ASSERT($tmp4333.value);
-    panda$core$Int64 $tmp4334 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(p_w->children);
-    panda$core$Bit $tmp4335 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp4334, ((panda$core$Int64) { 2 }));
-    PANDA_ASSERT($tmp4335.value);
-    panda$collections$Stack$push$panda$collections$Stack$T(self->loops, ((panda$core$Object*) ((panda$core$String*) p_w->payload)));
-    panda$core$Object* $tmp4337 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_w->children, ((panda$core$Int64) { 0 }));
-    org$pandalanguage$pandac$IRNode* $tmp4338 = org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, ((org$pandalanguage$pandac$ASTNode*) $tmp4337));
-    org$pandalanguage$pandac$Type* $tmp4339 = org$pandalanguage$pandac$Type$Bit$R$org$pandalanguage$pandac$Type();
-    org$pandalanguage$pandac$IRNode* $tmp4340 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, $tmp4338, $tmp4339);
-    test4336 = $tmp4340;
-    if (((panda$core$Bit) { test4336 == NULL }).value) {
+    panda$collections$Stack$push$panda$collections$Stack$T(self->loops, ((panda$core$Object*) p_label));
+    org$pandalanguage$pandac$IRNode* $tmp4339 = org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_rawTest);
+    org$pandalanguage$pandac$Type* $tmp4340 = org$pandalanguage$pandac$Type$Bit$R$org$pandalanguage$pandac$Type();
+    org$pandalanguage$pandac$IRNode* $tmp4341 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, $tmp4339, $tmp4340);
+    test4338 = $tmp4341;
+    if (((panda$core$Bit) { test4338 == NULL }).value) {
     {
         panda$collections$Stack$pop$R$panda$collections$Stack$T(self->loops);
         return NULL;
     }
     }
-    panda$core$Object* $tmp4342 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_w->children, ((panda$core$Int64) { 1 }));
-    org$pandalanguage$pandac$IRNode* $tmp4343 = org$pandalanguage$pandac$Compiler$compileStatement$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, ((org$pandalanguage$pandac$ASTNode*) $tmp4342));
-    stmt4341 = $tmp4343;
-    if (((panda$core$Bit) { stmt4341 == NULL }).value) {
+    org$pandalanguage$pandac$IRNode* $tmp4343 = org$pandalanguage$pandac$Compiler$compileBlock$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$R$org$pandalanguage$pandac$IRNode$Q(self, p_position, p_statements);
+    block4342 = $tmp4343;
+    if (((panda$core$Bit) { block4342 == NULL }).value) {
     {
         panda$collections$Stack$pop$R$panda$collections$Stack$T(self->loops);
         return NULL;
@@ -10656,1594 +10728,1572 @@ org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileWhile$
     $tmp4345->refCount.value = 1;
     panda$collections$Array$init$panda$core$Int64($tmp4345, ((panda$core$Int64) { 2 }));
     children4344 = $tmp4345;
-    panda$collections$Array$add$panda$collections$Array$T(children4344, ((panda$core$Object*) test4336));
-    panda$collections$Array$add$panda$collections$Array$T(children4344, ((panda$core$Object*) stmt4341));
+    panda$collections$Array$add$panda$collections$Array$T(children4344, ((panda$core$Object*) test4338));
+    panda$collections$Array$add$panda$collections$Array$T(children4344, ((panda$core$Object*) block4342));
     panda$collections$Stack$pop$R$panda$collections$Stack$T(self->loops);
     org$pandalanguage$pandac$IRNode* $tmp4347 = (org$pandalanguage$pandac$IRNode*) malloc(72);
     $tmp4347->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
     $tmp4347->refCount.value = 1;
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4347, ((panda$core$Int64) { 1013 }), p_w->position, p_w->payload, ((panda$collections$ListView*) children4344));
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4347, ((panda$core$Int64) { 1013 }), p_position, ((panda$core$Object*) p_label), ((panda$collections$ListView*) children4344));
     return $tmp4347;
 }
-org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileDo$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$ASTNode* p_d) {
-    org$pandalanguage$pandac$IRNode* stmt4352;
-    org$pandalanguage$pandac$IRNode* test4355;
-    panda$collections$Array* children4360;
-    panda$core$Bit $tmp4349 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_d->kind, ((panda$core$Int64) { 120 }));
-    PANDA_ASSERT($tmp4349.value);
-    panda$core$Int64 $tmp4350 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(p_d->children);
-    panda$core$Bit $tmp4351 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp4350, ((panda$core$Int64) { 2 }));
-    PANDA_ASSERT($tmp4351.value);
-    panda$collections$Stack$push$panda$collections$Stack$T(self->loops, ((panda$core$Object*) ((panda$core$String*) p_d->payload)));
-    panda$core$Object* $tmp4353 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_d->children, ((panda$core$Int64) { 0 }));
-    org$pandalanguage$pandac$IRNode* $tmp4354 = org$pandalanguage$pandac$Compiler$compileStatement$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, ((org$pandalanguage$pandac$ASTNode*) $tmp4353));
-    stmt4352 = $tmp4354;
-    if (((panda$core$Bit) { stmt4352 == NULL }).value) {
+org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileDo$org$pandalanguage$pandac$Position$panda$core$String$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position p_position, panda$core$String* p_label, panda$collections$ListView* p_statements, org$pandalanguage$pandac$ASTNode* p_rawTest) {
+    org$pandalanguage$pandac$IRNode* block4349;
+    org$pandalanguage$pandac$IRNode* test4351;
+    panda$collections$Array* children4355;
+    panda$collections$Stack$push$panda$collections$Stack$T(self->loops, ((panda$core$Object*) p_label));
+    org$pandalanguage$pandac$IRNode* $tmp4350 = org$pandalanguage$pandac$Compiler$compileBlock$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$R$org$pandalanguage$pandac$IRNode$Q(self, p_position, p_statements);
+    block4349 = $tmp4350;
+    if (((panda$core$Bit) { block4349 == NULL }).value) {
     {
         panda$collections$Stack$pop$R$panda$collections$Stack$T(self->loops);
         return NULL;
     }
     }
-    panda$core$Object* $tmp4356 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_d->children, ((panda$core$Int64) { 1 }));
-    org$pandalanguage$pandac$IRNode* $tmp4357 = org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, ((org$pandalanguage$pandac$ASTNode*) $tmp4356));
-    org$pandalanguage$pandac$Type* $tmp4358 = org$pandalanguage$pandac$Type$Bit$R$org$pandalanguage$pandac$Type();
-    org$pandalanguage$pandac$IRNode* $tmp4359 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, $tmp4357, $tmp4358);
-    test4355 = $tmp4359;
-    if (((panda$core$Bit) { test4355 == NULL }).value) {
+    org$pandalanguage$pandac$IRNode* $tmp4352 = org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_rawTest);
+    org$pandalanguage$pandac$Type* $tmp4353 = org$pandalanguage$pandac$Type$Bit$R$org$pandalanguage$pandac$Type();
+    org$pandalanguage$pandac$IRNode* $tmp4354 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, $tmp4352, $tmp4353);
+    test4351 = $tmp4354;
+    if (((panda$core$Bit) { test4351 == NULL }).value) {
     {
         panda$collections$Stack$pop$R$panda$collections$Stack$T(self->loops);
         return NULL;
     }
     }
-    panda$collections$Array* $tmp4361 = (panda$collections$Array*) malloc(40);
-    $tmp4361->$class = (panda$core$Class*) &panda$collections$Array$class;
-    $tmp4361->refCount.value = 1;
-    panda$collections$Array$init$panda$core$Int64($tmp4361, ((panda$core$Int64) { 2 }));
-    children4360 = $tmp4361;
-    panda$collections$Array$add$panda$collections$Array$T(children4360, ((panda$core$Object*) stmt4352));
-    panda$collections$Array$add$panda$collections$Array$T(children4360, ((panda$core$Object*) test4355));
+    panda$collections$Array* $tmp4356 = (panda$collections$Array*) malloc(40);
+    $tmp4356->$class = (panda$core$Class*) &panda$collections$Array$class;
+    $tmp4356->refCount.value = 1;
+    panda$collections$Array$init$panda$core$Int64($tmp4356, ((panda$core$Int64) { 2 }));
+    children4355 = $tmp4356;
+    panda$collections$Array$add$panda$collections$Array$T(children4355, ((panda$core$Object*) block4349));
+    panda$collections$Array$add$panda$collections$Array$T(children4355, ((panda$core$Object*) test4351));
     panda$collections$Stack$pop$R$panda$collections$Stack$T(self->loops);
-    org$pandalanguage$pandac$IRNode* $tmp4363 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-    $tmp4363->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    org$pandalanguage$pandac$IRNode* $tmp4358 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+    $tmp4358->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    $tmp4358->refCount.value = 1;
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4358, ((panda$core$Int64) { 1014 }), p_position, ((panda$core$Object*) p_label), ((panda$collections$ListView*) children4355));
+    return $tmp4358;
+}
+org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileLoop$org$pandalanguage$pandac$Position$panda$core$String$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position p_position, panda$core$String* p_label, panda$collections$ListView* p_statements) {
+    org$pandalanguage$pandac$IRNode* block4360;
+    panda$collections$Array* children4362;
+    panda$collections$Stack$push$panda$collections$Stack$T(self->loops, ((panda$core$Object*) p_label));
+    org$pandalanguage$pandac$IRNode* $tmp4361 = org$pandalanguage$pandac$Compiler$compileBlock$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$R$org$pandalanguage$pandac$IRNode$Q(self, p_position, p_statements);
+    block4360 = $tmp4361;
+    if (((panda$core$Bit) { block4360 == NULL }).value) {
+    {
+        panda$collections$Stack$pop$R$panda$collections$Stack$T(self->loops);
+        return NULL;
+    }
+    }
+    panda$collections$Array* $tmp4363 = (panda$collections$Array*) malloc(40);
+    $tmp4363->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp4363->refCount.value = 1;
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4363, ((panda$core$Int64) { 1014 }), p_d->position, p_d->payload, ((panda$collections$ListView*) children4360));
-    return $tmp4363;
-}
-org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileLoop$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$ASTNode* p_l) {
-    org$pandalanguage$pandac$IRNode* stmt4368;
-    panda$collections$Array* children4371;
-    panda$core$Bit $tmp4365 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_l->kind, ((panda$core$Int64) { 122 }));
-    PANDA_ASSERT($tmp4365.value);
-    panda$core$Int64 $tmp4366 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(p_l->children);
-    panda$core$Bit $tmp4367 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp4366, ((panda$core$Int64) { 1 }));
-    PANDA_ASSERT($tmp4367.value);
-    panda$collections$Stack$push$panda$collections$Stack$T(self->loops, ((panda$core$Object*) ((panda$core$String*) p_l->payload)));
-    panda$core$Object* $tmp4369 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_l->children, ((panda$core$Int64) { 0 }));
-    org$pandalanguage$pandac$IRNode* $tmp4370 = org$pandalanguage$pandac$Compiler$compileStatement$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, ((org$pandalanguage$pandac$ASTNode*) $tmp4369));
-    stmt4368 = $tmp4370;
-    if (((panda$core$Bit) { stmt4368 == NULL }).value) {
-    {
-        panda$collections$Stack$pop$R$panda$collections$Stack$T(self->loops);
-        return NULL;
-    }
-    }
-    panda$collections$Array* $tmp4372 = (panda$collections$Array*) malloc(40);
-    $tmp4372->$class = (panda$core$Class*) &panda$collections$Array$class;
-    $tmp4372->refCount.value = 1;
-    panda$collections$Array$init$panda$core$Int64($tmp4372, ((panda$core$Int64) { 1 }));
-    children4371 = $tmp4372;
-    panda$collections$Array$add$panda$collections$Array$T(children4371, ((panda$core$Object*) stmt4368));
+    panda$collections$Array$init$panda$core$Int64($tmp4363, ((panda$core$Int64) { 1 }));
+    children4362 = $tmp4363;
+    panda$collections$Array$add$panda$collections$Array$T(children4362, ((panda$core$Object*) block4360));
     panda$collections$Stack$pop$R$panda$collections$Stack$T(self->loops);
-    org$pandalanguage$pandac$IRNode* $tmp4374 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-    $tmp4374->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-    $tmp4374->refCount.value = 1;
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4374, ((panda$core$Int64) { 1015 }), p_l->position, p_l->payload, ((panda$collections$ListView*) children4371));
-    return $tmp4374;
+    org$pandalanguage$pandac$IRNode* $tmp4365 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+    $tmp4365->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    $tmp4365->refCount.value = 1;
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4365, ((panda$core$Int64) { 1015 }), p_position, ((panda$core$Object*) p_label), ((panda$collections$ListView*) children4362));
+    return $tmp4365;
 }
-org$pandalanguage$pandac$Compiler$CompileTargetResult* org$pandalanguage$pandac$Compiler$compileTarget$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$Variable$Kind$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$Q$R$org$pandalanguage$pandac$Compiler$CompileTargetResult$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$ASTNode* p_t, org$pandalanguage$pandac$Variable$Kind* p_kind, org$pandalanguage$pandac$IRNode* p_rawValue, org$pandalanguage$pandac$Type* p_valueType) {
-    org$pandalanguage$pandac$IRNode* value4376;
-    org$pandalanguage$pandac$Type* type4380;
-    org$pandalanguage$pandac$Variable* v4396;
-    value4376 = p_rawValue;
-    bool $tmp4377 = ((panda$core$Bit) { value4376 == NULL }).value;
-    if ($tmp4377) goto $l4378;
-    $tmp4377 = ((panda$core$Bit) { p_valueType == NULL }).value;
-    $l4378:;
-    panda$core$Bit $tmp4379 = { $tmp4377 };
-    PANDA_ASSERT($tmp4379.value);
-    switch (p_t->kind.value) {
-        case 106:
+org$pandalanguage$pandac$Compiler$CompileTargetResult* org$pandalanguage$pandac$Compiler$compileTarget$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$Variable$Kind$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$Q$R$org$pandalanguage$pandac$Compiler$CompileTargetResult$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$ASTNode* p_t, org$pandalanguage$pandac$Variable$Kind p_kind, org$pandalanguage$pandac$IRNode* p_rawValue, org$pandalanguage$pandac$Type* p_valueType) {
+    org$pandalanguage$pandac$IRNode* value4367;
+    org$pandalanguage$pandac$ASTNode* $match$3253_94371;
+    org$pandalanguage$pandac$Position position4373;
+    panda$core$String* name4375;
+    org$pandalanguage$pandac$Type* type4377;
+    org$pandalanguage$pandac$Variable* v4383;
+    org$pandalanguage$pandac$Position position4391;
+    panda$core$String* name4393;
+    org$pandalanguage$pandac$ASTNode* rawType4395;
+    org$pandalanguage$pandac$Type* type4397;
+    org$pandalanguage$pandac$Variable* v4402;
+    value4367 = p_rawValue;
+    bool $tmp4368 = ((panda$core$Bit) { value4367 == NULL }).value;
+    if ($tmp4368) goto $l4369;
+    $tmp4368 = ((panda$core$Bit) { p_valueType == NULL }).value;
+    $l4369:;
+    panda$core$Bit $tmp4370 = { $tmp4368 };
+    PANDA_ASSERT($tmp4370.value);
+    {
+        $match$3253_94371 = p_t;
+        panda$core$Bit $tmp4372 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$3253_94371->$rawValue, ((panda$core$Int64) { 18 }));
+        if ($tmp4372.value) {
         {
-            bool $tmp4381 = ((panda$core$Bit) { p_t->children != NULL }).value;
-            if (!$tmp4381) goto $l4382;
-            panda$core$Int64 $tmp4383 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(p_t->children);
-            panda$core$Bit $tmp4384 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit($tmp4383, ((panda$core$Int64) { 0 }));
-            $tmp4381 = $tmp4384.value;
-            $l4382:;
-            panda$core$Bit $tmp4385 = { $tmp4381 };
-            if ($tmp4385.value) {
+            org$pandalanguage$pandac$Position* $tmp4374 = ((org$pandalanguage$pandac$Position*) ((char*) $match$3253_94371->$data + 0));
+            position4373 = *$tmp4374;
+            panda$core$String** $tmp4376 = ((panda$core$String**) ((char*) $match$3253_94371->$data + 16));
+            name4375 = *$tmp4376;
+            if (((panda$core$Bit) { value4367 != NULL }).value) {
             {
-                panda$core$Int64 $tmp4386 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(p_t->children);
-                panda$core$Bit $tmp4387 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp4386, ((panda$core$Int64) { 1 }));
-                PANDA_ASSERT($tmp4387.value);
-                panda$core$Object* $tmp4388 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_t->children, ((panda$core$Int64) { 0 }));
-                org$pandalanguage$pandac$Type* $tmp4389 = org$pandalanguage$pandac$Scanner$convertType$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$Type(self->scanner, ((org$pandalanguage$pandac$ASTNode*) $tmp4388));
-                org$pandalanguage$pandac$Type* $tmp4390 = org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type$Q(self, $tmp4389);
-                type4380 = $tmp4390;
-            }
-            }
-            else {
-            if (((panda$core$Bit) { value4376 != NULL }).value) {
-            {
-                org$pandalanguage$pandac$IRNode* $tmp4391 = org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$IRNode$Q$R$org$pandalanguage$pandac$IRNode$Q(self, value4376);
-                value4376 = $tmp4391;
-                if (((panda$core$Bit) { value4376 == NULL }).value) {
+                org$pandalanguage$pandac$IRNode* $tmp4378 = org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$IRNode$Q$R$org$pandalanguage$pandac$IRNode$Q(self, value4367);
+                value4367 = $tmp4378;
+                if (((panda$core$Bit) { value4367 == NULL }).value) {
                 {
                     return NULL;
                 }
                 }
-                org$pandalanguage$pandac$Type* $tmp4392 = org$pandalanguage$pandac$Compiler$variableType$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$Type(self, value4376);
-                type4380 = $tmp4392;
+                org$pandalanguage$pandac$Type* $tmp4379 = org$pandalanguage$pandac$Compiler$variableType$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$Type(self, value4367);
+                type4377 = $tmp4379;
             }
             }
             else {
             if (((panda$core$Bit) { p_valueType != NULL }).value) {
             {
-                type4380 = p_valueType;
+                type4377 = p_valueType;
             }
             }
             else {
             {
-                org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, p_t->position, &$s4393);
+                org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, position4373, &$s4380);
                 return NULL;
             }
             }
             }
-            }
-            if (((panda$core$Bit) { value4376 != NULL }).value) {
+            if (((panda$core$Bit) { value4367 != NULL }).value) {
             {
-                org$pandalanguage$pandac$IRNode* $tmp4394 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, value4376, type4380);
-                value4376 = $tmp4394;
-                if (((panda$core$Bit) { value4376 == NULL }).value) {
+                org$pandalanguage$pandac$IRNode* $tmp4381 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, value4367, type4377);
+                value4367 = $tmp4381;
+                if (((panda$core$Bit) { value4367 == NULL }).value) {
                 {
                     return NULL;
                 }
                 }
-                panda$core$Bit $tmp4395 = org$pandalanguage$pandac$Type$$EQ$org$pandalanguage$pandac$Type$R$panda$core$Bit(value4376->type, type4380);
-                PANDA_ASSERT($tmp4395.value);
+                panda$core$Bit $tmp4382 = org$pandalanguage$pandac$Type$$EQ$org$pandalanguage$pandac$Type$R$panda$core$Bit(value4367->type, type4377);
+                PANDA_ASSERT($tmp4382.value);
             }
             }
-            org$pandalanguage$pandac$Variable* $tmp4397 = (org$pandalanguage$pandac$Variable*) malloc(88);
-            $tmp4397->$class = (panda$core$Class*) &org$pandalanguage$pandac$Variable$class;
-            $tmp4397->refCount.value = 1;
-            org$pandalanguage$pandac$Variable$init$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Variable$Kind$panda$core$String$org$pandalanguage$pandac$Type($tmp4397, p_t->position, p_kind, ((panda$core$String*) p_t->payload), type4380);
-            v4396 = $tmp4397;
-            org$pandalanguage$pandac$SymbolTable$add$org$pandalanguage$pandac$Symbol(self->symbolTable, ((org$pandalanguage$pandac$Symbol*) v4396));
-            org$pandalanguage$pandac$Compiler$CompileTargetResult* $tmp4399 = (org$pandalanguage$pandac$Compiler$CompileTargetResult*) malloc(32);
-            $tmp4399->$class = (panda$core$Class*) &org$pandalanguage$pandac$Compiler$CompileTargetResult$class;
-            $tmp4399->refCount.value = 1;
-            org$pandalanguage$pandac$IRNode* $tmp4401 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-            $tmp4401->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-            $tmp4401->refCount.value = 1;
-            org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Variable($tmp4401, ((panda$core$Int64) { 1016 }), ((org$pandalanguage$pandac$Symbol*) v4396)->position, v4396->type, v4396);
-            org$pandalanguage$pandac$Compiler$CompileTargetResult$init$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$IRNode$Q($tmp4399, $tmp4401, value4376);
-            return $tmp4399;
+            org$pandalanguage$pandac$Variable* $tmp4384 = (org$pandalanguage$pandac$Variable*) malloc(88);
+            $tmp4384->$class = (panda$core$Class*) &org$pandalanguage$pandac$Variable$class;
+            $tmp4384->refCount.value = 1;
+            org$pandalanguage$pandac$Variable$init$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Variable$Kind$panda$core$String$org$pandalanguage$pandac$Type($tmp4384, position4373, p_kind, name4375, type4377);
+            v4383 = $tmp4384;
+            org$pandalanguage$pandac$SymbolTable$add$org$pandalanguage$pandac$Symbol(self->symbolTable, ((org$pandalanguage$pandac$Symbol*) v4383));
+            org$pandalanguage$pandac$Compiler$CompileTargetResult* $tmp4386 = (org$pandalanguage$pandac$Compiler$CompileTargetResult*) malloc(32);
+            $tmp4386->$class = (panda$core$Class*) &org$pandalanguage$pandac$Compiler$CompileTargetResult$class;
+            $tmp4386->refCount.value = 1;
+            org$pandalanguage$pandac$IRNode* $tmp4388 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+            $tmp4388->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+            $tmp4388->refCount.value = 1;
+            org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Variable($tmp4388, ((panda$core$Int64) { 1016 }), ((org$pandalanguage$pandac$Symbol*) v4383)->position, v4383->type, v4383);
+            org$pandalanguage$pandac$Compiler$CompileTargetResult$init$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$IRNode$Q($tmp4386, $tmp4388, value4367);
+            return $tmp4386;
         }
-        break;
-        case 153:
+        }
+        else {
+        panda$core$Bit $tmp4390 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$3253_94371->$rawValue, ((panda$core$Int64) { 36 }));
+        if ($tmp4390.value) {
         {
-            PANDA_ASSERT(((panda$core$Bit) { false }).value);
-        }
-        break;
-        default:
-        {
-            PANDA_ASSERT(((panda$core$Bit) { false }).value);
-        }
-    }
-}
-org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileDeclaration$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$Variable$Kind$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$ASTNode* p_d, org$pandalanguage$pandac$Variable$Kind* p_varKind) {
-    org$pandalanguage$pandac$IRNode* value4411;
-    org$pandalanguage$pandac$Compiler$CompileTargetResult* target4416;
-    panda$collections$Array* children4419;
-    org$pandalanguage$pandac$Variable* v4423;
-    panda$core$Bit $tmp4403 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_d->kind, ((panda$core$Int64) { 129 }));
-    PANDA_ASSERT($tmp4403.value);
-    panda$core$Int64 $tmp4405 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(p_d->children);
-    panda$core$Bit $tmp4406 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp4405, ((panda$core$Int64) { 1 }));
-    bool $tmp4404 = $tmp4406.value;
-    if ($tmp4404) goto $l4407;
-    panda$core$Int64 $tmp4408 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(p_d->children);
-    panda$core$Bit $tmp4409 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp4408, ((panda$core$Int64) { 2 }));
-    $tmp4404 = $tmp4409.value;
-    $l4407:;
-    panda$core$Bit $tmp4410 = { $tmp4404 };
-    PANDA_ASSERT($tmp4410.value);
-    panda$core$Int64 $tmp4412 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(p_d->children);
-    panda$core$Bit $tmp4413 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp4412, ((panda$core$Int64) { 2 }));
-    if ($tmp4413.value) {
-    {
-        panda$core$Object* $tmp4414 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_d->children, ((panda$core$Int64) { 1 }));
-        org$pandalanguage$pandac$IRNode* $tmp4415 = org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, ((org$pandalanguage$pandac$ASTNode*) $tmp4414));
-        value4411 = $tmp4415;
-        if (((panda$core$Bit) { value4411 == NULL }).value) {
-        {
-            return NULL;
-        }
-        }
-    }
-    }
-    else {
-    {
-        value4411 = NULL;
-    }
-    }
-    panda$core$Object* $tmp4417 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_d->children, ((panda$core$Int64) { 0 }));
-    org$pandalanguage$pandac$Compiler$CompileTargetResult* $tmp4418 = org$pandalanguage$pandac$Compiler$compileTarget$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$Variable$Kind$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$Q$R$org$pandalanguage$pandac$Compiler$CompileTargetResult$Q(self, ((org$pandalanguage$pandac$ASTNode*) $tmp4417), p_varKind, value4411, NULL);
-    target4416 = $tmp4418;
-    if (((panda$core$Bit) { target4416 == NULL }).value) {
-    {
-        return NULL;
-    }
-    }
-    panda$collections$Array* $tmp4420 = (panda$collections$Array*) malloc(40);
-    $tmp4420->$class = (panda$core$Class*) &panda$collections$Array$class;
-    $tmp4420->refCount.value = 1;
-    panda$collections$Array$init($tmp4420);
-    children4419 = $tmp4420;
-    panda$collections$Array$add$panda$collections$Array$T(children4419, ((panda$core$Object*) target4416->target));
-    if (((panda$core$Bit) { target4416->value != NULL }).value) {
-    {
-        panda$core$Bit $tmp4422 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(target4416->target->kind, ((panda$core$Int64) { 1016 }));
-        PANDA_ASSERT($tmp4422.value);
-        v4423 = ((org$pandalanguage$pandac$Variable*) target4416->target->payload);
-        v4423->initialValue = target4416->value;
-        panda$collections$Array$add$panda$collections$Array$T(children4419, ((panda$core$Object*) target4416->value));
-    }
-    }
-    org$pandalanguage$pandac$IRNode* $tmp4424 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-    $tmp4424->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-    $tmp4424->refCount.value = 1;
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4424, ((panda$core$Int64) { 1021 }), p_d->position, ((panda$collections$ListView*) children4419));
-    return $tmp4424;
-}
-org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileBreak$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$ASTNode* p_b) {
-    panda$core$Bit found4427;
-    panda$collections$Iterator* label$Iter4428;
-    panda$core$String* label4440;
-    panda$core$Bit $tmp4426 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_b->kind, ((panda$core$Int64) { 134 }));
-    PANDA_ASSERT($tmp4426.value);
-    if (((panda$core$Bit) { p_b->payload != NULL }).value) {
-    {
-        found4427 = ((panda$core$Bit) { false });
-        {
-            ITable* $tmp4429 = ((panda$collections$Iterable*) self->loops)->$class->itable;
-            while ($tmp4429->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
-                $tmp4429 = $tmp4429->next;
-            }
-            $fn4431 $tmp4430 = $tmp4429->methods[0];
-            panda$collections$Iterator* $tmp4432 = $tmp4430(((panda$collections$Iterable*) self->loops));
-            label$Iter4428 = $tmp4432;
-            $l4433:;
-            ITable* $tmp4435 = label$Iter4428->$class->itable;
-            while ($tmp4435->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-                $tmp4435 = $tmp4435->next;
-            }
-            $fn4437 $tmp4436 = $tmp4435->methods[0];
-            panda$core$Bit $tmp4438 = $tmp4436(label$Iter4428);
-            panda$core$Bit $tmp4439 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp4438);
-            if (!$tmp4439.value) goto $l4434;
+            org$pandalanguage$pandac$Position* $tmp4392 = ((org$pandalanguage$pandac$Position*) ((char*) $match$3253_94371->$data + 0));
+            position4391 = *$tmp4392;
+            panda$core$String** $tmp4394 = ((panda$core$String**) ((char*) $match$3253_94371->$data + 16));
+            name4393 = *$tmp4394;
+            org$pandalanguage$pandac$ASTNode** $tmp4396 = ((org$pandalanguage$pandac$ASTNode**) ((char*) $match$3253_94371->$data + 24));
+            rawType4395 = *$tmp4396;
+            org$pandalanguage$pandac$Type* $tmp4398 = org$pandalanguage$pandac$Scanner$convertType$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$Type(self->scanner, rawType4395);
+            org$pandalanguage$pandac$Type* $tmp4399 = org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type$Q(self, $tmp4398);
+            type4397 = $tmp4399;
+            if (((panda$core$Bit) { value4367 != NULL }).value) {
             {
-                ITable* $tmp4441 = label$Iter4428->$class->itable;
-                while ($tmp4441->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-                    $tmp4441 = $tmp4441->next;
-                }
-                $fn4443 $tmp4442 = $tmp4441->methods[1];
-                panda$core$Object* $tmp4444 = $tmp4442(label$Iter4428);
-                label4440 = ((panda$core$String*) $tmp4444);
-                bool $tmp4445 = ((panda$core$Bit) { label4440 != NULL }).value;
-                if (!$tmp4445) goto $l4446;
-                panda$core$Bit $tmp4450;
-                if (((panda$core$Bit) { label4440 != NULL }).value) goto $l4447; else goto $l4448;
-                $l4447:;
-                panda$core$Bit $tmp4451 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit(label4440, ((panda$core$String*) p_b->payload));
-                $tmp4450 = $tmp4451;
-                goto $l4449;
-                $l4448:;
-                $tmp4450 = ((panda$core$Bit) { false });
-                goto $l4449;
-                $l4449:;
-                $tmp4445 = $tmp4450.value;
-                $l4446:;
-                panda$core$Bit $tmp4452 = { $tmp4445 };
-                if ($tmp4452.value) {
+                org$pandalanguage$pandac$IRNode* $tmp4400 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, value4367, type4397);
+                value4367 = $tmp4400;
+                if (((panda$core$Bit) { value4367 == NULL }).value) {
                 {
-                    found4427 = ((panda$core$Bit) { true });
-                    goto $l4434;
+                    return NULL;
                 }
                 }
+                panda$core$Bit $tmp4401 = org$pandalanguage$pandac$Type$$EQ$org$pandalanguage$pandac$Type$R$panda$core$Bit(value4367->type, type4397);
+                PANDA_ASSERT($tmp4401.value);
             }
-            goto $l4433;
-            $l4434:;
-        }
-        panda$core$Bit $tmp4453 = panda$core$Bit$$NOT$R$panda$core$Bit(found4427);
-        if ($tmp4453.value) {
-        {
-            panda$core$String* $tmp4455 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s4454, p_b->payload);
-            panda$core$String* $tmp4457 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4455, &$s4456);
-            panda$core$String* $tmp4459 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s4458, p_b->payload);
-            panda$core$String* $tmp4461 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4459, &$s4460);
-            panda$core$String* $tmp4462 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4457, $tmp4461);
-            org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, p_b->position, $tmp4462);
-        }
-        }
-    }
-    }
-    else {
-    panda$core$Int64 $tmp4463 = panda$collections$Stack$get_count$R$panda$core$Int64(self->loops);
-    panda$core$Bit $tmp4464 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp4463, ((panda$core$Int64) { 0 }));
-    if ($tmp4464.value) {
-    {
-        org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, p_b->position, &$s4465);
-    }
-    }
-    }
-    org$pandalanguage$pandac$IRNode* $tmp4466 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-    $tmp4466->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-    $tmp4466->refCount.value = 1;
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$String($tmp4466, ((panda$core$Int64) { 1006 }), p_b->position, ((panda$core$String*) p_b->payload));
-    return $tmp4466;
-}
-org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileContinue$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$ASTNode* p_c) {
-    panda$core$Bit found4469;
-    panda$collections$Iterator* label$Iter4470;
-    panda$core$String* label4482;
-    panda$core$Bit $tmp4468 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_c->kind, ((panda$core$Int64) { 135 }));
-    PANDA_ASSERT($tmp4468.value);
-    if (((panda$core$Bit) { p_c->payload != NULL }).value) {
-    {
-        found4469 = ((panda$core$Bit) { false });
-        {
-            ITable* $tmp4471 = ((panda$collections$Iterable*) self->loops)->$class->itable;
-            while ($tmp4471->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
-                $tmp4471 = $tmp4471->next;
             }
-            $fn4473 $tmp4472 = $tmp4471->methods[0];
-            panda$collections$Iterator* $tmp4474 = $tmp4472(((panda$collections$Iterable*) self->loops));
-            label$Iter4470 = $tmp4474;
-            $l4475:;
-            ITable* $tmp4477 = label$Iter4470->$class->itable;
-            while ($tmp4477->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-                $tmp4477 = $tmp4477->next;
-            }
-            $fn4479 $tmp4478 = $tmp4477->methods[0];
-            panda$core$Bit $tmp4480 = $tmp4478(label$Iter4470);
-            panda$core$Bit $tmp4481 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp4480);
-            if (!$tmp4481.value) goto $l4476;
-            {
-                ITable* $tmp4483 = label$Iter4470->$class->itable;
-                while ($tmp4483->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-                    $tmp4483 = $tmp4483->next;
-                }
-                $fn4485 $tmp4484 = $tmp4483->methods[1];
-                panda$core$Object* $tmp4486 = $tmp4484(label$Iter4470);
-                label4482 = ((panda$core$String*) $tmp4486);
-                bool $tmp4487 = ((panda$core$Bit) { label4482 != NULL }).value;
-                if (!$tmp4487) goto $l4488;
-                panda$core$Bit $tmp4492;
-                if (((panda$core$Bit) { label4482 != NULL }).value) goto $l4489; else goto $l4490;
-                $l4489:;
-                panda$core$Bit $tmp4493 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit(label4482, ((panda$core$String*) p_c->payload));
-                $tmp4492 = $tmp4493;
-                goto $l4491;
-                $l4490:;
-                $tmp4492 = ((panda$core$Bit) { false });
-                goto $l4491;
-                $l4491:;
-                $tmp4487 = $tmp4492.value;
-                $l4488:;
-                panda$core$Bit $tmp4494 = { $tmp4487 };
-                if ($tmp4494.value) {
-                {
-                    found4469 = ((panda$core$Bit) { true });
-                    goto $l4476;
-                }
-                }
-            }
-            goto $l4475;
-            $l4476:;
-        }
-        panda$core$Bit $tmp4495 = panda$core$Bit$$NOT$R$panda$core$Bit(found4469);
-        if ($tmp4495.value) {
-        {
-            panda$core$String* $tmp4497 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s4496, p_c->payload);
-            panda$core$String* $tmp4499 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4497, &$s4498);
-            panda$core$String* $tmp4501 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s4500, p_c->payload);
-            panda$core$String* $tmp4503 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4501, &$s4502);
-            panda$core$String* $tmp4504 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4499, $tmp4503);
-            org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, p_c->position, $tmp4504);
+            org$pandalanguage$pandac$Variable* $tmp4403 = (org$pandalanguage$pandac$Variable*) malloc(88);
+            $tmp4403->$class = (panda$core$Class*) &org$pandalanguage$pandac$Variable$class;
+            $tmp4403->refCount.value = 1;
+            org$pandalanguage$pandac$Variable$init$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Variable$Kind$panda$core$String$org$pandalanguage$pandac$Type($tmp4403, position4391, p_kind, name4393, type4397);
+            v4402 = $tmp4403;
+            org$pandalanguage$pandac$SymbolTable$add$org$pandalanguage$pandac$Symbol(self->symbolTable, ((org$pandalanguage$pandac$Symbol*) v4402));
+            org$pandalanguage$pandac$Compiler$CompileTargetResult* $tmp4405 = (org$pandalanguage$pandac$Compiler$CompileTargetResult*) malloc(32);
+            $tmp4405->$class = (panda$core$Class*) &org$pandalanguage$pandac$Compiler$CompileTargetResult$class;
+            $tmp4405->refCount.value = 1;
+            org$pandalanguage$pandac$IRNode* $tmp4407 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+            $tmp4407->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+            $tmp4407->refCount.value = 1;
+            org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Variable($tmp4407, ((panda$core$Int64) { 1016 }), ((org$pandalanguage$pandac$Symbol*) v4402)->position, v4402->type, v4402);
+            org$pandalanguage$pandac$Compiler$CompileTargetResult$init$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$IRNode$Q($tmp4405, $tmp4407, value4367);
+            return $tmp4405;
         }
         }
-    }
-    }
-    else {
-    panda$core$Int64 $tmp4505 = panda$collections$Stack$get_count$R$panda$core$Int64(self->loops);
-    panda$core$Bit $tmp4506 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp4505, ((panda$core$Int64) { 0 }));
-    if ($tmp4506.value) {
-    {
-        org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, p_c->position, &$s4507);
-    }
-    }
-    }
-    org$pandalanguage$pandac$IRNode* $tmp4508 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-    $tmp4508->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-    $tmp4508->refCount.value = 1;
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$String($tmp4508, ((panda$core$Int64) { 1007 }), p_c->position, ((panda$core$String*) p_c->payload));
-    return $tmp4508;
-}
-org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileReturn$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$ASTNode* p_r) {
-    org$pandalanguage$pandac$IRNode* value4522;
-    panda$collections$Array* children4527;
-    panda$core$Bit $tmp4510 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_r->kind, ((panda$core$Int64) { 136 }));
-    PANDA_ASSERT($tmp4510.value);
-    bool $tmp4511 = ((panda$core$Bit) { p_r->children != NULL }).value;
-    if (!$tmp4511) goto $l4512;
-    panda$core$Int64 $tmp4513 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(p_r->children);
-    panda$core$Bit $tmp4514 = panda$core$Int64$$GT$panda$core$Int64$R$panda$core$Bit($tmp4513, ((panda$core$Int64) { 0 }));
-    $tmp4511 = $tmp4514.value;
-    $l4512:;
-    panda$core$Bit $tmp4515 = { $tmp4511 };
-    if ($tmp4515.value) {
-    {
-        panda$core$Int64 $tmp4516 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(p_r->children);
-        panda$core$Bit $tmp4517 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp4516, ((panda$core$Int64) { 1 }));
-        PANDA_ASSERT($tmp4517.value);
-        panda$core$Object* $tmp4518 = panda$collections$Stack$peek$R$panda$collections$Stack$T(self->currentMethod);
-        org$pandalanguage$pandac$Type* $tmp4519 = org$pandalanguage$pandac$Type$Void$R$org$pandalanguage$pandac$Type();
-        panda$core$Bit $tmp4520 = org$pandalanguage$pandac$Type$$EQ$org$pandalanguage$pandac$Type$R$panda$core$Bit(((org$pandalanguage$pandac$MethodDecl*) $tmp4518)->returnType, $tmp4519);
-        if ($tmp4520.value) {
-        {
-            org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, p_r->position, &$s4521);
-            return NULL;
-        }
-        }
-        panda$core$Object* $tmp4523 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_r->children, ((panda$core$Int64) { 0 }));
-        org$pandalanguage$pandac$IRNode* $tmp4524 = org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, ((org$pandalanguage$pandac$ASTNode*) $tmp4523));
-        panda$core$Object* $tmp4525 = panda$collections$Stack$peek$R$panda$collections$Stack$T(self->currentMethod);
-        org$pandalanguage$pandac$IRNode* $tmp4526 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, $tmp4524, ((org$pandalanguage$pandac$MethodDecl*) $tmp4525)->returnType);
-        value4522 = $tmp4526;
-        if (((panda$core$Bit) { value4522 == NULL }).value) {
-        {
-            return NULL;
-        }
-        }
-        panda$collections$Array* $tmp4528 = (panda$collections$Array*) malloc(40);
-        $tmp4528->$class = (panda$core$Class*) &panda$collections$Array$class;
-        $tmp4528->refCount.value = 1;
-        panda$collections$Array$init($tmp4528);
-        children4527 = $tmp4528;
-        panda$collections$Array$add$panda$collections$Array$T(children4527, ((panda$core$Object*) value4522));
-        org$pandalanguage$pandac$IRNode* $tmp4530 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-        $tmp4530->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-        $tmp4530->refCount.value = 1;
-        org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4530, ((panda$core$Int64) { 1008 }), p_r->position, ((panda$collections$ListView*) children4527));
-        return $tmp4530;
-    }
-    }
-    panda$core$Object* $tmp4532 = panda$collections$Stack$peek$R$panda$collections$Stack$T(self->currentMethod);
-    org$pandalanguage$pandac$Type* $tmp4533 = org$pandalanguage$pandac$Type$Void$R$org$pandalanguage$pandac$Type();
-    panda$core$Bit $tmp4534 = org$pandalanguage$pandac$Type$$NEQ$org$pandalanguage$pandac$Type$R$panda$core$Bit(((org$pandalanguage$pandac$MethodDecl*) $tmp4532)->returnType, $tmp4533);
-    if ($tmp4534.value) {
-    {
-        org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, p_r->position, &$s4535);
-        return NULL;
-    }
-    }
-    org$pandalanguage$pandac$IRNode* $tmp4536 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-    $tmp4536->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-    $tmp4536->refCount.value = 1;
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position($tmp4536, ((panda$core$Int64) { 1008 }), p_r->position);
-    return $tmp4536;
-}
-org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileAssert$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$ASTNode* p_a) {
-    org$pandalanguage$pandac$IRNode* test4546;
-    org$pandalanguage$pandac$ClassDecl* bit4551;
-    org$pandalanguage$pandac$Symbol* value4554;
-    panda$collections$Array* fieldChildren4557;
-    panda$collections$Array* children4563;
-    org$pandalanguage$pandac$IRNode* msg4568;
-    panda$core$Bit $tmp4538 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_a->kind, ((panda$core$Int64) { 123 }));
-    PANDA_ASSERT($tmp4538.value);
-    panda$core$Int64 $tmp4540 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(p_a->children);
-    panda$core$Bit $tmp4541 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp4540, ((panda$core$Int64) { 1 }));
-    bool $tmp4539 = $tmp4541.value;
-    if ($tmp4539) goto $l4542;
-    panda$core$Int64 $tmp4543 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(p_a->children);
-    panda$core$Bit $tmp4544 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp4543, ((panda$core$Int64) { 2 }));
-    $tmp4539 = $tmp4544.value;
-    $l4542:;
-    panda$core$Bit $tmp4545 = { $tmp4539 };
-    PANDA_ASSERT($tmp4545.value);
-    panda$core$Object* $tmp4547 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_a->children, ((panda$core$Int64) { 0 }));
-    org$pandalanguage$pandac$IRNode* $tmp4548 = org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, ((org$pandalanguage$pandac$ASTNode*) $tmp4547));
-    test4546 = $tmp4548;
-    if (((panda$core$Bit) { test4546 == NULL }).value) {
-    {
-        return NULL;
-    }
-    }
-    org$pandalanguage$pandac$Type* $tmp4549 = org$pandalanguage$pandac$Type$Bit$R$org$pandalanguage$pandac$Type();
-    org$pandalanguage$pandac$IRNode* $tmp4550 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, test4546, $tmp4549);
-    test4546 = $tmp4550;
-    if (((panda$core$Bit) { test4546 == NULL }).value) {
-    {
-        return NULL;
-    }
-    }
-    org$pandalanguage$pandac$Type* $tmp4552 = org$pandalanguage$pandac$Type$Bit$R$org$pandalanguage$pandac$Type();
-    org$pandalanguage$pandac$ClassDecl* $tmp4553 = org$pandalanguage$pandac$Compiler$getClass$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$ClassDecl$Q(self, $tmp4552);
-    bit4551 = $tmp4553;
-    PANDA_ASSERT(((panda$core$Bit) { bit4551 != NULL }).value);
-    org$pandalanguage$pandac$Symbol* $tmp4556 = org$pandalanguage$pandac$SymbolTable$$IDX$panda$core$String$R$org$pandalanguage$pandac$Symbol$Q(bit4551->symbolTable, &$s4555);
-    value4554 = $tmp4556;
-    org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$FieldDecl(self, ((org$pandalanguage$pandac$FieldDecl*) value4554));
-    panda$collections$Array* $tmp4558 = (panda$collections$Array*) malloc(40);
-    $tmp4558->$class = (panda$core$Class*) &panda$collections$Array$class;
-    $tmp4558->refCount.value = 1;
-    panda$collections$Array$init($tmp4558);
-    fieldChildren4557 = $tmp4558;
-    panda$collections$Array$add$panda$collections$Array$T(fieldChildren4557, ((panda$core$Object*) test4546));
-    org$pandalanguage$pandac$IRNode* $tmp4560 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-    $tmp4560->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-    $tmp4560->refCount.value = 1;
-    org$pandalanguage$pandac$Type* $tmp4562 = org$pandalanguage$pandac$Type$BuiltinBit$R$org$pandalanguage$pandac$Type();
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$Q($tmp4560, ((panda$core$Int64) { 1026 }), p_a->position, $tmp4562, ((panda$core$Object*) value4554), ((panda$collections$ListView*) fieldChildren4557));
-    test4546 = $tmp4560;
-    panda$collections$Array* $tmp4564 = (panda$collections$Array*) malloc(40);
-    $tmp4564->$class = (panda$core$Class*) &panda$collections$Array$class;
-    $tmp4564->refCount.value = 1;
-    panda$collections$Array$init($tmp4564);
-    children4563 = $tmp4564;
-    panda$collections$Array$add$panda$collections$Array$T(children4563, ((panda$core$Object*) test4546));
-    panda$core$Int64 $tmp4566 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(p_a->children);
-    panda$core$Bit $tmp4567 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp4566, ((panda$core$Int64) { 2 }));
-    if ($tmp4567.value) {
-    {
-        panda$core$Object* $tmp4569 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_a->children, ((panda$core$Int64) { 1 }));
-        org$pandalanguage$pandac$IRNode* $tmp4570 = org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, ((org$pandalanguage$pandac$ASTNode*) $tmp4569));
-        msg4568 = $tmp4570;
-        if (((panda$core$Bit) { msg4568 == NULL }).value) {
-        {
-            return NULL;
-        }
-        }
-        org$pandalanguage$pandac$Type* $tmp4571 = org$pandalanguage$pandac$Type$StringType$R$org$pandalanguage$pandac$Type();
-        org$pandalanguage$pandac$IRNode* $tmp4572 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, msg4568, $tmp4571);
-        msg4568 = $tmp4572;
-        if (((panda$core$Bit) { msg4568 == NULL }).value) {
-        {
-            return NULL;
-        }
-        }
-        panda$collections$Array$add$panda$collections$Array$T(children4563, ((panda$core$Object*) msg4568));
-    }
-    }
-    org$pandalanguage$pandac$IRNode* $tmp4573 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-    $tmp4573->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-    $tmp4573->refCount.value = 1;
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4573, ((panda$core$Int64) { 1034 }), p_a->position, ((panda$collections$ListView*) children4563));
-    return $tmp4573;
-}
-org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileVar$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$ASTNode* p_v) {
-    panda$core$Int64 nodeKind4588;
-    org$pandalanguage$pandac$Variable$Kind* varKind4589;
-    panda$collections$Array* decls4598;
-    panda$collections$Iterator* astDecl$Iter4601;
-    org$pandalanguage$pandac$ASTNode* astDecl4613;
-    org$pandalanguage$pandac$IRNode* decl4618;
-    panda$core$Bit $tmp4578 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_v->kind, ((panda$core$Int64) { 130 }));
-    bool $tmp4577 = $tmp4578.value;
-    if ($tmp4577) goto $l4579;
-    panda$core$Bit $tmp4580 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_v->kind, ((panda$core$Int64) { 131 }));
-    $tmp4577 = $tmp4580.value;
-    $l4579:;
-    panda$core$Bit $tmp4581 = { $tmp4577 };
-    bool $tmp4576 = $tmp4581.value;
-    if ($tmp4576) goto $l4582;
-    panda$core$Bit $tmp4583 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_v->kind, ((panda$core$Int64) { 133 }));
-    $tmp4576 = $tmp4583.value;
-    $l4582:;
-    panda$core$Bit $tmp4584 = { $tmp4576 };
-    bool $tmp4575 = $tmp4584.value;
-    if ($tmp4575) goto $l4585;
-    panda$core$Bit $tmp4586 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_v->kind, ((panda$core$Int64) { 132 }));
-    $tmp4575 = $tmp4586.value;
-    $l4585:;
-    panda$core$Bit $tmp4587 = { $tmp4575 };
-    PANDA_ASSERT($tmp4587.value);
-    switch (p_v->kind.value) {
-        case 130:
-        {
-            nodeKind4588 = ((panda$core$Int64) { 1017 });
-            org$pandalanguage$pandac$Variable$Kind* $tmp4590 = (org$pandalanguage$pandac$Variable$Kind*) malloc(24);
-            $tmp4590->$class = (panda$core$Class*) &org$pandalanguage$pandac$Variable$Kind$class;
-            $tmp4590->refCount.value = 1;
-            org$pandalanguage$pandac$Variable$Kind$init$panda$core$Int64($tmp4590, ((panda$core$Int64) { 0 }));
-            varKind4589 = $tmp4590;
-        }
-        break;
-        case 131:
-        {
-            nodeKind4588 = ((panda$core$Int64) { 1018 });
-            org$pandalanguage$pandac$Variable$Kind* $tmp4592 = (org$pandalanguage$pandac$Variable$Kind*) malloc(24);
-            $tmp4592->$class = (panda$core$Class*) &org$pandalanguage$pandac$Variable$Kind$class;
-            $tmp4592->refCount.value = 1;
-            org$pandalanguage$pandac$Variable$Kind$init$panda$core$Int64($tmp4592, ((panda$core$Int64) { 1 }));
-            varKind4589 = $tmp4592;
-        }
-        break;
-        case 132:
-        {
-            nodeKind4588 = ((panda$core$Int64) { 1019 });
-            org$pandalanguage$pandac$Variable$Kind* $tmp4594 = (org$pandalanguage$pandac$Variable$Kind*) malloc(24);
-            $tmp4594->$class = (panda$core$Class*) &org$pandalanguage$pandac$Variable$Kind$class;
-            $tmp4594->refCount.value = 1;
-            org$pandalanguage$pandac$Variable$Kind$init$panda$core$Int64($tmp4594, ((panda$core$Int64) { 2 }));
-            varKind4589 = $tmp4594;
-        }
-        break;
-        case 133:
-        {
-            nodeKind4588 = ((panda$core$Int64) { 1020 });
-            org$pandalanguage$pandac$Variable$Kind* $tmp4596 = (org$pandalanguage$pandac$Variable$Kind*) malloc(24);
-            $tmp4596->$class = (panda$core$Class*) &org$pandalanguage$pandac$Variable$Kind$class;
-            $tmp4596->refCount.value = 1;
-            org$pandalanguage$pandac$Variable$Kind$init$panda$core$Int64($tmp4596, ((panda$core$Int64) { 3 }));
-            varKind4589 = $tmp4596;
-        }
-        break;
-        default:
+        else {
         {
             PANDA_ASSERT(((panda$core$Bit) { false }).value);
         }
+        }
+        }
     }
-    panda$collections$Array* $tmp4599 = (panda$collections$Array*) malloc(40);
-    $tmp4599->$class = (panda$core$Class*) &panda$collections$Array$class;
-    $tmp4599->refCount.value = 1;
-    panda$collections$Array$init($tmp4599);
-    decls4598 = $tmp4599;
+}
+org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileDeclaration$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$ASTNode$Q$org$pandalanguage$pandac$Variable$Kind$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position p_position, org$pandalanguage$pandac$ASTNode* p_target, org$pandalanguage$pandac$ASTNode* p_rawValue, org$pandalanguage$pandac$Variable$Kind p_varKind) {
+    org$pandalanguage$pandac$IRNode* value4409;
+    org$pandalanguage$pandac$Compiler$CompileTargetResult* target4411;
+    panda$collections$Array* children4413;
+    org$pandalanguage$pandac$Variable* v4417;
+    if (((panda$core$Bit) { p_rawValue != NULL }).value) {
     {
-        ITable* $tmp4602 = ((panda$collections$Iterable*) p_v->children)->$class->itable;
-        while ($tmp4602->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
-            $tmp4602 = $tmp4602->next;
-        }
-        $fn4604 $tmp4603 = $tmp4602->methods[0];
-        panda$collections$Iterator* $tmp4605 = $tmp4603(((panda$collections$Iterable*) p_v->children));
-        astDecl$Iter4601 = $tmp4605;
-        $l4606:;
-        ITable* $tmp4608 = astDecl$Iter4601->$class->itable;
-        while ($tmp4608->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-            $tmp4608 = $tmp4608->next;
-        }
-        $fn4610 $tmp4609 = $tmp4608->methods[0];
-        panda$core$Bit $tmp4611 = $tmp4609(astDecl$Iter4601);
-        panda$core$Bit $tmp4612 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp4611);
-        if (!$tmp4612.value) goto $l4607;
+        org$pandalanguage$pandac$IRNode* $tmp4410 = org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_rawValue);
+        value4409 = $tmp4410;
+        if (((panda$core$Bit) { value4409 == NULL }).value) {
         {
-            ITable* $tmp4614 = astDecl$Iter4601->$class->itable;
-            while ($tmp4614->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-                $tmp4614 = $tmp4614->next;
-            }
-            $fn4616 $tmp4615 = $tmp4614->methods[1];
-            panda$core$Object* $tmp4617 = $tmp4615(astDecl$Iter4601);
-            astDecl4613 = ((org$pandalanguage$pandac$ASTNode*) $tmp4617);
-            org$pandalanguage$pandac$IRNode* $tmp4619 = org$pandalanguage$pandac$Compiler$compileDeclaration$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$Variable$Kind$R$org$pandalanguage$pandac$IRNode$Q(self, astDecl4613, varKind4589);
-            decl4618 = $tmp4619;
-            if (((panda$core$Bit) { decl4618 == NULL }).value) {
-            {
-                return NULL;
-            }
-            }
-            panda$collections$Array$add$panda$collections$Array$T(decls4598, ((panda$core$Object*) decl4618));
+            return NULL;
         }
-        goto $l4606;
-        $l4607:;
+        }
     }
-    org$pandalanguage$pandac$IRNode* $tmp4620 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-    $tmp4620->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-    $tmp4620->refCount.value = 1;
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4620, nodeKind4588, p_v->position, ((panda$collections$ListView*) decls4598));
-    return $tmp4620;
+    }
+    else {
+    {
+        value4409 = NULL;
+    }
+    }
+    org$pandalanguage$pandac$Compiler$CompileTargetResult* $tmp4412 = org$pandalanguage$pandac$Compiler$compileTarget$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$Variable$Kind$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$Q$R$org$pandalanguage$pandac$Compiler$CompileTargetResult$Q(self, p_target, p_varKind, value4409, NULL);
+    target4411 = $tmp4412;
+    if (((panda$core$Bit) { target4411 == NULL }).value) {
+    {
+        return NULL;
+    }
+    }
+    panda$collections$Array* $tmp4414 = (panda$collections$Array*) malloc(40);
+    $tmp4414->$class = (panda$core$Class*) &panda$collections$Array$class;
+    $tmp4414->refCount.value = 1;
+    panda$collections$Array$init($tmp4414);
+    children4413 = $tmp4414;
+    panda$collections$Array$add$panda$collections$Array$T(children4413, ((panda$core$Object*) target4411->target));
+    if (((panda$core$Bit) { target4411->value != NULL }).value) {
+    {
+        panda$core$Bit $tmp4416 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(target4411->target->kind, ((panda$core$Int64) { 1016 }));
+        PANDA_ASSERT($tmp4416.value);
+        v4417 = ((org$pandalanguage$pandac$Variable*) target4411->target->payload);
+        v4417->initialValue = target4411->value;
+        panda$collections$Array$add$panda$collections$Array$T(children4413, ((panda$core$Object*) target4411->value));
+    }
+    }
+    org$pandalanguage$pandac$IRNode* $tmp4418 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+    $tmp4418->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    $tmp4418->refCount.value = 1;
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4418, ((panda$core$Int64) { 1021 }), p_position, ((panda$collections$ListView*) children4413));
+    return $tmp4418;
+}
+org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileBreak$org$pandalanguage$pandac$Position$panda$core$String$Q$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position p_position, panda$core$String* p_label) {
+    panda$core$Bit found4420;
+    panda$collections$Iterator* loopLabel$Iter4421;
+    panda$core$String* loopLabel4433;
+    if (((panda$core$Bit) { p_label != NULL }).value) {
+    {
+        found4420 = ((panda$core$Bit) { false });
+        {
+            ITable* $tmp4422 = ((panda$collections$Iterable*) self->loops)->$class->itable;
+            while ($tmp4422->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
+                $tmp4422 = $tmp4422->next;
+            }
+            $fn4424 $tmp4423 = $tmp4422->methods[0];
+            panda$collections$Iterator* $tmp4425 = $tmp4423(((panda$collections$Iterable*) self->loops));
+            loopLabel$Iter4421 = $tmp4425;
+            $l4426:;
+            ITable* $tmp4428 = loopLabel$Iter4421->$class->itable;
+            while ($tmp4428->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+                $tmp4428 = $tmp4428->next;
+            }
+            $fn4430 $tmp4429 = $tmp4428->methods[0];
+            panda$core$Bit $tmp4431 = $tmp4429(loopLabel$Iter4421);
+            panda$core$Bit $tmp4432 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp4431);
+            if (!$tmp4432.value) goto $l4427;
+            {
+                ITable* $tmp4434 = loopLabel$Iter4421->$class->itable;
+                while ($tmp4434->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+                    $tmp4434 = $tmp4434->next;
+                }
+                $fn4436 $tmp4435 = $tmp4434->methods[1];
+                panda$core$Object* $tmp4437 = $tmp4435(loopLabel$Iter4421);
+                loopLabel4433 = ((panda$core$String*) $tmp4437);
+                bool $tmp4438 = ((panda$core$Bit) { loopLabel4433 != NULL }).value;
+                if (!$tmp4438) goto $l4439;
+                panda$core$Bit $tmp4443;
+                if (((panda$core$Bit) { p_label != NULL }).value) goto $l4440; else goto $l4441;
+                $l4440:;
+                panda$core$Bit $tmp4444 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit(p_label, loopLabel4433);
+                $tmp4443 = $tmp4444;
+                goto $l4442;
+                $l4441:;
+                $tmp4443 = ((panda$core$Bit) { false });
+                goto $l4442;
+                $l4442:;
+                $tmp4438 = $tmp4443.value;
+                $l4439:;
+                panda$core$Bit $tmp4445 = { $tmp4438 };
+                if ($tmp4445.value) {
+                {
+                    found4420 = ((panda$core$Bit) { true });
+                    goto $l4427;
+                }
+                }
+            }
+            goto $l4426;
+            $l4427:;
+        }
+        panda$core$Bit $tmp4446 = panda$core$Bit$$NOT$R$panda$core$Bit(found4420);
+        if ($tmp4446.value) {
+        {
+            panda$core$String* $tmp4448 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s4447, p_label);
+            panda$core$String* $tmp4450 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4448, &$s4449);
+            panda$core$String* $tmp4451 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4450, p_label);
+            panda$core$String* $tmp4453 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4451, &$s4452);
+            org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, p_position, $tmp4453);
+        }
+        }
+    }
+    }
+    else {
+    panda$core$Int64 $tmp4454 = panda$collections$Stack$get_count$R$panda$core$Int64(self->loops);
+    panda$core$Bit $tmp4455 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp4454, ((panda$core$Int64) { 0 }));
+    if ($tmp4455.value) {
+    {
+        org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, p_position, &$s4456);
+    }
+    }
+    }
+    org$pandalanguage$pandac$IRNode* $tmp4457 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+    $tmp4457->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    $tmp4457->refCount.value = 1;
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$String($tmp4457, ((panda$core$Int64) { 1006 }), p_position, p_label);
+    return $tmp4457;
+}
+org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileContinue$org$pandalanguage$pandac$Position$panda$core$String$Q$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position p_position, panda$core$String* p_label) {
+    panda$core$Bit found4459;
+    panda$collections$Iterator* loopLabel$Iter4460;
+    panda$core$String* loopLabel4472;
+    if (((panda$core$Bit) { p_label != NULL }).value) {
+    {
+        found4459 = ((panda$core$Bit) { false });
+        {
+            ITable* $tmp4461 = ((panda$collections$Iterable*) self->loops)->$class->itable;
+            while ($tmp4461->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
+                $tmp4461 = $tmp4461->next;
+            }
+            $fn4463 $tmp4462 = $tmp4461->methods[0];
+            panda$collections$Iterator* $tmp4464 = $tmp4462(((panda$collections$Iterable*) self->loops));
+            loopLabel$Iter4460 = $tmp4464;
+            $l4465:;
+            ITable* $tmp4467 = loopLabel$Iter4460->$class->itable;
+            while ($tmp4467->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+                $tmp4467 = $tmp4467->next;
+            }
+            $fn4469 $tmp4468 = $tmp4467->methods[0];
+            panda$core$Bit $tmp4470 = $tmp4468(loopLabel$Iter4460);
+            panda$core$Bit $tmp4471 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp4470);
+            if (!$tmp4471.value) goto $l4466;
+            {
+                ITable* $tmp4473 = loopLabel$Iter4460->$class->itable;
+                while ($tmp4473->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+                    $tmp4473 = $tmp4473->next;
+                }
+                $fn4475 $tmp4474 = $tmp4473->methods[1];
+                panda$core$Object* $tmp4476 = $tmp4474(loopLabel$Iter4460);
+                loopLabel4472 = ((panda$core$String*) $tmp4476);
+                bool $tmp4477 = ((panda$core$Bit) { loopLabel4472 != NULL }).value;
+                if (!$tmp4477) goto $l4478;
+                panda$core$Bit $tmp4482;
+                if (((panda$core$Bit) { p_label != NULL }).value) goto $l4479; else goto $l4480;
+                $l4479:;
+                panda$core$Bit $tmp4483 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit(p_label, loopLabel4472);
+                $tmp4482 = $tmp4483;
+                goto $l4481;
+                $l4480:;
+                $tmp4482 = ((panda$core$Bit) { false });
+                goto $l4481;
+                $l4481:;
+                $tmp4477 = $tmp4482.value;
+                $l4478:;
+                panda$core$Bit $tmp4484 = { $tmp4477 };
+                if ($tmp4484.value) {
+                {
+                    found4459 = ((panda$core$Bit) { true });
+                    goto $l4466;
+                }
+                }
+            }
+            goto $l4465;
+            $l4466:;
+        }
+        panda$core$Bit $tmp4485 = panda$core$Bit$$NOT$R$panda$core$Bit(found4459);
+        if ($tmp4485.value) {
+        {
+            panda$core$String* $tmp4487 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s4486, p_label);
+            panda$core$String* $tmp4489 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4487, &$s4488);
+            panda$core$String* $tmp4490 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4489, p_label);
+            panda$core$String* $tmp4492 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4490, &$s4491);
+            org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, p_position, $tmp4492);
+        }
+        }
+    }
+    }
+    else {
+    panda$core$Int64 $tmp4493 = panda$collections$Stack$get_count$R$panda$core$Int64(self->loops);
+    panda$core$Bit $tmp4494 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp4493, ((panda$core$Int64) { 0 }));
+    if ($tmp4494.value) {
+    {
+        org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, p_position, &$s4495);
+    }
+    }
+    }
+    org$pandalanguage$pandac$IRNode* $tmp4496 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+    $tmp4496->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    $tmp4496->refCount.value = 1;
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$String($tmp4496, ((panda$core$Int64) { 1007 }), p_position, p_label);
+    return $tmp4496;
+}
+org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileReturn$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$Q$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position p_position, org$pandalanguage$pandac$ASTNode* p_rawValue) {
+    org$pandalanguage$pandac$IRNode* value4502;
+    panda$collections$Array* children4506;
+    if (((panda$core$Bit) { p_rawValue != NULL }).value) {
+    {
+        panda$core$Object* $tmp4498 = panda$collections$Stack$peek$R$panda$collections$Stack$T(self->currentMethod);
+        org$pandalanguage$pandac$Type* $tmp4499 = org$pandalanguage$pandac$Type$Void$R$org$pandalanguage$pandac$Type();
+        panda$core$Bit $tmp4500 = org$pandalanguage$pandac$Type$$EQ$org$pandalanguage$pandac$Type$R$panda$core$Bit(((org$pandalanguage$pandac$MethodDecl*) $tmp4498)->returnType, $tmp4499);
+        if ($tmp4500.value) {
+        {
+            org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, p_position, &$s4501);
+            return NULL;
+        }
+        }
+        org$pandalanguage$pandac$IRNode* $tmp4503 = org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_rawValue);
+        panda$core$Object* $tmp4504 = panda$collections$Stack$peek$R$panda$collections$Stack$T(self->currentMethod);
+        org$pandalanguage$pandac$IRNode* $tmp4505 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, $tmp4503, ((org$pandalanguage$pandac$MethodDecl*) $tmp4504)->returnType);
+        value4502 = $tmp4505;
+        if (((panda$core$Bit) { value4502 == NULL }).value) {
+        {
+            return NULL;
+        }
+        }
+        panda$collections$Array* $tmp4507 = (panda$collections$Array*) malloc(40);
+        $tmp4507->$class = (panda$core$Class*) &panda$collections$Array$class;
+        $tmp4507->refCount.value = 1;
+        panda$collections$Array$init($tmp4507);
+        children4506 = $tmp4507;
+        panda$collections$Array$add$panda$collections$Array$T(children4506, ((panda$core$Object*) value4502));
+        org$pandalanguage$pandac$IRNode* $tmp4509 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+        $tmp4509->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+        $tmp4509->refCount.value = 1;
+        org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4509, ((panda$core$Int64) { 1008 }), p_position, ((panda$collections$ListView*) children4506));
+        return $tmp4509;
+    }
+    }
+    panda$core$Object* $tmp4511 = panda$collections$Stack$peek$R$panda$collections$Stack$T(self->currentMethod);
+    org$pandalanguage$pandac$Type* $tmp4512 = org$pandalanguage$pandac$Type$Void$R$org$pandalanguage$pandac$Type();
+    panda$core$Bit $tmp4513 = org$pandalanguage$pandac$Type$$NEQ$org$pandalanguage$pandac$Type$R$panda$core$Bit(((org$pandalanguage$pandac$MethodDecl*) $tmp4511)->returnType, $tmp4512);
+    if ($tmp4513.value) {
+    {
+        org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, p_position, &$s4514);
+        return NULL;
+    }
+    }
+    org$pandalanguage$pandac$IRNode* $tmp4515 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+    $tmp4515->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    $tmp4515->refCount.value = 1;
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position($tmp4515, ((panda$core$Int64) { 1008 }), p_position);
+    return $tmp4515;
+}
+org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileAssert$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$ASTNode$Q$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position p_position, org$pandalanguage$pandac$ASTNode* p_rawTest, org$pandalanguage$pandac$ASTNode* p_rawMessage) {
+    org$pandalanguage$pandac$IRNode* test4517;
+    org$pandalanguage$pandac$ClassDecl* bit4521;
+    org$pandalanguage$pandac$Symbol* value4524;
+    panda$collections$Array* fieldChildren4527;
+    panda$collections$Array* children4533;
+    org$pandalanguage$pandac$IRNode* message4536;
+    org$pandalanguage$pandac$IRNode* $tmp4518 = org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_rawTest);
+    test4517 = $tmp4518;
+    if (((panda$core$Bit) { test4517 == NULL }).value) {
+    {
+        return NULL;
+    }
+    }
+    org$pandalanguage$pandac$Type* $tmp4519 = org$pandalanguage$pandac$Type$Bit$R$org$pandalanguage$pandac$Type();
+    org$pandalanguage$pandac$IRNode* $tmp4520 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, test4517, $tmp4519);
+    test4517 = $tmp4520;
+    if (((panda$core$Bit) { test4517 == NULL }).value) {
+    {
+        return NULL;
+    }
+    }
+    org$pandalanguage$pandac$Type* $tmp4522 = org$pandalanguage$pandac$Type$Bit$R$org$pandalanguage$pandac$Type();
+    org$pandalanguage$pandac$ClassDecl* $tmp4523 = org$pandalanguage$pandac$Compiler$getClass$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$ClassDecl$Q(self, $tmp4522);
+    bit4521 = $tmp4523;
+    PANDA_ASSERT(((panda$core$Bit) { bit4521 != NULL }).value);
+    org$pandalanguage$pandac$Symbol* $tmp4526 = org$pandalanguage$pandac$SymbolTable$$IDX$panda$core$String$R$org$pandalanguage$pandac$Symbol$Q(bit4521->symbolTable, &$s4525);
+    value4524 = $tmp4526;
+    org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$FieldDecl(self, ((org$pandalanguage$pandac$FieldDecl*) value4524));
+    panda$collections$Array* $tmp4528 = (panda$collections$Array*) malloc(40);
+    $tmp4528->$class = (panda$core$Class*) &panda$collections$Array$class;
+    $tmp4528->refCount.value = 1;
+    panda$collections$Array$init($tmp4528);
+    fieldChildren4527 = $tmp4528;
+    panda$collections$Array$add$panda$collections$Array$T(fieldChildren4527, ((panda$core$Object*) test4517));
+    org$pandalanguage$pandac$IRNode* $tmp4530 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+    $tmp4530->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    $tmp4530->refCount.value = 1;
+    org$pandalanguage$pandac$Type* $tmp4532 = org$pandalanguage$pandac$Type$BuiltinBit$R$org$pandalanguage$pandac$Type();
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$Q($tmp4530, ((panda$core$Int64) { 1026 }), p_position, $tmp4532, ((panda$core$Object*) value4524), ((panda$collections$ListView*) fieldChildren4527));
+    test4517 = $tmp4530;
+    panda$collections$Array* $tmp4534 = (panda$collections$Array*) malloc(40);
+    $tmp4534->$class = (panda$core$Class*) &panda$collections$Array$class;
+    $tmp4534->refCount.value = 1;
+    panda$collections$Array$init($tmp4534);
+    children4533 = $tmp4534;
+    panda$collections$Array$add$panda$collections$Array$T(children4533, ((panda$core$Object*) test4517));
+    if (((panda$core$Bit) { p_rawMessage != NULL }).value) {
+    {
+        org$pandalanguage$pandac$IRNode* $tmp4537 = org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_rawMessage);
+        message4536 = $tmp4537;
+        if (((panda$core$Bit) { message4536 == NULL }).value) {
+        {
+            return NULL;
+        }
+        }
+        org$pandalanguage$pandac$Type* $tmp4538 = org$pandalanguage$pandac$Type$StringType$R$org$pandalanguage$pandac$Type();
+        org$pandalanguage$pandac$IRNode* $tmp4539 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, message4536, $tmp4538);
+        message4536 = $tmp4539;
+        if (((panda$core$Bit) { message4536 == NULL }).value) {
+        {
+            return NULL;
+        }
+        }
+        panda$collections$Array$add$panda$collections$Array$T(children4533, ((panda$core$Object*) message4536));
+    }
+    }
+    org$pandalanguage$pandac$IRNode* $tmp4540 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+    $tmp4540->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    $tmp4540->refCount.value = 1;
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4540, ((panda$core$Int64) { 1034 }), p_position, ((panda$collections$ListView*) children4533));
+    return $tmp4540;
+}
+org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileVar$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Variable$Kind$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position p_position, org$pandalanguage$pandac$Variable$Kind p_kind, panda$collections$ImmutableArray* p_declarations) {
+    panda$core$Int64 nodeKind4542;
+    org$pandalanguage$pandac$Variable$Kind $match$3421_94543;
+    panda$collections$Array* decls4548;
+    panda$collections$Iterator* astDecl$Iter4551;
+    org$pandalanguage$pandac$ASTNode* astDecl4563;
+    org$pandalanguage$pandac$ASTNode* $match$3434_134568;
+    org$pandalanguage$pandac$Position position4570;
+    org$pandalanguage$pandac$ASTNode* target4572;
+    org$pandalanguage$pandac$ASTNode* rawValue4574;
+    org$pandalanguage$pandac$IRNode* decl4576;
+    {
+        $match$3421_94543 = p_kind;
+        panda$core$Bit $tmp4544 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$3421_94543.$rawValue, ((panda$core$Int64) { 0 }));
+        if ($tmp4544.value) {
+        {
+            nodeKind4542 = ((panda$core$Int64) { 1017 });
+        }
+        }
+        else {
+        panda$core$Bit $tmp4545 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$3421_94543.$rawValue, ((panda$core$Int64) { 1 }));
+        if ($tmp4545.value) {
+        {
+            nodeKind4542 = ((panda$core$Int64) { 1018 });
+        }
+        }
+        else {
+        panda$core$Bit $tmp4546 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$3421_94543.$rawValue, ((panda$core$Int64) { 2 }));
+        if ($tmp4546.value) {
+        {
+            nodeKind4542 = ((panda$core$Int64) { 1019 });
+        }
+        }
+        else {
+        panda$core$Bit $tmp4547 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$3421_94543.$rawValue, ((panda$core$Int64) { 3 }));
+        if ($tmp4547.value) {
+        {
+            nodeKind4542 = ((panda$core$Int64) { 1020 });
+        }
+        }
+        else {
+        {
+            PANDA_ASSERT(((panda$core$Bit) { false }).value);
+        }
+        }
+        }
+        }
+        }
+    }
+    panda$collections$Array* $tmp4549 = (panda$collections$Array*) malloc(40);
+    $tmp4549->$class = (panda$core$Class*) &panda$collections$Array$class;
+    $tmp4549->refCount.value = 1;
+    panda$collections$Array$init($tmp4549);
+    decls4548 = $tmp4549;
+    {
+        ITable* $tmp4552 = ((panda$collections$Iterable*) p_declarations)->$class->itable;
+        while ($tmp4552->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
+            $tmp4552 = $tmp4552->next;
+        }
+        $fn4554 $tmp4553 = $tmp4552->methods[0];
+        panda$collections$Iterator* $tmp4555 = $tmp4553(((panda$collections$Iterable*) p_declarations));
+        astDecl$Iter4551 = $tmp4555;
+        $l4556:;
+        ITable* $tmp4558 = astDecl$Iter4551->$class->itable;
+        while ($tmp4558->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+            $tmp4558 = $tmp4558->next;
+        }
+        $fn4560 $tmp4559 = $tmp4558->methods[0];
+        panda$core$Bit $tmp4561 = $tmp4559(astDecl$Iter4551);
+        panda$core$Bit $tmp4562 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp4561);
+        if (!$tmp4562.value) goto $l4557;
+        {
+            ITable* $tmp4564 = astDecl$Iter4551->$class->itable;
+            while ($tmp4564->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+                $tmp4564 = $tmp4564->next;
+            }
+            $fn4566 $tmp4565 = $tmp4564->methods[1];
+            panda$core$Object* $tmp4567 = $tmp4565(astDecl$Iter4551);
+            astDecl4563 = ((org$pandalanguage$pandac$ASTNode*) $tmp4567);
+            {
+                $match$3434_134568 = astDecl4563;
+                panda$core$Bit $tmp4569 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$3434_134568->$rawValue, ((panda$core$Int64) { 11 }));
+                if ($tmp4569.value) {
+                {
+                    org$pandalanguage$pandac$Position* $tmp4571 = ((org$pandalanguage$pandac$Position*) ((char*) $match$3434_134568->$data + 0));
+                    position4570 = *$tmp4571;
+                    org$pandalanguage$pandac$ASTNode** $tmp4573 = ((org$pandalanguage$pandac$ASTNode**) ((char*) $match$3434_134568->$data + 16));
+                    target4572 = *$tmp4573;
+                    org$pandalanguage$pandac$ASTNode** $tmp4575 = ((org$pandalanguage$pandac$ASTNode**) ((char*) $match$3434_134568->$data + 24));
+                    rawValue4574 = *$tmp4575;
+                    org$pandalanguage$pandac$IRNode* $tmp4577 = org$pandalanguage$pandac$Compiler$compileDeclaration$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$ASTNode$Q$org$pandalanguage$pandac$Variable$Kind$R$org$pandalanguage$pandac$IRNode$Q(self, position4570, target4572, rawValue4574, p_kind);
+                    decl4576 = $tmp4577;
+                    if (((panda$core$Bit) { decl4576 == NULL }).value) {
+                    {
+                        return NULL;
+                    }
+                    }
+                    panda$collections$Array$add$panda$collections$Array$T(decls4548, ((panda$core$Object*) decl4576));
+                }
+                }
+                else {
+                {
+                    PANDA_ASSERT(((panda$core$Bit) { false }).value);
+                }
+                }
+            }
+        }
+        goto $l4556;
+        $l4557:;
+    }
+    org$pandalanguage$pandac$IRNode* $tmp4578 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+    $tmp4578->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    $tmp4578->refCount.value = 1;
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4578, nodeKind4542, p_position, ((panda$collections$ListView*) decls4548));
+    return $tmp4578;
 }
 org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileWhenTest$org$pandalanguage$pandac$Variable$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Variable* p_value, org$pandalanguage$pandac$ASTNode* p_test) {
-    org$pandalanguage$pandac$IRNode* target4622;
-    org$pandalanguage$pandac$IRNode* testValue4625;
-    panda$collections$Array* callChildren4627;
-    org$pandalanguage$pandac$IRNode* $tmp4623 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-    $tmp4623->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-    $tmp4623->refCount.value = 1;
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Variable($tmp4623, ((panda$core$Int64) { 1016 }), p_test->position, p_value->type, p_value);
-    target4622 = $tmp4623;
-    org$pandalanguage$pandac$IRNode* $tmp4626 = org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_test);
-    testValue4625 = $tmp4626;
-    if (((panda$core$Bit) { testValue4625 == NULL }).value) {
+    org$pandalanguage$pandac$IRNode* target4580;
+    org$pandalanguage$pandac$IRNode* testValue4585;
+    panda$collections$Array* callChildren4587;
+    org$pandalanguage$pandac$IRNode* $tmp4581 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+    $tmp4581->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    $tmp4581->refCount.value = 1;
+    org$pandalanguage$pandac$Position $tmp4584 = (($fn4583) p_test->$class->vtable[2])(p_test);
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Variable($tmp4581, ((panda$core$Int64) { 1016 }), $tmp4584, p_value->type, p_value);
+    target4580 = $tmp4581;
+    org$pandalanguage$pandac$IRNode* $tmp4586 = org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_test);
+    testValue4585 = $tmp4586;
+    if (((panda$core$Bit) { testValue4585 == NULL }).value) {
     {
         return NULL;
     }
     }
-    panda$collections$Array* $tmp4628 = (panda$collections$Array*) malloc(40);
-    $tmp4628->$class = (panda$core$Class*) &panda$collections$Array$class;
-    $tmp4628->refCount.value = 1;
-    panda$collections$Array$init($tmp4628);
-    callChildren4627 = $tmp4628;
-    panda$collections$Array$add$panda$collections$Array$T(callChildren4627, ((panda$core$Object*) testValue4625));
-    org$pandalanguage$pandac$IRNode* $tmp4631 = org$pandalanguage$pandac$Compiler$call$org$pandalanguage$pandac$IRNode$panda$core$String$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$R$org$pandalanguage$pandac$IRNode$Q(self, target4622, &$s4630, ((panda$collections$ListView*) callChildren4627));
-    return $tmp4631;
+    panda$collections$Array* $tmp4588 = (panda$collections$Array*) malloc(40);
+    $tmp4588->$class = (panda$core$Class*) &panda$collections$Array$class;
+    $tmp4588->refCount.value = 1;
+    panda$collections$Array$init($tmp4588);
+    callChildren4587 = $tmp4588;
+    panda$collections$Array$add$panda$collections$Array$T(callChildren4587, ((panda$core$Object*) testValue4585));
+    org$pandalanguage$pandac$IRNode* $tmp4591 = org$pandalanguage$pandac$Compiler$call$org$pandalanguage$pandac$IRNode$panda$core$String$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$R$org$pandalanguage$pandac$IRNode$Q(self, target4580, &$s4590, ((panda$collections$ListView*) callChildren4587));
+    return $tmp4591;
 }
-org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileChainedIfWhen$org$pandalanguage$pandac$Variable$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Variable* p_value, org$pandalanguage$pandac$ASTNode* p_w) {
-    org$pandalanguage$pandac$ASTNode* test4643;
-    org$pandalanguage$pandac$ClassDecl* cl4651;
-    org$pandalanguage$pandac$IRNode* base4654;
-    panda$collections$Array* callChildren4658;
-    org$pandalanguage$pandac$IRNode* target4661;
-    org$pandalanguage$pandac$IRNode* check4664;
-    org$pandalanguage$pandac$ChoiceEntry* entry4667;
-    panda$core$Int64 requiredCount4668;
-    panda$core$Int64 actualCount4670;
-    panda$collections$Array* statements4700;
-    panda$core$Range$LTpanda$core$Int64$GT $tmp4703;
-    org$pandalanguage$pandac$Variable* variable4722;
-    panda$collections$Array* declChildren4731;
-    panda$collections$Array* fieldRefChildren4736;
-    panda$collections$Array* varChildren4747;
-    panda$core$Range$LTpanda$core$Int64$GT $tmp4760;
-    org$pandalanguage$pandac$IRNode* statement4775;
-    panda$collections$Array* children4785;
-    org$pandalanguage$pandac$IRNode* test4792;
-    panda$core$Range$LTpanda$core$Int64$GT $tmp4796;
-    org$pandalanguage$pandac$IRNode* nextTest4812;
-    panda$collections$Array* callChildren4816;
-    panda$collections$Array* statements4829;
-    panda$core$Range$LTpanda$core$Int64$GT $tmp4832;
-    org$pandalanguage$pandac$IRNode* statement4847;
-    panda$collections$Array* children4857;
-    panda$core$Bit $tmp4632 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_w->kind, ((panda$core$Int64) { 124 }));
-    PANDA_ASSERT($tmp4632.value);
-    panda$core$Int64 $tmp4633 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(p_w->children);
-    panda$core$Bit $tmp4634 = panda$core$Int64$$GE$panda$core$Int64$R$panda$core$Bit($tmp4633, ((panda$core$Int64) { 1 }));
-    PANDA_ASSERT($tmp4634.value);
-    panda$core$Object* $tmp4635 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_w->children, ((panda$core$Int64) { 0 }));
-    panda$core$Bit $tmp4636 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(((org$pandalanguage$pandac$ASTNode*) $tmp4635)->kind, ((panda$core$Int64) { 128 }));
-    PANDA_ASSERT($tmp4636.value);
-    panda$core$Object* $tmp4637 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_w->children, ((panda$core$Int64) { 0 }));
-    panda$core$Int64 $tmp4638 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(((org$pandalanguage$pandac$ASTNode*) $tmp4637)->children);
-    panda$core$Bit $tmp4639 = panda$core$Int64$$GE$panda$core$Int64$R$panda$core$Bit($tmp4638, ((panda$core$Int64) { 1 }));
-    PANDA_ASSERT($tmp4639.value);
-    panda$core$Object* $tmp4640 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_w->children, ((panda$core$Int64) { 0 }));
-    panda$core$Int64 $tmp4641 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(((org$pandalanguage$pandac$ASTNode*) $tmp4640)->children);
-    panda$core$Bit $tmp4642 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp4641, ((panda$core$Int64) { 1 }));
-    if ($tmp4642.value) {
+org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileChainedIfWhen$org$pandalanguage$pandac$Variable$org$pandalanguage$pandac$Position$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Variable* p_value, org$pandalanguage$pandac$Position p_position, panda$collections$ImmutableArray* p_tests, panda$collections$ImmutableArray* p_rawStatements) {
+    org$pandalanguage$pandac$ASTNode* test4594;
+    org$pandalanguage$pandac$ASTNode* $match$3464_174597;
+    org$pandalanguage$pandac$Position testPosition4599;
+    org$pandalanguage$pandac$ASTNode* rawBase4601;
+    panda$collections$ImmutableArray* args4603;
+    org$pandalanguage$pandac$ClassDecl* cl4605;
+    org$pandalanguage$pandac$IRNode* base4608;
+    panda$collections$Array* callChildren4611;
+    org$pandalanguage$pandac$IRNode* target4614;
+    org$pandalanguage$pandac$IRNode* check4617;
+    org$pandalanguage$pandac$ChoiceEntry* entry4620;
+    panda$core$Int64 requiredCount4621;
+    panda$core$Int64 actualCount4623;
+    panda$collections$Array* statements4652;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp4655;
+    org$pandalanguage$pandac$ASTNode* $match$3494_374669;
+    org$pandalanguage$pandac$Position position4672;
+    panda$core$String* name4674;
+    org$pandalanguage$pandac$Variable* variable4676;
+    org$pandalanguage$pandac$Variable$Kind $tmp4679;
+    panda$collections$Array* declChildren4681;
+    panda$collections$Array* fieldRefChildren4686;
+    panda$collections$Array* varChildren4696;
+    panda$collections$Iterator* rawStatement$Iter4713;
+    org$pandalanguage$pandac$ASTNode* rawStatement4725;
+    org$pandalanguage$pandac$IRNode* statement4730;
+    panda$collections$Array* children4733;
+    org$pandalanguage$pandac$IRNode* test4740;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp4743;
+    org$pandalanguage$pandac$IRNode* nextTest4758;
+    panda$collections$Array* callChildren4761;
+    panda$collections$Array* statements4774;
+    panda$collections$Iterator* rawStatement$Iter4777;
+    org$pandalanguage$pandac$ASTNode* rawStatement4789;
+    org$pandalanguage$pandac$IRNode* statement4794;
+    panda$collections$Array* children4797;
+    panda$core$Int64 $tmp4592 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(p_tests);
+    panda$core$Bit $tmp4593 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp4592, ((panda$core$Int64) { 1 }));
+    if ($tmp4593.value) {
     {
-        panda$core$Object* $tmp4644 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_w->children, ((panda$core$Int64) { 0 }));
-        panda$core$Object* $tmp4645 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(((org$pandalanguage$pandac$ASTNode*) $tmp4644)->children, ((panda$core$Int64) { 0 }));
-        test4643 = ((org$pandalanguage$pandac$ASTNode*) $tmp4645);
-        panda$core$Bit $tmp4647 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(test4643->kind, ((panda$core$Int64) { 107 }));
-        bool $tmp4646 = $tmp4647.value;
-        if (!$tmp4646) goto $l4648;
-        panda$core$Bit $tmp4649 = org$pandalanguage$pandac$Type$isClass$R$panda$core$Bit(p_value->type);
-        $tmp4646 = $tmp4649.value;
-        $l4648:;
-        panda$core$Bit $tmp4650 = { $tmp4646 };
-        if ($tmp4650.value) {
+        panda$core$Object* $tmp4595 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_tests, ((panda$core$Int64) { 0 }));
+        test4594 = ((org$pandalanguage$pandac$ASTNode*) $tmp4595);
+        panda$core$Bit $tmp4596 = org$pandalanguage$pandac$Type$isClass$R$panda$core$Bit(p_value->type);
+        if ($tmp4596.value) {
         {
-            org$pandalanguage$pandac$ClassDecl* $tmp4652 = org$pandalanguage$pandac$Compiler$getClass$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$ClassDecl$Q(self, p_value->type);
-            cl4651 = $tmp4652;
-            panda$core$Bit $tmp4653 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(cl4651->classKind->$rawValue, ((panda$core$Int64) { 2 }));
-            if ($tmp4653.value) {
             {
-                panda$core$Object* $tmp4655 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(test4643->children, ((panda$core$Int64) { 0 }));
-                org$pandalanguage$pandac$IRNode* $tmp4656 = org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, ((org$pandalanguage$pandac$ASTNode*) $tmp4655));
-                base4654 = $tmp4656;
-                if (((panda$core$Bit) { base4654 == NULL }).value) {
+                $match$3464_174597 = test4594;
+                panda$core$Bit $tmp4598 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$3464_174597->$rawValue, ((panda$core$Int64) { 6 }));
+                if ($tmp4598.value) {
                 {
-                    return NULL;
-                }
-                }
-                panda$core$Bit $tmp4657 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(base4654->kind, ((panda$core$Int64) { 1046 }));
-                if ($tmp4657.value) {
-                {
-                    panda$collections$Array* $tmp4659 = (panda$collections$Array*) malloc(40);
-                    $tmp4659->$class = (panda$core$Class*) &panda$collections$Array$class;
-                    $tmp4659->refCount.value = 1;
-                    panda$collections$Array$init($tmp4659);
-                    callChildren4658 = $tmp4659;
-                    panda$collections$Array$add$panda$collections$Array$T(callChildren4658, ((panda$core$Object*) base4654));
-                    org$pandalanguage$pandac$IRNode* $tmp4662 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-                    $tmp4662->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-                    $tmp4662->refCount.value = 1;
-                    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Variable($tmp4662, ((panda$core$Int64) { 1016 }), test4643->position, p_value->type, p_value);
-                    target4661 = $tmp4662;
-                    org$pandalanguage$pandac$IRNode* $tmp4666 = org$pandalanguage$pandac$Compiler$call$org$pandalanguage$pandac$IRNode$panda$core$String$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$R$org$pandalanguage$pandac$IRNode$Q(self, target4661, &$s4665, ((panda$collections$ListView*) callChildren4658));
-                    check4664 = $tmp4666;
-                    if (((panda$core$Bit) { check4664 == NULL }).value) {
+                    org$pandalanguage$pandac$Position* $tmp4600 = ((org$pandalanguage$pandac$Position*) ((char*) $match$3464_174597->$data + 0));
+                    testPosition4599 = *$tmp4600;
+                    org$pandalanguage$pandac$ASTNode** $tmp4602 = ((org$pandalanguage$pandac$ASTNode**) ((char*) $match$3464_174597->$data + 16));
+                    rawBase4601 = *$tmp4602;
+                    panda$collections$ImmutableArray** $tmp4604 = ((panda$collections$ImmutableArray**) ((char*) $match$3464_174597->$data + 24));
+                    args4603 = *$tmp4604;
+                    org$pandalanguage$pandac$ClassDecl* $tmp4606 = org$pandalanguage$pandac$Compiler$getClass$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$ClassDecl$Q(self, p_value->type);
+                    cl4605 = $tmp4606;
+                    panda$core$Bit $tmp4607 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(cl4605->classKind.$rawValue, ((panda$core$Int64) { 2 }));
+                    if ($tmp4607.value) {
                     {
-                        return NULL;
-                    }
-                    }
-                    entry4667 = ((org$pandalanguage$pandac$ChoiceEntry*) base4654->payload);
-                    panda$core$Int64 $tmp4669 = panda$collections$Array$get_count$R$panda$core$Int64(entry4667->fields);
-                    requiredCount4668 = $tmp4669;
-                    panda$core$Int64 $tmp4671 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(test4643->children);
-                    panda$core$Int64 $tmp4672 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64($tmp4671, ((panda$core$Int64) { 1 }));
-                    actualCount4670 = $tmp4672;
-                    panda$core$Bit $tmp4673 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit(actualCount4670, requiredCount4668);
-                    if ($tmp4673.value) {
-                    {
-                        panda$core$String* $tmp4675 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s4674, base4654->payload);
-                        panda$core$String* $tmp4677 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4675, &$s4676);
-                        panda$core$Int64$wrapper* $tmp4678;
-                        $tmp4678 = (panda$core$Int64$wrapper*) malloc(24);
-                        $tmp4678->cl = (panda$core$Class*) &panda$core$Int64$wrapperclass;
-                        $tmp4678->refCount = 1;
-                        $tmp4678->value = requiredCount4668;
-                        panda$core$String* $tmp4679 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp4677, ((panda$core$Object*) $tmp4678));
-                        panda$core$String* $tmp4681 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4679, &$s4680);
-                        panda$core$Bit $tmp4683 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(requiredCount4668, ((panda$core$Int64) { 1 }));
-                        panda$core$Bit$wrapper* $tmp4684;
-                        $tmp4684 = (panda$core$Bit$wrapper*) malloc(13);
-                        $tmp4684->cl = (panda$core$Class*) &panda$core$Bit$wrapperclass;
-                        $tmp4684->refCount = 1;
-                        $tmp4684->value = $tmp4683;
-                        ITable* $tmp4686 = ((panda$core$Formattable*) $tmp4684)->$class->itable;
-                        while ($tmp4686->$class != (panda$core$Class*) &panda$core$Formattable$class) {
-                            $tmp4686 = $tmp4686->next;
-                        }
-                        $fn4688 $tmp4687 = $tmp4686->methods[0];
-                        panda$core$String* $tmp4689 = $tmp4687(((panda$core$Formattable*) $tmp4684), &$s4685);
-                        panda$core$String* $tmp4690 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s4682, $tmp4689);
-                        panda$core$String* $tmp4692 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4690, &$s4691);
-                        panda$core$Int64$wrapper* $tmp4693;
-                        $tmp4693 = (panda$core$Int64$wrapper*) malloc(24);
-                        $tmp4693->cl = (panda$core$Class*) &panda$core$Int64$wrapperclass;
-                        $tmp4693->refCount = 1;
-                        $tmp4693->value = actualCount4670;
-                        panda$core$String* $tmp4694 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp4692, ((panda$core$Object*) $tmp4693));
-                        panda$core$String* $tmp4696 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4694, &$s4695);
-                        panda$core$String* $tmp4697 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4681, $tmp4696);
-                        org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, test4643->position, $tmp4697);
-                        return NULL;
-                    }
-                    }
-                    org$pandalanguage$pandac$SymbolTable* $tmp4698 = (org$pandalanguage$pandac$SymbolTable*) malloc(48);
-                    $tmp4698->$class = (panda$core$Class*) &org$pandalanguage$pandac$SymbolTable$class;
-                    $tmp4698->refCount.value = 1;
-                    org$pandalanguage$pandac$SymbolTable$init$org$pandalanguage$pandac$SymbolTable($tmp4698, self->symbolTable);
-                    self->symbolTable = $tmp4698;
-                    panda$collections$Array* $tmp4701 = (panda$collections$Array*) malloc(40);
-                    $tmp4701->$class = (panda$core$Class*) &panda$collections$Array$class;
-                    $tmp4701->refCount.value = 1;
-                    panda$collections$Array$init($tmp4701);
-                    statements4700 = $tmp4701;
-                    panda$core$Int64 $tmp4704 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(test4643->children);
-                    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp4703, ((panda$core$Int64) { 1 }), $tmp4704, ((panda$core$Bit) { false }));
-                    int64_t $tmp4706 = $tmp4703.min.value;
-                    panda$core$Int64 i4705 = { $tmp4706 };
-                    int64_t $tmp4708 = $tmp4703.max.value;
-                    bool $tmp4709 = $tmp4703.inclusive.value;
-                    if ($tmp4709) goto $l4716; else goto $l4717;
-                    $l4716:;
-                    if ($tmp4706 <= $tmp4708) goto $l4710; else goto $l4712;
-                    $l4717:;
-                    if ($tmp4706 < $tmp4708) goto $l4710; else goto $l4712;
-                    $l4710:;
-                    {
-                        panda$core$Object* $tmp4718 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(test4643->children, i4705);
-                        panda$core$Bit $tmp4719 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit(((org$pandalanguage$pandac$ASTNode*) $tmp4718)->kind, ((panda$core$Int64) { 106 }));
-                        if ($tmp4719.value) {
-                        {
-                            panda$core$Object* $tmp4720 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(test4643->children, i4705);
-                            org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, ((org$pandalanguage$pandac$ASTNode*) $tmp4720)->position, &$s4721);
-                            return NULL;
-                        }
-                        }
-                        org$pandalanguage$pandac$Variable* $tmp4723 = (org$pandalanguage$pandac$Variable*) malloc(88);
-                        $tmp4723->$class = (panda$core$Class*) &org$pandalanguage$pandac$Variable$class;
-                        $tmp4723->refCount.value = 1;
-                        panda$core$Object* $tmp4725 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(test4643->children, i4705);
-                        org$pandalanguage$pandac$Variable$Kind* $tmp4726 = (org$pandalanguage$pandac$Variable$Kind*) malloc(24);
-                        $tmp4726->$class = (panda$core$Class*) &org$pandalanguage$pandac$Variable$Kind$class;
-                        $tmp4726->refCount.value = 1;
-                        org$pandalanguage$pandac$Variable$Kind$init$panda$core$Int64($tmp4726, ((panda$core$Int64) { 1 }));
-                        panda$core$Object* $tmp4728 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(test4643->children, i4705);
-                        panda$core$Int64 $tmp4729 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(i4705, ((panda$core$Int64) { 1 }));
-                        panda$core$Object* $tmp4730 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(entry4667->fields, $tmp4729);
-                        org$pandalanguage$pandac$Variable$init$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Variable$Kind$panda$core$String$org$pandalanguage$pandac$Type($tmp4723, ((org$pandalanguage$pandac$ASTNode*) $tmp4725)->position, $tmp4726, ((panda$core$String*) ((org$pandalanguage$pandac$ASTNode*) $tmp4728)->payload), ((org$pandalanguage$pandac$Type*) $tmp4730));
-                        variable4722 = $tmp4723;
-                        org$pandalanguage$pandac$SymbolTable$add$org$pandalanguage$pandac$Symbol(self->symbolTable, ((org$pandalanguage$pandac$Symbol*) variable4722));
-                        panda$collections$Array* $tmp4732 = (panda$collections$Array*) malloc(40);
-                        $tmp4732->$class = (panda$core$Class*) &panda$collections$Array$class;
-                        $tmp4732->refCount.value = 1;
-                        panda$collections$Array$init($tmp4732);
-                        declChildren4731 = $tmp4732;
-                        org$pandalanguage$pandac$IRNode* $tmp4734 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-                        $tmp4734->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-                        $tmp4734->refCount.value = 1;
-                        org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Variable($tmp4734, ((panda$core$Int64) { 1016 }), ((org$pandalanguage$pandac$Symbol*) variable4722)->position, variable4722->type, variable4722);
-                        panda$collections$Array$add$panda$collections$Array$T(declChildren4731, ((panda$core$Object*) $tmp4734));
-                        panda$collections$Array* $tmp4737 = (panda$collections$Array*) malloc(40);
-                        $tmp4737->$class = (panda$core$Class*) &panda$collections$Array$class;
-                        $tmp4737->refCount.value = 1;
-                        panda$collections$Array$init($tmp4737);
-                        fieldRefChildren4736 = $tmp4737;
-                        org$pandalanguage$pandac$IRNode* $tmp4739 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-                        $tmp4739->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-                        $tmp4739->refCount.value = 1;
-                        org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Variable($tmp4739, ((panda$core$Int64) { 1016 }), test4643->position, p_value->type, p_value);
-                        panda$collections$Array$add$panda$collections$Array$T(fieldRefChildren4736, ((panda$core$Object*) $tmp4739));
-                        org$pandalanguage$pandac$IRNode* $tmp4741 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-                        $tmp4741->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-                        $tmp4741->refCount.value = 1;
-                        org$pandalanguage$pandac$Pair* $tmp4743 = (org$pandalanguage$pandac$Pair*) malloc(32);
-                        $tmp4743->$class = (panda$core$Class*) &org$pandalanguage$pandac$Pair$class;
-                        $tmp4743->refCount.value = 1;
-                        panda$core$Int64 $tmp4745 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(i4705, ((panda$core$Int64) { 1 }));
-                        panda$core$Int64$wrapper* $tmp4746;
-                        $tmp4746 = (panda$core$Int64$wrapper*) malloc(24);
-                        $tmp4746->cl = (panda$core$Class*) &panda$core$Int64$wrapperclass;
-                        $tmp4746->refCount = 1;
-                        $tmp4746->value = $tmp4745;
-                        org$pandalanguage$pandac$Pair$init$org$pandalanguage$pandac$Pair$A$org$pandalanguage$pandac$Pair$B($tmp4743, ((panda$core$Object*) entry4667), ((panda$core$Object*) $tmp4746));
-                        org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$Q($tmp4741, ((panda$core$Int64) { 1047 }), ((org$pandalanguage$pandac$Symbol*) variable4722)->position, variable4722->type, ((panda$core$Object*) $tmp4743), ((panda$collections$ListView*) fieldRefChildren4736));
-                        panda$collections$Array$add$panda$collections$Array$T(declChildren4731, ((panda$core$Object*) $tmp4741));
-                        panda$collections$Array* $tmp4748 = (panda$collections$Array*) malloc(40);
-                        $tmp4748->$class = (panda$core$Class*) &panda$collections$Array$class;
-                        $tmp4748->refCount.value = 1;
-                        panda$collections$Array$init($tmp4748);
-                        varChildren4747 = $tmp4748;
-                        org$pandalanguage$pandac$IRNode* $tmp4750 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-                        $tmp4750->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-                        $tmp4750->refCount.value = 1;
-                        org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4750, ((panda$core$Int64) { 1021 }), ((org$pandalanguage$pandac$Symbol*) variable4722)->position, ((panda$collections$ListView*) declChildren4731));
-                        panda$collections$Array$add$panda$collections$Array$T(varChildren4747, ((panda$core$Object*) $tmp4750));
-                        org$pandalanguage$pandac$IRNode* $tmp4752 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-                        $tmp4752->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-                        $tmp4752->refCount.value = 1;
-                        org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4752, ((panda$core$Int64) { 1018 }), ((org$pandalanguage$pandac$Symbol*) variable4722)->position, ((panda$collections$ListView*) varChildren4747));
-                        panda$collections$Array$add$panda$collections$Array$T(statements4700, ((panda$core$Object*) $tmp4752));
-                    }
-                    $l4713:;
-                    int64_t $tmp4755 = $tmp4708 - i4705.value;
-                    if ($tmp4709) goto $l4756; else goto $l4757;
-                    $l4756:;
-                    if ((uint64_t) $tmp4755 >= 1) goto $l4754; else goto $l4712;
-                    $l4757:;
-                    if ((uint64_t) $tmp4755 > 1) goto $l4754; else goto $l4712;
-                    $l4754:;
-                    i4705.value += 1;
-                    goto $l4710;
-                    $l4712:;
-                    panda$core$Int64 $tmp4761 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(p_w->children);
-                    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp4760, ((panda$core$Int64) { 1 }), $tmp4761, ((panda$core$Bit) { false }));
-                    int64_t $tmp4763 = $tmp4760.min.value;
-                    panda$core$Int64 i4762 = { $tmp4763 };
-                    int64_t $tmp4765 = $tmp4760.max.value;
-                    bool $tmp4766 = $tmp4760.inclusive.value;
-                    if ($tmp4766) goto $l4773; else goto $l4774;
-                    $l4773:;
-                    if ($tmp4763 <= $tmp4765) goto $l4767; else goto $l4769;
-                    $l4774:;
-                    if ($tmp4763 < $tmp4765) goto $l4767; else goto $l4769;
-                    $l4767:;
-                    {
-                        panda$core$Object* $tmp4776 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_w->children, i4762);
-                        org$pandalanguage$pandac$IRNode* $tmp4777 = org$pandalanguage$pandac$Compiler$compileStatement$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, ((org$pandalanguage$pandac$ASTNode*) $tmp4776));
-                        statement4775 = $tmp4777;
-                        if (((panda$core$Bit) { statement4775 == NULL }).value) {
+                        org$pandalanguage$pandac$IRNode* $tmp4609 = org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, rawBase4601);
+                        base4608 = $tmp4609;
+                        if (((panda$core$Bit) { base4608 == NULL }).value) {
                         {
                             return NULL;
                         }
                         }
-                        panda$collections$Array$add$panda$collections$Array$T(statements4700, ((panda$core$Object*) statement4775));
+                        panda$core$Bit $tmp4610 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(base4608->kind, ((panda$core$Int64) { 1046 }));
+                        if ($tmp4610.value) {
+                        {
+                            panda$collections$Array* $tmp4612 = (panda$collections$Array*) malloc(40);
+                            $tmp4612->$class = (panda$core$Class*) &panda$collections$Array$class;
+                            $tmp4612->refCount.value = 1;
+                            panda$collections$Array$init($tmp4612);
+                            callChildren4611 = $tmp4612;
+                            panda$collections$Array$add$panda$collections$Array$T(callChildren4611, ((panda$core$Object*) base4608));
+                            org$pandalanguage$pandac$IRNode* $tmp4615 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+                            $tmp4615->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+                            $tmp4615->refCount.value = 1;
+                            org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Variable($tmp4615, ((panda$core$Int64) { 1016 }), testPosition4599, p_value->type, p_value);
+                            target4614 = $tmp4615;
+                            org$pandalanguage$pandac$IRNode* $tmp4619 = org$pandalanguage$pandac$Compiler$call$org$pandalanguage$pandac$IRNode$panda$core$String$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$R$org$pandalanguage$pandac$IRNode$Q(self, target4614, &$s4618, ((panda$collections$ListView*) callChildren4611));
+                            check4617 = $tmp4619;
+                            if (((panda$core$Bit) { check4617 == NULL }).value) {
+                            {
+                                return NULL;
+                            }
+                            }
+                            entry4620 = ((org$pandalanguage$pandac$ChoiceEntry*) base4608->payload);
+                            org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$ChoiceEntry(self, entry4620);
+                            panda$core$Int64 $tmp4622 = panda$collections$Array$get_count$R$panda$core$Int64(entry4620->fields);
+                            requiredCount4621 = $tmp4622;
+                            panda$core$Int64 $tmp4624 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(args4603);
+                            actualCount4623 = $tmp4624;
+                            panda$core$Bit $tmp4625 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit(actualCount4623, requiredCount4621);
+                            if ($tmp4625.value) {
+                            {
+                                panda$core$String* $tmp4627 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s4626, base4608->payload);
+                                panda$core$String* $tmp4629 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4627, &$s4628);
+                                panda$core$String* $tmp4630 = panda$core$Int64$convert$R$panda$core$String(requiredCount4621);
+                                panda$core$String* $tmp4632 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4630, &$s4631);
+                                panda$core$Bit $tmp4633 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(requiredCount4621, ((panda$core$Int64) { 1 }));
+                                panda$core$Bit$wrapper* $tmp4634;
+                                $tmp4634 = (panda$core$Bit$wrapper*) malloc(13);
+                                $tmp4634->cl = (panda$core$Class*) &panda$core$Bit$wrapperclass;
+                                $tmp4634->refCount = 1;
+                                $tmp4634->value = $tmp4633;
+                                ITable* $tmp4636 = ((panda$core$Formattable*) $tmp4634)->$class->itable;
+                                while ($tmp4636->$class != (panda$core$Class*) &panda$core$Formattable$class) {
+                                    $tmp4636 = $tmp4636->next;
+                                }
+                                $fn4638 $tmp4637 = $tmp4636->methods[0];
+                                panda$core$String* $tmp4639 = $tmp4637(((panda$core$Formattable*) $tmp4634), &$s4635);
+                                panda$core$String* $tmp4640 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4632, $tmp4639);
+                                panda$core$String* $tmp4642 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4640, &$s4641);
+                                panda$core$String* $tmp4643 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4629, $tmp4642);
+                                panda$core$Int64$wrapper* $tmp4645;
+                                $tmp4645 = (panda$core$Int64$wrapper*) malloc(24);
+                                $tmp4645->cl = (panda$core$Class*) &panda$core$Int64$wrapperclass;
+                                $tmp4645->refCount = 1;
+                                $tmp4645->value = actualCount4623;
+                                panda$core$String* $tmp4646 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s4644, ((panda$core$Object*) $tmp4645));
+                                panda$core$String* $tmp4648 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4646, &$s4647);
+                                panda$core$String* $tmp4649 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4643, $tmp4648);
+                                org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, testPosition4599, $tmp4649);
+                                return NULL;
+                            }
+                            }
+                            org$pandalanguage$pandac$SymbolTable* $tmp4650 = (org$pandalanguage$pandac$SymbolTable*) malloc(48);
+                            $tmp4650->$class = (panda$core$Class*) &org$pandalanguage$pandac$SymbolTable$class;
+                            $tmp4650->refCount.value = 1;
+                            org$pandalanguage$pandac$SymbolTable$init$org$pandalanguage$pandac$SymbolTable($tmp4650, self->symbolTable);
+                            self->symbolTable = $tmp4650;
+                            panda$collections$Array* $tmp4653 = (panda$collections$Array*) malloc(40);
+                            $tmp4653->$class = (panda$core$Class*) &panda$collections$Array$class;
+                            $tmp4653->refCount.value = 1;
+                            panda$collections$Array$init($tmp4653);
+                            statements4652 = $tmp4653;
+                            panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp4655, ((panda$core$Int64) { 0 }), actualCount4623, ((panda$core$Bit) { false }));
+                            int64_t $tmp4657 = $tmp4655.min.value;
+                            panda$core$Int64 i4656 = { $tmp4657 };
+                            int64_t $tmp4659 = $tmp4655.max.value;
+                            bool $tmp4660 = $tmp4655.inclusive.value;
+                            if ($tmp4660) goto $l4667; else goto $l4668;
+                            $l4667:;
+                            if ($tmp4657 <= $tmp4659) goto $l4661; else goto $l4663;
+                            $l4668:;
+                            if ($tmp4657 < $tmp4659) goto $l4661; else goto $l4663;
+                            $l4661:;
+                            {
+                                {
+                                    panda$core$Object* $tmp4670 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(args4603, i4656);
+                                    $match$3494_374669 = ((org$pandalanguage$pandac$ASTNode*) $tmp4670);
+                                    panda$core$Bit $tmp4671 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$3494_374669->$rawValue, ((panda$core$Int64) { 18 }));
+                                    if ($tmp4671.value) {
+                                    {
+                                        org$pandalanguage$pandac$Position* $tmp4673 = ((org$pandalanguage$pandac$Position*) ((char*) $match$3494_374669->$data + 0));
+                                        position4672 = *$tmp4673;
+                                        panda$core$String** $tmp4675 = ((panda$core$String**) ((char*) $match$3494_374669->$data + 16));
+                                        name4674 = *$tmp4675;
+                                        org$pandalanguage$pandac$Variable* $tmp4677 = (org$pandalanguage$pandac$Variable*) malloc(88);
+                                        $tmp4677->$class = (panda$core$Class*) &org$pandalanguage$pandac$Variable$class;
+                                        $tmp4677->refCount.value = 1;
+                                        org$pandalanguage$pandac$Variable$Kind$init$panda$core$Int64(&$tmp4679, ((panda$core$Int64) { 1 }));
+                                        panda$core$Object* $tmp4680 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(entry4620->fields, i4656);
+                                        org$pandalanguage$pandac$Variable$init$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Variable$Kind$panda$core$String$org$pandalanguage$pandac$Type($tmp4677, position4672, $tmp4679, name4674, ((org$pandalanguage$pandac$Type*) $tmp4680));
+                                        variable4676 = $tmp4677;
+                                        org$pandalanguage$pandac$SymbolTable$add$org$pandalanguage$pandac$Symbol(self->symbolTable, ((org$pandalanguage$pandac$Symbol*) variable4676));
+                                        panda$collections$Array* $tmp4682 = (panda$collections$Array*) malloc(40);
+                                        $tmp4682->$class = (panda$core$Class*) &panda$collections$Array$class;
+                                        $tmp4682->refCount.value = 1;
+                                        panda$collections$Array$init($tmp4682);
+                                        declChildren4681 = $tmp4682;
+                                        org$pandalanguage$pandac$IRNode* $tmp4684 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+                                        $tmp4684->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+                                        $tmp4684->refCount.value = 1;
+                                        org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Variable($tmp4684, ((panda$core$Int64) { 1016 }), ((org$pandalanguage$pandac$Symbol*) variable4676)->position, variable4676->type, variable4676);
+                                        panda$collections$Array$add$panda$collections$Array$T(declChildren4681, ((panda$core$Object*) $tmp4684));
+                                        panda$collections$Array* $tmp4687 = (panda$collections$Array*) malloc(40);
+                                        $tmp4687->$class = (panda$core$Class*) &panda$collections$Array$class;
+                                        $tmp4687->refCount.value = 1;
+                                        panda$collections$Array$init($tmp4687);
+                                        fieldRefChildren4686 = $tmp4687;
+                                        org$pandalanguage$pandac$IRNode* $tmp4689 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+                                        $tmp4689->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+                                        $tmp4689->refCount.value = 1;
+                                        org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Variable($tmp4689, ((panda$core$Int64) { 1016 }), position4672, p_value->type, p_value);
+                                        panda$collections$Array$add$panda$collections$Array$T(fieldRefChildren4686, ((panda$core$Object*) $tmp4689));
+                                        org$pandalanguage$pandac$IRNode* $tmp4691 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+                                        $tmp4691->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+                                        $tmp4691->refCount.value = 1;
+                                        org$pandalanguage$pandac$Pair* $tmp4693 = (org$pandalanguage$pandac$Pair*) malloc(32);
+                                        $tmp4693->$class = (panda$core$Class*) &org$pandalanguage$pandac$Pair$class;
+                                        $tmp4693->refCount.value = 1;
+                                        panda$core$Int64$wrapper* $tmp4695;
+                                        $tmp4695 = (panda$core$Int64$wrapper*) malloc(24);
+                                        $tmp4695->cl = (panda$core$Class*) &panda$core$Int64$wrapperclass;
+                                        $tmp4695->refCount = 1;
+                                        $tmp4695->value = i4656;
+                                        org$pandalanguage$pandac$Pair$init$org$pandalanguage$pandac$Pair$A$org$pandalanguage$pandac$Pair$B($tmp4693, ((panda$core$Object*) entry4620), ((panda$core$Object*) $tmp4695));
+                                        org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$Q($tmp4691, ((panda$core$Int64) { 1047 }), ((org$pandalanguage$pandac$Symbol*) variable4676)->position, variable4676->type, ((panda$core$Object*) $tmp4693), ((panda$collections$ListView*) fieldRefChildren4686));
+                                        panda$collections$Array$add$panda$collections$Array$T(declChildren4681, ((panda$core$Object*) $tmp4691));
+                                        panda$collections$Array* $tmp4697 = (panda$collections$Array*) malloc(40);
+                                        $tmp4697->$class = (panda$core$Class*) &panda$collections$Array$class;
+                                        $tmp4697->refCount.value = 1;
+                                        panda$collections$Array$init($tmp4697);
+                                        varChildren4696 = $tmp4697;
+                                        org$pandalanguage$pandac$IRNode* $tmp4699 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+                                        $tmp4699->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+                                        $tmp4699->refCount.value = 1;
+                                        org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4699, ((panda$core$Int64) { 1021 }), ((org$pandalanguage$pandac$Symbol*) variable4676)->position, ((panda$collections$ListView*) declChildren4681));
+                                        panda$collections$Array$add$panda$collections$Array$T(varChildren4696, ((panda$core$Object*) $tmp4699));
+                                        org$pandalanguage$pandac$IRNode* $tmp4701 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+                                        $tmp4701->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+                                        $tmp4701->refCount.value = 1;
+                                        org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4701, ((panda$core$Int64) { 1018 }), ((org$pandalanguage$pandac$Symbol*) variable4676)->position, ((panda$collections$ListView*) varChildren4696));
+                                        panda$collections$Array$add$panda$collections$Array$T(statements4652, ((panda$core$Object*) $tmp4701));
+                                    }
+                                    }
+                                    else {
+                                    {
+                                        panda$core$Object* $tmp4703 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(args4603, i4656);
+                                        org$pandalanguage$pandac$Position $tmp4705 = (($fn4704) ((org$pandalanguage$pandac$ASTNode*) $tmp4703)->$class->vtable[2])(((org$pandalanguage$pandac$ASTNode*) $tmp4703));
+                                        org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(self, $tmp4705, &$s4706);
+                                        return NULL;
+                                    }
+                                    }
+                                }
+                            }
+                            $l4664:;
+                            int64_t $tmp4708 = $tmp4659 - i4656.value;
+                            if ($tmp4660) goto $l4709; else goto $l4710;
+                            $l4709:;
+                            if ((uint64_t) $tmp4708 >= 1) goto $l4707; else goto $l4663;
+                            $l4710:;
+                            if ((uint64_t) $tmp4708 > 1) goto $l4707; else goto $l4663;
+                            $l4707:;
+                            i4656.value += 1;
+                            goto $l4661;
+                            $l4663:;
+                            {
+                                ITable* $tmp4714 = ((panda$collections$Iterable*) p_rawStatements)->$class->itable;
+                                while ($tmp4714->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
+                                    $tmp4714 = $tmp4714->next;
+                                }
+                                $fn4716 $tmp4715 = $tmp4714->methods[0];
+                                panda$collections$Iterator* $tmp4717 = $tmp4715(((panda$collections$Iterable*) p_rawStatements));
+                                rawStatement$Iter4713 = $tmp4717;
+                                $l4718:;
+                                ITable* $tmp4720 = rawStatement$Iter4713->$class->itable;
+                                while ($tmp4720->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+                                    $tmp4720 = $tmp4720->next;
+                                }
+                                $fn4722 $tmp4721 = $tmp4720->methods[0];
+                                panda$core$Bit $tmp4723 = $tmp4721(rawStatement$Iter4713);
+                                panda$core$Bit $tmp4724 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp4723);
+                                if (!$tmp4724.value) goto $l4719;
+                                {
+                                    ITable* $tmp4726 = rawStatement$Iter4713->$class->itable;
+                                    while ($tmp4726->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+                                        $tmp4726 = $tmp4726->next;
+                                    }
+                                    $fn4728 $tmp4727 = $tmp4726->methods[1];
+                                    panda$core$Object* $tmp4729 = $tmp4727(rawStatement$Iter4713);
+                                    rawStatement4725 = ((org$pandalanguage$pandac$ASTNode*) $tmp4729);
+                                    org$pandalanguage$pandac$IRNode* $tmp4731 = org$pandalanguage$pandac$Compiler$compileStatement$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, rawStatement4725);
+                                    statement4730 = $tmp4731;
+                                    if (((panda$core$Bit) { statement4730 == NULL }).value) {
+                                    {
+                                        return NULL;
+                                    }
+                                    }
+                                    panda$collections$Array$add$panda$collections$Array$T(statements4652, ((panda$core$Object*) statement4730));
+                                }
+                                goto $l4718;
+                                $l4719:;
+                            }
+                            panda$core$Object* $tmp4732 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(self->symbolTable->parents, ((panda$core$Int64) { 0 }));
+                            self->symbolTable = ((org$pandalanguage$pandac$SymbolTable*) $tmp4732);
+                            panda$collections$Array* $tmp4734 = (panda$collections$Array*) malloc(40);
+                            $tmp4734->$class = (panda$core$Class*) &panda$collections$Array$class;
+                            $tmp4734->refCount.value = 1;
+                            panda$collections$Array$init($tmp4734);
+                            children4733 = $tmp4734;
+                            panda$collections$Array$add$panda$collections$Array$T(children4733, ((panda$core$Object*) check4617));
+                            org$pandalanguage$pandac$IRNode* $tmp4736 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+                            $tmp4736->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+                            $tmp4736->refCount.value = 1;
+                            org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4736, ((panda$core$Int64) { 1000 }), p_position, ((panda$collections$ListView*) statements4652));
+                            panda$collections$Array$add$panda$collections$Array$T(children4733, ((panda$core$Object*) $tmp4736));
+                            org$pandalanguage$pandac$IRNode* $tmp4738 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+                            $tmp4738->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+                            $tmp4738->refCount.value = 1;
+                            org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4738, ((panda$core$Int64) { 1012 }), p_position, ((panda$collections$ListView*) children4733));
+                            return $tmp4738;
+                        }
+                        }
                     }
-                    $l4770:;
-                    int64_t $tmp4779 = $tmp4765 - i4762.value;
-                    if ($tmp4766) goto $l4780; else goto $l4781;
-                    $l4780:;
-                    if ((uint64_t) $tmp4779 >= 1) goto $l4778; else goto $l4769;
-                    $l4781:;
-                    if ((uint64_t) $tmp4779 > 1) goto $l4778; else goto $l4769;
-                    $l4778:;
-                    i4762.value += 1;
-                    goto $l4767;
-                    $l4769:;
-                    panda$core$Object* $tmp4784 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(self->symbolTable->parents, ((panda$core$Int64) { 0 }));
-                    self->symbolTable = ((org$pandalanguage$pandac$SymbolTable*) $tmp4784);
-                    panda$collections$Array* $tmp4786 = (panda$collections$Array*) malloc(40);
-                    $tmp4786->$class = (panda$core$Class*) &panda$collections$Array$class;
-                    $tmp4786->refCount.value = 1;
-                    panda$collections$Array$init($tmp4786);
-                    children4785 = $tmp4786;
-                    panda$collections$Array$add$panda$collections$Array$T(children4785, ((panda$core$Object*) check4664));
-                    org$pandalanguage$pandac$IRNode* $tmp4788 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-                    $tmp4788->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-                    $tmp4788->refCount.value = 1;
-                    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4788, ((panda$core$Int64) { 1000 }), p_w->position, ((panda$collections$ListView*) statements4700));
-                    panda$collections$Array$add$panda$collections$Array$T(children4785, ((panda$core$Object*) $tmp4788));
-                    org$pandalanguage$pandac$IRNode* $tmp4790 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-                    $tmp4790->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-                    $tmp4790->refCount.value = 1;
-                    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4790, ((panda$core$Int64) { 1012 }), p_w->position, ((panda$collections$ListView*) children4785));
-                    return $tmp4790;
+                    }
                 }
                 }
-            }
             }
         }
         }
     }
     }
-    panda$core$Object* $tmp4793 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_w->children, ((panda$core$Int64) { 0 }));
-    panda$core$Object* $tmp4794 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(((org$pandalanguage$pandac$ASTNode*) $tmp4793)->children, ((panda$core$Int64) { 0 }));
-    org$pandalanguage$pandac$IRNode* $tmp4795 = org$pandalanguage$pandac$Compiler$compileWhenTest$org$pandalanguage$pandac$Variable$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_value, ((org$pandalanguage$pandac$ASTNode*) $tmp4794));
-    test4792 = $tmp4795;
-    if (((panda$core$Bit) { test4792 == NULL }).value) {
+    panda$core$Object* $tmp4741 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_tests, ((panda$core$Int64) { 0 }));
+    org$pandalanguage$pandac$IRNode* $tmp4742 = org$pandalanguage$pandac$Compiler$compileWhenTest$org$pandalanguage$pandac$Variable$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_value, ((org$pandalanguage$pandac$ASTNode*) $tmp4741));
+    test4740 = $tmp4742;
+    if (((panda$core$Bit) { test4740 == NULL }).value) {
     {
         return NULL;
     }
     }
-    panda$core$Object* $tmp4797 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_w->children, ((panda$core$Int64) { 0 }));
-    panda$core$Int64 $tmp4798 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(((org$pandalanguage$pandac$ASTNode*) $tmp4797)->children);
-    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp4796, ((panda$core$Int64) { 1 }), $tmp4798, ((panda$core$Bit) { false }));
-    int64_t $tmp4800 = $tmp4796.min.value;
-    panda$core$Int64 i4799 = { $tmp4800 };
-    int64_t $tmp4802 = $tmp4796.max.value;
-    bool $tmp4803 = $tmp4796.inclusive.value;
-    if ($tmp4803) goto $l4810; else goto $l4811;
-    $l4810:;
-    if ($tmp4800 <= $tmp4802) goto $l4804; else goto $l4806;
-    $l4811:;
-    if ($tmp4800 < $tmp4802) goto $l4804; else goto $l4806;
-    $l4804:;
+    panda$core$Int64 $tmp4744 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(p_tests);
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp4743, ((panda$core$Int64) { 1 }), $tmp4744, ((panda$core$Bit) { false }));
+    int64_t $tmp4746 = $tmp4743.min.value;
+    panda$core$Int64 i4745 = { $tmp4746 };
+    int64_t $tmp4748 = $tmp4743.max.value;
+    bool $tmp4749 = $tmp4743.inclusive.value;
+    if ($tmp4749) goto $l4756; else goto $l4757;
+    $l4756:;
+    if ($tmp4746 <= $tmp4748) goto $l4750; else goto $l4752;
+    $l4757:;
+    if ($tmp4746 < $tmp4748) goto $l4750; else goto $l4752;
+    $l4750:;
     {
-        panda$core$Object* $tmp4813 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_w->children, ((panda$core$Int64) { 0 }));
-        panda$core$Object* $tmp4814 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(((org$pandalanguage$pandac$ASTNode*) $tmp4813)->children, i4799);
-        org$pandalanguage$pandac$IRNode* $tmp4815 = org$pandalanguage$pandac$Compiler$compileWhenTest$org$pandalanguage$pandac$Variable$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_value, ((org$pandalanguage$pandac$ASTNode*) $tmp4814));
-        nextTest4812 = $tmp4815;
-        if (((panda$core$Bit) { nextTest4812 == NULL }).value) {
+        panda$core$Object* $tmp4759 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_tests, i4745);
+        org$pandalanguage$pandac$IRNode* $tmp4760 = org$pandalanguage$pandac$Compiler$compileWhenTest$org$pandalanguage$pandac$Variable$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_value, ((org$pandalanguage$pandac$ASTNode*) $tmp4759));
+        nextTest4758 = $tmp4760;
+        if (((panda$core$Bit) { nextTest4758 == NULL }).value) {
         {
             return NULL;
         }
         }
-        panda$collections$Array* $tmp4817 = (panda$collections$Array*) malloc(40);
-        $tmp4817->$class = (panda$core$Class*) &panda$collections$Array$class;
-        $tmp4817->refCount.value = 1;
-        panda$collections$Array$init($tmp4817);
-        callChildren4816 = $tmp4817;
-        panda$collections$Array$add$panda$collections$Array$T(callChildren4816, ((panda$core$Object*) nextTest4812));
-        org$pandalanguage$pandac$IRNode* $tmp4820 = org$pandalanguage$pandac$Compiler$call$org$pandalanguage$pandac$IRNode$panda$core$String$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$R$org$pandalanguage$pandac$IRNode$Q(self, test4792, &$s4819, ((panda$collections$ListView*) callChildren4816));
-        test4792 = $tmp4820;
-        if (((panda$core$Bit) { test4792 == NULL }).value) {
+        panda$collections$Array* $tmp4762 = (panda$collections$Array*) malloc(40);
+        $tmp4762->$class = (panda$core$Class*) &panda$collections$Array$class;
+        $tmp4762->refCount.value = 1;
+        panda$collections$Array$init($tmp4762);
+        callChildren4761 = $tmp4762;
+        panda$collections$Array$add$panda$collections$Array$T(callChildren4761, ((panda$core$Object*) nextTest4758));
+        org$pandalanguage$pandac$IRNode* $tmp4765 = org$pandalanguage$pandac$Compiler$call$org$pandalanguage$pandac$IRNode$panda$core$String$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$R$org$pandalanguage$pandac$IRNode$Q(self, test4740, &$s4764, ((panda$collections$ListView*) callChildren4761));
+        test4740 = $tmp4765;
+        if (((panda$core$Bit) { test4740 == NULL }).value) {
         {
             return NULL;
         }
         }
     }
-    $l4807:;
-    int64_t $tmp4822 = $tmp4802 - i4799.value;
-    if ($tmp4803) goto $l4823; else goto $l4824;
-    $l4823:;
-    if ((uint64_t) $tmp4822 >= 1) goto $l4821; else goto $l4806;
-    $l4824:;
-    if ((uint64_t) $tmp4822 > 1) goto $l4821; else goto $l4806;
-    $l4821:;
-    i4799.value += 1;
-    goto $l4804;
-    $l4806:;
-    org$pandalanguage$pandac$SymbolTable* $tmp4827 = (org$pandalanguage$pandac$SymbolTable*) malloc(48);
-    $tmp4827->$class = (panda$core$Class*) &org$pandalanguage$pandac$SymbolTable$class;
-    $tmp4827->refCount.value = 1;
-    org$pandalanguage$pandac$SymbolTable$init$org$pandalanguage$pandac$SymbolTable($tmp4827, self->symbolTable);
-    self->symbolTable = $tmp4827;
-    panda$collections$Array* $tmp4830 = (panda$collections$Array*) malloc(40);
-    $tmp4830->$class = (panda$core$Class*) &panda$collections$Array$class;
+    $l4753:;
+    int64_t $tmp4767 = $tmp4748 - i4745.value;
+    if ($tmp4749) goto $l4768; else goto $l4769;
+    $l4768:;
+    if ((uint64_t) $tmp4767 >= 1) goto $l4766; else goto $l4752;
+    $l4769:;
+    if ((uint64_t) $tmp4767 > 1) goto $l4766; else goto $l4752;
+    $l4766:;
+    i4745.value += 1;
+    goto $l4750;
+    $l4752:;
+    org$pandalanguage$pandac$SymbolTable* $tmp4772 = (org$pandalanguage$pandac$SymbolTable*) malloc(48);
+    $tmp4772->$class = (panda$core$Class*) &org$pandalanguage$pandac$SymbolTable$class;
+    $tmp4772->refCount.value = 1;
+    org$pandalanguage$pandac$SymbolTable$init$org$pandalanguage$pandac$SymbolTable($tmp4772, self->symbolTable);
+    self->symbolTable = $tmp4772;
+    panda$collections$Array* $tmp4775 = (panda$collections$Array*) malloc(40);
+    $tmp4775->$class = (panda$core$Class*) &panda$collections$Array$class;
+    $tmp4775->refCount.value = 1;
+    panda$collections$Array$init($tmp4775);
+    statements4774 = $tmp4775;
+    {
+        ITable* $tmp4778 = ((panda$collections$Iterable*) p_rawStatements)->$class->itable;
+        while ($tmp4778->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
+            $tmp4778 = $tmp4778->next;
+        }
+        $fn4780 $tmp4779 = $tmp4778->methods[0];
+        panda$collections$Iterator* $tmp4781 = $tmp4779(((panda$collections$Iterable*) p_rawStatements));
+        rawStatement$Iter4777 = $tmp4781;
+        $l4782:;
+        ITable* $tmp4784 = rawStatement$Iter4777->$class->itable;
+        while ($tmp4784->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+            $tmp4784 = $tmp4784->next;
+        }
+        $fn4786 $tmp4785 = $tmp4784->methods[0];
+        panda$core$Bit $tmp4787 = $tmp4785(rawStatement$Iter4777);
+        panda$core$Bit $tmp4788 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp4787);
+        if (!$tmp4788.value) goto $l4783;
+        {
+            ITable* $tmp4790 = rawStatement$Iter4777->$class->itable;
+            while ($tmp4790->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+                $tmp4790 = $tmp4790->next;
+            }
+            $fn4792 $tmp4791 = $tmp4790->methods[1];
+            panda$core$Object* $tmp4793 = $tmp4791(rawStatement$Iter4777);
+            rawStatement4789 = ((org$pandalanguage$pandac$ASTNode*) $tmp4793);
+            org$pandalanguage$pandac$IRNode* $tmp4795 = org$pandalanguage$pandac$Compiler$compileStatement$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, rawStatement4789);
+            statement4794 = $tmp4795;
+            if (((panda$core$Bit) { statement4794 == NULL }).value) {
+            {
+                return NULL;
+            }
+            }
+            panda$collections$Array$add$panda$collections$Array$T(statements4774, ((panda$core$Object*) statement4794));
+        }
+        goto $l4782;
+        $l4783:;
+    }
+    panda$core$Object* $tmp4796 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(self->symbolTable->parents, ((panda$core$Int64) { 0 }));
+    self->symbolTable = ((org$pandalanguage$pandac$SymbolTable*) $tmp4796);
+    panda$collections$Array* $tmp4798 = (panda$collections$Array*) malloc(40);
+    $tmp4798->$class = (panda$core$Class*) &panda$collections$Array$class;
+    $tmp4798->refCount.value = 1;
+    panda$collections$Array$init($tmp4798);
+    children4797 = $tmp4798;
+    panda$collections$Array$add$panda$collections$Array$T(children4797, ((panda$core$Object*) test4740));
+    org$pandalanguage$pandac$IRNode* $tmp4800 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+    $tmp4800->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    $tmp4800->refCount.value = 1;
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4800, ((panda$core$Int64) { 1000 }), p_position, ((panda$collections$ListView*) statements4774));
+    panda$collections$Array$add$panda$collections$Array$T(children4797, ((panda$core$Object*) $tmp4800));
+    org$pandalanguage$pandac$IRNode* $tmp4802 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+    $tmp4802->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    $tmp4802->refCount.value = 1;
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4802, ((panda$core$Int64) { 1012 }), p_position, ((panda$collections$ListView*) children4797));
+    return $tmp4802;
+}
+org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileChainedIfMatch$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$Q$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position p_position, org$pandalanguage$pandac$IRNode* p_value, panda$collections$ImmutableArray* p_whens, panda$collections$ImmutableArray* p_other) {
+    panda$collections$Array* children4804;
+    org$pandalanguage$pandac$Variable* valueVar4807;
+    org$pandalanguage$pandac$Variable$Kind $tmp4810;
+    panda$collections$Array* declChildren4820;
+    panda$collections$Array* varChildren4825;
+    panda$collections$Iterator* rawWhen$Iter4832;
+    org$pandalanguage$pandac$ASTNode* rawWhen4844;
+    org$pandalanguage$pandac$ASTNode* $match$3584_134849;
+    org$pandalanguage$pandac$Position whenPosition4851;
+    panda$collections$ImmutableArray* tests4853;
+    panda$collections$ImmutableArray* statements4855;
+    org$pandalanguage$pandac$IRNode* w4857;
+    panda$collections$Array* statements4859;
+    panda$collections$Iterator* raw$Iter4862;
+    org$pandalanguage$pandac$ASTNode* raw4874;
+    org$pandalanguage$pandac$IRNode* stmt4879;
+    panda$core$SteppedRange$LTpanda$core$Int64$Cpanda$core$Int64$GT $tmp4883;
+    panda$collections$Array* newChildren4911;
+    panda$collections$Array* $tmp4805 = (panda$collections$Array*) malloc(40);
+    $tmp4805->$class = (panda$core$Class*) &panda$collections$Array$class;
+    $tmp4805->refCount.value = 1;
+    panda$collections$Array$init($tmp4805);
+    children4804 = $tmp4805;
+    org$pandalanguage$pandac$Variable* $tmp4808 = (org$pandalanguage$pandac$Variable*) malloc(88);
+    $tmp4808->$class = (panda$core$Class*) &org$pandalanguage$pandac$Variable$class;
+    $tmp4808->refCount.value = 1;
+    org$pandalanguage$pandac$Variable$Kind$init$panda$core$Int64(&$tmp4810, ((panda$core$Int64) { 1 }));
+    panda$core$Int64$wrapper* $tmp4812;
+    $tmp4812 = (panda$core$Int64$wrapper*) malloc(24);
+    $tmp4812->cl = (panda$core$Class*) &panda$core$Int64$wrapperclass;
+    $tmp4812->refCount = 1;
+    $tmp4812->value = p_position.line;
+    panda$core$String* $tmp4813 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s4811, ((panda$core$Object*) $tmp4812));
+    panda$core$String* $tmp4815 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4813, &$s4814);
+    panda$core$Int64$wrapper* $tmp4816;
+    $tmp4816 = (panda$core$Int64$wrapper*) malloc(24);
+    $tmp4816->cl = (panda$core$Class*) &panda$core$Int64$wrapperclass;
+    $tmp4816->refCount = 1;
+    $tmp4816->value = p_position.column;
+    panda$core$String* $tmp4817 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp4815, ((panda$core$Object*) $tmp4816));
+    panda$core$String* $tmp4819 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4817, &$s4818);
+    org$pandalanguage$pandac$Variable$init$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Variable$Kind$panda$core$String$org$pandalanguage$pandac$Type($tmp4808, p_position, $tmp4810, $tmp4819, p_value->type);
+    valueVar4807 = $tmp4808;
+    panda$collections$Array* $tmp4821 = (panda$collections$Array*) malloc(40);
+    $tmp4821->$class = (panda$core$Class*) &panda$collections$Array$class;
+    $tmp4821->refCount.value = 1;
+    panda$collections$Array$init($tmp4821);
+    declChildren4820 = $tmp4821;
+    org$pandalanguage$pandac$IRNode* $tmp4823 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+    $tmp4823->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    $tmp4823->refCount.value = 1;
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Variable($tmp4823, ((panda$core$Int64) { 1016 }), p_value->position, valueVar4807->type, valueVar4807);
+    panda$collections$Array$add$panda$collections$Array$T(declChildren4820, ((panda$core$Object*) $tmp4823));
+    panda$collections$Array$add$panda$collections$Array$T(declChildren4820, ((panda$core$Object*) p_value));
+    panda$collections$Array* $tmp4826 = (panda$collections$Array*) malloc(40);
+    $tmp4826->$class = (panda$core$Class*) &panda$collections$Array$class;
+    $tmp4826->refCount.value = 1;
+    panda$collections$Array$init($tmp4826);
+    varChildren4825 = $tmp4826;
+    org$pandalanguage$pandac$IRNode* $tmp4828 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+    $tmp4828->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    $tmp4828->refCount.value = 1;
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4828, ((panda$core$Int64) { 1021 }), ((org$pandalanguage$pandac$Symbol*) valueVar4807)->position, ((panda$collections$ListView*) declChildren4820));
+    panda$collections$Array$add$panda$collections$Array$T(varChildren4825, ((panda$core$Object*) $tmp4828));
+    org$pandalanguage$pandac$IRNode* $tmp4830 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+    $tmp4830->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
     $tmp4830->refCount.value = 1;
-    panda$collections$Array$init($tmp4830);
-    statements4829 = $tmp4830;
-    panda$core$Int64 $tmp4833 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(p_w->children);
-    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp4832, ((panda$core$Int64) { 1 }), $tmp4833, ((panda$core$Bit) { false }));
-    int64_t $tmp4835 = $tmp4832.min.value;
-    panda$core$Int64 i4834 = { $tmp4835 };
-    int64_t $tmp4837 = $tmp4832.max.value;
-    bool $tmp4838 = $tmp4832.inclusive.value;
-    if ($tmp4838) goto $l4845; else goto $l4846;
-    $l4845:;
-    if ($tmp4835 <= $tmp4837) goto $l4839; else goto $l4841;
-    $l4846:;
-    if ($tmp4835 < $tmp4837) goto $l4839; else goto $l4841;
-    $l4839:;
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4830, ((panda$core$Int64) { 1018 }), ((org$pandalanguage$pandac$Symbol*) valueVar4807)->position, ((panda$collections$ListView*) varChildren4825));
+    panda$collections$Array$add$panda$collections$Array$T(children4804, ((panda$core$Object*) $tmp4830));
     {
-        panda$core$Object* $tmp4848 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_w->children, i4834);
-        org$pandalanguage$pandac$IRNode* $tmp4849 = org$pandalanguage$pandac$Compiler$compileStatement$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, ((org$pandalanguage$pandac$ASTNode*) $tmp4848));
-        statement4847 = $tmp4849;
-        if (((panda$core$Bit) { statement4847 == NULL }).value) {
+        ITable* $tmp4833 = ((panda$collections$Iterable*) p_whens)->$class->itable;
+        while ($tmp4833->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
+            $tmp4833 = $tmp4833->next;
+        }
+        $fn4835 $tmp4834 = $tmp4833->methods[0];
+        panda$collections$Iterator* $tmp4836 = $tmp4834(((panda$collections$Iterable*) p_whens));
+        rawWhen$Iter4832 = $tmp4836;
+        $l4837:;
+        ITable* $tmp4839 = rawWhen$Iter4832->$class->itable;
+        while ($tmp4839->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+            $tmp4839 = $tmp4839->next;
+        }
+        $fn4841 $tmp4840 = $tmp4839->methods[0];
+        panda$core$Bit $tmp4842 = $tmp4840(rawWhen$Iter4832);
+        panda$core$Bit $tmp4843 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp4842);
+        if (!$tmp4843.value) goto $l4838;
         {
-            return NULL;
-        }
-        }
-        panda$collections$Array$add$panda$collections$Array$T(statements4829, ((panda$core$Object*) statement4847));
-    }
-    $l4842:;
-    int64_t $tmp4851 = $tmp4837 - i4834.value;
-    if ($tmp4838) goto $l4852; else goto $l4853;
-    $l4852:;
-    if ((uint64_t) $tmp4851 >= 1) goto $l4850; else goto $l4841;
-    $l4853:;
-    if ((uint64_t) $tmp4851 > 1) goto $l4850; else goto $l4841;
-    $l4850:;
-    i4834.value += 1;
-    goto $l4839;
-    $l4841:;
-    panda$core$Object* $tmp4856 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(self->symbolTable->parents, ((panda$core$Int64) { 0 }));
-    self->symbolTable = ((org$pandalanguage$pandac$SymbolTable*) $tmp4856);
-    panda$collections$Array* $tmp4858 = (panda$collections$Array*) malloc(40);
-    $tmp4858->$class = (panda$core$Class*) &panda$collections$Array$class;
-    $tmp4858->refCount.value = 1;
-    panda$collections$Array$init($tmp4858);
-    children4857 = $tmp4858;
-    panda$collections$Array$add$panda$collections$Array$T(children4857, ((panda$core$Object*) test4792));
-    org$pandalanguage$pandac$IRNode* $tmp4860 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-    $tmp4860->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-    $tmp4860->refCount.value = 1;
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4860, ((panda$core$Int64) { 1000 }), p_w->position, ((panda$collections$ListView*) statements4829));
-    panda$collections$Array$add$panda$collections$Array$T(children4857, ((panda$core$Object*) $tmp4860));
-    org$pandalanguage$pandac$IRNode* $tmp4862 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-    $tmp4862->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-    $tmp4862->refCount.value = 1;
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4862, ((panda$core$Int64) { 1012 }), p_w->position, ((panda$collections$ListView*) children4857));
-    return $tmp4862;
-}
-org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileChainedIfMatch$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$ASTNode* p_m, org$pandalanguage$pandac$IRNode* p_value) {
-    panda$collections$Array* children4864;
-    org$pandalanguage$pandac$Variable* valueVar4867;
-    panda$collections$Array* declChildren4881;
-    panda$collections$Array* varChildren4886;
-    panda$core$Range$LTpanda$core$Int64$GT $tmp4893;
-    org$pandalanguage$pandac$ASTNode* c4908;
-    org$pandalanguage$pandac$IRNode* w4910;
-    panda$collections$Array* statements4912;
-    panda$collections$Iterator* astStatement$Iter4915;
-    org$pandalanguage$pandac$ASTNode* astStatement4927;
-    org$pandalanguage$pandac$IRNode* stmt4932;
-    panda$core$SteppedRange$LTpanda$core$Int64$Cpanda$core$Int64$GT $tmp4942;
-    panda$collections$Array* newChildren4970;
-    panda$collections$Array* $tmp4865 = (panda$collections$Array*) malloc(40);
-    $tmp4865->$class = (panda$core$Class*) &panda$collections$Array$class;
-    $tmp4865->refCount.value = 1;
-    panda$collections$Array$init($tmp4865);
-    children4864 = $tmp4865;
-    org$pandalanguage$pandac$Variable* $tmp4868 = (org$pandalanguage$pandac$Variable*) malloc(88);
-    $tmp4868->$class = (panda$core$Class*) &org$pandalanguage$pandac$Variable$class;
-    $tmp4868->refCount.value = 1;
-    org$pandalanguage$pandac$Variable$Kind* $tmp4870 = (org$pandalanguage$pandac$Variable$Kind*) malloc(24);
-    $tmp4870->$class = (panda$core$Class*) &org$pandalanguage$pandac$Variable$Kind$class;
-    $tmp4870->refCount.value = 1;
-    org$pandalanguage$pandac$Variable$Kind$init$panda$core$Int64($tmp4870, ((panda$core$Int64) { 1 }));
-    panda$core$Int64$wrapper* $tmp4873;
-    $tmp4873 = (panda$core$Int64$wrapper*) malloc(24);
-    $tmp4873->cl = (panda$core$Class*) &panda$core$Int64$wrapperclass;
-    $tmp4873->refCount = 1;
-    $tmp4873->value = p_m->position.line;
-    panda$core$String* $tmp4874 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s4872, ((panda$core$Object*) $tmp4873));
-    panda$core$String* $tmp4876 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4874, &$s4875);
-    panda$core$Int64$wrapper* $tmp4877;
-    $tmp4877 = (panda$core$Int64$wrapper*) malloc(24);
-    $tmp4877->cl = (panda$core$Class*) &panda$core$Int64$wrapperclass;
-    $tmp4877->refCount = 1;
-    $tmp4877->value = p_m->position.column;
-    panda$core$String* $tmp4878 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp4876, ((panda$core$Object*) $tmp4877));
-    panda$core$String* $tmp4880 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4878, &$s4879);
-    org$pandalanguage$pandac$Variable$init$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Variable$Kind$panda$core$String$org$pandalanguage$pandac$Type($tmp4868, p_m->position, $tmp4870, $tmp4880, p_value->type);
-    valueVar4867 = $tmp4868;
-    panda$collections$Array* $tmp4882 = (panda$collections$Array*) malloc(40);
-    $tmp4882->$class = (panda$core$Class*) &panda$collections$Array$class;
-    $tmp4882->refCount.value = 1;
-    panda$collections$Array$init($tmp4882);
-    declChildren4881 = $tmp4882;
-    org$pandalanguage$pandac$IRNode* $tmp4884 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-    $tmp4884->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-    $tmp4884->refCount.value = 1;
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Variable($tmp4884, ((panda$core$Int64) { 1016 }), p_value->position, valueVar4867->type, valueVar4867);
-    panda$collections$Array$add$panda$collections$Array$T(declChildren4881, ((panda$core$Object*) $tmp4884));
-    panda$collections$Array$add$panda$collections$Array$T(declChildren4881, ((panda$core$Object*) p_value));
-    panda$collections$Array* $tmp4887 = (panda$collections$Array*) malloc(40);
-    $tmp4887->$class = (panda$core$Class*) &panda$collections$Array$class;
-    $tmp4887->refCount.value = 1;
-    panda$collections$Array$init($tmp4887);
-    varChildren4886 = $tmp4887;
-    org$pandalanguage$pandac$IRNode* $tmp4889 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-    $tmp4889->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-    $tmp4889->refCount.value = 1;
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4889, ((panda$core$Int64) { 1021 }), ((org$pandalanguage$pandac$Symbol*) valueVar4867)->position, ((panda$collections$ListView*) declChildren4881));
-    panda$collections$Array$add$panda$collections$Array$T(varChildren4886, ((panda$core$Object*) $tmp4889));
-    org$pandalanguage$pandac$IRNode* $tmp4891 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-    $tmp4891->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-    $tmp4891->refCount.value = 1;
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4891, ((panda$core$Int64) { 1018 }), ((org$pandalanguage$pandac$Symbol*) valueVar4867)->position, ((panda$collections$ListView*) varChildren4886));
-    panda$collections$Array$add$panda$collections$Array$T(children4864, ((panda$core$Object*) $tmp4891));
-    panda$core$Int64 $tmp4894 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(p_m->children);
-    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp4893, ((panda$core$Int64) { 1 }), $tmp4894, ((panda$core$Bit) { false }));
-    int64_t $tmp4896 = $tmp4893.min.value;
-    panda$core$Int64 i4895 = { $tmp4896 };
-    int64_t $tmp4898 = $tmp4893.max.value;
-    bool $tmp4899 = $tmp4893.inclusive.value;
-    if ($tmp4899) goto $l4906; else goto $l4907;
-    $l4906:;
-    if ($tmp4896 <= $tmp4898) goto $l4900; else goto $l4902;
-    $l4907:;
-    if ($tmp4896 < $tmp4898) goto $l4900; else goto $l4902;
-    $l4900:;
-    {
-        panda$core$Object* $tmp4909 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_m->children, i4895);
-        c4908 = ((org$pandalanguage$pandac$ASTNode*) $tmp4909);
-        switch (c4908->kind.value) {
-            case 124:
+            ITable* $tmp4845 = rawWhen$Iter4832->$class->itable;
+            while ($tmp4845->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+                $tmp4845 = $tmp4845->next;
+            }
+            $fn4847 $tmp4846 = $tmp4845->methods[1];
+            panda$core$Object* $tmp4848 = $tmp4846(rawWhen$Iter4832);
+            rawWhen4844 = ((org$pandalanguage$pandac$ASTNode*) $tmp4848);
             {
-                org$pandalanguage$pandac$IRNode* $tmp4911 = org$pandalanguage$pandac$Compiler$compileChainedIfWhen$org$pandalanguage$pandac$Variable$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, valueVar4867, c4908);
-                w4910 = $tmp4911;
-                if (((panda$core$Bit) { w4910 == NULL }).value) {
+                $match$3584_134849 = rawWhen4844;
+                panda$core$Bit $tmp4850 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$3584_134849->$rawValue, ((panda$core$Int64) { 39 }));
+                if ($tmp4850.value) {
+                {
+                    org$pandalanguage$pandac$Position* $tmp4852 = ((org$pandalanguage$pandac$Position*) ((char*) $match$3584_134849->$data + 0));
+                    whenPosition4851 = *$tmp4852;
+                    panda$collections$ImmutableArray** $tmp4854 = ((panda$collections$ImmutableArray**) ((char*) $match$3584_134849->$data + 16));
+                    tests4853 = *$tmp4854;
+                    panda$collections$ImmutableArray** $tmp4856 = ((panda$collections$ImmutableArray**) ((char*) $match$3584_134849->$data + 24));
+                    statements4855 = *$tmp4856;
+                    org$pandalanguage$pandac$IRNode* $tmp4858 = org$pandalanguage$pandac$Compiler$compileChainedIfWhen$org$pandalanguage$pandac$Variable$org$pandalanguage$pandac$Position$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$R$org$pandalanguage$pandac$IRNode$Q(self, valueVar4807, whenPosition4851, tests4853, statements4855);
+                    w4857 = $tmp4858;
+                    if (((panda$core$Bit) { w4857 == NULL }).value) {
+                    {
+                        return NULL;
+                    }
+                    }
+                    panda$collections$Array$add$panda$collections$Array$T(children4804, ((panda$core$Object*) w4857));
+                }
+                }
+                else {
+                {
+                    PANDA_ASSERT(((panda$core$Bit) { false }).value);
+                }
+                }
+            }
+        }
+        goto $l4837;
+        $l4838:;
+    }
+    if (((panda$core$Bit) { p_other != NULL }).value) {
+    {
+        panda$collections$Array* $tmp4860 = (panda$collections$Array*) malloc(40);
+        $tmp4860->$class = (panda$core$Class*) &panda$collections$Array$class;
+        $tmp4860->refCount.value = 1;
+        panda$collections$Array$init($tmp4860);
+        statements4859 = $tmp4860;
+        {
+            ITable* $tmp4863 = ((panda$collections$Iterable*) p_other)->$class->itable;
+            while ($tmp4863->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
+                $tmp4863 = $tmp4863->next;
+            }
+            $fn4865 $tmp4864 = $tmp4863->methods[0];
+            panda$collections$Iterator* $tmp4866 = $tmp4864(((panda$collections$Iterable*) p_other));
+            raw$Iter4862 = $tmp4866;
+            $l4867:;
+            ITable* $tmp4869 = raw$Iter4862->$class->itable;
+            while ($tmp4869->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+                $tmp4869 = $tmp4869->next;
+            }
+            $fn4871 $tmp4870 = $tmp4869->methods[0];
+            panda$core$Bit $tmp4872 = $tmp4870(raw$Iter4862);
+            panda$core$Bit $tmp4873 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp4872);
+            if (!$tmp4873.value) goto $l4868;
+            {
+                ITable* $tmp4875 = raw$Iter4862->$class->itable;
+                while ($tmp4875->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+                    $tmp4875 = $tmp4875->next;
+                }
+                $fn4877 $tmp4876 = $tmp4875->methods[1];
+                panda$core$Object* $tmp4878 = $tmp4876(raw$Iter4862);
+                raw4874 = ((org$pandalanguage$pandac$ASTNode*) $tmp4878);
+                org$pandalanguage$pandac$IRNode* $tmp4880 = org$pandalanguage$pandac$Compiler$compileStatement$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, raw4874);
+                stmt4879 = $tmp4880;
+                if (((panda$core$Bit) { stmt4879 == NULL }).value) {
                 {
                     return NULL;
                 }
                 }
-                panda$collections$Array$add$panda$collections$Array$T(children4864, ((panda$core$Object*) w4910));
+                panda$collections$Array$add$panda$collections$Array$T(statements4859, ((panda$core$Object*) stmt4879));
             }
-            break;
-            case 127:
-            {
-                panda$collections$Array* $tmp4913 = (panda$collections$Array*) malloc(40);
-                $tmp4913->$class = (panda$core$Class*) &panda$collections$Array$class;
-                $tmp4913->refCount.value = 1;
-                panda$collections$Array$init($tmp4913);
-                statements4912 = $tmp4913;
-                {
-                    ITable* $tmp4916 = ((panda$collections$Iterable*) c4908->children)->$class->itable;
-                    while ($tmp4916->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
-                        $tmp4916 = $tmp4916->next;
-                    }
-                    $fn4918 $tmp4917 = $tmp4916->methods[0];
-                    panda$collections$Iterator* $tmp4919 = $tmp4917(((panda$collections$Iterable*) c4908->children));
-                    astStatement$Iter4915 = $tmp4919;
-                    $l4920:;
-                    ITable* $tmp4922 = astStatement$Iter4915->$class->itable;
-                    while ($tmp4922->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-                        $tmp4922 = $tmp4922->next;
-                    }
-                    $fn4924 $tmp4923 = $tmp4922->methods[0];
-                    panda$core$Bit $tmp4925 = $tmp4923(astStatement$Iter4915);
-                    panda$core$Bit $tmp4926 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp4925);
-                    if (!$tmp4926.value) goto $l4921;
-                    {
-                        ITable* $tmp4928 = astStatement$Iter4915->$class->itable;
-                        while ($tmp4928->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-                            $tmp4928 = $tmp4928->next;
-                        }
-                        $fn4930 $tmp4929 = $tmp4928->methods[1];
-                        panda$core$Object* $tmp4931 = $tmp4929(astStatement$Iter4915);
-                        astStatement4927 = ((org$pandalanguage$pandac$ASTNode*) $tmp4931);
-                        org$pandalanguage$pandac$IRNode* $tmp4933 = org$pandalanguage$pandac$Compiler$compileStatement$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, astStatement4927);
-                        stmt4932 = $tmp4933;
-                        if (((panda$core$Bit) { stmt4932 == NULL }).value) {
-                        {
-                            return NULL;
-                        }
-                        }
-                        panda$collections$Array$add$panda$collections$Array$T(statements4912, ((panda$core$Object*) stmt4932));
-                    }
-                    goto $l4920;
-                    $l4921:;
-                }
-                org$pandalanguage$pandac$IRNode* $tmp4934 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-                $tmp4934->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-                $tmp4934->refCount.value = 1;
-                org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4934, ((panda$core$Int64) { 1000 }), c4908->position, ((panda$collections$ListView*) statements4912));
-                panda$collections$Array$add$panda$collections$Array$T(children4864, ((panda$core$Object*) $tmp4934));
-            }
-            break;
-            default:
-            {
-                PANDA_ASSERT(((panda$core$Bit) { false }).value);
-            }
+            goto $l4867;
+            $l4868:;
         }
+        org$pandalanguage$pandac$IRNode* $tmp4881 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+        $tmp4881->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+        $tmp4881->refCount.value = 1;
+        org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4881, ((panda$core$Int64) { 1000 }), p_position, ((panda$collections$ListView*) statements4859));
+        panda$collections$Array$add$panda$collections$Array$T(children4804, ((panda$core$Object*) $tmp4881));
     }
-    $l4903:;
-    int64_t $tmp4937 = $tmp4898 - i4895.value;
-    if ($tmp4899) goto $l4938; else goto $l4939;
-    $l4938:;
-    if ((uint64_t) $tmp4937 >= 1) goto $l4936; else goto $l4902;
-    $l4939:;
-    if ((uint64_t) $tmp4937 > 1) goto $l4936; else goto $l4902;
-    $l4936:;
-    i4895.value += 1;
-    goto $l4900;
+    }
+    panda$core$Int64 $tmp4884 = panda$collections$Array$get_count$R$panda$core$Int64(children4804);
+    panda$core$Int64 $tmp4885 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64($tmp4884, ((panda$core$Int64) { 1 }));
+    panda$core$SteppedRange$LTpanda$core$Int64$Cpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp4883, $tmp4885, ((panda$core$Int64) { 1 }), ((panda$core$Int64) { -1 }), ((panda$core$Bit) { false }));
+    int64_t $tmp4887 = $tmp4883.start.value;
+    panda$core$Int64 i4886 = { $tmp4887 };
+    int64_t $tmp4889 = $tmp4883.end.value;
+    int64_t $tmp4890 = $tmp4883.step.value;
+    bool $tmp4891 = $tmp4883.inclusive.value;
+    bool $tmp4898 = $tmp4890 > 0;
+    if ($tmp4898) goto $l4896; else goto $l4897;
+    $l4896:;
+    if ($tmp4891) goto $l4899; else goto $l4900;
+    $l4899:;
+    if ($tmp4887 <= $tmp4889) goto $l4892; else goto $l4894;
+    $l4900:;
+    if ($tmp4887 < $tmp4889) goto $l4892; else goto $l4894;
+    $l4897:;
+    if ($tmp4891) goto $l4901; else goto $l4902;
+    $l4901:;
+    if ($tmp4887 >= $tmp4889) goto $l4892; else goto $l4894;
     $l4902:;
-    panda$core$Int64 $tmp4943 = panda$collections$Array$get_count$R$panda$core$Int64(children4864);
-    panda$core$Int64 $tmp4944 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64($tmp4943, ((panda$core$Int64) { 1 }));
-    panda$core$SteppedRange$LTpanda$core$Int64$Cpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp4942, $tmp4944, ((panda$core$Int64) { 1 }), ((panda$core$Int64) { -1 }), ((panda$core$Bit) { false }));
-    int64_t $tmp4946 = $tmp4942.start.value;
-    panda$core$Int64 i4945 = { $tmp4946 };
-    int64_t $tmp4948 = $tmp4942.end.value;
-    int64_t $tmp4949 = $tmp4942.step.value;
-    bool $tmp4950 = $tmp4942.inclusive.value;
-    bool $tmp4957 = $tmp4949 > 0;
-    if ($tmp4957) goto $l4955; else goto $l4956;
-    $l4955:;
-    if ($tmp4950) goto $l4958; else goto $l4959;
-    $l4958:;
-    if ($tmp4946 <= $tmp4948) goto $l4951; else goto $l4953;
-    $l4959:;
-    if ($tmp4946 < $tmp4948) goto $l4951; else goto $l4953;
-    $l4956:;
-    if ($tmp4950) goto $l4960; else goto $l4961;
-    $l4960:;
-    if ($tmp4946 >= $tmp4948) goto $l4951; else goto $l4953;
-    $l4961:;
-    if ($tmp4946 > $tmp4948) goto $l4951; else goto $l4953;
-    $l4951:;
+    if ($tmp4887 > $tmp4889) goto $l4892; else goto $l4894;
+    $l4892:;
     {
-        panda$core$Int64 $tmp4963 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(i4945, ((panda$core$Int64) { 1 }));
-        panda$core$Object* $tmp4964 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(children4864, $tmp4963);
-        panda$core$Bit $tmp4965 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(((org$pandalanguage$pandac$IRNode*) $tmp4964)->kind, ((panda$core$Int64) { 1012 }));
-        PANDA_ASSERT($tmp4965.value);
-        panda$core$Int64 $tmp4966 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(i4945, ((panda$core$Int64) { 1 }));
-        panda$core$Object* $tmp4967 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(children4864, $tmp4966);
-        panda$core$Int64 $tmp4968 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(((org$pandalanguage$pandac$IRNode*) $tmp4967)->children);
-        panda$core$Bit $tmp4969 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp4968, ((panda$core$Int64) { 2 }));
-        PANDA_ASSERT($tmp4969.value);
-        panda$collections$Array* $tmp4971 = (panda$collections$Array*) malloc(40);
-        $tmp4971->$class = (panda$core$Class*) &panda$collections$Array$class;
-        $tmp4971->refCount.value = 1;
-        panda$core$Int64 $tmp4973 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(i4945, ((panda$core$Int64) { 1 }));
-        panda$core$Object* $tmp4974 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(children4864, $tmp4973);
-        panda$collections$Array$init$panda$collections$ListView$LTpanda$collections$Array$T$GT($tmp4971, ((panda$collections$ListView*) ((org$pandalanguage$pandac$IRNode*) $tmp4974)->children));
-        newChildren4970 = $tmp4971;
-        panda$core$Object* $tmp4975 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(children4864, i4945);
-        panda$collections$Array$add$panda$collections$Array$T(newChildren4970, ((panda$core$Object*) ((org$pandalanguage$pandac$IRNode*) $tmp4975)));
-        panda$core$Int64 $tmp4976 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(i4945, ((panda$core$Int64) { 1 }));
-        org$pandalanguage$pandac$IRNode* $tmp4977 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-        $tmp4977->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-        $tmp4977->refCount.value = 1;
-        panda$core$Int64 $tmp4979 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(i4945, ((panda$core$Int64) { 1 }));
-        panda$core$Object* $tmp4980 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(children4864, $tmp4979);
-        panda$core$Int64 $tmp4981 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(i4945, ((panda$core$Int64) { 1 }));
-        panda$core$Object* $tmp4982 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(children4864, $tmp4981);
-        org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4977, ((org$pandalanguage$pandac$IRNode*) $tmp4980)->kind, ((org$pandalanguage$pandac$IRNode*) $tmp4982)->position, ((panda$collections$ListView*) newChildren4970));
-        panda$collections$Array$$IDXEQ$panda$core$Int64$panda$collections$Array$T(children4864, $tmp4976, ((panda$core$Object*) $tmp4977));
-        panda$core$Int64 $tmp4983 = panda$collections$Array$get_count$R$panda$core$Int64(children4864);
-        panda$core$Int64 $tmp4984 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64($tmp4983, ((panda$core$Int64) { 1 }));
-        panda$collections$Array$removeIndex$panda$core$Int64(children4864, $tmp4984);
+        panda$core$Int64 $tmp4904 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(i4886, ((panda$core$Int64) { 1 }));
+        panda$core$Object* $tmp4905 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(children4804, $tmp4904);
+        panda$core$Bit $tmp4906 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(((org$pandalanguage$pandac$IRNode*) $tmp4905)->kind, ((panda$core$Int64) { 1012 }));
+        PANDA_ASSERT($tmp4906.value);
+        panda$core$Int64 $tmp4907 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(i4886, ((panda$core$Int64) { 1 }));
+        panda$core$Object* $tmp4908 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(children4804, $tmp4907);
+        panda$core$Int64 $tmp4909 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(((org$pandalanguage$pandac$IRNode*) $tmp4908)->children);
+        panda$core$Bit $tmp4910 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp4909, ((panda$core$Int64) { 2 }));
+        PANDA_ASSERT($tmp4910.value);
+        panda$collections$Array* $tmp4912 = (panda$collections$Array*) malloc(40);
+        $tmp4912->$class = (panda$core$Class*) &panda$collections$Array$class;
+        $tmp4912->refCount.value = 1;
+        panda$core$Int64 $tmp4914 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(i4886, ((panda$core$Int64) { 1 }));
+        panda$core$Object* $tmp4915 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(children4804, $tmp4914);
+        panda$collections$Array$init$panda$collections$ListView$LTpanda$collections$Array$T$GT($tmp4912, ((panda$collections$ListView*) ((org$pandalanguage$pandac$IRNode*) $tmp4915)->children));
+        newChildren4911 = $tmp4912;
+        panda$core$Object* $tmp4916 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(children4804, i4886);
+        panda$collections$Array$add$panda$collections$Array$T(newChildren4911, ((panda$core$Object*) ((org$pandalanguage$pandac$IRNode*) $tmp4916)));
+        panda$core$Int64 $tmp4917 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(i4886, ((panda$core$Int64) { 1 }));
+        org$pandalanguage$pandac$IRNode* $tmp4918 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+        $tmp4918->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+        $tmp4918->refCount.value = 1;
+        panda$core$Int64 $tmp4920 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(i4886, ((panda$core$Int64) { 1 }));
+        panda$core$Object* $tmp4921 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(children4804, $tmp4920);
+        panda$core$Int64 $tmp4922 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(i4886, ((panda$core$Int64) { 1 }));
+        panda$core$Object* $tmp4923 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(children4804, $tmp4922);
+        org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4918, ((org$pandalanguage$pandac$IRNode*) $tmp4921)->kind, ((org$pandalanguage$pandac$IRNode*) $tmp4923)->position, ((panda$collections$ListView*) newChildren4911));
+        panda$collections$Array$$IDXEQ$panda$core$Int64$panda$collections$Array$T(children4804, $tmp4917, ((panda$core$Object*) $tmp4918));
+        panda$core$Int64 $tmp4924 = panda$collections$Array$get_count$R$panda$core$Int64(children4804);
+        panda$core$Int64 $tmp4925 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64($tmp4924, ((panda$core$Int64) { 1 }));
+        panda$collections$Array$removeIndex$panda$core$Int64(children4804, $tmp4925);
     }
-    $l4954:;
-    if ($tmp4957) goto $l4986; else goto $l4987;
-    $l4986:;
-    int64_t $tmp4988 = $tmp4948 - i4945.value;
-    if ($tmp4950) goto $l4989; else goto $l4990;
-    $l4989:;
-    if ((uint64_t) $tmp4988 >= $tmp4949) goto $l4985; else goto $l4953;
-    $l4990:;
-    if ((uint64_t) $tmp4988 > $tmp4949) goto $l4985; else goto $l4953;
-    $l4987:;
-    int64_t $tmp4992 = i4945.value - $tmp4948;
-    if ($tmp4950) goto $l4993; else goto $l4994;
-    $l4993:;
-    if ((uint64_t) $tmp4992 >= -$tmp4949) goto $l4985; else goto $l4953;
-    $l4994:;
-    if ((uint64_t) $tmp4992 > -$tmp4949) goto $l4985; else goto $l4953;
-    $l4985:;
-    i4945.value += $tmp4949;
-    goto $l4951;
-    $l4953:;
-    org$pandalanguage$pandac$IRNode* $tmp4996 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-    $tmp4996->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-    $tmp4996->refCount.value = 1;
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4996, ((panda$core$Int64) { 1000 }), p_m->position, ((panda$collections$ListView*) children4864));
-    return $tmp4996;
+    $l4895:;
+    if ($tmp4898) goto $l4927; else goto $l4928;
+    $l4927:;
+    int64_t $tmp4929 = $tmp4889 - i4886.value;
+    if ($tmp4891) goto $l4930; else goto $l4931;
+    $l4930:;
+    if ((uint64_t) $tmp4929 >= $tmp4890) goto $l4926; else goto $l4894;
+    $l4931:;
+    if ((uint64_t) $tmp4929 > $tmp4890) goto $l4926; else goto $l4894;
+    $l4928:;
+    int64_t $tmp4933 = i4886.value - $tmp4889;
+    if ($tmp4891) goto $l4934; else goto $l4935;
+    $l4934:;
+    if ((uint64_t) $tmp4933 >= -$tmp4890) goto $l4926; else goto $l4894;
+    $l4935:;
+    if ((uint64_t) $tmp4933 > -$tmp4890) goto $l4926; else goto $l4894;
+    $l4926:;
+    i4886.value += $tmp4890;
+    goto $l4892;
+    $l4894:;
+    org$pandalanguage$pandac$IRNode* $tmp4937 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+    $tmp4937->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    $tmp4937->refCount.value = 1;
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4937, ((panda$core$Int64) { 1000 }), p_position, ((panda$collections$ListView*) children4804));
+    return $tmp4937;
 }
-org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileWhen$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Type* p_type, org$pandalanguage$pandac$ASTNode* p_w) {
-    panda$collections$Array* children5006;
-    panda$collections$Iterator* expr$Iter5009;
-    org$pandalanguage$pandac$ASTNode* expr5022;
-    org$pandalanguage$pandac$IRNode* compiled5027;
-    panda$collections$Array* statements5032;
-    panda$core$Range$LTpanda$core$Int64$GT $tmp5035;
-    org$pandalanguage$pandac$IRNode* statement5050;
-    panda$core$Bit $tmp4998 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_w->kind, ((panda$core$Int64) { 124 }));
-    PANDA_ASSERT($tmp4998.value);
-    panda$core$Int64 $tmp4999 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(p_w->children);
-    panda$core$Bit $tmp5000 = panda$core$Int64$$GE$panda$core$Int64$R$panda$core$Bit($tmp4999, ((panda$core$Int64) { 1 }));
-    PANDA_ASSERT($tmp5000.value);
-    panda$core$Object* $tmp5001 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_w->children, ((panda$core$Int64) { 0 }));
-    panda$core$Bit $tmp5002 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(((org$pandalanguage$pandac$ASTNode*) $tmp5001)->kind, ((panda$core$Int64) { 128 }));
-    PANDA_ASSERT($tmp5002.value);
-    panda$core$Object* $tmp5003 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_w->children, ((panda$core$Int64) { 0 }));
-    panda$core$Int64 $tmp5004 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(((org$pandalanguage$pandac$ASTNode*) $tmp5003)->children);
-    panda$core$Bit $tmp5005 = panda$core$Int64$$GE$panda$core$Int64$R$panda$core$Bit($tmp5004, ((panda$core$Int64) { 1 }));
-    PANDA_ASSERT($tmp5005.value);
-    panda$collections$Array* $tmp5007 = (panda$collections$Array*) malloc(40);
-    $tmp5007->$class = (panda$core$Class*) &panda$collections$Array$class;
-    $tmp5007->refCount.value = 1;
-    panda$collections$Array$init($tmp5007);
-    children5006 = $tmp5007;
+org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileWhen$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Position$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Type* p_type, org$pandalanguage$pandac$Position p_position, panda$collections$ImmutableArray* p_tests, panda$collections$ImmutableArray* p_rawStatements) {
+    panda$collections$Array* children4939;
+    panda$collections$Iterator* expr$Iter4942;
+    org$pandalanguage$pandac$ASTNode* expr4954;
+    org$pandalanguage$pandac$IRNode* compiled4959;
+    panda$collections$Array* statements4964;
+    panda$collections$Iterator* rawStatement$Iter4967;
+    org$pandalanguage$pandac$ASTNode* rawStatement4979;
+    org$pandalanguage$pandac$IRNode* statement4984;
+    panda$collections$Array* $tmp4940 = (panda$collections$Array*) malloc(40);
+    $tmp4940->$class = (panda$core$Class*) &panda$collections$Array$class;
+    $tmp4940->refCount.value = 1;
+    panda$collections$Array$init($tmp4940);
+    children4939 = $tmp4940;
     {
-        panda$core$Object* $tmp5010 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_w->children, ((panda$core$Int64) { 0 }));
-        ITable* $tmp5011 = ((panda$collections$Iterable*) ((org$pandalanguage$pandac$ASTNode*) $tmp5010)->children)->$class->itable;
-        while ($tmp5011->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
-            $tmp5011 = $tmp5011->next;
+        ITable* $tmp4943 = ((panda$collections$Iterable*) p_tests)->$class->itable;
+        while ($tmp4943->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
+            $tmp4943 = $tmp4943->next;
         }
-        $fn5013 $tmp5012 = $tmp5011->methods[0];
-        panda$collections$Iterator* $tmp5014 = $tmp5012(((panda$collections$Iterable*) ((org$pandalanguage$pandac$ASTNode*) $tmp5010)->children));
-        expr$Iter5009 = $tmp5014;
-        $l5015:;
-        ITable* $tmp5017 = expr$Iter5009->$class->itable;
-        while ($tmp5017->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-            $tmp5017 = $tmp5017->next;
+        $fn4945 $tmp4944 = $tmp4943->methods[0];
+        panda$collections$Iterator* $tmp4946 = $tmp4944(((panda$collections$Iterable*) p_tests));
+        expr$Iter4942 = $tmp4946;
+        $l4947:;
+        ITable* $tmp4949 = expr$Iter4942->$class->itable;
+        while ($tmp4949->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+            $tmp4949 = $tmp4949->next;
         }
-        $fn5019 $tmp5018 = $tmp5017->methods[0];
-        panda$core$Bit $tmp5020 = $tmp5018(expr$Iter5009);
-        panda$core$Bit $tmp5021 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp5020);
-        if (!$tmp5021.value) goto $l5016;
+        $fn4951 $tmp4950 = $tmp4949->methods[0];
+        panda$core$Bit $tmp4952 = $tmp4950(expr$Iter4942);
+        panda$core$Bit $tmp4953 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp4952);
+        if (!$tmp4953.value) goto $l4948;
         {
-            ITable* $tmp5023 = expr$Iter5009->$class->itable;
-            while ($tmp5023->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-                $tmp5023 = $tmp5023->next;
+            ITable* $tmp4955 = expr$Iter4942->$class->itable;
+            while ($tmp4955->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+                $tmp4955 = $tmp4955->next;
             }
-            $fn5025 $tmp5024 = $tmp5023->methods[1];
-            panda$core$Object* $tmp5026 = $tmp5024(expr$Iter5009);
-            expr5022 = ((org$pandalanguage$pandac$ASTNode*) $tmp5026);
-            org$pandalanguage$pandac$IRNode* $tmp5028 = org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, expr5022);
-            org$pandalanguage$pandac$IRNode* $tmp5029 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, $tmp5028, p_type);
-            compiled5027 = $tmp5029;
-            if (((panda$core$Bit) { compiled5027 == NULL }).value) {
+            $fn4957 $tmp4956 = $tmp4955->methods[1];
+            panda$core$Object* $tmp4958 = $tmp4956(expr$Iter4942);
+            expr4954 = ((org$pandalanguage$pandac$ASTNode*) $tmp4958);
+            org$pandalanguage$pandac$IRNode* $tmp4960 = org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, expr4954);
+            org$pandalanguage$pandac$IRNode* $tmp4961 = org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(self, $tmp4960, p_type);
+            compiled4959 = $tmp4961;
+            if (((panda$core$Bit) { compiled4959 == NULL }).value) {
             {
                 return NULL;
             }
             }
-            panda$collections$Array$add$panda$collections$Array$T(children5006, ((panda$core$Object*) compiled5027));
+            panda$collections$Array$add$panda$collections$Array$T(children4939, ((panda$core$Object*) compiled4959));
         }
-        goto $l5015;
-        $l5016:;
+        goto $l4947;
+        $l4948:;
     }
-    org$pandalanguage$pandac$SymbolTable* $tmp5030 = (org$pandalanguage$pandac$SymbolTable*) malloc(48);
-    $tmp5030->$class = (panda$core$Class*) &org$pandalanguage$pandac$SymbolTable$class;
-    $tmp5030->refCount.value = 1;
-    org$pandalanguage$pandac$SymbolTable$init$org$pandalanguage$pandac$SymbolTable($tmp5030, self->symbolTable);
-    self->symbolTable = $tmp5030;
-    panda$collections$Array* $tmp5033 = (panda$collections$Array*) malloc(40);
-    $tmp5033->$class = (panda$core$Class*) &panda$collections$Array$class;
-    $tmp5033->refCount.value = 1;
-    panda$collections$Array$init($tmp5033);
-    statements5032 = $tmp5033;
-    panda$core$Int64 $tmp5036 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(p_w->children);
-    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp5035, ((panda$core$Int64) { 1 }), $tmp5036, ((panda$core$Bit) { false }));
-    int64_t $tmp5038 = $tmp5035.min.value;
-    panda$core$Int64 i5037 = { $tmp5038 };
-    int64_t $tmp5040 = $tmp5035.max.value;
-    bool $tmp5041 = $tmp5035.inclusive.value;
-    if ($tmp5041) goto $l5048; else goto $l5049;
-    $l5048:;
-    if ($tmp5038 <= $tmp5040) goto $l5042; else goto $l5044;
-    $l5049:;
-    if ($tmp5038 < $tmp5040) goto $l5042; else goto $l5044;
-    $l5042:;
+    org$pandalanguage$pandac$SymbolTable* $tmp4962 = (org$pandalanguage$pandac$SymbolTable*) malloc(48);
+    $tmp4962->$class = (panda$core$Class*) &org$pandalanguage$pandac$SymbolTable$class;
+    $tmp4962->refCount.value = 1;
+    org$pandalanguage$pandac$SymbolTable$init$org$pandalanguage$pandac$SymbolTable($tmp4962, self->symbolTable);
+    self->symbolTable = $tmp4962;
+    panda$collections$Array* $tmp4965 = (panda$collections$Array*) malloc(40);
+    $tmp4965->$class = (panda$core$Class*) &panda$collections$Array$class;
+    $tmp4965->refCount.value = 1;
+    panda$collections$Array$init($tmp4965);
+    statements4964 = $tmp4965;
     {
-        panda$core$Object* $tmp5051 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_w->children, i5037);
-        org$pandalanguage$pandac$IRNode* $tmp5052 = org$pandalanguage$pandac$Compiler$compileStatement$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, ((org$pandalanguage$pandac$ASTNode*) $tmp5051));
-        statement5050 = $tmp5052;
-        if (((panda$core$Bit) { statement5050 == NULL }).value) {
+        ITable* $tmp4968 = ((panda$collections$Iterable*) p_rawStatements)->$class->itable;
+        while ($tmp4968->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
+            $tmp4968 = $tmp4968->next;
+        }
+        $fn4970 $tmp4969 = $tmp4968->methods[0];
+        panda$collections$Iterator* $tmp4971 = $tmp4969(((panda$collections$Iterable*) p_rawStatements));
+        rawStatement$Iter4967 = $tmp4971;
+        $l4972:;
+        ITable* $tmp4974 = rawStatement$Iter4967->$class->itable;
+        while ($tmp4974->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+            $tmp4974 = $tmp4974->next;
+        }
+        $fn4976 $tmp4975 = $tmp4974->methods[0];
+        panda$core$Bit $tmp4977 = $tmp4975(rawStatement$Iter4967);
+        panda$core$Bit $tmp4978 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp4977);
+        if (!$tmp4978.value) goto $l4973;
         {
-            return NULL;
-        }
-        }
-        panda$collections$Array$add$panda$collections$Array$T(statements5032, ((panda$core$Object*) statement5050));
-    }
-    $l5045:;
-    int64_t $tmp5054 = $tmp5040 - i5037.value;
-    if ($tmp5041) goto $l5055; else goto $l5056;
-    $l5055:;
-    if ((uint64_t) $tmp5054 >= 1) goto $l5053; else goto $l5044;
-    $l5056:;
-    if ((uint64_t) $tmp5054 > 1) goto $l5053; else goto $l5044;
-    $l5053:;
-    i5037.value += 1;
-    goto $l5042;
-    $l5044:;
-    panda$core$Object* $tmp5059 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(self->symbolTable->parents, ((panda$core$Int64) { 0 }));
-    self->symbolTable = ((org$pandalanguage$pandac$SymbolTable*) $tmp5059);
-    org$pandalanguage$pandac$IRNode* $tmp5060 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-    $tmp5060->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-    $tmp5060->refCount.value = 1;
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp5060, ((panda$core$Int64) { 1000 }), p_w->position, ((panda$collections$ListView*) statements5032));
-    panda$collections$Array$add$panda$collections$Array$T(children5006, ((panda$core$Object*) $tmp5060));
-    org$pandalanguage$pandac$IRNode* $tmp5062 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-    $tmp5062->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-    $tmp5062->refCount.value = 1;
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp5062, ((panda$core$Int64) { 1042 }), p_w->position, ((panda$collections$ListView*) children5006));
-    return $tmp5062;
-}
-org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileOtherwise$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$ASTNode* p_o) {
-    panda$collections$Array* children5065;
-    panda$collections$Array* statements5070;
-    panda$collections$Iterator* s$Iter5073;
-    org$pandalanguage$pandac$ASTNode* s5085;
-    org$pandalanguage$pandac$IRNode* statement5090;
-    panda$core$Bit $tmp5064 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_o->kind, ((panda$core$Int64) { 127 }));
-    PANDA_ASSERT($tmp5064.value);
-    panda$collections$Array* $tmp5066 = (panda$collections$Array*) malloc(40);
-    $tmp5066->$class = (panda$core$Class*) &panda$collections$Array$class;
-    $tmp5066->refCount.value = 1;
-    panda$collections$Array$init($tmp5066);
-    children5065 = $tmp5066;
-    org$pandalanguage$pandac$SymbolTable* $tmp5068 = (org$pandalanguage$pandac$SymbolTable*) malloc(48);
-    $tmp5068->$class = (panda$core$Class*) &org$pandalanguage$pandac$SymbolTable$class;
-    $tmp5068->refCount.value = 1;
-    org$pandalanguage$pandac$SymbolTable$init$org$pandalanguage$pandac$SymbolTable($tmp5068, self->symbolTable);
-    self->symbolTable = $tmp5068;
-    panda$collections$Array* $tmp5071 = (panda$collections$Array*) malloc(40);
-    $tmp5071->$class = (panda$core$Class*) &panda$collections$Array$class;
-    $tmp5071->refCount.value = 1;
-    panda$collections$Array$init($tmp5071);
-    statements5070 = $tmp5071;
-    {
-        ITable* $tmp5074 = ((panda$collections$Iterable*) p_o->children)->$class->itable;
-        while ($tmp5074->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
-            $tmp5074 = $tmp5074->next;
-        }
-        $fn5076 $tmp5075 = $tmp5074->methods[0];
-        panda$collections$Iterator* $tmp5077 = $tmp5075(((panda$collections$Iterable*) p_o->children));
-        s$Iter5073 = $tmp5077;
-        $l5078:;
-        ITable* $tmp5080 = s$Iter5073->$class->itable;
-        while ($tmp5080->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-            $tmp5080 = $tmp5080->next;
-        }
-        $fn5082 $tmp5081 = $tmp5080->methods[0];
-        panda$core$Bit $tmp5083 = $tmp5081(s$Iter5073);
-        panda$core$Bit $tmp5084 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp5083);
-        if (!$tmp5084.value) goto $l5079;
-        {
-            ITable* $tmp5086 = s$Iter5073->$class->itable;
-            while ($tmp5086->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-                $tmp5086 = $tmp5086->next;
+            ITable* $tmp4980 = rawStatement$Iter4967->$class->itable;
+            while ($tmp4980->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+                $tmp4980 = $tmp4980->next;
             }
-            $fn5088 $tmp5087 = $tmp5086->methods[1];
-            panda$core$Object* $tmp5089 = $tmp5087(s$Iter5073);
-            s5085 = ((org$pandalanguage$pandac$ASTNode*) $tmp5089);
-            org$pandalanguage$pandac$IRNode* $tmp5091 = org$pandalanguage$pandac$Compiler$compileStatement$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, s5085);
-            statement5090 = $tmp5091;
-            if (((panda$core$Bit) { statement5090 == NULL }).value) {
+            $fn4982 $tmp4981 = $tmp4980->methods[1];
+            panda$core$Object* $tmp4983 = $tmp4981(rawStatement$Iter4967);
+            rawStatement4979 = ((org$pandalanguage$pandac$ASTNode*) $tmp4983);
+            org$pandalanguage$pandac$IRNode* $tmp4985 = org$pandalanguage$pandac$Compiler$compileStatement$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, rawStatement4979);
+            statement4984 = $tmp4985;
+            if (((panda$core$Bit) { statement4984 == NULL }).value) {
             {
                 return NULL;
             }
             }
-            panda$collections$Array$add$panda$collections$Array$T(statements5070, ((panda$core$Object*) statement5090));
+            panda$collections$Array$add$panda$collections$Array$T(statements4964, ((panda$core$Object*) statement4984));
         }
-        goto $l5078;
-        $l5079:;
+        goto $l4972;
+        $l4973:;
     }
-    panda$core$Object* $tmp5092 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(self->symbolTable->parents, ((panda$core$Int64) { 0 }));
-    self->symbolTable = ((org$pandalanguage$pandac$SymbolTable*) $tmp5092);
-    org$pandalanguage$pandac$IRNode* $tmp5093 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-    $tmp5093->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-    $tmp5093->refCount.value = 1;
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp5093, ((panda$core$Int64) { 1000 }), p_o->position, ((panda$collections$ListView*) statements5070));
-    panda$collections$Array$add$panda$collections$Array$T(children5065, ((panda$core$Object*) $tmp5093));
-    org$pandalanguage$pandac$IRNode* $tmp5095 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-    $tmp5095->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-    $tmp5095->refCount.value = 1;
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp5095, ((panda$core$Int64) { 1043 }), p_o->position, ((panda$collections$ListView*) children5065));
-    return $tmp5095;
+    panda$core$Object* $tmp4986 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(self->symbolTable->parents, ((panda$core$Int64) { 0 }));
+    self->symbolTable = ((org$pandalanguage$pandac$SymbolTable*) $tmp4986);
+    org$pandalanguage$pandac$IRNode* $tmp4987 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+    $tmp4987->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    $tmp4987->refCount.value = 1;
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4987, ((panda$core$Int64) { 1000 }), p_position, ((panda$collections$ListView*) statements4964));
+    panda$collections$Array$add$panda$collections$Array$T(children4939, ((panda$core$Object*) $tmp4987));
+    org$pandalanguage$pandac$IRNode* $tmp4989 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+    $tmp4989->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    $tmp4989->refCount.value = 1;
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp4989, ((panda$core$Int64) { 1042 }), p_position, ((panda$collections$ListView*) children4939));
+    return $tmp4989;
+}
+org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileOtherwise$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, panda$collections$ImmutableArray* p_rawStatements) {
+    panda$collections$Array* children4991;
+    panda$collections$Array* statements4996;
+    panda$collections$Iterator* rawStatement$Iter4999;
+    org$pandalanguage$pandac$ASTNode* rawStatement5011;
+    org$pandalanguage$pandac$IRNode* statement5016;
+    org$pandalanguage$pandac$Position $tmp5021;
+    org$pandalanguage$pandac$Position $tmp5024;
+    panda$collections$Array* $tmp4992 = (panda$collections$Array*) malloc(40);
+    $tmp4992->$class = (panda$core$Class*) &panda$collections$Array$class;
+    $tmp4992->refCount.value = 1;
+    panda$collections$Array$init($tmp4992);
+    children4991 = $tmp4992;
+    org$pandalanguage$pandac$SymbolTable* $tmp4994 = (org$pandalanguage$pandac$SymbolTable*) malloc(48);
+    $tmp4994->$class = (panda$core$Class*) &org$pandalanguage$pandac$SymbolTable$class;
+    $tmp4994->refCount.value = 1;
+    org$pandalanguage$pandac$SymbolTable$init$org$pandalanguage$pandac$SymbolTable($tmp4994, self->symbolTable);
+    self->symbolTable = $tmp4994;
+    panda$collections$Array* $tmp4997 = (panda$collections$Array*) malloc(40);
+    $tmp4997->$class = (panda$core$Class*) &panda$collections$Array$class;
+    $tmp4997->refCount.value = 1;
+    panda$collections$Array$init($tmp4997);
+    statements4996 = $tmp4997;
+    {
+        ITable* $tmp5000 = ((panda$collections$Iterable*) p_rawStatements)->$class->itable;
+        while ($tmp5000->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
+            $tmp5000 = $tmp5000->next;
+        }
+        $fn5002 $tmp5001 = $tmp5000->methods[0];
+        panda$collections$Iterator* $tmp5003 = $tmp5001(((panda$collections$Iterable*) p_rawStatements));
+        rawStatement$Iter4999 = $tmp5003;
+        $l5004:;
+        ITable* $tmp5006 = rawStatement$Iter4999->$class->itable;
+        while ($tmp5006->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+            $tmp5006 = $tmp5006->next;
+        }
+        $fn5008 $tmp5007 = $tmp5006->methods[0];
+        panda$core$Bit $tmp5009 = $tmp5007(rawStatement$Iter4999);
+        panda$core$Bit $tmp5010 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp5009);
+        if (!$tmp5010.value) goto $l5005;
+        {
+            ITable* $tmp5012 = rawStatement$Iter4999->$class->itable;
+            while ($tmp5012->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+                $tmp5012 = $tmp5012->next;
+            }
+            $fn5014 $tmp5013 = $tmp5012->methods[1];
+            panda$core$Object* $tmp5015 = $tmp5013(rawStatement$Iter4999);
+            rawStatement5011 = ((org$pandalanguage$pandac$ASTNode*) $tmp5015);
+            org$pandalanguage$pandac$IRNode* $tmp5017 = org$pandalanguage$pandac$Compiler$compileStatement$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, rawStatement5011);
+            statement5016 = $tmp5017;
+            if (((panda$core$Bit) { statement5016 == NULL }).value) {
+            {
+                return NULL;
+            }
+            }
+            panda$collections$Array$add$panda$collections$Array$T(statements4996, ((panda$core$Object*) statement5016));
+        }
+        goto $l5004;
+        $l5005:;
+    }
+    panda$core$Object* $tmp5018 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(self->symbolTable->parents, ((panda$core$Int64) { 0 }));
+    self->symbolTable = ((org$pandalanguage$pandac$SymbolTable*) $tmp5018);
+    org$pandalanguage$pandac$IRNode* $tmp5019 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+    $tmp5019->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    $tmp5019->refCount.value = 1;
+    org$pandalanguage$pandac$Position$init(&$tmp5021);
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp5019, ((panda$core$Int64) { 1000 }), $tmp5021, ((panda$collections$ListView*) statements4996));
+    panda$collections$Array$add$panda$collections$Array$T(children4991, ((panda$core$Object*) $tmp5019));
+    org$pandalanguage$pandac$IRNode* $tmp5022 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+    $tmp5022->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    $tmp5022->refCount.value = 1;
+    org$pandalanguage$pandac$Position$init(&$tmp5024);
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp5022, ((panda$core$Int64) { 1043 }), $tmp5024, ((panda$collections$ListView*) children4991));
+    return $tmp5022;
 }
 panda$core$Bit org$pandalanguage$pandac$Compiler$isConstantInt$org$pandalanguage$pandac$IRNode$R$panda$core$Bit(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$IRNode* p_expr) {
-    org$pandalanguage$pandac$FieldDecl* f5104;
-    org$pandalanguage$pandac$Variable* v5113;
+    org$pandalanguage$pandac$FieldDecl* f5032;
+    org$pandalanguage$pandac$Variable* v5041;
     switch (p_expr->kind.value) {
         case 1004:
         {
@@ -12252,59 +12302,59 @@ panda$core$Bit org$pandalanguage$pandac$Compiler$isConstantInt$org$pandalanguage
         break;
         case 1010:
         {
-            panda$core$Bit $tmp5098 = org$pandalanguage$pandac$Type$isNumber$R$panda$core$Bit(p_expr->type);
-            bool $tmp5097 = $tmp5098.value;
-            if (!$tmp5097) goto $l5099;
-            panda$core$Object* $tmp5100 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_expr->children, ((panda$core$Int64) { 0 }));
-            panda$core$Object* $tmp5101 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(((org$pandalanguage$pandac$IRNode*) $tmp5100)->children, ((panda$core$Int64) { 0 }));
-            panda$core$Bit $tmp5102 = org$pandalanguage$pandac$Compiler$isConstantInt$org$pandalanguage$pandac$IRNode$R$panda$core$Bit(self, ((org$pandalanguage$pandac$IRNode*) $tmp5101));
-            $tmp5097 = $tmp5102.value;
-            $l5099:;
-            panda$core$Bit $tmp5103 = { $tmp5097 };
-            return $tmp5103;
+            panda$core$Bit $tmp5026 = org$pandalanguage$pandac$Type$isNumber$R$panda$core$Bit(p_expr->type);
+            bool $tmp5025 = $tmp5026.value;
+            if (!$tmp5025) goto $l5027;
+            panda$core$Object* $tmp5028 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_expr->children, ((panda$core$Int64) { 0 }));
+            panda$core$Object* $tmp5029 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(((org$pandalanguage$pandac$IRNode*) $tmp5028)->children, ((panda$core$Int64) { 0 }));
+            panda$core$Bit $tmp5030 = org$pandalanguage$pandac$Compiler$isConstantInt$org$pandalanguage$pandac$IRNode$R$panda$core$Bit(self, ((org$pandalanguage$pandac$IRNode*) $tmp5029));
+            $tmp5025 = $tmp5030.value;
+            $l5027:;
+            panda$core$Bit $tmp5031 = { $tmp5025 };
+            return $tmp5031;
         }
         break;
         case 1026:
         {
-            f5104 = ((org$pandalanguage$pandac$FieldDecl*) p_expr->payload);
-            PANDA_ASSERT(f5104->resolved.value);
-            panda$core$Bit $tmp5107 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(f5104->fieldKind, ((panda$core$Int64) { 10002 }));
-            bool $tmp5106 = $tmp5107.value;
-            if (!$tmp5106) goto $l5108;
-            $tmp5106 = ((panda$core$Bit) { f5104->value != NULL }).value;
-            $l5108:;
-            panda$core$Bit $tmp5109 = { $tmp5106 };
-            bool $tmp5105 = $tmp5109.value;
-            if (!$tmp5105) goto $l5110;
-            panda$core$Bit $tmp5111 = org$pandalanguage$pandac$Compiler$isConstantInt$org$pandalanguage$pandac$IRNode$R$panda$core$Bit(self, f5104->value);
-            $tmp5105 = $tmp5111.value;
-            $l5110:;
-            panda$core$Bit $tmp5112 = { $tmp5105 };
-            return $tmp5112;
+            f5032 = ((org$pandalanguage$pandac$FieldDecl*) p_expr->payload);
+            PANDA_ASSERT(f5032->resolved.value);
+            panda$core$Bit $tmp5035 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(f5032->fieldKind.$rawValue, ((panda$core$Int64) { 2 }));
+            bool $tmp5034 = $tmp5035.value;
+            if (!$tmp5034) goto $l5036;
+            $tmp5034 = ((panda$core$Bit) { f5032->value != NULL }).value;
+            $l5036:;
+            panda$core$Bit $tmp5037 = { $tmp5034 };
+            bool $tmp5033 = $tmp5037.value;
+            if (!$tmp5033) goto $l5038;
+            panda$core$Bit $tmp5039 = org$pandalanguage$pandac$Compiler$isConstantInt$org$pandalanguage$pandac$IRNode$R$panda$core$Bit(self, f5032->value);
+            $tmp5033 = $tmp5039.value;
+            $l5038:;
+            panda$core$Bit $tmp5040 = { $tmp5033 };
+            return $tmp5040;
         }
         break;
         case 1016:
         {
-            v5113 = ((org$pandalanguage$pandac$Variable*) p_expr->payload);
-            panda$core$Bit $tmp5115 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(v5113->varKind->$rawValue, ((panda$core$Int64) { 1 }));
-            bool $tmp5114 = $tmp5115.value;
-            if ($tmp5114) goto $l5116;
-            panda$core$Bit $tmp5119 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(v5113->varKind->$rawValue, ((panda$core$Int64) { 2 }));
-            bool $tmp5118 = $tmp5119.value;
-            if (!$tmp5118) goto $l5120;
-            $tmp5118 = ((panda$core$Bit) { v5113->initialValue != NULL }).value;
-            $l5120:;
-            panda$core$Bit $tmp5121 = { $tmp5118 };
-            bool $tmp5117 = $tmp5121.value;
-            if (!$tmp5117) goto $l5122;
-            panda$core$Bit $tmp5123 = org$pandalanguage$pandac$Compiler$isConstantInt$org$pandalanguage$pandac$IRNode$R$panda$core$Bit(self, v5113->initialValue);
-            $tmp5117 = $tmp5123.value;
-            $l5122:;
-            panda$core$Bit $tmp5124 = { $tmp5117 };
-            $tmp5114 = $tmp5124.value;
-            $l5116:;
-            panda$core$Bit $tmp5125 = { $tmp5114 };
-            return $tmp5125;
+            v5041 = ((org$pandalanguage$pandac$Variable*) p_expr->payload);
+            panda$core$Bit $tmp5043 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(v5041->varKind.$rawValue, ((panda$core$Int64) { 1 }));
+            bool $tmp5042 = $tmp5043.value;
+            if ($tmp5042) goto $l5044;
+            panda$core$Bit $tmp5047 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(v5041->varKind.$rawValue, ((panda$core$Int64) { 2 }));
+            bool $tmp5046 = $tmp5047.value;
+            if (!$tmp5046) goto $l5048;
+            $tmp5046 = ((panda$core$Bit) { v5041->initialValue != NULL }).value;
+            $l5048:;
+            panda$core$Bit $tmp5049 = { $tmp5046 };
+            bool $tmp5045 = $tmp5049.value;
+            if (!$tmp5045) goto $l5050;
+            panda$core$Bit $tmp5051 = org$pandalanguage$pandac$Compiler$isConstantInt$org$pandalanguage$pandac$IRNode$R$panda$core$Bit(self, v5041->initialValue);
+            $tmp5045 = $tmp5051.value;
+            $l5050:;
+            panda$core$Bit $tmp5052 = { $tmp5045 };
+            $tmp5042 = $tmp5052.value;
+            $l5044:;
+            panda$core$Bit $tmp5053 = { $tmp5042 };
+            return $tmp5053;
         }
         break;
         default:
@@ -12314,10 +12364,10 @@ panda$core$Bit org$pandalanguage$pandac$Compiler$isConstantInt$org$pandalanguage
     }
 }
 panda$core$UInt64 org$pandalanguage$pandac$Compiler$getConstantInt$org$pandalanguage$pandac$IRNode$R$panda$core$UInt64(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$IRNode* p_expr) {
-    org$pandalanguage$pandac$FieldDecl* f5130;
-    org$pandalanguage$pandac$Variable* v5132;
-    panda$core$Bit $tmp5126 = org$pandalanguage$pandac$Compiler$isConstantInt$org$pandalanguage$pandac$IRNode$R$panda$core$Bit(self, p_expr);
-    PANDA_ASSERT($tmp5126.value);
+    org$pandalanguage$pandac$FieldDecl* f5058;
+    org$pandalanguage$pandac$Variable* v5060;
+    panda$core$Bit $tmp5054 = org$pandalanguage$pandac$Compiler$isConstantInt$org$pandalanguage$pandac$IRNode$R$panda$core$Bit(self, p_expr);
+    PANDA_ASSERT($tmp5054.value);
     switch (p_expr->kind.value) {
         case 1004:
         {
@@ -12326,24 +12376,24 @@ panda$core$UInt64 org$pandalanguage$pandac$Compiler$getConstantInt$org$pandalang
         break;
         case 1010:
         {
-            panda$core$Object* $tmp5127 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_expr->children, ((panda$core$Int64) { 0 }));
-            panda$core$Object* $tmp5128 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(((org$pandalanguage$pandac$IRNode*) $tmp5127)->children, ((panda$core$Int64) { 0 }));
-            panda$core$UInt64 $tmp5129 = org$pandalanguage$pandac$Compiler$getConstantInt$org$pandalanguage$pandac$IRNode$R$panda$core$UInt64(self, ((org$pandalanguage$pandac$IRNode*) $tmp5128));
-            return $tmp5129;
+            panda$core$Object* $tmp5055 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_expr->children, ((panda$core$Int64) { 0 }));
+            panda$core$Object* $tmp5056 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(((org$pandalanguage$pandac$IRNode*) $tmp5055)->children, ((panda$core$Int64) { 0 }));
+            panda$core$UInt64 $tmp5057 = org$pandalanguage$pandac$Compiler$getConstantInt$org$pandalanguage$pandac$IRNode$R$panda$core$UInt64(self, ((org$pandalanguage$pandac$IRNode*) $tmp5056));
+            return $tmp5057;
         }
         break;
         case 1026:
         {
-            f5130 = ((org$pandalanguage$pandac$FieldDecl*) p_expr->payload);
-            panda$core$UInt64 $tmp5131 = org$pandalanguage$pandac$Compiler$getConstantInt$org$pandalanguage$pandac$IRNode$R$panda$core$UInt64(self, f5130->value);
-            return $tmp5131;
+            f5058 = ((org$pandalanguage$pandac$FieldDecl*) p_expr->payload);
+            panda$core$UInt64 $tmp5059 = org$pandalanguage$pandac$Compiler$getConstantInt$org$pandalanguage$pandac$IRNode$R$panda$core$UInt64(self, f5058->value);
+            return $tmp5059;
         }
         break;
         case 1016:
         {
-            v5132 = ((org$pandalanguage$pandac$Variable*) p_expr->payload);
-            panda$core$UInt64 $tmp5133 = org$pandalanguage$pandac$Compiler$getConstantInt$org$pandalanguage$pandac$IRNode$R$panda$core$UInt64(self, v5132->initialValue);
-            return $tmp5133;
+            v5060 = ((org$pandalanguage$pandac$Variable*) p_expr->payload);
+            panda$core$UInt64 $tmp5061 = org$pandalanguage$pandac$Compiler$getConstantInt$org$pandalanguage$pandac$IRNode$R$panda$core$UInt64(self, v5060->initialValue);
+            return $tmp5061;
         }
         break;
         default:
@@ -12352,419 +12402,604 @@ panda$core$UInt64 org$pandalanguage$pandac$Compiler$getConstantInt$org$pandalang
         }
     }
 }
-org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileMatch$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$ASTNode* p_m) {
-    org$pandalanguage$pandac$IRNode* value5137;
-    panda$collections$Array* children5144;
-    panda$collections$Iterator* rawWhen$Iter5147;
-    panda$core$Range$LTpanda$core$Int64$Q$GT $tmp5148;
-    org$pandalanguage$pandac$ASTNode* rawWhen5161;
-    org$pandalanguage$pandac$IRNode* o5167;
-    org$pandalanguage$pandac$IRNode* w5169;
-    panda$core$Bit $tmp5134 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_m->kind, ((panda$core$Int64) { 125 }));
-    PANDA_ASSERT($tmp5134.value);
-    panda$core$Int64 $tmp5135 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(p_m->children);
-    panda$core$Bit $tmp5136 = panda$core$Int64$$GE$panda$core$Int64$R$panda$core$Bit($tmp5135, ((panda$core$Int64) { 1 }));
-    PANDA_ASSERT($tmp5136.value);
-    panda$core$Object* $tmp5138 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(p_m->children, ((panda$core$Int64) { 0 }));
-    org$pandalanguage$pandac$IRNode* $tmp5139 = org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, ((org$pandalanguage$pandac$ASTNode*) $tmp5138));
-    org$pandalanguage$pandac$IRNode* $tmp5140 = org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$IRNode$Q$R$org$pandalanguage$pandac$IRNode$Q(self, $tmp5139);
-    value5137 = $tmp5140;
-    if (((panda$core$Bit) { value5137 == NULL }).value) {
+org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileMatch$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$Q$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position p_position, org$pandalanguage$pandac$ASTNode* p_rawValue, panda$collections$ImmutableArray* p_whens, panda$collections$ImmutableArray* p_other) {
+    org$pandalanguage$pandac$IRNode* value5062;
+    panda$collections$Array* children5068;
+    panda$collections$Iterator* rawWhen$Iter5071;
+    org$pandalanguage$pandac$ASTNode* rawWhen5083;
+    org$pandalanguage$pandac$ASTNode* $match$3707_135088;
+    org$pandalanguage$pandac$Position position5090;
+    panda$collections$ImmutableArray* tests5092;
+    panda$collections$ImmutableArray* statements5094;
+    org$pandalanguage$pandac$IRNode* w5096;
+    org$pandalanguage$pandac$IRNode* o5102;
+    org$pandalanguage$pandac$IRNode* $tmp5063 = org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_rawValue);
+    org$pandalanguage$pandac$IRNode* $tmp5064 = org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$IRNode$Q$R$org$pandalanguage$pandac$IRNode$Q(self, $tmp5063);
+    value5062 = $tmp5064;
+    if (((panda$core$Bit) { value5062 == NULL }).value) {
     {
         return NULL;
     }
     }
-    panda$core$Bit $tmp5141 = org$pandalanguage$pandac$Type$isNumber$R$panda$core$Bit(value5137->type);
-    panda$core$Bit $tmp5142 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp5141);
-    if ($tmp5142.value) {
+    panda$core$Bit $tmp5065 = org$pandalanguage$pandac$Type$isNumber$R$panda$core$Bit(value5062->type);
+    panda$core$Bit $tmp5066 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp5065);
+    if ($tmp5066.value) {
     {
-        org$pandalanguage$pandac$IRNode* $tmp5143 = org$pandalanguage$pandac$Compiler$compileChainedIfMatch$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_m, value5137);
-        return $tmp5143;
+        org$pandalanguage$pandac$IRNode* $tmp5067 = org$pandalanguage$pandac$Compiler$compileChainedIfMatch$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$Q$R$org$pandalanguage$pandac$IRNode$Q(self, p_position, value5062, p_whens, p_other);
+        return $tmp5067;
     }
     }
-    panda$collections$Array* $tmp5145 = (panda$collections$Array*) malloc(40);
-    $tmp5145->$class = (panda$core$Class*) &panda$collections$Array$class;
-    $tmp5145->refCount.value = 1;
-    panda$collections$Array$init($tmp5145);
-    children5144 = $tmp5145;
-    panda$collections$Array$add$panda$collections$Array$T(children5144, ((panda$core$Object*) value5137));
+    panda$collections$Array* $tmp5069 = (panda$collections$Array*) malloc(40);
+    $tmp5069->$class = (panda$core$Class*) &panda$collections$Array$class;
+    $tmp5069->refCount.value = 1;
+    panda$collections$Array$init($tmp5069);
+    children5068 = $tmp5069;
+    panda$collections$Array$add$panda$collections$Array$T(children5068, ((panda$core$Object*) value5062));
     {
-        panda$core$Range$LTpanda$core$Int64$Q$GT$init$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Bit(&$tmp5148, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Int64$nullable) { .nonnull = false }), ((panda$core$Bit) { false }));
-        panda$collections$ImmutableArray* $tmp5149 = panda$collections$ImmutableArray$$IDX$panda$core$Range$LTpanda$core$Int64$Q$GT$R$panda$collections$ImmutableArray$LTpanda$collections$ImmutableArray$T$GT(p_m->children, $tmp5148);
-        ITable* $tmp5150 = ((panda$collections$Iterable*) $tmp5149)->$class->itable;
-        while ($tmp5150->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
-            $tmp5150 = $tmp5150->next;
+        ITable* $tmp5072 = ((panda$collections$Iterable*) p_whens)->$class->itable;
+        while ($tmp5072->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
+            $tmp5072 = $tmp5072->next;
         }
-        $fn5152 $tmp5151 = $tmp5150->methods[0];
-        panda$collections$Iterator* $tmp5153 = $tmp5151(((panda$collections$Iterable*) $tmp5149));
-        rawWhen$Iter5147 = $tmp5153;
-        $l5154:;
-        ITable* $tmp5156 = rawWhen$Iter5147->$class->itable;
-        while ($tmp5156->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-            $tmp5156 = $tmp5156->next;
+        $fn5074 $tmp5073 = $tmp5072->methods[0];
+        panda$collections$Iterator* $tmp5075 = $tmp5073(((panda$collections$Iterable*) p_whens));
+        rawWhen$Iter5071 = $tmp5075;
+        $l5076:;
+        ITable* $tmp5078 = rawWhen$Iter5071->$class->itable;
+        while ($tmp5078->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+            $tmp5078 = $tmp5078->next;
         }
-        $fn5158 $tmp5157 = $tmp5156->methods[0];
-        panda$core$Bit $tmp5159 = $tmp5157(rawWhen$Iter5147);
-        panda$core$Bit $tmp5160 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp5159);
-        if (!$tmp5160.value) goto $l5155;
+        $fn5080 $tmp5079 = $tmp5078->methods[0];
+        panda$core$Bit $tmp5081 = $tmp5079(rawWhen$Iter5071);
+        panda$core$Bit $tmp5082 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp5081);
+        if (!$tmp5082.value) goto $l5077;
         {
-            ITable* $tmp5162 = rawWhen$Iter5147->$class->itable;
-            while ($tmp5162->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-                $tmp5162 = $tmp5162->next;
+            ITable* $tmp5084 = rawWhen$Iter5071->$class->itable;
+            while ($tmp5084->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+                $tmp5084 = $tmp5084->next;
             }
-            $fn5164 $tmp5163 = $tmp5162->methods[1];
-            panda$core$Object* $tmp5165 = $tmp5163(rawWhen$Iter5147);
-            rawWhen5161 = ((org$pandalanguage$pandac$ASTNode*) $tmp5165);
-            panda$core$Bit $tmp5166 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(rawWhen5161->kind, ((panda$core$Int64) { 127 }));
-            if ($tmp5166.value) {
+            $fn5086 $tmp5085 = $tmp5084->methods[1];
+            panda$core$Object* $tmp5087 = $tmp5085(rawWhen$Iter5071);
+            rawWhen5083 = ((org$pandalanguage$pandac$ASTNode*) $tmp5087);
             {
-                org$pandalanguage$pandac$IRNode* $tmp5168 = org$pandalanguage$pandac$Compiler$compileOtherwise$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, rawWhen5161);
-                o5167 = $tmp5168;
-                if (((panda$core$Bit) { o5167 == NULL }).value) {
+                $match$3707_135088 = rawWhen5083;
+                panda$core$Bit $tmp5089 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$3707_135088->$rawValue, ((panda$core$Int64) { 39 }));
+                if ($tmp5089.value) {
                 {
-                    return NULL;
+                    org$pandalanguage$pandac$Position* $tmp5091 = ((org$pandalanguage$pandac$Position*) ((char*) $match$3707_135088->$data + 0));
+                    position5090 = *$tmp5091;
+                    panda$collections$ImmutableArray** $tmp5093 = ((panda$collections$ImmutableArray**) ((char*) $match$3707_135088->$data + 16));
+                    tests5092 = *$tmp5093;
+                    panda$collections$ImmutableArray** $tmp5095 = ((panda$collections$ImmutableArray**) ((char*) $match$3707_135088->$data + 24));
+                    statements5094 = *$tmp5095;
+                    org$pandalanguage$pandac$IRNode* $tmp5097 = org$pandalanguage$pandac$Compiler$compileWhen$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Position$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$R$org$pandalanguage$pandac$IRNode$Q(self, value5062->type, position5090, tests5092, statements5094);
+                    w5096 = $tmp5097;
+                    if (((panda$core$Bit) { w5096 == NULL }).value) {
+                    {
+                        return NULL;
+                    }
+                    }
+                    panda$core$Object* $tmp5098 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(w5096->children, ((panda$core$Int64) { 0 }));
+                    panda$core$Bit $tmp5099 = org$pandalanguage$pandac$Compiler$isConstantInt$org$pandalanguage$pandac$IRNode$R$panda$core$Bit(self, ((org$pandalanguage$pandac$IRNode*) $tmp5098));
+                    panda$core$Bit $tmp5100 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp5099);
+                    if ($tmp5100.value) {
+                    {
+                        org$pandalanguage$pandac$IRNode* $tmp5101 = org$pandalanguage$pandac$Compiler$compileChainedIfMatch$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$Q$R$org$pandalanguage$pandac$IRNode$Q(self, position5090, value5062, p_whens, p_other);
+                        return $tmp5101;
+                    }
+                    }
+                    panda$collections$Array$add$panda$collections$Array$T(children5068, ((panda$core$Object*) w5096));
                 }
                 }
-                panda$collections$Array$add$panda$collections$Array$T(children5144, ((panda$core$Object*) o5167));
-                goto $l5154;
+                else {
+                {
+                    PANDA_ASSERT(((panda$core$Bit) { false }).value);
+                }
+                }
             }
-            }
-            org$pandalanguage$pandac$IRNode* $tmp5170 = org$pandalanguage$pandac$Compiler$compileWhen$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, value5137->type, rawWhen5161);
-            w5169 = $tmp5170;
-            if (((panda$core$Bit) { w5169 == NULL }).value) {
-            {
-                return NULL;
-            }
-            }
-            panda$core$Object* $tmp5171 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(w5169->children, ((panda$core$Int64) { 0 }));
-            panda$core$Bit $tmp5172 = org$pandalanguage$pandac$Compiler$isConstantInt$org$pandalanguage$pandac$IRNode$R$panda$core$Bit(self, ((org$pandalanguage$pandac$IRNode*) $tmp5171));
-            panda$core$Bit $tmp5173 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp5172);
-            if ($tmp5173.value) {
-            {
-                org$pandalanguage$pandac$IRNode* $tmp5174 = org$pandalanguage$pandac$Compiler$compileChainedIfMatch$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_m, value5137);
-                return $tmp5174;
-            }
-            }
-            panda$collections$Array$add$panda$collections$Array$T(children5144, ((panda$core$Object*) w5169));
         }
-        goto $l5154;
-        $l5155:;
+        goto $l5076;
+        $l5077:;
     }
-    org$pandalanguage$pandac$IRNode* $tmp5175 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-    $tmp5175->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-    $tmp5175->refCount.value = 1;
-    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp5175, ((panda$core$Int64) { 1042 }), p_m->position, ((panda$collections$ListView*) children5144));
-    return $tmp5175;
+    if (((panda$core$Bit) { p_other != NULL }).value) {
+    {
+        org$pandalanguage$pandac$IRNode* $tmp5103 = org$pandalanguage$pandac$Compiler$compileOtherwise$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$R$org$pandalanguage$pandac$IRNode$Q(self, p_other);
+        o5102 = $tmp5103;
+        if (((panda$core$Bit) { o5102 == NULL }).value) {
+        {
+            return NULL;
+        }
+        }
+        panda$collections$Array$add$panda$collections$Array$T(children5068, ((panda$core$Object*) o5102));
+    }
+    }
+    org$pandalanguage$pandac$IRNode* $tmp5104 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+    $tmp5104->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+    $tmp5104->refCount.value = 1;
+    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp5104, ((panda$core$Int64) { 1042 }), p_position, ((panda$collections$ListView*) children5068));
+    return $tmp5104;
 }
 org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileStatement$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$ASTNode* p_s) {
-    org$pandalanguage$pandac$IRNode* result5190;
-    switch (p_s->kind.value) {
-        case 123:
+    org$pandalanguage$pandac$ASTNode* $match$3732_95106;
+    org$pandalanguage$pandac$Position position5108;
+    org$pandalanguage$pandac$ASTNode* test5110;
+    org$pandalanguage$pandac$ASTNode* msg5112;
+    org$pandalanguage$pandac$Position position5116;
+    org$pandalanguage$pandac$ASTNode* left5118;
+    org$pandalanguage$pandac$parser$Token$Kind op5120;
+    org$pandalanguage$pandac$ASTNode* right5122;
+    org$pandalanguage$pandac$Position position5127;
+    panda$collections$ImmutableArray* statements5129;
+    org$pandalanguage$pandac$Position position5133;
+    org$pandalanguage$pandac$ASTNode* test5135;
+    panda$collections$ImmutableArray* ifTrue5137;
+    org$pandalanguage$pandac$ASTNode* ifFalse5139;
+    org$pandalanguage$pandac$Position position5143;
+    panda$core$String* label5145;
+    org$pandalanguage$pandac$ASTNode* target5147;
+    org$pandalanguage$pandac$ASTNode* list5149;
+    panda$collections$ImmutableArray* statements5151;
+    org$pandalanguage$pandac$Position position5155;
+    panda$core$String* label5157;
+    org$pandalanguage$pandac$ASTNode* test5159;
+    panda$collections$ImmutableArray* statements5161;
+    org$pandalanguage$pandac$Position position5165;
+    panda$core$String* label5167;
+    panda$collections$ImmutableArray* statements5169;
+    org$pandalanguage$pandac$ASTNode* test5171;
+    org$pandalanguage$pandac$Position position5175;
+    panda$core$String* label5177;
+    panda$collections$ImmutableArray* statements5179;
+    org$pandalanguage$pandac$Position position5183;
+    org$pandalanguage$pandac$ASTNode* value5185;
+    panda$collections$ImmutableArray* whens5187;
+    panda$collections$ImmutableArray* other5189;
+    org$pandalanguage$pandac$Position position5193;
+    panda$core$String* label5195;
+    org$pandalanguage$pandac$Position position5199;
+    panda$core$String* label5201;
+    org$pandalanguage$pandac$Position position5205;
+    org$pandalanguage$pandac$ASTNode* value5207;
+    org$pandalanguage$pandac$Position position5211;
+    org$pandalanguage$pandac$ASTNode* target5213;
+    panda$collections$ImmutableArray* args5215;
+    org$pandalanguage$pandac$IRNode* result5217;
+    org$pandalanguage$pandac$Position position5222;
+    org$pandalanguage$pandac$Variable$Kind kind5224;
+    panda$collections$ImmutableArray* declarations5226;
+    {
+        $match$3732_95106 = p_s;
+        panda$core$Bit $tmp5107 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$3732_95106->$rawValue, ((panda$core$Int64) { 1 }));
+        if ($tmp5107.value) {
         {
-            org$pandalanguage$pandac$IRNode* $tmp5177 = org$pandalanguage$pandac$Compiler$compileAssert$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_s);
-            return $tmp5177;
+            org$pandalanguage$pandac$Position* $tmp5109 = ((org$pandalanguage$pandac$Position*) ((char*) $match$3732_95106->$data + 0));
+            position5108 = *$tmp5109;
+            org$pandalanguage$pandac$ASTNode** $tmp5111 = ((org$pandalanguage$pandac$ASTNode**) ((char*) $match$3732_95106->$data + 16));
+            test5110 = *$tmp5111;
+            org$pandalanguage$pandac$ASTNode** $tmp5113 = ((org$pandalanguage$pandac$ASTNode**) ((char*) $match$3732_95106->$data + 24));
+            msg5112 = *$tmp5113;
+            org$pandalanguage$pandac$IRNode* $tmp5114 = org$pandalanguage$pandac$Compiler$compileAssert$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$ASTNode$Q$R$org$pandalanguage$pandac$IRNode$Q(self, position5108, test5110, msg5112);
+            return $tmp5114;
         }
-        break;
-        case 103:
-        {
-            org$pandalanguage$pandac$IRNode* $tmp5178 = org$pandalanguage$pandac$Compiler$compileBinary$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_s);
-            org$pandalanguage$pandac$IRNode* $tmp5179 = org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$IRNode$Q$R$org$pandalanguage$pandac$IRNode$Q(self, $tmp5178);
-            return $tmp5179;
         }
-        break;
-        case 126:
+        else {
+        panda$core$Bit $tmp5115 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$3732_95106->$rawValue, ((panda$core$Int64) { 2 }));
+        if ($tmp5115.value) {
         {
-            org$pandalanguage$pandac$IRNode* $tmp5180 = org$pandalanguage$pandac$Compiler$compileBlock$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_s);
-            return $tmp5180;
+            org$pandalanguage$pandac$Position* $tmp5117 = ((org$pandalanguage$pandac$Position*) ((char*) $match$3732_95106->$data + 0));
+            position5116 = *$tmp5117;
+            org$pandalanguage$pandac$ASTNode** $tmp5119 = ((org$pandalanguage$pandac$ASTNode**) ((char*) $match$3732_95106->$data + 16));
+            left5118 = *$tmp5119;
+            org$pandalanguage$pandac$parser$Token$Kind* $tmp5121 = ((org$pandalanguage$pandac$parser$Token$Kind*) ((char*) $match$3732_95106->$data + 24));
+            op5120 = *$tmp5121;
+            org$pandalanguage$pandac$ASTNode** $tmp5123 = ((org$pandalanguage$pandac$ASTNode**) ((char*) $match$3732_95106->$data + 32));
+            right5122 = *$tmp5123;
+            org$pandalanguage$pandac$IRNode* $tmp5124 = org$pandalanguage$pandac$Compiler$compileBinary$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, position5116, left5118, op5120, right5122);
+            org$pandalanguage$pandac$IRNode* $tmp5125 = org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$IRNode$Q$R$org$pandalanguage$pandac$IRNode$Q(self, $tmp5124);
+            return $tmp5125;
         }
-        break;
-        case 118:
+        }
+        else {
+        panda$core$Bit $tmp5126 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$3732_95106->$rawValue, ((panda$core$Int64) { 4 }));
+        if ($tmp5126.value) {
         {
-            org$pandalanguage$pandac$IRNode* $tmp5181 = org$pandalanguage$pandac$Compiler$compileIf$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_s);
+            org$pandalanguage$pandac$Position* $tmp5128 = ((org$pandalanguage$pandac$Position*) ((char*) $match$3732_95106->$data + 0));
+            position5127 = *$tmp5128;
+            panda$collections$ImmutableArray** $tmp5130 = ((panda$collections$ImmutableArray**) ((char*) $match$3732_95106->$data + 16));
+            statements5129 = *$tmp5130;
+            org$pandalanguage$pandac$IRNode* $tmp5131 = org$pandalanguage$pandac$Compiler$compileBlock$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$R$org$pandalanguage$pandac$IRNode$Q(self, position5127, ((panda$collections$ListView*) statements5129));
+            return $tmp5131;
+        }
+        }
+        else {
+        panda$core$Bit $tmp5132 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$3732_95106->$rawValue, ((panda$core$Int64) { 19 }));
+        if ($tmp5132.value) {
+        {
+            org$pandalanguage$pandac$Position* $tmp5134 = ((org$pandalanguage$pandac$Position*) ((char*) $match$3732_95106->$data + 0));
+            position5133 = *$tmp5134;
+            org$pandalanguage$pandac$ASTNode** $tmp5136 = ((org$pandalanguage$pandac$ASTNode**) ((char*) $match$3732_95106->$data + 16));
+            test5135 = *$tmp5136;
+            panda$collections$ImmutableArray** $tmp5138 = ((panda$collections$ImmutableArray**) ((char*) $match$3732_95106->$data + 24));
+            ifTrue5137 = *$tmp5138;
+            org$pandalanguage$pandac$ASTNode** $tmp5140 = ((org$pandalanguage$pandac$ASTNode**) ((char*) $match$3732_95106->$data + 32));
+            ifFalse5139 = *$tmp5140;
+            org$pandalanguage$pandac$IRNode* $tmp5141 = org$pandalanguage$pandac$Compiler$compileIf$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$org$pandalanguage$pandac$ASTNode$Q$R$org$pandalanguage$pandac$IRNode$Q(self, position5133, test5135, ((panda$collections$ListView*) ifTrue5137), ifFalse5139);
+            return $tmp5141;
+        }
+        }
+        else {
+        panda$core$Bit $tmp5142 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$3732_95106->$rawValue, ((panda$core$Int64) { 16 }));
+        if ($tmp5142.value) {
+        {
+            org$pandalanguage$pandac$Position* $tmp5144 = ((org$pandalanguage$pandac$Position*) ((char*) $match$3732_95106->$data + 0));
+            position5143 = *$tmp5144;
+            panda$core$String** $tmp5146 = ((panda$core$String**) ((char*) $match$3732_95106->$data + 16));
+            label5145 = *$tmp5146;
+            org$pandalanguage$pandac$ASTNode** $tmp5148 = ((org$pandalanguage$pandac$ASTNode**) ((char*) $match$3732_95106->$data + 24));
+            target5147 = *$tmp5148;
+            org$pandalanguage$pandac$ASTNode** $tmp5150 = ((org$pandalanguage$pandac$ASTNode**) ((char*) $match$3732_95106->$data + 32));
+            list5149 = *$tmp5150;
+            panda$collections$ImmutableArray** $tmp5152 = ((panda$collections$ImmutableArray**) ((char*) $match$3732_95106->$data + 40));
+            statements5151 = *$tmp5152;
+            org$pandalanguage$pandac$IRNode* $tmp5153 = org$pandalanguage$pandac$Compiler$compileFor$org$pandalanguage$pandac$Position$panda$core$String$Q$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$ASTNode$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$R$org$pandalanguage$pandac$IRNode$Q(self, position5143, label5145, target5147, list5149, ((panda$collections$ListView*) statements5151));
+            return $tmp5153;
+        }
+        }
+        else {
+        panda$core$Bit $tmp5154 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$3732_95106->$rawValue, ((panda$core$Int64) { 40 }));
+        if ($tmp5154.value) {
+        {
+            org$pandalanguage$pandac$Position* $tmp5156 = ((org$pandalanguage$pandac$Position*) ((char*) $match$3732_95106->$data + 0));
+            position5155 = *$tmp5156;
+            panda$core$String** $tmp5158 = ((panda$core$String**) ((char*) $match$3732_95106->$data + 16));
+            label5157 = *$tmp5158;
+            org$pandalanguage$pandac$ASTNode** $tmp5160 = ((org$pandalanguage$pandac$ASTNode**) ((char*) $match$3732_95106->$data + 24));
+            test5159 = *$tmp5160;
+            panda$collections$ImmutableArray** $tmp5162 = ((panda$collections$ImmutableArray**) ((char*) $match$3732_95106->$data + 32));
+            statements5161 = *$tmp5162;
+            org$pandalanguage$pandac$IRNode* $tmp5163 = org$pandalanguage$pandac$Compiler$compileWhile$org$pandalanguage$pandac$Position$panda$core$String$Q$org$pandalanguage$pandac$ASTNode$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$R$org$pandalanguage$pandac$IRNode$Q(self, position5155, label5157, test5159, ((panda$collections$ListView*) statements5161));
+            return $tmp5163;
+        }
+        }
+        else {
+        panda$core$Bit $tmp5164 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$3732_95106->$rawValue, ((panda$core$Int64) { 12 }));
+        if ($tmp5164.value) {
+        {
+            org$pandalanguage$pandac$Position* $tmp5166 = ((org$pandalanguage$pandac$Position*) ((char*) $match$3732_95106->$data + 0));
+            position5165 = *$tmp5166;
+            panda$core$String** $tmp5168 = ((panda$core$String**) ((char*) $match$3732_95106->$data + 16));
+            label5167 = *$tmp5168;
+            panda$collections$ImmutableArray** $tmp5170 = ((panda$collections$ImmutableArray**) ((char*) $match$3732_95106->$data + 24));
+            statements5169 = *$tmp5170;
+            org$pandalanguage$pandac$ASTNode** $tmp5172 = ((org$pandalanguage$pandac$ASTNode**) ((char*) $match$3732_95106->$data + 32));
+            test5171 = *$tmp5172;
+            org$pandalanguage$pandac$IRNode* $tmp5173 = org$pandalanguage$pandac$Compiler$compileDo$org$pandalanguage$pandac$Position$panda$core$String$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, position5165, label5167, ((panda$collections$ListView*) statements5169), test5171);
+            return $tmp5173;
+        }
+        }
+        else {
+        panda$core$Bit $tmp5174 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$3732_95106->$rawValue, ((panda$core$Int64) { 21 }));
+        if ($tmp5174.value) {
+        {
+            org$pandalanguage$pandac$Position* $tmp5176 = ((org$pandalanguage$pandac$Position*) ((char*) $match$3732_95106->$data + 0));
+            position5175 = *$tmp5176;
+            panda$core$String** $tmp5178 = ((panda$core$String**) ((char*) $match$3732_95106->$data + 16));
+            label5177 = *$tmp5178;
+            panda$collections$ImmutableArray** $tmp5180 = ((panda$collections$ImmutableArray**) ((char*) $match$3732_95106->$data + 24));
+            statements5179 = *$tmp5180;
+            org$pandalanguage$pandac$IRNode* $tmp5181 = org$pandalanguage$pandac$Compiler$compileLoop$org$pandalanguage$pandac$Position$panda$core$String$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$R$org$pandalanguage$pandac$IRNode$Q(self, position5175, label5177, ((panda$collections$ListView*) statements5179));
             return $tmp5181;
         }
-        break;
-        case 119:
-        {
-            org$pandalanguage$pandac$IRNode* $tmp5182 = org$pandalanguage$pandac$Compiler$compileFor$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_s);
-            return $tmp5182;
         }
-        break;
-        case 121:
+        else {
+        panda$core$Bit $tmp5182 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$3732_95106->$rawValue, ((panda$core$Int64) { 22 }));
+        if ($tmp5182.value) {
         {
-            org$pandalanguage$pandac$IRNode* $tmp5183 = org$pandalanguage$pandac$Compiler$compileWhile$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_s);
-            return $tmp5183;
+            org$pandalanguage$pandac$Position* $tmp5184 = ((org$pandalanguage$pandac$Position*) ((char*) $match$3732_95106->$data + 0));
+            position5183 = *$tmp5184;
+            org$pandalanguage$pandac$ASTNode** $tmp5186 = ((org$pandalanguage$pandac$ASTNode**) ((char*) $match$3732_95106->$data + 16));
+            value5185 = *$tmp5186;
+            panda$collections$ImmutableArray** $tmp5188 = ((panda$collections$ImmutableArray**) ((char*) $match$3732_95106->$data + 24));
+            whens5187 = *$tmp5188;
+            panda$collections$ImmutableArray** $tmp5190 = ((panda$collections$ImmutableArray**) ((char*) $match$3732_95106->$data + 32));
+            other5189 = *$tmp5190;
+            org$pandalanguage$pandac$IRNode* $tmp5191 = org$pandalanguage$pandac$Compiler$compileMatch$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$Q$R$org$pandalanguage$pandac$IRNode$Q(self, position5183, value5185, whens5187, other5189);
+            return $tmp5191;
         }
-        break;
-        case 120:
-        {
-            org$pandalanguage$pandac$IRNode* $tmp5184 = org$pandalanguage$pandac$Compiler$compileDo$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_s);
-            return $tmp5184;
         }
-        break;
-        case 122:
+        else {
+        panda$core$Bit $tmp5192 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$3732_95106->$rawValue, ((panda$core$Int64) { 5 }));
+        if ($tmp5192.value) {
         {
-            org$pandalanguage$pandac$IRNode* $tmp5185 = org$pandalanguage$pandac$Compiler$compileLoop$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_s);
-            return $tmp5185;
+            org$pandalanguage$pandac$Position* $tmp5194 = ((org$pandalanguage$pandac$Position*) ((char*) $match$3732_95106->$data + 0));
+            position5193 = *$tmp5194;
+            panda$core$String** $tmp5196 = ((panda$core$String**) ((char*) $match$3732_95106->$data + 16));
+            label5195 = *$tmp5196;
+            org$pandalanguage$pandac$IRNode* $tmp5197 = org$pandalanguage$pandac$Compiler$compileBreak$org$pandalanguage$pandac$Position$panda$core$String$Q$R$org$pandalanguage$pandac$IRNode$Q(self, position5193, label5195);
+            return $tmp5197;
         }
-        break;
-        case 125:
-        {
-            org$pandalanguage$pandac$IRNode* $tmp5186 = org$pandalanguage$pandac$Compiler$compileMatch$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_s);
-            return $tmp5186;
         }
-        break;
-        case 134:
+        else {
+        panda$core$Bit $tmp5198 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$3732_95106->$rawValue, ((panda$core$Int64) { 10 }));
+        if ($tmp5198.value) {
         {
-            org$pandalanguage$pandac$IRNode* $tmp5187 = org$pandalanguage$pandac$Compiler$compileBreak$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_s);
-            return $tmp5187;
+            org$pandalanguage$pandac$Position* $tmp5200 = ((org$pandalanguage$pandac$Position*) ((char*) $match$3732_95106->$data + 0));
+            position5199 = *$tmp5200;
+            panda$core$String** $tmp5202 = ((panda$core$String**) ((char*) $match$3732_95106->$data + 16));
+            label5201 = *$tmp5202;
+            org$pandalanguage$pandac$IRNode* $tmp5203 = org$pandalanguage$pandac$Compiler$compileContinue$org$pandalanguage$pandac$Position$panda$core$String$Q$R$org$pandalanguage$pandac$IRNode$Q(self, position5199, label5201);
+            return $tmp5203;
         }
-        break;
-        case 135:
-        {
-            org$pandalanguage$pandac$IRNode* $tmp5188 = org$pandalanguage$pandac$Compiler$compileContinue$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_s);
-            return $tmp5188;
         }
-        break;
-        case 136:
+        else {
+        panda$core$Bit $tmp5204 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$3732_95106->$rawValue, ((panda$core$Int64) { 31 }));
+        if ($tmp5204.value) {
         {
-            org$pandalanguage$pandac$IRNode* $tmp5189 = org$pandalanguage$pandac$Compiler$compileReturn$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_s);
-            return $tmp5189;
+            org$pandalanguage$pandac$Position* $tmp5206 = ((org$pandalanguage$pandac$Position*) ((char*) $match$3732_95106->$data + 0));
+            position5205 = *$tmp5206;
+            org$pandalanguage$pandac$ASTNode** $tmp5208 = ((org$pandalanguage$pandac$ASTNode**) ((char*) $match$3732_95106->$data + 16));
+            value5207 = *$tmp5208;
+            org$pandalanguage$pandac$IRNode* $tmp5209 = org$pandalanguage$pandac$Compiler$compileReturn$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$Q$R$org$pandalanguage$pandac$IRNode$Q(self, position5205, value5207);
+            return $tmp5209;
         }
-        break;
-        case 107:
+        }
+        else {
+        panda$core$Bit $tmp5210 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$3732_95106->$rawValue, ((panda$core$Int64) { 6 }));
+        if ($tmp5210.value) {
         {
-            org$pandalanguage$pandac$IRNode* $tmp5191 = org$pandalanguage$pandac$Compiler$compileCall$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_s);
-            org$pandalanguage$pandac$IRNode* $tmp5192 = org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$IRNode$Q$R$org$pandalanguage$pandac$IRNode$Q(self, $tmp5191);
-            result5190 = $tmp5192;
-            if (((panda$core$Bit) { result5190 != NULL }).value) {
+            org$pandalanguage$pandac$Position* $tmp5212 = ((org$pandalanguage$pandac$Position*) ((char*) $match$3732_95106->$data + 0));
+            position5211 = *$tmp5212;
+            org$pandalanguage$pandac$ASTNode** $tmp5214 = ((org$pandalanguage$pandac$ASTNode**) ((char*) $match$3732_95106->$data + 16));
+            target5213 = *$tmp5214;
+            panda$collections$ImmutableArray** $tmp5216 = ((panda$collections$ImmutableArray**) ((char*) $match$3732_95106->$data + 24));
+            args5215 = *$tmp5216;
+            org$pandalanguage$pandac$IRNode* $tmp5218 = org$pandalanguage$pandac$Compiler$compileCall$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$R$org$pandalanguage$pandac$IRNode$Q(self, position5211, target5213, args5215);
+            org$pandalanguage$pandac$IRNode* $tmp5219 = org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$IRNode$Q$R$org$pandalanguage$pandac$IRNode$Q(self, $tmp5218);
+            result5217 = $tmp5219;
+            if (((panda$core$Bit) { result5217 != NULL }).value) {
             {
-                org$pandalanguage$pandac$IRNode* $tmp5193 = org$pandalanguage$pandac$Compiler$unwrapCast$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode(self, result5190);
-                result5190 = $tmp5193;
+                org$pandalanguage$pandac$IRNode* $tmp5220 = org$pandalanguage$pandac$Compiler$unwrapCast$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode(self, result5217);
+                result5217 = $tmp5220;
             }
             }
-            return result5190;
+            return result5217;
         }
-        break;
-        case 130:
-        case 131:
-        case 132:
-        case 133:
+        }
+        else {
+        panda$core$Bit $tmp5221 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$3732_95106->$rawValue, ((panda$core$Int64) { 38 }));
+        if ($tmp5221.value) {
         {
-            org$pandalanguage$pandac$IRNode* $tmp5194 = org$pandalanguage$pandac$Compiler$compileVar$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_s);
-            return $tmp5194;
+            org$pandalanguage$pandac$Position* $tmp5223 = ((org$pandalanguage$pandac$Position*) ((char*) $match$3732_95106->$data + 0));
+            position5222 = *$tmp5223;
+            org$pandalanguage$pandac$Variable$Kind* $tmp5225 = ((org$pandalanguage$pandac$Variable$Kind*) ((char*) $match$3732_95106->$data + 16));
+            kind5224 = *$tmp5225;
+            panda$collections$ImmutableArray** $tmp5227 = ((panda$collections$ImmutableArray**) ((char*) $match$3732_95106->$data + 24));
+            declarations5226 = *$tmp5227;
+            org$pandalanguage$pandac$IRNode* $tmp5228 = org$pandalanguage$pandac$Compiler$compileVar$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Variable$Kind$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$R$org$pandalanguage$pandac$IRNode$Q(self, position5222, kind5224, declarations5226);
+            return $tmp5228;
         }
-        break;
+        }
+        }
+        }
+        }
+        }
+        }
+        }
+        }
+        }
+        }
+        }
+        }
+        }
+        }
     }
     PANDA_ASSERT(((panda$core$Bit) { false }).value);
 }
 org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileBody$org$pandalanguage$pandac$MethodDecl$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$MethodDecl* p_m) {
-    org$pandalanguage$pandac$SymbolTable* old5195;
-    org$pandalanguage$pandac$SymbolTable* symbols5197;
-    panda$collections$Iterator* p$Iter5200;
-    org$pandalanguage$pandac$MethodDecl$Parameter* p5212;
-    panda$collections$Array* fieldInitializers5223;
-    panda$collections$Iterator* f$Iter5227;
-    org$pandalanguage$pandac$FieldDecl* f5240;
-    panda$collections$Array* children5250;
-    org$pandalanguage$pandac$IRNode* fieldRef5257;
-    org$pandalanguage$pandac$IRNode* compiled5264;
-    panda$collections$Array* children5266;
+    org$pandalanguage$pandac$SymbolTable* old5229;
+    org$pandalanguage$pandac$SymbolTable* symbols5231;
+    panda$collections$Iterator* p$Iter5234;
+    org$pandalanguage$pandac$MethodDecl$Parameter* p5246;
+    org$pandalanguage$pandac$Variable$Kind $tmp5253;
+    org$pandalanguage$pandac$Variable$Storage $tmp5254;
+    panda$collections$Array* fieldInitializers5255;
+    panda$collections$Iterator* f$Iter5259;
+    org$pandalanguage$pandac$FieldDecl* f5272;
+    panda$collections$Array* children5282;
+    org$pandalanguage$pandac$IRNode* fieldRef5289;
+    org$pandalanguage$pandac$parser$Token$Kind $tmp5294;
+    org$pandalanguage$pandac$IRNode* compiled5296;
+    panda$collections$Array* children5298;
     if (((panda$core$Bit) { p_m->compiledBody != NULL }).value) {
     {
         return p_m->compiledBody;
     }
     }
     panda$collections$Stack$push$panda$collections$Stack$T(self->currentClass, ((panda$core$Object*) p_m->owner));
-    old5195 = self->symbolTable;
-    org$pandalanguage$pandac$SymbolTable* $tmp5196 = org$pandalanguage$pandac$Compiler$getSymbolTable$org$pandalanguage$pandac$ClassDecl$R$org$pandalanguage$pandac$SymbolTable(self, p_m->owner);
-    self->symbolTable = $tmp5196;
+    old5229 = self->symbolTable;
+    org$pandalanguage$pandac$SymbolTable* $tmp5230 = org$pandalanguage$pandac$Compiler$getSymbolTable$org$pandalanguage$pandac$ClassDecl$R$org$pandalanguage$pandac$SymbolTable(self, p_m->owner);
+    self->symbolTable = $tmp5230;
     panda$collections$Stack$push$panda$collections$Stack$T(self->currentMethod, ((panda$core$Object*) p_m));
     org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$MethodDecl(self, p_m);
     PANDA_ASSERT(((panda$core$Bit) { p_m->body != NULL }).value);
-    org$pandalanguage$pandac$SymbolTable* $tmp5198 = (org$pandalanguage$pandac$SymbolTable*) malloc(48);
-    $tmp5198->$class = (panda$core$Class*) &org$pandalanguage$pandac$SymbolTable$class;
-    $tmp5198->refCount.value = 1;
-    org$pandalanguage$pandac$SymbolTable$init$org$pandalanguage$pandac$SymbolTable($tmp5198, self->symbolTable);
-    symbols5197 = $tmp5198;
+    org$pandalanguage$pandac$SymbolTable* $tmp5232 = (org$pandalanguage$pandac$SymbolTable*) malloc(48);
+    $tmp5232->$class = (panda$core$Class*) &org$pandalanguage$pandac$SymbolTable$class;
+    $tmp5232->refCount.value = 1;
+    org$pandalanguage$pandac$SymbolTable$init$org$pandalanguage$pandac$SymbolTable($tmp5232, self->symbolTable);
+    symbols5231 = $tmp5232;
     {
-        ITable* $tmp5201 = ((panda$collections$Iterable*) p_m->parameters)->$class->itable;
-        while ($tmp5201->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
-            $tmp5201 = $tmp5201->next;
+        ITable* $tmp5235 = ((panda$collections$Iterable*) p_m->parameters)->$class->itable;
+        while ($tmp5235->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
+            $tmp5235 = $tmp5235->next;
         }
-        $fn5203 $tmp5202 = $tmp5201->methods[0];
-        panda$collections$Iterator* $tmp5204 = $tmp5202(((panda$collections$Iterable*) p_m->parameters));
-        p$Iter5200 = $tmp5204;
-        $l5205:;
-        ITable* $tmp5207 = p$Iter5200->$class->itable;
-        while ($tmp5207->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-            $tmp5207 = $tmp5207->next;
+        $fn5237 $tmp5236 = $tmp5235->methods[0];
+        panda$collections$Iterator* $tmp5238 = $tmp5236(((panda$collections$Iterable*) p_m->parameters));
+        p$Iter5234 = $tmp5238;
+        $l5239:;
+        ITable* $tmp5241 = p$Iter5234->$class->itable;
+        while ($tmp5241->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+            $tmp5241 = $tmp5241->next;
         }
-        $fn5209 $tmp5208 = $tmp5207->methods[0];
-        panda$core$Bit $tmp5210 = $tmp5208(p$Iter5200);
-        panda$core$Bit $tmp5211 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp5210);
-        if (!$tmp5211.value) goto $l5206;
+        $fn5243 $tmp5242 = $tmp5241->methods[0];
+        panda$core$Bit $tmp5244 = $tmp5242(p$Iter5234);
+        panda$core$Bit $tmp5245 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp5244);
+        if (!$tmp5245.value) goto $l5240;
         {
-            ITable* $tmp5213 = p$Iter5200->$class->itable;
-            while ($tmp5213->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-                $tmp5213 = $tmp5213->next;
+            ITable* $tmp5247 = p$Iter5234->$class->itable;
+            while ($tmp5247->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+                $tmp5247 = $tmp5247->next;
             }
-            $fn5215 $tmp5214 = $tmp5213->methods[1];
-            panda$core$Object* $tmp5216 = $tmp5214(p$Iter5200);
-            p5212 = ((org$pandalanguage$pandac$MethodDecl$Parameter*) $tmp5216);
-            org$pandalanguage$pandac$Variable* $tmp5217 = (org$pandalanguage$pandac$Variable*) malloc(88);
-            $tmp5217->$class = (panda$core$Class*) &org$pandalanguage$pandac$Variable$class;
-            $tmp5217->refCount.value = 1;
-            org$pandalanguage$pandac$Variable$Kind* $tmp5219 = (org$pandalanguage$pandac$Variable$Kind*) malloc(24);
-            $tmp5219->$class = (panda$core$Class*) &org$pandalanguage$pandac$Variable$Kind$class;
-            $tmp5219->refCount.value = 1;
-            org$pandalanguage$pandac$Variable$Kind$init$panda$core$Int64($tmp5219, ((panda$core$Int64) { 1 }));
-            org$pandalanguage$pandac$Variable$Storage* $tmp5221 = (org$pandalanguage$pandac$Variable$Storage*) malloc(24);
-            $tmp5221->$class = (panda$core$Class*) &org$pandalanguage$pandac$Variable$Storage$class;
-            $tmp5221->refCount.value = 1;
-            org$pandalanguage$pandac$Variable$Storage$init$panda$core$Int64($tmp5221, ((panda$core$Int64) { 1 }));
-            org$pandalanguage$pandac$Variable$init$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Variable$Kind$panda$core$String$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Variable$Storage($tmp5217, ((org$pandalanguage$pandac$Symbol*) p_m)->position, $tmp5219, p5212->name, p5212->type, $tmp5221);
-            org$pandalanguage$pandac$SymbolTable$add$org$pandalanguage$pandac$Symbol(symbols5197, ((org$pandalanguage$pandac$Symbol*) $tmp5217));
+            $fn5249 $tmp5248 = $tmp5247->methods[1];
+            panda$core$Object* $tmp5250 = $tmp5248(p$Iter5234);
+            p5246 = ((org$pandalanguage$pandac$MethodDecl$Parameter*) $tmp5250);
+            org$pandalanguage$pandac$Variable* $tmp5251 = (org$pandalanguage$pandac$Variable*) malloc(88);
+            $tmp5251->$class = (panda$core$Class*) &org$pandalanguage$pandac$Variable$class;
+            $tmp5251->refCount.value = 1;
+            org$pandalanguage$pandac$Variable$Kind$init$panda$core$Int64(&$tmp5253, ((panda$core$Int64) { 1 }));
+            org$pandalanguage$pandac$Variable$Storage$init$panda$core$Int64(&$tmp5254, ((panda$core$Int64) { 1 }));
+            org$pandalanguage$pandac$Variable$init$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Variable$Kind$panda$core$String$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Variable$Storage($tmp5251, ((org$pandalanguage$pandac$Symbol*) p_m)->position, $tmp5253, p5246->name, p5246->type, $tmp5254);
+            org$pandalanguage$pandac$SymbolTable$add$org$pandalanguage$pandac$Symbol(symbols5231, ((org$pandalanguage$pandac$Symbol*) $tmp5251));
         }
-        goto $l5205;
-        $l5206:;
+        goto $l5239;
+        $l5240:;
     }
-    self->symbolTable = symbols5197;
-    fieldInitializers5223 = NULL;
-    panda$core$Bit $tmp5224 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_m->methodKind->$rawValue, ((panda$core$Int64) { 2 }));
-    if ($tmp5224.value) {
+    self->symbolTable = symbols5231;
+    fieldInitializers5255 = NULL;
+    panda$core$Bit $tmp5256 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_m->methodKind.$rawValue, ((panda$core$Int64) { 2 }));
+    if ($tmp5256.value) {
     {
-        panda$collections$Array* $tmp5225 = (panda$collections$Array*) malloc(40);
-        $tmp5225->$class = (panda$core$Class*) &panda$collections$Array$class;
-        $tmp5225->refCount.value = 1;
-        panda$collections$Array$init($tmp5225);
-        fieldInitializers5223 = $tmp5225;
+        panda$collections$Array* $tmp5257 = (panda$collections$Array*) malloc(40);
+        $tmp5257->$class = (panda$core$Class*) &panda$collections$Array$class;
+        $tmp5257->refCount.value = 1;
+        panda$collections$Array$init($tmp5257);
+        fieldInitializers5255 = $tmp5257;
         {
-            panda$core$Object* $tmp5228 = panda$collections$Stack$peek$R$panda$collections$Stack$T(self->currentClass);
-            ITable* $tmp5229 = ((panda$collections$Iterable*) ((org$pandalanguage$pandac$ClassDecl*) $tmp5228)->fields)->$class->itable;
-            while ($tmp5229->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
-                $tmp5229 = $tmp5229->next;
+            panda$core$Object* $tmp5260 = panda$collections$Stack$peek$R$panda$collections$Stack$T(self->currentClass);
+            ITable* $tmp5261 = ((panda$collections$Iterable*) ((org$pandalanguage$pandac$ClassDecl*) $tmp5260)->fields)->$class->itable;
+            while ($tmp5261->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
+                $tmp5261 = $tmp5261->next;
             }
-            $fn5231 $tmp5230 = $tmp5229->methods[0];
-            panda$collections$Iterator* $tmp5232 = $tmp5230(((panda$collections$Iterable*) ((org$pandalanguage$pandac$ClassDecl*) $tmp5228)->fields));
-            f$Iter5227 = $tmp5232;
-            $l5233:;
-            ITable* $tmp5235 = f$Iter5227->$class->itable;
-            while ($tmp5235->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-                $tmp5235 = $tmp5235->next;
+            $fn5263 $tmp5262 = $tmp5261->methods[0];
+            panda$collections$Iterator* $tmp5264 = $tmp5262(((panda$collections$Iterable*) ((org$pandalanguage$pandac$ClassDecl*) $tmp5260)->fields));
+            f$Iter5259 = $tmp5264;
+            $l5265:;
+            ITable* $tmp5267 = f$Iter5259->$class->itable;
+            while ($tmp5267->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+                $tmp5267 = $tmp5267->next;
             }
-            $fn5237 $tmp5236 = $tmp5235->methods[0];
-            panda$core$Bit $tmp5238 = $tmp5236(f$Iter5227);
-            panda$core$Bit $tmp5239 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp5238);
-            if (!$tmp5239.value) goto $l5234;
+            $fn5269 $tmp5268 = $tmp5267->methods[0];
+            panda$core$Bit $tmp5270 = $tmp5268(f$Iter5259);
+            panda$core$Bit $tmp5271 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp5270);
+            if (!$tmp5271.value) goto $l5266;
             {
-                ITable* $tmp5241 = f$Iter5227->$class->itable;
-                while ($tmp5241->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-                    $tmp5241 = $tmp5241->next;
+                ITable* $tmp5273 = f$Iter5259->$class->itable;
+                while ($tmp5273->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+                    $tmp5273 = $tmp5273->next;
                 }
-                $fn5243 $tmp5242 = $tmp5241->methods[1];
-                panda$core$Object* $tmp5244 = $tmp5242(f$Iter5227);
-                f5240 = ((org$pandalanguage$pandac$FieldDecl*) $tmp5244);
-                org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$FieldDecl(self, f5240);
-                panda$core$Bit $tmp5246 = org$pandalanguage$pandac$Annotations$isClass$R$panda$core$Bit(f5240->annotations);
-                panda$core$Bit $tmp5247 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp5246);
-                bool $tmp5245 = $tmp5247.value;
-                if (!$tmp5245) goto $l5248;
-                $tmp5245 = ((panda$core$Bit) { f5240->value != NULL }).value;
-                $l5248:;
-                panda$core$Bit $tmp5249 = { $tmp5245 };
-                if ($tmp5249.value) {
+                $fn5275 $tmp5274 = $tmp5273->methods[1];
+                panda$core$Object* $tmp5276 = $tmp5274(f$Iter5259);
+                f5272 = ((org$pandalanguage$pandac$FieldDecl*) $tmp5276);
+                org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$FieldDecl(self, f5272);
+                panda$core$Bit $tmp5278 = org$pandalanguage$pandac$Annotations$isClass$R$panda$core$Bit(f5272->annotations);
+                panda$core$Bit $tmp5279 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp5278);
+                bool $tmp5277 = $tmp5279.value;
+                if (!$tmp5277) goto $l5280;
+                $tmp5277 = ((panda$core$Bit) { f5272->value != NULL }).value;
+                $l5280:;
+                panda$core$Bit $tmp5281 = { $tmp5277 };
+                if ($tmp5281.value) {
                 {
-                    panda$collections$Array* $tmp5251 = (panda$collections$Array*) malloc(40);
-                    $tmp5251->$class = (panda$core$Class*) &panda$collections$Array$class;
-                    $tmp5251->refCount.value = 1;
-                    panda$collections$Array$init($tmp5251);
-                    children5250 = $tmp5251;
-                    org$pandalanguage$pandac$IRNode* $tmp5253 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-                    $tmp5253->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-                    $tmp5253->refCount.value = 1;
-                    panda$core$Object* $tmp5255 = panda$collections$Stack$peek$R$panda$collections$Stack$T(self->currentClass);
-                    org$pandalanguage$pandac$Type* $tmp5256 = org$pandalanguage$pandac$ClassDecl$type$R$org$pandalanguage$pandac$Type(((org$pandalanguage$pandac$ClassDecl*) $tmp5255));
-                    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type($tmp5253, ((panda$core$Int64) { 1025 }), ((org$pandalanguage$pandac$Symbol*) p_m)->position, $tmp5256);
-                    panda$collections$Array$add$panda$collections$Array$T(children5250, ((panda$core$Object*) $tmp5253));
-                    org$pandalanguage$pandac$IRNode* $tmp5258 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-                    $tmp5258->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-                    $tmp5258->refCount.value = 1;
-                    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$Q($tmp5258, ((panda$core$Int64) { 1026 }), ((org$pandalanguage$pandac$Symbol*) p_m)->position, f5240->type, ((panda$core$Object*) f5240), ((panda$collections$ListView*) children5250));
-                    fieldRef5257 = $tmp5258;
-                    panda$collections$Array$clear(children5250);
-                    panda$collections$Array$add$panda$collections$Array$T(children5250, ((panda$core$Object*) fieldRef5257));
-                    panda$collections$Array$add$panda$collections$Array$T(children5250, ((panda$core$Object*) f5240->value));
-                    org$pandalanguage$pandac$IRNode* $tmp5260 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-                    $tmp5260->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-                    $tmp5260->refCount.value = 1;
-                    org$pandalanguage$pandac$parser$Token$Kind* $tmp5262 = (org$pandalanguage$pandac$parser$Token$Kind*) malloc(24);
-                    $tmp5262->$class = (panda$core$Class*) &org$pandalanguage$pandac$parser$Token$Kind$class;
-                    $tmp5262->refCount.value = 1;
-                    org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64($tmp5262, ((panda$core$Int64) { 73 }));
-                    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp5260, ((panda$core$Int64) { 1023 }), ((org$pandalanguage$pandac$Symbol*) f5240)->position, ((panda$core$Object*) $tmp5262), ((panda$collections$ListView*) children5250));
-                    panda$collections$Array$add$panda$collections$Array$T(fieldInitializers5223, ((panda$core$Object*) $tmp5260));
+                    panda$collections$Array* $tmp5283 = (panda$collections$Array*) malloc(40);
+                    $tmp5283->$class = (panda$core$Class*) &panda$collections$Array$class;
+                    $tmp5283->refCount.value = 1;
+                    panda$collections$Array$init($tmp5283);
+                    children5282 = $tmp5283;
+                    org$pandalanguage$pandac$IRNode* $tmp5285 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+                    $tmp5285->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+                    $tmp5285->refCount.value = 1;
+                    panda$core$Object* $tmp5287 = panda$collections$Stack$peek$R$panda$collections$Stack$T(self->currentClass);
+                    org$pandalanguage$pandac$Type* $tmp5288 = org$pandalanguage$pandac$ClassDecl$type$R$org$pandalanguage$pandac$Type(((org$pandalanguage$pandac$ClassDecl*) $tmp5287));
+                    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type($tmp5285, ((panda$core$Int64) { 1025 }), ((org$pandalanguage$pandac$Symbol*) p_m)->position, $tmp5288);
+                    panda$collections$Array$add$panda$collections$Array$T(children5282, ((panda$core$Object*) $tmp5285));
+                    org$pandalanguage$pandac$IRNode* $tmp5290 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+                    $tmp5290->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+                    $tmp5290->refCount.value = 1;
+                    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$Q($tmp5290, ((panda$core$Int64) { 1026 }), ((org$pandalanguage$pandac$Symbol*) p_m)->position, f5272->type, ((panda$core$Object*) f5272), ((panda$collections$ListView*) children5282));
+                    fieldRef5289 = $tmp5290;
+                    panda$collections$Array$clear(children5282);
+                    panda$collections$Array$add$panda$collections$Array$T(children5282, ((panda$core$Object*) fieldRef5289));
+                    panda$collections$Array$add$panda$collections$Array$T(children5282, ((panda$core$Object*) f5272->value));
+                    org$pandalanguage$pandac$IRNode* $tmp5292 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+                    $tmp5292->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+                    $tmp5292->refCount.value = 1;
+                    org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64(&$tmp5294, ((panda$core$Int64) { 73 }));
+                    org$pandalanguage$pandac$parser$Token$Kind$wrapper* $tmp5295;
+                    $tmp5295 = (org$pandalanguage$pandac$parser$Token$Kind$wrapper*) malloc(24);
+                    $tmp5295->cl = (panda$core$Class*) &org$pandalanguage$pandac$parser$Token$Kind$wrapperclass;
+                    $tmp5295->refCount = 1;
+                    $tmp5295->value = $tmp5294;
+                    org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Object$Q$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp5292, ((panda$core$Int64) { 1023 }), ((org$pandalanguage$pandac$Symbol*) f5272)->position, ((panda$core$Object*) $tmp5295), ((panda$collections$ListView*) children5282));
+                    panda$collections$Array$add$panda$collections$Array$T(fieldInitializers5255, ((panda$core$Object*) $tmp5292));
                 }
                 }
             }
-            goto $l5233;
-            $l5234:;
+            goto $l5265;
+            $l5266:;
         }
     }
     }
-    org$pandalanguage$pandac$IRNode* $tmp5265 = org$pandalanguage$pandac$Compiler$compileBlock$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(self, p_m->body);
-    compiled5264 = $tmp5265;
-    if (((panda$core$Bit) { compiled5264 != NULL }).value) {
+    org$pandalanguage$pandac$IRNode* $tmp5297 = org$pandalanguage$pandac$Compiler$compileBlock$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$ASTNode$GT$R$org$pandalanguage$pandac$IRNode$Q(self, ((org$pandalanguage$pandac$Symbol*) p_m)->position, ((panda$collections$ListView*) p_m->body));
+    compiled5296 = $tmp5297;
+    if (((panda$core$Bit) { compiled5296 != NULL }).value) {
     {
-        if (((panda$core$Bit) { fieldInitializers5223 != NULL }).value) {
+        if (((panda$core$Bit) { fieldInitializers5255 != NULL }).value) {
         {
-            panda$collections$Array* $tmp5267 = (panda$collections$Array*) malloc(40);
-            $tmp5267->$class = (panda$core$Class*) &panda$collections$Array$class;
-            $tmp5267->refCount.value = 1;
-            panda$collections$Array$init$panda$collections$ListView$LTpanda$collections$Array$T$GT($tmp5267, ((panda$collections$ListView*) fieldInitializers5223));
-            children5266 = $tmp5267;
-            panda$collections$Array$addAll$panda$collections$CollectionView$LTpanda$collections$Array$T$GT(children5266, ((panda$collections$CollectionView*) compiled5264->children));
-            org$pandalanguage$pandac$IRNode* $tmp5269 = (org$pandalanguage$pandac$IRNode*) malloc(72);
-            $tmp5269->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
-            $tmp5269->refCount.value = 1;
-            org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp5269, ((panda$core$Int64) { 1000 }), p_m->body->position, ((panda$collections$ListView*) children5266));
-            compiled5264 = $tmp5269;
+            panda$collections$Array* $tmp5299 = (panda$collections$Array*) malloc(40);
+            $tmp5299->$class = (panda$core$Class*) &panda$collections$Array$class;
+            $tmp5299->refCount.value = 1;
+            panda$collections$Array$init$panda$collections$ListView$LTpanda$collections$Array$T$GT($tmp5299, ((panda$collections$ListView*) fieldInitializers5255));
+            children5298 = $tmp5299;
+            panda$collections$Array$addAll$panda$collections$CollectionView$LTpanda$collections$Array$T$GT(children5298, ((panda$collections$CollectionView*) compiled5296->children));
+            org$pandalanguage$pandac$IRNode* $tmp5301 = (org$pandalanguage$pandac$IRNode*) malloc(72);
+            $tmp5301->$class = (panda$core$Class*) &org$pandalanguage$pandac$IRNode$class;
+            $tmp5301->refCount.value = 1;
+            org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT($tmp5301, ((panda$core$Int64) { 1000 }), ((org$pandalanguage$pandac$Symbol*) p_m)->position, ((panda$collections$ListView*) children5298));
+            compiled5296 = $tmp5301;
         }
         }
     }
     }
-    PANDA_ASSERT(((panda$core$Bit) { ((panda$core$Object*) self->symbolTable) == ((panda$core$Object*) symbols5197) }).value);
-    self->symbolTable = old5195;
+    PANDA_ASSERT(((panda$core$Bit) { ((panda$core$Object*) self->symbolTable) == ((panda$core$Object*) symbols5231) }).value);
+    self->symbolTable = old5229;
     panda$collections$Stack$pop$R$panda$collections$Stack$T(self->currentMethod);
     panda$collections$Stack$pop$R$panda$collections$Stack$T(self->currentClass);
-    panda$core$Bit $tmp5271 = org$pandalanguage$pandac$Annotations$isInline$R$panda$core$Bit(p_m->annotations);
-    if ($tmp5271.value) {
+    panda$core$Bit $tmp5303 = org$pandalanguage$pandac$Annotations$isInline$R$panda$core$Bit(p_m->annotations);
+    if ($tmp5303.value) {
     {
-        p_m->compiledBody = compiled5264;
+        p_m->compiledBody = compiled5296;
     }
     }
-    return compiled5264;
+    return compiled5296;
 }
 void org$pandalanguage$pandac$Compiler$compile$org$pandalanguage$pandac$MethodDecl(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$MethodDecl* p_m) {
-    org$pandalanguage$pandac$IRNode* compiled5272;
+    org$pandalanguage$pandac$IRNode* compiled5304;
     if (((panda$core$Bit) { p_m->body != NULL }).value) {
     {
-        org$pandalanguage$pandac$IRNode* $tmp5273 = org$pandalanguage$pandac$Compiler$compileBody$org$pandalanguage$pandac$MethodDecl$R$org$pandalanguage$pandac$IRNode$Q(self, p_m);
-        compiled5272 = $tmp5273;
-        panda$core$Bit $tmp5275 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(self->errorCount, ((panda$core$Int64) { 0 }));
-        bool $tmp5274 = $tmp5275.value;
-        if (!$tmp5274) goto $l5276;
-        $tmp5274 = ((panda$core$Bit) { compiled5272 != NULL }).value;
-        $l5276:;
-        panda$core$Bit $tmp5277 = { $tmp5274 };
-        if ($tmp5277.value) {
+        org$pandalanguage$pandac$IRNode* $tmp5305 = org$pandalanguage$pandac$Compiler$compileBody$org$pandalanguage$pandac$MethodDecl$R$org$pandalanguage$pandac$IRNode$Q(self, p_m);
+        compiled5304 = $tmp5305;
+        panda$core$Bit $tmp5307 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(self->errorCount, ((panda$core$Int64) { 0 }));
+        bool $tmp5306 = $tmp5307.value;
+        if (!$tmp5306) goto $l5308;
+        $tmp5306 = ((panda$core$Bit) { compiled5304 != NULL }).value;
+        $l5308:;
+        panda$core$Bit $tmp5309 = { $tmp5306 };
+        if ($tmp5309.value) {
         {
-            ITable* $tmp5278 = self->codeGenerator->$class->itable;
-            while ($tmp5278->$class != (panda$core$Class*) &org$pandalanguage$pandac$CodeGenerator$class) {
-                $tmp5278 = $tmp5278->next;
+            ITable* $tmp5310 = self->codeGenerator->$class->itable;
+            while ($tmp5310->$class != (panda$core$Class*) &org$pandalanguage$pandac$CodeGenerator$class) {
+                $tmp5310 = $tmp5310->next;
             }
-            $fn5280 $tmp5279 = $tmp5278->methods[3];
-            $tmp5279(self->codeGenerator, p_m, compiled5272);
+            $fn5312 $tmp5311 = $tmp5310->methods[3];
+            $tmp5311(self->codeGenerator, p_m, compiled5304);
         }
         }
     }
@@ -12772,271 +13007,271 @@ void org$pandalanguage$pandac$Compiler$compile$org$pandalanguage$pandac$MethodDe
     else {
     {
         org$pandalanguage$pandac$Compiler$resolve$org$pandalanguage$pandac$MethodDecl(self, p_m);
-        ITable* $tmp5281 = self->codeGenerator->$class->itable;
-        while ($tmp5281->$class != (panda$core$Class*) &org$pandalanguage$pandac$CodeGenerator$class) {
-            $tmp5281 = $tmp5281->next;
+        ITable* $tmp5313 = self->codeGenerator->$class->itable;
+        while ($tmp5313->$class != (panda$core$Class*) &org$pandalanguage$pandac$CodeGenerator$class) {
+            $tmp5313 = $tmp5313->next;
         }
-        $fn5283 $tmp5282 = $tmp5281->methods[2];
-        $tmp5282(self->codeGenerator, p_m);
+        $fn5315 $tmp5314 = $tmp5313->methods[2];
+        $tmp5314(self->codeGenerator, p_m);
     }
     }
 }
 void org$pandalanguage$pandac$Compiler$markNonExternal$org$pandalanguage$pandac$ClassDecl(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$ClassDecl* p_cl) {
-    panda$collections$Iterator* inner$Iter5284;
-    org$pandalanguage$pandac$ClassDecl* inner5296;
+    panda$collections$Iterator* inner$Iter5316;
+    org$pandalanguage$pandac$ClassDecl* inner5328;
     p_cl->external = ((panda$core$Bit) { false });
     {
-        ITable* $tmp5285 = ((panda$collections$Iterable*) p_cl->classes)->$class->itable;
-        while ($tmp5285->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
-            $tmp5285 = $tmp5285->next;
+        ITable* $tmp5317 = ((panda$collections$Iterable*) p_cl->classes)->$class->itable;
+        while ($tmp5317->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
+            $tmp5317 = $tmp5317->next;
         }
-        $fn5287 $tmp5286 = $tmp5285->methods[0];
-        panda$collections$Iterator* $tmp5288 = $tmp5286(((panda$collections$Iterable*) p_cl->classes));
-        inner$Iter5284 = $tmp5288;
-        $l5289:;
-        ITable* $tmp5291 = inner$Iter5284->$class->itable;
-        while ($tmp5291->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-            $tmp5291 = $tmp5291->next;
+        $fn5319 $tmp5318 = $tmp5317->methods[0];
+        panda$collections$Iterator* $tmp5320 = $tmp5318(((panda$collections$Iterable*) p_cl->classes));
+        inner$Iter5316 = $tmp5320;
+        $l5321:;
+        ITable* $tmp5323 = inner$Iter5316->$class->itable;
+        while ($tmp5323->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+            $tmp5323 = $tmp5323->next;
         }
-        $fn5293 $tmp5292 = $tmp5291->methods[0];
-        panda$core$Bit $tmp5294 = $tmp5292(inner$Iter5284);
-        panda$core$Bit $tmp5295 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp5294);
-        if (!$tmp5295.value) goto $l5290;
+        $fn5325 $tmp5324 = $tmp5323->methods[0];
+        panda$core$Bit $tmp5326 = $tmp5324(inner$Iter5316);
+        panda$core$Bit $tmp5327 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp5326);
+        if (!$tmp5327.value) goto $l5322;
         {
-            ITable* $tmp5297 = inner$Iter5284->$class->itable;
-            while ($tmp5297->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-                $tmp5297 = $tmp5297->next;
+            ITable* $tmp5329 = inner$Iter5316->$class->itable;
+            while ($tmp5329->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+                $tmp5329 = $tmp5329->next;
             }
-            $fn5299 $tmp5298 = $tmp5297->methods[1];
-            panda$core$Object* $tmp5300 = $tmp5298(inner$Iter5284);
-            inner5296 = ((org$pandalanguage$pandac$ClassDecl*) $tmp5300);
-            org$pandalanguage$pandac$Compiler$markNonExternal$org$pandalanguage$pandac$ClassDecl(self, inner5296);
+            $fn5331 $tmp5330 = $tmp5329->methods[1];
+            panda$core$Object* $tmp5332 = $tmp5330(inner$Iter5316);
+            inner5328 = ((org$pandalanguage$pandac$ClassDecl*) $tmp5332);
+            org$pandalanguage$pandac$Compiler$markNonExternal$org$pandalanguage$pandac$ClassDecl(self, inner5328);
         }
-        goto $l5289;
-        $l5290:;
+        goto $l5321;
+        $l5322:;
     }
 }
 void org$pandalanguage$pandac$Compiler$compile$org$pandalanguage$pandac$ClassDecl(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$ClassDecl* p_cl) {
-    org$pandalanguage$pandac$SymbolTable* old5308;
-    panda$collections$Iterator* m$Iter5313;
-    org$pandalanguage$pandac$MethodDecl* m5325;
-    org$pandalanguage$pandac$ClassDecl* next5335;
+    org$pandalanguage$pandac$SymbolTable* old5340;
+    panda$collections$Iterator* m$Iter5345;
+    org$pandalanguage$pandac$MethodDecl* m5357;
+    org$pandalanguage$pandac$ClassDecl* next5367;
     PANDA_ASSERT(((panda$core$Bit) { self->compiling == NULL }).value);
     self->compiling = p_cl;
     panda$collections$Stack$push$panda$collections$Stack$T(self->currentClass, ((panda$core$Object*) p_cl));
     org$pandalanguage$pandac$Compiler$markNonExternal$org$pandalanguage$pandac$ClassDecl(self, p_cl);
-    panda$core$Bit $tmp5301 = org$pandalanguage$pandac$Annotations$isSpecialize$R$panda$core$Bit(p_cl->annotations);
-    if ($tmp5301.value) {
+    panda$core$Bit $tmp5333 = org$pandalanguage$pandac$Annotations$isSpecialize$R$panda$core$Bit(p_cl->annotations);
+    if ($tmp5333.value) {
     {
-        ITable* $tmp5302 = self->codeGenerator->$class->itable;
-        while ($tmp5302->$class != (panda$core$Class*) &org$pandalanguage$pandac$CodeGenerator$class) {
-            $tmp5302 = $tmp5302->next;
+        ITable* $tmp5334 = self->codeGenerator->$class->itable;
+        while ($tmp5334->$class != (panda$core$Class*) &org$pandalanguage$pandac$CodeGenerator$class) {
+            $tmp5334 = $tmp5334->next;
         }
-        $fn5304 $tmp5303 = $tmp5302->methods[1];
-        $tmp5303(self->codeGenerator, p_cl);
-        ITable* $tmp5305 = self->codeGenerator->$class->itable;
-        while ($tmp5305->$class != (panda$core$Class*) &org$pandalanguage$pandac$CodeGenerator$class) {
-            $tmp5305 = $tmp5305->next;
+        $fn5336 $tmp5335 = $tmp5334->methods[1];
+        $tmp5335(self->codeGenerator, p_cl);
+        ITable* $tmp5337 = self->codeGenerator->$class->itable;
+        while ($tmp5337->$class != (panda$core$Class*) &org$pandalanguage$pandac$CodeGenerator$class) {
+            $tmp5337 = $tmp5337->next;
         }
-        $fn5307 $tmp5306 = $tmp5305->methods[4];
-        $tmp5306(self->codeGenerator, p_cl);
+        $fn5339 $tmp5338 = $tmp5337->methods[4];
+        $tmp5338(self->codeGenerator, p_cl);
         panda$collections$Stack$pop$R$panda$collections$Stack$T(self->currentClass);
         return;
     }
     }
-    old5308 = self->symbolTable;
-    org$pandalanguage$pandac$SymbolTable* $tmp5309 = org$pandalanguage$pandac$Compiler$getSymbolTable$org$pandalanguage$pandac$ClassDecl$R$org$pandalanguage$pandac$SymbolTable(self, p_cl);
-    self->symbolTable = $tmp5309;
-    ITable* $tmp5310 = self->codeGenerator->$class->itable;
-    while ($tmp5310->$class != (panda$core$Class*) &org$pandalanguage$pandac$CodeGenerator$class) {
-        $tmp5310 = $tmp5310->next;
+    old5340 = self->symbolTable;
+    org$pandalanguage$pandac$SymbolTable* $tmp5341 = org$pandalanguage$pandac$Compiler$getSymbolTable$org$pandalanguage$pandac$ClassDecl$R$org$pandalanguage$pandac$SymbolTable(self, p_cl);
+    self->symbolTable = $tmp5341;
+    ITable* $tmp5342 = self->codeGenerator->$class->itable;
+    while ($tmp5342->$class != (panda$core$Class*) &org$pandalanguage$pandac$CodeGenerator$class) {
+        $tmp5342 = $tmp5342->next;
     }
-    $fn5312 $tmp5311 = $tmp5310->methods[1];
-    $tmp5311(self->codeGenerator, p_cl);
+    $fn5344 $tmp5343 = $tmp5342->methods[1];
+    $tmp5343(self->codeGenerator, p_cl);
     {
-        ITable* $tmp5314 = ((panda$collections$Iterable*) p_cl->methods)->$class->itable;
-        while ($tmp5314->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
-            $tmp5314 = $tmp5314->next;
+        ITable* $tmp5346 = ((panda$collections$Iterable*) p_cl->methods)->$class->itable;
+        while ($tmp5346->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
+            $tmp5346 = $tmp5346->next;
         }
-        $fn5316 $tmp5315 = $tmp5314->methods[0];
-        panda$collections$Iterator* $tmp5317 = $tmp5315(((panda$collections$Iterable*) p_cl->methods));
-        m$Iter5313 = $tmp5317;
-        $l5318:;
-        ITable* $tmp5320 = m$Iter5313->$class->itable;
-        while ($tmp5320->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-            $tmp5320 = $tmp5320->next;
+        $fn5348 $tmp5347 = $tmp5346->methods[0];
+        panda$collections$Iterator* $tmp5349 = $tmp5347(((panda$collections$Iterable*) p_cl->methods));
+        m$Iter5345 = $tmp5349;
+        $l5350:;
+        ITable* $tmp5352 = m$Iter5345->$class->itable;
+        while ($tmp5352->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+            $tmp5352 = $tmp5352->next;
         }
-        $fn5322 $tmp5321 = $tmp5320->methods[0];
-        panda$core$Bit $tmp5323 = $tmp5321(m$Iter5313);
-        panda$core$Bit $tmp5324 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp5323);
-        if (!$tmp5324.value) goto $l5319;
+        $fn5354 $tmp5353 = $tmp5352->methods[0];
+        panda$core$Bit $tmp5355 = $tmp5353(m$Iter5345);
+        panda$core$Bit $tmp5356 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp5355);
+        if (!$tmp5356.value) goto $l5351;
         {
-            ITable* $tmp5326 = m$Iter5313->$class->itable;
-            while ($tmp5326->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-                $tmp5326 = $tmp5326->next;
+            ITable* $tmp5358 = m$Iter5345->$class->itable;
+            while ($tmp5358->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+                $tmp5358 = $tmp5358->next;
             }
-            $fn5328 $tmp5327 = $tmp5326->methods[1];
-            panda$core$Object* $tmp5329 = $tmp5327(m$Iter5313);
-            m5325 = ((org$pandalanguage$pandac$MethodDecl*) $tmp5329);
-            org$pandalanguage$pandac$Compiler$compile$org$pandalanguage$pandac$MethodDecl(self, m5325);
+            $fn5360 $tmp5359 = $tmp5358->methods[1];
+            panda$core$Object* $tmp5361 = $tmp5359(m$Iter5345);
+            m5357 = ((org$pandalanguage$pandac$MethodDecl*) $tmp5361);
+            org$pandalanguage$pandac$Compiler$compile$org$pandalanguage$pandac$MethodDecl(self, m5357);
         }
-        goto $l5318;
-        $l5319:;
+        goto $l5350;
+        $l5351:;
     }
-    ITable* $tmp5330 = self->codeGenerator->$class->itable;
-    while ($tmp5330->$class != (panda$core$Class*) &org$pandalanguage$pandac$CodeGenerator$class) {
-        $tmp5330 = $tmp5330->next;
+    ITable* $tmp5362 = self->codeGenerator->$class->itable;
+    while ($tmp5362->$class != (panda$core$Class*) &org$pandalanguage$pandac$CodeGenerator$class) {
+        $tmp5362 = $tmp5362->next;
     }
-    $fn5332 $tmp5331 = $tmp5330->methods[4];
-    $tmp5331(self->codeGenerator, p_cl);
-    self->symbolTable = old5308;
+    $fn5364 $tmp5363 = $tmp5362->methods[4];
+    $tmp5363(self->codeGenerator, p_cl);
+    self->symbolTable = old5340;
     panda$collections$Stack$pop$R$panda$collections$Stack$T(self->currentClass);
     self->compiling = NULL;
-    panda$core$Int64 $tmp5333 = panda$collections$Array$get_count$R$panda$core$Int64(self->compilationQueue);
-    panda$core$Bit $tmp5334 = panda$core$Int64$$GT$panda$core$Int64$R$panda$core$Bit($tmp5333, ((panda$core$Int64) { 0 }));
-    if ($tmp5334.value) {
+    panda$core$Int64 $tmp5365 = panda$collections$Array$get_count$R$panda$core$Int64(self->compilationQueue);
+    panda$core$Bit $tmp5366 = panda$core$Int64$$GT$panda$core$Int64$R$panda$core$Bit($tmp5365, ((panda$core$Int64) { 0 }));
+    if ($tmp5366.value) {
     {
-        panda$core$Object* $tmp5336 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(self->compilationQueue, ((panda$core$Int64) { 0 }));
-        next5335 = ((org$pandalanguage$pandac$ClassDecl*) $tmp5336);
+        panda$core$Object* $tmp5368 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(self->compilationQueue, ((panda$core$Int64) { 0 }));
+        next5367 = ((org$pandalanguage$pandac$ClassDecl*) $tmp5368);
         panda$collections$Array$removeIndex$panda$core$Int64(self->compilationQueue, ((panda$core$Int64) { 0 }));
-        org$pandalanguage$pandac$Compiler$compile$org$pandalanguage$pandac$ClassDecl(self, next5335);
+        org$pandalanguage$pandac$Compiler$compile$org$pandalanguage$pandac$ClassDecl(self, next5367);
     }
     }
-    panda$core$Int64 $tmp5337 = panda$collections$Array$get_count$R$panda$core$Int64(self->compilationQueue);
-    panda$core$Bit $tmp5338 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp5337, ((panda$core$Int64) { 0 }));
-    PANDA_ASSERT($tmp5338.value);
+    panda$core$Int64 $tmp5369 = panda$collections$Array$get_count$R$panda$core$Int64(self->compilationQueue);
+    panda$core$Bit $tmp5370 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp5369, ((panda$core$Int64) { 0 }));
+    PANDA_ASSERT($tmp5370.value);
 }
 panda$collections$ListView* org$pandalanguage$pandac$Compiler$scan$panda$io$File$R$panda$collections$ListView$LTorg$pandalanguage$pandac$ClassDecl$GT(org$pandalanguage$pandac$Compiler* self, panda$io$File* p_file) {
-    panda$collections$ListView* result5339;
-    org$pandalanguage$pandac$ASTNode* parsed5342;
-    panda$collections$Iterator* cl$Iter5345;
-    org$pandalanguage$pandac$ClassDecl* cl5357;
-    panda$core$Object* $tmp5340 = panda$collections$HashMap$$IDX$panda$collections$HashMap$K$R$panda$collections$HashMap$V$Q(self->scans, ((panda$collections$Key*) p_file));
-    result5339 = ((panda$collections$ListView*) $tmp5340);
-    if (((panda$core$Bit) { result5339 == NULL }).value) {
+    panda$collections$ListView* result5371;
+    org$pandalanguage$pandac$ASTNode* parsed5374;
+    panda$collections$Iterator* cl$Iter5377;
+    org$pandalanguage$pandac$ClassDecl* cl5389;
+    panda$core$Object* $tmp5372 = panda$collections$HashMap$$IDX$panda$collections$HashMap$K$R$panda$collections$HashMap$V$Q(self->scans, ((panda$collections$Key*) p_file));
+    result5371 = ((panda$collections$ListView*) $tmp5372);
+    if (((panda$core$Bit) { result5371 == NULL }).value) {
     {
-        panda$core$String* $tmp5341 = panda$io$File$readFully$R$panda$core$String(p_file);
-        org$pandalanguage$pandac$parser$Parser$start$panda$io$File$panda$core$String(self->parser, p_file, $tmp5341);
-        org$pandalanguage$pandac$ASTNode* $tmp5343 = org$pandalanguage$pandac$parser$Parser$file$R$org$pandalanguage$pandac$ASTNode$Q(self->parser);
-        parsed5342 = $tmp5343;
-        if (((panda$core$Bit) { parsed5342 != NULL }).value) {
+        panda$core$String* $tmp5373 = panda$io$File$readFully$R$panda$core$String(p_file);
+        org$pandalanguage$pandac$parser$Parser$start$panda$io$File$panda$core$String(self->parser, p_file, $tmp5373);
+        org$pandalanguage$pandac$ASTNode* $tmp5375 = org$pandalanguage$pandac$parser$Parser$file$R$org$pandalanguage$pandac$ASTNode$Q(self->parser);
+        parsed5374 = $tmp5375;
+        if (((panda$core$Bit) { parsed5374 != NULL }).value) {
         {
-            panda$collections$ListView* $tmp5344 = org$pandalanguage$pandac$Scanner$scan$panda$io$File$org$pandalanguage$pandac$ASTNode$R$panda$collections$ListView$LTorg$pandalanguage$pandac$ClassDecl$GT(self->scanner, p_file, parsed5342);
-            result5339 = $tmp5344;
+            panda$collections$ListView* $tmp5376 = org$pandalanguage$pandac$Scanner$scan$panda$io$File$org$pandalanguage$pandac$ASTNode$R$panda$collections$ListView$LTorg$pandalanguage$pandac$ClassDecl$GT(self->scanner, p_file, parsed5374);
+            result5371 = $tmp5376;
             {
-                ITable* $tmp5346 = ((panda$collections$Iterable*) result5339)->$class->itable;
-                while ($tmp5346->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
-                    $tmp5346 = $tmp5346->next;
+                ITable* $tmp5378 = ((panda$collections$Iterable*) result5371)->$class->itable;
+                while ($tmp5378->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
+                    $tmp5378 = $tmp5378->next;
                 }
-                $fn5348 $tmp5347 = $tmp5346->methods[0];
-                panda$collections$Iterator* $tmp5349 = $tmp5347(((panda$collections$Iterable*) result5339));
-                cl$Iter5345 = $tmp5349;
-                $l5350:;
-                ITable* $tmp5352 = cl$Iter5345->$class->itable;
-                while ($tmp5352->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-                    $tmp5352 = $tmp5352->next;
+                $fn5380 $tmp5379 = $tmp5378->methods[0];
+                panda$collections$Iterator* $tmp5381 = $tmp5379(((panda$collections$Iterable*) result5371));
+                cl$Iter5377 = $tmp5381;
+                $l5382:;
+                ITable* $tmp5384 = cl$Iter5377->$class->itable;
+                while ($tmp5384->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+                    $tmp5384 = $tmp5384->next;
                 }
-                $fn5354 $tmp5353 = $tmp5352->methods[0];
-                panda$core$Bit $tmp5355 = $tmp5353(cl$Iter5345);
-                panda$core$Bit $tmp5356 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp5355);
-                if (!$tmp5356.value) goto $l5351;
+                $fn5386 $tmp5385 = $tmp5384->methods[0];
+                panda$core$Bit $tmp5387 = $tmp5385(cl$Iter5377);
+                panda$core$Bit $tmp5388 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp5387);
+                if (!$tmp5388.value) goto $l5383;
                 {
-                    ITable* $tmp5358 = cl$Iter5345->$class->itable;
-                    while ($tmp5358->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-                        $tmp5358 = $tmp5358->next;
+                    ITable* $tmp5390 = cl$Iter5377->$class->itable;
+                    while ($tmp5390->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+                        $tmp5390 = $tmp5390->next;
                     }
-                    $fn5360 $tmp5359 = $tmp5358->methods[1];
-                    panda$core$Object* $tmp5361 = $tmp5359(cl$Iter5345);
-                    cl5357 = ((org$pandalanguage$pandac$ClassDecl*) $tmp5361);
-                    panda$collections$HashMap$$IDXEQ$panda$collections$HashMap$K$panda$collections$HashMap$V(self->classes, ((panda$collections$Key*) ((org$pandalanguage$pandac$Symbol*) cl5357)->name), ((panda$core$Object*) cl5357));
+                    $fn5392 $tmp5391 = $tmp5390->methods[1];
+                    panda$core$Object* $tmp5393 = $tmp5391(cl$Iter5377);
+                    cl5389 = ((org$pandalanguage$pandac$ClassDecl*) $tmp5393);
+                    panda$collections$HashMap$$IDXEQ$panda$collections$HashMap$K$panda$collections$HashMap$V(self->classes, ((panda$collections$Key*) ((org$pandalanguage$pandac$Symbol*) cl5389)->name), ((panda$core$Object*) cl5389));
                 }
-                goto $l5350;
-                $l5351:;
+                goto $l5382;
+                $l5383:;
             }
         }
         }
         else {
         {
-            panda$collections$Array* $tmp5362 = (panda$collections$Array*) malloc(40);
-            $tmp5362->$class = (panda$core$Class*) &panda$collections$Array$class;
-            $tmp5362->refCount.value = 1;
-            panda$collections$Array$init($tmp5362);
-            result5339 = ((panda$collections$ListView*) $tmp5362);
+            panda$collections$Array* $tmp5394 = (panda$collections$Array*) malloc(40);
+            $tmp5394->$class = (panda$core$Class*) &panda$collections$Array$class;
+            $tmp5394->refCount.value = 1;
+            panda$collections$Array$init($tmp5394);
+            result5371 = ((panda$collections$ListView*) $tmp5394);
         }
         }
-        panda$collections$HashMap$$IDXEQ$panda$collections$HashMap$K$panda$collections$HashMap$V(self->scans, ((panda$collections$Key*) p_file), ((panda$core$Object*) result5339));
+        panda$collections$HashMap$$IDXEQ$panda$collections$HashMap$K$panda$collections$HashMap$V(self->scans, ((panda$collections$Key*) p_file), ((panda$core$Object*) result5371));
     }
     }
-    return result5339;
+    return result5371;
 }
 void org$pandalanguage$pandac$Compiler$compile$panda$io$File(org$pandalanguage$pandac$Compiler* self, panda$io$File* p_file) {
-    panda$collections$ListView* classes5364;
-    panda$collections$Iterator* cl$Iter5366;
-    org$pandalanguage$pandac$ClassDecl* cl5378;
-    panda$collections$ListView* $tmp5365 = org$pandalanguage$pandac$Compiler$scan$panda$io$File$R$panda$collections$ListView$LTorg$pandalanguage$pandac$ClassDecl$GT(self, p_file);
-    classes5364 = $tmp5365;
+    panda$collections$ListView* classes5396;
+    panda$collections$Iterator* cl$Iter5398;
+    org$pandalanguage$pandac$ClassDecl* cl5410;
+    panda$collections$ListView* $tmp5397 = org$pandalanguage$pandac$Compiler$scan$panda$io$File$R$panda$collections$ListView$LTorg$pandalanguage$pandac$ClassDecl$GT(self, p_file);
+    classes5396 = $tmp5397;
     {
-        ITable* $tmp5367 = ((panda$collections$Iterable*) classes5364)->$class->itable;
-        while ($tmp5367->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
-            $tmp5367 = $tmp5367->next;
+        ITable* $tmp5399 = ((panda$collections$Iterable*) classes5396)->$class->itable;
+        while ($tmp5399->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
+            $tmp5399 = $tmp5399->next;
         }
-        $fn5369 $tmp5368 = $tmp5367->methods[0];
-        panda$collections$Iterator* $tmp5370 = $tmp5368(((panda$collections$Iterable*) classes5364));
-        cl$Iter5366 = $tmp5370;
-        $l5371:;
-        ITable* $tmp5373 = cl$Iter5366->$class->itable;
-        while ($tmp5373->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-            $tmp5373 = $tmp5373->next;
+        $fn5401 $tmp5400 = $tmp5399->methods[0];
+        panda$collections$Iterator* $tmp5402 = $tmp5400(((panda$collections$Iterable*) classes5396));
+        cl$Iter5398 = $tmp5402;
+        $l5403:;
+        ITable* $tmp5405 = cl$Iter5398->$class->itable;
+        while ($tmp5405->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+            $tmp5405 = $tmp5405->next;
         }
-        $fn5375 $tmp5374 = $tmp5373->methods[0];
-        panda$core$Bit $tmp5376 = $tmp5374(cl$Iter5366);
-        panda$core$Bit $tmp5377 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp5376);
-        if (!$tmp5377.value) goto $l5372;
+        $fn5407 $tmp5406 = $tmp5405->methods[0];
+        panda$core$Bit $tmp5408 = $tmp5406(cl$Iter5398);
+        panda$core$Bit $tmp5409 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp5408);
+        if (!$tmp5409.value) goto $l5404;
         {
-            ITable* $tmp5379 = cl$Iter5366->$class->itable;
-            while ($tmp5379->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-                $tmp5379 = $tmp5379->next;
+            ITable* $tmp5411 = cl$Iter5398->$class->itable;
+            while ($tmp5411->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+                $tmp5411 = $tmp5411->next;
             }
-            $fn5381 $tmp5380 = $tmp5379->methods[1];
-            panda$core$Object* $tmp5382 = $tmp5380(cl$Iter5366);
-            cl5378 = ((org$pandalanguage$pandac$ClassDecl*) $tmp5382);
-            org$pandalanguage$pandac$Compiler$compile$org$pandalanguage$pandac$ClassDecl(self, cl5378);
+            $fn5413 $tmp5412 = $tmp5411->methods[1];
+            panda$core$Object* $tmp5414 = $tmp5412(cl$Iter5398);
+            cl5410 = ((org$pandalanguage$pandac$ClassDecl*) $tmp5414);
+            org$pandalanguage$pandac$Compiler$compile$org$pandalanguage$pandac$ClassDecl(self, cl5410);
         }
-        goto $l5371;
-        $l5372:;
+        goto $l5403;
+        $l5404:;
     }
 }
 void org$pandalanguage$pandac$Compiler$error$org$pandalanguage$pandac$Position$panda$core$String(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position p_position, panda$core$String* p_msg) {
-    panda$core$Object* $tmp5383 = panda$collections$Stack$peek$R$panda$collections$Stack$T(self->currentClass);
-    org$pandalanguage$pandac$Compiler$error$panda$io$File$org$pandalanguage$pandac$Position$panda$core$String(self, ((org$pandalanguage$pandac$ClassDecl*) $tmp5383)->source, p_position, p_msg);
+    panda$core$Object* $tmp5415 = panda$collections$Stack$peek$R$panda$collections$Stack$T(self->currentClass);
+    org$pandalanguage$pandac$Compiler$error$panda$io$File$org$pandalanguage$pandac$Position$panda$core$String(self, ((org$pandalanguage$pandac$ClassDecl*) $tmp5415)->source, p_position, p_msg);
 }
 void org$pandalanguage$pandac$Compiler$error$panda$io$File$org$pandalanguage$pandac$Position$panda$core$String(org$pandalanguage$pandac$Compiler* self, panda$io$File* p_file, org$pandalanguage$pandac$Position p_pos, panda$core$String* p_msg) {
     if (self->reportErrors.value) {
     {
-        panda$core$Int64 $tmp5384 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->errorCount, ((panda$core$Int64) { 1 }));
-        self->errorCount = $tmp5384;
-        panda$core$String* $tmp5385 = panda$io$File$name$R$panda$core$String(p_file);
-        panda$core$String* $tmp5386 = panda$core$String$convert$R$panda$core$String($tmp5385);
-        panda$core$String* $tmp5388 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp5386, &$s5387);
-        org$pandalanguage$pandac$Position$wrapper* $tmp5389;
-        $tmp5389 = (org$pandalanguage$pandac$Position$wrapper*) malloc(32);
-        $tmp5389->cl = (panda$core$Class*) &org$pandalanguage$pandac$Position$wrapperclass;
-        $tmp5389->refCount = 1;
-        $tmp5389->value = p_pos;
-        panda$core$String* $tmp5390 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp5388, ((panda$core$Object*) $tmp5389));
-        panda$core$String* $tmp5392 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp5390, &$s5391);
-        panda$core$String* $tmp5393 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp5392, p_msg);
-        panda$core$String* $tmp5395 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp5393, &$s5394);
-        panda$io$Console$printLine$panda$core$Object(((panda$core$Object*) $tmp5395));
+        panda$core$Int64 $tmp5416 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->errorCount, ((panda$core$Int64) { 1 }));
+        self->errorCount = $tmp5416;
+        panda$core$String* $tmp5417 = panda$io$File$name$R$panda$core$String(p_file);
+        panda$core$String* $tmp5418 = panda$core$String$convert$R$panda$core$String($tmp5417);
+        panda$core$String* $tmp5420 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp5418, &$s5419);
+        org$pandalanguage$pandac$Position$wrapper* $tmp5421;
+        $tmp5421 = (org$pandalanguage$pandac$Position$wrapper*) malloc(32);
+        $tmp5421->cl = (panda$core$Class*) &org$pandalanguage$pandac$Position$wrapperclass;
+        $tmp5421->refCount = 1;
+        $tmp5421->value = p_pos;
+        panda$core$String* $tmp5422 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp5420, ((panda$core$Object*) $tmp5421));
+        panda$core$String* $tmp5424 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp5422, &$s5423);
+        panda$core$String* $tmp5425 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp5424, p_msg);
+        panda$core$String* $tmp5427 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp5425, &$s5426);
+        panda$io$Console$printLine$panda$core$Object(((panda$core$Object*) $tmp5427));
     }
     }
 }
 void org$pandalanguage$pandac$Compiler$finish(org$pandalanguage$pandac$Compiler* self) {
-    ITable* $tmp5396 = self->codeGenerator->$class->itable;
-    while ($tmp5396->$class != (panda$core$Class*) &org$pandalanguage$pandac$CodeGenerator$class) {
-        $tmp5396 = $tmp5396->next;
+    ITable* $tmp5428 = self->codeGenerator->$class->itable;
+    while ($tmp5428->$class != (panda$core$Class*) &org$pandalanguage$pandac$CodeGenerator$class) {
+        $tmp5428 = $tmp5428->next;
     }
-    $fn5398 $tmp5397 = $tmp5396->methods[5];
-    $tmp5397(self->codeGenerator);
+    $fn5430 $tmp5429 = $tmp5428->methods[5];
+    $tmp5429(self->codeGenerator);
 }
 

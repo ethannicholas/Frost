@@ -1,0 +1,2 @@
+ChoiceMismatch.panda:12:36: error: '=' cannot operate on 'anonymous.A', 'anonymous.B'
+1 error
