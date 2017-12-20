@@ -74,87 +74,87 @@ choice ASTNode {
 
     function position():Position {
         match self {
-            when ANNOTATION(position, name):
+            when ANNOTATION(position, _):
                 return position
-            when ASSERT(position, test, msg):
+            when ASSERT(position, _, _):
                 return position
-            when BINARY(position, left, op, right):
+            when BINARY(position, _, _, _):
                 return position
-            when BIT(position, value):
+            when BIT(position, _):
                 return position
-            when BLOCK(position, statements):
+            when BLOCK(position, _):
                 return position
-            when BREAK(position, label):
+            when BREAK(position, _):
                 return position
-            when CALL(position, target, args):
+            when CALL(position, _, _):
                 return position
-            when CHOICE_ENTRY(position, dc, name, fields):
+            when CHOICE_ENTRY(position, _, _, _):
                 return position
-            when CHOICE_FIELD_REFERENCE(position, base, ce, index):
+            when CHOICE_FIELD_REFERENCE(position, _, _, _):
                 return position
-            when CLASS(position, dc, annotations, kind, name, generics, supertypes, members):
+            when CLASS(position, _, _, _, _, _, _, _):
                 return position
-            when CONTINUE(position, label):
+            when CONTINUE(position, _):
                 return position
-            when DECLARATION(position, target, value):
+            when DECLARATION(position, _, _):
                 return position
-            when DO(position, label, statements, test):
+            when DO(position, _, _, _):
                 return position
-            when DOT(position, base, field):
+            when DOT(position, _, _):
                 return position
-            when FIELD(position, dc, annotations, decl):
+            when FIELD(position, _, _, _):
                 return position
             when FILE(_):
                 return Position()
-            when FOR(position, label, target, list, statements):
+            when FOR(position, _, _, _, _):
                 return position
-            when GENERIC_TYPE(position, name, subtypes):
+            when GENERIC_TYPE(position, _, _):
                 return position
-            when IDENTIFIER(position, name):
+            when IDENTIFIER(position, _):
                 return position
-            when IF(position, test, ifTrue, ifFalse):
+            when IF(position, _, _, _):
                 return position
-            when INT(position, value):
+            when INT(position, _):
                 return position
-            when LOOP(position, label, statements):
+            when LOOP(position, _, _):
                 return position
-            when MATCH(position, value, whens, other):
+            when MATCH(position, _, _, _):
                 return position
-            when METHOD(position, dc, annotations, kind, name, parameters, returnType, statements):
+            when METHOD(position, _, _, _, _, _, _, _):
                 return position
             when NULL(position):
                 return position
-            when NULLABLE_TYPE(position, base):
+            when NULLABLE_TYPE(position, _):
                 return position
-            when PACKAGE(position, name):
+            when PACKAGE(position, _):
                 return position
-            when PARAMETER(position, name, type):
+            when PARAMETER(position, _, _):
                 return position
-            when PREFIX(position, kind, base):
+            when PREFIX(position, _, _):
                 return position
-            when RANGE(position, start, end, inclusive, step):
+            when RANGE(position, _, _, _, _):
                 return position
-            when REAL(position, value):
+            when REAL(position, _):
                 return position
-            when RETURN(position, value):
+            when RETURN(position, _):
                 return position
             when SELF(position):
                 return position
-            when STRING(position, str):
+            when STRING(position, _):
                 return position
             when SUPER(position):
                 return position
-            when TYPE(position, name):
+            when TYPE(position, _):
                 return position
-            when TYPED_IDENTIFIER(position, name, type):
+            when TYPED_IDENTIFIER(position, _, _):
                 return position
-            when USES(position, name):
+            when USES(position, _):
                 return position
-            when VAR(position, kind, decls):
+            when VAR(position, _, _):
                 return position
-            when WHEN(position, tests, statements):
+            when WHEN(position, _, _):
                 return position
-            when WHILE(position, label, test, statements):
+            when WHILE(position, _, _, _):
                 return position
             otherwise: assert false
         }

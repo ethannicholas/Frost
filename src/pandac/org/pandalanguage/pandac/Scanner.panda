@@ -129,9 +129,9 @@ class Scanner {
     function complexity(node:ASTNode):Int {
         -- FIXME provide a visitor in ASTNode when lambdas are in so I can eliminate this mess
         match node {
-            when ASTNode.ASSERT(_, test, msg):
+            when ASTNode.ASSERT(_, test, _):
                 return complexity(test)
-            when ASTNode.BINARY(_, left, op, right):
+            when ASTNode.BINARY(_, left, _, right):
                 return 1 + complexity(left) + complexity(right)
             when ASTNode.BIT:
                 return 1
@@ -149,24 +149,24 @@ class Scanner {
                     result += complexity(a)
                 }
                 return result
-            when ASTNode.CHOICE_FIELD_REFERENCE(_, base, ce, f):
+            when ASTNode.CHOICE_FIELD_REFERENCE(_, base, _, _):
                 return complexity(base)
             when ASTNode.CONTINUE:
                 return 1
-            when ASTNode.DECLARATION(_, target, value):
+            when ASTNode.DECLARATION(_, _, value):
                 if value = null {
                     return 0
                 }
                 return complexity(value)
-            when ASTNode.DO(_, label, statements, test):
+            when ASTNode.DO(_, _, statements, test):
                 var result := complexity(test)
                 for s in statements {
                     result += complexity(s)
                 }
                 return result
-            when ASTNode.DOT(_, base, field):
+            when ASTNode.DOT(_, base, _):
                 return complexity(base)
-            when ASTNode.FOR(_, label, target, list, statements):
+            when ASTNode.FOR(_, _, _, list, statements):
                 var result := complexity(list)
                 for s in statements {
                     result += complexity(s)
@@ -174,7 +174,7 @@ class Scanner {
                 return result
             when ASTNode.GENERIC_TYPE:
                 return 0
-            when ASTNode.IDENTIFIER(_, text):
+            when ASTNode.IDENTIFIER:
                 return 1
             when ASTNode.IF(_, test, ifTrue, ifFalse):
                 var result := complexity(test)
@@ -187,7 +187,7 @@ class Scanner {
                 return result
             when ASTNode.INT:
                 return 1
-            when ASTNode.LOOP(_, label, statements):
+            when ASTNode.LOOP(_, _, statements):
                 var result := 0
                 for s in statements {
                     result += complexity(s)
@@ -208,7 +208,7 @@ class Scanner {
                 return 1
             when ASTNode.NULLABLE_TYPE:
                 return 0
-            when ASTNode.PREFIX(_, op, base):
+            when ASTNode.PREFIX(_, _, base):
                 return 1 + complexity(base)
             when ASTNode.RANGE:
                 return 1
@@ -227,7 +227,7 @@ class Scanner {
                 return 1
             when ASTNode.TYPE:
                 return 0
-            when ASTNode.VAR(_, kind, decls):
+            when ASTNode.VAR(_, _, decls):
                 var result := 0
                 for decl in decls {
                     result += complexity(decl)
@@ -242,7 +242,7 @@ class Scanner {
                     result += complexity(s)
                 }
                 return result
-            when ASTNode.WHILE(_, label, test, statements):
+            when ASTNode.WHILE(_, _, test, statements):
                 var result := complexity(test)
                 for s in statements {
                     result += complexity(s)

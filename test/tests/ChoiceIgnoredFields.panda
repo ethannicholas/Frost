@@ -1,0 +1,18 @@
+choice ChoiceIgnoredFields {
+    SOME_STUFF(String, String, Int, String)
+    OTHER_STUFF(Int, String, Int, Int)
+
+    @class
+    method test(c:ChoiceIgnoredFields) {
+        match c {
+            when SOME_STUFF(_, _, _, four): Console.printLine(four)
+            when OTHER_STUFF(_, two, _, _): Console.printLine(two)
+        }
+    }
+
+    @class
+    method main() {
+        test(SOME_STUFF("one", "two", 3, "four"))
+        test(OTHER_STUFF(1, "two", 3, 4))
+    }
+}

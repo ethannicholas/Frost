@@ -1843,7 +1843,6 @@ class Compiler : ErrorReporter {
         return null
     }
 
-
     method call(target:IRNode, name:String, args:ListView<IRNode>, expectedType:Type?):IRNode? {
         def resolved := resolve(target)
         if resolved = null {
@@ -3493,6 +3492,9 @@ class Compiler : ErrorReporter {
                                 for i in 0 .. actualCount {
                                     match args[i] {
                                         when ASTNode.IDENTIFIER(position, name):
+                                            if name = "_" {
+                                                continue
+                                            }
                                             def variable := Variable(position, Variable.Kind.DEF,
                                                     name, entry.fields[i])
                                             symbolTable.add(variable)
