@@ -10,6 +10,8 @@ class ChoiceEntry : Symbol {
 
     def rawValue:Int
 
+    def initMethod:MethodDecl? := null
+
     var resolved := false
 
     init(owner:ClassDecl, position:Position, name:String, doccomment:String?, rawValue:Int,

@@ -1393,8 +1393,7 @@ class Parser {
         if label != null {
             return ASTNode.BREAK(start.position, text(label))
         }
-        def s:String? := null
-        return ASTNode.BREAK(start.position, s) -- FIXME should just be able to use null directly
+        return ASTNode.BREAK(start.position, null)
     }
 
     ================================================================================================
@@ -1409,8 +1408,7 @@ class Parser {
         if label != null {
             return ASTNode.CONTINUE(start.position, text(label))
         }
-        def s:String? := null
-        return ASTNode.CONTINUE(start.position, s) -- FIXME should just be able to use null directly
+        return ASTNode.CONTINUE(start.position, null)
     }
 
     ================================================================================================
@@ -1423,8 +1421,7 @@ class Parser {
         }
         match peek().kind {
             when Token.Kind.RBRACE, Token.Kind.WHEN, Token.Kind.OTHERWISE:
-                def v:ASTNode? := null
-                return ASTNode.RETURN(start.position, v)  -- FIXME should just be able to use null directly
+                return ASTNode.RETURN(start.position, null)
             otherwise:
                 def children := Array<ASTNode>()
                 def expr := expression()

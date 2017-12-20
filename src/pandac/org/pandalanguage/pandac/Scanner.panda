@@ -389,6 +389,7 @@ class Scanner {
                     continue outer
                 }
             }
+            entry.initMethod := m
             found := true
             break
         }
@@ -413,6 +414,7 @@ class Scanner {
             }
             def synthetic := MethodDecl(cl, cl.position, null, Annotations(), MethodDecl.Kind.INIT,
                     "init", parameters, Type.Void(), statements.finish())
+            entry.initMethod := synthetic
             cl.methods.add(synthetic)
             cl.symbolTable.add(synthetic)
         }
@@ -488,8 +490,7 @@ class Scanner {
         }
         for m in members {
             match m {
-                when ASTNode.METHOD(mPosition, dc, annotations, methodKind, name, parameters, rawReturnType, -- FIXME replace unused values with '_'
-                        statements):
+                when ASTNode.METHOD(mPosition, _, _, methodKind, _,  _, _, _):
                     if methodKind = MethodDecl.Kind.INIT {
                         match kind {
                             when ClassDecl.Kind.CLASS: -- do nothing

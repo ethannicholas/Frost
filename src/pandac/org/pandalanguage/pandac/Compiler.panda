@@ -1965,9 +1965,15 @@ class Compiler : ErrorReporter {
                     }
                     finalArgs.add(arg)
                 }
+                resolve(c.initMethod)
                 def owner := IRNode(IRNode.Kind.TYPE_REFERENCE, m.position, Type.Class(),
                         c.owner.type())
-                return call(owner, finalArgs)
+                def initCall := call(m.position,
+                        IRNode(IRNode.Kind.CONSTRUCTED_OBJECT, m.position, c.owner.type()),
+                        MethodRef(c.initMethod, Array<Type>()), finalArgs) -- FIXME literal
+                def children := Array<IRNode>() -- FIXME literal
+                children.add(initCall)
+                return IRNode(IRNode.Kind.CONSTRUCT, m.position, c.owner.type(), children)
             otherwise:
                 def resolved := resolve(m)
                 if resolved = null {
