@@ -203,7 +203,7 @@ class TestRunner {
                 }
             }
         }
-        Console.printLine("Passed \{success} / \{total} tests.")    
+        Console.printLine("Passed \{success} / \{total} tests.")
     }
 
     @class

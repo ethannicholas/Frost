@@ -576,6 +576,6 @@ class Scanner {
                 return result
             otherwise:
                 assert false
-        }            
+        }
     }
 }

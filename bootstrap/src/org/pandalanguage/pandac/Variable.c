@@ -6,7 +6,6 @@
 #include "org/pandalanguage/pandac/Variable/Kind.h"
 #include "panda/core/String.h"
 #include "org/pandalanguage/pandac/Type.h"
-#include "org/pandalanguage/pandac/IRNode.h"
 #include "org/pandalanguage/pandac/Variable/Storage.h"
 #include "panda/core/Int64.h"
 

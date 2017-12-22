@@ -13,7 +13,6 @@ typedef struct org$pandalanguage$pandac$Annotations org$pandalanguage$pandac$Ann
 typedef struct panda$collections$Array panda$collections$Array;
 typedef struct org$pandalanguage$pandac$Type org$pandalanguage$pandac$Type;
 typedef struct panda$collections$ImmutableArray panda$collections$ImmutableArray;
-typedef struct org$pandalanguage$pandac$IRNode org$pandalanguage$pandac$IRNode;
 #include "panda/core/Bit.h"
 typedef struct org$pandalanguage$pandac$MethodDecl org$pandalanguage$pandac$MethodDecl;
 
@@ -30,7 +29,7 @@ typedef struct org$pandalanguage$pandac$MethodDecl {
     panda$collections$Array* parameters;
     org$pandalanguage$pandac$Type* returnType;
     panda$collections$ImmutableArray* body;
-    org$pandalanguage$pandac$IRNode* compiledBody;
+    panda$collections$ImmutableArray* compiledBody;
     panda$core$Bit resolved;
     panda$core$Bit overrideKnown;
     org$pandalanguage$pandac$MethodDecl* overridden;

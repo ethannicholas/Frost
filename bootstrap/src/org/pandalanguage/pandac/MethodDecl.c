@@ -10,7 +10,6 @@
 #include "panda/collections/Array.h"
 #include "org/pandalanguage/pandac/Type.h"
 #include "panda/collections/ImmutableArray.h"
-#include "org/pandalanguage/pandac/IRNode.h"
 #include "panda/core/Bit.h"
 #include "panda/core/Int64.h"
 #include "panda/core/Range.LTpanda/core/Int64.GT.h"

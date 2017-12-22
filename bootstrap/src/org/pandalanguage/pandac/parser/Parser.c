@@ -2834,7 +2834,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$ifState
     org$pandalanguage$pandac$ASTNode* $tmp951 = (org$pandalanguage$pandac$ASTNode*) malloc(96);
     $tmp951->$class = (panda$core$Class*) &org$pandalanguage$pandac$ASTNode$class;
     $tmp951->refCount.value = 1;
-    org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$org$pandalanguage$pandac$ASTNode($tmp951, ((panda$core$Int64) { 19 }), ((org$pandalanguage$pandac$parser$Token) start936.value).position, test940, ifTrue942, ifFalse944);
+    org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$org$pandalanguage$pandac$ASTNode$Q($tmp951, ((panda$core$Int64) { 19 }), ((org$pandalanguage$pandac$parser$Token) start936.value).position, test940, ifTrue942, ifFalse944);
     return $tmp951;
 }
 org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$typeDeclaration$R$org$pandalanguage$pandac$ASTNode$Q(org$pandalanguage$pandac$parser$Parser* self) {

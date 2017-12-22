@@ -56,10 +56,11 @@ org$pandalanguage$plex$runtime$RawToken org$pandalanguage$plex$runtime$DFA$next$
     panda$core$Int64 startLine15;
     panda$core$Int64 startColumn16;
     panda$core$Char8 c20;
-    panda$core$Int64 newAccept42;
-    org$pandalanguage$plex$runtime$RawToken $tmp44;
-    panda$core$String$Index $tmp45;
-    panda$core$String$Index $tmp46;
+    panda$core$UInt8 $match$60_2136;
+    panda$core$Int64 newAccept45;
+    org$pandalanguage$plex$runtime$RawToken $tmp47;
+    panda$core$String$Index $tmp48;
+    panda$core$String$Index $tmp49;
     state7 = ((panda$core$Int64) { 1 });
     panda$core$Bit $tmp8 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(self->offset, self->sourceEnd);
     if ($tmp8.value) {
@@ -109,34 +110,40 @@ org$pandalanguage$plex$runtime$RawToken org$pandalanguage$plex$runtime$DFA$next$
         {
             panda$core$Int64 $tmp35 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->offset, ((panda$core$Int64) { 1 }));
             self->offset = $tmp35;
-            panda$core$UInt8 $tmp36 = panda$core$Char8$convert$R$panda$core$UInt8(c20);
-            switch ($tmp36.value) {
-                case 10:
+            {
+                panda$core$UInt8 $tmp37 = panda$core$Char8$convert$R$panda$core$UInt8(c20);
+                $match$60_2136 = $tmp37;
+                panda$core$Bit $tmp38 = panda$core$UInt8$$EQ$panda$core$UInt8$R$panda$core$Bit($match$60_2136, ((panda$core$UInt8) { 10 }));
+                if ($tmp38.value) {
                 {
-                    panda$core$Int64 $tmp37 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->line, ((panda$core$Int64) { 1 }));
-                    self->line = $tmp37;
+                    panda$core$Int64 $tmp39 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->line, ((panda$core$Int64) { 1 }));
+                    self->line = $tmp39;
                     self->column = ((panda$core$Int64) { 1 });
                 }
-                break;
-                case 9:
-                {
-                    panda$core$Int64 $tmp38 = panda$core$Int64$$REM$panda$core$Int64$R$panda$core$Int64(self->column, ((panda$core$Int64) { 4 }));
-                    panda$core$Int64 $tmp39 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(((panda$core$Int64) { 4 }), $tmp38);
-                    panda$core$Int64 $tmp40 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->column, $tmp39);
-                    self->column = $tmp40;
                 }
-                break;
-                default:
+                else {
+                panda$core$Bit $tmp40 = panda$core$UInt8$$EQ$panda$core$UInt8$R$panda$core$Bit($match$60_2136, ((panda$core$UInt8) { 9 }));
+                if ($tmp40.value) {
                 {
-                    panda$core$Int64 $tmp41 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->column, ((panda$core$Int64) { 1 }));
-                    self->column = $tmp41;
+                    panda$core$Int64 $tmp41 = panda$core$Int64$$REM$panda$core$Int64$R$panda$core$Int64(self->column, ((panda$core$Int64) { 4 }));
+                    panda$core$Int64 $tmp42 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(((panda$core$Int64) { 4 }), $tmp41);
+                    panda$core$Int64 $tmp43 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->column, $tmp42);
+                    self->column = $tmp43;
+                }
+                }
+                else {
+                {
+                    panda$core$Int64 $tmp44 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->column, ((panda$core$Int64) { 1 }));
+                    self->column = $tmp44;
+                }
+                }
                 }
             }
-            newAccept42 = self->accepts[state7.value];
-            panda$core$Bit $tmp43 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit(newAccept42, ((panda$core$Int64) { -1 }));
-            if ($tmp43.value) {
+            newAccept45 = self->accepts[state7.value];
+            panda$core$Bit $tmp46 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit(newAccept45, ((panda$core$Int64) { -1 }));
+            if ($tmp46.value) {
             {
-                kind12 = newAccept42;
+                kind12 = newAccept45;
                 end14 = self->offset;
             }
             }
@@ -151,9 +158,9 @@ org$pandalanguage$plex$runtime$RawToken org$pandalanguage$plex$runtime$DFA$next$
     goto $l17;
     $l18:;
     self->offset = end14;
-    panda$core$String$Index$init$panda$core$Int64(&$tmp45, start13);
-    panda$core$String$Index$init$panda$core$Int64(&$tmp46, end14);
-    org$pandalanguage$plex$runtime$RawToken$init$panda$core$Int64$panda$core$String$Index$panda$core$String$Index$panda$core$Int64$panda$core$Int64(&$tmp44, kind12, $tmp45, $tmp46, startLine15, startColumn16);
-    return $tmp44;
+    panda$core$String$Index$init$panda$core$Int64(&$tmp48, start13);
+    panda$core$String$Index$init$panda$core$Int64(&$tmp49, end14);
+    org$pandalanguage$plex$runtime$RawToken$init$panda$core$Int64$panda$core$String$Index$panda$core$String$Index$panda$core$Int64$panda$core$Int64(&$tmp47, kind12, $tmp48, $tmp49, startLine15, startColumn16);
+    return $tmp47;
 }
 

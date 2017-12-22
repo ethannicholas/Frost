@@ -749,7 +749,7 @@ panda$core$String* panda$core$Int64$format$panda$core$String$R$panda$core$String
     bool $tmp183 = self.value < 0;
     panda$core$Int64 $tmp184 = panda$core$Int64$abs$R$panda$core$Int64(self);
     panda$core$UInt64 $tmp185 = panda$core$Int64$convert$R$panda$core$UInt64($tmp184);
-    panda$core$String* $tmp186 = panda$core$Panda$format$panda$core$Bit$panda$core$UInt64$panda$core$UInt64$panda$core$String$R$panda$core$String(((panda$core$Bit) { $tmp183 }), $tmp185, ((panda$core$UInt64) { -1 }), p_fmt);
+    panda$core$String* $tmp186 = panda$core$Panda$format$panda$core$Bit$panda$core$UInt64$panda$core$UInt64$panda$core$String$R$panda$core$String(((panda$core$Bit) { $tmp183 }), $tmp185, ((panda$core$UInt64) { 18446744073709551615 }), p_fmt);
     return $tmp186;
 }
 

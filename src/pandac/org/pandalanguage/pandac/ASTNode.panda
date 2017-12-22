@@ -37,7 +37,7 @@ choice ASTNode {
     GENERIC_TYPE    (Position, String, ImmutableArray<ASTNode> -* types *-)
     IDENTIFIER      (Position, String)
     IF              (Position, ASTNode, ImmutableArray<ASTNode> -* ifTrue *-,
-                     ASTNode -* ifFalse *-)
+                     ASTNode? -* ifFalse *-)
     INT             (Position, UInt64)
     LOOP            (Position, String?, ImmutableArray<ASTNode>)
     MATCH           (Position,
@@ -255,7 +255,7 @@ choice ASTNode {
                     result.append(a + "\n")
                 }
                 result.append(decl)
-                return result.finish()                
+                return result.finish()
             when FILE(entries):
                 def result := MutableString()
                 for e in entries {
@@ -416,7 +416,7 @@ choice ASTNode {
                     result.append(s + "\n")
                 }
                 result.append("}")
-                return result.finish()            
+                return result.finish()
             otherwise: assert false
         }
     }

@@ -10,11 +10,11 @@
 #include "org/pandalanguage/pandac/Type.h"
 #include "org/pandalanguage/pandac/ASTNode.h"
 #include "panda/core/Bit.h"
-#include "org/pandalanguage/pandac/IRNode.h"
 #include "panda/core/Int64.h"
 #include "panda/core/MutableString.h"
 #include "panda/core/Char8.h"
 #include "panda/core/UInt8.h"
+#include "org/pandalanguage/pandac/IRNode.h"
 
 
 org$pandalanguage$pandac$FieldDecl$class_type org$pandalanguage$pandac$FieldDecl$class = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &org$pandalanguage$pandac$Symbol$class, NULL, { org$pandalanguage$pandac$FieldDecl$convert$R$panda$core$String, panda$core$Object$cleanup, org$pandalanguage$pandac$Symbol$get_heritable$R$panda$core$Bit} };

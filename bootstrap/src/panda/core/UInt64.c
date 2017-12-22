@@ -701,7 +701,7 @@ panda$core$String* panda$core$UInt64$convert$R$panda$core$String(panda$core$UInt
     return $tmp170;
 }
 panda$core$String* panda$core$UInt64$format$panda$core$String$R$panda$core$String(panda$core$UInt64 self, panda$core$String* p_fmt) {
-    panda$core$String* $tmp172 = panda$core$Panda$format$panda$core$Bit$panda$core$UInt64$panda$core$UInt64$panda$core$String$R$panda$core$String(((panda$core$Bit) { false }), self, ((panda$core$UInt64) { -1 }), p_fmt);
+    panda$core$String* $tmp172 = panda$core$Panda$format$panda$core$Bit$panda$core$UInt64$panda$core$UInt64$panda$core$String$R$panda$core$String(((panda$core$Bit) { false }), self, ((panda$core$UInt64) { 18446744073709551615 }), p_fmt);
     return $tmp172;
 }
 

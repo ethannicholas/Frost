@@ -40,7 +40,7 @@ class MethodDecl : Symbol {
     def body:ImmutableArray<ASTNode>?
 
     -- only set for @inline methods
-    def compiledBody:IRNode? := null
+    def compiledBody:ImmutableArray<IRNode>? := null
 
     var resolved:Bit
 

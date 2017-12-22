@@ -2,265 +2,423 @@ package org.pandalanguage.pandac
 
 uses org.pandalanguage.pandac.parser.Token
 
-@final
-class IRNode {
-    class Kind {
-        constant BLOCK                       := 1000
-        constant TYPE_REFERENCE              := 1001
-        constant METHOD_REFERENCE            := 1002
-        constant UNRESOLVED_METHOD_REFERENCE := 1003
-        constant INT                         := 1004
-        constant CALL                        := 1005
-        constant BREAK                       := 1006
-        constant CONTINUE                    := 1007
-        constant RETURN                      := 1008
-        constant CAST                        := 1009
-        constant CONSTRUCT                   := 1010
-        constant BIT                         := 1011
-        constant IF                          := 1012
-        constant WHILE                       := 1013
-        constant DO                          := 1014
-        constant LOOP                        := 1015
-        constant VARIABLE_REFERENCE          := 1016
-        constant VAR                         := 1017
-        constant DEF                         := 1018
-        constant CONSTANT                    := 1019
-        constant PROPERTY                    := 1020
-        constant DECLARATION                 := 1021
-        constant TUPLE_TARGET                := 1022
-        constant BINARY                      := 1023
-        constant SUPER                       := 1024
-        constant SELF                        := 1025
-        constant FIELD_REFERENCE             := 1026
-        constant REUSED_VALUE_DEFINITION     := 1027
-        constant REUSED_VALUE                := 1028
-        constant RANGE_FOR                   := 1029
-        constant NULL                        := 1030
-        constant UNRESOLVED_RANGE            := 1031
-        constant NEGATED_INT                 := 1032
-        constant STRING                      := 1033
-        constant ASSERT                      := 1034
-        constant IS_NULL                     := 1035
-        constant IS_NONNULL                  := 1036
-        constant UNRESOLVED_IDENTIFIER       := 1037
-        -- target used for init calls during object construction, meaning "the object that was just
-        -- constructed"
-        constant CONSTRUCTED_OBJECT          := 1038
-        constant UNRESOLVED_METHOD_CALL      := 1039
-        -- index expressions (foo[bar]) always start out unresolved, because of indexed assignment.
-        -- For instance, a given object might define a "[]:=" method but not a "[]" function, or the
-        -- index types could be different between "[]" and "[]:=". Holding off on resolution allows
-        -- us to handle cases like this.
-        constant UNRESOLVED_INDEX            := 1040
-        constant PREFIX                      := 1041
-        -- [value, when0, when1...]
-        constant MATCH                       := 1042
-        -- [value0, value1, ..., block]
-        constant WHEN                        := 1042
-        constant OTHERWISE                   := 1043
-        -- C-style ternary expression. Not supported in Panda source code, but used internally.
-        constant TERNARY                     := 1044
-        constant REAL                        := 1045
-        -- a choice entry, like IRNode.Kind.STRING
-        constant CHOICE_ENTRY_REFERENCE      := 1046
-        -- a field of a choice entry, like IRNode.Kind.STRING[0]
-        constant CHOICE_FIELD_REFERENCE      := 1047
-    }
+choice IRNode {
+    ASSERT(Position, IRNode, IRNode?)
+    BINARY(Position, Type, IRNode, Token.Kind, IRNode)
+    BIT(Position, Type, Bit)
+    BLOCK(Position, ImmutableArray<IRNode>)
+    BREAK(Position, String?)
+    CALL(Position, Type, MethodRef, ImmutableArray<IRNode>)
+    CAST(Position, IRNode, Type, Bit -* explicit *-)
+    -- a choice entry, like IRNode.Kind.STRING
+    CHOICE_ENTRY_REFERENCE(Position, ChoiceEntry)
+    -- a field of a choice entry, like IRNode.Kind.STRING[0]
+    CHOICE_FIELD_REFERENCE(Position, IRNode, ChoiceEntry, Int)
+    CONSTRUCT(Position, Type, IRNode)
+    -- target used for init calls during object construction, meaning "the object that was just
+    -- constructed"
+    CONSTRUCTED_OBJECT(Position, Type)
+    CONTINUE(Position, String?)
+    DECLARATION(IRNode -* target *-, IRNode? -* value *-)
+    DO(Position, String?, ImmutableArray<IRNode>, IRNode)
+    FIELD_REFERENCE(Position, Type, IRNode -* base *-, FieldDecl)
+    IF(Position, IRNode, ImmutableArray<IRNode>, IRNode?)
+    INT(Position, Type, UInt64)
+    IS_NONNULL(Position, IRNode)
+    IS_NULL(Position, IRNode)
+    LOOP(Position, String?, ImmutableArray<IRNode>)
+    MATCH(Position, IRNode -* value *-, ImmutableArray<IRNode> -* whens *-,
+            ImmutableArray<IRNode>? -* otherwise statements *-)
+    METHOD_REFERENCE(Position, IRNode -* target *-, MethodRef)
+    NEGATED_INT(Position, Type, UInt64)
+    NULL(Position, Type)
+    PREFIX(Position, Token.Kind, IRNode)
+    RANGE_FOR(Position, String, IRNode -* target *-, IRNode -* list *-, ImmutableArray<IRNode>)
+    REAL(Position, Type, Real64)
+    RETURN(Position, IRNode?)
+    REUSED_VALUE(Position, Type, Int -* id *-)
+    REUSED_VALUE_DEFINITION(IRNode, Int -* id *-)
+    SELF(Position, Type)
+    STRING(Position, String)
+    SUPER(Position, Type)
+    -- C-style ternary expression. Not supported in Panda source code, but used internally.
+    TERNARY(Position, IRNode, IRNode, IRNode)
+    TYPE_REFERENCE(Position, Type)
+    UNRESOLVED_IDENTIFIER(Position, String)
+    -- index expressions (foo[bar]) always start out unresolved, because of indexed assignment. For
+    -- instance, a given object might define a "[]:=" method but not a "[]" function, or the index
+    -- types could be different between "[]" and "[]:=". Holding off on resolution allows us to
+    -- handle cases like this.
+    UNRESOLVED_INDEX(Position, Type, IRNode -* base *-, ImmutableArray<IRNode> -* args *-)
+    UNRESOLVED_METHOD_CALL(Position, Type, IRNode -* target *-, ImmutableArray<MethodRef>,
+            ImmutableArray<IRNode> -* args *-)
+    UNRESOLVED_METHOD_REFERENCE(Position, IRNode -* target *-, ImmutableArray<MethodRef>)
+    UNRESOLVED_RANGE(Position, IRNode -* start *-, IRNode -* end *-, Bit, IRNode -* step *-)
+    VAR(Position, Variable.Kind, ImmutableArray<IRNode> -* DECLARATIONs *-)
+    VARIABLE_REFERENCE(Position, Variable)
+    WHEN(Position, ImmutableArray<IRNode> -* tests *-, ImmutableArray<IRNode> -* statements *-)
+    WHILE(Position, String?, IRNode, ImmutableArray<IRNode>)
 
-    def kind:Int
-
-    def position:Position
-
-    def payload:Object?
-
-    def type:Type
-
-    def children:ImmutableArray<IRNode>?
-
-    init(kind:Int, position:Position) {
-        init(kind, position, Type.Void(), null, null)
-    }
-
-    init(kind:Int, position:Position, payload:UInt64) {
-        init(kind, position, Type.Void(), payload, null)
-    }
-
-    init(kind:Int, position:Position, payload:String) {
-        init(kind, position, Type.Void(), payload, null)
-    }
-
-    init(kind:Int, position:Position, payload:Bit) {
-        init(kind, position, Type.Void(), payload, null)
-    }
-
-    init(kind:Int, position:Position, children:ListView<IRNode>) {
-        init(kind, position, Type.Void(), null, children)
-    }
-
-    init(kind:Int, position:Position, payload:Object?, children:ListView<IRNode>) {
-        init(kind, position, Type.Void(), payload, children)
-    }
-
-    init(kind:Int, position:Position, type:Type) {
-        init(kind, position, type, null, null)
-    }
-
-    init(kind:Int, position:Position, type:Type, payload:UInt64) {
-        init(kind, position, type, payload, null)
-    }
-
-    init(kind:Int, position:Position, type:Type, payload:Real64) {
-        init(kind, position, type, payload, null)
-    }
-
-    init(kind:Int, position:Position, type:Type, payload:String) {
-        init(kind, position, type, payload, null)
-    }
-
-    init(kind:Int, position:Position, type:Type, payload:Bit) {
-        init(kind, position, type, payload, null)
-    }
-
-    init(kind:Int, position:Position, type:Type, payload:Type) {
-        init(kind, position, type, payload, null)
-    }
-
-    init(kind:Int, position:Position, type:Type, payload:Variable) {
-        init(kind, position, type, payload, null)
-    }
-
-    init(kind:Int, position:Position, type:Type, payload:Symbol) {
-        init(kind, position, type, payload, null)
-    }
-
-    init(kind:Int, position:Position, type:Type, payload:Pair<ChoiceEntry, Int>) {
-        init(kind, position, type, payload, null)
-    }
-
-    init(kind:Int, position:Position, type:Type, children:ListView<IRNode>) {
-        init(kind, position, type, null, children)
-    }
-
-    init(kind:Int, position:Position, type:Type, payload:Object?, children:ListView<IRNode>?) {
-        self.kind := kind
-        self.position := position
-        self.type := type
-        self.payload := payload
-        if children != null {
-            self.children := ImmutableArray<IRNode>(children)
+    function type():Type {
+        match self {
+            when BINARY(_, type, _, _, _):
+                return type
+            when BIT(_, type, _):
+                return type
+            when CALL(_, type, _, _):
+                return type
+            when CAST(_, _, type, _):
+                return type
+            when CHOICE_ENTRY_REFERENCE(_, ce):
+                return Type.Invalid()
+            when CHOICE_FIELD_REFERENCE(_, _, ce, field):
+                return ce.fields[field]
+            when CONSTRUCT(_, type, _):
+                return type
+            when CONSTRUCTED_OBJECT(_, type):
+                return type
+            when FIELD_REFERENCE(_, type, _, _):
+                return type
+            when INT(_, type, _):
+                return type
+            when IS_NONNULL:
+                return Type.Bit()
+            when IS_NULL:
+                return Type.Bit()
+            when METHOD_REFERENCE(_, ref, _):
+                return Type("<method>", Type.Kind.INVALID, Position(), true)
+            when NEGATED_INT(_, type, _):
+                return type
+            when NULL(_, type):
+                return type
+            when PREFIX(_, _, base):
+                return base.type()
+            when REAL(_, type, _):
+                return type
+            when REUSED_VALUE(_, type, id):
+                return type
+            when REUSED_VALUE_DEFINITION(base, _):
+                return base.type()
+            when SELF(_, type):
+                return type
+            when STRING:
+                return Type.StringType()
+            when SUPER(_, type):
+                return type
+            when TERNARY(_, _, ifTrue, ifFalse):
+                assert ifTrue.type() = ifFalse.type()
+                return ifTrue.type()
+            when TYPE_REFERENCE:
+                return Type.Class()
+            when UNRESOLVED_IDENTIFIER:
+                return Type.Invalid()
+            when UNRESOLVED_INDEX(_, type, _, _):
+                return type
+            when UNRESOLVED_METHOD_CALL(_, type, _, _, _):
+                return type
+            when UNRESOLVED_METHOD_REFERENCE:
+                return Type.Invalid()
+            when UNRESOLVED_RANGE:
+                return Type.Invalid()
+            when VARIABLE_REFERENCE(_, variable):
+                return variable.type
+            otherwise:
+                assert false
         }
-        else {
-            self.children := null
+    }
+
+    function position():Position {
+        match self {
+            when ASSERT(position, _, _):
+                return position
+            when BINARY(position, _, _, _, _):
+                return position
+            when BIT(position, _, _):
+                return position
+            when BLOCK(position, _):
+                return position
+            when BREAK(position, _):
+                return position
+            when CALL(position, _, _, _):
+                return position
+            when CAST(position, _, _, _):
+                return position
+            when CHOICE_ENTRY_REFERENCE(position, _):
+                return position
+            when CHOICE_FIELD_REFERENCE(position, _, _, _):
+                return position
+            when CONSTRUCT(position, _, _):
+                return position
+            when CONSTRUCTED_OBJECT(position, _):
+                return position
+            when CONTINUE(position, _):
+                return position
+            when DECLARATION(target, _):
+                return target.position()
+            when DO(position, _, _, _):
+                return position
+            when FIELD_REFERENCE(position, _, _, _):
+                return position
+            when IF(position, _, _, _):
+                return position
+            when INT(position, _, _):
+                return position
+            when IS_NONNULL(position, _):
+                return position
+            when IS_NULL(position, _):
+                return position
+            when LOOP(position, _, _):
+                return position
+            when MATCH(position, _, _, _):
+                return position
+            when METHOD_REFERENCE(position, _, _):
+                return position
+            when NEGATED_INT(position, _, _):
+                return position
+            when NULL(position, _):
+                return position
+            when PREFIX(position, _, _):
+                return position
+            when RANGE_FOR(position, _, _, _, _):
+                return position
+            when REAL(position, _, _):
+                return position
+            when RETURN(position, _):
+                return position
+            when REUSED_VALUE(position, _, _):
+                return position
+            when REUSED_VALUE_DEFINITION(base, _):
+                return base.position()
+            when SELF(position, _):
+                return position
+            when STRING(position, _):
+                return position
+            when SUPER(position, _):
+                return position
+            when TERNARY(position, _, _, _):
+                return position
+            when TYPE_REFERENCE(position, _):
+                return position
+            when UNRESOLVED_IDENTIFIER(position, _):
+                return position
+            when UNRESOLVED_INDEX(position, _, _, _):
+                return position
+            when UNRESOLVED_METHOD_CALL(position, _, _, _, _):
+                return position
+            when UNRESOLVED_METHOD_REFERENCE(position, _, _):
+                return position
+            when UNRESOLVED_RANGE(position, _, _, _, _):
+                return position
+            when VAR(position, _, _):
+                return position
+            when VARIABLE_REFERENCE(position, _):
+                return position
+            when WHEN(position, _, _):
+                return position
+            when WHILE(position, _, _, _):
+                return position
+            otherwise:
+                assert false
         }
-        assert type.resolved, "node \{self}:\{position} has unresolved type"
-        assert kind != Kind.TYPE_REFERENCE | (payload != null & (payload->Type).resolved)
     }
 
     @override
     function convert():String {
-        match kind {
-            when Kind.BLOCK:
+        match self {
+            when ASSERT(_, test, msg):
+                if msg != null {
+                    return "assert \{test}, \{msg}"
+                }
+                return "assert \{test}"
+            when BINARY(_, _, left, op, right):
+                return "\{left} \{op} \{right}"
+            when BIT(_, _, bit):
+                return bit.convert()
+            when BLOCK(_, statements):
                 def result := MutableString("{\n")
-                for child in children {
-                    def c := child.convert()
-                    if c.startsWith("(") & c.endsWith(")") {
-                        result.append(c[c.next(c.start()) .. c.previous(c.end())])
-                    }
-                    else {
-                        result.append(child)
-                    }
-                    result.append("\n")
+                for s in statements {
+                    result.append(s + "\n")
                 }
                 result.append("}")
                 return result.finish()
-            when Kind.METHOD_REFERENCE:
-                if children.get_count() > 0 {
-                    return "\{children[0]}.\{payload->MethodRef.value.name}"
+            when BREAK(_, label):
+                if label != null {
+                    return "break \{label}"
                 }
-                return payload->MethodRef.value.name
-            when Kind.UNRESOLVED_METHOD_REFERENCE:
-                if children.get_count() = 1 {
-                    return "\{children[0]}.\{payload->ListView<MethodRef>[0].value.name}"
+                return "break"
+            when CALL(_, _, m, args):
+                return "\{m.value.name}(\{args.join()})"
+            when CAST(_, value, type, _):
+                return "\{value}->\{type}"
+            when CHOICE_ENTRY_REFERENCE(_, ce):
+                return ce.convert()
+            when CHOICE_FIELD_REFERENCE(_, base, ce, field):
+                return "\{base}.\{ce}[\{field}]"
+            when CONSTRUCT(_, type, call):
+                match call {
+                    when CALL(_, _, _, args):
+                        return "\{type}(\{args.join()})"
+                    otherwise:
+                        assert false
                 }
-                assert children.get_count() = 0
-                return payload->ListView<MethodRef>[0].value.name
-            when Kind.TYPE_REFERENCE:
-                return payload.convert()
-            when Kind.INT:
-                return payload.convert()
-            when Kind.NEGATED_INT:
-                return "-" + payload.convert()
-            when Kind.BIT:
-                return payload.convert()
-            when Kind.CONSTRUCT:
-                return "\{type}(\{children[0].children.join(", ")})"
-            when Kind.CONSTRUCTED_OBJECT:
-                return "-* constructed object: \{type} *-"
-            when Kind.CALL:
-                return "\{payload->MethodRef.value.name}(\{children.join(", ")})"
-            when Kind.UNRESOLVED_METHOD_CALL:
-                return "\{children[0].payload}(\{children[1..].join(", ")})"
-            when Kind.UNRESOLVED_INDEX:
-                return "unresolved index<\{children[0]}[\{children[1..].join(", ")}]"
-            when Kind.CAST:
-                return "(\{children[0]}->\{type})"
-            when Kind.VARIABLE_REFERENCE:
-                return "\{payload->Variable}"
-            when Kind.BINARY:
-                return "(\{children[0]} \{Compiler.operatorName(payload->Token.Kind)} " +
-                        "\{children[1]})"
-            when Kind.SELF:
-                return "self"
-            when Kind.REUSED_VALUE_DEFINITION:
-                return "\{children[0]}-* ReusedValueDefinition: \{payload} *-"
-            when Kind.REUSED_VALUE:
-                return "-* ReusedValue: \{payload} *-"
-            when Kind.FIELD_REFERENCE:
-                return "\{children[0]}.\{payload->FieldDecl.name}"
-            when Kind.NULL:
+            when CONSTRUCTED_OBJECT(_, Type):
+                return "-* constructed object *-"
+            when CONTINUE(_, label):
+                if label != null {
+                    return "continue \{label}"
+                }
+                return "continue"
+            when DECLARATION(target, value):
+                if value != null {
+                    return "\{target} := \{value}"
+                }
+                return target.convert()
+            when DO(_, label, statements, test):
+                def result := MutableString()
+                if label != null {
+                    result.append("\{label}: ")
+                }
+                result.append("do {\n")
+                for s in statements {
+                    result.append(s + "\n")
+                }
+                result.append("} while \{test}")
+                return result.finish()
+            when FIELD_REFERENCE(_, _, base, field):
+                return "\{base}.\{field.name}"
+            when IF(_, test, ifTrue, ifFalse):
+                def result := MutableString("if \{test} {")
+                for s in ifTrue {
+                    result.append(s + "\n")
+                }
+                result.append("}")
+                if ifFalse != null {
+                    result.append("\nelse \{ifFalse}")
+                }
+                return result.finish()
+            when INT(_, _, value):
+                return value.convert()
+            when IS_NONNULL(_, value):
+                return "(\{value} != null)"
+            when IS_NULL(_, value):
+                return "(\{value} = null)"
+            when LOOP(_, label, statements):
+                def result := MutableString()
+                if label != null {
+                    result.append("\{label}: ")
+                }
+                result.append("loop {\n")
+                for s in statements {
+                    result.append(s + "\n")
+                }
+                result.append("}")
+                return result.finish()
+            when MATCH(_, value, whens, other):
+                def result := MutableString("match \{value} {\n")
+                for w in whens {
+                    result.append(w + "\n")
+                }
+                if other != null {
+                    result.append("otherwise:\n")
+                    for s in other {
+                        result.append(s + "\n")
+                    }
+                }
+                result.append("}")
+                return result.finish()
+            when METHOD_REFERENCE(_, target, m):
+                return "\{target}.\{m.value.name}"
+            when NEGATED_INT(_, _, value):
+                return "-" + value
+            when NULL:
                 return "null"
-            when Kind.DECLARATION:
-                if children.get_count() = 1 {
-                    return children[0].convert()
+            when PREFIX(_, op, base):
+                return "\{op}\{base}"
+            when RANGE_FOR(_, label, target, list, statements):
+                def result := MutableString()
+                if label != null {
+                    result.append("\{label}: ")
                 }
-                return "\{children[0]} := \{children[1]}"
-            when Kind.DEF:
-                return "def \{children.join(", ")}"
-            when Kind.VAR:
-                return "var \{children.join(", ")}"
-            when Kind.RETURN:
-                return "return \{children.join()}"
-            when Kind.UNRESOLVED_RANGE:
-                def result := MutableString("unresolved_range<")
-                if children[0].kind != IRNode.Kind.NULL {
-                    result.append(children[0])
+                result.append("for \{target} in \{list} {\n")
+                for s in statements {
+                    result.append(s + "\n")
                 }
-                if payload->Bit {
+                result.append("}")
+                return result.finish()
+            when REAL(_, _, value):
+                return value.convert()
+            when RETURN(_, value):
+                if value != null {
+                    return "return \{value}"
+                }
+                return "return"
+            when REUSED_VALUE(_, _, id):
+                return "-* reused value: \{id} *-"
+            when REUSED_VALUE_DEFINITION(base, id):
+                return "-* reused value definition: \{id} := \{base} *-"
+            when SELF:
+                return "self"
+            when STRING(_, str):
+                return str
+            when SUPER:
+                return "super"
+            when TERNARY(_, test, ifTrue, ifFalse):
+                return "(\{test} ? \{ifTrue} : \{ifFalse})"
+            when TYPE_REFERENCE(_, type):
+                return type.convert()
+            when UNRESOLVED_IDENTIFIER(_, name):
+                return name
+            when UNRESOLVED_INDEX(_, _, base, args):
+                return "\{base}[\{args.join()}]"
+            when UNRESOLVED_METHOD_CALL(_, _, target, methods, args):
+                return "\{target}.\{methods[0].value.name}(\{args.join()})"
+            when UNRESOLVED_METHOD_REFERENCE(_, target, methods):
+                return "\{target}.\{methods[0].value.name}"
+            when UNRESOLVED_RANGE(_, start, end, inclusive, step):
+                def result := MutableString()
+                if start != null {
+                    result.append(start)
+                }
+                if inclusive {
                     result.append("...")
                 }
                 else {
                     result.append("..")
                 }
-                if children[1].kind != IRNode.Kind.NULL {
-                    result.append(children[1])
+                if end != null {
+                    result.append(end)
                 }
-                if children.get_count() > 2 {
-                    result.append(" by ")
-                    result.append(children[2])
+                if step != null {
+                    result.append(" by \{step}")
                 }
-                result.append(">")
                 return result.finish()
-            when Kind.STRING:
-                return "\"\{payload}\""
-            when Kind.TERNARY:
-                return "(\{children[0]} ? \{children[1]} : \{children[2]})"
-            when Kind.CHOICE_ENTRY_REFERENCE:
-                return payload.convert()
-            when Kind.CHOICE_FIELD_REFERENCE:
-                def pair := payload->Pair<ChoiceEntry, Int>
-                return "\{pair.first}[\{pair.second}]"
+            when VAR(_, kind, decls):
+                def result := MutableString()
+                match kind {
+                    when Variable.Kind.VAR:      result.append("var ")
+                    when Variable.Kind.DEF:      result.append("def ")
+                    when Variable.Kind.CONSTANT: result.append("constant ")
+                    when Variable.Kind.PROPERTY: result.append("property ")
+                }
+                result.append(decls.join())
+                return result.finish()
+            when VARIABLE_REFERENCE(_, variable):
+                return variable.name
+            when WHEN(_, tests, statements):
+                return "when \{tests.join()}:\n\{statements.join("\n")}"
+            when WHILE(_, label, test, statements):
+                def result := MutableString()
+                if label != null {
+                    result.append("\{label}: ")
+                }
+                result.append("while \{test} {\n")
+                for s in statements {
+                    result.append(s + "\n")
+                }
+                result.append("}")
+                return result.finish()
             otherwise:
-                return "<IRNode:\{kind}>"
+                assert false
         }
     }
 }

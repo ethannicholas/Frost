@@ -271,7 +271,7 @@ class HCodeGenerator : CodeGenerator {
     }
 
     @override
-    method write(m:MethodDecl, body:IRNode) {
+    method write(m:MethodDecl, body:ImmutableArray<IRNode>) {
         writeDeclaration(m)
     }
 

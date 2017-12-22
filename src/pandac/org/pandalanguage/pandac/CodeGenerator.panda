@@ -23,7 +23,7 @@ interface CodeGenerator {
     ================================================================================================
     Writes a method with a compiled body,
     ================================================================================================
-    method write(m:MethodDecl, body:IRNode)
+    method write(m:MethodDecl, body:ImmutableArray<IRNode>)
 
     ================================================================================================
     Informs the code generator that this class is complete and no more methods will be written.

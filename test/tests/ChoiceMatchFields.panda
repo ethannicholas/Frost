@@ -26,7 +26,7 @@ choice Expression {
             when MUL(a, b): return a.evaluate() * b.evaluate()
             when DIV(a, b): return a.evaluate() // b.evaluate()
             when NEGATE(v): return -v.evaluate()
-        }        
+        }
     }
 
     @class
