@@ -2,11 +2,10 @@ package org.pandalanguage.pandac
 
 @final
 class SymbolTable {
-    @private
-    def compiler:Compiler
+    def symbols := HashMap<String, Symbol>()
 
     @private
-    def symbols := HashMap<String, Symbol>()
+    def compiler:Compiler
 
     @private
     def merged := HashMap<String, Symbol>()

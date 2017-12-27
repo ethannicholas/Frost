@@ -8,6 +8,7 @@
 #include "panda/core/Int64.h"
 #include "panda/core/Range.LTpanda/core/Int64.GT.h"
 #include "panda/core/Bit.h"
+#include "panda/core/Panda.h"
 #include "panda/core/Range.LTpanda/core/Int64.Q.GT.h"
 #include "panda/core/SteppedRange.LTpanda/core/Int64.Q.Cpanda/core/Int64.GT.h"
 #include "panda/collections/Array.h"
@@ -36,15 +37,15 @@ panda$collections$ImmutableArray$class_type panda$collections$ImmutableArray$cla
 
 typedef panda$core$Int64 (*$fn3)(panda$collections$CollectionView*);
 typedef panda$core$Object* (*$fn21)(panda$collections$ListView*, panda$core$Int64);
-typedef panda$core$String* (*$fn117)(panda$core$Object*);
-typedef panda$collections$Iterator* (*$fn150)(panda$collections$Iterable*);
-typedef panda$core$Bit (*$fn156)(panda$collections$Iterator*);
-typedef panda$core$Object* (*$fn162)(panda$collections$Iterator*);
+typedef panda$core$String* (*$fn118)(panda$core$Object*);
+typedef panda$collections$Iterator* (*$fn154)(panda$collections$Iterable*);
+typedef panda$core$Bit (*$fn160)(panda$collections$Iterator*);
+typedef panda$core$Object* (*$fn166)(panda$collections$Iterator*);
 
-static panda$core$String $s109 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2c\x20", 2, 14677, NULL };
-static panda$core$String $s112 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
-static panda$core$String $s146 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
-static panda$core$String $s164 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2c\x20", 2, 14677, NULL };
+static panda$core$String $s110 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2c\x20", 2, 14677, NULL };
+static panda$core$String $s113 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
+static panda$core$String $s149 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
+static panda$core$String $s168 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2c\x20", 2, 14677, NULL };
 
 void panda$collections$ImmutableArray$init(panda$collections$ImmutableArray* self) {
     self->count = ((panda$core$Int64) { 0 });
@@ -58,7 +59,7 @@ void panda$collections$ImmutableArray$init$panda$collections$ListView$LTpanda$co
     $fn3 $tmp2 = $tmp1->methods[0];
     panda$core$Int64 $tmp4 = $tmp2(((panda$collections$CollectionView*) p_data));
     self->count = $tmp4;
-    self->data = ((panda$core$Object**) malloc(self->count.value * 12));
+    self->data = ((panda$core$Object**) pandaAlloc(self->count.value * 12));
     panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp5, ((panda$core$Int64) { 0 }), self->count, ((panda$core$Bit) { false }));
     int64_t $tmp7 = $tmp5.min.value;
     panda$core$Int64 i6 = { $tmp7 };
@@ -71,13 +72,17 @@ void panda$collections$ImmutableArray$init$panda$collections$ListView$LTpanda$co
     if ($tmp7 < $tmp9) goto $l11; else goto $l13;
     $l11:;
     {
-        ITable* $tmp19 = p_data->$class->itable;
-        while ($tmp19->$class != (panda$core$Class*) &panda$collections$ListView$class) {
-            $tmp19 = $tmp19->next;
+        {
+            panda$core$Panda$unref$panda$core$Object$R$panda$core$Object(self->data[i6.value]);
+            ITable* $tmp19 = p_data->$class->itable;
+            while ($tmp19->$class != (panda$core$Class*) &panda$collections$ListView$class) {
+                $tmp19 = $tmp19->next;
+            }
+            $fn21 $tmp20 = $tmp19->methods[0];
+            panda$core$Object* $tmp22 = $tmp20(p_data, i6);
+            panda$core$Panda$ref$panda$core$Object$R$panda$core$Object($tmp22);
+            self->data[i6.value] = $tmp22;
         }
-        $fn21 $tmp20 = $tmp19->methods[0];
-        panda$core$Object* $tmp22 = $tmp20(p_data, i6);
-        self->data[i6.value] = $tmp22;
     }
     $l14:;
     int64_t $tmp24 = $tmp9 - i6.value;
@@ -96,7 +101,7 @@ void panda$collections$ImmutableArray$init$panda$unsafe$Pointer$LTpanda$collecti
     self->count = p_count;
 }
 void panda$collections$ImmutableArray$cleanup(panda$collections$ImmutableArray* self) {
-    free(self->data);
+    pandaFree(self->data);
 }
 panda$core$Object* panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(panda$collections$ImmutableArray* self, panda$core$Int64 p_index) {
     panda$core$Bit $tmp30 = panda$core$Int64$$GE$panda$core$Int64$R$panda$core$Bit(p_index, ((panda$core$Int64) { 0 }));
@@ -126,7 +131,7 @@ panda$collections$ImmutableArray* panda$collections$ImmutableArray$$IDX$panda$co
     }
     panda$core$Int64 $tmp37 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(max34, p_r.min);
     count36 = $tmp37;
-    result38 = ((panda$core$Object**) malloc(count36.value * 12));
+    result38 = ((panda$core$Object**) pandaAlloc(count36.value * 12));
     panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp39, ((panda$core$Int64) { 0 }), count36, ((panda$core$Bit) { false }));
     int64_t $tmp41 = $tmp39.min.value;
     panda$core$Int64 i40 = { $tmp41 };
@@ -139,9 +144,13 @@ panda$collections$ImmutableArray* panda$collections$ImmutableArray$$IDX$panda$co
     if ($tmp41 < $tmp43) goto $l45; else goto $l47;
     $l45:;
     {
-        panda$core$Int64 $tmp53 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(p_r.min, i40);
-        panda$core$Object* $tmp54 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(self, $tmp53);
-        result38[i40.value] = $tmp54;
+        {
+            panda$core$Panda$unref$panda$core$Object$R$panda$core$Object(result38[i40.value]);
+            panda$core$Int64 $tmp53 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(p_r.min, i40);
+            panda$core$Object* $tmp54 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(self, $tmp53);
+            panda$core$Panda$ref$panda$core$Object$R$panda$core$Object($tmp54);
+            result38[i40.value] = $tmp54;
+        }
     }
     $l48:;
     int64_t $tmp56 = $tmp43 - i40.value;
@@ -164,6 +173,7 @@ panda$collections$ImmutableArray* panda$collections$ImmutableArray$$IDX$panda$co
     panda$core$Int64 start63;
     panda$core$Int64 end64;
     panda$core$Range$LTpanda$core$Int64$GT $tmp67;
+    memset(&start63, 0, sizeof(start63));
     if (((panda$core$Bit) { p_r.min.nonnull }).value) {
     {
         start63 = ((panda$core$Int64) p_r.min.value);
@@ -174,6 +184,7 @@ panda$collections$ImmutableArray* panda$collections$ImmutableArray$$IDX$panda$co
         start63 = ((panda$core$Int64) { 0 });
     }
     }
+    memset(&end64, 0, sizeof(end64));
     if (((panda$core$Bit) { p_r.max.nonnull }).value) {
     {
         end64 = ((panda$core$Int64) p_r.max.value);
@@ -201,6 +212,7 @@ panda$collections$ImmutableArray* panda$collections$ImmutableArray$$IDX$panda$co
     panda$core$Int64 end74;
     panda$collections$Array* result77;
     step69 = p_r.step;
+    memset(&current70, 0, sizeof(current70));
     if (((panda$core$Bit) { p_r.start.nonnull }).value) {
     {
         current70 = ((panda$core$Int64) p_r.start.value);
@@ -221,6 +233,7 @@ panda$collections$ImmutableArray* panda$collections$ImmutableArray$$IDX$panda$co
     }
     }
     }
+    memset(&end74, 0, sizeof(end74));
     if (((panda$core$Bit) { p_r.end.nonnull }).value) {
     {
         end74 = ((panda$core$Int64) p_r.end.value);
@@ -244,177 +257,185 @@ panda$collections$ImmutableArray* panda$collections$ImmutableArray$$IDX$panda$co
     $tmp78->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp78->refCount.value = 1;
     panda$collections$Array$init($tmp78);
-    result77 = $tmp78;
-    panda$core$Bit $tmp80 = panda$core$Int64$$GT$panda$core$Int64$R$panda$core$Bit(p_r.step, ((panda$core$Int64) { 0 }));
-    if ($tmp80.value) {
+    panda$core$Object* $tmp80 = panda$core$Panda$ref$panda$core$Object$R$panda$core$Object(((panda$core$Object*) $tmp78));
+    result77 = ((panda$collections$Array*) $tmp80);
+    panda$core$Bit $tmp81 = panda$core$Int64$$GT$panda$core$Int64$R$panda$core$Bit(p_r.step, ((panda$core$Int64) { 0 }));
+    if ($tmp81.value) {
     {
-        $l81:;
-        panda$core$Bit $tmp83 = panda$core$Int64$$LT$panda$core$Int64$R$panda$core$Bit(current70, end74);
-        if (!$tmp83.value) goto $l82;
-        {
-            panda$core$Object* $tmp84 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(self, current70);
-            panda$collections$Array$add$panda$collections$Array$T(result77, $tmp84);
-            panda$core$Int64 $tmp85 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(current70, step69);
-            current70 = $tmp85;
-        }
-        goto $l81;
         $l82:;
+        panda$core$Bit $tmp84 = panda$core$Int64$$LT$panda$core$Int64$R$panda$core$Bit(current70, end74);
+        if (!$tmp84.value) goto $l83;
+        {
+            panda$core$Object* $tmp85 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(self, current70);
+            panda$collections$Array$add$panda$collections$Array$T(result77, $tmp85);
+            panda$core$Int64 $tmp86 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(current70, step69);
+            current70 = $tmp86;
+        }
+        goto $l82;
+        $l83:;
     }
     }
     else {
     {
-        panda$core$Bit $tmp86 = panda$core$Int64$$LT$panda$core$Int64$R$panda$core$Bit(p_r.step, ((panda$core$Int64) { 0 }));
-        PANDA_ASSERT($tmp86.value);
-        $l87:;
-        panda$core$Bit $tmp89 = panda$core$Int64$$GT$panda$core$Int64$R$panda$core$Bit(current70, end74);
-        if (!$tmp89.value) goto $l88;
-        {
-            panda$core$Object* $tmp90 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(self, current70);
-            panda$collections$Array$add$panda$collections$Array$T(result77, $tmp90);
-            panda$core$Int64 $tmp91 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(current70, step69);
-            current70 = $tmp91;
-        }
-        goto $l87;
+        panda$core$Bit $tmp87 = panda$core$Int64$$LT$panda$core$Int64$R$panda$core$Bit(p_r.step, ((panda$core$Int64) { 0 }));
+        PANDA_ASSERT($tmp87.value);
         $l88:;
+        panda$core$Bit $tmp90 = panda$core$Int64$$GT$panda$core$Int64$R$panda$core$Bit(current70, end74);
+        if (!$tmp90.value) goto $l89;
+        {
+            panda$core$Object* $tmp91 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(self, current70);
+            panda$collections$Array$add$panda$collections$Array$T(result77, $tmp91);
+            panda$core$Int64 $tmp92 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(current70, step69);
+            current70 = $tmp92;
+        }
+        goto $l88;
+        $l89:;
     }
     }
-    bool $tmp94 = p_r.inclusive.value;
-    if ($tmp94) goto $l95;
-    $tmp94 = ((panda$core$Bit) { !p_r.end.nonnull }).value;
-    $l95:;
-    panda$core$Bit $tmp96 = { $tmp94 };
-    bool $tmp93 = $tmp96.value;
-    if (!$tmp93) goto $l97;
-    panda$core$Bit $tmp98 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(current70, end74);
-    $tmp93 = $tmp98.value;
-    $l97:;
-    panda$core$Bit $tmp99 = { $tmp93 };
-    bool $tmp92 = $tmp99.value;
-    if (!$tmp92) goto $l100;
-    panda$core$Int64 $tmp101 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(self);
-    panda$core$Bit $tmp102 = panda$core$Int64$$LT$panda$core$Int64$R$panda$core$Bit(end74, $tmp101);
-    $tmp92 = $tmp102.value;
-    $l100:;
-    panda$core$Bit $tmp103 = { $tmp92 };
-    if ($tmp103.value) {
+    bool $tmp95 = p_r.inclusive.value;
+    if ($tmp95) goto $l96;
+    $tmp95 = ((panda$core$Bit) { !p_r.end.nonnull }).value;
+    $l96:;
+    panda$core$Bit $tmp97 = { $tmp95 };
+    bool $tmp94 = $tmp97.value;
+    if (!$tmp94) goto $l98;
+    panda$core$Bit $tmp99 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(current70, end74);
+    $tmp94 = $tmp99.value;
+    $l98:;
+    panda$core$Bit $tmp100 = { $tmp94 };
+    bool $tmp93 = $tmp100.value;
+    if (!$tmp93) goto $l101;
+    panda$core$Int64 $tmp102 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(self);
+    panda$core$Bit $tmp103 = panda$core$Int64$$LT$panda$core$Int64$R$panda$core$Bit(end74, $tmp102);
+    $tmp93 = $tmp103.value;
+    $l101:;
+    panda$core$Bit $tmp104 = { $tmp93 };
+    if ($tmp104.value) {
     {
-        panda$core$Object* $tmp104 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(self, current70);
-        panda$collections$Array$add$panda$collections$Array$T(result77, $tmp104);
+        panda$core$Object* $tmp105 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(self, current70);
+        panda$collections$Array$add$panda$collections$Array$T(result77, $tmp105);
     }
     }
-    panda$collections$ImmutableArray* $tmp105 = (panda$collections$ImmutableArray*) malloc(40);
-    $tmp105->$class = (panda$core$Class*) &panda$collections$ImmutableArray$class;
-    $tmp105->refCount.value = 1;
-    panda$collections$ImmutableArray$init$panda$collections$ListView$LTpanda$collections$ImmutableArray$T$GT($tmp105, ((panda$collections$ListView*) result77));
-    return $tmp105;
+    panda$collections$ImmutableArray* $tmp106 = (panda$collections$ImmutableArray*) malloc(40);
+    $tmp106->$class = (panda$core$Class*) &panda$collections$ImmutableArray$class;
+    $tmp106->refCount.value = 1;
+    panda$collections$ImmutableArray$init$panda$collections$ListView$LTpanda$collections$ImmutableArray$T$GT($tmp106, ((panda$collections$ListView*) result77));
+    return $tmp106;
 }
 panda$collections$Iterator* panda$collections$ImmutableArray$iterator$R$panda$collections$Iterator$LTpanda$collections$ImmutableArray$T$GT(panda$collections$ImmutableArray* self) {
-    panda$collections$ImmutableArray$ImmutableArrayIterator* $tmp107 = (panda$collections$ImmutableArray$ImmutableArrayIterator*) malloc(32);
-    $tmp107->$class = (panda$core$Class*) &panda$collections$ImmutableArray$ImmutableArrayIterator$class;
-    $tmp107->refCount.value = 1;
-    panda$collections$ImmutableArray$ImmutableArrayIterator$init$panda$collections$ImmutableArray$LTpanda$collections$ImmutableArray$ImmutableArrayIterator$T$GT($tmp107, self);
-    return ((panda$collections$Iterator*) $tmp107);
+    panda$collections$ImmutableArray$ImmutableArrayIterator* $tmp108 = (panda$collections$ImmutableArray$ImmutableArrayIterator*) malloc(32);
+    $tmp108->$class = (panda$core$Class*) &panda$collections$ImmutableArray$ImmutableArrayIterator$class;
+    $tmp108->refCount.value = 1;
+    panda$collections$ImmutableArray$ImmutableArrayIterator$init$panda$collections$ImmutableArray$LTpanda$collections$ImmutableArray$ImmutableArrayIterator$T$GT($tmp108, self);
+    return ((panda$collections$Iterator*) $tmp108);
 }
 panda$core$String* panda$collections$ImmutableArray$join$R$panda$core$String(panda$collections$ImmutableArray* self) {
-    panda$core$String* $tmp110 = panda$collections$ImmutableArray$join$panda$core$String$R$panda$core$String(self, &$s109);
-    return $tmp110;
+    panda$core$String* $tmp111 = panda$collections$ImmutableArray$join$panda$core$String$R$panda$core$String(self, &$s110);
+    return $tmp111;
 }
 panda$core$String* panda$collections$ImmutableArray$join$panda$core$String$R$panda$core$String(panda$collections$ImmutableArray* self, panda$core$String* p_separator) {
-    panda$core$MutableString* result113;
-    panda$core$Range$LTpanda$core$Int64$GT $tmp119;
-    panda$core$Bit $tmp111 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(self->count, ((panda$core$Int64) { 0 }));
-    if ($tmp111.value) {
+    panda$core$MutableString* result114;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp121;
+    panda$core$Bit $tmp112 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(self->count, ((panda$core$Int64) { 0 }));
+    if ($tmp112.value) {
     {
-        return &$s112;
+        return &$s113;
     }
     }
-    panda$core$MutableString* $tmp114 = (panda$core$MutableString*) malloc(48);
-    $tmp114->$class = (panda$core$Class*) &panda$core$MutableString$class;
-    $tmp114->refCount.value = 1;
-    panda$core$Object* $tmp116 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(self, ((panda$core$Int64) { 0 }));
-    panda$core$String* $tmp118 = (($fn117) $tmp116->$class->vtable[0])($tmp116);
-    panda$core$MutableString$init$panda$core$String($tmp114, $tmp118);
-    result113 = $tmp114;
-    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp119, ((panda$core$Int64) { 1 }), self->count, ((panda$core$Bit) { false }));
-    int64_t $tmp121 = $tmp119.min.value;
-    panda$core$Int64 i120 = { $tmp121 };
-    int64_t $tmp123 = $tmp119.max.value;
-    bool $tmp124 = $tmp119.inclusive.value;
-    if ($tmp124) goto $l131; else goto $l132;
-    $l131:;
-    if ($tmp121 <= $tmp123) goto $l125; else goto $l127;
-    $l132:;
-    if ($tmp121 < $tmp123) goto $l125; else goto $l127;
-    $l125:;
-    {
-        panda$core$MutableString$append$panda$core$String(result113, p_separator);
-        panda$core$Object* $tmp133 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(self, i120);
-        panda$core$MutableString$append$panda$core$Object(result113, $tmp133);
-    }
-    $l128:;
-    int64_t $tmp135 = $tmp123 - i120.value;
-    if ($tmp124) goto $l136; else goto $l137;
-    $l136:;
-    if ((uint64_t) $tmp135 >= 1) goto $l134; else goto $l127;
-    $l137:;
-    if ((uint64_t) $tmp135 > 1) goto $l134; else goto $l127;
+    panda$core$MutableString* $tmp115 = (panda$core$MutableString*) malloc(48);
+    $tmp115->$class = (panda$core$Class*) &panda$core$MutableString$class;
+    $tmp115->refCount.value = 1;
+    panda$core$Object* $tmp117 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(self, ((panda$core$Int64) { 0 }));
+    panda$core$String* $tmp119 = (($fn118) $tmp117->$class->vtable[0])($tmp117);
+    panda$core$MutableString$init$panda$core$String($tmp115, $tmp119);
+    panda$core$Object* $tmp120 = panda$core$Panda$ref$panda$core$Object$R$panda$core$Object(((panda$core$Object*) $tmp115));
+    result114 = ((panda$core$MutableString*) $tmp120);
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp121, ((panda$core$Int64) { 1 }), self->count, ((panda$core$Bit) { false }));
+    int64_t $tmp123 = $tmp121.min.value;
+    panda$core$Int64 i122 = { $tmp123 };
+    int64_t $tmp125 = $tmp121.max.value;
+    bool $tmp126 = $tmp121.inclusive.value;
+    if ($tmp126) goto $l133; else goto $l134;
+    $l133:;
+    if ($tmp123 <= $tmp125) goto $l127; else goto $l129;
     $l134:;
-    i120.value += 1;
-    goto $l125;
+    if ($tmp123 < $tmp125) goto $l127; else goto $l129;
     $l127:;
-    panda$core$String* $tmp140 = panda$core$MutableString$finish$R$panda$core$String(result113);
-    return $tmp140;
+    {
+        panda$core$MutableString$append$panda$core$String(result114, p_separator);
+        panda$core$Object* $tmp135 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(self, i122);
+        panda$core$MutableString$append$panda$core$Object(result114, $tmp135);
+    }
+    $l130:;
+    int64_t $tmp137 = $tmp125 - i122.value;
+    if ($tmp126) goto $l138; else goto $l139;
+    $l138:;
+    if ((uint64_t) $tmp137 >= 1) goto $l136; else goto $l129;
+    $l139:;
+    if ((uint64_t) $tmp137 > 1) goto $l136; else goto $l129;
+    $l136:;
+    i122.value += 1;
+    goto $l127;
+    $l129:;
+    panda$core$String* $tmp142 = panda$core$MutableString$finish$R$panda$core$String(result114);
+    return $tmp142;
 }
 panda$core$String* panda$collections$ImmutableArray$convert$R$panda$core$String(panda$collections$ImmutableArray* self) {
-    panda$core$MutableString* result141;
-    panda$core$Char8 $tmp144;
-    panda$core$String* separator145;
-    panda$collections$Iterator* v$Iter147;
-    panda$core$Object* v159;
-    panda$core$Char8 $tmp165;
-    panda$core$MutableString* $tmp142 = (panda$core$MutableString*) malloc(48);
-    $tmp142->$class = (panda$core$Class*) &panda$core$MutableString$class;
-    $tmp142->refCount.value = 1;
-    panda$core$MutableString$init($tmp142);
-    result141 = $tmp142;
-    panda$core$Char8$init$panda$core$UInt8(&$tmp144, ((panda$core$UInt8) { 91 }));
-    panda$core$MutableString$append$panda$core$Char8(result141, $tmp144);
-    separator145 = &$s146;
+    panda$core$MutableString* result143;
+    panda$core$Char8 $tmp147;
+    panda$core$String* separator148;
+    panda$collections$Iterator* v$Iter151;
+    panda$core$Object* v163;
+    panda$core$Char8 $tmp170;
+    panda$core$MutableString* $tmp144 = (panda$core$MutableString*) malloc(48);
+    $tmp144->$class = (panda$core$Class*) &panda$core$MutableString$class;
+    $tmp144->refCount.value = 1;
+    panda$core$MutableString$init($tmp144);
+    panda$core$Object* $tmp146 = panda$core$Panda$ref$panda$core$Object$R$panda$core$Object(((panda$core$Object*) $tmp144));
+    result143 = ((panda$core$MutableString*) $tmp146);
+    panda$core$Char8$init$panda$core$UInt8(&$tmp147, ((panda$core$UInt8) { 91 }));
+    panda$core$MutableString$append$panda$core$Char8(result143, $tmp147);
+    panda$core$Object* $tmp150 = panda$core$Panda$ref$panda$core$Object$R$panda$core$Object(((panda$core$Object*) &$s149));
+    separator148 = ((panda$core$String*) $tmp150);
     {
-        ITable* $tmp148 = ((panda$collections$Iterable*) self)->$class->itable;
-        while ($tmp148->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
-            $tmp148 = $tmp148->next;
+        ITable* $tmp152 = ((panda$collections$Iterable*) self)->$class->itable;
+        while ($tmp152->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
+            $tmp152 = $tmp152->next;
         }
-        $fn150 $tmp149 = $tmp148->methods[0];
-        panda$collections$Iterator* $tmp151 = $tmp149(((panda$collections$Iterable*) self));
-        v$Iter147 = $tmp151;
-        $l152:;
-        ITable* $tmp154 = v$Iter147->$class->itable;
-        while ($tmp154->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-            $tmp154 = $tmp154->next;
+        $fn154 $tmp153 = $tmp152->methods[0];
+        panda$collections$Iterator* $tmp155 = $tmp153(((panda$collections$Iterable*) self));
+        v$Iter151 = $tmp155;
+        $l156:;
+        ITable* $tmp158 = v$Iter151->$class->itable;
+        while ($tmp158->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+            $tmp158 = $tmp158->next;
         }
-        $fn156 $tmp155 = $tmp154->methods[0];
-        panda$core$Bit $tmp157 = $tmp155(v$Iter147);
-        panda$core$Bit $tmp158 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp157);
-        if (!$tmp158.value) goto $l153;
+        $fn160 $tmp159 = $tmp158->methods[0];
+        panda$core$Bit $tmp161 = $tmp159(v$Iter151);
+        panda$core$Bit $tmp162 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp161);
+        if (!$tmp162.value) goto $l157;
         {
-            ITable* $tmp160 = v$Iter147->$class->itable;
-            while ($tmp160->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-                $tmp160 = $tmp160->next;
+            ITable* $tmp164 = v$Iter151->$class->itable;
+            while ($tmp164->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+                $tmp164 = $tmp164->next;
             }
-            $fn162 $tmp161 = $tmp160->methods[1];
-            panda$core$Object* $tmp163 = $tmp161(v$Iter147);
-            v159 = $tmp163;
-            panda$core$MutableString$append$panda$core$String(result141, separator145);
-            separator145 = &$s164;
-            panda$core$MutableString$append$panda$core$Object(result141, v159);
+            $fn166 $tmp165 = $tmp164->methods[1];
+            panda$core$Object* $tmp167 = $tmp165(v$Iter151);
+            v163 = $tmp167;
+            panda$core$MutableString$append$panda$core$String(result143, separator148);
+            {
+                panda$core$Panda$unref$panda$core$Object$R$panda$core$Object(((panda$core$Object*) separator148));
+                panda$core$Object* $tmp169 = panda$core$Panda$ref$panda$core$Object$R$panda$core$Object(((panda$core$Object*) &$s168));
+                separator148 = ((panda$core$String*) $tmp169);
+            }
+            panda$core$MutableString$append$panda$core$Object(result143, v163);
         }
-        goto $l152;
-        $l153:;
+        goto $l156;
+        $l157:;
     }
-    panda$core$Char8$init$panda$core$UInt8(&$tmp165, ((panda$core$UInt8) { 93 }));
-    panda$core$MutableString$append$panda$core$Char8(result141, $tmp165);
-    panda$core$String* $tmp166 = panda$core$MutableString$finish$R$panda$core$String(result141);
-    return $tmp166;
+    panda$core$Char8$init$panda$core$UInt8(&$tmp170, ((panda$core$UInt8) { 93 }));
+    panda$core$MutableString$append$panda$core$Char8(result143, $tmp170);
+    panda$core$String* $tmp171 = panda$core$MutableString$finish$R$panda$core$String(result143);
+    return $tmp171;
 }
 

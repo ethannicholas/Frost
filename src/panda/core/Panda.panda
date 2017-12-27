@@ -8,6 +8,14 @@ Contains utility methods used in the internal implementation of certain language
 class Panda {
     @class
     @external
+    method ref(o:Object):Object
+
+    @class
+    @external
+    method unref(o:Object):Object
+
+    @class
+    @external
     function toReal64(s:String):Real64
 
     @class

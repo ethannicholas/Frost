@@ -61,6 +61,8 @@ class TestRunner {
         args.add("-o")
         args.add(exe.path)
         var compiler := System.exec(cCompiler, args)
+        var compileResult := compiler.error.readFully()
+        Console.printLine(compileResult)
         if compiler.waitFor() != 0 {
             Console.printLine("C compiler error")
             return false

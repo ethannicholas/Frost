@@ -160,6 +160,10 @@ class Compiler : ErrorReporter {
         root.add(Alias(name[name.next(name.lastIndexOf("."))..], name, Position()))
     }
 
+    method isRefCounted(type:Type):Bit {
+        return type.isClass() & !isValue(getClass(type))
+    }
+
     ================================================================================================
     Attempts to locate a class with the given, possibly not-fully-qualified, class name. Returns
     null and does not report any errors on failure.
@@ -936,7 +940,7 @@ class Compiler : ErrorReporter {
                     var result := IRNode.FIELD_REFERENCE(position, f.type, finalTarget,
                             s->FieldDecl)
                     if effectiveType != result.type() {
-                        result := cast(result, position, false, effectiveType)
+                        result := cast(position, result, effectiveType, false)
                     }
                     return result
                 }
@@ -1239,7 +1243,7 @@ class Compiler : ErrorReporter {
                     return null
                 }
                 if expr.type().typeKind = Type.Kind.NULLABLE {
-                    return base + cost
+                    return base + cost - NULLABLE_TO_NONNULLABLE_CAST_COST
                 }
                 return base + cost + NONNULLABLE_TO_NULLABLE_CAST_COST
             when Type.Kind.GENERIC_PARAMETER:
@@ -1653,7 +1657,7 @@ class Compiler : ErrorReporter {
         return result
     }
 
-    method cast(node:IRNode, position:Position, isExplicit:Bit, target:Type):IRNode {
+    method cast(position:Position, node:IRNode, target:Type, isExplicit:Bit):IRNode {
         if node.type() = target {
             return node
         }
@@ -1671,7 +1675,7 @@ class Compiler : ErrorReporter {
                 }
                 def resolved := resolve(node)
                 if resolved != null {
-                    return cast(resolved, position, isExplicit, target)
+                    return cast(position, resolved, target, isExplicit)
                 }
         }
         return IRNode.CAST(position, node, target, isExplicit)
@@ -1738,7 +1742,7 @@ class Compiler : ErrorReporter {
         def finalArgs := Array<IRNode>()
         if target != null & target != IRNode.CONSTRUCTED_OBJECT &
                 !m.value.annotations.isClass() {
-            finalArgs.add(cast(target, position, false, m.owner()))
+            finalArgs.add(cast(position, target, m.owner(), false))
         }
         if m.value.methodKind = MethodDecl.Kind.INIT {
             if target = null {
@@ -1771,21 +1775,48 @@ class Compiler : ErrorReporter {
             if coerced = null {
                 return null
             }
-            coerced := cast(coerced, position, false, m.value.parameters[i].type)
+            coerced := cast(position, coerced, m.value.parameters[i].type, false)
             if coerced = null {
                 return null
             }
             finalArgs.add(coerced)
         }
-        var result:IRNode
         if m.value.owner.name = "panda.unsafe.Pointer" {
-            result := IRNode.CALL(position, m.returnType(), m, finalArgs.finish())
+            if isRefCounted(m.types[0]) {
+                match m.value.name {
+                    when "[]:=":
+                        def statements := Array<IRNode>()
+                        reusedValueCount += 1
+                        def reusedPointer := IRNode.REUSED_VALUE_DEFINITION(finalArgs[0],
+                                reusedValueCount)
+                        finalArgs[0] := IRNode.REUSED_VALUE(finalArgs[0].position(),
+                                finalArgs[0].type(), reusedValueCount)
+                        reusedValueCount += 1
+                        def reusedIndex := IRNode.REUSED_VALUE_DEFINITION(finalArgs[1],
+                                reusedValueCount)
+                        finalArgs[1] := IRNode.REUSED_VALUE(finalArgs[1].position(),
+                                finalArgs[1].type(), reusedValueCount)
+                        def idxArgs := Array<IRNode>()
+                        idxArgs.add(reusedIndex)
+                        statements.add(compilePandaCall("unref", call(reusedPointer, "[]",
+                                idxArgs)))
+                        finalArgs[2] := unwrapCast(finalArgs[2])
+                        reusedValueCount += 1
+                        def reusedValue := IRNode.REUSED_VALUE_DEFINITION(finalArgs[2],
+                                reusedValueCount)
+                        finalArgs[2] := IRNode.REUSED_VALUE(finalArgs[2].position(),
+                                finalArgs[2].type(), reusedValueCount)
+                        statements.add(compilePandaCall("ref", reusedValue))
+                        statements.add(IRNode.CALL(position, m.returnType(), m, finalArgs.finish()))
+                        return IRNode.BLOCK(position, statements.finish())
+                }
+            }
+            return IRNode.CALL(position, m.returnType(), m, finalArgs.finish())
         }
         else {
-            result := IRNode.CALL(position, m.value.returnType, m, finalArgs.finish())
-            result := cast(result, position, false, m.returnType())
+            def result := IRNode.CALL(position, m.value.returnType, m, finalArgs.finish())
+            return cast(position, result, m.returnType(), false)
         }
-        return result
     }
 
     method call(target:IRNode, name:String, args:ListView<IRNode>):IRNode? {
@@ -2248,6 +2279,109 @@ class Compiler : ErrorReporter {
         }
     }
 
+    method compilePandaCall(name:String, arg:IRNode):IRNode {
+        def p := Position()
+        def mref := compileDot(p, IRNode.TYPE_REFERENCE(p, Type.Panda()), name)
+        def args := Array<IRNode>() -- FIXME literal
+        args.add(arg)
+        def result := resolve(call(mref, args))
+        assert result != null
+        return result
+    }
+
+    method compileAssignment(position:Position, rawLeft:IRNode, op:Token.Kind,
+            rawRight:IRNode):IRNode? {
+        var left := rawLeft
+        var right := rawRight
+        if op = Token.Kind.ASSIGNMENT {
+            if left = IRNode.UNRESOLVED_INDEX {
+                return compileIndexedAssignment(position, left, op, right)
+            }
+            left := resolve(left)
+            if left = null {
+                return null
+            }
+            right := coerce(right, left.type())
+            if right = null {
+                return null
+            }
+            if !isLValue(left) {
+                error(left.position(), "cannot assign to this expression")
+                return null
+            }
+            if isRefCounted(left.type()) {
+                right := cast(position, compilePandaCall("ref", right), right.type(), false)
+                def result := Array<IRNode>()
+                if left.hasSideEffects() {
+                    reusedValueCount += 1
+                    def reusedDef := IRNode.REUSED_VALUE_DEFINITION(left, reusedValueCount)
+                    left := IRNode.REUSED_VALUE(position, left.type(), reusedValueCount)
+                    result.add(compilePandaCall("unref", reusedDef))
+                }
+                else {
+                    match left {
+                        when IRNode.VARIABLE_REFERENCE(_, v):
+                            if v.varKind = Variable.Kind.VAR {
+                                result.add(compilePandaCall("unref", left))
+                            }
+                    }
+                }
+                result.add(IRNode.BINARY(position, Type.Void(), left, Token.Kind.ASSIGNMENT, right))
+                return IRNode.BLOCK(position, result.finish())
+            }
+            else {
+                return IRNode.BINARY(position, Type.Void(), left, Token.Kind.ASSIGNMENT, right)
+            }
+        }
+        if !isAssignment(op) {
+            error(position, "expected a statement, but found an expression")
+            return null
+        }
+        -- compound assignment
+        if left = IRNode.UNRESOLVED_INDEX {
+            return compileIndexedAssignment(position, left, op, right)
+        }
+        left := resolve(left)
+        if left = null {
+            return null
+        }
+        if !isLValue(left) {
+            error(left.position(), "cannot assign to this expression")
+            return null
+        }
+        reusedValueCount += 1
+        left := IRNode.REUSED_VALUE_DEFINITION(left, reusedValueCount)
+        def reusedLeft := IRNode.REUSED_VALUE(left.position(), left.type(),
+                reusedValueCount)
+        right := compileBinary(position, reusedLeft, removeAssignment(op), right)
+        if right = null {
+            return null
+        }
+        -- 32 bit promotion means that e.g. int8 += int8 will result in a 32 bit value that can't be
+        -- stored back into the original lvalue. Special case this and convert it back to its
+        -- original size.
+        if left.type().isNumber() & left.type() != right.type() {
+            right := call(right, "convert", Array<IRNode>(), left.type())
+            if right = null {
+                return null
+            }
+        }
+        return compileAssignment(position, left, Token.Kind.ASSIGNMENT, right)
+    }
+
+    method compileAssignment(position:Position, rawLeft:ASTNode, op:Token.Kind,
+            rawRight:ASTNode):IRNode? {
+        def left := compileExpression(rawLeft)
+        if left = null {
+            return null
+        }
+        def right := compileExpression(rawRight)
+        if right = null {
+            return null
+        }
+        return compileAssignment(position, left, op, right)
+    }
+
     method compileBinary(position:Position, rawLeft:IRNode, op:Token.Kind,
             rawRight:IRNode):IRNode? {
         -- FIXME use var parameters
@@ -2344,56 +2478,6 @@ class Compiler : ErrorReporter {
                 return null
             }
             return IRNode.BINARY(position, Type.Bit(), finalLeft, op, finalRight)
-        }
-        if op = Token.Kind.ASSIGNMENT {
-            if left = IRNode.UNRESOLVED_INDEX {
-                return compileIndexedAssignment(position, left, op, right)
-            }
-            left := resolve(left)
-            if left = null {
-                return null
-            }
-            right := coerce(right, left.type())
-            if right = null {
-                return null
-            }
-            if !isLValue(left) {
-                error(left.position(), "cannot assign to this expression")
-                return null
-            }
-            return IRNode.BINARY(position, Type.Void(), left, Token.Kind.ASSIGNMENT, right)
-        }
-        if isAssignment(op) {
-            -- compound assignment
-            if left = IRNode.UNRESOLVED_INDEX {
-                return compileIndexedAssignment(position, left, op, right)
-            }
-            left := resolve(left)
-            if left = null {
-                return null
-            }
-            if !isLValue(left) {
-                error(left.position(), "cannot assign to this expression")
-                return null
-            }
-            reusedValueCount += 1
-            left := IRNode.REUSED_VALUE_DEFINITION(left, reusedValueCount)
-            def reusedLeft := IRNode.REUSED_VALUE(left.position(), left.type(),
-                    reusedValueCount)
-            right := compileBinary(position, reusedLeft, removeAssignment(op), right)
-            if right = null {
-                return null
-            }
-            -- 32 bit promotion means that e.g. int8 += int8 will result in a 32 bit value that can't be
-            -- stored back into the original lvalue. Special case this and convert it back to its
-            -- original size.
-            if left.type().isNumber() & left.type() != right.type() {
-                right := call(right, "convert", Array<IRNode>(), left.type())
-                if right = null {
-                    return null
-                }
-            }
-            return compileBinary(position, left, Token.Kind.ASSIGNMENT, right)
         }
         if op = Token.Kind.LBRACKET {
             left := resolve(left)
@@ -2797,7 +2881,7 @@ class Compiler : ErrorReporter {
             return coerce(value, type)
         }
         if canCast(value, type) {
-            return cast(value, position, true, type)
+            return cast(position, value, type, true)
         }
         else {
             error(position, "value of type '\{value.type()}' cannot possibly be an instance of " +
@@ -3227,7 +3311,7 @@ class Compiler : ErrorReporter {
 
     method compileDeclaration(position:Position, target:ASTNode, rawValue:ASTNode?,
             varKind:Variable.Kind):IRNode? {
-        def value:IRNode?
+        var value:IRNode?
         if rawValue != null {
             value := compileExpression(rawValue)
             if value = null {
@@ -3246,12 +3330,15 @@ class Compiler : ErrorReporter {
                 when IRNode.VARIABLE_REFERENCE(_, v):
                     v.initialValue := target.value
                     value := target.value
+                    if isRefCounted(value.type()) {
+                        value := cast(position, compilePandaCall("ref", value), v.type, false)
+                    }
             }
         }
         else {
             value := null
         }
-        return IRNode.DECLARATION(target.target, target.value)
+        return IRNode.DECLARATION(target.target, value)
     }
 
     method compileBreak(position:Position, label:String?):IRNode? {
@@ -3653,7 +3740,7 @@ class Compiler : ErrorReporter {
             when ASTNode.ASSERT(position, test, msg):
                 return compileAssert(position, test, msg)
             when ASTNode.BINARY(position, left, op, right):
-                return resolve(compileBinary(position, left, op, right))
+                return compileAssignment(position, left, op, right)
             when ASTNode.BLOCK(position, statements):
                 return compileBlock(position, statements)
             when ASTNode.IF(position, test, ifTrue, ifFalse):

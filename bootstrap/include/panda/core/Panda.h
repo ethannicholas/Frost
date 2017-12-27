@@ -16,15 +16,17 @@ typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super
 extern panda$core$Panda$class_type panda$core$Panda$class;
 
 #ifndef PANDA_TYPESONLY
+typedef struct panda$core$Object panda$core$Object;
 #include "panda/core/Real64.h"
 typedef struct panda$core$String panda$core$String;
 #include "panda/core/Int64.h"
-typedef struct panda$core$Object panda$core$Object;
 #include "panda/core/UInt64.h"
 #include "panda/core/Char32.h"
 #include "panda/core/Bit.h"
 typedef struct panda$core$Panda panda$core$Panda;
 
+panda$core$Object* panda$core$Panda$ref$panda$core$Object$R$panda$core$Object(panda$core$Object* p_o);
+panda$core$Object* panda$core$Panda$unref$panda$core$Object$R$panda$core$Object(panda$core$Object* p_o);
 void panda$core$Panda$toReal64$panda$core$String$R$panda$core$Real64(panda$core$Real64* result, panda$core$String* p_s);
 void panda$core$Panda$floatToIntBits$panda$core$Real64$R$panda$core$Int64(panda$core$Int64* result, panda$core$Real64 p_r);
 void panda$core$Panda$addressOf$panda$core$Object$R$panda$core$Int64(panda$core$Int64* result, panda$core$Object* p_o);

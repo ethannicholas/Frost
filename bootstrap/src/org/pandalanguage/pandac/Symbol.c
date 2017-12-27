@@ -4,6 +4,7 @@
 #include "panda/core/Int64.h"
 #include "org/pandalanguage/pandac/Position.h"
 #include "panda/core/String.h"
+#include "panda/core/Panda.h"
 #include "panda/core/Bit.h"
 
 
@@ -14,7 +15,10 @@ org$pandalanguage$pandac$Symbol$class_type org$pandalanguage$pandac$Symbol$class
 void org$pandalanguage$pandac$Symbol$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$String(org$pandalanguage$pandac$Symbol* self, panda$core$Int64 p_kind, org$pandalanguage$pandac$Position p_position, panda$core$String* p_name) {
     self->kind = p_kind;
     self->position = p_position;
-    self->name = p_name;
+    {
+        panda$core$Object* $tmp1 = panda$core$Panda$ref$panda$core$Object$R$panda$core$Object(((panda$core$Object*) p_name));
+        self->name = ((panda$core$String*) $tmp1);
+    }
 }
 panda$core$Bit org$pandalanguage$pandac$Symbol$get_heritable$R$panda$core$Bit(org$pandalanguage$pandac$Symbol* self) {
     return ((panda$core$Bit) { true });

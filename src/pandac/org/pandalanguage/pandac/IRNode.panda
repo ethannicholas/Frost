@@ -222,6 +222,180 @@ choice IRNode {
         }
     }
 
+    function hasSideEffects():Bit {
+        match self {
+            when ASSERT(_, test, msg):
+                return test.hasSideEffects() | msg.hasSideEffects()
+            when BINARY(_, _, left, op, right):
+                return Compiler.isAssignment(op) | left.hasSideEffects() | right.hasSideEffects()
+            when BIT(_, _, bit):
+                return false
+            when BLOCK(_, statements):
+                for s in statements {
+                    if s.hasSideEffects() {
+                        return true
+                    }
+                }
+                return false
+            when BREAK(_, label):
+                return false
+            when CALL(_, _, m, args):
+                if m.value.methodKind = MethodDecl.Kind.METHOD {
+                    return true
+                }
+                for arg in args {
+                    if arg.hasSideEffects() {
+                        return true
+                    }
+                }
+                return false
+            when CAST(_, value, type, _):
+                return false
+            when CHOICE_ENTRY_REFERENCE(_, ce):
+                return false
+            when CHOICE_FIELD_REFERENCE(_, base, ce, field):
+                return false
+            when CONSTRUCT(_, type, call):
+                return call.hasSideEffects()
+            when CONSTRUCTED_OBJECT(_, Type):
+                return false
+            when CONTINUE(_, label):
+                return false
+            when DECLARATION(target, value):
+                return value != null & value.hasSideEffects()
+            when DO(_, label, statements, test):
+                if test.hasSideEffects() {
+                    return true
+                }
+                for s in statements {
+                    if s.hasSideEffects() {
+                        return true
+                    }
+                }
+                return false
+            when FIELD_REFERENCE(_, _, base, field):
+                return false
+            when IF(_, test, ifTrue, ifFalse):
+                if test.hasSideEffects() {
+                    return true
+                }
+                for s in ifTrue {
+                    if s.hasSideEffects() {
+                        return true
+                    }
+                }
+                return ifFalse.hasSideEffects()
+            when INT(_, _, value):
+                return false
+            when IS_NONNULL(_, value):
+                return value.hasSideEffects()
+            when IS_NULL(_, value):
+                return value.hasSideEffects()
+            when LOOP(_, label, statements):
+                for s in statements {
+                    if s.hasSideEffects() {
+                        return true
+                    }
+                }
+                return false
+            when MATCH(_, value, whens, other):
+                if value.hasSideEffects() {
+                    return true
+                }
+                for w in whens {
+                    if w.hasSideEffects() {
+                        return true
+                    }
+                }
+                for s in other {
+                    if s.hasSideEffects() {
+                        return true
+                    }
+                }
+                return false
+
+            when METHOD_REFERENCE(_, target, m):
+                return false
+            when NEGATED_INT(_, _, value):
+                return false
+            when NULL:
+                return false
+            when PREFIX(_, op, base):
+                return base.hasSideEffects()
+            when RANGE_FOR(_, label, target, list, statements):
+                if list.hasSideEffects() {
+                    return true
+                }
+                for s in statements {
+                    if s.hasSideEffects() {
+                        return true
+                    }
+                }
+                return false
+            when REAL(_, _, value):
+                return false
+            when RETURN(_, value):
+                return value.hasSideEffects()
+            when REUSED_VALUE(_, _, id):
+                return false
+            when REUSED_VALUE_DEFINITION(base, id):
+                return base.hasSideEffects()
+            when SELF:
+                return false
+            when STRING(_, str):
+                return false
+            when SUPER:
+                return false
+            when TERNARY(_, test, ifTrue, ifFalse):
+                return test.hasSideEffects() | ifTrue.hasSideEffects() | ifFalse.hasSideEffects()
+            when TYPE_REFERENCE(_, type):
+                return false
+            when UNRESOLVED_IDENTIFIER(_, name):
+                assert false
+            when UNRESOLVED_INDEX(_, _, base, args):
+                assert false
+            when UNRESOLVED_METHOD_CALL(_, _, target, methods, args):
+                assert false
+            when UNRESOLVED_METHOD_REFERENCE(_, target, methods):
+                assert false
+            when UNRESOLVED_RANGE(_, start, end, inclusive, step):
+                assert false
+            when VAR(_, kind, decls):
+                for d in decls {
+                    if d.hasSideEffects() {
+                        return true
+                    }
+                }
+                return false
+            when VARIABLE_REFERENCE(_, variable):
+                return false
+            when WHEN(_, tests, statements):
+                for t in tests {
+                    if t.hasSideEffects() {
+                        return true
+                    }
+                }
+                for s in statements {
+                    if s.hasSideEffects() {
+                        return true
+                    }
+                }
+                return false
+            when WHILE(_, label, test, statements):
+                if test.hasSideEffects() {
+                    return true
+                }
+                for s in statements {
+                    if s.hasSideEffects() {
+                        return true
+                    }
+                }
+                return false
+            otherwise:
+                assert false
+        }
+    }
+
     @override
     function convert():String {
         match self {
@@ -352,8 +526,8 @@ choice IRNode {
                     return "return \{value}"
                 }
                 return "return"
-            when REUSED_VALUE(_, _, id):
-                return "-* reused value: \{id} *-"
+            when REUSED_VALUE(_, type, id):
+                return "-* reused value: \{id}:\{type} *-"
             when REUSED_VALUE_DEFINITION(base, id):
                 return "-* reused value definition: \{id} := \{base} *-"
             when SELF:

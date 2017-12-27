@@ -20,7 +20,7 @@ class Pointer<T> : Value {
     method []:=(index:Int, value:T)
 
     @external
-    method realloc(count:Int):Pointer<T>
+    method realloc(oldCount:Int, newCount:Int):Pointer<T>
 
     @external
     method offset(count:Int):Pointer<T>

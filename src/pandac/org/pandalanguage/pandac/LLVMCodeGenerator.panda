@@ -150,9 +150,9 @@ class LLVMCodeGenerator : CodeGenerator {
         out.printLine("target datalayout = \"e-m:o-i64:64-f80:128-n8:16:32:64-S128\"")
         out.printLine("target triple = \"x86_64-apple-macosx10.12.0\"")
 --        out.printLine("target triple = \"x86_64-pc-linux-gnu\"")
-        out.printLine("declare i8* @malloc(i64)")
-        out.printLine("declare i8* @realloc(i8*, i64)")
-        out.printLine("declare void @free(i8*)")
+        out.printLine("declare i8* @pandaAlloc(i64)")
+        out.printLine("declare i8* @pandaRealloc(i8*, i64, i64)")
+        out.printLine("declare void @pandaFree(i8*)")
         out.printLine("%$itable = type { %panda$core$Class*, %$itable*, [0 x i8*] }")
     }
 
@@ -804,7 +804,7 @@ class LLVMCodeGenerator : CodeGenerator {
             }
             code.append("constant \{result.type} { " +
                     "%panda$core$Class* bitcast(\{clConstant.type}* \{clConstant.name} to " +
-                    "%panda$core$Class*), \{INT_TYPE} 1, %panda$core$Class* \{superPtr}, " +
+                    "%panda$core$Class*), \{INT_TYPE} -999, %panda$core$Class* \{superPtr}, " +
                     "\{getITable(cl)}, [\{vtable.get_count()} x i8*] [")
             var separator := ""
             for m in vtable {
@@ -1314,7 +1314,7 @@ class LLVMCodeGenerator : CodeGenerator {
                 assert elementSize > 0, "invalid size for type \{m.returnType().subtypes[1]}"
                 out.printLine("\{size} = mul \{SIZE_TYPE} \{count}, \{elementSize}")
                 def malloc := nextVar()
-                out.printLine("\{malloc} = call i8* @malloc(\{SIZE_TYPE} \{size})")
+                out.printLine("\{malloc} = call i8* @pandaAlloc(\{SIZE_TYPE} \{size})")
                 def result := nextVar()
                 out.printLine("\{result} = bitcast i8* \{malloc} to \{type(m.returnType())}")
                 return result
@@ -1345,19 +1345,25 @@ class LLVMCodeGenerator : CodeGenerator {
                 out.printLine("\{load} = load \{baseType}, \{ptrType} \{offsetPtr}")
                 return load
             when "realloc":
-                assert args.get_count() = 2
+                assert args.get_count() = 3
                 def ptr := getTypedReference(args[0], out)
                 def ptrCast := nextVar()
                 out.printLine("\{ptrCast} = bitcast \{ptr} to i8*")
-                def countStruct := getTypedReference(args[1], out)
-                def count := nextVar()
-                out.printLine("\{count} = extractvalue \{countStruct}, 0")
-                def size := nextVar()
-                out.printLine("\{size} = mul \{SIZE_TYPE} \{count}, " +
+                def oldCountStruct := getTypedReference(args[2], out)
+                def oldCount := nextVar()
+                out.printLine("\{oldCount} = extractvalue \{oldCountStruct}, 0")
+                def oldSize := nextVar()
+                out.printLine("\{oldSize} = mul \{SIZE_TYPE} \{oldCount}, " +
+                        sizeOf(m.returnType().subtypes[1]))
+                def newCountStruct := getTypedReference(args[2], out)
+                def newCount := nextVar()
+                out.printLine("\{newCount} = extractvalue \{newCountStruct}, 0")
+                def newSize := nextVar()
+                out.printLine("\{newSize} = mul \{SIZE_TYPE} \{newCount}, " +
                         sizeOf(m.returnType().subtypes[1]))
                 def realloc := nextVar()
-                out.printLine("\{realloc} = call i8* @realloc(i8* \{ptrCast}, \{SIZE_TYPE} " +
-                        "\{size})")
+                out.printLine("\{realloc} = call i8* @pandaRealloc(i8* \{ptrCast}, \{SIZE_TYPE} " +
+                        "\{oldSize}, \{SIZE_TYPE} \{newSize})")
                 def result := nextVar()
                 out.printLine("\{result} = bitcast i8* \{realloc} to \{type(m.returnType())}")
                 return result
@@ -1558,7 +1564,7 @@ class LLVMCodeGenerator : CodeGenerator {
             return result
         }
         def mallocRef := nextVar()
-        out.printLine("\{mallocRef} = call i8* @malloc(i64 \{sizeOfWrapper(src.type())})")
+        out.printLine("\{mallocRef} = call i8* @pandaAlloc(i64 \{sizeOfWrapper(src.type())})")
         def wrapperTypeName := wrapperTypeName(src.type())
         def wrapperType := wrapperType(src.type())
         def wrapperCast := nextVar()
@@ -1808,7 +1814,7 @@ class LLVMCodeGenerator : CodeGenerator {
                     return result
                 }
                 def callRef := nextVar()
-                out.printLine("\{callRef} = call i8* @malloc(i64 \{sizeOf(target)})")
+                out.printLine("\{callRef} = call i8* @pandaAlloc(i64 \{sizeOf(target)})")
                 def result := nextVar()
                 out.printLine("\{result} = bitcast i8* \{callRef} to \{type(target)}")
                 def classPtr := nextVar()
@@ -1819,11 +1825,15 @@ class LLVMCodeGenerator : CodeGenerator {
                 else {
                     className := typeName(target)
                 }
-                out.printLine("\{classPtr} = getelementptr inbounds \{className}, \{t} \{result}, " +
-                        "i64 0, i32 0")
+                out.printLine("\{classPtr} = getelementptr inbounds \{className}, " +
+                        "\{t} \{result}, i64 0, i32 0")
                 def cc := getClassConstant(cl)
                 out.printLine("store i8* bitcast(\{cc.type}* \{cc.name} to " +
                         "i8*), i8** \{classPtr}")
+                def refCount := nextVar()
+                out.printLine("\{refCount} = getelementptr \{className}, \{t} \{result}, i64 0, " +
+                        "i32 1, i32 0")
+                out.printLine("store i32 0, i32* \{refCount}")
                 writeCall(initType, initMref, args, "\{t} \{result}", out)
                 return result
             otherwise:
@@ -2118,7 +2128,7 @@ class LLVMCodeGenerator : CodeGenerator {
                 def ptr := getTypedReference(args[0], out)
                 def cast := nextVar()
                 out.printLine("\{cast} = bitcast \{ptr} to i8*")
-                out.printLine("call void @free(i8* \{cast})")
+                out.printLine("call void @pandaFree(i8* \{cast})")
             otherwise:
                 assert false
         }
@@ -2851,10 +2861,15 @@ class LLVMCodeGenerator : CodeGenerator {
     method writeVarTarget(target:IRNode, value:IRNode?, out:OutputStream) {
         match target {
             when IRNode.VARIABLE_REFERENCE(_, v):
-                methodHeader.printLine("\{getName(v)} = alloca \{type(v.type)}")
+                def name := getName(v)
+                def t := type(v.type)
+                methodHeader.printLine("\{name} = alloca \{t}")
                 if value != null {
                     def ref := getTypedReference(value, out)
-                    out.printLine("store \{ref}, \{type(v.type)}* \{getName(v)}")
+                    out.printLine("store \{ref}, \{t}* \{name}")
+                }
+                else if v.varKind = Variable.Kind.VAR & compiler.isRefCounted(v.type) {
+                    out.printLine("store \{t} null, \{t}* \{name}")
                 }
             otherwise:
                 assert false
@@ -3203,6 +3218,16 @@ class LLVMCodeGenerator : CodeGenerator {
         }
         methods.printLine(") {")
         def bodyBuffer := MemoryOutputStream()
+        if m.methodKind = MethodDecl.Kind.INIT {
+            for f in compiler.instanceFields(m.owner) {
+                compiler.resolve(f)
+                if f.fieldKind = FieldDecl.Kind.VAR & compiler.isRefCounted(f.type) {
+                    writeAssignment(IRNode.FIELD_REFERENCE(m.position, f.type,
+                            IRNode.SELF(m.position, m.owner.type()), f),
+                            IRNode.NULL(m.position, f.type.nullable()), bodyBuffer)
+                }
+            }
+        }
         for s in body {
             writeStatement(s, bodyBuffer)
         }

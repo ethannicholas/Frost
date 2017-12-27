@@ -664,7 +664,7 @@ panda$core$String* panda$core$Int64$convert$R$panda$core$String(panda$core$Int64
     panda$core$Int64 size158;
     panda$core$Range$LTpanda$core$Int64$GT $tmp160;
     max132 = ((panda$core$Int64) { 20 });
-    chars133 = ((panda$core$Char8*) malloc(max132.value * 1));
+    chars133 = ((panda$core$Char8*) pandaAlloc(max132.value * 1));
     panda$core$Int64 $tmp135 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(max132, ((panda$core$Int64) { 1 }));
     index134 = $tmp135;
     value136 = self;

@@ -113,14 +113,15 @@ class MutableString {
         if maxLength >= newSize {
             return
         }
+        def oldMax := maxLength
         while maxLength < newSize {
             maxLength *= 2
         }
-        data := data.realloc(maxLength)
+        data := data.realloc(oldMax, maxLength)
     }
 
     method clear() {
-        data := data.realloc(DEFAULT_SIZE)
+        data := data.realloc(maxLength, DEFAULT_SIZE)
         length := 0
         maxLength := DEFAULT_SIZE
     }
@@ -145,7 +146,7 @@ class MutableString {
     ================================================================================================
     method finish():String {
         -- FIXME this transformation is only safe at -S0
-        data := data.realloc(length)
+        data := data.realloc(maxLength, length)
         maxLength := 0 -- maxLength and hash live at the same address, zero the hash
         self.$class := "".$class
         return self->Object->String

@@ -867,7 +867,7 @@ class CCodeGenerator : CodeGenerator {
                 def count := getReference(args[0], out)
                 assert m.returnType().subtypes.get_count() = 2
                 def elementSize := sizeOf(m.returnType().subtypes[1])
-                return "((\{type(t)}) malloc(\{count}.value * \{elementSize}))"
+                return "((\{type(t)}) pandaAlloc(\{count}.value * \{elementSize}))"
             when "get":
                 assert args.get_count() = 1
                 def ptr := getReference(args[0], out)
@@ -878,12 +878,14 @@ class CCodeGenerator : CodeGenerator {
                 def index := getReference(args[1], out)
                 return "\{ptr}[\{index}.value]"
             when "realloc":
-                assert args.get_count() = 2
+                assert args.get_count() = 3
                 def ptr := getReference(args[0], out)
-                def count := getReference(args[1], out)
+                def oldCount := getReference(args[1], out)
+                def newCount := getReference(args[2], out)
                 assert m.returnType().subtypes.get_count() = 2
                 def elementSize := sizeOf(m.returnType().subtypes[1])
-                return "((\{type(t)}) realloc(\{ptr}, \{count}.value * \{elementSize}))"
+                return "((\{type(t)}) pandaRealloc(\{ptr}, \{oldCount}.value * \{elementSize}, " +
+                        "\{newCount}.value * \{elementSize}))"
             when "offset":
                 assert args.get_count() = 2
                 def ptr := getReference(args[0], out)
@@ -1296,7 +1298,7 @@ class CCodeGenerator : CodeGenerator {
                 def result := reusedValues[id]
                 assert result != null
                 return result
-            when IRNode.NULL(_, type):
+            when IRNode.NULL(pos, type):
                 return getNullReference(type, out)
             when IRNode.IS_NULL(_, value):
                 return getIsNullReference(value, out)
@@ -1343,7 +1345,7 @@ class CCodeGenerator : CodeGenerator {
                 out.printLine("\{base}[\{index}.value] = \{value};")
             when "destroy":
                 assert args.get_count() = 1
-                out.printLine("free(\{getReference(args[0], out)});")
+                out.printLine("pandaFree(\{getReference(args[0], out)});")
             otherwise:
                 assert false
         }
@@ -1612,13 +1614,17 @@ class CCodeGenerator : CodeGenerator {
         def signPrefix:String
         if stepType.name.startsWith("panda.core.Int") {
             signPrefix := "s"
-            unsigned := "u" + numberType
         }
         else {
             assert stepType.name.startsWith("panda.core.UInt") |
                     stepType.name.startsWith("panda.core.Char")
             signPrefix := "u"
+        }
+        if numberType.startsWith("u") {
             unsigned := numberType
+        }
+        else {
+            unsigned := "u" + numberType
         }
         def direction:String
         if signPrefix = "s" {
@@ -1771,6 +1777,9 @@ class CCodeGenerator : CodeGenerator {
                 methodHeader.printLine("\{type(v.type)} \{getName(v)};")
                 if value != null {
                     out.printLine("\{getName(v)} = \{getReference(value, out)};")
+                }
+                else {
+                    out.printLine("memset(&\{getName(v)}, 0, sizeof(\{getName(v)}));")
                 }
             otherwise:
                 assert false
@@ -1950,6 +1959,16 @@ class CCodeGenerator : CodeGenerator {
         methods.level += 1
         def bodyBuffer := MemoryOutputStream()
         def indentedBody := IndentedOutputStream(bodyBuffer)
+        if m.methodKind = MethodDecl.Kind.INIT {
+            for f in compiler.instanceFields(m.owner) {
+                compiler.resolve(f)
+                if f.fieldKind = FieldDecl.Kind.VAR & compiler.isRefCounted(f.type) {
+                    writeAssignment(IRNode.FIELD_REFERENCE(m.position, f.type,
+                            IRNode.SELF(m.position, m.owner.type()), f),
+                            IRNode.NULL(m.position, f.type.nullable()), indentedBody)
+                }
+            }
+        }
         for s in body {
             writeStatement(s, indentedBody)
         }

@@ -4,15 +4,15 @@
 #undef PANDA_TYPESONLY
 typedef struct panda$core$Class panda$core$Class;
 #include "panda/core/Int32.h"
-typedef struct org$pandalanguage$pandac$Compiler org$pandalanguage$pandac$Compiler;
 typedef struct panda$collections$HashMap panda$collections$HashMap;
+typedef struct org$pandalanguage$pandac$Compiler org$pandalanguage$pandac$Compiler;
 typedef struct panda$collections$Array panda$collections$Array;
 
 typedef struct org$pandalanguage$pandac$SymbolTable {
     panda$core$Class* $class;
     panda$core$Int32 refCount;
-    org$pandalanguage$pandac$Compiler* compiler;
     panda$collections$HashMap* symbols;
+    org$pandalanguage$pandac$Compiler* compiler;
     panda$collections$HashMap* merged;
     panda$collections$Array* parents;
 } org$pandalanguage$pandac$SymbolTable;

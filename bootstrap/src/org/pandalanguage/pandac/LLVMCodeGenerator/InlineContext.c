@@ -4,6 +4,7 @@
 #include "panda/core/String.h"
 #include "panda/collections/ListView.h"
 #include "panda/collections/Array.h"
+#include "panda/core/Panda.h"
 #include "panda/collections/ImmutableArray.h"
 
 
@@ -17,13 +18,25 @@ void org$pandalanguage$pandac$LLVMCodeGenerator$InlineContext$init$panda$core$St
     $tmp1->refCount.value = 1;
     panda$collections$Array$init($tmp1);
     self->returns = $tmp1;
-    self->varSuffix = p_varSuffix;
-    self->selfRef = p_selfRef;
-    panda$collections$ImmutableArray* $tmp3 = (panda$collections$ImmutableArray*) malloc(40);
-    $tmp3->$class = (panda$core$Class*) &panda$collections$ImmutableArray$class;
-    $tmp3->refCount.value = 1;
-    panda$collections$ImmutableArray$init$panda$collections$ListView$LTpanda$collections$ImmutableArray$T$GT($tmp3, p_argRefs);
-    self->argRefs = $tmp3;
-    self->exitLabel = p_exitLabel;
+    {
+        panda$core$Object* $tmp3 = panda$core$Panda$ref$panda$core$Object$R$panda$core$Object(((panda$core$Object*) p_varSuffix));
+        self->varSuffix = ((panda$core$String*) $tmp3);
+    }
+    {
+        panda$core$Object* $tmp4 = panda$core$Panda$ref$panda$core$Object$R$panda$core$Object(((panda$core$Object*) p_selfRef));
+        self->selfRef = ((panda$core$String*) $tmp4);
+    }
+    {
+        panda$collections$ImmutableArray* $tmp5 = (panda$collections$ImmutableArray*) malloc(40);
+        $tmp5->$class = (panda$core$Class*) &panda$collections$ImmutableArray$class;
+        $tmp5->refCount.value = 1;
+        panda$collections$ImmutableArray$init$panda$collections$ListView$LTpanda$collections$ImmutableArray$T$GT($tmp5, p_argRefs);
+        panda$core$Object* $tmp7 = panda$core$Panda$ref$panda$core$Object$R$panda$core$Object(((panda$core$Object*) $tmp5));
+        self->argRefs = ((panda$collections$ImmutableArray*) $tmp7);
+    }
+    {
+        panda$core$Object* $tmp8 = panda$core$Panda$ref$panda$core$Object$R$panda$core$Object(((panda$core$Object*) p_exitLabel));
+        self->exitLabel = ((panda$core$String*) $tmp8);
+    }
 }
 

@@ -156,7 +156,9 @@ class IdentityMap<K, V> : Map<K, V>, Equatable<Map<K, V>> {
         bucketCount := DEFAULT_BUCKET_COUNT
         contents := Pointer<Entry<K, V>?>.alloc(bucketCount)
         for i in 0 .. bucketCount {
-            contents[i] := null
+            if contents[i] != null {
+                contents[i] := null
+            }
         }
         threshold := (bucketCount * 3) // 4
     }

@@ -213,10 +213,11 @@ class SpecializedArray<T> : List<T> {
         if newCapacity <= capacity {
             return
         }
+        def oldCapacity := capacity
         while capacity < newCapacity {
             capacity *= 2
         }
-        data := data.realloc(capacity)
+        data := data.realloc(oldCapacity, capacity)
     }
 
     @override

@@ -8,6 +8,7 @@
 #include "panda/core/Int64.h"
 #include "panda/core/Char8.h"
 #include "panda/core/String.h"
+#include "panda/core/Panda.h"
 #include "panda/core/String/UTF8Iterator.h"
 panda$collections$Iterator* panda$core$String$UTF8List$iterator$R$panda$collections$Iterator$LTpanda$core$Char8$GT$shim(panda$core$String$UTF8List* self) {
     panda$collections$Iterator* result = panda$core$String$UTF8List$iterator$R$panda$collections$Iterator$LTpanda$core$Char8$GT(self);
@@ -35,7 +36,10 @@ panda$core$String$UTF8List$class_type panda$core$String$UTF8List$class = { (pand
 
 
 void panda$core$String$UTF8List$init$panda$core$String(panda$core$String$UTF8List* self, panda$core$String* p_str) {
-    self->str = p_str;
+    {
+        panda$core$Object* $tmp2 = panda$core$Panda$ref$panda$core$Object$R$panda$core$Object(((panda$core$Object*) p_str));
+        self->str = ((panda$core$String*) $tmp2);
+    }
 }
 panda$core$Char8 panda$core$String$UTF8List$$IDX$panda$core$Int64$R$panda$core$Char8(panda$core$String$UTF8List* self, panda$core$Int64 p_index) {
     return self->str->data[p_index.value];
@@ -44,10 +48,10 @@ panda$core$Int64 panda$core$String$UTF8List$get_count$R$panda$core$Int64(panda$c
     return self->str->_length;
 }
 panda$collections$Iterator* panda$core$String$UTF8List$iterator$R$panda$collections$Iterator$LTpanda$core$Char8$GT(panda$core$String$UTF8List* self) {
-    panda$core$String$UTF8Iterator* $tmp2 = (panda$core$String$UTF8Iterator*) malloc(32);
-    $tmp2->$class = (panda$core$Class*) &panda$core$String$UTF8Iterator$class;
-    $tmp2->refCount.value = 1;
-    panda$core$String$UTF8Iterator$init$panda$core$String($tmp2, self->str);
-    return ((panda$collections$Iterator*) $tmp2);
+    panda$core$String$UTF8Iterator* $tmp3 = (panda$core$String$UTF8Iterator*) malloc(32);
+    $tmp3->$class = (panda$core$Class*) &panda$core$String$UTF8Iterator$class;
+    $tmp3->refCount.value = 1;
+    panda$core$String$UTF8Iterator$init$panda$core$String($tmp3, self->str);
+    return ((panda$collections$Iterator*) $tmp3);
 }
 

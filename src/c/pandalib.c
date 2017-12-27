@@ -137,6 +137,30 @@ void* pandaGetInterfaceMethod(Object* o, Class* intf, int index) {
     return it->methods[index];
 }
 
+void* pandaAlloc(size_t size) {
+    return calloc(size, 1);
+}
+
+void* pandaRealloc(void* ptr, size_t oldSize, size_t newSize) {
+    void* result = realloc(ptr, newSize);
+    if (newSize > oldSize) {
+        memset(result + oldSize, 0, newSize - oldSize);
+    }
+    return result;
+}
+
+void* pandaNewRealloc(void* ptr, size_t oldSize, size_t newSize) {
+    void* result = realloc(ptr, newSize);
+    if (newSize > oldSize) {
+        memset(result + oldSize, 0, newSize - oldSize);
+    }
+    return result;
+}
+
+void pandaFree(void* ptr) {
+    free(ptr);
+}
+
 void pandaMain(Array* args);
 
 int main(int argc, char** argv) {
@@ -259,6 +283,31 @@ void panda$core$System$Process$waitFor$R$panda$core$Int64(int64_t* result, Proce
 }
 
 // Panda
+
+#define NO_REFCNT -999
+
+Object* panda$core$Panda$ref$panda$core$Object$R$panda$core$Object(Object* o) {
+/*    if (o && o->refcnt != NO_REFCNT) {
+        ++o->refcnt;
+    }*/
+    return o;
+}
+
+Object* panda$core$Panda$unref$panda$core$Object$R$panda$core$Object(Object* o) {
+/*    if (o && o->refcnt != NO_REFCNT) {
+        if (o->refcnt <= 0) {
+            fprintf(stderr, "internal error: refcnt = %d\n", o->refcnt);
+            abort();
+        }
+        --o->refcnt;
+        if (o->refcnt == 0) {
+            void (*cleanup)() = o->cl->vtable[1]; // FIXME hardcoded index to cleanup
+//            cleanup(o);
+//            free(o);
+        }
+    }*/
+    return o;
+}
 
 void panda$core$Panda$addressOf$panda$core$Object$R$panda$core$Int64(int64_t* result, void* o) {
     *result = (int64_t) o;

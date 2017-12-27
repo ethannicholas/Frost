@@ -209,10 +209,11 @@ class Array<T> : List<T> {
         if newCapacity <= capacity {
             return
         }
+        def oldCapacity := capacity
         while capacity < newCapacity {
             capacity *= 2
         }
-        data := data.realloc(capacity)
+        data := data.realloc(oldCapacity, capacity)
     }
 
     @override
@@ -287,7 +288,7 @@ class Array<T> : List<T> {
     ================================================================================================
     method finish():ImmutableArray<T> {
         -- FIXME this transformation is only safe at -S0
-        data := data.realloc(count)
+        data := data.realloc(capacity, count)
         self.$class := ImmutableArray<T>().$class
         return self->Object->ImmutableArray<T>
     }

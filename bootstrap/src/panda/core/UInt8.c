@@ -797,7 +797,7 @@ panda$core$String* panda$core$UInt8$convert$R$panda$core$String(panda$core$UInt8
     panda$core$Int64 size189;
     panda$core$Range$LTpanda$core$Int64$GT $tmp191;
     max161 = ((panda$core$Int64) { 3 });
-    chars162 = ((panda$core$Char8*) malloc(max161.value * 1));
+    chars162 = ((panda$core$Char8*) pandaAlloc(max161.value * 1));
     panda$core$Int64 $tmp164 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(max161, ((panda$core$Int64) { 1 }));
     index163 = $tmp164;
     value165 = self;

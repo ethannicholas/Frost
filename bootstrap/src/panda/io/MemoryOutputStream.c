@@ -3,6 +3,7 @@
 #include "panda/core/Class.h"
 #include "panda/core/Object.h"
 #include "panda/core/Int64.h"
+#include "panda/core/Panda.h"
 #include "panda/core/MutableString.h"
 #include "panda/core/UInt8.h"
 #include "panda/core/Char8.h"
@@ -14,19 +15,24 @@ panda$io$MemoryOutputStream$class_type panda$io$MemoryOutputStream$class = { (pa
 
 
 void panda$io$MemoryOutputStream$init(panda$io$MemoryOutputStream* self) {
+    self->data = NULL;
     panda$io$MemoryOutputStream$init$panda$core$Int64(self, ((panda$core$Int64) { 1024 }));
 }
 void panda$io$MemoryOutputStream$init$panda$core$Int64(panda$io$MemoryOutputStream* self, panda$core$Int64 p_capacity) {
-    panda$core$MutableString* $tmp1 = (panda$core$MutableString*) malloc(48);
-    $tmp1->$class = (panda$core$Class*) &panda$core$MutableString$class;
-    $tmp1->refCount.value = 1;
-    panda$core$MutableString$init$panda$core$Int64($tmp1, p_capacity);
-    self->data = $tmp1;
+    self->data = NULL;
+    {
+        panda$core$MutableString* $tmp1 = (panda$core$MutableString*) malloc(48);
+        $tmp1->$class = (panda$core$Class*) &panda$core$MutableString$class;
+        $tmp1->refCount.value = 1;
+        panda$core$MutableString$init$panda$core$Int64($tmp1, p_capacity);
+        panda$core$Object* $tmp3 = panda$core$Panda$ref$panda$core$Object$R$panda$core$Object(((panda$core$Object*) $tmp1));
+        self->data = ((panda$core$MutableString*) $tmp3);
+    }
 }
 void panda$io$MemoryOutputStream$write$panda$core$UInt8(panda$io$MemoryOutputStream* self, panda$core$UInt8 p_i) {
-    panda$core$Char8 $tmp3;
-    panda$core$Char8$init$panda$core$UInt8(&$tmp3, p_i);
-    panda$core$MutableString$append$panda$core$Char8(self->data, $tmp3);
+    panda$core$Char8 $tmp4;
+    panda$core$Char8$init$panda$core$UInt8(&$tmp4, p_i);
+    panda$core$MutableString$append$panda$core$Char8(self->data, $tmp4);
 }
 void panda$io$MemoryOutputStream$write$panda$unsafe$Pointer$LTpanda$core$UInt8$GT$panda$core$Int64$panda$core$Int64(panda$io$MemoryOutputStream* self, panda$core$UInt8* p_ptr, panda$core$Int64 p_offset, panda$core$Int64 p_count) {
     panda$core$MutableString$append$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64$panda$core$Int64(self->data, ((panda$core$Char8*) p_ptr), p_offset, p_count);
@@ -35,11 +41,11 @@ void panda$io$MemoryOutputStream$clear(panda$io$MemoryOutputStream* self) {
     panda$core$MutableString$clear(self->data);
 }
 panda$core$String* panda$io$MemoryOutputStream$convert$R$panda$core$String(panda$io$MemoryOutputStream* self) {
-    panda$core$String* $tmp4 = panda$core$MutableString$convert$R$panda$core$String(self->data);
-    return $tmp4;
+    panda$core$String* $tmp5 = panda$core$MutableString$convert$R$panda$core$String(self->data);
+    return $tmp5;
 }
 panda$core$String* panda$io$MemoryOutputStream$finish$R$panda$core$String(panda$io$MemoryOutputStream* self) {
-    panda$core$String* $tmp5 = panda$core$MutableString$finish$R$panda$core$String(self->data);
-    return $tmp5;
+    panda$core$String* $tmp6 = panda$core$MutableString$finish$R$panda$core$String(self->data);
+    return $tmp6;
 }
 

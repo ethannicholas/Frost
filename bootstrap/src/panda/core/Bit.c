@@ -8,6 +8,7 @@
 #include "panda/core/String.h"
 #include "panda/core/Int64.h"
 #include "panda/collections/Array.h"
+#include "panda/core/Panda.h"
 panda$core$Bit panda$core$Bit$$EQ$panda$core$Bit$R$panda$core$Bit$shim(panda$core$Bit self, panda$core$Object* p0) {
     panda$core$Bit result = panda$core$Bit$$EQ$panda$core$Bit$R$panda$core$Bit(self, ((panda$core$Bit$wrapper*) p0)->value);
     return result;
@@ -107,17 +108,18 @@ panda$core$Bit panda$core$Bit$$XOR$panda$core$Bit$R$panda$core$Bit(panda$core$Bi
 panda$core$String* panda$core$Bit$format$panda$core$String$R$panda$core$String(panda$core$Bit self, panda$core$String* p_fmt) {
     panda$collections$Array* s11;
     panda$collections$Array* $tmp13 = panda$core$String$split$panda$core$String$R$panda$collections$Array$LTpanda$core$String$GT(p_fmt, &$s12);
-    s11 = $tmp13;
-    panda$core$Int64 $tmp14 = panda$collections$Array$get_count$R$panda$core$Int64(s11);
-    panda$core$Bit $tmp15 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp14, ((panda$core$Int64) { 2 }));
-    PANDA_ASSERT($tmp15.value);
+    panda$core$Object* $tmp14 = panda$core$Panda$ref$panda$core$Object$R$panda$core$Object(((panda$core$Object*) $tmp13));
+    s11 = ((panda$collections$Array*) $tmp14);
+    panda$core$Int64 $tmp15 = panda$collections$Array$get_count$R$panda$core$Int64(s11);
+    panda$core$Bit $tmp16 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp15, ((panda$core$Int64) { 2 }));
+    PANDA_ASSERT($tmp16.value);
     if (self.value) {
     {
-        panda$core$Object* $tmp16 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(s11, ((panda$core$Int64) { 0 }));
-        return ((panda$core$String*) $tmp16);
+        panda$core$Object* $tmp17 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(s11, ((panda$core$Int64) { 0 }));
+        return ((panda$core$String*) $tmp17);
     }
     }
-    panda$core$Object* $tmp17 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(s11, ((panda$core$Int64) { 1 }));
-    return ((panda$core$String*) $tmp17);
+    panda$core$Object* $tmp18 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(s11, ((panda$core$Int64) { 1 }));
+    return ((panda$core$String*) $tmp18);
 }
 
