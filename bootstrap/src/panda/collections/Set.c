@@ -38,14 +38,14 @@ typedef panda$core$Object* (*$fn20)(panda$collections$Iterator*);
 
 
 void panda$collections$Set$init(panda$collections$Set* self) {
-    panda$collections$HashMap* $tmp1 = (panda$collections$HashMap*) malloc(56);
+    panda$collections$HashMap* $tmp1 = (panda$collections$HashMap*) pandaAlloc(56);
     $tmp1->$class = (panda$core$Class*) &panda$collections$HashMap$class;
     $tmp1->refCount.value = 1;
     panda$collections$HashMap$init($tmp1);
     self->contents = $tmp1;
 }
 void panda$collections$Set$init$panda$collections$CollectionView$LTpanda$collections$Set$T$GT(panda$collections$Set* self, panda$collections$CollectionView* p_c) {
-    panda$collections$HashMap* $tmp3 = (panda$collections$HashMap*) malloc(56);
+    panda$collections$HashMap* $tmp3 = (panda$collections$HashMap*) pandaAlloc(56);
     $tmp3->$class = (panda$core$Class*) &panda$collections$HashMap$class;
     $tmp3->refCount.value = 1;
     panda$collections$HashMap$init($tmp3);

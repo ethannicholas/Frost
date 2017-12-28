@@ -41,7 +41,7 @@ void panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$
 panda$core$Object* panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$$IDX$panda$core$Int64$R$org$pandalanguage$pandac$parser$Token$shim(panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT* self, panda$core$Int64 p0) {
     org$pandalanguage$pandac$parser$Token result = panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$$IDX$panda$core$Int64$R$org$pandalanguage$pandac$parser$Token(self, p0);
     org$pandalanguage$pandac$parser$Token$wrapper* $tmp1;
-    $tmp1 = (org$pandalanguage$pandac$parser$Token$wrapper*) malloc(64);
+    $tmp1 = (org$pandalanguage$pandac$parser$Token$wrapper*) pandaAlloc(64);
     $tmp1->cl = (panda$core$Class*) &org$pandalanguage$pandac$parser$Token$wrapperclass;
     $tmp1->refCount = 1;
     $tmp1->value = result;
@@ -78,11 +78,11 @@ typedef panda$collections$Iterator* (*$fn244)(panda$collections$Iterable*);
 typedef panda$core$Bit (*$fn250)(panda$collections$Iterator*);
 typedef panda$core$Object* (*$fn256)(panda$collections$Iterator*);
 
-static panda$core$String $s198 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2c\x20", 2, 14677, NULL };
-static panda$core$String $s201 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
-static panda$core$String $s239 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
-static panda$core$String $s258 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2c\x20", 2, 14677, NULL };
-static panda$core$String $s261 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x3c\x6e\x75\x6c\x6c\x3e", 6, 1703694482666, NULL };
+static panda$core$String $s198 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2c\x20", 2, 14677, NULL };
+static panda$core$String $s201 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
+static panda$core$String $s239 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
+static panda$core$String $s258 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2c\x20", 2, 14677, NULL };
+static panda$core$String $s261 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x3c\x6e\x75\x6c\x6c\x3e", 6, 1703694482666, NULL };
 
 void panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$init(panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT* self) {
     self->count = ((panda$core$Int64) { 0 });
@@ -263,7 +263,7 @@ panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT* p
     i74.value += 1;
     goto $l79;
     $l81:;
-    panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT* $tmp95 = (panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT*) malloc(40);
+    panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT* $tmp95 = (panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT*) pandaAlloc(40);
     $tmp95->$class = (panda$core$Class*) &panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$class;
     $tmp95->refCount.value = 1;
     panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$init$panda$unsafe$Pointer$LTorg$pandalanguage$pandac$parser$Token$GT$panda$core$Int64($tmp95, result72, count70);
@@ -353,7 +353,7 @@ panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT* p
     }
     }
     }
-    panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT* $tmp112 = (panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT*) malloc(40);
+    panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT* $tmp112 = (panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT*) pandaAlloc(40);
     $tmp112->$class = (panda$core$Class*) &panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$class;
     $tmp112->refCount.value = 1;
     panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$init($tmp112);
@@ -528,7 +528,7 @@ void panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$
     self->count = $tmp195;
 }
 panda$collections$Iterator* panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$iterator$R$panda$collections$Iterator$LTorg$pandalanguage$pandac$parser$Token$GT(panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT* self) {
-    panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$pandac$parser$Token$GT* $tmp196 = (panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$pandac$parser$Token$GT*) malloc(32);
+    panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$pandac$parser$Token$GT* $tmp196 = (panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$pandac$parser$Token$GT*) pandaAlloc(32);
     $tmp196->$class = (panda$core$Class*) &panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$pandac$parser$Token$GT$class;
     $tmp196->refCount.value = 1;
     panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$pandac$parser$Token$GT$init$panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT($tmp196, self);
@@ -550,12 +550,12 @@ panda$core$String* panda$collections$SpecializedArray$LTorg$pandalanguage$pandac
         return &$s201;
     }
     }
-    panda$core$MutableString* $tmp203 = (panda$core$MutableString*) malloc(48);
+    panda$core$MutableString* $tmp203 = (panda$core$MutableString*) pandaAlloc(48);
     $tmp203->$class = (panda$core$Class*) &panda$core$MutableString$class;
     $tmp203->refCount.value = 1;
     org$pandalanguage$pandac$parser$Token $tmp205 = panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$$IDX$panda$core$Int64$R$org$pandalanguage$pandac$parser$Token(self, ((panda$core$Int64) { 0 }));
     org$pandalanguage$pandac$parser$Token$wrapper* $tmp206;
-    $tmp206 = (org$pandalanguage$pandac$parser$Token$wrapper*) malloc(64);
+    $tmp206 = (org$pandalanguage$pandac$parser$Token$wrapper*) pandaAlloc(64);
     $tmp206->cl = (panda$core$Class*) &org$pandalanguage$pandac$parser$Token$wrapperclass;
     $tmp206->refCount = 1;
     $tmp206->value = $tmp205;
@@ -578,7 +578,7 @@ panda$core$String* panda$collections$SpecializedArray$LTorg$pandalanguage$pandac
         panda$core$MutableString$append$panda$core$String(result202, p_separator);
         org$pandalanguage$pandac$parser$Token $tmp224 = panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$$IDX$panda$core$Int64$R$org$pandalanguage$pandac$parser$Token(self, i211);
         org$pandalanguage$pandac$parser$Token$wrapper* $tmp225;
-        $tmp225 = (org$pandalanguage$pandac$parser$Token$wrapper*) malloc(64);
+        $tmp225 = (org$pandalanguage$pandac$parser$Token$wrapper*) pandaAlloc(64);
         $tmp225->cl = (panda$core$Class*) &org$pandalanguage$pandac$parser$Token$wrapperclass;
         $tmp225->refCount = 1;
         $tmp225->value = $tmp224;
@@ -605,7 +605,7 @@ panda$core$String* panda$collections$SpecializedArray$LTorg$pandalanguage$pandac
     panda$collections$Iterator* v$Iter241;
     org$pandalanguage$pandac$parser$Token v253;
     panda$core$Char8 $tmp262;
-    panda$core$MutableString* $tmp234 = (panda$core$MutableString*) malloc(48);
+    panda$core$MutableString* $tmp234 = (panda$core$MutableString*) pandaAlloc(48);
     $tmp234->$class = (panda$core$Class*) &panda$core$MutableString$class;
     $tmp234->refCount.value = 1;
     panda$core$MutableString$init($tmp234);
@@ -649,7 +649,7 @@ panda$core$String* panda$collections$SpecializedArray$LTorg$pandalanguage$pandac
             if (((panda$core$Bit) { true }).value) {
             {
                 org$pandalanguage$pandac$parser$Token$wrapper* $tmp260;
-                $tmp260 = (org$pandalanguage$pandac$parser$Token$wrapper*) malloc(64);
+                $tmp260 = (org$pandalanguage$pandac$parser$Token$wrapper*) pandaAlloc(64);
                 $tmp260->cl = (panda$core$Class*) &org$pandalanguage$pandac$parser$Token$wrapperclass;
                 $tmp260->refCount = 1;
                 $tmp260->value = v253;

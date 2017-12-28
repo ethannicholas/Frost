@@ -877,7 +877,7 @@ panda$core$String* panda$core$UInt16$convert$R$panda$core$String(panda$core$UInt
     i192.value += 1;
     goto $l197;
     $l199:;
-    panda$core$String* $tmp212 = (panda$core$String*) malloc(48);
+    panda$core$String* $tmp212 = (panda$core$String*) pandaAlloc(48);
     $tmp212->$class = (panda$core$Class*) &panda$core$String$class;
     $tmp212->refCount.value = 1;
     panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp212, chars162, size189);

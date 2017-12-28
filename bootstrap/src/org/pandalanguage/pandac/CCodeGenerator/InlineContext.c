@@ -13,7 +13,7 @@ org$pandalanguage$pandac$CCodeGenerator$InlineContext$class_type org$pandalangua
 
 
 void org$pandalanguage$pandac$CCodeGenerator$InlineContext$init$panda$core$String$panda$core$String$panda$collections$ListView$LTpanda$core$String$GT$panda$core$String(org$pandalanguage$pandac$CCodeGenerator$InlineContext* self, panda$core$String* p_varSuffix, panda$core$String* p_selfRef, panda$collections$ListView* p_argRefs, panda$core$String* p_exitLabel) {
-    panda$collections$Array* $tmp1 = (panda$collections$Array*) malloc(40);
+    panda$collections$Array* $tmp1 = (panda$collections$Array*) pandaAlloc(40);
     $tmp1->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp1->refCount.value = 1;
     panda$collections$Array$init($tmp1);
@@ -27,7 +27,7 @@ void org$pandalanguage$pandac$CCodeGenerator$InlineContext$init$panda$core$Strin
         self->selfRef = ((panda$core$String*) $tmp4);
     }
     {
-        panda$collections$ImmutableArray* $tmp5 = (panda$collections$ImmutableArray*) malloc(40);
+        panda$collections$ImmutableArray* $tmp5 = (panda$collections$ImmutableArray*) pandaAlloc(40);
         $tmp5->$class = (panda$core$Class*) &panda$collections$ImmutableArray$class;
         $tmp5->refCount.value = 1;
         panda$collections$ImmutableArray$init$panda$collections$ListView$LTpanda$collections$ImmutableArray$T$GT($tmp5, p_argRefs);

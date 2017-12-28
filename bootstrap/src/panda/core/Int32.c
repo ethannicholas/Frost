@@ -93,7 +93,7 @@ struct { panda$core$Class* cl; ITable* itable; void* methods[2]; } panda$core$In
 struct { panda$core$Class* cl; ITable* itable; void* methods[4]; } panda$core$Int32$wrapper_panda$core$Comparable = { (panda$core$Class*) &panda$core$Comparable$class, (ITable*) &panda$core$Int32$wrapper_panda$core$Equatable, { panda$core$Int32$$GT$panda$core$Int32$R$panda$core$Bit$wrappershim, panda$core$Int32$$LT$panda$core$Int32$R$panda$core$Bit$wrappershim, panda$core$Int32$$GE$panda$core$Int32$R$panda$core$Bit$wrappershim, panda$core$Int32$$LE$panda$core$Int32$R$panda$core$Bit$wrappershim} };
 
 panda$core$Int32$wrapperclass_type panda$core$Int32$wrapperclass = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Value$class, (ITable*) &panda$core$Int32$wrapper_panda$core$Comparable, { panda$core$Int32$convert$R$panda$core$String$wrappershim, panda$core$Object$cleanup} };
-static panda$core$String $s160 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2d", 1, 146, NULL };
+static panda$core$String $s160 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2d", 1, 146, NULL };
 
 void panda$core$Int32$init$builtin_int32(panda$core$Int32* self, int32_t p_value) {
     self->value = p_value;
@@ -919,7 +919,7 @@ panda$core$String* panda$core$Int32$convert$R$panda$core$String(panda$core$Int32
     i200.value += 1;
     goto $l205;
     $l207:;
-    panda$core$String* $tmp220 = (panda$core$String*) malloc(48);
+    panda$core$String* $tmp220 = (panda$core$String*) pandaAlloc(48);
     $tmp220->$class = (panda$core$Class*) &panda$core$String$class;
     $tmp220->refCount.value = 1;
     panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp220, chars172, size197);

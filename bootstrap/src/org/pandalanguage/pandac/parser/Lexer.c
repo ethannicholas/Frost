@@ -19,7 +19,7 @@ org$pandalanguage$pandac$parser$Lexer$class_type org$pandalanguage$pandac$parser
 
 void org$pandalanguage$pandac$parser$Lexer$start$panda$core$String(org$pandalanguage$pandac$parser$Lexer* self, panda$core$String* p_source) {
     {
-        org$pandalanguage$plex$runtime$DFA* $tmp1 = (org$pandalanguage$plex$runtime$DFA*) malloc(80);
+        org$pandalanguage$plex$runtime$DFA* $tmp1 = (org$pandalanguage$plex$runtime$DFA*) pandaAlloc(80);
         $tmp1->$class = (panda$core$Class*) &org$pandalanguage$plex$runtime$DFA$class;
         $tmp1->refCount.value = 1;
         org$pandalanguage$plex$runtime$DFA$init$panda$core$String$panda$core$Int64$panda$unsafe$Pointer$LTpanda$unsafe$Pointer$LTpanda$core$Int64$GT$GT$panda$unsafe$Pointer$LTpanda$core$Int64$GT($tmp1, p_source, ((panda$core$Int64) { 239 }), self->transitions, self->accepts);

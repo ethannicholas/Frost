@@ -13,8 +13,8 @@ struct { panda$core$Class* cl; ITable* next; void* methods[1]; } org$pandalangua
 org$pandalanguage$pandac$parser$Parser$Errors$class_type org$pandalanguage$pandac$parser$Parser$Errors$class = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Object$class, (ITable*) &org$pandalanguage$pandac$parser$Parser$Errors$_org$pandalanguage$pandac$ErrorReporter, { panda$core$Object$convert$R$panda$core$String, panda$core$Object$cleanup, org$pandalanguage$pandac$parser$Parser$Errors$error$panda$io$File$org$pandalanguage$pandac$Position$panda$core$String} };
 
 
-static panda$core$String $s2 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x3a\x20", 2, 16091, NULL };
-static panda$core$String $s5 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
+static panda$core$String $s2 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x3a\x20", 2, 16091, NULL };
+static panda$core$String $s5 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
 
 void org$pandalanguage$pandac$parser$Parser$Errors$error$panda$io$File$org$pandalanguage$pandac$Position$panda$core$String(org$pandalanguage$pandac$parser$Parser$Errors* self, panda$io$File* p_file, org$pandalanguage$pandac$Position p_pos, panda$core$String* p_msg) {
     panda$core$String* $tmp1 = org$pandalanguage$pandac$Position$convert$R$panda$core$String(p_pos);

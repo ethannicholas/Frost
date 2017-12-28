@@ -42,10 +42,10 @@ typedef panda$collections$Iterator* (*$fn154)(panda$collections$Iterable*);
 typedef panda$core$Bit (*$fn160)(panda$collections$Iterator*);
 typedef panda$core$Object* (*$fn166)(panda$collections$Iterator*);
 
-static panda$core$String $s110 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2c\x20", 2, 14677, NULL };
-static panda$core$String $s113 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
-static panda$core$String $s149 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
-static panda$core$String $s168 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2c\x20", 2, 14677, NULL };
+static panda$core$String $s110 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2c\x20", 2, 14677, NULL };
+static panda$core$String $s113 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
+static panda$core$String $s149 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
+static panda$core$String $s168 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2c\x20", 2, 14677, NULL };
 
 void panda$collections$ImmutableArray$init(panda$collections$ImmutableArray* self) {
     self->count = ((panda$core$Int64) { 0 });
@@ -163,7 +163,7 @@ panda$collections$ImmutableArray* panda$collections$ImmutableArray$$IDX$panda$co
     i40.value += 1;
     goto $l45;
     $l47:;
-    panda$collections$ImmutableArray* $tmp61 = (panda$collections$ImmutableArray*) malloc(40);
+    panda$collections$ImmutableArray* $tmp61 = (panda$collections$ImmutableArray*) pandaAlloc(40);
     $tmp61->$class = (panda$core$Class*) &panda$collections$ImmutableArray$class;
     $tmp61->refCount.value = 1;
     panda$collections$ImmutableArray$init$panda$unsafe$Pointer$LTpanda$collections$ImmutableArray$T$GT$panda$core$Int64($tmp61, result38, count36);
@@ -253,7 +253,7 @@ panda$collections$ImmutableArray* panda$collections$ImmutableArray$$IDX$panda$co
     }
     }
     }
-    panda$collections$Array* $tmp78 = (panda$collections$Array*) malloc(40);
+    panda$collections$Array* $tmp78 = (panda$collections$Array*) pandaAlloc(40);
     $tmp78->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp78->refCount.value = 1;
     panda$collections$Array$init($tmp78);
@@ -316,14 +316,14 @@ panda$collections$ImmutableArray* panda$collections$ImmutableArray$$IDX$panda$co
         panda$collections$Array$add$panda$collections$Array$T(result77, $tmp105);
     }
     }
-    panda$collections$ImmutableArray* $tmp106 = (panda$collections$ImmutableArray*) malloc(40);
+    panda$collections$ImmutableArray* $tmp106 = (panda$collections$ImmutableArray*) pandaAlloc(40);
     $tmp106->$class = (panda$core$Class*) &panda$collections$ImmutableArray$class;
     $tmp106->refCount.value = 1;
     panda$collections$ImmutableArray$init$panda$collections$ListView$LTpanda$collections$ImmutableArray$T$GT($tmp106, ((panda$collections$ListView*) result77));
     return $tmp106;
 }
 panda$collections$Iterator* panda$collections$ImmutableArray$iterator$R$panda$collections$Iterator$LTpanda$collections$ImmutableArray$T$GT(panda$collections$ImmutableArray* self) {
-    panda$collections$ImmutableArray$ImmutableArrayIterator* $tmp108 = (panda$collections$ImmutableArray$ImmutableArrayIterator*) malloc(32);
+    panda$collections$ImmutableArray$ImmutableArrayIterator* $tmp108 = (panda$collections$ImmutableArray$ImmutableArrayIterator*) pandaAlloc(32);
     $tmp108->$class = (panda$core$Class*) &panda$collections$ImmutableArray$ImmutableArrayIterator$class;
     $tmp108->refCount.value = 1;
     panda$collections$ImmutableArray$ImmutableArrayIterator$init$panda$collections$ImmutableArray$LTpanda$collections$ImmutableArray$ImmutableArrayIterator$T$GT($tmp108, self);
@@ -342,7 +342,7 @@ panda$core$String* panda$collections$ImmutableArray$join$panda$core$String$R$pan
         return &$s113;
     }
     }
-    panda$core$MutableString* $tmp115 = (panda$core$MutableString*) malloc(48);
+    panda$core$MutableString* $tmp115 = (panda$core$MutableString*) pandaAlloc(48);
     $tmp115->$class = (panda$core$Class*) &panda$core$MutableString$class;
     $tmp115->refCount.value = 1;
     panda$core$Object* $tmp117 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(self, ((panda$core$Int64) { 0 }));
@@ -387,7 +387,7 @@ panda$core$String* panda$collections$ImmutableArray$convert$R$panda$core$String(
     panda$collections$Iterator* v$Iter151;
     panda$core$Object* v163;
     panda$core$Char8 $tmp170;
-    panda$core$MutableString* $tmp144 = (panda$core$MutableString*) malloc(48);
+    panda$core$MutableString* $tmp144 = (panda$core$MutableString*) pandaAlloc(48);
     $tmp144->$class = (panda$core$Class*) &panda$core$MutableString$class;
     $tmp144->refCount.value = 1;
     panda$core$MutableString$init($tmp144);

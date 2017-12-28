@@ -28,15 +28,15 @@ typedef panda$core$Int64 (*$fn12)(panda$collections$CollectionView*);
 typedef panda$core$Object* (*$fn32)(panda$collections$ListView*, panda$core$Int64);
 typedef panda$core$Object* (*$fn37)(panda$collections$ListView*, panda$core$Int64);
 
-static panda$core$String $s28 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2e", 1, 147, NULL };
-static panda$core$String $s53 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x3c\x6d\x65\x74\x68\x6f\x64\x3e", 8, 17378158564789264, NULL };
-static panda$core$String $s55 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x4d\x65\x74\x68\x6f\x64\x52\x65\x66\x28", 10, -7131972655011641641, NULL };
-static panda$core$String $s58 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2c\x20", 2, 14677, NULL };
-static panda$core$String $s61 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x29", 1, 142, NULL };
+static panda$core$String $s28 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2e", 1, 147, NULL };
+static panda$core$String $s53 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x3c\x6d\x65\x74\x68\x6f\x64\x3e", 8, 17378158564789264, NULL };
+static panda$core$String $s55 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x4d\x65\x74\x68\x6f\x64\x52\x65\x66\x28", 10, -7131972655011641641, NULL };
+static panda$core$String $s58 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2c\x20", 2, 14677, NULL };
+static panda$core$String $s61 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x29", 1, 142, NULL };
 
 void org$pandalanguage$pandac$MethodRef$init$org$pandalanguage$pandac$MethodDecl$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT(org$pandalanguage$pandac$MethodRef* self, org$pandalanguage$pandac$MethodDecl* p_value, panda$collections$ListView* p_types) {
     panda$core$Range$LTpanda$core$Int64$GT $tmp5;
-    panda$collections$HashMap* $tmp1 = (panda$collections$HashMap*) malloc(56);
+    panda$collections$HashMap* $tmp1 = (panda$collections$HashMap*) pandaAlloc(56);
     $tmp1->$class = (panda$core$Class*) &panda$collections$HashMap$class;
     $tmp1->refCount.value = 1;
     panda$collections$HashMap$init($tmp1);
@@ -123,7 +123,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$MethodRef$returnType$R$o
 }
 org$pandalanguage$pandac$Type* org$pandalanguage$pandac$MethodRef$type$R$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$MethodRef* self) {
     org$pandalanguage$pandac$Position $tmp54;
-    org$pandalanguage$pandac$Type* $tmp51 = (org$pandalanguage$pandac$Type*) malloc(96);
+    org$pandalanguage$pandac$Type* $tmp51 = (org$pandalanguage$pandac$Type*) pandaAlloc(96);
     $tmp51->$class = (panda$core$Class*) &org$pandalanguage$pandac$Type$class;
     $tmp51->refCount.value = 1;
     org$pandalanguage$pandac$Position$init(&$tmp54);

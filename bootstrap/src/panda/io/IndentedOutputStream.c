@@ -17,8 +17,8 @@ typedef void (*$fn15)(panda$io$OutputStream*, panda$core$UInt8*, panda$core$Int6
 typedef void (*$fn18)(panda$io$OutputStream*, panda$core$UInt8*, panda$core$Int64, panda$core$Int64);
 typedef void (*$fn25)(panda$io$OutputStream*, panda$core$String*);
 
-static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
-static panda$core$String $s21 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x20", 1, 133, NULL };
+static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
+static panda$core$String $s21 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x20", 1, 133, NULL };
 
 void panda$io$IndentedOutputStream$init$panda$io$OutputStream(panda$io$IndentedOutputStream* self, panda$io$OutputStream* p_out) {
     self->indent = NULL;

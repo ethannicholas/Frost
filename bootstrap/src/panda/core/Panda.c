@@ -24,25 +24,25 @@ typedef void (*$fn10)(panda$io$OutputStream*, panda$core$String*);
 typedef void (*$fn23)(panda$io$OutputStream*, panda$core$String*);
 typedef panda$core$Object* (*$fn180)(panda$collections$ListView*, panda$core$Int64);
 
-static panda$core$String $s2 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x61\x73\x73\x65\x72\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x28", 19, -2375112016343986227, NULL };
-static panda$core$String $s4 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x3a", 1, 159, NULL };
-static panda$core$String $s8 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x29", 1, 142, NULL };
-static panda$core$String $s12 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x61\x73\x73\x65\x72\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x28", 19, -2375112016343986227, NULL };
-static panda$core$String $s14 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x3a", 1, 159, NULL };
-static panda$core$String $s18 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x29\x3a\x20", 3, 1454432, NULL };
-static panda$core$String $s21 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
-static panda$core$String $s59 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
-static panda$core$String $s126 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x61\x62\x63\x64\x65\x66", 16, 6478845731788479527, NULL };
-static panda$core$String $s158 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x41\x42\x43\x44\x45\x46", 16, 6478845392102031335, NULL };
-static panda$core$String $s217 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x44\x65\x62\x75\x67\x3a\x20", 7, 180468745123278, NULL };
-static panda$core$String $s220 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
+static panda$core$String $s2 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x61\x73\x73\x65\x72\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x28", 19, -2375112016343986227, NULL };
+static panda$core$String $s4 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x3a", 1, 159, NULL };
+static panda$core$String $s8 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x29", 1, 142, NULL };
+static panda$core$String $s12 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x61\x73\x73\x65\x72\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x28", 19, -2375112016343986227, NULL };
+static panda$core$String $s14 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x3a", 1, 159, NULL };
+static panda$core$String $s18 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x29\x3a\x20", 3, 1454432, NULL };
+static panda$core$String $s21 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
+static panda$core$String $s59 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
+static panda$core$String $s126 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x61\x62\x63\x64\x65\x66", 16, 6478845731788479527, NULL };
+static panda$core$String $s158 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x41\x42\x43\x44\x45\x46", 16, 6478845392102031335, NULL };
+static panda$core$String $s217 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x44\x65\x62\x75\x67\x3a\x20", 7, 180468745123278, NULL };
+static panda$core$String $s220 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
 
 void panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(panda$core$String* p_file, panda$core$Int64 p_line) {
     panda$io$OutputStream* $tmp1 = panda$io$Console$errorStream$R$panda$io$OutputStream();
     panda$core$String* $tmp3 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s2, p_file);
     panda$core$String* $tmp5 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3, &$s4);
     panda$core$Int64$wrapper* $tmp6;
-    $tmp6 = (panda$core$Int64$wrapper*) malloc(24);
+    $tmp6 = (panda$core$Int64$wrapper*) pandaAlloc(24);
     $tmp6->cl = (panda$core$Class*) &panda$core$Int64$wrapperclass;
     $tmp6->refCount = 1;
     $tmp6->value = p_line;
@@ -56,7 +56,7 @@ void panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$
     panda$core$String* $tmp13 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s12, p_file);
     panda$core$String* $tmp15 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp13, &$s14);
     panda$core$Int64$wrapper* $tmp16;
-    $tmp16 = (panda$core$Int64$wrapper*) malloc(24);
+    $tmp16 = (panda$core$Int64$wrapper*) pandaAlloc(24);
     $tmp16->cl = (panda$core$Class*) &panda$core$Int64$wrapperclass;
     $tmp16->refCount = 1;
     $tmp16->value = p_line;
@@ -488,7 +488,7 @@ panda$core$String* panda$core$Panda$format$panda$core$Bit$panda$core$UInt64$pand
     i195.value += 1;
     goto $l200;
     $l202:;
-    panda$core$String* $tmp215 = (panda$core$String*) malloc(48);
+    panda$core$String* $tmp215 = (panda$core$String*) pandaAlloc(48);
     $tmp215->$class = (panda$core$Class*) &panda$core$String$class;
     $tmp215->refCount.value = 1;
     panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp215, chars171, size192);
@@ -496,7 +496,7 @@ panda$core$String* panda$core$Panda$format$panda$core$Bit$panda$core$UInt64$pand
 }
 void panda$core$Panda$debugPrint$builtin_int64(int64_t p_i) {
     panda$core$Int64$wrapper* $tmp218;
-    $tmp218 = (panda$core$Int64$wrapper*) malloc(24);
+    $tmp218 = (panda$core$Int64$wrapper*) pandaAlloc(24);
     $tmp218->cl = (panda$core$Class*) &panda$core$Int64$wrapperclass;
     $tmp218->refCount = 1;
     $tmp218->value = ((panda$core$Int64) { p_i });

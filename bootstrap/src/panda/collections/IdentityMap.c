@@ -51,10 +51,10 @@ struct { panda$core$Class* cl; ITable* next; void* methods[2]; } panda$collectio
 panda$collections$IdentityMap$class_type panda$collections$IdentityMap$class = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Object$class, (ITable*) &panda$collections$IdentityMap$_panda$core$Equatable, { panda$collections$IdentityMap$convert$R$panda$core$String, panda$core$Object$cleanup, panda$collections$IdentityMap$indexFor$panda$collections$IdentityMap$K$R$panda$core$Int64, panda$collections$IdentityMap$$IDX$panda$collections$IdentityMap$K$R$panda$collections$IdentityMap$V$Q$shim, panda$collections$IdentityMap$contains$panda$collections$IdentityMap$K$R$panda$core$Bit, panda$collections$IdentityMap$$IDXEQ$panda$collections$IdentityMap$K$panda$collections$IdentityMap$V$shim, panda$collections$IdentityMap$remove$panda$collections$IdentityMap$K, panda$collections$IdentityMap$clear, panda$collections$IdentityMap$incrementCount, panda$collections$IdentityMap$get_count$R$panda$core$Int64, panda$collections$IdentityMap$$EQ$panda$collections$Map$LTpanda$collections$IdentityMap$K$Cpanda$collections$IdentityMap$V$GT$R$panda$core$Bit$shim, panda$collections$IdentityMap$$NEQ$panda$collections$Map$LTpanda$collections$IdentityMap$K$Cpanda$collections$IdentityMap$V$GT$R$panda$core$Bit$shim, panda$collections$IdentityMap$keys$R$panda$collections$Iterator$LTpanda$collections$IdentityMap$K$GT$shim, panda$collections$IdentityMap$values$R$panda$collections$Iterator$LTpanda$collections$IdentityMap$V$GT$shim} };
 
 
-static panda$core$String $s159 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
-static panda$core$String $s179 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x6e\x75\x6c\x6c", 4, 218598044, NULL };
-static panda$core$String $s181 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x6e\x75\x6c\x6c", 4, 218598044, NULL };
-static panda$core$String $s183 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2c\x20", 2, 14677, NULL };
+static panda$core$String $s159 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
+static panda$core$String $s179 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6e\x75\x6c\x6c", 4, 218598044, NULL };
+static panda$core$String $s181 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6e\x75\x6c\x6c", 4, 218598044, NULL };
+static panda$core$String $s183 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2c\x20", 2, 14677, NULL };
 
 void panda$collections$IdentityMap$init(panda$collections$IdentityMap* self) {
     panda$core$Range$LTpanda$core$Int64$GT $tmp2;
@@ -194,7 +194,7 @@ void panda$collections$IdentityMap$$IDXEQ$panda$collections$IdentityMap$K$panda$
         old57 = ((panda$collections$IdentityMap$Entry*) $tmp58);
         {
             panda$core$Panda$unref$panda$core$Object$R$panda$core$Object(((panda$core$Object*) e49));
-            panda$collections$IdentityMap$Entry* $tmp59 = (panda$collections$IdentityMap$Entry*) malloc(40);
+            panda$collections$IdentityMap$Entry* $tmp59 = (panda$collections$IdentityMap$Entry*) pandaAlloc(40);
             $tmp59->$class = (panda$core$Class*) &panda$collections$IdentityMap$Entry$class;
             $tmp59->refCount.value = 1;
             panda$collections$IdentityMap$Entry$init$panda$collections$IdentityMap$Entry$K$panda$collections$IdentityMap$Entry$V($tmp59, p_key, p_value);
@@ -440,7 +440,7 @@ panda$core$String* panda$collections$IdentityMap$convert$R$panda$core$String(pan
     panda$collections$IdentityMap$Entry* entry175;
     panda$core$Char8 $tmp180;
     panda$core$Char8 $tmp191;
-    panda$core$MutableString* $tmp154 = (panda$core$MutableString*) malloc(48);
+    panda$core$MutableString* $tmp154 = (panda$core$MutableString*) pandaAlloc(48);
     $tmp154->$class = (panda$core$Class*) &panda$core$MutableString$class;
     $tmp154->refCount.value = 1;
     panda$core$MutableString$init($tmp154);

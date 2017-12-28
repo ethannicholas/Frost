@@ -23,7 +23,7 @@ typedef panda$core$Object* (*$fn6)(panda$collections$HashMap$EntryIterator*);
 
 void panda$collections$HashMap$ValueIterator$init$panda$collections$HashMap$LTpanda$collections$HashMap$ValueIterator$K$Cpanda$collections$HashMap$ValueIterator$V$GT(panda$collections$HashMap$ValueIterator* self, panda$collections$HashMap* p_map) {
     {
-        panda$collections$HashMap$EntryIterator* $tmp1 = (panda$collections$HashMap$EntryIterator*) malloc(40);
+        panda$collections$HashMap$EntryIterator* $tmp1 = (panda$collections$HashMap$EntryIterator*) pandaAlloc(40);
         $tmp1->$class = (panda$core$Class*) &panda$collections$HashMap$EntryIterator$class;
         $tmp1->refCount.value = 1;
         panda$collections$HashMap$EntryIterator$init$panda$collections$HashMap$LTpanda$collections$HashMap$EntryIterator$K$Cpanda$collections$HashMap$EntryIterator$V$GT($tmp1, p_map);

@@ -27,7 +27,7 @@ typedef panda$core$Object* (*$fn122)(panda$collections$ListView*, panda$core$Int
 
 
 void panda$io$PushbackInputStream$init$panda$io$InputStream(panda$io$PushbackInputStream* self, panda$io$InputStream* p_source) {
-    panda$collections$Array* $tmp1 = (panda$collections$Array*) malloc(40);
+    panda$collections$Array* $tmp1 = (panda$collections$Array*) pandaAlloc(40);
     $tmp1->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp1->refCount.value = 1;
     panda$collections$Array$init($tmp1);
@@ -58,7 +58,7 @@ panda$core$UInt8$nullable panda$io$PushbackInputStream$read$R$panda$core$UInt8$Q
 }
 void panda$io$PushbackInputStream$pushback$panda$core$UInt8(panda$io$PushbackInputStream* self, panda$core$UInt8 p_v) {
     panda$core$UInt8$wrapper* $tmp14;
-    $tmp14 = (panda$core$UInt8$wrapper*) malloc(13);
+    $tmp14 = (panda$core$UInt8$wrapper*) pandaAlloc(13);
     $tmp14->cl = (panda$core$Class*) &panda$core$UInt8$wrapperclass;
     $tmp14->refCount = 1;
     $tmp14->value = p_v;
@@ -67,7 +67,7 @@ void panda$io$PushbackInputStream$pushback$panda$core$UInt8(panda$io$PushbackInp
 void panda$io$PushbackInputStream$pushback$panda$core$Int8(panda$io$PushbackInputStream* self, panda$core$Int8 p_v) {
     panda$core$UInt8 $tmp15 = panda$core$Int8$convert$R$panda$core$UInt8(p_v);
     panda$core$UInt8$wrapper* $tmp16;
-    $tmp16 = (panda$core$UInt8$wrapper*) malloc(13);
+    $tmp16 = (panda$core$UInt8$wrapper*) pandaAlloc(13);
     $tmp16->cl = (panda$core$Class*) &panda$core$UInt8$wrapperclass;
     $tmp16->refCount = 1;
     $tmp16->value = $tmp15;

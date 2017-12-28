@@ -58,7 +58,7 @@ void panda$io$Console$printLine() {
     panda$core$Char8 $tmp25;
     panda$core$Char8$init$panda$core$UInt8(&$tmp25, ((panda$core$UInt8) { 10 }));
     panda$core$Char8$wrapper* $tmp26;
-    $tmp26 = (panda$core$Char8$wrapper*) malloc(13);
+    $tmp26 = (panda$core$Char8$wrapper*) pandaAlloc(13);
     $tmp26->cl = (panda$core$Class*) &panda$core$Char8$wrapperclass;
     $tmp26->refCount = 1;
     $tmp26->value = $tmp25;
@@ -69,7 +69,7 @@ panda$core$String* panda$io$Console$readLine$R$panda$core$String$Q() {
     panda$core$Char8$nullable c33;
     panda$core$Char8$nullable $tmp34;
     panda$core$Char8 $tmp40;
-    panda$core$MutableString* $tmp28 = (panda$core$MutableString*) malloc(48);
+    panda$core$MutableString* $tmp28 = (panda$core$MutableString*) pandaAlloc(48);
     $tmp28->$class = (panda$core$Class*) &panda$core$MutableString$class;
     $tmp28->refCount.value = 1;
     panda$core$MutableString$init($tmp28);

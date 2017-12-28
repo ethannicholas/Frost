@@ -10,7 +10,7 @@
 panda$core$Object* panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$pandac$parser$Token$GT$next$R$org$pandalanguage$pandac$parser$Token$shim(panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$pandac$parser$Token$GT* self) {
     org$pandalanguage$pandac$parser$Token result = panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$pandac$parser$Token$GT$next$R$org$pandalanguage$pandac$parser$Token(self);
     org$pandalanguage$pandac$parser$Token$wrapper* $tmp1;
-    $tmp1 = (org$pandalanguage$pandac$parser$Token$wrapper*) malloc(64);
+    $tmp1 = (org$pandalanguage$pandac$parser$Token$wrapper*) pandaAlloc(64);
     $tmp1->cl = (panda$core$Class*) &org$pandalanguage$pandac$parser$Token$wrapperclass;
     $tmp1->refCount = 1;
     $tmp1->value = result;

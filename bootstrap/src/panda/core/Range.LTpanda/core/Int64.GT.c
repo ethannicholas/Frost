@@ -15,8 +15,8 @@ panda$core$String* panda$core$Range$LTpanda$core$Int64$GT$convert$R$panda$core$S
 panda$core$Range$LTpanda$core$Int64$GT$class_type panda$core$Range$LTpanda$core$Int64$GT$class = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Value$class, NULL, { panda$core$Range$LTpanda$core$Int64$GT$convert$R$panda$core$String, panda$core$Object$cleanup} };
 
 panda$core$Range$LTpanda$core$Int64$GT$wrapperclass_type panda$core$Range$LTpanda$core$Int64$GT$wrapperclass = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Value$class, NULL, { panda$core$Range$LTpanda$core$Int64$GT$convert$R$panda$core$String$wrappershim, panda$core$Object$cleanup} };
-static panda$core$String $s6 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2e\x2e\x2e", 3, 1504239, NULL };
-static panda$core$String $s7 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2e\x2e", 2, 14893, NULL };
+static panda$core$String $s6 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2e\x2e\x2e", 3, 1504239, NULL };
+static panda$core$String $s7 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2e\x2e", 2, 14893, NULL };
 
 void panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(panda$core$Range$LTpanda$core$Int64$GT* self, panda$core$Int64 p_min, panda$core$Int64 p_max, panda$core$Bit p_inclusive) {
     self->min = p_min;
@@ -25,7 +25,7 @@ void panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int
 }
 panda$core$String* panda$core$Range$LTpanda$core$Int64$GT$convert$R$panda$core$String(panda$core$Range$LTpanda$core$Int64$GT self) {
     panda$core$MutableString* result1;
-    panda$core$MutableString* $tmp2 = (panda$core$MutableString*) malloc(48);
+    panda$core$MutableString* $tmp2 = (panda$core$MutableString*) pandaAlloc(48);
     $tmp2->$class = (panda$core$Class*) &panda$core$MutableString$class;
     $tmp2->refCount.value = 1;
     panda$core$MutableString$init($tmp2);
@@ -34,7 +34,7 @@ panda$core$String* panda$core$Range$LTpanda$core$Int64$GT$convert$R$panda$core$S
     if (((panda$core$Bit) { true }).value) {
     {
         panda$core$Int64$wrapper* $tmp5;
-        $tmp5 = (panda$core$Int64$wrapper*) malloc(24);
+        $tmp5 = (panda$core$Int64$wrapper*) pandaAlloc(24);
         $tmp5->cl = (panda$core$Class*) &panda$core$Int64$wrapperclass;
         $tmp5->refCount = 1;
         $tmp5->value = self.min;
@@ -54,7 +54,7 @@ panda$core$String* panda$core$Range$LTpanda$core$Int64$GT$convert$R$panda$core$S
     if (((panda$core$Bit) { true }).value) {
     {
         panda$core$Int64$wrapper* $tmp8;
-        $tmp8 = (panda$core$Int64$wrapper*) malloc(24);
+        $tmp8 = (panda$core$Int64$wrapper*) pandaAlloc(24);
         $tmp8->cl = (panda$core$Class*) &panda$core$Int64$wrapperclass;
         $tmp8->refCount = 1;
         $tmp8->value = self.max;

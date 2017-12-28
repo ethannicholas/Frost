@@ -13,8 +13,8 @@ panda$core$String* org$pandalanguage$pandac$Position$convert$R$panda$core$String
 org$pandalanguage$pandac$Position$class_type org$pandalanguage$pandac$Position$class = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Value$class, NULL, { org$pandalanguage$pandac$Position$convert$R$panda$core$String, panda$core$Object$cleanup} };
 
 org$pandalanguage$pandac$Position$wrapperclass_type org$pandalanguage$pandac$Position$wrapperclass = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Value$class, NULL, { org$pandalanguage$pandac$Position$convert$R$panda$core$String$wrappershim, panda$core$Object$cleanup} };
-static panda$core$String $s7 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x3a", 1, 159, NULL };
-static panda$core$String $s11 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
+static panda$core$String $s7 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x3a", 1, 159, NULL };
+static panda$core$String $s11 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
 
 void org$pandalanguage$pandac$Position$init(org$pandalanguage$pandac$Position* self) {
     self->line = ((panda$core$Int64) { 1 });
@@ -36,7 +36,7 @@ panda$core$String* org$pandalanguage$pandac$Position$convert$R$panda$core$String
     panda$core$String* $tmp6 = panda$core$Int64$convert$R$panda$core$String(self.line);
     panda$core$String* $tmp8 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp6, &$s7);
     panda$core$Int64$wrapper* $tmp9;
-    $tmp9 = (panda$core$Int64$wrapper*) malloc(24);
+    $tmp9 = (panda$core$Int64$wrapper*) pandaAlloc(24);
     $tmp9->cl = (panda$core$Class*) &panda$core$Int64$wrapperclass;
     $tmp9->refCount = 1;
     $tmp9->value = self.column;

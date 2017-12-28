@@ -694,7 +694,7 @@ panda$core$String* panda$core$UInt64$convert$R$panda$core$String(panda$core$UInt
     i150.value += 1;
     goto $l155;
     $l157:;
-    panda$core$String* $tmp170 = (panda$core$String*) malloc(48);
+    panda$core$String* $tmp170 = (panda$core$String*) pandaAlloc(48);
     $tmp170->$class = (panda$core$Class*) &panda$core$String$class;
     $tmp170->refCount.value = 1;
     panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp170, chars122, size147);

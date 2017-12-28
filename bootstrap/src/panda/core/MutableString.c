@@ -15,7 +15,7 @@ panda$core$MutableString$class_type panda$core$MutableString$class = { (panda$co
 
 typedef panda$core$String* (*$fn123)(panda$core$Object*);
 
-static panda$core$String $s154 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
+static panda$core$String $s154 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
 
 void panda$core$MutableString$init(panda$core$MutableString* self) {
     self->dummy = NULL;
@@ -298,7 +298,7 @@ panda$core$String* panda$core$MutableString$convert$R$panda$core$String(panda$co
     i133.value += 1;
     goto $l138;
     $l140:;
-    panda$core$String* $tmp152 = (panda$core$String*) malloc(48);
+    panda$core$String* $tmp152 = (panda$core$String*) pandaAlloc(48);
     $tmp152->$class = (panda$core$Class*) &panda$core$String$class;
     $tmp152->refCount.value = 1;
     panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp152, result131, self->length);

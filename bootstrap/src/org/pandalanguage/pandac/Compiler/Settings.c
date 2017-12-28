@@ -19,7 +19,7 @@ void org$pandalanguage$pandac$Compiler$Settings$init$panda$io$File$panda$collect
         self->pandaHome = ((panda$io$File*) $tmp1);
     }
     {
-        panda$collections$ImmutableArray* $tmp2 = (panda$collections$ImmutableArray*) malloc(40);
+        panda$collections$ImmutableArray* $tmp2 = (panda$collections$ImmutableArray*) pandaAlloc(40);
         $tmp2->$class = (panda$core$Class*) &panda$collections$ImmutableArray$class;
         $tmp2->refCount.value = 1;
         panda$collections$ImmutableArray$init$panda$collections$ListView$LTpanda$collections$ImmutableArray$T$GT($tmp2, p_importDirs);

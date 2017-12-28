@@ -10,7 +10,7 @@
 panda$core$Object* panda$core$String$UTF8Iterator$next$R$panda$core$Char8$shim(panda$core$String$UTF8Iterator* self) {
     panda$core$Char8 result = panda$core$String$UTF8Iterator$next$R$panda$core$Char8(self);
     panda$core$Char8$wrapper* $tmp1;
-    $tmp1 = (panda$core$Char8$wrapper*) malloc(13);
+    $tmp1 = (panda$core$Char8$wrapper*) pandaAlloc(13);
     $tmp1->cl = (panda$core$Class*) &panda$core$Char8$wrapperclass;
     $tmp1->refCount = 1;
     $tmp1->value = result;

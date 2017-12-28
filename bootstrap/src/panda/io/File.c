@@ -30,14 +30,14 @@ panda$io$File$class_type panda$io$File$class = { (panda$core$Class*) &panda$core
 typedef panda$collections$Iterator* (*$fn12)(panda$io$InputStream*);
 typedef panda$core$String* (*$fn61)(panda$io$InputStream*);
 
-static panda$core$String $s2 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2f", 1, 148, NULL };
-static panda$core$String $s8 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2f", 1, 148, NULL };
-static panda$core$String $s17 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2f", 1, 148, NULL };
-static panda$core$String $s19 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
-static panda$core$String $s23 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2e", 1, 147, NULL };
-static panda$core$String $s26 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2f", 1, 148, NULL };
-static panda$core$String $s35 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2f", 1, 148, NULL };
-static panda$core$String $s44 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2e", 1, 147, NULL };
+static panda$core$String $s2 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2f", 1, 148, NULL };
+static panda$core$String $s8 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2f", 1, 148, NULL };
+static panda$core$String $s17 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2f", 1, 148, NULL };
+static panda$core$String $s19 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
+static panda$core$String $s23 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2e", 1, 147, NULL };
+static panda$core$String $s26 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2f", 1, 148, NULL };
+static panda$core$String $s35 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2f", 1, 148, NULL };
+static panda$core$String $s44 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2e", 1, 147, NULL };
 
 void panda$io$File$init$panda$core$String(panda$io$File* self, panda$core$String* p_path) {
     {
@@ -49,14 +49,14 @@ panda$io$File* panda$io$File$resolve$panda$core$String$R$panda$io$File(panda$io$
     panda$core$Bit $tmp3 = panda$core$String$startsWith$panda$core$String$R$panda$core$Bit(p_path, &$s2);
     if ($tmp3.value) {
     {
-        panda$io$File* $tmp4 = (panda$io$File*) malloc(24);
+        panda$io$File* $tmp4 = (panda$io$File*) pandaAlloc(24);
         $tmp4->$class = (panda$core$Class*) &panda$io$File$class;
         $tmp4->refCount.value = 1;
         panda$io$File$init$panda$core$String($tmp4, p_path);
         return $tmp4;
     }
     }
-    panda$io$File* $tmp6 = (panda$io$File*) malloc(24);
+    panda$io$File* $tmp6 = (panda$io$File*) pandaAlloc(24);
     $tmp6->$class = (panda$core$Class*) &panda$io$File$class;
     $tmp6->refCount.value = 1;
     panda$core$String* $tmp9 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(self->path, &$s8);
@@ -70,7 +70,7 @@ panda$collections$Iterator* panda$io$File$lines$R$panda$collections$Iterator$LTp
     return $tmp13;
 }
 panda$io$File* panda$io$File$absolute$R$panda$io$File(panda$io$File* self) {
-    panda$io$File* $tmp14 = (panda$io$File*) malloc(24);
+    panda$io$File* $tmp14 = (panda$io$File*) pandaAlloc(24);
     $tmp14->$class = (panda$core$Class*) &panda$io$File$class;
     $tmp14->refCount.value = 1;
     panda$core$String* $tmp16 = panda$io$File$absolutePath$R$panda$core$String(self);
@@ -89,7 +89,7 @@ panda$io$File* panda$io$File$parent$R$panda$io$File$Q(panda$io$File* self) {
     panda$core$Bit $tmp20 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit(self->path, &$s19);
     if ($tmp20.value) {
     {
-        panda$io$File* $tmp21 = (panda$io$File*) malloc(24);
+        panda$io$File* $tmp21 = (panda$io$File*) pandaAlloc(24);
         $tmp21->$class = (panda$core$Class*) &panda$io$File$class;
         $tmp21->refCount.value = 1;
         panda$io$File$init$panda$core$String($tmp21, &$s23);
@@ -101,7 +101,7 @@ panda$io$File* panda$io$File$parent$R$panda$io$File$Q(panda$io$File* self) {
     index25 = $tmp27;
     if (((panda$core$Bit) { index25.nonnull }).value) {
     {
-        panda$io$File* $tmp28 = (panda$io$File*) malloc(24);
+        panda$io$File* $tmp28 = (panda$io$File*) pandaAlloc(24);
         $tmp28->$class = (panda$core$Class*) &panda$io$File$class;
         $tmp28->refCount.value = 1;
         panda$core$Range$LTpanda$core$String$Index$Q$GT$init$panda$core$String$Index$Q$panda$core$String$Index$Q$panda$core$Bit(&$tmp30, ((panda$core$String$Index$nullable) { .nonnull = false }), index25, ((panda$core$Bit) { false }));

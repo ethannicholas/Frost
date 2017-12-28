@@ -993,7 +993,7 @@ class CCodeGenerator : CodeGenerator {
             out.level += 1
         }
         out.printLine("\{wrapped} = (\{wrapperType(srcType)}) " +
-                "malloc(\{sizeOfWrapper(srcType)});")
+                "pandaAlloc(\{sizeOfWrapper(srcType)});")
         out.printLine("\{wrapped}->cl = (panda$core$Class*) " +
                 "&\{escapeName(srcType.name)}$wrapperclass;")
         out.printLine("\{wrapped}->refCount = 1;")
@@ -1108,7 +1108,7 @@ class CCodeGenerator : CodeGenerator {
                     return tmp
                 }
                 def result := nextVar()
-                out.printLine("\{t} \{result} = (\{t}) malloc(\{sizeOf(target)});")
+                out.printLine("\{t} \{result} = (\{t}) pandaAlloc(\{sizeOf(target)});")
                 def classPtr := nextVar()
                 def className:String
                 if target.typeKind = Type.Kind.GENERIC {
@@ -1159,7 +1159,7 @@ class CCodeGenerator : CodeGenerator {
         def result := "$s\{varCount}"
         type(Type.StringType())
         strings.print("static panda$core$String \{result} = { " +
-                "(panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) \"")
+                "(panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) \"")
         for c in s.utf8() {
             strings.print("\\x\{c.convert()->UInt8,0>2:x}")
         }

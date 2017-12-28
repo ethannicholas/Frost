@@ -12,7 +12,7 @@
 panda$core$Object* panda$core$String$UTF32Iterator$next$R$panda$core$Char32$shim(panda$core$String$UTF32Iterator* self) {
     panda$core$Char32 result = panda$core$String$UTF32Iterator$next$R$panda$core$Char32(self);
     panda$core$Char32$wrapper* $tmp1;
-    $tmp1 = (panda$core$Char32$wrapper*) malloc(16);
+    $tmp1 = (panda$core$Char32$wrapper*) pandaAlloc(16);
     $tmp1->cl = (panda$core$Class*) &panda$core$Char32$wrapperclass;
     $tmp1->refCount = 1;
     $tmp1->value = result;

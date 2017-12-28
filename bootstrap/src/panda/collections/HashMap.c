@@ -64,10 +64,10 @@ typedef panda$core$Bit (*$fn99)(panda$core$Equatable*, panda$core$Object*);
 typedef panda$core$Bit (*$fn117)(panda$core$Equatable*, panda$core$Object*);
 typedef panda$core$Bit (*$fn126)(panda$core$Equatable*, panda$core$Object*);
 
-static panda$core$String $s217 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
-static panda$core$String $s237 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x6e\x75\x6c\x6c", 4, 218598044, NULL };
-static panda$core$String $s239 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x6e\x75\x6c\x6c", 4, 218598044, NULL };
-static panda$core$String $s241 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2c\x20", 2, 14677, NULL };
+static panda$core$String $s217 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
+static panda$core$String $s237 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6e\x75\x6c\x6c", 4, 218598044, NULL };
+static panda$core$String $s239 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6e\x75\x6c\x6c", 4, 218598044, NULL };
+static panda$core$String $s241 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2c\x20", 2, 14677, NULL };
 
 void panda$collections$HashMap$init(panda$collections$HashMap* self) {
     panda$core$Range$LTpanda$core$Int64$GT $tmp2;
@@ -294,7 +294,7 @@ void panda$collections$HashMap$$IDXEQ$panda$collections$HashMap$K$panda$collecti
         old103 = ((panda$collections$HashMap$Entry*) $tmp104);
         {
             panda$core$Panda$unref$panda$core$Object$R$panda$core$Object(((panda$core$Object*) e91));
-            panda$collections$HashMap$Entry* $tmp105 = (panda$collections$HashMap$Entry*) malloc(40);
+            panda$collections$HashMap$Entry* $tmp105 = (panda$collections$HashMap$Entry*) pandaAlloc(40);
             $tmp105->$class = (panda$core$Class*) &panda$collections$HashMap$Entry$class;
             $tmp105->refCount.value = 1;
             panda$collections$HashMap$Entry$init$panda$collections$HashMap$Entry$K$panda$collections$HashMap$Entry$V($tmp105, p_key, p_value);
@@ -531,14 +531,14 @@ void panda$collections$HashMap$incrementCount(panda$collections$HashMap* self) {
     }
 }
 panda$collections$Iterator* panda$collections$HashMap$keys$R$panda$collections$Iterator$LTpanda$collections$HashMap$K$GT(panda$collections$HashMap* self) {
-    panda$collections$HashMap$KeyIterator* $tmp207 = (panda$collections$HashMap$KeyIterator*) malloc(24);
+    panda$collections$HashMap$KeyIterator* $tmp207 = (panda$collections$HashMap$KeyIterator*) pandaAlloc(24);
     $tmp207->$class = (panda$core$Class*) &panda$collections$HashMap$KeyIterator$class;
     $tmp207->refCount.value = 1;
     panda$collections$HashMap$KeyIterator$init$panda$collections$HashMap$LTpanda$collections$HashMap$KeyIterator$K$Cpanda$collections$HashMap$KeyIterator$V$GT($tmp207, self);
     return ((panda$collections$Iterator*) $tmp207);
 }
 panda$collections$Iterator* panda$collections$HashMap$values$R$panda$collections$Iterator$LTpanda$collections$HashMap$V$GT(panda$collections$HashMap* self) {
-    panda$collections$HashMap$ValueIterator* $tmp209 = (panda$collections$HashMap$ValueIterator*) malloc(24);
+    panda$collections$HashMap$ValueIterator* $tmp209 = (panda$collections$HashMap$ValueIterator*) pandaAlloc(24);
     $tmp209->$class = (panda$core$Class*) &panda$collections$HashMap$ValueIterator$class;
     $tmp209->refCount.value = 1;
     panda$collections$HashMap$ValueIterator$init$panda$collections$HashMap$LTpanda$collections$HashMap$ValueIterator$K$Cpanda$collections$HashMap$ValueIterator$V$GT($tmp209, self);
@@ -561,7 +561,7 @@ panda$core$String* panda$collections$HashMap$convert$R$panda$core$String(panda$c
     panda$collections$HashMap$Entry* entry233;
     panda$core$Char8 $tmp238;
     panda$core$Char8 $tmp249;
-    panda$core$MutableString* $tmp212 = (panda$core$MutableString*) malloc(48);
+    panda$core$MutableString* $tmp212 = (panda$core$MutableString*) pandaAlloc(48);
     $tmp212->$class = (panda$core$Class*) &panda$core$MutableString$class;
     $tmp212->refCount.value = 1;
     panda$core$MutableString$init($tmp212);

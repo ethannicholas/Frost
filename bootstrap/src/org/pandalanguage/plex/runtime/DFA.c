@@ -20,9 +20,9 @@ org$pandalanguage$plex$runtime$DFA$class_type org$pandalanguage$plex$runtime$DFA
 typedef panda$core$Int64 (*$fn6)(panda$collections$CollectionView*);
 typedef panda$core$Object* (*$fn24)(panda$collections$ListView*, panda$core$Int64);
 
-static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
-static panda$core$String $s28 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x69\x6e\x76\x61\x6c\x69\x64\x20\x74\x6f\x6b\x65\x6e\x20", 14, 8535351213971602697, NULL };
-static panda$core$String $s32 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
+static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
+static panda$core$String $s28 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x69\x6e\x76\x61\x6c\x69\x64\x20\x74\x6f\x6b\x65\x6e\x20", 14, 8535351213971602697, NULL };
+static panda$core$String $s32 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
 
 void org$pandalanguage$plex$runtime$DFA$init$panda$core$Int64$panda$unsafe$Pointer$LTpanda$unsafe$Pointer$LTpanda$core$Int64$GT$GT$panda$unsafe$Pointer$LTpanda$core$Int64$GT(org$pandalanguage$plex$runtime$DFA* self, panda$core$Int64 p_stateCount, panda$core$Int64** p_transitions, panda$core$Int64* p_accepts) {
     self->source = NULL;
@@ -99,7 +99,7 @@ org$pandalanguage$plex$runtime$RawToken org$pandalanguage$plex$runtime$DFA$next$
         {
             panda$core$UInt8 $tmp29 = panda$core$Char8$convert$R$panda$core$UInt8(c21);
             panda$core$UInt8$wrapper* $tmp30;
-            $tmp30 = (panda$core$UInt8$wrapper*) malloc(13);
+            $tmp30 = (panda$core$UInt8$wrapper*) pandaAlloc(13);
             $tmp30->cl = (panda$core$Class*) &panda$core$UInt8$wrapperclass;
             $tmp30->refCount = 1;
             $tmp30->value = $tmp29;

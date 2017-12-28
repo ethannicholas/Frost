@@ -93,7 +93,7 @@ struct { panda$core$Class* cl; ITable* itable; void* methods[4]; } panda$core$In
 struct { panda$core$Class* cl; ITable* itable; void* methods[1]; } panda$core$Int8$wrapper_panda$collections$Key = { (panda$core$Class*) &panda$collections$Key$class, (ITable*) &panda$core$Int8$wrapper_panda$core$Comparable, { panda$core$Int8$hash$R$panda$core$Int64$wrappershim} };
 
 panda$core$Int8$wrapperclass_type panda$core$Int8$wrapperclass = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Value$class, (ITable*) &panda$core$Int8$wrapper_panda$collections$Key, { panda$core$Int8$convert$R$panda$core$String$wrappershim, panda$core$Object$cleanup} };
-static panda$core$String $s160 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2d", 1, 146, NULL };
+static panda$core$String $s160 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2d", 1, 146, NULL };
 
 void panda$core$Int8$init$builtin_int8(panda$core$Int8* self, int8_t p_value) {
     self->value = p_value;
@@ -909,7 +909,7 @@ panda$core$String* panda$core$Int8$convert$R$panda$core$String(panda$core$Int8 s
     i202.value += 1;
     goto $l207;
     $l209:;
-    panda$core$String* $tmp222 = (panda$core$String*) malloc(48);
+    panda$core$String* $tmp222 = (panda$core$String*) pandaAlloc(48);
     $tmp222->$class = (panda$core$Class*) &panda$core$String$class;
     $tmp222->refCount.value = 1;
     panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp222, chars172, size199);

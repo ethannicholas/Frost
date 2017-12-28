@@ -150,9 +150,10 @@ class LLVMCodeGenerator : CodeGenerator {
         out.printLine("target datalayout = \"e-m:o-i64:64-f80:128-n8:16:32:64-S128\"")
         out.printLine("target triple = \"x86_64-apple-macosx10.12.0\"")
 --        out.printLine("target triple = \"x86_64-pc-linux-gnu\"")
-        out.printLine("declare i8* @pandaAlloc(i64)")
-        out.printLine("declare i8* @pandaRealloc(i8*, i64, i64)")
+        out.printLine("declare i8* @pandaAlloc(\{SIZE_TYPE})")
+        out.printLine("declare i8* @pandaRealloc(i8*, \{SIZE_TYPE}, \{SIZE_TYPE})")
         out.printLine("declare void @pandaFree(i8*)")
+        out.printLine("declare i8* @memset(i8*, i8, \{SIZE_TYPE})")
         out.printLine("%$itable = type { %panda$core$Class*, %$itable*, [0 x i8*] }")
     }
 
@@ -1349,7 +1350,7 @@ class LLVMCodeGenerator : CodeGenerator {
                 def ptr := getTypedReference(args[0], out)
                 def ptrCast := nextVar()
                 out.printLine("\{ptrCast} = bitcast \{ptr} to i8*")
-                def oldCountStruct := getTypedReference(args[2], out)
+                def oldCountStruct := getTypedReference(args[1], out)
                 def oldCount := nextVar()
                 out.printLine("\{oldCount} = extractvalue \{oldCountStruct}, 0")
                 def oldSize := nextVar()
@@ -2870,6 +2871,14 @@ class LLVMCodeGenerator : CodeGenerator {
                 }
                 else if v.varKind = Variable.Kind.VAR & compiler.isRefCounted(v.type) {
                     out.printLine("store \{t} null, \{t}* \{name}")
+                }
+                else if v.varKind = Variable.Kind.VAR &
+                        compiler.isValue(compiler.getClass(v.type)) {
+                    def cast := nextVar()
+                    out.printLine("\{cast} = bitcast \{t}* \{name} to i8*")
+                    def size := sizeOf(v.type)
+                    out.printLine("call i8* @memset(i8* \{cast}, i8 0, \{SIZE_TYPE} \{size})")
+                    nextVar()
                 }
             otherwise:
                 assert false

@@ -93,7 +93,7 @@ struct { panda$core$Class* cl; ITable* itable; void* methods[4]; } panda$core$In
 struct { panda$core$Class* cl; ITable* itable; void* methods[1]; } panda$core$Int64$wrapper_panda$collections$Key = { (panda$core$Class*) &panda$collections$Key$class, (ITable*) &panda$core$Int64$wrapper_panda$core$Comparable, { panda$core$Int64$hash$R$panda$core$Int64$wrappershim} };
 
 panda$core$Int64$wrapperclass_type panda$core$Int64$wrapperclass = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Value$class, (ITable*) &panda$core$Int64$wrapper_panda$collections$Key, { panda$core$Int64$convert$R$panda$core$String$wrappershim, panda$core$Object$cleanup} };
-static panda$core$String $s121 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2d", 1, 146, NULL };
+static panda$core$String $s121 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2d", 1, 146, NULL };
 
 void panda$core$Int64$init$builtin_int64(panda$core$Int64* self, int64_t p_value) {
     self->value = p_value;
@@ -739,7 +739,7 @@ panda$core$String* panda$core$Int64$convert$R$panda$core$String(panda$core$Int64
     i161.value += 1;
     goto $l166;
     $l168:;
-    panda$core$String* $tmp181 = (panda$core$String*) malloc(48);
+    panda$core$String* $tmp181 = (panda$core$String*) pandaAlloc(48);
     $tmp181->$class = (panda$core$Class*) &panda$core$String$class;
     $tmp181->refCount.value = 1;
     panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp181, chars133, size158);

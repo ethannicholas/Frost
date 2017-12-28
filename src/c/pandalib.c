@@ -149,14 +149,6 @@ void* pandaRealloc(void* ptr, size_t oldSize, size_t newSize) {
     return result;
 }
 
-void* pandaNewRealloc(void* ptr, size_t oldSize, size_t newSize) {
-    void* result = realloc(ptr, newSize);
-    if (newSize > oldSize) {
-        memset(result + oldSize, 0, newSize - oldSize);
-    }
-    return result;
-}
-
 void pandaFree(void* ptr) {
     free(ptr);
 }
@@ -287,14 +279,14 @@ void panda$core$System$Process$waitFor$R$panda$core$Int64(int64_t* result, Proce
 #define NO_REFCNT -999
 
 Object* panda$core$Panda$ref$panda$core$Object$R$panda$core$Object(Object* o) {
-/*    if (o && o->refcnt != NO_REFCNT) {
+    if (o && o->refcnt != NO_REFCNT) {
         ++o->refcnt;
-    }*/
+    }
     return o;
 }
 
 Object* panda$core$Panda$unref$panda$core$Object$R$panda$core$Object(Object* o) {
-/*    if (o && o->refcnt != NO_REFCNT) {
+    if (o && o->refcnt != NO_REFCNT) {
         if (o->refcnt <= 0) {
             fprintf(stderr, "internal error: refcnt = %d\n", o->refcnt);
             abort();
@@ -305,7 +297,7 @@ Object* panda$core$Panda$unref$panda$core$Object$R$panda$core$Object(Object* o) 
 //            cleanup(o);
 //            free(o);
         }
-    }*/
+    }
     return o;
 }
 

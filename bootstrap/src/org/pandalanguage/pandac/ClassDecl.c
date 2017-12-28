@@ -52,49 +52,49 @@ typedef panda$collections$Iterator* (*$fn197)(panda$collections$Iterable*);
 typedef panda$core$Bit (*$fn203)(panda$collections$Iterator*);
 typedef panda$core$Object* (*$fn209)(panda$collections$Iterator*);
 
-static panda$core$String $s46 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2e", 1, 147, NULL };
-static panda$core$String $s71 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
-static panda$core$String $s93 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2e", 1, 147, NULL };
-static panda$core$String $s98 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2c\x20", 2, 14677, NULL };
-static panda$core$String $s111 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x63\x6c\x61\x73\x73\x20", 6, 2113359747467, NULL };
-static panda$core$String $s114 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
-static panda$core$String $s118 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x20\x3a\x20", 3, 1362623, NULL };
-static panda$core$String $s121 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
-static panda$core$String $s124 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
-static panda$core$String $s126 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2c\x20", 2, 14677, NULL };
-static panda$core$String $s146 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
-static panda$core$String $s149 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "", 0, 1, NULL };
-static panda$core$String $s151 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x2c\x20", 2, 14677, NULL };
-static panda$core$String $s153 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x20\x7b\x0a", 3, 1369166, NULL };
-static panda$core$String $s172 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x0a", 1, 111, NULL };
-static panda$core$String $s192 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x0a", 1, 111, NULL };
-static panda$core$String $s212 = { (panda$core$Class*) &panda$core$String$class, 2, (panda$core$Char8*) "\x0a", 1, 111, NULL };
+static panda$core$String $s46 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2e", 1, 147, NULL };
+static panda$core$String $s71 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
+static panda$core$String $s93 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2e", 1, 147, NULL };
+static panda$core$String $s98 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2c\x20", 2, 14677, NULL };
+static panda$core$String $s111 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x63\x6c\x61\x73\x73\x20", 6, 2113359747467, NULL };
+static panda$core$String $s114 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
+static panda$core$String $s118 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x20\x3a\x20", 3, 1362623, NULL };
+static panda$core$String $s121 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
+static panda$core$String $s124 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
+static panda$core$String $s126 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2c\x20", 2, 14677, NULL };
+static panda$core$String $s146 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
+static panda$core$String $s149 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
+static panda$core$String $s151 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2c\x20", 2, 14677, NULL };
+static panda$core$String $s153 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x20\x7b\x0a", 3, 1369166, NULL };
+static panda$core$String $s172 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x0a", 1, 111, NULL };
+static panda$core$String $s192 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x0a", 1, 111, NULL };
+static panda$core$String $s212 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x0a", 1, 111, NULL };
 
 void org$pandalanguage$pandac$ClassDecl$init$panda$io$File$org$pandalanguage$pandac$Position$panda$collections$MapView$LTpanda$core$String$Cpanda$core$String$GT$panda$core$String$Q$org$pandalanguage$pandac$Annotations$org$pandalanguage$pandac$ClassDecl$Kind$panda$core$String$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT$panda$collections$Array$LTorg$pandalanguage$pandac$ClassDecl$GenericParameter$GT$org$pandalanguage$pandac$SymbolTable(org$pandalanguage$pandac$ClassDecl* self, panda$io$File* p_source, org$pandalanguage$pandac$Position p_position, panda$collections$MapView* p_aliases, panda$core$String* p_doccomment, org$pandalanguage$pandac$Annotations* p_annotations, org$pandalanguage$pandac$ClassDecl$Kind p_kind, panda$core$String* p_name, panda$collections$ListView* p_declaredSupers, panda$collections$Array* p_parameters, org$pandalanguage$pandac$SymbolTable* p_parent) {
     panda$collections$Iterator* p$Iter28;
     org$pandalanguage$pandac$ClassDecl$GenericParameter* p40;
     self->rawSuper = NULL;
-    panda$collections$Array* $tmp1 = (panda$collections$Array*) malloc(40);
+    panda$collections$Array* $tmp1 = (panda$collections$Array*) pandaAlloc(40);
     $tmp1->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp1->refCount.value = 1;
     panda$collections$Array$init($tmp1);
     self->rawInterfaces = $tmp1;
-    panda$collections$Array* $tmp3 = (panda$collections$Array*) malloc(40);
+    panda$collections$Array* $tmp3 = (panda$collections$Array*) pandaAlloc(40);
     $tmp3->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp3->refCount.value = 1;
     panda$collections$Array$init($tmp3);
     self->fields = $tmp3;
-    panda$collections$Array* $tmp5 = (panda$collections$Array*) malloc(40);
+    panda$collections$Array* $tmp5 = (panda$collections$Array*) pandaAlloc(40);
     $tmp5->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp5->refCount.value = 1;
     panda$collections$Array$init($tmp5);
     self->methods = $tmp5;
-    panda$collections$Array* $tmp7 = (panda$collections$Array*) malloc(40);
+    panda$collections$Array* $tmp7 = (panda$collections$Array*) pandaAlloc(40);
     $tmp7->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp7->refCount.value = 1;
     panda$collections$Array$init($tmp7);
     self->classes = $tmp7;
-    panda$collections$Array* $tmp9 = (panda$collections$Array*) malloc(40);
+    panda$collections$Array* $tmp9 = (panda$collections$Array*) pandaAlloc(40);
     $tmp9->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp9->refCount.value = 1;
     panda$collections$Array$init($tmp9);
@@ -102,12 +102,12 @@ void org$pandalanguage$pandac$ClassDecl$init$panda$io$File$org$pandalanguage$pan
     self->owner = NULL;
     self->symbolTableResolved = ((panda$core$Bit) { false });
     self->external = ((panda$core$Bit) { true });
-    panda$collections$Array* $tmp11 = (panda$collections$Array*) malloc(40);
+    panda$collections$Array* $tmp11 = (panda$collections$Array*) pandaAlloc(40);
     $tmp11->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp11->refCount.value = 1;
     panda$collections$Array$init($tmp11);
     self->virtualMethods = $tmp11;
-    panda$collections$HashMap* $tmp13 = (panda$collections$HashMap*) malloc(56);
+    panda$collections$HashMap* $tmp13 = (panda$collections$HashMap*) pandaAlloc(56);
     $tmp13->$class = (panda$core$Class*) &panda$collections$HashMap$class;
     $tmp13->refCount.value = 1;
     panda$collections$HashMap$init($tmp13);
@@ -118,7 +118,7 @@ void org$pandalanguage$pandac$ClassDecl$init$panda$io$File$org$pandalanguage$pan
         self->source = ((panda$io$File*) $tmp15);
     }
     {
-        panda$collections$HashMap* $tmp16 = (panda$collections$HashMap*) malloc(56);
+        panda$collections$HashMap* $tmp16 = (panda$collections$HashMap*) pandaAlloc(56);
         $tmp16->$class = (panda$core$Class*) &panda$collections$HashMap$class;
         $tmp16->refCount.value = 1;
         panda$collections$HashMap$init$panda$collections$MapView$LTpanda$collections$HashMap$K$Cpanda$collections$HashMap$V$GT($tmp16, p_aliases);
@@ -135,7 +135,7 @@ void org$pandalanguage$pandac$ClassDecl$init$panda$io$File$org$pandalanguage$pan
     }
     self->classKind = p_kind;
     {
-        panda$collections$Array* $tmp21 = (panda$collections$Array*) malloc(40);
+        panda$collections$Array* $tmp21 = (panda$collections$Array*) pandaAlloc(40);
         $tmp21->$class = (panda$core$Class*) &panda$collections$Array$class;
         $tmp21->refCount.value = 1;
         panda$collections$Array$init$panda$collections$ListView$LTpanda$collections$Array$T$GT($tmp21, p_declaredSupers);
@@ -147,7 +147,7 @@ void org$pandalanguage$pandac$ClassDecl$init$panda$io$File$org$pandalanguage$pan
         self->parameters = ((panda$collections$List*) $tmp24);
     }
     {
-        org$pandalanguage$pandac$SymbolTable* $tmp25 = (org$pandalanguage$pandac$SymbolTable*) malloc(48);
+        org$pandalanguage$pandac$SymbolTable* $tmp25 = (org$pandalanguage$pandac$SymbolTable*) pandaAlloc(48);
         $tmp25->$class = (panda$core$Class*) &org$pandalanguage$pandac$SymbolTable$class;
         $tmp25->refCount.value = 1;
         org$pandalanguage$pandac$SymbolTable$init$org$pandalanguage$pandac$SymbolTable($tmp25, p_parent);
@@ -203,7 +203,7 @@ panda$core$String* org$pandalanguage$pandac$ClassDecl$simpleName$R$panda$core$St
 }
 org$pandalanguage$pandac$Type* org$pandalanguage$pandac$ClassDecl$type$R$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$ClassDecl* self) {
     org$pandalanguage$pandac$Position $tmp53;
-    org$pandalanguage$pandac$Type* $tmp51 = (org$pandalanguage$pandac$Type*) malloc(96);
+    org$pandalanguage$pandac$Type* $tmp51 = (org$pandalanguage$pandac$Type*) pandaAlloc(96);
     $tmp51->$class = (panda$core$Class*) &org$pandalanguage$pandac$Type$class;
     $tmp51->refCount.value = 1;
     org$pandalanguage$pandac$Position$init(&$tmp53);
@@ -234,7 +234,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$ClassDecl$typeWithParame
         return $tmp59;
     }
     }
-    panda$collections$Array* $tmp61 = (panda$collections$Array*) malloc(40);
+    panda$collections$Array* $tmp61 = (panda$collections$Array*) pandaAlloc(40);
     $tmp61->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp61->refCount.value = 1;
     panda$collections$Array$init($tmp61);
@@ -242,7 +242,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$ClassDecl$typeWithParame
     subtypes60 = ((panda$collections$Array*) $tmp63);
     org$pandalanguage$pandac$Type* $tmp64 = org$pandalanguage$pandac$ClassDecl$type$R$org$pandalanguage$pandac$Type(self);
     panda$collections$Array$add$panda$collections$Array$T(subtypes60, ((panda$core$Object*) $tmp64));
-    panda$core$MutableString* $tmp66 = (panda$core$MutableString*) malloc(48);
+    panda$core$MutableString* $tmp66 = (panda$core$MutableString*) pandaAlloc(48);
     $tmp66->$class = (panda$core$Class*) &panda$core$MutableString$class;
     $tmp66->refCount.value = 1;
     panda$core$MutableString$init$panda$core$String($tmp66, ((org$pandalanguage$pandac$Symbol*) self)->name);
@@ -277,7 +277,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$ClassDecl$typeWithParame
             $fn88 $tmp87 = $tmp86->methods[1];
             panda$core$Object* $tmp89 = $tmp87(p$Iter73);
             p85 = ((org$pandalanguage$pandac$ClassDecl$GenericParameter*) $tmp89);
-            org$pandalanguage$pandac$Type* $tmp91 = (org$pandalanguage$pandac$Type*) malloc(96);
+            org$pandalanguage$pandac$Type* $tmp91 = (org$pandalanguage$pandac$Type*) pandaAlloc(96);
             $tmp91->$class = (panda$core$Class*) &org$pandalanguage$pandac$Type$class;
             $tmp91->refCount.value = 1;
             panda$core$String* $tmp94 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(((org$pandalanguage$pandac$Symbol*) self)->name, &$s93);
@@ -300,7 +300,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$ClassDecl$typeWithParame
     }
     panda$core$Char8$init$panda$core$UInt8(&$tmp100, ((panda$core$UInt8) { 62 }));
     panda$core$MutableString$append$panda$core$Char8(name65, $tmp100);
-    org$pandalanguage$pandac$Type* $tmp101 = (org$pandalanguage$pandac$Type*) malloc(96);
+    org$pandalanguage$pandac$Type* $tmp101 = (org$pandalanguage$pandac$Type*) pandaAlloc(96);
     $tmp101->$class = (panda$core$Class*) &org$pandalanguage$pandac$Type$class;
     $tmp101->refCount.value = 1;
     panda$core$String* $tmp103 = panda$core$MutableString$finish$R$panda$core$String(name65);
@@ -326,7 +326,7 @@ panda$core$String* org$pandalanguage$pandac$ClassDecl$convert$R$panda$core$Strin
     panda$collections$Iterator* m$Iter194;
     org$pandalanguage$pandac$MethodDecl* m206;
     panda$core$Char8 $tmp214;
-    panda$core$MutableString* $tmp108 = (panda$core$MutableString*) malloc(48);
+    panda$core$MutableString* $tmp108 = (panda$core$MutableString*) pandaAlloc(48);
     $tmp108->$class = (panda$core$Class*) &panda$core$MutableString$class;
     $tmp108->refCount.value = 1;
     panda$core$String* $tmp110 = org$pandalanguage$pandac$Annotations$convert$R$panda$core$String(self->annotations);

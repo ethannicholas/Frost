@@ -43,6 +43,9 @@ class Array<T> : List<T> {
     init(capacity:Int) {
         self.capacity := capacity
         data := Pointer<T>.alloc(capacity)
+        for i in 0 .. capacity {
+            assert data[i] = null
+        }
     }
 
     init(list:ListView<T>) {

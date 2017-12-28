@@ -55,7 +55,7 @@ panda$core$Object* panda$collections$Stack$peek$panda$core$Int64$R$panda$collect
     return $tmp16;
 }
 panda$collections$Iterator* panda$collections$Stack$iterator$R$panda$collections$Iterator$LTpanda$collections$Stack$T$GT(panda$collections$Stack* self) {
-    panda$collections$Stack$StackIterator* $tmp17 = (panda$collections$Stack$StackIterator*) malloc(32);
+    panda$collections$Stack$StackIterator* $tmp17 = (panda$collections$Stack$StackIterator*) pandaAlloc(32);
     $tmp17->$class = (panda$core$Class*) &panda$collections$Stack$StackIterator$class;
     $tmp17->refCount.value = 1;
     panda$collections$Stack$StackIterator$init$panda$collections$Stack$LTpanda$collections$Stack$StackIterator$T$GT($tmp17, self);
@@ -69,7 +69,7 @@ panda$core$String* panda$collections$Stack$convert$R$panda$core$String(panda$col
     return $tmp19;
 }
 void panda$collections$Stack$init(panda$collections$Stack* self) {
-    panda$collections$Array* $tmp20 = (panda$collections$Array*) malloc(40);
+    panda$collections$Array* $tmp20 = (panda$collections$Array*) pandaAlloc(40);
     $tmp20->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp20->refCount.value = 1;
     panda$collections$Array$init($tmp20);

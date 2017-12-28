@@ -157,7 +157,7 @@ panda$core$Bit panda$core$Char8$isWhitespace$R$panda$core$Bit(panda$core$Char8 s
 panda$core$String* panda$core$Char8$$MUL$panda$core$Int64$R$panda$core$String(panda$core$Char8 self, panda$core$Int64 p_count) {
     panda$core$MutableString* result25;
     panda$core$Range$LTpanda$core$Int64$GT $tmp29;
-    panda$core$MutableString* $tmp26 = (panda$core$MutableString*) malloc(48);
+    panda$core$MutableString* $tmp26 = (panda$core$MutableString*) pandaAlloc(48);
     $tmp26->$class = (panda$core$Class*) &panda$core$MutableString$class;
     $tmp26->refCount.value = 1;
     panda$core$MutableString$init($tmp26);
@@ -236,7 +236,7 @@ panda$core$String* panda$core$Char8$convert$R$panda$core$String(panda$core$Char8
     {
         data56 = ((panda$core$Char8*) pandaAlloc(((panda$core$Int64) { 1 }).value * 1));
         data56[((panda$core$Int64) { 0 }).value] = self;
-        panda$core$String* $tmp57 = (panda$core$String*) malloc(48);
+        panda$core$String* $tmp57 = (panda$core$String*) pandaAlloc(48);
         $tmp57->$class = (panda$core$Class*) &panda$core$String$class;
         $tmp57->refCount.value = 1;
         panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp57, data56, ((panda$core$Int64) { 1 }));
@@ -252,7 +252,7 @@ panda$core$String* panda$core$Char8$convert$R$panda$core$String(panda$core$Char8
     uint16_t $tmp65 = $tmp64 | 128;
     panda$core$Char8$init$panda$core$UInt8(&$tmp63, ((panda$core$UInt8) { ((uint8_t) $tmp65) }));
     data59[((panda$core$Int64) { 1 }).value] = $tmp63;
-    panda$core$String* $tmp66 = (panda$core$String*) malloc(48);
+    panda$core$String* $tmp66 = (panda$core$String*) pandaAlloc(48);
     $tmp66->$class = (panda$core$Class*) &panda$core$String$class;
     $tmp66->refCount.value = 1;
     panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp66, data59, ((panda$core$Int64) { 2 }));
