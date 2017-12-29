@@ -170,7 +170,7 @@ void org$pandalanguage$pandac$Type$init$panda$core$String$panda$core$Int64$org$p
     ((org$pandalanguage$pandac$Symbol*) self)->position = p_position;
     self->resolved = p_resolved;
     {
-        panda$collections$Array* $tmp19 = (panda$collections$Array*) pandaAlloc(40);
+        panda$collections$Array* $tmp19 = (panda$collections$Array*) pandaAlloc(41);
         $tmp19->$class = (panda$core$Class*) &panda$collections$Array$class;
         $tmp19->refCount.value = 1;
         panda$collections$Array$init$panda$collections$ListView$LTpanda$collections$Array$T$GT($tmp19, p_subtypes);
@@ -188,7 +188,7 @@ void org$pandalanguage$pandac$Type$init$panda$collections$ListView$LTorg$pandala
     self->parameter = NULL;
     self->typeKind = ((panda$core$Int64) { 17 });
     {
-        panda$collections$Array* $tmp22 = (panda$collections$Array*) pandaAlloc(40);
+        panda$collections$Array* $tmp22 = (panda$collections$Array*) pandaAlloc(41);
         $tmp22->$class = (panda$core$Class*) &panda$collections$Array$class;
         $tmp22->refCount.value = 1;
         panda$collections$Array$init$panda$collections$ListView$LTpanda$collections$Array$T$GT($tmp22, p_subtypes);
@@ -327,7 +327,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$Object$R$org$pandal
 org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$Any$R$org$pandalanguage$pandac$Type() {
     panda$collections$Array* subtypes89;
     org$pandalanguage$pandac$Position $tmp97;
-    panda$collections$Array* $tmp90 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp90 = (panda$collections$Array*) pandaAlloc(41);
     $tmp90->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp90->refCount.value = 1;
     panda$collections$Array$init($tmp90);
@@ -644,7 +644,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$Panda$R$org$pandala
 org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$RangeOf$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$Type* p_t) {
     panda$collections$Array* children230;
     org$pandalanguage$pandac$Position $tmp237;
-    panda$collections$Array* $tmp231 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp231 = (panda$collections$Array*) pandaAlloc(41);
     $tmp231->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp231->refCount.value = 1;
     panda$collections$Array$init($tmp231);
@@ -670,7 +670,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$RangeOf$org$pandala
 org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$SteppedRangeOf$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$Type* p_t) {
     panda$collections$Array* children247;
     org$pandalanguage$pandac$Position $tmp254;
-    panda$collections$Array* $tmp248 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp248 = (panda$collections$Array*) pandaAlloc(41);
     $tmp248->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp248->refCount.value = 1;
     panda$collections$Array$init($tmp248);
@@ -918,7 +918,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$nullable$R$org$pand
         return self;
     }
     }
-    panda$collections$Array* $tmp375 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp375 = (panda$collections$Array*) pandaAlloc(41);
     $tmp375->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp375->refCount.value = 1;
     panda$collections$Array$init($tmp375);
@@ -1243,7 +1243,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$remap$panda$collect
         panda$core$Bit $tmp481 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$506_13476, ((panda$core$Int64) { 21 }));
         if ($tmp481.value) {
         {
-            panda$collections$Array* $tmp483 = (panda$collections$Array*) pandaAlloc(40);
+            panda$collections$Array* $tmp483 = (panda$collections$Array*) pandaAlloc(41);
             $tmp483->$class = (panda$core$Class*) &panda$collections$Array$class;
             $tmp483->refCount.value = 1;
             panda$collections$Array$init($tmp483);
@@ -1332,7 +1332,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$remap$panda$collect
         panda$core$Bit $tmp535 = { $tmp531 };
         if ($tmp535.value) {
         {
-            panda$collections$Array* $tmp537 = (panda$collections$Array*) pandaAlloc(40);
+            panda$collections$Array* $tmp537 = (panda$collections$Array*) pandaAlloc(41);
             $tmp537->$class = (panda$core$Class*) &panda$collections$Array$class;
             $tmp537->refCount.value = 1;
             panda$collections$Array$init($tmp537);

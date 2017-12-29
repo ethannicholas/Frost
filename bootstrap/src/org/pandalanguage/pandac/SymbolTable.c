@@ -55,7 +55,7 @@ void org$pandalanguage$pandac$SymbolTable$init$org$pandalanguage$pandac$Compiler
     $tmp3->refCount.value = 1;
     panda$collections$HashMap$init($tmp3);
     self->merged = $tmp3;
-    panda$collections$Array* $tmp5 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp5 = (panda$collections$Array*) pandaAlloc(41);
     $tmp5->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp5->refCount.value = 1;
     panda$collections$Array$init($tmp5);
@@ -76,7 +76,7 @@ void org$pandalanguage$pandac$SymbolTable$init$org$pandalanguage$pandac$SymbolTa
     $tmp10->refCount.value = 1;
     panda$collections$HashMap$init($tmp10);
     self->merged = $tmp10;
-    panda$collections$Array* $tmp12 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp12 = (panda$collections$Array*) pandaAlloc(41);
     $tmp12->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp12->refCount.value = 1;
     panda$collections$Array$init($tmp12);
@@ -113,7 +113,7 @@ void org$pandalanguage$pandac$SymbolTable$add$org$pandalanguage$pandac$Symbol$pa
             panda$core$Bit $tmp20 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$38_1719, ((panda$core$Int64) { 204 }));
             if ($tmp20.value) {
             {
-                panda$collections$Array* $tmp22 = (panda$collections$Array*) pandaAlloc(40);
+                panda$collections$Array* $tmp22 = (panda$collections$Array*) pandaAlloc(41);
                 $tmp22->$class = (panda$core$Class*) &panda$collections$Array$class;
                 $tmp22->refCount.value = 1;
                 panda$collections$Array$init($tmp22);
@@ -133,7 +133,7 @@ void org$pandalanguage$pandac$SymbolTable$add$org$pandalanguage$pandac$Symbol$pa
             panda$core$Bit $tmp27 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$38_1719, ((panda$core$Int64) { 205 }));
             if ($tmp27.value) {
             {
-                panda$collections$Array* $tmp29 = (panda$collections$Array*) pandaAlloc(40);
+                panda$collections$Array* $tmp29 = (panda$collections$Array*) pandaAlloc(41);
                 $tmp29->$class = (panda$core$Class*) &panda$collections$Array$class;
                 $tmp29->refCount.value = 1;
                 panda$collections$Array$init($tmp29);
@@ -259,7 +259,7 @@ org$pandalanguage$pandac$Symbol* org$pandalanguage$pandac$SymbolTable$merge$org$
                 panda$core$Bit $tmp69 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$86_2168, ((panda$core$Int64) { 205 }));
                 if ($tmp69.value) {
                 {
-                    panda$collections$Array* $tmp71 = (panda$collections$Array*) pandaAlloc(40);
+                    panda$collections$Array* $tmp71 = (panda$collections$Array*) pandaAlloc(41);
                     $tmp71->$class = (panda$core$Class*) &panda$collections$Array$class;
                     $tmp71->refCount.value = 1;
                     panda$collections$Array$init($tmp71);
@@ -313,7 +313,7 @@ org$pandalanguage$pandac$Symbol* org$pandalanguage$pandac$SymbolTable$merge$org$
                         return p_symbol;
                     }
                     }
-                    panda$collections$Array* $tmp96 = (panda$collections$Array*) pandaAlloc(40);
+                    panda$collections$Array* $tmp96 = (panda$collections$Array*) pandaAlloc(41);
                     $tmp96->$class = (panda$core$Class*) &panda$collections$Array$class;
                     $tmp96->refCount.value = 1;
                     panda$collections$Array$init($tmp96);
@@ -346,7 +346,7 @@ org$pandalanguage$pandac$Symbol* org$pandalanguage$pandac$SymbolTable$merge$org$
                 panda$core$Bit $tmp103 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$107_21102, ((panda$core$Int64) { 205 }));
                 if ($tmp103.value) {
                 {
-                    panda$collections$Array* $tmp105 = (panda$collections$Array*) pandaAlloc(40);
+                    panda$collections$Array* $tmp105 = (panda$collections$Array*) pandaAlloc(41);
                     $tmp105->$class = (panda$core$Class*) &panda$collections$Array$class;
                     $tmp105->refCount.value = 1;
                     panda$collections$Array$init$panda$collections$ListView$LTpanda$collections$Array$T$GT($tmp105, ((panda$collections$ListView*) ((org$pandalanguage$pandac$Methods*) p_symbol)->methods));
@@ -393,7 +393,7 @@ org$pandalanguage$pandac$Symbol* org$pandalanguage$pandac$SymbolTable$merge$org$
                 panda$core$Bit $tmp127 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$107_21102, ((panda$core$Int64) { 204 }));
                 if ($tmp127.value) {
                 {
-                    panda$collections$Array* $tmp129 = (panda$collections$Array*) pandaAlloc(40);
+                    panda$collections$Array* $tmp129 = (panda$collections$Array*) pandaAlloc(41);
                     $tmp129->$class = (panda$core$Class*) &panda$collections$Array$class;
                     $tmp129->refCount.value = 1;
                     panda$collections$Array$init$panda$collections$ListView$LTpanda$collections$Array$T$GT($tmp129, ((panda$collections$ListView*) ((org$pandalanguage$pandac$Methods*) p_symbol)->methods));

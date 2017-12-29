@@ -253,7 +253,7 @@ panda$collections$ImmutableArray* panda$collections$ImmutableArray$$IDX$panda$co
     }
     }
     }
-    panda$collections$Array* $tmp78 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp78 = (panda$collections$Array*) pandaAlloc(41);
     $tmp78->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp78->refCount.value = 1;
     panda$collections$Array$init($tmp78);

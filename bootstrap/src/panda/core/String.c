@@ -1588,7 +1588,7 @@ panda$collections$Array* panda$core$String$split$panda$core$String$panda$core$In
     panda$core$String$Index$nullable nextIndex741;
     panda$core$Range$LTpanda$core$String$Index$Q$GT $tmp750;
     panda$core$Range$LTpanda$core$String$Index$GT $tmp752;
-    panda$collections$Array* $tmp734 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp734 = (panda$collections$Array*) pandaAlloc(41);
     $tmp734->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp734->refCount.value = 1;
     panda$collections$Array$init($tmp734);

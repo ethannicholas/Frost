@@ -69,7 +69,7 @@ panda$core$String* panda$collections$Stack$convert$R$panda$core$String(panda$col
     return $tmp19;
 }
 void panda$collections$Stack$init(panda$collections$Stack* self) {
-    panda$collections$Array* $tmp20 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp20 = (panda$collections$Array*) pandaAlloc(41);
     $tmp20->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp20->refCount.value = 1;
     panda$collections$Array$init($tmp20);

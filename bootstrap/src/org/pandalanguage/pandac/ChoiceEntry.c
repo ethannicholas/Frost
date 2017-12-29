@@ -31,7 +31,7 @@ void org$pandalanguage$pandac$ChoiceEntry$init$org$pandalanguage$pandac$ClassDec
     }
     self->rawValue = p_rawValue;
     {
-        panda$collections$Array* $tmp3 = (panda$collections$Array*) pandaAlloc(40);
+        panda$collections$Array* $tmp3 = (panda$collections$Array*) pandaAlloc(41);
         $tmp3->$class = (panda$core$Class*) &panda$collections$Array$class;
         $tmp3->refCount.value = 1;
         panda$collections$Array$init$panda$collections$ListView$LTpanda$collections$Array$T$GT($tmp3, p_fields);

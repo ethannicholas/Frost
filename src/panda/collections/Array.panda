@@ -217,6 +217,9 @@ class Array<T> : List<T> {
             capacity *= 2
         }
         data := data.realloc(oldCapacity, capacity)
+        for i in oldCapacity .. capacity {
+            assert data[i] = null
+        }
     }
 
     @override
@@ -230,6 +233,7 @@ class Array<T> : List<T> {
             self[i] := self[i + 1]
         }
         count -= 1
+        data[count] := null->T?
     }
 
     @override
@@ -240,6 +244,9 @@ class Array<T> : List<T> {
     @override
     method clear() {
         count := 0
+        for i in 0 .. capacity {
+            data[i] := null->T?
+        }
     }
 
     function join():String { -- FIXME move to ListView

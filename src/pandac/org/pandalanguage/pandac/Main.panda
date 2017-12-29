@@ -267,6 +267,7 @@ class Main {
 
     @class
     method main(args:ListView<String>) {
+        Panda.disableRefCounting()
         Main().run(args)
     }
 }

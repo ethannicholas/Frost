@@ -44,7 +44,7 @@ void panda$io$MemoryInputStream$init$panda$core$String(panda$io$MemoryInputStrea
     panda$collections$ListView* $tmp3 = panda$core$String$utf8$R$panda$collections$ListView$LTpanda$core$Char8$GT(p_source);
     panda$core$Object* $tmp4 = panda$core$Panda$ref$panda$core$Object$R$panda$core$Object(((panda$core$Object*) $tmp3));
     utf82 = ((panda$collections$ListView*) $tmp4);
-    panda$collections$Array* $tmp6 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp6 = (panda$collections$Array*) pandaAlloc(41);
     $tmp6->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp6->refCount.value = 1;
     ITable* $tmp8 = ((panda$collections$CollectionView*) utf82)->$class->itable;

@@ -1935,7 +1935,7 @@ org$pandalanguage$pandac$CCodeGenerator$MethodShim* org$pandalanguage$pandac$CCo
     panda$core$Int64 $tmp527 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(out447->level, ((panda$core$Int64) { 1 }));
     out447->level = $tmp527;
     panda$core$MutableString$append$panda$core$String(resultType470, &$s528);
-    panda$collections$Array* $tmp530 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp530 = (panda$collections$Array*) pandaAlloc(41);
     $tmp530->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp530->refCount.value = 1;
     panda$collections$Array$init($tmp530);
@@ -2140,7 +2140,7 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$createWrapperShim$org
     (($fn693) ((panda$io$OutputStream*) p_out)->$class->vtable[19])(((panda$io$OutputStream*) p_out), &$s692);
     panda$core$Int64 $tmp694 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(p_out->level, ((panda$core$Int64) { 1 }));
     p_out->level = $tmp694;
-    panda$collections$Array* $tmp696 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp696 = (panda$collections$Array*) pandaAlloc(41);
     $tmp696->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp696->refCount.value = 1;
     panda$collections$Array$init($tmp696);
@@ -2176,7 +2176,7 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$createWrapperShim$org
     i701.value += 1;
     goto $l706;
     $l708:;
-    panda$collections$Array* $tmp725 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp725 = (panda$collections$Array*) pandaAlloc(41);
     $tmp725->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp725->refCount.value = 1;
     panda$collections$Array$init($tmp725);
@@ -3825,7 +3825,7 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getCallReference$org$
         }
     }
     }
-    panda$collections$Array* $tmp1719 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp1719 = (panda$collections$Array*) pandaAlloc(41);
     $tmp1719->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp1719->refCount.value = 1;
     panda$core$Int64 $tmp1721 = panda$collections$ImmutableArray$get_count$R$panda$core$Int64(p_args);
@@ -5440,7 +5440,7 @@ void org$pandalanguage$pandac$CCodeGenerator$writeCall$org$pandalanguage$pandac$
         }
     }
     }
-    panda$collections$Array* $tmp2694 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp2694 = (panda$collections$Array*) pandaAlloc(41);
     $tmp2694->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp2694->refCount.value = 1;
     panda$collections$Array$init($tmp2694);

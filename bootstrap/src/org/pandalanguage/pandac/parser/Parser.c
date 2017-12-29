@@ -1196,7 +1196,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$string$
                                 org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$panda$core$String($tmp367, ((panda$core$Int64) { 13 }), $tmp370, cast359, &$s371);
                                 panda$core$Object* $tmp372 = panda$core$Panda$ref$panda$core$Object$R$panda$core$Object(((panda$core$Object*) $tmp367));
                                 dot366 = ((org$pandalanguage$pandac$ASTNode*) $tmp372);
-                                panda$collections$Array* $tmp374 = (panda$collections$Array*) pandaAlloc(40);
+                                panda$collections$Array* $tmp374 = (panda$collections$Array*) pandaAlloc(41);
                                 $tmp374->$class = (panda$core$Class*) &panda$collections$Array$class;
                                 $tmp374->refCount.value = 1;
                                 panda$collections$Array$init($tmp374);
@@ -1253,7 +1253,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$string$
                                 org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$panda$core$String($tmp398, ((panda$core$Int64) { 13 }), $tmp401, pandaType390, &$s402);
                                 panda$core$Object* $tmp403 = panda$core$Panda$ref$panda$core$Object$R$panda$core$Object(((panda$core$Object*) $tmp398));
                                 callTarget397 = ((org$pandalanguage$pandac$ASTNode*) $tmp403);
-                                panda$collections$Array* $tmp405 = (panda$collections$Array*) pandaAlloc(40);
+                                panda$collections$Array* $tmp405 = (panda$collections$Array*) pandaAlloc(41);
                                 $tmp405->$class = (panda$core$Class*) &panda$collections$Array$class;
                                 $tmp405->refCount.value = 1;
                                 panda$collections$Array$init($tmp405);
@@ -1878,7 +1878,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$type$pa
         }
         }
         org$pandalanguage$pandac$parser$Parser$next$R$org$pandalanguage$pandac$parser$Token(self);
-        panda$collections$Array* $tmp663 = (panda$collections$Array*) pandaAlloc(40);
+        panda$collections$Array* $tmp663 = (panda$collections$Array*) pandaAlloc(41);
         $tmp663->$class = (panda$core$Class*) &panda$collections$Array$class;
         $tmp663->refCount.value = 1;
         panda$collections$Array$init($tmp663);
@@ -2019,7 +2019,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$callExp
                 $tmp696->refCount = 1;
                 $tmp696->value = ((panda$core$Bit) { true });
                 panda$collections$Stack$push$panda$collections$Stack$T(self->commaSeparatedExpressionContext, ((panda$core$Object*) $tmp696));
-                panda$collections$Array* $tmp698 = (panda$collections$Array*) pandaAlloc(40);
+                panda$collections$Array* $tmp698 = (panda$collections$Array*) pandaAlloc(41);
                 $tmp698->$class = (panda$core$Class*) &panda$collections$Array$class;
                 $tmp698->refCount.value = 1;
                 panda$collections$Array$init($tmp698);
@@ -2198,7 +2198,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$callExp
                     panda$core$MutableString$append$panda$core$Char8(finalName753, $tmp757);
                     org$pandalanguage$pandac$parser$Parser$startSpeculative(self);
                     org$pandalanguage$pandac$parser$Parser$next$R$org$pandalanguage$pandac$parser$Token(self);
-                    panda$collections$Array* $tmp759 = (panda$collections$Array*) pandaAlloc(40);
+                    panda$collections$Array* $tmp759 = (panda$collections$Array*) pandaAlloc(41);
                     $tmp759->$class = (panda$core$Class*) &panda$collections$Array$class;
                     $tmp759->refCount.value = 1;
                     panda$collections$Array$init($tmp759);
@@ -3332,7 +3332,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$whenCla
         return NULL;
     }
     }
-    panda$collections$Array* $tmp1143 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp1143 = (panda$collections$Array*) pandaAlloc(41);
     $tmp1143->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp1143->refCount.value = 1;
     panda$collections$Array$init($tmp1143);
@@ -3374,7 +3374,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$whenCla
         return NULL;
     }
     }
-    panda$collections$Array* $tmp1159 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp1159 = (panda$collections$Array*) pandaAlloc(41);
     $tmp1159->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp1159->refCount.value = 1;
     panda$collections$Array$init($tmp1159);
@@ -3499,7 +3499,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$matchSt
         return NULL;
     }
     }
-    panda$collections$Array* $tmp1205 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp1205 = (panda$collections$Array*) pandaAlloc(41);
     $tmp1205->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp1205->refCount.value = 1;
     panda$collections$Array$init($tmp1205);
@@ -3550,7 +3550,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$matchSt
                 }
                 {
                     panda$core$Panda$unref$panda$core$Object$R$panda$core$Object(((panda$core$Object*) other1208));
-                    panda$collections$Array* $tmp1226 = (panda$collections$Array*) pandaAlloc(40);
+                    panda$collections$Array* $tmp1226 = (panda$collections$Array*) pandaAlloc(41);
                     $tmp1226->$class = (panda$core$Class*) &panda$collections$Array$class;
                     $tmp1226->refCount.value = 1;
                     panda$collections$Array$init($tmp1226);
@@ -3675,7 +3675,7 @@ panda$collections$ImmutableArray* org$pandalanguage$pandac$parser$Parser$blockSt
         return NULL;
     }
     }
-    panda$collections$Array* $tmp1271 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp1271 = (panda$collections$Array*) pandaAlloc(41);
     $tmp1271->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp1271->refCount.value = 1;
     panda$collections$Array$init($tmp1271);
@@ -4050,7 +4050,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$varDecl
         }
         }
     }
-    panda$collections$Array* $tmp1424 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp1424 = (panda$collections$Array*) pandaAlloc(41);
     $tmp1424->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp1424->refCount.value = 1;
     panda$collections$Array$init($tmp1424);
@@ -4127,7 +4127,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$initCal
     org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$String($tmp1449, ((panda$core$Int64) { 18 }), ((org$pandalanguage$pandac$parser$Token) start1440.value).position, $tmp1451);
     panda$core$Object* $tmp1452 = panda$core$Panda$ref$panda$core$Object$R$panda$core$Object(((panda$core$Object*) $tmp1449));
     target1448 = ((org$pandalanguage$pandac$ASTNode*) $tmp1452);
-    panda$collections$Array* $tmp1454 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp1454 = (panda$collections$Array*) pandaAlloc(41);
     $tmp1454->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp1454->refCount.value = 1;
     panda$collections$Array$init($tmp1454);
@@ -4291,7 +4291,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$returnS
         }
         else {
         {
-            panda$collections$Array* $tmp1516 = (panda$collections$Array*) pandaAlloc(40);
+            panda$collections$Array* $tmp1516 = (panda$collections$Array*) pandaAlloc(41);
             $tmp1516->$class = (panda$core$Class*) &panda$collections$Array$class;
             $tmp1516->refCount.value = 1;
             panda$collections$Array$init($tmp1516);
@@ -4719,7 +4719,7 @@ panda$collections$ImmutableArray* org$pandalanguage$pandac$parser$Parser$generic
         return NULL;
     }
     }
-    panda$collections$Array* $tmp1653 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp1653 = (panda$collections$Array*) pandaAlloc(41);
     $tmp1653->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp1653->refCount.value = 1;
     panda$collections$Array$init($tmp1653);
@@ -4825,7 +4825,7 @@ panda$collections$ImmutableArray* org$pandalanguage$pandac$parser$Parser$superty
         return NULL;
     }
     }
-    panda$collections$Array* $tmp1694 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp1694 = (panda$collections$Array*) pandaAlloc(41);
     $tmp1694->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp1694->refCount.value = 1;
     panda$collections$Array$init($tmp1694);
@@ -4867,7 +4867,7 @@ panda$collections$ImmutableArray* org$pandalanguage$pandac$parser$Parser$annotat
     panda$collections$Array* result1707;
     org$pandalanguage$pandac$parser$Token$nullable next1713;
     org$pandalanguage$pandac$parser$Token$Kind $tmp1714;
-    panda$collections$Array* $tmp1708 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp1708 = (panda$collections$Array*) pandaAlloc(41);
     $tmp1708->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp1708->refCount.value = 1;
     panda$collections$Array$init($tmp1708);
@@ -4988,7 +4988,7 @@ panda$collections$ImmutableArray* org$pandalanguage$pandac$parser$Parser$paramet
         return NULL;
     }
     }
-    panda$collections$Array* $tmp1754 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp1754 = (panda$collections$Array*) pandaAlloc(41);
     $tmp1754->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp1754->refCount.value = 1;
     panda$collections$Array$init($tmp1754);
@@ -5285,7 +5285,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$choiceE
         return NULL;
     }
     }
-    panda$collections$Array* $tmp1865 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp1865 = (panda$collections$Array*) pandaAlloc(41);
     $tmp1865->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp1865->refCount.value = 1;
     panda$collections$Array$init($tmp1865);
@@ -5391,7 +5391,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$choiceD
         return NULL;
     }
     }
-    panda$collections$Array* $tmp1900 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp1900 = (panda$collections$Array*) pandaAlloc(41);
     $tmp1900->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp1900->refCount.value = 1;
     panda$collections$Array$init($tmp1900);
@@ -6001,7 +6001,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$classDe
         return NULL;
     }
     }
-    panda$collections$Array* $tmp2127 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp2127 = (panda$collections$Array*) pandaAlloc(41);
     $tmp2127->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp2127->refCount.value = 1;
     panda$collections$Array$init($tmp2127);
@@ -6093,7 +6093,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$interfa
         }
     }
     }
-    panda$collections$Array* $tmp2159 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp2159 = (panda$collections$Array*) pandaAlloc(41);
     $tmp2159->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp2159->refCount.value = 1;
     panda$collections$Array$init($tmp2159);
@@ -6141,7 +6141,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$interfa
         return NULL;
     }
     }
-    panda$collections$Array* $tmp2177 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp2177 = (panda$collections$Array*) pandaAlloc(41);
     $tmp2177->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp2177->refCount.value = 1;
     panda$collections$Array$init($tmp2177);
@@ -6251,7 +6251,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$bodyEnt
 org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$file$R$org$pandalanguage$pandac$ASTNode$Q(org$pandalanguage$pandac$parser$Parser* self) {
     panda$collections$Array* entries2226;
     org$pandalanguage$pandac$ASTNode* entry2234;
-    panda$collections$Array* $tmp2227 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp2227 = (panda$collections$Array*) pandaAlloc(41);
     $tmp2227->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp2227->refCount.value = 1;
     panda$collections$Array$init($tmp2227);

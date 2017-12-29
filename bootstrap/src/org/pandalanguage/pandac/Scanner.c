@@ -215,7 +215,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Scanner$convertType$org$
             position11 = *$tmp12;
             org$pandalanguage$pandac$ASTNode** $tmp14 = ((org$pandalanguage$pandac$ASTNode**) ((char*) $match$18_92->$data + 16));
             base13 = *$tmp14;
-            panda$collections$Array* $tmp16 = (panda$collections$Array*) pandaAlloc(40);
+            panda$collections$Array* $tmp16 = (panda$collections$Array*) pandaAlloc(41);
             $tmp16->$class = (panda$core$Class*) &panda$collections$Array$class;
             $tmp16->refCount.value = 1;
             panda$collections$Array$init($tmp16);
@@ -242,7 +242,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Scanner$convertType$org$
             base28 = *$tmp29;
             panda$collections$ImmutableArray** $tmp31 = ((panda$collections$ImmutableArray**) ((char*) $match$18_92->$data + 24));
             args30 = *$tmp31;
-            panda$collections$Array* $tmp33 = (panda$collections$Array*) pandaAlloc(40);
+            panda$collections$Array* $tmp33 = (panda$collections$Array*) pandaAlloc(41);
             $tmp33->$class = (panda$core$Class*) &panda$collections$Array$class;
             $tmp33->refCount.value = 1;
             panda$collections$Array$init($tmp33);
@@ -1660,7 +1660,7 @@ org$pandalanguage$pandac$MethodDecl* org$pandalanguage$pandac$Scanner$scanMethod
         annotations604->flags = $tmp617;
     }
     }
-    panda$collections$Array* $tmp619 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp619 = (panda$collections$Array*) pandaAlloc(41);
     $tmp619->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp619->refCount.value = 1;
     panda$collections$Array$init($tmp619);
@@ -1993,7 +1993,7 @@ void org$pandalanguage$pandac$Scanner$scanChoiceEntry$org$pandalanguage$pandac$C
         }
     }
     }
-    panda$collections$Array* $tmp756 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp756 = (panda$collections$Array*) pandaAlloc(41);
     $tmp756->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp756->refCount.value = 1;
     panda$collections$Array$init($tmp756);
@@ -2127,7 +2127,7 @@ void org$pandalanguage$pandac$Scanner$scanChoiceEntry$org$pandalanguage$pandac$C
     panda$core$Bit $tmp834 = panda$core$Bit$$NOT$R$panda$core$Bit(found782);
     if ($tmp834.value) {
     {
-        panda$collections$Array* $tmp836 = (panda$collections$Array*) pandaAlloc(40);
+        panda$collections$Array* $tmp836 = (panda$collections$Array*) pandaAlloc(41);
         $tmp836->$class = (panda$core$Class*) &panda$collections$Array$class;
         $tmp836->refCount.value = 1;
         panda$collections$Array$init($tmp836);
@@ -2139,7 +2139,7 @@ void org$pandalanguage$pandac$Scanner$scanChoiceEntry$org$pandalanguage$pandac$C
         org$pandalanguage$pandac$Type* $tmp842 = org$pandalanguage$pandac$Type$Int64$R$org$pandalanguage$pandac$Type();
         org$pandalanguage$pandac$MethodDecl$Parameter$init$panda$core$String$org$pandalanguage$pandac$Type($tmp839, &$s841, $tmp842);
         panda$collections$Array$add$panda$collections$Array$T(parameters835, ((panda$core$Object*) $tmp839));
-        panda$collections$Array* $tmp844 = (panda$collections$Array*) pandaAlloc(40);
+        panda$collections$Array* $tmp844 = (panda$collections$Array*) pandaAlloc(41);
         $tmp844->$class = (panda$core$Class*) &panda$collections$Array$class;
         $tmp844->refCount.value = 1;
         panda$collections$Array$init($tmp844);
@@ -2341,7 +2341,7 @@ org$pandalanguage$pandac$ClassDecl* org$pandalanguage$pandac$Scanner$scanClass$p
     org$pandalanguage$pandac$Annotations* $tmp931 = org$pandalanguage$pandac$Scanner$convertAnnotations$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$R$org$pandalanguage$pandac$Annotations(self, p_rawAnnotations);
     panda$core$Object* $tmp932 = panda$core$Panda$ref$panda$core$Object$R$panda$core$Object(((panda$core$Object*) $tmp931));
     annotations930 = ((org$pandalanguage$pandac$Annotations*) $tmp932);
-    panda$collections$Array* $tmp934 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp934 = (panda$collections$Array*) pandaAlloc(41);
     $tmp934->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp934->refCount.value = 1;
     panda$collections$Array$init($tmp934);
@@ -2438,7 +2438,7 @@ org$pandalanguage$pandac$ClassDecl* org$pandalanguage$pandac$Scanner$scanClass$p
         }
     }
     }
-    panda$collections$Array* $tmp978 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp978 = (panda$collections$Array*) pandaAlloc(41);
     $tmp978->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp978->refCount.value = 1;
     panda$collections$Array$init($tmp978);
@@ -2660,7 +2660,7 @@ org$pandalanguage$pandac$ClassDecl* org$pandalanguage$pandac$Scanner$scanClass$p
         $tmp1086->refCount.value = 1;
         org$pandalanguage$pandac$Annotations$init($tmp1086);
         org$pandalanguage$pandac$MethodDecl$Kind$init$panda$core$Int64(&$tmp1088, ((panda$core$Int64) { 2 }));
-        panda$collections$Array* $tmp1090 = (panda$collections$Array*) pandaAlloc(40);
+        panda$collections$Array* $tmp1090 = (panda$collections$Array*) pandaAlloc(41);
         $tmp1090->$class = (panda$core$Class*) &panda$collections$Array$class;
         $tmp1090->refCount.value = 1;
         panda$collections$Array$init($tmp1090);
@@ -2797,7 +2797,7 @@ panda$collections$ListView* org$pandalanguage$pandac$Scanner$scan$panda$io$File$
         {
             panda$collections$ImmutableArray** $tmp1140 = ((panda$collections$ImmutableArray**) ((char*) $match$546_91137->$data + 0));
             entries1139 = *$tmp1140;
-            panda$collections$Array* $tmp1142 = (panda$collections$Array*) pandaAlloc(40);
+            panda$collections$Array* $tmp1142 = (panda$collections$Array*) pandaAlloc(41);
             $tmp1142->$class = (panda$core$Class*) &panda$collections$Array$class;
             $tmp1142->refCount.value = 1;
             panda$collections$Array$init($tmp1142);

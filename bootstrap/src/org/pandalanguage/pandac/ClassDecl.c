@@ -74,27 +74,27 @@ void org$pandalanguage$pandac$ClassDecl$init$panda$io$File$org$pandalanguage$pan
     panda$collections$Iterator* p$Iter28;
     org$pandalanguage$pandac$ClassDecl$GenericParameter* p40;
     self->rawSuper = NULL;
-    panda$collections$Array* $tmp1 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp1 = (panda$collections$Array*) pandaAlloc(41);
     $tmp1->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp1->refCount.value = 1;
     panda$collections$Array$init($tmp1);
     self->rawInterfaces = $tmp1;
-    panda$collections$Array* $tmp3 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp3 = (panda$collections$Array*) pandaAlloc(41);
     $tmp3->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp3->refCount.value = 1;
     panda$collections$Array$init($tmp3);
     self->fields = $tmp3;
-    panda$collections$Array* $tmp5 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp5 = (panda$collections$Array*) pandaAlloc(41);
     $tmp5->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp5->refCount.value = 1;
     panda$collections$Array$init($tmp5);
     self->methods = $tmp5;
-    panda$collections$Array* $tmp7 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp7 = (panda$collections$Array*) pandaAlloc(41);
     $tmp7->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp7->refCount.value = 1;
     panda$collections$Array$init($tmp7);
     self->classes = $tmp7;
-    panda$collections$Array* $tmp9 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp9 = (panda$collections$Array*) pandaAlloc(41);
     $tmp9->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp9->refCount.value = 1;
     panda$collections$Array$init($tmp9);
@@ -102,7 +102,7 @@ void org$pandalanguage$pandac$ClassDecl$init$panda$io$File$org$pandalanguage$pan
     self->owner = NULL;
     self->symbolTableResolved = ((panda$core$Bit) { false });
     self->external = ((panda$core$Bit) { true });
-    panda$collections$Array* $tmp11 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp11 = (panda$collections$Array*) pandaAlloc(41);
     $tmp11->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp11->refCount.value = 1;
     panda$collections$Array$init($tmp11);
@@ -135,7 +135,7 @@ void org$pandalanguage$pandac$ClassDecl$init$panda$io$File$org$pandalanguage$pan
     }
     self->classKind = p_kind;
     {
-        panda$collections$Array* $tmp21 = (panda$collections$Array*) pandaAlloc(40);
+        panda$collections$Array* $tmp21 = (panda$collections$Array*) pandaAlloc(41);
         $tmp21->$class = (panda$core$Class*) &panda$collections$Array$class;
         $tmp21->refCount.value = 1;
         panda$collections$Array$init$panda$collections$ListView$LTpanda$collections$Array$T$GT($tmp21, p_declaredSupers);
@@ -234,7 +234,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$ClassDecl$typeWithParame
         return $tmp59;
     }
     }
-    panda$collections$Array* $tmp61 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp61 = (panda$collections$Array*) pandaAlloc(41);
     $tmp61->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp61->refCount.value = 1;
     panda$collections$Array$init($tmp61);

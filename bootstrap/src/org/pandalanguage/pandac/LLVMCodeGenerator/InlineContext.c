@@ -13,7 +13,7 @@ org$pandalanguage$pandac$LLVMCodeGenerator$InlineContext$class_type org$pandalan
 
 
 void org$pandalanguage$pandac$LLVMCodeGenerator$InlineContext$init$panda$core$String$panda$core$String$panda$collections$ListView$LTpanda$core$String$GT$panda$core$String(org$pandalanguage$pandac$LLVMCodeGenerator$InlineContext* self, panda$core$String* p_varSuffix, panda$core$String* p_selfRef, panda$collections$ListView* p_argRefs, panda$core$String* p_exitLabel) {
-    panda$collections$Array* $tmp1 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp1 = (panda$collections$Array*) pandaAlloc(41);
     $tmp1->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp1->refCount.value = 1;
     panda$collections$Array$init($tmp1);

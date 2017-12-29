@@ -25,6 +25,7 @@ typedef struct panda$core$String panda$core$String;
 #include "panda/core/Bit.h"
 typedef struct panda$core$Panda panda$core$Panda;
 
+void panda$core$Panda$disableRefCounting();
 panda$core$Object* panda$core$Panda$ref$panda$core$Object$R$panda$core$Object(panda$core$Object* p_o);
 panda$core$Object* panda$core$Panda$unref$panda$core$Object$R$panda$core$Object(panda$core$Object* p_o);
 void panda$core$Panda$toReal64$panda$core$String$R$panda$core$Real64(panda$core$Real64* result, panda$core$String* p_s);

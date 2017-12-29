@@ -161,7 +161,7 @@ int main(int argc, char** argv) {
     args->refcnt = 1;
     args->count = argc;
     args->capacity = argc;
-    args->data = malloc(argc * sizeof(Object*));
+    args->data = calloc(argc, sizeof(Object*));
     int i;
     for (i = 0; i < argc; ++i) {
         args->data[i] = (Object*) pandaNewString(argv[i], strlen(argv[i]));
@@ -278,15 +278,21 @@ void panda$core$System$Process$waitFor$R$panda$core$Int64(int64_t* result, Proce
 
 #define NO_REFCNT -999
 
+int refCount = 1;
+
+Object* panda$core$Panda$disableRefCounting() {
+    refCount = 0;
+}
+
 Object* panda$core$Panda$ref$panda$core$Object$R$panda$core$Object(Object* o) {
-    if (o && o->refcnt != NO_REFCNT) {
+    if (refCount && o && o->refcnt != NO_REFCNT) {
         ++o->refcnt;
     }
     return o;
 }
 
 Object* panda$core$Panda$unref$panda$core$Object$R$panda$core$Object(Object* o) {
-    if (o && o->refcnt != NO_REFCNT) {
+    if (refCount && o && o->refcnt != NO_REFCNT) {
         if (o->refcnt <= 0) {
             fprintf(stderr, "internal error: refcnt = %d\n", o->refcnt);
             abort();
@@ -294,8 +300,8 @@ Object* panda$core$Panda$unref$panda$core$Object$R$panda$core$Object(Object* o) 
         --o->refcnt;
         if (o->refcnt == 0) {
             void (*cleanup)() = o->cl->vtable[1]; // FIXME hardcoded index to cleanup
-//            cleanup(o);
-//            free(o);
+            cleanup(o);
+            free(o);
         }
     }
     return o;
@@ -438,7 +444,7 @@ Array* panda$io$File$list$R$panda$collections$ListView$LTpanda$io$File$GT(File* 
     result->refcnt = 1;
     result->count = 0;
     result->capacity = 16;
-    result->data = malloc(result->capacity * sizeof(Object*));
+    result->data = calloc(result->capacity, sizeof(Object*));
     DIR *d;
     struct dirent *entry;
     char* path = pandaGetCString(dir->path);

@@ -27,7 +27,7 @@ typedef panda$core$Object* (*$fn122)(panda$collections$ListView*, panda$core$Int
 
 
 void panda$io$PushbackInputStream$init$panda$io$InputStream(panda$io$PushbackInputStream* self, panda$io$InputStream* p_source) {
-    panda$collections$Array* $tmp1 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp1 = (panda$collections$Array*) pandaAlloc(41);
     $tmp1->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp1->refCount.value = 1;
     panda$collections$Array$init($tmp1);

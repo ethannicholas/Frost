@@ -174,7 +174,7 @@ panda$io$File* org$pandalanguage$pandac$Main$optimize$panda$io$File$panda$core$I
     panda$io$File* $tmp24 = panda$io$File$changeExtension$panda$core$String$R$panda$io$File(p_llvm, &$s23);
     panda$core$Object* $tmp25 = panda$core$Panda$ref$panda$core$Object$R$panda$core$Object(((panda$core$Object*) $tmp24));
     dest22 = ((panda$io$File*) $tmp25);
-    panda$collections$Array* $tmp27 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp27 = (panda$collections$Array*) pandaAlloc(41);
     $tmp27->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp27->refCount.value = 1;
     panda$collections$Array$init($tmp27);
@@ -216,7 +216,7 @@ panda$io$File* org$pandalanguage$pandac$Main$toAssembly$panda$io$File$R$panda$io
     panda$io$File* $tmp49 = panda$io$File$changeExtension$panda$core$String$R$panda$io$File(p_llvm, &$s48);
     panda$core$Object* $tmp50 = panda$core$Panda$ref$panda$core$Object$R$panda$core$Object(((panda$core$Object*) $tmp49));
     dest47 = ((panda$io$File*) $tmp50);
-    panda$collections$Array* $tmp52 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp52 = (panda$collections$Array*) pandaAlloc(41);
     $tmp52->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp52->refCount.value = 1;
     panda$collections$Array$init($tmp52);
@@ -244,7 +244,7 @@ panda$io$File* org$pandalanguage$pandac$Main$toObject$panda$io$File$panda$io$Fil
     panda$collections$Array* args65;
     panda$core$System$Process* p72;
     panda$core$Int64 $tmp79;
-    panda$collections$Array* $tmp66 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp66 = (panda$collections$Array*) pandaAlloc(41);
     $tmp66->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp66->refCount.value = 1;
     panda$collections$Array$init($tmp66);
@@ -274,7 +274,7 @@ panda$io$File* org$pandalanguage$pandac$Main$toExecutable$panda$io$File$panda$io
     panda$collections$Array* args81;
     panda$core$System$Process* p89;
     panda$core$Int64 $tmp96;
-    panda$collections$Array* $tmp82 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp82 = (panda$collections$Array*) pandaAlloc(41);
     $tmp82->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp82->refCount.value = 1;
     panda$collections$Array$init($tmp82);
@@ -343,13 +343,13 @@ void org$pandalanguage$pandac$Main$run$panda$collections$ListView$LTpanda$core$S
     org$pandalanguage$pandac$Main$Arguments$init$panda$collections$ListView$LTpanda$core$String$GT($tmp109, p_rawArgs);
     panda$core$Object* $tmp111 = panda$core$Panda$ref$panda$core$Object$R$panda$core$Object(((panda$core$Object*) $tmp109));
     args108 = ((org$pandalanguage$pandac$Main$Arguments*) $tmp111);
-    panda$collections$Array* $tmp113 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp113 = (panda$collections$Array*) pandaAlloc(41);
     $tmp113->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp113->refCount.value = 1;
     panda$collections$Array$init($tmp113);
     panda$core$Object* $tmp115 = panda$core$Panda$ref$panda$core$Object$R$panda$core$Object(((panda$core$Object*) $tmp113));
     sources112 = ((panda$collections$Array*) $tmp115);
-    panda$collections$Array* $tmp117 = (panda$collections$Array*) pandaAlloc(40);
+    panda$collections$Array* $tmp117 = (panda$collections$Array*) pandaAlloc(41);
     $tmp117->$class = (panda$core$Class*) &panda$collections$Array$class;
     $tmp117->refCount.value = 1;
     panda$collections$Array$init($tmp117);
@@ -826,6 +826,7 @@ void org$pandalanguage$pandac$Main$run$panda$collections$ListView$LTpanda$core$S
     }
 }
 void pandaMain(panda$collections$ListView* p_args) {
+    panda$core$Panda$disableRefCounting();
     org$pandalanguage$pandac$Main* $tmp330 = (org$pandalanguage$pandac$Main*) pandaAlloc(48);
     $tmp330->$class = (panda$core$Class*) &org$pandalanguage$pandac$Main$class;
     $tmp330->refCount.value = 1;
