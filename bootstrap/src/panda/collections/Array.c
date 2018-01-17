@@ -178,10 +178,10 @@ void panda$collections$Array$cleanup(panda$collections$Array* self) {
     if ($tmp45 < $tmp47) goto $l49; else goto $l51;
     $l49:;
     {
+        if (((panda$core$Bit) { self->data[i44.value] != NULL }).value) {
         {
             panda$core$Panda$unref$panda$core$Object(self->data[i44.value]);
-            panda$core$Panda$ref$panda$core$Object(NULL);
-            self->data[i44.value] = NULL;
+        }
         }
     }
     $l52:;
@@ -823,7 +823,6 @@ panda$collections$ImmutableArray* panda$collections$Array$finish$R$panda$collect
         panda$collections$ImmutableArray$init($tmp339);
         ((panda$core$Object*) self)->$class = ((panda$core$Object*) $tmp339)->$class;
     }
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) self));
     return ((panda$collections$ImmutableArray*) ((panda$core$Object*) self));
 }
 

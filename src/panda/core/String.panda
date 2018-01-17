@@ -430,7 +430,7 @@ class String : Immutable, Key<String>, Iterable<Char32> {
         else {
             max := self.end()
             if r.inclusive {
-                max := offset(max, -1)
+                max := previous(max)
             }
         }
         return substring(Range<Index>(min, max, r.inclusive))
@@ -968,7 +968,7 @@ class String : Immutable, Key<String>, Iterable<Char32> {
                 break
             }
             result.add(self[index .. nextIndex->Index])
-            index := offset(nextIndex, delimiter._length)
+            index := Index(nextIndex.value + delimiter._length)
         }
         return result
     }

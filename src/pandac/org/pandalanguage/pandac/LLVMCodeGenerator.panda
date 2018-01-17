@@ -3250,9 +3250,9 @@ class LLVMCodeGenerator : CodeGenerator {
 
     @override
     method write(m:MethodDecl, body:ImmutableArray<IRNode>) {
-        Console.printLine("##### " + m.declaration())
-        Console.printLine(body.join("\n"))
-        Console.printLine("########################")
+--        Console.printLine("##### " + m.declaration())
+--        Console.printLine(body.join("\n"))
+--        Console.printLine("########################")
         assert compiler.currentClass.peek() == m.owner,
                 "compiling \{m.owner.name}.\{m.signature()} from within " +
                 compiler.currentClass.peek().name

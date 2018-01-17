@@ -2254,6 +2254,28 @@ class Compiler : ErrorReporter {
         match expr {
             when IRNode.CAST(_, base, _, _):
                 return base
+            when IRNode.EXPRESSION_WITH_EXTRA_EFFECTS(base, extra):
+                match base {
+                    when IRNode.REUSED_VALUE_DEFINITION(value, idx):
+                        def unwrapped := unwrapCast(value)
+                        if unwrapped == value {
+                            return expr
+                        }
+                        match extra {
+                            when IRNode.CALL(_, _, m, args):
+                                if m.value.owner.name = "panda.core.Panda" &
+                                        m.value.name = "unref" & args.get_count() = 1 {
+                                    match unwrapCast(unwrapCast(args[0])) {
+                                        when IRNode.REUSED_VALUE(_, _, idx2):
+                                            assert idx = idx2
+                                            return unwrapped
+                                        otherwise:
+                                            assert false
+                                    }
+                                }
+                        }
+                }
+                return expr
             otherwise:
                 return expr
         }
@@ -3156,7 +3178,6 @@ class Compiler : ErrorReporter {
             if compiled = IRNode.VAR {
                 def unrefs := Array<IRNode>()
                 for v in symbolTable.symbols.values() {
-                    Console.printLine("symbol: \{v}")
                     if v.kind = Symbol.Kind.VARIABLE & isRefCounted(v->Variable.type) {
                         unrefs.add(compilePandaCall("unref",
                                 IRNode.VARIABLE_REFERENCE(Position(), v->Variable)))

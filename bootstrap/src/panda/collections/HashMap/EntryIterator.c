@@ -76,10 +76,7 @@ panda$collections$HashMap$Entry* panda$collections$HashMap$EntryIterator$next$R$
         panda$core$Bit $tmp18 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(self->bucket, self->map->bucketCount);
         if ($tmp18.value) {
         {
-            {
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result14));
-                goto $l16;
-            }
+            goto $l16;
         }
         }
         {

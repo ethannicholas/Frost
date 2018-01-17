@@ -311,7 +311,6 @@ panda$core$String* panda$core$MutableString$finish$R$panda$core$String(panda$cor
     {
         ((panda$core$Object*) self)->$class = ((panda$core$Object*) &$s154)->$class;
     }
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) self));
     return ((panda$core$String*) ((panda$core$Object*) self));
 }
 

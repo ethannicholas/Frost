@@ -281,7 +281,7 @@ void panda$collections$IdentityMap$remove$panda$collections$IdentityMap$K(panda$
         if (((panda$core$Bit) { next64->key == p_key }).value) {
         {
             {
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) e60));
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) next64));
                 goto $l63;
             }
         }

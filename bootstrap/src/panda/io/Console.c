@@ -90,10 +90,7 @@ panda$core$String* panda$io$Console$readLine$R$panda$core$String$Q() {
                 }
             }
             }
-            {
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result26));
-                goto $l30;
-            }
+            goto $l30;
         }
         }
         panda$core$Bit $tmp38;
@@ -109,10 +106,7 @@ panda$core$String* panda$io$Console$readLine$R$panda$core$String$Q() {
         $l37:;
         if ($tmp38.value) {
         {
-            {
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result26));
-                goto $l30;
-            }
+            goto $l30;
         }
         }
         panda$core$MutableString$append$panda$core$Char8(result26, ((panda$core$Char8) c31.value));

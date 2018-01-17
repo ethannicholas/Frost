@@ -83,10 +83,7 @@ panda$core$String* panda$io$InputStream$readFully$R$panda$core$String(panda$io$I
         panda$core$Bit $tmp22 = panda$core$Int64$$LE$panda$core$Int64$R$panda$core$Bit(count20, ((panda$core$Int64) { 0 }));
         if ($tmp22.value) {
         {
-            {
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result14));
-                goto $l19;
-            }
+            goto $l19;
         }
         }
         panda$core$MutableString$append$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64$panda$core$Int64(result14, ((panda$core$Char8*) buffer17), ((panda$core$Int64) { 0 }), count20);
@@ -207,10 +204,7 @@ panda$core$String* panda$io$InputStream$readLine$R$panda$core$String$Q(panda$io$
                 }
             }
             }
-            {
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result55));
-                goto $l59;
-            }
+            goto $l59;
         }
         }
         panda$core$Bit $tmp68;
@@ -226,10 +220,7 @@ panda$core$String* panda$io$InputStream$readLine$R$panda$core$String$Q(panda$io$
         $l67:;
         if ($tmp68.value) {
         {
-            {
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result55));
-                goto $l59;
-            }
+            goto $l59;
         }
         }
         panda$core$MutableString$append$panda$core$Char8(result55, ((panda$core$Char8) c60.value));

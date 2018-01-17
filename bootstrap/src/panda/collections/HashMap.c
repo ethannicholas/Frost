@@ -393,7 +393,7 @@ void panda$collections$HashMap$remove$panda$collections$HashMap$K(panda$collecti
         if ($tmp118.value) {
         {
             {
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) e106));
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) next114));
                 goto $l113;
             }
         }
