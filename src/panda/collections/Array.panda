@@ -64,6 +64,11 @@ class Array<T> : List<T> {
 
     @override
     method cleanup() {
+        for i in 0 .. count {
+            if data[i] != null {
+                Panda.unref(data[i])
+            }
+        }
         data.destroy()
     }
 
@@ -83,10 +88,10 @@ class Array<T> : List<T> {
     method insert(index:Int, value:T) {
         ensureCapacity(count + 1)
         for i in count .. index by -1 {
-            self[i] := self[i - 1]
+            data[i] := data[i - 1]
         }
         count += 1
-        self[index] := value
+        data[index] := value
     }
 
     ================================================================================================
@@ -268,7 +273,6 @@ class Array<T> : List<T> {
             }
         }
         return result.finish()
-
     }
 
     @override

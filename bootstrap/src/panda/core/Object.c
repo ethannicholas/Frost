@@ -1,6 +1,7 @@
 #include "panda/core/Object.h"
 #include "panda/core/Class.h"
 #include "panda/core/String.h"
+#include "panda/core/Panda.h"
 
 
 panda$core$Object$class_type panda$core$Object$class = { (panda$core$Class*) &panda$core$Class$class, 1, NULL, NULL, { panda$core$Object$convert$R$panda$core$String, panda$core$Object$cleanup} };
@@ -12,6 +13,7 @@ panda$core$String* panda$core$Object$convert$R$panda$core$String(panda$core$Obje
     return &$s1;
 }
 void panda$core$Object$cleanup(panda$core$Object* self) {
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->$class));
 }
 void panda$core$Object$init(panda$core$Object* self) {
 }

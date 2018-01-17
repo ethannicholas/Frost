@@ -45,5 +45,6 @@ panda$core$Bit panda$collections$IdentityMap$$NEQ$panda$collections$Map$LTpanda$
 panda$collections$Iterator* panda$collections$IdentityMap$keys$R$panda$collections$Iterator$LTpanda$collections$IdentityMap$K$GT(panda$collections$IdentityMap* self);
 panda$collections$Iterator* panda$collections$IdentityMap$values$R$panda$collections$Iterator$LTpanda$collections$IdentityMap$V$GT(panda$collections$IdentityMap* self);
 panda$core$String* panda$collections$IdentityMap$convert$R$panda$core$String(panda$collections$IdentityMap* self);
+void panda$collections$IdentityMap$cleanup(panda$collections$IdentityMap* self);
 
 #endif

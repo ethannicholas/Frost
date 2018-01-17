@@ -25,5 +25,6 @@ typedef struct panda$core$String panda$core$String;
 
 void org$pandalanguage$pandac$CCodeGenerator$LoopDescriptor$init$panda$core$String$Q$panda$core$String$panda$core$String(org$pandalanguage$pandac$CCodeGenerator$LoopDescriptor* self, panda$core$String* p_loopLabel, panda$core$String* p_breakLabel, panda$core$String* p_continueLabel);
 panda$core$String* org$pandalanguage$pandac$CCodeGenerator$LoopDescriptor$convert$R$panda$core$String(org$pandalanguage$pandac$CCodeGenerator$LoopDescriptor* self);
+void org$pandalanguage$pandac$CCodeGenerator$LoopDescriptor$cleanup(org$pandalanguage$pandac$CCodeGenerator$LoopDescriptor* self);
 
 #endif

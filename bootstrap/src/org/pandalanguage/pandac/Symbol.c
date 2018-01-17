@@ -4,11 +4,11 @@
 #include "panda/core/Int64.h"
 #include "org/pandalanguage/pandac/Position.h"
 #include "panda/core/String.h"
-#include "panda/core/Panda.h"
 #include "panda/core/Bit.h"
+#include "panda/core/Panda.h"
 
 
-org$pandalanguage$pandac$Symbol$class_type org$pandalanguage$pandac$Symbol$class = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Object$class, NULL, { panda$core$Object$convert$R$panda$core$String, panda$core$Object$cleanup, org$pandalanguage$pandac$Symbol$get_heritable$R$panda$core$Bit} };
+org$pandalanguage$pandac$Symbol$class_type org$pandalanguage$pandac$Symbol$class = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Object$class, NULL, { panda$core$Object$convert$R$panda$core$String, org$pandalanguage$pandac$Symbol$cleanup, org$pandalanguage$pandac$Symbol$get_heritable$R$panda$core$Bit} };
 
 
 
@@ -16,11 +16,13 @@ void org$pandalanguage$pandac$Symbol$init$panda$core$Int64$org$pandalanguage$pan
     self->kind = p_kind;
     self->position = p_position;
     {
-        panda$core$Object* $tmp1 = panda$core$Panda$ref$panda$core$Object$R$panda$core$Object(((panda$core$Object*) p_name));
-        self->name = ((panda$core$String*) $tmp1);
+        self->name = p_name;
     }
 }
 panda$core$Bit org$pandalanguage$pandac$Symbol$get_heritable$R$panda$core$Bit(org$pandalanguage$pandac$Symbol* self) {
     return ((panda$core$Bit) { true });
+}
+void org$pandalanguage$pandac$Symbol$cleanup(org$pandalanguage$pandac$Symbol* self) {
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->name));
 }
 

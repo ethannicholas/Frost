@@ -30,5 +30,6 @@ typedef struct panda$core$String panda$core$String;
 
 void org$pandalanguage$pandac$Symbol$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$String(org$pandalanguage$pandac$Symbol* self, panda$core$Int64 p_kind, org$pandalanguage$pandac$Position p_position, panda$core$String* p_name);
 panda$core$Bit org$pandalanguage$pandac$Symbol$get_heritable$R$panda$core$Bit(org$pandalanguage$pandac$Symbol* self);
+void org$pandalanguage$pandac$Symbol$cleanup(org$pandalanguage$pandac$Symbol* self);
 
 #endif

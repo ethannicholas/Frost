@@ -19,5 +19,6 @@ extern org$pandalanguage$pandac$Symbol$Kind$class_type org$pandalanguage$pandac$
 typedef struct org$pandalanguage$pandac$Symbol$Kind org$pandalanguage$pandac$Symbol$Kind;
 
 void org$pandalanguage$pandac$Symbol$Kind$init(org$pandalanguage$pandac$Symbol$Kind* self);
+void org$pandalanguage$pandac$Symbol$Kind$cleanup(org$pandalanguage$pandac$Symbol$Kind* self);
 
 #endif

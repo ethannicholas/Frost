@@ -35,6 +35,7 @@ typedef struct org$pandalanguage$pandac$LLVMCodeGenerator {
     panda$core$String* currentBlock;
     org$pandalanguage$pandac$MethodDecl* currentMethod;
     panda$collections$Stack* loopDescriptors;
+    panda$collections$Stack* extraEffects;
     panda$core$Int64 varCount;
     panda$core$Int64 labelCount;
     panda$collections$HashMap* reusedValues;
@@ -55,20 +56,20 @@ typedef struct org$pandalanguage$pandac$LLVMCodeGenerator org$pandalanguage$pand
 typedef struct panda$io$OutputStream panda$io$OutputStream;
 typedef struct org$pandalanguage$pandac$Compiler org$pandalanguage$pandac$Compiler;
 typedef struct panda$core$String panda$core$String;
-#include "panda/core/Bit.h"
-typedef struct panda$collections$ImmutableArray panda$collections$ImmutableArray;
-typedef struct org$pandalanguage$pandac$IRNode org$pandalanguage$pandac$IRNode;
 #include "panda/core/Int64.h"
 typedef struct org$pandalanguage$pandac$Type org$pandalanguage$pandac$Type;
 typedef struct org$pandalanguage$pandac$ClassDecl org$pandalanguage$pandac$ClassDecl;
 typedef struct org$pandalanguage$pandac$MethodDecl org$pandalanguage$pandac$MethodDecl;
 typedef struct org$pandalanguage$pandac$LLVMCodeGenerator$MethodShim org$pandalanguage$pandac$LLVMCodeGenerator$MethodShim;
+#include "panda/core/Bit.h"
 typedef struct org$pandalanguage$pandac$Pair org$pandalanguage$pandac$Pair;
 typedef struct org$pandalanguage$pandac$LLVMCodeGenerator$ClassConstant org$pandalanguage$pandac$LLVMCodeGenerator$ClassConstant;
 typedef struct org$pandalanguage$pandac$Variable org$pandalanguage$pandac$Variable;
 typedef struct org$pandalanguage$pandac$FieldDecl org$pandalanguage$pandac$FieldDecl;
+typedef struct org$pandalanguage$pandac$IRNode org$pandalanguage$pandac$IRNode;
 #include "org/pandalanguage/pandac/parser/Token/Kind.h"
 typedef struct org$pandalanguage$pandac$MethodRef org$pandalanguage$pandac$MethodRef;
+typedef struct panda$collections$ImmutableArray panda$collections$ImmutableArray;
 #include "panda/core/UInt64.h"
 #include "panda/core/Real64.h"
 typedef struct org$pandalanguage$pandac$ChoiceEntry org$pandalanguage$pandac$ChoiceEntry;
@@ -82,8 +83,6 @@ void org$pandalanguage$pandac$LLVMCodeGenerator$finish(org$pandalanguage$pandac$
 panda$core$String* org$pandalanguage$pandac$LLVMCodeGenerator$nextVar$R$panda$core$String(org$pandalanguage$pandac$LLVMCodeGenerator* self);
 panda$core$String* org$pandalanguage$pandac$LLVMCodeGenerator$nextLabel$R$panda$core$String(org$pandalanguage$pandac$LLVMCodeGenerator* self);
 void org$pandalanguage$pandac$LLVMCodeGenerator$createBlock$panda$core$String$panda$io$OutputStream(org$pandalanguage$pandac$LLVMCodeGenerator* self, panda$core$String* p_label, panda$io$OutputStream* p_out);
-panda$core$Bit org$pandalanguage$pandac$LLVMCodeGenerator$endsWithBranch$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$IRNode$GT$R$panda$core$Bit(org$pandalanguage$pandac$LLVMCodeGenerator* self, panda$collections$ImmutableArray* p_statements);
-panda$core$Bit org$pandalanguage$pandac$LLVMCodeGenerator$endsWithBranch$org$pandalanguage$pandac$IRNode$R$panda$core$Bit(org$pandalanguage$pandac$LLVMCodeGenerator* self, org$pandalanguage$pandac$IRNode* p_stmt);
 panda$core$Int64 org$pandalanguage$pandac$LLVMCodeGenerator$fieldSize$org$pandalanguage$pandac$Type$R$panda$core$Int64(org$pandalanguage$pandac$LLVMCodeGenerator* self, org$pandalanguage$pandac$Type* p_t);
 panda$core$Int64 org$pandalanguage$pandac$LLVMCodeGenerator$alignment$org$pandalanguage$pandac$Type$R$panda$core$Int64(org$pandalanguage$pandac$LLVMCodeGenerator* self, org$pandalanguage$pandac$Type* p_t);
 panda$core$Int64 org$pandalanguage$pandac$LLVMCodeGenerator$sizeOf$org$pandalanguage$pandac$Type$R$panda$core$Int64(org$pandalanguage$pandac$LLVMCodeGenerator* self, org$pandalanguage$pandac$Type* p_t);
@@ -148,6 +147,7 @@ panda$core$String* org$pandalanguage$pandac$LLVMCodeGenerator$getIsNonNullRefere
 panda$core$String* org$pandalanguage$pandac$LLVMCodeGenerator$getNullReference$org$pandalanguage$pandac$Type$panda$io$OutputStream$R$panda$core$String(org$pandalanguage$pandac$LLVMCodeGenerator* self, org$pandalanguage$pandac$Type* p_t, panda$io$OutputStream* p_out);
 panda$core$String* org$pandalanguage$pandac$LLVMCodeGenerator$getPrefixReference$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$IRNode$panda$io$OutputStream$R$panda$core$String(org$pandalanguage$pandac$LLVMCodeGenerator* self, org$pandalanguage$pandac$parser$Token$Kind p_op, org$pandalanguage$pandac$IRNode* p_base, panda$io$OutputStream* p_out);
 panda$core$String* org$pandalanguage$pandac$LLVMCodeGenerator$getChoiceFieldReference$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$ChoiceEntry$panda$core$Int64$panda$io$OutputStream$R$panda$core$String(org$pandalanguage$pandac$LLVMCodeGenerator* self, org$pandalanguage$pandac$IRNode* p_base, org$pandalanguage$pandac$ChoiceEntry* p_ce, panda$core$Int64 p_field, panda$io$OutputStream* p_out);
+panda$core$String* org$pandalanguage$pandac$LLVMCodeGenerator$getExpressionWithExtraEffectsReference$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$IRNode$panda$io$OutputStream$R$panda$core$String(org$pandalanguage$pandac$LLVMCodeGenerator* self, org$pandalanguage$pandac$IRNode* p_expr, org$pandalanguage$pandac$IRNode* p_stmt, panda$io$OutputStream* p_out);
 panda$core$String* org$pandalanguage$pandac$LLVMCodeGenerator$getReference$org$pandalanguage$pandac$IRNode$panda$io$OutputStream$R$panda$core$String(org$pandalanguage$pandac$LLVMCodeGenerator* self, org$pandalanguage$pandac$IRNode* p_expr, panda$io$OutputStream* p_out);
 panda$core$String* org$pandalanguage$pandac$LLVMCodeGenerator$getTypedReference$org$pandalanguage$pandac$IRNode$panda$io$OutputStream$R$panda$core$String(org$pandalanguage$pandac$LLVMCodeGenerator* self, org$pandalanguage$pandac$IRNode* p_expr, panda$io$OutputStream* p_out);
 void org$pandalanguage$pandac$LLVMCodeGenerator$writeBlock$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$IRNode$GT$panda$io$OutputStream(org$pandalanguage$pandac$LLVMCodeGenerator* self, panda$collections$ImmutableArray* p_statements, panda$io$OutputStream* p_out);
@@ -175,11 +175,13 @@ void org$pandalanguage$pandac$LLVMCodeGenerator$writeBreak$panda$core$String$Q$p
 void org$pandalanguage$pandac$LLVMCodeGenerator$writeContinue$panda$core$String$Q$panda$io$OutputStream(org$pandalanguage$pandac$LLVMCodeGenerator* self, panda$core$String* p_label, panda$io$OutputStream* p_out);
 void org$pandalanguage$pandac$LLVMCodeGenerator$writeAssert$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$IRNode$Q$panda$io$OutputStream(org$pandalanguage$pandac$LLVMCodeGenerator* self, org$pandalanguage$pandac$Position p_position, org$pandalanguage$pandac$IRNode* p_test, org$pandalanguage$pandac$IRNode* p_msg, panda$io$OutputStream* p_out);
 void org$pandalanguage$pandac$LLVMCodeGenerator$writeMatch$org$pandalanguage$pandac$IRNode$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$IRNode$GT$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$IRNode$GT$Q$panda$io$OutputStream(org$pandalanguage$pandac$LLVMCodeGenerator* self, org$pandalanguage$pandac$IRNode* p_value, panda$collections$ImmutableArray* p_whens, panda$collections$ImmutableArray* p_other, panda$io$OutputStream* p_out);
+void org$pandalanguage$pandac$LLVMCodeGenerator$writeExtraEffects$panda$io$OutputStream(org$pandalanguage$pandac$LLVMCodeGenerator* self, panda$io$OutputStream* p_out);
 void org$pandalanguage$pandac$LLVMCodeGenerator$writeStatement$org$pandalanguage$pandac$IRNode$panda$io$OutputStream(org$pandalanguage$pandac$LLVMCodeGenerator* self, org$pandalanguage$pandac$IRNode* p_stmt, panda$io$OutputStream* p_out);
 panda$core$String* org$pandalanguage$pandac$LLVMCodeGenerator$selfType$org$pandalanguage$pandac$MethodDecl$R$panda$core$String(org$pandalanguage$pandac$LLVMCodeGenerator* self, org$pandalanguage$pandac$MethodDecl* p_m);
 void org$pandalanguage$pandac$LLVMCodeGenerator$writeDeclaration$org$pandalanguage$pandac$MethodDecl(org$pandalanguage$pandac$LLVMCodeGenerator* self, org$pandalanguage$pandac$MethodDecl* p_m);
 void org$pandalanguage$pandac$LLVMCodeGenerator$write$org$pandalanguage$pandac$MethodDecl$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$IRNode$GT(org$pandalanguage$pandac$LLVMCodeGenerator* self, org$pandalanguage$pandac$MethodDecl* p_m, panda$collections$ImmutableArray* p_body);
 void org$pandalanguage$pandac$LLVMCodeGenerator$start$org$pandalanguage$pandac$ClassDecl(org$pandalanguage$pandac$LLVMCodeGenerator* self, org$pandalanguage$pandac$ClassDecl* p_cl);
 void org$pandalanguage$pandac$LLVMCodeGenerator$end$org$pandalanguage$pandac$ClassDecl(org$pandalanguage$pandac$LLVMCodeGenerator* self, org$pandalanguage$pandac$ClassDecl* p_cl);
+void org$pandalanguage$pandac$LLVMCodeGenerator$cleanup(org$pandalanguage$pandac$LLVMCodeGenerator* self);
 
 #endif

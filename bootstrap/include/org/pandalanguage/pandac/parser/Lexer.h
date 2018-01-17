@@ -32,5 +32,6 @@ panda$core$Int64** org$pandalanguage$pandac$parser$Lexer$getTransitions$R$panda$
 panda$core$Int64* org$pandalanguage$pandac$parser$Lexer$getAccepts$R$panda$unsafe$Pointer$LTpanda$core$Int64$GT();
 org$pandalanguage$pandac$parser$Token org$pandalanguage$pandac$parser$Lexer$next$R$org$pandalanguage$pandac$parser$Token(org$pandalanguage$pandac$parser$Lexer* self);
 void org$pandalanguage$pandac$parser$Lexer$init(org$pandalanguage$pandac$parser$Lexer* self);
+void org$pandalanguage$pandac$parser$Lexer$cleanup(org$pandalanguage$pandac$parser$Lexer* self);
 
 #endif

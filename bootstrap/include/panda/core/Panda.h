@@ -26,8 +26,8 @@ typedef struct panda$core$String panda$core$String;
 typedef struct panda$core$Panda panda$core$Panda;
 
 void panda$core$Panda$disableRefCounting();
-panda$core$Object* panda$core$Panda$ref$panda$core$Object$R$panda$core$Object(panda$core$Object* p_o);
-panda$core$Object* panda$core$Panda$unref$panda$core$Object$R$panda$core$Object(panda$core$Object* p_o);
+void panda$core$Panda$ref$panda$core$Object(panda$core$Object* p_o);
+void panda$core$Panda$unref$panda$core$Object(panda$core$Object* p_o);
 void panda$core$Panda$toReal64$panda$core$String$R$panda$core$Real64(panda$core$Real64* result, panda$core$String* p_s);
 void panda$core$Panda$floatToIntBits$panda$core$Real64$R$panda$core$Int64(panda$core$Int64* result, panda$core$Real64 p_r);
 void panda$core$Panda$addressOf$panda$core$Object$R$panda$core$Int64(panda$core$Int64* result, panda$core$Object* p_o);
@@ -39,5 +39,6 @@ panda$core$String* panda$core$Panda$align$panda$core$String$panda$core$String$R$
 panda$core$String* panda$core$Panda$format$panda$core$Bit$panda$core$UInt64$panda$core$UInt64$panda$core$String$R$panda$core$String(panda$core$Bit p_sign, panda$core$UInt64 p_rawValue, panda$core$UInt64 p_mask, panda$core$String* p_fmt);
 void panda$core$Panda$debugPrint$builtin_int64(int64_t p_i);
 void panda$core$Panda$init(panda$core$Panda* self);
+void panda$core$Panda$cleanup(panda$core$Panda* self);
 
 #endif

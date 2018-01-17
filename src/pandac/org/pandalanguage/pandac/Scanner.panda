@@ -506,10 +506,13 @@ class Scanner {
             scanClassChild(result, m)
         }
         var foundInit := false
+        var foundCleanup := false
         for m in result.methods {
             if m.methodKind = MethodDecl.Kind.INIT {
                 foundInit := true
-                break
+            }
+            if m.name = "cleanup" & m.parameters.get_count() = 0 {
+                foundCleanup := true
             }
         }
         if !foundInit & kind = ClassDecl.Kind.CLASS & result.name != "panda.unsafe.Pointer" {
@@ -518,6 +521,13 @@ class Scanner {
                     ImmutableArray<ASTNode>())
             result.methods.add(defaultInit)
             result.symbolTable.add(defaultInit)
+        }
+        if !foundCleanup & kind = ClassDecl.Kind.CLASS & result.name != "panda.unsafe.Pointer" {
+            def defaultCleanup := MethodDecl(result, position, null,
+                    Annotations(Annotations.Flag.OVERRIDE), MethodDecl.Kind.METHOD, "cleanup",
+                    Array<MethodDecl.Parameter>(), Type.Void(), ImmutableArray<ASTNode>())
+            result.methods.add(defaultCleanup)
+            result.symbolTable.add(defaultCleanup)
         }
         if kind = ClassDecl.Kind.CHOICE {
             var haveFields := false

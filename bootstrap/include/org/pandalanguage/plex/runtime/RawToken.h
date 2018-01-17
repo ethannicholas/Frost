@@ -37,5 +37,6 @@ extern org$pandalanguage$plex$runtime$RawToken$wrapperclass_type org$pandalangua
 #include "panda/core/String/Index.h"
 
 void org$pandalanguage$plex$runtime$RawToken$init$panda$core$Int64$panda$core$String$Index$panda$core$String$Index$panda$core$Int64$panda$core$Int64(org$pandalanguage$plex$runtime$RawToken* self, panda$core$Int64 p_kind, panda$core$String$Index p_start, panda$core$String$Index p_end, panda$core$Int64 p_line, panda$core$Int64 p_column);
+void org$pandalanguage$plex$runtime$RawToken$cleanup(org$pandalanguage$plex$runtime$RawToken self);
 
 #endif

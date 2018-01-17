@@ -23,5 +23,6 @@ typedef struct org$pandalanguage$pandac$CCodeGenerator$ClassConstant org$pandala
 typedef struct panda$core$String panda$core$String;
 
 void org$pandalanguage$pandac$CCodeGenerator$ClassConstant$init$panda$core$String$panda$core$String(org$pandalanguage$pandac$CCodeGenerator$ClassConstant* self, panda$core$String* p_name, panda$core$String* p_type);
+void org$pandalanguage$pandac$CCodeGenerator$ClassConstant$cleanup(org$pandalanguage$pandac$CCodeGenerator$ClassConstant* self);
 
 #endif

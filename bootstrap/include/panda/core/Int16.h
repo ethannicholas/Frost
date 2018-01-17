@@ -197,5 +197,6 @@ panda$core$Real32 panda$core$Int16$convert$R$panda$core$Real32(panda$core$Int16 
 panda$core$Real64 panda$core$Int16$convert$R$panda$core$Real64(panda$core$Int16 self);
 panda$core$String* panda$core$Int16$convert$R$panda$core$String(panda$core$Int16 self);
 panda$core$String* panda$core$Int16$format$panda$core$String$R$panda$core$String(panda$core$Int16 self, panda$core$String* p_fmt);
+void panda$core$Int16$cleanup(panda$core$Int16 self);
 
 #endif

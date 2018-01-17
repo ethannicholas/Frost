@@ -57,5 +57,6 @@ panda$core$UInt16 panda$core$Char16$convert$R$panda$core$UInt16(panda$core$Char1
 panda$core$UInt32 panda$core$Char16$convert$R$panda$core$UInt32(panda$core$Char16 self);
 panda$core$UInt64 panda$core$Char16$convert$R$panda$core$UInt64(panda$core$Char16 self);
 panda$core$String* panda$core$Char16$convert$R$panda$core$String(panda$core$Char16 self);
+void panda$core$Char16$cleanup(panda$core$Char16 self);
 
 #endif

@@ -28,5 +28,6 @@ typedef struct panda$core$String panda$core$String;
 void panda$io$MemoryInputStream$init$panda$collections$ImmutableArray$LTpanda$core$UInt8$GT(panda$io$MemoryInputStream* self, panda$collections$ImmutableArray* p_source);
 void panda$io$MemoryInputStream$init$panda$core$String(panda$io$MemoryInputStream* self, panda$core$String* p_source);
 panda$core$UInt8$nullable panda$io$MemoryInputStream$read$R$panda$core$UInt8$Q(panda$io$MemoryInputStream* self);
+void panda$io$MemoryInputStream$cleanup(panda$io$MemoryInputStream* self);
 
 #endif

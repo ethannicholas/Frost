@@ -4,7 +4,6 @@
 #include "panda/core/Object.h"
 #include "panda/collections/ImmutableArray.h"
 #include "panda/core/Int64.h"
-#include "panda/core/Panda.h"
 #include "panda/collections/ListView.h"
 #include "panda/core/String.h"
 #include "panda/collections/Array.h"
@@ -14,112 +13,116 @@
 #include "panda/core/Bit.h"
 #include "panda/core/Char8.h"
 #include "panda/core/UInt8.h"
+#include "panda/core/Panda.h"
 
 
-panda$io$MemoryInputStream$class_type panda$io$MemoryInputStream$class = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$io$InputStream$class, NULL, { panda$core$Object$convert$R$panda$core$String, panda$core$Object$cleanup, panda$io$MemoryInputStream$read$R$panda$core$UInt8$Q, panda$io$InputStream$read$panda$unsafe$Pointer$LTpanda$core$UInt8$GT$panda$core$Int64$R$panda$core$Int64, panda$io$InputStream$read$panda$unsafe$Pointer$LTpanda$core$Int8$GT$panda$core$Int64$R$panda$core$Int64, panda$io$InputStream$read$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64$R$panda$core$Int64, panda$io$InputStream$readFully$R$panda$core$String, panda$io$InputStream$read$R$panda$core$Int16$Q, panda$io$InputStream$read$R$panda$core$Int32$Q, panda$io$InputStream$read$R$panda$core$Int64$Q, panda$io$InputStream$read$R$panda$core$Char8$Q, panda$io$InputStream$readLine$R$panda$core$String$Q, panda$io$InputStream$lines$R$panda$collections$Iterator$LTpanda$core$String$GT} };
+panda$io$MemoryInputStream$class_type panda$io$MemoryInputStream$class = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$io$InputStream$class, NULL, { panda$core$Object$convert$R$panda$core$String, panda$io$MemoryInputStream$cleanup, panda$io$MemoryInputStream$read$R$panda$core$UInt8$Q, panda$io$InputStream$read$panda$unsafe$Pointer$LTpanda$core$UInt8$GT$panda$core$Int64$R$panda$core$Int64, panda$io$InputStream$read$panda$unsafe$Pointer$LTpanda$core$Int8$GT$panda$core$Int64$R$panda$core$Int64, panda$io$InputStream$read$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64$R$panda$core$Int64, panda$io$InputStream$readFully$R$panda$core$String, panda$io$InputStream$read$R$panda$core$Int16$Q, panda$io$InputStream$read$R$panda$core$Int32$Q, panda$io$InputStream$read$R$panda$core$Int64$Q, panda$io$InputStream$read$R$panda$core$Char8$Q, panda$io$InputStream$readLine$R$panda$core$String$Q, panda$io$InputStream$lines$R$panda$collections$Iterator$LTpanda$core$String$GT} };
 
-typedef panda$core$Int64 (*$fn10)(panda$collections$CollectionView*);
-typedef panda$collections$Iterator* (*$fn16)(panda$collections$Iterable*);
-typedef panda$core$Bit (*$fn22)(panda$collections$Iterator*);
-typedef panda$core$Object* (*$fn28)(panda$collections$Iterator*);
-typedef panda$core$Int64 (*$fn35)(panda$collections$CollectionView*);
-typedef panda$core$Object* (*$fn41)(panda$collections$ListView*, panda$core$Int64);
+typedef panda$core$Int64 (*$fn8)(panda$collections$CollectionView*);
+typedef panda$collections$Iterator* (*$fn13)(panda$collections$Iterable*);
+typedef panda$core$Bit (*$fn19)(panda$collections$Iterator*);
+typedef panda$core$Object* (*$fn25)(panda$collections$Iterator*);
+typedef panda$core$Int64 (*$fn31)(panda$collections$CollectionView*);
+typedef panda$core$Object* (*$fn37)(panda$collections$ListView*, panda$core$Int64);
 
 
 void panda$io$MemoryInputStream$init$panda$collections$ImmutableArray$LTpanda$core$UInt8$GT(panda$io$MemoryInputStream* self, panda$collections$ImmutableArray* p_source) {
     self->data = NULL;
     self->index = ((panda$core$Int64) { 0 });
     {
-        panda$core$Object* $tmp1 = panda$core$Panda$ref$panda$core$Object$R$panda$core$Object(((panda$core$Object*) ((panda$collections$ListView*) p_source)));
-        self->data = ((panda$collections$ListView*) $tmp1);
+        self->data = ((panda$collections$ListView*) p_source);
     }
 }
 void panda$io$MemoryInputStream$init$panda$core$String(panda$io$MemoryInputStream* self, panda$core$String* p_source) {
-    panda$collections$ListView* utf82;
-    panda$collections$Array* array5;
-    panda$collections$Iterator* c$Iter13;
-    panda$core$Char8 c25;
+    panda$collections$ListView* utf81;
+    panda$collections$Array* array3;
+    panda$collections$Iterator* c$Iter10;
+    panda$core$Char8 c22;
     self->data = NULL;
     self->index = ((panda$core$Int64) { 0 });
-    panda$collections$ListView* $tmp3 = panda$core$String$utf8$R$panda$collections$ListView$LTpanda$core$Char8$GT(p_source);
-    panda$core$Object* $tmp4 = panda$core$Panda$ref$panda$core$Object$R$panda$core$Object(((panda$core$Object*) $tmp3));
-    utf82 = ((panda$collections$ListView*) $tmp4);
-    panda$collections$Array* $tmp6 = (panda$collections$Array*) pandaAlloc(41);
-    $tmp6->$class = (panda$core$Class*) &panda$collections$Array$class;
-    $tmp6->refCount.value = 1;
-    ITable* $tmp8 = ((panda$collections$CollectionView*) utf82)->$class->itable;
-    while ($tmp8->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
-        $tmp8 = $tmp8->next;
+    panda$collections$ListView* $tmp2 = panda$core$String$utf8$R$panda$collections$ListView$LTpanda$core$Char8$GT(p_source);
+    utf81 = $tmp2;
+    panda$collections$Array* $tmp4 = (panda$collections$Array*) pandaZAlloc(40);
+    $tmp4->$class = (panda$core$Class*) &panda$collections$Array$class;
+    $tmp4->refCount.value = 1;
+    ITable* $tmp6 = ((panda$collections$CollectionView*) utf81)->$class->itable;
+    while ($tmp6->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
+        $tmp6 = $tmp6->next;
     }
-    $fn10 $tmp9 = $tmp8->methods[0];
-    panda$core$Int64 $tmp11 = $tmp9(((panda$collections$CollectionView*) utf82));
-    panda$collections$Array$init$panda$core$Int64($tmp6, $tmp11);
-    panda$core$Object* $tmp12 = panda$core$Panda$ref$panda$core$Object$R$panda$core$Object(((panda$core$Object*) $tmp6));
-    array5 = ((panda$collections$Array*) $tmp12);
+    $fn8 $tmp7 = $tmp6->methods[0];
+    panda$core$Int64 $tmp9 = $tmp7(((panda$collections$CollectionView*) utf81));
+    panda$collections$Array$init$panda$core$Int64($tmp4, $tmp9);
+    array3 = $tmp4;
     {
-        ITable* $tmp14 = ((panda$collections$Iterable*) utf82)->$class->itable;
-        while ($tmp14->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
-            $tmp14 = $tmp14->next;
+        ITable* $tmp11 = ((panda$collections$Iterable*) utf81)->$class->itable;
+        while ($tmp11->$class != (panda$core$Class*) &panda$collections$Iterable$class) {
+            $tmp11 = $tmp11->next;
         }
-        $fn16 $tmp15 = $tmp14->methods[0];
-        panda$collections$Iterator* $tmp17 = $tmp15(((panda$collections$Iterable*) utf82));
-        c$Iter13 = $tmp17;
-        $l18:;
-        ITable* $tmp20 = c$Iter13->$class->itable;
-        while ($tmp20->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-            $tmp20 = $tmp20->next;
+        $fn13 $tmp12 = $tmp11->methods[0];
+        panda$collections$Iterator* $tmp14 = $tmp12(((panda$collections$Iterable*) utf81));
+        c$Iter10 = $tmp14;
+        $l15:;
+        ITable* $tmp17 = c$Iter10->$class->itable;
+        while ($tmp17->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+            $tmp17 = $tmp17->next;
         }
-        $fn22 $tmp21 = $tmp20->methods[0];
-        panda$core$Bit $tmp23 = $tmp21(c$Iter13);
-        panda$core$Bit $tmp24 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp23);
-        if (!$tmp24.value) goto $l19;
+        $fn19 $tmp18 = $tmp17->methods[0];
+        panda$core$Bit $tmp20 = $tmp18(c$Iter10);
+        panda$core$Bit $tmp21 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp20);
+        if (!$tmp21.value) goto $l16;
         {
-            ITable* $tmp26 = c$Iter13->$class->itable;
-            while ($tmp26->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
-                $tmp26 = $tmp26->next;
+            ITable* $tmp23 = c$Iter10->$class->itable;
+            while ($tmp23->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+                $tmp23 = $tmp23->next;
             }
-            $fn28 $tmp27 = $tmp26->methods[1];
-            panda$core$Object* $tmp29 = $tmp27(c$Iter13);
-            c25 = ((panda$core$Char8$wrapper*) $tmp29)->value;
-            panda$core$UInt8 $tmp30 = panda$core$Char8$convert$R$panda$core$UInt8(c25);
-            panda$core$UInt8$wrapper* $tmp31;
-            $tmp31 = (panda$core$UInt8$wrapper*) pandaAlloc(13);
-            $tmp31->cl = (panda$core$Class*) &panda$core$UInt8$wrapperclass;
-            $tmp31->refCount = 1;
-            $tmp31->value = $tmp30;
-            panda$collections$Array$add$panda$collections$Array$T(array5, ((panda$core$Object*) $tmp31));
+            $fn25 $tmp24 = $tmp23->methods[1];
+            panda$core$Object* $tmp26 = $tmp24(c$Iter10);
+            c22 = ((panda$core$Char8$wrapper*) $tmp26)->value;
+            panda$core$UInt8 $tmp27 = panda$core$Char8$convert$R$panda$core$UInt8(c22);
+            panda$core$UInt8$wrapper* $tmp28;
+            $tmp28 = (panda$core$UInt8$wrapper*) pandaZAlloc(13);
+            $tmp28->cl = (panda$core$Class*) &panda$core$UInt8$wrapperclass;
+            $tmp28->refCount = 1;
+            $tmp28->value = $tmp27;
+            panda$collections$Array$add$panda$collections$Array$T(array3, ((panda$core$Object*) $tmp28));
         }
-        goto $l18;
-        $l19:;
+        goto $l15;
+        $l16:;
     }
     {
-        panda$core$Object* $tmp32 = panda$core$Panda$ref$panda$core$Object$R$panda$core$Object(((panda$core$Object*) ((panda$collections$ListView*) array5)));
-        self->data = ((panda$collections$ListView*) $tmp32);
+        self->data = ((panda$collections$ListView*) array3);
+    }
+    {
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) utf81));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) array3));
     }
 }
 panda$core$UInt8$nullable panda$io$MemoryInputStream$read$R$panda$core$UInt8$Q(panda$io$MemoryInputStream* self) {
-    panda$core$UInt8 result38;
-    ITable* $tmp33 = ((panda$collections$CollectionView*) self->data)->$class->itable;
-    while ($tmp33->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
-        $tmp33 = $tmp33->next;
+    panda$core$UInt8 result34;
+    ITable* $tmp29 = ((panda$collections$CollectionView*) self->data)->$class->itable;
+    while ($tmp29->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
+        $tmp29 = $tmp29->next;
     }
-    $fn35 $tmp34 = $tmp33->methods[0];
-    panda$core$Int64 $tmp36 = $tmp34(((panda$collections$CollectionView*) self->data));
-    panda$core$Bit $tmp37 = panda$core$Int64$$LT$panda$core$Int64$R$panda$core$Bit(self->index, $tmp36);
-    if ($tmp37.value) {
+    $fn31 $tmp30 = $tmp29->methods[0];
+    panda$core$Int64 $tmp32 = $tmp30(((panda$collections$CollectionView*) self->data));
+    panda$core$Bit $tmp33 = panda$core$Int64$$LT$panda$core$Int64$R$panda$core$Bit(self->index, $tmp32);
+    if ($tmp33.value) {
     {
-        ITable* $tmp39 = self->data->$class->itable;
-        while ($tmp39->$class != (panda$core$Class*) &panda$collections$ListView$class) {
-            $tmp39 = $tmp39->next;
+        ITable* $tmp35 = self->data->$class->itable;
+        while ($tmp35->$class != (panda$core$Class*) &panda$collections$ListView$class) {
+            $tmp35 = $tmp35->next;
         }
-        $fn41 $tmp40 = $tmp39->methods[0];
-        panda$core$Object* $tmp42 = $tmp40(self->data, self->index);
-        result38 = ((panda$core$UInt8$wrapper*) $tmp42)->value;
-        panda$core$Int64 $tmp43 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 1 }));
-        self->index = $tmp43;
-        return ((panda$core$UInt8$nullable) { result38, true });
+        $fn37 $tmp36 = $tmp35->methods[0];
+        panda$core$Object* $tmp38 = $tmp36(self->data, self->index);
+        result34 = ((panda$core$UInt8$wrapper*) $tmp38)->value;
+        panda$core$Int64 $tmp39 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 1 }));
+        self->index = $tmp39;
+        return ((panda$core$UInt8$nullable) { result34, true });
     }
     }
     return ((panda$core$UInt8$nullable) { .nonnull = false });
+}
+void panda$io$MemoryInputStream$cleanup(panda$io$MemoryInputStream* self) {
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->data));
 }
 

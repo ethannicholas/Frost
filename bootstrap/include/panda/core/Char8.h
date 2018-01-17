@@ -58,5 +58,6 @@ panda$core$UInt16 panda$core$Char8$convert$R$panda$core$UInt16(panda$core$Char8 
 panda$core$UInt32 panda$core$Char8$convert$R$panda$core$UInt32(panda$core$Char8 self);
 panda$core$UInt64 panda$core$Char8$convert$R$panda$core$UInt64(panda$core$Char8 self);
 panda$core$String* panda$core$Char8$convert$R$panda$core$String(panda$core$Char8 self);
+void panda$core$Char8$cleanup(panda$core$Char8 self);
 
 #endif

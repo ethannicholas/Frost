@@ -28,5 +28,6 @@ typedef struct panda$core$String panda$core$String;
 void panda$core$String$UTF32Iterator$init$panda$core$String(panda$core$String$UTF32Iterator* self, panda$core$String* p_str);
 panda$core$Bit panda$core$String$UTF32Iterator$get_done$R$panda$core$Bit(panda$core$String$UTF32Iterator* self);
 panda$core$Char32 panda$core$String$UTF32Iterator$next$R$panda$core$Char32(panda$core$String$UTF32Iterator* self);
+void panda$core$String$UTF32Iterator$cleanup(panda$core$String$UTF32Iterator* self);
 
 #endif

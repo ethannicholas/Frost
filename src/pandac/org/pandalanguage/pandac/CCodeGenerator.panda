@@ -9,6 +9,8 @@ uses org.pandalanguage.pandac.parser.Token
 -- any problems, but is still something to be aware of.
 @final
 class CCodeGenerator : CodeGenerator {
+    constant NO_REFCNT := -999
+
     var compiler:Compiler?
 
     def outDir:File
@@ -22,6 +24,8 @@ class CCodeGenerator : CodeGenerator {
     def hCodeGen:HCodeGenerator
 
     var currentClass:ClassDecl? := null
+
+    var extraEffects := Array<IRNode>()
 
     init(outDir:File) {
         self.outDir := outDir
@@ -238,20 +242,6 @@ class CCodeGenerator : CodeGenerator {
     method createBlock(label:String, out:IndentedOutputStream) {
         out.printLine("\{label}:;")
         currentBlock := label
-    }
-
-    function endsWithBranch(stmt:IRNode):Bit {
-        match stmt {
-            when IRNode.BLOCK(_, statements):
-                if statements.get_count() = 0 {
-                    return false
-                }
-                return endsWithBranch(statements[statements.get_count() - 1])
-            when IRNode.BREAK, IRNode.CONTINUE, IRNode.RETURN:
-                return true
-            otherwise:
-                return false
-        }
     }
 
     function fieldSize(t:Type):Int {
@@ -685,6 +675,7 @@ class CCodeGenerator : CodeGenerator {
             leftRef := leftRef + ".value"
         }
         out.printLine("bool \{result} = \{leftRef};")
+        writeExtraEffects(out)
         def falseLabel := nextLabel()
         out.printLine("if (!\{result}) goto \{falseLabel};")
         var rightRef := getReference(right, out)
@@ -692,6 +683,7 @@ class CCodeGenerator : CodeGenerator {
             rightRef := rightRef + ".value"
         }
         out.printLine("\{result} = \{rightRef};")
+        writeExtraEffects(out)
         createBlock(falseLabel, out)
         return result
     }
@@ -703,6 +695,7 @@ class CCodeGenerator : CodeGenerator {
             leftRef := leftRef + ".value"
         }
         out.printLine("bool \{result} = \{leftRef};")
+        writeExtraEffects(out)
         def trueLabel := nextLabel()
         out.printLine("if (\{result}) goto \{trueLabel};")
         var rightRef := getReference(right, out)
@@ -710,6 +703,7 @@ class CCodeGenerator : CodeGenerator {
             rightRef := rightRef + ".value"
         }
         out.printLine("\{result} = \{rightRef};")
+        writeExtraEffects(out)
         createBlock(trueLabel, out)
         return result
     }
@@ -867,7 +861,7 @@ class CCodeGenerator : CodeGenerator {
                 def count := getReference(args[0], out)
                 assert m.returnType().subtypes.get_count() = 2
                 def elementSize := sizeOf(m.returnType().subtypes[1])
-                return "((\{type(t)}) pandaAlloc(\{count}.value * \{elementSize}))"
+                return "((\{type(t)}) pandaZAlloc(\{count}.value * \{elementSize}))"
             when "get":
                 assert args.get_count() = 1
                 def ptr := getReference(args[0], out)
@@ -993,7 +987,7 @@ class CCodeGenerator : CodeGenerator {
             out.level += 1
         }
         out.printLine("\{wrapped} = (\{wrapperType(srcType)}) " +
-                "pandaAlloc(\{sizeOfWrapper(srcType)});")
+                "pandaZAlloc(\{sizeOfWrapper(srcType)});")
         out.printLine("\{wrapped}->cl = (panda$core$Class*) " +
                 "&\{escapeName(srcType.name)}$wrapperclass;")
         out.printLine("\{wrapped}->refCount = 1;")
@@ -1108,7 +1102,7 @@ class CCodeGenerator : CodeGenerator {
                     return tmp
                 }
                 def result := nextVar()
-                out.printLine("\{t} \{result} = (\{t}) pandaAlloc(\{sizeOf(target)});")
+                out.printLine("\{t} \{result} = (\{t}) pandaZAlloc(\{sizeOf(target)});")
                 def classPtr := nextVar()
                 def className:String
                 if target.typeKind = Type.Kind.GENERIC {
@@ -1159,7 +1153,8 @@ class CCodeGenerator : CodeGenerator {
         def result := "$s\{varCount}"
         type(Type.StringType())
         strings.print("static panda$core$String \{result} = { " +
-                "(panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) \"")
+                "(panda$core$Class*) &panda$core$String$class, \{NO_REFCNT}, " +
+                "(panda$core$Char8*) \"")
         for c in s.utf8() {
             strings.print("\\x\{c.convert()->UInt8,0>2:x}")
         }
@@ -1262,6 +1257,13 @@ class CCodeGenerator : CodeGenerator {
         return getLValue(expr, out)
     }
 
+    method getExpressionWithExtraEffectsReference(expr:IRNode, stmt:IRNode,
+            out:IndentedOutputStream):String {
+        def result := getReference(expr, out)
+        extraEffects.add(stmt)
+        return result
+    }
+
     method getReference(expr:IRNode, out:IndentedOutputStream):String {
         match expr {
             when IRNode.BINARY(_, _, left, op, right):
@@ -1310,6 +1312,8 @@ class CCodeGenerator : CodeGenerator {
                 return getTernaryReference(test, ifTrue, ifFalse, out)
             when IRNode.CHOICE_FIELD_REFERENCE:
                 return getChoiceFieldReference(expr, out)
+            when IRNode.EXPRESSION_WITH_EXTRA_EFFECTS(base, stmt):
+                return getExpressionWithExtraEffectsReference(base, stmt, out)
             otherwise:
                 assert false, "unsupported expression \{expr}"
         }
@@ -1422,13 +1426,16 @@ class CCodeGenerator : CodeGenerator {
             out:IndentedOutputStream) {
         def testRef := getReference(test, out)
         out.printLine("if (\{testRef}.value) {")
+        writeExtraEffects(false, out)
         writeBlock(ifTrue, out)
         out.printLine("}")
         if ifFalse != null {
             out.printLine("else {")
+            writeExtraEffects(false, out)
             writeStatement(ifFalse, out)
             out.printLine("}")
         }
+        extraEffects.clear()
     }
 
     method writeSimpleRangeFor(label:String?, target:IRNode, list:IRNode,
@@ -1891,6 +1898,22 @@ class CCodeGenerator : CodeGenerator {
         out.printLine("}")
     }
 
+    method writeExtraEffects(clear:Bit, out:IndentedOutputStream) {
+        -*if extraEffects.get_count() > 0 {
+            def finalExtra := extraEffects
+            if clear {
+                extraEffects := Array<IRNode>()
+            }
+            for extra in finalExtra {
+                writeStatement(extra, out)
+            }
+        }*-
+    }
+
+    method writeExtraEffects(out:IndentedOutputStream) {
+        writeExtraEffects(true, out)
+    }
+
     method writeStatement(stmt:IRNode, out:IndentedOutputStream) {
         match stmt {
             when IRNode.BINARY(_, _, left, op, right):
@@ -1899,6 +1922,8 @@ class CCodeGenerator : CodeGenerator {
                 writeBlock(statements, out)
             when IRNode.CALL(_, target, mref, args):
                 writeCall(target, mref, args, null, out)
+            when IRNode.EXPRESSION_WITH_EXTRA_EFFECTS(base, stmt):
+                getExpressionWithExtraEffectsReference(base, stmt, out)
             when IRNode.IF(_, test, ifTrue, ifFalse):
                 writeIf(test, ifTrue, ifFalse, out)
             when IRNode.RANGE_FOR(_, label, target, list, statements):
@@ -1924,6 +1949,7 @@ class CCodeGenerator : CodeGenerator {
             otherwise:
                 assert false, "unsupported statement \{stmt}"
         }
+        writeExtraEffects(out)
     }
 
     method selfType(m:MethodDecl):String {

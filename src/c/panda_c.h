@@ -14,7 +14,7 @@ typedef struct ITable {
     void* methods[];
 } ITable;
 
-void* pandaAlloc(size_t size);
+void* pandaZAlloc(size_t size);
 
 void* pandaRealloc(void* old, size_t oldSize, size_t newSize);
 

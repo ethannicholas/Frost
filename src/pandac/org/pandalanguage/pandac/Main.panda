@@ -239,9 +239,16 @@ class Main {
         def settings := Compiler.Settings(pandaHome, imports, optimizationLevel, safetyLevel)
         def compiler := Compiler(cg, settings)
         for s in sources {
-            compiler.compile(s)
+            for cl in compiler.scan(s) {
+                compiler.markNonExternal(cl)
+            }
         }
-        compiler.finish()
+        if compiler.errorCount = 0 {
+            for s in sources {
+                compiler.compile(s)
+            }
+            compiler.finish()
+        }
         if compiler.errorCount = 0 {
             match format {
                 when Format.EXECUTABLE:

@@ -23,5 +23,6 @@ typedef struct panda$core$String panda$core$String;
 
 void org$pandalanguage$pandac$parser$Parser$Errors$error$panda$io$File$org$pandalanguage$pandac$Position$panda$core$String(org$pandalanguage$pandac$parser$Parser$Errors* self, panda$io$File* p_file, org$pandalanguage$pandac$Position p_pos, panda$core$String* p_msg);
 void org$pandalanguage$pandac$parser$Parser$Errors$init(org$pandalanguage$pandac$parser$Parser$Errors* self);
+void org$pandalanguage$pandac$parser$Parser$Errors$cleanup(org$pandalanguage$pandac$parser$Parser$Errors* self);
 
 #endif

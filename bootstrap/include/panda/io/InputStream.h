@@ -38,5 +38,6 @@ panda$core$Char8$nullable panda$io$InputStream$read$R$panda$core$Char8$Q(panda$i
 panda$core$String* panda$io$InputStream$readLine$R$panda$core$String$Q(panda$io$InputStream* self);
 panda$collections$Iterator* panda$io$InputStream$lines$R$panda$collections$Iterator$LTpanda$core$String$GT(panda$io$InputStream* self);
 void panda$io$InputStream$init(panda$io$InputStream* self);
+void panda$io$InputStream$cleanup(panda$io$InputStream* self);
 
 #endif

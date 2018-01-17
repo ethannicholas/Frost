@@ -30,5 +30,6 @@ void panda$io$MemoryOutputStream$write$panda$unsafe$Pointer$LTpanda$core$UInt8$G
 void panda$io$MemoryOutputStream$clear(panda$io$MemoryOutputStream* self);
 panda$core$String* panda$io$MemoryOutputStream$convert$R$panda$core$String(panda$io$MemoryOutputStream* self);
 panda$core$String* panda$io$MemoryOutputStream$finish$R$panda$core$String(panda$io$MemoryOutputStream* self);
+void panda$io$MemoryOutputStream$cleanup(panda$io$MemoryOutputStream* self);
 
 #endif

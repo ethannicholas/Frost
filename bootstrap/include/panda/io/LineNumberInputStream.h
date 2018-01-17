@@ -27,5 +27,6 @@ typedef struct panda$io$InputStream panda$io$InputStream;
 
 void panda$io$LineNumberInputStream$init$panda$io$InputStream(panda$io$LineNumberInputStream* self, panda$io$InputStream* p_source);
 panda$core$UInt8$nullable panda$io$LineNumberInputStream$read$R$panda$core$UInt8$Q(panda$io$LineNumberInputStream* self);
+void panda$io$LineNumberInputStream$cleanup(panda$io$LineNumberInputStream* self);
 
 #endif

@@ -195,5 +195,6 @@ panda$core$Real32 panda$core$Int8$convert$R$panda$core$Real32(panda$core$Int8 se
 panda$core$Real64 panda$core$Int8$convert$R$panda$core$Real64(panda$core$Int8 self);
 panda$core$String* panda$core$Int8$convert$R$panda$core$String(panda$core$Int8 self);
 panda$core$String* panda$core$Int8$format$panda$core$String$R$panda$core$String(panda$core$Int8 self, panda$core$String* p_fmt);
+void panda$core$Int8$cleanup(panda$core$Int8 self);
 
 #endif

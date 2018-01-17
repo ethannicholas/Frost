@@ -26,19 +26,24 @@ class Console {
     }
 
     @class
+    method printLine(s:String) {
+        print(s)
+        printLine()
+    }
+
+    @class
     method print(o:Object) {
         print(o.convert())
     }
 
     @class
     method printLine(o:Object) {
-        print(o.convert())
-        printLine()
+        printLine(o.convert())
     }
 
     @class
     method printLine() {
-        print(Char8(10))
+        print("\n")
     }
 
     @class
@@ -56,7 +61,7 @@ class Console {
                 }
                 break
             }
-            if c = Char8(10) {
+            if c = "\n" {
                 break
             }
             result.append(c)

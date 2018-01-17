@@ -19,5 +19,6 @@ extern panda$core$Value$class_type panda$core$Value$class;
 typedef struct panda$core$Value panda$core$Value;
 
 void panda$core$Value$init(panda$core$Value* self);
+void panda$core$Value$cleanup(panda$core$Value* self);
 
 #endif

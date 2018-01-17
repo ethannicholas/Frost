@@ -48,5 +48,6 @@ panda$core$Int64 panda$collections$HashMap$get_count$R$panda$core$Int64(panda$co
 panda$core$Bit panda$collections$HashMap$$EQ$panda$collections$Map$LTpanda$collections$HashMap$K$Cpanda$collections$HashMap$V$GT$R$panda$core$Bit(panda$collections$HashMap* self, panda$collections$Map* p_other);
 panda$core$Bit panda$collections$HashMap$$NEQ$panda$collections$Map$LTpanda$collections$HashMap$K$Cpanda$collections$HashMap$V$GT$R$panda$core$Bit(panda$collections$HashMap* self, panda$collections$Map* p_other);
 panda$core$String* panda$collections$HashMap$convert$R$panda$core$String(panda$collections$HashMap* self);
+void panda$collections$HashMap$cleanup(panda$collections$HashMap* self);
 
 #endif

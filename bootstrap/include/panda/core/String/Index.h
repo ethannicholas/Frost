@@ -39,5 +39,6 @@ panda$core$Bit panda$core$String$Index$$GT$panda$core$String$Index$R$panda$core$
 panda$core$Bit panda$core$String$Index$$LE$panda$core$String$Index$R$panda$core$Bit(panda$core$String$Index self, panda$core$String$Index p_other);
 panda$core$Bit panda$core$String$Index$$GE$panda$core$String$Index$R$panda$core$Bit(panda$core$String$Index self, panda$core$String$Index p_other);
 panda$core$Int64 panda$core$String$Index$hash$R$panda$core$Int64(panda$core$String$Index self);
+void panda$core$String$Index$cleanup(panda$core$String$Index self);
 
 #endif

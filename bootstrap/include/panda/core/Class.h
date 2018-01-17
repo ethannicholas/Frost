@@ -22,5 +22,6 @@ extern panda$core$Class$class_type panda$core$Class$class;
 typedef struct panda$core$Class panda$core$Class;
 
 void panda$core$Class$init(panda$core$Class* self);
+void panda$core$Class$cleanup(panda$core$Class* self);
 
 #endif

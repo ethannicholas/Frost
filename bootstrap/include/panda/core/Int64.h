@@ -162,5 +162,6 @@ panda$core$Real32 panda$core$Int64$convert$R$panda$core$Real32(panda$core$Int64 
 panda$core$Real64 panda$core$Int64$convert$R$panda$core$Real64(panda$core$Int64 self);
 panda$core$String* panda$core$Int64$convert$R$panda$core$String(panda$core$Int64 self);
 panda$core$String* panda$core$Int64$format$panda$core$String$R$panda$core$String(panda$core$Int64 self, panda$core$String* p_fmt);
+void panda$core$Int64$cleanup(panda$core$Int64 self);
 
 #endif

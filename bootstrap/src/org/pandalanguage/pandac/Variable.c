@@ -1,7 +1,6 @@
 #include "org/pandalanguage/pandac/Variable.h"
 #include "org/pandalanguage/pandac/Symbol.h"
 #include "panda/core/Class.h"
-#include "panda/core/Object.h"
 #include "org/pandalanguage/pandac/Position.h"
 #include "org/pandalanguage/pandac/Variable/Kind.h"
 #include "panda/core/String.h"
@@ -9,9 +8,11 @@
 #include "org/pandalanguage/pandac/Variable/Storage.h"
 #include "panda/core/Int64.h"
 #include "panda/core/Panda.h"
+#include "panda/core/Object.h"
+#include "org/pandalanguage/pandac/IRNode.h"
 
 
-org$pandalanguage$pandac$Variable$class_type org$pandalanguage$pandac$Variable$class = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &org$pandalanguage$pandac$Symbol$class, NULL, { org$pandalanguage$pandac$Variable$convert$R$panda$core$String, panda$core$Object$cleanup, org$pandalanguage$pandac$Symbol$get_heritable$R$panda$core$Bit} };
+org$pandalanguage$pandac$Variable$class_type org$pandalanguage$pandac$Variable$class = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &org$pandalanguage$pandac$Symbol$class, NULL, { org$pandalanguage$pandac$Variable$convert$R$panda$core$String, org$pandalanguage$pandac$Variable$cleanup, org$pandalanguage$pandac$Symbol$get_heritable$R$panda$core$Bit} };
 
 
 
@@ -25,13 +26,16 @@ void org$pandalanguage$pandac$Variable$init$org$pandalanguage$pandac$Position$or
     self->initialValue = NULL;
     self->varKind = p_kind;
     {
-        panda$core$Object* $tmp2 = panda$core$Panda$ref$panda$core$Object$R$panda$core$Object(((panda$core$Object*) p_type));
-        self->type = ((org$pandalanguage$pandac$Type*) $tmp2);
+        self->type = p_type;
     }
     self->storage = p_storage;
     org$pandalanguage$pandac$Symbol$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$String(((org$pandalanguage$pandac$Symbol*) self), ((panda$core$Int64) { 208 }), p_position, p_name);
 }
 panda$core$String* org$pandalanguage$pandac$Variable$convert$R$panda$core$String(org$pandalanguage$pandac$Variable* self) {
     return self->name;
+}
+void org$pandalanguage$pandac$Variable$cleanup(org$pandalanguage$pandac$Variable* self) {
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->type));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->initialValue));
 }
 

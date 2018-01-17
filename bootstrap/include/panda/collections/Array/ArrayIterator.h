@@ -28,5 +28,6 @@ typedef struct panda$core$Object panda$core$Object;
 void panda$collections$Array$ArrayIterator$init$panda$collections$Array$LTpanda$collections$Array$ArrayIterator$T$GT(panda$collections$Array$ArrayIterator* self, panda$collections$Array* p_array);
 panda$core$Bit panda$collections$Array$ArrayIterator$get_done$R$panda$core$Bit(panda$collections$Array$ArrayIterator* self);
 panda$core$Object* panda$collections$Array$ArrayIterator$next$R$panda$collections$Array$ArrayIterator$T(panda$collections$Array$ArrayIterator* self);
+void panda$collections$Array$ArrayIterator$cleanup(panda$collections$Array$ArrayIterator* self);
 
 #endif

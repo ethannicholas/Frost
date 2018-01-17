@@ -33,5 +33,6 @@ panda$core$Int64 panda$collections$Set$get_count$R$panda$core$Int64(panda$collec
 void panda$collections$Set$clear(panda$collections$Set* self);
 panda$collections$Iterator* panda$collections$Set$iterator$R$panda$collections$Iterator$LTpanda$collections$Set$T$GT(panda$collections$Set* self);
 panda$core$Bit panda$collections$Set$contains$panda$collections$Set$T$R$panda$core$Bit(panda$collections$Set* self, panda$collections$Key* p_value);
+void panda$collections$Set$cleanup(panda$collections$Set* self);
 
 #endif

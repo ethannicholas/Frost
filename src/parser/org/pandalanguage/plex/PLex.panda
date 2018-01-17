@@ -189,6 +189,7 @@ class PLex {
 
     @class
     method main() {
+        Panda.disableRefCounting()
         def dst := File("org/pandalanguage/pandac/parser")
         dst.createDirectories()
         PLex().process(File("../src/parser/Panda.plex"),

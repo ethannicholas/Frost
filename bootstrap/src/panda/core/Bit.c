@@ -33,6 +33,9 @@ panda$core$Bit panda$core$Bit$$NEQ$panda$core$Bit$R$panda$core$Bit$wrappershim(p
 panda$core$String* panda$core$Bit$convert$R$panda$core$String$wrappershim(panda$core$Bit$wrapper* self) {
     return panda$core$Bit$convert$R$panda$core$String(self->value);
 }
+void panda$core$Bit$cleanup$wrappershim(panda$core$Bit$wrapper* self) {
+    panda$core$Bit$cleanup(self->value);
+}
 
 struct { panda$core$Class* cl; ITable* next; void* methods[1]; } panda$core$Bit$_panda$core$Formattable = { (panda$core$Class*) &panda$core$Formattable$class, NULL, { panda$core$Bit$format$panda$core$String$R$panda$core$String} };
 
@@ -40,7 +43,7 @@ struct { panda$core$Class* cl; ITable* next; void* methods[1]; } panda$core$Bit$
 
 struct { panda$core$Class* cl; ITable* next; void* methods[2]; } panda$core$Bit$_panda$core$Equatable = { (panda$core$Class*) &panda$core$Equatable$class, (ITable*) &panda$core$Bit$_panda$collections$Key, { panda$core$Bit$$EQ$panda$core$Bit$R$panda$core$Bit$shim, panda$core$Bit$$NEQ$panda$core$Bit$R$panda$core$Bit$shim} };
 
-panda$core$Bit$class_type panda$core$Bit$class = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Value$class, (ITable*) &panda$core$Bit$_panda$core$Equatable, { panda$core$Bit$convert$R$panda$core$String, panda$core$Object$cleanup, panda$core$Bit$$EQ$panda$core$Bit$R$panda$core$Bit$shim, panda$core$Bit$$NEQ$panda$core$Bit$R$panda$core$Bit$shim, panda$core$Bit$hash$R$panda$core$Int64, panda$core$Bit$$NOT$R$panda$core$Bit, panda$core$Bit$$OR$panda$core$Bit$R$panda$core$Bit, panda$core$Bit$$AND$panda$core$Bit$R$panda$core$Bit, panda$core$Bit$$XOR$panda$core$Bit$R$panda$core$Bit, panda$core$Bit$format$panda$core$String$R$panda$core$String} };
+panda$core$Bit$class_type panda$core$Bit$class = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Value$class, (ITable*) &panda$core$Bit$_panda$core$Equatable, { panda$core$Bit$convert$R$panda$core$String, panda$core$Bit$cleanup, panda$core$Bit$$EQ$panda$core$Bit$R$panda$core$Bit$shim, panda$core$Bit$$NEQ$panda$core$Bit$R$panda$core$Bit$shim, panda$core$Bit$hash$R$panda$core$Int64, panda$core$Bit$$NOT$R$panda$core$Bit, panda$core$Bit$$OR$panda$core$Bit$R$panda$core$Bit, panda$core$Bit$$AND$panda$core$Bit$R$panda$core$Bit, panda$core$Bit$$XOR$panda$core$Bit$R$panda$core$Bit, panda$core$Bit$format$panda$core$String$R$panda$core$String} };
 
 struct { panda$core$Class* cl; ITable* itable; void* methods[1]; } panda$core$Bit$wrapper_panda$core$Formattable = { (panda$core$Class*) &panda$core$Formattable$class, NULL, { panda$core$Bit$format$panda$core$String$R$panda$core$String$wrappershim} };
 
@@ -48,7 +51,7 @@ struct { panda$core$Class* cl; ITable* itable; void* methods[1]; } panda$core$Bi
 
 struct { panda$core$Class* cl; ITable* itable; void* methods[2]; } panda$core$Bit$wrapper_panda$core$Equatable = { (panda$core$Class*) &panda$core$Equatable$class, (ITable*) &panda$core$Bit$wrapper_panda$collections$Key, { panda$core$Bit$$EQ$panda$core$Bit$R$panda$core$Bit$wrappershim, panda$core$Bit$$NEQ$panda$core$Bit$R$panda$core$Bit$wrappershim} };
 
-panda$core$Bit$wrapperclass_type panda$core$Bit$wrapperclass = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Value$class, (ITable*) &panda$core$Bit$wrapper_panda$core$Equatable, { panda$core$Bit$convert$R$panda$core$String$wrappershim, panda$core$Object$cleanup} };
+panda$core$Bit$wrapperclass_type panda$core$Bit$wrapperclass = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Value$class, (ITable*) &panda$core$Bit$wrapper_panda$core$Equatable, { panda$core$Bit$convert$R$panda$core$String$wrappershim, panda$core$Bit$cleanup$wrappershim} };
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x74\x72\x75\x65", 4, 224750149, NULL };
 static panda$core$String $s2 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x66\x61\x6c\x73\x65", 5, 21225314024, NULL };
 static panda$core$String $s12 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x7c", 1, 225, NULL };
@@ -107,19 +110,30 @@ panda$core$Bit panda$core$Bit$$XOR$panda$core$Bit$R$panda$core$Bit(panda$core$Bi
 }
 panda$core$String* panda$core$Bit$format$panda$core$String$R$panda$core$String(panda$core$Bit self, panda$core$String* p_fmt) {
     panda$collections$Array* s11;
+    panda$core$String* tmp116;
+    panda$core$String* tmp218;
     panda$collections$Array* $tmp13 = panda$core$String$split$panda$core$String$R$panda$collections$Array$LTpanda$core$String$GT(p_fmt, &$s12);
-    panda$core$Object* $tmp14 = panda$core$Panda$ref$panda$core$Object$R$panda$core$Object(((panda$core$Object*) $tmp13));
-    s11 = ((panda$collections$Array*) $tmp14);
-    panda$core$Int64 $tmp15 = panda$collections$Array$get_count$R$panda$core$Int64(s11);
-    panda$core$Bit $tmp16 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp15, ((panda$core$Int64) { 2 }));
-    PANDA_ASSERT($tmp16.value);
+    s11 = $tmp13;
+    panda$core$Int64 $tmp14 = panda$collections$Array$get_count$R$panda$core$Int64(s11);
+    panda$core$Bit $tmp15 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp14, ((panda$core$Int64) { 2 }));
+    PANDA_ASSERT($tmp15.value);
     if (self.value) {
     {
-        panda$core$Object* $tmp17 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(s11, ((panda$core$Int64) { 0 }));
-        return ((panda$core$String*) $tmp17);
+        {
+            panda$core$Object* $tmp17 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(s11, ((panda$core$Int64) { 0 }));
+            tmp116 = ((panda$core$String*) $tmp17);
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) s11));
+            return tmp116;
+        }
     }
     }
-    panda$core$Object* $tmp18 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(s11, ((panda$core$Int64) { 1 }));
-    return ((panda$core$String*) $tmp18);
+    {
+        panda$core$Object* $tmp19 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(s11, ((panda$core$Int64) { 1 }));
+        tmp218 = ((panda$core$String*) $tmp19);
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) s11));
+        return tmp218;
+    }
+}
+void panda$core$Bit$cleanup(panda$core$Bit self) {
 }
 

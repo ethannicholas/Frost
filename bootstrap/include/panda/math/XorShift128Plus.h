@@ -25,5 +25,6 @@ typedef struct panda$math$XorShift128Plus panda$math$XorShift128Plus;
 void panda$math$XorShift128Plus$init$panda$core$Int64(panda$math$XorShift128Plus* self, panda$core$Int64 p_seed);
 panda$core$Int64 panda$math$XorShift128Plus$int64$R$panda$core$Int64(panda$math$XorShift128Plus* self);
 panda$core$Int64 panda$math$XorShift128Plus$int$panda$core$Int64$R$panda$core$Int64(panda$math$XorShift128Plus* self, panda$core$Int64 p_n);
+void panda$math$XorShift128Plus$cleanup(panda$math$XorShift128Plus* self);
 
 #endif

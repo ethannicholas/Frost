@@ -35,5 +35,6 @@ panda$io$File* org$pandalanguage$pandac$Main$toExecutable$panda$io$File$panda$io
 void org$pandalanguage$pandac$Main$printUsage$panda$io$OutputStream(org$pandalanguage$pandac$Main* self, panda$io$OutputStream* p_out);
 void org$pandalanguage$pandac$Main$run$panda$collections$ListView$LTpanda$core$String$GT(org$pandalanguage$pandac$Main* self, panda$collections$ListView* p_rawArgs);
 void pandaMain(panda$collections$ListView* p_args);
+void org$pandalanguage$pandac$Main$cleanup(org$pandalanguage$pandac$Main* self);
 
 #endif

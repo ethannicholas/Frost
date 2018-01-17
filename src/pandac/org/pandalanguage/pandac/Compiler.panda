@@ -68,6 +68,9 @@ class Compiler : ErrorReporter {
     var errorCount := 0
 
     @private
+    var tmpCount := 0
+
+    @private
     var reportErrors := true
 
     @private
@@ -1613,7 +1616,15 @@ class Compiler : ErrorReporter {
                     }
                 }
             }
-            return IRNode.CAST(expr.position(), expr, target, false)
+            var result := IRNode.CAST(expr.position(), expr, target, false)
+            if !isRefCounted(expr.type()) & isRefCounted(target) {
+                reusedValueCount += 1
+                result := IRNode.REUSED_VALUE_DEFINITION(result, reusedValueCount)
+                def reused := IRNode.REUSED_VALUE(result.position(), target, reusedValueCount)
+                result := IRNode.EXPRESSION_WITH_EXTRA_EFFECTS(result,
+                        compilePandaCall("unref", reused))
+            }
+            return result
         }
         error(expr.position(), "expected '\{target}', but found '\{expr.type()}'")
         return null
@@ -1678,7 +1689,15 @@ class Compiler : ErrorReporter {
                     return cast(position, resolved, target, isExplicit)
                 }
         }
-        return IRNode.CAST(position, node, target, isExplicit)
+        var result := IRNode.CAST(position, node, target, isExplicit)
+        if !isRefCounted(node.type()) & isRefCounted(target) {
+            reusedValueCount += 1
+            result := IRNode.REUSED_VALUE_DEFINITION(result, reusedValueCount)
+            def reused := IRNode.REUSED_VALUE(result.position(), target, reusedValueCount)
+            result := IRNode.EXPRESSION_WITH_EXTRA_EFFECTS(result,
+                    compilePandaCall("unref", reused))
+        }
+        return result
     }
 
     method callCost(m:MethodRef, args:ListView<IRNode>, expectedReturn:Type?):Int? {
@@ -1730,6 +1749,13 @@ class Compiler : ErrorReporter {
         methods.clear()
         methods.addAll(result)
         return best
+    }
+
+    method actualReturnType(m:MethodRef):Type {
+        if getClass(m.owner()).annotations.isSpecialize() {
+            return m.returnType()
+        }
+        return m.value.returnType
     }
 
     method call(position:Position, target:IRNode?, m:MethodRef, args:ListView<IRNode>):IRNode? {
@@ -1814,8 +1840,19 @@ class Compiler : ErrorReporter {
             return IRNode.CALL(position, m.returnType(), m, finalArgs.finish())
         }
         else {
-            def result := IRNode.CALL(position, m.value.returnType, m, finalArgs.finish())
-            return cast(position, result, m.returnType(), false)
+            var result := IRNode.CALL(position, m.value.returnType, m, finalArgs.finish())
+            result := cast(position, result, m.returnType(), false)
+            if isRefCounted(actualReturnType(m)) {
+                reusedValueCount += 1
+                result := IRNode.REUSED_VALUE_DEFINITION(result, reusedValueCount)
+                def reused := cast(result.position(),
+                        IRNode.REUSED_VALUE(result.position(), result.type(), reusedValueCount),
+                        actualReturnType(m),
+                        false)
+                result := IRNode.EXPRESSION_WITH_EXTRA_EFFECTS(result,
+                        compilePandaCall("unref", reused))
+            }
+            return result
         }
     }
 
@@ -1929,7 +1966,16 @@ class Compiler : ErrorReporter {
                 if initCall = null {
                     return null
                 }
-                return IRNode.CONSTRUCT(m.position(), type, initCall)
+                var construct := IRNode.CONSTRUCT(m.position(), type, initCall)
+                if isRefCounted(type) {
+                    reusedValueCount += 1
+                    construct := IRNode.REUSED_VALUE_DEFINITION(construct, reusedValueCount)
+                    def reused := IRNode.REUSED_VALUE(construct.position(), construct.type(),
+                            reusedValueCount)
+                    construct := IRNode.EXPRESSION_WITH_EXTRA_EFFECTS(construct,
+                            compilePandaCall("unref", reused))
+                }
+                return construct
             when IRNode.CHOICE_ENTRY_REFERENCE(_, ce):
                 if ce.fields.get_count() != args.get_count() {
                     error(m.position(), "choice '\{m}' requires \{ce.fields.get_count()} " +
@@ -2232,6 +2278,14 @@ class Compiler : ErrorReporter {
                 if resolved = null {
                     return null
                 }
+                match resolved {
+                    when IRNode.EXPRESSION_WITH_EXTRA_EFFECTS(base, _):
+                        resolved := base
+                }
+                match resolved {
+                    when IRNode.REUSED_VALUE_DEFINITION(base, _):
+                        resolved := base
+                }
                 resolved := unwrapCast(resolved)
                 match resolved {
                     when IRNode.CALL(_, _, _, resolvedArgs):
@@ -2272,6 +2326,7 @@ class Compiler : ErrorReporter {
                         callArgs.add(value)
                         return call(base, "[]:=", callArgs)
                     otherwise:
+                        Console.printLine("have \{resolved}")
                         assert false
                 }
             otherwise:
@@ -2280,6 +2335,7 @@ class Compiler : ErrorReporter {
     }
 
     method compilePandaCall(name:String, arg:IRNode):IRNode {
+        assert isRefCounted(arg.type())
         def p := Position()
         def mref := compileDot(p, IRNode.TYPE_REFERENCE(p, Type.Panda()), name)
         def args := Array<IRNode>() -- FIXME literal
@@ -2310,7 +2366,11 @@ class Compiler : ErrorReporter {
                 return null
             }
             if isRefCounted(left.type()) {
-                right := cast(position, compilePandaCall("ref", right), right.type(), false)
+                reusedValueCount += 1
+                right := IRNode.REUSED_VALUE_DEFINITION(right, reusedValueCount)
+                right := IRNode.EXPRESSION_WITH_EXTRA_EFFECTS(right,
+                        compilePandaCall("ref", IRNode.REUSED_VALUE(right.position(), right.type(),
+                            reusedValueCount)))
                 def result := Array<IRNode>()
                 if left.hasSideEffects() {
                     reusedValueCount += 1
@@ -2951,19 +3011,174 @@ class Compiler : ErrorReporter {
         assert false, "unsupported expression: \{e} (\{e.position()})"
     }
 
+    function endsWithBranch(statements:ListView<IRNode>):Bit {
+        if statements.get_count() = 0 {
+            return false
+        }
+        return endsWithBranch(statements[statements.get_count() - 1])
+    }
+
+    function endsWithBranch(stmt:IRNode):Bit {
+        match stmt {
+            when IRNode.BLOCK(_, statements):
+                return endsWithBranch(statements)
+            when IRNode.BREAK, IRNode.CONTINUE, IRNode.RETURN:
+                return true
+            otherwise: return false
+        }
+    }
+
+    function inScope(label:String?, loopScopes:Stack<String?>):Bit {
+        if label = null {
+            return loopScopes.get_count() > 0
+        }
+        for i in 0 .. loopScopes.get_count() {
+            if loopScopes.peek(i) = label {
+                return true
+            }
+        }
+        return false
+    }
+
+    ================================================================================================
+    Modifies a statement to perform extra work prior to leaving the current scope. If the statement
+    contains code which would cause the scope to be left (`return`, appropriate `break` or
+    `continue`), returns a modified version of the statement which invokes `finally` prior to
+    executing the `return` / `break` / `continue`. Otherwise, returns the original statement.
+    ================================================================================================
+    method instrumentExits(stmt:IRNode, loopScopes:Stack<String?>, finally:IRNode):IRNode {
+        match stmt {
+            when IRNode.RETURN(pos, value):
+                def stmts := Array<IRNode>() -- FIXME literal
+                if value != null {
+                    tmpCount += 1
+                    def tmp := Variable(stmt.position(), Variable.Kind.DEF, "tmp\{tmpCount}",
+                            value.type())
+                    def varChildren := Array<IRNode>()
+                    def varRef := IRNode.VARIABLE_REFERENCE(pos, tmp)
+                    varChildren.add(IRNode.DECLARATION(varRef, value))
+                    stmts.add(IRNode.VAR(pos, Variable.Kind.DEF, varChildren.finish()))
+                    stmts.add(finally)
+                    stmts.add(IRNode.RETURN(pos, varRef))
+                }
+                else {
+                    stmts.add(finally)
+                    stmts.add(stmt)
+                }
+                return IRNode.BLOCK(pos, stmts.finish())
+            when IRNode.BLOCK(pos, statements):
+                return IRNode.BLOCK(pos, instrumentExits(statements, loopScopes, finally))
+            when IRNode.IF(pos, test, ifTrue, ifFalse):
+                return IRNode.IF(pos, test, instrumentExits(ifTrue, loopScopes, finally),
+                        instrumentExits(ifFalse, loopScopes, finally))
+            when IRNode.MATCH(pos, value, whens, others):
+                return IRNode.MATCH(pos, value, instrumentExits(whens, loopScopes, finally),
+                        instrumentExits(others, loopScopes, finally))
+            when IRNode.WHEN(pos, tests, statements):
+                return IRNode.WHEN(pos, tests, instrumentExits(statements, loopScopes, finally))
+            when IRNode.RANGE_FOR(pos, label, target, list, statements):
+                loopScopes.push(label)
+                def result := IRNode.RANGE_FOR(pos, label, target, list,
+                        instrumentExits(statements, loopScopes, finally))
+                loopScopes.pop()
+                return result
+            when IRNode.WHILE(pos, label, test, statements):
+                loopScopes.push(label)
+                def result := IRNode.WHILE(pos, label, test,
+                        instrumentExits(statements, loopScopes, finally))
+                loopScopes.pop()
+                return result
+            when IRNode.DO(pos, label, statements, test):
+                loopScopes.push(label)
+                def result := IRNode.DO(pos,
+                        label,
+                        instrumentExits(statements, loopScopes, finally),
+                        test)
+                loopScopes.pop()
+                return result
+            when IRNode.LOOP(pos, label, statements):
+                loopScopes.push(label)
+                def result := IRNode.LOOP(pos, label,
+                        instrumentExits(statements, loopScopes, finally))
+                loopScopes.pop()
+                return result
+            when IRNode.BREAK(pos, label):
+                if !inScope(label, loopScopes) {
+                    def stmts := Array<IRNode>() -- FIXME literal
+                    stmts.add(finally)
+                    stmts.add(stmt)
+                    return IRNode.BLOCK(pos, stmts.finish())
+                }
+                return stmt
+            when IRNode.CONTINUE(pos, label):
+                if !inScope(label, loopScopes) {
+                    def stmts := Array<IRNode>() -- FIXME literal
+                    stmts.add(finally)
+                    stmts.add(stmt)
+                    return IRNode.BLOCK(pos, stmts.finish())
+                }
+                return stmt
+            otherwise:
+                return stmt
+        }
+    }
+
+    method instrumentExits(stmt:IRNode?, loopScopes:Stack<String?>, finally:IRNode):IRNode? {
+        if stmt = null {
+            return null
+        }
+        return instrumentExits(stmt->IRNode, loopScopes, finally)
+    }
+
+    method instrumentExits(stmts:ListView<IRNode>, loopScopes:Stack<String?>,
+            finally:IRNode):ImmutableArray<IRNode> {
+        def result := Array<IRNode>()
+        for s in stmts {
+            result.add(instrumentExits(s, loopScopes, finally))
+        }
+        return result.finish()
+    }
+
     method compileBlockStatements(position:Position,
             statements:ListView<ASTNode>):ImmutableArray<IRNode>? {
         def symbols := SymbolTable(symbolTable) -- FIXME auto
         symbolTable := symbols
         def result := Array<IRNode>()
+        def unref:IRNode? := null
+        def loopScopes := Stack<String?>()
         for stmt in statements {
-            def compiled := compileStatement(stmt)
+            var compiled := compileStatement(stmt)
             if compiled = null {
                 symbolTable := symbols.parents[0]
                 return null
             }
             assert compiled != IRNode.UNRESOLVED_METHOD_CALL
+            if compiled = IRNode.VAR {
+                def unrefs := Array<IRNode>()
+                for v in symbolTable.symbols.values() {
+                    Console.printLine("symbol: \{v}")
+                    if v.kind = Symbol.Kind.VARIABLE & isRefCounted(v->Variable.type) {
+                        unrefs.add(compilePandaCall("unref",
+                                IRNode.VARIABLE_REFERENCE(Position(), v->Variable)))
+                    }
+                }
+                if unrefs.get_count() > 0 {
+                    if unrefs.get_count() = 1 {
+                        unref := unrefs[0]
+                    }
+                    else {
+                        unref := IRNode.BLOCK(Position(), unrefs.finish())
+                    }
+                }
+            }
+            if unref != null {
+                compiled := instrumentExits(compiled, loopScopes, unref)
+                assert loopScopes.get_count() = 0
+            }
             result.add(compiled)
+        }
+        if unref != null & !endsWithBranch(result) {
+            result.add(unref)
         }
         symbolTable := symbols.parents[0]
         return result.finish()
@@ -3331,7 +3546,12 @@ class Compiler : ErrorReporter {
                     v.initialValue := target.value
                     value := target.value
                     if isRefCounted(value.type()) {
-                        value := cast(position, compilePandaCall("ref", value), v.type, false)
+                        reusedValueCount += 1
+                        value := IRNode.REUSED_VALUE_DEFINITION(value, reusedValueCount)
+                        def reused := IRNode.REUSED_VALUE(value.position(), value.type(),
+                                reusedValueCount)
+                        value := IRNode.EXPRESSION_WITH_EXTRA_EFFECTS(value,
+                                compilePandaCall("ref", reused))
                     }
             }
         }
@@ -3385,9 +3605,16 @@ class Compiler : ErrorReporter {
                 error(position, "cannot return a value from a method with no return type")
                 return null
             }
-            def value := coerce(compileExpression(rawValue), currentMethod.peek().returnType)
+            var value := coerce(compileExpression(rawValue), currentMethod.peek().returnType)
             if value = null {
                 return null
+            }
+            if isRefCounted(value.type()) {
+                reusedValueCount += 1
+                value := IRNode.REUSED_VALUE_DEFINITION(value, reusedValueCount)
+                def reused := IRNode.REUSED_VALUE(value.position(), value.type(), reusedValueCount)
+                value := IRNode.EXPRESSION_WITH_EXTRA_EFFECTS(value,
+                        compilePandaCall("ref", reused))
             }
             return IRNode.RETURN(position, value)
         }
@@ -3565,6 +3792,7 @@ class Compiler : ErrorReporter {
         def result := Array<IRNode>()
         def valueVar := Variable(position, Variable.Kind.DEF,
                 "$match$\{position.line}_\{position.column}", value.type())
+        symbolTable.add(valueVar)
         def decls := Array<IRNode>()
         decls.add(IRNode.DECLARATION(IRNode.VARIABLE_REFERENCE(value.position(), valueVar), value))
         result.add(IRNode.VAR(valueVar.position, Variable.Kind.DEF, decls.finish()))
@@ -3797,8 +4025,20 @@ class Compiler : ErrorReporter {
                 if !f.annotations.isClass() & f.value != null {
                     def fieldRef := IRNode.FIELD_REFERENCE(m.position, f.type,
                             IRNode.SELF(m.position, m.owner.type()), f)
+                    def value:IRNode
+                    if isRefCounted(f.type) {
+                        reusedValueCount += 1
+                        value := IRNode.REUSED_VALUE_DEFINITION(f.value, reusedValueCount)
+                        def reused := IRNode.REUSED_VALUE(value.position(), value.type(),
+                                reusedValueCount)
+                        value := IRNode.EXPRESSION_WITH_EXTRA_EFFECTS(value,
+                                compilePandaCall("ref", reused))
+                    }
+                    else {
+                        value := f.value
+                    }
                     fieldInitializers.add(IRNode.BINARY(f.position, Type.Void(), fieldRef,
-                            Token.Kind.ASSIGNMENT, f.value))
+                            Token.Kind.ASSIGNMENT, value))
                 }
             }
         }
@@ -3808,6 +4048,18 @@ class Compiler : ErrorReporter {
                 def finalBody := Array<IRNode>(fieldInitializers)
                 finalBody.addAll(compiled)
                 compiled := finalBody.finish()
+            }
+            if m.name = "cleanup" & m.parameters.get_count() = 0 {
+                def finalBody := Array<IRNode>(compiled)
+                for f in m.owner.fields {
+                    resolve(f)
+                    if !f.annotations.isClass() & isRefCounted(f.type) {
+                        def fieldRef := IRNode.FIELD_REFERENCE(Position(), f.type,
+                                IRNode.SELF(Position(), m.owner.type()), f)
+                        finalBody.add(compilePandaCall("unref", fieldRef))
+                        compiled := finalBody.finish()
+                    }
+                }
             }
         }
         assert symbolTable == symbols
@@ -3845,7 +4097,6 @@ class Compiler : ErrorReporter {
                 "starting compilation of \{cl.name} while already compiling \{compiling.name}"
         compiling := cl
         currentClass.push(cl)
-        markNonExternal(cl)
         if cl.annotations.isSpecialize() {
             codeGenerator.start(cl)
             codeGenerator.end(cl)
@@ -3891,8 +4142,7 @@ class Compiler : ErrorReporter {
     }
 
     method compile(file:File) {
-        def classes := scan(file)
-        for cl in classes {
+        for cl in scan(file) {
             compile(cl)
         }
     }

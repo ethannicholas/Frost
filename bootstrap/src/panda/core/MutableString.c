@@ -5,10 +5,10 @@
 #include "panda/core/String.h"
 #include "panda/core/Range.LTpanda/core/Int64.GT.h"
 #include "panda/core/Bit.h"
+#include "panda/core/Panda.h"
 #include "panda/core/Char8.h"
 #include "panda/core/Char32.h"
 #include "panda/core/UInt8.h"
-#include "panda/core/Panda.h"
 
 
 panda$core$MutableString$class_type panda$core$MutableString$class = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Object$class, NULL, { panda$core$MutableString$convert$R$panda$core$String, panda$core$MutableString$cleanup, panda$core$MutableString$append$panda$core$Char8, panda$core$MutableString$append$panda$core$Char32, panda$core$MutableString$append$panda$core$String, panda$core$MutableString$append$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64$panda$core$Int64, panda$core$MutableString$append$panda$core$Object, panda$core$MutableString$ensureCapacity$panda$core$Int64, panda$core$MutableString$clear, panda$core$MutableString$finish$R$panda$core$String} };
@@ -27,7 +27,7 @@ void panda$core$MutableString$init$panda$core$String(panda$core$MutableString* s
     self->length = p_s->_length;
     panda$core$Int64 $tmp1 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->length, ((panda$core$Int64) { 32 }));
     self->maxLength = $tmp1;
-    self->data = ((panda$core$Char8*) pandaAlloc(self->maxLength.value * 1));
+    self->data = ((panda$core$Char8*) pandaZAlloc(self->maxLength.value * 1));
     panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp2, ((panda$core$Int64) { 0 }), p_s->_length, ((panda$core$Bit) { false }));
     int64_t $tmp4 = $tmp2.min.value;
     panda$core$Int64 i3 = { $tmp4 };
@@ -58,10 +58,11 @@ void panda$core$MutableString$init$panda$core$Int64(panda$core$MutableString* se
     self->dummy = NULL;
     self->length = ((panda$core$Int64) { 0 });
     self->maxLength = p_capacity;
-    self->data = ((panda$core$Char8*) pandaAlloc(self->maxLength.value * 1));
+    self->data = ((panda$core$Char8*) pandaZAlloc(self->maxLength.value * 1));
 }
 void panda$core$MutableString$cleanup(panda$core$MutableString* self) {
     pandaFree(self->data);
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->dummy));
 }
 void panda$core$MutableString$append$panda$core$Char8(panda$core$MutableString* self, panda$core$Char8 p_c) {
     panda$core$Int64 $tmp22 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->length, ((panda$core$Int64) { 1 }));
@@ -272,7 +273,7 @@ void panda$core$MutableString$clear(panda$core$MutableString* self) {
 panda$core$String* panda$core$MutableString$convert$R$panda$core$String(panda$core$MutableString* self) {
     panda$core$Char8* result131;
     panda$core$Range$LTpanda$core$Int64$GT $tmp132;
-    result131 = ((panda$core$Char8*) pandaAlloc(self->length.value * 1));
+    result131 = ((panda$core$Char8*) pandaZAlloc(self->length.value * 1));
     panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp132, ((panda$core$Int64) { 0 }), self->length, ((panda$core$Bit) { false }));
     int64_t $tmp134 = $tmp132.min.value;
     panda$core$Int64 i133 = { $tmp134 };
@@ -298,7 +299,7 @@ panda$core$String* panda$core$MutableString$convert$R$panda$core$String(panda$co
     i133.value += 1;
     goto $l138;
     $l140:;
-    panda$core$String* $tmp152 = (panda$core$String*) pandaAlloc(48);
+    panda$core$String* $tmp152 = (panda$core$String*) pandaZAlloc(48);
     $tmp152->$class = (panda$core$Class*) &panda$core$String$class;
     $tmp152->refCount.value = 1;
     panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp152, result131, self->length);
@@ -308,9 +309,9 @@ panda$core$String* panda$core$MutableString$finish$R$panda$core$String(panda$cor
     self->data = ((panda$core$Char8*) pandaRealloc(self->data, self->maxLength.value * 1, self->length.value * 1));
     self->maxLength = ((panda$core$Int64) { 0 });
     {
-        panda$core$Object* $tmp155 = panda$core$Panda$ref$panda$core$Object$R$panda$core$Object(((panda$core$Object*) ((panda$core$Object*) &$s154)->$class));
-        ((panda$core$Object*) self)->$class = ((panda$core$Class*) $tmp155);
+        ((panda$core$Object*) self)->$class = ((panda$core$Object*) &$s154)->$class;
     }
+    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) self));
     return ((panda$core$String*) ((panda$core$Object*) self));
 }
 

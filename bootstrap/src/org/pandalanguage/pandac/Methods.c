@@ -9,11 +9,11 @@
 #include "panda/core/Range.LTpanda/core/Int64.GT.h"
 #include "org/pandalanguage/pandac/MethodDecl.h"
 #include "org/pandalanguage/pandac/Position.h"
-#include "panda/core/Panda.h"
 #include "panda/collections/ImmutableArray.h"
+#include "panda/core/Panda.h"
 
 
-org$pandalanguage$pandac$Methods$class_type org$pandalanguage$pandac$Methods$class = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &org$pandalanguage$pandac$Symbol$class, NULL, { panda$core$Object$convert$R$panda$core$String, panda$core$Object$cleanup, org$pandalanguage$pandac$Symbol$get_heritable$R$panda$core$Bit} };
+org$pandalanguage$pandac$Methods$class_type org$pandalanguage$pandac$Methods$class = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &org$pandalanguage$pandac$Symbol$class, NULL, { panda$core$Object$convert$R$panda$core$String, org$pandalanguage$pandac$Methods$cleanup, org$pandalanguage$pandac$Symbol$get_heritable$R$panda$core$Bit} };
 
 typedef panda$core$Int64 (*$fn3)(panda$collections$CollectionView*);
 typedef panda$core$Int64 (*$fn9)(panda$collections$CollectionView*);
@@ -114,12 +114,14 @@ void org$pandalanguage$pandac$Methods$init$panda$collections$ListView$LTorg$pand
     panda$core$Object* $tmp62 = $tmp60(p_methods, ((panda$core$Int64) { 0 }));
     org$pandalanguage$pandac$Symbol$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$String(((org$pandalanguage$pandac$Symbol*) self), ((panda$core$Int64) { 205 }), $tmp58, ((org$pandalanguage$pandac$Symbol*) ((org$pandalanguage$pandac$MethodDecl*) $tmp62))->name);
     {
-        panda$collections$ImmutableArray* $tmp63 = (panda$collections$ImmutableArray*) pandaAlloc(40);
+        panda$collections$ImmutableArray* $tmp63 = (panda$collections$ImmutableArray*) pandaZAlloc(40);
         $tmp63->$class = (panda$core$Class*) &panda$collections$ImmutableArray$class;
         $tmp63->refCount.value = 1;
         panda$collections$ImmutableArray$init$panda$collections$ListView$LTpanda$collections$ImmutableArray$T$GT($tmp63, p_methods);
-        panda$core$Object* $tmp65 = panda$core$Panda$ref$panda$core$Object$R$panda$core$Object(((panda$core$Object*) $tmp63));
-        self->methods = ((panda$collections$ImmutableArray*) $tmp65);
+        self->methods = $tmp63;
     }
+}
+void org$pandalanguage$pandac$Methods$cleanup(org$pandalanguage$pandac$Methods* self) {
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->methods));
 }
 

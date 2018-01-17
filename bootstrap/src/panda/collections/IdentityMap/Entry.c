@@ -4,7 +4,7 @@
 #include "panda/core/Panda.h"
 
 
-panda$collections$IdentityMap$Entry$class_type panda$collections$IdentityMap$Entry$class = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Object$class, NULL, { panda$core$Object$convert$R$panda$core$String, panda$core$Object$cleanup} };
+panda$collections$IdentityMap$Entry$class_type panda$collections$IdentityMap$Entry$class = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Object$class, NULL, { panda$core$Object$convert$R$panda$core$String, panda$collections$IdentityMap$Entry$cleanup} };
 
 
 
@@ -12,12 +12,15 @@ void panda$collections$IdentityMap$Entry$init$panda$collections$IdentityMap$Entr
     self->value = NULL;
     self->next = NULL;
     {
-        panda$core$Object* $tmp1 = panda$core$Panda$ref$panda$core$Object$R$panda$core$Object(p_key);
-        self->key = $tmp1;
+        self->key = p_key;
     }
     {
-        panda$core$Object* $tmp2 = panda$core$Panda$ref$panda$core$Object$R$panda$core$Object(p_value);
-        self->value = $tmp2;
+        self->value = p_value;
     }
+}
+void panda$collections$IdentityMap$Entry$cleanup(panda$collections$IdentityMap$Entry* self) {
+    panda$core$Panda$unref$panda$core$Object(self->key);
+    panda$core$Panda$unref$panda$core$Object(self->value);
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->next));
 }
 

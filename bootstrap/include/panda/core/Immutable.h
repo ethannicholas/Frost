@@ -19,5 +19,6 @@ extern panda$core$Immutable$class_type panda$core$Immutable$class;
 typedef struct panda$core$Immutable panda$core$Immutable;
 
 void panda$core$Immutable$init(panda$core$Immutable* self);
+void panda$core$Immutable$cleanup(panda$core$Immutable* self);
 
 #endif

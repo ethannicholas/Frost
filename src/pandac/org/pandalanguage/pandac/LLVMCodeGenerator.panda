@@ -4,6 +4,8 @@ uses org.pandalanguage.pandac.parser.Token
 
 @final
 class LLVMCodeGenerator : CodeGenerator {
+    constant NO_REFCNT := -999
+
     class ClassConstant : Immutable {
         def name:String
         def type:String
@@ -128,6 +130,8 @@ class LLVMCodeGenerator : CodeGenerator {
 
     def loopDescriptors := Stack<LoopDescriptor>()
 
+    def extraEffects := Stack<Array<IRNode>>()
+
     var varCount := 0
 
     var labelCount := 0
@@ -150,7 +154,7 @@ class LLVMCodeGenerator : CodeGenerator {
         out.printLine("target datalayout = \"e-m:o-i64:64-f80:128-n8:16:32:64-S128\"")
         out.printLine("target triple = \"x86_64-apple-macosx10.12.0\"")
 --        out.printLine("target triple = \"x86_64-pc-linux-gnu\"")
-        out.printLine("declare i8* @pandaAlloc(\{SIZE_TYPE})")
+        out.printLine("declare i8* @pandaZAlloc(\{SIZE_TYPE})")
         out.printLine("declare i8* @pandaRealloc(i8*, \{SIZE_TYPE}, \{SIZE_TYPE})")
         out.printLine("declare void @pandaFree(i8*)")
         out.printLine("declare i8* @memset(i8*, i8, \{SIZE_TYPE})")
@@ -187,23 +191,6 @@ class LLVMCodeGenerator : CodeGenerator {
     method createBlock(label:String, out:OutputStream) {
         out.printLine("\n\{label}:")
         currentBlock := label
-    }
-
-    function endsWithBranch(statements:ImmutableArray<IRNode>):Bit {
-        if statements.get_count() = 0 {
-            return false
-        }
-        return endsWithBranch(statements[statements.get_count() - 1])
-    }
-
-    function endsWithBranch(stmt:IRNode):Bit {
-        match stmt {
-            when IRNode.BLOCK(_, statements):
-                return endsWithBranch(statements)
-            when IRNode.BREAK, IRNode.CONTINUE, IRNode.RETURN:
-                return true
-            otherwise: return false
-        }
     }
 
     function fieldSize(t:Type):Int {
@@ -294,6 +281,15 @@ class LLVMCodeGenerator : CodeGenerator {
         }
         sizes[cl] := result
         return result
+    }
+
+    function stride(t:Type):Int {
+        def s := sizeOf(t)
+        def a := alignment(t)
+        if s % a = 0 {
+            return s
+        }
+        return s + a - s % a
     }
 
     function sizeOfWrapper(t:Type):Int {
@@ -805,8 +801,9 @@ class LLVMCodeGenerator : CodeGenerator {
             }
             code.append("constant \{result.type} { " +
                     "%panda$core$Class* bitcast(\{clConstant.type}* \{clConstant.name} to " +
-                    "%panda$core$Class*), \{INT_TYPE} -999, %panda$core$Class* \{superPtr}, " +
-                    "\{getITable(cl)}, [\{vtable.get_count()} x i8*] [")
+                    "%panda$core$Class*), \{INT_TYPE} \{NO_REFCNT}, " +
+                    "%panda$core$Class* \{superPtr}, \{getITable(cl)}, " +
+                    "[\{vtable.get_count()} x i8*] [")
             var separator := ""
             for m in vtable {
                 code.append(separator)
@@ -999,23 +996,27 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     method getAndReference(left:IRNode, right:IRNode, out:OutputStream):String {
+        extraEffects.push(Array<IRNode>())
         var leftRef := getReference(left, out)
         if left.type() = Type.Bit() {
             def leftField := nextVar()
             out.printLine("\{leftField} = extractvalue %panda$core$Bit \{leftRef}, 0")
             leftRef := leftField
         }
+        writeExtraEffects(out)
         def start := currentBlock
         def ifTrue := nextLabel()
         def ifFalse := nextLabel()
         out.printLine("br i1 \{leftRef}, label %\{ifTrue}, label %\{ifFalse}")
         createBlock(ifTrue, out)
+        extraEffects.push(Array<IRNode>())
         def rightRef := getReference(right, out)
         if right.type() = Type.Bit() {
             def rightField := nextVar()
             out.printLine("\{rightField} = extractvalue %panda$core$Bit \{rightRef}, 0")
             rightRef := rightField
         }
+        writeExtraEffects(out)
         def truePred := currentBlock
         out.printLine("br label %\{ifFalse}")
         createBlock(ifFalse, out)
@@ -1025,23 +1026,27 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     method getOrReference(left:IRNode, right:IRNode, out:OutputStream):String {
+        extraEffects.push(Array<IRNode>())
         var leftRef := getReference(left, out)
         if left.type() = Type.Bit() {
             def leftField := nextVar()
             out.printLine("\{leftField} = extractvalue %panda$core$Bit \{leftRef}, 0")
             leftRef := leftField
         }
+        writeExtraEffects(out)
         def start := currentBlock
         def ifTrue := nextLabel()
         def ifFalse := nextLabel()
         out.printLine("br i1 \{leftRef}, label %\{ifTrue}, label %\{ifFalse}")
         createBlock(ifFalse, out)
+        extraEffects.push(Array<IRNode>())
         def rightRef := getReference(right, out)
         if right.type() = Type.Bit() {
             def rightField := nextVar()
             out.printLine("\{rightField} = extractvalue %panda$core$Bit \{rightRef}, 0")
             rightRef := rightField
         }
+        writeExtraEffects(out)
         def falsePred := currentBlock
         out.printLine("br label %\{ifTrue}")
         createBlock(ifTrue, out)
@@ -1156,7 +1161,9 @@ class LLVMCodeGenerator : CodeGenerator {
 
     method getTernaryReference(test:IRNode, ifTrue:IRNode, ifFalse:IRNode,
             out:OutputStream):String {
+        extraEffects.push(Array<IRNode>())
         def testRef := getTypedReference(test, out)
+        writeExtraEffects(out)
         def testBit := nextVar()
         out.printLine("\{testBit} = extractvalue \{testRef}, 0")
         var trueLabel := nextLabel()
@@ -1164,11 +1171,15 @@ class LLVMCodeGenerator : CodeGenerator {
         def merge := nextLabel()
         out.printLine("br i1 \{testBit}, label %\{trueLabel}, label %\{falseLabel}")
         createBlock(trueLabel, out)
+        extraEffects.push(Array<IRNode>())
         def ifTrueRef := getReference(ifTrue, out)
+        writeExtraEffects(out)
         trueLabel := currentBlock
         out.printLine("br label %\{merge}")
         createBlock(falseLabel, out)
+        extraEffects.push(Array<IRNode>())
         def ifFalseRef := getReference(ifFalse, out)
+        writeExtraEffects(out)
         falseLabel := currentBlock
         out.printLine("br label %\{merge}")
         createBlock(merge, out)
@@ -1311,11 +1322,11 @@ class LLVMCodeGenerator : CodeGenerator {
                 def count := nextVar()
                 out.printLine("\{count} = extractvalue \{countStruct}, 0")
                 def size := nextVar()
-                def elementSize := sizeOf(m.returnType().subtypes[1])
+                def elementSize := stride(m.returnType().subtypes[1])
                 assert elementSize > 0, "invalid size for type \{m.returnType().subtypes[1]}"
                 out.printLine("\{size} = mul \{SIZE_TYPE} \{count}, \{elementSize}")
                 def malloc := nextVar()
-                out.printLine("\{malloc} = call i8* @pandaAlloc(\{SIZE_TYPE} \{size})")
+                out.printLine("\{malloc} = call i8* @pandaZAlloc(\{SIZE_TYPE} \{size})")
                 def result := nextVar()
                 out.printLine("\{result} = bitcast i8* \{malloc} to \{type(m.returnType())}")
                 return result
@@ -1355,13 +1366,13 @@ class LLVMCodeGenerator : CodeGenerator {
                 out.printLine("\{oldCount} = extractvalue \{oldCountStruct}, 0")
                 def oldSize := nextVar()
                 out.printLine("\{oldSize} = mul \{SIZE_TYPE} \{oldCount}, " +
-                        sizeOf(m.returnType().subtypes[1]))
+                        stride(m.returnType().subtypes[1]))
                 def newCountStruct := getTypedReference(args[2], out)
                 def newCount := nextVar()
                 out.printLine("\{newCount} = extractvalue \{newCountStruct}, 0")
                 def newSize := nextVar()
                 out.printLine("\{newSize} = mul \{SIZE_TYPE} \{newCount}, " +
-                        sizeOf(m.returnType().subtypes[1]))
+                        stride(m.returnType().subtypes[1]))
                 def realloc := nextVar()
                 out.printLine("\{realloc} = call i8* @pandaRealloc(i8* \{ptrCast}, \{SIZE_TYPE} " +
                         "\{oldSize}, \{SIZE_TYPE} \{newSize})")
@@ -1410,7 +1421,7 @@ class LLVMCodeGenerator : CodeGenerator {
         writeBlock(body, out)
         currentMethod := old
         inlineContext.pop()
-        if !endsWithBranch(body) {
+        if !compiler.endsWithBranch(body) {
             out.printLine("unreachable")
         }
         createBlock(end, out)
@@ -1565,7 +1576,7 @@ class LLVMCodeGenerator : CodeGenerator {
             return result
         }
         def mallocRef := nextVar()
-        out.printLine("\{mallocRef} = call i8* @pandaAlloc(i64 \{sizeOfWrapper(src.type())})")
+        out.printLine("\{mallocRef} = call i8* @pandaZAlloc(i64 \{sizeOfWrapper(src.type())})")
         def wrapperTypeName := wrapperTypeName(src.type())
         def wrapperType := wrapperType(src.type())
         def wrapperCast := nextVar()
@@ -1585,7 +1596,7 @@ class LLVMCodeGenerator : CodeGenerator {
         def refCount := nextVar()
         out.printLine("\{refCount} = getelementptr \{wrapperTypeName}, " +
                 "\{wrapperType} \{wrapperCast}, i64 0, i32 1, i32 0")
-        out.printLine("store i32 0, i32* \{refCount}")
+        out.printLine("store i32 1, i32* \{refCount}")
         def target := nextVar()
         out.printLine("\{target} = getelementptr \{wrapperTypeName}, " +
                 "\{wrapperType} \{wrapperCast}, i64 0, i32 2")
@@ -1815,7 +1826,7 @@ class LLVMCodeGenerator : CodeGenerator {
                     return result
                 }
                 def callRef := nextVar()
-                out.printLine("\{callRef} = call i8* @pandaAlloc(i64 \{sizeOf(target)})")
+                out.printLine("\{callRef} = call i8* @pandaZAlloc(i64 \{sizeOf(target)})")
                 def result := nextVar()
                 out.printLine("\{result} = bitcast i8* \{callRef} to \{type(target)}")
                 def classPtr := nextVar()
@@ -1834,7 +1845,7 @@ class LLVMCodeGenerator : CodeGenerator {
                 def refCount := nextVar()
                 out.printLine("\{refCount} = getelementptr \{className}, \{t} \{result}, i64 0, " +
                         "i32 1, i32 0")
-                out.printLine("store i32 0, i32* \{refCount}")
+                out.printLine("store i32 1, i32* \{refCount}")
                 writeCall(initType, initMref, args, "\{t} \{result}", out)
                 return result
             otherwise:
@@ -2041,54 +2052,63 @@ class LLVMCodeGenerator : CodeGenerator {
         return load
     }
 
+    method getExpressionWithExtraEffectsReference(expr:IRNode, stmt:IRNode,
+            out:OutputStream):String {
+        def result := getReference(expr, out)
+        extraEffects.peek().add(stmt)
+        return result
+    }
+
     method getReference(expr:IRNode, out:OutputStream):String {
         match expr {
             when IRNode.BINARY(_, _, left, op, right):
                 return getBinaryReference(left, op, right, out)
+            when IRNode.BIT(_, _, value):
+                return getBitReference(value, out)
             when IRNode.CALL(_, type, target, args):
                 return getCallReference(type, target, args, out)
             when IRNode.CAST(_, base, type, explicit):
                 return getCastReference(base, type, out)
-            when IRNode.INT(_, _, value):
-                return getIntReference(value, out)
-            when IRNode.NEGATED_INT(_, _, value):
-                return getNegatedIntReference(value, out)
-            when IRNode.REAL(_, type, value):
-                return getRealReference(type, value, out)
-            when IRNode.BIT(_, _, value):
-                return getBitReference(value, out)
+            when IRNode.CHOICE_FIELD_REFERENCE(_, base, ce, field):
+                return getChoiceFieldReference(base, ce, field, out)
             when IRNode.CONSTRUCT(_, type, initCall):
                 return getConstructReference(type, initCall, out)
-            when IRNode.VARIABLE_REFERENCE(_, variable):
-                return getVariableReference(variable, out)
+            when IRNode.EXPRESSION_WITH_EXTRA_EFFECTS(expr, stmt):
+                return getExpressionWithExtraEffectsReference(expr, stmt, out)
             when IRNode.FIELD_REFERENCE(_, _, base, field):
                 return getFieldReference(base, field, out)
-            when IRNode.STRING(_, str):
-                return getStringReference(str, out)
-            when IRNode.SELF:
-                return getSelfReference(out)
-            when IRNode.SUPER(_, t):
-                return getSuperReference(t, out)
-            when IRNode.REUSED_VALUE_DEFINITION(base, id):
-                def value := getReference(base, out)
-                reusedValues[id] := value
-                return value
+            when IRNode.INT(_, _, value):
+                return getIntReference(value, out)
+            when IRNode.IS_NONNULL(_, value):
+                return getIsNonNullReference(value, out)
+            when IRNode.IS_NULL(_, value):
+                return getIsNullReference(value, out)
+            when IRNode.NEGATED_INT(_, _, value):
+                return getNegatedIntReference(value, out)
+            when IRNode.NULL(_, type):
+                return getNullReference(type, out)
+            when IRNode.PREFIX(_, op, base):
+                return getPrefixReference(op, base, out)
+            when IRNode.REAL(_, type, value):
+                return getRealReference(type, value, out)
             when IRNode.REUSED_VALUE(_, _, id):
                 def result := reusedValues[id]
                 assert result != null
                 return result
-            when IRNode.NULL(_, type):
-                return getNullReference(type, out)
-            when IRNode.IS_NULL(_, value):
-                return getIsNullReference(value, out)
-            when IRNode.IS_NONNULL(_, value):
-                return getIsNonNullReference(value, out)
-            when IRNode.PREFIX(_, op, base):
-                return getPrefixReference(op, base, out)
+            when IRNode.REUSED_VALUE_DEFINITION(base, id):
+                def value := getReference(base, out)
+                reusedValues[id] := value
+                return value
+            when IRNode.SELF:
+                return getSelfReference(out)
+            when IRNode.STRING(_, str):
+                return getStringReference(str, out)
+            when IRNode.SUPER(_, t):
+                return getSuperReference(t, out)
             when IRNode.TERNARY(_, test, ifTrue, ifFalse):
                 return getTernaryReference(test, ifTrue, ifFalse, out)
-            when IRNode.CHOICE_FIELD_REFERENCE(_, base, ce, field):
-                return getChoiceFieldReference(base, ce, field, out)
+            when IRNode.VARIABLE_REFERENCE(_, variable):
+                return getVariableReference(variable, out)
             otherwise:
                 assert false, "unsupported expression \{expr}:\{expr.$rawValue}"
         }
@@ -2225,6 +2245,7 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     method writeIf(test:IRNode, ifTrue:ImmutableArray<IRNode>, ifFalse:IRNode?, out:OutputStream) {
+        extraEffects.push(Array<IRNode>())
         def testRef := getTypedReference(test, out)
         def testBit := nextVar()
         out.printLine("\{testBit} = extractvalue \{testRef}, 0")
@@ -2232,6 +2253,10 @@ class LLVMCodeGenerator : CodeGenerator {
         def ifFalseLabel := nextLabel()
         out.printLine("br i1 \{testBit}, label %\{ifTrueLabel}, label %\{ifFalseLabel}")
         createBlock(ifTrueLabel, out)
+        if ifFalse != null {
+            extraEffects.push(Array<IRNode>(extraEffects.peek()))
+        }
+        writeExtraEffects(out)
         writeBlock(ifTrue, out)
         def end:String
         if ifFalse != null {
@@ -2240,13 +2265,14 @@ class LLVMCodeGenerator : CodeGenerator {
         else {
             end := ifFalseLabel
         }
-        if !endsWithBranch(ifTrue) {
+        if !compiler.endsWithBranch(ifTrue) {
             out.printLine("br label %\{end}")
         }
         if ifFalse != null {
             createBlock(ifFalseLabel, out)
+            writeExtraEffects(out)
             writeStatement(ifFalse, out)
-            if !endsWithBranch(ifFalse) {
+            if !compiler.endsWithBranch(ifFalse) {
                 out.printLine("br label %\{end}")
             }
         }
@@ -2328,7 +2354,7 @@ class LLVMCodeGenerator : CodeGenerator {
         out.printLine("br i1 \{forwardExclusiveTest}, label %\{loopBody}, label %\{loopEnd}")
         createBlock(loopBody, out)
         writeBlock(statements, out)
-        if !endsWithBranch(statements) {
+        if !compiler.endsWithBranch(statements) {
             out.printLine("br label %\{loopInc}")
         }
         createBlock(loopInc, out)
@@ -2439,7 +2465,7 @@ class LLVMCodeGenerator : CodeGenerator {
         out.printLine("br i1 \{backwardExclusiveTest}, label %\{loopBody}, label %\{loopEnd}")
         createBlock(loopBody, out)
         writeBlock(statements, out)
-        if !endsWithBranch(statements) {
+        if !compiler.endsWithBranch(statements) {
             out.printLine("br label %\{loopInc}")
         }
         createBlock(loopInc, out)
@@ -2538,7 +2564,7 @@ class LLVMCodeGenerator : CodeGenerator {
         def indexValue := nextVar()
         out.printLine("\{indexValue} = load \{numberType}, \{numberType}* \{indexValuePtr}")
         writeBlock(statements, out)
-        if !endsWithBranch(statements) {
+        if !compiler.endsWithBranch(statements) {
             out.printLine("br label %\{loopTest}")
         }
         createBlock(loopTest, out)
@@ -2708,7 +2734,7 @@ class LLVMCodeGenerator : CodeGenerator {
         def indexValue := nextVar()
         out.printLine("\{indexValue} = load \{numberType}, \{numberType}* \{indexValuePtr}")
         writeBlock(statements, out)
-        if !endsWithBranch(statements) {
+        if !compiler.endsWithBranch(statements) {
             out.printLine("br label %\{loopTest}")
         }
         createBlock(loopTest, out)
@@ -2817,7 +2843,7 @@ class LLVMCodeGenerator : CodeGenerator {
         out.printLine("br i1 \{testBit}, label %\{loopBody}, label %\{loopEnd}")
         createBlock(loopBody, out)
         writeBlock(statements, out)
-        if !endsWithBranch(statements) {
+        if !compiler.endsWithBranch(statements) {
             out.printLine("br label %\{loopStart}")
         }
         createBlock(loopEnd, out)
@@ -2838,7 +2864,7 @@ class LLVMCodeGenerator : CodeGenerator {
         out.printLine("br i1 \{testBit}, label %\{loopBody}, label %\{loopEnd}")
         createBlock(loopBody, out)
         writeBlock(statements, out)
-        if !endsWithBranch(statements) {
+        if !compiler.endsWithBranch(statements) {
             out.printLine("br label %\{loopStart}")
         }
         createBlock(loopEnd, out)
@@ -2852,7 +2878,7 @@ class LLVMCodeGenerator : CodeGenerator {
         out.printLine("br label %\{loopStart}")
         createBlock(loopStart, out)
         writeBlock(statements, out)
-        if !endsWithBranch(statements) {
+        if !compiler.endsWithBranch(statements) {
             out.printLine("br label %\{loopStart}")
         }
         createBlock(loopEnd, out)
@@ -2919,7 +2945,7 @@ class LLVMCodeGenerator : CodeGenerator {
         def fields := compiler.instanceFields(cl)
         var index := -1
         for i in 0 .. fields.get_count() {
-            if fields[i].name == field.name {
+            if fields[i].name = field.name {
                 index := i
                 break
             }
@@ -2980,12 +3006,17 @@ class LLVMCodeGenerator : CodeGenerator {
         if value != null {
             if inlineContext.get_count() > 0 {
                 def inline := inlineContext.peek()
+                extraEffects.push(Array<IRNode>())
                 def result := getReference(value, out)
                 inline.returns.add(Pair<String, String>(currentBlock, result))
+                writeExtraEffects(out)
                 out.printLine("br label %\{inline.exitLabel}")
             }
             else {
-                out.printLine("ret \{getTypedReference(value, out)}")
+                extraEffects.push(Array<IRNode>())
+                def ref := getTypedReference(value, out)
+                writeExtraEffects(out)
+                out.printLine("ret \{ref}")
             }
         }
         else {
@@ -3025,11 +3056,14 @@ class LLVMCodeGenerator : CodeGenerator {
         if compiler.settings.safetyLevel < 2 {
             return
         }
+        extraEffects.push(Array<IRNode>())
         def testRef := getReference(test, out)
+        writeExtraEffects(out)
         def ifTrue := nextLabel()
         def ifFalse := nextLabel()
         out.printLine("br i1 \{testRef}, label %\{ifTrue}, label %\{ifFalse}")
         createBlock(ifFalse, out)
+        extraEffects.push(Array<IRNode>())
         def name:String
         def path := compiler.currentClass.peek().source.path
         def index := path.lastIndexOf("/")
@@ -3069,6 +3103,7 @@ class LLVMCodeGenerator : CodeGenerator {
             out.print(", %panda$core$String* \{msgRef}")
         }
         out.printLine(")")
+        extraEffects.pop()
         out.printLine("unreachable")
         createBlock(ifTrue, out)
     }
@@ -3113,7 +3148,7 @@ class LLVMCodeGenerator : CodeGenerator {
                 when IRNode.WHEN(_, _, statements):
                     createBlock(whenLabels[i], out)
                     writeBlock(statements, out)
-                    if !endsWithBranch(statements) {
+                    if !compiler.endsWithBranch(statements) {
                         out.printLine("br label %\{endLabel}")
                     }
                 otherwise:
@@ -3127,7 +3162,15 @@ class LLVMCodeGenerator : CodeGenerator {
         createBlock(endLabel, out)
     }
 
+    method writeExtraEffects(out:OutputStream) {
+        def finalEffects := extraEffects.pop()
+        for i in finalEffects.get_count() - 1 ... 0 by -1 {
+            writeStatement(finalEffects[i], out)
+        }
+    }
+
     method writeStatement(stmt:IRNode, out:OutputStream) {
+        extraEffects.push(Array<IRNode>())
         match stmt {
             when IRNode.BINARY(_, _, left, op, right):
                 writeAssignment(left, right, out)
@@ -3135,6 +3178,8 @@ class LLVMCodeGenerator : CodeGenerator {
                 writeBlock(statements, out)
             when IRNode.CALL(_, target, mref, args):
                 writeCall(target, mref, args, null, out)
+            when IRNode.EXPRESSION_WITH_EXTRA_EFFECTS(base, stmt):
+                getExpressionWithExtraEffectsReference(base, stmt, out)
             when IRNode.IF(_, test, ifTrue, ifFalse):
                 writeIf(test, ifTrue, ifFalse, out)
             when IRNode.RANGE_FOR(_, label, target, list, statements):
@@ -3160,6 +3205,7 @@ class LLVMCodeGenerator : CodeGenerator {
             otherwise:
                 assert false, "unsupported statement \{stmt}"
         }
+        writeExtraEffects(out)
     }
 
     method selfType(m:MethodDecl):String {
@@ -3204,6 +3250,9 @@ class LLVMCodeGenerator : CodeGenerator {
 
     @override
     method write(m:MethodDecl, body:ImmutableArray<IRNode>) {
+        Console.printLine("##### " + m.declaration())
+        Console.printLine(body.join("\n"))
+        Console.printLine("########################")
         assert compiler.currentClass.peek() == m.owner,
                 "compiling \{m.owner.name}.\{m.signature()} from within " +
                 compiler.currentClass.peek().name
@@ -3242,7 +3291,7 @@ class LLVMCodeGenerator : CodeGenerator {
         }
         methods.print(methodHeader.finish())
         methods.print(bodyBuffer.finish())
-        if !endsWithBranch(body) {
+        if !compiler.endsWithBranch(body) {
             if m.returnType = Type.Void() {
                 methods.printLine("ret void")
             }

@@ -32,5 +32,6 @@ panda$collections$Iterator* panda$collections$Stack$iterator$R$panda$collections
 panda$core$Int64 panda$collections$Stack$get_count$R$panda$core$Int64(panda$collections$Stack* self);
 panda$core$String* panda$collections$Stack$convert$R$panda$core$String(panda$collections$Stack* self);
 void panda$collections$Stack$init(panda$collections$Stack* self);
+void panda$collections$Stack$cleanup(panda$collections$Stack* self);
 
 #endif

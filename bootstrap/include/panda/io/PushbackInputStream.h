@@ -37,5 +37,6 @@ void panda$io$PushbackInputStream$pushback$panda$collections$ListView$LTpanda$co
 void panda$io$PushbackInputStream$pushback$panda$core$Char8(panda$io$PushbackInputStream* self, panda$core$Char8 p_c);
 void panda$io$PushbackInputStream$pushback$panda$collections$ListView$LTpanda$core$Char8$GT(panda$io$PushbackInputStream* self, panda$collections$ListView* p_c);
 void panda$io$PushbackInputStream$pushback$panda$core$String(panda$io$PushbackInputStream* self, panda$core$String* p_s);
+void panda$io$PushbackInputStream$cleanup(panda$io$PushbackInputStream* self);
 
 #endif

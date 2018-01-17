@@ -37,5 +37,6 @@ panda$core$Bit org$pandalanguage$pandac$Annotations$isAbstract$R$panda$core$Bit(
 panda$core$Bit org$pandalanguage$pandac$Annotations$isInline$R$panda$core$Bit(org$pandalanguage$pandac$Annotations* self);
 panda$core$Bit org$pandalanguage$pandac$Annotations$isSpecialize$R$panda$core$Bit(org$pandalanguage$pandac$Annotations* self);
 panda$core$String* org$pandalanguage$pandac$Annotations$convert$R$panda$core$String(org$pandalanguage$pandac$Annotations* self);
+void org$pandalanguage$pandac$Annotations$cleanup(org$pandalanguage$pandac$Annotations* self);
 
 #endif

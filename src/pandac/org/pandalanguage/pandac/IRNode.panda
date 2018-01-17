@@ -21,6 +21,9 @@ choice IRNode {
     CONTINUE(Position, String?)
     DECLARATION(IRNode -* target *-, IRNode? -* value *-)
     DO(Position, String?, ImmutableArray<IRNode>, IRNode)
+    -- evaluates to the expression, but executes the extraEffectsStatement after the current
+    -- statement
+    EXPRESSION_WITH_EXTRA_EFFECTS(IRNode -* expression *-, IRNode -* extraEffectStatement *-)
     FIELD_REFERENCE(Position, Type, IRNode -* base *-, FieldDecl)
     IF(Position, IRNode, ImmutableArray<IRNode>, IRNode?)
     INT(Position, Type, UInt64)
@@ -29,7 +32,7 @@ choice IRNode {
     LOOP(Position, String?, ImmutableArray<IRNode>)
     MATCH(Position, IRNode -* value *-, ImmutableArray<IRNode> -* whens *-,
             ImmutableArray<IRNode>? -* otherwise statements *-)
-    METHOD_REFERENCE(Position, IRNode -* target *-, MethodRef)
+    METHOD_REFERENCE(Position, IRNode? -* target *-, MethodRef)
     NEGATED_INT(Position, Type, UInt64)
     NULL(Position, Type)
     PREFIX(Position, Token.Kind, IRNode)
@@ -77,6 +80,8 @@ choice IRNode {
                 return type
             when CONSTRUCTED_OBJECT(_, type):
                 return type
+            when EXPRESSION_WITH_EXTRA_EFFECTS(expr, _):
+                return expr.type()
             when FIELD_REFERENCE(_, type, _, _):
                 return type
             when INT(_, type, _):
@@ -157,6 +162,8 @@ choice IRNode {
                 return target.position()
             when DO(position, _, _, _):
                 return position
+            when EXPRESSION_WITH_EXTRA_EFFECTS(expr, _):
+                return expr.position()
             when FIELD_REFERENCE(position, _, _, _):
                 return position
             when IF(position, _, _, _):
@@ -273,6 +280,8 @@ choice IRNode {
                     }
                 }
                 return false
+            when EXPRESSION_WITH_EXTRA_EFFECTS:
+                return true
             when FIELD_REFERENCE(_, _, base, field):
                 return false
             when IF(_, test, ifTrue, ifFalse):
@@ -458,6 +467,8 @@ choice IRNode {
                 }
                 result.append("} while \{test}")
                 return result.finish()
+            when EXPRESSION_WITH_EXTRA_EFFECTS(expr, stmt):
+                return "\{expr} -* and then: \{stmt} *-"
             when FIELD_REFERENCE(_, _, base, field):
                 return "\{base}.\{field.name}"
             when IF(_, test, ifTrue, ifFalse):
@@ -501,7 +512,10 @@ choice IRNode {
                 result.append("}")
                 return result.finish()
             when METHOD_REFERENCE(_, target, m):
-                return "\{target}.\{m.value.name}"
+                if target != null {
+                    return "\{target}.\{m.value.name}"
+                }
+                return m.value.name
             when NEGATED_INT(_, _, value):
                 return "-" + value
             when NULL:

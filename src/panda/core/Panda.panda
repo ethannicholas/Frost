@@ -12,11 +12,11 @@ class Panda {
 
     @class
     @external
-    method ref(o:Object):Object
+    method ref(o:Object)
 
     @class
     @external
-    method unref(o:Object):Object
+    method unref(o:Object)
 
     @class
     @external
@@ -172,7 +172,6 @@ class Panda {
     }
 
     @class
-    method debugPrint(i:builtin_int64) {
-        Console.printLine("Debug: \{Int64(i)}")
-    }
+    @external
+    method debugPrint(i:builtin_int64)
 }

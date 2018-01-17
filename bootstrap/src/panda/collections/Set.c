@@ -10,6 +10,7 @@
 #include "panda/collections/HashMap.h"
 #include "panda/core/Bit.h"
 #include "panda/core/Int64.h"
+#include "panda/core/Panda.h"
 void panda$collections$Set$add$panda$collections$Set$T$shim(panda$collections$Set* self, panda$core$Object* p0) {
     panda$collections$Set$add$panda$collections$Set$T(self, ((panda$collections$Key*) p0));
 }
@@ -30,7 +31,7 @@ struct { panda$core$Class* cl; ITable* next; void* methods[0]; } panda$collectio
 
 struct { panda$core$Class* cl; ITable* next; void* methods[1]; } panda$collections$Set$_panda$collections$CollectionView = { (panda$core$Class*) &panda$collections$CollectionView$class, (ITable*) &panda$collections$Set$_panda$collections$Collection, { panda$collections$Set$get_count$R$panda$core$Int64} };
 
-panda$collections$Set$class_type panda$collections$Set$class = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Object$class, (ITable*) &panda$collections$Set$_panda$collections$CollectionView, { panda$core$Object$convert$R$panda$core$String, panda$core$Object$cleanup, panda$collections$Set$add$panda$collections$Set$T$shim, panda$collections$Set$addAll$panda$collections$CollectionView$LTpanda$collections$Set$T$GT$shim, panda$collections$Set$get_count$R$panda$core$Int64, panda$collections$Set$clear, panda$collections$Set$iterator$R$panda$collections$Iterator$LTpanda$collections$Set$T$GT$shim, panda$collections$Set$contains$panda$collections$Set$T$R$panda$core$Bit} };
+panda$collections$Set$class_type panda$collections$Set$class = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Object$class, (ITable*) &panda$collections$Set$_panda$collections$CollectionView, { panda$core$Object$convert$R$panda$core$String, panda$collections$Set$cleanup, panda$collections$Set$add$panda$collections$Set$T$shim, panda$collections$Set$addAll$panda$collections$CollectionView$LTpanda$collections$Set$T$GT$shim, panda$collections$Set$get_count$R$panda$core$Int64, panda$collections$Set$clear, panda$collections$Set$iterator$R$panda$collections$Iterator$LTpanda$collections$Set$T$GT$shim, panda$collections$Set$contains$panda$collections$Set$T$R$panda$core$Bit} };
 
 typedef panda$collections$Iterator* (*$fn8)(panda$collections$Iterable*);
 typedef panda$core$Bit (*$fn14)(panda$collections$Iterator*);
@@ -38,14 +39,14 @@ typedef panda$core$Object* (*$fn20)(panda$collections$Iterator*);
 
 
 void panda$collections$Set$init(panda$collections$Set* self) {
-    panda$collections$HashMap* $tmp1 = (panda$collections$HashMap*) pandaAlloc(56);
+    panda$collections$HashMap* $tmp1 = (panda$collections$HashMap*) pandaZAlloc(56);
     $tmp1->$class = (panda$core$Class*) &panda$collections$HashMap$class;
     $tmp1->refCount.value = 1;
     panda$collections$HashMap$init($tmp1);
     self->contents = $tmp1;
 }
 void panda$collections$Set$init$panda$collections$CollectionView$LTpanda$collections$Set$T$GT(panda$collections$Set* self, panda$collections$CollectionView* p_c) {
-    panda$collections$HashMap* $tmp3 = (panda$collections$HashMap*) pandaAlloc(56);
+    panda$collections$HashMap* $tmp3 = (panda$collections$HashMap*) pandaZAlloc(56);
     $tmp3->$class = (panda$core$Class*) &panda$collections$HashMap$class;
     $tmp3->refCount.value = 1;
     panda$collections$HashMap$init($tmp3);
@@ -103,5 +104,8 @@ panda$collections$Iterator* panda$collections$Set$iterator$R$panda$collections$I
 panda$core$Bit panda$collections$Set$contains$panda$collections$Set$T$R$panda$core$Bit(panda$collections$Set* self, panda$collections$Key* p_value) {
     panda$core$Bit $tmp24 = panda$collections$HashMap$contains$panda$collections$HashMap$K$R$panda$core$Bit(self->contents, p_value);
     return $tmp24;
+}
+void panda$collections$Set$cleanup(panda$collections$Set* self) {
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->contents));
 }
 

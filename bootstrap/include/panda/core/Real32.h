@@ -65,5 +65,6 @@ panda$core$UInt32 panda$core$Real32$convert$R$panda$core$UInt32(panda$core$Real3
 panda$core$UInt64 panda$core$Real32$convert$R$panda$core$UInt64(panda$core$Real32 self);
 panda$core$Real64 panda$core$Real32$convert$R$panda$core$Real64(panda$core$Real32 self);
 panda$core$String* panda$core$Real32$convert$R$panda$core$String(panda$core$Real32 self);
+void panda$core$Real32$cleanup(panda$core$Real32 self);
 
 #endif

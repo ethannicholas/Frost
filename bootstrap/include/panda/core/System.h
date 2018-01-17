@@ -26,5 +26,6 @@ void panda$core$System$exit$panda$core$Int64(panda$core$Int64 p_status);
 void panda$core$System$crash();
 panda$core$System$Process* panda$core$System$exec$panda$io$File$panda$collections$ListView$LTpanda$core$String$GT$R$panda$core$System$Process$Q(panda$io$File* p_path, panda$collections$ListView* p_args);
 void panda$core$System$init(panda$core$System* self);
+void panda$core$System$cleanup(panda$core$System* self);
 
 #endif

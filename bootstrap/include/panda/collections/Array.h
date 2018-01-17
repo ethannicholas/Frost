@@ -6,7 +6,6 @@ typedef struct panda$core$Class panda$core$Class;
 #include "panda/core/Int32.h"
 #include "panda/core/Int64.h"
 typedef struct panda$core$Object panda$core$Object;
-#include "panda/core/Bit.h"
 
 typedef struct panda$collections$Array {
     panda$core$Class* $class;
@@ -14,7 +13,6 @@ typedef struct panda$collections$Array {
     panda$core$Int64 count;
     panda$core$Int64 capacity;
     panda$core$Object** data;
-    panda$core$Bit valid;
 } panda$collections$Array;
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"

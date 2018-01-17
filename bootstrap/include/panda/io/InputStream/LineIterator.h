@@ -29,5 +29,6 @@ void panda$io$InputStream$LineIterator$init$panda$io$InputStream(panda$io$InputS
 panda$core$Bit panda$io$InputStream$LineIterator$get_done$R$panda$core$Bit(panda$io$InputStream$LineIterator* self);
 panda$core$String* panda$io$InputStream$LineIterator$next$R$panda$core$String(panda$io$InputStream$LineIterator* self);
 void panda$io$InputStream$LineIterator$readNext(panda$io$InputStream$LineIterator* self);
+void panda$io$InputStream$LineIterator$cleanup(panda$io$InputStream$LineIterator* self);
 
 #endif
