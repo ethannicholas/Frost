@@ -1621,6 +1621,7 @@ class Compiler : ErrorReporter {
                 reusedValueCount += 1
                 result := IRNode.REUSED_VALUE_DEFINITION(result, reusedValueCount)
                 def reused := IRNode.REUSED_VALUE(result.position(), target, reusedValueCount)
+                Console.printLine("coerce unref: \{expr}:\{expr.type()}->\{target}")
                 result := IRNode.EXPRESSION_WITH_EXTRA_EFFECTS(result,
                         compilePandaCall("unref", reused))
             }
@@ -1694,6 +1695,7 @@ class Compiler : ErrorReporter {
             reusedValueCount += 1
             result := IRNode.REUSED_VALUE_DEFINITION(result, reusedValueCount)
             def reused := IRNode.REUSED_VALUE(result.position(), target, reusedValueCount)
+            Console.printLine("cast unref: \{node}:\{node.type()}->\{target}")
             result := IRNode.EXPRESSION_WITH_EXTRA_EFFECTS(result,
                     compilePandaCall("unref", reused))
         }
@@ -1841,17 +1843,15 @@ class Compiler : ErrorReporter {
         }
         else {
             var result := IRNode.CALL(position, m.value.returnType, m, finalArgs.finish())
-            result := cast(position, result, m.returnType(), false)
             if isRefCounted(actualReturnType(m)) {
                 reusedValueCount += 1
                 result := IRNode.REUSED_VALUE_DEFINITION(result, reusedValueCount)
-                def reused := cast(result.position(),
-                        IRNode.REUSED_VALUE(result.position(), result.type(), reusedValueCount),
-                        actualReturnType(m),
-                        false)
+                def reused := IRNode.REUSED_VALUE(result.position(), result.type(),
+                        reusedValueCount)
                 result := IRNode.EXPRESSION_WITH_EXTRA_EFFECTS(result,
                         compilePandaCall("unref", reused))
             }
+            result := cast(position, result, m.returnType(), false)
             return result
         }
     }
@@ -2309,6 +2309,16 @@ class Compiler : ErrorReporter {
                         resolved := base
                 }
                 resolved := unwrapCast(resolved)
+                match resolved {
+                    when IRNode.EXPRESSION_WITH_EXTRA_EFFECTS(base, extra):
+                        resolved := base
+                    otherwise:
+                }
+                match resolved {
+                    when IRNode.REUSED_VALUE_DEFINITION(base, _):
+                        resolved := base
+                    otherwise:
+                }
                 match resolved {
                     when IRNode.CALL(_, _, _, resolvedArgs):
                         assert resolvedArgs.get_count() = 2
@@ -3359,8 +3369,14 @@ class Compiler : ErrorReporter {
                 symbolTable.add(iter)
                 def statements := Array<IRNode>()
                 def varChildren := Array<IRNode>()
+                reusedValueCount += 1
+                def reusedDef := IRNode.REUSED_VALUE_DEFINITION(iterator, reusedValueCount)
+                def reusedIterator := IRNode.REUSED_VALUE(iterator.position(), iterator.type(),
+                        reusedValueCount)
+                def declValue := IRNode.EXPRESSION_WITH_EXTRA_EFFECTS(reusedDef,
+                        compilePandaCall("ref", reusedIterator))
                 varChildren.add(IRNode.DECLARATION(IRNode.VARIABLE_REFERENCE(iterator.position(),
-                        iter), iterator))
+                        iter), declValue))
                 statements.add(IRNode.VAR(iter.position, Variable.Kind.DEF, varChildren.finish()))
                 def whileChildren := Array<IRNode>()
                 def done := call(IRNode.VARIABLE_REFERENCE(iter.position, iter),
@@ -3388,6 +3404,7 @@ class Compiler : ErrorReporter {
                 finalBlock.addAll(rawBlock)
                 statements.add(IRNode.WHILE(iterator.position(), label, notCall,
                         finalBlock.finish()))
+                statements.add(compilePandaCall("unref", reusedIterator))
                 return IRNode.BLOCK(iterator.position(), statements.finish())
             otherwise:
                 assert false
