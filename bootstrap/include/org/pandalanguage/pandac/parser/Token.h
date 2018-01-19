@@ -5,6 +5,7 @@
 #include "org/pandalanguage/pandac/parser/Token/Kind.h"
 #include "panda/core/String/Index.h"
 #include "org/pandalanguage/pandac/Position.h"
+typedef struct panda$core$String panda$core$String;
 typedef struct panda$core$Class panda$core$Class;
 #include "org/pandalanguage/pandac/parser/Token.h"
 
@@ -17,7 +18,7 @@ typedef struct org$pandalanguage$pandac$parser$Token {
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"
 #undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[2]; } org$pandalanguage$pandac$parser$Token$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[2]; } org$pandalanguage$pandac$parser$Token$class_type;
 extern org$pandalanguage$pandac$parser$Token$class_type org$pandalanguage$pandac$parser$Token$class;
 typedef struct org$pandalanguage$pandac$parser$Token$wrapper {
     panda$core$Class* cl;
@@ -28,7 +29,7 @@ typedef struct org$pandalanguage$pandac$parser$Token$nullable {
     org$pandalanguage$pandac$parser$Token value;
     bool nonnull;
 } org$pandalanguage$pandac$parser$Token$nullable;
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[2]; } org$pandalanguage$pandac$parser$Token$wrapperclass_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[2]; } org$pandalanguage$pandac$parser$Token$wrapperclass_type;
 extern org$pandalanguage$pandac$parser$Token$wrapperclass_type org$pandalanguage$pandac$parser$Token$wrapperclass;
 
 #ifndef PANDA_TYPESONLY

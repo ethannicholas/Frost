@@ -6,6 +6,7 @@ typedef struct panda$core$Class panda$core$Class;
 #include "panda/core/Int32.h"
 typedef struct panda$core$Object panda$core$Object;
 typedef struct panda$collections$IdentityMap$Entry panda$collections$IdentityMap$Entry;
+typedef struct panda$core$String panda$core$String;
 
 typedef struct panda$collections$IdentityMap$Entry {
     panda$core$Class* $class;
@@ -17,7 +18,7 @@ typedef struct panda$collections$IdentityMap$Entry {
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"
 #undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[2]; } panda$collections$IdentityMap$Entry$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[2]; } panda$collections$IdentityMap$Entry$class_type;
 extern panda$collections$IdentityMap$Entry$class_type panda$collections$IdentityMap$Entry$class;
 
 #ifndef PANDA_TYPESONLY

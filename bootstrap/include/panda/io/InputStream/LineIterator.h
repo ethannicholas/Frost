@@ -16,7 +16,7 @@ typedef struct panda$io$InputStream$LineIterator {
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"
 #undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[5]; } panda$io$InputStream$LineIterator$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[5]; } panda$io$InputStream$LineIterator$class_type;
 extern panda$io$InputStream$LineIterator$class_type panda$io$InputStream$LineIterator$class;
 
 #ifndef PANDA_TYPESONLY

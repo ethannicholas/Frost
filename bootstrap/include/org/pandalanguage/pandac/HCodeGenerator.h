@@ -11,6 +11,7 @@ typedef struct panda$collections$Set panda$collections$Set;
 typedef struct panda$io$File panda$io$File;
 typedef struct org$pandalanguage$pandac$LLVMCodeGenerator org$pandalanguage$pandac$LLVMCodeGenerator;
 #include "panda/core/Bit.h"
+typedef struct panda$core$String panda$core$String;
 
 typedef struct org$pandalanguage$pandac$HCodeGenerator {
     panda$core$Class* $class;
@@ -34,7 +35,7 @@ typedef struct org$pandalanguage$pandac$HCodeGenerator {
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"
 #undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[16]; } org$pandalanguage$pandac$HCodeGenerator$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[16]; } org$pandalanguage$pandac$HCodeGenerator$class_type;
 extern org$pandalanguage$pandac$HCodeGenerator$class_type org$pandalanguage$pandac$HCodeGenerator$class;
 
 #ifndef PANDA_TYPESONLY

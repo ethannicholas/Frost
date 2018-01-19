@@ -6,6 +6,7 @@ typedef struct panda$core$Class panda$core$Class;
 #include "panda/core/Int32.h"
 #include "panda/core/Int64.h"
 typedef struct panda$collections$HashMap$Entry panda$collections$HashMap$Entry;
+typedef struct panda$core$String panda$core$String;
 
 typedef struct panda$collections$HashMap {
     panda$core$Class* $class;
@@ -19,7 +20,7 @@ typedef struct panda$collections$HashMap {
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"
 #undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[14]; } panda$collections$HashMap$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[14]; } panda$collections$HashMap$class_type;
 extern panda$collections$HashMap$class_type panda$collections$HashMap$class;
 
 #ifndef PANDA_TYPESONLY

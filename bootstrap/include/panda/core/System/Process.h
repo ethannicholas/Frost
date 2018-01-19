@@ -7,6 +7,7 @@ typedef struct panda$core$Class panda$core$Class;
 #include "panda/core/Int64.h"
 typedef struct panda$io$OutputStream panda$io$OutputStream;
 typedef struct panda$io$InputStream panda$io$InputStream;
+typedef struct panda$core$String panda$core$String;
 
 typedef struct panda$core$System$Process {
     panda$core$Class* $class;
@@ -19,7 +20,7 @@ typedef struct panda$core$System$Process {
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"
 #undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[3]; } panda$core$System$Process$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[3]; } panda$core$System$Process$class_type;
 extern panda$core$System$Process$class_type panda$core$System$Process$class;
 
 #ifndef PANDA_TYPESONLY

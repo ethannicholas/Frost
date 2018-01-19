@@ -4,6 +4,7 @@
 #undef PANDA_TYPESONLY
 typedef struct panda$core$Class panda$core$Class;
 #include "panda/core/Int32.h"
+typedef struct panda$core$String panda$core$String;
 
 typedef struct panda$core$Panda {
     panda$core$Class* $class;
@@ -12,7 +13,7 @@ typedef struct panda$core$Panda {
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"
 #undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[2]; } panda$core$Panda$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[2]; } panda$core$Panda$class_type;
 extern panda$core$Panda$class_type panda$core$Panda$class;
 
 #ifndef PANDA_TYPESONLY

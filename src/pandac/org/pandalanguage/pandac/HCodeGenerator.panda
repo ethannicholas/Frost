@@ -169,6 +169,7 @@ class HCodeGenerator : CodeGenerator {
             }
         }
         if cl.name = "panda.core.Class" {
+            types.printLine("panda$core$String* name;")
             types.printLine("panda$core$Class* super;")
             types.printLine("ITable* itable;")
             types.printLine("void* vtable[];")
@@ -179,7 +180,7 @@ class HCodeGenerator : CodeGenerator {
         types.printLine("#include \"panda/core/Class.h\"")
         types.printLine("#undef PANDA_TYPESONLY")
         types.printLine("typedef struct { panda$core$Class* cl; int32_t refCount; " +
-                "\{type(Type.Class())} super; ITable* itable; " +
+                "\{type(Type.StringType())} name; \{type(Type.Class())} super; ITable* itable; " +
                 "void* vtable[\{compiler.getVTable(cl).get_count()}]; } " +
                 "\{escapeName(cl.name)}$class_type;")
         types.printLine("extern \{escapeName(cl.name)}$class_type \{escapeName(cl.name)}$class;")
@@ -200,7 +201,7 @@ class HCodeGenerator : CodeGenerator {
             def value := compiler.getClass(Type.Value())
             def valueVTable := compiler.getVTable(value)
             types.printLine("typedef struct { panda$core$Class* cl; int32_t refCount; " +
-                    "panda$core$Class* super; ITable* itable; " +
+                    "panda$core$String* name; panda$core$Class* super; ITable* itable; " +
                     "void* vtable[\{valueVTable.get_count()}]; } " +
                     "\{escapeName(cl.name)}$wrapperclass_type;")
             types.printLine("extern \{escapeName(cl.name)}$wrapperclass_type " +

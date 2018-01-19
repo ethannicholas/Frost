@@ -1,6 +1,7 @@
 #include "panda/io/OutputStream.h"
 #include "panda/core/Object.h"
 #include "panda/core/Class.h"
+#include "panda/core/String.h"
 #include "panda/core/Int8.h"
 #include "panda/core/UInt8.h"
 #include "panda/core/Int64.h"
@@ -13,132 +14,133 @@
 #include "panda/core/Int32.h"
 #include "panda/core/UInt64.h"
 #include "panda/core/Char8.h"
-#include "panda/core/String.h"
 
 
-panda$io$OutputStream$class_type panda$io$OutputStream$class = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Object$class, NULL, { panda$core$Object$convert$R$panda$core$String, panda$io$OutputStream$cleanup, NULL, panda$io$OutputStream$write$panda$core$Int8, panda$io$OutputStream$write$panda$unsafe$Pointer$LTpanda$core$UInt8$GT$panda$core$Int64$panda$core$Int64, panda$io$OutputStream$write$panda$unsafe$Pointer$LTpanda$core$Int8$GT$panda$core$Int64$panda$core$Int64, panda$io$OutputStream$write$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64$panda$core$Int64, panda$io$OutputStream$write$panda$collections$Array$LTpanda$core$UInt8$GT$panda$core$Int64$panda$core$Int64, panda$io$OutputStream$write$panda$core$UInt16, panda$io$OutputStream$write$panda$core$Int16, panda$io$OutputStream$write$panda$core$UInt32, panda$io$OutputStream$write$panda$core$Int32, panda$io$OutputStream$write$panda$core$UInt64, panda$io$OutputStream$write$panda$core$Int64, panda$io$OutputStream$write$panda$core$Char8, panda$io$OutputStream$print$panda$core$Object, panda$io$OutputStream$print$panda$core$String, panda$io$OutputStream$printLine, panda$io$OutputStream$printLine$panda$core$Object, panda$io$OutputStream$printLine$panda$core$String} };
+static panda$core$String $s1;
+panda$io$OutputStream$class_type panda$io$OutputStream$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, NULL, { panda$core$Object$convert$R$panda$core$String, panda$io$OutputStream$cleanup, NULL, panda$io$OutputStream$write$panda$core$Int8, panda$io$OutputStream$write$panda$unsafe$Pointer$LTpanda$core$UInt8$GT$panda$core$Int64$panda$core$Int64, panda$io$OutputStream$write$panda$unsafe$Pointer$LTpanda$core$Int8$GT$panda$core$Int64$panda$core$Int64, panda$io$OutputStream$write$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64$panda$core$Int64, panda$io$OutputStream$write$panda$collections$Array$LTpanda$core$UInt8$GT$panda$core$Int64$panda$core$Int64, panda$io$OutputStream$write$panda$core$UInt16, panda$io$OutputStream$write$panda$core$Int16, panda$io$OutputStream$write$panda$core$UInt32, panda$io$OutputStream$write$panda$core$Int32, panda$io$OutputStream$write$panda$core$UInt64, panda$io$OutputStream$write$panda$core$Int64, panda$io$OutputStream$write$panda$core$Char8, panda$io$OutputStream$print$panda$core$Object, panda$io$OutputStream$print$panda$core$String, panda$io$OutputStream$printLine, panda$io$OutputStream$printLine$panda$core$Object, panda$io$OutputStream$printLine$panda$core$String} };
 
-typedef void (*$fn2)(panda$io$OutputStream*, panda$core$UInt8);
-typedef void (*$fn18)(panda$io$OutputStream*, panda$core$UInt8);
-typedef void (*$fn25)(panda$io$OutputStream*, panda$core$UInt8*, panda$core$Int64, panda$core$Int64);
+typedef void (*$fn3)(panda$io$OutputStream*, panda$core$UInt8);
+typedef void (*$fn19)(panda$io$OutputStream*, panda$core$UInt8);
 typedef void (*$fn26)(panda$io$OutputStream*, panda$core$UInt8*, panda$core$Int64, panda$core$Int64);
 typedef void (*$fn27)(panda$io$OutputStream*, panda$core$UInt8*, panda$core$Int64, panda$core$Int64);
-typedef void (*$fn30)(panda$io$OutputStream*, panda$core$UInt8);
-typedef void (*$fn32)(panda$io$OutputStream*, panda$core$UInt8);
-typedef void (*$fn34)(panda$io$OutputStream*, panda$core$UInt16);
-typedef void (*$fn37)(panda$io$OutputStream*, panda$core$UInt16);
-typedef void (*$fn39)(panda$io$OutputStream*, panda$core$UInt16);
-typedef void (*$fn41)(panda$io$OutputStream*, panda$core$UInt32);
-typedef void (*$fn44)(panda$io$OutputStream*, panda$core$UInt32);
-typedef void (*$fn46)(panda$io$OutputStream*, panda$core$UInt32);
-typedef void (*$fn48)(panda$io$OutputStream*, panda$core$UInt64);
-typedef void (*$fn49)(panda$io$OutputStream*, panda$core$UInt8);
-typedef panda$core$String* (*$fn50)(panda$core$Object*);
-typedef void (*$fn52)(panda$io$OutputStream*, panda$core$String*);
-typedef void (*$fn54)(panda$io$OutputStream*, panda$core$Char8);
-typedef panda$core$String* (*$fn55)(panda$core$Object*);
-typedef void (*$fn57)(panda$io$OutputStream*, panda$core$String*);
+typedef void (*$fn28)(panda$io$OutputStream*, panda$core$UInt8*, panda$core$Int64, panda$core$Int64);
+typedef void (*$fn31)(panda$io$OutputStream*, panda$core$UInt8);
+typedef void (*$fn33)(panda$io$OutputStream*, panda$core$UInt8);
+typedef void (*$fn35)(panda$io$OutputStream*, panda$core$UInt16);
+typedef void (*$fn38)(panda$io$OutputStream*, panda$core$UInt16);
+typedef void (*$fn40)(panda$io$OutputStream*, panda$core$UInt16);
+typedef void (*$fn42)(panda$io$OutputStream*, panda$core$UInt32);
+typedef void (*$fn45)(panda$io$OutputStream*, panda$core$UInt32);
+typedef void (*$fn47)(panda$io$OutputStream*, panda$core$UInt32);
+typedef void (*$fn49)(panda$io$OutputStream*, panda$core$UInt64);
+typedef void (*$fn50)(panda$io$OutputStream*, panda$core$UInt8);
+typedef panda$core$String* (*$fn51)(panda$core$Object*);
+typedef void (*$fn53)(panda$io$OutputStream*, panda$core$String*);
+typedef void (*$fn55)(panda$io$OutputStream*, panda$core$Char8);
+typedef panda$core$String* (*$fn56)(panda$core$Object*);
 typedef void (*$fn58)(panda$io$OutputStream*, panda$core$String*);
-typedef void (*$fn59)(panda$io$OutputStream*);
+typedef void (*$fn59)(panda$io$OutputStream*, panda$core$String*);
+typedef void (*$fn60)(panda$io$OutputStream*);
 
+static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x69\x6f\x2e\x4f\x75\x74\x70\x75\x74\x53\x74\x72\x65\x61\x6d", 21, -3689739765115213222, NULL };
 
 void panda$io$OutputStream$write$panda$core$Int8(panda$io$OutputStream* self, panda$core$Int8 p_value) {
-    panda$core$UInt8 $tmp1 = panda$core$Int8$convert$R$panda$core$UInt8(p_value);
-    (($fn2) self->$class->vtable[2])(self, $tmp1);
+    panda$core$UInt8 $tmp2 = panda$core$Int8$convert$R$panda$core$UInt8(p_value);
+    (($fn3) self->$class->vtable[2])(self, $tmp2);
 }
 void panda$io$OutputStream$write$panda$unsafe$Pointer$LTpanda$core$UInt8$GT$panda$core$Int64$panda$core$Int64(panda$io$OutputStream* self, panda$core$UInt8* p_ptr, panda$core$Int64 p_offset, panda$core$Int64 p_count) {
-    panda$core$Range$LTpanda$core$Int64$GT $tmp3;
-    panda$core$Int64 $tmp4 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(p_offset, p_count);
-    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp3, p_offset, $tmp4, ((panda$core$Bit) { false }));
-    int64_t $tmp6 = $tmp3.min.value;
-    panda$core$Int64 i5 = { $tmp6 };
-    int64_t $tmp8 = $tmp3.max.value;
-    bool $tmp9 = $tmp3.inclusive.value;
-    if ($tmp9) goto $l16; else goto $l17;
-    $l16:;
-    if ($tmp6 <= $tmp8) goto $l10; else goto $l12;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp4;
+    panda$core$Int64 $tmp5 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(p_offset, p_count);
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp4, p_offset, $tmp5, ((panda$core$Bit) { false }));
+    int64_t $tmp7 = $tmp4.min.value;
+    panda$core$Int64 i6 = { $tmp7 };
+    int64_t $tmp9 = $tmp4.max.value;
+    bool $tmp10 = $tmp4.inclusive.value;
+    if ($tmp10) goto $l17; else goto $l18;
     $l17:;
-    if ($tmp6 < $tmp8) goto $l10; else goto $l12;
-    $l10:;
+    if ($tmp7 <= $tmp9) goto $l11; else goto $l13;
+    $l18:;
+    if ($tmp7 < $tmp9) goto $l11; else goto $l13;
+    $l11:;
     {
-        (($fn18) self->$class->vtable[2])(self, p_ptr[i5.value]);
+        (($fn19) self->$class->vtable[2])(self, p_ptr[i6.value]);
     }
-    $l13:;
-    int64_t $tmp20 = $tmp8 - i5.value;
-    if ($tmp9) goto $l21; else goto $l22;
-    $l21:;
-    if ((uint64_t) $tmp20 >= 1) goto $l19; else goto $l12;
+    $l14:;
+    int64_t $tmp21 = $tmp9 - i6.value;
+    if ($tmp10) goto $l22; else goto $l23;
     $l22:;
-    if ((uint64_t) $tmp20 > 1) goto $l19; else goto $l12;
-    $l19:;
-    i5.value += 1;
-    goto $l10;
-    $l12:;
+    if ((uint64_t) $tmp21 >= 1) goto $l20; else goto $l13;
+    $l23:;
+    if ((uint64_t) $tmp21 > 1) goto $l20; else goto $l13;
+    $l20:;
+    i6.value += 1;
+    goto $l11;
+    $l13:;
 }
 void panda$io$OutputStream$write$panda$unsafe$Pointer$LTpanda$core$Int8$GT$panda$core$Int64$panda$core$Int64(panda$io$OutputStream* self, panda$core$Int8* p_ptr, panda$core$Int64 p_offset, panda$core$Int64 p_count) {
-    (($fn25) self->$class->vtable[4])(self, ((panda$core$UInt8*) p_ptr), p_offset, p_count);
-}
-void panda$io$OutputStream$write$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64$panda$core$Int64(panda$io$OutputStream* self, panda$core$Char8* p_ptr, panda$core$Int64 p_offset, panda$core$Int64 p_count) {
     (($fn26) self->$class->vtable[4])(self, ((panda$core$UInt8*) p_ptr), p_offset, p_count);
 }
+void panda$io$OutputStream$write$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64$panda$core$Int64(panda$io$OutputStream* self, panda$core$Char8* p_ptr, panda$core$Int64 p_offset, panda$core$Int64 p_count) {
+    (($fn27) self->$class->vtable[4])(self, ((panda$core$UInt8*) p_ptr), p_offset, p_count);
+}
 void panda$io$OutputStream$write$panda$collections$Array$LTpanda$core$UInt8$GT$panda$core$Int64$panda$core$Int64(panda$io$OutputStream* self, panda$collections$Array* p_a, panda$core$Int64 p_offset, panda$core$Int64 p_count) {
-    (($fn27) self->$class->vtable[4])(self, ((panda$core$UInt8*) p_a->data), p_offset, p_count);
+    (($fn28) self->$class->vtable[4])(self, ((panda$core$UInt8*) p_a->data), p_offset, p_count);
 }
 void panda$io$OutputStream$write$panda$core$UInt16(panda$io$OutputStream* self, panda$core$UInt16 p_value) {
-    panda$core$UInt32 $tmp28 = panda$core$UInt16$$SHR$panda$core$UInt16$R$panda$core$UInt32(p_value, ((panda$core$UInt16) { 8 }));
-    panda$core$UInt8 $tmp29 = panda$core$UInt32$convert$R$panda$core$UInt8($tmp28);
-    (($fn30) self->$class->vtable[2])(self, $tmp29);
-    panda$core$UInt8 $tmp31 = panda$core$UInt16$convert$R$panda$core$UInt8(p_value);
-    (($fn32) self->$class->vtable[2])(self, $tmp31);
+    panda$core$UInt32 $tmp29 = panda$core$UInt16$$SHR$panda$core$UInt16$R$panda$core$UInt32(p_value, ((panda$core$UInt16) { 8 }));
+    panda$core$UInt8 $tmp30 = panda$core$UInt32$convert$R$panda$core$UInt8($tmp29);
+    (($fn31) self->$class->vtable[2])(self, $tmp30);
+    panda$core$UInt8 $tmp32 = panda$core$UInt16$convert$R$panda$core$UInt8(p_value);
+    (($fn33) self->$class->vtable[2])(self, $tmp32);
 }
 void panda$io$OutputStream$write$panda$core$Int16(panda$io$OutputStream* self, panda$core$Int16 p_value) {
-    panda$core$UInt16 $tmp33 = panda$core$Int16$convert$R$panda$core$UInt16(p_value);
-    (($fn34) self->$class->vtable[8])(self, $tmp33);
+    panda$core$UInt16 $tmp34 = panda$core$Int16$convert$R$panda$core$UInt16(p_value);
+    (($fn35) self->$class->vtable[8])(self, $tmp34);
 }
 void panda$io$OutputStream$write$panda$core$UInt32(panda$io$OutputStream* self, panda$core$UInt32 p_value) {
-    panda$core$UInt32 $tmp35 = panda$core$UInt32$$SHR$panda$core$UInt32$R$panda$core$UInt32(p_value, ((panda$core$UInt32) { 16 }));
-    panda$core$UInt16 $tmp36 = panda$core$UInt32$convert$R$panda$core$UInt16($tmp35);
-    (($fn37) self->$class->vtable[8])(self, $tmp36);
-    panda$core$UInt16 $tmp38 = panda$core$UInt32$convert$R$panda$core$UInt16(p_value);
-    (($fn39) self->$class->vtable[8])(self, $tmp38);
+    panda$core$UInt32 $tmp36 = panda$core$UInt32$$SHR$panda$core$UInt32$R$panda$core$UInt32(p_value, ((panda$core$UInt32) { 16 }));
+    panda$core$UInt16 $tmp37 = panda$core$UInt32$convert$R$panda$core$UInt16($tmp36);
+    (($fn38) self->$class->vtable[8])(self, $tmp37);
+    panda$core$UInt16 $tmp39 = panda$core$UInt32$convert$R$panda$core$UInt16(p_value);
+    (($fn40) self->$class->vtable[8])(self, $tmp39);
 }
 void panda$io$OutputStream$write$panda$core$Int32(panda$io$OutputStream* self, panda$core$Int32 p_value) {
-    panda$core$UInt32 $tmp40 = panda$core$Int32$convert$R$panda$core$UInt32(p_value);
-    (($fn41) self->$class->vtable[10])(self, $tmp40);
+    panda$core$UInt32 $tmp41 = panda$core$Int32$convert$R$panda$core$UInt32(p_value);
+    (($fn42) self->$class->vtable[10])(self, $tmp41);
 }
 void panda$io$OutputStream$write$panda$core$UInt64(panda$io$OutputStream* self, panda$core$UInt64 p_value) {
-    panda$core$UInt64 $tmp42 = panda$core$UInt64$$SHR$panda$core$UInt64$R$panda$core$UInt64(p_value, ((panda$core$UInt64) { 32 }));
-    panda$core$UInt32 $tmp43 = panda$core$UInt64$convert$R$panda$core$UInt32($tmp42);
-    (($fn44) self->$class->vtable[10])(self, $tmp43);
-    panda$core$UInt32 $tmp45 = panda$core$UInt64$convert$R$panda$core$UInt32(p_value);
-    (($fn46) self->$class->vtable[10])(self, $tmp45);
+    panda$core$UInt64 $tmp43 = panda$core$UInt64$$SHR$panda$core$UInt64$R$panda$core$UInt64(p_value, ((panda$core$UInt64) { 32 }));
+    panda$core$UInt32 $tmp44 = panda$core$UInt64$convert$R$panda$core$UInt32($tmp43);
+    (($fn45) self->$class->vtable[10])(self, $tmp44);
+    panda$core$UInt32 $tmp46 = panda$core$UInt64$convert$R$panda$core$UInt32(p_value);
+    (($fn47) self->$class->vtable[10])(self, $tmp46);
 }
 void panda$io$OutputStream$write$panda$core$Int64(panda$io$OutputStream* self, panda$core$Int64 p_value) {
-    panda$core$UInt64 $tmp47 = panda$core$Int64$convert$R$panda$core$UInt64(p_value);
-    (($fn48) self->$class->vtable[12])(self, $tmp47);
+    panda$core$UInt64 $tmp48 = panda$core$Int64$convert$R$panda$core$UInt64(p_value);
+    (($fn49) self->$class->vtable[12])(self, $tmp48);
 }
 void panda$io$OutputStream$write$panda$core$Char8(panda$io$OutputStream* self, panda$core$Char8 p_c) {
-    (($fn49) self->$class->vtable[2])(self, ((panda$core$UInt8) { p_c.value }));
+    (($fn50) self->$class->vtable[2])(self, ((panda$core$UInt8) { p_c.value }));
 }
 void panda$io$OutputStream$print$panda$core$Object(panda$io$OutputStream* self, panda$core$Object* p_o) {
-    panda$core$String* $tmp51 = (($fn50) p_o->$class->vtable[0])(p_o);
-    (($fn52) self->$class->vtable[16])(self, $tmp51);
+    panda$core$String* $tmp52 = (($fn51) p_o->$class->vtable[0])(p_o);
+    (($fn53) self->$class->vtable[16])(self, $tmp52);
 }
 void panda$io$OutputStream$print$panda$core$String(panda$io$OutputStream* self, panda$core$String* p_s) {
     panda$io$OutputStream$write$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64$panda$core$Int64(self, p_s->data, ((panda$core$Int64) { 0 }), p_s->_length);
 }
 void panda$io$OutputStream$printLine(panda$io$OutputStream* self) {
-    panda$core$Char8 $tmp53;
-    panda$core$Char8$init$panda$core$UInt8(&$tmp53, ((panda$core$UInt8) { 10 }));
-    (($fn54) self->$class->vtable[14])(self, $tmp53);
+    panda$core$Char8 $tmp54;
+    panda$core$Char8$init$panda$core$UInt8(&$tmp54, ((panda$core$UInt8) { 10 }));
+    (($fn55) self->$class->vtable[14])(self, $tmp54);
 }
 void panda$io$OutputStream$printLine$panda$core$Object(panda$io$OutputStream* self, panda$core$Object* p_o) {
-    panda$core$String* $tmp56 = (($fn55) p_o->$class->vtable[0])(p_o);
-    (($fn57) self->$class->vtable[19])(self, $tmp56);
+    panda$core$String* $tmp57 = (($fn56) p_o->$class->vtable[0])(p_o);
+    (($fn58) self->$class->vtable[19])(self, $tmp57);
 }
 void panda$io$OutputStream$printLine$panda$core$String(panda$io$OutputStream* self, panda$core$String* p_s) {
-    (($fn58) self->$class->vtable[16])(self, p_s);
-    (($fn59) self->$class->vtable[17])(self);
+    (($fn59) self->$class->vtable[16])(self, p_s);
+    (($fn60) self->$class->vtable[17])(self);
 }
 void panda$io$OutputStream$init(panda$io$OutputStream* self) {
 }

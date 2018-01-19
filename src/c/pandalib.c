@@ -10,6 +10,7 @@
 typedef uint8_t Bit;
 
 struct Class;
+struct String;
 
 typedef struct ITable {
     struct Class* cl;
@@ -20,6 +21,7 @@ typedef struct ITable {
 typedef struct Class {
     struct Class* cl;
     int32_t refcnt;
+    struct String* name;
     struct Class* super;
     ITable* itable;
     void* vtable[0];

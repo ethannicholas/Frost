@@ -16,7 +16,7 @@ typedef struct panda$core$String$UTF8Iterator {
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"
 #undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[4]; } panda$core$String$UTF8Iterator$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[4]; } panda$core$String$UTF8Iterator$class_type;
 extern panda$core$String$UTF8Iterator$class_type panda$core$String$UTF8Iterator$class;
 
 #ifndef PANDA_TYPESONLY

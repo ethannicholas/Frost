@@ -90,8 +90,8 @@ class LLVMCodeGenerator : CodeGenerator {
     constant POINTER_SIZE        := 8
     constant OBJECT_FIELD_COUNT  := 2
     constant CLASS_POINTER_INDEX := 0
-    constant ITABLE_INDEX        := 3
-    constant VTABLE_INDEX        := 4
+    constant ITABLE_INDEX        := 4
+    constant VTABLE_INDEX        := 5
 
     constant INT_TYPE  := "i64"
     constant SIZE_TYPE := "i64"
@@ -374,7 +374,7 @@ class LLVMCodeGenerator : CodeGenerator {
             separator := ", "
         }
         if t = Type.Class() {
-            code.append(", %panda$core$Class*, %$itable*, [0 x i8*]")
+            code.append(", %panda$core$String*, %panda$core$Class*, %$itable*, [0 x i8*]")
         }
         code.append(" }")
         types.printLine(code.finish())
@@ -783,8 +783,8 @@ class LLVMCodeGenerator : CodeGenerator {
             }
             def vtable := compiler.getVTable(cl)
             result := ClassConstant("@\{escapeName(cl.type().name)}$class",
-                    "{ %panda$core$Class*, \{INT_TYPE}, %panda$core$Class*, %$itable*, " +
-                    "[\{vtable.get_count()} x i8*] }")
+                    "{ %panda$core$Class*, \{INT_TYPE}, %panda$core$String*, %panda$core$Class*, " +
+                    "%$itable*, [\{vtable.get_count()} x i8*] }")
             classConstants[cl.name] := result
             def superPtr:String
             if cl.rawSuper != null {
@@ -801,9 +801,9 @@ class LLVMCodeGenerator : CodeGenerator {
             }
             code.append("constant \{result.type} { " +
                     "%panda$core$Class* bitcast(\{clConstant.type}* \{clConstant.name} to " +
-                    "%panda$core$Class*), \{INT_TYPE} \{NO_REFCNT}, " +
-                    "%panda$core$Class* \{superPtr}, \{getITable(cl)}, " +
-                    "[\{vtable.get_count()} x i8*] [")
+                    "%panda$core$Class*), \{INT_TYPE} \{NO_REFCNT}, %panda$core$String* " +
+                    getStringReference(cl.name) + ", %panda$core$Class* \{superPtr}, " +
+                    "\{getITable(cl)}, [\{vtable.get_count()} x i8*] [")
             var separator := ""
             for m in vtable {
                 code.append(separator)
@@ -837,8 +837,8 @@ class LLVMCodeGenerator : CodeGenerator {
                 def value := compiler.getClass(Type.Value())
                 def valueVTable := compiler.getVTable(value)
                 result := ClassConstant("@\{escapeName(cl.name)}$wrapperclass",
-                        "{ %panda$core$Class*, \{INT_TYPE}, %panda$core$Class*, %$itable*, " +
-                        "[\{valueVTable.get_count()} x i8*] }")
+                        "{ %panda$core$Class*, \{INT_TYPE}, %panda$core$String*, " +
+                        "%panda$core$Class*, %$itable*, [\{valueVTable.get_count()} x i8*] }")
                 def vtable := compiler.getVTable(cl)
                 def superCC := getClassConstant(compiler.getClass(cl.rawSuper))
                 def superCast:String
@@ -856,7 +856,8 @@ class LLVMCodeGenerator : CodeGenerator {
                 }
                 code.append("constant \{result.type} { " +
                         "%panda$core$Class* bitcast(\{clConstant.type}* \{clConstant.name} to " +
-                        "%panda$core$Class*), \{INT_TYPE} 1, \{type(Type.Class())} \{superCast}, " +
+                        "%panda$core$Class*), \{INT_TYPE} \{NO_REFCNT}, %panda$core$String* " +
+                        "\{getStringReference(cl.name)}, \{type(Type.Class())} \{superCast}, " +
                         "\{itable}, [\{valueVTable.get_count()} x i8*] [")
                 var separator := ""
                 for i in 0 .. valueVTable.get_count() {
@@ -1889,7 +1890,7 @@ class LLVMCodeGenerator : CodeGenerator {
         return result
     }
 
-    method getStringReference(s:String, out:OutputStream):String {
+    method getStringReference(s:String):String {
         labelCount += 1
         def chars := "@$chars\{labelCount}"
         def charsType := "[\{s.utf8().get_count()} x i8]"
@@ -2102,7 +2103,7 @@ class LLVMCodeGenerator : CodeGenerator {
             when IRNode.SELF:
                 return getSelfReference(out)
             when IRNode.STRING(_, str):
-                return getStringReference(str, out)
+                return getStringReference(str)
             when IRNode.SUPER(_, t):
                 return getSuperReference(t, out)
             when IRNode.TERNARY(_, test, ifTrue, ifFalse):
@@ -3073,7 +3074,7 @@ class LLVMCodeGenerator : CodeGenerator {
         else {
             name := path[path.next(index)...]
         }
-        def nameRef := getStringReference(name, out)
+        def nameRef := getStringReference(name)
         def line := "%panda$core$Int64 { i64 \{position.line} }"
         def msgRef:String?
         if msg != null {

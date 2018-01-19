@@ -1,6 +1,6 @@
 class Room {
     var label:Int
-    var exits := Array<Room>()
+    var exits := Array<Int>()
     var bats:Bit
     var pit:Bit
     var wumpus:Bit
@@ -11,7 +11,7 @@ class Room {
     
     function hasExitTo(r:Room):Bit {
         for i in 0 .. exits.count {
-            if exits[i].label = r.label {
+            if exits[i] = r.label {
                 return true
             }
         }
@@ -56,7 +56,8 @@ class HuntTheWumpus {
     }
     
     method canConnect(fromRoom:Room, toRoom:Room):Bit {
-        return fromRoom.label != toRoom.label & toRoom.exits.count < EXITS & !fromRoom.hasExitTo(toRoom)
+        return fromRoom.label != toRoom.label & toRoom.exits.count < EXITS &
+                !fromRoom.hasExitTo(toRoom)
     }
     
     method getShuffledArray(count:Int):Array<Int> {
@@ -81,8 +82,8 @@ class HuntTheWumpus {
         for i in 0 .. count - 1 {
             def room1 := rooms[firstPath[i]]
             def room2 := rooms[firstPath[i + 1]]
-            room1.exits.add(room2)
-            room2.exits.add(room1)
+            room1.exits.add(room2.label)
+            room2.exits.add(room1.label)
         }
         
         -- fill in the remaining exits randomly
@@ -94,8 +95,8 @@ class HuntTheWumpus {
                 for i in 0 .. searchOrder.count {
                     def toRoom := rooms[searchOrder[i]]
                     if canConnect(fromRoom, toRoom) {
-                        fromRoom.exits.add(toRoom)
-                        toRoom.exits.add(fromRoom)
+                        fromRoom.exits.add(toRoom.label)
+                        toRoom.exits.add(fromRoom.label)
                         found := true
                         break
                     }
@@ -156,12 +157,12 @@ class HuntTheWumpus {
         var pit := false
         var wumpus := false
         for i in 0 .. currentRoom.exits.count {
-            def room := currentRoom.exits[i]
+            def room := getRoom(currentRoom.exits[i])
             bats |= room.bats
             pit |= room.pit
             wumpus |= room.wumpus
             for i in 0 .. room.exits.count {
-                wumpus |= room.exits[i].wumpus
+                wumpus |= getRoom(room.exits[i]).wumpus
             }
         }
         if bats {
@@ -176,8 +177,8 @@ class HuntTheWumpus {
     }
     
     method printRoomInfo() {
-        Console.printLine("You are in room \{currentRoom.label} of the cave, " +
-                "and have \{arrows} arrows left.")
+        Console.printLine("You are in room \{currentRoom.label} of the cave, and have \{arrows} " +
+                "arrows left.")
         writePercepts()
         Console.print("There are tunnels to rooms ")
         for i in 0 .. currentRoom.exits.count {
@@ -233,10 +234,10 @@ class HuntTheWumpus {
         }
     }
     
-    method shoot(rooms:Array<Int>) {
+    method shoot(targets:Array<Int>) {
         var arrowRoom := currentRoom
-        for i in 0 .. rooms.count {
-            def targetLabel := rooms[i]
+        for i in 0 .. targets.count {
+            def targetLabel := targets[i]
             def target := getRoom(targetLabel)
             if arrowRoom.label = target.label {
                 Console.printLine("The arrow falls to the floor.")
@@ -244,7 +245,7 @@ class HuntTheWumpus {
             }
             var ricochet := false
             if !arrowRoom.hasExitTo(target) {
-                def newTarget := arrowRoom.exits[random.int(arrowRoom.exits.count)]
+                def newTarget := getRoom(arrowRoom.exits[random.int(arrowRoom.exits.count)])
                 Console.printLine("*thunk*  The arrow can't find a way from \{arrowRoom} to " +
                         "\{target} and flies randomly ")
                 Console.printLine("into room \{newTarget}!")
@@ -309,7 +310,7 @@ class HuntTheWumpus {
             def room := rooms[i]
             if room.wumpus {
                 room.wumpus := false
-                def target := room.exits[random.int(room.exits.count)]
+                def target := getRoom(room.exits[random.int(room.exits.count)])
                 target.wumpus := true
                 if target.label = currentRoom.label {
                     Console.printLine("You hear a horrible slithering sound, and look up just in time")

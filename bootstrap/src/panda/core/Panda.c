@@ -18,264 +18,266 @@
 #include "panda/core/Range.LTpanda/core/Int64.GT.h"
 
 
-panda$core$Panda$class_type panda$core$Panda$class = { (panda$core$Class*) &panda$core$Class$class, 1, (panda$core$Class*) &panda$core$Object$class, NULL, { panda$core$Object$convert$R$panda$core$String, panda$core$Panda$cleanup} };
+static panda$core$String $s1;
+panda$core$Panda$class_type panda$core$Panda$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, NULL, { panda$core$Object$convert$R$panda$core$String, panda$core$Panda$cleanup} };
 
-typedef void (*$fn10)(panda$io$OutputStream*, panda$core$String*);
-typedef void (*$fn23)(panda$io$OutputStream*, panda$core$String*);
-typedef panda$core$Object* (*$fn178)(panda$collections$ListView*, panda$core$Int64);
+typedef void (*$fn11)(panda$io$OutputStream*, panda$core$String*);
+typedef void (*$fn24)(panda$io$OutputStream*, panda$core$String*);
+typedef panda$core$Object* (*$fn179)(panda$collections$ListView*, panda$core$Int64);
 
-static panda$core$String $s2 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x61\x73\x73\x65\x72\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x28", 19, -2375112016343986227, NULL };
-static panda$core$String $s4 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x3a", 1, 159, NULL };
-static panda$core$String $s8 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x29", 1, 142, NULL };
-static panda$core$String $s12 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x61\x73\x73\x65\x72\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x28", 19, -2375112016343986227, NULL };
-static panda$core$String $s14 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x3a", 1, 159, NULL };
-static panda$core$String $s18 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x29\x3a\x20", 3, 1454432, NULL };
-static panda$core$String $s21 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
-static panda$core$String $s59 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
-static panda$core$String $s126 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x61\x62\x63\x64\x65\x66", 16, 6478845731788479527, NULL };
-static panda$core$String $s157 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x41\x42\x43\x44\x45\x46", 16, 6478845392102031335, NULL };
+static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x50\x61\x6e\x64\x61", 16, -4218233432272217990, NULL };
+static panda$core$String $s3 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x61\x73\x73\x65\x72\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x28", 19, -2375112016343986227, NULL };
+static panda$core$String $s5 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x3a", 1, 159, NULL };
+static panda$core$String $s9 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x29", 1, 142, NULL };
+static panda$core$String $s13 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x61\x73\x73\x65\x72\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x28", 19, -2375112016343986227, NULL };
+static panda$core$String $s15 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x3a", 1, 159, NULL };
+static panda$core$String $s19 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x29\x3a\x20", 3, 1454432, NULL };
+static panda$core$String $s22 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
+static panda$core$String $s60 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
+static panda$core$String $s127 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x61\x62\x63\x64\x65\x66", 16, 6478845731788479527, NULL };
+static panda$core$String $s158 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x41\x42\x43\x44\x45\x46", 16, 6478845392102031335, NULL };
 
 void panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(panda$core$String* p_file, panda$core$Int64 p_line) {
-    panda$io$OutputStream* $tmp1 = panda$io$Console$errorStream$R$panda$io$OutputStream();
-    panda$core$String* $tmp3 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s2, p_file);
-    panda$core$String* $tmp5 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3, &$s4);
-    panda$core$Int64$wrapper* $tmp6;
-    $tmp6 = (panda$core$Int64$wrapper*) pandaZAlloc(24);
-    $tmp6->cl = (panda$core$Class*) &panda$core$Int64$wrapperclass;
-    $tmp6->refCount = 1;
-    $tmp6->value = p_line;
-    panda$core$String* $tmp7 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp5, ((panda$core$Object*) $tmp6));
-    panda$core$String* $tmp9 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp7, &$s8);
-    (($fn10) $tmp1->$class->vtable[19])($tmp1, $tmp9);
+    panda$io$OutputStream* $tmp2 = panda$io$Console$errorStream$R$panda$io$OutputStream();
+    panda$core$String* $tmp4 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s3, p_file);
+    panda$core$String* $tmp6 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4, &$s5);
+    panda$core$Int64$wrapper* $tmp7;
+    $tmp7 = (panda$core$Int64$wrapper*) pandaZAlloc(24);
+    $tmp7->cl = (panda$core$Class*) &panda$core$Int64$wrapperclass;
+    $tmp7->refCount = 1;
+    $tmp7->value = p_line;
+    panda$core$String* $tmp8 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp6, ((panda$core$Object*) $tmp7));
+    panda$core$String* $tmp10 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp8, &$s9);
+    (($fn11) $tmp2->$class->vtable[19])($tmp2, $tmp10);
     panda$core$System$crash();
 }
 void panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(panda$core$String* p_file, panda$core$Int64 p_line, panda$core$String* p_msg) {
-    panda$io$OutputStream* $tmp11 = panda$io$Console$errorStream$R$panda$io$OutputStream();
-    panda$core$String* $tmp13 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s12, p_file);
-    panda$core$String* $tmp15 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp13, &$s14);
-    panda$core$Int64$wrapper* $tmp16;
-    $tmp16 = (panda$core$Int64$wrapper*) pandaZAlloc(24);
-    $tmp16->cl = (panda$core$Class*) &panda$core$Int64$wrapperclass;
-    $tmp16->refCount = 1;
-    $tmp16->value = p_line;
-    panda$core$String* $tmp17 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp15, ((panda$core$Object*) $tmp16));
-    panda$core$String* $tmp19 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp17, &$s18);
-    panda$core$String* $tmp20 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp19, p_msg);
-    panda$core$String* $tmp22 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp20, &$s21);
-    (($fn23) $tmp11->$class->vtable[19])($tmp11, $tmp22);
+    panda$io$OutputStream* $tmp12 = panda$io$Console$errorStream$R$panda$io$OutputStream();
+    panda$core$String* $tmp14 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s13, p_file);
+    panda$core$String* $tmp16 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp14, &$s15);
+    panda$core$Int64$wrapper* $tmp17;
+    $tmp17 = (panda$core$Int64$wrapper*) pandaZAlloc(24);
+    $tmp17->cl = (panda$core$Class*) &panda$core$Int64$wrapperclass;
+    $tmp17->refCount = 1;
+    $tmp17->value = p_line;
+    panda$core$String* $tmp18 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp16, ((panda$core$Object*) $tmp17));
+    panda$core$String* $tmp20 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp18, &$s19);
+    panda$core$String* $tmp21 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp20, p_msg);
+    panda$core$String* $tmp23 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp21, &$s22);
+    (($fn24) $tmp12->$class->vtable[19])($tmp12, $tmp23);
     panda$core$System$crash();
 }
 panda$core$UInt64$nullable panda$core$Panda$digit$panda$core$Char32$R$panda$core$UInt64$Q(panda$core$Char32 p_c) {
-    panda$core$Char32 $tmp25;
-    panda$core$Char32 $tmp28;
-    panda$core$Char8 $tmp32;
-    panda$core$Char32 $tmp36;
-    panda$core$Char32 $tmp39;
-    panda$core$Char8 $tmp43;
-    panda$core$Char32 $tmp48;
-    panda$core$Char32 $tmp51;
-    panda$core$Char8 $tmp55;
-    panda$core$Char32$init$panda$core$Int32(&$tmp25, ((panda$core$Int32) { 48 }));
-    panda$core$Bit $tmp26 = panda$core$Char32$$GE$panda$core$Char32$R$panda$core$Bit(p_c, $tmp25);
-    bool $tmp24 = $tmp26.value;
-    if (!$tmp24) goto $l27;
-    panda$core$Char32$init$panda$core$Int32(&$tmp28, ((panda$core$Int32) { 57 }));
-    panda$core$Bit $tmp29 = panda$core$Char32$$LE$panda$core$Char32$R$panda$core$Bit(p_c, $tmp28);
-    $tmp24 = $tmp29.value;
-    $l27:;
-    panda$core$Bit $tmp30 = { $tmp24 };
-    if ($tmp30.value) {
+    panda$core$Char32 $tmp26;
+    panda$core$Char32 $tmp29;
+    panda$core$Char8 $tmp33;
+    panda$core$Char32 $tmp37;
+    panda$core$Char32 $tmp40;
+    panda$core$Char8 $tmp44;
+    panda$core$Char32 $tmp49;
+    panda$core$Char32 $tmp52;
+    panda$core$Char8 $tmp56;
+    panda$core$Char32$init$panda$core$Int32(&$tmp26, ((panda$core$Int32) { 48 }));
+    panda$core$Bit $tmp27 = panda$core$Char32$$GE$panda$core$Char32$R$panda$core$Bit(p_c, $tmp26);
+    bool $tmp25 = $tmp27.value;
+    if (!$tmp25) goto $l28;
+    panda$core$Char32$init$panda$core$Int32(&$tmp29, ((panda$core$Int32) { 57 }));
+    panda$core$Bit $tmp30 = panda$core$Char32$$LE$panda$core$Char32$R$panda$core$Bit(p_c, $tmp29);
+    $tmp25 = $tmp30.value;
+    $l28:;
+    panda$core$Bit $tmp31 = { $tmp25 };
+    if ($tmp31.value) {
     {
-        panda$core$UInt64 $tmp31 = panda$core$Char32$convert$R$panda$core$UInt64(p_c);
-        panda$core$Char8$init$panda$core$UInt8(&$tmp32, ((panda$core$UInt8) { 48 }));
-        panda$core$UInt64 $tmp33 = panda$core$Char8$convert$R$panda$core$UInt64($tmp32);
-        panda$core$UInt64 $tmp34 = panda$core$UInt64$$SUB$panda$core$UInt64$R$panda$core$UInt64($tmp31, $tmp33);
-        return ((panda$core$UInt64$nullable) { $tmp34, true });
+        panda$core$UInt64 $tmp32 = panda$core$Char32$convert$R$panda$core$UInt64(p_c);
+        panda$core$Char8$init$panda$core$UInt8(&$tmp33, ((panda$core$UInt8) { 48 }));
+        panda$core$UInt64 $tmp34 = panda$core$Char8$convert$R$panda$core$UInt64($tmp33);
+        panda$core$UInt64 $tmp35 = panda$core$UInt64$$SUB$panda$core$UInt64$R$panda$core$UInt64($tmp32, $tmp34);
+        return ((panda$core$UInt64$nullable) { $tmp35, true });
     }
     }
-    panda$core$Char32$init$panda$core$Int32(&$tmp36, ((panda$core$Int32) { 65 }));
-    panda$core$Bit $tmp37 = panda$core$Char32$$GE$panda$core$Char32$R$panda$core$Bit(p_c, $tmp36);
-    bool $tmp35 = $tmp37.value;
-    if (!$tmp35) goto $l38;
-    panda$core$Char32$init$panda$core$Int32(&$tmp39, ((panda$core$Int32) { 90 }));
-    panda$core$Bit $tmp40 = panda$core$Char32$$LE$panda$core$Char32$R$panda$core$Bit(p_c, $tmp39);
-    $tmp35 = $tmp40.value;
-    $l38:;
-    panda$core$Bit $tmp41 = { $tmp35 };
-    if ($tmp41.value) {
+    panda$core$Char32$init$panda$core$Int32(&$tmp37, ((panda$core$Int32) { 65 }));
+    panda$core$Bit $tmp38 = panda$core$Char32$$GE$panda$core$Char32$R$panda$core$Bit(p_c, $tmp37);
+    bool $tmp36 = $tmp38.value;
+    if (!$tmp36) goto $l39;
+    panda$core$Char32$init$panda$core$Int32(&$tmp40, ((panda$core$Int32) { 90 }));
+    panda$core$Bit $tmp41 = panda$core$Char32$$LE$panda$core$Char32$R$panda$core$Bit(p_c, $tmp40);
+    $tmp36 = $tmp41.value;
+    $l39:;
+    panda$core$Bit $tmp42 = { $tmp36 };
+    if ($tmp42.value) {
     {
-        panda$core$UInt64 $tmp42 = panda$core$Char32$convert$R$panda$core$UInt64(p_c);
-        panda$core$Char8$init$panda$core$UInt8(&$tmp43, ((panda$core$UInt8) { 65 }));
-        panda$core$UInt64 $tmp44 = panda$core$Char8$convert$R$panda$core$UInt64($tmp43);
-        panda$core$UInt64 $tmp45 = panda$core$UInt64$$SUB$panda$core$UInt64$R$panda$core$UInt64($tmp42, $tmp44);
-        panda$core$UInt64 $tmp46 = panda$core$UInt64$$ADD$panda$core$UInt64$R$panda$core$UInt64($tmp45, ((panda$core$UInt64) { 10 }));
-        return ((panda$core$UInt64$nullable) { $tmp46, true });
+        panda$core$UInt64 $tmp43 = panda$core$Char32$convert$R$panda$core$UInt64(p_c);
+        panda$core$Char8$init$panda$core$UInt8(&$tmp44, ((panda$core$UInt8) { 65 }));
+        panda$core$UInt64 $tmp45 = panda$core$Char8$convert$R$panda$core$UInt64($tmp44);
+        panda$core$UInt64 $tmp46 = panda$core$UInt64$$SUB$panda$core$UInt64$R$panda$core$UInt64($tmp43, $tmp45);
+        panda$core$UInt64 $tmp47 = panda$core$UInt64$$ADD$panda$core$UInt64$R$panda$core$UInt64($tmp46, ((panda$core$UInt64) { 10 }));
+        return ((panda$core$UInt64$nullable) { $tmp47, true });
     }
     }
-    panda$core$Char32$init$panda$core$Int32(&$tmp48, ((panda$core$Int32) { 97 }));
-    panda$core$Bit $tmp49 = panda$core$Char32$$GE$panda$core$Char32$R$panda$core$Bit(p_c, $tmp48);
-    bool $tmp47 = $tmp49.value;
-    if (!$tmp47) goto $l50;
-    panda$core$Char32$init$panda$core$Int32(&$tmp51, ((panda$core$Int32) { 122 }));
-    panda$core$Bit $tmp52 = panda$core$Char32$$LE$panda$core$Char32$R$panda$core$Bit(p_c, $tmp51);
-    $tmp47 = $tmp52.value;
-    $l50:;
-    panda$core$Bit $tmp53 = { $tmp47 };
-    if ($tmp53.value) {
+    panda$core$Char32$init$panda$core$Int32(&$tmp49, ((panda$core$Int32) { 97 }));
+    panda$core$Bit $tmp50 = panda$core$Char32$$GE$panda$core$Char32$R$panda$core$Bit(p_c, $tmp49);
+    bool $tmp48 = $tmp50.value;
+    if (!$tmp48) goto $l51;
+    panda$core$Char32$init$panda$core$Int32(&$tmp52, ((panda$core$Int32) { 122 }));
+    panda$core$Bit $tmp53 = panda$core$Char32$$LE$panda$core$Char32$R$panda$core$Bit(p_c, $tmp52);
+    $tmp48 = $tmp53.value;
+    $l51:;
+    panda$core$Bit $tmp54 = { $tmp48 };
+    if ($tmp54.value) {
     {
-        panda$core$UInt64 $tmp54 = panda$core$Char32$convert$R$panda$core$UInt64(p_c);
-        panda$core$Char8$init$panda$core$UInt8(&$tmp55, ((panda$core$UInt8) { 97 }));
-        panda$core$UInt64 $tmp56 = panda$core$Char8$convert$R$panda$core$UInt64($tmp55);
-        panda$core$UInt64 $tmp57 = panda$core$UInt64$$SUB$panda$core$UInt64$R$panda$core$UInt64($tmp54, $tmp56);
-        panda$core$UInt64 $tmp58 = panda$core$UInt64$$ADD$panda$core$UInt64$R$panda$core$UInt64($tmp57, ((panda$core$UInt64) { 10 }));
-        return ((panda$core$UInt64$nullable) { $tmp58, true });
+        panda$core$UInt64 $tmp55 = panda$core$Char32$convert$R$panda$core$UInt64(p_c);
+        panda$core$Char8$init$panda$core$UInt8(&$tmp56, ((panda$core$UInt8) { 97 }));
+        panda$core$UInt64 $tmp57 = panda$core$Char8$convert$R$panda$core$UInt64($tmp56);
+        panda$core$UInt64 $tmp58 = panda$core$UInt64$$SUB$panda$core$UInt64$R$panda$core$UInt64($tmp55, $tmp57);
+        panda$core$UInt64 $tmp59 = panda$core$UInt64$$ADD$panda$core$UInt64$R$panda$core$UInt64($tmp58, ((panda$core$UInt64) { 10 }));
+        return ((panda$core$UInt64$nullable) { $tmp59, true });
     }
     }
     return ((panda$core$UInt64$nullable) { .nonnull = false });
 }
 panda$core$UInt64$nullable panda$core$Panda$parse$panda$core$String$panda$core$Int64$R$panda$core$UInt64$Q(panda$core$String* p_str, panda$core$Int64 p_rawRadix) {
-    panda$core$UInt64 result61;
-    panda$core$UInt64 radix62;
-    panda$core$String$Index index64;
-    panda$core$UInt64$nullable value70;
-    panda$core$Bit $tmp60 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit(p_str, &$s59);
-    if ($tmp60.value) {
+    panda$core$UInt64 result62;
+    panda$core$UInt64 radix63;
+    panda$core$String$Index index65;
+    panda$core$UInt64$nullable value71;
+    panda$core$Bit $tmp61 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit(p_str, &$s60);
+    if ($tmp61.value) {
     {
         return ((panda$core$UInt64$nullable) { .nonnull = false });
     }
     }
-    result61 = ((panda$core$UInt64) { 0 });
-    panda$core$UInt64 $tmp63 = panda$core$Int64$convert$R$panda$core$UInt64(p_rawRadix);
-    radix62 = $tmp63;
-    panda$core$String$Index $tmp65 = panda$core$String$start$R$panda$core$String$Index(p_str);
-    index64 = $tmp65;
-    $l66:;
-    panda$core$String$Index $tmp68 = panda$core$String$end$R$panda$core$String$Index(p_str);
-    panda$core$Bit $tmp69 = panda$core$String$Index$$NEQ$panda$core$String$Index$R$panda$core$Bit(index64, $tmp68);
-    if (!$tmp69.value) goto $l67;
+    result62 = ((panda$core$UInt64) { 0 });
+    panda$core$UInt64 $tmp64 = panda$core$Int64$convert$R$panda$core$UInt64(p_rawRadix);
+    radix63 = $tmp64;
+    panda$core$String$Index $tmp66 = panda$core$String$start$R$panda$core$String$Index(p_str);
+    index65 = $tmp66;
+    $l67:;
+    panda$core$String$Index $tmp69 = panda$core$String$end$R$panda$core$String$Index(p_str);
+    panda$core$Bit $tmp70 = panda$core$String$Index$$NEQ$panda$core$String$Index$R$panda$core$Bit(index65, $tmp69);
+    if (!$tmp70.value) goto $l68;
     {
-        panda$core$Char32 $tmp71 = panda$core$String$$IDX$panda$core$String$Index$R$panda$core$Char32(p_str, index64);
-        panda$core$UInt64$nullable $tmp72 = panda$core$Panda$digit$panda$core$Char32$R$panda$core$UInt64$Q($tmp71);
-        value70 = $tmp72;
-        bool $tmp73 = ((panda$core$Bit) { !value70.nonnull }).value;
-        if ($tmp73) goto $l74;
-        panda$core$Bit $tmp75 = panda$core$UInt64$$GE$panda$core$UInt64$R$panda$core$Bit(((panda$core$UInt64) value70.value), radix62);
-        $tmp73 = $tmp75.value;
-        $l74:;
-        panda$core$Bit $tmp76 = { $tmp73 };
-        if ($tmp76.value) {
+        panda$core$Char32 $tmp72 = panda$core$String$$IDX$panda$core$String$Index$R$panda$core$Char32(p_str, index65);
+        panda$core$UInt64$nullable $tmp73 = panda$core$Panda$digit$panda$core$Char32$R$panda$core$UInt64$Q($tmp72);
+        value71 = $tmp73;
+        bool $tmp74 = ((panda$core$Bit) { !value71.nonnull }).value;
+        if ($tmp74) goto $l75;
+        panda$core$Bit $tmp76 = panda$core$UInt64$$GE$panda$core$UInt64$R$panda$core$Bit(((panda$core$UInt64) value71.value), radix63);
+        $tmp74 = $tmp76.value;
+        $l75:;
+        panda$core$Bit $tmp77 = { $tmp74 };
+        if ($tmp77.value) {
         {
             return ((panda$core$UInt64$nullable) { .nonnull = false });
         }
         }
-        panda$core$UInt64 $tmp77 = panda$core$UInt64$$MUL$panda$core$UInt64$R$panda$core$UInt64(result61, radix62);
-        panda$core$UInt64 $tmp78 = panda$core$UInt64$$ADD$panda$core$UInt64$R$panda$core$UInt64($tmp77, ((panda$core$UInt64) value70.value));
-        result61 = $tmp78;
-        panda$core$String$Index $tmp79 = panda$core$String$next$panda$core$String$Index$R$panda$core$String$Index(p_str, index64);
-        index64 = $tmp79;
+        panda$core$UInt64 $tmp78 = panda$core$UInt64$$MUL$panda$core$UInt64$R$panda$core$UInt64(result62, radix63);
+        panda$core$UInt64 $tmp79 = panda$core$UInt64$$ADD$panda$core$UInt64$R$panda$core$UInt64($tmp78, ((panda$core$UInt64) value71.value));
+        result62 = $tmp79;
+        panda$core$String$Index $tmp80 = panda$core$String$next$panda$core$String$Index$R$panda$core$String$Index(p_str, index65);
+        index65 = $tmp80;
     }
-    goto $l66;
-    $l67:;
-    return ((panda$core$UInt64$nullable) { result61, true });
+    goto $l67;
+    $l68:;
+    return ((panda$core$UInt64$nullable) { result62, true });
 }
 panda$core$String* panda$core$Panda$align$panda$core$String$panda$core$String$R$panda$core$String(panda$core$String* p_str, panda$core$String* p_specifier) {
-    panda$core$String$Index index82;
-    panda$core$Char32 $match$94_985;
-    panda$core$Char32 $tmp89;
-    panda$core$Char32 $tmp92;
-    panda$core$Char32 $tmp96;
-    panda$core$Int64 width100;
-    panda$core$Range$LTpanda$core$String$Index$Q$GT $tmp101;
-    panda$core$Char32 fill105;
-    panda$core$Char32 $tmp108;
-    panda$core$Char32 $match$107_9111;
-    panda$core$Char32 $tmp113;
-    panda$core$Char32 $tmp116;
-    panda$core$Char32 $tmp119;
-    panda$core$Int64 $tmp80 = panda$core$String$length$R$panda$core$Int64(p_specifier);
-    panda$core$Bit $tmp81 = panda$core$Int64$$GE$panda$core$Int64$R$panda$core$Bit($tmp80, ((panda$core$Int64) { 2 }));
-    PANDA_ASSERT($tmp81.value);
-    panda$core$String$Index $tmp83 = panda$core$String$start$R$panda$core$String$Index(p_specifier);
-    panda$core$String$Index $tmp84 = panda$core$String$next$panda$core$String$Index$R$panda$core$String$Index(p_specifier, $tmp83);
-    index82 = $tmp84;
+    panda$core$String$Index index83;
+    panda$core$Char32 $match$94_986;
+    panda$core$Char32 $tmp90;
+    panda$core$Char32 $tmp93;
+    panda$core$Char32 $tmp97;
+    panda$core$Int64 width101;
+    panda$core$Range$LTpanda$core$String$Index$Q$GT $tmp102;
+    panda$core$Char32 fill106;
+    panda$core$Char32 $tmp109;
+    panda$core$Char32 $match$107_9112;
+    panda$core$Char32 $tmp114;
+    panda$core$Char32 $tmp117;
+    panda$core$Char32 $tmp120;
+    panda$core$Int64 $tmp81 = panda$core$String$length$R$panda$core$Int64(p_specifier);
+    panda$core$Bit $tmp82 = panda$core$Int64$$GE$panda$core$Int64$R$panda$core$Bit($tmp81, ((panda$core$Int64) { 2 }));
+    PANDA_ASSERT($tmp82.value);
+    panda$core$String$Index $tmp84 = panda$core$String$start$R$panda$core$String$Index(p_specifier);
+    panda$core$String$Index $tmp85 = panda$core$String$next$panda$core$String$Index$R$panda$core$String$Index(p_specifier, $tmp84);
+    index83 = $tmp85;
     {
-        panda$core$Char32 $tmp86 = panda$core$String$$IDX$panda$core$String$Index$R$panda$core$Char32(p_specifier, index82);
-        $match$94_985 = $tmp86;
-        panda$core$Char32$init$panda$core$Int32(&$tmp89, ((panda$core$Int32) { 60 }));
-        panda$core$Bit $tmp90 = panda$core$Char32$$EQ$panda$core$Char32$R$panda$core$Bit($match$94_985, $tmp89);
-        bool $tmp88 = $tmp90.value;
-        if ($tmp88) goto $l91;
-        panda$core$Char32$init$panda$core$Int32(&$tmp92, ((panda$core$Int32) { 94 }));
-        panda$core$Bit $tmp93 = panda$core$Char32$$EQ$panda$core$Char32$R$panda$core$Bit($match$94_985, $tmp92);
-        $tmp88 = $tmp93.value;
-        $l91:;
-        panda$core$Bit $tmp94 = { $tmp88 };
-        bool $tmp87 = $tmp94.value;
-        if ($tmp87) goto $l95;
-        panda$core$Char32$init$panda$core$Int32(&$tmp96, ((panda$core$Int32) { 62 }));
-        panda$core$Bit $tmp97 = panda$core$Char32$$EQ$panda$core$Char32$R$panda$core$Bit($match$94_985, $tmp96);
-        $tmp87 = $tmp97.value;
-        $l95:;
-        panda$core$Bit $tmp98 = { $tmp87 };
-        if ($tmp98.value) {
+        panda$core$Char32 $tmp87 = panda$core$String$$IDX$panda$core$String$Index$R$panda$core$Char32(p_specifier, index83);
+        $match$94_986 = $tmp87;
+        panda$core$Char32$init$panda$core$Int32(&$tmp90, ((panda$core$Int32) { 60 }));
+        panda$core$Bit $tmp91 = panda$core$Char32$$EQ$panda$core$Char32$R$panda$core$Bit($match$94_986, $tmp90);
+        bool $tmp89 = $tmp91.value;
+        if ($tmp89) goto $l92;
+        panda$core$Char32$init$panda$core$Int32(&$tmp93, ((panda$core$Int32) { 94 }));
+        panda$core$Bit $tmp94 = panda$core$Char32$$EQ$panda$core$Char32$R$panda$core$Bit($match$94_986, $tmp93);
+        $tmp89 = $tmp94.value;
+        $l92:;
+        panda$core$Bit $tmp95 = { $tmp89 };
+        bool $tmp88 = $tmp95.value;
+        if ($tmp88) goto $l96;
+        panda$core$Char32$init$panda$core$Int32(&$tmp97, ((panda$core$Int32) { 62 }));
+        panda$core$Bit $tmp98 = panda$core$Char32$$EQ$panda$core$Char32$R$panda$core$Bit($match$94_986, $tmp97);
+        $tmp88 = $tmp98.value;
+        $l96:;
+        panda$core$Bit $tmp99 = { $tmp88 };
+        if ($tmp99.value) {
         {
         }
         }
         else {
         {
-            panda$core$String$Index $tmp99 = panda$core$String$start$R$panda$core$String$Index(p_specifier);
-            index82 = $tmp99;
+            panda$core$String$Index $tmp100 = panda$core$String$start$R$panda$core$String$Index(p_specifier);
+            index83 = $tmp100;
         }
         }
     }
-    panda$core$String$Index $tmp102 = panda$core$String$next$panda$core$String$Index$R$panda$core$String$Index(p_specifier, index82);
-    panda$core$Range$LTpanda$core$String$Index$Q$GT$init$panda$core$String$Index$Q$panda$core$String$Index$Q$panda$core$Bit(&$tmp101, ((panda$core$String$Index$nullable) { $tmp102, true }), ((panda$core$String$Index$nullable) { .nonnull = false }), ((panda$core$Bit) { false }));
-    panda$core$String* $tmp103 = panda$core$String$$IDX$panda$core$Range$LTpanda$core$String$Index$Q$GT$R$panda$core$String(p_specifier, $tmp101);
-    panda$core$Int64$nullable $tmp104 = panda$core$String$convert$R$panda$core$Int64$Q($tmp103);
-    width100 = ((panda$core$Int64) $tmp104.value);
-    memset(&fill105, 0, sizeof(fill105));
-    panda$core$String$Index $tmp106 = panda$core$String$start$R$panda$core$String$Index(p_specifier);
-    panda$core$Bit $tmp107 = panda$core$String$Index$$EQ$panda$core$String$Index$R$panda$core$Bit(index82, $tmp106);
-    if ($tmp107.value) {
+    panda$core$String$Index $tmp103 = panda$core$String$next$panda$core$String$Index$R$panda$core$String$Index(p_specifier, index83);
+    panda$core$Range$LTpanda$core$String$Index$Q$GT$init$panda$core$String$Index$Q$panda$core$String$Index$Q$panda$core$Bit(&$tmp102, ((panda$core$String$Index$nullable) { $tmp103, true }), ((panda$core$String$Index$nullable) { .nonnull = false }), ((panda$core$Bit) { false }));
+    panda$core$String* $tmp104 = panda$core$String$$IDX$panda$core$Range$LTpanda$core$String$Index$Q$GT$R$panda$core$String(p_specifier, $tmp102);
+    panda$core$Int64$nullable $tmp105 = panda$core$String$convert$R$panda$core$Int64$Q($tmp104);
+    width101 = ((panda$core$Int64) $tmp105.value);
+    memset(&fill106, 0, sizeof(fill106));
+    panda$core$String$Index $tmp107 = panda$core$String$start$R$panda$core$String$Index(p_specifier);
+    panda$core$Bit $tmp108 = panda$core$String$Index$$EQ$panda$core$String$Index$R$panda$core$Bit(index83, $tmp107);
+    if ($tmp108.value) {
     {
-        panda$core$Char32$init$panda$core$Int32(&$tmp108, ((panda$core$Int32) { 32 }));
-        fill105 = $tmp108;
+        panda$core$Char32$init$panda$core$Int32(&$tmp109, ((panda$core$Int32) { 32 }));
+        fill106 = $tmp109;
     }
     }
     else {
     {
-        panda$core$String$Index $tmp109 = panda$core$String$start$R$panda$core$String$Index(p_specifier);
-        panda$core$Char32 $tmp110 = panda$core$String$$IDX$panda$core$String$Index$R$panda$core$Char32(p_specifier, $tmp109);
-        fill105 = $tmp110;
+        panda$core$String$Index $tmp110 = panda$core$String$start$R$panda$core$String$Index(p_specifier);
+        panda$core$Char32 $tmp111 = panda$core$String$$IDX$panda$core$String$Index$R$panda$core$Char32(p_specifier, $tmp110);
+        fill106 = $tmp111;
     }
     }
     {
-        panda$core$Char32 $tmp112 = panda$core$String$$IDX$panda$core$String$Index$R$panda$core$Char32(p_specifier, index82);
-        $match$107_9111 = $tmp112;
-        panda$core$Char32$init$panda$core$Int32(&$tmp113, ((panda$core$Int32) { 60 }));
-        panda$core$Bit $tmp114 = panda$core$Char32$$EQ$panda$core$Char32$R$panda$core$Bit($match$107_9111, $tmp113);
-        if ($tmp114.value) {
+        panda$core$Char32 $tmp113 = panda$core$String$$IDX$panda$core$String$Index$R$panda$core$Char32(p_specifier, index83);
+        $match$107_9112 = $tmp113;
+        panda$core$Char32$init$panda$core$Int32(&$tmp114, ((panda$core$Int32) { 60 }));
+        panda$core$Bit $tmp115 = panda$core$Char32$$EQ$panda$core$Char32$R$panda$core$Bit($match$107_9112, $tmp114);
+        if ($tmp115.value) {
         {
-            panda$core$String* $tmp115 = panda$core$String$leftAlign$panda$core$Int64$panda$core$Char32$R$panda$core$String(p_str, width100, fill105);
-            return $tmp115;
+            panda$core$String* $tmp116 = panda$core$String$leftAlign$panda$core$Int64$panda$core$Char32$R$panda$core$String(p_str, width101, fill106);
+            return $tmp116;
         }
         }
         else {
-        panda$core$Char32$init$panda$core$Int32(&$tmp116, ((panda$core$Int32) { 94 }));
-        panda$core$Bit $tmp117 = panda$core$Char32$$EQ$panda$core$Char32$R$panda$core$Bit($match$107_9111, $tmp116);
-        if ($tmp117.value) {
+        panda$core$Char32$init$panda$core$Int32(&$tmp117, ((panda$core$Int32) { 94 }));
+        panda$core$Bit $tmp118 = panda$core$Char32$$EQ$panda$core$Char32$R$panda$core$Bit($match$107_9112, $tmp117);
+        if ($tmp118.value) {
         {
-            panda$core$String* $tmp118 = panda$core$String$centerAlign$panda$core$Int64$panda$core$Char32$R$panda$core$String(p_str, width100, fill105);
-            return $tmp118;
+            panda$core$String* $tmp119 = panda$core$String$centerAlign$panda$core$Int64$panda$core$Char32$R$panda$core$String(p_str, width101, fill106);
+            return $tmp119;
         }
         }
         else {
-        panda$core$Char32$init$panda$core$Int32(&$tmp119, ((panda$core$Int32) { 62 }));
-        panda$core$Bit $tmp120 = panda$core$Char32$$EQ$panda$core$Char32$R$panda$core$Bit($match$107_9111, $tmp119);
-        if ($tmp120.value) {
+        panda$core$Char32$init$panda$core$Int32(&$tmp120, ((panda$core$Int32) { 62 }));
+        panda$core$Bit $tmp121 = panda$core$Char32$$EQ$panda$core$Char32$R$panda$core$Bit($match$107_9112, $tmp120);
+        if ($tmp121.value) {
         {
-            panda$core$String* $tmp121 = panda$core$String$rightAlign$panda$core$Int64$panda$core$Char32$R$panda$core$String(p_str, width100, fill105);
-            return $tmp121;
+            panda$core$String* $tmp122 = panda$core$String$rightAlign$panda$core$Int64$panda$core$Char32$R$panda$core$String(p_str, width101, fill106);
+            return $tmp122;
         }
         }
         else {
@@ -288,100 +290,100 @@ panda$core$String* panda$core$Panda$align$panda$core$String$panda$core$String$R$
     }
 }
 panda$core$String* panda$core$Panda$format$panda$core$Bit$panda$core$UInt64$panda$core$UInt64$panda$core$String$R$panda$core$String(panda$core$Bit p_sign, panda$core$UInt64 p_rawValue, panda$core$UInt64 p_mask, panda$core$String* p_fmt) {
-    panda$core$String$Index index122;
-    panda$core$UInt64 base124;
-    panda$collections$ListView* digits125;
-    panda$core$Char32 $match$130_13130;
-    panda$core$Char32 $tmp133;
-    panda$core$Char32 $tmp136;
-    panda$core$Char32 $tmp140;
-    panda$core$Char32 $tmp143;
-    panda$core$Char32 $tmp147;
-    panda$core$Char32 $tmp150;
-    panda$core$Char32 $tmp153;
-    panda$core$Char32 $tmp155;
-    panda$core$UInt64 value159;
-    panda$core$Int64 max168;
-    panda$core$Char8* chars169;
-    panda$core$Int64 charIndex170;
-    panda$core$Char8 $tmp187;
-    panda$core$Int64 size190;
-    panda$core$Range$LTpanda$core$Int64$GT $tmp192;
-    panda$core$String* tmp1213;
-    panda$core$String$Index $tmp123 = panda$core$String$start$R$panda$core$String$Index(p_fmt);
-    index122 = $tmp123;
-    base124 = ((panda$core$UInt64) { 10 });
-    panda$collections$ListView* $tmp127 = panda$core$String$utf8$R$panda$collections$ListView$LTpanda$core$Char8$GT(&$s126);
-    digits125 = $tmp127;
-    panda$core$String$Index $tmp128 = panda$core$String$end$R$panda$core$String$Index(p_fmt);
-    panda$core$Bit $tmp129 = panda$core$String$Index$$LT$panda$core$String$Index$R$panda$core$Bit(index122, $tmp128);
-    if ($tmp129.value) {
+    panda$core$String$Index index123;
+    panda$core$UInt64 base125;
+    panda$collections$ListView* digits126;
+    panda$core$Char32 $match$130_13131;
+    panda$core$Char32 $tmp134;
+    panda$core$Char32 $tmp137;
+    panda$core$Char32 $tmp141;
+    panda$core$Char32 $tmp144;
+    panda$core$Char32 $tmp148;
+    panda$core$Char32 $tmp151;
+    panda$core$Char32 $tmp154;
+    panda$core$Char32 $tmp156;
+    panda$core$UInt64 value160;
+    panda$core$Int64 max169;
+    panda$core$Char8* chars170;
+    panda$core$Int64 charIndex171;
+    panda$core$Char8 $tmp188;
+    panda$core$Int64 size191;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp193;
+    panda$core$String* tmp1214;
+    panda$core$String$Index $tmp124 = panda$core$String$start$R$panda$core$String$Index(p_fmt);
+    index123 = $tmp124;
+    base125 = ((panda$core$UInt64) { 10 });
+    panda$collections$ListView* $tmp128 = panda$core$String$utf8$R$panda$collections$ListView$LTpanda$core$Char8$GT(&$s127);
+    digits126 = $tmp128;
+    panda$core$String$Index $tmp129 = panda$core$String$end$R$panda$core$String$Index(p_fmt);
+    panda$core$Bit $tmp130 = panda$core$String$Index$$LT$panda$core$String$Index$R$panda$core$Bit(index123, $tmp129);
+    if ($tmp130.value) {
     {
         {
-            panda$core$Char32 $tmp131 = panda$core$String$$IDX$panda$core$String$Index$R$panda$core$Char32(p_fmt, index122);
-            $match$130_13130 = $tmp131;
-            panda$core$Char32$init$panda$core$Int32(&$tmp133, ((panda$core$Int32) { 98 }));
-            panda$core$Bit $tmp134 = panda$core$Char32$$EQ$panda$core$Char32$R$panda$core$Bit($match$130_13130, $tmp133);
-            bool $tmp132 = $tmp134.value;
-            if ($tmp132) goto $l135;
-            panda$core$Char32$init$panda$core$Int32(&$tmp136, ((panda$core$Int32) { 66 }));
-            panda$core$Bit $tmp137 = panda$core$Char32$$EQ$panda$core$Char32$R$panda$core$Bit($match$130_13130, $tmp136);
-            $tmp132 = $tmp137.value;
-            $l135:;
-            panda$core$Bit $tmp138 = { $tmp132 };
-            if ($tmp138.value) {
+            panda$core$Char32 $tmp132 = panda$core$String$$IDX$panda$core$String$Index$R$panda$core$Char32(p_fmt, index123);
+            $match$130_13131 = $tmp132;
+            panda$core$Char32$init$panda$core$Int32(&$tmp134, ((panda$core$Int32) { 98 }));
+            panda$core$Bit $tmp135 = panda$core$Char32$$EQ$panda$core$Char32$R$panda$core$Bit($match$130_13131, $tmp134);
+            bool $tmp133 = $tmp135.value;
+            if ($tmp133) goto $l136;
+            panda$core$Char32$init$panda$core$Int32(&$tmp137, ((panda$core$Int32) { 66 }));
+            panda$core$Bit $tmp138 = panda$core$Char32$$EQ$panda$core$Char32$R$panda$core$Bit($match$130_13131, $tmp137);
+            $tmp133 = $tmp138.value;
+            $l136:;
+            panda$core$Bit $tmp139 = { $tmp133 };
+            if ($tmp139.value) {
             {
-                base124 = ((panda$core$UInt64) { 2 });
+                base125 = ((panda$core$UInt64) { 2 });
             }
             }
             else {
-            panda$core$Char32$init$panda$core$Int32(&$tmp140, ((panda$core$Int32) { 111 }));
-            panda$core$Bit $tmp141 = panda$core$Char32$$EQ$panda$core$Char32$R$panda$core$Bit($match$130_13130, $tmp140);
-            bool $tmp139 = $tmp141.value;
-            if ($tmp139) goto $l142;
-            panda$core$Char32$init$panda$core$Int32(&$tmp143, ((panda$core$Int32) { 79 }));
-            panda$core$Bit $tmp144 = panda$core$Char32$$EQ$panda$core$Char32$R$panda$core$Bit($match$130_13130, $tmp143);
-            $tmp139 = $tmp144.value;
-            $l142:;
-            panda$core$Bit $tmp145 = { $tmp139 };
-            if ($tmp145.value) {
+            panda$core$Char32$init$panda$core$Int32(&$tmp141, ((panda$core$Int32) { 111 }));
+            panda$core$Bit $tmp142 = panda$core$Char32$$EQ$panda$core$Char32$R$panda$core$Bit($match$130_13131, $tmp141);
+            bool $tmp140 = $tmp142.value;
+            if ($tmp140) goto $l143;
+            panda$core$Char32$init$panda$core$Int32(&$tmp144, ((panda$core$Int32) { 79 }));
+            panda$core$Bit $tmp145 = panda$core$Char32$$EQ$panda$core$Char32$R$panda$core$Bit($match$130_13131, $tmp144);
+            $tmp140 = $tmp145.value;
+            $l143:;
+            panda$core$Bit $tmp146 = { $tmp140 };
+            if ($tmp146.value) {
             {
-                base124 = ((panda$core$UInt64) { 8 });
+                base125 = ((panda$core$UInt64) { 8 });
             }
             }
             else {
-            panda$core$Char32$init$panda$core$Int32(&$tmp147, ((panda$core$Int32) { 100 }));
-            panda$core$Bit $tmp148 = panda$core$Char32$$EQ$panda$core$Char32$R$panda$core$Bit($match$130_13130, $tmp147);
-            bool $tmp146 = $tmp148.value;
-            if ($tmp146) goto $l149;
-            panda$core$Char32$init$panda$core$Int32(&$tmp150, ((panda$core$Int32) { 68 }));
-            panda$core$Bit $tmp151 = panda$core$Char32$$EQ$panda$core$Char32$R$panda$core$Bit($match$130_13130, $tmp150);
-            $tmp146 = $tmp151.value;
-            $l149:;
-            panda$core$Bit $tmp152 = { $tmp146 };
-            if ($tmp152.value) {
+            panda$core$Char32$init$panda$core$Int32(&$tmp148, ((panda$core$Int32) { 100 }));
+            panda$core$Bit $tmp149 = panda$core$Char32$$EQ$panda$core$Char32$R$panda$core$Bit($match$130_13131, $tmp148);
+            bool $tmp147 = $tmp149.value;
+            if ($tmp147) goto $l150;
+            panda$core$Char32$init$panda$core$Int32(&$tmp151, ((panda$core$Int32) { 68 }));
+            panda$core$Bit $tmp152 = panda$core$Char32$$EQ$panda$core$Char32$R$panda$core$Bit($match$130_13131, $tmp151);
+            $tmp147 = $tmp152.value;
+            $l150:;
+            panda$core$Bit $tmp153 = { $tmp147 };
+            if ($tmp153.value) {
             {
-                base124 = ((panda$core$UInt64) { 10 });
+                base125 = ((panda$core$UInt64) { 10 });
             }
             }
             else {
-            panda$core$Char32$init$panda$core$Int32(&$tmp153, ((panda$core$Int32) { 120 }));
-            panda$core$Bit $tmp154 = panda$core$Char32$$EQ$panda$core$Char32$R$panda$core$Bit($match$130_13130, $tmp153);
-            if ($tmp154.value) {
+            panda$core$Char32$init$panda$core$Int32(&$tmp154, ((panda$core$Int32) { 120 }));
+            panda$core$Bit $tmp155 = panda$core$Char32$$EQ$panda$core$Char32$R$panda$core$Bit($match$130_13131, $tmp154);
+            if ($tmp155.value) {
             {
-                base124 = ((panda$core$UInt64) { 16 });
+                base125 = ((panda$core$UInt64) { 16 });
             }
             }
             else {
-            panda$core$Char32$init$panda$core$Int32(&$tmp155, ((panda$core$Int32) { 88 }));
-            panda$core$Bit $tmp156 = panda$core$Char32$$EQ$panda$core$Char32$R$panda$core$Bit($match$130_13130, $tmp155);
-            if ($tmp156.value) {
+            panda$core$Char32$init$panda$core$Int32(&$tmp156, ((panda$core$Int32) { 88 }));
+            panda$core$Bit $tmp157 = panda$core$Char32$$EQ$panda$core$Char32$R$panda$core$Bit($match$130_13131, $tmp156);
+            if ($tmp157.value) {
             {
-                base124 = ((panda$core$UInt64) { 16 });
+                base125 = ((panda$core$UInt64) { 16 });
                 {
-                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) digits125));
-                    panda$collections$ListView* $tmp158 = panda$core$String$utf8$R$panda$collections$ListView$LTpanda$core$Char8$GT(&$s157);
-                    digits125 = $tmp158;
+                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) digits126));
+                    panda$collections$ListView* $tmp159 = panda$core$String$utf8$R$panda$collections$ListView$LTpanda$core$Char8$GT(&$s158);
+                    digits126 = $tmp159;
                 }
             }
             }
@@ -397,102 +399,102 @@ panda$core$String* panda$core$Panda$format$panda$core$Bit$panda$core$UInt64$pand
         }
     }
     }
-    memset(&value159, 0, sizeof(value159));
-    bool $tmp160 = p_sign.value;
-    if (!$tmp160) goto $l161;
-    panda$core$Bit $tmp162 = panda$core$UInt64$$NEQ$panda$core$UInt64$R$panda$core$Bit(base124, ((panda$core$UInt64) { 10 }));
-    $tmp160 = $tmp162.value;
-    $l161:;
-    panda$core$Bit $tmp163 = { $tmp160 };
-    if ($tmp163.value) {
+    memset(&value160, 0, sizeof(value160));
+    bool $tmp161 = p_sign.value;
+    if (!$tmp161) goto $l162;
+    panda$core$Bit $tmp163 = panda$core$UInt64$$NEQ$panda$core$UInt64$R$panda$core$Bit(base125, ((panda$core$UInt64) { 10 }));
+    $tmp161 = $tmp163.value;
+    $l162:;
+    panda$core$Bit $tmp164 = { $tmp161 };
+    if ($tmp164.value) {
     {
-        panda$core$Int64 $tmp164 = panda$core$UInt64$convert$R$panda$core$Int64(p_rawValue);
-        panda$core$Int64 $tmp165 = panda$core$Int64$$SUB$R$panda$core$Int64($tmp164);
-        panda$core$UInt64 $tmp166 = panda$core$Int64$convert$R$panda$core$UInt64($tmp165);
-        panda$core$UInt64 $tmp167 = panda$core$UInt64$$BAND$panda$core$UInt64$R$panda$core$UInt64($tmp166, p_mask);
-        value159 = $tmp167;
+        panda$core$Int64 $tmp165 = panda$core$UInt64$convert$R$panda$core$Int64(p_rawValue);
+        panda$core$Int64 $tmp166 = panda$core$Int64$$SUB$R$panda$core$Int64($tmp165);
+        panda$core$UInt64 $tmp167 = panda$core$Int64$convert$R$panda$core$UInt64($tmp166);
+        panda$core$UInt64 $tmp168 = panda$core$UInt64$$BAND$panda$core$UInt64$R$panda$core$UInt64($tmp167, p_mask);
+        value160 = $tmp168;
     }
     }
     else {
     {
-        value159 = p_rawValue;
+        value160 = p_rawValue;
     }
     }
-    max168 = ((panda$core$Int64) { 64 });
-    chars169 = ((panda$core$Char8*) pandaZAlloc(max168.value * 1));
-    panda$core$Int64 $tmp171 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(max168, ((panda$core$Int64) { 1 }));
-    charIndex170 = $tmp171;
-    $l172:;
-    {
-        panda$core$UInt64 $tmp174 = panda$core$UInt64$$REM$panda$core$UInt64$R$panda$core$UInt64(value159, base124);
-        panda$core$Int64 $tmp175 = panda$core$UInt64$convert$R$panda$core$Int64($tmp174);
-        ITable* $tmp176 = digits125->$class->itable;
-        while ($tmp176->$class != (panda$core$Class*) &panda$collections$ListView$class) {
-            $tmp176 = $tmp176->next;
-        }
-        $fn178 $tmp177 = $tmp176->methods[0];
-        panda$core$Object* $tmp179 = $tmp177(digits125, $tmp175);
-        chars169[charIndex170.value] = ((panda$core$Char8$wrapper*) $tmp179)->value;
-        panda$core$UInt64 $tmp180 = panda$core$UInt64$$INTDIV$panda$core$UInt64$R$panda$core$UInt64(value159, base124);
-        value159 = $tmp180;
-        panda$core$Int64 $tmp181 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(charIndex170, ((panda$core$Int64) { 1 }));
-        charIndex170 = $tmp181;
-    }
-    panda$core$Bit $tmp182 = panda$core$UInt64$$GT$panda$core$UInt64$R$panda$core$Bit(value159, ((panda$core$UInt64) { 0 }));
-    if ($tmp182.value) goto $l172;
+    max169 = ((panda$core$Int64) { 64 });
+    chars170 = ((panda$core$Char8*) pandaZAlloc(max169.value * 1));
+    panda$core$Int64 $tmp172 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(max169, ((panda$core$Int64) { 1 }));
+    charIndex171 = $tmp172;
     $l173:;
-    bool $tmp183 = p_sign.value;
-    if (!$tmp183) goto $l184;
-    panda$core$Bit $tmp185 = panda$core$UInt64$$EQ$panda$core$UInt64$R$panda$core$Bit(base124, ((panda$core$UInt64) { 10 }));
-    $tmp183 = $tmp185.value;
-    $l184:;
-    panda$core$Bit $tmp186 = { $tmp183 };
-    if ($tmp186.value) {
     {
-        panda$core$Char8$init$panda$core$UInt8(&$tmp187, ((panda$core$UInt8) { 45 }));
-        chars169[charIndex170.value] = $tmp187;
-        panda$core$Int64 $tmp188 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(charIndex170, ((panda$core$Int64) { 1 }));
-        charIndex170 = $tmp188;
+        panda$core$UInt64 $tmp175 = panda$core$UInt64$$REM$panda$core$UInt64$R$panda$core$UInt64(value160, base125);
+        panda$core$Int64 $tmp176 = panda$core$UInt64$convert$R$panda$core$Int64($tmp175);
+        ITable* $tmp177 = digits126->$class->itable;
+        while ($tmp177->$class != (panda$core$Class*) &panda$collections$ListView$class) {
+            $tmp177 = $tmp177->next;
+        }
+        $fn179 $tmp178 = $tmp177->methods[0];
+        panda$core$Object* $tmp180 = $tmp178(digits126, $tmp176);
+        chars170[charIndex171.value] = ((panda$core$Char8$wrapper*) $tmp180)->value;
+        panda$core$UInt64 $tmp181 = panda$core$UInt64$$INTDIV$panda$core$UInt64$R$panda$core$UInt64(value160, base125);
+        value160 = $tmp181;
+        panda$core$Int64 $tmp182 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(charIndex171, ((panda$core$Int64) { 1 }));
+        charIndex171 = $tmp182;
+    }
+    panda$core$Bit $tmp183 = panda$core$UInt64$$GT$panda$core$UInt64$R$panda$core$Bit(value160, ((panda$core$UInt64) { 0 }));
+    if ($tmp183.value) goto $l173;
+    $l174:;
+    bool $tmp184 = p_sign.value;
+    if (!$tmp184) goto $l185;
+    panda$core$Bit $tmp186 = panda$core$UInt64$$EQ$panda$core$UInt64$R$panda$core$Bit(base125, ((panda$core$UInt64) { 10 }));
+    $tmp184 = $tmp186.value;
+    $l185:;
+    panda$core$Bit $tmp187 = { $tmp184 };
+    if ($tmp187.value) {
+    {
+        panda$core$Char8$init$panda$core$UInt8(&$tmp188, ((panda$core$UInt8) { 45 }));
+        chars170[charIndex171.value] = $tmp188;
+        panda$core$Int64 $tmp189 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(charIndex171, ((panda$core$Int64) { 1 }));
+        charIndex171 = $tmp189;
     }
     }
-    panda$core$Int64 $tmp189 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(charIndex170, ((panda$core$Int64) { 1 }));
-    charIndex170 = $tmp189;
-    panda$core$Int64 $tmp191 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(max168, charIndex170);
-    size190 = $tmp191;
-    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp192, ((panda$core$Int64) { 0 }), size190, ((panda$core$Bit) { false }));
-    int64_t $tmp194 = $tmp192.min.value;
-    panda$core$Int64 i193 = { $tmp194 };
-    int64_t $tmp196 = $tmp192.max.value;
-    bool $tmp197 = $tmp192.inclusive.value;
-    if ($tmp197) goto $l204; else goto $l205;
-    $l204:;
-    if ($tmp194 <= $tmp196) goto $l198; else goto $l200;
+    panda$core$Int64 $tmp190 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(charIndex171, ((panda$core$Int64) { 1 }));
+    charIndex171 = $tmp190;
+    panda$core$Int64 $tmp192 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(max169, charIndex171);
+    size191 = $tmp192;
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp193, ((panda$core$Int64) { 0 }), size191, ((panda$core$Bit) { false }));
+    int64_t $tmp195 = $tmp193.min.value;
+    panda$core$Int64 i194 = { $tmp195 };
+    int64_t $tmp197 = $tmp193.max.value;
+    bool $tmp198 = $tmp193.inclusive.value;
+    if ($tmp198) goto $l205; else goto $l206;
     $l205:;
-    if ($tmp194 < $tmp196) goto $l198; else goto $l200;
-    $l198:;
+    if ($tmp195 <= $tmp197) goto $l199; else goto $l201;
+    $l206:;
+    if ($tmp195 < $tmp197) goto $l199; else goto $l201;
+    $l199:;
     {
-        panda$core$Int64 $tmp206 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(i193, charIndex170);
-        chars169[i193.value] = chars169[$tmp206.value];
+        panda$core$Int64 $tmp207 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(i194, charIndex171);
+        chars170[i194.value] = chars170[$tmp207.value];
     }
-    $l201:;
-    int64_t $tmp208 = $tmp196 - i193.value;
-    if ($tmp197) goto $l209; else goto $l210;
-    $l209:;
-    if ((uint64_t) $tmp208 >= 1) goto $l207; else goto $l200;
+    $l202:;
+    int64_t $tmp209 = $tmp197 - i194.value;
+    if ($tmp198) goto $l210; else goto $l211;
     $l210:;
-    if ((uint64_t) $tmp208 > 1) goto $l207; else goto $l200;
-    $l207:;
-    i193.value += 1;
-    goto $l198;
-    $l200:;
+    if ((uint64_t) $tmp209 >= 1) goto $l208; else goto $l201;
+    $l211:;
+    if ((uint64_t) $tmp209 > 1) goto $l208; else goto $l201;
+    $l208:;
+    i194.value += 1;
+    goto $l199;
+    $l201:;
     {
-        panda$core$String* $tmp214 = (panda$core$String*) pandaZAlloc(48);
-        $tmp214->$class = (panda$core$Class*) &panda$core$String$class;
-        $tmp214->refCount.value = 1;
-        panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp214, chars169, size190);
-        tmp1213 = $tmp214;
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) digits125));
-        return tmp1213;
+        panda$core$String* $tmp215 = (panda$core$String*) pandaZAlloc(48);
+        $tmp215->$class = (panda$core$Class*) &panda$core$String$class;
+        $tmp215->refCount.value = 1;
+        panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp215, chars170, size191);
+        tmp1214 = $tmp215;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) digits126));
+        return tmp1214;
     }
 }
 void panda$core$Panda$init(panda$core$Panda* self) {

@@ -6,6 +6,7 @@ typedef struct panda$core$Class panda$core$Class;
 #include "panda/core/Int32.h"
 #include "panda/core/Int64.h"
 #include "org/pandalanguage/pandac/parser/Token.h"
+typedef struct panda$core$String panda$core$String;
 
 typedef struct panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT {
     panda$core$Class* $class;
@@ -17,7 +18,7 @@ typedef struct panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$par
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"
 #undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$Class* super; ITable* itable; void* vtable[17]; } panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[17]; } panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$class_type;
 extern panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$class_type panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$class;
 
 #ifndef PANDA_TYPESONLY

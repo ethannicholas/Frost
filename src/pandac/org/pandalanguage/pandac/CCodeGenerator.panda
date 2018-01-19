@@ -566,8 +566,12 @@ class CCodeGenerator : CodeGenerator {
                 superPtr := "NULL"
             }
             def clConstant := getClassConstant(compiler.getClass(Type.Class()))
-            def code := MutableString("\{result.name}_type \{result.name} = { " +
-                    "(panda$core$Class*) &\{clConstant.name}, 1, \{superPtr}, \{getITable(cl)}, { ")
+            def name := getStringReference(cl.name)
+            assert name.startsWith("&")
+            def code := MutableString("static panda$core$String \{name[1..]};\n" +
+                    "\{result.name}_type \{result.name} = { " +
+                    "(panda$core$Class*) &\{clConstant.name}, \{NO_REFCNT}, " +
+                    "\{name}, \{superPtr}, \{getITable(cl)}, { ")
             var separator := ""
             for m in vtable {
                 code.append(separator)
@@ -605,8 +609,12 @@ class CCodeGenerator : CodeGenerator {
                 def superCast := "(panda$core$Class*) &\{superCC.name}"
                 def itable := getWrapperITable(cl)
                 def clConstant := getClassConstant(compiler.getClass(Type.Class()))
-                def code := MutableString("\{result.name}_type \{result.name} = { " +
-                        "(panda$core$Class*) &\{clConstant.name}, 1, \{superCast}, \{itable}, { ")
+                def name := getStringReference(cl.name)
+                assert name.startsWith("&")
+                def code := MutableString("static panda$core$String \{name[1..]};\n" +
+                        "\{result.name}_type \{result.name} = { " +
+                        "(panda$core$Class*) &\{clConstant.name}, \{NO_REFCNT}, " +
+                        "\{name}, \{superCast}, \{itable}, { ")
                 var separator := ""
                 for i in 0 .. valueVTable.get_count() {
                     def m := vtable[i]
@@ -1148,7 +1156,7 @@ class CCodeGenerator : CodeGenerator {
         return getName(v)
     }
 
-    method getStringReference(s:String, out:IndentedOutputStream):String {
+    method getStringReference(s:String):String {
         varCount += 1
         def result := "$s\{varCount}"
         type(Type.StringType())
@@ -1287,7 +1295,7 @@ class CCodeGenerator : CodeGenerator {
             when IRNode.FIELD_REFERENCE(_, _, base, field):
                 return getFieldReference(base, field, out)
             when IRNode.STRING(_, str):
-                return getStringReference(str, out)
+                return getStringReference(str)
             when IRNode.SELF:
                 return getSelfReference(out)
             when IRNode.SUPER(_, t):
