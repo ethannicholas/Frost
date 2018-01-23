@@ -21,9 +21,7 @@ void org$pandalanguage$pandac$Compiler$Settings$init$panda$io$File$panda$collect
         self->pandaHome = p_pandaHome;
     }
     {
-        panda$collections$ImmutableArray* $tmp2 = (panda$collections$ImmutableArray*) pandaZAlloc(40);
-        $tmp2->$class = (panda$core$Class*) &panda$collections$ImmutableArray$class;
-        $tmp2->refCount.value = 1;
+        panda$collections$ImmutableArray* $tmp2 = (panda$collections$ImmutableArray*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$ImmutableArray$class);
         panda$collections$ImmutableArray$init$panda$collections$ListView$LTpanda$collections$ImmutableArray$T$GT($tmp2, p_importDirs);
         self->importDirs = $tmp2;
     }

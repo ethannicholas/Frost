@@ -15,5 +15,6 @@ class CompoundAssignmentReuse {
         Console.printLine(x[0])
         x[noisyZero()] *= 2
         Console.printLine(x[0])
+        x.destroy()
     }
 }

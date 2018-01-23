@@ -36,6 +36,7 @@ typedef struct panda$core$String panda$core$String;
 
 void panda$collections$HashMap$init(panda$collections$HashMap* self);
 void panda$collections$HashMap$init$panda$collections$MapView$LTpanda$collections$HashMap$K$Cpanda$collections$HashMap$V$GT(panda$collections$HashMap* self, panda$collections$MapView* p_map);
+void panda$collections$HashMap$cleanup(panda$collections$HashMap* self);
 panda$core$Int64 panda$collections$HashMap$indexFor$panda$collections$HashMap$K$R$panda$core$Int64(panda$collections$HashMap* self, panda$collections$Key* p_key);
 panda$core$Object* panda$collections$HashMap$$IDX$panda$collections$HashMap$K$R$panda$collections$HashMap$V$Q(panda$collections$HashMap* self, panda$collections$Key* p_key);
 panda$core$Bit panda$collections$HashMap$contains$panda$collections$HashMap$K$R$panda$core$Bit(panda$collections$HashMap* self, panda$collections$Key* p_key);
@@ -49,6 +50,5 @@ panda$core$Int64 panda$collections$HashMap$get_count$R$panda$core$Int64(panda$co
 panda$core$Bit panda$collections$HashMap$$EQ$panda$collections$Map$LTpanda$collections$HashMap$K$Cpanda$collections$HashMap$V$GT$R$panda$core$Bit(panda$collections$HashMap* self, panda$collections$Map* p_other);
 panda$core$Bit panda$collections$HashMap$$NEQ$panda$collections$Map$LTpanda$collections$HashMap$K$Cpanda$collections$HashMap$V$GT$R$panda$core$Bit(panda$collections$HashMap* self, panda$collections$Map* p_other);
 panda$core$String* panda$collections$HashMap$convert$R$panda$core$String(panda$collections$HashMap* self);
-void panda$collections$HashMap$cleanup(panda$collections$HashMap* self);
 
 #endif

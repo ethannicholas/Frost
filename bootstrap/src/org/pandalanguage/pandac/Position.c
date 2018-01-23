@@ -43,9 +43,7 @@ panda$core$String* org$pandalanguage$pandac$Position$convert$R$panda$core$String
     panda$core$String* $tmp8 = panda$core$Int64$convert$R$panda$core$String(self.line);
     panda$core$String* $tmp10 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp8, &$s9);
     panda$core$Int64$wrapper* $tmp11;
-    $tmp11 = (panda$core$Int64$wrapper*) pandaZAlloc(24);
-    $tmp11->cl = (panda$core$Class*) &panda$core$Int64$wrapperclass;
-    $tmp11->refCount = 1;
+    $tmp11 = (panda$core$Int64$wrapper*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$Int64$wrapperclass);
     $tmp11->value = self.column;
     panda$core$String* $tmp12 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp10, ((panda$core$Object*) $tmp11));
     panda$core$String* $tmp14 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp12, &$s13);

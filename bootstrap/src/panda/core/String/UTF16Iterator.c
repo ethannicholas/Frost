@@ -11,9 +11,7 @@
 panda$core$Object* panda$core$String$UTF16Iterator$next$R$panda$core$Char16$shim(panda$core$String$UTF16Iterator* self) {
     panda$core$Char16 result = panda$core$String$UTF16Iterator$next$R$panda$core$Char16(self);
     panda$core$Char16$wrapper* $tmp2;
-    $tmp2 = (panda$core$Char16$wrapper*) pandaZAlloc(14);
-    $tmp2->cl = (panda$core$Class*) &panda$core$Char16$wrapperclass;
-    $tmp2->refCount = 1;
+    $tmp2 = (panda$core$Char16$wrapper*) pandaObjectAlloc(14, (panda$core$Class*) &panda$core$Char16$wrapperclass);
     $tmp2->value = result;
     return ((panda$core$Object*) $tmp2);
 }

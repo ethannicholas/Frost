@@ -59,7 +59,7 @@ class Test6 : Test5, Intf2 {
 class Interfaces {
     @class
     method main() {
-        def i1:Intf1 := Test1()
+        var i1:Intf1 := Test1()
         i1.action()
         Console.printLine(i1.number())
         i1 := Test2()
@@ -72,7 +72,7 @@ class Interfaces {
         i1.action()
         Console.printLine(i1.number())
 
-        def i2:Intf2 := Test1()
+        var i2:Intf2 := Test1()
         Console.printLine(i2.string())
         i2 := Test4()
         Console.printLine(i2.string())

@@ -154,6 +154,16 @@ class HashMap<K:Key<K>, V> : Map<K, V>, Equatable<Map<K, V>> {
         }
     }
 
+    @override
+    method cleanup() {
+        for i in 0 .. bucketCount {
+            if contents[i] != null {
+                Panda.unref(contents[i])
+            }
+        }
+        contents.destroy()
+    }
+
     ================================================================================================
     Given a key, returns the bucket in which the key's entry should be stored.
     ================================================================================================
@@ -255,6 +265,11 @@ class HashMap<K:Key<K>, V> : Map<K, V>, Equatable<Map<K, V>> {
     method clear() {
         changeCount += 1
         _count := 0
+        for i in 0 .. bucketCount {
+            if contents[i] != null {
+                Panda.unref(contents[i])
+            }
+        }
         contents.destroy()
         bucketCount := DEFAULT_BUCKET_COUNT
         contents := Pointer<Entry<K, V>?>.alloc(bucketCount)
@@ -284,6 +299,11 @@ class HashMap<K:Key<K>, V> : Map<K, V>, Equatable<Map<K, V>> {
                 while e != null {
                     self[e.key] := e.value
                     e := e.next
+                }
+            }
+            for i in 0 .. oldBucketCount {
+                if oldContents[i] != null {
+                    Panda.unref(oldContents[i])
                 }
             }
             oldContents.destroy()

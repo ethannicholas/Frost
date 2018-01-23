@@ -106,18 +106,32 @@ void panda$core$Panda$unref$panda$core$Object(Object*);
 
 void panda$collections$Array$add$panda$collections$Array$T(Array*, Object*);
 
+char* pandaGetCString(String* s);
+
+void pandaFree(void* ptr);
+
 int allocations = 0;
+
+int refCount = 1;
 
 void* pandaAlloc(size_t size) {
     allocations++;
-//    printf("now have %d allocations\n", allocations);
     return calloc(size, 1);
 }
 
 void* pandaZAlloc(size_t size) {
     allocations++;
-//    printf("now have %d allocations\n", allocations);
     return calloc(size, 1);
+}
+
+void* pandaObjectAlloc(size_t size, Class* cl) {
+/*    char* name = pandaGetCString(cl->name);
+    printf("%s alloc\n", name);
+    pandaFree(name);*/
+    Object* result = pandaZAlloc(size);
+    result->cl = cl;
+    result->refcnt = 1;
+    return result;
 }
 
 void* pandaRealloc(void* ptr, size_t oldSize, size_t newSize) {
@@ -130,10 +144,15 @@ void* pandaRealloc(void* ptr, size_t oldSize, size_t newSize) {
 
 void pandaFree(void* ptr) {
     allocations--;
-//    printf("now have %d allocations\n", allocations);
     free(ptr);
 }
 
+void pandaObjectFree(Object* o) {
+/*    char* name = pandaGetCString(o->cl->name);
+    printf("%s free\n", name);
+    pandaFree(name);*/
+    pandaFree(o);
+}
 /**
  * Returns a null-terminated copy of a Panda string. The caller is responsible for freeing this
  * memory.
@@ -146,9 +165,7 @@ char* pandaGetCString(String* s) {
 }
 
 String* pandaNewString(const char* s, int length) {
-    String* result = pandaAlloc(sizeof(String));
-    result->cl = &panda$core$String$class;
-    result->refcnt = 1;
+    String* result = pandaObjectAlloc(sizeof(String), &panda$core$String$class);
     result->size = length;
     result->data = pandaAlloc(length);
     result->hash = 0;
@@ -168,9 +185,7 @@ void* pandaGetInterfaceMethod(Object* o, Class* intf, int index) {
 void pandaMain(Array* args);
 
 int main(int argc, char** argv) {
-    Array* args = pandaAlloc(sizeof(Array));
-    args->cl = &panda$collections$Array$class;
-    args->refcnt = 1;
+    Array* args = pandaObjectAlloc(sizeof(Array), &panda$collections$Array$class);
     args->count = argc;
     args->capacity = argc;
     args->data = pandaZAlloc(argc * sizeof(Object*));
@@ -180,10 +195,10 @@ int main(int argc, char** argv) {
     }
     pandaMain(args);
     panda$core$Panda$unref$panda$core$Object((Object*) args);
-    if (allocations > 1) {
+    if (refCount && allocations > 1) {
         printf("warning: %d objects were still in memory on exit\n", allocations);
     }
-    else if (allocations == 1) {
+    else if (refCount && allocations == 1) {
         printf("warning: 1 object was still in memory on exit\n");
     }
     return 0;
@@ -263,21 +278,14 @@ Process* panda$core$System$exec$panda$io$File$panda$collections$ListView$LTpanda
         close(stdinPipe[0]);
         close(stdoutPipe[1]);
         close(stderrPipe[1]);
-        Process* result = pandaAlloc(sizeof(Process));
-        result->cl = &panda$core$System$Process$class;
-        result->refcnt = 1;
+        Process* result = pandaObjectAlloc(sizeof(Process), &panda$core$System$Process$class);
         result->pid = pid;
-        result->input = pandaAlloc(sizeof(FileOutputStream));
-        result->input->cl = &panda$io$FileOutputStream$class;
-        result->input->refcnt = 1;
+        result->input = pandaObjectAlloc(sizeof(FileOutputStream),
+                &panda$io$FileOutputStream$class);
         result->input->file = fdopen(stdinPipe[1], "wb");
-        result->output = pandaAlloc(sizeof(FileInputStream));
-        result->output->cl = &panda$io$FileInputStream$class;
-        result->output->refcnt = 1;
+        result->output = pandaObjectAlloc(sizeof(FileInputStream), &panda$io$FileInputStream$class);
         result->output->file = fdopen(stdoutPipe[0], "rb");
-        result->error = pandaAlloc(sizeof(FileInputStream));
-        result->error->cl = &panda$io$FileInputStream$class;
-        result->error->refcnt = 1;
+        result->error = pandaObjectAlloc(sizeof(FileInputStream), &panda$io$FileInputStream$class);
         result->error->file = fdopen(stderrPipe[0], "rb");
         return result;
     }
@@ -296,8 +304,6 @@ void panda$core$System$Process$waitFor$R$panda$core$Int64(int64_t* result, Proce
 // Panda
 
 #define NO_REFCNT -999
-
-int refCount = 1;
 
 void panda$core$Panda$debugPrint$builtin_int64(int64_t x) {
     printf("Debug: %" PRId64 "\n", x);
@@ -329,7 +335,7 @@ void panda$core$Panda$unref$panda$core$Object(Object* o) {
             void (*cleanup)() = o->cl->vtable[1]; // FIXME hardcoded index to cleanup
             o->refcnt = -100000;
             cleanup(o);
-            pandaFree(o);
+            pandaObjectFree(o);
         }
     }
 }
@@ -346,9 +352,11 @@ void panda$core$Panda$toReal64$panda$core$String$R$panda$core$Real64(double* res
 
 String* panda$core$Real64$convert$R$panda$core$String(double d) {
     size_t len = snprintf(NULL, 0, "%g", d);
-    char* result = (char*) pandaAlloc(len + 1);
-    snprintf(result, len + 1, "%g", d);
-    return pandaNewString(result, len);
+    char* chars = (char*) pandaAlloc(len + 1);
+    snprintf(chars, len + 1, "%g", d);
+    String* result = pandaNewString(chars, len);
+    pandaFree(chars);
+    return result;
 }
 
 void panda$core$Panda$floatToIntBits$panda$core$Real64$R$panda$core$Int64(int64_t* result,
@@ -466,9 +474,7 @@ void panda$io$File$createDirectory(File* file) {
 }
 
 Array* panda$io$File$list$R$panda$collections$ListView$LTpanda$io$File$GT(File* dir) {
-    Array* result = pandaAlloc(sizeof(Array));
-    result->cl = &panda$collections$Array$class;
-    result->refcnt = 1;
+    Array* result = pandaObjectAlloc(sizeof(Array), &panda$collections$Array$class);
     result->count = 0;
     result->capacity = 16;
     result->data = pandaZAlloc(result->capacity * sizeof(Object*));
@@ -492,9 +498,7 @@ Array* panda$io$File$list$R$panda$collections$ListView$LTpanda$io$File$GT(File* 
         memcpy(buffer + dir->path->size + 1, entry->d_name, length);
         buffer[dir->path->size + 1 + length] = 0;
         String* path = pandaNewString(buffer, dir->path->size + 1 + length);
-        File* file = pandaAlloc(sizeof(File));
-        file->cl = &panda$io$File$class;
-        file->refcnt = 1;
+        File* file = pandaObjectAlloc(sizeof(File), &panda$io$File$class);
         file->path = path;
         panda$collections$Array$add$panda$collections$Array$T(result, (Object*) file);
     }

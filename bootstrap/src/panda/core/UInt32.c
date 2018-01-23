@@ -885,16 +885,14 @@ panda$core$String* panda$core$UInt32$convert$R$panda$core$String(panda$core$UInt
     i192.value += 1;
     goto $l197;
     $l199:;
-    panda$core$String* $tmp212 = (panda$core$String*) pandaZAlloc(48);
-    $tmp212->$class = (panda$core$Class*) &panda$core$String$class;
-    $tmp212->refCount.value = 1;
+    panda$core$String* $tmp212 = (panda$core$String*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$String$class);
     panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp212, chars164, size189);
     return $tmp212;
 }
 panda$core$String* panda$core$UInt32$format$panda$core$String$R$panda$core$String(panda$core$UInt32 self, panda$core$String* p_fmt) {
-    panda$core$UInt64 $tmp214 = panda$core$UInt32$convert$R$panda$core$UInt64(self);
-    panda$core$String* $tmp215 = panda$core$Panda$format$panda$core$Bit$panda$core$UInt64$panda$core$UInt64$panda$core$String$R$panda$core$String(((panda$core$Bit) { false }), $tmp214, ((panda$core$UInt64) { 4294967295 }), p_fmt);
-    return $tmp215;
+    panda$core$UInt64 $tmp213 = panda$core$UInt32$convert$R$panda$core$UInt64(self);
+    panda$core$String* $tmp214 = panda$core$Panda$format$panda$core$Bit$panda$core$UInt64$panda$core$UInt64$panda$core$String$R$panda$core$String(((panda$core$Bit) { false }), $tmp213, ((panda$core$UInt64) { 4294967295 }), p_fmt);
+    return $tmp214;
 }
 void panda$core$UInt32$cleanup(panda$core$UInt32 self) {
 }

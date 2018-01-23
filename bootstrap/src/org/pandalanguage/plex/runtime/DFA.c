@@ -100,9 +100,7 @@ org$pandalanguage$plex$runtime$RawToken org$pandalanguage$plex$runtime$DFA$next$
         {
             panda$core$UInt8 $tmp29 = panda$core$Char8$convert$R$panda$core$UInt8(c21);
             panda$core$UInt8$wrapper* $tmp30;
-            $tmp30 = (panda$core$UInt8$wrapper*) pandaZAlloc(13);
-            $tmp30->cl = (panda$core$Class*) &panda$core$UInt8$wrapperclass;
-            $tmp30->refCount = 1;
+            $tmp30 = (panda$core$UInt8$wrapper*) pandaObjectAlloc(13, (panda$core$Class*) &panda$core$UInt8$wrapperclass);
             $tmp30->value = $tmp29;
             panda$core$String* $tmp31 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s28, ((panda$core$Object*) $tmp30));
             panda$core$String* $tmp33 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp31, &$s32);

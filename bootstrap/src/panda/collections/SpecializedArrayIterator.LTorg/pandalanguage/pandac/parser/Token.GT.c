@@ -11,9 +11,7 @@
 panda$core$Object* panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$pandac$parser$Token$GT$next$R$org$pandalanguage$pandac$parser$Token$shim(panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$pandac$parser$Token$GT* self) {
     org$pandalanguage$pandac$parser$Token result = panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$pandac$parser$Token$GT$next$R$org$pandalanguage$pandac$parser$Token(self);
     org$pandalanguage$pandac$parser$Token$wrapper* $tmp2;
-    $tmp2 = (org$pandalanguage$pandac$parser$Token$wrapper*) pandaZAlloc(64);
-    $tmp2->cl = (panda$core$Class*) &org$pandalanguage$pandac$parser$Token$wrapperclass;
-    $tmp2->refCount = 1;
+    $tmp2 = (org$pandalanguage$pandac$parser$Token$wrapper*) pandaObjectAlloc(64, (panda$core$Class*) &org$pandalanguage$pandac$parser$Token$wrapperclass);
     $tmp2->value = result;
     return ((panda$core$Object*) $tmp2);
 }

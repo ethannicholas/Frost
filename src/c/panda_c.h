@@ -16,6 +16,8 @@ typedef struct ITable {
 
 void* pandaZAlloc(size_t size);
 
+void* pandaObjectAlloc(size_t size, panda$core$Class* cl);
+
 void* pandaRealloc(void* old, size_t oldSize, size_t newSize);
 
 void* pandaNewRealloc(void* old, size_t oldSize, size_t newSize);

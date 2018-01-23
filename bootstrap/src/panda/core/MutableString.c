@@ -17,7 +17,7 @@ panda$core$MutableString$class_type panda$core$MutableString$class = { (panda$co
 typedef panda$core$String* (*$fn124)(panda$core$Object*);
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x4d\x75\x74\x61\x62\x6c\x65\x53\x74\x72\x69\x6e\x67", 24, -1180377191894570377, NULL };
-static panda$core$String $s155 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
+static panda$core$String $s154 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
 
 void panda$core$MutableString$init(panda$core$MutableString* self) {
     self->dummy = NULL;
@@ -301,9 +301,7 @@ panda$core$String* panda$core$MutableString$convert$R$panda$core$String(panda$co
     i134.value += 1;
     goto $l139;
     $l141:;
-    panda$core$String* $tmp153 = (panda$core$String*) pandaZAlloc(48);
-    $tmp153->$class = (panda$core$Class*) &panda$core$String$class;
-    $tmp153->refCount.value = 1;
+    panda$core$String* $tmp153 = (panda$core$String*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$String$class);
     panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp153, result132, self->length);
     return $tmp153;
 }
@@ -311,7 +309,7 @@ panda$core$String* panda$core$MutableString$finish$R$panda$core$String(panda$cor
     self->data = ((panda$core$Char8*) pandaRealloc(self->data, self->maxLength.value * 1, self->length.value * 1));
     self->maxLength = ((panda$core$Int64) { 0 });
     {
-        ((panda$core$Object*) self)->$class = ((panda$core$Object*) &$s155)->$class;
+        ((panda$core$Object*) self)->$class = ((panda$core$Object*) &$s154)->$class;
     }
     return ((panda$core$String*) ((panda$core$Object*) self));
 }

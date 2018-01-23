@@ -432,6 +432,9 @@ choice IRNode {
             when CALL(_, _, m, args):
                 return "\{m.value.name}(\{args.join()})"
             when CAST(_, value, type, _):
+                if value.type() = Type.Int64() {
+                    return "INT64_WRAP(\{value}->\{type})"
+                }
                 return "\{value}->\{type}"
             when CHOICE_ENTRY_REFERENCE(_, ce):
                 return ce.convert()

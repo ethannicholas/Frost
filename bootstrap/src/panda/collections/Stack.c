@@ -61,9 +61,7 @@ panda$core$Object* panda$collections$Stack$peek$panda$core$Int64$R$panda$collect
     return $tmp17;
 }
 panda$collections$Iterator* panda$collections$Stack$iterator$R$panda$collections$Iterator$LTpanda$collections$Stack$T$GT(panda$collections$Stack* self) {
-    panda$collections$Stack$StackIterator* $tmp18 = (panda$collections$Stack$StackIterator*) pandaZAlloc(32);
-    $tmp18->$class = (panda$core$Class*) &panda$collections$Stack$StackIterator$class;
-    $tmp18->refCount.value = 1;
+    panda$collections$Stack$StackIterator* $tmp18 = (panda$collections$Stack$StackIterator*) pandaObjectAlloc(32, (panda$core$Class*) &panda$collections$Stack$StackIterator$class);
     panda$collections$Stack$StackIterator$init$panda$collections$Stack$LTpanda$collections$Stack$StackIterator$T$GT($tmp18, self);
     return ((panda$collections$Iterator*) $tmp18);
 }
@@ -71,15 +69,13 @@ panda$core$Int64 panda$collections$Stack$get_count$R$panda$core$Int64(panda$coll
     return self->contents->count;
 }
 panda$core$String* panda$collections$Stack$convert$R$panda$core$String(panda$collections$Stack* self) {
-    panda$core$String* $tmp20 = panda$collections$Array$convert$R$panda$core$String(self->contents);
-    return $tmp20;
+    panda$core$String* $tmp19 = panda$collections$Array$convert$R$panda$core$String(self->contents);
+    return $tmp19;
 }
 void panda$collections$Stack$init(panda$collections$Stack* self) {
-    panda$collections$Array* $tmp21 = (panda$collections$Array*) pandaZAlloc(40);
-    $tmp21->$class = (panda$core$Class*) &panda$collections$Array$class;
-    $tmp21->refCount.value = 1;
-    panda$collections$Array$init($tmp21);
-    self->contents = $tmp21;
+    panda$collections$Array* $tmp20 = (panda$collections$Array*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$Array$class);
+    panda$collections$Array$init($tmp20);
+    self->contents = $tmp20;
 }
 void panda$collections$Stack$cleanup(panda$collections$Stack* self) {
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->contents));

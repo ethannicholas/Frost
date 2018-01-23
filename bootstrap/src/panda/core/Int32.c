@@ -926,18 +926,16 @@ panda$core$String* panda$core$Int32$convert$R$panda$core$String(panda$core$Int32
     i202.value += 1;
     goto $l207;
     $l209:;
-    panda$core$String* $tmp222 = (panda$core$String*) pandaZAlloc(48);
-    $tmp222->$class = (panda$core$Class*) &panda$core$String$class;
-    $tmp222->refCount.value = 1;
+    panda$core$String* $tmp222 = (panda$core$String*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$String$class);
     panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp222, chars174, size199);
     return $tmp222;
 }
 panda$core$String* panda$core$Int32$format$panda$core$String$R$panda$core$String(panda$core$Int32 self, panda$core$String* p_fmt) {
-    bool $tmp224 = self.value < 0;
-    panda$core$Int32 $tmp225 = panda$core$Int32$abs$R$panda$core$Int32(self);
-    panda$core$UInt64 $tmp226 = panda$core$Int32$convert$R$panda$core$UInt64($tmp225);
-    panda$core$String* $tmp227 = panda$core$Panda$format$panda$core$Bit$panda$core$UInt64$panda$core$UInt64$panda$core$String$R$panda$core$String(((panda$core$Bit) { $tmp224 }), $tmp226, ((panda$core$UInt64) { 4294967295 }), p_fmt);
-    return $tmp227;
+    bool $tmp223 = self.value < 0;
+    panda$core$Int32 $tmp224 = panda$core$Int32$abs$R$panda$core$Int32(self);
+    panda$core$UInt64 $tmp225 = panda$core$Int32$convert$R$panda$core$UInt64($tmp224);
+    panda$core$String* $tmp226 = panda$core$Panda$format$panda$core$Bit$panda$core$UInt64$panda$core$UInt64$panda$core$String$R$panda$core$String(((panda$core$Bit) { $tmp223 }), $tmp225, ((panda$core$UInt64) { 4294967295 }), p_fmt);
+    return $tmp226;
 }
 void panda$core$Int32$cleanup(panda$core$Int32 self) {
 }

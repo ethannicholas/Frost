@@ -15,9 +15,7 @@ org$pandalanguage$pandac$CCodeGenerator$InlineContext$class_type org$pandalangua
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x43\x43\x6f\x64\x65\x47\x65\x6e\x65\x72\x61\x74\x6f\x72\x2e\x49\x6e\x6c\x69\x6e\x65\x43\x6f\x6e\x74\x65\x78\x74", 53, 7170302049067210593, NULL };
 
 void org$pandalanguage$pandac$CCodeGenerator$InlineContext$init$panda$core$String$panda$core$String$panda$collections$ListView$LTpanda$core$String$GT$panda$core$String(org$pandalanguage$pandac$CCodeGenerator$InlineContext* self, panda$core$String* p_varSuffix, panda$core$String* p_selfRef, panda$collections$ListView* p_argRefs, panda$core$String* p_exitLabel) {
-    panda$collections$Array* $tmp2 = (panda$collections$Array*) pandaZAlloc(40);
-    $tmp2->$class = (panda$core$Class*) &panda$collections$Array$class;
-    $tmp2->refCount.value = 1;
+    panda$collections$Array* $tmp2 = (panda$collections$Array*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$Array$class);
     panda$collections$Array$init($tmp2);
     self->returns = $tmp2;
     {
@@ -27,11 +25,9 @@ void org$pandalanguage$pandac$CCodeGenerator$InlineContext$init$panda$core$Strin
         self->selfRef = p_selfRef;
     }
     {
-        panda$collections$ImmutableArray* $tmp4 = (panda$collections$ImmutableArray*) pandaZAlloc(40);
-        $tmp4->$class = (panda$core$Class*) &panda$collections$ImmutableArray$class;
-        $tmp4->refCount.value = 1;
-        panda$collections$ImmutableArray$init$panda$collections$ListView$LTpanda$collections$ImmutableArray$T$GT($tmp4, p_argRefs);
-        self->argRefs = $tmp4;
+        panda$collections$ImmutableArray* $tmp3 = (panda$collections$ImmutableArray*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$ImmutableArray$class);
+        panda$collections$ImmutableArray$init$panda$collections$ListView$LTpanda$collections$ImmutableArray$T$GT($tmp3, p_argRefs);
+        self->argRefs = $tmp3;
     }
     {
         self->exitLabel = p_exitLabel;

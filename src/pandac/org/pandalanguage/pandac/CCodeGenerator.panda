@@ -995,10 +995,8 @@ class CCodeGenerator : CodeGenerator {
             out.level += 1
         }
         out.printLine("\{wrapped} = (\{wrapperType(srcType)}) " +
-                "pandaZAlloc(\{sizeOfWrapper(srcType)});")
-        out.printLine("\{wrapped}->cl = (panda$core$Class*) " +
-                "&\{escapeName(srcType.name)}$wrapperclass;")
-        out.printLine("\{wrapped}->refCount = 1;")
+                "pandaObjectAlloc(\{sizeOfWrapper(srcType)}, (panda$core$Class*) " +
+                "&\{escapeName(srcType.name)}$wrapperclass);")
         out.printLine("\{wrapped}->value = \{value};")
         if srcType.typeKind = Type.Kind.NULLABLE {
             out.level -= 1
@@ -1110,18 +1108,8 @@ class CCodeGenerator : CodeGenerator {
                     return tmp
                 }
                 def result := nextVar()
-                out.printLine("\{t} \{result} = (\{t}) pandaZAlloc(\{sizeOf(target)});")
-                def classPtr := nextVar()
-                def className:String
-                if target.typeKind = Type.Kind.GENERIC {
-                    className := typeName(target.subtypes[0])
-                }
-                else {
-                    className := typeName(target)
-                }
-                out.printLine("\{result}->$class = (panda$core$Class*) &\{escapeName(cl.name)}" +
-                            "$class;")
-                out.printLine("\{result}->refCount.value = 1;")
+                out.printLine("\{t} \{result} = (\{t}) pandaObjectAlloc(\{sizeOf(target)}, " +
+                        "(panda$core$Class*) &\{escapeName(cl.name)}$class);")
                 writeCall(initType, initMref, initArgs, "\{result}", out)
                 return result
             otherwise:

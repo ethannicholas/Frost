@@ -881,16 +881,14 @@ panda$core$String* panda$core$UInt8$convert$R$panda$core$String(panda$core$UInt8
     i194.value += 1;
     goto $l199;
     $l201:;
-    panda$core$String* $tmp214 = (panda$core$String*) pandaZAlloc(48);
-    $tmp214->$class = (panda$core$Class*) &panda$core$String$class;
-    $tmp214->refCount.value = 1;
+    panda$core$String* $tmp214 = (panda$core$String*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$String$class);
     panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp214, chars164, size191);
     return $tmp214;
 }
 panda$core$String* panda$core$UInt8$format$panda$core$String$R$panda$core$String(panda$core$UInt8 self, panda$core$String* p_fmt) {
-    panda$core$UInt64 $tmp216 = panda$core$UInt8$convert$R$panda$core$UInt64(self);
-    panda$core$String* $tmp217 = panda$core$Panda$format$panda$core$Bit$panda$core$UInt64$panda$core$UInt64$panda$core$String$R$panda$core$String(((panda$core$Bit) { false }), $tmp216, ((panda$core$UInt64) { 255 }), p_fmt);
-    return $tmp217;
+    panda$core$UInt64 $tmp215 = panda$core$UInt8$convert$R$panda$core$UInt64(self);
+    panda$core$String* $tmp216 = panda$core$Panda$format$panda$core$Bit$panda$core$UInt64$panda$core$UInt64$panda$core$String$R$panda$core$String(((panda$core$Bit) { false }), $tmp215, ((panda$core$UInt64) { 255 }), p_fmt);
+    return $tmp216;
 }
 void panda$core$UInt8$cleanup(panda$core$UInt8 self) {
 }

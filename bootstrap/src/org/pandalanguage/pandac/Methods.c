@@ -117,9 +117,7 @@ void org$pandalanguage$pandac$Methods$init$panda$collections$ListView$LTorg$pand
     panda$core$Object* $tmp63 = $tmp61(p_methods, ((panda$core$Int64) { 0 }));
     org$pandalanguage$pandac$Symbol$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$String(((org$pandalanguage$pandac$Symbol*) self), ((panda$core$Int64) { 205 }), $tmp59, ((org$pandalanguage$pandac$Symbol*) ((org$pandalanguage$pandac$MethodDecl*) $tmp63))->name);
     {
-        panda$collections$ImmutableArray* $tmp64 = (panda$collections$ImmutableArray*) pandaZAlloc(40);
-        $tmp64->$class = (panda$core$Class*) &panda$collections$ImmutableArray$class;
-        $tmp64->refCount.value = 1;
+        panda$collections$ImmutableArray* $tmp64 = (panda$collections$ImmutableArray*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$ImmutableArray$class);
         panda$collections$ImmutableArray$init$panda$collections$ListView$LTpanda$collections$ImmutableArray$T$GT($tmp64, p_methods);
         self->methods = $tmp64;
     }

@@ -12,9 +12,7 @@
 panda$core$Object* panda$core$String$UTF32Iterator$next$R$panda$core$Char32$shim(panda$core$String$UTF32Iterator* self) {
     panda$core$Char32 result = panda$core$String$UTF32Iterator$next$R$panda$core$Char32(self);
     panda$core$Char32$wrapper* $tmp2;
-    $tmp2 = (panda$core$Char32$wrapper*) pandaZAlloc(16);
-    $tmp2->cl = (panda$core$Class*) &panda$core$Char32$wrapperclass;
-    $tmp2->refCount = 1;
+    $tmp2 = (panda$core$Char32$wrapper*) pandaObjectAlloc(16, (panda$core$Class*) &panda$core$Char32$wrapperclass);
     $tmp2->value = result;
     return ((panda$core$Object*) $tmp2);
 }

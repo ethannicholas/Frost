@@ -42,9 +42,7 @@ void panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(panda$
     panda$core$String* $tmp4 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s3, p_file);
     panda$core$String* $tmp6 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4, &$s5);
     panda$core$Int64$wrapper* $tmp7;
-    $tmp7 = (panda$core$Int64$wrapper*) pandaZAlloc(24);
-    $tmp7->cl = (panda$core$Class*) &panda$core$Int64$wrapperclass;
-    $tmp7->refCount = 1;
+    $tmp7 = (panda$core$Int64$wrapper*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$Int64$wrapperclass);
     $tmp7->value = p_line;
     panda$core$String* $tmp8 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp6, ((panda$core$Object*) $tmp7));
     panda$core$String* $tmp10 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp8, &$s9);
@@ -56,9 +54,7 @@ void panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$
     panda$core$String* $tmp14 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s13, p_file);
     panda$core$String* $tmp16 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp14, &$s15);
     panda$core$Int64$wrapper* $tmp17;
-    $tmp17 = (panda$core$Int64$wrapper*) pandaZAlloc(24);
-    $tmp17->cl = (panda$core$Class*) &panda$core$Int64$wrapperclass;
-    $tmp17->refCount = 1;
+    $tmp17 = (panda$core$Int64$wrapper*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$Int64$wrapperclass);
     $tmp17->value = p_line;
     panda$core$String* $tmp18 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp16, ((panda$core$Object*) $tmp17));
     panda$core$String* $tmp20 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp18, &$s19);
@@ -488,9 +484,7 @@ panda$core$String* panda$core$Panda$format$panda$core$Bit$panda$core$UInt64$pand
     goto $l199;
     $l201:;
     {
-        panda$core$String* $tmp215 = (panda$core$String*) pandaZAlloc(48);
-        $tmp215->$class = (panda$core$Class*) &panda$core$String$class;
-        $tmp215->refCount.value = 1;
+        panda$core$String* $tmp215 = (panda$core$String*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$String$class);
         panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp215, chars170, size191);
         tmp1214 = $tmp215;
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) digits126));

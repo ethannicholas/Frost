@@ -10,9 +10,7 @@
 panda$core$Object* panda$core$String$UTF8Iterator$next$R$panda$core$Char8$shim(panda$core$String$UTF8Iterator* self) {
     panda$core$Char8 result = panda$core$String$UTF8Iterator$next$R$panda$core$Char8(self);
     panda$core$Char8$wrapper* $tmp2;
-    $tmp2 = (panda$core$Char8$wrapper*) pandaZAlloc(13);
-    $tmp2->cl = (panda$core$Class*) &panda$core$Char8$wrapperclass;
-    $tmp2->refCount = 1;
+    $tmp2 = (panda$core$Char8$wrapper*) pandaObjectAlloc(13, (panda$core$Class*) &panda$core$Char8$wrapperclass);
     $tmp2->value = result;
     return ((panda$core$Object*) $tmp2);
 }

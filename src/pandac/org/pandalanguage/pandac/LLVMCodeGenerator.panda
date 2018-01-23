@@ -155,6 +155,7 @@ class LLVMCodeGenerator : CodeGenerator {
         out.printLine("target triple = \"x86_64-apple-macosx10.12.0\"")
 --        out.printLine("target triple = \"x86_64-pc-linux-gnu\"")
         out.printLine("declare i8* @pandaZAlloc(\{SIZE_TYPE})")
+        out.printLine("declare i8* @pandaObjectAlloc(\{SIZE_TYPE}, %panda$core$Class*)")
         out.printLine("declare i8* @pandaRealloc(i8*, \{SIZE_TYPE}, \{SIZE_TYPE})")
         out.printLine("declare void @pandaFree(i8*)")
         out.printLine("declare i8* @memset(i8*, i8, \{SIZE_TYPE})")
@@ -1576,15 +1577,6 @@ class LLVMCodeGenerator : CodeGenerator {
                     "[\{nonNullValue}, %\{nonNullLabel}]")
             return result
         }
-        def mallocRef := nextVar()
-        out.printLine("\{mallocRef} = call i8* @pandaZAlloc(i64 \{sizeOfWrapper(src.type())})")
-        def wrapperTypeName := wrapperTypeName(src.type())
-        def wrapperType := wrapperType(src.type())
-        def wrapperCast := nextVar()
-        out.printLine("\{wrapperCast} = bitcast i8* \{mallocRef} to \{wrapperType}")
-        def classPtr := nextVar()
-        out.printLine("\{classPtr} = getelementptr \{wrapperTypeName}, " +
-                "\{wrapperType} \{wrapperCast}, i64 0, i32 0")
         def cc := getWrapperClassConstant(src)
         def ccCast:String
         if cc.type != "%panda$core$Class" {
@@ -1593,11 +1585,13 @@ class LLVMCodeGenerator : CodeGenerator {
         else {
             ccCast := cc.name
         }
-        out.printLine("store %panda$core$Class* \{ccCast}, %panda$core$Class** \{classPtr}")
-        def refCount := nextVar()
-        out.printLine("\{refCount} = getelementptr \{wrapperTypeName}, " +
-                "\{wrapperType} \{wrapperCast}, i64 0, i32 1, i32 0")
-        out.printLine("store i32 1, i32* \{refCount}")
+        def mallocRef := nextVar()
+        out.printLine("\{mallocRef} = call i8* @pandaObjectAlloc(" +
+                "i64 \{sizeOfWrapper(src.type())}, %panda$core$Class* \{ccCast})")
+        def wrapperTypeName := wrapperTypeName(src.type())
+        def wrapperType := wrapperType(src.type())
+        def wrapperCast := nextVar()
+        out.printLine("\{wrapperCast} = bitcast i8* \{mallocRef} to \{wrapperType}")
         def target := nextVar()
         out.printLine("\{target} = getelementptr \{wrapperTypeName}, " +
                 "\{wrapperType} \{wrapperCast}, i64 0, i32 2")
@@ -1826,11 +1820,19 @@ class LLVMCodeGenerator : CodeGenerator {
                     out.printLine("\{result} = load \{t}, \{t}* \{alloca}")
                     return result
                 }
+                def cc := getClassConstant(cl)
+                def ccCast:String
+                if cc.type != "%panda$core$Class" {
+                    ccCast := "bitcast(\{cc.type}* \{cc.name} to %panda$core$Class*)"
+                }
+                else {
+                    ccCast := cc.name
+                }
                 def callRef := nextVar()
-                out.printLine("\{callRef} = call i8* @pandaZAlloc(i64 \{sizeOf(target)})")
+                out.printLine("\{callRef} = call i8* @pandaObjectAlloc(i64 \{sizeOf(target)}, " +
+                        "%panda$core$Class* \{ccCast})")
                 def result := nextVar()
                 out.printLine("\{result} = bitcast i8* \{callRef} to \{type(target)}")
-                def classPtr := nextVar()
                 def className:String
                 if target.typeKind = Type.Kind.GENERIC & !cl.isSpecialization() {
                     className := typeName(target.subtypes[0])
@@ -1838,15 +1840,6 @@ class LLVMCodeGenerator : CodeGenerator {
                 else {
                     className := typeName(target)
                 }
-                out.printLine("\{classPtr} = getelementptr inbounds \{className}, " +
-                        "\{t} \{result}, i64 0, i32 0")
-                def cc := getClassConstant(cl)
-                out.printLine("store i8* bitcast(\{cc.type}* \{cc.name} to " +
-                        "i8*), i8** \{classPtr}")
-                def refCount := nextVar()
-                out.printLine("\{refCount} = getelementptr \{className}, \{t} \{result}, i64 0, " +
-                        "i32 1, i32 0")
-                out.printLine("store i32 1, i32* \{refCount}")
                 writeCall(initType, initMref, args, "\{t} \{result}", out)
                 return result
             otherwise:
@@ -3251,9 +3244,9 @@ class LLVMCodeGenerator : CodeGenerator {
 
     @override
     method write(m:MethodDecl, body:ImmutableArray<IRNode>) {
-        Console.printLine("##### " + m.declaration())
-        Console.printLine(body.join("\n"))
-        Console.printLine("########################")
+--        Console.printLine("##### " + m.declaration())
+--        Console.printLine(body.join("\n"))
+--        Console.printLine("########################")
         assert compiler.currentClass.peek() == m.owner,
                 "compiling \{m.owner.name}.\{m.signature()} from within " +
                 compiler.currentClass.peek().name
