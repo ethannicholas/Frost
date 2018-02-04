@@ -833,6 +833,7 @@ class LLVMCodeGenerator : CodeGenerator {
                 def type := "%panda$core$Class"
                 types.printLine("\{name} = external global \{type}")
                 result := ClassConstant(name, type)
+                classConstants[name] := result
             }
             else {
                 def value := compiler.getClass(Type.Value())
@@ -840,6 +841,7 @@ class LLVMCodeGenerator : CodeGenerator {
                 result := ClassConstant("@\{escapeName(cl.name)}$wrapperclass",
                         "{ %panda$core$Class*, \{INT_TYPE}, %panda$core$String*, " +
                         "%panda$core$Class*, %$itable*, [\{valueVTable.get_count()} x i8*] }")
+                classConstants[name] := result
                 def vtable := compiler.getVTable(cl)
                 def superCC := getClassConstant(compiler.getClass(cl.rawSuper))
                 def superCast:String
@@ -876,10 +878,9 @@ class LLVMCodeGenerator : CodeGenerator {
                     code.append("\{separator}i8* bitcast(\{wrapperType(m)} \{methodName} to i8*)")
                     separator := ", "
                 }
-                code.append("] }")
+                code.append("] }\n")
                 types.print(code.finish())
             }
-            classConstants[name] := result
         }
         return result
     }
