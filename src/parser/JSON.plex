@@ -1,0 +1,11 @@
+STRING   := /"([^\\]|\\["\\bfnrt])*"/
+NUMBER   := /-?[0-9]+|-?[0-9]+)?\.[0-9]*([Ee][+-]?[0-9]+)?/
+WS       := /[ \t\n\r]+/
+TRUE     := "true"
+FALSE    := "false"
+NULL     := "null"
+LBRACE   := "{"
+RBRACE   := "}"
+LBRACKET := "["
+RBRACKET := "]"
+COMMA    := ","

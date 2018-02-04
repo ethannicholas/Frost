@@ -2414,6 +2414,12 @@ class Compiler : ErrorReporter {
                             if v.varKind = Variable.Kind.VAR {
                                 result.add(compilePandaCall("unref", left))
                             }
+                        when IRNode.FIELD_REFERENCE(_, _, _, f):
+                            if f.fieldKind = FieldDecl.Kind.VAR {
+                                result.add(compilePandaCall("unref", left))
+                            }
+                        otherwise:
+                            assert false
                     }
                 }
                 result.add(IRNode.BINARY(position, Type.Void(), left, Token.Kind.ASSIGNMENT, right))
@@ -2475,8 +2481,8 @@ class Compiler : ErrorReporter {
     method compileBinary(position:Position, rawLeft:IRNode, op:Token.Kind,
             rawRight:IRNode):IRNode? {
         -- FIXME use var parameters
-        var left := rawLeft
-        var right := rawRight
+        var left:IRNode? := rawLeft
+        var right:IRNode? := rawRight
         if left.type().typeKind = Type.Kind.INT_LITERAL {
             right := resolve(right)
             if right = null {
@@ -2484,11 +2490,17 @@ class Compiler : ErrorReporter {
             }
             if coercionCost(left, right.type()) != null {
                 left := coerce(left, right.type())
+                if left = null {
+                    return null
+                }
             }
         }
         if right.type().typeKind = Type.Kind.INT_LITERAL &
                 coercionCost(right, left.type()) != null {
             right := coerce(right, left.type())
+            if right = null {
+                return null
+            }
         }
         if op = Token.Kind.EQ | op = Token.Kind.NEQ | op = Token.Kind.IDENTITY |
                 op = Token.Kind.NIDENTITY {

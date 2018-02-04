@@ -92,8 +92,8 @@ class HuntTheWumpus {
             while fromRoom.exits.count < EXITS {
                 def searchOrder := getShuffledArray(count)
                 var found := false
-                for i in 0 .. searchOrder.count {
-                    def toRoom := rooms[searchOrder[i]]
+                for j in 0 .. searchOrder.count {
+                    def toRoom := rooms[searchOrder[j]]
                     if canConnect(fromRoom, toRoom) {
                         fromRoom.exits.add(toRoom.label)
                         toRoom.exits.add(fromRoom.label)

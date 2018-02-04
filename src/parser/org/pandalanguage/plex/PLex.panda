@@ -8,16 +8,17 @@ A simple lexical analyzer generator for Panda, used to build pandac's lexer.
 class PLex {
     def tokens := HashMap<String, Regex>()
 
-    method process(inputPath:File, tokenPath:File, lexerPath:File) {
+    method process(inputPath:File, tokenName:String, tokenPath:File, lexerName:String,
+            lexerPath:File) {
         def input := inputPath.openInputStream()
         def token := IndentedOutputStream(tokenPath.openOutputStream())
         def nfa := NFA()
-        token.printLine("package org.pandalanguage.pandac.parser")
+        token.printLine("package \{tokenName[..tokenName.lastIndexOf(".")]}")
         token.printLine()
         token.printLine("uses org.pandalanguage.pandac.Position")
         token.printLine()
         token.printLine("@final")
-        token.printLine("class Token : Value {")
+        token.printLine("class \{tokenName[tokenName.next(tokenName.lastIndexOf("."))..]} : Value {")
         token.level += 1
         token.printLine("choice Kind { -- FIXME use choice")
         token.level += 1
@@ -56,12 +57,12 @@ class PLex {
         token.level -= 1
         token.printLine("}")
         token.printLine()
-        token.printLine("def kind:Token.Kind")
+        token.printLine("def kind:Kind")
         token.printLine("def start:String.Index")
         token.printLine("def end:String.Index")
         token.printLine("def position:Position")
         token.printLine()
-        token.printLine("init(kind:Token.Kind, start:String.Index, end:String.Index, " +
+        token.printLine("init(kind:Kind, start:String.Index, end:String.Index, " +
                 "position:Position) {")
         token.level += 1
         token.printLine("self.kind := kind")
@@ -75,7 +76,7 @@ class PLex {
 
         def dfa := NFAtoDFA(nfa).createDFA()
         def lexer := IndentedOutputStream(lexerPath.openOutputStream())
-        writeLexer(dfa, lexer)
+        writeLexer(tokenName, lexerName, lexerPath, dfa, lexer)
         tokens.clear()
     }
 
@@ -90,15 +91,16 @@ class PLex {
         return result.finish()
     }
 
-    method writeLexer(dfa:DFA, out:IndentedOutputStream) {
-        out.printLine("package org.pandalanguage.pandac.parser")
+    method writeLexer(tokenName:String, lexerName:String, lexerPath:File, dfa:DFA,
+            out:IndentedOutputStream) {
+        out.printLine("package \{lexerName[..lexerName.lastIndexOf(".")]}")
         out.printLine()
         out.printLine("uses panda.unsafe.Pointer")
         out.printLine("uses org.pandalanguage.plex.runtime.DFA")
         out.printLine("uses org.pandalanguage.pandac.Position")
         out.printLine()
         out.printLine("@final")
-        out.printLine("class Lexer {")
+        out.printLine("class \{lexerName[lexerName.next(lexerName.lastIndexOf("."))..]} {")
         out.level += 1
         out.printLine("def dfa:DFA")
         out.printLine()
@@ -112,11 +114,11 @@ class PLex {
         out.printLine()
         writeStateTable(dfa, out)
         out.printLine()
-        out.printLine("method next():Token {")
+        out.printLine("method next():\{tokenName} {")
         out.level += 1
         out.printLine("def raw := dfa.next()")
-        out.printLine("return Token(Token.Kind(raw.kind), raw.start, raw.end, Position(raw.line, " +
-                "raw.column))")
+        out.printLine("return \{tokenName}(\{tokenName}.Kind(raw.kind), raw.start, raw.end, " +
+                "Position(raw.line, raw.column))")
         out.level -= 1
         out.printLine("}")
         out.level -= 1
@@ -188,12 +190,16 @@ class PLex {
     }
 
     @class
-    method main() {
+    method main(args:ListView<String>) {
         Panda.disableRefCounting()
+        assert args.get_count() = 6
+        def input := File(args[1])
+        def tokenName := args[2]
+        def tokenPath := File(args[3])
+        def lexerName := args[4]
+        def lexerPath := File(args[5])
         def dst := File("org/pandalanguage/pandac/parser")
         dst.createDirectories()
-        PLex().process(File("../src/parser/Panda.plex"),
-                dst.resolve("Token.panda"),
-                dst.resolve("Lexer.panda"))
+        PLex().process(input, tokenName, tokenPath, lexerName, lexerPath)
     }
 }

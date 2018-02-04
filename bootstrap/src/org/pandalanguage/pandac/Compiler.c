@@ -4257,6 +4257,9 @@ panda$core$Int64 org$pandalanguage$pandac$Compiler$smallestCharSize$org$pandalan
     }
 }
 panda$core$Bit org$pandalanguage$pandac$Compiler$isSingleChar$org$pandalanguage$pandac$IRNode$R$panda$core$Bit(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$IRNode* p_node) {
+    if (!p_node) {
+        return ((panda$core$Bit) { false });
+    }
     org$pandalanguage$pandac$IRNode* $match$1028_91404;
     panda$core$String* str1406;
     {

@@ -2243,6 +2243,7 @@ class LLVMCodeGenerator : CodeGenerator {
         def testRef := getTypedReference(test, out)
         def testBit := nextVar()
         out.printLine("\{testBit} = extractvalue \{testRef}, 0")
+        writeExtraEffects(out)
         def ifTrueLabel := nextLabel()
         def ifFalseLabel := nextLabel()
         out.printLine("br i1 \{testBit}, label %\{ifTrueLabel}, label %\{ifFalseLabel}")
@@ -2250,7 +2251,6 @@ class LLVMCodeGenerator : CodeGenerator {
         if ifFalse != null {
             extraEffects.push(Array<IRNode>(extraEffects.peek()))
         }
-        writeExtraEffects(out)
         writeBlock(ifTrue, out)
         def end:String
         if ifFalse != null {
@@ -2831,9 +2831,11 @@ class LLVMCodeGenerator : CodeGenerator {
         loopDescriptors.push(LoopDescriptor(label, loopEnd, loopStart)) -- FIXME Auto
         out.printLine("br label %\{loopStart}")
         createBlock(loopStart, out)
+        extraEffects.push(Array<IRNode>())
         def testRef := getTypedReference(test, out)
         def testBit := nextVar()
         out.printLine("\{testBit} = extractvalue \{testRef}, 0")
+        writeExtraEffects(out)
         out.printLine("br i1 \{testBit}, label %\{loopBody}, label %\{loopEnd}")
         createBlock(loopBody, out)
         writeBlock(statements, out)
@@ -2852,9 +2854,11 @@ class LLVMCodeGenerator : CodeGenerator {
         loopDescriptors.push(LoopDescriptor(label, loopEnd, loopStart)) -- FIXME Auto
         out.printLine("br label %\{loopBody}")
         createBlock(loopStart, out)
+        extraEffects.push(Array<IRNode>())
         def testRef := getTypedReference(test, out)
         def testBit := nextVar()
         out.printLine("\{testBit} = extractvalue \{testRef}, 0")
+        writeExtraEffects(out)
         out.printLine("br i1 \{testBit}, label %\{loopBody}, label %\{loopEnd}")
         createBlock(loopBody, out)
         writeBlock(statements, out)
