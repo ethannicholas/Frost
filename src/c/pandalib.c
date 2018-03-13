@@ -501,6 +501,7 @@ Array* panda$io$File$list$R$panda$collections$ListView$LTpanda$io$File$GT(File* 
         File* file = pandaObjectAlloc(sizeof(File), &panda$io$File$class);
         file->path = path;
         panda$collections$Array$add$panda$collections$Array$T(result, (Object*) file);
+        --file->refcnt;
     }
     closedir(d);
     return result;

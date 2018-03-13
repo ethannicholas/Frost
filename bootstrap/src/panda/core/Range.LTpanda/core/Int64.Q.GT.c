@@ -32,7 +32,7 @@ void panda$core$Range$LTpanda$core$Int64$Q$GT$init$panda$core$Int64$Q$panda$core
 }
 panda$core$String* panda$core$Range$LTpanda$core$Int64$Q$GT$convert$R$panda$core$String(panda$core$Range$LTpanda$core$Int64$Q$GT self) {
     panda$core$MutableString* result3;
-    panda$core$String* tmp2419;
+    panda$core$String* tmp2949;
     panda$core$MutableString* $tmp4 = (panda$core$MutableString*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$MutableString$class);
     panda$core$MutableString$init($tmp4);
     result3 = $tmp4;
@@ -64,9 +64,9 @@ panda$core$String* panda$core$Range$LTpanda$core$Int64$Q$GT$convert$R$panda$core
     }
     {
         panda$core$String* $tmp10 = panda$core$MutableString$finish$R$panda$core$String(result3);
-        tmp2419 = $tmp10;
+        tmp2949 = $tmp10;
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result3));
-        return tmp2419;
+        return tmp2949;
     }
 }
 void panda$core$Range$LTpanda$core$Int64$Q$GT$cleanup(panda$core$Range$LTpanda$core$Int64$Q$GT self) {

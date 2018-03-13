@@ -419,6 +419,7 @@ void org$pandalanguage$pandac$Main$run$panda$collections$ListView$LTpanda$core$S
                     panda$core$System$exit$panda$core$Int64(((panda$core$Int64) { 1 }));
                 }
                 }
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) level123));
             }
             }
             else {
@@ -443,6 +444,7 @@ void org$pandalanguage$pandac$Main$run$panda$collections$ListView$LTpanda$core$S
                     panda$core$System$exit$panda$core$Int64(((panda$core$Int64) { 1 }));
                 }
                 }
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) level138));
             }
             }
             else {
@@ -506,6 +508,7 @@ void org$pandalanguage$pandac$Main$run$panda$collections$ListView$LTpanda$core$S
                     }
                     }
                 }
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) f155));
             }
             }
             else {
@@ -826,6 +829,10 @@ void org$pandalanguage$pandac$Main$run$panda$collections$ListView$LTpanda$core$S
                 panda$io$File* $tmp301 = org$pandalanguage$pandac$Main$toAssembly$panda$io$File$R$panda$io$File(self, optimized296);
                 assembly300 = $tmp301;
                 panda$io$File* $tmp302 = org$pandalanguage$pandac$Main$toExecutable$panda$io$File$panda$io$File$R$panda$io$File(self, assembly300, outFile97);
+                {
+                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) assembly300));
+                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) optimized296));
+                }
             }
             }
             else {
@@ -838,6 +845,10 @@ void org$pandalanguage$pandac$Main$run$panda$collections$ListView$LTpanda$core$S
                 panda$io$File* $tmp309 = org$pandalanguage$pandac$Main$toAssembly$panda$io$File$R$panda$io$File(self, optimized304);
                 assembly308 = $tmp309;
                 panda$io$File* $tmp310 = org$pandalanguage$pandac$Main$toObject$panda$io$File$panda$io$File$R$panda$io$File(self, assembly308, outFile97);
+                {
+                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) assembly308));
+                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) optimized304));
+                }
             }
             }
             }

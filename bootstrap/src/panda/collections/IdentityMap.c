@@ -210,6 +210,7 @@ void panda$collections$IdentityMap$$IDXEQ$panda$collections$IdentityMap$K$panda$
             e49 = $tmp56;
         }
         {
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) e49->next));
             e49->next = old55;
         }
         {
@@ -224,6 +225,7 @@ void panda$collections$IdentityMap$$IDXEQ$panda$collections$IdentityMap$K$panda$
     else {
     {
         {
+            panda$core$Panda$unref$panda$core$Object(e49->value);
             e49->value = p_value;
         }
     }
@@ -297,6 +299,7 @@ void panda$collections$IdentityMap$remove$panda$collections$IdentityMap$K(panda$
     next65 = e60->next;
     PANDA_ASSERT(((panda$core$Bit) { next65 != NULL }).value);
     {
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) e60->next));
         e60->next = next65->next;
     }
     panda$core$Int64 $tmp66 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(self->_count, ((panda$core$Int64) { 1 }));

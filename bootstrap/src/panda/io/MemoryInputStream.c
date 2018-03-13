@@ -5,6 +5,7 @@
 #include "panda/core/Object.h"
 #include "panda/collections/ImmutableArray.h"
 #include "panda/core/Int64.h"
+#include "panda/core/Panda.h"
 #include "panda/collections/ListView.h"
 #include "panda/collections/Array.h"
 #include "panda/collections/CollectionView.h"
@@ -13,7 +14,6 @@
 #include "panda/core/Bit.h"
 #include "panda/core/Char8.h"
 #include "panda/core/UInt8.h"
-#include "panda/core/Panda.h"
 
 
 static panda$core$String $s1;
@@ -32,6 +32,7 @@ void panda$io$MemoryInputStream$init$panda$collections$ImmutableArray$LTpanda$co
     self->data = NULL;
     self->index = ((panda$core$Int64) { 0 });
     {
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->data));
         self->data = ((panda$collections$ListView*) p_source);
     }
 }
@@ -89,6 +90,7 @@ void panda$io$MemoryInputStream$init$panda$core$String(panda$io$MemoryInputStrea
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp14));
     }
     {
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->data));
         self->data = ((panda$collections$ListView*) array4);
     }
     {

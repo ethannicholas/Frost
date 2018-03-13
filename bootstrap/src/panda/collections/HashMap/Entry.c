@@ -19,6 +19,7 @@ void panda$collections$HashMap$Entry$init$panda$collections$HashMap$Entry$K$pand
         self->key = p_key;
     }
     {
+        panda$core$Panda$unref$panda$core$Object(self->value);
         self->value = p_value;
     }
 }

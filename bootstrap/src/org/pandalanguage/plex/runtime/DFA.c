@@ -3,6 +3,7 @@
 #include "panda/core/Class.h"
 #include "panda/core/String.h"
 #include "panda/core/Int64.h"
+#include "panda/core/Panda.h"
 #include "panda/collections/ListView.h"
 #include "panda/collections/CollectionView.h"
 #include "org/pandalanguage/plex/runtime/RawToken.h"
@@ -12,7 +13,6 @@
 #include "panda/core/UInt8.h"
 #include "panda/io/Console.h"
 #include "panda/core/System.h"
-#include "panda/core/Panda.h"
 
 
 static panda$core$String $s1;
@@ -37,6 +37,7 @@ void org$pandalanguage$plex$runtime$DFA$init$panda$core$String$panda$core$Int64$
     self->line = ((panda$core$Int64) { 1 });
     self->column = ((panda$core$Int64) { 1 });
     {
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->source));
         panda$collections$ListView* $tmp3 = panda$core$String$utf8$R$panda$collections$ListView$LTpanda$core$Char8$GT(p_source);
         self->source = $tmp3;
     }
@@ -63,11 +64,10 @@ org$pandalanguage$plex$runtime$RawToken org$pandalanguage$plex$runtime$DFA$next$
     panda$core$Int64 startLine16;
     panda$core$Int64 startColumn17;
     panda$core$Char8 c21;
-    panda$core$UInt8 $match$60_2137;
-    panda$core$Int64 newAccept46;
-    org$pandalanguage$plex$runtime$RawToken $tmp48;
-    panda$core$String$Index $tmp49;
-    panda$core$String$Index $tmp50;
+    panda$core$Int64 newAccept43;
+    org$pandalanguage$plex$runtime$RawToken $tmp45;
+    panda$core$String$Index $tmp46;
+    panda$core$String$Index $tmp47;
     state8 = ((panda$core$Int64) { 1 });
     panda$core$Bit $tmp9 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(self->offset, self->sourceEnd);
     if ($tmp9.value) {
@@ -115,40 +115,34 @@ org$pandalanguage$plex$runtime$RawToken org$pandalanguage$plex$runtime$DFA$next$
         {
             panda$core$Int64 $tmp36 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->offset, ((panda$core$Int64) { 1 }));
             self->offset = $tmp36;
-            {
-                panda$core$UInt8 $tmp38 = panda$core$Char8$convert$R$panda$core$UInt8(c21);
-                $match$60_2137 = $tmp38;
-                panda$core$Bit $tmp39 = panda$core$UInt8$$EQ$panda$core$UInt8$R$panda$core$Bit($match$60_2137, ((panda$core$UInt8) { 10 }));
-                if ($tmp39.value) {
+            panda$core$UInt8 $tmp37 = panda$core$Char8$convert$R$panda$core$UInt8(c21);
+            switch ($tmp37.value) {
+                case 10:
                 {
-                    panda$core$Int64 $tmp40 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->line, ((panda$core$Int64) { 1 }));
-                    self->line = $tmp40;
+                    panda$core$Int64 $tmp38 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->line, ((panda$core$Int64) { 1 }));
+                    self->line = $tmp38;
                     self->column = ((panda$core$Int64) { 1 });
                 }
-                }
-                else {
-                panda$core$Bit $tmp41 = panda$core$UInt8$$EQ$panda$core$UInt8$R$panda$core$Bit($match$60_2137, ((panda$core$UInt8) { 9 }));
-                if ($tmp41.value) {
+                break;
+                case 9:
                 {
-                    panda$core$Int64 $tmp42 = panda$core$Int64$$REM$panda$core$Int64$R$panda$core$Int64(self->column, ((panda$core$Int64) { 4 }));
-                    panda$core$Int64 $tmp43 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(((panda$core$Int64) { 4 }), $tmp42);
-                    panda$core$Int64 $tmp44 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->column, $tmp43);
-                    self->column = $tmp44;
+                    panda$core$Int64 $tmp39 = panda$core$Int64$$REM$panda$core$Int64$R$panda$core$Int64(self->column, ((panda$core$Int64) { 4 }));
+                    panda$core$Int64 $tmp40 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(((panda$core$Int64) { 4 }), $tmp39);
+                    panda$core$Int64 $tmp41 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->column, $tmp40);
+                    self->column = $tmp41;
                 }
-                }
-                else {
+                break;
+                default:
                 {
-                    panda$core$Int64 $tmp45 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->column, ((panda$core$Int64) { 1 }));
-                    self->column = $tmp45;
-                }
-                }
+                    panda$core$Int64 $tmp42 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->column, ((panda$core$Int64) { 1 }));
+                    self->column = $tmp42;
                 }
             }
-            newAccept46 = self->accepts[state8.value];
-            panda$core$Bit $tmp47 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit(newAccept46, ((panda$core$Int64) { -1 }));
-            if ($tmp47.value) {
+            newAccept43 = self->accepts[state8.value];
+            panda$core$Bit $tmp44 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit(newAccept43, ((panda$core$Int64) { -1 }));
+            if ($tmp44.value) {
             {
-                kind13 = newAccept46;
+                kind13 = newAccept43;
                 end15 = self->offset;
             }
             }
@@ -163,10 +157,10 @@ org$pandalanguage$plex$runtime$RawToken org$pandalanguage$plex$runtime$DFA$next$
     goto $l18;
     $l19:;
     self->offset = end15;
-    panda$core$String$Index$init$panda$core$Int64(&$tmp49, start14);
-    panda$core$String$Index$init$panda$core$Int64(&$tmp50, end15);
-    org$pandalanguage$plex$runtime$RawToken$init$panda$core$Int64$panda$core$String$Index$panda$core$String$Index$panda$core$Int64$panda$core$Int64(&$tmp48, kind13, $tmp49, $tmp50, startLine16, startColumn17);
-    return $tmp48;
+    panda$core$String$Index$init$panda$core$Int64(&$tmp46, start14);
+    panda$core$String$Index$init$panda$core$Int64(&$tmp47, end15);
+    org$pandalanguage$plex$runtime$RawToken$init$panda$core$Int64$panda$core$String$Index$panda$core$String$Index$panda$core$Int64$panda$core$Int64(&$tmp45, kind13, $tmp46, $tmp47, startLine16, startColumn17);
+    return $tmp45;
 }
 void org$pandalanguage$plex$runtime$DFA$cleanup(org$pandalanguage$plex$runtime$DFA* self) {
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->source));

@@ -18,6 +18,7 @@ void panda$collections$IdentityMap$Entry$init$panda$collections$IdentityMap$Entr
         self->key = p_key;
     }
     {
+        panda$core$Panda$unref$panda$core$Object(self->value);
         self->value = p_value;
     }
 }

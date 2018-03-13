@@ -344,6 +344,7 @@ void panda$collections$HashMap$$IDXEQ$panda$collections$HashMap$K$panda$collecti
             e111 = $tmp122;
         }
         {
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) e111->next));
             e111->next = old121;
         }
         {
@@ -358,6 +359,7 @@ void panda$collections$HashMap$$IDXEQ$panda$collections$HashMap$K$panda$collecti
     else {
     {
         {
+            panda$core$Panda$unref$panda$core$Object(e111->value);
             e111->value = p_value;
         }
     }
@@ -443,6 +445,7 @@ void panda$collections$HashMap$remove$panda$collections$HashMap$K(panda$collecti
     next139 = e126->next;
     PANDA_ASSERT(((panda$core$Bit) { next139 != NULL }).value);
     {
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) e126->next));
         e126->next = next139->next;
     }
     panda$core$Int64 $tmp140 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(self->_count, ((panda$core$Int64) { 1 }));

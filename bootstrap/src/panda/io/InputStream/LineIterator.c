@@ -47,6 +47,7 @@ panda$core$String* panda$io$InputStream$LineIterator$next$R$panda$core$String(pa
 }
 void panda$io$InputStream$LineIterator$readNext(panda$io$InputStream$LineIterator* self) {
     {
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->_next));
         panda$core$String* $tmp7 = (($fn6) self->input->$class->vtable[11])(self->input);
         self->_next = $tmp7;
     }

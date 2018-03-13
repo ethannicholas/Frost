@@ -310,7 +310,7 @@ panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT* p
     panda$core$Int64 current104;
     panda$core$Int64 end108;
     panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT* result111;
-    panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT* tmp237138;
+    panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT* tmp290138;
     step103 = p_r.step;
     memset(&current104, 0, sizeof(current104));
     if (((panda$core$Bit) { p_r.start.nonnull }).value) {
@@ -414,9 +414,9 @@ panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT* p
     }
     }
     {
-        tmp237138 = result111;
+        tmp290138 = result111;
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result111));
-        return tmp237138;
+        return tmp290138;
     }
 }
 void panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$add$org$pandalanguage$pandac$parser$Token(panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT* self, org$pandalanguage$pandac$parser$Token p_value) {
@@ -544,7 +544,7 @@ panda$core$String* panda$collections$SpecializedArray$LTorg$pandalanguage$pandac
 panda$core$String* panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$join$panda$core$String$R$panda$core$String(panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT* self, panda$core$String* p_separator) {
     panda$core$MutableString* result200;
     panda$core$Range$LTpanda$core$Int64$GT $tmp206;
-    panda$core$String* tmp238228;
+    panda$core$String* tmp291228;
     panda$core$Bit $tmp198 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(self->count, ((panda$core$Int64) { 0 }));
     if ($tmp198.value) {
     {
@@ -591,9 +591,9 @@ panda$core$String* panda$collections$SpecializedArray$LTorg$pandalanguage$pandac
     $l214:;
     {
         panda$core$String* $tmp229 = panda$core$MutableString$finish$R$panda$core$String(result200);
-        tmp238228 = $tmp229;
+        tmp291228 = $tmp229;
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result200));
-        return tmp238228;
+        return tmp291228;
     }
 }
 panda$core$String* panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$convert$R$panda$core$String(panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT* self) {
@@ -603,7 +603,7 @@ panda$core$String* panda$collections$SpecializedArray$LTorg$pandalanguage$pandac
     panda$collections$Iterator* v$Iter235;
     org$pandalanguage$pandac$parser$Token v247;
     panda$core$Char8 $tmp255;
-    panda$core$String* tmp239256;
+    panda$core$String* tmp292256;
     panda$core$MutableString* $tmp231 = (panda$core$MutableString*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$MutableString$class);
     panda$core$MutableString$init($tmp231);
     result230 = $tmp231;
@@ -662,12 +662,12 @@ panda$core$String* panda$collections$SpecializedArray$LTorg$pandalanguage$pandac
     panda$core$MutableString$append$panda$core$Char8(result230, $tmp255);
     {
         panda$core$String* $tmp257 = panda$core$MutableString$finish$R$panda$core$String(result230);
-        tmp239256 = $tmp257;
+        tmp292256 = $tmp257;
         {
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator233));
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result230));
         }
-        return tmp239256;
+        return tmp292256;
     }
 }
 

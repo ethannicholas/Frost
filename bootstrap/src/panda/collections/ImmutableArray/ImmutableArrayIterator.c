@@ -5,8 +5,8 @@
 #include "panda/collections/Iterator.h"
 #include "panda/collections/ImmutableArray.h"
 #include "panda/core/Int64.h"
-#include "panda/core/Bit.h"
 #include "panda/core/Panda.h"
+#include "panda/core/Bit.h"
 panda$core$Object* panda$collections$ImmutableArray$ImmutableArrayIterator$next$R$panda$collections$ImmutableArray$ImmutableArrayIterator$T$shim(panda$collections$ImmutableArray$ImmutableArrayIterator* self) {
     panda$core$Object* result = panda$collections$ImmutableArray$ImmutableArrayIterator$next$R$panda$collections$ImmutableArray$ImmutableArrayIterator$T(self);
     return result;
@@ -25,6 +25,7 @@ void panda$collections$ImmutableArray$ImmutableArrayIterator$init$panda$collecti
     self->array = NULL;
     self->index = ((panda$core$Int64) { 0 });
     {
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->array));
         self->array = p_array;
     }
 }

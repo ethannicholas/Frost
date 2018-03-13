@@ -3157,6 +3157,9 @@ class LLVMCodeGenerator : CodeGenerator {
         if other != null {
             createBlock(otherwiseLabel, out)
             writeBlock(other, out)
+            if !compiler.endsWithBranch(other) {
+                out.printLine("br label %\{endLabel}")
+            }
         }
         createBlock(endLabel, out)
     }

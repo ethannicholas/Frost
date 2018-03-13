@@ -92,6 +92,7 @@ void panda$io$IndentedOutputStream$indentIfNeeded(panda$io$IndentedOutputStream*
         if ($tmp20.value) {
         {
             {
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->indent));
                 panda$core$Int64 $tmp22 = panda$core$Int64$$MUL$panda$core$Int64$R$panda$core$Int64(self->indentSize, self->level);
                 panda$core$String* $tmp23 = panda$core$String$$MUL$panda$core$Int64$R$panda$core$String(&$s21, $tmp22);
                 self->indent = $tmp23;

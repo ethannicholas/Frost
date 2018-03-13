@@ -47,6 +47,7 @@ void panda$collections$HashMap$EntryIterator$init$panda$collections$HashMap$LTpa
     if ($tmp9.value) {
     {
         {
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->entry));
             self->entry = p_map->contents[self->bucket.value];
         }
     }
@@ -69,6 +70,7 @@ panda$collections$HashMap$Entry* panda$collections$HashMap$EntryIterator$next$R$
     PANDA_ASSERT($tmp14.value);
     result15 = self->entry;
     {
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->entry));
         self->entry = self->entry->next;
     }
     $l16:;
@@ -83,6 +85,7 @@ panda$collections$HashMap$Entry* panda$collections$HashMap$EntryIterator$next$R$
         }
         }
         {
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->entry));
             self->entry = self->map->contents[self->bucket.value];
         }
     }

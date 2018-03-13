@@ -3,11 +3,11 @@
 #include "panda/core/Class.h"
 #include "panda/core/String.h"
 #include "panda/core/Int64.h"
+#include "panda/core/Panda.h"
 #include "panda/core/MutableString.h"
+#include "panda/core/Object.h"
 #include "panda/core/UInt8.h"
 #include "panda/core/Char8.h"
-#include "panda/core/Panda.h"
-#include "panda/core/Object.h"
 
 
 static panda$core$String $s1;
@@ -23,6 +23,7 @@ void panda$io$MemoryOutputStream$init(panda$io$MemoryOutputStream* self) {
 void panda$io$MemoryOutputStream$init$panda$core$Int64(panda$io$MemoryOutputStream* self, panda$core$Int64 p_capacity) {
     self->data = NULL;
     {
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->data));
         panda$core$MutableString* $tmp2 = (panda$core$MutableString*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$MutableString$class);
         panda$core$MutableString$init$panda$core$Int64($tmp2, p_capacity);
         self->data = $tmp2;
