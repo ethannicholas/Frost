@@ -46,6 +46,7 @@ panda$core$Object* panda$collections$Stack$StackIterator$next$R$panda$collection
     }
 }
 void panda$collections$Stack$StackIterator$cleanup(panda$collections$Stack$StackIterator* self) {
+    panda$core$Object$cleanup(((panda$core$Object*) self));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->stack));
 }
 

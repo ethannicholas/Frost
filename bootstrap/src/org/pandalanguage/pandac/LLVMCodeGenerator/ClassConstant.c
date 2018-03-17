@@ -21,6 +21,7 @@ void org$pandalanguage$pandac$LLVMCodeGenerator$ClassConstant$init$panda$core$St
     }
 }
 void org$pandalanguage$pandac$LLVMCodeGenerator$ClassConstant$cleanup(org$pandalanguage$pandac$LLVMCodeGenerator$ClassConstant* self) {
+    panda$core$Immutable$cleanup(((panda$core$Immutable*) self));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->name));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->type));
 }

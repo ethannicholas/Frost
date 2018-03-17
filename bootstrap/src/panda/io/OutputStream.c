@@ -145,5 +145,6 @@ void panda$io$OutputStream$printLine$panda$core$String(panda$io$OutputStream* se
 void panda$io$OutputStream$init(panda$io$OutputStream* self) {
 }
 void panda$io$OutputStream$cleanup(panda$io$OutputStream* self) {
+    panda$core$Object$cleanup(((panda$core$Object*) self));
 }
 

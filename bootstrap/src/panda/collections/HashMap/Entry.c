@@ -24,6 +24,7 @@ void panda$collections$HashMap$Entry$init$panda$collections$HashMap$Entry$K$pand
     }
 }
 void panda$collections$HashMap$Entry$cleanup(panda$collections$HashMap$Entry* self) {
+    panda$core$Object$cleanup(((panda$core$Object*) self));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->key));
     panda$core$Panda$unref$panda$core$Object(self->value);
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->next));

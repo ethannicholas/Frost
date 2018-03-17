@@ -25,6 +25,7 @@ panda$core$Bit org$pandalanguage$pandac$Symbol$get_heritable$R$panda$core$Bit(or
     return ((panda$core$Bit) { true });
 }
 void org$pandalanguage$pandac$Symbol$cleanup(org$pandalanguage$pandac$Symbol* self) {
+    panda$core$Object$cleanup(((panda$core$Object*) self));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->name));
 }
 

@@ -123,6 +123,7 @@ void org$pandalanguage$pandac$Methods$init$panda$collections$ListView$LTorg$pand
     }
 }
 void org$pandalanguage$pandac$Methods$cleanup(org$pandalanguage$pandac$Methods* self) {
+    org$pandalanguage$pandac$Symbol$cleanup(((org$pandalanguage$pandac$Symbol*) self));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->methods));
 }
 

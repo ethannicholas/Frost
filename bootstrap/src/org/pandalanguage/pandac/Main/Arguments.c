@@ -92,6 +92,7 @@ panda$core$String* org$pandalanguage$pandac$Main$Arguments$next$panda$core$Strin
     return $tmp39;
 }
 void org$pandalanguage$pandac$Main$Arguments$cleanup(org$pandalanguage$pandac$Main$Arguments* self) {
+    panda$core$Object$cleanup(((panda$core$Object*) self));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->args));
 }
 

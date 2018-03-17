@@ -16,6 +16,7 @@ static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -
 void panda$core$System$Process$init(panda$core$System$Process* self) {
 }
 void panda$core$System$Process$cleanup(panda$core$System$Process* self) {
+    panda$core$Object$cleanup(((panda$core$Object*) self));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->input));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->output));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->error));

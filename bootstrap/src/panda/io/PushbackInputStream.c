@@ -257,6 +257,7 @@ void panda$io$PushbackInputStream$pushback$panda$core$String(panda$io$PushbackIn
     panda$io$PushbackInputStream$pushback$panda$collections$ListView$LTpanda$core$Char8$GT(self, $tmp134);
 }
 void panda$io$PushbackInputStream$cleanup(panda$io$PushbackInputStream* self) {
+    panda$io$InputStream$cleanup(((panda$io$InputStream*) self));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->source));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->pushbackBuffer));
 }

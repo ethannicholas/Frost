@@ -20,6 +20,7 @@ void org$pandalanguage$pandac$CCodeGenerator$MethodShim$init$panda$core$String$p
     }
 }
 void org$pandalanguage$pandac$CCodeGenerator$MethodShim$cleanup(org$pandalanguage$pandac$CCodeGenerator$MethodShim* self) {
+    panda$core$Object$cleanup(((panda$core$Object*) self));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->name));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->type));
 }

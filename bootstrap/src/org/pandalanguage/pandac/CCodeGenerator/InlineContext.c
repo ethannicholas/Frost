@@ -34,6 +34,7 @@ void org$pandalanguage$pandac$CCodeGenerator$InlineContext$init$panda$core$Strin
     }
 }
 void org$pandalanguage$pandac$CCodeGenerator$InlineContext$cleanup(org$pandalanguage$pandac$CCodeGenerator$InlineContext* self) {
+    panda$core$Object$cleanup(((panda$core$Object*) self));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->varSuffix));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->selfRef));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->argRefs));

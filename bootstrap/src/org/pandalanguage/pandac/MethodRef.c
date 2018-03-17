@@ -135,6 +135,7 @@ panda$core$String* org$pandalanguage$pandac$MethodRef$convert$R$panda$core$Strin
     return $tmp59;
 }
 void org$pandalanguage$pandac$MethodRef$cleanup(org$pandalanguage$pandac$MethodRef* self) {
+    panda$core$Object$cleanup(((panda$core$Object*) self));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->value));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->types));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->typeMap));

@@ -30,6 +30,7 @@ panda$core$String* org$pandalanguage$pandac$MethodDecl$Parameter$convert$R$panda
     return $tmp7;
 }
 void org$pandalanguage$pandac$MethodDecl$Parameter$cleanup(org$pandalanguage$pandac$MethodDecl$Parameter* self) {
+    panda$core$Object$cleanup(((panda$core$Object*) self));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->name));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->type));
 }

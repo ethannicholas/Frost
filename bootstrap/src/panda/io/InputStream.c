@@ -240,5 +240,6 @@ panda$collections$Iterator* panda$io$InputStream$lines$R$panda$collections$Itera
 void panda$io$InputStream$init(panda$io$InputStream* self) {
 }
 void panda$io$InputStream$cleanup(panda$io$InputStream* self) {
+    panda$core$Object$cleanup(((panda$core$Object*) self));
 }
 

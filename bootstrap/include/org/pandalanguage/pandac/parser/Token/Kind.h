@@ -33,5 +33,6 @@ extern org$pandalanguage$pandac$parser$Token$Kind$wrapperclass_type org$pandalan
 #include "panda/core/Int64.h"
 
 void org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64(org$pandalanguage$pandac$parser$Token$Kind* self, panda$core$Int64 p_rv);
+void org$pandalanguage$pandac$parser$Token$Kind$cleanup(org$pandalanguage$pandac$parser$Token$Kind self);
 
 #endif

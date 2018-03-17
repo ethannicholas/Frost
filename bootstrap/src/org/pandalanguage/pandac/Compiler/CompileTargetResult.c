@@ -21,6 +21,7 @@ void org$pandalanguage$pandac$Compiler$CompileTargetResult$init$org$pandalanguag
     }
 }
 void org$pandalanguage$pandac$Compiler$CompileTargetResult$cleanup(org$pandalanguage$pandac$Compiler$CompileTargetResult* self) {
+    panda$core$Object$cleanup(((panda$core$Object*) self));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->target));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->value));
 }

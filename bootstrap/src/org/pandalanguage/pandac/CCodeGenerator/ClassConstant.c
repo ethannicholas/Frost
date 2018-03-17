@@ -21,6 +21,7 @@ void org$pandalanguage$pandac$CCodeGenerator$ClassConstant$init$panda$core$Strin
     }
 }
 void org$pandalanguage$pandac$CCodeGenerator$ClassConstant$cleanup(org$pandalanguage$pandac$CCodeGenerator$ClassConstant* self) {
+    panda$core$Immutable$cleanup(((panda$core$Immutable*) self));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->name));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->type));
 }

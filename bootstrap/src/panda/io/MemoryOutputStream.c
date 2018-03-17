@@ -49,6 +49,7 @@ panda$core$String* panda$io$MemoryOutputStream$finish$R$panda$core$String(panda$
     return $tmp5;
 }
 void panda$io$MemoryOutputStream$cleanup(panda$io$MemoryOutputStream* self) {
+    panda$io$OutputStream$cleanup(((panda$io$OutputStream*) self));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->data));
 }
 

@@ -37,6 +37,7 @@ panda$core$String* org$pandalanguage$pandac$Variable$convert$R$panda$core$String
     return self->name;
 }
 void org$pandalanguage$pandac$Variable$cleanup(org$pandalanguage$pandac$Variable* self) {
+    org$pandalanguage$pandac$Symbol$cleanup(((org$pandalanguage$pandac$Symbol*) self));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->type));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->initialValue));
 }

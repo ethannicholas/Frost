@@ -3348,6 +3348,7 @@ void org$pandalanguage$pandac$parser$Lexer$init(org$pandalanguage$pandac$parser$
     self->accepts = $tmp92;
 }
 void org$pandalanguage$pandac$parser$Lexer$cleanup(org$pandalanguage$pandac$parser$Lexer* self) {
+    panda$core$Object$cleanup(((panda$core$Object*) self));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->dfa));
 }
 

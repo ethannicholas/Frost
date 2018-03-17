@@ -13,5 +13,6 @@ static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -
 void org$pandalanguage$pandac$Symbol$Kind$init(org$pandalanguage$pandac$Symbol$Kind* self) {
 }
 void org$pandalanguage$pandac$Symbol$Kind$cleanup(org$pandalanguage$pandac$Symbol$Kind* self) {
+    panda$core$Object$cleanup(((panda$core$Object*) self));
 }
 

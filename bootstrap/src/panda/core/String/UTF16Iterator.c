@@ -43,6 +43,7 @@ panda$core$Char16 panda$core$String$UTF16Iterator$next$R$panda$core$Char16(panda
     return $tmp5;
 }
 void panda$core$String$UTF16Iterator$cleanup(panda$core$String$UTF16Iterator* self) {
+    panda$core$Object$cleanup(((panda$core$Object*) self));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->str));
 }
 

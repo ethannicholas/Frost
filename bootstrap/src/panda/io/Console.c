@@ -123,5 +123,6 @@ panda$core$String* panda$io$Console$readLine$R$panda$core$String$Q() {
 void panda$io$Console$init(panda$io$Console* self) {
 }
 void panda$io$Console$cleanup(panda$io$Console* self) {
+    panda$core$Object$cleanup(((panda$core$Object*) self));
 }
 

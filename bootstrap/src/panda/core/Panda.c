@@ -494,5 +494,6 @@ panda$core$String* panda$core$Panda$format$panda$core$Bit$panda$core$UInt64$pand
 void panda$core$Panda$init(panda$core$Panda* self) {
 }
 void panda$core$Panda$cleanup(panda$core$Panda* self) {
+    panda$core$Object$cleanup(((panda$core$Object*) self));
 }
 

@@ -78,6 +78,7 @@ void panda$collections$Stack$init(panda$collections$Stack* self) {
     self->contents = $tmp20;
 }
 void panda$collections$Stack$cleanup(panda$collections$Stack* self) {
+    panda$core$Object$cleanup(((panda$core$Object*) self));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->contents));
 }
 

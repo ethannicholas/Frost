@@ -129,6 +129,7 @@ panda$core$Char32 panda$core$String$UTF32Iterator$next$R$panda$core$Char32(panda
     return $tmp60;
 }
 void panda$core$String$UTF32Iterator$cleanup(panda$core$String$UTF32Iterator* self) {
+    panda$core$Object$cleanup(((panda$core$Object*) self));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->str));
 }
 

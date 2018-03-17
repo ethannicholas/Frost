@@ -41,6 +41,7 @@ panda$core$String* org$pandalanguage$pandac$LLVMCodeGenerator$LoopDescriptor$con
     }
 }
 void org$pandalanguage$pandac$LLVMCodeGenerator$LoopDescriptor$cleanup(org$pandalanguage$pandac$LLVMCodeGenerator$LoopDescriptor* self) {
+    panda$core$Immutable$cleanup(((panda$core$Immutable*) self));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->loopLabel));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->breakLabel));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->continueLabel));

@@ -104,6 +104,7 @@ void panda$io$IndentedOutputStream$indentIfNeeded(panda$io$IndentedOutputStream*
     }
 }
 void panda$io$IndentedOutputStream$cleanup(panda$io$IndentedOutputStream* self) {
+    panda$io$OutputStream$cleanup(((panda$io$OutputStream*) self));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->indent));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->out));
 }

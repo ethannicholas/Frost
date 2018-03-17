@@ -2894,7 +2894,7 @@ class LLVMCodeGenerator : CodeGenerator {
                     def ref := getTypedReference(value, out)
                     out.printLine("store \{ref}, \{t}* \{name}")
                 }
-                else if v.varKind = Variable.Kind.VAR & compiler.isRefCounted(v.type) {
+                else if compiler.isRefCounted(v.type) {
                     out.printLine("store \{t} null, \{t}* \{name}")
                 }
                 else if v.varKind = Variable.Kind.VAR &

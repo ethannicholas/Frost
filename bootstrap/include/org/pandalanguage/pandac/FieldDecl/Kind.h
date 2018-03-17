@@ -33,5 +33,6 @@ extern org$pandalanguage$pandac$FieldDecl$Kind$wrapperclass_type org$pandalangua
 #include "panda/core/Int64.h"
 
 void org$pandalanguage$pandac$FieldDecl$Kind$init$panda$core$Int64(org$pandalanguage$pandac$FieldDecl$Kind* self, panda$core$Int64 p_rv);
+void org$pandalanguage$pandac$FieldDecl$Kind$cleanup(org$pandalanguage$pandac$FieldDecl$Kind self);
 
 #endif

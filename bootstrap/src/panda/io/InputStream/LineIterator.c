@@ -53,6 +53,7 @@ void panda$io$InputStream$LineIterator$readNext(panda$io$InputStream$LineIterato
     }
 }
 void panda$io$InputStream$LineIterator$cleanup(panda$io$InputStream$LineIterator* self) {
+    panda$core$Object$cleanup(((panda$core$Object*) self));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->input));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->_next));
 }

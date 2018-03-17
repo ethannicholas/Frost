@@ -13,5 +13,6 @@ static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -
 void org$pandalanguage$pandac$LLVMCodeGenerator$OpClass$init(org$pandalanguage$pandac$LLVMCodeGenerator$OpClass* self) {
 }
 void org$pandalanguage$pandac$LLVMCodeGenerator$OpClass$cleanup(org$pandalanguage$pandac$LLVMCodeGenerator$OpClass* self) {
+    panda$core$Object$cleanup(((panda$core$Object*) self));
 }
 

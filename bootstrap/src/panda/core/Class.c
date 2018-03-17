@@ -12,5 +12,6 @@ static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -
 void panda$core$Class$init(panda$core$Class* self) {
 }
 void panda$core$Class$cleanup(panda$core$Class* self) {
+    panda$core$Object$cleanup(((panda$core$Object*) self));
 }
 

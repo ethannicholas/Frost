@@ -94,7 +94,7 @@ void panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$
     self->data = ((org$pandalanguage$pandac$parser$Token*) pandaZAlloc(p_capacity.value * 48));
 }
 void panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$init$panda$collections$ListView$LTorg$pandalanguage$pandac$parser$Token$GT(panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT* self, panda$collections$ListView* p_list) {
-    panda$collections$Iterator* v$Iter8;
+    panda$collections$Iterator* Iter$54$98;
     org$pandalanguage$pandac$parser$Token v20;
     self->count = ((panda$core$Int64) { 0 });
     ITable* $tmp3 = ((panda$collections$CollectionView*) p_list)->$class->itable;
@@ -112,29 +112,29 @@ void panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$
         }
         $fn11 $tmp10 = $tmp9->methods[0];
         panda$collections$Iterator* $tmp12 = $tmp10(((panda$collections$Iterable*) p_list));
-        v$Iter8 = $tmp12;
+        Iter$54$98 = $tmp12;
         $l13:;
-        ITable* $tmp15 = v$Iter8->$class->itable;
+        ITable* $tmp15 = Iter$54$98->$class->itable;
         while ($tmp15->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
             $tmp15 = $tmp15->next;
         }
         $fn17 $tmp16 = $tmp15->methods[0];
-        panda$core$Bit $tmp18 = $tmp16(v$Iter8);
+        panda$core$Bit $tmp18 = $tmp16(Iter$54$98);
         panda$core$Bit $tmp19 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp18);
         if (!$tmp19.value) goto $l14;
         {
-            ITable* $tmp21 = v$Iter8->$class->itable;
+            ITable* $tmp21 = Iter$54$98->$class->itable;
             while ($tmp21->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
                 $tmp21 = $tmp21->next;
             }
             $fn23 $tmp22 = $tmp21->methods[1];
-            panda$core$Object* $tmp24 = $tmp22(v$Iter8);
+            panda$core$Object* $tmp24 = $tmp22(Iter$54$98);
             v20 = ((org$pandalanguage$pandac$parser$Token$wrapper*) $tmp24)->value;
             panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$add$org$pandalanguage$pandac$parser$Token(self, v20);
         }
         goto $l13;
         $l14:;
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp12));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$54$98));
     }
 }
 void panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$init$panda$unsafe$Pointer$LTorg$pandalanguage$pandac$parser$Token$GT$panda$core$Int64(panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT* self, org$pandalanguage$pandac$parser$Token* p_data, panda$core$Int64 p_count) {
@@ -145,6 +145,7 @@ void panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$
 }
 void panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$cleanup(panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT* self) {
     pandaFree(self->data);
+    panda$core$Object$cleanup(((panda$core$Object*) self));
 }
 org$pandalanguage$pandac$parser$Token panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$$IDX$panda$core$Int64$R$org$pandalanguage$pandac$parser$Token(panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT* self, panda$core$Int64 p_index) {
     panda$core$Bit $tmp26 = panda$core$Int64$$GE$panda$core$Int64$R$panda$core$Bit(p_index, ((panda$core$Int64) { 0 }));
@@ -427,7 +428,7 @@ void panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$
     self->count = $tmp140;
 }
 void panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$addAll$panda$collections$CollectionView$LTorg$pandalanguage$pandac$parser$Token$GT(panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT* self, panda$collections$CollectionView* p_c) {
-    panda$collections$Iterator* v$Iter146;
+    panda$collections$Iterator* Iter$205$9146;
     org$pandalanguage$pandac$parser$Token v158;
     ITable* $tmp141 = p_c->$class->itable;
     while ($tmp141->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
@@ -444,23 +445,23 @@ void panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$
         }
         $fn149 $tmp148 = $tmp147->methods[0];
         panda$collections$Iterator* $tmp150 = $tmp148(((panda$collections$Iterable*) p_c));
-        v$Iter146 = $tmp150;
+        Iter$205$9146 = $tmp150;
         $l151:;
-        ITable* $tmp153 = v$Iter146->$class->itable;
+        ITable* $tmp153 = Iter$205$9146->$class->itable;
         while ($tmp153->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
             $tmp153 = $tmp153->next;
         }
         $fn155 $tmp154 = $tmp153->methods[0];
-        panda$core$Bit $tmp156 = $tmp154(v$Iter146);
+        panda$core$Bit $tmp156 = $tmp154(Iter$205$9146);
         panda$core$Bit $tmp157 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp156);
         if (!$tmp157.value) goto $l152;
         {
-            ITable* $tmp159 = v$Iter146->$class->itable;
+            ITable* $tmp159 = Iter$205$9146->$class->itable;
             while ($tmp159->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
                 $tmp159 = $tmp159->next;
             }
             $fn161 $tmp160 = $tmp159->methods[1];
-            panda$core$Object* $tmp162 = $tmp160(v$Iter146);
+            panda$core$Object* $tmp162 = $tmp160(Iter$205$9146);
             v158 = ((org$pandalanguage$pandac$parser$Token$wrapper*) $tmp162)->value;
             self->data[self->count.value] = v158;
             panda$core$Int64 $tmp163 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->count, ((panda$core$Int64) { 1 }));
@@ -468,7 +469,7 @@ void panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$
         }
         goto $l151;
         $l152:;
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp150));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$205$9146));
     }
 }
 void panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$ensureCapacity$panda$core$Int64(panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT* self, panda$core$Int64 p_newCapacity) {
@@ -600,7 +601,7 @@ panda$core$String* panda$collections$SpecializedArray$LTorg$pandalanguage$pandac
     panda$core$MutableString* result230;
     panda$core$Char8 $tmp232;
     panda$core$String* separator233;
-    panda$collections$Iterator* v$Iter235;
+    panda$collections$Iterator* Iter$268$9235;
     org$pandalanguage$pandac$parser$Token v247;
     panda$core$Char8 $tmp255;
     panda$core$String* tmp292256;
@@ -617,23 +618,23 @@ panda$core$String* panda$collections$SpecializedArray$LTorg$pandalanguage$pandac
         }
         $fn238 $tmp237 = $tmp236->methods[0];
         panda$collections$Iterator* $tmp239 = $tmp237(((panda$collections$Iterable*) self));
-        v$Iter235 = $tmp239;
+        Iter$268$9235 = $tmp239;
         $l240:;
-        ITable* $tmp242 = v$Iter235->$class->itable;
+        ITable* $tmp242 = Iter$268$9235->$class->itable;
         while ($tmp242->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
             $tmp242 = $tmp242->next;
         }
         $fn244 $tmp243 = $tmp242->methods[0];
-        panda$core$Bit $tmp245 = $tmp243(v$Iter235);
+        panda$core$Bit $tmp245 = $tmp243(Iter$268$9235);
         panda$core$Bit $tmp246 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp245);
         if (!$tmp246.value) goto $l241;
         {
-            ITable* $tmp248 = v$Iter235->$class->itable;
+            ITable* $tmp248 = Iter$268$9235->$class->itable;
             while ($tmp248->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
                 $tmp248 = $tmp248->next;
             }
             $fn250 $tmp249 = $tmp248->methods[1];
-            panda$core$Object* $tmp251 = $tmp249(v$Iter235);
+            panda$core$Object* $tmp251 = $tmp249(Iter$268$9235);
             v247 = ((org$pandalanguage$pandac$parser$Token$wrapper*) $tmp251)->value;
             panda$core$MutableString$append$panda$core$String(result230, separator233);
             {
@@ -656,7 +657,7 @@ panda$core$String* panda$collections$SpecializedArray$LTorg$pandalanguage$pandac
         }
         goto $l240;
         $l241:;
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp239));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$268$9235));
     }
     panda$core$Char8$init$panda$core$UInt8(&$tmp255, ((panda$core$UInt8) { 93 }));
     panda$core$MutableString$append$panda$core$Char8(result230, $tmp255);

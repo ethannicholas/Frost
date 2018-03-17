@@ -3057,6 +3057,8 @@ class Compiler : ErrorReporter {
                 return compileNull(position)
             when ASTNode.CHOICE_FIELD_REFERENCE(position, base, ce, field):
                 return compileChoiceFieldReference(position, base, ce, field)
+            when ASTNode.IR_WRAPPER(ir):
+                return ir
         }
         assert false, "unsupported expression: \{e} (\{e.position()})"
     }
@@ -3193,11 +3195,11 @@ class Compiler : ErrorReporter {
     }
 
     method compileBlockStatements(position:Position,
-            statements:ListView<ASTNode>):ImmutableArray<IRNode>? {
+            statements:ListView<ASTNode>, finally:IRNode?):ImmutableArray<IRNode>? {
         def symbols := SymbolTable(symbolTable) -- FIXME auto
         symbolTable := symbols
         def result := Array<IRNode>()
-        def unref:IRNode? := null
+        def unref:IRNode? := finally
         def loopScopes := Stack<String?>()
         for stmt in statements {
             var compiled := compileStatement(stmt)
@@ -3235,6 +3237,12 @@ class Compiler : ErrorReporter {
         symbolTable := symbols.parents[0]
         return result.finish()
     }
+
+    method compileBlockStatements(position:Position,
+            statements:ListView<ASTNode>):ImmutableArray<IRNode>? {
+        return compileBlockStatements(position, statements, null)
+    }
+
 
     method compileBlock(position:Position, statements:ListView<ASTNode>):IRNode? {
         def result := compileBlockStatements(position, statements)
@@ -3364,7 +3372,7 @@ class Compiler : ErrorReporter {
         return IRNode.RANGE_FOR(position, label, target.target, list, body)
     }
 
-    method compileIteratorFor(position:Position, label:String?, astTarget:ASTNode, iterator:IRNode,
+    method compileIteratorFor(position:Position, label:String?, target:ASTNode, iterator:IRNode,
             body:ListView<ASTNode>):IRNode? {
         -- We rewrite 'for v in <iterator> { <statements> }' to:
         -- def v$Iter := <iterator>
@@ -3374,62 +3382,26 @@ class Compiler : ErrorReporter {
         -- }
         assert iterator.type().typeKind = Type.Kind.GENERIC &
                 iterator.type().subtypes[0] = Type.Iterator()
-        def target := compileTarget(astTarget, Variable.Kind.DEF, null, iterator.type().subtypes[1])
-        if target = null {
-            return null
-        }
-        match target.target {
-            when IRNode.VARIABLE_REFERENCE(_, targetVar):
-                def subtypes := Array<Type>() -- FIXME literal
-                subtypes.add(Type.Iterator())
-                subtypes.add(target.target.type())
-                def iterType := Type("\{subtypes[0]}<\{subtypes[1]}>", Type.Kind.GENERIC, position,
-                        subtypes, true)
-                def iter := Variable(iterator.position(), Variable.Kind.DEF,
-                        targetVar.name + "$Iter", iterType)
-                symbolTable.add(iter)
-                def statements := Array<IRNode>()
-                def varChildren := Array<IRNode>()
-                reusedValueCount += 1
-                def reusedDef := IRNode.REUSED_VALUE_DEFINITION(iterator, reusedValueCount)
-                def reusedIterator := IRNode.REUSED_VALUE(iterator.position(), iterator.type(),
-                        reusedValueCount)
-                def declValue := IRNode.EXPRESSION_WITH_EXTRA_EFFECTS(reusedDef,
-                        compilePandaCall("ref", reusedIterator))
-                varChildren.add(IRNode.DECLARATION(IRNode.VARIABLE_REFERENCE(iterator.position(),
-                        iter), declValue))
-                statements.add(IRNode.VAR(iter.position, Variable.Kind.DEF, varChildren.finish()))
-                def whileChildren := Array<IRNode>()
-                def done := call(IRNode.VARIABLE_REFERENCE(iter.position, iter),
-                        "get_done", Array<IRNode>(), null)
-                if done = null {
-                    return null
-                }
-                def notCall := call(done, "!", Array<IRNode>(), null)
-                if notCall = null {
-                    return null
-                }
-                def next := call(IRNode.VARIABLE_REFERENCE(iterator.position(), iter),
-                        "next", Array<IRNode>(), null)
-                assert next != null
-                def valueVarChildren := Array<IRNode>() -- FIXME literal
-                valueVarChildren.add(IRNode.DECLARATION(IRNode.VARIABLE_REFERENCE(
-                        iterator.position(), targetVar), next))
-                var rawBlock := compileBlockStatements(position, body)
-                if rawBlock = null {
-                    return null
-                }
-                def finalBlock := Array<IRNode>()
-                finalBlock.add(IRNode.VAR(iterator.position(), Variable.Kind.DEF,
-                        valueVarChildren.finish()))
-                finalBlock.addAll(rawBlock)
-                statements.add(IRNode.WHILE(iterator.position(), label, notCall,
-                        finalBlock.finish()))
-                statements.add(compilePandaCall("unref", reusedIterator))
-                return IRNode.BLOCK(iterator.position(), statements.finish())
-            otherwise:
-                assert false
-        }
+        def statements := Array<ASTNode>()
+        def iterDecls := Array<ASTNode>() -- FIXME literal
+        def iterName := "Iter$\{position.line}$\{position.column}"
+        iterDecls.add(ASTNode.DECLARATION(position, ASTNode.IDENTIFIER(position, iterName),
+                ASTNode.IR_WRAPPER(iterator)))
+        def iterDecl := ASTNode.VAR(position, Variable.Kind.DEF, iterDecls.finish())
+        statements.add(iterDecl)
+        def bodyStatements := Array<ASTNode>()
+        def nextDecls := Array<ASTNode>() -- FIXME literal
+        nextDecls.add(ASTNode.DECLARATION(position, target, ASTNode.CALL(position,
+                ASTNode.DOT(position, ASTNode.IDENTIFIER(position, iterName), "next"),
+                ImmutableArray<ASTNode>())))
+        def nextDecl := ASTNode.VAR(position, Variable.Kind.DEF, nextDecls.finish())
+        bodyStatements.add(nextDecl)
+        bodyStatements.addAll(body)
+        def notDone := ASTNode.PREFIX(position, Token.Kind.NOT, ASTNode.CALL(position,
+                ASTNode.DOT(position, ASTNode.IDENTIFIER(position, iterName), "get_done"),
+                ImmutableArray<ASTNode>()))
+        statements.add(ASTNode.WHILE(position, label, notDone, bodyStatements.finish()))
+        return compileBlock(position, statements.finish())
     }
 
     method compileFor(position:Position, label:String?, rawTarget:ASTNode, rawList:ASTNode,
@@ -4084,7 +4056,19 @@ class Compiler : ErrorReporter {
                 }
             }
         }
-        var compiled := compileBlockStatements(m.position, m.body)
+        def finally:IRNode?
+        if m.name = "cleanup" & m.parameters.get_count() = 0 & m.owner.name != "panda.core.Object" &
+            !isValue(m.owner) {
+            def cleanup := compileExpression(ASTNode.DOT(m.position, ASTNode.SUPER(m.position),
+                    "cleanup"))
+            assert cleanup != null
+            finally := call(cleanup, ImmutableArray<IRNode>() -* FIXME literal *-)
+            assert finally != null
+        }
+        else {
+            finally := null
+        }
+        var compiled := compileBlockStatements(m.position, m.body, finally)
         if compiled != null {
             if fieldInitializers != null {
                 def finalBody := Array<IRNode>(fieldInitializers)

@@ -29,6 +29,7 @@ void org$pandalanguage$pandac$Compiler$Settings$init$panda$io$File$panda$collect
     self->safetyLevel = p_safetyLevel;
 }
 void org$pandalanguage$pandac$Compiler$Settings$cleanup(org$pandalanguage$pandac$Compiler$Settings* self) {
+    panda$core$Immutable$cleanup(((panda$core$Immutable*) self));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->pandaHome));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->importDirs));
 }

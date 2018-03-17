@@ -64,6 +64,7 @@ panda$core$UInt8$nullable panda$io$LineNumberInputStream$read$R$panda$core$UInt8
     return result2;
 }
 void panda$io$LineNumberInputStream$cleanup(panda$io$LineNumberInputStream* self) {
+    panda$io$InputStream$cleanup(((panda$io$InputStream*) self));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->source));
 }
 

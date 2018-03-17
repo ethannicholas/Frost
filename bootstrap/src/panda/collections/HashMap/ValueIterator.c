@@ -40,6 +40,7 @@ panda$core$Object* panda$collections$HashMap$ValueIterator$next$R$panda$collecti
     return ((panda$collections$HashMap$Entry*) $tmp6)->value;
 }
 void panda$collections$HashMap$ValueIterator$cleanup(panda$collections$HashMap$ValueIterator* self) {
+    panda$core$Object$cleanup(((panda$core$Object*) self));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->base));
 }
 

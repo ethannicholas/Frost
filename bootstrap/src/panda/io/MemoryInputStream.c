@@ -39,7 +39,7 @@ void panda$io$MemoryInputStream$init$panda$collections$ImmutableArray$LTpanda$co
 void panda$io$MemoryInputStream$init$panda$core$String(panda$io$MemoryInputStream* self, panda$core$String* p_source) {
     panda$collections$ListView* utf82;
     panda$collections$Array* array4;
-    panda$collections$Iterator* c$Iter10;
+    panda$collections$Iterator* Iter$26$910;
     panda$core$Char8 c22;
     self->data = NULL;
     self->index = ((panda$core$Int64) { 0 });
@@ -61,23 +61,23 @@ void panda$io$MemoryInputStream$init$panda$core$String(panda$io$MemoryInputStrea
         }
         $fn13 $tmp12 = $tmp11->methods[0];
         panda$collections$Iterator* $tmp14 = $tmp12(((panda$collections$Iterable*) utf82));
-        c$Iter10 = $tmp14;
+        Iter$26$910 = $tmp14;
         $l15:;
-        ITable* $tmp17 = c$Iter10->$class->itable;
+        ITable* $tmp17 = Iter$26$910->$class->itable;
         while ($tmp17->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
             $tmp17 = $tmp17->next;
         }
         $fn19 $tmp18 = $tmp17->methods[0];
-        panda$core$Bit $tmp20 = $tmp18(c$Iter10);
+        panda$core$Bit $tmp20 = $tmp18(Iter$26$910);
         panda$core$Bit $tmp21 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp20);
         if (!$tmp21.value) goto $l16;
         {
-            ITable* $tmp23 = c$Iter10->$class->itable;
+            ITable* $tmp23 = Iter$26$910->$class->itable;
             while ($tmp23->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
                 $tmp23 = $tmp23->next;
             }
             $fn25 $tmp24 = $tmp23->methods[1];
-            panda$core$Object* $tmp26 = $tmp24(c$Iter10);
+            panda$core$Object* $tmp26 = $tmp24(Iter$26$910);
             c22 = ((panda$core$Char8$wrapper*) $tmp26)->value;
             panda$core$UInt8 $tmp27 = panda$core$Char8$convert$R$panda$core$UInt8(c22);
             panda$core$UInt8$wrapper* $tmp28;
@@ -87,7 +87,7 @@ void panda$io$MemoryInputStream$init$panda$core$String(panda$io$MemoryInputStrea
         }
         goto $l15;
         $l16:;
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp14));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$26$910));
     }
     {
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->data));
@@ -124,6 +124,7 @@ panda$core$UInt8$nullable panda$io$MemoryInputStream$read$R$panda$core$UInt8$Q(p
     return ((panda$core$UInt8$nullable) { .nonnull = false });
 }
 void panda$io$MemoryInputStream$cleanup(panda$io$MemoryInputStream* self) {
+    panda$io$InputStream$cleanup(((panda$io$InputStream*) self));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->data));
 }
 

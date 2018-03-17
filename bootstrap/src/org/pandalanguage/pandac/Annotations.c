@@ -177,5 +177,6 @@ panda$core$String* org$pandalanguage$pandac$Annotations$convert$R$panda$core$Str
     }
 }
 void org$pandalanguage$pandac$Annotations$cleanup(org$pandalanguage$pandac$Annotations* self) {
+    panda$core$Object$cleanup(((panda$core$Object*) self));
 }
 

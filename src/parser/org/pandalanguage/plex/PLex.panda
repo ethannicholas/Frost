@@ -191,7 +191,6 @@ class PLex {
 
     @class
     method main(args:ListView<String>) {
-        Panda.disableRefCounting()
         assert args.get_count() = 6
         def input := File(args[1])
         def tokenName := args[2]

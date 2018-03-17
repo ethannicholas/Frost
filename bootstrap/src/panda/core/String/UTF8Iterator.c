@@ -41,6 +41,7 @@ panda$core$Char8 panda$core$String$UTF8Iterator$next$R$panda$core$Char8(panda$co
     return self->str->data[$tmp5.value];
 }
 void panda$core$String$UTF8Iterator$cleanup(panda$core$String$UTF8Iterator* self) {
+    panda$core$Object$cleanup(((panda$core$Object*) self));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->str));
 }
 

@@ -19,6 +19,7 @@ void org$pandalanguage$pandac$ClassDecl$Resolution$init$org$pandalanguage$pandac
     }
 }
 void org$pandalanguage$pandac$ClassDecl$Resolution$cleanup(org$pandalanguage$pandac$ClassDecl$Resolution* self) {
+    panda$core$Immutable$cleanup(((panda$core$Immutable*) self));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->value));
 }
 

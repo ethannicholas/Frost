@@ -75,5 +75,6 @@ panda$core$Int64 panda$math$XorShift128Plus$int$panda$core$Int64$R$panda$core$In
     $l20:;
 }
 void panda$math$XorShift128Plus$cleanup(panda$math$XorShift128Plus* self) {
+    panda$core$Object$cleanup(((panda$core$Object*) self));
 }
 

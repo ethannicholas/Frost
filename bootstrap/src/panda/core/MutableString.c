@@ -64,6 +64,7 @@ void panda$core$MutableString$init$panda$core$Int64(panda$core$MutableString* se
 }
 void panda$core$MutableString$cleanup(panda$core$MutableString* self) {
     pandaFree(self->data);
+    panda$core$Object$cleanup(((panda$core$Object*) self));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->dummy));
 }
 void panda$core$MutableString$append$panda$core$Char8(panda$core$MutableString* self, panda$core$Char8 p_c) {

@@ -23,6 +23,7 @@ void panda$collections$IdentityMap$Entry$init$panda$collections$IdentityMap$Entr
     }
 }
 void panda$collections$IdentityMap$Entry$cleanup(panda$collections$IdentityMap$Entry* self) {
+    panda$core$Object$cleanup(((panda$core$Object*) self));
     panda$core$Panda$unref$panda$core$Object(self->key);
     panda$core$Panda$unref$panda$core$Object(self->value);
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->next));

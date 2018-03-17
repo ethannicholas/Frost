@@ -130,6 +130,7 @@ panda$core$String* panda$core$String$convert$R$panda$core$String(panda$core$Stri
 }
 void panda$core$String$cleanup(panda$core$String* self) {
     pandaFree(self->data);
+    panda$core$Immutable$cleanup(((panda$core$Immutable*) self));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->owner));
 }
 panda$collections$ListView* panda$core$String$utf8$R$panda$collections$ListView$LTpanda$core$Char8$GT(panda$core$String* self) {

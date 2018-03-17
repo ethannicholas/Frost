@@ -548,5 +548,6 @@ panda$core$String* panda$collections$IdentityMap$convert$R$panda$core$String(pan
     }
 }
 void panda$collections$IdentityMap$cleanup(panda$collections$IdentityMap* self) {
+    panda$core$Object$cleanup(((panda$core$Object*) self));
 }
 

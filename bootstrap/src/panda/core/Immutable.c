@@ -13,5 +13,6 @@ static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -
 void panda$core$Immutable$init(panda$core$Immutable* self) {
 }
 void panda$core$Immutable$cleanup(panda$core$Immutable* self) {
+    panda$core$Object$cleanup(((panda$core$Object*) self));
 }
 

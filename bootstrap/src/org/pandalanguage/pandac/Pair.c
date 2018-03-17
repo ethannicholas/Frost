@@ -20,6 +20,7 @@ void org$pandalanguage$pandac$Pair$init$org$pandalanguage$pandac$Pair$A$org$pand
     }
 }
 void org$pandalanguage$pandac$Pair$cleanup(org$pandalanguage$pandac$Pair* self) {
+    panda$core$Object$cleanup(((panda$core$Object*) self));
     panda$core$Panda$unref$panda$core$Object(self->first);
     panda$core$Panda$unref$panda$core$Object(self->second);
 }

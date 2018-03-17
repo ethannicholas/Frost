@@ -41,6 +41,7 @@ panda$core$Object* panda$collections$ImmutableArray$ImmutableArrayIterator$next$
     return $tmp5;
 }
 void panda$collections$ImmutableArray$ImmutableArrayIterator$cleanup(panda$collections$ImmutableArray$ImmutableArrayIterator* self) {
+    panda$core$Object$cleanup(((panda$core$Object*) self));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->array));
 }
 

@@ -28,5 +28,6 @@ void org$pandalanguage$pandac$parser$Parser$Errors$error$panda$io$File$org$panda
 void org$pandalanguage$pandac$parser$Parser$Errors$init(org$pandalanguage$pandac$parser$Parser$Errors* self) {
 }
 void org$pandalanguage$pandac$parser$Parser$Errors$cleanup(org$pandalanguage$pandac$parser$Parser$Errors* self) {
+    panda$core$Object$cleanup(((panda$core$Object*) self));
 }
 

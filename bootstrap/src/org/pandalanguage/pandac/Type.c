@@ -179,7 +179,7 @@ void org$pandalanguage$pandac$Type$init$panda$core$String$panda$core$Int64$org$p
 void org$pandalanguage$pandac$Type$init$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT(org$pandalanguage$pandac$Type* self, panda$collections$ListView* p_subtypes) {
     panda$core$MutableString* name20;
     panda$core$String* separator23;
-    panda$collections$Iterator* t$Iter25;
+    panda$collections$Iterator* Iter$76$925;
     org$pandalanguage$pandac$Type* t37;
     panda$core$Char8 $tmp46;
     self->parameter = NULL;
@@ -201,23 +201,23 @@ void org$pandalanguage$pandac$Type$init$panda$collections$ListView$LTorg$pandala
         }
         $fn28 $tmp27 = $tmp26->methods[0];
         panda$collections$Iterator* $tmp29 = $tmp27(((panda$collections$Iterable*) p_subtypes));
-        t$Iter25 = $tmp29;
+        Iter$76$925 = $tmp29;
         $l30:;
-        ITable* $tmp32 = t$Iter25->$class->itable;
+        ITable* $tmp32 = Iter$76$925->$class->itable;
         while ($tmp32->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
             $tmp32 = $tmp32->next;
         }
         $fn34 $tmp33 = $tmp32->methods[0];
-        panda$core$Bit $tmp35 = $tmp33(t$Iter25);
+        panda$core$Bit $tmp35 = $tmp33(Iter$76$925);
         panda$core$Bit $tmp36 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp35);
         if (!$tmp36.value) goto $l31;
         {
-            ITable* $tmp38 = t$Iter25->$class->itable;
+            ITable* $tmp38 = Iter$76$925->$class->itable;
             while ($tmp38->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
                 $tmp38 = $tmp38->next;
             }
             $fn40 $tmp39 = $tmp38->methods[1];
-            panda$core$Object* $tmp41 = $tmp39(t$Iter25);
+            panda$core$Object* $tmp41 = $tmp39(Iter$76$925);
             t37 = ((org$pandalanguage$pandac$Type*) $tmp41);
             panda$core$MutableString$append$panda$core$String(name20, separator23);
             panda$core$MutableString$append$panda$core$Object(name20, ((panda$core$Object*) t37));
@@ -231,10 +231,11 @@ void org$pandalanguage$pandac$Type$init$panda$collections$ListView$LTorg$pandala
             $l44:;
             panda$core$Bit $tmp45 = { $tmp43 };
             self->resolved = $tmp45;
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) t37));
         }
         goto $l30;
         $l31:;
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp29));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$76$925));
     }
     panda$core$Char8$init$panda$core$UInt8(&$tmp46, ((panda$core$UInt8) { 62 }));
     panda$core$MutableString$append$panda$core$Char8(name20, $tmp46);
@@ -1341,6 +1342,7 @@ panda$core$String* org$pandalanguage$pandac$Type$convert$R$panda$core$String(org
     return self->name;
 }
 void org$pandalanguage$pandac$Type$cleanup(org$pandalanguage$pandac$Type* self) {
+    org$pandalanguage$pandac$Symbol$cleanup(((org$pandalanguage$pandac$Symbol*) self));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->subtypes));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->test));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->parameter));

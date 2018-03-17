@@ -166,7 +166,7 @@ panda$core$Bit org$pandalanguage$pandac$MethodDecl$matches$org$pandalanguage$pan
 panda$core$String* org$pandalanguage$pandac$MethodDecl$signature$R$panda$core$String(org$pandalanguage$pandac$MethodDecl* self) {
     panda$core$MutableString* result48;
     panda$core$String* separator53;
-    panda$collections$Iterator* p$Iter55;
+    panda$collections$Iterator* Iter$100$955;
     org$pandalanguage$pandac$MethodDecl$Parameter* p67;
     panda$core$Char8 $tmp73;
     panda$core$String* tmp180;
@@ -183,23 +183,23 @@ panda$core$String* org$pandalanguage$pandac$MethodDecl$signature$R$panda$core$St
         }
         $fn58 $tmp57 = $tmp56->methods[0];
         panda$collections$Iterator* $tmp59 = $tmp57(((panda$collections$Iterable*) self->parameters));
-        p$Iter55 = $tmp59;
+        Iter$100$955 = $tmp59;
         $l60:;
-        ITable* $tmp62 = p$Iter55->$class->itable;
+        ITable* $tmp62 = Iter$100$955->$class->itable;
         while ($tmp62->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
             $tmp62 = $tmp62->next;
         }
         $fn64 $tmp63 = $tmp62->methods[0];
-        panda$core$Bit $tmp65 = $tmp63(p$Iter55);
+        panda$core$Bit $tmp65 = $tmp63(Iter$100$955);
         panda$core$Bit $tmp66 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp65);
         if (!$tmp66.value) goto $l61;
         {
-            ITable* $tmp68 = p$Iter55->$class->itable;
+            ITable* $tmp68 = Iter$100$955->$class->itable;
             while ($tmp68->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
                 $tmp68 = $tmp68->next;
             }
             $fn70 $tmp69 = $tmp68->methods[1];
-            panda$core$Object* $tmp71 = $tmp69(p$Iter55);
+            panda$core$Object* $tmp71 = $tmp69(Iter$100$955);
             p67 = ((org$pandalanguage$pandac$MethodDecl$Parameter*) $tmp71);
             panda$core$MutableString$append$panda$core$String(result48, separator53);
             panda$core$MutableString$append$panda$core$Object(result48, ((panda$core$Object*) p67));
@@ -207,10 +207,11 @@ panda$core$String* org$pandalanguage$pandac$MethodDecl$signature$R$panda$core$St
                 panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator53));
                 separator53 = &$s72;
             }
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) p67));
         }
         goto $l60;
         $l61:;
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp59));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$100$955));
     }
     panda$core$Char8$init$panda$core$UInt8(&$tmp73, ((panda$core$UInt8) { 41 }));
     panda$core$MutableString$append$panda$core$Char8(result48, $tmp73);
@@ -291,6 +292,7 @@ panda$core$String* org$pandalanguage$pandac$MethodDecl$convert$R$panda$core$Stri
     return $tmp116;
 }
 void org$pandalanguage$pandac$MethodDecl$cleanup(org$pandalanguage$pandac$MethodDecl* self) {
+    org$pandalanguage$pandac$Symbol$cleanup(((org$pandalanguage$pandac$Symbol*) self));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->owner));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->doccomment));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->annotations));

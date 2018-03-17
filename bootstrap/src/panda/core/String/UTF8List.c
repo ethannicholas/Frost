@@ -52,6 +52,7 @@ panda$collections$Iterator* panda$core$String$UTF8List$iterator$R$panda$collecti
     return ((panda$collections$Iterator*) $tmp3);
 }
 void panda$core$String$UTF8List$cleanup(panda$core$String$UTF8List* self) {
+    panda$core$Object$cleanup(((panda$core$Object*) self));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->str));
 }
 

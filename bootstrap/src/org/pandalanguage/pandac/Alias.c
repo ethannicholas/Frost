@@ -31,6 +31,7 @@ panda$core$String* org$pandalanguage$pandac$Alias$convert$R$panda$core$String(or
     return $tmp8;
 }
 void org$pandalanguage$pandac$Alias$cleanup(org$pandalanguage$pandac$Alias* self) {
+    org$pandalanguage$pandac$Symbol$cleanup(((org$pandalanguage$pandac$Symbol*) self));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->fullName));
 }
 

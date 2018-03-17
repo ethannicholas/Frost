@@ -41,6 +41,7 @@ panda$collections$Key* panda$collections$HashMap$KeyIterator$next$R$panda$collec
     return ((panda$collections$HashMap$Entry*) $tmp6)->key;
 }
 void panda$collections$HashMap$KeyIterator$cleanup(panda$collections$HashMap$KeyIterator* self) {
+    panda$core$Object$cleanup(((panda$core$Object*) self));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->base));
 }
 

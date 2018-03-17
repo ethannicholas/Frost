@@ -98,6 +98,7 @@ panda$collections$HashMap$Entry* panda$collections$HashMap$EntryIterator$next$R$
     }
 }
 void panda$collections$HashMap$EntryIterator$cleanup(panda$collections$HashMap$EntryIterator* self) {
+    panda$core$Object$cleanup(((panda$core$Object*) self));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->map));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->entry));
 }

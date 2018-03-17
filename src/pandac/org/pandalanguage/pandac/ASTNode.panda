@@ -39,6 +39,7 @@ choice ASTNode {
     IF              (Position, ASTNode, ImmutableArray<ASTNode> -* ifTrue *-,
                      ASTNode? -* ifFalse *-)
     INT             (Position, UInt64)
+    IR_WRAPPER      (IRNode)
     LOOP            (Position, String?, ImmutableArray<ASTNode>)
     MATCH           (Position,
                      ASTNode                  -* value *-,
@@ -116,6 +117,8 @@ choice ASTNode {
                 return position
             when INT(position, _):
                 return position
+            when IR_WRAPPER(ir):
+                return ir.position()
             when LOOP(position, _, _):
                 return position
             when MATCH(position, _, _, _):
@@ -289,6 +292,8 @@ choice ASTNode {
                 return result.finish()
             when INT(_, value):
                 return value.convert()
+            when IR_WRAPPER(ir):
+                return ir.convert()
             when LOOP(_, label, statements):
                 def result := MutableString()
                 if label != null {

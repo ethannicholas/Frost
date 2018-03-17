@@ -203,6 +203,7 @@ panda$core$String* panda$io$File$convert$R$panda$core$String(panda$io$File* self
     return self->path;
 }
 void panda$io$File$cleanup(panda$io$File* self) {
+    panda$core$Object$cleanup(((panda$core$Object*) self));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->path));
 }
 

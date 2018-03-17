@@ -33,5 +33,6 @@ extern org$pandalanguage$pandac$MethodDecl$Kind$wrapperclass_type org$pandalangu
 #include "panda/core/Int64.h"
 
 void org$pandalanguage$pandac$MethodDecl$Kind$init$panda$core$Int64(org$pandalanguage$pandac$MethodDecl$Kind* self, panda$core$Int64 p_rv);
+void org$pandalanguage$pandac$MethodDecl$Kind$cleanup(org$pandalanguage$pandac$MethodDecl$Kind self);
 
 #endif

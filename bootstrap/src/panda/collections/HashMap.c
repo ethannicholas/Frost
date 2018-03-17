@@ -113,7 +113,7 @@ void panda$collections$HashMap$init(panda$collections$HashMap* self) {
     self->threshold = $tmp24;
 }
 void panda$collections$HashMap$init$panda$collections$MapView$LTpanda$collections$HashMap$K$Cpanda$collections$HashMap$V$GT(panda$collections$HashMap* self, panda$collections$MapView* p_map) {
-    panda$collections$Iterator* k$Iter25;
+    panda$collections$Iterator* Iter$152$925;
     panda$collections$Key* k37;
     self->changeCount = ((panda$core$Int64) { 0 });
     panda$collections$HashMap$init(self);
@@ -124,23 +124,23 @@ void panda$collections$HashMap$init$panda$collections$MapView$LTpanda$collection
         }
         $fn28 $tmp27 = $tmp26->methods[2];
         panda$collections$Iterator* $tmp29 = $tmp27(p_map);
-        k$Iter25 = $tmp29;
+        Iter$152$925 = $tmp29;
         $l30:;
-        ITable* $tmp32 = k$Iter25->$class->itable;
+        ITable* $tmp32 = Iter$152$925->$class->itable;
         while ($tmp32->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
             $tmp32 = $tmp32->next;
         }
         $fn34 $tmp33 = $tmp32->methods[0];
-        panda$core$Bit $tmp35 = $tmp33(k$Iter25);
+        panda$core$Bit $tmp35 = $tmp33(Iter$152$925);
         panda$core$Bit $tmp36 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp35);
         if (!$tmp36.value) goto $l31;
         {
-            ITable* $tmp38 = k$Iter25->$class->itable;
+            ITable* $tmp38 = Iter$152$925->$class->itable;
             while ($tmp38->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
                 $tmp38 = $tmp38->next;
             }
             $fn40 $tmp39 = $tmp38->methods[1];
-            panda$core$Object* $tmp41 = $tmp39(k$Iter25);
+            panda$core$Object* $tmp41 = $tmp39(Iter$152$925);
             k37 = ((panda$collections$Key*) $tmp41);
             ITable* $tmp42 = p_map->$class->itable;
             while ($tmp42->$class != (panda$core$Class*) &panda$collections$MapView$class) {
@@ -149,10 +149,11 @@ void panda$collections$HashMap$init$panda$collections$MapView$LTpanda$collection
             $fn44 $tmp43 = $tmp42->methods[1];
             panda$core$Object* $tmp45 = $tmp43(p_map, ((panda$core$Object*) k37));
             panda$collections$HashMap$$IDXEQ$panda$collections$HashMap$K$panda$collections$HashMap$V(self, k37, $tmp45);
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) k37));
         }
         goto $l30;
         $l31:;
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp29));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$152$925));
     }
 }
 void panda$collections$HashMap$cleanup(panda$collections$HashMap* self) {
@@ -187,6 +188,7 @@ void panda$collections$HashMap$cleanup(panda$collections$HashMap* self) {
     goto $l52;
     $l54:;
     pandaFree(self->contents);
+    panda$core$Object$cleanup(((panda$core$Object*) self));
 }
 panda$core$Int64 panda$collections$HashMap$indexFor$panda$collections$HashMap$K$R$panda$core$Int64(panda$collections$HashMap* self, panda$collections$Key* p_key) {
     panda$core$Int64 h66;
