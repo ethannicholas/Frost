@@ -27,8 +27,8 @@ class PLex {
         offset += 1
         token.printLine("SHIFTRIGHT")
         offset += 1
-        for line in input.lines() {
-            line := line.trim()
+        for rawLine in input.lines() {
+            def line := rawLine.trim()
             if line.contains(":=") {
                 def id := line[line.start() .. line.indexOf(":=")].trim()
                 def pattern := line[line.offset(line.indexOf(":="), 2) .. line.end()].trim()
