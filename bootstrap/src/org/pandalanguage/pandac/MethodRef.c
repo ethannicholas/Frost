@@ -6,6 +6,7 @@
 #include "panda/collections/ListView.h"
 #include "panda/collections/HashMap.h"
 #include "panda/core/Bit.h"
+#include "panda/core/Panda.h"
 #include "panda/core/Range.LTpanda/core/Int64.GT.h"
 #include "panda/core/Int64.h"
 #include "panda/collections/CollectionView.h"
@@ -18,7 +19,6 @@
 #include "panda/collections/Array.h"
 #include "org/pandalanguage/pandac/MethodDecl/Parameter.h"
 #include "org/pandalanguage/pandac/Position.h"
-#include "panda/core/Panda.h"
 
 
 static panda$core$String $s1;
@@ -44,9 +44,11 @@ void org$pandalanguage$pandac$MethodRef$init$org$pandalanguage$pandac$MethodDecl
     PANDA_ASSERT(p_value->resolved.value);
     {
         self->value = p_value;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->value));
     }
     {
         self->types = p_types;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->types));
     }
     ITable* $tmp4 = ((panda$collections$CollectionView*) p_value->owner->parameters)->$class->itable;
     while ($tmp4->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {

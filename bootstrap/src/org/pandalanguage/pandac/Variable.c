@@ -29,6 +29,7 @@ void org$pandalanguage$pandac$Variable$init$org$pandalanguage$pandac$Position$or
     self->varKind = p_kind;
     {
         self->type = p_type;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->type));
     }
     self->storage = p_storage;
     org$pandalanguage$pandac$Symbol$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$String(((org$pandalanguage$pandac$Symbol*) self), ((panda$core$Int64) { 208 }), p_position, p_name);

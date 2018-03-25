@@ -5,10 +5,10 @@
 #include "panda/collections/Iterator.h"
 #include "panda/core/Char32.h"
 #include "panda/core/Int64.h"
+#include "panda/core/Panda.h"
 #include "panda/core/Bit.h"
 #include "panda/core/Char8.h"
 #include "panda/core/Int32.h"
-#include "panda/core/Panda.h"
 panda$core$Object* panda$core$String$UTF32Iterator$next$R$panda$core$Char32$shim(panda$core$String$UTF32Iterator* self) {
     panda$core$Char32 result = panda$core$String$UTF32Iterator$next$R$panda$core$Char32(self);
     panda$core$Char32$wrapper* $tmp2;
@@ -30,6 +30,7 @@ void panda$core$String$UTF32Iterator$init$panda$core$String(panda$core$String$UT
     self->index = ((panda$core$Int64) { 0 });
     {
         self->str = p_str;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->str));
     }
 }
 panda$core$Bit panda$core$String$UTF32Iterator$get_done$R$panda$core$Bit(panda$core$String$UTF32Iterator* self) {

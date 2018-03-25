@@ -120,6 +120,7 @@ void org$pandalanguage$pandac$Methods$init$panda$collections$ListView$LTorg$pand
         panda$collections$ImmutableArray* $tmp64 = (panda$collections$ImmutableArray*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$ImmutableArray$class);
         panda$collections$ImmutableArray$init$panda$collections$ListView$LTpanda$collections$ImmutableArray$T$GT($tmp64, p_methods);
         self->methods = $tmp64;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->methods));
     }
 }
 void org$pandalanguage$pandac$Methods$cleanup(org$pandalanguage$pandac$Methods* self) {

@@ -3,6 +3,7 @@
 #include "panda/core/Class.h"
 #include "panda/core/String.h"
 #include "panda/io/File.h"
+#include "panda/core/Panda.h"
 #include "panda/core/Int64.h"
 #include "panda/core/Bit.h"
 #include "panda/collections/Array.h"
@@ -12,7 +13,6 @@
 #include "panda/io/OutputStream.h"
 #include "panda/io/Console.h"
 #include "panda/io/InputStream.h"
-#include "panda/core/Panda.h"
 #include "org/pandalanguage/pandac/Main/Arguments.h"
 #include "org/pandalanguage/pandac/CodeGenerator.h"
 #include "org/pandalanguage/pandac/LLVMCodeGenerator.h"
@@ -139,22 +139,26 @@ void org$pandalanguage$pandac$Main$init(org$pandalanguage$pandac$Main* self) {
         panda$io$File$init$panda$core$String($tmp2, &$s3);
         panda$io$File* $tmp5 = panda$io$File$resolve$panda$core$String$R$panda$io$File($tmp2, &$s4);
         self->opt = $tmp5;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->opt));
     }
     {
         panda$io$File* $tmp6 = (panda$io$File*) pandaObjectAlloc(24, (panda$core$Class*) &panda$io$File$class);
         panda$io$File$init$panda$core$String($tmp6, &$s7);
         panda$io$File* $tmp9 = panda$io$File$resolve$panda$core$String$R$panda$io$File($tmp6, &$s8);
         self->llc = $tmp9;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->llc));
     }
     {
         panda$io$File* $tmp10 = (panda$io$File*) pandaObjectAlloc(24, (panda$core$Class*) &panda$io$File$class);
         panda$io$File$init$panda$core$String($tmp10, &$s11);
         self->gcc = $tmp10;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->gcc));
     }
     {
         panda$io$File* $tmp12 = (panda$io$File*) pandaObjectAlloc(24, (panda$core$Class*) &panda$io$File$class);
         panda$io$File$init$panda$core$String($tmp12, &$s13);
         self->pandaHome = $tmp12;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->pandaHome));
     }
 }
 panda$io$File* org$pandalanguage$pandac$Main$optimize$panda$io$File$panda$core$Int64$R$panda$io$File(org$pandalanguage$pandac$Main* self, panda$io$File* p_llvm, panda$core$Int64 p_level) {
@@ -387,11 +391,11 @@ void org$pandalanguage$pandac$Main$run$panda$collections$ListView$LTpanda$core$S
                 }
                 }
                 {
-                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) outFile97));
                     panda$io$File* $tmp116 = (panda$io$File*) pandaObjectAlloc(24, (panda$core$Class*) &panda$io$File$class);
                     panda$core$String* $tmp119 = (($fn118) args91->$class->vtable[4])(args91, &$s117);
                     panda$io$File$init$panda$core$String($tmp116, $tmp119);
                     outFile97 = $tmp116;
+                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) outFile97));
                 }
                 panda$io$File* $tmp120 = panda$io$File$parent$R$panda$io$File$Q(outFile97);
                 panda$io$File$createDirectories($tmp120);
@@ -586,6 +590,7 @@ void org$pandalanguage$pandac$Main$run$panda$collections$ListView$LTpanda$core$S
                 {
                     {
                         extension199 = &$s202;
+                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) extension199));
                     }
                 }
                 }
@@ -595,6 +600,7 @@ void org$pandalanguage$pandac$Main$run$panda$collections$ListView$LTpanda$core$S
                 {
                     {
                         extension199 = &$s204;
+                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) extension199));
                     }
                 }
                 }
@@ -604,6 +610,7 @@ void org$pandalanguage$pandac$Main$run$panda$collections$ListView$LTpanda$core$S
                 {
                     {
                         extension199 = &$s206;
+                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) extension199));
                     }
                 }
                 }
@@ -613,6 +620,7 @@ void org$pandalanguage$pandac$Main$run$panda$collections$ListView$LTpanda$core$S
                 {
                     {
                         extension199 = &$s208;
+                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) extension199));
                     }
                 }
                 }
@@ -622,6 +630,7 @@ void org$pandalanguage$pandac$Main$run$panda$collections$ListView$LTpanda$core$S
                 {
                     {
                         extension199 = &$s210;
+                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) extension199));
                     }
                 }
                 }
@@ -636,10 +645,10 @@ void org$pandalanguage$pandac$Main$run$panda$collections$ListView$LTpanda$core$S
                 }
             }
             {
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) outFile97));
                 panda$core$Object* $tmp211 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(sources93, ((panda$core$Int64) { 0 }));
                 panda$io$File* $tmp212 = panda$io$File$changeExtension$panda$core$String$R$panda$io$File(((panda$io$File*) $tmp211), extension199);
                 outFile97 = $tmp212;
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) outFile97));
             }
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) extension199));
         }
@@ -677,6 +686,7 @@ void org$pandalanguage$pandac$Main$run$panda$collections$ListView$LTpanda$core$S
                 panda$io$OutputStream* $tmp231 = panda$io$File$openOutputStream$R$panda$io$OutputStream($tmp230);
                 org$pandalanguage$pandac$LLVMCodeGenerator$init$panda$io$OutputStream($tmp228, $tmp231);
                 cg217 = ((org$pandalanguage$pandac$CodeGenerator*) $tmp228);
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) cg217));
             }
         }
         }
@@ -688,6 +698,7 @@ void org$pandalanguage$pandac$Main$run$panda$collections$ListView$LTpanda$core$S
                 org$pandalanguage$pandac$HCodeGenerator* $tmp233 = (org$pandalanguage$pandac$HCodeGenerator*) pandaObjectAlloc(129, (panda$core$Class*) &org$pandalanguage$pandac$HCodeGenerator$class);
                 org$pandalanguage$pandac$HCodeGenerator$init$panda$io$File($tmp233, outFile97);
                 cg217 = ((org$pandalanguage$pandac$CodeGenerator*) $tmp233);
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) cg217));
             }
         }
         }
@@ -699,6 +710,7 @@ void org$pandalanguage$pandac$Main$run$panda$collections$ListView$LTpanda$core$S
                 org$pandalanguage$pandac$CCodeGenerator* $tmp235 = (org$pandalanguage$pandac$CCodeGenerator*) pandaObjectAlloc(264, (panda$core$Class*) &org$pandalanguage$pandac$CCodeGenerator$class);
                 org$pandalanguage$pandac$CCodeGenerator$init$panda$io$File($tmp235, outFile97);
                 cg217 = ((org$pandalanguage$pandac$CodeGenerator*) $tmp235);
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) cg217));
             }
         }
         }

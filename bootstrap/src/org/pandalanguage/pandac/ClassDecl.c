@@ -13,12 +13,12 @@
 #include "panda/core/Bit.h"
 #include "panda/collections/HashMap.h"
 #include "panda/core/Int64.h"
+#include "panda/core/Panda.h"
+#include "panda/core/Object.h"
 #include "panda/collections/List.h"
 #include "panda/collections/Iterator.h"
 #include "panda/collections/Iterable.h"
 #include "org/pandalanguage/pandac/ClassDecl/GenericParameter.h"
-#include "panda/core/Object.h"
-#include "panda/core/Panda.h"
 #include "panda/core/String/Index.h"
 #include "panda/core/Range.LTpanda/core/String/Index.Q.GT.h"
 #include "org/pandalanguage/pandac/Type.h"
@@ -103,31 +103,38 @@ void org$pandalanguage$pandac$ClassDecl$init$panda$io$File$org$pandalanguage$pan
     org$pandalanguage$pandac$Symbol$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$String(((org$pandalanguage$pandac$Symbol*) self), ((panda$core$Int64) { 201 }), p_position, p_name);
     {
         self->source = p_source;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->source));
     }
     {
         panda$collections$HashMap* $tmp9 = (panda$collections$HashMap*) pandaObjectAlloc(56, (panda$core$Class*) &panda$collections$HashMap$class);
         panda$collections$HashMap$init$panda$collections$MapView$LTpanda$collections$HashMap$K$Cpanda$collections$HashMap$V$GT($tmp9, p_aliases);
         self->aliases = ((panda$collections$MapView*) $tmp9);
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->aliases));
     }
     {
         self->doccomment = p_doccomment;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->doccomment));
     }
     {
         self->annotations = p_annotations;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->annotations));
     }
     self->classKind = p_kind;
     {
         panda$collections$Array* $tmp10 = (panda$collections$Array*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$Array$class);
         panda$collections$Array$init$panda$collections$ListView$LTpanda$collections$Array$T$GT($tmp10, p_declaredSupers);
         self->declaredSupers = $tmp10;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->declaredSupers));
     }
     {
         self->parameters = ((panda$collections$List*) p_parameters);
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->parameters));
     }
     {
         org$pandalanguage$pandac$SymbolTable* $tmp11 = (org$pandalanguage$pandac$SymbolTable*) pandaObjectAlloc(48, (panda$core$Class*) &org$pandalanguage$pandac$SymbolTable$class);
         org$pandalanguage$pandac$SymbolTable$init$org$pandalanguage$pandac$SymbolTable($tmp11, p_parent);
         self->symbolTable = $tmp11;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->symbolTable));
     }
     self->resolved = ((panda$core$Bit) { false });
     {
@@ -256,8 +263,8 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$ClassDecl$typeWithParame
             panda$core$MutableString$append$panda$core$String(name46, separator49);
             panda$core$MutableString$append$panda$core$String(name46, ((org$pandalanguage$pandac$Symbol*) t68)->name);
             {
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator49));
                 separator49 = &$s74;
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator49));
             }
             {
                 panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) t68));
@@ -319,8 +326,8 @@ panda$core$String* org$pandalanguage$pandac$ClassDecl$convert$R$panda$core$Strin
         panda$core$String* $tmp97 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp95, &$s96);
         panda$core$MutableString$append$panda$core$String(result82, $tmp97);
         {
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator90));
             separator90 = &$s98;
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator90));
         }
     }
     }
@@ -355,8 +362,8 @@ panda$core$String* org$pandalanguage$pandac$ClassDecl$convert$R$panda$core$Strin
             panda$core$String* $tmp121 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp119, &$s120);
             panda$core$MutableString$append$panda$core$String(result82, $tmp121);
             {
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator90));
                 separator90 = &$s122;
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator90));
             }
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) intf111));
         }

@@ -5,9 +5,9 @@
 #include "panda/collections/Iterator.h"
 #include "panda/core/Char16.h"
 #include "panda/core/Int64.h"
+#include "panda/core/Panda.h"
 #include "panda/core/Bit.h"
 #include "panda/core/UInt16.h"
-#include "panda/core/Panda.h"
 panda$core$Object* panda$core$String$UTF16Iterator$next$R$panda$core$Char16$shim(panda$core$String$UTF16Iterator* self) {
     panda$core$Char16 result = panda$core$String$UTF16Iterator$next$R$panda$core$Char16(self);
     panda$core$Char16$wrapper* $tmp2;
@@ -29,6 +29,7 @@ void panda$core$String$UTF16Iterator$init$panda$core$String(panda$core$String$UT
     self->index = ((panda$core$Int64) { 0 });
     {
         self->str = p_str;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->str));
     }
 }
 panda$core$Bit panda$core$String$UTF16Iterator$get_done$R$panda$core$Bit(panda$core$String$UTF16Iterator* self) {

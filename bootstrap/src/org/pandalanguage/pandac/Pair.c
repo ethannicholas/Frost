@@ -14,9 +14,11 @@ static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -
 void org$pandalanguage$pandac$Pair$init$org$pandalanguage$pandac$Pair$A$org$pandalanguage$pandac$Pair$B(org$pandalanguage$pandac$Pair* self, panda$core$Object* p_first, panda$core$Object* p_second) {
     {
         self->first = p_first;
+        panda$core$Panda$unref$panda$core$Object(self->first);
     }
     {
         self->second = p_second;
+        panda$core$Panda$unref$panda$core$Object(self->second);
     }
 }
 void org$pandalanguage$pandac$Pair$cleanup(org$pandalanguage$pandac$Pair* self) {

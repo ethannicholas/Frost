@@ -6,8 +6,8 @@
 #include "panda/collections/HashMap/Entry.h"
 #include "panda/collections/HashMap.h"
 #include "panda/core/Int64.h"
-#include "panda/core/Bit.h"
 #include "panda/core/Panda.h"
+#include "panda/core/Bit.h"
 panda$core$Object* panda$collections$HashMap$EntryIterator$next$R$panda$collections$HashMap$Entry$LTpanda$collections$HashMap$EntryIterator$K$Cpanda$collections$HashMap$EntryIterator$V$GT$shim(panda$collections$HashMap$EntryIterator* self) {
     panda$collections$HashMap$Entry* result = panda$collections$HashMap$EntryIterator$next$R$panda$collections$HashMap$Entry$LTpanda$collections$HashMap$EntryIterator$K$Cpanda$collections$HashMap$EntryIterator$V$GT(self);
     return ((panda$core$Object*) result);
@@ -28,6 +28,7 @@ void panda$collections$HashMap$EntryIterator$init$panda$collections$HashMap$LTpa
     self->entry = NULL;
     {
         self->map = p_map;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->map));
     }
     $l2:;
     panda$core$Bit $tmp5 = panda$core$Int64$$LT$panda$core$Int64$R$panda$core$Bit(self->bucket, p_map->bucketCount);
@@ -47,8 +48,8 @@ void panda$collections$HashMap$EntryIterator$init$panda$collections$HashMap$LTpa
     if ($tmp9.value) {
     {
         {
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->entry));
             self->entry = p_map->contents[self->bucket.value];
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->entry));
         }
     }
     }
@@ -70,8 +71,8 @@ panda$collections$HashMap$Entry* panda$collections$HashMap$EntryIterator$next$R$
     PANDA_ASSERT($tmp14.value);
     result15 = self->entry;
     {
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->entry));
         self->entry = self->entry->next;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->entry));
     }
     $l16:;
     if (!((panda$core$Bit) { self->entry == NULL }).value) goto $l17;
@@ -85,8 +86,8 @@ panda$collections$HashMap$Entry* panda$collections$HashMap$EntryIterator$next$R$
         }
         }
         {
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->entry));
             self->entry = self->map->contents[self->bucket.value];
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->entry));
         }
     }
     goto $l16;

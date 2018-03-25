@@ -7,9 +7,9 @@
 #include "panda/core/Int64.h"
 #include "panda/collections/ListView.h"
 #include "panda/core/Bit.h"
-#include "panda/collections/Array.h"
 #include "panda/core/Panda.h"
 #include "panda/core/Object.h"
+#include "panda/collections/Array.h"
 #include "org/pandalanguage/pandac/MethodDecl.h"
 
 
@@ -26,15 +26,18 @@ void org$pandalanguage$pandac$ChoiceEntry$init$org$pandalanguage$pandac$ClassDec
     self->resolved = ((panda$core$Bit) { false });
     {
         self->owner = p_owner;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->owner));
     }
     {
         self->doccomment = p_doccomment;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->doccomment));
     }
     self->rawValue = p_rawValue;
     {
         panda$collections$Array* $tmp2 = (panda$collections$Array*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$Array$class);
         panda$collections$Array$init$panda$collections$ListView$LTpanda$collections$Array$T$GT($tmp2, p_fields);
         self->fields = $tmp2;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->fields));
     }
     org$pandalanguage$pandac$Symbol$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$String(((org$pandalanguage$pandac$Symbol*) self), ((panda$core$Int64) { 209 }), p_position, p_name);
 }

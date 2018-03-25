@@ -221,7 +221,9 @@ class String : Immutable, Key<String>, Iterable<Char32> {
     @override
     @private
     method cleanup() {
-        data.destroy()
+        if owner = null {
+            data.destroy()
+        }
     }
 
     function utf8():ListView<Char8> {

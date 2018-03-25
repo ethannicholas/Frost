@@ -5,8 +5,8 @@
 #include "panda/core/Object.h"
 #include "panda/core/Int64.h"
 #include "panda/core/Bit.h"
-#include "panda/core/UInt8.h"
 #include "panda/core/Panda.h"
+#include "panda/core/UInt8.h"
 
 
 static panda$core$String $s1;
@@ -30,6 +30,7 @@ void panda$io$IndentedOutputStream$init$panda$io$OutputStream(panda$io$IndentedO
     self->atLineStart = ((panda$core$Bit) { true });
     {
         self->out = p_out;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->out));
     }
 }
 void panda$io$IndentedOutputStream$write$panda$core$UInt8(panda$io$IndentedOutputStream* self, panda$core$UInt8 p_b) {
@@ -92,10 +93,10 @@ void panda$io$IndentedOutputStream$indentIfNeeded(panda$io$IndentedOutputStream*
         if ($tmp20.value) {
         {
             {
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->indent));
                 panda$core$Int64 $tmp22 = panda$core$Int64$$MUL$panda$core$Int64$R$panda$core$Int64(self->indentSize, self->level);
                 panda$core$String* $tmp23 = panda$core$String$$MUL$panda$core$Int64$R$panda$core$String(&$s21, $tmp22);
                 self->indent = $tmp23;
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->indent));
             }
         }
         }

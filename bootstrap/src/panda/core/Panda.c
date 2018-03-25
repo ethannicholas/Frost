@@ -377,9 +377,9 @@ panda$core$String* panda$core$Panda$format$panda$core$Bit$panda$core$UInt64$pand
             {
                 base125 = ((panda$core$UInt64) { 16 });
                 {
-                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) digits126));
                     panda$collections$ListView* $tmp159 = panda$core$String$utf8$R$panda$collections$ListView$LTpanda$core$Char8$GT(&$s158);
                     digits126 = $tmp159;
+                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) digits126));
                 }
             }
             }

@@ -4,12 +4,12 @@
 #include "panda/core/String.h"
 #include "panda/collections/ListView.h"
 #include "panda/core/Int64.h"
+#include "panda/core/Panda.h"
 #include "panda/core/Bit.h"
 #include "panda/collections/CollectionView.h"
 #include "panda/io/OutputStream.h"
 #include "panda/io/Console.h"
 #include "panda/core/System.h"
-#include "panda/core/Panda.h"
 
 
 static panda$core$String $s1;
@@ -34,6 +34,7 @@ void org$pandalanguage$pandac$Main$Arguments$init$panda$collections$ListView$LTp
     self->index = ((panda$core$Int64) { 1 });
     {
         self->args = p_args;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->args));
     }
 }
 panda$core$Bit org$pandalanguage$pandac$Main$Arguments$get_done$R$panda$core$Bit(org$pandalanguage$pandac$Main$Arguments* self) {

@@ -4,6 +4,7 @@
 #include "panda/core/String.h"
 #include "panda/core/Object.h"
 #include "panda/collections/Array.h"
+#include "panda/core/Panda.h"
 #include "panda/core/UInt8.h"
 #include "panda/core/Int64.h"
 #include "panda/core/Bit.h"
@@ -12,7 +13,6 @@
 #include "panda/core/SteppedRange.LTpanda/core/Int64.Cpanda/core/Int64.GT.h"
 #include "panda/collections/CollectionView.h"
 #include "panda/core/Char8.h"
-#include "panda/core/Panda.h"
 
 
 static panda$core$String $s1;
@@ -34,6 +34,7 @@ void panda$io$PushbackInputStream$init$panda$io$InputStream(panda$io$PushbackInp
     self->pushbackBuffer = $tmp2;
     {
         self->source = p_source;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->source));
     }
 }
 panda$core$UInt8$nullable panda$io$PushbackInputStream$read$R$panda$core$UInt8$Q(panda$io$PushbackInputStream* self) {

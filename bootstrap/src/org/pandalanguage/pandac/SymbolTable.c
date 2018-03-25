@@ -5,9 +5,9 @@
 #include "org/pandalanguage/pandac/Compiler.h"
 #include "panda/collections/HashMap.h"
 #include "panda/collections/Array.h"
+#include "panda/core/Panda.h"
 #include "org/pandalanguage/pandac/Symbol.h"
 #include "panda/collections/Key.h"
-#include "panda/core/Panda.h"
 #include "panda/core/Int64.h"
 #include "panda/core/Bit.h"
 #include "org/pandalanguage/pandac/MethodDecl.h"
@@ -58,6 +58,7 @@ void org$pandalanguage$pandac$SymbolTable$init$org$pandalanguage$pandac$Compiler
     self->parents = $tmp4;
     {
         self->compiler = p_compiler;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->compiler));
     }
 }
 void org$pandalanguage$pandac$SymbolTable$init$org$pandalanguage$pandac$SymbolTable(org$pandalanguage$pandac$SymbolTable* self, org$pandalanguage$pandac$SymbolTable* p_parent) {
@@ -72,6 +73,7 @@ void org$pandalanguage$pandac$SymbolTable$init$org$pandalanguage$pandac$SymbolTa
     self->parents = $tmp7;
     {
         self->compiler = p_parent->compiler;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->compiler));
     }
     panda$collections$Array$add$panda$collections$Array$T(self->parents, ((panda$core$Object*) p_parent));
 }
@@ -410,9 +412,9 @@ org$pandalanguage$pandac$Symbol* org$pandalanguage$pandac$SymbolTable$$IDX$panda
     if (((panda$core$Bit) { result100 == NULL }).value) {
     {
         {
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result100));
             panda$core$Object* $tmp102 = panda$collections$HashMap$$IDX$panda$collections$HashMap$K$R$panda$collections$HashMap$V$Q(self->symbols, ((panda$collections$Key*) p_name));
             result100 = ((org$pandalanguage$pandac$Symbol*) $tmp102);
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result100));
         }
         {
             ITable* $tmp104 = ((panda$collections$Iterable*) self->parents)->$class->itable;
@@ -440,10 +442,10 @@ org$pandalanguage$pandac$Symbol* org$pandalanguage$pandac$SymbolTable$$IDX$panda
                 panda$core$Object* $tmp119 = $tmp117(Iter$129$13103);
                 p115 = ((org$pandalanguage$pandac$SymbolTable*) $tmp119);
                 {
-                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result100));
                     org$pandalanguage$pandac$Symbol* $tmp120 = org$pandalanguage$pandac$SymbolTable$$IDX$panda$core$String$R$org$pandalanguage$pandac$Symbol$Q(p115, p_name);
                     org$pandalanguage$pandac$Symbol* $tmp121 = org$pandalanguage$pandac$SymbolTable$merge$org$pandalanguage$pandac$Symbol$Q$org$pandalanguage$pandac$Symbol$Q$R$org$pandalanguage$pandac$Symbol$Q(self, result100, $tmp120);
                     result100 = $tmp121;
+                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result100));
                 }
                 panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) p115));
             }

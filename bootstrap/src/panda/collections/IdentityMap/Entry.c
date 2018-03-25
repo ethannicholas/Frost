@@ -16,10 +16,11 @@ void panda$collections$IdentityMap$Entry$init$panda$collections$IdentityMap$Entr
     self->next = NULL;
     {
         self->key = p_key;
+        panda$core$Panda$unref$panda$core$Object(self->key);
     }
     {
-        panda$core$Panda$unref$panda$core$Object(self->value);
         self->value = p_value;
+        panda$core$Panda$unref$panda$core$Object(self->value);
     }
 }
 void panda$collections$IdentityMap$Entry$cleanup(panda$collections$IdentityMap$Entry* self) {

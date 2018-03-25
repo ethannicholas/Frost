@@ -8,10 +8,10 @@
 #include "panda/collections/Iterable.h"
 #include "panda/collections/Iterator.h"
 #include "panda/core/Int64.h"
+#include "panda/core/Panda.h"
 #include "panda/collections/ListView.h"
 #include "panda/collections/CollectionView.h"
 #include "panda/core/Range.LTpanda/core/Int64.GT.h"
-#include "panda/core/Panda.h"
 #include "panda/core/String/UTF8List.h"
 #include "panda/core/String/UTF16Iterator.h"
 #include "panda/core/String/UTF32Iterator.h"
@@ -69,6 +69,7 @@ void panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$cor
     self->_length = p_length;
     {
         self->owner = NULL;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->owner));
     }
 }
 void panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64$panda$core$String(panda$core$String* self, panda$core$Char8* p_data, panda$core$Int64 p_length, panda$core$String* p_owner) {
@@ -77,6 +78,7 @@ void panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$cor
     self->_length = p_length;
     {
         self->owner = p_owner;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->owner));
     }
 }
 void panda$core$String$init$panda$collections$ListView$LTpanda$core$Char8$GT(panda$core$String* self, panda$collections$ListView* p_chars) {
@@ -123,13 +125,18 @@ void panda$core$String$init$panda$collections$ListView$LTpanda$core$Char8$GT(pan
     $l14:;
     {
         self->owner = NULL;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->owner));
     }
 }
 panda$core$String* panda$core$String$convert$R$panda$core$String(panda$core$String* self) {
     return self;
 }
 void panda$core$String$cleanup(panda$core$String* self) {
-    pandaFree(self->data);
+    if (((panda$core$Bit) { self->owner == NULL }).value) {
+    {
+        pandaFree(self->data);
+    }
+    }
     panda$core$Immutable$cleanup(((panda$core$Immutable*) self));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->owner));
 }

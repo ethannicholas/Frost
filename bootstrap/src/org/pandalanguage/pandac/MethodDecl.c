@@ -11,13 +11,13 @@
 #include "panda/collections/ImmutableArray.h"
 #include "panda/core/Bit.h"
 #include "panda/core/Int64.h"
+#include "panda/core/Panda.h"
+#include "panda/core/Object.h"
 #include "panda/core/Range.LTpanda/core/Int64.GT.h"
 #include "org/pandalanguage/pandac/MethodDecl/Parameter.h"
-#include "panda/core/Object.h"
 #include "panda/core/MutableString.h"
 #include "panda/collections/Iterator.h"
 #include "panda/collections/Iterable.h"
-#include "panda/core/Panda.h"
 #include "panda/core/Char8.h"
 #include "panda/core/UInt8.h"
 
@@ -54,22 +54,28 @@ void org$pandalanguage$pandac$MethodDecl$init$org$pandalanguage$pandac$ClassDecl
     org$pandalanguage$pandac$Symbol$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$String(((org$pandalanguage$pandac$Symbol*) self), ((panda$core$Int64) { 204 }), p_position, p_name);
     {
         self->owner = p_owner;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->owner));
     }
     {
         self->doccomment = p_doccomment;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->doccomment));
     }
     {
         self->annotations = p_annotations;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->annotations));
     }
     self->methodKind = p_methodKind;
     {
         self->parameters = p_parameters;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->parameters));
     }
     {
         self->returnType = p_returnType;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->returnType));
     }
     {
         self->body = p_body;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->body));
     }
     self->resolved = ((panda$core$Bit) { false });
 }
@@ -204,8 +210,8 @@ panda$core$String* org$pandalanguage$pandac$MethodDecl$signature$R$panda$core$St
             panda$core$MutableString$append$panda$core$String(result48, separator53);
             panda$core$MutableString$append$panda$core$Object(result48, ((panda$core$Object*) p67));
             {
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator53));
                 separator53 = &$s72;
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator53));
             }
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) p67));
         }

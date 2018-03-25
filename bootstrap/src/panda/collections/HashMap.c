@@ -246,8 +246,8 @@ panda$core$Object* panda$collections$HashMap$$IDX$panda$collections$HashMap$K$R$
     if (!$tmp92.value) goto $l85;
     {
         {
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) e83));
             e83 = e83->next;
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) e83));
         }
     }
     goto $l84;
@@ -294,8 +294,8 @@ panda$core$Bit panda$collections$HashMap$contains$panda$collections$HashMap$K$R$
     if (!$tmp106.value) goto $l99;
     {
         {
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) e97));
             e97 = e97->next;
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) e97));
         }
     }
     goto $l98;
@@ -330,8 +330,8 @@ void panda$collections$HashMap$$IDXEQ$panda$collections$HashMap$K$panda$collecti
     if (!$tmp120.value) goto $l113;
     {
         {
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) e111));
             e111 = e111->next;
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) e111));
         }
     }
     goto $l112;
@@ -340,14 +340,14 @@ void panda$collections$HashMap$$IDXEQ$panda$collections$HashMap$K$panda$collecti
     {
         old121 = self->contents[index109.value];
         {
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) e111));
             panda$collections$HashMap$Entry* $tmp122 = (panda$collections$HashMap$Entry*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$HashMap$Entry$class);
             panda$collections$HashMap$Entry$init$panda$collections$HashMap$Entry$K$panda$collections$HashMap$Entry$V($tmp122, p_key, p_value);
             e111 = $tmp122;
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) e111));
         }
         {
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) e111->next));
             e111->next = old121;
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) e111->next));
         }
         {
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->contents[index109.value]));
@@ -361,8 +361,8 @@ void panda$collections$HashMap$$IDXEQ$panda$collections$HashMap$K$panda$collecti
     else {
     {
         {
-            panda$core$Panda$unref$panda$core$Object(e111->value);
             e111->value = p_value;
+            panda$core$Panda$unref$panda$core$Object(e111->value);
         }
     }
     }
@@ -437,8 +437,8 @@ void panda$collections$HashMap$remove$panda$collections$HashMap$K(panda$collecti
         }
         }
         {
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) e126));
             e126 = next134;
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) e126));
         }
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) next134));
     }
@@ -447,8 +447,8 @@ void panda$collections$HashMap$remove$panda$collections$HashMap$K(panda$collecti
     next139 = e126->next;
     PANDA_ASSERT(((panda$core$Bit) { next139 != NULL }).value);
     {
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) e126->next));
         e126->next = next139->next;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) e126->next));
     }
     panda$core$Int64 $tmp140 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(self->_count, ((panda$core$Int64) { 1 }));
     self->_count = $tmp140;
@@ -599,8 +599,8 @@ void panda$collections$HashMap$incrementCount(panda$collections$HashMap* self) {
             {
                 panda$collections$HashMap$$IDXEQ$panda$collections$HashMap$K$panda$collections$HashMap$V(self, e224->key, e224->value);
                 {
-                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) e224));
                     e224 = e224->next;
+                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) e224));
                 }
             }
             goto $l225;
@@ -725,12 +725,12 @@ panda$core$String* panda$collections$HashMap$convert$R$panda$core$String(panda$c
             }
             }
             {
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) entry274));
                 entry274 = entry274->next;
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) entry274));
             }
             {
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator258));
                 separator258 = &$s280;
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator258));
             }
         }
         goto $l275;

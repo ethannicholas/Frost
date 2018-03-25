@@ -18,12 +18,15 @@ static panda$core$String $s6 = { (panda$core$Class*) &panda$core$String$class, -
 void org$pandalanguage$pandac$CCodeGenerator$LoopDescriptor$init$panda$core$String$Q$panda$core$String$panda$core$String(org$pandalanguage$pandac$CCodeGenerator$LoopDescriptor* self, panda$core$String* p_loopLabel, panda$core$String* p_breakLabel, panda$core$String* p_continueLabel) {
     {
         self->loopLabel = p_loopLabel;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->loopLabel));
     }
     {
         self->breakLabel = p_breakLabel;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->breakLabel));
     }
     {
         self->continueLabel = p_continueLabel;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->continueLabel));
     }
 }
 panda$core$String* org$pandalanguage$pandac$CCodeGenerator$LoopDescriptor$convert$R$panda$core$String(org$pandalanguage$pandac$CCodeGenerator$LoopDescriptor* self) {

@@ -210,7 +210,6 @@ class TestRunner {
 
     @class
     method main(args:Array<String>) {
-        Panda.disableRefCounting()
         if args.get_count() != 4 {
             Console.printLine("usage: testrunner <panda home> <build path> <c compiler>")
             System.exit(1)

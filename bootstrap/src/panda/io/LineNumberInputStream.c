@@ -4,9 +4,9 @@
 #include "panda/core/String.h"
 #include "panda/core/Object.h"
 #include "panda/core/Int64.h"
+#include "panda/core/Panda.h"
 #include "panda/core/UInt8.h"
 #include "panda/core/Bit.h"
-#include "panda/core/Panda.h"
 
 
 static panda$core$String $s1;
@@ -21,6 +21,7 @@ void panda$io$LineNumberInputStream$init$panda$io$InputStream(panda$io$LineNumbe
     self->column = ((panda$core$Int64) { 1 });
     {
         self->source = p_source;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->source));
     }
 }
 panda$core$UInt8$nullable panda$io$LineNumberInputStream$read$R$panda$core$UInt8$Q(panda$io$LineNumberInputStream* self) {

@@ -452,8 +452,8 @@ panda$core$String* panda$collections$ImmutableArray$convert$R$panda$core$String(
             v176 = $tmp180;
             panda$core$MutableString$append$panda$core$String(result159, separator162);
             {
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator162));
                 separator162 = &$s181;
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator162));
             }
             panda$core$MutableString$append$panda$core$Object(result159, v176);
             panda$core$Panda$unref$panda$core$Object(v176);

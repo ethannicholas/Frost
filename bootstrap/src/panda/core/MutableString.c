@@ -311,6 +311,7 @@ panda$core$String* panda$core$MutableString$finish$R$panda$core$String(panda$cor
     self->maxLength = ((panda$core$Int64) { 0 });
     {
         ((panda$core$Object*) self)->$class = ((panda$core$Object*) &$s154)->$class;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) ((panda$core$Object*) self)->$class));
     }
     return ((panda$core$String*) ((panda$core$Object*) self));
 }

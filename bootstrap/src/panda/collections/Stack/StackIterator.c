@@ -5,8 +5,8 @@
 #include "panda/collections/Iterator.h"
 #include "panda/collections/Stack.h"
 #include "panda/core/Int64.h"
-#include "panda/core/Bit.h"
 #include "panda/core/Panda.h"
+#include "panda/core/Bit.h"
 panda$core$Object* panda$collections$Stack$StackIterator$next$R$panda$collections$Stack$StackIterator$T$shim(panda$collections$Stack$StackIterator* self) {
     panda$core$Object* result = panda$collections$Stack$StackIterator$next$R$panda$collections$Stack$StackIterator$T(self);
     return result;
@@ -25,6 +25,7 @@ void panda$collections$Stack$StackIterator$init$panda$collections$Stack$LTpanda$
     self->index = ((panda$core$Int64) { 0 });
     {
         self->stack = p_stack;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->stack));
     }
 }
 panda$core$Bit panda$collections$Stack$StackIterator$get_done$R$panda$core$Bit(panda$collections$Stack$StackIterator* self) {

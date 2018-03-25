@@ -239,14 +239,15 @@ void org$pandalanguage$pandac$HCodeGenerator$init$panda$io$File(org$pandalanguag
     self->inClass = ((panda$core$Bit) { false });
     {
         self->outDir = p_outDir;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->outDir));
     }
     {
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->out));
         panda$io$IndentedOutputStream* $tmp12 = (panda$io$IndentedOutputStream*) pandaObjectAlloc(56, (panda$core$Class*) &panda$io$IndentedOutputStream$class);
         panda$io$MemoryOutputStream* $tmp13 = (panda$io$MemoryOutputStream*) pandaObjectAlloc(24, (panda$core$Class*) &panda$io$MemoryOutputStream$class);
         panda$io$MemoryOutputStream$init($tmp13);
         panda$io$IndentedOutputStream$init$panda$io$OutputStream($tmp12, ((panda$io$OutputStream*) $tmp13));
         self->out = $tmp12;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->out));
     }
 }
 panda$core$String* org$pandalanguage$pandac$HCodeGenerator$escapeName$panda$core$String$R$panda$core$String(org$pandalanguage$pandac$HCodeGenerator* self, panda$core$String* p_s) {
@@ -548,8 +549,8 @@ panda$core$String* org$pandalanguage$pandac$HCodeGenerator$type$org$pandalanguag
 }
 void org$pandalanguage$pandac$HCodeGenerator$setCompiler$org$pandalanguage$pandac$Compiler(org$pandalanguage$pandac$HCodeGenerator* self, org$pandalanguage$pandac$Compiler* p_compiler) {
     {
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->compiler));
         self->compiler = p_compiler;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->compiler));
     }
     org$pandalanguage$pandac$LLVMCodeGenerator$setCompiler$org$pandalanguage$pandac$Compiler(self->llvmCodeGen, p_compiler);
 }
@@ -581,20 +582,22 @@ void org$pandalanguage$pandac$HCodeGenerator$start$org$pandalanguage$pandac$Clas
     panda$io$File* $tmp159 = panda$io$File$parent$R$panda$io$File$Q(path156);
     panda$io$File$createDirectories($tmp159);
     {
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->out));
         panda$io$IndentedOutputStream* $tmp160 = (panda$io$IndentedOutputStream*) pandaObjectAlloc(56, (panda$core$Class*) &panda$io$IndentedOutputStream$class);
         panda$io$OutputStream* $tmp161 = panda$io$File$openOutputStream$R$panda$io$OutputStream(path156);
         panda$io$IndentedOutputStream$init$panda$io$OutputStream($tmp160, $tmp161);
         self->out = $tmp160;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->out));
     }
     (($fn163) ((panda$io$OutputStream*) self->out)->$class->vtable[19])(((panda$io$OutputStream*) self->out), &$s162);
     (($fn165) ((panda$io$OutputStream*) self->out)->$class->vtable[19])(((panda$io$OutputStream*) self->out), &$s164);
     (($fn167) ((panda$io$OutputStream*) self->out)->$class->vtable[19])(((panda$io$OutputStream*) self->out), &$s166);
     {
         self->importStream = self->typeImportStream;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->importStream));
     }
     {
         self->imports = self->typeImports;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->imports));
     }
     panda$core$String* $tmp169 = org$pandalanguage$pandac$HCodeGenerator$escapeName$panda$core$String$R$panda$core$String(self, ((org$pandalanguage$pandac$Symbol*) p_cl)->name);
     panda$core$String* $tmp170 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s168, $tmp169);
@@ -874,9 +877,11 @@ void org$pandalanguage$pandac$HCodeGenerator$writeDeclaration$org$pandalanguage$
     org$pandalanguage$pandac$MethodDecl$Parameter* p443;
     {
         self->importStream = self->bodyImportStream;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->importStream));
     }
     {
         self->imports = self->bodyImports;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->imports));
     }
     separator397 = &$s398;
     panda$core$Bit $tmp399 = org$pandalanguage$pandac$HCodeGenerator$needsStructIndirection$org$pandalanguage$pandac$MethodDecl$R$panda$core$Bit(self, p_m);
@@ -890,8 +895,8 @@ void org$pandalanguage$pandac$HCodeGenerator$writeDeclaration$org$pandalanguage$
         panda$core$String* $tmp408 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp406, &$s407);
         (($fn409) ((panda$io$OutputStream*) self->body)->$class->vtable[16])(((panda$io$OutputStream*) self->body), $tmp408);
         {
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator397));
             separator397 = &$s410;
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator397));
         }
     }
     }
@@ -917,8 +922,8 @@ void org$pandalanguage$pandac$HCodeGenerator$writeDeclaration$org$pandalanguage$
         panda$core$String* $tmp428 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp426, &$s427);
         (($fn429) ((panda$io$OutputStream*) self->body)->$class->vtable[16])(((panda$io$OutputStream*) self->body), $tmp428);
         {
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator397));
             separator397 = &$s430;
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator397));
         }
     }
     }
@@ -957,8 +962,8 @@ void org$pandalanguage$pandac$HCodeGenerator$writeDeclaration$org$pandalanguage$
             panda$core$String* $tmp458 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp456, &$s457);
             (($fn459) ((panda$io$OutputStream*) self->body)->$class->vtable[16])(((panda$io$OutputStream*) self->body), $tmp458);
             {
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator397));
                 separator397 = &$s460;
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator397));
             }
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) p443));
         }

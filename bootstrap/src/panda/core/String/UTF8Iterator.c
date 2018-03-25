@@ -5,8 +5,8 @@
 #include "panda/collections/Iterator.h"
 #include "panda/core/Char8.h"
 #include "panda/core/Int64.h"
-#include "panda/core/Bit.h"
 #include "panda/core/Panda.h"
+#include "panda/core/Bit.h"
 panda$core$Object* panda$core$String$UTF8Iterator$next$R$panda$core$Char8$shim(panda$core$String$UTF8Iterator* self) {
     panda$core$Char8 result = panda$core$String$UTF8Iterator$next$R$panda$core$Char8(self);
     panda$core$Char8$wrapper* $tmp2;
@@ -28,6 +28,7 @@ void panda$core$String$UTF8Iterator$init$panda$core$String(panda$core$String$UTF
     self->index = ((panda$core$Int64) { 0 });
     {
         self->str = p_str;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->str));
     }
 }
 panda$core$Bit panda$core$String$UTF8Iterator$get_done$R$panda$core$Bit(panda$core$String$UTF8Iterator* self) {

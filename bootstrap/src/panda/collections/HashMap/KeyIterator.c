@@ -6,9 +6,9 @@
 #include "panda/collections/Key.h"
 #include "panda/collections/HashMap.h"
 #include "panda/collections/HashMap/EntryIterator.h"
+#include "panda/core/Panda.h"
 #include "panda/core/Bit.h"
 #include "panda/collections/HashMap/Entry.h"
-#include "panda/core/Panda.h"
 panda$core$Object* panda$collections$HashMap$KeyIterator$next$R$panda$collections$HashMap$KeyIterator$K$shim(panda$collections$HashMap$KeyIterator* self) {
     panda$collections$Key* result = panda$collections$HashMap$KeyIterator$next$R$panda$collections$HashMap$KeyIterator$K(self);
     return ((panda$core$Object*) result);
@@ -30,6 +30,7 @@ void panda$collections$HashMap$KeyIterator$init$panda$collections$HashMap$LTpand
         panda$collections$HashMap$EntryIterator* $tmp2 = (panda$collections$HashMap$EntryIterator*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$HashMap$EntryIterator$class);
         panda$collections$HashMap$EntryIterator$init$panda$collections$HashMap$LTpanda$collections$HashMap$EntryIterator$K$Cpanda$collections$HashMap$EntryIterator$V$GT($tmp2, p_map);
         self->base = $tmp2;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->base));
     }
 }
 panda$core$Bit panda$collections$HashMap$KeyIterator$get_done$R$panda$core$Bit(panda$collections$HashMap$KeyIterator* self) {

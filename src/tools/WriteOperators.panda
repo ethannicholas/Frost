@@ -198,7 +198,6 @@ class WriteOperators {
 
     @class
     method main() {
-        Panda.disableRefCounting()
         writePanda(File("../test/tests/Operators.panda").openOutputStream())
         writeC(File("Operators.c").openOutputStream())
     }

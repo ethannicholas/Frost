@@ -2411,26 +2411,13 @@ class Compiler : ErrorReporter {
                         compilePandaCall("ref", IRNode.REUSED_VALUE(right.position(), right.type(),
                             reusedValueCount)))
                 def result := Array<IRNode>()
-                if left.hasSideEffects() {
-                    reusedValueCount += 1
-                    def reusedDef := IRNode.REUSED_VALUE_DEFINITION(left, reusedValueCount)
-                    left := IRNode.REUSED_VALUE(position, left.type(), reusedValueCount)
-                    result.add(compilePandaCall("unref", reusedDef))
-                }
-                else {
-                    var unwrapped := unwrapCast(left)
-                    match unwrapped {
-                        when IRNode.VARIABLE_REFERENCE(_, v):
-                            if v.varKind = Variable.Kind.VAR {
-                                result.add(compilePandaCall("unref", unwrapped))
-                            }
-                        when IRNode.FIELD_REFERENCE(_, _, _, f):
-                            if f.fieldKind = FieldDecl.Kind.VAR {
-                                result.add(compilePandaCall("unref", unwrapped))
-                            }
-                    }
-                }
+                def reusedDef:IRNode? := null
+                reusedValueCount += 1
+                reusedDef := IRNode.REUSED_VALUE_DEFINITION(left, reusedValueCount)
+                result.add(reusedDef)
                 result.add(IRNode.BINARY(position, Type.Void(), left, Token.Kind.ASSIGNMENT, right))
+                result.add(compilePandaCall("unref",
+                        IRNode.REUSED_VALUE(left.position(), left.type(), reusedValueCount)))
                 return IRNode.BLOCK(position, result.finish())
             }
             else {

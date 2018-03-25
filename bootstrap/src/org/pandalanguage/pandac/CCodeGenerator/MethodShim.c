@@ -14,9 +14,11 @@ static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -
 void org$pandalanguage$pandac$CCodeGenerator$MethodShim$init$panda$core$String$panda$core$String(org$pandalanguage$pandac$CCodeGenerator$MethodShim* self, panda$core$String* p_name, panda$core$String* p_type) {
     {
         self->name = p_name;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->name));
     }
     {
         self->type = p_type;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->type));
     }
 }
 void org$pandalanguage$pandac$CCodeGenerator$MethodShim$cleanup(org$pandalanguage$pandac$CCodeGenerator$MethodShim* self) {

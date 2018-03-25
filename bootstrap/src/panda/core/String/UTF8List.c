@@ -8,8 +8,8 @@
 #include "panda/collections/ListView.h"
 #include "panda/core/Int64.h"
 #include "panda/core/Char8.h"
-#include "panda/core/String/UTF8Iterator.h"
 #include "panda/core/Panda.h"
+#include "panda/core/String/UTF8Iterator.h"
 panda$collections$Iterator* panda$core$String$UTF8List$iterator$R$panda$collections$Iterator$LTpanda$core$Char8$GT$shim(panda$core$String$UTF8List* self) {
     panda$collections$Iterator* result = panda$core$String$UTF8List$iterator$R$panda$collections$Iterator$LTpanda$core$Char8$GT(self);
     return result;
@@ -38,6 +38,7 @@ static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -
 void panda$core$String$UTF8List$init$panda$core$String(panda$core$String$UTF8List* self, panda$core$String* p_str) {
     {
         self->str = p_str;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->str));
     }
 }
 panda$core$Char8 panda$core$String$UTF8List$$IDX$panda$core$Int64$R$panda$core$Char8(panda$core$String$UTF8List* self, panda$core$Int64 p_index) {

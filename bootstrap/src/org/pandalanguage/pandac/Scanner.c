@@ -3,6 +3,7 @@
 #include "panda/core/Class.h"
 #include "panda/core/String.h"
 #include "org/pandalanguage/pandac/Compiler.h"
+#include "panda/core/Panda.h"
 #include "org/pandalanguage/pandac/Type.h"
 #include "org/pandalanguage/pandac/ASTNode.h"
 #include "panda/core/Int64.h"
@@ -11,7 +12,6 @@
 #include "panda/collections/Array.h"
 #include "org/pandalanguage/pandac/Symbol.h"
 #include "panda/collections/ListView.h"
-#include "panda/core/Panda.h"
 #include "panda/collections/ImmutableArray.h"
 #include "panda/core/MutableString.h"
 #include "panda/core/Char8.h"
@@ -175,6 +175,7 @@ static panda$core$String $s1124 = { (panda$core$Class*) &panda$core$String$class
 void org$pandalanguage$pandac$Scanner$init$org$pandalanguage$pandac$Compiler(org$pandalanguage$pandac$Scanner* self, org$pandalanguage$pandac$Compiler* p_compiler) {
     {
         self->compiler = p_compiler;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->compiler));
     }
 }
 org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Scanner$convertType$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$Scanner* self, org$pandalanguage$pandac$ASTNode* p_type) {
@@ -285,8 +286,8 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Scanner$convertType$org$
                     panda$core$MutableString$append$panda$core$String(name31, separator34);
                     panda$core$MutableString$append$panda$core$String(name31, ((org$pandalanguage$pandac$Symbol*) subtype53)->name);
                     {
-                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator34));
                         separator34 = &$s55;
+                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator34));
                     }
                     {
                         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) arg48));
@@ -534,6 +535,7 @@ void org$pandalanguage$pandac$Scanner$scanFields$org$pandalanguage$pandac$ClassD
     {
         {
             doccomment134 = NULL;
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) doccomment134));
         }
     }
     }
@@ -550,6 +552,7 @@ void org$pandalanguage$pandac$Scanner$scanFields$org$pandalanguage$pandac$ClassD
                 text139 = *$tmp140;
                 {
                     doccomment134 = text139;
+                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) doccomment134));
                 }
             }
             }
@@ -660,10 +663,12 @@ void org$pandalanguage$pandac$Scanner$scanFields$org$pandalanguage$pandac$ClassD
                                     id190 = *$tmp191;
                                     {
                                         name186 = id190;
+                                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) name186));
                                     }
                                     {
                                         org$pandalanguage$pandac$Type* $tmp192 = org$pandalanguage$pandac$Type$Void$R$org$pandalanguage$pandac$Type();
                                         type187 = $tmp192;
+                                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) type187));
                                     }
                                 }
                                 }
@@ -677,10 +682,12 @@ void org$pandalanguage$pandac$Scanner$scanFields$org$pandalanguage$pandac$ClassD
                                     idType196 = *$tmp197;
                                     {
                                         name186 = id194;
+                                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) name186));
                                     }
                                     {
                                         org$pandalanguage$pandac$Type* $tmp198 = org$pandalanguage$pandac$Scanner$convertType$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$Type(self, idType196);
                                         type187 = $tmp198;
+                                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) type187));
                                     }
                                 }
                                 }
@@ -1652,6 +1659,7 @@ org$pandalanguage$pandac$MethodDecl* org$pandalanguage$pandac$Scanner$scanMethod
     {
         {
             doccomment577 = NULL;
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) doccomment577));
         }
     }
     }
@@ -1668,6 +1676,7 @@ org$pandalanguage$pandac$MethodDecl* org$pandalanguage$pandac$Scanner$scanMethod
                 text582 = *$tmp583;
                 {
                     doccomment577 = text582;
+                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) doccomment577));
                 }
             }
             }
@@ -1762,6 +1771,7 @@ org$pandalanguage$pandac$MethodDecl* org$pandalanguage$pandac$Scanner$scanMethod
         {
             org$pandalanguage$pandac$Type* $tmp625 = org$pandalanguage$pandac$Scanner$convertType$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$Type(self, p_rawReturnType);
             returnType624 = $tmp625;
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) returnType624));
         }
     }
     }
@@ -1770,6 +1780,7 @@ org$pandalanguage$pandac$MethodDecl* org$pandalanguage$pandac$Scanner$scanMethod
         {
             org$pandalanguage$pandac$Type* $tmp626 = org$pandalanguage$pandac$Type$Void$R$org$pandalanguage$pandac$Type();
             returnType624 = $tmp626;
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) returnType624));
         }
     }
     }
@@ -1938,6 +1949,7 @@ void org$pandalanguage$pandac$Scanner$scanClassChild$org$pandalanguage$pandac$Cl
             {
                 {
                     inner698->owner = p_cl;
+                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) inner698->owner));
                 }
                 panda$collections$Array$add$panda$collections$Array$T(p_cl->classes, ((panda$core$Object*) inner698));
                 panda$core$String* $tmp701 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(((org$pandalanguage$pandac$Symbol*) p_cl)->name, &$s700);
@@ -2006,6 +2018,7 @@ void org$pandalanguage$pandac$Scanner$scanChoiceEntry$org$pandalanguage$pandac$C
     {
         {
             doccomment717 = NULL;
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) doccomment717));
         }
     }
     }
@@ -2022,6 +2035,7 @@ void org$pandalanguage$pandac$Scanner$scanChoiceEntry$org$pandalanguage$pandac$C
                 text722 = *$tmp723;
                 {
                     doccomment717 = text722;
+                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) doccomment717));
                 }
             }
             }
@@ -2158,6 +2172,7 @@ void org$pandalanguage$pandac$Scanner$scanChoiceEntry$org$pandalanguage$pandac$C
             $l782:;
             {
                 entry744->initMethod = m760;
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) entry744->initMethod));
             }
             found747 = ((panda$core$Bit) { true });
             {
@@ -2249,6 +2264,7 @@ void org$pandalanguage$pandac$Scanner$scanChoiceEntry$org$pandalanguage$pandac$C
         synthetic850 = $tmp851;
         {
             entry744->initMethod = synthetic850;
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) entry744->initMethod));
         }
         panda$collections$Array$add$panda$collections$Array$T(p_cl->methods, ((panda$core$Object*) synthetic850));
         org$pandalanguage$pandac$SymbolTable$add$org$pandalanguage$pandac$Symbol(p_cl->symbolTable, ((org$pandalanguage$pandac$Symbol*) synthetic850));
@@ -2317,6 +2333,7 @@ org$pandalanguage$pandac$ClassDecl* org$pandalanguage$pandac$Scanner$scanClass$p
             panda$core$String* $tmp863 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp862, p_name);
             panda$core$String* $tmp865 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp863, &$s864);
             fullName857 = $tmp865;
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) fullName857));
         }
     }
     }
@@ -2324,6 +2341,7 @@ org$pandalanguage$pandac$ClassDecl* org$pandalanguage$pandac$Scanner$scanClass$p
     {
         {
             fullName857 = p_name;
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) fullName857));
         }
     }
     }
@@ -2332,6 +2350,7 @@ org$pandalanguage$pandac$ClassDecl* org$pandalanguage$pandac$Scanner$scanClass$p
     {
         {
             doccomment866 = NULL;
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) doccomment866));
         }
     }
     }
@@ -2348,6 +2367,7 @@ org$pandalanguage$pandac$ClassDecl* org$pandalanguage$pandac$Scanner$scanClass$p
                 text871 = *$tmp872;
                 {
                     doccomment866 = text871;
+                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) doccomment866));
                 }
             }
             }
@@ -2402,10 +2422,12 @@ org$pandalanguage$pandac$ClassDecl* org$pandalanguage$pandac$Scanner$scanClass$p
                         id898 = *$tmp899;
                         {
                             name894 = id898;
+                            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) name894));
                         }
                         {
                             org$pandalanguage$pandac$Type* $tmp900 = org$pandalanguage$pandac$Type$Any$R$org$pandalanguage$pandac$Type();
                             bound895 = $tmp900;
+                            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) bound895));
                         }
                     }
                     }
@@ -2419,10 +2441,12 @@ org$pandalanguage$pandac$ClassDecl* org$pandalanguage$pandac$Scanner$scanClass$p
                         type904 = *$tmp905;
                         {
                             name894 = id902;
+                            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) name894));
                         }
                         {
                             org$pandalanguage$pandac$Type* $tmp906 = org$pandalanguage$pandac$Scanner$convertType$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$Type(self, type904);
                             bound895 = $tmp906;
+                            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) bound895));
                         }
                     }
                     }
@@ -2782,6 +2806,7 @@ org$pandalanguage$pandac$ClassDecl* org$pandalanguage$pandac$Scanner$scanClass$p
             {
                 org$pandalanguage$pandac$Type* $tmp1069 = org$pandalanguage$pandac$Type$Value$R$org$pandalanguage$pandac$Type();
                 result934->rawSuper = $tmp1069;
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result934->rawSuper));
             }
         }
         }
@@ -2909,8 +2934,8 @@ panda$collections$ListView* org$pandalanguage$pandac$Scanner$scan$panda$io$File$
                             panda$core$String** $tmp1119 = ((panda$core$String**) ((char*) $match$563_211116->$data + 16));
                             name1118 = *$tmp1119;
                             {
-                                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) currentPackage1095));
                                 currentPackage1095 = name1118;
+                                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) currentPackage1095));
                             }
                         }
                         }
@@ -2930,6 +2955,7 @@ panda$collections$ListView* org$pandalanguage$pandac$Scanner$scan$panda$io$File$
                                     panda$core$Range$LTpanda$core$String$Index$Q$GT$init$panda$core$String$Index$Q$panda$core$String$Index$Q$panda$core$Bit(&$tmp1127, ((panda$core$String$Index$nullable) { $tmp1128, true }), ((panda$core$String$Index$nullable) { .nonnull = false }), ((panda$core$Bit) { false }));
                                     panda$core$String* $tmp1129 = panda$core$String$$IDX$panda$core$Range$LTpanda$core$String$Index$Q$GT$R$panda$core$String(fullName1121, $tmp1127);
                                     alias1126 = $tmp1129;
+                                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) alias1126));
                                 }
                             }
                             }
@@ -2937,6 +2963,7 @@ panda$collections$ListView* org$pandalanguage$pandac$Scanner$scan$panda$io$File$
                             {
                                 {
                                     alias1126 = fullName1121;
+                                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) alias1126));
                                 }
                             }
                             }

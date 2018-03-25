@@ -17,10 +17,11 @@ void panda$collections$HashMap$Entry$init$panda$collections$HashMap$Entry$K$pand
     self->next = NULL;
     {
         self->key = p_key;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->key));
     }
     {
-        panda$core$Panda$unref$panda$core$Object(self->value);
         self->value = p_value;
+        panda$core$Panda$unref$panda$core$Object(self->value);
     }
 }
 void panda$collections$HashMap$Entry$cleanup(panda$collections$HashMap$Entry* self) {

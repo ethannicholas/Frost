@@ -25,8 +25,8 @@ void panda$collections$Array$ArrayIterator$init$panda$collections$Array$LTpanda$
     self->array = NULL;
     self->index = ((panda$core$Int64) { 0 });
     {
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->array));
         self->array = p_array;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->array));
     }
 }
 panda$core$Bit panda$collections$Array$ArrayIterator$get_done$R$panda$core$Bit(panda$collections$Array$ArrayIterator* self) {

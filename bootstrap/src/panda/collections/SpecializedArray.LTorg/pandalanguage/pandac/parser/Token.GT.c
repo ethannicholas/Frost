@@ -638,8 +638,8 @@ panda$core$String* panda$collections$SpecializedArray$LTorg$pandalanguage$pandac
             v247 = ((org$pandalanguage$pandac$parser$Token$wrapper*) $tmp251)->value;
             panda$core$MutableString$append$panda$core$String(result230, separator233);
             {
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator233));
                 separator233 = &$s252;
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator233));
             }
             if (((panda$core$Bit) { true }).value) {
             {

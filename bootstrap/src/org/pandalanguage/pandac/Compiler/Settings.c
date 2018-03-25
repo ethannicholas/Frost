@@ -6,8 +6,8 @@
 #include "panda/io/File.h"
 #include "panda/collections/ListView.h"
 #include "panda/core/Int64.h"
-#include "panda/collections/ImmutableArray.h"
 #include "panda/core/Panda.h"
+#include "panda/collections/ImmutableArray.h"
 
 
 static panda$core$String $s1;
@@ -19,11 +19,13 @@ static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -
 void org$pandalanguage$pandac$Compiler$Settings$init$panda$io$File$panda$collections$ListView$LTpanda$io$File$GT$panda$core$Int64$panda$core$Int64(org$pandalanguage$pandac$Compiler$Settings* self, panda$io$File* p_pandaHome, panda$collections$ListView* p_importDirs, panda$core$Int64 p_optimizationLevel, panda$core$Int64 p_safetyLevel) {
     {
         self->pandaHome = p_pandaHome;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->pandaHome));
     }
     {
         panda$collections$ImmutableArray* $tmp2 = (panda$collections$ImmutableArray*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$ImmutableArray$class);
         panda$collections$ImmutableArray$init$panda$collections$ListView$LTpanda$collections$ImmutableArray$T$GT($tmp2, p_importDirs);
         self->importDirs = $tmp2;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->importDirs));
     }
     self->optimizationLevel = p_optimizationLevel;
     self->safetyLevel = p_safetyLevel;

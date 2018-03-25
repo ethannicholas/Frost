@@ -1,30 +1,74 @@
 package panda.unsafe
 
--* Pointer is implemented directly by the CodeGenerator; there is no actual code backing it *-
+====================================================================================================
+Represents a system-level pointer to a block of memory. Pointers are inherently unsafe, bringing
+all of the standard dangers of C pointers with them into Panda. They are primarily used internally
+by Panda in the implementation of various data structures, and should generally be avoided in favor
+of these high-level data structures.
+====================================================================================================
 @final
 class Pointer<T> : Value {
+    -* Pointer is implemented directly by the CodeGenerator; there is no actual code backing it *-
+    ================================================================================================
+    Allocates a zero-filled block of memory big enough to hold `count` instances of its type and
+    returns a pointer to it. For instance, `Pointer<Int64>.alloc(8)` is equivalent to the C code
+    `calloc(sizeof(int64_t), 8)`.
+    ================================================================================================
     @class
     @external
     method alloc(count:Int):Pointer<T>
 
+    ================================================================================================
+    Returns the item pointed to by this pointer. Equivalent to `pointer[0]`.
+    ================================================================================================
     @external
     function get():T
 
+    ================================================================================================
+    Replaces the item pointed to by this pointer with a new value. Equivalent to
+    `pointer[0] := value`.
+    ================================================================================================
     @external
     method set(value:T)
 
+    ================================================================================================
+    Returns the n'th item pointed to by this pointer. Equivalent to `pointer.offset(count).get()`.
+    ================================================================================================
     @external
     function [](index:Int):T
 
+    ================================================================================================
+    Replaces the n'th item pointed to by this pointer. Equivalent to
+    `pointer.offset(count).set(value)`.
+    ================================================================================================
     @external
     method []:=(index:Int, value:T)
 
+    ================================================================================================
+    Changes the size of the block of memory pointed to by this pointer, equivalent to the C
+    `realloc` function. Just as with `realloc`, the original pointer is invalid after this call and
+    the returned pointer (which may or not be the same) must be used instead.
+    ================================================================================================
     @external
     method realloc(oldCount:Int, newCount:Int):Pointer<T>
 
+    ================================================================================================
+    Moves this pointer forward (or backward if `count` is negative) `count` steps. Each step is the
+    size of a single element of type `T`, so e.g. offsetting an `Int32` pointer by 4 steps will move
+    it by 16 total bytes. This call is not bounds-checked, and moving the pointer outside of its
+    associated block of memory can lead to undefined behavior.
+    ================================================================================================
     @external
     method offset(count:Int):Pointer<T>
 
+    ================================================================================================
+    Frees the block of memory that this pointer points to. This is exactly equivalen to the C `free`
+    function, and in particular **does not do any reference counting or cleanup of values in the
+    pointed-to memory**. If, for instance, you wish to destroy a `Pointer<Pointer<Char8>>`, you must
+    first `destroy` all of the inner `Pointer<Char8>`s or you will leak memory. If the values
+    pointed to by the pointer are reference counted Panda objects, you must call `Panda.unref()` on
+    them to avoid leaking memory.
+    ================================================================================================
     @external
     method destroy()
 }

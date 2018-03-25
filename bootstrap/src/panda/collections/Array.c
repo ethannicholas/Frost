@@ -782,8 +782,8 @@ panda$core$String* panda$collections$Array$convert$R$panda$core$String(panda$col
             v325 = $tmp329;
             panda$core$MutableString$append$panda$core$String(result308, separator311);
             {
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator311));
                 separator311 = &$s330;
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator311));
             }
             if (((panda$core$Bit) { v325 != NULL }).value) {
             {
@@ -819,6 +819,7 @@ panda$collections$ImmutableArray* panda$collections$Array$finish$R$panda$collect
         panda$collections$ImmutableArray* $tmp335 = (panda$collections$ImmutableArray*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$ImmutableArray$class);
         panda$collections$ImmutableArray$init($tmp335);
         ((panda$core$Object*) self)->$class = ((panda$core$Object*) $tmp335)->$class;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) ((panda$core$Object*) self)->$class));
     }
     return ((panda$collections$ImmutableArray*) ((panda$core$Object*) self));
 }

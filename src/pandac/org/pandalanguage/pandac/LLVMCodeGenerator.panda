@@ -3204,6 +3204,8 @@ class LLVMCodeGenerator : CodeGenerator {
                 writeAssert(position, test, msg, out)
             when IRNode.MATCH(_, value, whens, other):
                 writeMatch(value, whens, other, out)
+            when IRNode.REUSED_VALUE_DEFINITION(base, id):
+                reusedValues[id] := getReference(base, out)
             otherwise:
                 assert false, "unsupported statement \{stmt}"
         }
@@ -3281,7 +3283,7 @@ class LLVMCodeGenerator : CodeGenerator {
         if m.methodKind = MethodDecl.Kind.INIT {
             for f in compiler.instanceFields(m.owner) {
                 compiler.resolve(f)
-                if f.fieldKind = FieldDecl.Kind.VAR & compiler.isRefCounted(f.type) {
+                if f.name != "$class" & compiler.isRefCounted(f.type) {
                     writeAssignment(IRNode.FIELD_REFERENCE(m.position, f.type,
                             IRNode.SELF(m.position, m.owner.type()), f),
                             IRNode.NULL(m.position, f.type.nullable()), bodyBuffer)

@@ -4,8 +4,8 @@
 #include "panda/core/String.h"
 #include "panda/collections/Iterator.h"
 #include "panda/io/InputStream.h"
-#include "panda/core/Bit.h"
 #include "panda/core/Panda.h"
+#include "panda/core/Bit.h"
 panda$core$Object* panda$io$InputStream$LineIterator$next$R$panda$core$String$shim(panda$io$InputStream$LineIterator* self) {
     panda$core$String* result = panda$io$InputStream$LineIterator$next$R$panda$core$String(self);
     return ((panda$core$Object*) result);
@@ -27,6 +27,7 @@ void panda$io$InputStream$LineIterator$init$panda$io$InputStream(panda$io$InputS
     self->_next = NULL;
     {
         self->input = p_input;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->input));
     }
     (($fn2) self->$class->vtable[4])(self);
 }
@@ -47,9 +48,9 @@ panda$core$String* panda$io$InputStream$LineIterator$next$R$panda$core$String(pa
 }
 void panda$io$InputStream$LineIterator$readNext(panda$io$InputStream$LineIterator* self) {
     {
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->_next));
         panda$core$String* $tmp7 = (($fn6) self->input->$class->vtable[11])(self->input);
         self->_next = $tmp7;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->_next));
     }
 }
 void panda$io$InputStream$LineIterator$cleanup(panda$io$InputStream$LineIterator* self) {

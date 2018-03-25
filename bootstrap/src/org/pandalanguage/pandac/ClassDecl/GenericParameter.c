@@ -4,9 +4,9 @@
 #include "panda/core/String.h"
 #include "org/pandalanguage/pandac/Position.h"
 #include "org/pandalanguage/pandac/Type.h"
-#include "panda/core/Int64.h"
-#include "panda/core/Object.h"
 #include "panda/core/Panda.h"
+#include "panda/core/Object.h"
+#include "panda/core/Int64.h"
 
 
 static panda$core$String $s1;
@@ -21,9 +21,11 @@ static panda$core$String $s9 = { (panda$core$Class*) &panda$core$String$class, -
 void org$pandalanguage$pandac$ClassDecl$GenericParameter$init$org$pandalanguage$pandac$Position$panda$core$String$panda$core$String$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$ClassDecl$GenericParameter* self, org$pandalanguage$pandac$Position p_position, panda$core$String* p_owner, panda$core$String* p_name, org$pandalanguage$pandac$Type* p_bound) {
     {
         self->owner = p_owner;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->owner));
     }
     {
         self->bound = p_bound;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->bound));
     }
     org$pandalanguage$pandac$Symbol$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$String(((org$pandalanguage$pandac$Symbol*) self), ((panda$core$Int64) { 203 }), p_position, p_name);
 }

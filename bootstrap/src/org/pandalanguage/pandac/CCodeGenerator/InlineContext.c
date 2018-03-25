@@ -4,8 +4,8 @@
 #include "panda/core/String.h"
 #include "panda/collections/ListView.h"
 #include "panda/collections/Array.h"
-#include "panda/collections/ImmutableArray.h"
 #include "panda/core/Panda.h"
+#include "panda/collections/ImmutableArray.h"
 
 
 static panda$core$String $s1;
@@ -20,17 +20,21 @@ void org$pandalanguage$pandac$CCodeGenerator$InlineContext$init$panda$core$Strin
     self->returns = $tmp2;
     {
         self->varSuffix = p_varSuffix;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->varSuffix));
     }
     {
         self->selfRef = p_selfRef;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->selfRef));
     }
     {
         panda$collections$ImmutableArray* $tmp3 = (panda$collections$ImmutableArray*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$ImmutableArray$class);
         panda$collections$ImmutableArray$init$panda$collections$ListView$LTpanda$collections$ImmutableArray$T$GT($tmp3, p_argRefs);
         self->argRefs = $tmp3;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->argRefs));
     }
     {
         self->exitLabel = p_exitLabel;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->exitLabel));
     }
 }
 void org$pandalanguage$pandac$CCodeGenerator$InlineContext$cleanup(org$pandalanguage$pandac$CCodeGenerator$InlineContext* self) {

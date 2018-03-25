@@ -21,6 +21,7 @@ void org$pandalanguage$pandac$Alias$init$panda$core$String$panda$core$String$org
     org$pandalanguage$pandac$Symbol$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$String(((org$pandalanguage$pandac$Symbol*) self), ((panda$core$Int64) { 200 }), p_position, p_alias);
     {
         self->fullName = p_fullName;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->fullName));
     }
 }
 panda$core$String* org$pandalanguage$pandac$Alias$convert$R$panda$core$String(org$pandalanguage$pandac$Alias* self) {

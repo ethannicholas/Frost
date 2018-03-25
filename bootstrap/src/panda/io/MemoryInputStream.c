@@ -5,8 +5,8 @@
 #include "panda/core/Object.h"
 #include "panda/collections/ImmutableArray.h"
 #include "panda/core/Int64.h"
-#include "panda/core/Panda.h"
 #include "panda/collections/ListView.h"
+#include "panda/core/Panda.h"
 #include "panda/collections/Array.h"
 #include "panda/collections/CollectionView.h"
 #include "panda/collections/Iterator.h"
@@ -32,8 +32,8 @@ void panda$io$MemoryInputStream$init$panda$collections$ImmutableArray$LTpanda$co
     self->data = NULL;
     self->index = ((panda$core$Int64) { 0 });
     {
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->data));
         self->data = ((panda$collections$ListView*) p_source);
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->data));
     }
 }
 void panda$io$MemoryInputStream$init$panda$core$String(panda$io$MemoryInputStream* self, panda$core$String* p_source) {
@@ -90,8 +90,8 @@ void panda$io$MemoryInputStream$init$panda$core$String(panda$io$MemoryInputStrea
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$26$910));
     }
     {
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->data));
         self->data = ((panda$collections$ListView*) array4);
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->data));
     }
     {
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) utf82));

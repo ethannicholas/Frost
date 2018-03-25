@@ -5,11 +5,11 @@
 #include "panda/core/Equatable.h"
 #include "panda/core/Bit.h"
 #include "panda/collections/Key.h"
+#include "panda/core/Panda.h"
 #include "panda/collections/Iterator.h"
 #include "panda/io/InputStream.h"
 #include "panda/core/String/Index.h"
 #include "panda/core/Range.LTpanda/core/String/Index.Q.GT.h"
-#include "panda/core/Panda.h"
 #include "panda/core/Int64.h"
 panda$core$Bit panda$io$File$$EQ$panda$io$File$R$panda$core$Bit$shim(panda$io$File* self, panda$core$Object* p0) {
     panda$core$Bit result = panda$io$File$$EQ$panda$io$File$R$panda$core$Bit(self, ((panda$io$File*) p0));
@@ -44,6 +44,7 @@ static panda$core$String $s38 = { (panda$core$Class*) &panda$core$String$class, 
 void panda$io$File$init$panda$core$String(panda$io$File* self, panda$core$String* p_path) {
     {
         self->path = p_path;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->path));
     }
 }
 panda$io$File* panda$io$File$resolve$panda$core$String$R$panda$io$File(panda$io$File* self, panda$core$String* p_path) {

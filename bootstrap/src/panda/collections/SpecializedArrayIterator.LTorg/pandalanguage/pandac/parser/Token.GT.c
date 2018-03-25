@@ -29,8 +29,8 @@ void panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$pandac$parse
     self->array = NULL;
     self->index = ((panda$core$Int64) { 0 });
     {
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->array));
         self->array = p_array;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->array));
     }
 }
 panda$core$Bit panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$pandac$parser$Token$GT$get_done$R$panda$core$Bit(panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$pandac$parser$Token$GT* self) {

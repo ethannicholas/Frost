@@ -9,13 +9,13 @@
 #include "org/pandalanguage/pandac/Type.h"
 #include "org/pandalanguage/pandac/ASTNode.h"
 #include "panda/core/Bit.h"
+#include "panda/core/Panda.h"
+#include "panda/core/Object.h"
+#include "org/pandalanguage/pandac/IRNode.h"
 #include "panda/core/Int64.h"
 #include "panda/core/MutableString.h"
 #include "panda/core/Char8.h"
 #include "panda/core/UInt8.h"
-#include "panda/core/Object.h"
-#include "org/pandalanguage/pandac/IRNode.h"
-#include "panda/core/Panda.h"
 
 
 static panda$core$String $s1;
@@ -34,22 +34,28 @@ void org$pandalanguage$pandac$FieldDecl$init$org$pandalanguage$pandac$ClassDecl$
     self->resolved = ((panda$core$Bit) { false });
     {
         self->owner = p_owner;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->owner));
     }
     {
         self->doccomment = p_doccomment;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->doccomment));
     }
     {
         self->annotations = p_annotations;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->annotations));
     }
     self->fieldKind = p_fieldKind;
     {
         self->type = p_type;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->type));
     }
     {
         self->rawValue = p_value;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->rawValue));
     }
     {
         self->value = NULL;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->value));
     }
     org$pandalanguage$pandac$Symbol$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$String(((org$pandalanguage$pandac$Symbol*) self), ((panda$core$Int64) { 202 }), p_position, p_name);
 }

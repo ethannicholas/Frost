@@ -15,9 +15,11 @@ static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -
 void org$pandalanguage$pandac$Compiler$CompileTargetResult$init$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler$CompileTargetResult* self, org$pandalanguage$pandac$IRNode* p_target, org$pandalanguage$pandac$IRNode* p_value) {
     {
         self->target = p_target;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->target));
     }
     {
         self->value = p_value;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->value));
     }
 }
 void org$pandalanguage$pandac$Compiler$CompileTargetResult$cleanup(org$pandalanguage$pandac$Compiler$CompileTargetResult* self) {

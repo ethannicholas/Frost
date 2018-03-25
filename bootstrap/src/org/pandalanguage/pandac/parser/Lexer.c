@@ -4,13 +4,13 @@
 #include "panda/core/String.h"
 #include "org/pandalanguage/plex/runtime/DFA.h"
 #include "panda/core/Int64.h"
+#include "panda/core/Panda.h"
 #include "panda/core/Range.LTpanda/core/Int64.GT.h"
 #include "panda/core/Bit.h"
 #include "org/pandalanguage/pandac/parser/Token.h"
 #include "org/pandalanguage/plex/runtime/RawToken.h"
 #include "org/pandalanguage/pandac/parser/Token/Kind.h"
 #include "org/pandalanguage/pandac/Position.h"
-#include "panda/core/Panda.h"
 
 
 static panda$core$String $s1;
@@ -24,6 +24,7 @@ void org$pandalanguage$pandac$parser$Lexer$start$panda$core$String(org$pandalang
         org$pandalanguage$plex$runtime$DFA* $tmp2 = (org$pandalanguage$plex$runtime$DFA*) pandaObjectAlloc(80, (panda$core$Class*) &org$pandalanguage$plex$runtime$DFA$class);
         org$pandalanguage$plex$runtime$DFA$init$panda$core$String$panda$core$Int64$panda$unsafe$Pointer$LTpanda$unsafe$Pointer$LTpanda$core$Int64$GT$GT$panda$unsafe$Pointer$LTpanda$core$Int64$GT($tmp2, p_source, ((panda$core$Int64) { 239 }), self->transitions, self->accepts);
         self->dfa = $tmp2;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->dfa));
     }
 }
 panda$core$Int64* org$pandalanguage$pandac$parser$Lexer$alloc$panda$core$Int64$panda$core$Int64$R$panda$unsafe$Pointer$LTpanda$core$Int64$GT(panda$core$Int64 p_count, panda$core$Int64 p_fill) {
