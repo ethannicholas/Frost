@@ -64,6 +64,7 @@ static panda$core$String $s305 = { (panda$core$Class*) &panda$core$String$class,
 static panda$core$String $s314 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
 
 void panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64(panda$core$String* self, panda$core$Char8* p_data, panda$core$Int64 p_length) {
+    self->owner = NULL;
     self->_hash = ((panda$core$Int64) { 0 });
     self->data = p_data;
     self->_length = p_length;
@@ -73,6 +74,7 @@ void panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$cor
     }
 }
 void panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64$panda$core$String(panda$core$String* self, panda$core$Char8* p_data, panda$core$Int64 p_length, panda$core$String* p_owner) {
+    self->owner = NULL;
     self->_hash = ((panda$core$Int64) { 0 });
     self->data = p_data;
     self->_length = p_length;
@@ -83,6 +85,7 @@ void panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$cor
 }
 void panda$core$String$init$panda$collections$ListView$LTpanda$core$Char8$GT(panda$core$String* self, panda$collections$ListView* p_chars) {
     panda$core$Range$LTpanda$core$Int64$GT $tmp6;
+    self->owner = NULL;
     self->_hash = ((panda$core$Int64) { 0 });
     ITable* $tmp2 = ((panda$collections$CollectionView*) p_chars)->$class->itable;
     while ($tmp2->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {

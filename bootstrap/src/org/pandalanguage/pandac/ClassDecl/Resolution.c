@@ -14,6 +14,7 @@ org$pandalanguage$pandac$ClassDecl$Resolution$class_type org$pandalanguage$panda
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x43\x6c\x61\x73\x73\x44\x65\x63\x6c\x2e\x52\x65\x73\x6f\x6c\x75\x74\x69\x6f\x6e", 45, 664459329846423106, NULL };
 
 void org$pandalanguage$pandac$ClassDecl$Resolution$init$org$pandalanguage$pandac$ClassDecl$Q(org$pandalanguage$pandac$ClassDecl$Resolution* self, org$pandalanguage$pandac$ClassDecl* p_value) {
+    self->value = NULL;
     {
         self->value = p_value;
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->value));

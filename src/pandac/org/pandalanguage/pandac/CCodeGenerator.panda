@@ -1986,7 +1986,7 @@ class CCodeGenerator : CodeGenerator {
         if m.methodKind = MethodDecl.Kind.INIT {
             for f in compiler.instanceFields(m.owner) {
                 compiler.resolve(f)
-                if compiler.isRefCounted(f.type) {
+                if compiler.isRefCounted(f.type) & f.name != "$class" {
                     writeAssignment(IRNode.FIELD_REFERENCE(m.position, f.type,
                             IRNode.SELF(m.position, m.owner.type()), f),
                             IRNode.NULL(m.position, f.type.nullable()), indentedBody)

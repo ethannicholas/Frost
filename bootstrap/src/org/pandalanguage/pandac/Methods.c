@@ -29,6 +29,8 @@ void org$pandalanguage$pandac$Methods$init$panda$collections$ListView$LTorg$pand
     panda$core$Range$LTpanda$core$Int64$GT $tmp7;
     panda$core$Range$LTpanda$core$Int64$GT $tmp25;
     org$pandalanguage$pandac$Position $tmp59;
+    self->name = NULL;
+    self->methods = NULL;
     ITable* $tmp2 = ((panda$collections$CollectionView*) p_methods)->$class->itable;
     while ($tmp2->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
         $tmp2 = $tmp2->next;

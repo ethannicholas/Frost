@@ -36,6 +36,7 @@ panda$core$String$UTF8List$class_type panda$core$String$UTF8List$class = { (pand
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x55\x54\x46\x38\x4c\x69\x73\x74", 26, 3665319702853686154, NULL };
 
 void panda$core$String$UTF8List$init$panda$core$String(panda$core$String$UTF8List* self, panda$core$String* p_str) {
+    self->str = NULL;
     {
         self->str = p_str;
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->str));

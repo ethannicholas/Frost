@@ -3343,6 +3343,7 @@ org$pandalanguage$pandac$parser$Token org$pandalanguage$pandac$parser$Lexer$next
     return $tmp88;
 }
 void org$pandalanguage$pandac$parser$Lexer$init(org$pandalanguage$pandac$parser$Lexer* self) {
+    self->dfa = NULL;
     panda$core$Int64** $tmp91 = org$pandalanguage$pandac$parser$Lexer$getTransitions$R$panda$unsafe$Pointer$LTpanda$unsafe$Pointer$LTpanda$core$Int64$GT$GT();
     self->transitions = $tmp91;
     panda$core$Int64* $tmp92 = org$pandalanguage$pandac$parser$Lexer$getAccepts$R$panda$unsafe$Pointer$LTpanda$core$Int64$GT();

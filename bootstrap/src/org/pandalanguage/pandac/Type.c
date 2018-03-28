@@ -123,10 +123,18 @@ static panda$core$String $s470 = { (panda$core$Class*) &panda$core$String$class,
 static panda$core$String $s471 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x29\x3d\x26\x3e\x28", 5, 14839819243, NULL };
 
 void org$pandalanguage$pandac$Type$init$panda$core$String$panda$core$Int64$org$pandalanguage$pandac$Position(org$pandalanguage$pandac$Type* self, panda$core$String* p_name, panda$core$Int64 p_typeKind, org$pandalanguage$pandac$Position p_position) {
+    self->name = NULL;
+    self->subtypes = NULL;
+    self->test = NULL;
+    self->parameter = NULL;
     self->parameter = NULL;
     org$pandalanguage$pandac$Type$init$panda$core$String$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Bit(self, p_name, p_typeKind, p_position, ((panda$core$Bit) { false }));
 }
 void org$pandalanguage$pandac$Type$init$panda$core$String$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Bit(org$pandalanguage$pandac$Type* self, panda$core$String* p_name, panda$core$Int64 p_typeKind, org$pandalanguage$pandac$Position p_position, panda$core$Bit p_resolved) {
+    self->name = NULL;
+    self->subtypes = NULL;
+    self->test = NULL;
+    self->parameter = NULL;
     self->parameter = NULL;
     panda$core$Bit $tmp3 = panda$core$String$endsWith$panda$core$String$R$panda$core$Bit(p_name, &$s2);
     panda$core$Bit $tmp4 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp3);
@@ -142,6 +150,10 @@ void org$pandalanguage$pandac$Type$init$panda$core$String$panda$core$Int64$org$p
 }
 void org$pandalanguage$pandac$Type$init$panda$core$String$panda$core$Int64$panda$core$Int64(org$pandalanguage$pandac$Type* self, panda$core$String* p_name, panda$core$Int64 p_typeKind, panda$core$Int64 p_size) {
     org$pandalanguage$pandac$Position $tmp8;
+    self->name = NULL;
+    self->subtypes = NULL;
+    self->test = NULL;
+    self->parameter = NULL;
     self->parameter = NULL;
     panda$core$Bit $tmp6 = panda$core$String$endsWith$panda$core$String$R$panda$core$Bit(p_name, &$s5);
     panda$core$Bit $tmp7 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp6);
@@ -157,6 +169,10 @@ void org$pandalanguage$pandac$Type$init$panda$core$String$panda$core$Int64$panda
     org$pandalanguage$pandac$Symbol$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$String(((org$pandalanguage$pandac$Symbol*) self), ((panda$core$Int64) { 207 }), self->position, p_name);
 }
 void org$pandalanguage$pandac$Type$init$panda$core$String$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT$panda$core$Bit(org$pandalanguage$pandac$Type* self, panda$core$String* p_name, panda$core$Int64 p_typeKind, org$pandalanguage$pandac$Position p_position, panda$collections$ListView* p_subtypes, panda$core$Bit p_resolved) {
+    self->name = NULL;
+    self->subtypes = NULL;
+    self->test = NULL;
+    self->parameter = NULL;
     self->parameter = NULL;
     panda$core$Bit $tmp9 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_typeKind, ((panda$core$Int64) { 11 }));
     panda$core$Bit $tmp11 = panda$core$String$endsWith$panda$core$String$R$panda$core$Bit(p_name, &$s10);
@@ -185,6 +201,10 @@ void org$pandalanguage$pandac$Type$init$panda$collections$ListView$LTorg$pandala
     panda$collections$Iterator* Iter$76$925;
     org$pandalanguage$pandac$Type* t37;
     panda$core$Char8 $tmp46;
+    self->name = NULL;
+    self->subtypes = NULL;
+    self->test = NULL;
+    self->parameter = NULL;
     self->parameter = NULL;
     self->typeKind = ((panda$core$Int64) { 17 });
     {
@@ -251,6 +271,10 @@ void org$pandalanguage$pandac$Type$init$panda$collections$ListView$LTorg$pandala
     }
 }
 void org$pandalanguage$pandac$Type$init$org$pandalanguage$pandac$ClassDecl$GenericParameter(org$pandalanguage$pandac$Type* self, org$pandalanguage$pandac$ClassDecl$GenericParameter* p_param) {
+    self->name = NULL;
+    self->subtypes = NULL;
+    self->test = NULL;
+    self->parameter = NULL;
     self->parameter = NULL;
     {
         panda$core$String* $tmp48 = panda$core$String$convert$R$panda$core$String(p_param->owner);

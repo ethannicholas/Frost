@@ -12,6 +12,8 @@ org$pandalanguage$pandac$Pair$class_type org$pandalanguage$pandac$Pair$class = {
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x50\x61\x69\x72", 29, -3248623696870598334, NULL };
 
 void org$pandalanguage$pandac$Pair$init$org$pandalanguage$pandac$Pair$A$org$pandalanguage$pandac$Pair$B(org$pandalanguage$pandac$Pair* self, panda$core$Object* p_first, panda$core$Object* p_second) {
+    self->first = NULL;
+    self->second = NULL;
     {
         self->first = p_first;
         panda$core$Panda$unref$panda$core$Object(self->first);

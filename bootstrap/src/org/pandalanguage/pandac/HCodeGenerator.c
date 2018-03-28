@@ -204,7 +204,19 @@ static panda$core$String $s475 = { (panda$core$Class*) &panda$core$String$class,
 
 void org$pandalanguage$pandac$HCodeGenerator$init$panda$io$File(org$pandalanguage$pandac$HCodeGenerator* self, panda$io$File* p_outDir) {
     self->compiler = NULL;
+    self->typeImportStream = NULL;
+    self->typesBuffer = NULL;
+    self->types = NULL;
+    self->bodyImportStream = NULL;
+    self->bodyBuffer = NULL;
+    self->body = NULL;
+    self->typeImports = NULL;
+    self->bodyImports = NULL;
+    self->imports = NULL;
+    self->importStream = NULL;
+    self->outDir = NULL;
     self->out = NULL;
+    self->llvmCodeGen = NULL;
     panda$io$MemoryOutputStream* $tmp2 = (panda$io$MemoryOutputStream*) pandaObjectAlloc(24, (panda$core$Class*) &panda$io$MemoryOutputStream$class);
     panda$io$MemoryOutputStream$init($tmp2);
     self->typeImportStream = $tmp2;

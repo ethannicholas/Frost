@@ -47,6 +47,10 @@ static panda$core$String $s127 = { (panda$core$Class*) &panda$core$String$class,
 static panda$core$String $s130 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x3e", 1, 163, NULL };
 
 void org$pandalanguage$pandac$SymbolTable$init$org$pandalanguage$pandac$Compiler(org$pandalanguage$pandac$SymbolTable* self, org$pandalanguage$pandac$Compiler* p_compiler) {
+    self->symbols = NULL;
+    self->compiler = NULL;
+    self->merged = NULL;
+    self->parents = NULL;
     panda$collections$HashMap* $tmp2 = (panda$collections$HashMap*) pandaObjectAlloc(56, (panda$core$Class*) &panda$collections$HashMap$class);
     panda$collections$HashMap$init($tmp2);
     self->symbols = $tmp2;
@@ -62,6 +66,10 @@ void org$pandalanguage$pandac$SymbolTable$init$org$pandalanguage$pandac$Compiler
     }
 }
 void org$pandalanguage$pandac$SymbolTable$init$org$pandalanguage$pandac$SymbolTable(org$pandalanguage$pandac$SymbolTable* self, org$pandalanguage$pandac$SymbolTable* p_parent) {
+    self->symbols = NULL;
+    self->compiler = NULL;
+    self->merged = NULL;
+    self->parents = NULL;
     panda$collections$HashMap* $tmp5 = (panda$collections$HashMap*) pandaObjectAlloc(56, (panda$core$Class*) &panda$collections$HashMap$class);
     panda$collections$HashMap$init($tmp5);
     self->symbols = $tmp5;

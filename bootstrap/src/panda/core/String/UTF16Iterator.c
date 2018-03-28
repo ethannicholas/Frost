@@ -26,6 +26,7 @@ panda$core$String$UTF16Iterator$class_type panda$core$String$UTF16Iterator$class
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x55\x54\x46\x31\x36\x49\x74\x65\x72\x61\x74\x6f\x72", 31, -7181782867719721369, NULL };
 
 void panda$core$String$UTF16Iterator$init$panda$core$String(panda$core$String$UTF16Iterator* self, panda$core$String* p_str) {
+    self->str = NULL;
     self->index = ((panda$core$Int64) { 0 });
     {
         self->str = p_str;

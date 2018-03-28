@@ -19,6 +19,9 @@ static panda$core$String $s6 = { (panda$core$Class*) &panda$core$String$class, -
 static panda$core$String $s9 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
 
 void org$pandalanguage$pandac$ClassDecl$GenericParameter$init$org$pandalanguage$pandac$Position$panda$core$String$panda$core$String$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$ClassDecl$GenericParameter* self, org$pandalanguage$pandac$Position p_position, panda$core$String* p_owner, panda$core$String* p_name, org$pandalanguage$pandac$Type* p_bound) {
+    self->name = NULL;
+    self->owner = NULL;
+    self->bound = NULL;
     {
         self->owner = p_owner;
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->owner));

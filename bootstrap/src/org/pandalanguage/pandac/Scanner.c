@@ -173,6 +173,7 @@ static panda$core$String $s1096 = { (panda$core$Class*) &panda$core$String$class
 static panda$core$String $s1124 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2e", 1, 147, NULL };
 
 void org$pandalanguage$pandac$Scanner$init$org$pandalanguage$pandac$Compiler(org$pandalanguage$pandac$Scanner* self, org$pandalanguage$pandac$Compiler* p_compiler) {
+    self->compiler = NULL;
     {
         self->compiler = p_compiler;
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->compiler));

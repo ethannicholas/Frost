@@ -22,6 +22,11 @@ static panda$core$String $s4 = { (panda$core$Class*) &panda$core$String$class, -
 static panda$core$String $s7 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
 
 void org$pandalanguage$pandac$ChoiceEntry$init$org$pandalanguage$pandac$ClassDecl$org$pandalanguage$pandac$Position$panda$core$String$panda$core$String$Q$panda$core$Int64$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT(org$pandalanguage$pandac$ChoiceEntry* self, org$pandalanguage$pandac$ClassDecl* p_owner, org$pandalanguage$pandac$Position p_position, panda$core$String* p_name, panda$core$String* p_doccomment, panda$core$Int64 p_rawValue, panda$collections$ListView* p_fields) {
+    self->name = NULL;
+    self->owner = NULL;
+    self->doccomment = NULL;
+    self->fields = NULL;
+    self->initMethod = NULL;
     self->initMethod = NULL;
     self->resolved = ((panda$core$Bit) { false });
     {

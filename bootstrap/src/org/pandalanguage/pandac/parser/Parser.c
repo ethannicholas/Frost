@@ -183,8 +183,13 @@ static panda$core$String $s2107 = { (panda$core$Class*) &panda$core$String$class
 static panda$core$String $s2131 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x27\x7b\x27", 3, 1440602, NULL };
 
 void org$pandalanguage$pandac$parser$Parser$init$org$pandalanguage$pandac$ErrorReporter(org$pandalanguage$pandac$parser$Parser* self, org$pandalanguage$pandac$ErrorReporter* p_errors) {
+    self->lexer = NULL;
+    self->errors = NULL;
     self->path = NULL;
     self->source = NULL;
+    self->pushbackBuffer = NULL;
+    self->commaSeparatedExpressionContext = NULL;
+    self->speculativeBuffer = NULL;
     org$pandalanguage$pandac$parser$Lexer* $tmp2 = (org$pandalanguage$pandac$parser$Lexer*) pandaObjectAlloc(40, (panda$core$Class*) &org$pandalanguage$pandac$parser$Lexer$class);
     org$pandalanguage$pandac$parser$Lexer$init($tmp2);
     self->lexer = $tmp2;

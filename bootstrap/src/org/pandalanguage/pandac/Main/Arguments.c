@@ -31,6 +31,7 @@ static panda$core$String $s23 = { (panda$core$Class*) &panda$core$String$class, 
 static panda$core$String $s34 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x27", 1, 140, NULL };
 
 void org$pandalanguage$pandac$Main$Arguments$init$panda$collections$ListView$LTpanda$core$String$GT(org$pandalanguage$pandac$Main$Arguments* self, panda$collections$ListView* p_args) {
+    self->args = NULL;
     self->index = ((panda$core$Int64) { 1 });
     {
         self->args = p_args;

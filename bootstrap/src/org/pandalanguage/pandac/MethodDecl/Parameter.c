@@ -15,6 +15,8 @@ static panda$core$String $s3 = { (panda$core$Class*) &panda$core$String$class, -
 static panda$core$String $s6 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
 
 void org$pandalanguage$pandac$MethodDecl$Parameter$init$panda$core$String$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$MethodDecl$Parameter* self, panda$core$String* p_name, org$pandalanguage$pandac$Type* p_type) {
+    self->name = NULL;
+    self->type = NULL;
     {
         self->name = p_name;
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->name));

@@ -42,6 +42,7 @@ static panda$core$String $s30 = { (panda$core$Class*) &panda$core$String$class, 
 static panda$core$String $s38 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2e", 1, 147, NULL };
 
 void panda$io$File$init$panda$core$String(panda$io$File* self, panda$core$String* p_path) {
+    self->path = NULL;
     {
         self->path = p_path;
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->path));

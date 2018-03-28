@@ -17,6 +17,7 @@ typedef panda$core$UInt8$nullable (*$fn3)(panda$io$InputStream*);
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x69\x6f\x2e\x4c\x69\x6e\x65\x4e\x75\x6d\x62\x65\x72\x49\x6e\x70\x75\x74\x53\x74\x72\x65\x61\x6d", 30, 6529214259521028726, NULL };
 
 void panda$io$LineNumberInputStream$init$panda$io$InputStream(panda$io$LineNumberInputStream* self, panda$io$InputStream* p_source) {
+    self->source = NULL;
     self->line = ((panda$core$Int64) { 1 });
     self->column = ((panda$core$Int64) { 1 });
     {

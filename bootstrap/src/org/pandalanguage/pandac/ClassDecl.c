@@ -75,6 +75,23 @@ static panda$core$String $s182 = { (panda$core$Class*) &panda$core$String$class,
 void org$pandalanguage$pandac$ClassDecl$init$panda$io$File$org$pandalanguage$pandac$Position$panda$collections$MapView$LTpanda$core$String$Cpanda$core$String$GT$panda$core$String$Q$org$pandalanguage$pandac$Annotations$org$pandalanguage$pandac$ClassDecl$Kind$panda$core$String$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT$panda$collections$Array$LTorg$pandalanguage$pandac$ClassDecl$GenericParameter$GT$org$pandalanguage$pandac$SymbolTable(org$pandalanguage$pandac$ClassDecl* self, panda$io$File* p_source, org$pandalanguage$pandac$Position p_position, panda$collections$MapView* p_aliases, panda$core$String* p_doccomment, org$pandalanguage$pandac$Annotations* p_annotations, org$pandalanguage$pandac$ClassDecl$Kind p_kind, panda$core$String* p_name, panda$collections$ListView* p_declaredSupers, panda$collections$Array* p_parameters, org$pandalanguage$pandac$SymbolTable* p_parent) {
     panda$collections$Iterator* Iter$119$912;
     org$pandalanguage$pandac$ClassDecl$GenericParameter* p24;
+    self->name = NULL;
+    self->source = NULL;
+    self->aliases = NULL;
+    self->doccomment = NULL;
+    self->annotations = NULL;
+    self->declaredSupers = NULL;
+    self->rawSuper = NULL;
+    self->rawInterfaces = NULL;
+    self->parameters = NULL;
+    self->fields = NULL;
+    self->methods = NULL;
+    self->classes = NULL;
+    self->choiceEntries = NULL;
+    self->owner = NULL;
+    self->symbolTable = NULL;
+    self->virtualMethods = NULL;
+    self->classResolutionCache = NULL;
     self->rawSuper = NULL;
     panda$collections$Array* $tmp2 = (panda$collections$Array*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$Array$class);
     panda$collections$Array$init($tmp2);

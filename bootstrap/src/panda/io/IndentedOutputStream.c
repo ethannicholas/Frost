@@ -24,6 +24,7 @@ static panda$core$String $s21 = { (panda$core$Class*) &panda$core$String$class, 
 
 void panda$io$IndentedOutputStream$init$panda$io$OutputStream(panda$io$IndentedOutputStream* self, panda$io$OutputStream* p_out) {
     self->indent = NULL;
+    self->out = NULL;
     self->level = ((panda$core$Int64) { 0 });
     self->indentSize = ((panda$core$Int64) { 4 });
     self->indent = &$s2;

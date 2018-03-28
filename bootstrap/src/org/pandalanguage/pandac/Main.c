@@ -134,6 +134,10 @@ static panda$core$String $s312 = { (panda$core$Class*) &panda$core$String$class,
 static panda$core$String $s314 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x20\x65\x72\x72\x6f\x72\x73", 7, 142255681664502, NULL };
 
 void org$pandalanguage$pandac$Main$init(org$pandalanguage$pandac$Main* self) {
+    self->opt = NULL;
+    self->llc = NULL;
+    self->gcc = NULL;
+    self->pandaHome = NULL;
     {
         panda$io$File* $tmp2 = (panda$io$File*) pandaObjectAlloc(24, (panda$core$Class*) &panda$io$File$class);
         panda$io$File$init$panda$core$String($tmp2, &$s3);

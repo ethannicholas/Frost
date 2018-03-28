@@ -73,6 +73,7 @@ panda$core$String* panda$collections$Stack$convert$R$panda$core$String(panda$col
     return $tmp19;
 }
 void panda$collections$Stack$init(panda$collections$Stack* self) {
+    self->contents = NULL;
     panda$collections$Array* $tmp20 = (panda$collections$Array*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$Array$class);
     panda$collections$Array$init($tmp20);
     self->contents = $tmp20;

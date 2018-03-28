@@ -16,6 +16,9 @@ static panda$core$String $s4 = { (panda$core$Class*) &panda$core$String$class, -
 static panda$core$String $s6 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x4c\x6f\x6f\x70\x44\x65\x73\x63\x72\x69\x70\x74\x6f\x72\x3c\x3e", 16, 3973305489047735296, NULL };
 
 void org$pandalanguage$pandac$CCodeGenerator$LoopDescriptor$init$panda$core$String$Q$panda$core$String$panda$core$String(org$pandalanguage$pandac$CCodeGenerator$LoopDescriptor* self, panda$core$String* p_loopLabel, panda$core$String* p_breakLabel, panda$core$String* p_continueLabel) {
+    self->loopLabel = NULL;
+    self->breakLabel = NULL;
+    self->continueLabel = NULL;
     {
         self->loopLabel = p_loopLabel;
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->loopLabel));
