@@ -139,6 +139,7 @@ class PLex {
         out.printLine("function getTransitions():Pointer<Pointer<Int>> {")
         out.level += 1
         out.printLine("def result := Pointer<Pointer<Int>>.alloc(\{DFA.END_CHAR} + 1)")
+        def destroys := MutableString()
         outer: for i in 0 ... DFA.END_CHAR.convert()->Int {
             for j in 0 .. i {
                 var equal := true
@@ -153,6 +154,7 @@ class PLex {
                     continue outer
                 }
             }
+            destroys.append("transitions[\{i}].destroy()\n")
             def a := dfa.transitions[i]
             def counts := Array<Int>(dfa.stateCount)
             for j in 0 .. dfa.stateCount {
@@ -185,6 +187,15 @@ class PLex {
             out.printLine("result[\{i}] := \{dfa.accepts[i]}")
         }
         out.printLine("return result")
+        out.level -= 1
+        out.printLine("}")
+        out.printLine()
+        out.printLine("@override")
+        out.printLine("method cleanup() {")
+        out.level += 1
+        out.print(destroys)
+        out.printLine("transitions.destroy()")
+        out.printLine("accepts.destroy()")
         out.level -= 1
         out.printLine("}")
     }

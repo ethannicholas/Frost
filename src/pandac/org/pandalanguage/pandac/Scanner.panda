@@ -513,6 +513,9 @@ class Scanner {
             }
             if m.name = "cleanup" & m.parameters.get_count() = 0 {
                 foundCleanup := true
+                if kind = ClassDecl.Kind.CHOICE {
+                    compiler.error(position, "choice cleanup method cannot be overridden")
+                }
             }
         }
         if !foundInit & kind = ClassDecl.Kind.CLASS & result.name != "panda.unsafe.Pointer" {

@@ -3330,6 +3330,71 @@ panda$core$Int64* org$pandalanguage$pandac$parser$Lexer$getAccepts$R$panda$unsaf
     result85[((panda$core$Int64) { 238 }).value] = ((panda$core$Int64) { 86 });
     return result85;
 }
+void org$pandalanguage$pandac$parser$Lexer$cleanup(org$pandalanguage$pandac$parser$Lexer* self) {
+    pandaFree(self->transitions[((panda$core$Int64) { 0 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 9 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 10 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 33 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 34 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 36 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 37 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 38 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 39 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 40 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 41 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 42 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 43 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 44 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 45 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 46 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 47 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 48 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 49 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 50 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 58 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 60 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 61 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 62 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 63 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 64 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 65 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 69 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 91 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 92 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 93 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 94 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 97 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 98 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 99 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 100 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 101 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 102 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 103 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 104 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 105 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 107 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 108 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 109 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 110 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 111 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 112 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 114 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 115 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 116 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 117 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 118 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 119 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 120 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 121 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 123 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 124 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 125 }).value]);
+    pandaFree(self->transitions[((panda$core$Int64) { 126 }).value]);
+    pandaFree(self->transitions);
+    pandaFree(self->accepts);
+    panda$core$Object$cleanup(((panda$core$Object*) self));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->dfa));
+}
 org$pandalanguage$pandac$parser$Token org$pandalanguage$pandac$parser$Lexer$next$R$org$pandalanguage$pandac$parser$Token(org$pandalanguage$pandac$parser$Lexer* self) {
     org$pandalanguage$plex$runtime$RawToken raw86;
     org$pandalanguage$pandac$parser$Token $tmp88;
@@ -3348,9 +3413,5 @@ void org$pandalanguage$pandac$parser$Lexer$init(org$pandalanguage$pandac$parser$
     self->transitions = $tmp91;
     panda$core$Int64* $tmp92 = org$pandalanguage$pandac$parser$Lexer$getAccepts$R$panda$unsafe$Pointer$LTpanda$core$Int64$GT();
     self->accepts = $tmp92;
-}
-void org$pandalanguage$pandac$parser$Lexer$cleanup(org$pandalanguage$pandac$parser$Lexer* self) {
-    panda$core$Object$cleanup(((panda$core$Object*) self));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->dfa));
 }
 

@@ -37,15 +37,6 @@ class DFA {
         self.accepts := accepts
     }
 
-    @override
-    method cleanup() {
-        for i in 0 .. stateCount {
-            transitions[i].destroy()
-        }
-        transitions.destroy()
-        accepts.destroy()
-    }
-
     method next():RawToken {
         var state := 1
         if offset = sourceEnd {
