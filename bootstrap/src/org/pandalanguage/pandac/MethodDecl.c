@@ -180,7 +180,7 @@ panda$core$Bit org$pandalanguage$pandac$MethodDecl$matches$org$pandalanguage$pan
 panda$core$String* org$pandalanguage$pandac$MethodDecl$signature$R$panda$core$String(org$pandalanguage$pandac$MethodDecl* self) {
     panda$core$MutableString* result48;
     panda$core$String* separator53;
-    panda$collections$Iterator* Iter$100$955;
+    panda$collections$Iterator* Iter$99$955;
     org$pandalanguage$pandac$MethodDecl$Parameter* p67;
     panda$core$Char8 $tmp73;
     panda$core$String* tmp180;
@@ -197,23 +197,23 @@ panda$core$String* org$pandalanguage$pandac$MethodDecl$signature$R$panda$core$St
         }
         $fn58 $tmp57 = $tmp56->methods[0];
         panda$collections$Iterator* $tmp59 = $tmp57(((panda$collections$Iterable*) self->parameters));
-        Iter$100$955 = $tmp59;
+        Iter$99$955 = $tmp59;
         $l60:;
-        ITable* $tmp62 = Iter$100$955->$class->itable;
+        ITable* $tmp62 = Iter$99$955->$class->itable;
         while ($tmp62->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
             $tmp62 = $tmp62->next;
         }
         $fn64 $tmp63 = $tmp62->methods[0];
-        panda$core$Bit $tmp65 = $tmp63(Iter$100$955);
+        panda$core$Bit $tmp65 = $tmp63(Iter$99$955);
         panda$core$Bit $tmp66 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp65);
         if (!$tmp66.value) goto $l61;
         {
-            ITable* $tmp68 = Iter$100$955->$class->itable;
+            ITable* $tmp68 = Iter$99$955->$class->itable;
             while ($tmp68->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
                 $tmp68 = $tmp68->next;
             }
             $fn70 $tmp69 = $tmp68->methods[1];
-            panda$core$Object* $tmp71 = $tmp69(Iter$100$955);
+            panda$core$Object* $tmp71 = $tmp69(Iter$99$955);
             p67 = ((org$pandalanguage$pandac$MethodDecl$Parameter*) $tmp71);
             panda$core$MutableString$append$panda$core$String(result48, separator53);
             panda$core$MutableString$append$panda$core$Object(result48, ((panda$core$Object*) p67));
@@ -225,7 +225,7 @@ panda$core$String* org$pandalanguage$pandac$MethodDecl$signature$R$panda$core$St
         }
         goto $l60;
         $l61:;
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$100$955));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$99$955));
     }
     panda$core$Char8$init$panda$core$UInt8(&$tmp73, ((panda$core$UInt8) { 41 }));
     panda$core$MutableString$append$panda$core$Char8(result48, $tmp73);
@@ -249,10 +249,10 @@ panda$core$String* org$pandalanguage$pandac$MethodDecl$signature$R$panda$core$St
     }
 }
 panda$core$String* org$pandalanguage$pandac$MethodDecl$declaration$R$panda$core$String(org$pandalanguage$pandac$MethodDecl* self) {
-    org$pandalanguage$pandac$MethodDecl$Kind $match$113_982;
+    org$pandalanguage$pandac$MethodDecl$Kind $match$112_982;
     {
-        $match$113_982 = self->methodKind;
-        panda$core$Bit $tmp83 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$113_982.$rawValue, ((panda$core$Int64) { 0 }));
+        $match$112_982 = self->methodKind;
+        panda$core$Bit $tmp83 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$112_982.$rawValue, ((panda$core$Int64) { 0 }));
         if ($tmp83.value) {
         {
             panda$core$String* $tmp85 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s84, ((org$pandalanguage$pandac$Symbol*) self->owner)->name);
@@ -264,7 +264,7 @@ panda$core$String* org$pandalanguage$pandac$MethodDecl$declaration$R$panda$core$
         }
         }
         else {
-        panda$core$Bit $tmp92 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$113_982.$rawValue, ((panda$core$Int64) { 1 }));
+        panda$core$Bit $tmp92 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$112_982.$rawValue, ((panda$core$Int64) { 1 }));
         if ($tmp92.value) {
         {
             panda$core$String* $tmp94 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s93, ((org$pandalanguage$pandac$Symbol*) self->owner)->name);
@@ -276,7 +276,7 @@ panda$core$String* org$pandalanguage$pandac$MethodDecl$declaration$R$panda$core$
         }
         }
         else {
-        panda$core$Bit $tmp101 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$113_982.$rawValue, ((panda$core$Int64) { 2 }));
+        panda$core$Bit $tmp101 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$112_982.$rawValue, ((panda$core$Int64) { 2 }));
         if ($tmp101.value) {
         {
             panda$core$String* $tmp102 = panda$core$String$convert$R$panda$core$String(((org$pandalanguage$pandac$Symbol*) self->owner)->name);

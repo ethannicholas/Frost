@@ -9,7 +9,7 @@ class FieldDecl : Symbol {
         PROPERTY
     }
 
-    def owner:ClassDecl -- FIXME weak
+    def owner:ClassDecl
 
     def doccomment:String?
 

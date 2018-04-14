@@ -33,6 +33,7 @@ typedef struct panda$collections$Iterator panda$collections$Iterator;
 typedef struct panda$core$String panda$core$String;
 
 void panda$collections$IdentityMap$init(panda$collections$IdentityMap* self);
+void panda$collections$IdentityMap$cleanup(panda$collections$IdentityMap* self);
 panda$core$Int64 panda$collections$IdentityMap$indexFor$panda$collections$IdentityMap$K$R$panda$core$Int64(panda$collections$IdentityMap* self, panda$core$Object* p_key);
 panda$core$Object* panda$collections$IdentityMap$$IDX$panda$collections$IdentityMap$K$R$panda$collections$IdentityMap$V$Q(panda$collections$IdentityMap* self, panda$core$Object* p_key);
 panda$core$Bit panda$collections$IdentityMap$contains$panda$collections$IdentityMap$K$R$panda$core$Bit(panda$collections$IdentityMap* self, panda$core$Object* p_key);
@@ -46,6 +47,5 @@ panda$core$Bit panda$collections$IdentityMap$$NEQ$panda$collections$Map$LTpanda$
 panda$collections$Iterator* panda$collections$IdentityMap$keys$R$panda$collections$Iterator$LTpanda$collections$IdentityMap$K$GT(panda$collections$IdentityMap* self);
 panda$collections$Iterator* panda$collections$IdentityMap$values$R$panda$collections$Iterator$LTpanda$collections$IdentityMap$V$GT(panda$collections$IdentityMap* self);
 panda$core$String* panda$collections$IdentityMap$convert$R$panda$core$String(panda$collections$IdentityMap* self);
-void panda$collections$IdentityMap$cleanup(panda$collections$IdentityMap* self);
 
 #endif

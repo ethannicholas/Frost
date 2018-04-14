@@ -4,7 +4,22 @@ uses org.pandalanguage.pandac.parser.Parser
 uses org.pandalanguage.pandac.parser.Token
 
 @final
-class Compiler : ErrorReporter {
+class Compiler {
+    class CompilerErrorReporter : ErrorReporter {
+        @weak
+        def compiler:Compiler
+
+        init(compiler:Compiler) {
+            self.compiler := compiler
+        }
+
+        @override
+        method error(file:File, pos:Position, msg:String) {
+            compiler.error(file, pos, msg)
+        }
+    }
+
+    constant WEAK_NAME := "panda.core.Weak"
     constant RANGE_NAME := "panda.core.Range"
     constant STEPPED_RANGE_NAME := "panda.core.SteppedRange"
 
@@ -76,11 +91,15 @@ class Compiler : ErrorReporter {
     @private
     var existenceCache := HashMap<File, Bit>()
 
+    @private
+    var inFieldCleanup := false
+
     init(codeGenerator:CodeGenerator, settings:Settings) {
         self.settings := settings
-        self.parser := Parser(self)
         self.scanner := Scanner(self)
         self.root := SymbolTable(self)
+        def errorReporter := CompilerErrorReporter(self)
+        self.parser := Parser(errorReporter)
         self.symbolTable := root
         self.codeGenerator := codeGenerator
         codeGenerator.setCompiler(self)
@@ -144,6 +163,7 @@ class Compiler : ErrorReporter {
         addAlias("panda.core.UInt32")
         addAlias("panda.core.UInt64")
         addAlias("panda.core.Value")
+        addAlias("panda.core.Weak")
         addAlias("panda.math.Random")
         addAlias("panda.math.XorShift128Plus")
         addAlias("panda.io.Console")
@@ -448,11 +468,7 @@ class Compiler : ErrorReporter {
         currentClass.pop()
     }
 
-    method resolve(f:FieldDecl) {
-        if f.resolved {
-            return
-        }
-        f.resolved := true
+    method determineRawType(f:FieldDecl) {
         currentClass.push(f.owner)
         def old := symbolTable
         symbolTable := f.owner.symbolTable
@@ -484,6 +500,22 @@ class Compiler : ErrorReporter {
         f.value := coerce(f.value, f.type)
         currentClass.pop()
         symbolTable := old
+    }
+
+    method resolve(f:FieldDecl) {
+        if f.resolved {
+            return
+        }
+        f.resolved := true
+        determineRawType(f)
+        if f.annotations.isWeak() & f.type != Type.Void() {
+            f.type := Type.WeakOf(f.type)
+            if f.value != null {
+                def args := Array<IRNode>() -- FIXME literal
+                args.add(f.value)
+                f.value := call(IRNode.TYPE_REFERENCE(f.position, f.type), args)
+            }
+        }
     }
 
     method resolve(c:ChoiceEntry) {
@@ -552,6 +584,13 @@ class Compiler : ErrorReporter {
             when IRNode.SUPER(position, _):
                 error(position, "'super' can only be used as part of a method call")
                 return null
+            when IRNode.FIELD_REFERENCE(position, _, _, field):
+                if field.annotations.isWeak() & !inFieldCleanup {
+                    def get := compileDot(position, expr, "get")
+                    assert get != null
+                    return call(get, Array<IRNode>())
+                }
+                return expr
             otherwise:
                 return coerce(expr, variableType(expr))
         }
@@ -1616,8 +1655,12 @@ class Compiler : ErrorReporter {
                     }
                 }
             }
-            var result := IRNode.CAST(expr.position(), expr, target, false)
-            if !isRefCounted(expr.type()) & isRefCounted(target) {
+            def resolved := resolve(expr)
+            if resolved = null {
+                return null
+            }
+            var result := IRNode.CAST(resolved.position(), resolved, target, false)
+            if !isRefCounted(resolved.type()) & isRefCounted(target) {
                 reusedValueCount += 1
                 result := IRNode.REUSED_VALUE_DEFINITION(result, reusedValueCount)
                 def reused := IRNode.REUSED_VALUE(result.position(), target, reusedValueCount)
@@ -2392,7 +2435,20 @@ class Compiler : ErrorReporter {
             if left = IRNode.UNRESOLVED_INDEX {
                 return compileIndexedAssignment(position, left, op, right)
             }
-            left := resolve(left)
+            var refCount := true
+            match left {
+                when IRNode.FIELD_REFERENCE(_, type, _, field):
+                    if field.owner.name = WEAK_NAME {
+                        refCount := false
+                    }
+                    if field.annotations.isWeak() {
+                        def args := Array<IRNode>() -- FIXME literal
+                        args.add(right)
+                        right := call(IRNode.TYPE_REFERENCE(position, type), args)
+                    }
+                otherwise:
+                    left := resolve(left)
+            }
             if left = null {
                 return null
             }
@@ -2404,7 +2460,7 @@ class Compiler : ErrorReporter {
                 error(left.position(), "cannot assign to this expression")
                 return null
             }
-            if isRefCounted(left.type()) {
+            if refCount & isRefCounted(left.type()) {
                 reusedValueCount += 1
                 right := IRNode.REUSED_VALUE_DEFINITION(right, reusedValueCount)
                 right := IRNode.EXPRESSION_WITH_EXTRA_EFFECTS(right,
@@ -4062,7 +4118,9 @@ class Compiler : ErrorReporter {
                 finalBody.addAll(compiled)
                 compiled := finalBody.finish()
             }
-            if m.name = "cleanup" & m.parameters.get_count() = 0 {
+            if m.name = "cleanup" & m.parameters.get_count() = 0 & m.owner.name != WEAK_NAME {
+                assert !inFieldCleanup
+                inFieldCleanup := true
                 def finalBody := Array<IRNode>(compiled)
                 for f in m.owner.fields {
                     resolve(f)
@@ -4073,6 +4131,8 @@ class Compiler : ErrorReporter {
                         compiled := finalBody.finish()
                     }
                 }
+                assert inFieldCleanup
+                inFieldCleanup := false
             }
         }
         assert symbolTable == symbols
@@ -4198,7 +4258,6 @@ class Compiler : ErrorReporter {
         error(currentClass.peek().source, position, msg)
     }
 
-    @override
     method error(file:File, pos:Position, msg:String) {
         if reportErrors {
             errorCount += 1

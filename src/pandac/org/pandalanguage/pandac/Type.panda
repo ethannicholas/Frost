@@ -305,6 +305,14 @@ class Type : Symbol, Key<Type> {
     }
 
     @class
+    method WeakOf(t:Type):Type {
+        def children := Array<Type>() -- FIXME literal
+        children.add(Type(Compiler.WEAK_NAME, Kind.CLASS, Position(), true))
+        children.add(t)
+        return Type("\{Compiler.WEAK_NAME}<\{t}>", Kind.GENERIC, t.position, children, t.resolved)
+    }
+
+    @class
     method RangeOf(t:Type):Type {
         def children := Array<Type>() -- FIXME literal
         children.add(Type(Compiler.RANGE_NAME, Kind.CLASS, Position(), true))

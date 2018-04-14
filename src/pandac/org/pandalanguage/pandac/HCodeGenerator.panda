@@ -2,6 +2,7 @@ package org.pandalanguage.pandac
 
 @final
 class HCodeGenerator : CodeGenerator {
+    @weak
     var compiler:Compiler?
 
     def typeImportStream := MemoryOutputStream()

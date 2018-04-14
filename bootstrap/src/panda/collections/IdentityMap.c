@@ -99,6 +99,10 @@ void panda$collections$IdentityMap$init(panda$collections$IdentityMap* self) {
     panda$core$Int64 $tmp24 = panda$core$Int64$$INTDIV$panda$core$Int64$R$panda$core$Int64($tmp23, ((panda$core$Int64) { 4 }));
     self->threshold = $tmp24;
 }
+void panda$collections$IdentityMap$cleanup(panda$collections$IdentityMap* self) {
+    pandaFree(self->contents);
+    panda$core$Object$cleanup(((panda$core$Object*) self));
+}
 panda$core$Int64 panda$collections$IdentityMap$indexFor$panda$collections$IdentityMap$K$R$panda$core$Int64(panda$collections$IdentityMap* self, panda$core$Object* p_key) {
     panda$core$Int64 $tmp25;
     panda$core$Panda$addressOf$panda$core$Object$R$panda$core$Int64(&$tmp25, p_key);
@@ -546,8 +550,5 @@ panda$core$String* panda$collections$IdentityMap$convert$R$panda$core$String(pan
         }
         return tmp4172;
     }
-}
-void panda$collections$IdentityMap$cleanup(panda$collections$IdentityMap* self) {
-    panda$core$Object$cleanup(((panda$core$Object*) self));
 }
 

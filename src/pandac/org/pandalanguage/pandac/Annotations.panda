@@ -14,6 +14,7 @@ class Annotations {
         constant ABSTRACT   := 1 << 9
         constant INLINE     := 1 << 10
         constant SPECIALIZE := 1 << 11
+        constant WEAK       := 1 << 12
     }
 
     def flags:Int
@@ -70,6 +71,10 @@ class Annotations {
         return flags && Flag.SPECIALIZE != 0
     }
 
+    function isWeak():Bit {
+        return flags && Flag.WEAK != 0
+    }
+
     @override
     function convert():String {
         def result := MutableString()
@@ -105,6 +110,9 @@ class Annotations {
         }
         if isSpecialize() {
             result.append("@specialize\n")
+        }
+        if isWeak() {
+            result.append("@weak\n")
         }
         return result.finish()
     }

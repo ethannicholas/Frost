@@ -8,6 +8,7 @@ class Scanner {
     constant INLINE_THRESHOLD := 10
 
     @private
+    @weak
     def compiler:Compiler
 
     init(compiler:Compiler) {
@@ -58,6 +59,7 @@ class Scanner {
                         when "@abstract":   flags ||= Annotations.Flag.ABSTRACT
                         when "@inline":     flags ||= Annotations.Flag.INLINE
                         when "@specialize": flags ||= Annotations.Flag.SPECIALIZE
+                        when "@weak":       flags ||= Annotations.Flag.WEAK
                         otherwise:
                             compiler.error(position, "unrecognized annotation '\{text}'")
                     }

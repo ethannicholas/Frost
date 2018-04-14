@@ -77,6 +77,7 @@ add_library(c_panda
     bootstrap/src/panda/core/UInt64.c
     bootstrap/src/panda/core/UInt8.c
     bootstrap/src/panda/core/Value.c
+    bootstrap/src/panda/core/Weak.c
     bootstrap/src/panda/io/Console.c
     bootstrap/src/panda/io/File.c
     bootstrap/src/panda/io/FileInputStream.c
@@ -110,6 +111,7 @@ add_executable(bootstrap
     bootstrap/src/org/pandalanguage/pandac/ClassDecl/Resolution.c
     bootstrap/src/org/pandalanguage/pandac/CodeGenerator.c
     bootstrap/src/org/pandalanguage/pandac/Compiler.c
+    bootstrap/src/org/pandalanguage/pandac/Compiler/CompilerErrorReporter.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/CompileTargetResult.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/Settings.c
     bootstrap/src/org/pandalanguage/pandac/ErrorReporter.c
@@ -208,6 +210,7 @@ set(core_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/String.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/System.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Value.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Weak.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/io/Console.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/io/File.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/io/FileInputStream.panda

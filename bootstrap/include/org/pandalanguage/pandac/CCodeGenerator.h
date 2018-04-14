@@ -4,7 +4,7 @@
 #undef PANDA_TYPESONLY
 typedef struct panda$core$Class panda$core$Class;
 #include "panda/core/Int32.h"
-typedef struct org$pandalanguage$pandac$Compiler org$pandalanguage$pandac$Compiler;
+typedef struct panda$core$Weak panda$core$Weak;
 typedef struct panda$io$File panda$io$File;
 typedef struct panda$io$IndentedOutputStream panda$io$IndentedOutputStream;
 typedef struct panda$io$MemoryOutputStream panda$io$MemoryOutputStream;
@@ -22,7 +22,7 @@ typedef struct panda$collections$Stack panda$collections$Stack;
 typedef struct org$pandalanguage$pandac$CCodeGenerator {
     panda$core$Class* $class;
     panda$core$Int32 refCount;
-    org$pandalanguage$pandac$Compiler* compiler;
+    panda$core$Weak* compiler;
     panda$io$File* outDir;
     panda$io$IndentedOutputStream* out;
     panda$io$MemoryOutputStream* strings;

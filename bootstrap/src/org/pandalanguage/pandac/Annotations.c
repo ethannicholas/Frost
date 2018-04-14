@@ -9,21 +9,22 @@
 
 
 static panda$core$String $s1;
-org$pandalanguage$pandac$Annotations$class_type org$pandalanguage$pandac$Annotations$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, NULL, { org$pandalanguage$pandac$Annotations$convert$R$panda$core$String, org$pandalanguage$pandac$Annotations$cleanup, org$pandalanguage$pandac$Annotations$isPrivate$R$panda$core$Bit, org$pandalanguage$pandac$Annotations$isProtected$R$panda$core$Bit, org$pandalanguage$pandac$Annotations$isPackage$R$panda$core$Bit, org$pandalanguage$pandac$Annotations$isClass$R$panda$core$Bit, org$pandalanguage$pandac$Annotations$isOverride$R$panda$core$Bit, org$pandalanguage$pandac$Annotations$isExternal$R$panda$core$Bit, org$pandalanguage$pandac$Annotations$isImplicit$R$panda$core$Bit, org$pandalanguage$pandac$Annotations$isFinal$R$panda$core$Bit, org$pandalanguage$pandac$Annotations$isAbstract$R$panda$core$Bit, org$pandalanguage$pandac$Annotations$isInline$R$panda$core$Bit, org$pandalanguage$pandac$Annotations$isSpecialize$R$panda$core$Bit} };
+org$pandalanguage$pandac$Annotations$class_type org$pandalanguage$pandac$Annotations$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, NULL, { org$pandalanguage$pandac$Annotations$convert$R$panda$core$String, org$pandalanguage$pandac$Annotations$cleanup, org$pandalanguage$pandac$Annotations$isPrivate$R$panda$core$Bit, org$pandalanguage$pandac$Annotations$isProtected$R$panda$core$Bit, org$pandalanguage$pandac$Annotations$isPackage$R$panda$core$Bit, org$pandalanguage$pandac$Annotations$isClass$R$panda$core$Bit, org$pandalanguage$pandac$Annotations$isOverride$R$panda$core$Bit, org$pandalanguage$pandac$Annotations$isExternal$R$panda$core$Bit, org$pandalanguage$pandac$Annotations$isImplicit$R$panda$core$Bit, org$pandalanguage$pandac$Annotations$isFinal$R$panda$core$Bit, org$pandalanguage$pandac$Annotations$isAbstract$R$panda$core$Bit, org$pandalanguage$pandac$Annotations$isInline$R$panda$core$Bit, org$pandalanguage$pandac$Annotations$isSpecialize$R$panda$core$Bit, org$pandalanguage$pandac$Annotations$isWeak$R$panda$core$Bit} };
 
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x41\x6e\x6e\x6f\x74\x61\x74\x69\x6f\x6e\x73", 36, -7200059981408518764, NULL };
-static panda$core$String $s38 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x40\x70\x72\x69\x76\x61\x74\x65\x0a", 9, 1798843609467911838, NULL };
-static panda$core$String $s40 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x40\x70\x72\x6f\x74\x65\x63\x74\x65\x64\x0a", 11, -4506051960376467375, NULL };
-static panda$core$String $s42 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x40\x70\x61\x63\x6b\x61\x67\x65\x0a", 9, 1798825499419951591, NULL };
-static panda$core$String $s44 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x40\x63\x6c\x61\x73\x73\x0a", 7, 176202664446009, NULL };
-static panda$core$String $s46 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x40\x6f\x76\x65\x72\x72\x69\x64\x65\x0a", 10, -2794640180115170421, NULL };
-static panda$core$String $s48 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x40\x65\x78\x74\x65\x72\x6e\x61\x6c\x0a", 10, -2902695637431482918, NULL };
-static panda$core$String $s50 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x40\x69\x6d\x70\x6c\x69\x63\x69\x74\x0a", 10, -2860564891551370826, NULL };
-static panda$core$String $s52 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x40\x66\x69\x6e\x61\x6c\x0a", 7, 176233895775897, NULL };
-static panda$core$String $s54 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x40\x61\x62\x73\x74\x72\x61\x63\x74\x0a", 10, -2948369507313257333, NULL };
-static panda$core$String $s56 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x40\x69\x6e\x6c\x69\x6e\x65\x0a", 8, 17802860384471114, NULL };
-static panda$core$String $s58 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x40\x73\x70\x65\x63\x69\x61\x6c\x69\x7a\x65\x0a", 12, 3105123519507170732, NULL };
+static panda$core$String $s41 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x40\x70\x72\x69\x76\x61\x74\x65\x0a", 9, 1798843609467911838, NULL };
+static panda$core$String $s43 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x40\x70\x72\x6f\x74\x65\x63\x74\x65\x64\x0a", 11, -4506051960376467375, NULL };
+static panda$core$String $s45 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x40\x70\x61\x63\x6b\x61\x67\x65\x0a", 9, 1798825499419951591, NULL };
+static panda$core$String $s47 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x40\x63\x6c\x61\x73\x73\x0a", 7, 176202664446009, NULL };
+static panda$core$String $s49 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x40\x6f\x76\x65\x72\x72\x69\x64\x65\x0a", 10, -2794640180115170421, NULL };
+static panda$core$String $s51 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x40\x65\x78\x74\x65\x72\x6e\x61\x6c\x0a", 10, -2902695637431482918, NULL };
+static panda$core$String $s53 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x40\x69\x6d\x70\x6c\x69\x63\x69\x74\x0a", 10, -2860564891551370826, NULL };
+static panda$core$String $s55 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x40\x66\x69\x6e\x61\x6c\x0a", 7, 176233895775897, NULL };
+static panda$core$String $s57 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x40\x61\x62\x73\x74\x72\x61\x63\x74\x0a", 10, -2948369507313257333, NULL };
+static panda$core$String $s59 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x40\x69\x6e\x6c\x69\x6e\x65\x0a", 8, 17802860384471114, NULL };
+static panda$core$String $s61 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x40\x73\x70\x65\x63\x69\x61\x6c\x69\x7a\x65\x0a", 12, 3105123519507170732, NULL };
+static panda$core$String $s63 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x40\x77\x65\x61\x6b\x0a", 6, 1746654831099, NULL };
 
 void org$pandalanguage$pandac$Annotations$init(org$pandalanguage$pandac$Annotations* self) {
     org$pandalanguage$pandac$Annotations$init$panda$core$Int64(self, ((panda$core$Int64) { 0 }));
@@ -97,83 +98,95 @@ panda$core$Bit org$pandalanguage$pandac$Annotations$isSpecialize$R$panda$core$Bi
     panda$core$Bit $tmp34 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit($tmp33, ((panda$core$Int64) { 0 }));
     return $tmp34;
 }
+panda$core$Bit org$pandalanguage$pandac$Annotations$isWeak$R$panda$core$Bit(org$pandalanguage$pandac$Annotations* self) {
+    panda$core$Int64 $tmp35 = panda$core$Int64$$SHL$panda$core$Int64$R$panda$core$Int64(((panda$core$Int64) { 1 }), ((panda$core$Int64) { 12 }));
+    panda$core$Int64 $tmp36 = panda$core$Int64$$BAND$panda$core$Int64$R$panda$core$Int64(self->flags, $tmp35);
+    panda$core$Bit $tmp37 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit($tmp36, ((panda$core$Int64) { 0 }));
+    return $tmp37;
+}
 panda$core$String* org$pandalanguage$pandac$Annotations$convert$R$panda$core$String(org$pandalanguage$pandac$Annotations* self) {
-    panda$core$MutableString* result35;
-    panda$core$String* tmp159;
-    panda$core$MutableString* $tmp36 = (panda$core$MutableString*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$MutableString$class);
-    panda$core$MutableString$init($tmp36);
-    result35 = $tmp36;
-    panda$core$Bit $tmp37 = org$pandalanguage$pandac$Annotations$isPrivate$R$panda$core$Bit(self);
-    if ($tmp37.value) {
+    panda$core$MutableString* result38;
+    panda$core$String* tmp164;
+    panda$core$MutableString* $tmp39 = (panda$core$MutableString*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$MutableString$class);
+    panda$core$MutableString$init($tmp39);
+    result38 = $tmp39;
+    panda$core$Bit $tmp40 = org$pandalanguage$pandac$Annotations$isPrivate$R$panda$core$Bit(self);
+    if ($tmp40.value) {
     {
-        panda$core$MutableString$append$panda$core$String(result35, &$s38);
+        panda$core$MutableString$append$panda$core$String(result38, &$s41);
     }
     }
-    panda$core$Bit $tmp39 = org$pandalanguage$pandac$Annotations$isProtected$R$panda$core$Bit(self);
-    if ($tmp39.value) {
+    panda$core$Bit $tmp42 = org$pandalanguage$pandac$Annotations$isProtected$R$panda$core$Bit(self);
+    if ($tmp42.value) {
     {
-        panda$core$MutableString$append$panda$core$String(result35, &$s40);
+        panda$core$MutableString$append$panda$core$String(result38, &$s43);
     }
     }
-    panda$core$Bit $tmp41 = org$pandalanguage$pandac$Annotations$isPackage$R$panda$core$Bit(self);
-    if ($tmp41.value) {
+    panda$core$Bit $tmp44 = org$pandalanguage$pandac$Annotations$isPackage$R$panda$core$Bit(self);
+    if ($tmp44.value) {
     {
-        panda$core$MutableString$append$panda$core$String(result35, &$s42);
+        panda$core$MutableString$append$panda$core$String(result38, &$s45);
     }
     }
-    panda$core$Bit $tmp43 = org$pandalanguage$pandac$Annotations$isClass$R$panda$core$Bit(self);
-    if ($tmp43.value) {
+    panda$core$Bit $tmp46 = org$pandalanguage$pandac$Annotations$isClass$R$panda$core$Bit(self);
+    if ($tmp46.value) {
     {
-        panda$core$MutableString$append$panda$core$String(result35, &$s44);
+        panda$core$MutableString$append$panda$core$String(result38, &$s47);
     }
     }
-    panda$core$Bit $tmp45 = org$pandalanguage$pandac$Annotations$isOverride$R$panda$core$Bit(self);
-    if ($tmp45.value) {
+    panda$core$Bit $tmp48 = org$pandalanguage$pandac$Annotations$isOverride$R$panda$core$Bit(self);
+    if ($tmp48.value) {
     {
-        panda$core$MutableString$append$panda$core$String(result35, &$s46);
+        panda$core$MutableString$append$panda$core$String(result38, &$s49);
     }
     }
-    panda$core$Bit $tmp47 = org$pandalanguage$pandac$Annotations$isExternal$R$panda$core$Bit(self);
-    if ($tmp47.value) {
+    panda$core$Bit $tmp50 = org$pandalanguage$pandac$Annotations$isExternal$R$panda$core$Bit(self);
+    if ($tmp50.value) {
     {
-        panda$core$MutableString$append$panda$core$String(result35, &$s48);
+        panda$core$MutableString$append$panda$core$String(result38, &$s51);
     }
     }
-    panda$core$Bit $tmp49 = org$pandalanguage$pandac$Annotations$isImplicit$R$panda$core$Bit(self);
-    if ($tmp49.value) {
+    panda$core$Bit $tmp52 = org$pandalanguage$pandac$Annotations$isImplicit$R$panda$core$Bit(self);
+    if ($tmp52.value) {
     {
-        panda$core$MutableString$append$panda$core$String(result35, &$s50);
+        panda$core$MutableString$append$panda$core$String(result38, &$s53);
     }
     }
-    panda$core$Bit $tmp51 = org$pandalanguage$pandac$Annotations$isFinal$R$panda$core$Bit(self);
-    if ($tmp51.value) {
+    panda$core$Bit $tmp54 = org$pandalanguage$pandac$Annotations$isFinal$R$panda$core$Bit(self);
+    if ($tmp54.value) {
     {
-        panda$core$MutableString$append$panda$core$String(result35, &$s52);
+        panda$core$MutableString$append$panda$core$String(result38, &$s55);
     }
     }
-    panda$core$Bit $tmp53 = org$pandalanguage$pandac$Annotations$isAbstract$R$panda$core$Bit(self);
-    if ($tmp53.value) {
+    panda$core$Bit $tmp56 = org$pandalanguage$pandac$Annotations$isAbstract$R$panda$core$Bit(self);
+    if ($tmp56.value) {
     {
-        panda$core$MutableString$append$panda$core$String(result35, &$s54);
+        panda$core$MutableString$append$panda$core$String(result38, &$s57);
     }
     }
-    panda$core$Bit $tmp55 = org$pandalanguage$pandac$Annotations$isInline$R$panda$core$Bit(self);
-    if ($tmp55.value) {
+    panda$core$Bit $tmp58 = org$pandalanguage$pandac$Annotations$isInline$R$panda$core$Bit(self);
+    if ($tmp58.value) {
     {
-        panda$core$MutableString$append$panda$core$String(result35, &$s56);
+        panda$core$MutableString$append$panda$core$String(result38, &$s59);
     }
     }
-    panda$core$Bit $tmp57 = org$pandalanguage$pandac$Annotations$isSpecialize$R$panda$core$Bit(self);
-    if ($tmp57.value) {
+    panda$core$Bit $tmp60 = org$pandalanguage$pandac$Annotations$isSpecialize$R$panda$core$Bit(self);
+    if ($tmp60.value) {
     {
-        panda$core$MutableString$append$panda$core$String(result35, &$s58);
+        panda$core$MutableString$append$panda$core$String(result38, &$s61);
+    }
+    }
+    panda$core$Bit $tmp62 = org$pandalanguage$pandac$Annotations$isWeak$R$panda$core$Bit(self);
+    if ($tmp62.value) {
+    {
+        panda$core$MutableString$append$panda$core$String(result38, &$s63);
     }
     }
     {
-        panda$core$String* $tmp60 = panda$core$MutableString$finish$R$panda$core$String(result35);
-        tmp159 = $tmp60;
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result35));
-        return tmp159;
+        panda$core$String* $tmp65 = panda$core$MutableString$finish$R$panda$core$String(result38);
+        tmp164 = $tmp65;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result38));
+        return tmp164;
     }
 }
 void org$pandalanguage$pandac$Annotations$cleanup(org$pandalanguage$pandac$Annotations* self) {

@@ -272,9 +272,36 @@ class Main {
         }
     }
 
+    class Errors : ErrorReporter {
+        @override
+        method error(file:File, pos:Position, msg:String) {
+            Console.printLine("error in \{file}:\{pos}: \{msg}")
+        }
+    }
+
     @class
     method main(args:ListView<String>) {
+        if false {
+-*        def p := Parser(Errors())
+        def f := File("/tmp/Test.panda")
+        p.start(f, f.readFully())
+        Console.printLine(p.file())*-
+        def imports := Array<File>()
+        imports.add(File("../src"))
+        def optimizationLevel := 3
+        def cg := LLVMCodeGenerator(File("/tmp/Test.ll").openOutputStream())
+        def safetyLevel := 3
+        def settings := Compiler.Settings(File("../src"), imports, optimizationLevel, safetyLevel)
+        def compiler := Compiler(cg, settings)
+        def s := File("/tmp/Test.panda")
+        for cl in compiler.scan(s) {
+            compiler.markNonExternal(cl)
+        }
+        compiler.compile(s)
+        }
+        else {
         Panda.disableRefCounting()
         Main().run(args)
+        }
     }
 }

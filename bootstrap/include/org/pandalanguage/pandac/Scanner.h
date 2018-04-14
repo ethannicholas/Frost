@@ -4,13 +4,13 @@
 #undef PANDA_TYPESONLY
 typedef struct panda$core$Class panda$core$Class;
 #include "panda/core/Int32.h"
-typedef struct org$pandalanguage$pandac$Compiler org$pandalanguage$pandac$Compiler;
+typedef struct panda$core$Weak panda$core$Weak;
 typedef struct panda$core$String panda$core$String;
 
 typedef struct org$pandalanguage$pandac$Scanner {
     panda$core$Class* $class;
     panda$core$Int32 refCount;
-    org$pandalanguage$pandac$Compiler* compiler;
+    panda$core$Weak* compiler;
 } org$pandalanguage$pandac$Scanner;
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"

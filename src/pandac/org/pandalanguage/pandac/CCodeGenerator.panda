@@ -11,6 +11,7 @@ uses org.pandalanguage.pandac.parser.Token
 class CCodeGenerator : CodeGenerator {
     constant NO_REFCNT := -999
 
+    @weak
     var compiler:Compiler?
 
     def outDir:File

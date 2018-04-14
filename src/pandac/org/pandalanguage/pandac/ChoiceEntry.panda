@@ -2,7 +2,7 @@ package org.pandalanguage.pandac
 
 @final
 class ChoiceEntry : Symbol {
-    def owner:ClassDecl -- FIXME weak
+    def owner:ClassDecl
 
     def doccomment:String?
 

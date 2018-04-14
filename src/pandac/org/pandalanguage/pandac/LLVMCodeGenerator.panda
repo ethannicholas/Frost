@@ -98,7 +98,8 @@ class LLVMCodeGenerator : CodeGenerator {
 
     def out:OutputStream
 
-    def compiler:Compiler
+    @weak
+    def compiler:Compiler?
 
     def declarations := MemoryOutputStream()
 

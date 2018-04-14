@@ -64,6 +64,11 @@ class IdentityMap<K, V> : Map<K, V>, Equatable<Map<K, V>> {
         threshold := (bucketCount * 3) // 4
     }
 
+    @override
+    method cleanup() {
+        contents.destroy()
+    }
+
     ================================================================================================
     Given a key, returns the bucket in which the key's entry should be stored.
     ================================================================================================

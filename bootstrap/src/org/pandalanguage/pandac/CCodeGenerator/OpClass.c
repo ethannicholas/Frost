@@ -22,22 +22,22 @@ void org$pandalanguage$pandac$CCodeGenerator$OpClass$init$panda$core$Int64(org$p
     self->$rawValue = p_rv;
 }
 void org$pandalanguage$pandac$CCodeGenerator$OpClass$cleanup(org$pandalanguage$pandac$CCodeGenerator$OpClass self) {
-    org$pandalanguage$pandac$CCodeGenerator$OpClass $match$660_53;
+    org$pandalanguage$pandac$CCodeGenerator$OpClass $match$661_53;
     {
-        $match$660_53 = self;
-        panda$core$Bit $tmp4 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$660_53.$rawValue, ((panda$core$Int64) { 0 }));
+        $match$661_53 = self;
+        panda$core$Bit $tmp4 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$661_53.$rawValue, ((panda$core$Int64) { 0 }));
         if ($tmp4.value) {
         {
         }
         }
         else {
-        panda$core$Bit $tmp5 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$660_53.$rawValue, ((panda$core$Int64) { 1 }));
+        panda$core$Bit $tmp5 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$661_53.$rawValue, ((panda$core$Int64) { 1 }));
         if ($tmp5.value) {
         {
         }
         }
         else {
-        panda$core$Bit $tmp6 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$660_53.$rawValue, ((panda$core$Int64) { 2 }));
+        panda$core$Bit $tmp6 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$661_53.$rawValue, ((panda$core$Int64) { 2 }));
         if ($tmp6.value) {
         {
         }

@@ -1,0 +1,25 @@
+package panda.core
+
+====================================================================================================
+Holds a weak reference to an object. A weak reference allows access to an object, but does not
+participate in reference counting. Objects are destroyed when there are no remaining normal
+("strong") references to them, even if one or more `Weak` references remain in memory.
+====================================================================================================
+class Weak<T> {
+    -- This is special cased within the compiler
+    @private
+    def value:T?
+
+    init(value:T) {
+        self.value := value
+    }
+
+    method get():T {
+        return value
+    }
+
+    @override
+    function convert():String {
+        return "Weak(\{value})"
+    }
+}
