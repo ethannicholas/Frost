@@ -165,12 +165,12 @@ class WriteOperators {
         writeCInt("int8", "int8_t", "%d", null, 9, 12, indented)
         writeCInt("int16", "int16_t", "%d", null, 126, 519, indented)
         writeCInt("int32", "int32_t", "%d", null, 88124, 65318, indented)
-        writeCInt("int64", "int64_t", "%lld", null, 4000311441, 1991297512,
+        writeCInt("int64", "int64_t", "%\" PRId64 \"", null, 4000311441, 1991297512,
                 indented)
         writeCInt("uint8", "uint8_t", "%u", "0xFFu", 16, 15, indented)
         writeCInt("uint16", "uint16_t", "%u", "0xFFFFu", 598, 87, indented)
         writeCInt("uint32", "uint32_t", "%u", "0xFFFFFFFF", 124870, 6713, indented)
-        writeCInt("uint64", "uint64_t", "%llu", "0xFFFFFFFFFFFFFFFFu", 420032777, 81272990,
+        writeCInt("uint64", "uint64_t", "%\" PRIu64 \"", "0xFFFFFFFFFFFFFFFFu", 420032777, 81272990,
                 indented)
         indented.printLine("int main() {")
         indented.level += 1

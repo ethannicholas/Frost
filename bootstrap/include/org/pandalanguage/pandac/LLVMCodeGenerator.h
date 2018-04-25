@@ -53,9 +53,9 @@ extern org$pandalanguage$pandac$LLVMCodeGenerator$class_type org$pandalanguage$p
 
 #ifndef PANDA_TYPESONLY
 typedef struct org$pandalanguage$pandac$LLVMCodeGenerator org$pandalanguage$pandac$LLVMCodeGenerator;
+typedef struct panda$core$String panda$core$String;
 typedef struct panda$io$OutputStream panda$io$OutputStream;
 typedef struct org$pandalanguage$pandac$Compiler org$pandalanguage$pandac$Compiler;
-typedef struct panda$core$String panda$core$String;
 #include "panda/core/Int64.h"
 typedef struct org$pandalanguage$pandac$Type org$pandalanguage$pandac$Type;
 typedef struct org$pandalanguage$pandac$ClassDecl org$pandalanguage$pandac$ClassDecl;
@@ -77,7 +77,7 @@ typedef struct org$pandalanguage$pandac$ChoiceEntry org$pandalanguage$pandac$Cho
 typedef struct org$pandalanguage$pandac$LLVMCodeGenerator$LoopDescriptor org$pandalanguage$pandac$LLVMCodeGenerator$LoopDescriptor;
 #include "org/pandalanguage/pandac/Position.h"
 
-void org$pandalanguage$pandac$LLVMCodeGenerator$init$panda$io$OutputStream(org$pandalanguage$pandac$LLVMCodeGenerator* self, panda$io$OutputStream* p_out);
+void org$pandalanguage$pandac$LLVMCodeGenerator$init$panda$core$String$panda$io$OutputStream(org$pandalanguage$pandac$LLVMCodeGenerator* self, panda$core$String* p_triple, panda$io$OutputStream* p_out);
 void org$pandalanguage$pandac$LLVMCodeGenerator$setCompiler$org$pandalanguage$pandac$Compiler(org$pandalanguage$pandac$LLVMCodeGenerator* self, org$pandalanguage$pandac$Compiler* p_compiler);
 void org$pandalanguage$pandac$LLVMCodeGenerator$finish(org$pandalanguage$pandac$LLVMCodeGenerator* self);
 panda$core$String* org$pandalanguage$pandac$LLVMCodeGenerator$nextVar$R$panda$core$String(org$pandalanguage$pandac$LLVMCodeGenerator* self);

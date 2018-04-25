@@ -14,18 +14,15 @@ class Main {
         constant C          := 921
     }
 
-    constant LLVM_DIR := "/opt/local/libexec/llvm-4.0"
---    constant LLVM_DIR := "/usr"
+    var llvmDir := File(Config.LLVM_DIR)
+    var triple := Config.LLVM_TRIPLE
 
-    def opt:File
-    def llc:File
-    def gcc:File
+    var opt:File
+    var llc:File
+    var gcc:File
     def pandaHome:File
 
     init() {
-        opt := File(LLVM_DIR).resolve("bin/opt")
-        llc := File(LLVM_DIR).resolve("bin/llc")
-        gcc := File("/usr/bin/gcc")
         pandaHome := File("../src")
     }
 
@@ -185,7 +182,11 @@ class Main {
                             System.exit(1)
                     }
                 when "-i":
-                    imports.add(File(args.next("a path to a directory")))
+                    imports.add(File(args.next("a path to an import directory")))
+                when "--llvm_dir":
+                    llvmDir := File(args.next("a path to the LLVM directory"))
+                when "--triple":
+                    triple := args.next("LLVM target triple")
                 when "-pause":
                     Console.printLine("Press enter to continue...")
                     Console.readLine()
@@ -199,6 +200,9 @@ class Main {
                     }
             }
         }
+        opt := llvmDir.resolve("bin/opt")
+        llc := llvmDir.resolve("bin/llc")
+        gcc := File("/usr/bin/gcc")
         if sources.get_count() = 0 {
             err.printLine("no input files specified")
             System.exit(1)
@@ -228,7 +232,7 @@ class Main {
         def cg:CodeGenerator
         match format {
             when Format.LLVM, Format.EXECUTABLE, Format.OBJECT:
-                cg := LLVMCodeGenerator(outFile.changeExtension(".ll").openOutputStream())
+                cg := LLVMCodeGenerator(triple, outFile.changeExtension(".ll").openOutputStream())
             when Format.C_HEADER:
                 cg := HCodeGenerator(outFile)
             when Format.C:
@@ -289,7 +293,7 @@ class Main {
         def imports := Array<File>()
         imports.add(File("../src"))
         def optimizationLevel := 3
-        def cg := LLVMCodeGenerator(File("/tmp/Test.ll").openOutputStream())
+        def cg := LLVMCodeGenerator(Config.LLVM_TRIPLE, File("/tmp/Test.ll").openOutputStream())
         def safetyLevel := 3
         def settings := Compiler.Settings(File("../src"), imports, optimizationLevel, safetyLevel)
         def compiler := Compiler(cg, settings)

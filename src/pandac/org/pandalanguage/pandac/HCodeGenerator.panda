@@ -29,7 +29,7 @@ class HCodeGenerator : CodeGenerator {
 
     var out:IndentedOutputStream
 
-    def llvmCodeGen := LLVMCodeGenerator(MemoryOutputStream())
+    def llvmCodeGen := LLVMCodeGenerator("", MemoryOutputStream())
 
     var inClass := false
 

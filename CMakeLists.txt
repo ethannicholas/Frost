@@ -4,7 +4,17 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -m64")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -m64")
 set(OPTIMIZATION 0)
 set(SAFETY 3)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/third-party/FindLLVM")
 
+find_package(LLVM 4.0 REQUIRED)
+file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/pandac/Config.panda"
+    "package org.pandalanguage.pandac\n"
+    "class Config {\n"
+    "constant LLVM_DIR := \"${LLVM_ROOT_DIR}\"\n"
+    "constant LLVM_TRIPLE := \"${LLVM_HOST_TARGET}\"\n"
+    "}")
+
+set(BOOTSTRAP_ARGS "--llvm_dir" ${LLVM_ROOT_DIR} "--triple" ${LLVM_HOST_TARGET} "-O" ${OPTIMIZATION} "-S" ${SAFETY})
 include_directories(
     bootstrap/include
     src/c
@@ -157,7 +167,7 @@ function(compile_panda_sources out_var)
         set(output "${CMAKE_CURRENT_BINARY_DIR}/${output}.o")
         add_custom_command(
             OUTPUT ${output}
-            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/bootstrap -O ${OPTIMIZATION} -S ${SAFETY} -f o -o ${output} ${input}
+            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/bootstrap ${BOOTSTRAP_ARGS} -f o -o ${output} ${input}
             DEPENDS ${input} bootstrap
             WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         )
@@ -237,7 +247,7 @@ add_library(panda
 
 add_custom_command(
     OUTPUT writeInts
-    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/bootstrap -O ${OPTIMIZATION} -S ${SAFETY} -o writeInts ${CMAKE_CURRENT_SOURCE_DIR}/src/tools/WriteInts.panda
+    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/bootstrap ${BOOTSTRAP_ARGS} -o writeInts ${CMAKE_CURRENT_SOURCE_DIR}/src/tools/WriteInts.panda
     DEPENDS bootstrap src/tools/WriteInts.panda
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
@@ -258,7 +268,7 @@ add_custom_command(
 
 add_custom_command(
     OUTPUT writeOperators
-    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/bootstrap -O ${OPTIMIZATION} -S ${SAFETY} -o writeOperators ${CMAKE_CURRENT_SOURCE_DIR}/src/tools/WriteOperators.panda
+    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/bootstrap ${BOOTSTRAP_ARGS} -o writeOperators ${CMAKE_CURRENT_SOURCE_DIR}/src/tools/WriteOperators.panda
     DEPENDS src/tools/WriteOperators.panda pandac
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
@@ -304,7 +314,7 @@ function(compile_plex_sources out_var)
         set(output "${CMAKE_CURRENT_BINARY_DIR}/${output}.o")
         add_custom_command(
             OUTPUT ${output}
-            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/bootstrap -O ${OPTIMIZATION} -S ${SAFETY} -i ${CMAKE_CURRENT_SOURCE_DIR}/src/parser -f o -o ${output} ${input}
+            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/bootstrap ${BOOTSTRAP_ARGS} -i ${CMAKE_CURRENT_SOURCE_DIR}/src/parser -f o -o ${output} ${input}
             DEPENDS bootstrap ${input}
             WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         )
@@ -362,7 +372,7 @@ function(compile_pandac_sources out_var)
         set(output "${CMAKE_CURRENT_BINARY_DIR}/${output}.o")
         add_custom_command(
             OUTPUT ${output}
-            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/bootstrap -O ${OPTIMIZATION} -S ${SAFETY} -i ${CMAKE_CURRENT_SOURCE_DIR}/src/parser -i ${CMAKE_CURRENT_BINARY_DIR} -i ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac -f o -o ${output} ${input}
+            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/bootstrap ${BOOTSTRAP_ARGS} -i ${CMAKE_CURRENT_SOURCE_DIR}/src/parser -i ${CMAKE_CURRENT_BINARY_DIR} -i ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac -f o -o ${output} ${input}
             DEPENDS bootstrap ${input}
             WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         )
