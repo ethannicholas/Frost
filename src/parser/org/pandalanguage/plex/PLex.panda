@@ -202,6 +202,11 @@ class PLex {
 
     @class
     method main(args:ListView<String>) {
+        Console.printLine("PLEX STARTUP")
+        for i in 0 .. args.get_count() {
+            Console.printLine("\{i}: \{args[i]}")
+        }
+        Console.printLine(args)
         assert args.get_count() = 6
         def input := File(args[1])
         def tokenName := args[2]

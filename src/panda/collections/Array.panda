@@ -304,6 +304,7 @@ class Array<T> : List<T> {
         -- FIXME this transformation is only safe at -S0
         data := data.realloc(capacity, count)
         self.$class := ImmutableArray<T>().$class
+        self.capacity := -1
         return self->Object->ImmutableArray<T>
     }
 }

@@ -18120,11 +18120,6 @@ panda$collections$ImmutableArray* org$pandalanguage$pandac$Compiler$compileBody$
                         fieldRef6482 = $tmp6483;
                         org$pandalanguage$pandac$IRNode* $tmp6489 = org$pandalanguage$pandac$Compiler$compilePandaCall$panda$core$String$org$pandalanguage$pandac$IRNode$R$org$pandalanguage$pandac$IRNode(self, &$s6488, fieldRef6482);
                         panda$collections$Array$add$panda$collections$Array$T(finalBody6457, ((panda$core$Object*) $tmp6489));
-                        {
-                            panda$collections$ImmutableArray* $tmp6490 = panda$collections$Array$finish$R$panda$collections$ImmutableArray$LTpanda$collections$Array$T$GT(finalBody6457);
-                            compiled6439 = $tmp6490;
-                            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) compiled6439));
-                        }
                         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) fieldRef6482));
                     }
                     }
@@ -18136,6 +18131,11 @@ panda$collections$ImmutableArray* org$pandalanguage$pandac$Compiler$compileBody$
             }
             PANDA_ASSERT(self->inFieldCleanup.value);
             self->inFieldCleanup = ((panda$core$Bit) { false });
+            {
+                panda$collections$ImmutableArray* $tmp6490 = panda$collections$Array$finish$R$panda$collections$ImmutableArray$LTpanda$collections$Array$T$GT(finalBody6457);
+                compiled6439 = $tmp6490;
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) compiled6439));
+            }
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) finalBody6457));
         }
         }

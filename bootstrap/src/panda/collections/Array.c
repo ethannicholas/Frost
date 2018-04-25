@@ -90,7 +90,7 @@ void panda$collections$Array$init$panda$core$Int64(panda$collections$Array* self
     panda$core$Range$LTpanda$core$Int64$GT $tmp2;
     self->count = ((panda$core$Int64) { 0 });
     self->capacity = p_capacity;
-    self->data = ((panda$core$Object**) pandaZAlloc(p_capacity.value * 12));
+    self->data = ((panda$core$Object**) pandaZAlloc(p_capacity.value * 8));
     panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp2, ((panda$core$Int64) { 0 }), p_capacity, ((panda$core$Bit) { false }));
     int64_t $tmp4 = $tmp2.min.value;
     panda$core$Int64 i3 = { $tmp4 };
@@ -303,7 +303,7 @@ panda$collections$Array* panda$collections$Array$$IDX$panda$core$Range$LTpanda$c
     }
     panda$core$Int64 $tmp110 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(max107, p_r.min);
     count109 = $tmp110;
-    result111 = ((panda$core$Object**) pandaZAlloc(count109.value * 12));
+    result111 = ((panda$core$Object**) pandaZAlloc(count109.value * 8));
     panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp112, ((panda$core$Int64) { 0 }), count109, ((panda$core$Bit) { false }));
     int64_t $tmp114 = $tmp112.min.value;
     panda$core$Int64 i113 = { $tmp114 };
@@ -572,7 +572,7 @@ void panda$collections$Array$ensureCapacity$panda$core$Int64(panda$collections$A
     }
     goto $l205;
     $l206:;
-    self->data = ((panda$core$Object**) pandaRealloc(self->data, oldCapacity204.value * 12, self->capacity.value * 12));
+    self->data = ((panda$core$Object**) pandaRealloc(self->data, oldCapacity204.value * 8, self->capacity.value * 8));
     panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp209, oldCapacity204, self->capacity, ((panda$core$Bit) { false }));
     int64_t $tmp211 = $tmp209.min.value;
     panda$core$Int64 i210 = { $tmp211 };
@@ -814,13 +814,14 @@ panda$core$String* panda$collections$Array$convert$R$panda$core$String(panda$col
     }
 }
 panda$collections$ImmutableArray* panda$collections$Array$finish$R$panda$collections$ImmutableArray$LTpanda$collections$Array$T$GT(panda$collections$Array* self) {
-    self->data = ((panda$core$Object**) pandaRealloc(self->data, self->capacity.value * 12, self->count.value * 12));
+    self->data = ((panda$core$Object**) pandaRealloc(self->data, self->capacity.value * 8, self->count.value * 8));
     {
         panda$collections$ImmutableArray* $tmp335 = (panda$collections$ImmutableArray*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$ImmutableArray$class);
         panda$collections$ImmutableArray$init($tmp335);
         ((panda$core$Object*) self)->$class = ((panda$core$Object*) $tmp335)->$class;
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) ((panda$core$Object*) self)->$class));
     }
+    self->capacity = ((panda$core$Int64) { -1 });
     return ((panda$collections$ImmutableArray*) ((panda$core$Object*) self));
 }
 

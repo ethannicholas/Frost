@@ -65,7 +65,7 @@ void panda$collections$IdentityMap$init(panda$collections$IdentityMap* self) {
     self->changeCount = $tmp2;
     self->_count = ((panda$core$Int64) { 0 });
     self->bucketCount = ((panda$core$Int64) { 16 });
-    self->contents = ((panda$collections$IdentityMap$Entry**) pandaZAlloc(self->bucketCount.value * 40));
+    self->contents = ((panda$collections$IdentityMap$Entry**) pandaZAlloc(self->bucketCount.value * 8));
     panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp3, ((panda$core$Int64) { 0 }), self->bucketCount, ((panda$core$Bit) { false }));
     int64_t $tmp5 = $tmp3.min.value;
     panda$core$Int64 i4 = { $tmp5 };
@@ -320,7 +320,7 @@ void panda$collections$IdentityMap$clear(panda$collections$IdentityMap* self) {
     self->_count = ((panda$core$Int64) { 0 });
     pandaFree(self->contents);
     self->bucketCount = ((panda$core$Int64) { 16 });
-    self->contents = ((panda$collections$IdentityMap$Entry**) pandaZAlloc(self->bucketCount.value * 40));
+    self->contents = ((panda$collections$IdentityMap$Entry**) pandaZAlloc(self->bucketCount.value * 8));
     panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp68, ((panda$core$Int64) { 0 }), self->bucketCount, ((panda$core$Bit) { false }));
     int64_t $tmp70 = $tmp68.min.value;
     panda$core$Int64 i69 = { $tmp70 };
@@ -373,7 +373,7 @@ void panda$collections$IdentityMap$incrementCount(panda$collections$IdentityMap*
         oldBucketCount93 = self->bucketCount;
         panda$core$Int64 $tmp94 = panda$core$Int64$$MUL$panda$core$Int64$R$panda$core$Int64(self->bucketCount, ((panda$core$Int64) { 2 }));
         self->bucketCount = $tmp94;
-        self->contents = ((panda$collections$IdentityMap$Entry**) pandaZAlloc(self->bucketCount.value * 40));
+        self->contents = ((panda$collections$IdentityMap$Entry**) pandaZAlloc(self->bucketCount.value * 8));
         panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp95, ((panda$core$Int64) { 0 }), self->bucketCount, ((panda$core$Bit) { false }));
         int64_t $tmp97 = $tmp95.min.value;
         panda$core$Int64 i96 = { $tmp97 };

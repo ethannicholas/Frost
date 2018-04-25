@@ -4128,11 +4128,11 @@ class Compiler {
                         def fieldRef := IRNode.FIELD_REFERENCE(Position(), f.type,
                                 IRNode.SELF(Position(), m.owner.type()), f)
                         finalBody.add(compilePandaCall("unref", fieldRef))
-                        compiled := finalBody.finish()
                     }
                 }
                 assert inFieldCleanup
                 inFieldCleanup := false
+                compiled := finalBody.finish()
             }
         }
         assert symbolTable == symbols

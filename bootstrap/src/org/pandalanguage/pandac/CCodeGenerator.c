@@ -3789,7 +3789,7 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getPointerCallReferen
             PANDA_ASSERT($tmp1500.value);
             org$pandalanguage$pandac$Type* $tmp1502 = org$pandalanguage$pandac$MethodRef$returnType$R$org$pandalanguage$pandac$Type(p_m);
             panda$core$Object* $tmp1503 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T($tmp1502->subtypes, ((panda$core$Int64) { 1 }));
-            panda$core$Int64 $tmp1504 = org$pandalanguage$pandac$CCodeGenerator$sizeOf$org$pandalanguage$pandac$Type$R$panda$core$Int64(self, ((org$pandalanguage$pandac$Type*) $tmp1503));
+            panda$core$Int64 $tmp1504 = org$pandalanguage$pandac$CCodeGenerator$fieldSize$org$pandalanguage$pandac$Type$R$panda$core$Int64(self, ((org$pandalanguage$pandac$Type*) $tmp1503));
             elementSize1501 = $tmp1504;
             {
                 panda$core$String* $tmp1507 = org$pandalanguage$pandac$CCodeGenerator$type$org$pandalanguage$pandac$Type$R$panda$core$String(self, p_t);
@@ -3876,7 +3876,7 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getPointerCallReferen
             PANDA_ASSERT($tmp1562.value);
             org$pandalanguage$pandac$Type* $tmp1564 = org$pandalanguage$pandac$MethodRef$returnType$R$org$pandalanguage$pandac$Type(p_m);
             panda$core$Object* $tmp1565 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T($tmp1564->subtypes, ((panda$core$Int64) { 1 }));
-            panda$core$Int64 $tmp1566 = org$pandalanguage$pandac$CCodeGenerator$sizeOf$org$pandalanguage$pandac$Type$R$panda$core$Int64(self, ((org$pandalanguage$pandac$Type*) $tmp1565));
+            panda$core$Int64 $tmp1566 = org$pandalanguage$pandac$CCodeGenerator$fieldSize$org$pandalanguage$pandac$Type$R$panda$core$Int64(self, ((org$pandalanguage$pandac$Type*) $tmp1565));
             elementSize1563 = $tmp1566;
             {
                 panda$core$String* $tmp1569 = org$pandalanguage$pandac$CCodeGenerator$type$org$pandalanguage$pandac$Type$R$panda$core$String(self, p_t);

@@ -70,7 +70,6 @@ class InputStream {
             result.append(buffer->Pointer<Char8>, 0, count)
         }
         buffer.destroy()
-        cleanup() -- FIXME kill this when memory management is in
         return result.finish()
     }
 

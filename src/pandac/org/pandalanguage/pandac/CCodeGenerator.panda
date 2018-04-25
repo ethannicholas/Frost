@@ -869,7 +869,7 @@ class CCodeGenerator : CodeGenerator {
                 assert args.get_count() = 1
                 def count := getReference(args[0], out)
                 assert m.returnType().subtypes.get_count() = 2
-                def elementSize := sizeOf(m.returnType().subtypes[1])
+                def elementSize := fieldSize(m.returnType().subtypes[1])
                 return "((\{type(t)}) pandaZAlloc(\{count}.value * \{elementSize}))"
             when "get":
                 assert args.get_count() = 1
@@ -886,7 +886,7 @@ class CCodeGenerator : CodeGenerator {
                 def oldCount := getReference(args[1], out)
                 def newCount := getReference(args[2], out)
                 assert m.returnType().subtypes.get_count() = 2
-                def elementSize := sizeOf(m.returnType().subtypes[1])
+                def elementSize := fieldSize(m.returnType().subtypes[1])
                 return "((\{type(t)}) pandaRealloc(\{ptr}, \{oldCount}.value * \{elementSize}, " +
                         "\{newCount}.value * \{elementSize}))"
             when "offset":

@@ -286,7 +286,7 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     function stride(t:Type):Int {
-        def s := sizeOf(t)
+        def s := fieldSize(t)
         def a := alignment(t)
         if s % a = 0 {
             return s
@@ -1904,8 +1904,9 @@ class LLVMCodeGenerator : CodeGenerator {
         strings.printLine("\{result} = private unnamed_addr constant %panda$core$String { " +
                 "i8* bitcast(\{cc.type}* \{cc.name} to " +
                 "i8*), %panda$core$Int32 insertvalue(%panda$core$Int32 " +
-                "{ i32 undef }, i32 1, 0), %panda$core$Char8* bitcast(\{charsType}* \{chars}" +
-                " to %panda$core$Char8*), %panda$core$Int64 { i64 \{s.utf8().get_count()} }, " +
+                "{ i32 undef }, i32 \{NO_REFCNT}, 0), " +
+                "%panda$core$Char8* bitcast(\{charsType}* \{chars} " +
+                "to %panda$core$Char8*), %panda$core$Int64 { i64 \{s.utf8().get_count()} }, " +
                 "%panda$core$Int64 { i64 \{s.hash()} }, i8* null }")
         return result
     }

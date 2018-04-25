@@ -6,6 +6,8 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 typedef uint8_t Bit;
 
@@ -269,6 +271,7 @@ Process* panda$core$System$exec$panda$io$File$panda$collections$ListView$LTpanda
         }
         cargs[argCount + 1] = NULL;
         execv(cargs[0], cargs);
+        printf("running %s\n", cargs[0]);
         perror("error exec'ing child process");
         // we don't bother freeing the argument memory because we just kill the process here
         exit(1);
