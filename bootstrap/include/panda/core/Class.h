@@ -10,7 +10,7 @@ typedef struct panda$core$Class {
     panda$core$Class* $class;
     panda$core$Int32 refCount;
     panda$core$String* name;
-    panda$core$Class* super;
+    panda$core$Class* superclass;
     ITable* itable;
     void* vtable[];
 } panda$core$Class;

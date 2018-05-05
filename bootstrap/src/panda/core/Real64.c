@@ -77,7 +77,7 @@ struct { panda$core$Class* cl; ITable* next; void* methods[1]; } panda$core$Real
 struct { panda$core$Class* cl; ITable* next; void* methods[2]; } panda$core$Real64$_panda$core$Equatable = { (panda$core$Class*) &panda$core$Equatable$class, (ITable*) &panda$core$Real64$_panda$collections$Key, { panda$core$Real64$$EQ$panda$core$Real64$R$panda$core$Bit$shim, panda$core$Real64$$NEQ$panda$core$Real64$R$panda$core$Bit$shim} };
 
 static panda$core$String $s1;
-panda$core$Real64$class_type panda$core$Real64$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Value$class, (ITable*) &panda$core$Real64$_panda$core$Equatable, { panda$core$Real64$convert$R$panda$core$String, panda$core$Real64$cleanup, panda$core$Real64$$ADD$panda$core$Real64$R$panda$core$Real64, panda$core$Real64$$SUB$panda$core$Real64$R$panda$core$Real64, panda$core$Real64$$SUB$R$panda$core$Real64, panda$core$Real64$$MUL$panda$core$Real64$R$panda$core$Real64, panda$core$Real64$$DIV$panda$core$Real64$R$panda$core$Real64, panda$core$Real64$$EQ$panda$core$Real64$R$panda$core$Bit$shim, panda$core$Real64$$NEQ$panda$core$Real64$R$panda$core$Bit$shim, panda$core$Real64$$LT$panda$core$Real64$R$panda$core$Bit$shim, panda$core$Real64$$GT$panda$core$Real64$R$panda$core$Bit$shim, panda$core$Real64$$GE$panda$core$Real64$R$panda$core$Bit$shim, panda$core$Real64$$LE$panda$core$Real64$R$panda$core$Bit$shim, panda$core$Real64$min$panda$core$Real64$R$panda$core$Real64, panda$core$Real64$max$panda$core$Real64$R$panda$core$Real64, panda$core$Real64$hash$R$panda$core$Int64, panda$core$Real64$convert$R$panda$core$Int8, panda$core$Real64$convert$R$panda$core$Int16, panda$core$Real64$convert$R$panda$core$Int32, panda$core$Real64$convert$R$panda$core$Int64, panda$core$Real64$convert$R$panda$core$UInt8, panda$core$Real64$convert$R$panda$core$UInt16, panda$core$Real64$convert$R$panda$core$UInt32, panda$core$Real64$convert$R$panda$core$UInt64, panda$core$Real64$convert$R$panda$core$Real32} };
+panda$core$Real64$class_type panda$core$Real64$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Value$class, (ITable*) &panda$core$Real64$_panda$core$Equatable, { panda$core$Real64$convert$R$panda$core$String, panda$core$Real64$cleanup, panda$core$Real64$$ADD$panda$core$Real64$R$panda$core$Real64, panda$core$Real64$$SUB$panda$core$Real64$R$panda$core$Real64, panda$core$Real64$$SUB$R$panda$core$Real64, panda$core$Real64$$MUL$panda$core$Real64$R$panda$core$Real64, panda$core$Real64$$DIV$panda$core$Real64$R$panda$core$Real64, panda$core$Real64$$EQ$panda$core$Real64$R$panda$core$Bit$shim, panda$core$Real64$$NEQ$panda$core$Real64$R$panda$core$Bit$shim, panda$core$Real64$$LT$panda$core$Real64$R$panda$core$Bit$shim, panda$core$Real64$$GT$panda$core$Real64$R$panda$core$Bit$shim, panda$core$Real64$$GE$panda$core$Real64$R$panda$core$Bit$shim, panda$core$Real64$$LE$panda$core$Real64$R$panda$core$Bit$shim, panda$core$Real64$min$panda$core$Real64$R$panda$core$Real64, panda$core$Real64$max$panda$core$Real64$R$panda$core$Real64, panda$core$Real64$abs$R$panda$core$Real64, panda$core$Real64$sqrt$R$panda$core$Real64, panda$core$Real64$hash$R$panda$core$Int64, panda$core$Real64$convert$R$panda$core$Int8, panda$core$Real64$convert$R$panda$core$Int16, panda$core$Real64$convert$R$panda$core$Int32, panda$core$Real64$convert$R$panda$core$Int64, panda$core$Real64$convert$R$panda$core$UInt8, panda$core$Real64$convert$R$panda$core$UInt16, panda$core$Real64$convert$R$panda$core$UInt32, panda$core$Real64$convert$R$panda$core$UInt64, panda$core$Real64$convert$R$panda$core$Real32} };
 
 struct { panda$core$Class* cl; ITable* itable; void* methods[4]; } panda$core$Real64$wrapper_panda$core$Comparable = { (panda$core$Class*) &panda$core$Comparable$class, NULL, { panda$core$Real64$$GT$panda$core$Real64$R$panda$core$Bit$wrappershim, panda$core$Real64$$LT$panda$core$Real64$R$panda$core$Bit$wrappershim, panda$core$Real64$$GE$panda$core$Real64$R$panda$core$Bit$wrappershim, panda$core$Real64$$LE$panda$core$Real64$R$panda$core$Bit$wrappershim} };
 
@@ -172,53 +172,69 @@ panda$core$Real64 panda$core$Real64$max$panda$core$Real64$R$panda$core$Real64(pa
     panda$core$Real64 $tmp30 = ((panda$core$Real64) { p_other.value });
     return $tmp30;
 }
-panda$core$Int64 panda$core$Real64$hash$R$panda$core$Int64(panda$core$Real64 self) {
-    panda$core$Int64 $tmp32;
-    panda$core$Panda$floatToIntBits$panda$core$Real64$R$panda$core$Int64(&$tmp32, self);
-    panda$core$Int64 $tmp31 = $tmp32;
-    return $tmp31;
+panda$core$Real64 panda$core$Real64$abs$R$panda$core$Real64(panda$core$Real64 self) {
+    bool $tmp31 = self.value < 0.0;
+    if (((panda$core$Bit) { $tmp31 }).value) {
+    {
+        panda$core$Real64 $tmp32 = ((panda$core$Real64) { -self.value });
+        return $tmp32;
+    }
+    }
+    panda$core$Real64 $tmp34 = self;
+    return $tmp34;
 }
-panda$core$Real64$nullable panda$core$Real64$parse$panda$core$String$R$panda$core$Real64$Q(panda$core$String* p_s) {
-    panda$core$Real64 $tmp34;
-    panda$core$Panda$toReal64$panda$core$String$R$panda$core$Real64(&$tmp34, p_s);
-    panda$core$Real64$nullable $tmp33 = ((panda$core$Real64$nullable) { $tmp34, true });
-    return $tmp33;
-}
-panda$core$Int8 panda$core$Real64$convert$R$panda$core$Int8(panda$core$Real64 self) {
-    panda$core$Int8 $tmp35 = ((panda$core$Int8) { ((int8_t) self.value) });
+panda$core$Real64 panda$core$Real64$sqrt$R$panda$core$Real64(panda$core$Real64 self) {
+    double $tmp36 = panda$core$Panda$sqrt$builtin_float64$R$builtin_float64(self.value);
+    panda$core$Real64 $tmp35 = ((panda$core$Real64) { $tmp36 });
     return $tmp35;
 }
-panda$core$Int16 panda$core$Real64$convert$R$panda$core$Int16(panda$core$Real64 self) {
-    panda$core$Int16 $tmp36 = ((panda$core$Int16) { ((int16_t) self.value) });
-    return $tmp36;
-}
-panda$core$Int32 panda$core$Real64$convert$R$panda$core$Int32(panda$core$Real64 self) {
-    panda$core$Int32 $tmp37 = ((panda$core$Int32) { ((int32_t) self.value) });
+panda$core$Int64 panda$core$Real64$hash$R$panda$core$Int64(panda$core$Real64 self) {
+    panda$core$Int64 $tmp38;
+    panda$core$Panda$floatToIntBits$panda$core$Real64$R$panda$core$Int64(&$tmp38, self);
+    panda$core$Int64 $tmp37 = $tmp38;
     return $tmp37;
 }
-panda$core$Int64 panda$core$Real64$convert$R$panda$core$Int64(panda$core$Real64 self) {
-    panda$core$Int64 $tmp38 = ((panda$core$Int64) { ((int64_t) self.value) });
-    return $tmp38;
-}
-panda$core$UInt8 panda$core$Real64$convert$R$panda$core$UInt8(panda$core$Real64 self) {
-    panda$core$UInt8 $tmp39 = ((panda$core$UInt8) { ((uint8_t) self.value) });
+panda$core$Real64$nullable panda$core$Real64$parse$panda$core$String$R$panda$core$Real64$Q(panda$core$String* p_s) {
+    panda$core$Real64 $tmp40;
+    panda$core$Panda$toReal64$panda$core$String$R$panda$core$Real64(&$tmp40, p_s);
+    panda$core$Real64$nullable $tmp39 = ((panda$core$Real64$nullable) { $tmp40, true });
     return $tmp39;
 }
-panda$core$UInt16 panda$core$Real64$convert$R$panda$core$UInt16(panda$core$Real64 self) {
-    panda$core$UInt16 $tmp40 = ((panda$core$UInt16) { ((uint16_t) self.value) });
-    return $tmp40;
-}
-panda$core$UInt32 panda$core$Real64$convert$R$panda$core$UInt32(panda$core$Real64 self) {
-    panda$core$UInt32 $tmp41 = ((panda$core$UInt32) { ((uint32_t) self.value) });
+panda$core$Int8 panda$core$Real64$convert$R$panda$core$Int8(panda$core$Real64 self) {
+    panda$core$Int8 $tmp41 = ((panda$core$Int8) { ((int8_t) self.value) });
     return $tmp41;
 }
-panda$core$UInt64 panda$core$Real64$convert$R$panda$core$UInt64(panda$core$Real64 self) {
-    panda$core$UInt64 $tmp42 = ((panda$core$UInt64) { ((uint64_t) self.value) });
+panda$core$Int16 panda$core$Real64$convert$R$panda$core$Int16(panda$core$Real64 self) {
+    panda$core$Int16 $tmp42 = ((panda$core$Int16) { ((int16_t) self.value) });
     return $tmp42;
 }
-panda$core$Real32 panda$core$Real64$convert$R$panda$core$Real32(panda$core$Real64 self) {
-    panda$core$Real32 $tmp43 = ((panda$core$Real32) { ((float) self.value) });
+panda$core$Int32 panda$core$Real64$convert$R$panda$core$Int32(panda$core$Real64 self) {
+    panda$core$Int32 $tmp43 = ((panda$core$Int32) { ((int32_t) self.value) });
     return $tmp43;
+}
+panda$core$Int64 panda$core$Real64$convert$R$panda$core$Int64(panda$core$Real64 self) {
+    panda$core$Int64 $tmp44 = ((panda$core$Int64) { ((int64_t) self.value) });
+    return $tmp44;
+}
+panda$core$UInt8 panda$core$Real64$convert$R$panda$core$UInt8(panda$core$Real64 self) {
+    panda$core$UInt8 $tmp45 = ((panda$core$UInt8) { ((uint8_t) self.value) });
+    return $tmp45;
+}
+panda$core$UInt16 panda$core$Real64$convert$R$panda$core$UInt16(panda$core$Real64 self) {
+    panda$core$UInt16 $tmp46 = ((panda$core$UInt16) { ((uint16_t) self.value) });
+    return $tmp46;
+}
+panda$core$UInt32 panda$core$Real64$convert$R$panda$core$UInt32(panda$core$Real64 self) {
+    panda$core$UInt32 $tmp47 = ((panda$core$UInt32) { ((uint32_t) self.value) });
+    return $tmp47;
+}
+panda$core$UInt64 panda$core$Real64$convert$R$panda$core$UInt64(panda$core$Real64 self) {
+    panda$core$UInt64 $tmp48 = ((panda$core$UInt64) { ((uint64_t) self.value) });
+    return $tmp48;
+}
+panda$core$Real32 panda$core$Real64$convert$R$panda$core$Real32(panda$core$Real64 self) {
+    panda$core$Real32 $tmp49 = ((panda$core$Real32) { ((float) self.value) });
+    return $tmp49;
 }
 void panda$core$Real64$cleanup(panda$core$Real64 self) {
 }

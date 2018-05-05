@@ -36,6 +36,8 @@ void panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(panda$
 void panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(panda$core$String* p_file, panda$core$Int64 p_line, panda$core$String* p_msg);
 panda$core$UInt64$nullable panda$core$Panda$digit$panda$core$Char32$R$panda$core$UInt64$Q(panda$core$Char32 p_c);
 panda$core$UInt64$nullable panda$core$Panda$parse$panda$core$String$panda$core$Int64$R$panda$core$UInt64$Q(panda$core$String* p_str, panda$core$Int64 p_rawRadix);
+float panda$core$Panda$sqrt$builtin_float32$R$builtin_float32(float p_v);
+double panda$core$Panda$sqrt$builtin_float64$R$builtin_float64(double p_v);
 panda$core$String* panda$core$Panda$align$panda$core$String$panda$core$String$R$panda$core$String(panda$core$String* p_str, panda$core$String* p_specifier);
 panda$core$String* panda$core$Panda$format$panda$core$Bit$panda$core$UInt64$panda$core$UInt64$panda$core$String$R$panda$core$String(panda$core$Bit p_sign, panda$core$UInt64 p_rawValue, panda$core$UInt64 p_mask, panda$core$String* p_fmt);
 void panda$core$Panda$debugPrint$builtin_int64(int64_t p_i);

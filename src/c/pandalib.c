@@ -146,11 +146,11 @@ void* pandaRealloc(void* ptr, size_t oldSize, size_t newSize) {
 }
 
 void pandaFree(void* ptr) {
-    if (!ptr || allocations <= 0) {
+    if (allocations <= 0) {
         abort();
     }
     allocations--;
-    free(ptr);
+//    free(ptr);
 }
 
 void pandaObjectFree(Object* o) {

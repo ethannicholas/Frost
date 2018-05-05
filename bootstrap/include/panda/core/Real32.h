@@ -12,7 +12,7 @@ typedef struct panda$core$Real32 {
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"
 #undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[25]; } panda$core$Real32$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[27]; } panda$core$Real32$class_type;
 extern panda$core$Real32$class_type panda$core$Real32$class;
 typedef struct panda$core$Real32$wrapper {
     panda$core$Class* cl;
@@ -54,6 +54,8 @@ panda$core$Bit panda$core$Real32$$GE$panda$core$Real32$R$panda$core$Bit(panda$co
 panda$core$Bit panda$core$Real32$$LE$panda$core$Real32$R$panda$core$Bit(panda$core$Real32 self, panda$core$Real32 p_other);
 panda$core$Real32 panda$core$Real32$min$panda$core$Real32$R$panda$core$Real32(panda$core$Real32 self, panda$core$Real32 p_other);
 panda$core$Real32 panda$core$Real32$max$panda$core$Real32$R$panda$core$Real32(panda$core$Real32 self, panda$core$Real32 p_other);
+panda$core$Real32 panda$core$Real32$abs$R$panda$core$Real32(panda$core$Real32 self);
+panda$core$Real32 panda$core$Real32$sqrt$R$panda$core$Real32(panda$core$Real32 self);
 panda$core$Int64 panda$core$Real32$hash$R$panda$core$Int64(panda$core$Real32 self);
 panda$core$Real32$nullable panda$core$Real32$parse$panda$core$String$R$panda$core$Real32$Q(panda$core$String* p_s);
 panda$core$Int8 panda$core$Real32$convert$R$panda$core$Int8(panda$core$Real32 self);

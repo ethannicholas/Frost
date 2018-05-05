@@ -113,6 +113,7 @@ class Main {
         args.add(assembly.path)
         args.add("-L.")
         args.add("-lpanda")
+        args.add("-lm")
         args.add("-m64")
         args.add("-fPIC")
         args.add("-o")
@@ -288,7 +289,7 @@ class Main {
 
     @class
     method main(args:ListView<String>) {
-        if false {
+        if args.get_count() = 2 & args[1] = "--crash" {
 -*        def p := Parser(Errors())
         def f := File("/tmp/Test.panda")
         p.start(f, f.readFully())

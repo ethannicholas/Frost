@@ -51,6 +51,7 @@ static panda$core$String $s237 = { (panda$core$Class*) &panda$core$String$class,
 
 void panda$collections$ImmutableArray$init(panda$collections$ImmutableArray* self) {
     self->count = ((panda$core$Int64) { 0 });
+    self->data = ((panda$core$Object**) pandaZAlloc(((panda$core$Int64) { 0 }).value * 8));
 }
 void panda$collections$ImmutableArray$init$panda$collections$ListView$LTpanda$collections$ImmutableArray$T$GT(panda$collections$ImmutableArray* self, panda$collections$ListView* p_data) {
     panda$core$Range$LTpanda$core$Int64$GT $tmp6;
@@ -487,7 +488,7 @@ panda$core$String* panda$collections$ImmutableArray$convert$R$panda$core$String(
     panda$core$MutableString* result205;
     panda$core$Char8 $tmp209;
     panda$core$String* separator210;
-    panda$collections$Iterator* Iter$192$9213;
+    panda$collections$Iterator* Iter$193$9213;
     panda$core$Object* v228;
     panda$core$Char8 $tmp238;
     panda$core$String* tmp3239;
@@ -512,26 +513,26 @@ panda$core$String* panda$collections$ImmutableArray$convert$R$panda$core$String(
         panda$collections$Iterator* $tmp219 = $tmp217(((panda$collections$Iterable*) self));
         panda$collections$Iterator* $tmp215 = $tmp219;
         panda$collections$Iterator* $tmp214 = $tmp215;
-        Iter$192$9213 = $tmp214;
+        Iter$193$9213 = $tmp214;
         panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp214));
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp215));
         $l220:;
-        ITable* $tmp223 = Iter$192$9213->$class->itable;
+        ITable* $tmp223 = Iter$193$9213->$class->itable;
         while ($tmp223->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
             $tmp223 = $tmp223->next;
         }
         $fn225 $tmp224 = $tmp223->methods[0];
-        panda$core$Bit $tmp226 = $tmp224(Iter$192$9213);
+        panda$core$Bit $tmp226 = $tmp224(Iter$193$9213);
         panda$core$Bit $tmp227 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp226);
         bool $tmp222 = $tmp227.value;
         if (!$tmp222) goto $l221;
         {
-            ITable* $tmp231 = Iter$192$9213->$class->itable;
+            ITable* $tmp231 = Iter$193$9213->$class->itable;
             while ($tmp231->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
                 $tmp231 = $tmp231->next;
             }
             $fn233 $tmp232 = $tmp231->methods[1];
-            panda$core$Object* $tmp234 = $tmp232(Iter$192$9213);
+            panda$core$Object* $tmp234 = $tmp232(Iter$193$9213);
             panda$core$Object* $tmp230 = $tmp234;
             panda$core$Object* $tmp229 = $tmp230;
             v228 = $tmp229;
@@ -550,7 +551,7 @@ panda$core$String* panda$collections$ImmutableArray$convert$R$panda$core$String(
         }
         goto $l220;
         $l221:;
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$192$9213));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$193$9213));
     }
     panda$core$Char8$init$panda$core$UInt8(&$tmp238, ((panda$core$UInt8) { 93 }));
     panda$core$MutableString$append$panda$core$Char8(result205, $tmp238);

@@ -375,7 +375,7 @@ class LLVMCodeGenerator : CodeGenerator {
             separator := ", "
         }
         if t = Type.Class() {
-            code.append(", %panda$core$String*, %panda$core$Class*, %$itable*, [0 x i8*]")
+            code.append(", %$itable*, [0 x i8*]")
         }
         code.append(" }")
         types.printLine(code.finish())

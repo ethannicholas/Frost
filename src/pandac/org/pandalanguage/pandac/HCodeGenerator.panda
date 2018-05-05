@@ -170,8 +170,6 @@ class HCodeGenerator : CodeGenerator {
             }
         }
         if cl.name = "panda.core.Class" {
-            types.printLine("panda$core$String* name;")
-            types.printLine("panda$core$Class* super;")
             types.printLine("ITable* itable;")
             types.printLine("void* vtable[];")
         }

@@ -1,5 +1,12 @@
 package panda.core
 
 @final
-class Class {
+class Class : Immutable {
+    def name:String
+
+    def superclass:Class?
+
+    @private
+    init() {
+    }
 }
