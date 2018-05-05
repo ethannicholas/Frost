@@ -115,7 +115,7 @@ void pandaFree(void* ptr);
 
 int allocations = 0;
 
-int refCount = 0;
+int refCount = 1;
 
 void* pandaAlloc(size_t size) {
     allocations++;
@@ -146,6 +146,9 @@ void* pandaRealloc(void* ptr, size_t oldSize, size_t newSize) {
 }
 
 void pandaFree(void* ptr) {
+    if (!ptr || allocations <= 0) {
+        abort();
+    }
     allocations--;
     free(ptr);
 }
@@ -188,7 +191,6 @@ void* pandaGetInterfaceMethod(Object* o, Class* intf, int index) {
 void pandaMain(Array* args);
 
 int main(int argc, char** argv) {
-    printf("refcounting disabled by setting refCount to 0 in pandalib.c\n");
     Array* args = pandaObjectAlloc(sizeof(Array), &panda$collections$Array$class);
     args->count = argc;
     args->capacity = argc;
@@ -199,7 +201,7 @@ int main(int argc, char** argv) {
     }
     pandaMain(args);
     panda$core$Panda$unref$panda$core$Object((Object*) args);
-    if (refCount && allocations > 1) {
+    if (refCount && allocations && allocations != 1) {
         printf("warning: %d objects were still in memory on exit\n", allocations);
     }
     else if (refCount && allocations == 1) {

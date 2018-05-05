@@ -36,6 +36,7 @@ class ImmutableArray<T> : ListView<T> {
 
     init() {
         self.count := 0
+        data := Pointer<T>.alloc(0)
     }
 
     init(data:ListView<T>) {
