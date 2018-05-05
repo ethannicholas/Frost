@@ -16,12 +16,18 @@ void panda$collections$IdentityMap$Entry$init$panda$collections$IdentityMap$Entr
     self->value = NULL;
     self->next = NULL;
     {
-        self->key = p_key;
-        panda$core$Panda$unref$panda$core$Object(self->key);
+        panda$core$Object* $tmp2 = self->key;
+        panda$core$Object* $tmp3 = p_key;
+        self->key = $tmp3;
+        panda$core$Panda$ref$panda$core$Object($tmp3);
+        panda$core$Panda$unref$panda$core$Object($tmp2);
     }
     {
-        self->value = p_value;
-        panda$core$Panda$unref$panda$core$Object(self->value);
+        panda$core$Object* $tmp4 = self->value;
+        panda$core$Object* $tmp5 = p_value;
+        self->value = $tmp5;
+        panda$core$Panda$ref$panda$core$Object($tmp5);
+        panda$core$Panda$unref$panda$core$Object($tmp4);
     }
 }
 void panda$collections$IdentityMap$Entry$cleanup(panda$collections$IdentityMap$Entry* self) {

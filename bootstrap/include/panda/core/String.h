@@ -19,7 +19,7 @@ typedef struct panda$core$String {
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"
 #undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[47]; } panda$core$String$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[48]; } panda$core$String$class_type;
 extern panda$core$String$class_type panda$core$String$class;
 
 #ifndef PANDA_TYPESONLY
@@ -44,6 +44,7 @@ void panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$cor
 void panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64$panda$core$String(panda$core$String* self, panda$core$Char8* p_data, panda$core$Int64 p_length, panda$core$String* p_owner);
 void panda$core$String$init$panda$collections$ListView$LTpanda$core$Char8$GT(panda$core$String* self, panda$collections$ListView* p_chars);
 panda$core$String* panda$core$String$convert$R$panda$core$String(panda$core$String* self);
+panda$core$String* panda$core$String$format$panda$core$String$R$panda$core$String(panda$core$String* self, panda$core$String* p_fmt);
 void panda$core$String$cleanup(panda$core$String* self);
 panda$collections$ListView* panda$core$String$utf8$R$panda$collections$ListView$LTpanda$core$Char8$GT(panda$core$String* self);
 panda$collections$Iterator* panda$core$String$utf16$R$panda$collections$Iterator$LTpanda$core$Char16$GT(panda$core$String* self);

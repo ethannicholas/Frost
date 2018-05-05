@@ -74,6 +74,17 @@ class Real32 : Value, Key<Real32>, Comparable<Real32> {
         return other.value
     }
 
+    function abs():Real32 {
+        if value < 0 {
+            return Real32(-value)
+        }
+        return self
+    }
+
+    function sqrt():Real32 {
+        return Real32(Panda.sqrt(value))
+    }
+
     @override
     function hash():Int {
         return Panda.floatToIntBits(convert())

@@ -26,8 +26,6 @@ class CCodeGenerator : CodeGenerator {
 
     var currentClass:ClassDecl? := null
 
-    var extraEffects := Array<IRNode>()
-
     init(outDir:File) {
         self.outDir := outDir
         self.out := IndentedOutputStream(MemoryOutputStream())
@@ -219,6 +217,8 @@ class CCodeGenerator : CodeGenerator {
     var currentMethod:MethodDecl?
 
     def loopDescriptors := Stack<LoopDescriptor>()
+
+    def extraEffects := Stack<Array<IRNode>>()
 
     var varCount := 0
 
@@ -678,6 +678,7 @@ class CCodeGenerator : CodeGenerator {
     }
 
     method getAndReference(left:IRNode, right:IRNode, out:IndentedOutputStream):String {
+        extraEffects.push(Array<IRNode>())
         def result := nextVar()
         var leftRef := getReference(left, out)
         if left.type() = Type.Bit() {
@@ -687,6 +688,7 @@ class CCodeGenerator : CodeGenerator {
         writeExtraEffects(out)
         def falseLabel := nextLabel()
         out.printLine("if (!\{result}) goto \{falseLabel};")
+        extraEffects.push(Array<IRNode>())
         var rightRef := getReference(right, out)
         if right.type() = Type.Bit() {
             rightRef := rightRef + ".value"
@@ -698,6 +700,7 @@ class CCodeGenerator : CodeGenerator {
     }
 
     method getOrReference(left:IRNode, right:IRNode, out:IndentedOutputStream):String {
+        extraEffects.push(Array<IRNode>())
         def result := nextVar()
         var leftRef := getReference(left, out)
         if left.type() = Type.Bit() {
@@ -707,6 +710,7 @@ class CCodeGenerator : CodeGenerator {
         writeExtraEffects(out)
         def trueLabel := nextLabel()
         out.printLine("if (\{result}) goto \{trueLabel};")
+        extraEffects.push(Array<IRNode>())
         var rightRef := getReference(right, out)
         if right.type() = Type.Bit() {
             rightRef := rightRef + ".value"
@@ -1232,8 +1236,10 @@ class CCodeGenerator : CodeGenerator {
 
     method getTernaryReference(test:IRNode, ifTrue:IRNode, ifFalse:IRNode,
             out:IndentedOutputStream):String {
+        extraEffects.push(Array<IRNode>())
         assert ifTrue.type() = ifFalse.type()
         def testRef := getTypedReference(test, out)
+        writeExtraEffects(out)
         var trueLabel := nextLabel()
         var falseLabel := nextLabel()
         def merge := nextLabel()
@@ -1241,10 +1247,14 @@ class CCodeGenerator : CodeGenerator {
         out.printLine("\{type(ifTrue.type())} \{result};")
         out.printLine("if (\{testRef}.value) goto \{trueLabel}; else goto \{falseLabel};")
         createBlock(trueLabel, out)
+        extraEffects.push(Array<IRNode>())
         out.printLine("\{result} = \{getReference(ifTrue, out)};")
+        writeExtraEffects(out)
         out.printLine("goto \{merge};")
         createBlock(falseLabel, out)
+        extraEffects.push(Array<IRNode>())
         out.printLine("\{result} = \{getReference(ifFalse, out)};")
+        writeExtraEffects(out)
         out.printLine("goto \{merge};")
         createBlock(merge, out)
         return result
@@ -1257,7 +1267,7 @@ class CCodeGenerator : CodeGenerator {
     method getExpressionWithExtraEffectsReference(expr:IRNode, stmt:IRNode,
             out:IndentedOutputStream):String {
         def result := getReference(expr, out)
-        extraEffects.add(stmt)
+        extraEffects.peek().add(stmt)
         return result
     }
 
@@ -1290,9 +1300,10 @@ class CCodeGenerator : CodeGenerator {
             when IRNode.SUPER(_, t):
                 return getSuperReference(t, out)
             when IRNode.REUSED_VALUE_DEFINITION(base, id):
-                def value := getReference(base, out)
-                reusedValues[id] := value
-                return value
+                def result := nextVar()
+                out.printLine("\{type(base.type())} \{result} = \{getReference(base, out)};")
+                reusedValues[id] := result
+                return result
             when IRNode.REUSED_VALUE(_, _, id):
                 def result := reusedValues[id]
                 assert result != null
@@ -1421,18 +1432,17 @@ class CCodeGenerator : CodeGenerator {
 
     method writeIf(test:IRNode, ifTrue:ImmutableArray<IRNode>, ifFalse:IRNode?,
             out:IndentedOutputStream) {
+        extraEffects.push(Array<IRNode>())
         def testRef := getReference(test, out)
+        writeExtraEffects(out)
         out.printLine("if (\{testRef}.value) {")
-        writeExtraEffects(false, out)
         writeBlock(ifTrue, out)
         out.printLine("}")
         if ifFalse != null {
             out.printLine("else {")
-            writeExtraEffects(false, out)
             writeStatement(ifFalse, out)
             out.printLine("}")
         }
-        extraEffects.clear()
     }
 
     method writeSimpleRangeFor(label:String?, target:IRNode, list:IRNode,
@@ -1742,7 +1752,11 @@ class CCodeGenerator : CodeGenerator {
         def loopEnd := nextLabel()
         loopDescriptors.push(LoopDescriptor(label, loopEnd, loopStart)) -- FIXME Auto
         createBlock(loopStart, out)
-        out.printLine("if (!\{getReference(test, out)}.value) goto \{loopEnd};")
+        extraEffects.push(Array<IRNode>())
+        def testVar := nextVar()
+        out.printLine("bool \{testVar} = \{getReference(test, out)}.value;")
+        writeExtraEffects(out)
+        out.printLine("if (!\{testVar}) goto \{loopEnd};")
         writeBlock(statements, out)
         out.printLine("goto \{loopStart};")
         createBlock(loopEnd, out)
@@ -1758,7 +1772,11 @@ class CCodeGenerator : CodeGenerator {
         loopDescriptors.push(LoopDescriptor(label, loopEnd, loopStart)) -- FIXME Auto
         createBlock(loopStart, out)
         writeBlock(statements, out)
-        out.printLine("if (\{getReference(test, out)}.value) goto \{loopStart};")
+        extraEffects.push(Array<IRNode>())
+        def testVar := nextVar()
+        out.printLine("bool \{testVar} = \{getReference(test, out)}.value;")
+        writeExtraEffects(out)
+        out.printLine("if (\{testVar}) goto \{loopStart};")
         createBlock(loopEnd, out)
         loopDescriptors.pop()
     }
@@ -1837,7 +1855,11 @@ class CCodeGenerator : CodeGenerator {
 
     method writeReturn(value:IRNode?, out:IndentedOutputStream) {
         if value != null {
-            out.printLine("return \{getReference(value, out)};")
+            extraEffects.push(Array<IRNode>())
+            def result := nextVar()
+            out.printLine("\{type(value.type())} \{result} = \{getReference(value, out)};")
+            writeExtraEffects(out)
+            out.printLine("return \{result};")
         }
         else {
             out.printLine("return;")
@@ -1868,7 +1890,9 @@ class CCodeGenerator : CodeGenerator {
     }
 
     method writeAssert(test:IRNode, message:IRNode?, out:IndentedOutputStream) {
+        extraEffects.push(Array<IRNode>())
         out.printLine("PANDA_ASSERT(\{getReference(test, out)});")
+        writeExtraEffects(out)
     }
 
     method writeMatch(value:IRNode, whens:ImmutableArray<IRNode>, other:ImmutableArray<IRNode>?,
@@ -1895,23 +1919,15 @@ class CCodeGenerator : CodeGenerator {
         out.printLine("}")
     }
 
-    method writeExtraEffects(clear:Bit, out:IndentedOutputStream) {
-        -*if extraEffects.get_count() > 0 {
-            def finalExtra := extraEffects
-            if clear {
-                extraEffects := Array<IRNode>()
-            }
-            for extra in finalExtra {
-                writeStatement(extra, out)
-            }
-        }*-
-    }
-
     method writeExtraEffects(out:IndentedOutputStream) {
-        writeExtraEffects(true, out)
+        def finalEffects := extraEffects.pop()
+        for i in finalEffects.get_count() - 1 ... 0 by -1 {
+            writeStatement(finalEffects[i], out)
+        }
     }
 
     method writeStatement(stmt:IRNode, out:IndentedOutputStream) {
+        extraEffects.push(Array<IRNode>())
         match stmt {
             when IRNode.BINARY(_, _, left, op, right):
                 writeAssignment(left, right, out)
@@ -1944,7 +1960,9 @@ class CCodeGenerator : CodeGenerator {
             when IRNode.MATCH(_, value, whens, other):
                 writeMatch(value, whens, other, out)
             when IRNode.REUSED_VALUE_DEFINITION(base, id):
-                reusedValues[id] := getReference(base, out)
+                def result := nextVar()
+                out.printLine("\{type(base.type())} \{result} = \{getReference(base, out)};")
+                reusedValues[id] := result
             otherwise:
                 assert false, "unsupported statement \{stmt}"
         }

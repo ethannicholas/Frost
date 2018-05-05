@@ -16,8 +16,11 @@ static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -
 void org$pandalanguage$pandac$ClassDecl$Resolution$init$org$pandalanguage$pandac$ClassDecl$Q(org$pandalanguage$pandac$ClassDecl$Resolution* self, org$pandalanguage$pandac$ClassDecl* p_value) {
     self->value = NULL;
     {
-        self->value = p_value;
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->value));
+        org$pandalanguage$pandac$ClassDecl* $tmp2 = self->value;
+        org$pandalanguage$pandac$ClassDecl* $tmp3 = p_value;
+        self->value = $tmp3;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp3));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2));
     }
 }
 void org$pandalanguage$pandac$ClassDecl$Resolution$cleanup(org$pandalanguage$pandac$ClassDecl$Resolution* self) {

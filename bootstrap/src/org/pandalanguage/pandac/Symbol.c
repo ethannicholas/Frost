@@ -19,12 +19,16 @@ void org$pandalanguage$pandac$Symbol$init$panda$core$Int64$org$pandalanguage$pan
     self->kind = p_kind;
     self->position = p_position;
     {
-        self->name = p_name;
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->name));
+        panda$core$String* $tmp2 = self->name;
+        panda$core$String* $tmp3 = p_name;
+        self->name = $tmp3;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp3));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2));
     }
 }
 panda$core$Bit org$pandalanguage$pandac$Symbol$get_heritable$R$panda$core$Bit(org$pandalanguage$pandac$Symbol* self) {
-    return ((panda$core$Bit) { true });
+    panda$core$Bit $tmp4 = ((panda$core$Bit) { true });
+    return $tmp4;
 }
 void org$pandalanguage$pandac$Symbol$cleanup(org$pandalanguage$pandac$Symbol* self) {
     panda$core$Object$cleanup(((panda$core$Object*) self));

@@ -100,7 +100,7 @@ static panda$core$String $s2;
 panda$core$Int64$wrapperclass_type panda$core$Int64$wrapperclass = { (panda$core$Class*) &panda$core$Class$class, -999, &$s2, (panda$core$Class*) &panda$core$Value$class, (ITable*) &panda$core$Int64$wrapper_panda$collections$Key, { panda$core$Int64$convert$R$panda$core$String$wrappershim, panda$core$Int64$cleanup$wrappershim} };
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34", 16, -4218233432987190369, NULL };
 static panda$core$String $s2 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34", 16, -4218233432987190369, NULL };
-static panda$core$String $s123 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2d", 1, 146, NULL };
+static panda$core$String $s236 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2d", 1, 146, NULL };
 
 void panda$core$Int64$init$builtin_int64(panda$core$Int64* self, int64_t p_value) {
     self->value = p_value;
@@ -124,638 +124,778 @@ void panda$core$Int64$init$panda$core$UInt32(panda$core$Int64* self, panda$core$
     self->value = ((int64_t) p_value.value);
 }
 panda$core$Int64 panda$core$Int64$$ADD$panda$core$Int8$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int8 p_other) {
-    int64_t $tmp3 = self.value + ((int64_t) p_other.value);
-    return ((panda$core$Int64) { $tmp3 });
+    int64_t $tmp4 = self.value + ((int64_t) p_other.value);
+    panda$core$Int64 $tmp3 = ((panda$core$Int64) { $tmp4 });
+    return $tmp3;
 }
 panda$core$Int64 panda$core$Int64$$ADD$panda$core$Int16$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int16 p_other) {
-    int64_t $tmp4 = self.value + ((int64_t) p_other.value);
-    return ((panda$core$Int64) { $tmp4 });
+    int64_t $tmp6 = self.value + ((int64_t) p_other.value);
+    panda$core$Int64 $tmp5 = ((panda$core$Int64) { $tmp6 });
+    return $tmp5;
 }
 panda$core$Int64 panda$core$Int64$$ADD$panda$core$Int32$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int32 p_other) {
-    int64_t $tmp5 = self.value + ((int64_t) p_other.value);
-    return ((panda$core$Int64) { $tmp5 });
+    int64_t $tmp8 = self.value + ((int64_t) p_other.value);
+    panda$core$Int64 $tmp7 = ((panda$core$Int64) { $tmp8 });
+    return $tmp7;
 }
 panda$core$Int64 panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int64 p_other) {
-    int64_t $tmp6 = self.value + p_other.value;
-    return ((panda$core$Int64) { $tmp6 });
+    int64_t $tmp10 = self.value + p_other.value;
+    panda$core$Int64 $tmp9 = ((panda$core$Int64) { $tmp10 });
+    return $tmp9;
 }
 panda$core$Int64 panda$core$Int64$$SUB$panda$core$Int8$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int8 p_other) {
-    int64_t $tmp7 = self.value - ((int64_t) p_other.value);
-    return ((panda$core$Int64) { $tmp7 });
+    int64_t $tmp12 = self.value - ((int64_t) p_other.value);
+    panda$core$Int64 $tmp11 = ((panda$core$Int64) { $tmp12 });
+    return $tmp11;
 }
 panda$core$Int64 panda$core$Int64$$SUB$panda$core$Int16$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int16 p_other) {
-    int64_t $tmp8 = self.value - ((int64_t) p_other.value);
-    return ((panda$core$Int64) { $tmp8 });
+    int64_t $tmp14 = self.value - ((int64_t) p_other.value);
+    panda$core$Int64 $tmp13 = ((panda$core$Int64) { $tmp14 });
+    return $tmp13;
 }
 panda$core$Int64 panda$core$Int64$$SUB$panda$core$Int32$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int32 p_other) {
-    int64_t $tmp9 = self.value - ((int64_t) p_other.value);
-    return ((panda$core$Int64) { $tmp9 });
+    int64_t $tmp16 = self.value - ((int64_t) p_other.value);
+    panda$core$Int64 $tmp15 = ((panda$core$Int64) { $tmp16 });
+    return $tmp15;
 }
 panda$core$Int64 panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int64 p_other) {
-    int64_t $tmp10 = self.value - p_other.value;
-    return ((panda$core$Int64) { $tmp10 });
+    int64_t $tmp18 = self.value - p_other.value;
+    panda$core$Int64 $tmp17 = ((panda$core$Int64) { $tmp18 });
+    return $tmp17;
 }
 panda$core$Int64 panda$core$Int64$$SUB$R$panda$core$Int64(panda$core$Int64 self) {
-    return ((panda$core$Int64) { -self.value });
+    panda$core$Int64 $tmp19 = ((panda$core$Int64) { -self.value });
+    return $tmp19;
 }
 panda$core$Int64 panda$core$Int64$$MUL$panda$core$Int8$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int8 p_other) {
-    int64_t $tmp12 = self.value * ((int64_t) p_other.value);
-    return ((panda$core$Int64) { $tmp12 });
+    int64_t $tmp22 = self.value * ((int64_t) p_other.value);
+    panda$core$Int64 $tmp21 = ((panda$core$Int64) { $tmp22 });
+    return $tmp21;
 }
 panda$core$Int64 panda$core$Int64$$MUL$panda$core$Int16$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int16 p_other) {
-    int64_t $tmp13 = self.value * ((int64_t) p_other.value);
-    return ((panda$core$Int64) { $tmp13 });
+    int64_t $tmp24 = self.value * ((int64_t) p_other.value);
+    panda$core$Int64 $tmp23 = ((panda$core$Int64) { $tmp24 });
+    return $tmp23;
 }
 panda$core$Int64 panda$core$Int64$$MUL$panda$core$Int32$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int32 p_other) {
-    int64_t $tmp14 = self.value * ((int64_t) p_other.value);
-    return ((panda$core$Int64) { $tmp14 });
+    int64_t $tmp26 = self.value * ((int64_t) p_other.value);
+    panda$core$Int64 $tmp25 = ((panda$core$Int64) { $tmp26 });
+    return $tmp25;
 }
 panda$core$Int64 panda$core$Int64$$MUL$panda$core$Int64$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int64 p_other) {
-    int64_t $tmp15 = self.value * p_other.value;
-    return ((panda$core$Int64) { $tmp15 });
+    int64_t $tmp28 = self.value * p_other.value;
+    panda$core$Int64 $tmp27 = ((panda$core$Int64) { $tmp28 });
+    return $tmp27;
 }
 panda$core$Int64 panda$core$Int64$$INTDIV$panda$core$Int8$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int8 p_other) {
-    int64_t $tmp16 = self.value / ((int64_t) p_other.value);
-    return ((panda$core$Int64) { $tmp16 });
+    int64_t $tmp30 = self.value / ((int64_t) p_other.value);
+    panda$core$Int64 $tmp29 = ((panda$core$Int64) { $tmp30 });
+    return $tmp29;
 }
 panda$core$Int64 panda$core$Int64$$INTDIV$panda$core$Int16$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int16 p_other) {
-    int64_t $tmp17 = self.value / ((int64_t) p_other.value);
-    return ((panda$core$Int64) { $tmp17 });
+    int64_t $tmp32 = self.value / ((int64_t) p_other.value);
+    panda$core$Int64 $tmp31 = ((panda$core$Int64) { $tmp32 });
+    return $tmp31;
 }
 panda$core$Int64 panda$core$Int64$$INTDIV$panda$core$Int32$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int32 p_other) {
-    int64_t $tmp18 = self.value / ((int64_t) p_other.value);
-    return ((panda$core$Int64) { $tmp18 });
+    int64_t $tmp34 = self.value / ((int64_t) p_other.value);
+    panda$core$Int64 $tmp33 = ((panda$core$Int64) { $tmp34 });
+    return $tmp33;
 }
 panda$core$Int64 panda$core$Int64$$INTDIV$panda$core$Int64$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int64 p_other) {
-    int64_t $tmp19 = self.value / p_other.value;
-    return ((panda$core$Int64) { $tmp19 });
+    int64_t $tmp36 = self.value / p_other.value;
+    panda$core$Int64 $tmp35 = ((panda$core$Int64) { $tmp36 });
+    return $tmp35;
 }
 panda$core$Int64 panda$core$Int64$$REM$panda$core$Int8$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int8 p_other) {
-    int64_t $tmp20 = self.value % ((int64_t) p_other.value);
-    return ((panda$core$Int64) { $tmp20 });
+    int64_t $tmp38 = self.value % ((int64_t) p_other.value);
+    panda$core$Int64 $tmp37 = ((panda$core$Int64) { $tmp38 });
+    return $tmp37;
 }
 panda$core$Int64 panda$core$Int64$$REM$panda$core$Int16$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int16 p_other) {
-    int64_t $tmp21 = self.value % ((int64_t) p_other.value);
-    return ((panda$core$Int64) { $tmp21 });
+    int64_t $tmp40 = self.value % ((int64_t) p_other.value);
+    panda$core$Int64 $tmp39 = ((panda$core$Int64) { $tmp40 });
+    return $tmp39;
 }
 panda$core$Int64 panda$core$Int64$$REM$panda$core$Int32$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int32 p_other) {
-    int64_t $tmp22 = self.value % ((int64_t) p_other.value);
-    return ((panda$core$Int64) { $tmp22 });
+    int64_t $tmp42 = self.value % ((int64_t) p_other.value);
+    panda$core$Int64 $tmp41 = ((panda$core$Int64) { $tmp42 });
+    return $tmp41;
 }
 panda$core$Int64 panda$core$Int64$$REM$panda$core$Int64$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int64 p_other) {
-    int64_t $tmp23 = self.value % p_other.value;
-    return ((panda$core$Int64) { $tmp23 });
+    int64_t $tmp44 = self.value % p_other.value;
+    panda$core$Int64 $tmp43 = ((panda$core$Int64) { $tmp44 });
+    return $tmp43;
 }
 panda$core$Int64 panda$core$Int64$$BNOT$R$panda$core$Int64(panda$core$Int64 self) {
-    return ((panda$core$Int64) { ~self.value });
+    panda$core$Int64 $tmp45 = ((panda$core$Int64) { ~self.value });
+    return $tmp45;
 }
 panda$core$Int64 panda$core$Int64$$BAND$panda$core$Int8$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int8 p_other) {
-    int64_t $tmp25 = self.value & ((int64_t) p_other.value);
-    return ((panda$core$Int64) { $tmp25 });
+    int64_t $tmp48 = self.value & ((int64_t) p_other.value);
+    panda$core$Int64 $tmp47 = ((panda$core$Int64) { $tmp48 });
+    return $tmp47;
 }
 panda$core$Int64 panda$core$Int64$$BAND$panda$core$Int16$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int16 p_other) {
-    int64_t $tmp26 = self.value & ((int64_t) p_other.value);
-    return ((panda$core$Int64) { $tmp26 });
+    int64_t $tmp50 = self.value & ((int64_t) p_other.value);
+    panda$core$Int64 $tmp49 = ((panda$core$Int64) { $tmp50 });
+    return $tmp49;
 }
 panda$core$Int64 panda$core$Int64$$BAND$panda$core$Int32$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int32 p_other) {
-    int64_t $tmp27 = self.value & ((int64_t) p_other.value);
-    return ((panda$core$Int64) { $tmp27 });
+    int64_t $tmp52 = self.value & ((int64_t) p_other.value);
+    panda$core$Int64 $tmp51 = ((panda$core$Int64) { $tmp52 });
+    return $tmp51;
 }
 panda$core$Int64 panda$core$Int64$$BAND$panda$core$Int64$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int64 p_other) {
-    int64_t $tmp28 = self.value & p_other.value;
-    return ((panda$core$Int64) { $tmp28 });
+    int64_t $tmp54 = self.value & p_other.value;
+    panda$core$Int64 $tmp53 = ((panda$core$Int64) { $tmp54 });
+    return $tmp53;
 }
 panda$core$Int64 panda$core$Int64$$BAND$panda$core$UInt8$R$panda$core$Int64(panda$core$Int64 self, panda$core$UInt8 p_other) {
-    int64_t $tmp29 = self.value & ((int64_t) p_other.value);
-    return ((panda$core$Int64) { $tmp29 });
+    int64_t $tmp56 = self.value & ((int64_t) p_other.value);
+    panda$core$Int64 $tmp55 = ((panda$core$Int64) { $tmp56 });
+    return $tmp55;
 }
 panda$core$Int64 panda$core$Int64$$BAND$panda$core$UInt16$R$panda$core$Int64(panda$core$Int64 self, panda$core$UInt16 p_other) {
-    int64_t $tmp30 = self.value & ((int64_t) p_other.value);
-    return ((panda$core$Int64) { $tmp30 });
+    int64_t $tmp58 = self.value & ((int64_t) p_other.value);
+    panda$core$Int64 $tmp57 = ((panda$core$Int64) { $tmp58 });
+    return $tmp57;
 }
 panda$core$Int64 panda$core$Int64$$BAND$panda$core$UInt32$R$panda$core$Int64(panda$core$Int64 self, panda$core$UInt32 p_other) {
-    int64_t $tmp31 = self.value & ((int64_t) p_other.value);
-    return ((panda$core$Int64) { $tmp31 });
+    int64_t $tmp60 = self.value & ((int64_t) p_other.value);
+    panda$core$Int64 $tmp59 = ((panda$core$Int64) { $tmp60 });
+    return $tmp59;
 }
 panda$core$UInt64 panda$core$Int64$$BAND$panda$core$UInt64$R$panda$core$UInt64(panda$core$Int64 self, panda$core$UInt64 p_other) {
-    uint64_t $tmp32 = ((uint64_t) self.value) & p_other.value;
-    return ((panda$core$UInt64) { $tmp32 });
+    uint64_t $tmp62 = ((uint64_t) self.value) & p_other.value;
+    panda$core$UInt64 $tmp61 = ((panda$core$UInt64) { $tmp62 });
+    return $tmp61;
 }
 panda$core$Int64 panda$core$Int64$$BOR$panda$core$Int8$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int8 p_other) {
-    int64_t $tmp33 = self.value | ((int64_t) p_other.value);
-    return ((panda$core$Int64) { $tmp33 });
+    int64_t $tmp64 = self.value | ((int64_t) p_other.value);
+    panda$core$Int64 $tmp63 = ((panda$core$Int64) { $tmp64 });
+    return $tmp63;
 }
 panda$core$Int64 panda$core$Int64$$BOR$panda$core$Int16$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int16 p_other) {
-    int64_t $tmp34 = self.value | ((int64_t) p_other.value);
-    return ((panda$core$Int64) { $tmp34 });
+    int64_t $tmp66 = self.value | ((int64_t) p_other.value);
+    panda$core$Int64 $tmp65 = ((panda$core$Int64) { $tmp66 });
+    return $tmp65;
 }
 panda$core$Int64 panda$core$Int64$$BOR$panda$core$Int32$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int32 p_other) {
-    int64_t $tmp35 = self.value | ((int64_t) p_other.value);
-    return ((panda$core$Int64) { $tmp35 });
+    int64_t $tmp68 = self.value | ((int64_t) p_other.value);
+    panda$core$Int64 $tmp67 = ((panda$core$Int64) { $tmp68 });
+    return $tmp67;
 }
 panda$core$Int64 panda$core$Int64$$BOR$panda$core$Int64$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int64 p_other) {
-    int64_t $tmp36 = self.value | p_other.value;
-    return ((panda$core$Int64) { $tmp36 });
+    int64_t $tmp70 = self.value | p_other.value;
+    panda$core$Int64 $tmp69 = ((panda$core$Int64) { $tmp70 });
+    return $tmp69;
 }
 panda$core$Int64 panda$core$Int64$$BOR$panda$core$UInt8$R$panda$core$Int64(panda$core$Int64 self, panda$core$UInt8 p_other) {
-    int64_t $tmp37 = self.value | ((int64_t) p_other.value);
-    return ((panda$core$Int64) { $tmp37 });
+    int64_t $tmp72 = self.value | ((int64_t) p_other.value);
+    panda$core$Int64 $tmp71 = ((panda$core$Int64) { $tmp72 });
+    return $tmp71;
 }
 panda$core$Int64 panda$core$Int64$$BOR$panda$core$UInt16$R$panda$core$Int64(panda$core$Int64 self, panda$core$UInt16 p_other) {
-    int64_t $tmp38 = self.value | ((int64_t) p_other.value);
-    return ((panda$core$Int64) { $tmp38 });
+    int64_t $tmp74 = self.value | ((int64_t) p_other.value);
+    panda$core$Int64 $tmp73 = ((panda$core$Int64) { $tmp74 });
+    return $tmp73;
 }
 panda$core$Int64 panda$core$Int64$$BOR$panda$core$UInt32$R$panda$core$Int64(panda$core$Int64 self, panda$core$UInt32 p_other) {
-    int64_t $tmp39 = self.value | ((int64_t) p_other.value);
-    return ((panda$core$Int64) { $tmp39 });
+    int64_t $tmp76 = self.value | ((int64_t) p_other.value);
+    panda$core$Int64 $tmp75 = ((panda$core$Int64) { $tmp76 });
+    return $tmp75;
 }
 panda$core$UInt64 panda$core$Int64$$BOR$panda$core$UInt64$R$panda$core$UInt64(panda$core$Int64 self, panda$core$UInt64 p_other) {
-    uint64_t $tmp40 = ((uint64_t) self.value) | p_other.value;
-    return ((panda$core$UInt64) { $tmp40 });
+    uint64_t $tmp78 = ((uint64_t) self.value) | p_other.value;
+    panda$core$UInt64 $tmp77 = ((panda$core$UInt64) { $tmp78 });
+    return $tmp77;
 }
 panda$core$Int64 panda$core$Int64$$BXOR$panda$core$Int8$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int8 p_other) {
-    int64_t $tmp41 = self.value ^ ((int64_t) p_other.value);
-    return ((panda$core$Int64) { $tmp41 });
+    int64_t $tmp80 = self.value ^ ((int64_t) p_other.value);
+    panda$core$Int64 $tmp79 = ((panda$core$Int64) { $tmp80 });
+    return $tmp79;
 }
 panda$core$Int64 panda$core$Int64$$BXOR$panda$core$Int16$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int16 p_other) {
-    int64_t $tmp42 = self.value ^ ((int64_t) p_other.value);
-    return ((panda$core$Int64) { $tmp42 });
+    int64_t $tmp82 = self.value ^ ((int64_t) p_other.value);
+    panda$core$Int64 $tmp81 = ((panda$core$Int64) { $tmp82 });
+    return $tmp81;
 }
 panda$core$Int64 panda$core$Int64$$BXOR$panda$core$Int32$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int32 p_other) {
-    int64_t $tmp43 = self.value ^ ((int64_t) p_other.value);
-    return ((panda$core$Int64) { $tmp43 });
+    int64_t $tmp84 = self.value ^ ((int64_t) p_other.value);
+    panda$core$Int64 $tmp83 = ((panda$core$Int64) { $tmp84 });
+    return $tmp83;
 }
 panda$core$Int64 panda$core$Int64$$BXOR$panda$core$Int64$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int64 p_other) {
-    int64_t $tmp44 = self.value ^ p_other.value;
-    return ((panda$core$Int64) { $tmp44 });
+    int64_t $tmp86 = self.value ^ p_other.value;
+    panda$core$Int64 $tmp85 = ((panda$core$Int64) { $tmp86 });
+    return $tmp85;
 }
 panda$core$Int64 panda$core$Int64$$BXOR$panda$core$UInt8$R$panda$core$Int64(panda$core$Int64 self, panda$core$UInt8 p_other) {
-    int64_t $tmp45 = self.value ^ ((int64_t) p_other.value);
-    return ((panda$core$Int64) { $tmp45 });
+    int64_t $tmp88 = self.value ^ ((int64_t) p_other.value);
+    panda$core$Int64 $tmp87 = ((panda$core$Int64) { $tmp88 });
+    return $tmp87;
 }
 panda$core$Int64 panda$core$Int64$$BXOR$panda$core$UInt16$R$panda$core$Int64(panda$core$Int64 self, panda$core$UInt16 p_other) {
-    int64_t $tmp46 = self.value ^ ((int64_t) p_other.value);
-    return ((panda$core$Int64) { $tmp46 });
+    int64_t $tmp90 = self.value ^ ((int64_t) p_other.value);
+    panda$core$Int64 $tmp89 = ((panda$core$Int64) { $tmp90 });
+    return $tmp89;
 }
 panda$core$Int64 panda$core$Int64$$BXOR$panda$core$UInt32$R$panda$core$Int64(panda$core$Int64 self, panda$core$UInt32 p_other) {
-    int64_t $tmp47 = self.value ^ ((int64_t) p_other.value);
-    return ((panda$core$Int64) { $tmp47 });
+    int64_t $tmp92 = self.value ^ ((int64_t) p_other.value);
+    panda$core$Int64 $tmp91 = ((panda$core$Int64) { $tmp92 });
+    return $tmp91;
 }
 panda$core$UInt64 panda$core$Int64$$BXOR$panda$core$UInt64$R$panda$core$UInt64(panda$core$Int64 self, panda$core$UInt64 p_other) {
-    uint64_t $tmp48 = ((uint64_t) self.value) ^ p_other.value;
-    return ((panda$core$UInt64) { $tmp48 });
+    uint64_t $tmp94 = ((uint64_t) self.value) ^ p_other.value;
+    panda$core$UInt64 $tmp93 = ((panda$core$UInt64) { $tmp94 });
+    return $tmp93;
 }
 panda$core$Int64 panda$core$Int64$$SHL$panda$core$Int8$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int8 p_other) {
-    int64_t $tmp49 = self.value << ((int64_t) p_other.value);
-    return ((panda$core$Int64) { $tmp49 });
+    int64_t $tmp96 = self.value << ((int64_t) p_other.value);
+    panda$core$Int64 $tmp95 = ((panda$core$Int64) { $tmp96 });
+    return $tmp95;
 }
 panda$core$Int64 panda$core$Int64$$SHL$panda$core$Int16$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int16 p_other) {
-    int64_t $tmp50 = self.value << ((int64_t) p_other.value);
-    return ((panda$core$Int64) { $tmp50 });
+    int64_t $tmp98 = self.value << ((int64_t) p_other.value);
+    panda$core$Int64 $tmp97 = ((panda$core$Int64) { $tmp98 });
+    return $tmp97;
 }
 panda$core$Int64 panda$core$Int64$$SHL$panda$core$Int32$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int32 p_other) {
-    int64_t $tmp51 = self.value << ((int64_t) p_other.value);
-    return ((panda$core$Int64) { $tmp51 });
+    int64_t $tmp100 = self.value << ((int64_t) p_other.value);
+    panda$core$Int64 $tmp99 = ((panda$core$Int64) { $tmp100 });
+    return $tmp99;
 }
 panda$core$Int64 panda$core$Int64$$SHL$panda$core$Int64$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int64 p_other) {
-    int64_t $tmp52 = self.value << p_other.value;
-    return ((panda$core$Int64) { $tmp52 });
-}
-panda$core$Int64 panda$core$Int64$$SHL$panda$core$UInt8$R$panda$core$Int64(panda$core$Int64 self, panda$core$UInt8 p_other) {
-    int64_t $tmp53 = self.value << ((int64_t) p_other.value);
-    return ((panda$core$Int64) { $tmp53 });
-}
-panda$core$Int64 panda$core$Int64$$SHL$panda$core$UInt16$R$panda$core$Int64(panda$core$Int64 self, panda$core$UInt16 p_other) {
-    int64_t $tmp54 = self.value << ((int64_t) p_other.value);
-    return ((panda$core$Int64) { $tmp54 });
-}
-panda$core$Int64 panda$core$Int64$$SHL$panda$core$UInt32$R$panda$core$Int64(panda$core$Int64 self, panda$core$UInt32 p_other) {
-    int64_t $tmp55 = self.value << ((int64_t) p_other.value);
-    return ((panda$core$Int64) { $tmp55 });
-}
-panda$core$UInt64 panda$core$Int64$$SHL$panda$core$UInt64$R$panda$core$UInt64(panda$core$Int64 self, panda$core$UInt64 p_other) {
-    uint64_t $tmp56 = ((uint64_t) self.value) << p_other.value;
-    return ((panda$core$UInt64) { $tmp56 });
-}
-panda$core$Int64 panda$core$Int64$$SHR$panda$core$Int8$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int8 p_other) {
-    int64_t $tmp57 = self.value >> ((int64_t) p_other.value);
-    return ((panda$core$Int64) { $tmp57 });
-}
-panda$core$Int64 panda$core$Int64$$SHR$panda$core$Int16$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int16 p_other) {
-    int64_t $tmp58 = self.value >> ((int64_t) p_other.value);
-    return ((panda$core$Int64) { $tmp58 });
-}
-panda$core$Int64 panda$core$Int64$$SHR$panda$core$Int32$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int32 p_other) {
-    int64_t $tmp59 = self.value >> ((int64_t) p_other.value);
-    return ((panda$core$Int64) { $tmp59 });
-}
-panda$core$Int64 panda$core$Int64$$SHR$panda$core$Int64$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int64 p_other) {
-    int64_t $tmp60 = self.value >> p_other.value;
-    return ((panda$core$Int64) { $tmp60 });
-}
-panda$core$Int64 panda$core$Int64$$SHR$panda$core$UInt8$R$panda$core$Int64(panda$core$Int64 self, panda$core$UInt8 p_other) {
-    int64_t $tmp61 = self.value >> ((int64_t) p_other.value);
-    return ((panda$core$Int64) { $tmp61 });
-}
-panda$core$Int64 panda$core$Int64$$SHR$panda$core$UInt16$R$panda$core$Int64(panda$core$Int64 self, panda$core$UInt16 p_other) {
-    int64_t $tmp62 = self.value >> ((int64_t) p_other.value);
-    return ((panda$core$Int64) { $tmp62 });
-}
-panda$core$Int64 panda$core$Int64$$SHR$panda$core$UInt32$R$panda$core$Int64(panda$core$Int64 self, panda$core$UInt32 p_other) {
-    int64_t $tmp63 = self.value >> ((int64_t) p_other.value);
-    return ((panda$core$Int64) { $tmp63 });
-}
-panda$core$UInt64 panda$core$Int64$$SHR$panda$core$UInt64$R$panda$core$UInt64(panda$core$Int64 self, panda$core$UInt64 p_other) {
-    uint64_t $tmp64 = ((uint64_t) self.value) >> p_other.value;
-    return ((panda$core$UInt64) { $tmp64 });
-}
-panda$core$Bit panda$core$Int64$$EQ$panda$core$Int8$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int8 p_other) {
-    bool $tmp65 = self.value == ((int64_t) p_other.value);
-    return ((panda$core$Bit) { $tmp65 });
-}
-panda$core$Bit panda$core$Int64$$EQ$panda$core$Int16$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int16 p_other) {
-    bool $tmp66 = self.value == ((int64_t) p_other.value);
-    return ((panda$core$Bit) { $tmp66 });
-}
-panda$core$Bit panda$core$Int64$$EQ$panda$core$Int32$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int32 p_other) {
-    bool $tmp67 = self.value == ((int64_t) p_other.value);
-    return ((panda$core$Bit) { $tmp67 });
-}
-panda$core$Bit panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int64 p_other) {
-    bool $tmp68 = self.value == p_other.value;
-    return ((panda$core$Bit) { $tmp68 });
-}
-panda$core$Bit panda$core$Int64$$NEQ$panda$core$Int8$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int8 p_other) {
-    bool $tmp69 = self.value != ((int64_t) p_other.value);
-    return ((panda$core$Bit) { $tmp69 });
-}
-panda$core$Bit panda$core$Int64$$NEQ$panda$core$Int16$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int16 p_other) {
-    bool $tmp70 = self.value != ((int64_t) p_other.value);
-    return ((panda$core$Bit) { $tmp70 });
-}
-panda$core$Bit panda$core$Int64$$NEQ$panda$core$Int32$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int32 p_other) {
-    bool $tmp71 = self.value != ((int64_t) p_other.value);
-    return ((panda$core$Bit) { $tmp71 });
-}
-panda$core$Bit panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int64 p_other) {
-    bool $tmp72 = self.value != p_other.value;
-    return ((panda$core$Bit) { $tmp72 });
-}
-panda$core$Bit panda$core$Int64$$LT$panda$core$Int8$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int8 p_other) {
-    bool $tmp73 = self.value < ((int64_t) p_other.value);
-    return ((panda$core$Bit) { $tmp73 });
-}
-panda$core$Bit panda$core$Int64$$LT$panda$core$Int16$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int16 p_other) {
-    bool $tmp74 = self.value < ((int64_t) p_other.value);
-    return ((panda$core$Bit) { $tmp74 });
-}
-panda$core$Bit panda$core$Int64$$LT$panda$core$Int32$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int32 p_other) {
-    bool $tmp75 = self.value < ((int64_t) p_other.value);
-    return ((panda$core$Bit) { $tmp75 });
-}
-panda$core$Bit panda$core$Int64$$LT$panda$core$Int64$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int64 p_other) {
-    bool $tmp76 = self.value < p_other.value;
-    return ((panda$core$Bit) { $tmp76 });
-}
-panda$core$Bit panda$core$Int64$$GT$panda$core$Int8$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int8 p_other) {
-    bool $tmp77 = self.value > ((int64_t) p_other.value);
-    return ((panda$core$Bit) { $tmp77 });
-}
-panda$core$Bit panda$core$Int64$$GT$panda$core$Int16$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int16 p_other) {
-    bool $tmp78 = self.value > ((int64_t) p_other.value);
-    return ((panda$core$Bit) { $tmp78 });
-}
-panda$core$Bit panda$core$Int64$$GT$panda$core$Int32$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int32 p_other) {
-    bool $tmp79 = self.value > ((int64_t) p_other.value);
-    return ((panda$core$Bit) { $tmp79 });
-}
-panda$core$Bit panda$core$Int64$$GT$panda$core$Int64$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int64 p_other) {
-    bool $tmp80 = self.value > p_other.value;
-    return ((panda$core$Bit) { $tmp80 });
-}
-panda$core$Bit panda$core$Int64$$GE$panda$core$Int8$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int8 p_other) {
-    bool $tmp81 = self.value >= ((int64_t) p_other.value);
-    return ((panda$core$Bit) { $tmp81 });
-}
-panda$core$Bit panda$core$Int64$$GE$panda$core$Int16$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int16 p_other) {
-    bool $tmp82 = self.value >= ((int64_t) p_other.value);
-    return ((panda$core$Bit) { $tmp82 });
-}
-panda$core$Bit panda$core$Int64$$GE$panda$core$Int32$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int32 p_other) {
-    bool $tmp83 = self.value >= ((int64_t) p_other.value);
-    return ((panda$core$Bit) { $tmp83 });
-}
-panda$core$Bit panda$core$Int64$$GE$panda$core$Int64$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int64 p_other) {
-    bool $tmp84 = self.value >= p_other.value;
-    return ((panda$core$Bit) { $tmp84 });
-}
-panda$core$Bit panda$core$Int64$$LE$panda$core$Int8$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int8 p_other) {
-    bool $tmp85 = self.value <= ((int64_t) p_other.value);
-    return ((panda$core$Bit) { $tmp85 });
-}
-panda$core$Bit panda$core$Int64$$LE$panda$core$Int16$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int16 p_other) {
-    bool $tmp86 = self.value <= ((int64_t) p_other.value);
-    return ((panda$core$Bit) { $tmp86 });
-}
-panda$core$Bit panda$core$Int64$$LE$panda$core$Int32$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int32 p_other) {
-    bool $tmp87 = self.value <= ((int64_t) p_other.value);
-    return ((panda$core$Bit) { $tmp87 });
-}
-panda$core$Bit panda$core$Int64$$LE$panda$core$Int64$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int64 p_other) {
-    bool $tmp88 = self.value <= p_other.value;
-    return ((panda$core$Bit) { $tmp88 });
-}
-panda$core$Int64 panda$core$Int64$abs$R$panda$core$Int64(panda$core$Int64 self) {
-    panda$core$Bit $tmp89 = panda$core$Int64$$LT$panda$core$Int64$R$panda$core$Bit(self, ((panda$core$Int64) { 0 }));
-    if ($tmp89.value) {
-    {
-        panda$core$Int64 $tmp90 = panda$core$Int64$$SUB$R$panda$core$Int64(self);
-        return $tmp90;
-    }
-    }
-    return self;
-}
-panda$core$Int64 panda$core$Int64$min$panda$core$Int8$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int8 p_other) {
-    bool $tmp91 = self.value < ((int64_t) p_other.value);
-    if (((panda$core$Bit) { $tmp91 }).value) {
-    {
-        return ((panda$core$Int64) { self.value });
-    }
-    }
-    return ((panda$core$Int64) { ((int64_t) p_other.value) });
-}
-panda$core$Int64 panda$core$Int64$min$panda$core$Int16$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int16 p_other) {
-    bool $tmp92 = self.value < ((int64_t) p_other.value);
-    if (((panda$core$Bit) { $tmp92 }).value) {
-    {
-        return ((panda$core$Int64) { self.value });
-    }
-    }
-    return ((panda$core$Int64) { ((int64_t) p_other.value) });
-}
-panda$core$Int64 panda$core$Int64$min$panda$core$Int32$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int32 p_other) {
-    bool $tmp93 = self.value < ((int64_t) p_other.value);
-    if (((panda$core$Bit) { $tmp93 }).value) {
-    {
-        return ((panda$core$Int64) { self.value });
-    }
-    }
-    return ((panda$core$Int64) { ((int64_t) p_other.value) });
-}
-panda$core$Int64 panda$core$Int64$min$panda$core$Int64$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int64 p_other) {
-    bool $tmp94 = self.value < p_other.value;
-    if (((panda$core$Bit) { $tmp94 }).value) {
-    {
-        return ((panda$core$Int64) { self.value });
-    }
-    }
-    return ((panda$core$Int64) { p_other.value });
-}
-panda$core$Int64 panda$core$Int64$max$panda$core$Int8$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int8 p_other) {
-    bool $tmp95 = self.value > ((int64_t) p_other.value);
-    if (((panda$core$Bit) { $tmp95 }).value) {
-    {
-        return ((panda$core$Int64) { self.value });
-    }
-    }
-    return ((panda$core$Int64) { ((int64_t) p_other.value) });
-}
-panda$core$Int64 panda$core$Int64$max$panda$core$Int16$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int16 p_other) {
-    bool $tmp96 = self.value > ((int64_t) p_other.value);
-    if (((panda$core$Bit) { $tmp96 }).value) {
-    {
-        return ((panda$core$Int64) { self.value });
-    }
-    }
-    return ((panda$core$Int64) { ((int64_t) p_other.value) });
-}
-panda$core$Int64 panda$core$Int64$max$panda$core$Int32$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int32 p_other) {
-    bool $tmp97 = self.value > ((int64_t) p_other.value);
-    if (((panda$core$Bit) { $tmp97 }).value) {
-    {
-        return ((panda$core$Int64) { self.value });
-    }
-    }
-    return ((panda$core$Int64) { ((int64_t) p_other.value) });
-}
-panda$core$Int64 panda$core$Int64$max$panda$core$Int64$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int64 p_other) {
-    bool $tmp98 = self.value > p_other.value;
-    if (((panda$core$Bit) { $tmp98 }).value) {
-    {
-        return ((panda$core$Int64) { self.value });
-    }
-    }
-    return ((panda$core$Int64) { p_other.value });
-}
-panda$core$Bit panda$core$Int64$$IDX$panda$core$Int8$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int8 p_index) {
-    panda$core$Int32 $tmp99 = panda$core$Int8$$SHL$panda$core$Int8$R$panda$core$Int32(((panda$core$Int8) { 1 }), p_index);
-    panda$core$Int64 $tmp100 = panda$core$Int64$$BAND$panda$core$Int32$R$panda$core$Int64(self, $tmp99);
-    panda$core$Bit $tmp101 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit($tmp100, ((panda$core$Int64) { 0 }));
+    int64_t $tmp102 = self.value << p_other.value;
+    panda$core$Int64 $tmp101 = ((panda$core$Int64) { $tmp102 });
     return $tmp101;
 }
-panda$core$Bit panda$core$Int64$$IDX$panda$core$Int16$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int16 p_index) {
-    panda$core$Int32 $tmp102 = panda$core$Int16$$SHL$panda$core$Int16$R$panda$core$Int32(((panda$core$Int16) { 1 }), p_index);
-    panda$core$Int64 $tmp103 = panda$core$Int64$$BAND$panda$core$Int32$R$panda$core$Int64(self, $tmp102);
-    panda$core$Bit $tmp104 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit($tmp103, ((panda$core$Int64) { 0 }));
-    return $tmp104;
+panda$core$Int64 panda$core$Int64$$SHL$panda$core$UInt8$R$panda$core$Int64(panda$core$Int64 self, panda$core$UInt8 p_other) {
+    int64_t $tmp104 = self.value << ((int64_t) p_other.value);
+    panda$core$Int64 $tmp103 = ((panda$core$Int64) { $tmp104 });
+    return $tmp103;
 }
-panda$core$Bit panda$core$Int64$$IDX$panda$core$Int32$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int32 p_index) {
-    panda$core$Int32 $tmp105 = panda$core$Int32$$SHL$panda$core$Int32$R$panda$core$Int32(((panda$core$Int32) { 1 }), p_index);
-    panda$core$Int64 $tmp106 = panda$core$Int64$$BAND$panda$core$Int32$R$panda$core$Int64(self, $tmp105);
-    panda$core$Bit $tmp107 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit($tmp106, ((panda$core$Int64) { 0 }));
+panda$core$Int64 panda$core$Int64$$SHL$panda$core$UInt16$R$panda$core$Int64(panda$core$Int64 self, panda$core$UInt16 p_other) {
+    int64_t $tmp106 = self.value << ((int64_t) p_other.value);
+    panda$core$Int64 $tmp105 = ((panda$core$Int64) { $tmp106 });
+    return $tmp105;
+}
+panda$core$Int64 panda$core$Int64$$SHL$panda$core$UInt32$R$panda$core$Int64(panda$core$Int64 self, panda$core$UInt32 p_other) {
+    int64_t $tmp108 = self.value << ((int64_t) p_other.value);
+    panda$core$Int64 $tmp107 = ((panda$core$Int64) { $tmp108 });
     return $tmp107;
 }
-panda$core$Bit panda$core$Int64$$IDX$panda$core$Int64$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int64 p_index) {
-    panda$core$Int64 $tmp108 = panda$core$Int64$$SHL$panda$core$Int64$R$panda$core$Int64(((panda$core$Int64) { 1 }), p_index);
-    panda$core$Int64 $tmp109 = panda$core$Int64$$BAND$panda$core$Int64$R$panda$core$Int64(self, $tmp108);
-    panda$core$Bit $tmp110 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit($tmp109, ((panda$core$Int64) { 0 }));
-    return $tmp110;
+panda$core$UInt64 panda$core$Int64$$SHL$panda$core$UInt64$R$panda$core$UInt64(panda$core$Int64 self, panda$core$UInt64 p_other) {
+    uint64_t $tmp110 = ((uint64_t) self.value) << p_other.value;
+    panda$core$UInt64 $tmp109 = ((panda$core$UInt64) { $tmp110 });
+    return $tmp109;
 }
-panda$core$Bit panda$core$Int64$$IDX$panda$core$UInt8$R$panda$core$Bit(panda$core$Int64 self, panda$core$UInt8 p_index) {
-    panda$core$UInt32 $tmp111 = panda$core$UInt8$$SHL$panda$core$UInt8$R$panda$core$UInt32(((panda$core$UInt8) { 1 }), p_index);
-    panda$core$Int64 $tmp112 = panda$core$Int64$$BAND$panda$core$UInt32$R$panda$core$Int64(self, $tmp111);
-    panda$core$Bit $tmp113 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit($tmp112, ((panda$core$Int64) { 0 }));
+panda$core$Int64 panda$core$Int64$$SHR$panda$core$Int8$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int8 p_other) {
+    int64_t $tmp112 = self.value >> ((int64_t) p_other.value);
+    panda$core$Int64 $tmp111 = ((panda$core$Int64) { $tmp112 });
+    return $tmp111;
+}
+panda$core$Int64 panda$core$Int64$$SHR$panda$core$Int16$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int16 p_other) {
+    int64_t $tmp114 = self.value >> ((int64_t) p_other.value);
+    panda$core$Int64 $tmp113 = ((panda$core$Int64) { $tmp114 });
     return $tmp113;
 }
-panda$core$Bit panda$core$Int64$$IDX$panda$core$UInt16$R$panda$core$Bit(panda$core$Int64 self, panda$core$UInt16 p_index) {
-    panda$core$UInt32 $tmp114 = panda$core$UInt16$$SHL$panda$core$UInt16$R$panda$core$UInt32(((panda$core$UInt16) { 1 }), p_index);
-    panda$core$Int64 $tmp115 = panda$core$Int64$$BAND$panda$core$UInt32$R$panda$core$Int64(self, $tmp114);
-    panda$core$Bit $tmp116 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit($tmp115, ((panda$core$Int64) { 0 }));
-    return $tmp116;
+panda$core$Int64 panda$core$Int64$$SHR$panda$core$Int32$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int32 p_other) {
+    int64_t $tmp116 = self.value >> ((int64_t) p_other.value);
+    panda$core$Int64 $tmp115 = ((panda$core$Int64) { $tmp116 });
+    return $tmp115;
 }
-panda$core$Bit panda$core$Int64$$IDX$panda$core$UInt32$R$panda$core$Bit(panda$core$Int64 self, panda$core$UInt32 p_index) {
-    panda$core$UInt32 $tmp117 = panda$core$UInt32$$SHL$panda$core$UInt32$R$panda$core$UInt32(((panda$core$UInt32) { 1 }), p_index);
-    panda$core$Int64 $tmp118 = panda$core$Int64$$BAND$panda$core$UInt32$R$panda$core$Int64(self, $tmp117);
-    panda$core$Bit $tmp119 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit($tmp118, ((panda$core$Int64) { 0 }));
+panda$core$Int64 panda$core$Int64$$SHR$panda$core$Int64$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int64 p_other) {
+    int64_t $tmp118 = self.value >> p_other.value;
+    panda$core$Int64 $tmp117 = ((panda$core$Int64) { $tmp118 });
+    return $tmp117;
+}
+panda$core$Int64 panda$core$Int64$$SHR$panda$core$UInt8$R$panda$core$Int64(panda$core$Int64 self, panda$core$UInt8 p_other) {
+    int64_t $tmp120 = self.value >> ((int64_t) p_other.value);
+    panda$core$Int64 $tmp119 = ((panda$core$Int64) { $tmp120 });
     return $tmp119;
 }
+panda$core$Int64 panda$core$Int64$$SHR$panda$core$UInt16$R$panda$core$Int64(panda$core$Int64 self, panda$core$UInt16 p_other) {
+    int64_t $tmp122 = self.value >> ((int64_t) p_other.value);
+    panda$core$Int64 $tmp121 = ((panda$core$Int64) { $tmp122 });
+    return $tmp121;
+}
+panda$core$Int64 panda$core$Int64$$SHR$panda$core$UInt32$R$panda$core$Int64(panda$core$Int64 self, panda$core$UInt32 p_other) {
+    int64_t $tmp124 = self.value >> ((int64_t) p_other.value);
+    panda$core$Int64 $tmp123 = ((panda$core$Int64) { $tmp124 });
+    return $tmp123;
+}
+panda$core$UInt64 panda$core$Int64$$SHR$panda$core$UInt64$R$panda$core$UInt64(panda$core$Int64 self, panda$core$UInt64 p_other) {
+    uint64_t $tmp126 = ((uint64_t) self.value) >> p_other.value;
+    panda$core$UInt64 $tmp125 = ((panda$core$UInt64) { $tmp126 });
+    return $tmp125;
+}
+panda$core$Bit panda$core$Int64$$EQ$panda$core$Int8$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int8 p_other) {
+    bool $tmp128 = self.value == ((int64_t) p_other.value);
+    panda$core$Bit $tmp127 = ((panda$core$Bit) { $tmp128 });
+    return $tmp127;
+}
+panda$core$Bit panda$core$Int64$$EQ$panda$core$Int16$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int16 p_other) {
+    bool $tmp130 = self.value == ((int64_t) p_other.value);
+    panda$core$Bit $tmp129 = ((panda$core$Bit) { $tmp130 });
+    return $tmp129;
+}
+panda$core$Bit panda$core$Int64$$EQ$panda$core$Int32$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int32 p_other) {
+    bool $tmp132 = self.value == ((int64_t) p_other.value);
+    panda$core$Bit $tmp131 = ((panda$core$Bit) { $tmp132 });
+    return $tmp131;
+}
+panda$core$Bit panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int64 p_other) {
+    bool $tmp134 = self.value == p_other.value;
+    panda$core$Bit $tmp133 = ((panda$core$Bit) { $tmp134 });
+    return $tmp133;
+}
+panda$core$Bit panda$core$Int64$$NEQ$panda$core$Int8$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int8 p_other) {
+    bool $tmp136 = self.value != ((int64_t) p_other.value);
+    panda$core$Bit $tmp135 = ((panda$core$Bit) { $tmp136 });
+    return $tmp135;
+}
+panda$core$Bit panda$core$Int64$$NEQ$panda$core$Int16$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int16 p_other) {
+    bool $tmp138 = self.value != ((int64_t) p_other.value);
+    panda$core$Bit $tmp137 = ((panda$core$Bit) { $tmp138 });
+    return $tmp137;
+}
+panda$core$Bit panda$core$Int64$$NEQ$panda$core$Int32$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int32 p_other) {
+    bool $tmp140 = self.value != ((int64_t) p_other.value);
+    panda$core$Bit $tmp139 = ((panda$core$Bit) { $tmp140 });
+    return $tmp139;
+}
+panda$core$Bit panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int64 p_other) {
+    bool $tmp142 = self.value != p_other.value;
+    panda$core$Bit $tmp141 = ((panda$core$Bit) { $tmp142 });
+    return $tmp141;
+}
+panda$core$Bit panda$core$Int64$$LT$panda$core$Int8$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int8 p_other) {
+    bool $tmp144 = self.value < ((int64_t) p_other.value);
+    panda$core$Bit $tmp143 = ((panda$core$Bit) { $tmp144 });
+    return $tmp143;
+}
+panda$core$Bit panda$core$Int64$$LT$panda$core$Int16$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int16 p_other) {
+    bool $tmp146 = self.value < ((int64_t) p_other.value);
+    panda$core$Bit $tmp145 = ((panda$core$Bit) { $tmp146 });
+    return $tmp145;
+}
+panda$core$Bit panda$core$Int64$$LT$panda$core$Int32$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int32 p_other) {
+    bool $tmp148 = self.value < ((int64_t) p_other.value);
+    panda$core$Bit $tmp147 = ((panda$core$Bit) { $tmp148 });
+    return $tmp147;
+}
+panda$core$Bit panda$core$Int64$$LT$panda$core$Int64$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int64 p_other) {
+    bool $tmp150 = self.value < p_other.value;
+    panda$core$Bit $tmp149 = ((panda$core$Bit) { $tmp150 });
+    return $tmp149;
+}
+panda$core$Bit panda$core$Int64$$GT$panda$core$Int8$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int8 p_other) {
+    bool $tmp152 = self.value > ((int64_t) p_other.value);
+    panda$core$Bit $tmp151 = ((panda$core$Bit) { $tmp152 });
+    return $tmp151;
+}
+panda$core$Bit panda$core$Int64$$GT$panda$core$Int16$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int16 p_other) {
+    bool $tmp154 = self.value > ((int64_t) p_other.value);
+    panda$core$Bit $tmp153 = ((panda$core$Bit) { $tmp154 });
+    return $tmp153;
+}
+panda$core$Bit panda$core$Int64$$GT$panda$core$Int32$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int32 p_other) {
+    bool $tmp156 = self.value > ((int64_t) p_other.value);
+    panda$core$Bit $tmp155 = ((panda$core$Bit) { $tmp156 });
+    return $tmp155;
+}
+panda$core$Bit panda$core$Int64$$GT$panda$core$Int64$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int64 p_other) {
+    bool $tmp158 = self.value > p_other.value;
+    panda$core$Bit $tmp157 = ((panda$core$Bit) { $tmp158 });
+    return $tmp157;
+}
+panda$core$Bit panda$core$Int64$$GE$panda$core$Int8$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int8 p_other) {
+    bool $tmp160 = self.value >= ((int64_t) p_other.value);
+    panda$core$Bit $tmp159 = ((panda$core$Bit) { $tmp160 });
+    return $tmp159;
+}
+panda$core$Bit panda$core$Int64$$GE$panda$core$Int16$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int16 p_other) {
+    bool $tmp162 = self.value >= ((int64_t) p_other.value);
+    panda$core$Bit $tmp161 = ((panda$core$Bit) { $tmp162 });
+    return $tmp161;
+}
+panda$core$Bit panda$core$Int64$$GE$panda$core$Int32$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int32 p_other) {
+    bool $tmp164 = self.value >= ((int64_t) p_other.value);
+    panda$core$Bit $tmp163 = ((panda$core$Bit) { $tmp164 });
+    return $tmp163;
+}
+panda$core$Bit panda$core$Int64$$GE$panda$core$Int64$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int64 p_other) {
+    bool $tmp166 = self.value >= p_other.value;
+    panda$core$Bit $tmp165 = ((panda$core$Bit) { $tmp166 });
+    return $tmp165;
+}
+panda$core$Bit panda$core$Int64$$LE$panda$core$Int8$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int8 p_other) {
+    bool $tmp168 = self.value <= ((int64_t) p_other.value);
+    panda$core$Bit $tmp167 = ((panda$core$Bit) { $tmp168 });
+    return $tmp167;
+}
+panda$core$Bit panda$core$Int64$$LE$panda$core$Int16$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int16 p_other) {
+    bool $tmp170 = self.value <= ((int64_t) p_other.value);
+    panda$core$Bit $tmp169 = ((panda$core$Bit) { $tmp170 });
+    return $tmp169;
+}
+panda$core$Bit panda$core$Int64$$LE$panda$core$Int32$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int32 p_other) {
+    bool $tmp172 = self.value <= ((int64_t) p_other.value);
+    panda$core$Bit $tmp171 = ((panda$core$Bit) { $tmp172 });
+    return $tmp171;
+}
+panda$core$Bit panda$core$Int64$$LE$panda$core$Int64$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int64 p_other) {
+    bool $tmp174 = self.value <= p_other.value;
+    panda$core$Bit $tmp173 = ((panda$core$Bit) { $tmp174 });
+    return $tmp173;
+}
+panda$core$Int64 panda$core$Int64$abs$R$panda$core$Int64(panda$core$Int64 self) {
+    panda$core$Bit $tmp175 = panda$core$Int64$$LT$panda$core$Int64$R$panda$core$Bit(self, ((panda$core$Int64) { 0 }));
+    if ($tmp175.value) {
+    {
+        panda$core$Int64 $tmp177 = panda$core$Int64$$SUB$R$panda$core$Int64(self);
+        panda$core$Int64 $tmp176 = $tmp177;
+        return $tmp176;
+    }
+    }
+    panda$core$Int64 $tmp178 = self;
+    return $tmp178;
+}
+panda$core$Int64 panda$core$Int64$min$panda$core$Int8$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int8 p_other) {
+    bool $tmp179 = self.value < ((int64_t) p_other.value);
+    if (((panda$core$Bit) { $tmp179 }).value) {
+    {
+        panda$core$Int64 $tmp180 = ((panda$core$Int64) { self.value });
+        return $tmp180;
+    }
+    }
+    panda$core$Int64 $tmp181 = ((panda$core$Int64) { ((int64_t) p_other.value) });
+    return $tmp181;
+}
+panda$core$Int64 panda$core$Int64$min$panda$core$Int16$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int16 p_other) {
+    bool $tmp182 = self.value < ((int64_t) p_other.value);
+    if (((panda$core$Bit) { $tmp182 }).value) {
+    {
+        panda$core$Int64 $tmp183 = ((panda$core$Int64) { self.value });
+        return $tmp183;
+    }
+    }
+    panda$core$Int64 $tmp184 = ((panda$core$Int64) { ((int64_t) p_other.value) });
+    return $tmp184;
+}
+panda$core$Int64 panda$core$Int64$min$panda$core$Int32$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int32 p_other) {
+    bool $tmp185 = self.value < ((int64_t) p_other.value);
+    if (((panda$core$Bit) { $tmp185 }).value) {
+    {
+        panda$core$Int64 $tmp186 = ((panda$core$Int64) { self.value });
+        return $tmp186;
+    }
+    }
+    panda$core$Int64 $tmp187 = ((panda$core$Int64) { ((int64_t) p_other.value) });
+    return $tmp187;
+}
+panda$core$Int64 panda$core$Int64$min$panda$core$Int64$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int64 p_other) {
+    bool $tmp188 = self.value < p_other.value;
+    if (((panda$core$Bit) { $tmp188 }).value) {
+    {
+        panda$core$Int64 $tmp189 = ((panda$core$Int64) { self.value });
+        return $tmp189;
+    }
+    }
+    panda$core$Int64 $tmp190 = ((panda$core$Int64) { p_other.value });
+    return $tmp190;
+}
+panda$core$Int64 panda$core$Int64$max$panda$core$Int8$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int8 p_other) {
+    bool $tmp191 = self.value > ((int64_t) p_other.value);
+    if (((panda$core$Bit) { $tmp191 }).value) {
+    {
+        panda$core$Int64 $tmp192 = ((panda$core$Int64) { self.value });
+        return $tmp192;
+    }
+    }
+    panda$core$Int64 $tmp193 = ((panda$core$Int64) { ((int64_t) p_other.value) });
+    return $tmp193;
+}
+panda$core$Int64 panda$core$Int64$max$panda$core$Int16$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int16 p_other) {
+    bool $tmp194 = self.value > ((int64_t) p_other.value);
+    if (((panda$core$Bit) { $tmp194 }).value) {
+    {
+        panda$core$Int64 $tmp195 = ((panda$core$Int64) { self.value });
+        return $tmp195;
+    }
+    }
+    panda$core$Int64 $tmp196 = ((panda$core$Int64) { ((int64_t) p_other.value) });
+    return $tmp196;
+}
+panda$core$Int64 panda$core$Int64$max$panda$core$Int32$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int32 p_other) {
+    bool $tmp197 = self.value > ((int64_t) p_other.value);
+    if (((panda$core$Bit) { $tmp197 }).value) {
+    {
+        panda$core$Int64 $tmp198 = ((panda$core$Int64) { self.value });
+        return $tmp198;
+    }
+    }
+    panda$core$Int64 $tmp199 = ((panda$core$Int64) { ((int64_t) p_other.value) });
+    return $tmp199;
+}
+panda$core$Int64 panda$core$Int64$max$panda$core$Int64$R$panda$core$Int64(panda$core$Int64 self, panda$core$Int64 p_other) {
+    bool $tmp200 = self.value > p_other.value;
+    if (((panda$core$Bit) { $tmp200 }).value) {
+    {
+        panda$core$Int64 $tmp201 = ((panda$core$Int64) { self.value });
+        return $tmp201;
+    }
+    }
+    panda$core$Int64 $tmp202 = ((panda$core$Int64) { p_other.value });
+    return $tmp202;
+}
+panda$core$Bit panda$core$Int64$$IDX$panda$core$Int8$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int8 p_index) {
+    panda$core$Int32 $tmp204 = panda$core$Int8$$SHL$panda$core$Int8$R$panda$core$Int32(((panda$core$Int8) { 1 }), p_index);
+    panda$core$Int64 $tmp205 = panda$core$Int64$$BAND$panda$core$Int32$R$panda$core$Int64(self, $tmp204);
+    panda$core$Bit $tmp206 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit($tmp205, ((panda$core$Int64) { 0 }));
+    panda$core$Bit $tmp203 = $tmp206;
+    return $tmp203;
+}
+panda$core$Bit panda$core$Int64$$IDX$panda$core$Int16$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int16 p_index) {
+    panda$core$Int32 $tmp208 = panda$core$Int16$$SHL$panda$core$Int16$R$panda$core$Int32(((panda$core$Int16) { 1 }), p_index);
+    panda$core$Int64 $tmp209 = panda$core$Int64$$BAND$panda$core$Int32$R$panda$core$Int64(self, $tmp208);
+    panda$core$Bit $tmp210 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit($tmp209, ((panda$core$Int64) { 0 }));
+    panda$core$Bit $tmp207 = $tmp210;
+    return $tmp207;
+}
+panda$core$Bit panda$core$Int64$$IDX$panda$core$Int32$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int32 p_index) {
+    panda$core$Int32 $tmp212 = panda$core$Int32$$SHL$panda$core$Int32$R$panda$core$Int32(((panda$core$Int32) { 1 }), p_index);
+    panda$core$Int64 $tmp213 = panda$core$Int64$$BAND$panda$core$Int32$R$panda$core$Int64(self, $tmp212);
+    panda$core$Bit $tmp214 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit($tmp213, ((panda$core$Int64) { 0 }));
+    panda$core$Bit $tmp211 = $tmp214;
+    return $tmp211;
+}
+panda$core$Bit panda$core$Int64$$IDX$panda$core$Int64$R$panda$core$Bit(panda$core$Int64 self, panda$core$Int64 p_index) {
+    panda$core$Int64 $tmp216 = panda$core$Int64$$SHL$panda$core$Int64$R$panda$core$Int64(((panda$core$Int64) { 1 }), p_index);
+    panda$core$Int64 $tmp217 = panda$core$Int64$$BAND$panda$core$Int64$R$panda$core$Int64(self, $tmp216);
+    panda$core$Bit $tmp218 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit($tmp217, ((panda$core$Int64) { 0 }));
+    panda$core$Bit $tmp215 = $tmp218;
+    return $tmp215;
+}
+panda$core$Bit panda$core$Int64$$IDX$panda$core$UInt8$R$panda$core$Bit(panda$core$Int64 self, panda$core$UInt8 p_index) {
+    panda$core$UInt32 $tmp220 = panda$core$UInt8$$SHL$panda$core$UInt8$R$panda$core$UInt32(((panda$core$UInt8) { 1 }), p_index);
+    panda$core$Int64 $tmp221 = panda$core$Int64$$BAND$panda$core$UInt32$R$panda$core$Int64(self, $tmp220);
+    panda$core$Bit $tmp222 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit($tmp221, ((panda$core$Int64) { 0 }));
+    panda$core$Bit $tmp219 = $tmp222;
+    return $tmp219;
+}
+panda$core$Bit panda$core$Int64$$IDX$panda$core$UInt16$R$panda$core$Bit(panda$core$Int64 self, panda$core$UInt16 p_index) {
+    panda$core$UInt32 $tmp224 = panda$core$UInt16$$SHL$panda$core$UInt16$R$panda$core$UInt32(((panda$core$UInt16) { 1 }), p_index);
+    panda$core$Int64 $tmp225 = panda$core$Int64$$BAND$panda$core$UInt32$R$panda$core$Int64(self, $tmp224);
+    panda$core$Bit $tmp226 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit($tmp225, ((panda$core$Int64) { 0 }));
+    panda$core$Bit $tmp223 = $tmp226;
+    return $tmp223;
+}
+panda$core$Bit panda$core$Int64$$IDX$panda$core$UInt32$R$panda$core$Bit(panda$core$Int64 self, panda$core$UInt32 p_index) {
+    panda$core$UInt32 $tmp228 = panda$core$UInt32$$SHL$panda$core$UInt32$R$panda$core$UInt32(((panda$core$UInt32) { 1 }), p_index);
+    panda$core$Int64 $tmp229 = panda$core$Int64$$BAND$panda$core$UInt32$R$panda$core$Int64(self, $tmp228);
+    panda$core$Bit $tmp230 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit($tmp229, ((panda$core$Int64) { 0 }));
+    panda$core$Bit $tmp227 = $tmp230;
+    return $tmp227;
+}
 panda$core$Bit panda$core$Int64$$IDX$panda$core$UInt64$R$panda$core$Bit(panda$core$Int64 self, panda$core$UInt64 p_index) {
-    panda$core$UInt64 $tmp120 = panda$core$UInt64$$SHL$panda$core$UInt64$R$panda$core$UInt64(((panda$core$UInt64) { 1 }), p_index);
-    panda$core$UInt64 $tmp121 = panda$core$Int64$$BAND$panda$core$UInt64$R$panda$core$UInt64(self, $tmp120);
-    panda$core$Bit $tmp122 = panda$core$UInt64$$NEQ$panda$core$UInt64$R$panda$core$Bit($tmp121, ((panda$core$UInt64) { 0 }));
-    return $tmp122;
+    panda$core$UInt64 $tmp232 = panda$core$UInt64$$SHL$panda$core$UInt64$R$panda$core$UInt64(((panda$core$UInt64) { 1 }), p_index);
+    panda$core$UInt64 $tmp233 = panda$core$Int64$$BAND$panda$core$UInt64$R$panda$core$UInt64(self, $tmp232);
+    panda$core$Bit $tmp234 = panda$core$UInt64$$NEQ$panda$core$UInt64$R$panda$core$Bit($tmp233, ((panda$core$UInt64) { 0 }));
+    panda$core$Bit $tmp231 = $tmp234;
+    return $tmp231;
 }
 panda$core$Int64 panda$core$Int64$hash$R$panda$core$Int64(panda$core$Int64 self) {
-    return ((panda$core$Int64) { self.value });
+    panda$core$Int64 $tmp235 = ((panda$core$Int64) { self.value });
+    return $tmp235;
 }
 panda$core$Int64$nullable panda$core$Int64$parse$panda$core$String$panda$core$Int64$R$panda$core$Int64$Q(panda$core$String* p_str, panda$core$Int64 p_radix) {
-    panda$core$UInt64$nullable abs125;
-    panda$core$Range$LTpanda$core$Int64$Q$GT $tmp126;
-    panda$core$UInt64$nullable result131;
-    panda$core$Bit $tmp124 = panda$core$String$startsWith$panda$core$String$R$panda$core$Bit(p_str, &$s123);
-    if ($tmp124.value) {
+    panda$core$UInt64$nullable abs238;
+    panda$core$Range$LTpanda$core$Int64$Q$GT $tmp240;
+    panda$core$UInt64$nullable result247;
+    panda$core$Bit $tmp237 = panda$core$String$startsWith$panda$core$String$R$panda$core$Bit(p_str, &$s236);
+    if ($tmp237.value) {
     {
-        panda$core$Range$LTpanda$core$Int64$Q$GT$init$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Bit(&$tmp126, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Int64$nullable) { .nonnull = false }), ((panda$core$Bit) { false }));
-        panda$core$String* $tmp127 = panda$core$String$$IDX$panda$core$Range$LTpanda$core$Int64$Q$GT$R$panda$core$String(p_str, $tmp126);
-        panda$core$UInt64$nullable $tmp128 = panda$core$Panda$parse$panda$core$String$panda$core$Int64$R$panda$core$UInt64$Q($tmp127, p_radix);
-        abs125 = $tmp128;
-        if (((panda$core$Bit) { !abs125.nonnull }).value) {
+        panda$core$Range$LTpanda$core$Int64$Q$GT$init$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Bit(&$tmp240, ((panda$core$Int64$nullable) { ((panda$core$Int64) { 1 }), true }), ((panda$core$Int64$nullable) { .nonnull = false }), ((panda$core$Bit) { false }));
+        panda$core$String* $tmp241 = panda$core$String$$IDX$panda$core$Range$LTpanda$core$Int64$Q$GT$R$panda$core$String(p_str, $tmp240);
+        panda$core$String* $tmp239 = $tmp241;
+        panda$core$UInt64$nullable $tmp242 = panda$core$Panda$parse$panda$core$String$panda$core$Int64$R$panda$core$UInt64$Q($tmp239, p_radix);
+        abs238 = $tmp242;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp239));
+        if (((panda$core$Bit) { !abs238.nonnull }).value) {
         {
-            return ((panda$core$Int64$nullable) { .nonnull = false });
+            panda$core$Int64$nullable $tmp243 = ((panda$core$Int64$nullable) { .nonnull = false });
+            return $tmp243;
         }
         }
-        panda$core$Int64 $tmp129 = panda$core$UInt64$convert$R$panda$core$Int64(((panda$core$UInt64) abs125.value));
-        panda$core$Int64 $tmp130 = panda$core$Int64$$SUB$R$panda$core$Int64($tmp129);
-        return ((panda$core$Int64$nullable) { $tmp130, true });
+        panda$core$Int64 $tmp245 = panda$core$UInt64$convert$R$panda$core$Int64(((panda$core$UInt64) abs238.value));
+        panda$core$Int64 $tmp246 = panda$core$Int64$$SUB$R$panda$core$Int64($tmp245);
+        panda$core$Int64$nullable $tmp244 = ((panda$core$Int64$nullable) { $tmp246, true });
+        return $tmp244;
     }
     }
     else {
     {
-        panda$core$UInt64$nullable $tmp132 = panda$core$Panda$parse$panda$core$String$panda$core$Int64$R$panda$core$UInt64$Q(p_str, p_radix);
-        result131 = $tmp132;
-        if (((panda$core$Bit) { !result131.nonnull }).value) {
+        panda$core$UInt64$nullable $tmp248 = panda$core$Panda$parse$panda$core$String$panda$core$Int64$R$panda$core$UInt64$Q(p_str, p_radix);
+        result247 = $tmp248;
+        if (((panda$core$Bit) { !result247.nonnull }).value) {
         {
-            return ((panda$core$Int64$nullable) { .nonnull = false });
+            panda$core$Int64$nullable $tmp249 = ((panda$core$Int64$nullable) { .nonnull = false });
+            return $tmp249;
         }
         }
-        panda$core$Int64 $tmp133 = panda$core$UInt64$convert$R$panda$core$Int64(((panda$core$UInt64) result131.value));
-        return ((panda$core$Int64$nullable) { $tmp133, true });
+        panda$core$Int64 $tmp251 = panda$core$UInt64$convert$R$panda$core$Int64(((panda$core$UInt64) result247.value));
+        panda$core$Int64$nullable $tmp250 = ((panda$core$Int64$nullable) { $tmp251, true });
+        return $tmp250;
     }
     }
 }
 panda$core$Int8 panda$core$Int64$convert$R$panda$core$Int8(panda$core$Int64 self) {
-    return ((panda$core$Int8) { ((int8_t) self.value) });
+    panda$core$Int8 $tmp252 = ((panda$core$Int8) { ((int8_t) self.value) });
+    return $tmp252;
 }
 panda$core$Int16 panda$core$Int64$convert$R$panda$core$Int16(panda$core$Int64 self) {
-    return ((panda$core$Int16) { ((int16_t) self.value) });
+    panda$core$Int16 $tmp253 = ((panda$core$Int16) { ((int16_t) self.value) });
+    return $tmp253;
 }
 panda$core$Int32 panda$core$Int64$convert$R$panda$core$Int32(panda$core$Int64 self) {
-    return ((panda$core$Int32) { ((int32_t) self.value) });
+    panda$core$Int32 $tmp254 = ((panda$core$Int32) { ((int32_t) self.value) });
+    return $tmp254;
 }
 panda$core$UInt8 panda$core$Int64$convert$R$panda$core$UInt8(panda$core$Int64 self) {
-    return ((panda$core$UInt8) { ((uint8_t) self.value) });
+    panda$core$UInt8 $tmp255 = ((panda$core$UInt8) { ((uint8_t) self.value) });
+    return $tmp255;
 }
 panda$core$UInt16 panda$core$Int64$convert$R$panda$core$UInt16(panda$core$Int64 self) {
-    return ((panda$core$UInt16) { ((uint16_t) self.value) });
+    panda$core$UInt16 $tmp256 = ((panda$core$UInt16) { ((uint16_t) self.value) });
+    return $tmp256;
 }
 panda$core$UInt32 panda$core$Int64$convert$R$panda$core$UInt32(panda$core$Int64 self) {
-    return ((panda$core$UInt32) { ((uint32_t) self.value) });
+    panda$core$UInt32 $tmp257 = ((panda$core$UInt32) { ((uint32_t) self.value) });
+    return $tmp257;
 }
 panda$core$UInt64 panda$core$Int64$convert$R$panda$core$UInt64(panda$core$Int64 self) {
-    return ((panda$core$UInt64) { ((uint64_t) self.value) });
+    panda$core$UInt64 $tmp258 = ((panda$core$UInt64) { ((uint64_t) self.value) });
+    return $tmp258;
 }
 panda$core$Real32 panda$core$Int64$convert$R$panda$core$Real32(panda$core$Int64 self) {
-    return ((panda$core$Real32) { ((float) self.value) });
+    panda$core$Real32 $tmp259 = ((panda$core$Real32) { ((float) self.value) });
+    return $tmp259;
 }
 panda$core$Real64 panda$core$Int64$convert$R$panda$core$Real64(panda$core$Int64 self) {
-    return ((panda$core$Real64) { ((double) self.value) });
+    panda$core$Real64 $tmp260 = ((panda$core$Real64) { ((double) self.value) });
+    return $tmp260;
 }
 panda$core$String* panda$core$Int64$convert$R$panda$core$String(panda$core$Int64 self) {
-    panda$core$Int64 max134;
-    panda$core$Char8* chars135;
-    panda$core$Int64 index136;
-    panda$core$Int64 value138;
-    panda$core$Char8 $tmp142;
-    panda$core$Char8 $tmp152;
-    panda$core$Char8 $tmp159;
-    panda$core$Int64 size160;
-    panda$core$Range$LTpanda$core$Int64$GT $tmp162;
-    max134 = ((panda$core$Int64) { 20 });
-    chars135 = ((panda$core$Char8*) pandaZAlloc(max134.value * 1));
-    panda$core$Int64 $tmp137 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(max134, ((panda$core$Int64) { 1 }));
-    index136 = $tmp137;
-    value138 = self;
-    panda$core$Bit $tmp139 = panda$core$Int64$$GE$panda$core$Int64$R$panda$core$Bit(value138, ((panda$core$Int64) { 0 }));
-    if ($tmp139.value) {
+    panda$core$Int64 max261;
+    panda$core$Char8* chars262;
+    panda$core$Int64 index263;
+    panda$core$Int64 value265;
+    panda$core$Char8 $tmp269;
+    panda$core$Char8 $tmp280;
+    panda$core$Char8 $tmp288;
+    panda$core$Int64 size289;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp291;
+    max261 = ((panda$core$Int64) { 20 });
+    chars262 = ((panda$core$Char8*) pandaZAlloc(max261.value * 1));
+    panda$core$Int64 $tmp264 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(max261, ((panda$core$Int64) { 1 }));
+    index263 = $tmp264;
+    value265 = self;
+    panda$core$Bit $tmp266 = panda$core$Int64$$GE$panda$core$Int64$R$panda$core$Bit(value265, ((panda$core$Int64) { 0 }));
+    if ($tmp266.value) {
     {
-        $l140:;
+        $l267:;
         {
-            panda$core$Int64 $tmp143 = panda$core$Int64$$REM$panda$core$Int64$R$panda$core$Int64(value138, ((panda$core$Int64) { 10 }));
-            panda$core$Int64 $tmp144 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64($tmp143, ((panda$core$Int64) { 48 }));
-            panda$core$UInt8 $tmp145 = panda$core$Int64$convert$R$panda$core$UInt8($tmp144);
-            panda$core$Char8$init$panda$core$UInt8(&$tmp142, $tmp145);
-            chars135[index136.value] = $tmp142;
-            panda$core$Int64 $tmp146 = panda$core$Int64$$INTDIV$panda$core$Int64$R$panda$core$Int64(value138, ((panda$core$Int64) { 10 }));
-            value138 = $tmp146;
-            panda$core$Int64 $tmp147 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(index136, ((panda$core$Int64) { 1 }));
-            index136 = $tmp147;
+            panda$core$Int64 $tmp270 = panda$core$Int64$$REM$panda$core$Int64$R$panda$core$Int64(value265, ((panda$core$Int64) { 10 }));
+            panda$core$Int64 $tmp271 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64($tmp270, ((panda$core$Int64) { 48 }));
+            panda$core$UInt8 $tmp272 = panda$core$Int64$convert$R$panda$core$UInt8($tmp271);
+            panda$core$Char8$init$panda$core$UInt8(&$tmp269, $tmp272);
+            chars262[index263.value] = $tmp269;
+            panda$core$Int64 $tmp273 = panda$core$Int64$$INTDIV$panda$core$Int64$R$panda$core$Int64(value265, ((panda$core$Int64) { 10 }));
+            value265 = $tmp273;
+            panda$core$Int64 $tmp274 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(index263, ((panda$core$Int64) { 1 }));
+            index263 = $tmp274;
         }
-        panda$core$Bit $tmp148 = panda$core$Int64$$GT$panda$core$Int64$R$panda$core$Bit(value138, ((panda$core$Int64) { 0 }));
-        if ($tmp148.value) goto $l140;
-        $l141:;
-        panda$core$Int64 $tmp149 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(index136, ((panda$core$Int64) { 1 }));
-        index136 = $tmp149;
+        panda$core$Bit $tmp276 = panda$core$Int64$$GT$panda$core$Int64$R$panda$core$Bit(value265, ((panda$core$Int64) { 0 }));
+        bool $tmp275 = $tmp276.value;
+        if ($tmp275) goto $l267;
+        $l268:;
+        panda$core$Int64 $tmp277 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(index263, ((panda$core$Int64) { 1 }));
+        index263 = $tmp277;
     }
     }
     else {
     {
-        $l150:;
+        $l278:;
         {
-            panda$core$Int64 $tmp153 = panda$core$Int64$$REM$panda$core$Int64$R$panda$core$Int64(value138, ((panda$core$Int64) { 10 }));
-            panda$core$Int64 $tmp154 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(((panda$core$Int64) { 48 }), $tmp153);
-            panda$core$UInt8 $tmp155 = panda$core$Int64$convert$R$panda$core$UInt8($tmp154);
-            panda$core$Char8$init$panda$core$UInt8(&$tmp152, $tmp155);
-            chars135[index136.value] = $tmp152;
-            panda$core$Int64 $tmp156 = panda$core$Int64$$INTDIV$panda$core$Int64$R$panda$core$Int64(value138, ((panda$core$Int64) { 10 }));
-            value138 = $tmp156;
-            panda$core$Int64 $tmp157 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(index136, ((panda$core$Int64) { 1 }));
-            index136 = $tmp157;
+            panda$core$Int64 $tmp281 = panda$core$Int64$$REM$panda$core$Int64$R$panda$core$Int64(value265, ((panda$core$Int64) { 10 }));
+            panda$core$Int64 $tmp282 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(((panda$core$Int64) { 48 }), $tmp281);
+            panda$core$UInt8 $tmp283 = panda$core$Int64$convert$R$panda$core$UInt8($tmp282);
+            panda$core$Char8$init$panda$core$UInt8(&$tmp280, $tmp283);
+            chars262[index263.value] = $tmp280;
+            panda$core$Int64 $tmp284 = panda$core$Int64$$INTDIV$panda$core$Int64$R$panda$core$Int64(value265, ((panda$core$Int64) { 10 }));
+            value265 = $tmp284;
+            panda$core$Int64 $tmp285 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(index263, ((panda$core$Int64) { 1 }));
+            index263 = $tmp285;
         }
-        panda$core$Bit $tmp158 = panda$core$Int64$$LT$panda$core$Int64$R$panda$core$Bit(value138, ((panda$core$Int64) { 0 }));
-        if ($tmp158.value) goto $l150;
-        $l151:;
-        panda$core$Char8$init$panda$core$UInt8(&$tmp159, ((panda$core$UInt8) { 45 }));
-        chars135[index136.value] = $tmp159;
+        panda$core$Bit $tmp287 = panda$core$Int64$$LT$panda$core$Int64$R$panda$core$Bit(value265, ((panda$core$Int64) { 0 }));
+        bool $tmp286 = $tmp287.value;
+        if ($tmp286) goto $l278;
+        $l279:;
+        panda$core$Char8$init$panda$core$UInt8(&$tmp288, ((panda$core$UInt8) { 45 }));
+        chars262[index263.value] = $tmp288;
     }
     }
-    panda$core$Int64 $tmp161 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(max134, index136);
-    size160 = $tmp161;
-    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp162, ((panda$core$Int64) { 0 }), size160, ((panda$core$Bit) { false }));
-    int64_t $tmp164 = $tmp162.min.value;
-    panda$core$Int64 i163 = { $tmp164 };
-    int64_t $tmp166 = $tmp162.max.value;
-    bool $tmp167 = $tmp162.inclusive.value;
-    if ($tmp167) goto $l174; else goto $l175;
-    $l174:;
-    if ($tmp164 <= $tmp166) goto $l168; else goto $l170;
-    $l175:;
-    if ($tmp164 < $tmp166) goto $l168; else goto $l170;
-    $l168:;
+    panda$core$Int64 $tmp290 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(max261, index263);
+    size289 = $tmp290;
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp291, ((panda$core$Int64) { 0 }), size289, ((panda$core$Bit) { false }));
+    int64_t $tmp293 = $tmp291.min.value;
+    panda$core$Int64 i292 = { $tmp293 };
+    int64_t $tmp295 = $tmp291.max.value;
+    bool $tmp296 = $tmp291.inclusive.value;
+    if ($tmp296) goto $l303; else goto $l304;
+    $l303:;
+    if ($tmp293 <= $tmp295) goto $l297; else goto $l299;
+    $l304:;
+    if ($tmp293 < $tmp295) goto $l297; else goto $l299;
+    $l297:;
     {
-        panda$core$Int64 $tmp176 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(i163, index136);
-        chars135[i163.value] = chars135[$tmp176.value];
+        panda$core$Int64 $tmp305 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(i292, index263);
+        chars262[i292.value] = chars262[$tmp305.value];
     }
-    $l171:;
-    int64_t $tmp178 = $tmp166 - i163.value;
-    if ($tmp167) goto $l179; else goto $l180;
-    $l179:;
-    if ((uint64_t) $tmp178 >= 1) goto $l177; else goto $l170;
-    $l180:;
-    if ((uint64_t) $tmp178 > 1) goto $l177; else goto $l170;
-    $l177:;
-    i163.value += 1;
-    goto $l168;
-    $l170:;
-    panda$core$String* $tmp183 = (panda$core$String*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$String$class);
-    panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp183, chars135, size160);
-    return $tmp183;
+    $l300:;
+    int64_t $tmp307 = $tmp295 - i292.value;
+    if ($tmp296) goto $l308; else goto $l309;
+    $l308:;
+    if ((uint64_t) $tmp307 >= 1) goto $l306; else goto $l299;
+    $l309:;
+    if ((uint64_t) $tmp307 > 1) goto $l306; else goto $l299;
+    $l306:;
+    i292.value += 1;
+    goto $l297;
+    $l299:;
+    panda$core$String* $tmp315 = (panda$core$String*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$String$class);
+    panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp315, chars262, size289);
+    panda$core$String* $tmp314 = $tmp315;
+    panda$core$String* $tmp313 = $tmp314;
+    panda$core$String* $tmp312 = $tmp313;
+    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp313));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp314));
+    return $tmp312;
 }
 panda$core$String* panda$core$Int64$format$panda$core$String$R$panda$core$String(panda$core$Int64 self, panda$core$String* p_fmt) {
-    bool $tmp184 = self.value < 0;
-    panda$core$Int64 $tmp185 = panda$core$Int64$abs$R$panda$core$Int64(self);
-    panda$core$UInt64 $tmp186 = panda$core$Int64$convert$R$panda$core$UInt64($tmp185);
-    panda$core$String* $tmp187 = panda$core$Panda$format$panda$core$Bit$panda$core$UInt64$panda$core$UInt64$panda$core$String$R$panda$core$String(((panda$core$Bit) { $tmp184 }), $tmp186, ((panda$core$UInt64) { 18446744073709551615 }), p_fmt);
-    return $tmp187;
+    bool $tmp319 = self.value < 0;
+    panda$core$Int64 $tmp320 = panda$core$Int64$abs$R$panda$core$Int64(self);
+    panda$core$UInt64 $tmp321 = panda$core$Int64$convert$R$panda$core$UInt64($tmp320);
+    panda$core$String* $tmp322 = panda$core$Panda$format$panda$core$Bit$panda$core$UInt64$panda$core$UInt64$panda$core$String$R$panda$core$String(((panda$core$Bit) { $tmp319 }), $tmp321, ((panda$core$UInt64) { 18446744073709551615 }), p_fmt);
+    panda$core$String* $tmp318 = $tmp322;
+    panda$core$String* $tmp317 = $tmp318;
+    panda$core$String* $tmp316 = $tmp317;
+    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp317));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp318));
+    return $tmp316;
 }
 void panda$core$Int64$cleanup(panda$core$Int64 self) {
 }

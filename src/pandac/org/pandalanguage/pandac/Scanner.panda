@@ -346,7 +346,7 @@ class Scanner {
                     cl.classes.add(inner)
                     assert inner.name.startsWith(cl.name + ".")
                     cl.symbolTable.add(inner, inner.name[cl.name.length() + 1..])
-                    inner.symbolTable.parents.add(cl.symbolTable)
+--                    inner.symbolTable.parents.add(cl.symbolTable)
                     inner.symbolTable.add(cl, cl.simpleName())
                 }
             when ASTNode.CHOICE_ENTRY(position, dc, name, fields):

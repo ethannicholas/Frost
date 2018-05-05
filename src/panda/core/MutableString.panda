@@ -142,7 +142,8 @@ class MutableString {
     ================================================================================================
     Invalidates this `MutableString` and returns its contents as an immutable `String`. This is
     generally preferable to [convert()], as it does not copy the string's contents. Interacting in
-    any way with a `MutableString` after `finish`ing will cause precondition violations.
+    any way with a `MutableString` after `finish`ing will cause precondition violations (or, if
+    safety checks are disabled, undefined behavior).
     ================================================================================================
     method finish():String {
         -- FIXME this transformation is only safe at -S0

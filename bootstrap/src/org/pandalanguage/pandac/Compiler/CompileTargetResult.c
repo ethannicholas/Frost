@@ -16,12 +16,18 @@ void org$pandalanguage$pandac$Compiler$CompileTargetResult$init$org$pandalanguag
     self->target = NULL;
     self->value = NULL;
     {
-        self->target = p_target;
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->target));
+        org$pandalanguage$pandac$IRNode* $tmp2 = self->target;
+        org$pandalanguage$pandac$IRNode* $tmp3 = p_target;
+        self->target = $tmp3;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp3));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2));
     }
     {
-        self->value = p_value;
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->value));
+        org$pandalanguage$pandac$IRNode* $tmp4 = self->value;
+        org$pandalanguage$pandac$IRNode* $tmp5 = p_value;
+        self->value = $tmp5;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp5));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp4));
     }
 }
 void org$pandalanguage$pandac$Compiler$CompileTargetResult$cleanup(org$pandalanguage$pandac$Compiler$CompileTargetResult* self) {

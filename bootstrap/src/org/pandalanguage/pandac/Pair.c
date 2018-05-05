@@ -15,12 +15,18 @@ void org$pandalanguage$pandac$Pair$init$org$pandalanguage$pandac$Pair$A$org$pand
     self->first = NULL;
     self->second = NULL;
     {
-        self->first = p_first;
-        panda$core$Panda$unref$panda$core$Object(self->first);
+        panda$core$Object* $tmp2 = self->first;
+        panda$core$Object* $tmp3 = p_first;
+        self->first = $tmp3;
+        panda$core$Panda$ref$panda$core$Object($tmp3);
+        panda$core$Panda$unref$panda$core$Object($tmp2);
     }
     {
-        self->second = p_second;
-        panda$core$Panda$unref$panda$core$Object(self->second);
+        panda$core$Object* $tmp4 = self->second;
+        panda$core$Object* $tmp5 = p_second;
+        self->second = $tmp5;
+        panda$core$Panda$ref$panda$core$Object($tmp5);
+        panda$core$Panda$unref$panda$core$Object($tmp4);
     }
 }
 void org$pandalanguage$pandac$Pair$cleanup(org$pandalanguage$pandac$Pair* self) {

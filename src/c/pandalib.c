@@ -1,6 +1,7 @@
 #include <dirent.h>
 #include <inttypes.h>
 #include <limits.h>
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -114,7 +115,7 @@ void pandaFree(void* ptr);
 
 int allocations = 0;
 
-int refCount = 1;
+int refCount = 0;
 
 void* pandaAlloc(size_t size) {
     allocations++;
@@ -187,6 +188,7 @@ void* pandaGetInterfaceMethod(Object* o, Class* intf, int index) {
 void pandaMain(Array* args);
 
 int main(int argc, char** argv) {
+    printf("refcounting disabled by setting refCount to 0 in pandalib.c\n");
     Array* args = pandaObjectAlloc(sizeof(Array), &panda$collections$Array$class);
     args->count = argc;
     args->capacity = argc;
@@ -365,6 +367,14 @@ String* panda$core$Real64$convert$R$panda$core$String(double d) {
 void panda$core$Panda$floatToIntBits$panda$core$Real64$R$panda$core$Int64(int64_t* result,
         double d) {
     *result = *((int64_t*) &d);
+}
+
+float panda$core$Panda$sqrt$builtin_float32$R$builtin_float32(float v) {
+    return sqrt(v);
+}
+
+double panda$core$Panda$sqrt$builtin_float64$R$builtin_float64(double v) {
+    return sqrt(v);
 }
 
 // Console

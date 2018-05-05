@@ -8,19 +8,26 @@ A simple lexical analyzer generator for Panda, used to build pandac's lexer.
 class PLex {
     def tokens := HashMap<String, Regex>()
 
+    method printWarning(out:OutputStream) {
+        out.printLine("-***********************************************************************-")
+        out.printLine("-********************* GENERATED CODE, DO NOT EDIT *********************-")
+        out.printLine("-***********************************************************************-")
+    }
+
     method process(inputPath:File, tokenName:String, tokenPath:File, lexerName:String,
-            lexerPath:File) {
+            lexerPath:File, positionName:String) {
         def input := inputPath.openInputStream()
         def token := IndentedOutputStream(tokenPath.openOutputStream())
         def nfa := NFA()
+        printWarning(token)
         token.printLine("package \{tokenName[..tokenName.lastIndexOf(".")]}")
         token.printLine()
-        token.printLine("uses org.pandalanguage.pandac.Position")
+        token.printLine("uses \{positionName}")
         token.printLine()
         token.printLine("@final")
         token.printLine("class \{tokenName[tokenName.next(tokenName.lastIndexOf("."))..]} : Value {")
         token.level += 1
-        token.printLine("choice Kind { -- FIXME use choice")
+        token.printLine("choice Kind {")
         token.level += 1
         var offset := 0
         token.printLine("EOF")
@@ -76,7 +83,7 @@ class PLex {
 
         def dfa := NFAtoDFA(nfa).createDFA()
         def lexer := IndentedOutputStream(lexerPath.openOutputStream())
-        writeLexer(tokenName, lexerName, lexerPath, dfa, lexer)
+        writeLexer(tokenName, lexerName, lexerPath, positionName, dfa, lexer)
         tokens.clear()
     }
 
@@ -91,13 +98,14 @@ class PLex {
         return result.finish()
     }
 
-    method writeLexer(tokenName:String, lexerName:String, lexerPath:File, dfa:DFA,
-            out:IndentedOutputStream) {
+    method writeLexer(tokenName:String, lexerName:String, lexerPath:File, positionName:String,
+            dfa:DFA, out:IndentedOutputStream) {
+        printWarning(out)
         out.printLine("package \{lexerName[..lexerName.lastIndexOf(".")]}")
         out.printLine()
         out.printLine("uses panda.unsafe.Pointer")
         out.printLine("uses org.pandalanguage.plex.runtime.DFA")
-        out.printLine("uses org.pandalanguage.pandac.Position")
+        out.printLine("uses \{positionName}")
         out.printLine()
         out.printLine("@final")
         out.printLine("class \{lexerName[lexerName.next(lexerName.lastIndexOf("."))..]} {")
@@ -202,19 +210,15 @@ class PLex {
 
     @class
     method main(args:ListView<String>) {
-        Console.printLine("PLEX STARTUP")
-        for i in 0 .. args.get_count() {
-            Console.printLine("\{i}: \{args[i]}")
-        }
-        Console.printLine(args)
-        assert args.get_count() = 6
+        assert args.get_count() = 7
         def input := File(args[1])
         def tokenName := args[2]
         def tokenPath := File(args[3])
         def lexerName := args[4]
         def lexerPath := File(args[5])
+        def positionName := args[6]
         def dst := File("org/pandalanguage/pandac/parser")
         dst.createDirectories()
-        PLex().process(input, tokenName, tokenPath, lexerName, lexerPath)
+        PLex().process(input, tokenName, tokenPath, lexerName, lexerPath, positionName)
     }
 }

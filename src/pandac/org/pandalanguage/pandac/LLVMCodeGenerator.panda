@@ -2250,9 +2250,6 @@ class LLVMCodeGenerator : CodeGenerator {
         def ifFalseLabel := nextLabel()
         out.printLine("br i1 \{testBit}, label %\{ifTrueLabel}, label %\{ifFalseLabel}")
         createBlock(ifTrueLabel, out)
-        if ifFalse != null {
-            extraEffects.push(Array<IRNode>(extraEffects.peek()))
-        }
         writeBlock(ifTrue, out)
         def end:String
         if ifFalse != null {
@@ -2266,7 +2263,6 @@ class LLVMCodeGenerator : CodeGenerator {
         }
         if ifFalse != null {
             createBlock(ifFalseLabel, out)
-            writeExtraEffects(out)
             writeStatement(ifFalse, out)
             if !compiler.endsWithBranch(ifFalse) {
                 out.printLine("br label %\{end}")

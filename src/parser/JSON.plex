@@ -1,5 +1,6 @@
-STRING   := /"([^\\]|\\["\\bfnrt])*"/
-NUMBER   := /-?[0-9]+|-?[0-9]+)?\.[0-9]*([Ee][+-]?[0-9]+)?/
+STRING   := /"([^\\"]|\\["\\bfnrt])*"/
+INT      := /-?[0-9]+/
+REAL     := /(-?[0-9]+)?\.[0-9]*([Ee][+-]?[0-9]+)?/
 WS       := /[ \t\n\r]+/
 TRUE     := "true"
 FALSE    := "false"
@@ -9,3 +10,4 @@ RBRACE   := "}"
 LBRACKET := "["
 RBRACKET := "]"
 COMMA    := ","
+COLON    := ":"

@@ -12,7 +12,7 @@ struct { panda$core$Class* cl; ITable* next; void* methods[2]; } panda$math$XorS
 static panda$core$String $s1;
 panda$math$XorShift128Plus$class_type panda$math$XorShift128Plus$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, (ITable*) &panda$math$XorShift128Plus$_panda$math$Random, { panda$core$Object$convert$R$panda$core$String, panda$math$XorShift128Plus$cleanup, panda$math$XorShift128Plus$int64$R$panda$core$Int64, panda$math$XorShift128Plus$int$panda$core$Int64$R$panda$core$Int64} };
 
-typedef panda$core$Int64 (*$fn22)(panda$math$XorShift128Plus*);
+typedef panda$core$Int64 (*$fn24)(panda$math$XorShift128Plus*);
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x6d\x61\x74\x68\x2e\x58\x6f\x72\x53\x68\x69\x66\x74\x31\x32\x38\x50\x6c\x75\x73", 26, 215641961116556169, NULL };
 
@@ -43,36 +43,39 @@ panda$core$Int64 panda$math$XorShift128Plus$int64$R$panda$core$Int64(panda$math$
     panda$core$Int64 $tmp12 = panda$core$Int64$$SHR$panda$core$Int64$R$panda$core$Int64(y6, ((panda$core$Int64) { 26 }));
     panda$core$Int64 $tmp13 = panda$core$Int64$$BXOR$panda$core$Int64$R$panda$core$Int64($tmp11, $tmp12);
     self->state2 = $tmp13;
-    panda$core$Int64 $tmp14 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->state2, y6);
+    panda$core$Int64 $tmp15 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->state2, y6);
+    panda$core$Int64 $tmp14 = $tmp15;
     return $tmp14;
 }
 panda$core$Int64 panda$math$XorShift128Plus$int$panda$core$Int64$R$panda$core$Int64(panda$math$XorShift128Plus* self, panda$core$Int64 p_n) {
-    panda$core$Int64 min16;
-    panda$core$Int64 x21;
-    panda$core$Bit $tmp15 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_n, ((panda$core$Int64) { 1 }));
-    if ($tmp15.value) {
+    panda$core$Int64 min18;
+    panda$core$Int64 x23;
+    panda$core$Bit $tmp16 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_n, ((panda$core$Int64) { 1 }));
+    if ($tmp16.value) {
     {
-        return ((panda$core$Int64) { 0 });
+        panda$core$Int64 $tmp17 = ((panda$core$Int64) { 0 });
+        return $tmp17;
     }
     }
-    panda$core$Int64 $tmp17 = panda$core$Int64$$SUB$R$panda$core$Int64(p_n);
-    panda$core$Int64 $tmp18 = panda$core$Int64$$REM$panda$core$Int64$R$panda$core$Int64($tmp17, p_n);
-    min16 = $tmp18;
-    $l19:;
+    panda$core$Int64 $tmp19 = panda$core$Int64$$SUB$R$panda$core$Int64(p_n);
+    panda$core$Int64 $tmp20 = panda$core$Int64$$REM$panda$core$Int64$R$panda$core$Int64($tmp19, p_n);
+    min18 = $tmp20;
+    $l21:;
     while (true) {
     {
-        panda$core$Int64 $tmp23 = (($fn22) self->$class->vtable[2])(self);
-        x21 = $tmp23;
-        panda$core$Bit $tmp24 = panda$core$Int64$$GE$panda$core$Int64$R$panda$core$Bit(x21, min16);
-        if ($tmp24.value) {
+        panda$core$Int64 $tmp25 = (($fn24) self->$class->vtable[2])(self);
+        x23 = $tmp25;
+        panda$core$Bit $tmp26 = panda$core$Int64$$GE$panda$core$Int64$R$panda$core$Bit(x23, min18);
+        if ($tmp26.value) {
         {
-            panda$core$Int64 $tmp25 = panda$core$Int64$$REM$panda$core$Int64$R$panda$core$Int64(x21, p_n);
-            return $tmp25;
+            panda$core$Int64 $tmp28 = panda$core$Int64$$REM$panda$core$Int64$R$panda$core$Int64(x23, p_n);
+            panda$core$Int64 $tmp27 = $tmp28;
+            return $tmp27;
         }
         }
     }
     }
-    $l20:;
+    $l22:;
 }
 void panda$math$XorShift128Plus$cleanup(panda$math$XorShift128Plus* self) {
     panda$core$Object$cleanup(((panda$core$Object*) self));

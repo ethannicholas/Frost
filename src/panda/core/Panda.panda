@@ -1,5 +1,7 @@
 package panda.core
 
+uses panda.unsafe.Pointer
+
 ====================================================================================================
 Contains utility methods used in the internal implementation of certain language features.
 ====================================================================================================
@@ -77,6 +79,14 @@ class Panda {
         }
         return result
     }
+
+    @external
+    @class
+    function sqrt(v:builtin_float32):builtin_float32
+
+    @external
+    @class
+    function sqrt(v:builtin_float64):builtin_float64
 
     ================================================================================================
     Used to implement alignment specifiers during string interpolation. The alignment specifier must

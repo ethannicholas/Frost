@@ -16,12 +16,18 @@ void org$pandalanguage$pandac$CCodeGenerator$ClassConstant$init$panda$core$Strin
     self->name = NULL;
     self->type = NULL;
     {
-        self->name = p_name;
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->name));
+        panda$core$String* $tmp2 = self->name;
+        panda$core$String* $tmp3 = p_name;
+        self->name = $tmp3;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp3));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2));
     }
     {
-        self->type = p_type;
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->type));
+        panda$core$String* $tmp4 = self->type;
+        panda$core$String* $tmp5 = p_type;
+        self->type = $tmp5;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp5));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp4));
     }
 }
 void org$pandalanguage$pandac$CCodeGenerator$ClassConstant$cleanup(org$pandalanguage$pandac$CCodeGenerator$ClassConstant* self) {

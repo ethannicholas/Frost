@@ -28,19 +28,24 @@ void panda$core$String$UTF8Iterator$init$panda$core$String(panda$core$String$UTF
     self->str = NULL;
     self->index = ((panda$core$Int64) { 0 });
     {
-        self->str = p_str;
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->str));
+        panda$core$String* $tmp3 = self->str;
+        panda$core$String* $tmp4 = p_str;
+        self->str = $tmp4;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp4));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp3));
     }
 }
 panda$core$Bit panda$core$String$UTF8Iterator$get_done$R$panda$core$Bit(panda$core$String$UTF8Iterator* self) {
-    panda$core$Bit $tmp3 = panda$core$Int64$$GE$panda$core$Int64$R$panda$core$Bit(self->index, self->str->_length);
-    return $tmp3;
+    panda$core$Bit $tmp6 = panda$core$Int64$$GE$panda$core$Int64$R$panda$core$Bit(self->index, self->str->_length);
+    panda$core$Bit $tmp5 = $tmp6;
+    return $tmp5;
 }
 panda$core$Char8 panda$core$String$UTF8Iterator$next$R$panda$core$Char8(panda$core$String$UTF8Iterator* self) {
-    panda$core$Int64 $tmp4 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 1 }));
-    self->index = $tmp4;
-    panda$core$Int64 $tmp5 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 1 }));
-    return self->str->data[$tmp5.value];
+    panda$core$Int64 $tmp7 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 1 }));
+    self->index = $tmp7;
+    panda$core$Int64 $tmp9 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 1 }));
+    panda$core$Char8 $tmp8 = self->str->data[$tmp9.value];
+    return $tmp8;
 }
 void panda$core$String$UTF8Iterator$cleanup(panda$core$String$UTF8Iterator* self) {
     panda$core$Object$cleanup(((panda$core$Object*) self));

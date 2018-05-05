@@ -15,7 +15,7 @@ number of values can be stored in a `HashMap` and then retrieved in constant ave
 This will display the value `"good"`.
 ====================================================================================================
 @final
-class HashMap<K:Key<K>, V> : Map<K, V>, Equatable<Map<K, V>> {
+class HashMap<K:Key<K>, V> : Map<K, V>, Equatable<MapView<K, V>> {
     @private
     class Entry<K:Key<K>, V> {
         ============================================================================================
@@ -326,13 +326,13 @@ class HashMap<K:Key<K>, V> : Map<K, V>, Equatable<Map<K, V>> {
     }
 
     ================================================================================================
-    Returns `true` if `o` is a Map containing the same key/value pairs as this map.
+    Returns `true` if `o` is a [MapView] containing the same key/value pairs as this map.
 
     @param o the object to compare against
     @returns `true` if the two values are equal
     ================================================================================================
     @override
-    function =(other:Map<K, V>):Bit {
+    function =(other:MapView<K, V>):Bit {
 -*        if count != other.get_count() {
             return false
         }
@@ -346,7 +346,7 @@ class HashMap<K:Key<K>, V> : Map<K, V>, Equatable<Map<K, V>> {
     }
 
     @override
-    function !=(other:Map<K, V>):Bit {
+    function !=(other:MapView<K, V>):Bit {
         assert false, "HashMap.!=" -- fixme remove this method when default != is in
     }
 
@@ -384,5 +384,16 @@ class HashMap<K:Key<K>, V> : Map<K, V>, Equatable<Map<K, V>> {
         }
         result.append("}")
         return result.finish()
+    }
+
+    ================================================================================================
+    Invalidates this `HashMap` and returns its contents as an `ImmutableHashMap`. Interacting in
+    any way with a `HashMap` after `finish`ing will cause precondition violations (or, if
+    safety checks are disabled, undefined behavior).
+    ================================================================================================
+    method finish():ImmutableHashMap<K, V> {
+        -- FIXME this transformation is only safe at -S0
+        self.$class := ImmutableHashMap<K, V>().$class -- FIXME need a better way to get at the class
+        return self->Object->ImmutableHashMap<K, V>
     }
 }

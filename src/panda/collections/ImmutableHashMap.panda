@@ -1,0 +1,272 @@
+package panda.collections
+
+uses panda.unsafe.Pointer
+
+====================================================================================================
+Immutable implementation of the [Map] interface, which associates keys with values. Immutable maps
+are typically created via the [HashMap.finish()] function.
+====================================================================================================
+@final
+class ImmutableHashMap<K:Key<K>, V> : MapView<K, V>, Equatable<MapView<K, V>> {
+    @private
+    class Entry<K:Key<K>, V> {
+        ============================================================================================
+        The entry's key.
+        ============================================================================================
+        def key:K
+
+        ============================================================================================
+        The entry's value.
+        ============================================================================================
+        var value:V
+
+        var next:Entry<K, V>?
+
+        @private
+        init(key:K, value:V) {
+            self.key := key
+            self.value := value
+        }
+    }
+
+    @private
+    class EntryIterator<K:Key<K>, V> : Iterator<Entry<K, V>> {
+        def map:ImmutableHashMap<K, V>
+        var bucket := 0
+        var entry:Entry<K, V>? := null
+
+        init(map:ImmutableHashMap<K, V>) {
+            self.map := map
+            while bucket < map.bucketCount & map.contents[bucket] = null {
+                bucket += 1
+            }
+            if bucket < map.bucketCount {
+                entry := map.contents[bucket]
+            }
+        }
+
+        @override
+        function get_done():Bit {
+            return bucket = map.bucketCount & entry = null
+        }
+
+        @override
+        method next():Entry<K, V> {
+            assert entry != null
+            assert bucket < map.bucketCount
+            def result := entry
+            entry := entry.next
+            while entry = null {
+                bucket += 1
+                if bucket = map.bucketCount {
+                    break
+                }
+                entry := map.contents[bucket]
+            }
+            return result
+        }
+    }
+
+    @private
+    class KeyIterator<K:Key<K>, V> : Iterator<K> {
+        def base:EntryIterator<K, V>
+
+        init(map:ImmutableHashMap<K, V>) {
+            base := EntryIterator<K, V>(map)
+        }
+
+        @override
+        function get_done():Bit {
+            return base.get_done()
+        }
+
+        @override
+        method next():K {
+            return base.next().key
+        }
+    }
+
+    @private
+    class ValueIterator<K:Key<K>, V> : Iterator<V> {
+        def base:EntryIterator<K, V>
+
+        init(map:ImmutableHashMap<K, V>) {
+            base := EntryIterator<K, V>(map)
+        }
+
+        @override
+        function get_done():Bit {
+            return base.get_done()
+        }
+
+        @override
+        method next():V {
+            return base.next().value
+        }
+    }
+
+    @private
+    constant DEFAULT_BUCKET_COUNT := 16
+
+    @private
+    var _count:Int
+
+    @private
+    -- must be a power of 2 (see indexFor)
+    var bucketCount:Int
+
+    @private
+    var contents:Pointer<Entry<K, V>?>
+
+    @private
+    var dummyThreshold:Int -- for compatibility with HashMap
+
+    @private
+    var dummyChangeCount:Int -- for compatibility with HashMap
+    
+    ================================================================================================
+    Creates an empty `ImmutableHashMap`.
+    ================================================================================================
+    init() {
+        _count := 0
+        bucketCount := 0
+        contents := Pointer<Entry<K, V>?>.alloc(0)
+    }
+
+    @override
+    method cleanup() {
+        for i in 0 .. bucketCount {
+            if contents[i] != null {
+                Panda.unref(contents[i])
+            }
+        }
+        contents.destroy()
+    }
+
+    ================================================================================================
+    Given a key, returns the bucket in which the key's entry should be stored.
+    ================================================================================================
+    @private
+    function indexFor(key:K):Int {
+        var h:Int
+        if key = null {
+            h := 0
+        }
+        else {
+            h := key.hash()
+        }
+        -- supplemental hash function to defend against poor hash codes, as we do not use a prime
+        -- table length
+        h ~~= (h >> 20) ~~ (h >> 12) ~~ (h >> 7) ~~ (h >> 4)
+        -- the bitwise and below is equivalent to mod if length is a power of 2, which is why we
+        -- require that
+        h &&= bucketCount - 1
+        return h
+    }
+    
+    @override
+    function [](key:K):V? {
+        if bucketCount = 0 {
+            return null
+        }
+        def index := indexFor(key)
+        var e := contents[index]
+        while e != null & e.key != key {
+            e := e.next
+        }
+        if e != null {
+            return e.value
+        }
+        else {
+            return null
+        }
+    }
+    
+    function contains(key:K):Bit {
+        if bucketCount = 0 {
+            return false
+        }
+        def index := indexFor(key)
+        var e := contents[index]
+        while e != null & e.key != key {
+            e := e.next
+        }
+        return e != null
+    }
+
+    @override
+    function keys():Iterator<K> {
+        return KeyIterator<K, V>(self)
+    }
+
+    @override
+    function values():Iterator<V> {
+        return ValueIterator<K, V>(self)
+    }
+
+    @override
+    function get_count():Int {
+        return _count
+    }
+
+    ================================================================================================
+    Returns `true` if `o` is a MapView containing the same key/value pairs as this map.
+
+    @param o the object to compare against
+    @returns `true` if the two values are equal
+    ================================================================================================
+    @override
+    function =(other:MapView<K, V>):Bit {
+-*        if count != other.get_count() {
+            return false
+        }
+        for (key, value) in self {
+            if value != m[key] {
+                return false
+            }
+        }
+        return true*-
+        assert false, "ImmutableHashMap.="
+    }
+
+    @override
+    function !=(other:MapView<K, V>):Bit {
+        assert false, "ImmutableHashMap.!=" -- fixme remove this method when default != is in
+    }
+
+    ================================================================================================
+    Returns a string representation of the map.
+
+    @param fmt the format string
+    @returns a string representation of this object
+    ================================================================================================
+    @override
+    function convert():String {
+        def result := MutableString()
+        result.append("{")
+        var separator := ""
+        for i in 0 .. bucketCount {
+            var entry := contents[i]
+            while entry != null {
+                result.append(separator)
+                if entry.key != null {
+                    result.append(entry.key)
+                }
+                else {
+                    result.append("null")
+                }
+                result.append(":")
+                if entry.value != null {
+                    result.append(entry.value)
+                }
+                else {
+                    result.append("null")
+                }
+                entry := entry.next
+                separator := ", "
+            }
+        }
+        result.append("}")
+        return result.finish()
+    }
+}

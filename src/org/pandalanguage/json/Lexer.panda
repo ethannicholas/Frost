@@ -1,0 +1,433 @@
+-***********************************************************************-
+-********************* GENERATED CODE, DO NOT EDIT *********************-
+-***********************************************************************-
+package org.pandalanguage.json
+
+uses panda.unsafe.Pointer
+uses org.pandalanguage.plex.runtime.DFA
+uses org.pandalanguage.json.Position
+
+@final
+class Lexer {
+    def dfa:DFA
+
+    def transitions := getTransitions()
+
+    def accepts := getAccepts()
+
+    method start(source:String) {
+        dfa := DFA(source, 31, transitions, accepts)
+    }
+
+    @class
+    function alloc(count:Int, fill:Int):Pointer<Int> {
+        def result := Pointer<Int>.alloc(count)
+        for i in 0 .. count {
+            result[i] := fill
+        }
+        return result
+    }
+
+    @class
+    function getTransitions():Pointer<Pointer<Int>> {
+        def result := Pointer<Pointer<Int>>.alloc(255 + 1)
+        result[0] := alloc(31, 0)
+        result[0][3] := 3
+        result[1] := result[0]
+        result[2] := result[0]
+        result[3] := result[0]
+        result[4] := result[0]
+        result[5] := result[0]
+        result[6] := result[0]
+        result[7] := result[0]
+        result[8] := result[0]
+        result[9] := alloc(31, 0)
+        result[9][1] := 2
+        result[9][2] := 2
+        result[9][3] := 3
+        result[10] := result[9]
+        result[11] := result[0]
+        result[12] := result[0]
+        result[13] := result[9]
+        result[14] := result[0]
+        result[15] := result[0]
+        result[16] := result[0]
+        result[17] := result[0]
+        result[18] := result[0]
+        result[19] := result[0]
+        result[20] := result[0]
+        result[21] := result[0]
+        result[22] := result[0]
+        result[23] := result[0]
+        result[24] := result[0]
+        result[25] := result[0]
+        result[26] := result[0]
+        result[27] := result[0]
+        result[28] := result[0]
+        result[29] := result[0]
+        result[30] := result[0]
+        result[31] := result[0]
+        result[32] := result[9]
+        result[33] := result[0]
+        result[34] := alloc(31, 0)
+        result[34][1] := 3
+        result[34][3] := 4
+        result[34][5] := 3
+        result[35] := result[0]
+        result[36] := result[0]
+        result[37] := result[0]
+        result[38] := result[0]
+        result[39] := result[0]
+        result[40] := result[0]
+        result[41] := result[0]
+        result[42] := result[0]
+        result[43] := alloc(31, 0)
+        result[43][3] := 3
+        result[43][10] := 11
+        result[44] := alloc(31, 0)
+        result[44][1] := 6
+        result[44][3] := 3
+        result[45] := alloc(31, 0)
+        result[45][1] := 7
+        result[45][3] := 3
+        result[45][10] := 11
+        result[46] := alloc(31, 0)
+        result[46][1] := 9
+        result[46][3] := 3
+        result[46][8] := 9
+        result[47] := result[0]
+        result[48] := alloc(31, 0)
+        result[48][1] := 8
+        result[48][3] := 3
+        result[48][7] := 8
+        result[48][8] := 8
+        result[48][9] := 9
+        result[48][10] := 12
+        result[48][11] := 12
+        result[48][12] := 12
+        result[49] := result[48]
+        result[50] := result[48]
+        result[51] := result[48]
+        result[52] := result[48]
+        result[53] := result[48]
+        result[54] := result[48]
+        result[55] := result[48]
+        result[56] := result[48]
+        result[57] := result[48]
+        result[58] := alloc(31, 0)
+        result[58][1] := 13
+        result[58][3] := 3
+        result[59] := result[0]
+        result[60] := result[0]
+        result[61] := result[0]
+        result[62] := result[0]
+        result[63] := result[0]
+        result[64] := result[0]
+        result[65] := result[0]
+        result[66] := result[0]
+        result[67] := result[0]
+        result[68] := result[0]
+        result[69] := alloc(31, 0)
+        result[69][3] := 3
+        result[69][9] := 10
+        result[70] := result[0]
+        result[71] := result[0]
+        result[72] := result[0]
+        result[73] := result[0]
+        result[74] := result[0]
+        result[75] := result[0]
+        result[76] := result[0]
+        result[77] := result[0]
+        result[78] := result[0]
+        result[79] := result[0]
+        result[80] := result[0]
+        result[81] := result[0]
+        result[82] := result[0]
+        result[83] := result[0]
+        result[84] := result[0]
+        result[85] := result[0]
+        result[86] := result[0]
+        result[87] := result[0]
+        result[88] := result[0]
+        result[89] := result[0]
+        result[90] := result[0]
+        result[91] := alloc(31, 0)
+        result[91][1] := 14
+        result[91][3] := 3
+        result[92] := alloc(31, 0)
+        result[92][3] := 5
+        result[92][5] := 3
+        result[93] := alloc(31, 0)
+        result[93][1] := 15
+        result[93][3] := 3
+        result[94] := result[0]
+        result[95] := result[0]
+        result[96] := result[0]
+        result[97] := alloc(31, 0)
+        result[97][3] := 3
+        result[97][16] := 17
+        result[98] := alloc(31, 0)
+        result[98][3] := 3
+        result[98][5] := 3
+        result[99] := result[0]
+        result[100] := result[0]
+        result[101] := alloc(31, 0)
+        result[101][3] := 3
+        result[101][9] := 10
+        result[101][19] := 20
+        result[101][27] := 28
+        result[102] := alloc(31, 0)
+        result[102][1] := 16
+        result[102][3] := 3
+        result[102][5] := 3
+        result[103] := result[0]
+        result[104] := result[0]
+        result[105] := result[0]
+        result[106] := result[0]
+        result[107] := result[0]
+        result[108] := alloc(31, 0)
+        result[108][3] := 3
+        result[108][17] := 18
+        result[108][22] := 23
+        result[108][23] := 24
+        result[109] := result[0]
+        result[110] := alloc(31, 0)
+        result[110][1] := 21
+        result[110][3] := 3
+        result[110][5] := 3
+        result[111] := result[0]
+        result[112] := result[0]
+        result[113] := result[0]
+        result[114] := alloc(31, 0)
+        result[114][3] := 3
+        result[114][5] := 3
+        result[114][25] := 26
+        result[115] := alloc(31, 0)
+        result[115][3] := 3
+        result[115][18] := 19
+        result[116] := alloc(31, 0)
+        result[116][1] := 25
+        result[116][3] := 3
+        result[116][5] := 3
+        result[117] := alloc(31, 0)
+        result[117][3] := 3
+        result[117][21] := 22
+        result[117][26] := 27
+        result[118] := result[0]
+        result[119] := result[0]
+        result[120] := result[0]
+        result[121] := result[0]
+        result[122] := result[0]
+        result[123] := alloc(31, 0)
+        result[123][1] := 29
+        result[123][3] := 3
+        result[124] := result[0]
+        result[125] := alloc(31, 0)
+        result[125][1] := 30
+        result[125][3] := 3
+        result[126] := result[0]
+        result[127] := result[0]
+        result[128] := result[0]
+        result[129] := result[0]
+        result[130] := result[0]
+        result[131] := result[0]
+        result[132] := result[0]
+        result[133] := result[0]
+        result[134] := result[0]
+        result[135] := result[0]
+        result[136] := result[0]
+        result[137] := result[0]
+        result[138] := result[0]
+        result[139] := result[0]
+        result[140] := result[0]
+        result[141] := result[0]
+        result[142] := result[0]
+        result[143] := result[0]
+        result[144] := result[0]
+        result[145] := result[0]
+        result[146] := result[0]
+        result[147] := result[0]
+        result[148] := result[0]
+        result[149] := result[0]
+        result[150] := result[0]
+        result[151] := result[0]
+        result[152] := result[0]
+        result[153] := result[0]
+        result[154] := result[0]
+        result[155] := result[0]
+        result[156] := result[0]
+        result[157] := result[0]
+        result[158] := result[0]
+        result[159] := result[0]
+        result[160] := result[0]
+        result[161] := result[0]
+        result[162] := result[0]
+        result[163] := result[0]
+        result[164] := result[0]
+        result[165] := result[0]
+        result[166] := result[0]
+        result[167] := result[0]
+        result[168] := result[0]
+        result[169] := result[0]
+        result[170] := result[0]
+        result[171] := result[0]
+        result[172] := result[0]
+        result[173] := result[0]
+        result[174] := result[0]
+        result[175] := result[0]
+        result[176] := result[0]
+        result[177] := result[0]
+        result[178] := result[0]
+        result[179] := result[0]
+        result[180] := result[0]
+        result[181] := result[0]
+        result[182] := result[0]
+        result[183] := result[0]
+        result[184] := result[0]
+        result[185] := result[0]
+        result[186] := result[0]
+        result[187] := result[0]
+        result[188] := result[0]
+        result[189] := result[0]
+        result[190] := result[0]
+        result[191] := result[0]
+        result[192] := result[0]
+        result[193] := result[0]
+        result[194] := result[0]
+        result[195] := result[0]
+        result[196] := result[0]
+        result[197] := result[0]
+        result[198] := result[0]
+        result[199] := result[0]
+        result[200] := result[0]
+        result[201] := result[0]
+        result[202] := result[0]
+        result[203] := result[0]
+        result[204] := result[0]
+        result[205] := result[0]
+        result[206] := result[0]
+        result[207] := result[0]
+        result[208] := result[0]
+        result[209] := result[0]
+        result[210] := result[0]
+        result[211] := result[0]
+        result[212] := result[0]
+        result[213] := result[0]
+        result[214] := result[0]
+        result[215] := result[0]
+        result[216] := result[0]
+        result[217] := result[0]
+        result[218] := result[0]
+        result[219] := result[0]
+        result[220] := result[0]
+        result[221] := result[0]
+        result[222] := result[0]
+        result[223] := result[0]
+        result[224] := result[0]
+        result[225] := result[0]
+        result[226] := result[0]
+        result[227] := result[0]
+        result[228] := result[0]
+        result[229] := result[0]
+        result[230] := result[0]
+        result[231] := result[0]
+        result[232] := result[0]
+        result[233] := result[0]
+        result[234] := result[0]
+        result[235] := result[0]
+        result[236] := result[0]
+        result[237] := result[0]
+        result[238] := result[0]
+        result[239] := result[0]
+        result[240] := result[0]
+        result[241] := result[0]
+        result[242] := result[0]
+        result[243] := result[0]
+        result[244] := result[0]
+        result[245] := result[0]
+        result[246] := result[0]
+        result[247] := result[0]
+        result[248] := result[0]
+        result[249] := result[0]
+        result[250] := result[0]
+        result[251] := result[0]
+        result[252] := result[0]
+        result[253] := result[0]
+        result[254] := result[0]
+        result[255] := result[0]
+        return result
+    }
+
+    @class
+    function getAccepts():Pointer<Int> {
+        def result := Pointer<Int>.alloc(31)
+        result[0] := -1
+        result[1] := -1
+        result[2] := 5
+        result[3] := -1
+        result[4] := 2
+        result[5] := -1
+        result[6] := 13
+        result[7] := -1
+        result[8] := 3
+        result[9] := 4
+        result[10] := -1
+        result[11] := -1
+        result[12] := 4
+        result[13] := 14
+        result[14] := 11
+        result[15] := 12
+        result[16] := -1
+        result[17] := -1
+        result[18] := -1
+        result[19] := -1
+        result[20] := 7
+        result[21] := -1
+        result[22] := -1
+        result[23] := -1
+        result[24] := 8
+        result[25] := -1
+        result[26] := -1
+        result[27] := -1
+        result[28] := 6
+        result[29] := 9
+        result[30] := 10
+        return result
+    }
+
+    @override
+    method cleanup() {
+        transitions[0].destroy()
+        transitions[9].destroy()
+        transitions[34].destroy()
+        transitions[43].destroy()
+        transitions[44].destroy()
+        transitions[45].destroy()
+        transitions[46].destroy()
+        transitions[48].destroy()
+        transitions[58].destroy()
+        transitions[69].destroy()
+        transitions[91].destroy()
+        transitions[92].destroy()
+        transitions[93].destroy()
+        transitions[97].destroy()
+        transitions[98].destroy()
+        transitions[101].destroy()
+        transitions[102].destroy()
+        transitions[108].destroy()
+        transitions[110].destroy()
+        transitions[114].destroy()
+        transitions[115].destroy()
+        transitions[116].destroy()
+        transitions[117].destroy()
+        transitions[123].destroy()
+        transitions[125].destroy()
+        transitions.destroy()
+        accepts.destroy()
+    }
+
+    method next():org.pandalanguage.json.Token {
+        def raw := dfa.next()
+        return org.pandalanguage.json.Token(org.pandalanguage.json.Token.Kind(raw.kind), raw.start, raw.end, Position(raw.line, raw.column))
+    }
+}

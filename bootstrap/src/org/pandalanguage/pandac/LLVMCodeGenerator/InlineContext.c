@@ -20,26 +20,44 @@ void org$pandalanguage$pandac$LLVMCodeGenerator$InlineContext$init$panda$core$St
     self->argRefs = NULL;
     self->returns = NULL;
     self->exitLabel = NULL;
-    panda$collections$Array* $tmp2 = (panda$collections$Array*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$Array$class);
-    panda$collections$Array$init($tmp2);
+    panda$collections$Array* $tmp4 = (panda$collections$Array*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$Array$class);
+    panda$collections$Array$init($tmp4);
+    panda$collections$Array* $tmp3 = $tmp4;
+    panda$collections$Array* $tmp2 = $tmp3;
     self->returns = $tmp2;
+    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp3));
     {
-        self->varSuffix = p_varSuffix;
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->varSuffix));
+        panda$core$String* $tmp5 = self->varSuffix;
+        panda$core$String* $tmp6 = p_varSuffix;
+        self->varSuffix = $tmp6;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp6));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp5));
     }
     {
-        self->selfRef = p_selfRef;
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->selfRef));
+        panda$core$String* $tmp7 = self->selfRef;
+        panda$core$String* $tmp8 = p_selfRef;
+        self->selfRef = $tmp8;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp8));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp7));
     }
     {
-        panda$collections$ImmutableArray* $tmp3 = (panda$collections$ImmutableArray*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$ImmutableArray$class);
-        panda$collections$ImmutableArray$init$panda$collections$ListView$LTpanda$collections$ImmutableArray$T$GT($tmp3, p_argRefs);
-        self->argRefs = $tmp3;
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->argRefs));
+        panda$collections$ImmutableArray* $tmp9 = self->argRefs;
+        panda$collections$ImmutableArray* $tmp12 = (panda$collections$ImmutableArray*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$ImmutableArray$class);
+        panda$collections$ImmutableArray$init$panda$collections$ListView$LTpanda$collections$ImmutableArray$T$GT($tmp12, p_argRefs);
+        panda$collections$ImmutableArray* $tmp11 = $tmp12;
+        panda$collections$ImmutableArray* $tmp10 = $tmp11;
+        self->argRefs = $tmp10;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp10));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp11));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp9));
     }
     {
-        self->exitLabel = p_exitLabel;
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->exitLabel));
+        panda$core$String* $tmp13 = self->exitLabel;
+        panda$core$String* $tmp14 = p_exitLabel;
+        self->exitLabel = $tmp14;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp14));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp13));
     }
 }
 void org$pandalanguage$pandac$LLVMCodeGenerator$InlineContext$cleanup(org$pandalanguage$pandac$LLVMCodeGenerator$InlineContext* self) {

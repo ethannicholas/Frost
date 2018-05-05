@@ -38,20 +38,30 @@ static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -
 void panda$core$String$UTF8List$init$panda$core$String(panda$core$String$UTF8List* self, panda$core$String* p_str) {
     self->str = NULL;
     {
-        self->str = p_str;
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->str));
+        panda$core$String* $tmp3 = self->str;
+        panda$core$String* $tmp4 = p_str;
+        self->str = $tmp4;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp4));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp3));
     }
 }
 panda$core$Char8 panda$core$String$UTF8List$$IDX$panda$core$Int64$R$panda$core$Char8(panda$core$String$UTF8List* self, panda$core$Int64 p_index) {
-    return self->str->data[p_index.value];
+    panda$core$Char8 $tmp5 = self->str->data[p_index.value];
+    return $tmp5;
 }
 panda$core$Int64 panda$core$String$UTF8List$get_count$R$panda$core$Int64(panda$core$String$UTF8List* self) {
-    return self->str->_length;
+    panda$core$Int64 $tmp6 = self->str->_length;
+    return $tmp6;
 }
 panda$collections$Iterator* panda$core$String$UTF8List$iterator$R$panda$collections$Iterator$LTpanda$core$Char8$GT(panda$core$String$UTF8List* self) {
-    panda$core$String$UTF8Iterator* $tmp3 = (panda$core$String$UTF8Iterator*) pandaObjectAlloc(32, (panda$core$Class*) &panda$core$String$UTF8Iterator$class);
-    panda$core$String$UTF8Iterator$init$panda$core$String($tmp3, self->str);
-    return ((panda$collections$Iterator*) $tmp3);
+    panda$core$String$UTF8Iterator* $tmp10 = (panda$core$String$UTF8Iterator*) pandaObjectAlloc(32, (panda$core$Class*) &panda$core$String$UTF8Iterator$class);
+    panda$core$String$UTF8Iterator$init$panda$core$String($tmp10, self->str);
+    panda$core$String$UTF8Iterator* $tmp9 = $tmp10;
+    panda$collections$Iterator* $tmp8 = ((panda$collections$Iterator*) $tmp9);
+    panda$collections$Iterator* $tmp7 = $tmp8;
+    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp8));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp9));
+    return $tmp7;
 }
 void panda$core$String$UTF8List$cleanup(panda$core$String$UTF8List* self) {
     panda$core$Object$cleanup(((panda$core$Object*) self));

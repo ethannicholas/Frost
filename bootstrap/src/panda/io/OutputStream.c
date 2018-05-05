@@ -14,6 +14,7 @@
 #include "panda/core/Int32.h"
 #include "panda/core/UInt64.h"
 #include "panda/core/Char8.h"
+#include "panda/core/Panda.h"
 
 
 static panda$core$String $s1;
@@ -34,13 +35,13 @@ typedef void (*$fn45)(panda$io$OutputStream*, panda$core$UInt32);
 typedef void (*$fn47)(panda$io$OutputStream*, panda$core$UInt32);
 typedef void (*$fn49)(panda$io$OutputStream*, panda$core$UInt64);
 typedef void (*$fn50)(panda$io$OutputStream*, panda$core$UInt8);
-typedef panda$core$String* (*$fn51)(panda$core$Object*);
-typedef void (*$fn53)(panda$io$OutputStream*, panda$core$String*);
-typedef void (*$fn55)(panda$io$OutputStream*, panda$core$Char8);
-typedef panda$core$String* (*$fn56)(panda$core$Object*);
-typedef void (*$fn58)(panda$io$OutputStream*, panda$core$String*);
-typedef void (*$fn59)(panda$io$OutputStream*, panda$core$String*);
-typedef void (*$fn60)(panda$io$OutputStream*);
+typedef panda$core$String* (*$fn52)(panda$core$Object*);
+typedef void (*$fn54)(panda$io$OutputStream*, panda$core$String*);
+typedef void (*$fn56)(panda$io$OutputStream*, panda$core$Char8);
+typedef panda$core$String* (*$fn58)(panda$core$Object*);
+typedef void (*$fn60)(panda$io$OutputStream*, panda$core$String*);
+typedef void (*$fn61)(panda$io$OutputStream*, panda$core$String*);
+typedef void (*$fn62)(panda$io$OutputStream*);
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x69\x6f\x2e\x4f\x75\x74\x70\x75\x74\x53\x74\x72\x65\x61\x6d", 21, -3689739765115213222, NULL };
 
@@ -123,24 +124,28 @@ void panda$io$OutputStream$write$panda$core$Char8(panda$io$OutputStream* self, p
     (($fn50) self->$class->vtable[2])(self, ((panda$core$UInt8) { p_c.value }));
 }
 void panda$io$OutputStream$print$panda$core$Object(panda$io$OutputStream* self, panda$core$Object* p_o) {
-    panda$core$String* $tmp52 = (($fn51) p_o->$class->vtable[0])(p_o);
-    (($fn53) self->$class->vtable[16])(self, $tmp52);
+    panda$core$String* $tmp53 = (($fn52) p_o->$class->vtable[0])(p_o);
+    panda$core$String* $tmp51 = $tmp53;
+    (($fn54) self->$class->vtable[16])(self, $tmp51);
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp51));
 }
 void panda$io$OutputStream$print$panda$core$String(panda$io$OutputStream* self, panda$core$String* p_s) {
     panda$io$OutputStream$write$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64$panda$core$Int64(self, p_s->data, ((panda$core$Int64) { 0 }), p_s->_length);
 }
 void panda$io$OutputStream$printLine(panda$io$OutputStream* self) {
-    panda$core$Char8 $tmp54;
-    panda$core$Char8$init$panda$core$UInt8(&$tmp54, ((panda$core$UInt8) { 10 }));
-    (($fn55) self->$class->vtable[14])(self, $tmp54);
+    panda$core$Char8 $tmp55;
+    panda$core$Char8$init$panda$core$UInt8(&$tmp55, ((panda$core$UInt8) { 10 }));
+    (($fn56) self->$class->vtable[14])(self, $tmp55);
 }
 void panda$io$OutputStream$printLine$panda$core$Object(panda$io$OutputStream* self, panda$core$Object* p_o) {
-    panda$core$String* $tmp57 = (($fn56) p_o->$class->vtable[0])(p_o);
-    (($fn58) self->$class->vtable[19])(self, $tmp57);
+    panda$core$String* $tmp59 = (($fn58) p_o->$class->vtable[0])(p_o);
+    panda$core$String* $tmp57 = $tmp59;
+    (($fn60) self->$class->vtable[19])(self, $tmp57);
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp57));
 }
 void panda$io$OutputStream$printLine$panda$core$String(panda$io$OutputStream* self, panda$core$String* p_s) {
-    (($fn59) self->$class->vtable[16])(self, p_s);
-    (($fn60) self->$class->vtable[17])(self);
+    (($fn61) self->$class->vtable[16])(self, p_s);
+    (($fn62) self->$class->vtable[17])(self);
 }
 void panda$io$OutputStream$init(panda$io$OutputStream* self) {
 }

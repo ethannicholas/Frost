@@ -81,6 +81,7 @@ class Main {
         def dest := llvm.changeExtension(".s")
         def args := Array<String>() -- FIXME literal
         args.add(llvm.path)
+        args.add("-relocation-model=pic")
         args.add("-o")
         args.add(dest.path)
         def p := System.exec(llc, args)
@@ -95,6 +96,7 @@ class Main {
         def args := Array<String>() -- FIXME literal
         args.add(assembly.path)
         args.add("-m64")
+        args.add("-fPIC")
         args.add("-c")
         args.add("-o")
         args.add(dest.path)
@@ -112,6 +114,7 @@ class Main {
         args.add("-L.")
         args.add("-lpanda")
         args.add("-m64")
+        args.add("-fPIC")
         args.add("-o")
         args.add(dest.path)
         def p := System.exec(gcc, args)

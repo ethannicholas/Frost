@@ -25,20 +25,29 @@ void panda$collections$ImmutableArray$ImmutableArrayIterator$init$panda$collecti
     self->array = NULL;
     self->index = ((panda$core$Int64) { 0 });
     {
-        self->array = p_array;
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->array));
+        panda$collections$ImmutableArray* $tmp2 = self->array;
+        panda$collections$ImmutableArray* $tmp3 = p_array;
+        self->array = $tmp3;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp3));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2));
     }
 }
 panda$core$Bit panda$collections$ImmutableArray$ImmutableArrayIterator$get_done$R$panda$core$Bit(panda$collections$ImmutableArray$ImmutableArrayIterator* self) {
-    panda$core$Bit $tmp2 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(self->index, self->array->count);
-    return $tmp2;
+    panda$core$Bit $tmp5 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(self->index, self->array->count);
+    panda$core$Bit $tmp4 = $tmp5;
+    return $tmp4;
 }
 panda$core$Object* panda$collections$ImmutableArray$ImmutableArrayIterator$next$R$panda$collections$ImmutableArray$ImmutableArrayIterator$T(panda$collections$ImmutableArray$ImmutableArrayIterator* self) {
-    panda$core$Int64 $tmp3 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 1 }));
-    self->index = $tmp3;
-    panda$core$Int64 $tmp4 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 1 }));
-    panda$core$Object* $tmp5 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(self->array, $tmp4);
-    return $tmp5;
+    panda$core$Int64 $tmp6 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 1 }));
+    self->index = $tmp6;
+    panda$core$Int64 $tmp10 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 1 }));
+    panda$core$Object* $tmp11 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(self->array, $tmp10);
+    panda$core$Object* $tmp9 = $tmp11;
+    panda$core$Object* $tmp8 = $tmp9;
+    panda$core$Object* $tmp7 = $tmp8;
+    panda$core$Panda$ref$panda$core$Object($tmp8);
+    panda$core$Panda$unref$panda$core$Object($tmp9);
+    return $tmp7;
 }
 void panda$collections$ImmutableArray$ImmutableArrayIterator$cleanup(panda$collections$ImmutableArray$ImmutableArrayIterator* self) {
     panda$core$Object$cleanup(((panda$core$Object*) self));

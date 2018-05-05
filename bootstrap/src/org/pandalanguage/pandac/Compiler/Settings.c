@@ -20,14 +20,22 @@ void org$pandalanguage$pandac$Compiler$Settings$init$panda$io$File$panda$collect
     self->pandaHome = NULL;
     self->importDirs = NULL;
     {
-        self->pandaHome = p_pandaHome;
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->pandaHome));
+        panda$io$File* $tmp2 = self->pandaHome;
+        panda$io$File* $tmp3 = p_pandaHome;
+        self->pandaHome = $tmp3;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp3));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2));
     }
     {
-        panda$collections$ImmutableArray* $tmp2 = (panda$collections$ImmutableArray*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$ImmutableArray$class);
-        panda$collections$ImmutableArray$init$panda$collections$ListView$LTpanda$collections$ImmutableArray$T$GT($tmp2, p_importDirs);
-        self->importDirs = $tmp2;
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->importDirs));
+        panda$collections$ImmutableArray* $tmp4 = self->importDirs;
+        panda$collections$ImmutableArray* $tmp7 = (panda$collections$ImmutableArray*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$ImmutableArray$class);
+        panda$collections$ImmutableArray$init$panda$collections$ListView$LTpanda$collections$ImmutableArray$T$GT($tmp7, p_importDirs);
+        panda$collections$ImmutableArray* $tmp6 = $tmp7;
+        panda$collections$ImmutableArray* $tmp5 = $tmp6;
+        self->importDirs = $tmp5;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp5));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp6));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp4));
     }
     self->optimizationLevel = p_optimizationLevel;
     self->safetyLevel = p_safetyLevel;

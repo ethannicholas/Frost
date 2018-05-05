@@ -20,7 +20,7 @@ typedef struct panda$collections$HashMap {
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"
 #undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[14]; } panda$collections$HashMap$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[15]; } panda$collections$HashMap$class_type;
 extern panda$collections$HashMap$class_type panda$collections$HashMap$class;
 
 #ifndef PANDA_TYPESONLY
@@ -31,8 +31,8 @@ typedef struct panda$collections$Key panda$collections$Key;
 typedef struct panda$core$Object panda$core$Object;
 #include "panda/core/Bit.h"
 typedef struct panda$collections$Iterator panda$collections$Iterator;
-typedef struct panda$collections$Map panda$collections$Map;
 typedef struct panda$core$String panda$core$String;
+typedef struct panda$collections$ImmutableHashMap panda$collections$ImmutableHashMap;
 
 void panda$collections$HashMap$init(panda$collections$HashMap* self);
 void panda$collections$HashMap$init$panda$collections$MapView$LTpanda$collections$HashMap$K$Cpanda$collections$HashMap$V$GT(panda$collections$HashMap* self, panda$collections$MapView* p_map);
@@ -47,8 +47,9 @@ void panda$collections$HashMap$incrementCount(panda$collections$HashMap* self);
 panda$collections$Iterator* panda$collections$HashMap$keys$R$panda$collections$Iterator$LTpanda$collections$HashMap$K$GT(panda$collections$HashMap* self);
 panda$collections$Iterator* panda$collections$HashMap$values$R$panda$collections$Iterator$LTpanda$collections$HashMap$V$GT(panda$collections$HashMap* self);
 panda$core$Int64 panda$collections$HashMap$get_count$R$panda$core$Int64(panda$collections$HashMap* self);
-panda$core$Bit panda$collections$HashMap$$EQ$panda$collections$Map$LTpanda$collections$HashMap$K$Cpanda$collections$HashMap$V$GT$R$panda$core$Bit(panda$collections$HashMap* self, panda$collections$Map* p_other);
-panda$core$Bit panda$collections$HashMap$$NEQ$panda$collections$Map$LTpanda$collections$HashMap$K$Cpanda$collections$HashMap$V$GT$R$panda$core$Bit(panda$collections$HashMap* self, panda$collections$Map* p_other);
+panda$core$Bit panda$collections$HashMap$$EQ$panda$collections$MapView$LTpanda$collections$HashMap$K$Cpanda$collections$HashMap$V$GT$R$panda$core$Bit(panda$collections$HashMap* self, panda$collections$MapView* p_other);
+panda$core$Bit panda$collections$HashMap$$NEQ$panda$collections$MapView$LTpanda$collections$HashMap$K$Cpanda$collections$HashMap$V$GT$R$panda$core$Bit(panda$collections$HashMap* self, panda$collections$MapView* p_other);
 panda$core$String* panda$collections$HashMap$convert$R$panda$core$String(panda$collections$HashMap* self);
+panda$collections$ImmutableHashMap* panda$collections$HashMap$finish$R$panda$collections$ImmutableHashMap$LTpanda$collections$HashMap$K$Cpanda$collections$HashMap$V$GT(panda$collections$HashMap* self);
 
 #endif

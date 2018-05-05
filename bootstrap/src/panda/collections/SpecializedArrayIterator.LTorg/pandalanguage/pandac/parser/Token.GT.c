@@ -29,20 +29,25 @@ void panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$pandac$parse
     self->array = NULL;
     self->index = ((panda$core$Int64) { 0 });
     {
-        self->array = p_array;
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->array));
+        panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT* $tmp3 = self->array;
+        panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT* $tmp4 = p_array;
+        self->array = $tmp4;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp4));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp3));
     }
 }
 panda$core$Bit panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$pandac$parser$Token$GT$get_done$R$panda$core$Bit(panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$pandac$parser$Token$GT* self) {
-    panda$core$Bit $tmp3 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(self->index, self->array->count);
-    return $tmp3;
+    panda$core$Bit $tmp6 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(self->index, self->array->count);
+    panda$core$Bit $tmp5 = $tmp6;
+    return $tmp5;
 }
 org$pandalanguage$pandac$parser$Token panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$pandac$parser$Token$GT$next$R$org$pandalanguage$pandac$parser$Token(panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$pandac$parser$Token$GT* self) {
-    panda$core$Int64 $tmp4 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 1 }));
-    self->index = $tmp4;
-    panda$core$Int64 $tmp5 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 1 }));
-    org$pandalanguage$pandac$parser$Token $tmp6 = panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$$IDX$panda$core$Int64$R$org$pandalanguage$pandac$parser$Token(self->array, $tmp5);
-    return $tmp6;
+    panda$core$Int64 $tmp7 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 1 }));
+    self->index = $tmp7;
+    panda$core$Int64 $tmp9 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 1 }));
+    org$pandalanguage$pandac$parser$Token $tmp10 = panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$$IDX$panda$core$Int64$R$org$pandalanguage$pandac$parser$Token(self->array, $tmp9);
+    org$pandalanguage$pandac$parser$Token $tmp8 = $tmp10;
+    return $tmp8;
 }
 void panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$pandac$parser$Token$GT$cleanup(panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$pandac$parser$Token$GT* self) {
     panda$core$Object$cleanup(((panda$core$Object*) self));

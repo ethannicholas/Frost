@@ -14,7 +14,8 @@ file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/pandac/Config.panda"
     "constant LLVM_TRIPLE := \"${LLVM_HOST_TARGET}\"\n"
     "}")
 
-set(BOOTSTRAP_ARGS "--llvm_dir" ${LLVM_ROOT_DIR} "--triple" ${LLVM_HOST_TARGET} "-O" ${OPTIMIZATION} "-S" ${SAFETY})
+set(BOOTSTRAP_ARGS "--llvm_dir" ${LLVM_ROOT_DIR} "--triple" ${LLVM_HOST_TARGET} "-O" ${OPTIMIZATION}
+    "-S" ${SAFETY})
 include_directories(
     bootstrap/include
     src/c
@@ -35,6 +36,11 @@ add_library(c_panda
     bootstrap/src/panda/collections/IdentityMap/Entry.c
     bootstrap/src/panda/collections/ImmutableArray.c
     bootstrap/src/panda/collections/ImmutableArray/ImmutableArrayIterator.c
+    bootstrap/src/panda/collections/ImmutableHashMap.c
+    bootstrap/src/panda/collections/ImmutableHashMap/Entry.c
+    bootstrap/src/panda/collections/ImmutableHashMap/EntryIterator.c
+    bootstrap/src/panda/collections/ImmutableHashMap/KeyIterator.c
+    bootstrap/src/panda/collections/ImmutableHashMap/ValueIterator.c
     bootstrap/src/panda/collections/Iterable.c
     bootstrap/src/panda/collections/Iterator.c
     bootstrap/src/panda/collections/Key.c
@@ -100,8 +106,15 @@ add_library(c_panda
     bootstrap/src/panda/io/MemoryOutputStream.c
     bootstrap/src/panda/io/OutputStream.c
     bootstrap/src/panda/io/PushbackInputStream.c
+    bootstrap/src/panda/json/JSON.c
+    bootstrap/src/panda/json/JSON/Node.c
+    bootstrap/src/panda/json/JSONParser.c
     bootstrap/src/panda/math/Random.c
     bootstrap/src/panda/math/XorShift128Plus.c
+    bootstrap/src/org/pandalanguage/json/Lexer.c
+    bootstrap/src/org/pandalanguage/json/Position.c
+    bootstrap/src/org/pandalanguage/json/Token.c
+    bootstrap/src/org/pandalanguage/json/Token/Kind.c
     src/c/pandalib.c
 )
 
@@ -163,11 +176,13 @@ set_target_properties(bootstrap PROPERTIES LINKER_LANGUAGE CXX)
 function(compile_panda_sources out_var)
     set(result)
     foreach(input ${ARGN})
-        get_filename_component(output ${input} NAME_WE)
-        set(output "${CMAKE_CURRENT_BINARY_DIR}/${output}.o")
+        get_filename_component(outputDir ${input} DIRECTORY)
+        get_filename_component(outputName ${input} NAME_WE)
+        set(output "${CMAKE_CURRENT_BINARY_DIR}/${outputDir}/${outputName}.o")
         add_custom_command(
             OUTPUT ${output}
-            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/bootstrap ${BOOTSTRAP_ARGS} -f o -o ${output} ${input}
+            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/bootstrap ${BOOTSTRAP_ARGS} -f o -o ${output}
+                    ${input}
             DEPENDS ${input} bootstrap
             WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         )
@@ -184,6 +199,7 @@ set(core_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/HashMap.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/IdentityMap.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/ImmutableArray.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/ImmutableHashMap.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/Iterable.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/Iterator.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/Key.panda
@@ -232,8 +248,15 @@ set(core_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/io/MemoryOutputStream.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/io/OutputStream.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/io/PushbackInputStream.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/json/JSON.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/json/JSONParser.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/math/Random.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/math/XorShift128Plus.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/json/Lexer.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/json/Position.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/json/Token.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/plex/runtime/DFA.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/plex/runtime/RawToken.panda
 )
 
 compile_panda_sources(panda_objects
@@ -247,7 +270,8 @@ add_library(panda
 
 add_custom_command(
     OUTPUT writeInts
-    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/bootstrap ${BOOTSTRAP_ARGS} -o writeInts ${CMAKE_CURRENT_SOURCE_DIR}/src/tools/WriteInts.panda
+    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/bootstrap ${BOOTSTRAP_ARGS} -o writeInts
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/tools/WriteInts.panda
     DEPENDS bootstrap src/tools/WriteInts.panda
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
@@ -268,7 +292,8 @@ add_custom_command(
 
 add_custom_command(
     OUTPUT writeOperators
-    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/bootstrap ${BOOTSTRAP_ARGS} -o writeOperators ${CMAKE_CURRENT_SOURCE_DIR}/src/tools/WriteOperators.panda
+    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/bootstrap ${BOOTSTRAP_ARGS} -o writeOperators
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/tools/WriteOperators.panda
     DEPENDS src/tools/WriteOperators.panda pandac
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
@@ -301,6 +326,8 @@ add_custom_target(generate_code
             src/panda/core/UInt16.panda
             src/panda/core/UInt32.panda
             src/panda/core/UInt64.panda
+            src/parser/org/pandalanguage/json/Lexer.panda
+            src/parser/org/pandalanguage/json/Token.panda
             test/tests/Operators.panda
             test/tests/Operators.expected
             Operators.c
@@ -314,7 +341,8 @@ function(compile_plex_sources out_var)
         set(output "${CMAKE_CURRENT_BINARY_DIR}/${output}.o")
         add_custom_command(
             OUTPUT ${output}
-            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/bootstrap ${BOOTSTRAP_ARGS} -i ${CMAKE_CURRENT_SOURCE_DIR}/src/parser -f o -o ${output} ${input}
+            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/bootstrap ${BOOTSTRAP_ARGS}
+                    -i ${CMAKE_CURRENT_SOURCE_DIR}/src/parser -f o -o ${output} ${input}
             DEPENDS bootstrap ${input}
             WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         )
@@ -347,8 +375,6 @@ compile_plex_sources(plex_objects
     src/parser/org/pandalanguage/plex/State.panda
     src/parser/org/pandalanguage/plex/TableState.panda
     src/parser/org/pandalanguage/plex/Union.panda
-    src/parser/org/pandalanguage/plex/runtime/DFA.panda
-    src/parser/org/pandalanguage/plex/runtime/RawToken.panda
 )
 
 add_executable(plex
@@ -360,8 +386,26 @@ set_target_properties(plex PROPERTIES LINKER_LANGUAGE CXX)
 add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/pandac/parser/Lexer.panda
            ${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/pandac/parser/Token.panda
-    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/plex ${CMAKE_CURRENT_SOURCE_DIR}/src/parser/Panda.plex org.pandalanguage.pandac.parser.Token ${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/pandac/parser/Token.panda org.pandalanguage.pandac.parser.Lexer ${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/pandac/parser/Lexer.panda
+    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/plex ${CMAKE_CURRENT_SOURCE_DIR}/src/parser/Panda.plex
+            org.pandalanguage.pandac.parser.Token
+            ${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/pandac/parser/Token.panda
+            org.pandalanguage.pandac.parser.Lexer
+            ${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/pandac/parser/Lexer.panda
+            org.pandalanguage.pandac.Position
     DEPENDS plex src/parser/Panda.plex
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+)
+
+add_custom_command(
+    OUTPUT src/parser/org/pandalanguage/json/Lexer.panda
+           src/parser/org/pandalanguage/json/Token.panda
+    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/plex ${CMAKE_CURRENT_SOURCE_DIR}/src/parser/JSON.plex
+            org.pandalanguage.json.Token
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/json/Token.panda
+            org.pandalanguage.json.Lexer
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/json/Lexer.panda
+            org.pandalanguage.json.Position
+    DEPENDS plex src/parser/JSON.plex
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
 
@@ -372,7 +416,11 @@ function(compile_pandac_sources out_var)
         set(output "${CMAKE_CURRENT_BINARY_DIR}/${output}.o")
         add_custom_command(
             OUTPUT ${output}
-            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/bootstrap ${BOOTSTRAP_ARGS} -i ${CMAKE_CURRENT_SOURCE_DIR}/src/parser -i ${CMAKE_CURRENT_BINARY_DIR} -i ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac -f o -o ${output} ${input}
+            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/bootstrap ${BOOTSTRAP_ARGS}
+                    -i ${CMAKE_CURRENT_SOURCE_DIR}/src/parser
+                    -i ${CMAKE_CURRENT_BINARY_DIR}
+                    -i ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac
+                    -f o -o ${output} ${input}
             DEPENDS bootstrap ${input}
             WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         )
@@ -417,9 +465,6 @@ compile_pandac_sources(pandac_objects
 
 add_executable(pandac
     ${pandac_objects}
-    ${CMAKE_CURRENT_BINARY_DIR}/DFA.o
-    ${CMAKE_CURRENT_BINARY_DIR}/Position.o
-    ${CMAKE_CURRENT_BINARY_DIR}/RawToken.o
 )
 target_link_libraries(pandac panda)
 set_target_properties(pandac PROPERTIES LINKER_LANGUAGE CXX)
@@ -457,7 +502,9 @@ function(create_headers out_var)
         endif()
         add_custom_command(
             OUTPUT ${output}
-            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/pandac -O ${OPTIMIZATION} -S ${SAFETY} -f h -i ${CMAKE_CURRENT_SOURCE_DIR}/src -i ${pandacInc} -i ${parserInc} -i ${buildInc} -o ${CMAKE_CURRENT_BINARY_DIR}/updated_bootstrap/include ${input}
+            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/pandac -O ${OPTIMIZATION} -S ${SAFETY} -f h
+                    -i ${CMAKE_CURRENT_SOURCE_DIR}/src -i ${pandacInc} -i ${parserInc}
+                    -i ${buildInc} -o ${CMAKE_CURRENT_BINARY_DIR}/updated_bootstrap/include ${input}
             DEPENDS ${rawInput} pandac
             WORKING_DIRECTORY ${working}
         )
@@ -469,8 +516,6 @@ endfunction()
 create_headers(updated_pandac_headers
     ${core_source}
     ${pandac_source}
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/parser/org/pandalanguage/plex/runtime/DFA.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/parser/org/pandalanguage/plex/runtime/RawToken.panda
 )
 
 function(compile_panda_sources_to_c out_var)
@@ -489,8 +534,9 @@ function(compile_panda_sources_to_c out_var)
             file(RELATIVE_PATH input "${CMAKE_CURRENT_BINARY_DIR}" ${rawInput})
             set(working "${CMAKE_CURRENT_BINARY_DIR}")
         endif()
-        get_filename_component(output ${input} NAME_WE)
-        set(output "${CMAKE_CURRENT_BINARY_DIR}/updated_bootstrap/src/${output}.c")
+        get_filename_component(outputDir ${input} DIRECTORY)
+        get_filename_component(outputName ${input} NAME_WE)
+        set(output "${CMAKE_CURRENT_BINARY_DIR}/updated_bootstrap/src/${outputDir}/${outputName}.c")
         file(RELATIVE_PATH pandacInc ${working} "${CMAKE_CURRENT_SOURCE_DIR}/src/pandac")
         if (pandacInc STREQUAL "")
             set(pandacInc ".")
@@ -505,7 +551,9 @@ function(compile_panda_sources_to_c out_var)
         endif()
         add_custom_command(
             OUTPUT ${output}
-            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/pandac -O ${OPTIMIZATION} -S ${SAFETY} -f c -i ${CMAKE_CURRENT_SOURCE_DIR}/src -i ${pandacInc} -i ${parserInc} -i ${buildInc} -o ${CMAKE_CURRENT_BINARY_DIR}/updated_bootstrap/src ${input}
+            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/pandac -O ${OPTIMIZATION} -S ${SAFETY} -f c
+                    -i ${CMAKE_CURRENT_SOURCE_DIR}/src -i ${pandacInc} -i ${parserInc}
+                    -i ${buildInc} -o ${CMAKE_CURRENT_BINARY_DIR}/updated_bootstrap/src ${input}
             DEPENDS ${rawInput} pandac
             WORKING_DIRECTORY ${working}
         )
@@ -517,8 +565,6 @@ endfunction()
 compile_panda_sources_to_c(updated_pandac_c
     ${core_source}
     ${pandac_source}
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/parser/org/pandalanguage/plex/runtime/DFA.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/parser/org/pandalanguage/plex/runtime/RawToken.panda
 )
 
 add_custom_target(update_bootstrap
@@ -528,12 +574,15 @@ add_custom_target(update_bootstrap
 add_custom_command(
     TARGET update_bootstrap POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E remove_directory ${CMAKE_CURRENT_SOURCE_DIR}/bootstrap
-    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_BINARY_DIR}/updated_bootstrap ${CMAKE_CURRENT_SOURCE_DIR}/bootstrap
+    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_BINARY_DIR}/updated_bootstrap
+            ${CMAKE_CURRENT_SOURCE_DIR}/bootstrap
 )
 
 add_custom_command(
     OUTPUT TestRunner
-    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/pandac -O ${OPTIMIZATION} -S ${SAFETY} ${CMAKE_CURRENT_SOURCE_DIR}/test/TestRunner.panda -o ${CMAKE_CURRENT_BINARY_DIR}/TestRunner
+    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/pandac -O ${OPTIMIZATION} -S ${SAFETY}
+            ${CMAKE_CURRENT_SOURCE_DIR}/test/TestRunner.panda
+            -o ${CMAKE_CURRENT_BINARY_DIR}/TestRunner
     DEPENDS pandac test/TestRunner.panda
 )
 
@@ -543,5 +592,6 @@ add_custom_target(run_tests
 
 add_custom_command(
     TARGET run_tests POST_BUILD
-    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/TestRunner ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_C_COMPILER}
+    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/TestRunner ${CMAKE_CURRENT_SOURCE_DIR}
+            ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_C_COMPILER}
 )

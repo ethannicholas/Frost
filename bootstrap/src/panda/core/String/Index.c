@@ -82,32 +82,39 @@ void panda$core$String$Index$init$panda$core$Int64(panda$core$String$Index* self
     self->value = p_value;
 }
 panda$core$Bit panda$core$String$Index$$EQ$panda$core$String$Index$R$panda$core$Bit(panda$core$String$Index self, panda$core$String$Index p_other) {
-    panda$core$Bit $tmp3 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(self.value, p_other.value);
+    panda$core$Bit $tmp4 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(self.value, p_other.value);
+    panda$core$Bit $tmp3 = $tmp4;
     return $tmp3;
 }
 panda$core$Bit panda$core$String$Index$$NEQ$panda$core$String$Index$R$panda$core$Bit(panda$core$String$Index self, panda$core$String$Index p_other) {
-    panda$core$Bit $tmp4 = panda$core$String$Index$$EQ$panda$core$String$Index$R$panda$core$Bit(self, p_other);
-    panda$core$Bit $tmp5 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp4);
+    panda$core$Bit $tmp6 = panda$core$String$Index$$EQ$panda$core$String$Index$R$panda$core$Bit(self, p_other);
+    panda$core$Bit $tmp7 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp6);
+    panda$core$Bit $tmp5 = $tmp7;
     return $tmp5;
 }
 panda$core$Bit panda$core$String$Index$$LT$panda$core$String$Index$R$panda$core$Bit(panda$core$String$Index self, panda$core$String$Index p_other) {
-    panda$core$Bit $tmp6 = panda$core$Int64$$LT$panda$core$Int64$R$panda$core$Bit(self.value, p_other.value);
-    return $tmp6;
-}
-panda$core$Bit panda$core$String$Index$$GT$panda$core$String$Index$R$panda$core$Bit(panda$core$String$Index self, panda$core$String$Index p_other) {
-    panda$core$Bit $tmp7 = panda$core$Int64$$GT$panda$core$Int64$R$panda$core$Bit(self.value, p_other.value);
-    return $tmp7;
-}
-panda$core$Bit panda$core$String$Index$$LE$panda$core$String$Index$R$panda$core$Bit(panda$core$String$Index self, panda$core$String$Index p_other) {
-    panda$core$Bit $tmp8 = panda$core$Int64$$LE$panda$core$Int64$R$panda$core$Bit(self.value, p_other.value);
+    panda$core$Bit $tmp9 = panda$core$Int64$$LT$panda$core$Int64$R$panda$core$Bit(self.value, p_other.value);
+    panda$core$Bit $tmp8 = $tmp9;
     return $tmp8;
 }
+panda$core$Bit panda$core$String$Index$$GT$panda$core$String$Index$R$panda$core$Bit(panda$core$String$Index self, panda$core$String$Index p_other) {
+    panda$core$Bit $tmp11 = panda$core$Int64$$GT$panda$core$Int64$R$panda$core$Bit(self.value, p_other.value);
+    panda$core$Bit $tmp10 = $tmp11;
+    return $tmp10;
+}
+panda$core$Bit panda$core$String$Index$$LE$panda$core$String$Index$R$panda$core$Bit(panda$core$String$Index self, panda$core$String$Index p_other) {
+    panda$core$Bit $tmp13 = panda$core$Int64$$LE$panda$core$Int64$R$panda$core$Bit(self.value, p_other.value);
+    panda$core$Bit $tmp12 = $tmp13;
+    return $tmp12;
+}
 panda$core$Bit panda$core$String$Index$$GE$panda$core$String$Index$R$panda$core$Bit(panda$core$String$Index self, panda$core$String$Index p_other) {
-    panda$core$Bit $tmp9 = panda$core$Int64$$GE$panda$core$Int64$R$panda$core$Bit(self.value, p_other.value);
-    return $tmp9;
+    panda$core$Bit $tmp15 = panda$core$Int64$$GE$panda$core$Int64$R$panda$core$Bit(self.value, p_other.value);
+    panda$core$Bit $tmp14 = $tmp15;
+    return $tmp14;
 }
 panda$core$Int64 panda$core$String$Index$hash$R$panda$core$Int64(panda$core$String$Index self) {
-    return self.value;
+    panda$core$Int64 $tmp16 = self.value;
+    return $tmp16;
 }
 void panda$core$String$Index$cleanup(panda$core$String$Index self) {
 }

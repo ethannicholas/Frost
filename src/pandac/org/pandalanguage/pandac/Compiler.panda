@@ -123,6 +123,7 @@ class Compiler {
         addAlias("panda.collections.CollectionWriter")
         addAlias("panda.collections.IdentityMap")
         addAlias("panda.collections.ImmutableArray")
+        addAlias("panda.collections.ImmutableHashMap")
         addAlias("panda.collections.Iterable")
         addAlias("panda.collections.Iterator")
         addAlias("panda.collections.Key")
@@ -175,7 +176,8 @@ class Compiler {
         addAlias("panda.io.MemoryOutputStream")
         addAlias("panda.io.OutputStream")
         addAlias("panda.io.PushbackInputStream")
-        addAlias("panda.unsafe.Pointer")
+        addAlias("panda.json.JSON")
+        addAlias("panda.json.JSONParser")
     }
 
     @private
