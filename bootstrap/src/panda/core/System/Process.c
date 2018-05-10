@@ -19,7 +19,17 @@ void panda$core$System$Process$init(panda$core$System$Process* self) {
     self->error = NULL;
 }
 void panda$core$System$Process$cleanup(panda$core$System$Process* self) {
+    int $tmp4;
+    {
+    }
+    $tmp4 = -1;
+    goto $l2;
+    $l2:;
     panda$core$Object$cleanup(((panda$core$Object*) self));
+    switch ($tmp4) {
+        case -1: goto $l5;
+    }
+    $l5:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->input));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->output));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->error));

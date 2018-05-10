@@ -13,6 +13,16 @@ static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -
 void org$pandalanguage$pandac$LLVMCodeGenerator$OpClass$init(org$pandalanguage$pandac$LLVMCodeGenerator$OpClass* self) {
 }
 void org$pandalanguage$pandac$LLVMCodeGenerator$OpClass$cleanup(org$pandalanguage$pandac$LLVMCodeGenerator$OpClass* self) {
+    int $tmp4;
+    {
+    }
+    $tmp4 = -1;
+    goto $l2;
+    $l2:;
     panda$core$Object$cleanup(((panda$core$Object*) self));
+    switch ($tmp4) {
+        case -1: goto $l5;
+    }
+    $l5:;
 }
 

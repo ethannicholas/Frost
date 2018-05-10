@@ -13,6 +13,16 @@ static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -
 void panda$core$System$init(panda$core$System* self) {
 }
 void panda$core$System$cleanup(panda$core$System* self) {
+    int $tmp4;
+    {
+    }
+    $tmp4 = -1;
+    goto $l2;
+    $l2:;
     panda$core$Object$cleanup(((panda$core$Object*) self));
+    switch ($tmp4) {
+        case -1: goto $l5;
+    }
+    $l5:;
 }
 

@@ -28,7 +28,13 @@ static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -
 void org$pandalanguage$pandac$Methods$init$panda$collections$ListView$LTorg$pandalanguage$pandac$MethodDecl$GT(org$pandalanguage$pandac$Methods* self, panda$collections$ListView* p_methods) {
     panda$core$Range$LTpanda$core$Int64$GT $tmp7;
     panda$core$Range$LTpanda$core$Int64$GT $tmp25;
+    panda$core$Object* $tmp39;
+    panda$core$Object* $tmp44;
     org$pandalanguage$pandac$Position $tmp61;
+    panda$core$Object* $tmp62;
+    panda$collections$ImmutableArray* $tmp67;
+    panda$collections$ImmutableArray* $tmp68;
+    panda$collections$ImmutableArray* $tmp69;
     self->name = NULL;
     self->methods = NULL;
     ITable* $tmp2 = ((panda$collections$CollectionView*) p_methods)->$class->itable;
@@ -75,14 +81,14 @@ void org$pandalanguage$pandac$Methods$init$panda$collections$ListView$LTorg$pand
             }
             $fn42 $tmp41 = $tmp40->methods[0];
             panda$core$Object* $tmp43 = $tmp41(p_methods, i12);
-            panda$core$Object* $tmp39 = $tmp43;
+            $tmp39 = $tmp43;
             ITable* $tmp45 = p_methods->$class->itable;
             while ($tmp45->$class != (panda$core$Class*) &panda$collections$ListView$class) {
                 $tmp45 = $tmp45->next;
             }
             $fn47 $tmp46 = $tmp45->methods[0];
             panda$core$Object* $tmp48 = $tmp46(p_methods, j26);
-            panda$core$Object* $tmp44 = $tmp48;
+            $tmp44 = $tmp48;
             panda$core$Panda$unref$panda$core$Object($tmp44);
             panda$core$Panda$unref$panda$core$Object($tmp39);
             if (((panda$core$Bit) { ((panda$core$Object*) ((org$pandalanguage$pandac$MethodDecl*) $tmp39)) == ((panda$core$Object*) ((org$pandalanguage$pandac$MethodDecl*) $tmp44)) }).value) {
@@ -121,15 +127,15 @@ void org$pandalanguage$pandac$Methods$init$panda$collections$ListView$LTorg$pand
     }
     $fn65 $tmp64 = $tmp63->methods[0];
     panda$core$Object* $tmp66 = $tmp64(p_methods, ((panda$core$Int64) { 0 }));
-    panda$core$Object* $tmp62 = $tmp66;
+    $tmp62 = $tmp66;
     org$pandalanguage$pandac$Symbol$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$String(((org$pandalanguage$pandac$Symbol*) self), ((panda$core$Int64) { 205 }), $tmp61, ((org$pandalanguage$pandac$Symbol*) ((org$pandalanguage$pandac$MethodDecl*) $tmp62))->name);
     panda$core$Panda$unref$panda$core$Object($tmp62);
     {
-        panda$collections$ImmutableArray* $tmp67 = self->methods;
+        $tmp67 = self->methods;
         panda$collections$ImmutableArray* $tmp70 = (panda$collections$ImmutableArray*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$ImmutableArray$class);
         panda$collections$ImmutableArray$init$panda$collections$ListView$LTpanda$collections$ImmutableArray$T$GT($tmp70, p_methods);
-        panda$collections$ImmutableArray* $tmp69 = $tmp70;
-        panda$collections$ImmutableArray* $tmp68 = $tmp69;
+        $tmp69 = $tmp70;
+        $tmp68 = $tmp69;
         self->methods = $tmp68;
         panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp68));
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp69));
@@ -137,7 +143,17 @@ void org$pandalanguage$pandac$Methods$init$panda$collections$ListView$LTorg$pand
     }
 }
 void org$pandalanguage$pandac$Methods$cleanup(org$pandalanguage$pandac$Methods* self) {
+    int $tmp73;
+    {
+    }
+    $tmp73 = -1;
+    goto $l71;
+    $l71:;
     org$pandalanguage$pandac$Symbol$cleanup(((org$pandalanguage$pandac$Symbol*) self));
+    switch ($tmp73) {
+        case -1: goto $l74;
+    }
+    $l74:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->methods));
 }
 

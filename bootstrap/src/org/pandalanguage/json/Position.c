@@ -41,27 +41,34 @@ void org$pandalanguage$json$Position$init$panda$core$Int64$panda$core$Int64(org$
     self->column = p_column;
 }
 panda$core$String* org$pandalanguage$json$Position$convert$R$panda$core$String(org$pandalanguage$json$Position self) {
+    panda$core$String* $finallyReturn7;
+    panda$core$String* $tmp9;
+    panda$core$String* $tmp10;
+    panda$core$String* $tmp11;
+    panda$core$String* $tmp12;
+    panda$core$String* $tmp13;
+    panda$core$Object* $tmp17;
     panda$core$String* $tmp14 = panda$core$Int64$convert$R$panda$core$String(self.line);
-    panda$core$String* $tmp13 = $tmp14;
+    $tmp13 = $tmp14;
     panda$core$String* $tmp16 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp13, &$s15);
-    panda$core$String* $tmp12 = $tmp16;
+    $tmp12 = $tmp16;
     panda$core$Int64$wrapper* $tmp18;
     $tmp18 = (panda$core$Int64$wrapper*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$Int64$wrapperclass);
     $tmp18->value = self.column;
-    panda$core$Object* $tmp17 = ((panda$core$Object*) $tmp18);
+    $tmp17 = ((panda$core$Object*) $tmp18);
     panda$core$String* $tmp19 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp12, $tmp17);
-    panda$core$String* $tmp11 = $tmp19;
+    $tmp11 = $tmp19;
     panda$core$String* $tmp21 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp11, &$s20);
-    panda$core$String* $tmp10 = $tmp21;
-    panda$core$String* $tmp9 = $tmp10;
-    panda$core$String* $tmp8 = $tmp9;
+    $tmp10 = $tmp21;
+    $tmp9 = $tmp10;
+    $finallyReturn7 = $tmp9;
     panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp9));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp10));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp11));
     panda$core$Panda$unref$panda$core$Object($tmp17);
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp12));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp13));
-    return $tmp8;
+    return $finallyReturn7;
 }
 void org$pandalanguage$json$Position$cleanup(org$pandalanguage$json$Position self) {
 }

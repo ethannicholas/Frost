@@ -18,37 +18,55 @@ static panda$core$String $s12 = { (panda$core$Class*) &panda$core$String$class, 
 static panda$core$String $s15 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x29", 1, 142, NULL };
 
 void org$pandalanguage$pandac$Alias$init$panda$core$String$panda$core$String$org$pandalanguage$pandac$Position(org$pandalanguage$pandac$Alias* self, panda$core$String* p_alias, panda$core$String* p_fullName, org$pandalanguage$pandac$Position p_position) {
+    panda$core$String* $tmp2;
+    panda$core$String* $tmp3;
     self->name = NULL;
     self->fullName = NULL;
     org$pandalanguage$pandac$Symbol$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$String(((org$pandalanguage$pandac$Symbol*) self), ((panda$core$Int64) { 200 }), p_position, p_alias);
     {
-        panda$core$String* $tmp2 = self->fullName;
-        panda$core$String* $tmp3 = p_fullName;
+        $tmp2 = self->fullName;
+        $tmp3 = p_fullName;
         self->fullName = $tmp3;
         panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp3));
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2));
     }
 }
 panda$core$String* org$pandalanguage$pandac$Alias$convert$R$panda$core$String(org$pandalanguage$pandac$Alias* self) {
+    panda$core$String* $finallyReturn3;
+    panda$core$String* $tmp5;
+    panda$core$String* $tmp6;
+    panda$core$String* $tmp7;
+    panda$core$String* $tmp8;
+    panda$core$String* $tmp9;
     panda$core$String* $tmp11 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s10, self->name);
-    panda$core$String* $tmp9 = $tmp11;
+    $tmp9 = $tmp11;
     panda$core$String* $tmp13 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp9, &$s12);
-    panda$core$String* $tmp8 = $tmp13;
+    $tmp8 = $tmp13;
     panda$core$String* $tmp14 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp8, self->fullName);
-    panda$core$String* $tmp7 = $tmp14;
+    $tmp7 = $tmp14;
     panda$core$String* $tmp16 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp7, &$s15);
-    panda$core$String* $tmp6 = $tmp16;
-    panda$core$String* $tmp5 = $tmp6;
-    panda$core$String* $tmp4 = $tmp5;
+    $tmp6 = $tmp16;
+    $tmp5 = $tmp6;
+    $finallyReturn3 = $tmp5;
     panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp5));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp6));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp7));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp8));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp9));
-    return $tmp4;
+    return $finallyReturn3;
 }
 void org$pandalanguage$pandac$Alias$cleanup(org$pandalanguage$pandac$Alias* self) {
+    int $tmp20;
+    {
+    }
+    $tmp20 = -1;
+    goto $l18;
+    $l18:;
     org$pandalanguage$pandac$Symbol$cleanup(((org$pandalanguage$pandac$Symbol*) self));
+    switch ($tmp20) {
+        case -1: goto $l21;
+    }
+    $l21:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->fullName));
 }
 

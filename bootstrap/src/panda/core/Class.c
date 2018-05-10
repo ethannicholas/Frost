@@ -16,7 +16,17 @@ void panda$core$Class$init(panda$core$Class* self) {
     self->superclass = NULL;
 }
 void panda$core$Class$cleanup(panda$core$Class* self) {
+    int $tmp4;
+    {
+    }
+    $tmp4 = -1;
+    goto $l2;
+    $l2:;
     panda$core$Immutable$cleanup(((panda$core$Immutable*) self));
+    switch ($tmp4) {
+        case -1: goto $l5;
+    }
+    $l5:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->name));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->superclass));
 }

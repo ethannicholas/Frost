@@ -117,6 +117,8 @@ int allocations = 0;
 
 int refCount = 1;
 
+#define DEBUG_REFS 0
+
 void* pandaAlloc(size_t size) {
     allocations++;
     return calloc(size, 1);
@@ -128,9 +130,15 @@ void* pandaZAlloc(size_t size) {
 }
 
 void* pandaObjectAlloc(size_t size, Class* cl) {
-/*    char* name = pandaGetCString(cl->name);
-    printf("%s alloc\n", name);
-    pandaFree(name);*/
+#if DEBUG_REFS
+    if (refCount) {
+        char* name = malloc(cl->name->size + 1);
+        memcpy(name, cl->name->data, cl->name->size);
+        name[cl->name->size] = 0;
+        printf("%s alloc\n", name);
+        free(name);
+    }
+#endif
     Object* result = pandaZAlloc(size);
     result->cl = cl;
     result->refcnt = 1;
@@ -154,11 +162,19 @@ void pandaFree(void* ptr) {
 }
 
 void pandaObjectFree(Object* o) {
-/*    char* name = pandaGetCString(o->cl->name);
-    printf("%s free\n", name);
-    pandaFree(name);*/
+#if DEBUG_REFS
+    if (refCount) {
+        char* name = malloc(o->cl->name->size + 1);
+        memcpy(name, o->cl->name->data, o->cl->name->size);
+        name[o->cl->name->size] = 0;
+        printf("%s free\n", name);
+        free(name);
+    }
+#endif
+    o->refcnt = -100000;
     pandaFree(o);
 }
+
 /**
  * Returns a null-terminated copy of a Panda string. The caller is responsible for freeing this
  * memory.
@@ -167,6 +183,14 @@ char* pandaGetCString(String* s) {
     char* result = pandaAlloc(s->size + 1);
     memcpy(result, s->data, s->size);
     result[s->size] = 0;
+    return result;
+}
+
+char* pandaConvertToString(void* o) {
+    String* (*convert)(void*) = (String*(*)(void*)) ((Object*) o)->cl->vtable[0]; // FIXME hardcoded index to convert
+    String* pandaString = convert(o);
+    char* result = pandaGetCString(pandaString);
+    panda$core$Panda$unref$panda$core$Object((Object*) pandaString);
     return result;
 }
 
@@ -331,18 +355,32 @@ void panda$core$Panda$ref$panda$core$Object(Object* o) {
     }
 }
 
+void debugPrintObject(void* object) {
+    char* className = pandaGetCString(((Object*) object)->cl->name);
+    printf("%s(%p)\n", className, object);
+    pandaFree(className);
+
+}
+
 void panda$core$Panda$unref$panda$core$Object(Object* o) {
     if (refCount && o && o->refcnt != NO_REFCNT) {
         if (o->refcnt <= 0) {
             printf("internal error: unref with refcnt = %d\n", o->refcnt);
+            debugPrintObject(o);
             abort();
         }
-        --o->refcnt;
-        if (o->refcnt == 0) {
+        if (o->refcnt == 1) {
             void (*cleanup)() = o->cl->vtable[1]; // FIXME hardcoded index to cleanup
-            o->refcnt = -100000;
             cleanup(o);
+            if (o->refcnt != 1) {
+                printf("object was resurrected during cleanup\n");
+                debugPrintObject(o);
+//                abort();
+            }
             pandaObjectFree(o);
+        }
+        else {
+            --o->refcnt;
         }
     }
 }

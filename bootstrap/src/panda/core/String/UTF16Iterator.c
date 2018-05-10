@@ -26,31 +26,45 @@ panda$core$String$UTF16Iterator$class_type panda$core$String$UTF16Iterator$class
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x55\x54\x46\x31\x36\x49\x74\x65\x72\x61\x74\x6f\x72", 31, -7181782867719721369, NULL };
 
 void panda$core$String$UTF16Iterator$init$panda$core$String(panda$core$String$UTF16Iterator* self, panda$core$String* p_str) {
+    panda$core$String* $tmp3;
+    panda$core$String* $tmp4;
     self->str = NULL;
     self->index = ((panda$core$Int64) { 0 });
     {
-        panda$core$String* $tmp3 = self->str;
-        panda$core$String* $tmp4 = p_str;
+        $tmp3 = self->str;
+        $tmp4 = p_str;
         self->str = $tmp4;
         panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp4));
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp3));
     }
 }
 panda$core$Bit panda$core$String$UTF16Iterator$get_done$R$panda$core$Bit(panda$core$String$UTF16Iterator* self) {
+    panda$core$Bit $finallyReturn4;
     panda$core$Bit $tmp6 = panda$core$Int64$$GE$panda$core$Int64$R$panda$core$Bit(self->index, self->str->_length);
-    panda$core$Bit $tmp5 = $tmp6;
-    return $tmp5;
+    $finallyReturn4 = $tmp6;
+    return $finallyReturn4;
 }
 panda$core$Char16 panda$core$String$UTF16Iterator$next$R$panda$core$Char16(panda$core$String$UTF16Iterator* self) {
-    panda$core$Char16 $tmp9;
-    panda$core$Int64 $tmp7 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 1 }));
-    self->index = $tmp7;
-    panda$core$Char16$init$panda$core$UInt16(&$tmp9, ((panda$core$UInt16) { 1 }));
-    panda$core$Char16 $tmp8 = $tmp9;
-    return $tmp8;
+    panda$core$Char16 $finallyReturn8;
+    panda$core$Char16 $tmp10;
+    panda$core$Int64 $tmp8 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 1 }));
+    self->index = $tmp8;
+    panda$core$Char16$init$panda$core$UInt16(&$tmp10, ((panda$core$UInt16) { 1 }));
+    $finallyReturn8 = $tmp10;
+    return $finallyReturn8;
 }
 void panda$core$String$UTF16Iterator$cleanup(panda$core$String$UTF16Iterator* self) {
+    int $tmp14;
+    {
+    }
+    $tmp14 = -1;
+    goto $l12;
+    $l12:;
     panda$core$Object$cleanup(((panda$core$Object*) self));
+    switch ($tmp14) {
+        case -1: goto $l15;
+    }
+    $l15:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->str));
 }
 

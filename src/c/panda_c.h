@@ -24,5 +24,7 @@ void* pandaNewRealloc(void* old, size_t oldSize, size_t newSize);
 
 void pandaFree(void* ptr);
 
+char* pandaConvertToString(void* o);
+
 #define PANDA_ASSERT(x) if (!x) { printf("assertion failure: %s:%d\n", __FILE__, __LINE__); \
         __builtin_trap(); }

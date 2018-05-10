@@ -16,15 +16,17 @@ static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -
 void panda$io$FileInputStream$init(panda$io$FileInputStream* self) {
 }
 panda$core$UInt8$nullable panda$io$FileInputStream$read$R$panda$core$UInt8$Q(panda$io$FileInputStream* self) {
+    panda$core$UInt8$nullable $finallyReturn1;
     panda$core$UInt8$nullable $tmp3;
     panda$io$FileInputStream$readImpl$R$panda$core$UInt8$Q(&$tmp3, self);
-    panda$core$UInt8$nullable $tmp2 = $tmp3;
-    return $tmp2;
+    $finallyReturn1 = $tmp3;
+    return $finallyReturn1;
 }
 panda$core$Int64 panda$io$FileInputStream$read$panda$unsafe$Pointer$LTpanda$core$UInt8$GT$panda$core$Int64$R$panda$core$Int64(panda$io$FileInputStream* self, panda$core$UInt8* p_buffer, panda$core$Int64 p_max) {
-    panda$core$Int64 $tmp5;
-    panda$io$FileInputStream$readImpl$panda$unsafe$Pointer$LTpanda$core$UInt8$GT$panda$core$Int64$R$panda$core$Int64(&$tmp5, self, p_buffer, p_max);
-    panda$core$Int64 $tmp4 = $tmp5;
-    return $tmp4;
+    panda$core$Int64 $finallyReturn4;
+    panda$core$Int64 $tmp6;
+    panda$io$FileInputStream$readImpl$panda$unsafe$Pointer$LTpanda$core$UInt8$GT$panda$core$Int64$R$panda$core$Int64(&$tmp6, self, p_buffer, p_max);
+    $finallyReturn4 = $tmp6;
+    return $finallyReturn4;
 }
 

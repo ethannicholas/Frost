@@ -20,14 +20,18 @@ static panda$core$String $s7 = { (panda$core$Class*) &panda$core$String$class, -
 static panda$core$String $s10 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
 
 void org$pandalanguage$pandac$parser$Parser$Errors$error$panda$io$File$org$pandalanguage$pandac$Position$panda$core$String(org$pandalanguage$pandac$parser$Parser$Errors* self, panda$io$File* p_file, org$pandalanguage$pandac$Position p_pos, panda$core$String* p_msg) {
+    panda$core$String* $tmp2;
+    panda$core$String* $tmp3;
+    panda$core$String* $tmp4;
+    panda$core$String* $tmp5;
     panda$core$String* $tmp6 = org$pandalanguage$pandac$Position$convert$R$panda$core$String(p_pos);
-    panda$core$String* $tmp5 = $tmp6;
+    $tmp5 = $tmp6;
     panda$core$String* $tmp8 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp5, &$s7);
-    panda$core$String* $tmp4 = $tmp8;
+    $tmp4 = $tmp8;
     panda$core$String* $tmp9 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp4, p_msg);
-    panda$core$String* $tmp3 = $tmp9;
+    $tmp3 = $tmp9;
     panda$core$String* $tmp11 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp3, &$s10);
-    panda$core$String* $tmp2 = $tmp11;
+    $tmp2 = $tmp11;
     panda$io$Console$printLine$panda$core$String($tmp2);
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp3));
@@ -37,6 +41,16 @@ void org$pandalanguage$pandac$parser$Parser$Errors$error$panda$io$File$org$panda
 void org$pandalanguage$pandac$parser$Parser$Errors$init(org$pandalanguage$pandac$parser$Parser$Errors* self) {
 }
 void org$pandalanguage$pandac$parser$Parser$Errors$cleanup(org$pandalanguage$pandac$parser$Parser$Errors* self) {
+    int $tmp14;
+    {
+    }
+    $tmp14 = -1;
+    goto $l12;
+    $l12:;
     panda$core$Object$cleanup(((panda$core$Object*) self));
+    switch ($tmp14) {
+        case -1: goto $l15;
+    }
+    $l15:;
 }
 

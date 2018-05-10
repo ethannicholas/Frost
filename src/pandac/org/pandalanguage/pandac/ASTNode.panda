@@ -3,75 +3,74 @@ package org.pandalanguage.pandac
 uses org.pandalanguage.pandac.parser.Token
 
 choice ASTNode {
-    ANNOTATION      (Position, String)
-    ASSERT          (Position, ASTNode, ASTNode?)
-    BINARY          (Position, ASTNode, Token.Kind, ASTNode)
-    BIT             (Position, Bit)
-    BLOCK           (Position, ImmutableArray<ASTNode>)
-    BREAK           (Position, String?)
-    CALL            (Position, ASTNode, ImmutableArray<ASTNode>)
-    CHOICE_ENTRY    (Position,
-                     ASTNode?                 -* Doccomment (STRING) *-,
-                     String                   -* name *-,
-                     ImmutableArray<ASTNode>? -* field TYPEs *-)
-    CHOICE_FIELD_REFERENCE
-                    (Position, ASTNode -* base *-, ChoiceEntry, Int -* field index *-)
-    CLASS           (Position,
-                     ASTNode?                 -* Doccomment (STRING) *-,
-                     ImmutableArray<ASTNode>  -* ANNOTATIONs *-,
-                     ClassDecl.Kind,
-                     String,
-                     ImmutableArray<ASTNode>? -* Generics (TYPED_IDENTIFIERs) *-,
-                     ImmutableArray<ASTNode>? -* Supertypes (TYPEs)) *-,
-                     ImmutableArray<ASTNode>  -* Members *-)
-    CONTINUE        (Position, String?)
-    DECLARATION     (Position, ASTNode -* target *-, ASTNode? -* initializer *-)
-    DO              (Position, String?, ImmutableArray<ASTNode>, ASTNode)
-    DOT             (Position, ASTNode, String)
-    FIELD           (Position,
-                     ASTNode?                 -* Doccomment (STRING) *-,
-                     ImmutableArray<ASTNode>  -* ANNOTATIONs *-,
-                     ASTNode                  -* VAR *-)
-    FILE            (ImmutableArray<ASTNode>)
-    FOR             (Position, String?, ASTNode, ASTNode, ImmutableArray<ASTNode>)
-    GENERIC_TYPE    (Position, String, ImmutableArray<ASTNode> -* types *-)
-    IDENTIFIER      (Position, String)
-    IF              (Position, ASTNode, ImmutableArray<ASTNode> -* ifTrue *-,
-                     ASTNode? -* ifFalse *-)
-    INT             (Position, UInt64)
-    IR_WRAPPER      (IRNode)
-    LOOP            (Position, String?, ImmutableArray<ASTNode>)
-    MATCH           (Position,
-                     ASTNode                  -* value *-,
-                     ImmutableArray<ASTNode>  -* whens *-,
-                     ImmutableArray<ASTNode>? -* otherwise *-)
-    METHOD          (Position,
-                     ASTNode?                 -* Doccomment (STRING) *-,
-                     ImmutableArray<ASTNode>  -* ANNOTATIONs *-,
-                     MethodDecl.Kind,
-                     String                   -* name *-,
-                     ImmutableArray<ASTNode>  -* PARAMETERs *-,
-                     ASTNode?                 -* return type *-,
-                     ImmutableArray<ASTNode>? -* statements *-)
-    NULL            (Position)
-    NULLABLE_TYPE   (Position, ASTNode -* type *-)
-    PACKAGE         (Position, String)
-    PARAMETER       (Position, String, ASTNode -* type *-)
-    PREFIX          (Position, Token.Kind, ASTNode)
-    RANGE           (Position, ASTNode?, ASTNode?, Bit, ASTNode?)
-    REAL            (Position, Real64)
-    RETURN          (Position, ASTNode?)
-    SELF            (Position)
-    STRING          (Position, String)
-    SUPER           (Position)
-    TYPE            (Position, String)
-    TYPED_IDENTIFIER(Position, String, ASTNode?)
-    USES            (Position, String)
-    VAR             (Position, Variable.Kind, ImmutableArray<ASTNode> -* DECLARATIONs *-)
-    WHEN            (Position,
-                     ImmutableArray<ASTNode> -* tests *-,
-                     ImmutableArray<ASTNode> -* statements *-)
-    WHILE           (Position, String?, ASTNode, ImmutableArray<ASTNode>)
+    ANNOTATION             (Position, String)
+    ASSERT                 (Position, ASTNode, ASTNode?)
+    BINARY                 (Position, ASTNode, Token.Kind, ASTNode)
+    BIT                    (Position, Bit)
+    BLOCK                  (Position, ImmutableArray<ASTNode>)
+    BREAK                  (Position, String?)
+    CALL                   (Position, ASTNode, ImmutableArray<ASTNode>)
+    CHOICE_ENTRY           (Position,
+                            ASTNode?                 -* Doccomment (STRING) *-,
+                            String                   -* name *-,
+                            ImmutableArray<ASTNode>? -* field TYPEs *-)
+    CHOICE_FIELD_REFERENCE (Position, ASTNode -* base *-, ChoiceEntry, Int -* field index *-)
+    CLASS                  (Position,
+                            ASTNode?                 -* Doccomment (STRING) *-,
+                            ImmutableArray<ASTNode>  -* ANNOTATIONs *-,
+                            ClassDecl.Kind,
+                            String,
+                            ImmutableArray<ASTNode>? -* Generics (TYPED_IDENTIFIERs) *-,
+                            ImmutableArray<ASTNode>? -* Supertypes (TYPEs)) *-,
+                            ImmutableArray<ASTNode>  -* Members *-)
+    CONTINUE               (Position, String?)
+    DECLARATION            (Position, ASTNode -* target *-, ASTNode? -* initializer *-)
+    DO                     (Position, String?, ImmutableArray<ASTNode>, ASTNode)
+    DOT                    (Position, ASTNode, String)
+    FIELD                  (Position,
+                            ASTNode?                 -* Doccomment (STRING) *-,
+                            ImmutableArray<ASTNode>  -* ANNOTATIONs *-,
+                            ASTNode                  -* VAR *-)
+    FILE                   (ImmutableArray<ASTNode>)
+    FOR                    (Position, String?, ASTNode, ASTNode, ImmutableArray<ASTNode>)
+    GENERIC_TYPE           (Position, String, ImmutableArray<ASTNode> -* types *-)
+    IDENTIFIER             (Position, String)
+    IF                     (Position, ASTNode, ImmutableArray<ASTNode> -* ifTrue *-,
+                            ASTNode? -* ifFalse *-)
+    INT                    (Position, UInt64)
+    IR_WRAPPER             (IRNode)
+    LOOP                   (Position, String?, ImmutableArray<ASTNode>)
+    MATCH                  (Position,
+                            ASTNode                  -* value *-,
+                            ImmutableArray<ASTNode>  -* whens *-,
+                            ImmutableArray<ASTNode>? -* otherwise *-)
+    METHOD                 (Position,
+                            ASTNode?                 -* Doccomment (STRING) *-,
+                            ImmutableArray<ASTNode>  -* ANNOTATIONs *-,
+                            MethodDecl.Kind,
+                            String                   -* name *-,
+                            ImmutableArray<ASTNode>  -* PARAMETERs *-,
+                            ASTNode?                 -* return type *-,
+                            ImmutableArray<ASTNode>? -* statements *-)
+    NULL                   (Position)
+    NULLABLE_TYPE          (Position, ASTNode -* type *-)
+    PACKAGE                (Position, String)
+    PARAMETER              (Position, String, ASTNode -* type *-)
+    PREFIX                 (Position, Token.Kind, ASTNode)
+    RANGE                  (Position, ASTNode?, ASTNode?, Bit, ASTNode?)
+    REAL                   (Position, Real64)
+    RETURN                 (Position, ASTNode?)
+    SELF                   (Position)
+    STRING                 (Position, String)
+    SUPER                  (Position)
+    TYPE                   (Position, String)
+    TYPED_IDENTIFIER       (Position, String, ASTNode?)
+    USES                   (Position, String)
+    VAR                    (Position, Variable.Kind, ImmutableArray<ASTNode> -* DECLARATIONs *-)
+    WHEN                   (Position,
+                            ImmutableArray<ASTNode> -* tests *-,
+                            ImmutableArray<ASTNode> -* statements *-)
+    WHILE                  (Position, String?, ASTNode, ImmutableArray<ASTNode>)
 
     function position():Position {
         match self {

@@ -23,17 +23,20 @@ static panda$core$String $s3 = { (panda$core$Class*) &panda$core$String$class, -
 static panda$core$String $s28 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x20", 1, 133, NULL };
 
 void panda$io$IndentedOutputStream$init$panda$io$OutputStream(panda$io$IndentedOutputStream* self, panda$io$OutputStream* p_out) {
+    panda$core$String* $tmp2;
+    panda$io$OutputStream* $tmp4;
+    panda$io$OutputStream* $tmp5;
     self->indent = NULL;
     self->out = NULL;
     self->level = ((panda$core$Int64) { 0 });
     self->indentSize = ((panda$core$Int64) { 4 });
-    panda$core$String* $tmp2 = &$s3;
+    $tmp2 = &$s3;
     self->indent = $tmp2;
     panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2));
     self->atLineStart = ((panda$core$Bit) { true });
     {
-        panda$io$OutputStream* $tmp4 = self->out;
-        panda$io$OutputStream* $tmp5 = p_out;
+        $tmp4 = self->out;
+        $tmp5 = p_out;
         self->out = $tmp5;
         panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp5));
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp4));
@@ -92,6 +95,9 @@ void panda$io$IndentedOutputStream$write$panda$unsafe$Pointer$LTpanda$core$UInt8
     (($fn22) self->out->$class->vtable[4])(self->out, p_ptr, start8, $tmp21);
 }
 void panda$io$IndentedOutputStream$indentIfNeeded(panda$io$IndentedOutputStream* self) {
+    panda$core$String* $tmp25;
+    panda$core$String* $tmp26;
+    panda$core$String* $tmp27;
     if (self->atLineStart.value) {
     {
         self->atLineStart = ((panda$core$Bit) { false });
@@ -100,11 +106,11 @@ void panda$io$IndentedOutputStream$indentIfNeeded(panda$io$IndentedOutputStream*
         if ($tmp24.value) {
         {
             {
-                panda$core$String* $tmp25 = self->indent;
+                $tmp25 = self->indent;
                 panda$core$Int64 $tmp29 = panda$core$Int64$$MUL$panda$core$Int64$R$panda$core$Int64(self->indentSize, self->level);
                 panda$core$String* $tmp30 = panda$core$String$$MUL$panda$core$Int64$R$panda$core$String(&$s28, $tmp29);
-                panda$core$String* $tmp27 = $tmp30;
-                panda$core$String* $tmp26 = $tmp27;
+                $tmp27 = $tmp30;
+                $tmp26 = $tmp27;
                 self->indent = $tmp26;
                 panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp26));
                 panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp27));
@@ -117,7 +123,17 @@ void panda$io$IndentedOutputStream$indentIfNeeded(panda$io$IndentedOutputStream*
     }
 }
 void panda$io$IndentedOutputStream$cleanup(panda$io$IndentedOutputStream* self) {
+    int $tmp34;
+    {
+    }
+    $tmp34 = -1;
+    goto $l32;
+    $l32:;
     panda$io$OutputStream$cleanup(((panda$io$OutputStream*) self));
+    switch ($tmp34) {
+        case -1: goto $l35;
+    }
+    $l35:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->indent));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->out));
 }

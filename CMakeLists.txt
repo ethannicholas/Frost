@@ -107,7 +107,6 @@ add_library(c_panda
     bootstrap/src/panda/io/OutputStream.c
     bootstrap/src/panda/io/PushbackInputStream.c
     bootstrap/src/panda/json/JSON.c
-    bootstrap/src/panda/json/JSON/Node.c
     bootstrap/src/panda/json/JSONParser.c
     bootstrap/src/panda/math/Random.c
     bootstrap/src/panda/math/XorShift128Plus.c
@@ -124,7 +123,7 @@ add_executable(bootstrap
     bootstrap/src/org/pandalanguage/pandac/ASTNode.c
     bootstrap/src/org/pandalanguage/pandac/CCodeGenerator.c
     bootstrap/src/org/pandalanguage/pandac/CCodeGenerator/ClassConstant.c
-    bootstrap/src/org/pandalanguage/pandac/CCodeGenerator/LoopDescriptor.c
+    bootstrap/src/org/pandalanguage/pandac/CCodeGenerator/EnclosingContext.c
     bootstrap/src/org/pandalanguage/pandac/CCodeGenerator/MethodShim.c
     bootstrap/src/org/pandalanguage/pandac/CCodeGenerator/OpClass.c
     bootstrap/src/org/pandalanguage/pandac/ChoiceEntry.c
@@ -145,7 +144,7 @@ add_executable(bootstrap
     bootstrap/src/org/pandalanguage/pandac/LLVMCodeGenerator.c
     bootstrap/src/org/pandalanguage/pandac/LLVMCodeGenerator/ClassConstant.c
     bootstrap/src/org/pandalanguage/pandac/LLVMCodeGenerator/InlineContext.c
-    bootstrap/src/org/pandalanguage/pandac/LLVMCodeGenerator/LoopDescriptor.c
+    bootstrap/src/org/pandalanguage/pandac/LLVMCodeGenerator/EnclosingContext.c
     bootstrap/src/org/pandalanguage/pandac/LLVMCodeGenerator/MethodShim.c
     bootstrap/src/org/pandalanguage/pandac/Main.c
     bootstrap/src/org/pandalanguage/pandac/Main/Arguments.c

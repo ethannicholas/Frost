@@ -77,6 +77,9 @@ class Compiler {
     def loops := Stack<String?>()
 
     @private
+    def finallies := Stack<Array<IRNode>>()
+
+    @private
     var reusedValueCount := 0
 
     @private
@@ -3125,127 +3128,16 @@ class Compiler {
         }
     }
 
-    function inScope(label:String?, loopScopes:Stack<String?>):Bit {
-        if label = null {
-            return loopScopes.get_count() > 0
-        }
-        for i in 0 .. loopScopes.get_count() {
-            if loopScopes.peek(i) = label {
-                return true
-            }
-        }
-        return false
-    }
-
-    ================================================================================================
-    Modifies a statement to perform extra work prior to leaving the current scope. If the statement
-    contains code which would cause the scope to be left (`return`, appropriate `break` or
-    `continue`), returns a modified version of the statement which invokes `finally` prior to
-    executing the `return` / `break` / `continue`. Otherwise, returns the original statement.
-    ================================================================================================
-    method instrumentExits(stmt:IRNode, loopScopes:Stack<String?>, finally:IRNode):IRNode {
-        match stmt {
-            when IRNode.RETURN(pos, value):
-                def stmts := Array<IRNode>() -- FIXME literal
-                if value != null {
-                    tmpCount += 1
-                    def tmp := Variable(stmt.position(), Variable.Kind.DEF, "tmp\{tmpCount}",
-                            value.type())
-                    def varChildren := Array<IRNode>()
-                    def varRef := IRNode.VARIABLE_REFERENCE(pos, tmp)
-                    varChildren.add(IRNode.DECLARATION(varRef, value))
-                    stmts.add(IRNode.VAR(pos, Variable.Kind.DEF, varChildren.finish()))
-                    stmts.add(finally)
-                    stmts.add(IRNode.RETURN(pos, varRef))
-                }
-                else {
-                    stmts.add(finally)
-                    stmts.add(stmt)
-                }
-                return IRNode.BLOCK(pos, stmts.finish())
-            when IRNode.BLOCK(pos, statements):
-                return IRNode.BLOCK(pos, instrumentExits(statements, loopScopes, finally))
-            when IRNode.IF(pos, test, ifTrue, ifFalse):
-                return IRNode.IF(pos, test, instrumentExits(ifTrue, loopScopes, finally),
-                        instrumentExits(ifFalse, loopScopes, finally))
-            when IRNode.MATCH(pos, value, whens, others):
-                return IRNode.MATCH(pos, value, instrumentExits(whens, loopScopes, finally),
-                        instrumentExits(others, loopScopes, finally))
-            when IRNode.WHEN(pos, tests, statements):
-                return IRNode.WHEN(pos, tests, instrumentExits(statements, loopScopes, finally))
-            when IRNode.RANGE_FOR(pos, label, target, list, statements):
-                loopScopes.push(label)
-                def result := IRNode.RANGE_FOR(pos, label, target, list,
-                        instrumentExits(statements, loopScopes, finally))
-                loopScopes.pop()
-                return result
-            when IRNode.WHILE(pos, label, test, statements):
-                loopScopes.push(label)
-                def result := IRNode.WHILE(pos, label, test,
-                        instrumentExits(statements, loopScopes, finally))
-                loopScopes.pop()
-                return result
-            when IRNode.DO(pos, label, statements, test):
-                loopScopes.push(label)
-                def result := IRNode.DO(pos,
-                        label,
-                        instrumentExits(statements, loopScopes, finally),
-                        test)
-                loopScopes.pop()
-                return result
-            when IRNode.LOOP(pos, label, statements):
-                loopScopes.push(label)
-                def result := IRNode.LOOP(pos, label,
-                        instrumentExits(statements, loopScopes, finally))
-                loopScopes.pop()
-                return result
-            when IRNode.BREAK(pos, label):
-                if !inScope(label, loopScopes) {
-                    def stmts := Array<IRNode>() -- FIXME literal
-                    stmts.add(finally)
-                    stmts.add(stmt)
-                    return IRNode.BLOCK(pos, stmts.finish())
-                }
-                return stmt
-            when IRNode.CONTINUE(pos, label):
-                if !inScope(label, loopScopes) {
-                    def stmts := Array<IRNode>() -- FIXME literal
-                    stmts.add(finally)
-                    stmts.add(stmt)
-                    return IRNode.BLOCK(pos, stmts.finish())
-                }
-                return stmt
-            otherwise:
-                return stmt
-        }
-    }
-
-    method instrumentExits(stmt:IRNode?, loopScopes:Stack<String?>, finally:IRNode):IRNode? {
-        if stmt = null {
-            return null
-        }
-        return instrumentExits(stmt->IRNode, loopScopes, finally)
-    }
-
-    method instrumentExits(stmts:ListView<IRNode>?, loopScopes:Stack<String?>,
-            finally:IRNode):ImmutableArray<IRNode>? {
-        if stmts = null {
-            return null
-        }
-        def result := Array<IRNode>()
-        for s in stmts {
-            result.add(instrumentExits(s, loopScopes, finally))
-        }
-        return result.finish()
-    }
-
     method compileBlockStatements(position:Position,
-            statements:ListView<ASTNode>, finally:IRNode?):ImmutableArray<IRNode>? {
+            statements:ListView<ASTNode>, finally:ListView<IRNode>?):ImmutableArray<IRNode>? {
         def symbols := SymbolTable(symbolTable) -- FIXME auto
         symbolTable := symbols
         def result := Array<IRNode>()
-        def unref:IRNode? := finally
-        def loopScopes := Stack<String?>()
+        def finalFinally := Array<IRNode>()
+        if finally != null {
+            finalFinally.addAll(finally)
+        }
+        finallies.push(finalFinally)
         for stmt in statements {
             var compiled := compileStatement(stmt)
             if compiled = null {
@@ -3253,33 +3145,16 @@ class Compiler {
                 return null
             }
             assert compiled != IRNode.UNRESOLVED_METHOD_CALL
-            if compiled = IRNode.VAR {
-                def unrefs := Array<IRNode>()
-                for v in symbolTable.symbols.values() {
-                    if v.kind = Symbol.Kind.VARIABLE & isRefCounted(v->Variable.type) {
-                        unrefs.add(compilePandaCall("unref",
-                                IRNode.VARIABLE_REFERENCE(Position(), v->Variable)))
-                    }
-                }
-                if unrefs.get_count() > 0 {
-                    if unrefs.get_count() = 1 {
-                        unref := unrefs[0]
-                    }
-                    else {
-                        unref := IRNode.BLOCK(Position(), unrefs.finish())
-                    }
-                }
-            }
-            if unref != null {
-                compiled := instrumentExits(compiled, loopScopes, unref)
-                assert loopScopes.get_count() = 0
-            }
             result.add(compiled)
         }
-        if unref != null & !endsWithBranch(result) {
-            result.add(unref)
-        }
+        finallies.pop()
         symbolTable := symbols.parents[0]
+        if finalFinally.get_count() > 0 {
+            def resultWithFinally := Array<IRNode>() -- FIXME literal
+            resultWithFinally.add(IRNode.BLOCK_WITH_FINALLY(position, result.finish(),
+                                                            finalFinally.finish()))
+            return resultWithFinally.finish()
+        }
         return result.finish()
     }
 
@@ -3582,6 +3457,10 @@ class Compiler {
                 }
                 def v := Variable(position, kind, name, type)
                 symbolTable.add(v)
+                if isRefCounted(type) {
+                    finallies.peek().add(compilePandaCall("unref",
+                                                          IRNode.VARIABLE_REFERENCE(v.position, v)))
+                }
                 return CompileTargetResult(IRNode.VARIABLE_REFERENCE(v.position, v), value)
             when ASTNode.TYPED_IDENTIFIER(position, name, rawType):
                 def type := resolve(scanner.convertType(rawType))
@@ -3594,6 +3473,10 @@ class Compiler {
                 }
                 def v := Variable(position, kind, name, type)
                 symbolTable.add(v)
+                if isRefCounted(type) {
+                    finallies.peek().add(compilePandaCall("unref",
+                                                          IRNode.VARIABLE_REFERENCE(v.position, v)))
+                }
                 return CompileTargetResult(IRNode.VARIABLE_REFERENCE(v.position, v), value)
             otherwise:
                 assert false
@@ -3858,9 +3741,25 @@ class Compiler {
         return IRNode.IF(position, test, statements, null)
     }
 
-    method compileChainedIfMatch(position:Position, value:IRNode, whens:ImmutableArray<ASTNode>,
+    method compileChainedIfMatch(position:Position, rawValue:IRNode, whens:ImmutableArray<ASTNode>,
                      other:ImmutableArray<ASTNode>?):IRNode? {
         def result := Array<IRNode>()
+        def value:IRNode?
+        def finally:Array<IRNode>?
+        if isRefCounted(rawValue.type()) {
+            reusedValueCount += 1
+            value := IRNode.REUSED_VALUE_DEFINITION(rawValue, reusedValueCount)
+            def reused := IRNode.REUSED_VALUE(value.position(), value.type(),
+                    reusedValueCount)
+            value := IRNode.EXPRESSION_WITH_EXTRA_EFFECTS(value,
+                    compilePandaCall("ref", reused))
+            finally := Array<IRNode>()
+            finally.add(compilePandaCall("unref", reused))
+        }
+        else {
+            value := rawValue
+            finally := null
+        }
         def valueVar := Variable(position, Variable.Kind.DEF,
                 "$match$\{position.line}_\{position.column}", value.type())
         symbolTable.add(valueVar)
@@ -3895,6 +3794,9 @@ class Compiler {
                     assert false
             }
             result.removeIndex(result.get_count() - 1)
+        }
+        if finally != null {
+            return IRNode.BLOCK_WITH_FINALLY(position, result.finish(), finally.finish())
         }
         return IRNode.BLOCK(position, result.finish())
     }
@@ -4101,14 +4003,16 @@ class Compiler {
                 }
             }
         }
-        def finally:IRNode?
+        def finally:Array<IRNode>?
         if m.name = "cleanup" & m.parameters.get_count() = 0 & m.owner.name != "panda.core.Object" &
             !isValue(m.owner) {
             def cleanup := compileExpression(ASTNode.DOT(m.position, ASTNode.SUPER(m.position),
                     "cleanup"))
             assert cleanup != null
-            finally := call(cleanup, ImmutableArray<IRNode>() -* FIXME literal *-)
-            assert finally != null
+            finally := Array<IRNode>() -- FIXME literal
+            def cleanupCall := call(cleanup, ImmutableArray<IRNode>())
+            assert cleanupCall != null
+            finally.add(cleanupCall)
         }
         else {
             finally := null

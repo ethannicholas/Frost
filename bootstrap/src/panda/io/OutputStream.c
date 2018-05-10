@@ -124,8 +124,9 @@ void panda$io$OutputStream$write$panda$core$Char8(panda$io$OutputStream* self, p
     (($fn50) self->$class->vtable[2])(self, ((panda$core$UInt8) { p_c.value }));
 }
 void panda$io$OutputStream$print$panda$core$Object(panda$io$OutputStream* self, panda$core$Object* p_o) {
+    panda$core$String* $tmp51;
     panda$core$String* $tmp53 = (($fn52) p_o->$class->vtable[0])(p_o);
-    panda$core$String* $tmp51 = $tmp53;
+    $tmp51 = $tmp53;
     (($fn54) self->$class->vtable[16])(self, $tmp51);
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp51));
 }
@@ -138,8 +139,9 @@ void panda$io$OutputStream$printLine(panda$io$OutputStream* self) {
     (($fn56) self->$class->vtable[14])(self, $tmp55);
 }
 void panda$io$OutputStream$printLine$panda$core$Object(panda$io$OutputStream* self, panda$core$Object* p_o) {
+    panda$core$String* $tmp57;
     panda$core$String* $tmp59 = (($fn58) p_o->$class->vtable[0])(p_o);
-    panda$core$String* $tmp57 = $tmp59;
+    $tmp57 = $tmp59;
     (($fn60) self->$class->vtable[19])(self, $tmp57);
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp57));
 }
@@ -150,6 +152,16 @@ void panda$io$OutputStream$printLine$panda$core$String(panda$io$OutputStream* se
 void panda$io$OutputStream$init(panda$io$OutputStream* self) {
 }
 void panda$io$OutputStream$cleanup(panda$io$OutputStream* self) {
+    int $tmp65;
+    {
+    }
+    $tmp65 = -1;
+    goto $l63;
+    $l63:;
     panda$core$Object$cleanup(((panda$core$Object*) self));
+    switch ($tmp65) {
+        case -1: goto $l66;
+    }
+    $l66:;
 }
 

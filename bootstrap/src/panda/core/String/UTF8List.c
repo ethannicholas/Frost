@@ -36,35 +36,52 @@ panda$core$String$UTF8List$class_type panda$core$String$UTF8List$class = { (pand
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x55\x54\x46\x38\x4c\x69\x73\x74", 26, 3665319702853686154, NULL };
 
 void panda$core$String$UTF8List$init$panda$core$String(panda$core$String$UTF8List* self, panda$core$String* p_str) {
+    panda$core$String* $tmp3;
+    panda$core$String* $tmp4;
     self->str = NULL;
     {
-        panda$core$String* $tmp3 = self->str;
-        panda$core$String* $tmp4 = p_str;
+        $tmp3 = self->str;
+        $tmp4 = p_str;
         self->str = $tmp4;
         panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp4));
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp3));
     }
 }
 panda$core$Char8 panda$core$String$UTF8List$$IDX$panda$core$Int64$R$panda$core$Char8(panda$core$String$UTF8List* self, panda$core$Int64 p_index) {
-    panda$core$Char8 $tmp5 = self->str->data[p_index.value];
-    return $tmp5;
+    panda$core$Char8 $finallyReturn4;
+    $finallyReturn4 = self->str->data[p_index.value];
+    return $finallyReturn4;
 }
 panda$core$Int64 panda$core$String$UTF8List$get_count$R$panda$core$Int64(panda$core$String$UTF8List* self) {
-    panda$core$Int64 $tmp6 = self->str->_length;
-    return $tmp6;
+    panda$core$Int64 $finallyReturn6;
+    $finallyReturn6 = self->str->_length;
+    return $finallyReturn6;
 }
 panda$collections$Iterator* panda$core$String$UTF8List$iterator$R$panda$collections$Iterator$LTpanda$core$Char8$GT(panda$core$String$UTF8List* self) {
-    panda$core$String$UTF8Iterator* $tmp10 = (panda$core$String$UTF8Iterator*) pandaObjectAlloc(32, (panda$core$Class*) &panda$core$String$UTF8Iterator$class);
-    panda$core$String$UTF8Iterator$init$panda$core$String($tmp10, self->str);
-    panda$core$String$UTF8Iterator* $tmp9 = $tmp10;
-    panda$collections$Iterator* $tmp8 = ((panda$collections$Iterator*) $tmp9);
-    panda$collections$Iterator* $tmp7 = $tmp8;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp8));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp9));
-    return $tmp7;
+    panda$collections$Iterator* $finallyReturn8;
+    panda$collections$Iterator* $tmp10;
+    panda$core$String$UTF8Iterator* $tmp11;
+    panda$core$String$UTF8Iterator* $tmp12 = (panda$core$String$UTF8Iterator*) pandaObjectAlloc(32, (panda$core$Class*) &panda$core$String$UTF8Iterator$class);
+    panda$core$String$UTF8Iterator$init$panda$core$String($tmp12, self->str);
+    $tmp11 = $tmp12;
+    $tmp10 = ((panda$collections$Iterator*) $tmp11);
+    $finallyReturn8 = $tmp10;
+    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp10));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp11));
+    return $finallyReturn8;
 }
 void panda$core$String$UTF8List$cleanup(panda$core$String$UTF8List* self) {
+    int $tmp16;
+    {
+    }
+    $tmp16 = -1;
+    goto $l14;
+    $l14:;
     panda$core$Object$cleanup(((panda$core$Object*) self));
+    switch ($tmp16) {
+        case -1: goto $l17;
+    }
+    $l17:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->str));
 }
 

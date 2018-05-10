@@ -7,6 +7,11 @@ choice IRNode {
     BINARY(Position, Type, IRNode, Token.Kind, IRNode)
     BIT(Position, Type, Bit)
     BLOCK(Position, ImmutableArray<IRNode>)
+    -- represents a block which has additional code that must be run before exiting the block, no
+    -- matter how the block ends up being exited.
+    BLOCK_WITH_FINALLY(Position,
+                       ImmutableArray<IRNode> -* statements *-,
+                       ImmutableArray<IRNode> -* finally *-)
     BREAK(Position, String?)
     CALL(Position, Type, MethodRef, ImmutableArray<IRNode>)
     CAST(Position, IRNode, Type, Bit -* explicit *-)
@@ -424,6 +429,17 @@ choice IRNode {
                 }
                 result.append("}")
                 return result.finish()
+            when BLOCK_WITH_FINALLY(_, statements, finally ):
+                def result := MutableString("try {\n")
+                for s in statements {
+                    result.append(s + "\n")
+                }
+                result.append("}\nfinally {\n")
+                for s in finally {
+                    result.append(s + "\n")
+                }
+                result.append("}")
+                return result.finish()
             when BREAK(_, label):
                 if label != null {
                     return "break \{label}"
@@ -544,9 +560,9 @@ choice IRNode {
                 }
                 return "return"
             when REUSED_VALUE(_, type, id):
-                return "-* reused value: \{id}:\{type} *-"
+                return "$reused(\{id})"
             when REUSED_VALUE_DEFINITION(base, id):
-                return "-* reused value definition: \{id} := \{base} *-"
+                return "$reused(\{id} := \{base})"
             when SELF:
                 return "self"
             when STRING(_, str):

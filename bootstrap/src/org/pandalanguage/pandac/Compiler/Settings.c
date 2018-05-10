@@ -17,21 +17,26 @@ org$pandalanguage$pandac$Compiler$Settings$class_type org$pandalanguage$pandac$C
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x43\x6f\x6d\x70\x69\x6c\x65\x72\x2e\x53\x65\x74\x74\x69\x6e\x67\x73", 42, 3094301528977944540, NULL };
 
 void org$pandalanguage$pandac$Compiler$Settings$init$panda$io$File$panda$collections$ListView$LTpanda$io$File$GT$panda$core$Int64$panda$core$Int64(org$pandalanguage$pandac$Compiler$Settings* self, panda$io$File* p_pandaHome, panda$collections$ListView* p_importDirs, panda$core$Int64 p_optimizationLevel, panda$core$Int64 p_safetyLevel) {
+    panda$io$File* $tmp2;
+    panda$io$File* $tmp3;
+    panda$collections$ImmutableArray* $tmp4;
+    panda$collections$ImmutableArray* $tmp5;
+    panda$collections$ImmutableArray* $tmp6;
     self->pandaHome = NULL;
     self->importDirs = NULL;
     {
-        panda$io$File* $tmp2 = self->pandaHome;
-        panda$io$File* $tmp3 = p_pandaHome;
+        $tmp2 = self->pandaHome;
+        $tmp3 = p_pandaHome;
         self->pandaHome = $tmp3;
         panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp3));
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2));
     }
     {
-        panda$collections$ImmutableArray* $tmp4 = self->importDirs;
+        $tmp4 = self->importDirs;
         panda$collections$ImmutableArray* $tmp7 = (panda$collections$ImmutableArray*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$ImmutableArray$class);
         panda$collections$ImmutableArray$init$panda$collections$ListView$LTpanda$collections$ImmutableArray$T$GT($tmp7, p_importDirs);
-        panda$collections$ImmutableArray* $tmp6 = $tmp7;
-        panda$collections$ImmutableArray* $tmp5 = $tmp6;
+        $tmp6 = $tmp7;
+        $tmp5 = $tmp6;
         self->importDirs = $tmp5;
         panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp5));
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp6));
@@ -41,7 +46,17 @@ void org$pandalanguage$pandac$Compiler$Settings$init$panda$io$File$panda$collect
     self->safetyLevel = p_safetyLevel;
 }
 void org$pandalanguage$pandac$Compiler$Settings$cleanup(org$pandalanguage$pandac$Compiler$Settings* self) {
+    int $tmp10;
+    {
+    }
+    $tmp10 = -1;
+    goto $l8;
+    $l8:;
     panda$core$Immutable$cleanup(((panda$core$Immutable*) self));
+    switch ($tmp10) {
+        case -1: goto $l11;
+    }
+    $l11:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->pandaHome));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->importDirs));
 }
