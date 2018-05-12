@@ -345,9 +345,9 @@ class Scanner {
                     inner.owner := cl
                     cl.classes.add(inner)
                     assert inner.name.startsWith(cl.name + ".")
-                    cl.symbolTable.add(inner, inner.name[cl.name.length() + 1..])
---                    inner.symbolTable.parents.add(cl.symbolTable)
-                    inner.symbolTable.add(cl, cl.simpleName())
+                    cl.symbolTable.add(Alias(inner.name[cl.name.length() + 1..], inner.name,
+                            Position()))
+                    inner.symbolTable.add(Alias(cl.simpleName(), cl.name, Position()))
                 }
             when ASTNode.CHOICE_ENTRY(position, dc, name, fields):
                 scanChoiceEntry(cl, position, dc, name, fields)

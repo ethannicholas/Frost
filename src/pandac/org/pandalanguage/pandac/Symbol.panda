@@ -3,7 +3,6 @@ package org.pandalanguage.pandac
 class Symbol {
     class Kind {
         constant ALIAS             := 200
-        constant CLASS             := 201
         constant FIELD             := 202
         constant GENERIC_PARAMETER := 203
         constant METHOD            := 204

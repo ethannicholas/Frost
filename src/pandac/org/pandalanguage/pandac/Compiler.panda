@@ -312,8 +312,6 @@ class Compiler {
                             return Type(gp)
                         when Symbol.Kind.TYPE:
                             return s->Type
-                        when Symbol.Kind.CLASS:
-                            return s->ClassDecl.type()
                     }
                 }
                 error(type.position, "unknown type '\{type}'")
@@ -956,9 +954,6 @@ class Compiler {
                     return IRNode.TYPE_REFERENCE(position, cl.type())
                 }
                 return null
-            when Symbol.Kind.CLASS:
-                checkGenericParameters(position, s->ClassDecl, s->ClassDecl.type())
-                return IRNode.TYPE_REFERENCE(position, s->ClassDecl.type())
             when Symbol.Kind.METHOD, Symbol.Kind.METHODS:
                 return getMethodReference(st, target, s.name, position, typeParameters(target))
             when Symbol.Kind.VARIABLE:
@@ -2919,7 +2914,11 @@ class Compiler {
     method compileIdentifier(position:Position, name:String):IRNode? {
         var s := symbolTable[name]
         if s = null {
-            s := tryResolveClass(name)
+            def cl := tryResolveClass(name)
+            if cl != null {
+                checkGenericParameters(position, cl, cl.type())
+                return IRNode.TYPE_REFERENCE(position, cl.type())
+            }
         }
         if s != null {
             return symbolRef(position, null, s, symbolTable)

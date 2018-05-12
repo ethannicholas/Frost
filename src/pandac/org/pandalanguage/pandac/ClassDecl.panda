@@ -1,7 +1,7 @@
 package org.pandalanguage.pandac
 
 @final
-class ClassDecl : Symbol {
+class ClassDecl {
     choice Kind {
         CLASS
         INTERFACE
@@ -46,6 +46,10 @@ class ClassDecl : Symbol {
     }
 
     def source:File
+
+    def position:Position
+
+    def name:String
 
     ================================================================================================
     Maps simple class names to fully-qualified class names. This is populated from "uses" statements
@@ -108,7 +112,8 @@ class ClassDecl : Symbol {
     init(source:File, position:Position, aliases:MapView<String, String>, doccomment:String?,
             annotations:Annotations, kind:Kind, name:String, declaredSupers:ListView<Type>,
             parameters:Array<GenericParameter>, parent:SymbolTable) {
-        super.init(Symbol.Kind.CLASS, position, name)
+        self.position := position
+        self.name := name
         self.source := source
         self.aliases := HashMap<String, String>(aliases)
         self.doccomment := doccomment
