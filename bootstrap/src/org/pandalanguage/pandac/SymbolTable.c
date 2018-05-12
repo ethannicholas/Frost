@@ -144,14 +144,14 @@ void org$pandalanguage$pandac$SymbolTable$add$org$pandalanguage$pandac$Symbol(or
     org$pandalanguage$pandac$SymbolTable$add$org$pandalanguage$pandac$Symbol$panda$core$String(self, p_s, p_s->name);
 }
 void org$pandalanguage$pandac$SymbolTable$add$org$pandalanguage$pandac$Symbol$panda$core$String(org$pandalanguage$pandac$SymbolTable* self, org$pandalanguage$pandac$Symbol* p_s, panda$core$String* p_name) {
-    org$pandalanguage$pandac$Symbol* old29;
+    org$pandalanguage$pandac$Symbol* old29 = NULL;
     org$pandalanguage$pandac$Symbol* $tmp30;
     panda$core$Object* $tmp31;
-    panda$collections$Array* methods38;
+    panda$collections$Array* methods38 = NULL;
     panda$collections$Array* $tmp39;
     panda$collections$Array* $tmp40;
     org$pandalanguage$pandac$Methods* $tmp42;
-    panda$collections$Array* methods50;
+    panda$collections$Array* methods50 = NULL;
     panda$collections$Array* $tmp51;
     panda$collections$Array* $tmp52;
     org$pandalanguage$pandac$Methods* $tmp54;
@@ -210,6 +210,7 @@ void org$pandalanguage$pandac$SymbolTable$add$org$pandalanguage$pandac$Symbol$pa
                     }
                     $l35:;
                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) methods38));
+                    methods38 = NULL;
                     switch ($tmp37) {
                         case 0: goto $l44;
                     }
@@ -244,6 +245,7 @@ void org$pandalanguage$pandac$SymbolTable$add$org$pandalanguage$pandac$Symbol$pa
                     }
                     $l47:;
                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) methods50));
+                    methods50 = NULL;
                     switch ($tmp49) {
                         case 0: goto $l56;
                     }
@@ -276,6 +278,7 @@ void org$pandalanguage$pandac$SymbolTable$add$org$pandalanguage$pandac$Symbol$pa
     goto $l26;
     $l26:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) old29));
+    old29 = NULL;
     switch ($tmp28) {
         case 1: goto $l45;
         case -1: goto $l72;
@@ -285,10 +288,10 @@ void org$pandalanguage$pandac$SymbolTable$add$org$pandalanguage$pandac$Symbol$pa
     $l72:;
 }
 void org$pandalanguage$pandac$SymbolTable$addIfNotOverridden$org$pandalanguage$pandac$MethodDecl$panda$collections$List$LTorg$pandalanguage$pandac$MethodDecl$GT(org$pandalanguage$pandac$SymbolTable* self, org$pandalanguage$pandac$MethodDecl* p_m, panda$collections$List* p_methods) {
-    panda$collections$Iterator* Iter$61$978;
+    panda$collections$Iterator* Iter$61$978 = NULL;
     panda$collections$Iterator* $tmp79;
     panda$collections$Iterator* $tmp80;
-    org$pandalanguage$pandac$MethodDecl* test96;
+    org$pandalanguage$pandac$MethodDecl* test96 = NULL;
     org$pandalanguage$pandac$MethodDecl* $tmp97;
     panda$core$Object* $tmp98;
     org$pandalanguage$pandac$MethodDecl* $tmp103;
@@ -360,6 +363,7 @@ void org$pandalanguage$pandac$SymbolTable$addIfNotOverridden$org$pandalanguage$p
                 goto $l93;
                 $l93:;
                 panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) test96));
+                test96 = NULL;
                 switch ($tmp95) {
                     case -1: goto $l110;
                     case 0: goto $l108;
@@ -373,6 +377,7 @@ void org$pandalanguage$pandac$SymbolTable$addIfNotOverridden$org$pandalanguage$p
         goto $l75;
         $l75:;
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$61$978));
+        Iter$61$978 = NULL;
         switch ($tmp77) {
             case 0: goto $l109;
             case -1: goto $l111;
@@ -395,13 +400,13 @@ org$pandalanguage$pandac$Symbol* org$pandalanguage$pandac$SymbolTable$merge$org$
     org$pandalanguage$pandac$Symbol* $tmp122;
     org$pandalanguage$pandac$Symbol* $finallyReturn126;
     org$pandalanguage$pandac$Symbol* $tmp128;
-    panda$collections$Array* methods133;
+    panda$collections$Array* methods133 = NULL;
     panda$collections$Array* $tmp134;
     panda$collections$Array* $tmp135;
-    panda$collections$Iterator* Iter$89$25140;
+    panda$collections$Iterator* Iter$89$25140 = NULL;
     panda$collections$Iterator* $tmp141;
     panda$collections$Iterator* $tmp142;
-    org$pandalanguage$pandac$MethodDecl* m158;
+    org$pandalanguage$pandac$MethodDecl* m158 = NULL;
     org$pandalanguage$pandac$MethodDecl* $tmp159;
     panda$core$Object* $tmp160;
     org$pandalanguage$pandac$Symbol* $finallyReturn166;
@@ -411,7 +416,7 @@ org$pandalanguage$pandac$Symbol* org$pandalanguage$pandac$SymbolTable$merge$org$
     panda$core$Object* $tmp178;
     org$pandalanguage$pandac$Symbol* $finallyReturn181;
     org$pandalanguage$pandac$Symbol* $tmp183;
-    panda$collections$Array* methods186;
+    panda$collections$Array* methods186 = NULL;
     panda$collections$Array* $tmp187;
     panda$collections$Array* $tmp188;
     org$pandalanguage$pandac$Symbol* $finallyReturn189;
@@ -419,19 +424,19 @@ org$pandalanguage$pandac$Symbol* org$pandalanguage$pandac$SymbolTable$merge$org$
     org$pandalanguage$pandac$Methods* $tmp192;
     org$pandalanguage$pandac$Symbol* $finallyReturn196;
     org$pandalanguage$pandac$Symbol* $tmp198;
-    panda$collections$Array* methods203;
+    panda$collections$Array* methods203 = NULL;
     panda$collections$Array* $tmp204;
     panda$collections$Array* $tmp205;
-    panda$collections$Iterator* Iter$109$25210;
+    panda$collections$Iterator* Iter$109$25210 = NULL;
     panda$collections$Iterator* $tmp211;
     panda$collections$Iterator* $tmp212;
-    org$pandalanguage$pandac$MethodDecl* m228;
+    org$pandalanguage$pandac$MethodDecl* m228 = NULL;
     org$pandalanguage$pandac$MethodDecl* $tmp229;
     panda$core$Object* $tmp230;
     org$pandalanguage$pandac$Symbol* $finallyReturn236;
     org$pandalanguage$pandac$Symbol* $tmp238;
     org$pandalanguage$pandac$Methods* $tmp239;
-    panda$collections$Array* methods247;
+    panda$collections$Array* methods247 = NULL;
     panda$collections$Array* $tmp248;
     panda$collections$Array* $tmp249;
     org$pandalanguage$pandac$Symbol* $finallyReturn250;
@@ -535,6 +540,7 @@ org$pandalanguage$pandac$Symbol* org$pandalanguage$pandac$SymbolTable$merge$org$
                                     goto $l155;
                                     $l155:;
                                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) m158));
+                                    m158 = NULL;
                                     switch ($tmp157) {
                                         case -1: goto $l165;
                                     }
@@ -547,6 +553,7 @@ org$pandalanguage$pandac$Symbol* org$pandalanguage$pandac$SymbolTable$merge$org$
                             goto $l137;
                             $l137:;
                             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$89$25140));
+                            Iter$89$25140 = NULL;
                             switch ($tmp139) {
                                 case -1: goto $l166;
                             }
@@ -566,6 +573,7 @@ org$pandalanguage$pandac$Symbol* org$pandalanguage$pandac$SymbolTable$merge$org$
                     }
                     $l130:;
                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) methods133));
+                    methods133 = NULL;
                     switch ($tmp132) {
                         case 0: goto $l171;
                     }
@@ -616,6 +624,7 @@ org$pandalanguage$pandac$Symbol* org$pandalanguage$pandac$SymbolTable$merge$org$
                     }
                     $l174:;
                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) methods186));
+                    methods186 = NULL;
                     switch ($tmp176) {
                         case 1: goto $l194;
                         case 0: goto $l184;
@@ -691,6 +700,7 @@ org$pandalanguage$pandac$Symbol* org$pandalanguage$pandac$SymbolTable$merge$org$
                                     goto $l225;
                                     $l225:;
                                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) m228));
+                                    m228 = NULL;
                                     switch ($tmp227) {
                                         case -1: goto $l235;
                                     }
@@ -703,6 +713,7 @@ org$pandalanguage$pandac$Symbol* org$pandalanguage$pandac$SymbolTable$merge$org$
                             goto $l207;
                             $l207:;
                             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$109$25210));
+                            Iter$109$25210 = NULL;
                             switch ($tmp209) {
                                 case -1: goto $l236;
                             }
@@ -722,6 +733,7 @@ org$pandalanguage$pandac$Symbol* org$pandalanguage$pandac$SymbolTable$merge$org$
                     }
                     $l200:;
                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) methods203));
+                    methods203 = NULL;
                     switch ($tmp202) {
                         case 0: goto $l241;
                     }
@@ -754,6 +766,7 @@ org$pandalanguage$pandac$Symbol* org$pandalanguage$pandac$SymbolTable$merge$org$
                     }
                     $l244:;
                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) methods247));
+                    methods247 = NULL;
                     switch ($tmp246) {
                         case 0: goto $l255;
                     }
@@ -780,16 +793,16 @@ org$pandalanguage$pandac$Symbol* org$pandalanguage$pandac$SymbolTable$merge$org$
     }
 }
 org$pandalanguage$pandac$Symbol* org$pandalanguage$pandac$SymbolTable$$IDX$panda$core$String$R$org$pandalanguage$pandac$Symbol$Q(org$pandalanguage$pandac$SymbolTable* self, panda$core$String* p_name) {
-    org$pandalanguage$pandac$Symbol* result267;
+    org$pandalanguage$pandac$Symbol* result267 = NULL;
     org$pandalanguage$pandac$Symbol* $tmp268;
     panda$core$Object* $tmp269;
     org$pandalanguage$pandac$Symbol* $tmp271;
     org$pandalanguage$pandac$Symbol* $tmp272;
     panda$core$Object* $tmp273;
-    panda$collections$Iterator* Iter$129$13278;
+    panda$collections$Iterator* Iter$129$13278 = NULL;
     panda$collections$Iterator* $tmp279;
     panda$collections$Iterator* $tmp280;
-    org$pandalanguage$pandac$SymbolTable* p296;
+    org$pandalanguage$pandac$SymbolTable* p296 = NULL;
     org$pandalanguage$pandac$SymbolTable* $tmp297;
     panda$core$Object* $tmp298;
     org$pandalanguage$pandac$Symbol* $tmp303;
@@ -874,6 +887,7 @@ org$pandalanguage$pandac$Symbol* org$pandalanguage$pandac$SymbolTable$$IDX$panda
                         goto $l293;
                         $l293:;
                         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) p296));
+                        p296 = NULL;
                         switch ($tmp295) {
                             case -1: goto $l309;
                         }
@@ -886,6 +900,7 @@ org$pandalanguage$pandac$Symbol* org$pandalanguage$pandac$SymbolTable$$IDX$panda
                 goto $l275;
                 $l275:;
                 panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$129$13278));
+                Iter$129$13278 = NULL;
                 switch ($tmp277) {
                     case -1: goto $l310;
                 }
@@ -904,6 +919,7 @@ org$pandalanguage$pandac$Symbol* org$pandalanguage$pandac$SymbolTable$$IDX$panda
     }
     $l264:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result267));
+    result267 = NULL;
     switch ($tmp266) {
         case 0: goto $l313;
     }

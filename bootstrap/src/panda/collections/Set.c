@@ -70,10 +70,10 @@ void panda$collections$Set$add$panda$collections$Set$T(panda$collections$Set* se
     panda$collections$HashMap$$IDXEQ$panda$collections$HashMap$K$panda$collections$HashMap$V(self->contents, p_value, ((panda$core$Object*) p_value));
 }
 void panda$collections$Set$addAll$panda$collections$CollectionView$LTpanda$collections$Set$T$GT(panda$collections$Set* self, panda$collections$CollectionView* p_c) {
-    panda$collections$Iterator* Iter$24$911;
+    panda$collections$Iterator* Iter$24$911 = NULL;
     panda$collections$Iterator* $tmp12;
     panda$collections$Iterator* $tmp13;
-    panda$collections$Key* v29;
+    panda$collections$Key* v29 = NULL;
     panda$collections$Key* $tmp30;
     panda$core$Object* $tmp31;
     {
@@ -120,6 +120,7 @@ void panda$collections$Set$addAll$panda$collections$CollectionView$LTpanda$colle
                 goto $l26;
                 $l26:;
                 panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) v29));
+                v29 = NULL;
                 switch ($tmp28) {
                     case -1: goto $l36;
                 }
@@ -132,6 +133,7 @@ void panda$collections$Set$addAll$panda$collections$CollectionView$LTpanda$colle
         goto $l8;
         $l8:;
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$24$911));
+        Iter$24$911 = NULL;
         switch ($tmp10) {
             case -1: goto $l37;
         }

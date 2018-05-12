@@ -372,7 +372,7 @@ panda$core$String* panda$core$Panda$align$panda$core$String$panda$core$String$R$
 panda$core$String* panda$core$Panda$format$panda$core$Bit$panda$core$UInt64$panda$core$UInt64$panda$core$String$R$panda$core$String(panda$core$Bit p_sign, panda$core$UInt64 p_rawValue, panda$core$UInt64 p_mask, panda$core$String* p_fmt) {
     panda$core$String$Index index168;
     panda$core$UInt64 base170;
-    panda$collections$ListView* digits171;
+    panda$collections$ListView* digits171 = NULL;
     panda$collections$ListView* $tmp172;
     panda$collections$ListView* $tmp173;
     panda$core$Char32 $match$140_13178;
@@ -603,6 +603,7 @@ panda$core$String* panda$core$Panda$format$panda$core$Bit$panda$core$UInt64$pand
     }
     $l165:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) digits171));
+    digits171 = NULL;
     switch ($tmp167) {
         case 0: goto $l270;
     }

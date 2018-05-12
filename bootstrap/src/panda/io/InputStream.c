@@ -72,7 +72,7 @@ panda$core$Int64 panda$io$InputStream$read$panda$unsafe$Pointer$LTpanda$core$Cha
 }
 panda$core$String* panda$io$InputStream$readFully$R$panda$core$String(panda$io$InputStream* self) {
     panda$core$Int64 BUFFER_SIZE24;
-    panda$core$MutableString* result25;
+    panda$core$MutableString* result25 = NULL;
     panda$core$MutableString* $tmp26;
     panda$core$MutableString* $tmp27;
     panda$core$Int8* buffer29;
@@ -120,6 +120,7 @@ panda$core$String* panda$io$InputStream$readFully$R$panda$core$String(panda$io$I
     }
     $l21:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result25));
+    result25 = NULL;
     switch ($tmp23) {
         case 0: goto $l39;
     }
@@ -225,7 +226,7 @@ panda$core$Char8$nullable panda$io$InputStream$read$R$panda$core$Char8$Q(panda$i
     return $finallyReturn90;
 }
 panda$core$String* panda$io$InputStream$readLine$R$panda$core$String$Q(panda$io$InputStream* self) {
-    panda$core$MutableString* result96;
+    panda$core$MutableString* result96 = NULL;
     panda$core$MutableString* $tmp97;
     panda$core$MutableString* $tmp98;
     panda$core$Char8$nullable c102;
@@ -301,6 +302,7 @@ panda$core$String* panda$io$InputStream$readLine$R$panda$core$String$Q(panda$io$
     }
     $l93:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result96));
+    result96 = NULL;
     switch ($tmp95) {
         case 1: goto $l121;
         case 0: goto $l108;

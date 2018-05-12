@@ -236,17 +236,17 @@ panda$core$Bit org$pandalanguage$pandac$MethodDecl$matches$org$pandalanguage$pan
     return $finallyReturn77;
 }
 panda$core$String* org$pandalanguage$pandac$MethodDecl$signature$R$panda$core$String(org$pandalanguage$pandac$MethodDecl* self) {
-    panda$core$MutableString* result83;
+    panda$core$MutableString* result83 = NULL;
     panda$core$MutableString* $tmp84;
     panda$core$MutableString* $tmp85;
     panda$core$String* $tmp87;
     panda$core$String* $tmp88;
-    panda$core$String* separator92;
+    panda$core$String* separator92 = NULL;
     panda$core$String* $tmp93;
-    panda$collections$Iterator* Iter$99$998;
+    panda$collections$Iterator* Iter$99$998 = NULL;
     panda$collections$Iterator* $tmp99;
     panda$collections$Iterator* $tmp100;
-    org$pandalanguage$pandac$MethodDecl$Parameter* p116;
+    org$pandalanguage$pandac$MethodDecl$Parameter* p116 = NULL;
     org$pandalanguage$pandac$MethodDecl$Parameter* $tmp117;
     panda$core$Object* $tmp118;
     panda$core$String* $tmp123;
@@ -328,6 +328,7 @@ panda$core$String* org$pandalanguage$pandac$MethodDecl$signature$R$panda$core$St
                     goto $l113;
                     $l113:;
                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) p116));
+                    p116 = NULL;
                     switch ($tmp115) {
                         case -1: goto $l126;
                     }
@@ -340,6 +341,7 @@ panda$core$String* org$pandalanguage$pandac$MethodDecl$signature$R$panda$core$St
             goto $l95;
             $l95:;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$99$998));
+            Iter$99$998 = NULL;
             switch ($tmp97) {
                 case -1: goto $l127;
             }
@@ -375,7 +377,9 @@ panda$core$String* org$pandalanguage$pandac$MethodDecl$signature$R$panda$core$St
     }
     $l80:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result83));
+    result83 = NULL;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator92));
+    separator92 = NULL;
     switch ($tmp82) {
         case 0: goto $l142;
     }

@@ -70,7 +70,7 @@ void panda$io$Console$printLine() {
     panda$io$Console$print$panda$core$String(&$s28);
 }
 panda$core$String* panda$io$Console$readLine$R$panda$core$String$Q() {
-    panda$core$MutableString* result32;
+    panda$core$MutableString* result32 = NULL;
     panda$core$MutableString* $tmp33;
     panda$core$MutableString* $tmp34;
     panda$core$Char8$nullable c38;
@@ -147,6 +147,7 @@ panda$core$String* panda$io$Console$readLine$R$panda$core$String$Q() {
     }
     $l29:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result32));
+    result32 = NULL;
     switch ($tmp31) {
         case 0: goto $l43;
         case 1: goto $l56;

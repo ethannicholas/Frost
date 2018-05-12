@@ -81,7 +81,7 @@ panda$core$Bit panda$collections$HashMap$EntryIterator$get_done$R$panda$core$Bit
     return $finallyReturn15;
 }
 panda$collections$HashMap$Entry* panda$collections$HashMap$EntryIterator$next$R$panda$collections$HashMap$Entry$LTpanda$collections$HashMap$EntryIterator$K$Cpanda$collections$HashMap$EntryIterator$V$GT(panda$collections$HashMap$EntryIterator* self) {
-    panda$collections$HashMap$Entry* result26;
+    panda$collections$HashMap$Entry* result26 = NULL;
     panda$collections$HashMap$Entry* $tmp27;
     panda$collections$HashMap$Entry* $tmp28;
     panda$collections$HashMap$Entry* $tmp29;
@@ -136,6 +136,7 @@ panda$collections$HashMap$Entry* panda$collections$HashMap$EntryIterator$next$R$
     }
     $l22:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result26));
+    result26 = NULL;
     switch ($tmp24) {
         case 0: goto $l39;
     }

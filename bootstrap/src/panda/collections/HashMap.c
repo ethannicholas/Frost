@@ -120,10 +120,10 @@ void panda$collections$HashMap$init(panda$collections$HashMap* self) {
     self->threshold = $tmp27;
 }
 void panda$collections$HashMap$init$panda$collections$MapView$LTpanda$collections$HashMap$K$Cpanda$collections$HashMap$V$GT(panda$collections$HashMap* self, panda$collections$MapView* p_map) {
-    panda$collections$Iterator* Iter$152$931;
+    panda$collections$Iterator* Iter$152$931 = NULL;
     panda$collections$Iterator* $tmp32;
     panda$collections$Iterator* $tmp33;
-    panda$collections$Key* k49;
+    panda$collections$Key* k49 = NULL;
     panda$collections$Key* $tmp50;
     panda$core$Object* $tmp51;
     panda$core$Object* $tmp56;
@@ -181,6 +181,7 @@ void panda$collections$HashMap$init$panda$collections$MapView$LTpanda$collection
                 goto $l46;
                 $l46:;
                 panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) k49));
+                k49 = NULL;
                 switch ($tmp48) {
                     case -1: goto $l61;
                 }
@@ -193,6 +194,7 @@ void panda$collections$HashMap$init$panda$collections$MapView$LTpanda$collection
         goto $l28;
         $l28:;
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$152$931));
+        Iter$152$931 = NULL;
         switch ($tmp30) {
             case -1: goto $l62;
         }
@@ -280,7 +282,7 @@ panda$core$Int64 panda$collections$HashMap$indexFor$panda$collections$HashMap$K$
 }
 panda$core$Object* panda$collections$HashMap$$IDX$panda$collections$HashMap$K$R$panda$collections$HashMap$V$Q(panda$collections$HashMap* self, panda$collections$Key* p_key) {
     panda$core$Int64 index107;
-    panda$collections$HashMap$Entry* e109;
+    panda$collections$HashMap$Entry* e109 = NULL;
     panda$collections$HashMap$Entry* $tmp110;
     panda$collections$HashMap$Entry* $tmp121;
     panda$collections$HashMap$Entry* $tmp122;
@@ -347,6 +349,7 @@ panda$core$Object* panda$collections$HashMap$$IDX$panda$collections$HashMap$K$R$
     goto $l104;
     $l104:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) e109));
+    e109 = NULL;
     switch ($tmp106) {
         case -1: goto $l131;
         case 1: goto $l129;
@@ -356,7 +359,7 @@ panda$core$Object* panda$collections$HashMap$$IDX$panda$collections$HashMap$K$R$
 }
 panda$core$Bit panda$collections$HashMap$contains$panda$collections$HashMap$K$R$panda$core$Bit(panda$collections$HashMap* self, panda$collections$Key* p_key) {
     panda$core$Int64 index135;
-    panda$collections$HashMap$Entry* e137;
+    panda$collections$HashMap$Entry* e137 = NULL;
     panda$collections$HashMap$Entry* $tmp138;
     panda$collections$HashMap$Entry* $tmp149;
     panda$collections$HashMap$Entry* $tmp150;
@@ -401,6 +404,7 @@ panda$core$Bit panda$collections$HashMap$contains$panda$collections$HashMap$K$R$
     }
     $l132:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) e137));
+    e137 = NULL;
     switch ($tmp134) {
         case 0: goto $l152;
     }
@@ -408,11 +412,11 @@ panda$core$Bit panda$collections$HashMap$contains$panda$collections$HashMap$K$R$
 }
 void panda$collections$HashMap$$IDXEQ$panda$collections$HashMap$K$panda$collections$HashMap$V(panda$collections$HashMap* self, panda$collections$Key* p_key, panda$core$Object* p_value) {
     panda$core$Int64 index159;
-    panda$collections$HashMap$Entry* e161;
+    panda$collections$HashMap$Entry* e161 = NULL;
     panda$collections$HashMap$Entry* $tmp162;
     panda$collections$HashMap$Entry* $tmp173;
     panda$collections$HashMap$Entry* $tmp174;
-    panda$collections$HashMap$Entry* old178;
+    panda$collections$HashMap$Entry* old178 = NULL;
     panda$collections$HashMap$Entry* $tmp179;
     panda$collections$HashMap$Entry* $tmp180;
     panda$collections$HashMap$Entry* $tmp181;
@@ -497,6 +501,7 @@ void panda$collections$HashMap$$IDXEQ$panda$collections$HashMap$K$panda$collecti
             goto $l175;
             $l175:;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) old178));
+            old178 = NULL;
             switch ($tmp177) {
                 case -1: goto $l189;
             }
@@ -519,6 +524,7 @@ void panda$collections$HashMap$$IDXEQ$panda$collections$HashMap$K$panda$collecti
     goto $l155;
     $l155:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) e161));
+    e161 = NULL;
     switch ($tmp157) {
         case -1: goto $l192;
     }
@@ -526,16 +532,16 @@ void panda$collections$HashMap$$IDXEQ$panda$collections$HashMap$K$panda$collecti
 }
 void panda$collections$HashMap$remove$panda$collections$HashMap$K(panda$collections$HashMap* self, panda$collections$Key* p_key) {
     panda$core$Int64 index197;
-    panda$collections$HashMap$Entry* e199;
+    panda$collections$HashMap$Entry* e199 = NULL;
     panda$collections$HashMap$Entry* $tmp200;
     panda$collections$HashMap$Entry** $tmp206;
     panda$core$Int64 $tmp207;
     panda$collections$HashMap$Entry* $tmp208;
-    panda$collections$HashMap$Entry* next216;
+    panda$collections$HashMap$Entry* next216 = NULL;
     panda$collections$HashMap$Entry* $tmp217;
     panda$collections$HashMap$Entry* $tmp225;
     panda$collections$HashMap$Entry* $tmp226;
-    panda$collections$HashMap$Entry* next228;
+    panda$collections$HashMap$Entry* next228 = NULL;
     panda$collections$HashMap$Entry* $tmp229;
     panda$collections$HashMap$Entry* $tmp230;
     panda$collections$HashMap$Entry* $tmp231;
@@ -625,6 +631,7 @@ void panda$collections$HashMap$remove$panda$collections$HashMap$K(panda$collecti
             goto $l213;
             $l213:;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) next216));
+            next216 = NULL;
             switch ($tmp215) {
                 case -1: goto $l227;
                 case 0: goto $l218;
@@ -652,7 +659,9 @@ void panda$collections$HashMap$remove$panda$collections$HashMap$K(panda$collecti
     goto $l193;
     $l193:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) e199));
+    e199 = NULL;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) next228));
+    next228 = NULL;
     switch ($tmp195) {
         case 1: goto $l210;
         case -1: goto $l233;
@@ -750,7 +759,7 @@ void panda$collections$HashMap$incrementCount(panda$collections$HashMap* self) {
     panda$core$Int64 $tmp300;
     panda$collections$HashMap$Entry* $tmp301;
     panda$core$Range$LTpanda$core$Int64$GT $tmp309;
-    panda$collections$HashMap$Entry* e326;
+    panda$collections$HashMap$Entry* e326 = NULL;
     panda$collections$HashMap$Entry* $tmp327;
     panda$collections$HashMap$Entry* $tmp331;
     panda$collections$HashMap$Entry* $tmp332;
@@ -837,6 +846,7 @@ void panda$collections$HashMap$incrementCount(panda$collections$HashMap* self) {
             goto $l323;
             $l323:;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) e326));
+            e326 = NULL;
             switch ($tmp325) {
                 case -1: goto $l333;
             }
@@ -924,14 +934,14 @@ panda$core$Bit panda$collections$HashMap$$NEQ$panda$collections$MapView$LTpanda$
     PANDA_ASSERT(((panda$core$Bit) { false }).value);
 }
 panda$core$String* panda$collections$HashMap$convert$R$panda$core$String(panda$collections$HashMap* self) {
-    panda$core$MutableString* result375;
+    panda$core$MutableString* result375 = NULL;
     panda$core$MutableString* $tmp376;
     panda$core$MutableString* $tmp377;
     panda$core$Char8 $tmp379;
-    panda$core$String* separator380;
+    panda$core$String* separator380 = NULL;
     panda$core$String* $tmp381;
     panda$core$Range$LTpanda$core$Int64$GT $tmp383;
-    panda$collections$HashMap$Entry* entry400;
+    panda$collections$HashMap$Entry* entry400 = NULL;
     panda$collections$HashMap$Entry* $tmp401;
     panda$core$Char8 $tmp406;
     panda$collections$HashMap$Entry* $tmp408;
@@ -1022,6 +1032,7 @@ panda$core$String* panda$collections$HashMap$convert$R$panda$core$String(panda$c
             goto $l397;
             $l397:;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) entry400));
+            entry400 = NULL;
             switch ($tmp399) {
                 case -1: goto $l413;
             }
@@ -1053,7 +1064,9 @@ panda$core$String* panda$collections$HashMap$convert$R$panda$core$String(panda$c
     }
     $l372:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result375));
+    result375 = NULL;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator380));
+    separator380 = NULL;
     switch ($tmp374) {
         case 0: goto $l425;
     }

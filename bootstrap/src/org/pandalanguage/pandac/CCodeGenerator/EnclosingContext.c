@@ -87,14 +87,14 @@ void org$pandalanguage$pandac$CCodeGenerator$EnclosingContext$init$panda$core$In
     }
 }
 void org$pandalanguage$pandac$CCodeGenerator$EnclosingContext$cleanup(org$pandalanguage$pandac$CCodeGenerator$EnclosingContext* self) {
-    org$pandalanguage$pandac$CCodeGenerator$EnclosingContext* $match$12_532;
+    org$pandalanguage$pandac$CCodeGenerator$EnclosingContext* $match$12_532 = NULL;
     org$pandalanguage$pandac$CCodeGenerator$EnclosingContext* $tmp33;
-    panda$core$String* _f035;
-    panda$core$String* _f137;
-    panda$core$String* _f239;
-    panda$core$String* _f042;
-    panda$collections$Map* _f144;
-    panda$core$String* _f246;
+    panda$core$String* _f035 = NULL;
+    panda$core$String* _f137 = NULL;
+    panda$core$String* _f239 = NULL;
+    panda$core$String* _f042 = NULL;
+    panda$collections$Map* _f144 = NULL;
+    panda$core$String* _f246 = NULL;
     int $tmp28;
     {
         int $tmp31;

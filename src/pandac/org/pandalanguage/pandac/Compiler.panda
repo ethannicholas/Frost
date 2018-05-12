@@ -3460,6 +3460,9 @@ class Compiler {
                 if isRefCounted(type) {
                     finallies.peek().add(compilePandaCall("unref",
                                                           IRNode.VARIABLE_REFERENCE(v.position, v)))
+                    finallies.peek().add(IRNode.BINARY(v.position, Type.Void(),
+                            IRNode.VARIABLE_REFERENCE(v.position, v), Token.Kind.ASSIGNMENT,
+                            IRNode.NULL(v.position, v.type.nullable())))
                 }
                 return CompileTargetResult(IRNode.VARIABLE_REFERENCE(v.position, v), value)
             when ASTNode.TYPED_IDENTIFIER(position, name, rawType):

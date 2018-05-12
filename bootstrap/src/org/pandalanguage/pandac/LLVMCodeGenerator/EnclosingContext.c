@@ -91,14 +91,14 @@ void org$pandalanguage$pandac$LLVMCodeGenerator$EnclosingContext$init$panda$core
     }
 }
 void org$pandalanguage$pandac$LLVMCodeGenerator$EnclosingContext$cleanup(org$pandalanguage$pandac$LLVMCodeGenerator$EnclosingContext* self) {
-    org$pandalanguage$pandac$LLVMCodeGenerator$EnclosingContext* $match$29_532;
+    org$pandalanguage$pandac$LLVMCodeGenerator$EnclosingContext* $match$29_532 = NULL;
     org$pandalanguage$pandac$LLVMCodeGenerator$EnclosingContext* $tmp33;
-    panda$core$String* _f035;
-    panda$core$String* _f137;
-    panda$core$String* _f239;
-    panda$core$String* _f042;
-    panda$collections$Map* _f144;
-    org$pandalanguage$pandac$LLVMCodeGenerator$InlineContext* _f047;
+    panda$core$String* _f035 = NULL;
+    panda$core$String* _f137 = NULL;
+    panda$core$String* _f239 = NULL;
+    panda$core$String* _f042 = NULL;
+    panda$collections$Map* _f144 = NULL;
+    org$pandalanguage$pandac$LLVMCodeGenerator$InlineContext* _f047 = NULL;
     int $tmp28;
     {
         int $tmp31;

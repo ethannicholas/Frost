@@ -94,7 +94,7 @@ void panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$
     self->data = ((org$pandalanguage$pandac$parser$Token*) pandaZAlloc(p_capacity.value * 48));
 }
 void panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$init$panda$collections$ListView$LTorg$pandalanguage$pandac$parser$Token$GT(panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT* self, panda$collections$ListView* p_list) {
-    panda$collections$Iterator* Iter$54$911;
+    panda$collections$Iterator* Iter$54$911 = NULL;
     panda$collections$Iterator* $tmp12;
     panda$collections$Iterator* $tmp13;
     org$pandalanguage$pandac$parser$Token v26;
@@ -151,6 +151,7 @@ void panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$
         goto $l8;
         $l8:;
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$54$911));
+        Iter$54$911 = NULL;
         switch ($tmp10) {
             case -1: goto $l32;
         }
@@ -358,7 +359,7 @@ panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT* p
     panda$core$Int64 step128;
     panda$core$Int64 current129;
     panda$core$Int64 end133;
-    panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT* result136;
+    panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT* result136 = NULL;
     panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT* $tmp137;
     panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT* $tmp138;
     panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT* $finallyReturn166;
@@ -483,6 +484,7 @@ panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT* p
     }
     $l125:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result136));
+    result136 = NULL;
     switch ($tmp127) {
         case 0: goto $l169;
     }
@@ -496,7 +498,7 @@ void panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$
     self->count = $tmp173;
 }
 void panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$addAll$panda$collections$CollectionView$LTorg$pandalanguage$pandac$parser$Token$GT(panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT* self, panda$collections$CollectionView* p_c) {
-    panda$collections$Iterator* Iter$205$9182;
+    panda$collections$Iterator* Iter$205$9182 = NULL;
     panda$collections$Iterator* $tmp183;
     panda$collections$Iterator* $tmp184;
     org$pandalanguage$pandac$parser$Token v197;
@@ -554,6 +556,7 @@ void panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$
         goto $l179;
         $l179:;
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$205$9182));
+        Iter$205$9182 = NULL;
         switch ($tmp181) {
             case -1: goto $l204;
         }
@@ -652,7 +655,7 @@ panda$core$String* panda$collections$SpecializedArray$LTorg$pandalanguage$pandac
 panda$core$String* panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$join$panda$core$String$R$panda$core$String(panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT* self, panda$core$String* p_separator) {
     panda$core$String* $finallyReturn253;
     panda$core$String* $tmp255;
-    panda$core$MutableString* result259;
+    panda$core$MutableString* result259 = NULL;
     panda$core$MutableString* $tmp260;
     panda$core$MutableString* $tmp261;
     panda$core$String* $tmp263;
@@ -737,6 +740,7 @@ panda$core$String* panda$collections$SpecializedArray$LTorg$pandalanguage$pandac
     }
     $l250:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result259));
+    result259 = NULL;
     switch ($tmp252) {
         case 1: goto $l296;
         case 0: goto $l257;
@@ -744,13 +748,13 @@ panda$core$String* panda$collections$SpecializedArray$LTorg$pandalanguage$pandac
     $l298:;
 }
 panda$core$String* panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$convert$R$panda$core$String(panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT* self) {
-    panda$core$MutableString* result302;
+    panda$core$MutableString* result302 = NULL;
     panda$core$MutableString* $tmp303;
     panda$core$MutableString* $tmp304;
     panda$core$Char8 $tmp306;
-    panda$core$String* separator307;
+    panda$core$String* separator307 = NULL;
     panda$core$String* $tmp308;
-    panda$collections$Iterator* Iter$268$9313;
+    panda$collections$Iterator* Iter$268$9313 = NULL;
     panda$collections$Iterator* $tmp314;
     panda$collections$Iterator* $tmp315;
     org$pandalanguage$pandac$parser$Token v328;
@@ -841,6 +845,7 @@ panda$core$String* panda$collections$SpecializedArray$LTorg$pandalanguage$pandac
             goto $l310;
             $l310:;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$268$9313));
+            Iter$268$9313 = NULL;
             switch ($tmp312) {
                 case -1: goto $l340;
             }
@@ -861,7 +866,9 @@ panda$core$String* panda$collections$SpecializedArray$LTorg$pandalanguage$pandac
     }
     $l299:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result302));
+    result302 = NULL;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator307));
+    separator307 = NULL;
     switch ($tmp301) {
         case 0: goto $l346;
     }

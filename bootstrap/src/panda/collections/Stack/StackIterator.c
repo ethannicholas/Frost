@@ -42,7 +42,7 @@ panda$core$Bit panda$collections$Stack$StackIterator$get_done$R$panda$core$Bit(p
     return $finallyReturn3;
 }
 panda$core$Object* panda$collections$Stack$StackIterator$next$R$panda$collections$Stack$StackIterator$T(panda$collections$Stack$StackIterator* self) {
-    panda$core$Object* result11;
+    panda$core$Object* result11 = NULL;
     panda$core$Object* $tmp12;
     panda$core$Object* $tmp13;
     panda$core$Object* $finallyReturn15;
@@ -67,6 +67,7 @@ panda$core$Object* panda$collections$Stack$StackIterator$next$R$panda$collection
     }
     $l8:;
     panda$core$Panda$unref$panda$core$Object(result11);
+    result11 = NULL;
     switch ($tmp10) {
         case 0: goto $l18;
     }

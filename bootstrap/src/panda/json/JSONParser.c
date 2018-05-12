@@ -126,7 +126,7 @@ panda$json$JSON* panda$json$JSONParser$array$R$panda$json$JSON(panda$json$JSONPa
     panda$json$JSON* $tmp44;
     panda$json$JSON* $tmp45;
     panda$collections$ImmutableArray* $tmp47;
-    panda$collections$Array* result51;
+    panda$collections$Array* result51 = NULL;
     panda$collections$Array* $tmp52;
     panda$collections$Array* $tmp53;
     panda$json$JSON* $tmp57;
@@ -216,6 +216,7 @@ panda$json$JSON* panda$json$JSONParser$array$R$panda$json$JSON(panda$json$JSONPa
     goto $l38;
     $l38:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result51));
+    result51 = NULL;
     switch ($tmp40) {
         case -1: goto $l71;
         case 1: goto $l68;
@@ -229,10 +230,10 @@ panda$json$JSON* panda$json$JSONParser$object$R$panda$json$JSON(panda$json$JSONP
     panda$json$JSON* $tmp78;
     panda$json$JSON* $tmp79;
     panda$collections$ImmutableHashMap* $tmp81;
-    panda$collections$HashMap* result85;
+    panda$collections$HashMap* result85 = NULL;
     panda$collections$HashMap* $tmp86;
     panda$collections$HashMap* $tmp87;
-    panda$core$String* key94;
+    panda$core$String* key94 = NULL;
     panda$core$String* $tmp95;
     panda$core$String* $tmp96;
     org$pandalanguage$json$Token colon98;
@@ -342,6 +343,7 @@ panda$json$JSON* panda$json$JSONParser$object$R$panda$json$JSON(panda$json$JSONP
             goto $l91;
             $l91:;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) key94));
+            key94 = NULL;
             switch ($tmp93) {
                 case -1: goto $l117;
                 case 0: goto $l112;
@@ -356,6 +358,7 @@ panda$json$JSON* panda$json$JSONParser$object$R$panda$json$JSON(panda$json$JSONP
     goto $l72;
     $l72:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result85));
+    result85 = NULL;
     switch ($tmp74) {
         case -1: goto $l118;
         case 0: goto $l83;
@@ -365,7 +368,7 @@ panda$json$JSON* panda$json$JSONParser$object$R$panda$json$JSON(panda$json$JSONP
 }
 panda$core$String* panda$json$JSONParser$string$R$panda$core$String(panda$json$JSONParser* self) {
     org$pandalanguage$json$Token token122;
-    panda$core$String* s125;
+    panda$core$String* s125 = NULL;
     panda$core$String* $tmp126;
     panda$core$String* $tmp127;
     panda$core$String* $finallyReturn128;
@@ -406,6 +409,7 @@ panda$core$String* panda$json$JSONParser$string$R$panda$core$String(panda$json$J
     }
     $l119:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) s125));
+    s125 = NULL;
     switch ($tmp121) {
         case 0: goto $l138;
     }
@@ -420,7 +424,7 @@ panda$json$JSON* panda$json$JSONParser$node$R$panda$json$JSON(panda$json$JSONPar
     panda$json$JSON* $finallyReturn150;
     panda$json$JSON* $tmp152;
     panda$json$JSON* $tmp153;
-    panda$core$String* s160;
+    panda$core$String* s160 = NULL;
     panda$core$String* $tmp161;
     panda$core$String* $tmp162;
     panda$json$JSON* $finallyReturn163;
@@ -508,6 +512,7 @@ panda$json$JSON* panda$json$JSONParser$node$R$panda$json$JSON(panda$json$JSONPar
             }
             $l157:;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) s160));
+            s160 = NULL;
             switch ($tmp159) {
                 case 0: goto $l175;
             }

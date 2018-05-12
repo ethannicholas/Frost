@@ -367,7 +367,7 @@ panda$core$String* org$pandalanguage$pandac$HCodeGenerator$escapeName$panda$core
     return $finallyReturn41;
 }
 panda$core$String* org$pandalanguage$pandac$HCodeGenerator$getName$org$pandalanguage$pandac$MethodDecl$R$panda$core$String(org$pandalanguage$pandac$HCodeGenerator* self, org$pandalanguage$pandac$MethodDecl* p_m) {
-    panda$core$String* llvmName50;
+    panda$core$String* llvmName50 = NULL;
     panda$core$String* $tmp51;
     panda$core$String* $tmp52;
     panda$core$String* $finallyReturn55;
@@ -398,6 +398,7 @@ panda$core$String* org$pandalanguage$pandac$HCodeGenerator$getName$org$pandalang
     }
     $l47:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) llvmName50));
+    llvmName50 = NULL;
     switch ($tmp49) {
         case 0: goto $l61;
     }
@@ -464,12 +465,12 @@ panda$core$String* org$pandalanguage$pandac$HCodeGenerator$type$org$pandalanguag
     panda$core$String* $tmp132;
     panda$core$String* $finallyReturn134;
     panda$core$String* $tmp136;
-    panda$core$String* name142;
+    panda$core$String* name142 = NULL;
     panda$core$String* $tmp143;
     panda$core$String* $tmp144;
     panda$core$String* $tmp145;
     panda$core$String* $tmp146;
-    org$pandalanguage$pandac$ClassDecl* cl151;
+    org$pandalanguage$pandac$ClassDecl* cl151 = NULL;
     org$pandalanguage$pandac$ClassDecl* $tmp152;
     org$pandalanguage$pandac$ClassDecl* $tmp153;
     panda$core$Object* $tmp154;
@@ -481,14 +482,14 @@ panda$core$String* org$pandalanguage$pandac$HCodeGenerator$type$org$pandalanguag
     panda$core$String* $finallyReturn176;
     panda$core$String* $tmp178;
     panda$core$String* $tmp179;
-    panda$core$String* includePath184;
+    panda$core$String* includePath184 = NULL;
     panda$core$String* $tmp185;
     panda$core$String* $tmp186;
     panda$core$String* $tmp191;
     panda$core$String* $tmp192;
     panda$core$String* $finallyReturn197;
     panda$core$String* $tmp199;
-    org$pandalanguage$pandac$ClassDecl* cl206;
+    org$pandalanguage$pandac$ClassDecl* cl206 = NULL;
     org$pandalanguage$pandac$ClassDecl* $tmp207;
     org$pandalanguage$pandac$ClassDecl* $tmp208;
     panda$core$Object* $tmp209;
@@ -508,16 +509,16 @@ panda$core$String* org$pandalanguage$pandac$HCodeGenerator$type$org$pandalanguag
     panda$core$String* $tmp246;
     panda$core$String* $tmp247;
     panda$core$Object* $tmp248;
-    org$pandalanguage$pandac$ClassDecl* cl255;
+    org$pandalanguage$pandac$ClassDecl* cl255 = NULL;
     org$pandalanguage$pandac$ClassDecl* $tmp256;
     org$pandalanguage$pandac$ClassDecl* $tmp257;
     panda$core$Object* $tmp258;
-    panda$core$String* name266;
+    panda$core$String* name266 = NULL;
     panda$core$String* $tmp267;
     panda$core$String* $tmp268;
     panda$core$String* $tmp269;
     panda$core$String* $tmp270;
-    org$pandalanguage$pandac$ClassDecl* cl275;
+    org$pandalanguage$pandac$ClassDecl* cl275 = NULL;
     org$pandalanguage$pandac$ClassDecl* $tmp276;
     org$pandalanguage$pandac$ClassDecl* $tmp277;
     panda$core$Object* $tmp278;
@@ -529,7 +530,7 @@ panda$core$String* org$pandalanguage$pandac$HCodeGenerator$type$org$pandalanguag
     panda$core$String* $finallyReturn300;
     panda$core$String* $tmp302;
     panda$core$String* $tmp303;
-    panda$core$String* includePath309;
+    panda$core$String* includePath309 = NULL;
     panda$core$String* $tmp310;
     panda$core$String* $tmp311;
     panda$core$String* $tmp316;
@@ -724,8 +725,11 @@ panda$core$String* org$pandalanguage$pandac$HCodeGenerator$type$org$pandalanguag
             }
             $l139:;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) name142));
+            name142 = NULL;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) cl151));
+            cl151 = NULL;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) includePath184));
+            includePath184 = NULL;
             switch ($tmp141) {
                 case 1: goto $l200;
                 case 0: goto $l182;
@@ -787,6 +791,7 @@ panda$core$String* org$pandalanguage$pandac$HCodeGenerator$type$org$pandalanguag
             }
             $l203:;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) cl206));
+            cl206 = NULL;
             switch ($tmp205) {
                 case 0: goto $l226;
                 case 1: goto $l234;
@@ -933,8 +938,11 @@ panda$core$String* org$pandalanguage$pandac$HCodeGenerator$type$org$pandalanguag
                     }
                     $l263:;
                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) name266));
+                    name266 = NULL;
                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) cl275));
+                    cl275 = NULL;
                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) includePath309));
+                    includePath309 = NULL;
                     switch ($tmp265) {
                         case 0: goto $l306;
                         case 1: goto $l325;
@@ -958,6 +966,7 @@ panda$core$String* org$pandalanguage$pandac$HCodeGenerator$type$org$pandalanguag
             }
             $l237:;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) cl255));
+            cl255 = NULL;
             switch ($tmp239) {
                 case 2: goto $l326;
                 case 1: goto $l307;
@@ -1018,7 +1027,7 @@ panda$io$File* org$pandalanguage$pandac$HCodeGenerator$getPath$org$pandalanguage
     return $finallyReturn346;
 }
 void org$pandalanguage$pandac$HCodeGenerator$start$org$pandalanguage$pandac$ClassDecl(org$pandalanguage$pandac$HCodeGenerator* self, org$pandalanguage$pandac$ClassDecl* p_cl) {
-    panda$io$File* path357;
+    panda$io$File* path357 = NULL;
     panda$io$File* $tmp358;
     panda$io$File* $tmp359;
     panda$io$File* $tmp362;
@@ -1033,12 +1042,12 @@ void org$pandalanguage$pandac$HCodeGenerator$start$org$pandalanguage$pandac$Clas
     panda$core$String* $tmp380;
     panda$core$String* $tmp381;
     panda$core$String* $tmp383;
-    panda$collections$Iterator* Iter$163$9393;
+    panda$collections$Iterator* Iter$163$9393 = NULL;
     panda$collections$Iterator* $tmp394;
     panda$collections$Iterator* $tmp395;
     panda$collections$ListView* $tmp396;
     panda$core$Object* $tmp397;
-    org$pandalanguage$pandac$FieldDecl* f416;
+    org$pandalanguage$pandac$FieldDecl* f416 = NULL;
     org$pandalanguage$pandac$FieldDecl* $tmp417;
     panda$core$Object* $tmp418;
     panda$core$Object* $tmp423;
@@ -1101,12 +1110,12 @@ void org$pandalanguage$pandac$HCodeGenerator$start$org$pandalanguage$pandac$Clas
     panda$core$String* $tmp609;
     panda$core$String* $tmp610;
     panda$core$String* $tmp612;
-    org$pandalanguage$pandac$ClassDecl* value618;
+    org$pandalanguage$pandac$ClassDecl* value618 = NULL;
     org$pandalanguage$pandac$ClassDecl* $tmp619;
     org$pandalanguage$pandac$ClassDecl* $tmp620;
     panda$core$Object* $tmp621;
     org$pandalanguage$pandac$Type* $tmp624;
-    panda$collections$ListView* valueVTable627;
+    panda$collections$ListView* valueVTable627 = NULL;
     panda$collections$ListView* $tmp628;
     panda$collections$ListView* $tmp629;
     panda$core$Object* $tmp630;
@@ -1293,6 +1302,7 @@ void org$pandalanguage$pandac$HCodeGenerator$start$org$pandalanguage$pandac$Clas
                     goto $l413;
                     $l413:;
                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) f416));
+                    f416 = NULL;
                     switch ($tmp415) {
                         case -1: goto $l457;
                     }
@@ -1305,6 +1315,7 @@ void org$pandalanguage$pandac$HCodeGenerator$start$org$pandalanguage$pandac$Clas
             goto $l390;
             $l390:;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$163$9393));
+            Iter$163$9393 = NULL;
             switch ($tmp392) {
                 case -1: goto $l458;
             }
@@ -1583,7 +1594,9 @@ void org$pandalanguage$pandac$HCodeGenerator$start$org$pandalanguage$pandac$Clas
             goto $l551;
             $l551:;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) value618));
+            value618 = NULL;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) valueVTable627));
+            valueVTable627 = NULL;
             switch ($tmp553) {
                 case -1: goto $l680;
             }
@@ -1595,13 +1608,14 @@ void org$pandalanguage$pandac$HCodeGenerator$start$org$pandalanguage$pandac$Clas
     goto $l354;
     $l354:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) path357));
+    path357 = NULL;
     switch ($tmp356) {
         case -1: goto $l681;
     }
     $l681:;
 }
 panda$core$String* org$pandalanguage$pandac$HCodeGenerator$selfType$org$pandalanguage$pandac$MethodDecl$R$panda$core$String(org$pandalanguage$pandac$HCodeGenerator* self, org$pandalanguage$pandac$MethodDecl* p_m) {
-    panda$core$String* result685;
+    panda$core$String* result685 = NULL;
     panda$core$String* $tmp686;
     panda$core$String* $tmp687;
     org$pandalanguage$pandac$Type* $tmp688;
@@ -1653,6 +1667,7 @@ panda$core$String* org$pandalanguage$pandac$HCodeGenerator$selfType$org$pandalan
     }
     $l682:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result685));
+    result685 = NULL;
     switch ($tmp684) {
         case 0: goto $l703;
         case 1: goto $l707;
@@ -1726,7 +1741,7 @@ void org$pandalanguage$pandac$HCodeGenerator$writeDeclaration$org$pandalanguage$
     panda$io$MemoryOutputStream* $tmp752;
     panda$collections$Set* $tmp753;
     panda$collections$Set* $tmp754;
-    panda$core$String* separator755;
+    panda$core$String* separator755 = NULL;
     panda$core$String* $tmp756;
     panda$core$String* $tmp759;
     panda$core$String* $tmp760;
@@ -1749,10 +1764,10 @@ void org$pandalanguage$pandac$HCodeGenerator$writeDeclaration$org$pandalanguage$
     panda$core$String* $tmp802;
     panda$core$String* $tmp808;
     panda$core$String* $tmp809;
-    panda$collections$Iterator* Iter$266$9814;
+    panda$collections$Iterator* Iter$266$9814 = NULL;
     panda$collections$Iterator* $tmp815;
     panda$collections$Iterator* $tmp816;
-    org$pandalanguage$pandac$MethodDecl$Parameter* p832;
+    org$pandalanguage$pandac$MethodDecl$Parameter* p832 = NULL;
     org$pandalanguage$pandac$MethodDecl$Parameter* $tmp833;
     panda$core$Object* $tmp834;
     panda$core$String* $tmp839;
@@ -1942,6 +1957,7 @@ void org$pandalanguage$pandac$HCodeGenerator$writeDeclaration$org$pandalanguage$
                     goto $l829;
                     $l829:;
                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) p832));
+                    p832 = NULL;
                     switch ($tmp831) {
                         case -1: goto $l862;
                     }
@@ -1954,6 +1970,7 @@ void org$pandalanguage$pandac$HCodeGenerator$writeDeclaration$org$pandalanguage$
             goto $l811;
             $l811:;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$266$9814));
+            Iter$266$9814 = NULL;
             switch ($tmp813) {
                 case -1: goto $l863;
             }
@@ -1965,6 +1982,7 @@ void org$pandalanguage$pandac$HCodeGenerator$writeDeclaration$org$pandalanguage$
     goto $l748;
     $l748:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator755));
+    separator755 = NULL;
     switch ($tmp750) {
         case -1: goto $l866;
     }

@@ -42,13 +42,13 @@ void panda$io$MemoryInputStream$init$panda$collections$ImmutableArray$LTpanda$co
     }
 }
 void panda$io$MemoryInputStream$init$panda$core$String(panda$io$MemoryInputStream* self, panda$core$String* p_source) {
-    panda$collections$ListView* utf87;
+    panda$collections$ListView* utf87 = NULL;
     panda$collections$ListView* $tmp8;
     panda$collections$ListView* $tmp9;
-    panda$collections$Array* array11;
+    panda$collections$Array* array11 = NULL;
     panda$collections$Array* $tmp12;
     panda$collections$Array* $tmp13;
-    panda$collections$Iterator* Iter$26$922;
+    panda$collections$Iterator* Iter$26$922 = NULL;
     panda$collections$Iterator* $tmp23;
     panda$collections$Iterator* $tmp24;
     panda$core$Char8 c37;
@@ -128,6 +128,7 @@ void panda$io$MemoryInputStream$init$panda$core$String(panda$io$MemoryInputStrea
             goto $l19;
             $l19:;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$26$922));
+            Iter$26$922 = NULL;
             switch ($tmp21) {
                 case -1: goto $l46;
             }
@@ -145,7 +146,9 @@ void panda$io$MemoryInputStream$init$panda$core$String(panda$io$MemoryInputStrea
     goto $l4;
     $l4:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) utf87));
+    utf87 = NULL;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) array11));
+    array11 = NULL;
     switch ($tmp6) {
         case -1: goto $l49;
     }

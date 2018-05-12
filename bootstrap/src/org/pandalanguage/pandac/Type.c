@@ -234,15 +234,15 @@ void org$pandalanguage$pandac$Type$init$panda$collections$ListView$LTorg$pandala
     panda$collections$Array* $tmp34;
     panda$collections$Array* $tmp35;
     panda$collections$Array* $tmp36;
-    panda$core$MutableString* name38;
+    panda$core$MutableString* name38 = NULL;
     panda$core$MutableString* $tmp39;
     panda$core$MutableString* $tmp40;
-    panda$core$String* separator43;
+    panda$core$String* separator43 = NULL;
     panda$core$String* $tmp44;
-    panda$collections$Iterator* Iter$76$949;
+    panda$collections$Iterator* Iter$76$949 = NULL;
     panda$collections$Iterator* $tmp50;
     panda$collections$Iterator* $tmp51;
-    org$pandalanguage$pandac$Type* t67;
+    org$pandalanguage$pandac$Type* t67 = NULL;
     org$pandalanguage$pandac$Type* $tmp68;
     panda$core$Object* $tmp69;
     panda$core$String* $tmp74;
@@ -339,6 +339,7 @@ void org$pandalanguage$pandac$Type$init$panda$collections$ListView$LTorg$pandala
                     goto $l64;
                     $l64:;
                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) t67));
+                    t67 = NULL;
                     switch ($tmp66) {
                         case -1: goto $l80;
                     }
@@ -351,6 +352,7 @@ void org$pandalanguage$pandac$Type$init$panda$collections$ListView$LTorg$pandala
             goto $l46;
             $l46:;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$76$949));
+            Iter$76$949 = NULL;
             switch ($tmp48) {
                 case -1: goto $l81;
             }
@@ -367,7 +369,9 @@ void org$pandalanguage$pandac$Type$init$panda$collections$ListView$LTorg$pandala
     goto $l31;
     $l31:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) name38));
+    name38 = NULL;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator43));
+    separator43 = NULL;
     switch ($tmp33) {
         case -1: goto $l85;
     }
@@ -505,7 +509,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$Object$R$org$pandal
     return $finallyReturn133;
 }
 org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$Any$R$org$pandalanguage$pandac$Type() {
-    panda$collections$Array* subtypes144;
+    panda$collections$Array* subtypes144 = NULL;
     panda$collections$Array* $tmp145;
     panda$collections$Array* $tmp146;
     org$pandalanguage$pandac$Type* $tmp148;
@@ -541,6 +545,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$Any$R$org$pandalang
     }
     $l141:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) subtypes144));
+    subtypes144 = NULL;
     switch ($tmp143) {
         case 0: goto $l156;
     }
@@ -1068,7 +1073,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$Panda$R$org$pandala
     return $finallyReturn392;
 }
 org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$WeakOf$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$Type* p_t) {
-    panda$collections$Array* children403;
+    panda$collections$Array* children403 = NULL;
     panda$collections$Array* $tmp404;
     panda$collections$Array* $tmp405;
     org$pandalanguage$pandac$Type* $tmp407;
@@ -1122,13 +1127,14 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$WeakOf$org$pandalan
     }
     $l400:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) children403));
+    children403 = NULL;
     switch ($tmp402) {
         case 0: goto $l426;
     }
     $l428:;
 }
 org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$RangeOf$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$Type* p_t) {
-    panda$collections$Array* children432;
+    panda$collections$Array* children432 = NULL;
     panda$collections$Array* $tmp433;
     panda$collections$Array* $tmp434;
     org$pandalanguage$pandac$Type* $tmp436;
@@ -1182,13 +1188,14 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$RangeOf$org$pandala
     }
     $l429:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) children432));
+    children432 = NULL;
     switch ($tmp431) {
         case 0: goto $l455;
     }
     $l457:;
 }
 org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$SteppedRangeOf$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$Type* p_t) {
-    panda$collections$Array* children461;
+    panda$collections$Array* children461 = NULL;
     panda$collections$Array* $tmp462;
     panda$collections$Array* $tmp463;
     org$pandalanguage$pandac$Type* $tmp465;
@@ -1309,6 +1316,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$SteppedRangeOf$org$
     }
     $l458:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) children461));
+    children461 = NULL;
     switch ($tmp460) {
         case 0: goto $l508;
     }
@@ -1527,7 +1535,7 @@ panda$core$Bit org$pandalanguage$pandac$Type$isSteppedRange$R$panda$core$Bit(org
 org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$nullable$R$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$Type* self) {
     org$pandalanguage$pandac$Type* $finallyReturn631;
     org$pandalanguage$pandac$Type* $tmp633;
-    panda$collections$Array* subtypes636;
+    panda$collections$Array* subtypes636 = NULL;
     panda$collections$Array* $tmp637;
     panda$collections$Array* $tmp638;
     org$pandalanguage$pandac$Type* $finallyReturn639;
@@ -1579,6 +1587,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$nullable$R$org$pand
     }
     $l628:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) subtypes636));
+    subtypes636 = NULL;
     switch ($tmp630) {
         case 1: goto $l650;
         case 0: goto $l634;
@@ -1653,18 +1662,18 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$union$org$pandalang
     org$pandalanguage$pandac$Type* $tmp780;
     org$pandalanguage$pandac$Type* $tmp781;
     panda$core$Object* $tmp782;
-    org$pandalanguage$pandac$Type* t1788;
+    org$pandalanguage$pandac$Type* t1788 = NULL;
     org$pandalanguage$pandac$Type* $tmp789;
     org$pandalanguage$pandac$Type* $tmp790;
-    org$pandalanguage$pandac$Type* t2792;
+    org$pandalanguage$pandac$Type* t2792 = NULL;
     org$pandalanguage$pandac$Type* $tmp793;
     org$pandalanguage$pandac$Type* $tmp794;
-    panda$collections$Set* ancestors804;
+    panda$collections$Set* ancestors804 = NULL;
     panda$collections$Set* $tmp805;
     panda$collections$Set* $tmp806;
-    org$pandalanguage$pandac$Type* t808;
+    org$pandalanguage$pandac$Type* t808 = NULL;
     org$pandalanguage$pandac$Type* $tmp809;
-    org$pandalanguage$pandac$ClassDecl* cl810;
+    org$pandalanguage$pandac$ClassDecl* cl810 = NULL;
     org$pandalanguage$pandac$ClassDecl* $tmp811;
     org$pandalanguage$pandac$ClassDecl* $tmp812;
     org$pandalanguage$pandac$Type* $tmp817;
@@ -2112,8 +2121,11 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$union$org$pandalang
             goto $l801;
             $l801:;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) ancestors804));
+            ancestors804 = NULL;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) t808));
+            t808 = NULL;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) cl810));
+            cl810 = NULL;
             switch ($tmp803) {
                 case 0: goto $l839;
                 case -1: goto $l852;
@@ -2134,7 +2146,9 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$union$org$pandalang
     }
     $l662:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) t1788));
+    t1788 = NULL;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) t2792));
+    t2792 = NULL;
     switch ($tmp664) {
         case 4: goto $l696;
         case 3: goto $l690;
@@ -2159,25 +2173,25 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$union$org$pandalang
 org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$remap$panda$collections$HashMap$LTpanda$core$String$Corg$pandalanguage$pandac$Type$GT$R$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$Type* self, panda$collections$HashMap* p_types) {
     org$pandalanguage$pandac$Type* $finallyReturn861;
     org$pandalanguage$pandac$Type* $tmp863;
-    org$pandalanguage$pandac$Type* found868;
+    org$pandalanguage$pandac$Type* found868 = NULL;
     org$pandalanguage$pandac$Type* $tmp869;
     panda$core$Object* $tmp870;
     org$pandalanguage$pandac$Type* $finallyReturn871;
     org$pandalanguage$pandac$Type* $tmp873;
     org$pandalanguage$pandac$Type* $finallyReturn875;
     org$pandalanguage$pandac$Type* $tmp877;
-    panda$collections$Array* remapped884;
+    panda$collections$Array* remapped884 = NULL;
     panda$collections$Array* $tmp885;
     panda$collections$Array* $tmp886;
-    panda$core$MutableString* name888;
+    panda$core$MutableString* name888 = NULL;
     panda$core$MutableString* $tmp889;
     panda$core$MutableString* $tmp890;
     panda$core$Object* $tmp892;
     panda$core$Char8 $tmp894;
-    panda$core$String* separator895;
+    panda$core$String* separator895 = NULL;
     panda$core$String* $tmp896;
     panda$core$Range$LTpanda$core$Int64$GT $tmp898;
-    org$pandalanguage$pandac$Type* child916;
+    org$pandalanguage$pandac$Type* child916 = NULL;
     org$pandalanguage$pandac$Type* $tmp917;
     org$pandalanguage$pandac$Type* $tmp918;
     panda$core$Object* $tmp919;
@@ -2193,16 +2207,16 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$remap$panda$collect
     org$pandalanguage$pandac$Type* $tmp945;
     org$pandalanguage$pandac$Type* $tmp946;
     panda$core$Object* $tmp947;
-    panda$collections$Array* remapped955;
+    panda$collections$Array* remapped955 = NULL;
     panda$collections$Array* $tmp956;
     panda$collections$Array* $tmp957;
-    panda$core$MutableString* name959;
+    panda$core$MutableString* name959 = NULL;
     panda$core$MutableString* $tmp960;
     panda$core$MutableString* $tmp961;
-    panda$core$String* separator964;
+    panda$core$String* separator964 = NULL;
     panda$core$String* $tmp965;
     panda$core$Range$LTpanda$core$Int64$GT $tmp969;
-    org$pandalanguage$pandac$Type* child988;
+    org$pandalanguage$pandac$Type* child988 = NULL;
     org$pandalanguage$pandac$Type* $tmp989;
     org$pandalanguage$pandac$Type* $tmp990;
     panda$core$Object* $tmp991;
@@ -2210,7 +2224,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$remap$panda$collect
     panda$core$String* $tmp995;
     panda$core$Object* $tmp1007;
     org$pandalanguage$pandac$Type* $tmp1011;
-    org$pandalanguage$pandac$Type* child1017;
+    org$pandalanguage$pandac$Type* child1017 = NULL;
     org$pandalanguage$pandac$Type* $tmp1018;
     org$pandalanguage$pandac$Type* $tmp1019;
     panda$core$Object* $tmp1020;
@@ -2264,6 +2278,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$remap$panda$collect
             }
             $l865:;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) found868));
+            found868 = NULL;
             switch ($tmp867) {
                 case 1: goto $l878;
                 case 0: goto $l874;
@@ -2341,6 +2356,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$remap$panda$collect
                     goto $l913;
                     $l913:;
                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) child916));
+                    child916 = NULL;
                     switch ($tmp915) {
                         case -1: goto $l926;
                     }
@@ -2376,8 +2392,11 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$remap$panda$collect
             }
             $l881:;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) remapped884));
+            remapped884 = NULL;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) name888));
+            name888 = NULL;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator895));
+            separator895 = NULL;
             switch ($tmp883) {
                 case 0: goto $l940;
             }
@@ -2466,6 +2485,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$remap$panda$collect
                     goto $l985;
                     $l985:;
                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) child988));
+                    child988 = NULL;
                     switch ($tmp987) {
                         case -1: goto $l997;
                     }
@@ -2524,6 +2544,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$remap$panda$collect
                     goto $l1014;
                     $l1014:;
                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) child1017));
+                    child1017 = NULL;
                     switch ($tmp1016) {
                         case -1: goto $l1025;
                     }
@@ -2557,8 +2578,11 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$remap$panda$collect
             }
             $l952:;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) remapped955));
+            remapped955 = NULL;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) name959));
+            name959 = NULL;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator964));
+            separator964 = NULL;
             switch ($tmp954) {
                 case 0: goto $l1035;
             }

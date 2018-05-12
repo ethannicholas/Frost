@@ -231,7 +231,7 @@ panda$core$String* panda$io$File$name$R$panda$core$String(panda$io$File* self) {
     }
 }
 panda$core$String* panda$io$File$simpleName$R$panda$core$String(panda$io$File* self) {
-    panda$core$String* result85;
+    panda$core$String* result85 = NULL;
     panda$core$String* $tmp86;
     panda$core$String* $tmp87;
     panda$core$String$Index$nullable index89;
@@ -276,6 +276,7 @@ panda$core$String* panda$io$File$simpleName$R$panda$core$String(panda$io$File* s
     }
     $l82:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result85));
+    result85 = NULL;
     switch ($tmp84) {
         case 0: goto $l94;
         case 1: goto $l101;
@@ -307,7 +308,7 @@ panda$io$File* panda$io$File$changeExtension$panda$core$String$R$panda$io$File(p
     return $finallyReturn103;
 }
 void panda$io$File$createDirectories(panda$io$File* self) {
-    panda$io$File* p118;
+    panda$io$File* p118 = NULL;
     panda$io$File* $tmp119;
     panda$io$File* $tmp120;
     panda$core$Bit $tmp124;
@@ -337,6 +338,7 @@ void panda$io$File$createDirectories(panda$io$File* self) {
     goto $l115;
     $l115:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) p118));
+    p118 = NULL;
     switch ($tmp117) {
         case -1: goto $l127;
     }

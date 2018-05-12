@@ -132,7 +132,7 @@ panda$core$Bit panda$core$Char16$$GE$panda$core$Char16$R$panda$core$Bit(panda$co
     return $finallyReturn17;
 }
 panda$core$String* panda$core$Char16$$MUL$panda$core$Int64$R$panda$core$String(panda$core$Char16 self, panda$core$Int64 p_count) {
-    panda$core$MutableString* result24;
+    panda$core$MutableString* result24 = NULL;
     panda$core$MutableString* $tmp25;
     panda$core$MutableString* $tmp26;
     panda$core$Range$LTpanda$core$Int64$GT $tmp28;
@@ -192,6 +192,7 @@ panda$core$String* panda$core$Char16$$MUL$panda$core$Int64$R$panda$core$String(p
     }
     $l21:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result24));
+    result24 = NULL;
     switch ($tmp23) {
         case 0: goto $l54;
     }

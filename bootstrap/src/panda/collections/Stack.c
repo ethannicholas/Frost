@@ -27,7 +27,7 @@ void panda$collections$Stack$push$panda$collections$Stack$T(panda$collections$St
     panda$collections$Array$add$panda$collections$Array$T(self->contents, p_v);
 }
 panda$core$Object* panda$collections$Stack$pop$R$panda$collections$Stack$T(panda$collections$Stack* self) {
-    panda$core$Object* result7;
+    panda$core$Object* result7 = NULL;
     panda$core$Object* $tmp8;
     panda$core$Object* $tmp9;
     panda$core$Object* $finallyReturn12;
@@ -56,6 +56,7 @@ panda$core$Object* panda$collections$Stack$pop$R$panda$collections$Stack$T(panda
     }
     $l2:;
     panda$core$Panda$unref$panda$core$Object(result7);
+    result7 = NULL;
     switch ($tmp4) {
         case 0: goto $l15;
     }

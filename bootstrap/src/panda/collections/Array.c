@@ -118,10 +118,10 @@ void panda$collections$Array$init$panda$core$Int64(panda$collections$Array* self
     $l10:;
 }
 void panda$collections$Array$init$panda$collections$ListView$LTpanda$collections$Array$T$GT(panda$collections$Array* self, panda$collections$ListView* p_list) {
-    panda$collections$Iterator* Iter$53$930;
+    panda$collections$Iterator* Iter$53$930 = NULL;
     panda$collections$Iterator* $tmp31;
     panda$collections$Iterator* $tmp32;
-    panda$core$Object* v48;
+    panda$core$Object* v48 = NULL;
     panda$core$Object* $tmp49;
     panda$core$Object* $tmp50;
     self->count = ((panda$core$Int64) { 0 });
@@ -177,6 +177,7 @@ void panda$collections$Array$init$panda$collections$ListView$LTpanda$collections
                 goto $l45;
                 $l45:;
                 panda$core$Panda$unref$panda$core$Object(v48);
+                v48 = NULL;
                 switch ($tmp47) {
                     case -1: goto $l55;
                 }
@@ -189,6 +190,7 @@ void panda$collections$Array$init$panda$collections$ListView$LTpanda$collections
         goto $l27;
         $l27:;
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$53$930));
+        Iter$53$930 = NULL;
         switch ($tmp29) {
             case -1: goto $l56;
         }
@@ -471,7 +473,7 @@ panda$collections$Array* panda$collections$Array$$IDX$panda$core$SteppedRange$LT
     panda$core$Int64 step185;
     panda$core$Int64 current186;
     panda$core$Int64 end190;
-    panda$collections$Array* result193;
+    panda$collections$Array* result193 = NULL;
     panda$collections$Array* $tmp194;
     panda$collections$Array* $tmp195;
     panda$core$Object* $tmp202;
@@ -605,6 +607,7 @@ panda$collections$Array* panda$collections$Array$$IDX$panda$core$SteppedRange$LT
     }
     $l182:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result193));
+    result193 = NULL;
     switch ($tmp184) {
         case 0: goto $l229;
     }
@@ -628,10 +631,10 @@ void panda$collections$Array$add$panda$collections$Array$T(panda$collections$Arr
     self->count = $tmp236;
 }
 void panda$collections$Array$addAll$panda$collections$CollectionView$LTpanda$collections$Array$T$GT(panda$collections$Array* self, panda$collections$CollectionView* p_c) {
-    panda$collections$Iterator* Iter$209$9245;
+    panda$collections$Iterator* Iter$209$9245 = NULL;
     panda$collections$Iterator* $tmp246;
     panda$collections$Iterator* $tmp247;
-    panda$core$Object* v263;
+    panda$core$Object* v263 = NULL;
     panda$core$Object* $tmp264;
     panda$core$Object* $tmp265;
     panda$core$Object** $tmp270;
@@ -698,6 +701,7 @@ void panda$collections$Array$addAll$panda$collections$CollectionView$LTpanda$col
                 goto $l260;
                 $l260:;
                 panda$core$Panda$unref$panda$core$Object(v263);
+                v263 = NULL;
                 switch ($tmp262) {
                     case -1: goto $l274;
                 }
@@ -710,6 +714,7 @@ void panda$collections$Array$addAll$panda$collections$CollectionView$LTpanda$col
         goto $l242;
         $l242:;
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$209$9245));
+        Iter$209$9245 = NULL;
         switch ($tmp244) {
             case -1: goto $l275;
         }
@@ -884,7 +889,7 @@ panda$core$String* panda$collections$Array$join$R$panda$core$String(panda$collec
 panda$core$String* panda$collections$Array$join$panda$core$String$R$panda$core$String(panda$collections$Array* self, panda$core$String* p_separator) {
     panda$core$String* $finallyReturn371;
     panda$core$String* $tmp373;
-    panda$core$MutableString* result377;
+    panda$core$MutableString* result377 = NULL;
     panda$core$MutableString* $tmp378;
     panda$core$MutableString* $tmp379;
     panda$core$String* $tmp381;
@@ -976,6 +981,7 @@ panda$core$String* panda$collections$Array$join$panda$core$String$R$panda$core$S
     }
     $l368:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result377));
+    result377 = NULL;
     switch ($tmp370) {
         case 1: goto $l415;
         case 0: goto $l375;
@@ -983,16 +989,16 @@ panda$core$String* panda$collections$Array$join$panda$core$String$R$panda$core$S
     $l417:;
 }
 panda$core$String* panda$collections$Array$convert$R$panda$core$String(panda$collections$Array* self) {
-    panda$core$MutableString* result421;
+    panda$core$MutableString* result421 = NULL;
     panda$core$MutableString* $tmp422;
     panda$core$MutableString* $tmp423;
     panda$core$Char8 $tmp425;
-    panda$core$String* separator426;
+    panda$core$String* separator426 = NULL;
     panda$core$String* $tmp427;
-    panda$collections$Iterator* Iter$283$9432;
+    panda$collections$Iterator* Iter$283$9432 = NULL;
     panda$collections$Iterator* $tmp433;
     panda$collections$Iterator* $tmp434;
-    panda$core$Object* v450;
+    panda$core$Object* v450 = NULL;
     panda$core$Object* $tmp451;
     panda$core$Object* $tmp452;
     panda$core$String* $tmp457;
@@ -1076,6 +1082,7 @@ panda$core$String* panda$collections$Array$convert$R$panda$core$String(panda$col
                     goto $l447;
                     $l447:;
                     panda$core$Panda$unref$panda$core$Object(v450);
+                    v450 = NULL;
                     switch ($tmp449) {
                         case -1: goto $l461;
                     }
@@ -1088,6 +1095,7 @@ panda$core$String* panda$collections$Array$convert$R$panda$core$String(panda$col
             goto $l429;
             $l429:;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$283$9432));
+            Iter$283$9432 = NULL;
             switch ($tmp431) {
                 case -1: goto $l462;
             }
@@ -1108,7 +1116,9 @@ panda$core$String* panda$collections$Array$convert$R$panda$core$String(panda$col
     }
     $l418:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result421));
+    result421 = NULL;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator426));
+    separator426 = NULL;
     switch ($tmp420) {
         case 0: goto $l468;
     }

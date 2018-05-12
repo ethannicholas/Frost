@@ -139,7 +139,7 @@ panda$core$Bit panda$core$Bit$$XOR$panda$core$Bit$R$panda$core$Bit(panda$core$Bi
     return $finallyReturn31;
 }
 panda$core$String* panda$core$Bit$format$panda$core$String$R$panda$core$String(panda$core$Bit self, panda$core$String* p_fmt) {
-    panda$collections$Array* s38;
+    panda$collections$Array* s38 = NULL;
     panda$collections$Array* $tmp39;
     panda$collections$Array* $tmp40;
     panda$core$String* $finallyReturn44;
@@ -186,6 +186,7 @@ panda$core$String* panda$core$Bit$format$panda$core$String$R$panda$core$String(p
     }
     $l35:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) s38));
+    s38 = NULL;
     switch ($tmp37) {
         case 1: goto $l55;
         case 0: goto $l49;

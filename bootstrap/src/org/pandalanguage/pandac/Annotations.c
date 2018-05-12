@@ -129,7 +129,7 @@ panda$core$Bit org$pandalanguage$pandac$Annotations$isWeak$R$panda$core$Bit(org$
     return $finallyReturn56;
 }
 panda$core$String* org$pandalanguage$pandac$Annotations$convert$R$panda$core$String(org$pandalanguage$pandac$Annotations* self) {
-    panda$core$MutableString* result65;
+    panda$core$MutableString* result65 = NULL;
     panda$core$MutableString* $tmp66;
     panda$core$MutableString* $tmp67;
     panda$core$String* $finallyReturn92;
@@ -229,6 +229,7 @@ panda$core$String* org$pandalanguage$pandac$Annotations$convert$R$panda$core$Str
     }
     $l62:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result65));
+    result65 = NULL;
     switch ($tmp64) {
         case 0: goto $l97;
     }

@@ -1771,7 +1771,11 @@ class CCodeGenerator : CodeGenerator {
     method writeVarTarget(target:IRNode, value:IRNode?, out:IndentedOutputStream) {
         match target {
             when IRNode.VARIABLE_REFERENCE(_, v):
-                methodHeader.printLine("\{type(v.type)} \{getName(v)};")
+                methodHeader.print("\{type(v.type)} \{getName(v)}")
+                if compiler.isRefCounted(v.type) {
+                    methodHeader.print(" = NULL")
+                }
+                methodHeader.printLine(";")
                 if value != null {
                     out.printLine("\{getName(v)} = \{getReference(value, out)};")
                 }

@@ -38,9 +38,9 @@ void panda$json$JSON$PathKey$init$panda$core$Int64$panda$core$Int64$panda$core$S
     *$tmp8 = p_f1;
 }
 void panda$json$JSON$PathKey$cleanup(panda$json$JSON$PathKey* self) {
-    panda$json$JSON$PathKey* $match$15_515;
+    panda$json$JSON$PathKey* $match$15_515 = NULL;
     panda$json$JSON$PathKey* $tmp16;
-    panda$core$String* _f018;
+    panda$core$String* _f018 = NULL;
     panda$core$String$Index _f120;
     panda$core$Int64 _f023;
     panda$core$String$Index _f125;

@@ -345,6 +345,12 @@ void panda$core$Panda$disableRefCounting() {
     refCount = 0;
 }
 
+void debugPrintObject(void* object) {
+    char* className = pandaGetCString(((Object*) object)->cl->name);
+    printf("%s(%p)\n", className, object);
+    pandaFree(className);
+}
+
 void panda$core$Panda$ref$panda$core$Object(Object* o) {
     if (refCount && o && o->refcnt != NO_REFCNT) {
         if (o->refcnt <= 0) {
@@ -355,27 +361,18 @@ void panda$core$Panda$ref$panda$core$Object(Object* o) {
     }
 }
 
-void debugPrintObject(void* object) {
-    char* className = pandaGetCString(((Object*) object)->cl->name);
-    printf("%s(%p)\n", className, object);
-    pandaFree(className);
-
-}
-
 void panda$core$Panda$unref$panda$core$Object(Object* o) {
     if (refCount && o && o->refcnt != NO_REFCNT) {
         if (o->refcnt <= 0) {
             printf("internal error: unref with refcnt = %d\n", o->refcnt);
-            debugPrintObject(o);
             abort();
         }
         if (o->refcnt == 1) {
             void (*cleanup)() = o->cl->vtable[1]; // FIXME hardcoded index to cleanup
             cleanup(o);
             if (o->refcnt != 1) {
-                printf("object was resurrected during cleanup\n");
-                debugPrintObject(o);
-//                abort();
+                printf("internal error: refcount changed to %d during cleanup\n", o->refcnt);
+                abort();
             }
             pandaObjectFree(o);
         }

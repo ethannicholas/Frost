@@ -172,14 +172,14 @@ panda$core$String* panda$core$String$convert$R$panda$core$String(panda$core$Stri
     return $finallyReturn36;
 }
 panda$core$String* panda$core$String$format$panda$core$String$R$panda$core$String(panda$core$String* self, panda$core$String* p_fmt) {
-    panda$core$String* $match$231_943;
+    panda$core$String* $match$231_943 = NULL;
     panda$core$String* $tmp44;
     panda$core$String* $finallyReturn46;
     panda$core$String* $tmp48;
-    panda$core$MutableString* result56;
+    panda$core$MutableString* result56 = NULL;
     panda$core$MutableString* $tmp57;
     panda$core$MutableString* $tmp58;
-    panda$collections$Iterator* Iter$236$1764;
+    panda$collections$Iterator* Iter$236$1764 = NULL;
     panda$collections$Iterator* $tmp65;
     panda$collections$Iterator* $tmp66;
     panda$collections$ListView* $tmp67;
@@ -341,6 +341,7 @@ panda$core$String* panda$core$String$format$panda$core$String$R$panda$core$Strin
                     goto $l61;
                     $l61:;
                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$236$1764));
+                    Iter$236$1764 = NULL;
                     switch ($tmp63) {
                         case -1: goto $l111;
                     }
@@ -364,6 +365,7 @@ panda$core$String* panda$core$String$format$panda$core$String$R$panda$core$Strin
             }
             $l53:;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result56));
+            result56 = NULL;
             switch ($tmp55) {
                 case 0: goto $l117;
             }
@@ -448,7 +450,7 @@ panda$collections$Iterator* panda$core$String$iterator$R$panda$collections$Itera
 }
 panda$core$Int64 panda$core$String$length$R$panda$core$Int64(panda$core$String* self) {
     panda$core$Int64 count144;
-    panda$collections$Iterator* iter145;
+    panda$collections$Iterator* iter145 = NULL;
     panda$collections$Iterator* $tmp146;
     panda$collections$Iterator* $tmp147;
     panda$core$Object* $tmp158;
@@ -494,6 +496,7 @@ panda$core$Int64 panda$core$String$length$R$panda$core$Int64(panda$core$String* 
     }
     $l141:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) iter145));
+    iter145 = NULL;
     switch ($tmp143) {
         case 0: goto $l164;
     }
@@ -751,7 +754,7 @@ panda$core$String* panda$core$String$$ADD$panda$core$Object$R$panda$core$String(
     return $finallyReturn308;
 }
 panda$core$String* panda$core$String$$MUL$panda$core$Int64$R$panda$core$String(panda$core$String* self, panda$core$Int64 p_count) {
-    panda$core$MutableString* result320;
+    panda$core$MutableString* result320 = NULL;
     panda$core$MutableString* $tmp321;
     panda$core$MutableString* $tmp322;
     panda$core$Range$LTpanda$core$Int64$GT $tmp324;
@@ -805,6 +808,7 @@ panda$core$String* panda$core$String$$MUL$panda$core$Int64$R$panda$core$String(p
     }
     $l317:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result320));
+    result320 = NULL;
     switch ($tmp319) {
         case 0: goto $l348;
     }
@@ -1041,7 +1045,7 @@ panda$core$String* panda$core$String$substring$panda$core$Range$LTpanda$core$Str
 }
 panda$core$String* panda$core$String$$IDX$panda$core$Range$LTpanda$core$String$Index$GT$R$panda$core$String(panda$core$String* self, panda$core$Range$LTpanda$core$String$Index$GT p_r) {
     panda$core$Int64 current477;
-    panda$core$MutableString* result478;
+    panda$core$MutableString* result478 = NULL;
     panda$core$MutableString* $tmp479;
     panda$core$MutableString* $tmp480;
     panda$core$Int64 max482;
@@ -1118,6 +1122,7 @@ panda$core$String* panda$core$String$$IDX$panda$core$Range$LTpanda$core$String$I
     }
     $l474:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result478));
+    result478 = NULL;
     switch ($tmp476) {
         case 0: goto $l503;
     }
@@ -1186,7 +1191,7 @@ panda$core$String* panda$core$String$$IDX$panda$core$SteppedRange$LTpanda$core$S
     panda$core$Int64 step531;
     panda$core$Int64 current532;
     panda$core$Int64 end537;
-    panda$core$MutableString* result541;
+    panda$core$MutableString* result541 = NULL;
     panda$core$MutableString* $tmp542;
     panda$core$MutableString* $tmp543;
     panda$core$Char8 c550;
@@ -1544,6 +1549,7 @@ panda$core$String* panda$core$String$$IDX$panda$core$SteppedRange$LTpanda$core$S
     }
     $l522:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result541));
+    result541 = NULL;
     switch ($tmp524) {
         case 3: goto $l681;
         case 2: goto $l641;
@@ -1869,7 +1875,7 @@ panda$core$String$Index$nullable panda$core$String$lastIndexOf$panda$core$String
     return $finallyReturn855;
 }
 panda$core$String* panda$core$String$replace$panda$core$String$panda$core$String$R$panda$core$String(panda$core$String* self, panda$core$String* p_search, panda$core$String* p_replacement) {
-    panda$core$MutableString* result861;
+    panda$core$MutableString* result861 = NULL;
     panda$core$MutableString* $tmp862;
     panda$core$MutableString* $tmp863;
     panda$core$String$Index index865;
@@ -1933,6 +1939,7 @@ panda$core$String* panda$core$String$replace$panda$core$String$panda$core$String
     }
     $l858:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result861));
+    result861 = NULL;
     switch ($tmp860) {
         case 0: goto $l883;
     }
@@ -2277,7 +2284,7 @@ panda$collections$Array* panda$core$String$split$panda$core$String$R$panda$colle
     return $finallyReturn1054;
 }
 panda$collections$Array* panda$core$String$split$panda$core$String$panda$core$Int64$R$panda$collections$Array$LTpanda$core$String$GT(panda$core$String* self, panda$core$String* p_delimiter, panda$core$Int64 p_maxResults) {
-    panda$collections$Array* result1063;
+    panda$collections$Array* result1063 = NULL;
     panda$collections$Array* $tmp1064;
     panda$collections$Array* $tmp1065;
     panda$core$String$Index index1067;
@@ -2355,6 +2362,7 @@ panda$collections$Array* panda$core$String$split$panda$core$String$panda$core$In
     }
     $l1060:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result1063));
+    result1063 = NULL;
     switch ($tmp1062) {
         case 0: goto $l1090;
     }

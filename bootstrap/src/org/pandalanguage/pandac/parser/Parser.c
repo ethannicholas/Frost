@@ -596,12 +596,12 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$addStri
     return $finallyReturn149;
 }
 panda$core$String* org$pandalanguage$pandac$parser$Parser$formatString$org$pandalanguage$pandac$parser$Token$R$panda$core$String$Q(org$pandalanguage$pandac$parser$Parser* self, org$pandalanguage$pandac$parser$Token p_start) {
-    panda$core$MutableString* result161;
+    panda$core$MutableString* result161 = NULL;
     panda$core$MutableString* $tmp162;
     panda$core$MutableString* $tmp163;
     org$pandalanguage$pandac$parser$Token token167;
     org$pandalanguage$pandac$parser$Token$Kind $match$157_13169;
-    panda$core$String* str174;
+    panda$core$String* str174 = NULL;
     panda$core$String* $tmp175;
     panda$core$String* $tmp176;
     panda$core$Char8 $tmp178;
@@ -612,7 +612,7 @@ panda$core$String* org$pandalanguage$pandac$parser$Parser$formatString$org$panda
     org$pandalanguage$pandac$parser$Token escape197;
     panda$core$String* $finallyReturn200;
     panda$core$String* $tmp202;
-    panda$core$String* escapeText206;
+    panda$core$String* escapeText206 = NULL;
     panda$core$String* $tmp207;
     panda$core$String* $tmp208;
     panda$core$Char8 c210;
@@ -691,6 +691,7 @@ panda$core$String* org$pandalanguage$pandac$parser$Parser$formatString$org$panda
                     goto $l171;
                     $l171:;
                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) str174));
+                    str174 = NULL;
                     switch ($tmp173) {
                         case -1: goto $l186;
                         case 0: goto $l183;
@@ -852,6 +853,7 @@ panda$core$String* org$pandalanguage$pandac$parser$Parser$formatString$org$panda
                     goto $l194;
                     $l194:;
                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) escapeText206));
+                    escapeText206 = NULL;
                     switch ($tmp196) {
                         case 1: goto $l243;
                         case 0: goto $l203;
@@ -897,6 +899,7 @@ panda$core$String* org$pandalanguage$pandac$parser$Parser$formatString$org$panda
     goto $l158;
     $l158:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result161));
+    result161 = NULL;
     switch ($tmp160) {
         case 0: goto $l184;
         case 2: goto $l204;
@@ -908,12 +911,12 @@ panda$core$String* org$pandalanguage$pandac$parser$Parser$formatString$org$panda
     $l261:;
 }
 panda$core$String* org$pandalanguage$pandac$parser$Parser$alignmentString$org$pandalanguage$pandac$parser$Token$R$panda$core$String$Q(org$pandalanguage$pandac$parser$Parser* self, org$pandalanguage$pandac$parser$Token p_start) {
-    panda$core$MutableString* result265;
+    panda$core$MutableString* result265 = NULL;
     panda$core$MutableString* $tmp266;
     panda$core$MutableString* $tmp267;
     org$pandalanguage$pandac$parser$Token token271;
     org$pandalanguage$pandac$parser$Token$Kind $match$202_13273;
-    panda$core$String* str278;
+    panda$core$String* str278 = NULL;
     panda$core$String* $tmp279;
     panda$core$String* $tmp280;
     panda$core$Char8 $tmp282;
@@ -924,7 +927,7 @@ panda$core$String* org$pandalanguage$pandac$parser$Parser$alignmentString$org$pa
     org$pandalanguage$pandac$parser$Token escape301;
     panda$core$String* $finallyReturn304;
     panda$core$String* $tmp306;
-    panda$core$String* escapeText310;
+    panda$core$String* escapeText310 = NULL;
     panda$core$String* $tmp311;
     panda$core$String* $tmp312;
     panda$core$Char8 c314;
@@ -1008,6 +1011,7 @@ panda$core$String* org$pandalanguage$pandac$parser$Parser$alignmentString$org$pa
                     goto $l275;
                     $l275:;
                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) str278));
+                    str278 = NULL;
                     switch ($tmp277) {
                         case -1: goto $l290;
                         case 0: goto $l287;
@@ -1179,6 +1183,7 @@ panda$core$String* org$pandalanguage$pandac$parser$Parser$alignmentString$org$pa
                     goto $l298;
                     $l298:;
                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) escapeText310));
+                    escapeText310 = NULL;
                     switch ($tmp300) {
                         case 1: goto $l350;
                         case 0: goto $l307;
@@ -1242,6 +1247,7 @@ panda$core$String* org$pandalanguage$pandac$parser$Parser$alignmentString$org$pa
     goto $l262;
     $l262:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result265));
+    result265 = NULL;
     switch ($tmp264) {
         case 0: goto $l288;
         case 4: goto $l364;
@@ -1254,14 +1260,14 @@ panda$core$String* org$pandalanguage$pandac$parser$Parser$alignmentString$org$pa
     $l375:;
 }
 org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$convertToString$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$ASTNode(org$pandalanguage$pandac$parser$Parser* self, org$pandalanguage$pandac$ASTNode* p_expr) {
-    org$pandalanguage$pandac$ASTNode* dot379;
+    org$pandalanguage$pandac$ASTNode* dot379 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp380;
     org$pandalanguage$pandac$ASTNode* $tmp381;
-    org$pandalanguage$pandac$ASTNode* call386;
+    org$pandalanguage$pandac$ASTNode* call386 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp387;
     org$pandalanguage$pandac$ASTNode* $tmp388;
     panda$collections$ImmutableArray* $tmp392;
-    org$pandalanguage$pandac$ASTNode* stringType394;
+    org$pandalanguage$pandac$ASTNode* stringType394 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp395;
     org$pandalanguage$pandac$ASTNode* $tmp396;
     org$pandalanguage$pandac$ASTNode* $finallyReturn400;
@@ -1314,8 +1320,11 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$convert
     }
     $l376:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) dot379));
+    dot379 = NULL;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) call386));
+    call386 = NULL;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) stringType394));
+    stringType394 = NULL;
     switch ($tmp378) {
         case 0: goto $l408;
     }
@@ -1328,14 +1337,14 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$string$
     panda$core$String* $tmp424;
     org$pandalanguage$pandac$ASTNode* $finallyReturn428;
     org$pandalanguage$pandac$ASTNode* $tmp430;
-    org$pandalanguage$pandac$ASTNode* result433;
+    org$pandalanguage$pandac$ASTNode* result433 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp434;
-    panda$core$MutableString* chunk435;
+    panda$core$MutableString* chunk435 = NULL;
     panda$core$MutableString* $tmp436;
     panda$core$MutableString* $tmp437;
     org$pandalanguage$pandac$parser$Token token441;
     org$pandalanguage$pandac$parser$Token$Kind $match$268_13444;
-    panda$core$String* str449;
+    panda$core$String* str449 = NULL;
     panda$core$String* $tmp450;
     panda$core$String* $tmp451;
     panda$core$Char8 $tmp453;
@@ -1346,7 +1355,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$string$
     org$pandalanguage$pandac$parser$Token escape472;
     org$pandalanguage$pandac$ASTNode* $finallyReturn475;
     org$pandalanguage$pandac$ASTNode* $tmp477;
-    panda$core$String* escapeText481;
+    panda$core$String* escapeText481 = NULL;
     panda$core$String* $tmp482;
     panda$core$String* $tmp483;
     panda$core$Char8 c485;
@@ -1366,14 +1375,14 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$string$
     panda$core$Char8 $tmp509;
     panda$core$Char8 $tmp511;
     panda$core$Char8 $tmp512;
-    org$pandalanguage$pandac$ASTNode* expr517;
+    org$pandalanguage$pandac$ASTNode* expr517 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp518;
     org$pandalanguage$pandac$ASTNode* $tmp519;
     org$pandalanguage$pandac$ASTNode* $finallyReturn520;
     org$pandalanguage$pandac$ASTNode* $tmp522;
-    panda$core$String* align527;
+    panda$core$String* align527 = NULL;
     panda$core$String* $tmp528;
-    panda$core$String* format529;
+    panda$core$String* format529 = NULL;
     panda$core$String* $tmp530;
     org$pandalanguage$pandac$parser$Token$Kind $tmp531;
     panda$core$String* $tmp533;
@@ -1385,17 +1394,17 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$string$
     panda$core$String* $tmp544;
     org$pandalanguage$pandac$ASTNode* $finallyReturn545;
     org$pandalanguage$pandac$ASTNode* $tmp547;
-    org$pandalanguage$pandac$ASTNode* formattable553;
+    org$pandalanguage$pandac$ASTNode* formattable553 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp554;
     org$pandalanguage$pandac$ASTNode* $tmp555;
-    org$pandalanguage$pandac$ASTNode* cast560;
+    org$pandalanguage$pandac$ASTNode* cast560 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp561;
     org$pandalanguage$pandac$ASTNode* $tmp562;
     org$pandalanguage$pandac$parser$Token$Kind $tmp566;
-    org$pandalanguage$pandac$ASTNode* dot567;
+    org$pandalanguage$pandac$ASTNode* dot567 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp568;
     org$pandalanguage$pandac$ASTNode* $tmp569;
-    panda$collections$Array* callArgs574;
+    panda$collections$Array* callArgs574 = NULL;
     panda$collections$Array* $tmp575;
     panda$collections$Array* $tmp576;
     org$pandalanguage$pandac$ASTNode* $tmp578;
@@ -1409,13 +1418,13 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$string$
     org$pandalanguage$pandac$ASTNode* $tmp601;
     org$pandalanguage$pandac$ASTNode* $tmp602;
     org$pandalanguage$pandac$ASTNode* $tmp603;
-    org$pandalanguage$pandac$ASTNode* pandaType605;
+    org$pandalanguage$pandac$ASTNode* pandaType605 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp606;
     org$pandalanguage$pandac$ASTNode* $tmp607;
-    org$pandalanguage$pandac$ASTNode* callTarget612;
+    org$pandalanguage$pandac$ASTNode* callTarget612 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp613;
     org$pandalanguage$pandac$ASTNode* $tmp614;
-    panda$collections$Array* callArgs619;
+    panda$collections$Array* callArgs619 = NULL;
     panda$collections$Array* $tmp620;
     panda$collections$Array* $tmp621;
     org$pandalanguage$pandac$ASTNode* $tmp623;
@@ -1423,7 +1432,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$string$
     org$pandalanguage$pandac$ASTNode* $tmp626;
     org$pandalanguage$pandac$ASTNode* $tmp627;
     panda$collections$ImmutableArray* $tmp631;
-    panda$core$String* text634;
+    panda$core$String* text634 = NULL;
     panda$core$String* $tmp635;
     panda$core$String* $tmp636;
     panda$core$MutableString* $tmp638;
@@ -1538,6 +1547,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$string$
                     goto $l446;
                     $l446:;
                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) str449));
+                    str449 = NULL;
                     switch ($tmp448) {
                         case -1: goto $l461;
                         case 0: goto $l458;
@@ -1802,9 +1812,13 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$string$
                                             goto $l539;
                                             $l539:;
                                             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) formattable553));
+                                            formattable553 = NULL;
                                             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) cast560));
+                                            cast560 = NULL;
                                             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) dot567));
+                                            dot567 = NULL;
                                             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) callArgs574));
+                                            callArgs574 = NULL;
                                             switch ($tmp541) {
                                                 case 0: goto $l548;
                                                 case -1: goto $l588;
@@ -1898,8 +1912,11 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$string$
                                             goto $l598;
                                             $l598:;
                                             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) pandaType605));
+                                            pandaType605 = NULL;
                                             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) callTarget612));
+                                            callTarget612 = NULL;
                                             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) callArgs619));
+                                            callArgs619 = NULL;
                                             switch ($tmp600) {
                                                 case -1: goto $l633;
                                             }
@@ -1976,9 +1993,11 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$string$
                                     goto $l514;
                                     $l514:;
                                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) expr517));
+                                    expr517 = NULL;
                                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) align527));
                                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) format529));
                                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) text634));
+                                    text634 = NULL;
                                     switch ($tmp516) {
                                         case 2: goto $l594;
                                         case 0: goto $l523;
@@ -2023,6 +2042,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$string$
                     goto $l469;
                     $l469:;
                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) escapeText481));
+                    escapeText481 = NULL;
                     switch ($tmp471) {
                         case 0: goto $l478;
                         case 2: goto $l550;
@@ -2069,6 +2089,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$string$
     $l411:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result433));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) chunk435));
+    chunk435 = NULL;
     switch ($tmp413) {
         case 2: goto $l466;
         case 0: goto $l431;
@@ -2127,7 +2148,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$term$R$
     org$pandalanguage$pandac$ASTNode* $finallyReturn774;
     org$pandalanguage$pandac$ASTNode* $tmp776;
     org$pandalanguage$pandac$ASTNode* $tmp777;
-    org$pandalanguage$pandac$ASTNode* result784;
+    org$pandalanguage$pandac$ASTNode* result784 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp785;
     org$pandalanguage$pandac$ASTNode* $tmp786;
     org$pandalanguage$pandac$ASTNode* $finallyReturn787;
@@ -2378,6 +2399,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$term$R$
             }
             $l781:;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result784));
+            result784 = NULL;
             switch ($tmp783) {
                 case 1: goto $l797;
                 case 2: goto $l801;
@@ -2418,14 +2440,14 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$term$R$
     }
 }
 panda$core$String* org$pandalanguage$pandac$parser$Parser$getClassName$org$pandalanguage$pandac$ASTNode$R$panda$core$String$Q(org$pandalanguage$pandac$ASTNode* p_expr) {
-    org$pandalanguage$pandac$ASTNode* $match$403_9818;
+    org$pandalanguage$pandac$ASTNode* $match$403_9818 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp819;
-    panda$core$String* text821;
+    panda$core$String* text821 = NULL;
     panda$core$String* $finallyReturn822;
     panda$core$String* $tmp824;
-    org$pandalanguage$pandac$ASTNode* base828;
-    panda$core$String* field830;
-    panda$core$String* result835;
+    org$pandalanguage$pandac$ASTNode* base828 = NULL;
+    panda$core$String* field830 = NULL;
+    panda$core$String* result835 = NULL;
     panda$core$String* $tmp836;
     panda$core$String* $tmp837;
     panda$core$String* $tmp839;
@@ -2503,6 +2525,7 @@ panda$core$String* org$pandalanguage$pandac$parser$Parser$getClassName$org$panda
             }
             $l832:;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result835));
+            result835 = NULL;
             switch ($tmp834) {
                 case 0: goto $l849;
             }
@@ -2795,7 +2818,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$type$pa
     org$pandalanguage$pandac$parser$Token$Kind $tmp1000;
     org$pandalanguage$pandac$ASTNode* $finallyReturn1002;
     org$pandalanguage$pandac$ASTNode* $tmp1004;
-    panda$core$MutableString* name1007;
+    panda$core$MutableString* name1007 = NULL;
     panda$core$MutableString* $tmp1008;
     panda$core$MutableString* $tmp1009;
     panda$core$String* $tmp1011;
@@ -2806,16 +2829,16 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$type$pa
     org$pandalanguage$pandac$ASTNode* $tmp1023;
     panda$core$Char8 $tmp1026;
     panda$core$String* $tmp1027;
-    panda$core$String* finalName1029;
+    panda$core$String* finalName1029 = NULL;
     panda$core$String* $tmp1030;
     panda$core$String* $tmp1031;
-    org$pandalanguage$pandac$ASTNode* result1033;
+    org$pandalanguage$pandac$ASTNode* result1033 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp1034;
     org$pandalanguage$pandac$ASTNode* $tmp1035;
-    panda$collections$Array* children1042;
+    panda$collections$Array* children1042 = NULL;
     panda$collections$Array* $tmp1043;
     panda$collections$Array* $tmp1044;
-    org$pandalanguage$pandac$ASTNode* t1046;
+    org$pandalanguage$pandac$ASTNode* t1046 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp1047;
     org$pandalanguage$pandac$ASTNode* $tmp1048;
     org$pandalanguage$pandac$ASTNode* $finallyReturn1049;
@@ -3069,7 +3092,9 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$type$pa
             goto $l1039;
             $l1039:;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) children1042));
+            children1042 = NULL;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) t1046));
+            t1046 = NULL;
             switch ($tmp1041) {
                 case 4: goto $l1084;
                 case 2: goto $l1071;
@@ -3109,8 +3134,11 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$type$pa
     }
     $l996:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) name1007));
+    name1007 = NULL;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) finalName1029));
+    finalName1029 = NULL;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result1033));
+    result1033 = NULL;
     switch ($tmp998) {
         case 5: goto $l1077;
         case 1: goto $l1024;
@@ -3125,7 +3153,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$type$pa
     $l1109:;
 }
 org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$callExpression$R$org$pandalanguage$pandac$ASTNode$Q(org$pandalanguage$pandac$parser$Parser* self) {
-    org$pandalanguage$pandac$ASTNode* result1113;
+    org$pandalanguage$pandac$ASTNode* result1113 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp1114;
     org$pandalanguage$pandac$ASTNode* $tmp1115;
     org$pandalanguage$pandac$ASTNode* $finallyReturn1116;
@@ -3133,11 +3161,11 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$callExp
     org$pandalanguage$pandac$parser$Token token1123;
     org$pandalanguage$pandac$parser$Token$Kind $match$540_131125;
     panda$core$Object* $tmp1130;
-    panda$collections$Array* args1132;
+    panda$collections$Array* args1132 = NULL;
     panda$collections$Array* $tmp1133;
     panda$collections$Array* $tmp1134;
     org$pandalanguage$pandac$parser$Token$Kind $tmp1136;
-    org$pandalanguage$pandac$ASTNode* expr1141;
+    org$pandalanguage$pandac$ASTNode* expr1141 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp1142;
     org$pandalanguage$pandac$ASTNode* $tmp1143;
     panda$core$Object* $tmp1145;
@@ -3159,7 +3187,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$callExp
     org$pandalanguage$pandac$ASTNode* $tmp1185;
     org$pandalanguage$pandac$ASTNode* $tmp1186;
     panda$collections$ImmutableArray* $tmp1188;
-    org$pandalanguage$pandac$ASTNode* arg1195;
+    org$pandalanguage$pandac$ASTNode* arg1195 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp1196;
     org$pandalanguage$pandac$ASTNode* $tmp1197;
     org$pandalanguage$pandac$ASTNode* $finallyReturn1198;
@@ -3171,7 +3199,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$callExp
     org$pandalanguage$pandac$ASTNode* $tmp1213;
     org$pandalanguage$pandac$ASTNode* $tmp1214;
     org$pandalanguage$pandac$parser$Token$Kind $tmp1216;
-    panda$core$String* name1222;
+    panda$core$String* name1222 = NULL;
     org$pandalanguage$pandac$parser$Token$Kind $tmp1223;
     panda$core$String* $tmp1225;
     panda$core$String* $tmp1226;
@@ -3183,7 +3211,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$callExp
     org$pandalanguage$pandac$ASTNode* $tmp1237;
     org$pandalanguage$pandac$ASTNode* $tmp1238;
     org$pandalanguage$pandac$ASTNode* $tmp1239;
-    org$pandalanguage$pandac$ASTNode* target1246;
+    org$pandalanguage$pandac$ASTNode* target1246 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp1247;
     org$pandalanguage$pandac$ASTNode* $tmp1248;
     org$pandalanguage$pandac$ASTNode* $finallyReturn1249;
@@ -3192,18 +3220,18 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$callExp
     org$pandalanguage$pandac$ASTNode* $tmp1256;
     org$pandalanguage$pandac$ASTNode* $tmp1257;
     org$pandalanguage$pandac$parser$Token$Kind $tmp1259;
-    panda$core$String* name1265;
+    panda$core$String* name1265 = NULL;
     panda$core$String* $tmp1266;
     panda$core$String* $tmp1267;
-    panda$core$MutableString* finalName1272;
+    panda$core$MutableString* finalName1272 = NULL;
     panda$core$MutableString* $tmp1273;
     panda$core$MutableString* $tmp1274;
     panda$core$Char8 $tmp1276;
-    panda$collections$Array* types1277;
+    panda$collections$Array* types1277 = NULL;
     panda$collections$Array* $tmp1278;
     panda$collections$Array* $tmp1279;
     org$pandalanguage$pandac$ASTNode* $tmp1281;
-    org$pandalanguage$pandac$ASTNode* t1285;
+    org$pandalanguage$pandac$ASTNode* t1285 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp1286;
     org$pandalanguage$pandac$ASTNode* $tmp1287;
     org$pandalanguage$pandac$ASTNode* $finallyReturn1288;
@@ -3376,6 +3404,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$callExp
                             goto $l1138;
                             $l1138:;
                             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) expr1141));
+                            expr1141 = NULL;
                             switch ($tmp1140) {
                                 case -1: goto $l1181;
                                 case 0: goto $l1149;
@@ -3407,6 +3436,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$callExp
                     goto $l1127;
                     $l1127:;
                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) args1132));
+                    args1132 = NULL;
                     switch ($tmp1129) {
                         case 0: goto $l1150;
                         case 2: goto $l1178;
@@ -3475,6 +3505,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$callExp
                     goto $l1192;
                     $l1192:;
                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) arg1195));
+                    arg1195 = NULL;
                     switch ($tmp1194) {
                         case 0: goto $l1201;
                         case -1: goto $l1217;
@@ -3597,6 +3628,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$callExp
                     goto $l1243;
                     $l1243:;
                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) target1246));
+                    target1246 = NULL;
                     switch ($tmp1245) {
                         case 0: goto $l1252;
                         case -1: goto $l1260;
@@ -3832,8 +3864,11 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$callExp
                             goto $l1269;
                             $l1269:;
                             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) finalName1272));
+                            finalName1272 = NULL;
                             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) types1277));
+                            types1277 = NULL;
                             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) t1285));
+                            t1285 = NULL;
                             switch ($tmp1271) {
                                 case 4: goto $l1353;
                                 case 0: goto $l1291;
@@ -3858,6 +3893,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$callExp
                     }
                     $l1262:;
                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) name1265));
+                    name1265 = NULL;
                     switch ($tmp1264) {
                         case 1: goto $l1307;
                         case 3: goto $l1350;
@@ -3894,6 +3930,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$callExp
     goto $l1110;
     $l1110:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result1113));
+    result1113 = NULL;
     switch ($tmp1112) {
         case 3: goto $l1179;
         case -1: goto $l1368;
@@ -3914,14 +3951,14 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$callExp
     $l1368:;
 }
 org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$exponentExpression$R$org$pandalanguage$pandac$ASTNode$Q(org$pandalanguage$pandac$parser$Parser* self) {
-    org$pandalanguage$pandac$ASTNode* result1372;
+    org$pandalanguage$pandac$ASTNode* result1372 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp1373;
     org$pandalanguage$pandac$ASTNode* $tmp1374;
     org$pandalanguage$pandac$ASTNode* $finallyReturn1375;
     org$pandalanguage$pandac$ASTNode* $tmp1377;
     org$pandalanguage$pandac$parser$Token$nullable op1385;
     org$pandalanguage$pandac$parser$Token$Kind $tmp1386;
-    org$pandalanguage$pandac$ASTNode* next1389;
+    org$pandalanguage$pandac$ASTNode* next1389 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp1390;
     org$pandalanguage$pandac$ASTNode* $tmp1391;
     org$pandalanguage$pandac$ASTNode* $finallyReturn1392;
@@ -4002,6 +4039,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$exponen
             goto $l1382;
             $l1382:;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) next1389));
+            next1389 = NULL;
             switch ($tmp1384) {
                 case 0: goto $l1388;
                 case 1: goto $l1395;
@@ -4021,6 +4059,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$exponen
     }
     $l1369:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result1372));
+    result1372 = NULL;
     switch ($tmp1371) {
         case 2: goto $l1405;
         case 1: goto $l1396;
@@ -4031,7 +4070,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$exponen
 org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$prefixExpression$R$org$pandalanguage$pandac$ASTNode$Q(org$pandalanguage$pandac$parser$Parser* self) {
     org$pandalanguage$pandac$parser$Token op1408;
     org$pandalanguage$pandac$parser$Token$Kind $match$709_91410;
-    org$pandalanguage$pandac$ASTNode* base1423;
+    org$pandalanguage$pandac$ASTNode* base1423 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp1424;
     org$pandalanguage$pandac$ASTNode* $tmp1425;
     org$pandalanguage$pandac$ASTNode* $finallyReturn1426;
@@ -4094,6 +4133,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$prefixE
             }
             $l1420:;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) base1423));
+            base1423 = NULL;
             switch ($tmp1422) {
                 case 1: goto $l1435;
                 case 0: goto $l1429;
@@ -4116,14 +4156,14 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$prefixE
     }
 }
 org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$multiplicativeExpression$R$org$pandalanguage$pandac$ASTNode$Q(org$pandalanguage$pandac$parser$Parser* self) {
-    org$pandalanguage$pandac$ASTNode* result1446;
+    org$pandalanguage$pandac$ASTNode* result1446 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp1447;
     org$pandalanguage$pandac$ASTNode* $tmp1448;
     org$pandalanguage$pandac$ASTNode* $finallyReturn1449;
     org$pandalanguage$pandac$ASTNode* $tmp1451;
     org$pandalanguage$pandac$parser$Token op1456;
     org$pandalanguage$pandac$parser$Token$Kind $match$735_131458;
-    org$pandalanguage$pandac$ASTNode* next1487;
+    org$pandalanguage$pandac$ASTNode* next1487 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp1488;
     org$pandalanguage$pandac$ASTNode* $tmp1489;
     org$pandalanguage$pandac$ASTNode* $finallyReturn1490;
@@ -4132,7 +4172,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$multipl
     org$pandalanguage$pandac$ASTNode* $tmp1497;
     org$pandalanguage$pandac$ASTNode* $tmp1498;
     org$pandalanguage$pandac$parser$Token nextToken1502;
-    org$pandalanguage$pandac$ASTNode* next1508;
+    org$pandalanguage$pandac$ASTNode* next1508 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp1509;
     org$pandalanguage$pandac$ASTNode* $tmp1510;
     org$pandalanguage$pandac$ASTNode* $finallyReturn1511;
@@ -4248,6 +4288,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$multipl
                     goto $l1484;
                     $l1484:;
                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) next1487));
+                    next1487 = NULL;
                     switch ($tmp1486) {
                         case 0: goto $l1493;
                         case -1: goto $l1500;
@@ -4303,6 +4344,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$multipl
                         goto $l1505;
                         $l1505:;
                         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) next1508));
+                        next1508 = NULL;
                         switch ($tmp1507) {
                             case -1: goto $l1522;
                             case 0: goto $l1514;
@@ -4347,6 +4389,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$multipl
     goto $l1443;
     $l1443:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result1446));
+    result1446 = NULL;
     switch ($tmp1445) {
         case 4: goto $l1529;
         case 2: goto $l1515;
@@ -4358,14 +4401,14 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$multipl
     $l1531:;
 }
 org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$additiveExpression$R$org$pandalanguage$pandac$ASTNode$Q(org$pandalanguage$pandac$parser$Parser* self) {
-    org$pandalanguage$pandac$ASTNode* result1535;
+    org$pandalanguage$pandac$ASTNode* result1535 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp1536;
     org$pandalanguage$pandac$ASTNode* $tmp1537;
     org$pandalanguage$pandac$ASTNode* $finallyReturn1538;
     org$pandalanguage$pandac$ASTNode* $tmp1540;
     org$pandalanguage$pandac$parser$Token op1545;
     org$pandalanguage$pandac$parser$Token$Kind $match$776_131547;
-    org$pandalanguage$pandac$ASTNode* next1560;
+    org$pandalanguage$pandac$ASTNode* next1560 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp1561;
     org$pandalanguage$pandac$ASTNode* $tmp1562;
     org$pandalanguage$pandac$ASTNode* $finallyReturn1563;
@@ -4454,6 +4497,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$additiv
                     goto $l1557;
                     $l1557:;
                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) next1560));
+                    next1560 = NULL;
                     switch ($tmp1559) {
                         case 0: goto $l1566;
                         case -1: goto $l1573;
@@ -4482,6 +4526,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$additiv
     goto $l1532;
     $l1532:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result1535));
+    result1535 = NULL;
     switch ($tmp1534) {
         case 1: goto $l1567;
         case 2: goto $l1576;
@@ -4491,7 +4536,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$additiv
     $l1578:;
 }
 org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$rangeExpression$R$org$pandalanguage$pandac$ASTNode$Q(org$pandalanguage$pandac$parser$Parser* self) {
-    org$pandalanguage$pandac$ASTNode* result1582;
+    org$pandalanguage$pandac$ASTNode* result1582 = NULL;
     org$pandalanguage$pandac$parser$Token$Kind $match$796_91583;
     org$pandalanguage$pandac$ASTNode* $tmp1590;
     org$pandalanguage$pandac$ASTNode* $tmp1591;
@@ -4503,7 +4548,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$rangeEx
     org$pandalanguage$pandac$parser$Token op1600;
     org$pandalanguage$pandac$parser$Token$Kind $match$806_91602;
     org$pandalanguage$pandac$parser$Token next1611;
-    org$pandalanguage$pandac$ASTNode* right1613;
+    org$pandalanguage$pandac$ASTNode* right1613 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp1623;
     org$pandalanguage$pandac$ASTNode* $tmp1624;
     org$pandalanguage$pandac$ASTNode* $tmp1625;
@@ -4511,7 +4556,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$rangeEx
     org$pandalanguage$pandac$ASTNode* $tmp1628;
     org$pandalanguage$pandac$ASTNode* $tmp1632;
     org$pandalanguage$pandac$ASTNode* $tmp1633;
-    org$pandalanguage$pandac$ASTNode* step1634;
+    org$pandalanguage$pandac$ASTNode* step1634 = NULL;
     org$pandalanguage$pandac$parser$Token$Kind $tmp1635;
     org$pandalanguage$pandac$ASTNode* $tmp1637;
     org$pandalanguage$pandac$ASTNode* $tmp1638;
@@ -4743,14 +4788,14 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$rangeEx
     $l1661:;
 }
 org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$comparisonExpression$R$org$pandalanguage$pandac$ASTNode$Q(org$pandalanguage$pandac$parser$Parser* self) {
-    org$pandalanguage$pandac$ASTNode* result1665;
+    org$pandalanguage$pandac$ASTNode* result1665 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp1666;
     org$pandalanguage$pandac$ASTNode* $tmp1667;
     org$pandalanguage$pandac$ASTNode* $finallyReturn1668;
     org$pandalanguage$pandac$ASTNode* $tmp1670;
     org$pandalanguage$pandac$parser$Token op1675;
     org$pandalanguage$pandac$parser$Token$Kind $match$849_131677;
-    org$pandalanguage$pandac$ASTNode* next1710;
+    org$pandalanguage$pandac$ASTNode* next1710 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp1711;
     org$pandalanguage$pandac$ASTNode* $tmp1712;
     org$pandalanguage$pandac$ASTNode* $finallyReturn1713;
@@ -4869,6 +4914,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$compari
                     goto $l1707;
                     $l1707:;
                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) next1710));
+                    next1710 = NULL;
                     switch ($tmp1709) {
                         case -1: goto $l1723;
                         case 0: goto $l1716;
@@ -4897,6 +4943,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$compari
     goto $l1662;
     $l1662:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result1665));
+    result1665 = NULL;
     switch ($tmp1664) {
         case 2: goto $l1726;
         case 1: goto $l1717;
@@ -4906,14 +4953,14 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$compari
     $l1728:;
 }
 org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$andExpression$R$org$pandalanguage$pandac$ASTNode$Q(org$pandalanguage$pandac$parser$Parser* self) {
-    org$pandalanguage$pandac$ASTNode* result1732;
+    org$pandalanguage$pandac$ASTNode* result1732 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp1733;
     org$pandalanguage$pandac$ASTNode* $tmp1734;
     org$pandalanguage$pandac$ASTNode* $finallyReturn1735;
     org$pandalanguage$pandac$ASTNode* $tmp1737;
     org$pandalanguage$pandac$parser$Token op1742;
     org$pandalanguage$pandac$parser$Token$Kind $match$880_131744;
-    org$pandalanguage$pandac$ASTNode* next1753;
+    org$pandalanguage$pandac$ASTNode* next1753 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp1754;
     org$pandalanguage$pandac$ASTNode* $tmp1755;
     org$pandalanguage$pandac$ASTNode* $finallyReturn1756;
@@ -4996,6 +5043,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$andExpr
                     goto $l1750;
                     $l1750:;
                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) next1753));
+                    next1753 = NULL;
                     switch ($tmp1752) {
                         case -1: goto $l1766;
                         case 0: goto $l1759;
@@ -5024,6 +5072,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$andExpr
     goto $l1729;
     $l1729:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result1732));
+    result1732 = NULL;
     switch ($tmp1731) {
         case -1: goto $l1771;
         case 1: goto $l1760;
@@ -5033,14 +5082,14 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$andExpr
     $l1771:;
 }
 org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$expression$R$org$pandalanguage$pandac$ASTNode$Q(org$pandalanguage$pandac$parser$Parser* self) {
-    org$pandalanguage$pandac$ASTNode* result1775;
+    org$pandalanguage$pandac$ASTNode* result1775 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp1776;
     org$pandalanguage$pandac$ASTNode* $tmp1777;
     org$pandalanguage$pandac$ASTNode* $finallyReturn1778;
     org$pandalanguage$pandac$ASTNode* $tmp1780;
     org$pandalanguage$pandac$parser$Token$nullable op1788;
     org$pandalanguage$pandac$parser$Token$Kind $tmp1789;
-    org$pandalanguage$pandac$ASTNode* next1792;
+    org$pandalanguage$pandac$ASTNode* next1792 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp1793;
     org$pandalanguage$pandac$ASTNode* $tmp1794;
     org$pandalanguage$pandac$ASTNode* $finallyReturn1795;
@@ -5121,6 +5170,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$express
             goto $l1785;
             $l1785:;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) next1792));
+            next1792 = NULL;
             switch ($tmp1787) {
                 case 1: goto $l1798;
                 case -1: goto $l1805;
@@ -5140,6 +5190,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$express
     }
     $l1772:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result1775));
+    result1775 = NULL;
     switch ($tmp1774) {
         case 1: goto $l1799;
         case 2: goto $l1808;
@@ -5152,17 +5203,17 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$ifState
     org$pandalanguage$pandac$parser$Token$Kind $tmp1815;
     org$pandalanguage$pandac$ASTNode* $finallyReturn1817;
     org$pandalanguage$pandac$ASTNode* $tmp1819;
-    org$pandalanguage$pandac$ASTNode* test1822;
+    org$pandalanguage$pandac$ASTNode* test1822 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp1823;
     org$pandalanguage$pandac$ASTNode* $tmp1824;
     org$pandalanguage$pandac$ASTNode* $finallyReturn1825;
     org$pandalanguage$pandac$ASTNode* $tmp1827;
-    panda$collections$ImmutableArray* ifTrue1830;
+    panda$collections$ImmutableArray* ifTrue1830 = NULL;
     panda$collections$ImmutableArray* $tmp1831;
     panda$collections$ImmutableArray* $tmp1832;
     org$pandalanguage$pandac$ASTNode* $finallyReturn1833;
     org$pandalanguage$pandac$ASTNode* $tmp1835;
-    org$pandalanguage$pandac$ASTNode* ifFalse1838;
+    org$pandalanguage$pandac$ASTNode* ifFalse1838 = NULL;
     org$pandalanguage$pandac$parser$Token$Kind $tmp1839;
     org$pandalanguage$pandac$ASTNode* $tmp1843;
     org$pandalanguage$pandac$ASTNode* $tmp1844;
@@ -5313,7 +5364,9 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$ifState
     }
     $l1811:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) test1822));
+    test1822 = NULL;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) ifTrue1830));
+    ifTrue1830 = NULL;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) ifFalse1838));
     switch ($tmp1813) {
         case 2: goto $l1836;
@@ -5355,7 +5408,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$target$
     org$pandalanguage$pandac$parser$Token$Kind $tmp1880;
     org$pandalanguage$pandac$ASTNode* $finallyReturn1882;
     org$pandalanguage$pandac$ASTNode* $tmp1884;
-    org$pandalanguage$pandac$ASTNode* type1891;
+    org$pandalanguage$pandac$ASTNode* type1891 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp1892;
     org$pandalanguage$pandac$ASTNode* $tmp1893;
     org$pandalanguage$pandac$ASTNode* $finallyReturn1894;
@@ -5419,6 +5472,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$target$
         }
         $l1888:;
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) type1891));
+        type1891 = NULL;
         switch ($tmp1890) {
             case 1: goto $l1905;
             case 0: goto $l1897;
@@ -5443,7 +5497,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$forLoop
     org$pandalanguage$pandac$parser$Token$Kind $tmp1919;
     org$pandalanguage$pandac$ASTNode* $finallyReturn1921;
     org$pandalanguage$pandac$ASTNode* $tmp1923;
-    org$pandalanguage$pandac$ASTNode* t1926;
+    org$pandalanguage$pandac$ASTNode* t1926 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp1927;
     org$pandalanguage$pandac$ASTNode* $tmp1928;
     org$pandalanguage$pandac$ASTNode* $finallyReturn1929;
@@ -5451,12 +5505,12 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$forLoop
     org$pandalanguage$pandac$parser$Token$Kind $tmp1934;
     org$pandalanguage$pandac$ASTNode* $finallyReturn1936;
     org$pandalanguage$pandac$ASTNode* $tmp1938;
-    org$pandalanguage$pandac$ASTNode* list1941;
+    org$pandalanguage$pandac$ASTNode* list1941 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp1942;
     org$pandalanguage$pandac$ASTNode* $tmp1943;
     org$pandalanguage$pandac$ASTNode* $finallyReturn1944;
     org$pandalanguage$pandac$ASTNode* $tmp1946;
-    panda$collections$ImmutableArray* block1949;
+    panda$collections$ImmutableArray* block1949 = NULL;
     panda$collections$ImmutableArray* $tmp1950;
     panda$collections$ImmutableArray* $tmp1951;
     org$pandalanguage$pandac$ASTNode* $finallyReturn1952;
@@ -5558,8 +5612,11 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$forLoop
     }
     $l1915:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) t1926));
+    t1926 = NULL;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) list1941));
+    list1941 = NULL;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) block1949));
+    block1949 = NULL;
     switch ($tmp1917) {
         case 3: goto $l1947;
         case 1: goto $l1932;
@@ -5575,12 +5632,12 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$whileLo
     org$pandalanguage$pandac$parser$Token$Kind $tmp1968;
     org$pandalanguage$pandac$ASTNode* $finallyReturn1970;
     org$pandalanguage$pandac$ASTNode* $tmp1972;
-    org$pandalanguage$pandac$ASTNode* test1975;
+    org$pandalanguage$pandac$ASTNode* test1975 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp1976;
     org$pandalanguage$pandac$ASTNode* $tmp1977;
     org$pandalanguage$pandac$ASTNode* $finallyReturn1978;
     org$pandalanguage$pandac$ASTNode* $tmp1980;
-    panda$collections$ImmutableArray* body1983;
+    panda$collections$ImmutableArray* body1983 = NULL;
     panda$collections$ImmutableArray* $tmp1984;
     panda$collections$ImmutableArray* $tmp1985;
     org$pandalanguage$pandac$ASTNode* $finallyReturn1986;
@@ -5652,7 +5709,9 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$whileLo
     }
     $l1964:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) test1975));
+    test1975 = NULL;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) body1983));
+    body1983 = NULL;
     switch ($tmp1966) {
         case 1: goto $l1981;
         case 2: goto $l1989;
@@ -5666,7 +5725,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$doLoop$
     org$pandalanguage$pandac$parser$Token$Kind $tmp2002;
     org$pandalanguage$pandac$ASTNode* $finallyReturn2004;
     org$pandalanguage$pandac$ASTNode* $tmp2006;
-    panda$collections$ImmutableArray* body2009;
+    panda$collections$ImmutableArray* body2009 = NULL;
     panda$collections$ImmutableArray* $tmp2010;
     panda$collections$ImmutableArray* $tmp2011;
     org$pandalanguage$pandac$ASTNode* $finallyReturn2012;
@@ -5674,7 +5733,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$doLoop$
     org$pandalanguage$pandac$parser$Token$Kind $tmp2017;
     org$pandalanguage$pandac$ASTNode* $finallyReturn2019;
     org$pandalanguage$pandac$ASTNode* $tmp2021;
-    org$pandalanguage$pandac$ASTNode* test2024;
+    org$pandalanguage$pandac$ASTNode* test2024 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp2025;
     org$pandalanguage$pandac$ASTNode* $tmp2026;
     org$pandalanguage$pandac$ASTNode* $finallyReturn2027;
@@ -5759,7 +5818,9 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$doLoop$
     }
     $l1998:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) body2009));
+    body2009 = NULL;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) test2024));
+    test2024 = NULL;
     switch ($tmp2000) {
         case 1: goto $l2015;
         case 4: goto $l2036;
@@ -5774,7 +5835,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$loopLoo
     org$pandalanguage$pandac$parser$Token$Kind $tmp2043;
     org$pandalanguage$pandac$ASTNode* $finallyReturn2045;
     org$pandalanguage$pandac$ASTNode* $tmp2047;
-    panda$collections$ImmutableArray* body2050;
+    panda$collections$ImmutableArray* body2050 = NULL;
     panda$collections$ImmutableArray* $tmp2051;
     panda$collections$ImmutableArray* $tmp2052;
     org$pandalanguage$pandac$ASTNode* $finallyReturn2053;
@@ -5829,6 +5890,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$loopLoo
     }
     $l2039:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) body2050));
+    body2050 = NULL;
     switch ($tmp2041) {
         case 1: goto $l2056;
         case 2: goto $l2062;
@@ -5841,12 +5903,12 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$assertS
     org$pandalanguage$pandac$parser$Token$Kind $tmp2069;
     org$pandalanguage$pandac$ASTNode* $finallyReturn2071;
     org$pandalanguage$pandac$ASTNode* $tmp2073;
-    org$pandalanguage$pandac$ASTNode* expr2076;
+    org$pandalanguage$pandac$ASTNode* expr2076 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp2077;
     org$pandalanguage$pandac$ASTNode* $tmp2078;
     org$pandalanguage$pandac$ASTNode* $finallyReturn2079;
     org$pandalanguage$pandac$ASTNode* $tmp2081;
-    org$pandalanguage$pandac$ASTNode* message2084;
+    org$pandalanguage$pandac$ASTNode* message2084 = NULL;
     org$pandalanguage$pandac$parser$Token$Kind $tmp2085;
     org$pandalanguage$pandac$ASTNode* $tmp2087;
     org$pandalanguage$pandac$ASTNode* $tmp2088;
@@ -5944,6 +6006,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$assertS
     }
     $l2065:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) expr2076));
+    expr2076 = NULL;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) message2084));
     switch ($tmp2067) {
         case 2: goto $l2093;
@@ -5958,10 +6021,10 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$whenCla
     org$pandalanguage$pandac$parser$Token$Kind $tmp2108;
     org$pandalanguage$pandac$ASTNode* $finallyReturn2110;
     org$pandalanguage$pandac$ASTNode* $tmp2112;
-    panda$collections$Array* expressions2115;
+    panda$collections$Array* expressions2115 = NULL;
     panda$collections$Array* $tmp2116;
     panda$collections$Array* $tmp2117;
-    org$pandalanguage$pandac$ASTNode* expr2119;
+    org$pandalanguage$pandac$ASTNode* expr2119 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp2120;
     org$pandalanguage$pandac$ASTNode* $tmp2121;
     org$pandalanguage$pandac$ASTNode* $finallyReturn2122;
@@ -5975,16 +6038,16 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$whenCla
     org$pandalanguage$pandac$parser$Token$Kind $tmp2140;
     org$pandalanguage$pandac$ASTNode* $finallyReturn2142;
     org$pandalanguage$pandac$ASTNode* $tmp2144;
-    panda$collections$Array* statements2147;
+    panda$collections$Array* statements2147 = NULL;
     panda$collections$Array* $tmp2148;
     panda$collections$Array* $tmp2149;
     org$pandalanguage$pandac$parser$Token$Kind $match$1114_132153;
-    org$pandalanguage$pandac$ASTNode* stmt2176;
+    org$pandalanguage$pandac$ASTNode* stmt2176 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp2177;
     org$pandalanguage$pandac$ASTNode* $tmp2178;
     org$pandalanguage$pandac$ASTNode* $finallyReturn2179;
     org$pandalanguage$pandac$ASTNode* $tmp2181;
-    org$pandalanguage$pandac$ASTNode* stmt2190;
+    org$pandalanguage$pandac$ASTNode* stmt2190 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp2191;
     org$pandalanguage$pandac$ASTNode* $tmp2192;
     org$pandalanguage$pandac$ASTNode* $finallyReturn2193;
@@ -6156,6 +6219,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$whenCla
                     }
                     $l2173:;
                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) stmt2176));
+                    stmt2176 = NULL;
                     switch ($tmp2175) {
                         case 0: goto $l2182;
                         case 1: goto $l2185;
@@ -6194,6 +6258,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$whenCla
                         goto $l2187;
                         $l2187:;
                         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) stmt2190));
+                        stmt2190 = NULL;
                         switch ($tmp2189) {
                             case -1: goto $l2199;
                             case 0: goto $l2196;
@@ -6227,8 +6292,11 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$whenCla
     }
     $l2104:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) expressions2115));
+    expressions2115 = NULL;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) expr2119));
+    expr2119 = NULL;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) statements2147));
+    statements2147 = NULL;
     switch ($tmp2106) {
         case 1: goto $l2125;
         case 4: goto $l2183;
@@ -6245,7 +6313,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$matchSt
     org$pandalanguage$pandac$parser$Token$Kind $tmp2215;
     org$pandalanguage$pandac$ASTNode* $finallyReturn2217;
     org$pandalanguage$pandac$ASTNode* $tmp2219;
-    org$pandalanguage$pandac$ASTNode* expr2222;
+    org$pandalanguage$pandac$ASTNode* expr2222 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp2223;
     org$pandalanguage$pandac$ASTNode* $tmp2224;
     org$pandalanguage$pandac$ASTNode* $finallyReturn2225;
@@ -6253,14 +6321,14 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$matchSt
     org$pandalanguage$pandac$parser$Token$Kind $tmp2230;
     org$pandalanguage$pandac$ASTNode* $finallyReturn2232;
     org$pandalanguage$pandac$ASTNode* $tmp2234;
-    panda$collections$Array* whens2237;
+    panda$collections$Array* whens2237 = NULL;
     panda$collections$Array* $tmp2238;
     panda$collections$Array* $tmp2239;
-    panda$collections$Array* other2241;
+    panda$collections$Array* other2241 = NULL;
     panda$collections$Array* $tmp2242;
     org$pandalanguage$pandac$parser$Token token2245;
     org$pandalanguage$pandac$parser$Token$Kind $match$1155_132247;
-    org$pandalanguage$pandac$ASTNode* w2253;
+    org$pandalanguage$pandac$ASTNode* w2253 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp2254;
     org$pandalanguage$pandac$ASTNode* $tmp2255;
     org$pandalanguage$pandac$ASTNode* $finallyReturn2256;
@@ -6273,12 +6341,12 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$matchSt
     panda$collections$Array* $tmp2274;
     panda$collections$Array* $tmp2275;
     org$pandalanguage$pandac$parser$Token$Kind $match$1171_252279;
-    org$pandalanguage$pandac$ASTNode* stmt2294;
+    org$pandalanguage$pandac$ASTNode* stmt2294 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp2295;
     org$pandalanguage$pandac$ASTNode* $tmp2296;
     org$pandalanguage$pandac$ASTNode* $finallyReturn2297;
     org$pandalanguage$pandac$ASTNode* $tmp2299;
-    org$pandalanguage$pandac$ASTNode* stmt2308;
+    org$pandalanguage$pandac$ASTNode* stmt2308 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp2309;
     org$pandalanguage$pandac$ASTNode* $tmp2310;
     org$pandalanguage$pandac$ASTNode* $finallyReturn2311;
@@ -6400,6 +6468,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$matchSt
                     goto $l2250;
                     $l2250:;
                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) w2253));
+                    w2253 = NULL;
                     switch ($tmp2252) {
                         case 0: goto $l2259;
                         case -1: goto $l2262;
@@ -6495,6 +6564,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$matchSt
                                 }
                                 $l2291:;
                                 panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) stmt2294));
+                                stmt2294 = NULL;
                                 switch ($tmp2293) {
                                     case 0: goto $l2300;
                                     case 1: goto $l2303;
@@ -6532,6 +6602,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$matchSt
                                 goto $l2305;
                                 $l2305:;
                                 panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) stmt2308));
+                                stmt2308 = NULL;
                                 switch ($tmp2307) {
                                     case -1: goto $l2317;
                                     case 0: goto $l2314;
@@ -6622,7 +6693,9 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$matchSt
     }
     $l2211:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) expr2222));
+    expr2222 = NULL;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) whens2237));
+    whens2237 = NULL;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) other2241));
     switch ($tmp2213) {
         case 2: goto $l2235;
@@ -6643,11 +6716,11 @@ panda$collections$ImmutableArray* org$pandalanguage$pandac$parser$Parser$blockSt
     org$pandalanguage$pandac$parser$Token$Kind $tmp2359;
     panda$collections$ImmutableArray* $finallyReturn2361;
     panda$collections$ImmutableArray* $tmp2363;
-    panda$collections$Array* result2366;
+    panda$collections$Array* result2366 = NULL;
     panda$collections$Array* $tmp2367;
     panda$collections$Array* $tmp2368;
     org$pandalanguage$pandac$parser$Token$Kind $match$1215_132372;
-    org$pandalanguage$pandac$ASTNode* stmt2387;
+    org$pandalanguage$pandac$ASTNode* stmt2387 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp2388;
     org$pandalanguage$pandac$ASTNode* $tmp2389;
     panda$collections$ImmutableArray* $finallyReturn2390;
@@ -6655,7 +6728,7 @@ panda$collections$ImmutableArray* org$pandalanguage$pandac$parser$Parser$blockSt
     org$pandalanguage$pandac$parser$Token$Kind $tmp2396;
     panda$collections$ImmutableArray* $finallyReturn2398;
     panda$collections$ImmutableArray* $tmp2400;
-    org$pandalanguage$pandac$ASTNode* stmt2409;
+    org$pandalanguage$pandac$ASTNode* stmt2409 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp2410;
     org$pandalanguage$pandac$ASTNode* $tmp2411;
     panda$collections$ImmutableArray* $finallyReturn2412;
@@ -6761,6 +6834,7 @@ panda$collections$ImmutableArray* org$pandalanguage$pandac$parser$Parser$blockSt
                     }
                     $l2384:;
                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) stmt2387));
+                    stmt2387 = NULL;
                     switch ($tmp2386) {
                         case 2: goto $l2404;
                         case 1: goto $l2401;
@@ -6799,6 +6873,7 @@ panda$collections$ImmutableArray* org$pandalanguage$pandac$parser$Parser$blockSt
                     goto $l2406;
                     $l2406:;
                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) stmt2409));
+                    stmt2409 = NULL;
                     switch ($tmp2408) {
                         case 0: goto $l2415;
                         case -1: goto $l2418;
@@ -6824,6 +6899,7 @@ panda$collections$ImmutableArray* org$pandalanguage$pandac$parser$Parser$blockSt
     }
     $l2355:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result2366));
+    result2366 = NULL;
     switch ($tmp2357) {
         case 2: goto $l2402;
         case 4: goto $l2423;
@@ -6834,7 +6910,7 @@ panda$collections$ImmutableArray* org$pandalanguage$pandac$parser$Parser$blockSt
     $l2425:;
 }
 org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$block$R$org$pandalanguage$pandac$ASTNode$Q(org$pandalanguage$pandac$parser$Parser* self) {
-    panda$collections$ImmutableArray* statements2429;
+    panda$collections$ImmutableArray* statements2429 = NULL;
     panda$collections$ImmutableArray* $tmp2430;
     panda$collections$ImmutableArray* $tmp2431;
     org$pandalanguage$pandac$ASTNode* $finallyReturn2432;
@@ -6877,6 +6953,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$block$R
     }
     $l2426:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) statements2429));
+    statements2429 = NULL;
     switch ($tmp2428) {
         case 1: goto $l2442;
         case 0: goto $l2435;
@@ -6884,14 +6961,14 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$block$R
     $l2444:;
 }
 org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$expressionOrAssignment$R$org$pandalanguage$pandac$ASTNode$Q(org$pandalanguage$pandac$parser$Parser* self) {
-    org$pandalanguage$pandac$ASTNode* start2448;
+    org$pandalanguage$pandac$ASTNode* start2448 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp2449;
     org$pandalanguage$pandac$ASTNode* $tmp2450;
     org$pandalanguage$pandac$ASTNode* $finallyReturn2451;
     org$pandalanguage$pandac$ASTNode* $tmp2453;
     org$pandalanguage$pandac$parser$Token$Kind $match$1259_92456;
     org$pandalanguage$pandac$parser$Token op2522;
-    org$pandalanguage$pandac$ASTNode* rvalue2524;
+    org$pandalanguage$pandac$ASTNode* rvalue2524 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp2525;
     org$pandalanguage$pandac$ASTNode* $tmp2526;
     org$pandalanguage$pandac$ASTNode* $finallyReturn2527;
@@ -6900,7 +6977,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$express
     org$pandalanguage$pandac$ASTNode* $tmp2534;
     org$pandalanguage$pandac$ASTNode* $tmp2535;
     org$pandalanguage$pandac$parser$Token op2549;
-    org$pandalanguage$pandac$ASTNode* rvalue2551;
+    org$pandalanguage$pandac$ASTNode* rvalue2551 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp2552;
     org$pandalanguage$pandac$ASTNode* $tmp2553;
     org$pandalanguage$pandac$ASTNode* $finallyReturn2554;
@@ -7067,6 +7144,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$express
                 }
                 $l2519:;
                 panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) rvalue2524));
+                rvalue2524 = NULL;
                 switch ($tmp2521) {
                     case 0: goto $l2530;
                     case 1: goto $l2539;
@@ -7122,6 +7200,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$express
                 }
                 $l2544:;
                 panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) rvalue2551));
+                rvalue2551 = NULL;
                 switch ($tmp2546) {
                     case 1: goto $l2566;
                     case 0: goto $l2557;
@@ -7147,6 +7226,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$express
     goto $l2445;
     $l2445:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) start2448));
+    start2448 = NULL;
     switch ($tmp2447) {
         case 1: goto $l2531;
         case 2: goto $l2540;
@@ -7159,12 +7239,12 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$express
     $l2574:;
 }
 org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$singleVar$R$org$pandalanguage$pandac$ASTNode$Q(org$pandalanguage$pandac$parser$Parser* self) {
-    org$pandalanguage$pandac$ASTNode* t2578;
+    org$pandalanguage$pandac$ASTNode* t2578 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp2579;
     org$pandalanguage$pandac$ASTNode* $tmp2580;
     org$pandalanguage$pandac$ASTNode* $finallyReturn2581;
     org$pandalanguage$pandac$ASTNode* $tmp2583;
-    org$pandalanguage$pandac$ASTNode* value2586;
+    org$pandalanguage$pandac$ASTNode* value2586 = NULL;
     org$pandalanguage$pandac$parser$Token$Kind $tmp2587;
     org$pandalanguage$pandac$ASTNode* $tmp2589;
     org$pandalanguage$pandac$ASTNode* $tmp2590;
@@ -7285,6 +7365,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$singleV
     }
     $l2575:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) t2578));
+    t2578 = NULL;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) value2586));
     switch ($tmp2577) {
         case 3: goto $l2617;
@@ -7302,16 +7383,16 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$varDecl
     org$pandalanguage$pandac$Variable$Kind $tmp2630;
     org$pandalanguage$pandac$Variable$Kind $tmp2632;
     org$pandalanguage$pandac$Variable$Kind $tmp2634;
-    panda$collections$Array* declarations2636;
+    panda$collections$Array* declarations2636 = NULL;
     panda$collections$Array* $tmp2637;
     panda$collections$Array* $tmp2638;
-    org$pandalanguage$pandac$ASTNode* decl2640;
+    org$pandalanguage$pandac$ASTNode* decl2640 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp2641;
     org$pandalanguage$pandac$ASTNode* $tmp2642;
     org$pandalanguage$pandac$ASTNode* $finallyReturn2643;
     org$pandalanguage$pandac$ASTNode* $tmp2645;
     org$pandalanguage$pandac$parser$Token$Kind $tmp2651;
-    org$pandalanguage$pandac$ASTNode* decl2656;
+    org$pandalanguage$pandac$ASTNode* decl2656 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp2657;
     org$pandalanguage$pandac$ASTNode* $tmp2658;
     org$pandalanguage$pandac$ASTNode* $finallyReturn2659;
@@ -7426,6 +7507,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$varDecl
             goto $l2653;
             $l2653:;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) decl2656));
+            decl2656 = NULL;
             switch ($tmp2655) {
                 case -1: goto $l2665;
                 case 0: goto $l2662;
@@ -7451,7 +7533,9 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$varDecl
     }
     $l2620:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) declarations2636));
+    declarations2636 = NULL;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) decl2640));
+    decl2640 = NULL;
     switch ($tmp2622) {
         case 2: goto $l2672;
         case 1: goto $l2663;
@@ -7468,15 +7552,15 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$initCal
     org$pandalanguage$pandac$ASTNode* $finallyReturn2688;
     org$pandalanguage$pandac$ASTNode* $tmp2690;
     panda$core$Object* $tmp2693;
-    org$pandalanguage$pandac$ASTNode* target2695;
+    org$pandalanguage$pandac$ASTNode* target2695 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp2696;
     org$pandalanguage$pandac$ASTNode* $tmp2697;
     panda$core$String* $tmp2699;
-    panda$collections$Array* args2701;
+    panda$collections$Array* args2701 = NULL;
     panda$collections$Array* $tmp2702;
     panda$collections$Array* $tmp2703;
     org$pandalanguage$pandac$parser$Token$Kind $tmp2705;
-    org$pandalanguage$pandac$ASTNode* expr2710;
+    org$pandalanguage$pandac$ASTNode* expr2710 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp2711;
     org$pandalanguage$pandac$ASTNode* $tmp2712;
     panda$core$Object* $tmp2714;
@@ -7641,6 +7725,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$initCal
             goto $l2707;
             $l2707:;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) expr2710));
+            expr2710 = NULL;
             switch ($tmp2709) {
                 case 2: goto $l2744;
                 case 0: goto $l2718;
@@ -7670,7 +7755,9 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$initCal
     }
     $l2675:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) target2695));
+    target2695 = NULL;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) args2701));
+    args2701 = NULL;
     switch ($tmp2677) {
         case 3: goto $l2735;
         case 2: goto $l2719;
@@ -7794,10 +7881,10 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$returnS
     org$pandalanguage$pandac$ASTNode* $finallyReturn2820;
     org$pandalanguage$pandac$ASTNode* $tmp2822;
     org$pandalanguage$pandac$ASTNode* $tmp2823;
-    panda$collections$Array* children2829;
+    panda$collections$Array* children2829 = NULL;
     panda$collections$Array* $tmp2830;
     panda$collections$Array* $tmp2831;
-    org$pandalanguage$pandac$ASTNode* expr2833;
+    org$pandalanguage$pandac$ASTNode* expr2833 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp2834;
     org$pandalanguage$pandac$ASTNode* $tmp2835;
     org$pandalanguage$pandac$ASTNode* $finallyReturn2836;
@@ -7887,7 +7974,9 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$returnS
             }
             $l2826:;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) children2829));
+            children2829 = NULL;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) expr2833));
+            expr2833 = NULL;
             switch ($tmp2828) {
                 case 0: goto $l2839;
                 case 1: goto $l2845;
@@ -8324,7 +8413,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$package
     org$pandalanguage$pandac$parser$Token$Kind $tmp3017;
     org$pandalanguage$pandac$ASTNode* $finallyReturn3019;
     org$pandalanguage$pandac$ASTNode* $tmp3021;
-    panda$core$MutableString* name3024;
+    panda$core$MutableString* name3024 = NULL;
     panda$core$MutableString* $tmp3025;
     panda$core$MutableString* $tmp3026;
     panda$core$String* $tmp3028;
@@ -8429,6 +8518,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$package
     }
     $l3005:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) name3024));
+    name3024 = NULL;
     switch ($tmp3007) {
         case 2: goto $l3040;
         case 1: goto $l3022;
@@ -8446,7 +8536,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$usesDec
     org$pandalanguage$pandac$parser$Token$Kind $tmp3065;
     org$pandalanguage$pandac$ASTNode* $finallyReturn3067;
     org$pandalanguage$pandac$ASTNode* $tmp3069;
-    panda$core$MutableString* name3072;
+    panda$core$MutableString* name3072 = NULL;
     panda$core$MutableString* $tmp3073;
     panda$core$MutableString* $tmp3074;
     panda$core$String* $tmp3076;
@@ -8551,6 +8641,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$usesDec
     }
     $l3053:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) name3072));
+    name3072 = NULL;
     switch ($tmp3055) {
         case 2: goto $l3088;
         case 1: goto $l3070;
@@ -8568,11 +8659,11 @@ panda$collections$ImmutableArray* org$pandalanguage$pandac$parser$Parser$generic
     org$pandalanguage$pandac$parser$Token$Kind $tmp3113;
     panda$collections$ImmutableArray* $finallyReturn3115;
     panda$collections$ImmutableArray* $tmp3117;
-    panda$collections$Array* parameters3120;
+    panda$collections$Array* parameters3120 = NULL;
     panda$collections$Array* $tmp3121;
     panda$collections$Array* $tmp3122;
     org$pandalanguage$pandac$parser$Token$Kind $tmp3124;
-    org$pandalanguage$pandac$ASTNode* t3129;
+    org$pandalanguage$pandac$ASTNode* t3129 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp3130;
     org$pandalanguage$pandac$ASTNode* $tmp3131;
     panda$collections$ImmutableArray* $finallyReturn3132;
@@ -8586,7 +8677,7 @@ panda$collections$ImmutableArray* org$pandalanguage$pandac$parser$Parser$generic
     panda$collections$ImmutableArray* $finallyReturn3154;
     panda$collections$ImmutableArray* $tmp3156;
     org$pandalanguage$pandac$parser$Token$Kind $tmp3159;
-    org$pandalanguage$pandac$ASTNode* t3164;
+    org$pandalanguage$pandac$ASTNode* t3164 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp3165;
     org$pandalanguage$pandac$ASTNode* $tmp3166;
     panda$collections$ImmutableArray* $finallyReturn3167;
@@ -8677,6 +8768,7 @@ panda$collections$ImmutableArray* org$pandalanguage$pandac$parser$Parser$generic
             goto $l3126;
             $l3126:;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) t3129));
+            t3129 = NULL;
             switch ($tmp3128) {
                 case -1: goto $l3142;
                 case 0: goto $l3135;
@@ -8755,6 +8847,7 @@ panda$collections$ImmutableArray* org$pandalanguage$pandac$parser$Parser$generic
                 goto $l3161;
                 $l3161:;
                 panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) t3164));
+                t3164 = NULL;
                 switch ($tmp3163) {
                     case -1: goto $l3177;
                     case 0: goto $l3170;
@@ -8803,6 +8896,7 @@ panda$collections$ImmutableArray* org$pandalanguage$pandac$parser$Parser$generic
     }
     $l3101:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) parameters3120));
+    parameters3120 = NULL;
     switch ($tmp3103) {
         case 2: goto $l3136;
         case 6: goto $l3193;
@@ -8819,10 +8913,10 @@ panda$collections$ImmutableArray* org$pandalanguage$pandac$parser$Parser$superty
     org$pandalanguage$pandac$parser$Token$Kind $tmp3200;
     panda$collections$ImmutableArray* $finallyReturn3202;
     panda$collections$ImmutableArray* $tmp3204;
-    panda$collections$Array* result3207;
+    panda$collections$Array* result3207 = NULL;
     panda$collections$Array* $tmp3208;
     panda$collections$Array* $tmp3209;
-    org$pandalanguage$pandac$ASTNode* t3211;
+    org$pandalanguage$pandac$ASTNode* t3211 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp3212;
     org$pandalanguage$pandac$ASTNode* $tmp3213;
     panda$collections$ImmutableArray* $finallyReturn3214;
@@ -8921,7 +9015,9 @@ panda$collections$ImmutableArray* org$pandalanguage$pandac$parser$Parser$superty
     }
     $l3196:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result3207));
+    result3207 = NULL;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) t3211));
+    t3211 = NULL;
     switch ($tmp3198) {
         case 1: goto $l3217;
         case 2: goto $l3230;
@@ -8931,7 +9027,7 @@ panda$collections$ImmutableArray* org$pandalanguage$pandac$parser$Parser$superty
     $l3238:;
 }
 panda$collections$ImmutableArray* org$pandalanguage$pandac$parser$Parser$annotations$R$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT(org$pandalanguage$pandac$parser$Parser* self) {
-    panda$collections$Array* result3242;
+    panda$collections$Array* result3242 = NULL;
     panda$collections$Array* $tmp3243;
     panda$collections$Array* $tmp3244;
     org$pandalanguage$pandac$parser$Token$nullable next3248;
@@ -8985,6 +9081,7 @@ panda$collections$ImmutableArray* org$pandalanguage$pandac$parser$Parser$annotat
     }
     $l3239:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result3242));
+    result3242 = NULL;
     switch ($tmp3241) {
         case 0: goto $l3259;
     }
@@ -8995,7 +9092,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$doccomm
     org$pandalanguage$pandac$parser$Token$Kind $tmp3266;
     org$pandalanguage$pandac$ASTNode* $finallyReturn3268;
     org$pandalanguage$pandac$ASTNode* $tmp3270;
-    panda$core$MutableString* result3273;
+    panda$core$MutableString* result3273 = NULL;
     panda$core$MutableString* $tmp3274;
     panda$core$MutableString* $tmp3275;
     org$pandalanguage$pandac$parser$Token next3279;
@@ -9077,6 +9174,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$doccomm
     }
     $l3262:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result3273));
+    result3273 = NULL;
     switch ($tmp3264) {
         case 1: goto $l3286;
         case 2: goto $l3296;
@@ -9089,7 +9187,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$paramet
     org$pandalanguage$pandac$parser$Token$Kind $tmp3303;
     org$pandalanguage$pandac$ASTNode* $finallyReturn3305;
     org$pandalanguage$pandac$ASTNode* $tmp3307;
-    org$pandalanguage$pandac$ASTNode* t3310;
+    org$pandalanguage$pandac$ASTNode* t3310 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp3311;
     org$pandalanguage$pandac$ASTNode* $tmp3312;
     org$pandalanguage$pandac$ASTNode* $finallyReturn3313;
@@ -9148,6 +9246,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$paramet
     }
     $l3299:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) t3310));
+    t3310 = NULL;
     switch ($tmp3301) {
         case 2: goto $l3324;
         case 1: goto $l3316;
@@ -9160,11 +9259,11 @@ panda$collections$ImmutableArray* org$pandalanguage$pandac$parser$Parser$paramet
     org$pandalanguage$pandac$parser$Token$Kind $tmp3331;
     panda$collections$ImmutableArray* $finallyReturn3333;
     panda$collections$ImmutableArray* $tmp3335;
-    panda$collections$Array* result3338;
+    panda$collections$Array* result3338 = NULL;
     panda$collections$Array* $tmp3339;
     panda$collections$Array* $tmp3340;
     org$pandalanguage$pandac$parser$Token$Kind $tmp3342;
-    org$pandalanguage$pandac$ASTNode* param3347;
+    org$pandalanguage$pandac$ASTNode* param3347 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp3348;
     org$pandalanguage$pandac$ASTNode* $tmp3349;
     panda$collections$ImmutableArray* $finallyReturn3350;
@@ -9286,6 +9385,7 @@ panda$collections$ImmutableArray* org$pandalanguage$pandac$parser$Parser$paramet
             goto $l3344;
             $l3344:;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) param3347));
+            param3347 = NULL;
             switch ($tmp3346) {
                 case 2: goto $l3375;
                 case 1: goto $l3367;
@@ -9308,6 +9408,7 @@ panda$collections$ImmutableArray* org$pandalanguage$pandac$parser$Parser$paramet
     }
     $l3327:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result3338));
+    result3338 = NULL;
     switch ($tmp3329) {
         case 3: goto $l3376;
         case 4: goto $l3383;
@@ -9335,17 +9436,17 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$methodD
     org$pandalanguage$pandac$ASTNode* $tmp3400;
     org$pandalanguage$pandac$MethodDecl$Kind $tmp3403;
     org$pandalanguage$pandac$MethodDecl$Kind $tmp3404;
-    panda$core$String* name3405;
+    panda$core$String* name3405 = NULL;
     panda$core$String* $tmp3406;
     panda$core$String* $tmp3407;
     org$pandalanguage$pandac$ASTNode* $finallyReturn3408;
     org$pandalanguage$pandac$ASTNode* $tmp3410;
-    panda$collections$ImmutableArray* params3413;
+    panda$collections$ImmutableArray* params3413 = NULL;
     panda$collections$ImmutableArray* $tmp3414;
     panda$collections$ImmutableArray* $tmp3415;
     org$pandalanguage$pandac$ASTNode* $finallyReturn3416;
     org$pandalanguage$pandac$ASTNode* $tmp3418;
-    org$pandalanguage$pandac$ASTNode* returnType3421;
+    org$pandalanguage$pandac$ASTNode* returnType3421 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp3424;
     org$pandalanguage$pandac$ASTNode* $tmp3425;
     org$pandalanguage$pandac$ASTNode* $tmp3426;
@@ -9353,7 +9454,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$methodD
     org$pandalanguage$pandac$ASTNode* $tmp3429;
     org$pandalanguage$pandac$ASTNode* $tmp3432;
     org$pandalanguage$pandac$ASTNode* $tmp3433;
-    panda$collections$ImmutableArray* body3434;
+    panda$collections$ImmutableArray* body3434 = NULL;
     panda$collections$ImmutableArray* $tmp3437;
     panda$collections$ImmutableArray* $tmp3438;
     panda$collections$ImmutableArray* $tmp3439;
@@ -9362,10 +9463,10 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$methodD
     panda$collections$ImmutableArray* $tmp3445;
     panda$collections$ImmutableArray* $tmp3446;
     org$pandalanguage$pandac$parser$Token token3447;
-    panda$core$String* tokenText3449;
+    panda$core$String* tokenText3449 = NULL;
     panda$core$String* $tmp3450;
     panda$core$String* $tmp3451;
-    org$pandalanguage$pandac$ASTNode* post3467;
+    org$pandalanguage$pandac$ASTNode* post3467 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp3468;
     org$pandalanguage$pandac$ASTNode* $tmp3469;
     org$pandalanguage$pandac$ASTNode* $finallyReturn3470;
@@ -9567,6 +9668,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$methodD
             goto $l3464;
             $l3464:;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) post3467));
+            post3467 = NULL;
             switch ($tmp3466) {
                 case 0: goto $l3473;
                 case -1: goto $l3476;
@@ -9588,10 +9690,13 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$methodD
     }
     $l3389:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) name3405));
+    name3405 = NULL;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) params3413));
+    params3413 = NULL;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) returnType3421));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) body3434));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) tokenText3449));
+    tokenText3449 = NULL;
     switch ($tmp3391) {
         case 3: goto $l3430;
         case 6: goto $l3481;
@@ -9608,21 +9713,21 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$initDec
     org$pandalanguage$pandac$parser$Token$Kind $tmp3488;
     org$pandalanguage$pandac$ASTNode* $finallyReturn3490;
     org$pandalanguage$pandac$ASTNode* $tmp3492;
-    panda$collections$ImmutableArray* params3495;
+    panda$collections$ImmutableArray* params3495 = NULL;
     panda$collections$ImmutableArray* $tmp3496;
     panda$collections$ImmutableArray* $tmp3497;
     org$pandalanguage$pandac$ASTNode* $finallyReturn3498;
     org$pandalanguage$pandac$ASTNode* $tmp3500;
-    panda$collections$ImmutableArray* b3503;
+    panda$collections$ImmutableArray* b3503 = NULL;
     panda$collections$ImmutableArray* $tmp3504;
     panda$collections$ImmutableArray* $tmp3505;
     org$pandalanguage$pandac$ASTNode* $finallyReturn3506;
     org$pandalanguage$pandac$ASTNode* $tmp3508;
     org$pandalanguage$pandac$parser$Token token3511;
-    panda$core$String* tokenText3513;
+    panda$core$String* tokenText3513 = NULL;
     panda$core$String* $tmp3514;
     panda$core$String* $tmp3515;
-    org$pandalanguage$pandac$ASTNode* post3531;
+    org$pandalanguage$pandac$ASTNode* post3531 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp3532;
     org$pandalanguage$pandac$ASTNode* $tmp3533;
     org$pandalanguage$pandac$ASTNode* $finallyReturn3534;
@@ -9731,6 +9836,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$initDec
             goto $l3528;
             $l3528:;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) post3531));
+            post3531 = NULL;
             switch ($tmp3530) {
                 case 0: goto $l3537;
                 case -1: goto $l3540;
@@ -9753,8 +9859,11 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$initDec
     }
     $l3484:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) params3495));
+    params3495 = NULL;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) b3503));
+    b3503 = NULL;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) tokenText3513));
+    tokenText3513 = NULL;
     switch ($tmp3486) {
         case 4: goto $l3547;
         case 3: goto $l3538;
@@ -9765,7 +9874,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$initDec
     $l3549:;
 }
 org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$fieldDeclaration$org$pandalanguage$pandac$ASTNode$Q$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$R$org$pandalanguage$pandac$ASTNode$Q(org$pandalanguage$pandac$parser$Parser* self, org$pandalanguage$pandac$ASTNode* p_doccomment, panda$collections$ImmutableArray* p_annotations) {
-    org$pandalanguage$pandac$ASTNode* decl3553;
+    org$pandalanguage$pandac$ASTNode* decl3553 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp3554;
     org$pandalanguage$pandac$ASTNode* $tmp3555;
     org$pandalanguage$pandac$ASTNode* $finallyReturn3556;
@@ -9807,6 +9916,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$fieldDe
     }
     $l3550:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) decl3553));
+    decl3553 = NULL;
     switch ($tmp3552) {
         case 1: goto $l3567;
         case 0: goto $l3559;
@@ -9818,11 +9928,11 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$choiceE
     org$pandalanguage$pandac$parser$Token$Kind $tmp3574;
     org$pandalanguage$pandac$ASTNode* $finallyReturn3576;
     org$pandalanguage$pandac$ASTNode* $tmp3578;
-    panda$collections$Array* fields3581;
+    panda$collections$Array* fields3581 = NULL;
     panda$collections$Array* $tmp3582;
     panda$collections$Array* $tmp3583;
     org$pandalanguage$pandac$parser$Token$Kind $tmp3585;
-    org$pandalanguage$pandac$ASTNode* field3592;
+    org$pandalanguage$pandac$ASTNode* field3592 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp3593;
     org$pandalanguage$pandac$ASTNode* $tmp3594;
     org$pandalanguage$pandac$ASTNode* $finallyReturn3595;
@@ -9934,6 +10044,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$choiceE
                 goto $l3589;
                 $l3589:;
                 panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) field3592));
+                field3592 = NULL;
                 switch ($tmp3591) {
                     case 0: goto $l3598;
                     case 1: goto $l3612;
@@ -9977,6 +10088,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$choiceE
     }
     $l3570:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) fields3581));
+    fields3581 = NULL;
     switch ($tmp3572) {
         case 1: goto $l3599;
         case 3: goto $l3621;
@@ -9998,10 +10110,10 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$choiceD
     org$pandalanguage$pandac$parser$Token$Kind $tmp3653;
     org$pandalanguage$pandac$ASTNode* $finallyReturn3655;
     org$pandalanguage$pandac$ASTNode* $tmp3657;
-    panda$collections$Array* members3660;
+    panda$collections$Array* members3660 = NULL;
     panda$collections$Array* $tmp3661;
     panda$collections$Array* $tmp3662;
-    org$pandalanguage$pandac$ASTNode* dc3664;
+    org$pandalanguage$pandac$ASTNode* dc3664 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp3665;
     org$pandalanguage$pandac$parser$Token next3668;
     org$pandalanguage$pandac$parser$Token$Kind $match$1854_133670;
@@ -10011,14 +10123,14 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$choiceD
     org$pandalanguage$pandac$ASTNode* $tmp3717;
     org$pandalanguage$pandac$ASTNode* $tmp3718;
     org$pandalanguage$pandac$ASTNode* $tmp3719;
-    org$pandalanguage$pandac$ASTNode* c3725;
+    org$pandalanguage$pandac$ASTNode* c3725 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp3726;
     org$pandalanguage$pandac$ASTNode* $tmp3727;
     org$pandalanguage$pandac$ASTNode* $finallyReturn3728;
     org$pandalanguage$pandac$ASTNode* $tmp3730;
     org$pandalanguage$pandac$ASTNode* $tmp3734;
     org$pandalanguage$pandac$ASTNode* $tmp3735;
-    panda$collections$ImmutableArray* a3737;
+    panda$collections$ImmutableArray* a3737 = NULL;
     panda$collections$ImmutableArray* $tmp3738;
     panda$collections$ImmutableArray* $tmp3739;
     org$pandalanguage$pandac$parser$Token next3743;
@@ -10039,7 +10151,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$choiceD
     org$pandalanguage$pandac$ASTNode* $tmp3783;
     org$pandalanguage$pandac$ASTNode* $tmp3784;
     org$pandalanguage$pandac$ASTNode* $tmp3785;
-    org$pandalanguage$pandac$ASTNode* decl3791;
+    org$pandalanguage$pandac$ASTNode* decl3791 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp3792;
     org$pandalanguage$pandac$ASTNode* $tmp3793;
     org$pandalanguage$pandac$ASTNode* $finallyReturn3794;
@@ -10049,7 +10161,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$choiceD
     panda$collections$ImmutableArray* $tmp3802;
     panda$collections$ImmutableArray* $tmp3803;
     panda$collections$ImmutableArray* $tmp3804;
-    org$pandalanguage$pandac$ASTNode* decl3811;
+    org$pandalanguage$pandac$ASTNode* decl3811 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp3812;
     org$pandalanguage$pandac$ASTNode* $tmp3813;
     org$pandalanguage$pandac$ASTNode* $finallyReturn3814;
@@ -10059,7 +10171,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$choiceD
     panda$collections$ImmutableArray* $tmp3822;
     panda$collections$ImmutableArray* $tmp3823;
     panda$collections$ImmutableArray* $tmp3824;
-    org$pandalanguage$pandac$ASTNode* decl3831;
+    org$pandalanguage$pandac$ASTNode* decl3831 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp3832;
     org$pandalanguage$pandac$ASTNode* $tmp3833;
     org$pandalanguage$pandac$ASTNode* $finallyReturn3834;
@@ -10069,7 +10181,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$choiceD
     panda$collections$ImmutableArray* $tmp3842;
     panda$collections$ImmutableArray* $tmp3843;
     panda$collections$ImmutableArray* $tmp3844;
-    org$pandalanguage$pandac$ASTNode* decl3855;
+    org$pandalanguage$pandac$ASTNode* decl3855 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp3856;
     org$pandalanguage$pandac$ASTNode* $tmp3857;
     org$pandalanguage$pandac$ASTNode* $finallyReturn3858;
@@ -10079,7 +10191,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$choiceD
     panda$collections$ImmutableArray* $tmp3866;
     panda$collections$ImmutableArray* $tmp3867;
     panda$collections$ImmutableArray* $tmp3868;
-    org$pandalanguage$pandac$ASTNode* decl3887;
+    org$pandalanguage$pandac$ASTNode* decl3887 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp3888;
     org$pandalanguage$pandac$ASTNode* $tmp3889;
     org$pandalanguage$pandac$ASTNode* $finallyReturn3890;
@@ -10290,6 +10402,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$choiceD
                     goto $l3722;
                     $l3722:;
                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) c3725));
+                    c3725 = NULL;
                     switch ($tmp3724) {
                         case -1: goto $l3736;
                         case 0: goto $l3731;
@@ -10454,6 +10567,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$choiceD
                     goto $l3788;
                     $l3788:;
                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) decl3791));
+                    decl3791 = NULL;
                     switch ($tmp3790) {
                         case -1: goto $l3806;
                         case 0: goto $l3797;
@@ -10511,6 +10625,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$choiceD
                     goto $l3808;
                     $l3808:;
                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) decl3811));
+                    decl3811 = NULL;
                     switch ($tmp3810) {
                         case 0: goto $l3817;
                         case -1: goto $l3826;
@@ -10568,6 +10683,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$choiceD
                     goto $l3828;
                     $l3828:;
                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) decl3831));
+                    decl3831 = NULL;
                     switch ($tmp3830) {
                         case 0: goto $l3837;
                         case -1: goto $l3846;
@@ -10631,6 +10747,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$choiceD
                     goto $l3852;
                     $l3852:;
                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) decl3855));
+                    decl3855 = NULL;
                     switch ($tmp3854) {
                         case 0: goto $l3861;
                         case -1: goto $l3870;
@@ -10706,6 +10823,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$choiceD
                     goto $l3884;
                     $l3884:;
                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) decl3887));
+                    decl3887 = NULL;
                     switch ($tmp3886) {
                         case 0: goto $l3893;
                         case -1: goto $l3902;
@@ -10776,8 +10894,10 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$choiceD
     }
     $l3634:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) members3660));
+    members3660 = NULL;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) dc3664));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) a3737));
+    a3737 = NULL;
     switch ($tmp3636) {
         case 11: goto $l3916;
         case 3: goto $l3732;
@@ -10797,7 +10917,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$choiceD
 }
 org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$declaration$R$org$pandalanguage$pandac$ASTNode$Q(org$pandalanguage$pandac$parser$Parser* self) {
     org$pandalanguage$pandac$parser$Token start3933;
-    org$pandalanguage$pandac$ASTNode* dc3935;
+    org$pandalanguage$pandac$ASTNode* dc3935 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp3937;
     org$pandalanguage$pandac$ASTNode* $tmp3938;
     org$pandalanguage$pandac$ASTNode* $tmp3939;
@@ -10805,7 +10925,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$declara
     org$pandalanguage$pandac$ASTNode* $tmp3942;
     org$pandalanguage$pandac$ASTNode* $tmp3945;
     org$pandalanguage$pandac$ASTNode* $tmp3946;
-    panda$collections$ImmutableArray* a3947;
+    panda$collections$ImmutableArray* a3947 = NULL;
     panda$collections$ImmutableArray* $tmp3948;
     panda$collections$ImmutableArray* $tmp3949;
     org$pandalanguage$pandac$ASTNode* $finallyReturn3950;
@@ -11038,6 +11158,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$declara
     $l3930:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) dc3935));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) a3947));
+    a3947 = NULL;
     switch ($tmp3932) {
         case 5: goto $l3987;
         case 2: goto $l3962;
@@ -11061,7 +11182,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$classDe
     org$pandalanguage$pandac$parser$Token$Kind $tmp4034;
     org$pandalanguage$pandac$ASTNode* $finallyReturn4036;
     org$pandalanguage$pandac$ASTNode* $tmp4038;
-    panda$collections$ImmutableArray* generics4041;
+    panda$collections$ImmutableArray* generics4041 = NULL;
     panda$collections$ImmutableArray* $tmp4044;
     panda$collections$ImmutableArray* $tmp4045;
     panda$collections$ImmutableArray* $tmp4046;
@@ -11069,7 +11190,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$classDe
     org$pandalanguage$pandac$ASTNode* $tmp4049;
     panda$collections$ImmutableArray* $tmp4052;
     panda$collections$ImmutableArray* $tmp4053;
-    panda$collections$ImmutableArray* stypes4054;
+    panda$collections$ImmutableArray* stypes4054 = NULL;
     panda$collections$ImmutableArray* $tmp4057;
     panda$collections$ImmutableArray* $tmp4058;
     panda$collections$ImmutableArray* $tmp4059;
@@ -11080,11 +11201,11 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$classDe
     org$pandalanguage$pandac$parser$Token$Kind $tmp4067;
     org$pandalanguage$pandac$ASTNode* $finallyReturn4069;
     org$pandalanguage$pandac$ASTNode* $tmp4071;
-    panda$collections$Array* members4074;
+    panda$collections$Array* members4074 = NULL;
     panda$collections$Array* $tmp4075;
     panda$collections$Array* $tmp4076;
     org$pandalanguage$pandac$parser$Token$Kind $tmp4081;
-    org$pandalanguage$pandac$ASTNode* member4086;
+    org$pandalanguage$pandac$ASTNode* member4086 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp4087;
     org$pandalanguage$pandac$ASTNode* $tmp4088;
     org$pandalanguage$pandac$ASTNode* $finallyReturn4089;
@@ -11257,6 +11378,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$classDe
             goto $l4083;
             $l4083:;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) member4086));
+            member4086 = NULL;
             switch ($tmp4085) {
                 case 0: goto $l4092;
                 case -1: goto $l4095;
@@ -11288,6 +11410,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$classDe
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) generics4041));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) stypes4054));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) members4074));
+    members4074 = NULL;
     switch ($tmp4024) {
         case 6: goto $l4105;
         case 2: goto $l4050;
@@ -11308,7 +11431,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$interfa
     org$pandalanguage$pandac$parser$Token$Kind $tmp4120;
     org$pandalanguage$pandac$ASTNode* $finallyReturn4122;
     org$pandalanguage$pandac$ASTNode* $tmp4124;
-    panda$collections$ImmutableArray* generics4127;
+    panda$collections$ImmutableArray* generics4127 = NULL;
     panda$collections$ImmutableArray* $tmp4130;
     panda$collections$ImmutableArray* $tmp4131;
     panda$collections$ImmutableArray* $tmp4132;
@@ -11317,11 +11440,11 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$interfa
     panda$collections$ImmutableArray* $tmp4138;
     panda$collections$ImmutableArray* $tmp4139;
     panda$collections$ImmutableArray* $tmp4140;
-    panda$collections$Array* intfs4142;
+    panda$collections$Array* intfs4142 = NULL;
     panda$collections$Array* $tmp4143;
     panda$collections$Array* $tmp4144;
     org$pandalanguage$pandac$parser$Token$Kind $tmp4146;
-    org$pandalanguage$pandac$ASTNode* t4151;
+    org$pandalanguage$pandac$ASTNode* t4151 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp4152;
     org$pandalanguage$pandac$ASTNode* $tmp4153;
     org$pandalanguage$pandac$ASTNode* $finallyReturn4154;
@@ -11335,11 +11458,11 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$interfa
     org$pandalanguage$pandac$parser$Token$Kind $tmp4175;
     org$pandalanguage$pandac$ASTNode* $finallyReturn4177;
     org$pandalanguage$pandac$ASTNode* $tmp4179;
-    panda$collections$Array* members4182;
+    panda$collections$Array* members4182 = NULL;
     panda$collections$Array* $tmp4183;
     panda$collections$Array* $tmp4184;
     org$pandalanguage$pandac$parser$Token$Kind $tmp4189;
-    org$pandalanguage$pandac$ASTNode* member4194;
+    org$pandalanguage$pandac$ASTNode* member4194 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp4195;
     org$pandalanguage$pandac$ASTNode* $tmp4196;
     org$pandalanguage$pandac$ASTNode* $finallyReturn4197;
@@ -11497,6 +11620,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$interfa
             goto $l4148;
             $l4148:;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) t4151));
+            t4151 = NULL;
             switch ($tmp4150) {
                 case -1: goto $l4174;
                 case 1: goto $l4171;
@@ -11559,6 +11683,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$interfa
             goto $l4191;
             $l4191:;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) member4194));
+            member4194 = NULL;
             switch ($tmp4193) {
                 case 0: goto $l4200;
                 case -1: goto $l4203;
@@ -11592,7 +11717,9 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$interfa
     $l4108:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) generics4127));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) intfs4142));
+    intfs4142 = NULL;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) members4182));
+    members4182 = NULL;
     switch ($tmp4110) {
         case 4: goto $l4172;
         case 1: goto $l4125;
@@ -11712,10 +11839,10 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$bodyEnt
     }
 }
 org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$file$R$org$pandalanguage$pandac$ASTNode$Q(org$pandalanguage$pandac$parser$Parser* self) {
-    panda$collections$Array* entries4270;
+    panda$collections$Array* entries4270 = NULL;
     panda$collections$Array* $tmp4271;
     panda$collections$Array* $tmp4272;
-    org$pandalanguage$pandac$ASTNode* entry4282;
+    org$pandalanguage$pandac$ASTNode* entry4282 = NULL;
     org$pandalanguage$pandac$ASTNode* $tmp4283;
     org$pandalanguage$pandac$ASTNode* $tmp4284;
     org$pandalanguage$pandac$ASTNode* $finallyReturn4285;
@@ -11769,6 +11896,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$file$R$
             goto $l4279;
             $l4279:;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) entry4282));
+            entry4282 = NULL;
             switch ($tmp4281) {
                 case -1: goto $l4292;
                 case 0: goto $l4288;
@@ -11794,6 +11922,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$file$R$
     }
     $l4267:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) entries4270));
+    entries4270 = NULL;
     switch ($tmp4269) {
         case 0: goto $l4289;
         case 1: goto $l4299;

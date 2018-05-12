@@ -97,7 +97,7 @@ void org$pandalanguage$pandac$FieldDecl$init$org$pandalanguage$pandac$ClassDecl$
     org$pandalanguage$pandac$Symbol$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$String(((org$pandalanguage$pandac$Symbol*) self), ((panda$core$Int64) { 202 }), p_position, p_name);
 }
 panda$core$String* org$pandalanguage$pandac$FieldDecl$convert$R$panda$core$String(org$pandalanguage$pandac$FieldDecl* self) {
-    panda$core$MutableString* result17;
+    panda$core$MutableString* result17 = NULL;
     panda$core$MutableString* $tmp18;
     panda$core$MutableString* $tmp19;
     panda$core$String* $tmp21;
@@ -182,6 +182,7 @@ panda$core$String* org$pandalanguage$pandac$FieldDecl$convert$R$panda$core$Strin
     }
     $l14:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result17));
+    result17 = NULL;
     switch ($tmp16) {
         case 0: goto $l39;
     }

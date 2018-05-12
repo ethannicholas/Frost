@@ -43,7 +43,7 @@ panda$core$Bit panda$io$InputStream$LineIterator$get_done$R$panda$core$Bit(panda
     return $finallyReturn4;
 }
 panda$core$String* panda$io$InputStream$LineIterator$next$R$panda$core$String(panda$io$InputStream$LineIterator* self) {
-    panda$core$String* result10;
+    panda$core$String* result10 = NULL;
     panda$core$String* $tmp11;
     panda$core$String* $finallyReturn12;
     panda$core$String* $tmp14;
@@ -64,6 +64,7 @@ panda$core$String* panda$io$InputStream$LineIterator$next$R$panda$core$String(pa
     }
     $l7:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result10));
+    result10 = NULL;
     switch ($tmp9) {
         case 0: goto $l15;
     }

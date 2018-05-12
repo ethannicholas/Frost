@@ -178,7 +178,7 @@ panda$core$Bit panda$core$Char8$isWhitespace$R$panda$core$Bit(panda$core$Char8 s
     }
 }
 panda$core$String* panda$core$Char8$$MUL$panda$core$Int64$R$panda$core$String(panda$core$Char8 self, panda$core$Int64 p_count) {
-    panda$core$MutableString* result46;
+    panda$core$MutableString* result46 = NULL;
     panda$core$MutableString* $tmp47;
     panda$core$MutableString* $tmp48;
     panda$core$Range$LTpanda$core$Int64$GT $tmp50;
@@ -232,6 +232,7 @@ panda$core$String* panda$core$Char8$$MUL$panda$core$Int64$R$panda$core$String(pa
     }
     $l43:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result46));
+    result46 = NULL;
     switch ($tmp45) {
         case 0: goto $l74;
     }

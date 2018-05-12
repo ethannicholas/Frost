@@ -31,7 +31,7 @@ void panda$core$Range$LTpanda$core$String$Index$GT$init$panda$core$String$Index$
     self->inclusive = p_inclusive;
 }
 panda$core$String* panda$core$Range$LTpanda$core$String$Index$GT$convert$R$panda$core$String(panda$core$Range$LTpanda$core$String$Index$GT self) {
-    panda$core$MutableString* result6;
+    panda$core$MutableString* result6 = NULL;
     panda$core$MutableString* $tmp7;
     panda$core$MutableString* $tmp8;
     panda$core$Object* $tmp10;
@@ -91,6 +91,7 @@ panda$core$String* panda$core$Range$LTpanda$core$String$Index$GT$convert$R$panda
     }
     $l3:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result6));
+    result6 = NULL;
     switch ($tmp5) {
         case 0: goto $l20;
     }
