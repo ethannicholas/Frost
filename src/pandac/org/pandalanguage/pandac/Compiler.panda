@@ -712,7 +712,7 @@ class Compiler {
             }
             result := ClassDecl(cl.source, cl.position, aliases, cl.doccomment, annotations,
                     cl.classKind, type.name, supertypes, Array<ClassDecl.GenericParameter>(),
-                    cl.symbolTable.parents[0])
+                    cl.symbolTable.parents[0].get())
             result.external := false
             for m in cl.methods {
                 resolve(m)
@@ -866,13 +866,13 @@ class Compiler {
             if cl.rawSuper != null {
                 def superCl := getClass(cl.rawSuper)
                 if superCl != null {
-                    cl.symbolTable.parents.add(getSymbolTable(superCl))
+                    cl.symbolTable.parents.add(Weak<SymbolTable>(getSymbolTable(superCl)))
                 }
             }
             for rawIntf in cl.rawInterfaces {
                 def intf := getClass(rawIntf)
                 if intf != null {
-                    cl.symbolTable.parents.add(getSymbolTable(intf))
+                    cl.symbolTable.parents.add(Weak<SymbolTable>(getSymbolTable(intf)))
                 }
             }
         }
@@ -936,7 +936,7 @@ class Compiler {
             }
         }
         for p in st.parents {
-            addInheritedMethods(p, name, methods, types)
+            addInheritedMethods(p.get(), name, methods, types)
         }
         if methods.get_count() = 1 {
             return IRNode.METHOD_REFERENCE(position, target, methods[0])
@@ -1442,6 +1442,12 @@ class Compiler {
                 return coercionCost(call(value, "[]", args), target)
             when IRNode.CHOICE_ENTRY_REFERENCE(_, ce):
                 return coercionCost(ce.owner.type(), target)
+            when IRNode.FIELD_REFERENCE(_, _, _, field):
+                if field.annotations.isWeak() & !inFieldCleanup {
+                    def get := compileDot(expr.position(), expr, "get")
+                    assert get != null
+                    return coercionCost(call(get, Array<IRNode>()), target)
+                }
         }
         if !target.isClass() {
             return null
@@ -1631,6 +1637,12 @@ class Compiler {
                 error(expr.position(), "choice '\{expr}' requires \{ce.fields.get_count()} " +
                         "argument\{ce.fields.get_count() = 1:|s}, but found 0")
                 return null
+            when IRNode.FIELD_REFERENCE(_, _, _, field):
+                if field.annotations.isWeak() & !inFieldCleanup {
+                    def get := compileDot(expr.position(), expr, "get")
+                    assert get != null
+                    return coerce(call(get, Array<IRNode>()), target)
+                }
         }
         if target.typeKind = Type.Kind.NULLABLE {
             if expr = IRNode.NULL {
@@ -3141,14 +3153,14 @@ class Compiler {
         for stmt in statements {
             var compiled := compileStatement(stmt)
             if compiled = null {
-                symbolTable := symbols.parents[0]
+                symbolTable := symbols.parents[0].get()
                 return null
             }
             assert compiled != IRNode.UNRESOLVED_METHOD_CALL
             result.add(compiled)
         }
         finallies.pop()
-        symbolTable := symbols.parents[0]
+        symbolTable := symbols.parents[0].get()
         if finalFinally.get_count() > 0 {
             def resultWithFinally := Array<IRNode>() -- FIXME literal
             resultWithFinally.add(IRNode.BLOCK_WITH_FINALLY(position, result.finish(),
@@ -3365,7 +3377,7 @@ class Compiler {
                 return null
             }
         }
-        symbolTable := symbols.parents[0]
+        symbolTable := symbols.parents[0].get()
         loops.pop()
         return result
     }
@@ -3711,7 +3723,7 @@ class Compiler {
                                         return null
                                     }
                                     statements.addAll(blockStatements)
-                                    symbolTable := symbolTable.parents[0]
+                                    symbolTable := symbolTable.parents[0].get()
                                     return IRNode.IF(position, check, statements.finish(), null)
                             }
                     }
@@ -3740,7 +3752,7 @@ class Compiler {
         if statements = null {
             return null
         }
-        symbolTable := symbolTable.parents[0]
+        symbolTable := symbolTable.parents[0].get()
         return IRNode.IF(position, test, statements, null)
     }
 
@@ -3819,7 +3831,7 @@ class Compiler {
         if statements = null {
             return null
         }
-        symbolTable := symbolTable.parents[0]
+        symbolTable := symbolTable.parents[0].get()
         return IRNode.WHEN(position, finalTests.finish(), statements)
     }
 
@@ -3829,7 +3841,7 @@ class Compiler {
         if statements = null {
             return null
         }
-        symbolTable := symbolTable.parents[0]
+        symbolTable := symbolTable.parents[0].get()
         return statements
     }
 

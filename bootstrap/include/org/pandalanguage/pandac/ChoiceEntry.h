@@ -7,7 +7,7 @@ typedef struct panda$core$Class panda$core$Class;
 #include "panda/core/Int64.h"
 #include "org/pandalanguage/pandac/Position.h"
 typedef struct panda$core$String panda$core$String;
-typedef struct org$pandalanguage$pandac$ClassDecl org$pandalanguage$pandac$ClassDecl;
+typedef struct panda$core$Weak panda$core$Weak;
 typedef struct panda$collections$Array panda$collections$Array;
 typedef struct org$pandalanguage$pandac$MethodDecl org$pandalanguage$pandac$MethodDecl;
 #include "panda/core/Bit.h"
@@ -18,7 +18,7 @@ typedef struct org$pandalanguage$pandac$ChoiceEntry {
     panda$core$Int64 kind;
     org$pandalanguage$pandac$Position position;
     panda$core$String* name;
-    org$pandalanguage$pandac$ClassDecl* owner;
+    panda$core$Weak* owner;
     panda$core$String* doccomment;
     panda$collections$Array* fields;
     panda$core$Int64 rawValue;

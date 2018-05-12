@@ -7,7 +7,7 @@ typedef struct panda$core$Class panda$core$Class;
 #include "panda/core/Int64.h"
 #include "org/pandalanguage/pandac/Position.h"
 typedef struct panda$core$String panda$core$String;
-typedef struct org$pandalanguage$pandac$ClassDecl org$pandalanguage$pandac$ClassDecl;
+typedef struct panda$core$Weak panda$core$Weak;
 typedef struct org$pandalanguage$pandac$Annotations org$pandalanguage$pandac$Annotations;
 #include "org/pandalanguage/pandac/MethodDecl/Kind.h"
 typedef struct panda$collections$Array panda$collections$Array;
@@ -22,7 +22,7 @@ typedef struct org$pandalanguage$pandac$MethodDecl {
     panda$core$Int64 kind;
     org$pandalanguage$pandac$Position position;
     panda$core$String* name;
-    org$pandalanguage$pandac$ClassDecl* owner;
+    panda$core$Weak* owner;
     panda$core$String* doccomment;
     org$pandalanguage$pandac$Annotations* annotations;
     org$pandalanguage$pandac$MethodDecl$Kind methodKind;

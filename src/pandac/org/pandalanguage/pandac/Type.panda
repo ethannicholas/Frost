@@ -28,8 +28,6 @@ class Type : Symbol, Key<Type> {
 
     def subtypes:Array<Type>?
 
-    def test:ClassDecl
-
     def parameter:ClassDecl.GenericParameter? := null
 
     init(name:String, typeKind:Int, position:Position) {

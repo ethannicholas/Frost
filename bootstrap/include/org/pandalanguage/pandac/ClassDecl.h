@@ -14,7 +14,7 @@ typedef struct org$pandalanguage$pandac$Annotations org$pandalanguage$pandac$Ann
 typedef struct panda$collections$Array panda$collections$Array;
 typedef struct org$pandalanguage$pandac$Type org$pandalanguage$pandac$Type;
 typedef struct panda$collections$List panda$collections$List;
-typedef struct org$pandalanguage$pandac$ClassDecl org$pandalanguage$pandac$ClassDecl;
+typedef struct panda$core$Weak panda$core$Weak;
 typedef struct org$pandalanguage$pandac$SymbolTable org$pandalanguage$pandac$SymbolTable;
 #include "panda/core/Bit.h"
 typedef struct panda$collections$HashMap panda$collections$HashMap;
@@ -38,7 +38,7 @@ typedef struct org$pandalanguage$pandac$ClassDecl {
     panda$collections$Array* methods;
     panda$collections$Array* classes;
     panda$collections$Array* choiceEntries;
-    org$pandalanguage$pandac$ClassDecl* owner;
+    panda$core$Weak* owner;
     org$pandalanguage$pandac$SymbolTable* symbolTable;
     panda$core$Bit symbolTableResolved;
     panda$core$Bit external;

@@ -1595,7 +1595,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$IRNode$type$R$org$pandal
         {
             org$pandalanguage$pandac$IRNode** $tmp446 = ((org$pandalanguage$pandac$IRNode**) ((char*) $match$71_9342->$data + 16));
             ref445 = *$tmp446;
-            org$pandalanguage$pandac$Type* $tmp450 = (org$pandalanguage$pandac$Type*) pandaObjectAlloc(96, (panda$core$Class*) &org$pandalanguage$pandac$Type$class);
+            org$pandalanguage$pandac$Type* $tmp450 = (org$pandalanguage$pandac$Type*) pandaObjectAlloc(88, (panda$core$Class*) &org$pandalanguage$pandac$Type$class);
             org$pandalanguage$pandac$Position$init(&$tmp452);
             org$pandalanguage$pandac$Type$init$panda$core$String$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Bit($tmp450, &$s451, ((panda$core$Int64) { 16 }), $tmp452, ((panda$core$Bit) { true }));
             $tmp449 = $tmp450;

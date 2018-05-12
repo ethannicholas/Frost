@@ -37,6 +37,7 @@ class ClassDecl : Symbol {
     }
 
     class Resolution : Immutable {
+        @weak
         def value:ClassDecl?
 
         init(value:ClassDecl?) {
@@ -88,6 +89,7 @@ class ClassDecl : Symbol {
 
     def choiceEntries := Array<ChoiceEntry>()
 
+    @weak
     def owner:ClassDecl? := null
 
     def symbolTable:SymbolTable

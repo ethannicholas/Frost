@@ -4,13 +4,13 @@
 #undef PANDA_TYPESONLY
 typedef struct panda$core$Class panda$core$Class;
 #include "panda/core/Int32.h"
-typedef struct org$pandalanguage$pandac$ClassDecl org$pandalanguage$pandac$ClassDecl;
+typedef struct panda$core$Weak panda$core$Weak;
 typedef struct panda$core$String panda$core$String;
 
 typedef struct org$pandalanguage$pandac$ClassDecl$Resolution {
     panda$core$Class* $class;
     panda$core$Int32 refCount;
-    org$pandalanguage$pandac$ClassDecl* value;
+    panda$core$Weak* value;
 } org$pandalanguage$pandac$ClassDecl$Resolution;
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"

@@ -2,6 +2,7 @@ package org.pandalanguage.pandac
 
 @final
 class ChoiceEntry : Symbol {
+    @weak
     def owner:ClassDecl
 
     def doccomment:String?

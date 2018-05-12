@@ -345,7 +345,7 @@ void panda$core$Panda$disableRefCounting() {
     refCount = 0;
 }
 
-void debugPrintObject(void* object) {
+void pandaDebugPrintObject(void* object) {
     char* className = pandaGetCString(((Object*) object)->cl->name);
     printf("%s(%p)\n", className, object);
     pandaFree(className);

@@ -5,21 +5,22 @@ class SymbolTable {
     def symbols := HashMap<String, Symbol>()
 
     @private
-    def compiler:Weak<Compiler> -- FIXME @weak
+    @weak
+    def compiler:Compiler
 
     @private
     def merged := HashMap<String, Symbol>()
 
     @private
-    def parents := Array<SymbolTable>()
+    def parents := Array<Weak<SymbolTable>>()
 
     init(compiler:Compiler) {
-        self.compiler := Weak<Compiler>(compiler)
+        self.compiler := compiler
     }
 
     init(parent:SymbolTable) {
         self.compiler := parent.compiler
-        self.parents.add(parent)
+        self.parents.add(Weak<SymbolTable>(parent))
     }
 
     method add(s:Symbol) {
@@ -49,7 +50,7 @@ class SymbolTable {
                     return
             }
         }
-        compiler.get().error(s.position, "duplicate symbol '\{name}' (previous declaration was at " +
+        compiler.error(s.position, "duplicate symbol '\{name}' (previous declaration was at " +
                 old.position)
     }
 
@@ -59,7 +60,7 @@ class SymbolTable {
             return
         }
         for test in methods {
-            if compiler.get().getOverriddenMethod(test) == m {
+            if compiler.getOverriddenMethod(test) == m {
                 return
             }
         }
@@ -91,7 +92,7 @@ class SymbolTable {
                         }
                         return Methods(methods)
                     when Symbol.Kind.METHOD:
-                        if compiler.get().getOverriddenMethod(symbol->MethodDecl) ==
+                        if compiler.getOverriddenMethod(symbol->MethodDecl) ==
                                 inherited->MethodDecl {
                             return symbol
                         }
@@ -127,7 +128,7 @@ class SymbolTable {
         if result = null {
             result := symbols[name]
             for p in parents {
-                result := merge(result, p[name])
+                result := merge(result, p.get()[name])
             }
             merged[name] := result
         }

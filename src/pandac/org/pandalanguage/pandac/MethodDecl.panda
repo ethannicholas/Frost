@@ -24,6 +24,7 @@ class MethodDecl : Symbol {
         }
     }
 
+    @weak
     def owner:ClassDecl
 
     def doccomment:String?

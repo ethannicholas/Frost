@@ -9,7 +9,6 @@ typedef struct panda$core$Class panda$core$Class;
 typedef struct panda$core$String panda$core$String;
 #include "panda/core/Bit.h"
 typedef struct panda$collections$Array panda$collections$Array;
-typedef struct org$pandalanguage$pandac$ClassDecl org$pandalanguage$pandac$ClassDecl;
 typedef struct org$pandalanguage$pandac$ClassDecl$GenericParameter org$pandalanguage$pandac$ClassDecl$GenericParameter;
 
 typedef struct org$pandalanguage$pandac$Type {
@@ -21,7 +20,6 @@ typedef struct org$pandalanguage$pandac$Type {
     panda$core$Bit resolved;
     panda$core$Int64 typeKind;
     panda$collections$Array* subtypes;
-    org$pandalanguage$pandac$ClassDecl* test;
     org$pandalanguage$pandac$ClassDecl$GenericParameter* parameter;
 } org$pandalanguage$pandac$Type;
 #define PANDA_TYPESONLY
