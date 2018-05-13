@@ -184,4 +184,8 @@ class Panda {
     @class
     @external
     method debugPrint(i:builtin_int64)
+
+    @class
+    @external
+    method debugPrint(o:Object)
 }

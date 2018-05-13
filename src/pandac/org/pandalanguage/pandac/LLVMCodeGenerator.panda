@@ -3076,9 +3076,9 @@ class LLVMCodeGenerator : CodeGenerator {
             def result := getReference(value, out)
             out.printLine("store \{valueType} \{result}, \{valueType}* \{tmp}")
             if inline != null {
-                inline.returns.add(Pair<String, String>(currentBlock, tmp))
                 writeExtraEffects(out)
                 writeFinallies(null, out)
+                inline.returns.add(Pair<String, String>(currentBlock, tmp))
                 out.printLine("br label %\{inline.exitLabel}")
             }
             else {

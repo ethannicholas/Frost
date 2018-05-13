@@ -351,10 +351,14 @@ void pandaDebugPrintObject(void* object) {
     pandaFree(className);
 }
 
+void panda$core$Panda$debugPrint$panda$core$Object(void* object) {
+    pandaDebugPrintObject(object);
+}
+
 void panda$core$Panda$ref$panda$core$Object(Object* o) {
     if (refCount && o && o->refcnt != NO_REFCNT) {
         if (o->refcnt <= 0) {
-            printf("internal error: ref with refcnt = %d\n", o->refcnt);
+            printf("internal error: ref %p with refcnt = %d\n", o, o->refcnt);
             abort();
         }
         ++o->refcnt;
@@ -364,14 +368,15 @@ void panda$core$Panda$ref$panda$core$Object(Object* o) {
 void panda$core$Panda$unref$panda$core$Object(Object* o) {
     if (refCount && o && o->refcnt != NO_REFCNT) {
         if (o->refcnt <= 0) {
-            printf("internal error: unref with refcnt = %d\n", o->refcnt);
+            printf("internal error: unref %p with refcnt = %d\n", o, o->refcnt);
             abort();
         }
         if (o->refcnt == 1) {
             void (*cleanup)() = o->cl->vtable[1]; // FIXME hardcoded index to cleanup
             cleanup(o);
             if (o->refcnt != 1) {
-                printf("internal error: refcount changed to %d during cleanup\n", o->refcnt);
+                printf("internal error: refcount of %p changed to %d during cleanup\n", o,
+                        o->refcnt);
                 abort();
             }
             pandaObjectFree(o);

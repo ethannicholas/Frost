@@ -66,6 +66,11 @@ class IdentityMap<K, V> : Map<K, V>, Equatable<Map<K, V>> {
 
     @override
     method cleanup() {
+        for i in 0 .. bucketCount {
+            if contents[i] != null {
+                Panda.unref(contents[i])
+            }
+        }
         contents.destroy()
     }
 

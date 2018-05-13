@@ -12,7 +12,7 @@ class SymbolTable {
     def merged := HashMap<String, Symbol>()
 
     @private
-    def parents := Array<Weak<SymbolTable>>()
+    def parents := Array<SymbolTable>()
 
     init(compiler:Compiler) {
         self.compiler := compiler
@@ -20,7 +20,7 @@ class SymbolTable {
 
     init(parent:SymbolTable) {
         self.compiler := parent.compiler
-        self.parents.add(Weak<SymbolTable>(parent))
+        self.parents.add(parent)
     }
 
     method add(s:Symbol) {
@@ -128,7 +128,7 @@ class SymbolTable {
         if result = null {
             result := symbols[name]
             for p in parents {
-                result := merge(result, p.get()[name])
+                result := merge(result, p[name])
             }
             merged[name] := result
         }

@@ -710,7 +710,7 @@ class Compiler {
             }
             result := ClassDecl(cl.source, cl.position, aliases, cl.doccomment, annotations,
                     cl.classKind, type.name, supertypes, Array<ClassDecl.GenericParameter>(),
-                    cl.symbolTable.parents[0].get())
+                    cl.symbolTable.parents[0])
             result.external := false
             for m in cl.methods {
                 resolve(m)
@@ -864,13 +864,13 @@ class Compiler {
             if cl.rawSuper != null {
                 def superCl := getClass(cl.rawSuper)
                 if superCl != null {
-                    cl.symbolTable.parents.add(Weak<SymbolTable>(getSymbolTable(superCl)))
+                    cl.symbolTable.parents.add(getSymbolTable(superCl))
                 }
             }
             for rawIntf in cl.rawInterfaces {
                 def intf := getClass(rawIntf)
                 if intf != null {
-                    cl.symbolTable.parents.add(Weak<SymbolTable>(getSymbolTable(intf)))
+                    cl.symbolTable.parents.add(getSymbolTable(intf))
                 }
             }
         }
@@ -934,7 +934,7 @@ class Compiler {
             }
         }
         for p in st.parents {
-            addInheritedMethods(p.get(), name, methods, types)
+            addInheritedMethods(p, name, methods, types)
         }
         if methods.get_count() = 1 {
             return IRNode.METHOD_REFERENCE(position, target, methods[0])
@@ -3152,14 +3152,14 @@ class Compiler {
         for stmt in statements {
             var compiled := compileStatement(stmt)
             if compiled = null {
-                symbolTable := symbols.parents[0].get()
+                symbolTable := symbols.parents[0]
                 return null
             }
             assert compiled != IRNode.UNRESOLVED_METHOD_CALL
             result.add(compiled)
         }
         finallies.pop()
-        symbolTable := symbols.parents[0].get()
+        symbolTable := symbols.parents[0]
         if finalFinally.get_count() > 0 {
             def resultWithFinally := Array<IRNode>() -- FIXME literal
             resultWithFinally.add(IRNode.BLOCK_WITH_FINALLY(position, result.finish(),
@@ -3376,7 +3376,7 @@ class Compiler {
                 return null
             }
         }
-        symbolTable := symbols.parents[0].get()
+        symbolTable := symbols.parents[0]
         loops.pop()
         return result
     }
@@ -3722,7 +3722,7 @@ class Compiler {
                                         return null
                                     }
                                     statements.addAll(blockStatements)
-                                    symbolTable := symbolTable.parents[0].get()
+                                    symbolTable := symbolTable.parents[0]
                                     return IRNode.IF(position, check, statements.finish(), null)
                             }
                     }
@@ -3751,7 +3751,7 @@ class Compiler {
         if statements = null {
             return null
         }
-        symbolTable := symbolTable.parents[0].get()
+        symbolTable := symbolTable.parents[0]
         return IRNode.IF(position, test, statements, null)
     }
 
@@ -3830,7 +3830,7 @@ class Compiler {
         if statements = null {
             return null
         }
-        symbolTable := symbolTable.parents[0].get()
+        symbolTable := symbolTable.parents[0]
         return IRNode.WHEN(position, finalTests.finish(), statements)
     }
 
@@ -3840,7 +3840,7 @@ class Compiler {
         if statements = null {
             return null
         }
-        symbolTable := symbolTable.parents[0].get()
+        symbolTable := symbolTable.parents[0]
         return statements
     }
 
