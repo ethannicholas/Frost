@@ -87,3 +87,8 @@ void panda$io$MemoryOutputStream$cleanup(panda$io$MemoryOutputStream* self) {
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->data));
 }
 
+
+
+
+
+

@@ -34,6 +34,21 @@ class LLVMCodeGenerator : CodeGenerator {
         methods.
         ================================================================================================
         INLINE(InlineContext)
+
+        @override
+        function convert():String {
+            match self {
+                when LOOP(label, breakTarget, continueTarget):
+                    if label != null {
+                        return "LOOP(\{label}, \{breakTarget}, \{continueTarget})"
+                    }
+                    return "LOOP(<null>, \{breakTarget}, \{continueTarget})"
+                when FINALLY(label, map):
+                    return "FINALLY(\{label}, \{map})"
+                when INLINE(context):
+                    return context.convert()
+            }
+        }
     }
 
     class InlineContext {
@@ -158,7 +173,7 @@ class LLVMCodeGenerator : CodeGenerator {
         out.print(wrapperShims.finish())
         out.print(shims.finish())
         out.print(methods.finish())
-        out.cleanup() -- FIXME this should be automatic when memory management is in
+--        out.cleanup() -- FIXME this should be automatic when memory management is in
     }
 
     method nextVar():String {
@@ -2160,7 +2175,7 @@ class LLVMCodeGenerator : CodeGenerator {
         for label in returnLabelMap.keys() {
             out.print(" i16 \{i}, label %\{returnLabelMap[label]}")
             i += 1
-        }    
+        }
         out.printLine(" ]")
         createBlock(fallthrough, out)
         enclosingContexts.pop()
@@ -3050,9 +3065,6 @@ class LLVMCodeGenerator : CodeGenerator {
     -- invokes all currently-pending finally blocks and resumes the same code flow
     method writeFinallies(boundary:EnclosingContext?, out:OutputStream) {
         for c in enclosingContexts {
-            if boundary != null & boundary = c { -- FIXME use 'when c' below for this test
-                break
-            }
             match c {
                 when EnclosingContext.FINALLY(label, returnMap):
                     def returnLabel := nextLabel()
@@ -3061,6 +3073,9 @@ class LLVMCodeGenerator : CodeGenerator {
                     createBlock(returnLabel, out)
                 when EnclosingContext.INLINE:
                     return
+            }
+            if boundary != null & boundary == c {
+                break
             }
         }
     }
@@ -3340,9 +3355,6 @@ class LLVMCodeGenerator : CodeGenerator {
 
     @override
     method write(m:MethodDecl, body:ImmutableArray<IRNode>) {
---        Console.printLine("##### " + m.declaration())
---        Console.printLine(body.join("\n"))
---        Console.printLine("########################")
         assert compiler.currentClass.peek() == m.owner,
                 "compiling \{m.owner.name}.\{m.signature()} from within " +
                 compiler.currentClass.peek().name

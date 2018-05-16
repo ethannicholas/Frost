@@ -32,7 +32,7 @@ extern org$pandalanguage$pandac$ClassDecl$Kind$wrapperclass_type org$pandalangua
 #include "org/pandalanguage/pandac/ClassDecl/Kind.h"
 #include "panda/core/Int64.h"
 
-void org$pandalanguage$pandac$ClassDecl$Kind$init$panda$core$Int64(org$pandalanguage$pandac$ClassDecl$Kind* self, panda$core$Int64 p_rv);
 void org$pandalanguage$pandac$ClassDecl$Kind$cleanup(org$pandalanguage$pandac$ClassDecl$Kind self);
+void org$pandalanguage$pandac$ClassDecl$Kind$init$panda$core$Int64(org$pandalanguage$pandac$ClassDecl$Kind* self, panda$core$Int64 p_rv);
 
 #endif

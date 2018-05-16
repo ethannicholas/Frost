@@ -483,7 +483,6 @@ class Parser {
             }
             next()
             def children := Array<ASTNode>()
-            children.add(result)
             var t := type(false)
             if t = null {
                 if needSpeculativeParse {
@@ -596,21 +595,17 @@ class Parser {
                     pushback(token)
                     def name := getClassName(result)
                     if name != null {
-                        def finalName := MutableString(name)
-                        finalName.append("<")
                         startSpeculative()
                         next()
                         -- no matter what, we might have to backtrack, because we might not find a
                         -- '>', e.g. foo(X < Y)
                         def types := Array<ASTNode>()
-                        types.add(ASTNode.TYPE(result.position(), name))
                         var t := type(false)
                         if t = null {
                             rewind()
                             return result
                         }
                         types.add(t)
-                        finalName.append(t)
                         while checkNext(Token.Kind.COMMA) != null {
                             t := type(false)
                             if t = null {
@@ -618,14 +613,11 @@ class Parser {
                                 return result
                             }
                             types.add(t)
-                            finalName.append(", ")
-                            finalName.append(t)
                         }
                         if expect(Token.Kind.GT, "'>'") = null {
                             rewind()
                             return result
                         }
-                        finalName.append(">")
                         -- ok, we've successfully parsed a type... but we still might be wrong. If
                         -- we have, say, X<Y, Z>, it's possible that was supposed to be two
                         -- comparison expressions (which would include whatever the next token is).
@@ -662,8 +654,7 @@ class Parser {
                         }
                         if shouldAccept {
                             accept()
-                            result := ASTNode.GENERIC_TYPE(result.position(), finalName.finish(),
-                                    types.finish())
+                            result := ASTNode.GENERIC_TYPE(result.position(), name, types.finish())
                             continue
                         }
                         else {

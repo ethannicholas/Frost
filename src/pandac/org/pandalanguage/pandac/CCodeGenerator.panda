@@ -1855,9 +1855,6 @@ class CCodeGenerator : CodeGenerator {
     -- invokes all currently-pending finally blocks and resumes the same code flow
     method writeFinallies(boundary:EnclosingContext?, out:IndentedOutputStream) {
         for c in enclosingContexts {
-            if boundary != null & boundary = c { -- FIXME use 'when c' below for this test
-                break
-            }
             match c {
                 when EnclosingContext.FINALLY(label, returnMap, sourceBlock):
                     def returnLabel := nextLabel()
@@ -1865,6 +1862,9 @@ class CCodeGenerator : CodeGenerator {
                     out.printLine("goto \{label};")
                     returnMap[currentBlock] := Pair<Int, String>(returnMap.get_count(), returnLabel)
                     createBlock(returnLabel, out)
+            }
+            if boundary != null & boundary == c {
+                break
             }
         }
     }
@@ -2086,6 +2086,6 @@ class CCodeGenerator : CodeGenerator {
         strings.clear()
         out.printLine(methodsBuffer.finish())
         methodsBuffer.clear()
-        out.out.cleanup() -- FIXME shouldn't be necessary
+--        out.out.cleanup() -- FIXME shouldn't be necessary
     }
 }

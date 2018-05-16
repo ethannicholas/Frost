@@ -18,9 +18,6 @@ org$pandalanguage$pandac$Variable$Kind$wrapperclass_type org$pandalanguage$panda
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x56\x61\x72\x69\x61\x62\x6c\x65\x2e\x4b\x69\x6e\x64", 38, -745177751005299924, NULL };
 static panda$core$String $s2 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x56\x61\x72\x69\x61\x62\x6c\x65\x2e\x4b\x69\x6e\x64", 38, -745177751005299924, NULL };
 
-void org$pandalanguage$pandac$Variable$Kind$init$panda$core$Int64(org$pandalanguage$pandac$Variable$Kind* self, panda$core$Int64 p_rv) {
-    self->$rawValue = p_rv;
-}
 void org$pandalanguage$pandac$Variable$Kind$cleanup(org$pandalanguage$pandac$Variable$Kind self) {
     org$pandalanguage$pandac$Variable$Kind $match$8_53;
     {
@@ -52,5 +49,8 @@ void org$pandalanguage$pandac$Variable$Kind$cleanup(org$pandalanguage$pandac$Var
         }
         }
     }
+}
+void org$pandalanguage$pandac$Variable$Kind$init$panda$core$Int64(org$pandalanguage$pandac$Variable$Kind* self, panda$core$Int64 p_rv) {
+    self->$rawValue = p_rv;
 }
 

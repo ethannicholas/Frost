@@ -20,14 +20,14 @@ typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name
 extern org$pandalanguage$pandac$IRNode$class_type org$pandalanguage$pandac$IRNode$class;
 
 #ifndef PANDA_TYPESONLY
-typedef struct org$pandalanguage$pandac$IRNode org$pandalanguage$pandac$IRNode;
-#include "panda/core/Int64.h"
-#include "org/pandalanguage/pandac/Position.h"
 typedef struct org$pandalanguage$pandac$Type org$pandalanguage$pandac$Type;
-#include "org/pandalanguage/pandac/parser/Token/Kind.h"
+typedef struct org$pandalanguage$pandac$IRNode org$pandalanguage$pandac$IRNode;
+#include "org/pandalanguage/pandac/Position.h"
 #include "panda/core/Bit.h"
-typedef struct panda$collections$ImmutableArray panda$collections$ImmutableArray;
 typedef struct panda$core$String panda$core$String;
+#include "panda/core/Int64.h"
+#include "org/pandalanguage/pandac/parser/Token/Kind.h"
+typedef struct panda$collections$ImmutableArray panda$collections$ImmutableArray;
 typedef struct org$pandalanguage$pandac$MethodRef org$pandalanguage$pandac$MethodRef;
 typedef struct org$pandalanguage$pandac$ChoiceEntry org$pandalanguage$pandac$ChoiceEntry;
 typedef struct org$pandalanguage$pandac$FieldDecl org$pandalanguage$pandac$FieldDecl;
@@ -36,6 +36,11 @@ typedef struct org$pandalanguage$pandac$FieldDecl org$pandalanguage$pandac$Field
 #include "org/pandalanguage/pandac/Variable/Kind.h"
 typedef struct org$pandalanguage$pandac$Variable org$pandalanguage$pandac$Variable;
 
+org$pandalanguage$pandac$Type* org$pandalanguage$pandac$IRNode$type$R$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$IRNode* self);
+org$pandalanguage$pandac$Position org$pandalanguage$pandac$IRNode$position$R$org$pandalanguage$pandac$Position(org$pandalanguage$pandac$IRNode* self);
+panda$core$Bit org$pandalanguage$pandac$IRNode$hasSideEffects$R$panda$core$Bit(org$pandalanguage$pandac$IRNode* self);
+panda$core$String* org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(org$pandalanguage$pandac$IRNode* self);
+void org$pandalanguage$pandac$IRNode$cleanup(org$pandalanguage$pandac$IRNode* self);
 void org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$IRNode* self, panda$core$Int64 p_rv, org$pandalanguage$pandac$Position p_f0, org$pandalanguage$pandac$IRNode* p_f1, org$pandalanguage$pandac$IRNode* p_f2);
 void org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$parser$Token$Kind$org$pandalanguage$pandac$IRNode(org$pandalanguage$pandac$IRNode* self, panda$core$Int64 p_rv, org$pandalanguage$pandac$Position p_f0, org$pandalanguage$pandac$Type* p_f1, org$pandalanguage$pandac$IRNode* p_f2, org$pandalanguage$pandac$parser$Token$Kind p_f3, org$pandalanguage$pandac$IRNode* p_f4);
 void org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$panda$core$Bit(org$pandalanguage$pandac$IRNode* self, panda$core$Int64 p_rv, org$pandalanguage$pandac$Position p_f0, org$pandalanguage$pandac$Type* p_f1, panda$core$Bit p_f2);
@@ -73,10 +78,5 @@ void org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pan
 void org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Variable$Kind$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$IRNode$GT(org$pandalanguage$pandac$IRNode* self, panda$core$Int64 p_rv, org$pandalanguage$pandac$Position p_f0, org$pandalanguage$pandac$Variable$Kind p_f1, panda$collections$ImmutableArray* p_f2);
 void org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Variable(org$pandalanguage$pandac$IRNode* self, panda$core$Int64 p_rv, org$pandalanguage$pandac$Position p_f0, org$pandalanguage$pandac$Variable* p_f1);
 void org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$String$Q$org$pandalanguage$pandac$IRNode$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$IRNode$GT(org$pandalanguage$pandac$IRNode* self, panda$core$Int64 p_rv, org$pandalanguage$pandac$Position p_f0, panda$core$String* p_f1, org$pandalanguage$pandac$IRNode* p_f2, panda$collections$ImmutableArray* p_f3);
-org$pandalanguage$pandac$Type* org$pandalanguage$pandac$IRNode$type$R$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$IRNode* self);
-org$pandalanguage$pandac$Position org$pandalanguage$pandac$IRNode$position$R$org$pandalanguage$pandac$Position(org$pandalanguage$pandac$IRNode* self);
-panda$core$Bit org$pandalanguage$pandac$IRNode$hasSideEffects$R$panda$core$Bit(org$pandalanguage$pandac$IRNode* self);
-panda$core$String* org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(org$pandalanguage$pandac$IRNode* self);
-void org$pandalanguage$pandac$IRNode$cleanup(org$pandalanguage$pandac$IRNode* self);
 
 #endif

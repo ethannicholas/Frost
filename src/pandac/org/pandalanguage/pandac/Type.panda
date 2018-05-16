@@ -2,7 +2,7 @@ package org.pandalanguage.pandac
 
 @final
 class Type : Symbol, Key<Type> {
-    class Kind {
+    class Kind { -- FIXME choice
         constant CLASS := 10
         constant NULLABLE := 11
         constant BUILTIN_INT := 12
@@ -87,6 +87,26 @@ class Type : Symbol, Key<Type> {
         self.parameter := param
         self.resolved := true
         self.subtypes := null
+    }
+
+    @class
+    function generic(base:Type, arguments:ListView<Type>):Type {
+        var resolved := base.resolved
+        def name := MutableString()
+        name.append(base.name)
+        name.append("<")
+        var separator := ""
+        for a in arguments {
+            resolved &= a.resolved
+            name.append(separator)
+            name.append(a.name)
+            separator := ", "
+        }
+        name.append(">")
+        def subtypes := Array<Type>()
+        subtypes.add(base)
+        subtypes.addAll(arguments)
+        return Type(name.finish(), Kind.GENERIC, base.position, subtypes.finish(), resolved)
     }
 
     function size():Int {
@@ -516,21 +536,12 @@ class Type : Symbol, Key<Type> {
                 }
                 return self
             when Kind.GENERIC:
-                def remapped := Array<Type>()
-                def name := MutableString(subtypes[0].name)
-                name.append("<")
-                var separator := ""
-                for i in 0 .. subtypes.get_count() {
-                    def child := subtypes[i].remap(types)
-                    remapped.add(child)
-                    if i > 0 {
-                        name.append(separator)
-                        name.append(child.name)
-                        separator := ", "
-                    }
+                def base := subtypes[0].remap(types)
+                def remappedArgs := Array<Type>()
+                for i in 1 .. subtypes.get_count() {
+                    remappedArgs.add(subtypes[i].remap(types))
                 }
-                name.append(">")
-                return Type(name.finish(), Kind.GENERIC, position, remapped, resolved)
+                return Type.generic(base, remappedArgs)
             when Kind.NULLABLE:
                 return subtypes[0].remap(types).nullable()
             when Kind.METHOD, Kind.FUNCTION:

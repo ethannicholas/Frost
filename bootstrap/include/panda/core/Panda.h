@@ -41,6 +41,7 @@ double panda$core$Panda$sqrt$builtin_float64$R$builtin_float64(double p_v);
 panda$core$String* panda$core$Panda$align$panda$core$String$panda$core$String$R$panda$core$String(panda$core$String* p_str, panda$core$String* p_specifier);
 panda$core$String* panda$core$Panda$format$panda$core$Bit$panda$core$UInt64$panda$core$UInt64$panda$core$String$R$panda$core$String(panda$core$Bit p_sign, panda$core$UInt64 p_rawValue, panda$core$UInt64 p_mask, panda$core$String* p_fmt);
 void panda$core$Panda$debugPrint$builtin_int64(int64_t p_i);
+void panda$core$Panda$debugPrint$panda$core$Object(panda$core$Object* p_o);
 void panda$core$Panda$init(panda$core$Panda* self);
 void panda$core$Panda$cleanup(panda$core$Panda* self);
 

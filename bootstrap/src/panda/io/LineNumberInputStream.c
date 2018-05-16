@@ -89,3 +89,8 @@ void panda$io$LineNumberInputStream$cleanup(panda$io$LineNumberInputStream* self
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->source));
 }
 
+
+
+
+
+

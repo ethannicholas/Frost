@@ -14,3 +14,8 @@ static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -
 void panda$io$FileOutputStream$init(panda$io$FileOutputStream* self) {
 }
 
+
+
+
+
+

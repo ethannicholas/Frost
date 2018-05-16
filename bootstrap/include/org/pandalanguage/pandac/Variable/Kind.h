@@ -32,7 +32,7 @@ extern org$pandalanguage$pandac$Variable$Kind$wrapperclass_type org$pandalanguag
 #include "org/pandalanguage/pandac/Variable/Kind.h"
 #include "panda/core/Int64.h"
 
-void org$pandalanguage$pandac$Variable$Kind$init$panda$core$Int64(org$pandalanguage$pandac$Variable$Kind* self, panda$core$Int64 p_rv);
 void org$pandalanguage$pandac$Variable$Kind$cleanup(org$pandalanguage$pandac$Variable$Kind self);
+void org$pandalanguage$pandac$Variable$Kind$init$panda$core$Int64(org$pandalanguage$pandac$Variable$Kind* self, panda$core$Int64 p_rv);
 
 #endif

@@ -88,3 +88,8 @@ void panda$collections$Stack$StackIterator$cleanup(panda$collections$Stack$Stack
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->stack));
 }
 
+
+
+
+
+

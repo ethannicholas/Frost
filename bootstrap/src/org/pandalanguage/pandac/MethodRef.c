@@ -110,7 +110,7 @@ void org$pandalanguage$pandac$MethodRef$init$org$pandalanguage$pandac$MethodDecl
     {
         panda$core$Object* $tmp39 = (($fn38) p_value->owner->$class->vtable[2])(p_value->owner);
         $tmp37 = $tmp39;
-        panda$core$String* $tmp41 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(((org$pandalanguage$pandac$Symbol*) ((org$pandalanguage$pandac$ClassDecl*) $tmp37))->name, &$s40);
+        panda$core$String* $tmp41 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(((org$pandalanguage$pandac$ClassDecl*) $tmp37)->name, &$s40);
         $tmp36 = $tmp41;
         panda$core$Object* $tmp45 = (($fn44) p_value->owner->$class->vtable[2])(p_value->owner);
         $tmp43 = $tmp45;

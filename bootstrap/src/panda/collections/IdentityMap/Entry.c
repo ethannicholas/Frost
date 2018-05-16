@@ -51,3 +51,8 @@ void panda$collections$IdentityMap$Entry$cleanup(panda$collections$IdentityMap$E
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->next));
 }
 
+
+
+
+
+

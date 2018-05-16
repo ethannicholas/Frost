@@ -73,3 +73,8 @@ panda$core$String* org$pandalanguage$json$Position$convert$R$panda$core$String(o
 void org$pandalanguage$json$Position$cleanup(org$pandalanguage$json$Position self) {
 }
 
+
+
+
+
+

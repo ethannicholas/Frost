@@ -24,19 +24,11 @@ class Scanner {
                 subtypes.add(convertType(base))
                 return Type(subtypes[0].name + "?", Type.Kind.NULLABLE, position, subtypes, false)
             when ASTNode.GENERIC_TYPE(position, base, args):
-                def subtypes := Array<Type>()
-                def name := MutableString(base)
-                name.append("<")
-                var separator := ""
+                def finalArgs := Array<Type>()
                 for arg in args {
-                    def subtype := convertType(arg)
-                    subtypes.add(subtype)
-                    name.append(separator)
-                    name.append(subtype.name)
-                    separator := ", "
+                    finalArgs.add(convertType(arg))
                 }
-                name.append(">")
-                return Type(name.finish(), Type.Kind.GENERIC, position, subtypes, false)
+                return Type.generic(Type(base, Type.Kind.CLASS, type.position()), finalArgs)
             otherwise:
                 assert false, "unsupported type \{type}"
         }
@@ -379,47 +371,6 @@ class Scanner {
                 fields)
         cl.choiceEntries.add(entry)
         cl.symbolTable.add(entry)
-        var found := false
-        outer: for m in cl.methods {
-            assert m.methodKind = MethodDecl.Kind.INIT
-            if m.parameters.get_count() != fields.get_count() + 1 {
-                continue
-            }
-            assert m.parameters[0].type = Type.Int64()
-            for i in 0 .. fields.get_count() {
-                if fields[i] != m.parameters[i + 1].type {
-                    continue outer
-                }
-            }
-            entry.initMethod := m
-            found := true
-            break
-        }
-        if !found {
-            -- need a synthetic init for this particular combination of parameters
-            def parameters := Array<MethodDecl.Parameter>()
-            parameters.add(MethodDecl.Parameter("rv", Type.Int64()))
-            def statements := Array<ASTNode>()
-            statements.add(ASTNode.BINARY(cl.position,
-                    ASTNode.IDENTIFIER(cl.position, ClassDecl.RAW_VALUE_NAME),
-                    Token.Kind.ASSIGNMENT,
-                    ASTNode.IDENTIFIER(cl.position, "rv")))
-            for i in 0 .. fields.get_count() {
-                parameters.add(MethodDecl.Parameter("f\{i}", fields[i]))
-                statements.add(ASTNode.BINARY(cl.position,
-                        ASTNode.CHOICE_FIELD_REFERENCE(cl.position,
-                            ASTNode.SELF(cl.position),
-                            entry,
-                            i),
-                        Token.Kind.ASSIGNMENT,
-                        ASTNode.IDENTIFIER(cl.position, "f\{i}")))
-            }
-            def synthetic := MethodDecl(cl, cl.position, null, Annotations(), MethodDecl.Kind.INIT,
-                    "init", parameters, Type.Void(), statements.finish())
-            entry.initMethod := synthetic
-            cl.methods.add(synthetic)
-            cl.symbolTable.add(synthetic)
-        }
     }
 
     method scanClass(source:File, aliases:MapView<String, String>, contextName:String,

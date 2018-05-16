@@ -13,3 +13,8 @@ org$pandalanguage$pandac$ErrorReporter$class_type org$pandalanguage$pandac$Error
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x45\x72\x72\x6f\x72\x52\x65\x70\x6f\x72\x74\x65\x72", 38, -3933235778902413905, NULL };
 
 
+
+
+
+
+

@@ -138,3 +138,8 @@ void panda$io$IndentedOutputStream$cleanup(panda$io$IndentedOutputStream* self) 
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->out));
 }
 
+
+
+
+
+

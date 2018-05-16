@@ -25,3 +25,8 @@ void panda$core$Object$cleanup(panda$core$Object* self) {
 void panda$core$Object$init(panda$core$Object* self) {
 }
 
+
+
+
+
+

@@ -44,4 +44,22 @@ class Set<T:Key<T>> : Collection<T> {
     function contains(value:T):Bit {
         return contents.contains(value)
     }
+
+    @override
+    function convert():String {
+        def result := MutableString("[")
+        var separator := ""
+        for v in contents.keys() {
+            result.append(separator)
+            if v != null {
+                result.append(v)
+            }
+            else {
+                result.append("<null>")
+            }
+            separator := ", "
+        }
+        result.append("]")
+        return result.finish()
+    }
 }

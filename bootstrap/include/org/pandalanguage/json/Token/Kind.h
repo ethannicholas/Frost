@@ -32,7 +32,7 @@ extern org$pandalanguage$json$Token$Kind$wrapperclass_type org$pandalanguage$jso
 #include "org/pandalanguage/json/Token/Kind.h"
 #include "panda/core/Int64.h"
 
-void org$pandalanguage$json$Token$Kind$init$panda$core$Int64(org$pandalanguage$json$Token$Kind* self, panda$core$Int64 p_rv);
 void org$pandalanguage$json$Token$Kind$cleanup(org$pandalanguage$json$Token$Kind self);
+void org$pandalanguage$json$Token$Kind$init$panda$core$Int64(org$pandalanguage$json$Token$Kind* self, panda$core$Int64 p_rv);
 
 #endif

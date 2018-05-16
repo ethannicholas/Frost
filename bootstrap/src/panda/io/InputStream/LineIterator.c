@@ -101,3 +101,8 @@ void panda$io$InputStream$LineIterator$cleanup(panda$io$InputStream$LineIterator
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->_next));
 }
 
+
+
+
+
+

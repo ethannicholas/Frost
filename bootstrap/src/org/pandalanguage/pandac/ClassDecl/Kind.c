@@ -18,9 +18,6 @@ org$pandalanguage$pandac$ClassDecl$Kind$wrapperclass_type org$pandalanguage$pand
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x43\x6c\x61\x73\x73\x44\x65\x63\x6c\x2e\x4b\x69\x6e\x64", 39, -2435870461219294496, NULL };
 static panda$core$String $s2 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x43\x6c\x61\x73\x73\x44\x65\x63\x6c\x2e\x4b\x69\x6e\x64", 39, -2435870461219294496, NULL };
 
-void org$pandalanguage$pandac$ClassDecl$Kind$init$panda$core$Int64(org$pandalanguage$pandac$ClassDecl$Kind* self, panda$core$Int64 p_rv) {
-    self->$rawValue = p_rv;
-}
 void org$pandalanguage$pandac$ClassDecl$Kind$cleanup(org$pandalanguage$pandac$ClassDecl$Kind self) {
     org$pandalanguage$pandac$ClassDecl$Kind $match$5_53;
     {
@@ -45,5 +42,8 @@ void org$pandalanguage$pandac$ClassDecl$Kind$cleanup(org$pandalanguage$pandac$Cl
         }
         }
     }
+}
+void org$pandalanguage$pandac$ClassDecl$Kind$init$panda$core$Int64(org$pandalanguage$pandac$ClassDecl$Kind* self, panda$core$Int64 p_rv) {
+    self->$rawValue = p_rv;
 }
 

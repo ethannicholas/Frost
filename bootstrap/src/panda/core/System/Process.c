@@ -35,3 +35,8 @@ void panda$core$System$Process$cleanup(panda$core$System$Process* self) {
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->error));
 }
 
+
+
+
+
+

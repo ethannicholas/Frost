@@ -233,31 +233,36 @@ class Main {
                 System.exit(1)
             }
         }
-        def cg:CodeGenerator
-        match format {
-            when Format.LLVM, Format.EXECUTABLE, Format.OBJECT:
-                cg := LLVMCodeGenerator(triple, outFile.changeExtension(".ll").openOutputStream())
-            when Format.C_HEADER:
-                cg := HCodeGenerator(outFile)
-            when Format.C:
-                cg := CCodeGenerator(outFile)
-            otherwise:
-                assert false
-        }
-        def settings := Compiler.Settings(pandaHome, imports, optimizationLevel, safetyLevel)
-        def compiler := Compiler(cg, settings)
-        for s in sources {
-            for cl in compiler.scan(s) {
-                compiler.markNonExternal(cl)
+        def errorCount:Int
+        {
+            def cg:CodeGenerator
+            match format {
+                when Format.LLVM, Format.EXECUTABLE, Format.OBJECT:
+                    cg := LLVMCodeGenerator(triple,
+                                            outFile.changeExtension(".ll").openOutputStream())
+                when Format.C_HEADER:
+                    cg := HCodeGenerator(outFile)
+                when Format.C:
+                    cg := CCodeGenerator(outFile)
+                otherwise:
+                    assert false
             }
-        }
-        if compiler.errorCount = 0 {
+            def settings := Compiler.Settings(pandaHome, imports, optimizationLevel, safetyLevel)
+            def compiler := Compiler(cg, settings)
             for s in sources {
-                compiler.compile(s)
+                for cl in compiler.scan(s) {
+                    compiler.markNonExternal(cl)
+                }
             }
-            compiler.finish()
+            if compiler.errorCount = 0 {
+                for s in sources {
+                    compiler.compile(s)
+                }
+                compiler.finish()
+            }
+            errorCount := compiler.errorCount
         }
-        if compiler.errorCount = 0 {
+        if errorCount = 0 {
             match format {
                 when Format.EXECUTABLE:
                     def optimized := optimize(outFile.changeExtension(".ll"), optimizationLevel)
@@ -270,11 +275,11 @@ class Main {
             }
         }
         else {
-            if compiler.errorCount = 1 {
+            if errorCount = 1 {
                 Console.printLine("1 error")
             }
             else {
-                Console.printLine("\{compiler.errorCount} errors")
+                Console.printLine("\{errorCount} errors")
             }
             System.exit(1)
         }
@@ -289,7 +294,6 @@ class Main {
 
     @class
     method main(args:ListView<String>) {
-        Panda.disableRefCounting()
         Main().run(args)
     }
 }

@@ -160,3 +160,8 @@ void panda$core$String$UTF32Iterator$cleanup(panda$core$String$UTF32Iterator* se
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->str));
 }
 
+
+
+
+
+

@@ -11,6 +11,7 @@ class ChoiceEntry : Symbol {
 
     def rawValue:Int
 
+    @weak
     def initMethod:MethodDecl? := null
 
     var resolved := false

@@ -18,9 +18,6 @@ org$pandalanguage$pandac$parser$Token$Kind$wrapperclass_type org$pandalanguage$p
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x70\x61\x72\x73\x65\x72\x2e\x54\x6f\x6b\x65\x6e\x2e\x4b\x69\x6e\x64", 42, -5886139380304636838, NULL };
 static panda$core$String $s2 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x70\x61\x72\x73\x65\x72\x2e\x54\x6f\x6b\x65\x6e\x2e\x4b\x69\x6e\x64", 42, -5886139380304636838, NULL };
 
-void org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64(org$pandalanguage$pandac$parser$Token$Kind* self, panda$core$Int64 p_rv) {
-    self->$rawValue = p_rv;
-}
 void org$pandalanguage$pandac$parser$Token$Kind$cleanup(org$pandalanguage$pandac$parser$Token$Kind self) {
     org$pandalanguage$pandac$parser$Token$Kind $match$10_53;
     {
@@ -781,4 +778,12 @@ void org$pandalanguage$pandac$parser$Token$Kind$cleanup(org$pandalanguage$pandac
         }
     }
 }
+void org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64(org$pandalanguage$pandac$parser$Token$Kind* self, panda$core$Int64 p_rv) {
+    self->$rawValue = p_rv;
+}
+
+
+
+
+
 

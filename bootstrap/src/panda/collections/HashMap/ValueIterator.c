@@ -74,3 +74,8 @@ void panda$collections$HashMap$ValueIterator$cleanup(panda$collections$HashMap$V
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->base));
 }
 
+
+
+
+
+

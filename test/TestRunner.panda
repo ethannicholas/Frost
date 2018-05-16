@@ -121,7 +121,7 @@ class TestRunner {
         def input := workingDir.resolve(test + ".in")
         if input.exists() {
             child.input.print(input.readFully())
-            child.input.cleanup()
+            child.input.cleanup() -- FIXME add close and use that
         }
         def childResult := child.output.readFully()
         child.waitFor()
@@ -170,7 +170,7 @@ class TestRunner {
         def input := workingDir.resolve(test + ".in")
         if input.exists() {
             child.input.print(input.readFully())
-            child.input.cleanup()
+            child.input.cleanup() -- FIXME add close and use that
         }
         def childResult := child.output.readFully()
         child.waitFor()

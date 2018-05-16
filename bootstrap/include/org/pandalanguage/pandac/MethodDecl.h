@@ -14,7 +14,6 @@ typedef struct panda$collections$Array panda$collections$Array;
 typedef struct org$pandalanguage$pandac$Type org$pandalanguage$pandac$Type;
 typedef struct panda$collections$ImmutableArray panda$collections$ImmutableArray;
 #include "panda/core/Bit.h"
-typedef struct org$pandalanguage$pandac$MethodDecl org$pandalanguage$pandac$MethodDecl;
 
 typedef struct org$pandalanguage$pandac$MethodDecl {
     panda$core$Class* $class;
@@ -32,7 +31,7 @@ typedef struct org$pandalanguage$pandac$MethodDecl {
     panda$collections$ImmutableArray* compiledBody;
     panda$core$Bit resolved;
     panda$core$Bit overrideKnown;
-    org$pandalanguage$pandac$MethodDecl* overridden;
+    panda$core$Weak* overridden;
 } org$pandalanguage$pandac$MethodDecl;
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"

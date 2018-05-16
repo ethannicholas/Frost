@@ -4,10 +4,9 @@
 #undef PANDA_TYPESONLY
 typedef struct panda$core$Class panda$core$Class;
 #include "panda/core/Int32.h"
-#include "panda/core/Int64.h"
+typedef struct panda$io$File panda$io$File;
 #include "org/pandalanguage/pandac/Position.h"
 typedef struct panda$core$String panda$core$String;
-typedef struct panda$io$File panda$io$File;
 typedef struct panda$collections$MapView panda$collections$MapView;
 typedef struct org$pandalanguage$pandac$Annotations org$pandalanguage$pandac$Annotations;
 #include "org/pandalanguage/pandac/ClassDecl/Kind.h"
@@ -22,10 +21,9 @@ typedef struct panda$collections$HashMap panda$collections$HashMap;
 typedef struct org$pandalanguage$pandac$ClassDecl {
     panda$core$Class* $class;
     panda$core$Int32 refCount;
-    panda$core$Int64 kind;
+    panda$io$File* source;
     org$pandalanguage$pandac$Position position;
     panda$core$String* name;
-    panda$io$File* source;
     panda$collections$MapView* aliases;
     panda$core$String* doccomment;
     org$pandalanguage$pandac$Annotations* annotations;
@@ -49,7 +47,7 @@ typedef struct org$pandalanguage$pandac$ClassDecl {
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"
 #undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[7]; } org$pandalanguage$pandac$ClassDecl$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[6]; } org$pandalanguage$pandac$ClassDecl$class_type;
 extern org$pandalanguage$pandac$ClassDecl$class_type org$pandalanguage$pandac$ClassDecl$class;
 
 #ifndef PANDA_TYPESONLY

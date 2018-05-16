@@ -46,3 +46,8 @@ void org$pandalanguage$pandac$ClassDecl$Resolution$cleanup(org$pandalanguage$pan
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->value));
 }
 
+
+
+
+
+

@@ -196,3 +196,8 @@ panda$core$String* panda$core$Bit$format$panda$core$String$R$panda$core$String(p
 void panda$core$Bit$cleanup(panda$core$Bit self) {
 }
 
+
+
+
+
+

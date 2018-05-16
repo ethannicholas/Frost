@@ -327,27 +327,19 @@ class Compiler {
                 return Type(subtypes[0].name + "?", Type.Kind.NULLABLE, type.position, subtypes, true)
             when Type.Kind.GENERIC:
                 assert type.subtypes.get_count() >= 2
-                def subtypes := Array<Type>()
                 def base := resolve(type.subtypes[0], false)
                 if base = null {
                     return null
                 }
-                subtypes.add(base)
-                def name := MutableString(subtypes[0].name)
-                name.append("<")
-                var separator := ""
+                def args := Array<Type>()
                 for i in 1 .. type.subtypes.get_count() {
                     def resolved := resolve(type.subtypes[i])
                     if resolved = null {
                         return null
                     }
-                    subtypes.add(resolved)
-                    name.append(separator)
-                    name.append(resolved.name)
-                    separator := ", "
+                    args.add(resolved)
                 }
-                name.append(">")
-                def result := Type(name.finish(), Type.Kind.GENERIC, type.position, subtypes, true)
+                def result := Type.generic(base, args)
                 if checkParameters {
                     if !checkGenericParameters(type.position, getClass(result.subtypes[0]),
                             result) {
@@ -431,6 +423,9 @@ class Compiler {
             if cl != null {
                 checkGenericParameters(cl.position, cl, p.bound)
             }
+        }
+        for ce in cl.choiceEntries {
+            resolve(ce)
         }
         symbolTable := old
         currentClass.pop()
@@ -527,6 +522,7 @@ class Compiler {
         }
         c.resolved := true
         if c.fields.get_count() = 0 {
+            createChoiceEntryInit(c)
             return
         }
         currentClass.push(c.owner)
@@ -535,6 +531,7 @@ class Compiler {
         for i in 0 .. c.fields.get_count() {
             c.fields[i] := resolve(c.fields[i])
         }
+        createChoiceEntryInit(c)
         symbolTable := old
         currentClass.pop()
     }
@@ -947,7 +944,6 @@ class Compiler {
     method symbolRef(position:Position, target:IRNode?, s:Symbol, st:SymbolTable):IRNode? {
         match s.kind {
             when Symbol.Kind.ALIAS:
-                assert target = null
                 def cl := getClass(position, s->Alias.fullName)
                 if cl != null {
                     checkGenericParameters(position, cl, cl.type())
@@ -1818,6 +1814,7 @@ class Compiler {
         if m.parameterCount() != args.get_count() {
             error(position, "\{m.value.declaration()} expected \{m.parameterCount()} argument" +
                     "\{m.parameterCount() = 1:|s}, but received \{args.get_count()}")
+            System.crash()
             return null
         }
         def finalArgs := Array<IRNode>()
@@ -1980,6 +1977,49 @@ class Compiler {
         return call(m, args, null)
     }
 
+    method createChoiceEntryInit(entry:ChoiceEntry) {
+        def cl := entry.owner
+        assert entry.resolved
+        outer: for m in cl.methods {
+            if m.methodKind != MethodDecl.Kind.INIT |
+                    m.parameters.get_count() != entry.fields.get_count() + 1 {
+                continue
+            }
+            assert m.parameters[0].type = Type.Int64()
+            for i in 0 .. entry.fields.get_count() {
+                if entry.fields[i] != m.parameters[i + 1].type {
+                    continue outer
+                }
+            }
+            entry.initMethod := m
+            return
+        }
+        -- need a synthetic init for this particular combination of parameters
+        def parameters := Array<MethodDecl.Parameter>()
+        parameters.add(MethodDecl.Parameter("rv", Type.Int64()))
+        def statements := Array<ASTNode>()
+        statements.add(ASTNode.BINARY(cl.position,
+                ASTNode.IDENTIFIER(cl.position, ClassDecl.RAW_VALUE_NAME),
+                Token.Kind.ASSIGNMENT,
+                ASTNode.IDENTIFIER(cl.position, "rv")))
+        for i in 0 .. entry.fields.get_count() {
+            parameters.add(MethodDecl.Parameter("f\{i}", entry.fields[i]))
+            statements.add(ASTNode.BINARY(cl.position,
+                    ASTNode.CHOICE_FIELD_REFERENCE(cl.position,
+                        ASTNode.SELF(cl.position),
+                        entry,
+                        i),
+                    Token.Kind.ASSIGNMENT,
+                    ASTNode.IDENTIFIER(cl.position, "f\{i}")))
+        }
+        def synthetic := MethodDecl(cl, cl.position, null, Annotations(), MethodDecl.Kind.INIT,
+                "init", parameters, Type.Void(), statements.finish())
+        synthetic.resolved := true
+        entry.initMethod := synthetic
+        cl.methods.add(synthetic)
+        cl.symbolTable.add(synthetic)
+    }
+
     method call(m:IRNode, args:ListView<IRNode>, expectedType:Type?):IRNode? {
         match m {
             when IRNode.METHOD_REFERENCE(_, target, mref):
@@ -2047,11 +2087,11 @@ class Compiler {
                     }
                     finalArgs.add(arg)
                 }
-                resolve(ce.initMethod)
+                def initMethod := ce.initMethod
                 def owner := IRNode.TYPE_REFERENCE(m.position(), ce.owner.type())
                 def initCall := call(m.position(),
                         IRNode.CONSTRUCTED_OBJECT(m.position(), ce.owner.type()),
-                        MethodRef(ce.initMethod, Array<Type>()), finalArgs) -- FIXME literal
+                        MethodRef(initMethod, Array<Type>()), finalArgs) -- FIXME literal
                 var construct := IRNode.CONSTRUCT(m.position(), ce.owner.type(), initCall)
                 if isRefCounted(ce.owner.type()) {
                     reusedValueCount += 1
@@ -2985,22 +3025,11 @@ class Compiler {
         def type:Type
         def cl := currentClass.peek()
         if cl.parameters.get_count() > 0 {
-            def subtypes := Array<Type>()
-            subtypes.add(cl.type())
-            def name := MutableString(cl.name)
-            name.append("<")
-            var separator := ""
+            def args := Array<Type>()
             for p in cl.parameters {
-                def pType := Array<Type>() -- FIXME literal
-                pType.add(p.bound)
-                def pName := "\{cl.name}.\{p.name}"
-                name.append(separator)
-                name.append(pName)
-                subtypes.add(Type(p))
-                separator := ", "
+                args.add(Type(p))
             }
-            name.append(">")
-            type := Type(name.finish(), Type.Kind.GENERIC, position, subtypes, true)
+            type := Type.generic(cl.type(), args)
         }
         else {
             type := cl.type()

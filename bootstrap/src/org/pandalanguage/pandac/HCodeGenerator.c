@@ -421,7 +421,7 @@ panda$core$String* org$pandalanguage$pandac$HCodeGenerator$getRelativePath$org$p
     panda$core$String* $tmp73;
     panda$core$String* $tmp74;
     panda$core$String* $tmp75;
-    panda$core$String* $tmp78 = panda$core$String$replace$panda$core$String$panda$core$String$R$panda$core$String(((org$pandalanguage$pandac$Symbol*) p_cl)->name, &$s76, &$s77);
+    panda$core$String* $tmp78 = panda$core$String$replace$panda$core$String$panda$core$String$R$panda$core$String(p_cl->name, &$s76, &$s77);
     $tmp75 = $tmp78;
     panda$core$String* $tmp81 = panda$core$String$replace$panda$core$String$panda$core$String$R$panda$core$String($tmp75, &$s79, &$s80);
     $tmp74 = $tmp81;
@@ -1191,7 +1191,7 @@ void org$pandalanguage$pandac$HCodeGenerator$start$org$pandalanguage$pandac$Clas
             panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp379));
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp378));
         }
-        panda$core$String* $tmp384 = org$pandalanguage$pandac$HCodeGenerator$escapeName$panda$core$String$R$panda$core$String(self, ((org$pandalanguage$pandac$Symbol*) p_cl)->name);
+        panda$core$String* $tmp384 = org$pandalanguage$pandac$HCodeGenerator$escapeName$panda$core$String$R$panda$core$String(self, p_cl->name);
         $tmp383 = $tmp384;
         panda$core$String* $tmp385 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s382, $tmp383);
         $tmp381 = $tmp385;
@@ -1322,7 +1322,7 @@ void org$pandalanguage$pandac$HCodeGenerator$start$org$pandalanguage$pandac$Clas
             }
             $l458:;
         }
-        panda$core$Bit $tmp460 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit(((org$pandalanguage$pandac$Symbol*) p_cl)->name, &$s459);
+        panda$core$Bit $tmp460 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit(p_cl->name, &$s459);
         if ($tmp460.value) {
         {
             (($fn462) ((panda$io$OutputStream*) self->types)->$class->vtable[19])(((panda$io$OutputStream*) self->types), &$s461);
@@ -1331,7 +1331,7 @@ void org$pandalanguage$pandac$HCodeGenerator$start$org$pandalanguage$pandac$Clas
         }
         panda$core$Int64 $tmp465 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(self->types->level, ((panda$core$Int64) { 1 }));
         self->types->level = $tmp465;
-        panda$core$String* $tmp470 = org$pandalanguage$pandac$HCodeGenerator$escapeName$panda$core$String$R$panda$core$String(self, ((org$pandalanguage$pandac$Symbol*) p_cl)->name);
+        panda$core$String* $tmp470 = org$pandalanguage$pandac$HCodeGenerator$escapeName$panda$core$String$R$panda$core$String(self, p_cl->name);
         $tmp469 = $tmp470;
         panda$core$String* $tmp471 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s468, $tmp469);
         $tmp467 = $tmp471;
@@ -1382,7 +1382,7 @@ void org$pandalanguage$pandac$HCodeGenerator$start$org$pandalanguage$pandac$Clas
         $tmp504 = $tmp520;
         panda$core$String* $tmp521 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp483, $tmp504);
         $tmp482 = $tmp521;
-        panda$core$String* $tmp525 = org$pandalanguage$pandac$HCodeGenerator$escapeName$panda$core$String$R$panda$core$String(self, ((org$pandalanguage$pandac$Symbol*) p_cl)->name);
+        panda$core$String* $tmp525 = org$pandalanguage$pandac$HCodeGenerator$escapeName$panda$core$String$R$panda$core$String(self, p_cl->name);
         $tmp524 = $tmp525;
         panda$core$String* $tmp526 = panda$core$String$convert$R$panda$core$String($tmp524);
         $tmp523 = $tmp526;
@@ -1410,13 +1410,13 @@ void org$pandalanguage$pandac$HCodeGenerator$start$org$pandalanguage$pandac$Clas
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp488));
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp489));
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp490));
-        panda$core$String* $tmp537 = org$pandalanguage$pandac$HCodeGenerator$escapeName$panda$core$String$R$panda$core$String(self, ((org$pandalanguage$pandac$Symbol*) p_cl)->name);
+        panda$core$String* $tmp537 = org$pandalanguage$pandac$HCodeGenerator$escapeName$panda$core$String$R$panda$core$String(self, p_cl->name);
         $tmp536 = $tmp537;
         panda$core$String* $tmp538 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s535, $tmp536);
         $tmp534 = $tmp538;
         panda$core$String* $tmp540 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp534, &$s539);
         $tmp533 = $tmp540;
-        panda$core$String* $tmp542 = org$pandalanguage$pandac$HCodeGenerator$escapeName$panda$core$String$R$panda$core$String(self, ((org$pandalanguage$pandac$Symbol*) p_cl)->name);
+        panda$core$String* $tmp542 = org$pandalanguage$pandac$HCodeGenerator$escapeName$panda$core$String$R$panda$core$String(self, p_cl->name);
         $tmp541 = $tmp542;
         panda$core$String* $tmp543 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp533, $tmp541);
         $tmp532 = $tmp543;
@@ -1437,7 +1437,7 @@ void org$pandalanguage$pandac$HCodeGenerator$start$org$pandalanguage$pandac$Clas
         {
             int $tmp553;
             {
-                panda$core$String* $tmp558 = org$pandalanguage$pandac$HCodeGenerator$escapeName$panda$core$String$R$panda$core$String(self, ((org$pandalanguage$pandac$Symbol*) p_cl)->name);
+                panda$core$String* $tmp558 = org$pandalanguage$pandac$HCodeGenerator$escapeName$panda$core$String$R$panda$core$String(self, p_cl->name);
                 $tmp557 = $tmp558;
                 panda$core$String* $tmp559 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s556, $tmp557);
                 $tmp555 = $tmp559;
@@ -1466,7 +1466,7 @@ void org$pandalanguage$pandac$HCodeGenerator$start$org$pandalanguage$pandac$Clas
                 panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp571));
                 panda$core$Int64 $tmp578 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(self->types->level, ((panda$core$Int64) { 1 }));
                 self->types->level = $tmp578;
-                panda$core$String* $tmp583 = org$pandalanguage$pandac$HCodeGenerator$escapeName$panda$core$String$R$panda$core$String(self, ((org$pandalanguage$pandac$Symbol*) p_cl)->name);
+                panda$core$String* $tmp583 = org$pandalanguage$pandac$HCodeGenerator$escapeName$panda$core$String$R$panda$core$String(self, p_cl->name);
                 $tmp582 = $tmp583;
                 panda$core$String* $tmp584 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s581, $tmp582);
                 $tmp580 = $tmp584;
@@ -1476,7 +1476,7 @@ void org$pandalanguage$pandac$HCodeGenerator$start$org$pandalanguage$pandac$Clas
                 panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp579));
                 panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp580));
                 panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp582));
-                panda$core$String* $tmp592 = org$pandalanguage$pandac$HCodeGenerator$escapeName$panda$core$String$R$panda$core$String(self, ((org$pandalanguage$pandac$Symbol*) p_cl)->name);
+                panda$core$String* $tmp592 = org$pandalanguage$pandac$HCodeGenerator$escapeName$panda$core$String$R$panda$core$String(self, p_cl->name);
                 $tmp591 = $tmp592;
                 panda$core$String* $tmp593 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s590, $tmp591);
                 $tmp589 = $tmp593;
@@ -1488,7 +1488,7 @@ void org$pandalanguage$pandac$HCodeGenerator$start$org$pandalanguage$pandac$Clas
                 panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp591));
                 panda$core$Int64 $tmp597 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->types->level, ((panda$core$Int64) { 1 }));
                 self->types->level = $tmp597;
-                panda$core$String* $tmp601 = org$pandalanguage$pandac$HCodeGenerator$escapeName$panda$core$String$R$panda$core$String(self, ((org$pandalanguage$pandac$Symbol*) p_cl)->name);
+                panda$core$String* $tmp601 = org$pandalanguage$pandac$HCodeGenerator$escapeName$panda$core$String$R$panda$core$String(self, p_cl->name);
                 $tmp600 = $tmp601;
                 panda$core$String* $tmp602 = panda$core$String$convert$R$panda$core$String($tmp600);
                 $tmp599 = $tmp602;
@@ -1501,7 +1501,7 @@ void org$pandalanguage$pandac$HCodeGenerator$start$org$pandalanguage$pandac$Clas
                 (($fn607) ((panda$io$OutputStream*) self->types)->$class->vtable[19])(((panda$io$OutputStream*) self->types), &$s606);
                 panda$core$Int64 $tmp608 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(self->types->level, ((panda$core$Int64) { 1 }));
                 self->types->level = $tmp608;
-                panda$core$String* $tmp613 = org$pandalanguage$pandac$HCodeGenerator$escapeName$panda$core$String$R$panda$core$String(self, ((org$pandalanguage$pandac$Symbol*) p_cl)->name);
+                panda$core$String* $tmp613 = org$pandalanguage$pandac$HCodeGenerator$escapeName$panda$core$String$R$panda$core$String(self, p_cl->name);
                 $tmp612 = $tmp613;
                 panda$core$String* $tmp614 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s611, $tmp612);
                 $tmp610 = $tmp614;
@@ -1550,7 +1550,7 @@ void org$pandalanguage$pandac$HCodeGenerator$start$org$pandalanguage$pandac$Clas
                 $tmp640 = $tmp651;
                 panda$core$String* $tmp652 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp636, $tmp640);
                 $tmp635 = $tmp652;
-                panda$core$String* $tmp656 = org$pandalanguage$pandac$HCodeGenerator$escapeName$panda$core$String$R$panda$core$String(self, ((org$pandalanguage$pandac$Symbol*) p_cl)->name);
+                panda$core$String* $tmp656 = org$pandalanguage$pandac$HCodeGenerator$escapeName$panda$core$String$R$panda$core$String(self, p_cl->name);
                 $tmp655 = $tmp656;
                 panda$core$String* $tmp657 = panda$core$String$convert$R$panda$core$String($tmp655);
                 $tmp654 = $tmp657;
@@ -1568,13 +1568,13 @@ void org$pandalanguage$pandac$HCodeGenerator$start$org$pandalanguage$pandac$Clas
                 panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp641));
                 panda$core$Panda$unref$panda$core$Object($tmp643);
                 panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp636));
-                panda$core$String* $tmp667 = org$pandalanguage$pandac$HCodeGenerator$escapeName$panda$core$String$R$panda$core$String(self, ((org$pandalanguage$pandac$Symbol*) p_cl)->name);
+                panda$core$String* $tmp667 = org$pandalanguage$pandac$HCodeGenerator$escapeName$panda$core$String$R$panda$core$String(self, p_cl->name);
                 $tmp666 = $tmp667;
                 panda$core$String* $tmp668 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s665, $tmp666);
                 $tmp664 = $tmp668;
                 panda$core$String* $tmp670 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp664, &$s669);
                 $tmp663 = $tmp670;
-                panda$core$String* $tmp674 = org$pandalanguage$pandac$HCodeGenerator$escapeName$panda$core$String$R$panda$core$String(self, ((org$pandalanguage$pandac$Symbol*) p_cl)->name);
+                panda$core$String* $tmp674 = org$pandalanguage$pandac$HCodeGenerator$escapeName$panda$core$String$R$panda$core$String(self, p_cl->name);
                 $tmp673 = $tmp674;
                 panda$core$String* $tmp675 = panda$core$String$convert$R$panda$core$String($tmp673);
                 $tmp672 = $tmp675;

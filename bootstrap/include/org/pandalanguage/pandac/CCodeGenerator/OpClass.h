@@ -32,7 +32,7 @@ extern org$pandalanguage$pandac$CCodeGenerator$OpClass$wrapperclass_type org$pan
 #include "org/pandalanguage/pandac/CCodeGenerator/OpClass.h"
 #include "panda/core/Int64.h"
 
-void org$pandalanguage$pandac$CCodeGenerator$OpClass$init$panda$core$Int64(org$pandalanguage$pandac$CCodeGenerator$OpClass* self, panda$core$Int64 p_rv);
 void org$pandalanguage$pandac$CCodeGenerator$OpClass$cleanup(org$pandalanguage$pandac$CCodeGenerator$OpClass self);
+void org$pandalanguage$pandac$CCodeGenerator$OpClass$init$panda$core$Int64(org$pandalanguage$pandac$CCodeGenerator$OpClass* self, panda$core$Int64 p_rv);
 
 #endif

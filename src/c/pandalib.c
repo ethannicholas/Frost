@@ -359,7 +359,7 @@ void panda$core$Panda$ref$panda$core$Object(Object* o) {
     if (refCount && o && o->refcnt != NO_REFCNT) {
         if (o->refcnt <= 0) {
             printf("internal error: ref %p with refcnt = %d\n", o, o->refcnt);
-            abort();
+//            abort();
         }
         ++o->refcnt;
     }
@@ -369,7 +369,7 @@ void panda$core$Panda$unref$panda$core$Object(Object* o) {
     if (refCount && o && o->refcnt != NO_REFCNT) {
         if (o->refcnt <= 0) {
             printf("internal error: unref %p with refcnt = %d\n", o, o->refcnt);
-            abort();
+//            abort();
         }
         if (o->refcnt == 1) {
             void (*cleanup)() = o->cl->vtable[1]; // FIXME hardcoded index to cleanup

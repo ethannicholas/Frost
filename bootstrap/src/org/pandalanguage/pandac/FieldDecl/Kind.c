@@ -18,9 +18,6 @@ org$pandalanguage$pandac$FieldDecl$Kind$wrapperclass_type org$pandalanguage$pand
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x46\x69\x65\x6c\x64\x44\x65\x63\x6c\x2e\x4b\x69\x6e\x64", 39, 8609681886220303398, NULL };
 static panda$core$String $s2 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x46\x69\x65\x6c\x64\x44\x65\x63\x6c\x2e\x4b\x69\x6e\x64", 39, 8609681886220303398, NULL };
 
-void org$pandalanguage$pandac$FieldDecl$Kind$init$panda$core$Int64(org$pandalanguage$pandac$FieldDecl$Kind* self, panda$core$Int64 p_rv) {
-    self->$rawValue = p_rv;
-}
 void org$pandalanguage$pandac$FieldDecl$Kind$cleanup(org$pandalanguage$pandac$FieldDecl$Kind self) {
     org$pandalanguage$pandac$FieldDecl$Kind $match$5_53;
     {
@@ -53,4 +50,12 @@ void org$pandalanguage$pandac$FieldDecl$Kind$cleanup(org$pandalanguage$pandac$Fi
         }
     }
 }
+void org$pandalanguage$pandac$FieldDecl$Kind$init$panda$core$Int64(org$pandalanguage$pandac$FieldDecl$Kind* self, panda$core$Int64 p_rv) {
+    self->$rawValue = p_rv;
+}
+
+
+
+
+
 

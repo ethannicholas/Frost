@@ -162,6 +162,11 @@ class IdentityMap<K, V> : Map<K, V>, Equatable<Map<K, V>> {
     method clear() {
         changeCount += 1
         _count := 0
+        for i in 0 .. bucketCount {
+            if contents[i] != null {
+                Panda.unref(contents[i])
+            }
+        }
         contents.destroy()
         bucketCount := DEFAULT_BUCKET_COUNT
         contents := Pointer<Entry<K, V>?>.alloc(bucketCount)
@@ -193,6 +198,12 @@ class IdentityMap<K, V> : Map<K, V>, Equatable<Map<K, V>> {
                     e := e.next
                 }
             }
+            for i in 0 .. oldBucketCount {
+                if oldContents[i] != null {
+                    Panda.unref(oldContents[i])
+                }
+            }
+            oldContents.destroy()
         }
     }
 

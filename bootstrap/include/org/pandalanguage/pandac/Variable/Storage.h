@@ -32,7 +32,7 @@ extern org$pandalanguage$pandac$Variable$Storage$wrapperclass_type org$pandalang
 #include "org/pandalanguage/pandac/Variable/Storage.h"
 #include "panda/core/Int64.h"
 
-void org$pandalanguage$pandac$Variable$Storage$init$panda$core$Int64(org$pandalanguage$pandac$Variable$Storage* self, panda$core$Int64 p_rv);
 void org$pandalanguage$pandac$Variable$Storage$cleanup(org$pandalanguage$pandac$Variable$Storage self);
+void org$pandalanguage$pandac$Variable$Storage$init$panda$core$Int64(org$pandalanguage$pandac$Variable$Storage* self, panda$core$Int64 p_rv);
 
 #endif
