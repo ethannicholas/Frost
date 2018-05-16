@@ -159,6 +159,7 @@ add_executable(bootstrap
     bootstrap/src/org/pandalanguage/pandac/Symbol.c
     bootstrap/src/org/pandalanguage/pandac/SymbolTable.c
     bootstrap/src/org/pandalanguage/pandac/Type.c
+    bootstrap/src/org/pandalanguage/pandac/Type/Kind.c
     bootstrap/src/org/pandalanguage/pandac/Variable.c
     bootstrap/src/org/pandalanguage/pandac/Variable/Kind.c
     bootstrap/src/org/pandalanguage/pandac/Variable/Storage.c

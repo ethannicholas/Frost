@@ -8,8 +8,9 @@ typedef struct panda$core$Class panda$core$Class;
 #include "org/pandalanguage/pandac/Position.h"
 typedef struct panda$core$String panda$core$String;
 #include "panda/core/Bit.h"
+#include "org/pandalanguage/pandac/Type/Kind.h"
 typedef struct panda$collections$Array panda$collections$Array;
-typedef struct org$pandalanguage$pandac$ClassDecl$GenericParameter org$pandalanguage$pandac$ClassDecl$GenericParameter;
+typedef struct panda$core$Weak panda$core$Weak;
 
 typedef struct org$pandalanguage$pandac$Type {
     panda$core$Class* $class;
@@ -18,9 +19,9 @@ typedef struct org$pandalanguage$pandac$Type {
     org$pandalanguage$pandac$Position position;
     panda$core$String* name;
     panda$core$Bit resolved;
-    panda$core$Int64 typeKind;
+    org$pandalanguage$pandac$Type$Kind typeKind;
     panda$collections$Array* subtypes;
-    org$pandalanguage$pandac$ClassDecl$GenericParameter* parameter;
+    panda$core$Weak* parameter;
 } org$pandalanguage$pandac$Type;
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"
@@ -31,9 +32,10 @@ extern org$pandalanguage$pandac$Type$class_type org$pandalanguage$pandac$Type$cl
 #ifndef PANDA_TYPESONLY
 typedef struct org$pandalanguage$pandac$Type org$pandalanguage$pandac$Type;
 typedef struct panda$core$String panda$core$String;
-#include "panda/core/Int64.h"
+#include "org/pandalanguage/pandac/Type/Kind.h"
 #include "org/pandalanguage/pandac/Position.h"
 #include "panda/core/Bit.h"
+#include "panda/core/Int64.h"
 typedef struct panda$collections$ListView panda$collections$ListView;
 typedef struct org$pandalanguage$pandac$ClassDecl$GenericParameter org$pandalanguage$pandac$ClassDecl$GenericParameter;
 #include "panda/core/UInt64.h"
@@ -41,10 +43,10 @@ typedef struct org$pandalanguage$pandac$ClassDecl$GenericParameter org$pandalang
 typedef struct org$pandalanguage$pandac$Compiler org$pandalanguage$pandac$Compiler;
 typedef struct panda$collections$HashMap panda$collections$HashMap;
 
-void org$pandalanguage$pandac$Type$init$panda$core$String$panda$core$Int64$org$pandalanguage$pandac$Position(org$pandalanguage$pandac$Type* self, panda$core$String* p_name, panda$core$Int64 p_typeKind, org$pandalanguage$pandac$Position p_position);
-void org$pandalanguage$pandac$Type$init$panda$core$String$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Bit(org$pandalanguage$pandac$Type* self, panda$core$String* p_name, panda$core$Int64 p_typeKind, org$pandalanguage$pandac$Position p_position, panda$core$Bit p_resolved);
-void org$pandalanguage$pandac$Type$init$panda$core$String$panda$core$Int64$panda$core$Int64(org$pandalanguage$pandac$Type* self, panda$core$String* p_name, panda$core$Int64 p_typeKind, panda$core$Int64 p_size);
-void org$pandalanguage$pandac$Type$init$panda$core$String$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT$panda$core$Bit(org$pandalanguage$pandac$Type* self, panda$core$String* p_name, panda$core$Int64 p_typeKind, org$pandalanguage$pandac$Position p_position, panda$collections$ListView* p_subtypes, panda$core$Bit p_resolved);
+void org$pandalanguage$pandac$Type$init$panda$core$String$org$pandalanguage$pandac$Type$Kind$org$pandalanguage$pandac$Position(org$pandalanguage$pandac$Type* self, panda$core$String* p_name, org$pandalanguage$pandac$Type$Kind p_typeKind, org$pandalanguage$pandac$Position p_position);
+void org$pandalanguage$pandac$Type$init$panda$core$String$org$pandalanguage$pandac$Type$Kind$org$pandalanguage$pandac$Position$panda$core$Bit(org$pandalanguage$pandac$Type* self, panda$core$String* p_name, org$pandalanguage$pandac$Type$Kind p_typeKind, org$pandalanguage$pandac$Position p_position, panda$core$Bit p_resolved);
+void org$pandalanguage$pandac$Type$init$panda$core$String$org$pandalanguage$pandac$Type$Kind$panda$core$Int64(org$pandalanguage$pandac$Type* self, panda$core$String* p_name, org$pandalanguage$pandac$Type$Kind p_typeKind, panda$core$Int64 p_size);
+void org$pandalanguage$pandac$Type$init$panda$core$String$org$pandalanguage$pandac$Type$Kind$org$pandalanguage$pandac$Position$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT$panda$core$Bit(org$pandalanguage$pandac$Type* self, panda$core$String* p_name, org$pandalanguage$pandac$Type$Kind p_typeKind, org$pandalanguage$pandac$Position p_position, panda$collections$ListView* p_subtypes, panda$core$Bit p_resolved);
 void org$pandalanguage$pandac$Type$init$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT(org$pandalanguage$pandac$Type* self, panda$collections$ListView* p_subtypes);
 void org$pandalanguage$pandac$Type$init$org$pandalanguage$pandac$ClassDecl$GenericParameter(org$pandalanguage$pandac$Type* self, org$pandalanguage$pandac$ClassDecl$GenericParameter* p_param);
 org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$generic$org$pandalanguage$pandac$Type$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT$R$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$Type* p_base, panda$collections$ListView* p_arguments);

@@ -2,40 +2,40 @@ package org.pandalanguage.pandac
 
 @final
 class Type : Symbol, Key<Type> {
-    class Kind { -- FIXME choice
-        constant CLASS := 10
-        constant NULLABLE := 11
-        constant BUILTIN_INT := 12
-        constant BUILTIN_UINT := 13
-        constant VOID := 14
-        constant INT_LITERAL := 15
-        constant INVALID := 16
-        constant UNRESOLVED := 17
-        constant BIT_LITERAL := 18
-        constant BUILTIN_BIT := 19
-        constant BUILTIN_FLOAT := 20
-        constant GENERIC := 21
-        constant GENERIC_PARAMETER := 22
-        constant NULL := 23
-        constant FUNCTION := 24
-        constant METHOD := 25
-        constant REAL_LITERAL := 26
+    choice Kind {
+        CLASS
+        NULLABLE
+        BUILTIN_INT
+        BUILTIN_UINT
+        VOID
+        INT_LITERAL
+        INVALID
+        UNRESOLVED
+        BIT_LITERAL
+        BUILTIN_BIT
+        BUILTIN_FLOAT
+        GENERIC
+        GENERIC_PARAMETER
+        NULL
+        FUNCTION
+        METHOD
+        REAL_LITERAL
     }
 
     def resolved:Bit
 
-    def typeKind:Int
+    def typeKind:Kind
 
     def subtypes:Array<Type>?
 
-    def parameter:ClassDecl.GenericParameter? := null
+    @weak
+    def parameter:ClassDecl.GenericParameter?
 
-    init(name:String, typeKind:Int, position:Position) {
+    init(name:String, typeKind:Kind, position:Position) {
         init(name, typeKind, position, false)
     }
 
-    init(name:String, typeKind:Int, position:Position, resolved:Bit) {
-        assert !name.endsWith("?")
+    init(name:String, typeKind:Kind, position:Position, resolved:Bit) {
         self.typeKind := typeKind
         self.position := position
         self.resolved := resolved
@@ -43,7 +43,7 @@ class Type : Symbol, Key<Type> {
         super.init(Symbol.Kind.TYPE, position, name)
     }
 
-    init(name:String, typeKind:Int, size:Int) {
+    init(name:String, typeKind:Kind, size:Int) {
         assert !name.endsWith("?")
         self.typeKind := typeKind
         self.position := Position(size, size)
@@ -52,7 +52,7 @@ class Type : Symbol, Key<Type> {
         super.init(Symbol.Kind.TYPE, position, name)
     }
 
-    init(name:String, typeKind:Int, position:Position, subtypes:ListView<Type>, resolved:Bit) {
+    init(name:String, typeKind:Kind, position:Position, subtypes:ListView<Type>, resolved:Bit) {
         assert (typeKind = Kind.NULLABLE) = name.endsWith("?"),
                 "invalid type: name=\{name}, nullable=\{typeKind = Kind.NULLABLE}"
         assert (typeKind = Kind.GENERIC) = name.endsWith(">"),

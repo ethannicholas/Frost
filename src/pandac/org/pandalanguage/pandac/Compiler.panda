@@ -147,6 +147,7 @@ class Compiler {
         addAlias("panda.core.Char32")
         addAlias("panda.core.Comparable")
         addAlias("panda.core.Equatable")
+        addAlias("panda.core.Formattable")
         addAlias("panda.core.Int8")
         addAlias("panda.core.Int16")
         addAlias("panda.core.Int32")
@@ -2123,7 +2124,7 @@ class Compiler {
             subtypes.add(p.type)
             separator := ", "
         }
-        def kind:Int
+        def kind:Type.Kind
         if m.methodKind = MethodDecl.Kind.FUNCTION {
             typeName.append(")=>(")
             kind := Type.Kind.FUNCTION
@@ -2151,7 +2152,7 @@ class Compiler {
             typeName.append(p.type.name)
             subtypes.add(p.type)
         }
-        def kind:Int
+        def kind:Type.Kind
         if m.methodKind = MethodDecl.Kind.FUNCTION {
             typeName.append(")=>(")
             kind := Type.Kind.FUNCTION
