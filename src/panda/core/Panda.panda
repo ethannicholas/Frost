@@ -8,9 +8,34 @@ Contains utility methods used in the internal implementation of certain language
 @package
 @final
 class Panda {
-    @class
-    @external
-    method disableRefCounting()
+    @private
+    init() {}
+
+    def allocations := HashMap<String, Int>()
+
+    method countAllocation(cl:Class) {
+        var old := allocations[cl.name]
+        if old = null {
+            old := 0
+        }
+        allocations[cl.name] := old + 1
+    }
+
+    method countDeallocation(cl:Class) {
+        var old := allocations[cl.name]
+        if old = null {
+            old := 0
+        }
+        allocations[cl.name] := old - 1
+    }
+
+    method reportAllocations() {
+        for k in allocations.keys() { -- FIXME entries
+            if allocations[k] != 0 {
+                Console.printLine("\{k}: \{allocations[k]}")
+            }
+        }
+    }
 
     @class
     @external

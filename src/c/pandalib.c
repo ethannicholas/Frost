@@ -12,6 +12,9 @@
 
 typedef uint8_t Bit;
 
+#define true 1
+#define false 0
+
 struct Class;
 struct String;
 
@@ -93,6 +96,8 @@ typedef struct Process {
     FileInputStream* error;
 } Process;
 
+extern Class panda$core$Panda$class;
+
 extern Class panda$io$File$class;
 
 extern Class panda$io$FileOutputStream$class;
@@ -105,7 +110,17 @@ extern Class panda$collections$ListView$class;
 
 extern Class panda$core$System$Process$class;
 
+void panda$core$Panda$init(Object*);
+
 void panda$core$Panda$unref$panda$core$Object(Object*);
+
+#if DEBUG_ALLOCS
+void panda$core$Panda$countAllocation$panda$core$Class(Object*, Class*);
+
+void panda$core$Panda$countDeallocation$panda$core$Class(Object*, Class*);
+
+void panda$core$Panda$reportAllocations(Object*);
+#endif
 
 void panda$collections$Array$add$panda$collections$Array$T(Array*, Object*);
 
@@ -115,9 +130,12 @@ void pandaFree(void* ptr);
 
 int allocations = 0;
 
-int refCount = 1;
+#define DEBUG_ALLOCS 0
 
-#define DEBUG_REFS 0
+#if DEBUG_ALLOCS
+Object* panda = NULL;
+Bit debugAllocs = true;
+#endif
 
 void* pandaAlloc(size_t size) {
     allocations++;
@@ -130,13 +148,17 @@ void* pandaZAlloc(size_t size) {
 }
 
 void* pandaObjectAlloc(size_t size, Class* cl) {
-#if DEBUG_REFS
-    if (refCount) {
-        char* name = malloc(cl->name->size + 1);
-        memcpy(name, cl->name->data, cl->name->size);
-        name[cl->name->size] = 0;
-        printf("%s alloc\n", name);
-        free(name);
+#if DEBUG_ALLOCS
+    if (debugAllocs) {
+        debugAllocs = false;
+        if (!panda) {
+            panda = pandaZAlloc(sizeof(Object) + sizeof(void*));
+            panda->cl = &panda$core$Panda$class;
+            panda->refcnt = 1;
+            panda$core$Panda$init(panda);
+        }
+        panda$core$Panda$countAllocation$panda$core$Class(panda, cl);
+        debugAllocs = true;
     }
 #endif
     Object* result = pandaZAlloc(size);
@@ -154,21 +176,16 @@ void* pandaRealloc(void* ptr, size_t oldSize, size_t newSize) {
 }
 
 void pandaFree(void* ptr) {
-    if (allocations <= 0) {
-        abort();
-    }
     allocations--;
-//    free(ptr);
+    free(ptr);
 }
 
 void pandaObjectFree(Object* o) {
-#if DEBUG_REFS
-    if (refCount) {
-        char* name = malloc(o->cl->name->size + 1);
-        memcpy(name, o->cl->name->data, o->cl->name->size);
-        name[o->cl->name->size] = 0;
-        printf("%s free\n", name);
-        free(name);
+#if DEBUG_ALLOCS
+    if (debugAllocs) {
+        debugAllocs = false;
+        panda$core$Panda$countDeallocation$panda$core$Class(panda, o->cl);
+        debugAllocs = true;
     }
 #endif
     o->refcnt = -100000;
@@ -225,10 +242,15 @@ int main(int argc, char** argv) {
     }
     pandaMain(args);
     panda$core$Panda$unref$panda$core$Object((Object*) args);
-    if (refCount && allocations && allocations != 1) {
+#if DEBUG_ALLOCS
+    debugAllocs = false;
+    panda$core$Panda$reportAllocations(panda);
+    panda$core$Panda$unref$panda$core$Object(panda);
+#endif
+    if (allocations && allocations != 1) {
         printf("warning: %d objects were still in memory on exit\n", allocations);
     }
-    else if (refCount && allocations == 1) {
+    else if (allocations == 1) {
         printf("warning: 1 object was still in memory on exit\n");
     }
     return 0;
@@ -340,11 +362,6 @@ void panda$core$Panda$debugPrint$builtin_int64(int64_t x) {
     printf("Debug: %" PRId64 "\n", x);
 }
 
-// #################### FIME REMOVE ####################
-void panda$core$Panda$disableRefCounting() {
-    refCount = 0;
-}
-
 void pandaDebugPrintObject(void* object) {
     char* className = pandaGetCString(((Object*) object)->cl->name);
     printf("%s(%p)\n", className, object);
@@ -356,7 +373,7 @@ void panda$core$Panda$debugPrint$panda$core$Object(void* object) {
 }
 
 void panda$core$Panda$ref$panda$core$Object(Object* o) {
-    if (refCount && o && o->refcnt != NO_REFCNT) {
+    if (o && o->refcnt != NO_REFCNT) {
         if (o->refcnt <= 0) {
             printf("internal error: ref %p with refcnt = %d\n", o, o->refcnt);
 //            abort();
@@ -366,7 +383,7 @@ void panda$core$Panda$ref$panda$core$Object(Object* o) {
 }
 
 void panda$core$Panda$unref$panda$core$Object(Object* o) {
-    if (refCount && o && o->refcnt != NO_REFCNT) {
+    if (o && o->refcnt != NO_REFCNT) {
         if (o->refcnt <= 0) {
             printf("internal error: unref %p with refcnt = %d\n", o, o->refcnt);
 //            abort();
@@ -437,25 +454,22 @@ void panda$io$Console$read$R$panda$core$Char8$Q(NullableChar* result) {
 }
 
 FileInputStream* panda$io$Console$inputStream$R$panda$io$InputStream() {
-    FileInputStream* result = pandaAlloc(sizeof(FileInputStream));
-    result->cl = &panda$io$FileInputStream$class;
-    result->refcnt = 1;
+    FileInputStream* result = pandaObjectAlloc(sizeof(FileInputStream),
+            &panda$io$FileInputStream$class);
     result->file = stdin;
     return result;
 }
 
 FileOutputStream* panda$io$Console$outputStream$R$panda$io$OutputStream() {
-    FileOutputStream* result = pandaAlloc(sizeof(FileOutputStream));
-    result->cl = &panda$io$FileOutputStream$class;
-    result->refcnt = 1;
+    FileOutputStream* result = pandaObjectAlloc(sizeof(FileOutputStream),
+            &panda$io$FileOutputStream$class);
     result->file = stdout;
     return result;
 }
 
 FileOutputStream* panda$io$Console$errorStream$R$panda$io$OutputStream() {
-    FileOutputStream* result = pandaAlloc(sizeof(FileOutputStream));
-    result->cl = &panda$io$FileOutputStream$class;
-    result->refcnt = 1;
+    FileOutputStream* result = pandaObjectAlloc(sizeof(FileOutputStream),
+            &panda$io$FileOutputStream$class);
     result->file = stderr;
     return result;
 }
@@ -463,9 +477,8 @@ FileOutputStream* panda$io$Console$errorStream$R$panda$io$OutputStream() {
 // File
 
 FileInputStream* panda$io$File$openInputStream$R$panda$io$InputStream(File* self) {
-    FileInputStream* result = pandaAlloc(sizeof(FileInputStream));
-    result->cl = &panda$io$FileInputStream$class;
-    result->refcnt = 1;
+    FileInputStream* result = pandaObjectAlloc(sizeof(FileInputStream),
+            &panda$io$FileInputStream$class);
     char* str = pandaGetCString(self->path);
     result->file = fopen(str, "rb");
     if (!result->file) {
@@ -477,9 +490,8 @@ FileInputStream* panda$io$File$openInputStream$R$panda$io$InputStream(File* self
 }
 
 FileOutputStream* panda$io$File$openOutputStream$R$panda$io$OutputStream(File* self) {
-    FileOutputStream* result = pandaAlloc(sizeof(FileOutputStream));
-    result->cl = &panda$io$FileOutputStream$class;
-    result->refcnt = 1;
+    FileOutputStream* result = pandaObjectAlloc(sizeof(FileOutputStream),
+            &panda$io$FileOutputStream$class);
     char* str = pandaGetCString(self->path);
     result->file = fopen(str, "wb");
     if (!result->file) {

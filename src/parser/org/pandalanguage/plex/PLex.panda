@@ -85,6 +85,11 @@ class PLex {
         def lexer := IndentedOutputStream(lexerPath.openOutputStream())
         writeLexer(tokenName, lexerName, lexerPath, positionName, dfa, lexer)
         tokens.clear()
+        for i in 0 ... DFA.END_CHAR.convert()->Int {
+            dfa.transitions[i].destroy()
+        }
+        dfa.transitions.destroy()
+        dfa.accepts.destroy()
     }
 
     function escape(s:String):String {

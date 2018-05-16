@@ -515,7 +515,6 @@ class WriteInts {
         writeConvert(type, out)
         writeFormat(type, out)
         out.printLine("}")
---        out.cleanup()
     }
 
     @class

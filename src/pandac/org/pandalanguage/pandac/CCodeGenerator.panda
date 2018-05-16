@@ -2086,6 +2086,5 @@ class CCodeGenerator : CodeGenerator {
         strings.clear()
         out.printLine(methodsBuffer.finish())
         methodsBuffer.clear()
---        out.out.cleanup() -- FIXME shouldn't be necessary
     }
 }

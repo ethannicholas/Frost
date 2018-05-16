@@ -173,7 +173,6 @@ class LLVMCodeGenerator : CodeGenerator {
         out.print(wrapperShims.finish())
         out.print(shims.finish())
         out.print(methods.finish())
---        out.cleanup() -- FIXME this should be automatic when memory management is in
     }
 
     method nextVar():String {
