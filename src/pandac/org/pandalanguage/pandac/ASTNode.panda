@@ -3,7 +3,7 @@ package org.pandalanguage.pandac
 uses org.pandalanguage.pandac.parser.Token
 
 choice ASTNode {
-    ANNOTATION             (Position, String)
+    ANNOTATION             (Position, String, ASTNode? -* expression *-)
     ASSERT                 (Position, ASTNode, ASTNode?)
     BINARY                 (Position, ASTNode, Token.Kind, ASTNode)
     BIT                    (Position, Bit)
@@ -74,7 +74,7 @@ choice ASTNode {
 
     function position():Position {
         match self {
-            when ANNOTATION(position, _):
+            when ANNOTATION(position, _, _):
                 return position
             when ASSERT(position, _, _):
                 return position
@@ -165,7 +165,10 @@ choice ASTNode {
     @override
     function convert():String {
         match self {
-            when ANNOTATION(_, name):
+            when ANNOTATION(_, name, expr):
+                if expr != null {
+                    return "\{name}(\{expr})"
+                }
                 return name
             when ASSERT(_, test, msg):
                 if msg = null {

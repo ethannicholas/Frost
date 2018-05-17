@@ -49,7 +49,7 @@ panda$core$Object* panda$collections$Stack$StackIterator$next$R$panda$collection
     panda$core$Object* $tmp17;
     int $tmp10;
     {
-        panda$core$Object* $tmp14 = panda$collections$Stack$peek$panda$core$Int64$R$panda$collections$Stack$T(self->stack, self->index);
+        panda$core$Object* $tmp14 = panda$collections$Stack$$IDX$panda$core$Int64$R$panda$collections$Stack$T(self->stack, self->index);
         $tmp13 = $tmp14;
         $tmp12 = $tmp13;
         result11 = $tmp12;

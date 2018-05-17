@@ -5,12 +5,14 @@
 typedef struct panda$core$Class panda$core$Class;
 #include "panda/core/Int32.h"
 #include "panda/core/Int64.h"
+typedef struct panda$collections$Array panda$collections$Array;
 typedef struct panda$core$String panda$core$String;
 
 typedef struct org$pandalanguage$pandac$Annotations {
     panda$core$Class* $class;
     panda$core$Int32 refCount;
     panda$core$Int64 flags;
+    panda$collections$Array* expressions;
 } org$pandalanguage$pandac$Annotations;
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"
@@ -21,11 +23,13 @@ extern org$pandalanguage$pandac$Annotations$class_type org$pandalanguage$pandac$
 #ifndef PANDA_TYPESONLY
 typedef struct org$pandalanguage$pandac$Annotations org$pandalanguage$pandac$Annotations;
 #include "panda/core/Int64.h"
+typedef struct panda$collections$ListView panda$collections$ListView;
 #include "panda/core/Bit.h"
 typedef struct panda$core$String panda$core$String;
 
 void org$pandalanguage$pandac$Annotations$init(org$pandalanguage$pandac$Annotations* self);
 void org$pandalanguage$pandac$Annotations$init$panda$core$Int64(org$pandalanguage$pandac$Annotations* self, panda$core$Int64 p_flags);
+void org$pandalanguage$pandac$Annotations$init$panda$core$Int64$panda$collections$ListView$LTorg$pandalanguage$pandac$Annotations$Expression$GT$Q(org$pandalanguage$pandac$Annotations* self, panda$core$Int64 p_flags, panda$collections$ListView* p_expressions);
 panda$core$Bit org$pandalanguage$pandac$Annotations$isPrivate$R$panda$core$Bit(org$pandalanguage$pandac$Annotations* self);
 panda$core$Bit org$pandalanguage$pandac$Annotations$isProtected$R$panda$core$Bit(org$pandalanguage$pandac$Annotations* self);
 panda$core$Bit org$pandalanguage$pandac$Annotations$isPackage$R$panda$core$Bit(org$pandalanguage$pandac$Annotations* self);

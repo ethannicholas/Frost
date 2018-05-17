@@ -19,6 +19,31 @@ class Compiler {
         }
     }
 
+    class AutoSymbolTable {
+        def compiler:Compiler
+
+        def oldSymbolTable:SymbolTable
+
+        def newSymbolTable:SymbolTable
+
+        init(compiler:Compiler) {
+            init(compiler, SymbolTable(compiler.symbolTable))
+        }
+
+        init(compiler:Compiler, symbolTable:SymbolTable) {
+            self.compiler := compiler
+            self.oldSymbolTable := compiler.symbolTable
+            self.newSymbolTable := symbolTable
+            compiler.symbolTable := symbolTable
+        }
+
+        @override
+        method cleanup() {
+            assert compiler.symbolTable == newSymbolTable
+            compiler.symbolTable := oldSymbolTable
+        }
+    }
+
     constant WEAK_NAME := "panda.core.Weak"
     constant RANGE_NAME := "panda.core.Range"
     constant STEPPED_RANGE_NAME := "panda.core.SteppedRange"
@@ -200,7 +225,7 @@ class Compiler {
     method tryResolveClass(name:String):ClassDecl? {
         def current:ClassDecl?
         if currentClass.get_count() > 0 {
-            current := currentClass.peek()
+            current := currentClass[0]
         }
         else {
             current := null
@@ -984,7 +1009,7 @@ class Compiler {
                     return result
                 }
                 else {
-                    def finalTarget := IRNode.SELF(position, currentClass.peek().type())
+                    def finalTarget := IRNode.SELF(position, currentClass[0].type())
                     return IRNode.FIELD_REFERENCE(position, f.type, finalTarget, f)
                 }
             when Symbol.Kind.CHOICE_ENTRY:
@@ -1825,8 +1850,8 @@ class Compiler {
         }
         if m.value.methodKind = MethodDecl.Kind.INIT {
             if target = null {
-                if currentMethod.peek().methodKind = MethodDecl.Kind.INIT {
-                    finalArgs.add(IRNode.SELF(position, currentClass.peek().type()))
+                if currentMethod[0].methodKind = MethodDecl.Kind.INIT {
+                    finalArgs.add(IRNode.SELF(position, currentClass[0].type()))
                 }
                 else {
                     error(position, "cannot directly call 'init' outside of an init method")
@@ -1838,11 +1863,11 @@ class Compiler {
             }
         }
         else if m.value.isInstance() & target = null {
-            var selfNode := IRNode.SELF(position, currentClass.peek().type())
+            var selfNode := IRNode.SELF(position, currentClass[0].type())
             selfNode := coerce(selfNode, m.value.owner.type())
             assert selfNode != null
             finalArgs.add(selfNode)
-            if !currentMethod.peek().isInstance() {
+            if !currentMethod[0].isInstance() {
                 error(position, "cannot call instance \{m.value.declaration()} from a @class context")
             }
         }
@@ -1956,7 +1981,7 @@ class Compiler {
         }
         def s := getSymbolTable(cl)[name]
         if s = null {
-            if name = "=" | name = "!=" & cl.classKind = ClassDecl.Kind.CHOICE &
+            if (name = "=" | name = "!=") & cl.classKind = ClassDecl.Kind.CHOICE &
                     args.get_count() = 1 {
                 return compileChoiceComparison(resolved, name, args[0])
             }
@@ -2917,8 +2942,8 @@ class Compiler {
                 }
                 return IRNode.UNRESOLVED_IDENTIFIER(position, fullName)
             when IRNode.SUPER:
-                resolve(currentClass.peek())
-                cl := getClass(currentClass.peek().rawSuper)
+                resolve(currentClass[0])
+                cl := getClass(currentClass[0].rawSuper)
             otherwise:
                 if !base.type().isClass() {
                     error(position, "type '\{base.type()}' is not a class")
@@ -3019,12 +3044,12 @@ class Compiler {
     }
 
     method compileSelf(position:Position):IRNode? {
-        if currentMethod.peek().annotations.isClass() {
+        if currentMethod[0].annotations.isClass() {
             error(position, "cannot reference 'self' from a @class method")
             return null
         }
         def type:Type
-        def cl := currentClass.peek()
+        def cl := currentClass[0]
         if cl.parameters.get_count() > 0 {
             def args := Array<Type>()
             for p in cl.parameters {
@@ -3039,11 +3064,11 @@ class Compiler {
     }
 
     method compileSuper(position:Position):IRNode? {
-        if currentMethod.peek().annotations.isClass() {
+        if currentMethod[0].annotations.isClass() {
             error(position, "cannot reference 'super' from a @class method")
             return null
         }
-        def cl := currentClass.peek()
+        def cl := currentClass[0]
         assert cl.resolved
         return IRNode.SUPER(position, cl.rawSuper)
     }
@@ -3499,9 +3524,9 @@ class Compiler {
                 def v := Variable(position, kind, name, type)
                 symbolTable.add(v)
                 if isRefCounted(type) {
-                    finallies.peek().add(compilePandaCall("unref",
+                    finallies[0].add(compilePandaCall("unref",
                                                           IRNode.VARIABLE_REFERENCE(v.position, v)))
-                    finallies.peek().add(IRNode.BINARY(v.position, Type.Void(),
+                    finallies[0].add(IRNode.BINARY(v.position, Type.Void(),
                             IRNode.VARIABLE_REFERENCE(v.position, v), Token.Kind.ASSIGNMENT,
                             IRNode.NULL(v.position, v.type.nullable())))
                 }
@@ -3518,7 +3543,7 @@ class Compiler {
                 def v := Variable(position, kind, name, type)
                 symbolTable.add(v)
                 if isRefCounted(type) {
-                    finallies.peek().add(compilePandaCall("unref",
+                    finallies[0].add(compilePandaCall("unref",
                                                           IRNode.VARIABLE_REFERENCE(v.position, v)))
                 }
                 return CompileTargetResult(IRNode.VARIABLE_REFERENCE(v.position, v), value)
@@ -3604,11 +3629,11 @@ class Compiler {
 
     method compileReturn(position:Position, rawValue:ASTNode?):IRNode? {
         if rawValue != null {
-            if currentMethod.peek().returnType = Type.Void() {
+            if currentMethod[0].returnType = Type.Void() {
                 error(position, "cannot return a value from a method with no return type")
                 return null
             }
-            var value := coerce(compileExpression(rawValue), currentMethod.peek().returnType)
+            var value := coerce(compileExpression(rawValue), currentMethod[0].returnType)
             if value = null {
                 return null
             }
@@ -3621,7 +3646,7 @@ class Compiler {
             }
             return IRNode.RETURN(position, value)
         }
-        if currentMethod.peek().returnType != Type.Void() {
+        if currentMethod[0].returnType != Type.Void() {
             error(position, "expected a return value")
             return null
         }
@@ -4006,6 +4031,119 @@ class Compiler {
         assert false, "unsupported statement: \{s}"
     }
 
+    function getBuiltinBit(expr:IRNode):IRNode {
+        def bit := getClass(Type.Bit())
+        def valueField := bit.symbolTable["value"]->FieldDecl
+        resolve(valueField)
+        return IRNode.FIELD_REFERENCE(expr.position(), Type.BuiltinBit(), expr, valueField)
+    }
+
+    method addPrecondition(body:Array<IRNode>, expr:IRNode) {
+        body.insert(0, IRNode.ASSERT(expr.position(), getBuiltinBit(expr),
+                IRNode.STRING(expr.position(), "precondition failure")))
+    }
+
+    method addAnd(old:IRNode?, new:ASTNode):IRNode? {
+        var compiled := compileExpression(new)
+        if compiled = null {
+            return old
+        }
+        compiled := coerce(compiled, Type.Bit())
+        if compiled = null {
+            return old
+        }
+        if old != null {
+            return coerce(IRNode.BINARY(new.position(), Type.BuiltinBit(), getBuiltinBit(old),
+                    Token.Kind.AND, getBuiltinBit(compiled)), Type.Bit())
+        }
+        return compiled
+    }
+
+    method addOr(old:IRNode?, new:IRNode):IRNode {
+        if old != null {
+            return coerce(IRNode.BINARY(new.position(), Type.BuiltinBit(), getBuiltinBit(old),
+                    Token.Kind.OR, getBuiltinBit(new)), Type.Bit())
+        }
+        return new
+    }
+
+    ================================================================================================
+    Compiles an expression (which was found attached to `owner`) for use within `context`. The
+    expression may reference parameters of `owner`, and these references will be interpreted as if
+    they refer to the corresponding parameters of `context`. For instance, if we have two methods:
+
+        @pre(param.count() > 0)
+        method check(param:Array<Object>)
+
+    and:
+
+        @override
+        method check(arr:Array<Object>)
+
+    where the second method overrides the first, we need to attach the precondition expression to
+    both methods. Since the second `check` method does not have a parameter named `param`, we need
+    to use `compileExpressionInContext` to be able to compile the expression correctly.
+    ================================================================================================
+    @pre(owner.name = context.name & owner.parameters.get_count() = context.parameters.get_count())
+    method compileExpressionInContext(expr:ASTNode, owner:MethodDecl, context:MethodDecl):IRNode? {
+        def symbols := AutoSymbolTable(self)
+        for i in 0 .. owner.parameters.get_count() {
+            symbolTable.add(symbols.oldSymbolTable[context.parameters[i].name],
+                    owner.parameters[i].name)
+        }
+        return compileExpression(expr)
+    }
+
+    ================================================================================================
+    Applies pre/postcondition annotations to the body of a method. The method's raw code is modified
+    to include the pre/postcondition checks it declares and/or inherits.
+    ================================================================================================
+    method processAnnotations(m:MethodDecl, body:ImmutableArray<IRNode>):ImmutableArray<IRNode> {
+        def result := Array<IRNode>(body)
+        var current := m
+        var pre:IRNode? := null
+        loop {
+            if current.annotations.expressions != null {
+                var currentPre:IRNode? := null
+                for ann in current.annotations.expressions {
+                    match ann {
+                        when Annotations.Expression.PRE(expr):
+                            if current == m & m.overridden != null {
+                                error(expr.position(), "cannot use '@pre' in a method which " +
+                                        "overrides another method; did you mean '@preOr'?")
+                            }
+                            if currentPre != null {
+                                error(expr.position(), "found more than one precondition")
+                            }
+                            currentPre := coerce(compileExpressionInContext(expr, current, m),
+                                    Type.Bit())
+                        when Annotations.Expression.PRE_OR(expr):
+                            if current == m & m.overridden = null {
+                                error(expr.position(), "cannot use '@preOr' in a method which " +
+                                        "does not override another method; did you mean '@pre'?")
+                            }
+                            if currentPre != null {
+                                error(expr.position(), "found more than one precondition")
+                            }
+                            currentPre := coerce(compileExpressionInContext(expr, current, m),
+                                    Type.Bit())
+                    }
+                }
+                if currentPre != null {
+                    pre := addOr(pre, currentPre)
+                }
+            }
+            if current.overridden = null {
+                break
+            }
+            current := current.overridden
+        }
+        if pre != null {
+            addPrecondition(result, pre)
+        }
+        return result.finish()
+    }
+
     method compileBody(m:MethodDecl):ImmutableArray<IRNode>? {
         if m.compiledBody != null {
             return m.compiledBody
@@ -4025,7 +4163,7 @@ class Compiler {
         def fieldInitializers:Array<IRNode>? := null
         if m.methodKind = MethodDecl.Kind.INIT {
             fieldInitializers := Array<IRNode>()
-            for f in currentClass.peek().fields {
+            for f in currentClass[0].fields {
                 resolve(f)
                 if !f.annotations.isClass() & f.value != null {
                     def fieldRef := IRNode.FIELD_REFERENCE(m.position, f.type,
@@ -4074,7 +4212,7 @@ class Compiler {
                 def finalBody := Array<IRNode>(compiled)
                 for f in m.owner.fields {
                     resolve(f)
-                    if !f.annotations.isClass() & isRefCounted(f.type) {
+                    if f.type.resolved & !f.annotations.isClass() & isRefCounted(f.type) {
                         def fieldRef := IRNode.FIELD_REFERENCE(Position(), f.type,
                                 IRNode.SELF(Position(), m.owner.type()), f)
                         finalBody.add(compilePandaCall("unref", fieldRef))
@@ -4084,6 +4222,7 @@ class Compiler {
                 inFieldCleanup := false
                 compiled := finalBody.finish()
             }
+            compiled := processAnnotations(m, compiled)
         }
         assert symbolTable == symbols
         symbolTable := old
@@ -4205,7 +4344,7 @@ class Compiler {
     }
 
     method error(position:Position, msg:String) {
-        error(currentClass.peek().source, position, msg)
+        error(currentClass[0].source, position, msg)
     }
 
     method error(file:File, pos:Position, msg:String) {

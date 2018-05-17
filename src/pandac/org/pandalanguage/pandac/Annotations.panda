@@ -17,14 +17,43 @@ class Annotations {
         constant WEAK       := 1 << 12
     }
 
+    choice Expression {
+        PRE(ASTNode)
+        PRE_OR(ASTNode)
+        POST(ASTNode)
+        POST_AND(ASTNode)
+
+        @override
+        function convert():String {
+            match self {
+                when PRE(expr):      return "@pre(\{expr})"
+                when PRE_OR(expr):   return "@preOr(\{expr})"
+                when POST(expr):     return "@post(\{expr})"
+                when POST_AND(expr): return "@postAnd(\{expr})"
+            }
+        }
+    }
+
     def flags:Int
+
+    def expressions:Array<Expression>?
 
     init() {
         init(0)
     }
 
     init(flags:Int) {
+        init(flags, null)
+    }
+
+    init(flags:Int, expressions:ListView<Expression>?) {
         self.flags := flags
+        if expressions != null {
+            self.expressions := Array<Expression>(expressions)
+        }
+        else {
+            self.expressions := null
+        }
     }
 
     function isPrivate():Bit {
@@ -113,6 +142,11 @@ class Annotations {
         }
         if isWeak() {
             result.append("@weak\n")
+        }
+        if expressions != null {
+            for expr in expressions {
+                result.append("\{expr}\n")
+            }
         }
         return result.finish()
     }

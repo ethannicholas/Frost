@@ -20,7 +20,7 @@ caller:
 2. A [Maybe] result. The `Maybe<X>` type contains either an instance of the
    type `X`, or an `Error`. The caller can inspect this object to retrieve the
    result or examine the `Error`.
-3. The return type `Error?`. When a method does not need to return any
+3. The return type `Error?`. When a method does not normally need to return any
    information, but still might fail, `Error?` is the right return type.
    `File.delete()` is a good example of this sort of method. It is a
    compile-time error for a program to call a method which returns `Error?` and

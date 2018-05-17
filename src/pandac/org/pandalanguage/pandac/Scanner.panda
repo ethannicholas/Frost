@@ -36,9 +36,11 @@ class Scanner {
 
     method convertAnnotations(a:ImmutableArray<ASTNode>):Annotations {
         var flags := 0
+        var expressions:Array<Annotations.Expression>? := null
         for c in a {
             match c {
-                when ASTNode.ANNOTATION(position, text):
+                when ASTNode.ANNOTATION(position, text, rawExpr):
+                    var expr := rawExpr
                     match text {
                         when "@private":    flags ||= Annotations.Flag.PRIVATE
                         when "@protected":  flags ||= Annotations.Flag.PROTECTED
@@ -52,14 +54,41 @@ class Scanner {
                         when "@inline":     flags ||= Annotations.Flag.INLINE
                         when "@specialize": flags ||= Annotations.Flag.SPECIALIZE
                         when "@weak":       flags ||= Annotations.Flag.WEAK
+                        when "@pre":
+                            if expressions = null {
+                                expressions := Array<Annotations.Expression>()
+                            }
+                            expressions.add(Annotations.Expression.PRE(expr))
+                            expr := null
+                        when "@preOr":
+                            if expressions = null {
+                                expressions := Array<Annotations.Expression>()
+                            }
+                            expressions.add(Annotations.Expression.PRE_OR(expr))
+                            expr := null
+                        when "@post":
+                            if expressions = null {
+                                expressions := Array<Annotations.Expression>()
+                            }
+                            expressions.add(Annotations.Expression.POST(expr))
+                            expr := null
+                        when "@postAnd":
+                            if expressions = null {
+                                expressions := Array<Annotations.Expression>()
+                            }
+                            expressions.add(Annotations.Expression.POST_AND(expr))
+                            expr := null
                         otherwise:
                             compiler.error(position, "unrecognized annotation '\{text}'")
+                    }
+                    if expr != null {
+                        compiler.error(position, "'\{text}' annotation does not accept parameters")
                     }
                 otherwise:
                     assert false
             }
         }
-        return Annotations(flags)
+        return Annotations(flags, expressions)
     }
 
     method scanFields(owner:ClassDecl, position:Position, rawDoccomment:ASTNode?,

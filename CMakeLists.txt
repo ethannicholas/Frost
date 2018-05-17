@@ -120,8 +120,10 @@ add_library(c_panda
 add_executable(bootstrap
     bootstrap/src/org/pandalanguage/pandac/Alias.c
     bootstrap/src/org/pandalanguage/pandac/Annotations.c
+    bootstrap/src/org/pandalanguage/pandac/Annotations/Expression.c
     bootstrap/src/org/pandalanguage/pandac/ASTNode.c
     bootstrap/src/org/pandalanguage/pandac/CCodeGenerator.c
+    bootstrap/src/org/pandalanguage/pandac/CCodeGenerator/AutoContext.c
     bootstrap/src/org/pandalanguage/pandac/CCodeGenerator/ClassConstant.c
     bootstrap/src/org/pandalanguage/pandac/CCodeGenerator/EnclosingContext.c
     bootstrap/src/org/pandalanguage/pandac/CCodeGenerator/MethodShim.c
@@ -142,6 +144,7 @@ add_executable(bootstrap
     bootstrap/src/org/pandalanguage/pandac/HCodeGenerator.c
     bootstrap/src/org/pandalanguage/pandac/IRNode.c
     bootstrap/src/org/pandalanguage/pandac/LLVMCodeGenerator.c
+    bootstrap/src/org/pandalanguage/pandac/LLVMCodeGenerator/AutoContext.c
     bootstrap/src/org/pandalanguage/pandac/LLVMCodeGenerator/ClassConstant.c
     bootstrap/src/org/pandalanguage/pandac/LLVMCodeGenerator/InlineContext.c
     bootstrap/src/org/pandalanguage/pandac/LLVMCodeGenerator/EnclosingContext.c

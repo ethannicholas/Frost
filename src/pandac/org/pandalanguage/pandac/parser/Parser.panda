@@ -640,7 +640,7 @@ class Parser {
                         -- follows it, because there is no way it can resolve to multiple
                         -- expressions.
                         def shouldAccept:Bit
-                        if commaSeparatedExpressionContext.peek() {
+                        if commaSeparatedExpressionContext[0] {
                             match peek().kind {
                                 when Token.Kind.DOT, Token.Kind.LPAREN, Token.Kind.COMMA,
                                         Token.Kind.CAST:
@@ -1609,16 +1609,32 @@ class Parser {
     }
 
     ================================================================================================
-    annotations = ANNOTATION*
+    annotation = ANNOTATION (LPAREN expression RPAREN)?
+    ================================================================================================
+    method annotation():ASTNode? {
+        def a := expect(Token.Kind.ANNOTATION, "an annotation")
+        def expr:ASTNode?
+        if checkNext(Token.Kind.LPAREN) != null {
+            expr := expression()
+            if expr = null {
+                return null
+            }
+            expect(Token.Kind.RPAREN, "')'")
+        }
+        return ASTNode.ANNOTATION(a.position, text(a), expr)
+    }
+
+    ================================================================================================
+    annotations = annotation*
     ================================================================================================
     method annotations():ImmutableArray<ASTNode> {
         def result := Array<ASTNode>()
-        loop {
-            def next := checkNext(Token.Kind.ANNOTATION)
-            if next = null {
+        while peek().kind = Token.Kind.ANNOTATION {
+            def a := annotation()
+            if a = null {
                 break
             }
-            result.add(ASTNode.ANNOTATION(next.position, text(next)))
+            result.add(a)
         }
         return result.finish()
     }

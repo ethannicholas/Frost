@@ -44,7 +44,7 @@ typedef struct org$pandalanguage$pandac$Compiler {
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"
 #undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[127]; } org$pandalanguage$pandac$Compiler$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[129]; } org$pandalanguage$pandac$Compiler$class_type;
 extern org$pandalanguage$pandac$Compiler$class_type org$pandalanguage$pandac$Compiler$class;
 
 #ifndef PANDA_TYPESONLY
@@ -195,6 +195,8 @@ panda$core$Bit org$pandalanguage$pandac$Compiler$isConstantInt$org$pandalanguage
 panda$core$UInt64 org$pandalanguage$pandac$Compiler$getConstantInt$org$pandalanguage$pandac$IRNode$R$panda$core$UInt64(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$IRNode* p_expr);
 org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileMatch$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$Q$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position p_position, org$pandalanguage$pandac$ASTNode* p_value, panda$collections$ImmutableArray* p_whens, panda$collections$ImmutableArray* p_other);
 org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileStatement$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$ASTNode* p_s);
+void org$pandalanguage$pandac$Compiler$addPrecondition$panda$collections$Array$LTorg$pandalanguage$pandac$IRNode$GT$org$pandalanguage$pandac$ASTNode(org$pandalanguage$pandac$Compiler* self, panda$collections$Array* p_body, org$pandalanguage$pandac$ASTNode* p_expr);
+panda$collections$ImmutableArray* org$pandalanguage$pandac$Compiler$processAnnotations$org$pandalanguage$pandac$MethodDecl$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$IRNode$GT$R$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$IRNode$GT(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$MethodDecl* p_m, panda$collections$ImmutableArray* p_body);
 panda$collections$ImmutableArray* org$pandalanguage$pandac$Compiler$compileBody$org$pandalanguage$pandac$MethodDecl$R$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$IRNode$GT$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$MethodDecl* p_m);
 void org$pandalanguage$pandac$Compiler$createChoiceCleanup$org$pandalanguage$pandac$MethodDecl(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$MethodDecl* p_m);
 void org$pandalanguage$pandac$Compiler$compile$org$pandalanguage$pandac$MethodDecl(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$MethodDecl* p_m);

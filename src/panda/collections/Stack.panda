@@ -1,5 +1,10 @@
 package panda.collections
 
+====================================================================================================
+An implementation of the stack abstract data type. A stack is a collection of elements which
+operates in "LIFO" (last in, first out) order; that is, the element most recently added to the stack
+is the first one retrieved.
+====================================================================================================
 @final
 class Stack<T> : Iterable<T> {
     @private
@@ -19,7 +24,7 @@ class Stack<T> : Iterable<T> {
 
         @override
         method next():T {
-            def result := stack.peek(index)
+            def result := stack[index]
             index += 1
             return result
         }
@@ -28,10 +33,17 @@ class Stack<T> : Iterable<T> {
     @private
     def contents := Array<T>()
 
+    ================================================================================================
+    Pushes a new element onto the stack.
+    ================================================================================================
     method push(v:T) {
         contents.add(v)
     }
 
+    ================================================================================================
+    Pops the top value from the stack and returns it.
+    ================================================================================================
+    @pre(get_count() > 0)
     method pop():T {
         assert contents.get_count() > 0
         def result := contents[contents.count - 1]
@@ -39,16 +51,36 @@ class Stack<T> : Iterable<T> {
         return result
     }
 
-    function peek():T {
-        assert contents.get_count() > 0
-        return contents[contents.count - 1]
+    ================================================================================================
+    Pops the top value from the stack with the precondition that it has the expected value. This is
+    useful for balanced stack operations, e.g.:
+
+        stack.push(value)
+        <perform various operations which should ultimately leave the stack unmodified>
+        stack.pop(value)
+
+    This will generate a safety violation if the stack was incorrectly modified in between the
+    `push` and `pop`, because the `pop` will not result in the expected value.
+    ================================================================================================
+    @pre(self[0] == expected)
+    method pop(expected:T) {
+        pop()
     }
 
-    function peek(depth:Int):T {
+    ================================================================================================
+    Returns the value at the given depth in the stack. The top element (most recently pushed) is
+    element 0, and the bottom element (earliest pushed) is element `count - 1`.
+    ================================================================================================
+    @pre(depth >= 0 & depth < get_count())
+    function [](depth:Int):T {
         assert contents.get_count() > depth
         return contents[contents.count - 1 - depth]
     }
 
+    ================================================================================================
+    Returns an iterator which returns elements from the stack, starting from the top and working
+    down to the bottom. Iterating over the stack does not modify it.
+    ================================================================================================
     @override
     function iterator():Iterator<T> {
         return StackIterator<T>(self)

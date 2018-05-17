@@ -16,6 +16,23 @@ class CCodeGenerator : CodeGenerator {
                 String -* variable holding numeric id of block which jumped to finally block *-)
     }
 
+    class AutoContext {
+        def cg:CCodeGenerator
+
+        def context:EnclosingContext
+
+        init(cg:CCodeGenerator, context:EnclosingContext) {
+            self.cg := cg
+            self.context := context
+            cg.enclosingContexts.push(context)
+        }
+
+        @override
+        method cleanup() {
+            cg.enclosingContexts.pop(context)
+        }
+    }
+
     constant NO_REFCNT := -999
 
     @weak
@@ -528,7 +545,7 @@ class CCodeGenerator : CodeGenerator {
             }
             code.append("} };\n")
             types.printLine(code.finish())
-            compiler.currentClass.pop()
+            compiler.currentClass.pop(cl)
         }
         return result
     }
@@ -1209,7 +1226,7 @@ class CCodeGenerator : CodeGenerator {
     method getExpressionWithExtraEffectsReference(expr:IRNode, stmt:IRNode,
             out:IndentedOutputStream):String {
         def result := getReference(expr, out)
-        extraEffects.peek().add(stmt)
+        extraEffects[0].add(stmt)
         return result
     }
 
@@ -1294,7 +1311,8 @@ class CCodeGenerator : CodeGenerator {
         varCount += 1
         def source := nextVar()
         out.printLine("int \{source};")
-        enclosingContexts.push(EnclosingContext.FINALLY(finallyLabel, returnLabelMap, source))
+        def context := AutoContext(self,
+                    EnclosingContext.FINALLY(finallyLabel, returnLabelMap, source))
         writeBlock(statements, out)
         def fallthrough := nextLabel()
         if !compiler.endsWithBranch(statements) {
@@ -1314,7 +1332,6 @@ class CCodeGenerator : CodeGenerator {
         out.level -= 1
         out.printLine("}")
         createBlock(fallthrough, out)
-        enclosingContexts.pop()
     }
 
     method writePointerCall(m:MethodRef, args:ImmutableArray<IRNode>, out:IndentedOutputStream) {
@@ -1476,7 +1493,7 @@ class CCodeGenerator : CodeGenerator {
         def loopBody := nextLabel()
         def loopEnd := nextLabel()
         def loopTest := nextLabel()
-        enclosingContexts.push(EnclosingContext.LOOP(label, loopEnd, loopTest)) -- FIXME Auto
+        def context := AutoContext(self, EnclosingContext.LOOP(label, loopEnd, loopTest))
         def forwardEntry := nextLabel()
         def backwardEntry := nextLabel()
         def signPrefix:String
@@ -1529,7 +1546,6 @@ class CCodeGenerator : CodeGenerator {
         out.printLine("\{index}.value += 1;")
         out.printLine("goto \{loopStart};")
         createBlock(loopEnd, out)
-        enclosingContexts.pop()
     }
 
     method writeSteppedRangeFor(label:String?, target:IRNode, list:IRNode,
@@ -1597,7 +1613,7 @@ class CCodeGenerator : CodeGenerator {
         def loopBody := nextLabel()
         def loopEnd := nextLabel()
         def loopTest := nextLabel()
-        enclosingContexts.push(EnclosingContext.LOOP(label, loopEnd, loopTest)) -- FIXME Auto
+        def context := AutoContext(self, EnclosingContext.LOOP(label, loopEnd, loopTest))
         def forwardEntry := nextLabel()
         def backwardEntry := nextLabel()
         def unsigned:String
@@ -1705,7 +1721,6 @@ class CCodeGenerator : CodeGenerator {
         out.printLine("\{index}.value += \{step};")
         out.printLine("goto \{loopStart};")
         createBlock(loopEnd, out)
-        enclosingContexts.pop()
     }
 
     method writeRangeFor(label:String?, target:IRNode, list:IRNode,
@@ -1726,7 +1741,7 @@ class CCodeGenerator : CodeGenerator {
         assert test.type() = Type.Bit()
         def loopStart := nextLabel()
         def loopEnd := nextLabel()
-        enclosingContexts.push(EnclosingContext.LOOP(label, loopEnd, loopStart)) -- FIXME Auto
+        def context := AutoContext(self, EnclosingContext.LOOP(label, loopEnd, loopStart))
         createBlock(loopStart, out)
         extraEffects.push(Array<IRNode>())
         def testVar := nextVar()
@@ -1736,7 +1751,6 @@ class CCodeGenerator : CodeGenerator {
         writeBlock(statements, out)
         out.printLine("goto \{loopStart};")
         createBlock(loopEnd, out)
-        enclosingContexts.pop()
     }
 
     method writeDo(label:String?, statements:ImmutableArray<IRNode>, test:IRNode,
@@ -1744,7 +1758,7 @@ class CCodeGenerator : CodeGenerator {
         assert test.type() = Type.Bit()
         def loopStart := nextLabel()
         def loopEnd := nextLabel()
-        enclosingContexts.push(EnclosingContext.LOOP(label, loopEnd, loopStart)) -- FIXME Auto
+        def context := AutoContext(self, EnclosingContext.LOOP(label, loopEnd, loopStart))
         createBlock(loopStart, out)
         writeBlock(statements, out)
         extraEffects.push(Array<IRNode>())
@@ -1753,19 +1767,17 @@ class CCodeGenerator : CodeGenerator {
         writeExtraEffects(out)
         out.printLine("if (\{testVar}) goto \{loopStart};")
         createBlock(loopEnd, out)
-        enclosingContexts.pop()
     }
 
     method writeLoop(label:String?, statements:ImmutableArray<IRNode>, out:IndentedOutputStream) {
         def loopStart := nextLabel()
         def loopEnd := nextLabel()
-        enclosingContexts.push(EnclosingContext.LOOP(label, loopEnd, loopStart)) -- FIXME Auto
+        def context := AutoContext(self, EnclosingContext.LOOP(label, loopEnd, loopStart))
         createBlock(loopStart, out)
         out.printLine("while (true) {")
         writeBlock(statements, out)
         out.printLine("}")
         createBlock(loopEnd, out)
-        enclosingContexts.pop()
     }
 
     method writeVarTarget(target:IRNode, value:IRNode?, out:IndentedOutputStream) {
@@ -1871,7 +1883,7 @@ class CCodeGenerator : CodeGenerator {
 
     function findLoop(name:String?):EnclosingContext {
         for i in 0 .. enclosingContexts.get_count() {
-            def context := enclosingContexts.peek(i)
+            def context := enclosingContexts[i]
             match context {
                 when EnclosingContext.LOOP(loopLabel, _, _):
                     if name = null | (loopLabel != null & loopLabel = name) {
@@ -2002,7 +2014,7 @@ class CCodeGenerator : CodeGenerator {
 
     @override
     method write(m:MethodDecl, body:ImmutableArray<IRNode>) {
-        assert compiler.currentClass.peek() == m.owner
+        assert compiler.currentClass[0] == m.owner
         currentMethod := m
         currentBlock := "0"
         methodHeaderBuffer.clear()

@@ -86,6 +86,23 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
+    class AutoContext {
+        def cg:LLVMCodeGenerator
+
+        def context:EnclosingContext
+
+        init(cg:LLVMCodeGenerator, context:EnclosingContext) {
+            self.cg := cg
+            self.context := context
+            cg.enclosingContexts.push(context)
+        }
+
+        @override
+        method cleanup() {
+            cg.enclosingContexts.pop(context)
+        }
+    }
+
     constant POINTER_SIZE        := 8
     constant OBJECT_FIELD_COUNT  := 2
     constant CLASS_POINTER_INDEX := 0
@@ -1425,12 +1442,13 @@ class LLVMCodeGenerator : CodeGenerator {
         def end := nextLabel()
         assert argRefs.get_count() = m.parameters.get_count()
         def inline := InlineContext("$inline\{varCount}", selfRef, argRefs, end)
-        enclosingContexts.push(EnclosingContext.INLINE(inline))
-        def old := currentMethod
-        currentMethod := m
-        writeBlock(body, out)
-        currentMethod := old
-        enclosingContexts.pop()
+        {
+            def context := AutoContext(self, EnclosingContext.INLINE(inline))
+            def old := currentMethod
+            currentMethod := m
+            writeBlock(body, out)
+            currentMethod := old
+        }
         if !compiler.endsWithBranch(body) {
             out.printLine("unreachable")
         }
@@ -2065,7 +2083,7 @@ class LLVMCodeGenerator : CodeGenerator {
     method getExpressionWithExtraEffectsReference(expr:IRNode, stmt:IRNode,
             out:OutputStream):String {
         def result := getReference(expr, out)
-        extraEffects.peek().add(stmt)
+        extraEffects[0].add(stmt)
         return result
     }
 
@@ -2146,7 +2164,7 @@ class LLVMCodeGenerator : CodeGenerator {
         def finallyLabel := nextLabel()
         def returnLabelMap := HashMap<String, String>()
         labelCount += 1
-        enclosingContexts.push(EnclosingContext.FINALLY(finallyLabel, returnLabelMap))
+        def context := AutoContext(self, EnclosingContext.FINALLY(finallyLabel, returnLabelMap))
         writeBlock(statements, out)
         def fallthrough := nextLabel()
         if !compiler.endsWithBranch(statements) {
@@ -2177,7 +2195,6 @@ class LLVMCodeGenerator : CodeGenerator {
         }
         out.printLine(" ]")
         createBlock(fallthrough, out)
-        enclosingContexts.pop()
     }
 
     method writePointerCall(m:MethodRef, args:ImmutableArray<IRNode>, out:OutputStream) {
@@ -2385,7 +2402,7 @@ class LLVMCodeGenerator : CodeGenerator {
         def loopBody := nextLabel()
         def loopEnd := nextLabel()
         def loopInc := nextLabel()
-        enclosingContexts.push(EnclosingContext.LOOP(label, loopEnd, loopInc)) -- FIXME Auto
+        def context := AutoContext(self, EnclosingContext.LOOP(label, loopEnd, loopInc))
         def forward := nextLabel()
         def backward := nextLabel()
         out.printLine("br label %\{loopStart}")
@@ -2419,7 +2436,6 @@ class LLVMCodeGenerator : CodeGenerator {
         out.printLine("br label %\{loopStart}")
 
         createBlock(loopEnd, out)
-        enclosingContexts.pop()
     }
 
     method writeSteppedRealRangeFor(label:String?, target:IRNode, list:IRNode,
@@ -2478,7 +2494,7 @@ class LLVMCodeGenerator : CodeGenerator {
         def loopBody := nextLabel()
         def loopEnd := nextLabel()
         def loopInc := nextLabel()
-        enclosingContexts.push(EnclosingContext.LOOP(label, loopEnd, loopInc)) -- FIXME Auto
+        def context := AutoContext(self, EnclosingContext.LOOP(label, loopEnd, loopInc))
         def forward := nextLabel()
         def backward := nextLabel()
         def direction:String
@@ -2530,7 +2546,6 @@ class LLVMCodeGenerator : CodeGenerator {
         out.printLine("br label %\{loopStart}")
 
         createBlock(loopEnd, out)
-        enclosingContexts.pop()
     }
 
     method writeSimpleRangeFor(label:String?, target:IRNode, list:IRNode,
@@ -2587,7 +2602,7 @@ class LLVMCodeGenerator : CodeGenerator {
         def loopBody := nextLabel()
         def loopEnd := nextLabel()
         def loopTest := nextLabel()
-        enclosingContexts.push(EnclosingContext.LOOP(label, loopEnd, loopTest)) -- FIXME Auto
+        def context := AutoContext(self, EnclosingContext.LOOP(label, loopEnd, loopTest))
         def forwardEntry := nextLabel()
         def backwardEntry := nextLabel()
         def signPrefix:String
@@ -2654,7 +2669,6 @@ class LLVMCodeGenerator : CodeGenerator {
         out.printLine("br label %\{loopStart}")
 
         createBlock(loopEnd, out)
-        enclosingContexts.pop()
     }
 
     method writeSteppedRangeFor(label:String?, target:IRNode, list:IRNode,
@@ -2731,7 +2745,7 @@ class LLVMCodeGenerator : CodeGenerator {
         def loopBody := nextLabel()
         def loopEnd := nextLabel()
         def loopTest := nextLabel()
-        enclosingContexts.push(EnclosingContext.LOOP(label, loopEnd, loopTest)) -- FIXME Auto
+        def context := AutoContext(self, EnclosingContext.LOOP(label, loopEnd, loopTest))
         def forwardEntry := nextLabel()
         def backwardEntry := nextLabel()
         def signPrefix:String
@@ -2860,7 +2874,6 @@ class LLVMCodeGenerator : CodeGenerator {
         out.printLine("br label %\{loopStart}")
 
         createBlock(loopEnd, out)
-        enclosingContexts.pop()
     }
 
     method writeRangeFor(label:String?, target:IRNode, list:IRNode,
@@ -2886,7 +2899,7 @@ class LLVMCodeGenerator : CodeGenerator {
         def loopStart := nextLabel()
         def loopBody := nextLabel()
         def loopEnd := nextLabel()
-        enclosingContexts.push(EnclosingContext.LOOP(label, loopEnd, loopStart)) -- FIXME Auto
+        def context := AutoContext(self, EnclosingContext.LOOP(label, loopEnd, loopStart))
         out.printLine("br label %\{loopStart}")
         createBlock(loopStart, out)
         extraEffects.push(Array<IRNode>())
@@ -2901,7 +2914,6 @@ class LLVMCodeGenerator : CodeGenerator {
             out.printLine("br label %\{loopStart}")
         }
         createBlock(loopEnd, out)
-        enclosingContexts.pop()
     }
 
     method writeDo(label:String?, statements:ImmutableArray<IRNode>, test:IRNode,
@@ -2909,7 +2921,7 @@ class LLVMCodeGenerator : CodeGenerator {
         def loopStart := nextLabel()
         def loopBody := nextLabel()
         def loopEnd := nextLabel()
-        enclosingContexts.push(EnclosingContext.LOOP(label, loopEnd, loopStart)) -- FIXME Auto
+        def context := AutoContext(self, EnclosingContext.LOOP(label, loopEnd, loopStart))
         out.printLine("br label %\{loopBody}")
         createBlock(loopStart, out)
         extraEffects.push(Array<IRNode>())
@@ -2924,13 +2936,12 @@ class LLVMCodeGenerator : CodeGenerator {
             out.printLine("br label %\{loopStart}")
         }
         createBlock(loopEnd, out)
-        enclosingContexts.pop()
     }
 
     method writeLoop(label:String?, statements:ImmutableArray<IRNode>, out:OutputStream) {
         def loopStart := nextLabel()
         def loopEnd := nextLabel()
-        enclosingContexts.push(EnclosingContext.LOOP(label, loopEnd, loopStart))
+        def context := AutoContext(self, EnclosingContext.LOOP(label, loopEnd, loopStart))
         out.printLine("br label %\{loopStart}")
         createBlock(loopStart, out)
         writeBlock(statements, out)
@@ -2938,7 +2949,6 @@ class LLVMCodeGenerator : CodeGenerator {
             out.printLine("br label %\{loopStart}")
         }
         createBlock(loopEnd, out)
-        enclosingContexts.pop()
     }
 
     method writeVarTarget(target:IRNode, value:IRNode?, out:OutputStream) {
@@ -3116,7 +3126,7 @@ class LLVMCodeGenerator : CodeGenerator {
 
     function findLoop(name:String?):EnclosingContext {
         for i in 0 .. enclosingContexts.get_count() {
-            def context := enclosingContexts.peek(i)
+            def context := enclosingContexts[i]
             match context {
                 when EnclosingContext.LOOP(loopLabel, _, _):
                     if name = null | (loopLabel != null & loopLabel = name) {
@@ -3162,7 +3172,7 @@ class LLVMCodeGenerator : CodeGenerator {
         createBlock(ifFalse, out)
         extraEffects.push(Array<IRNode>())
         def name:String
-        def path := compiler.currentClass.peek().source.path
+        def path := compiler.currentClass[0].source.path
         def index := path.lastIndexOf("/")
         if index = null {
             name := path
@@ -3354,9 +3364,9 @@ class LLVMCodeGenerator : CodeGenerator {
 
     @override
     method write(m:MethodDecl, body:ImmutableArray<IRNode>) {
-        assert compiler.currentClass.peek() == m.owner,
+        assert compiler.currentClass[0] == m.owner,
                 "compiling \{m.owner.name}.\{m.signature()} from within " +
-                compiler.currentClass.peek().name
+                compiler.currentClass[0].name
         currentMethod := m
         currentBlock := "0"
         varCount := 0
