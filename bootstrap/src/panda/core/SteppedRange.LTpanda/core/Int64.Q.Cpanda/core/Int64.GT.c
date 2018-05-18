@@ -39,7 +39,7 @@ panda$core$String* panda$core$SteppedRange$LTpanda$core$Int64$Q$Cpanda$core$Int6
     panda$core$Object* $tmp10;
     panda$core$Object* $tmp14;
     panda$core$Object* $tmp17;
-    panda$core$String* $finallyReturn18;
+    panda$core$String* $returnValue19;
     panda$core$String* $tmp20;
     panda$core$String* $tmp21;
     int $tmp5;
@@ -91,13 +91,13 @@ panda$core$String* panda$core$SteppedRange$LTpanda$core$Int64$Q$Cpanda$core$Int6
         panda$core$String* $tmp22 = panda$core$MutableString$finish$R$panda$core$String(result6);
         $tmp21 = $tmp22;
         $tmp20 = $tmp21;
-        $finallyReturn18 = $tmp20;
+        $returnValue19 = $tmp20;
         panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp20));
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp21));
         $tmp5 = 0;
         goto $l3;
         $l23:;
-        return $finallyReturn18;
+        return $returnValue19;
     }
     $l3:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result6));

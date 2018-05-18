@@ -63,7 +63,7 @@ void org$pandalanguage$plex$runtime$DFA$init$panda$core$String$panda$core$Int64$
 }
 org$pandalanguage$plex$runtime$RawToken org$pandalanguage$plex$runtime$DFA$next$R$org$pandalanguage$plex$runtime$RawToken(org$pandalanguage$plex$runtime$DFA* self) {
     panda$core$Int64 state11;
-    org$pandalanguage$plex$runtime$RawToken $finallyReturn12;
+    org$pandalanguage$plex$runtime$RawToken $returnValue13;
     org$pandalanguage$plex$runtime$RawToken $tmp14;
     panda$core$String$Index $tmp15;
     panda$core$String$Index $tmp16;
@@ -78,10 +78,9 @@ org$pandalanguage$plex$runtime$RawToken org$pandalanguage$plex$runtime$DFA$next$
     panda$core$String* $tmp36;
     panda$core$Object* $tmp38;
     panda$core$Int64 newAccept53;
-    org$pandalanguage$plex$runtime$RawToken $finallyReturn54;
-    org$pandalanguage$plex$runtime$RawToken $tmp56;
+    org$pandalanguage$plex$runtime$RawToken $tmp55;
+    panda$core$String$Index $tmp56;
     panda$core$String$Index $tmp57;
-    panda$core$String$Index $tmp58;
     state11 = ((panda$core$Int64) { 1 });
     panda$core$Bit $tmp12 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(self->offset, self->sourceEnd);
     if ($tmp12.value) {
@@ -89,8 +88,8 @@ org$pandalanguage$plex$runtime$RawToken org$pandalanguage$plex$runtime$DFA$next$
         panda$core$String$Index$init$panda$core$Int64(&$tmp15, self->offset);
         panda$core$String$Index$init$panda$core$Int64(&$tmp16, self->offset);
         org$pandalanguage$plex$runtime$RawToken$init$panda$core$Int64$panda$core$String$Index$panda$core$String$Index$panda$core$Int64$panda$core$Int64(&$tmp14, ((panda$core$Int64) { 0 }), $tmp15, $tmp16, self->line, self->column);
-        $finallyReturn12 = $tmp14;
-        return $finallyReturn12;
+        $returnValue13 = $tmp14;
+        return $returnValue13;
     }
     }
     kind18 = ((panda$core$Int64) { -1 });
@@ -181,24 +180,24 @@ org$pandalanguage$plex$runtime$RawToken org$pandalanguage$plex$runtime$DFA$next$
     goto $l23;
     $l24:;
     self->offset = end20;
-    panda$core$String$Index$init$panda$core$Int64(&$tmp57, start19);
-    panda$core$String$Index$init$panda$core$Int64(&$tmp58, end20);
-    org$pandalanguage$plex$runtime$RawToken$init$panda$core$Int64$panda$core$String$Index$panda$core$String$Index$panda$core$Int64$panda$core$Int64(&$tmp56, kind18, $tmp57, $tmp58, startLine21, startColumn22);
-    $finallyReturn54 = $tmp56;
-    return $finallyReturn54;
+    panda$core$String$Index$init$panda$core$Int64(&$tmp56, start19);
+    panda$core$String$Index$init$panda$core$Int64(&$tmp57, end20);
+    org$pandalanguage$plex$runtime$RawToken$init$panda$core$Int64$panda$core$String$Index$panda$core$String$Index$panda$core$Int64$panda$core$Int64(&$tmp55, kind18, $tmp56, $tmp57, startLine21, startColumn22);
+    $returnValue13 = $tmp55;
+    return $returnValue13;
 }
 void org$pandalanguage$plex$runtime$DFA$cleanup(org$pandalanguage$plex$runtime$DFA* self) {
-    int $tmp62;
+    int $tmp61;
     {
     }
-    $tmp62 = -1;
-    goto $l60;
-    $l60:;
+    $tmp61 = -1;
+    goto $l59;
+    $l59:;
     panda$core$Object$cleanup(((panda$core$Object*) self));
-    switch ($tmp62) {
-        case -1: goto $l63;
+    switch ($tmp61) {
+        case -1: goto $l62;
     }
-    $l63:;
+    $l62:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->source));
 }
 

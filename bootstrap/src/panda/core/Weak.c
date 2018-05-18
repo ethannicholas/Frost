@@ -18,15 +18,15 @@ void panda$core$Weak$init$panda$core$Weak$T(panda$core$Weak* self, panda$core$Ob
     self->value = p_value;
 }
 panda$core$Object* panda$core$Weak$get$R$panda$core$Weak$T(panda$core$Weak* self) {
-    panda$core$Object* $finallyReturn1;
+    panda$core$Object* $returnValue2;
     panda$core$Object* $tmp3;
     $tmp3 = self->value;
-    $finallyReturn1 = $tmp3;
+    $returnValue2 = $tmp3;
     panda$core$Panda$ref$panda$core$Object($tmp3);
-    return $finallyReturn1;
+    return $returnValue2;
 }
 panda$core$String* panda$core$Weak$convert$R$panda$core$String(panda$core$Weak* self) {
-    panda$core$String* $finallyReturn4;
+    panda$core$String* $returnValue5;
     panda$core$String* $tmp6;
     panda$core$String* $tmp7;
     panda$core$String* $tmp8;
@@ -35,11 +35,11 @@ panda$core$String* panda$core$Weak$convert$R$panda$core$String(panda$core$Weak* 
     panda$core$String* $tmp12 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp8, &$s11);
     $tmp7 = $tmp12;
     $tmp6 = $tmp7;
-    $finallyReturn4 = $tmp6;
+    $returnValue5 = $tmp6;
     panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp6));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp7));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp8));
-    return $finallyReturn4;
+    return $returnValue5;
 }
 void panda$core$Weak$cleanup(panda$core$Weak* self) {
     int $tmp16;

@@ -80,100 +80,100 @@ void org$pandalanguage$pandac$Annotations$init$panda$core$Int64$panda$collection
     }
 }
 panda$core$Bit org$pandalanguage$pandac$Annotations$isPrivate$R$panda$core$Bit(org$pandalanguage$pandac$Annotations* self) {
-    panda$core$Bit $finallyReturn7;
+    panda$core$Bit $returnValue8;
     panda$core$Int64 $tmp9 = panda$core$Int64$$SHL$panda$core$Int64$R$panda$core$Int64(((panda$core$Int64) { 1 }), ((panda$core$Int64) { 1 }));
     panda$core$Int64 $tmp10 = panda$core$Int64$$BAND$panda$core$Int64$R$panda$core$Int64(self->flags, $tmp9);
     panda$core$Bit $tmp11 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit($tmp10, ((panda$core$Int64) { 0 }));
-    $finallyReturn7 = $tmp11;
-    return $finallyReturn7;
+    $returnValue8 = $tmp11;
+    return $returnValue8;
 }
 panda$core$Bit org$pandalanguage$pandac$Annotations$isProtected$R$panda$core$Bit(org$pandalanguage$pandac$Annotations* self) {
-    panda$core$Bit $finallyReturn12;
+    panda$core$Bit $returnValue13;
     panda$core$Int64 $tmp14 = panda$core$Int64$$SHL$panda$core$Int64$R$panda$core$Int64(((panda$core$Int64) { 1 }), ((panda$core$Int64) { 2 }));
     panda$core$Int64 $tmp15 = panda$core$Int64$$BAND$panda$core$Int64$R$panda$core$Int64(self->flags, $tmp14);
     panda$core$Bit $tmp16 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit($tmp15, ((panda$core$Int64) { 0 }));
-    $finallyReturn12 = $tmp16;
-    return $finallyReturn12;
+    $returnValue13 = $tmp16;
+    return $returnValue13;
 }
 panda$core$Bit org$pandalanguage$pandac$Annotations$isPackage$R$panda$core$Bit(org$pandalanguage$pandac$Annotations* self) {
-    panda$core$Bit $finallyReturn17;
+    panda$core$Bit $returnValue18;
     panda$core$Int64 $tmp19 = panda$core$Int64$$SHL$panda$core$Int64$R$panda$core$Int64(((panda$core$Int64) { 1 }), ((panda$core$Int64) { 3 }));
     panda$core$Int64 $tmp20 = panda$core$Int64$$BAND$panda$core$Int64$R$panda$core$Int64(self->flags, $tmp19);
     panda$core$Bit $tmp21 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit($tmp20, ((panda$core$Int64) { 0 }));
-    $finallyReturn17 = $tmp21;
-    return $finallyReturn17;
+    $returnValue18 = $tmp21;
+    return $returnValue18;
 }
 panda$core$Bit org$pandalanguage$pandac$Annotations$isClass$R$panda$core$Bit(org$pandalanguage$pandac$Annotations* self) {
-    panda$core$Bit $finallyReturn22;
+    panda$core$Bit $returnValue23;
     panda$core$Int64 $tmp24 = panda$core$Int64$$SHL$panda$core$Int64$R$panda$core$Int64(((panda$core$Int64) { 1 }), ((panda$core$Int64) { 4 }));
     panda$core$Int64 $tmp25 = panda$core$Int64$$BAND$panda$core$Int64$R$panda$core$Int64(self->flags, $tmp24);
     panda$core$Bit $tmp26 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit($tmp25, ((panda$core$Int64) { 0 }));
-    $finallyReturn22 = $tmp26;
-    return $finallyReturn22;
+    $returnValue23 = $tmp26;
+    return $returnValue23;
 }
 panda$core$Bit org$pandalanguage$pandac$Annotations$isOverride$R$panda$core$Bit(org$pandalanguage$pandac$Annotations* self) {
-    panda$core$Bit $finallyReturn27;
+    panda$core$Bit $returnValue28;
     panda$core$Int64 $tmp29 = panda$core$Int64$$SHL$panda$core$Int64$R$panda$core$Int64(((panda$core$Int64) { 1 }), ((panda$core$Int64) { 5 }));
     panda$core$Int64 $tmp30 = panda$core$Int64$$BAND$panda$core$Int64$R$panda$core$Int64(self->flags, $tmp29);
     panda$core$Bit $tmp31 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit($tmp30, ((panda$core$Int64) { 0 }));
-    $finallyReturn27 = $tmp31;
-    return $finallyReturn27;
+    $returnValue28 = $tmp31;
+    return $returnValue28;
 }
 panda$core$Bit org$pandalanguage$pandac$Annotations$isExternal$R$panda$core$Bit(org$pandalanguage$pandac$Annotations* self) {
-    panda$core$Bit $finallyReturn32;
+    panda$core$Bit $returnValue33;
     panda$core$Int64 $tmp34 = panda$core$Int64$$SHL$panda$core$Int64$R$panda$core$Int64(((panda$core$Int64) { 1 }), ((panda$core$Int64) { 6 }));
     panda$core$Int64 $tmp35 = panda$core$Int64$$BAND$panda$core$Int64$R$panda$core$Int64(self->flags, $tmp34);
     panda$core$Bit $tmp36 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit($tmp35, ((panda$core$Int64) { 0 }));
-    $finallyReturn32 = $tmp36;
-    return $finallyReturn32;
+    $returnValue33 = $tmp36;
+    return $returnValue33;
 }
 panda$core$Bit org$pandalanguage$pandac$Annotations$isImplicit$R$panda$core$Bit(org$pandalanguage$pandac$Annotations* self) {
-    panda$core$Bit $finallyReturn37;
+    panda$core$Bit $returnValue38;
     panda$core$Int64 $tmp39 = panda$core$Int64$$SHL$panda$core$Int64$R$panda$core$Int64(((panda$core$Int64) { 1 }), ((panda$core$Int64) { 7 }));
     panda$core$Int64 $tmp40 = panda$core$Int64$$BAND$panda$core$Int64$R$panda$core$Int64(self->flags, $tmp39);
     panda$core$Bit $tmp41 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit($tmp40, ((panda$core$Int64) { 0 }));
-    $finallyReturn37 = $tmp41;
-    return $finallyReturn37;
+    $returnValue38 = $tmp41;
+    return $returnValue38;
 }
 panda$core$Bit org$pandalanguage$pandac$Annotations$isFinal$R$panda$core$Bit(org$pandalanguage$pandac$Annotations* self) {
-    panda$core$Bit $finallyReturn42;
+    panda$core$Bit $returnValue43;
     panda$core$Int64 $tmp44 = panda$core$Int64$$SHL$panda$core$Int64$R$panda$core$Int64(((panda$core$Int64) { 1 }), ((panda$core$Int64) { 8 }));
     panda$core$Int64 $tmp45 = panda$core$Int64$$BAND$panda$core$Int64$R$panda$core$Int64(self->flags, $tmp44);
     panda$core$Bit $tmp46 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit($tmp45, ((panda$core$Int64) { 0 }));
-    $finallyReturn42 = $tmp46;
-    return $finallyReturn42;
+    $returnValue43 = $tmp46;
+    return $returnValue43;
 }
 panda$core$Bit org$pandalanguage$pandac$Annotations$isAbstract$R$panda$core$Bit(org$pandalanguage$pandac$Annotations* self) {
-    panda$core$Bit $finallyReturn47;
+    panda$core$Bit $returnValue48;
     panda$core$Int64 $tmp49 = panda$core$Int64$$SHL$panda$core$Int64$R$panda$core$Int64(((panda$core$Int64) { 1 }), ((panda$core$Int64) { 9 }));
     panda$core$Int64 $tmp50 = panda$core$Int64$$BAND$panda$core$Int64$R$panda$core$Int64(self->flags, $tmp49);
     panda$core$Bit $tmp51 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit($tmp50, ((panda$core$Int64) { 0 }));
-    $finallyReturn47 = $tmp51;
-    return $finallyReturn47;
+    $returnValue48 = $tmp51;
+    return $returnValue48;
 }
 panda$core$Bit org$pandalanguage$pandac$Annotations$isInline$R$panda$core$Bit(org$pandalanguage$pandac$Annotations* self) {
-    panda$core$Bit $finallyReturn52;
+    panda$core$Bit $returnValue53;
     panda$core$Int64 $tmp54 = panda$core$Int64$$SHL$panda$core$Int64$R$panda$core$Int64(((panda$core$Int64) { 1 }), ((panda$core$Int64) { 10 }));
     panda$core$Int64 $tmp55 = panda$core$Int64$$BAND$panda$core$Int64$R$panda$core$Int64(self->flags, $tmp54);
     panda$core$Bit $tmp56 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit($tmp55, ((panda$core$Int64) { 0 }));
-    $finallyReturn52 = $tmp56;
-    return $finallyReturn52;
+    $returnValue53 = $tmp56;
+    return $returnValue53;
 }
 panda$core$Bit org$pandalanguage$pandac$Annotations$isSpecialize$R$panda$core$Bit(org$pandalanguage$pandac$Annotations* self) {
-    panda$core$Bit $finallyReturn57;
+    panda$core$Bit $returnValue58;
     panda$core$Int64 $tmp59 = panda$core$Int64$$SHL$panda$core$Int64$R$panda$core$Int64(((panda$core$Int64) { 1 }), ((panda$core$Int64) { 11 }));
     panda$core$Int64 $tmp60 = panda$core$Int64$$BAND$panda$core$Int64$R$panda$core$Int64(self->flags, $tmp59);
     panda$core$Bit $tmp61 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit($tmp60, ((panda$core$Int64) { 0 }));
-    $finallyReturn57 = $tmp61;
-    return $finallyReturn57;
+    $returnValue58 = $tmp61;
+    return $returnValue58;
 }
 panda$core$Bit org$pandalanguage$pandac$Annotations$isWeak$R$panda$core$Bit(org$pandalanguage$pandac$Annotations* self) {
-    panda$core$Bit $finallyReturn62;
+    panda$core$Bit $returnValue63;
     panda$core$Int64 $tmp64 = panda$core$Int64$$SHL$panda$core$Int64$R$panda$core$Int64(((panda$core$Int64) { 1 }), ((panda$core$Int64) { 12 }));
     panda$core$Int64 $tmp65 = panda$core$Int64$$BAND$panda$core$Int64$R$panda$core$Int64(self->flags, $tmp64);
     panda$core$Bit $tmp66 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit($tmp65, ((panda$core$Int64) { 0 }));
-    $finallyReturn62 = $tmp66;
-    return $finallyReturn62;
+    $returnValue63 = $tmp66;
+    return $returnValue63;
 }
 panda$core$String* org$pandalanguage$pandac$Annotations$convert$R$panda$core$String(org$pandalanguage$pandac$Annotations* self) {
     panda$core$MutableString* result71 = NULL;
@@ -187,7 +187,7 @@ panda$core$String* org$pandalanguage$pandac$Annotations$convert$R$panda$core$Str
     panda$core$Object* $tmp122;
     panda$core$String* $tmp127;
     panda$core$String* $tmp128;
-    panda$core$String* $finallyReturn134;
+    panda$core$String* $returnValue135;
     panda$core$String* $tmp136;
     panda$core$String* $tmp137;
     int $tmp70;
@@ -347,13 +347,13 @@ panda$core$String* org$pandalanguage$pandac$Annotations$convert$R$panda$core$Str
         panda$core$String* $tmp138 = panda$core$MutableString$finish$R$panda$core$String(result71);
         $tmp137 = $tmp138;
         $tmp136 = $tmp137;
-        $finallyReturn134 = $tmp136;
+        $returnValue135 = $tmp136;
         panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp136));
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp137));
         $tmp70 = 0;
         goto $l68;
         $l139:;
-        return $finallyReturn134;
+        return $returnValue135;
     }
     $l68:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result71));

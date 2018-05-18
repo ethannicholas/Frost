@@ -29,9 +29,9 @@ void org$pandalanguage$pandac$Symbol$init$panda$core$Int64$org$pandalanguage$pan
     }
 }
 panda$core$Bit org$pandalanguage$pandac$Symbol$get_heritable$R$panda$core$Bit(org$pandalanguage$pandac$Symbol* self) {
-    panda$core$Bit $finallyReturn3;
-    $finallyReturn3 = ((panda$core$Bit) { true });
-    return $finallyReturn3;
+    panda$core$Bit $returnValue4;
+    $returnValue4 = ((panda$core$Bit) { true });
+    return $returnValue4;
 }
 void org$pandalanguage$pandac$Symbol$cleanup(org$pandalanguage$pandac$Symbol* self) {
     int $tmp8;

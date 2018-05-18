@@ -290,7 +290,7 @@ void panda$core$MutableString$clear(panda$core$MutableString* self) {
 panda$core$String* panda$core$MutableString$convert$R$panda$core$String(panda$core$MutableString* self) {
     panda$core$Char8* result138;
     panda$core$Range$LTpanda$core$Int64$GT $tmp139;
-    panda$core$String* $finallyReturn158;
+    panda$core$String* $returnValue159;
     panda$core$String* $tmp160;
     panda$core$String* $tmp161;
     result138 = ((panda$core$Char8*) pandaZAlloc(self->length.value * 1));
@@ -323,15 +323,15 @@ panda$core$String* panda$core$MutableString$convert$R$panda$core$String(panda$co
     panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp162, result138, self->length);
     $tmp161 = $tmp162;
     $tmp160 = $tmp161;
-    $finallyReturn158 = $tmp160;
+    $returnValue159 = $tmp160;
     panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp160));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp161));
-    return $finallyReturn158;
+    return $returnValue159;
 }
 panda$core$String* panda$core$MutableString$finish$R$panda$core$String(panda$core$MutableString* self) {
     panda$core$Class* $tmp164;
     panda$core$Class* $tmp165;
-    panda$core$String* $finallyReturn166;
+    panda$core$String* $returnValue167;
     panda$core$String* $tmp168;
     self->data = ((panda$core$Char8*) pandaRealloc(self->data, self->maxLength.value * 1, self->length.value * 1));
     self->maxLength = ((panda$core$Int64) { 0 });
@@ -343,8 +343,8 @@ panda$core$String* panda$core$MutableString$finish$R$panda$core$String(panda$cor
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp164));
     }
     $tmp168 = ((panda$core$String*) ((panda$core$Object*) self));
-    $finallyReturn166 = $tmp168;
+    $returnValue167 = $tmp168;
     panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp168));
-    return $finallyReturn166;
+    return $returnValue167;
 }
 

@@ -35,13 +35,13 @@ void panda$collections$Array$ArrayIterator$init$panda$collections$Array$LTpanda$
     }
 }
 panda$core$Bit panda$collections$Array$ArrayIterator$get_done$R$panda$core$Bit(panda$collections$Array$ArrayIterator* self) {
-    panda$core$Bit $finallyReturn3;
+    panda$core$Bit $returnValue4;
     panda$core$Bit $tmp5 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(self->index, self->array->count);
-    $finallyReturn3 = $tmp5;
-    return $finallyReturn3;
+    $returnValue4 = $tmp5;
+    return $returnValue4;
 }
 panda$core$Object* panda$collections$Array$ArrayIterator$next$R$panda$collections$Array$ArrayIterator$T(panda$collections$Array$ArrayIterator* self) {
-    panda$core$Object* $finallyReturn7;
+    panda$core$Object* $returnValue8;
     panda$core$Object* $tmp9;
     panda$core$Object* $tmp10;
     panda$core$Int64 $tmp7 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 1 }));
@@ -50,10 +50,10 @@ panda$core$Object* panda$collections$Array$ArrayIterator$next$R$panda$collection
     panda$core$Object* $tmp12 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(self->array, $tmp11);
     $tmp10 = $tmp12;
     $tmp9 = $tmp10;
-    $finallyReturn7 = $tmp9;
+    $returnValue8 = $tmp9;
     panda$core$Panda$ref$panda$core$Object($tmp9);
     panda$core$Panda$unref$panda$core$Object($tmp10);
-    return $finallyReturn7;
+    return $returnValue8;
 }
 void panda$collections$Array$ArrayIterator$cleanup(panda$collections$Array$ArrayIterator* self) {
     int $tmp16;

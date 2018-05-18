@@ -75,13 +75,12 @@ panda$core$String* panda$io$Console$readLine$R$panda$core$String$Q() {
     panda$core$MutableString* $tmp34;
     panda$core$Char8$nullable c38;
     panda$core$Char8$nullable $tmp39;
-    panda$core$String* $finallyReturn40;
+    panda$core$String* $returnValue41;
     panda$core$String* $tmp42;
     panda$core$Char8$nullable $tmp45;
     panda$core$Char8 $tmp50;
-    panda$core$String* $finallyReturn51;
+    panda$core$String* $tmp52;
     panda$core$String* $tmp53;
-    panda$core$String* $tmp54;
     int $tmp31;
     {
         panda$core$MutableString* $tmp35 = (panda$core$MutableString*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$MutableString$class);
@@ -102,12 +101,12 @@ panda$core$String* panda$io$Console$readLine$R$panda$core$String$Q() {
                 if ($tmp40.value) {
                 {
                     $tmp42 = NULL;
-                    $finallyReturn40 = $tmp42;
+                    $returnValue41 = $tmp42;
                     panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp42));
                     $tmp31 = 0;
                     goto $l29;
                     $l43:;
-                    return $finallyReturn40;
+                    return $returnValue41;
                 }
                 }
                 goto $l37;
@@ -134,39 +133,39 @@ panda$core$String* panda$io$Console$readLine$R$panda$core$String$Q() {
         }
         }
         $l37:;
-        panda$core$String* $tmp55 = panda$core$MutableString$finish$R$panda$core$String(result32);
-        $tmp54 = $tmp55;
+        panda$core$String* $tmp54 = panda$core$MutableString$finish$R$panda$core$String(result32);
         $tmp53 = $tmp54;
-        $finallyReturn51 = $tmp53;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp53));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp54));
+        $tmp52 = $tmp53;
+        $returnValue41 = $tmp52;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp52));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp53));
         $tmp31 = 1;
         goto $l29;
-        $l56:;
-        return $finallyReturn51;
+        $l55:;
+        return $returnValue41;
     }
     $l29:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result32));
     result32 = NULL;
     switch ($tmp31) {
         case 0: goto $l43;
-        case 1: goto $l56;
+        case 1: goto $l55;
     }
-    $l58:;
+    $l57:;
 }
 void panda$io$Console$init(panda$io$Console* self) {
 }
 void panda$io$Console$cleanup(panda$io$Console* self) {
-    int $tmp61;
+    int $tmp60;
     {
     }
-    $tmp61 = -1;
-    goto $l59;
-    $l59:;
+    $tmp60 = -1;
+    goto $l58;
+    $l58:;
     panda$core$Object$cleanup(((panda$core$Object*) self));
-    switch ($tmp61) {
-        case -1: goto $l62;
+    switch ($tmp60) {
+        case -1: goto $l61;
     }
-    $l62:;
+    $l61:;
 }
 

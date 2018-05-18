@@ -1,0 +1,16 @@
+class PostconditionMultiple1 {
+    @post(@return > 0)
+    @post(@return % 2 = 1)
+    method test():Int {
+        return 3
+    }
+}
+
+class PostconditionMultiple2 : PostconditionMultiple1 {
+    @override
+    @postAnd(@return < 0)
+    @postAnd(@return % 2 = 0)
+    method test():Int {
+        return -2
+    }
+}

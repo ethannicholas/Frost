@@ -1,0 +1,12 @@
+class PostconditionSimpleSuccess {
+    @class
+    @post(@return >= 0)
+    method test(x:Int):Int {
+        return x
+    }
+
+    @class
+    method main() {
+        Console.printLine(test(0))
+    }
+}

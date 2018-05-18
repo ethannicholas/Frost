@@ -43,22 +43,22 @@ void panda$collections$ImmutableHashMap$KeyIterator$init$panda$collections$Immut
     }
 }
 panda$core$Bit panda$collections$ImmutableHashMap$KeyIterator$get_done$R$panda$core$Bit(panda$collections$ImmutableHashMap$KeyIterator* self) {
-    panda$core$Bit $finallyReturn5;
+    panda$core$Bit $returnValue6;
     panda$core$Bit $tmp8 = (($fn7) self->base->$class->vtable[2])(self->base);
-    $finallyReturn5 = $tmp8;
-    return $finallyReturn5;
+    $returnValue6 = $tmp8;
+    return $returnValue6;
 }
 panda$collections$Key* panda$collections$ImmutableHashMap$KeyIterator$next$R$panda$collections$ImmutableHashMap$KeyIterator$K(panda$collections$ImmutableHashMap$KeyIterator* self) {
-    panda$collections$Key* $finallyReturn9;
+    panda$collections$Key* $returnValue10;
     panda$collections$Key* $tmp11;
     panda$collections$ImmutableHashMap$Entry* $tmp12;
     panda$core$Object* $tmp14 = (($fn13) self->base->$class->vtable[3])(self->base);
     $tmp12 = ((panda$collections$ImmutableHashMap$Entry*) $tmp14);
     $tmp11 = $tmp12->key;
-    $finallyReturn9 = $tmp11;
+    $returnValue10 = $tmp11;
     panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp11));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp12));
-    return $finallyReturn9;
+    return $returnValue10;
 }
 void panda$collections$ImmutableHashMap$KeyIterator$cleanup(panda$collections$ImmutableHashMap$KeyIterator* self) {
     int $tmp18;

@@ -31,7 +31,7 @@ void panda$math$XorShift128Plus$init$panda$core$Int64(panda$math$XorShift128Plus
 panda$core$Int64 panda$math$XorShift128Plus$int64$R$panda$core$Int64(panda$math$XorShift128Plus* self) {
     panda$core$Int64 x5;
     panda$core$Int64 y6;
-    panda$core$Int64 $finallyReturn13;
+    panda$core$Int64 $returnValue14;
     x5 = self->state1;
     y6 = self->state2;
     self->state1 = y6;
@@ -45,19 +45,18 @@ panda$core$Int64 panda$math$XorShift128Plus$int64$R$panda$core$Int64(panda$math$
     panda$core$Int64 $tmp13 = panda$core$Int64$$BXOR$panda$core$Int64$R$panda$core$Int64($tmp11, $tmp12);
     self->state2 = $tmp13;
     panda$core$Int64 $tmp15 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->state2, y6);
-    $finallyReturn13 = $tmp15;
-    return $finallyReturn13;
+    $returnValue14 = $tmp15;
+    return $returnValue14;
 }
 panda$core$Int64 panda$math$XorShift128Plus$int$panda$core$Int64$R$panda$core$Int64(panda$math$XorShift128Plus* self, panda$core$Int64 p_n) {
-    panda$core$Int64 $finallyReturn17;
+    panda$core$Int64 $returnValue18;
     panda$core$Int64 min20;
     panda$core$Int64 x25;
-    panda$core$Int64 $finallyReturn28;
     panda$core$Bit $tmp17 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_n, ((panda$core$Int64) { 1 }));
     if ($tmp17.value) {
     {
-        $finallyReturn17 = ((panda$core$Int64) { 0 });
-        return $finallyReturn17;
+        $returnValue18 = ((panda$core$Int64) { 0 });
+        return $returnValue18;
     }
     }
     panda$core$Int64 $tmp21 = panda$core$Int64$$SUB$R$panda$core$Int64(p_n);
@@ -71,9 +70,9 @@ panda$core$Int64 panda$math$XorShift128Plus$int$panda$core$Int64$R$panda$core$In
         panda$core$Bit $tmp28 = panda$core$Int64$$GE$panda$core$Int64$R$panda$core$Bit(x25, min20);
         if ($tmp28.value) {
         {
-            panda$core$Int64 $tmp30 = panda$core$Int64$$REM$panda$core$Int64$R$panda$core$Int64(x25, p_n);
-            $finallyReturn28 = $tmp30;
-            return $finallyReturn28;
+            panda$core$Int64 $tmp29 = panda$core$Int64$$REM$panda$core$Int64$R$panda$core$Int64(x25, p_n);
+            $returnValue18 = $tmp29;
+            return $returnValue18;
         }
         }
     }
@@ -81,17 +80,17 @@ panda$core$Int64 panda$math$XorShift128Plus$int$panda$core$Int64$R$panda$core$In
     $l24:;
 }
 void panda$math$XorShift128Plus$cleanup(panda$math$XorShift128Plus* self) {
-    int $tmp34;
+    int $tmp33;
     {
     }
-    $tmp34 = -1;
-    goto $l32;
-    $l32:;
+    $tmp33 = -1;
+    goto $l31;
+    $l31:;
     panda$core$Object$cleanup(((panda$core$Object*) self));
-    switch ($tmp34) {
-        case -1: goto $l35;
+    switch ($tmp33) {
+        case -1: goto $l34;
     }
-    $l35:;
+    $l34:;
 }
 
 

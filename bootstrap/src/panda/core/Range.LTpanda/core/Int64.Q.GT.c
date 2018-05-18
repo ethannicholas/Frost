@@ -36,7 +36,7 @@ panda$core$String* panda$core$Range$LTpanda$core$Int64$Q$GT$convert$R$panda$core
     panda$core$MutableString* $tmp8;
     panda$core$Object* $tmp10;
     panda$core$Object* $tmp14;
-    panda$core$String* $finallyReturn15;
+    panda$core$String* $returnValue16;
     panda$core$String* $tmp17;
     panda$core$String* $tmp18;
     int $tmp5;
@@ -81,13 +81,13 @@ panda$core$String* panda$core$Range$LTpanda$core$Int64$Q$GT$convert$R$panda$core
         panda$core$String* $tmp19 = panda$core$MutableString$finish$R$panda$core$String(result6);
         $tmp18 = $tmp19;
         $tmp17 = $tmp18;
-        $finallyReturn15 = $tmp17;
+        $returnValue16 = $tmp17;
         panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp17));
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp18));
         $tmp5 = 0;
         goto $l3;
         $l20:;
-        return $finallyReturn15;
+        return $returnValue16;
     }
     $l3:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result6));

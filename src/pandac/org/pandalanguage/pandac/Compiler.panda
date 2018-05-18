@@ -122,6 +122,9 @@ class Compiler {
     @private
     var inFieldCleanup := false
 
+    @private
+    var atPreSetupStatements:Array<IRNode>?
+
     init(codeGenerator:CodeGenerator, settings:Settings) {
         self.settings := settings
         self.scanner := Scanner(self)
@@ -3148,6 +3151,33 @@ class Compiler {
         return IRNode.CHOICE_FIELD_REFERENCE(position, base, ce, field)
     }
 
+    method compileAtPre(position:Position, expr:ASTNode):IRNode? {
+        if atPreSetupStatements = null {
+            error(position, "@pre is only legal within @post or @postAnd annotations")
+            return null
+        }
+        def compiled := compileExpression(expr)
+        if compiled = null {
+            return null
+        }
+        tmpCount += 1
+        def preVar := Variable(position, Variable.Kind.DEF, "$atPre\{tmpCount}", compiled.type())
+        def ref := IRNode.VARIABLE_REFERENCE(position, preVar)
+        def decl := IRNode.DECLARATION(ref, compiled)
+        def decls := Array<IRNode>() -- FIXME literal
+        decls.add(decl)
+        atPreSetupStatements.add(IRNode.VAR(position, Variable.Kind.DEF, decls.finish()))
+        return ref
+    }
+
+    method compileAtReturn(position:Position):IRNode? {
+        if atPreSetupStatements = null {
+            error(position, "@return is only legal within @post() or @postAnd()")
+            return null
+        }
+        return IRNode.AT_RETURN(position, currentMethod[0].returnType)
+    }
+
     method compileExpression(e:ASTNode):IRNode? {
         match e {
             when ASTNode.BINARY(position, left, op, right):
@@ -3191,6 +3221,10 @@ class Compiler {
                 return compileNull(position)
             when ASTNode.CHOICE_FIELD_REFERENCE(position, base, ce, field):
                 return compileChoiceFieldReference(position, base, ce, field)
+            when ASTNode.AT_PRE(position, expr):
+                return compileAtPre(position, expr)
+            when ASTNode.AT_RETURN(position):
+                return compileAtReturn(position)
             when ASTNode.IR_WRAPPER(ir):
                 return ir
         }
@@ -4063,26 +4097,23 @@ class Compiler {
                 IRNode.STRING(expr.position(), "precondition failure")))
     }
 
-    method addAnd(old:IRNode?, new:ASTNode):IRNode? {
-        var compiled := compileExpression(new)
-        if compiled = null {
-            return old
-        }
-        compiled := coerce(compiled, Type.Bit())
-        if compiled = null {
-            return old
-        }
-        if old != null {
-            return coerce(IRNode.BINARY(new.position(), Type.BuiltinBit(), getBuiltinBit(old),
-                    Token.Kind.AND, getBuiltinBit(compiled)), Type.Bit())
-        }
-        return compiled
+    @pre(atPreSetupStatements != null)
+    method addPostcondition(body:Array<IRNode>, expr:IRNode) {
+        def a := IRNode.ASSERT(expr.position(), getBuiltinBit(expr),
+                IRNode.STRING(expr.position(), "postcondition failure"))
+        def finally := Array<IRNode>() -- FIXME literal
+        finally.add(a)
+        def newBody := Array<IRNode>()
+        newBody.addAll(atPreSetupStatements)
+        newBody.addAll(body)
+        body.clear()
+        body.add(IRNode.BLOCK_WITH_FINALLY(expr.position(), newBody.finish(), finally.finish()))
     }
 
-    method addOr(old:IRNode?, new:IRNode):IRNode {
+    method addBinary(old:IRNode?, op:Token.Kind, new:IRNode):IRNode {
         if old != null {
-            return coerce(IRNode.BINARY(new.position(), Type.BuiltinBit(), getBuiltinBit(old),
-                    Token.Kind.OR, getBuiltinBit(new)), Type.Bit())
+            return coerce(IRNode.BINARY(new.position(), Type.BuiltinBit(), getBuiltinBit(old), op,
+                    getBuiltinBit(new)), Type.Bit())
         }
         return new
     }
@@ -4118,13 +4149,18 @@ class Compiler {
     Applies pre/postcondition annotations to the body of a method. The method's raw code is modified
     to include the pre/postcondition checks it declares and/or inherits.
     ================================================================================================
+    @pre(atPreSetupStatements = null)
+    @post(atPreSetupStatements = null)
     method processAnnotations(m:MethodDecl, body:ImmutableArray<IRNode>):ImmutableArray<IRNode> {
+        atPreSetupStatements := Array<IRNode>()
         def result := Array<IRNode>(body)
         var current := m
         var pre:IRNode? := null
+        var post:IRNode? := null
         loop {
             if current.annotations.expressions != null {
                 var currentPre:IRNode? := null
+                var currentPost:IRNode? := null
                 for ann in current.annotations.expressions {
                     match ann {
                         when Annotations.Expression.PRE(expr):
@@ -4152,10 +4188,38 @@ class Compiler {
                             }
                             currentPre := coerce(compileExpressionInContext(expr, current, m),
                                     Type.Bit())
+                        when Annotations.Expression.POST(expr):
+                            if current == m {
+                                if m.overridden != null {
+                                    error(expr.position(), "cannot use '@post' in a method which " +
+                                            "overrides another method; did you mean '@postAnd'?")
+                                }
+                                if currentPost != null {
+                                    error(expr.position(), "found more than one postcondition")
+                                }
+                            }
+                            currentPost := coerce(compileExpressionInContext(expr, current, m),
+                                    Type.Bit())
+                        when Annotations.Expression.POST_AND(expr):
+                            if current == m {
+                                if m.overridden = null {
+                                    error(expr.position(), "cannot use '@postAnd' in a method " +
+                                            "which does not override another method; did you " +
+                                            "mean '@post'?")
+                                }
+                                if currentPost != null {
+                                    error(expr.position(), "found more than one postcondition")
+                                }
+                            }
+                            currentPost := coerce(compileExpressionInContext(expr, current, m),
+                                    Type.Bit())
                     }
                 }
                 if currentPre != null {
-                    pre := addOr(pre, currentPre)
+                    pre := addBinary(pre, Token.Kind.OR, currentPre)
+                }
+                if currentPost != null {
+                    post := addBinary(post, Token.Kind.AND, currentPost)
                 }
             }
             if current.overridden = null {
@@ -4166,6 +4230,10 @@ class Compiler {
         if pre != null {
             addPrecondition(result, pre)
         }
+        if post != null {
+            addPostcondition(result, post)
+        }
+        atPreSetupStatements := null
         return result.finish()
     }
 

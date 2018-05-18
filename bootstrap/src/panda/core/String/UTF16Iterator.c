@@ -40,19 +40,19 @@ void panda$core$String$UTF16Iterator$init$panda$core$String(panda$core$String$UT
     PANDA_ASSERT(((panda$core$Bit) { false }).value);
 }
 panda$core$Bit panda$core$String$UTF16Iterator$get_done$R$panda$core$Bit(panda$core$String$UTF16Iterator* self) {
-    panda$core$Bit $finallyReturn4;
+    panda$core$Bit $returnValue5;
     panda$core$Bit $tmp6 = panda$core$Int64$$GE$panda$core$Int64$R$panda$core$Bit(self->index, self->str->_length);
-    $finallyReturn4 = $tmp6;
-    return $finallyReturn4;
+    $returnValue5 = $tmp6;
+    return $returnValue5;
 }
 panda$core$Char16 panda$core$String$UTF16Iterator$next$R$panda$core$Char16(panda$core$String$UTF16Iterator* self) {
-    panda$core$Char16 $finallyReturn8;
+    panda$core$Char16 $returnValue9;
     panda$core$Char16 $tmp10;
     panda$core$Int64 $tmp8 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 1 }));
     self->index = $tmp8;
     panda$core$Char16$init$panda$core$UInt16(&$tmp10, ((panda$core$UInt16) { 1 }));
-    $finallyReturn8 = $tmp10;
-    return $finallyReturn8;
+    $returnValue9 = $tmp10;
+    return $returnValue9;
 }
 void panda$core$String$UTF16Iterator$cleanup(panda$core$String$UTF16Iterator* self) {
     int $tmp14;

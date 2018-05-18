@@ -32,15 +32,14 @@ void panda$io$LineNumberInputStream$init$panda$io$InputStream(panda$io$LineNumbe
 }
 panda$core$UInt8$nullable panda$io$LineNumberInputStream$read$R$panda$core$UInt8$Q(panda$io$LineNumberInputStream* self) {
     panda$core$UInt8$nullable result4;
-    panda$core$UInt8$nullable $finallyReturn6;
+    panda$core$UInt8$nullable $returnValue7;
     panda$core$UInt8$nullable $match$37_139;
-    panda$core$UInt8$nullable $finallyReturn16;
     panda$core$UInt8$nullable $tmp6 = (($fn5) self->source->$class->vtable[2])(self->source);
     result4 = $tmp6;
     if (((panda$core$Bit) { !result4.nonnull }).value) {
     {
-        $finallyReturn6 = ((panda$core$UInt8$nullable) { .nonnull = false });
-        return $finallyReturn6;
+        $returnValue7 = ((panda$core$UInt8$nullable) { .nonnull = false });
+        return $returnValue7;
     }
     }
     {
@@ -71,21 +70,21 @@ panda$core$UInt8$nullable panda$io$LineNumberInputStream$read$R$panda$core$UInt8
         }
         }
     }
-    $finallyReturn16 = result4;
-    return $finallyReturn16;
+    $returnValue7 = result4;
+    return $returnValue7;
 }
 void panda$io$LineNumberInputStream$cleanup(panda$io$LineNumberInputStream* self) {
-    int $tmp21;
+    int $tmp20;
     {
     }
-    $tmp21 = -1;
-    goto $l19;
-    $l19:;
+    $tmp20 = -1;
+    goto $l18;
+    $l18:;
     panda$io$InputStream$cleanup(((panda$io$InputStream*) self));
-    switch ($tmp21) {
-        case -1: goto $l22;
+    switch ($tmp20) {
+        case -1: goto $l21;
     }
-    $l22:;
+    $l21:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->source));
 }
 

@@ -70,15 +70,15 @@ void panda$collections$ImmutableHashMap$EntryIterator$init$panda$collections$Imm
     }
 }
 panda$core$Bit panda$collections$ImmutableHashMap$EntryIterator$get_done$R$panda$core$Bit(panda$collections$ImmutableHashMap$EntryIterator* self) {
-    panda$core$Bit $finallyReturn15;
+    panda$core$Bit $returnValue16;
     panda$core$Bit $tmp18 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(self->bucket, self->map->bucketCount);
     bool $tmp17 = $tmp18.value;
     if (!$tmp17) goto $l19;
     $tmp17 = ((panda$core$Bit) { self->entry == NULL }).value;
     $l19:;
     panda$core$Bit $tmp20 = { $tmp17 };
-    $finallyReturn15 = $tmp20;
-    return $finallyReturn15;
+    $returnValue16 = $tmp20;
+    return $returnValue16;
 }
 panda$collections$ImmutableHashMap$Entry* panda$collections$ImmutableHashMap$EntryIterator$next$R$panda$collections$ImmutableHashMap$Entry$LTpanda$collections$ImmutableHashMap$EntryIterator$K$Cpanda$collections$ImmutableHashMap$EntryIterator$V$GT(panda$collections$ImmutableHashMap$EntryIterator* self) {
     panda$collections$ImmutableHashMap$Entry* result26 = NULL;
@@ -87,7 +87,7 @@ panda$collections$ImmutableHashMap$Entry* panda$collections$ImmutableHashMap$Ent
     panda$collections$ImmutableHashMap$Entry* $tmp29;
     panda$collections$ImmutableHashMap$Entry* $tmp35;
     panda$collections$ImmutableHashMap$Entry* $tmp36;
-    panda$collections$ImmutableHashMap$Entry* $finallyReturn36;
+    panda$collections$ImmutableHashMap$Entry* $returnValue37;
     panda$collections$ImmutableHashMap$Entry* $tmp38;
     int $tmp24;
     {
@@ -127,12 +127,12 @@ panda$collections$ImmutableHashMap$Entry* panda$collections$ImmutableHashMap$Ent
         goto $l30;
         $l31:;
         $tmp38 = result26;
-        $finallyReturn36 = $tmp38;
+        $returnValue37 = $tmp38;
         panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp38));
         $tmp24 = 0;
         goto $l22;
         $l39:;
-        return $finallyReturn36;
+        return $returnValue37;
     }
     $l22:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result26));

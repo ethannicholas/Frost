@@ -1,0 +1,16 @@
+class PostconditionBadPost1 {
+    var x := 0
+
+    @postAnd(x > 0)
+    method test(x:Int) {
+        self.x := x
+    }
+}
+
+class PostconditionBadPost2 : PostconditionBadPost1 {
+    @override
+    @postAnd(x > 0)
+    method test(x:Int) {
+        self.x := x
+    }
+}

@@ -179,6 +179,8 @@ class CCodeGenerator : CodeGenerator {
 
     var currentMethod:MethodDecl?
 
+    var returnValueVar:String?
+
     def enclosingContexts := Stack<EnclosingContext>()
 
     def extraEffects := Stack<Array<IRNode>>()
@@ -1232,6 +1234,8 @@ class CCodeGenerator : CodeGenerator {
 
     method getReference(expr:IRNode, out:IndentedOutputStream):String {
         match expr {
+            when IRNode.AT_RETURN:
+                return returnValueVar
             when IRNode.BINARY(_, _, left, op, right):
                 return getBinaryReference(left, op, right, out)
             when IRNode.CALL(_, type, target, args):
@@ -1846,17 +1850,19 @@ class CCodeGenerator : CodeGenerator {
 
     method writeReturn(value:IRNode?, out:IndentedOutputStream) {
         if value != null {
-            def tmp := "$finallyReturn\{varCount}"
-            varCount += 1
             def valueType := type(value.type())
-            methodHeader.printLine("\{valueType} \{tmp};")
+            if returnValueVar = null {
+                varCount += 1
+                returnValueVar := "$returnValue\{varCount}"
+                methodHeader.printLine("\{valueType} \{returnValueVar};")
+            }
             extraEffects.push(Array<IRNode>())
             def result := getReference(value, out)
-            out.printLine("\{tmp} = \{result};")
+            out.printLine("\{returnValueVar} = \{result};")
             writeExtraEffects(out)
             writeFinallies(null, out)
             def load := nextVar()
-            out.printLine("return \{tmp};")
+            out.printLine("return \{returnValueVar};")
         }
         else {
             writeFinallies(null, out)
@@ -2017,6 +2023,7 @@ class CCodeGenerator : CodeGenerator {
         assert compiler.currentClass[0] == m.owner
         currentMethod := m
         currentBlock := "0"
+        returnValueVar := null
         methodHeaderBuffer.clear()
         methods.print("\{type(m.returnType)} \{getName(m)}(")
         var separator := ""

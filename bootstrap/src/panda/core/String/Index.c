@@ -82,46 +82,46 @@ void panda$core$String$Index$init$panda$core$Int64(panda$core$String$Index* self
     self->value = p_value;
 }
 panda$core$Bit panda$core$String$Index$$EQ$panda$core$String$Index$R$panda$core$Bit(panda$core$String$Index self, panda$core$String$Index p_other) {
-    panda$core$Bit $finallyReturn2;
+    panda$core$Bit $returnValue3;
     panda$core$Bit $tmp4 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(self.value, p_other.value);
-    $finallyReturn2 = $tmp4;
-    return $finallyReturn2;
+    $returnValue3 = $tmp4;
+    return $returnValue3;
 }
 panda$core$Bit panda$core$String$Index$$NEQ$panda$core$String$Index$R$panda$core$Bit(panda$core$String$Index self, panda$core$String$Index p_other) {
-    panda$core$Bit $finallyReturn5;
+    panda$core$Bit $returnValue6;
     panda$core$Bit $tmp7 = panda$core$String$Index$$EQ$panda$core$String$Index$R$panda$core$Bit(self, p_other);
     panda$core$Bit $tmp8 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp7);
-    $finallyReturn5 = $tmp8;
-    return $finallyReturn5;
+    $returnValue6 = $tmp8;
+    return $returnValue6;
 }
 panda$core$Bit panda$core$String$Index$$LT$panda$core$String$Index$R$panda$core$Bit(panda$core$String$Index self, panda$core$String$Index p_other) {
-    panda$core$Bit $finallyReturn9;
+    panda$core$Bit $returnValue10;
     panda$core$Bit $tmp11 = panda$core$Int64$$LT$panda$core$Int64$R$panda$core$Bit(self.value, p_other.value);
-    $finallyReturn9 = $tmp11;
-    return $finallyReturn9;
+    $returnValue10 = $tmp11;
+    return $returnValue10;
 }
 panda$core$Bit panda$core$String$Index$$GT$panda$core$String$Index$R$panda$core$Bit(panda$core$String$Index self, panda$core$String$Index p_other) {
-    panda$core$Bit $finallyReturn12;
+    panda$core$Bit $returnValue13;
     panda$core$Bit $tmp14 = panda$core$Int64$$GT$panda$core$Int64$R$panda$core$Bit(self.value, p_other.value);
-    $finallyReturn12 = $tmp14;
-    return $finallyReturn12;
+    $returnValue13 = $tmp14;
+    return $returnValue13;
 }
 panda$core$Bit panda$core$String$Index$$LE$panda$core$String$Index$R$panda$core$Bit(panda$core$String$Index self, panda$core$String$Index p_other) {
-    panda$core$Bit $finallyReturn15;
+    panda$core$Bit $returnValue16;
     panda$core$Bit $tmp17 = panda$core$Int64$$LE$panda$core$Int64$R$panda$core$Bit(self.value, p_other.value);
-    $finallyReturn15 = $tmp17;
-    return $finallyReturn15;
+    $returnValue16 = $tmp17;
+    return $returnValue16;
 }
 panda$core$Bit panda$core$String$Index$$GE$panda$core$String$Index$R$panda$core$Bit(panda$core$String$Index self, panda$core$String$Index p_other) {
-    panda$core$Bit $finallyReturn18;
+    panda$core$Bit $returnValue19;
     panda$core$Bit $tmp20 = panda$core$Int64$$GE$panda$core$Int64$R$panda$core$Bit(self.value, p_other.value);
-    $finallyReturn18 = $tmp20;
-    return $finallyReturn18;
+    $returnValue19 = $tmp20;
+    return $returnValue19;
 }
 panda$core$Int64 panda$core$String$Index$hash$R$panda$core$Int64(panda$core$String$Index self) {
-    panda$core$Int64 $finallyReturn21;
-    $finallyReturn21 = self.value;
-    return $finallyReturn21;
+    panda$core$Int64 $returnValue22;
+    $returnValue22 = self.value;
+    return $returnValue22;
 }
 void panda$core$String$Index$cleanup(panda$core$String$Index self) {
 }

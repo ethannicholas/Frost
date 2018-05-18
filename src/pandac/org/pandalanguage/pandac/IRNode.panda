@@ -4,6 +4,7 @@ uses org.pandalanguage.pandac.parser.Token
 
 choice IRNode {
     ASSERT(Position, IRNode, IRNode?)
+    AT_RETURN(Position, Type)
     BINARY(Position, Type, IRNode, Token.Kind, IRNode)
     BIT(Position, Type, Bit)
     BLOCK(Position, ImmutableArray<IRNode>)
@@ -69,6 +70,8 @@ choice IRNode {
 
     function type():Type {
         match self {
+            when AT_RETURN(_, type):
+                return type
             when BINARY(_, type, _, _, _):
                 return type
             when BIT(_, type, _):
@@ -140,6 +143,8 @@ choice IRNode {
     function position():Position {
         match self {
             when ASSERT(position, _, _):
+                return position
+            when AT_RETURN(position, _):
                 return position
             when BINARY(position, _, _, _, _):
                 return position
@@ -238,6 +243,8 @@ choice IRNode {
         match self {
             when ASSERT(_, test, msg):
                 return test.hasSideEffects() | msg.hasSideEffects()
+            when AT_RETURN:
+                return false
             when BINARY(_, _, left, op, right):
                 return Compiler.isAssignment(op) | left.hasSideEffects() | right.hasSideEffects()
             when BIT(_, _, bit):
@@ -418,6 +425,8 @@ choice IRNode {
                     return "assert \{test}, \{msg}"
                 }
                 return "assert \{test}"
+            when AT_RETURN:
+                return "@return"
             when BINARY(_, _, left, op, right):
                 return "\{left} \{op} \{right}"
             when BIT(_, _, bit):

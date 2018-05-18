@@ -38,14 +38,14 @@ void panda$io$InputStream$LineIterator$init$panda$io$InputStream(panda$io$InputS
     (($fn4) self->$class->vtable[4])(self);
 }
 panda$core$Bit panda$io$InputStream$LineIterator$get_done$R$panda$core$Bit(panda$io$InputStream$LineIterator* self) {
-    panda$core$Bit $finallyReturn4;
-    $finallyReturn4 = ((panda$core$Bit) { self->_next == NULL });
-    return $finallyReturn4;
+    panda$core$Bit $returnValue5;
+    $returnValue5 = ((panda$core$Bit) { self->_next == NULL });
+    return $returnValue5;
 }
 panda$core$String* panda$io$InputStream$LineIterator$next$R$panda$core$String(panda$io$InputStream$LineIterator* self) {
     panda$core$String* result10 = NULL;
     panda$core$String* $tmp11;
-    panda$core$String* $finallyReturn12;
+    panda$core$String* $returnValue13;
     panda$core$String* $tmp14;
     int $tmp9;
     {
@@ -55,12 +55,12 @@ panda$core$String* panda$io$InputStream$LineIterator$next$R$panda$core$String(pa
         panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp11));
         (($fn12) self->$class->vtable[4])(self);
         $tmp14 = result10;
-        $finallyReturn12 = $tmp14;
+        $returnValue13 = $tmp14;
         panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp14));
         $tmp9 = 0;
         goto $l7;
         $l15:;
-        return $finallyReturn12;
+        return $returnValue13;
     }
     $l7:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result10));

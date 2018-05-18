@@ -52,12 +52,12 @@ void org$pandalanguage$pandac$Variable$init$org$pandalanguage$pandac$Position$or
     org$pandalanguage$pandac$Symbol$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$String(((org$pandalanguage$pandac$Symbol*) self), ((panda$core$Int64) { 208 }), p_position, p_name);
 }
 panda$core$String* org$pandalanguage$pandac$Variable$convert$R$panda$core$String(org$pandalanguage$pandac$Variable* self) {
-    panda$core$String* $finallyReturn6;
+    panda$core$String* $returnValue7;
     panda$core$String* $tmp8;
     $tmp8 = self->name;
-    $finallyReturn6 = $tmp8;
+    $returnValue7 = $tmp8;
     panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp8));
-    return $finallyReturn6;
+    return $returnValue7;
 }
 void org$pandalanguage$pandac$Variable$cleanup(org$pandalanguage$pandac$Variable* self) {
     int $tmp12;

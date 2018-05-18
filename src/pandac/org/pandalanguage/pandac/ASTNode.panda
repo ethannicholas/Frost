@@ -5,6 +5,8 @@ uses org.pandalanguage.pandac.parser.Token
 choice ASTNode {
     ANNOTATION             (Position, String, ASTNode? -* expression *-)
     ASSERT                 (Position, ASTNode, ASTNode?)
+    AT_PRE                 (Position, ASTNode -* expression *-)
+    AT_RETURN              (Position)
     BINARY                 (Position, ASTNode, Token.Kind, ASTNode)
     BIT                    (Position, Bit)
     BLOCK                  (Position, ImmutableArray<ASTNode>)
@@ -77,6 +79,10 @@ choice ASTNode {
             when ANNOTATION(position, _, _):
                 return position
             when ASSERT(position, _, _):
+                return position
+            when AT_PRE(position, _):
+                return position
+            when AT_RETURN(position):
                 return position
             when BINARY(position, _, _, _):
                 return position
@@ -175,6 +181,10 @@ choice ASTNode {
                     return "assert \{test}"
                 }
                 return "assert \{test}, \{msg}"
+            when AT_PRE(_, expr):
+                return "@pre(\{expr})"
+            when AT_RETURN(_):
+                return "@return"
             when BINARY(_, left, op, right):
                 return "\{left} \{op} \{right}"
             when BIT(_, value):

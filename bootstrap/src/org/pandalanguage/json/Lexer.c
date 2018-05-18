@@ -38,7 +38,7 @@ void org$pandalanguage$json$Lexer$start$panda$core$String(org$pandalanguage$json
 panda$core$Int64* org$pandalanguage$json$Lexer$alloc$panda$core$Int64$panda$core$Int64$R$panda$unsafe$Pointer$LTpanda$core$Int64$GT(panda$core$Int64 p_count, panda$core$Int64 p_fill) {
     panda$core$Int64* result6;
     panda$core$Range$LTpanda$core$Int64$GT $tmp7;
-    panda$core$Int64* $finallyReturn26;
+    panda$core$Int64* $returnValue27;
     result6 = ((panda$core$Int64*) pandaZAlloc(p_count.value * 8));
     panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp7, ((panda$core$Int64) { 0 }), p_count, ((panda$core$Bit) { false }));
     int64_t $tmp9 = $tmp7.min.value;
@@ -65,12 +65,12 @@ panda$core$Int64* org$pandalanguage$json$Lexer$alloc$panda$core$Int64$panda$core
     i8.value += 1;
     goto $l13;
     $l15:;
-    $finallyReturn26 = result6;
-    return $finallyReturn26;
+    $returnValue27 = result6;
+    return $returnValue27;
 }
 panda$core$Int64** org$pandalanguage$json$Lexer$getTransitions$R$panda$unsafe$Pointer$LTpanda$unsafe$Pointer$LTpanda$core$Int64$GT$GT() {
     panda$core$Int64** result29;
-    panda$core$Int64** $finallyReturn55;
+    panda$core$Int64** $returnValue56;
     panda$core$Int64 $tmp30 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(((panda$core$Int64) { 255 }), ((panda$core$Int64) { 1 }));
     result29 = ((panda$core$Int64**) pandaZAlloc($tmp30.value * 8));
     panda$core$Int64* $tmp31 = org$pandalanguage$json$Lexer$alloc$panda$core$Int64$panda$core$Int64$R$panda$unsafe$Pointer$LTpanda$core$Int64$GT(((panda$core$Int64) { 31 }), ((panda$core$Int64) { 0 }));
@@ -422,12 +422,12 @@ panda$core$Int64** org$pandalanguage$json$Lexer$getTransitions$R$panda$unsafe$Po
     result29[((panda$core$Int64) { 253 }).value] = result29[((panda$core$Int64) { 0 }).value];
     result29[((panda$core$Int64) { 254 }).value] = result29[((panda$core$Int64) { 0 }).value];
     result29[((panda$core$Int64) { 255 }).value] = result29[((panda$core$Int64) { 0 }).value];
-    $finallyReturn55 = result29;
-    return $finallyReturn55;
+    $returnValue56 = result29;
+    return $returnValue56;
 }
 panda$core$Int64* org$pandalanguage$json$Lexer$getAccepts$R$panda$unsafe$Pointer$LTpanda$core$Int64$GT() {
     panda$core$Int64* result58;
-    panda$core$Int64* $finallyReturn58;
+    panda$core$Int64* $returnValue59;
     result58 = ((panda$core$Int64*) pandaZAlloc(((panda$core$Int64) { 31 }).value * 8));
     result58[((panda$core$Int64) { 0 }).value] = ((panda$core$Int64) { -1 });
     result58[((panda$core$Int64) { 1 }).value] = ((panda$core$Int64) { -1 });
@@ -460,8 +460,8 @@ panda$core$Int64* org$pandalanguage$json$Lexer$getAccepts$R$panda$unsafe$Pointer
     result58[((panda$core$Int64) { 28 }).value] = ((panda$core$Int64) { 6 });
     result58[((panda$core$Int64) { 29 }).value] = ((panda$core$Int64) { 9 });
     result58[((panda$core$Int64) { 30 }).value] = ((panda$core$Int64) { 10 });
-    $finallyReturn58 = result58;
-    return $finallyReturn58;
+    $returnValue59 = result58;
+    return $returnValue59;
 }
 void org$pandalanguage$json$Lexer$cleanup(org$pandalanguage$json$Lexer* self) {
     int $tmp63;
@@ -506,7 +506,7 @@ void org$pandalanguage$json$Lexer$cleanup(org$pandalanguage$json$Lexer* self) {
 }
 org$pandalanguage$json$Token org$pandalanguage$json$Lexer$next$R$org$pandalanguage$json$Token(org$pandalanguage$json$Lexer* self) {
     org$pandalanguage$plex$runtime$RawToken raw65;
-    org$pandalanguage$json$Token $finallyReturn66;
+    org$pandalanguage$json$Token $returnValue67;
     org$pandalanguage$json$Token $tmp68;
     org$pandalanguage$json$Token$Kind $tmp69;
     org$pandalanguage$json$Position $tmp70;
@@ -515,8 +515,8 @@ org$pandalanguage$json$Token org$pandalanguage$json$Lexer$next$R$org$pandalangua
     org$pandalanguage$json$Token$Kind$init$panda$core$Int64(&$tmp69, raw65.kind);
     org$pandalanguage$json$Position$init$panda$core$Int64$panda$core$Int64(&$tmp70, raw65.line, raw65.column);
     org$pandalanguage$json$Token$init$org$pandalanguage$json$Token$Kind$panda$core$String$Index$panda$core$String$Index$org$pandalanguage$json$Position(&$tmp68, $tmp69, raw65.start, raw65.end, $tmp70);
-    $finallyReturn66 = $tmp68;
-    return $finallyReturn66;
+    $returnValue67 = $tmp68;
+    return $returnValue67;
 }
 void org$pandalanguage$json$Lexer$init(org$pandalanguage$json$Lexer* self) {
     self->dfa = NULL;

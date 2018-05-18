@@ -355,7 +355,8 @@ class Parser {
 
     ================================================================================================
     term = IDENTIFIER | DECIMAL | BINARY | HEX | REAL | SELF | SUPER | NULL | TRUE | FALSE |
-            string | LPAREN expression RPAREN
+            string | LPAREN expression RPAREN | ANNOTATION(@pre) LPAREN expression RPAREN |
+            ANNOTATION(@return) |
     ================================================================================================
     method term():ASTNode? {
         def t := next()
@@ -392,6 +393,19 @@ class Parser {
                     return null
                 }
                 return result
+            when Token.Kind.ANNOTATION:
+                def name := text(t)
+                if name = "@pre" {
+                    expect(Token.Kind.LPAREN, "'('")
+                    def expr := expression()
+                    expect(Token.Kind.RPAREN, "')'")
+                    return ASTNode.AT_PRE(t.position, expr)
+                }
+                else if name = "@return" {
+                    return ASTNode.AT_RETURN(t.position)
+                }
+                error(t, "expected an expression, but found '\{name}'")
+                return null
             otherwise:
                 error(t, "expected an expression, but found '\{text(t)}'")
                 return null

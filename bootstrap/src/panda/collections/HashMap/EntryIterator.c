@@ -70,15 +70,15 @@ void panda$collections$HashMap$EntryIterator$init$panda$collections$HashMap$LTpa
     }
 }
 panda$core$Bit panda$collections$HashMap$EntryIterator$get_done$R$panda$core$Bit(panda$collections$HashMap$EntryIterator* self) {
-    panda$core$Bit $finallyReturn15;
+    panda$core$Bit $returnValue16;
     panda$core$Bit $tmp18 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(self->bucket, self->map->bucketCount);
     bool $tmp17 = $tmp18.value;
     if (!$tmp17) goto $l19;
     $tmp17 = ((panda$core$Bit) { self->entry == NULL }).value;
     $l19:;
     panda$core$Bit $tmp20 = { $tmp17 };
-    $finallyReturn15 = $tmp20;
-    return $finallyReturn15;
+    $returnValue16 = $tmp20;
+    return $returnValue16;
 }
 panda$collections$HashMap$Entry* panda$collections$HashMap$EntryIterator$next$R$panda$collections$HashMap$Entry$LTpanda$collections$HashMap$EntryIterator$K$Cpanda$collections$HashMap$EntryIterator$V$GT(panda$collections$HashMap$EntryIterator* self) {
     panda$collections$HashMap$Entry* result26 = NULL;
@@ -87,7 +87,7 @@ panda$collections$HashMap$Entry* panda$collections$HashMap$EntryIterator$next$R$
     panda$collections$HashMap$Entry* $tmp29;
     panda$collections$HashMap$Entry* $tmp35;
     panda$collections$HashMap$Entry* $tmp36;
-    panda$collections$HashMap$Entry* $finallyReturn36;
+    panda$collections$HashMap$Entry* $returnValue37;
     panda$collections$HashMap$Entry* $tmp38;
     int $tmp24;
     {
@@ -127,12 +127,12 @@ panda$collections$HashMap$Entry* panda$collections$HashMap$EntryIterator$next$R$
         goto $l30;
         $l31:;
         $tmp38 = result26;
-        $finallyReturn36 = $tmp38;
+        $returnValue37 = $tmp38;
         panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp38));
         $tmp24 = 0;
         goto $l22;
         $l39:;
-        return $finallyReturn36;
+        return $returnValue37;
     }
     $l22:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result26));

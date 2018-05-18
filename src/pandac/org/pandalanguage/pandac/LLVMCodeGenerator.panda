@@ -145,6 +145,8 @@ class LLVMCodeGenerator : CodeGenerator {
 
     var currentMethod:MethodDecl?
 
+    var returnValueVar:String?
+
     def enclosingContexts := Stack<EnclosingContext>()
 
     def extraEffects := Stack<Array<IRNode>>()
@@ -1421,6 +1423,7 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
+--    @post(currentMethod = @pre(currentMethod) & returnValueVar = @pre(returnValueVar))
     method getInlineCallReference(t:Type, mref:MethodRef, args:ImmutableArray<IRNode>,
             body:ImmutableArray<IRNode>, out:OutputStream):String {
         def m := mref.value
@@ -1446,7 +1449,10 @@ class LLVMCodeGenerator : CodeGenerator {
             def context := AutoContext(self, EnclosingContext.INLINE(inline))
             def old := currentMethod
             currentMethod := m
+            def oldReturnValueVar := returnValueVar
+            returnValueVar := null
             writeBlock(body, out)
+            returnValueVar := oldReturnValueVar
             currentMethod := old
         }
         if !compiler.endsWithBranch(body) {
@@ -2087,8 +2093,17 @@ class LLVMCodeGenerator : CodeGenerator {
         return result
     }
 
+    method getAtReturnReference(t:Type, out:OutputStream):String {
+        def load := nextVar()
+        def llvmType := type(t)
+        out.printLine("\{load} = load \{llvmType}, \{llvmType}* \{returnValueVar}")
+        return load
+    }
+
     method getReference(expr:IRNode, out:OutputStream):String {
         match expr {
+            when IRNode.AT_RETURN(_, type):
+                return getAtReturnReference(type, out)
             when IRNode.BINARY(_, _, left, op, right):
                 return getBinaryReference(left, op, right, out)
             when IRNode.BIT(_, _, value):
@@ -2138,7 +2153,7 @@ class LLVMCodeGenerator : CodeGenerator {
             when IRNode.VARIABLE_REFERENCE(_, variable):
                 return getVariableReference(variable, out)
             otherwise:
-                assert false, "unsupported expression \{expr}:\{expr.$rawValue}"
+                assert false, "unsupported expression \{expr}(\{expr.$rawValue}):\{expr.position()}"
         }
     }
 
@@ -3092,24 +3107,27 @@ class LLVMCodeGenerator : CodeGenerator {
     method writeReturn(value:IRNode?, out:OutputStream) {
         def inline := getInlineContext()
         if value != null {
-            def tmp := "%finallyReturn\{labelCount}"
             labelCount += 1
             def valueType := type(value.type())
-            methodHeader.printLine("\{tmp} = alloca \{valueType}")
+            if returnValueVar = null {
+                labelCount += 1
+                returnValueVar := "%$returnValue\{labelCount}"
+                methodHeader.printLine("\{returnValueVar} = alloca \{valueType}")
+            }
             extraEffects.push(Array<IRNode>())
             def result := getReference(value, out)
-            out.printLine("store \{valueType} \{result}, \{valueType}* \{tmp}")
+            out.printLine("store \{valueType} \{result}, \{valueType}* \{returnValueVar}")
             if inline != null {
                 writeExtraEffects(out)
                 writeFinallies(null, out)
-                inline.returns.add(Pair<String, String>(currentBlock, tmp))
+                inline.returns.add(Pair<String, String>(currentBlock, returnValueVar))
                 out.printLine("br label %\{inline.exitLabel}")
             }
             else {
                 writeExtraEffects(out)
                 writeFinallies(null, out)
                 def load := nextVar()
-                out.printLine("\{load} = load \{valueType}, \{valueType}* \{tmp}")
+                out.printLine("\{load} = load \{valueType}, \{valueType}* \{returnValueVar}")
                 out.printLine("ret \{valueType} \{load}")
             }
         }
@@ -3368,6 +3386,7 @@ class LLVMCodeGenerator : CodeGenerator {
                 "compiling \{m.owner.name}.\{m.signature()} from within " +
                 compiler.currentClass[0].name
         currentMethod := m
+        returnValueVar := null
         currentBlock := "0"
         varCount := 0
         methodHeader := MemoryOutputStream()

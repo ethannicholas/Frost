@@ -17,9 +17,10 @@ typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name
 extern panda$math$Random$class_type panda$math$Random$class;
 
 #ifndef PANDA_TYPESONLY
-#include "panda/core/Int64.h"
 typedef struct panda$math$Random panda$math$Random;
+#include "panda/core/Int64.h"
 
+panda$math$Random* panda$math$Random$default$R$panda$math$Random();
 panda$core$Int64 panda$math$Random$int64$R$panda$core$Int64(panda$math$Random* self);
 panda$core$Int64 panda$math$Random$int$panda$core$Int64$R$panda$core$Int64(panda$math$Random* self, panda$core$Int64 p_n);
 

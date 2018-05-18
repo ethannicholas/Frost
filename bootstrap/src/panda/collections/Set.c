@@ -150,31 +150,31 @@ void panda$collections$Set$addAll$panda$collections$CollectionView$LTpanda$colle
     }
 }
 panda$core$Int64 panda$collections$Set$get_count$R$panda$core$Int64(panda$collections$Set* self) {
-    panda$core$Int64 $finallyReturn37;
+    panda$core$Int64 $returnValue38;
     panda$core$Int64 $tmp39 = panda$collections$HashMap$get_count$R$panda$core$Int64(self->contents);
-    $finallyReturn37 = $tmp39;
-    return $finallyReturn37;
+    $returnValue38 = $tmp39;
+    return $returnValue38;
 }
 void panda$collections$Set$clear(panda$collections$Set* self) {
     panda$collections$HashMap$clear(self->contents);
 }
 panda$collections$Iterator* panda$collections$Set$iterator$R$panda$collections$Iterator$LTpanda$collections$Set$T$GT(panda$collections$Set* self) {
-    panda$collections$Iterator* $finallyReturn40;
+    panda$collections$Iterator* $returnValue41;
     panda$collections$Iterator* $tmp42;
     panda$collections$Iterator* $tmp43;
     panda$collections$Iterator* $tmp44 = panda$collections$HashMap$keys$R$panda$collections$Iterator$LTpanda$collections$HashMap$K$GT(self->contents);
     $tmp43 = $tmp44;
     $tmp42 = $tmp43;
-    $finallyReturn40 = $tmp42;
+    $returnValue41 = $tmp42;
     panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp42));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp43));
-    return $finallyReturn40;
+    return $returnValue41;
 }
 panda$core$Bit panda$collections$Set$contains$panda$collections$Set$T$R$panda$core$Bit(panda$collections$Set* self, panda$collections$Key* p_value) {
-    panda$core$Bit $finallyReturn45;
+    panda$core$Bit $returnValue46;
     panda$core$Bit $tmp47 = panda$collections$HashMap$contains$panda$collections$HashMap$K$R$panda$core$Bit(self->contents, p_value);
-    $finallyReturn45 = $tmp47;
-    return $finallyReturn45;
+    $returnValue46 = $tmp47;
+    return $returnValue46;
 }
 panda$core$String* panda$collections$Set$convert$R$panda$core$String(panda$collections$Set* self) {
     panda$core$MutableString* result52 = NULL;
@@ -191,7 +191,7 @@ panda$core$String* panda$collections$Set$convert$R$panda$core$String(panda$colle
     panda$core$String* $tmp86;
     panda$core$String* $tmp87;
     panda$core$Char8 $tmp91;
-    panda$core$String* $finallyReturn91;
+    panda$core$String* $returnValue92;
     panda$core$String* $tmp93;
     panda$core$String* $tmp94;
     int $tmp51;
@@ -286,13 +286,13 @@ panda$core$String* panda$collections$Set$convert$R$panda$core$String(panda$colle
         panda$core$String* $tmp95 = panda$core$MutableString$finish$R$panda$core$String(result52);
         $tmp94 = $tmp95;
         $tmp93 = $tmp94;
-        $finallyReturn91 = $tmp93;
+        $returnValue92 = $tmp93;
         panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp93));
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp94));
         $tmp51 = 0;
         goto $l49;
         $l96:;
-        return $finallyReturn91;
+        return $returnValue92;
     }
     $l49:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result52));

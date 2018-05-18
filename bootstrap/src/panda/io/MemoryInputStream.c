@@ -157,8 +157,7 @@ void panda$io$MemoryInputStream$init$panda$core$String(panda$io$MemoryInputStrea
 panda$core$UInt8$nullable panda$io$MemoryInputStream$read$R$panda$core$UInt8$Q(panda$io$MemoryInputStream* self) {
     panda$core$UInt8 result55;
     panda$core$Object* $tmp56;
-    panda$core$UInt8$nullable $finallyReturn61;
-    panda$core$UInt8$nullable $finallyReturn63;
+    panda$core$UInt8$nullable $returnValue62;
     ITable* $tmp50 = ((panda$collections$CollectionView*) self->data)->$class->itable;
     while ($tmp50->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
         $tmp50 = $tmp50->next;
@@ -179,25 +178,25 @@ panda$core$UInt8$nullable panda$io$MemoryInputStream$read$R$panda$core$UInt8$Q(p
         panda$core$Panda$unref$panda$core$Object($tmp56);
         panda$core$Int64 $tmp61 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 1 }));
         self->index = $tmp61;
-        $finallyReturn61 = ((panda$core$UInt8$nullable) { result55, true });
-        return $finallyReturn61;
+        $returnValue62 = ((panda$core$UInt8$nullable) { result55, true });
+        return $returnValue62;
     }
     }
-    $finallyReturn63 = ((panda$core$UInt8$nullable) { .nonnull = false });
-    return $finallyReturn63;
+    $returnValue62 = ((panda$core$UInt8$nullable) { .nonnull = false });
+    return $returnValue62;
 }
 void panda$io$MemoryInputStream$cleanup(panda$io$MemoryInputStream* self) {
-    int $tmp68;
+    int $tmp67;
     {
     }
-    $tmp68 = -1;
-    goto $l66;
-    $l66:;
+    $tmp67 = -1;
+    goto $l65;
+    $l65:;
     panda$io$InputStream$cleanup(((panda$io$InputStream*) self));
-    switch ($tmp68) {
-        case -1: goto $l69;
+    switch ($tmp67) {
+        case -1: goto $l68;
     }
-    $l69:;
+    $l68:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->data));
 }
 

@@ -48,27 +48,27 @@ void panda$core$String$UTF8List$init$panda$core$String(panda$core$String$UTF8Lis
     }
 }
 panda$core$Char8 panda$core$String$UTF8List$$IDX$panda$core$Int64$R$panda$core$Char8(panda$core$String$UTF8List* self, panda$core$Int64 p_index) {
-    panda$core$Char8 $finallyReturn4;
-    $finallyReturn4 = self->str->data[p_index.value];
-    return $finallyReturn4;
+    panda$core$Char8 $returnValue5;
+    $returnValue5 = self->str->data[p_index.value];
+    return $returnValue5;
 }
 panda$core$Int64 panda$core$String$UTF8List$get_count$R$panda$core$Int64(panda$core$String$UTF8List* self) {
-    panda$core$Int64 $finallyReturn6;
-    $finallyReturn6 = self->str->_length;
-    return $finallyReturn6;
+    panda$core$Int64 $returnValue7;
+    $returnValue7 = self->str->_length;
+    return $returnValue7;
 }
 panda$collections$Iterator* panda$core$String$UTF8List$iterator$R$panda$collections$Iterator$LTpanda$core$Char8$GT(panda$core$String$UTF8List* self) {
-    panda$collections$Iterator* $finallyReturn8;
+    panda$collections$Iterator* $returnValue9;
     panda$collections$Iterator* $tmp10;
     panda$core$String$UTF8Iterator* $tmp11;
     panda$core$String$UTF8Iterator* $tmp12 = (panda$core$String$UTF8Iterator*) pandaObjectAlloc(32, (panda$core$Class*) &panda$core$String$UTF8Iterator$class);
     panda$core$String$UTF8Iterator$init$panda$core$String($tmp12, self->str);
     $tmp11 = $tmp12;
     $tmp10 = ((panda$collections$Iterator*) $tmp11);
-    $finallyReturn8 = $tmp10;
+    $returnValue9 = $tmp10;
     panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp10));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp11));
-    return $finallyReturn8;
+    return $returnValue9;
 }
 void panda$core$String$UTF8List$cleanup(panda$core$String$UTF8List* self) {
     int $tmp16;

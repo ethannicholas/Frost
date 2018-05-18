@@ -45,6 +45,7 @@ typedef struct org$pandalanguage$pandac$CCodeGenerator {
     panda$collections$IdentityMap* variableNames;
     panda$core$String* currentBlock;
     org$pandalanguage$pandac$MethodDecl* currentMethod;
+    panda$core$String* returnValueVar;
     panda$collections$Stack* enclosingContexts;
     panda$collections$Stack* extraEffects;
     panda$core$Int64 varCount;

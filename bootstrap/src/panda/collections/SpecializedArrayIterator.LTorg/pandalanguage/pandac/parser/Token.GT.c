@@ -39,19 +39,19 @@ void panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$pandac$parse
     }
 }
 panda$core$Bit panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$pandac$parser$Token$GT$get_done$R$panda$core$Bit(panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$pandac$parser$Token$GT* self) {
-    panda$core$Bit $finallyReturn4;
+    panda$core$Bit $returnValue5;
     panda$core$Bit $tmp6 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(self->index, self->array->count);
-    $finallyReturn4 = $tmp6;
-    return $finallyReturn4;
+    $returnValue5 = $tmp6;
+    return $returnValue5;
 }
 org$pandalanguage$pandac$parser$Token panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$pandac$parser$Token$GT$next$R$org$pandalanguage$pandac$parser$Token(panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$pandac$parser$Token$GT* self) {
-    org$pandalanguage$pandac$parser$Token $finallyReturn8;
+    org$pandalanguage$pandac$parser$Token $returnValue9;
     panda$core$Int64 $tmp8 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 1 }));
     self->index = $tmp8;
     panda$core$Int64 $tmp10 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 1 }));
     org$pandalanguage$pandac$parser$Token $tmp11 = panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$$IDX$panda$core$Int64$R$org$pandalanguage$pandac$parser$Token(self->array, $tmp10);
-    $finallyReturn8 = $tmp11;
-    return $finallyReturn8;
+    $returnValue9 = $tmp11;
+    return $returnValue9;
 }
 void panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$pandac$parser$Token$GT$cleanup(panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$pandac$parser$Token$GT* self) {
     int $tmp15;

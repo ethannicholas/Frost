@@ -80,7 +80,7 @@ void org$pandalanguage$pandac$ChoiceEntry$init$org$pandalanguage$pandac$ClassDec
     org$pandalanguage$pandac$Symbol$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$String(((org$pandalanguage$pandac$Symbol*) self), ((panda$core$Int64) { 209 }), p_position, p_name);
 }
 panda$core$String* org$pandalanguage$pandac$ChoiceEntry$convert$R$panda$core$String(org$pandalanguage$pandac$ChoiceEntry* self) {
-    panda$core$String* $finallyReturn14;
+    panda$core$String* $returnValue15;
     panda$core$String* $tmp16;
     panda$core$String* $tmp17;
     panda$core$String* $tmp18;
@@ -98,14 +98,14 @@ panda$core$String* org$pandalanguage$pandac$ChoiceEntry$convert$R$panda$core$Str
     panda$core$String* $tmp29 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp18, &$s28);
     $tmp17 = $tmp29;
     $tmp16 = $tmp17;
-    $finallyReturn14 = $tmp16;
+    $returnValue15 = $tmp16;
     panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp16));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp17));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp18));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp19));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp20));
     panda$core$Panda$unref$panda$core$Object($tmp21);
-    return $finallyReturn14;
+    return $returnValue15;
 }
 void org$pandalanguage$pandac$ChoiceEntry$cleanup(org$pandalanguage$pandac$ChoiceEntry* self) {
     int $tmp33;

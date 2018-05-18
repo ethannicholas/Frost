@@ -1,0 +1,27 @@
+class PostconditionOverrideParameterName1 {
+    var x:Int
+
+    @post(x >= min & x <= max)
+    method setup(min:Int, max:Int) {
+        x := (min + max) // 2
+        Console.printLine(x)
+    }
+}
+
+class PostconditionOverrideParameterName2 : PostconditionOverrideParameterName1 {
+    var y:Int
+
+    @override
+    @postAnd(y >= minimum & y <= maximum)
+    method setup(minimum:Int, maximum:Int) {
+        y := ((minimum + maximum) // 2).abs()
+        Console.printLine(y)
+    }
+
+    @class
+    method main() {
+        PostconditionOverrideParameterName1().setup(0, 10)
+        PostconditionOverrideParameterName2().setup(0, 20)
+        PostconditionOverrideParameterName2().setup(-10, -40)
+    }
+}

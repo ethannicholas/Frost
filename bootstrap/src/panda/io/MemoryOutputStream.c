@@ -49,28 +49,28 @@ void panda$io$MemoryOutputStream$clear(panda$io$MemoryOutputStream* self) {
     panda$core$MutableString$clear(self->data);
 }
 panda$core$String* panda$io$MemoryOutputStream$convert$R$panda$core$String(panda$io$MemoryOutputStream* self) {
-    panda$core$String* $finallyReturn6;
+    panda$core$String* $returnValue7;
     panda$core$String* $tmp8;
     panda$core$String* $tmp9;
     panda$core$String* $tmp10 = panda$core$MutableString$convert$R$panda$core$String(self->data);
     $tmp9 = $tmp10;
     $tmp8 = $tmp9;
-    $finallyReturn6 = $tmp8;
+    $returnValue7 = $tmp8;
     panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp8));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp9));
-    return $finallyReturn6;
+    return $returnValue7;
 }
 panda$core$String* panda$io$MemoryOutputStream$finish$R$panda$core$String(panda$io$MemoryOutputStream* self) {
-    panda$core$String* $finallyReturn11;
+    panda$core$String* $returnValue12;
     panda$core$String* $tmp13;
     panda$core$String* $tmp14;
     panda$core$String* $tmp15 = panda$core$MutableString$finish$R$panda$core$String(self->data);
     $tmp14 = $tmp15;
     $tmp13 = $tmp14;
-    $finallyReturn11 = $tmp13;
+    $returnValue12 = $tmp13;
     panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp13));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp14));
-    return $finallyReturn11;
+    return $returnValue12;
 }
 void panda$io$MemoryOutputStream$cleanup(panda$io$MemoryOutputStream* self) {
     int $tmp19;

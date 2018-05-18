@@ -1,0 +1,10 @@
+[true, 1, "hello"]
+true
+1
+hello
+{ "lastName": "Smith", "isAlive": true, "firstName": "John", "age": 27, "phoneNumbers": [{ "type": "home", "number": "212 555-1234" }, { "type": "office", "number": "646 555-4567" }, { "type": "mobile", "number": "123 456-7890" }], "spouse": null, "children": [], "address": { "city": "New York", "postalCode": "10021-3100", "streetAddress": "21 2nd Street", "state": "NY" } }
+true
+27
+{ "city": "New York", "postalCode": "10021-3100", "streetAddress": "21 2nd Street", "state": "NY" }
+John
+646 555-4567

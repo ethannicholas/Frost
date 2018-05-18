@@ -43,7 +43,7 @@ void org$pandalanguage$pandac$ClassDecl$GenericParameter$init$org$pandalanguage$
     org$pandalanguage$pandac$Symbol$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$String(((org$pandalanguage$pandac$Symbol*) self), ((panda$core$Int64) { 203 }), p_position, p_name);
 }
 panda$core$String* org$pandalanguage$pandac$ClassDecl$GenericParameter$convert$R$panda$core$String(org$pandalanguage$pandac$ClassDecl$GenericParameter* self) {
-    panda$core$String* $finallyReturn5;
+    panda$core$String* $returnValue6;
     panda$core$String* $tmp7;
     panda$core$String* $tmp8;
     panda$core$String* $tmp9;
@@ -64,7 +64,7 @@ panda$core$String* org$pandalanguage$pandac$ClassDecl$GenericParameter$convert$R
     panda$core$String* $tmp22 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp9, &$s21);
     $tmp8 = $tmp22;
     $tmp7 = $tmp8;
-    $finallyReturn5 = $tmp7;
+    $returnValue6 = $tmp7;
     panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp7));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp8));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp9));
@@ -72,7 +72,7 @@ panda$core$String* org$pandalanguage$pandac$ClassDecl$GenericParameter$convert$R
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp11));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp12));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp13));
-    return $finallyReturn5;
+    return $returnValue6;
 }
 void org$pandalanguage$pandac$ClassDecl$GenericParameter$cleanup(org$pandalanguage$pandac$ClassDecl$GenericParameter* self) {
     int $tmp26;

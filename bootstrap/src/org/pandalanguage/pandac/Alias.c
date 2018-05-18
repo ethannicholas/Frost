@@ -32,7 +32,7 @@ void org$pandalanguage$pandac$Alias$init$panda$core$String$panda$core$String$org
     }
 }
 panda$core$String* org$pandalanguage$pandac$Alias$convert$R$panda$core$String(org$pandalanguage$pandac$Alias* self) {
-    panda$core$String* $finallyReturn3;
+    panda$core$String* $returnValue4;
     panda$core$String* $tmp5;
     panda$core$String* $tmp6;
     panda$core$String* $tmp7;
@@ -47,13 +47,13 @@ panda$core$String* org$pandalanguage$pandac$Alias$convert$R$panda$core$String(or
     panda$core$String* $tmp16 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp7, &$s15);
     $tmp6 = $tmp16;
     $tmp5 = $tmp6;
-    $finallyReturn3 = $tmp5;
+    $returnValue4 = $tmp5;
     panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp5));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp6));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp7));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp8));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp9));
-    return $finallyReturn3;
+    return $returnValue4;
 }
 void org$pandalanguage$pandac$Alias$cleanup(org$pandalanguage$pandac$Alias* self) {
     int $tmp20;

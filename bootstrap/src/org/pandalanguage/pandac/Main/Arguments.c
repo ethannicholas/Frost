@@ -44,7 +44,7 @@ void org$pandalanguage$pandac$Main$Arguments$init$panda$collections$ListView$LTp
     }
 }
 panda$core$Bit org$pandalanguage$pandac$Main$Arguments$get_done$R$panda$core$Bit(org$pandalanguage$pandac$Main$Arguments* self) {
-    panda$core$Bit $finallyReturn3;
+    panda$core$Bit $returnValue4;
     ITable* $tmp5 = ((panda$collections$CollectionView*) self->args)->$class->itable;
     while ($tmp5->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
         $tmp5 = $tmp5->next;
@@ -52,11 +52,11 @@ panda$core$Bit org$pandalanguage$pandac$Main$Arguments$get_done$R$panda$core$Bit
     $fn7 $tmp6 = $tmp5->methods[0];
     panda$core$Int64 $tmp8 = $tmp6(((panda$collections$CollectionView*) self->args));
     panda$core$Bit $tmp9 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(self->index, $tmp8);
-    $finallyReturn3 = $tmp9;
-    return $finallyReturn3;
+    $returnValue4 = $tmp9;
+    return $returnValue4;
 }
 panda$core$String* org$pandalanguage$pandac$Main$Arguments$next$R$panda$core$String(org$pandalanguage$pandac$Main$Arguments* self) {
-    panda$core$String* $finallyReturn14;
+    panda$core$String* $returnValue15;
     panda$core$String* $tmp16;
     panda$core$Object* $tmp17;
     panda$core$Bit $tmp12 = (($fn11) self->$class->vtable[2])(self);
@@ -73,10 +73,10 @@ panda$core$String* org$pandalanguage$pandac$Main$Arguments$next$R$panda$core$Str
     panda$core$Object* $tmp22 = $tmp20(self->args, $tmp18);
     $tmp17 = $tmp22;
     $tmp16 = ((panda$core$String*) $tmp17);
-    $finallyReturn14 = $tmp16;
+    $returnValue15 = $tmp16;
     panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp16));
     panda$core$Panda$unref$panda$core$Object($tmp17);
-    return $finallyReturn14;
+    return $returnValue15;
 }
 panda$core$String* org$pandalanguage$pandac$Main$Arguments$next$panda$core$String$R$panda$core$String(org$pandalanguage$pandac$Main$Arguments* self, panda$core$String* p_label) {
     panda$io$OutputStream* $tmp26;
@@ -86,7 +86,7 @@ panda$core$String* org$pandalanguage$pandac$Main$Arguments$next$panda$core$Strin
     panda$core$String* $tmp35;
     panda$core$String* $tmp36;
     panda$core$Object* $tmp38;
-    panda$core$String* $finallyReturn52;
+    panda$core$String* $returnValue53;
     panda$core$String* $tmp54;
     panda$core$String* $tmp55;
     panda$core$Bit $tmp25 = (($fn24) self->$class->vtable[2])(self);
@@ -132,10 +132,10 @@ panda$core$String* org$pandalanguage$pandac$Main$Arguments$next$panda$core$Strin
     panda$core$String* $tmp57 = (($fn56) self->$class->vtable[3])(self);
     $tmp55 = $tmp57;
     $tmp54 = $tmp55;
-    $finallyReturn52 = $tmp54;
+    $returnValue53 = $tmp54;
     panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp54));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp55));
-    return $finallyReturn52;
+    return $returnValue53;
 }
 void org$pandalanguage$pandac$Main$Arguments$cleanup(org$pandalanguage$pandac$Main$Arguments* self) {
     int $tmp61;

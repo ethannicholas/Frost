@@ -153,7 +153,7 @@ void org$pandalanguage$pandac$MethodRef$init$org$pandalanguage$pandac$MethodDecl
     panda$core$Panda$unref$panda$core$Object($tmp10);
 }
 org$pandalanguage$pandac$Type* org$pandalanguage$pandac$MethodRef$owner$R$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$MethodRef* self) {
-    org$pandalanguage$pandac$Type* $finallyReturn61;
+    org$pandalanguage$pandac$Type* $returnValue62;
     org$pandalanguage$pandac$Type* $tmp63;
     org$pandalanguage$pandac$Type* $tmp64;
     org$pandalanguage$pandac$Type* $tmp65;
@@ -165,21 +165,21 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$MethodRef$owner$R$org$pa
     org$pandalanguage$pandac$Type* $tmp70 = org$pandalanguage$pandac$Type$remap$panda$collections$HashMap$LTpanda$core$String$Corg$pandalanguage$pandac$Type$GT$R$org$pandalanguage$pandac$Type($tmp65, self->typeMap);
     $tmp64 = $tmp70;
     $tmp63 = $tmp64;
-    $finallyReturn61 = $tmp63;
+    $returnValue62 = $tmp63;
     panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp63));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp64));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp65));
     panda$core$Panda$unref$panda$core$Object($tmp66);
-    return $finallyReturn61;
+    return $returnValue62;
 }
 panda$core$Int64 org$pandalanguage$pandac$MethodRef$parameterCount$R$panda$core$Int64(org$pandalanguage$pandac$MethodRef* self) {
-    panda$core$Int64 $finallyReturn71;
+    panda$core$Int64 $returnValue72;
     panda$core$Int64 $tmp73 = panda$collections$Array$get_count$R$panda$core$Int64(self->value->parameters);
-    $finallyReturn71 = $tmp73;
-    return $finallyReturn71;
+    $returnValue72 = $tmp73;
+    return $returnValue72;
 }
 org$pandalanguage$pandac$Type* org$pandalanguage$pandac$MethodRef$parameter$panda$core$Int64$R$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$MethodRef* self, panda$core$Int64 p_index) {
-    org$pandalanguage$pandac$Type* $finallyReturn74;
+    org$pandalanguage$pandac$Type* $returnValue75;
     org$pandalanguage$pandac$Type* $tmp76;
     org$pandalanguage$pandac$Type* $tmp77;
     panda$core$Object* $tmp78;
@@ -188,26 +188,26 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$MethodRef$parameter$pand
     org$pandalanguage$pandac$Type* $tmp80 = org$pandalanguage$pandac$Type$remap$panda$collections$HashMap$LTpanda$core$String$Corg$pandalanguage$pandac$Type$GT$R$org$pandalanguage$pandac$Type(((org$pandalanguage$pandac$MethodDecl$Parameter*) $tmp78)->type, self->typeMap);
     $tmp77 = $tmp80;
     $tmp76 = $tmp77;
-    $finallyReturn74 = $tmp76;
+    $returnValue75 = $tmp76;
     panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp76));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp77));
     panda$core$Panda$unref$panda$core$Object($tmp78);
-    return $finallyReturn74;
+    return $returnValue75;
 }
 org$pandalanguage$pandac$Type* org$pandalanguage$pandac$MethodRef$returnType$R$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$MethodRef* self) {
-    org$pandalanguage$pandac$Type* $finallyReturn81;
+    org$pandalanguage$pandac$Type* $returnValue82;
     org$pandalanguage$pandac$Type* $tmp83;
     org$pandalanguage$pandac$Type* $tmp84;
     org$pandalanguage$pandac$Type* $tmp85 = org$pandalanguage$pandac$Type$remap$panda$collections$HashMap$LTpanda$core$String$Corg$pandalanguage$pandac$Type$GT$R$org$pandalanguage$pandac$Type(self->value->returnType, self->typeMap);
     $tmp84 = $tmp85;
     $tmp83 = $tmp84;
-    $finallyReturn81 = $tmp83;
+    $returnValue82 = $tmp83;
     panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp83));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp84));
-    return $finallyReturn81;
+    return $returnValue82;
 }
 org$pandalanguage$pandac$Type* org$pandalanguage$pandac$MethodRef$type$R$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$MethodRef* self) {
-    org$pandalanguage$pandac$Type* $finallyReturn86;
+    org$pandalanguage$pandac$Type* $returnValue87;
     org$pandalanguage$pandac$Type* $tmp88;
     org$pandalanguage$pandac$Type* $tmp89;
     org$pandalanguage$pandac$Type$Kind $tmp92;
@@ -218,13 +218,13 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$MethodRef$type$R$org$pan
     org$pandalanguage$pandac$Type$init$panda$core$String$org$pandalanguage$pandac$Type$Kind$org$pandalanguage$pandac$Position$panda$core$Bit($tmp90, &$s91, $tmp92, $tmp93, ((panda$core$Bit) { true }));
     $tmp89 = $tmp90;
     $tmp88 = $tmp89;
-    $finallyReturn86 = $tmp88;
+    $returnValue87 = $tmp88;
     panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp88));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp89));
-    return $finallyReturn86;
+    return $returnValue87;
 }
 panda$core$String* org$pandalanguage$pandac$MethodRef$convert$R$panda$core$String(org$pandalanguage$pandac$MethodRef* self) {
-    panda$core$String* $finallyReturn94;
+    panda$core$String* $returnValue95;
     panda$core$String* $tmp96;
     panda$core$String* $tmp97;
     panda$core$String* $tmp98;
@@ -242,14 +242,14 @@ panda$core$String* org$pandalanguage$pandac$MethodRef$convert$R$panda$core$Strin
     panda$core$String* $tmp109 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp98, &$s108);
     $tmp97 = $tmp109;
     $tmp96 = $tmp97;
-    $finallyReturn94 = $tmp96;
+    $returnValue95 = $tmp96;
     panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp96));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp97));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp98));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp99));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp100));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp102));
-    return $finallyReturn94;
+    return $returnValue95;
 }
 void org$pandalanguage$pandac$MethodRef$cleanup(org$pandalanguage$pandac$MethodRef* self) {
     int $tmp113;

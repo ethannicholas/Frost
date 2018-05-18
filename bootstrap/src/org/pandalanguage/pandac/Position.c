@@ -41,7 +41,7 @@ void org$pandalanguage$pandac$Position$init$panda$core$Int64$panda$core$Int64(or
     self->column = p_column;
 }
 panda$core$String* org$pandalanguage$pandac$Position$convert$R$panda$core$String(org$pandalanguage$pandac$Position self) {
-    panda$core$String* $finallyReturn7;
+    panda$core$String* $returnValue8;
     panda$core$String* $tmp9;
     panda$core$String* $tmp10;
     panda$core$String* $tmp11;
@@ -61,14 +61,14 @@ panda$core$String* org$pandalanguage$pandac$Position$convert$R$panda$core$String
     panda$core$String* $tmp21 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp11, &$s20);
     $tmp10 = $tmp21;
     $tmp9 = $tmp10;
-    $finallyReturn7 = $tmp9;
+    $returnValue8 = $tmp9;
     panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp9));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp10));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp11));
     panda$core$Panda$unref$panda$core$Object($tmp17);
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp12));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp13));
-    return $finallyReturn7;
+    return $returnValue8;
 }
 void org$pandalanguage$pandac$Position$cleanup(org$pandalanguage$pandac$Position self) {
 }

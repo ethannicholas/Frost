@@ -38,7 +38,7 @@ void org$pandalanguage$pandac$parser$Lexer$start$panda$core$String(org$pandalang
 panda$core$Int64* org$pandalanguage$pandac$parser$Lexer$alloc$panda$core$Int64$panda$core$Int64$R$panda$unsafe$Pointer$LTpanda$core$Int64$GT(panda$core$Int64 p_count, panda$core$Int64 p_fill) {
     panda$core$Int64* result6;
     panda$core$Range$LTpanda$core$Int64$GT $tmp7;
-    panda$core$Int64* $finallyReturn26;
+    panda$core$Int64* $returnValue27;
     result6 = ((panda$core$Int64*) pandaZAlloc(p_count.value * 8));
     panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp7, ((panda$core$Int64) { 0 }), p_count, ((panda$core$Bit) { false }));
     int64_t $tmp9 = $tmp7.min.value;
@@ -65,12 +65,12 @@ panda$core$Int64* org$pandalanguage$pandac$parser$Lexer$alloc$panda$core$Int64$p
     i8.value += 1;
     goto $l13;
     $l15:;
-    $finallyReturn26 = result6;
-    return $finallyReturn26;
+    $returnValue27 = result6;
+    return $returnValue27;
 }
 panda$core$Int64** org$pandalanguage$pandac$parser$Lexer$getTransitions$R$panda$unsafe$Pointer$LTpanda$unsafe$Pointer$LTpanda$core$Int64$GT$GT() {
     panda$core$Int64** result29;
-    panda$core$Int64** $finallyReturn89;
+    panda$core$Int64** $returnValue90;
     panda$core$Int64 $tmp30 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(((panda$core$Int64) { 255 }), ((panda$core$Int64) { 1 }));
     result29 = ((panda$core$Int64**) pandaZAlloc($tmp30.value * 8));
     panda$core$Int64* $tmp31 = org$pandalanguage$pandac$parser$Lexer$alloc$panda$core$Int64$panda$core$Int64$R$panda$unsafe$Pointer$LTpanda$core$Int64$GT(((panda$core$Int64) { 239 }), ((panda$core$Int64) { 0 }));
@@ -3095,12 +3095,12 @@ panda$core$Int64** org$pandalanguage$pandac$parser$Lexer$getTransitions$R$panda$
     result29[((panda$core$Int64) { 253 }).value] = result29[((panda$core$Int64) { 0 }).value];
     result29[((panda$core$Int64) { 254 }).value] = result29[((panda$core$Int64) { 0 }).value];
     result29[((panda$core$Int64) { 255 }).value] = result29[((panda$core$Int64) { 0 }).value];
-    $finallyReturn89 = result29;
-    return $finallyReturn89;
+    $returnValue90 = result29;
+    return $returnValue90;
 }
 panda$core$Int64* org$pandalanguage$pandac$parser$Lexer$getAccepts$R$panda$unsafe$Pointer$LTpanda$core$Int64$GT() {
     panda$core$Int64* result92;
-    panda$core$Int64* $finallyReturn92;
+    panda$core$Int64* $returnValue93;
     result92 = ((panda$core$Int64*) pandaZAlloc(((panda$core$Int64) { 239 }).value * 8));
     result92[((panda$core$Int64) { 0 }).value] = ((panda$core$Int64) { -1 });
     result92[((panda$core$Int64) { 1 }).value] = ((panda$core$Int64) { -1 });
@@ -3341,8 +3341,8 @@ panda$core$Int64* org$pandalanguage$pandac$parser$Lexer$getAccepts$R$panda$unsaf
     result92[((panda$core$Int64) { 236 }).value] = ((panda$core$Int64) { 85 });
     result92[((panda$core$Int64) { 237 }).value] = ((panda$core$Int64) { 71 });
     result92[((panda$core$Int64) { 238 }).value] = ((panda$core$Int64) { 86 });
-    $finallyReturn92 = result92;
-    return $finallyReturn92;
+    $returnValue93 = result92;
+    return $returnValue93;
 }
 void org$pandalanguage$pandac$parser$Lexer$cleanup(org$pandalanguage$pandac$parser$Lexer* self) {
     int $tmp97;
@@ -3421,7 +3421,7 @@ void org$pandalanguage$pandac$parser$Lexer$cleanup(org$pandalanguage$pandac$pars
 }
 org$pandalanguage$pandac$parser$Token org$pandalanguage$pandac$parser$Lexer$next$R$org$pandalanguage$pandac$parser$Token(org$pandalanguage$pandac$parser$Lexer* self) {
     org$pandalanguage$plex$runtime$RawToken raw99;
-    org$pandalanguage$pandac$parser$Token $finallyReturn100;
+    org$pandalanguage$pandac$parser$Token $returnValue101;
     org$pandalanguage$pandac$parser$Token $tmp102;
     org$pandalanguage$pandac$parser$Token$Kind $tmp103;
     org$pandalanguage$pandac$Position $tmp104;
@@ -3430,8 +3430,8 @@ org$pandalanguage$pandac$parser$Token org$pandalanguage$pandac$parser$Lexer$next
     org$pandalanguage$pandac$parser$Token$Kind$init$panda$core$Int64(&$tmp103, raw99.kind);
     org$pandalanguage$pandac$Position$init$panda$core$Int64$panda$core$Int64(&$tmp104, raw99.line, raw99.column);
     org$pandalanguage$pandac$parser$Token$init$org$pandalanguage$pandac$parser$Token$Kind$panda$core$String$Index$panda$core$String$Index$org$pandalanguage$pandac$Position(&$tmp102, $tmp103, raw99.start, raw99.end, $tmp104);
-    $finallyReturn100 = $tmp102;
-    return $finallyReturn100;
+    $returnValue101 = $tmp102;
+    return $returnValue101;
 }
 void org$pandalanguage$pandac$parser$Lexer$init(org$pandalanguage$pandac$parser$Lexer* self) {
     self->dfa = NULL;

@@ -37,7 +37,7 @@ void org$pandalanguage$pandac$MethodDecl$Parameter$init$panda$core$String$org$pa
     }
 }
 panda$core$String* org$pandalanguage$pandac$MethodDecl$Parameter$convert$R$panda$core$String(org$pandalanguage$pandac$MethodDecl$Parameter* self) {
-    panda$core$String* $finallyReturn5;
+    panda$core$String* $returnValue6;
     panda$core$String* $tmp7;
     panda$core$String* $tmp8;
     panda$core$String* $tmp9;
@@ -52,13 +52,13 @@ panda$core$String* org$pandalanguage$pandac$MethodDecl$Parameter$convert$R$panda
     panda$core$String* $tmp17 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp9, &$s16);
     $tmp8 = $tmp17;
     $tmp7 = $tmp8;
-    $finallyReturn5 = $tmp7;
+    $returnValue6 = $tmp7;
     panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp7));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp8));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp9));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp10));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp11));
-    return $finallyReturn5;
+    return $returnValue6;
 }
 void org$pandalanguage$pandac$MethodDecl$Parameter$cleanup(org$pandalanguage$pandac$MethodDecl$Parameter* self) {
     int $tmp21;

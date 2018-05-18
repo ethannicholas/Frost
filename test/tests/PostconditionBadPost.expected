@@ -1,0 +1,2 @@
+PostconditionBadPost.panda:12:13: error: cannot use '@post' in a method which overrides another method; did you mean '@postAnd'?
+1 error

@@ -20,18 +20,18 @@ typedef panda$core$Bit (*$fn18)(panda$core$Comparable*, panda$core$Comparable*);
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x43\x6f\x6d\x70\x61\x72\x61\x62\x6c\x65", 21, -5254568576296725552, NULL };
 
 panda$core$Bit panda$core$Comparable$$LT$panda$core$Comparable$T$R$panda$core$Bit(panda$core$Comparable* self, panda$core$Comparable* p_other) {
-    panda$core$Bit $finallyReturn1;
+    panda$core$Bit $returnValue2;
     ITable* $tmp3 = p_other->$class->itable;
     while ($tmp3->$class != (panda$core$Class*) &panda$core$Comparable$class) {
         $tmp3 = $tmp3->next;
     }
     $fn5 $tmp4 = $tmp3->methods[0];
     panda$core$Bit $tmp6 = $tmp4(p_other, self);
-    $finallyReturn1 = $tmp6;
-    return $finallyReturn1;
+    $returnValue2 = $tmp6;
+    return $returnValue2;
 }
 panda$core$Bit panda$core$Comparable$$GE$panda$core$Comparable$T$R$panda$core$Bit(panda$core$Comparable* self, panda$core$Comparable* p_other) {
-    panda$core$Bit $finallyReturn7;
+    panda$core$Bit $returnValue8;
     ITable* $tmp9 = self->$class->itable;
     while ($tmp9->$class != (panda$core$Class*) &panda$core$Comparable$class) {
         $tmp9 = $tmp9->next;
@@ -39,11 +39,11 @@ panda$core$Bit panda$core$Comparable$$GE$panda$core$Comparable$T$R$panda$core$Bi
     $fn11 $tmp10 = $tmp9->methods[1];
     panda$core$Bit $tmp12 = $tmp10(self, p_other);
     panda$core$Bit $tmp13 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp12);
-    $finallyReturn7 = $tmp13;
-    return $finallyReturn7;
+    $returnValue8 = $tmp13;
+    return $returnValue8;
 }
 panda$core$Bit panda$core$Comparable$$LE$panda$core$Comparable$T$R$panda$core$Bit(panda$core$Comparable* self, panda$core$Comparable* p_other) {
-    panda$core$Bit $finallyReturn14;
+    panda$core$Bit $returnValue15;
     ITable* $tmp16 = self->$class->itable;
     while ($tmp16->$class != (panda$core$Class*) &panda$core$Comparable$class) {
         $tmp16 = $tmp16->next;
@@ -51,8 +51,8 @@ panda$core$Bit panda$core$Comparable$$LE$panda$core$Comparable$T$R$panda$core$Bi
     $fn18 $tmp17 = $tmp16->methods[0];
     panda$core$Bit $tmp19 = $tmp17(self, p_other);
     panda$core$Bit $tmp20 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp19);
-    $finallyReturn14 = $tmp20;
-    return $finallyReturn14;
+    $returnValue15 = $tmp20;
+    return $returnValue15;
 }
 
 

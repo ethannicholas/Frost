@@ -109,7 +109,7 @@ panda$core$String* org$pandalanguage$pandac$FieldDecl$convert$R$panda$core$Strin
     panda$core$String* $tmp23;
     org$pandalanguage$pandac$FieldDecl$Kind $match$44_925;
     panda$core$Char8 $tmp34;
-    panda$core$String* $finallyReturn36;
+    panda$core$String* $returnValue37;
     panda$core$String* $tmp38;
     panda$core$String* $tmp39;
     int $tmp18;
@@ -178,13 +178,13 @@ panda$core$String* org$pandalanguage$pandac$FieldDecl$convert$R$panda$core$Strin
         panda$core$String* $tmp40 = panda$core$MutableString$finish$R$panda$core$String(result19);
         $tmp39 = $tmp40;
         $tmp38 = $tmp39;
-        $finallyReturn36 = $tmp38;
+        $returnValue37 = $tmp38;
         panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp38));
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp39));
         $tmp18 = 0;
         goto $l16;
         $l41:;
-        return $finallyReturn36;
+        return $returnValue37;
     }
     $l16:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result19));
