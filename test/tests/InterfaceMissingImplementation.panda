@@ -1,0 +1,20 @@
+class Base {
+    method foo(x:Int) {
+        Console.printLine("Base.foo")
+    }
+}
+
+interface Foo {
+    method foo()
+}
+
+class Sub : Base, Foo {
+}
+
+class InterfaceMissingImplementation {
+    @class
+    method main() {
+        def f:Foo := Sub()
+        f.foo()
+    }
+}

@@ -1,0 +1,14 @@
+class PreconditionMultiple1 {
+    @pre(x > 0)
+    @pre(x % 2 = 1)
+    method test(x:Int) {
+    }
+}
+
+class PreconditionMultiple2 : PreconditionMultiple1 {
+    @override
+    @preOr(x < 0)
+    @preOr(x % 2 = 0)
+    method test(x:Int) {
+    }
+}

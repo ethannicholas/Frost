@@ -1,0 +1,13 @@
+class PreconditionBadPreOr1 {
+    @class
+    @pre(x > 0)
+    method test(x:Int) {
+    }
+}
+
+class PreconditionBadPreOr2 {
+    @class
+    @preOr(x < -10)
+    method test(x:Int) {
+    }
+}

@@ -5,7 +5,6 @@
 #include "panda/collections/Key.h"
 #include "panda/core/Equatable.h"
 #include "panda/core/Bit.h"
-#include "panda/core/Object.h"
 #include "panda/core/Comparable.h"
 #include "panda/core/Int64.h"
 #include "panda/core/Panda.h"
@@ -17,27 +16,28 @@
 #include "panda/core/UInt16.h"
 #include "panda/core/UInt32.h"
 #include "panda/core/UInt64.h"
-panda$core$Bit panda$core$Real32$$EQ$panda$core$Real32$R$panda$core$Bit$shim(panda$core$Real32 self, panda$core$Object* p0) {
+#include "panda/core/Object.h"
+panda$core$Bit panda$core$Real32$$EQ$panda$core$Real32$R$panda$core$Bit$shim(panda$core$Real32 self, panda$core$Equatable* p0) {
     panda$core$Bit result = panda$core$Real32$$EQ$panda$core$Real32$R$panda$core$Bit(self, ((panda$core$Real32$wrapper*) p0)->value);
     return result;
 }
-panda$core$Bit panda$core$Real32$$NEQ$panda$core$Real32$R$panda$core$Bit$shim(panda$core$Real32 self, panda$core$Object* p0) {
+panda$core$Bit panda$core$Real32$$NEQ$panda$core$Real32$R$panda$core$Bit$shim(panda$core$Real32 self, panda$core$Equatable* p0) {
     panda$core$Bit result = panda$core$Real32$$NEQ$panda$core$Real32$R$panda$core$Bit(self, ((panda$core$Real32$wrapper*) p0)->value);
     return result;
 }
-panda$core$Bit panda$core$Real32$$GT$panda$core$Real32$R$panda$core$Bit$shim(panda$core$Real32 self, panda$core$Object* p0) {
+panda$core$Bit panda$core$Real32$$GT$panda$core$Real32$R$panda$core$Bit$shim(panda$core$Real32 self, panda$core$Comparable* p0) {
     panda$core$Bit result = panda$core$Real32$$GT$panda$core$Real32$R$panda$core$Bit(self, ((panda$core$Real32$wrapper*) p0)->value);
     return result;
 }
-panda$core$Bit panda$core$Real32$$LT$panda$core$Real32$R$panda$core$Bit$shim(panda$core$Real32 self, panda$core$Object* p0) {
+panda$core$Bit panda$core$Real32$$LT$panda$core$Real32$R$panda$core$Bit$shim(panda$core$Real32 self, panda$core$Comparable* p0) {
     panda$core$Bit result = panda$core$Real32$$LT$panda$core$Real32$R$panda$core$Bit(self, ((panda$core$Real32$wrapper*) p0)->value);
     return result;
 }
-panda$core$Bit panda$core$Real32$$GE$panda$core$Real32$R$panda$core$Bit$shim(panda$core$Real32 self, panda$core$Object* p0) {
+panda$core$Bit panda$core$Real32$$GE$panda$core$Real32$R$panda$core$Bit$shim(panda$core$Real32 self, panda$core$Comparable* p0) {
     panda$core$Bit result = panda$core$Real32$$GE$panda$core$Real32$R$panda$core$Bit(self, ((panda$core$Real32$wrapper*) p0)->value);
     return result;
 }
-panda$core$Bit panda$core$Real32$$LE$panda$core$Real32$R$panda$core$Bit$shim(panda$core$Real32 self, panda$core$Object* p0) {
+panda$core$Bit panda$core$Real32$$LE$panda$core$Real32$R$panda$core$Bit$shim(panda$core$Real32 self, panda$core$Comparable* p0) {
     panda$core$Bit result = panda$core$Real32$$LE$panda$core$Real32$R$panda$core$Bit(self, ((panda$core$Real32$wrapper*) p0)->value);
     return result;
 }
@@ -45,22 +45,22 @@ panda$core$Bit panda$core$Real32$$LE$panda$core$Real32$R$panda$core$Bit$shim(pan
 panda$core$Int64 panda$core$Real32$hash$R$panda$core$Int64$wrappershim(panda$core$Real32$wrapper* self) {
     return panda$core$Real32$hash$R$panda$core$Int64(self->value);
 }
-panda$core$Bit panda$core$Real32$$EQ$panda$core$Real32$R$panda$core$Bit$wrappershim(panda$core$Real32$wrapper* self, panda$core$Object* other) {
+panda$core$Bit panda$core$Real32$$EQ$panda$core$Real32$R$panda$core$Bit$wrappershim(panda$core$Real32$wrapper* self, panda$core$Equatable* other) {
     return panda$core$Real32$$EQ$panda$core$Real32$R$panda$core$Bit(self->value, ((panda$core$Real32$wrapper*) other)->value);
 }
-panda$core$Bit panda$core$Real32$$NEQ$panda$core$Real32$R$panda$core$Bit$wrappershim(panda$core$Real32$wrapper* self, panda$core$Object* other) {
+panda$core$Bit panda$core$Real32$$NEQ$panda$core$Real32$R$panda$core$Bit$wrappershim(panda$core$Real32$wrapper* self, panda$core$Equatable* other) {
     return panda$core$Real32$$NEQ$panda$core$Real32$R$panda$core$Bit(self->value, ((panda$core$Real32$wrapper*) other)->value);
 }
-panda$core$Bit panda$core$Real32$$GT$panda$core$Real32$R$panda$core$Bit$wrappershim(panda$core$Real32$wrapper* self, panda$core$Object* other) {
+panda$core$Bit panda$core$Real32$$GT$panda$core$Real32$R$panda$core$Bit$wrappershim(panda$core$Real32$wrapper* self, panda$core$Comparable* other) {
     return panda$core$Real32$$GT$panda$core$Real32$R$panda$core$Bit(self->value, ((panda$core$Real32$wrapper*) other)->value);
 }
-panda$core$Bit panda$core$Real32$$LT$panda$core$Real32$R$panda$core$Bit$wrappershim(panda$core$Real32$wrapper* self, panda$core$Object* other) {
+panda$core$Bit panda$core$Real32$$LT$panda$core$Real32$R$panda$core$Bit$wrappershim(panda$core$Real32$wrapper* self, panda$core$Comparable* other) {
     return panda$core$Real32$$LT$panda$core$Real32$R$panda$core$Bit(self->value, ((panda$core$Real32$wrapper*) other)->value);
 }
-panda$core$Bit panda$core$Real32$$GE$panda$core$Real32$R$panda$core$Bit$wrappershim(panda$core$Real32$wrapper* self, panda$core$Object* other) {
+panda$core$Bit panda$core$Real32$$GE$panda$core$Real32$R$panda$core$Bit$wrappershim(panda$core$Real32$wrapper* self, panda$core$Comparable* other) {
     return panda$core$Real32$$GE$panda$core$Real32$R$panda$core$Bit(self->value, ((panda$core$Real32$wrapper*) other)->value);
 }
-panda$core$Bit panda$core$Real32$$LE$panda$core$Real32$R$panda$core$Bit$wrappershim(panda$core$Real32$wrapper* self, panda$core$Object* other) {
+panda$core$Bit panda$core$Real32$$LE$panda$core$Real32$R$panda$core$Bit$wrappershim(panda$core$Real32$wrapper* self, panda$core$Comparable* other) {
     return panda$core$Real32$$LE$panda$core$Real32$R$panda$core$Bit(self->value, ((panda$core$Real32$wrapper*) other)->value);
 }
 panda$core$String* panda$core$Real32$convert$R$panda$core$String$wrappershim(panda$core$Real32$wrapper* self) {

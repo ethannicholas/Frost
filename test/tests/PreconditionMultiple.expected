@@ -1,0 +1,3 @@
+PreconditionMultiple.panda:3:16: error: found more than one precondition
+PreconditionMultiple.panda:11:18: error: found more than one precondition
+2 errors

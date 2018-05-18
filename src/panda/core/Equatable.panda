@@ -1,7 +1,13 @@
 package panda.core
 
-interface Equatable<T> { -- FIXME type should be Equatable<T:Equatable<T>>
+====================================================================================================
+Interface for objects which can be compared for equality. As `Equatable` provides a default
+implementation of `!=`, only the `=` operator is strictly required.
+====================================================================================================
+interface Equatable<T:Equatable<T>> {
     function =(other:T):Bit
 
-    function !=(other:T):Bit
+    function !=(other:T):Bit {
+        return !(self = other)
+    }
 }

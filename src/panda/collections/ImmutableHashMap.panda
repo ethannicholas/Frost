@@ -7,7 +7,7 @@ Immutable implementation of the [Map] interface, which associates keys with valu
 are typically created via the [HashMap.finish()] function.
 ====================================================================================================
 @final
-class ImmutableHashMap<K:Key<K>, V> : MapView<K, V>, Equatable<MapView<K, V>> {
+class ImmutableHashMap<K:Key<K>, V> : MapView<K, V> {
     @private
     class Entry<K:Key<K>, V> {
         ============================================================================================
@@ -207,31 +207,6 @@ class ImmutableHashMap<K:Key<K>, V> : MapView<K, V>, Equatable<MapView<K, V>> {
     @override
     function get_count():Int {
         return _count
-    }
-
-    ================================================================================================
-    Returns `true` if `o` is a MapView containing the same key/value pairs as this map.
-
-    @param o the object to compare against
-    @returns `true` if the two values are equal
-    ================================================================================================
-    @override
-    function =(other:MapView<K, V>):Bit {
--*        if count != other.get_count() {
-            return false
-        }
-        for (key, value) in self {
-            if value != m[key] {
-                return false
-            }
-        }
-        return true*-
-        assert false, "ImmutableHashMap.="
-    }
-
-    @override
-    function !=(other:MapView<K, V>):Bit {
-        assert false, "ImmutableHashMap.!=" -- fixme remove this method when default != is in
     }
 
     ================================================================================================

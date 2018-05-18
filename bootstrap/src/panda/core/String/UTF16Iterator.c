@@ -37,6 +37,7 @@ void panda$core$String$UTF16Iterator$init$panda$core$String(panda$core$String$UT
         panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp4));
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp3));
     }
+    PANDA_ASSERT(((panda$core$Bit) { false }).value);
 }
 panda$core$Bit panda$core$String$UTF16Iterator$get_done$R$panda$core$Bit(panda$core$String$UTF16Iterator* self) {
     panda$core$Bit $finallyReturn4;

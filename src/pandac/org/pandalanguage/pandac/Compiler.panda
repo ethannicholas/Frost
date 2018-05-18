@@ -872,12 +872,29 @@ class Compiler {
         assert intfClass != null
         def result := Array<MethodDecl>()
         for m in intfClass.methods {
+            if m.annotations.isClass() {
+                continue
+            }
             def found := findMethod(cl.type(), m.name, remapType(intf, inheritedType(m)), false)
-            assert found != null, "internal error: interface \{m.declaration()} not found in " +
-                    "\{cl.name}"
-            result.add(found)
+            if found != null {
+                result.add(found)
+            }
+            else if m.body != null {
+                result.add(m)
+            }
+            else {
+                error(cl.position, "class '\{cl.name}' does not implement interface " +
+                        m.declaration())
+            }
         }
         return result
+    }
+
+    method checkInterfaceMethods() {
+        def cl := currentClass[0]
+        for intf in allInterfaces(cl.type()) {
+            interfaceMethods(cl, intf)
+        }
     }
 
     method getSymbolTable(cl:ClassDecl):SymbolTable {
@@ -1724,6 +1741,9 @@ class Compiler {
         }
         if type.isBuiltinNumber() & target.isBuiltinNumber() {
             return true
+        }
+        if type.typeKind = Type.Kind.GENERIC_PARAMETER {
+            return canCast(type.parameter.bound, target)
         }
         if type.typeKind = Type.Kind.INVALID {
             return false
@@ -4108,22 +4128,27 @@ class Compiler {
                 for ann in current.annotations.expressions {
                     match ann {
                         when Annotations.Expression.PRE(expr):
-                            if current == m & m.overridden != null {
-                                error(expr.position(), "cannot use '@pre' in a method which " +
-                                        "overrides another method; did you mean '@preOr'?")
-                            }
-                            if currentPre != null {
-                                error(expr.position(), "found more than one precondition")
+                            if current == m {
+                                if m.overridden != null {
+                                    error(expr.position(), "cannot use '@pre' in a method which " +
+                                            "overrides another method; did you mean '@preOr'?")
+                                }
+                                if currentPre != null {
+                                    error(expr.position(), "found more than one precondition")
+                                }
                             }
                             currentPre := coerce(compileExpressionInContext(expr, current, m),
                                     Type.Bit())
                         when Annotations.Expression.PRE_OR(expr):
-                            if current == m & m.overridden = null {
-                                error(expr.position(), "cannot use '@preOr' in a method which " +
-                                        "does not override another method; did you mean '@pre'?")
-                            }
-                            if currentPre != null {
-                                error(expr.position(), "found more than one precondition")
+                            if current == m {
+                                if m.overridden = null {
+                                    error(expr.position(), "cannot use '@preOr' in a method " +
+                                            "which does not override another method; did you " +
+                                            "mean '@pre'?")
+                                }
+                                if currentPre != null {
+                                    error(expr.position(), "found more than one precondition")
+                                }
                             }
                             currentPre := coerce(compileExpressionInContext(expr, current, m),
                                     Type.Bit())
@@ -4301,11 +4326,18 @@ class Compiler {
         }
         def old := symbolTable
         symbolTable := getSymbolTable(cl)
-        codeGenerator.start(cl)
+        checkInterfaceMethods()
+        var started := false
+        if errorCount = 0 {
+            codeGenerator.start(cl)
+            started := true
+        }
         for m in cl.methods {
             compile(m)
         }
-        codeGenerator.end(cl)
+        if started {
+            codeGenerator.end(cl)
+        }
         symbolTable := old
         currentClass.pop()
         compiling := null

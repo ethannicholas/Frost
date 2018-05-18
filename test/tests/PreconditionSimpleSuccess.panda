@@ -1,0 +1,12 @@
+class PreconditionSimpleSuccess {
+    @class
+    @pre(x > 0)
+    method test(x:Int) {
+        Console.printLine("Got X: \{x}")
+    }
+
+    @class
+    method main() {
+        test(1)
+    }
+}

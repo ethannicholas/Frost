@@ -5,11 +5,11 @@
 #include "panda/collections/Key.h"
 #include "panda/core/Equatable.h"
 #include "panda/core/Bit.h"
-#include "panda/core/Object.h"
 #include "org/pandalanguage/pandac/Type/Kind.h"
 #include "org/pandalanguage/pandac/Position.h"
 #include "panda/collections/Array.h"
 #include "panda/core/Panda.h"
+#include "panda/core/Object.h"
 #include "panda/core/Int64.h"
 #include "panda/collections/ListView.h"
 #include "panda/core/MutableString.h"
@@ -28,11 +28,11 @@
 #include "org/pandalanguage/pandac/ClassDecl.h"
 #include "panda/collections/HashMap.h"
 #include "panda/core/Range.LTpanda/core/Int64.GT.h"
-panda$core$Bit org$pandalanguage$pandac$Type$$EQ$org$pandalanguage$pandac$Type$R$panda$core$Bit$shim(org$pandalanguage$pandac$Type* self, panda$core$Object* p0) {
+panda$core$Bit org$pandalanguage$pandac$Type$$EQ$org$pandalanguage$pandac$Type$R$panda$core$Bit$shim(org$pandalanguage$pandac$Type* self, panda$core$Equatable* p0) {
     panda$core$Bit result = org$pandalanguage$pandac$Type$$EQ$org$pandalanguage$pandac$Type$R$panda$core$Bit(self, ((org$pandalanguage$pandac$Type*) p0));
     return result;
 }
-panda$core$Bit org$pandalanguage$pandac$Type$$NEQ$org$pandalanguage$pandac$Type$R$panda$core$Bit$shim(org$pandalanguage$pandac$Type* self, panda$core$Object* p0) {
+panda$core$Bit org$pandalanguage$pandac$Type$$NEQ$org$pandalanguage$pandac$Type$R$panda$core$Bit$shim(org$pandalanguage$pandac$Type* self, panda$core$Equatable* p0) {
     panda$core$Bit result = org$pandalanguage$pandac$Type$$NEQ$org$pandalanguage$pandac$Type$R$panda$core$Bit(self, ((org$pandalanguage$pandac$Type*) p0));
     return result;
 }

@@ -1,0 +1,3 @@
+Got X2: 1
+Got X2: -12
+assertion failure (PreconditionOverrideFail.panda:2): precondition failure

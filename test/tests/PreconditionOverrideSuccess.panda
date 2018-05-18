@@ -1,0 +1,20 @@
+class PreconditionOverrideSuccess1 {
+    @pre(x > 0)
+    method test(x:Int) {
+        Console.printLine("Got X1: \{x}")
+    }
+}
+
+class PreconditionOverrideSuccess2 : PreconditionOverrideSuccess1 {
+    @override
+    @preOr(x < -10)
+    method test(x:Int) {
+        Console.printLine("Got X2: \{x}")
+    }
+
+    @class
+    method main() {
+        PreconditionOverrideSuccess1().test(10)
+        PreconditionOverrideSuccess2().test(-50)
+    }
+}

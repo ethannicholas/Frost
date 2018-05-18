@@ -1,11 +1,22 @@
 package panda.core
 
-interface Comparable<T> : Equatable<T> {
+====================================================================================================
+Interface for objects which can be compared for equality and ordering. To fully implement this
+interface, only the `=` (inherited from `Equatable`) and `>` operators are required, as the others
+all have default implementations.
+====================================================================================================
+interface Comparable<T:Comparable<T>> : Equatable<T> {
     function >(other:T):Bit
 
-    function <(other:T):Bit
+    function <(other:T):Bit {
+        return other > self
+    }
 
-    function >=(other:T):Bit
+    function >=(other:T):Bit {
+        return !(self < other)
+    }
 
-    function <=(other:T):Bit
+    function <=(other:T):Bit {
+        return !(self > other)
+    }
 }

@@ -1,0 +1,28 @@
+class PreconditionComplexInheritance1 {
+    @pre(x > 0)
+    method test(x:Int) {
+        Console.printLine("Got X1: \{x}")
+    }
+}
+
+interface PreconditionComplexInheritance2 {
+    @pre(x % 2 = 1)
+    method test(x:Int) {
+        Console.printLine("Got X2: \{x}")
+    }
+}
+
+class PreconditionComplexInheritance3 : PreconditionComplexInheritance1,
+        PreconditionComplexInheritance2 {
+    @override
+    @preOr(x < 0)
+    method test(x:Int) {
+        Console.printLine("Got X3: \{x}")
+    }
+
+    @class
+    method main() {
+        PreconditionComplexInheritance3().test(1)
+        PreconditionComplexInheritance3().test(-50)
+    }
+}

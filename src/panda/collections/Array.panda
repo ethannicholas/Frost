@@ -43,9 +43,6 @@ class Array<T> : List<T> {
     init(capacity:Int) {
         self.capacity := capacity
         data := Pointer<T>.alloc(capacity)
-        for i in 0 .. capacity {
-            assert data[i] = null
-        }
     }
 
     init(list:ListView<T>) {
@@ -74,13 +71,11 @@ class Array<T> : List<T> {
 
     @override
     function [](index:Int):T {
-        assert index >= 0 & index < count, "index \{index} is out of bounds (count = \{count})"
         return data[index]
     }
 
     @override
     method []:=(index:Int, value:T) {
-        assert index >= 0 & index < count, "index \{index} is out of bounds (count = \{count})"
         data[index] := value
     }
 

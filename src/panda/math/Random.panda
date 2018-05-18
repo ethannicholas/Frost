@@ -1,6 +1,16 @@
 package panda.math
 
 interface Random {
+    ================================================================================================
+    Provides an automatically-seeded implementation of the default random number generator. The
+    precise algorithm chosen may be system- and version-dependent and is not guaranteed to remain
+    consistent over time.
+    ================================================================================================
+    @class
+    function default():Random {
+        return XorShift128Plus(Panda.currentTime())
+    }
+
     method int64():Int64
 
     method int(n:Int64):Int64

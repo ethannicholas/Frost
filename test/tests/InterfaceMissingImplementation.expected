@@ -1,0 +1,2 @@
+InterfaceMissingImplementation.panda:11:1: error: class 'anonymous.Sub' does not implement interface method anonymous.Foo.foo()
+1 error

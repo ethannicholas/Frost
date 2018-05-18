@@ -194,7 +194,7 @@ choice JSON {
         }
     }
 
-    -- @pre(self = INT)
+    @pre(self = INT)
     function asInt():Int64 {
         match self {
             when INT(value):
@@ -204,7 +204,7 @@ choice JSON {
         }
     }
 
-    -- @pre(self = REAL)
+    @pre(self = REAL)
     function asReal():Real64 {
         match self {
             when REAL(value):
@@ -214,7 +214,7 @@ choice JSON {
         }
     }
 
-    -- @pre(self = STRING)
+    @pre(self = STRING)
     function asString():String {
         match self {
             when STRING(value):
@@ -224,7 +224,7 @@ choice JSON {
         }
     }
 
-    -- @pre(self = BIT)
+    @pre(self = BIT)
     function asBit():Bit {
         match self {
             when BIT(value):
@@ -234,7 +234,7 @@ choice JSON {
         }
     }
 
-    -- @pre(self = OBJECT)
+    @pre(self = OBJECT)
     function asObject():MapView<String, JSON> {
         match self {
             when OBJECT(value):
@@ -244,7 +244,7 @@ choice JSON {
         }
     }
 
-    -- @pre(self = ARRAY)
+    @pre(self = ARRAY)
     function asObject():ListView<JSON> {
         match self {
             when ARRAY(value):

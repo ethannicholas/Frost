@@ -1,0 +1,20 @@
+interface Intf {
+    class Implementation : Intf {
+        @override
+        method foo() {
+            Console.printLine("implementation.foo")
+        }
+    }
+
+    method foo()
+
+    @class
+    method getTest():Intf {
+        return Implementation()
+    }
+
+    @class
+    method main() {
+        Intf.getTest().foo()
+    }
+}

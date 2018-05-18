@@ -1,0 +1,3 @@
+char 0: H
+entire string: Hello
+assertion failure (PreconditionOverrideParameterName.panda:2): precondition failure

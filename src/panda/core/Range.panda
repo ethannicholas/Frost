@@ -1,5 +1,13 @@
 package panda.core
 
+====================================================================================================
+Represents a range between two values. `Range` contains a `min`, `max`, and flag to determine
+inclusive vs. exclusive ranges; the `inclusive` flag is understood to refer to the `max` endpoint
+only, with `min` always being included in the `Range`.
+
+The exclusive range (`..`) and inclusive range (`...`) operators in Panda provide a shorthand syntax
+for creating `Range` and [SteppedRange] objects.
+====================================================================================================
 @final
 @specialize
 class Range<T:Value?> : Value {

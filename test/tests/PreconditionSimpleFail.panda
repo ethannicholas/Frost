@@ -1,0 +1,12 @@
+class PreconditionSimpleFail {
+    @class
+    @pre(x > 0)
+    method test(x:Int) {
+        Console.printLine("This should not happen.")
+    }
+
+    @class
+    method main() {
+        test(-1)
+    }
+}

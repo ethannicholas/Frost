@@ -135,6 +135,7 @@ add_executable(bootstrap
     bootstrap/src/org/pandalanguage/pandac/ClassDecl/Resolution.c
     bootstrap/src/org/pandalanguage/pandac/CodeGenerator.c
     bootstrap/src/org/pandalanguage/pandac/Compiler.c
+    bootstrap/src/org/pandalanguage/pandac/Compiler/AutoSymbolTable.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/CompilerErrorReporter.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/CompileTargetResult.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/Settings.c

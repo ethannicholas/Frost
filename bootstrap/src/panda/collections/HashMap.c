@@ -2,31 +2,23 @@
 #include "panda/core/Object.h"
 #include "panda/core/Class.h"
 #include "panda/core/String.h"
-#include "panda/core/Equatable.h"
-#include "panda/core/Bit.h"
-#include "panda/collections/MapView.h"
 #include "panda/collections/Map.h"
+#include "panda/collections/MapView.h"
 #include "panda/collections/Key.h"
 #include "panda/collections/Iterator.h"
 #include "panda/collections/MapWriter.h"
 #include "panda/core/Int64.h"
 #include "panda/core/Range.LTpanda/core/Int64.GT.h"
+#include "panda/core/Bit.h"
 #include "panda/core/Panda.h"
 #include "panda/collections/HashMap/Entry.h"
+#include "panda/core/Equatable.h"
 #include "panda/collections/HashMap/KeyIterator.h"
 #include "panda/collections/HashMap/ValueIterator.h"
 #include "panda/core/MutableString.h"
 #include "panda/core/Char8.h"
 #include "panda/core/UInt8.h"
 #include "panda/collections/ImmutableHashMap.h"
-panda$core$Bit panda$collections$HashMap$$EQ$panda$collections$MapView$LTpanda$collections$HashMap$K$Cpanda$collections$HashMap$V$GT$R$panda$core$Bit$shim(panda$collections$HashMap* self, panda$core$Object* p0) {
-    panda$core$Bit result = panda$collections$HashMap$$EQ$panda$collections$MapView$LTpanda$collections$HashMap$K$Cpanda$collections$HashMap$V$GT$R$panda$core$Bit(self, ((panda$collections$MapView*) p0));
-    return result;
-}
-panda$core$Bit panda$collections$HashMap$$NEQ$panda$collections$MapView$LTpanda$collections$HashMap$K$Cpanda$collections$HashMap$V$GT$R$panda$core$Bit$shim(panda$collections$HashMap* self, panda$core$Object* p0) {
-    panda$core$Bit result = panda$collections$HashMap$$NEQ$panda$collections$MapView$LTpanda$collections$HashMap$K$Cpanda$collections$HashMap$V$GT$R$panda$core$Bit(self, ((panda$collections$MapView*) p0));
-    return result;
-}
 panda$core$Object* panda$collections$HashMap$$IDX$panda$collections$HashMap$K$R$panda$collections$HashMap$V$Q$shim(panda$collections$HashMap* self, panda$core$Object* p0) {
     panda$core$Object* result = panda$collections$HashMap$$IDX$panda$collections$HashMap$K$R$panda$collections$HashMap$V$Q(self, ((panda$collections$Key*) p0));
     return result;
@@ -44,27 +36,25 @@ void panda$collections$HashMap$$IDXEQ$panda$collections$HashMap$K$panda$collecti
 }
 
 
-struct { panda$core$Class* cl; ITable* next; void* methods[2]; } panda$collections$HashMap$_panda$core$Equatable = { (panda$core$Class*) &panda$core$Equatable$class, NULL, { panda$collections$HashMap$$EQ$panda$collections$MapView$LTpanda$collections$HashMap$K$Cpanda$collections$HashMap$V$GT$R$panda$core$Bit$shim, panda$collections$HashMap$$NEQ$panda$collections$MapView$LTpanda$collections$HashMap$K$Cpanda$collections$HashMap$V$GT$R$panda$core$Bit$shim} };
-
-struct { panda$core$Class* cl; ITable* next; void* methods[0]; } panda$collections$HashMap$_panda$collections$Map = { (panda$core$Class*) &panda$collections$Map$class, (ITable*) &panda$collections$HashMap$_panda$core$Equatable, { } };
+struct { panda$core$Class* cl; ITable* next; void* methods[0]; } panda$collections$HashMap$_panda$collections$Map = { (panda$core$Class*) &panda$collections$Map$class, NULL, { } };
 
 struct { panda$core$Class* cl; ITable* next; void* methods[4]; } panda$collections$HashMap$_panda$collections$MapView = { (panda$core$Class*) &panda$collections$MapView$class, (ITable*) &panda$collections$HashMap$_panda$collections$Map, { panda$collections$HashMap$get_count$R$panda$core$Int64, panda$collections$HashMap$$IDX$panda$collections$HashMap$K$R$panda$collections$HashMap$V$Q$shim, panda$collections$HashMap$keys$R$panda$collections$Iterator$LTpanda$collections$HashMap$K$GT$shim, panda$collections$HashMap$values$R$panda$collections$Iterator$LTpanda$collections$HashMap$V$GT$shim} };
 
 struct { panda$core$Class* cl; ITable* next; void* methods[1]; } panda$collections$HashMap$_panda$collections$MapWriter = { (panda$core$Class*) &panda$collections$MapWriter$class, (ITable*) &panda$collections$HashMap$_panda$collections$MapView, { panda$collections$HashMap$$IDXEQ$panda$collections$HashMap$K$panda$collections$HashMap$V$shim} };
 
 static panda$core$String $s1;
-panda$collections$HashMap$class_type panda$collections$HashMap$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, (ITable*) &panda$collections$HashMap$_panda$collections$MapWriter, { panda$collections$HashMap$convert$R$panda$core$String, panda$collections$HashMap$cleanup, panda$collections$HashMap$indexFor$panda$collections$HashMap$K$R$panda$core$Int64, panda$collections$HashMap$$IDX$panda$collections$HashMap$K$R$panda$collections$HashMap$V$Q$shim, panda$collections$HashMap$contains$panda$collections$HashMap$K$R$panda$core$Bit, panda$collections$HashMap$$IDXEQ$panda$collections$HashMap$K$panda$collections$HashMap$V$shim, panda$collections$HashMap$remove$panda$collections$HashMap$K, panda$collections$HashMap$clear, panda$collections$HashMap$incrementCount, panda$collections$HashMap$keys$R$panda$collections$Iterator$LTpanda$collections$HashMap$K$GT$shim, panda$collections$HashMap$values$R$panda$collections$Iterator$LTpanda$collections$HashMap$V$GT$shim, panda$collections$HashMap$get_count$R$panda$core$Int64, panda$collections$HashMap$$EQ$panda$collections$MapView$LTpanda$collections$HashMap$K$Cpanda$collections$HashMap$V$GT$R$panda$core$Bit$shim, panda$collections$HashMap$$NEQ$panda$collections$MapView$LTpanda$collections$HashMap$K$Cpanda$collections$HashMap$V$GT$R$panda$core$Bit$shim, panda$collections$HashMap$finish$R$panda$collections$ImmutableHashMap$LTpanda$collections$HashMap$K$Cpanda$collections$HashMap$V$GT} };
+panda$collections$HashMap$class_type panda$collections$HashMap$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, (ITable*) &panda$collections$HashMap$_panda$collections$MapWriter, { panda$collections$HashMap$convert$R$panda$core$String, panda$collections$HashMap$cleanup, panda$collections$HashMap$indexFor$panda$collections$HashMap$K$R$panda$core$Int64, panda$collections$HashMap$$IDX$panda$collections$HashMap$K$R$panda$collections$HashMap$V$Q$shim, panda$collections$HashMap$contains$panda$collections$HashMap$K$R$panda$core$Bit, panda$collections$HashMap$$IDXEQ$panda$collections$HashMap$K$panda$collections$HashMap$V$shim, panda$collections$HashMap$remove$panda$collections$HashMap$K, panda$collections$HashMap$clear, panda$collections$HashMap$incrementCount, panda$collections$HashMap$keys$R$panda$collections$Iterator$LTpanda$collections$HashMap$K$GT$shim, panda$collections$HashMap$values$R$panda$collections$Iterator$LTpanda$collections$HashMap$V$GT$shim, panda$collections$HashMap$get_count$R$panda$core$Int64, panda$collections$HashMap$finish$R$panda$collections$ImmutableHashMap$LTpanda$collections$HashMap$K$Cpanda$collections$HashMap$V$GT} };
 
 typedef panda$collections$Iterator* (*$fn36)(panda$collections$MapView*);
 typedef panda$core$Bit (*$fn43)(panda$collections$Iterator*);
 typedef panda$core$Object* (*$fn54)(panda$collections$Iterator*);
 typedef panda$core$Object* (*$fn59)(panda$collections$MapView*, panda$core$Object*);
 typedef panda$core$Int64 (*$fn90)(panda$collections$Key*);
-typedef panda$core$Bit (*$fn118)(panda$core$Equatable*, panda$core$Object*);
-typedef panda$core$Bit (*$fn146)(panda$core$Equatable*, panda$core$Object*);
-typedef panda$core$Bit (*$fn170)(panda$core$Equatable*, panda$core$Object*);
-typedef panda$core$Bit (*$fn204)(panda$core$Equatable*, panda$core$Object*);
-typedef panda$core$Bit (*$fn222)(panda$core$Equatable*, panda$core$Object*);
+typedef panda$core$Bit (*$fn118)(panda$core$Equatable*, panda$core$Equatable*);
+typedef panda$core$Bit (*$fn146)(panda$core$Equatable*, panda$core$Equatable*);
+typedef panda$core$Bit (*$fn170)(panda$core$Equatable*, panda$core$Equatable*);
+typedef panda$core$Bit (*$fn204)(panda$core$Equatable*, panda$core$Equatable*);
+typedef panda$core$Bit (*$fn222)(panda$core$Equatable*, panda$core$Equatable*);
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x48\x61\x73\x68\x4d\x61\x70", 25, -7657594595818158330, NULL };
 static panda$core$String $s382 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
@@ -305,7 +295,7 @@ panda$core$Object* panda$collections$HashMap$$IDX$panda$collections$HashMap$K$R$
             $tmp116 = $tmp116->next;
         }
         $fn118 $tmp117 = $tmp116->methods[1];
-        panda$core$Bit $tmp119 = $tmp117(((panda$core$Equatable*) e109->key), ((panda$core$Object*) p_key));
+        panda$core$Bit $tmp119 = $tmp117(((panda$core$Equatable*) e109->key), ((panda$core$Equatable*) p_key));
         $tmp114 = $tmp119.value;
         $l115:;
         panda$core$Bit $tmp120 = { $tmp114 };
@@ -379,7 +369,7 @@ panda$core$Bit panda$collections$HashMap$contains$panda$collections$HashMap$K$R$
             $tmp144 = $tmp144->next;
         }
         $fn146 $tmp145 = $tmp144->methods[1];
-        panda$core$Bit $tmp147 = $tmp145(((panda$core$Equatable*) e137->key), ((panda$core$Object*) p_key));
+        panda$core$Bit $tmp147 = $tmp145(((panda$core$Equatable*) e137->key), ((panda$core$Equatable*) p_key));
         $tmp142 = $tmp147.value;
         $l143:;
         panda$core$Bit $tmp148 = { $tmp142 };
@@ -445,7 +435,7 @@ void panda$collections$HashMap$$IDXEQ$panda$collections$HashMap$K$panda$collecti
             $tmp168 = $tmp168->next;
         }
         $fn170 $tmp169 = $tmp168->methods[1];
-        panda$core$Bit $tmp171 = $tmp169(((panda$core$Equatable*) e161->key), ((panda$core$Object*) p_key));
+        panda$core$Bit $tmp171 = $tmp169(((panda$core$Equatable*) e161->key), ((panda$core$Equatable*) p_key));
         $tmp166 = $tmp171.value;
         $l167:;
         panda$core$Bit $tmp172 = { $tmp166 };
@@ -567,7 +557,7 @@ void panda$collections$HashMap$remove$panda$collections$HashMap$K(panda$collecti
             $tmp202 = $tmp202->next;
         }
         $fn204 $tmp203 = $tmp202->methods[0];
-        panda$core$Bit $tmp205 = $tmp203(((panda$core$Equatable*) e199->key), ((panda$core$Object*) p_key));
+        panda$core$Bit $tmp205 = $tmp203(((panda$core$Equatable*) e199->key), ((panda$core$Equatable*) p_key));
         if ($tmp205.value) {
         {
             {
@@ -610,7 +600,7 @@ void panda$collections$HashMap$remove$panda$collections$HashMap$K(panda$collecti
                     $tmp220 = $tmp220->next;
                 }
                 $fn222 $tmp221 = $tmp220->methods[0];
-                panda$core$Bit $tmp223 = $tmp221(((panda$core$Equatable*) next216->key), ((panda$core$Object*) p_key));
+                panda$core$Bit $tmp223 = $tmp221(((panda$core$Equatable*) next216->key), ((panda$core$Equatable*) p_key));
                 if ($tmp223.value) {
                 {
                     $tmp215 = 1;
@@ -926,12 +916,6 @@ panda$core$Int64 panda$collections$HashMap$get_count$R$panda$core$Int64(panda$co
     panda$core$Int64 $finallyReturn369;
     $finallyReturn369 = self->_count;
     return $finallyReturn369;
-}
-panda$core$Bit panda$collections$HashMap$$EQ$panda$collections$MapView$LTpanda$collections$HashMap$K$Cpanda$collections$HashMap$V$GT$R$panda$core$Bit(panda$collections$HashMap* self, panda$collections$MapView* p_other) {
-    PANDA_ASSERT(((panda$core$Bit) { false }).value);
-}
-panda$core$Bit panda$collections$HashMap$$NEQ$panda$collections$MapView$LTpanda$collections$HashMap$K$Cpanda$collections$HashMap$V$GT$R$panda$core$Bit(panda$collections$HashMap* self, panda$collections$MapView* p_other) {
-    PANDA_ASSERT(((panda$core$Bit) { false }).value);
 }
 panda$core$String* panda$collections$HashMap$convert$R$panda$core$String(panda$collections$HashMap* self) {
     panda$core$MutableString* result375 = NULL;

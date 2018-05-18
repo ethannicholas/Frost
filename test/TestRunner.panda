@@ -172,8 +172,10 @@ class TestRunner {
             child.input.print(input.readFully())
             child.input.cleanup() -- FIXME add close and use that
         }
-        def childResult := child.output.readFully()
+        def childResult1 := child.output.readFully()
+        def childResult2 := child.error.readFully()
         child.waitFor()
+        def childResult := childResult1 + childResult2
         if childResult != expected {
             Console.printLine("error, expected:\n\{expected}\nbut received:\n\{childResult}")
             return false
@@ -182,10 +184,64 @@ class TestRunner {
         return true
     }
 
+
+    @private
+    @class
+    method swap(a:List<File>, i1:Int, i2:Int) {
+        def tmp := a[i1]
+        a[i1] := a[i2]
+        a[i2] := tmp
+    }
+
+    @private
+    @class
+    function lessThan(a:String, b:String):Bit {
+        for i in 0 .. a.length().min(b.length()) {
+            if a[i] < b[i] {
+                return true
+            }
+            if a[i] > b[i] {
+                return false
+            }
+        }
+        return a.length() < b.length()
+    }
+
+    @private
+    @class
+    method sort(a:List<File>, left:Int, right:Int) {
+        if left >= right {
+            return
+        }
+        def pivotIndex := left + (right - left) // 2
+        def pivot := a[pivotIndex]
+        swap(a, right, pivotIndex)
+        var storeIndex := left
+        for i in left ... right - 1 {
+            if lessThan(a[i].name(), pivot.name()) {
+                swap(a, i, storeIndex)
+                storeIndex += 1
+            }
+        }
+        swap(a, storeIndex, right)
+        sort(a, left, storeIndex - 1)
+        sort(a, storeIndex + 1, right)
+    }
+
+    ================================================================================================
+    Quick and dirty naive quicksort, until generics are done and ListView can be 
+    sorted natively. FIXME kill this.
+    ================================================================================================
+    @class
+    method sort(a:List<File>) {
+        sort(a, 0, a.get_count() - 1)
+    }
+
     method run() {
         def pandac := buildDir.resolve("pandac")
         def tests := pandaHome.resolve("test/tests")
-        def files := tests.list()
+        def files := Array<File>(tests.list())
+        sort(files)
         var total := 0
         var success := 0
         for file in files {

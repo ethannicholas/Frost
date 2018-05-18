@@ -1,0 +1,14 @@
+class PreconditionBadPre1 {
+    @class
+    @pre(x > 0)
+    method test(x:Int) {
+    }
+}
+
+class PreconditionBadPre2 : PreconditionBadPre1 {
+    @class
+    @override
+    @pre(x < -10)
+    method test(x:Int) {
+    }
+}

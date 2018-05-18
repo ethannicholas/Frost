@@ -7,6 +7,7 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <sys/time.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 
@@ -434,6 +435,15 @@ float panda$core$Panda$sqrt$builtin_float32$R$builtin_float32(float v) {
 
 double panda$core$Panda$sqrt$builtin_float64$R$builtin_float64(double v) {
     return sqrt(v);
+}
+
+int64_t panda$core$Panda$currentTime$R$builtin_int64() {
+    struct timeval t;
+    if (gettimeofday(&t, NULL) == -1) {
+        abort();
+    }
+    return ((int64_t) t.tv_sec) * 1000 + ((int64_t) t.tv_usec) / 1000;
+    
 }
 
 // Console

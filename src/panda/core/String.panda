@@ -10,7 +10,38 @@ uses panda.unsafe.Pointer
 ------------------------------------------------------------------------------
 
 ====================================================================================================
-An immutable sequence of Unicode codepoints.
+An immutable sequence of Unicode codepoints. Each Unicode codepoint is a number between 0 and
+1,114,112; a `String` may consist of any sequence of zero or more codepoints, regardless of whether
+this sequence forms a sensible Unicode string. Note that a single logical character may be composed
+of multiple Unicode codepoints, such as a string consisting of REGIONAL INDICATOR SYMBOL LETTER B
+followed by REGIONAL INDICATOR SYMBOL LETTER R, which many platforms will render as a Brazilian flag
+Emoji. Even though this string will generally be displayed as a single logical character, Panda
+deals with Unicode codepoints and thus considers the string to have a length of 2.
+
+Internally, `String`s are stored using the UTF-8 encoding. The fact that UTF-8 is a variable-length
+encoding impacts the performance of some operations, as determining the offset of a given codepoint
+requires traversing the string from the beginning. Because of this, it can be much faster to use
+[String.Index] as opposed to numeric offsets to index into `String`s. For instance, the code:
+
+    for i in 0 .. string.length {
+        process(s[i])
+    }
+
+is relatively slow, as the repeated calls to `s[i]` constantly re-scan the `String` from the
+beginning to find each successive character. We can rewrite this code using `String.Index`:
+
+    var index := string.start()
+    while index != string.end() {
+        process(s[index])
+        index := s.next(index)
+    }
+
+this avoids the expensive re-scan of the string. Of course, iteration over the string is even
+simpler:
+
+    for c in string {
+        process(c)
+    }
 ====================================================================================================
 @final
 class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
@@ -116,6 +147,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
 
         init(str:String) {
             self.str := str
+            assert false, "unimplemented"
         }
 
         @override
@@ -266,14 +298,24 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
         }
     }
 
+    ================================================================================================
+    Returns a list of the bytes in this string's UTF-8 representation.
+    ================================================================================================
     function utf8():ListView<Char8> {
         return UTF8List(self)
     }
 
+    ================================================================================================
+    Returns an iterator which returns the code units of this string's UTF-16 representation. As not
+    all Unicode codepoints fit into a single UTF-16 code unit, the returned code units may contain
+    surrogate pairs.
+    ================================================================================================
     function utf16():Iterator<Char16> {
         return UTF16Iterator(self)
     }
 
+    ================================================================================================
+    ================================================================================================
     @override
     function iterator():Iterator<Char32> {
         return UTF32Iterator(self)
@@ -700,6 +742,9 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
         return self[SteppedRange<Index?, Int>(start, end, r.step, r.inclusive)]
     }
 
+    ================================================================================================
+    Returns `true` if this string contains at least one occurrence of the given character.
+    ================================================================================================
     function contains(c:Char8):Bit {
         for i in 0 .. _length {
             if data[i] = c {
@@ -709,6 +754,9 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
         return false
     }
 
+    ================================================================================================
+    Returns `true` if this string contains at least one occurrence of the given substring.
+    ================================================================================================
     function contains(s:String):Bit {
         return indexOf(s) != null
     }

@@ -4,54 +4,54 @@
 #include "panda/core/String.h"
 #include "panda/core/Comparable.h"
 #include "panda/core/Bit.h"
-#include "panda/core/Object.h"
 #include "panda/collections/Key.h"
 #include "panda/core/Equatable.h"
+#include "panda/core/Object.h"
 #include "panda/core/Int64.h"
-panda$core$Bit panda$core$String$Index$$GT$panda$core$String$Index$R$panda$core$Bit$shim(panda$core$String$Index self, panda$core$Object* p0) {
+panda$core$Bit panda$core$String$Index$$GT$panda$core$String$Index$R$panda$core$Bit$shim(panda$core$String$Index self, panda$core$Comparable* p0) {
     panda$core$Bit result = panda$core$String$Index$$GT$panda$core$String$Index$R$panda$core$Bit(self, ((panda$core$String$Index$wrapper*) p0)->value);
     return result;
 }
-panda$core$Bit panda$core$String$Index$$LT$panda$core$String$Index$R$panda$core$Bit$shim(panda$core$String$Index self, panda$core$Object* p0) {
+panda$core$Bit panda$core$String$Index$$LT$panda$core$String$Index$R$panda$core$Bit$shim(panda$core$String$Index self, panda$core$Comparable* p0) {
     panda$core$Bit result = panda$core$String$Index$$LT$panda$core$String$Index$R$panda$core$Bit(self, ((panda$core$String$Index$wrapper*) p0)->value);
     return result;
 }
-panda$core$Bit panda$core$String$Index$$GE$panda$core$String$Index$R$panda$core$Bit$shim(panda$core$String$Index self, panda$core$Object* p0) {
+panda$core$Bit panda$core$String$Index$$GE$panda$core$String$Index$R$panda$core$Bit$shim(panda$core$String$Index self, panda$core$Comparable* p0) {
     panda$core$Bit result = panda$core$String$Index$$GE$panda$core$String$Index$R$panda$core$Bit(self, ((panda$core$String$Index$wrapper*) p0)->value);
     return result;
 }
-panda$core$Bit panda$core$String$Index$$LE$panda$core$String$Index$R$panda$core$Bit$shim(panda$core$String$Index self, panda$core$Object* p0) {
+panda$core$Bit panda$core$String$Index$$LE$panda$core$String$Index$R$panda$core$Bit$shim(panda$core$String$Index self, panda$core$Comparable* p0) {
     panda$core$Bit result = panda$core$String$Index$$LE$panda$core$String$Index$R$panda$core$Bit(self, ((panda$core$String$Index$wrapper*) p0)->value);
     return result;
 }
-panda$core$Bit panda$core$String$Index$$EQ$panda$core$String$Index$R$panda$core$Bit$shim(panda$core$String$Index self, panda$core$Object* p0) {
+panda$core$Bit panda$core$String$Index$$EQ$panda$core$String$Index$R$panda$core$Bit$shim(panda$core$String$Index self, panda$core$Equatable* p0) {
     panda$core$Bit result = panda$core$String$Index$$EQ$panda$core$String$Index$R$panda$core$Bit(self, ((panda$core$String$Index$wrapper*) p0)->value);
     return result;
 }
-panda$core$Bit panda$core$String$Index$$NEQ$panda$core$String$Index$R$panda$core$Bit$shim(panda$core$String$Index self, panda$core$Object* p0) {
+panda$core$Bit panda$core$String$Index$$NEQ$panda$core$String$Index$R$panda$core$Bit$shim(panda$core$String$Index self, panda$core$Equatable* p0) {
     panda$core$Bit result = panda$core$String$Index$$NEQ$panda$core$String$Index$R$panda$core$Bit(self, ((panda$core$String$Index$wrapper*) p0)->value);
     return result;
 }
 
-panda$core$Bit panda$core$String$Index$$GT$panda$core$String$Index$R$panda$core$Bit$wrappershim(panda$core$String$Index$wrapper* self, panda$core$Object* other) {
+panda$core$Bit panda$core$String$Index$$GT$panda$core$String$Index$R$panda$core$Bit$wrappershim(panda$core$String$Index$wrapper* self, panda$core$Comparable* other) {
     return panda$core$String$Index$$GT$panda$core$String$Index$R$panda$core$Bit(self->value, ((panda$core$String$Index$wrapper*) other)->value);
 }
-panda$core$Bit panda$core$String$Index$$LT$panda$core$String$Index$R$panda$core$Bit$wrappershim(panda$core$String$Index$wrapper* self, panda$core$Object* other) {
+panda$core$Bit panda$core$String$Index$$LT$panda$core$String$Index$R$panda$core$Bit$wrappershim(panda$core$String$Index$wrapper* self, panda$core$Comparable* other) {
     return panda$core$String$Index$$LT$panda$core$String$Index$R$panda$core$Bit(self->value, ((panda$core$String$Index$wrapper*) other)->value);
 }
-panda$core$Bit panda$core$String$Index$$GE$panda$core$String$Index$R$panda$core$Bit$wrappershim(panda$core$String$Index$wrapper* self, panda$core$Object* other) {
+panda$core$Bit panda$core$String$Index$$GE$panda$core$String$Index$R$panda$core$Bit$wrappershim(panda$core$String$Index$wrapper* self, panda$core$Comparable* other) {
     return panda$core$String$Index$$GE$panda$core$String$Index$R$panda$core$Bit(self->value, ((panda$core$String$Index$wrapper*) other)->value);
 }
-panda$core$Bit panda$core$String$Index$$LE$panda$core$String$Index$R$panda$core$Bit$wrappershim(panda$core$String$Index$wrapper* self, panda$core$Object* other) {
+panda$core$Bit panda$core$String$Index$$LE$panda$core$String$Index$R$panda$core$Bit$wrappershim(panda$core$String$Index$wrapper* self, panda$core$Comparable* other) {
     return panda$core$String$Index$$LE$panda$core$String$Index$R$panda$core$Bit(self->value, ((panda$core$String$Index$wrapper*) other)->value);
 }
 panda$core$Int64 panda$core$String$Index$hash$R$panda$core$Int64$wrappershim(panda$core$String$Index$wrapper* self) {
     return panda$core$String$Index$hash$R$panda$core$Int64(self->value);
 }
-panda$core$Bit panda$core$String$Index$$EQ$panda$core$String$Index$R$panda$core$Bit$wrappershim(panda$core$String$Index$wrapper* self, panda$core$Object* other) {
+panda$core$Bit panda$core$String$Index$$EQ$panda$core$String$Index$R$panda$core$Bit$wrappershim(panda$core$String$Index$wrapper* self, panda$core$Equatable* other) {
     return panda$core$String$Index$$EQ$panda$core$String$Index$R$panda$core$Bit(self->value, ((panda$core$String$Index$wrapper*) other)->value);
 }
-panda$core$Bit panda$core$String$Index$$NEQ$panda$core$String$Index$R$panda$core$Bit$wrappershim(panda$core$String$Index$wrapper* self, panda$core$Object* other) {
+panda$core$Bit panda$core$String$Index$$NEQ$panda$core$String$Index$R$panda$core$Bit$wrappershim(panda$core$String$Index$wrapper* self, panda$core$Equatable* other) {
     return panda$core$String$Index$$NEQ$panda$core$String$Index$R$panda$core$Bit(self->value, ((panda$core$String$Index$wrapper*) other)->value);
 }
 void panda$core$String$Index$cleanup$wrappershim(panda$core$String$Index$wrapper* self) {

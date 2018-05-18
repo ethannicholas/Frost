@@ -20,7 +20,7 @@ typedef struct panda$collections$IdentityMap {
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"
 #undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[14]; } panda$collections$IdentityMap$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[12]; } panda$collections$IdentityMap$class_type;
 extern panda$collections$IdentityMap$class_type panda$collections$IdentityMap$class;
 
 #ifndef PANDA_TYPESONLY
@@ -28,7 +28,6 @@ typedef struct panda$collections$IdentityMap panda$collections$IdentityMap;
 #include "panda/core/Int64.h"
 typedef struct panda$core$Object panda$core$Object;
 #include "panda/core/Bit.h"
-typedef struct panda$collections$Map panda$collections$Map;
 typedef struct panda$collections$Iterator panda$collections$Iterator;
 typedef struct panda$core$String panda$core$String;
 
@@ -42,8 +41,6 @@ void panda$collections$IdentityMap$remove$panda$collections$IdentityMap$K(panda$
 void panda$collections$IdentityMap$clear(panda$collections$IdentityMap* self);
 void panda$collections$IdentityMap$incrementCount(panda$collections$IdentityMap* self);
 panda$core$Int64 panda$collections$IdentityMap$get_count$R$panda$core$Int64(panda$collections$IdentityMap* self);
-panda$core$Bit panda$collections$IdentityMap$$EQ$panda$collections$Map$LTpanda$collections$IdentityMap$K$Cpanda$collections$IdentityMap$V$GT$R$panda$core$Bit(panda$collections$IdentityMap* self, panda$collections$Map* p_other);
-panda$core$Bit panda$collections$IdentityMap$$NEQ$panda$collections$Map$LTpanda$collections$IdentityMap$K$Cpanda$collections$IdentityMap$V$GT$R$panda$core$Bit(panda$collections$IdentityMap* self, panda$collections$Map* p_other);
 panda$collections$Iterator* panda$collections$IdentityMap$keys$R$panda$collections$Iterator$LTpanda$collections$IdentityMap$K$GT(panda$collections$IdentityMap* self);
 panda$collections$Iterator* panda$collections$IdentityMap$values$R$panda$collections$Iterator$LTpanda$collections$IdentityMap$V$GT(panda$collections$IdentityMap* self);
 panda$core$String* panda$collections$IdentityMap$convert$R$panda$core$String(panda$collections$IdentityMap* self);

@@ -19,11 +19,10 @@ extern panda$core$Comparable$class_type panda$core$Comparable$class;
 #ifndef PANDA_TYPESONLY
 #include "panda/core/Bit.h"
 typedef struct panda$core$Comparable panda$core$Comparable;
-typedef struct panda$core$Object panda$core$Object;
 
-panda$core$Bit panda$core$Comparable$$GT$panda$core$Comparable$T$R$panda$core$Bit(panda$core$Comparable* self, panda$core$Object* p_other);
-panda$core$Bit panda$core$Comparable$$LT$panda$core$Comparable$T$R$panda$core$Bit(panda$core$Comparable* self, panda$core$Object* p_other);
-panda$core$Bit panda$core$Comparable$$GE$panda$core$Comparable$T$R$panda$core$Bit(panda$core$Comparable* self, panda$core$Object* p_other);
-panda$core$Bit panda$core$Comparable$$LE$panda$core$Comparable$T$R$panda$core$Bit(panda$core$Comparable* self, panda$core$Object* p_other);
+panda$core$Bit panda$core$Comparable$$GT$panda$core$Comparable$T$R$panda$core$Bit(panda$core$Comparable* self, panda$core$Comparable* p_other);
+panda$core$Bit panda$core$Comparable$$LT$panda$core$Comparable$T$R$panda$core$Bit(panda$core$Comparable* self, panda$core$Comparable* p_other);
+panda$core$Bit panda$core$Comparable$$GE$panda$core$Comparable$T$R$panda$core$Bit(panda$core$Comparable* self, panda$core$Comparable* p_other);
+panda$core$Bit panda$core$Comparable$$LE$panda$core$Comparable$T$R$panda$core$Bit(panda$core$Comparable* self, panda$core$Comparable* p_other);
 
 #endif

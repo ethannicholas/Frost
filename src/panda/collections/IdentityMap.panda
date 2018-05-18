@@ -9,7 +9,7 @@ However, it is important that the key not be a subclass of `Value`, as values do
 well-defined identities and `IdentityMap` will therefore not function properly with value keys.
 ====================================================================================================
 @final
-class IdentityMap<K, V> : Map<K, V>, Equatable<Map<K, V>> {
+class IdentityMap<K, V> : Map<K, V> {
     @private
     class Entry<K, V> {
         ============================================================================================
@@ -210,31 +210,6 @@ class IdentityMap<K, V> : Map<K, V>, Equatable<Map<K, V>> {
     @override
     function get_count():Int {
         return _count
-    }
-
-    ================================================================================================
-    Returns `true` if `o` is a Map containing the same key/value pairs as this map.
-
-    @param o the object to compare against
-    @returns `true` if the two values are equal
-    ================================================================================================
-    @override
-    function =(other:Map<K, V>):Bit {
--*        if count != other.get_count() {
-            return false
-        }
-        for (key, value) in self {
-            if value != m[key] {
-                return false
-            }
-        }
-        return true*-
-        assert false, "IdentityMap.="
-    }
-
-    @override
-    function !=(other:Map<K, V>):Bit {
-        assert false, "IdentityMap.!=" -- fixme remove this method when default != is in
     }
 
     @override

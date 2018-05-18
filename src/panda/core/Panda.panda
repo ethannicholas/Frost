@@ -113,6 +113,10 @@ class Panda {
     @class
     function sqrt(v:builtin_float64):builtin_float64
 
+    @class 
+    @external 
+    method currentTime():builtin_int64
+
     ================================================================================================
     Used to implement alignment specifiers during string interpolation. The alignment specifier must
     be of the form `[<fill>]<direction><width>`, where the optional `<fill>` is a single character

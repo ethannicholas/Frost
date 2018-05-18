@@ -19,9 +19,8 @@ extern panda$core$Equatable$class_type panda$core$Equatable$class;
 #ifndef PANDA_TYPESONLY
 #include "panda/core/Bit.h"
 typedef struct panda$core$Equatable panda$core$Equatable;
-typedef struct panda$core$Object panda$core$Object;
 
-panda$core$Bit panda$core$Equatable$$EQ$panda$core$Equatable$T$R$panda$core$Bit(panda$core$Equatable* self, panda$core$Object* p_other);
-panda$core$Bit panda$core$Equatable$$NEQ$panda$core$Equatable$T$R$panda$core$Bit(panda$core$Equatable* self, panda$core$Object* p_other);
+panda$core$Bit panda$core$Equatable$$EQ$panda$core$Equatable$T$R$panda$core$Bit(panda$core$Equatable* self, panda$core$Equatable* p_other);
+panda$core$Bit panda$core$Equatable$$NEQ$panda$core$Equatable$T$R$panda$core$Bit(panda$core$Equatable* self, panda$core$Equatable* p_other);
 
 #endif
