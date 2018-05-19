@@ -10,6 +10,7 @@
 #include "panda/core/Object.h"
 #include "org/pandalanguage/pandac/Variable/Storage.h"
 #include "panda/core/Int64.h"
+#include "org/pandalanguage/pandac/Symbol/Kind.h"
 
 
 static panda$core$String $s1;
@@ -34,6 +35,7 @@ void org$pandalanguage$pandac$Variable$init$org$pandalanguage$pandac$Position$or
     org$pandalanguage$pandac$IRNode* $tmp4;
     org$pandalanguage$pandac$Type* $tmp5;
     org$pandalanguage$pandac$Type* $tmp6;
+    org$pandalanguage$pandac$Symbol$Kind $tmp7;
     self->name = NULL;
     self->type = NULL;
     self->initialValue = NULL;
@@ -49,28 +51,29 @@ void org$pandalanguage$pandac$Variable$init$org$pandalanguage$pandac$Position$or
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp5));
     }
     self->storage = p_storage;
-    org$pandalanguage$pandac$Symbol$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$String(((org$pandalanguage$pandac$Symbol*) self), ((panda$core$Int64) { 208 }), p_position, p_name);
+    org$pandalanguage$pandac$Symbol$Kind$init$panda$core$Int64(&$tmp7, ((panda$core$Int64) { 7 }));
+    org$pandalanguage$pandac$Symbol$init$org$pandalanguage$pandac$Symbol$Kind$org$pandalanguage$pandac$Position$panda$core$String(((org$pandalanguage$pandac$Symbol*) self), $tmp7, p_position, p_name);
 }
 panda$core$String* org$pandalanguage$pandac$Variable$convert$R$panda$core$String(org$pandalanguage$pandac$Variable* self) {
-    panda$core$String* $returnValue7;
-    panda$core$String* $tmp8;
-    $tmp8 = self->name;
-    $returnValue7 = $tmp8;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp8));
-    return $returnValue7;
+    panda$core$String* $returnValue8;
+    panda$core$String* $tmp9;
+    $tmp9 = self->name;
+    $returnValue8 = $tmp9;
+    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp9));
+    return $returnValue8;
 }
 void org$pandalanguage$pandac$Variable$cleanup(org$pandalanguage$pandac$Variable* self) {
-    int $tmp12;
+    int $tmp13;
     {
     }
-    $tmp12 = -1;
-    goto $l10;
-    $l10:;
+    $tmp13 = -1;
+    goto $l11;
+    $l11:;
     org$pandalanguage$pandac$Symbol$cleanup(((org$pandalanguage$pandac$Symbol*) self));
-    switch ($tmp12) {
-        case -1: goto $l13;
+    switch ($tmp13) {
+        case -1: goto $l14;
     }
-    $l13:;
+    $l14:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->type));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->initialValue));
 }

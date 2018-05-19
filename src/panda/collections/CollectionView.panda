@@ -4,4 +4,14 @@ interface CollectionView<T> : Iterable<T> {
     -- property count:Int
 
     function get_count():Int
+
+    function filter(predicate:(T)=>(Bit)):CollectionView<T> {
+        def result := Array<T>()
+        for v in self {
+            if predicate(v) {
+                result.add(v)
+            }
+        }
+        return result
+    }
 }

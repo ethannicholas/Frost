@@ -29,6 +29,7 @@ choice IRNode {
     DO(Position, String?, ImmutableArray<IRNode>, IRNode)
     -- evaluates to the expression, but executes the extraEffectsStatement after the current
     -- statement
+    DYNAMIC_CALL(IRNode -* method *-, ImmutableArray<IRNode>)
     EXPRESSION_WITH_EXTRA_EFFECTS(IRNode -* expression *-, IRNode -* extraEffectStatement *-)
     FIELD_REFERENCE(Position, Type, IRNode -* base *-, FieldDecl)
     IF(Position, IRNode, ImmutableArray<IRNode>, IRNode?)
@@ -88,6 +89,8 @@ choice IRNode {
                 return type
             when CONSTRUCTED_OBJECT(_, type):
                 return type
+            when DYNAMIC_CALL(m, _):
+                return m.type().subtypes[m.type().subtypes.get_count() - 1]
             when EXPRESSION_WITH_EXTRA_EFFECTS(expr, _):
                 return expr.type()
             when FIELD_REFERENCE(_, type, _, _):
@@ -98,8 +101,8 @@ choice IRNode {
                 return Type.Bit()
             when IS_NULL:
                 return Type.Bit()
-            when METHOD_REFERENCE(_, ref, _):
-                return Type("<method>", Type.Kind.INVALID, Position(), true)
+            when METHOD_REFERENCE(_, _, m):
+                return m.type()
             when NEGATED_INT(_, type, _):
                 return type
             when NULL(_, type):
@@ -172,6 +175,8 @@ choice IRNode {
                 return target.position()
             when DO(position, _, _, _):
                 return position
+            when DYNAMIC_CALL(m, _):
+                return m.position()
             when EXPRESSION_WITH_EXTRA_EFFECTS(expr, _):
                 return expr.position()
             when FIELD_REFERENCE(position, _, _, _):
@@ -495,6 +500,8 @@ choice IRNode {
                 }
                 result.append("} while \{test}")
                 return result.finish()
+            when DYNAMIC_CALL(m, args):
+                return "\{m}(\{args.join(" ")})"
             when EXPRESSION_WITH_EXTRA_EFFECTS(expr, stmt):
                 return "\{expr} -* and then: \{stmt} *-"
             when FIELD_REFERENCE(_, _, base, field):

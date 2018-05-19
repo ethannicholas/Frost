@@ -182,6 +182,38 @@ class Int32 : Value, Key<Int32>, Comparable<Int32>, Formattable {
         return value->builtin_int64 % other.value->builtin_int64
     }
 
+    function /(other:Int8):Real32 {
+        return value->builtin_float32 / other.value->builtin_float32
+    }
+
+    function /(other:Int16):Real32 {
+        return value->builtin_float32 / other.value->builtin_float32
+    }
+
+    function /(other:Int32):Real32 {
+        return value->builtin_float32 / other.value->builtin_float32
+    }
+
+    function /(other:Int64):Real64 {
+        return value->builtin_float64 / other.value->builtin_float64
+    }
+
+    function /(other:UInt8):Real32 {
+        return value->builtin_float32 / other.value->builtin_float32
+    }
+
+    function /(other:UInt16):Real32 {
+        return value->builtin_float32 / other.value->builtin_float32
+    }
+
+    function /(other:UInt32):Real32 {
+        return value->builtin_float32 / other.value->builtin_float32
+    }
+
+    function /(other:UInt64):Real64 {
+        return value->builtin_float64 / other.value->builtin_float64
+    }
+
     function !!():Int32 {
         return Int32(!!value)
     }

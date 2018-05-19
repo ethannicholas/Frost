@@ -4,7 +4,7 @@
 #undef PANDA_TYPESONLY
 typedef struct panda$core$Class panda$core$Class;
 #include "panda/core/Int32.h"
-#include "panda/core/Int64.h"
+#include "org/pandalanguage/pandac/Symbol/Kind.h"
 #include "org/pandalanguage/pandac/Position.h"
 typedef struct panda$core$String panda$core$String;
 typedef struct panda$core$Weak panda$core$Weak;
@@ -18,7 +18,7 @@ typedef struct panda$collections$ImmutableArray panda$collections$ImmutableArray
 typedef struct org$pandalanguage$pandac$MethodDecl {
     panda$core$Class* $class;
     panda$core$Int32 refCount;
-    panda$core$Int64 kind;
+    org$pandalanguage$pandac$Symbol$Kind kind;
     org$pandalanguage$pandac$Position position;
     panda$core$String* name;
     panda$core$Weak* owner;
@@ -36,7 +36,7 @@ typedef struct org$pandalanguage$pandac$MethodDecl {
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"
 #undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[8]; } org$pandalanguage$pandac$MethodDecl$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[9]; } org$pandalanguage$pandac$MethodDecl$class_type;
 extern org$pandalanguage$pandac$MethodDecl$class_type org$pandalanguage$pandac$MethodDecl$class;
 
 #ifndef PANDA_TYPESONLY
@@ -56,6 +56,7 @@ panda$core$Bit org$pandalanguage$pandac$MethodDecl$get_heritable$R$panda$core$Bi
 panda$core$Bit org$pandalanguage$pandac$MethodDecl$isVirtual$R$panda$core$Bit(org$pandalanguage$pandac$MethodDecl* self);
 panda$core$Bit org$pandalanguage$pandac$MethodDecl$isInstance$R$panda$core$Bit(org$pandalanguage$pandac$MethodDecl* self);
 panda$core$Bit org$pandalanguage$pandac$MethodDecl$matches$org$pandalanguage$pandac$MethodDecl$R$panda$core$Bit(org$pandalanguage$pandac$MethodDecl* self, org$pandalanguage$pandac$MethodDecl* p_other);
+org$pandalanguage$pandac$Type* org$pandalanguage$pandac$MethodDecl$type$R$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$MethodDecl* self);
 panda$core$String* org$pandalanguage$pandac$MethodDecl$signature$R$panda$core$String(org$pandalanguage$pandac$MethodDecl* self);
 panda$core$String* org$pandalanguage$pandac$MethodDecl$declaration$R$panda$core$String(org$pandalanguage$pandac$MethodDecl* self);
 panda$core$String* org$pandalanguage$pandac$MethodDecl$convert$R$panda$core$String(org$pandalanguage$pandac$MethodDecl* self);

@@ -117,6 +117,38 @@ class UInt64 : Value, Key<UInt64>, Comparable<UInt64>, Formattable {
         return value % other.value
     }
 
+    function /(other:Int8):Real64 {
+        return value->builtin_float64 / other.value->builtin_float64
+    }
+
+    function /(other:Int16):Real64 {
+        return value->builtin_float64 / other.value->builtin_float64
+    }
+
+    function /(other:Int32):Real64 {
+        return value->builtin_float64 / other.value->builtin_float64
+    }
+
+    function /(other:Int64):Real64 {
+        return value->builtin_float64 / other.value->builtin_float64
+    }
+
+    function /(other:UInt8):Real64 {
+        return value->builtin_float64 / other.value->builtin_float64
+    }
+
+    function /(other:UInt16):Real64 {
+        return value->builtin_float64 / other.value->builtin_float64
+    }
+
+    function /(other:UInt32):Real64 {
+        return value->builtin_float64 / other.value->builtin_float64
+    }
+
+    function /(other:UInt64):Real64 {
+        return value->builtin_float64 / other.value->builtin_float64
+    }
+
     function !!():UInt64 {
         return UInt64(!!value)
     }

@@ -1,25 +1,25 @@
 package org.pandalanguage.pandac
 
 class Symbol {
-    class Kind {
-        constant ALIAS             := 200
-        constant FIELD             := 202
-        constant GENERIC_PARAMETER := 203
-        constant METHOD            := 204
-        constant METHODS           := 205
-        constant PACKAGE           := 206
-        constant TYPE              := 207
-        constant VARIABLE          := 208
-        constant CHOICE_ENTRY      := 209
+    choice Kind {
+        ALIAS
+        FIELD
+        GENERIC_PARAMETER
+        METHOD
+        METHODS
+        PACKAGE
+        TYPE
+        VARIABLE
+        CHOICE_ENTRY
     }
 
-    def kind:Int
+    def kind:Kind
 
     def position:Position
 
     def name:String
 
-    init(kind:Int, position:Position, name:String) {
+    init(kind:Kind, position:Position, name:String) {
         self.kind := kind
         self.position := position
         self.name := name

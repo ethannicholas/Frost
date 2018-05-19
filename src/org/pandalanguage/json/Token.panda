@@ -7,7 +7,7 @@ uses org.pandalanguage.json.Position
 
 @final
 class Token : Value {
-    choice Kind { -- FIXME use choice
+    choice Kind {
         EOF
         SHIFTRIGHT
         STRING

@@ -1,0 +1,15 @@
+class NestedComments {
+-* Nested
+    -* Comments
+        -* Should
+            -* Work!
+            -- *- ...but this terminator doesn't count because of the line comment
+            *-
+        *-
+    *-
+*-
+    @class
+    method main() {
+        Console.printLine("It's the 21st century, people.")
+    }
+}

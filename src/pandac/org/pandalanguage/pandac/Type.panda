@@ -109,6 +109,36 @@ class Type : Symbol, Key<Type> {
         return Type(name.finish(), Kind.GENERIC, base.position, subtypes.finish(), resolved)
     }
 
+    @class
+    function methodType(position:Position, kind:Type.Kind, parameterTypes:ListView<Type>,
+            returnType:Type):Type {
+        var resolved := returnType.resolved
+        def name := MutableString("(")
+        def subtypes := Array<Type>()
+        var separator := ""
+        for p in parameterTypes {
+            subtypes.add(p)
+            resolved &= p.resolved
+            name.append(separator)
+            name.append(p.name)
+            separator := ", "
+        }
+        match kind {
+            when Kind.FUNCTION:
+                name.append(")=>(")
+            when Kind.METHOD:
+                name.append(")=&>(")
+            otherwise:
+                assert false
+        }
+        subtypes.add(returnType)
+        if returnType != Type.Void() {
+            name.append(returnType.name)
+        }
+        name.append(")")
+        return Type(name.finish(), kind, position, subtypes.finish(), resolved)
+    }
+
     function size():Int {
         assert typeKind = Kind.BUILTIN_INT | typeKind = Kind.BUILTIN_UINT |
                 typeKind = Kind.BUILTIN_FLOAT, "not a number: \{self}"

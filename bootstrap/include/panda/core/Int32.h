@@ -12,7 +12,7 @@ typedef struct panda$core$Int32 {
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"
 #undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[155]; } panda$core$Int32$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[163]; } panda$core$Int32$class_type;
 extern panda$core$Int32$class_type panda$core$Int32$class;
 typedef struct panda$core$Int32$wrapper {
     panda$core$Class* cl;
@@ -34,11 +34,11 @@ extern panda$core$Int32$wrapperclass_type panda$core$Int32$wrapperclass;
 #include "panda/core/UInt16.h"
 #include "panda/core/Int64.h"
 #include "panda/core/UInt32.h"
+#include "panda/core/Real32.h"
+#include "panda/core/Real64.h"
 #include "panda/core/UInt64.h"
 #include "panda/core/Bit.h"
 typedef struct panda$core$String panda$core$String;
-#include "panda/core/Real32.h"
-#include "panda/core/Real64.h"
 
 void panda$core$Int32$init$builtin_int32(panda$core$Int32* self, int32_t p_value);
 void panda$core$Int32$init$panda$core$Int8(panda$core$Int32* self, panda$core$Int8 p_value);
@@ -81,6 +81,14 @@ panda$core$Int64 panda$core$Int32$$REM$panda$core$Int64$R$panda$core$Int64(panda
 panda$core$Int64 panda$core$Int32$$REM$panda$core$UInt8$R$panda$core$Int64(panda$core$Int32 self, panda$core$UInt8 p_other);
 panda$core$Int64 panda$core$Int32$$REM$panda$core$UInt16$R$panda$core$Int64(panda$core$Int32 self, panda$core$UInt16 p_other);
 panda$core$Int64 panda$core$Int32$$REM$panda$core$UInt32$R$panda$core$Int64(panda$core$Int32 self, panda$core$UInt32 p_other);
+panda$core$Real32 panda$core$Int32$$DIV$panda$core$Int8$R$panda$core$Real32(panda$core$Int32 self, panda$core$Int8 p_other);
+panda$core$Real32 panda$core$Int32$$DIV$panda$core$Int16$R$panda$core$Real32(panda$core$Int32 self, panda$core$Int16 p_other);
+panda$core$Real32 panda$core$Int32$$DIV$panda$core$Int32$R$panda$core$Real32(panda$core$Int32 self, panda$core$Int32 p_other);
+panda$core$Real64 panda$core$Int32$$DIV$panda$core$Int64$R$panda$core$Real64(panda$core$Int32 self, panda$core$Int64 p_other);
+panda$core$Real32 panda$core$Int32$$DIV$panda$core$UInt8$R$panda$core$Real32(panda$core$Int32 self, panda$core$UInt8 p_other);
+panda$core$Real32 panda$core$Int32$$DIV$panda$core$UInt16$R$panda$core$Real32(panda$core$Int32 self, panda$core$UInt16 p_other);
+panda$core$Real32 panda$core$Int32$$DIV$panda$core$UInt32$R$panda$core$Real32(panda$core$Int32 self, panda$core$UInt32 p_other);
+panda$core$Real64 panda$core$Int32$$DIV$panda$core$UInt64$R$panda$core$Real64(panda$core$Int32 self, panda$core$UInt64 p_other);
 panda$core$Int32 panda$core$Int32$$BNOT$R$panda$core$Int32(panda$core$Int32 self);
 panda$core$Int32 panda$core$Int32$$BAND$panda$core$Int8$R$panda$core$Int32(panda$core$Int32 self, panda$core$Int8 p_other);
 panda$core$Int32 panda$core$Int32$$BAND$panda$core$Int16$R$panda$core$Int32(panda$core$Int32 self, panda$core$Int16 p_other);

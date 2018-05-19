@@ -471,9 +471,78 @@ class Parser {
     }
 
     ================================================================================================
-    type = IDENTIFIER (DOT IDENTIFIER)* (LT type (COMMA type)*) GT)? QUESTION?
+    functionOrTupleType = LPAREN (type (COMMA type)*)? RPAREN ((YIELDS | YIELDS_METHOD |
+            YIELDS_IMMUTABLE | YIELDS_METHOD_IMMUTABLE) LPAREN (type (COMMA type)*)? RPAREN)?
+    ================================================================================================
+    method functionOrTupleType():ASTNode? {
+        def start := expect(Token.Kind.LPAREN, "'('")
+        if start = null {
+            return null
+        }
+        def subtypes := Array<ASTNode>()
+        if checkNext(Token.Kind.RPAREN) = null {
+            var t := type()
+            if t = null {
+                return null
+            }
+            subtypes.add(t)
+            while checkNext(Token.Kind.COMMA) != null {
+                t := type()
+                if t = null {
+                    return null
+                }
+                subtypes.add(t)
+            }
+            expect(Token.Kind.RPAREN, "')'")
+        }
+        def yields := peek()
+        match yields.kind {
+            when Token.Kind.YIELDS, Token.Kind.YIELDS_METHOD, Token.Kind.YIELDS_IMMUTABLE,
+                    Token.Kind.YIELDS_METHOD_IMMUTABLE:
+                next()
+                if expect(Token.Kind.LPAREN, "'('") = null {
+                    return null
+                }
+                def returnTypes := Array<ASTNode>()
+                if checkNext(Token.Kind.RPAREN) = null {
+                    var t := type()
+                    if t = null {
+                        return null
+                    }
+                    returnTypes.add(t)
+                    while checkNext(Token.Kind.COMMA) != null {
+                        t := type()
+                        if t = null {
+                            return null
+                        }
+                        returnTypes.add(t)
+                    }
+                    expect(Token.Kind.RPAREN, "')'")
+                }
+                def returnType:ASTNode?
+                if returnTypes.get_count() = 0 {
+                    returnType := null
+                }
+                else if returnTypes.get_count() = 1 {
+                    returnType := returnTypes[0]
+                }
+                else {
+                    returnType := ASTNode.TUPLE_TYPE(start.position, returnTypes.finish())
+                }
+                return ASTNode.METHOD_TYPE(start.position, yields.kind, subtypes.finish(),
+                        returnType)
+            otherwise:
+                return ASTNode.TUPLE_TYPE(start.position, subtypes.finish())
+        }
+    }
+
+    ================================================================================================
+    type = IDENTIFIER (DOT IDENTIFIER)* (LT type (COMMA type)*) GT)? QUESTION? | functionOrTupleType
     ================================================================================================
     method type(needSpeculativeParse:Bit):ASTNode? {
+        if peek().kind = Token.Kind.LPAREN {
+            return functionOrTupleType()
+        }
         def start := expect(Token.Kind.IDENTIFIER, "an identifier")
         if start = null {
             return null

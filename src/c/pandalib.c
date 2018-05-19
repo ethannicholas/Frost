@@ -2,6 +2,7 @@
 #include <inttypes.h>
 #include <limits.h>
 #include <math.h>
+#include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -131,6 +132,10 @@ void pandaFree(void* ptr);
 
 int allocations = 0;
 
+static int preventsExitThreads = 0;
+static pthread_cond_t preventsExitThreadsVar = PTHREAD_COND_INITIALIZER;
+static pthread_mutex_t preventsExitThreadsMutex = PTHREAD_MUTEX_INITIALIZER;
+
 #define DEBUG_ALLOCS 0
 
 #if DEBUG_ALLOCS
@@ -242,6 +247,13 @@ int main(int argc, char** argv) {
         args->data[i] = (Object*) pandaNewString(argv[i], strlen(argv[i]));
     }
     pandaMain(args);
+    // ensure all threads have exited
+    pthread_mutex_lock(&preventsExitThreadsMutex);
+    for (;;) {
+        if (preventsExitThreads == 0)
+            break;
+        pthread_cond_wait(&preventsExitThreadsVar, &preventsExitThreadsMutex);
+    }
     panda$core$Panda$unref$panda$core$Object((Object*) args);
 #if DEBUG_ALLOCS
     debugAllocs = false;
@@ -349,10 +361,13 @@ Process* panda$core$System$exec$panda$io$File$panda$collections$ListView$LTpanda
 void panda$core$System$Process$waitFor$R$panda$core$Int64(int64_t* result, Process* p) {
     int status;
     fclose(p->input->file);
+    p->input->file = NULL;
     waitpid(p->pid, &status, 0);
     *result = WEXITSTATUS(status);
     fclose(p->output->file);
+    p->output->file = NULL;
     fclose(p->error->file);
+    p->error->file = NULL;
 }
 
 // Panda
@@ -444,6 +459,39 @@ int64_t panda$core$Panda$currentTime$R$builtin_int64() {
     }
     return ((int64_t) t.tv_sec) * 1000 + ((int64_t) t.tv_usec) / 1000;
     
+}
+
+// Thread
+
+typedef struct ThreadInfo {
+    void (*run)();
+    Bit preventsExit;
+} ThreadInfo;
+
+void pandaThreadEntry(ThreadInfo* threadInfo) {
+    if (threadInfo->preventsExit) {
+        pthread_mutex_lock(&preventsExitThreadsMutex);
+        preventsExitThreads++;
+        pthread_mutex_unlock(&preventsExitThreadsMutex);
+    }
+    threadInfo->run();
+    pandaFree(threadInfo);
+    if (threadInfo->preventsExit) {
+        pthread_mutex_lock(&preventsExitThreadsMutex);
+        preventsExitThreads--;
+        if (preventsExitThreads == 0)
+            pthread_cond_signal(&preventsExitThreadsVar);
+        pthread_mutex_unlock(&preventsExitThreadsMutex);
+    }
+}
+
+void panda$threads$Thread$run$$LP$RP$EQ$AM$GT$LP$RP$builtin_bit(Object* thread, void* run,
+        Bit preventsExit) {
+    pthread_t threadId;
+    ThreadInfo* threadInfo = pandaAlloc(sizeof(ThreadInfo));
+    threadInfo->run = (void (*)(void*)) run;
+    threadInfo->preventsExit = preventsExit;
+    pthread_create(&threadId, NULL, (void* (*)()) &pandaThreadEntry, threadInfo);
 }
 
 // Console
@@ -604,7 +652,10 @@ void panda$io$FileInputStream$readImpl$panda$unsafe$Pointer$LTpanda$core$UInt8$G
 }
 
 void panda$io$FileInputStream$cleanup(FileInputStream* self) {
-    fclose(self->file);
+    if (self->file) {
+        fclose(self->file);
+    }
+    self->file = NULL;
 }
 
 // FileOutputStream
@@ -619,5 +670,8 @@ void panda$io$FileOutputStream$write$panda$unsafe$Pointer$LTpanda$core$UInt8$GT$
 }
 
 void panda$io$FileOutputStream$cleanup(FileOutputStream* self) {
-    fclose(self->file);
+    if (self->file) {
+        fclose(self->file);
+    }
+    self->file = NULL;
 }

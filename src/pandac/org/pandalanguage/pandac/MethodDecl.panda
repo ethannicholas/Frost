@@ -95,6 +95,21 @@ class MethodDecl : Symbol {
         return true
     }
 
+    function type():Type {
+        def paramTypes := Array<Type>(parameters.get_count()) -- FIXME use map
+        for p in parameters {
+            paramTypes.add(p.type)
+        }
+        def kind:Type.Kind
+        if methodKind = Kind.FUNCTION {
+            kind := Type.Kind.FUNCTION
+        }
+        else {
+            kind := Type.Kind.METHOD
+        }
+        return Type.methodType(position, kind, paramTypes, returnType)
+    }
+
     function signature():String {
         def result := MutableString("\{name}(")
         var separator := ""

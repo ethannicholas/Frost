@@ -34,7 +34,7 @@ class MethodRef {
     }
 
     function type():Type {
-        return Type("<method>", Type.Kind.INVALID, Position(), true)
+        return value.type().remap(typeMap)
     }
 
     @override

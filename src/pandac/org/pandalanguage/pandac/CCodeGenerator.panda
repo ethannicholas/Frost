@@ -1232,6 +1232,28 @@ class CCodeGenerator : CodeGenerator {
         return result
     }
 
+    method getDynamicCallReference(m:IRNode, args:ListView<IRNode>,
+            out:IndentedOutputStream):String {
+        def argRefs := Array<String>(args.get_count())
+        for a in args {
+            argRefs.add(getReference(a, out))
+        }
+        def mRef := getReference(m, out)
+        def result := nextVar()
+        def type := m.type()
+        def returnType := type.subtypes[type.subtypes.get_count() - 1]
+        methodHeader.printLine("\{hCodeGen.declaration(returnType, result)};")
+        out.print("\{result} = \{mRef}(")
+        var separator := ""
+        for a in argRefs {
+            out.print(separator)
+            out.print(a)
+            separator := ", "
+        }
+        out.printLine(");")
+        return result
+    }
+
     method getReference(expr:IRNode, out:IndentedOutputStream):String {
         match expr {
             when IRNode.AT_RETURN:
@@ -1242,6 +1264,8 @@ class CCodeGenerator : CodeGenerator {
                 return getCallReference(type, target, args, out)
             when IRNode.CAST(_, base, type, explicit):
                 return getCastReference(base, type, out)
+            when IRNode.DYNAMIC_CALL(m, args):
+                return getDynamicCallReference(m, args, out)
             when IRNode.INT(_, _, value):
                 return getIntReference(value, out)
             when IRNode.NEGATED_INT(_, _, value):

@@ -10,7 +10,7 @@
 #include "panda/collections/ListWriter.h"
 
 
-struct { panda$core$Class* cl; ITable* next; void* methods[1]; } panda$collections$List$_panda$collections$CollectionView = { (panda$core$Class*) &panda$collections$CollectionView$class, NULL, { NULL} };
+struct { panda$core$Class* cl; ITable* next; void* methods[2]; } panda$collections$List$_panda$collections$CollectionView = { (panda$core$Class*) &panda$collections$CollectionView$class, NULL, { NULL, panda$collections$CollectionView$filter$$LPpanda$collections$CollectionView$T$RP$EQ$GT$LPpanda$core$Bit$RP$R$panda$collections$CollectionView$LTpanda$collections$CollectionView$T$GT} };
 
 struct { panda$core$Class* cl; ITable* next; void* methods[0]; } panda$collections$List$_panda$collections$Collection = { (panda$core$Class*) &panda$collections$Collection$class, (ITable*) &panda$collections$List$_panda$collections$CollectionView, { } };
 

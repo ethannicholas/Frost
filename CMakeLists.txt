@@ -161,6 +161,7 @@ add_executable(bootstrap
     bootstrap/src/org/pandalanguage/pandac/Position.c
     bootstrap/src/org/pandalanguage/pandac/Scanner.c
     bootstrap/src/org/pandalanguage/pandac/Symbol.c
+    bootstrap/src/org/pandalanguage/pandac/Symbol/Kind.c
     bootstrap/src/org/pandalanguage/pandac/SymbolTable.c
     bootstrap/src/org/pandalanguage/pandac/Type.c
     bootstrap/src/org/pandalanguage/pandac/Type/Kind.c
@@ -256,6 +257,7 @@ set(core_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/json/JSONParser.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/math/Random.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/math/XorShift128Plus.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/threads/Thread.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/json/Lexer.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/json/Position.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/json/Token.panda

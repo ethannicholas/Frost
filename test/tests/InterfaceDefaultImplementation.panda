@@ -7,7 +7,13 @@ interface Foo {
     } 
 }
 
-class Sub : Base, Foo {
+interface Bar : Foo {
+    method bar() {
+        Console.printLine("Bar.bar")
+    }
+}
+
+class Sub : Base, Bar {
 }
 
 class InterfaceInheritedImplementation {
@@ -15,5 +21,8 @@ class InterfaceInheritedImplementation {
     method main() {
         def f:Foo := Sub()
         f.foo()
+        def b:Bar := Sub()
+        b.foo()
+        b.bar()
     }
 }

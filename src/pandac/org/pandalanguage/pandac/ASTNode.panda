@@ -54,6 +54,8 @@ choice ASTNode {
                             ImmutableArray<ASTNode>  -* PARAMETERs *-,
                             ASTNode?                 -* return type *-,
                             ImmutableArray<ASTNode>? -* statements *-)
+    METHOD_TYPE            (Position, Token.Kind -* yield type *-,
+                            ImmutableArray<ASTNode> -* arg types *-, ASTNode? -* return type *-)
     NULL                   (Position)
     NULLABLE_TYPE          (Position, ASTNode -* type *-)
     PACKAGE                (Position, String)
@@ -65,6 +67,7 @@ choice ASTNode {
     SELF                   (Position)
     STRING                 (Position, String)
     SUPER                  (Position)
+    TUPLE_TYPE             (Position, ImmutableArray<ASTNode>)
     TYPE                   (Position, String)
     TYPED_IDENTIFIER       (Position, String, ASTNode?)
     USES                   (Position, String)
@@ -130,6 +133,8 @@ choice ASTNode {
                 return position
             when METHOD(position, _, _, _, _, _, _, _):
                 return position
+            when METHOD_TYPE(position, _, _, _):
+                return position
             when NULL(position):
                 return position
             when NULLABLE_TYPE(position, _):
@@ -151,6 +156,8 @@ choice ASTNode {
             when STRING(position, _):
                 return position
             when SUPER(position):
+                return position
+            when TUPLE_TYPE(position, _):
                 return position
             when TYPE(position, _):
                 return position

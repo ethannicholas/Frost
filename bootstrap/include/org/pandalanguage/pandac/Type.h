@@ -4,7 +4,7 @@
 #undef PANDA_TYPESONLY
 typedef struct panda$core$Class panda$core$Class;
 #include "panda/core/Int32.h"
-#include "panda/core/Int64.h"
+#include "org/pandalanguage/pandac/Symbol/Kind.h"
 #include "org/pandalanguage/pandac/Position.h"
 typedef struct panda$core$String panda$core$String;
 #include "panda/core/Bit.h"
@@ -15,7 +15,7 @@ typedef struct panda$core$Weak panda$core$Weak;
 typedef struct org$pandalanguage$pandac$Type {
     panda$core$Class* $class;
     panda$core$Int32 refCount;
-    panda$core$Int64 kind;
+    org$pandalanguage$pandac$Symbol$Kind kind;
     org$pandalanguage$pandac$Position position;
     panda$core$String* name;
     panda$core$Bit resolved;
@@ -50,6 +50,7 @@ void org$pandalanguage$pandac$Type$init$panda$core$String$org$pandalanguage$pand
 void org$pandalanguage$pandac$Type$init$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT(org$pandalanguage$pandac$Type* self, panda$collections$ListView* p_subtypes);
 void org$pandalanguage$pandac$Type$init$org$pandalanguage$pandac$ClassDecl$GenericParameter(org$pandalanguage$pandac$Type* self, org$pandalanguage$pandac$ClassDecl$GenericParameter* p_param);
 org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$generic$org$pandalanguage$pandac$Type$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT$R$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$Type* p_base, panda$collections$ListView* p_arguments);
+org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$methodType$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Type$Kind$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$Position p_position, org$pandalanguage$pandac$Type$Kind p_kind, panda$collections$ListView* p_parameterTypes, org$pandalanguage$pandac$Type* p_returnType);
 panda$core$Int64 org$pandalanguage$pandac$Type$size$R$panda$core$Int64(org$pandalanguage$pandac$Type* self);
 panda$core$Bit org$pandalanguage$pandac$Type$$EQ$org$pandalanguage$pandac$Type$R$panda$core$Bit(org$pandalanguage$pandac$Type* self, org$pandalanguage$pandac$Type* p_other);
 panda$core$Bit org$pandalanguage$pandac$Type$$NEQ$org$pandalanguage$pandac$Type$R$panda$core$Bit(org$pandalanguage$pandac$Type* self, org$pandalanguage$pandac$Type* p_other);

@@ -208,6 +208,7 @@ class Compiler {
         addAlias("panda.io.MemoryOutputStream")
         addAlias("panda.io.OutputStream")
         addAlias("panda.io.PushbackInputStream")
+        addAlias("panda.threads.Thread")
         addAlias("panda.json.JSON")
         addAlias("panda.json.JSONParser")
     }
@@ -376,6 +377,20 @@ class Compiler {
                     }
                 }
                 return result
+            when Type.Kind.METHOD, Type.Kind.FUNCTION:
+                def params := Array<Type>()
+                for i in 0 .. type.subtypes.get_count() - 1 {
+                    def resolved := resolve(type.subtypes[i])
+                    if resolved = null {
+                        return null
+                    }
+                    params.add(resolved)
+                }
+                def returnType := resolve(type.subtypes[type.subtypes.get_count() - 1])
+                if returnType = null {
+                    return null
+                }
+                return Type.methodType(type.position, type.typeKind, params, returnType)
             otherwise:
                 assert false, "cannot resolve \{type}"
         }
@@ -1511,7 +1526,8 @@ class Compiler {
         return null
     }
 
-    function doCoerce(expr:IRNode?, target:Type):IRNode? {
+    @post(@return = null | @return.type() = target)
+    function coerce(expr:IRNode?, target:Type):IRNode? {
         if expr = null {
             return null
         }
@@ -1713,6 +1729,7 @@ class Compiler {
             if resolved = null {
                 return null
             }
+            assert !target.isMethod()
             var result := IRNode.CAST(resolved.position(), resolved, target, false)
             if !isRefCounted(resolved.type()) & isRefCounted(target) {
                 reusedValueCount += 1
@@ -1725,14 +1742,6 @@ class Compiler {
         }
         error(expr.position(), "expected '\{target}', but found '\{expr.type()}'")
         return null
-    }
-
-    -- FIXME use postcondition
-    method coerce(expr:IRNode?, target:Type):IRNode? {
-        def result := doCoerce(expr, target)
-        assert result = null | result.type() = target,
-                "coerce returned wrong type: \{expr}->\{target} yields \{result.type()}"
-        return result
     }
 
     method canCast(type:Type, target:Type):Bit {
@@ -1768,6 +1777,51 @@ class Compiler {
         return result
     }
 
+    method methodCast(node:IRNode, target:Type):IRNode {
+        def position := node.position()
+        def src := node.type()
+        assert src.subtypes.get_count() = target.subtypes.get_count()
+        -- FIXME need to reuse shims if possible
+        def parameters := Array<MethodDecl.Parameter>(target.subtypes.get_count() - 1)
+        def args := Array<ASTNode>()
+        for i in 0 .. target.subtypes.get_count() - 1 {
+            def name := "p\{i}"
+            parameters.add(MethodDecl.Parameter(name, target.subtypes[i]))
+            args.add(ASTNode.BINARY(position, ASTNode.IDENTIFIER(position, name), Token.Kind.CAST,
+                    ASTNode.IR_WRAPPER(IRNode.TYPE_REFERENCE(position, src.subtypes[i]))))
+        }
+        def body := Array<ASTNode>()
+        def call := ASTNode.CALL(position, ASTNode.IR_WRAPPER(node), args.finish())
+        def returnType := target.subtypes[target.subtypes.get_count() - 1]
+        def cast := ASTNode.BINARY(position, call, Token.Kind.CAST,
+                ASTNode.IR_WRAPPER(IRNode.TYPE_REFERENCE(position, returnType)))
+        if returnType != Type.Void() {
+            body.add(ASTNode.RETURN(position, cast))
+        }
+        else {
+            body.add(cast)
+        }
+        tmpCount += 1
+        def shim := MethodDecl(currentClass[0], position, null, Annotations(Annotations.Flag.CLASS),
+                MethodDecl.Kind.FUNCTION, "$shim\{tmpCount}", parameters, returnType, body.finish())
+        compile(shim)
+        return IRNode.METHOD_REFERENCE(position, null, MethodRef(shim, Array<Type>())) -- FIXME literal
+    }
+
+    -- FIXME figure out how to handle list comparisons
+    function equal(a:ListView<Type>, b:ListView<Type>):Bit {
+        if a.get_count() != b.get_count() {
+            return false
+        }
+        for i in 0 .. a.get_count() {
+            if a[i] != b[i] {
+                return false
+            }
+        }
+        return true
+    }
+
+    @post(@return.type() = target)
     method cast(position:Position, node:IRNode, target:Type, isExplicit:Bit):IRNode {
         if node.type() = target {
             return node
@@ -1788,6 +1842,10 @@ class Compiler {
                 if resolved != null {
                     return cast(position, resolved, target, isExplicit)
                 }
+        }
+        if node.type().nonnullable().isMethod() & target.nonnullable().isMethod() &
+            !equal(node.type().nonnullable().subtypes, target.nonnullable().subtypes) {
+            return methodCast(node, target)
         }
         var result := IRNode.CAST(position, node, target, isExplicit)
         if !isRefCounted(node.type()) & isRefCounted(target) {
@@ -2155,6 +2213,25 @@ class Compiler {
                 def resolved := resolve(m)
                 if resolved = null {
                     return null
+                }
+                def t := m.type()
+                if t.typeKind = Type.Kind.METHOD | t.typeKind = Type.Kind.FUNCTION {
+                    def expected := t.subtypes.get_count() - 1
+                    def actual := args.get_count()
+                    if expected != actual {
+                        error(resolved.position(), "method expected \{expected} arguments, but " +
+                                "found \{actual}")
+                        return null
+                    }
+                    def finalArgs := Array<IRNode>()
+                        for i in 0 .. actual {
+                        def arg := coerce(args[i], t.subtypes[i])
+                        if arg = null {
+                            return null
+                        }
+                        finalArgs.add(arg)
+                    }
+                    return IRNode.DYNAMIC_CALL(m, finalArgs.finish())
                 }
                 error(resolved.position(), "value of type '\{resolved.type()}' is not a method")
                 return null

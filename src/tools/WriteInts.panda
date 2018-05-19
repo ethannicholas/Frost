@@ -1,79 +1,81 @@
 class WriteInts {
-    constant INT8   := 0
-    constant INT16  := 1
-    constant INT32  := 2
-    constant INT64  := 3
-    constant UINT8  := 4
-    constant UINT16 := 5
-    constant UINT32 := 6
-    constant UINT64 := 7
-    constant REAL32 := 8
-    constant REAL64 := 9
-    constant INVALID := -1
+    choice Type {
+        INT8
+        INT16
+        INT32
+        INT64
+        UINT8
+        UINT16
+        UINT32
+        UINT64
+        REAL32
+        REAL64
+        INVALID
+    }
 
     @class
-    function builtin(type:Int):String {
+    function builtin(type:Type):String {
         match type {
-            when INT8:   return "builtin_int8"
-            when INT16:  return "builtin_int16"
-            when INT32:  return "builtin_int32"
-            when INT64:  return "builtin_int64"
-            when UINT8:  return "builtin_uint8"
-            when UINT16: return "builtin_uint16"
-            when UINT32: return "builtin_uint32"
-            when UINT64: return "builtin_uint64"
-            when REAL32: return "builtin_float32"
-            when REAL64: return "builtin_float64"
+            when Type.INT8:   return "builtin_int8"
+            when Type.INT16:  return "builtin_int16"
+            when Type.INT32:  return "builtin_int32"
+            when Type.INT64:  return "builtin_int64"
+            when Type.UINT8:  return "builtin_uint8"
+            when Type.UINT16: return "builtin_uint16"
+            when Type.UINT32: return "builtin_uint32"
+            when Type.UINT64: return "builtin_uint64"
+            when Type.REAL32: return "builtin_float32"
+            when Type.REAL64: return "builtin_float64"
         }
         assert false, "invalid type \{type}"
     }
 
     @class
-    function object(type:Int):String {
+    function object(type:Type):String {
         match type {
-            when INT8:   return "Int8"
-            when INT16:  return "Int16"
-            when INT32:  return "Int32"
-            when INT64:  return "Int64"
-            when UINT8:  return "UInt8"
-            when UINT16: return "UInt16"
-            when UINT32: return "UInt32"
-            when UINT64: return "UInt64"
-            when REAL32: return "Real32"
-            when REAL64: return "Real64"
+            when Type.INT8:   return "Int8"
+            when Type.INT16:  return "Int16"
+            when Type.INT32:  return "Int32"
+            when Type.INT64:  return "Int64"
+            when Type.UINT8:  return "UInt8"
+            when Type.UINT16: return "UInt16"
+            when Type.UINT32: return "UInt32"
+            when Type.UINT64: return "UInt64"
+            when Type.REAL32: return "Real32"
+            when Type.REAL64: return "Real64"
         }
         assert false, "invalid type \{type}"
     }
 
     @class
-    function max32(type:Int):Int {
+    function max32(type:Type):Type {
         match type {
-            when INT8,  INT16:  return INT32
-            when UINT8, UINT16: return UINT32
+            when Type.INT8,  Type.INT16:  return Type.INT32
+            when Type.UINT8, Type.UINT16: return Type.UINT32
             otherwise: return type
         }
     }
 
     @class
-    function signed(type:Int):Bit {
+    function signed(type:Type):Bit {
         match type {
-            when INT8,  INT16,  INT32,  INT64:  return true
-            when UINT8, UINT16, UINT32, UINT64: return false
+            when Type.INT8,  Type.INT16,  Type.INT32,  Type.INT64:  return true
+            when Type.UINT8, Type.UINT16, Type.UINT32, Type.UINT64: return false
         }
     }
 
     @class
-    function size(type:Int):Int {
+    function size(type:Type):Int {
         match type {
-            when INT8,  UINT8:  return 8
-            when INT16, UINT16: return 16
-            when INT32, UINT32: return 32
-            when INT64, UINT64: return 64
+            when Type.INT8,  Type.UINT8:  return 8
+            when Type.INT16, Type.UINT16: return 16
+            when Type.INT32, Type.UINT32: return 32
+            when Type.INT64, Type.UINT64: return 64
         }
     }
 
     @class
-    function cast(type:Int, target:Int):String {
+    function cast(type:Type, target:Type):String {
         if type = target {
             return ""
         }
@@ -81,7 +83,7 @@ class WriteInts {
     }
 
     @class
-    function castInt(type:Int, target:Int):String {
+    function castInt(type:Type, target:Type):String {
         if type = target {
             return ""
         }
@@ -89,35 +91,35 @@ class WriteInts {
     }
 
     @class
-    function min(type:Int):String {
+    function min(type:Type):String {
         match type {
-            when INT8:   return "-128"
-            when INT16:  return "-32768"
-            when INT32:  return "-2147483648"
-            when INT64:  return "-9223372036854775808"
-            when UINT8:  return "0"
-            when UINT16: return "0"
-            when UINT32: return "0"
-            when UINT64: return "0"
+            when Type.INT8:   return "-128"
+            when Type.INT16:  return "-32768"
+            when Type.INT32:  return "-2147483648"
+            when Type.INT64:  return "-9223372036854775808"
+            when Type.UINT8:  return "0"
+            when Type.UINT16: return "0"
+            when Type.UINT32: return "0"
+            when Type.UINT64: return "0"
         }
     }
 
     @class
-    function max(type:Int):String {
+    function max(type:Type):String {
         match type {
-            when INT8:   return "127"
-            when INT16:  return "32767"
-            when INT32:  return "2147483647"
-            when INT64:  return "9223372036854775807"
-            when UINT8:  return "255"
-            when UINT16: return "65535"
-            when UINT32: return "4294967295"
-            when UINT64: return "18446744073709551615"
+            when Type.INT8:   return "127"
+            when Type.INT16:  return "32767"
+            when Type.INT32:  return "2147483647"
+            when Type.INT64:  return "9223372036854775807"
+            when Type.UINT8:  return "255"
+            when Type.UINT16: return "65535"
+            when Type.UINT32: return "4294967295"
+            when Type.UINT64: return "18446744073709551615"
         }
     }
 
     @class
-    function binaryType(leftType:Int, rightType:Int, signMatters:Bit):Int {
+    function binaryType(leftType:Type, rightType:Type, signMatters:Bit):Type {
         if signed(leftType) = signed(rightType) | !signMatters {
             def left32 := max32(leftType)
             def right32 := max32(rightType)
@@ -130,21 +132,21 @@ class WriteInts {
             return right32
         }
         else if size(leftType) = 8 & size(rightType) = 8 {
-            return INT16
+            return Type.INT16
         }
         else if size(leftType) <= 16 & size(rightType) <= 16 {
-            return INT32
+            return Type.INT32
         }
         else if size(leftType) <= 32 & size(rightType) <= 32 {
-            return INT64
+            return Type.INT64
         }
         else {
-            return INVALID
+            return Type.INVALID
         }
     }
 
     @class
-    method writeConstructor(type:Int, other:Int, out:OutputStream) {
+    method writeConstructor(type:Type, other:Type, out:OutputStream) {
         out.printLine()
         out.printLine("    @implicit")
         out.printLine("    init(value:\{object(other)}) {")
@@ -153,32 +155,32 @@ class WriteInts {
     }
 
     @class
-    method writeConstructors(type:Int, out:OutputStream) {
-        if size(type) > size(INT8) & signed(type) {
-            writeConstructor(type, INT8, out)
+    method writeConstructors(type:Type, out:OutputStream) {
+        if size(type) > size(Type.INT8) & signed(type) {
+            writeConstructor(type, Type.INT8, out)
         }
-        if size(type) > size(INT16) & signed(type) {
-            writeConstructor(type, INT16, out)
+        if size(type) > size(Type.INT16) & signed(type) {
+            writeConstructor(type, Type.INT16, out)
         }
-        if size(type) > size(INT32) & signed(type) {
-            writeConstructor(type, INT32, out)
+        if size(type) > size(Type.INT32) & signed(type) {
+            writeConstructor(type, Type.INT32, out)
         }
-        if size(type) > size(UINT8) {
-            writeConstructor(type, UINT8, out)
+        if size(type) > size(Type.UINT8) {
+            writeConstructor(type, Type.UINT8, out)
         }
-        if size(type) > size(UINT16) {
-            writeConstructor(type, UINT16, out)
+        if size(type) > size(Type.UINT16) {
+            writeConstructor(type, Type.UINT16, out)
         }
-        if size(type) > size(UINT32) {
-            writeConstructor(type, UINT32, out)
+        if size(type) > size(Type.UINT32) {
+            writeConstructor(type, Type.UINT32, out)
         }
     }
 
     @class
-    method writeOperator(op:String, leftType:Int, rightType:Int, signMatters:Bit,
+    method writeOperator(op:String, leftType:Type, rightType:Type, signMatters:Bit,
             out:OutputStream) {
         def resultType := binaryType(leftType, rightType, signMatters)
-        if resultType = INVALID {
+        if resultType = Type.INVALID {
             return
         }
         out.printLine()
@@ -189,19 +191,47 @@ class WriteInts {
     }
 
     @class
-    method writeOperator(op:String, type:Int, signMatters:Bit, out:OutputStream) {
-        writeOperator(op, type, INT8,   signMatters, out)
-        writeOperator(op, type, INT16,  signMatters, out)
-        writeOperator(op, type, INT32,  signMatters, out)
-        writeOperator(op, type, INT64,  signMatters, out)
-        writeOperator(op, type, UINT8,  signMatters, out)
-        writeOperator(op, type, UINT16, signMatters, out)
-        writeOperator(op, type, UINT32, signMatters, out)
-        writeOperator(op, type, UINT64, signMatters, out)
+    method writeOperator(op:String, type:Type, signMatters:Bit, out:OutputStream) {
+        writeOperator(op, type, Type.INT8,   signMatters, out)
+        writeOperator(op, type, Type.INT16,  signMatters, out)
+        writeOperator(op, type, Type.INT32,  signMatters, out)
+        writeOperator(op, type, Type.INT64,  signMatters, out)
+        writeOperator(op, type, Type.UINT8,  signMatters, out)
+        writeOperator(op, type, Type.UINT16, signMatters, out)
+        writeOperator(op, type, Type.UINT32, signMatters, out)
+        writeOperator(op, type, Type.UINT64, signMatters, out)
     }
 
     @class
-    method writePrefixOperator(op:String, type:Int, out:OutputStream) {
+    method writeDivide(leftType:Type, rightType:Type, out:OutputStream) {
+        def resultType:Type
+        if size(leftType).max(size(rightType)) = 64 {
+            resultType := Type.REAL64
+        }
+        else {
+            resultType := Type.REAL32
+        }
+        out.printLine()
+        out.printLine("    function /(other:\{object(rightType)}):\{object(resultType)} {")
+        out.printLine("        return value\{cast(leftType, resultType)} / " +
+                "other.value\{cast(rightType, resultType)}")
+        out.printLine("    }")
+    }
+
+    @class
+    method writeDivide(type:Type, out:OutputStream) {
+        writeDivide(type, Type.INT8,   out)
+        writeDivide(type, Type.INT16,  out)
+        writeDivide(type, Type.INT32,  out)
+        writeDivide(type, Type.INT64,  out)
+        writeDivide(type, Type.UINT8,  out)
+        writeDivide(type, Type.UINT16, out)
+        writeDivide(type, Type.UINT32, out)
+        writeDivide(type, Type.UINT64, out)
+    }
+
+    @class
+    method writePrefixOperator(op:String, type:Type, out:OutputStream) {
         out.printLine()
         out.printLine("    function \{op}():\{object(type)} {")
         out.printLine("        return \{object(type)}(\{op}value)")
@@ -209,9 +239,9 @@ class WriteInts {
     }
 
     @class
-    method writeComparisonOperator(op:String, leftType:Int, rightType:Int, out:OutputStream) {
+    method writeComparisonOperator(op:String, leftType:Type, rightType:Type, out:OutputStream) {
         def operandType := binaryType(leftType, rightType, true)
-        if operandType = INVALID {
+        if operandType = Type.INVALID {
             return
         }
         out.printLine()
@@ -225,22 +255,22 @@ class WriteInts {
     }
 
     @class
-    method writeComparisonOperator(op:String, type:Int, out:OutputStream) {
-        writeComparisonOperator(op, type, INT8,   out)
-        writeComparisonOperator(op, type, INT16,  out)
-        writeComparisonOperator(op, type, INT32,  out)
-        writeComparisonOperator(op, type, INT64,  out)
-        writeComparisonOperator(op, type, UINT8,  out)
-        writeComparisonOperator(op, type, UINT16, out)
-        writeComparisonOperator(op, type, UINT32, out)
-        writeComparisonOperator(op, type, UINT64, out)
+    method writeComparisonOperator(op:String, type:Type, out:OutputStream) {
+        writeComparisonOperator(op, type, Type.INT8,   out)
+        writeComparisonOperator(op, type, Type.INT16,  out)
+        writeComparisonOperator(op, type, Type.INT32,  out)
+        writeComparisonOperator(op, type, Type.INT64,  out)
+        writeComparisonOperator(op, type, Type.UINT8,  out)
+        writeComparisonOperator(op, type, Type.UINT16, out)
+        writeComparisonOperator(op, type, Type.UINT32, out)
+        writeComparisonOperator(op, type, Type.UINT64, out)
     }
 
     @class
-    method writeMax(leftType:Int, rightType:Int, out:OutputStream) {
+    method writeMax(leftType:Type, rightType:Type, out:OutputStream) {
         out.printLine()
         def resultType := binaryType(leftType, rightType, true)
-        if resultType = INVALID {
+        if resultType = Type.INVALID {
             return
         }
         out.printLine("    function max(other:\{object(rightType)}):\{object(resultType)} {")
@@ -253,22 +283,22 @@ class WriteInts {
     }
 
     @class
-    method writeMax(type:Int, out:OutputStream) {
-        writeMax(type, INT8,   out)
-        writeMax(type, INT16,  out)
-        writeMax(type, INT32,  out)
-        writeMax(type, INT64,  out)
-        writeMax(type, UINT8,  out)
-        writeMax(type, UINT16, out)
-        writeMax(type, UINT32, out)
-        writeMax(type, UINT64, out)
+    method writeMax(type:Type, out:OutputStream) {
+        writeMax(type, Type.INT8,   out)
+        writeMax(type, Type.INT16,  out)
+        writeMax(type, Type.INT32,  out)
+        writeMax(type, Type.INT64,  out)
+        writeMax(type, Type.UINT8,  out)
+        writeMax(type, Type.UINT16, out)
+        writeMax(type, Type.UINT32, out)
+        writeMax(type, Type.UINT64, out)
     }
 
     @class
-    method writeMin(leftType:Int, rightType:Int, out:OutputStream) {
+    method writeMin(leftType:Type, rightType:Type, out:OutputStream) {
         out.printLine()
         def resultType := binaryType(leftType, rightType, true)
-        if resultType = INVALID {
+        if resultType = Type.INVALID {
             return
         }
         out.printLine("    function min(other:\{object(rightType)}):\{object(resultType)} {")
@@ -281,19 +311,19 @@ class WriteInts {
     }
 
     @class
-    method writeMin(type:Int, out:OutputStream) {
-        writeMin(type, INT8,   out)
-        writeMin(type, INT16,  out)
-        writeMin(type, INT32,  out)
-        writeMin(type, INT64,  out)
-        writeMin(type, UINT8,  out)
-        writeMin(type, UINT16, out)
-        writeMin(type, UINT32, out)
-        writeMin(type, UINT64, out)
+    method writeMin(type:Type, out:OutputStream) {
+        writeMin(type, Type.INT8,   out)
+        writeMin(type, Type.INT16,  out)
+        writeMin(type, Type.INT32,  out)
+        writeMin(type, Type.INT64,  out)
+        writeMin(type, Type.UINT8,  out)
+        writeMin(type, Type.UINT16, out)
+        writeMin(type, Type.UINT32, out)
+        writeMin(type, Type.UINT64, out)
     }
 
     @class
-    method writeIndex(leftType:Int, rightType:Int, out:OutputStream) {
+    method writeIndex(leftType:Type, rightType:Type, out:OutputStream) {
         out.printLine()
         out.printLine("    function [](index:\{object(rightType)}):Bit {")
         out.printLine("        return self && (1 << index) != 0")
@@ -301,28 +331,28 @@ class WriteInts {
     }
 
     @class
-    method writeIndex(type:Int, out:OutputStream) {
-        writeIndex(type, INT8,   out)
-        writeIndex(type, INT16,  out)
-        writeIndex(type, INT32,  out)
-        writeIndex(type, INT64,  out)
-        writeIndex(type, UINT8,  out)
-        writeIndex(type, UINT16, out)
-        writeIndex(type, UINT32, out)
-        writeIndex(type, UINT64, out)
+    method writeIndex(type:Type, out:OutputStream) {
+        writeIndex(type, Type.INT8,   out)
+        writeIndex(type, Type.INT16,  out)
+        writeIndex(type, Type.INT32,  out)
+        writeIndex(type, Type.INT64,  out)
+        writeIndex(type, Type.UINT8,  out)
+        writeIndex(type, Type.UINT16, out)
+        writeIndex(type, Type.UINT32, out)
+        writeIndex(type, Type.UINT64, out)
     }
 
     @class
-    method writeHash(type:Int, out:OutputStream) {
+    method writeHash(type:Type, out:OutputStream) {
         out.printLine()
         out.printLine("    @override")
         out.printLine("    function hash():Int {")
-        out.printLine("        return Int(value\{cast(type, INT64)})")
+        out.printLine("        return Int(value\{cast(type, Type.INT64)})")
         out.printLine("    }")
     }
 
     @class
-    method writeConvertToString(type:Int, out:OutputStream) {
+    method writeConvertToString(type:Type, out:OutputStream) {
         out.printLine()
         out.printLine("    @override")
         out.printLine("    function convert():String {")
@@ -361,7 +391,7 @@ class WriteInts {
     }
 
     @class
-    method writeConvert(type:Int, target:Int, out:OutputStream) {
+    method writeConvert(type:Type, target:Type, out:OutputStream) {
         out.printLine()
         out.printLine("    function convert():\{object(target)} {")
         out.printLine("        return \{object(target)}(value->\{builtin(target)})")
@@ -369,38 +399,38 @@ class WriteInts {
     }
 
     @class
-    method writeConvert(type:Int, out:OutputStream) {
-        if type != INT8 {
-            writeConvert(type, INT8, out)
+    method writeConvert(type:Type, out:OutputStream) {
+        if type != Type.INT8 {
+            writeConvert(type, Type.INT8, out)
         }
-        if type != INT16 {
-            writeConvert(type, INT16, out)
+        if type != Type.INT16 {
+            writeConvert(type, Type.INT16, out)
         }
-        if type != INT32 {
-            writeConvert(type, INT32, out)
+        if type != Type.INT32 {
+            writeConvert(type, Type.INT32, out)
         }
-        if type != INT64 {
-            writeConvert(type, INT64, out)
+        if type != Type.INT64 {
+            writeConvert(type, Type.INT64, out)
         }
-        if type != UINT8 {
-            writeConvert(type, UINT8, out)
+        if type != Type.UINT8 {
+            writeConvert(type, Type.UINT8, out)
         }
-        if type != UINT16 {
-            writeConvert(type, UINT16, out)
+        if type != Type.UINT16 {
+            writeConvert(type, Type.UINT16, out)
         }
-        if type != UINT32 {
-            writeConvert(type, UINT32, out)
+        if type != Type.UINT32 {
+            writeConvert(type, Type.UINT32, out)
         }
-        if type != UINT64 {
-            writeConvert(type, UINT64, out)
+        if type != Type.UINT64 {
+            writeConvert(type, Type.UINT64, out)
         }
-        writeConvert(type, REAL32, out)
-        writeConvert(type, REAL64, out)
+        writeConvert(type, Type.REAL32, out)
+        writeConvert(type, Type.REAL64, out)
         writeConvertToString(type, out)
     }
 
     @class
-    method writeFormat(type:Int, out:OutputStream) {
+    method writeFormat(type:Type, out:OutputStream) {
         out.printLine()
         def mask:String
         match size(type) {
@@ -415,14 +445,14 @@ class WriteInts {
             out.printLine("        return Panda.format(value < 0, abs().convert(), \{mask}, fmt)")
         }
         else {
-            out.printLine("        return Panda.format(false, self\{castInt(type, UINT64)}, " +
+            out.printLine("        return Panda.format(false, self\{castInt(type, Type.UINT64)}, " +
                     "\{mask}, fmt)")
         }
         out.printLine("    }")
     }
 
     @class
-    method writeAbs(type:Int, out:OutputStream) {
+    method writeAbs(type:Type, out:OutputStream) {
         out.printLine()
         out.printLine("    function abs():\{object(type)} {")
         out.printLine("        if self < 0 {")
@@ -433,7 +463,7 @@ class WriteInts {
     }
 
     @class
-    method writeParse(type:Int, out:OutputStream) {
+    method writeParse(type:Type, out:OutputStream) {
         out.printLine()
         out.printLine("    @class")
         out.printLine("    function parse(str:String, radix:Int):\{object(type)}? {")
@@ -443,14 +473,14 @@ class WriteInts {
             out.printLine("            if abs = null {")
             out.printLine("                return null")
             out.printLine("            }")
-            out.printLine("            return -(abs\{castInt(UINT64, type)})")
+            out.printLine("            return -(abs\{castInt(Type.UINT64, type)})")
             out.printLine("        }")
             out.printLine("        else {")
             out.printLine("            def result := Panda.parse(str, radix)")
             out.printLine("            if result = null {")
             out.printLine("                return null")
             out.printLine("            }")
-            out.printLine("            return result\{castInt(UINT64, type)}")
+            out.printLine("            return result\{castInt(Type.UINT64, type)}")
             out.printLine("        }")
         }
         else {
@@ -458,13 +488,13 @@ class WriteInts {
             out.printLine("        if result = null {")
             out.printLine("            return null")
             out.printLine("        }")
-            out.printLine("        return result\{castInt(UINT64, type)}")
+            out.printLine("        return result\{castInt(Type.UINT64, type)}")
         }
         out.printLine("    }")
     }
 
     @class
-    method writeInt(type:Int, out:OutputStream) {
+    method writeInt(type:Type, out:OutputStream) {
         out.printLine("-- This file was autogenerated by 'writeints', do not modify")
         out.printLine("package panda.core")
         out.printLine()
@@ -492,6 +522,7 @@ class WriteInts {
         writeOperator("*", type, true, out)
         writeOperator("//", type, true, out)
         writeOperator("%", type, true, out)
+        writeDivide(type, out)
         writePrefixOperator("!!", type, out)
         writeOperator("&&", type, false, out)
         writeOperator("||", type, false, out)
@@ -520,13 +551,13 @@ class WriteInts {
     @class
     method main() {
         def path := File("../src/panda/core")
-        writeInt(INT8, path.resolve("Int8.panda").openOutputStream())
-        writeInt(INT16, path.resolve("Int16.panda").openOutputStream())
-        writeInt(INT32, path.resolve("Int32.panda").openOutputStream())
-        writeInt(INT64, path.resolve("Int64.panda").openOutputStream())
-        writeInt(UINT8, path.resolve("UInt8.panda").openOutputStream())
-        writeInt(UINT16, path.resolve("UInt16.panda").openOutputStream())
-        writeInt(UINT32, path.resolve("UInt32.panda").openOutputStream())
-        writeInt(UINT64, path.resolve("UInt64.panda").openOutputStream())
+        writeInt(Type.INT8, path.resolve("Int8.panda").openOutputStream())
+        writeInt(Type.INT16, path.resolve("Int16.panda").openOutputStream())
+        writeInt(Type.INT32, path.resolve("Int32.panda").openOutputStream())
+        writeInt(Type.INT64, path.resolve("Int64.panda").openOutputStream())
+        writeInt(Type.UINT8, path.resolve("UInt8.panda").openOutputStream())
+        writeInt(Type.UINT16, path.resolve("UInt16.panda").openOutputStream())
+        writeInt(Type.UINT32, path.resolve("UInt32.panda").openOutputStream())
+        writeInt(Type.UINT64, path.resolve("UInt64.panda").openOutputStream())
     }
 }

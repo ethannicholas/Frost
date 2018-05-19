@@ -913,6 +913,11 @@ class LLVMCodeGenerator : CodeGenerator {
                 when ">": result.append("$GT")
                 when " ": -- do nothing
                 when ",": result.append("$C")
+                when "(": result.append("$LP")
+                when ")": result.append("$RP")
+                when "=": result.append("$EQ")
+                when "&": result.append("$AM")
+                when "*": result.append("$ST")
                 otherwise: result.append(c)
             }
             current := s.next(current)
@@ -1593,6 +1598,25 @@ class LLVMCodeGenerator : CodeGenerator {
         return result
     }
 
+    method getDynamicCallReference(m:IRNode, args:ListView<IRNode>, out:OutputStream):String {
+        def argRefs := Array<String>(args.get_count())
+        for a in args {
+            argRefs.add(getTypedReference(a, out))
+        }
+        def mRef := getReference(m, out)
+        def returnType := m.type().subtypes[m.type().subtypes.get_count() - 1]
+        def result := nextVar()
+        out.print("\{result} = call \{type(returnType)} \{mRef}(")
+        var separator := ""
+        for a in argRefs {
+            out.print(separator)
+            out.print(a)
+            separator := ", "
+        }
+        out.printLine(")")
+        return result
+    }
+
     method wrapValue(value:String, srcType:Type, dstType:Type, out:OutputStream):String {
         def src := compiler.getClass(srcType)
         assert src != null
@@ -2116,6 +2140,8 @@ class LLVMCodeGenerator : CodeGenerator {
                 return getChoiceFieldReference(base, ce, field, out)
             when IRNode.CONSTRUCT(_, type, initCall):
                 return getConstructReference(type, initCall, out)
+            when IRNode.DYNAMIC_CALL(m, args):
+                return getDynamicCallReference(m, args, out)
             when IRNode.EXPRESSION_WITH_EXTRA_EFFECTS(expr, stmt):
                 return getExpressionWithExtraEffectsReference(expr, stmt, out)
             when IRNode.FIELD_REFERENCE(_, _, base, field):
@@ -2126,6 +2152,9 @@ class LLVMCodeGenerator : CodeGenerator {
                 return getIsNonNullReference(value, out)
             when IRNode.IS_NULL(_, value):
                 return getIsNullReference(value, out)
+            when IRNode.METHOD_REFERENCE(_, target, ref):
+                assert target = null, "unsupported"
+                return getName(ref.value)
             when IRNode.NEGATED_INT(_, _, value):
                 return getNegatedIntReference(value, out)
             when IRNode.NULL(_, type):
@@ -3335,7 +3364,7 @@ class LLVMCodeGenerator : CodeGenerator {
             when IRNode.REUSED_VALUE_DEFINITION(base, id):
                 reusedValues[id] := getReference(base, out)
             otherwise:
-                assert false, "unsupported statement \{stmt}"
+                assert false, "unsupported statement '\{stmt}' (\{stmt.$rawValue})"
         }
         writeExtraEffects(out)
     }

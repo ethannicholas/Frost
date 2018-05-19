@@ -17,6 +17,13 @@ class Scanner {
 
     method convertType(type:ASTNode):Type {
         match type {
+            when ASTNode.IR_WRAPPER(node):
+                match node {
+                    when IRNode.TYPE_REFERENCE(_, type):
+                        return type
+                    otherwise:
+                        assert false                
+                }
             when ASTNode.TYPE(position, name):
                 return Type(name, Type.Kind.CLASS, position)
             when ASTNode.NULLABLE_TYPE(position, base):
@@ -29,6 +36,28 @@ class Scanner {
                     finalArgs.add(convertType(arg))
                 }
                 return Type.generic(Type(base, Type.Kind.CLASS, type.position()), finalArgs)
+            when ASTNode.METHOD_TYPE(position, kind, rawParameters, rawReturnType):
+                def typeKind:Type.Kind
+                match kind {
+                    when Token.Kind.YIELDS:
+                        typeKind := Type.Kind.FUNCTION
+                    when Token.Kind.YIELDS_METHOD:
+                        typeKind := Type.Kind.METHOD
+                    otherwise:
+                        assert false, "unsupported"
+                }
+                def parameters := Array<Type>() -- FIXME use map
+                for p in rawParameters {
+                    parameters.add(convertType(p))
+                }
+                def returnType:Type
+                if rawReturnType != null {
+                    returnType := convertType(rawReturnType)
+                }
+                else {
+                    returnType := Type.Void()
+                }
+                return Type.methodType(type.position(), typeKind, parameters.finish(), returnType)
             otherwise:
                 assert false, "unsupported type \{type}"
         }
