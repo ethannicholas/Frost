@@ -18,7 +18,7 @@ typedef struct panda$collections$Array {
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"
 #undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[18]; } panda$collections$Array$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[16]; } panda$collections$Array$class_type;
 extern panda$collections$Array$class_type panda$collections$Array$class;
 
 #ifndef PANDA_TYPESONLY
@@ -52,8 +52,6 @@ panda$core$Int64 panda$collections$Array$get_count$R$panda$core$Int64(panda$coll
 void panda$collections$Array$removeIndex$panda$core$Int64(panda$collections$Array* self, panda$core$Int64 p_index);
 panda$collections$Iterator* panda$collections$Array$iterator$R$panda$collections$Iterator$LTpanda$collections$Array$T$GT(panda$collections$Array* self);
 void panda$collections$Array$clear(panda$collections$Array* self);
-panda$core$String* panda$collections$Array$join$R$panda$core$String(panda$collections$Array* self);
-panda$core$String* panda$collections$Array$join$panda$core$String$R$panda$core$String(panda$collections$Array* self, panda$core$String* p_separator);
 panda$core$String* panda$collections$Array$convert$R$panda$core$String(panda$collections$Array* self);
 panda$collections$ImmutableArray* panda$collections$Array$finish$R$panda$collections$ImmutableArray$LTpanda$collections$Array$T$GT(panda$collections$Array* self);
 

@@ -779,8 +779,8 @@ class Compiler {
         return result
     }
 
+    @pre(type.resolved)
     method getClass(type:Type):ClassDecl? {
-        assert type.resolved, "unresolved type \{type}"
         var result:ClassDecl
         match type.typeKind {
             when Type.Kind.CLASS:
@@ -789,6 +789,8 @@ class Compiler {
                 result := getClass(type.subtypes[0])
             when Type.Kind.GENERIC_PARAMETER:
                 return getClass(type.parameter.bound)
+            when Type.Kind.METHOD, Type.Kind.FUNCTION:
+                return getClass(Type.Method())
             otherwise:
                 assert false, "type '\{type}' is not a class"
         }
@@ -1242,6 +1244,26 @@ class Compiler {
             }
             return result + NULLABLE_TO_NONNULLABLE_CAST_COST
         }
+        if type.isMethod() & target.isMethod() {
+            var total := 0
+            if type.typeKind = Type.Kind.METHOD & target.typeKind = Type.Kind.FUNCTION {
+                return null
+            }
+            if type.typeKind = Type.Kind.FUNCTION & target.typeKind = Type.Kind.METHOD {
+                total += 1
+            }
+            if type.subtypes.get_count() != target.subtypes.get_count() {
+                return null
+            }
+            for i in 0 .. type.subtypes.get_count() {
+                def cost := coercionCost(type.subtypes[i], target.subtypes[i])
+                if cost = null {
+                    return null
+                }
+                total += cost
+            }
+            return total
+        }
         match target.typeKind {
             when Type.Kind.NULLABLE:
                 def result := coercionCost(type, target.subtypes[0])
@@ -1501,20 +1523,19 @@ class Compiler {
                     return coercionCost(call(get, Array<IRNode>()), target)
                 }
         }
-        if !target.isClass() {
-            return null
-        }
-        def targetClass := getClass(target)
-        if targetClass = null {
-            return null
-        }
-        for m in targetClass.methods {
-            if m.annotations.isImplicit() {
-                resolve(m)
-                if m.methodKind = MethodDecl.Kind.INIT & m.parameters.get_count() = 1 {
-                    def cost := coercionCost(expr, m.parameters[0].type)
-                    if cost != null {
-                        return base + cost + 2
+        if target.isClass() {
+            def targetClass := getClass(target)
+            if targetClass = null {
+                return null
+            }
+            for m in targetClass.methods {
+                if m.annotations.isImplicit() {
+                    resolve(m)
+                    if m.methodKind = MethodDecl.Kind.INIT & m.parameters.get_count() = 1 {
+                        def cost := coercionCost(expr, m.parameters[0].type)
+                        if cost != null {
+                            return base + cost + 2
+                        }
                     }
                 }
             }
@@ -1729,7 +1750,9 @@ class Compiler {
             if resolved = null {
                 return null
             }
-            assert !target.isMethod()
+            if target.isMethod() {
+                return methodCast(expr, target)
+            }
             var result := IRNode.CAST(resolved.position(), resolved, target, false)
             if !isRefCounted(resolved.type()) & isRefCounted(target) {
                 reusedValueCount += 1
@@ -1745,7 +1768,7 @@ class Compiler {
     }
 
     method canCast(type:Type, target:Type):Bit {
-        if type.isPointer() & target.isPointer() {
+        if type.isPointer() & (target.isPointer() | target.isMethod()) {
             return true
         }
         if coercionCost(type, target) != null {
@@ -1782,7 +1805,7 @@ class Compiler {
         def src := node.type()
         assert src.subtypes.get_count() = target.subtypes.get_count()
         -- FIXME need to reuse shims if possible
-        def parameters := Array<MethodDecl.Parameter>(target.subtypes.get_count() - 1)
+        def parameters := Array<MethodDecl.Parameter>(target.subtypes.get_count())
         def args := Array<ASTNode>()
         for i in 0 .. target.subtypes.get_count() - 1 {
             def name := "p\{i}"
@@ -1791,21 +1814,44 @@ class Compiler {
                     ASTNode.IR_WRAPPER(IRNode.TYPE_REFERENCE(position, src.subtypes[i]))))
         }
         def body := Array<ASTNode>()
-        def call := ASTNode.CALL(position, ASTNode.IR_WRAPPER(node), args.finish())
+        def methodPointer := ASTNode.IDENTIFIER(position, "pointer")
+        def realParams := Array<Type>(src.subtypes.get_count() + 1)
+        realParams.add(Type.Method())
+        realParams.addAll(src.subtypes[0 .. src.subtypes.get_count() - 1])
+        def realType := Type.methodType(src.position, src.typeKind, realParams,
+                src.subtypes[src.subtypes.get_count() - 1])
+        def methodType := ASTNode.IR_WRAPPER(IRNode.TYPE_REFERENCE(position, node.type()))
+        def call := ASTNode.CALL(position, ASTNode.BINARY(position, methodPointer,
+                Token.Kind.CAST, ASTNode.IR_WRAPPER(IRNode.TYPE_REFERENCE(position, src))),
+                args.finish())
         def returnType := target.subtypes[target.subtypes.get_count() - 1]
-        def cast := ASTNode.BINARY(position, call, Token.Kind.CAST,
-                ASTNode.IR_WRAPPER(IRNode.TYPE_REFERENCE(position, returnType)))
         if returnType != Type.Void() {
+            def cast := ASTNode.BINARY(position, call, Token.Kind.CAST,
+                    ASTNode.IR_WRAPPER(IRNode.TYPE_REFERENCE(position, returnType)))
             body.add(ASTNode.RETURN(position, cast))
         }
         else {
-            body.add(cast)
+            body.add(call)
         }
         tmpCount += 1
-        def shim := MethodDecl(currentClass[0], position, null, Annotations(Annotations.Flag.CLASS),
-                MethodDecl.Kind.FUNCTION, "$shim\{tmpCount}", parameters, returnType, body.finish())
+        def methodClass := getClass("panda.core.Method")
+        assert methodClass != null
+        def kind:MethodDecl.Kind
+        match target.typeKind {
+            when Type.Kind.FUNCTION:
+                kind := MethodDecl.Kind.FUNCTION
+            when Type.Kind.METHOD:
+                kind := MethodDecl.Kind.METHOD
+            otherwise:
+                assert false
+        }
+        def shim := MethodDecl(methodClass, position, null, Annotations(), kind, "$shim\{tmpCount}",
+                parameters, returnType, body.finish())
+        currentClass.push(methodClass)
         compile(shim)
-        return IRNode.METHOD_REFERENCE(position, null, MethodRef(shim, Array<Type>())) -- FIXME literal
+        Console.printLine(shim)
+        currentClass.pop(methodClass)
+        return IRNode.METHOD_REFERENCE(position, node, MethodRef(shim, Array<Type>())) -- FIXME literal
     }
 
     -- FIXME figure out how to handle list comparisons
@@ -1821,12 +1867,12 @@ class Compiler {
         return true
     }
 
+    @pre((node.type() = Type.Void() & target = Type.Void()) | target != Type.Void())
     @post(@return.type() = target)
     method cast(position:Position, node:IRNode, target:Type, isExplicit:Bit):IRNode {
         if node.type() = target {
             return node
         }
-        assert target != Type.Void()
         if isExplicit & !canCast(node, target) {
             error(position, "value of type '\{node.type()}' cannot possibly be an instance of " +
                     "'\{target}'")
@@ -1842,6 +1888,24 @@ class Compiler {
                 if resolved != null {
                     return cast(position, resolved, target, isExplicit)
                 }
+        }
+        if node.type().isPointer() & target.nonnullable().isMethod() {
+            def methodClass := getClass("panda.core.Method")
+            assert methodClass != null
+            resolve(methodClass.methods[0])
+            def initMethod := MethodRef(methodClass.methods[0], Array<Type>())
+            def args := Array<IRNode>() -- FIXME literal
+            args.add(node)
+            args.add(IRNode.NULL(position, Type.Any()))
+            def initCall := IRNode.CALL(position, Type.Void(), initMethod, args.finish())
+            def construct := IRNode.CONSTRUCT(position, Type.Method(), initCall)
+            reusedValueCount += 1
+            def reusedDef := IRNode.REUSED_VALUE_DEFINITION(construct, reusedValueCount)
+            def cast := IRNode.CAST(position, reusedDef, target, true)
+            def reusedValue := IRNode.REUSED_VALUE(construct.position(), construct.type(),
+                    reusedValueCount)
+            return IRNode.EXPRESSION_WITH_EXTRA_EFFECTS(cast,
+                    compilePandaCall("unref", reusedValue))
         }
         if node.type().nonnullable().isMethod() & target.nonnullable().isMethod() &
             !equal(node.type().nonnullable().subtypes, target.nonnullable().subtypes) {
@@ -2595,7 +2659,7 @@ class Compiler {
     }
 
     method compilePandaCall(name:String, arg:IRNode):IRNode {
-        assert isRefCounted(arg.type())
+        assert isRefCounted(arg.type()), "not refcounted: \{arg}:\{arg.type()}"
         def p := Position()
         def mref := compileDot(p, IRNode.TYPE_REFERENCE(p, Type.Panda()), name)
         def args := Array<IRNode>() -- FIXME literal
@@ -3266,8 +3330,13 @@ class Compiler {
                 if result != null & result.type() = Type.Void() {
                     match result {
                         when IRNode.CALL(_, _, mref, _):
-                            error(result.position(), mref.value.declaration() +
-                                    " does not return a value")
+                            error(result.position(), mref.value.declaration() + " does not " +
+                                    "return a value")
+                            return null
+                        when IRNode.DYNAMIC_CALL(m, _):
+                            error(result.position(), "method of type \{m.type()} does not return " +
+                                    "a value")
+                            assert false
                             return null
                         otherwise:
                             assert false
@@ -4159,7 +4228,8 @@ class Compiler {
             when ASTNode.VAR(position, kind, declarations):
                 return compileVar(position, kind, declarations)
         }
-        assert false, "unsupported statement: \{s}"
+        error(s.position(), "not a statement")
+        return null
     }
 
     function getBuiltinBit(expr:IRNode):IRNode {

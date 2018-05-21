@@ -2,4 +2,25 @@ package panda.collections
 
 interface ListView<T> : CollectionView<T> {
     function [](index:Int):T
+
+    function join():String {
+        return join(", ")
+    }
+
+    function join(separator:String):String {
+        if get_count() = 0 {
+            return ""
+        }
+        def result := MutableString(self[0].convert())
+        for i in 1 .. get_count() {
+            result.append(separator)
+            if self[i] != null {
+                result.append(self[i])
+            }
+            else {
+                result.append("<null>")
+            }
+        }
+        return result.finish()
+    }
 }

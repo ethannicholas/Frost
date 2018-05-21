@@ -149,6 +149,7 @@ add_executable(bootstrap
     bootstrap/src/org/pandalanguage/pandac/LLVMCodeGenerator/ClassConstant.c
     bootstrap/src/org/pandalanguage/pandac/LLVMCodeGenerator/InlineContext.c
     bootstrap/src/org/pandalanguage/pandac/LLVMCodeGenerator/EnclosingContext.c
+    bootstrap/src/org/pandalanguage/pandac/LLVMCodeGenerator/ExtraEffect.c
     bootstrap/src/org/pandalanguage/pandac/LLVMCodeGenerator/MethodShim.c
     bootstrap/src/org/pandalanguage/pandac/Main.c
     bootstrap/src/org/pandalanguage/pandac/Main/Arguments.c
@@ -229,6 +230,7 @@ set(core_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Int32.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Int64.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Int8.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Method.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/UInt16.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/UInt32.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/UInt64.panda

@@ -14,4 +14,28 @@ interface CollectionView<T> : Iterable<T> {
         }
         return result
     }
+
+    @pre(get_count() > 0)
+    function fold(f:(T, T)=>(T)):T {
+        def i := iterator()
+        var result := i.next()
+        while !i.get_done() {
+            result := f(result, i.next())
+        }
+        return result
+    }
+
+    function fold(f:(T, T)=>(T), start:T):T {
+        var result := start
+        for v in self {
+            result := f(result, v)
+        }
+        return result
+    }
+
+    method apply(m:(T)=&>()) {
+        for v in self {
+            m(v)
+        }
+    }
 }

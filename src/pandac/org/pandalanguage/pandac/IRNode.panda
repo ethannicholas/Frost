@@ -20,7 +20,7 @@ choice IRNode {
     CHOICE_ENTRY_REFERENCE(Position, ChoiceEntry)
     -- a field of a choice entry, like IRNode.Kind.STRING[0]
     CHOICE_FIELD_REFERENCE(Position, IRNode, ChoiceEntry, Int)
-    CONSTRUCT(Position, Type, IRNode)
+    CONSTRUCT(Position, Type, IRNode -* init call *-)
     -- target used for init calls during object construction, meaning "the object that was just
     -- constructed"
     CONSTRUCTED_OBJECT(Position, Type)
@@ -29,7 +29,7 @@ choice IRNode {
     DO(Position, String?, ImmutableArray<IRNode>, IRNode)
     -- evaluates to the expression, but executes the extraEffectsStatement after the current
     -- statement
-    DYNAMIC_CALL(IRNode -* method *-, ImmutableArray<IRNode>)
+    DYNAMIC_CALL(IRNode -* panda.core.Method *-, ImmutableArray<IRNode>)
     EXPRESSION_WITH_EXTRA_EFFECTS(IRNode -* expression *-, IRNode -* extraEffectStatement *-)
     FIELD_REFERENCE(Position, Type, IRNode -* base *-, FieldDecl)
     IF(Position, IRNode, ImmutableArray<IRNode>, IRNode?)

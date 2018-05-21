@@ -149,7 +149,11 @@ class LLVMCodeGenerator : CodeGenerator {
 
     def enclosingContexts := Stack<EnclosingContext>()
 
-    def extraEffects := Stack<Array<IRNode>>()
+    choice ExtraEffect {
+        STATEMENT(IRNode)
+        STRING(String)
+    }
+    def extraEffects := Stack<Array<ExtraEffect>>()
 
     var varCount := 0
 
@@ -472,20 +476,35 @@ class LLVMCodeGenerator : CodeGenerator {
             when Type.Kind.GENERIC_PARAMETER:
                 return type(t.parameter.bound)
             when Type.Kind.FUNCTION, Type.Kind.METHOD:
-                def result := MutableString(type(t.subtypes[t.subtypes.get_count() - 1]))
-                result.append(" (")
-                for i in 0 .. t.subtypes.get_count() - 1 {
-                    if i > 0 {
-                        result.append(", ")
-                    }
-                    result.append(type(t.subtypes[i]))
-                }
-                result.append(")*")
-                return result.finish()
-
+                return type(Type.Method())
             otherwise:
                 assert false, "unsupported type '\{t}'"
         }
+    }
+
+    ================================================================================================
+    Returns the signature of a method type. Methods in Panda have two different types: normally they
+    are manipulated as instances of [Method] or [MutableMethod], but sometimes we need the actual
+    type signature of the underlying method. The [type()] function always returns
+    `%panda.core.Method*` or `%panda.core.MutableMethod*`, whereas `methodType` returns the call
+    signature of the method.
+    ================================================================================================
+    @pre(t.typeKind = Type.Kind.FUNCTION | t.typeKind = Type.Kind.METHOD)
+    method methodType(t:Type, selfType:Type?):String {
+        def result := MutableString(type(t.subtypes[t.subtypes.get_count() - 1]))
+        result.append(" (")
+        var separator := ""
+        if selfType != null {
+            result.append(type(selfType))
+            separator := ", "
+        }
+        for i in 0 .. t.subtypes.get_count() - 1 {
+            result.append(separator)
+            result.append(type(t.subtypes[i]))
+            separator := ", "
+        }
+        result.append(")*")
+        return result.finish()
     }
 
     method wrapperTypeName(t:Type):String {
@@ -781,7 +800,7 @@ class LLVMCodeGenerator : CodeGenerator {
             resultType.append(")*")
             return Pair<String, String>(resultName, resultType.finish())
         }
-        return Pair<String, String>(resultName, type(inherited))
+        return Pair<String, String>(resultName, methodType(inherited, null))
     }
 
     method getClassConstant(cl:ClassDecl):ClassConstant {
@@ -1030,7 +1049,7 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     method getAndReference(left:IRNode, right:IRNode, out:OutputStream):String {
-        extraEffects.push(Array<IRNode>())
+        extraEffects.push(Array<ExtraEffect>())
         var leftRef := getReference(left, out)
         if left.type() = Type.Bit() {
             def leftField := nextVar()
@@ -1043,7 +1062,7 @@ class LLVMCodeGenerator : CodeGenerator {
         def ifFalse := nextLabel()
         out.printLine("br i1 \{leftRef}, label %\{ifTrue}, label %\{ifFalse}")
         createBlock(ifTrue, out)
-        extraEffects.push(Array<IRNode>())
+        extraEffects.push(Array<ExtraEffect>())
         def rightRef := getReference(right, out)
         if right.type() = Type.Bit() {
             def rightField := nextVar()
@@ -1060,7 +1079,7 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     method getOrReference(left:IRNode, right:IRNode, out:OutputStream):String {
-        extraEffects.push(Array<IRNode>())
+        extraEffects.push(Array<ExtraEffect>())
         var leftRef := getReference(left, out)
         if left.type() = Type.Bit() {
             def leftField := nextVar()
@@ -1073,7 +1092,7 @@ class LLVMCodeGenerator : CodeGenerator {
         def ifFalse := nextLabel()
         out.printLine("br i1 \{leftRef}, label %\{ifTrue}, label %\{ifFalse}")
         createBlock(ifFalse, out)
-        extraEffects.push(Array<IRNode>())
+        extraEffects.push(Array<ExtraEffect>())
         def rightRef := getReference(right, out)
         if right.type() = Type.Bit() {
             def rightField := nextVar()
@@ -1195,7 +1214,7 @@ class LLVMCodeGenerator : CodeGenerator {
 
     method getTernaryReference(test:IRNode, ifTrue:IRNode, ifFalse:IRNode,
             out:OutputStream):String {
-        extraEffects.push(Array<IRNode>())
+        extraEffects.push(Array<ExtraEffect>())
         def testRef := getTypedReference(test, out)
         writeExtraEffects(out)
         def testBit := nextVar()
@@ -1205,13 +1224,13 @@ class LLVMCodeGenerator : CodeGenerator {
         def merge := nextLabel()
         out.printLine("br i1 \{testBit}, label %\{trueLabel}, label %\{falseLabel}")
         createBlock(trueLabel, out)
-        extraEffects.push(Array<IRNode>())
+        extraEffects.push(Array<ExtraEffect>())
         def ifTrueRef := getReference(ifTrue, out)
         writeExtraEffects(out)
         trueLabel := currentBlock
         out.printLine("br label %\{merge}")
         createBlock(falseLabel, out)
-        extraEffects.push(Array<IRNode>())
+        extraEffects.push(Array<ExtraEffect>())
         def ifFalseRef := getReference(ifFalse, out)
         writeExtraEffects(out)
         falseLabel := currentBlock
@@ -1225,9 +1244,9 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     function callingConvention(m:MethodDecl):String {
-        if m.annotations.isFinal() & !m.annotations.isOverride() & !m.annotations.isExternal() {
+-*        if m.annotations.isFinal() & !m.annotations.isOverride() & !m.annotations.isExternal() {
             return "fastcc "
-        }
+        }*-
         return ""
     }
 
@@ -1256,13 +1275,13 @@ class LLVMCodeGenerator : CodeGenerator {
         out.printLine("\{load} = load i8*, i8** \{ptr}")
         def result := nextVar()
         out.printLine("\{result} = bitcast i8* \{load} to " +
-                type(compiler.inheritedTypeWithSelf(m)))
+                methodType(compiler.inheritedTypeWithSelf(m), null))
         return result
     }
 
     method getInterfaceMethodReference(target:String, m:MethodDecl,
             out:OutputStream):String {
-        def methodType := type(compiler.inheritedTypeWithSelf(m))
+        def methodTypeString := methodType(compiler.inheritedTypeWithSelf(m), null)
         -- load class constant entry
         def entry := nextLabel()
         out.printLine("br label %\{entry}")
@@ -1322,9 +1341,9 @@ class LLVMCodeGenerator : CodeGenerator {
         out.printLine("\{methodPtrPtr} = getelementptr inbounds %$itable, %$itable* " +
                 "\{itablePtr}, \{SIZE_TYPE} 0, i32 2, i32 \{index}")
         def cast := nextVar()
-        out.printLine("\{cast} = bitcast i8** \{methodPtrPtr} to \{methodType}*")
+        out.printLine("\{cast} = bitcast i8** \{methodPtrPtr} to \{methodTypeString}*")
         def methodPtr := nextVar()
-        out.printLine("\{methodPtr} = load \{methodType}, \{methodType}* \{cast}")
+        out.printLine("\{methodPtr} = load \{methodTypeString}, \{methodTypeString}* \{cast}")
         return methodPtr
     }
 
@@ -1603,17 +1622,48 @@ class LLVMCodeGenerator : CodeGenerator {
         for a in args {
             argRefs.add(getTypedReference(a, out))
         }
-        def mRef := getReference(m, out)
-        def returnType := m.type().subtypes[m.type().subtypes.get_count() - 1]
+        def targetType := "i8*"
+        def methodObjectPtrRef := getTypedReference(m, out)
+        def methodObjectRef := nextVar()
+        def methodObjectType := "%panda$core$Method"
+        out.printLine("\{methodObjectRef} = load \{methodObjectType}, \{methodObjectPtrRef}")
+        def rawMethodRef := nextVar()
+        out.printLine("\{rawMethodRef} = extractvalue \{methodObjectType} \{methodObjectRef}, " +
+                "\{OBJECT_FIELD_COUNT + 0}")
+        def target := nextVar()
+        out.printLine("\{target} = extractvalue \{methodObjectType} \{methodObjectRef}, " +
+                "\{OBJECT_FIELD_COUNT + 1}")
+        def targetNonNull := nextVar()
+        out.printLine("\{targetNonNull} = icmp ne \{targetType} \{target}, null")
+        def haveTarget := nextLabel()
+        def noTarget := nextLabel()
+        def merge := nextLabel()
+        out.printLine("br i1 \{targetNonNull}, label %\{haveTarget}, label %\{noTarget}")
+        def resultType := m.type().subtypes[m.type().subtypes.get_count() - 1]
+
+        createBlock(haveTarget, out)
+        def haveTargetMethodRef := nextVar()
+        out.printLine("\{haveTargetMethodRef} = bitcast %panda$core$Int8* \{rawMethodRef} to " +
+                methodType(m.type(), Type.pointerTo(Type.BuiltinInt8())))
+        def haveTargetResult := nextVar()
+        out.printLine("\{haveTargetResult} = call \{type(resultType)} \{haveTargetMethodRef}(" +
+                "\{targetType} \{target}, \{argRefs.join()})")
+        out.print("br label %\{merge}")
+
+        createBlock(noTarget, out)
+        def noTargetMethodRef := nextVar()
+        out.printLine("\{noTargetMethodRef} = bitcast %panda$core$Int8* \{rawMethodRef} to " +
+                methodType(m.type(), null))
+        def noTargetResult := nextVar()
+        out.printLine("\{noTargetResult} = call \{type(resultType)} \{noTargetMethodRef}(" +
+                "\{argRefs.join()})")
+        out.print("br label %\{merge}")
+
+        createBlock(merge, out)
         def result := nextVar()
-        out.print("\{result} = call \{type(returnType)} \{mRef}(")
-        var separator := ""
-        for a in argRefs {
-            out.print(separator)
-            out.print(a)
-            separator := ", "
-        }
-        out.printLine(")")
+        out.printLine("\{result} = phi \{type(resultType)} " +
+                "[\{haveTargetResult}, %\{haveTarget}], " +
+                "[\{noTargetResult}, %\{noTarget}]")
         return result
     }
 
@@ -2113,7 +2163,7 @@ class LLVMCodeGenerator : CodeGenerator {
     method getExpressionWithExtraEffectsReference(expr:IRNode, stmt:IRNode,
             out:OutputStream):String {
         def result := getReference(expr, out)
-        extraEffects[0].add(stmt)
+        extraEffects[0].add(ExtraEffect.STATEMENT(stmt))
         return result
     }
 
@@ -2124,6 +2174,55 @@ class LLVMCodeGenerator : CodeGenerator {
         return load
     }
 
+    method getMethodRefReference(target:IRNode?, m:MethodDecl, out:OutputStream):String {
+        def methodObjectType := Type.Method()
+        def methodClass := compiler.getClass(methodObjectType)
+        def cc := getClassConstant(methodClass)
+        def ccCast:String
+        if cc.type != "%panda$core$Class" {
+            ccCast := "bitcast(\{cc.type}* \{cc.name} to %panda$core$Class*)"
+        }
+        else {
+            ccCast := cc.name
+        }
+        def alloc := nextVar()
+        out.printLine("\{alloc} = call i8* @pandaObjectAlloc(i64 \{sizeOf(methodObjectType)}, " +
+                "%panda$core$Class* \{ccCast})")
+        def result := nextVar()
+        out.printLine("\{result} = bitcast i8* \{alloc} to \{type(methodObjectType)}")
+        def initMethod := methodClass.methods[0]
+        compiler.resolve(initMethod)
+        writeDeclaration(initMethod)
+        def methodCast := nextVar()
+        def targetType:Type?
+        if target != null {
+            targetType := target.type()
+        }
+        else {
+            targetType := null
+        }
+        out.printLine("\{methodCast} = bitcast \{methodType(m.type(), targetType)} " +
+                "\{getName(m)} to %panda$core$Int8*")
+        def targetCast:String
+        if target != null {
+            def targetRef := getTypedReference(target, out)
+            targetCast := nextVar()
+            out.printLine("\{targetCast} = bitcast \{targetRef} to \{type(Type.Object())}")
+        }
+        else {
+            targetCast := "null"
+        }
+        out.printLine("call void \{getName(initMethod)}(\{type(methodObjectType)} \{result}, " +
+                "%panda$core$Int8* \{methodCast}, \{type(Type.Any())} \{targetCast})")
+
+        def resultCast := nextVar()
+        out.printLine("\{resultCast} = bitcast %panda$core$Method* \{result} to %panda$core$Object*")
+        extraEffects[0].add(ExtraEffect.STRING("call void " +
+                "@panda$core$Panda$unref$panda$core$Object(%panda$core$Object* \{resultCast})"))
+        return result
+    }
+
+    @post(extraEffects.get_count() = @pre(extraEffects.get_count()))
     method getReference(expr:IRNode, out:OutputStream):String {
         match expr {
             when IRNode.AT_RETURN(_, type):
@@ -2153,8 +2252,7 @@ class LLVMCodeGenerator : CodeGenerator {
             when IRNode.IS_NULL(_, value):
                 return getIsNullReference(value, out)
             when IRNode.METHOD_REFERENCE(_, target, ref):
-                assert target = null, "unsupported"
-                return getName(ref.value)
+                return getMethodRefReference(target, ref.value, out)
             when IRNode.NEGATED_INT(_, _, value):
                 return getNegatedIntReference(value, out)
             when IRNode.NULL(_, type):
@@ -2362,7 +2460,7 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     method writeIf(test:IRNode, ifTrue:ImmutableArray<IRNode>, ifFalse:IRNode?, out:OutputStream) {
-        extraEffects.push(Array<IRNode>())
+        extraEffects.push(Array<ExtraEffect>())
         def testRef := getTypedReference(test, out)
         def testBit := nextVar()
         out.printLine("\{testBit} = extractvalue \{testRef}, 0")
@@ -2946,7 +3044,7 @@ class LLVMCodeGenerator : CodeGenerator {
         def context := AutoContext(self, EnclosingContext.LOOP(label, loopEnd, loopStart))
         out.printLine("br label %\{loopStart}")
         createBlock(loopStart, out)
-        extraEffects.push(Array<IRNode>())
+        extraEffects.push(Array<ExtraEffect>())
         def testRef := getTypedReference(test, out)
         def testBit := nextVar()
         out.printLine("\{testBit} = extractvalue \{testRef}, 0")
@@ -2968,7 +3066,7 @@ class LLVMCodeGenerator : CodeGenerator {
         def context := AutoContext(self, EnclosingContext.LOOP(label, loopEnd, loopStart))
         out.printLine("br label %\{loopBody}")
         createBlock(loopStart, out)
-        extraEffects.push(Array<IRNode>())
+        extraEffects.push(Array<ExtraEffect>())
         def testRef := getTypedReference(test, out)
         def testBit := nextVar()
         out.printLine("\{testBit} = extractvalue \{testRef}, 0")
@@ -3143,7 +3241,7 @@ class LLVMCodeGenerator : CodeGenerator {
                 returnValueVar := "%$returnValue\{labelCount}"
                 methodHeader.printLine("\{returnValueVar} = alloca \{valueType}")
             }
-            extraEffects.push(Array<IRNode>())
+            extraEffects.push(Array<ExtraEffect>())
             def result := getReference(value, out)
             out.printLine("store \{valueType} \{result}, \{valueType}* \{returnValueVar}")
             if inline != null {
@@ -3210,14 +3308,14 @@ class LLVMCodeGenerator : CodeGenerator {
         if compiler.settings.safetyLevel < 2 {
             return
         }
-        extraEffects.push(Array<IRNode>())
+        extraEffects.push(Array<ExtraEffect>())
         def testRef := getReference(test, out)
         writeExtraEffects(out)
         def ifTrue := nextLabel()
         def ifFalse := nextLabel()
         out.printLine("br i1 \{testRef}, label %\{ifTrue}, label %\{ifFalse}")
         createBlock(ifFalse, out)
-        extraEffects.push(Array<IRNode>())
+        extraEffects.push(Array<ExtraEffect>())
         def name:String
         def path := compiler.currentClass[0].source.path
         def index := path.lastIndexOf("/")
@@ -3236,7 +3334,7 @@ class LLVMCodeGenerator : CodeGenerator {
         else {
             msgRef := null
         }
-        out.print("call fastcc void ")
+        out.print("call void ")
         for m in compiler.getClass(Type.Panda()).methods {
             if m.name = "assertionFailure" {
                 compiler.resolve(m)
@@ -3319,15 +3417,63 @@ class LLVMCodeGenerator : CodeGenerator {
         createBlock(endLabel, out)
     }
 
+    method writeDynamicCall(m:IRNode, args:ListView<IRNode>, out:OutputStream) {
+        def argRefs := Array<String>(args.get_count())
+        for a in args {
+            argRefs.add(getTypedReference(a, out))
+        }
+        def targetType := "i8*"
+        def methodObjectPtrRef := getTypedReference(m, out)
+        def methodObjectRef := nextVar()
+        def methodObjectType := "%panda$core$Method"
+        out.printLine("\{methodObjectRef} = load \{methodObjectType}, \{methodObjectPtrRef}")
+        def rawMethodRef := nextVar()
+        out.printLine("\{rawMethodRef} = extractvalue \{methodObjectType} \{methodObjectRef}, " +
+                "\{OBJECT_FIELD_COUNT + 0}")
+        def target := nextVar()
+        out.printLine("\{target} = extractvalue \{methodObjectType} \{methodObjectRef}, " +
+                "\{OBJECT_FIELD_COUNT + 1}")
+        def targetNonNull := nextVar()
+        out.printLine("\{targetNonNull} = icmp ne \{targetType} \{target}, null")
+        def haveTarget := nextLabel()
+        def noTarget := nextLabel()
+        def merge := nextLabel()
+        out.printLine("br i1 \{targetNonNull}, label %\{haveTarget}, label %\{noTarget}")
+        def resultType := m.type().subtypes[m.type().subtypes.get_count() - 1]
+
+        createBlock(haveTarget, out)
+        def haveTargetMethodRef := nextVar()
+        out.printLine("\{haveTargetMethodRef} = bitcast %panda$core$Int8* \{rawMethodRef} to " +
+                methodType(m.type(), Type.pointerTo(Type.BuiltinInt8())))
+        out.printLine("call \{type(resultType)} \{haveTargetMethodRef}(\{targetType} \{target}, " +
+                "\{argRefs.join()})")
+        out.print("br label %\{merge}")
+
+        createBlock(noTarget, out)
+        def noTargetMethodRef := nextVar()
+        out.printLine("\{noTargetMethodRef} = bitcast %panda$core$Int8* \{rawMethodRef} to " +
+                methodType(m.type(), null))
+        out.printLine("call \{type(resultType)} \{noTargetMethodRef}(\{argRefs.join()})")
+        out.print("br label %\{merge}")
+
+        createBlock(merge, out)
+    }
+
     method writeExtraEffects(out:OutputStream) {
         def finalEffects := extraEffects.pop()
         for i in finalEffects.get_count() - 1 ... 0 by -1 {
-            writeStatement(finalEffects[i], out)
+            match finalEffects[i] {
+                when ExtraEffect.STATEMENT(stmt):
+                    writeStatement(stmt, out)
+                when ExtraEffect.STRING(s):
+                    out.printLine(s)
+            }
         }
     }
 
+    @post(extraEffects.get_count() = @pre(extraEffects.get_count()))
     method writeStatement(stmt:IRNode, out:OutputStream) {
-        extraEffects.push(Array<IRNode>())
+        extraEffects.push(Array<ExtraEffect>())
         match stmt {
             when IRNode.BINARY(_, _, left, op, right):
                 writeAssignment(left, right, out)
@@ -3337,6 +3483,8 @@ class LLVMCodeGenerator : CodeGenerator {
                 writeBlockWithFinally(statements, finally, out)
             when IRNode.CALL(_, target, mref, args):
                 writeCall(target, mref, args, null, out)
+            when IRNode.DYNAMIC_CALL(m, args):
+                writeDynamicCall(m, args, out)
             when IRNode.EXPRESSION_WITH_EXTRA_EFFECTS(base, stmt):
                 getExpressionWithExtraEffectsReference(base, stmt, out)
             when IRNode.IF(_, test, ifTrue, ifFalse):

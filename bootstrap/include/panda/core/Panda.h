@@ -49,6 +49,7 @@ panda$core$String* panda$core$Panda$align$panda$core$String$panda$core$String$R$
 panda$core$String* panda$core$Panda$format$panda$core$Bit$panda$core$UInt64$panda$core$UInt64$panda$core$String$R$panda$core$String(panda$core$Bit p_sign, panda$core$UInt64 p_rawValue, panda$core$UInt64 p_mask, panda$core$String* p_fmt);
 void panda$core$Panda$debugPrint$builtin_int64(int64_t p_i);
 void panda$core$Panda$debugPrint$panda$core$Object(panda$core$Object* p_o);
+panda$core$String* panda$core$Panda$pointerConvert$panda$unsafe$Pointer$LTpanda$core$Object$Q$GT$R$panda$core$String(panda$core$Object** p_p);
 void panda$core$Panda$cleanup(panda$core$Panda* self);
 
 #endif

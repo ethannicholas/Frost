@@ -217,4 +217,8 @@ class Panda {
     @class
     @external
     method debugPrint(o:Object)
+
+    @class
+    @external
+    method pointerConvert(p:Pointer<Object?>):String
 }

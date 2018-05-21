@@ -17,6 +17,8 @@ typedef uint8_t Bit;
 #define true 1
 #define false 0
 
+#define DEBUG_ALLOCS 0
+
 struct Class;
 struct String;
 
@@ -135,8 +137,6 @@ int allocations = 0;
 static int preventsExitThreads = 0;
 static pthread_cond_t preventsExitThreadsVar = PTHREAD_COND_INITIALIZER;
 static pthread_mutex_t preventsExitThreadsMutex = PTHREAD_MUTEX_INITIALIZER;
-
-#define DEBUG_ALLOCS 0
 
 #if DEBUG_ALLOCS
 Object* panda = NULL;
@@ -380,12 +380,21 @@ void panda$core$Panda$debugPrint$builtin_int64(int64_t x) {
 
 void pandaDebugPrintObject(void* object) {
     char* className = pandaGetCString(((Object*) object)->cl->name);
-    printf("%s(%p)\n", className, object);
+    printf("%s(%p):\n", className, object);
+    char* converted = pandaConvertToString(object);
+    printf("    %s\n", converted);
+    pandaFree(converted);
     pandaFree(className);
 }
 
 void panda$core$Panda$debugPrint$panda$core$Object(void* object) {
     pandaDebugPrintObject(object);
+}
+
+String* panda$core$Panda$pointerConvert$panda$unsafe$Pointer$LTpanda$core$Object$Q$GT$R$panda$core$String(void* ptr) {
+    char buffer[32];
+    int length = sprintf(buffer, "%p", ptr);
+    return pandaNewString(buffer, length);
 }
 
 void panda$core$Panda$ref$panda$core$Object(Object* o) {

@@ -353,6 +353,11 @@ class Type : Symbol, Key<Type> {
     }
 
     @class
+    method Method():Type {
+        return Type("panda.core.Method", Kind.CLASS, Position(), true)
+    }
+
+    @class
     method WeakOf(t:Type):Type {
         def children := Array<Type>() -- FIXME literal
         children.add(Type(Compiler.WEAK_NAME, Kind.CLASS, Position(), true))
@@ -361,17 +366,22 @@ class Type : Symbol, Key<Type> {
     }
 
     @class
+    method pointerTo(t:Type):Type {
+        def children := Array<Type>() -- FIXME literal
+        children.add(t)
+        return generic(Type("panda.unsafe.Pointer", Kind.CLASS, Position(), true), children)
+    }
+
+    @class
     method RangeOf(t:Type):Type {
         def children := Array<Type>() -- FIXME literal
-        children.add(Type(Compiler.RANGE_NAME, Kind.CLASS, Position(), true))
         children.add(t)
-        return Type("\{Compiler.RANGE_NAME}<\{t}>", Kind.GENERIC, t.position, children, t.resolved)
+        return generic(Type(Compiler.RANGE_NAME, Kind.CLASS, Position(), true), children)
     }
 
     @class
     method SteppedRangeOf(t:Type):Type {
         def children := Array<Type>() -- FIXME literal
-        children.add(Type(Compiler.STEPPED_RANGE_NAME, Kind.CLASS, Position(), true))
         children.add(t)
         if t = Char8() {
             children.add(Int8())
@@ -385,8 +395,7 @@ class Type : Symbol, Key<Type> {
         else {
             children.add(t.nonnullable())
         }
-        return Type("\{Compiler.STEPPED_RANGE_NAME}<\{t}, \{t.nonnullable()}>", Kind.GENERIC,
-                t.position, children, t.resolved)
+        return generic(Type(Compiler.STEPPED_RANGE_NAME, Kind.CLASS, Position(), true), children)
     }
 
     @class
