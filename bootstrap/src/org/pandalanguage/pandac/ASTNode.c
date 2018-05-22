@@ -7,6 +7,7 @@
 #include "panda/core/Int64.h"
 #include "panda/core/Bit.h"
 #include "org/pandalanguage/pandac/IRNode.h"
+#include "panda/core/Method.h"
 #include "org/pandalanguage/pandac/parser/Token/Kind.h"
 #include "panda/collections/ImmutableArray.h"
 #include "panda/core/MutableString.h"

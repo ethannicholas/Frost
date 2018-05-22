@@ -18,6 +18,7 @@
 #include "panda/collections/List.h"
 #include "panda/collections/Iterator.h"
 #include "panda/collections/Iterable.h"
+#include "panda/core/Method.h"
 #include "org/pandalanguage/pandac/ClassDecl/GenericParameter.h"
 #include "org/pandalanguage/pandac/Symbol.h"
 #include "panda/core/String/Index.h"

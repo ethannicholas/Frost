@@ -19,6 +19,8 @@ class Type : Symbol, Key<Type> {
         NULL
         FUNCTION
         METHOD
+        IMMUTABLE_FUNCTION
+        IMMUTABLE_METHOD
         REAL_LITERAL
     }
 
@@ -128,6 +130,10 @@ class Type : Symbol, Key<Type> {
                 name.append(")=>(")
             when Kind.METHOD:
                 name.append(")=&>(")
+            when Kind.IMMUTABLE_FUNCTION:
+                name.append(")=>*(")
+            when Kind.IMMUTABLE_METHOD:
+                name.append(")=&>*(")
             otherwise:
                 assert false
         }
@@ -433,7 +439,8 @@ class Type : Symbol, Key<Type> {
 
     function isClass():Bit {
         match typeKind {
-            when Kind.CLASS, Kind.NULLABLE, Kind.GENERIC, Kind.GENERIC_PARAMETER:
+            when Kind.CLASS, Kind.NULLABLE, Kind.GENERIC, Kind.GENERIC_PARAMETER, Kind.METHOD,
+                    Kind.FUNCTION, Kind.IMMUTABLE_METHOD, Kind.IMMUTABLE_FUNCTION:
                 return true
             otherwise:
                 return false
@@ -441,7 +448,12 @@ class Type : Symbol, Key<Type> {
     }
 
     function isMethod():Bit {
-        return typeKind = Kind.METHOD | typeKind = Kind.FUNCTION
+        match typeKind {
+            when Kind.METHOD, Kind.FUNCTION, Kind.IMMUTABLE_METHOD, Kind.IMMUTABLE_FUNCTION:
+                return true
+            otherwise:
+                return false
+        }
     }
 
     function isPointer():Bit {
@@ -583,7 +595,7 @@ class Type : Symbol, Key<Type> {
                 return Type.generic(base, remappedArgs)
             when Kind.NULLABLE:
                 return subtypes[0].remap(types).nullable()
-            when Kind.METHOD, Kind.FUNCTION:
+            when Kind.METHOD, Kind.FUNCTION, Kind.IMMUTABLE_METHOD, Kind.IMMUTABLE_FUNCTION:
                 def remapped := Array<Type>()
                 def name := MutableString("(")
                 var separator := ""
@@ -595,11 +607,15 @@ class Type : Symbol, Key<Type> {
                     remapped.add(child)
                     separator := ", "
                 }
-                if typeKind = Kind.FUNCTION {
-                    name.append(")=>(")
-                }
-                else {
-                    name.append(")=&>(")
+                match typeKind {
+                    when Kind.FUNCTION:
+                        name.append(")=>(")
+                    when Kind.METHOD:
+                        name.append(")=&>(")
+                    when Kind.IMMUTABLE_FUNCTION:
+                        name.append(")=>*(")
+                    when Kind.IMMUTABLE_METHOD:
+                        name.append(")=&>*(")
                 }
                 if subtypes[subtypes.get_count() - 1] != Type.Void() {
                     def child := subtypes[subtypes.get_count() - 1].remap(types)

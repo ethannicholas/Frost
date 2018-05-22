@@ -181,6 +181,7 @@ class Compiler {
         addAlias("panda.core.Int32")
         addAlias("panda.core.Int64")
         addAlias("panda.core.Immutable")
+        addAlias("panda.core.Method")
         addAlias("panda.core.MutableString")
         addAlias("panda.core.Object")
         addAlias("panda.core.Panda")
@@ -1244,25 +1245,28 @@ class Compiler {
             }
             return result + NULLABLE_TO_NONNULLABLE_CAST_COST
         }
-        if type.isMethod() & target.isMethod() {
-            var total := 0
-            if type.typeKind = Type.Kind.METHOD & target.typeKind = Type.Kind.FUNCTION {
-                return null
-            }
-            if type.typeKind = Type.Kind.FUNCTION & target.typeKind = Type.Kind.METHOD {
-                total += 1
-            }
-            if type.subtypes.get_count() != target.subtypes.get_count() {
-                return null
-            }
-            for i in 0 .. type.subtypes.get_count() {
-                def cost := coercionCost(type.subtypes[i], target.subtypes[i])
-                if cost = null {
+        if type.isMethod() {
+            if target.isMethod() {
+                var total := 0
+                if type.typeKind = Type.Kind.METHOD & target.typeKind = Type.Kind.FUNCTION {
                     return null
                 }
-                total += cost
+                if type.typeKind = Type.Kind.FUNCTION & target.typeKind = Type.Kind.METHOD {
+                    total += 1
+                }
+                if type.subtypes.get_count() != target.subtypes.get_count() {
+                    return null
+                }
+                for i in 0 .. type.subtypes.get_count() {
+                    def cost := coercionCost(type.subtypes[i], target.subtypes[i])
+                    if cost = null {
+                        return null
+                    }
+                    total += cost
+                }
+                return total
             }
-            return total
+            return coercionCost(Type.Method(), target)
         }
         match target.typeKind {
             when Type.Kind.NULLABLE:
@@ -1849,7 +1853,6 @@ class Compiler {
                 parameters, returnType, body.finish())
         currentClass.push(methodClass)
         compile(shim)
-        Console.printLine(shim)
         currentClass.pop(methodClass)
         return IRNode.METHOD_REFERENCE(position, node, MethodRef(shim, Array<Type>())) -- FIXME literal
     }
@@ -2295,7 +2298,16 @@ class Compiler {
                         }
                         finalArgs.add(arg)
                     }
-                    return IRNode.DYNAMIC_CALL(m, finalArgs.finish())
+                    var result := IRNode.DYNAMIC_CALL(m, finalArgs.finish())
+                    if isRefCounted(t.subtypes[t.subtypes.get_count() - 1]) {
+                        reusedValueCount += 1
+                        result := IRNode.REUSED_VALUE_DEFINITION(result, reusedValueCount)
+                        def reused := IRNode.REUSED_VALUE(result.position(), result.type(),
+                                reusedValueCount)
+                        result := IRNode.EXPRESSION_WITH_EXTRA_EFFECTS(result,
+                                compilePandaCall("unref", reused))
+                    }
+                    return result
                 }
                 error(resolved.position(), "value of type '\{resolved.type()}' is not a method")
                 return null

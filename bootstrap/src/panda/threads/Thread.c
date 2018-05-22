@@ -3,6 +3,7 @@
 #include "panda/core/Class.h"
 #include "panda/core/String.h"
 #include "panda/core/Object.h"
+#include "panda/core/Method.h"
 #include "panda/core/Panda.h"
 #include "panda/core/Bit.h"
 #include "panda/core/Int64.h"

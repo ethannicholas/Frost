@@ -12,6 +12,7 @@
 #include "panda/core/Bit.h"
 #include "panda/core/Panda.h"
 #include "panda/collections/HashMap/Entry.h"
+#include "panda/core/Method.h"
 #include "panda/core/Equatable.h"
 #include "panda/collections/HashMap/KeyIterator.h"
 #include "panda/collections/HashMap/ValueIterator.h"

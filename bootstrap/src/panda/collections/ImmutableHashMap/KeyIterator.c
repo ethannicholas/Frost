@@ -8,6 +8,7 @@
 #include "panda/collections/ImmutableHashMap/EntryIterator.h"
 #include "panda/core/Panda.h"
 #include "panda/core/Bit.h"
+#include "panda/core/Method.h"
 #include "panda/collections/ImmutableHashMap/Entry.h"
 panda$core$Object* panda$collections$ImmutableHashMap$KeyIterator$next$R$panda$collections$ImmutableHashMap$KeyIterator$K$shim(panda$collections$ImmutableHashMap$KeyIterator* self) {
     panda$collections$Key* result = panda$collections$ImmutableHashMap$KeyIterator$next$R$panda$collections$ImmutableHashMap$KeyIterator$K(self);

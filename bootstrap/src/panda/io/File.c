@@ -8,6 +8,7 @@
 #include "panda/core/Panda.h"
 #include "panda/collections/Iterator.h"
 #include "panda/io/InputStream.h"
+#include "panda/core/Method.h"
 #include "panda/core/String/Index.h"
 #include "panda/core/Range.LTpanda/core/String/Index.Q.GT.h"
 #include "panda/core/Int64.h"

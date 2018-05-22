@@ -18,6 +18,7 @@
 #include "panda/collections/ImmutableArray.h"
 #include "panda/collections/Iterator.h"
 #include "panda/collections/Iterable.h"
+#include "panda/core/Method.h"
 #include "org/pandalanguage/pandac/parser/Token/Kind.h"
 #include "org/pandalanguage/pandac/Annotations.h"
 #include "org/pandalanguage/pandac/Annotations/Expression.h"

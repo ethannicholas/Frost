@@ -7,6 +7,7 @@
 #include "panda/core/Bit.h"
 #include "panda/collections/Map.h"
 #include "org/pandalanguage/pandac/LLVMCodeGenerator/InlineContext.h"
+#include "panda/core/Method.h"
 
 
 static panda$core$String $s1;

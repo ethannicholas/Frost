@@ -7,6 +7,7 @@
 #include "panda/collections/HashMap/EntryIterator.h"
 #include "panda/core/Panda.h"
 #include "panda/core/Bit.h"
+#include "panda/core/Method.h"
 #include "panda/collections/HashMap/Entry.h"
 panda$core$Object* panda$collections$HashMap$ValueIterator$next$R$panda$collections$HashMap$ValueIterator$V$shim(panda$collections$HashMap$ValueIterator* self) {
     panda$core$Object* result = panda$collections$HashMap$ValueIterator$next$R$panda$collections$HashMap$ValueIterator$V(self);

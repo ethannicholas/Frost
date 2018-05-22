@@ -20,6 +20,7 @@
 #include "org/pandalanguage/pandac/Symbol.h"
 #include "org/pandalanguage/pandac/Compiler.h"
 #include "panda/core/Weak.h"
+#include "panda/core/Method.h"
 #include "panda/collections/Key.h"
 #include "panda/collections/Array.h"
 #include "org/pandalanguage/pandac/ClassDecl/GenericParameter.h"

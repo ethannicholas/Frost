@@ -7,6 +7,7 @@
 #include "panda/core/Panda.h"
 #include "panda/collections/Array.h"
 #include "panda/core/Weak.h"
+#include "panda/core/Method.h"
 #include "org/pandalanguage/pandac/Symbol.h"
 #include "panda/collections/Key.h"
 #include "panda/core/Int64.h"

@@ -119,7 +119,6 @@ class Main {
         args.add("-o")
         args.add(dest.path)
         def p := System.exec(gcc, args)
-        Console.printLine("\{gcc} \{args.join(" ")}")
         Console.errorStream().print(p.error.readFully())
         if p.waitFor() != 0 {
             System.exit(1)

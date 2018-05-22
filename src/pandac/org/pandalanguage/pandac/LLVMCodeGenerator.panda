@@ -1646,8 +1646,13 @@ class LLVMCodeGenerator : CodeGenerator {
         out.printLine("\{haveTargetMethodRef} = bitcast %panda$core$Int8* \{rawMethodRef} to " +
                 methodType(m.type(), Type.pointerTo(Type.BuiltinInt8())))
         def haveTargetResult := nextVar()
-        out.printLine("\{haveTargetResult} = call \{type(resultType)} \{haveTargetMethodRef}(" +
-                "\{targetType} \{target}, \{argRefs.join()})")
+        out.print("\{haveTargetResult} = call \{type(resultType)} \{haveTargetMethodRef}(" +
+                "\{targetType} \{target}")
+        if argRefs.get_count() > 0 {
+            out.print(", \{argRefs.join()}")
+        }
+        out.printLine(")")
+
         out.print("br label %\{merge}")
 
         createBlock(noTarget, out)
@@ -3445,8 +3450,11 @@ class LLVMCodeGenerator : CodeGenerator {
         def haveTargetMethodRef := nextVar()
         out.printLine("\{haveTargetMethodRef} = bitcast %panda$core$Int8* \{rawMethodRef} to " +
                 methodType(m.type(), Type.pointerTo(Type.BuiltinInt8())))
-        out.printLine("call \{type(resultType)} \{haveTargetMethodRef}(\{targetType} \{target}, " +
-                "\{argRefs.join()})")
+        out.print("call \{type(resultType)} \{haveTargetMethodRef}(\{targetType} \{target}")
+        if argRefs.get_count() > 0 {
+            out.print(", \{argRefs.join()}")
+        }
+        out.printLine(")")
         out.print("br label %\{merge}")
 
         createBlock(noTarget, out)

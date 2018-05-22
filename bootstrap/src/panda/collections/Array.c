@@ -11,6 +11,7 @@
 #include "panda/collections/Collection.h"
 #include "panda/collections/CollectionWriter.h"
 #include "panda/collections/CollectionView.h"
+#include "panda/core/Method.h"
 #include "panda/core/Panda.h"
 #include "panda/core/Bit.h"
 #include "panda/core/Range.LTpanda/core/Int64.GT.h"

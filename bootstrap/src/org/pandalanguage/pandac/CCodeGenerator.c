@@ -19,6 +19,7 @@
 #include "org/pandalanguage/pandac/Type.h"
 #include "panda/core/Bit.h"
 #include "panda/collections/Key.h"
+#include "panda/core/Method.h"
 #include "org/pandalanguage/pandac/Compiler.h"
 #include "panda/core/Weak.h"
 #include "org/pandalanguage/pandac/Type/Kind.h"

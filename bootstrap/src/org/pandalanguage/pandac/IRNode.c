@@ -8,6 +8,7 @@
 #include "panda/core/Bit.h"
 #include "org/pandalanguage/pandac/ChoiceEntry.h"
 #include "panda/collections/Array.h"
+#include "panda/core/Method.h"
 #include "org/pandalanguage/pandac/MethodRef.h"
 #include "org/pandalanguage/pandac/Variable.h"
 #include "org/pandalanguage/pandac/Position.h"

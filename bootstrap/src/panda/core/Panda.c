@@ -7,6 +7,7 @@
 #include "panda/collections/Key.h"
 #include "panda/collections/Iterator.h"
 #include "panda/core/Bit.h"
+#include "panda/core/Method.h"
 #include "panda/io/Console.h"
 #include "panda/io/OutputStream.h"
 #include "panda/core/System.h"

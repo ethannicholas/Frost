@@ -10,6 +10,7 @@
 #include "panda/core/MutableString.h"
 #include "panda/collections/Iterator.h"
 #include "panda/collections/Iterable.h"
+#include "panda/core/Method.h"
 #include "org/pandalanguage/pandac/Annotations/Expression.h"
 
 

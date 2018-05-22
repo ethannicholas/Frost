@@ -13,6 +13,7 @@
 #include "panda/collections/ImmutableHashMap.h"
 #include "panda/collections/Key.h"
 #include "panda/collections/ImmutableArray.h"
+#include "panda/core/Method.h"
 #include "panda/core/Real64.h"
 #include "panda/collections/ListView.h"
 #include "panda/collections/MapView.h"

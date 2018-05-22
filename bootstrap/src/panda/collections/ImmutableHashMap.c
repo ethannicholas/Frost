@@ -10,6 +10,7 @@
 #include "panda/core/Bit.h"
 #include "panda/core/Panda.h"
 #include "panda/collections/ImmutableHashMap/Entry.h"
+#include "panda/core/Method.h"
 #include "panda/core/Equatable.h"
 #include "panda/collections/ImmutableHashMap/KeyIterator.h"
 #include "panda/collections/ImmutableHashMap/ValueIterator.h"

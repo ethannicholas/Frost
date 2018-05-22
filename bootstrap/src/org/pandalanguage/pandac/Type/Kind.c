@@ -123,6 +123,20 @@ void org$pandalanguage$pandac$Type$Kind$cleanup(org$pandalanguage$pandac$Type$Ki
         {
         }
         }
+        else {
+        panda$core$Bit $tmp21 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$5_53.$rawValue, ((panda$core$Int64) { 17 }));
+        if ($tmp21.value) {
+        {
+        }
+        }
+        else {
+        panda$core$Bit $tmp22 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$5_53.$rawValue, ((panda$core$Int64) { 18 }));
+        if ($tmp22.value) {
+        {
+        }
+        }
+        }
+        }
         }
         }
         }

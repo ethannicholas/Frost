@@ -3,6 +3,7 @@
 #include "panda/core/Class.h"
 #include "panda/core/String.h"
 #include "panda/core/Bit.h"
+#include "panda/core/Method.h"
 
 
 struct { panda$core$Class* cl; ITable* next; void* methods[2]; } panda$core$Equatable$_panda$core$Equatable = { (panda$core$Class*) &panda$core$Equatable$class, NULL, { NULL, panda$core$Equatable$$NEQ$panda$core$Equatable$T$R$panda$core$Bit} };

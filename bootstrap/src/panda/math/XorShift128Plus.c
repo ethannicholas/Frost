@@ -5,6 +5,7 @@
 #include "panda/math/Random.h"
 #include "panda/core/Int64.h"
 #include "panda/core/Bit.h"
+#include "panda/core/Method.h"
 
 
 struct { panda$core$Class* cl; ITable* next; void* methods[2]; } panda$math$XorShift128Plus$_panda$math$Random = { (panda$core$Class*) &panda$math$Random$class, NULL, { panda$math$XorShift128Plus$int64$R$panda$core$Int64, panda$math$XorShift128Plus$int$panda$core$Int64$R$panda$core$Int64} };

@@ -9,6 +9,7 @@
 #include "panda/core/Panda.h"
 #include "panda/collections/Array.h"
 #include "panda/collections/CollectionView.h"
+#include "panda/core/Method.h"
 #include "panda/collections/Iterator.h"
 #include "panda/collections/Iterable.h"
 #include "panda/core/Bit.h"

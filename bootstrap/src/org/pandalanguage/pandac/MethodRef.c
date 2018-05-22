@@ -12,6 +12,7 @@
 #include "panda/collections/CollectionView.h"
 #include "org/pandalanguage/pandac/ClassDecl.h"
 #include "panda/core/Weak.h"
+#include "panda/core/Method.h"
 #include "panda/collections/List.h"
 #include "org/pandalanguage/pandac/Symbol.h"
 #include "org/pandalanguage/pandac/ClassDecl/GenericParameter.h"

@@ -5,6 +5,7 @@
 #include "panda/collections/Iterator.h"
 #include "panda/io/InputStream.h"
 #include "panda/core/Panda.h"
+#include "panda/core/Method.h"
 #include "panda/core/Bit.h"
 panda$core$Object* panda$io$InputStream$LineIterator$next$R$panda$core$String$shim(panda$io$InputStream$LineIterator* self) {
     panda$core$String* result = panda$io$InputStream$LineIterator$next$R$panda$core$String(self);
