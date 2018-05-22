@@ -1349,6 +1349,31 @@ class Compiler {
         return 64
     }
 
+    @private
+    @class
+    function effectiveMethodType(target:IRNode?, owner:ClassDecl, isClass:Bit,
+            methodType:Type):Type {
+        var result := methodType
+        if (target = null | target = IRNode.TYPE_REFERENCE) & !isClass {
+            def params := Array<Type>()
+            params.add(owner.type())
+            params.addAll(result.subtypes[0 .. result.subtypes.get_count() - 1])
+            result := Type.methodType(result.position, result.typeKind, params,
+                    result.subtypes[result.subtypes.get_count() - 1])
+        }
+        return result
+    }
+
+    @class
+    function effectiveMethodType(target:IRNode?, m:MethodRef):Type {
+        return effectiveMethodType(target, m.value.owner, m.value.annotations.isClass(), m.type())
+    }
+
+    @class
+    function effectiveMethodType(target:IRNode?, m:MethodDecl):Type {
+        return effectiveMethodType(target, m.owner, m.annotations.isClass(), m.type())
+    }
+
     function coercionCost(expr:IRNode, target:Type):Int? {
         var base := 0
         if isSingleChar(expr) & !target.isChar() {
@@ -1441,6 +1466,18 @@ class Compiler {
                     }
                     return null
                 }
+            when IRNode.UNRESOLVED_METHOD_REFERENCE(_, targetNode, methods):
+                var bestCost:Int? := null
+                for m in methods {
+                    def cost := coercionCost(effectiveMethodType(targetNode, m), target)
+                    if cost = null {
+                        continue
+                    }
+                    if bestCost = null | cost < bestCost {
+                        bestCost := cost
+                    }
+                }
+                return bestCost
             when IRNode.UNRESOLVED_METHOD_CALL(_, _, _, methods, args):
                 var bestCost:Int? := null
                 for m in methods {
@@ -1805,8 +1842,37 @@ class Compiler {
     }
 
     method methodCast(node:IRNode, target:Type):IRNode {
+        match node {
+            when IRNode.UNRESOLVED_METHOD_REFERENCE(position, targetNode, methods):
+                var bestCost:Int? := null
+                var best := Array<MethodRef?>()
+                for m in methods {
+                    def type := effectiveMethodType(targetNode, m)
+                    def cost := coercionCost(type, target)
+                    if cost = null {
+                        continue
+                    }
+                    if bestCost = null | cost < bestCost {
+                        bestCost := cost
+                        best.clear()
+                    }
+                    if cost <= bestCost {
+                        best.add(m)
+                    }
+                }
+                if best.get_count() = 1 {
+                    return methodCast(IRNode.METHOD_REFERENCE(position, targetNode, best[0]),
+                            target)
+                }
+                Console.printLine("no or ambiguous match on method call (\{position}, " +
+                        "\{methods[0].value.name}, \{best})")
+                assert false
+        }
         def position := node.position()
         def src := node.type()
+        if src = target {
+            return node
+        }
         assert src.subtypes.get_count() = target.subtypes.get_count()
         -- FIXME need to reuse shims if possible
         def parameters := Array<MethodDecl.Parameter>(target.subtypes.get_count())
@@ -1837,7 +1903,6 @@ class Compiler {
         else {
             body.add(call)
         }
-        tmpCount += 1
         def methodClass := getClass("panda.core.Method")
         assert methodClass != null
         def kind:MethodDecl.Kind
@@ -1849,8 +1914,9 @@ class Compiler {
             otherwise:
                 assert false
         }
-        def shim := MethodDecl(methodClass, position, null, Annotations(), kind, "$shim\{tmpCount}",
-                parameters, returnType, body.finish())
+        tmpCount += 1
+        def shim := MethodDecl(methodClass, position, null, Annotations(Annotations.Flag.SYNTHETIC),
+                kind, "$shim\{tmpCount}", parameters, returnType, body.finish())
         currentClass.push(methodClass)
         compile(shim)
         currentClass.pop(methodClass)

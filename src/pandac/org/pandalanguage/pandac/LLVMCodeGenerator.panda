@@ -2198,18 +2198,21 @@ class LLVMCodeGenerator : CodeGenerator {
         def initMethod := methodClass.methods[0]
         compiler.resolve(initMethod)
         writeDeclaration(initMethod)
+        if !m.annotations.isSynthetic() {
+            writeDeclaration(m)
+        }
         def methodCast := nextVar()
         def targetType:Type?
-        if target != null {
+        if target != null & target != IRNode.TYPE_REFERENCE {
             targetType := target.type()
         }
         else {
             targetType := null
         }
-        out.printLine("\{methodCast} = bitcast \{methodType(m.type(), targetType)} " +
+        out.printLine("\{methodCast} = bitcast \{methodType(Compiler.effectiveMethodType(target, m), targetType)} " +
                 "\{getName(m)} to %panda$core$Int8*")
         def targetCast:String
-        if target != null {
+        if targetType != null {
             def targetRef := getTypedReference(target, out)
             targetCast := nextVar()
             out.printLine("\{targetCast} = bitcast \{targetRef} to \{type(Type.Object())}")

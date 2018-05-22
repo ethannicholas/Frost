@@ -15,6 +15,7 @@ class Annotations {
         constant INLINE     := 1 << 10
         constant SPECIALIZE := 1 << 11
         constant WEAK       := 1 << 12
+        constant SYNTHETIC  := 1 << 13
     }
 
     choice Expression {
@@ -104,6 +105,10 @@ class Annotations {
         return flags && Flag.WEAK != 0
     }
 
+    function isSynthetic():Bit {
+        return flags && Flag.SYNTHETIC != 0
+    }
+
     @override
     function convert():String {
         def result := MutableString()
@@ -142,6 +147,9 @@ class Annotations {
         }
         if isWeak() {
             result.append("@weak\n")
+        }
+        if isSynthetic() {
+            result.append("@synthetic\n")
         }
         if expressions != null {
             for expr in expressions {

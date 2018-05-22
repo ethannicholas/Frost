@@ -62,7 +62,7 @@ choice IRNode {
     UNRESOLVED_INDEX(Position, Type, IRNode -* base *-, ImmutableArray<IRNode> -* args *-)
     UNRESOLVED_METHOD_CALL(Position, Type, IRNode -* target *-, ImmutableArray<MethodRef>,
             ImmutableArray<IRNode> -* args *-)
-    UNRESOLVED_METHOD_REFERENCE(Position, IRNode -* target *-, ImmutableArray<MethodRef>)
+    UNRESOLVED_METHOD_REFERENCE(Position, IRNode? -* target *-, ImmutableArray<MethodRef>)
     UNRESOLVED_RANGE(Position, IRNode -* start *-, IRNode -* end *-, Bit, IRNode -* step *-)
     VAR(Position, Variable.Kind, ImmutableArray<IRNode> -* DECLARATIONs *-)
     VARIABLE_REFERENCE(Position, Variable)
@@ -101,8 +101,8 @@ choice IRNode {
                 return Type.Bit()
             when IS_NULL:
                 return Type.Bit()
-            when METHOD_REFERENCE(_, _, m):
-                return m.type()
+            when METHOD_REFERENCE(_, target, m):
+                return Compiler.effectiveMethodType(target, m)
             when NEGATED_INT(_, type, _):
                 return type
             when NULL(_, type):

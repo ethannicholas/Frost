@@ -530,17 +530,18 @@ class Scanner {
             }
         }
         if !foundInit & kind = ClassDecl.Kind.CLASS & result.name != "panda.unsafe.Pointer" {
-            def defaultInit := MethodDecl(result, position, null, Annotations(),
-                    MethodDecl.Kind.INIT, "init", Array<MethodDecl.Parameter>(), Type.Void(),
-                    ImmutableArray<ASTNode>())
+            def defaultInit := MethodDecl(result, position, null,
+                    Annotations(Annotations.Flag.SYNTHETIC), MethodDecl.Kind.INIT, "init",
+                    Array<MethodDecl.Parameter>(), Type.Void(), ImmutableArray<ASTNode>())
             result.methods.add(defaultInit)
             result.symbolTable.add(defaultInit)
         }
         if !foundCleanup & (kind = ClassDecl.Kind.CLASS | kind = ClassDecl.Kind.CHOICE) &
                 result.name != "panda.unsafe.Pointer" {
             def defaultCleanup := MethodDecl(result, position, null,
-                    Annotations(Annotations.Flag.OVERRIDE), MethodDecl.Kind.METHOD, "cleanup",
-                    Array<MethodDecl.Parameter>(), Type.Void(), ImmutableArray<ASTNode>())
+                    Annotations(Annotations.Flag.OVERRIDE || Annotations.Flag.SYNTHETIC),
+                    MethodDecl.Kind.METHOD, "cleanup", Array<MethodDecl.Parameter>(), Type.Void(),
+                    ImmutableArray<ASTNode>())
             result.methods.add(defaultCleanup)
             result.symbolTable.add(defaultCleanup)
         }
