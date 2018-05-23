@@ -62,18 +62,11 @@ class Thread : Immutable {
     not 100% sure about this API, just capturing my current thinking
 
     ================================================================================================
-    Creates and starts a new thread which executes the specified method, posting its result to an
-    `UnsafeMessageQueue`. As the thread will no longer be running after its result is computed, this
-    particular usage of `UnsafeMessageQueue` is actually perfectly safe despite the name.
+    Creates and starts a new thread which executes the specified method, posting its result to a
+    `ResultQueue`.
     ================================================================================================
-    method start<T>(run:()=&>(T), resultQueue:UnsafeMessageQueue<T>):Thread {
-    }
-
-    ================================================================================================
-    Creates and starts a new thread which executes the specified method, posting its result to an
-    `MessageQueue`.
-    ================================================================================================
-    method start<T:Immutable>(run:()=&>(T), resultQueue:MessageQueue<T>):Thread {
+    @class
+    method start<T>(run:()=&>(T), resultQueue:ResultQueue<T>):Thread {
     }
 *-
 

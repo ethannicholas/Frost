@@ -111,6 +111,12 @@ add_library(c_panda
     bootstrap/src/panda/json/JSONParser.c
     bootstrap/src/panda/math/Random.c
     bootstrap/src/panda/math/XorShift128Plus.c
+    bootstrap/src/panda/threads/Lock.c
+    bootstrap/src/panda/threads/MessageQueue.c
+    bootstrap/src/panda/threads/MessageQueue/Message.c
+    bootstrap/src/panda/threads/Notifier.c
+    bootstrap/src/panda/threads/ScopedLock.c
+    bootstrap/src/panda/threads/Thread.c
     bootstrap/src/org/pandalanguage/json/Lexer.c
     bootstrap/src/org/pandalanguage/json/Position.c
     bootstrap/src/org/pandalanguage/json/Token.c
@@ -261,6 +267,10 @@ set(core_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/json/JSONParser.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/math/Random.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/math/XorShift128Plus.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/threads/Lock.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/threads/Notifier.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/threads/MessageQueue.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/threads/SCopedLock.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/threads/Thread.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/json/Lexer.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/json/Position.panda

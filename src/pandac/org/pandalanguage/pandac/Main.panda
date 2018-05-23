@@ -101,6 +101,7 @@ class Main {
         args.add("-o")
         args.add(dest.path)
         def p := System.exec(gcc, args)
+        Console.errorStream().print(p.output.readFully())
         Console.errorStream().print(p.error.readFully())
         if p.waitFor() != 0 {
             System.exit(1)
@@ -119,6 +120,7 @@ class Main {
         args.add("-o")
         args.add(dest.path)
         def p := System.exec(gcc, args)
+        Console.errorStream().print(p.output.readFully())
         Console.errorStream().print(p.error.readFully())
         if p.waitFor() != 0 {
             System.exit(1)

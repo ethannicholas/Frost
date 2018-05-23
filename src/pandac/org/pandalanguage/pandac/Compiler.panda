@@ -209,6 +209,7 @@ class Compiler {
         addAlias("panda.io.MemoryOutputStream")
         addAlias("panda.io.OutputStream")
         addAlias("panda.io.PushbackInputStream")
+        addAlias("panda.threads.MessageQueue")
         addAlias("panda.threads.Thread")
         addAlias("panda.json.JSON")
         addAlias("panda.json.JSONParser")
@@ -1713,7 +1714,7 @@ class Compiler {
                 }
                 else if target.isSteppedRange() {
                     if step = null {
-                        error(expr.position(), "expected '\{target}', but found2 '\{expr}'")
+                        error(expr.position(), "expected '\{target}', but found '\{expr}'")
                         return null
                     }
                     assert target.typeKind = Type.Kind.GENERIC
@@ -1808,7 +1809,7 @@ class Compiler {
             }
             return result
         }
-        error(expr.position(), "expected '\{target}', but found3 '\{expr}(\{expr.$rawValue}):\{expr.type()}'")
+        error(expr.position(), "expected '\{target}', but found '\{expr.type()}'")
         return null
     }
 

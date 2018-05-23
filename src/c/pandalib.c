@@ -100,6 +100,26 @@ typedef struct Process {
     FileInputStream* error;
 } Process;
 
+typedef struct Lock {
+    Class* cl;
+    int32_t refcnt;
+    pthread_mutex_t* mutex;
+} Lock;
+
+typedef struct Notifier {
+    Class* cl;
+    int32_t refcnt;
+    pthread_cond_t* cond;
+    Lock* lock;
+} Notifier;
+
+typedef struct Method {
+    Class* cl;
+    int32_t refcnt;
+    void* pointer;
+    Object* target;
+} Method;
+
 extern Class panda$core$Panda$class;
 
 extern Class panda$io$File$class;
@@ -399,32 +419,30 @@ String* panda$core$Panda$pointerConvert$panda$unsafe$Pointer$LTpanda$core$Object
 
 void panda$core$Panda$ref$panda$core$Object(Object* o) {
     if (o && o->refcnt != NO_REFCNT) {
-        if (o->refcnt <= 0) {
-            printf("internal error: ref %p with refcnt = %d\n", o, o->refcnt);
+        int newCount = __atomic_add_fetch(&o->refcnt, 1, __ATOMIC_RELAXED <= 1);
+        if (newCount <= 1) {
+            printf("internal error: ref %p with refcnt = %d\n", o, newCount - 1);
             abort();
         }
-        ++o->refcnt;
     }
 }
 
 void panda$core$Panda$unref$panda$core$Object(Object* o) {
     if (o && o->refcnt != NO_REFCNT) {
-        if (o->refcnt <= 0) {
-            printf("internal error: unref %p with refcnt = %d\n", o, o->refcnt);
+        int newCount = __atomic_sub_fetch(&o->refcnt, 1, __ATOMIC_RELAXED);
+        if (newCount < 0) {
+            printf("internal error: unref %p with refcnt = %d\n", o, newCount + 1);
             abort();
         }
-        if (o->refcnt == 1) {
+        if (newCount == 0) {
             void (*cleanup)() = o->cl->vtable[1]; // FIXME hardcoded index to cleanup
+            o->refcnt = 1; // no other thread can see it, so we no longer need to use atomics here
             cleanup(o);
             if (o->refcnt != 1) {
-                printf("internal error: refcount of %p changed to %d during cleanup\n", o,
-                        o->refcnt);
+                printf("internal error: refcount of %p changed during cleanup\n", o);
                 abort();
             }
             pandaObjectFree(o);
-        }
-        else {
-            --o->refcnt;
         }
     }
 }
@@ -473,7 +491,7 @@ int64_t panda$core$Panda$currentTime$R$builtin_int64() {
 // Thread
 
 typedef struct ThreadInfo {
-    void (*run)();
+    Method* run;
     Bit preventsExit;
 } ThreadInfo;
 
@@ -483,7 +501,13 @@ void pandaThreadEntry(ThreadInfo* threadInfo) {
         preventsExitThreads++;
         pthread_mutex_unlock(&preventsExitThreadsMutex);
     }
-    threadInfo->run();
+    if (threadInfo->run->target) {
+        ((void(*)(Object*)) threadInfo->run->pointer)(threadInfo->run->target);
+    }
+    else {
+        ((void(*)()) threadInfo->run->pointer)();
+    }
+    panda$core$Panda$unref$panda$core$Object((Object*) threadInfo->run);
     pandaFree(threadInfo);
     if (threadInfo->preventsExit) {
         pthread_mutex_lock(&preventsExitThreadsMutex);
@@ -494,13 +518,58 @@ void pandaThreadEntry(ThreadInfo* threadInfo) {
     }
 }
 
-void panda$threads$Thread$run$$LP$RP$EQ$AM$GT$LP$RP$builtin_bit(Object* thread, void* run,
+void panda$threads$Thread$run$$LP$RP$EQ$AM$GT$LP$RP$builtin_bit(Object* thread, Method* run,
         Bit preventsExit) {
     pthread_t threadId;
     ThreadInfo* threadInfo = pandaAlloc(sizeof(ThreadInfo));
-    threadInfo->run = (void (*)(void*)) run;
+    panda$core$Panda$ref$panda$core$Object((Object*) run);
+    threadInfo->run = run;
     threadInfo->preventsExit = preventsExit;
     pthread_create(&threadId, NULL, (void* (*)()) &pandaThreadEntry, threadInfo);
+}
+
+// Lock
+
+void panda$threads$Lock$create(Lock* lock) {
+    lock->mutex = pandaAlloc(sizeof(pthread_mutex_t));
+    pthread_mutex_init(lock->mutex, NULL);
+}
+
+void panda$threads$Lock$lock(Lock* lock) {
+    pthread_mutex_lock(lock->mutex);
+}
+
+void panda$threads$Lock$unlock(Lock* lock) {
+    pthread_mutex_unlock(lock->mutex);
+}
+
+void panda$threads$Lock$destroy(Lock* lock) {
+    pthread_mutex_destroy(lock->mutex);
+    pandaFree(lock->mutex);
+}
+
+// Notifier
+
+void panda$threads$Notifier$create(Notifier* notifier) {
+    notifier->cond = pandaAlloc(sizeof(pthread_cond_t));
+    pthread_cond_init(notifier->cond, NULL);
+}
+
+void panda$threads$Notifier$wait(Notifier* notifier) {
+    pthread_cond_wait(notifier->cond, notifier->lock->mutex);
+}
+
+void panda$threads$Notifier$notify(Notifier* notifier) {
+    pthread_cond_signal(notifier->cond);
+}
+
+void panda$threads$Notifier$notifyAll(Notifier* notifier) {
+    pthread_cond_broadcast(notifier->cond);
+}
+
+void panda$threads$Notifier$destroy(Notifier* notifier) {
+    pthread_cond_destroy(notifier->cond);
+    pandaFree(notifier->cond);
 }
 
 // Console

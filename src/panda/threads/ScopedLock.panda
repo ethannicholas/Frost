@@ -1,0 +1,27 @@
+package panda.threads
+
+====================================================================================================
+An object which holds onto a lock as long as the `ScopedLock` itself continues to exist.
+`ScopedLock` is typically assigned to a local variable, which will cause it to remain in memory
+until the local variable goes out of scope. For example:
+
+    method process() {
+        def scope := ScopedLock(lock)
+        <do stuff>
+        -- lock is automatically released at this point
+    }
+====================================================================================================
+class ScopedLock : Immutable {
+    @private
+    def lock:Lock
+
+    init(lock:Lock) {
+        self.lock := lock
+        lock.lock()
+    }
+
+    @override
+    method cleanup() {
+        lock.unlock()
+    }
+}
