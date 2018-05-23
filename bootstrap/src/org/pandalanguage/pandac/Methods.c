@@ -7,7 +7,6 @@
 #include "panda/core/Bit.h"
 #include "panda/core/Int64.h"
 #include "panda/collections/CollectionView.h"
-#include "panda/core/Method.h"
 #include "panda/core/Range.LTpanda/core/Int64.GT.h"
 #include "org/pandalanguage/pandac/MethodDecl.h"
 #include "panda/core/Panda.h"

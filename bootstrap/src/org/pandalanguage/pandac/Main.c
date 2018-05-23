@@ -13,7 +13,6 @@
 #include "panda/io/OutputStream.h"
 #include "panda/io/Console.h"
 #include "panda/io/InputStream.h"
-#include "panda/core/Method.h"
 #include "org/pandalanguage/pandac/Main/Arguments.h"
 #include "org/pandalanguage/pandac/CodeGenerator.h"
 #include "org/pandalanguage/pandac/LLVMCodeGenerator.h"

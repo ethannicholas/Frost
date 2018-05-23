@@ -14,7 +14,6 @@
 #include "org/pandalanguage/pandac/parser/Token/Kind.h"
 #include "panda/core/Char8.h"
 #include "panda/core/UInt8.h"
-#include "panda/core/Method.h"
 #include "org/pandalanguage/pandac/Position.h"
 #include "panda/collections/CollectionView.h"
 #include "panda/core/SteppedRange.LTpanda/core/Int64.Cpanda/core/Int64.GT.h"

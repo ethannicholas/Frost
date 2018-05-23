@@ -68,6 +68,7 @@ add_library(c_panda
     bootstrap/src/panda/core/Int32.c
     bootstrap/src/panda/core/Int64.c
     bootstrap/src/panda/core/Int8.c
+    bootstrap/src/panda/core/Method.c
     bootstrap/src/panda/core/Real32.c
     bootstrap/src/panda/core/Real64.c
     bootstrap/src/panda/core/MutableString.c
@@ -126,6 +127,7 @@ add_executable(bootstrap
     bootstrap/src/org/pandalanguage/pandac/CCodeGenerator/AutoContext.c
     bootstrap/src/org/pandalanguage/pandac/CCodeGenerator/ClassConstant.c
     bootstrap/src/org/pandalanguage/pandac/CCodeGenerator/EnclosingContext.c
+    bootstrap/src/org/pandalanguage/pandac/CCodeGenerator/ExtraEffect.c
     bootstrap/src/org/pandalanguage/pandac/CCodeGenerator/MethodShim.c
     bootstrap/src/org/pandalanguage/pandac/CCodeGenerator/OpClass.c
     bootstrap/src/org/pandalanguage/pandac/ChoiceEntry.c

@@ -5,7 +5,6 @@
 #include "panda/core/Int64.h"
 #include "panda/core/Bit.h"
 #include "panda/core/UInt8.h"
-#include "panda/core/Method.h"
 #include "panda/core/MutableString.h"
 #include "panda/core/Panda.h"
 #include "panda/core/Int16.h"

@@ -19,7 +19,6 @@
 #include "org/pandalanguage/pandac/MethodDecl/Parameter.h"
 #include "panda/collections/Iterator.h"
 #include "panda/collections/Iterable.h"
-#include "panda/core/Method.h"
 #include "org/pandalanguage/pandac/Type/Kind.h"
 #include "panda/collections/ListView.h"
 #include "panda/core/MutableString.h"

@@ -12,7 +12,6 @@
 #include "panda/collections/ListView.h"
 #include "org/pandalanguage/pandac/parser/Token.h"
 #include "panda/collections/Collection.h"
-#include "panda/core/Method.h"
 #include "panda/core/Panda.h"
 #include "panda/core/Bit.h"
 #include "panda/core/SteppedRange.LTpanda/core/Int64.Cpanda/core/Int64.GT.h"

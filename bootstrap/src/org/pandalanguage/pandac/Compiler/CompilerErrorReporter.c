@@ -8,7 +8,6 @@
 #include "panda/core/Panda.h"
 #include "panda/io/File.h"
 #include "org/pandalanguage/pandac/Position.h"
-#include "panda/core/Method.h"
 
 
 struct { panda$core$Class* cl; ITable* next; void* methods[1]; } org$pandalanguage$pandac$Compiler$CompilerErrorReporter$_org$pandalanguage$pandac$ErrorReporter = { (panda$core$Class*) &org$pandalanguage$pandac$ErrorReporter$class, NULL, { org$pandalanguage$pandac$Compiler$CompilerErrorReporter$error$panda$io$File$org$pandalanguage$pandac$Position$panda$core$String} };

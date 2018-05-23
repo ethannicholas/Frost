@@ -1258,11 +1258,15 @@ class Compiler {
                     return null
                 }
                 for i in 0 .. type.subtypes.get_count() {
-                    def cost := coercionCost(type.subtypes[i], target.subtypes[i])
-                    if cost = null {
+                    if type.subtypes[i] != target.subtypes[i] {
+                        -- we could potentially allow some differences here, as long as things are
+                        -- binary compatible - i.e., it would be fine to coerce (String)=>(String)
+                        -- to (Object)=>(Object), but not ok to coerce (Int)=>(Int) to
+                        -- (Object)=>(Object) because Int is a value which is not binary compatible
+                        -- with Object. This may be confusing, and I'm not sure it's worth it, so
+                        -- for right now let's just be strict about it.
                         return null
                     }
-                    total += cost
                 }
                 return total
             }
@@ -1687,7 +1691,7 @@ class Compiler {
             when IRNode.UNRESOLVED_RANGE(_, start, end, inclusive, step):
                 if target.isRange() {
                     if step != null {
-                        error(expr.position(), "expected '\{target}', but found '\{expr}'")
+                        error(expr.position(), "expected '\{target}', but found1 '\{expr}'")
                         return null
                     }
                     assert target.typeKind = Type.Kind.GENERIC
@@ -1709,7 +1713,7 @@ class Compiler {
                 }
                 else if target.isSteppedRange() {
                     if step = null {
-                        error(expr.position(), "expected '\{target}', but found '\{expr}'")
+                        error(expr.position(), "expected '\{target}', but found2 '\{expr}'")
                         return null
                     }
                     assert target.typeKind = Type.Kind.GENERIC
@@ -1804,7 +1808,7 @@ class Compiler {
             }
             return result
         }
-        error(expr.position(), "expected '\{target}', but found '\{expr.type()}'")
+        error(expr.position(), "expected '\{target}', but found3 '\{expr}(\{expr.$rawValue}):\{expr.type()}'")
         return null
     }
 
@@ -1884,6 +1888,7 @@ class Compiler {
                     ASTNode.IR_WRAPPER(IRNode.TYPE_REFERENCE(position, src.subtypes[i]))))
         }
         def body := Array<ASTNode>()
+        -- def methodVar := pointer-><src type>
         def methodPointer := ASTNode.IDENTIFIER(position, "pointer")
         def realParams := Array<Type>(src.subtypes.get_count() + 1)
         realParams.add(Type.Method())
@@ -1891,9 +1896,21 @@ class Compiler {
         def realType := Type.methodType(src.position, src.typeKind, realParams,
                 src.subtypes[src.subtypes.get_count() - 1])
         def methodType := ASTNode.IR_WRAPPER(IRNode.TYPE_REFERENCE(position, node.type()))
-        def call := ASTNode.CALL(position, ASTNode.BINARY(position, methodPointer,
-                Token.Kind.CAST, ASTNode.IR_WRAPPER(IRNode.TYPE_REFERENCE(position, src))),
-                args.finish())
+        def methodVar := ASTNode.IDENTIFIER(position, "methodVar")
+        def declarations := Array<ASTNode>()
+        declarations.add(ASTNode.DECLARATION(position, methodVar,
+                ASTNode.BINARY(position, methodPointer, Token.Kind.CAST,
+                ASTNode.IR_WRAPPER(IRNode.TYPE_REFERENCE(position, src)))))
+        body.add(ASTNode.VAR(position, Variable.Kind.DEF, declarations.finish()))
+        -- methodVar->Method.target := self.target
+        def methodVarTarget := ASTNode.DOT(position,
+                ASTNode.BINARY(position, methodVar, Token.Kind.CAST,
+                    ASTNode.IR_WRAPPER(IRNode.TYPE_REFERENCE(position, Type.Method()))),
+                "target")
+        def selfTarget := ASTNode.DOT(position, ASTNode.SELF(position), "target")
+        body.add(ASTNode.BINARY(position, methodVarTarget, Token.Kind.ASSIGNMENT, selfTarget))
+        -- perform actual call
+        def call := ASTNode.CALL(position, methodVar, args.finish())
         def returnType := target.subtypes[target.subtypes.get_count() - 1]
         if returnType != Type.Void() {
             def cast := ASTNode.BINARY(position, call, Token.Kind.CAST,

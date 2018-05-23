@@ -1622,7 +1622,7 @@ class LLVMCodeGenerator : CodeGenerator {
         for a in args {
             argRefs.add(getTypedReference(a, out))
         }
-        def targetType := "i8*"
+        def rawTargetType := "i8*"
         def methodObjectPtrRef := getTypedReference(m, out)
         def methodObjectRef := nextVar()
         def methodObjectType := "%panda$core$Method"
@@ -1634,7 +1634,7 @@ class LLVMCodeGenerator : CodeGenerator {
         out.printLine("\{target} = extractvalue \{methodObjectType} \{methodObjectRef}, " +
                 "\{OBJECT_FIELD_COUNT + 1}")
         def targetNonNull := nextVar()
-        out.printLine("\{targetNonNull} = icmp ne \{targetType} \{target}, null")
+        out.printLine("\{targetNonNull} = icmp ne \{rawTargetType} \{target}, null")
         def haveTarget := nextLabel()
         def noTarget := nextLabel()
         def merge := nextLabel()
@@ -1643,11 +1643,16 @@ class LLVMCodeGenerator : CodeGenerator {
 
         createBlock(haveTarget, out)
         def haveTargetMethodRef := nextVar()
+        def finalTargetType := m.type().subtypes[0]
         out.printLine("\{haveTargetMethodRef} = bitcast %panda$core$Int8* \{rawMethodRef} to " +
-                methodType(m.type(), Type.pointerTo(Type.BuiltinInt8())))
+                methodType(m.type(), finalTargetType))
+        def targetObjectCast := nextVar()
+        out.printLine("\{targetObjectCast} = bitcast \{rawTargetType} \{target} to " +
+                type(Type.Object()))
+        def targetCast := getCastReference(targetObjectCast, Type.Object(), finalTargetType, out)
         def haveTargetResult := nextVar()
         out.print("\{haveTargetResult} = call \{type(resultType)} \{haveTargetMethodRef}(" +
-                "\{targetType} \{target}")
+                "\{type(finalTargetType)} \{targetCast}")
         if argRefs.get_count() > 0 {
             out.print(", \{argRefs.join()}")
         }
@@ -2198,7 +2203,7 @@ class LLVMCodeGenerator : CodeGenerator {
         def initMethod := methodClass.methods[0]
         compiler.resolve(initMethod)
         writeDeclaration(initMethod)
-        if !m.annotations.isSynthetic() {
+        if m.owner.external & !m.annotations.isSynthetic() {
             writeDeclaration(m)
         }
         def methodCast := nextVar()
@@ -2209,19 +2214,23 @@ class LLVMCodeGenerator : CodeGenerator {
         else {
             targetType := null
         }
-        out.printLine("\{methodCast} = bitcast \{methodType(Compiler.effectiveMethodType(target, m), targetType)} " +
+        out.printLine("\{methodCast} = bitcast " +
+                "\{methodType(Compiler.effectiveMethodType(target, m), targetType)} " +
                 "\{getName(m)} to %panda$core$Int8*")
         def targetCast:String
         if targetType != null {
-            def targetRef := getTypedReference(target, out)
-            targetCast := nextVar()
-            out.printLine("\{targetCast} = bitcast \{targetRef} to \{type(Type.Object())}")
+            def targetRef := getReference(target, out)
+            targetCast := getCastReference(targetRef, target.type(), Type.Object(), out)
         }
         else {
             targetCast := "null"
         }
         out.printLine("call void \{getName(initMethod)}(\{type(methodObjectType)} \{result}, " +
                 "%panda$core$Int8* \{methodCast}, \{type(Type.Any())} \{targetCast})")
+        if target != null & compiler.isValue(compiler.getClass(target.type())) {
+            out.printLine("call void " +
+                    "@panda$core$Panda$unref$panda$core$Object(\{type(Type.Any())} \{targetCast})")
+        }
 
         def resultCast := nextVar()
         out.printLine("\{resultCast} = bitcast %panda$core$Method* \{result} to %panda$core$Object*")
@@ -2230,6 +2239,7 @@ class LLVMCodeGenerator : CodeGenerator {
         return result
     }
 
+    @pre(expr.type() != Type.Void())
     @post(extraEffects.get_count() = @pre(extraEffects.get_count()))
     method getReference(expr:IRNode, out:OutputStream):String {
         match expr {
@@ -3426,11 +3436,15 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     method writeDynamicCall(m:IRNode, args:ListView<IRNode>, out:OutputStream) {
+        if m.type().subtypes[m.type().subtypes.get_count() - 1] != Type.Void() {
+            getDynamicCallReference(m, args, out)
+            return
+        }
         def argRefs := Array<String>(args.get_count())
         for a in args {
             argRefs.add(getTypedReference(a, out))
         }
-        def targetType := "i8*"
+        def rawTargetType := "i8*"
         def methodObjectPtrRef := getTypedReference(m, out)
         def methodObjectRef := nextVar()
         def methodObjectType := "%panda$core$Method"
@@ -3442,7 +3456,7 @@ class LLVMCodeGenerator : CodeGenerator {
         out.printLine("\{target} = extractvalue \{methodObjectType} \{methodObjectRef}, " +
                 "\{OBJECT_FIELD_COUNT + 1}")
         def targetNonNull := nextVar()
-        out.printLine("\{targetNonNull} = icmp ne \{targetType} \{target}, null")
+        out.printLine("\{targetNonNull} = icmp ne \{rawTargetType} \{target}, null")
         def haveTarget := nextLabel()
         def noTarget := nextLabel()
         def merge := nextLabel()
@@ -3451,20 +3465,28 @@ class LLVMCodeGenerator : CodeGenerator {
 
         createBlock(haveTarget, out)
         def haveTargetMethodRef := nextVar()
+        def finalTargetType := m.type().subtypes[0]
         out.printLine("\{haveTargetMethodRef} = bitcast %panda$core$Int8* \{rawMethodRef} to " +
-                methodType(m.type(), Type.pointerTo(Type.BuiltinInt8())))
-        out.print("call \{type(resultType)} \{haveTargetMethodRef}(\{targetType} \{target}")
+                methodType(m.type(), finalTargetType))
+        def targetObjectCast := nextVar()
+        out.printLine("\{targetObjectCast} = bitcast \{rawTargetType} \{target} to " +
+                type(Type.Object()))
+        def targetCast := getCastReference(targetObjectCast, Type.Object(), finalTargetType, out)
+        out.print("call \{type(resultType)} \{haveTargetMethodRef}(" +
+                "\{type(finalTargetType)} \{targetCast}")
         if argRefs.get_count() > 0 {
             out.print(", \{argRefs.join()}")
         }
         out.printLine(")")
+
         out.print("br label %\{merge}")
 
         createBlock(noTarget, out)
         def noTargetMethodRef := nextVar()
         out.printLine("\{noTargetMethodRef} = bitcast %panda$core$Int8* \{rawMethodRef} to " +
                 methodType(m.type(), null))
-        out.printLine("call \{type(resultType)} \{noTargetMethodRef}(\{argRefs.join()})")
+        out.printLine("call \{type(resultType)} \{noTargetMethodRef}(" +
+                "\{argRefs.join()})")
         out.print("br label %\{merge}")
 
         createBlock(merge, out)

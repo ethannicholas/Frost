@@ -1,0 +1,37 @@
+class MethodReferences {
+    @class
+    method main() {
+        def strings := Array<String>()
+        strings.add("Hello, ")
+        strings.add("World!")
+        Console.printLine(strings.fold(String.+))
+        strings.apply(Console.print)
+        Console.printLine()
+        Console.printLine(strings.filter("World!".=))
+
+        def printLine:(Object)=&>() := Console.printLine
+        printLine("Hello a third time!")
+
+        def ints := Array<Int>()
+        for i in 1 ... 10 {
+            ints.add(i)
+        }
+        printLine(ints.fold(Int.+))
+        printLine(ints.fold(Int.*))
+        printLine(ints.fold(Int.min))
+        printLine(ints.fold(Int.max))
+        printLine(ints.filter(5.<))
+        printLine(ints.filter(7.=))
+
+        def triple:(Int)=>(Int) := 3.*
+        triple(142)
+        printLine(triple(142))
+
+        def multiply:(Int, Int)=>(Int) := Int.*
+        printLine(multiply(142, 3))
+
+        def hello:(String)=>(String) := "Hello, ".+
+        printLine(hello("Panda"))
+        hello("Panda")
+    }
+}

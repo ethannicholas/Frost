@@ -4,7 +4,6 @@
 #include "panda/core/String.h"
 #include "panda/core/Int8.h"
 #include "panda/core/UInt8.h"
-#include "panda/core/Method.h"
 #include "panda/core/Int64.h"
 #include "panda/core/Range.LTpanda/core/Int64.GT.h"
 #include "panda/core/Bit.h"

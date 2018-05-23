@@ -6,7 +6,6 @@
 #include "panda/collections/ListView.h"
 #include "panda/core/Panda.h"
 #include "panda/collections/CollectionView.h"
-#include "panda/core/Method.h"
 #include "org/pandalanguage/plex/runtime/RawToken.h"
 #include "panda/core/Bit.h"
 #include "panda/core/String/Index.h"

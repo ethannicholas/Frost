@@ -13,7 +13,6 @@
 #include "panda/core/Bit.h"
 #include "panda/collections/Array.h"
 #include "org/pandalanguage/pandac/Symbol/Kind.h"
-#include "panda/core/Method.h"
 
 
 static panda$core$String $s1;

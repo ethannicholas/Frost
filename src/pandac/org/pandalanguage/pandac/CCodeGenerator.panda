@@ -90,24 +90,33 @@ class CCodeGenerator : CodeGenerator {
             writeImport(cl)
         }
         if t.typeKind = Type.Kind.METHOD | t.typeKind = Type.Kind.FUNCTION {
-            varCount += 1
-            def result := "$fn\{varCount}"
-            def code := MutableString("typedef ")
-            code.append(type(t.subtypes[t.subtypes.get_count() - 1]))
-            code.append(" (*")
-            code.append(result)
-            code.append(")(")
-            var separator := ""
-            for i in 0 .. t.subtypes.get_count() - 1 {
-                code.append(separator)
-                code.append(type(t.subtypes[i]))
-                separator := ", "
-            }
-            code.append(");")
-            types.printLine(code.finish())
-            return result
+            return type(Type.Method())
         }
         return hCodeGen.type(t)
+    }
+
+    @pre(t.typeKind = Type.Kind.FUNCTION | t.typeKind = Type.Kind.METHOD)
+    method methodType(t:Type, selfType:Type?):String {
+        varCount += 1
+        def result := "$fn\{varCount}"
+        def code := MutableString("typedef ")
+        code.append(type(t.subtypes[t.subtypes.get_count() - 1]))
+        code.append(" (*")
+        code.append(result)
+        code.append(")(")
+        var separator := ""
+        if selfType != null {
+            code.append(type(selfType))
+            separator := ", "
+        }
+        for i in 0 .. t.subtypes.get_count() - 1 {
+            code.append(separator)
+            code.append(type(t.subtypes[i]))
+            separator := ", "
+        }
+        code.append(");")
+        types.printLine(code.finish())
+        return result
     }
 
     @override
@@ -183,7 +192,11 @@ class CCodeGenerator : CodeGenerator {
 
     def enclosingContexts := Stack<EnclosingContext>()
 
-    def extraEffects := Stack<Array<IRNode>>()
+    choice ExtraEffect {
+        STATEMENT(IRNode)
+        STRING(String)
+    }
+    def extraEffects := Stack<Array<ExtraEffect>>()
 
     var varCount := 0
 
@@ -639,7 +652,7 @@ class CCodeGenerator : CodeGenerator {
     }
 
     method getAndReference(left:IRNode, right:IRNode, out:IndentedOutputStream):String {
-        extraEffects.push(Array<IRNode>())
+        extraEffects.push(Array<ExtraEffect>())
         def result := nextVar()
         var leftRef := getReference(left, out)
         if left.type() = Type.Bit() {
@@ -649,7 +662,7 @@ class CCodeGenerator : CodeGenerator {
         writeExtraEffects(out)
         def falseLabel := nextLabel()
         out.printLine("if (!\{result}) goto \{falseLabel};")
-        extraEffects.push(Array<IRNode>())
+        extraEffects.push(Array<ExtraEffect>())
         var rightRef := getReference(right, out)
         if right.type() = Type.Bit() {
             rightRef := rightRef + ".value"
@@ -661,7 +674,7 @@ class CCodeGenerator : CodeGenerator {
     }
 
     method getOrReference(left:IRNode, right:IRNode, out:IndentedOutputStream):String {
-        extraEffects.push(Array<IRNode>())
+        extraEffects.push(Array<ExtraEffect>())
         def result := nextVar()
         var leftRef := getReference(left, out)
         if left.type() = Type.Bit() {
@@ -671,7 +684,7 @@ class CCodeGenerator : CodeGenerator {
         writeExtraEffects(out)
         def trueLabel := nextLabel()
         out.printLine("if (\{result}) goto \{trueLabel};")
-        extraEffects.push(Array<IRNode>())
+        extraEffects.push(Array<ExtraEffect>())
         var rightRef := getReference(right, out)
         if right.type() = Type.Bit() {
             rightRef := rightRef + ".value"
@@ -779,7 +792,8 @@ class CCodeGenerator : CodeGenerator {
             }
         }
         assert index != -1
-        return "((\{type(compiler.inheritedTypeWithSelf(m))}) \{target}->$class->vtable[\{index}])"
+        return "((\{methodType(compiler.inheritedTypeWithSelf(m), null)}) " +
+                "\{target}->$class->vtable[\{index}])"
     }
 
     method getInterfaceMethodReference(target:String, m:MethodDecl,
@@ -803,7 +817,7 @@ class CCodeGenerator : CodeGenerator {
         index -= compiler.getVTable(compiler.getClass(Type.Object())).get_count()
         assert index != -1
         def result := nextVar()
-        def methodType := type(compiler.inheritedTypeWithSelf(m))
+        def methodType := methodType(compiler.inheritedTypeWithSelf(m), null)
         out.printLine("\{methodType} \{result} = \{itable}->methods[\{index}];")
         return result
     }
@@ -1197,7 +1211,7 @@ class CCodeGenerator : CodeGenerator {
 
     method getTernaryReference(test:IRNode, ifTrue:IRNode, ifFalse:IRNode,
             out:IndentedOutputStream):String {
-        extraEffects.push(Array<IRNode>())
+        extraEffects.push(Array<ExtraEffect>())
         assert ifTrue.type() = ifFalse.type()
         def testRef := getTypedReference(test, out)
         writeExtraEffects(out)
@@ -1208,12 +1222,12 @@ class CCodeGenerator : CodeGenerator {
         out.printLine("\{type(ifTrue.type())} \{result};")
         out.printLine("if (\{testRef}.value) goto \{trueLabel}; else goto \{falseLabel};")
         createBlock(trueLabel, out)
-        extraEffects.push(Array<IRNode>())
+        extraEffects.push(Array<ExtraEffect>())
         out.printLine("\{result} = \{getReference(ifTrue, out)};")
         writeExtraEffects(out)
         out.printLine("goto \{merge};")
         createBlock(falseLabel, out)
-        extraEffects.push(Array<IRNode>())
+        extraEffects.push(Array<ExtraEffect>())
         out.printLine("\{result} = \{getReference(ifFalse, out)};")
         writeExtraEffects(out)
         out.printLine("goto \{merge};")
@@ -1228,22 +1242,35 @@ class CCodeGenerator : CodeGenerator {
     method getExpressionWithExtraEffectsReference(expr:IRNode, stmt:IRNode,
             out:IndentedOutputStream):String {
         def result := getReference(expr, out)
-        extraEffects[0].add(stmt)
+        extraEffects[0].add(ExtraEffect.STATEMENT(stmt))
         return result
     }
 
-    method getDynamicCallReference(m:IRNode, args:ListView<IRNode>,
-            out:IndentedOutputStream):String {
+    method getDynamicCallReference(m:IRNode, args:ListView<IRNode>, out:IndentedOutputStream):String {
         def argRefs := Array<String>(args.get_count())
         for a in args {
             argRefs.add(getReference(a, out))
         }
         def mRef := getReference(m, out)
         def result := nextVar()
-        def type := m.type()
-        def returnType := type.subtypes[type.subtypes.get_count() - 1]
+        def mtype := m.type()
+        def returnType := mtype.subtypes[mtype.subtypes.get_count() - 1]
         methodHeader.printLine("\{hCodeGen.declaration(returnType, result)};")
-        out.print("\{result} = \{mRef}(")
+        out.printLine("if (\{mRef}->target) {")
+        out.level += 1
+        def finalTargetType := mtype.subtypes[0]
+        def targetCast := getCastReference("\{mRef}->target", Type.Any(), finalTargetType, out)
+        out.print("\{result} = ((\{methodType(m.type(), finalTargetType)}) \{mRef}->pointer)(" +
+                targetCast)
+        for a in argRefs {
+            out.print(", ")
+            out.print(a)
+        }
+        out.printLine(");")
+        out.level -= 1
+        out.printLine("} else {")
+        out.level += 1
+        out.print("\{result} = ((\{methodType(mtype, null)}) \{mRef}->pointer)(")
         var separator := ""
         for a in argRefs {
             out.print(separator)
@@ -1251,7 +1278,49 @@ class CCodeGenerator : CodeGenerator {
             separator := ", "
         }
         out.printLine(");")
+        out.level -= 1
+        out.printLine("}")
         return result
+    }
+
+    method getMethodRefReference(target:IRNode?, m:MethodDecl,
+            out:IndentedOutputStream):String {
+        def methodObjectType := Type.Method()
+        def methodClass := compiler.getClass(methodObjectType)
+        def cc := getClassConstant(methodClass)
+        def result := nextVar()
+        out.printLine("\{type(methodObjectType)} \{result} = (\{type(methodObjectType)}) " +
+                "pandaObjectAlloc(\{sizeOf(methodObjectType)}, &\{cc.name});")
+        def initMethod := methodClass.methods[0]
+        compiler.resolve(initMethod)
+        writeDeclaration(initMethod)
+        if m.owner.external & !m.annotations.isSynthetic() {
+            writeDeclaration(m)
+        }
+        def targetType:Type?
+        if target != null & target != IRNode.TYPE_REFERENCE {
+            targetType := target.type()
+        }
+        else {
+            targetType := null
+        }
+        def targetCast:String
+        if targetType != null {
+            def targetRef := getReference(target, out)
+            targetCast := getCastReference(targetRef, target.type(), Type.Object(), out)
+        }
+        else {
+            targetCast := "NULL"
+        }
+        out.printLine("\{getName(initMethod)}(\{result}, \{getName(m)}, \{targetCast});")
+        if target != null & compiler.isValue(compiler.getClass(target.type())) {
+            out.printLine("panda$core$Panda$unref$panda$core$Object(\{targetCast});")
+        }
+
+        def resultCast := "((panda$core$Object*) \{result})"
+        extraEffects[0].add(ExtraEffect.STRING(
+                "panda$core$Panda$unref$panda$core$Object(\{resultCast});"))
+        return resultCast
     }
 
     method getReference(expr:IRNode, out:IndentedOutputStream):String {
@@ -1268,6 +1337,8 @@ class CCodeGenerator : CodeGenerator {
                 return getDynamicCallReference(m, args, out)
             when IRNode.INT(_, _, value):
                 return getIntReference(value, out)
+            when IRNode.METHOD_REFERENCE(_, target, mref):
+                return getMethodRefReference(target, mref.value, out)
             when IRNode.NEGATED_INT(_, _, value):
                 return getNegatedIntReference(value, out)
             when IRNode.REAL(_, _, value):
@@ -1453,7 +1524,7 @@ class CCodeGenerator : CodeGenerator {
 
     method writeIf(test:IRNode, ifTrue:ImmutableArray<IRNode>, ifFalse:IRNode?,
             out:IndentedOutputStream) {
-        extraEffects.push(Array<IRNode>())
+        extraEffects.push(Array<ExtraEffect>())
         def testRef := getReference(test, out)
         writeExtraEffects(out)
         out.printLine("if (\{testRef}.value) {")
@@ -1771,7 +1842,7 @@ class CCodeGenerator : CodeGenerator {
         def loopEnd := nextLabel()
         def context := AutoContext(self, EnclosingContext.LOOP(label, loopEnd, loopStart))
         createBlock(loopStart, out)
-        extraEffects.push(Array<IRNode>())
+        extraEffects.push(Array<ExtraEffect>())
         def testVar := nextVar()
         out.printLine("bool \{testVar} = \{getReference(test, out)}.value;")
         writeExtraEffects(out)
@@ -1789,7 +1860,7 @@ class CCodeGenerator : CodeGenerator {
         def context := AutoContext(self, EnclosingContext.LOOP(label, loopEnd, loopStart))
         createBlock(loopStart, out)
         writeBlock(statements, out)
-        extraEffects.push(Array<IRNode>())
+        extraEffects.push(Array<ExtraEffect>())
         def testVar := nextVar()
         out.printLine("bool \{testVar} = \{getReference(test, out)}.value;")
         writeExtraEffects(out)
@@ -1880,7 +1951,7 @@ class CCodeGenerator : CodeGenerator {
                 returnValueVar := "$returnValue\{varCount}"
                 methodHeader.printLine("\{valueType} \{returnValueVar};")
             }
-            extraEffects.push(Array<IRNode>())
+            extraEffects.push(Array<ExtraEffect>())
             def result := getReference(value, out)
             out.printLine("\{returnValueVar} = \{result};")
             writeExtraEffects(out)
@@ -1947,7 +2018,7 @@ class CCodeGenerator : CodeGenerator {
     }
 
     method writeAssert(test:IRNode, message:IRNode?, out:IndentedOutputStream) {
-        extraEffects.push(Array<IRNode>())
+        extraEffects.push(Array<ExtraEffect>())
         out.printLine("PANDA_ASSERT(\{getReference(test, out)});")
         writeExtraEffects(out)
     }
@@ -1979,12 +2050,50 @@ class CCodeGenerator : CodeGenerator {
     method writeExtraEffects(out:IndentedOutputStream) {
         def finalEffects := extraEffects.pop()
         for i in finalEffects.get_count() - 1 ... 0 by -1 {
-            writeStatement(finalEffects[i], out)
+            match finalEffects[i] {
+                when ExtraEffect.STATEMENT(stmt):
+                    writeStatement(stmt, out)
+                when ExtraEffect.STRING(s):
+                    out.printLine(s)
+            }
         }
     }
 
+    method writeDynamicCall(m:IRNode, args:ListView<IRNode>, out:IndentedOutputStream) {
+        def argRefs := Array<String>(args.get_count())
+        for a in args {
+            argRefs.add(getReference(a, out))
+        }
+        def mRef := getReference(m, out)
+        def mtype := m.type()
+        def returnType := mtype.subtypes[mtype.subtypes.get_count() - 1]
+        out.printLine("if (\{mRef}->target) {")
+        out.level += 1
+        def finalTargetType := mtype.subtypes[0]
+        def targetCast := getCastReference("\{mRef}->target", Type.Any(), finalTargetType, out)
+        out.print("((\{methodType(mtype, finalTargetType)}) \{mRef}->pointer)(\{targetCast}")
+        for a in argRefs {
+            out.print(", ")
+            out.print(a)
+        }
+        out.printLine(");")
+        out.level -= 1
+        out.printLine("} else {")
+        out.level += 1
+        out.print("((\{methodType(mtype, null)}) \{mRef}->pointer)(")
+        var separator := ""
+        for a in argRefs {
+            out.print(separator)
+            out.print(a)
+            separator := ", "
+        }
+        out.printLine(");")
+        out.level -= 1
+        out.printLine("}")
+    }
+
     method writeStatement(stmt:IRNode, out:IndentedOutputStream) {
-        extraEffects.push(Array<IRNode>())
+        extraEffects.push(Array<ExtraEffect>())
         match stmt {
             when IRNode.BINARY(_, _, left, op, right):
                 writeAssignment(left, right, out)
@@ -1995,7 +2104,7 @@ class CCodeGenerator : CodeGenerator {
             when IRNode.CALL(_, target, mref, args):
                 writeCall(target, mref, args, null, out)
             when IRNode.DYNAMIC_CALL(m, args):
-                Console.printLine("SKIPPING UNSUPPORTED DYNAMIC CALL")
+                writeDynamicCall(m, args, out)
             when IRNode.EXPRESSION_WITH_EXTRA_EFFECTS(base, stmt):
                 getExpressionWithExtraEffectsReference(base, stmt, out)
             when IRNode.IF(_, test, ifTrue, ifFalse):

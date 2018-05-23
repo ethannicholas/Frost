@@ -124,39 +124,14 @@ class HCodeGenerator : CodeGenerator {
             when Type.Kind.GENERIC_PARAMETER:
                 return type(t.parameter.bound)
             when Type.Kind.FUNCTION, Type.Kind.METHOD:
-                def result := MutableString()
-                result.append(type(t.subtypes[t.subtypes.get_count() - 1]))
-                result.append("(*)(")
-                var separator := ""
-                for i in 0 .. t.subtypes.get_count() - 1 {
-                    result.append(separator)
-                    result.append(type(t.subtypes[i]))
-                    separator := ", "
-                }
-                result.append(")")
-                return result.finish()
+                return type(Type.Method())
             otherwise:
                 assert false, "unsupported type '\{t}'"
         }
     }
 
     method declaration(t:Type, name:String):String {
-        match t.typeKind {
-            when Type.Kind.FUNCTION, Type.Kind.METHOD:
-                def result := MutableString()
-                result.append(type(t.subtypes[t.subtypes.get_count() - 1]))
-                result.append("(*\{name})(")
-                var separator := ""
-                for i in 0 .. t.subtypes.get_count() - 1 {
-                    result.append(separator)
-                    result.append(type(t.subtypes[i]))
-                    separator := ", "
-                }
-                result.append(")")
-                return result.finish()
-            otherwise:
-                return "\{type(t)} \{name}"        
-        }        
+        return "\{type(t)} \{name}"
     }
 
     @override

@@ -16,7 +16,6 @@
 #include "panda/core/MutableString.h"
 #include "panda/collections/Iterator.h"
 #include "panda/collections/Iterable.h"
-#include "panda/core/Method.h"
 #include "panda/core/Char8.h"
 #include "panda/core/UInt8.h"
 #include "org/pandalanguage/pandac/ClassDecl/GenericParameter.h"

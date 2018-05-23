@@ -4,7 +4,6 @@
 #include "panda/core/String.h"
 #include "panda/collections/Iterable.h"
 #include "panda/collections/CollectionView.h"
-#include "panda/core/Method.h"
 #include "panda/core/Panda.h"
 #include "panda/core/Int64.h"
 #include "panda/core/Bit.h"

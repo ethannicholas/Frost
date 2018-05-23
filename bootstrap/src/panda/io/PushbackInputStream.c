@@ -8,7 +8,6 @@
 #include "panda/core/UInt8.h"
 #include "panda/core/Int64.h"
 #include "panda/core/Bit.h"
-#include "panda/core/Method.h"
 #include "panda/core/Int8.h"
 #include "panda/collections/ListView.h"
 #include "panda/core/SteppedRange.LTpanda/core/Int64.Cpanda/core/Int64.GT.h"

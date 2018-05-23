@@ -8,7 +8,6 @@
 #include "panda/collections/HashMap/EntryIterator.h"
 #include "panda/core/Panda.h"
 #include "panda/core/Bit.h"
-#include "panda/core/Method.h"
 #include "panda/collections/HashMap/Entry.h"
 panda$core$Object* panda$collections$HashMap$KeyIterator$next$R$panda$collections$HashMap$KeyIterator$K$shim(panda$collections$HashMap$KeyIterator* self) {
     panda$collections$Key* result = panda$collections$HashMap$KeyIterator$next$R$panda$collections$HashMap$KeyIterator$K(self);

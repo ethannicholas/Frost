@@ -4,7 +4,6 @@
 #include "panda/core/String.h"
 #include "panda/core/Equatable.h"
 #include "panda/core/Bit.h"
-#include "panda/core/Method.h"
 
 
 struct { panda$core$Class* cl; ITable* next; void* methods[4]; } panda$core$Comparable$_panda$core$Comparable = { (panda$core$Class*) &panda$core$Comparable$class, NULL, { NULL, panda$core$Comparable$$LT$panda$core$Comparable$T$R$panda$core$Bit, panda$core$Comparable$$GE$panda$core$Comparable$T$R$panda$core$Bit, panda$core$Comparable$$LE$panda$core$Comparable$T$R$panda$core$Bit} };
