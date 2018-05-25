@@ -1,0 +1,3 @@
+function(12) = 15
+method(12) = 36
+This one just prints 12

@@ -357,7 +357,7 @@ class Parser {
     ================================================================================================
     term = IDENTIFIER | DECIMAL | BINARY | HEX | REAL | SELF | SUPER | NULL | TRUE | FALSE |
             string | LPAREN expression RPAREN | ANNOTATION(@pre) LPAREN expression RPAREN |
-            ANNOTATION(@return) |
+            anonymousMethod | ANNOTATION(@return) |
     ================================================================================================
     method term():ASTNode? {
         def t := next()
@@ -407,6 +407,9 @@ class Parser {
                 }
                 error(t, "expected an expression, but found '\{name}'")
                 return null
+            when Token.Kind.FUNCTION, Token.Kind.METHOD:
+                pushback(t)
+                return anonymousMethod()
             otherwise:
                 error(t, "expected an expression, but found '\{text(t)}'")
                 return null
@@ -1787,14 +1790,8 @@ class Parser {
         return result.finish()
     }
 
-    method postconditions():ASTNode? {
-        assert false
-        return null
-    }
-
     ================================================================================================
     methodDeclaration = (METHOD | FUNCTION) methodName parameters typeDeclaration? block?
-            postconditions?
     ================================================================================================
     method methodDeclaration(doccomment:ASTNode?, annotations:ImmutableArray<ASTNode>):ASTNode? {
         def kind:MethodDecl.Kind
@@ -1837,21 +1834,50 @@ class Parser {
         else {
             body := null
         }
-        def token := peek()
-        def tokenText := text(token)
-        if token.kind = Token.Kind.ANNOTATION &
-                (tokenText = "post" | tokenText = "postAnd") {
-            def post := postconditions()
-            if post = null {
-                return null
-            }
-        }
         return ASTNode.METHOD(start.position, doccomment, annotations, kind, name, params,
                 returnType, body)
     }
 
     ================================================================================================
-    initDeclaration = INIT parameters block postconditions?
+    anonymousMethod = (METHOD | FUNCTION) parameters typeDeclaration? block
+    ================================================================================================
+    method anonymousMethod():ASTNode? {
+        def kind:MethodDecl.Kind
+        def start := checkNext(Token.Kind.FUNCTION)
+        if start = null {
+            start := expect(Token.Kind.METHOD, "'method' or 'function'")
+            if start = null {
+                return null
+            }
+            kind := MethodDecl.Kind.METHOD
+        }
+        else {
+            kind := MethodDecl.Kind.FUNCTION
+        }
+        def params := parameters()
+        if params = null {
+            return null
+        }
+        def returnType:ASTNode?
+        if peek().kind = Token.Kind.COLON {
+            returnType := typeDeclaration()
+            if returnType = null {
+                return null
+            }
+        }
+        else {
+            returnType := null
+        }
+        def body := blockStatements()
+        if body = null {
+            return null
+        }
+        return ASTNode.METHOD(start.position, null, ImmutableArray<ASTNode>(), kind, "<anonymous>", -- FIXME literal
+                params, returnType, body)
+    }
+
+    ================================================================================================
+    initDeclaration = INIT parameters block
     ================================================================================================
     method initDeclaration(doccomment:ASTNode?, annotations:ImmutableArray<ASTNode>):ASTNode? {
         def start := expect(Token.Kind.INIT, "'init'")
@@ -1866,16 +1892,6 @@ class Parser {
         if b = null {
             return null
         }
-        def token := peek()
-        def tokenText := text(token)
-        if token.kind = Token.Kind.ANNOTATION &
-                (tokenText = "post" | tokenText = "postAnd") {
-            def post := postconditions()
-            if post = null {
-                return null
-            }
-        }
-
         return ASTNode.METHOD(start.position, doccomment, annotations, MethodDecl.Kind.INIT, "init",
                 params, null, b)
     }

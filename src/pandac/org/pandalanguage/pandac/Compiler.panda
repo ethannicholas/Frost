@@ -44,6 +44,21 @@ class Compiler {
         }
     }
 
+    class AutoAtPreFlag {
+        def compiler:Compiler
+
+        init(compiler:Compiler) {
+            self.compiler := compiler
+            compiler.inAtPre := true
+        }
+
+        @override
+        method cleanup() {
+            assert compiler.inAtPre
+            compiler.inAtPre := false
+        }
+    }
+
     constant WEAK_NAME := "panda.core.Weak"
     constant RANGE_NAME := "panda.core.Range"
     constant STEPPED_RANGE_NAME := "panda.core.SteppedRange"
@@ -127,6 +142,9 @@ class Compiler {
 
     @private
     var atPreSetupStatements:Array<IRNode>?
+
+    @private
+    var inAtPre := false
 
     init(errorQueue:MessageQueue<Error>, codeGenerator:CodeGenerator, settings:Settings) {
         self.settings := settings
@@ -3516,6 +3534,11 @@ class Compiler {
             error(position, "@pre is only legal within @post or @postAnd annotations")
             return null
         }
+        if inAtPre {
+            error(position, "@pre is not legal within @pre")
+            return null
+        }
+        def flag := AutoAtPreFlag(self)
         def compiled := compileExpression(expr)
         if compiled = null {
             return null
@@ -3535,7 +3558,44 @@ class Compiler {
             error(position, "@return is only legal within @post() or @postAnd()")
             return null
         }
+        if inAtPre {
+            error(position, "cannot use @return inside @pre")
+            return null
+        }
+        if currentMethod[0].returnType = Type.Void() {
+            error(position, "cannot use @return in a method which does not have a return type")
+            return null
+        }
         return IRNode.AT_RETURN(position, currentMethod[0].returnType)
+    }
+
+    method compileAnonymousMethod(position:Position, kind:MethodDecl.Kind,
+            rawParameters:ImmutableArray<ASTNode>, rawReturnType:ASTNode?,
+            body:ImmutableArray<ASTNode>):IRNode? {
+        tmpCount += 1
+        def name := "$anonymous\{tmpCount}"
+        def parameters := Array<MethodDecl.Parameter>()
+        for p in rawParameters {
+            match p {
+                when ASTNode.PARAMETER(_, name, type):
+                    def type := resolve(scanner.convertType(type))
+                    parameters.add(MethodDecl.Parameter(name, type))
+                otherwise:
+                    assert false
+            }
+        }
+        def returnType:Type
+        if rawReturnType != null {
+            returnType := resolve(scanner.convertType(rawReturnType))
+        }
+        else {
+            returnType := Type.Void()
+        }
+        def methodDecl := MethodDecl(currentClass[0], position, null,
+                Annotations(Annotations.Flag.CLASS), kind, name, parameters, returnType, body)
+        compile(methodDecl)
+        return IRNode.METHOD_REFERENCE(position, methodDecl.type(), null,
+                MethodRef(methodDecl, Array<Type>())) -- FIXME literal
     }
 
     method compileExpression(e:ASTNode):IRNode? {
@@ -3568,6 +3628,8 @@ class Compiler {
                 return compileIdentifier(position, name)
             when ASTNode.INT(position, value):
                 return IRNode.INT(position, Type.IntLiteral(value), value)
+            when ASTNode.METHOD(position, _, _, kind, _, parameters, returnType, body):
+                return compileAnonymousMethod(position, kind, parameters, returnType, body)
             when ASTNode.REAL(position, value):
                 return IRNode.REAL(position, Type.RealLiteral(value), value)
             when ASTNode.PREFIX(position, op, base):
@@ -4775,6 +4837,12 @@ class Compiler {
         checkImmutable(cl)
         checkInterfaceMethods()
         var started := false
+        for f in cl.fields {
+            resolve(f)
+        }
+        for m in cl.methods {
+            resolve(m)
+        }
         if errorCount = 0 {
             codeGenerator.start(cl)
             started := true

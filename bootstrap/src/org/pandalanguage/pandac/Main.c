@@ -27,6 +27,8 @@
 #include "panda/core/Range.LTpanda/core/Int64.GT.h"
 #include "org/pandalanguage/pandac/Compiler/Error.h"
 #include "panda/core/Immutable.h"
+#include "panda/core/MutableMethod.h"
+#include "panda/core/Method.h"
 
 
 static panda$core$String $s1;
@@ -76,6 +78,12 @@ typedef panda$core$Object* (*$fn510)(panda$collections$Iterator*);
 typedef panda$collections$Iterator* (*$fn526)(panda$collections$Iterable*);
 typedef panda$core$Bit (*$fn533)(panda$collections$Iterator*);
 typedef panda$core$Object* (*$fn544)(panda$collections$Iterator*);
+typedef panda$core$Bit (*$fn658)(panda$core$String*, panda$core$String*);
+typedef panda$core$Bit (*$fn659)(panda$core$String*);
+typedef panda$core$Object* (*$fn666)(panda$collections$ListView*, panda$core$Int64);
+typedef panda$collections$Iterator* (*$fn685)(panda$collections$Iterator*, panda$core$MutableMethod*);
+typedef panda$core$Bit (*$fn692)(panda$collections$Iterator*);
+typedef panda$core$Object* (*$fn703)(panda$collections$Iterator*);
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x4d\x61\x69\x6e", 29, -3248623696873689241, NULL };
 static panda$core$String $s5 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2f\x6f\x70\x74\x2f\x6c\x6f\x63\x61\x6c\x2f\x6c\x69\x62\x65\x78\x65\x63\x2f\x6c\x6c\x76\x6d\x2d\x35\x2e\x30", 27, -855196788127931458, NULL };
@@ -153,6 +161,9 @@ static panda$core$String $s607 = { (panda$core$Class*) &panda$core$String$class,
 static panda$core$String $s625 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2e\x6c\x6c", 3, 1510563, NULL };
 static panda$core$String $s636 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x31\x20\x65\x72\x72\x6f\x72", 7, 159574974535236, NULL };
 static panda$core$String $s640 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x20\x65\x72\x72\x6f\x72\x73", 7, 142255681664502, NULL };
+static panda$core$String $s644 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x65\x72\x72\x6f\x72", 5, 21138829555, NULL };
+static panda$core$String $s668 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2d\x2d\x74\x65\x73\x74", 6, 1539277948139, NULL };
+static panda$core$String $s679 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2f\x74\x6d\x70\x2f\x54\x65\x73\x74\x32\x2e\x70\x61\x6e\x64\x61", 16, 1663116493871802296, NULL };
 
 void org$pandalanguage$pandac$Main$init(org$pandalanguage$pandac$Main* self) {
     panda$io$File* $tmp2;
@@ -1318,7 +1329,7 @@ void org$pandalanguage$pandac$Main$run$panda$collections$ListView$LTpanda$core$S
                 errorQueue446 = $tmp447;
                 panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp447));
                 panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp448));
-                org$pandalanguage$pandac$Compiler* $tmp453 = (org$pandalanguage$pandac$Compiler*) pandaObjectAlloc(192, (panda$core$Class*) &org$pandalanguage$pandac$Compiler$class);
+                org$pandalanguage$pandac$Compiler* $tmp453 = (org$pandalanguage$pandac$Compiler*) pandaObjectAlloc(193, (panda$core$Class*) &org$pandalanguage$pandac$Compiler$class);
                 org$pandalanguage$pandac$Compiler$init$panda$threads$MessageQueue$LTorg$pandalanguage$pandac$Compiler$Error$GT$org$pandalanguage$pandac$CodeGenerator$org$pandalanguage$pandac$Compiler$Settings($tmp453, errorQueue446, cg412, settings442);
                 $tmp452 = $tmp453;
                 $tmp451 = $tmp452;
@@ -1734,26 +1745,173 @@ void org$pandalanguage$pandac$Main$run$panda$collections$ListView$LTpanda$core$S
     }
     $l642:;
 }
+panda$core$Bit org$pandalanguage$pandac$Main$containsError$panda$core$String$R$panda$core$Bit(panda$core$String* p_s) {
+    panda$core$Bit $returnValue643;
+    panda$core$Bit $tmp645 = panda$core$String$contains$panda$core$String$R$panda$core$Bit(p_s, &$s644);
+    $returnValue643 = $tmp645;
+    return $returnValue643;
+}
+panda$core$Bit panda$core$MutableMethod$$shim1$panda$collections$Iterator$T$R$panda$core$Bit(panda$core$MutableMethod* self, panda$core$Object* p_p0) {
+    panda$core$MutableMethod* methodVar650 = NULL;
+    panda$core$MutableMethod* $tmp651;
+    panda$core$Method* $tmp652;
+    panda$core$Object* $tmp654;
+    panda$core$Object* $tmp655;
+    panda$core$Bit $returnValue656;
+    panda$core$Bit $tmp657;
+    int $tmp649;
+    {
+        panda$core$Method* $tmp653 = (panda$core$Method*) pandaObjectAlloc(32, (panda$core$Class*) &panda$core$Method$class);
+        panda$core$Method$init$panda$unsafe$Pointer$LTpanda$core$Int8$GT$panda$core$Immutable$Q($tmp653, self->pointer, ((panda$core$Immutable*) NULL));
+        $tmp652 = $tmp653;
+        $tmp651 = ((panda$core$MutableMethod*) $tmp652);
+        methodVar650 = $tmp651;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp651));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp652));
+        {
+            $tmp654 = methodVar650->target;
+            $tmp655 = self->target;
+            methodVar650->target = $tmp655;
+            panda$core$Panda$ref$panda$core$Object($tmp655);
+            panda$core$Panda$unref$panda$core$Object($tmp654);
+        }
+        if (methodVar650->target) {
+            $tmp657 = (($fn658) methodVar650->pointer)(((panda$core$String*) methodVar650->target), ((panda$core$String*) p_p0));
+        } else {
+            $tmp657 = (($fn659) methodVar650->pointer)(((panda$core$String*) p_p0));
+        }
+        $returnValue656 = $tmp657;
+        $tmp649 = 0;
+        goto $l647;
+        $l660:;
+        return $returnValue656;
+    }
+    $l647:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) methodVar650));
+    methodVar650 = NULL;
+    switch ($tmp649) {
+        case 0: goto $l660;
+    }
+    $l662:;
+}
 void pandaMain(panda$collections$ListView* p_args) {
-    org$pandalanguage$pandac$Main* $tmp643;
-    org$pandalanguage$pandac$Main* $tmp644 = (org$pandalanguage$pandac$Main*) pandaObjectAlloc(64, (panda$core$Class*) &org$pandalanguage$pandac$Main$class);
-    org$pandalanguage$pandac$Main$init($tmp644);
-    $tmp643 = $tmp644;
-    org$pandalanguage$pandac$Main$run$panda$collections$ListView$LTpanda$core$String$GT($tmp643, p_args);
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp643));
+    panda$core$Object* $tmp663;
+    panda$collections$Iterator* Iter$303$13673 = NULL;
+    panda$collections$Iterator* $tmp674;
+    panda$collections$Iterator* $tmp675;
+    panda$collections$Iterator* $tmp676;
+    panda$io$File* $tmp677;
+    panda$core$String* line698 = NULL;
+    panda$core$String* $tmp699;
+    panda$core$Object* $tmp700;
+    org$pandalanguage$pandac$Main* $tmp707;
+    ITable* $tmp664 = p_args->$class->itable;
+    while ($tmp664->$class != (panda$core$Class*) &panda$collections$ListView$class) {
+        $tmp664 = $tmp664->next;
+    }
+    $fn666 $tmp665 = $tmp664->methods[0];
+    panda$core$Object* $tmp667 = $tmp665(p_args, ((panda$core$Int64) { 1 }));
+    $tmp663 = $tmp667;
+    panda$core$Bit $tmp669 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit(((panda$core$String*) $tmp663), &$s668);
+    panda$core$Panda$unref$panda$core$Object($tmp663);
+    if ($tmp669.value) {
+    {
+        {
+            int $tmp672;
+            {
+                panda$io$File* $tmp678 = (panda$io$File*) pandaObjectAlloc(24, (panda$core$Class*) &panda$io$File$class);
+                panda$io$File$init$panda$core$String($tmp678, &$s679);
+                $tmp677 = $tmp678;
+                panda$collections$Iterator* $tmp680 = panda$io$File$lines$R$panda$collections$Iterator$LTpanda$core$String$GT($tmp677);
+                $tmp676 = $tmp680;
+                panda$core$MutableMethod* $tmp681 = (panda$core$MutableMethod*) pandaObjectAlloc(32, &panda$core$MutableMethod$class);
+                panda$core$MutableMethod* $tmp682 = (panda$core$MutableMethod*) pandaObjectAlloc(32, &panda$core$MutableMethod$class);
+                panda$core$MutableMethod$init$panda$unsafe$Pointer$LTpanda$core$Int8$GT$panda$core$Object$Q($tmp682, org$pandalanguage$pandac$Main$containsError$panda$core$String$R$panda$core$Bit, NULL);
+                panda$core$MutableMethod$init$panda$unsafe$Pointer$LTpanda$core$Int8$GT$panda$core$Object$Q($tmp681, panda$core$MutableMethod$$shim1$panda$collections$Iterator$T$R$panda$core$Bit, ((panda$core$Object*) ((panda$core$MutableMethod*) ((panda$core$Object*) $tmp682))));
+                ITable* $tmp683 = $tmp676->$class->itable;
+                while ($tmp683->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+                    $tmp683 = $tmp683->next;
+                }
+                $fn685 $tmp684 = $tmp683->methods[2];
+                panda$collections$Iterator* $tmp686 = $tmp684($tmp676, ((panda$core$Object*) $tmp681));
+                $tmp675 = $tmp686;
+                $tmp674 = $tmp675;
+                Iter$303$13673 = $tmp674;
+                panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp674));
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp675));
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp681));
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp682));
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp676));
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp677));
+                $l687:;
+                ITable* $tmp690 = Iter$303$13673->$class->itable;
+                while ($tmp690->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+                    $tmp690 = $tmp690->next;
+                }
+                $fn692 $tmp691 = $tmp690->methods[0];
+                panda$core$Bit $tmp693 = $tmp691(Iter$303$13673);
+                panda$core$Bit $tmp694 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp693);
+                bool $tmp689 = $tmp694.value;
+                if (!$tmp689) goto $l688;
+                {
+                    int $tmp697;
+                    {
+                        ITable* $tmp701 = Iter$303$13673->$class->itable;
+                        while ($tmp701->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+                            $tmp701 = $tmp701->next;
+                        }
+                        $fn703 $tmp702 = $tmp701->methods[1];
+                        panda$core$Object* $tmp704 = $tmp702(Iter$303$13673);
+                        $tmp700 = $tmp704;
+                        $tmp699 = ((panda$core$String*) $tmp700);
+                        line698 = $tmp699;
+                        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp699));
+                        panda$core$Panda$unref$panda$core$Object($tmp700);
+                        panda$io$Console$printLine$panda$core$String(line698);
+                    }
+                    $tmp697 = -1;
+                    goto $l695;
+                    $l695:;
+                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) line698));
+                    line698 = NULL;
+                    switch ($tmp697) {
+                        case -1: goto $l705;
+                    }
+                    $l705:;
+                }
+                goto $l687;
+                $l688:;
+            }
+            $tmp672 = -1;
+            goto $l670;
+            $l670:;
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$303$13673));
+            Iter$303$13673 = NULL;
+            switch ($tmp672) {
+                case -1: goto $l706;
+            }
+            $l706:;
+        }
+    }
+    }
+    org$pandalanguage$pandac$Main* $tmp708 = (org$pandalanguage$pandac$Main*) pandaObjectAlloc(64, (panda$core$Class*) &org$pandalanguage$pandac$Main$class);
+    org$pandalanguage$pandac$Main$init($tmp708);
+    $tmp707 = $tmp708;
+    org$pandalanguage$pandac$Main$run$panda$collections$ListView$LTpanda$core$String$GT($tmp707, p_args);
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp707));
 }
 void org$pandalanguage$pandac$Main$cleanup(org$pandalanguage$pandac$Main* self) {
-    int $tmp647;
+    int $tmp711;
     {
     }
-    $tmp647 = -1;
-    goto $l645;
-    $l645:;
+    $tmp711 = -1;
+    goto $l709;
+    $l709:;
     panda$core$Object$cleanup(((panda$core$Object*) self));
-    switch ($tmp647) {
-        case -1: goto $l648;
+    switch ($tmp711) {
+        case -1: goto $l712;
     }
-    $l648:;
+    $l712:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->llvmDir));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->triple));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->opt));

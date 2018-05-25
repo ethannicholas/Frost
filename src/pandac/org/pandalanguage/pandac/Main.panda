@@ -293,7 +293,17 @@ class Main {
     }
     
     @class
+    function containsError(s:String):Bit {
+        return s.contains("error")
+    }
+
+    @class
     method main(args:ListView<String>) {
+        if args[1] = "--test" {
+            for line in File("/tmp/Test2.panda").lines().filter(containsError) {
+                Console.printLine(line)
+            }
+        }
         Main().run(args)
     }
 }

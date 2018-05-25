@@ -43,6 +43,7 @@ add_library(c_panda
     bootstrap/src/panda/collections/ImmutableHashMap/ValueIterator.c
     bootstrap/src/panda/collections/Iterable.c
     bootstrap/src/panda/collections/Iterator.c
+    bootstrap/src/panda/collections/Iterator/FilterIterator.c
     bootstrap/src/panda/collections/Key.c
     bootstrap/src/panda/collections/List.c
     bootstrap/src/panda/collections/ListView.c
@@ -69,9 +70,10 @@ add_library(c_panda
     bootstrap/src/panda/core/Int64.c
     bootstrap/src/panda/core/Int8.c
     bootstrap/src/panda/core/Method.c
+    bootstrap/src/panda/core/MutableMethod.c
+    bootstrap/src/panda/core/MutableString.c
     bootstrap/src/panda/core/Real32.c
     bootstrap/src/panda/core/Real64.c
-    bootstrap/src/panda/core/MutableString.c
     bootstrap/src/panda/core/Object.c
     bootstrap/src/panda/core/Panda.c
     bootstrap/src/panda/core/Range.LTpanda/core/String/Index.Q.GT.c
@@ -143,6 +145,7 @@ add_executable(bootstrap
     bootstrap/src/org/pandalanguage/pandac/ClassDecl/Resolution.c
     bootstrap/src/org/pandalanguage/pandac/CodeGenerator.c
     bootstrap/src/org/pandalanguage/pandac/Compiler.c
+    bootstrap/src/org/pandalanguage/pandac/Compiler/AutoAtPreFlag.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/AutoSymbolTable.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/CompileTargetResult.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/Error.c

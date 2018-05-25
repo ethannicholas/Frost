@@ -1,0 +1,23 @@
+class AnonymousMethod {
+    @class
+    method test(m:(Int)=&>(Int)) {
+        Console.printLine("method(12) = \{m(12)}")
+    }
+
+    @class
+    method test(f:(Int)=>(Int)) {
+        Console.printLine("function(12) = \{f(12)}")
+    }
+
+    @class
+    method test(m:(Int)=&>()) {
+        m(12)
+    }
+
+    @class
+    method main() {
+        test(function(x:Int):Int { return x + 3 })
+        test(method(x:Int):Int { return x * 3 })
+        test(method(x:Int) { Console.printLine("This one just prints \{x}") })
+    }
+}

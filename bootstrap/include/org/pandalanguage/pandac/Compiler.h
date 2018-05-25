@@ -43,11 +43,12 @@ typedef struct org$pandalanguage$pandac$Compiler {
     panda$collections$HashMap* existenceCache;
     panda$core$Bit inFieldCleanup;
     panda$collections$Array* atPreSetupStatements;
+    panda$core$Bit inAtPre;
 } org$pandalanguage$pandac$Compiler;
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"
 #undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[140]; } org$pandalanguage$pandac$Compiler$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[144]; } org$pandalanguage$pandac$Compiler$class_type;
 extern org$pandalanguage$pandac$Compiler$class_type org$pandalanguage$pandac$Compiler$class;
 
 #ifndef PANDA_TYPESONLY
@@ -76,6 +77,7 @@ typedef struct org$pandalanguage$pandac$Symbol org$pandalanguage$pandac$Symbol;
 typedef struct org$pandalanguage$pandac$MethodRef org$pandalanguage$pandac$MethodRef;
 #include "org/pandalanguage/pandac/parser/Token/Kind.h"
 typedef struct org$pandalanguage$pandac$ASTNode org$pandalanguage$pandac$ASTNode;
+#include "org/pandalanguage/pandac/MethodDecl/Kind.h"
 typedef struct org$pandalanguage$pandac$Compiler$CompileTargetResult org$pandalanguage$pandac$Compiler$CompileTargetResult;
 #include "org/pandalanguage/pandac/Variable/Kind.h"
 typedef struct org$pandalanguage$pandac$Variable org$pandalanguage$pandac$Variable;
@@ -123,9 +125,9 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Compiler$variableType$or
 panda$core$Int64$nullable org$pandalanguage$pandac$Compiler$coercionCost$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Type$R$panda$core$Int64$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Type* p_type, org$pandalanguage$pandac$Type* p_target);
 panda$core$Int64 org$pandalanguage$pandac$Compiler$requiredSize$panda$core$Int64$R$panda$core$Int64(org$pandalanguage$pandac$Compiler* self, panda$core$Int64 p_value);
 panda$core$Int64 org$pandalanguage$pandac$Compiler$requiredSize$panda$core$UInt64$R$panda$core$Int64(org$pandalanguage$pandac$Compiler* self, panda$core$UInt64 p_value);
-org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Compiler$effectiveMethodType$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$ClassDecl$panda$core$Bit$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$IRNode* p_target, org$pandalanguage$pandac$ClassDecl* p_owner, panda$core$Bit p_isClass, org$pandalanguage$pandac$Type* p_methodType);
-org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Compiler$effectiveMethodType$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$MethodRef$R$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$IRNode* p_target, org$pandalanguage$pandac$MethodRef* p_m);
-org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Compiler$effectiveMethodType$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$MethodDecl$R$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$IRNode* p_target, org$pandalanguage$pandac$MethodDecl* p_m);
+org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Compiler$effectiveMethodType$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$ClassDecl$panda$core$Bit$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$IRNode* p_target, org$pandalanguage$pandac$ClassDecl* p_owner, panda$core$Bit p_isClass, org$pandalanguage$pandac$Type* p_methodType);
+org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Compiler$effectiveMethodType$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$MethodRef$R$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$IRNode* p_target, org$pandalanguage$pandac$MethodRef* p_m);
+org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Compiler$effectiveMethodType$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$MethodDecl$R$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$IRNode* p_target, org$pandalanguage$pandac$MethodDecl* p_m);
 panda$core$Int64$nullable org$pandalanguage$pandac$Compiler$coercionCost$org$pandalanguage$pandac$IRNode$org$pandalanguage$pandac$Type$R$panda$core$Int64$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$IRNode* p_expr, org$pandalanguage$pandac$Type* p_target);
 org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$coerce$org$pandalanguage$pandac$IRNode$Q$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$IRNode* p_expr, org$pandalanguage$pandac$Type* p_target);
 panda$core$Bit org$pandalanguage$pandac$Compiler$canCast$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Type$R$panda$core$Bit(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Type* p_type, org$pandalanguage$pandac$Type* p_target);
@@ -178,6 +180,7 @@ org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileNull$o
 org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileChoiceFieldReference$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$org$pandalanguage$pandac$ChoiceEntry$panda$core$Int64$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position p_position, org$pandalanguage$pandac$ASTNode* p_rawBase, org$pandalanguage$pandac$ChoiceEntry* p_ce, panda$core$Int64 p_field);
 org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileAtPre$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position p_position, org$pandalanguage$pandac$ASTNode* p_expr);
 org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileAtReturn$org$pandalanguage$pandac$Position$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position p_position);
+org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileAnonymousMethod$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$MethodDecl$Kind$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$org$pandalanguage$pandac$ASTNode$Q$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position p_position, org$pandalanguage$pandac$MethodDecl$Kind p_kind, panda$collections$ImmutableArray* p_parameters, org$pandalanguage$pandac$ASTNode* p_returnType, panda$collections$ImmutableArray* p_body);
 org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileExpression$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$IRNode$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$ASTNode* p_e);
 panda$core$Bit org$pandalanguage$pandac$Compiler$endsWithBranch$panda$collections$ListView$LTorg$pandalanguage$pandac$IRNode$GT$R$panda$core$Bit(org$pandalanguage$pandac$Compiler* self, panda$collections$ListView* p_statements);
 panda$core$Bit org$pandalanguage$pandac$Compiler$endsWithBranch$org$pandalanguage$pandac$IRNode$R$panda$core$Bit(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$IRNode* p_stmt);

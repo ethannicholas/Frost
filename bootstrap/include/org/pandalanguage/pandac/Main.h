@@ -29,6 +29,10 @@ typedef struct panda$io$File panda$io$File;
 #include "panda/core/Int64.h"
 typedef struct panda$io$OutputStream panda$io$OutputStream;
 typedef struct panda$collections$ListView panda$collections$ListView;
+#include "panda/core/Bit.h"
+typedef struct panda$core$String panda$core$String;
+typedef struct panda$core$MutableMethod panda$core$MutableMethod;
+typedef struct panda$core$Object panda$core$Object;
 
 void org$pandalanguage$pandac$Main$init(org$pandalanguage$pandac$Main* self);
 panda$io$File* org$pandalanguage$pandac$Main$optimize$panda$io$File$panda$core$Int64$R$panda$io$File(org$pandalanguage$pandac$Main* self, panda$io$File* p_llvm, panda$core$Int64 p_level);
@@ -37,6 +41,8 @@ panda$io$File* org$pandalanguage$pandac$Main$toObject$panda$io$File$panda$io$Fil
 panda$io$File* org$pandalanguage$pandac$Main$toExecutable$panda$io$File$panda$io$File$R$panda$io$File(org$pandalanguage$pandac$Main* self, panda$io$File* p_assembly, panda$io$File* p_dest);
 void org$pandalanguage$pandac$Main$printUsage$panda$io$OutputStream(org$pandalanguage$pandac$Main* self, panda$io$OutputStream* p_out);
 void org$pandalanguage$pandac$Main$run$panda$collections$ListView$LTpanda$core$String$GT(org$pandalanguage$pandac$Main* self, panda$collections$ListView* p_rawArgs);
+panda$core$Bit org$pandalanguage$pandac$Main$containsError$panda$core$String$R$panda$core$Bit(panda$core$String* p_s);
+panda$core$Bit panda$core$MutableMethod$$shim1$panda$collections$Iterator$T$R$panda$core$Bit(panda$core$MutableMethod* self, panda$core$Object* p_p0);
 void pandaMain(panda$collections$ListView* p_args);
 void org$pandalanguage$pandac$Main$cleanup(org$pandalanguage$pandac$Main* self);
 

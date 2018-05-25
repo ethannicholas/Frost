@@ -203,7 +203,7 @@ void* pandaRealloc(void* ptr, size_t oldSize, size_t newSize) {
 
 void pandaFree(void* ptr) {
     allocations--;
-    free(ptr);
+    //free(ptr);
 }
 
 void pandaObjectFree(Object* o) {
@@ -440,7 +440,8 @@ void panda$core$Panda$unref$panda$core$Object(Object* o) {
             o->refcnt = 1; // no other thread can see it, so we no longer need to use atomics here
             cleanup(o);
             if (o->refcnt != 1) {
-                printf("internal error: refcount of %p changed during cleanup\n", o);
+                char* cl = pandaGetCString(o->cl->name);
+                printf("internal error: refcount of %s(%p) changed during cleanup\n", cl, o);
                 abort();
             }
             pandaObjectFree(o);

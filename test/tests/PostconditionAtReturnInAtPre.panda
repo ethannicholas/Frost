@@ -1,0 +1,6 @@
+class PostconditionAtReturnInAtPre {
+    @post(@return = @pre(@return))
+    method test(x:Int):Int {
+        return x * x
+    }
+}

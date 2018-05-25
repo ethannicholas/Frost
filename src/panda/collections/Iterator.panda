@@ -1,9 +1,71 @@
 package panda.collections
 
 interface Iterator<T> {
+    @private
+    class FilterIterator<T> : Iterator<T> {
+        def base:Iterator<T>
+        
+        def filter:(T)=>(Bit)
+        
+        var nextValue:T?
+
+        init(base:Iterator<T>, filter:(T)=>(Bit)) {
+            self.base := base
+            self.filter := filter
+            getNext()
+        }
+
+        method getNext() {
+            do {
+                if base.get_done() {
+                    nextValue := null
+                    return
+                }
+                nextValue := base.next()
+            }
+            while !filter(nextValue)
+        }
+
+        @override
+        function get_done():Bit {
+            return nextValue = null
+        }
+
+        @override
+        method next():T {
+            def result := nextValue
+            getNext()
+            return result
+        }
+    }
+
     -- property done:Bit
 
     function get_done():Bit
 
     method next():T
+
+    ================================================================================================
+    Returns a new `Iterator` which reads from this `Iterator`, skipping over values which do not
+    match the predicate. As the new `Iterator` internally reads from this `Iterator`, you should not
+    interact with an `Iterator` after calling `filter` on it.
+    ================================================================================================
+    function filter(predicate:(T)=>(Bit)):Iterator<T> {
+        return FilterIterator<T>(self, predicate)
+    }
+
+    ================================================================================================
+    Scans through the `Iterator` until the end, calling the specified method on each object
+    returned.
+
+    For example, to call a method named `process` on each line in a file:
+
+        File(path).lines().apply(process)
+    ================================================================================================
+    @post(get_done())
+    method apply(m:(T)=&>()) {
+        for v in self {
+            m(v)
+        }
+    }
 }

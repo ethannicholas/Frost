@@ -1,0 +1,6 @@
+class PostconditionAtReturnInVoidMethod {
+    @post(@return > 0)
+    method test(x:Int) {
+        Console.printLine(x)
+    }
+}
