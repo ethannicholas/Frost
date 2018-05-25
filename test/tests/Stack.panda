@@ -1,19 +1,16 @@
-class StackTest {
-    @class
-    method main() {
-        def s := Stack<Int?>()
-        s.push(1)
-        s.push(2)
-        s.push(3)
-        s.push(null)
-        s.push(4)
-        Console.printLine(s[0])
-        Console.printLine(s.pop())
-        Console.printLine(s[1])
-        Console.printLine(s.pop() != null)
-        Console.printLine(s.pop())
-        Console.printLine(s.pop())
-        Console.printLine(s.pop())
-        Console.printLine(s.get_count())
-    }
+method main() {
+    def s := Stack<Int?>()
+    s.push(1)
+    s.push(2)
+    s.push(3)
+    s.push(null)
+    s.push(4)
+    Console.printLine(s[0])
+    Console.printLine(s.pop())
+    Console.printLine(s[1])
+    Console.printLine(s.pop() != null)
+    Console.printLine(s.pop())
+    Console.printLine(s.pop())
+    Console.printLine(s.pop())
+    Console.printLine(s.get_count())
 }

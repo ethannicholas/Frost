@@ -1,173 +1,154 @@
-class NumberConversion {
-    @class
-    method print8(v:Int8) {
-        Console.printLine(v)
-    }
+method print8(v:Int8) {
+    Console.printLine(v)
+}
 
-    @class
-    method print16(v:Int16) {
-        Console.printLine(v)
-    }
+method print16(v:Int16) {
+    Console.printLine(v)
+}
 
-    @class
-    method print32(v:Int32) {
-        Console.printLine(v)
-    }
+method print32(v:Int32) {
+    Console.printLine(v)
+}
 
-    @class
-    method print64(v:Int64) {
-        Console.printLine(v)
-    }
+method print64(v:Int64) {
+    Console.printLine(v)
+}
 
-    @class
-    method printU8(v:UInt8) {
-        Console.printLine(v)
-    }
+method printU8(v:UInt8) {
+    Console.printLine(v)
+}
 
-    @class
-    method printU16(v:UInt16) {
-        Console.printLine(v)
-    }
+method printU16(v:UInt16) {
+    Console.printLine(v)
+}
 
-    @class
-    method printU32(v:UInt32) {
-        Console.printLine(v)
-    }
+method printU32(v:UInt32) {
+    Console.printLine(v)
+}
 
-    @class
-    method printU64(v:UInt64) {
-        Console.printLine(v)
-    }
+method printU64(v:UInt64) {
+    Console.printLine(v)
+}
 
-    @class
-    method printAll(v:Int8) {
-        Console.printLine("## Int8 \{v} ##")
-        print8(v)
-        printU8(v.convert())
-        print16(v)
-        printU16(v.convert())
-        print32(v)
-        printU32(v.convert())
-        print64(v)
-        printU64(v.convert())
-        Console.printLine()
-    }
+method printAll(v:Int8) {
+    Console.printLine("## Int8 \{v} ##")
+    print8(v)
+    printU8(v.convert())
+    print16(v)
+    printU16(v.convert())
+    print32(v)
+    printU32(v.convert())
+    print64(v)
+    printU64(v.convert())
+    Console.printLine()
+}
 
-    @class
-    method printAll(v:UInt8) {
-        Console.printLine("## UInt8 \{v} ##")
-        print8(v.convert())
-        printU8(v)
-        print16(v)
-        printU16(v)
-        print32(v)
-        printU32(v)
-        print64(v)
-        printU64(v)
-        Console.printLine()
-    }
+method printAll(v:UInt8) {
+    Console.printLine("## UInt8 \{v} ##")
+    print8(v.convert())
+    printU8(v)
+    print16(v)
+    printU16(v)
+    print32(v)
+    printU32(v)
+    print64(v)
+    printU64(v)
+    Console.printLine()
+}
 
-    @class
-    method printAll(v:Int16) {
-        Console.printLine("## Int16 \{v} ##")
-        print8(v.convert())
-        printU8(v.convert())
-        print16(v)
-        printU16(v.convert())
-        print32(v)
-        printU32(v.convert())
-        print64(v)
-        printU64(v.convert())
-        Console.printLine()
-    }
+method printAll(v:Int16) {
+    Console.printLine("## Int16 \{v} ##")
+    print8(v.convert())
+    printU8(v.convert())
+    print16(v)
+    printU16(v.convert())
+    print32(v)
+    printU32(v.convert())
+    print64(v)
+    printU64(v.convert())
+    Console.printLine()
+}
 
-    @class
-    method printAll(v:UInt16) {
-        Console.printLine("## UInt16 \{v} ##")
-        print8(v.convert())
-        printU8(v.convert())
-        print16(v.convert())
-        printU16(v)
-        print32(v)
-        printU32(v)
-        print64(v)
-        printU64(v)
-        Console.printLine()
-    }
+method printAll(v:UInt16) {
+    Console.printLine("## UInt16 \{v} ##")
+    print8(v.convert())
+    printU8(v.convert())
+    print16(v.convert())
+    printU16(v)
+    print32(v)
+    printU32(v)
+    print64(v)
+    printU64(v)
+    Console.printLine()
+}
 
-    @class
-    method printAll(v:Int32) {
-        Console.printLine("## Int32 \{v} ##")
-        print8(v.convert())
-        printU8(v.convert())
-        print16(v.convert())
-        printU16(v.convert())
-        print32(v)
-        printU32(v.convert())
-        print64(v)
-        printU64(v.convert())
-        Console.printLine()
-    }
+method printAll(v:Int32) {
+    Console.printLine("## Int32 \{v} ##")
+    print8(v.convert())
+    printU8(v.convert())
+    print16(v.convert())
+    printU16(v.convert())
+    print32(v)
+    printU32(v.convert())
+    print64(v)
+    printU64(v.convert())
+    Console.printLine()
+}
 
-    @class
-    method printAll(v:UInt32) {
-        Console.printLine("## UInt32 \{v} ##")
-        print8(v.convert())
-        printU8(v.convert())
-        print16(v.convert())
-        printU16(v.convert())
-        print32(v.convert())
-        printU32(v)
-        print64(v)
-        printU64(v)
-        Console.printLine()
-    }
+method printAll(v:UInt32) {
+    Console.printLine("## UInt32 \{v} ##")
+    print8(v.convert())
+    printU8(v.convert())
+    print16(v.convert())
+    printU16(v.convert())
+    print32(v.convert())
+    printU32(v)
+    print64(v)
+    printU64(v)
+    Console.printLine()
+}
 
-    @class
-    method printAll(v:Int64) {
-        Console.printLine("## Int64 \{v} ##")
-        print8(v.convert())
-        printU8(v.convert())
-        print16(v.convert())
-        printU16(v.convert())
-        print32(v.convert())
-        printU32(v.convert())
-        print64(v)
-        printU64(v.convert())
-        Console.printLine()
-    }
+method printAll(v:Int64) {
+    Console.printLine("## Int64 \{v} ##")
+    print8(v.convert())
+    printU8(v.convert())
+    print16(v.convert())
+    printU16(v.convert())
+    print32(v.convert())
+    printU32(v.convert())
+    print64(v)
+    printU64(v.convert())
+    Console.printLine()
+}
 
-    @class
-    method printAll(v:UInt64) {
-        Console.printLine("## UInt64 \{v} ##")
-        print8(v.convert())
-        printU8(v.convert())
-        print16(v.convert())
-        printU16(v.convert())
-        print32(v.convert())
-        printU32(v.convert())
-        print64(v.convert())
-        printU64(v)
-        Console.printLine()
-    }
+method printAll(v:UInt64) {
+    Console.printLine("## UInt64 \{v} ##")
+    print8(v.convert())
+    printU8(v.convert())
+    print16(v.convert())
+    printU16(v.convert())
+    print32(v.convert())
+    printU32(v.convert())
+    print64(v.convert())
+    printU64(v)
+    Console.printLine()
+}
 
-    @class
-    method main() {
-        printAll(Int8.MIN)
-        printAll(Int8.MAX)
-        printAll(UInt8.MIN)
-        printAll(UInt8.MAX)
-        printAll(Int16.MIN)
-        printAll(Int16.MAX)
-        printAll(UInt16.MIN)
-        printAll(UInt16.MAX)
-        printAll(Int32.MIN)
-        printAll(Int32.MAX)
-        printAll(UInt32.MIN)
-        printAll(UInt32.MAX)
-        printAll(Int64.MIN)
-        printAll(Int64.MAX)
-        printAll(UInt64.MIN)
-        printAll(UInt64.MAX)
-    }
+method main() {
+    printAll(Int8.MIN)
+    printAll(Int8.MAX)
+    printAll(UInt8.MIN)
+    printAll(UInt8.MAX)
+    printAll(Int16.MIN)
+    printAll(Int16.MAX)
+    printAll(UInt16.MIN)
+    printAll(UInt16.MAX)
+    printAll(Int32.MIN)
+    printAll(Int32.MAX)
+    printAll(UInt32.MIN)
+    printAll(UInt32.MAX)
+    printAll(Int64.MIN)
+    printAll(Int64.MAX)
+    printAll(UInt64.MIN)
+    printAll(UInt64.MAX)
 }

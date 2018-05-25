@@ -1,4 +1,4 @@
-VoidExpression.panda:9:22: error: method anonymous.VoidExpression.foo() does not return a value
-VoidExpression.panda:13:13: error: method anonymous.VoidExpression.foo() does not return a value
-VoidExpression.panda:18:14: error: method anonymous.VoidExpression.bar(i:panda.core.Int64) does not return a value
+VoidExpression.panda:8:18: error: method anonymous.BareCode.foo() does not return a value
+VoidExpression.panda:12:9: error: method anonymous.BareCode.foo() does not return a value
+VoidExpression.panda:17:10: error: method anonymous.BareCode.bar(i:panda.core.Int64) does not return a value
 3 errors

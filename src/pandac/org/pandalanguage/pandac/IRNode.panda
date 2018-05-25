@@ -60,6 +60,7 @@ choice IRNode {
     -- types could be different between "[]" and "[]:=". Holding off on resolution allows us to
     -- handle cases like this.
     UNRESOLVED_INDEX(Position, Type, IRNode -* base *-, ImmutableArray<IRNode> -* args *-)
+    UNRESOLVED_LAMBDA(Position, ImmutableArray<String> -* parameters *-, ASTNode -* body *-)
     UNRESOLVED_METHOD_CALL(Position, Type, IRNode -* target *-, ImmutableArray<MethodRef>,
             ImmutableArray<IRNode> -* args *-)
     UNRESOLVED_METHOD_REFERENCE(Position, IRNode? -* target *-, ImmutableArray<MethodRef>)
@@ -130,6 +131,8 @@ choice IRNode {
                 return Type.Invalid()
             when UNRESOLVED_INDEX(_, type, _, _):
                 return type
+            when UNRESOLVED_LAMBDA:
+                return Type.Invalid()
             when UNRESOLVED_METHOD_CALL(_, type, _, _, _):
                 return type
             when UNRESOLVED_METHOD_REFERENCE:
@@ -224,6 +227,8 @@ choice IRNode {
             when UNRESOLVED_IDENTIFIER(position, _):
                 return position
             when UNRESOLVED_INDEX(position, _, _, _):
+                return position
+            when UNRESOLVED_LAMBDA(position, _, _):
                 return position
             when UNRESOLVED_METHOD_CALL(position, _, _, _, _):
                 return position
@@ -379,6 +384,8 @@ choice IRNode {
             when UNRESOLVED_IDENTIFIER(_, name):
                 assert false
             when UNRESOLVED_INDEX(_, _, base, args):
+                assert false
+            when UNRESOLVED_LAMBDA:
                 assert false
             when UNRESOLVED_METHOD_CALL(_, _, target, methods, args):
                 assert false
@@ -582,7 +589,7 @@ choice IRNode {
             when SELF:
                 return "self"
             when STRING(_, str):
-                return str
+                return str.format("panda")
             when SUPER:
                 return "super"
             when TERNARY(_, test, ifTrue, ifFalse):
@@ -593,6 +600,8 @@ choice IRNode {
                 return name
             when UNRESOLVED_INDEX(_, _, base, args):
                 return "\{base}[\{args.join()}]"
+            when UNRESOLVED_LAMBDA(_, params, body):
+                return "(\{params.join()})=>\{body}"
             when UNRESOLVED_METHOD_CALL(_, _, target, methods, args):
                 return "\{target}.\{methods[0].value.name}(\{args.join()})"
             when UNRESOLVED_METHOD_REFERENCE(_, target, methods):

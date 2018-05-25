@@ -1,4 +1,2 @@
-class MissingInnerClass {
-    method m(o:Object.NotFound) {
-    }
+method m(o:Object.NotFound) {
 }

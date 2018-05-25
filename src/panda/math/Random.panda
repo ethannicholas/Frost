@@ -4,14 +4,77 @@ interface Random {
     ================================================================================================
     Provides an automatically-seeded implementation of the default random number generator. The
     precise algorithm chosen may be system- and version-dependent and is not guaranteed to remain
-    consistent over time.
+    consistent over time. Calling `Random.default()` multiple times within a single run of a program
+    may return instances which all return the same sequence; generally, you should only call this
+    method once per run of a given program.
     ================================================================================================
     @class
     function default():Random {
         return XorShift128Plus(Panda.currentTime())
     }
 
+    ============================================================================
+    Returns a random `Bit` (either `true` or `false` with 50% odds of each).
+
+    @returns a random bit
+    ============================================================================
+    method bit():Bit {
+        return self.int64() >= 0
+    }
+ 
+    ================================================================================================
+    Returns a random number between [Int32.MIN] and [Int32.MAX], inclusive.
+    ================================================================================================
+    method int32():Int32 {
+        return int64().convert()
+    }
+
+    ================================================================================================
+    Returns a random number between [Int64.MIN] and [Int64.MAX], inclusive.
+    ================================================================================================
     method int64():Int64
 
-    method int(n:Int64):Int64
+    ================================================================================================
+    Returns a random `Int` between `0` and `n - 1`, inclusive. For example, `int(6)` is equivalent
+    to rolling a standard six-sided die, with return value between `0` and `5`.
+    
+    @param n the range of possible values to generate
+    @returns a random number between `0` and `n - 1`
+    ================================================================================================
+    @pre(n >= 1)
+    @post(@return >= 0 & @return < n)
+    method int(n:Int64):Int64 {
+        if n = 1 {
+            return 0
+        }
+
+        def min := -n % n
+        loop {
+            def x := int64()
+            if x >= min {
+                return x % n
+            }
+        }
+    }
+
+    ================================================================================================
+    Returns a random, uniformly distributed `Real32` between `0` (inclusive) and `1` (exclusive).
+    
+    @returns a random `Real32`
+    ================================================================================================
+    @post(@return >= 0 & @return < 1)
+    method real32():Real32 {
+        return 12--(int32().convert()->UInt32 >> 8) / (1 << 24)
+    }
+        
+    ================================================================================================
+    Returns a random, uniformly distributed `Real64` between `0` (inclusive) and `1` (exclusive).
+    
+    @returns a random `Real64`
+    ================================================================================================
+    @post(@return >= 0 & @return < 1)
+    method real64():Real64 {
+        return (int64().convert()->UInt64 >> 11) / (1 << 53)
+    }
+
 }

@@ -1,12 +1,9 @@
-class StringInterpolation {
-    @class
-    method main() {
-        Console.printLine("Basic interpolation: \{8 * 5 + 10}")
-        Console.printLine("\{'Multiple'} (\{'2'}) values")
-        def x := 'no space between them/'
-        Console.printLine("\{ x }\{x}\{x}\{    x}")
-        Console.printLine('\{'This works, but don\'t ' + "ever do it"}')
-        def y := "no, seriously"
-        Console.printLine("\{"This works, but \{"REALLY (\{y})"} don't " + "ever do it"}")
-    }
+method main() {
+    Console.printLine("Basic interpolation: \{8 * 5 + 10}")
+    Console.printLine("\{'Multiple'} (\{'2'}) values")
+    def x := 'no space between them/'
+    Console.printLine("\{ x }\{x}\{x}\{    x}")
+    Console.printLine('\{'This works, but don\'t ' + "ever do it"}')
+    def y := "no, seriously"
+    Console.printLine("\{"This works, but \{"REALLY (\{y})"} don't " + "ever do it"}")
 }

@@ -11,6 +11,9 @@ class Scanner {
     @weak
     def compiler:Compiler
 
+    @private
+    def bareCodeClass:ClassDecl?
+
     init(compiler:Compiler) {
         self.compiler := compiler
     }
@@ -63,7 +66,7 @@ class Scanner {
                 }
                 return Type.methodType(type.position(), typeKind, parameters.finish(), returnType)
             otherwise:
-                assert false, "unsupported type \{type}"
+                assert false, "unsupported type \{type}(\{type.$rawValue}"
         }
     }
 
@@ -573,6 +576,27 @@ class Scanner {
         }
     }
 
+    method createBareCodeClass(source:File, aliases:MapView<String, String>,
+            classes:List<ClassDecl>) {
+        if bareCodeClass = null {
+            bareCodeClass := ClassDecl(source, Position(), aliases, null, Annotations(),
+                    ClassDecl.Kind.CLASS, "anonymous.BareCode", Array<Type>(), -- FIXME literal
+                    Array<ClassDecl.GenericParameter>(), compiler.root) -- FIXME literal
+            classes.add(bareCodeClass)
+            def defaultInit := MethodDecl(bareCodeClass, Position(), null,
+                    Annotations(Annotations.Flag.SYNTHETIC), MethodDecl.Kind.INIT, "init",
+                    Array<MethodDecl.Parameter>(), Type.Void(), ImmutableArray<ASTNode>())
+            bareCodeClass.methods.add(defaultInit)
+            bareCodeClass.symbolTable.add(defaultInit)
+            def defaultCleanup := MethodDecl(bareCodeClass, Position(), null,
+                    Annotations(Annotations.Flag.OVERRIDE || Annotations.Flag.SYNTHETIC),
+                    MethodDecl.Kind.METHOD, "cleanup", Array<MethodDecl.Parameter>(), Type.Void(),
+                    ImmutableArray<ASTNode>())
+            bareCodeClass.methods.add(defaultCleanup)
+            bareCodeClass.symbolTable.add(defaultCleanup)
+        }
+    }
+
     method scan(source:File, file:ASTNode):ListView<ClassDecl> {
         match file {
             when ASTNode.FILE(entries):
@@ -600,8 +624,57 @@ class Scanner {
                             if cl != null {
                                 addClass(cl, result)
                             }
+                        when ASTNode.METHOD(position, dc, annotations, kind, rawName, parameters,
+                                rawReturnType, statements):
+                            createBareCodeClass(source, aliases, result)
+                            def name:String
+                            if rawName = "main" {
+                                name := "$bareMain"
+                                def mainParameters := Array<MethodDecl.Parameter>()
+                                def mainStatements := Array<ASTNode>() -- FIXME literals
+                                def mainArguments := Array<ASTNode>()
+                                for p in parameters {
+                                    match p {
+                                        when ASTNode.PARAMETER(position, name, type):
+                                            mainParameters.add(MethodDecl.Parameter(name,
+                                                    convertType(type)))
+                                            mainArguments.add(ASTNode.IDENTIFIER(position, name))
+                                        otherwise:
+                                            assert false
+                                    }
+                                }
+                                def bareConstruct := ASTNode.CALL(position,
+                                        ASTNode.IDENTIFIER(position, "BareCode"),
+                                        ImmutableArray<ASTNode>())
+                                mainStatements.add(ASTNode.CALL(position,
+                                        ASTNode.DOT(position, bareConstruct, name),
+                                        mainArguments.finish()))
+                                def returnType:Type
+                                if rawReturnType != null {
+                                    returnType := convertType(rawReturnType)
+                                }
+                                else {
+                                    returnType := Type.Void()
+                                }
+                                def bareMain := MethodDecl(bareCodeClass, Position(), null,
+                                        Annotations(Annotations.Flag.CLASS), MethodDecl.Kind.METHOD,
+                                        "main", mainParameters, returnType, mainStatements.finish())
+                                bareCodeClass.methods.add(bareMain)
+                            }
+                            else {
+                                name := rawName
+                            }
+                            compiler.currentClass.push(bareCodeClass)
+                            def m := scanMethod(bareCodeClass, position, dc, annotations,
+                                    kind, name, parameters, rawReturnType, statements)
+                            compiler.currentClass.pop(bareCodeClass)
+                            bareCodeClass.methods.add(m)
+                            bareCodeClass.symbolTable.add(m)
+                        when ASTNode.FIELD(position, dc, annotations, varDecl):
+                            createBareCodeClass(source, aliases, result)
+                            scanFields(bareCodeClass, position, dc, annotations, varDecl)
                         otherwise:
-                            assert false, "unsupported: \{e}"
+                            assert false, "unsupported: \{e}(\{e.$rawValue})"
                     }
                 }
                 return result

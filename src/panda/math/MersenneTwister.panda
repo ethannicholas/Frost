@@ -1,0 +1,120 @@
+package panda.math
+
+====================================================================================================
+Implementation of the standard Mersenne Twister MT19937 pseudorandom number generator.
+
+This generator is guaranteed to always produce the same random sequence when started from the same
+seed, even across different environments and versions of Panda.
+====================================================================================================
+class MersenneTwister : Random {
+    @private
+    constant N := 624
+
+    @private
+    constant M:Int32 := 397
+
+    @private
+    constant W:Int32 := 32
+
+    @private
+    constant F:Int32 := 0x6c078965
+
+    @private
+    def mt:Array<UInt32>
+
+    @private
+    var index := N
+
+    property state:ListView<UInt32>
+
+    ================================================================================================
+    Creates a new, automatically-seeded `MersenneTwister`.
+    ================================================================================================
+    init() {
+        init(Random.default())
+    }
+
+    ================================================================================================
+    Creates a new `MersenneTwister` seeded from an existing source of randomness.
+    ================================================================================================
+    init(seed:Random) {
+        mt := Array<UInt32>(N)
+        for i in 0 .. N {
+            mt.add(seed.int32().convert())
+        }
+    }
+
+    ================================================================================================
+    Creates a new `MersenneTwister` seeded with a state array. MT19937 uses a state vector
+    consisting of 624 32-bit numbers. If the state you pass in contains fewer than 624 entries, the
+    remaining values will be generated automatically in a deterministic fashion. If you pass more
+    than 624 entries, the extra entries are ignored.
+    ================================================================================================
+    init(state:Array<UInt32>) {
+        if state.count > N {
+            mt := Array<UInt32>(state[0 .. N])
+            return
+        }
+        mt := Array<UInt32>(state)
+        for i in state.count .. N {
+            mt.add((F * (mt[i - 1] ~~ (mt[i - 1] >> (W - 2))) + i).convert())
+        }
+        Console.printLine(mt)
+    }
+
+    ================================================================================================
+    Creates a new `MersenneTwister` with a specific seed. All `MersenneTwister` instances created
+    with the same seed will return the same sequence of pseudorandom numbers.
+    
+    @param seed the seed to use
+    ================================================================================================
+    init(seed:Int64) {
+        mt := Array<UInt32>(N)
+        mt.add((seed >> 32).convert())
+        mt.add(seed.convert())
+        for i in 2 .. 624 {
+            mt.add((F * (mt[i - 1] ~~ (mt[i - 1] >> (W - 2))) + i).convert())
+        }
+    }
+
+    @private
+    function get_state():ListView<UInt32> {
+        return Array<UInt32>(mt)
+    }
+
+    @private
+    method extract():UInt32 {
+        if index >= N {
+            twist()
+        }
+        def y := mt[index]
+        y ~~= y >> 11
+        y ~~= y << 7 && 0x9D2C5680
+        y ~~= y << 15 && 0xEFC60000
+        y ~~= y >> 18
+        index += 1
+        return y
+    }
+
+    @private
+    method twist() {
+        for i in 0 .. N {
+            def y := mt[i] && 0x80000000 + mt[(i + 1) % N] && 0x7fffffff
+            mt[i] := mt[(i + M) % N] ~~ (y >> 1)
+            if y % 2 != 0 {
+                mt[i] ~~= 0x9908b0df
+            }
+        }
+        index := 0
+    }
+
+    @override
+    method int32():Int32 {
+        return extract().convert()
+    }
+
+    @override
+    method int64():Int64 {
+        return extract().convert()->Int64 << 32 || extract()
+    }
+}

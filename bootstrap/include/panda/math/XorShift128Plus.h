@@ -16,7 +16,7 @@ typedef struct panda$math$XorShift128Plus {
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"
 #undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[4]; } panda$math$XorShift128Plus$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[3]; } panda$math$XorShift128Plus$class_type;
 extern panda$math$XorShift128Plus$class_type panda$math$XorShift128Plus$class;
 
 #ifndef PANDA_TYPESONLY
@@ -25,7 +25,6 @@ typedef struct panda$math$XorShift128Plus panda$math$XorShift128Plus;
 
 void panda$math$XorShift128Plus$init$panda$core$Int64(panda$math$XorShift128Plus* self, panda$core$Int64 p_seed);
 panda$core$Int64 panda$math$XorShift128Plus$int64$R$panda$core$Int64(panda$math$XorShift128Plus* self);
-panda$core$Int64 panda$math$XorShift128Plus$int$panda$core$Int64$R$panda$core$Int64(panda$math$XorShift128Plus* self, panda$core$Int64 p_n);
 void panda$math$XorShift128Plus$cleanup(panda$math$XorShift128Plus* self);
 
 #endif

@@ -1,0 +1,4 @@
+method main() {
+    function f(x:Int) {
+    }
+}

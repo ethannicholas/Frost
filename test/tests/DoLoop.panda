@@ -1,27 +1,24 @@
-class DoLoop {
-    @class
-    method main() {
-        var i := 0
-        do {
-            Console.printLine(i)
-            i += 1
-        }
-        while i < 10
-        do {
-            Console.printLine("ok")
-        }
-        while false
-        i := 0
-        do {
-            i += 1
-            if i % 2 = 1 {
-                continue
-            }
-            if i = 10 {
-                break
-            }
-            Console.printLine(i)
-        }
-        while true
+method main() {
+    var i := 0
+    do {
+        Console.printLine(i)
+        i += 1
     }
+    while i < 10
+    do {
+        Console.printLine("ok")
+    }
+    while false
+    i := 0
+    do {
+        i += 1
+        if i % 2 = 1 {
+            continue
+        }
+        if i = 10 {
+            break
+        }
+        Console.printLine(i)
+    }
+    while true
 }

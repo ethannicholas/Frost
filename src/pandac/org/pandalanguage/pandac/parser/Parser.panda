@@ -26,6 +26,8 @@ class Parser {
 
     def speculativeBuffer := SpecializedArray<Token>()
 
+    var allowLambdas := true
+
     init(errors:MessageQueue<Compiler.Error>) {
         self.errors := errors
         commaSeparatedExpressionContext.push(false)
@@ -253,6 +255,7 @@ class Parser {
         return ASTNode.BINARY(expr.position(), call, Token.Kind.CAST, stringType)
     }
 
+    @post(allowLambdas = @pre(allowLambdas))
     method string():ASTNode? {
         def start := next()
         if start.kind != Token.Kind.DOUBLE_QUOTE & start.kind != Token.Kind.SINGLE_QUOTE {
@@ -294,7 +297,10 @@ class Parser {
                         when "\\": chunk.append("\\")
                         when "{": {
                             -- handle string interpolation
+                            def oldAllow := allowLambdas
+                            allowLambdas := false
                             var expr := expression()
+                            allowLambdas := oldAllow
                             if expr = null {
                                 return null
                             }
@@ -355,14 +361,151 @@ class Parser {
     }
 
     ================================================================================================
+    parenthesizedExpression = LPAREN expression (COMMA expression)* RPAREN |
+            LPAREN IDENTIFIER (COMMA IDENTIFIER)* RPAREN YIELDS expression |
+            LPAREN IDENTIFIER COLON type (COMMA IDENTIFIER COLON type)* RPAREN YIELDS expression
+    ================================================================================================
+    method parenthesizedExpression():ASTNode? {
+        def start := expect(Token.Kind.LPAREN, "'('")
+        if start = null {
+            return null
+        }
+        def expr := expression()
+        if expr = null {
+            return null
+        }
+        match expr {
+            when ASTNode.IDENTIFIER(firstPosition, firstName):
+                -- possible tuple or lambda
+                if checkNext(Token.Kind.COLON) != null {
+                    -- typed lambda
+                    def parameters := Array<ASTNode>()
+                    def firstType := type()
+                    if firstType = null {
+                        return null
+                    }
+                    parameters.add(ASTNode.PARAMETER(firstPosition, firstName, firstType))
+                    while checkNext(Token.Kind.COMMA) != null {
+                        def nextName := expect(Token.Kind.IDENTIFIER, "an identifier")
+                        if expect(Token.Kind.COLON, "':'") = null {
+                            return null
+                        }
+                        def nextType := type()
+                        if nextType = null {
+                            return null
+                        }
+                        parameters.add(ASTNode.PARAMETER(nextName.position, text(nextName),
+                                nextType))
+                    }
+                    if expect(Token.Kind.RPAREN, "')'") = null {
+                        return null
+                    }
+                    if expect(Token.Kind.YIELDS, "'=>'") = null {
+                        return null
+                    }
+                    def body := expression()
+                    if body = null {
+                        return null
+                    }
+                    Console.printLine("have lambda at \{start.position}")
+                    return ASTNode.TYPED_LAMBDA(start.position, parameters.finish(), body)
+                }
+                if checkNext(Token.Kind.COMMA) != null {
+                    -- untyped lambda or tuple
+                    def parameters := Array<ASTNode>()
+                    parameters.add(expr)
+                    var validLambda := true
+                    while checkNext(Token.Kind.COMMA) != null {
+                        def nextExpr := expression()
+                        if nextExpr = null {
+                            return null
+                        }
+                        validLambda &= (nextExpr = ASTNode.IDENTIFIER)
+                        parameters.add(nextExpr)
+                    }
+                    if expect(Token.Kind.RPAREN, "')'") = null {
+                        return null
+                    }
+                    if validLambda & checkNext(Token.Kind.YIELDS) != null {
+                        def body := expression()
+                        if body = null {
+                            return null
+                        }
+                        Console.printLine("have lambda at \{start.position}")
+                        return ASTNode.UNTYPED_LAMBDA(start.position, parameters.finish(), body)
+                    }
+                    Console.printLine("have tuple at \{start.position}")
+                    return ASTNode.TUPLE(start.position, parameters.finish())
+                }
+            otherwise:
+                -- either a single parenthesized expression or a tuple
+                if checkNext(Token.Kind.COMMA) = null {
+                    expect(Token.Kind.RPAREN, "')'")
+                    return expr
+                }
+                def arguments := Array<ASTNode>()
+                arguments.add(expr)
+                do {
+                    def nextExpr := expression()
+                    if nextExpr = null {
+                        return null
+                    }
+                    arguments.add(nextExpr)
+                }
+                while checkNext(Token.Kind.COMMA) != null
+                expect(Token.Kind.RPAREN, "')'")
+                return ASTNode.TUPLE(start.position, arguments.finish())
+        }
+    }
+
+    ================================================================================================
+    lambda = IDENTIFIER (COLON type) YIELDS expression
+    ================================================================================================
+    method lambda():ASTNode? {
+        def start := expect(Token.Kind.IDENTIFIER, "an identifier")
+        Console.printLine("have lambda at \{start.position}")
+        if checkNext(Token.Kind.COLON) != null {
+            def t := type()
+            if t = null {
+                return null
+            }
+            def parameters := Array<ASTNode>()
+            parameters.add(ASTNode.PARAMETER(start.position, text(start), t))
+            if expect(Token.Kind.YIELDS, "'=>'") = null {
+                return null
+            }
+            def expr := expression()
+            if expr = null {
+                return null
+            }
+            return ASTNode.TYPED_LAMBDA(start.position, parameters.finish(), expr)
+        }
+        def parameters := Array<ASTNode>()
+        parameters.add(ASTNode.IDENTIFIER(start.position, text(start)))
+        if expect(Token.Kind.YIELDS, "'=>'") = null {
+            return null
+        }
+        def expr := expression()
+        if expr = null {
+            return null
+        }
+        return ASTNode.UNTYPED_LAMBDA(start.position, parameters.finish(), expr)
+    }
+
+    ================================================================================================
     term = IDENTIFIER | DECIMAL | BINARY | HEX | REAL | SELF | SUPER | NULL | TRUE | FALSE |
-            string | LPAREN expression RPAREN | ANNOTATION(@pre) LPAREN expression RPAREN |
-            anonymousMethod | ANNOTATION(@return) |
+            string | parenthesizedExpression | ANNOTATION(@pre) LPAREN expression RPAREN |
+            anonymousMethod | lambda | ANNOTATION(@return)
     ================================================================================================
     method term():ASTNode? {
         def t := next()
         match t.kind {
             when Token.Kind.IDENTIFIER:
+                def check := peek().kind
+                if (allowLambdas & check = Token.Kind.COLON) | check = Token.Kind.YIELDS {
+                    pushback(t)
+                    return lambda()
+                }
                 return ASTNode.IDENTIFIER(t.position, text(t))
             when Token.Kind.DECIMAL:
                 return ASTNode.INT(t.position, text(t).convert())
@@ -386,14 +529,8 @@ class Parser {
                 pushback(t)
                 return string()
             when Token.Kind.LPAREN:
-                def result := expression()
-                if result = null {
-                    return null
-                }
-                if expect(Token.Kind.RPAREN, "')'") = null {
-                    return null
-                }
-                return result
+                pushback(t)
+                return parenthesizedExpression()
             when Token.Kind.ANNOTATION:
                 def name := text(t)
                 if name = "@pre" {
@@ -1166,24 +1303,30 @@ class Parser {
     ================================================================================================
     whenClause = WHEN expression (COMMA expression)* COLON statement* terminalStatement?
     ================================================================================================
+    @pre(allowLambdas)
+    @post(allowLambdas)
     method whenClause():ASTNode? {
         def start := expect(Token.Kind.WHEN, "'when'")
         if start = null {
             return null
         }
+        allowLambdas := false
         def expressions := Array<ASTNode>()
         var expr := expression()
         if expr = null {
+            allowLambdas := true
             return null
         }
         expressions.add(expr)
         while checkNext(Token.Kind.COMMA) != null {
             expr := expression()
             if expr = null {
+                allowLambdas := true
                 return null
             }
             expressions.add(expr)
         }
+        allowLambdas := true
         if expect(Token.Kind.COLON, "':'") = null {
             return null
         }
@@ -1523,6 +1666,9 @@ class Parser {
         }
     }
 
+    ================================================================================================
+    anyLoop = doLoop | forLoop | loopLoop | whileLoop
+    ================================================================================================
     method anyLoop(label:String?):ASTNode? {
         match peek().kind {
             when Token.Kind.DO:    return doLoop(label)
@@ -1537,8 +1683,50 @@ class Parser {
     }
 
     ================================================================================================
+    innerMethod = (METHOD | FUNCTION) IDENTIFIER parameters typeDeclaration? block
+    ================================================================================================
+    method innerMethod():ASTNode? {
+        def kind:MethodDecl.Kind
+        def start := checkNext(Token.Kind.FUNCTION)
+        if start = null {
+            start := expect(Token.Kind.METHOD, "'method' or 'function'")
+            if start = null {
+                return null
+            }
+            kind := MethodDecl.Kind.METHOD
+        }
+        else {
+            kind := MethodDecl.Kind.FUNCTION
+        }
+        def name := expect(Token.Kind.IDENTIFIER, "an identifier")
+        if name = null {
+            return null
+        }
+        def params := parameters()
+        if params = null {
+            return null
+        }
+        def returnType:ASTNode?
+        if peek().kind = Token.Kind.COLON {
+            returnType := typeDeclaration()
+            if returnType = null {
+                return null
+            }
+        }
+        else {
+            returnType := null
+        }
+        def body := blockStatements()
+        if body = null {
+            return null
+        }
+        return ASTNode.METHOD(start.position, null, ImmutableArray<ASTNode>(), kind, text(name), -- FIXME literal
+                params, returnType, body)
+    }
+
+    ================================================================================================
     statement = ifStatement | anyLoop | expressionOrAssignment | assertStatement | matchStatement |
-            block | varDeclaration | initCall
+            block | varDeclaration | initCall | innerMethod
     ================================================================================================
     method statement():ASTNode? {
         match peek().kind {
@@ -1563,6 +1751,8 @@ class Parser {
                 return varDeclaration()
             when Token.Kind.INIT:
                 return initCall()
+            when Token.Kind.METHOD, Token.Kind.FUNCTION:
+                return innerMethod()
             otherwise:
                 -- trigger error
                 expect(Token.Kind.IF, "a statement")
@@ -2197,9 +2387,9 @@ class Parser {
                 return usesDeclaration()
             when Token.Kind.PACKAGE:
                 return packageDeclaration()
-            when Token.Kind.CLASS, Token.Kind.INTERFACE, Token.Kind.CHOICE,
-                    Token.Kind.METHOD, Token.Kind.FUNCTION, Token.Kind.ANNOTATION,
-                    Token.Kind.DOC_COMMENT:
+            when Token.Kind.CLASS, Token.Kind.INTERFACE, Token.Kind.CHOICE, Token.Kind.METHOD,
+                    Token.Kind.FUNCTION, Token.Kind.ANNOTATION, Token.Kind.DOC_COMMENT,
+                    Token.Kind.VAR, Token.Kind.DEF, Token.Kind.CONSTANT, Token.Kind.PROPERTY:
                 return declaration()
             otherwise:
                 return statement()

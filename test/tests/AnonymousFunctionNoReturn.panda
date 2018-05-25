@@ -1,0 +1,6 @@
+class AnonymousFunctionNoReturn {
+    @class
+    method main() {
+        def f := function(x:Int) { }
+    }
+}

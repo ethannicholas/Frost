@@ -7,20 +7,23 @@
 #include "panda/core/Method.h"
 #include "panda/core/Immutable.h"
 #include "panda/core/Panda.h"
-#include "panda/io/Console.h"
 #include "panda/collections/Iterator/FilterIterator.h"
 
 
-struct { panda$core$Class* cl; ITable* next; void* methods[3]; } panda$collections$Iterator$_panda$collections$Iterator = { (panda$core$Class*) &panda$collections$Iterator$class, NULL, { NULL, NULL, panda$collections$Iterator$filter$$LPpanda$collections$Iterator$T$RP$EQ$GT$LPpanda$core$Bit$RP$R$panda$collections$Iterator$LTpanda$collections$Iterator$T$GT} };
+struct { panda$core$Class* cl; ITable* next; void* methods[4]; } panda$collections$Iterator$_panda$collections$Iterator = { (panda$core$Class*) &panda$collections$Iterator$class, NULL, { NULL, NULL, panda$collections$Iterator$filter$$LPpanda$collections$Iterator$T$RP$EQ$GT$LPpanda$core$Bit$RP$R$panda$collections$Iterator$LTpanda$collections$Iterator$T$GT, panda$collections$Iterator$apply$$LPpanda$collections$Iterator$T$RP$EQ$AM$GT$LP$RP} };
 
 static panda$core$String $s1;
-panda$collections$Iterator$class_type panda$collections$Iterator$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, (ITable*) &panda$collections$Iterator$_panda$collections$Iterator, { panda$core$Object$convert$R$panda$core$String, panda$core$Object$cleanup, NULL, NULL, panda$collections$Iterator$filter$$LPpanda$collections$Iterator$T$RP$EQ$GT$LPpanda$core$Bit$RP$R$panda$collections$Iterator$LTpanda$collections$Iterator$T$GT} };
+panda$collections$Iterator$class_type panda$collections$Iterator$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, (ITable*) &panda$collections$Iterator$_panda$collections$Iterator, { panda$core$Object$convert$R$panda$core$String, panda$core$Object$cleanup, NULL, NULL, panda$collections$Iterator$filter$$LPpanda$collections$Iterator$T$RP$EQ$GT$LPpanda$core$Bit$RP$R$panda$collections$Iterator$LTpanda$collections$Iterator$T$GT, panda$collections$Iterator$apply$$LPpanda$collections$Iterator$T$RP$EQ$AM$GT$LP$RP} };
 
 typedef panda$core$Bit (*$fn13)(panda$core$Object*, panda$core$Object*);
 typedef panda$core$Bit (*$fn14)(panda$core$Object*);
+typedef panda$core$Bit (*$fn37)(panda$collections$Iterator*);
+typedef panda$core$Object* (*$fn48)(panda$collections$Iterator*);
+typedef void (*$fn50)(panda$core$Object*, panda$core$Object*);
+typedef void (*$fn51)(panda$core$Object*);
+typedef panda$core$Bit (*$fn57)(panda$collections$Iterator*);
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x74\x65\x72\x61\x74\x6f\x72", 26, 1346324154505245510, NULL };
-static panda$core$String $s18 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x46\x69\x6c\x74\x65\x72\x21", 7, 182634865385448, NULL };
 
 panda$core$Bit panda$core$MutableMethod$$shim1$panda$collections$Iterator$FilterIterator$T$R$panda$core$Bit(panda$core$MutableMethod* self, panda$core$Object* p_p0) {
     panda$core$MutableMethod* methodVar5 = NULL;
@@ -66,20 +69,102 @@ panda$core$Bit panda$core$MutableMethod$$shim1$panda$collections$Iterator$Filter
     $l17:;
 }
 panda$collections$Iterator* panda$collections$Iterator$filter$$LPpanda$collections$Iterator$T$RP$EQ$GT$LPpanda$core$Bit$RP$R$panda$collections$Iterator$LTpanda$collections$Iterator$T$GT(panda$collections$Iterator* self, panda$core$MutableMethod* p_predicate) {
-    panda$collections$Iterator* $returnValue19;
-    panda$collections$Iterator* $tmp20;
-    panda$collections$Iterator$FilterIterator* $tmp21;
-    panda$io$Console$printLine$panda$core$String(&$s18);
-    panda$collections$Iterator$FilterIterator* $tmp22 = (panda$collections$Iterator$FilterIterator*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$Iterator$FilterIterator$class);
-    panda$core$MutableMethod* $tmp23 = (panda$core$MutableMethod*) pandaObjectAlloc(32, &panda$core$MutableMethod$class);
-    panda$core$MutableMethod$init$panda$unsafe$Pointer$LTpanda$core$Int8$GT$panda$core$Object$Q($tmp23, panda$core$MutableMethod$$shim1$panda$collections$Iterator$FilterIterator$T$R$panda$core$Bit, ((panda$core$Object*) p_predicate));
-    panda$collections$Iterator$FilterIterator$init$panda$collections$Iterator$LTpanda$collections$Iterator$FilterIterator$T$GT$$LPpanda$collections$Iterator$FilterIterator$T$RP$EQ$GT$LPpanda$core$Bit$RP($tmp22, self, ((panda$core$Object*) $tmp23));
-    $tmp21 = $tmp22;
-    $tmp20 = ((panda$collections$Iterator*) $tmp21);
-    $returnValue19 = $tmp20;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp20));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp21));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp23));
-    return $returnValue19;
+    panda$collections$Iterator* $returnValue18;
+    panda$collections$Iterator* $tmp19;
+    panda$collections$Iterator$FilterIterator* $tmp20;
+    panda$collections$Iterator$FilterIterator* $tmp21 = (panda$collections$Iterator$FilterIterator*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$Iterator$FilterIterator$class);
+    panda$core$MutableMethod* $tmp22 = (panda$core$MutableMethod*) pandaObjectAlloc(32, &panda$core$MutableMethod$class);
+    panda$core$MutableMethod$init$panda$unsafe$Pointer$LTpanda$core$Int8$GT$panda$core$Object$Q($tmp22, panda$core$MutableMethod$$shim1$panda$collections$Iterator$FilterIterator$T$R$panda$core$Bit, ((panda$core$Object*) p_predicate));
+    panda$collections$Iterator$FilterIterator$init$panda$collections$Iterator$LTpanda$collections$Iterator$FilterIterator$T$GT$$LPpanda$collections$Iterator$FilterIterator$T$RP$EQ$GT$LPpanda$core$Bit$RP($tmp21, self, ((panda$core$Object*) $tmp22));
+    $tmp20 = $tmp21;
+    $tmp19 = ((panda$collections$Iterator*) $tmp20);
+    $returnValue18 = $tmp19;
+    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp19));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp20));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp22));
+    return $returnValue18;
+}
+void panda$collections$Iterator$apply$$LPpanda$collections$Iterator$T$RP$EQ$AM$GT$LP$RP(panda$collections$Iterator* self, panda$core$MutableMethod* p_m) {
+    panda$collections$Iterator* Iter$67$930 = NULL;
+    panda$collections$Iterator* $tmp31;
+    panda$core$Object* v43 = NULL;
+    panda$core$Object* $tmp44;
+    panda$core$Object* $tmp45;
+    int $tmp26;
+    {
+        {
+            int $tmp29;
+            {
+                $tmp31 = self;
+                Iter$67$930 = $tmp31;
+                panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp31));
+                $l32:;
+                ITable* $tmp35 = Iter$67$930->$class->itable;
+                while ($tmp35->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+                    $tmp35 = $tmp35->next;
+                }
+                $fn37 $tmp36 = $tmp35->methods[0];
+                panda$core$Bit $tmp38 = $tmp36(Iter$67$930);
+                panda$core$Bit $tmp39 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp38);
+                bool $tmp34 = $tmp39.value;
+                if (!$tmp34) goto $l33;
+                {
+                    int $tmp42;
+                    {
+                        ITable* $tmp46 = Iter$67$930->$class->itable;
+                        while ($tmp46->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+                            $tmp46 = $tmp46->next;
+                        }
+                        $fn48 $tmp47 = $tmp46->methods[1];
+                        panda$core$Object* $tmp49 = $tmp47(Iter$67$930);
+                        $tmp45 = $tmp49;
+                        $tmp44 = $tmp45;
+                        v43 = $tmp44;
+                        panda$core$Panda$ref$panda$core$Object($tmp44);
+                        panda$core$Panda$unref$panda$core$Object($tmp45);
+                        if (p_m->target) {
+                            (($fn50) p_m->pointer)(p_m->target, v43);
+                        } else {
+                            (($fn51) p_m->pointer)(v43);
+                        }
+                    }
+                    $tmp42 = -1;
+                    goto $l40;
+                    $l40:;
+                    panda$core$Panda$unref$panda$core$Object(v43);
+                    v43 = NULL;
+                    switch ($tmp42) {
+                        case -1: goto $l52;
+                    }
+                    $l52:;
+                }
+                goto $l32;
+                $l33:;
+            }
+            $tmp29 = -1;
+            goto $l27;
+            $l27:;
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$67$930));
+            Iter$67$930 = NULL;
+            switch ($tmp29) {
+                case -1: goto $l53;
+            }
+            $l53:;
+        }
+    }
+    $tmp26 = -1;
+    goto $l24;
+    $l24:;
+    ITable* $tmp55 = self->$class->itable;
+    while ($tmp55->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
+        $tmp55 = $tmp55->next;
+    }
+    $fn57 $tmp56 = $tmp55->methods[0];
+    panda$core$Bit $tmp58 = $tmp56(self);
+    PANDA_ASSERT($tmp58.value);
+    switch ($tmp26) {
+        case -1: goto $l54;
+    }
+    $l54:;
 }
 

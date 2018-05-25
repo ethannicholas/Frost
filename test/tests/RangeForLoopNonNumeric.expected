@@ -1,5 +1,5 @@
-RangeForLoopNonNumeric.panda:3:26: error: for loop expected a numeric range, but found 'panda.core.Range<panda.core.String>'
-RangeForLoopNonNumeric.panda:8:13: error: for loop variable cannot have non-numeric type 'panda.core.String'
-RangeForLoopNonNumeric.panda:13:13: error: for loop variable cannot have non-numeric type 'panda.core.Bit'
-RangeForLoopNonNumeric.panda:18:20: error: for loop expected a numeric range, but found 'panda.core.SteppedRange<panda.core.Immutable, panda.core.Immutable>'
+RangeForLoopNonNumeric.panda:2:22: error: for loop expected a numeric range, but found 'panda.core.Range<panda.core.String>'
+RangeForLoopNonNumeric.panda:7:9: error: for loop variable cannot have non-numeric type 'panda.core.String'
+RangeForLoopNonNumeric.panda:12:9: error: for loop variable cannot have non-numeric type 'panda.core.Bit'
+RangeForLoopNonNumeric.panda:17:16: error: for loop expected a numeric range, but found 'panda.core.SteppedRange<panda.core.Immutable, panda.core.Immutable>'
 4 errors

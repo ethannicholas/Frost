@@ -1,0 +1,14 @@
+class MersenneTwister {
+    @class
+    method main() {
+        var mt := MersenneTwister(1)
+        for i in 0 .. 1000 {
+            Console.printLine(mt.int32().convert()->UInt32)
+        }
+
+        mt := MersenneTwister(mt)
+        for i in 0 .. 50 {
+            Console.printLine(mt.int32().convert()->UInt32)
+        }
+    }
+}

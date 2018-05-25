@@ -12,6 +12,7 @@ class XorShift128Plus : Random {
     ================================================================================================
     @private 
     var state1:Int64
+    
     @private 
     var state2:Int64
     
@@ -40,20 +41,5 @@ class XorShift128Plus : Random {
         x ~~= x << 23
         state2 := x ~~ y ~~ (x >> 17) ~~ (y >> 26)
         return state2 + y
-    }
-
-    @override
-    method int(n:Int64):Int64 {
-        if n = 1 {
-            return 0
-        }
-
-        def min := -n % n
-        loop {
-            def x := int64()
-            if x >= min {
-                return x % n
-            }
-        }
     }
 }

@@ -1,36 +1,33 @@
-class IntRange {
-    @class
-    method main() {
-        def int8Min:Int8 := -128
-        Console.printLine(int8Min)
-        def int8Max:Int8 := 127
-        Console.printLine(int8Max)
+method main() {
+    def int8Min:Int8 := -128
+    Console.printLine(int8Min)
+    def int8Max:Int8 := 127
+    Console.printLine(int8Max)
 
-        def int16Min:Int16 := -32768
-        Console.printLine(int16Min)
-        def int16Max:Int16 := 32767
-        Console.printLine(int16Max)
+    def int16Min:Int16 := -32768
+    Console.printLine(int16Min)
+    def int16Max:Int16 := 32767
+    Console.printLine(int16Max)
 
-        def int32Min:Int32 := -2147483648
-        Console.printLine(int32Min)
-        def int32Max:Int32 := 2147483647
-        Console.printLine(int32Max)
+    def int32Min:Int32 := -2147483648
+    Console.printLine(int32Min)
+    def int32Max:Int32 := 2147483647
+    Console.printLine(int32Max)
 
-        def int64Min:Int64 := -9223372036854775808
-        Console.printLine(int64Min)
-        def int64Max:Int64 := 9223372036854775807
-        Console.printLine(int64Max)
+    def int64Min:Int64 := -9223372036854775808
+    Console.printLine(int64Min)
+    def int64Max:Int64 := 9223372036854775807
+    Console.printLine(int64Max)
 
-        def uint8Max:UInt8 := 255
-        Console.printLine(uint8Max)
+    def uint8Max:UInt8 := 255
+    Console.printLine(uint8Max)
 
-        def uint16Max:UInt16 := 65535
-        Console.printLine(uint16Max)
+    def uint16Max:UInt16 := 65535
+    Console.printLine(uint16Max)
 
-        def uint32Max:UInt32 := 4294967295
-        Console.printLine(uint32Max)
+    def uint32Max:UInt32 := 4294967295
+    Console.printLine(uint32Max)
 
-        def uint64Max:UInt64 := 18446744073709551615
-        Console.printLine(uint64Max)
-    }
+    def uint64Max:UInt64 := 18446744073709551615
+    Console.printLine(uint64Max)
 }

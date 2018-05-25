@@ -219,6 +219,7 @@ class Compiler {
         addAlias("panda.core.UInt64")
         addAlias("panda.core.Value")
         addAlias("panda.core.Weak")
+        addAlias("panda.math.MersenneTwister")
         addAlias("panda.math.Random")
         addAlias("panda.math.XorShift128Plus")
         addAlias("panda.io.Console")
@@ -1497,6 +1498,26 @@ class Compiler {
         return effectiveMethodType(target, m.owner, m.annotations.isClass(), m.type())
     }
 
+    function unresolvedLambdaCoercionCost(parameters:ImmutableArray<String>, expr:ASTNode,
+            target:Type):Int? {
+        if !target.isMethod() {
+            return null
+        }
+        if target.subtypes.get_count() != parameters.get_count() + 1 {
+            return null
+        }
+        def symbols := AutoSymbolTable(self)
+        for i in 0 .. parameters.get_count() {
+            symbolTable.add(Variable(expr.position(), Variable.Kind.DEF, parameters[i],
+                    target.subtypes[i]))
+        }
+        def compiledExpr := compileExpression(expr)
+        if compiledExpr = null {
+            return null
+        }
+        return coercionCost(compiledExpr.type(), target.subtypes[target.subtypes.get_count() - 1])
+    }
+
     function coercionCost(expr:IRNode, target:Type):Int? {
         var base := 0
         if isSingleChar(expr) & !target.isChar() {
@@ -1589,6 +1610,8 @@ class Compiler {
                     }
                     return null
                 }
+            when IRNode.UNRESOLVED_LAMBDA(_, parameters, expr):
+                return unresolvedLambdaCoercionCost(parameters, expr, target)
             when IRNode.UNRESOLVED_METHOD_REFERENCE(_, targetNode, methods):
                 var bestCost:Int? := null
                 for m in methods {
@@ -1993,6 +2016,16 @@ class Compiler {
                 Console.printLine("no or ambiguous match on method call (\{position}, " +
                         "\{methods[0].value.name}, \{best})")
                 assert false
+            when IRNode.UNRESOLVED_LAMBDA(position, rawParameters, expr):
+                def parameters := Array<ASTNode>()
+                for i in 0 .. rawParameters.get_count() {
+                    parameters.add(ASTNode.PARAMETER(position, rawParameters[i],
+                            ASTNode.IR_WRAPPER(IRNode.TYPE_REFERENCE(position,
+                                target.subtypes[i]))))
+                }
+                def lambda := compileTypedLambda(position, parameters.finish(), expr)
+                assert lambda != null
+                return coerce(lambda, target)
         }
         def position := node.position()
         def src := node.type()
@@ -3013,6 +3046,10 @@ class Compiler {
         -- FIXME use var parameters
         var left:IRNode? := rawLeft
         var right:IRNode? := rawRight
+        if (left = IRNode.INT | left = IRNode.NEGATED_INT) &
+                (right = IRNode.INT | right = IRNode.NEGATED_INT) {
+            return foldInts(position, left, op, right)
+        }
         if left.type().typeKind = Type.Kind.INT_LITERAL {
             right := resolve(right)
             if right = null {
@@ -3156,10 +3193,6 @@ class Compiler {
             error(position, "'\{operatorName(op)}' cannot operate on '\{left.type()}', " +
                     "'\{right.type()}'")
             return null
-        }
-        if (left = IRNode.INT | left = IRNode.NEGATED_INT) &
-                (right = IRNode.INT | right = IRNode.NEGATED_INT) {
-            return foldInts(position, left, op, right)
         }
         if left.type().isBuiltinNumber() & coercionCost(right, left.type()) != null {
             right := coerce(right, left.type())
@@ -3590,6 +3623,10 @@ class Compiler {
         }
         else {
             returnType := Type.Void()
+            if kind = MethodDecl.Kind.FUNCTION {
+                error(position, "functions must have a return type")
+                return null
+            }
         }
         def methodDecl := MethodDecl(currentClass[0], position, null,
                 Annotations(Annotations.Flag.CLASS), kind, name, parameters, returnType, body)
@@ -3630,6 +3667,10 @@ class Compiler {
                 return IRNode.INT(position, Type.IntLiteral(value), value)
             when ASTNode.METHOD(position, _, _, kind, _, parameters, returnType, body):
                 return compileAnonymousMethod(position, kind, parameters, returnType, body)
+            when ASTNode.TYPED_LAMBDA(position, parameters, body):
+                return compileTypedLambda(position, parameters, body)
+            when ASTNode.UNTYPED_LAMBDA(position, parameters, body):
+                return compileUntypedLambda(position, parameters, body)
             when ASTNode.REAL(position, value):
                 return IRNode.REAL(position, Type.RealLiteral(value), value)
             when ASTNode.PREFIX(position, op, base):
@@ -4474,6 +4515,63 @@ class Compiler {
         return IRNode.MATCH(position, finalValue, finalWhens.finish(), finalOther)
     }
 
+    method compileInnerMethod(position:Position, kind:MethodDecl.Kind, name:String,
+            rawParameters:ImmutableArray<ASTNode>, rawReturnType:ASTNode?,
+            body:ImmutableArray<ASTNode>):IRNode? {
+        def methodRef := compileAnonymousMethod(position, kind, rawParameters, rawReturnType, body)
+        if methodRef = null {
+            return null
+        }
+        def decl := ASTNode.DECLARATION(position, ASTNode.IDENTIFIER(position, name),
+                ASTNode.IR_WRAPPER(methodRef))
+        def decls := Array<ASTNode>() -- FIXME literal
+        decls.add(decl)
+        return compileStatement(ASTNode.VAR(position, Variable.Kind.DEF, decls.finish()))
+    }
+
+    method compileTypedLambda(position:Position, rawParameters:ImmutableArray<ASTNode>,
+            expr:ASTNode):IRNode? {
+        Console.printLine("typed lambda: \{rawParameters}, \{expr}")
+        def symbols := AutoSymbolTable(self)
+        for p in rawParameters {
+            match p {
+                when ASTNode.PARAMETER(position, name, rawType):
+                    var type := scanner.convertType(rawType)
+                    if type = null {
+                        return null
+                    }
+                    type := resolve(type)
+                    if type = null {
+                        return null
+                    }
+                    symbolTable.add(Variable(position, Variable.Kind.DEF, name, type))
+            }
+        }
+        def compiledExpr := compileExpression(expr)
+        if compiledExpr = null {
+            return null
+        }
+        def body := Array<ASTNode>() -- FIXME literal
+        body.add(ASTNode.RETURN(position, expr))
+        return compileAnonymousMethod(position, MethodDecl.Kind.FUNCTION, rawParameters,
+                ASTNode.IR_WRAPPER(IRNode.TYPE_REFERENCE(position, compiledExpr.type())),
+                body.finish())
+    }
+
+    method compileUntypedLambda(position:Position, rawParameters:ImmutableArray<ASTNode>,
+            expr:ASTNode):IRNode? {
+        def parameters := Array<String>()
+        for p in rawParameters {
+            match p {
+                when ASTNode.IDENTIFIER(_, name):
+                    parameters.add(name)
+                otherwise:
+                    assert false
+            }
+        }
+        return IRNode.UNRESOLVED_LAMBDA(position, parameters.finish(), expr)
+    }
+
     method compileStatement(s:ASTNode):IRNode? {
         match s {
             when ASTNode.ASSERT(position, test, msg):
@@ -4508,6 +4606,8 @@ class Compiler {
                 return result
             when ASTNode.VAR(position, kind, declarations):
                 return compileVar(position, kind, declarations)
+            when ASTNode.METHOD(position, _, _, kind, name, parameters, returnType, body):
+                return compileInnerMethod(position, kind, name, parameters, returnType, body)
         }
         error(s.position(), "not a statement")
         return null
@@ -4810,10 +4910,13 @@ class Compiler {
     }
 
     method checkImmutable(cl:ClassDecl) {
-        if isImmutable(cl) {
+        if !cl.annotations.isUnsafeImmutable() & isImmutable(cl) {
             for f in cl.fields {
                 resolve(f)
-                if !isImmutable(f.type) {
+                if f.fieldKind = FieldDecl.Kind.VAR {
+                    error(f.position, "immutable class '\{cl.name}' cannot contain a 'var'")
+                }
+                else if !isImmutable(f.type) {
                     error(f.position, "immutable class '\{cl.name}' cannot contain mutable field " +
                             "'\{f.name}' of type '\{f.type}'")
                 }

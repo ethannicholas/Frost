@@ -203,7 +203,7 @@ void* pandaRealloc(void* ptr, size_t oldSize, size_t newSize) {
 
 void pandaFree(void* ptr) {
     allocations--;
-    //free(ptr);
+    free(ptr);
 }
 
 void pandaObjectFree(Object* o) {

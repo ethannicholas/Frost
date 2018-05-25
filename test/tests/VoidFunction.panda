@@ -1,4 +1,2 @@
-class VoidFunction {
-    function foo() {
-    }
+function foo() {
 }

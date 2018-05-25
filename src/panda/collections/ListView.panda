@@ -1,6 +1,7 @@
 package panda.collections
 
 interface ListView<T> : CollectionView<T> {
+    @pre(index >= 0 & index < get_count())
     function [](index:Int):T
 
     function join():String {

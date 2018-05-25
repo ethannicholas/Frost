@@ -1,39 +1,36 @@
-class Unicode {
-    @class
-    method main() {
-        var s := "子曰：「學而時習之，不亦說乎？有朋自遠方來，不亦樂乎？人不知而不慍，不亦君子乎？」"
-        Console.printLine(s)
-        Console.printLine(s[... by 3])
-        Console.printLine(s[s.previous(s.end()) .. s.start() by -1])
-        Console.printLine(s[s.start()])
-        Console.printLine(s[s.next(s.start())])
-        Console.printLine(s[..s.indexOf("不亦")])
-        Console.printLine(s[s.offset(s.indexOf("不亦"), 2)...])
+method main() {
+    var s := "子曰：「學而時習之，不亦說乎？有朋自遠方來，不亦樂乎？人不知而不慍，不亦君子乎？」"
+    Console.printLine(s)
+    Console.printLine(s[... by 3])
+    Console.printLine(s[s.previous(s.end()) .. s.start() by -1])
+    Console.printLine(s[s.start()])
+    Console.printLine(s[s.next(s.start())])
+    Console.printLine(s[..s.indexOf("不亦")])
+    Console.printLine(s[s.offset(s.indexOf("不亦"), 2)...])
 
-        s := "🆗🆒👍😀"
-        Console.printLine(s)
-        Console.printLine(s[..])
-        Console.printLine(s[...])
-        Console.printLine(s[.. by -1])
-        Console.printLine(s[... by -1])
-        Console.printLine(s[s.start()])
-        Console.printLine(s[s.next(s.start())])
-        Console.printLine(s[s.offset(s.start(), 2)])
-        Console.printLine(s[s.offset(s.start(), 3)])
-        Console.printLine(s[s.previous(s.end())])
-        Console.printLine(s[s.offset(s.end(), -2)])
-        Console.printLine(s[s.offset(s.end(), -3)])
-        Console.printLine(s[s.offset(s.end(), -4)])
-        Console.printLine(s.utf8().get_count())
-        for c in s.utf8() {
-            Console.outputStream().write(c.convert()->Int8)
-        }
-        Console.printLine()
-        for c in s.utf8() {
-            Console.printLine(c.convert()->Int8)
-        }
-        Console.printLine(Char8(65))
-        Console.printLine(Char16(9749))
-        Console.printLine("Hello from \{Char32(0x1F43C)}!")
+    s := "🆗🆒👍😀"
+    Console.printLine(s)
+    Console.printLine(s[..])
+    Console.printLine(s[...])
+    Console.printLine(s[.. by -1])
+    Console.printLine(s[... by -1])
+    Console.printLine(s[s.start()])
+    Console.printLine(s[s.next(s.start())])
+    Console.printLine(s[s.offset(s.start(), 2)])
+    Console.printLine(s[s.offset(s.start(), 3)])
+    Console.printLine(s[s.previous(s.end())])
+    Console.printLine(s[s.offset(s.end(), -2)])
+    Console.printLine(s[s.offset(s.end(), -3)])
+    Console.printLine(s[s.offset(s.end(), -4)])
+    Console.printLine(s.utf8().get_count())
+    for c in s.utf8() {
+        Console.outputStream().write(c.convert()->Int8)
     }
+    Console.printLine()
+    for c in s.utf8() {
+        Console.printLine(c.convert()->Int8)
+    }
+    Console.printLine(Char8(65))
+    Console.printLine(Char16(9749))
+    Console.printLine("Hello from \{Char32(0x1F43C)}!")
 }

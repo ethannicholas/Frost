@@ -11746,7 +11746,7 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getReference$org$pand
         }
         }
         else {
-        panda$core$Bit $tmp4850 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$1337_94745->$rawValue, ((panda$core$Int64) { 45 }));
+        panda$core$Bit $tmp4850 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$1337_94745->$rawValue, ((panda$core$Int64) { 46 }));
         if ($tmp4850.value) {
         {
             org$pandalanguage$pandac$Variable** $tmp4852 = ((org$pandalanguage$pandac$Variable**) ((char*) $match$1337_94745->$data + 16));
@@ -13665,7 +13665,7 @@ void org$pandalanguage$pandac$CCodeGenerator$writeSimpleRangeFor$panda$core$Stri
             $tmp5655 = p_target;
             $match$1577_95654 = $tmp5655;
             panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp5655));
-            panda$core$Bit $tmp5656 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$1577_95654->$rawValue, ((panda$core$Int64) { 45 }));
+            panda$core$Bit $tmp5656 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$1577_95654->$rawValue, ((panda$core$Int64) { 46 }));
             if ($tmp5656.value) {
             {
                 org$pandalanguage$pandac$Variable** $tmp5658 = ((org$pandalanguage$pandac$Variable**) ((char*) $match$1577_95654->$data + 16));
@@ -14678,7 +14678,7 @@ void org$pandalanguage$pandac$CCodeGenerator$writeSteppedRangeFor$panda$core$Str
             $tmp6089 = p_target;
             $match$1688_96088 = $tmp6089;
             panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp6089));
-            panda$core$Bit $tmp6090 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$1688_96088->$rawValue, ((panda$core$Int64) { 45 }));
+            panda$core$Bit $tmp6090 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$1688_96088->$rawValue, ((panda$core$Int64) { 46 }));
             if ($tmp6090.value) {
             {
                 org$pandalanguage$pandac$Variable** $tmp6092 = ((org$pandalanguage$pandac$Variable**) ((char*) $match$1688_96088->$data + 16));
@@ -16023,7 +16023,7 @@ void org$pandalanguage$pandac$CCodeGenerator$writeVarTarget$org$pandalanguage$pa
         $tmp6904 = p_target;
         $match$1893_96903 = $tmp6904;
         panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp6904));
-        panda$core$Bit $tmp6905 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$1893_96903->$rawValue, ((panda$core$Int64) { 45 }));
+        panda$core$Bit $tmp6905 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$1893_96903->$rawValue, ((panda$core$Int64) { 46 }));
         if ($tmp6905.value) {
         {
             org$pandalanguage$pandac$Variable** $tmp6907 = ((org$pandalanguage$pandac$Variable**) ((char*) $match$1893_96903->$data + 16));
@@ -16316,7 +16316,7 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getLValue$org$pandala
         }
         }
         else {
-        panda$core$Bit $tmp7021 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$1923_97007->$rawValue, ((panda$core$Int64) { 45 }));
+        panda$core$Bit $tmp7021 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$1923_97007->$rawValue, ((panda$core$Int64) { 46 }));
         if ($tmp7021.value) {
         {
             org$pandalanguage$pandac$Variable** $tmp7023 = ((org$pandalanguage$pandac$Variable**) ((char*) $match$1923_97007->$data + 16));
@@ -17282,7 +17282,7 @@ void org$pandalanguage$pandac$CCodeGenerator$writeMatch$org$pandalanguage$pandac
                         $tmp7492 = w7481;
                         $match$2041_137491 = $tmp7492;
                         panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp7492));
-                        panda$core$Bit $tmp7493 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2041_137491->$rawValue, ((panda$core$Int64) { 46 }));
+                        panda$core$Bit $tmp7493 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2041_137491->$rawValue, ((panda$core$Int64) { 47 }));
                         if ($tmp7493.value) {
                         {
                             panda$collections$ImmutableArray** $tmp7495 = ((panda$collections$ImmutableArray**) ((char*) $match$2041_137491->$data + 16));
@@ -18095,7 +18095,7 @@ void org$pandalanguage$pandac$CCodeGenerator$writeStatement$org$pandalanguage$pa
         }
         }
         else {
-        panda$core$Bit $tmp7860 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2107_97808->$rawValue, ((panda$core$Int64) { 47 }));
+        panda$core$Bit $tmp7860 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2107_97808->$rawValue, ((panda$core$Int64) { 48 }));
         if ($tmp7860.value) {
         {
             panda$core$String** $tmp7862 = ((panda$core$String**) ((char*) $match$2107_97808->$data + 16));
@@ -18132,7 +18132,7 @@ void org$pandalanguage$pandac$CCodeGenerator$writeStatement$org$pandalanguage$pa
         }
         }
         else {
-        panda$core$Bit $tmp7879 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2107_97808->$rawValue, ((panda$core$Int64) { 44 }));
+        panda$core$Bit $tmp7879 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$2107_97808->$rawValue, ((panda$core$Int64) { 45 }));
         if ($tmp7879.value) {
         {
             org$pandalanguage$pandac$Variable$Kind* $tmp7881 = ((org$pandalanguage$pandac$Variable$Kind*) ((char*) $match$2107_97808->$data + 16));

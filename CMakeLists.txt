@@ -268,6 +268,7 @@ set(core_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/io/PushbackInputStream.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/json/JSON.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/json/JSONParser.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/math/MersenneTwister.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/math/Random.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/math/XorShift128Plus.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/threads/Lock.panda

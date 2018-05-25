@@ -6,8 +6,8 @@ messages to or pull messages out of it. Multiple threads may simultaneously wait
 the same message queue, in which case one of the waiting threads will be selected to receive the
 message in a system-dependent fashion, while the other threads will continue to wait.
 ====================================================================================================
--- FIXME needs @unsafeImmutable when that annotation exists
 @final
+@unsafeImmutable
 class MessageQueue<T:Immutable> : Immutable {
     @private
     class Message<T:Immutable> : Immutable {

@@ -1,48 +1,45 @@
-class JSON {
-    @class
-    method main() {
-        def p := JSONParser()
-        def json1 := p.parse("[true, 1, \"hello\"]")
-        Console.printLine(json1)
-        Console.printLine(json1.getBit("[0]"))
-        Console.printLine(json1.getInt("[1]"))
-        Console.printLine(json1.getString("[2]"))
+method main() {
+    def p := JSONParser()
+    def json1 := p.parse("[true, 1, \"hello\"]")
+    Console.printLine(json1)
+    Console.printLine(json1.getBit("[0]"))
+    Console.printLine(json1.getInt("[1]"))
+    Console.printLine(json1.getString("[2]"))
 
-        def json2 := p.parse("{\n" +
-                             "  \"firstName\": \"John\",\n" +
-                             "  \"lastName\": \"Smith\",\n" +
-                             "  \"isAlive\": true,\n" +
-                             "  \"age\": 27,\n" +
-                             "  \"address\": {\n" +
-                             "    \"streetAddress\": \"21 2nd Street\",\n" +
-                             "    \"city\": \"New York\",\n" +
-                             "    \"state\": \"NY\",\n" +
-                             "    \"postalCode\": \"10021-3100\"\n" +
-                             "  },\n" +
-                             "  \"phoneNumbers\": [\n" +
-                             "    {\n" +
-                             "      \"type\": \"home\",\n" +
-                             "      \"number\": \"212 555-1234\"\n" +
-                             "    },\n" +
-                             "    {\n" +
-                             "      \"type\": \"office\",\n" +
-                             "      \"number\": \"646 555-4567\"\n" +
-                             "    },\n" +
-                             "    {\n" +
-                             "      \"type\": \"mobile\",\n" +
-                             "      \"number\": \"123 456-7890\"\n" +
-                             "    }\n" +
-                             "  ],\n" +
-                             "  \"children\": [],\n" +
-                             "  \"spouse\": null\n" +
-                             "}")
-        Console.printLine(json2)
-        Console.printLine(json2.getBit("/isAlive"))
-        Console.printLine(json2.getInt("/age"))
-        Console.printLine(json2.get("/address"))
-        Console.printLine(json2.getString("/firstName"))
-        Console.printLine(json2.getString("/phoneNumbers[1]/number"))
-        assert json2.get("/notFound") = null
-        assert json2.get("/spouse") = JSON.NULL
-    }
+    def json2 := p.parse("{\n" +
+                         "  \"firstName\": \"John\",\n" +
+                         "  \"lastName\": \"Smith\",\n" +
+                         "  \"isAlive\": true,\n" +
+                         "  \"age\": 27,\n" +
+                         "  \"address\": {\n" +
+                         "    \"streetAddress\": \"21 2nd Street\",\n" +
+                         "    \"city\": \"New York\",\n" +
+                         "    \"state\": \"NY\",\n" +
+                         "    \"postalCode\": \"10021-3100\"\n" +
+                         "  },\n" +
+                         "  \"phoneNumbers\": [\n" +
+                         "    {\n" +
+                         "      \"type\": \"home\",\n" +
+                         "      \"number\": \"212 555-1234\"\n" +
+                         "    },\n" +
+                         "    {\n" +
+                         "      \"type\": \"office\",\n" +
+                         "      \"number\": \"646 555-4567\"\n" +
+                         "    },\n" +
+                         "    {\n" +
+                         "      \"type\": \"mobile\",\n" +
+                         "      \"number\": \"123 456-7890\"\n" +
+                         "    }\n" +
+                         "  ],\n" +
+                         "  \"children\": [],\n" +
+                         "  \"spouse\": null\n" +
+                         "}")
+    Console.printLine(json2)
+    Console.printLine(json2.getBit("/isAlive"))
+    Console.printLine(json2.getInt("/age"))
+    Console.printLine(json2.get("/address"))
+    Console.printLine(json2.getString("/firstName"))
+    Console.printLine(json2.getString("/phoneNumbers[1]/number"))
+    assert json2.get("/notFound") = null
+    assert json2.get("/spouse") = JSON.NULL
 }

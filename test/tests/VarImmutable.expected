@@ -1,0 +1,2 @@
+VarImmutable.panda:3:9: error: immutable class 'anonymous.VarImmutable' cannot contain a 'var'
+1 error

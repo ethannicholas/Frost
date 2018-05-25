@@ -2,11 +2,11 @@ package org.pandalanguage.plex.runtime
 
 @final
 class RawToken : Value {
-    var kind:Int
-    var start:String.Index
-    var end:String.Index
-    var line:Int
-    var column:Int
+    def kind:Int
+    def start:String.Index
+    def end:String.Index
+    def line:Int
+    def column:Int
 
     init(kind:Int, start:String.Index, end:String.Index, line:Int, column:Int) {
         self.kind := kind

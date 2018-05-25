@@ -1,20 +1,16 @@
 uses panda.unsafe.Pointer
 
-class CompoundAssignmentReuse {
-    @class
-    method noisyZero():Int {
-        Console.printLine("calculating index")
-        return 0
-    }
+method noisyZero():Int {
+    Console.printLine("calculating index")
+    return 0
+}
 
-    @class
-    method main() {
-        def x := Pointer<Int>.alloc(1)
-        x[0] := 16
-        x[noisyZero()] += 5
-        Console.printLine(x[0])
-        x[noisyZero()] *= 2
-        Console.printLine(x[0])
-        x.destroy()
-    }
+method main() {
+    def x := Pointer<Int>.alloc(1)
+    x[0] := 16
+    x[noisyZero()] += 5
+    Console.printLine(x[0])
+    x[noisyZero()] *= 2
+    Console.printLine(x[0])
+    x.destroy()
 }

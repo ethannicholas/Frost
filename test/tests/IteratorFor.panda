@@ -1,12 +1,9 @@
-class IteratorFor {
-    @class
-    method main() {
-        def a := Array<Int>()
-        for i in 0 ... 20 {
-            a.add(i * i)
-        }
-        for v in a.iterator() {
-            Console.printLine(v)
-        }
+method main() {
+    def a := Array<Int>()
+    for i in 0 ... 20 {
+        a.add(i * i)
+    }
+    for v in a.iterator() {
+        Console.printLine(v)
     }
 }

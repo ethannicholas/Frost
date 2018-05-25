@@ -6,9 +6,6 @@ choice B {
     BAR
 }
 
-class ChoiceMismatch {
-    @class
-    method main() {
-        Console.printLine(A.FOO = B.BAR)
-    }
+method main() {
+    Console.printLine(A.FOO = B.BAR)
 }

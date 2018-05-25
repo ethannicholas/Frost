@@ -1,9 +1,6 @@
-class RangeForLoopExplicitRangeNullable {
-    @class
-    method main() {
-        def range := Range<Int?>(1, 10, true)
-        for i in range {
-            Console.printLine(range)
-        }
+method main() {
+    def range := Range<Int?>(1, 10, true)
+    for i in range {
+        Console.printLine(range)
     }
 }

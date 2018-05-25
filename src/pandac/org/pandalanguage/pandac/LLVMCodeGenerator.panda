@@ -2257,6 +2257,13 @@ class LLVMCodeGenerator : CodeGenerator {
         }
         out.printLine("call void \{getName(initMethod)}(\{type(methodObjectType)} \{result}, " +
                 "%panda$core$Int8* \{methodCast}, \{targetCast})")
+        for m in compiler.getClass("panda.core.Panda").methods {
+            if m.name = "unref" {
+                compiler.resolve(m)
+                writeDeclaration(m)
+                break
+            }
+        }
         if target != null & compiler.isValue(compiler.getClass(target.type())) {
             def targetCastObject := nextVar()
             out.printLine("\{targetCastObject} = bitcast \{targetCast} to %panda$core$Object*")

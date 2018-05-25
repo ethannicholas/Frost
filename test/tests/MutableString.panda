@@ -1,16 +1,13 @@
-class MutableStringTest {
-    @class
-    method main() {
-        def m := MutableString()
-        m.append("Hello, World!")
-        m.append(true)
-        for i in 0 ... 100 {
-            m.append(i)
-        }
-        Console.printLine(m.finish())
-
-        def m2 := MutableString("Hello ")
-        m2.append("again!")
-        Console.printLine(m2.finish())
+method main() {
+    def m := MutableString()
+    m.append("Hello, World!")
+    m.append(true)
+    for i in 0 ... 100 {
+        m.append(i)
     }
+    Console.printLine(m.finish())
+
+    def m2 := MutableString("Hello ")
+    m2.append("again!")
+    Console.printLine(m2.finish())
 }

@@ -1,78 +1,75 @@
-class RangeForLoopChar {
-    @class
-    method main() {
-        Console.printLine("0.0 .. 10.0")
-        for f in 0.0 .. 10.0 {
-            Console.printLine(f)
-        }
-        Console.printLine()
-
-        Console.printLine("0.0 .. 10.0 by 1")
-        for f in 0.0 .. 10.0 by 1 {
-            Console.printLine(f)
-        }
-        Console.printLine()
-
-        Console.printLine("0.0 ... 10.0")
-        for f in 0.0 ... 10.0 {
-            Console.printLine(f)
-        }
-        Console.printLine()
-
-        Console.printLine("0.0 ... 10.0 by 1")
-        for f in 0.0 ... 10.0 by 1 {
-            Console.printLine(f)
-        }
-        Console.printLine()
-
-        Console.printLine("0.0 .. 10.0 by 0.5")
-        for f in 0.0 .. 10.0 by 0.5 {
-            Console.printLine(f)
-        }
-        Console.printLine()
-
-        Console.printLine("0.0 ... 10.0 by 0.5")
-        for f in 0.0 ... 10.0 by 0.5 {
-            Console.printLine(f)
-        }
-        Console.printLine()
-
-        Console.printLine("0.0 ... 10 by -0.5")
-        for f in 0.0 ... 10 by -0.5 {
-            Console.printLine(f)
-        }
-        Console.printLine()
-
-        Console.printLine("0 .. -10.0 by 0.5")
-        for f in 0 .. -10 by 0.5 {
-            Console.printLine(f)
-        }
-        Console.printLine()
-
-        Console.printLine("0 .. -10 by -0.5")
-        for f in 0 .. -10 by -0.5 {
-            Console.printLine(f)
-        }
-        Console.printLine()
-
-        Console.printLine("0.0 ... -10 by -0.5")
-        for f in 0.0 ... -10 by -0.5 {
-            Console.printLine(f)
-        }
-        Console.printLine()
-
-        def onePointOne := 1.1
-        def fivePointTwo := 5.2
-        Console.printLine("onePointOne ... fivePointTwo")
-        for f in onePointOne ... fivePointTwo {
-            Console.printLine(f)
-        }
-        Console.printLine()
-
-        Console.printLine("-1 ... fivePointTwo by onePointOne")
-        for f in -1 ... fivePointTwo by onePointOne {
-            Console.printLine(f)
-        }
-        Console.printLine()
+method main() {
+    Console.printLine("0.0 .. 10.0")
+    for f in 0.0 .. 10.0 {
+        Console.printLine(f)
     }
+    Console.printLine()
+
+    Console.printLine("0.0 .. 10.0 by 1")
+    for f in 0.0 .. 10.0 by 1 {
+        Console.printLine(f)
+    }
+    Console.printLine()
+
+    Console.printLine("0.0 ... 10.0")
+    for f in 0.0 ... 10.0 {
+        Console.printLine(f)
+    }
+    Console.printLine()
+
+    Console.printLine("0.0 ... 10.0 by 1")
+    for f in 0.0 ... 10.0 by 1 {
+        Console.printLine(f)
+    }
+    Console.printLine()
+
+    Console.printLine("0.0 .. 10.0 by 0.5")
+    for f in 0.0 .. 10.0 by 0.5 {
+        Console.printLine(f)
+    }
+    Console.printLine()
+
+    Console.printLine("0.0 ... 10.0 by 0.5")
+    for f in 0.0 ... 10.0 by 0.5 {
+        Console.printLine(f)
+    }
+    Console.printLine()
+
+    Console.printLine("0.0 ... 10 by -0.5")
+    for f in 0.0 ... 10 by -0.5 {
+        Console.printLine(f)
+    }
+    Console.printLine()
+
+    Console.printLine("0 .. -10.0 by 0.5")
+    for f in 0 .. -10 by 0.5 {
+        Console.printLine(f)
+    }
+    Console.printLine()
+
+    Console.printLine("0 .. -10 by -0.5")
+    for f in 0 .. -10 by -0.5 {
+        Console.printLine(f)
+    }
+    Console.printLine()
+
+    Console.printLine("0.0 ... -10 by -0.5")
+    for f in 0.0 ... -10 by -0.5 {
+        Console.printLine(f)
+    }
+    Console.printLine()
+
+    def onePointOne := 1.1
+    def fivePointTwo := 5.2
+    Console.printLine("onePointOne ... fivePointTwo")
+    for f in onePointOne ... fivePointTwo {
+        Console.printLine(f)
+    }
+    Console.printLine()
+
+    Console.printLine("-1 ... fivePointTwo by onePointOne")
+    for f in -1 ... fivePointTwo by onePointOne {
+        Console.printLine(f)
+    }
+    Console.printLine()
 }

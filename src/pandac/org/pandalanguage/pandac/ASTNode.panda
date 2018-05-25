@@ -67,9 +67,12 @@ choice ASTNode {
     SELF                   (Position)
     STRING                 (Position, String)
     SUPER                  (Position)
+    TUPLE                  (Position, ImmutableArray<ASTNode>)
     TUPLE_TYPE             (Position, ImmutableArray<ASTNode>)
     TYPE                   (Position, String)
+    TYPED_LAMBDA           (Position, ImmutableArray<ASTNode> -* PARAMETERs *-, ASTNode -* body *-)
     TYPED_IDENTIFIER       (Position, String, ASTNode?)
+    UNTYPED_LAMBDA         (Position, ImmutableArray<ASTNode> -* IDENTIFIERs *-, ASTNode -* body *-)
     USES                   (Position, String)
     VAR                    (Position, Variable.Kind, ImmutableArray<ASTNode> -* DECLARATIONs *-)
     WHEN                   (Position,
@@ -157,11 +160,17 @@ choice ASTNode {
                 return position
             when SUPER(position):
                 return position
+            when TUPLE(position, _):
+                return position
             when TUPLE_TYPE(position, _):
                 return position
             when TYPE(position, _):
                 return position
             when TYPED_IDENTIFIER(position, _, _):
+                return position
+            when TYPED_LAMBDA(position, _, _):
+                return position
+            when UNTYPED_LAMBDA(position, _, _):
                 return position
             when USES(position, _):
                 return position
@@ -414,9 +423,13 @@ choice ASTNode {
             when SELF:
                 return "self"
             when STRING(_, str):
-                return str
+                return str.format("panda")
             when SUPER:
                 return "super"
+            when TUPLE(_, arguments):
+                return "(\{arguments.join()})"
+            when TUPLE_TYPE(_, parameters):
+                return "(\{parameters.join()})"
             when TYPE(_, name):
                 return name
             when TYPED_IDENTIFIER(_, name, type):
@@ -424,6 +437,10 @@ choice ASTNode {
                     return "\{name}:\{type}"
                 }
                 return name
+            when TYPED_LAMBDA(_, parameters, body):
+                return "(\{parameters.join()})=>\{body}"
+            when UNTYPED_LAMBDA(_, parameters, body):
+                return "(\{parameters.join()})=>\{body}"
             when USES(_, name):
                 return name
             when VAR(_, kind, decls):

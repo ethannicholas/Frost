@@ -1,9 +1,11 @@
 package panda.collections
 
 interface ListWriter<T> : CollectionWriter<T> {
+    @pre(index >= 0 & index < get_count())
     method []:=(index:Int, value:T)
 
     method insert(index:Int, value:T)
 
+    @pre(index >= 0 & index < get_count())
     method removeIndex(index:Int)
 }

@@ -1,5 +1,3 @@
-class WrongGenericParameterCount {
-    def a:Array<Int, String>
+def a:Array<Int, String>
 
-    def b:HashMap<String>
-}
+def b:HashMap<String>

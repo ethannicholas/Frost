@@ -1,0 +1,4 @@
+class VarImmutable : Immutable {
+    def i:Int
+    var j:Int
+}
