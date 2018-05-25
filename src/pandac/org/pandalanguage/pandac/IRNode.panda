@@ -39,7 +39,7 @@ choice IRNode {
     LOOP(Position, String?, ImmutableArray<IRNode>)
     MATCH(Position, IRNode -* value *-, ImmutableArray<IRNode> -* whens *-,
             ImmutableArray<IRNode>? -* otherwise statements *-)
-    METHOD_REFERENCE(Position, IRNode? -* target *-, MethodRef)
+    METHOD_REFERENCE(Position, Type, IRNode? -* target *-, MethodRef)
     NEGATED_INT(Position, Type, UInt64)
     NULL(Position, Type)
     PREFIX(Position, Token.Kind, IRNode)
@@ -101,8 +101,8 @@ choice IRNode {
                 return Type.Bit()
             when IS_NULL:
                 return Type.Bit()
-            when METHOD_REFERENCE(_, target, m):
-                return Compiler.effectiveMethodType(target, m)
+            when METHOD_REFERENCE(_, type, target, m):
+                return type
             when NEGATED_INT(_, type, _):
                 return type
             when NULL(_, type):
@@ -193,7 +193,7 @@ choice IRNode {
                 return position
             when MATCH(position, _, _, _):
                 return position
-            when METHOD_REFERENCE(position, _, _):
+            when METHOD_REFERENCE(position, _, _, _):
                 return position
             when NEGATED_INT(position, _, _):
                 return position
@@ -340,7 +340,7 @@ choice IRNode {
                 }
                 return false
 
-            when METHOD_REFERENCE(_, target, m):
+            when METHOD_REFERENCE:
                 return false
             when NEGATED_INT(_, _, value):
                 return false
@@ -546,7 +546,7 @@ choice IRNode {
                 }
                 result.append("}")
                 return result.finish()
-            when METHOD_REFERENCE(_, target, m):
+            when METHOD_REFERENCE(_, _, target, m):
                 if target != null {
                     return "\{target}.\{m.value.name}"
                 }

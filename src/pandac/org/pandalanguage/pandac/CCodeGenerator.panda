@@ -90,12 +90,16 @@ class CCodeGenerator : CodeGenerator {
             writeImport(cl)
         }
         if t.typeKind = Type.Kind.METHOD | t.typeKind = Type.Kind.FUNCTION {
+            return type(Type.MutableMethod())
+        }
+        if t.typeKind = Type.Kind.IMMUTABLE_METHOD | t.typeKind = Type.Kind.IMMUTABLE_FUNCTION {
             return type(Type.Method())
         }
         return hCodeGen.type(t)
     }
 
-    @pre(t.typeKind = Type.Kind.FUNCTION | t.typeKind = Type.Kind.METHOD)
+    @pre(t.typeKind = Type.Kind.FUNCTION | t.typeKind = Type.Kind.METHOD |
+            t.typeKind = Type.Kind.IMMUTABLE_FUNCTION | t.typeKind = Type.Kind.IMMUTABLE_METHOD)
     method methodType(t:Type, selfType:Type?):String {
         varCount += 1
         def result := "$fn\{varCount}"
@@ -1285,7 +1289,13 @@ class CCodeGenerator : CodeGenerator {
 
     method getMethodRefReference(target:IRNode?, m:MethodDecl,
             out:IndentedOutputStream):String {
-        def methodObjectType := Type.Method()
+        def methodObjectType:Type
+        if compiler.isImmutable(m.owner) {
+            methodObjectType := Type.Method()
+        }
+        else {
+            methodObjectType := Type.MutableMethod()
+        }
         def methodClass := compiler.getClass(methodObjectType)
         def cc := getClassConstant(methodClass)
         def result := nextVar()
@@ -1337,7 +1347,7 @@ class CCodeGenerator : CodeGenerator {
                 return getDynamicCallReference(m, args, out)
             when IRNode.INT(_, _, value):
                 return getIntReference(value, out)
-            when IRNode.METHOD_REFERENCE(_, target, mref):
+            when IRNode.METHOD_REFERENCE(_, _, target, mref):
                 return getMethodRefReference(target, mref.value, out)
             when IRNode.NEGATED_INT(_, _, value):
                 return getNegatedIntReference(value, out)

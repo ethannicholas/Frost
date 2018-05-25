@@ -16,14 +16,7 @@ class Console {
 
     @class
     @external
-    method write(c:Char8)
-
-    @class
-    method print(s:String) {
-        for i in 0 .. s._length {
-            Console.write(s.data[i])
-        }
-    }
+    method print(s:String)
 
     @class
     method printLine(s:String) {

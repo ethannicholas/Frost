@@ -5,17 +5,17 @@ uses org.pandalanguage.pandac.parser.Token
 
 @final
 class Compiler {
-    class CompilerErrorReporter : ErrorReporter {
-        @weak
-        def compiler:Compiler
+    class Error : Immutable {
+        def file:File
 
-        init(compiler:Compiler) {
-            self.compiler := compiler
-        }
+        def position:Position
 
-        @override
-        method error(file:File, pos:Position, msg:String) {
-            compiler.error(file, pos, msg)
+        def message:String
+
+        init(file:File, position:Position, message:String) {
+            self.file := file
+            self.position := position
+            self.message := message
         }
     }
 
@@ -99,6 +99,9 @@ class Compiler {
     def codeGenerator:CodeGenerator
 
     @private
+    def errorQueue:MessageQueue<Error>
+
+    @private
     def loops := Stack<String?>()
 
     @private
@@ -125,14 +128,14 @@ class Compiler {
     @private
     var atPreSetupStatements:Array<IRNode>?
 
-    init(codeGenerator:CodeGenerator, settings:Settings) {
+    init(errorQueue:MessageQueue<Error>, codeGenerator:CodeGenerator, settings:Settings) {
         self.settings := settings
         self.scanner := Scanner(self)
         self.root := SymbolTable(self)
-        def errorReporter := CompilerErrorReporter(self)
-        self.parser := Parser(errorReporter)
+        self.parser := Parser(errorQueue)
         self.symbolTable := root
         self.codeGenerator := codeGenerator
+        self.errorQueue := errorQueue
         codeGenerator.setCompiler(self)
         root.add(Type("builtin_bit", Type.Kind.BUILTIN_BIT, 1))
         root.add(Type.BuiltinInt8())
@@ -379,7 +382,8 @@ class Compiler {
                     }
                 }
                 return result
-            when Type.Kind.METHOD, Type.Kind.FUNCTION:
+            when Type.Kind.METHOD, Type.Kind.FUNCTION, Type.Kind.IMMUTABLE_METHOD,
+                    Type.Kind.IMMUTABLE_FUNCTION:
                 def params := Array<Type>()
                 for i in 0 .. type.subtypes.get_count() - 1 {
                     def resolved := resolve(type.subtypes[i])
@@ -486,9 +490,15 @@ class Compiler {
         def old := symbolTable
         symbolTable := m.owner.symbolTable
         for p in m.parameters {
-            p.type := resolve(p.type)
+            def resolved := resolve(p.type)
+            if resolved != null {
+                p.type := resolved
+            }
         }
-        m.returnType := resolve(m.returnType)
+        def resolved := resolve(m.returnType)
+        if resolved != null {
+            m.returnType := resolved
+        }
         m.resolved := true
         if !m.owner.external {
             def overridden := getOverriddenMethod(m)
@@ -621,6 +631,9 @@ class Compiler {
         if expr = null {
             return null
         }
+        if expr.type() = Type.Void() {
+            return expr
+        }
         match expr {
             when IRNode.UNRESOLVED_IDENTIFIER(position, _):
                 error(position, "unknown identifier")
@@ -645,6 +658,31 @@ class Compiler {
     method isValue(cl:ClassDecl):Bit {
         resolve(cl)
         return cl.rawSuper != null & cl.rawSuper.name = "panda.core.Value"
+    }
+
+    method isImmutable(cl:ClassDecl):Bit {
+        resolve(cl)
+        var current := cl.type()
+        loop {
+            if current = null {
+                return false
+            }
+            if current.name = "panda.core.Immutable" {
+                return true
+            }
+            def superclass := getClass(current)
+            if superclass = null {
+                return false
+            }
+            current := superclass.rawSuper
+        }
+    }
+
+    method isImmutable(t:Type):Bit {
+        if !t.isClass() {
+            return true
+        }
+        return isImmutable(getClass(t))
     }
 
     method instanceFields(cl:ClassDecl):ListView<FieldDecl> {
@@ -792,6 +830,8 @@ class Compiler {
             when Type.Kind.GENERIC_PARAMETER:
                 return getClass(type.parameter.bound)
             when Type.Kind.METHOD, Type.Kind.FUNCTION:
+                return getClass(Type.MutableMethod())
+            when Type.Kind.IMMUTABLE_METHOD, Type.Kind.IMMUTABLE_FUNCTION:
                 return getClass(Type.Method())
             otherwise:
                 assert false, "type '\{type}' is not a class"
@@ -999,7 +1039,8 @@ class Compiler {
             addInheritedMethods(p, name, methods, types)
         }
         if methods.get_count() = 1 {
-            return IRNode.METHOD_REFERENCE(position, target, methods[0])
+            return IRNode.METHOD_REFERENCE(position, effectiveMethodType(target, methods[0]),
+                    target, methods[0])
         }
         else {
             return IRNode.UNRESOLVED_METHOD_REFERENCE(position, target, methods.finish())
@@ -1248,15 +1289,53 @@ class Compiler {
         }
         if type.isMethod() {
             if target.isMethod() {
-                var total := 0
-                if type.typeKind = Type.Kind.METHOD & target.typeKind = Type.Kind.FUNCTION {
-                    return null
-                }
-                if type.typeKind = Type.Kind.FUNCTION & target.typeKind = Type.Kind.METHOD {
-                    total += 1
-                }
                 if type.subtypes.get_count() != target.subtypes.get_count() {
                     return null
+                }
+                var total := 0
+                def srcFunction:Bit
+                def srcMutable:Bit
+                match type.typeKind {
+                    when Type.Kind.METHOD:
+                        srcFunction := false
+                        srcMutable := true
+                    when Type.Kind.FUNCTION:
+                        srcFunction := true
+                        srcMutable := true
+                    when Type.Kind.IMMUTABLE_METHOD:
+                        srcFunction := false
+                        srcMutable := false
+                    when Type.Kind.IMMUTABLE_FUNCTION:
+                        srcFunction := true
+                        srcMutable := false
+                }
+                def targetFunction:Bit
+                def targetMutable:Bit
+                match target.typeKind {
+                    when Type.Kind.METHOD:
+                        targetFunction := false
+                        targetMutable := true
+                    when Type.Kind.FUNCTION:
+                        targetFunction := true
+                        targetMutable := true
+                    when Type.Kind.IMMUTABLE_METHOD:
+                        targetFunction := false
+                        targetMutable := false
+                    when Type.Kind.IMMUTABLE_FUNCTION:
+                        targetFunction := true
+                        targetMutable := false
+                }
+                if targetFunction & !srcFunction {
+                    return null
+                }
+                if !targetMutable & srcMutable {
+                    return null
+                }
+                if targetFunction != srcFunction {
+                    total += 1
+                }
+                if targetMutable != srcMutable {
+                    total += 1
                 }
                 for i in 0 .. type.subtypes.get_count() {
                     if type.subtypes[i] != target.subtypes[i] {
@@ -1271,7 +1350,14 @@ class Compiler {
                 }
                 return total
             }
-            return coercionCost(Type.Method(), target)
+            if type.typeKind = Type.Kind.IMMUTABLE_METHOD |
+                    type.typeKind = Type.Kind.IMMUTABLE_FUNCTION {
+                def result := coercionCost(Type.Method(), target)
+                if result != null {
+                    return result
+                }
+            }
+            return coercionCost(Type.MutableMethod(), target)
         }
         match target.typeKind {
             when Type.Kind.NULLABLE:
@@ -1355,7 +1441,6 @@ class Compiler {
     }
 
     @private
-    @class
     function effectiveMethodType(target:IRNode?, owner:ClassDecl, isClass:Bit,
             methodType:Type):Type {
         var result := methodType
@@ -1366,15 +1451,30 @@ class Compiler {
             result := Type.methodType(result.position, result.typeKind, params,
                     result.subtypes[result.subtypes.get_count() - 1])
         }
+        -- if we have a mutable target, we need to mark the method mutable
+        if target != null & (result.typeKind = Type.Kind.IMMUTABLE_METHOD |
+                result.typeKind = Type.Kind.IMMUTABLE_FUNCTION) {
+            def cl := getClass(target.type())
+            if cl != null & !isImmutable(cl) {
+                def typeKind:Type.Kind
+                if result.typeKind = Type.Kind.IMMUTABLE_METHOD {
+                    typeKind := Type.Kind.METHOD
+                }
+                else {
+                    typeKind := Type.Kind.FUNCTION
+                }
+                result := Type.methodType(result.position, typeKind,
+                        result.subtypes[0 .. result.subtypes.get_count() - 1],
+                        result.subtypes[result.subtypes.get_count() - 1])
+            }
+        }
         return result
     }
 
-    @class
     function effectiveMethodType(target:IRNode?, m:MethodRef):Type {
         return effectiveMethodType(target, m.value.owner, m.value.annotations.isClass(), m.type())
     }
 
-    @class
     function effectiveMethodType(target:IRNode?, m:MethodDecl):Type {
         return effectiveMethodType(target, m.owner, m.annotations.isClass(), m.type())
     }
@@ -1593,6 +1693,7 @@ class Compiler {
         return null
     }
 
+    @pre(target != Type.Void())
     @post(@return = null | @return.type() = target)
     function coerce(expr:IRNode?, target:Type):IRNode? {
         if expr = null {
@@ -1692,7 +1793,7 @@ class Compiler {
             when IRNode.UNRESOLVED_RANGE(_, start, end, inclusive, step):
                 if target.isRange() {
                     if step != null {
-                        error(expr.position(), "expected '\{target}', but found1 '\{expr}'")
+                        error(expr.position(), "expected '\{target}', but found '\{expr}'")
                         return null
                     }
                     assert target.typeKind = Type.Kind.GENERIC
@@ -1846,6 +1947,7 @@ class Compiler {
         return result
     }
 
+    @post(@return.type() = target)
     method methodCast(node:IRNode, target:Type):IRNode {
         match node {
             when IRNode.UNRESOLVED_METHOD_REFERENCE(position, targetNode, methods):
@@ -1866,8 +1968,9 @@ class Compiler {
                     }
                 }
                 if best.get_count() = 1 {
-                    return methodCast(IRNode.METHOD_REFERENCE(position, targetNode, best[0]),
-                            target)
+                    return methodCast(IRNode.METHOD_REFERENCE(position,
+                            effectiveMethodType(targetNode, best[0].value),
+                            targetNode, best[0]), target)
                 }
                 Console.printLine("no or ambiguous match on method call (\{position}, " +
                         "\{methods[0].value.name}, \{best})")
@@ -1878,7 +1981,18 @@ class Compiler {
         if src = target {
             return node
         }
-        assert src.subtypes.get_count() = target.subtypes.get_count()
+        assert src.subtypes.get_count() = target.subtypes.get_count(),
+                "signature mismatch between \{src} and \{target}"
+        var same := true
+        for i in 0 .. src.subtypes.get_count() {
+            if src.subtypes[i] != target.subtypes[i] {
+                same := false
+                break
+            }
+        }
+        if same {
+            return IRNode.CAST(position, node, target, false)
+        }
         -- FIXME need to reuse shims if possible
         def parameters := Array<MethodDecl.Parameter>(target.subtypes.get_count())
         def args := Array<ASTNode>()
@@ -1888,6 +2002,16 @@ class Compiler {
             args.add(ASTNode.BINARY(position, ASTNode.IDENTIFIER(position, name), Token.Kind.CAST,
                     ASTNode.IR_WRAPPER(IRNode.TYPE_REFERENCE(position, src.subtypes[i]))))
         }
+        def methodClassType:Type
+        if target.typeKind = Type.Kind.IMMUTABLE_METHOD |
+                target.typeKind = Type.Kind.IMMUTABLE_FUNCTION {
+            methodClassType := Type.Method()
+        }
+        else {
+            methodClassType := Type.MutableMethod()
+        }
+        def methodClass := getClass(methodClassType)
+        assert methodClass != null
         def body := Array<ASTNode>()
         -- def methodVar := pointer-><src type>
         def methodPointer := ASTNode.IDENTIFIER(position, "pointer")
@@ -1906,7 +2030,7 @@ class Compiler {
         -- methodVar->Method.target := self.target
         def methodVarTarget := ASTNode.DOT(position,
                 ASTNode.BINARY(position, methodVar, Token.Kind.CAST,
-                    ASTNode.IR_WRAPPER(IRNode.TYPE_REFERENCE(position, Type.Method()))),
+                    ASTNode.IR_WRAPPER(IRNode.TYPE_REFERENCE(position, methodClassType))),
                 "target")
         def selfTarget := ASTNode.DOT(position, ASTNode.SELF(position), "target")
         body.add(ASTNode.BINARY(position, methodVarTarget, Token.Kind.ASSIGNMENT, selfTarget))
@@ -1921,13 +2045,11 @@ class Compiler {
         else {
             body.add(call)
         }
-        def methodClass := getClass("panda.core.Method")
-        assert methodClass != null
         def kind:MethodDecl.Kind
         match target.typeKind {
-            when Type.Kind.FUNCTION:
+            when Type.Kind.FUNCTION, Type.Kind.IMMUTABLE_FUNCTION:
                 kind := MethodDecl.Kind.FUNCTION
-            when Type.Kind.METHOD:
+            when Type.Kind.METHOD, Type.Kind.IMMUTABLE_METHOD:
                 kind := MethodDecl.Kind.METHOD
             otherwise:
                 assert false
@@ -1938,7 +2060,7 @@ class Compiler {
         currentClass.push(methodClass)
         compile(shim)
         currentClass.pop(methodClass)
-        return IRNode.METHOD_REFERENCE(position, node, MethodRef(shim, Array<Type>())) -- FIXME literal
+        return IRNode.METHOD_REFERENCE(position, target, node, MethodRef(shim, Array<Type>())) -- FIXME literal
     }
 
     -- FIXME figure out how to handle list comparisons
@@ -2072,7 +2194,6 @@ class Compiler {
         if m.parameterCount() != args.get_count() {
             error(position, "\{m.value.declaration()} expected \{m.parameterCount()} argument" +
                     "\{m.parameterCount() = 1:|s}, but received \{args.get_count()}")
-            System.crash()
             return null
         }
         def finalArgs := Array<IRNode>()
@@ -2094,12 +2215,12 @@ class Compiler {
                 error(position, "'init' may only be called on 'self' or 'super'")
             }
         }
-        else if m.value.isInstance() & target = null {
+        else if m.value.isInstance() & (target = null | target = IRNode.TYPE_REFERENCE) {
             var selfNode := IRNode.SELF(position, currentClass[0].type())
             selfNode := coerce(selfNode, m.value.owner.type())
             assert selfNode != null
             finalArgs.add(selfNode)
-            if !currentMethod[0].isInstance() {
+            if !currentMethod[0].isInstance() | target != null {
                 error(position, "cannot call instance \{m.value.declaration()} from a @class context")
             }
         }
@@ -2280,7 +2401,7 @@ class Compiler {
 
     method call(m:IRNode, args:ListView<IRNode>, expectedType:Type?):IRNode? {
         match m {
-            when IRNode.METHOD_REFERENCE(_, target, mref):
+            when IRNode.METHOD_REFERENCE(_, _, target, mref):
                 return call(m.position(), target, mref, args)
             when IRNode.UNRESOLVED_METHOD_REFERENCE(_, target, mrefs):
                 def methods := Array<MethodRef>(mrefs)
@@ -2366,7 +2487,9 @@ class Compiler {
                     return null
                 }
                 def t := m.type()
-                if t.typeKind = Type.Kind.METHOD | t.typeKind = Type.Kind.FUNCTION {
+                if t.typeKind = Type.Kind.METHOD | t.typeKind = Type.Kind.FUNCTION |
+                        t.typeKind = Type.Kind.IMMUTABLE_METHOD |
+                        t.typeKind = Type.Kind.IMMUTABLE_FUNCTION {
                     def expected := t.subtypes.get_count() - 1
                     def actual := args.get_count()
                     if expected != actual {
@@ -3122,7 +3245,7 @@ class Compiler {
                 if m != null {
                     resolve(m)
                     def ref := MethodRef(m, typeParameters(base))
-                    def methodRef := IRNode.METHOD_REFERENCE(position, base, ref)
+                    def methodRef := IRNode.METHOD_REFERENCE(position, ref.type(), base, ref)
                     def args := Array<IRNode>() -- FIXME literal
                     return call(methodRef, args)
                 }
@@ -4624,6 +4747,18 @@ class Compiler {
         }
     }
 
+    method checkImmutable(cl:ClassDecl) {
+        if isImmutable(cl) {
+            for f in cl.fields {
+                resolve(f)
+                if !isImmutable(f.type) {
+                    error(f.position, "immutable class '\{cl.name}' cannot contain mutable field " +
+                            "'\{f.name}' of type '\{f.type}'")
+                }
+            }
+        }
+    }
+
     method compile(cl:ClassDecl) {
         assert compiling = null,
                 "starting compilation of \{cl.name} while already compiling \{compiling.name}"
@@ -4637,6 +4772,7 @@ class Compiler {
         }
         def old := symbolTable
         symbolTable := getSymbolTable(cl)
+        checkImmutable(cl)
         checkInterfaceMethods()
         var started := false
         if errorCount = 0 {
@@ -4693,7 +4829,7 @@ class Compiler {
     method error(file:File, pos:Position, msg:String) {
         if reportErrors {
             errorCount += 1
-            Console.printLine("\{file.name()}:\{pos}: error: \{msg}")
+            errorQueue.post(Error(file, pos, msg))
         }
     }
 

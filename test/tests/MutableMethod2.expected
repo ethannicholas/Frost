@@ -1,0 +1,2 @@
+MutableMethod2.panda:18:50: error: expected '(panda.core.String)=&>*()', but found '(panda.core.String)=&>()'
+1 error

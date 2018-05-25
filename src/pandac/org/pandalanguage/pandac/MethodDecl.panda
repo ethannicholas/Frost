@@ -102,10 +102,10 @@ class MethodDecl : Symbol {
         }
         def kind:Type.Kind
         if methodKind = Kind.FUNCTION {
-            kind := Type.Kind.FUNCTION
+            kind := Type.Kind.IMMUTABLE_FUNCTION
         }
-        else {
-            kind := Type.Kind.METHOD
+         else {
+            kind := Type.Kind.IMMUTABLE_METHOD
         }
         return Type.methodType(position, kind, paramTypes, returnType)
     }

@@ -17,7 +17,7 @@ typedef struct org$pandalanguage$pandac$Annotations {
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"
 #undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[15]; } org$pandalanguage$pandac$Annotations$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[16]; } org$pandalanguage$pandac$Annotations$class_type;
 extern org$pandalanguage$pandac$Annotations$class_type org$pandalanguage$pandac$Annotations$class;
 
 #ifndef PANDA_TYPESONLY
@@ -43,6 +43,7 @@ panda$core$Bit org$pandalanguage$pandac$Annotations$isInline$R$panda$core$Bit(or
 panda$core$Bit org$pandalanguage$pandac$Annotations$isSpecialize$R$panda$core$Bit(org$pandalanguage$pandac$Annotations* self);
 panda$core$Bit org$pandalanguage$pandac$Annotations$isWeak$R$panda$core$Bit(org$pandalanguage$pandac$Annotations* self);
 panda$core$Bit org$pandalanguage$pandac$Annotations$isSynthetic$R$panda$core$Bit(org$pandalanguage$pandac$Annotations* self);
+panda$core$Bit org$pandalanguage$pandac$Annotations$isUnsafeImmutable$R$panda$core$Bit(org$pandalanguage$pandac$Annotations* self);
 panda$core$String* org$pandalanguage$pandac$Annotations$convert$R$panda$core$String(org$pandalanguage$pandac$Annotations* self);
 void org$pandalanguage$pandac$Annotations$cleanup(org$pandalanguage$pandac$Annotations* self);
 

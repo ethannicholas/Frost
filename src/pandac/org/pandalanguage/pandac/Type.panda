@@ -189,6 +189,11 @@ class Type : Symbol, Key<Type> {
     }
 
     @class
+    method Immutable():Type {
+        return Type("panda.core.Immutable", Kind.CLASS, Position(), true)
+    }
+
+    @class
     method Value():Type {
         return Type("panda.core.Value", Kind.CLASS, Position(), true)
     }
@@ -361,6 +366,11 @@ class Type : Symbol, Key<Type> {
     @class
     method Method():Type {
         return Type("panda.core.Method", Kind.CLASS, Position(), true)
+    }
+
+    @class
+    method MutableMethod():Type {
+        return Type("panda.core.MutableMethod", Kind.CLASS, Position(), true)
     }
 
     @class

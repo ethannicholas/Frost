@@ -26,7 +26,7 @@ class Unicode {
         Console.printLine(s[s.offset(s.end(), -4)])
         Console.printLine(s.utf8().get_count())
         for c in s.utf8() {
-            Console.write(c)
+            Console.outputStream().write(c.convert()->Int8)
         }
         Console.printLine()
         for c in s.utf8() {

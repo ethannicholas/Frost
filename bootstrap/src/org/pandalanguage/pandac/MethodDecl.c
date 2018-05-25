@@ -346,13 +346,13 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$MethodDecl$type$R$org$pa
         panda$core$Bit $tmp120 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(self->methodKind.$rawValue, ((panda$core$Int64) { 1 }));
         if ($tmp120.value) {
         {
-            org$pandalanguage$pandac$Type$Kind$init$panda$core$Int64(&$tmp121, ((panda$core$Int64) { 14 }));
+            org$pandalanguage$pandac$Type$Kind$init$panda$core$Int64(&$tmp121, ((panda$core$Int64) { 16 }));
             kind119 = $tmp121;
         }
         }
         else {
         {
-            org$pandalanguage$pandac$Type$Kind$init$panda$core$Int64(&$tmp122, ((panda$core$Int64) { 15 }));
+            org$pandalanguage$pandac$Type$Kind$init$panda$core$Int64(&$tmp122, ((panda$core$Int64) { 17 }));
             kind119 = $tmp122;
         }
         }

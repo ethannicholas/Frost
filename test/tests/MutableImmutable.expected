@@ -1,0 +1,2 @@
+MutableImmutable.panda:4:9: error: immutable class 'anonymous.MutableImmutable' cannot contain mutable field 'm' of type 'panda.core.MutableString'
+1 error

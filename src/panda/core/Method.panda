@@ -2,7 +2,7 @@ package panda.core
 
 uses panda.unsafe.Pointer
 
-class Method {
+class Method : Immutable {
     ================================================================================================
     Pointer to the actual method code. This pointer can be called directly at the C level.
 
@@ -28,10 +28,10 @@ class Method {
     Object on which the method is being invoked.
     ================================================================================================
     @private
-    def target:Object?
+    def target:Immutable?
 
     @private
-    init(pointer:Pointer<Int8>, target:Object?) {
+    init(pointer:Pointer<Int8>, target:Immutable?) {
         self.pointer := pointer
         self.target := target
     }

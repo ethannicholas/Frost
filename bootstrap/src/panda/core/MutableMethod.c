@@ -1,36 +1,35 @@
-#include "panda/core/Method.h"
-#include "panda/core/Immutable.h"
+#include "panda/core/MutableMethod.h"
+#include "panda/core/Object.h"
 #include "panda/core/Class.h"
 #include "panda/core/String.h"
 #include "panda/core/Panda.h"
-#include "panda/core/Object.h"
 
 
 static panda$core$String $s1;
-panda$core$Method$class_type panda$core$Method$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Immutable$class, NULL, { panda$core$Method$convert$R$panda$core$String, panda$core$Method$cleanup} };
+panda$core$MutableMethod$class_type panda$core$MutableMethod$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, NULL, { panda$core$MutableMethod$convert$R$panda$core$String, panda$core$MutableMethod$cleanup} };
 
 
-static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x4d\x65\x74\x68\x6f\x64", 17, -1766462995282165597, NULL };
-static panda$core$String $s10 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x4d\x65\x74\x68\x6f\x64\x3c", 7, 190024286257870, NULL };
+static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x4d\x75\x74\x61\x62\x6c\x65\x4d\x65\x74\x68\x6f\x64", 24, -1180377256514028899, NULL };
+static panda$core$String $s10 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x49\x6d\x6d\x75\x74\x61\x62\x6c\x65\x4d\x65\x74\x68\x6f\x64\x3c", 16, 1863085619830966870, NULL };
 static panda$core$String $s14 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2c\x20", 2, 14677, NULL };
 static panda$core$String $s17 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x3e", 1, 163, NULL };
-static panda$core$String $s23 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x4d\x65\x74\x68\x6f\x64\x3c", 7, 190024286257870, NULL };
+static panda$core$String $s23 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x49\x6d\x6d\x75\x74\x61\x62\x6c\x65\x4d\x65\x74\x68\x6f\x64\x3c", 16, 1863085619830966870, NULL };
 static panda$core$String $s27 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x3e", 1, 163, NULL };
 
-void panda$core$Method$init$panda$unsafe$Pointer$LTpanda$core$Int8$GT$panda$core$Immutable$Q(panda$core$Method* self, panda$core$Int8* p_pointer, panda$core$Immutable* p_target) {
-    panda$core$Immutable* $tmp2;
-    panda$core$Immutable* $tmp3;
+void panda$core$MutableMethod$init$panda$unsafe$Pointer$LTpanda$core$Int8$GT$panda$core$Object$Q(panda$core$MutableMethod* self, panda$core$Int8* p_pointer, panda$core$Object* p_target) {
+    panda$core$Object* $tmp2;
+    panda$core$Object* $tmp3;
     self->target = NULL;
     self->pointer = p_pointer;
     {
         $tmp2 = self->target;
         $tmp3 = p_target;
         self->target = $tmp3;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp3));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2));
+        panda$core$Panda$ref$panda$core$Object($tmp3);
+        panda$core$Panda$unref$panda$core$Object($tmp2);
     }
 }
-panda$core$String* panda$core$Method$convert$R$panda$core$String(panda$core$Method* self) {
+panda$core$String* panda$core$MutableMethod$convert$R$panda$core$String(panda$core$MutableMethod* self) {
     panda$core$String* $returnValue4;
     panda$core$String* $tmp5;
     panda$core$String* $tmp6;
@@ -50,7 +49,7 @@ panda$core$String* panda$core$Method$convert$R$panda$core$String(panda$core$Meth
         $tmp9 = $tmp13;
         panda$core$String* $tmp15 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp9, &$s14);
         $tmp8 = $tmp15;
-        panda$core$String* $tmp16 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp8, ((panda$core$Object*) self->target));
+        panda$core$String* $tmp16 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp8, self->target);
         $tmp7 = $tmp16;
         panda$core$String* $tmp18 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp7, &$s17);
         $tmp6 = $tmp18;
@@ -79,19 +78,19 @@ panda$core$String* panda$core$Method$convert$R$panda$core$String(panda$core$Meth
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp24));
     return $returnValue4;
 }
-void panda$core$Method$cleanup(panda$core$Method* self) {
+void panda$core$MutableMethod$cleanup(panda$core$MutableMethod* self) {
     int $tmp32;
     {
     }
     $tmp32 = -1;
     goto $l30;
     $l30:;
-    panda$core$Immutable$cleanup(((panda$core$Immutable*) self));
+    panda$core$Object$cleanup(((panda$core$Object*) self));
     switch ($tmp32) {
         case -1: goto $l33;
     }
     $l33:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->target));
+    panda$core$Panda$unref$panda$core$Object(self->target);
 }
 
 

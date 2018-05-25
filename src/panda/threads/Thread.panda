@@ -29,7 +29,7 @@ class Thread : Immutable {
 
     @private
     @external
-    method run(m:()=&>(), preventsExit:builtin_bit) -- FIXME ()=&>*()
+    method run(m:()=&>*(), preventsExit:builtin_bit)
 
     ================================================================================================
     Creates and starts a new thread which executes the specified method. For example, to create a
@@ -45,14 +45,14 @@ class Thread : Immutable {
     @returns the newly created thread
     ================================================================================================
     @class
-    method start(run:()=&>()):Thread { -- FIXME ()=&>*()
+    method start(run:()=&>*()):Thread {
         def result := Thread()
         result.run(run, true)
         return result
     }
 
     @class
-    method start(run:()=&>(), preventsExit:Bit):Thread { -- FIXME ()=&>*()
+    method start(run:()=&>*(), preventsExit:Bit):Thread {
         var result := Thread()
         result.run(run, preventsExit.value)
         return result

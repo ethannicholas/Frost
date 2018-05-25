@@ -26,10 +26,12 @@ class Variable : Symbol {
 
     def initialValue:IRNode? := null
 
+    @pre(type != Type.Void())
     init(position:Position, kind:Kind, name:String, type:Type) {
         init(position, kind, name, type, Storage.LOCAL)
     }
 
+    @pre(type != Type.Void())
     init(position:Position, kind:Kind, name:String, type:Type, storage:Storage) {
         self.varKind := kind
         self.type := type

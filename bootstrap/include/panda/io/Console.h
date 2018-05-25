@@ -19,15 +19,14 @@ extern panda$io$Console$class_type panda$io$Console$class;
 #ifndef PANDA_TYPESONLY
 typedef struct panda$io$InputStream panda$io$InputStream;
 typedef struct panda$io$OutputStream panda$io$OutputStream;
-#include "panda/core/Char8.h"
 typedef struct panda$core$String panda$core$String;
 typedef struct panda$core$Object panda$core$Object;
+#include "panda/core/Char8.h"
 typedef struct panda$io$Console panda$io$Console;
 
 panda$io$InputStream* panda$io$Console$inputStream$R$panda$io$InputStream();
 panda$io$OutputStream* panda$io$Console$outputStream$R$panda$io$OutputStream();
 panda$io$OutputStream* panda$io$Console$errorStream$R$panda$io$OutputStream();
-void panda$io$Console$write$panda$core$Char8(panda$core$Char8 p_c);
 void panda$io$Console$print$panda$core$String(panda$core$String* p_s);
 void panda$io$Console$printLine$panda$core$String(panda$core$String* p_s);
 void panda$io$Console$print$panda$core$Object(panda$core$Object* p_o);

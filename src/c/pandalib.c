@@ -270,8 +270,9 @@ int main(int argc, char** argv) {
     // ensure all threads have exited
     pthread_mutex_lock(&preventsExitThreadsMutex);
     for (;;) {
-        if (preventsExitThreads == 0)
+        if (preventsExitThreads == 0) {
             break;
+        }
         pthread_cond_wait(&preventsExitThreadsVar, &preventsExitThreadsMutex);
     }
     panda$core$Panda$unref$panda$core$Object((Object*) args);
@@ -528,6 +529,10 @@ void panda$threads$Thread$run$$LP$RP$EQ$AM$GT$LP$RP$builtin_bit(Object* thread, 
     pthread_create(&threadId, NULL, (void* (*)()) &pandaThreadEntry, threadInfo);
 }
 
+void panda$threads$Thread$sleep$panda$core$Int64(int64_t millis) {
+    usleep(millis * 1000);
+}
+
 // Lock
 
 void panda$threads$Lock$create(Lock* lock) {
@@ -576,6 +581,10 @@ void panda$threads$Notifier$destroy(Notifier* notifier) {
 
 void panda$io$Console$write$panda$core$Char8(char ch) {
     putchar(ch);
+}
+
+void panda$io$Console$print$panda$core$String(String* s) {
+    fwrite(s->data, 1, s->size, stdout);
 }
 
 void panda$io$Console$read$R$panda$core$Char8$Q(NullableChar* result) {

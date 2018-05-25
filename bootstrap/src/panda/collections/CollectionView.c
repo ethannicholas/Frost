@@ -3,7 +3,7 @@
 #include "panda/core/Class.h"
 #include "panda/core/String.h"
 #include "panda/collections/Iterable.h"
-#include "panda/core/Method.h"
+#include "panda/core/MutableMethod.h"
 #include "panda/collections/Array.h"
 #include "panda/core/Panda.h"
 #include "panda/collections/Iterator.h"
@@ -43,7 +43,7 @@ typedef void (*$fn168)(panda$core$Object*);
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x43\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x56\x69\x65\x77", 32, 608517271074877699, NULL };
 
-panda$collections$CollectionView* panda$collections$CollectionView$filter$$LPpanda$collections$CollectionView$T$RP$EQ$GT$LPpanda$core$Bit$RP$R$panda$collections$CollectionView$LTpanda$collections$CollectionView$T$GT(panda$collections$CollectionView* self, panda$core$Method* p_predicate) {
+panda$collections$CollectionView* panda$collections$CollectionView$filter$$LPpanda$collections$CollectionView$T$RP$EQ$GT$LPpanda$core$Bit$RP$R$panda$collections$CollectionView$LTpanda$collections$CollectionView$T$GT(panda$collections$CollectionView* self, panda$core$MutableMethod* p_predicate) {
     panda$collections$Array* result5 = NULL;
     panda$collections$Array* $tmp6;
     panda$collections$Array* $tmp7;
@@ -153,7 +153,7 @@ panda$collections$CollectionView* panda$collections$CollectionView$filter$$LPpan
     }
     $l46:;
 }
-panda$core$Object* panda$collections$CollectionView$fold$$LPpanda$collections$CollectionView$T$Cpanda$collections$CollectionView$T$RP$EQ$GT$LPpanda$collections$CollectionView$T$RP$R$panda$collections$CollectionView$T(panda$collections$CollectionView* self, panda$core$Method* p_f) {
+panda$core$Object* panda$collections$CollectionView$fold$$LPpanda$collections$CollectionView$T$Cpanda$collections$CollectionView$T$RP$EQ$GT$LPpanda$collections$CollectionView$T$RP$R$panda$collections$CollectionView$T(panda$collections$CollectionView* self, panda$core$MutableMethod* p_f) {
     panda$collections$Iterator* i55 = NULL;
     panda$collections$Iterator* $tmp56;
     panda$collections$Iterator* $tmp57;
@@ -253,7 +253,7 @@ panda$core$Object* panda$collections$CollectionView$fold$$LPpanda$collections$Co
     }
     $l92:;
 }
-panda$core$Object* panda$collections$CollectionView$fold$$LPpanda$collections$CollectionView$T$Cpanda$collections$CollectionView$T$RP$EQ$GT$LPpanda$collections$CollectionView$T$RP$panda$collections$CollectionView$T$R$panda$collections$CollectionView$T(panda$collections$CollectionView* self, panda$core$Method* p_f, panda$core$Object* p_start) {
+panda$core$Object* panda$collections$CollectionView$fold$$LPpanda$collections$CollectionView$T$Cpanda$collections$CollectionView$T$RP$EQ$GT$LPpanda$collections$CollectionView$T$RP$panda$collections$CollectionView$T$R$panda$collections$CollectionView$T(panda$collections$CollectionView* self, panda$core$MutableMethod* p_f, panda$core$Object* p_start) {
     panda$core$Object* result96 = NULL;
     panda$core$Object* $tmp97;
     panda$collections$Iterator* Iter$30$9101 = NULL;
@@ -365,7 +365,7 @@ panda$core$Object* panda$collections$CollectionView$fold$$LPpanda$collections$Co
     }
     $l138:;
 }
-void panda$collections$CollectionView$apply$$LPpanda$collections$CollectionView$T$RP$EQ$AM$GT$LP$RP(panda$collections$CollectionView* self, panda$core$Method* p_m) {
+void panda$collections$CollectionView$apply$$LPpanda$collections$CollectionView$T$RP$EQ$AM$GT$LP$RP(panda$collections$CollectionView* self, panda$core$MutableMethod* p_m) {
     panda$collections$Iterator* Iter$37$9142 = NULL;
     panda$collections$Iterator* $tmp143;
     panda$collections$Iterator* $tmp144;

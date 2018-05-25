@@ -1,0 +1,41 @@
+package panda.core
+
+uses panda.unsafe.Pointer
+
+====================================================================================================
+Represents a method or function with a mutable context at runtime. The "context" of a method in this
+sense consists of any values captured by the method reference; if any of them are mutable, the
+method reference itself is mutable. For example, the code:
+
+    def text := MutableString()
+    def append:(String)=>() := text.append
+
+results in a `MutableMethod` object, as it implicitly captures a reference to the mutable
+object `text`. On the other hand,
+
+    def append:(MutableString, String)=>() := MutableString.append
+
+does *not* result in a mutable method reference. Even though the method itself comes from a mutable
+class, the reference does not capture anything and so does not itself carry any mutable state.
+====================================================================================================
+class MutableMethod {
+    @private
+    def pointer:Pointer<Int8>
+
+    @private
+    def target:Object?
+
+    @private
+    init(pointer:Pointer<Int8>, target:Object?) {
+        self.pointer := pointer
+        self.target := target
+    }
+
+    @override
+    function convert():String {
+        if target != null {
+            return "ImmutableMethod<\{Panda.pointerConvert(pointer->Pointer<Object?>)}, \{target}>"
+        }
+        return "ImmutableMethod<\{Panda.pointerConvert(pointer->Pointer<Object?>)}>"
+    }
+}

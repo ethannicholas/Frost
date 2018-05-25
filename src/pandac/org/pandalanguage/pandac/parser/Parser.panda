@@ -2,6 +2,7 @@ package org.pandalanguage.pandac.parser
 
 uses org.pandalanguage.pandac.ASTNode
 uses org.pandalanguage.pandac.ClassDecl -- FIXME should be able to import ClassDecl.Kind directly
+uses org.pandalanguage.pandac.Compiler
 uses org.pandalanguage.pandac.ErrorReporter
 uses org.pandalanguage.pandac.MethodDecl -- FIXME should be able to import MethodDecl.Kind directly
 uses org.pandalanguage.pandac.Position
@@ -11,7 +12,7 @@ uses org.pandalanguage.pandac.Variable -- FIXME should be able to import Variabl
 class Parser {
     def lexer := Lexer()
 
-    def errors:ErrorReporter
+    def errors:MessageQueue<Compiler.Error>
 
     var path:File
 
@@ -25,7 +26,7 @@ class Parser {
 
     def speculativeBuffer := SpecializedArray<Token>()
 
-    init(errors:ErrorReporter) {
+    init(errors:MessageQueue<Compiler.Error>) {
         self.errors := errors
         commaSeparatedExpressionContext.push(false)
     }
@@ -117,7 +118,7 @@ class Parser {
 
     method error(token:Token, msg:String) {
         if !inSpeculative {
-            errors.error(path, token.position, msg)
+            errors.post(Compiler.Error(path, token.position, msg))
         }
     }
 
@@ -2203,12 +2204,5 @@ class Parser {
             entries.add(entry)
         }
         return ASTNode.FILE(entries.finish())
-    }
-
-    class Errors : ErrorReporter {
-        @override
-        method error(file:File, pos:Position, msg:String) {
-            Console.printLine("\{pos}: \{msg}")
-        }
     }
 }

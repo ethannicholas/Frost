@@ -1,0 +1,19 @@
+class MutableMethod {
+    method test(s:String) {
+        Console.printLine("Test: \{s}")
+    }
+
+    @class
+    method main() {
+        def m1:(MutableMethod, String)=&>*() := test
+        m1(MutableMethod(), "1")
+        def m2:(MutableMethod, String)=&>() := test
+        m2(MutableMethod(), "2")
+        def m3:(MutableMethod, String)=&>*() := MutableMethod.test
+        m3(MutableMethod(), "3")
+        def m4:(MutableMethod, String)=&>() := MutableMethod.test
+        m4(MutableMethod(), "4")
+        def m5:(String)=&>() := MutableMethod().test
+        m5("5")
+    }
+}

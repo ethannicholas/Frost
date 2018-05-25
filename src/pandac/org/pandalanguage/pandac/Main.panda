@@ -210,7 +210,7 @@ class Main {
         llc := llvmDir.resolve("bin/llc")
         gcc := File("/usr/bin/gcc")
         if sources.get_count() = 0 {
-            err.printLine("no input files specified")
+            err.printLine("no input files specified2")
             System.exit(1)
         }
         if format = null {
@@ -250,19 +250,24 @@ class Main {
                     assert false
             }
             def settings := Compiler.Settings(pandaHome, imports, optimizationLevel, safetyLevel)
-            def compiler := Compiler(cg, settings)
+            def errorQueue := MessageQueue<Compiler.Error>()
+            def compiler := Compiler(errorQueue, cg, settings)
             for s in sources {
                 for cl in compiler.scan(s) {
                     compiler.markNonExternal(cl)
                 }
             }
-            if compiler.errorCount = 0 {
+            if !errorQueue.hasMessage() {
                 for s in sources {
                     compiler.compile(s)
                 }
                 compiler.finish()
             }
-            errorCount := compiler.errorCount
+            errorCount := errorQueue.pendingMessages()
+            for i in 0 .. errorCount {
+                def error := errorQueue.getMessage()
+                Console.printLine("\{error.file.name()}:\{error.position}: error: \{error.message}")
+            }
         }
         if errorCount = 0 {
             match format {
@@ -286,14 +291,7 @@ class Main {
             System.exit(1)
         }
     }
-
-    class Errors : ErrorReporter {
-        @override
-        method error(file:File, pos:Position, msg:String) {
-            Console.printLine("error in \{file}:\{pos}: \{msg}")
-        }
-    }
-
+    
     @class
     method main(args:ListView<String>) {
         Main().run(args)

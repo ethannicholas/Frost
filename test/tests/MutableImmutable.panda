@@ -1,0 +1,5 @@
+class MutableImmutable : Immutable {
+    def s:String
+    def i:Int
+    def m:MutableString
+}

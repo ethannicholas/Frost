@@ -19,22 +19,22 @@ static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -
 static panda$core$String $s2 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x43\x43\x6f\x64\x65\x47\x65\x6e\x65\x72\x61\x74\x6f\x72\x2e\x4f\x70\x43\x6c\x61\x73\x73", 47, -2210284079518335582, NULL };
 
 void org$pandalanguage$pandac$CCodeGenerator$OpClass$cleanup(org$pandalanguage$pandac$CCodeGenerator$OpClass self) {
-    org$pandalanguage$pandac$CCodeGenerator$OpClass $match$635_53;
+    org$pandalanguage$pandac$CCodeGenerator$OpClass $match$639_53;
     {
-        $match$635_53 = self;
-        panda$core$Bit $tmp4 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$635_53.$rawValue, ((panda$core$Int64) { 0 }));
+        $match$639_53 = self;
+        panda$core$Bit $tmp4 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$639_53.$rawValue, ((panda$core$Int64) { 0 }));
         if ($tmp4.value) {
         {
         }
         }
         else {
-        panda$core$Bit $tmp5 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$635_53.$rawValue, ((panda$core$Int64) { 1 }));
+        panda$core$Bit $tmp5 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$639_53.$rawValue, ((panda$core$Int64) { 1 }));
         if ($tmp5.value) {
         {
         }
         }
         else {
-        panda$core$Bit $tmp6 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$635_53.$rawValue, ((panda$core$Int64) { 2 }));
+        panda$core$Bit $tmp6 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$639_53.$rawValue, ((panda$core$Int64) { 2 }));
         if ($tmp6.value) {
         {
         }

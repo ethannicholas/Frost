@@ -3,19 +3,20 @@ package org.pandalanguage.pandac
 @final
 class Annotations {
     class Flag {
-        constant PRIVATE    := 1 << 1
-        constant PROTECTED  := 1 << 2
-        constant PACKAGE    := 1 << 3
-        constant CLASS      := 1 << 4
-        constant OVERRIDE   := 1 << 5
-        constant EXTERNAL   := 1 << 6
-        constant IMPLICIT   := 1 << 7
-        constant FINAL      := 1 << 8
-        constant ABSTRACT   := 1 << 9
-        constant INLINE     := 1 << 10
-        constant SPECIALIZE := 1 << 11
-        constant WEAK       := 1 << 12
-        constant SYNTHETIC  := 1 << 13
+        constant PRIVATE          := 1 << 1
+        constant PROTECTED        := 1 << 2
+        constant PACKAGE          := 1 << 3
+        constant CLASS            := 1 << 4
+        constant OVERRIDE         := 1 << 5
+        constant EXTERNAL         := 1 << 6
+        constant IMPLICIT         := 1 << 7
+        constant FINAL            := 1 << 8
+        constant ABSTRACT         := 1 << 9
+        constant INLINE           := 1 << 10
+        constant SPECIALIZE       := 1 << 11
+        constant WEAK             := 1 << 12
+        constant SYNTHETIC        := 1 << 13
+        constant UNSAFE_IMMUTABLE := 1 << 14
     }
 
     choice Expression {
@@ -109,6 +110,10 @@ class Annotations {
         return flags && Flag.SYNTHETIC != 0
     }
 
+    function isUnsafeImmutable():Bit {
+        return flags && Flag.UNSAFE_IMMUTABLE != 0
+    }
+
     @override
     function convert():String {
         def result := MutableString()
@@ -150,6 +155,9 @@ class Annotations {
         }
         if isSynthetic() {
             result.append("@synthetic\n")
+        }
+        if isUnsafeImmutable() {
+            result.append("@unsafeImmutable\n")
         }
         if expressions != null {
             for expr in expressions {

@@ -1,0 +1,2 @@
+InstanceMethodOnClass2.panda:7:31: error: cannot call instance method anonymous.InstanceMethodOnClass2.fail() from a @class context
+1 error

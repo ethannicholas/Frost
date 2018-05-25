@@ -5,7 +5,7 @@
 typedef struct panda$core$Class panda$core$Class;
 #include "panda/core/Int32.h"
 typedef struct org$pandalanguage$pandac$parser$Lexer org$pandalanguage$pandac$parser$Lexer;
-typedef struct org$pandalanguage$pandac$ErrorReporter org$pandalanguage$pandac$ErrorReporter;
+typedef struct panda$threads$MessageQueue panda$threads$MessageQueue;
 typedef struct panda$io$File panda$io$File;
 typedef struct panda$core$String panda$core$String;
 typedef struct panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT;
@@ -16,7 +16,7 @@ typedef struct org$pandalanguage$pandac$parser$Parser {
     panda$core$Class* $class;
     panda$core$Int32 refCount;
     org$pandalanguage$pandac$parser$Lexer* lexer;
-    org$pandalanguage$pandac$ErrorReporter* errors;
+    panda$threads$MessageQueue* errors;
     panda$io$File* path;
     panda$core$String* source;
     panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT* pushbackBuffer;
@@ -32,7 +32,7 @@ extern org$pandalanguage$pandac$parser$Parser$class_type org$pandalanguage$panda
 
 #ifndef PANDA_TYPESONLY
 typedef struct org$pandalanguage$pandac$parser$Parser org$pandalanguage$pandac$parser$Parser;
-typedef struct org$pandalanguage$pandac$ErrorReporter org$pandalanguage$pandac$ErrorReporter;
+typedef struct panda$threads$MessageQueue panda$threads$MessageQueue;
 typedef struct panda$io$File panda$io$File;
 typedef struct panda$core$String panda$core$String;
 #include "org/pandalanguage/pandac/parser/Token.h"
@@ -41,7 +41,7 @@ typedef struct org$pandalanguage$pandac$ASTNode org$pandalanguage$pandac$ASTNode
 #include "panda/core/Bit.h"
 typedef struct panda$collections$ImmutableArray panda$collections$ImmutableArray;
 
-void org$pandalanguage$pandac$parser$Parser$init$org$pandalanguage$pandac$ErrorReporter(org$pandalanguage$pandac$parser$Parser* self, org$pandalanguage$pandac$ErrorReporter* p_errors);
+void org$pandalanguage$pandac$parser$Parser$init$panda$threads$MessageQueue$LTorg$pandalanguage$pandac$Compiler$Error$GT(org$pandalanguage$pandac$parser$Parser* self, panda$threads$MessageQueue* p_errors);
 void org$pandalanguage$pandac$parser$Parser$start$panda$io$File$panda$core$String(org$pandalanguage$pandac$parser$Parser* self, panda$io$File* p_path, panda$core$String* p_source);
 org$pandalanguage$pandac$parser$Token org$pandalanguage$pandac$parser$Parser$rawNext$R$org$pandalanguage$pandac$parser$Token(org$pandalanguage$pandac$parser$Parser* self);
 org$pandalanguage$pandac$parser$Token org$pandalanguage$pandac$parser$Parser$next$R$org$pandalanguage$pandac$parser$Token(org$pandalanguage$pandac$parser$Parser* self);

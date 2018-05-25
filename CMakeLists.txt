@@ -144,10 +144,9 @@ add_executable(bootstrap
     bootstrap/src/org/pandalanguage/pandac/CodeGenerator.c
     bootstrap/src/org/pandalanguage/pandac/Compiler.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/AutoSymbolTable.c
-    bootstrap/src/org/pandalanguage/pandac/Compiler/CompilerErrorReporter.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/CompileTargetResult.c
+    bootstrap/src/org/pandalanguage/pandac/Compiler/Error.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/Settings.c
-    bootstrap/src/org/pandalanguage/pandac/ErrorReporter.c
     bootstrap/src/org/pandalanguage/pandac/FieldDecl.c
     bootstrap/src/org/pandalanguage/pandac/FieldDecl/Kind.c
     bootstrap/src/org/pandalanguage/pandac/HCodeGenerator.c
@@ -239,6 +238,7 @@ set(core_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Int64.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Int8.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Method.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/MutableMethod.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/UInt16.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/UInt32.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/UInt64.panda
@@ -458,7 +458,6 @@ set(pandac_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/ClassDecl.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/CodeGenerator.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/Compiler.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/ErrorReporter.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/FieldDecl.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/HCodeGenerator.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/IRNode.panda

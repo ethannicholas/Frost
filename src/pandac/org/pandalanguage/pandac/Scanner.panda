@@ -43,6 +43,10 @@ class Scanner {
                         typeKind := Type.Kind.FUNCTION
                     when Token.Kind.YIELDS_METHOD:
                         typeKind := Type.Kind.METHOD
+                    when Token.Kind.YIELDS_IMMUTABLE:
+                        typeKind := Type.Kind.IMMUTABLE_FUNCTION
+                    when Token.Kind.YIELDS_METHOD_IMMUTABLE:
+                        typeKind := Type.Kind.IMMUTABLE_METHOD
                     otherwise:
                         assert false, "unsupported"
                 }
@@ -71,18 +75,19 @@ class Scanner {
                 when ASTNode.ANNOTATION(position, text, rawExpr):
                     var expr := rawExpr
                     match text {
-                        when "@private":    flags ||= Annotations.Flag.PRIVATE
-                        when "@protected":  flags ||= Annotations.Flag.PROTECTED
-                        when "@package":    flags ||= Annotations.Flag.PACKAGE
-                        when "@class":      flags ||= Annotations.Flag.CLASS
-                        when "@override":   flags ||= Annotations.Flag.OVERRIDE
-                        when "@external":   flags ||= Annotations.Flag.EXTERNAL
-                        when "@implicit":   flags ||= Annotations.Flag.IMPLICIT
-                        when "@final":      flags ||= Annotations.Flag.FINAL
-                        when "@abstract":   flags ||= Annotations.Flag.ABSTRACT
-                        when "@inline":     flags ||= Annotations.Flag.INLINE
-                        when "@specialize": flags ||= Annotations.Flag.SPECIALIZE
-                        when "@weak":       flags ||= Annotations.Flag.WEAK
+                        when "@private":         flags ||= Annotations.Flag.PRIVATE
+                        when "@protected":       flags ||= Annotations.Flag.PROTECTED
+                        when "@package":         flags ||= Annotations.Flag.PACKAGE
+                        when "@class":           flags ||= Annotations.Flag.CLASS
+                        when "@override":        flags ||= Annotations.Flag.OVERRIDE
+                        when "@external":        flags ||= Annotations.Flag.EXTERNAL
+                        when "@implicit":        flags ||= Annotations.Flag.IMPLICIT
+                        when "@final":           flags ||= Annotations.Flag.FINAL
+                        when "@abstract":        flags ||= Annotations.Flag.ABSTRACT
+                        when "@inline":          flags ||= Annotations.Flag.INLINE
+                        when "@specialize":      flags ||= Annotations.Flag.SPECIALIZE
+                        when "@weak":            flags ||= Annotations.Flag.WEAK
+                        when "@unsafeImmutable": flags ||= Annotations.Flag.UNSAFE_IMMUTABLE
                         when "@pre":
                             if expressions = null {
                                 expressions := Array<Annotations.Expression>()

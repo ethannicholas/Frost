@@ -359,6 +359,23 @@ choice ASTNode {
                     result.append("}")
                 }
                 return result.finish()
+            when METHOD_TYPE(_, kind, paramTypes, returnType):
+                def yield:String
+                match kind {
+                    when Token.Kind.YIELDS:
+                        yield := "=>"
+                    when Token.Kind.YIELDS_METHOD:
+                        yield := "=&>"
+                    when Token.Kind.YIELDS_IMMUTABLE:
+                        yield := "=>*"
+                    when Token.Kind.YIELDS_METHOD_IMMUTABLE:
+                        yield := "=&>*"
+                }
+                def partial := "(\{paramTypes.join()})\{yield}"
+                if returnType != null {
+                    return "\{partial}(\{returnType})"
+                }
+                return "\{partial}()"
             when NULL:
                 return "null"
             when NULLABLE_TYPE(_, base):
@@ -371,7 +388,7 @@ choice ASTNode {
                 return "\{kind}\{base}"
             when RANGE(_, start, end, inclusive, step):
                 def result := MutableString()
-                if start != NULL {
+                if start != null {
                     result.append(start)
                 }
                 if inclusive {
@@ -380,10 +397,10 @@ choice ASTNode {
                 else {
                     result.append("..")
                 }
-                if end != NULL {
+                if end != null {
                     result.append(end)
                 }
-                if step != NULL {
+                if step != null {
                     result.append(" by " + step)
                 }
                 return result.finish()
@@ -441,7 +458,8 @@ choice ASTNode {
                 }
                 result.append("}")
                 return result.finish()
-            otherwise: assert false
+            otherwise:
+                assert false, "unsupported ASTNode: \{$rawValue}"
         }
     }
 }
