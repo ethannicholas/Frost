@@ -13,27 +13,46 @@ class Panda {
 
     def allocations := HashMap<String, Int>()
 
+    def traces := HashMap<String, Int>()
+
+    @private
+    @class
+    function allocationName(cl:Class):String {
+        if cl.name = "panda.core.String" | cl.name = "panda.core.MutableString" {
+            return "panda.core.String/MutableString"
+        }
+        if cl.name = "panda.collections.Array" | cl.name = "panda.collections.ImmutableArray" {
+            return "panda.collections.Array/ImmutableArray"
+        }
+        return cl.name
+    }
+
     method countAllocation(cl:Class) {
-        var old := allocations[cl.name]
+        def name := allocationName(cl)
+        var old := allocations[name]
         if old = null {
             old := 0
         }
-        allocations[cl.name] := old + 1
+        allocations[name] := old + 1
     }
 
     method countDeallocation(cl:Class) {
-        var old := allocations[cl.name]
+        def name := allocationName(cl)
+        var old := allocations[name]
         if old = null {
             old := 0
         }
-        allocations[cl.name] := old - 1
+        allocations[name] := old - 1
     }
 
-    method reportAllocations() {
+    method dumpReport() {
         for k in allocations.keys() { -- FIXME entries
             if allocations[k] != 0 {
                 Console.printLine("\{k}: \{allocations[k]}")
             }
+        }
+        for k in traces.keys() { -- FIXME entries
+            Console.printLine("\{k}: \{traces[k]}")
         }
     }
 
@@ -44,6 +63,18 @@ class Panda {
     @class
     @external
     method unref(o:Object)
+
+    @class
+    @external
+    method trace(s:String)
+
+    method countTrace(s:String) {
+        var old := traces[s]
+        if old = null {
+            old := 0
+        }
+        traces[s] := old + 1
+    }
 
     @class
     @external

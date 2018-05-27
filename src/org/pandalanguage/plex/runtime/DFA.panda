@@ -13,7 +13,7 @@ class DFA {
 
     def accepts:Pointer<Int>
 
-    var source:ListView<Char8>
+    var source:Pointer<Char8>
 
     var offset:Int
 
@@ -29,9 +29,9 @@ class DFA {
 
     init(source:String, stateCount:Int, transitions:Pointer<Pointer<Int>>,
             accepts:Pointer<Int>) {
-        self.source := source.utf8()
+        self.source := source.data
         self.offset := 0
-        self.sourceEnd := self.source.get_count()
+        self.sourceEnd := source.byteLength()
         self.stateCount := stateCount
         self.transitions := transitions
         self.accepts := accepts

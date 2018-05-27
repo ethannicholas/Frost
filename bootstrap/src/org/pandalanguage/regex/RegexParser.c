@@ -18,13 +18,11 @@
 #include "org/pandalanguage/pandac/Position.h"
 #include "org/pandalanguage/plex/runtime/DFA.h"
 #include "panda/core/Range.LTpanda/core/Int64.GT.h"
-#include "panda/collections/ListView.h"
 
 
 static panda$core$String $s1;
 org$pandalanguage$regex$RegexParser$class_type org$pandalanguage$regex$RegexParser$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, NULL, { panda$core$Object$convert$R$panda$core$String, org$pandalanguage$regex$RegexParser$cleanup, org$pandalanguage$regex$RegexParser$start$panda$io$File$panda$core$String, org$pandalanguage$regex$RegexParser$next$R$org$pandalanguage$regex$RegexToken, org$pandalanguage$regex$RegexParser$pushback$org$pandalanguage$regex$RegexToken, org$pandalanguage$regex$RegexParser$peek$R$org$pandalanguage$regex$RegexToken, org$pandalanguage$regex$RegexParser$checkNext$org$pandalanguage$regex$RegexToken$Kind$R$panda$core$Bit, org$pandalanguage$regex$RegexParser$expect$org$pandalanguage$regex$RegexToken$Kind$panda$core$String$R$panda$core$Bit, org$pandalanguage$regex$RegexParser$error$org$pandalanguage$regex$RegexToken$panda$core$String, org$pandalanguage$regex$RegexParser$text$org$pandalanguage$regex$RegexToken$R$panda$core$String, org$pandalanguage$regex$RegexParser$characterClass$R$panda$core$Bit, org$pandalanguage$regex$RegexParser$integer$R$panda$core$Bit, org$pandalanguage$regex$RegexParser$metacharacter$R$panda$core$Bit, org$pandalanguage$regex$RegexParser$atom$R$panda$core$Bit, org$pandalanguage$regex$RegexParser$factor$R$panda$core$Bit, org$pandalanguage$regex$RegexParser$term$R$panda$core$Bit, org$pandalanguage$regex$RegexParser$expression$R$panda$core$Bit, org$pandalanguage$regex$RegexParser$regex$R$org$pandalanguage$pandac$ASTNode$Q} };
 
-typedef panda$core$Object* (*$fn189)(panda$collections$ListView*, panda$core$Int64);
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x72\x65\x67\x65\x78\x2e\x52\x65\x67\x65\x78\x50\x61\x72\x73\x65\x72", 35, -3638705302730546102, NULL };
 static panda$core$String $s49 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x65\x78\x70\x65\x63\x74\x65\x64\x20", 9, 2200356131793558883, NULL };
@@ -451,10 +449,9 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$regex$RegexParser$regex$R$or
     panda$core$Int64 length168;
     panda$core$Char8* result170;
     panda$core$Range$LTpanda$core$Int64$GT $tmp171;
-    panda$core$Object* $tmp186;
-    org$pandalanguage$pandac$ASTNode* $tmp197;
-    org$pandalanguage$pandac$ASTNode* $tmp198;
-    panda$core$String* $tmp200;
+    org$pandalanguage$pandac$ASTNode* $tmp192;
+    org$pandalanguage$pandac$ASTNode* $tmp193;
+    panda$core$String* $tmp195;
     panda$collections$SpecializedArray$LTorg$pandalanguage$regex$RegexToken$GT$clear(self->pushbackBuffer);
     org$pandalanguage$pandac$Position$init$panda$core$Int64$panda$core$Int64(&$tmp159, self->lexer->dfa->line, self->lexer->dfa->column);
     position158 = $tmp159;
@@ -488,52 +485,44 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$regex$RegexParser$regex$R$or
     $l177:;
     {
         panda$core$Int64 $tmp185 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(i172, start160);
-        ITable* $tmp187 = self->lexer->dfa->source->$class->itable;
-        while ($tmp187->$class != (panda$core$Class*) &panda$collections$ListView$class) {
-            $tmp187 = $tmp187->next;
-        }
-        $fn189 $tmp188 = $tmp187->methods[0];
-        panda$core$Object* $tmp190 = $tmp188(self->lexer->dfa->source, i172);
-        $tmp186 = $tmp190;
-        result170[$tmp185.value] = ((panda$core$Char8$wrapper*) $tmp186)->value;
-        panda$core$Panda$unref$panda$core$Object($tmp186);
+        result170[$tmp185.value] = self->lexer->dfa->source[i172.value];
     }
     $l180:;
-    int64_t $tmp192 = $tmp175 - i172.value;
-    if ($tmp176) goto $l193; else goto $l194;
-    $l193:;
-    if ((uint64_t) $tmp192 >= 1) goto $l191; else goto $l179;
-    $l194:;
-    if ((uint64_t) $tmp192 > 1) goto $l191; else goto $l179;
-    $l191:;
+    int64_t $tmp187 = $tmp175 - i172.value;
+    if ($tmp176) goto $l188; else goto $l189;
+    $l188:;
+    if ((uint64_t) $tmp187 >= 1) goto $l186; else goto $l179;
+    $l189:;
+    if ((uint64_t) $tmp187 > 1) goto $l186; else goto $l179;
+    $l186:;
     i172.value += 1;
     goto $l177;
     $l179:;
-    org$pandalanguage$pandac$ASTNode* $tmp199 = (org$pandalanguage$pandac$ASTNode*) pandaObjectAlloc(96, (panda$core$Class*) &org$pandalanguage$pandac$ASTNode$class);
-    panda$core$String* $tmp201 = (panda$core$String*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$String$class);
-    panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp201, result170, length168);
-    $tmp200 = $tmp201;
-    org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$String($tmp199, ((panda$core$Int64) { 35 }), position158, $tmp200);
-    $tmp198 = $tmp199;
-    $tmp197 = $tmp198;
-    $returnValue163 = $tmp197;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp197));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp198));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp200));
+    org$pandalanguage$pandac$ASTNode* $tmp194 = (org$pandalanguage$pandac$ASTNode*) pandaObjectAlloc(96, (panda$core$Class*) &org$pandalanguage$pandac$ASTNode$class);
+    panda$core$String* $tmp196 = (panda$core$String*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$String$class);
+    panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp196, result170, length168);
+    $tmp195 = $tmp196;
+    org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$String($tmp194, ((panda$core$Int64) { 35 }), position158, $tmp195);
+    $tmp193 = $tmp194;
+    $tmp192 = $tmp193;
+    $returnValue163 = $tmp192;
+    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp192));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp193));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp195));
     return $returnValue163;
 }
 void org$pandalanguage$regex$RegexParser$cleanup(org$pandalanguage$regex$RegexParser* self) {
-    int $tmp205;
+    int $tmp200;
     {
     }
-    $tmp205 = -1;
-    goto $l203;
-    $l203:;
+    $tmp200 = -1;
+    goto $l198;
+    $l198:;
     panda$core$Object$cleanup(((panda$core$Object*) self));
-    switch ($tmp205) {
-        case -1: goto $l206;
+    switch ($tmp200) {
+        case -1: goto $l201;
     }
-    $l206:;
+    $l201:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->lexer));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->errors));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->path));

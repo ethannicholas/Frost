@@ -3091,6 +3091,17 @@ class Compiler {
         return compileAssignment(position, left, op, right)
     }
 
+    function foldConstantStrings(left:IRNode, right:IRNode):IRNode {
+        match left {
+            when IRNode.STRING(position, s1):
+                match right {
+                    when IRNode.STRING(_, s2):
+                        return IRNode.STRING(position, s1 + s2)
+                }
+        }
+        assert false
+    }
+
     method compileBinary(position:Position, rawLeft:IRNode, op:Token.Kind,
             rawRight:IRNode):IRNode? {
         -- FIXME use var parameters
@@ -3099,6 +3110,9 @@ class Compiler {
         if (left = IRNode.INT | left = IRNode.NEGATED_INT) &
                 (right = IRNode.INT | right = IRNode.NEGATED_INT) {
             return foldInts(position, left, op, right)
+        }
+        if op = Token.Kind.ADD & left = IRNode.STRING & right = IRNode.STRING {
+            return foldConstantStrings(left, right)
         }
         if left.type().typeKind = Type.Kind.INT_LITERAL {
             right := resolve(right)
@@ -5081,5 +5095,10 @@ class Compiler {
 
     method finish() {
         codeGenerator.finish()
+        for cl in classes.values() {
+            for m in cl.methods {
+                m.compiledBody := null
+            }
+        }
     }
 }

@@ -308,6 +308,12 @@ class Main {
 
     @class
     method main(args:ListView<String>) {
+        if args.get_count() > 1 & args[1] = "--repeat" {
+            for i in 0 .. 1000 {
+                Console.printLine(i)
+                Main().run(args[1..])
+            }
+        }
         Main().run(args)
     }
 }

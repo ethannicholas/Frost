@@ -157,13 +157,15 @@ void panda$core$Panda$init(Object*);
 
 void panda$core$Panda$unref$panda$core$Object(Object*);
 
+void panda$core$Panda$dumpReport(Object*);
+
 #if DEBUG_ALLOCS
 void panda$core$Panda$countAllocation$panda$core$Class(Object*, Class*);
 
 void panda$core$Panda$countDeallocation$panda$core$Class(Object*, Class*);
-
-void panda$core$Panda$reportAllocations(Object*);
 #endif
+
+panda$core$Panda$countTrace$panda$core$String(Object*, String*);
 
 void panda$collections$Array$add$panda$collections$Array$T(Array*, Object*);
 
@@ -177,8 +179,9 @@ static int preventsExitThreads = 0;
 static pthread_cond_t preventsExitThreadsVar = PTHREAD_COND_INITIALIZER;
 static pthread_mutex_t preventsExitThreadsMutex = PTHREAD_MUTEX_INITIALIZER;
 
-#if DEBUG_ALLOCS
 Object* panda = NULL;
+
+#if DEBUG_ALLOCS
 Bit debugAllocs = true;
 #endif
 
@@ -297,9 +300,11 @@ int main(int argc, char** argv) {
     panda$core$Panda$unref$panda$core$Object((Object*) args);
 #if DEBUG_ALLOCS
     debugAllocs = false;
-    panda$core$Panda$reportAllocations(panda);
-    panda$core$Panda$unref$panda$core$Object(panda);
 #endif
+    if (panda) {
+        panda$core$Panda$dumpReport(panda);
+        panda$core$Panda$unref$panda$core$Object(panda);
+    }
     if (allocations && allocations != 1) {
         printf("warning: %d objects were still in memory on exit\n", allocations);
     }
@@ -435,6 +440,16 @@ String* panda$core$Panda$pointerConvert$panda$unsafe$Pointer$LTpanda$core$Object
     char buffer[32];
     int length = sprintf(buffer, "%p", ptr);
     return pandaNewString(buffer, length);
+}
+
+void panda$core$Panda$trace$panda$core$String(String* s) {
+    if (!panda) {
+        panda = pandaZAlloc(sizeof(Object) + sizeof(void*));
+        panda->cl = &panda$core$Panda$class;
+        panda->refcnt = 1;
+        panda$core$Panda$init(panda);
+    }
+    panda$core$Panda$countTrace$panda$core$String(panda, s);
 }
 
 void panda$core$Panda$ref$panda$core$Object(Object* o) {

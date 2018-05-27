@@ -4690,7 +4690,7 @@ panda$core$String* org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(o
             while ($tmp1546->$class != (panda$core$Class*) &panda$collections$ListView$class) {
                 $tmp1546 = $tmp1546->next;
             }
-            $fn1548 $tmp1547 = $tmp1546->methods[1];
+            $fn1548 $tmp1547 = $tmp1546->methods[4];
             panda$core$String* $tmp1549 = $tmp1547(((panda$collections$ListView*) args1535));
             $tmp1545 = $tmp1549;
             panda$core$String* $tmp1550 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp1540, $tmp1545);
@@ -4856,7 +4856,7 @@ panda$core$String* org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(o
                     while ($tmp1652->$class != (panda$core$Class*) &panda$collections$ListView$class) {
                         $tmp1652 = $tmp1652->next;
                     }
-                    $fn1654 $tmp1653 = $tmp1652->methods[1];
+                    $fn1654 $tmp1653 = $tmp1652->methods[4];
                     panda$core$String* $tmp1655 = $tmp1653(((panda$collections$ListView*) args1641));
                     $tmp1651 = $tmp1655;
                     panda$core$String* $tmp1656 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp1646, $tmp1651);
@@ -5130,7 +5130,7 @@ panda$core$String* org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(o
             while ($tmp1793->$class != (panda$core$Class*) &panda$collections$ListView$class) {
                 $tmp1793 = $tmp1793->next;
             }
-            $fn1795 $tmp1794 = $tmp1793->methods[2];
+            $fn1795 $tmp1794 = $tmp1793->methods[5];
             panda$core$String* $tmp1796 = $tmp1794(((panda$collections$ListView*) args1780), &$s1792);
             $tmp1791 = $tmp1796;
             panda$core$String* $tmp1797 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp1785, $tmp1791);
@@ -6191,7 +6191,7 @@ panda$core$String* org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(o
             while ($tmp2360->$class != (panda$core$Class*) &panda$collections$ListView$class) {
                 $tmp2360 = $tmp2360->next;
             }
-            $fn2362 $tmp2361 = $tmp2360->methods[1];
+            $fn2362 $tmp2361 = $tmp2360->methods[4];
             panda$core$String* $tmp2363 = $tmp2361(((panda$collections$ListView*) args2348));
             $tmp2359 = $tmp2363;
             panda$core$String* $tmp2364 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp2353, $tmp2359);
@@ -6224,7 +6224,7 @@ panda$core$String* org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(o
             while ($tmp2381->$class != (panda$core$Class*) &panda$collections$ListView$class) {
                 $tmp2381 = $tmp2381->next;
             }
-            $fn2383 $tmp2382 = $tmp2381->methods[1];
+            $fn2383 $tmp2382 = $tmp2381->methods[4];
             panda$core$String* $tmp2384 = $tmp2382(((panda$collections$ListView*) params2370));
             $tmp2380 = $tmp2384;
             panda$core$String* $tmp2385 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s2379, $tmp2380);
@@ -6275,7 +6275,7 @@ panda$core$String* org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(o
                 while ($tmp2417->$class != (panda$core$Class*) &panda$collections$ListView$class) {
                     $tmp2417 = $tmp2417->next;
                 }
-                $fn2419 $tmp2418 = $tmp2417->methods[1];
+                $fn2419 $tmp2418 = $tmp2417->methods[4];
                 panda$core$String* $tmp2420 = $tmp2418(((panda$collections$ListView*) args2398));
                 $tmp2416 = $tmp2420;
                 panda$core$String* $tmp2421 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp2403, $tmp2416);
@@ -6311,7 +6311,7 @@ panda$core$String* org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(o
                 while ($tmp2437->$class != (panda$core$Class*) &panda$collections$ListView$class) {
                     $tmp2437 = $tmp2437->next;
                 }
-                $fn2439 $tmp2438 = $tmp2437->methods[1];
+                $fn2439 $tmp2438 = $tmp2437->methods[4];
                 panda$core$String* $tmp2440 = $tmp2438(((panda$collections$ListView*) args2398));
                 $tmp2436 = $tmp2440;
                 panda$core$String* $tmp2441 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp2429, $tmp2436);
@@ -6520,7 +6520,7 @@ panda$core$String* org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(o
                 while ($tmp2530->$class != (panda$core$Class*) &panda$collections$ListView$class) {
                     $tmp2530 = $tmp2530->next;
                 }
-                $fn2532 $tmp2531 = $tmp2530->methods[1];
+                $fn2532 $tmp2531 = $tmp2530->methods[4];
                 panda$core$String* $tmp2533 = $tmp2531(((panda$collections$ListView*) decls2511));
                 $tmp2529 = $tmp2533;
                 panda$core$MutableString$append$panda$core$String(result2516, $tmp2529);
@@ -6575,7 +6575,7 @@ panda$core$String* org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(o
             while ($tmp2559->$class != (panda$core$Class*) &panda$collections$ListView$class) {
                 $tmp2559 = $tmp2559->next;
             }
-            $fn2561 $tmp2560 = $tmp2559->methods[1];
+            $fn2561 $tmp2560 = $tmp2559->methods[4];
             panda$core$String* $tmp2562 = $tmp2560(((panda$collections$ListView*) tests2548));
             $tmp2558 = $tmp2562;
             panda$core$String* $tmp2563 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s2557, $tmp2558);
@@ -6586,7 +6586,7 @@ panda$core$String* org$pandalanguage$pandac$IRNode$convert$R$panda$core$String(o
             while ($tmp2568->$class != (panda$core$Class*) &panda$collections$ListView$class) {
                 $tmp2568 = $tmp2568->next;
             }
-            $fn2570 $tmp2569 = $tmp2568->methods[2];
+            $fn2570 $tmp2569 = $tmp2568->methods[5];
             panda$core$String* $tmp2571 = $tmp2569(((panda$collections$ListView*) statements2550), &$s2567);
             $tmp2566 = $tmp2571;
             panda$core$String* $tmp2572 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp2555, $tmp2566);

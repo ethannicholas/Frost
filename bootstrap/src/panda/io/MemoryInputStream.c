@@ -200,8 +200,3 @@ void panda$io$MemoryInputStream$cleanup(panda$io$MemoryInputStream* self) {
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->data));
 }
 
-
-
-
-
-

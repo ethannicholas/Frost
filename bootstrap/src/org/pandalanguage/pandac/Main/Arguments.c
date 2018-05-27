@@ -152,8 +152,3 @@ void org$pandalanguage$pandac$Main$Arguments$cleanup(org$pandalanguage$pandac$Ma
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->args));
 }
 
-
-
-
-
-
