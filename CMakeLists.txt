@@ -4,14 +4,18 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -m64")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -m64")
 set(OPTIMIZATION 0)
 set(SAFETY 3)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/third-party/FindICU")
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/third-party/FindLLVM")
 
 find_package(LLVM 4.0 REQUIRED)
+find_package(ICU COMPONENTS uc i18n REQUIRED)
+
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/pandac/Config.panda"
     "package org.pandalanguage.pandac\n"
     "class Config {\n"
     "constant LLVM_DIR := \"${LLVM_ROOT_DIR}\"\n"
     "constant LLVM_TRIPLE := \"${LLVM_HOST_TARGET}\"\n"
+    "constant ICU_LIBRARIES := \"${ICU_LIBRARIES}\"\n"
     "}")
 
 set(BOOTSTRAP_ARGS "--llvm_dir" ${LLVM_ROOT_DIR} "--triple" ${LLVM_HOST_TARGET} "-O" ${OPTIMIZATION}
@@ -19,7 +23,10 @@ set(BOOTSTRAP_ARGS "--llvm_dir" ${LLVM_ROOT_DIR} "--triple" ${LLVM_HOST_TARGET} 
 include_directories(
     bootstrap/include
     src/c
+    ${ICU_INCLUDE_DIRS}
 )
+
+file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/regex")
 
 add_library(c_panda
     bootstrap/src/panda/collections/Array.c
@@ -56,6 +63,8 @@ add_library(c_panda
     bootstrap/src/panda/collections/Stack/StackIterator.c
     bootstrap/src/panda/collections/SpecializedArray.LTorg/pandalanguage/pandac/parser/Token.GT.c
     bootstrap/src/panda/collections/SpecializedArrayIterator.LTorg/pandalanguage/pandac/parser/Token.GT.c
+    bootstrap/src/panda/collections/SpecializedArray.LTorg/pandalanguage/regex/RegexToken.GT.c
+    bootstrap/src/panda/collections/SpecializedArrayIterator.LTorg/pandalanguage/regex/RegexToken.GT.c
     bootstrap/src/panda/core/Bit.c
     bootstrap/src/panda/core/Char8.c
     bootstrap/src/panda/core/Char16.c
@@ -69,11 +78,13 @@ add_library(c_panda
     bootstrap/src/panda/core/Int32.c
     bootstrap/src/panda/core/Int64.c
     bootstrap/src/panda/core/Int8.c
+    bootstrap/src/panda/core/Matcher.c
     bootstrap/src/panda/core/Method.c
     bootstrap/src/panda/core/MutableMethod.c
     bootstrap/src/panda/core/MutableString.c
     bootstrap/src/panda/core/Real32.c
     bootstrap/src/panda/core/Real64.c
+    bootstrap/src/panda/core/RegularExpression.c
     bootstrap/src/panda/core/Object.c
     bootstrap/src/panda/core/Panda.c
     bootstrap/src/panda/core/Range.LTpanda/core/String/Index.Q.GT.c
@@ -149,6 +160,7 @@ add_executable(bootstrap
     bootstrap/src/org/pandalanguage/pandac/Compiler/AutoSymbolTable.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/CompileTargetResult.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/Error.c
+    bootstrap/src/org/pandalanguage/pandac/Compiler/Resolution.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/Settings.c
     bootstrap/src/org/pandalanguage/pandac/FieldDecl.c
     bootstrap/src/org/pandalanguage/pandac/FieldDecl/Kind.c
@@ -185,8 +197,12 @@ add_executable(bootstrap
     bootstrap/src/org/pandalanguage/pandac/parser/Token/Kind.c
     bootstrap/src/org/pandalanguage/plex/runtime/DFA.c
     bootstrap/src/org/pandalanguage/plex/runtime/RawToken.c
+    bootstrap/src/org/pandalanguage/regex/RegexParser.c
+    bootstrap/src/org/pandalanguage/regex/RegexLexer.c
+    bootstrap/src/org/pandalanguage/regex/RegexToken.c
+    bootstrap/src/org/pandalanguage/regex/RegexToken/Kind.c
 )
-target_link_libraries(bootstrap c_panda)
+target_link_libraries(bootstrap c_panda ${ICU_LIBRARIES})
 set_target_properties(bootstrap PROPERTIES LINKER_LANGUAGE CXX)
 
 function(compile_panda_sources out_var)
@@ -246,11 +262,13 @@ set(core_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/UInt32.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/UInt64.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/UInt8.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Matcher.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/MutableString.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Object.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Panda.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Real32.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Real64.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/RegularExpression.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/String.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/System.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Value.panda
@@ -404,7 +422,7 @@ compile_plex_sources(plex_objects
 add_executable(plex
     ${plex_objects}
 )
-target_link_libraries(plex panda)
+target_link_libraries(plex panda ${ICU_LIBRARIES})
 set_target_properties(plex PROPERTIES LINKER_LANGUAGE CXX)
 
 add_custom_command(
@@ -433,6 +451,19 @@ add_custom_command(
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
 
+add_custom_command(
+    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/regex/RegexLexer.panda
+           ${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/regex/RegexToken.panda
+    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/plex ${CMAKE_CURRENT_SOURCE_DIR}/src/parser/Regex.plex
+            org.pandalanguage.regex.RegexToken
+            ${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/regex/RegexToken.panda
+            org.pandalanguage.regex.RegexLexer
+            ${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/regex/RegexLexer.panda
+            org.pandalanguage.pandac.Position
+    DEPENDS plex src/parser/Regex.plex
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+)
+
 function(compile_pandac_sources out_var)
     set(result)
     foreach(input ${ARGN})
@@ -454,6 +485,10 @@ function(compile_pandac_sources out_var)
 endfunction()
 
 set(pandac_source
+    ${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/pandac/parser/Lexer.panda
+    ${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/pandac/parser/Token.panda
+    ${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/regex/RegexLexer.panda
+    ${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/regex/RegexToken.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/Alias.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/Annotations.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/ASTNode.panda
@@ -478,8 +513,7 @@ set(pandac_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/Type.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/Variable.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/parser/Parser.panda
-    ${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/pandac/parser/Lexer.panda
-    ${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/pandac/parser/Token.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/regex/RegexParser.panda
 )
 
 compile_pandac_sources(pandac_objects
@@ -489,7 +523,7 @@ compile_pandac_sources(pandac_objects
 add_executable(pandac
     ${pandac_objects}
 )
-target_link_libraries(pandac panda)
+target_link_libraries(pandac panda ${ICU_LIBRARIES})
 set_target_properties(pandac PROPERTIES LINKER_LANGUAGE CXX)
 
 function(create_headers out_var)

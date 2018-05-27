@@ -603,9 +603,19 @@ choice IRNode {
             when UNRESOLVED_LAMBDA(_, params, body):
                 return "(\{params.join()})=>\{body}"
             when UNRESOLVED_METHOD_CALL(_, _, target, methods, args):
-                return "\{target}.\{methods[0].value.name}(\{args.join()})"
+                if target != null {
+                    return "\{target}.\{methods[0].value.name}(\{args.join()})"
+                }
+                else {
+                    return "\{methods[0].value.name}(\{args.join()})"
+                }
             when UNRESOLVED_METHOD_REFERENCE(_, target, methods):
-                return "\{target}.\{methods[0].value.name}"
+                if target != null {
+                    return "\{target}.\{methods[0].value.name}"
+                }
+                else {
+                    return "\{methods[0].value.name}"
+                }
             when UNRESOLVED_RANGE(_, start, end, inclusive, step):
                 def result := MutableString()
                 if start != null {

@@ -14,7 +14,7 @@ class ChoiceEntry : Symbol {
     @weak
     def initMethod:MethodDecl? := null
 
-    var resolved := false
+    var resolved:Compiler.Resolution := Compiler.Resolution.UNRESOLVED
 
     init(owner:ClassDecl, position:Position, name:String, doccomment:String?, rawValue:Int,
             fields:ListView<Type>) {

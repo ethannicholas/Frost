@@ -42,7 +42,7 @@ class MethodDecl : Symbol {
     -- only set for @inline methods
     def compiledBody:ImmutableArray<IRNode>? := null
 
-    var resolved:Bit
+    var resolved := Compiler.Resolution.UNRESOLVED
 
     var overrideKnown := false
 
@@ -60,7 +60,6 @@ class MethodDecl : Symbol {
         self.parameters := parameters
         self.returnType := returnType
         self.body := body
-        self.resolved := false
     }
 
     @override
@@ -77,7 +76,8 @@ class MethodDecl : Symbol {
     }
 
     function matches(other:MethodDecl):Bit {
-        assert resolved & other.resolved
+        assert resolved != Compiler.Resolution.UNRESOLVED &
+                other.resolved != Compiler.Resolution.UNRESOLVED
         if name != other.name {
             return false
         }

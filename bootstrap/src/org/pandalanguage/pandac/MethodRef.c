@@ -7,8 +7,9 @@
 #include "panda/collections/HashMap.h"
 #include "panda/core/Panda.h"
 #include "panda/core/Bit.h"
-#include "panda/core/Range.LTpanda/core/Int64.GT.h"
 #include "panda/core/Int64.h"
+#include "org/pandalanguage/pandac/Compiler/Resolution.h"
+#include "panda/core/Range.LTpanda/core/Int64.GT.h"
 #include "panda/collections/CollectionView.h"
 #include "org/pandalanguage/pandac/ClassDecl.h"
 #include "panda/core/Weak.h"
@@ -24,36 +25,36 @@
 static panda$core$String $s1;
 org$pandalanguage$pandac$MethodRef$class_type org$pandalanguage$pandac$MethodRef$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, NULL, { org$pandalanguage$pandac$MethodRef$convert$R$panda$core$String, org$pandalanguage$pandac$MethodRef$cleanup, org$pandalanguage$pandac$MethodRef$owner$R$org$pandalanguage$pandac$Type, org$pandalanguage$pandac$MethodRef$parameterCount$R$panda$core$Int64, org$pandalanguage$pandac$MethodRef$parameter$panda$core$Int64$R$org$pandalanguage$pandac$Type, org$pandalanguage$pandac$MethodRef$returnType$R$org$pandalanguage$pandac$Type, org$pandalanguage$pandac$MethodRef$type$R$org$pandalanguage$pandac$Type} };
 
-typedef panda$core$Object* (*$fn11)(panda$core$Weak*);
-typedef panda$core$Int64 (*$fn15)(panda$collections$CollectionView*);
-typedef panda$core$Int64 (*$fn19)(panda$collections$CollectionView*);
-typedef panda$core$Object* (*$fn38)(panda$core$Weak*);
-typedef panda$core$Object* (*$fn44)(panda$core$Weak*);
-typedef panda$core$Object* (*$fn48)(panda$collections$ListView*, panda$core$Int64);
-typedef panda$core$Object* (*$fn54)(panda$collections$ListView*, panda$core$Int64);
-typedef panda$core$Object* (*$fn67)(panda$core$Weak*);
+typedef panda$core$Object* (*$fn12)(panda$core$Weak*);
+typedef panda$core$Int64 (*$fn16)(panda$collections$CollectionView*);
+typedef panda$core$Int64 (*$fn20)(panda$collections$CollectionView*);
+typedef panda$core$Object* (*$fn39)(panda$core$Weak*);
+typedef panda$core$Object* (*$fn45)(panda$core$Weak*);
+typedef panda$core$Object* (*$fn49)(panda$collections$ListView*, panda$core$Int64);
+typedef panda$core$Object* (*$fn55)(panda$collections$ListView*, panda$core$Int64);
+typedef panda$core$Object* (*$fn68)(panda$core$Weak*);
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x4d\x65\x74\x68\x6f\x64\x52\x65\x66", 34, -1882581302938845728, NULL };
-static panda$core$String $s40 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2e", 1, 147, NULL };
-static panda$core$String $s100 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x4d\x65\x74\x68\x6f\x64\x52\x65\x66\x28", 10, -7131972655011641641, NULL };
-static panda$core$String $s104 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2c\x20", 2, 14677, NULL };
-static panda$core$String $s107 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x29", 1, 142, NULL };
+static panda$core$String $s41 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2e", 1, 147, NULL };
+static panda$core$String $s101 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x4d\x65\x74\x68\x6f\x64\x52\x65\x66\x28", 10, -7131972655011641641, NULL };
+static panda$core$String $s105 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2c\x20", 2, 14677, NULL };
+static panda$core$String $s108 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x29", 1, 142, NULL };
 
 void org$pandalanguage$pandac$MethodRef$init$org$pandalanguage$pandac$MethodDecl$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT(org$pandalanguage$pandac$MethodRef* self, org$pandalanguage$pandac$MethodDecl* p_value, panda$collections$ListView* p_types) {
     panda$collections$HashMap* $tmp2;
     panda$collections$HashMap* $tmp3;
-    org$pandalanguage$pandac$MethodDecl* $tmp5;
     org$pandalanguage$pandac$MethodDecl* $tmp6;
-    panda$collections$ListView* $tmp7;
+    org$pandalanguage$pandac$MethodDecl* $tmp7;
     panda$collections$ListView* $tmp8;
-    panda$core$Range$LTpanda$core$Int64$GT $tmp9;
-    panda$core$Object* $tmp10;
-    panda$core$String* $tmp35;
+    panda$collections$ListView* $tmp9;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp10;
+    panda$core$Object* $tmp11;
     panda$core$String* $tmp36;
-    panda$core$Object* $tmp37;
-    panda$core$Object* $tmp42;
+    panda$core$String* $tmp37;
+    panda$core$Object* $tmp38;
     panda$core$Object* $tmp43;
-    panda$core$Object* $tmp51;
+    panda$core$Object* $tmp44;
+    panda$core$Object* $tmp52;
     self->value = NULL;
     self->types = NULL;
     self->typeMap = NULL;
@@ -64,201 +65,202 @@ void org$pandalanguage$pandac$MethodRef$init$org$pandalanguage$pandac$MethodDecl
     self->typeMap = $tmp2;
     panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp3));
-    PANDA_ASSERT(p_value->resolved.value);
+    panda$core$Bit $tmp5 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_value->resolved.$rawValue, ((panda$core$Int64) { 2 }));
+    PANDA_ASSERT($tmp5.value);
     {
-        $tmp5 = self->value;
-        $tmp6 = p_value;
-        self->value = $tmp6;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp6));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp5));
+        $tmp6 = self->value;
+        $tmp7 = p_value;
+        self->value = $tmp7;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp7));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp6));
     }
     {
-        $tmp7 = self->types;
-        $tmp8 = p_types;
-        self->types = $tmp8;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp8));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp7));
+        $tmp8 = self->types;
+        $tmp9 = p_types;
+        self->types = $tmp9;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp9));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp8));
     }
-    panda$core$Object* $tmp12 = (($fn11) p_value->owner->$class->vtable[2])(p_value->owner);
-    $tmp10 = $tmp12;
-    ITable* $tmp13 = ((panda$collections$CollectionView*) ((org$pandalanguage$pandac$ClassDecl*) $tmp10)->parameters)->$class->itable;
-    while ($tmp13->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
-        $tmp13 = $tmp13->next;
+    panda$core$Object* $tmp13 = (($fn12) p_value->owner->$class->vtable[2])(p_value->owner);
+    $tmp11 = $tmp13;
+    ITable* $tmp14 = ((panda$collections$CollectionView*) ((org$pandalanguage$pandac$ClassDecl*) $tmp11)->parameters)->$class->itable;
+    while ($tmp14->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
+        $tmp14 = $tmp14->next;
     }
-    $fn15 $tmp14 = $tmp13->methods[0];
-    panda$core$Int64 $tmp16 = $tmp14(((panda$collections$CollectionView*) ((org$pandalanguage$pandac$ClassDecl*) $tmp10)->parameters));
-    ITable* $tmp17 = ((panda$collections$CollectionView*) p_types)->$class->itable;
-    while ($tmp17->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
-        $tmp17 = $tmp17->next;
+    $fn16 $tmp15 = $tmp14->methods[0];
+    panda$core$Int64 $tmp17 = $tmp15(((panda$collections$CollectionView*) ((org$pandalanguage$pandac$ClassDecl*) $tmp11)->parameters));
+    ITable* $tmp18 = ((panda$collections$CollectionView*) p_types)->$class->itable;
+    while ($tmp18->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
+        $tmp18 = $tmp18->next;
     }
-    $fn19 $tmp18 = $tmp17->methods[0];
-    panda$core$Int64 $tmp20 = $tmp18(((panda$collections$CollectionView*) p_types));
-    panda$core$Int64 $tmp21 = panda$core$Int64$min$panda$core$Int64$R$panda$core$Int64($tmp16, $tmp20);
-    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp9, ((panda$core$Int64) { 0 }), $tmp21, ((panda$core$Bit) { false }));
-    int64_t $tmp23 = $tmp9.min.value;
-    panda$core$Int64 i22 = { $tmp23 };
-    int64_t $tmp25 = $tmp9.max.value;
-    bool $tmp26 = $tmp9.inclusive.value;
-    if ($tmp26) goto $l33; else goto $l34;
-    $l33:;
-    if ($tmp23 <= $tmp25) goto $l27; else goto $l29;
+    $fn20 $tmp19 = $tmp18->methods[0];
+    panda$core$Int64 $tmp21 = $tmp19(((panda$collections$CollectionView*) p_types));
+    panda$core$Int64 $tmp22 = panda$core$Int64$min$panda$core$Int64$R$panda$core$Int64($tmp17, $tmp21);
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp10, ((panda$core$Int64) { 0 }), $tmp22, ((panda$core$Bit) { false }));
+    int64_t $tmp24 = $tmp10.min.value;
+    panda$core$Int64 i23 = { $tmp24 };
+    int64_t $tmp26 = $tmp10.max.value;
+    bool $tmp27 = $tmp10.inclusive.value;
+    if ($tmp27) goto $l34; else goto $l35;
     $l34:;
-    if ($tmp23 < $tmp25) goto $l27; else goto $l29;
-    $l27:;
+    if ($tmp24 <= $tmp26) goto $l28; else goto $l30;
+    $l35:;
+    if ($tmp24 < $tmp26) goto $l28; else goto $l30;
+    $l28:;
     {
-        panda$core$Object* $tmp39 = (($fn38) p_value->owner->$class->vtable[2])(p_value->owner);
-        $tmp37 = $tmp39;
-        panda$core$String* $tmp41 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(((org$pandalanguage$pandac$ClassDecl*) $tmp37)->name, &$s40);
-        $tmp36 = $tmp41;
-        panda$core$Object* $tmp45 = (($fn44) p_value->owner->$class->vtable[2])(p_value->owner);
-        $tmp43 = $tmp45;
-        ITable* $tmp46 = ((panda$collections$ListView*) ((org$pandalanguage$pandac$ClassDecl*) $tmp43)->parameters)->$class->itable;
-        while ($tmp46->$class != (panda$core$Class*) &panda$collections$ListView$class) {
-            $tmp46 = $tmp46->next;
+        panda$core$Object* $tmp40 = (($fn39) p_value->owner->$class->vtable[2])(p_value->owner);
+        $tmp38 = $tmp40;
+        panda$core$String* $tmp42 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(((org$pandalanguage$pandac$ClassDecl*) $tmp38)->name, &$s41);
+        $tmp37 = $tmp42;
+        panda$core$Object* $tmp46 = (($fn45) p_value->owner->$class->vtable[2])(p_value->owner);
+        $tmp44 = $tmp46;
+        ITable* $tmp47 = ((panda$collections$ListView*) ((org$pandalanguage$pandac$ClassDecl*) $tmp44)->parameters)->$class->itable;
+        while ($tmp47->$class != (panda$core$Class*) &panda$collections$ListView$class) {
+            $tmp47 = $tmp47->next;
         }
-        $fn48 $tmp47 = $tmp46->methods[0];
-        panda$core$Object* $tmp49 = $tmp47(((panda$collections$ListView*) ((org$pandalanguage$pandac$ClassDecl*) $tmp43)->parameters), i22);
-        $tmp42 = $tmp49;
-        panda$core$String* $tmp50 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp36, ((org$pandalanguage$pandac$Symbol*) ((org$pandalanguage$pandac$ClassDecl$GenericParameter*) $tmp42))->name);
-        $tmp35 = $tmp50;
-        ITable* $tmp52 = p_types->$class->itable;
-        while ($tmp52->$class != (panda$core$Class*) &panda$collections$ListView$class) {
-            $tmp52 = $tmp52->next;
+        $fn49 $tmp48 = $tmp47->methods[0];
+        panda$core$Object* $tmp50 = $tmp48(((panda$collections$ListView*) ((org$pandalanguage$pandac$ClassDecl*) $tmp44)->parameters), i23);
+        $tmp43 = $tmp50;
+        panda$core$String* $tmp51 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp37, ((org$pandalanguage$pandac$Symbol*) ((org$pandalanguage$pandac$ClassDecl$GenericParameter*) $tmp43))->name);
+        $tmp36 = $tmp51;
+        ITable* $tmp53 = p_types->$class->itable;
+        while ($tmp53->$class != (panda$core$Class*) &panda$collections$ListView$class) {
+            $tmp53 = $tmp53->next;
         }
-        $fn54 $tmp53 = $tmp52->methods[0];
-        panda$core$Object* $tmp55 = $tmp53(p_types, i22);
-        $tmp51 = $tmp55;
-        panda$collections$HashMap$$IDXEQ$panda$collections$HashMap$K$panda$collections$HashMap$V(self->typeMap, ((panda$collections$Key*) $tmp35), ((panda$core$Object*) ((org$pandalanguage$pandac$Type*) $tmp51)));
-        panda$core$Panda$unref$panda$core$Object($tmp51);
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp35));
-        panda$core$Panda$unref$panda$core$Object($tmp42);
-        panda$core$Panda$unref$panda$core$Object($tmp43);
+        $fn55 $tmp54 = $tmp53->methods[0];
+        panda$core$Object* $tmp56 = $tmp54(p_types, i23);
+        $tmp52 = $tmp56;
+        panda$collections$HashMap$$IDXEQ$panda$collections$HashMap$K$panda$collections$HashMap$V(self->typeMap, ((panda$collections$Key*) $tmp36), ((panda$core$Object*) ((org$pandalanguage$pandac$Type*) $tmp52)));
+        panda$core$Panda$unref$panda$core$Object($tmp52);
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp36));
-        panda$core$Panda$unref$panda$core$Object($tmp37);
+        panda$core$Panda$unref$panda$core$Object($tmp43);
+        panda$core$Panda$unref$panda$core$Object($tmp44);
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp37));
+        panda$core$Panda$unref$panda$core$Object($tmp38);
     }
-    $l30:;
-    int64_t $tmp57 = $tmp25 - i22.value;
-    if ($tmp26) goto $l58; else goto $l59;
-    $l58:;
-    if ((uint64_t) $tmp57 >= 1) goto $l56; else goto $l29;
+    $l31:;
+    int64_t $tmp58 = $tmp26 - i23.value;
+    if ($tmp27) goto $l59; else goto $l60;
     $l59:;
-    if ((uint64_t) $tmp57 > 1) goto $l56; else goto $l29;
-    $l56:;
-    i22.value += 1;
-    goto $l27;
-    $l29:;
-    panda$core$Panda$unref$panda$core$Object($tmp10);
+    if ((uint64_t) $tmp58 >= 1) goto $l57; else goto $l30;
+    $l60:;
+    if ((uint64_t) $tmp58 > 1) goto $l57; else goto $l30;
+    $l57:;
+    i23.value += 1;
+    goto $l28;
+    $l30:;
+    panda$core$Panda$unref$panda$core$Object($tmp11);
 }
 org$pandalanguage$pandac$Type* org$pandalanguage$pandac$MethodRef$owner$R$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$MethodRef* self) {
-    org$pandalanguage$pandac$Type* $returnValue62;
-    org$pandalanguage$pandac$Type* $tmp63;
+    org$pandalanguage$pandac$Type* $returnValue63;
     org$pandalanguage$pandac$Type* $tmp64;
     org$pandalanguage$pandac$Type* $tmp65;
-    panda$core$Object* $tmp66;
-    panda$core$Object* $tmp68 = (($fn67) self->value->owner->$class->vtable[2])(self->value->owner);
-    $tmp66 = $tmp68;
-    org$pandalanguage$pandac$Type* $tmp69 = org$pandalanguage$pandac$ClassDecl$typeWithParameters$R$org$pandalanguage$pandac$Type(((org$pandalanguage$pandac$ClassDecl*) $tmp66));
-    $tmp65 = $tmp69;
-    org$pandalanguage$pandac$Type* $tmp70 = org$pandalanguage$pandac$Type$remap$panda$collections$HashMap$LTpanda$core$String$Corg$pandalanguage$pandac$Type$GT$R$org$pandalanguage$pandac$Type($tmp65, self->typeMap);
-    $tmp64 = $tmp70;
-    $tmp63 = $tmp64;
-    $returnValue62 = $tmp63;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp63));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp64));
+    org$pandalanguage$pandac$Type* $tmp66;
+    panda$core$Object* $tmp67;
+    panda$core$Object* $tmp69 = (($fn68) self->value->owner->$class->vtable[2])(self->value->owner);
+    $tmp67 = $tmp69;
+    org$pandalanguage$pandac$Type* $tmp70 = org$pandalanguage$pandac$ClassDecl$typeWithParameters$R$org$pandalanguage$pandac$Type(((org$pandalanguage$pandac$ClassDecl*) $tmp67));
+    $tmp66 = $tmp70;
+    org$pandalanguage$pandac$Type* $tmp71 = org$pandalanguage$pandac$Type$remap$panda$collections$HashMap$LTpanda$core$String$Corg$pandalanguage$pandac$Type$GT$R$org$pandalanguage$pandac$Type($tmp66, self->typeMap);
+    $tmp65 = $tmp71;
+    $tmp64 = $tmp65;
+    $returnValue63 = $tmp64;
+    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp64));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp65));
-    panda$core$Panda$unref$panda$core$Object($tmp66);
-    return $returnValue62;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp66));
+    panda$core$Panda$unref$panda$core$Object($tmp67);
+    return $returnValue63;
 }
 panda$core$Int64 org$pandalanguage$pandac$MethodRef$parameterCount$R$panda$core$Int64(org$pandalanguage$pandac$MethodRef* self) {
-    panda$core$Int64 $returnValue72;
-    panda$core$Int64 $tmp73 = panda$collections$Array$get_count$R$panda$core$Int64(self->value->parameters);
-    $returnValue72 = $tmp73;
-    return $returnValue72;
+    panda$core$Int64 $returnValue73;
+    panda$core$Int64 $tmp74 = panda$collections$Array$get_count$R$panda$core$Int64(self->value->parameters);
+    $returnValue73 = $tmp74;
+    return $returnValue73;
 }
 org$pandalanguage$pandac$Type* org$pandalanguage$pandac$MethodRef$parameter$panda$core$Int64$R$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$MethodRef* self, panda$core$Int64 p_index) {
-    org$pandalanguage$pandac$Type* $returnValue75;
-    org$pandalanguage$pandac$Type* $tmp76;
+    org$pandalanguage$pandac$Type* $returnValue76;
     org$pandalanguage$pandac$Type* $tmp77;
-    panda$core$Object* $tmp78;
-    panda$core$Object* $tmp79 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(self->value->parameters, p_index);
-    $tmp78 = $tmp79;
-    org$pandalanguage$pandac$Type* $tmp80 = org$pandalanguage$pandac$Type$remap$panda$collections$HashMap$LTpanda$core$String$Corg$pandalanguage$pandac$Type$GT$R$org$pandalanguage$pandac$Type(((org$pandalanguage$pandac$MethodDecl$Parameter*) $tmp78)->type, self->typeMap);
-    $tmp77 = $tmp80;
-    $tmp76 = $tmp77;
-    $returnValue75 = $tmp76;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp76));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp77));
-    panda$core$Panda$unref$panda$core$Object($tmp78);
-    return $returnValue75;
+    org$pandalanguage$pandac$Type* $tmp78;
+    panda$core$Object* $tmp79;
+    panda$core$Object* $tmp80 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(self->value->parameters, p_index);
+    $tmp79 = $tmp80;
+    org$pandalanguage$pandac$Type* $tmp81 = org$pandalanguage$pandac$Type$remap$panda$collections$HashMap$LTpanda$core$String$Corg$pandalanguage$pandac$Type$GT$R$org$pandalanguage$pandac$Type(((org$pandalanguage$pandac$MethodDecl$Parameter*) $tmp79)->type, self->typeMap);
+    $tmp78 = $tmp81;
+    $tmp77 = $tmp78;
+    $returnValue76 = $tmp77;
+    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp77));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp78));
+    panda$core$Panda$unref$panda$core$Object($tmp79);
+    return $returnValue76;
 }
 org$pandalanguage$pandac$Type* org$pandalanguage$pandac$MethodRef$returnType$R$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$MethodRef* self) {
-    org$pandalanguage$pandac$Type* $returnValue82;
-    org$pandalanguage$pandac$Type* $tmp83;
+    org$pandalanguage$pandac$Type* $returnValue83;
     org$pandalanguage$pandac$Type* $tmp84;
-    org$pandalanguage$pandac$Type* $tmp85 = org$pandalanguage$pandac$Type$remap$panda$collections$HashMap$LTpanda$core$String$Corg$pandalanguage$pandac$Type$GT$R$org$pandalanguage$pandac$Type(self->value->returnType, self->typeMap);
+    org$pandalanguage$pandac$Type* $tmp85;
+    org$pandalanguage$pandac$Type* $tmp86 = org$pandalanguage$pandac$Type$remap$panda$collections$HashMap$LTpanda$core$String$Corg$pandalanguage$pandac$Type$GT$R$org$pandalanguage$pandac$Type(self->value->returnType, self->typeMap);
+    $tmp85 = $tmp86;
     $tmp84 = $tmp85;
-    $tmp83 = $tmp84;
-    $returnValue82 = $tmp83;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp83));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp84));
-    return $returnValue82;
+    $returnValue83 = $tmp84;
+    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp84));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp85));
+    return $returnValue83;
 }
 org$pandalanguage$pandac$Type* org$pandalanguage$pandac$MethodRef$type$R$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$MethodRef* self) {
-    org$pandalanguage$pandac$Type* $returnValue87;
-    org$pandalanguage$pandac$Type* $tmp88;
+    org$pandalanguage$pandac$Type* $returnValue88;
     org$pandalanguage$pandac$Type* $tmp89;
     org$pandalanguage$pandac$Type* $tmp90;
-    org$pandalanguage$pandac$Type* $tmp91 = org$pandalanguage$pandac$MethodDecl$type$R$org$pandalanguage$pandac$Type(self->value);
-    $tmp90 = $tmp91;
-    org$pandalanguage$pandac$Type* $tmp92 = org$pandalanguage$pandac$Type$remap$panda$collections$HashMap$LTpanda$core$String$Corg$pandalanguage$pandac$Type$GT$R$org$pandalanguage$pandac$Type($tmp90, self->typeMap);
-    $tmp89 = $tmp92;
-    $tmp88 = $tmp89;
-    $returnValue87 = $tmp88;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp88));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp89));
+    org$pandalanguage$pandac$Type* $tmp91;
+    org$pandalanguage$pandac$Type* $tmp92 = org$pandalanguage$pandac$MethodDecl$type$R$org$pandalanguage$pandac$Type(self->value);
+    $tmp91 = $tmp92;
+    org$pandalanguage$pandac$Type* $tmp93 = org$pandalanguage$pandac$Type$remap$panda$collections$HashMap$LTpanda$core$String$Corg$pandalanguage$pandac$Type$GT$R$org$pandalanguage$pandac$Type($tmp91, self->typeMap);
+    $tmp90 = $tmp93;
+    $tmp89 = $tmp90;
+    $returnValue88 = $tmp89;
+    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp89));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp90));
-    return $returnValue87;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp91));
+    return $returnValue88;
 }
 panda$core$String* org$pandalanguage$pandac$MethodRef$convert$R$panda$core$String(org$pandalanguage$pandac$MethodRef* self) {
-    panda$core$String* $returnValue94;
-    panda$core$String* $tmp95;
+    panda$core$String* $returnValue95;
     panda$core$String* $tmp96;
     panda$core$String* $tmp97;
     panda$core$String* $tmp98;
     panda$core$String* $tmp99;
-    panda$core$String* $tmp101;
-    panda$core$String* $tmp102 = org$pandalanguage$pandac$MethodDecl$declaration$R$panda$core$String(self->value);
-    $tmp101 = $tmp102;
-    panda$core$String* $tmp103 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s100, $tmp101);
-    $tmp99 = $tmp103;
-    panda$core$String* $tmp105 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp99, &$s104);
-    $tmp98 = $tmp105;
-    panda$core$String* $tmp106 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp98, ((panda$core$Object*) self->types));
-    $tmp97 = $tmp106;
-    panda$core$String* $tmp108 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp97, &$s107);
-    $tmp96 = $tmp108;
-    $tmp95 = $tmp96;
-    $returnValue94 = $tmp95;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp95));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp96));
+    panda$core$String* $tmp100;
+    panda$core$String* $tmp102;
+    panda$core$String* $tmp103 = org$pandalanguage$pandac$MethodDecl$declaration$R$panda$core$String(self->value);
+    $tmp102 = $tmp103;
+    panda$core$String* $tmp104 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s101, $tmp102);
+    $tmp100 = $tmp104;
+    panda$core$String* $tmp106 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp100, &$s105);
+    $tmp99 = $tmp106;
+    panda$core$String* $tmp107 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp99, ((panda$core$Object*) self->types));
+    $tmp98 = $tmp107;
+    panda$core$String* $tmp109 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp98, &$s108);
+    $tmp97 = $tmp109;
+    $tmp96 = $tmp97;
+    $returnValue95 = $tmp96;
+    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp96));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp97));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp98));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp99));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp101));
-    return $returnValue94;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp100));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp102));
+    return $returnValue95;
 }
 void org$pandalanguage$pandac$MethodRef$cleanup(org$pandalanguage$pandac$MethodRef* self) {
-    int $tmp112;
+    int $tmp113;
     {
     }
-    $tmp112 = -1;
-    goto $l110;
-    $l110:;
+    $tmp113 = -1;
+    goto $l111;
+    $l111:;
     panda$core$Object$cleanup(((panda$core$Object*) self));
-    switch ($tmp112) {
-        case -1: goto $l113;
+    switch ($tmp113) {
+        case -1: goto $l114;
     }
-    $l113:;
+    $l114:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->value));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->types));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->typeMap));

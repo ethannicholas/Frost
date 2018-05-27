@@ -24,8 +24,8 @@ class FieldDecl : Symbol {
 
     def value:IRNode?
 
-    var resolved := false
-
+    var resolved := Compiler.Resolution.UNRESOLVED
+    
     init(owner:ClassDecl, position:Position, doccomment:String?, annotations:Annotations,
             fieldKind:Kind, name:String, type:Type, value:ASTNode?) {
         self.owner := owner

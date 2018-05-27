@@ -9,7 +9,7 @@ class MethodRef {
     def typeMap := HashMap<String, Type>()
 
     init(value:MethodDecl, types:ListView<Type>) {
-        assert value.resolved
+        assert value.resolved = Compiler.Resolution.RESOLVED
         self.value := value
         self.types := types
         for i in 0 .. value.owner.parameters.get_count().min(types.get_count()) {

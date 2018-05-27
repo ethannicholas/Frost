@@ -204,6 +204,11 @@ class Type : Symbol, Key<Type> {
     }
 
     @class
+    method RegularExpression():Type {
+        return Type("panda.core.RegularExpression", Kind.CLASS, Position(), true)
+    }
+
+    @class
     method BuiltinInt8():Type {
         return Type("builtin_int8", Type.Kind.BUILTIN_INT, 8)
     }

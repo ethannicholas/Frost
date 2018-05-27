@@ -63,6 +63,7 @@ choice ASTNode {
     PREFIX                 (Position, Token.Kind, ASTNode)
     RANGE                  (Position, ASTNode?, ASTNode?, Bit, ASTNode?)
     REAL                   (Position, Real64)
+    REGEX                  (Position, String)
     RETURN                 (Position, ASTNode?)
     SELF                   (Position)
     STRING                 (Position, String)
@@ -151,6 +152,8 @@ choice ASTNode {
             when RANGE(position, _, _, _, _):
                 return position
             when REAL(position, _):
+                return position
+            when REGEX(position, _):
                 return position
             when RETURN(position, _):
                 return position
@@ -415,6 +418,8 @@ choice ASTNode {
                 return result.finish()
             when REAL(_, value):
                 return value.convert()
+            when REGEX(_, src):
+                return "/\{src}/"
             when RETURN(_, value):
                 if value != null {
                     return "return \{value}"

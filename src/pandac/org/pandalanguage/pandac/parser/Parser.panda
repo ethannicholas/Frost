@@ -3,14 +3,16 @@ package org.pandalanguage.pandac.parser
 uses org.pandalanguage.pandac.ASTNode
 uses org.pandalanguage.pandac.ClassDecl -- FIXME should be able to import ClassDecl.Kind directly
 uses org.pandalanguage.pandac.Compiler
-uses org.pandalanguage.pandac.ErrorReporter
 uses org.pandalanguage.pandac.MethodDecl -- FIXME should be able to import MethodDecl.Kind directly
 uses org.pandalanguage.pandac.Position
 uses org.pandalanguage.pandac.Variable -- FIXME should be able to import Variable.Kind directly
+uses org.pandalanguage.regex.RegexParser
 
 @final
 class Parser {
     def lexer := Lexer()
+
+    def regexParser:RegexParser
 
     def errors:MessageQueue<Compiler.Error>
 
@@ -31,6 +33,7 @@ class Parser {
     init(errors:MessageQueue<Compiler.Error>) {
         self.errors := errors
         commaSeparatedExpressionContext.push(false)
+        regexParser := RegexParser(errors)
     }
 
     method start(path:File, source:String) {
@@ -38,6 +41,7 @@ class Parser {
         self.path := path
         self.source := source
         pushbackBuffer.clear()
+        regexParser.start(path, source)
     }
 
     method rawNext():Token {
@@ -407,7 +411,6 @@ class Parser {
                     if body = null {
                         return null
                     }
-                    Console.printLine("have lambda at \{start.position}")
                     return ASTNode.TYPED_LAMBDA(start.position, parameters.finish(), body)
                 }
                 if checkNext(Token.Kind.COMMA) != null {
@@ -415,14 +418,14 @@ class Parser {
                     def parameters := Array<ASTNode>()
                     parameters.add(expr)
                     var validLambda := true
-                    while checkNext(Token.Kind.COMMA) != null {
+                    do {
                         def nextExpr := expression()
                         if nextExpr = null {
                             return null
                         }
                         validLambda &= (nextExpr = ASTNode.IDENTIFIER)
                         parameters.add(nextExpr)
-                    }
+                    } while checkNext(Token.Kind.COMMA) != null
                     if expect(Token.Kind.RPAREN, "')'") = null {
                         return null
                     }
@@ -431,7 +434,6 @@ class Parser {
                         if body = null {
                             return null
                         }
-                        Console.printLine("have lambda at \{start.position}")
                         return ASTNode.UNTYPED_LAMBDA(start.position, parameters.finish(), body)
                     }
                     Console.printLine("have tuple at \{start.position}")
@@ -463,7 +465,6 @@ class Parser {
     ================================================================================================
     method lambda():ASTNode? {
         def start := expect(Token.Kind.IDENTIFIER, "an identifier")
-        Console.printLine("have lambda at \{start.position}")
         if checkNext(Token.Kind.COLON) != null {
             def t := type()
             if t = null {
@@ -493,9 +494,30 @@ class Parser {
     }
 
     ================================================================================================
+    REGEX = DIV <see org.pandalangauge.regex.Parser for grammar> DIV
+    ================================================================================================
+    method regex():ASTNode? {
+        if expect(Token.Kind.DIV, "'/'") = null {
+            return null
+        }
+        regexParser.lexer.dfa.offset := lexer.dfa.offset
+        regexParser.lexer.dfa.line := lexer.dfa.line
+        regexParser.lexer.dfa.column := lexer.dfa.column
+        def regex := regexParser.regex()
+        lexer.dfa.offset := regexParser.lexer.dfa.offset
+        lexer.dfa.line := regexParser.lexer.dfa.line
+        lexer.dfa.column := regexParser.lexer.dfa.column
+        if regex = null {
+            return null
+        }
+        expect(Token.Kind.DIV, "'/'")
+        return regex
+    }
+
+    ================================================================================================
     term = IDENTIFIER | DECIMAL | BINARY | HEX | REAL | SELF | SUPER | NULL | TRUE | FALSE |
             string | parenthesizedExpression | ANNOTATION(@pre) LPAREN expression RPAREN |
-            anonymousMethod | lambda | ANNOTATION(@return)
+            anonymousMethod | lambda | regex | ANNOTATION(@return)
     ================================================================================================
     method term():ASTNode? {
         def t := next()
@@ -547,6 +569,9 @@ class Parser {
             when Token.Kind.FUNCTION, Token.Kind.METHOD:
                 pushback(t)
                 return anonymousMethod()
+            when Token.Kind.DIV:
+                pushback(t)
+                return regex()
             otherwise:
                 error(t, "expected an expression, but found '\{text(t)}'")
                 return null

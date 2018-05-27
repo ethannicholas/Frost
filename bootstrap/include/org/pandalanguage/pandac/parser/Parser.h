@@ -5,6 +5,7 @@
 typedef struct panda$core$Class panda$core$Class;
 #include "panda/core/Int32.h"
 typedef struct org$pandalanguage$pandac$parser$Lexer org$pandalanguage$pandac$parser$Lexer;
+typedef struct org$pandalanguage$regex$RegexParser org$pandalanguage$regex$RegexParser;
 typedef struct panda$threads$MessageQueue panda$threads$MessageQueue;
 typedef struct panda$io$File panda$io$File;
 typedef struct panda$core$String panda$core$String;
@@ -16,6 +17,7 @@ typedef struct org$pandalanguage$pandac$parser$Parser {
     panda$core$Class* $class;
     panda$core$Int32 refCount;
     org$pandalanguage$pandac$parser$Lexer* lexer;
+    org$pandalanguage$regex$RegexParser* regexParser;
     panda$threads$MessageQueue* errors;
     panda$io$File* path;
     panda$core$String* source;
@@ -28,7 +30,7 @@ typedef struct org$pandalanguage$pandac$parser$Parser {
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"
 #undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[78]; } org$pandalanguage$pandac$parser$Parser$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[79]; } org$pandalanguage$pandac$parser$Parser$class_type;
 extern org$pandalanguage$pandac$parser$Parser$class_type org$pandalanguage$pandac$parser$Parser$class;
 
 #ifndef PANDA_TYPESONLY
@@ -62,6 +64,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$convert
 org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$string$R$org$pandalanguage$pandac$ASTNode$Q(org$pandalanguage$pandac$parser$Parser* self);
 org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$parenthesizedExpression$R$org$pandalanguage$pandac$ASTNode$Q(org$pandalanguage$pandac$parser$Parser* self);
 org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$lambda$R$org$pandalanguage$pandac$ASTNode$Q(org$pandalanguage$pandac$parser$Parser* self);
+org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$regex$R$org$pandalanguage$pandac$ASTNode$Q(org$pandalanguage$pandac$parser$Parser* self);
 org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$term$R$org$pandalanguage$pandac$ASTNode$Q(org$pandalanguage$pandac$parser$Parser* self);
 panda$core$String* org$pandalanguage$pandac$parser$Parser$getClassName$org$pandalanguage$pandac$ASTNode$R$panda$core$String$Q(org$pandalanguage$pandac$ASTNode* p_expr);
 panda$core$String* org$pandalanguage$pandac$parser$Parser$methodName$R$panda$core$String$Q(org$pandalanguage$pandac$parser$Parser* self);

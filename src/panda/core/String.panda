@@ -42,6 +42,10 @@ simpler:
     for c in string {
         process(c)
     }
+
+As `String` is immutable, assembling a string via repeated concatenation is a very slow operation
+that creates many temporary objects. Instead create a [MutableString], repeatedly call `append` on
+it, and then finally turn it into an immutable `String` using [finish](MutableString.finish).
 ====================================================================================================
 @final
 class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
@@ -831,6 +835,50 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
     }
 
     ================================================================================================
+    Returns `true` if this string matches the given regular expression. The regular expression must
+    match the entire string.
+    
+    @param regex the regular expression to compare against
+    @returns `true` if the string matches
+    ================================================================================================
+    function matches(regex:RegularExpression):Bit {
+        return regex.matcher(self).matches()
+    }
+
+    ================================================================================================
+    Returns `true` if this string contains a match for the given regular expression. The regular
+    expression may match zero or more characters of the string, starting at any point.
+    
+    @param needle the regular expression to search for
+    @returns `true` if the string contains a match
+    ================================================================================================
+    function contains(needle:RegularExpression):Bit {
+        return needle.matcher(self).find()
+    }
+
+    ================================================================================================
+    Matches the string against the given regular expression, returning an array of its capture
+    groups. Group 0, the group containing the entire string, is not returned. If the string does not
+    match the regular expression, returns `null`. For example, `"1,2,34".parse(/(\d+),(\d+),(\d+)/)`
+    will return a list consisting of `"1"`, `"2"`, and `"34"`.
+    
+    @param regex the regular expression to parse against
+    @returns a list of the capture groups, or `null` if the string did not match
+    ================================================================================================
+    -- @safeReturn FIXME
+    function parse(regex:RegularExpression):ListView<String>? {
+        def matcher := regex.matcher(self)
+        if matcher.matches() {
+            def result := Array<String>()
+            for i in 1 .. matcher.get_groupCount() {
+                result.add(matcher.group(i))
+            }
+            return result
+        }
+        return null
+    }
+
+    ================================================================================================
     Returns a new string with every occurrence of `search` replaced with `replacement`.
 
     @param search the string to search for
@@ -851,6 +899,54 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
             index := Index(nextIndex.value + search._length)
         }
         return result.finish()
+    }
+
+    ============================================================================
+    Returns a new string with every match of `search` replaced with
+    `replacement`. The replacement string may contain `$1`-style regular 
+    expression group references; for instance `s.replace(regex, "$1")` will
+    replace every occurrence of the regex with the contents of its first group.
+    
+    @param search the regular expression to search for
+    @param replacement the replacement text
+    @returns a string with all matches replaced
+    ============================================================================
+    function replace(search:RegularExpression, replacement:String):String {
+        Console.printLine("replace: \{replacement} into \{self}")
+        def result := MutableString()
+        def matcher := search.matcher(self)
+        while matcher.find() {
+            matcher.appendReplacement(result, replacement)
+        }
+        matcher.appendTail(result)
+        return result.finish()
+    }
+
+    ================================================================================================
+    Searches the string for a regular expression, replacing occurrences of the regular expression
+    with new text determined by a function. For instance, given:
+
+        "This is a test!".replace(/\w+/, word => word.length)
+
+    The regular expression `/\w+/` matches sequences of one or more word characters; in other words,
+    it matches all words occurring in the string. The replacement function 
+    `word => word.length.convert()` replaces each matched sequence with the number of characters in
+    the sequence, resulting in the text:
+
+        4 2 1 4!
+
+    @param search the regular expression to match the string with
+    @param replacement a function generating the replacement text
+    @returns a new string with all occurrences of the regular expression  replaced
+    ============================================================================
+    function replace(search:RegularExpression, replacement:(String)=>(Object)):String {
+        def result := MutableString()
+        def matcher := search.matcher(self)
+        while matcher.find() {
+            matcher.appendReplacement(result, replacement(matcher.group(0)).convert(), false)
+        }
+        matcher.appendTail(result)
+        return result.convert()
     }
 
     ================================================================================================

@@ -10,7 +10,7 @@ typedef struct panda$core$String panda$core$String;
 typedef struct panda$core$Weak panda$core$Weak;
 typedef struct panda$collections$Array panda$collections$Array;
 #include "panda/core/Int64.h"
-#include "panda/core/Bit.h"
+#include "org/pandalanguage/pandac/Compiler/Resolution.h"
 
 typedef struct org$pandalanguage$pandac$ChoiceEntry {
     panda$core$Class* $class;
@@ -23,7 +23,7 @@ typedef struct org$pandalanguage$pandac$ChoiceEntry {
     panda$collections$Array* fields;
     panda$core$Int64 rawValue;
     panda$core$Weak* initMethod;
-    panda$core$Bit resolved;
+    org$pandalanguage$pandac$Compiler$Resolution resolved;
 } org$pandalanguage$pandac$ChoiceEntry;
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"

@@ -12,6 +12,8 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
+#include "unicode/uregex.h"
+
 typedef uint8_t Bit;
 
 #define true 1
@@ -120,6 +122,21 @@ typedef struct Method {
     Object* target;
 } Method;
 
+typedef struct RegularExpression {
+    Class* cl;
+    int32_t refcnt;
+    void* nativeHandle;
+} RegularExpression;
+
+typedef struct Matcher {
+    Class* cl;
+    int32_t refcnt;
+    void* nativeHandle;
+    String* searchText;
+    Bit matched;
+    Bit replacementIndex;
+} Matcher;
+
 extern Class panda$core$Panda$class;
 
 extern Class panda$io$File$class;
@@ -133,6 +150,8 @@ extern Class panda$collections$CollectionView$class;
 extern Class panda$collections$ListView$class;
 
 extern Class panda$core$System$Process$class;
+
+extern Class panda$core$Matcher$class;
 
 void panda$core$Panda$init(Object*);
 
@@ -488,6 +507,120 @@ int64_t panda$core$Panda$currentTime$R$builtin_int64() {
     }
     return ((int64_t) t.tv_sec) * 1000 + ((int64_t) t.tv_usec) / 1000;
     
+}
+
+// RegularExpression
+
+void pandaFatalError(const char* msg) {
+    printf("%s\n", msg);
+    abort();
+}
+
+void panda$core$RegularExpression$compile$panda$core$String(RegularExpression* r, String* regex) {
+    UErrorCode status = U_ZERO_ERROR;
+    char* text = pandaGetCString(regex);
+    UText* ut = utext_openUTF8(NULL, text, regex->size, &status);
+    UParseError parseStatus;
+    int icuFlags = 0;
+    r->nativeHandle = uregex_openUText(ut, icuFlags, &parseStatus, &status);
+    ++allocations;
+    utext_close(ut);
+    pandaFree(text);
+    if (U_FAILURE(status)) {
+        pandaFatalError(u_errorName(status));
+    }
+}
+
+Matcher* panda$core$RegularExpression$matcher$panda$core$String$R$panda$core$Matcher(
+        RegularExpression* self, String* s) {
+    Matcher* result = pandaObjectAlloc(sizeof(Matcher), &panda$core$Matcher$class);
+    UErrorCode status = U_ZERO_ERROR;
+    ++allocations;
+    result->nativeHandle = uregex_clone(self->nativeHandle, &status);
+    if (U_FAILURE(status)) {
+        pandaFatalError(u_errorName(status));
+    }
+    result->searchText = s;
+    panda$core$Panda$ref$panda$core$Object((Object*) s);    
+    UText* ut = utext_openUTF8(NULL, (const char*) s->data, s->size, &status);
+    if (U_FAILURE(status)) {
+        pandaFatalError(u_errorName(status));
+    }
+    uregex_setUText(result->nativeHandle, ut, &status);
+    if (U_FAILURE(status)) {
+        pandaFatalError(u_errorName(status));
+    }
+    utext_close(ut);
+    return result;
+}
+
+void panda$core$RegularExpression$destroy(RegularExpression* self) {
+    uregex_close(self->nativeHandle);
+    --allocations;
+}
+
+void panda$core$Matcher$matches$R$panda$core$Bit(Bit* result, Matcher* self) {
+    UErrorCode status = U_ZERO_ERROR;
+    self->matched = uregex_matches(self->nativeHandle, 0, &status);
+    *result = self->matched;
+    self->replacementIndex = self->searchText->size;
+    if (U_FAILURE(status)) {
+        pandaFatalError(u_errorName(status));
+    }
+}
+
+void panda$core$Matcher$nativeFind$panda$core$String$Index$R$panda$core$Bit(Bit* result,
+        Matcher* self, int64_t startIndex) {
+    UErrorCode status = U_ZERO_ERROR;
+    *result = uregex_find(self->nativeHandle, startIndex, &status);
+    if (U_FAILURE(status)) {
+        pandaFatalError(u_errorName(status));
+    }
+}
+
+void panda$core$Matcher$get_start$R$panda$core$String$Index(int64_t* result, Matcher* self) {
+    UErrorCode status = U_ZERO_ERROR;
+    *result = uregex_start(self->nativeHandle, 0, &status);
+    if (U_FAILURE(status)) {
+        pandaFatalError(u_errorName(status));
+    }
+
+}
+
+void panda$core$Matcher$get_end$R$panda$core$String$Index(int64_t* result, Matcher* self) {
+    UErrorCode status = U_ZERO_ERROR;
+    *result = uregex_end(self->nativeHandle, 0, &status);
+    if (U_FAILURE(status)) {
+        pandaFatalError(u_errorName(status));
+    }
+
+}
+
+void panda$core$Matcher$get_groupCount$R$panda$core$Int64(int64_t* result, Matcher* self) {
+    UErrorCode status = U_ZERO_ERROR;
+    *result = uregex_groupCount(self->nativeHandle, &status) + 1;
+    if (U_FAILURE(status)) {
+        pandaFatalError(u_errorName(status));
+    }
+}
+
+String* panda$core$Matcher$group$panda$core$Int64$R$panda$core$String(Matcher* self,
+        int64_t group) {
+    UErrorCode status = U_ZERO_ERROR;
+    int64_t length;
+    UText* ut = uregex_groupUText(self->nativeHandle, group, NULL, &length, &status);
+    if (U_FAILURE(status)) {
+        pandaFatalError(u_errorName(status));
+    }
+    const char* utf8 = (ut->context + (int) UTEXT_GETNATIVEINDEX(ut));
+    String* result = pandaNewString(utf8, length);
+    utext_close(ut);
+    return result;
+}
+
+void panda$core$Matcher$destroy(Matcher* self) {
+    uregex_close(self->nativeHandle);
+    --allocations;
 }
 
 // Thread

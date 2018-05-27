@@ -115,6 +115,15 @@ class Main {
         args.add("-L.")
         args.add("-lpanda")
         args.add("-lm")
+        def icuLibs := Config.ICU_LIBRARIES.split(";")
+        for lib in icuLibs {
+            def libFile := File(lib)
+            args.add("-L" + libFile.parent())
+            var simpleName := libFile.simpleName()
+            assert simpleName.startsWith("lib")
+            simpleName := simpleName[3..]
+            args.add("-l" + simpleName)
+        }
         args.add("-m64")
         args.add("-fPIC")
         args.add("-o")
@@ -210,7 +219,7 @@ class Main {
         llc := llvmDir.resolve("bin/llc")
         gcc := File("/usr/bin/gcc")
         if sources.get_count() = 0 {
-            err.printLine("no input files specified2")
+            err.printLine("no input files specified")
             System.exit(1)
         }
         if format = null {
@@ -299,11 +308,6 @@ class Main {
 
     @class
     method main(args:ListView<String>) {
-        if args[1] = "--test" {
-            for line in File("/tmp/Test2.panda").lines().filter(containsError) {
-                Console.printLine(line)
-            }
-        }
         Main().run(args)
     }
 }

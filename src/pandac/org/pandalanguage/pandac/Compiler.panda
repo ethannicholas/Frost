@@ -5,6 +5,13 @@ uses org.pandalanguage.pandac.parser.Token
 
 @final
 class Compiler {
+    choice Resolution {
+        UNRESOLVED
+        IN_PROGRESS
+        RESOLVED
+        RESOLVED_WITH_ERRORS
+    }
+
     class Error : Immutable {
         def file:File
 
@@ -209,6 +216,7 @@ class Compiler {
         addAlias("panda.core.Range")
         addAlias("panda.core.Real32")
         addAlias("panda.core.Real64")
+        addAlias("panda.core.RegularExpression")
         addAlias("panda.core.SimpleRange")
         addAlias("panda.core.SteppedRange")
         addAlias("panda.core.String")
@@ -501,9 +509,10 @@ class Compiler {
     }
 
     method resolve(m:MethodDecl) {
-        if m.resolved {
+        if m.resolved != Resolution.UNRESOLVED {
             return
         }
+        m.resolved := Resolution.IN_PROGRESS
         resolve(m.owner)
         currentClass.push(m.owner)
         def old := symbolTable
@@ -513,12 +522,20 @@ class Compiler {
             if resolved != null {
                 p.type := resolved
             }
+            else {
+                m.resolved := Resolution.RESOLVED_WITH_ERRORS
+            }
         }
         def resolved := resolve(m.returnType)
         if resolved != null {
             m.returnType := resolved
         }
-        m.resolved := true
+        else {
+            m.resolved := Resolution.RESOLVED_WITH_ERRORS
+        }
+        if m.resolved = Resolution.IN_PROGRESS {
+            m.resolved := Resolution.RESOLVED
+        }
         if !m.owner.external {
             def overridden := getOverriddenMethod(m)
             if overridden != null {
@@ -576,11 +593,17 @@ class Compiler {
     }
 
     method resolve(f:FieldDecl) {
-        if f.resolved {
+        if f.resolved != Resolution.UNRESOLVED {
             return
         }
-        f.resolved := true
+        f.resolved := Resolution.IN_PROGRESS
         determineRawType(f)
+        if f.type != Type.Void() & f.type.resolved {
+            f.resolved := Resolution.RESOLVED
+        }
+        else {
+            f.resolved := Resolution.RESOLVED_WITH_ERRORS
+        }
         if f.annotations.isWeak() & f.type != Type.Void() {
             f.type := Type.WeakOf(f.type)
             if f.value != null {
@@ -592,19 +615,30 @@ class Compiler {
     }
 
     method resolve(c:ChoiceEntry) {
-        if c.resolved {
+        if c.resolved != Resolution.UNRESOLVED {
             return
         }
-        c.resolved := true
         if c.fields.get_count() = 0 {
+            c.resolved := Resolution.RESOLVED
             createChoiceEntryInit(c)
             return
         }
+        c.resolved := Resolution.IN_PROGRESS
         currentClass.push(c.owner)
         def old := symbolTable
         symbolTable := c.owner.symbolTable
         for i in 0 .. c.fields.get_count() {
-            c.fields[i] := resolve(c.fields[i])
+            def resolved := resolve(c.fields[i])
+            if resolved != null {
+                c.fields[i] := resolved
+            }
+            else {
+                c.fields[i] := Type.Invalid()
+                c.resolved := Resolution.RESOLVED_WITH_ERRORS
+            }
+        }
+        if c.resolved = Resolution.IN_PROGRESS {
+            c.resolved := Resolution.RESOLVED
         }
         createChoiceEntryInit(c)
         symbolTable := old
@@ -1988,8 +2022,8 @@ class Compiler {
         return result
     }
 
-    @post(@return.type() = target)
-    method methodCast(node:IRNode, target:Type):IRNode {
+    @post(@return = null | @return.type() = target)
+    method methodCast(node:IRNode, target:Type):IRNode? {
         match node {
             when IRNode.UNRESOLVED_METHOD_REFERENCE(position, targetNode, methods):
                 var bestCost:Int? := null
@@ -2023,8 +2057,7 @@ class Compiler {
                             ASTNode.IR_WRAPPER(IRNode.TYPE_REFERENCE(position,
                                 target.subtypes[i]))))
                 }
-                def lambda := compileTypedLambda(position, parameters.finish(), expr)
-                assert lambda != null
+                def lambda := compileTypedLambda(position, parameters.finish(), expr, target)
                 return coerce(lambda, target)
         }
         def position := node.position()
@@ -2169,7 +2202,12 @@ class Compiler {
         }
         if node.type().nonnullable().isMethod() & target.nonnullable().isMethod() &
             !equal(node.type().nonnullable().subtypes, target.nonnullable().subtypes) {
-            return methodCast(node, target)
+            def result := methodCast(node, target)
+            if result = null {
+                -- error has already been reported, just need to return a non-null node
+                return IRNode.CAST(position, node, target, true)
+            }
+            return result
         }
         var result := IRNode.CAST(position, node, target, isExplicit)
         if !isRefCounted(node.type()) & isRefCounted(target) {
@@ -2183,7 +2221,10 @@ class Compiler {
     }
 
     method callCost(m:MethodRef, args:ListView<IRNode>, expectedReturn:Type?):Int? {
-        assert m.value.resolved
+        assert m.value.resolved != Resolution.UNRESOLVED
+        if m.value.resolved = Resolution.RESOLVED_WITH_ERRORS {
+            return null
+        }
         if m.parameterCount() != args.get_count() {
             return null
         }
@@ -2241,7 +2282,10 @@ class Compiler {
     }
 
     method call(position:Position, target:IRNode?, m:MethodRef, args:ListView<IRNode>):IRNode? {
-        assert m.value.resolved
+        assert m.value.resolved != Resolution.UNRESOLVED
+        if m.value.resolved = Resolution.RESOLVED_WITH_ERRORS {
+            return null
+        }
         if m.parameterCount() != args.get_count() {
             error(position, "\{m.value.declaration()} expected \{m.parameterCount()} argument" +
                     "\{m.parameterCount() = 1:|s}, but received \{args.get_count()}")
@@ -2409,7 +2453,10 @@ class Compiler {
 
     method createChoiceEntryInit(entry:ChoiceEntry) {
         def cl := entry.owner
-        assert entry.resolved
+        assert entry.resolved != Resolution.UNRESOLVED
+        if entry.resolved != Resolution.RESOLVED {
+            return
+        }
         outer: for m in cl.methods {
             if m.methodKind != MethodDecl.Kind.INIT |
                     m.parameters.get_count() != entry.fields.get_count() + 1 {
@@ -2444,7 +2491,7 @@ class Compiler {
         }
         def synthetic := MethodDecl(cl, cl.position, null, Annotations(), MethodDecl.Kind.INIT,
                 "init", parameters, Type.Void(), statements.finish())
-        synthetic.resolved := true
+        synthetic.resolved := Resolution.RESOLVED
         entry.initMethod := synthetic
         cl.methods.add(synthetic)
         cl.symbolTable.add(synthetic)
@@ -3635,8 +3682,18 @@ class Compiler {
                 MethodRef(methodDecl, Array<Type>())) -- FIXME literal
     }
 
+    method compileRegex(position:Position, regex:String):IRNode? {
+        def args := Array<IRNode>() -- FIXME literal
+        args.add(compileString(position, regex))
+        return call(IRNode.TYPE_REFERENCE(position, Type.RegularExpression()), args.finish())
+    }
+
     method compileExpression(e:ASTNode):IRNode? {
         match e {
+            when ASTNode.AT_PRE(position, expr):
+                return compileAtPre(position, expr)
+            when ASTNode.AT_RETURN(position):
+                return compileAtReturn(position)
             when ASTNode.BINARY(position, left, op, right):
                 return compileBinary(position, left, op, right)
             when ASTNode.BIT(position, value):
@@ -3659,42 +3716,40 @@ class Compiler {
                     }
                 }
                 return result
+            when ASTNode.CHOICE_FIELD_REFERENCE(position, base, ce, field):
+                return compileChoiceFieldReference(position, base, ce, field)
             when ASTNode.DOT(position, base, field):
                 return compileDot(position, base, field)
             when ASTNode.IDENTIFIER(position, name):
                 return compileIdentifier(position, name)
             when ASTNode.INT(position, value):
                 return IRNode.INT(position, Type.IntLiteral(value), value)
+            when ASTNode.IR_WRAPPER(ir):
+                return ir
             when ASTNode.METHOD(position, _, _, kind, _, parameters, returnType, body):
                 return compileAnonymousMethod(position, kind, parameters, returnType, body)
-            when ASTNode.TYPED_LAMBDA(position, parameters, body):
-                return compileTypedLambda(position, parameters, body)
-            when ASTNode.UNTYPED_LAMBDA(position, parameters, body):
-                return compileUntypedLambda(position, parameters, body)
+            when ASTNode.NULL(position):
+                return compileNull(position)
             when ASTNode.REAL(position, value):
                 return IRNode.REAL(position, Type.RealLiteral(value), value)
+            when ASTNode.REGEX(position, regex):
+                return compileRegex(position, regex)
             when ASTNode.PREFIX(position, op, base):
                 return compilePrefix(position, op, base)
             when ASTNode.RANGE(position, start, end, inclusive, step):
                 return compileRange(position, start, end, inclusive, step)
-            when ASTNode.STRING(position, str):
-                return compileString(position, str)
-            when ASTNode.TYPE, ASTNode.GENERIC_TYPE, ASTNode.NULLABLE_TYPE:
-                return compileType(e)
             when ASTNode.SELF(position):
                 return compileSelf(position)
+            when ASTNode.STRING(position, str):
+                return compileString(position, str)
             when ASTNode.SUPER(position):
                 return compileSuper(position)
-            when ASTNode.NULL(position):
-                return compileNull(position)
-            when ASTNode.CHOICE_FIELD_REFERENCE(position, base, ce, field):
-                return compileChoiceFieldReference(position, base, ce, field)
-            when ASTNode.AT_PRE(position, expr):
-                return compileAtPre(position, expr)
-            when ASTNode.AT_RETURN(position):
-                return compileAtReturn(position)
-            when ASTNode.IR_WRAPPER(ir):
-                return ir
+            when ASTNode.TYPE, ASTNode.GENERIC_TYPE, ASTNode.NULLABLE_TYPE:
+                return compileType(e)
+            when ASTNode.TYPED_LAMBDA(position, parameters, body):
+                return compileTypedLambda(position, parameters, body, null)
+            when ASTNode.UNTYPED_LAMBDA(position, parameters, body):
+                return compileUntypedLambda(position, parameters, body)
         }
         assert false, "unsupported expression: \{e} (\{e.position()})"
     }
@@ -4437,7 +4492,10 @@ class Compiler {
                         return false
                 }
             when IRNode.FIELD_REFERENCE(_, _, _, f):
-                assert f.resolved
+                assert f.resolved != Resolution.UNRESOLVED
+                if f.resolved != Resolution.RESOLVED {
+                    return false
+                }
                 return f.fieldKind = FieldDecl.Kind.CONSTANT & f.value != null &
                         isConstantInt(f.value)
             when IRNode.VARIABLE_REFERENCE(_, v):
@@ -4530,8 +4588,7 @@ class Compiler {
     }
 
     method compileTypedLambda(position:Position, rawParameters:ImmutableArray<ASTNode>,
-            expr:ASTNode):IRNode? {
-        Console.printLine("typed lambda: \{rawParameters}, \{expr}")
+            expr:ASTNode, expectedType:Type?):IRNode? {
         def symbols := AutoSymbolTable(self)
         for p in rawParameters {
             match p {
@@ -4547,9 +4604,13 @@ class Compiler {
                     symbolTable.add(Variable(position, Variable.Kind.DEF, name, type))
             }
         }
-        def compiledExpr := compileExpression(expr)
+        var compiledExpr := compileExpression(expr)
         if compiledExpr = null {
             return null
+        }
+        if expectedType != null {
+            compiledExpr := coerce(compiledExpr,
+                    expectedType.subtypes[expectedType.subtypes.get_count() - 1])
         }
         def body := Array<ASTNode>() -- FIXME literal
         body.add(ASTNode.RETURN(position, expr))
@@ -4786,7 +4847,7 @@ class Compiler {
             fieldInitializers := Array<IRNode>()
             for f in currentClass[0].fields {
                 resolve(f)
-                if !f.annotations.isClass() & f.value != null {
+                if f.resolved = Resolution.RESOLVED & !f.annotations.isClass() & f.value != null {
                     def fieldRef := IRNode.FIELD_REFERENCE(m.position, f.type,
                             IRNode.SELF(m.position, m.owner.type()), f)
                     def value:IRNode
@@ -4807,8 +4868,8 @@ class Compiler {
             }
         }
         def finally:Array<IRNode>?
-        if m.name = "cleanup" & m.parameters.get_count() = 0 & m.owner.name != "panda.core.Object" &
-            !isValue(m.owner) {
+        if errorCount = 0 & m.name = "cleanup" & m.parameters.get_count() = 0 &
+            m.owner.name != "panda.core.Object" & !isValue(m.owner) {
             def cleanup := compileExpression(ASTNode.DOT(m.position, ASTNode.SUPER(m.position),
                     "cleanup"))
             assert cleanup != null
@@ -4833,7 +4894,8 @@ class Compiler {
                 def finalBody := Array<IRNode>(compiled)
                 for f in m.owner.fields {
                     resolve(f)
-                    if f.type.resolved & !f.annotations.isClass() & isRefCounted(f.type) {
+                    if f.resolved = Resolution.RESOLVED & !f.annotations.isClass() &
+                            isRefCounted(f.type) {
                         def fieldRef := IRNode.FIELD_REFERENCE(Position(), f.type,
                                 IRNode.SELF(Position(), m.owner.type()), f)
                         finalBody.add(compilePandaCall("unref", fieldRef))
@@ -4862,6 +4924,9 @@ class Compiler {
         def whens := Array<ASTNode>()
         for e in cl.choiceEntries {
             resolve(e)
+            if errorCount != 0 {
+                return
+            }
             def tests := Array<ASTNode>() -- FIXME literal
             def fields := Array<ASTNode>()
             for i in 0 .. e.fields.get_count() {
