@@ -65,7 +65,7 @@ void org$pandalanguage$pandac$MethodRef$init$org$pandalanguage$pandac$MethodDecl
     self->typeMap = $tmp2;
     panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp3));
-    panda$core$Bit $tmp5 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(p_value->resolved.$rawValue, ((panda$core$Int64) { 2 }));
+    panda$core$Bit $tmp5 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit(p_value->resolved.$rawValue, ((panda$core$Int64) { 0 }));
     PANDA_ASSERT($tmp5.value);
     {
         $tmp6 = self->value;

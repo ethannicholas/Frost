@@ -87,3 +87,52 @@ split2
 This
 is
 a long string
+
+matchCount
+6
+6
+10
+1
+2
+10
+0
+
+replace
+Hell123, W123rld!
+123456789
+456456789
+123456456
+bbbbbbbbb
+aa
+aa
+
+
+split
+[Hello, World!]
+[, hello, world, , test, ]
+[1, 2,3,4,5,6]
+[H, e, llo]
+
+trim
+Hello, World!
+Hello, World!
+
+
+
+contains
+true
+false
+true
+false
+true
+false
+
+*
+HelloHelloHello
+
+
+
+format
+Hello
+"Hello"
+"\tHe\"llo\n\\"

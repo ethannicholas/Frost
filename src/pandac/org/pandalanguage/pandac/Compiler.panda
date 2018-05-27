@@ -1545,7 +1545,10 @@ class Compiler {
             symbolTable.add(Variable(expr.position(), Variable.Kind.DEF, parameters[i],
                     target.subtypes[i]))
         }
+        def old := reportErrors
+        reportErrors := false
         def compiledExpr := compileExpression(expr)
+        reportErrors := old
         if compiledExpr = null {
             return null
         }
@@ -3256,10 +3259,10 @@ class Compiler {
         }
         def args := Array<IRNode>()
         args.add(right)
-        assert reportErrors
+        def old := reportErrors
         reportErrors := false
         var result := call(left, operatorName(op), args)
-        reportErrors := true
+        reportErrors := old
         if result = null {
             args.clear()
             args.add(left)
@@ -3565,10 +3568,10 @@ class Compiler {
             -- 'o->String.length'. This is obviously meant to be a cast to String followed by a
             -- call to get_length(), but syntactically it could just as easily be a cast to a class
             -- named String.length. We need to disambiguate these cases here.
-            assert reportErrors
+            def old := reportErrors
             reportErrors := false
             def type := resolve(rawType)
-            reportErrors := true
+            reportErrors := old
             if type = null {
                 def base := compileCast(position, expr,
                         Type(rawType.name[..index], Type.Kind.CLASS, position))
@@ -4835,6 +4838,11 @@ class Compiler {
         symbolTable := getSymbolTable(m.owner)
         currentMethod.push(m)
         resolve(m)
+        if m.resolved != Resolution.RESOLVED {
+            currentMethod.pop(m)
+            currentClass.pop(m.owner)
+            return null
+        }
         assert m.body != null
         def symbols := SymbolTable(symbolTable)
         for p in m.parameters {
@@ -4963,7 +4971,9 @@ class Compiler {
         }
         else {
             resolve(m)
-            codeGenerator.writeDeclaration(m)
+            if m.resolved = Resolution.RESOLVED {
+                codeGenerator.writeDeclaration(m)
+            }
         }
     }
 

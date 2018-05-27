@@ -1,0 +1,46 @@
+method main() {
+    Console.printLine("contains")
+    Console.printLine("The answer is 42.".contains(/\d+/))
+    Console.printLine("What's the question?".contains(/\d+/))
+    Console.printLine("".contains(/\d+/))
+    Console.printLine("".contains(/.?/))
+    Console.printLine()
+
+    Console.printLine("matches")
+    Console.printLine("(999) 555-1212".matches(/\(\d{3}\) \d{3}-\d{4}/))
+    Console.printLine("(999) 555-12121".matches(/\(\d{3}\) \d{3}-\d{4}/))
+    Console.printLine("".matches(/\(\d{3}\) \d{3}-\d{4}/))
+    Console.printLine("".matches(/.?/))
+    Console.printLine()
+
+    Console.printLine("split")
+    Console.printLine("1;2,3;4".split(/[;,]/))
+    Console.printLine("1;2,3;4".split(/[;,]/, 2))
+    Console.printLine("1234".split(/,?/))
+    Console.printLine("1234".split(/,?/, 2))
+    Console.printLine("Multiple\nLine\n\nString\n\n".split(/\w+/))
+    Console.printLine()
+
+    Console.printLine("replace")
+    Console.printLine("Hello, World!".replace(/[, !]/, ""))
+    Console.printLine("123, 456, 789".replace(/\d+/, "<<$0>>"))
+    Console.printLine("123, 456, 789".replace(/(\d+)/, "<<$1>>"))
+    Console.printLine("no matches!".replace(/\d+/, "oops!"))
+    Console.printLine("Hello".replace(/q?/, "q"))
+    Console.printLine("123".replace(/\d/, "$0"))
+    Console.printLine("123".replace(/\d/, "$1"))
+    Console.printLine("123".replace(/(\d)/, "$12"))
+    Console.printLine("123".replace(/\d/, "$01"))
+    Console.printLine("1,2,3,4,5,6,7,8,9,10".replace(/\d+/, s => s.convert()->Int? * 2))
+    Console.printLine("Curie, Marie\nNewton, Isaac\nEinstein, Albert".replace(
+            /(\w+)\s*,\s*(\w+)/, groups:ListView<String> => "\{groups[2]} \{groups[1]}"->Object)) -- FIXME shouldn't need ->Object
+    Console.printLine()
+
+    Console.printLine("matchCount")
+    Console.printLine("Hello, World!".matchCount(/[A-Z]/))
+    Console.printLine("Hello, World!".matchCount(/[a-z]{3}/))
+    Console.printLine("Hello, World!".matchCount(/[a-z]{3}/, true))
+    Console.printLine("Hello".matchCount(/./))
+    Console.printLine("Hello".matchCount(/.?/))
+    Console.printLine("".matchCount(/.?/, true))
+}

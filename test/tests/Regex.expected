@@ -1,0 +1,46 @@
+contains
+true
+false
+false
+true
+
+matches
+true
+false
+false
+true
+
+split
+[1, 2, 3, 4]
+[1, 2,3;4]
+[, 1, 2, 3, 4]
+[, 1234]
+[, 
+, 
+
+, 
+
+]
+
+replace
+HelloWorld
+<<123>>, <<456>>, <<789>>
+<<123>>, <<456>>, <<789>>
+no matches!
+qHqeqlqlqo
+123
+$1$1$1
+122232
+112131
+2,4,6,8,10,12,14,16,18,20
+Marie Curie
+Isaac Newton
+Albert Einstein
+
+matchCount
+2
+2
+4
+5
+5
+0

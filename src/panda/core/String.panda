@@ -409,6 +409,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
         return self + other.convert()->String
     }
 
+    @pre(count >= 0)
     function *(count:Int):String {
         def result := MutableString()
         for i in 0 .. count {
@@ -886,6 +887,9 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
     @returns a string with all matches replaced
     ================================================================================================
     function replace(search:String, replacement:String):String {
+        if search = "" {
+            return self
+        }
         def result := MutableString()
         var index := start()
         loop {
@@ -912,7 +916,6 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
     @returns a string with all matches replaced
     ============================================================================
     function replace(search:RegularExpression, replacement:String):String {
-        Console.printLine("replace: \{replacement} into \{self}")
         def result := MutableString()
         def matcher := search.matcher(self)
         while matcher.find() {
@@ -947,6 +950,124 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
         }
         matcher.appendTail(result)
         return result.convert()
+    }
+
+    ================================================================================================
+    As [replace(RegularExpression, (String)=>(Object))], but the replacement function receives the
+    capture groups from the regular expression rather than the raw matched text. The groups list
+    includes the special whole-match group at index `0`, with the first set of parentheses in the
+    regular expression corresponding to index `1`.
+
+    @param search the regular expression to match the string with
+    @param replacement a function generating the replacement text
+    @returns a new string with all occurrences of the regular expression replaced
+    ================================================================================================
+    function replace(search:RegularExpression, replacement:(ListView<String>)=>(Object)):String {
+        def result := MutableString()
+        def matcher := search.matcher(self)
+        while matcher.find() {
+            def groups := Array<String>()
+            for i in 0 .. matcher.get_groupCount() {
+                groups.add(matcher.group(i))
+            }
+            matcher.appendReplacement(result, replacement(groups).convert(), false)
+        }
+        matcher.appendTail(result)
+        return result.convert()
+    }
+
+    ================================================================================================
+    Returns the number of times the given character appears in this string.
+
+    @param needle the character to search for
+    @returns the number of copies found
+    ================================================================================================
+    function matchCount(needle:Char32):Int {
+        var count := 0
+        for c in self {
+            if c = needle {
+                count += 1
+            }
+        }
+        return count
+    }
+
+    ================================================================================================
+    Returns the number of times the given string appears, non-overlapping, in this string.
+
+    @param needle the string to search for
+    @returns the number of copies found
+    ================================================================================================
+    function matchCount(needle:String):Int {
+        return matchCount(needle, false)
+    }
+
+    ================================================================================================
+    Returns the number of times the given string appears in this string. The `overlapping` parameter
+    controls whether overlapping instances are counted.
+
+    @param needle the string to search for
+    @param `true` if overlapping instances are permitted
+    @returns the number of copies found
+    ================================================================================================
+    function matchCount(needle:String, overlapping:Bit):Int {
+        var count := 0
+        var i:String.Index? := start()
+        def needleLength := needle.length()
+        while i < end() {
+            i := indexOf(needle, i)
+            if i = null {
+                break
+            }
+            count += 1
+            if overlapping {
+                i := next(i)
+            }
+            else {
+                i := offset(i, needleLength.max(1))
+            }
+        }
+        return count
+    }
+
+    ================================================================================================
+    Returns the number of times the given regex appears, non-overlapping, in this string.
+
+    @param needle the regex to search for
+    @returns the number of copies found
+    ================================================================================================
+    function matchCount(needle:RegularExpression):Int {
+        return matchCount(needle, false)
+    }
+
+    ================================================================================================
+    Returns the number of times the given string appears in this string. The `overlapping` parameter
+    controls whether overlapping instances are counted.
+
+    @param needle the string to search for
+    @param `true` if overlapping instances are permitted
+    @returns the number of copies found
+    ================================================================================================
+    function matchCount(needle:RegularExpression, overlapping:Bit):Int {
+        var count := 0
+        var i := start()
+        def matcher := needle.matcher(self)
+        while i != end() & matcher.find(i) {
+            count += 1
+            if overlapping {
+                i := next(matcher.get_start())
+            }
+            else {
+                def matchEnd := matcher.get_end()
+                if i != matchEnd {
+                    i := matchEnd
+                }
+                else {
+                    i := next(i)
+                }
+            }
+        }
+        return count
     }
 
     ================================================================================================
@@ -1157,6 +1278,47 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
             index := Index(nextIndex.value + delimiter._length)
         }
         return result
+    }
+
+    ================================================================================================
+    Splits this string into tokens separated by a delimiter. At most `maxResults` different strings
+    will be returned; any additional delimiters beyond that point will be ignored. For instance,
+    `"This  is a long    string".split(/\s+/, 3)` yields `"This"`, `"is"`, and `"a long    string"`.
+
+    @param delimiter the token delimiter
+    @param maxResults the maximum number of results to return
+    @returns the split tokens
+    ================================================================================================
+    -- FIXME @safeReturn
+    @pre(maxResults > 0)
+    function split(delimiter:RegularExpression, maxResults:Int):ListView<String> {
+        def result := Array<String>()
+        def matcher := delimiter.matcher(self)
+        var index := start()
+        loop {
+            def found := matcher.find()
+            if !found | result.count = maxResults - 1 {
+                result.add(self[index..])
+                break
+            }
+            def start := matcher.get_start()
+            result.add(self[index .. start])
+            index := Index(start.value.max(matcher.get_end().value))
+        }
+        return result
+    }
+
+    ================================================================================================
+    Splits this string into tokens separated by a delimiter. For instance,
+    `"This  is a long    string".split(/\s+/)` yields `"This"`, `"is"`, `"a"`, `"long"`, and
+    `"string"`.
+
+    @param delimiter the token delimiter
+    @returns the split tokens
+    ================================================================================================
+    -- FIXME @safeReturn
+    function split(delimiter:RegularExpression):ListView<String> {
+        return split(delimiter, Int.MAX)
     }
 
     ================================================================================================

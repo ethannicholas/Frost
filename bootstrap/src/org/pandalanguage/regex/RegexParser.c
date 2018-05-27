@@ -455,6 +455,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$regex$RegexParser$regex$R$or
     org$pandalanguage$pandac$ASTNode* $tmp197;
     org$pandalanguage$pandac$ASTNode* $tmp198;
     panda$core$String* $tmp200;
+    panda$collections$SpecializedArray$LTorg$pandalanguage$regex$RegexToken$GT$clear(self->pushbackBuffer);
     org$pandalanguage$pandac$Position$init$panda$core$Int64$panda$core$Int64(&$tmp159, self->lexer->dfa->line, self->lexer->dfa->column);
     position158 = $tmp159;
     start160 = self->lexer->dfa->offset;

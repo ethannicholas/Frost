@@ -188,6 +188,7 @@ class RegexParser {
     regex = expression
     ================================================================================================
     method regex():ASTNode? {
+        pushbackBuffer.clear()
         def position := Position(lexer.dfa.line, lexer.dfa.column)
         def start := lexer.dfa.offset
         if !expression() {
