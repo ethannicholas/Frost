@@ -1,2 +1,2 @@
-RangeTypeMismatch2.panda:4:22: error: for loop expected a numeric range, but found 'panda.core.SteppedRange<panda.core.Immutable, panda.core.Immutable>'
+RangeTypeMismatch2.panda:4:25: error: expected range end to be a Value, but found 'panda.core.String'
 1 error

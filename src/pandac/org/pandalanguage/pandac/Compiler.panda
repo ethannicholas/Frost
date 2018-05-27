@@ -713,6 +713,13 @@ class Compiler {
         return cl.rawSuper != null & cl.rawSuper.name = "panda.core.Value"
     }
 
+    method isValue(t:Type):Bit {
+        if !t.isClass() {
+            return true
+        }
+        return isValue(getClass(t))
+    }
+
     method isImmutable(cl:ClassDecl):Bit {
         resolve(cl)
         var current := cl.type()
@@ -3534,6 +3541,19 @@ class Compiler {
         else {
             step := null
         }
+        if !isSingleChar(start) & !isValue(start.type()) {
+            error(start.position(), "expected range start to be a Value, but found " +
+                    "'\{start.type()}'")
+            return null
+        }
+        if !isSingleChar(end) & !isValue(end.type()) {
+            error(end.position(), "expected range end to be a Value, but found '\{end.type()}'")
+            return null
+        }
+        if step != null & !isValue(step.type()) {
+            error(step.position(), "expected range step to be a Value, but found '\{step.type()}'")
+            return null
+        }
         return IRNode.UNRESOLVED_RANGE(position, start, end, inclusive, step)
     }
 
@@ -5013,6 +5033,20 @@ class Compiler {
         }
     }
 
+    method checkValue(cl:ClassDecl) {
+        if isValue(cl) {
+            for f in cl.fields {
+                resolve(f)
+                if f.type.isClass() {
+                    if !isValue(getClass(f.type)) {
+                        error(f.position, "value class '\{cl.name}' cannot contain non-value " +
+                                "field '\{f.name}' of type '\{f.type}'")
+                    }
+                }
+            }
+        }
+    }
+
     method compile(cl:ClassDecl) {
         assert compiling = null,
                 "starting compilation of \{cl.name} while already compiling \{compiling.name}"
@@ -5027,6 +5061,7 @@ class Compiler {
         def old := symbolTable
         symbolTable := getSymbolTable(cl)
         checkImmutable(cl)
+        checkValue(cl)
         checkInterfaceMethods()
         var started := false
         for f in cl.fields {
