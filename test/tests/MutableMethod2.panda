@@ -16,6 +16,5 @@ class MutableMethod2 {
         def m5:(String)=&>() := MutableMethod2().test
         m5("5")
         def m6:(String)=&>*() := MutableMethod2().test
-        m6("6")
     }
 }

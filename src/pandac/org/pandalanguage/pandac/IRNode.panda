@@ -604,10 +604,10 @@ choice IRNode {
                 return "(\{params.join()})=>\{body}"
             when UNRESOLVED_METHOD_CALL(_, _, target, methods, args):
                 if target != null {
-                    return "\{target}.\{methods[0].value.name}(\{args.join()})"
+                    return "-*UNRESOLVED*-\{target}.\{methods[0].value.name}(\{args.join()})"
                 }
                 else {
-                    return "\{methods[0].value.name}(\{args.join()})"
+                    return "-*UNRESOLVED*-\{methods[0].value.name}(\{args.join()})"
                 }
             when UNRESOLVED_METHOD_REFERENCE(_, target, methods):
                 if target != null {

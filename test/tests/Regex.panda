@@ -35,12 +35,4 @@ method main() {
     Console.printLine("Curie, Marie\nNewton, Isaac\nEinstein, Albert".replace(
             /(\w+)\s*,\s*(\w+)/, groups:ListView<String> => "\{groups[2]} \{groups[1]}"->Object)) -- FIXME shouldn't need ->Object
     Console.printLine()
-
-    Console.printLine("matchCount")
-    Console.printLine("Hello, World!".matchCount(/[A-Z]/))
-    Console.printLine("Hello, World!".matchCount(/[a-z]{3}/))
-    Console.printLine("Hello, World!".matchCount(/[a-z]{3}/, true))
-    Console.printLine("Hello".matchCount(/./))
-    Console.printLine("Hello".matchCount(/.?/))
-    Console.printLine("".matchCount(/.?/, true))
 }

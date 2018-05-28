@@ -330,8 +330,8 @@ class Scanner {
 
     method scanMethod(owner:ClassDecl, position:Position, rawDoccomment:ASTNode?,
             rawAnnotations:ImmutableArray<ASTNode>, kind:MethodDecl.Kind, name:String,
-            rawParameters:ImmutableArray<ASTNode>, rawReturnType:ASTNode?,
-            statements:ImmutableArray<ASTNode>?):MethodDecl? {
+            rawGenerics:ImmutableArray<ASTNode>?, rawParameters:ImmutableArray<ASTNode>,
+            rawReturnType:ASTNode?, statements:ImmutableArray<ASTNode>?):MethodDecl? {
         def doccomment:String?
         -- FIXME should be able to match against null too
         if rawDoccomment = null {
@@ -348,6 +348,30 @@ class Scanner {
         def annotations := convertAnnotations(rawAnnotations)
         if kind != MethodDecl.Kind.INIT & owner.annotations.isFinal() | annotations.isPrivate() {
             annotations.flags ||= Annotations.Flag.FINAL
+        }
+        def generics:Array<ClassDecl.GenericParameter>?
+        if rawGenerics != null {
+            generics := Array<ClassDecl.GenericParameter>()
+            def fullName := "\{owner.name}.\{name}"
+            for p in rawGenerics {
+                def parameterName:String
+                def bound:Type
+                match p {
+                    when ASTNode.IDENTIFIER(_, id):
+                        parameterName := id
+                        bound := Type.Any()
+                    when ASTNode.TYPED_IDENTIFIER(_, id, type):
+                        parameterName := id
+                        bound := convertType(type)
+                    otherwise:
+                        assert false
+                }
+                generics.add(ClassDecl.GenericParameter(p.position(), fullName, parameterName,
+                        bound))
+            }
+        }
+        else {
+            generics := null
         }
         def parameters := Array<MethodDecl.Parameter>()
         for p in rawParameters {
@@ -379,18 +403,18 @@ class Scanner {
                 compiler.error(position, "expected non-abstract method '\{name}' to have a body")
             }
         }
-        return MethodDecl(owner, position, doccomment, annotations, kind, name, parameters,
-                returnType, statements)
+        return MethodDecl(owner, position, doccomment, annotations, kind, name, generics,
+                parameters, returnType, statements)
     }
 
     method scanClassChild(cl:ClassDecl, node:ASTNode) {
         match node {
             when ASTNode.FIELD(position, dc, annotations, varDecl):
                 scanFields(cl, position, dc, annotations, varDecl)
-            when ASTNode.METHOD(position, dc, annotations, kind, name, parameters, rawReturnType,
-                    statements):
-                def m := scanMethod(cl, position, dc, annotations, kind, name, parameters,
-                        rawReturnType, statements)
+            when ASTNode.METHOD(position, dc, annotations, kind, name, generics, parameters,
+                    returnType, statements):
+                def m := scanMethod(cl, position, dc, annotations, kind, name, generics, parameters,
+                        returnType, statements)
                 if m != null {
                     cl.symbolTable.add(m)
                     cl.methods.add(m)
@@ -509,7 +533,7 @@ class Scanner {
         }
         for m in members {
             match m {
-                when ASTNode.METHOD(mPosition, _, _, methodKind, _,  _, _, _):
+                when ASTNode.METHOD(mPosition, _, _, methodKind, _, _,  _, _, _):
                     if methodKind = MethodDecl.Kind.INIT {
                         match kind {
                             when ClassDecl.Kind.CLASS: -- do nothing
@@ -540,7 +564,8 @@ class Scanner {
         if !foundInit & kind = ClassDecl.Kind.CLASS & result.name != "panda.unsafe.Pointer" {
             def defaultInit := MethodDecl(result, position, null,
                     Annotations(Annotations.Flag.SYNTHETIC), MethodDecl.Kind.INIT, "init",
-                    Array<MethodDecl.Parameter>(), Type.Void(), ImmutableArray<ASTNode>())
+                    Array<ClassDecl.GenericParameter>(), Array<MethodDecl.Parameter>(),
+                    Type.Void(), ImmutableArray<ASTNode>())
             result.methods.add(defaultInit)
             result.symbolTable.add(defaultInit)
         }
@@ -548,8 +573,8 @@ class Scanner {
                 result.name != "panda.unsafe.Pointer" {
             def defaultCleanup := MethodDecl(result, position, null,
                     Annotations(Annotations.Flag.OVERRIDE || Annotations.Flag.SYNTHETIC),
-                    MethodDecl.Kind.METHOD, "cleanup", Array<MethodDecl.Parameter>(), Type.Void(),
-                    ImmutableArray<ASTNode>())
+                    MethodDecl.Kind.METHOD, "cleanup", Array<ClassDecl.GenericParameter>(),
+                    Array<MethodDecl.Parameter>(), Type.Void(), ImmutableArray<ASTNode>())
             result.methods.add(defaultCleanup)
             result.symbolTable.add(defaultCleanup)
         }
@@ -585,13 +610,14 @@ class Scanner {
             classes.add(bareCodeClass)
             def defaultInit := MethodDecl(bareCodeClass, Position(), null,
                     Annotations(Annotations.Flag.SYNTHETIC), MethodDecl.Kind.INIT, "init",
-                    Array<MethodDecl.Parameter>(), Type.Void(), ImmutableArray<ASTNode>())
+                    Array<ClassDecl.GenericParameter>(), Array<MethodDecl.Parameter>(), Type.Void(),
+                    ImmutableArray<ASTNode>())
             bareCodeClass.methods.add(defaultInit)
             bareCodeClass.symbolTable.add(defaultInit)
             def defaultCleanup := MethodDecl(bareCodeClass, Position(), null,
                     Annotations(Annotations.Flag.OVERRIDE || Annotations.Flag.SYNTHETIC),
-                    MethodDecl.Kind.METHOD, "cleanup", Array<MethodDecl.Parameter>(), Type.Void(),
-                    ImmutableArray<ASTNode>())
+                    MethodDecl.Kind.METHOD, "cleanup", Array<ClassDecl.GenericParameter>(),
+                    Array<MethodDecl.Parameter>(), Type.Void(), ImmutableArray<ASTNode>())
             bareCodeClass.methods.add(defaultCleanup)
             bareCodeClass.symbolTable.add(defaultCleanup)
         }
@@ -624,8 +650,8 @@ class Scanner {
                             if cl != null {
                                 addClass(cl, result)
                             }
-                        when ASTNode.METHOD(position, dc, annotations, kind, rawName, parameters,
-                                rawReturnType, statements):
+                        when ASTNode.METHOD(position, dc, annotations, kind, rawName, generics,
+                                parameters, rawReturnType, statements):
                             createBareCodeClass(source, aliases, result)
                             def name:String
                             if rawName = "main" {
@@ -658,7 +684,8 @@ class Scanner {
                                 }
                                 def bareMain := MethodDecl(bareCodeClass, Position(), null,
                                         Annotations(Annotations.Flag.CLASS), MethodDecl.Kind.METHOD,
-                                        "main", mainParameters, returnType, mainStatements.finish())
+                                        "main", Array<ClassDecl.GenericParameter>(), mainParameters,
+                                        returnType, mainStatements.finish())
                                 bareCodeClass.methods.add(bareMain)
                             }
                             else {
@@ -666,7 +693,7 @@ class Scanner {
                             }
                             compiler.currentClass.push(bareCodeClass)
                             def m := scanMethod(bareCodeClass, position, dc, annotations,
-                                    kind, name, parameters, rawReturnType, statements)
+                                    kind, name, generics, parameters, rawReturnType, statements)
                             compiler.currentClass.pop(bareCodeClass)
                             bareCodeClass.methods.add(m)
                             bareCodeClass.symbolTable.add(m)
@@ -674,7 +701,7 @@ class Scanner {
                             createBareCodeClass(source, aliases, result)
                             scanFields(bareCodeClass, position, dc, annotations, varDecl)
                         otherwise:
-                            assert false, "unsupported: \{e}(\{e.$rawValue})"
+                            assert false, "unsupported: \{e}(\{e.$rawValue}):\{e.position()}"
                     }
                 }
                 return result

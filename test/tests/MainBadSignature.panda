@@ -1,0 +1,6 @@
+class MainNotClass {
+    function main(x:Int):Int {
+        Console.printLine("Hello, World!")
+        return 1
+    }
+}

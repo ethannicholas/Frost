@@ -782,9 +782,9 @@ panda$core$String* panda$collections$SpecializedArray$LTorg$pandalanguage$pandac
         return $returnValue305;
     }
     $l262:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator270));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result265));
     result265 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator270));
     separator270 = NULL;
     switch ($tmp264) {
         case 0: goto $l309;

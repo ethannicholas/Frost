@@ -493,9 +493,9 @@ void panda$collections$IdentityMap$remove$panda$collections$IdentityMap$K(panda$
     $tmp134 = -1;
     goto $l132;
     $l132:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) next159));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) e138));
     e138 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) next159));
     next159 = NULL;
     switch ($tmp134) {
         case -1: goto $l164;
@@ -872,9 +872,9 @@ panda$core$String* panda$collections$IdentityMap$convert$R$panda$core$String(pan
         return $returnValue342;
     }
     $l293:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator301));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result296));
     result296 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator301));
     separator301 = NULL;
     switch ($tmp295) {
         case 0: goto $l346;

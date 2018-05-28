@@ -84,11 +84,11 @@ class Type : Symbol, Key<Type> {
     }
 
     init(param:ClassDecl.GenericParameter) {
-        self.name := "\{param.owner}.\{param.name}"
         self.typeKind := Kind.GENERIC_PARAMETER
         self.parameter := param
         self.resolved := true
         self.subtypes := null
+        super.init(Symbol.Kind.TYPE, position, "\{param.owner}.\{param.name}")
     }
 
     @class
@@ -330,17 +330,17 @@ class Type : Symbol, Key<Type> {
 
     @class
     method IntLiteral(value:UInt64):Type {
-        return Type(value.convert(), Kind.INT_LITERAL, Position(), true)
+        return Type("IntegerLiteral(\{value})", Kind.INT_LITERAL, Position(), true)
     }
 
     @class
     method NegatedIntLiteral(value:UInt64):Type {
-        return Type("-" + value.convert(), Kind.INT_LITERAL, Position(), true)
+        return Type("IntegerLiteral(-\{value.convert()})", Kind.INT_LITERAL, Position(), true)
     }
 
     @class
     method RealLiteral(value:Real64):Type {
-        return Type(value.convert(), Kind.REAL_LITERAL, Position(), true)
+        return Type("RealLiteral(\{value.convert()})", Kind.REAL_LITERAL, Position(), true)
     }
 
     @class

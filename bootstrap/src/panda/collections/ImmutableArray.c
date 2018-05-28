@@ -582,9 +582,9 @@ panda$core$String* panda$collections$ImmutableArray$convert$R$panda$core$String(
         return $returnValue225;
     }
     $l180:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator188));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result183));
     result183 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator188));
     separator188 = NULL;
     switch ($tmp182) {
         case 0: goto $l229;

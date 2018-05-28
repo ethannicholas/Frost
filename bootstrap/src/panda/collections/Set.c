@@ -295,9 +295,9 @@ panda$core$String* panda$collections$Set$convert$R$panda$core$String(panda$colle
         return $returnValue92;
     }
     $l49:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator57));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result52));
     result52 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator57));
     separator57 = NULL;
     switch ($tmp51) {
         case 0: goto $l96;

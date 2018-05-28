@@ -51,6 +51,7 @@ choice ASTNode {
                             ImmutableArray<ASTNode>  -* ANNOTATIONs *-,
                             MethodDecl.Kind,
                             String                   -* name *-,
+                            ImmutableArray<ASTNode>? -* Generics (TYPED_IDENTIFIERs) *-,
                             ImmutableArray<ASTNode>  -* PARAMETERs *-,
                             ASTNode?                 -* return type *-,
                             ImmutableArray<ASTNode>? -* statements *-)
@@ -135,7 +136,7 @@ choice ASTNode {
                 return position
             when MATCH(position, _, _, _):
                 return position
-            when METHOD(position, _, _, _, _, _, _, _):
+            when METHOD(position, _, _, _, _, _, _, _, _):
                 return position
             when METHOD_TYPE(position, _, _, _):
                 return position
@@ -346,7 +347,7 @@ choice ASTNode {
                 }
                 result.append("}")
                 return result.finish()
-            when METHOD(_, dc, annotations, kind, name, parameters, returnType, statements):
+            when METHOD(_, dc, annotations, kind, name, generics, parameters, returnType, statements):
                 def result := MutableString()
                 if dc != null {
                     result.append(dc + "\n")
@@ -359,7 +360,11 @@ choice ASTNode {
                     when MethodDecl.Kind.FUNCTION: result.append("function ")
                     when MethodDecl.Kind.INIT:     -- do nothing
                 }
-                result.append("\{name}(\{parameters.join()})")
+                result.append(name)
+                if generics != null {
+                    result.append("<\{generics.join()}>")
+                }
+                result.append("(\{parameters.join()})")
                 if returnType != null {
                     result.append(":\{returnType}")
                 }

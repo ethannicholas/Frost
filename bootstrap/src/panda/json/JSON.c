@@ -1461,9 +1461,9 @@ panda$core$String* panda$json$JSON$convert$R$panda$core$String(panda$json$JSON* 
                 return $returnValue401;
             }
             $l435:;
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator443));
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result438));
             result438 = NULL;
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator443));
             separator443 = NULL;
             switch ($tmp437) {
                 case 0: goto $l503;
@@ -1588,9 +1588,9 @@ panda$core$String* panda$json$JSON$convert$R$panda$core$String(panda$json$JSON* 
                 return $returnValue401;
             }
             $l510:;
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator518));
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result513));
             result513 = NULL;
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator518));
             separator518 = NULL;
             switch ($tmp512) {
                 case 0: goto $l568;

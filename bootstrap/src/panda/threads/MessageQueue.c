@@ -200,9 +200,9 @@ panda$core$Immutable* panda$threads$MessageQueue$getMessage$R$panda$threads$Mess
         return $returnValue58;
     }
     $l40:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result51));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) scope43));
     scope43 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result51));
     result51 = NULL;
     switch ($tmp42) {
         case 0: goto $l60;

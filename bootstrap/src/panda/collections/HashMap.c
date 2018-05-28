@@ -647,9 +647,9 @@ void panda$collections$HashMap$remove$panda$collections$HashMap$K(panda$collecti
     $tmp194 = -1;
     goto $l192;
     $l192:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) next227));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) e198));
     e198 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) next227));
     next227 = NULL;
     switch ($tmp194) {
         case -1: goto $l232;
@@ -1046,9 +1046,9 @@ panda$core$String* panda$collections$HashMap$convert$R$panda$core$String(panda$c
         return $returnValue420;
     }
     $l371:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator379));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result374));
     result374 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator379));
     separator379 = NULL;
     switch ($tmp373) {
         case 0: goto $l424;

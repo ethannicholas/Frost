@@ -515,8 +515,12 @@ class Compiler {
         m.resolved := Resolution.IN_PROGRESS
         resolve(m.owner)
         currentClass.push(m.owner)
-        def old := symbolTable
-        symbolTable := m.owner.symbolTable
+        def symbols := AutoSymbolTable(self, SymbolTable(m.owner.symbolTable))
+        if m.genericParameters != null {
+            for p in m.genericParameters {
+                symbolTable.add(Type(p), p.name)
+            }
+        }
         for p in m.parameters {
             def resolved := resolve(p.type)
             if resolved != null {
@@ -554,7 +558,6 @@ class Compiler {
                         "method exists among its ancestors")
             }
         }
-        symbolTable := old
         currentClass.pop()
     }
 
@@ -648,35 +651,15 @@ class Compiler {
     method resolveMethodCall(position:Position, callTarget:IRNode?,
             methods:ImmutableArray<MethodRef>, args:ImmutableArray<IRNode>,
             targetType:Type?):IRNode? {
-        var best := Array<MethodRef>()
-        var bestCost:Int? := null
-        for m in methods {
-            def cost := callCost(m, args, targetType)
-            if cost = null {
-                continue
-            }
-            if bestCost = null {
-                best.add(m)
-                bestCost := cost
-                continue
-            }
-            if cost < bestCost {
-                best.clear()
-                bestCost := cost
-            }
-            if cost = bestCost {
-                best.add(m)
-            }
-        }
-        if best.get_count() = 1 {
-            var result := call(position, callTarget, best[0], args)
+        var matches := Array<MethodRef>(methods)
+        def matchResult := matchMethods(position, matches, args, targetType, true)
+        if matchResult != null & matchResult.second.get_count() = 1 {
+            var result := call(position, callTarget, matchResult.second[0], args)
             if targetType != null {
                 result := coerce(result, targetType)
             }
             return result
         }
-        Console.printLine("no or ambiguous match on method call (\{position}, \{methods[0].value.name}, \{best})")
-        assert false
         return null
     }
 
@@ -855,12 +838,20 @@ class Compiler {
             result.external := false
             for m in cl.methods {
                 resolve(m)
+                def generics:Array<ClassDecl.GenericParameter>?
+                if m.genericParameters != null {
+                    for p in m.genericParameters {
+                        generics.add(ClassDecl.GenericParameter(p.position, p.owner, p.name,
+                                remapType(type, p.bound)))
+                    }
+                }
                 def parameters := Array<MethodDecl.Parameter>() -- FIXME use map
                 for p in m.parameters {
                     parameters.add(MethodDecl.Parameter(p.name, remapType(type, p.type)))
                 }
                 def clone := MethodDecl(result, m.position, m.doccomment, m.annotations,
-                        m.methodKind, m.name, parameters, remapType(type, m.returnType), m.body)
+                        m.methodKind, m.name, generics, parameters, remapType(type, m.returnType),
+                        m.body)
                 result.methods.add(clone)
                 result.symbolTable.add(clone)
             }
@@ -1314,7 +1305,7 @@ class Compiler {
                 var union := startType.union(self, endType).union(self, stepType)
                 return Type.SteppedRangeOf(variableType(union))
             when IRNode.UNRESOLVED_INDEX(_, _, base, args):
-                def c := call(base, "[]", args)
+                def c := resolve(call(base, "[]", args))
                 if c = null {
                     return Type.Any()
                 }
@@ -1668,18 +1659,12 @@ class Compiler {
                     }
                 }
                 return bestCost
-            when IRNode.UNRESOLVED_METHOD_CALL(_, _, _, methods, args):
-                var bestCost:Int? := null
-                for m in methods {
-                    def cost := callCost(m, args, target)
-                    if cost = null {
-                        continue
-                    }
-                    if bestCost = null | cost < bestCost {
-                        bestCost := cost
-                    }
+            when IRNode.UNRESOLVED_METHOD_CALL(position, _, _, methods, args):
+                def matchResult := matchMethods(position, methods, args, target, false)
+                if matchResult != null {
+                    return matchResult.first
                 }
-                return bestCost
+                return null
             when IRNode.UNRESOLVED_RANGE(_, start, end, inclusive, step):
                 if target.isRange() {
                     if step != null {
@@ -2057,9 +2042,8 @@ class Compiler {
                             effectiveMethodType(targetNode, best[0].value),
                             targetNode, best[0]), target)
                 }
-                Console.printLine("no or ambiguous match on method call (\{position}, " +
-                        "\{methods[0].value.name}, \{best})")
-                assert false
+                assert false, "no or ambiguous match"
+                return null
             when IRNode.UNRESOLVED_LAMBDA(position, rawParameters, expr):
                 def parameters := Array<ASTNode>()
                 for i in 0 .. rawParameters.get_count() {
@@ -2150,7 +2134,7 @@ class Compiler {
         }
         tmpCount += 1
         def shim := MethodDecl(methodClass, position, null, Annotations(Annotations.Flag.SYNTHETIC),
-                kind, "$shim\{tmpCount}", parameters, returnType, body.finish())
+                kind, "$shim\{tmpCount}", null, parameters, returnType, body.finish())
         currentClass.push(methodClass)
         compile(shim)
         currentClass.pop(methodClass)
@@ -2230,18 +2214,40 @@ class Compiler {
         return result
     }
 
-    method callCost(m:MethodRef, args:ListView<IRNode>, expectedReturn:Type?):Int? {
+    @pre(args.get_count() = m.parameterCount())
+    method matchGenericMethod(position:Position, m:MethodRef, args:ListView<IRNode>,
+            expectedReturn:Type?, reportErrors:Bit):Pair<Int, MethodRef>? {
+        return Pair<Int, MethodRef>(0, m)
+    }
+
+    ================================================================================================
+    Determines if a method can be called with the specified parameters, returning either the cost
+    and an updated `MethodRef` (containing generic parameter resolutions, if any) or `null`. If
+    `reportErrors` is true, reports errors in the event of an unsuccessful match.
+    ================================================================================================
+    method matchMethod(position:Position, m:MethodRef, args:ListView<IRNode>, expectedReturn:Type?,
+            reportErrors:Bit):Pair<Int, MethodRef>? {
         assert m.value.resolved != Resolution.UNRESOLVED
         if m.value.resolved = Resolution.RESOLVED_WITH_ERRORS {
             return null
         }
-        if m.parameterCount() != args.get_count() {
+        if args.get_count() != m.parameterCount() {
+            if reportErrors {
+                error(position, "method expected \{ m.parameterCount()} argument" +
+                        "\{m.parameterCount() = 1:|s}, but found \{args.get_count()}")
+            }
             return null
+        }
+        if m.value.genericParameters != null {
+            return matchGenericMethod(position, m, args, expectedReturn, reportErrors)
         }
         var result := 0
         for i in 0 .. m.parameterCount() {
             def cost := coercionCost(args[i], m.parameter(i))
             if cost = null {
+                if reportErrors {
+                    coerce(args[i], m.parameter(i))
+                }
                 return null
             }
             result += cost
@@ -2249,6 +2255,9 @@ class Compiler {
         if expectedReturn != null {
             def cost := coercionCost(m.returnType(), expectedReturn)
             if cost = null {
+                if reportErrors {
+                    error(position, "expected '\{expectedReturn}', but found '\{m.returnType()}'")
+                }
                 return null
             }
             result += cost
@@ -2259,29 +2268,83 @@ class Compiler {
                 m.value.parameters[0].type != m.value.owner.type() {
             result += 1
         }
-        return result
+        return Pair<Int, MethodRef>(result, m)
     }
 
-    method matchMethods(methods:Array<MethodRef>, args:ListView<IRNode>,
-            expectedReturn:Type?):Int? {
+    method reportNoMatch(position:Position, args:ListView<IRNode>, expectedReturn:Type?,
+            methods:ListView<MethodRef>) {
+        def msg := MutableString("no match for call to '\{methods[0].value.name}' with " +
+                "arguments (")
+        var separator := ""
+        for a in args {
+            msg.append(separator)
+            msg.append(a.type())
+            separator := ", "
+        }
+        msg.append(")")
+        if expectedReturn != null {
+            msg.append(" and expected return type '\{expectedReturn}'")
+        }
+        error(position, msg.finish())
+    }
+
+    @pre(methods.get_count() > 1)
+    method reportAmbiguousMatch(position:Position, args:ListView<IRNode>, expectedReturn:Type?,
+            methods:ListView<MethodRef>) {
+        def msg := MutableString("call to '\{methods[0].value.name}' with arguments (")
+        var separator := ""
+        for a in args {
+            msg.append(separator)
+            msg.append(a.type())
+            separator := ", "
+        }
+        msg.append(")")
+        if expectedReturn != null {
+            msg.append(" and expected return type '\{expectedReturn}'")
+        }
+        msg.append(" is ambiguous. The following methods are equally good matches:")
+        for m in methods {
+            msg.append("\n    \{m.value.declaration()}:\{m.value.owner.source.name()}:" +
+                    "\{m.value.position}")
+        }
+        error(position, msg.finish())
+    }
+
+    ================================================================================================
+    Matches a list of methods against arguments and an expected return type. If there is a
+    successful match, returns the cost and all tied `MethodRef`s (which may have been updated from
+    the original passed-in `MethodRef`s due to generic parameter resolution), otherwise returns
+    `null`. If `reportErrors` is true, reports an error unless there is exactly one successful
+    match. Note that in the case of ambiguity, you will receive a non-`null` response even though an
+    error has occurred.
+    ================================================================================================
+    method matchMethods(position:Position, methods:ListView<MethodRef>, args:ListView<IRNode>,
+            expectedReturn:Type?, reportErrors:Bit):Pair<Int, ListView<MethodRef>>? {
         def result := Array<MethodRef>()
         var best:Int? := null
         for m in methods {
-            def cost := callCost(m, args, expectedReturn)
-            if cost = null {
+            def matchResult := matchMethod(position, m, args, expectedReturn, false)
+            if matchResult = null {
                 continue
             }
-            if best = null | cost < best {
+            if best = null | matchResult.first < best {
                 result.clear()
-                best := cost
+                best := matchResult.first
             }
-            if cost = best {
-                result.add(m)
+            if matchResult.first = best {
+                result.add(matchResult.second)
             }
         }
-        methods.clear()
-        methods.addAll(result)
-        return best
+        if result.get_count() = 0 {
+            if reportErrors {
+                reportNoMatch(position, args, expectedReturn, methods)
+            }
+            return null
+        }
+        if result.get_count() > 1 & reportErrors {
+            reportAmbiguousMatch(position, args, expectedReturn, result)
+        }
+        return Pair<Int, ListView<MethodRef>>(best, result)
     }
 
     method actualReturnType(m:MethodRef):Type {
@@ -2291,16 +2354,16 @@ class Compiler {
         return m.value.returnType
     }
 
-    method call(position:Position, target:IRNode?, m:MethodRef, args:ListView<IRNode>):IRNode? {
-        assert m.value.resolved != Resolution.UNRESOLVED
-        if m.value.resolved = Resolution.RESOLVED_WITH_ERRORS {
+    method call(position:Position, target:IRNode?, rawM:MethodRef, args:ListView<IRNode>):IRNode? {
+        assert rawM.value.resolved != Resolution.UNRESOLVED
+        if rawM.value.resolved = Resolution.RESOLVED_WITH_ERRORS {
             return null
         }
-        if m.parameterCount() != args.get_count() {
-            error(position, "\{m.value.declaration()} expected \{m.parameterCount()} argument" +
-                    "\{m.parameterCount() = 1:|s}, but received \{args.get_count()}")
+        def matchResult := matchMethod(position, rawM, args, null, true)
+        if matchResult = null {
             return null
         }
+        def m := matchResult.second
         def finalArgs := Array<IRNode>()
         if target != null & target != IRNode.CONSTRUCTED_OBJECT &
                 !m.value.annotations.isClass() {
@@ -2500,7 +2563,7 @@ class Compiler {
                     ASTNode.IDENTIFIER(cl.position, "f\{i}")))
         }
         def synthetic := MethodDecl(cl, cl.position, null, Annotations(), MethodDecl.Kind.INIT,
-                "init", parameters, Type.Void(), statements.finish())
+                "init", null, parameters, Type.Void(), statements.finish())
         synthetic.resolved := Resolution.RESOLVED
         entry.initMethod := synthetic
         cl.methods.add(synthetic)
@@ -2511,35 +2574,19 @@ class Compiler {
         match m {
             when IRNode.METHOD_REFERENCE(_, _, target, mref):
                 return call(m.position(), target, mref, args)
-            when IRNode.UNRESOLVED_METHOD_REFERENCE(_, target, mrefs):
-                def methods := Array<MethodRef>(mrefs)
-                matchMethods(methods, args, expectedType)
-                if methods.get_count() = 0 {
-                    def first := mrefs[0].value
-                    def msg := MutableString("no match for call to '\{first.owner.name}." +
-                            "\{first.name}(")
-                    var separator := ""
-                    for a in args {
-                        msg.append(separator)
-                        msg.append(a.type())
-                        separator := ", "
-                    }
-                    msg.append(")'")
-                    if expectedType != null {
-                        msg.append(" with return type '\{expectedType}'")
-                    }
-                    error(m.position(), msg.finish())
+            when IRNode.UNRESOLVED_METHOD_REFERENCE(position, target, mrefs):
+                def matchResult := matchMethods(position, mrefs, args, expectedType, false)
+                if matchResult = null {
+                    -- report error
+                    matchMethods(position, mrefs, args, expectedType, true)
                     return null
                 }
-                if methods.get_count() = 1 {
-                    return call(m.position(), target, methods[0], args)
+                if matchResult.second.get_count() > 1 {
+                    return IRNode.UNRESOLVED_METHOD_CALL(m.position(), Type.Invalid(), target,
+                            mrefs, ImmutableArray<IRNode>(args))
                 }
-                def types := Array<Type>()
-                for m in methods {
-                    types.add(m.returnType())
-                }
-                return IRNode.UNRESOLVED_METHOD_CALL(m.position(), Type(types), target,
-                        methods.finish(), ImmutableArray<IRNode>(args))
+                assert matchResult.second.get_count() = 1
+                return call(m.position(), target, matchResult.second[0], args)
             when IRNode.TYPE_REFERENCE(_, type):
                 def target := IRNode.CONSTRUCTED_OBJECT(m.position(), type)
                 def initCall := resolve(call(target, "init", args))
@@ -3713,7 +3760,7 @@ class Compiler {
             }
         }
         def methodDecl := MethodDecl(currentClass[0], position, null,
-                Annotations(Annotations.Flag.CLASS), kind, name, parameters, returnType, body)
+                Annotations(Annotations.Flag.CLASS), kind, name, null, parameters, returnType, body)
         compile(methodDecl)
         return IRNode.METHOD_REFERENCE(position, methodDecl.type(), null,
                 MethodRef(methodDecl, Array<Type>())) -- FIXME literal
@@ -3763,7 +3810,7 @@ class Compiler {
                 return IRNode.INT(position, Type.IntLiteral(value), value)
             when ASTNode.IR_WRAPPER(ir):
                 return ir
-            when ASTNode.METHOD(position, _, _, kind, _, parameters, returnType, body):
+            when ASTNode.METHOD(position, _, _, kind, _, _, parameters, returnType, body):
                 return compileAnonymousMethod(position, kind, parameters, returnType, body)
             when ASTNode.NULL(position):
                 return compileNull(position)
@@ -3820,12 +3867,10 @@ class Compiler {
         finallies.push(finalFinally)
         for stmt in statements {
             var compiled := compileStatement(stmt)
-            if compiled = null {
-                symbolTable := symbols.parents[0]
-                return null
+            if compiled != null {
+                assert compiled != IRNode.UNRESOLVED_METHOD_CALL
+                result.add(compiled)
             }
-            assert compiled != IRNode.UNRESOLVED_METHOD_CALL
-            result.add(compiled)
         }
         finallies.pop()
         symbolTable := symbols.parents[0]
@@ -4138,7 +4183,7 @@ class Compiler {
                 def v := Variable(position, kind, name, type)
                 symbolTable.add(v)
                 if isRefCounted(type) {
-                    finallies[0].add(compilePandaCall("unref",
+                    finallies[0].insert(0, compilePandaCall("unref",
                                                           IRNode.VARIABLE_REFERENCE(v.position, v)))
                     finallies[0].add(IRNode.BINARY(v.position, Type.Void(),
                             IRNode.VARIABLE_REFERENCE(v.position, v), Token.Kind.ASSIGNMENT,
@@ -4157,7 +4202,7 @@ class Compiler {
                 def v := Variable(position, kind, name, type)
                 symbolTable.add(v)
                 if isRefCounted(type) {
-                    finallies[0].add(compilePandaCall("unref",
+                    finallies[0].insert(0, compilePandaCall("unref",
                                                           IRNode.VARIABLE_REFERENCE(v.position, v)))
                 }
                 return CompileTargetResult(IRNode.VARIABLE_REFERENCE(v.position, v), value)
@@ -4324,7 +4369,7 @@ class Compiler {
         }
         def callChildren := Array<IRNode>()
         callChildren.add(testValue)
-        return call(target, "=", callChildren)
+        return resolve(call(target, "=", callChildren))
     }
 
     method compileChainedIfWhen(value:Variable, position:Position, tests:ImmutableArray<ASTNode>,
@@ -4345,7 +4390,7 @@ class Compiler {
                                     def callChildren := Array<IRNode>()
                                     callChildren.add(base)
                                     def target := IRNode.VARIABLE_REFERENCE(testPosition, value)
-                                    def check := call(target, "=", callChildren)
+                                    def check := resolve(call(target, "=", callChildren))
                                     if check = null {
                                         return null
                                     }
@@ -4704,7 +4749,7 @@ class Compiler {
                 return result
             when ASTNode.VAR(position, kind, declarations):
                 return compileVar(position, kind, declarations)
-            when ASTNode.METHOD(position, _, _, kind, name, parameters, returnType, body):
+            when ASTNode.METHOD(position, _, _, kind, name, _, parameters, returnType, body):
                 return compileInnerMethod(position, kind, name, parameters, returnType, body)
         }
         error(s.position(), "not a statement")
@@ -4719,14 +4764,18 @@ class Compiler {
     }
 
     method addPrecondition(body:Array<IRNode>, expr:IRNode) {
-        body.insert(0, IRNode.ASSERT(expr.position(), getBuiltinBit(expr),
-                IRNode.STRING(expr.position(), "precondition failure")))
+        def position := currentMethod[0].position
+        body.insert(0, IRNode.ASSERT(position, getBuiltinBit(expr),
+                IRNode.STRING(position,
+                    "precondition failure for \{currentMethod[0].declaration()}")))
     }
 
     @pre(atPreSetupStatements != null)
     method addPostcondition(body:Array<IRNode>, expr:IRNode) {
-        def a := IRNode.ASSERT(expr.position(), getBuiltinBit(expr),
-                IRNode.STRING(expr.position(), "postcondition failure"))
+        def position := currentMethod[0].position
+        def a := IRNode.ASSERT(position, getBuiltinBit(expr),
+                IRNode.STRING(position,
+                    "postcondition failure for \{currentMethod[0].declaration()}"))
         def finally := Array<IRNode>() -- FIXME literal
         finally.add(a)
         def newBody := Array<IRNode>()
@@ -4863,13 +4912,13 @@ class Compiler {
         return result.finish()
     }
 
+    @post(symbolTable == @pre(symbolTable))
     method compileBody(m:MethodDecl):ImmutableArray<IRNode>? {
         if m.compiledBody != null {
             return m.compiledBody
         }
         currentClass.push(m.owner)
-        def old := symbolTable
-        symbolTable := getSymbolTable(m.owner)
+        def classSymbols := AutoSymbolTable(self, getSymbolTable(m.owner))
         currentMethod.push(m)
         resolve(m)
         if m.resolved != Resolution.RESOLVED {
@@ -4878,12 +4927,16 @@ class Compiler {
             return null
         }
         assert m.body != null
-        def symbols := SymbolTable(symbolTable)
+        def methodSymbols := AutoSymbolTable(self, SymbolTable(symbolTable))
+        if m.genericParameters != null {
+            for p in m.genericParameters {
+                symbolTable.add(Type(p), p.name)
+            }
+        }
         for p in m.parameters {
-            symbols.add(Variable(m.position, Variable.Kind.DEF, p.name, p.type,
+            symbolTable.add(Variable(m.position, Variable.Kind.DEF, p.name, p.type,
                     Variable.Storage.PARAMETER))
         }
-        symbolTable := symbols
         def fieldInitializers:Array<IRNode>? := null
         if m.methodKind = MethodDecl.Kind.INIT {
             fieldInitializers := Array<IRNode>()
@@ -4949,8 +5002,6 @@ class Compiler {
             }
             compiled := processAnnotations(m, compiled)
         }
-        assert symbolTable == symbols
-        symbolTable := old
         currentMethod.pop()
         currentClass.pop()
         if m.annotations.isInline() {
@@ -4996,6 +5047,25 @@ class Compiler {
     method compile(m:MethodDecl) {
         if m.owner.classKind = ClassDecl.Kind.CHOICE & m.name = "cleanup" {
             createChoiceCleanup(m)
+        }
+        if m.name = "main" {
+            resolve(m)
+            if m.methodKind != MethodDecl.Kind.METHOD {
+                error(m.position, "'main' must be a method")
+            }
+            if m.returnType != Type.Void() {
+                error(m.position, "'main' must not have a return type")
+            }
+            if !m.annotations.isClass() {
+                error(m.position, "'main' must be declared @class")
+            }
+            def required := "panda.collections.ListView<panda.core.String>"
+            if m.parameters.get_count() > 1 |
+                    (m.parameters.get_count() = 1 &
+                        m.parameters[0].type.name != required) {
+                error(m.position, "'main' must have either zero parameters or one parameter of " +
+                        "type '\{required}'")
+            }
         }
         if m.body != null {
             def compiled := compileBody(m)

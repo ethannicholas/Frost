@@ -498,7 +498,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$regex$RegexParser$regex$R$or
     i172.value += 1;
     goto $l177;
     $l179:;
-    org$pandalanguage$pandac$ASTNode* $tmp194 = (org$pandalanguage$pandac$ASTNode*) pandaObjectAlloc(96, (panda$core$Class*) &org$pandalanguage$pandac$ASTNode$class);
+    org$pandalanguage$pandac$ASTNode* $tmp194 = (org$pandalanguage$pandac$ASTNode*) pandaObjectAlloc(104, (panda$core$Class*) &org$pandalanguage$pandac$ASTNode$class);
     panda$core$String* $tmp196 = (panda$core$String*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$String$class);
     panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp196, result170, length168);
     $tmp195 = $tmp196;

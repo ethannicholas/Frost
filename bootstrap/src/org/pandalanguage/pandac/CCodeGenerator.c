@@ -1857,11 +1857,11 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$methodType$org$pandal
         return $returnValue234;
     }
     $l166:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator193));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) code180));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result170));
     result170 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) code180));
     code180 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator193));
     separator193 = NULL;
     switch ($tmp168) {
         case 0: goto $l236;
@@ -2586,9 +2586,9 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$wrapperType$org$panda
         return $returnValue565;
     }
     $l496:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result506));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) inheritedType499));
     inheritedType499 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result506));
     result506 = NULL;
     switch ($tmp498) {
         case 0: goto $l569;
@@ -2959,19 +2959,19 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getITable$org$pandala
                     $tmp620 = -1;
                     goto $l618;
                     $l618:;
+                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator708));
+                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result662));
+                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) name646));
+                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) methods639));
+                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) intfCC635));
+                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) intf628));
                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) intfType621));
                     intfType621 = NULL;
-                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) intf628));
                     intf628 = NULL;
-                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) intfCC635));
                     intfCC635 = NULL;
-                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) methods639));
                     methods639 = NULL;
-                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) name646));
                     name646 = NULL;
-                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result662));
                     result662 = NULL;
-                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator708));
                     separator708 = NULL;
                     switch ($tmp620) {
                         case -1: goto $l760;
@@ -3000,9 +3000,9 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getITable$org$pandala
         return $returnValue762;
     }
     $l585:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) previous597));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) interfaces588));
     interfaces588 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) previous597));
     previous597 = NULL;
     switch ($tmp587) {
         case 0: goto $l764;
@@ -3448,23 +3448,23 @@ org$pandalanguage$pandac$CCodeGenerator$MethodShim* org$pandalanguage$pandac$CCo
         return $returnValue782;
     }
     $l767:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result1000));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) casts883));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self_t822));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) resultType805));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) resultName798));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) effectiveReturnType792));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) found778));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) out774));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) outBuffer770));
     outBuffer770 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) out774));
     out774 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) found778));
     found778 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) effectiveReturnType792));
     effectiveReturnType792 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) resultName798));
     resultName798 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) resultType805));
     resultType805 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self_t822));
     self_t822 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) casts883));
     casts883 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result1000));
     result1000 = NULL;
     switch ($tmp769) {
         case 1: goto $l1010;
@@ -3803,19 +3803,19 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$createWrapperShim$org
         return $returnValue1208;
     }
     $l1013:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) children1149));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) parameters1116));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) inheritedMethodType1067));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) actualMethodType1060));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) selfType1030));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result1021));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) oldMethod1017));
     oldMethod1017 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result1021));
     result1021 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) selfType1030));
     selfType1030 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) actualMethodType1060));
     actualMethodType1060 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) inheritedMethodType1067));
     inheritedMethodType1067 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) parameters1116));
     parameters1116 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) children1149));
     children1149 = NULL;
     switch ($tmp1015) {
         case 0: goto $l1210;
@@ -4176,19 +4176,19 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getWrapperITable$org$
                     $tmp1248 = -1;
                     goto $l1246;
                     $l1246:;
+                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator1345));
+                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result1290));
+                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) name1274));
+                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) methods1267));
+                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) intfCC1263));
+                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) intf1256));
                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) intfType1249));
                     intfType1249 = NULL;
-                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) intf1256));
                     intf1256 = NULL;
-                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) intfCC1263));
                     intfCC1263 = NULL;
-                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) methods1267));
                     methods1267 = NULL;
-                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) name1274));
                     name1274 = NULL;
-                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result1290));
                     result1290 = NULL;
-                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator1345));
                     separator1345 = NULL;
                     switch ($tmp1248) {
                         case -1: goto $l1397;
@@ -4217,9 +4217,9 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getWrapperITable$org$
         return $returnValue1399;
     }
     $l1213:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) previous1225));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) interfaces1216));
     interfaces1216 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) previous1225));
     previous1225 = NULL;
     switch ($tmp1215) {
         case 0: goto $l1401;
@@ -4357,10 +4357,10 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getMethodTableEntry$o
         return $returnValue1457;
     }
     $l1407:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result1417));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) declared1418));
-    declared1418 = NULL;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) inherited1430));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) declared1418));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result1417));
+    declared1418 = NULL;
     inherited1430 = NULL;
     switch ($tmp1409) {
         case 0: goto $l1459;
@@ -4805,17 +4805,17 @@ org$pandalanguage$pandac$CCodeGenerator$ClassConstant* org$pandalanguage$pandac$
             $tmp1471 = -1;
             goto $l1469;
             $l1469:;
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) type1475));
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) vtable1501));
-            vtable1501 = NULL;
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) superPtr1522));
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) clConstant1547));
-            clConstant1547 = NULL;
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) name1558));
-            name1558 = NULL;
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) code1564));
-            code1564 = NULL;
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator1623));
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) code1564));
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) name1558));
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) clConstant1547));
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) superPtr1522));
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) vtable1501));
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) type1475));
+            vtable1501 = NULL;
+            clConstant1547 = NULL;
+            name1558 = NULL;
+            code1564 = NULL;
             separator1623 = NULL;
             switch ($tmp1471) {
                 case -1: goto $l1670;
@@ -5298,9 +5298,9 @@ org$pandalanguage$pandac$CCodeGenerator$ClassConstant* org$pandalanguage$pandac$
                         $tmp1874 = -1;
                         goto $l1872;
                         $l1872:;
+                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) methodName1882));
                         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) m1875));
                         m1875 = NULL;
-                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) methodName1882));
                         switch ($tmp1874) {
                             case -1: goto $l1911;
                         }
@@ -5326,25 +5326,25 @@ org$pandalanguage$pandac$CCodeGenerator$ClassConstant* org$pandalanguage$pandac$
                 $tmp1720 = -1;
                 goto $l1718;
                 $l1718:;
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator1851));
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) code1794));
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) name1788));
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) clConstant1777));
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) itable1773));
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) superCast1765));
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) superCC1756));
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) vtable1749));
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) valueVTable1730));
                 panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) value1721));
                 value1721 = NULL;
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) valueVTable1730));
                 valueVTable1730 = NULL;
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) vtable1749));
                 vtable1749 = NULL;
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) superCC1756));
                 superCC1756 = NULL;
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) superCast1765));
                 superCast1765 = NULL;
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) itable1773));
                 itable1773 = NULL;
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) clConstant1777));
                 clConstant1777 = NULL;
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) name1788));
                 name1788 = NULL;
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) code1794));
                 code1794 = NULL;
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator1851));
                 separator1851 = NULL;
                 switch ($tmp1720) {
                     case -1: goto $l1922;
@@ -5364,9 +5364,9 @@ org$pandalanguage$pandac$CCodeGenerator$ClassConstant* org$pandalanguage$pandac$
         return $returnValue1923;
     }
     $l1675:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result1687));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) name1678));
     name1678 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result1687));
     result1687 = NULL;
     switch ($tmp1677) {
         case 0: goto $l1925;
@@ -5714,13 +5714,13 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getAndReference$org$p
         return $returnValue2079;
     }
     $l1999:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) rightRef2053));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) falseLabel2035));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) leftRef2008));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result2004));
     result2004 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) leftRef2008));
     leftRef2008 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) falseLabel2035));
     falseLabel2035 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) rightRef2053));
     rightRef2053 = NULL;
     switch ($tmp2001) {
         case 0: goto $l2081;
@@ -5895,13 +5895,13 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getOrReference$org$pa
         return $returnValue2164;
     }
     $l2084:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) rightRef2138));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) trueLabel2120));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) leftRef2093));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result2089));
     result2089 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) leftRef2093));
     leftRef2093 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) trueLabel2120));
     trueLabel2120 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) rightRef2138));
     rightRef2138 = NULL;
     switch ($tmp2086) {
         case 0: goto $l2166;
@@ -6281,8 +6281,8 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getBinaryReference$or
         return $returnValue2282;
     }
     $l2169:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) cOp2172));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result2247));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) cOp2172));
     result2247 = NULL;
     switch ($tmp2171) {
         case 0: goto $l2284;
@@ -6337,9 +6337,9 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getIdentityReference$
         return $returnValue2298;
     }
     $l2287:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) rightRef2294));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) leftRef2290));
     leftRef2290 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) rightRef2294));
     rightRef2294 = NULL;
     switch ($tmp2289) {
         case 0: goto $l2311;
@@ -6394,9 +6394,9 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getNIdentityReference
         return $returnValue2325;
     }
     $l2314:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) rightRef2321));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) leftRef2317));
     leftRef2317 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) rightRef2321));
     rightRef2321 = NULL;
     switch ($tmp2316) {
         case 0: goto $l2338;
@@ -6517,9 +6517,9 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getBinaryReference$or
                 return $returnValue2350;
             }
             $l2370:;
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) rightRef2377));
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) leftRef2373));
             leftRef2373 = NULL;
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) rightRef2377));
             rightRef2377 = NULL;
             switch ($tmp2372) {
                 case 0: goto $l2387;
@@ -6672,9 +6672,9 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getVirtualMethodRefer
         return $returnValue2441;
     }
     $l2390:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) vtable2401));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) cc2393));
     cc2393 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) vtable2401));
     vtable2401 = NULL;
     switch ($tmp2392) {
         case 0: goto $l2470;
@@ -6933,15 +6933,15 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getInterfaceMethodRef
         return $returnValue2620;
     }
     $l2473:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) methodType2588));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result2584));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) vtable2527));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) itable2483));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) cc2476));
     cc2476 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) itable2483));
     itable2483 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) vtable2527));
     vtable2527 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result2584));
     result2584 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) methodType2588));
     methodType2588 = NULL;
     switch ($tmp2475) {
         case 0: goto $l2622;
@@ -7281,9 +7281,9 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getPointerCallReferen
                 return $returnValue2679;
             }
             $l2731:;
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) index2742));
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) ptr2736));
             ptr2736 = NULL;
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) index2742));
             index2742 = NULL;
             switch ($tmp2733) {
                 case 0: goto $l2759;
@@ -7405,11 +7405,11 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getPointerCallReferen
                 return $returnValue2679;
             }
             $l2765:;
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) newCount2782));
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) oldCount2776));
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) ptr2770));
             ptr2770 = NULL;
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) oldCount2776));
             oldCount2776 = NULL;
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) newCount2782));
             newCount2782 = NULL;
             switch ($tmp2767) {
                 case 0: goto $l2838;
@@ -7468,9 +7468,9 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getPointerCallReferen
                 return $returnValue2679;
             }
             $l2844:;
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) offset2855));
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) ptr2849));
             ptr2849 = NULL;
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) offset2855));
             offset2855 = NULL;
             switch ($tmp2846) {
                 case 0: goto $l2873;
@@ -7712,9 +7712,9 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getCallReference$org$
                     return $returnValue2888;
                 }
                 $l2905:;
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result2918));
                 panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) bit2910));
                 bit2910 = NULL;
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result2918));
                 result2918 = NULL;
                 switch ($tmp2907) {
                     case 0: goto $l2935;
@@ -7773,9 +7773,9 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getCallReference$org$
                     return $returnValue2888;
                 }
                 $l2941:;
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result2954));
                 panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) bit2946));
                 bit2946 = NULL;
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result2954));
                 result2954 = NULL;
                 switch ($tmp2943) {
                     case 0: goto $l2971;
@@ -8187,20 +8187,20 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getCallReference$org$
         return $returnValue2888;
     }
     $l2878:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) indirectVar3105));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator3102));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result3098));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) methodRef3092));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) target3083));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) actualResultType2981));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) actualMethodType2980));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) argRefs2975));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) m2881));
     m2881 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) argRefs2975));
     argRefs2975 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) actualMethodType2980));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) actualResultType2981));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) target3083));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) methodRef3092));
     methodRef3092 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result3098));
     result3098 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator3102));
     separator3102 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) indirectVar3105));
     switch ($tmp2880) {
         case 2: goto $l2972;
         case 1: goto $l2936;
@@ -8309,9 +8309,9 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$wrapValue$panda$core$
                 return $returnValue3228;
             }
             $l3213:;
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) nonNullValue3222));
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) unwrapped3216));
             unwrapped3216 = NULL;
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) nonNullValue3222));
             nonNullValue3222 = NULL;
             switch ($tmp3215) {
                 case 0: goto $l3241;
@@ -8581,9 +8581,9 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getFieldReference$org
         return $returnValue3353;
     }
     $l3349:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) baseRef3369));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) cl3359));
     cl3359 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) baseRef3369));
     baseRef3369 = NULL;
     switch ($tmp3351) {
         case 1: goto $l3390;
@@ -8694,9 +8694,9 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$unwrapValue$panda$cor
                 return $returnValue3442;
             }
             $l3427:;
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) nonNullValue3436));
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) wrapped3430));
             wrapped3430 = NULL;
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) nonNullValue3436));
             nonNullValue3436 = NULL;
             switch ($tmp3429) {
                 case 0: goto $l3462;
@@ -9031,9 +9031,9 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getCastReference$pand
             $tmp3527 = -1;
             goto $l3525;
             $l3525:;
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) targetClass3535));
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) srcClass3528));
             srcClass3528 = NULL;
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) targetClass3535));
             targetClass3535 = NULL;
             switch ($tmp3527) {
                 case 2: goto $l3595;
@@ -9090,10 +9090,10 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getCastReference$pand
         return $returnValue3508;
     }
     $l3502:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) op3505));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) srcType3622));
-    srcType3622 = NULL;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) dstType3626));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) srcType3622));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) op3505));
+    srcType3622 = NULL;
     dstType3626 = NULL;
     switch ($tmp3504) {
         case 1: goto $l3558;
@@ -9456,11 +9456,11 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getConstructReference
                 return $returnValue3718;
             }
             $l3678:;
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result3779));
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) t3688));
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) cl3681));
             cl3681 = NULL;
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) t3688));
             t3688 = NULL;
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result3779));
             result3779 = NULL;
             switch ($tmp3680) {
                 case 1: goto $l3775;
@@ -9959,11 +9959,11 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getIsNullReference$or
         return $returnValue4050;
     }
     $l4006:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) bit4023));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) cl4013));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) ref4009));
     ref4009 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) cl4013));
     cl4013 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) bit4023));
     switch ($tmp4008) {
         case 0: goto $l4058;
     }
@@ -10088,11 +10088,11 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getIsNonNullReference
         return $returnValue4104;
     }
     $l4061:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) bit4078));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) cl4068));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) ref4064));
     ref4064 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) cl4068));
     cl4068 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) bit4078));
     switch ($tmp4063) {
         case 0: goto $l4112;
     }
@@ -10278,9 +10278,9 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getPrefixReference$or
     $tmp4151 = -1;
     goto $l4149;
     $l4149:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result4156));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) baseRef4152));
     baseRef4152 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result4156));
     result4156 = NULL;
     switch ($tmp4151) {
         case 1: goto $l4180;
@@ -10493,15 +10493,15 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getTernaryReference$o
         return $returnValue4302;
     }
     $l4193:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result4221));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) merge4217));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) falseLabel4213));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) trueLabel4209));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) testRef4205));
     testRef4205 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) trueLabel4209));
     trueLabel4209 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) falseLabel4213));
     falseLabel4213 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) merge4217));
     merge4217 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result4221));
     result4221 = NULL;
     switch ($tmp4195) {
         case 0: goto $l4304;
@@ -10985,21 +10985,21 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getDynamicCallReferen
         return $returnValue4544;
     }
     $l4328:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator4501));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) targetCast4410));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) finalTargetType4406));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) returnType4384));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) mtype4379));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result4375));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) mRef4371));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) argRefs4331));
     argRefs4331 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) mRef4371));
     mRef4371 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result4375));
     result4375 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) mtype4379));
     mtype4379 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) returnType4384));
     returnType4384 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) finalTargetType4406));
     finalTargetType4406 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) targetCast4410));
     targetCast4410 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator4501));
     separator4501 = NULL;
     switch ($tmp4330) {
         case 0: goto $l4546;
@@ -11404,18 +11404,18 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getMethodRefReference
         return $returnValue4737;
     }
     $l4549:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) methodObjectType4552));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) methodClass4568));
-    methodClass4568 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) cc4575));
-    cc4575 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result4579));
-    result4579 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) initMethod4619));
-    initMethod4619 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) targetType4634));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) targetCast4651));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) resultCast4719));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) targetCast4651));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) targetType4634));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) initMethod4619));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result4579));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) cc4575));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) methodClass4568));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) methodObjectType4552));
+    methodClass4568 = NULL;
+    cc4575 = NULL;
+    result4579 = NULL;
+    initMethod4619 = NULL;
     resultCast4719 = NULL;
     switch ($tmp4551) {
         case 0: goto $l4739;
@@ -12521,15 +12521,15 @@ void org$pandalanguage$pandac$CCodeGenerator$writeBlockWithFinally$panda$collect
     $tmp5063 = -1;
     goto $l5061;
     $l5061:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) fallthrough5090));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) context5084));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) source5073));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) returnLabelMap5068));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) finallyLabel5064));
     finallyLabel5064 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) returnLabelMap5068));
     returnLabelMap5068 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) source5073));
     source5073 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) context5084));
     context5084 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) fallthrough5090));
     fallthrough5090 = NULL;
     switch ($tmp5063) {
         case -1: goto $l5198;
@@ -12635,9 +12635,9 @@ void org$pandalanguage$pandac$CCodeGenerator$writePointerCall$org$pandalanguage$
             $tmp5208 = -1;
             goto $l5206;
             $l5206:;
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) arg5217));
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) ptr5211));
             ptr5211 = NULL;
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) arg5217));
             arg5217 = NULL;
             switch ($tmp5208) {
                 case -1: goto $l5240;
@@ -12725,11 +12725,11 @@ void org$pandalanguage$pandac$CCodeGenerator$writePointerCall$org$pandalanguage$
             $tmp5245 = -1;
             goto $l5243;
             $l5243:;
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) value5272));
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) index5266));
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) base5260));
             base5260 = NULL;
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) index5266));
             index5266 = NULL;
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) value5272));
             value5272 = NULL;
             switch ($tmp5245) {
                 case -1: goto $l5299;
@@ -13174,9 +13174,9 @@ void org$pandalanguage$pandac$CCodeGenerator$writeCall$org$pandalanguage$pandac$
             $tmp5457 = -1;
             goto $l5455;
             $l5455:;
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) resultType5466));
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) indirectVar5459));
             indirectVar5459 = NULL;
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) resultType5466));
             resultType5466 = NULL;
             switch ($tmp5457) {
                 case -1: goto $l5500;
@@ -13271,16 +13271,16 @@ void org$pandalanguage$pandac$CCodeGenerator$writeCall$org$pandalanguage$pandac$
     $tmp5318 = -1;
     goto $l5316;
     $l5316:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator5451));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) methodRef5447));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) targetRef5438));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) argRefs5373));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) actualResultType5332));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) actualMethodType5331));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) m5319));
     m5319 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) actualMethodType5331));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) actualResultType5332));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) argRefs5373));
     argRefs5373 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) targetRef5438));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) methodRef5447));
     methodRef5447 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator5451));
     separator5451 = NULL;
     switch ($tmp5318) {
         case 0: goto $l5326;
@@ -14143,59 +14143,59 @@ void org$pandalanguage$pandac$CCodeGenerator$writeSimpleRangeFor$panda$core$Stri
     $tmp5570 = -1;
     goto $l5568;
     $l5568:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) inc5977));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) forwardExclusiveTest5949));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) forwardExclusiveLabel5902));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) forwardInclusiveLabel5898));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) forwardDelta5873));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) loopInc5869));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) forwardEntryExclusive5802));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) forwardEntryInclusive5798));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) unsigned5775));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) signPrefix5774));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) backwardEntry5770));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) forwardEntry5766));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) context5760));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) loopTest5756));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) loopEnd5752));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) loopBody5748));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) loopStart5744));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) inclusive5728));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) end5708));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) indexValuePtr5684));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) start5664));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) index5650));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) numberType5646));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) field5631));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) cl5614));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) indexType5602));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) llt5598));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) t5591));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) range5587));
     range5587 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) t5591));
     t5591 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) llt5598));
     llt5598 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) indexType5602));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) cl5614));
     cl5614 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) field5631));
     field5631 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) numberType5646));
     numberType5646 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) index5650));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) start5664));
     start5664 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) indexValuePtr5684));
     indexValuePtr5684 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) end5708));
     end5708 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) inclusive5728));
     inclusive5728 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) loopStart5744));
     loopStart5744 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) loopBody5748));
     loopBody5748 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) loopEnd5752));
     loopEnd5752 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) loopTest5756));
     loopTest5756 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) context5760));
     context5760 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) forwardEntry5766));
     forwardEntry5766 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) backwardEntry5770));
     backwardEntry5770 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) signPrefix5774));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) unsigned5775));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) forwardEntryInclusive5798));
     forwardEntryInclusive5798 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) forwardEntryExclusive5802));
     forwardEntryExclusive5802 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) loopInc5869));
     loopInc5869 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) forwardDelta5873));
     forwardDelta5873 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) forwardInclusiveLabel5898));
     forwardInclusiveLabel5898 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) forwardExclusiveLabel5902));
     forwardExclusiveLabel5902 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) forwardExclusiveTest5949));
     forwardExclusiveTest5949 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) inc5977));
     inc5977 = NULL;
     switch ($tmp5570) {
         case -1: goto $l5994;
@@ -15577,84 +15577,84 @@ void org$pandalanguage$pandac$CCodeGenerator$writeSteppedRangeFor$panda$core$Str
     $tmp5997 = -1;
     goto $l5995;
     $l5995:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) inc6728));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) backwardExclusiveLabel6645));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) backwardInclusiveLabel6641));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) backwardDelta6616));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) forwardExclusiveTest6583));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) forwardExclusiveLabel6531));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) forwardInclusiveLabel6527));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) forwardDelta6502));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) backwardLabel6481));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) forwardLabel6477));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) loopInc6473));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) backwardEntryExclusiveTest6447));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) backwardEntryExclusive6402));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) backwardEntryInclusive6398));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) forwardEntryExclusive6331));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) forwardEntryInclusive6327));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) direction6288));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) signPrefix6263));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) unsigned6262));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) backwardEntry6258));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) forwardEntry6254));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) context6248));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) loopTest6244));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) loopEnd6240));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) loopBody6236));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) loopStart6232));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) inclusive6216));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) stepField6183));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) stepCl6166));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) step6162));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) end6142));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) indexValuePtr6118));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) start6098));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) index6084));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) numberType6080));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) field6065));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) cl6048));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) indexType6036));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) llt6032));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) stepType6025));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) t6018));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) range6014));
     range6014 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) t6018));
     t6018 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) stepType6025));
     stepType6025 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) llt6032));
     llt6032 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) indexType6036));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) cl6048));
     cl6048 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) field6065));
     field6065 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) numberType6080));
     numberType6080 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) index6084));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) start6098));
     start6098 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) indexValuePtr6118));
     indexValuePtr6118 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) end6142));
     end6142 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) step6162));
     step6162 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) stepCl6166));
     stepCl6166 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) stepField6183));
     stepField6183 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) inclusive6216));
     inclusive6216 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) loopStart6232));
     loopStart6232 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) loopBody6236));
     loopBody6236 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) loopEnd6240));
     loopEnd6240 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) loopTest6244));
     loopTest6244 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) context6248));
     context6248 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) forwardEntry6254));
     forwardEntry6254 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) backwardEntry6258));
     backwardEntry6258 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) unsigned6262));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) signPrefix6263));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) direction6288));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) forwardEntryInclusive6327));
     forwardEntryInclusive6327 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) forwardEntryExclusive6331));
     forwardEntryExclusive6331 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) backwardEntryInclusive6398));
     backwardEntryInclusive6398 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) backwardEntryExclusive6402));
     backwardEntryExclusive6402 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) backwardEntryExclusiveTest6447));
     backwardEntryExclusiveTest6447 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) loopInc6473));
     loopInc6473 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) forwardLabel6477));
     forwardLabel6477 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) backwardLabel6481));
     backwardLabel6481 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) forwardDelta6502));
     forwardDelta6502 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) forwardInclusiveLabel6527));
     forwardInclusiveLabel6527 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) forwardExclusiveLabel6531));
     forwardExclusiveLabel6531 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) forwardExclusiveTest6583));
     forwardExclusiveTest6583 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) backwardDelta6616));
     backwardDelta6616 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) backwardInclusiveLabel6641));
     backwardInclusiveLabel6641 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) backwardExclusiveLabel6645));
     backwardExclusiveLabel6645 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) inc6728));
     inc6728 = NULL;
     switch ($tmp5997) {
         case -1: goto $l6750;
@@ -15806,13 +15806,13 @@ void org$pandalanguage$pandac$CCodeGenerator$writeWhile$panda$core$String$Q$org$
     $tmp6761 = -1;
     goto $l6759;
     $l6759:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) testVar6784));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) context6776));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) loopEnd6772));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) loopStart6768));
     loopStart6768 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) loopEnd6772));
     loopEnd6772 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) context6776));
     context6776 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) testVar6784));
     testVar6784 = NULL;
     switch ($tmp6761) {
         case -1: goto $l6821;
@@ -15926,13 +15926,13 @@ void org$pandalanguage$pandac$CCodeGenerator$writeDo$panda$core$String$Q$panda$c
     $tmp6824 = -1;
     goto $l6822;
     $l6822:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) testVar6847));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) context6839));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) loopEnd6835));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) loopStart6831));
     loopStart6831 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) loopEnd6835));
     loopEnd6835 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) context6839));
     context6839 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) testVar6847));
     testVar6847 = NULL;
     switch ($tmp6824) {
         case -1: goto $l6877;
@@ -15984,11 +15984,11 @@ void org$pandalanguage$pandac$CCodeGenerator$writeLoop$panda$core$String$Q$panda
     $tmp6880 = -1;
     goto $l6878;
     $l6878:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) context6889));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) loopEnd6885));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) loopStart6881));
     loopStart6881 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) loopEnd6885));
     loopEnd6885 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) context6889));
     context6889 = NULL;
     switch ($tmp6880) {
         case -1: goto $l6899;
@@ -16542,13 +16542,13 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getLValue$org$pandala
                 return $returnValue7010;
             }
             $l7082:;
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result7111));
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) base7100));
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) fieldRef7094));
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) data7085));
             data7085 = NULL;
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) fieldRef7094));
             fieldRef7094 = NULL;
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) base7100));
             base7100 = NULL;
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result7111));
             result7111 = NULL;
             switch ($tmp7084) {
                 case 0: goto $l7163;
@@ -16727,11 +16727,11 @@ void org$pandalanguage$pandac$CCodeGenerator$writeReturn$org$pandalanguage$panda
         $tmp7185 = -1;
         goto $l7183;
         $l7183:;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) load7232));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result7217));
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) valueType7186));
         valueType7186 = NULL;
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result7217));
         result7217 = NULL;
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) load7232));
         load7232 = NULL;
         switch ($tmp7185) {
             case -1: goto $l7243;
@@ -17908,19 +17908,19 @@ void org$pandalanguage$pandac$CCodeGenerator$writeDynamicCall$org$pandalanguage$
     $tmp7608 = -1;
     goto $l7606;
     $l7606:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator7759));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) targetCast7676));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) finalTargetType7672));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) returnType7658));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) mtype7653));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) mRef7649));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) argRefs7609));
     argRefs7609 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) mRef7649));
     mRef7649 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) mtype7653));
     mtype7653 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) returnType7658));
     returnType7658 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) finalTargetType7672));
     finalTargetType7672 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) targetCast7676));
     targetCast7676 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator7759));
     separator7759 = NULL;
     switch ($tmp7608) {
         case -1: goto $l7802;
@@ -18828,11 +18828,11 @@ void org$pandalanguage$pandac$CCodeGenerator$write$org$pandalanguage$pandac$Meth
     $tmp7985 = -1;
     goto $l7983;
     $l7983:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) indentedBody8092));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) bodyBuffer8088));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator8016));
     separator8016 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) bodyBuffer8088));
     bodyBuffer8088 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) indentedBody8092));
     indentedBody8092 = NULL;
     switch ($tmp7985) {
         case -1: goto $l8201;

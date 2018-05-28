@@ -1,1 +1,1 @@
-assertion failure (PostconditionSimpleFail.panda:3): postcondition failure
+assertion failure (PostconditionSimpleFail.panda:4): postcondition failure for method anonymous.PostconditionSimpleFail.test(x:panda.core.Int64):panda.core.Int64

@@ -244,9 +244,9 @@ panda$core$Object* panda$collections$CollectionView$fold$$LPpanda$collections$Co
         return $returnValue88;
     }
     $l52:;
+    panda$core$Panda$unref$panda$core$Object(result62);
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) i55));
     i55 = NULL;
-    panda$core$Panda$unref$panda$core$Object(result62);
     result62 = NULL;
     switch ($tmp54) {
         case 0: goto $l90;

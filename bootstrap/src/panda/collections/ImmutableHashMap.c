@@ -444,9 +444,9 @@ panda$core$String* panda$collections$ImmutableHashMap$convert$R$panda$core$Strin
         return $returnValue161;
     }
     $l112:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator120));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result115));
     result115 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator120));
     separator120 = NULL;
     switch ($tmp114) {
         case 0: goto $l165;

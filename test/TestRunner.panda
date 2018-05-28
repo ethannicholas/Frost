@@ -147,6 +147,8 @@ class TestRunner {
         args.add(workingDir.resolve(test + ".panda").path)
         args.add("-o")
         args.add(exe.path)
+        args.add("-i")
+        args.add(workingDir.parent().convert())
         match mode {
             when Mode.O0:
                 args.add("-O")
@@ -265,7 +267,7 @@ class TestRunner {
     }
 
     @class
-    method main(args:Array<String>) {
+    method main(args:ListView<String>) {
         if args.get_count() != 4 {
             Console.printLine("usage: testrunner <panda home> <build path> <c compiler>")
             System.exit(1)

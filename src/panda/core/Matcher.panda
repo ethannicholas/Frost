@@ -31,9 +31,10 @@ class Matcher {
     method matches():Bit
 
     ================================================================================================
-    Returns the next occurrence of the matcher's regular expression within the string. Returns a
-    `Bit` indicating whether or not a match was found. Use [start], [end], and [group(Int)] for
-    more information about the match.
+    Returns the next occurrence of the matcher's regular expression within the string, starting just
+    past the last match (or at the beginning of the string). Returns a `Bit` indicating whether or
+    not a match was found. Use [start], [end], and [group(Int)] for more information about the
+    match.
     
     @returns `true` if a match was found
     @see matches()
@@ -144,7 +145,7 @@ class Matcher {
         }
         else {
             target.append(replacement)
-        }        
+        }
         replacementIndex := get_end()
     }
     

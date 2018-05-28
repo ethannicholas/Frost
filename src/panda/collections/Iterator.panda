@@ -7,6 +7,8 @@ interface Iterator<T> {
         
         def filter:(T)=>(Bit)
         
+        var _done:Bit
+
         var nextValue:T?
 
         init(base:Iterator<T>, filter:(T)=>(Bit)) {
@@ -18,7 +20,7 @@ interface Iterator<T> {
         method getNext() {
             do {
                 if base.get_done() {
-                    nextValue := null
+                    _done := true
                     return
                 }
                 nextValue := base.next()
@@ -28,13 +30,79 @@ interface Iterator<T> {
 
         @override
         function get_done():Bit {
-            return nextValue = null
+            return _done
         }
 
         @override
         method next():T {
             def result := nextValue
             getNext()
+            return result
+        }
+    }
+
+    @private
+    class RangeIterator<T> : Iterator<T> {
+        def base:Iterator<T>
+
+        def current:Int
+
+        def end:Int?
+
+        def step:Int
+
+        def pending:T?
+
+        def _done := false
+
+        @pre(step > 0)
+        init(base:Iterator<T>, start:Int?, end:Int?, inclusive:Bit, step:Int) {
+            self.base := base
+            if start != null {
+                for i in 0 .. start {
+                    if !base.get_done() {
+                        base.next()
+                    }
+                }
+                current := start
+            }
+            else {
+                current := 0
+            }
+            if end != null {
+                if inclusive {
+                    self.end := end + 1
+                }
+                else {
+                    self.end := end
+                }
+            }
+            self.step := step
+            if !base.get_done() {
+                pending := base.next()
+            }
+            else {
+                _done := true
+            }
+        }
+
+        @override
+        function get_done():Bit {
+            return _done
+        }
+
+        @override
+        method next():T {
+            def result := pending
+            for i in 0 .. step {
+                current += 1
+                _done := (end != null & current >= end) | base.get_done()
+                if _done {
+                    pending := null
+                    break
+                }
+                pending := base.next()
+            }
             return result
         }
     }
@@ -46,12 +114,75 @@ interface Iterator<T> {
     method next():T
 
     ================================================================================================
+    Scans through the `Iterator` until the end, returning the number of elements traversed over.
+    ================================================================================================
+    @post(get_done())
+    method count():Int {
+        var result := 0
+        while !get_done() {
+            next()
+            result += 1
+        }
+        return result
+    }
+
+    ================================================================================================
     Returns a new `Iterator` which reads from this `Iterator`, skipping over values which do not
     match the predicate. As the new `Iterator` internally reads from this `Iterator`, you should not
     interact with an `Iterator` after calling `filter` on it.
     ================================================================================================
     function filter(predicate:(T)=>(Bit)):Iterator<T> {
         return FilterIterator<T>(self, predicate)
+    }
+
+    ================================================================================================
+    Returns an `Iterator` which traverses a subrange of this `Iterator`. As the new `Iterator`
+    internally reads from this `Iterator`, you should not interact with an `Iterator` after calling
+    `range` on it.
+
+    Example:
+
+        File(path).lines().range(..count).apply(Console.printLine)
+
+    This is roughly equivalent to the Unix `head` utility, in that it will print the first `count`
+    lines of a file.
+
+    The range iterator will never read past the end of the base iterator. If the base iterator does
+    not produce enough elements to finish (or even begin) the range, iteration will simply end at
+    that point.
+    ================================================================================================
+    @pre(range.min = null | range.min >= 0 & range.max = null | range.min >= 0)
+    function range(range:Range<Int?>):Iterator<T> {
+        return RangeIterator<T>(self, range.min, range.max, range.inclusive, 1)
+    }
+
+    ================================================================================================
+    As [range(Range<Int?>)], but additionally handles a `step`.
+
+    Example:
+
+        for v in arr.iterator().step(1.. by 2) {
+            ...
+        }
+
+    This will loop over every odd-numbered element in `arr`.
+    ================================================================================================
+    @pre(range.start = null | range.start >= 0 & range.end = null | range.end >= 0 & range.step > 0)
+    function range(range:SteppedRange<Int?, Int>):Iterator<T> {
+        return RangeIterator<T>(self, range.start, range.end, range.inclusive, range.step)
+    }
+
+    ================================================================================================
+    Scans through the `Iterator` until the end, collecting all of the traversed elements into a
+    `List`.
+    ================================================================================================
+    @post(get_done())
+    method all():List<T> {
+        def result := Array<T>()
+        for v in self {
+            result.add(v)
+        }
+        return result
     }
 
     ================================================================================================
@@ -68,4 +199,5 @@ interface Iterator<T> {
             m(v)
         }
     }
+
 }

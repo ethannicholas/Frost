@@ -213,6 +213,103 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
     }
 
     @private
+    class MatchIterator : Iterator<String.Index> {
+        def haystack:String
+
+        def needle:String
+
+        var nextMatch:String.Index?
+
+        var allowOverlaps:Bit
+
+        init(haystack:String, needle:String, allowOveraps:Bit) {
+            self.haystack := haystack
+            self.needle := needle
+            self.allowOverlaps := allowOverlaps
+            nextMatch := haystack.indexOf(needle)
+        }
+
+        @override
+        function get_done():Bit {
+            return nextMatch = null
+        }
+
+        @override
+        method next():String.Index {
+            def result := nextMatch
+            def start:String.Index
+            if allowOverlaps {
+                start := haystack.next(start)
+            }
+            else {
+                start := String.Index(nextMatch.value + needle.byteLength())
+            }
+            nextMatch := haystack.indexOf(needle, start)
+            return result
+        }
+    }
+
+    class Match : Immutable {
+        def start:String.Index
+
+        def end:String.Index
+
+        def groups:ImmutableArray<String>
+
+        init(m:Matcher) {
+            start := m.get_start()
+            end := m.get_end()
+            def g := Array<String>()
+            for i in 0 .. m.get_groupCount() {
+                g.add(m.group(i))
+            }
+            groups := g.finish()
+        }
+
+        @override
+        function convert():String {
+            return "Match(\{groups[0]})"
+        }
+    }
+
+    @private
+    class RegexMatchIterator : Iterator<Match> {
+        def matcher:Matcher
+
+        def haystack:String
+
+        def allowOverlaps:Bit
+
+        var found:Bit
+
+        init(haystack:String, needle:RegularExpression, allowOveraps:Bit) {
+            self.haystack := haystack
+            self.allowOverlaps := allowOverlaps
+            matcher := needle.matcher(haystack)
+            found := matcher.find()
+        }
+
+        @override
+        function get_done():Bit {
+            return !found
+        }
+
+        @override
+        method next():Match {
+            def result := Match(matcher)
+            def start:String.Index
+            if allowOverlaps {
+                start := haystack.next(matcher.get_start())
+            }
+            else {
+                start := matcher.get_end()
+            }
+            found := matcher.find(start)
+            return result
+        }
+    }
+
+    @private
     def data:Pointer<Char8>
 
     @private
@@ -976,98 +1073,20 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
         return result.convert()
     }
 
-    ================================================================================================
-    Returns the number of times the given character appears in this string.
-
-    @param needle the character to search for
-    @returns the number of copies found
-    ================================================================================================
-    function matchCount(needle:Char32):Int {
-        var count := 0
-        for c in self {
-            if c = needle {
-                count += 1
-            }
-        }
-        return count
+    function find(needle:String):Iterator<String.Index> {
+        return find(needle, false)
     }
 
-    ================================================================================================
-    Returns the number of times the given string appears, non-overlapping, in this string.
-
-    @param needle the string to search for
-    @returns the number of copies found
-    ================================================================================================
-    function matchCount(needle:String):Int {
-        return matchCount(needle, false)
+    function find(needle:String, overlapping:Bit):Iterator<String.Index> {
+        return MatchIterator(self, needle, overlapping)
     }
 
-    ================================================================================================
-    Returns the number of times the given string appears in this string. The `overlapping` parameter
-    controls whether overlapping instances are counted.
-
-    @param needle the string to search for
-    @param `true` if overlapping instances are permitted
-    @returns the number of copies found
-    ================================================================================================
-    function matchCount(needle:String, overlapping:Bit):Int {
-        var count := 0
-        var i:String.Index? := start()
-        def needleLength := needle.length()
-        while i < end() {
-            i := indexOf(needle, i)
-            if i = null {
-                break
-            }
-            count += 1
-            if overlapping {
-                i := next(i)
-            }
-            else {
-                i := offset(i, needleLength.max(1))
-            }
-        }
-        return count
+    function find(needle:RegularExpression):Iterator<Match> {
+        return find(needle, false)
     }
 
-    ================================================================================================
-    Returns the number of times the given regex appears, non-overlapping, in this string.
-
-    @param needle the regex to search for
-    @returns the number of copies found
-    ================================================================================================
-    function matchCount(needle:RegularExpression):Int {
-        return matchCount(needle, false)
-    }
-
-    ================================================================================================
-    Returns the number of times the given string appears in this string. The `overlapping` parameter
-    controls whether overlapping instances are counted.
-
-    @param needle the string to search for
-    @param `true` if overlapping instances are permitted
-    @returns the number of copies found
-    ================================================================================================
-    function matchCount(needle:RegularExpression, overlapping:Bit):Int {
-        var count := 0
-        var i := start()
-        def matcher := needle.matcher(self)
-        while i != end() & matcher.find(i) {
-            count += 1
-            if overlapping {
-                i := next(matcher.get_start())
-            }
-            else {
-                def matchEnd := matcher.get_end()
-                if i != matchEnd {
-                    i := matchEnd
-                }
-                else {
-                    i := next(i)
-                }
-            }
-        }
-        return count
+    function find(needle:RegularExpression, overlapping:Bit):Iterator<Match> {
+        return RegexMatchIterator(self, needle, overlapping)
     }
 
     ================================================================================================

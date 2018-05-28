@@ -1,4 +1,4 @@
 5
 10
 25
-assertion failure (PostconditionOverrideParameterName.panda:4): postcondition failure
+assertion failure (PostconditionOverrideParameterName.panda:16): postcondition failure for method anonymous.PostconditionOverrideParameterName2.setup(minimum:panda.core.Int64, maximum:panda.core.Int64)

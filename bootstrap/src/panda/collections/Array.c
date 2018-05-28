@@ -724,9 +724,9 @@ panda$core$String* panda$collections$Array$convert$R$panda$core$String(panda$col
         return $returnValue300;
     }
     $l254:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator262));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result257));
     result257 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator262));
     separator262 = NULL;
     switch ($tmp256) {
         case 0: goto $l304;

@@ -937,9 +937,9 @@ panda$core$String* org$pandalanguage$pandac$ClassDecl$convert$R$panda$core$Strin
         return $returnValue350;
     }
     $l167:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator184));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result170));
     result170 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator184));
     separator184 = NULL;
     switch ($tmp169) {
         case 0: goto $l354;

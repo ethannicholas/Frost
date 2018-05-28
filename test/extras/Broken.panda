@@ -1,0 +1,12 @@
+package extras
+
+class Broken {
+    def x:Int
+
+    def y:Int
+
+    Broken(x:Int, y:Int) {
+        self.x := x
+        self.y := y
+    }
+}

@@ -1746,7 +1746,7 @@ class Parser {
             return null
         }
         return ASTNode.METHOD(start.position, null, ImmutableArray<ASTNode>(), kind, text(name), -- FIXME literal
-                params, returnType, body)
+                null, params, returnType, body)
     }
 
     ================================================================================================
@@ -2006,7 +2006,8 @@ class Parser {
     }
 
     ================================================================================================
-    methodDeclaration = (METHOD | FUNCTION) methodName parameters typeDeclaration? block?
+    methodDeclaration = (METHOD | FUNCTION) methodName genericsDeclaration parameters
+            typeDeclaration? block?
     ================================================================================================
     method methodDeclaration(doccomment:ASTNode?, annotations:ImmutableArray<ASTNode>):ASTNode? {
         def kind:MethodDecl.Kind
@@ -2024,6 +2025,13 @@ class Parser {
         def name := methodName()
         if name = null {
             return null
+        }
+        def generics:ImmutableArray<ASTNode>?
+        if peek().kind = Token.Kind.LT {
+            generics := genericsDeclaration()
+        }
+        else {
+            generics := null
         }
         def params := parameters()
         if params = null {
@@ -2049,7 +2057,7 @@ class Parser {
         else {
             body := null
         }
-        return ASTNode.METHOD(start.position, doccomment, annotations, kind, name, params,
+        return ASTNode.METHOD(start.position, doccomment, annotations, kind, name, generics, params,
                 returnType, body)
     }
 
@@ -2088,7 +2096,7 @@ class Parser {
             return null
         }
         return ASTNode.METHOD(start.position, null, ImmutableArray<ASTNode>(), kind, "<anonymous>", -- FIXME literal
-                params, returnType, body)
+                null, params, returnType, body)
     }
 
     ================================================================================================
@@ -2108,7 +2116,7 @@ class Parser {
             return null
         }
         return ASTNode.METHOD(start.position, doccomment, annotations, MethodDecl.Kind.INIT, "init",
-                params, null, b)
+                null, params, null, b)
     }
 
     ================================================================================================
@@ -2404,7 +2412,7 @@ class Parser {
     }
 
     ================================================================================================
-    bodyEntry = usesDeclaration | packageDeclaration | statement | declaration
+    bodyEntry = usesDeclaration | packageDeclaration | declaration
     ================================================================================================
     method bodyEntry():ASTNode? {
         match peek().kind {
@@ -2412,12 +2420,8 @@ class Parser {
                 return usesDeclaration()
             when Token.Kind.PACKAGE:
                 return packageDeclaration()
-            when Token.Kind.CLASS, Token.Kind.INTERFACE, Token.Kind.CHOICE, Token.Kind.METHOD,
-                    Token.Kind.FUNCTION, Token.Kind.ANNOTATION, Token.Kind.DOC_COMMENT,
-                    Token.Kind.VAR, Token.Kind.DEF, Token.Kind.CONSTANT, Token.Kind.PROPERTY:
-                return declaration()
             otherwise:
-                return statement()
+                return declaration()
         }
     }
 

@@ -1,4 +1,4 @@
 1
 5
 11
-assertion failure (PostconditionOverride.panda:4): postcondition failure
+assertion failure (PostconditionOverride.panda:14): postcondition failure for method anonymous.PostconditionOverride2.test(x:panda.core.Int64)

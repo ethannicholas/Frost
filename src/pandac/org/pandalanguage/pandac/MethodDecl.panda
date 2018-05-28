@@ -33,6 +33,8 @@ class MethodDecl : Symbol {
 
     def methodKind:Kind
 
+    def genericParameters:Array<ClassDecl.GenericParameter>?
+
     def parameters:Array<Parameter>
 
     def returnType:Type
@@ -50,13 +52,15 @@ class MethodDecl : Symbol {
     var overridden:MethodDecl? := null
 
     init(owner:ClassDecl, position:Position, doccomment:String?, annotations:Annotations,
-            methodKind:Kind, name:String, parameters:Array<Parameter>, returnType:Type,
+            methodKind:Kind, name:String, genericParameters:Array<ClassDecl.GenericParameter>?,
+            parameters:Array<Parameter>, returnType:Type,
             body:ImmutableArray<ASTNode>?) {
         super.init(Symbol.Kind.METHOD, position, name)
         self.owner := owner
         self.doccomment := doccomment
         self.annotations := annotations
         self.methodKind := methodKind
+        self.genericParameters := genericParameters
         self.parameters := parameters
         self.returnType := returnType
         self.body := body

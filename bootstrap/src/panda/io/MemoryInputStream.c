@@ -145,9 +145,9 @@ void panda$io$MemoryInputStream$init$panda$core$String(panda$io$MemoryInputStrea
     $tmp6 = -1;
     goto $l4;
     $l4:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) array11));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) utf87));
     utf87 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) array11));
     array11 = NULL;
     switch ($tmp6) {
         case -1: goto $l49;

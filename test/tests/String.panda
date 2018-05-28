@@ -104,16 +104,6 @@ method main() {
     }
     Console.printLine()
 
-    Console.printLine("matchCount")
-    Console.printLine("AAABCADADA".matchCount("A"->Char32))
-    Console.printLine("AAABCADADA".matchCount("A"->String))
-    Console.printLine("AAABCADADA".matchCount(""))
-    Console.printLine("AAABCADADA".matchCount("AA"))
-    Console.printLine("AAABCADADA".matchCount("AA", true))
-    Console.printLine("AAABCADADA".matchCount("", true))
-    Console.printLine("".matchCount(""))
-    Console.printLine()
-
     Console.printLine("replace")
     Console.printLine("Hello, World!".replace("o", "123"))
     Console.printLine("123456789".replace("0123", "456"))

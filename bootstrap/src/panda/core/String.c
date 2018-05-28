@@ -2122,9 +2122,9 @@ panda$core$String* panda$core$String$replace$panda$core$RegularExpression$panda$
         return $returnValue945;
     }
     $l930:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) matcher937));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result933));
     result933 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) matcher937));
     matcher937 = NULL;
     switch ($tmp932) {
         case 0: goto $l949;
@@ -2195,9 +2195,9 @@ panda$core$String* panda$core$String$replace$panda$core$RegularExpression$$LPpan
         return $returnValue976;
     }
     $l952:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) matcher959));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result955));
     result955 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) matcher959));
     matcher959 = NULL;
     switch ($tmp954) {
         case 0: goto $l980;
@@ -2318,9 +2318,9 @@ panda$core$String* panda$core$String$replace$panda$core$RegularExpression$$LPpan
         return $returnValue1036;
     }
     $l983:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) matcher990));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result986));
     result986 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) matcher990));
     matcher990 = NULL;
     switch ($tmp985) {
         case 0: goto $l1040;
@@ -3028,9 +3028,9 @@ panda$collections$ListView* panda$core$String$split$panda$core$RegularExpression
         return $returnValue1362;
     }
     $l1328:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) matcher1335));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result1331));
     result1331 = NULL;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) matcher1335));
     matcher1335 = NULL;
     switch ($tmp1330) {
         case 0: goto $l1364;
