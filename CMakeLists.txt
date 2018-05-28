@@ -2,7 +2,7 @@ project(panda)
 cmake_minimum_required(VERSION 2.8)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -m64")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -m64")
-set(OPTIMIZATION 0)
+set(OPTIMIZATION 3)
 set(SAFETY 3)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/third-party/FindICU")
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/third-party/FindLLVM")
@@ -51,6 +51,7 @@ add_library(c_panda
     bootstrap/src/panda/collections/Iterable.c
     bootstrap/src/panda/collections/Iterator.c
     bootstrap/src/panda/collections/Iterator/FilterIterator.c
+    bootstrap/src/panda/collections/Iterator/RangeIterator.c
     bootstrap/src/panda/collections/Key.c
     bootstrap/src/panda/collections/List.c
     bootstrap/src/panda/collections/ListView.c
@@ -96,6 +97,9 @@ add_library(c_panda
     bootstrap/src/panda/core/SteppedRange.LTpanda/core/Int64.Q.Cpanda/core/Int64.GT.c
     bootstrap/src/panda/core/String.c
     bootstrap/src/panda/core/String/Index.c
+    bootstrap/src/panda/core/String/Match.c
+    bootstrap/src/panda/core/String/MatchIterator.c
+    bootstrap/src/panda/core/String/RegexMatchIterator.c
     bootstrap/src/panda/core/String/UTF8Iterator.c
     bootstrap/src/panda/core/String/UTF16Iterator.c
     bootstrap/src/panda/core/String/UTF32Iterator.c

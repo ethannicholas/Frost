@@ -1,9 +1,13 @@
 class Super1 {
-    function foo():String
+    function foo():String {
+        return "super1"
+    }
 }
 
 class Super2 : Super1 {
-    method foo():Int
+    method foo():Int {
+        return 2
+    }
 }
 
 interface Intf {

@@ -1,0 +1,3 @@
+BadAnnotations2.panda:2:5: error: '@class' annotation may not be used outside of a class
+BadAnnotations2.panda:5:1: error: '@class' annotation may not be used outside of a class
+2 errors

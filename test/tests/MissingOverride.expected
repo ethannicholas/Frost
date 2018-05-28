@@ -1,5 +1,5 @@
-MissingOverride.panda:14:5: error: function anonymous.Sub1.foo():panda.core.String overrides function anonymous.Super1.foo():panda.core.String, but is not marked @override
-MissingOverride.panda:20:5: error: function anonymous.Sub2.foo():panda.core.String overrides function anonymous.Super1.foo():panda.core.String, but is not marked @override
-MissingOverride.panda:26:5: error: function anonymous.Sub3.foo():panda.core.Int64 overrides function anonymous.Intf.foo():panda.core.Int64, but is not marked @override
-MissingOverride.panda:38:5: error: function anonymous.Sub5.foo():panda.core.Int64 overrides method anonymous.Super2.foo():panda.core.Int64, but is not marked @override
+MissingOverride.panda:18:5: error: function anonymous.Sub1.foo():panda.core.String overrides function anonymous.Super1.foo():panda.core.String, but is not marked @override
+MissingOverride.panda:24:5: error: function anonymous.Sub2.foo():panda.core.String overrides function anonymous.Super1.foo():panda.core.String, but is not marked @override
+MissingOverride.panda:30:5: error: function anonymous.Sub3.foo():panda.core.Int64 overrides function anonymous.Intf.foo():panda.core.Int64, but is not marked @override
+MissingOverride.panda:42:5: error: function anonymous.Sub5.foo():panda.core.Int64 overrides method anonymous.Super2.foo():panda.core.Int64, but is not marked @override
 4 errors

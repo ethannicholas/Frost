@@ -1,0 +1,18 @@
+class Test {
+    @private
+    @protected
+    @package
+    @class
+    @override
+    @external
+    @implicit
+    @abstract
+    @inline
+    @specialize
+    @weak
+    @unsafeImmutable
+    def x:MutableString
+
+    @class
+    var y:String
+}

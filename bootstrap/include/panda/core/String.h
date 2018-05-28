@@ -19,7 +19,7 @@ typedef struct panda$core$String {
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"
 #undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[61]; } panda$core$String$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[60]; } panda$core$String$class_type;
 extern panda$core$String$class_type panda$core$String$class;
 
 #ifndef PANDA_TYPESONLY
@@ -84,11 +84,10 @@ panda$core$String* panda$core$String$replace$panda$core$String$panda$core$String
 panda$core$String* panda$core$String$replace$panda$core$RegularExpression$panda$core$String$R$panda$core$String(panda$core$String* self, panda$core$RegularExpression* p_search, panda$core$String* p_replacement);
 panda$core$String* panda$core$String$replace$panda$core$RegularExpression$$LPpanda$core$String$RP$EQ$GT$LPpanda$core$Object$RP$R$panda$core$String(panda$core$String* self, panda$core$RegularExpression* p_search, panda$core$MutableMethod* p_replacement);
 panda$core$String* panda$core$String$replace$panda$core$RegularExpression$$LPpanda$collections$ListView$LTpanda$core$String$GT$RP$EQ$GT$LPpanda$core$Object$RP$R$panda$core$String(panda$core$String* self, panda$core$RegularExpression* p_search, panda$core$MutableMethod* p_replacement);
-panda$core$Int64 panda$core$String$matchCount$panda$core$Char32$R$panda$core$Int64(panda$core$String* self, panda$core$Char32 p_needle);
-panda$core$Int64 panda$core$String$matchCount$panda$core$String$R$panda$core$Int64(panda$core$String* self, panda$core$String* p_needle);
-panda$core$Int64 panda$core$String$matchCount$panda$core$String$panda$core$Bit$R$panda$core$Int64(panda$core$String* self, panda$core$String* p_needle, panda$core$Bit p_overlapping);
-panda$core$Int64 panda$core$String$matchCount$panda$core$RegularExpression$R$panda$core$Int64(panda$core$String* self, panda$core$RegularExpression* p_needle);
-panda$core$Int64 panda$core$String$matchCount$panda$core$RegularExpression$panda$core$Bit$R$panda$core$Int64(panda$core$String* self, panda$core$RegularExpression* p_needle, panda$core$Bit p_overlapping);
+panda$collections$Iterator* panda$core$String$find$panda$core$String$R$panda$collections$Iterator$LTpanda$core$String$Index$GT(panda$core$String* self, panda$core$String* p_needle);
+panda$collections$Iterator* panda$core$String$find$panda$core$String$panda$core$Bit$R$panda$collections$Iterator$LTpanda$core$String$Index$GT(panda$core$String* self, panda$core$String* p_needle, panda$core$Bit p_overlapping);
+panda$collections$Iterator* panda$core$String$find$panda$core$RegularExpression$R$panda$collections$Iterator$LTpanda$core$String$Match$GT(panda$core$String* self, panda$core$RegularExpression* p_needle);
+panda$collections$Iterator* panda$core$String$find$panda$core$RegularExpression$panda$core$Bit$R$panda$collections$Iterator$LTpanda$core$String$Match$GT(panda$core$String* self, panda$core$RegularExpression* p_needle, panda$core$Bit p_overlapping);
 panda$core$String$Index panda$core$String$start$R$panda$core$String$Index(panda$core$String* self);
 panda$core$String$Index panda$core$String$end$R$panda$core$String$Index(panda$core$String* self);
 panda$core$String$Index panda$core$String$next$panda$core$String$Index$R$panda$core$String$Index(panda$core$String* self, panda$core$String$Index p_i);

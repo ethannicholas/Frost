@@ -266,12 +266,10 @@ class Main {
                     compiler.markNonExternal(cl)
                 }
             }
-            if !errorQueue.hasMessage() {
-                for s in sources {
-                    compiler.compile(s)
-                }
-                compiler.finish()
+            for s in sources {
+                compiler.compile(s)
             }
+            compiler.finish()
             errorCount := errorQueue.pendingMessages()
             for i in 0 .. errorCount {
                 def error := errorQueue.getMessage()

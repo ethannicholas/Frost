@@ -5044,7 +5044,47 @@ class Compiler {
         m.body := statements.finish()
     }
 
+    method checkAccessModifierCount(position:Position, a:Annotations) {
+        var count := 0
+        if a.flags && Annotations.Flag.PRIVATE != 0 {
+            count += 1
+        }
+        if a.flags && Annotations.Flag.PROTECTED != 0 {
+            count += 1
+        }
+        if a.flags && Annotations.Flag.PACKAGE != 0 {
+            count += 1
+        }
+        if count > 1 {
+            error(position, "conflicting access modifier annotations")
+        }
+    }
+
+    method checkAnnotations(m:MethodDecl) {
+        method disallow(compiler:Compiler -* FIXME capture this *-, m:MethodDecl -* FIXME capture this *-, flag:Int, name:String) {
+            if m.annotations.flags && flag != 0 {
+                compiler.error(m.position, "methods may not be annotated with '\{name}'")
+            }
+        }
+        disallow(self, m, Annotations.Flag.SPECIALIZE,       "@specialize")
+        disallow(self, m, Annotations.Flag.WEAK,             "@weak")
+        disallow(self, m, Annotations.Flag.UNSAFE_IMMUTABLE, "@unsafeImmutable")
+        if m.annotations.flags && Annotations.Flag.EXTERNAL != 0 & m.body != null {
+            error(m.position, "methods annotated with '@external' may not have a body")
+        }
+        if m.annotations.flags && Annotations.Flag.ABSTRACT != 0 & m.body != null {
+            error(m.position, "methods annotated with '@abstract' may not have a body")
+        }
+        if m.annotations.flags && Annotations.Flag.ABSTRACT = 0 &
+                m.annotations.flags && Annotations.Flag.EXTERNAL = 0 &
+                m.body = null {
+            error(m.position, "expected non-abstract method '\{m.name}' to have a body")
+        }
+        checkAccessModifierCount(m.position, m.annotations)
+    }
+
     method compile(m:MethodDecl) {
+        checkAnnotations(m)
         if m.owner.classKind = ClassDecl.Kind.CHOICE & m.name = "cleanup" {
             createChoiceCleanup(m)
         }
@@ -5117,11 +5157,80 @@ class Compiler {
         }
     }
 
+    method checkAnnotations(cl:ClassDecl) {
+        method disallow(compiler:Compiler -* FIXME capture this *-, cl:ClassDecl -* FIXME capture this *-, flag:Int, name:String) {
+            if cl.annotations.flags && flag != 0 {
+                compiler.error(cl.position, "classes may not be annotated with '\{name}'")
+            }
+        }
+        disallow(self, cl, Annotations.Flag.PROTECTED, "@protected")
+        disallow(self, cl, Annotations.Flag.CLASS,     "@class")
+        disallow(self, cl, Annotations.Flag.OVERRIDE,  "@override")
+        disallow(self, cl, Annotations.Flag.EXTERNAL,  "@external")
+        disallow(self, cl, Annotations.Flag.IMPLICIT,  "@implicit")
+        disallow(self, cl, Annotations.Flag.INLINE,    "@inline")
+        disallow(self, cl, Annotations.Flag.WEAK,      "@weak")
+        if cl.annotations.expressions != null {
+            for expr in cl.annotations.expressions {
+                match expr {
+                    when Annotations.Expression.PRE:
+                        error(cl.position, "classes may not be annotated with '@pre'")
+                    when Annotations.Expression.POST:
+                        error(cl.position, "classes may not be annotated with '@post'")
+                    when Annotations.Expression.PRE_OR:
+                        error(cl.position, "classes may not be annotated with '@preOr'")
+                    when Annotations.Expression.POST_AND:
+                        error(cl.position, "classes may not be annotated with '@postAnd'")
+                }
+            }
+        }
+        checkAccessModifierCount(cl.position, cl.annotations)
+    }
+
+    method checkAnnotations(f:FieldDecl) {
+        method disallow(compiler:Compiler -* FIXME capture this *-, f:FieldDecl -* FIXME capture this *-, flag:Int, name:String) {
+            if f.annotations.flags && flag != 0 {
+                compiler.error(f.position, "fields may not be annotated with '\{name}'")
+            }
+        }
+        disallow(self, f, Annotations.Flag.OVERRIDE,         "@override")
+        disallow(self, f, Annotations.Flag.EXTERNAL,         "@external")
+        disallow(self, f, Annotations.Flag.IMPLICIT,         "@implicit")
+        disallow(self, f, Annotations.Flag.ABSTRACT,         "@abstract")
+        disallow(self, f, Annotations.Flag.INLINE,           "@inline")
+        disallow(self, f, Annotations.Flag.SPECIALIZE,       "@specialize")
+        disallow(self, f, Annotations.Flag.UNSAFE_IMMUTABLE, "@unsafeImmutable")
+        if f.annotations.expressions != null {
+            for expr in f.annotations.expressions {
+                match expr {
+                    when Annotations.Expression.PRE:
+                        error(f.position, "fields may not be annotated with '@pre'")
+                    when Annotations.Expression.POST:
+                        error(f.position, "fields may not be annotated with '@post'")
+                    when Annotations.Expression.PRE_OR:
+                        error(f.position, "fields may not be annotated with '@preOr'")
+                    when Annotations.Expression.POST_AND:
+                        error(f.position, "fields may not be annotated with '@postAnd'")
+                }
+            }
+        }
+        if f.resolved = Resolution.RESOLVED {
+            if f.annotations.isClass() & !isImmutable(f.type) {
+                error(f.position, "only immutable fields may be annotated with '@class'")
+            }
+            if f.annotations.isClass() & f.fieldKind = FieldDecl.Kind.VAR {
+                error(f.position, "'var' fields may not be annotated with '@class'")
+            }
+        }
+        checkAccessModifierCount(f.position, f.annotations)
+    }
+
     method compile(cl:ClassDecl) {
         assert compiling = null,
                 "starting compilation of \{cl.name} while already compiling \{compiling.name}"
         compiling := cl
         currentClass.push(cl)
+        checkAnnotations(cl)
         if cl.annotations.isSpecialize() {
             codeGenerator.start(cl)
             codeGenerator.end(cl)
@@ -5136,6 +5245,7 @@ class Compiler {
         var started := false
         for f in cl.fields {
             resolve(f)
+            checkAnnotations(f)
         }
         for m in cl.methods {
             resolve(m)

@@ -1,0 +1,13 @@
+@private
+@protected
+@package
+@implicit
+@abstract
+@external
+@specialize
+@weak
+@unsafeImmutable
+method main() {
+}
+
+method foo()

@@ -1,0 +1,6 @@
+@class
+def x := 10
+
+@class
+method main() {
+}

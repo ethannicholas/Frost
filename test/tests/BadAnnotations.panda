@@ -2,7 +2,15 @@
 @class
 @private
 @protected
+@package
 @class
 @override
+@implicit
+@weak
+@external
+@pre(true)
+@preOr(true)
+@post(true)
+@postAnd(true)
 class Test {
 }

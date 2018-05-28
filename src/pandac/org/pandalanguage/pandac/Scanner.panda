@@ -14,6 +14,9 @@ class Scanner {
     @private
     def bareCodeClass:ClassDecl?
 
+    @private
+    def source:File?
+
     init(compiler:Compiler) {
         self.compiler := compiler
     }
@@ -70,27 +73,34 @@ class Scanner {
         }
     }
 
+    method add(position:Position, flags:Int, flag:Int):Int {
+        if flags && flag != 0 {
+            error(position, "duplicate annotation")
+        }
+        return flags || flag
+    }
+
     method convertAnnotations(a:ImmutableArray<ASTNode>):Annotations {
         var flags := 0
         var expressions:Array<Annotations.Expression>? := null
         for c in a {
             match c {
-                when ASTNode.ANNOTATION(position, text, rawExpr):
+                when ASTNode.ANNOTATION(p, text, rawExpr):
                     var expr := rawExpr
                     match text {
-                        when "@private":         flags ||= Annotations.Flag.PRIVATE
-                        when "@protected":       flags ||= Annotations.Flag.PROTECTED
-                        when "@package":         flags ||= Annotations.Flag.PACKAGE
-                        when "@class":           flags ||= Annotations.Flag.CLASS
-                        when "@override":        flags ||= Annotations.Flag.OVERRIDE
-                        when "@external":        flags ||= Annotations.Flag.EXTERNAL
-                        when "@implicit":        flags ||= Annotations.Flag.IMPLICIT
-                        when "@final":           flags ||= Annotations.Flag.FINAL
-                        when "@abstract":        flags ||= Annotations.Flag.ABSTRACT
-                        when "@inline":          flags ||= Annotations.Flag.INLINE
-                        when "@specialize":      flags ||= Annotations.Flag.SPECIALIZE
-                        when "@weak":            flags ||= Annotations.Flag.WEAK
-                        when "@unsafeImmutable": flags ||= Annotations.Flag.UNSAFE_IMMUTABLE
+                        when "@private":         flags := add(p, flags, Annotations.Flag.PRIVATE)
+                        when "@protected":       flags := add(p, flags, Annotations.Flag.PROTECTED)
+                        when "@package":         flags := add(p, flags, Annotations.Flag.PACKAGE)
+                        when "@class":           flags := add(p, flags, Annotations.Flag.CLASS)
+                        when "@override":        flags := add(p, flags, Annotations.Flag.OVERRIDE)
+                        when "@external":        flags := add(p, flags, Annotations.Flag.EXTERNAL)
+                        when "@implicit":        flags := add(p, flags, Annotations.Flag.IMPLICIT)
+                        when "@final":           flags := add(p, flags, Annotations.Flag.FINAL)
+                        when "@abstract":        flags := add(p, flags, Annotations.Flag.ABSTRACT)
+                        when "@inline":          flags := add(p, flags, Annotations.Flag.INLINE)
+                        when "@specialize":      flags := add(p, flags, Annotations.Flag.SPECIALIZE)
+                        when "@weak":            flags := add(p, flags, Annotations.Flag.WEAK)
+                        when "@unsafeImmutable": flags := add(p, flags, Annotations.Flag.UNSAFE_IMMUTABLE)
                         when "@pre":
                             if expressions = null {
                                 expressions := Array<Annotations.Expression>()
@@ -116,10 +126,10 @@ class Scanner {
                             expressions.add(Annotations.Expression.POST_AND(expr))
                             expr := null
                         otherwise:
-                            compiler.error(position, "unrecognized annotation '\{text}'")
+                            error(p, "unrecognized annotation '\{text}'")
                     }
                     if expr != null {
-                        compiler.error(position, "'\{text}' annotation does not accept parameters")
+                        error(p, "'\{text}' annotation does not accept parameters")
                     }
                 otherwise:
                     assert false
@@ -264,6 +274,8 @@ class Scanner {
                     }
                 }
                 return result
+            when ASTNode.METHOD:
+                return INLINE_THRESHOLD
             when ASTNode.NULL:
                 return 1
             when ASTNode.NULLABLE_TYPE:
@@ -287,6 +299,10 @@ class Scanner {
                 return 1
             when ASTNode.TYPE:
                 return 0
+            when ASTNode.TYPED_LAMBDA:
+                return INLINE_THRESHOLD
+            when ASTNode.UNTYPED_LAMBDA:
+                return INLINE_THRESHOLD
             when ASTNode.VAR(_, _, decls):
                 var result := 0
                 for decl in decls {
@@ -390,18 +406,13 @@ class Scanner {
             returnType := Type.Void()
         }
         if kind = MethodDecl.Kind.FUNCTION & returnType = Type.Void() {
-            compiler.error(position, "functions must have a return type")
+            error(position, "functions must have a return type")
         }
         if statements != null & shouldInline(annotations, statements) {
             annotations.flags ||= Annotations.Flag.INLINE
         }
-        if statements = null {
-            if owner.classKind = ClassDecl.Kind.INTERFACE {
-                annotations.flags ||= Annotations.Flag.ABSTRACT
-            }
-            else if annotations.flags || Annotations.Flag.ABSTRACT = 0 {
-                compiler.error(position, "expected non-abstract method '\{name}' to have a body")
-            }
+        if statements = null & owner.classKind = ClassDecl.Kind.INTERFACE {
+            annotations.flags ||= Annotations.Flag.ABSTRACT
         }
         return MethodDecl(owner, position, doccomment, annotations, kind, name, generics,
                 parameters, returnType, statements)
@@ -506,13 +517,13 @@ class Scanner {
                 parameters.add(ClassDecl.GenericParameter(p.position(), fullName, name, bound))
             }
             if kind = ClassDecl.Kind.CHOICE {
-                compiler.error(position, "choices may not have generic parameters")
+                error(position, "choices may not have generic parameters")
             }
         }
         def supertypes := Array<Type>()
         if rawSupertypes != null {
             if kind = ClassDecl.Kind.CHOICE {
-                compiler.error(position, "choices may not specify supertypes")
+                error(position, "choices may not specify supertypes")
             }
             for s in rawSupertypes {
                 supertypes.add(convertType(s))
@@ -538,9 +549,9 @@ class Scanner {
                         match kind {
                             when ClassDecl.Kind.CLASS: -- do nothing
                             when ClassDecl.Kind.INTERFACE:
-                                compiler.error(mPosition, "interfaces may not have 'init' methods")
+                                error(mPosition, "interfaces may not have 'init' methods")
                             when ClassDecl.Kind.CHOICE:
-                                compiler.error(mPosition, "choices may not have 'init' methods")
+                                error(mPosition, "choices may not have 'init' methods")
                         }
                     }
                 otherwise:
@@ -557,7 +568,7 @@ class Scanner {
             if m.name = "cleanup" & m.parameters.get_count() = 0 {
                 foundCleanup := true
                 if kind = ClassDecl.Kind.CHOICE {
-                    compiler.error(position, "choice cleanup method cannot be overridden")
+                    error(position, "choice cleanup method cannot be overridden")
                 }
             }
         }
@@ -623,7 +634,13 @@ class Scanner {
         }
     }
 
+    @pre(source != null)
+    method error(position:Position, msg:String) {
+        compiler.error(source, position, msg)
+    }
+
     method scan(source:File, file:ASTNode):ListView<ClassDecl> {
+        self.source := source
         match file {
             when ASTNode.FILE(entries):
                 def result := Array<ClassDecl>()
@@ -694,16 +711,31 @@ class Scanner {
                             compiler.currentClass.push(bareCodeClass)
                             def m := scanMethod(bareCodeClass, position, dc, annotations,
                                     kind, name, generics, parameters, rawReturnType, statements)
+                            if m.annotations.isClass() {
+                                error(m.position, "'@class' annotation may not be used outside " +
+                                        "of a class")
+                                m.annotations.flags &&= !!Annotations.Flag.CLASS
+                            }
                             compiler.currentClass.pop(bareCodeClass)
                             bareCodeClass.methods.add(m)
                             bareCodeClass.symbolTable.add(m)
                         when ASTNode.FIELD(position, dc, annotations, varDecl):
                             createBareCodeClass(source, aliases, result)
+                            def old := bareCodeClass.fields.get_count()
                             scanFields(bareCodeClass, position, dc, annotations, varDecl)
+                            for i in old .. bareCodeClass.fields.get_count() {
+                                def f := bareCodeClass.fields[i]
+                                if f.fieldKind != FieldDecl.Kind.CONSTANT &
+                                        f.annotations.isClass() {
+                                    error(f.position, "'@class' annotation may not be used " +
+                                            "outside of a class")
+                                }
+                            }
                         otherwise:
                             assert false, "unsupported: \{e}(\{e.$rawValue}):\{e.position()}"
                     }
                 }
+                self.source := null
                 return result
             otherwise:
                 assert false

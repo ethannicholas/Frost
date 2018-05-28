@@ -48,7 +48,7 @@ typedef struct org$pandalanguage$pandac$Compiler {
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"
 #undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[155]; } org$pandalanguage$pandac$Compiler$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[159]; } org$pandalanguage$pandac$Compiler$class_type;
 extern org$pandalanguage$pandac$Compiler$class_type org$pandalanguage$pandac$Compiler$class;
 
 #ifndef PANDA_TYPESONLY
@@ -82,6 +82,7 @@ typedef struct org$pandalanguage$pandac$Pair org$pandalanguage$pandac$Pair;
 typedef struct org$pandalanguage$pandac$Compiler$CompileTargetResult org$pandalanguage$pandac$Compiler$CompileTargetResult;
 #include "org/pandalanguage/pandac/Variable/Kind.h"
 typedef struct org$pandalanguage$pandac$Variable org$pandalanguage$pandac$Variable;
+typedef struct org$pandalanguage$pandac$Annotations org$pandalanguage$pandac$Annotations;
 
 void org$pandalanguage$pandac$Compiler$init$panda$threads$MessageQueue$LTorg$pandalanguage$pandac$Compiler$Error$GT$org$pandalanguage$pandac$CodeGenerator$org$pandalanguage$pandac$Compiler$Settings(org$pandalanguage$pandac$Compiler* self, panda$threads$MessageQueue* p_errorQueue, org$pandalanguage$pandac$CodeGenerator* p_codeGenerator, org$pandalanguage$pandac$Compiler$Settings* p_settings);
 void org$pandalanguage$pandac$Compiler$addAlias$panda$core$String(org$pandalanguage$pandac$Compiler* self, panda$core$String* p_name);
@@ -230,10 +231,17 @@ org$pandalanguage$pandac$IRNode* org$pandalanguage$pandac$Compiler$compileExpres
 panda$collections$ImmutableArray* org$pandalanguage$pandac$Compiler$processAnnotations$org$pandalanguage$pandac$MethodDecl$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$IRNode$GT$R$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$IRNode$GT(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$MethodDecl* p_m, panda$collections$ImmutableArray* p_body);
 panda$collections$ImmutableArray* org$pandalanguage$pandac$Compiler$compileBody$org$pandalanguage$pandac$MethodDecl$R$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$IRNode$GT$Q(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$MethodDecl* p_m);
 void org$pandalanguage$pandac$Compiler$createChoiceCleanup$org$pandalanguage$pandac$MethodDecl(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$MethodDecl* p_m);
+void org$pandalanguage$pandac$Compiler$checkAccessModifierCount$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Annotations(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$Position p_position, org$pandalanguage$pandac$Annotations* p_a);
+void org$pandalanguage$pandac$Compiler$$anonymous2$org$pandalanguage$pandac$Compiler$org$pandalanguage$pandac$MethodDecl$panda$core$Int64$panda$core$String(org$pandalanguage$pandac$Compiler* p_compiler, org$pandalanguage$pandac$MethodDecl* p_m, panda$core$Int64 p_flag, panda$core$String* p_name);
+void org$pandalanguage$pandac$Compiler$checkAnnotations$org$pandalanguage$pandac$MethodDecl(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$MethodDecl* p_m);
 void org$pandalanguage$pandac$Compiler$compile$org$pandalanguage$pandac$MethodDecl(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$MethodDecl* p_m);
 void org$pandalanguage$pandac$Compiler$markNonExternal$org$pandalanguage$pandac$ClassDecl(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$ClassDecl* p_cl);
 void org$pandalanguage$pandac$Compiler$checkImmutable$org$pandalanguage$pandac$ClassDecl(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$ClassDecl* p_cl);
 void org$pandalanguage$pandac$Compiler$checkValue$org$pandalanguage$pandac$ClassDecl(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$ClassDecl* p_cl);
+void org$pandalanguage$pandac$Compiler$$anonymous3$org$pandalanguage$pandac$Compiler$org$pandalanguage$pandac$ClassDecl$panda$core$Int64$panda$core$String(org$pandalanguage$pandac$Compiler* p_compiler, org$pandalanguage$pandac$ClassDecl* p_cl, panda$core$Int64 p_flag, panda$core$String* p_name);
+void org$pandalanguage$pandac$Compiler$checkAnnotations$org$pandalanguage$pandac$ClassDecl(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$ClassDecl* p_cl);
+void org$pandalanguage$pandac$Compiler$$anonymous4$org$pandalanguage$pandac$Compiler$org$pandalanguage$pandac$FieldDecl$panda$core$Int64$panda$core$String(org$pandalanguage$pandac$Compiler* p_compiler, org$pandalanguage$pandac$FieldDecl* p_f, panda$core$Int64 p_flag, panda$core$String* p_name);
+void org$pandalanguage$pandac$Compiler$checkAnnotations$org$pandalanguage$pandac$FieldDecl(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$FieldDecl* p_f);
 void org$pandalanguage$pandac$Compiler$compile$org$pandalanguage$pandac$ClassDecl(org$pandalanguage$pandac$Compiler* self, org$pandalanguage$pandac$ClassDecl* p_cl);
 panda$collections$ListView* org$pandalanguage$pandac$Compiler$scan$panda$io$File$R$panda$collections$ListView$LTorg$pandalanguage$pandac$ClassDecl$GT(org$pandalanguage$pandac$Compiler* self, panda$io$File* p_file);
 void org$pandalanguage$pandac$Compiler$compile$panda$io$File(org$pandalanguage$pandac$Compiler* self, panda$io$File* p_file);
