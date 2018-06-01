@@ -5,7 +5,6 @@
 #include "org/pandalanguage/pandac/Type.h"
 #include "panda/core/Panda.h"
 
-
 static panda$core$String $s1;
 org$pandalanguage$pandac$MethodDecl$Parameter$class_type org$pandalanguage$pandac$MethodDecl$Parameter$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, NULL, { org$pandalanguage$pandac$MethodDecl$Parameter$convert$R$panda$core$String, org$pandalanguage$pandac$MethodDecl$Parameter$cleanup} };
 
@@ -75,7 +74,6 @@ void org$pandalanguage$pandac$MethodDecl$Parameter$cleanup(org$pandalanguage$pan
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->name));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->type));
 }
-
 
 
 

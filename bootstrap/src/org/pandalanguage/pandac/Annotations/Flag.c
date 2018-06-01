@@ -3,7 +3,6 @@
 #include "panda/core/Class.h"
 #include "panda/core/String.h"
 
-
 static panda$core$String $s1;
 org$pandalanguage$pandac$Annotations$Flag$class_type org$pandalanguage$pandac$Annotations$Flag$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, NULL, { panda$core$Object$convert$R$panda$core$String, org$pandalanguage$pandac$Annotations$Flag$cleanup} };
 

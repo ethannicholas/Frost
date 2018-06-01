@@ -15,17 +15,19 @@
 #include "panda/core/MutableString.h"
 #include "panda/core/Char8.h"
 #include "panda/core/UInt8.h"
-void panda$collections$Set$add$panda$collections$Set$T$shim(panda$collections$Set* self, panda$core$Object* p0) {
-    panda$collections$Set$add$panda$collections$Set$T(self, ((panda$collections$Key*) p0));
+void panda$collections$Set$add$panda$collections$Set$T$shim(panda$collections$Set* p0, panda$core$Object* p1) {
+    panda$collections$Set$add$panda$collections$Set$T(p0, ((panda$collections$Key*) p1));
+
 }
-void panda$collections$Set$addAll$panda$collections$CollectionView$LTpanda$collections$Set$T$GT$shim(panda$collections$Set* self, panda$collections$CollectionView* p0) {
-    panda$collections$Set$addAll$panda$collections$CollectionView$LTpanda$collections$Set$T$GT(self, p0);
+void panda$collections$Set$addAll$panda$collections$CollectionView$LTpanda$collections$Set$T$GT$shim(panda$collections$Set* p0, panda$collections$CollectionView* p1) {
+    panda$collections$Set$addAll$panda$collections$CollectionView$LTpanda$collections$Set$T$GT(p0, p1);
+
 }
-panda$collections$Iterator* panda$collections$Set$iterator$R$panda$collections$Iterator$LTpanda$collections$Set$T$GT$shim(panda$collections$Set* self) {
-    panda$collections$Iterator* result = panda$collections$Set$iterator$R$panda$collections$Iterator$LTpanda$collections$Set$T$GT(self);
+panda$collections$Iterator* panda$collections$Set$iterator$R$panda$collections$Iterator$LTpanda$collections$Set$T$GT$shim(panda$collections$Set* p0) {
+    panda$collections$Iterator* result = panda$collections$Set$iterator$R$panda$collections$Iterator$LTpanda$collections$Set$T$GT(p0);
+
     return result;
 }
-
 
 struct { panda$core$Class* cl; ITable* next; void* methods[3]; } panda$collections$Set$_panda$collections$CollectionWriter = { (panda$core$Class*) &panda$collections$CollectionWriter$class, NULL, { panda$collections$Set$add$panda$collections$Set$T$shim, panda$collections$Set$addAll$panda$collections$CollectionView$LTpanda$collections$Set$T$GT$shim, panda$collections$Set$clear} };
 
@@ -303,6 +305,7 @@ panda$core$String* panda$collections$Set$convert$R$panda$core$String(panda$colle
         case 0: goto $l96;
     }
     $l98:;
+    abort();
 }
 void panda$collections$Set$cleanup(panda$collections$Set* self) {
     int $tmp101;
@@ -318,7 +321,6 @@ void panda$collections$Set$cleanup(panda$collections$Set* self) {
     $l102:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->contents));
 }
-
 
 
 

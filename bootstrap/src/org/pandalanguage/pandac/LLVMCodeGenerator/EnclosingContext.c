@@ -8,7 +8,6 @@
 #include "panda/collections/Map.h"
 #include "org/pandalanguage/pandac/LLVMCodeGenerator/InlineContext.h"
 
-
 static panda$core$String $s1;
 org$pandalanguage$pandac$LLVMCodeGenerator$EnclosingContext$class_type org$pandalanguage$pandac$LLVMCodeGenerator$EnclosingContext$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, NULL, { org$pandalanguage$pandac$LLVMCodeGenerator$EnclosingContext$convert$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$EnclosingContext$cleanup} };
 
@@ -181,6 +180,7 @@ panda$core$String* org$pandalanguage$pandac$LLVMCodeGenerator$EnclosingContext$c
         case 1: goto $l46;
     }
     $l76:;
+    abort();
 }
 void org$pandalanguage$pandac$LLVMCodeGenerator$EnclosingContext$cleanup(org$pandalanguage$pandac$LLVMCodeGenerator$EnclosingContext* self) {
     org$pandalanguage$pandac$LLVMCodeGenerator$EnclosingContext* $match$29_583 = NULL;

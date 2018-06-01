@@ -6,7 +6,6 @@
 #include "panda/threads/Lock.h"
 #include "panda/core/Panda.h"
 
-
 static panda$core$String $s1;
 panda$threads$Notifier$class_type panda$threads$Notifier$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Immutable$class, NULL, { panda$core$Object$convert$R$panda$core$String, panda$threads$Notifier$cleanup, panda$threads$Notifier$wait, panda$threads$Notifier$notify, panda$threads$Notifier$notifyAll, panda$threads$Notifier$create, panda$threads$Notifier$destroy} };
 
@@ -50,7 +49,6 @@ void panda$threads$Notifier$cleanup(panda$threads$Notifier* self) {
     $l10:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->lock));
 }
-
 
 
 

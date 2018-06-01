@@ -2,24 +2,26 @@
 #include "panda/core/Value.h"
 #include "panda/core/Class.h"
 #include "panda/core/String.h"
+#include "panda/core/Object.h"
 #include "panda/core/String/Index.h"
 #include "panda/core/Bit.h"
 #include "panda/core/MutableString.h"
 #include "panda/core/Panda.h"
-#include "panda/core/Object.h"
+panda$core$String* panda$core$Range$LTpanda$core$String$Index$Q$GT$convert$R$panda$core$String$shim(panda$core$Object* p0) {
+    panda$core$String* result = panda$core$Range$LTpanda$core$String$Index$Q$GT$convert$R$panda$core$String(((panda$core$Range$LTpanda$core$String$Index$Q$GT$wrapper*) p0)->value);
 
-panda$core$String* panda$core$Range$LTpanda$core$String$Index$Q$GT$convert$R$panda$core$String$wrappershim(panda$core$Range$LTpanda$core$String$Index$Q$GT$wrapper* self) {
-    return panda$core$Range$LTpanda$core$String$Index$Q$GT$convert$R$panda$core$String(self->value);
+    return result;
 }
-void panda$core$Range$LTpanda$core$String$Index$Q$GT$cleanup$wrappershim(panda$core$Range$LTpanda$core$String$Index$Q$GT$wrapper* self) {
-    panda$core$Range$LTpanda$core$String$Index$Q$GT$cleanup(self->value);
+void panda$core$Range$LTpanda$core$String$Index$Q$GT$cleanup$shim(panda$core$Object* p0) {
+    panda$core$Range$LTpanda$core$String$Index$Q$GT$cleanup(((panda$core$Range$LTpanda$core$String$Index$Q$GT$wrapper*) p0)->value);
+
 }
 
 static panda$core$String $s1;
-panda$core$Range$LTpanda$core$String$Index$Q$GT$class_type panda$core$Range$LTpanda$core$String$Index$Q$GT$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Value$class, NULL, { panda$core$Range$LTpanda$core$String$Index$Q$GT$convert$R$panda$core$String, panda$core$Range$LTpanda$core$String$Index$Q$GT$cleanup} };
+panda$core$Range$LTpanda$core$String$Index$Q$GT$class_type panda$core$Range$LTpanda$core$String$Index$Q$GT$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Value$class, NULL, { panda$core$Range$LTpanda$core$String$Index$Q$GT$convert$R$panda$core$String$shim, panda$core$Range$LTpanda$core$String$Index$Q$GT$cleanup$shim} };
 
 static panda$core$String $s2;
-panda$core$Range$LTpanda$core$String$Index$Q$GT$wrapperclass_type panda$core$Range$LTpanda$core$String$Index$Q$GT$wrapperclass = { (panda$core$Class*) &panda$core$Class$class, -999, &$s2, (panda$core$Class*) &panda$core$Value$class, NULL, { panda$core$Range$LTpanda$core$String$Index$Q$GT$convert$R$panda$core$String$wrappershim, panda$core$Range$LTpanda$core$String$Index$Q$GT$cleanup$wrappershim} };
+panda$core$Range$LTpanda$core$String$Index$Q$GT$wrapperclass_type panda$core$Range$LTpanda$core$String$Index$Q$GT$wrapperclass = { (panda$core$Class*) &panda$core$Class$class, -999, &$s2, (panda$core$Class*) &panda$core$Value$class, NULL, { panda$core$Range$LTpanda$core$String$Index$Q$GT$convert$R$panda$core$String$shim, panda$core$Range$LTpanda$core$String$Index$Q$GT$cleanup$shim} };
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x52\x61\x6e\x67\x65\x3c\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x49\x6e\x64\x65\x78\x3f\x3e", 42, 6344064505343177902, NULL };
 static panda$core$String $s2 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x52\x61\x6e\x67\x65\x3c\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x49\x6e\x64\x65\x78\x3f\x3e", 42, 6344064505343177902, NULL };
 static panda$core$String $s12 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2e\x2e\x2e", 3, 1504239, NULL };
@@ -96,6 +98,7 @@ panda$core$String* panda$core$Range$LTpanda$core$String$Index$Q$GT$convert$R$pan
         case 0: goto $l20;
     }
     $l22:;
+    abort();
 }
 void panda$core$Range$LTpanda$core$String$Index$Q$GT$cleanup(panda$core$Range$LTpanda$core$String$Index$Q$GT self) {
 }

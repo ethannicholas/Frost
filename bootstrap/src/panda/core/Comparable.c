@@ -5,7 +5,6 @@
 #include "panda/core/Equatable.h"
 #include "panda/core/Bit.h"
 
-
 struct { panda$core$Class* cl; ITable* next; void* methods[4]; } panda$core$Comparable$_panda$core$Comparable = { (panda$core$Class*) &panda$core$Comparable$class, NULL, { NULL, panda$core$Comparable$$LT$panda$core$Comparable$T$R$panda$core$Bit, panda$core$Comparable$$GE$panda$core$Comparable$T$R$panda$core$Bit, panda$core$Comparable$$LE$panda$core$Comparable$T$R$panda$core$Bit} };
 
 struct { panda$core$Class* cl; ITable* next; void* methods[2]; } panda$core$Comparable$_panda$core$Equatable = { (panda$core$Class*) &panda$core$Equatable$class, (ITable*) &panda$core$Comparable$_panda$core$Comparable, { NULL, panda$core$Equatable$$NEQ$panda$core$Equatable$T$R$panda$core$Bit} };
@@ -54,7 +53,6 @@ panda$core$Bit panda$core$Comparable$$LE$panda$core$Comparable$T$R$panda$core$Bi
     $returnValue15 = $tmp20;
     return $returnValue15;
 }
-
 
 
 

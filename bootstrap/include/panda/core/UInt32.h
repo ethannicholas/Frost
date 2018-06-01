@@ -12,7 +12,7 @@ typedef struct panda$core$UInt32 {
 #define PANDA_TYPESONLY
 #include "panda/core/Class.h"
 #undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[162]; } panda$core$UInt32$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[163]; } panda$core$UInt32$class_type;
 extern panda$core$UInt32$class_type panda$core$UInt32$class;
 typedef struct panda$core$UInt32$wrapper {
     panda$core$Class* cl;

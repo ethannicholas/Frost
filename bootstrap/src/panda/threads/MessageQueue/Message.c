@@ -5,7 +5,6 @@
 #include "panda/core/Panda.h"
 #include "panda/core/Object.h"
 
-
 static panda$core$String $s1;
 panda$threads$MessageQueue$Message$class_type panda$threads$MessageQueue$Message$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Immutable$class, NULL, { panda$threads$MessageQueue$Message$convert$R$panda$core$String, panda$threads$MessageQueue$Message$cleanup} };
 
@@ -86,7 +85,6 @@ void panda$threads$MessageQueue$Message$cleanup(panda$threads$MessageQueue$Messa
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->payload));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->next));
 }
-
 
 
 

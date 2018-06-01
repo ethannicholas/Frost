@@ -5,16 +5,16 @@
 #include "panda/core/Object.h"
 #include "panda/core/Int64.h"
 #include "panda/core/String/Index.h"
+void org$pandalanguage$plex$runtime$RawToken$cleanup$shim(panda$core$Object* p0) {
+    org$pandalanguage$plex$runtime$RawToken$cleanup(((org$pandalanguage$plex$runtime$RawToken$wrapper*) p0)->value);
 
-void org$pandalanguage$plex$runtime$RawToken$cleanup$wrappershim(org$pandalanguage$plex$runtime$RawToken$wrapper* self) {
-    org$pandalanguage$plex$runtime$RawToken$cleanup(self->value);
 }
 
 static panda$core$String $s1;
-org$pandalanguage$plex$runtime$RawToken$class_type org$pandalanguage$plex$runtime$RawToken$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Value$class, NULL, { panda$core$Object$convert$R$panda$core$String, org$pandalanguage$plex$runtime$RawToken$cleanup} };
+org$pandalanguage$plex$runtime$RawToken$class_type org$pandalanguage$plex$runtime$RawToken$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Value$class, NULL, { panda$core$Object$convert$R$panda$core$String, org$pandalanguage$plex$runtime$RawToken$cleanup$shim} };
 
 static panda$core$String $s2;
-org$pandalanguage$plex$runtime$RawToken$wrapperclass_type org$pandalanguage$plex$runtime$RawToken$wrapperclass = { (panda$core$Class*) &panda$core$Class$class, -999, &$s2, (panda$core$Class*) &panda$core$Value$class, NULL, { panda$core$Object$convert$R$panda$core$String, org$pandalanguage$plex$runtime$RawToken$cleanup$wrappershim} };
+org$pandalanguage$plex$runtime$RawToken$wrapperclass_type org$pandalanguage$plex$runtime$RawToken$wrapperclass = { (panda$core$Class*) &panda$core$Class$class, -999, &$s2, (panda$core$Class*) &panda$core$Value$class, NULL, { panda$core$Object$convert$R$panda$core$String, org$pandalanguage$plex$runtime$RawToken$cleanup$shim} };
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x6c\x65\x78\x2e\x72\x75\x6e\x74\x69\x6d\x65\x2e\x52\x61\x77\x54\x6f\x6b\x65\x6e", 39, 3077586406795953085, NULL };
 static panda$core$String $s2 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x6c\x65\x78\x2e\x72\x75\x6e\x74\x69\x6d\x65\x2e\x52\x61\x77\x54\x6f\x6b\x65\x6e", 39, 3077586406795953085, NULL };
 
@@ -27,7 +27,6 @@ void org$pandalanguage$plex$runtime$RawToken$init$panda$core$Int64$panda$core$St
 }
 void org$pandalanguage$plex$runtime$RawToken$cleanup(org$pandalanguage$plex$runtime$RawToken self) {
 }
-
 
 
 

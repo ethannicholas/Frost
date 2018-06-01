@@ -4,7 +4,6 @@
 #include "panda/core/String.h"
 #include "panda/core/Panda.h"
 
-
 static panda$core$String $s1;
 panda$core$Weak$class_type panda$core$Weak$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, NULL, { panda$core$Weak$convert$R$panda$core$String, panda$core$Weak$cleanup, panda$core$Weak$get$R$panda$core$Weak$T} };
 
@@ -54,7 +53,6 @@ void panda$core$Weak$cleanup(panda$core$Weak* self) {
     }
     $l17:;
 }
-
 
 
 

@@ -125,8 +125,6 @@ class LLVMCodeGenerator : CodeGenerator {
 
     def methodHeader := MemoryOutputStream()
 
-    def wrapperShims := MemoryOutputStream()
-
     def shims := MemoryOutputStream()
 
     def strings := MemoryOutputStream()
@@ -193,7 +191,6 @@ class LLVMCodeGenerator : CodeGenerator {
         out.print(types.finish())
         out.print(strings.finish())
         out.print(declarations.finish())
-        out.print(wrapperShims.finish())
         out.print(shims.finish())
         out.print(methods.finish())
     }
@@ -215,6 +212,10 @@ class LLVMCodeGenerator : CodeGenerator {
 
     function fieldSize(t:Type):Int {
         assert t.resolved
+        if t = Type.Void() {
+             -- void as the result of an error which should have been reported elsewhere
+            return 1
+        }
         if t.isBuiltinNumber() {
             if t.name.endsWith("8") {
                 return 1
@@ -525,7 +526,7 @@ class LLVMCodeGenerator : CodeGenerator {
     method wrapperType(m:MethodDecl):String {
         def inheritedType := compiler.inheritedType(m)
         def result := MutableString()
-        result.append(type(inheritedType.subtypes[inheritedType.subtypes.get_count() - 1]))
+        result.append(type(inheritedType.returnType()))
         result.append("(")
         assert m.isInstance()
         result.append("%\{escapeName(m.owner.name)}")
@@ -595,11 +596,12 @@ class LLVMCodeGenerator : CodeGenerator {
             return found
         }
         assert effective.isMethod()
-        assert effective.subtypes.get_count() = raw.parameters.get_count() + 1
+        assert effective.subtypes.get_count() = raw.parameters.get_count() + 2 -- self and return
         assert raw.isInstance()
+        def unrefs := MemoryOutputStream()
         def oldVarCount := varCount
         varCount := 0
-        def effectiveReturnType := effective.subtypes[effective.subtypes.get_count() - 1]
+        def effectiveReturnType := effective.returnType()
         def resultName := getName(raw) + "$shim"
         def resultType := MutableString(type(effectiveReturnType))
         out.print("define ")
@@ -607,24 +609,39 @@ class LLVMCodeGenerator : CodeGenerator {
             out.print("linkonce_odr ")
         }
         out.print("\{resultType} \{resultName}(")
-        def self_t := selfType(raw)
-        out.print("\{self_t} %self")
         resultType.append("(")
-        resultType.append(self_t)
-        for i in 0 .. raw.parameters.get_count() {
+        var separator := ""
+        for i in 0 .. effective.subtypes.get_count() - 1 {
             def pType := type(effective.subtypes[i])
             resultType.append(", ")
             resultType.append(pType)
-            out.print(", \{pType} %p\{i}")
+            out.print("\{separator}\{pType} %p\{i}")
+            separator := ", "
         }
-        out.printLine(") {")
         resultType.append(")*")
+        out.printLine(") {")
         def casts := Array<String>()
-        for i in 0 .. raw.parameters.get_count() {
+        for i in 0 .. effective.subtypes.get_count() - 1 {
             def p := "%p\{i}"
-            if raw.parameters[i].type != effective.subtypes[i] {
-                casts.add(getCastReference(p, effective.subtypes[i],
-                        raw.parameters[i].type, out))
+            def rawType:Type
+            if i = 0 {
+                rawType := raw.owner.type()
+            }
+            else {
+                rawType := raw.parameters[i - 1].type
+            }
+            if rawType != effective.subtypes[i] {
+                def cast := getCastReference(p, effective.subtypes[i], rawType, out)
+                casts.add(cast)
+                if compiler.isValue(effective.subtypes[i]) & !compiler.isValue(rawType) {
+                    labelCount += 1
+                    def objectCast := "%objectCast\{labelCount}"
+                    unrefs.printLine("\{objectCast} = bitcast \{type(rawType)} \{cast} to " +
+                            "%panda$core$Object*")
+                    unrefs.printLine("call void @panda$core$Panda$unref$panda$core$Object(" +
+                            "%panda$core$Object* \{objectCast})")
+
+                }
             }
             else {
                 casts.add(p)
@@ -638,70 +655,31 @@ class LLVMCodeGenerator : CodeGenerator {
         else {
             returnValue := "void"
         }
-        out.print("call \{callingConvention(raw)}\{type(raw.returnType)} \{getName(raw)}(" +
-                "\{self_t} %self")
-        for i in 0 .. raw.parameters.get_count() {
-            out.print(", \{type(raw.parameters[i].type)} \{casts[i]}")
+        out.print("call \{callingConvention(raw)}\{type(raw.returnType)} \{getName(raw)}(")
+        separator := ""
+        for i in 0 .. effective.subtypes.get_count() - 1 {
+            def rawType:Type
+            if i = 0 {
+                rawType := raw.owner.type()
+            }
+            else {
+                rawType := raw.parameters[i - 1].type
+            }
+            out.print("\{separator}\{type(rawType)} \{casts[i]}")
+            separator := ", "
         }
         out.printLine(")")
         if raw.returnType != Type.Void() {
             returnValue := type(effectiveReturnType) + " " +
                     getCastReference(returnValue, raw.returnType, effectiveReturnType, out)
         }
+        out.printLine(unrefs)
         out.printLine("ret \{returnValue}")
         out.printLine("}")
         varCount := oldVarCount
         def result := MethodShim(resultName, resultType.finish())
         methodShims[raw] := result
         rawOut.print(out.finish())
-        return result
-    }
-
-    method createWrapperShim(m:MethodDecl, out:OutputStream):String {
-        def oldMethod := currentMethod
-        currentMethod := m
-        assert m.isInstance()
-        def oldVarCount := varCount
-        varCount := 0
-        def result := "\{getName(m)}$wrappershim"
-        def selfType := "%\{escapeName(m.owner.name)}$wrapper*"
-        out.print("define ")
-        if m.owner.isSpecialization() {
-            out.print("linkonce_odr ")
-        }
-        out.print("\{type(m.returnType)} \{result}(\{selfType} %actualSelf")
-        def actualMethodType := compiler.declaredType(m)
-        def inheritedMethodType := compiler.inheritedType(m)
-        for i in 0 .. m.parameters.get_count() {
-            out.print(", \{type(inheritedMethodType.subtypes[i])} %\{m.parameters[i].name}")
-        }
-        out.printLine(") {")
-        out.printLine("%self = bitcast \{selfType} %actualSelf to %panda$core$Object*")
-        def parameters := Array<String>()
-        for i in 0 .. m.parameters.get_count() {
-            parameters.add(getCastReference("%" + m.parameters[i].name,
-                    inheritedMethodType.subtypes[i], actualMethodType.subtypes[i], out))
-        }
-        def unwrapped := type(m.owner.type()) + " " +
-                getCastReference(IRNode.SELF(Position(), Type.Object()), m.owner.type(), out)
-        def returnValue:String
-        if m.returnType != Type.Void() {
-            returnValue := nextVar()
-            out.print("\{returnValue} = ")
-            returnValue := "\{type(m.returnType)} \{returnValue}"
-        }
-        else {
-            returnValue := "void"
-        }
-        out.print("call \{callingConvention(m)}\{type(m.returnType)} \{getName(m)}(\{unwrapped}")
-        for i in 0 .. m.parameters.get_count() {
-            out.print(", \{type(actualMethodType.subtypes[i])} \{parameters[i]}")
-        }
-        out.printLine(")")
-        out.printLine("ret \{returnValue}")
-        out.printLine("}")
-        varCount := oldVarCount
-        currentMethod := oldMethod
         return result
     }
 
@@ -735,8 +713,8 @@ class LLVMCodeGenerator : CodeGenerator {
                     result.append("i8* null")
                 }
                 else {
-                    def shim := createWrapperShim(m, wrapperShims)
-                    result.append("i8* bitcast(\{wrapperType(m)} \{shim} to i8*)")
+                    def entry := getMethodTableEntry(m)
+                    result.append("i8* bitcast(\{entry.second} \{entry.first} to i8*)")
                 }
             }
             result.append("] }\n")
@@ -784,9 +762,16 @@ class LLVMCodeGenerator : CodeGenerator {
         }
         def resultName:String
         def declared := compiler.declaredTypeWithSelf(m, m.owner.type())
-        def inherited := compiler.inheritedTypeWithSelf(m)
+        def effectiveSelf:Type
+        if compiler.isValue(m.owner) {
+            effectiveSelf := Type.Object()
+        }
+        else {
+            effectiveSelf := m.owner.type()
+        }
+        def inherited := compiler.inheritedTypeWithSelf(m, effectiveSelf)
         if declared != inherited {
-            def shim := createMethodShim(m, compiler.inheritedType(m), shims)
+            def shim := createMethodShim(m, inherited, shims)
             resultName := shim.name
         }
         else {
@@ -902,17 +887,8 @@ class LLVMCodeGenerator : CodeGenerator {
                 var separator := ""
                 for i in 0 .. valueVTable.get_count() {
                     def m := vtable[i]
-                    def methodName:String
-                    if m.owner == cl {
-                        methodName := createWrapperShim(m, wrapperShims)
-                    }
-                    else {
-                        methodName := getName(m)
-                        if m.owner.external {
-                            writeDeclaration(m)
-                        }
-                    }
-                    code.append("\{separator}i8* bitcast(\{wrapperType(m)} \{methodName} to i8*)")
+                    def entry := getMethodTableEntry(m)
+                    code.append("\{separator}i8* bitcast(\{entry.second} \{entry.first} to i8*)")
                     separator := ", "
                 }
                 code.append("] }\n")
@@ -2507,7 +2483,8 @@ class LLVMCodeGenerator : CodeGenerator {
             if t != Type.Void() {
                 nextVar()
             }
-            out.print("call \{callingConvention(m)}\{type(t)} \{methodRef}(")
+            out.print("call \{callingConvention(m)}\{type(actualMethodType.returnType())} " +
+                    "\{methodRef}(")
         }
         for a in argRefs {
             out.print(separator)

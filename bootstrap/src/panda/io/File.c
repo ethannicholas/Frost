@@ -12,15 +12,16 @@
 #include "panda/core/String/Index.h"
 #include "panda/core/Range.LTpanda/core/String/Index.Q.GT.h"
 #include "panda/core/Int64.h"
-panda$core$Bit panda$io$File$$EQ$panda$io$File$R$panda$core$Bit$shim(panda$io$File* self, panda$core$Equatable* p0) {
-    panda$core$Bit result = panda$io$File$$EQ$panda$io$File$R$panda$core$Bit(self, ((panda$io$File*) p0));
-    return result;
-}
-panda$core$Bit panda$io$File$$NEQ$panda$io$File$R$panda$core$Bit$shim(panda$io$File* self, panda$core$Equatable* p0) {
-    panda$core$Bit result = panda$io$File$$NEQ$panda$io$File$R$panda$core$Bit(self, ((panda$io$File*) p0));
-    return result;
-}
+panda$core$Bit panda$io$File$$EQ$panda$io$File$R$panda$core$Bit$shim(panda$io$File* p0, panda$core$Equatable* p1) {
+    panda$core$Bit result = panda$io$File$$EQ$panda$io$File$R$panda$core$Bit(p0, ((panda$io$File*) p1));
 
+    return result;
+}
+panda$core$Bit panda$io$File$$NEQ$panda$io$File$R$panda$core$Bit$shim(panda$io$File* p0, panda$core$Equatable* p1) {
+    panda$core$Bit result = panda$io$File$$NEQ$panda$io$File$R$panda$core$Bit(p0, ((panda$io$File*) p1));
+
+    return result;
+}
 
 struct { panda$core$Class* cl; ITable* next; void* methods[2]; } panda$io$File$_panda$core$Equatable = { (panda$core$Class*) &panda$core$Equatable$class, NULL, { panda$io$File$$EQ$panda$io$File$R$panda$core$Bit$shim, panda$io$File$$NEQ$panda$io$File$R$panda$core$Bit$shim} };
 
@@ -194,6 +195,7 @@ panda$io$File* panda$io$File$parent$R$panda$io$File$Q(panda$io$File* self) {
         return $returnValue37;
     }
     }
+    abort();
 }
 panda$core$String* panda$io$File$name$R$panda$core$String(panda$io$File* self) {
     panda$core$String$Index$nullable index65;
@@ -225,6 +227,7 @@ panda$core$String* panda$io$File$name$R$panda$core$String(panda$io$File* self) {
         return $returnValue68;
     }
     }
+    abort();
 }
 panda$core$String* panda$io$File$simpleName$R$panda$core$String(panda$io$File* self) {
     panda$core$String* result80 = NULL;
@@ -277,6 +280,7 @@ panda$core$String* panda$io$File$simpleName$R$panda$core$String(panda$io$File* s
         case 0: goto $l89;
     }
     $l97:;
+    abort();
 }
 panda$io$File* panda$io$File$changeExtension$panda$core$String$R$panda$io$File(panda$io$File* self, panda$core$String* p_ext) {
     panda$io$File* $returnValue98;

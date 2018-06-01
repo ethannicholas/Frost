@@ -1,0 +1,27 @@
+interface Intf<T> {
+    function compute():T
+
+    method doSomething() {
+        Console.printLine(compute())
+    }
+}
+
+class GenericInterfaceDefaultMethod : Intf<Int> {
+    def x:Int
+
+    init(x:Int) {
+        self.x := x
+    }
+
+    @override
+    function compute():Int {
+        return x * 12
+    }
+
+    @class
+    method main() {
+        GenericInterfaceDefaultMethod(3).compute()
+        Console.printLine(GenericInterfaceDefaultMethod(4).compute())
+        GenericInterfaceDefaultMethod(5).doSomething()
+    }
+}

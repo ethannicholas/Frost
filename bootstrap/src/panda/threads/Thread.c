@@ -8,7 +8,6 @@
 #include "panda/core/Bit.h"
 #include "panda/core/Int64.h"
 
-
 static panda$core$String $s1;
 panda$threads$Thread$class_type panda$threads$Thread$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Immutable$class, NULL, { panda$core$Object$convert$R$panda$core$String, panda$threads$Thread$cleanup, panda$threads$Thread$run$$LP$RP$EQ$AM$GT$ST$LP$RP$builtin_bit} };
 
@@ -48,6 +47,7 @@ panda$threads$Thread* panda$threads$Thread$start$$LP$RP$EQ$AM$GT$ST$LP$RP$R$pand
         case 0: goto $l11;
     }
     $l13:;
+    abort();
 }
 panda$threads$Thread* panda$threads$Thread$start$$LP$RP$EQ$AM$GT$ST$LP$RP$panda$core$Bit$R$panda$threads$Thread(panda$core$Method* p_run, panda$core$Bit p_preventsExit) {
     panda$threads$Thread* result17 = NULL;
@@ -80,6 +80,7 @@ panda$threads$Thread* panda$threads$Thread$start$$LP$RP$EQ$AM$GT$ST$LP$RP$panda$
         case 0: goto $l23;
     }
     $l25:;
+    abort();
 }
 panda$core$Int64 panda$threads$Thread$preferredThreadCount$R$panda$core$Int64() {
     panda$core$Int64 $returnValue26;
@@ -99,7 +100,6 @@ void panda$threads$Thread$cleanup(panda$threads$Thread* self) {
     }
     $l31:;
 }
-
 
 
 

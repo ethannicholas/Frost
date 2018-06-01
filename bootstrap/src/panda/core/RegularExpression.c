@@ -4,7 +4,6 @@
 #include "panda/core/String.h"
 #include "panda/core/Object.h"
 
-
 static panda$core$String $s1;
 panda$core$RegularExpression$class_type panda$core$RegularExpression$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Immutable$class, NULL, { panda$core$Object$convert$R$panda$core$String, panda$core$RegularExpression$cleanup, panda$core$RegularExpression$matcher$panda$core$String$R$panda$core$Matcher, panda$core$RegularExpression$compile$panda$core$String, panda$core$RegularExpression$destroy} };
 
@@ -28,7 +27,6 @@ void panda$core$RegularExpression$cleanup(panda$core$RegularExpression* self) {
     }
     $l5:;
 }
-
 
 
 

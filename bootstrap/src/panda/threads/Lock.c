@@ -4,7 +4,6 @@
 #include "panda/core/String.h"
 #include "panda/core/Object.h"
 
-
 static panda$core$String $s1;
 panda$threads$Lock$class_type panda$threads$Lock$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Immutable$class, NULL, { panda$core$Object$convert$R$panda$core$String, panda$threads$Lock$cleanup, panda$threads$Lock$lock, panda$threads$Lock$unlock, panda$threads$Lock$create, panda$threads$Lock$destroy} };
 
@@ -28,7 +27,6 @@ void panda$threads$Lock$cleanup(panda$threads$Lock* self) {
     }
     $l5:;
 }
-
 
 
 

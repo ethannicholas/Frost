@@ -9,13 +9,13 @@
 #include "panda/core/Panda.h"
 #include "panda/core/Matcher.h"
 #include "panda/core/String/Index.h"
-panda$core$Object* panda$core$String$RegexMatchIterator$next$R$panda$core$String$Match$shim(panda$core$String$RegexMatchIterator* self) {
-    panda$core$String$Match* result = panda$core$String$RegexMatchIterator$next$R$panda$core$String$Match(self);
+panda$core$Object* panda$core$String$RegexMatchIterator$next$R$panda$core$String$Match$shim(panda$core$String$RegexMatchIterator* p0) {
+    panda$core$String$Match* result = panda$core$String$RegexMatchIterator$next$R$panda$core$String$Match(p0);
+
     return ((panda$core$Object*) result);
 }
 
-
-struct { panda$core$Class* cl; ITable* next; void* methods[8]; } panda$core$String$RegexMatchIterator$_panda$collections$Iterator = { (panda$core$Class*) &panda$collections$Iterator$class, NULL, { panda$core$String$RegexMatchIterator$get_done$R$panda$core$Bit, panda$core$String$RegexMatchIterator$next$R$panda$core$String$Match$shim, panda$collections$Iterator$count$R$panda$core$Int64, panda$collections$Iterator$filter$$LPpanda$collections$Iterator$T$RP$EQ$GT$LPpanda$core$Bit$RP$R$panda$collections$Iterator$LTpanda$collections$Iterator$T$GT, panda$collections$Iterator$range$panda$core$Range$LTpanda$core$Int64$Q$GT$R$panda$collections$Iterator$LTpanda$collections$Iterator$T$GT, panda$collections$Iterator$range$panda$core$SteppedRange$LTpanda$core$Int64$Q$Cpanda$core$Int64$GT$R$panda$collections$Iterator$LTpanda$collections$Iterator$T$GT, panda$collections$Iterator$all$R$panda$collections$List$LTpanda$collections$Iterator$T$GT, panda$collections$Iterator$apply$$LPpanda$collections$Iterator$T$RP$EQ$AM$GT$LP$RP} };
+struct { panda$core$Class* cl; ITable* next; void* methods[10]; } panda$core$String$RegexMatchIterator$_panda$collections$Iterator = { (panda$core$Class*) &panda$collections$Iterator$class, NULL, { panda$core$String$RegexMatchIterator$get_done$R$panda$core$Bit, panda$core$String$RegexMatchIterator$next$R$panda$core$String$Match$shim, panda$collections$Iterator$count$R$panda$core$Int64, panda$collections$Iterator$filter$$LPpanda$collections$Iterator$T$RP$EQ$GT$LPpanda$core$Bit$RP$R$panda$collections$Iterator$LTpanda$collections$Iterator$T$GT, panda$collections$Iterator$range$panda$core$Range$LTpanda$core$Int64$Q$GT$R$panda$collections$Iterator$LTpanda$collections$Iterator$T$GT, panda$collections$Iterator$range$panda$core$SteppedRange$LTpanda$core$Int64$Q$Cpanda$core$Int64$GT$R$panda$collections$Iterator$LTpanda$collections$Iterator$T$GT, panda$collections$Iterator$all$R$panda$collections$List$LTpanda$collections$Iterator$T$GT, panda$collections$Iterator$apply$$LPpanda$collections$Iterator$T$RP$EQ$AM$GT$LP$RP, panda$collections$Iterator$fold$$LPpanda$collections$Iterator$T$Cpanda$collections$Iterator$T$RP$EQ$GT$LPpanda$collections$Iterator$T$RP$R$panda$collections$Iterator$T, panda$collections$Iterator$fold$$LPpanda$collections$Iterator$T$Cpanda$collections$Iterator$T$RP$EQ$GT$LPpanda$collections$Iterator$T$RP$panda$collections$Iterator$T$R$panda$collections$Iterator$T} };
 
 static panda$core$String $s1;
 panda$core$String$RegexMatchIterator$class_type panda$core$String$RegexMatchIterator$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, (ITable*) &panda$core$String$RegexMatchIterator$_panda$collections$Iterator, { panda$core$Object$convert$R$panda$core$String, panda$core$String$RegexMatchIterator$cleanup, panda$core$String$RegexMatchIterator$get_done$R$panda$core$Bit, panda$core$String$RegexMatchIterator$next$R$panda$core$String$Match$shim} };
@@ -107,6 +107,7 @@ panda$core$String$Match* panda$core$String$RegexMatchIterator$next$R$panda$core$
         case 0: goto $l26;
     }
     $l28:;
+    abort();
 }
 void panda$core$String$RegexMatchIterator$cleanup(panda$core$String$RegexMatchIterator* self) {
     int $tmp31;
@@ -123,7 +124,6 @@ void panda$core$String$RegexMatchIterator$cleanup(panda$core$String$RegexMatchIt
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->matcher));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->haystack));
 }
-
 
 
 

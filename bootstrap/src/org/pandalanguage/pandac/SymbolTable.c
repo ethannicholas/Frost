@@ -22,7 +22,6 @@
 #include "panda/collections/Iterable.h"
 #include "panda/collections/CollectionWriter.h"
 
-
 static panda$core$String $s1;
 org$pandalanguage$pandac$SymbolTable$class_type org$pandalanguage$pandac$SymbolTable$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, NULL, { org$pandalanguage$pandac$SymbolTable$convert$R$panda$core$String, org$pandalanguage$pandac$SymbolTable$cleanup, org$pandalanguage$pandac$SymbolTable$add$org$pandalanguage$pandac$Symbol, org$pandalanguage$pandac$SymbolTable$add$org$pandalanguage$pandac$Symbol$panda$core$String, org$pandalanguage$pandac$SymbolTable$addIfNotOverridden$org$pandalanguage$pandac$MethodDecl$panda$collections$List$LTorg$pandalanguage$pandac$MethodDecl$GT, org$pandalanguage$pandac$SymbolTable$merge$org$pandalanguage$pandac$Symbol$Q$org$pandalanguage$pandac$Symbol$Q$R$org$pandalanguage$pandac$Symbol$Q, org$pandalanguage$pandac$SymbolTable$$IDX$panda$core$String$R$org$pandalanguage$pandac$Symbol$Q} };
 
@@ -818,6 +817,7 @@ org$pandalanguage$pandac$Symbol* org$pandalanguage$pandac$SymbolTable$merge$org$
         }
         }
     }
+    abort();
 }
 org$pandalanguage$pandac$Symbol* org$pandalanguage$pandac$SymbolTable$$IDX$panda$core$String$R$org$pandalanguage$pandac$Symbol$Q(org$pandalanguage$pandac$SymbolTable* self, panda$core$String* p_name) {
     org$pandalanguage$pandac$Symbol* result273 = NULL;
@@ -951,6 +951,7 @@ org$pandalanguage$pandac$Symbol* org$pandalanguage$pandac$SymbolTable$$IDX$panda
         case 0: goto $l319;
     }
     $l321:;
+    abort();
 }
 panda$core$String* org$pandalanguage$pandac$SymbolTable$convert$R$panda$core$String(org$pandalanguage$pandac$SymbolTable* self) {
     panda$core$String* $returnValue322;
@@ -1000,7 +1001,6 @@ void org$pandalanguage$pandac$SymbolTable$cleanup(org$pandalanguage$pandac$Symbo
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->merged));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->parents));
 }
-
 
 
 

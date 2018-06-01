@@ -5,16 +5,16 @@
 #include "panda/core/Object.h"
 #include "panda/core/Int64.h"
 #include "panda/core/Bit.h"
+void org$pandalanguage$pandac$Compiler$Resolution$cleanup$shim(panda$core$Object* p0) {
+    org$pandalanguage$pandac$Compiler$Resolution$cleanup(((org$pandalanguage$pandac$Compiler$Resolution$wrapper*) p0)->value);
 
-void org$pandalanguage$pandac$Compiler$Resolution$cleanup$wrappershim(org$pandalanguage$pandac$Compiler$Resolution$wrapper* self) {
-    org$pandalanguage$pandac$Compiler$Resolution$cleanup(self->value);
 }
 
 static panda$core$String $s1;
-org$pandalanguage$pandac$Compiler$Resolution$class_type org$pandalanguage$pandac$Compiler$Resolution$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Value$class, NULL, { panda$core$Object$convert$R$panda$core$String, org$pandalanguage$pandac$Compiler$Resolution$cleanup} };
+org$pandalanguage$pandac$Compiler$Resolution$class_type org$pandalanguage$pandac$Compiler$Resolution$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Value$class, NULL, { panda$core$Object$convert$R$panda$core$String, org$pandalanguage$pandac$Compiler$Resolution$cleanup$shim} };
 
 static panda$core$String $s2;
-org$pandalanguage$pandac$Compiler$Resolution$wrapperclass_type org$pandalanguage$pandac$Compiler$Resolution$wrapperclass = { (panda$core$Class*) &panda$core$Class$class, -999, &$s2, (panda$core$Class*) &panda$core$Value$class, NULL, { panda$core$Object$convert$R$panda$core$String, org$pandalanguage$pandac$Compiler$Resolution$cleanup$wrappershim} };
+org$pandalanguage$pandac$Compiler$Resolution$wrapperclass_type org$pandalanguage$pandac$Compiler$Resolution$wrapperclass = { (panda$core$Class*) &panda$core$Class$class, -999, &$s2, (panda$core$Class*) &panda$core$Value$class, NULL, { panda$core$Object$convert$R$panda$core$String, org$pandalanguage$pandac$Compiler$Resolution$cleanup$shim} };
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x43\x6f\x6d\x70\x69\x6c\x65\x72\x2e\x52\x65\x73\x6f\x6c\x75\x74\x69\x6f\x6e", 44, 1496989225421140491, NULL };
 static panda$core$String $s2 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x43\x6f\x6d\x70\x69\x6c\x65\x72\x2e\x52\x65\x73\x6f\x6c\x75\x74\x69\x6f\x6e", 44, 1496989225421140491, NULL };
 

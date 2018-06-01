@@ -5,7 +5,6 @@
 #include "panda/core/Panda.h"
 #include "panda/core/Object.h"
 
-
 static panda$core$String $s1;
 panda$core$Method$class_type panda$core$Method$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Immutable$class, NULL, { panda$core$Method$convert$R$panda$core$String, panda$core$Method$cleanup} };
 
@@ -93,7 +92,6 @@ void panda$core$Method$cleanup(panda$core$Method* self) {
     $l33:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->target));
 }
-
 
 
 

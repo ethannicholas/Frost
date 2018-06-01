@@ -52,9 +52,19 @@ class TestRunner {
         def args := Array<String>()
         args.add("-L\{buildDir}")
         args.add("-lc_panda")
+        args.add("-lm")
         args.add("-I../bootstrap/include")
         args.add("-I\{outPath}")
         args.add("-I\{pandaHome}/src/c")
+        def icuLibs := org.pandalanguage.pandac.Config.ICU_LIBRARIES.split(";")
+        for lib in icuLibs {
+            def libFile := File(lib)
+            args.add("-L" + libFile.parent())
+            var simpleName := libFile.simpleName()
+            assert simpleName.startsWith("lib")
+            simpleName := simpleName[3..]
+            args.add("-l" + simpleName)
+        }
         for f in files {
             args.add(f.path)
         }
@@ -62,9 +72,10 @@ class TestRunner {
         args.add(exe.path)
         var compiler := System.exec(cCompiler, args)
         var compileResult := compiler.error.readFully()
-        Console.printLine(compileResult)
+        Console.print(compileResult)
         if compiler.waitFor() != 0 {
             Console.printLine("C compiler error")
+            assert !compileResult.contains("pandaMain"), "\{cCompiler} \{args.join(" ")}"
             return false
         }
         return true
@@ -123,8 +134,10 @@ class TestRunner {
             child.input.print(input.readFully())
             child.input.cleanup() -- FIXME add close and use that
         }
-        def childResult := child.output.readFully()
+        def childResult1 := child.output.readFully()
+        def childResult2 := child.error.readFully()
         child.waitFor()
+        def childResult := childResult1 + childResult2
         if childResult != expected {
             Console.printLine("error, expected:\n\{expected}\nbut received:\n\{childResult}")
             return false
@@ -257,10 +270,10 @@ class TestRunner {
                 if runTest(pandac, tests, name, Mode.O3) {
                     success += 1
                 }
-                -*total += 1
+                total += 1
                 if runTest(pandac, tests, name, Mode.C) {
                     success += 1
-                }*-
+                }
             }
         }
         Console.printLine("Passed \{success} / \{total} tests.")

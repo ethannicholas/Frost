@@ -4,7 +4,6 @@
 #include "panda/core/String.h"
 #include "panda/core/Panda.h"
 
-
 static panda$core$String $s1;
 panda$collections$IdentityMap$Entry$class_type panda$collections$IdentityMap$Entry$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, NULL, { panda$core$Object$convert$R$panda$core$String, panda$collections$IdentityMap$Entry$cleanup} };
 
@@ -50,7 +49,6 @@ void panda$collections$IdentityMap$Entry$cleanup(panda$collections$IdentityMap$E
     panda$core$Panda$unref$panda$core$Object(self->value);
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->next));
 }
-
 
 
 

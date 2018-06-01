@@ -170,10 +170,6 @@ class CCodeGenerator : CodeGenerator {
 
     def methodHeader := IndentedOutputStream(methodHeaderBuffer)
 
-    def wrapperShimsBuffer := MemoryOutputStream()
-
-    def wrapperShims := IndentedOutputStream(wrapperShimsBuffer)
-
     def shimsBuffer := MemoryOutputStream()
 
     def shims := IndentedOutputStream(shimsBuffer)
@@ -326,7 +322,7 @@ class CCodeGenerator : CodeGenerator {
     method wrapperType(m:MethodDecl):String {
         def inheritedType := compiler.inheritedType(m)
         def result := MutableString()
-        result.append(type(inheritedType.subtypes[inheritedType.subtypes.get_count() - 1]))
+        result.append(type(inheritedType.returnType()))
         result.append("(")
         assert m.isInstance()
         result.append("\{escapeName(m.owner.name)}")
@@ -384,31 +380,42 @@ class CCodeGenerator : CodeGenerator {
             return found
         }
         assert effective.isMethod()
-        assert effective.subtypes.get_count() = raw.parameters.get_count() + 1
+        assert effective.subtypes.get_count() = raw.parameters.get_count() + 2 -- self and return
         assert raw.isInstance()
-        def effectiveReturnType := effective.subtypes[effective.subtypes.get_count() - 1]
+        def effectiveReturnType := effective.returnType()
         def resultName := getName(raw) + "$shim"
         def resultType := MutableString(type(effectiveReturnType))
         out.print("\{resultType} \{resultName}(")
-        def self_t := selfType(raw)
-        out.print("\{self_t} self")
         resultType.append("(")
-        resultType.append(self_t)
-        for i in 0 .. raw.parameters.get_count() {
+        var separator := ""
+        for i in 0 .. effective.subtypes.get_count() - 1 {
             def pType := type(effective.subtypes[i])
             resultType.append(", ")
             resultType.append(pType)
-            out.print(", \{pType} p\{i}")
+            out.print("\{separator}\{pType} p\{i}")
+            separator := ", "
         }
         out.printLine(") {")
         out.level +=1
         resultType.append(")*")
+        def unrefs := MemoryOutputStream()
         def casts := Array<String>()
-        for i in 0 .. raw.parameters.get_count() {
+        for i in 0 .. effective.subtypes.get_count() - 1 {
             def p := "p\{i}"
-            if raw.parameters[i].type != effective.subtypes[i] {
-                casts.add(getCastReference(p, effective.subtypes[i],
-                        raw.parameters[i].type, out))
+            def rawType:Type
+            if i = 0 {
+                rawType := raw.owner.type()
+            }
+            else {
+                rawType := raw.parameters[i - 1].type
+            }
+            if rawType != effective.subtypes[i] {
+                def cast := getCastReference(p, effective.subtypes[i], rawType, out)
+                casts.add(cast)
+                if compiler.isValue(effective.subtypes[i]) & !compiler.isValue(rawType) {
+                    unrefs.printLine("panda$core$Panda$unref$panda$core$Object(" +
+                            "(panda$core$Object*) \{cast});")
+                }
             }
             else {
                 casts.add(p)
@@ -417,11 +424,14 @@ class CCodeGenerator : CodeGenerator {
         if raw.returnType != Type.Void() {
             out.print("\{type(raw.returnType)} result = ")
         }
-        out.print("\{getName(raw)}(self")
-        for i in 0 .. raw.parameters.get_count() {
-            out.print(", \{casts[i]}")
+        out.print("\{getName(raw)}(")
+        separator := ""
+        for i in 0 .. effective.subtypes.get_count() - 1 {
+            out.print("\{separator}\{casts[i]}")
+            separator := ", "
         }
         out.printLine(");")
+        out.printLine(unrefs)
         if raw.returnType != Type.Void() {
             out.printLine("return " + getCastReference("result", raw.returnType,
                     effectiveReturnType, out) + ";")
@@ -431,41 +441,6 @@ class CCodeGenerator : CodeGenerator {
         def result := MethodShim(resultName, resultType.finish())
         methodShims[raw] := result
         rawOut.print(outBuffer.finish())
-        return result
-    }
-
-    method createWrapperShim(m:MethodDecl, out:IndentedOutputStream):String {
-        assert m.isInstance()
-        def oldMethod := currentMethod
-        currentMethod := m
-        def result := "\{getName(m)}$wrappershim"
-        def selfType := "\{escapeName(m.owner.name)}$wrapper*"
-        out.print("\{type(m.returnType)} \{result}(\{selfType} self")
-        def actualMethodType := compiler.declaredType(m)
-        def inheritedMethodType := compiler.inheritedType(m)
-        for i in 0 .. m.parameters.get_count() {
-            out.print(", \{type(inheritedMethodType.subtypes[i])} \{m.parameters[i].name}")
-        }
-        out.printLine(") {")
-        out.level += 1
-        def parameters := Array<String>()
-        for i in 0 .. m.parameters.get_count() {
-            parameters.add(getCastReference(m.parameters[i].name, inheritedMethodType.subtypes[i],
-                    actualMethodType.subtypes[i], out))
-        }
-        def children := Array<IRNode>()
-        children.add(IRNode.SELF(Position(), Type.Object()))
-        if m.returnType != Type.Void() {
-            out.print("return ")
-        }
-        out.print("\{getName(m)}(self->value")
-        for i in 0 .. m.parameters.get_count() {
-            out.print(", \{parameters[i]}")
-        }
-        out.printLine(");")
-        out.level -= 1
-        out.printLine("}")
-        currentMethod := oldMethod
         return result
     }
 
@@ -488,7 +463,7 @@ class CCodeGenerator : CodeGenerator {
                     result.append("NULL")
                 }
                 else {
-                    result.append(createWrapperShim(m, wrapperShims))
+                    result.append(getMethodTableEntry(m))
                 }
             }
             result.append("} };\n")
@@ -509,9 +484,16 @@ class CCodeGenerator : CodeGenerator {
         }
         def result:String
         def declared := compiler.declaredTypeWithSelf(m, m.owner.type())
-        def inherited := compiler.inheritedTypeWithSelf(m)
+        def effectiveSelf:Type
+        if compiler.isValue(m.owner) {
+            effectiveSelf := Type.Object()
+        }
+        else {
+            effectiveSelf := m.owner.type()
+        }
+        def inherited := compiler.inheritedTypeWithSelf(m, effectiveSelf)
         if declared != inherited {
-            def shim := createMethodShim(m, compiler.inheritedType(m), shims)
+            def shim := createMethodShim(m, inherited, shims)
             result := shim.name
         }
         else {
@@ -596,18 +578,7 @@ class CCodeGenerator : CodeGenerator {
                         "\{name}, \{superCast}, \{itable}, { ")
                 var separator := ""
                 for i in 0 .. valueVTable.get_count() {
-                    def m := vtable[i]
-                    def methodName:String
-                    if m.owner == cl {
-                        methodName := createWrapperShim(m, wrapperShims)
-                    }
-                    else {
-                        methodName := getName(m)
-                        if isExternal(m.owner) {
-                            writeDeclaration(m)
-                        }
-                    }
-                    code.append("\{separator}\{methodName}")
+                    code.append("\{separator}\{getMethodTableEntry(vtable[i])}")
                     separator := ", "
                 }
                 code.append("} };")
@@ -968,9 +939,21 @@ class CCodeGenerator : CodeGenerator {
     method wrapValue(value:String, srcType:Type, dstType:Type, out:IndentedOutputStream):String {
         if srcType.typeKind = Type.Kind.NULLABLE {
             -- casting nullable value to nullable wrapper, need to special-case null
+            def result := nextVar()
+            out.printLine("\{type(dstType)} \{result};")
+            out.printLine("if (\{value}.nonnull) {")
+            out.level += 1
             def unwrapped := toNonNullableValue(value, srcType, srcType.subtypes[0], out)
             def nonNullValue := wrapValue(unwrapped, srcType.subtypes[0], dstType, out)
-            return "(\{value}.nonnull ? \{nonNullValue} : NULL)"
+            out.printLine("\{result} = \{nonNullValue};")
+            out.level -= 1
+            out.printLine("}")
+            out.printLine("else {")
+            out.level += 1
+            out.printLine("\{result} = NULL;")
+            out.level -= 1
+            out.printLine("}")
+            return result
         }
         def wrapped := nextVar()
         out.printLine("\{wrapperType(srcType)} \{wrapped};")
@@ -1031,7 +1014,6 @@ class CCodeGenerator : CodeGenerator {
     }
 
     method getCastReference(value:String, src:Type, target:Type, out:IndentedOutputStream):String {
-        def op:String
         if target.isBuiltinNumber() {
             assert src.isBuiltinNumber()
             return "((\{type(target)}) \{value})"
@@ -1055,7 +1037,6 @@ class CCodeGenerator : CodeGenerator {
                     src.subtypes[0] = target {
                 return toNonNullableValue(value, src, target, out)
             }
-            op := "bitcast2"
         }
         def srcType := type(src)
         def dstType := type(target)
@@ -1102,6 +1083,9 @@ class CCodeGenerator : CodeGenerator {
     }
 
     method getIntReference(int:UInt64, out:IndentedOutputStream):String {
+        if int > Int64.MAX.convert() {
+            return int + "u"
+        }
         return int.convert()
     }
 
@@ -1300,7 +1284,7 @@ class CCodeGenerator : CodeGenerator {
         def cc := getClassConstant(methodClass)
         def result := nextVar()
         out.printLine("\{type(methodObjectType)} \{result} = (\{type(methodObjectType)}) " +
-                "pandaObjectAlloc(\{sizeOf(methodObjectType)}, &\{cc.name});")
+                "pandaObjectAlloc(\{sizeOf(methodObjectType)}, (panda$core$Class*) &\{cc.name});")
         def initMethod := methodClass.methods[0]
         compiler.resolve(initMethod)
         writeDeclaration(initMethod)
@@ -1322,7 +1306,8 @@ class CCodeGenerator : CodeGenerator {
         else {
             targetCast := "NULL"
         }
-        out.printLine("\{getName(initMethod)}(\{result}, \{getName(m)}, \{targetCast});")
+        out.printLine("\{getName(initMethod)}(\{result}, (panda$core$Int8*) &\{getName(m)}, " +
+                    "\{targetCast});")
         if target != null & compiler.isValue(compiler.getClass(target.type())) {
             out.printLine("panda$core$Panda$unref$panda$core$Object(\{targetCast});")
         }
@@ -1611,6 +1596,10 @@ class CCodeGenerator : CodeGenerator {
             signPrefix := "s"
             unsigned := "u" + numberType
         }
+        else if t.name.startsWith("panda.core.Real") {
+            signPrefix := "s"
+            unsigned := numberType
+        }
         else {
             assert t.name.startsWith("panda.core.UInt") | t.name.startsWith("panda.core.Char")
             signPrefix := "u"
@@ -1727,7 +1716,8 @@ class CCodeGenerator : CodeGenerator {
         def backwardEntry := nextLabel()
         def unsigned:String
         def signPrefix:String
-        if stepType.name.startsWith("panda.core.Int") {
+        if stepType.name.startsWith("panda.core.Int") |
+                stepType.name.startsWith("panda.core.Real") {
             signPrefix := "s"
         }
         else {
@@ -1735,7 +1725,7 @@ class CCodeGenerator : CodeGenerator {
                     stepType.name.startsWith("panda.core.Char")
             signPrefix := "u"
         }
-        if numberType.startsWith("u") {
+        if numberType.startsWith("u") | numberType = "float" | numberType = "double" {
             unsigned := numberType
         }
         else {
@@ -2027,10 +2017,58 @@ class CCodeGenerator : CodeGenerator {
         }
     }
 
-    method writeAssert(test:IRNode, message:IRNode?, out:IndentedOutputStream) {
+    method writeAssert(position:Position, test:IRNode, msg:IRNode?, out:IndentedOutputStream) {
+        if compiler.settings.safetyLevel < 2 {
+            return
+        }
         extraEffects.push(Array<ExtraEffect>())
-        out.printLine("PANDA_ASSERT(\{getReference(test, out)});")
+        def testRef := getReference(test, out)
         writeExtraEffects(out)
+        def ifTrue := nextLabel()
+        def ifFalse := nextLabel()
+        out.printLine("if (\{testRef}) goto \{ifTrue}; else goto \{ifFalse};")
+        createBlock(ifFalse, out)
+        extraEffects.push(Array<ExtraEffect>())
+        def name:String
+        def path := compiler.currentClass[0].source.path
+        def index := path.lastIndexOf("/")
+        if index = null {
+            name := path
+        }
+        else {
+            name := path[path.next(index)...]
+        }
+        def nameRef := getStringReference(name)
+        def msgRef:String?
+        if msg != null {
+            msgRef := getReference(msg, out)
+        }
+        else {
+            msgRef := null
+        }
+        for m in compiler.getClass(Type.Panda()).methods {
+            if m.name = "assertionFailure" {
+                compiler.resolve(m)
+                if m.owner.external {
+                    writeDeclaration(m)
+                }
+            }
+        }
+        if msgRef != null {
+            out.print("panda$core$Panda$assertionFailure$" +
+                    "panda$core$String$panda$core$Int64$panda$core$String")
+        }
+        else {
+            out.print("panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64")
+        }
+        out.print("(\{nameRef}, (panda$core$Int64) { \{position.line} }")
+        if msgRef != null {
+            out.print(", \{msgRef}")
+        }
+        out.printLine(");")
+        extraEffects.pop()
+        out.printLine("abort();")
+        createBlock(ifTrue, out)
     }
 
     method writeMatch(value:IRNode, whens:ImmutableArray<IRNode>, other:ImmutableArray<IRNode>?,
@@ -2135,8 +2173,8 @@ class CCodeGenerator : CodeGenerator {
                 writeBreak(label, out)
             when IRNode.CONTINUE(_, label):
                 writeContinue(label, out)
-            when IRNode.ASSERT(_, test, msg):
-                writeAssert(test, msg, out)
+            when IRNode.ASSERT(position, test, msg):
+                writeAssert(position, test, msg, out)
             when IRNode.MATCH(_, value, whens, other):
                 writeMatch(value, whens, other, out)
             when IRNode.REUSED_VALUE_DEFINITION(base, id):
@@ -2199,6 +2237,9 @@ class CCodeGenerator : CodeGenerator {
         }
         methods.print(methodHeaderBuffer.finish())
         methods.print(bodyBuffer.finish())
+        if m.returnType != Type.Void() & !compiler.endsWithBranch(body) {
+            methods.printLine("abort();")
+        }
         methods.level -= 1
         methods.printLine("}")
         currentMethod := null
@@ -2213,7 +2254,6 @@ class CCodeGenerator : CodeGenerator {
         declarations.clear()
         types.clear()
         methodsBuffer.clear()
-        wrapperShimsBuffer.clear()
         shimsBuffer.clear()
         declared.clear()
         writtenTypes.clear()
@@ -2242,8 +2282,6 @@ class CCodeGenerator : CodeGenerator {
     method finish() {
         out.printLine(shimsBuffer.finish())
         shimsBuffer.clear()
-        out.printLine(wrapperShimsBuffer.finish())
-        wrapperShimsBuffer.clear()
         out.printLine(types.finish())
         types.clear()
         out.printLine(strings.finish())

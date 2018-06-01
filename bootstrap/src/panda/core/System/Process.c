@@ -6,7 +6,6 @@
 #include "panda/io/OutputStream.h"
 #include "panda/io/InputStream.h"
 
-
 static panda$core$String $s1;
 panda$core$System$Process$class_type panda$core$System$Process$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, NULL, { panda$core$Object$convert$R$panda$core$String, panda$core$System$Process$cleanup, panda$core$System$Process$waitFor$R$panda$core$Int64} };
 
@@ -34,7 +33,6 @@ void panda$core$System$Process$cleanup(panda$core$System$Process* self) {
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->output));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->error));
 }
-
 
 
 

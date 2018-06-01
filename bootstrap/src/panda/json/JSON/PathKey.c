@@ -7,7 +7,6 @@
 #include "panda/core/Bit.h"
 #include "panda/core/String/Index.h"
 
-
 static panda$core$String $s1;
 panda$json$JSON$PathKey$class_type panda$json$JSON$PathKey$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, NULL, { panda$core$Object$convert$R$panda$core$String, panda$json$JSON$PathKey$cleanup} };
 
@@ -91,7 +90,6 @@ void panda$json$JSON$PathKey$init$panda$core$Int64$panda$core$Int64$panda$core$S
     panda$core$String$Index* $tmp28 = ((panda$core$String$Index*) ((char*) self->$data + 8));
     *$tmp28 = p_f1;
 }
-
 
 
 

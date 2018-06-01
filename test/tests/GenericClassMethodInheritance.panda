@@ -1,0 +1,30 @@
+@abstract
+class Super<T> {
+    @abstract
+    function compute():T
+
+    method doSomething() {
+        Console.printLine(compute())
+    }
+}
+
+class GenericClassMethodInheritance : Super<Int> {
+    def x:Int
+
+    init(x:Int) {
+        self.x := x
+    }
+
+    @override
+    @final
+    function compute():Int {
+        return x * 12
+    }
+
+    @class
+    method main() {
+        GenericClassMethodInheritance(3).compute()
+        Console.printLine(GenericClassMethodInheritance(4).compute())
+        GenericClassMethodInheritance(5).doSomething()
+    }
+}

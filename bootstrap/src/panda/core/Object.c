@@ -3,7 +3,6 @@
 #include "panda/core/String.h"
 #include "panda/core/Panda.h"
 
-
 static panda$core$String $s1;
 panda$core$Object$class_type panda$core$Object$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, NULL, NULL, { panda$core$Object$convert$R$panda$core$String, panda$core$Object$cleanup} };
 
@@ -24,7 +23,6 @@ void panda$core$Object$cleanup(panda$core$Object* self) {
 }
 void panda$core$Object$init(panda$core$Object* self) {
 }
-
 
 
 

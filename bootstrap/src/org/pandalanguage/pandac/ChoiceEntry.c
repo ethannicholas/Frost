@@ -14,7 +14,6 @@
 #include "panda/collections/Array.h"
 #include "org/pandalanguage/pandac/Symbol/Kind.h"
 
-
 static panda$core$String $s1;
 org$pandalanguage$pandac$ChoiceEntry$class_type org$pandalanguage$pandac$ChoiceEntry$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &org$pandalanguage$pandac$Symbol$class, NULL, { org$pandalanguage$pandac$ChoiceEntry$convert$R$panda$core$String, org$pandalanguage$pandac$ChoiceEntry$cleanup, org$pandalanguage$pandac$Symbol$get_heritable$R$panda$core$Bit} };
 
@@ -129,7 +128,6 @@ void org$pandalanguage$pandac$ChoiceEntry$cleanup(org$pandalanguage$pandac$Choic
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->fields));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->initMethod));
 }
-
 
 
 

@@ -5,7 +5,6 @@
 #include "panda/collections/Key.h"
 #include "panda/core/Panda.h"
 
-
 static panda$core$String $s1;
 panda$collections$HashMap$Entry$class_type panda$collections$HashMap$Entry$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, NULL, { panda$core$Object$convert$R$panda$core$String, panda$collections$HashMap$Entry$cleanup} };
 

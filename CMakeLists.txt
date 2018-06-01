@@ -22,7 +22,6 @@ set(BOOTSTRAP_ARGS "--llvm_dir" ${LLVM_ROOT_DIR} "--triple" ${LLVM_HOST_TARGET} 
     "-S" ${SAFETY})
 include_directories(
     bootstrap/include
-    src/c
     ${ICU_INCLUDE_DIRS}
 )
 
@@ -126,6 +125,7 @@ add_library(c_panda
     bootstrap/src/panda/io/PushbackInputStream.c
     bootstrap/src/panda/json/JSON.c
     bootstrap/src/panda/json/JSONParser.c
+    bootstrap/src/panda/math/MersenneTwister.c
     bootstrap/src/panda/math/Random.c
     bootstrap/src/panda/math/XorShift128Plus.c
     bootstrap/src/panda/threads/Lock.c
@@ -138,7 +138,7 @@ add_library(c_panda
     bootstrap/src/org/pandalanguage/json/Position.c
     bootstrap/src/org/pandalanguage/json/Token.c
     bootstrap/src/org/pandalanguage/json/Token/Kind.c
-    src/c/pandalib.c
+    bootstrap/src/pandalib.c
 )
 
 add_executable(bootstrap
@@ -637,12 +637,16 @@ add_custom_command(
     COMMAND ${CMAKE_COMMAND} -E remove_directory ${CMAKE_CURRENT_SOURCE_DIR}/bootstrap
     COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_BINARY_DIR}/updated_bootstrap
             ${CMAKE_CURRENT_SOURCE_DIR}/bootstrap
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/src/c/panda_c.h
+            ${CMAKE_CURRENT_SOURCE_DIR}/bootstrap/include
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/src/c/pandalib.c
+            ${CMAKE_CURRENT_SOURCE_DIR}/bootstrap/src
 )
 
 add_custom_command(
     OUTPUT TestRunner
     COMMAND ${CMAKE_CURRENT_BINARY_DIR}/pandac -O ${OPTIMIZATION} -S ${SAFETY}
-            ${CMAKE_CURRENT_SOURCE_DIR}/test/TestRunner.panda
+            -i ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/test/TestRunner.panda
             -o ${CMAKE_CURRENT_BINARY_DIR}/TestRunner
     DEPENDS pandac test/TestRunner.panda
 )

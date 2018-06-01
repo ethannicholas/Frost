@@ -200,4 +200,22 @@ interface Iterator<T> {
         }
     }
 
+    @pre(!get_done())
+    @post(get_done())
+    method fold(f:(T, T)=>(T)):T { -- FIXME (T, U)=>(U) when generics are in
+        var result := next()
+        while !get_done() {
+            result := f(result, next())
+        }
+        return result
+    }
+
+    @post(get_done())
+    method fold(f:(T, T)=>(T), start:T):T { -- FIXME (T, U)=>(U) when generics are in
+        var result := start
+        while !get_done() {
+            result := f(result, next())
+        }
+        return result
+    }
 }

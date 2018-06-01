@@ -4,7 +4,6 @@
 #include "panda/core/String.h"
 #include "panda/core/Bit.h"
 
-
 struct { panda$core$Class* cl; ITable* next; void* methods[2]; } panda$core$Equatable$_panda$core$Equatable = { (panda$core$Class*) &panda$core$Equatable$class, NULL, { NULL, panda$core$Equatable$$NEQ$panda$core$Equatable$T$R$panda$core$Bit} };
 
 static panda$core$String $s1;
@@ -26,7 +25,6 @@ panda$core$Bit panda$core$Equatable$$NEQ$panda$core$Equatable$T$R$panda$core$Bit
     $returnValue2 = $tmp7;
     return $returnValue2;
 }
-
 
 
 

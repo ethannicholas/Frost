@@ -9,7 +9,6 @@
 #include "panda/core/Panda.h"
 #include "panda/collections/ImmutableArray.h"
 
-
 static panda$core$String $s1;
 org$pandalanguage$pandac$Compiler$Settings$class_type org$pandalanguage$pandac$Compiler$Settings$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Immutable$class, NULL, { panda$core$Object$convert$R$panda$core$String, org$pandalanguage$pandac$Compiler$Settings$cleanup} };
 

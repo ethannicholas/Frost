@@ -9,7 +9,6 @@
 #include "panda/core/Bit.h"
 #include "panda/core/UInt8.h"
 
-
 static panda$core$String $s1;
 panda$io$Console$class_type panda$io$Console$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, NULL, { panda$core$Object$convert$R$panda$core$String, panda$io$Console$cleanup} };
 
@@ -19,6 +18,8 @@ typedef panda$core$String* (*$fn6)(panda$core$Object*);
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x69\x6f\x2e\x43\x6f\x6e\x73\x6f\x6c\x65", 16, 2336552278051400340, NULL };
 static panda$core$String $s8 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x0a", 1, 111, NULL };
 
+void panda$io$Console$init(panda$io$Console* self) {
+}
 void panda$io$Console$printLine$panda$core$String(panda$core$String* p_s) {
     panda$io$Console$print$panda$core$String(p_s);
     panda$io$Console$printLine();
@@ -123,8 +124,7 @@ panda$core$String* panda$io$Console$readLine$R$panda$core$String$Q() {
         case 1: goto $l35;
     }
     $l37:;
-}
-void panda$io$Console$init(panda$io$Console* self) {
+    abort();
 }
 void panda$io$Console$cleanup(panda$io$Console* self) {
     int $tmp40;
@@ -139,7 +139,6 @@ void panda$io$Console$cleanup(panda$io$Console* self) {
     }
     $l41:;
 }
-
 
 
 

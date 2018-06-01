@@ -31,7 +31,6 @@
 #include "org/pandalanguage/pandac/FieldDecl.h"
 #include "org/pandalanguage/pandac/MethodDecl.h"
 
-
 static panda$core$String $s1;
 org$pandalanguage$pandac$ClassDecl$class_type org$pandalanguage$pandac$ClassDecl$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, NULL, { org$pandalanguage$pandac$ClassDecl$convert$R$panda$core$String, org$pandalanguage$pandac$ClassDecl$cleanup, org$pandalanguage$pandac$ClassDecl$simpleName$R$panda$core$String, org$pandalanguage$pandac$ClassDecl$type$R$org$pandalanguage$pandac$Type, org$pandalanguage$pandac$ClassDecl$typeWithParameters$R$org$pandalanguage$pandac$Type, org$pandalanguage$pandac$ClassDecl$isSpecialization$R$panda$core$Bit} };
 
@@ -520,6 +519,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$ClassDecl$typeWithParame
         case 0: goto $l110;
     }
     $l162:;
+    abort();
 }
 panda$core$Bit org$pandalanguage$pandac$ClassDecl$isSpecialization$R$panda$core$Bit(org$pandalanguage$pandac$ClassDecl* self) {
     panda$core$Bit $returnValue163;
@@ -945,6 +945,7 @@ panda$core$String* org$pandalanguage$pandac$ClassDecl$convert$R$panda$core$Strin
         case 0: goto $l354;
     }
     $l356:;
+    abort();
 }
 void org$pandalanguage$pandac$ClassDecl$cleanup(org$pandalanguage$pandac$ClassDecl* self) {
     int $tmp359;

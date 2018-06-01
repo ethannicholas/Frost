@@ -4,7 +4,6 @@
 #include "panda/core/Object.h"
 #include "panda/core/Panda.h"
 
-
 static panda$core$String $s1;
 panda$core$Class$class_type panda$core$Class$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Immutable$class, NULL, { panda$core$Object$convert$R$panda$core$String, panda$core$Class$cleanup} };
 
@@ -30,7 +29,6 @@ void panda$core$Class$cleanup(panda$core$Class* self) {
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->name));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->superclass));
 }
-
 
 
 

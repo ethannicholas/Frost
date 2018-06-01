@@ -14,7 +14,6 @@
 #include "panda/collections/Iterator.h"
 #include "panda/io/InputStream/LineIterator.h"
 
-
 static panda$core$String $s1;
 panda$io$InputStream$class_type panda$io$InputStream$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, NULL, { panda$core$Object$convert$R$panda$core$String, panda$io$InputStream$cleanup, NULL, panda$io$InputStream$read$panda$unsafe$Pointer$LTpanda$core$UInt8$GT$panda$core$Int64$R$panda$core$Int64, panda$io$InputStream$read$panda$unsafe$Pointer$LTpanda$core$Int8$GT$panda$core$Int64$R$panda$core$Int64, panda$io$InputStream$read$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64$R$panda$core$Int64, panda$io$InputStream$readFully$R$panda$core$String, panda$io$InputStream$read$R$panda$core$Int16$Q, panda$io$InputStream$read$R$panda$core$Int32$Q, panda$io$InputStream$read$R$panda$core$Int64$Q, panda$io$InputStream$read$R$panda$core$Char8$Q, panda$io$InputStream$readLine$R$panda$core$String$Q, panda$io$InputStream$lines$R$panda$collections$Iterator$LTpanda$core$String$GT} };
 
@@ -125,6 +124,7 @@ panda$core$String* panda$io$InputStream$readFully$R$panda$core$String(panda$io$I
         case 0: goto $l39;
     }
     $l41:;
+    abort();
 }
 panda$core$Int16$nullable panda$io$InputStream$read$R$panda$core$Int16$Q(panda$io$InputStream* self) {
     panda$core$UInt8$nullable a42;
@@ -300,6 +300,7 @@ panda$core$String* panda$io$InputStream$readLine$R$panda$core$String$Q(panda$io$
         case 1: goto $l113;
     }
     $l115:;
+    abort();
 }
 panda$collections$Iterator* panda$io$InputStream$lines$R$panda$collections$Iterator$LTpanda$core$String$GT(panda$io$InputStream* self) {
     panda$collections$Iterator* $returnValue116;

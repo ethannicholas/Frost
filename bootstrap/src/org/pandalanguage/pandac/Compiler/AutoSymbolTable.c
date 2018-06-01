@@ -7,12 +7,12 @@
 #include "panda/core/Panda.h"
 #include "panda/core/Bit.h"
 
-
 static panda$core$String $s1;
 org$pandalanguage$pandac$Compiler$AutoSymbolTable$class_type org$pandalanguage$pandac$Compiler$AutoSymbolTable$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, NULL, { panda$core$Object$convert$R$panda$core$String, org$pandalanguage$pandac$Compiler$AutoSymbolTable$cleanup} };
 
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x43\x6f\x6d\x70\x69\x6c\x65\x72\x2e\x41\x75\x74\x6f\x53\x79\x6d\x62\x6f\x6c\x54\x61\x62\x6c\x65", 49, -1329876615109052662, NULL };
+static panda$core$String $s17 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x43\x6f\x6d\x70\x69\x6c\x65\x72\x2e\x70\x61\x6e\x64\x61", 14, -3408958965109419534, NULL };
 
 void org$pandalanguage$pandac$Compiler$AutoSymbolTable$init$org$pandalanguage$pandac$Compiler(org$pandalanguage$pandac$Compiler$AutoSymbolTable* self, org$pandalanguage$pandac$Compiler* p_compiler) {
     org$pandalanguage$pandac$SymbolTable* $tmp2;
@@ -67,17 +67,21 @@ void org$pandalanguage$pandac$Compiler$AutoSymbolTable$init$org$pandalanguage$pa
     }
 }
 void org$pandalanguage$pandac$Compiler$AutoSymbolTable$cleanup(org$pandalanguage$pandac$Compiler$AutoSymbolTable* self) {
-    org$pandalanguage$pandac$SymbolTable* $tmp15;
-    org$pandalanguage$pandac$SymbolTable* $tmp16;
+    org$pandalanguage$pandac$SymbolTable* $tmp18;
+    org$pandalanguage$pandac$SymbolTable* $tmp19;
     int $tmp14;
     {
-        PANDA_ASSERT(((panda$core$Bit) { ((panda$core$Object*) self->compiler->symbolTable) == ((panda$core$Object*) self->newSymbolTable) }).value);
+        if (((panda$core$Bit) { ((panda$core$Object*) self->compiler->symbolTable) == ((panda$core$Object*) self->newSymbolTable) }).value) goto $l15; else goto $l16;
+        $l16:;
+        panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s17, (panda$core$Int64) { 49 });
+        abort();
+        $l15:;
         {
-            $tmp15 = self->compiler->symbolTable;
-            $tmp16 = self->oldSymbolTable;
-            self->compiler->symbolTable = $tmp16;
-            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp16));
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp15));
+            $tmp18 = self->compiler->symbolTable;
+            $tmp19 = self->oldSymbolTable;
+            self->compiler->symbolTable = $tmp19;
+            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp19));
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp18));
         }
     }
     $tmp14 = -1;
@@ -85,9 +89,9 @@ void org$pandalanguage$pandac$Compiler$AutoSymbolTable$cleanup(org$pandalanguage
     $l12:;
     panda$core$Object$cleanup(((panda$core$Object*) self));
     switch ($tmp14) {
-        case -1: goto $l17;
+        case -1: goto $l20;
     }
-    $l17:;
+    $l20:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->compiler));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->oldSymbolTable));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->newSymbolTable));

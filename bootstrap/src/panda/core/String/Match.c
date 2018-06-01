@@ -12,7 +12,6 @@
 #include "panda/core/Bit.h"
 #include "panda/collections/ImmutableArray.h"
 
-
 static panda$core$String $s1;
 panda$core$String$Match$class_type panda$core$String$Match$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Immutable$class, NULL, { panda$core$String$Match$convert$R$panda$core$String, panda$core$String$Match$cleanup} };
 

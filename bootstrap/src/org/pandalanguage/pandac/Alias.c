@@ -8,7 +8,6 @@
 #include "panda/core/Panda.h"
 #include "panda/core/Object.h"
 
-
 static panda$core$String $s1;
 org$pandalanguage$pandac$Alias$class_type org$pandalanguage$pandac$Alias$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &org$pandalanguage$pandac$Symbol$class, NULL, { org$pandalanguage$pandac$Alias$convert$R$panda$core$String, org$pandalanguage$pandac$Alias$cleanup, org$pandalanguage$pandac$Symbol$get_heritable$R$panda$core$Bit} };
 
@@ -72,7 +71,6 @@ void org$pandalanguage$pandac$Alias$cleanup(org$pandalanguage$pandac$Alias* self
     $l22:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->fullName));
 }
-
 
 
 

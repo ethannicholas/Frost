@@ -2,6 +2,10 @@ package panda.io
 
 @final
 class Console {
+    @private
+    init() {
+    }
+
     @class
     @external
     function inputStream():InputStream

@@ -7,7 +7,6 @@
 #include "panda/core/Bit.h"
 #include "org/pandalanguage/pandac/ASTNode.h"
 
-
 static panda$core$String $s1;
 org$pandalanguage$pandac$Annotations$Expression$class_type org$pandalanguage$pandac$Annotations$Expression$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, NULL, { org$pandalanguage$pandac$Annotations$Expression$convert$R$panda$core$String, org$pandalanguage$pandac$Annotations$Expression$cleanup} };
 
@@ -146,6 +145,7 @@ panda$core$String* org$pandalanguage$pandac$Annotations$Expression$convert$R$pan
         case 3: goto $l54;
     }
     $l56:;
+    abort();
 }
 void org$pandalanguage$pandac$Annotations$Expression$cleanup(org$pandalanguage$pandac$Annotations$Expression* self) {
     org$pandalanguage$pandac$Annotations$Expression* $match$22_563 = NULL;
@@ -232,7 +232,6 @@ void org$pandalanguage$pandac$Annotations$Expression$init$panda$core$Int64$org$p
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp79));
     }
 }
-
 
 
 

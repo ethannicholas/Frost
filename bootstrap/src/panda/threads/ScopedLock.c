@@ -6,7 +6,6 @@
 #include "panda/threads/Lock.h"
 #include "panda/core/Panda.h"
 
-
 static panda$core$String $s1;
 panda$threads$ScopedLock$class_type panda$threads$ScopedLock$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Immutable$class, NULL, { panda$core$Object$convert$R$panda$core$String, panda$threads$ScopedLock$cleanup} };
 
@@ -43,7 +42,6 @@ void panda$threads$ScopedLock$cleanup(panda$threads$ScopedLock* self) {
     $l9:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->lock));
 }
-
 
 
 

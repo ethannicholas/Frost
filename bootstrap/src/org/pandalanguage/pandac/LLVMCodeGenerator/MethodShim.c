@@ -4,7 +4,6 @@
 #include "panda/core/String.h"
 #include "panda/core/Panda.h"
 
-
 static panda$core$String $s1;
 org$pandalanguage$pandac$LLVMCodeGenerator$MethodShim$class_type org$pandalanguage$pandac$LLVMCodeGenerator$MethodShim$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, NULL, { panda$core$Object$convert$R$panda$core$String, org$pandalanguage$pandac$LLVMCodeGenerator$MethodShim$cleanup} };
 

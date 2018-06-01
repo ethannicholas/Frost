@@ -4,7 +4,6 @@
 #include "panda/core/String.h"
 #include "panda/core/Panda.h"
 
-
 static panda$core$String $s1;
 org$pandalanguage$pandac$Pair$class_type org$pandalanguage$pandac$Pair$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, NULL, { panda$core$Object$convert$R$panda$core$String, org$pandalanguage$pandac$Pair$cleanup} };
 
@@ -48,7 +47,6 @@ void org$pandalanguage$pandac$Pair$cleanup(org$pandalanguage$pandac$Pair* self) 
     panda$core$Panda$unref$panda$core$Object(self->first);
     panda$core$Panda$unref$panda$core$Object(self->second);
 }
-
 
 
 

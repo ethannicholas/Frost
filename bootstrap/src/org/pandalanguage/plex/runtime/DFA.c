@@ -12,7 +12,6 @@
 #include "panda/core/Panda.h"
 #include "panda/core/System.h"
 
-
 static panda$core$String $s1;
 org$pandalanguage$plex$runtime$DFA$class_type org$pandalanguage$plex$runtime$DFA$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, NULL, { panda$core$Object$convert$R$panda$core$String, org$pandalanguage$plex$runtime$DFA$cleanup, org$pandalanguage$plex$runtime$DFA$next$R$org$pandalanguage$plex$runtime$RawToken} };
 
@@ -167,7 +166,6 @@ void org$pandalanguage$plex$runtime$DFA$cleanup(org$pandalanguage$plex$runtime$D
     }
     $l50:;
 }
-
 
 
 

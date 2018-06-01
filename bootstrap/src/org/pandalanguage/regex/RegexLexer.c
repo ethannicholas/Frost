@@ -12,7 +12,6 @@
 #include "org/pandalanguage/regex/RegexToken/Kind.h"
 #include "org/pandalanguage/pandac/Position.h"
 
-
 static panda$core$String $s1;
 org$pandalanguage$regex$RegexLexer$class_type org$pandalanguage$regex$RegexLexer$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, NULL, { panda$core$Object$convert$R$panda$core$String, org$pandalanguage$regex$RegexLexer$cleanup, org$pandalanguage$regex$RegexLexer$start$panda$core$String, org$pandalanguage$regex$RegexLexer$next$R$org$pandalanguage$regex$RegexToken} };
 

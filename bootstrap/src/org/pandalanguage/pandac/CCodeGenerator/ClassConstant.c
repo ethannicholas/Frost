@@ -5,7 +5,6 @@
 #include "panda/core/Object.h"
 #include "panda/core/Panda.h"
 
-
 static panda$core$String $s1;
 org$pandalanguage$pandac$CCodeGenerator$ClassConstant$class_type org$pandalanguage$pandac$CCodeGenerator$ClassConstant$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Immutable$class, NULL, { panda$core$Object$convert$R$panda$core$String, org$pandalanguage$pandac$CCodeGenerator$ClassConstant$cleanup} };
 

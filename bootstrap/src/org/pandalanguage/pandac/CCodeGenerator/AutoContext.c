@@ -7,7 +7,6 @@
 #include "panda/core/Panda.h"
 #include "panda/collections/Stack.h"
 
-
 static panda$core$String $s1;
 org$pandalanguage$pandac$CCodeGenerator$AutoContext$class_type org$pandalanguage$pandac$CCodeGenerator$AutoContext$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, NULL, { panda$core$Object$convert$R$panda$core$String, org$pandalanguage$pandac$CCodeGenerator$AutoContext$cleanup} };
 

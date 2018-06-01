@@ -1,0 +1,12 @@
+interface Intf {
+    method defaultMethod() {
+        Console.printLine("nobody overrode me!")
+    }
+}
+
+class ValueInheritingDefaultMethod : Value, Intf {
+    @class
+    method main() {
+        ValueInheritingDefaultMethod().defaultMethod()
+    }
+}

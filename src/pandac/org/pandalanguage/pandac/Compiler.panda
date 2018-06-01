@@ -1051,7 +1051,9 @@ class Compiler {
                 for i in 0 .. cl.virtualMethods.get_count() {
                     def base := cl.virtualMethods[i]
                     resolve(base)
-                    if derived.matches(base) {
+                    def overridden := getOverriddenMethod(derived)
+                    if overridden != null & (overridden == base |
+                                overridden == getOverriddenMethod(base)) {
                         found := true
                         cl.virtualMethods[i] := derived
                         break
@@ -2351,7 +2353,10 @@ class Compiler {
         if getClass(m.owner()).annotations.isSpecialize() {
             return m.returnType()
         }
-        return m.value.returnType
+        if m.value.annotations.isFinal() {
+            return m.value.returnType
+        }
+        return inheritedType(m.value).returnType()
     }
 
     method call(position:Position, target:IRNode?, rawM:MethodRef, args:ListView<IRNode>):IRNode? {
@@ -2439,8 +2444,9 @@ class Compiler {
             return IRNode.CALL(position, m.returnType(), m, finalArgs.finish())
         }
         else {
-            var result := IRNode.CALL(position, m.value.returnType, m, finalArgs.finish())
-            if isRefCounted(actualReturnType(m)) {
+            def actualType := actualReturnType(m)
+            var result := IRNode.CALL(position, actualType, m, finalArgs.finish())
+            if isRefCounted(actualType) {
                 reusedValueCount += 1
                 result := IRNode.REUSED_VALUE_DEFINITION(result, reusedValueCount)
                 def reused := IRNode.REUSED_VALUE(result.position(), result.type(),
@@ -3013,8 +3019,8 @@ class Compiler {
                         -- value that can't be stored back into the original lvalue. Special case
                         -- this and convert it back to its original size.
                         if rhsIndex.type().isNumber() & right.type().isNumber() &
-                                rhsIndex.type() != value.type() {
-                            value := call(value, "convert", Array<IRNode>(), resolved.type()) -- FIXME literal
+                                rhsIndex.type().nonnullable() != value.type().nonnullable() {
+                            value := call(value, "convert", Array<IRNode>(), resolved.type().nonnullable()) -- FIXME literal
                             if value = null {
                                 return null
                             }
@@ -3123,8 +3129,8 @@ class Compiler {
         -- 32 bit promotion means that e.g. int8 += int8 will result in a 32 bit value that can't be
         -- stored back into the original lvalue. Special case this and convert it back to its
         -- original size.
-        if left.type().isNumber() & left.type() != right.type() {
-            right := call(right, "convert", Array<IRNode>(), left.type())
+        if left.type().isNumber() & left.type().nonnullable() != right.type().nonnullable() {
+            right := call(right, "convert", Array<IRNode>(), left.type().nonnullable())
             if right = null {
                 return null
             }
@@ -5144,7 +5150,7 @@ class Compiler {
     }
 
     method checkValue(cl:ClassDecl) {
-        if isValue(cl) {
+        if false & isValue(cl) {
             for f in cl.fields {
                 resolve(f)
                 if f.type.isClass() {

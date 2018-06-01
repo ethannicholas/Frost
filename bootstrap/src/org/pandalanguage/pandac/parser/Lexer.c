@@ -12,7 +12,6 @@
 #include "org/pandalanguage/pandac/parser/Token/Kind.h"
 #include "org/pandalanguage/pandac/Position.h"
 
-
 static panda$core$String $s1;
 org$pandalanguage$pandac$parser$Lexer$class_type org$pandalanguage$pandac$parser$Lexer$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, NULL, { panda$core$Object$convert$R$panda$core$String, org$pandalanguage$pandac$parser$Lexer$cleanup, org$pandalanguage$pandac$parser$Lexer$start$panda$core$String, org$pandalanguage$pandac$parser$Lexer$next$R$org$pandalanguage$pandac$parser$Token} };
 

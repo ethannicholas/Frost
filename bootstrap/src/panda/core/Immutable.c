@@ -3,7 +3,6 @@
 #include "panda/core/Class.h"
 #include "panda/core/String.h"
 
-
 static panda$core$String $s1;
 panda$core$Immutable$class_type panda$core$Immutable$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, NULL, { panda$core$Object$convert$R$panda$core$String, panda$core$Immutable$cleanup} };
 
@@ -25,7 +24,6 @@ void panda$core$Immutable$cleanup(panda$core$Immutable* self) {
     }
     $l5:;
 }
-
 
 
 

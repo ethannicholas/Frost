@@ -20,7 +20,6 @@
 #include "panda/core/Char8.h"
 #include "panda/core/UInt8.h"
 
-
 static panda$core$String $s1;
 org$pandalanguage$pandac$FieldDecl$class_type org$pandalanguage$pandac$FieldDecl$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &org$pandalanguage$pandac$Symbol$class, NULL, { org$pandalanguage$pandac$FieldDecl$convert$R$panda$core$String, org$pandalanguage$pandac$FieldDecl$cleanup, org$pandalanguage$pandac$Symbol$get_heritable$R$panda$core$Bit} };
 
@@ -199,6 +198,7 @@ panda$core$String* org$pandalanguage$pandac$FieldDecl$convert$R$panda$core$Strin
         case 0: goto $l43;
     }
     $l45:;
+    abort();
 }
 void org$pandalanguage$pandac$FieldDecl$cleanup(org$pandalanguage$pandac$FieldDecl* self) {
     int $tmp48;

@@ -5,7 +5,6 @@
 #include "org/pandalanguage/pandac/IRNode.h"
 #include "panda/core/Panda.h"
 
-
 static panda$core$String $s1;
 org$pandalanguage$pandac$Compiler$CompileTargetResult$class_type org$pandalanguage$pandac$Compiler$CompileTargetResult$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, NULL, { panda$core$Object$convert$R$panda$core$String, org$pandalanguage$pandac$Compiler$CompileTargetResult$cleanup} };
 
@@ -49,7 +48,6 @@ void org$pandalanguage$pandac$Compiler$CompileTargetResult$cleanup(org$pandalang
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->target));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->value));
 }
-
 
 
 

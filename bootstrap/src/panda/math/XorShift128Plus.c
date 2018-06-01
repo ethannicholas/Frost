@@ -6,7 +6,6 @@
 #include "panda/core/Int64.h"
 #include "panda/core/Bit.h"
 
-
 struct { panda$core$Class* cl; ITable* next; void* methods[6]; } panda$math$XorShift128Plus$_panda$math$Random = { (panda$core$Class*) &panda$math$Random$class, NULL, { panda$math$Random$bit$R$panda$core$Bit, panda$math$Random$int32$R$panda$core$Int32, panda$math$XorShift128Plus$int64$R$panda$core$Int64, panda$math$Random$int$panda$core$Int64$R$panda$core$Int64, panda$math$Random$real32$R$panda$core$Real32, panda$math$Random$real64$R$panda$core$Real64} };
 
 static panda$core$String $s1;
@@ -60,7 +59,6 @@ void panda$math$XorShift128Plus$cleanup(panda$math$XorShift128Plus* self) {
     }
     $l20:;
 }
-
 
 
 

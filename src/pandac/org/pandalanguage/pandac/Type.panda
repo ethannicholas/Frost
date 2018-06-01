@@ -505,6 +505,12 @@ class Type : Symbol, Key<Type> {
         return subtypes[0]
     }
 
+    @pre(typeKind = Kind.FUNCTION | typeKind = Kind.METHOD | typeKind = Kind.IMMUTABLE_FUNCTION |
+            typeKind = Kind.IMMUTABLE_METHOD)
+    function returnType():Type {
+        return subtypes[subtypes.get_count() - 1]
+    }
+
     -- returns the narrowest type that can hold an instance of either type
     function union(compiler:Compiler, other:Type):Type {
         if self = other {

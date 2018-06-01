@@ -12,7 +12,6 @@
 #include "org/pandalanguage/json/Token/Kind.h"
 #include "org/pandalanguage/json/Position.h"
 
-
 static panda$core$String $s1;
 org$pandalanguage$json$Lexer$class_type org$pandalanguage$json$Lexer$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, NULL, { panda$core$Object$convert$R$panda$core$String, org$pandalanguage$json$Lexer$cleanup, org$pandalanguage$json$Lexer$start$panda$core$String, org$pandalanguage$json$Lexer$next$R$org$pandalanguage$json$Token} };
 
