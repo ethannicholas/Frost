@@ -17,9 +17,9 @@ class HCodeGenerator : CodeGenerator {
 
     def body := IndentedOutputStream(bodyBuffer)
 
-    def typeImports := Set<String>()
+    def typeImports := HashSet<String>()
 
-    def bodyImports := Set<String>()
+    def bodyImports := HashSet<String>()
 
     def imports := typeImports
 

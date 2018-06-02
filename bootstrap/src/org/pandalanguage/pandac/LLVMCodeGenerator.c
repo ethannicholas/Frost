@@ -6,7 +6,7 @@
 #include "panda/io/OutputStream.h"
 #include "panda/io/MemoryOutputStream.h"
 #include "panda/core/Panda.h"
-#include "panda/collections/Set.h"
+#include "panda/collections/HashSet.h"
 #include "panda/collections/HashMap.h"
 #include "panda/collections/IdentityMap.h"
 #include "panda/collections/Stack.h"
@@ -2714,12 +2714,12 @@ void org$pandalanguage$pandac$LLVMCodeGenerator$init$panda$core$String$panda$io$
     panda$io$MemoryOutputStream* $tmp15;
     panda$io$MemoryOutputStream* $tmp17;
     panda$io$MemoryOutputStream* $tmp18;
-    panda$collections$Set* $tmp20;
-    panda$collections$Set* $tmp21;
-    panda$collections$Set* $tmp23;
-    panda$collections$Set* $tmp24;
-    panda$collections$Set* $tmp26;
-    panda$collections$Set* $tmp27;
+    panda$collections$HashSet* $tmp20;
+    panda$collections$HashSet* $tmp21;
+    panda$collections$HashSet* $tmp23;
+    panda$collections$HashSet* $tmp24;
+    panda$collections$HashSet* $tmp26;
+    panda$collections$HashSet* $tmp27;
     panda$collections$HashMap* $tmp29;
     panda$collections$HashMap* $tmp30;
     panda$collections$IdentityMap* $tmp32;
@@ -2819,22 +2819,22 @@ void org$pandalanguage$pandac$LLVMCodeGenerator$init$panda$core$String$panda$io$
     self->strings = $tmp17;
     panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp17));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp18));
-    panda$collections$Set* $tmp22 = (panda$collections$Set*) pandaObjectAlloc(24, (panda$core$Class*) &panda$collections$Set$class);
-    panda$collections$Set$init($tmp22);
+    panda$collections$HashSet* $tmp22 = (panda$collections$HashSet*) pandaObjectAlloc(24, (panda$core$Class*) &panda$collections$HashSet$class);
+    panda$collections$HashSet$init($tmp22);
     $tmp21 = $tmp22;
     $tmp20 = $tmp21;
     self->declared = $tmp20;
     panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp20));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp21));
-    panda$collections$Set* $tmp25 = (panda$collections$Set*) pandaObjectAlloc(24, (panda$core$Class*) &panda$collections$Set$class);
-    panda$collections$Set$init($tmp25);
+    panda$collections$HashSet* $tmp25 = (panda$collections$HashSet*) pandaObjectAlloc(24, (panda$core$Class*) &panda$collections$HashSet$class);
+    panda$collections$HashSet$init($tmp25);
     $tmp24 = $tmp25;
     $tmp23 = $tmp24;
     self->writtenTypes = $tmp23;
     panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp23));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp24));
-    panda$collections$Set* $tmp28 = (panda$collections$Set*) pandaObjectAlloc(24, (panda$core$Class*) &panda$collections$Set$class);
-    panda$collections$Set$init($tmp28);
+    panda$collections$HashSet* $tmp28 = (panda$collections$HashSet*) pandaObjectAlloc(24, (panda$core$Class*) &panda$collections$HashSet$class);
+    panda$collections$HashSet$init($tmp28);
     $tmp27 = $tmp28;
     $tmp26 = $tmp27;
     self->writtenWrappers = $tmp26;
@@ -4076,7 +4076,7 @@ void org$pandalanguage$pandac$LLVMCodeGenerator$writeType$org$pandalanguage$pand
     panda$core$Object* $tmp750;
     int $tmp595;
     {
-        panda$core$Bit $tmp596 = panda$collections$Set$contains$panda$collections$Set$T$R$panda$core$Bit(self->writtenTypes, ((panda$collections$Key*) ((org$pandalanguage$pandac$Symbol*) p_t)->name));
+        panda$core$Bit $tmp596 = panda$collections$HashSet$contains$panda$collections$HashSet$T$R$panda$core$Bit(self->writtenTypes, ((panda$collections$Key*) ((org$pandalanguage$pandac$Symbol*) p_t)->name));
         if ($tmp596.value) {
         {
             $tmp595 = 0;
@@ -4085,7 +4085,7 @@ void org$pandalanguage$pandac$LLVMCodeGenerator$writeType$org$pandalanguage$pand
             return;
         }
         }
-        panda$collections$Set$add$panda$collections$Set$T(self->writtenTypes, ((panda$collections$Key*) ((org$pandalanguage$pandac$Symbol*) p_t)->name));
+        panda$collections$HashSet$add$panda$collections$HashSet$T(self->writtenTypes, ((panda$collections$Key*) ((org$pandalanguage$pandac$Symbol*) p_t)->name));
         panda$core$Object* $tmp603 = (($fn602) self->compiler->$class->vtable[2])(self->compiler);
         $tmp601 = $tmp603;
         org$pandalanguage$pandac$ClassDecl* $tmp604 = org$pandalanguage$pandac$Compiler$getClass$org$pandalanguage$pandac$Type$R$org$pandalanguage$pandac$ClassDecl$Q(((org$pandalanguage$pandac$Compiler*) $tmp601), p_t);
@@ -4429,7 +4429,7 @@ void org$pandalanguage$pandac$LLVMCodeGenerator$writeWrapperType$org$pandalangua
     panda$core$String* $tmp860;
     int $tmp757;
     {
-        panda$core$Bit $tmp758 = panda$collections$Set$contains$panda$collections$Set$T$R$panda$core$Bit(self->writtenWrappers, ((panda$collections$Key*) ((org$pandalanguage$pandac$Symbol*) p_t)->name));
+        panda$core$Bit $tmp758 = panda$collections$HashSet$contains$panda$collections$HashSet$T$R$panda$core$Bit(self->writtenWrappers, ((panda$collections$Key*) ((org$pandalanguage$pandac$Symbol*) p_t)->name));
         if ($tmp758.value) {
         {
             $tmp757 = 0;
@@ -4438,7 +4438,7 @@ void org$pandalanguage$pandac$LLVMCodeGenerator$writeWrapperType$org$pandalangua
             return;
         }
         }
-        panda$collections$Set$add$panda$collections$Set$T(self->writtenWrappers, ((panda$collections$Key*) ((org$pandalanguage$pandac$Symbol*) p_t)->name));
+        panda$collections$HashSet$add$panda$collections$HashSet$T(self->writtenWrappers, ((panda$collections$Key*) ((org$pandalanguage$pandac$Symbol*) p_t)->name));
         panda$core$MutableString* $tmp763 = (panda$core$MutableString*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$MutableString$class);
         panda$core$String* $tmp767 = org$pandalanguage$pandac$LLVMCodeGenerator$type$org$pandalanguage$pandac$Type$R$panda$core$String(self, p_t);
         $tmp766 = $tmp767;
@@ -5606,9 +5606,9 @@ panda$core$String* org$pandalanguage$pandac$LLVMCodeGenerator$nullableType$org$p
     return $returnValue1324;
 }
 panda$core$String* org$pandalanguage$pandac$LLVMCodeGenerator$getITable$org$pandalanguage$pandac$ClassDecl$R$panda$core$String(org$pandalanguage$pandac$LLVMCodeGenerator* self, org$pandalanguage$pandac$ClassDecl* p_cl) {
-    panda$collections$Set* interfaces1340 = NULL;
-    panda$collections$Set* $tmp1341;
-    panda$collections$Set* $tmp1342;
+    panda$collections$HashSet* interfaces1340 = NULL;
+    panda$collections$HashSet* $tmp1341;
+    panda$collections$HashSet* $tmp1342;
     panda$core$Object* $tmp1343;
     org$pandalanguage$pandac$Type* $tmp1346;
     panda$core$String* previous1349 = NULL;
@@ -5713,7 +5713,7 @@ panda$core$String* org$pandalanguage$pandac$LLVMCodeGenerator$getITable$org$pand
         $tmp1343 = $tmp1345;
         org$pandalanguage$pandac$Type* $tmp1347 = org$pandalanguage$pandac$ClassDecl$type$R$org$pandalanguage$pandac$Type(p_cl);
         $tmp1346 = $tmp1347;
-        panda$collections$Set* $tmp1348 = org$pandalanguage$pandac$Compiler$allInterfaces$org$pandalanguage$pandac$Type$R$panda$collections$Set$LTorg$pandalanguage$pandac$Type$GT(((org$pandalanguage$pandac$Compiler*) $tmp1343), $tmp1346);
+        panda$collections$HashSet* $tmp1348 = org$pandalanguage$pandac$Compiler$allInterfaces$org$pandalanguage$pandac$Type$R$panda$collections$HashSet$LTorg$pandalanguage$pandac$Type$GT(((org$pandalanguage$pandac$Compiler*) $tmp1343), $tmp1346);
         $tmp1342 = $tmp1348;
         $tmp1341 = $tmp1342;
         interfaces1340 = $tmp1341;
@@ -6992,9 +6992,9 @@ org$pandalanguage$pandac$LLVMCodeGenerator$MethodShim* org$pandalanguage$pandac$
     abort();
 }
 panda$core$String* org$pandalanguage$pandac$LLVMCodeGenerator$getWrapperITable$org$pandalanguage$pandac$ClassDecl$R$panda$core$String(org$pandalanguage$pandac$LLVMCodeGenerator* self, org$pandalanguage$pandac$ClassDecl* p_cl) {
-    panda$collections$Set* interfaces2017 = NULL;
-    panda$collections$Set* $tmp2018;
-    panda$collections$Set* $tmp2019;
+    panda$collections$HashSet* interfaces2017 = NULL;
+    panda$collections$HashSet* $tmp2018;
+    panda$collections$HashSet* $tmp2019;
     panda$core$Object* $tmp2020;
     org$pandalanguage$pandac$Type* $tmp2023;
     panda$core$String* previous2026 = NULL;
@@ -7099,7 +7099,7 @@ panda$core$String* org$pandalanguage$pandac$LLVMCodeGenerator$getWrapperITable$o
         $tmp2020 = $tmp2022;
         org$pandalanguage$pandac$Type* $tmp2024 = org$pandalanguage$pandac$ClassDecl$type$R$org$pandalanguage$pandac$Type(p_cl);
         $tmp2023 = $tmp2024;
-        panda$collections$Set* $tmp2025 = org$pandalanguage$pandac$Compiler$allInterfaces$org$pandalanguage$pandac$Type$R$panda$collections$Set$LTorg$pandalanguage$pandac$Type$GT(((org$pandalanguage$pandac$Compiler*) $tmp2020), $tmp2023);
+        panda$collections$HashSet* $tmp2025 = org$pandalanguage$pandac$Compiler$allInterfaces$org$pandalanguage$pandac$Type$R$panda$collections$HashSet$LTorg$pandalanguage$pandac$Type$GT(((org$pandalanguage$pandac$Compiler*) $tmp2020), $tmp2023);
         $tmp2019 = $tmp2025;
         $tmp2018 = $tmp2019;
         interfaces2017 = $tmp2018;
@@ -36047,7 +36047,7 @@ void org$pandalanguage$pandac$LLVMCodeGenerator$writeDeclaration$org$pandalangua
         name16076 = $tmp16077;
         panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp16077));
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp16078));
-        panda$core$Bit $tmp16080 = panda$collections$Set$contains$panda$collections$Set$T$R$panda$core$Bit(self->declared, ((panda$collections$Key*) name16076));
+        panda$core$Bit $tmp16080 = panda$collections$HashSet$contains$panda$collections$HashSet$T$R$panda$core$Bit(self->declared, ((panda$collections$Key*) name16076));
         if ($tmp16080.value) {
         {
             $tmp16075 = 0;
@@ -36056,7 +36056,7 @@ void org$pandalanguage$pandac$LLVMCodeGenerator$writeDeclaration$org$pandalangua
             return;
         }
         }
-        panda$collections$Set$add$panda$collections$Set$T(self->declared, ((panda$collections$Key*) name16076));
+        panda$collections$HashSet$add$panda$collections$HashSet$T(self->declared, ((panda$collections$Key*) name16076));
         panda$core$String* $tmp16086 = org$pandalanguage$pandac$LLVMCodeGenerator$callingConvention$org$pandalanguage$pandac$MethodDecl$R$panda$core$String(self, p_m);
         $tmp16085 = $tmp16086;
         panda$core$String* $tmp16087 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s16084, $tmp16085);

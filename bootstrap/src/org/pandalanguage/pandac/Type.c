@@ -25,7 +25,7 @@
 #include "panda/core/UInt64.h"
 #include "panda/core/Real64.h"
 #include "org/pandalanguage/pandac/Compiler.h"
-#include "panda/collections/Set.h"
+#include "panda/collections/HashSet.h"
 #include "org/pandalanguage/pandac/ClassDecl.h"
 #include "panda/collections/HashMap.h"
 #include "panda/core/Range.LTpanda/core/Int64.GT.h"
@@ -2744,9 +2744,9 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$union$org$pandalang
     org$pandalanguage$pandac$Type* t21292 = NULL;
     org$pandalanguage$pandac$Type* $tmp1293;
     org$pandalanguage$pandac$Type* $tmp1294;
-    panda$collections$Set* ancestors1304 = NULL;
-    panda$collections$Set* $tmp1305;
-    panda$collections$Set* $tmp1306;
+    panda$collections$HashSet* ancestors1304 = NULL;
+    panda$collections$HashSet* $tmp1305;
+    panda$collections$HashSet* $tmp1306;
     org$pandalanguage$pandac$Type* t1308 = NULL;
     org$pandalanguage$pandac$Type* $tmp1309;
     org$pandalanguage$pandac$ClassDecl* cl1310 = NULL;
@@ -3069,8 +3069,8 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$union$org$pandalang
         {
             int $tmp1303;
             {
-                panda$collections$Set* $tmp1307 = (panda$collections$Set*) pandaObjectAlloc(24, (panda$core$Class*) &panda$collections$Set$class);
-                panda$collections$Set$init($tmp1307);
+                panda$collections$HashSet* $tmp1307 = (panda$collections$HashSet*) pandaObjectAlloc(24, (panda$core$Class*) &panda$collections$HashSet$class);
+                panda$collections$HashSet$init($tmp1307);
                 $tmp1306 = $tmp1307;
                 $tmp1305 = $tmp1306;
                 ancestors1304 = $tmp1305;
@@ -3089,7 +3089,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$union$org$pandalang
                 bool $tmp1316 = ((panda$core$Bit) { cl1310 != NULL }).value;
                 if (!$tmp1316) goto $l1315;
                 {
-                    panda$collections$Set$add$panda$collections$Set$T(ancestors1304, ((panda$collections$Key*) t1308));
+                    panda$collections$HashSet$add$panda$collections$HashSet$T(ancestors1304, ((panda$collections$Key*) t1308));
                     if (((panda$core$Bit) { cl1310->rawSuper != NULL }).value) {
                     {
                         {
@@ -3149,7 +3149,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Type$union$org$pandalang
                 bool $tmp1335 = ((panda$core$Bit) { cl1310 != NULL }).value;
                 if (!$tmp1335) goto $l1334;
                 {
-                    panda$core$Bit $tmp1336 = panda$collections$Set$contains$panda$collections$Set$T$R$panda$core$Bit(ancestors1304, ((panda$collections$Key*) t1308));
+                    panda$core$Bit $tmp1336 = panda$collections$HashSet$contains$panda$collections$HashSet$T$R$panda$core$Bit(ancestors1304, ((panda$collections$Key*) t1308));
                     if ($tmp1336.value) {
                     {
                         $tmp1337 = t1308;

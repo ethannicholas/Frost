@@ -180,6 +180,7 @@ class Compiler {
         addAlias("panda.collections.Collection")
         addAlias("panda.collections.CollectionView")
         addAlias("panda.collections.CollectionWriter")
+        addAlias("panda.collections.HashSet")
         addAlias("panda.collections.IdentityMap")
         addAlias("panda.collections.ImmutableArray")
         addAlias("panda.collections.ImmutableHashMap")
@@ -193,7 +194,6 @@ class Compiler {
         addAlias("panda.collections.Map")
         addAlias("panda.collections.MapView")
         addAlias("panda.collections.MapWriter")
-        addAlias("panda.collections.Set")
         addAlias("panda.collections.SpecializedArray")
         addAlias("panda.collections.Stack")
         addAlias("panda.core.Class")
@@ -433,7 +433,7 @@ class Compiler {
         return resolve(type, true)
     }
 
-    method addAllSupertypes(cl:ClassDecl, set:Set<String>) {
+    method addAllSupertypes(cl:ClassDecl, set:HashSet<String>) {
         if set.contains(cl.name) {
             return
         }
@@ -467,7 +467,7 @@ class Compiler {
                 p.bound := resolved
             }
         }
-        def supertypes := Set<String>()
+        def supertypes := HashSet<String>()
         for rawS in cl.declaredSupers {
             def s := resolve(rawS, false)
             if s != null {
@@ -630,8 +630,9 @@ class Compiler {
         }
         f.resolved := Resolution.IN_PROGRESS
         if f.owner.classKind != ClassDecl.Kind.INTERFACE {
-            -- we need to mark that we are in an instance context so 'self' works. Since the class is
-            -- guaranteed to have at least one init method, we just pretend we're in one of those.
+            -- we need to mark that we are in an instance context so 'self' works. Since the class
+            -- is guaranteed to have at least one init method, we just pretend we're in one of
+            -- those.
             def firstInit:MethodDecl? := null
             for m in f.owner.methods {
                 if m.methodKind = MethodDecl.Kind.INIT {
@@ -645,7 +646,10 @@ class Compiler {
             currentMethod.pop(firstInit)
         }
         else {
+            def old := currentMethod
+            currentMethod := Stack<MethodDecl>()
             determineRawType(f)
+            currentMethod := old
         }
         if f.type != Type.Void() & f.type.resolved {
             f.resolved := Resolution.RESOLVED
@@ -943,11 +947,11 @@ class Compiler {
         return result
     }
 
-    method allInterfaces(t:Type):Set<Type> {
+    method allInterfaces(t:Type):HashSet<Type> {
         def cl := getClass(t)
         assert cl != null
         resolve(cl)
-        def result := Set<Type>()
+        def result := HashSet<Type>()
         if cl.rawSuper != null {
             result.addAll(allInterfaces(remapType(t, cl.rawSuper)))
         }

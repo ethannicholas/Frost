@@ -565,7 +565,7 @@ class Type : Symbol, Key<Type> {
         def t1 := compiler.variableType(self)
         def t2 := compiler.variableType(other)
         if t1.isClass() & t2.isClass() {
-            def ancestors := Set<Type>()
+            def ancestors := HashSet<Type>()
             var t := self
             var cl := compiler.getClass(t1)
             while cl != null {

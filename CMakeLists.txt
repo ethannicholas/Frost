@@ -38,6 +38,7 @@ add_library(c_panda
     bootstrap/src/panda/collections/HashMap/EntryIterator.c
     bootstrap/src/panda/collections/HashMap/KeyIterator.c
     bootstrap/src/panda/collections/HashMap/ValueIterator.c
+    bootstrap/src/panda/collections/HashSet.c
     bootstrap/src/panda/collections/IdentityMap.c
     bootstrap/src/panda/collections/IdentityMap/Entry.c
     bootstrap/src/panda/collections/ImmutableArray.c
@@ -59,7 +60,6 @@ add_library(c_panda
     bootstrap/src/panda/collections/Map.c
     bootstrap/src/panda/collections/MapView.c
     bootstrap/src/panda/collections/MapWriter.c
-    bootstrap/src/panda/collections/Set.c
     bootstrap/src/panda/collections/Stack.c
     bootstrap/src/panda/collections/Stack/StackIterator.c
     bootstrap/src/panda/collections/SpecializedArray.LTorg/pandalanguage/pandac/parser/Token.GT.c
@@ -250,6 +250,7 @@ set(core_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/CollectionView.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/CollectionWriter.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/HashMap.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/HashSet.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/IdentityMap.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/ImmutableArray.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/ImmutableHashMap.panda
@@ -262,7 +263,6 @@ set(core_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/Map.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/MapView.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/MapWriter.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/Set.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/Stack.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Bit.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Char8.panda

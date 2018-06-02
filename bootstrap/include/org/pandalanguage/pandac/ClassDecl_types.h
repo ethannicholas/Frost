@@ -15,6 +15,7 @@ typedef struct panda$core$Weak panda$core$Weak;
 typedef struct org$pandalanguage$pandac$SymbolTable org$pandalanguage$pandac$SymbolTable;
 #include "panda/core/Bit_types.h"
 typedef struct panda$collections$HashMap panda$collections$HashMap;
+#include "org/pandalanguage/pandac/Compiler/Resolution_types.h"
 
 typedef struct org$pandalanguage$pandac$ClassDecl {
     panda$core$Class* $class;
@@ -40,7 +41,7 @@ typedef struct org$pandalanguage$pandac$ClassDecl {
     panda$core$Bit external;
     panda$collections$Array* virtualMethods;
     panda$collections$HashMap* classResolutionCache;
-    panda$core$Bit resolved;
+    org$pandalanguage$pandac$Compiler$Resolution resolved;
 } org$pandalanguage$pandac$ClassDecl;
 #include "panda/core/Class.h"
 typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[6]; } org$pandalanguage$pandac$ClassDecl$class_type;

@@ -5,7 +5,7 @@ typedef struct panda$core$Class panda$core$Class;
 typedef struct panda$core$Weak panda$core$Weak;
 typedef struct panda$io$MemoryOutputStream panda$io$MemoryOutputStream;
 typedef struct panda$io$IndentedOutputStream panda$io$IndentedOutputStream;
-typedef struct panda$collections$Set panda$collections$Set;
+typedef struct panda$collections$HashSet panda$collections$HashSet;
 typedef struct panda$io$File panda$io$File;
 typedef struct org$pandalanguage$pandac$LLVMCodeGenerator org$pandalanguage$pandac$LLVMCodeGenerator;
 #include "panda/core/Bit_types.h"
@@ -21,9 +21,9 @@ typedef struct org$pandalanguage$pandac$HCodeGenerator {
     panda$io$MemoryOutputStream* bodyImportStream;
     panda$io$MemoryOutputStream* bodyBuffer;
     panda$io$IndentedOutputStream* body;
-    panda$collections$Set* typeImports;
-    panda$collections$Set* bodyImports;
-    panda$collections$Set* imports;
+    panda$collections$HashSet* typeImports;
+    panda$collections$HashSet* bodyImports;
+    panda$collections$HashSet* imports;
     panda$io$MemoryOutputStream* importStream;
     panda$io$File* outDir;
     panda$io$IndentedOutputStream* out;

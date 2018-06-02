@@ -44,7 +44,7 @@ class CCodeGenerator : CodeGenerator {
 
     def strings := MemoryOutputStream()
 
-    def imports := Set<String>()
+    def imports := HashSet<String>()
 
     def hCodeGen:HCodeGenerator
 
@@ -174,11 +174,11 @@ class CCodeGenerator : CodeGenerator {
 
     def shims := IndentedOutputStream(shimsBuffer)
 
-    def declared := Set<String>()
+    def declared := HashSet<String>()
 
-    def writtenTypes := Set<String>()
+    def writtenTypes := HashSet<String>()
 
-    def writtenWrappers := Set<String>()
+    def writtenWrappers := HashSet<String>()
 
     def classConstants := HashMap<String, ClassConstant>()
 

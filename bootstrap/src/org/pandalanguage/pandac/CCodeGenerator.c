@@ -6,7 +6,7 @@
 #include "panda/io/File.h"
 #include "panda/io/MemoryOutputStream.h"
 #include "panda/core/Panda.h"
-#include "panda/collections/Set.h"
+#include "panda/collections/HashSet.h"
 #include "org/pandalanguage/pandac/ClassDecl.h"
 #include "panda/io/IndentedOutputStream.h"
 #include "panda/io/OutputStream.h"
@@ -1387,8 +1387,8 @@ static panda$core$String $s8861 = { (panda$core$Class*) &panda$core$String$class
 void org$pandalanguage$pandac$CCodeGenerator$init$panda$io$File(org$pandalanguage$pandac$CCodeGenerator* self, panda$io$File* p_outDir) {
     panda$io$MemoryOutputStream* $tmp2;
     panda$io$MemoryOutputStream* $tmp3;
-    panda$collections$Set* $tmp5;
-    panda$collections$Set* $tmp6;
+    panda$collections$HashSet* $tmp5;
+    panda$collections$HashSet* $tmp6;
     org$pandalanguage$pandac$ClassDecl* $tmp8;
     panda$io$MemoryOutputStream* $tmp9;
     panda$io$MemoryOutputStream* $tmp10;
@@ -1406,12 +1406,12 @@ void org$pandalanguage$pandac$CCodeGenerator$init$panda$io$File(org$pandalanguag
     panda$io$MemoryOutputStream* $tmp28;
     panda$io$IndentedOutputStream* $tmp30;
     panda$io$IndentedOutputStream* $tmp31;
-    panda$collections$Set* $tmp33;
-    panda$collections$Set* $tmp34;
-    panda$collections$Set* $tmp36;
-    panda$collections$Set* $tmp37;
-    panda$collections$Set* $tmp39;
-    panda$collections$Set* $tmp40;
+    panda$collections$HashSet* $tmp33;
+    panda$collections$HashSet* $tmp34;
+    panda$collections$HashSet* $tmp36;
+    panda$collections$HashSet* $tmp37;
+    panda$collections$HashSet* $tmp39;
+    panda$collections$HashSet* $tmp40;
     panda$collections$HashMap* $tmp42;
     panda$collections$HashMap* $tmp43;
     panda$collections$IdentityMap* $tmp45;
@@ -1468,8 +1468,8 @@ void org$pandalanguage$pandac$CCodeGenerator$init$panda$io$File(org$pandalanguag
     self->strings = $tmp2;
     panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp3));
-    panda$collections$Set* $tmp7 = (panda$collections$Set*) pandaObjectAlloc(24, (panda$core$Class*) &panda$collections$Set$class);
-    panda$collections$Set$init($tmp7);
+    panda$collections$HashSet* $tmp7 = (panda$collections$HashSet*) pandaObjectAlloc(24, (panda$core$Class*) &panda$collections$HashSet$class);
+    panda$collections$HashSet$init($tmp7);
     $tmp6 = $tmp7;
     $tmp5 = $tmp6;
     self->imports = $tmp5;
@@ -1534,22 +1534,22 @@ void org$pandalanguage$pandac$CCodeGenerator$init$panda$io$File(org$pandalanguag
     self->shims = $tmp30;
     panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp30));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp31));
-    panda$collections$Set* $tmp35 = (panda$collections$Set*) pandaObjectAlloc(24, (panda$core$Class*) &panda$collections$Set$class);
-    panda$collections$Set$init($tmp35);
+    panda$collections$HashSet* $tmp35 = (panda$collections$HashSet*) pandaObjectAlloc(24, (panda$core$Class*) &panda$collections$HashSet$class);
+    panda$collections$HashSet$init($tmp35);
     $tmp34 = $tmp35;
     $tmp33 = $tmp34;
     self->declared = $tmp33;
     panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp33));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp34));
-    panda$collections$Set* $tmp38 = (panda$collections$Set*) pandaObjectAlloc(24, (panda$core$Class*) &panda$collections$Set$class);
-    panda$collections$Set$init($tmp38);
+    panda$collections$HashSet* $tmp38 = (panda$collections$HashSet*) pandaObjectAlloc(24, (panda$core$Class*) &panda$collections$HashSet$class);
+    panda$collections$HashSet$init($tmp38);
     $tmp37 = $tmp38;
     $tmp36 = $tmp37;
     self->writtenTypes = $tmp36;
     panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp36));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp37));
-    panda$collections$Set* $tmp41 = (panda$collections$Set*) pandaObjectAlloc(24, (panda$core$Class*) &panda$collections$Set$class);
-    panda$collections$Set$init($tmp41);
+    panda$collections$HashSet* $tmp41 = (panda$collections$HashSet*) pandaObjectAlloc(24, (panda$core$Class*) &panda$collections$HashSet$class);
+    panda$collections$HashSet$init($tmp41);
     $tmp40 = $tmp41;
     $tmp39 = $tmp40;
     self->writtenWrappers = $tmp39;
@@ -1691,7 +1691,7 @@ void org$pandalanguage$pandac$CCodeGenerator$writeImport$org$pandalanguage$panda
         includePath94 = $tmp95;
         panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp95));
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp96));
-        panda$core$Bit $tmp99 = panda$collections$Set$contains$panda$collections$Set$T$R$panda$core$Bit(self->imports, ((panda$collections$Key*) includePath94));
+        panda$core$Bit $tmp99 = panda$collections$HashSet$contains$panda$collections$HashSet$T$R$panda$core$Bit(self->imports, ((panda$collections$Key*) includePath94));
         panda$core$Bit $tmp100 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp99);
         if ($tmp100.value) {
         {
@@ -1702,7 +1702,7 @@ void org$pandalanguage$pandac$CCodeGenerator$writeImport$org$pandalanguage$panda
             (($fn107) ((panda$io$OutputStream*) self->out)->$class->vtable[19])(((panda$io$OutputStream*) self->out), $tmp101);
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp101));
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp102));
-            panda$collections$Set$add$panda$collections$Set$T(self->imports, ((panda$collections$Key*) includePath94));
+            panda$collections$HashSet$add$panda$collections$HashSet$T(self->imports, ((panda$collections$Key*) includePath94));
         }
         }
     }
@@ -2587,7 +2587,7 @@ panda$core$Int64 org$pandalanguage$pandac$CCodeGenerator$sizeOfWrapper$org$panda
     abort();
 }
 void org$pandalanguage$pandac$CCodeGenerator$writeType$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$CCodeGenerator* self, org$pandalanguage$pandac$Type* p_t) {
-    panda$core$Bit $tmp516 = panda$collections$Set$contains$panda$collections$Set$T$R$panda$core$Bit(self->writtenTypes, ((panda$collections$Key*) ((org$pandalanguage$pandac$Symbol*) p_t)->name));
+    panda$core$Bit $tmp516 = panda$collections$HashSet$contains$panda$collections$HashSet$T$R$panda$core$Bit(self->writtenTypes, ((panda$collections$Key*) ((org$pandalanguage$pandac$Symbol*) p_t)->name));
     if ($tmp516.value) {
     {
         return;
@@ -2856,9 +2856,9 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$nullableType$org$pand
     return $returnValue641;
 }
 panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getITable$org$pandalanguage$pandac$ClassDecl$R$panda$core$String(org$pandalanguage$pandac$CCodeGenerator* self, org$pandalanguage$pandac$ClassDecl* p_cl) {
-    panda$collections$Set* interfaces657 = NULL;
-    panda$collections$Set* $tmp658;
-    panda$collections$Set* $tmp659;
+    panda$collections$HashSet* interfaces657 = NULL;
+    panda$collections$HashSet* $tmp658;
+    panda$collections$HashSet* $tmp659;
     panda$core$Object* $tmp660;
     org$pandalanguage$pandac$Type* $tmp663;
     panda$core$String* previous666 = NULL;
@@ -2930,7 +2930,7 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getITable$org$pandala
         $tmp660 = $tmp662;
         org$pandalanguage$pandac$Type* $tmp664 = org$pandalanguage$pandac$ClassDecl$type$R$org$pandalanguage$pandac$Type(p_cl);
         $tmp663 = $tmp664;
-        panda$collections$Set* $tmp665 = org$pandalanguage$pandac$Compiler$allInterfaces$org$pandalanguage$pandac$Type$R$panda$collections$Set$LTorg$pandalanguage$pandac$Type$GT(((org$pandalanguage$pandac$Compiler*) $tmp660), $tmp663);
+        panda$collections$HashSet* $tmp665 = org$pandalanguage$pandac$Compiler$allInterfaces$org$pandalanguage$pandac$Type$R$panda$collections$HashSet$LTorg$pandalanguage$pandac$Type$GT(((org$pandalanguage$pandac$Compiler*) $tmp660), $tmp663);
         $tmp659 = $tmp665;
         $tmp658 = $tmp659;
         interfaces657 = $tmp658;
@@ -3883,9 +3883,9 @@ org$pandalanguage$pandac$CCodeGenerator$MethodShim* org$pandalanguage$pandac$CCo
     abort();
 }
 panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getWrapperITable$org$pandalanguage$pandac$ClassDecl$R$panda$core$String(org$pandalanguage$pandac$CCodeGenerator* self, org$pandalanguage$pandac$ClassDecl* p_cl) {
-    panda$collections$Set* interfaces1166 = NULL;
-    panda$collections$Set* $tmp1167;
-    panda$collections$Set* $tmp1168;
+    panda$collections$HashSet* interfaces1166 = NULL;
+    panda$collections$HashSet* $tmp1167;
+    panda$collections$HashSet* $tmp1168;
     panda$core$Object* $tmp1169;
     org$pandalanguage$pandac$Type* $tmp1172;
     panda$core$String* previous1175 = NULL;
@@ -3961,7 +3961,7 @@ panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getWrapperITable$org$
         $tmp1169 = $tmp1171;
         org$pandalanguage$pandac$Type* $tmp1173 = org$pandalanguage$pandac$ClassDecl$type$R$org$pandalanguage$pandac$Type(p_cl);
         $tmp1172 = $tmp1173;
-        panda$collections$Set* $tmp1174 = org$pandalanguage$pandac$Compiler$allInterfaces$org$pandalanguage$pandac$Type$R$panda$collections$Set$LTorg$pandalanguage$pandac$Type$GT(((org$pandalanguage$pandac$Compiler*) $tmp1169), $tmp1172);
+        panda$collections$HashSet* $tmp1174 = org$pandalanguage$pandac$Compiler$allInterfaces$org$pandalanguage$pandac$Type$R$panda$collections$HashSet$LTorg$pandalanguage$pandac$Type$GT(((org$pandalanguage$pandac$Compiler*) $tmp1169), $tmp1172);
         $tmp1168 = $tmp1174;
         $tmp1167 = $tmp1168;
         interfaces1166 = $tmp1167;
@@ -20203,15 +20203,15 @@ void org$pandalanguage$pandac$CCodeGenerator$start$org$pandalanguage$pandac$Clas
             panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp8856));
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp8855));
         }
-        panda$collections$Set$clear(self->imports);
+        panda$collections$HashSet$clear(self->imports);
         panda$io$MemoryOutputStream$clear(self->strings);
         panda$io$MemoryOutputStream$clear(self->declarations);
         panda$io$MemoryOutputStream$clear(self->types);
         panda$io$MemoryOutputStream$clear(self->methodsBuffer);
         panda$io$MemoryOutputStream$clear(self->shimsBuffer);
-        panda$collections$Set$clear(self->declared);
-        panda$collections$Set$clear(self->writtenTypes);
-        panda$collections$Set$clear(self->writtenWrappers);
+        panda$collections$HashSet$clear(self->declared);
+        panda$collections$HashSet$clear(self->writtenTypes);
+        panda$collections$HashSet$clear(self->writtenWrappers);
         panda$collections$HashMap$clear(self->classConstants);
         panda$collections$IdentityMap$clear(self->variableNames);
         panda$core$Int64$init$builtin_int64(&$tmp8857, 0);
