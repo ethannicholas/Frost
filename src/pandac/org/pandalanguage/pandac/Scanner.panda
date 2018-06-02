@@ -83,6 +83,13 @@ class Scanner {
     method convertAnnotations(a:ImmutableArray<ASTNode>):Annotations {
         var flags := 0
         var expressions:Array<Annotations.Expression>? := null
+        method checkExpression(scanner:Scanner, position:Position, text:String, expr:ASTNode?):Bit {
+            if expr != null {
+                return true
+            }
+            scanner.error(position, "annotation '\{text}' requires an expression")
+            return false
+        }
         for c in a {
             match c {
                 when ASTNode.ANNOTATION(p, text, rawExpr):
@@ -105,26 +112,34 @@ class Scanner {
                             if expressions = null {
                                 expressions := Array<Annotations.Expression>()
                             }
-                            expressions.add(Annotations.Expression.PRE(expr))
-                            expr := null
+                            if checkExpression(self, p, text, expr) {
+                                expressions.add(Annotations.Expression.PRE(expr))
+                                expr := null
+                            }
                         when "@preOr":
                             if expressions = null {
                                 expressions := Array<Annotations.Expression>()
                             }
-                            expressions.add(Annotations.Expression.PRE_OR(expr))
-                            expr := null
+                            if checkExpression(self, p, text, expr) {
+                                expressions.add(Annotations.Expression.PRE_OR(expr))
+                                expr := null
+                            }
                         when "@post":
                             if expressions = null {
                                 expressions := Array<Annotations.Expression>()
                             }
-                            expressions.add(Annotations.Expression.POST(expr))
-                            expr := null
+                            if checkExpression(self, p, text, expr) {
+                                expressions.add(Annotations.Expression.POST(expr))
+                                expr := null
+                            }
                         when "@postAnd":
                             if expressions = null {
                                 expressions := Array<Annotations.Expression>()
                             }
-                            expressions.add(Annotations.Expression.POST_AND(expr))
-                            expr := null
+                            if checkExpression(self, p, text, expr) {
+                                expressions.add(Annotations.Expression.POST_AND(expr))
+                                expr := null
+                            }
                         otherwise:
                             error(p, "unrecognized annotation '\{text}'")
                     }

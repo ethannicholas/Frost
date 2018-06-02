@@ -107,7 +107,7 @@ class ClassDecl {
 
     def classResolutionCache := HashMap<String, Resolution>()
 
-    var resolved:Bit
+    var resolved:Compiler.Resolution
 
     init(source:File, position:Position, aliases:MapView<String, String>, doccomment:String?,
             annotations:Annotations, kind:Kind, name:String, declaredSupers:ListView<Type>,
@@ -122,7 +122,7 @@ class ClassDecl {
         self.declaredSupers := Array<Type>(declaredSupers)
         self.parameters := parameters
         self.symbolTable := SymbolTable(parent)
-        self.resolved := false
+        self.resolved := Compiler.Resolution.UNRESOLVED
         for p in parameters {
             symbolTable.add(p)
         }

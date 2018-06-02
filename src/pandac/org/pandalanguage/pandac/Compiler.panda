@@ -433,11 +433,31 @@ class Compiler {
         return resolve(type, true)
     }
 
-    method resolve(cl:ClassDecl) {
-        if cl.resolved {
+    method addAllSupertypes(cl:ClassDecl, set:Set<String>) {
+        if set.contains(cl.name) {
             return
         }
-        cl.resolved := true
+        set.add(cl.name)
+        resolve(cl)
+        if cl.rawSuper != null {
+            def superclass := getClass(cl.rawSuper)
+            if superclass != null {
+                addAllSupertypes(superclass, set)
+            }
+        }
+        for intfType in cl.rawInterfaces {
+            def intf := getClass(intfType)
+            if intf != null {
+                addAllSupertypes(intf, set)
+            }
+        }
+    }
+
+    method resolve(cl:ClassDecl) {
+        if cl.resolved != Resolution.UNRESOLVED {
+            return
+        }
+        cl.resolved := Resolution.IN_PROGRESS
         currentClass.push(cl)
         def old := symbolTable
         symbolTable := cl.symbolTable
@@ -447,12 +467,14 @@ class Compiler {
                 p.bound := resolved
             }
         }
+        def supertypes := Set<String>()
         for rawS in cl.declaredSupers {
             def s := resolve(rawS, false)
             if s != null {
                 def sClass := getClass(s)
                 resolve(sClass)
                 if sClass != null {
+                    addAllSupertypes(sClass, supertypes)
                     if sClass.classKind = ClassDecl.Kind.CLASS {
                         if cl.classKind = ClassDecl.Kind.INTERFACE {
                             error(s.position, "interface '\{cl.name}' cannot extend class " +
@@ -489,6 +511,10 @@ class Compiler {
                 }
             }
         }
+        if supertypes.contains(cl.name) {
+            error(cl.position, "circular inheritance; '\{cl.name}' inherits from itself")
+            cl.resolved := Resolution.RESOLVED_WITH_ERRORS
+        }
         if cl.rawSuper != null {
             checkGenericParameters(cl.position, getClass(cl.rawSuper), cl.rawSuper)
         }
@@ -503,6 +529,9 @@ class Compiler {
         }
         for ce in cl.choiceEntries {
             resolve(ce)
+        }
+        if cl.resolved = Resolution.IN_PROGRESS {
+            cl.resolved := Resolution.RESOLVED
         }
         symbolTable := old
         currentClass.pop()
@@ -600,7 +629,24 @@ class Compiler {
             return
         }
         f.resolved := Resolution.IN_PROGRESS
-        determineRawType(f)
+        if f.owner.classKind != ClassDecl.Kind.INTERFACE {
+            -- we need to mark that we are in an instance context so 'self' works. Since the class is
+            -- guaranteed to have at least one init method, we just pretend we're in one of those.
+            def firstInit:MethodDecl? := null
+            for m in f.owner.methods {
+                if m.methodKind = MethodDecl.Kind.INIT {
+                    firstInit := m
+                    break
+                }
+            }
+            assert firstInit != null
+            currentMethod.push(firstInit)
+            determineRawType(f)
+            currentMethod.pop(firstInit)
+        }
+        else {
+            determineRawType(f)
+        }
         if f.type != Type.Void() & f.type.resolved {
             f.resolved := Resolution.RESOLVED
         }
@@ -663,6 +709,7 @@ class Compiler {
         return null
     }
 
+    @post(expr = null | expr.type().resolved)
     method resolve(expr:IRNode?):IRNode? {
         if expr = null {
             return null
@@ -705,6 +752,9 @@ class Compiler {
 
     method isImmutable(cl:ClassDecl):Bit {
         resolve(cl)
+        if cl.resolved != Resolution.RESOLVED {
+            return false
+        }
         var current := cl.type()
         loop {
             if current = null {
@@ -1115,7 +1165,7 @@ class Compiler {
             when Symbol.Kind.FIELD:
                 def f := s->FieldDecl
                 resolve(f)
-                if f.type = Type.Void() {
+                if f.type = Type.Void() | !f.type.resolved {
                     return null
                 }
                 def children := Array<IRNode>()
@@ -3088,12 +3138,16 @@ class Compiler {
                         args.add(right)
                         right := call(IRNode.TYPE_REFERENCE(position, type), args)
                     }
+                    if !field.type.resolved {
+                        return null
+                    }
                 otherwise:
                     left := resolve(left)
             }
             if left = null {
                 return null
             }
+            assert left.type().resolved
             right := coerce(right, left.type())
             if right = null {
                 return null
@@ -3660,7 +3714,7 @@ class Compiler {
             return null
         }
         def cl := currentClass[0]
-        assert cl.resolved
+        assert cl.resolved = Resolution.RESOLVED
         return IRNode.SUPER(position, cl.rawSuper)
     }
 
@@ -5098,6 +5152,20 @@ class Compiler {
         disallow(self, m, Annotations.Flag.SPECIALIZE,       "@specialize")
         disallow(self, m, Annotations.Flag.WEAK,             "@weak")
         disallow(self, m, Annotations.Flag.UNSAFE_IMMUTABLE, "@unsafeImmutable")
+        if m.methodKind = MethodDecl.Kind.INIT {
+            if m.annotations.flags && Annotations.Flag.EXTERNAL != 0 {
+                error(m.position, "init methods may not be annotated with '@external'")
+            }
+            if m.annotations.flags && Annotations.Flag.CLASS != 0 {
+                error(m.position, "init methods may not be annotated with '@class'")
+            }
+            if m.annotations.flags && Annotations.Flag.ABSTRACT != 0 {
+                error(m.position, "init methods may not be annotated with '@abstract'")
+            }
+            if m.annotations.flags && Annotations.Flag.OVERRIDE != 0 {
+                error(m.position, "init methods may not be annotated with '@override'")
+            }
+        }
         if m.annotations.flags && Annotations.Flag.EXTERNAL != 0 & m.body != null {
             error(m.position, "methods annotated with '@external' may not have a body")
         }
@@ -5269,6 +5337,10 @@ class Compiler {
         compiling := cl
         currentClass.push(cl)
         checkAnnotations(cl)
+        resolve(cl)
+        if cl.resolved != Resolution.RESOLVED {
+            return
+        }
         if cl.annotations.isSpecialize() {
             codeGenerator.start(cl)
             codeGenerator.end(cl)
