@@ -6,7 +6,7 @@
 #include "org/pandalanguage/pandac/parser/Token/Kind.h"
 #include "panda/core/String/Index.h"
 #include "org/pandalanguage/pandac/Position.h"
-void org$pandalanguage$pandac$parser$Token$cleanup$shim(panda$core$Object* p0) {
+__attribute__((weak)) void org$pandalanguage$pandac$parser$Token$cleanup$shim(panda$core$Object* p0) {
     org$pandalanguage$pandac$parser$Token$cleanup(((org$pandalanguage$pandac$parser$Token$wrapper*) p0)->value);
 
 }

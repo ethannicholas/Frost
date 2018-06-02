@@ -1,31 +1,10 @@
 #pragma once
 #include "panda_c.h"
-#define PANDA_TYPESONLY
-#undef PANDA_TYPESONLY
-typedef struct panda$core$Class panda$core$Class;
-#include "panda/core/Int32.h"
-#include "panda/core/Int64.h"
-typedef struct panda$core$Object panda$core$Object;
-typedef struct panda$core$String panda$core$String;
-
-typedef struct panda$collections$ImmutableArray {
-    panda$core$Class* $class;
-    panda$core$Int32 refCount;
-    panda$core$Int64 count;
-    panda$core$Int64 dummy;
-    panda$core$Object** data;
-} panda$collections$ImmutableArray;
-#define PANDA_TYPESONLY
-#include "panda/core/Class.h"
-#undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[8]; } panda$collections$ImmutableArray$class_type;
-extern panda$collections$ImmutableArray$class_type panda$collections$ImmutableArray$class;
-
-#ifndef PANDA_TYPESONLY
+#include "ImmutableArray_types.h"
 typedef struct panda$collections$ImmutableArray panda$collections$ImmutableArray;
 typedef struct panda$collections$ListView panda$collections$ListView;
 typedef struct panda$core$Object panda$core$Object;
-#include "panda/core/Int64.h"
+#include "panda/core/Int64_types.h"
 #include "panda/core/Range.LTpanda/core/Int64.GT.h"
 #include "panda/core/Range.LTpanda/core/Int64.Q.GT.h"
 #include "panda/core/SteppedRange.LTpanda/core/Int64.Q.Cpanda/core/Int64.GT.h"
@@ -44,4 +23,3 @@ panda$collections$ImmutableArray* panda$collections$ImmutableArray$$IDX$panda$co
 panda$collections$Iterator* panda$collections$ImmutableArray$iterator$R$panda$collections$Iterator$LTpanda$collections$ImmutableArray$T$GT(panda$collections$ImmutableArray* self);
 panda$core$String* panda$collections$ImmutableArray$convert$R$panda$core$String(panda$collections$ImmutableArray* self);
 
-#endif

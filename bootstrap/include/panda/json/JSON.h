@@ -1,32 +1,13 @@
 #pragma once
 #include "panda_c.h"
-#define PANDA_TYPESONLY
-#undef PANDA_TYPESONLY
-typedef struct panda$core$Class panda$core$Class;
-#include "panda/core/Int32.h"
-#include "panda/core/Int64.h"
-typedef struct panda$core$String panda$core$String;
-
-typedef struct panda$json$JSON {
-    panda$core$Class* $class;
-    panda$core$Int32 refCount;
-    panda$core$Int64 $rawValue;
-    int8_t $data[8];
-} panda$json$JSON;
-#define PANDA_TYPESONLY
-#include "panda/core/Class.h"
-#undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[15]; } panda$json$JSON$class_type;
-extern panda$json$JSON$class_type panda$json$JSON$class;
-
-#ifndef PANDA_TYPESONLY
+#include "JSON_types.h"
 typedef struct panda$json$JSON$PathKey panda$json$JSON$PathKey;
 typedef struct panda$core$String panda$core$String;
-#include "panda/core/String/Index.h"
+#include "panda/core/String/Index_types.h"
 typedef struct panda$json$JSON panda$json$JSON;
-#include "panda/core/Int64.h"
-#include "panda/core/Real64.h"
-#include "panda/core/Bit.h"
+#include "panda/core/Int64_types.h"
+#include "panda/core/Real64_types.h"
+#include "panda/core/Bit_types.h"
 typedef struct panda$collections$ListView panda$collections$ListView;
 typedef struct panda$collections$MapView panda$collections$MapView;
 typedef struct panda$collections$ImmutableHashMap panda$collections$ImmutableHashMap;
@@ -56,4 +37,3 @@ void panda$json$JSON$init$panda$core$Int64$panda$collections$ImmutableHashMap$LT
 void panda$json$JSON$init$panda$core$Int64$panda$collections$ImmutableArray$LTpanda$json$JSON$GT(panda$json$JSON* self, panda$core$Int64 p_rv, panda$collections$ImmutableArray* p_f0);
 void panda$json$JSON$init$panda$core$Int64(panda$json$JSON* self, panda$core$Int64 p_rv);
 
-#endif

@@ -3,6 +3,28 @@ package panda.collections
 uses panda.unsafe.Pointer
 
 interface ListView<T> : CollectionView<T> {
+    @private
+    class ListIterator<T> : Iterator<T> {
+        var list:ListView<T>
+
+        var index := 0
+
+        init(list:ListView<T>) {
+            self.list := list
+        }
+
+        @override
+        function get_done():Bit {
+            return index = list.get_count()
+        }
+
+        @override
+        function next():T {
+            index += 1
+            return list[index - 1]
+        }
+    }
+
     @pre(index >= 0 & index < get_count())
     function [](index:Int):T
 
@@ -126,5 +148,10 @@ interface ListView<T> : CollectionView<T> {
             }
         }
         return result.finish()
+    }
+
+    @override
+    function iterator():Iterator<T> {
+        return ListIterator<T>(self)
     }
 }

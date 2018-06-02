@@ -37,21 +37,23 @@ void org$pandalanguage$pandac$Symbol$init$org$pandalanguage$pandac$Symbol$Kind$o
 }
 panda$core$Bit org$pandalanguage$pandac$Symbol$get_heritable$R$panda$core$Bit(org$pandalanguage$pandac$Symbol* self) {
     panda$core$Bit $returnValue9;
-    $returnValue9 = ((panda$core$Bit) { true });
+    panda$core$Bit $tmp10;
+    panda$core$Bit$init$builtin_bit(&$tmp10, true);
+    $returnValue9 = $tmp10;
     return $returnValue9;
 }
 void org$pandalanguage$pandac$Symbol$cleanup(org$pandalanguage$pandac$Symbol* self) {
-    int $tmp13;
+    int $tmp14;
     {
     }
-    $tmp13 = -1;
-    goto $l11;
-    $l11:;
+    $tmp14 = -1;
+    goto $l12;
+    $l12:;
     panda$core$Object$cleanup(((panda$core$Object*) self));
-    switch ($tmp13) {
-        case -1: goto $l14;
+    switch ($tmp14) {
+        case -1: goto $l15;
     }
-    $l14:;
+    $l15:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->name));
 }
 

@@ -1,35 +1,9 @@
 #pragma once
 #include "panda_c.h"
-#define PANDA_TYPESONLY
-#undef PANDA_TYPESONLY
+#include "Bit_types.h"
+#include "panda/core/Bit_types.h"
 typedef struct panda$core$String panda$core$String;
-typedef struct panda$core$Class panda$core$Class;
-#include "panda/core/Bit.h"
-
-typedef struct panda$core$Bit {
-    bool value;
-} panda$core$Bit;
-#define PANDA_TYPESONLY
-#include "panda/core/Class.h"
-#undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[11]; } panda$core$Bit$class_type;
-extern panda$core$Bit$class_type panda$core$Bit$class;
-typedef struct panda$core$Bit$wrapper {
-    panda$core$Class* cl;
-    int32_t refCount;
-    panda$core$Bit value;
-} panda$core$Bit$wrapper;
-typedef struct panda$core$Bit$nullable {
-    panda$core$Bit value;
-    bool nonnull;
-} panda$core$Bit$nullable;
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[2]; } panda$core$Bit$wrapperclass_type;
-extern panda$core$Bit$wrapperclass_type panda$core$Bit$wrapperclass;
-
-#ifndef PANDA_TYPESONLY
-#include "panda/core/Bit.h"
-typedef struct panda$core$String panda$core$String;
-#include "panda/core/Int64.h"
+#include "panda/core/Int64_types.h"
 
 void panda$core$Bit$init$builtin_bit(panda$core$Bit* self, bool p_value);
 panda$core$String* panda$core$Bit$convert$R$panda$core$String(panda$core$Bit self);
@@ -43,4 +17,3 @@ panda$core$Bit panda$core$Bit$$XOR$panda$core$Bit$R$panda$core$Bit(panda$core$Bi
 panda$core$String* panda$core$Bit$format$panda$core$String$R$panda$core$String(panda$core$Bit self, panda$core$String* p_fmt);
 void panda$core$Bit$cleanup(panda$core$Bit self);
 
-#endif

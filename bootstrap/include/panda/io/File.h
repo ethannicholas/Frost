@@ -1,31 +1,14 @@
 #pragma once
 #include "panda_c.h"
-#define PANDA_TYPESONLY
-#undef PANDA_TYPESONLY
-typedef struct panda$core$Class panda$core$Class;
-#include "panda/core/Int32.h"
-typedef struct panda$core$String panda$core$String;
-
-typedef struct panda$io$File {
-    panda$core$Class* $class;
-    panda$core$Int32 refCount;
-    panda$core$String* path;
-} panda$io$File;
-#define PANDA_TYPESONLY
-#include "panda/core/Class.h"
-#undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[22]; } panda$io$File$class_type;
-extern panda$io$File$class_type panda$io$File$class;
-
-#ifndef PANDA_TYPESONLY
+#include "File_types.h"
 typedef struct panda$io$File panda$io$File;
 typedef struct panda$core$String panda$core$String;
 typedef struct panda$collections$Iterator panda$collections$Iterator;
-#include "panda/core/Bit.h"
+#include "panda/core/Bit_types.h"
 typedef struct panda$collections$ListView panda$collections$ListView;
 typedef struct panda$io$InputStream panda$io$InputStream;
 typedef struct panda$io$OutputStream panda$io$OutputStream;
-#include "panda/core/Int64.h"
+#include "panda/core/Int64_types.h"
 
 void panda$io$File$init$panda$core$String(panda$io$File* self, panda$core$String* p_path);
 panda$io$File* panda$io$File$resolve$panda$core$String$R$panda$io$File(panda$io$File* self, panda$core$String* p_path);
@@ -51,4 +34,3 @@ panda$core$Int64 panda$io$File$hash$R$panda$core$Int64(panda$io$File* self);
 panda$core$String* panda$io$File$convert$R$panda$core$String(panda$io$File* self);
 void panda$io$File$cleanup(panda$io$File* self);
 
-#endif

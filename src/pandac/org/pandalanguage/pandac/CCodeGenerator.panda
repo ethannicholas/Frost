@@ -385,7 +385,7 @@ class CCodeGenerator : CodeGenerator {
         def effectiveReturnType := effective.returnType()
         def resultName := getName(raw) + "$shim"
         def resultType := MutableString(type(effectiveReturnType))
-        out.print("\{resultType} \{resultName}(")
+        out.print("__attribute__((weak)) \{resultType} \{resultName}(")
         resultType.append("(")
         var separator := ""
         for i in 0 .. effective.subtypes.get_count() - 1 {
@@ -1057,14 +1057,6 @@ class CCodeGenerator : CodeGenerator {
                 def cl := compiler.getClass(target)
                 assert cl != null
                 def t := type(target)
-                if target.isNumber() | target = Type.Bit() {
-                    match initCall {
-                        when IRNode.CALL(_, _, _, args):
-                            assert args.get_count() = 1
-                            def value := getTypedReference(args[0], out)
-                            return "((\{t}) { " + value + " })"
-                    }
-                }
                 if compiler.isValue(cl) {
                     varCount += 1
                     def tmp := "$tmp\{varCount}"

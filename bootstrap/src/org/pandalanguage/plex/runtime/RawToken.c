@@ -5,7 +5,7 @@
 #include "panda/core/Object.h"
 #include "panda/core/Int64.h"
 #include "panda/core/String/Index.h"
-void org$pandalanguage$plex$runtime$RawToken$cleanup$shim(panda$core$Object* p0) {
+__attribute__((weak)) void org$pandalanguage$plex$runtime$RawToken$cleanup$shim(panda$core$Object* p0) {
     org$pandalanguage$plex$runtime$RawToken$cleanup(((org$pandalanguage$plex$runtime$RawToken$wrapper*) p0)->value);
 
 }

@@ -29,6 +29,8 @@ class HCodeGenerator : CodeGenerator {
 
     var out:IndentedOutputStream
 
+    var typesOut:IndentedOutputStream
+
     def llvmCodeGen := LLVMCodeGenerator("", MemoryOutputStream())
 
     var inClass := false
@@ -36,6 +38,7 @@ class HCodeGenerator : CodeGenerator {
     init(outDir:File) {
         self.outDir := outDir
         self.out := IndentedOutputStream(MemoryOutputStream())
+        self.typesOut := IndentedOutputStream(MemoryOutputStream())
     }
 
     function escapeName(s:String):String {
@@ -84,7 +87,7 @@ class HCodeGenerator : CodeGenerator {
                     }
                     return name + "*"
                 }
-                def includePath := getRelativePath(cl, ".h")
+                def includePath := getRelativePath(cl, "_types.h")
                 if !imports.contains(includePath) {
                     importStream.printLine("#include \"\{includePath}\"")
                     imports.add(includePath)
@@ -161,9 +164,13 @@ class HCodeGenerator : CodeGenerator {
         def path := getPath(cl, ".h")
         path.parent().createDirectories()
         self.out := IndentedOutputStream(path.openOutputStream())
+        def typesPath := getPath(cl, "_types.h")
+        self.typesOut := IndentedOutputStream(typesPath.openOutputStream())
         out.printLine("#pragma once")
         out.printLine("#include \"panda_c.h\"")
-        out.printLine("#define PANDA_TYPESONLY")
+        out.printLine("#include \"\{typesPath.name()}\"")
+        typesOut.printLine("#pragma once")
+        typesOut.printLine("#include \"panda_c.h\"")
         importStream := typeImportStream
         imports := typeImports
         types.printLine("typedef struct \{escapeName(cl.name)} {")
@@ -183,9 +190,7 @@ class HCodeGenerator : CodeGenerator {
         }
         types.level -= 1
         types.printLine("} \{escapeName(cl.name)};")
-        types.printLine("#define PANDA_TYPESONLY")
         types.printLine("#include \"panda/core/Class.h\"")
-        types.printLine("#undef PANDA_TYPESONLY")
         types.printLine("typedef struct { panda$core$Class* cl; int32_t refCount; " +
                 "\{type(Type.StringType())} name; \{type(Type.Class())} super; ITable* itable; " +
                 "void* vtable[\{compiler.getVTable(cl).get_count()}]; } " +
@@ -286,13 +291,10 @@ class HCodeGenerator : CodeGenerator {
 
     @override
     method end(cl:ClassDecl) {
-        out.printLine("#undef PANDA_TYPESONLY")
-        out.printLine(typeImportStream.finish())
-        out.printLine(typesBuffer.finish())
-        out.printLine("#ifndef PANDA_TYPESONLY")
+        typesOut.printLine(typeImportStream.finish())
+        typesOut.printLine(typesBuffer.finish())
         out.printLine(bodyImportStream.finish())
         out.printLine(bodyBuffer.finish())
-        out.printLine("#endif")
     }
 
     @override

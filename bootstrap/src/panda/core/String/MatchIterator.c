@@ -7,7 +7,7 @@
 #include "panda/core/Bit.h"
 #include "panda/core/Panda.h"
 #include "panda/core/Int64.h"
-panda$core$Object* panda$core$String$MatchIterator$next$R$panda$core$String$Index$shim(panda$core$String$MatchIterator* p0) {
+__attribute__((weak)) panda$core$Object* panda$core$String$MatchIterator$next$R$panda$core$String$Index$shim(panda$core$String$MatchIterator* p0) {
     panda$core$String$Index result = panda$core$String$MatchIterator$next$R$panda$core$String$Index(p0);
 
     panda$core$String$Index$wrapper* $tmp2;

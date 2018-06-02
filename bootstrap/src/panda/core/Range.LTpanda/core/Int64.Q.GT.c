@@ -7,12 +7,12 @@
 #include "panda/core/Bit.h"
 #include "panda/core/MutableString.h"
 #include "panda/core/Panda.h"
-panda$core$String* panda$core$Range$LTpanda$core$Int64$Q$GT$convert$R$panda$core$String$shim(panda$core$Object* p0) {
+__attribute__((weak)) panda$core$String* panda$core$Range$LTpanda$core$Int64$Q$GT$convert$R$panda$core$String$shim(panda$core$Object* p0) {
     panda$core$String* result = panda$core$Range$LTpanda$core$Int64$Q$GT$convert$R$panda$core$String(((panda$core$Range$LTpanda$core$Int64$Q$GT$wrapper*) p0)->value);
 
     return result;
 }
-void panda$core$Range$LTpanda$core$Int64$Q$GT$cleanup$shim(panda$core$Object* p0) {
+__attribute__((weak)) void panda$core$Range$LTpanda$core$Int64$Q$GT$cleanup$shim(panda$core$Object* p0) {
     panda$core$Range$LTpanda$core$Int64$Q$GT$cleanup(((panda$core$Range$LTpanda$core$Int64$Q$GT$wrapper*) p0)->value);
 
 }

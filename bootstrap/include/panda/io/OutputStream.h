@@ -1,33 +1,17 @@
 #pragma once
 #include "panda_c.h"
-#define PANDA_TYPESONLY
-#undef PANDA_TYPESONLY
-typedef struct panda$core$Class panda$core$Class;
-#include "panda/core/Int32.h"
-typedef struct panda$core$String panda$core$String;
-
-typedef struct panda$io$OutputStream {
-    panda$core$Class* $class;
-    panda$core$Int32 refCount;
-} panda$io$OutputStream;
-#define PANDA_TYPESONLY
-#include "panda/core/Class.h"
-#undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[20]; } panda$io$OutputStream$class_type;
-extern panda$io$OutputStream$class_type panda$io$OutputStream$class;
-
-#ifndef PANDA_TYPESONLY
+#include "OutputStream_types.h"
 typedef struct panda$io$OutputStream panda$io$OutputStream;
-#include "panda/core/UInt8.h"
-#include "panda/core/Int8.h"
-#include "panda/core/Int64.h"
-#include "panda/core/Char8.h"
+#include "panda/core/UInt8_types.h"
+#include "panda/core/Int8_types.h"
+#include "panda/core/Int64_types.h"
+#include "panda/core/Char8_types.h"
 typedef struct panda$collections$Array panda$collections$Array;
-#include "panda/core/UInt16.h"
-#include "panda/core/Int16.h"
-#include "panda/core/UInt32.h"
-#include "panda/core/Int32.h"
-#include "panda/core/UInt64.h"
+#include "panda/core/UInt16_types.h"
+#include "panda/core/Int16_types.h"
+#include "panda/core/UInt32_types.h"
+#include "panda/core/Int32_types.h"
+#include "panda/core/UInt64_types.h"
 typedef struct panda$core$Object panda$core$Object;
 typedef struct panda$core$String panda$core$String;
 
@@ -52,4 +36,3 @@ void panda$io$OutputStream$printLine$panda$core$String(panda$io$OutputStream* se
 void panda$io$OutputStream$init(panda$io$OutputStream* self);
 void panda$io$OutputStream$cleanup(panda$io$OutputStream* self);
 
-#endif

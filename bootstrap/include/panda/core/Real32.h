@@ -1,44 +1,18 @@
 #pragma once
 #include "panda_c.h"
-#define PANDA_TYPESONLY
-#undef PANDA_TYPESONLY
+#include "Real32_types.h"
+#include "panda/core/Real32_types.h"
+#include "panda/core/Bit_types.h"
+#include "panda/core/Int64_types.h"
 typedef struct panda$core$String panda$core$String;
-typedef struct panda$core$Class panda$core$Class;
-#include "panda/core/Real32.h"
-
-typedef struct panda$core$Real32 {
-    float value;
-} panda$core$Real32;
-#define PANDA_TYPESONLY
-#include "panda/core/Class.h"
-#undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[28]; } panda$core$Real32$class_type;
-extern panda$core$Real32$class_type panda$core$Real32$class;
-typedef struct panda$core$Real32$wrapper {
-    panda$core$Class* cl;
-    int32_t refCount;
-    panda$core$Real32 value;
-} panda$core$Real32$wrapper;
-typedef struct panda$core$Real32$nullable {
-    panda$core$Real32 value;
-    bool nonnull;
-} panda$core$Real32$nullable;
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[2]; } panda$core$Real32$wrapperclass_type;
-extern panda$core$Real32$wrapperclass_type panda$core$Real32$wrapperclass;
-
-#ifndef PANDA_TYPESONLY
-#include "panda/core/Real32.h"
-#include "panda/core/Bit.h"
-#include "panda/core/Int64.h"
-typedef struct panda$core$String panda$core$String;
-#include "panda/core/Int8.h"
-#include "panda/core/Int16.h"
-#include "panda/core/Int32.h"
-#include "panda/core/UInt8.h"
-#include "panda/core/UInt16.h"
-#include "panda/core/UInt32.h"
-#include "panda/core/UInt64.h"
-#include "panda/core/Real64.h"
+#include "panda/core/Int8_types.h"
+#include "panda/core/Int16_types.h"
+#include "panda/core/Int32_types.h"
+#include "panda/core/UInt8_types.h"
+#include "panda/core/UInt16_types.h"
+#include "panda/core/UInt32_types.h"
+#include "panda/core/UInt64_types.h"
+#include "panda/core/Real64_types.h"
 
 void panda$core$Real32$init$builtin_float32(panda$core$Real32* self, float p_value);
 panda$core$Real32 panda$core$Real32$$ADD$panda$core$Real32$R$panda$core$Real32(panda$core$Real32 self, panda$core$Real32 p_other);
@@ -70,4 +44,3 @@ panda$core$Real64 panda$core$Real32$convert$R$panda$core$Real64(panda$core$Real3
 panda$core$String* panda$core$Real32$convert$R$panda$core$String(panda$core$Real32 self);
 void panda$core$Real32$cleanup(panda$core$Real32 self);
 
-#endif

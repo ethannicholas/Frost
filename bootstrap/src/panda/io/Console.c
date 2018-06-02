@@ -47,12 +47,15 @@ panda$core$String* panda$io$Console$readLine$R$panda$core$String$Q() {
     panda$core$MutableString* $tmp14;
     panda$core$Char8$nullable c18;
     panda$core$Char8$nullable $tmp19;
-    panda$core$String* $returnValue21;
-    panda$core$String* $tmp22;
-    panda$core$Char8$nullable $tmp25;
-    panda$core$Char8 $tmp30;
-    panda$core$String* $tmp32;
-    panda$core$String* $tmp33;
+    panda$core$Int64 $tmp20;
+    panda$core$String* $returnValue22;
+    panda$core$String* $tmp23;
+    panda$core$Char8$nullable $tmp26;
+    panda$core$Char8 $tmp31;
+    panda$core$UInt8 $tmp32;
+    panda$core$Bit $tmp34;
+    panda$core$String* $tmp35;
+    panda$core$String* $tmp36;
     int $tmp11;
     {
         panda$core$MutableString* $tmp15 = (panda$core$MutableString*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$MutableString$class);
@@ -69,34 +72,37 @@ panda$core$String* panda$io$Console$readLine$R$panda$core$String$Q() {
             c18 = $tmp19;
             if (((panda$core$Bit) { !c18.nonnull }).value) {
             {
-                panda$core$Bit $tmp20 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(result12->length, ((panda$core$Int64) { 0 }));
-                if ($tmp20.value) {
+                panda$core$Int64$init$builtin_int64(&$tmp20, 0);
+                panda$core$Bit $tmp21 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(result12->length, $tmp20);
+                if ($tmp21.value) {
                 {
-                    $tmp22 = NULL;
-                    $returnValue21 = $tmp22;
-                    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp22));
+                    $tmp23 = NULL;
+                    $returnValue22 = $tmp23;
+                    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp23));
                     $tmp11 = 0;
                     goto $l9;
-                    $l23:;
-                    return $returnValue21;
+                    $l24:;
+                    return $returnValue22;
                 }
                 }
                 goto $l17;
             }
             }
-            $tmp25 = c18;
-            panda$core$Bit $tmp29;
-            if (((panda$core$Bit) { $tmp25.nonnull }).value) goto $l26; else goto $l27;
-            $l26:;
-            panda$core$Char8$init$panda$core$UInt8(&$tmp30, ((panda$core$UInt8) { 10 }));
-            panda$core$Bit $tmp31 = panda$core$Char8$$EQ$panda$core$Char8$R$panda$core$Bit(((panda$core$Char8) $tmp25.value), $tmp30);
-            $tmp29 = $tmp31;
-            goto $l28;
+            $tmp26 = c18;
+            panda$core$Bit $tmp30;
+            if (((panda$core$Bit) { $tmp26.nonnull }).value) goto $l27; else goto $l28;
             $l27:;
-            $tmp29 = ((panda$core$Bit) { false });
-            goto $l28;
+            panda$core$UInt8$init$builtin_uint8(&$tmp32, 10);
+            panda$core$Char8$init$panda$core$UInt8(&$tmp31, $tmp32);
+            panda$core$Bit $tmp33 = panda$core$Char8$$EQ$panda$core$Char8$R$panda$core$Bit(((panda$core$Char8) $tmp26.value), $tmp31);
+            $tmp30 = $tmp33;
+            goto $l29;
             $l28:;
-            if ($tmp29.value) {
+            panda$core$Bit$init$builtin_bit(&$tmp34, false);
+            $tmp30 = $tmp34;
+            goto $l29;
+            $l29:;
+            if ($tmp30.value) {
             {
                 goto $l17;
             }
@@ -105,39 +111,39 @@ panda$core$String* panda$io$Console$readLine$R$panda$core$String$Q() {
         }
         }
         $l17:;
-        panda$core$String* $tmp34 = panda$core$MutableString$finish$R$panda$core$String(result12);
-        $tmp33 = $tmp34;
-        $tmp32 = $tmp33;
-        $returnValue21 = $tmp32;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp32));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp33));
+        panda$core$String* $tmp37 = panda$core$MutableString$finish$R$panda$core$String(result12);
+        $tmp36 = $tmp37;
+        $tmp35 = $tmp36;
+        $returnValue22 = $tmp35;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp35));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp36));
         $tmp11 = 1;
         goto $l9;
-        $l35:;
-        return $returnValue21;
+        $l38:;
+        return $returnValue22;
     }
     $l9:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result12));
     result12 = NULL;
     switch ($tmp11) {
-        case 0: goto $l23;
-        case 1: goto $l35;
+        case 0: goto $l24;
+        case 1: goto $l38;
     }
-    $l37:;
+    $l40:;
     abort();
 }
 void panda$io$Console$cleanup(panda$io$Console* self) {
-    int $tmp40;
+    int $tmp43;
     {
     }
-    $tmp40 = -1;
-    goto $l38;
-    $l38:;
-    panda$core$Object$cleanup(((panda$core$Object*) self));
-    switch ($tmp40) {
-        case -1: goto $l41;
-    }
+    $tmp43 = -1;
+    goto $l41;
     $l41:;
+    panda$core$Object$cleanup(((panda$core$Object*) self));
+    switch ($tmp43) {
+        case -1: goto $l44;
+    }
+    $l44:;
 }
 
 

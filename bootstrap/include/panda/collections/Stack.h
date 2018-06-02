@@ -1,27 +1,9 @@
 #pragma once
 #include "panda_c.h"
-#define PANDA_TYPESONLY
-#undef PANDA_TYPESONLY
-typedef struct panda$core$Class panda$core$Class;
-#include "panda/core/Int32.h"
-typedef struct panda$collections$Array panda$collections$Array;
-typedef struct panda$core$String panda$core$String;
-
-typedef struct panda$collections$Stack {
-    panda$core$Class* $class;
-    panda$core$Int32 refCount;
-    panda$collections$Array* contents;
-} panda$collections$Stack;
-#define PANDA_TYPESONLY
-#include "panda/core/Class.h"
-#undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[8]; } panda$collections$Stack$class_type;
-extern panda$collections$Stack$class_type panda$collections$Stack$class;
-
-#ifndef PANDA_TYPESONLY
+#include "Stack_types.h"
 typedef struct panda$collections$Stack panda$collections$Stack;
 typedef struct panda$core$Object panda$core$Object;
-#include "panda/core/Int64.h"
+#include "panda/core/Int64_types.h"
 typedef struct panda$collections$Iterator panda$collections$Iterator;
 typedef struct panda$core$String panda$core$String;
 
@@ -35,4 +17,3 @@ panda$core$String* panda$collections$Stack$convert$R$panda$core$String(panda$col
 void panda$collections$Stack$init(panda$collections$Stack* self);
 void panda$collections$Stack$cleanup(panda$collections$Stack* self);
 
-#endif

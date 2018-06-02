@@ -8,42 +8,42 @@
 #include "panda/collections/Key.h"
 #include "panda/core/Int64.h"
 #include "panda/core/Equatable.h"
-panda$core$Bit panda$core$String$Index$$GT$panda$core$String$Index$R$panda$core$Bit$shim(panda$core$Object* p0, panda$core$Comparable* p1) {
+__attribute__((weak)) panda$core$Bit panda$core$String$Index$$GT$panda$core$String$Index$R$panda$core$Bit$shim(panda$core$Object* p0, panda$core$Comparable* p1) {
     panda$core$Bit result = panda$core$String$Index$$GT$panda$core$String$Index$R$panda$core$Bit(((panda$core$String$Index$wrapper*) p0)->value, ((panda$core$String$Index$wrapper*) p1)->value);
 
     return result;
 }
-panda$core$Bit panda$core$String$Index$$LT$panda$core$String$Index$R$panda$core$Bit$shim(panda$core$Object* p0, panda$core$Comparable* p1) {
+__attribute__((weak)) panda$core$Bit panda$core$String$Index$$LT$panda$core$String$Index$R$panda$core$Bit$shim(panda$core$Object* p0, panda$core$Comparable* p1) {
     panda$core$Bit result = panda$core$String$Index$$LT$panda$core$String$Index$R$panda$core$Bit(((panda$core$String$Index$wrapper*) p0)->value, ((panda$core$String$Index$wrapper*) p1)->value);
 
     return result;
 }
-panda$core$Bit panda$core$String$Index$$GE$panda$core$String$Index$R$panda$core$Bit$shim(panda$core$Object* p0, panda$core$Comparable* p1) {
+__attribute__((weak)) panda$core$Bit panda$core$String$Index$$GE$panda$core$String$Index$R$panda$core$Bit$shim(panda$core$Object* p0, panda$core$Comparable* p1) {
     panda$core$Bit result = panda$core$String$Index$$GE$panda$core$String$Index$R$panda$core$Bit(((panda$core$String$Index$wrapper*) p0)->value, ((panda$core$String$Index$wrapper*) p1)->value);
 
     return result;
 }
-panda$core$Bit panda$core$String$Index$$LE$panda$core$String$Index$R$panda$core$Bit$shim(panda$core$Object* p0, panda$core$Comparable* p1) {
+__attribute__((weak)) panda$core$Bit panda$core$String$Index$$LE$panda$core$String$Index$R$panda$core$Bit$shim(panda$core$Object* p0, panda$core$Comparable* p1) {
     panda$core$Bit result = panda$core$String$Index$$LE$panda$core$String$Index$R$panda$core$Bit(((panda$core$String$Index$wrapper*) p0)->value, ((panda$core$String$Index$wrapper*) p1)->value);
 
     return result;
 }
-panda$core$Int64 panda$core$String$Index$hash$R$panda$core$Int64$shim(panda$core$Object* p0) {
+__attribute__((weak)) panda$core$Int64 panda$core$String$Index$hash$R$panda$core$Int64$shim(panda$core$Object* p0) {
     panda$core$Int64 result = panda$core$String$Index$hash$R$panda$core$Int64(((panda$core$String$Index$wrapper*) p0)->value);
 
     return result;
 }
-panda$core$Bit panda$core$String$Index$$EQ$panda$core$String$Index$R$panda$core$Bit$shim(panda$core$Object* p0, panda$core$Equatable* p1) {
+__attribute__((weak)) panda$core$Bit panda$core$String$Index$$EQ$panda$core$String$Index$R$panda$core$Bit$shim(panda$core$Object* p0, panda$core$Equatable* p1) {
     panda$core$Bit result = panda$core$String$Index$$EQ$panda$core$String$Index$R$panda$core$Bit(((panda$core$String$Index$wrapper*) p0)->value, ((panda$core$String$Index$wrapper*) p1)->value);
 
     return result;
 }
-panda$core$Bit panda$core$String$Index$$NEQ$panda$core$String$Index$R$panda$core$Bit$shim(panda$core$Object* p0, panda$core$Equatable* p1) {
+__attribute__((weak)) panda$core$Bit panda$core$String$Index$$NEQ$panda$core$String$Index$R$panda$core$Bit$shim(panda$core$Object* p0, panda$core$Equatable* p1) {
     panda$core$Bit result = panda$core$String$Index$$NEQ$panda$core$String$Index$R$panda$core$Bit(((panda$core$String$Index$wrapper*) p0)->value, ((panda$core$String$Index$wrapper*) p1)->value);
 
     return result;
 }
-void panda$core$String$Index$cleanup$shim(panda$core$Object* p0) {
+__attribute__((weak)) void panda$core$String$Index$cleanup$shim(panda$core$Object* p0) {
     panda$core$String$Index$cleanup(((panda$core$String$Index$wrapper*) p0)->value);
 
 }

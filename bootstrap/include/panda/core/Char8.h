@@ -1,43 +1,17 @@
 #pragma once
 #include "panda_c.h"
-#define PANDA_TYPESONLY
-#undef PANDA_TYPESONLY
+#include "Char8_types.h"
+#include "panda/core/Char8_types.h"
+#include "panda/core/UInt8_types.h"
+#include "panda/core/Bit_types.h"
 typedef struct panda$core$String panda$core$String;
-typedef struct panda$core$Class panda$core$Class;
-#include "panda/core/Char8.h"
-
-typedef struct panda$core$Char8 {
-    uint8_t value;
-} panda$core$Char8;
-#define PANDA_TYPESONLY
-#include "panda/core/Class.h"
-#undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[20]; } panda$core$Char8$class_type;
-extern panda$core$Char8$class_type panda$core$Char8$class;
-typedef struct panda$core$Char8$wrapper {
-    panda$core$Class* cl;
-    int32_t refCount;
-    panda$core$Char8 value;
-} panda$core$Char8$wrapper;
-typedef struct panda$core$Char8$nullable {
-    panda$core$Char8 value;
-    bool nonnull;
-} panda$core$Char8$nullable;
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[2]; } panda$core$Char8$wrapperclass_type;
-extern panda$core$Char8$wrapperclass_type panda$core$Char8$wrapperclass;
-
-#ifndef PANDA_TYPESONLY
-#include "panda/core/Char8.h"
-#include "panda/core/UInt8.h"
-#include "panda/core/Bit.h"
-typedef struct panda$core$String panda$core$String;
-#include "panda/core/Int64.h"
-#include "panda/core/Int8.h"
-#include "panda/core/Int16.h"
-#include "panda/core/Int32.h"
-#include "panda/core/UInt16.h"
-#include "panda/core/UInt32.h"
-#include "panda/core/UInt64.h"
+#include "panda/core/Int64_types.h"
+#include "panda/core/Int8_types.h"
+#include "panda/core/Int16_types.h"
+#include "panda/core/Int32_types.h"
+#include "panda/core/UInt16_types.h"
+#include "panda/core/UInt32_types.h"
+#include "panda/core/UInt64_types.h"
 
 void panda$core$Char8$init$panda$core$UInt8(panda$core$Char8* self, panda$core$UInt8 p_value);
 panda$core$Bit panda$core$Char8$$EQ$panda$core$Char8$R$panda$core$Bit(panda$core$Char8 self, panda$core$Char8 p_other);
@@ -61,4 +35,3 @@ panda$core$UInt64 panda$core$Char8$convert$R$panda$core$UInt64(panda$core$Char8 
 panda$core$String* panda$core$Char8$convert$R$panda$core$String(panda$core$Char8 self);
 void panda$core$Char8$cleanup(panda$core$Char8 self);
 
-#endif

@@ -115,6 +115,7 @@ class Main {
         args.add("-L.")
         args.add("-lpanda")
         args.add("-lm")
+        args.add("-lpthread")
         def icuLibs := Config.ICU_LIBRARIES.split(";")
         for lib in icuLibs {
             def libFile := File(lib)
@@ -129,6 +130,7 @@ class Main {
         args.add("-o")
         args.add(dest.path)
         def p := System.exec(gcc, args)
+        Console.printLine("\{gcc} \{args.join(" ")}")
         Console.errorStream().print(p.output.readFully())
         Console.errorStream().print(p.error.readFully())
         if p.waitFor() != 0 {
@@ -159,6 +161,10 @@ class Main {
         while !args.get_done() {
             def a := args.next()
             match a {
+                when "--fuzz":
+                    def path := File("/tmp/fuzz.panda")
+                    Console.inputStream().sendTo(path.openOutputStream())
+                    sources.add(path)
                 when "-o":
                     if outFile != null {
                         err.printLine("'-o' may only be specified once")
@@ -306,12 +312,6 @@ class Main {
 
     @class
     method main(args:ListView<String>) {
-        if args.get_count() > 1 & args[1] = "--repeat" {
-            for i in 0 .. 1000 {
-                Console.printLine(i)
-                Main().run(args[1..])
-            }
-        }
         Main().run(args)
     }
 }

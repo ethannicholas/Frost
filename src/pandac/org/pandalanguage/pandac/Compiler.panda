@@ -887,7 +887,7 @@ class Compiler {
             otherwise:
                 assert false, "type '\{type}' is not a class"
         }
-        if result.annotations.isSpecialize() {
+        if result != null & result.annotations.isSpecialize() {
             result := specialize(result, type)
         }
         return result
@@ -936,12 +936,11 @@ class Compiler {
                 }
             }
         }
-        if checkInterfaces | cl.classKind = ClassDecl.Kind.INTERFACE {
-            for raw in cl.rawInterfaces {
-                def result := findMethod(remapType(owner, raw), name, methodType, checkInterfaces)
-                if result != null {
-                    return result
-                }
+        for raw in cl.rawInterfaces {
+            def result := findMethod(remapType(owner, raw), name, methodType, checkInterfaces)
+            if result != null & (checkInterfaces | cl.classKind = ClassDecl.Kind.INTERFACE |
+                    result.body != null) {
+                return result
             }
         }
         if cl.rawSuper != null {
@@ -1450,7 +1449,9 @@ class Compiler {
             return null
         }
         def cl := getClass(type)
-        assert cl != null
+        if cl = null {
+            return null
+        }
         resolve(cl)
         if cl.rawSuper != null {
             var cost := coercionCost(remapType(type, remapType(type, cl.rawSuper)), target)
@@ -1731,7 +1732,11 @@ class Compiler {
                 return coercionCost(variableType(expr), target)
             when IRNode.UNRESOLVED_INDEX(_, _, value, args):
                 assert base = 0
-                return coercionCost(call(value, "[]", args), target)
+                def c := call(value, "[]", args)
+                if c = null {
+                    return null
+                }
+                return coercionCost(c, target)
             when IRNode.CHOICE_ENTRY_REFERENCE(_, ce):
                 return coercionCost(ce.owner.type(), target)
             when IRNode.FIELD_REFERENCE(_, _, _, field):
@@ -2389,13 +2394,14 @@ class Compiler {
             }
         }
         else if m.value.isInstance() & (target = null | target = IRNode.TYPE_REFERENCE) {
+            if !currentMethod[0].isInstance() | target != null {
+                error(position, "cannot call instance \{m.value.declaration()} from a @class context")
+                return null
+            }
             var selfNode := IRNode.SELF(position, currentClass[0].type())
             selfNode := coerce(selfNode, m.value.owner.type())
             assert selfNode != null
             finalArgs.add(selfNode)
-            if !currentMethod[0].isInstance() | target != null {
-                error(position, "cannot call instance \{m.value.declaration()} from a @class context")
-            }
         }
         else if !m.value.isInstance() & target != null & target != IRNode.TYPE_REFERENCE {
             error(position, "cannot call class \{m.value.declaration()} on an instance")
@@ -2581,7 +2587,21 @@ class Compiler {
             when IRNode.METHOD_REFERENCE(_, _, target, mref):
                 return call(m.position(), target, mref, args)
             when IRNode.UNRESOLVED_METHOD_REFERENCE(position, target, mrefs):
-                def matchResult := matchMethods(position, mrefs, args, expectedType, false)
+                var isClass:Bit
+                if target != null {
+                    isClass := target = IRNode.TYPE_REFERENCE
+                }
+                else {
+                    isClass := !currentMethod[0].isInstance()
+                }
+                -- FIXME use lambda to filter
+                def filtered := Array<MethodRef>()
+                for m in mrefs {
+                    if m.value.annotations.isClass() = isClass {
+                        filtered.add(m)
+                    }
+                }
+                def matchResult := matchMethods(position, filtered, args, expectedType, false)
                 if matchResult = null {
                     -- report error
                     matchMethods(position, mrefs, args, expectedType, true)
@@ -4198,6 +4218,9 @@ class Compiler {
                 return CompileTargetResult(IRNode.VARIABLE_REFERENCE(v.position, v), value)
             when ASTNode.TYPED_IDENTIFIER(position, name, rawType):
                 def type := resolve(scanner.convertType(rawType))
+                if type = null {
+                    return null
+                }
                 if value != null {
                     value := coerce(value, type)
                     if value = null {
@@ -5080,6 +5103,15 @@ class Compiler {
         }
         if m.annotations.flags && Annotations.Flag.ABSTRACT != 0 & m.body != null {
             error(m.position, "methods annotated with '@abstract' may not have a body")
+        }
+        if m.annotations.flags && Annotations.Flag.OVERRIDE != 0 &
+                m.annotations.flags && Annotations.Flag.EXTERNAL = 0 &
+                m.body = null {
+            error(m.position, "methods annotated with '@override' must have a body")
+        }
+        if m.annotations.flags && Annotations.Flag.OVERRIDE != 0 &
+                m.annotations.flags && Annotations.Flag.CLASS != 0 {
+            error(m.position, "class methods may not be annotated with '@override'")
         }
         if m.annotations.flags && Annotations.Flag.ABSTRACT = 0 &
                 m.annotations.flags && Annotations.Flag.EXTERNAL = 0 &

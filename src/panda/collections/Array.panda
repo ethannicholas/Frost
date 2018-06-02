@@ -6,27 +6,6 @@ uses panda.unsafe.Pointer
 class Array<T> : List<T> {
     constant DEFAULT_CAPACITY := 16
 
-    class ArrayIterator<T> : Iterator<T> {
-        var array:Array<T>
-
-        var index := 0
-
-        init(array:Array<T>) {
-            self.array := array
-        }
-
-        @override
-        function get_done():Bit {
-            return index = array.count
-        }
-
-        @override
-        function next():T {
-            index += 1
-            return array[index - 1]
-        }
-    }
-
     @private
     var count := 0
 
@@ -132,11 +111,6 @@ class Array<T> : List<T> {
         }
         count -= 1
         data[count] := null->T?
-    }
-
-    @override
-    function iterator():Iterator<T> {
-        return ArrayIterator<T>(self)
     }
 
     @override

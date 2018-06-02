@@ -1,66 +1,15 @@
 #pragma once
 #include "panda_c.h"
-#define PANDA_TYPESONLY
-#undef PANDA_TYPESONLY
-typedef struct panda$core$Class panda$core$Class;
-#include "panda/core/Int32.h"
-typedef struct org$pandalanguage$pandac$Compiler$Settings org$pandalanguage$pandac$Compiler$Settings;
-typedef struct org$pandalanguage$pandac$parser$Parser org$pandalanguage$pandac$parser$Parser;
-typedef struct org$pandalanguage$pandac$Scanner org$pandalanguage$pandac$Scanner;
-typedef struct org$pandalanguage$pandac$SymbolTable org$pandalanguage$pandac$SymbolTable;
-typedef struct org$pandalanguage$pandac$ClassDecl org$pandalanguage$pandac$ClassDecl;
-typedef struct panda$collections$Array panda$collections$Array;
-typedef struct panda$collections$HashMap panda$collections$HashMap;
-typedef struct panda$collections$Stack panda$collections$Stack;
-typedef struct org$pandalanguage$pandac$CodeGenerator org$pandalanguage$pandac$CodeGenerator;
-typedef struct panda$threads$MessageQueue panda$threads$MessageQueue;
-#include "panda/core/Int64.h"
-#include "panda/core/Bit.h"
-typedef struct panda$core$String panda$core$String;
-
-typedef struct org$pandalanguage$pandac$Compiler {
-    panda$core$Class* $class;
-    panda$core$Int32 refCount;
-    org$pandalanguage$pandac$Compiler$Settings* settings;
-    org$pandalanguage$pandac$parser$Parser* parser;
-    org$pandalanguage$pandac$Scanner* scanner;
-    org$pandalanguage$pandac$SymbolTable* root;
-    org$pandalanguage$pandac$ClassDecl* compiling;
-    panda$collections$Array* compilationQueue;
-    panda$collections$HashMap* scans;
-    panda$collections$HashMap* classes;
-    panda$collections$Stack* currentClass;
-    panda$collections$Stack* currentMethod;
-    org$pandalanguage$pandac$SymbolTable* symbolTable;
-    org$pandalanguage$pandac$CodeGenerator* codeGenerator;
-    panda$threads$MessageQueue* errorQueue;
-    panda$collections$Stack* loops;
-    panda$collections$Stack* finallies;
-    panda$core$Int64 reusedValueCount;
-    panda$core$Int64 errorCount;
-    panda$core$Int64 tmpCount;
-    panda$core$Bit reportErrors;
-    panda$collections$HashMap* existenceCache;
-    panda$core$Bit inFieldCleanup;
-    panda$collections$Array* atPreSetupStatements;
-    panda$core$Bit inAtPre;
-} org$pandalanguage$pandac$Compiler;
-#define PANDA_TYPESONLY
-#include "panda/core/Class.h"
-#undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[159]; } org$pandalanguage$pandac$Compiler$class_type;
-extern org$pandalanguage$pandac$Compiler$class_type org$pandalanguage$pandac$Compiler$class;
-
-#ifndef PANDA_TYPESONLY
+#include "Compiler_types.h"
 typedef struct org$pandalanguage$pandac$Compiler org$pandalanguage$pandac$Compiler;
 typedef struct panda$threads$MessageQueue panda$threads$MessageQueue;
 typedef struct org$pandalanguage$pandac$CodeGenerator org$pandalanguage$pandac$CodeGenerator;
 typedef struct org$pandalanguage$pandac$Compiler$Settings org$pandalanguage$pandac$Compiler$Settings;
 typedef struct panda$core$String panda$core$String;
-#include "panda/core/Bit.h"
+#include "panda/core/Bit_types.h"
 typedef struct org$pandalanguage$pandac$Type org$pandalanguage$pandac$Type;
 typedef struct org$pandalanguage$pandac$ClassDecl org$pandalanguage$pandac$ClassDecl;
-#include "org/pandalanguage/pandac/Position.h"
+#include "org/pandalanguage/pandac/Position_types.h"
 typedef struct org$pandalanguage$pandac$MethodDecl org$pandalanguage$pandac$MethodDecl;
 typedef struct org$pandalanguage$pandac$FieldDecl org$pandalanguage$pandac$FieldDecl;
 typedef struct org$pandalanguage$pandac$ChoiceEntry org$pandalanguage$pandac$ChoiceEntry;
@@ -72,15 +21,15 @@ typedef struct panda$collections$Set panda$collections$Set;
 typedef struct org$pandalanguage$pandac$SymbolTable org$pandalanguage$pandac$SymbolTable;
 typedef struct panda$collections$Array panda$collections$Array;
 typedef struct org$pandalanguage$pandac$Symbol org$pandalanguage$pandac$Symbol;
-#include "panda/core/Int64.h"
-#include "panda/core/UInt64.h"
+#include "panda/core/Int64_types.h"
+#include "panda/core/UInt64_types.h"
 typedef struct org$pandalanguage$pandac$MethodRef org$pandalanguage$pandac$MethodRef;
 typedef struct org$pandalanguage$pandac$ASTNode org$pandalanguage$pandac$ASTNode;
 typedef struct org$pandalanguage$pandac$Pair org$pandalanguage$pandac$Pair;
-#include "org/pandalanguage/pandac/parser/Token/Kind.h"
-#include "org/pandalanguage/pandac/MethodDecl/Kind.h"
+#include "org/pandalanguage/pandac/parser/Token/Kind_types.h"
+#include "org/pandalanguage/pandac/MethodDecl/Kind_types.h"
 typedef struct org$pandalanguage$pandac$Compiler$CompileTargetResult org$pandalanguage$pandac$Compiler$CompileTargetResult;
-#include "org/pandalanguage/pandac/Variable/Kind.h"
+#include "org/pandalanguage/pandac/Variable/Kind_types.h"
 typedef struct org$pandalanguage$pandac$Variable org$pandalanguage$pandac$Variable;
 typedef struct org$pandalanguage$pandac$Annotations org$pandalanguage$pandac$Annotations;
 
@@ -250,4 +199,3 @@ void org$pandalanguage$pandac$Compiler$error$panda$io$File$org$pandalanguage$pan
 void org$pandalanguage$pandac$Compiler$finish(org$pandalanguage$pandac$Compiler* self);
 void org$pandalanguage$pandac$Compiler$cleanup(org$pandalanguage$pandac$Compiler* self);
 
-#endif

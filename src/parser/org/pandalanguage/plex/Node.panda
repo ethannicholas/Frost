@@ -21,8 +21,4 @@ class Node {
 
     @abstract
     method makeStartStates(context:NFA, accept:ListView<Int>):Array<Int>
-
-    @abstract
-    @override
-    function convert():String
 }

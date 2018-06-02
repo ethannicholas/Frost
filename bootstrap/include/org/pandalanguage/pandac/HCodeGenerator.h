@@ -1,53 +1,15 @@
 #pragma once
 #include "panda_c.h"
-#define PANDA_TYPESONLY
-#undef PANDA_TYPESONLY
-typedef struct panda$core$Class panda$core$Class;
-#include "panda/core/Int32.h"
-typedef struct panda$core$Weak panda$core$Weak;
-typedef struct panda$io$MemoryOutputStream panda$io$MemoryOutputStream;
-typedef struct panda$io$IndentedOutputStream panda$io$IndentedOutputStream;
-typedef struct panda$collections$Set panda$collections$Set;
-typedef struct panda$io$File panda$io$File;
-typedef struct org$pandalanguage$pandac$LLVMCodeGenerator org$pandalanguage$pandac$LLVMCodeGenerator;
-#include "panda/core/Bit.h"
-typedef struct panda$core$String panda$core$String;
-
-typedef struct org$pandalanguage$pandac$HCodeGenerator {
-    panda$core$Class* $class;
-    panda$core$Int32 refCount;
-    panda$core$Weak* compiler;
-    panda$io$MemoryOutputStream* typeImportStream;
-    panda$io$MemoryOutputStream* typesBuffer;
-    panda$io$IndentedOutputStream* types;
-    panda$io$MemoryOutputStream* bodyImportStream;
-    panda$io$MemoryOutputStream* bodyBuffer;
-    panda$io$IndentedOutputStream* body;
-    panda$collections$Set* typeImports;
-    panda$collections$Set* bodyImports;
-    panda$collections$Set* imports;
-    panda$io$MemoryOutputStream* importStream;
-    panda$io$File* outDir;
-    panda$io$IndentedOutputStream* out;
-    org$pandalanguage$pandac$LLVMCodeGenerator* llvmCodeGen;
-    panda$core$Bit inClass;
-} org$pandalanguage$pandac$HCodeGenerator;
-#define PANDA_TYPESONLY
-#include "panda/core/Class.h"
-#undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[17]; } org$pandalanguage$pandac$HCodeGenerator$class_type;
-extern org$pandalanguage$pandac$HCodeGenerator$class_type org$pandalanguage$pandac$HCodeGenerator$class;
-
-#ifndef PANDA_TYPESONLY
+#include "HCodeGenerator_types.h"
 typedef struct org$pandalanguage$pandac$HCodeGenerator org$pandalanguage$pandac$HCodeGenerator;
 typedef struct panda$io$File panda$io$File;
 typedef struct panda$core$String panda$core$String;
 typedef struct org$pandalanguage$pandac$MethodDecl org$pandalanguage$pandac$MethodDecl;
-#include "panda/core/Int64.h"
+#include "panda/core/Int64_types.h"
 typedef struct org$pandalanguage$pandac$Type org$pandalanguage$pandac$Type;
 typedef struct org$pandalanguage$pandac$ClassDecl org$pandalanguage$pandac$ClassDecl;
 typedef struct org$pandalanguage$pandac$Compiler org$pandalanguage$pandac$Compiler;
-#include "panda/core/Bit.h"
+#include "panda/core/Bit_types.h"
 typedef struct panda$collections$ImmutableArray panda$collections$ImmutableArray;
 
 void org$pandalanguage$pandac$HCodeGenerator$init$panda$io$File(org$pandalanguage$pandac$HCodeGenerator* self, panda$io$File* p_outDir);
@@ -68,4 +30,3 @@ void org$pandalanguage$pandac$HCodeGenerator$end$org$pandalanguage$pandac$ClassD
 void org$pandalanguage$pandac$HCodeGenerator$finish(org$pandalanguage$pandac$HCodeGenerator* self);
 void org$pandalanguage$pandac$HCodeGenerator$cleanup(org$pandalanguage$pandac$HCodeGenerator* self);
 
-#endif

@@ -604,10 +604,7 @@ class LLVMCodeGenerator : CodeGenerator {
         def effectiveReturnType := effective.returnType()
         def resultName := getName(raw) + "$shim"
         def resultType := MutableString(type(effectiveReturnType))
-        out.print("define ")
-        if raw.owner.isSpecialization() {
-            out.print("linkonce_odr ")
-        }
+        out.print("define linkonce_odr ")
         out.print("\{resultType} \{resultName}(")
         resultType.append("(")
         var separator := ""

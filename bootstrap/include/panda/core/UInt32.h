@@ -1,43 +1,21 @@
 #pragma once
 #include "panda_c.h"
-#define PANDA_TYPESONLY
-#undef PANDA_TYPESONLY
-typedef struct panda$core$String panda$core$String;
-typedef struct panda$core$Class panda$core$Class;
-#include "panda/core/UInt32.h"
-
-typedef struct panda$core$UInt32 {
-    uint32_t value;
-} panda$core$UInt32;
-#define PANDA_TYPESONLY
-#include "panda/core/Class.h"
-#undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[163]; } panda$core$UInt32$class_type;
-extern panda$core$UInt32$class_type panda$core$UInt32$class;
-typedef struct panda$core$UInt32$wrapper {
-    panda$core$Class* cl;
-    int32_t refCount;
-    panda$core$UInt32 value;
-} panda$core$UInt32$wrapper;
-typedef struct panda$core$UInt32$nullable {
-    panda$core$UInt32 value;
-    bool nonnull;
-} panda$core$UInt32$nullable;
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[2]; } panda$core$UInt32$wrapperclass_type;
-extern panda$core$UInt32$wrapperclass_type panda$core$UInt32$wrapperclass;
-
-#ifndef PANDA_TYPESONLY
-#include "panda/core/UInt32.h"
-#include "panda/core/UInt8.h"
-#include "panda/core/UInt16.h"
-#include "panda/core/Int64.h"
-#include "panda/core/Int8.h"
-#include "panda/core/Int16.h"
-#include "panda/core/Int32.h"
-#include "panda/core/UInt64.h"
-#include "panda/core/Real32.h"
-#include "panda/core/Real64.h"
-#include "panda/core/Bit.h"
+#include "UInt32_types.h"
+#include "panda/core/UInt32_types.h"
+#include "panda/core/UInt8_types.h"
+#include "panda/core/UInt16_types.h"
+#include "panda/core/Int64_types.h"
+#include "panda/core/Int8_types.h"
+#include "panda/core/Int16_types.h"
+#include "panda/core/Int32_types.h"
+#include "panda/core/UInt64_types.h"
+#include "panda/core/Real32_types.h"
+#include "panda/core/Real64_types.h"
+#include "panda/core/Bit_types.h"
+typedef struct panda$collections$ListView panda$collections$ListView;
+#include "panda/core/Range.LTpanda/core/UInt32.GT.h"
+#include "panda/core/SteppedRange.LTpanda/core/UInt32.Cpanda/core/UInt32.GT.h"
+typedef struct panda$collections$Iterator panda$collections$Iterator;
 typedef struct panda$core$String panda$core$String;
 
 void panda$core$UInt32$init$builtin_uint32(panda$core$UInt32* self, uint32_t p_value);
@@ -184,6 +162,8 @@ panda$core$UInt32 panda$core$UInt32$max$panda$core$UInt8$R$panda$core$UInt32(pan
 panda$core$UInt32 panda$core$UInt32$max$panda$core$UInt16$R$panda$core$UInt32(panda$core$UInt32 self, panda$core$UInt16 p_other);
 panda$core$UInt32 panda$core$UInt32$max$panda$core$UInt32$R$panda$core$UInt32(panda$core$UInt32 self, panda$core$UInt32 p_other);
 panda$core$UInt64 panda$core$UInt32$max$panda$core$UInt64$R$panda$core$UInt64(panda$core$UInt32 self, panda$core$UInt64 p_other);
+panda$collections$ListView* panda$core$UInt32$$IDX$panda$core$Range$LTpanda$core$UInt32$GT$R$panda$collections$ListView$LTpanda$core$UInt32$GT(panda$core$Range$LTpanda$core$UInt32$GT p_range);
+panda$collections$ListView* panda$core$UInt32$$IDX$panda$core$SteppedRange$LTpanda$core$UInt32$Cpanda$core$UInt32$GT$R$panda$collections$ListView$LTpanda$core$UInt32$GT(panda$core$SteppedRange$LTpanda$core$UInt32$Cpanda$core$UInt32$GT p_range);
 panda$core$Bit panda$core$UInt32$$IDX$panda$core$Int8$R$panda$core$Bit(panda$core$UInt32 self, panda$core$Int8 p_index);
 panda$core$Bit panda$core$UInt32$$IDX$panda$core$Int16$R$panda$core$Bit(panda$core$UInt32 self, panda$core$Int16 p_index);
 panda$core$Bit panda$core$UInt32$$IDX$panda$core$Int32$R$panda$core$Bit(panda$core$UInt32 self, panda$core$Int32 p_index);
@@ -192,6 +172,8 @@ panda$core$Bit panda$core$UInt32$$IDX$panda$core$UInt8$R$panda$core$Bit(panda$co
 panda$core$Bit panda$core$UInt32$$IDX$panda$core$UInt16$R$panda$core$Bit(panda$core$UInt32 self, panda$core$UInt16 p_index);
 panda$core$Bit panda$core$UInt32$$IDX$panda$core$UInt32$R$panda$core$Bit(panda$core$UInt32 self, panda$core$UInt32 p_index);
 panda$core$Bit panda$core$UInt32$$IDX$panda$core$UInt64$R$panda$core$Bit(panda$core$UInt32 self, panda$core$UInt64 p_index);
+panda$core$Int64 panda$core$UInt32$get_count$R$panda$core$Int64(panda$core$UInt32 self);
+panda$collections$Iterator* panda$core$UInt32$iterator$R$panda$collections$Iterator$LTpanda$core$Bit$GT(panda$core$UInt32 self);
 panda$core$Int64 panda$core$UInt32$hash$R$panda$core$Int64(panda$core$UInt32 self);
 panda$core$UInt32$nullable panda$core$UInt32$parse$panda$core$String$panda$core$Int64$R$panda$core$UInt32$Q(panda$core$String* p_str, panda$core$Int64 p_radix);
 panda$core$Int8 panda$core$UInt32$convert$R$panda$core$Int8(panda$core$UInt32 self);
@@ -207,4 +189,3 @@ panda$core$String* panda$core$UInt32$convert$R$panda$core$String(panda$core$UInt
 panda$core$String* panda$core$UInt32$format$panda$core$String$R$panda$core$String(panda$core$UInt32 self, panda$core$String* p_fmt);
 void panda$core$UInt32$cleanup(panda$core$UInt32 self);
 
-#endif

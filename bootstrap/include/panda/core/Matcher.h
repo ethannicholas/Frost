@@ -1,35 +1,12 @@
 #pragma once
 #include "panda_c.h"
-#define PANDA_TYPESONLY
-#undef PANDA_TYPESONLY
-typedef struct panda$core$Class panda$core$Class;
-#include "panda/core/Int32.h"
-#include "panda/core/Int8.h"
-typedef struct panda$core$String panda$core$String;
-#include "panda/core/Bit.h"
-#include "panda/core/String/Index.h"
-
-typedef struct panda$core$Matcher {
-    panda$core$Class* $class;
-    panda$core$Int32 refCount;
-    panda$core$Int8* nativeHandle;
-    panda$core$String* searchText;
-    panda$core$Bit matched;
-    panda$core$String$Index replacementIndex;
-} panda$core$Matcher;
-#define PANDA_TYPESONLY
-#include "panda/core/Class.h"
-#undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[14]; } panda$core$Matcher$class_type;
-extern panda$core$Matcher$class_type panda$core$Matcher$class;
-
-#ifndef PANDA_TYPESONLY
-#include "panda/core/Bit.h"
+#include "Matcher_types.h"
+#include "panda/core/Bit_types.h"
 typedef struct panda$core$Matcher panda$core$Matcher;
-#include "panda/core/String/Index.h"
+#include "panda/core/String/Index_types.h"
 typedef struct panda$core$MutableString panda$core$MutableString;
 typedef struct panda$core$String panda$core$String;
-#include "panda/core/Int64.h"
+#include "panda/core/Int64_types.h"
 
 void panda$core$Matcher$matches$R$panda$core$Bit(panda$core$Bit* result, panda$core$Matcher* self);
 panda$core$Bit panda$core$Matcher$find$R$panda$core$Bit(panda$core$Matcher* self);
@@ -46,4 +23,3 @@ void panda$core$Matcher$cleanup(panda$core$Matcher* self);
 void panda$core$Matcher$destroy(panda$core$Matcher* self);
 void panda$core$Matcher$init(panda$core$Matcher* self);
 
-#endif

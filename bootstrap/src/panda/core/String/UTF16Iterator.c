@@ -8,7 +8,7 @@
 #include "panda/core/Panda.h"
 #include "panda/core/Bit.h"
 #include "panda/core/UInt16.h"
-panda$core$Object* panda$core$String$UTF16Iterator$next$R$panda$core$Char16$shim(panda$core$String$UTF16Iterator* p0) {
+__attribute__((weak)) panda$core$Object* panda$core$String$UTF16Iterator$next$R$panda$core$Char16$shim(panda$core$String$UTF16Iterator* p0) {
     panda$core$Char16 result = panda$core$String$UTF16Iterator$next$R$panda$core$Char16(p0);
 
     panda$core$Char16$wrapper* $tmp2;
@@ -24,54 +24,62 @@ panda$core$String$UTF16Iterator$class_type panda$core$String$UTF16Iterator$class
 
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x55\x54\x46\x31\x36\x49\x74\x65\x72\x61\x74\x6f\x72", 31, -7181782867719721369, NULL };
-static panda$core$String $s7 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x53\x74\x72\x69\x6e\x67\x2e\x70\x61\x6e\x64\x61", 12, -7878295537817775382, NULL };
-static panda$core$String $s8 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x75\x6e\x69\x6d\x70\x6c\x65\x6d\x65\x6e\x74\x65\x64", 13, -3192095292821253576, NULL };
+static panda$core$String $s9 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x53\x74\x72\x69\x6e\x67\x2e\x70\x61\x6e\x64\x61", 12, -7878295537817775382, NULL };
+static panda$core$String $s10 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x75\x6e\x69\x6d\x70\x6c\x65\x6d\x65\x6e\x74\x65\x64", 13, -3192095292821253576, NULL };
 
 void panda$core$String$UTF16Iterator$init$panda$core$String(panda$core$String$UTF16Iterator* self, panda$core$String* p_str) {
-    panda$core$String* $tmp3;
+    panda$core$Int64 $tmp3;
     panda$core$String* $tmp4;
+    panda$core$String* $tmp5;
+    panda$core$Bit $tmp6;
     self->str = NULL;
-    self->index = ((panda$core$Int64) { 0 });
+    panda$core$Int64$init$builtin_int64(&$tmp3, 0);
+    self->index = $tmp3;
     {
-        $tmp3 = self->str;
-        $tmp4 = p_str;
-        self->str = $tmp4;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp4));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp3));
+        $tmp4 = self->str;
+        $tmp5 = p_str;
+        self->str = $tmp5;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp5));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp4));
     }
-    if (((panda$core$Bit) { false }).value) goto $l5; else goto $l6;
-    $l6:;
-    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s7, (panda$core$Int64) { 154 }, &$s8);
+    panda$core$Bit$init$builtin_bit(&$tmp6, false);
+    if ($tmp6.value) goto $l7; else goto $l8;
+    $l8:;
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s9, (panda$core$Int64) { 154 }, &$s10);
     abort();
-    $l5:;
+    $l7:;
 }
 panda$core$Bit panda$core$String$UTF16Iterator$get_done$R$panda$core$Bit(panda$core$String$UTF16Iterator* self) {
-    panda$core$Bit $returnValue9;
-    panda$core$Bit $tmp10 = panda$core$Int64$$GE$panda$core$Int64$R$panda$core$Bit(self->index, self->str->_length);
-    $returnValue9 = $tmp10;
-    return $returnValue9;
+    panda$core$Bit $returnValue11;
+    panda$core$Bit $tmp12 = panda$core$Int64$$GE$panda$core$Int64$R$panda$core$Bit(self->index, self->str->_length);
+    $returnValue11 = $tmp12;
+    return $returnValue11;
 }
 panda$core$Char16 panda$core$String$UTF16Iterator$next$R$panda$core$Char16(panda$core$String$UTF16Iterator* self) {
-    panda$core$Char16 $returnValue13;
-    panda$core$Char16 $tmp14;
-    panda$core$Int64 $tmp12 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, ((panda$core$Int64) { 1 }));
-    self->index = $tmp12;
-    panda$core$Char16$init$panda$core$UInt16(&$tmp14, ((panda$core$UInt16) { 1 }));
-    $returnValue13 = $tmp14;
-    return $returnValue13;
+    panda$core$Int64 $tmp14;
+    panda$core$Char16 $returnValue16;
+    panda$core$Char16 $tmp17;
+    panda$core$UInt16 $tmp18;
+    panda$core$Int64$init$builtin_int64(&$tmp14, 1);
+    panda$core$Int64 $tmp15 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, $tmp14);
+    self->index = $tmp15;
+    panda$core$UInt16$init$builtin_uint16(&$tmp18, 1);
+    panda$core$Char16$init$panda$core$UInt16(&$tmp17, $tmp18);
+    $returnValue16 = $tmp17;
+    return $returnValue16;
 }
 void panda$core$String$UTF16Iterator$cleanup(panda$core$String$UTF16Iterator* self) {
-    int $tmp18;
+    int $tmp22;
     {
     }
-    $tmp18 = -1;
-    goto $l16;
-    $l16:;
+    $tmp22 = -1;
+    goto $l20;
+    $l20:;
     panda$core$Object$cleanup(((panda$core$Object*) self));
-    switch ($tmp18) {
-        case -1: goto $l19;
+    switch ($tmp22) {
+        case -1: goto $l23;
     }
-    $l19:;
+    $l23:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->str));
 }
 

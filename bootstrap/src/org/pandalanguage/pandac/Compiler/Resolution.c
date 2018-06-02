@@ -5,7 +5,7 @@
 #include "panda/core/Object.h"
 #include "panda/core/Int64.h"
 #include "panda/core/Bit.h"
-void org$pandalanguage$pandac$Compiler$Resolution$cleanup$shim(panda$core$Object* p0) {
+__attribute__((weak)) void org$pandalanguage$pandac$Compiler$Resolution$cleanup$shim(panda$core$Object* p0) {
     org$pandalanguage$pandac$Compiler$Resolution$cleanup(((org$pandalanguage$pandac$Compiler$Resolution$wrapper*) p0)->value);
 
 }
@@ -20,28 +20,36 @@ static panda$core$String $s2 = { (panda$core$Class*) &panda$core$String$class, -
 
 void org$pandalanguage$pandac$Compiler$Resolution$cleanup(org$pandalanguage$pandac$Compiler$Resolution self) {
     org$pandalanguage$pandac$Compiler$Resolution $match$8_53;
+    panda$core$Int64 $tmp4;
+    panda$core$Int64 $tmp6;
+    panda$core$Int64 $tmp8;
+    panda$core$Int64 $tmp10;
     {
         $match$8_53 = self;
-        panda$core$Bit $tmp4 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$8_53.$rawValue, ((panda$core$Int64) { 0 }));
-        if ($tmp4.value) {
-        {
-        }
-        }
-        else {
-        panda$core$Bit $tmp5 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$8_53.$rawValue, ((panda$core$Int64) { 1 }));
+        panda$core$Int64$init$builtin_int64(&$tmp4, 0);
+        panda$core$Bit $tmp5 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$8_53.$rawValue, $tmp4);
         if ($tmp5.value) {
         {
         }
         }
         else {
-        panda$core$Bit $tmp6 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$8_53.$rawValue, ((panda$core$Int64) { 2 }));
-        if ($tmp6.value) {
+        panda$core$Int64$init$builtin_int64(&$tmp6, 1);
+        panda$core$Bit $tmp7 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$8_53.$rawValue, $tmp6);
+        if ($tmp7.value) {
         {
         }
         }
         else {
-        panda$core$Bit $tmp7 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$8_53.$rawValue, ((panda$core$Int64) { 3 }));
-        if ($tmp7.value) {
+        panda$core$Int64$init$builtin_int64(&$tmp8, 2);
+        panda$core$Bit $tmp9 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$8_53.$rawValue, $tmp8);
+        if ($tmp9.value) {
+        {
+        }
+        }
+        else {
+        panda$core$Int64$init$builtin_int64(&$tmp10, 3);
+        panda$core$Bit $tmp11 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$8_53.$rawValue, $tmp10);
+        if ($tmp11.value) {
         {
         }
         }

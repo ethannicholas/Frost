@@ -18,7 +18,6 @@ written:
     class BareCode {
         def random := Random.default()
 
-        @class
         method bareCodeMain() {
             Console.printLine("Die roll is: \{random.int(6) + 1}")
         }

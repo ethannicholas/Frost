@@ -12,12 +12,12 @@
 #include "panda/core/String/Index.h"
 #include "panda/core/Range.LTpanda/core/String/Index.Q.GT.h"
 #include "panda/core/Int64.h"
-panda$core$Bit panda$io$File$$EQ$panda$io$File$R$panda$core$Bit$shim(panda$io$File* p0, panda$core$Equatable* p1) {
+__attribute__((weak)) panda$core$Bit panda$io$File$$EQ$panda$io$File$R$panda$core$Bit$shim(panda$io$File* p0, panda$core$Equatable* p1) {
     panda$core$Bit result = panda$io$File$$EQ$panda$io$File$R$panda$core$Bit(p0, ((panda$io$File*) p1));
 
     return result;
 }
-panda$core$Bit panda$io$File$$NEQ$panda$io$File$R$panda$core$Bit$shim(panda$io$File* p0, panda$core$Equatable* p1) {
+__attribute__((weak)) panda$core$Bit panda$io$File$$NEQ$panda$io$File$R$panda$core$Bit$shim(panda$io$File* p0, panda$core$Equatable* p1) {
     panda$core$Bit result = panda$io$File$$NEQ$panda$io$File$R$panda$core$Bit(p0, ((panda$io$File*) p1));
 
     return result;
@@ -31,7 +31,7 @@ static panda$core$String $s1;
 panda$io$File$class_type panda$io$File$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Immutable$class, (ITable*) &panda$io$File$_panda$collections$Key, { panda$io$File$convert$R$panda$core$String, panda$io$File$cleanup, panda$io$File$resolve$panda$core$String$R$panda$io$File, panda$io$File$lines$R$panda$collections$Iterator$LTpanda$core$String$GT, panda$io$File$absolutePath$R$panda$core$String, panda$io$File$absolute$R$panda$io$File, panda$io$File$parent$R$panda$io$File$Q, panda$io$File$name$R$panda$core$String, panda$io$File$simpleName$R$panda$core$String, panda$io$File$changeExtension$panda$core$String$R$panda$io$File, panda$io$File$exists$R$panda$core$Bit, panda$io$File$isDirectory$R$panda$core$Bit, panda$io$File$list$R$panda$collections$ListView$LTpanda$io$File$GT, panda$io$File$createDirectory, panda$io$File$createDirectories, panda$io$File$openInputStream$R$panda$io$InputStream, panda$io$File$openOutputStream$R$panda$io$OutputStream, panda$io$File$readFully$R$panda$core$String, panda$io$File$delete, panda$io$File$$EQ$panda$io$File$R$panda$core$Bit$shim, panda$io$File$$NEQ$panda$io$File$R$panda$core$Bit$shim, panda$io$File$hash$R$panda$core$Int64} };
 
 typedef panda$collections$Iterator* (*$fn25)(panda$io$InputStream*);
-typedef panda$core$String* (*$fn127)(panda$io$InputStream*);
+typedef panda$core$String* (*$fn130)(panda$io$InputStream*);
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x69\x6f\x2e\x46\x69\x6c\x65", 13, 4119532389314393493, NULL };
 static panda$core$String $s4 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2f", 1, 148, NULL };
@@ -40,8 +40,8 @@ static panda$core$String $s35 = { (panda$core$Class*) &panda$core$String$class, 
 static panda$core$String $s40 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
 static panda$core$String $s46 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2e", 1, 147, NULL };
 static panda$core$String $s50 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2f", 1, 148, NULL };
-static panda$core$String $s66 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2f", 1, 148, NULL };
-static panda$core$String $s85 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2e", 1, 147, NULL };
+static panda$core$String $s67 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2f", 1, 148, NULL };
+static panda$core$String $s87 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2e", 1, 147, NULL };
 
 void panda$io$File$init$panda$core$String(panda$io$File* self, panda$core$String* p_path) {
     panda$core$String* $tmp2;
@@ -98,7 +98,7 @@ panda$collections$Iterator* panda$io$File$lines$R$panda$collections$Iterator$LTp
     panda$io$InputStream* $tmp23;
     panda$io$InputStream* $tmp24 = panda$io$File$openInputStream$R$panda$io$InputStream(self);
     $tmp23 = $tmp24;
-    panda$collections$Iterator* $tmp26 = (($fn25) $tmp23->$class->vtable[12])($tmp23);
+    panda$collections$Iterator* $tmp26 = (($fn25) $tmp23->$class->vtable[13])($tmp23);
     $tmp22 = $tmp26;
     $tmp21 = $tmp22;
     $returnValue20 = $tmp21;
@@ -135,9 +135,10 @@ panda$io$File* panda$io$File$parent$R$panda$io$File$Q(panda$io$File* self) {
     panda$io$File* $tmp53;
     panda$core$String* $tmp55;
     panda$core$Range$LTpanda$core$String$Index$Q$GT $tmp56;
-    panda$io$File* $tmp59;
+    panda$core$Bit $tmp57;
     panda$io$File* $tmp60;
     panda$io$File* $tmp61;
+    panda$io$File* $tmp62;
     panda$core$Bit $tmp36 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit(self->path, &$s35);
     if ($tmp36.value) {
     {
@@ -168,9 +169,10 @@ panda$io$File* panda$io$File$parent$R$panda$io$File$Q(panda$io$File* self) {
     if (((panda$core$Bit) { index49.nonnull }).value) {
     {
         panda$io$File* $tmp54 = (panda$io$File*) pandaObjectAlloc(24, (panda$core$Class*) &panda$io$File$class);
-        panda$core$Range$LTpanda$core$String$Index$Q$GT$init$panda$core$String$Index$Q$panda$core$String$Index$Q$panda$core$Bit(&$tmp56, ((panda$core$String$Index$nullable) { .nonnull = false }), index49, ((panda$core$Bit) { false }));
-        panda$core$String* $tmp57 = panda$core$String$$IDX$panda$core$Range$LTpanda$core$String$Index$Q$GT$R$panda$core$String(self->path, $tmp56);
-        $tmp55 = $tmp57;
+        panda$core$Bit$init$builtin_bit(&$tmp57, false);
+        panda$core$Range$LTpanda$core$String$Index$Q$GT$init$panda$core$String$Index$Q$panda$core$String$Index$Q$panda$core$Bit(&$tmp56, ((panda$core$String$Index$nullable) { .nonnull = false }), index49, $tmp57);
+        panda$core$String* $tmp58 = panda$core$String$$IDX$panda$core$Range$LTpanda$core$String$Index$Q$GT$R$panda$core$String(self->path, $tmp56);
+        $tmp55 = $tmp58;
         panda$io$File$init$panda$core$String($tmp54, $tmp55);
         $tmp53 = $tmp54;
         $tmp52 = $tmp53;
@@ -183,220 +185,224 @@ panda$io$File* panda$io$File$parent$R$panda$io$File$Q(panda$io$File* self) {
     }
     else {
     {
-        panda$io$File* $tmp62 = panda$io$File$absolute$R$panda$io$File(self);
-        $tmp61 = $tmp62;
-        panda$io$File* $tmp63 = panda$io$File$parent$R$panda$io$File$Q($tmp61);
-        $tmp60 = $tmp63;
-        $tmp59 = $tmp60;
-        $returnValue37 = $tmp59;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp59));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp60));
+        panda$io$File* $tmp63 = panda$io$File$absolute$R$panda$io$File(self);
+        $tmp62 = $tmp63;
+        panda$io$File* $tmp64 = panda$io$File$parent$R$panda$io$File$Q($tmp62);
+        $tmp61 = $tmp64;
+        $tmp60 = $tmp61;
+        $returnValue37 = $tmp60;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp60));
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp61));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp62));
         return $returnValue37;
     }
     }
     abort();
 }
 panda$core$String* panda$io$File$name$R$panda$core$String(panda$io$File* self) {
-    panda$core$String$Index$nullable index65;
-    panda$core$String* $returnValue68;
-    panda$core$String* $tmp69;
+    panda$core$String$Index$nullable index66;
+    panda$core$String* $returnValue69;
     panda$core$String* $tmp70;
-    panda$core$Range$LTpanda$core$String$Index$Q$GT $tmp71;
-    panda$core$String* $tmp75;
-    panda$core$String$Index$nullable $tmp67 = panda$core$String$lastIndexOf$panda$core$String$R$panda$core$String$Index$Q(self->path, &$s66);
-    index65 = $tmp67;
-    if (((panda$core$Bit) { index65.nonnull }).value) {
+    panda$core$String* $tmp71;
+    panda$core$Range$LTpanda$core$String$Index$Q$GT $tmp72;
+    panda$core$Bit $tmp74;
+    panda$core$String* $tmp77;
+    panda$core$String$Index$nullable $tmp68 = panda$core$String$lastIndexOf$panda$core$String$R$panda$core$String$Index$Q(self->path, &$s67);
+    index66 = $tmp68;
+    if (((panda$core$Bit) { index66.nonnull }).value) {
     {
-        panda$core$String$Index $tmp72 = panda$core$String$next$panda$core$String$Index$R$panda$core$String$Index(self->path, ((panda$core$String$Index) index65.value));
-        panda$core$Range$LTpanda$core$String$Index$Q$GT$init$panda$core$String$Index$Q$panda$core$String$Index$Q$panda$core$Bit(&$tmp71, ((panda$core$String$Index$nullable) { $tmp72, true }), ((panda$core$String$Index$nullable) { .nonnull = false }), ((panda$core$Bit) { false }));
-        panda$core$String* $tmp73 = panda$core$String$$IDX$panda$core$Range$LTpanda$core$String$Index$Q$GT$R$panda$core$String(self->path, $tmp71);
-        $tmp70 = $tmp73;
-        $tmp69 = $tmp70;
-        $returnValue68 = $tmp69;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp69));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp70));
-        return $returnValue68;
+        panda$core$String$Index $tmp73 = panda$core$String$next$panda$core$String$Index$R$panda$core$String$Index(self->path, ((panda$core$String$Index) index66.value));
+        panda$core$Bit$init$builtin_bit(&$tmp74, false);
+        panda$core$Range$LTpanda$core$String$Index$Q$GT$init$panda$core$String$Index$Q$panda$core$String$Index$Q$panda$core$Bit(&$tmp72, ((panda$core$String$Index$nullable) { $tmp73, true }), ((panda$core$String$Index$nullable) { .nonnull = false }), $tmp74);
+        panda$core$String* $tmp75 = panda$core$String$$IDX$panda$core$Range$LTpanda$core$String$Index$Q$GT$R$panda$core$String(self->path, $tmp72);
+        $tmp71 = $tmp75;
+        $tmp70 = $tmp71;
+        $returnValue69 = $tmp70;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp70));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp71));
+        return $returnValue69;
     }
     }
     else {
     {
-        $tmp75 = self->path;
-        $returnValue68 = $tmp75;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp75));
-        return $returnValue68;
+        $tmp77 = self->path;
+        $returnValue69 = $tmp77;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp77));
+        return $returnValue69;
     }
     }
     abort();
 }
 panda$core$String* panda$io$File$simpleName$R$panda$core$String(panda$io$File* self) {
-    panda$core$String* result80 = NULL;
-    panda$core$String* $tmp81;
-    panda$core$String* $tmp82;
-    panda$core$String$Index$nullable index84;
-    panda$core$String* $returnValue87;
-    panda$core$String* $tmp88;
-    panda$core$String* $tmp91;
-    panda$core$String* $tmp92;
-    panda$core$Range$LTpanda$core$String$Index$Q$GT $tmp93;
-    int $tmp79;
+    panda$core$String* result82 = NULL;
+    panda$core$String* $tmp83;
+    panda$core$String* $tmp84;
+    panda$core$String$Index$nullable index86;
+    panda$core$String* $returnValue89;
+    panda$core$String* $tmp90;
+    panda$core$String* $tmp93;
+    panda$core$String* $tmp94;
+    panda$core$Range$LTpanda$core$String$Index$Q$GT $tmp95;
+    panda$core$Bit $tmp96;
+    int $tmp81;
     {
-        panda$core$String* $tmp83 = panda$io$File$name$R$panda$core$String(self);
-        $tmp82 = $tmp83;
-        $tmp81 = $tmp82;
-        result80 = $tmp81;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp81));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp82));
-        panda$core$String$Index$nullable $tmp86 = panda$core$String$lastIndexOf$panda$core$String$R$panda$core$String$Index$Q(result80, &$s85);
-        index84 = $tmp86;
-        if (((panda$core$Bit) { !index84.nonnull }).value) {
+        panda$core$String* $tmp85 = panda$io$File$name$R$panda$core$String(self);
+        $tmp84 = $tmp85;
+        $tmp83 = $tmp84;
+        result82 = $tmp83;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp83));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp84));
+        panda$core$String$Index$nullable $tmp88 = panda$core$String$lastIndexOf$panda$core$String$R$panda$core$String$Index$Q(result82, &$s87);
+        index86 = $tmp88;
+        if (((panda$core$Bit) { !index86.nonnull }).value) {
         {
-            $tmp88 = result80;
-            $returnValue87 = $tmp88;
-            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp88));
-            $tmp79 = 0;
-            goto $l77;
-            $l89:;
-            return $returnValue87;
+            $tmp90 = result82;
+            $returnValue89 = $tmp90;
+            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp90));
+            $tmp81 = 0;
+            goto $l79;
+            $l91:;
+            return $returnValue89;
         }
         }
-        panda$core$Range$LTpanda$core$String$Index$Q$GT$init$panda$core$String$Index$Q$panda$core$String$Index$Q$panda$core$Bit(&$tmp93, ((panda$core$String$Index$nullable) { .nonnull = false }), index84, ((panda$core$Bit) { false }));
-        panda$core$String* $tmp94 = panda$core$String$$IDX$panda$core$Range$LTpanda$core$String$Index$Q$GT$R$panda$core$String(result80, $tmp93);
-        $tmp92 = $tmp94;
-        $tmp91 = $tmp92;
-        $returnValue87 = $tmp91;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp91));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp92));
-        $tmp79 = 1;
-        goto $l77;
-        $l95:;
-        return $returnValue87;
+        panda$core$Bit$init$builtin_bit(&$tmp96, false);
+        panda$core$Range$LTpanda$core$String$Index$Q$GT$init$panda$core$String$Index$Q$panda$core$String$Index$Q$panda$core$Bit(&$tmp95, ((panda$core$String$Index$nullable) { .nonnull = false }), index86, $tmp96);
+        panda$core$String* $tmp97 = panda$core$String$$IDX$panda$core$Range$LTpanda$core$String$Index$Q$GT$R$panda$core$String(result82, $tmp95);
+        $tmp94 = $tmp97;
+        $tmp93 = $tmp94;
+        $returnValue89 = $tmp93;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp93));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp94));
+        $tmp81 = 1;
+        goto $l79;
+        $l98:;
+        return $returnValue89;
     }
-    $l77:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result80));
-    result80 = NULL;
-    switch ($tmp79) {
-        case 1: goto $l95;
-        case 0: goto $l89;
+    $l79:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result82));
+    result82 = NULL;
+    switch ($tmp81) {
+        case 1: goto $l98;
+        case 0: goto $l91;
     }
-    $l97:;
+    $l100:;
     abort();
 }
 panda$io$File* panda$io$File$changeExtension$panda$core$String$R$panda$io$File(panda$io$File* self, panda$core$String* p_ext) {
-    panda$io$File* $returnValue98;
-    panda$io$File* $tmp99;
-    panda$io$File* $tmp100;
-    panda$io$File* $tmp101;
-    panda$core$String* $tmp103;
-    panda$core$String* $tmp104;
-    panda$io$File* $tmp102 = panda$io$File$parent$R$panda$io$File$Q(self);
-    $tmp101 = $tmp102;
-    panda$core$String* $tmp105 = panda$io$File$simpleName$R$panda$core$String(self);
+    panda$io$File* $returnValue101;
+    panda$io$File* $tmp102;
+    panda$io$File* $tmp103;
+    panda$io$File* $tmp104;
+    panda$core$String* $tmp106;
+    panda$core$String* $tmp107;
+    panda$io$File* $tmp105 = panda$io$File$parent$R$panda$io$File$Q(self);
     $tmp104 = $tmp105;
-    panda$core$String* $tmp106 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp104, p_ext);
-    $tmp103 = $tmp106;
-    panda$io$File* $tmp107 = panda$io$File$resolve$panda$core$String$R$panda$io$File($tmp101, $tmp103);
-    $tmp100 = $tmp107;
-    $tmp99 = $tmp100;
-    $returnValue98 = $tmp99;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp99));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp100));
+    panda$core$String* $tmp108 = panda$io$File$simpleName$R$panda$core$String(self);
+    $tmp107 = $tmp108;
+    panda$core$String* $tmp109 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp107, p_ext);
+    $tmp106 = $tmp109;
+    panda$io$File* $tmp110 = panda$io$File$resolve$panda$core$String$R$panda$io$File($tmp104, $tmp106);
+    $tmp103 = $tmp110;
+    $tmp102 = $tmp103;
+    $returnValue101 = $tmp102;
+    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp102));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp103));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp106));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp107));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp104));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp101));
-    return $returnValue98;
+    return $returnValue101;
 }
 void panda$io$File$createDirectories(panda$io$File* self) {
-    panda$io$File* p112 = NULL;
-    panda$io$File* $tmp113;
-    panda$io$File* $tmp114;
-    panda$core$Bit $tmp118;
-    int $tmp111;
+    panda$io$File* p115 = NULL;
+    panda$io$File* $tmp116;
+    panda$io$File* $tmp117;
+    panda$core$Bit $tmp121;
+    int $tmp114;
     {
-        panda$io$File* $tmp115 = panda$io$File$parent$R$panda$io$File$Q(self);
-        $tmp114 = $tmp115;
-        $tmp113 = $tmp114;
-        p112 = $tmp113;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp113));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp114));
-        bool $tmp116 = ((panda$core$Bit) { p112 != NULL }).value;
-        if (!$tmp116) goto $l117;
-        panda$io$File$exists$R$panda$core$Bit(&$tmp118, p112);
-        panda$core$Bit $tmp119 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp118);
-        $tmp116 = $tmp119.value;
-        $l117:;
-        panda$core$Bit $tmp120 = { $tmp116 };
-        if ($tmp120.value) {
+        panda$io$File* $tmp118 = panda$io$File$parent$R$panda$io$File$Q(self);
+        $tmp117 = $tmp118;
+        $tmp116 = $tmp117;
+        p115 = $tmp116;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp116));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp117));
+        bool $tmp119 = ((panda$core$Bit) { p115 != NULL }).value;
+        if (!$tmp119) goto $l120;
+        panda$io$File$exists$R$panda$core$Bit(&$tmp121, p115);
+        panda$core$Bit $tmp122 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp121);
+        $tmp119 = $tmp122.value;
+        $l120:;
+        panda$core$Bit $tmp123 = { $tmp119 };
+        if ($tmp123.value) {
         {
-            panda$io$File$createDirectories(p112);
+            panda$io$File$createDirectories(p115);
         }
         }
         panda$io$File$createDirectory(self);
     }
-    $tmp111 = -1;
-    goto $l109;
-    $l109:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) p112));
-    p112 = NULL;
-    switch ($tmp111) {
-        case -1: goto $l121;
+    $tmp114 = -1;
+    goto $l112;
+    $l112:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) p115));
+    p115 = NULL;
+    switch ($tmp114) {
+        case -1: goto $l124;
     }
-    $l121:;
+    $l124:;
 }
 panda$core$String* panda$io$File$readFully$R$panda$core$String(panda$io$File* self) {
-    panda$core$String* $returnValue122;
-    panda$core$String* $tmp123;
-    panda$core$String* $tmp124;
-    panda$io$InputStream* $tmp125;
-    panda$io$InputStream* $tmp126 = panda$io$File$openInputStream$R$panda$io$InputStream(self);
-    $tmp125 = $tmp126;
-    panda$core$String* $tmp128 = (($fn127) $tmp125->$class->vtable[6])($tmp125);
-    $tmp124 = $tmp128;
-    $tmp123 = $tmp124;
-    $returnValue122 = $tmp123;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp123));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp124));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp125));
-    return $returnValue122;
+    panda$core$String* $returnValue125;
+    panda$core$String* $tmp126;
+    panda$core$String* $tmp127;
+    panda$io$InputStream* $tmp128;
+    panda$io$InputStream* $tmp129 = panda$io$File$openInputStream$R$panda$io$InputStream(self);
+    $tmp128 = $tmp129;
+    panda$core$String* $tmp131 = (($fn130) $tmp128->$class->vtable[6])($tmp128);
+    $tmp127 = $tmp131;
+    $tmp126 = $tmp127;
+    $returnValue125 = $tmp126;
+    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp126));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp127));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp128));
+    return $returnValue125;
 }
 panda$core$Bit panda$io$File$$EQ$panda$io$File$R$panda$core$Bit(panda$io$File* self, panda$io$File* p_other) {
-    panda$core$Bit $returnValue130;
-    panda$core$Bit $tmp131 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit(self->path, p_other->path);
-    $returnValue130 = $tmp131;
-    return $returnValue130;
-}
-panda$core$Bit panda$io$File$$NEQ$panda$io$File$R$panda$core$Bit(panda$io$File* self, panda$io$File* p_other) {
     panda$core$Bit $returnValue133;
-    panda$core$Bit $tmp134 = panda$core$String$$NEQ$panda$core$String$R$panda$core$Bit(self->path, p_other->path);
+    panda$core$Bit $tmp134 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit(self->path, p_other->path);
     $returnValue133 = $tmp134;
     return $returnValue133;
 }
-panda$core$Int64 panda$io$File$hash$R$panda$core$Int64(panda$io$File* self) {
-    panda$core$Int64 $returnValue136;
-    panda$core$Int64 $tmp137 = panda$core$String$hash$R$panda$core$Int64(self->path);
+panda$core$Bit panda$io$File$$NEQ$panda$io$File$R$panda$core$Bit(panda$io$File* self, panda$io$File* p_other) {
+    panda$core$Bit $returnValue136;
+    panda$core$Bit $tmp137 = panda$core$String$$NEQ$panda$core$String$R$panda$core$Bit(self->path, p_other->path);
     $returnValue136 = $tmp137;
     return $returnValue136;
 }
-panda$core$String* panda$io$File$convert$R$panda$core$String(panda$io$File* self) {
-    panda$core$String* $returnValue139;
-    panda$core$String* $tmp140;
-    $tmp140 = self->path;
+panda$core$Int64 panda$io$File$hash$R$panda$core$Int64(panda$io$File* self) {
+    panda$core$Int64 $returnValue139;
+    panda$core$Int64 $tmp140 = panda$core$String$hash$R$panda$core$Int64(self->path);
     $returnValue139 = $tmp140;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp140));
     return $returnValue139;
 }
+panda$core$String* panda$io$File$convert$R$panda$core$String(panda$io$File* self) {
+    panda$core$String* $returnValue142;
+    panda$core$String* $tmp143;
+    $tmp143 = self->path;
+    $returnValue142 = $tmp143;
+    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp143));
+    return $returnValue142;
+}
 void panda$io$File$cleanup(panda$io$File* self) {
-    int $tmp144;
+    int $tmp147;
     {
     }
-    $tmp144 = -1;
-    goto $l142;
-    $l142:;
-    panda$core$Immutable$cleanup(((panda$core$Immutable*) self));
-    switch ($tmp144) {
-        case -1: goto $l145;
-    }
+    $tmp147 = -1;
+    goto $l145;
     $l145:;
+    panda$core$Immutable$cleanup(((panda$core$Immutable*) self));
+    switch ($tmp147) {
+        case -1: goto $l148;
+    }
+    $l148:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->path));
 }
 

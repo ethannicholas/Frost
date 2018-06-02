@@ -84,21 +84,23 @@ panda$threads$Thread* panda$threads$Thread$start$$LP$RP$EQ$AM$GT$ST$LP$RP$panda$
 }
 panda$core$Int64 panda$threads$Thread$preferredThreadCount$R$panda$core$Int64() {
     panda$core$Int64 $returnValue26;
-    $returnValue26 = ((panda$core$Int64) { 8 });
+    panda$core$Int64 $tmp27;
+    panda$core$Int64$init$builtin_int64(&$tmp27, 8);
+    $returnValue26 = $tmp27;
     return $returnValue26;
 }
 void panda$threads$Thread$cleanup(panda$threads$Thread* self) {
-    int $tmp30;
+    int $tmp31;
     {
     }
-    $tmp30 = -1;
-    goto $l28;
-    $l28:;
+    $tmp31 = -1;
+    goto $l29;
+    $l29:;
     panda$core$Immutable$cleanup(((panda$core$Immutable*) self));
-    switch ($tmp30) {
-        case -1: goto $l31;
+    switch ($tmp31) {
+        case -1: goto $l32;
     }
-    $l31:;
+    $l32:;
 }
 
 

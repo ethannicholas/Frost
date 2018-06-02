@@ -135,6 +135,26 @@ class InputStream {
         return result.finish()
     }
 
+    ================================================================================================
+    Continually reads from this stream, sending all of the data read to an [OutputStream]. Returns
+    when the end of the input is reached (which may be "never" for some `InputStream`s).
+    ================================================================================================
+    method sendTo(out:OutputStream):Int {
+        var total := 0
+        constant BUFFER_SIZE := 2048
+        def buffer := Pointer<UInt8>.alloc(BUFFER_SIZE)
+        loop {
+            def count := read(buffer, BUFFER_SIZE)
+            if count <= 0 {
+                break
+            }
+            total += count
+            out.write(buffer, 0, count)
+        }
+        buffer.destroy()
+        return total
+    }
+
     function lines():Iterator<String> {
         return LineIterator(self)
     }

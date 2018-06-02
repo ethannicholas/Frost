@@ -17,8 +17,8 @@ panda$core$String$Match$class_type panda$core$String$Match$class = { (panda$core
 
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x4d\x61\x74\x63\x68", 23, 6480045009745533488, NULL };
-static panda$core$String $s43 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x4d\x61\x74\x63\x68\x28", 6, 1881012283434, NULL };
-static panda$core$String $s47 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x29", 1, 142, NULL };
+static panda$core$String $s45 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x4d\x61\x74\x63\x68\x28", 6, 1881012283434, NULL };
+static panda$core$String $s50 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x29", 1, 142, NULL };
 
 void panda$core$String$Match$init$panda$core$Matcher(panda$core$String$Match* self, panda$core$Matcher* p_m) {
     panda$core$String$Index $tmp5;
@@ -28,10 +28,12 @@ void panda$core$String$Match$init$panda$core$Matcher(panda$core$String$Match* se
     panda$collections$Array* $tmp9;
     panda$core$Range$LTpanda$core$Int64$GT $tmp11;
     panda$core$Int64 $tmp12;
-    panda$core$String* $tmp26;
-    panda$collections$ImmutableArray* $tmp34;
-    panda$collections$ImmutableArray* $tmp35;
+    panda$core$Int64 $tmp13;
+    panda$core$Bit $tmp14;
+    panda$core$String* $tmp28;
     panda$collections$ImmutableArray* $tmp36;
+    panda$collections$ImmutableArray* $tmp37;
+    panda$collections$ImmutableArray* $tmp38;
     self->groups = NULL;
     int $tmp4;
     {
@@ -46,44 +48,46 @@ void panda$core$String$Match$init$panda$core$Matcher(panda$core$String$Match* se
         g7 = $tmp8;
         panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp8));
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp9));
-        panda$core$Matcher$get_groupCount$R$panda$core$Int64(&$tmp12, p_m);
-        panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp11, ((panda$core$Int64) { 0 }), $tmp12, ((panda$core$Bit) { false }));
-        int64_t $tmp14 = $tmp11.min.value;
-        panda$core$Int64 i13 = { $tmp14 };
-        int64_t $tmp16 = $tmp11.max.value;
-        bool $tmp17 = $tmp11.inclusive.value;
-        if ($tmp17) goto $l24; else goto $l25;
-        $l24:;
-        if ($tmp14 <= $tmp16) goto $l18; else goto $l20;
-        $l25:;
-        if ($tmp14 < $tmp16) goto $l18; else goto $l20;
-        $l18:;
-        {
-            panda$core$String* $tmp27 = panda$core$Matcher$group$panda$core$Int64$R$panda$core$String(p_m, i13);
-            $tmp26 = $tmp27;
-            panda$collections$Array$add$panda$collections$Array$T(g7, ((panda$core$Object*) $tmp26));
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp26));
-        }
-        $l21:;
-        int64_t $tmp29 = $tmp16 - i13.value;
-        if ($tmp17) goto $l30; else goto $l31;
-        $l30:;
-        if ((uint64_t) $tmp29 >= 1) goto $l28; else goto $l20;
-        $l31:;
-        if ((uint64_t) $tmp29 > 1) goto $l28; else goto $l20;
-        $l28:;
-        i13.value += 1;
-        goto $l18;
+        panda$core$Int64$init$builtin_int64(&$tmp12, 0);
+        panda$core$Matcher$get_groupCount$R$panda$core$Int64(&$tmp13, p_m);
+        panda$core$Bit$init$builtin_bit(&$tmp14, false);
+        panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp11, $tmp12, $tmp13, $tmp14);
+        int64_t $tmp16 = $tmp11.min.value;
+        panda$core$Int64 i15 = { $tmp16 };
+        int64_t $tmp18 = $tmp11.max.value;
+        bool $tmp19 = $tmp11.inclusive.value;
+        if ($tmp19) goto $l26; else goto $l27;
+        $l26:;
+        if ($tmp16 <= $tmp18) goto $l20; else goto $l22;
+        $l27:;
+        if ($tmp16 < $tmp18) goto $l20; else goto $l22;
         $l20:;
         {
-            $tmp34 = self->groups;
-            panda$collections$ImmutableArray* $tmp37 = panda$collections$Array$finish$R$panda$collections$ImmutableArray$LTpanda$collections$Array$T$GT(g7);
-            $tmp36 = $tmp37;
-            $tmp35 = $tmp36;
-            self->groups = $tmp35;
-            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp35));
+            panda$core$String* $tmp29 = panda$core$Matcher$group$panda$core$Int64$R$panda$core$String(p_m, i15);
+            $tmp28 = $tmp29;
+            panda$collections$Array$add$panda$collections$Array$T(g7, ((panda$core$Object*) $tmp28));
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp28));
+        }
+        $l23:;
+        int64_t $tmp31 = $tmp18 - i15.value;
+        if ($tmp19) goto $l32; else goto $l33;
+        $l32:;
+        if ((uint64_t) $tmp31 >= 1) goto $l30; else goto $l22;
+        $l33:;
+        if ((uint64_t) $tmp31 > 1) goto $l30; else goto $l22;
+        $l30:;
+        i15.value += 1;
+        goto $l20;
+        $l22:;
+        {
+            $tmp36 = self->groups;
+            panda$collections$ImmutableArray* $tmp39 = panda$collections$Array$finish$R$panda$collections$ImmutableArray$LTpanda$collections$Array$T$GT(g7);
+            $tmp38 = $tmp39;
+            $tmp37 = $tmp38;
+            self->groups = $tmp37;
+            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp37));
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp38));
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp36));
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp34));
         }
     }
     $tmp4 = -1;
@@ -92,42 +96,44 @@ void panda$core$String$Match$init$panda$core$Matcher(panda$core$String$Match* se
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) g7));
     g7 = NULL;
     switch ($tmp4) {
-        case -1: goto $l38;
+        case -1: goto $l40;
     }
-    $l38:;
+    $l40:;
 }
 panda$core$String* panda$core$String$Match$convert$R$panda$core$String(panda$core$String$Match* self) {
-    panda$core$String* $returnValue39;
-    panda$core$String* $tmp40;
-    panda$core$String* $tmp41;
+    panda$core$String* $returnValue41;
     panda$core$String* $tmp42;
-    panda$core$Object* $tmp44;
-    panda$core$Object* $tmp45 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(self->groups, ((panda$core$Int64) { 0 }));
-    $tmp44 = $tmp45;
-    panda$core$String* $tmp46 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s43, ((panda$core$String*) $tmp44));
-    $tmp42 = $tmp46;
-    panda$core$String* $tmp48 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp42, &$s47);
-    $tmp41 = $tmp48;
-    $tmp40 = $tmp41;
-    $returnValue39 = $tmp40;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp40));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp41));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp42));
-    panda$core$Panda$unref$panda$core$Object($tmp44);
-    return $returnValue39;
+    panda$core$String* $tmp43;
+    panda$core$String* $tmp44;
+    panda$core$Object* $tmp46;
+    panda$core$Int64 $tmp47;
+    panda$core$Int64$init$builtin_int64(&$tmp47, 0);
+    panda$core$Object* $tmp48 = panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T(self->groups, $tmp47);
+    $tmp46 = $tmp48;
+    panda$core$String* $tmp49 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s45, ((panda$core$String*) $tmp46));
+    $tmp44 = $tmp49;
+    panda$core$String* $tmp51 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp44, &$s50);
+    $tmp43 = $tmp51;
+    $tmp42 = $tmp43;
+    $returnValue41 = $tmp42;
+    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp42));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp43));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp44));
+    panda$core$Panda$unref$panda$core$Object($tmp46);
+    return $returnValue41;
 }
 void panda$core$String$Match$cleanup(panda$core$String$Match* self) {
-    int $tmp52;
+    int $tmp55;
     {
     }
-    $tmp52 = -1;
-    goto $l50;
-    $l50:;
-    panda$core$Immutable$cleanup(((panda$core$Immutable*) self));
-    switch ($tmp52) {
-        case -1: goto $l53;
-    }
+    $tmp55 = -1;
+    goto $l53;
     $l53:;
+    panda$core$Immutable$cleanup(((panda$core$Immutable*) self));
+    switch ($tmp55) {
+        case -1: goto $l56;
+    }
+    $l56:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->groups));
 }
 

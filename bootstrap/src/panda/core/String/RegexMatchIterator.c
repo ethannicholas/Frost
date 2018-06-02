@@ -9,7 +9,7 @@
 #include "panda/core/Panda.h"
 #include "panda/core/Matcher.h"
 #include "panda/core/String/Index.h"
-panda$core$Object* panda$core$String$RegexMatchIterator$next$R$panda$core$String$Match$shim(panda$core$String$RegexMatchIterator* p0) {
+__attribute__((weak)) panda$core$Object* panda$core$String$RegexMatchIterator$next$R$panda$core$String$Match$shim(panda$core$String$RegexMatchIterator* p0) {
     panda$core$String$Match* result = panda$core$String$RegexMatchIterator$next$R$panda$core$String$Match(p0);
 
     return ((panda$core$Object*) result);

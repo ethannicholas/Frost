@@ -1,33 +1,10 @@
 #pragma once
 #include "panda_c.h"
-#define PANDA_TYPESONLY
-#undef PANDA_TYPESONLY
-typedef struct panda$core$Class panda$core$Class;
-#include "panda/core/Int32.h"
-#include "panda/core/Int64.h"
-typedef struct panda$collections$IdentityMap$Entry panda$collections$IdentityMap$Entry;
-typedef struct panda$core$String panda$core$String;
-
-typedef struct panda$collections$IdentityMap {
-    panda$core$Class* $class;
-    panda$core$Int32 refCount;
-    panda$core$Int64 _count;
-    panda$core$Int64 bucketCount;
-    panda$collections$IdentityMap$Entry** contents;
-    panda$core$Int64 threshold;
-    panda$core$Int64 changeCount;
-} panda$collections$IdentityMap;
-#define PANDA_TYPESONLY
-#include "panda/core/Class.h"
-#undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[12]; } panda$collections$IdentityMap$class_type;
-extern panda$collections$IdentityMap$class_type panda$collections$IdentityMap$class;
-
-#ifndef PANDA_TYPESONLY
+#include "IdentityMap_types.h"
 typedef struct panda$collections$IdentityMap panda$collections$IdentityMap;
-#include "panda/core/Int64.h"
+#include "panda/core/Int64_types.h"
 typedef struct panda$core$Object panda$core$Object;
-#include "panda/core/Bit.h"
+#include "panda/core/Bit_types.h"
 typedef struct panda$collections$Iterator panda$collections$Iterator;
 typedef struct panda$core$String panda$core$String;
 
@@ -45,4 +22,3 @@ panda$collections$Iterator* panda$collections$IdentityMap$keys$R$panda$collectio
 panda$collections$Iterator* panda$collections$IdentityMap$values$R$panda$collections$Iterator$LTpanda$collections$IdentityMap$V$GT(panda$collections$IdentityMap* self);
 panda$core$String* panda$collections$IdentityMap$convert$R$panda$core$String(panda$collections$IdentityMap* self);
 
-#endif

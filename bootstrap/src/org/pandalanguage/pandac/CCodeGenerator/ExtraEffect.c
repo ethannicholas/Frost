@@ -16,8 +16,10 @@ static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -
 void org$pandalanguage$pandac$CCodeGenerator$ExtraEffect$cleanup(org$pandalanguage$pandac$CCodeGenerator$ExtraEffect* self) {
     org$pandalanguage$pandac$CCodeGenerator$ExtraEffect* $match$195_58 = NULL;
     org$pandalanguage$pandac$CCodeGenerator$ExtraEffect* $tmp9;
-    org$pandalanguage$pandac$IRNode* _f011 = NULL;
-    panda$core$String* _f014 = NULL;
+    panda$core$Int64 $tmp10;
+    org$pandalanguage$pandac$IRNode* _f012 = NULL;
+    panda$core$Int64 $tmp14;
+    panda$core$String* _f016 = NULL;
     int $tmp4;
     {
         int $tmp7;
@@ -25,21 +27,23 @@ void org$pandalanguage$pandac$CCodeGenerator$ExtraEffect$cleanup(org$pandalangua
             $tmp9 = self;
             $match$195_58 = $tmp9;
             panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp9));
-            panda$core$Bit $tmp10 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$195_58->$rawValue, ((panda$core$Int64) { 0 }));
-            if ($tmp10.value) {
+            panda$core$Int64$init$builtin_int64(&$tmp10, 0);
+            panda$core$Bit $tmp11 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$195_58->$rawValue, $tmp10);
+            if ($tmp11.value) {
             {
-                org$pandalanguage$pandac$IRNode** $tmp12 = ((org$pandalanguage$pandac$IRNode**) ((char*) $match$195_58->$data + 0));
-                _f011 = *$tmp12;
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) _f011));
+                org$pandalanguage$pandac$IRNode** $tmp13 = ((org$pandalanguage$pandac$IRNode**) ((char*) $match$195_58->$data + 0));
+                _f012 = *$tmp13;
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) _f012));
             }
             }
             else {
-            panda$core$Bit $tmp13 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$195_58->$rawValue, ((panda$core$Int64) { 1 }));
-            if ($tmp13.value) {
+            panda$core$Int64$init$builtin_int64(&$tmp14, 1);
+            panda$core$Bit $tmp15 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$195_58->$rawValue, $tmp14);
+            if ($tmp15.value) {
             {
-                panda$core$String** $tmp15 = ((panda$core$String**) ((char*) $match$195_58->$data + 0));
-                _f014 = *$tmp15;
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) _f014));
+                panda$core$String** $tmp17 = ((panda$core$String**) ((char*) $match$195_58->$data + 0));
+                _f016 = *$tmp17;
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) _f016));
             }
             }
             }
@@ -49,45 +53,45 @@ void org$pandalanguage$pandac$CCodeGenerator$ExtraEffect$cleanup(org$pandalangua
         $l5:;
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp9));
         switch ($tmp7) {
-            case -1: goto $l16;
+            case -1: goto $l18;
         }
-        $l16:;
+        $l18:;
     }
     $tmp4 = -1;
     goto $l2;
     $l2:;
     panda$core$Object$cleanup(((panda$core$Object*) self));
     switch ($tmp4) {
-        case -1: goto $l17;
+        case -1: goto $l19;
     }
-    $l17:;
+    $l19:;
 }
 void org$pandalanguage$pandac$CCodeGenerator$ExtraEffect$init$panda$core$Int64$org$pandalanguage$pandac$IRNode(org$pandalanguage$pandac$CCodeGenerator$ExtraEffect* self, panda$core$Int64 p_rv, org$pandalanguage$pandac$IRNode* p_f0) {
-    org$pandalanguage$pandac$IRNode* $tmp18;
-    org$pandalanguage$pandac$IRNode* $tmp21;
+    org$pandalanguage$pandac$IRNode* $tmp20;
+    org$pandalanguage$pandac$IRNode* $tmp23;
     self->$rawValue = p_rv;
     {
-        org$pandalanguage$pandac$IRNode** $tmp19 = ((org$pandalanguage$pandac$IRNode**) ((char*) self->$data + 0));
-        $tmp18 = *$tmp19;
-        org$pandalanguage$pandac$IRNode** $tmp20 = ((org$pandalanguage$pandac$IRNode**) ((char*) self->$data + 0));
-        $tmp21 = p_f0;
-        *$tmp20 = $tmp21;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp21));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp18));
+        org$pandalanguage$pandac$IRNode** $tmp21 = ((org$pandalanguage$pandac$IRNode**) ((char*) self->$data + 0));
+        $tmp20 = *$tmp21;
+        org$pandalanguage$pandac$IRNode** $tmp22 = ((org$pandalanguage$pandac$IRNode**) ((char*) self->$data + 0));
+        $tmp23 = p_f0;
+        *$tmp22 = $tmp23;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp23));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp20));
     }
 }
 void org$pandalanguage$pandac$CCodeGenerator$ExtraEffect$init$panda$core$Int64$panda$core$String(org$pandalanguage$pandac$CCodeGenerator$ExtraEffect* self, panda$core$Int64 p_rv, panda$core$String* p_f0) {
-    panda$core$String* $tmp22;
-    panda$core$String* $tmp25;
+    panda$core$String* $tmp24;
+    panda$core$String* $tmp27;
     self->$rawValue = p_rv;
     {
-        panda$core$String** $tmp23 = ((panda$core$String**) ((char*) self->$data + 0));
-        $tmp22 = *$tmp23;
-        panda$core$String** $tmp24 = ((panda$core$String**) ((char*) self->$data + 0));
-        $tmp25 = p_f0;
-        *$tmp24 = $tmp25;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp25));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp22));
+        panda$core$String** $tmp25 = ((panda$core$String**) ((char*) self->$data + 0));
+        $tmp24 = *$tmp25;
+        panda$core$String** $tmp26 = ((panda$core$String**) ((char*) self->$data + 0));
+        $tmp27 = p_f0;
+        *$tmp26 = $tmp27;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp27));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp24));
     }
 }
 

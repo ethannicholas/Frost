@@ -4,7 +4,7 @@ package panda.core
 uses panda.unsafe.Pointer
 
 @final
-class UInt8 : Value, Key<UInt8>, Comparable<UInt8>, Formattable {
+class UInt8 : Value, Key<UInt8>, Comparable<UInt8>, Formattable, ListView<Bit> {
     constant MIN:UInt8 := 0
 
     constant MAX:UInt8 := 255
@@ -631,6 +631,14 @@ class UInt8 : Value, Key<UInt8>, Comparable<UInt8>, Formattable {
         }
         return other.value
     }
+    @class
+    function [](range:Range<UInt8>):ListView<UInt8> {
+        return org.pandalanguage.panda.UInt8List(SteppedRange<UInt8, UInt8>(range.min, range.max, 1, range.inclusive))
+    }
+    @class
+    function [](range:SteppedRange<UInt8, UInt8>):ListView<UInt8> {
+        return org.pandalanguage.panda.UInt8List(range)
+    }
 
     function [](index:Int8):Bit {
         return self && (1 << index) != 0
@@ -644,6 +652,7 @@ class UInt8 : Value, Key<UInt8>, Comparable<UInt8>, Formattable {
         return self && (1 << index) != 0
     }
 
+    @override
     function [](index:Int64):Bit {
         return self && (1 << index) != 0
     }
@@ -662,6 +671,16 @@ class UInt8 : Value, Key<UInt8>, Comparable<UInt8>, Formattable {
 
     function [](index:UInt64):Bit {
         return self && (1 << index) != 0
+    }
+
+    @override
+    function get_count():Int {
+        return 8
+    }
+
+    @override
+    function iterator():Iterator<Bit> {
+        return org.pandalanguage.panda.IntBitIterator(self.convert()->UInt64, 1 << 7)
     }
 
     @override

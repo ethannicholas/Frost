@@ -1,45 +1,16 @@
 #pragma once
 #include "panda_c.h"
-#define PANDA_TYPESONLY
-#undef PANDA_TYPESONLY
-typedef struct panda$core$Class panda$core$Class;
-#include "panda/core/Int32.h"
-#include "org/pandalanguage/pandac/Symbol/Kind.h"
-#include "org/pandalanguage/pandac/Position.h"
-typedef struct panda$core$String panda$core$String;
-#include "panda/core/Bit.h"
-#include "org/pandalanguage/pandac/Type/Kind.h"
-typedef struct panda$collections$Array panda$collections$Array;
-typedef struct panda$core$Weak panda$core$Weak;
-
-typedef struct org$pandalanguage$pandac$Type {
-    panda$core$Class* $class;
-    panda$core$Int32 refCount;
-    org$pandalanguage$pandac$Symbol$Kind kind;
-    org$pandalanguage$pandac$Position position;
-    panda$core$String* name;
-    panda$core$Bit resolved;
-    org$pandalanguage$pandac$Type$Kind typeKind;
-    panda$collections$Array* subtypes;
-    panda$core$Weak* parameter;
-} org$pandalanguage$pandac$Type;
-#define PANDA_TYPESONLY
-#include "panda/core/Class.h"
-#undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[22]; } org$pandalanguage$pandac$Type$class_type;
-extern org$pandalanguage$pandac$Type$class_type org$pandalanguage$pandac$Type$class;
-
-#ifndef PANDA_TYPESONLY
+#include "Type_types.h"
 typedef struct org$pandalanguage$pandac$Type org$pandalanguage$pandac$Type;
 typedef struct panda$core$String panda$core$String;
-#include "org/pandalanguage/pandac/Type/Kind.h"
-#include "org/pandalanguage/pandac/Position.h"
-#include "panda/core/Bit.h"
-#include "panda/core/Int64.h"
+#include "org/pandalanguage/pandac/Type/Kind_types.h"
+#include "org/pandalanguage/pandac/Position_types.h"
+#include "panda/core/Bit_types.h"
+#include "panda/core/Int64_types.h"
 typedef struct panda$collections$ListView panda$collections$ListView;
 typedef struct org$pandalanguage$pandac$ClassDecl$GenericParameter org$pandalanguage$pandac$ClassDecl$GenericParameter;
-#include "panda/core/UInt64.h"
-#include "panda/core/Real64.h"
+#include "panda/core/UInt64_types.h"
+#include "panda/core/Real64_types.h"
 typedef struct org$pandalanguage$pandac$Compiler org$pandalanguage$pandac$Compiler;
 typedef struct panda$collections$HashMap panda$collections$HashMap;
 
@@ -122,4 +93,3 @@ panda$core$Int64 org$pandalanguage$pandac$Type$hash$R$panda$core$Int64(org$panda
 panda$core$String* org$pandalanguage$pandac$Type$convert$R$panda$core$String(org$pandalanguage$pandac$Type* self);
 void org$pandalanguage$pandac$Type$cleanup(org$pandalanguage$pandac$Type* self);
 
-#endif

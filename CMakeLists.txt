@@ -6,6 +6,7 @@ set(OPTIMIZATION 3)
 set(SAFETY 3)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/third-party/FindICU")
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/third-party/FindLLVM")
+set(SYSTEM_LIBRARIES m pthread)
 
 find_package(LLVM 4.0 REQUIRED)
 find_package(ICU COMPONENTS uc i18n REQUIRED)
@@ -29,7 +30,6 @@ file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/regex")
 
 add_library(c_panda
     bootstrap/src/panda/collections/Array.c
-    bootstrap/src/panda/collections/Array/ArrayIterator.c
     bootstrap/src/panda/collections/Collection.c
     bootstrap/src/panda/collections/CollectionView.c
     bootstrap/src/panda/collections/CollectionWriter.c
@@ -54,6 +54,7 @@ add_library(c_panda
     bootstrap/src/panda/collections/Key.c
     bootstrap/src/panda/collections/List.c
     bootstrap/src/panda/collections/ListView.c
+    bootstrap/src/panda/collections/ListView/ListIterator.c
     bootstrap/src/panda/collections/ListWriter.c
     bootstrap/src/panda/collections/Map.c
     bootstrap/src/panda/collections/MapView.c
@@ -92,7 +93,14 @@ add_library(c_panda
     bootstrap/src/panda/core/Range.LTpanda/core/Int64.Q.GT.c
     bootstrap/src/panda/core/Range.LTpanda/core/Int64.GT.c
     bootstrap/src/panda/core/SteppedRange.LTpanda/core/String/Index.Q.Cpanda/core/Int64.GT.c
+    bootstrap/src/panda/core/SteppedRange.LTpanda/core/Int8.Cpanda/core/Int8.GT.c
+    bootstrap/src/panda/core/SteppedRange.LTpanda/core/Int16.Cpanda/core/Int16.GT.c
+    bootstrap/src/panda/core/SteppedRange.LTpanda/core/Int32.Cpanda/core/Int32.GT.c
     bootstrap/src/panda/core/SteppedRange.LTpanda/core/Int64.Cpanda/core/Int64.GT.c
+    bootstrap/src/panda/core/SteppedRange.LTpanda/core/UInt8.Cpanda/core/UInt8.GT.c
+    bootstrap/src/panda/core/SteppedRange.LTpanda/core/UInt16.Cpanda/core/UInt16.GT.c
+    bootstrap/src/panda/core/SteppedRange.LTpanda/core/UInt32.Cpanda/core/UInt32.GT.c
+    bootstrap/src/panda/core/SteppedRange.LTpanda/core/UInt64.Cpanda/core/UInt64.GT.c
     bootstrap/src/panda/core/SteppedRange.LTpanda/core/Int64.Q.Cpanda/core/Int64.GT.c
     bootstrap/src/panda/core/String.c
     bootstrap/src/panda/core/String/Index.c
@@ -138,6 +146,15 @@ add_library(c_panda
     bootstrap/src/org/pandalanguage/json/Position.c
     bootstrap/src/org/pandalanguage/json/Token.c
     bootstrap/src/org/pandalanguage/json/Token/Kind.c
+    bootstrap/src/org/pandalanguage/panda/IntBitIterator.c
+    bootstrap/src/org/pandalanguage/panda/Int8List.c
+    bootstrap/src/org/pandalanguage/panda/Int16List.c
+    bootstrap/src/org/pandalanguage/panda/Int32List.c
+    bootstrap/src/org/pandalanguage/panda/Int64List.c
+    bootstrap/src/org/pandalanguage/panda/UInt8List.c
+    bootstrap/src/org/pandalanguage/panda/UInt16List.c
+    bootstrap/src/org/pandalanguage/panda/UInt32List.c
+    bootstrap/src/org/pandalanguage/panda/UInt64List.c
     bootstrap/src/pandalib.c
 )
 
@@ -206,7 +223,7 @@ add_executable(bootstrap
     bootstrap/src/org/pandalanguage/regex/RegexToken.c
     bootstrap/src/org/pandalanguage/regex/RegexToken/Kind.c
 )
-target_link_libraries(bootstrap c_panda ${ICU_LIBRARIES})
+target_link_libraries(bootstrap ${SYSTEM_LIBRARIES} c_panda ${ICU_LIBRARIES})
 set_target_properties(bootstrap PROPERTIES LINKER_LANGUAGE CXX)
 
 function(compile_panda_sources out_var)
@@ -296,11 +313,20 @@ set(core_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/threads/Lock.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/threads/Notifier.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/threads/MessageQueue.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/threads/SCopedLock.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/threads/ScopedLock.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/threads/Thread.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/json/Lexer.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/json/Position.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/json/Token.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/panda/IntBitIterator.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/panda/Int8List.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/panda/Int16List.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/panda/Int32List.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/panda/Int64List.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/panda/UInt8List.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/panda/UInt16List.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/panda/UInt32List.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/panda/UInt64List.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/plex/runtime/DFA.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/plex/runtime/RawToken.panda
 )
@@ -426,7 +452,7 @@ compile_plex_sources(plex_objects
 add_executable(plex
     ${plex_objects}
 )
-target_link_libraries(plex panda ${ICU_LIBRARIES})
+target_link_libraries(plex panda ${SYSTEM_LIBRARIES} ${ICU_LIBRARIES})
 set_target_properties(plex PROPERTIES LINKER_LANGUAGE CXX)
 
 add_custom_command(
@@ -527,7 +553,7 @@ compile_pandac_sources(pandac_objects
 add_executable(pandac
     ${pandac_objects}
 )
-target_link_libraries(pandac panda ${ICU_LIBRARIES})
+target_link_libraries(pandac panda ${SYSTEM_LIBRARIES} ${ICU_LIBRARIES})
 set_target_properties(pandac PROPERTIES LINKER_LANGUAGE CXX)
 
 function(create_headers out_var)

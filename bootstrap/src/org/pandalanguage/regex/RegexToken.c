@@ -6,7 +6,7 @@
 #include "org/pandalanguage/regex/RegexToken/Kind.h"
 #include "panda/core/String/Index.h"
 #include "org/pandalanguage/pandac/Position.h"
-void org$pandalanguage$regex$RegexToken$cleanup$shim(panda$core$Object* p0) {
+__attribute__((weak)) void org$pandalanguage$regex$RegexToken$cleanup$shim(panda$core$Object* p0) {
     org$pandalanguage$regex$RegexToken$cleanup(((org$pandalanguage$regex$RegexToken$wrapper*) p0)->value);
 
 }

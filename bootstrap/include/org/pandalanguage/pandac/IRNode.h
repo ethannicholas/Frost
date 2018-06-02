@@ -1,40 +1,21 @@
 #pragma once
 #include "panda_c.h"
-#define PANDA_TYPESONLY
-#undef PANDA_TYPESONLY
-typedef struct panda$core$Class panda$core$Class;
-#include "panda/core/Int32.h"
-#include "panda/core/Int64.h"
-typedef struct panda$core$String panda$core$String;
-
-typedef struct org$pandalanguage$pandac$IRNode {
-    panda$core$Class* $class;
-    panda$core$Int32 refCount;
-    panda$core$Int64 $rawValue;
-    int8_t $data[48];
-} org$pandalanguage$pandac$IRNode;
-#define PANDA_TYPESONLY
-#include "panda/core/Class.h"
-#undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[5]; } org$pandalanguage$pandac$IRNode$class_type;
-extern org$pandalanguage$pandac$IRNode$class_type org$pandalanguage$pandac$IRNode$class;
-
-#ifndef PANDA_TYPESONLY
+#include "IRNode_types.h"
 typedef struct org$pandalanguage$pandac$Type org$pandalanguage$pandac$Type;
 typedef struct org$pandalanguage$pandac$IRNode org$pandalanguage$pandac$IRNode;
-#include "org/pandalanguage/pandac/Position.h"
-#include "panda/core/Bit.h"
+#include "org/pandalanguage/pandac/Position_types.h"
+#include "panda/core/Bit_types.h"
 typedef struct panda$core$String panda$core$String;
-#include "panda/core/Int64.h"
-#include "org/pandalanguage/pandac/parser/Token/Kind.h"
+#include "panda/core/Int64_types.h"
+#include "org/pandalanguage/pandac/parser/Token/Kind_types.h"
 typedef struct panda$collections$ImmutableArray panda$collections$ImmutableArray;
 typedef struct org$pandalanguage$pandac$MethodRef org$pandalanguage$pandac$MethodRef;
 typedef struct org$pandalanguage$pandac$ChoiceEntry org$pandalanguage$pandac$ChoiceEntry;
 typedef struct org$pandalanguage$pandac$FieldDecl org$pandalanguage$pandac$FieldDecl;
-#include "panda/core/UInt64.h"
-#include "panda/core/Real64.h"
+#include "panda/core/UInt64_types.h"
+#include "panda/core/Real64_types.h"
 typedef struct org$pandalanguage$pandac$ASTNode org$pandalanguage$pandac$ASTNode;
-#include "org/pandalanguage/pandac/Variable/Kind.h"
+#include "org/pandalanguage/pandac/Variable/Kind_types.h"
 typedef struct org$pandalanguage$pandac$Variable org$pandalanguage$pandac$Variable;
 
 org$pandalanguage$pandac$Type* org$pandalanguage$pandac$IRNode$type$R$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$IRNode* self);
@@ -82,4 +63,3 @@ void org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pan
 void org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Variable(org$pandalanguage$pandac$IRNode* self, panda$core$Int64 p_rv, org$pandalanguage$pandac$Position p_f0, org$pandalanguage$pandac$Variable* p_f1);
 void org$pandalanguage$pandac$IRNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$String$Q$org$pandalanguage$pandac$IRNode$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$IRNode$GT(org$pandalanguage$pandac$IRNode* self, panda$core$Int64 p_rv, org$pandalanguage$pandac$Position p_f0, panda$core$String* p_f1, org$pandalanguage$pandac$IRNode* p_f2, panda$collections$ImmutableArray* p_f3);
 
-#endif

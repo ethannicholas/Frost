@@ -1,30 +1,12 @@
 #pragma once
 #include "panda_c.h"
-#define PANDA_TYPESONLY
-#undef PANDA_TYPESONLY
-typedef struct panda$core$Class panda$core$Class;
-#include "panda/core/Int32.h"
-typedef struct panda$collections$HashMap panda$collections$HashMap;
-typedef struct panda$core$String panda$core$String;
-
-typedef struct panda$collections$Set {
-    panda$core$Class* $class;
-    panda$core$Int32 refCount;
-    panda$collections$HashMap* contents;
-} panda$collections$Set;
-#define PANDA_TYPESONLY
-#include "panda/core/Class.h"
-#undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[8]; } panda$collections$Set$class_type;
-extern panda$collections$Set$class_type panda$collections$Set$class;
-
-#ifndef PANDA_TYPESONLY
+#include "Set_types.h"
 typedef struct panda$collections$Set panda$collections$Set;
 typedef struct panda$collections$CollectionView panda$collections$CollectionView;
 typedef struct panda$collections$Key panda$collections$Key;
-#include "panda/core/Int64.h"
+#include "panda/core/Int64_types.h"
 typedef struct panda$collections$Iterator panda$collections$Iterator;
-#include "panda/core/Bit.h"
+#include "panda/core/Bit_types.h"
 typedef struct panda$core$String panda$core$String;
 
 void panda$collections$Set$init(panda$collections$Set* self);
@@ -38,4 +20,3 @@ panda$core$Bit panda$collections$Set$contains$panda$collections$Set$T$R$panda$co
 panda$core$String* panda$collections$Set$convert$R$panda$core$String(panda$collections$Set* self);
 void panda$collections$Set$cleanup(panda$collections$Set* self);
 
-#endif

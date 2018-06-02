@@ -1,82 +1,32 @@
 #pragma once
 #include "panda_c.h"
-#define PANDA_TYPESONLY
-#undef PANDA_TYPESONLY
-typedef struct panda$core$Class panda$core$Class;
-#include "panda/core/Int32.h"
-typedef struct panda$io$OutputStream panda$io$OutputStream;
-typedef struct panda$core$Weak panda$core$Weak;
-typedef struct panda$io$MemoryOutputStream panda$io$MemoryOutputStream;
-typedef struct panda$collections$Set panda$collections$Set;
-typedef struct panda$collections$HashMap panda$collections$HashMap;
-typedef struct panda$collections$IdentityMap panda$collections$IdentityMap;
-typedef struct panda$core$String panda$core$String;
-typedef struct org$pandalanguage$pandac$MethodDecl org$pandalanguage$pandac$MethodDecl;
-typedef struct panda$collections$Stack panda$collections$Stack;
-#include "panda/core/Int64.h"
-
-typedef struct org$pandalanguage$pandac$LLVMCodeGenerator {
-    panda$core$Class* $class;
-    panda$core$Int32 refCount;
-    panda$io$OutputStream* out;
-    panda$core$Weak* compiler;
-    panda$io$MemoryOutputStream* declarations;
-    panda$io$MemoryOutputStream* types;
-    panda$io$MemoryOutputStream* methods;
-    panda$io$MemoryOutputStream* methodHeader;
-    panda$io$MemoryOutputStream* shims;
-    panda$io$MemoryOutputStream* strings;
-    panda$collections$Set* declared;
-    panda$collections$Set* writtenTypes;
-    panda$collections$Set* writtenWrappers;
-    panda$collections$HashMap* classConstants;
-    panda$collections$IdentityMap* variableNames;
-    panda$core$String* currentBlock;
-    org$pandalanguage$pandac$MethodDecl* currentMethod;
-    panda$core$String* returnValueVar;
-    panda$collections$Stack* enclosingContexts;
-    panda$collections$Stack* extraEffects;
-    panda$core$Int64 varCount;
-    panda$core$Int64 labelCount;
-    panda$collections$HashMap* reusedValues;
-    panda$collections$IdentityMap* methodShims;
-    panda$collections$IdentityMap* currentlyInlining;
-    panda$collections$IdentityMap* sizes;
-    panda$collections$IdentityMap* choiceDataSizes;
-} org$pandalanguage$pandac$LLVMCodeGenerator;
-#define PANDA_TYPESONLY
-#include "panda/core/Class.h"
-#undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[114]; } org$pandalanguage$pandac$LLVMCodeGenerator$class_type;
-extern org$pandalanguage$pandac$LLVMCodeGenerator$class_type org$pandalanguage$pandac$LLVMCodeGenerator$class;
-
-#ifndef PANDA_TYPESONLY
+#include "LLVMCodeGenerator_types.h"
 typedef struct org$pandalanguage$pandac$LLVMCodeGenerator org$pandalanguage$pandac$LLVMCodeGenerator;
 typedef struct panda$core$String panda$core$String;
 typedef struct panda$io$OutputStream panda$io$OutputStream;
 typedef struct org$pandalanguage$pandac$Compiler org$pandalanguage$pandac$Compiler;
-#include "panda/core/Int64.h"
+#include "panda/core/Int64_types.h"
 typedef struct org$pandalanguage$pandac$Type org$pandalanguage$pandac$Type;
 typedef struct org$pandalanguage$pandac$ClassDecl org$pandalanguage$pandac$ClassDecl;
 typedef struct org$pandalanguage$pandac$MethodDecl org$pandalanguage$pandac$MethodDecl;
 typedef struct org$pandalanguage$pandac$LLVMCodeGenerator$MethodShim org$pandalanguage$pandac$LLVMCodeGenerator$MethodShim;
-#include "panda/core/Bit.h"
+#include "panda/core/Bit_types.h"
 typedef struct org$pandalanguage$pandac$Pair org$pandalanguage$pandac$Pair;
 typedef struct org$pandalanguage$pandac$LLVMCodeGenerator$ClassConstant org$pandalanguage$pandac$LLVMCodeGenerator$ClassConstant;
 typedef struct org$pandalanguage$pandac$LLVMCodeGenerator$InlineContext org$pandalanguage$pandac$LLVMCodeGenerator$InlineContext;
 typedef struct org$pandalanguage$pandac$Variable org$pandalanguage$pandac$Variable;
 typedef struct org$pandalanguage$pandac$FieldDecl org$pandalanguage$pandac$FieldDecl;
 typedef struct org$pandalanguage$pandac$IRNode org$pandalanguage$pandac$IRNode;
-#include "org/pandalanguage/pandac/parser/Token/Kind.h"
+#include "org/pandalanguage/pandac/parser/Token/Kind_types.h"
 typedef struct org$pandalanguage$pandac$MethodRef org$pandalanguage$pandac$MethodRef;
 typedef struct panda$collections$ImmutableArray panda$collections$ImmutableArray;
 typedef struct panda$collections$ListView panda$collections$ListView;
-#include "panda/core/UInt64.h"
-#include "panda/core/Real64.h"
+#include "panda/core/UInt64_types.h"
+#include "panda/core/Real64_types.h"
 typedef struct org$pandalanguage$pandac$ChoiceEntry org$pandalanguage$pandac$ChoiceEntry;
-#include "org/pandalanguage/pandac/Variable/Kind.h"
+#include "org/pandalanguage/pandac/Variable/Kind_types.h"
 typedef struct org$pandalanguage$pandac$LLVMCodeGenerator$EnclosingContext org$pandalanguage$pandac$LLVMCodeGenerator$EnclosingContext;
-#include "org/pandalanguage/pandac/Position.h"
+#include "org/pandalanguage/pandac/Position_types.h"
 
 void org$pandalanguage$pandac$LLVMCodeGenerator$init$panda$core$String$panda$io$OutputStream(org$pandalanguage$pandac$LLVMCodeGenerator* self, panda$core$String* p_triple, panda$io$OutputStream* p_out);
 void org$pandalanguage$pandac$LLVMCodeGenerator$setCompiler$org$pandalanguage$pandac$Compiler(org$pandalanguage$pandac$LLVMCodeGenerator* self, org$pandalanguage$pandac$Compiler* p_compiler);
@@ -193,4 +143,3 @@ void org$pandalanguage$pandac$LLVMCodeGenerator$start$org$pandalanguage$pandac$C
 void org$pandalanguage$pandac$LLVMCodeGenerator$end$org$pandalanguage$pandac$ClassDecl(org$pandalanguage$pandac$LLVMCodeGenerator* self, org$pandalanguage$pandac$ClassDecl* p_cl);
 void org$pandalanguage$pandac$LLVMCodeGenerator$cleanup(org$pandalanguage$pandac$LLVMCodeGenerator* self);
 
-#endif

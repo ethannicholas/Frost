@@ -8,7 +8,7 @@
 #include "panda/core/Panda.h"
 #include "panda/core/Bit.h"
 #include "panda/collections/ImmutableHashMap/Entry.h"
-panda$core$Object* panda$collections$ImmutableHashMap$ValueIterator$next$R$panda$collections$ImmutableHashMap$ValueIterator$V$shim(panda$collections$ImmutableHashMap$ValueIterator* p0) {
+__attribute__((weak)) panda$core$Object* panda$collections$ImmutableHashMap$ValueIterator$next$R$panda$collections$ImmutableHashMap$ValueIterator$V$shim(panda$collections$ImmutableHashMap$ValueIterator* p0) {
     panda$core$Object* result = panda$collections$ImmutableHashMap$ValueIterator$next$R$panda$collections$ImmutableHashMap$ValueIterator$V(p0);
 
     return result;

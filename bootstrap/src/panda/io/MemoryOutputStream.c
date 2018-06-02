@@ -16,30 +16,32 @@ panda$io$MemoryOutputStream$class_type panda$io$MemoryOutputStream$class = { (pa
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x69\x6f\x2e\x4d\x65\x6d\x6f\x72\x79\x4f\x75\x74\x70\x75\x74\x53\x74\x72\x65\x61\x6d", 27, -1871907680230610725, NULL };
 
 void panda$io$MemoryOutputStream$init(panda$io$MemoryOutputStream* self) {
+    panda$core$Int64 $tmp2;
     self->data = NULL;
-    panda$io$MemoryOutputStream$init$panda$core$Int64(self, ((panda$core$Int64) { 1024 }));
+    panda$core$Int64$init$builtin_int64(&$tmp2, 1024);
+    panda$io$MemoryOutputStream$init$panda$core$Int64(self, $tmp2);
 }
 void panda$io$MemoryOutputStream$init$panda$core$Int64(panda$io$MemoryOutputStream* self, panda$core$Int64 p_capacity) {
-    panda$core$MutableString* $tmp2;
     panda$core$MutableString* $tmp3;
     panda$core$MutableString* $tmp4;
+    panda$core$MutableString* $tmp5;
     self->data = NULL;
     {
-        $tmp2 = self->data;
-        panda$core$MutableString* $tmp5 = (panda$core$MutableString*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$MutableString$class);
-        panda$core$MutableString$init$panda$core$Int64($tmp5, p_capacity);
+        $tmp3 = self->data;
+        panda$core$MutableString* $tmp6 = (panda$core$MutableString*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$MutableString$class);
+        panda$core$MutableString$init$panda$core$Int64($tmp6, p_capacity);
+        $tmp5 = $tmp6;
         $tmp4 = $tmp5;
-        $tmp3 = $tmp4;
-        self->data = $tmp3;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp3));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp4));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2));
+        self->data = $tmp4;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp4));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp5));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp3));
     }
 }
 void panda$io$MemoryOutputStream$write$panda$core$UInt8(panda$io$MemoryOutputStream* self, panda$core$UInt8 p_i) {
-    panda$core$Char8 $tmp6;
-    panda$core$Char8$init$panda$core$UInt8(&$tmp6, p_i);
-    panda$core$MutableString$append$panda$core$Char8(self->data, $tmp6);
+    panda$core$Char8 $tmp7;
+    panda$core$Char8$init$panda$core$UInt8(&$tmp7, p_i);
+    panda$core$MutableString$append$panda$core$Char8(self->data, $tmp7);
 }
 void panda$io$MemoryOutputStream$write$panda$unsafe$Pointer$LTpanda$core$UInt8$GT$panda$core$Int64$panda$core$Int64(panda$io$MemoryOutputStream* self, panda$core$UInt8* p_ptr, panda$core$Int64 p_offset, panda$core$Int64 p_count) {
     panda$core$MutableString$append$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64$panda$core$Int64(self->data, ((panda$core$Char8*) p_ptr), p_offset, p_count);
@@ -48,41 +50,41 @@ void panda$io$MemoryOutputStream$clear(panda$io$MemoryOutputStream* self) {
     panda$core$MutableString$clear(self->data);
 }
 panda$core$String* panda$io$MemoryOutputStream$convert$R$panda$core$String(panda$io$MemoryOutputStream* self) {
-    panda$core$String* $returnValue7;
-    panda$core$String* $tmp8;
+    panda$core$String* $returnValue8;
     panda$core$String* $tmp9;
-    panda$core$String* $tmp10 = panda$core$MutableString$convert$R$panda$core$String(self->data);
+    panda$core$String* $tmp10;
+    panda$core$String* $tmp11 = panda$core$MutableString$convert$R$panda$core$String(self->data);
+    $tmp10 = $tmp11;
     $tmp9 = $tmp10;
-    $tmp8 = $tmp9;
-    $returnValue7 = $tmp8;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp8));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp9));
-    return $returnValue7;
+    $returnValue8 = $tmp9;
+    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp9));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp10));
+    return $returnValue8;
 }
 panda$core$String* panda$io$MemoryOutputStream$finish$R$panda$core$String(panda$io$MemoryOutputStream* self) {
-    panda$core$String* $returnValue12;
-    panda$core$String* $tmp13;
+    panda$core$String* $returnValue13;
     panda$core$String* $tmp14;
-    panda$core$String* $tmp15 = panda$core$MutableString$finish$R$panda$core$String(self->data);
+    panda$core$String* $tmp15;
+    panda$core$String* $tmp16 = panda$core$MutableString$finish$R$panda$core$String(self->data);
+    $tmp15 = $tmp16;
     $tmp14 = $tmp15;
-    $tmp13 = $tmp14;
-    $returnValue12 = $tmp13;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp13));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp14));
-    return $returnValue12;
+    $returnValue13 = $tmp14;
+    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp14));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp15));
+    return $returnValue13;
 }
 void panda$io$MemoryOutputStream$cleanup(panda$io$MemoryOutputStream* self) {
-    int $tmp19;
+    int $tmp20;
     {
     }
-    $tmp19 = -1;
-    goto $l17;
-    $l17:;
+    $tmp20 = -1;
+    goto $l18;
+    $l18:;
     panda$io$OutputStream$cleanup(((panda$io$OutputStream*) self));
-    switch ($tmp19) {
-        case -1: goto $l20;
+    switch ($tmp20) {
+        case -1: goto $l21;
     }
-    $l20:;
+    $l21:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->data));
 }
 

@@ -6,7 +6,7 @@
 #include "panda/io/InputStream.h"
 #include "panda/core/Panda.h"
 #include "panda/core/Bit.h"
-panda$core$Object* panda$io$InputStream$LineIterator$next$R$panda$core$String$shim(panda$io$InputStream$LineIterator* p0) {
+__attribute__((weak)) panda$core$Object* panda$io$InputStream$LineIterator$next$R$panda$core$String$shim(panda$io$InputStream$LineIterator* p0) {
     panda$core$String* result = panda$io$InputStream$LineIterator$next$R$panda$core$String(p0);
 
     return ((panda$core$Object*) result);

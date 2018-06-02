@@ -1,37 +1,15 @@
 #pragma once
 #include "panda_c.h"
-#define PANDA_TYPESONLY
-#undef PANDA_TYPESONLY
-typedef struct panda$core$Class panda$core$Class;
-#include "panda/core/Int32.h"
-#include "panda/core/Char8.h"
-#include "panda/core/Int64.h"
+#include "String_types.h"
 typedef struct panda$core$String panda$core$String;
-
-typedef struct panda$core$String {
-    panda$core$Class* $class;
-    panda$core$Int32 refCount;
-    panda$core$Char8* data;
-    panda$core$Int64 _length;
-    panda$core$Int64 _hash;
-    panda$core$String* owner;
-} panda$core$String;
-#define PANDA_TYPESONLY
-#include "panda/core/Class.h"
-#undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[60]; } panda$core$String$class_type;
-extern panda$core$String$class_type panda$core$String$class;
-
-#ifndef PANDA_TYPESONLY
-typedef struct panda$core$String panda$core$String;
-#include "panda/core/Char8.h"
-#include "panda/core/Int64.h"
+#include "panda/core/Char8_types.h"
+#include "panda/core/Int64_types.h"
 typedef struct panda$collections$ListView panda$collections$ListView;
 typedef struct panda$collections$Iterator panda$collections$Iterator;
-#include "panda/core/Bit.h"
+#include "panda/core/Bit_types.h"
 typedef struct panda$core$Object panda$core$Object;
-#include "panda/core/Char32.h"
-#include "panda/core/String/Index.h"
+#include "panda/core/Char32_types.h"
+#include "panda/core/String/Index_types.h"
 #include "panda/core/Range.LTpanda/core/String/Index.GT.h"
 #include "panda/core/Range.LTpanda/core/String/Index.Q.GT.h"
 #include "panda/core/SteppedRange.LTpanda/core/String/Index.Q.Cpanda/core/Int64.GT.h"
@@ -40,7 +18,7 @@ typedef struct panda$core$Object panda$core$Object;
 typedef struct panda$core$RegularExpression panda$core$RegularExpression;
 typedef struct panda$core$MutableMethod panda$core$MutableMethod;
 typedef struct panda$collections$Array panda$collections$Array;
-#include "panda/core/UInt64.h"
+#include "panda/core/UInt64_types.h"
 
 void panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64(panda$core$String* self, panda$core$Char8* p_data, panda$core$Int64 p_length);
 void panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64$panda$core$String(panda$core$String* self, panda$core$Char8* p_data, panda$core$Int64 p_length, panda$core$String* p_owner);
@@ -107,4 +85,3 @@ panda$core$Int64$nullable panda$core$String$convert$R$panda$core$Int64$Q(panda$c
 panda$core$UInt64$nullable panda$core$String$convert$R$panda$core$UInt64$Q(panda$core$String* self);
 panda$core$Int64 panda$core$String$hash$R$panda$core$Int64(panda$core$String* self);
 
-#endif

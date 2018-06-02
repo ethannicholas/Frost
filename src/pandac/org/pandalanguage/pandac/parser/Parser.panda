@@ -436,9 +436,22 @@ class Parser {
                         }
                         return ASTNode.UNTYPED_LAMBDA(start.position, parameters.finish(), body)
                     }
-                    Console.printLine("have tuple at \{start.position}")
                     return ASTNode.TUPLE(start.position, parameters.finish())
                 }
+                -- either a single-parameter untyped lambda or a parenthesized identifier
+                if expect(Token.Kind.RPAREN, "')'") = null {
+                    return null
+                }
+                if checkNext(Token.Kind.YIELDS) != null {
+                    def parameters := Array<ASTNode>()
+                    parameters.add(expr)
+                    def body := expression()
+                    if body = null {
+                        return null
+                    }
+                    return ASTNode.UNTYPED_LAMBDA(start.position, parameters.finish(), body)
+                }
+                return expr -- just a parenthesized identifier
             otherwise:
                 -- either a single parenthesized expression or a tuple
                 if checkNext(Token.Kind.COMMA) = null {

@@ -1,38 +1,13 @@
 #pragma once
 #include "panda_c.h"
-#define PANDA_TYPESONLY
-#undef PANDA_TYPESONLY
-typedef struct panda$core$Class panda$core$Class;
-#include "panda/core/Int32.h"
-typedef struct org$pandalanguage$regex$RegexLexer org$pandalanguage$regex$RegexLexer;
-typedef struct panda$threads$MessageQueue panda$threads$MessageQueue;
-typedef struct panda$io$File panda$io$File;
-typedef struct panda$core$String panda$core$String;
-typedef struct panda$collections$SpecializedArray$LTorg$pandalanguage$regex$RegexToken$GT panda$collections$SpecializedArray$LTorg$pandalanguage$regex$RegexToken$GT;
-
-typedef struct org$pandalanguage$regex$RegexParser {
-    panda$core$Class* $class;
-    panda$core$Int32 refCount;
-    org$pandalanguage$regex$RegexLexer* lexer;
-    panda$threads$MessageQueue* errors;
-    panda$io$File* path;
-    panda$core$String* source;
-    panda$collections$SpecializedArray$LTorg$pandalanguage$regex$RegexToken$GT* pushbackBuffer;
-} org$pandalanguage$regex$RegexParser;
-#define PANDA_TYPESONLY
-#include "panda/core/Class.h"
-#undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[18]; } org$pandalanguage$regex$RegexParser$class_type;
-extern org$pandalanguage$regex$RegexParser$class_type org$pandalanguage$regex$RegexParser$class;
-
-#ifndef PANDA_TYPESONLY
+#include "RegexParser_types.h"
 typedef struct org$pandalanguage$regex$RegexParser org$pandalanguage$regex$RegexParser;
 typedef struct panda$threads$MessageQueue panda$threads$MessageQueue;
 typedef struct panda$io$File panda$io$File;
 typedef struct panda$core$String panda$core$String;
-#include "org/pandalanguage/regex/RegexToken.h"
-#include "panda/core/Bit.h"
-#include "org/pandalanguage/regex/RegexToken/Kind.h"
+#include "org/pandalanguage/regex/RegexToken_types.h"
+#include "panda/core/Bit_types.h"
+#include "org/pandalanguage/regex/RegexToken/Kind_types.h"
 typedef struct org$pandalanguage$pandac$ASTNode org$pandalanguage$pandac$ASTNode;
 
 void org$pandalanguage$regex$RegexParser$init$panda$threads$MessageQueue$LTorg$pandalanguage$pandac$Compiler$Error$GT(org$pandalanguage$regex$RegexParser* self, panda$threads$MessageQueue* p_errors);
@@ -54,4 +29,3 @@ panda$core$Bit org$pandalanguage$regex$RegexParser$expression$R$panda$core$Bit(o
 org$pandalanguage$pandac$ASTNode* org$pandalanguage$regex$RegexParser$regex$R$org$pandalanguage$pandac$ASTNode$Q(org$pandalanguage$regex$RegexParser* self);
 void org$pandalanguage$regex$RegexParser$cleanup(org$pandalanguage$regex$RegexParser* self);
 
-#endif

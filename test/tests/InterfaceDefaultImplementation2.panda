@@ -1,0 +1,41 @@
+interface Test1 {
+    method foo()
+}
+
+interface Test2 : Test1 {
+    @override
+    method foo() {
+        Console.printLine("Test2.foo")
+    }
+}
+
+class Test3 : Test2 {
+}
+
+class Test4 : Test1 {
+    @override
+    method foo() {
+        Console.printLine("Test4.foo")
+    }
+}
+
+class Test5 : Test2 {
+    @override
+    method foo() {
+        Console.printLine("Test5.foo")
+    }
+}
+
+method main() {
+    Test3().foo()
+    Test4().foo()
+    Test5().foo()
+
+    var t:Test1
+    t := Test3()
+    t.foo()
+    t := Test4()
+    t.foo()
+    t := Test5()
+    t.foo()
+}

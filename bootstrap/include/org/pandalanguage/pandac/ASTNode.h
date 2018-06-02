@@ -1,39 +1,20 @@
 #pragma once
 #include "panda_c.h"
-#define PANDA_TYPESONLY
-#undef PANDA_TYPESONLY
-typedef struct panda$core$Class panda$core$Class;
-#include "panda/core/Int32.h"
-#include "panda/core/Int64.h"
-typedef struct panda$core$String panda$core$String;
-
-typedef struct org$pandalanguage$pandac$ASTNode {
-    panda$core$Class* $class;
-    panda$core$Int32 refCount;
-    panda$core$Int64 $rawValue;
-    int8_t $data[80];
-} org$pandalanguage$pandac$ASTNode;
-#define PANDA_TYPESONLY
-#include "panda/core/Class.h"
-#undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[3]; } org$pandalanguage$pandac$ASTNode$class_type;
-extern org$pandalanguage$pandac$ASTNode$class_type org$pandalanguage$pandac$ASTNode$class;
-
-#ifndef PANDA_TYPESONLY
-#include "org/pandalanguage/pandac/Position.h"
+#include "ASTNode_types.h"
+#include "org/pandalanguage/pandac/Position_types.h"
 typedef struct org$pandalanguage$pandac$ASTNode org$pandalanguage$pandac$ASTNode;
 typedef struct panda$core$String panda$core$String;
-#include "panda/core/Int64.h"
-#include "org/pandalanguage/pandac/parser/Token/Kind.h"
-#include "panda/core/Bit.h"
+#include "panda/core/Int64_types.h"
+#include "org/pandalanguage/pandac/parser/Token/Kind_types.h"
+#include "panda/core/Bit_types.h"
 typedef struct panda$collections$ImmutableArray panda$collections$ImmutableArray;
 typedef struct org$pandalanguage$pandac$ChoiceEntry org$pandalanguage$pandac$ChoiceEntry;
-#include "org/pandalanguage/pandac/ClassDecl/Kind.h"
-#include "panda/core/UInt64.h"
+#include "org/pandalanguage/pandac/ClassDecl/Kind_types.h"
+#include "panda/core/UInt64_types.h"
 typedef struct org$pandalanguage$pandac$IRNode org$pandalanguage$pandac$IRNode;
-#include "org/pandalanguage/pandac/MethodDecl/Kind.h"
-#include "panda/core/Real64.h"
-#include "org/pandalanguage/pandac/Variable/Kind.h"
+#include "org/pandalanguage/pandac/MethodDecl/Kind_types.h"
+#include "panda/core/Real64_types.h"
+#include "org/pandalanguage/pandac/Variable/Kind_types.h"
 
 org$pandalanguage$pandac$Position org$pandalanguage$pandac$ASTNode$position$R$org$pandalanguage$pandac$Position(org$pandalanguage$pandac$ASTNode* self);
 panda$core$String* org$pandalanguage$pandac$ASTNode$convert$R$panda$core$String(org$pandalanguage$pandac$ASTNode* self);
@@ -74,4 +55,3 @@ void org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pa
 void org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT(org$pandalanguage$pandac$ASTNode* self, panda$core$Int64 p_rv, org$pandalanguage$pandac$Position p_f0, panda$collections$ImmutableArray* p_f1, panda$collections$ImmutableArray* p_f2);
 void org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$String$Q$org$pandalanguage$pandac$ASTNode$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT(org$pandalanguage$pandac$ASTNode* self, panda$core$Int64 p_rv, org$pandalanguage$pandac$Position p_f0, panda$core$String* p_f1, org$pandalanguage$pandac$ASTNode* p_f2, panda$collections$ImmutableArray* p_f3);
 
-#endif

@@ -18,7 +18,7 @@ generally contains a single [package statement](packages.html) and a single publ
 
 When Panda tries to find the class `example.Hello` (for instance, if it is referenced in another
 file), it will check the search path for a file named `example/Hello.panda`. Because of this, you
-will want to use a directory and file struction that matches the package and class names of your
+will want to use a directory and file structure that matches the package and class names of your
 source files.
 
 While a Panda source file *generally* contains a single package statement and a single public class,

@@ -6,7 +6,7 @@
 #include "org/pandalanguage/json/Token/Kind.h"
 #include "panda/core/String/Index.h"
 #include "org/pandalanguage/json/Position.h"
-void org$pandalanguage$json$Token$cleanup$shim(panda$core$Object* p0) {
+__attribute__((weak)) void org$pandalanguage$json$Token$cleanup$shim(panda$core$Object* p0) {
     org$pandalanguage$json$Token$cleanup(((org$pandalanguage$json$Token$wrapper*) p0)->value);
 
 }

@@ -1,34 +1,15 @@
 #pragma once
 #include "panda_c.h"
-#define PANDA_TYPESONLY
-#undef PANDA_TYPESONLY
-typedef struct panda$core$Class panda$core$Class;
-#include "panda/core/Int32.h"
-typedef struct panda$collections$HashMap panda$collections$HashMap;
-typedef struct panda$core$String panda$core$String;
-
-typedef struct panda$core$Panda {
-    panda$core$Class* $class;
-    panda$core$Int32 refCount;
-    panda$collections$HashMap* allocations;
-    panda$collections$HashMap* traces;
-} panda$core$Panda;
-#define PANDA_TYPESONLY
-#include "panda/core/Class.h"
-#undef PANDA_TYPESONLY
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[6]; } panda$core$Panda$class_type;
-extern panda$core$Panda$class_type panda$core$Panda$class;
-
-#ifndef PANDA_TYPESONLY
+#include "Panda_types.h"
 typedef struct panda$core$Panda panda$core$Panda;
 typedef struct panda$core$String panda$core$String;
 typedef struct panda$core$Class panda$core$Class;
 typedef struct panda$core$Object panda$core$Object;
-#include "panda/core/Real64.h"
-#include "panda/core/Int64.h"
-#include "panda/core/UInt64.h"
-#include "panda/core/Char32.h"
-#include "panda/core/Bit.h"
+#include "panda/core/Real64_types.h"
+#include "panda/core/Int64_types.h"
+#include "panda/core/UInt64_types.h"
+#include "panda/core/Char32_types.h"
+#include "panda/core/Bit_types.h"
 
 void panda$core$Panda$init(panda$core$Panda* self);
 panda$core$String* panda$core$Panda$allocationName$panda$core$Class$R$panda$core$String(panda$core$Class* p_cl);
@@ -56,4 +37,3 @@ void panda$core$Panda$debugPrint$panda$core$Object(panda$core$Object* p_o);
 panda$core$String* panda$core$Panda$pointerConvert$panda$unsafe$Pointer$LTpanda$core$Object$Q$GT$R$panda$core$String(panda$core$Object** p_p);
 void panda$core$Panda$cleanup(panda$core$Panda* self);
 
-#endif
