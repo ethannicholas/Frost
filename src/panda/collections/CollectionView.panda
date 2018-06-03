@@ -5,16 +5,6 @@ interface CollectionView<T> : Iterable<T> {
 
     function get_count():Int
 
-    function filter(predicate:(T)=>(Bit)):CollectionView<T> {
-        def result := Array<T>()
-        for v in self {
-            if predicate(v) {
-                result.add(v)
-            }
-        }
-        return result
-    }
-
     @pre(get_count() > 0)
     function fold(f:(T, T)=>(T)):T { -- FIXME (T, U)=>(U) when generics are in
         def i := iterator()

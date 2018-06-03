@@ -4,11 +4,17 @@ uses panda.unsafe.Pointer
 
 @final
 class RegularExpression : Immutable {
+    constant MULTILINE := 1
+
     @private
     def nativeHandle:Pointer<Int8>
 
     init(regex:String) {
-        compile(regex)
+        init(regex, 0)
+    }
+
+    init(regex:String, flags:Int) {
+        compile(regex, flags)
     }
 
     @external
@@ -21,7 +27,7 @@ class RegularExpression : Immutable {
     
     @private
     @external
-    method compile(regex:String)
+    method compile(regex:String, flags:Int)
 
     @private
     @external

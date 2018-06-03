@@ -150,6 +150,16 @@ interface ListView<T> : CollectionView<T> {
         return result.finish()
     }
 
+    function filter(predicate:(T)=>(Bit)):ListView<T> {
+        def result := Array<T>()
+        for v in self {
+            if predicate(v) {
+                result.add(v)
+            }
+        }
+        return result
+    }
+
     @override
     function iterator():Iterator<T> {
         return ListIterator<T>(self)

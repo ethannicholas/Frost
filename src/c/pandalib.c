@@ -531,12 +531,15 @@ void pandaFatalError(const char* msg) {
     abort();
 }
 
-void panda$core$RegularExpression$compile$panda$core$String(RegularExpression* r, String* regex) {
+void panda$core$RegularExpression$compile$panda$core$String$panda$core$Int64(RegularExpression* r, String* regex, int64_t flags) {
     UErrorCode status = U_ZERO_ERROR;
     char* text = pandaGetCString(regex);
     UText* ut = utext_openUTF8(NULL, text, regex->size, &status);
     UParseError parseStatus;
     int icuFlags = 0;
+    if (flags & 1) {
+        icuFlags |= UREGEX_MULTILINE;
+    }
     r->nativeHandle = uregex_openUText(ut, icuFlags, &parseStatus, &status);
     ++allocations;
     utext_close(ut);

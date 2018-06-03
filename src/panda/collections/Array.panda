@@ -24,9 +24,9 @@ class Array<T> : List<T> {
         data := Pointer<T>.alloc(capacity)
     }
 
-    init(list:ListView<T>) {
-        init(list.get_count().max(DEFAULT_CAPACITY))
-        for v in list {
+    init(c:CollectionView<T>) {
+        init(c.get_count().max(DEFAULT_CAPACITY))
+        for v in c {
             add(v)
         }
     }

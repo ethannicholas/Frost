@@ -50,7 +50,7 @@ it, and then finally turn it into an immutable `String` using [finish](MutableSt
 @final
 class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
     ================================================================================================
-    Represents the position of a Unicode codepoint within a String.
+    Represents the position of a Unicode codepoint within a `String`.
     ================================================================================================
     class Index : Value, Key<Index>, Comparable<Index> {
         @private
@@ -442,13 +442,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
     respect to the size of the string).
     ================================================================================================
     function length():Int {
-        var count := 0
-        def iter := iterator()
-        while !iter.get_done() {
-            count += 1
-            iter.next()
-        }
-        return count
+        return iterator().count()
     }
 
     ================================================================================================
@@ -948,7 +942,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
     ================================================================================================
     Returns `true` if this string matches the given regular expression. The regular expression must
     match the entire string.
-    
+
     @param regex the regular expression to compare against
     @returns `true` if the string matches
     ================================================================================================
@@ -959,7 +953,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
     ================================================================================================
     Returns `true` if this string contains a match for the given regular expression. The regular
     expression may match zero or more characters of the string, starting at any point.
-    
+
     @param needle the regular expression to search for
     @returns `true` if the string contains a match
     ================================================================================================
@@ -1050,8 +1044,8 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
 
     @param search the regular expression to match the string with
     @param replacement a function generating the replacement text
-    @returns a new string with all occurrences of the regular expression  replaced
-    ============================================================================
+    @returns a new string with all occurrences of the regular expression replaced
+    ================================================================================================
     function replace(search:RegularExpression, replacement:(String)=>(Object)):String {
         def result := MutableString()
         def matcher := search.matcher(self)

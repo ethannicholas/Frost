@@ -363,6 +363,7 @@ class LLVMCodeGenerator : CodeGenerator {
         }
         writtenTypes.add(t.name)
         def cl := compiler.getClass(t)
+        assert cl != null
         assert !cl.annotations.isSpecialize()
         def code := MutableString("%\{escapeName(t.name)} = type { ")
         compiler.currentClass.push(cl)
