@@ -49,6 +49,11 @@ class Char32 : Value, Key<Char32>, Comparable<Char32> {
         return value >= other.value
     }
 
+    function isWhitespace():Bit {
+        -- FIXME respect all Unicode whitespace
+        return self = " " | self = "\t" | self = "\r" | self = "\n"
+    }
+
     ================================================================================================
     Returns a string consisting of `count` copies of this character.
     ================================================================================================

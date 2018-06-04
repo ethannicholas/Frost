@@ -59,7 +59,7 @@ class Pointer<T> : Value {
     associated block of memory can lead to undefined behavior.
     ================================================================================================
     @external
-    method offset(count:Int):Pointer<T>
+    function offset(count:Int):Pointer<T> -- FIXME change to '+'
 
     ================================================================================================
     Frees the block of memory that this pointer points to. This is exactly equivalen to the C `free`

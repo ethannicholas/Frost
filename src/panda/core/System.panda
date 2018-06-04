@@ -35,6 +35,17 @@ class System {
         method waitFor():Int
     }
 
+    @private
+    init() {
+    }
+
+    ================================================================================================
+    Returns a path to a directory suitable for storing temporary files.
+    ================================================================================================
+    @class
+    @external
+    method tempDir():File
+    
     ================================================================================================
     Causes the program to immediately stop running, returning the indicated exit status to the
     operating system. Generally an exit value of 0 is taken to mean a normal exit and a non-zero

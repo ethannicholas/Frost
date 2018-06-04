@@ -494,7 +494,8 @@ class LLVMCodeGenerator : CodeGenerator {
     signature of the method.
     ================================================================================================
     @pre(t.typeKind = Type.Kind.FUNCTION | t.typeKind = Type.Kind.METHOD |
-            t.typeKind = Type.Kind.IMMUTABLE_FUNCTION | t.typeKind = Type.Kind.IMMUTABLE_METHOD)
+            t.typeKind = Type.Kind.IMMUTABLE_FUNCTION | t.typeKind = Type.Kind.IMMUTABLE_METHOD |
+            t.typeKind = Type.Kind.NULLABLE)
     method methodType(t:Type, selfType:Type?):String {
         def result := MutableString(type(t.subtypes[t.subtypes.get_count() - 1]))
         result.append(" (")

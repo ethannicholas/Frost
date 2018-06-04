@@ -31,4 +31,7 @@ method main() {
     def hello:(String)=>(String) := "Hello, ".+
     printLine(hello("Panda"))
     hello("Panda")
-}
+
+    def helloNullable:(String)=>(String)? := "Hello, ".+
+    printLine(helloNullable("Panda"))
+    helloNullable("Panda")}

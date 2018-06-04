@@ -4,6 +4,7 @@ package panda.io
 A `InputStream` which sits on top of another stream, tracking the current line and column as it
 reads from the underlying stream.
 ====================================================================================================
+@final
 class LineNumberInputStream : InputStream {
     @private
     def source:InputStream

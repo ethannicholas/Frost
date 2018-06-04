@@ -27,8 +27,8 @@ class MemoryOutputStream : OutputStream {
     }
 
     @override
-    method write(ptr:Pointer<UInt8>, offset:Int, count:Int) {
-        data.append(ptr->Pointer<Char8>, offset, count)
+    method write(ptr:Pointer<UInt8>, count:Int) {
+        data.append(ptr->Pointer<Char8>, count)
     }
 
     method clear() {

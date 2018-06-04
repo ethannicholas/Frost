@@ -716,46 +716,39 @@ class Parser {
     }
 
     ================================================================================================
-    type = IDENTIFIER (DOT IDENTIFIER)* (LT type (COMMA type)*) GT)? QUESTION? | functionOrTupleType
+    type = (IDENTIFIER (DOT IDENTIFIER)* (LT type (COMMA type)*) GT)? | functionOrTupleType)
+            QUESTION?
     ================================================================================================
     method type(needSpeculativeParse:Bit):ASTNode? {
+        var result:ASTNode?
         if peek().kind = Token.Kind.LPAREN {
-            return functionOrTupleType()
+            result := functionOrTupleType()
         }
-        def start := expect(Token.Kind.IDENTIFIER, "an identifier")
-        if start = null {
-            return null
-        }
-        def name := MutableString(text(start))
-        while checkNext(Token.Kind.DOT) != null {
-            def id := expect(Token.Kind.IDENTIFIER, "an identifier")
-            if id = null {
+        else {
+            def start := expect(Token.Kind.IDENTIFIER, "an identifier")
+            if start = null {
                 return null
             }
-            name.append(".")
-            name.append(text(id))
-        }
-        def finalName := name.finish()
-        var result := ASTNode.TYPE(start.position, finalName)
-        if peek().kind = Token.Kind.LT {
-            -- may need to speculatively parse, because foo->Int8<bar looks like the start of a cast
-            -- to "Int8<bar...", but is actually a cast to Int8 followed by less-than bar
-            if needSpeculativeParse {
-                startSpeculative()
-            }
-            next()
-            def children := Array<ASTNode>()
-            var t := type(false)
-            if t = null {
-                if needSpeculativeParse {
-                    rewind()
-                    return result
+            def name := MutableString(text(start))
+            while checkNext(Token.Kind.DOT) != null {
+                def id := expect(Token.Kind.IDENTIFIER, "an identifier")
+                if id = null {
+                    return null
                 }
-                return null
+                name.append(".")
+                name.append(text(id))
             }
-            children.add(t)
-            while checkNext(Token.Kind.COMMA) != null {
-                t := type(false)
+            def finalName := name.finish()
+            result := ASTNode.TYPE(start.position, finalName)
+            if peek().kind = Token.Kind.LT {
+                -- may need to speculatively parse, because foo->Int8<bar looks like the start of a cast
+                -- to "Int8<bar...", but is actually a cast to Int8 followed by less-than bar
+                if needSpeculativeParse {
+                    startSpeculative()
+                }
+                next()
+                def children := Array<ASTNode>()
+                var t := type(false)
                 if t = null {
                     if needSpeculativeParse {
                         rewind()
@@ -764,19 +757,30 @@ class Parser {
                     return null
                 }
                 children.add(t)
-            }
-            if expect(Token.Kind.GT, "'>'") = null {
-                if needSpeculativeParse {
-                    rewind()
-                    return result
+                while checkNext(Token.Kind.COMMA) != null {
+                    t := type(false)
+                    if t = null {
+                        if needSpeculativeParse {
+                            rewind()
+                            return result
+                        }
+                        return null
+                    }
+                    children.add(t)
                 }
-                return null
+                if expect(Token.Kind.GT, "'>'") = null {
+                    if needSpeculativeParse {
+                        rewind()
+                        return result
+                    }
+                    return null
+                }
+                result := ASTNode.GENERIC_TYPE(start.position, finalName, children.finish())
+                accept()
             }
-            result := ASTNode.GENERIC_TYPE(start.position, finalName, children.finish())
-            accept()
         }
         if checkNext(Token.Kind.QUESTION) != null {
-            result := ASTNode.NULLABLE_TYPE(start.position, result)
+            result := ASTNode.NULLABLE_TYPE(result.position(), result)
         }
         return result
     }

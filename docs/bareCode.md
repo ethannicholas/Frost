@@ -12,7 +12,7 @@ program, however, may consist of "bare code" which is not part of a class:
 
 Leaving off the class definition like this is purely a means of reducing the boilerplate involved in
 writing simple programs. The compiler still internally creates a class to hold the
-[variables](variables.md) and [methods](methods.md) defined in this file, much as if you had
+[variables](variables.html) and [methods](methods.html) defined in this file, much as if you had
 written:
 
     class BareCode {

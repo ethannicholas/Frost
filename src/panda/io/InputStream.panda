@@ -67,7 +67,7 @@ class InputStream {
             if count <= 0 {
                 break
             }
-            result.append(buffer->Pointer<Char8>, 0, count)
+            result.append(buffer->Pointer<Char8>, count)
         }
         buffer.destroy()
         return result.finish()
@@ -149,7 +149,7 @@ class InputStream {
                 break
             }
             total += count
-            out.write(buffer, 0, count)
+            out.write(buffer, count)
         }
         buffer.destroy()
         return total

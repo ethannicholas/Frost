@@ -83,6 +83,7 @@ typedef struct FileInputStream {
     Class* cl;
     int32_t refcnt;
     FILE* file;
+    Bit closeOnCleanup;
 } FileInputStream;
 
 extern Class panda$io$FileInputStream$class;
@@ -91,6 +92,7 @@ typedef struct FileOutputStream {
     Class* cl;
     int32_t refcnt;
     FILE* file;
+    Bit closeOnCleanup;
 } FileOutputStream;
 
 typedef struct Process {
@@ -370,6 +372,9 @@ Process* panda$core$System$exec$panda$io$File$panda$collections$ListView$LTpanda
             perror("dup2 onto stderr failed");
             exit(1);
         }
+//        setvbuf(stdin, NULL, _IONBF, 0);
+//        setvbuf(stdout, NULL, _IONBF, 0);
+//        setvbuf(stderr, NULL, _IONBF, 0);
         int argCount = get_count(args);
         char** cargs = (char**) pandaAlloc((argCount + 2) * sizeof(char*));
         cargs[0] = pandaGetCString(path->path);
@@ -379,7 +384,6 @@ Process* panda$core$System$exec$panda$io$File$panda$collections$ListView$LTpanda
         }
         cargs[argCount + 1] = NULL;
         execv(cargs[0], cargs);
-        printf("running %s\n", cargs[0]);
         perror("error exec'ing child process");
         // we don't bother freeing the argument memory because we just kill the process here
         exit(1);
@@ -394,10 +398,16 @@ Process* panda$core$System$exec$panda$io$File$panda$collections$ListView$LTpanda
         result->input = pandaObjectAlloc(sizeof(FileOutputStream),
                 &panda$io$FileOutputStream$class);
         result->input->file = fdopen(stdinPipe[1], "wb");
+        result->input->closeOnCleanup = true;
+//        setvbuf(result->input->file, NULL, _IONBF, 0);
         result->output = pandaObjectAlloc(sizeof(FileInputStream), &panda$io$FileInputStream$class);
         result->output->file = fdopen(stdoutPipe[0], "rb");
+        result->output->closeOnCleanup = true;
+//        setvbuf(result->output->file, NULL, _IONBF, 0);
         result->error = pandaObjectAlloc(sizeof(FileInputStream), &panda$io$FileInputStream$class);
         result->error->file = fdopen(stderrPipe[0], "rb");
+        result->error->closeOnCleanup = true;
+//        setvbuf(result->error->file, NULL, _IONBF, 0);
         return result;
     }
     return NULL;
@@ -405,14 +415,19 @@ Process* panda$core$System$exec$panda$io$File$panda$collections$ListView$LTpanda
 
 void panda$core$System$Process$waitFor$R$panda$core$Int64(int64_t* result, Process* p) {
     int status;
-    fclose(p->input->file);
-    p->input->file = NULL;
     waitpid(p->pid, &status, 0);
     *result = WEXITSTATUS(status);
-    fclose(p->output->file);
-    p->output->file = NULL;
-    fclose(p->error->file);
-    p->error->file = NULL;
+}
+
+File* panda$core$System$tempDir$R$panda$io$File() {
+    const char* tmpdir = getenv("TMPDIR");
+    if (!tmpdir) {
+        tmpdir = "/tmp";
+    }
+    String* path = pandaNewString(tmpdir, strlen(tmpdir));
+    File* file = pandaObjectAlloc(sizeof(File), &panda$io$File$class);
+    file->path = path;
+    return file;
 }
 
 // Panda
@@ -540,6 +555,12 @@ void panda$core$RegularExpression$compile$panda$core$String$panda$core$Int64(Reg
     if (flags & 1) {
         icuFlags |= UREGEX_MULTILINE;
     }
+    if (flags & 2) {
+        icuFlags |= UREGEX_CASE_INSENSITIVE;
+    }
+    if (flags & 4) {
+        icuFlags |= UREGEX_DOTALL;
+    }
     r->nativeHandle = uregex_openUText(ut, icuFlags, &parseStatus, &status);
     ++allocations;
     utext_close(ut);
@@ -622,7 +643,7 @@ void panda$core$Matcher$get_groupCount$R$panda$core$Int64(int64_t* result, Match
     }
 }
 
-String* panda$core$Matcher$group$panda$core$Int64$R$panda$core$String(Matcher* self,
+String* panda$core$Matcher$group$panda$core$Int64$R$panda$core$String$Q(Matcher* self,
         int64_t group) {
     UErrorCode status = U_ZERO_ERROR;
     int64_t length;
@@ -782,6 +803,7 @@ FileInputStream* panda$io$File$openInputStream$R$panda$io$InputStream(File* self
         printf("error opening '%s' for reading\n", str);
         exit(1);
     }
+    result->closeOnCleanup = true;
     pandaFree(str);
     return result;
 }
@@ -795,6 +817,7 @@ FileOutputStream* panda$io$File$openOutputStream$R$panda$io$OutputStream(File* s
         printf("error opening '%s' for writing\n", str);
         exit(1);
     }
+    result->closeOnCleanup = true;
     pandaFree(str);
     return result;
 }
@@ -890,11 +913,10 @@ void panda$io$FileInputStream$readImpl$panda$unsafe$Pointer$LTpanda$core$UInt8$G
     *result = fread(buffer, 1, max, self->file);
 }
 
-void panda$io$FileInputStream$cleanup(FileInputStream* self) {
+void panda$io$FileInputStream$close(FileInputStream* self) {
     if (self->file) {
         fclose(self->file);
     }
-    self->file = NULL;
 }
 
 // FileOutputStream
@@ -903,14 +925,15 @@ void panda$io$FileOutputStream$write$panda$core$UInt8(FileOutputStream* self, ui
     fputc(ch, self->file);
 }
 
-void panda$io$FileOutputStream$write$panda$unsafe$Pointer$LTpanda$core$UInt8$GT$panda$core$Int64$panda$core$Int64(
-        FileOutputStream* self, void* src, int64_t offset, int64_t count) {
-    fwrite(src + offset, 1, count, self->file);
+void panda$io$FileOutputStream$write$panda$unsafe$Pointer$LTpanda$core$UInt8$GT$panda$core$Int64(
+        FileOutputStream* self, void* src, int64_t count) {
+    fwrite(src, 1, count, self->file);
 }
 
-void panda$io$FileOutputStream$cleanup(FileOutputStream* self) {
-    if (self->file) {
-        fclose(self->file);
-    }
-    self->file = NULL;
+void panda$io$FileOutputStream$close(FileOutputStream* self) {
+    fclose(self->file);
+}
+
+void panda$io$FileOutputStream$flush(FileOutputStream* self) {
+    fflush(self->file);
 }

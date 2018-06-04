@@ -2637,6 +2637,9 @@ class Compiler {
     }
 
     method call(m:IRNode, args:ListView<IRNode>, expectedType:Type?):IRNode? {
+        if m.type().typeKind = Type.Kind.NULLABLE {
+            return call(coerce(m, m.type().nonnullable()), args, expectedType)
+        }
         match m {
             when IRNode.METHOD_REFERENCE(_, _, target, mref):
                 return call(m.position(), target, mref, args)

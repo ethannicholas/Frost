@@ -110,8 +110,17 @@ class RegexParser {
     method metacharacter():Bit {
         def token := next()
         match token.kind {
-            when RegexToken.Kind.PLUS, RegexToken.Kind.STAR, RegexToken.Kind.QUESTION:
+            when RegexToken.Kind.PLUS, RegexToken.Kind.STAR:
+                checkNext(RegexToken.Kind.QUESTION)
                 return true
+            when RegexToken.Kind.QUESTION:
+                return true
+            when RegexToken.Kind.DOLLAR:
+                match peek().kind {
+                    when RegexToken.Kind.BACKTICK, RegexToken.Kind.SINGLE_QUOTE,
+                            RegexToken.Kind.DOLLAR:
+                        next()
+                }
             otherwise:
                 pushback(token)
                 return false
@@ -125,9 +134,12 @@ class RegexParser {
     method atom():Bit {
         def token := next()
         match token.kind {
-            when RegexToken.Kind.LETTER, RegexToken.Kind.DIGIT:
+            when RegexToken.Kind.LETTER, RegexToken.Kind.DIGIT, RegexToken.Kind.DOLLAR,
+                    RegexToken.Kind.CARET, RegexToken.Kind.BACKTICK, RegexToken.Kind.SINGLE_QUOTE,
+                    RegexToken.Kind.AMPERSAND:
                 return true
             when RegexToken.Kind.LPAREN:
+                checkNext(RegexToken.Kind.QUESTION)
                 if !expression() {
                     return false
                 }

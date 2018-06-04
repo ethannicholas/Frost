@@ -301,6 +301,8 @@ class Scanner {
                 return 1
             when ASTNode.REAL:
                 return 1
+            when ASTNode.REGEX:
+                return 1
             when ASTNode.RETURN(_, value):
                 if value = null {
                     return 0

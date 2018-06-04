@@ -137,6 +137,10 @@ class File : Immutable, Key<File> {
         return openInputStream().readFully()
     }
 
+    method write(contents:String) {
+        openOutputStream().print(contents)
+    }
+
     ================================================================================================
     Deletes the file. If the file is a directory, it must be empty or FIXME some sort of error will
     be produced just as soon as I figure out how we're handling errors.

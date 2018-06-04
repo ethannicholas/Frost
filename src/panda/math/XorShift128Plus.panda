@@ -6,6 +6,7 @@ A fast pseudorandom number generator using a XorShift+ algorithm with a period o
 This generator is guaranteed to always produce the same random sequence when started from the same
 seed, even across different environments and versions of Panda.
 ====================================================================================================
+@final
 class XorShift128Plus : Random {
     ================================================================================================
     The current state.

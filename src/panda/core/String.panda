@@ -616,17 +616,16 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
             min := start()
         }
 
+        var inclusive := r.inclusive
         def max:Index
         if r.max != null {
             max := r.max
         }
         else {
             max := self.end()
-            if r.inclusive {
-                max := previous(max)
-            }
+            inclusive := false
         }
-        return substring(Range<Index>(min, max, r.inclusive))
+        return substring(Range<Index>(min, max, inclusive))
     }
 
     ================================================================================================
@@ -678,17 +677,16 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
             min := start()
         }
 
+        var inclusive := r.inclusive
         def max:Index
         if r.max != null {
             max := r.max
         }
         else {
             max := self.end()
-            if r.inclusive {
-                max := previous(max)
-            }
+            inclusive := false
         }
-        return self[Range<Index>(min, max, r.inclusive)]
+        return self[Range<Index>(min, max, inclusive)]
     }
 
     ================================================================================================
@@ -1009,21 +1007,26 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
         return result.finish()
     }
 
-    ============================================================================
-    Returns a new string with every match of `search` replaced with
-    `replacement`. The replacement string may contain `$1`-style regular 
-    expression group references; for instance `s.replace(regex, "$1")` will
-    replace every occurrence of the regex with the contents of its first group.
+    ================================================================================================
+    Returns a new string with every match of `search` replaced with `replacement`. The replacement
+    string may contain `$1`-style regular expression group references; for instance
+    `s.replace(regex, "$1")` will replace every occurrence of the regex with the contents of its
+    first group.
     
     @param search the regular expression to search for
     @param replacement the replacement text
     @returns a string with all matches replaced
-    ============================================================================
+    ================================================================================================
     function replace(search:RegularExpression, replacement:String):String {
+        return replace(search, replacement, true)
+    }
+
+    function replace(search:RegularExpression, replacement:String,
+            allowGroupReferences:Bit):String {
         def result := MutableString()
         def matcher := search.matcher(self)
         while matcher.find() {
-            matcher.appendReplacement(result, replacement)
+            matcher.appendReplacement(result, replacement, allowGroupReferences)
         }
         matcher.appendTail(result)
         return result.finish()
@@ -1066,11 +1069,11 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
     @param replacement a function generating the replacement text
     @returns a new string with all occurrences of the regular expression replaced
     ================================================================================================
-    function replace(search:RegularExpression, replacement:(ListView<String>)=>(Object)):String {
+    function replace(search:RegularExpression, replacement:(ListView<String?>)=>(Object)):String {
         def result := MutableString()
         def matcher := search.matcher(self)
         while matcher.find() {
-            def groups := Array<String>()
+            def groups := Array<String?>()
             for i in 0 .. matcher.get_groupCount() {
                 groups.add(matcher.group(i))
             }

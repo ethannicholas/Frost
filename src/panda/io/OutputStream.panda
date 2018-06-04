@@ -7,28 +7,40 @@ class OutputStream {
     @abstract
     method write(value:UInt8)
 
+    @final
     method write(value:Int8) {
         write(value.convert()->UInt8)
     }
 
-    method write(ptr:Pointer<UInt8>, offset:Int, count:Int) {
-        for i in offset .. offset + count {
+    method write(ptr:Pointer<UInt8>, count:Int) {
+        for i in 0 .. count {
             write(ptr[i])
         }
     }
 
     @final
-    method write(ptr:Pointer<Int8>, offset:Int, count:Int) {
-        write(ptr->Pointer<UInt8>, offset, count)
+    method write(ptr:Pointer<Int8>, count:Int) {
+        write(ptr->Pointer<UInt8>, count)
     }
 
     @final
-    method write(ptr:Pointer<Char8>, offset:Int, count:Int) {
-        write(ptr->Pointer<UInt8>, offset, count)
+    method write(ptr:Pointer<Char8>, count:Int) {
+        write(ptr->Pointer<UInt8>, count)
     }
 
-    method write(a:Array<UInt8>, offset:Int, count:Int) {
-        write(a.data, offset, count)
+    @final
+    method write(a:Array<UInt8>, count:Int) {
+        write(a.data, count)
+    }
+
+    @final
+    method write(a:Array<Int8>, count:Int) {
+        write(a.data, count)
+    }
+
+    @final
+    method write(a:Array<Char8>, count:Int) {
+        write(a.data, count)
     }
 
     method write(value:UInt16) {
@@ -67,7 +79,7 @@ class OutputStream {
     }
 
     method print(s:String) {
-        write(s.data, 0, s._length)
+        write(s.data, s._length)
     }
 
     method printLine() {
@@ -81,5 +93,13 @@ class OutputStream {
     method printLine(s:String) {
         print(s)
         printLine()
+    }
+
+    ================================================================================================
+    Flushes any buffers associated with this stream. `OutputStream` does not itself perform any
+    buffering, so the base implementation of this method does nothing, but subclasses which buffer
+    their output should override this.
+    ================================================================================================
+    method flush() {
     }
 }

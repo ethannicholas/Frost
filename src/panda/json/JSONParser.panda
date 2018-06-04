@@ -9,6 +9,7 @@ uses panda.collections.ImmutableHashMap
 Simple JSON parser. Note that this parser is incomplete - in particular it does not handle string
 escape sequences correctly.
 ====================================================================================================
+@private
 class JSONParser {
     @private
     var source := "<error>"

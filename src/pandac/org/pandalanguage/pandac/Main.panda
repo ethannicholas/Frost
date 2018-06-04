@@ -23,7 +23,7 @@ class Main {
     def pandaHome:File
 
     init() {
-        pandaHome := File("../src")
+        pandaHome := File(Config.PANDA_SOURCE_DIR)
     }
 
     class Arguments {
@@ -112,7 +112,7 @@ class Main {
     method toExecutable(assembly:File, dest:File):File {
         def args := Array<String>() -- FIXME literal
         args.add(assembly.path)
-        args.add("-L.")
+        args.add("-L\{Config.PANDA_LIB_DIR}")
         args.add("-lpanda")
         args.add("-lm")
         args.add("-lpthread")

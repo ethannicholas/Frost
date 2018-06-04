@@ -5,6 +5,8 @@ uses panda.unsafe.Pointer
 @final
 class RegularExpression : Immutable {
     constant MULTILINE := 1
+    constant CASE_INSENSITIVE := 2
+    constant DOTALL := 4
 
     @private
     def nativeHandle:Pointer<Int8>

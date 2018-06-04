@@ -1,5 +1,6 @@
 package panda.threads
 
+@final
 class Lock : Immutable {
     @private
     def nativeLock:Int64

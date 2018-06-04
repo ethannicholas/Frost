@@ -26,6 +26,10 @@ class Matcher {
     @private
     var replacementIndex:String.Index
 
+    @private
+    init() {
+    }
+
     -- @self FIXME
     @external
     method matches():Bit
@@ -173,7 +177,7 @@ class Matcher {
     function get_groupCount():Int
 
     @external
-    function group(index:Int):String
+    function group(index:Int):String?
 
     @override
     method cleanup() {

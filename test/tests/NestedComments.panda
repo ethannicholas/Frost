@@ -2,7 +2,7 @@ class NestedComments {
 -* Nested
     -* Comments
         -* Should
-            -* Work!
+            -* Work! -**** So should this ****-
             -- *- ...but this terminator doesn't count because of the line comment
             *-
         *-

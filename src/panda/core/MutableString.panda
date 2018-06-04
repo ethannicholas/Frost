@@ -100,12 +100,14 @@ class MutableString {
         data.destroy()
     }
 
+    -- FIXME @self
     method append(c:Char8) {
         ensureCapacity(_length + 1)
         data[_length] := c
         _length += 1
     }
 
+    -- FIXME @self
     method append(c:Char32) {
         def value := c.value
         if value < 0x80 {
@@ -137,6 +139,7 @@ class MutableString {
         }
     }
 
+    -- FIXME @self
     method append(s:String) {
         ensureCapacity(_length + s._length)
         for i in 0 .. s._length {
@@ -145,14 +148,16 @@ class MutableString {
         _length += s._length
     }
 
-    method append(chars:Pointer<Char8>, offset:Int, count:Int) {
+    -- FIXME @self
+    method append(chars:Pointer<Char8>, count:Int) {
         ensureCapacity(_length + count)
         for i in 0 .. count {
-            data[_length + i] := chars[offset + i]
+            data[_length + i] := chars[i]
         }
         _length += count
     }
 
+    -- FIXME @self
     method append(o:Object) {
         append(o.convert()->String)
     }
@@ -386,11 +391,34 @@ class MutableString {
         return needle.matcher(convert()).find()
     }
 
+    -- FIXME @self
+    method trim() {
+        var i := start()
+        while i != end() & self[i].isWhitespace() {
+            i := next(i)
+        }
+        self[start() .. i] := ""
+        if _length = 0 {
+            return
+        }
+        i := previous(end())
+        while i != start() & self[i].isWhitespace() {
+            i := previous(i)
+        }
+        self[i..] := ""
+    }
+
+    -- FIXME @self
     method replace(search:RegularExpression, replacement:String) {
+        replace(search, replacement, true)
+    }
+
+    -- FIXME @self
+    method replace(search:RegularExpression, replacement:String, allowGroupReferences:Bit) {
         def matcher := search.matcher(convert())
         clear()
         while matcher.find() {
-            matcher.appendReplacement(self, replacement)
+            matcher.appendReplacement(self, replacement, allowGroupReferences)
         }
         matcher.appendTail(self)
     }
@@ -411,6 +439,7 @@ class MutableString {
     @param search the regular expression to match the string with
     @param replacement a function generating the replacement text
     ============================================================================
+    -- FIXME @self
     method replace(search:RegularExpression, replacement:(String)=>(Object)) {
         def matcher := search.matcher(convert())
         clear()
@@ -429,10 +458,12 @@ class MutableString {
     @param search the regular expression to match the string with
     @param replacement a function generating the replacement text
     ================================================================================================
-    method replace(search:RegularExpression, replacement:(ListView<String>)=>(Object)) {
+    -- FIXME @self
+    method replace(search:RegularExpression, replacement:(ListView<String?>)=>(Object)) {
         def matcher := search.matcher(convert())
+        clear()
         while matcher.find() {
-            def groups := Array<String>()
+            def groups := Array<String?>()
             for i in 0 .. matcher.get_groupCount() {
                 groups.add(matcher.group(i))
             }
@@ -478,10 +509,12 @@ class MutableString {
         return self[offset(start(), index)]
     }
 
+    -- FIXME @self
     method []:=(index:Index, c:Char32) {
         self[index ... index] := c.convert()
     }
 
+    -- FIXME @self
     @pre(r.max >= r.min &
          ((r.inclusive & r.min.value < _length & r.max.value < _length) |
          (!r.inclusive & r.min.value <= _length & r.max.value <= _length)))
@@ -510,10 +543,54 @@ class MutableString {
         _length := newLength
     }
 
+    -- FIXME @self
     method []:=(r:Range<Int>, s:String) {
         self[Range<Index>(offset(start(), r.min), offset(start(), r.max), r.inclusive)] := s
     }
 
+    -- FIXME @self
+    method []:=(r:Range<Index?>, s:String) {
+        def min:Index
+        if r.min != null {
+            min := r.min
+        }
+        else {
+            min := start()
+        }
+        var inclusive := r.inclusive
+        def max:Index
+        if r.max != null {
+            max := r.max
+        }
+        else {
+            max := end()
+            inclusive := false
+        }
+        self[Range<Index>(min, max, inclusive)] := s
+    }
+
+    -- FIXME @self
+    method []:=(r:Range<Int?>, s:String) {
+        def min:Index
+        if r.min != null {
+            min := offset(start(), r.min)
+        }
+        else {
+            min := start()
+        }
+        var inclusive := r.inclusive
+        def max:Index
+        if r.max != null {
+            max := offset(start(), r.max)
+        }
+        else {
+            max := end()
+            inclusive := false
+        }
+        self[Range<Index>(min, max, inclusive)] := s
+    }
+
+    -- FIXME @self
     method replace(search:String, replacement:String) {
         var index := start()
         loop {
@@ -527,6 +604,7 @@ class MutableString {
     }
 
     @private
+    -- FIXME @self
     method ensureCapacity(newSize:Int) {
         if maxLength >= newSize {
             return
@@ -538,6 +616,7 @@ class MutableString {
         data := data.realloc(oldMax, maxLength)
     }
 
+    -- FIXME @self
     method clear() {
         data := data.realloc(maxLength, DEFAULT_SIZE)
         _length := 0
@@ -563,6 +642,7 @@ class MutableString {
     any way with a `MutableString` after `finish`ing will cause precondition violations (or, if
     safety checks are disabled, undefined behavior).
     ================================================================================================
+    -- FIXME @self
     method finish():String {
         -- FIXME this transformation is only safe at -S0
         data := data.realloc(maxLength, _length)

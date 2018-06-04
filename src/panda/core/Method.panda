@@ -2,6 +2,7 @@ package panda.core
 
 uses panda.unsafe.Pointer
 
+@final
 class Method : Immutable {
     ================================================================================================
     Pointer to the actual method code. This pointer can be called directly at the C level.

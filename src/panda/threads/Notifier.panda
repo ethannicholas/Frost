@@ -1,5 +1,6 @@
 package panda.threads
 
+@final
 class Notifier : Immutable {
     @private
     def nativeNotifier:Int64

@@ -6,7 +6,9 @@ set(OPTIMIZATION 3)
 set(SAFETY 3)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/third-party/FindICU")
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/third-party/FindLLVM")
-set(SYSTEM_LIBRARIES m pthread)
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package(Threads REQUIRED)
+set(SYSTEM_LIBRARIES m Threads::Threads)
 
 find_package(LLVM 4.0 REQUIRED)
 find_package(ICU COMPONENTS uc i18n REQUIRED)
@@ -14,6 +16,8 @@ find_package(ICU COMPONENTS uc i18n REQUIRED)
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/pandac/Config.panda"
     "package org.pandalanguage.pandac\n"
     "class Config {\n"
+    "constant PANDA_SOURCE_DIR := \"${CMAKE_SOURCE_DIR}/src\"\n"
+    "constant PANDA_LIB_DIR := \"${CMAKE_CURRENT_BINARY_DIR}\"\n"
     "constant LLVM_DIR := \"${LLVM_ROOT_DIR}\"\n"
     "constant LLVM_TRIPLE := \"${LLVM_HOST_TARGET}\"\n"
     "constant ICU_LIBRARIES := \"${ICU_LIBRARIES}\"\n"
@@ -667,6 +671,12 @@ add_custom_command(
             ${CMAKE_CURRENT_SOURCE_DIR}/bootstrap/include
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/src/c/pandalib.c
             ${CMAKE_CURRENT_SOURCE_DIR}/bootstrap/src
+)
+
+add_custom_target(pandarun
+    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/pandac -O ${OPTIMIZATION} -S ${SAFETY}
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/tools/PandaRun.panda
+            -o ${CMAKE_CURRENT_BINARY_DIR}/pandarun
 )
 
 add_custom_command(

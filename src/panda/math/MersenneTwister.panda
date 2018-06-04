@@ -6,6 +6,7 @@ Implementation of the standard Mersenne Twister MT19937 pseudorandom number gene
 This generator is guaranteed to always produce the same random sequence when started from the same
 seed, even across different environments and versions of Panda.
 ====================================================================================================
+@final
 class MersenneTwister : Random {
     @private
     constant N := 624

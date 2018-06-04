@@ -3,9 +3,13 @@ package panda.io
 uses panda.unsafe.Pointer
 
 @package
+@final
 class FileOutputStream : OutputStream {
     @private
     def handle:Int64
+
+    @private
+    def closeOnCleanup:Bit
 
     @private
     init() {
@@ -13,8 +17,15 @@ class FileOutputStream : OutputStream {
     }
 
     @override
+    method cleanup() {
+        if closeOnCleanup {
+            close()
+        }
+    }
+
+    @private
     @external
-    method cleanup()
+    method close()
 
     @override
     @external
@@ -22,5 +33,9 @@ class FileOutputStream : OutputStream {
 
     @override
     @external
-    method write(ptr:Pointer<UInt8>, offset:Int, size:Int)
+    method write(ptr:Pointer<UInt8>, size:Int)
+
+    @override
+    @external
+    method flush()
 }
