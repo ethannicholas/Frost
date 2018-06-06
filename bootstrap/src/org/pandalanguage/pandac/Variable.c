@@ -8,9 +8,9 @@
 #include "panda/core/Bit.h"
 #include "panda/core/Panda.h"
 #include "panda/core/Object.h"
-#include "org/pandalanguage/pandac/IRNode.h"
 #include "org/pandalanguage/pandac/Variable/Storage.h"
 #include "panda/core/Int64.h"
+#include "org/pandalanguage/pandac/IRNode.h"
 #include "org/pandalanguage/pandac/Symbol/Kind.h"
 
 static panda$core$String $s1;
@@ -20,16 +20,15 @@ org$pandalanguage$pandac$Variable$class_type org$pandalanguage$pandac$Variable$c
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x56\x61\x72\x69\x61\x62\x6c\x65", 33, -8053884103077052220, NULL };
 static panda$core$String $s13 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x56\x61\x72\x69\x61\x62\x6c\x65\x2e\x70\x61\x6e\x64\x61", 14, -3338407112971726327, NULL };
 static panda$core$String $s14 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x56\x61\x72\x69\x61\x62\x6c\x65\x2e\x69\x6e\x69\x74\x28\x70\x6f\x73\x69\x74\x69\x6f\x6e\x3a\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x50\x6f\x73\x69\x74\x69\x6f\x6e\x2c\x20\x6b\x69\x6e\x64\x3a\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x56\x61\x72\x69\x61\x62\x6c\x65\x2e\x4b\x69\x6e\x64\x2c\x20\x6e\x61\x6d\x65\x3a\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2c\x20\x74\x79\x70\x65\x3a\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x54\x79\x70\x65\x3f\x29", 213, 3933543666549636661, NULL };
-static panda$core$String $s23 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x56\x61\x72\x69\x61\x62\x6c\x65\x2e\x70\x61\x6e\x64\x61", 14, -3338407112971726327, NULL };
-static panda$core$String $s24 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x56\x61\x72\x69\x61\x62\x6c\x65\x2e\x69\x6e\x69\x74\x28\x70\x6f\x73\x69\x74\x69\x6f\x6e\x3a\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x50\x6f\x73\x69\x74\x69\x6f\x6e\x2c\x20\x6b\x69\x6e\x64\x3a\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x56\x61\x72\x69\x61\x62\x6c\x65\x2e\x4b\x69\x6e\x64\x2c\x20\x6e\x61\x6d\x65\x3a\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2c\x20\x74\x79\x70\x65\x3a\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x54\x79\x70\x65\x2c\x20\x73\x74\x6f\x72\x61\x67\x65\x3a\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x56\x61\x72\x69\x61\x62\x6c\x65\x2e\x53\x74\x6f\x72\x61\x67\x65\x29", 263, 3162362164514313779, NULL };
+static panda$core$String $s22 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x56\x61\x72\x69\x61\x62\x6c\x65\x2e\x70\x61\x6e\x64\x61", 14, -3338407112971726327, NULL };
+static panda$core$String $s23 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x56\x61\x72\x69\x61\x62\x6c\x65\x2e\x69\x6e\x69\x74\x28\x70\x6f\x73\x69\x74\x69\x6f\x6e\x3a\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x50\x6f\x73\x69\x74\x69\x6f\x6e\x2c\x20\x6b\x69\x6e\x64\x3a\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x56\x61\x72\x69\x61\x62\x6c\x65\x2e\x4b\x69\x6e\x64\x2c\x20\x6e\x61\x6d\x65\x3a\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2c\x20\x74\x79\x70\x65\x3a\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x54\x79\x70\x65\x2c\x20\x73\x74\x6f\x72\x61\x67\x65\x3a\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x56\x61\x72\x69\x61\x62\x6c\x65\x2e\x53\x74\x6f\x72\x61\x67\x65\x29", 263, 3162362164514313779, NULL };
 
 void org$pandalanguage$pandac$Variable$init$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Variable$Kind$panda$core$String$org$pandalanguage$pandac$Type$Q(org$pandalanguage$pandac$Variable* self, org$pandalanguage$pandac$Position p_position, org$pandalanguage$pandac$Variable$Kind p_kind, panda$core$String* p_name, org$pandalanguage$pandac$Type* p_type) {
     org$pandalanguage$pandac$Type* $tmp2;
     org$pandalanguage$pandac$Type* $tmp7;
     panda$core$Bit $tmp10;
-    org$pandalanguage$pandac$IRNode* $tmp15;
-    org$pandalanguage$pandac$Variable$Storage $tmp16;
-    panda$core$Int64 $tmp17;
+    org$pandalanguage$pandac$Variable$Storage $tmp15;
+    panda$core$Int64 $tmp16;
     self->name = NULL;
     self->type = NULL;
     self->initialValue = NULL;
@@ -53,68 +52,65 @@ void org$pandalanguage$pandac$Variable$init$org$pandalanguage$pandac$Position$or
     panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s13, (panda$core$Int64) { 30 }, &$s14);
     abort();
     $l11:;
-    $tmp15 = NULL;
-    self->initialValue = $tmp15;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp15));
-    panda$core$Int64$init$builtin_int64(&$tmp17, 0);
-    org$pandalanguage$pandac$Variable$Storage$init$panda$core$Int64(&$tmp16, $tmp17);
-    org$pandalanguage$pandac$Variable$init$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Variable$Kind$panda$core$String$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Variable$Storage(self, p_position, p_kind, p_name, p_type, $tmp16);
+    panda$core$Int64$init$builtin_int64(&$tmp16, 0);
+    org$pandalanguage$pandac$Variable$Storage$init$panda$core$Int64(&$tmp15, $tmp16);
+    org$pandalanguage$pandac$Variable$init$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Variable$Kind$panda$core$String$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Variable$Storage(self, p_position, p_kind, p_name, p_type, $tmp15);
 }
 void org$pandalanguage$pandac$Variable$init$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Variable$Kind$panda$core$String$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Variable$Storage(org$pandalanguage$pandac$Variable* self, org$pandalanguage$pandac$Position p_position, org$pandalanguage$pandac$Variable$Kind p_kind, panda$core$String* p_name, org$pandalanguage$pandac$Type* p_type, org$pandalanguage$pandac$Variable$Storage p_storage) {
-    org$pandalanguage$pandac$Type* $tmp18;
-    org$pandalanguage$pandac$IRNode* $tmp25;
+    org$pandalanguage$pandac$Type* $tmp17;
+    org$pandalanguage$pandac$IRNode* $tmp24;
+    org$pandalanguage$pandac$Type* $tmp25;
     org$pandalanguage$pandac$Type* $tmp26;
-    org$pandalanguage$pandac$Type* $tmp27;
-    org$pandalanguage$pandac$Symbol$Kind $tmp28;
-    panda$core$Int64 $tmp29;
+    org$pandalanguage$pandac$Symbol$Kind $tmp27;
+    panda$core$Int64 $tmp28;
     self->name = NULL;
     self->type = NULL;
     self->initialValue = NULL;
-    org$pandalanguage$pandac$Type* $tmp19 = org$pandalanguage$pandac$Type$Void$R$org$pandalanguage$pandac$Type();
-    $tmp18 = $tmp19;
-    panda$core$Bit $tmp20 = org$pandalanguage$pandac$Type$$NEQ$org$pandalanguage$pandac$Type$R$panda$core$Bit(p_type, $tmp18);
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp18));
-    if ($tmp20.value) goto $l21; else goto $l22;
-    $l22:;
-    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s23, (panda$core$Int64) { 35 }, &$s24);
-    abort();
+    org$pandalanguage$pandac$Type* $tmp18 = org$pandalanguage$pandac$Type$Void$R$org$pandalanguage$pandac$Type();
+    $tmp17 = $tmp18;
+    panda$core$Bit $tmp19 = org$pandalanguage$pandac$Type$$NEQ$org$pandalanguage$pandac$Type$R$panda$core$Bit(p_type, $tmp17);
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp17));
+    if ($tmp19.value) goto $l20; else goto $l21;
     $l21:;
-    $tmp25 = NULL;
-    self->initialValue = $tmp25;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp25));
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s22, (panda$core$Int64) { 35 }, &$s23);
+    abort();
+    $l20:;
+    $tmp24 = NULL;
+    self->initialValue = $tmp24;
+    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp24));
     self->varKind = p_kind;
     {
-        $tmp26 = self->type;
-        $tmp27 = p_type;
-        self->type = $tmp27;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp27));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp26));
+        $tmp25 = self->type;
+        $tmp26 = p_type;
+        self->type = $tmp26;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp26));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp25));
     }
     self->storage = p_storage;
-    panda$core$Int64$init$builtin_int64(&$tmp29, 7);
-    org$pandalanguage$pandac$Symbol$Kind$init$panda$core$Int64(&$tmp28, $tmp29);
-    org$pandalanguage$pandac$Symbol$init$org$pandalanguage$pandac$Symbol$Kind$org$pandalanguage$pandac$Position$panda$core$String(((org$pandalanguage$pandac$Symbol*) self), $tmp28, p_position, p_name);
+    panda$core$Int64$init$builtin_int64(&$tmp28, 7);
+    org$pandalanguage$pandac$Symbol$Kind$init$panda$core$Int64(&$tmp27, $tmp28);
+    org$pandalanguage$pandac$Symbol$init$org$pandalanguage$pandac$Symbol$Kind$org$pandalanguage$pandac$Position$panda$core$String(((org$pandalanguage$pandac$Symbol*) self), $tmp27, p_position, p_name);
 }
 panda$core$String* org$pandalanguage$pandac$Variable$convert$R$panda$core$String(org$pandalanguage$pandac$Variable* self) {
-    panda$core$String* $returnValue30;
-    panda$core$String* $tmp31;
-    $tmp31 = self->name;
-    $returnValue30 = $tmp31;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp31));
-    return $returnValue30;
+    panda$core$String* $returnValue29;
+    panda$core$String* $tmp30;
+    $tmp30 = self->name;
+    $returnValue29 = $tmp30;
+    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp30));
+    return $returnValue29;
 }
 void org$pandalanguage$pandac$Variable$cleanup(org$pandalanguage$pandac$Variable* self) {
-    int $tmp35;
+    int $tmp34;
     {
     }
-    $tmp35 = -1;
-    goto $l33;
-    $l33:;
+    $tmp34 = -1;
+    goto $l32;
+    $l32:;
     org$pandalanguage$pandac$Symbol$cleanup(((org$pandalanguage$pandac$Symbol*) self));
-    switch ($tmp35) {
-        case -1: goto $l36;
+    switch ($tmp34) {
+        case -1: goto $l35;
     }
-    $l36:;
+    $l35:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->type));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->initialValue));
 }

@@ -185,7 +185,7 @@ class Scanner {
                 }
                 for decl in decls {
                     match decl {
-                        when ASTNode.DECLARATION(declPosition, target, value):
+                        when ASTNode.DECLARATION(declPosition, target, rawValue):
                             def name:String
                             def type:Type
                             match target {
@@ -197,6 +197,14 @@ class Scanner {
                                     type := convertType(idType)
                                 otherwise:
                                     assert false
+                            }
+                            def value:ASTNode?
+                            if rawValue = null & annotations.isWeak() &
+                                    type.typeKind = Type.Kind.NULLABLE {
+                                value := ASTNode.NULL(declPosition)
+                            }
+                            else {
+                                value := rawValue
                             }
                             def field := FieldDecl(owner, declPosition, doccomment, annotations,
                                     fieldKind, name, type, value)
@@ -686,6 +694,10 @@ class Scanner {
                             }
                         when ASTNode.METHOD(position, dc, annotations, kind, rawName, generics,
                                 parameters, rawReturnType, statements):
+                            if kind = MethodDecl.Kind.INIT {
+                                error(position, "'init' methods must be inside a class")
+                                continue
+                            }
                             createBareCodeClass(source, aliases, result)
                             def name:String
                             if rawName = "main" {

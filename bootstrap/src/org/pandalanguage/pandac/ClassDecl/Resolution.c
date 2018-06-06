@@ -15,32 +15,41 @@ static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -
 void org$pandalanguage$pandac$ClassDecl$Resolution$init$org$pandalanguage$pandac$ClassDecl$Q(org$pandalanguage$pandac$ClassDecl$Resolution* self, org$pandalanguage$pandac$ClassDecl* p_value) {
     panda$core$Weak* $tmp2;
     panda$core$Weak* $tmp3;
-    panda$core$Weak* $tmp4;
+    panda$core$Weak* $tmp5;
+    panda$core$Weak* $tmp6;
+    panda$core$Weak* $tmp7;
     self->value = NULL;
+    panda$core$Weak* $tmp4 = (panda$core$Weak*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$Weak$class);
+    panda$core$Weak$init$panda$core$Weak$T($tmp4, ((panda$core$Object*) NULL));
+    $tmp3 = $tmp4;
+    $tmp2 = $tmp3;
+    self->value = $tmp2;
+    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp3));
     {
-        $tmp2 = self->value;
-        panda$core$Weak* $tmp5 = (panda$core$Weak*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$Weak$class);
-        panda$core$Weak$init$panda$core$Weak$T($tmp5, ((panda$core$Object*) p_value));
-        $tmp4 = $tmp5;
-        $tmp3 = $tmp4;
-        self->value = $tmp3;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp3));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp4));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2));
+        $tmp5 = self->value;
+        panda$core$Weak* $tmp8 = (panda$core$Weak*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$Weak$class);
+        panda$core$Weak$init$panda$core$Weak$T($tmp8, ((panda$core$Object*) p_value));
+        $tmp7 = $tmp8;
+        $tmp6 = $tmp7;
+        self->value = $tmp6;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp6));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp7));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp5));
     }
 }
 void org$pandalanguage$pandac$ClassDecl$Resolution$cleanup(org$pandalanguage$pandac$ClassDecl$Resolution* self) {
-    int $tmp8;
+    int $tmp11;
     {
     }
-    $tmp8 = -1;
-    goto $l6;
-    $l6:;
-    panda$core$Object$cleanup(((panda$core$Object*) self));
-    switch ($tmp8) {
-        case -1: goto $l9;
-    }
+    $tmp11 = -1;
+    goto $l9;
     $l9:;
+    panda$core$Object$cleanup(((panda$core$Object*) self));
+    switch ($tmp11) {
+        case -1: goto $l12;
+    }
+    $l12:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->value));
 }
 

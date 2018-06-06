@@ -5030,6 +5030,20 @@ class Compiler {
         return result.finish()
     }
 
+    function callsOtherSelf(body:ImmutableArray<ASTNode>):Bit {
+        if body.get_count() = 0 {
+            return false
+        }
+        match body[0] {
+            when ASTNode.CALL(_, target, _):
+                match target {
+                    when ASTNode.IDENTIFIER(_, text):
+                        return text = "init"
+                }
+        }
+        return false
+    }
+
     @post(symbolTable == @pre(symbolTable))
     method compileBody(m:MethodDecl):ImmutableArray<IRNode>? {
         if m.compiledBody != null {
@@ -5056,7 +5070,7 @@ class Compiler {
                     Variable.Storage.PARAMETER))
         }
         def fieldInitializers:Array<IRNode>? := null
-        if m.methodKind = MethodDecl.Kind.INIT {
+        if m.methodKind = MethodDecl.Kind.INIT & !callsOtherSelf(m.body) {
             fieldInitializers := Array<IRNode>()
             for f in currentClass[0].fields {
                 resolve(f)
