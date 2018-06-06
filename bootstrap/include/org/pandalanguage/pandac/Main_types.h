@@ -8,8 +8,6 @@ typedef struct panda$core$String panda$core$String;
 typedef struct org$pandalanguage$pandac$Main {
     panda$core$Class* $class;
     panda$core$Int32 refCount;
-    panda$io$File* llvmDir;
-    panda$core$String* triple;
     panda$io$File* opt;
     panda$io$File* llc;
     panda$io$File* gcc;

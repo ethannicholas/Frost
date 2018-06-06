@@ -672,7 +672,9 @@ class Parser {
                 }
                 subtypes.add(t)
             }
-            expect(Token.Kind.RPAREN, "')'")
+            if expect(Token.Kind.RPAREN, "')'") = null {
+                return null
+            }
         }
         def yields := peek()
         match yields.kind {
@@ -696,7 +698,9 @@ class Parser {
                         }
                         returnTypes.add(t)
                     }
-                    expect(Token.Kind.RPAREN, "')'")
+                    if expect(Token.Kind.RPAREN, "')'") = null {
+                        return null
+                    }
                 }
                 def returnType:ASTNode?
                 if returnTypes.get_count() = 0 {
@@ -706,12 +710,16 @@ class Parser {
                     returnType := returnTypes[0]
                 }
                 else {
-                    returnType := ASTNode.TUPLE_TYPE(start.position, returnTypes.finish())
+                    --returnType := ASTNode.TUPLE_TYPE(start.position, returnTypes.finish())
+                    error(start, "tuple types are not yet supported")
+                    return null
                 }
                 return ASTNode.METHOD_TYPE(start.position, yields.kind, subtypes.finish(),
                         returnType)
             otherwise:
-                return ASTNode.TUPLE_TYPE(start.position, subtypes.finish())
+                --return ASTNode.TUPLE_TYPE(start.position, subtypes.finish())
+                error(start, "tuple types are not yet supported")
+                return null
         }
     }
 
@@ -723,6 +731,9 @@ class Parser {
         var result:ASTNode?
         if peek().kind = Token.Kind.LPAREN {
             result := functionOrTupleType()
+            if result = null {
+                return null
+            }
         }
         else {
             def start := expect(Token.Kind.IDENTIFIER, "an identifier")

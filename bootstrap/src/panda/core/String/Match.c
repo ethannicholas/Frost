@@ -63,7 +63,7 @@ void panda$core$String$Match$init$panda$core$Matcher(panda$core$String$Match* se
         if ($tmp16 < $tmp18) goto $l20; else goto $l22;
         $l20:;
         {
-            panda$core$String* $tmp29 = panda$core$Matcher$group$panda$core$Int64$R$panda$core$String(p_m, i15);
+            panda$core$String* $tmp29 = panda$core$Matcher$group$panda$core$Int64$R$panda$core$String$Q(p_m, i15);
             $tmp28 = $tmp29;
             panda$collections$Array$add$panda$collections$Array$T(g7, ((panda$core$Object*) $tmp28));
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp28));

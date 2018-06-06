@@ -14,16 +14,13 @@ class Main {
         constant C          := 921
     }
 
-    var llvmDir := File(Config.LLVM_DIR)
-    var triple := Config.LLVM_TRIPLE
-
     var opt:File
     var llc:File
     var gcc:File
     def pandaHome:File
 
     init() {
-        pandaHome := File(Config.PANDA_SOURCE_DIR)
+        pandaHome := File(Config.pandaSourceDir())
     }
 
     class Arguments {
@@ -112,11 +109,11 @@ class Main {
     method toExecutable(assembly:File, dest:File):File {
         def args := Array<String>() -- FIXME literal
         args.add(assembly.path)
-        args.add("-L\{Config.PANDA_LIB_DIR}")
+        args.add("-L\{Config.pandaLibDir()}")
         args.add("-lpanda")
         args.add("-lm")
         args.add("-lpthread")
-        def icuLibs := Config.ICU_LIBRARIES.split(";")
+        def icuLibs := Config.icuLibraries().split(";")
         for lib in icuLibs {
             def libFile := File(lib)
             args.add("-L" + libFile.parent())
@@ -203,10 +200,6 @@ class Main {
                     }
                 when "-i":
                     imports.add(File(args.next("a path to an import directory")))
-                when "--llvm_dir":
-                    llvmDir := File(args.next("a path to the LLVM directory"))
-                when "--triple":
-                    triple := args.next("LLVM target triple")
                 when "-pause":
                     Console.printLine("Press enter to continue...")
                     Console.readLine()
@@ -220,10 +213,12 @@ class Main {
                     }
             }
         }
+        def llvmDir := File(Config.llvmDir())
         opt := llvmDir.resolve("bin/opt")
         llc := llvmDir.resolve("bin/llc")
         gcc := File("/usr/bin/gcc")
         if sources.get_count() = 0 {
+            Console.printLine(1234567)
             err.printLine("no input files specified")
             System.exit(1)
         }
@@ -254,7 +249,7 @@ class Main {
             def cg:CodeGenerator
             match format {
                 when Format.LLVM, Format.EXECUTABLE, Format.OBJECT:
-                    cg := LLVMCodeGenerator(triple,
+                    cg := LLVMCodeGenerator(Config.llvmTriple(),
                                             outFile.changeExtension(".ll").openOutputStream())
                 when Format.C_HEADER:
                     cg := HCodeGenerator(outFile)

@@ -11,6 +11,7 @@
 #include "panda/core/Int32.h"
 #include "panda/core/UInt32.h"
 #include "panda/collections/ListView.h"
+#include "panda/collections/CollectionView.h"
 #include "panda/io/Console.h"
 
 struct { panda$core$Class* cl; ITable* next; void* methods[6]; } panda$math$MersenneTwister$_panda$math$Random = { (panda$core$Class*) &panda$math$Random$class, NULL, { panda$math$Random$bit$R$panda$core$Bit, panda$math$MersenneTwister$int32$R$panda$core$Int32, panda$math$MersenneTwister$int64$R$panda$core$Int64, panda$math$Random$int$panda$core$Int64$R$panda$core$Int64, panda$math$Random$real32$R$panda$core$Real32, panda$math$Random$real64$R$panda$core$Real64} };
@@ -150,7 +151,7 @@ void panda$math$MersenneTwister$init$panda$collections$Array$LTpanda$core$UInt32
             $fn55 $tmp54 = $tmp53->methods[1];
             panda$collections$ListView* $tmp56 = $tmp54(((panda$collections$ListView*) p_state), $tmp49);
             $tmp48 = $tmp56;
-            panda$collections$Array$init$panda$collections$ListView$LTpanda$collections$Array$T$GT($tmp47, $tmp48);
+            panda$collections$Array$init$panda$collections$CollectionView$LTpanda$collections$Array$T$GT($tmp47, ((panda$collections$CollectionView*) $tmp48));
             $tmp46 = $tmp47;
             $tmp45 = $tmp46;
             self->mt = $tmp45;
@@ -165,7 +166,7 @@ void panda$math$MersenneTwister$init$panda$collections$Array$LTpanda$core$UInt32
     {
         $tmp57 = self->mt;
         panda$collections$Array* $tmp60 = (panda$collections$Array*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$Array$class);
-        panda$collections$Array$init$panda$collections$ListView$LTpanda$collections$Array$T$GT($tmp60, ((panda$collections$ListView*) p_state));
+        panda$collections$Array$init$panda$collections$CollectionView$LTpanda$collections$Array$T$GT($tmp60, ((panda$collections$CollectionView*) p_state));
         $tmp59 = $tmp60;
         $tmp58 = $tmp59;
         self->mt = $tmp58;
@@ -337,7 +338,7 @@ panda$collections$ListView* panda$math$MersenneTwister$get_state$R$panda$collect
     panda$collections$ListView* $tmp159;
     panda$collections$Array* $tmp160;
     panda$collections$Array* $tmp161 = (panda$collections$Array*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$Array$class);
-    panda$collections$Array$init$panda$collections$ListView$LTpanda$collections$Array$T$GT($tmp161, ((panda$collections$ListView*) self->mt));
+    panda$collections$Array$init$panda$collections$CollectionView$LTpanda$collections$Array$T$GT($tmp161, ((panda$collections$CollectionView*) self->mt));
     $tmp160 = $tmp161;
     $tmp159 = ((panda$collections$ListView*) $tmp160);
     $returnValue158 = $tmp159;

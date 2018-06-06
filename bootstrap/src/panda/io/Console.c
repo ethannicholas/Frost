@@ -73,7 +73,7 @@ panda$core$String* panda$io$Console$readLine$R$panda$core$String$Q() {
             if (((panda$core$Bit) { !c18.nonnull }).value) {
             {
                 panda$core$Int64$init$builtin_int64(&$tmp20, 0);
-                panda$core$Bit $tmp21 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(result12->length, $tmp20);
+                panda$core$Bit $tmp21 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(result12->_length, $tmp20);
                 if ($tmp21.value) {
                 {
                     $tmp23 = NULL;

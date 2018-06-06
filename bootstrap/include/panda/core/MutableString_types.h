@@ -10,11 +10,11 @@ typedef struct panda$core$MutableString {
     panda$core$Class* $class;
     panda$core$Int32 refCount;
     panda$core$Char8* data;
-    panda$core$Int64 length;
+    panda$core$Int64 _length;
     panda$core$Int64 maxLength;
     panda$core$String* dummy;
 } panda$core$MutableString;
 #include "panda/core/Class.h"
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[10]; } panda$core$MutableString$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[40]; } panda$core$MutableString$class_type;
 extern panda$core$MutableString$class_type panda$core$MutableString$class;
 

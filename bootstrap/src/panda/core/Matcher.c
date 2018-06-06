@@ -14,7 +14,7 @@
 #include "panda/core/Range.LTpanda/core/String/Index.Q.GT.h"
 
 static panda$core$String $s1;
-panda$core$Matcher$class_type panda$core$Matcher$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, NULL, { panda$core$Object$convert$R$panda$core$String, panda$core$Matcher$cleanup, panda$core$Matcher$matches$R$panda$core$Bit, panda$core$Matcher$find$R$panda$core$Bit, panda$core$Matcher$find$panda$core$String$Index$R$panda$core$Bit, panda$core$Matcher$appendReplacement$panda$core$MutableString$panda$core$String, panda$core$Matcher$appendReplacement$panda$core$MutableString$panda$core$String$panda$core$Bit, panda$core$Matcher$appendTail$panda$core$MutableString, panda$core$Matcher$nativeFind$panda$core$String$Index$R$panda$core$Bit, panda$core$Matcher$get_start$R$panda$core$String$Index, panda$core$Matcher$get_end$R$panda$core$String$Index, panda$core$Matcher$get_groupCount$R$panda$core$Int64, panda$core$Matcher$group$panda$core$Int64$R$panda$core$String, panda$core$Matcher$destroy} };
+panda$core$Matcher$class_type panda$core$Matcher$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, NULL, { panda$core$Object$convert$R$panda$core$String, panda$core$Matcher$cleanup, panda$core$Matcher$matches$R$panda$core$Bit, panda$core$Matcher$find$R$panda$core$Bit, panda$core$Matcher$find$panda$core$String$Index$R$panda$core$Bit, panda$core$Matcher$appendReplacement$panda$core$MutableString$panda$core$String, panda$core$Matcher$appendReplacement$panda$core$MutableString$panda$core$String$panda$core$Bit, panda$core$Matcher$appendTail$panda$core$MutableString, panda$core$Matcher$nativeFind$panda$core$String$Index$R$panda$core$Bit, panda$core$Matcher$get_start$R$panda$core$String$Index, panda$core$Matcher$get_end$R$panda$core$String$Index, panda$core$Matcher$get_groupCount$R$panda$core$Int64, panda$core$Matcher$group$panda$core$Int64$R$panda$core$String$Q, panda$core$Matcher$destroy} };
 
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x4d\x61\x74\x63\x68\x65\x72", 18, 6054678171551166162, NULL };
@@ -26,6 +26,9 @@ static panda$core$String $s34 = { (panda$core$Class*) &panda$core$String$class, 
 static panda$core$String $s35 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x4d\x61\x74\x63\x68\x65\x72\x2e\x61\x70\x70\x65\x6e\x64\x52\x65\x70\x6c\x61\x63\x65\x6d\x65\x6e\x74\x28\x74\x61\x72\x67\x65\x74\x3a\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x4d\x75\x74\x61\x62\x6c\x65\x53\x74\x72\x69\x6e\x67\x2c\x20\x72\x65\x70\x6c\x61\x63\x65\x6d\x65\x6e\x74\x3a\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2c\x20\x61\x6c\x6c\x6f\x77\x47\x72\x6f\x75\x70\x52\x65\x66\x65\x72\x65\x6e\x63\x65\x73\x3a\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x42\x69\x74\x29", 169, -7566637072357481844, NULL };
 static panda$core$String $s49 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x5c\x24\x28\x30\x7c\x5b\x31\x2d\x39\x5d\x5c\x64\x2a\x29", 14, -223758346038775697, NULL };
 
+void panda$core$Matcher$init(panda$core$Matcher* self) {
+    self->searchText = NULL;
+}
 panda$core$Bit panda$core$Matcher$find$R$panda$core$Bit(panda$core$Matcher* self) {
     panda$core$String$Index start11;
     panda$core$String$Index $tmp12;
@@ -42,7 +45,7 @@ panda$core$Bit panda$core$Matcher$find$R$panda$core$Bit(panda$core$Matcher* self
     panda$core$Bit $tmp6 = { $tmp2 };
     if ($tmp6.value) goto $l7; else goto $l8;
     $l8:;
-    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s9, (panda$core$Int64) { 45 }, &$s10);
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s9, (panda$core$Int64) { 49 }, &$s10);
     abort();
     $l7:;
     memset(&start11, 0, sizeof(start11));
@@ -94,7 +97,7 @@ void panda$core$Matcher$appendReplacement$panda$core$MutableString$panda$core$St
     panda$core$Bit $tmp31;
     if (self->matched.value) goto $l27; else goto $l28;
     $l28:;
-    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s29, (panda$core$Int64) { 105 }, &$s30);
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s29, (panda$core$Int64) { 109 }, &$s30);
     abort();
     $l27:;
     panda$core$Bit$init$builtin_bit(&$tmp31, true);
@@ -133,7 +136,7 @@ void panda$core$Matcher$appendReplacement$panda$core$MutableString$panda$core$St
     panda$core$String$Index $tmp94;
     if (self->matched.value) goto $l32; else goto $l33;
     $l33:;
-    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s34, (panda$core$Int64) { 122 }, &$s35);
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s34, (panda$core$Int64) { 126 }, &$s35);
     abort();
     $l32:;
     panda$core$Matcher$get_start$R$panda$core$String$Index(&$tmp38, self);
@@ -165,7 +168,7 @@ void panda$core$Matcher$appendReplacement$panda$core$MutableString$panda$core$St
             if (!$tmp55) goto $l54;
             {
                 panda$core$Int64$init$builtin_int64(&$tmp59, 1);
-                panda$core$String* $tmp60 = panda$core$Matcher$group$panda$core$Int64$R$panda$core$String(ref44, $tmp59);
+                panda$core$String* $tmp60 = panda$core$Matcher$group$panda$core$Int64$R$panda$core$String$Q(ref44, $tmp59);
                 $tmp58 = $tmp60;
                 panda$core$Int64$nullable $tmp61 = panda$core$String$convert$R$panda$core$Int64$Q($tmp58);
                 rawGroup57 = ((panda$core$Int64) $tmp61.value);
@@ -206,7 +209,7 @@ void panda$core$Matcher$appendReplacement$panda$core$MutableString$panda$core$St
                 panda$core$Bit $tmp84 = { $tmp78 };
                 if ($tmp84.value) {
                 {
-                    panda$core$String* $tmp86 = panda$core$Matcher$group$panda$core$Int64$R$panda$core$String(self, groupIdx62);
+                    panda$core$String* $tmp86 = panda$core$Matcher$group$panda$core$Int64$R$panda$core$String$Q(self, groupIdx62);
                     $tmp85 = $tmp86;
                     panda$core$MutableString$append$panda$core$String(p_target, $tmp85);
                     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp85));
@@ -273,8 +276,5 @@ void panda$core$Matcher$cleanup(panda$core$Matcher* self) {
     }
     $l102:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->searchText));
-}
-void panda$core$Matcher$init(panda$core$Matcher* self) {
-    self->searchText = NULL;
 }
 

@@ -10,6 +10,6 @@ typedef struct panda$io$File {
     panda$core$String* path;
 } panda$io$File;
 #include "panda/core/Class.h"
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[22]; } panda$io$File$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[23]; } panda$io$File$class_type;
 extern panda$io$File$class_type panda$io$File$class;
 

@@ -9,8 +9,6 @@
 static panda$core$String $s1;
 panda$threads$ScopedLock$class_type panda$threads$ScopedLock$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Immutable$class, NULL, { panda$core$Object$convert$R$panda$core$String, panda$threads$ScopedLock$cleanup} };
 
-typedef void (*$fn4)(panda$threads$Lock*);
-typedef void (*$fn8)(panda$threads$Lock*);
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x74\x68\x72\x65\x61\x64\x73\x2e\x53\x63\x6f\x70\x65\x64\x4c\x6f\x63\x6b", 24, -9085909330474498385, NULL };
 
@@ -25,21 +23,21 @@ void panda$threads$ScopedLock$init$panda$threads$Lock(panda$threads$ScopedLock* 
         panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp3));
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2));
     }
-    (($fn4) p_lock->$class->vtable[2])(p_lock);
+    panda$threads$Lock$lock(p_lock);
 }
 void panda$threads$ScopedLock$cleanup(panda$threads$ScopedLock* self) {
-    int $tmp7;
+    int $tmp6;
     {
-        (($fn8) self->lock->$class->vtable[3])(self->lock);
+        panda$threads$Lock$unlock(self->lock);
     }
-    $tmp7 = -1;
-    goto $l5;
-    $l5:;
+    $tmp6 = -1;
+    goto $l4;
+    $l4:;
     panda$core$Immutable$cleanup(((panda$core$Immutable*) self));
-    switch ($tmp7) {
-        case -1: goto $l9;
+    switch ($tmp6) {
+        case -1: goto $l7;
     }
-    $l9:;
+    $l7:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->lock));
 }
 

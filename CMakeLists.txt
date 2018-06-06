@@ -1,7 +1,7 @@
 project(panda)
 cmake_minimum_required(VERSION 2.8)
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -m64")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -m64")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -m64 -fPIC")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -m64 -fPIC")
 set(OPTIMIZATION 3)
 set(SAFETY 3)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/third-party/FindICU")
@@ -16,15 +16,26 @@ find_package(ICU COMPONENTS uc i18n REQUIRED)
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/pandac/Config.panda"
     "package org.pandalanguage.pandac\n"
     "class Config {\n"
-    "constant PANDA_SOURCE_DIR := \"${CMAKE_SOURCE_DIR}/src\"\n"
-    "constant PANDA_LIB_DIR := \"${CMAKE_CURRENT_BINARY_DIR}\"\n"
-    "constant LLVM_DIR := \"${LLVM_ROOT_DIR}\"\n"
-    "constant LLVM_TRIPLE := \"${LLVM_HOST_TARGET}\"\n"
-    "constant ICU_LIBRARIES := \"${ICU_LIBRARIES}\"\n"
+    "@class function pandaSourceDir():String { return \"${CMAKE_SOURCE_DIR}/src\" }\n"
+    "@class function pandaLibDir():String { return \"${CMAKE_CURRENT_BINARY_DIR}\" }\n"
+    "@class function llvmDir():String { return \"${LLVM_ROOT_DIR}\" }\n"
+    "@class function llvmTriple():String { return \"${LLVM_HOST_TARGET}\" }\n"
+    "@class function icuLibraries():String { return \"${ICU_LIBRARIES}\" }\n"
     "}")
 
-set(BOOTSTRAP_ARGS "--llvm_dir" ${LLVM_ROOT_DIR} "--triple" ${LLVM_HOST_TARGET} "-O" ${OPTIMIZATION}
-    "-S" ${SAFETY})
+file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/config.c"
+    "#include <string.h>\n"
+    "#include \"panda/core/String.h\"\n"
+    "panda$core$String* pandaNewString(const char* s, int length)\n;"
+    "static panda$core$String* configString(const char* s) { return pandaNewString(s, strlen(s)); }"
+    "panda$core$String* org$pandalanguage$pandac$Config$pandaSourceDir$R$panda$core$String() { return configString(\"${CMAKE_SOURCE_DIR}/src\"); }\n"
+    "panda$core$String* org$pandalanguage$pandac$Config$pandaLibDir$R$panda$core$String() { return configString(\"${CMAKE_CURRENT_BINARY_DIR}\"); }\n"
+    "panda$core$String* org$pandalanguage$pandac$Config$llvmDir$R$panda$core$String() { return configString(\"${LLVM_ROOT_DIR}\"); }\n"
+    "panda$core$String* org$pandalanguage$pandac$Config$llvmTriple$R$panda$core$String() { return configString(\"${LLVM_HOST_TARGET}\"); }\n"
+    "panda$core$String* org$pandalanguage$pandac$Config$icuLibraries$R$panda$core$String() { return configString(\"${ICU_LIBRARIES}\"); }\n"
+)
+
+set(BOOTSTRAP_ARGS "-O" ${OPTIMIZATION} "-S" ${SAFETY})
 include_directories(
     bootstrap/include
     ${ICU_INCLUDE_DIRS}
@@ -87,6 +98,7 @@ add_library(c_panda
     bootstrap/src/panda/core/Method.c
     bootstrap/src/panda/core/MutableMethod.c
     bootstrap/src/panda/core/MutableString.c
+    bootstrap/src/panda/core/MutableString/Index.c
     bootstrap/src/panda/core/Real32.c
     bootstrap/src/panda/core/Real64.c
     bootstrap/src/panda/core/RegularExpression.c
@@ -94,6 +106,8 @@ add_library(c_panda
     bootstrap/src/panda/core/Panda.c
     bootstrap/src/panda/core/Range.LTpanda/core/String/Index.Q.GT.c
     bootstrap/src/panda/core/Range.LTpanda/core/String/Index.GT.c
+    bootstrap/src/panda/core/Range.LTpanda/core/MutableString/Index.Q.GT.c
+    bootstrap/src/panda/core/Range.LTpanda/core/MutableString/Index.GT.c
     bootstrap/src/panda/core/Range.LTpanda/core/Int64.Q.GT.c
     bootstrap/src/panda/core/Range.LTpanda/core/Int64.GT.c
     bootstrap/src/panda/core/SteppedRange.LTpanda/core/String/Index.Q.Cpanda/core/Int64.GT.c
@@ -163,6 +177,7 @@ add_library(c_panda
 )
 
 add_executable(bootstrap
+    ${CMAKE_CURRENT_BINARY_DIR}/config.c
     bootstrap/src/org/pandalanguage/pandac/Alias.c
     bootstrap/src/org/pandalanguage/pandac/Annotations.c
     bootstrap/src/org/pandalanguage/pandac/Annotations/Expression.c
@@ -519,6 +534,7 @@ function(compile_pandac_sources out_var)
 endfunction()
 
 set(pandac_source
+    ${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/pandac/Config.panda
     ${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/pandac/parser/Lexer.panda
     ${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/pandac/parser/Token.panda
     ${CMAKE_CURRENT_BINARY_DIR}/org/pandalanguage/regex/RegexLexer.panda
@@ -694,5 +710,5 @@ add_custom_target(run_tests
 add_custom_command(
     TARGET run_tests POST_BUILD
     COMMAND ${CMAKE_CURRENT_BINARY_DIR}/TestRunner ${CMAKE_CURRENT_SOURCE_DIR}
-            ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_C_COMPILER}
+            ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_C_COMPILER} ${ICU_LIBRARIES}
 )

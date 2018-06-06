@@ -12,16 +12,16 @@
 #include "panda/core/Panda.h"
 #include "org/pandalanguage/pandac/Compiler/Resolution.h"
 #include "panda/collections/Array.h"
+#include "panda/collections/CollectionView.h"
 #include "org/pandalanguage/pandac/Symbol/Kind.h"
 
 static panda$core$String $s1;
 org$pandalanguage$pandac$ChoiceEntry$class_type org$pandalanguage$pandac$ChoiceEntry$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &org$pandalanguage$pandac$Symbol$class, NULL, { org$pandalanguage$pandac$ChoiceEntry$convert$R$panda$core$String, org$pandalanguage$pandac$ChoiceEntry$cleanup, org$pandalanguage$pandac$Symbol$get_heritable$R$panda$core$Bit} };
 
-typedef panda$core$Object* (*$fn26)(panda$core$Weak*);
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x43\x68\x6f\x69\x63\x65\x45\x6e\x74\x72\x79", 36, 4258235931078372511, NULL };
-static panda$core$String $s29 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2e", 1, 147, NULL };
-static panda$core$String $s32 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
+static panda$core$String $s28 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2e", 1, 147, NULL };
+static panda$core$String $s31 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
 
 void org$pandalanguage$pandac$ChoiceEntry$init$org$pandalanguage$pandac$ClassDecl$org$pandalanguage$pandac$Position$panda$core$String$panda$core$String$Q$panda$core$Int64$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT(org$pandalanguage$pandac$ChoiceEntry* self, org$pandalanguage$pandac$ClassDecl* p_owner, org$pandalanguage$pandac$Position p_position, panda$core$String* p_name, panda$core$String* p_doccomment, panda$core$Int64 p_rawValue, panda$collections$ListView* p_fields) {
     panda$core$Weak* $tmp2;
@@ -75,7 +75,7 @@ void org$pandalanguage$pandac$ChoiceEntry$init$org$pandalanguage$pandac$ClassDec
     {
         $tmp13 = self->fields;
         panda$collections$Array* $tmp16 = (panda$collections$Array*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$Array$class);
-        panda$collections$Array$init$panda$collections$ListView$LTpanda$collections$Array$T$GT($tmp16, p_fields);
+        panda$collections$Array$init$panda$collections$CollectionView$LTpanda$collections$Array$T$GT($tmp16, ((panda$collections$CollectionView*) p_fields));
         $tmp15 = $tmp16;
         $tmp14 = $tmp15;
         self->fields = $tmp14;
@@ -95,16 +95,16 @@ panda$core$String* org$pandalanguage$pandac$ChoiceEntry$convert$R$panda$core$Str
     panda$core$String* $tmp23;
     panda$core$String* $tmp24;
     panda$core$Object* $tmp25;
-    panda$core$Object* $tmp27 = (($fn26) self->owner->$class->vtable[2])(self->owner);
-    $tmp25 = $tmp27;
-    panda$core$String* $tmp28 = panda$core$String$convert$R$panda$core$String(((org$pandalanguage$pandac$ClassDecl*) $tmp25)->name);
-    $tmp24 = $tmp28;
-    panda$core$String* $tmp30 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp24, &$s29);
-    $tmp23 = $tmp30;
-    panda$core$String* $tmp31 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp23, self->name);
-    $tmp22 = $tmp31;
-    panda$core$String* $tmp33 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp22, &$s32);
-    $tmp21 = $tmp33;
+    panda$core$Object* $tmp26 = panda$core$Weak$get$R$panda$core$Weak$T(self->owner);
+    $tmp25 = $tmp26;
+    panda$core$String* $tmp27 = panda$core$String$convert$R$panda$core$String(((org$pandalanguage$pandac$ClassDecl*) $tmp25)->name);
+    $tmp24 = $tmp27;
+    panda$core$String* $tmp29 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp24, &$s28);
+    $tmp23 = $tmp29;
+    panda$core$String* $tmp30 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp23, self->name);
+    $tmp22 = $tmp30;
+    panda$core$String* $tmp32 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp22, &$s31);
+    $tmp21 = $tmp32;
     $tmp20 = $tmp21;
     $returnValue19 = $tmp20;
     panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp20));
@@ -116,17 +116,17 @@ panda$core$String* org$pandalanguage$pandac$ChoiceEntry$convert$R$panda$core$Str
     return $returnValue19;
 }
 void org$pandalanguage$pandac$ChoiceEntry$cleanup(org$pandalanguage$pandac$ChoiceEntry* self) {
-    int $tmp37;
+    int $tmp36;
     {
     }
-    $tmp37 = -1;
-    goto $l35;
-    $l35:;
+    $tmp36 = -1;
+    goto $l34;
+    $l34:;
     org$pandalanguage$pandac$Symbol$cleanup(((org$pandalanguage$pandac$Symbol*) self));
-    switch ($tmp37) {
-        case -1: goto $l38;
+    switch ($tmp36) {
+        case -1: goto $l37;
     }
-    $l38:;
+    $l37:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->owner));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->doccomment));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->fields));

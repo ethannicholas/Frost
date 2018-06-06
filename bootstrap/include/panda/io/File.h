@@ -27,6 +27,7 @@ void panda$io$File$createDirectories(panda$io$File* self);
 panda$io$InputStream* panda$io$File$openInputStream$R$panda$io$InputStream(panda$io$File* self);
 panda$io$OutputStream* panda$io$File$openOutputStream$R$panda$io$OutputStream(panda$io$File* self);
 panda$core$String* panda$io$File$readFully$R$panda$core$String(panda$io$File* self);
+void panda$io$File$write$panda$core$String(panda$io$File* self, panda$core$String* p_contents);
 void panda$io$File$delete(panda$io$File* self);
 panda$core$Bit panda$io$File$$EQ$panda$io$File$R$panda$core$Bit(panda$io$File* self, panda$io$File* p_other);
 panda$core$Bit panda$io$File$$NEQ$panda$io$File$R$panda$core$Bit(panda$io$File* self, panda$io$File* p_other);

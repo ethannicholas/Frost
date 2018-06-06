@@ -3,15 +3,14 @@
 #include "Array_types.h"
 typedef struct panda$collections$Array panda$collections$Array;
 #include "panda/core/Int64_types.h"
-typedef struct panda$collections$ListView panda$collections$ListView;
-typedef struct panda$core$Object panda$core$Object;
 typedef struct panda$collections$CollectionView panda$collections$CollectionView;
+typedef struct panda$core$Object panda$core$Object;
 typedef struct panda$core$String panda$core$String;
 typedef struct panda$collections$ImmutableArray panda$collections$ImmutableArray;
 
 void panda$collections$Array$init(panda$collections$Array* self);
 void panda$collections$Array$init$panda$core$Int64(panda$collections$Array* self, panda$core$Int64 p_capacity);
-void panda$collections$Array$init$panda$collections$ListView$LTpanda$collections$Array$T$GT(panda$collections$Array* self, panda$collections$ListView* p_list);
+void panda$collections$Array$init$panda$collections$CollectionView$LTpanda$collections$Array$T$GT(panda$collections$Array* self, panda$collections$CollectionView* p_c);
 void panda$collections$Array$init$panda$unsafe$Pointer$LTpanda$collections$Array$T$GT$panda$core$Int64(panda$collections$Array* self, panda$core$Object** p_data, panda$core$Int64 p_count);
 void panda$collections$Array$cleanup(panda$collections$Array* self);
 panda$core$Object* panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(panda$collections$Array* self, panda$core$Int64 p_index);

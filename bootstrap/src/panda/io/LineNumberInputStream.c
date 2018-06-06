@@ -36,7 +36,7 @@ void panda$io$LineNumberInputStream$init$panda$io$InputStream(panda$io$LineNumbe
 panda$core$UInt8$nullable panda$io$LineNumberInputStream$read$R$panda$core$UInt8$Q(panda$io$LineNumberInputStream* self) {
     panda$core$UInt8$nullable result6;
     panda$core$UInt8$nullable $returnValue9;
-    panda$core$UInt8$nullable $match$37_1311;
+    panda$core$UInt8$nullable $match$38_1311;
     panda$core$UInt8 $tmp12;
     panda$core$Int64 $tmp14;
     panda$core$Int64 $tmp16;
@@ -53,9 +53,9 @@ panda$core$UInt8$nullable panda$io$LineNumberInputStream$read$R$panda$core$UInt8
     }
     }
     {
-        $match$37_1311 = result6;
+        $match$38_1311 = result6;
         panda$core$UInt8$init$builtin_uint8(&$tmp12, 10);
-        panda$core$Bit $tmp13 = panda$core$UInt8$$EQ$panda$core$UInt8$R$panda$core$Bit(((panda$core$UInt8) $match$37_1311.value), $tmp12);
+        panda$core$Bit $tmp13 = panda$core$UInt8$$EQ$panda$core$UInt8$R$panda$core$Bit(((panda$core$UInt8) $match$38_1311.value), $tmp12);
         if ($tmp13.value) {
         {
             panda$core$Int64$init$builtin_int64(&$tmp14, 1);
@@ -67,7 +67,7 @@ panda$core$UInt8$nullable panda$io$LineNumberInputStream$read$R$panda$core$UInt8
         }
         else {
         panda$core$UInt8$init$builtin_uint8(&$tmp17, 9);
-        panda$core$Bit $tmp18 = panda$core$UInt8$$EQ$panda$core$UInt8$R$panda$core$Bit(((panda$core$UInt8) $match$37_1311.value), $tmp17);
+        panda$core$Bit $tmp18 = panda$core$UInt8$$EQ$panda$core$UInt8$R$panda$core$Bit(((panda$core$UInt8) $match$38_1311.value), $tmp17);
         if ($tmp18.value) {
         {
             panda$core$Int64$init$builtin_int64(&$tmp19, 4);

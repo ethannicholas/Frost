@@ -14,8 +14,6 @@
 
 #include "unicode/uregex.h"
 
-typedef uint8_t Bit;
-
 #define true 1
 #define false 0
 
@@ -44,6 +42,18 @@ typedef struct Object {
     int32_t refcnt;
 } Object;
 
+typedef struct Bit {
+    uint8_t value;
+} Bit;
+
+typedef struct Int64 {
+    int64_t value;
+} Int64;
+
+typedef struct Real64 {
+    double value;
+} Real64;
+
 typedef struct NullableChar {
     int8_t value;
     int8_t nonnull;
@@ -65,6 +75,10 @@ typedef struct String {
     struct String* owner;
 } String;
 
+typedef struct StringIndex {
+    Int64 value;
+} StringIndex;
+
 typedef struct Array {
     Class* cl;
     int32_t refcnt;
@@ -83,6 +97,7 @@ typedef struct FileInputStream {
     Class* cl;
     int32_t refcnt;
     FILE* file;
+    Bit closeOnCleanup;
 } FileInputStream;
 
 extern Class panda$io$FileInputStream$class;
@@ -91,6 +106,7 @@ typedef struct FileOutputStream {
     Class* cl;
     int32_t refcnt;
     FILE* file;
+    Bit closeOnCleanup;
 } FileOutputStream;
 
 typedef struct Process {
@@ -134,7 +150,7 @@ typedef struct Matcher {
     void* nativeHandle;
     String* searchText;
     Bit matched;
-    Bit replacementIndex;
+    StringIndex replacementIndex;
 } Matcher;
 
 extern Class panda$core$Panda$class;
@@ -316,8 +332,8 @@ int main(int argc, char** argv) {
 
 // System
 
-void panda$core$System$exit$panda$core$Int64(int64_t code) {
-    exit(code);
+void panda$core$System$exit$panda$core$Int64(Int64 code) {
+    exit(code.value);
 }
 
 void panda$core$System$crash() {
@@ -370,6 +386,9 @@ Process* panda$core$System$exec$panda$io$File$panda$collections$ListView$LTpanda
             perror("dup2 onto stderr failed");
             exit(1);
         }
+//        setvbuf(stdin, NULL, _IONBF, 0);
+//        setvbuf(stdout, NULL, _IONBF, 0);
+//        setvbuf(stderr, NULL, _IONBF, 0);
         int argCount = get_count(args);
         char** cargs = (char**) pandaAlloc((argCount + 2) * sizeof(char*));
         cargs[0] = pandaGetCString(path->path);
@@ -379,7 +398,6 @@ Process* panda$core$System$exec$panda$io$File$panda$collections$ListView$LTpanda
         }
         cargs[argCount + 1] = NULL;
         execv(cargs[0], cargs);
-        printf("running %s\n", cargs[0]);
         perror("error exec'ing child process");
         // we don't bother freeing the argument memory because we just kill the process here
         exit(1);
@@ -394,25 +412,36 @@ Process* panda$core$System$exec$panda$io$File$panda$collections$ListView$LTpanda
         result->input = pandaObjectAlloc(sizeof(FileOutputStream),
                 &panda$io$FileOutputStream$class);
         result->input->file = fdopen(stdinPipe[1], "wb");
+        result->input->closeOnCleanup.value = true;
+//        setvbuf(result->input->file, NULL, _IONBF, 0);
         result->output = pandaObjectAlloc(sizeof(FileInputStream), &panda$io$FileInputStream$class);
         result->output->file = fdopen(stdoutPipe[0], "rb");
+        result->output->closeOnCleanup.value = true;
+//        setvbuf(result->output->file, NULL, _IONBF, 0);
         result->error = pandaObjectAlloc(sizeof(FileInputStream), &panda$io$FileInputStream$class);
         result->error->file = fdopen(stderrPipe[0], "rb");
+        result->error->closeOnCleanup.value = true;
+//        setvbuf(result->error->file, NULL, _IONBF, 0);
         return result;
     }
     return NULL;
 }
 
-void panda$core$System$Process$waitFor$R$panda$core$Int64(int64_t* result, Process* p) {
+void panda$core$System$Process$waitFor$R$panda$core$Int64(Int64* result, Process* p) {
     int status;
-    fclose(p->input->file);
-    p->input->file = NULL;
     waitpid(p->pid, &status, 0);
-    *result = WEXITSTATUS(status);
-    fclose(p->output->file);
-    p->output->file = NULL;
-    fclose(p->error->file);
-    p->error->file = NULL;
+    result->value = WEXITSTATUS(status);
+}
+
+File* panda$core$System$tempDir$R$panda$io$File() {
+    const char* tmpdir = getenv("TMPDIR");
+    if (!tmpdir) {
+        tmpdir = "/tmp";
+    }
+    String* path = pandaNewString(tmpdir, strlen(tmpdir));
+    File* file = pandaObjectAlloc(sizeof(File), &panda$io$File$class);
+    file->path = path;
+    return file;
 }
 
 // Panda
@@ -483,28 +512,28 @@ void panda$core$Panda$unref$panda$core$Object(Object* o) {
     }
 }
 
-void panda$core$Panda$addressOf$panda$core$Object$R$panda$core$Int64(int64_t* result, void* o) {
-    *result = (int64_t) o;
+void panda$core$Panda$addressOf$panda$core$Object$R$panda$core$Int64(Int64* result, void* o) {
+    result->value = (int64_t) o;
 }
 
-void panda$core$Panda$toReal64$panda$core$String$R$panda$core$Real64(double* result, String* s) {
+void panda$core$Panda$toReal64$panda$core$String$R$panda$core$Real64(Real64* result, String* s) {
     char* cstr = pandaGetCString(s);
-    *result = atof(cstr);
+    result->value = atof(cstr);
     pandaFree(cstr);
 }
 
-String* panda$core$Real64$convert$R$panda$core$String(double d) {
-    size_t len = snprintf(NULL, 0, "%g", d);
+String* panda$core$Real64$convert$R$panda$core$String(Real64 d) {
+    size_t len = snprintf(NULL, 0, "%g", d.value);
     char* chars = (char*) pandaAlloc(len + 1);
-    snprintf(chars, len + 1, "%g", d);
+    snprintf(chars, len + 1, "%g", d.value);
     String* result = pandaNewString(chars, len);
     pandaFree(chars);
     return result;
 }
 
-void panda$core$Panda$floatToIntBits$panda$core$Real64$R$panda$core$Int64(int64_t* result,
-        double d) {
-    *result = *((int64_t*) &d);
+void panda$core$Panda$floatToIntBits$panda$core$Real64$R$panda$core$Int64(Int64* result,
+        Real64 d) {
+    *result = *(Int64*) &d;
 }
 
 float panda$core$Panda$sqrt$builtin_float32$R$builtin_float32(float v) {
@@ -531,12 +560,22 @@ void pandaFatalError(const char* msg) {
     abort();
 }
 
-void panda$core$RegularExpression$compile$panda$core$String(RegularExpression* r, String* regex) {
+void panda$core$RegularExpression$compile$panda$core$String$panda$core$Int64(RegularExpression* r,
+        String* regex, Int64 flags) {
     UErrorCode status = U_ZERO_ERROR;
     char* text = pandaGetCString(regex);
     UText* ut = utext_openUTF8(NULL, text, regex->size, &status);
     UParseError parseStatus;
     int icuFlags = 0;
+    if (flags.value & 1) {
+        icuFlags |= UREGEX_MULTILINE;
+    }
+    if (flags.value & 2) {
+        icuFlags |= UREGEX_CASE_INSENSITIVE;
+    }
+    if (flags.value & 4) {
+        icuFlags |= UREGEX_DOTALL;
+    }
     r->nativeHandle = uregex_openUText(ut, icuFlags, &parseStatus, &status);
     ++allocations;
     utext_close(ut);
@@ -576,54 +615,54 @@ void panda$core$RegularExpression$destroy(RegularExpression* self) {
 
 void panda$core$Matcher$matches$R$panda$core$Bit(Bit* result, Matcher* self) {
     UErrorCode status = U_ZERO_ERROR;
-    self->matched = uregex_matches(self->nativeHandle, 0, &status);
+    self->matched.value = uregex_matches(self->nativeHandle, 0, &status);
     *result = self->matched;
-    self->replacementIndex = self->searchText->size;
+    self->replacementIndex.value.value = self->searchText->size;
     if (U_FAILURE(status)) {
         pandaFatalError(u_errorName(status));
     }
 }
 
 void panda$core$Matcher$nativeFind$panda$core$String$Index$R$panda$core$Bit(Bit* result,
-        Matcher* self, int64_t startIndex) {
+        Matcher* self, StringIndex startIndex) {
     UErrorCode status = U_ZERO_ERROR;
-    *result = uregex_find(self->nativeHandle, startIndex, &status);
+    result->value = uregex_find(self->nativeHandle, startIndex.value.value, &status);
     if (U_FAILURE(status)) {
         pandaFatalError(u_errorName(status));
     }
 }
 
-void panda$core$Matcher$get_start$R$panda$core$String$Index(int64_t* result, Matcher* self) {
+void panda$core$Matcher$get_start$R$panda$core$String$Index(Int64* result, Matcher* self) {
     UErrorCode status = U_ZERO_ERROR;
-    *result = uregex_start(self->nativeHandle, 0, &status);
-    if (U_FAILURE(status)) {
-        pandaFatalError(u_errorName(status));
-    }
-
-}
-
-void panda$core$Matcher$get_end$R$panda$core$String$Index(int64_t* result, Matcher* self) {
-    UErrorCode status = U_ZERO_ERROR;
-    *result = uregex_end(self->nativeHandle, 0, &status);
+    result->value = uregex_start(self->nativeHandle, 0, &status);
     if (U_FAILURE(status)) {
         pandaFatalError(u_errorName(status));
     }
 
 }
 
-void panda$core$Matcher$get_groupCount$R$panda$core$Int64(int64_t* result, Matcher* self) {
+void panda$core$Matcher$get_end$R$panda$core$String$Index(Int64* result, Matcher* self) {
     UErrorCode status = U_ZERO_ERROR;
-    *result = uregex_groupCount(self->nativeHandle, &status) + 1;
+    result->value = uregex_end(self->nativeHandle, 0, &status);
+    if (U_FAILURE(status)) {
+        pandaFatalError(u_errorName(status));
+    }
+
+}
+
+void panda$core$Matcher$get_groupCount$R$panda$core$Int64(Int64* result, Matcher* self) {
+    UErrorCode status = U_ZERO_ERROR;
+    result->value = uregex_groupCount(self->nativeHandle, &status) + 1;
     if (U_FAILURE(status)) {
         pandaFatalError(u_errorName(status));
     }
 }
 
-String* panda$core$Matcher$group$panda$core$Int64$R$panda$core$String(Matcher* self,
-        int64_t group) {
+String* panda$core$Matcher$group$panda$core$Int64$R$panda$core$String$Q(Matcher* self,
+        Int64 group) {
     UErrorCode status = U_ZERO_ERROR;
     int64_t length;
-    UText* ut = uregex_groupUText(self->nativeHandle, group, NULL, &length, &status);
+    UText* ut = uregex_groupUText(self->nativeHandle, group.value, NULL, &length, &status);
     if (U_FAILURE(status)) {
         pandaFatalError(u_errorName(status));
     }
@@ -646,7 +685,7 @@ typedef struct ThreadInfo {
 } ThreadInfo;
 
 void pandaThreadEntry(ThreadInfo* threadInfo) {
-    if (threadInfo->preventsExit) {
+    if (threadInfo->preventsExit.value) {
         pthread_mutex_lock(&preventsExitThreadsMutex);
         preventsExitThreads++;
         pthread_mutex_unlock(&preventsExitThreadsMutex);
@@ -659,7 +698,7 @@ void pandaThreadEntry(ThreadInfo* threadInfo) {
     }
     panda$core$Panda$unref$panda$core$Object((Object*) threadInfo->run);
     pandaFree(threadInfo);
-    if (threadInfo->preventsExit) {
+    if (threadInfo->preventsExit.value) {
         pthread_mutex_lock(&preventsExitThreadsMutex);
         preventsExitThreads--;
         if (preventsExitThreads == 0)
@@ -668,7 +707,7 @@ void pandaThreadEntry(ThreadInfo* threadInfo) {
     }
 }
 
-void panda$threads$Thread$run$$LP$RP$EQ$AM$GT$LP$RP$builtin_bit(Object* thread, Method* run,
+void panda$threads$Thread$run$$LP$RP$EQ$AM$GT$ST$LP$RP$builtin_bit(Object* thread, Method* run,
         Bit preventsExit) {
     pthread_t threadId;
     ThreadInfo* threadInfo = pandaAlloc(sizeof(ThreadInfo));
@@ -779,6 +818,7 @@ FileInputStream* panda$io$File$openInputStream$R$panda$io$InputStream(File* self
         printf("error opening '%s' for reading\n", str);
         exit(1);
     }
+    result->closeOnCleanup.value = true;
     pandaFree(str);
     return result;
 }
@@ -792,6 +832,7 @@ FileOutputStream* panda$io$File$openOutputStream$R$panda$io$OutputStream(File* s
         printf("error opening '%s' for writing\n", str);
         exit(1);
     }
+    result->closeOnCleanup.value = true;
     pandaFree(str);
     return result;
 }
@@ -816,7 +857,7 @@ void panda$io$File$delete(File* file) {
 void panda$io$File$exists$R$panda$core$Bit(Bit* result, File* file) {
     char* path = pandaGetCString(file->path);
     struct stat fileInfo;
-    *result = stat(path, &fileInfo) >= 0;
+    result->value = stat(path, &fileInfo) >= 0;
     pandaFree(path);
 }
 
@@ -825,7 +866,7 @@ void panda$io$File$isDirectory$R$panda$core$Bit(Bit* result, File* file) {
     struct stat fileInfo;
     stat(path, &fileInfo);
     pandaFree(path);
-    *result = S_ISDIR(fileInfo.st_mode);
+    result->value = S_ISDIR(fileInfo.st_mode);
 }
 
 void panda$io$File$createDirectory(File* file) {
@@ -887,11 +928,10 @@ void panda$io$FileInputStream$readImpl$panda$unsafe$Pointer$LTpanda$core$UInt8$G
     *result = fread(buffer, 1, max, self->file);
 }
 
-void panda$io$FileInputStream$cleanup(FileInputStream* self) {
+void panda$io$FileInputStream$close(FileInputStream* self) {
     if (self->file) {
         fclose(self->file);
     }
-    self->file = NULL;
 }
 
 // FileOutputStream
@@ -900,14 +940,15 @@ void panda$io$FileOutputStream$write$panda$core$UInt8(FileOutputStream* self, ui
     fputc(ch, self->file);
 }
 
-void panda$io$FileOutputStream$write$panda$unsafe$Pointer$LTpanda$core$UInt8$GT$panda$core$Int64$panda$core$Int64(
-        FileOutputStream* self, void* src, int64_t offset, int64_t count) {
-    fwrite(src + offset, 1, count, self->file);
+void panda$io$FileOutputStream$write$panda$unsafe$Pointer$LTpanda$core$UInt8$GT$panda$core$Int64(
+        FileOutputStream* self, void* src, int64_t count) {
+    fwrite(src, 1, count, self->file);
 }
 
-void panda$io$FileOutputStream$cleanup(FileOutputStream* self) {
-    if (self->file) {
-        fclose(self->file);
-    }
-    self->file = NULL;
+void panda$io$FileOutputStream$close(FileOutputStream* self) {
+    fclose(self->file);
+}
+
+void panda$io$FileOutputStream$flush(FileOutputStream* self) {
+    fflush(self->file);
 }

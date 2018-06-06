@@ -45,7 +45,7 @@ class System {
     @class
     @external
     method tempDir():File
-    
+
     ================================================================================================
     Causes the program to immediately stop running, returning the indicated exit status to the
     operating system. Generally an exit value of 0 is taken to mean a normal exit and a non-zero

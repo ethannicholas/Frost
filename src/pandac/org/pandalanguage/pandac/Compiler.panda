@@ -516,10 +516,16 @@ class Compiler {
             cl.resolved := Resolution.RESOLVED_WITH_ERRORS
         }
         if cl.rawSuper != null {
-            checkGenericParameters(cl.position, getClass(cl.rawSuper), cl.rawSuper)
+            def superclass := getClass(cl.rawSuper)
+            if superclass != null {
+                checkGenericParameters(cl.position, superclass, cl.rawSuper)
+            }
         }
         for intf in cl.rawInterfaces {
-            checkGenericParameters(cl.position, getClass(intf), intf)
+            def intfclass := getClass(intf)
+            if intfclass != null {
+                checkGenericParameters(cl.position, intfclass, intf)
+            }
         }
         for p in cl.parameters {
             def cl := getClass(p.bound)
@@ -948,18 +954,21 @@ class Compiler {
     }
 
     method allInterfaces(t:Type):HashSet<Type> {
-        def cl := getClass(t)
-        assert cl != null
-        resolve(cl)
         def result := HashSet<Type>()
-        if cl.rawSuper != null {
-            result.addAll(allInterfaces(remapType(t, cl.rawSuper)))
-        }
-        for intf in cl.rawInterfaces {
-            result.addAll(allInterfaces(remapType(t, intf)))
-        }
-        if cl.classKind = ClassDecl.Kind.INTERFACE {
-            result.add(t)
+        def cl := getClass(t)
+        if cl != null {
+            resolve(cl)
+            if cl.resolved = Resolution.RESOLVED {
+                if cl.rawSuper != null {
+                    result.addAll(allInterfaces(remapType(t, cl.rawSuper)))
+                }
+                for intf in cl.rawInterfaces {
+                    result.addAll(allInterfaces(remapType(t, intf)))
+                }
+                if cl.classKind = ClassDecl.Kind.INTERFACE {
+                    result.add(t)
+                }
+            }
         }
         return result
     }
@@ -980,7 +989,9 @@ class Compiler {
 
     method findMethod(owner:Type, name:String, methodType:Type, checkInterfaces:Bit):MethodDecl? {
         def cl := getClass(owner)
-        assert cl != null
+        if cl = null {
+            return null
+        }
         resolve(cl)
         for test in cl.methods {
             if test.name = name {
@@ -1067,16 +1078,18 @@ class Compiler {
         if !cl.symbolTableResolved {
             cl.symbolTableResolved := true
             resolve(cl)
-            if cl.rawSuper != null {
-                def superCl := getClass(cl.rawSuper)
-                if superCl != null {
-                    cl.symbolTable.parents.add(getSymbolTable(superCl))
+            if cl.resolved = Resolution.RESOLVED {
+                if cl.rawSuper != null {
+                    def superCl := getClass(cl.rawSuper)
+                    if superCl != null {
+                        cl.symbolTable.parents.add(getSymbolTable(superCl))
+                    }
                 }
-            }
-            for rawIntf in cl.rawInterfaces {
-                def intf := getClass(rawIntf)
-                if intf != null {
-                    cl.symbolTable.parents.add(getSymbolTable(intf))
+                for rawIntf in cl.rawInterfaces {
+                    def intf := getClass(rawIntf)
+                    if intf != null {
+                        cl.symbolTable.parents.add(getSymbolTable(intf))
+                    }
                 }
             }
         }
@@ -1126,18 +1139,24 @@ class Compiler {
     }
 
     method getMethodReference(st:SymbolTable, target:IRNode?, name:String, position:Position,
-            types:ListView<Type>):IRNode {
+            types:ListView<Type>):IRNode? {
         def methods := Array<MethodRef>()
         def s := st[name]
         assert s != null, "could not find method '\{name}'"
         if s.kind = Symbol.Kind.METHOD {
             resolve(s->MethodDecl)
+            if s->MethodDecl.resolved != Resolution.RESOLVED {
+                return null
+            }
             methods.add(MethodRef(s->MethodDecl, types))
         }
         else {
             assert s.kind = Symbol.Kind.METHODS
             for m in s->Methods.methods {
                 resolve(m)
+                if m.resolved != Resolution.RESOLVED {
+                    return null
+                }
                 methods.add(MethodRef(m, types))
             }
         }
@@ -1444,15 +1463,11 @@ class Compiler {
                     total += 1
                 }
                 for i in 0 .. type.subtypes.get_count() {
-                    if type.subtypes[i] != target.subtypes[i] {
-                        -- we could potentially allow some differences here, as long as things are
-                        -- binary compatible - i.e., it would be fine to coerce (String)=>(String)
-                        -- to (Object)=>(Object), but not ok to coerce (Int)=>(Int) to
-                        -- (Object)=>(Object) because Int is a value which is not binary compatible
-                        -- with Object. This may be confusing, and I'm not sure it's worth it, so
-                        -- for right now let's just be strict about it.
+                    def cost := coercionCost(type.subtypes[i], target.subtypes[i])
+                    if cost = null {
                         return null
                     }
+                    total += cost
                 }
                 return total
             }
@@ -1507,16 +1522,18 @@ class Compiler {
             return null
         }
         resolve(cl)
-        if cl.rawSuper != null {
-            var cost := coercionCost(remapType(type, remapType(type, cl.rawSuper)), target)
-            if cost != null {
-                return cost + 1
+        if cl.resolved != Resolution.RESOLVED_WITH_ERRORS {
+            if cl.rawSuper != null {
+                var cost := coercionCost(remapType(type, remapType(type, cl.rawSuper)), target)
+                if cost != null {
+                    return cost + 1
+                }
             }
-        }
-        for intf in cl.rawInterfaces {
-            var cost := coercionCost(remapType(type, remapType(type, intf)), target)
-            if cost != null {
-                return cost + 1
+            for intf in cl.rawInterfaces {
+                var cost := coercionCost(remapType(type, remapType(type, intf)), target)
+                if cost != null {
+                    return cost + 1
+                }
             }
         }
         return null
@@ -3119,10 +3136,13 @@ class Compiler {
         assert isRefCounted(arg.type()), "not refcounted: \{arg}:\{arg.type()}"
         def p := Position()
         def mref := compileDot(p, IRNode.TYPE_REFERENCE(p, Type.Panda()), name)
+        assert mref != null
         def args := Array<IRNode>() -- FIXME literal
         args.add(arg)
         def result := resolve(call(mref, args))
-        assert result != null
+        if result = null {
+            return IRNode.BLOCK(arg.position(), ImmutableArray<IRNode>())
+        }
         return result
     }
 
@@ -3830,6 +3850,9 @@ class Compiler {
             match p {
                 when ASTNode.PARAMETER(_, name, type):
                     def type := resolve(scanner.convertType(type))
+                    if type = null {
+                        return null
+                    }
                     parameters.add(MethodDecl.Parameter(name, type))
                 otherwise:
                     assert false
@@ -3838,6 +3861,9 @@ class Compiler {
         def returnType:Type
         if rawReturnType != null {
             returnType := resolve(scanner.convertType(rawReturnType))
+            if returnType = null {
+                return null
+            }
         }
         else {
             returnType := Type.Void()
@@ -3880,7 +3906,6 @@ class Compiler {
                         when IRNode.DYNAMIC_CALL(m, _):
                             error(result.position(), "method of type \{m.type()} does not return " +
                                     "a value")
-                            assert false
                             return null
                         otherwise:
                             assert false
@@ -4260,6 +4285,9 @@ class Compiler {
                     error(position, "declaration has neither a type nor a value")
                     return null
                 }
+                if !type.resolved {
+                    return null
+                }
                 if value != null {
                     value := coerce(value, type)
                     if value = null {
@@ -4279,7 +4307,7 @@ class Compiler {
                 return CompileTargetResult(IRNode.VARIABLE_REFERENCE(v.position, v), value)
             when ASTNode.TYPED_IDENTIFIER(position, name, rawType):
                 def type := resolve(scanner.convertType(rawType))
-                if type = null {
+                if type = null | !type.resolved {
                     return null
                 }
                 if value != null {
@@ -5339,9 +5367,6 @@ class Compiler {
     }
 
     method compile(cl:ClassDecl) {
-        assert compiling = null,
-                "starting compilation of \{cl.name} while already compiling \{compiling.name}"
-        compiling := cl
         currentClass.push(cl)
         checkAnnotations(cl)
         resolve(cl)
@@ -5379,7 +5404,6 @@ class Compiler {
         }
         symbolTable := old
         currentClass.pop()
-        compiling := null
 
         if compilationQueue.get_count() > 0 {
             def next := compilationQueue[0]

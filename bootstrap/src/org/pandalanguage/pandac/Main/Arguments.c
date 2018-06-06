@@ -67,7 +67,7 @@ panda$core$String* org$pandalanguage$pandac$Main$Arguments$next$R$panda$core$Str
     panda$core$Bit $tmp14 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp13);
     if ($tmp14.value) goto $l15; else goto $l16;
     $l16:;
-    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s17, (panda$core$Int64) { 45 });
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s17, (panda$core$Int64) { 42 });
     abort();
     $l15:;
     panda$core$Int64$init$builtin_int64(&$tmp18, 1);
@@ -131,7 +131,7 @@ panda$core$String* org$pandalanguage$pandac$Main$Arguments$next$panda$core$Strin
         $tmp41 = $tmp57;
         panda$core$String* $tmp58 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp35, $tmp41);
         $tmp34 = $tmp58;
-        (($fn59) $tmp32->$class->vtable[19])($tmp32, $tmp34);
+        (($fn59) $tmp32->$class->vtable[21])($tmp32, $tmp34);
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp34));
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp41));
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp42));

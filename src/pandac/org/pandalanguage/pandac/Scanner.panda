@@ -69,7 +69,7 @@ class Scanner {
                 }
                 return Type.methodType(type.position(), typeKind, parameters.finish(), returnType)
             otherwise:
-                assert false, "unsupported type \{type}(\{type.$rawValue}"
+                assert false, "unsupported type \{type}(\{type.$rawValue})"
         }
     }
 

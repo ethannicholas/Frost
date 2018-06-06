@@ -17,11 +17,13 @@ class TestRunner {
     def pandaHome:File
     def buildDir:File
     def cCompiler:File
+    def cLibs:ListView<String>
 
-    init(pandaHome:File, buildDir:File, cCompiler:File) {
+    init(pandaHome:File, buildDir:File, cCompiler:File, cLibs:ListView<String>) {
         self.pandaHome := pandaHome
         self.buildDir := buildDir
         self.cCompiler := cCompiler
+        self.cLibs := cLibs
     }
 
     method deleteTree(file:File) {
@@ -46,7 +48,7 @@ class TestRunner {
         }
     }
 
-    method compileCFiles(outPath:File, exe:File):Bit {
+    method compileCFiles(cLibs:ListView<String>, outPath:File, exe:File):Bit {
         def files := Array<File>()
         findCFiles(outPath, files)
         def args := Array<String>()
@@ -56,8 +58,7 @@ class TestRunner {
         args.add("-I../bootstrap/include")
         args.add("-I\{outPath}")
         args.add("-I\{pandaHome}/src/c")
-        def icuLibs := org.pandalanguage.pandac.Config.ICU_LIBRARIES.split(";")
-        for lib in icuLibs {
+        for lib in cLibs {
             def libFile := File(lib)
             args.add("-L" + libFile.parent())
             var simpleName := libFile.simpleName()
@@ -81,7 +82,7 @@ class TestRunner {
         return true
     }
 
-    method runTestC(pandac:File, workingDir:File, test:String):Bit {
+    method runTestC(pandac:File, cLibs:ListView<String>, workingDir:File, test:String):Bit {
         def expected := workingDir.resolve(test + ".expected").readFully()
         def exe := File("/tmp/test.out")
         if exe.exists() {
@@ -117,7 +118,7 @@ class TestRunner {
         compiler := System.exec(pandac, args)
         compileResult := compiler.output.readFully() -- FIXME use error stream instead
         compiler.waitFor()
-        if !compileCFiles(outPath, exe) {
+        if !compileCFiles(cLibs, outPath, exe) {
             return false
         }
         if compileResult != "" {
@@ -146,10 +147,11 @@ class TestRunner {
         return true        
     }
 
-    method runTest(pandac:File, workingDir:File, test:String, mode:Mode):Bit {
+    method runTest(pandac:File, cLibs:ListView<String>, workingDir:File, test:String,
+            mode:Mode):Bit {
         Console.print("Testing \{test} (\{mode})...")
         if mode = Mode.C {
-            return runTestC(pandac, workingDir, test)
+            return runTestC(pandac, cLibs, workingDir, test)
         }
         def expected := workingDir.resolve(test + ".expected").readFully()
         def exe := File("/tmp/test.out")
@@ -263,15 +265,15 @@ class TestRunner {
             if file.path.endsWith(".panda") {
                 def name := file.changeExtension("").name()
                 total += 1
-                if runTest(pandac, tests, name, Mode.O0) {
+                if runTest(pandac, cLibs, tests, name, Mode.O0) {
                     success += 1
                 }
                 total += 1
-                if runTest(pandac, tests, name, Mode.O3) {
+                if runTest(pandac, cLibs, tests, name, Mode.O3) {
                     success += 1
                 }
                 total += 1
-                if runTest(pandac, tests, name, Mode.C) {
+                if runTest(pandac, cLibs, tests, name, Mode.C) {
                     success += 1
                 }
             }
@@ -281,13 +283,14 @@ class TestRunner {
 
     @class
     method main(args:ListView<String>) {
-        if args.get_count() != 4 {
-            Console.printLine("usage: testrunner <panda home> <build path> <c compiler>")
+        if args.get_count() < 5 {
+            Console.printLine("usage: testrunner <panda home> <build path> <c compiler> <c libs...>")
             System.exit(1)
         }
         def pandaHome := File(args[1])
         def buildDir := File(args[2])
         def cCompiler := File(args[3])
-        TestRunner(pandaHome, buildDir, cCompiler).run()
+        def cLibs := args[4...]
+        TestRunner(pandaHome, buildDir, cCompiler, cLibs).run()
     }
 }

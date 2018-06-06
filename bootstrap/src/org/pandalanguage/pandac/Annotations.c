@@ -5,6 +5,7 @@
 #include "panda/core/Int64.h"
 #include "panda/collections/ListView.h"
 #include "panda/collections/Array.h"
+#include "panda/collections/CollectionView.h"
 #include "panda/core/Panda.h"
 #include "panda/core/Bit.h"
 #include "panda/core/MutableString.h"
@@ -60,7 +61,7 @@ void org$pandalanguage$pandac$Annotations$init$panda$core$Int64$panda$collection
         {
             $tmp3 = self->expressions;
             panda$collections$Array* $tmp6 = (panda$collections$Array*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$Array$class);
-            panda$collections$Array$init$panda$collections$ListView$LTpanda$collections$Array$T$GT($tmp6, p_expressions);
+            panda$collections$Array$init$panda$collections$CollectionView$LTpanda$collections$Array$T$GT($tmp6, ((panda$collections$CollectionView*) p_expressions));
             $tmp5 = $tmp6;
             $tmp4 = $tmp5;
             self->expressions = $tmp4;

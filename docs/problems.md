@@ -1,3 +1,13 @@
+Need:
+
+fix <invalid> on unknown identifier
+Closures
+Proper lambda / inner method errors
+Documentation
+Array literals
+Properties
+fix command line parsing
+
 using = on two non-trivial choice entries does not work (merely compares rawValue)
 Need to figure out & enforce init and cleanup rules
 Add tests for things like breaking out of multiple loops w/ memory management

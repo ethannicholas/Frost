@@ -13,6 +13,7 @@
 #include "org/pandalanguage/pandac/Symbol/Kind.h"
 #include "panda/core/Int64.h"
 #include "panda/collections/ListView.h"
+#include "panda/collections/CollectionView.h"
 #include "panda/core/MutableString.h"
 #include "panda/collections/Iterator.h"
 #include "panda/collections/Iterable.h"
@@ -20,7 +21,6 @@
 #include "panda/core/UInt8.h"
 #include "org/pandalanguage/pandac/ClassDecl/GenericParameter.h"
 #include "panda/core/Weak.h"
-#include "panda/collections/CollectionView.h"
 #include "panda/collections/ImmutableArray.h"
 #include "panda/core/UInt64.h"
 #include "panda/core/Real64.h"
@@ -312,7 +312,7 @@ void org$pandalanguage$pandac$Type$init$panda$core$String$org$pandalanguage$pand
     {
         $tmp70 = self->subtypes;
         panda$collections$Array* $tmp73 = (panda$collections$Array*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$Array$class);
-        panda$collections$Array$init$panda$collections$ListView$LTpanda$collections$Array$T$GT($tmp73, p_subtypes);
+        panda$collections$Array$init$panda$collections$CollectionView$LTpanda$collections$Array$T$GT($tmp73, ((panda$collections$CollectionView*) p_subtypes));
         $tmp72 = $tmp73;
         $tmp71 = $tmp72;
         self->subtypes = $tmp71;
@@ -360,7 +360,7 @@ void org$pandalanguage$pandac$Type$init$panda$collections$ListView$LTorg$pandala
         {
             $tmp81 = self->subtypes;
             panda$collections$Array* $tmp84 = (panda$collections$Array*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$Array$class);
-            panda$collections$Array$init$panda$collections$ListView$LTpanda$collections$Array$T$GT($tmp84, p_subtypes);
+            panda$collections$Array$init$panda$collections$CollectionView$LTpanda$collections$Array$T$GT($tmp84, ((panda$collections$CollectionView*) p_subtypes));
             $tmp83 = $tmp84;
             $tmp82 = $tmp83;
             self->subtypes = $tmp82;

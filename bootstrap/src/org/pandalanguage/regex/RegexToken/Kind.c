@@ -35,6 +35,11 @@ void org$pandalanguage$regex$RegexToken$Kind$cleanup(org$pandalanguage$regex$Reg
     panda$core$Int64 $tmp28;
     panda$core$Int64 $tmp30;
     panda$core$Int64 $tmp32;
+    panda$core$Int64 $tmp34;
+    panda$core$Int64 $tmp36;
+    panda$core$Int64 $tmp38;
+    panda$core$Int64 $tmp40;
+    panda$core$Int64 $tmp42;
     {
         $match$10_53 = self;
         panda$core$Int64$init$builtin_int64(&$tmp4, 0);
@@ -139,6 +144,46 @@ void org$pandalanguage$regex$RegexToken$Kind$cleanup(org$pandalanguage$regex$Reg
         panda$core$Bit $tmp33 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_53.$rawValue, $tmp32);
         if ($tmp33.value) {
         {
+        }
+        }
+        else {
+        panda$core$Int64$init$builtin_int64(&$tmp34, 15);
+        panda$core$Bit $tmp35 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_53.$rawValue, $tmp34);
+        if ($tmp35.value) {
+        {
+        }
+        }
+        else {
+        panda$core$Int64$init$builtin_int64(&$tmp36, 16);
+        panda$core$Bit $tmp37 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_53.$rawValue, $tmp36);
+        if ($tmp37.value) {
+        {
+        }
+        }
+        else {
+        panda$core$Int64$init$builtin_int64(&$tmp38, 17);
+        panda$core$Bit $tmp39 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_53.$rawValue, $tmp38);
+        if ($tmp39.value) {
+        {
+        }
+        }
+        else {
+        panda$core$Int64$init$builtin_int64(&$tmp40, 18);
+        panda$core$Bit $tmp41 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_53.$rawValue, $tmp40);
+        if ($tmp41.value) {
+        {
+        }
+        }
+        else {
+        panda$core$Int64$init$builtin_int64(&$tmp42, 19);
+        panda$core$Bit $tmp43 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_53.$rawValue, $tmp42);
+        if ($tmp43.value) {
+        {
+        }
+        }
+        }
+        }
+        }
         }
         }
         }

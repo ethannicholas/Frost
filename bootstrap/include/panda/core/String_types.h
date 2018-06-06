@@ -15,6 +15,6 @@ typedef struct panda$core$String {
     panda$core$String* owner;
 } panda$core$String;
 #include "panda/core/Class.h"
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[60]; } panda$core$String$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[61]; } panda$core$String$class_type;
 extern panda$core$String$class_type panda$core$String$class;
 

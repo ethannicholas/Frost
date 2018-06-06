@@ -15,6 +15,7 @@
 #include "panda/core/Weak.h"
 #include "panda/core/Bit.h"
 #include "panda/collections/HashMap.h"
+#include "panda/collections/CollectionView.h"
 #include "panda/collections/List.h"
 #include "org/pandalanguage/pandac/Compiler/Resolution.h"
 #include "panda/core/Int64.h"
@@ -25,7 +26,6 @@
 #include "panda/core/String/Index.h"
 #include "panda/core/Range.LTpanda/core/String/Index.Q.GT.h"
 #include "org/pandalanguage/pandac/Type/Kind.h"
-#include "panda/collections/CollectionView.h"
 #include "panda/core/Char8.h"
 #include "panda/core/UInt8.h"
 #include "panda/core/MutableString.h"
@@ -243,7 +243,7 @@ void org$pandalanguage$pandac$ClassDecl$init$panda$io$File$org$pandalanguage$pan
     {
         $tmp41 = self->declaredSupers;
         panda$collections$Array* $tmp44 = (panda$collections$Array*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$Array$class);
-        panda$collections$Array$init$panda$collections$ListView$LTpanda$collections$Array$T$GT($tmp44, p_declaredSupers);
+        panda$collections$Array$init$panda$collections$CollectionView$LTpanda$collections$Array$T$GT($tmp44, ((panda$collections$CollectionView*) p_declaredSupers));
         $tmp43 = $tmp44;
         $tmp42 = $tmp43;
         self->declaredSupers = $tmp42;

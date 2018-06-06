@@ -17,6 +17,6 @@ typedef struct panda$io$IndentedOutputStream {
     panda$io$OutputStream* out;
 } panda$io$IndentedOutputStream;
 #include "panda/core/Class.h"
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[21]; } panda$io$IndentedOutputStream$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[24]; } panda$io$IndentedOutputStream$class_type;
 extern panda$io$IndentedOutputStream$class_type panda$io$IndentedOutputStream$class;
 
