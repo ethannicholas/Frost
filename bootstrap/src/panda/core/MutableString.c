@@ -25,10 +25,10 @@ static panda$core$String $s1;
 panda$core$MutableString$class_type panda$core$MutableString$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, NULL, { panda$core$MutableString$convert$R$panda$core$String, panda$core$MutableString$cleanup, panda$core$MutableString$append$panda$core$Char8, panda$core$MutableString$append$panda$core$Char32, panda$core$MutableString$append$panda$core$String, panda$core$MutableString$append$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64, panda$core$MutableString$append$panda$core$Object, panda$core$MutableString$length$R$panda$core$Int64, panda$core$MutableString$byteLength$R$panda$core$Int64, panda$core$MutableString$start$R$panda$core$MutableString$Index, panda$core$MutableString$end$R$panda$core$MutableString$Index, panda$core$MutableString$next$panda$core$MutableString$Index$R$panda$core$MutableString$Index, panda$core$MutableString$previous$panda$core$MutableString$Index$R$panda$core$MutableString$Index, panda$core$MutableString$offset$panda$core$MutableString$Index$panda$core$Int64$R$panda$core$MutableString$Index, panda$core$MutableString$indexOf$panda$core$String$R$panda$core$MutableString$Index$Q, panda$core$MutableString$indexOf$panda$core$String$panda$core$MutableString$Index$R$panda$core$MutableString$Index$Q, panda$core$MutableString$contains$panda$core$Char8$R$panda$core$Bit, panda$core$MutableString$contains$panda$core$String$R$panda$core$Bit, panda$core$MutableString$startsWith$panda$core$String$R$panda$core$Bit, panda$core$MutableString$endsWith$panda$core$String$R$panda$core$Bit, panda$core$MutableString$lastIndexOf$panda$core$String$R$panda$core$MutableString$Index$Q, panda$core$MutableString$lastIndexOf$panda$core$String$panda$core$MutableString$Index$R$panda$core$MutableString$Index$Q, panda$core$MutableString$matches$panda$core$RegularExpression$R$panda$core$Bit, panda$core$MutableString$contains$panda$core$RegularExpression$R$panda$core$Bit, panda$core$MutableString$trim, panda$core$MutableString$replace$panda$core$RegularExpression$panda$core$String, panda$core$MutableString$replace$panda$core$RegularExpression$panda$core$String$panda$core$Bit, panda$core$MutableString$replace$panda$core$RegularExpression$$LPpanda$core$String$RP$EQ$GT$LPpanda$core$Object$RP, panda$core$MutableString$replace$panda$core$RegularExpression$$LPpanda$collections$ListView$LTpanda$core$String$Q$GT$RP$EQ$GT$LPpanda$core$Object$RP, panda$core$MutableString$$IDX$panda$core$MutableString$Index$R$panda$core$Char32, panda$core$MutableString$$IDX$panda$core$Int64$R$panda$core$Char32, panda$core$MutableString$$IDXEQ$panda$core$MutableString$Index$panda$core$Char32, panda$core$MutableString$$IDXEQ$panda$core$Range$LTpanda$core$MutableString$Index$GT$panda$core$String, panda$core$MutableString$$IDXEQ$panda$core$Range$LTpanda$core$Int64$GT$panda$core$String, panda$core$MutableString$$IDXEQ$panda$core$Range$LTpanda$core$MutableString$Index$Q$GT$panda$core$String, panda$core$MutableString$$IDXEQ$panda$core$Range$LTpanda$core$Int64$Q$GT$panda$core$String, panda$core$MutableString$replace$panda$core$String$panda$core$String, panda$core$MutableString$ensureCapacity$panda$core$Int64, panda$core$MutableString$clear, panda$core$MutableString$finish$R$panda$core$String} };
 
 typedef panda$core$String* (*$fn169)(panda$core$Object*);
-typedef panda$core$Object* (*$fn612)(panda$core$String*, panda$core$String*);
+typedef panda$core$Object* (*$fn612)(panda$core$Object*, panda$core$String*);
 typedef panda$core$Object* (*$fn613)(panda$core$String*);
 typedef panda$core$String* (*$fn614)(panda$core$Object*);
-typedef panda$core$Object* (*$fn666)(panda$collections$ListView*, panda$collections$ListView*);
+typedef panda$core$Object* (*$fn666)(panda$core$Object*, panda$collections$ListView*);
 typedef panda$core$Object* (*$fn667)(panda$collections$ListView*);
 typedef panda$core$String* (*$fn668)(panda$core$Object*);
 
@@ -1146,7 +1146,7 @@ void panda$core$MutableString$replace$panda$core$RegularExpression$$LPpanda$core
             panda$core$String* $tmp610 = panda$core$Matcher$group$panda$core$Int64$R$panda$core$String$Q(matcher596, $tmp609);
             $tmp608 = $tmp610;
             if (p_replacement->target) {
-                $tmp611 = (($fn612) p_replacement->pointer)(((panda$core$String*) p_replacement->target), $tmp608);
+                $tmp611 = (($fn612) p_replacement->pointer)(p_replacement->target, $tmp608);
             } else {
                 $tmp611 = (($fn613) p_replacement->pointer)($tmp608);
             }
@@ -1248,7 +1248,7 @@ void panda$core$MutableString$replace$panda$core$RegularExpression$$LPpanda$coll
                 goto $l647;
                 $l649:;
                 if (p_replacement->target) {
-                    $tmp665 = (($fn666) p_replacement->pointer)(((panda$collections$ListView*) p_replacement->target), ((panda$collections$ListView*) groups634));
+                    $tmp665 = (($fn666) p_replacement->pointer)(p_replacement->target, ((panda$collections$ListView*) groups634));
                 } else {
                     $tmp665 = (($fn667) p_replacement->pointer)(((panda$collections$ListView*) groups634));
                 }

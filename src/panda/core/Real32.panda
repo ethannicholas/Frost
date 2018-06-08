@@ -90,15 +90,6 @@ class Real32 : Value, Key<Real32>, Comparable<Real32> {
         return Panda.floatToIntBits(convert())
     }
 
-    @class
-    function parse(s:String):Real32? {
-        def result := Real64.parse(s)
-        if result = null {
-            return null
-        }
-        return result.convert()
-    }
-
     function convert():Int8 {
         return Int8(value->builtin_int8)
     }

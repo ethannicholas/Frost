@@ -7,6 +7,11 @@ Documentation
 Array literals
 Properties
 fix command line parsing
+error handling (at least Maybe / Error / try, can wait on forcing people to check for errors)
+permissions
+handle duplicate classes, more than one public class per file, classes not being in the correct path
+figure out rules for init / cleanup, make sure I'm following them consistently, check any cases I
+can that don't rely on dataflow
 
 using = on two non-trivial choice entries does not work (merely compares rawValue)
 Need to figure out & enforce init and cleanup rules

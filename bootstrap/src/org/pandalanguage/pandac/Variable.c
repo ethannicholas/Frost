@@ -11,6 +11,8 @@
 #include "org/pandalanguage/pandac/Variable/Storage.h"
 #include "panda/core/Int64.h"
 #include "org/pandalanguage/pandac/IRNode.h"
+#include "panda/core/Weak.h"
+#include "org/pandalanguage/pandac/MethodDecl.h"
 #include "org/pandalanguage/pandac/Symbol/Kind.h"
 
 static panda$core$String $s1;
@@ -32,6 +34,7 @@ void org$pandalanguage$pandac$Variable$init$org$pandalanguage$pandac$Position$or
     self->name = NULL;
     self->type = NULL;
     self->initialValue = NULL;
+    self->owner = NULL;
     $tmp2 = p_type;
     panda$core$Bit $tmp6;
     if (((panda$core$Bit) { $tmp2 != NULL }).value) goto $l3; else goto $l4;
@@ -49,7 +52,7 @@ void org$pandalanguage$pandac$Variable$init$org$pandalanguage$pandac$Position$or
     $l5:;
     if ($tmp6.value) goto $l11; else goto $l12;
     $l12:;
-    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s13, (panda$core$Int64) { 30 }, &$s14);
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s13, (panda$core$Int64) { 33 }, &$s14);
     abort();
     $l11:;
     panda$core$Int64$init$builtin_int64(&$tmp16, 0);
@@ -59,59 +62,70 @@ void org$pandalanguage$pandac$Variable$init$org$pandalanguage$pandac$Position$or
 void org$pandalanguage$pandac$Variable$init$org$pandalanguage$pandac$Position$org$pandalanguage$pandac$Variable$Kind$panda$core$String$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$Variable$Storage(org$pandalanguage$pandac$Variable* self, org$pandalanguage$pandac$Position p_position, org$pandalanguage$pandac$Variable$Kind p_kind, panda$core$String* p_name, org$pandalanguage$pandac$Type* p_type, org$pandalanguage$pandac$Variable$Storage p_storage) {
     org$pandalanguage$pandac$Type* $tmp17;
     org$pandalanguage$pandac$IRNode* $tmp24;
-    org$pandalanguage$pandac$Type* $tmp25;
-    org$pandalanguage$pandac$Type* $tmp26;
-    org$pandalanguage$pandac$Symbol$Kind $tmp27;
-    panda$core$Int64 $tmp28;
+    panda$core$Weak* $tmp25;
+    panda$core$Weak* $tmp26;
+    org$pandalanguage$pandac$Type* $tmp28;
+    org$pandalanguage$pandac$Type* $tmp29;
+    org$pandalanguage$pandac$Symbol$Kind $tmp30;
+    panda$core$Int64 $tmp31;
     self->name = NULL;
     self->type = NULL;
     self->initialValue = NULL;
+    self->owner = NULL;
     org$pandalanguage$pandac$Type* $tmp18 = org$pandalanguage$pandac$Type$Void$R$org$pandalanguage$pandac$Type();
     $tmp17 = $tmp18;
     panda$core$Bit $tmp19 = org$pandalanguage$pandac$Type$$NEQ$org$pandalanguage$pandac$Type$R$panda$core$Bit(p_type, $tmp17);
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp17));
     if ($tmp19.value) goto $l20; else goto $l21;
     $l21:;
-    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s22, (panda$core$Int64) { 35 }, &$s23);
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s22, (panda$core$Int64) { 38 }, &$s23);
     abort();
     $l20:;
     $tmp24 = NULL;
     self->initialValue = $tmp24;
     panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp24));
+    panda$core$Weak* $tmp27 = (panda$core$Weak*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$Weak$class);
+    panda$core$Weak$init$panda$core$Weak$T($tmp27, ((panda$core$Object*) NULL));
+    $tmp26 = $tmp27;
+    $tmp25 = $tmp26;
+    self->owner = $tmp25;
+    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp25));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp26));
     self->varKind = p_kind;
     {
-        $tmp25 = self->type;
-        $tmp26 = p_type;
-        self->type = $tmp26;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp26));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp25));
+        $tmp28 = self->type;
+        $tmp29 = p_type;
+        self->type = $tmp29;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp29));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp28));
     }
     self->storage = p_storage;
-    panda$core$Int64$init$builtin_int64(&$tmp28, 7);
-    org$pandalanguage$pandac$Symbol$Kind$init$panda$core$Int64(&$tmp27, $tmp28);
-    org$pandalanguage$pandac$Symbol$init$org$pandalanguage$pandac$Symbol$Kind$org$pandalanguage$pandac$Position$panda$core$String(((org$pandalanguage$pandac$Symbol*) self), $tmp27, p_position, p_name);
+    panda$core$Int64$init$builtin_int64(&$tmp31, 7);
+    org$pandalanguage$pandac$Symbol$Kind$init$panda$core$Int64(&$tmp30, $tmp31);
+    org$pandalanguage$pandac$Symbol$init$org$pandalanguage$pandac$Symbol$Kind$org$pandalanguage$pandac$Position$panda$core$String(((org$pandalanguage$pandac$Symbol*) self), $tmp30, p_position, p_name);
 }
 panda$core$String* org$pandalanguage$pandac$Variable$convert$R$panda$core$String(org$pandalanguage$pandac$Variable* self) {
-    panda$core$String* $returnValue29;
-    panda$core$String* $tmp30;
-    $tmp30 = self->name;
-    $returnValue29 = $tmp30;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp30));
-    return $returnValue29;
+    panda$core$String* $returnValue32;
+    panda$core$String* $tmp33;
+    $tmp33 = self->name;
+    $returnValue32 = $tmp33;
+    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp33));
+    return $returnValue32;
 }
 void org$pandalanguage$pandac$Variable$cleanup(org$pandalanguage$pandac$Variable* self) {
-    int $tmp34;
+    int $tmp37;
     {
     }
-    $tmp34 = -1;
-    goto $l32;
-    $l32:;
-    org$pandalanguage$pandac$Symbol$cleanup(((org$pandalanguage$pandac$Symbol*) self));
-    switch ($tmp34) {
-        case -1: goto $l35;
-    }
+    $tmp37 = -1;
+    goto $l35;
     $l35:;
+    org$pandalanguage$pandac$Symbol$cleanup(((org$pandalanguage$pandac$Symbol*) self));
+    switch ($tmp37) {
+        case -1: goto $l38;
+    }
+    $l38:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->type));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->initialValue));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->owner));
 }
 

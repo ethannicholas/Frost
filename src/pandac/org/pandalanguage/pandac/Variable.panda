@@ -26,6 +26,9 @@ class Variable : Symbol {
 
     def initialValue:IRNode? := null
 
+    @weak
+    var owner:MethodDecl? := null
+
     @pre(type != Type.Void())
     init(position:Position, kind:Kind, name:String, type:Type?) {
         init(position, kind, name, type, Storage.LOCAL)

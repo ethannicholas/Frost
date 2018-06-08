@@ -7,5 +7,5 @@ interface ListWriter<T> : CollectionWriter<T> {
     method insert(index:Int, value:T)
 
     @pre(index >= 0 & index < get_count())
-    method removeIndex(index:Int)
+    method removeIndex(index:Int):T
 }

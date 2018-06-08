@@ -226,11 +226,13 @@ class SpecializedArray<T> : List<T> {
     }
 
     @override
-    method removeIndex(index:Int) {
+    method removeIndex(index:Int):T {
+        def result := self[index]
         for i in index .. count - 1 {
             self[i] := self[i + 1]
         }
         count -= 1
+        return result
     }
 
     @override

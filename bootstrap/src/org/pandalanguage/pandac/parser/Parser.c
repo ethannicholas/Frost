@@ -345,7 +345,7 @@ org$pandalanguage$pandac$parser$Token org$pandalanguage$pandac$parser$Parser$raw
         idx32 = $tmp35;
         org$pandalanguage$pandac$parser$Token $tmp37 = panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$$IDX$panda$core$Int64$R$org$pandalanguage$pandac$parser$Token(self->pushbackBuffer, idx32);
         result36 = $tmp37;
-        panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$removeIndex$panda$core$Int64(self->pushbackBuffer, idx32);
+        panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$removeIndex$panda$core$Int64$R$org$pandalanguage$pandac$parser$Token(self->pushbackBuffer, idx32);
         $returnValue38 = result36;
         return $returnValue38;
     }
@@ -3888,7 +3888,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$pandac$parser$Parser$term$R$
             panda$core$Int64$init$builtin_int64(&$tmp1316, 34);
             panda$core$String* $tmp1318 = org$pandalanguage$pandac$parser$Parser$text$org$pandalanguage$pandac$parser$Token$R$panda$core$String(self, t1240);
             $tmp1317 = $tmp1318;
-            panda$core$Real64$nullable $tmp1319 = panda$core$Real64$parse$panda$core$String$R$panda$core$Real64$Q($tmp1317);
+            panda$core$Real64$nullable $tmp1319 = panda$core$String$convert$R$panda$core$Real64$Q($tmp1317);
             org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$Real64($tmp1315, $tmp1316, t1240.position, ((panda$core$Real64) $tmp1319.value));
             $tmp1314 = $tmp1315;
             $tmp1313 = $tmp1314;

@@ -549,7 +549,7 @@ class Parser {
             when Token.Kind.HEX:
                 return ASTNode.INT(t.position, UInt64.parse(text(t)[2..], 16))
             when Token.Kind.REAL:
-                return ASTNode.REAL(t.position, Real64.parse(text(t)))
+                return ASTNode.REAL(t.position, text(t).convert())
             when Token.Kind.SELF:
                 return ASTNode.SELF(t.position)
             when Token.Kind.SUPER:

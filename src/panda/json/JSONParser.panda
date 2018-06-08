@@ -135,7 +135,7 @@ class JSONParser {
             when Token.Kind.INT:
                 return JSON.INT(text(token).convert())
             when Token.Kind.REAL:
-                return JSON.REAL(Real64.parse(text(token)))
+                return JSON.REAL(text(token).convert())
             when Token.Kind.TRUE:
                 return JSON.BIT(true)
             when Token.Kind.FALSE:

@@ -1515,7 +1515,7 @@ class LLVMCodeGenerator : CodeGenerator {
             }
         }
         if m.annotations.isInline() & currentlyInlining[m] = null {
-            def block := compiler.compileBody(m)
+            def block := compiler.compileBody(m, null)
             if block != null {
                 return getInlineCallReference(t, mref, args, block, out)
             }
@@ -1627,28 +1627,22 @@ class LLVMCodeGenerator : CodeGenerator {
 
         createBlock(haveTarget, out)
         def haveTargetResult:String
-        if m.type().subtypes.get_count() > 0 {
-            def haveTargetMethodRef := nextVar()
-            def finalTargetType := m.type().subtypes[0]
-            out.printLine("\{haveTargetMethodRef} = bitcast %panda$core$Int8* \{rawMethodRef} to " +
-                    methodType(m.type(), finalTargetType))
-            def targetObjectCast := nextVar()
-            out.printLine("\{targetObjectCast} = bitcast \{rawTargetType} \{target} to " +
-                    type(Type.Object()))
-            def targetCast := getCastReference(targetObjectCast, Type.Object(), finalTargetType, out)
-            haveTargetResult := nextVar()
-            out.print("\{haveTargetResult} = call \{type(resultType)} \{haveTargetMethodRef}(" +
-                    "\{type(finalTargetType)} \{targetCast}")
-            if argRefs.get_count() > 0 {
-                out.print(", \{argRefs.join()}")
-            }
-            out.printLine(")")
-            out.print("br label %\{merge}")
+        def haveTargetMethodRef := nextVar()
+        def finalTargetType := Type.Object()
+        out.printLine("\{haveTargetMethodRef} = bitcast %panda$core$Int8* \{rawMethodRef} to " +
+                methodType(m.type(), finalTargetType))
+        def targetObjectCast := nextVar()
+        out.printLine("\{targetObjectCast} = bitcast \{rawTargetType} \{target} to " +
+                type(Type.Object()))
+        def targetCast := getCastReference(targetObjectCast, Type.Object(), finalTargetType, out)
+        haveTargetResult := nextVar()
+        out.print("\{haveTargetResult} = call \{type(resultType)} \{haveTargetMethodRef}(" +
+                "\{type(finalTargetType)} \{targetCast}")
+        if argRefs.get_count() > 0 {
+            out.print(", \{argRefs.join()}")
         }
-        else {
-            out.printLine("unreachable")
-            haveTargetResult := "undef"
-        }
+        out.printLine(")")
+        out.print("br label %\{merge}")
 
         createBlock(noTarget, out)
         def noTargetMethodRef := nextVar()
@@ -2204,16 +2198,31 @@ class LLVMCodeGenerator : CodeGenerator {
             writeDeclaration(m)
         }
         def methodCast := nextVar()
-        def targetType:Type?
-        if target != null & target != IRNode.TYPE_REFERENCE {
-            targetType := target.type()
+        def actualMethodType:Type
+        var methodName:String
+        def hasTarget := target != null & target != IRNode.TYPE_REFERENCE
+        if !m.annotations.isClass() & compiler.isValue(m.owner) & hasTarget {
+            -- we're calling a Value method with a target. But since the 'self' of a Value method is
+            -- the Value, not an Object, and the target of a dynamic call must be an Object, we need
+            -- to shim the method
+            def parameterTypes := Array<Type>()
+            parameterTypes.add(Type.Object())
+            parameterTypes.addAll(refType.subtypes[0 .. refType.subtypes.get_count() - 1])
+            def returnType := refType.subtypes[refType.subtypes.get_count() - 1]
+            actualMethodType := Type.methodType(refType.position, refType.typeKind, parameterTypes,
+                    returnType)
+            methodName := createMethodShim(m, actualMethodType, shims).name
+        }
+        else if m.annotations.isClass() {
+            actualMethodType := m.type()
+            methodName := getName(m)
         }
         else {
-            targetType := null
+            actualMethodType := compiler.declaredTypeWithSelf(m, m.owner.type())
+            methodName := getName(m)
         }
         out.printLine("\{methodCast} = bitcast " +
-                "\{methodType(compiler.effectiveMethodType(target, m), targetType)} " +
-                "\{getName(m)} to %panda$core$Int8*")
+                "\{methodType(actualMethodType, null)} \{methodName} to %panda$core$Int8*")
         def finalTargetType:Type
         if compiler.isImmutable(methodClass) {
             finalTargetType := Type.Immutable()
@@ -2222,7 +2231,7 @@ class LLVMCodeGenerator : CodeGenerator {
             finalTargetType := Type.Any()
         }
         def targetCast:String
-        if targetType != null {
+        if target != null & target != IRNode.TYPE_REFERENCE {
             def targetRef := getReference(target, out)
             targetCast := type(finalTargetType) + " " +
                     getCastReference(targetRef, target.type(), finalTargetType, out)
@@ -3486,26 +3495,21 @@ class LLVMCodeGenerator : CodeGenerator {
         def resultType := m.type().subtypes[m.type().subtypes.get_count() - 1]
 
         createBlock(haveTarget, out)
-        if m.type().subtypes.get_count() > 0 {
-            def haveTargetMethodRef := nextVar()
-            def finalTargetType := m.type().subtypes[0]
-            out.printLine("\{haveTargetMethodRef} = bitcast %panda$core$Int8* \{rawMethodRef} to " +
-                    methodType(m.type(), finalTargetType))
-            def targetObjectCast := nextVar()
-            out.printLine("\{targetObjectCast} = bitcast \{rawTargetType} \{target} to " +
-                    type(Type.Object()))
-            def targetCast := getCastReference(targetObjectCast, Type.Object(), finalTargetType, out)
-            out.print("call \{type(resultType)} \{haveTargetMethodRef}(" +
-                    "\{type(finalTargetType)} \{targetCast}")
-            if argRefs.get_count() > 0 {
-                out.print(", \{argRefs.join()}")
-            }
-            out.printLine(")")
-            out.print("br label %\{merge}")
+        def haveTargetMethodRef := nextVar()
+        def finalTargetType := Type.Object()
+        out.printLine("\{haveTargetMethodRef} = bitcast %panda$core$Int8* \{rawMethodRef} to " +
+                methodType(m.type(), finalTargetType))
+        def targetObjectCast := nextVar()
+        out.printLine("\{targetObjectCast} = bitcast \{rawTargetType} \{target} to " +
+                type(Type.Object()))
+        def targetCast := getCastReference(targetObjectCast, Type.Object(), finalTargetType, out)
+        out.print("call \{type(resultType)} \{haveTargetMethodRef}(" +
+                "\{type(finalTargetType)} \{targetCast}")
+        if argRefs.get_count() > 0 {
+            out.print(", \{argRefs.join()}")
         }
-        else {
-            out.printLine("unreachable")
-        }
+        out.printLine(")")
+        out.print("br label %\{merge}")
 
         createBlock(noTarget, out)
         def noTargetMethodRef := nextVar()

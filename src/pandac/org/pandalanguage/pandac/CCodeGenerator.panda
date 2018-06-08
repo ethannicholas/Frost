@@ -1238,7 +1238,7 @@ class CCodeGenerator : CodeGenerator {
         methodHeader.printLine("\{hCodeGen.declaration(returnType, result)};")
         out.printLine("if (\{mRef}->target) {")
         out.level += 1
-        def finalTargetType := mtype.subtypes[0]
+        def finalTargetType := Type.Object()
         def targetCast := getCastReference("\{mRef}->target", Type.Any(), finalTargetType, out)
         out.print("\{result} = ((\{methodType(m.type(), finalTargetType)}) \{mRef}->pointer)(" +
                 targetCast)
@@ -1263,7 +1263,7 @@ class CCodeGenerator : CodeGenerator {
         return result
     }
 
-    method getMethodRefReference(target:IRNode?, m:MethodDecl,
+    method getMethodRefReference(refType:Type, target:IRNode?, m:MethodDecl,
             out:IndentedOutputStream):String {
         def methodObjectType:Type
         if compiler.isImmutable(m.owner) {
@@ -1283,22 +1283,45 @@ class CCodeGenerator : CodeGenerator {
         if m.owner.external & !m.annotations.isSynthetic() {
             writeDeclaration(m)
         }
-        def targetType:Type?
-        if target != null & target != IRNode.TYPE_REFERENCE {
-            targetType := target.type()
+        def actualMethodType:Type
+        var methodName:String
+        def hasTarget := target != null & target != IRNode.TYPE_REFERENCE
+        if !m.annotations.isClass() & compiler.isValue(m.owner) & hasTarget {
+            -- we're calling a Value method with a target. But since the 'self' of a Value method is
+            -- the Value, not an Object, and the target of a dynamic call must be an Object, we need
+            -- to shim the method
+            def parameterTypes := Array<Type>()
+            parameterTypes.add(Type.Object())
+            parameterTypes.addAll(refType.subtypes[0 .. refType.subtypes.get_count() - 1])
+            def returnType := refType.subtypes[refType.subtypes.get_count() - 1]
+            actualMethodType := Type.methodType(refType.position, refType.typeKind, parameterTypes,
+                    returnType)
+            methodName := createMethodShim(m, actualMethodType, shims).name
+        }
+        else if m.annotations.isClass() {
+            actualMethodType := m.type()
+            methodName := getName(m)
         }
         else {
-            targetType := null
+            actualMethodType := compiler.declaredTypeWithSelf(m, m.owner.type())
+            methodName := getName(m)
+        }
+        def finalTargetType:Type
+        if compiler.isImmutable(methodClass) {
+            finalTargetType := Type.Immutable()
+        }
+        else {
+            finalTargetType := Type.Any()
         }
         def targetCast:String
-        if targetType != null {
+        if target != null & target != IRNode.TYPE_REFERENCE {
             def targetRef := getReference(target, out)
-            targetCast := getCastReference(targetRef, target.type(), Type.Object(), out)
+            targetCast := getCastReference(targetRef, target.type(), finalTargetType, out)
         }
         else {
             targetCast := "NULL"
         }
-        out.printLine("\{getName(initMethod)}(\{result}, (panda$core$Int8*) &\{getName(m)}, " +
+        out.printLine("\{getName(initMethod)}(\{result}, (panda$core$Int8*) &\{methodName}, " +
                     "\{targetCast});")
         if target != null & compiler.isValue(compiler.getClass(target.type())) {
             out.printLine("panda$core$Panda$unref$panda$core$Object(\{targetCast});")
@@ -1324,8 +1347,8 @@ class CCodeGenerator : CodeGenerator {
                 return getDynamicCallReference(m, args, out)
             when IRNode.INT(_, _, value):
                 return getIntReference(value, out)
-            when IRNode.METHOD_REFERENCE(_, _, target, mref):
-                return getMethodRefReference(target, mref.value, out)
+            when IRNode.METHOD_REFERENCE(_, type, target, mref):
+                return getMethodRefReference(type, target, mref.value, out)
             when IRNode.NEGATED_INT(_, _, value):
                 return getNegatedIntReference(value, out)
             when IRNode.REAL(_, _, value):
@@ -2109,7 +2132,7 @@ class CCodeGenerator : CodeGenerator {
         def returnType := mtype.subtypes[mtype.subtypes.get_count() - 1]
         out.printLine("if (\{mRef}->target) {")
         out.level += 1
-        def finalTargetType := mtype.subtypes[0]
+        def finalTargetType := Type.Object()
         def targetCast := getCastReference("\{mRef}->target", Type.Any(), finalTargetType, out)
         out.print("((\{methodType(mtype, finalTargetType)}) \{mRef}->pointer)(\{targetCast}")
         for a in argRefs {

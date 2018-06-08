@@ -272,10 +272,10 @@ class TestRunner {
                 if runTest(pandac, cLibs, tests, name, Mode.O3) {
                     success += 1
                 }
-                total += 1
-                if runTest(pandac, cLibs, tests, name, Mode.C) {
-                    success += 1
-                }
+--                total += 1
+--                if runTest(pandac, cLibs, tests, name, Mode.C) {
+--                    success += 1
+--                }
             }
         }
         Console.printLine("Passed \{success} / \{total} tests.")

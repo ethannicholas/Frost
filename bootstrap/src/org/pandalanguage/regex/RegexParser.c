@@ -107,7 +107,7 @@ org$pandalanguage$regex$RegexToken org$pandalanguage$regex$RegexParser$next$R$or
         idx17 = $tmp20;
         org$pandalanguage$regex$RegexToken $tmp22 = panda$collections$SpecializedArray$LTorg$pandalanguage$regex$RegexToken$GT$$IDX$panda$core$Int64$R$org$pandalanguage$regex$RegexToken(self->pushbackBuffer, idx17);
         result21 = $tmp22;
-        panda$collections$SpecializedArray$LTorg$pandalanguage$regex$RegexToken$GT$removeIndex$panda$core$Int64(self->pushbackBuffer, idx17);
+        panda$collections$SpecializedArray$LTorg$pandalanguage$regex$RegexToken$GT$removeIndex$panda$core$Int64$R$org$pandalanguage$regex$RegexToken(self->pushbackBuffer, idx17);
         $returnValue23 = result21;
         return $returnValue23;
     }

@@ -13,6 +13,9 @@ class MethodDecl : Symbol {
 
         def type:Type
 
+        @weak
+        var owner:MethodDecl?
+
         init(name:String, type:org.pandalanguage.pandac.Type) {
             self.name := name
             self.type := type
@@ -61,6 +64,9 @@ class MethodDecl : Symbol {
         self.annotations := annotations
         self.methodKind := methodKind
         self.genericParameters := genericParameters
+        for p in parameters {
+            p.owner := self
+        }
         self.parameters := parameters
         self.returnType := returnType
         self.body := body

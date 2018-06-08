@@ -62,13 +62,13 @@ typedef org$pandalanguage$pandac$Position (*$fn221)(org$pandalanguage$pandac$AST
 typedef panda$collections$Iterator* (*$fn284)(panda$collections$Iterable*);
 typedef panda$core$Bit (*$fn291)(panda$collections$Iterator*);
 typedef panda$core$Object* (*$fn302)(panda$collections$Iterator*);
-typedef panda$core$Bit (*$fn386)(org$pandalanguage$pandac$Scanner*, org$pandalanguage$pandac$Scanner*, org$pandalanguage$pandac$Position, panda$core$String*, org$pandalanguage$pandac$ASTNode*);
+typedef panda$core$Bit (*$fn386)(panda$core$Object*, org$pandalanguage$pandac$Scanner*, org$pandalanguage$pandac$Position, panda$core$String*, org$pandalanguage$pandac$ASTNode*);
 typedef panda$core$Bit (*$fn387)(org$pandalanguage$pandac$Scanner*, org$pandalanguage$pandac$Position, panda$core$String*, org$pandalanguage$pandac$ASTNode*);
-typedef panda$core$Bit (*$fn400)(org$pandalanguage$pandac$Scanner*, org$pandalanguage$pandac$Scanner*, org$pandalanguage$pandac$Position, panda$core$String*, org$pandalanguage$pandac$ASTNode*);
+typedef panda$core$Bit (*$fn400)(panda$core$Object*, org$pandalanguage$pandac$Scanner*, org$pandalanguage$pandac$Position, panda$core$String*, org$pandalanguage$pandac$ASTNode*);
 typedef panda$core$Bit (*$fn401)(org$pandalanguage$pandac$Scanner*, org$pandalanguage$pandac$Position, panda$core$String*, org$pandalanguage$pandac$ASTNode*);
-typedef panda$core$Bit (*$fn414)(org$pandalanguage$pandac$Scanner*, org$pandalanguage$pandac$Scanner*, org$pandalanguage$pandac$Position, panda$core$String*, org$pandalanguage$pandac$ASTNode*);
+typedef panda$core$Bit (*$fn414)(panda$core$Object*, org$pandalanguage$pandac$Scanner*, org$pandalanguage$pandac$Position, panda$core$String*, org$pandalanguage$pandac$ASTNode*);
 typedef panda$core$Bit (*$fn415)(org$pandalanguage$pandac$Scanner*, org$pandalanguage$pandac$Position, panda$core$String*, org$pandalanguage$pandac$ASTNode*);
-typedef panda$core$Bit (*$fn428)(org$pandalanguage$pandac$Scanner*, org$pandalanguage$pandac$Scanner*, org$pandalanguage$pandac$Position, panda$core$String*, org$pandalanguage$pandac$ASTNode*);
+typedef panda$core$Bit (*$fn428)(panda$core$Object*, org$pandalanguage$pandac$Scanner*, org$pandalanguage$pandac$Position, panda$core$String*, org$pandalanguage$pandac$ASTNode*);
 typedef panda$core$Bit (*$fn429)(org$pandalanguage$pandac$Scanner*, org$pandalanguage$pandac$Position, panda$core$String*, org$pandalanguage$pandac$ASTNode*);
 typedef panda$collections$Iterator* (*$fn530)(panda$collections$Iterable*);
 typedef panda$core$Bit (*$fn537)(panda$collections$Iterator*);
@@ -1182,7 +1182,7 @@ org$pandalanguage$pandac$Annotations* org$pandalanguage$pandac$Scanner$convertAn
                                             }
                                             }
                                             if (checkExpression273->target) {
-                                                $tmp385 = (($fn386) checkExpression273->pointer)(((org$pandalanguage$pandac$Scanner*) checkExpression273->target), self, p311, text313, expr320);
+                                                $tmp385 = (($fn386) checkExpression273->pointer)(checkExpression273->target, self, p311, text313, expr320);
                                             } else {
                                                 $tmp385 = (($fn387) checkExpression273->pointer)(self, p311, text313, expr320);
                                             }
@@ -1225,7 +1225,7 @@ org$pandalanguage$pandac$Annotations* org$pandalanguage$pandac$Scanner$convertAn
                                             }
                                             }
                                             if (checkExpression273->target) {
-                                                $tmp399 = (($fn400) checkExpression273->pointer)(((org$pandalanguage$pandac$Scanner*) checkExpression273->target), self, p311, text313, expr320);
+                                                $tmp399 = (($fn400) checkExpression273->pointer)(checkExpression273->target, self, p311, text313, expr320);
                                             } else {
                                                 $tmp399 = (($fn401) checkExpression273->pointer)(self, p311, text313, expr320);
                                             }
@@ -1268,7 +1268,7 @@ org$pandalanguage$pandac$Annotations* org$pandalanguage$pandac$Scanner$convertAn
                                             }
                                             }
                                             if (checkExpression273->target) {
-                                                $tmp413 = (($fn414) checkExpression273->pointer)(((org$pandalanguage$pandac$Scanner*) checkExpression273->target), self, p311, text313, expr320);
+                                                $tmp413 = (($fn414) checkExpression273->pointer)(checkExpression273->target, self, p311, text313, expr320);
                                             } else {
                                                 $tmp413 = (($fn415) checkExpression273->pointer)(self, p311, text313, expr320);
                                             }
@@ -1311,7 +1311,7 @@ org$pandalanguage$pandac$Annotations* org$pandalanguage$pandac$Scanner$convertAn
                                             }
                                             }
                                             if (checkExpression273->target) {
-                                                $tmp427 = (($fn428) checkExpression273->pointer)(((org$pandalanguage$pandac$Scanner*) checkExpression273->target), self, p311, text313, expr320);
+                                                $tmp427 = (($fn428) checkExpression273->pointer)(checkExpression273->target, self, p311, text313, expr320);
                                             } else {
                                                 $tmp427 = (($fn429) checkExpression273->pointer)(self, p311, text313, expr320);
                                             }
@@ -4119,7 +4119,7 @@ org$pandalanguage$pandac$MethodDecl* org$pandalanguage$pandac$Scanner$scanMethod
                                 name1517 = *$tmp1518;
                                 org$pandalanguage$pandac$ASTNode** $tmp1520 = ((org$pandalanguage$pandac$ASTNode**) ((char*) $match$419_131513->$data + 24));
                                 type1519 = *$tmp1520;
-                                org$pandalanguage$pandac$MethodDecl$Parameter* $tmp1522 = (org$pandalanguage$pandac$MethodDecl$Parameter*) pandaObjectAlloc(32, (panda$core$Class*) &org$pandalanguage$pandac$MethodDecl$Parameter$class);
+                                org$pandalanguage$pandac$MethodDecl$Parameter* $tmp1522 = (org$pandalanguage$pandac$MethodDecl$Parameter*) pandaObjectAlloc(40, (panda$core$Class*) &org$pandalanguage$pandac$MethodDecl$Parameter$class);
                                 org$pandalanguage$pandac$Type* $tmp1524 = org$pandalanguage$pandac$Scanner$convertType$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$Type(self, type1519);
                                 $tmp1523 = $tmp1524;
                                 org$pandalanguage$pandac$MethodDecl$Parameter$init$panda$core$String$org$pandalanguage$pandac$Type($tmp1522, name1517, $tmp1523);
@@ -6487,7 +6487,7 @@ panda$collections$ListView* org$pandalanguage$pandac$Scanner$scan$panda$io$File$
                                                                             name2472 = *$tmp2473;
                                                                             org$pandalanguage$pandac$ASTNode** $tmp2475 = ((org$pandalanguage$pandac$ASTNode**) ((char*) $match$709_372466->$data + 24));
                                                                             type2474 = *$tmp2475;
-                                                                            org$pandalanguage$pandac$MethodDecl$Parameter* $tmp2477 = (org$pandalanguage$pandac$MethodDecl$Parameter*) pandaObjectAlloc(32, (panda$core$Class*) &org$pandalanguage$pandac$MethodDecl$Parameter$class);
+                                                                            org$pandalanguage$pandac$MethodDecl$Parameter* $tmp2477 = (org$pandalanguage$pandac$MethodDecl$Parameter*) pandaObjectAlloc(40, (panda$core$Class*) &org$pandalanguage$pandac$MethodDecl$Parameter$class);
                                                                             org$pandalanguage$pandac$Type* $tmp2479 = org$pandalanguage$pandac$Scanner$convertType$org$pandalanguage$pandac$ASTNode$R$org$pandalanguage$pandac$Type(self, type2474);
                                                                             $tmp2478 = $tmp2479;
                                                                             org$pandalanguage$pandac$MethodDecl$Parameter$init$panda$core$String$org$pandalanguage$pandac$Type($tmp2477, name2472, $tmp2478);

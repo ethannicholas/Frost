@@ -490,9 +490,9 @@ choice IRNode {
                 return "continue"
             when DECLARATION(target, value):
                 if value != null {
-                    return "\{target} := \{value}"
+                    return "\{target}:\{target.type()} := \{value}"
                 }
-                return target.convert()
+                return "\{target}:\{target.type()}"
             when DO(_, label, statements, test):
                 def result := MutableString()
                 if label != null {

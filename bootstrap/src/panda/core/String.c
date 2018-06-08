@@ -35,6 +35,7 @@
 #include "panda/core/String/MatchIterator.h"
 #include "panda/core/String/RegexMatchIterator.h"
 #include "panda/core/UInt64.h"
+#include "panda/core/Real64.h"
 __attribute__((weak)) panda$core$Bit panda$core$String$$EQ$panda$core$String$R$panda$core$Bit$shim(panda$core$String* p0, panda$core$Equatable* p1) {
     panda$core$Bit result = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit(p0, ((panda$core$String*) p1));
 
@@ -60,7 +61,7 @@ struct { panda$core$Class* cl; ITable* next; void* methods[2]; } panda$core$Stri
 struct { panda$core$Class* cl; ITable* next; void* methods[1]; } panda$core$String$_panda$collections$Iterable = { (panda$core$Class*) &panda$collections$Iterable$class, (ITable*) &panda$core$String$_panda$core$Equatable, { panda$core$String$iterator$R$panda$collections$Iterator$LTpanda$core$Char32$GT$shim} };
 
 static panda$core$String $s1;
-panda$core$String$class_type panda$core$String$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Immutable$class, (ITable*) &panda$core$String$_panda$collections$Iterable, { panda$core$String$convert$R$panda$core$String, panda$core$String$cleanup, panda$core$String$format$panda$core$String$R$panda$core$String, panda$core$String$utf8$R$panda$collections$ListView$LTpanda$core$Char8$GT, panda$core$String$utf16$R$panda$collections$Iterator$LTpanda$core$Char16$GT, panda$core$String$iterator$R$panda$collections$Iterator$LTpanda$core$Char32$GT$shim, panda$core$String$length$R$panda$core$Int64, panda$core$String$byteLength$R$panda$core$Int64, panda$core$String$startsWith$panda$core$String$R$panda$core$Bit, panda$core$String$endsWith$panda$core$String$R$panda$core$Bit, panda$core$String$trim$R$panda$core$String, panda$core$String$$ADD$panda$core$String$R$panda$core$String, panda$core$String$$ADD$panda$core$Object$R$panda$core$String, panda$core$String$$MUL$panda$core$Int64$R$panda$core$String, panda$core$String$$EQ$panda$core$String$R$panda$core$Bit$shim, panda$core$String$$NEQ$panda$core$String$R$panda$core$Bit$shim, panda$core$String$$IDX$panda$core$String$Index$R$panda$core$Char32, panda$core$String$$IDX$panda$core$Int64$R$panda$core$Char32, panda$core$String$substring$panda$core$Range$LTpanda$core$String$Index$GT$R$panda$core$String, panda$core$String$substring$panda$core$Range$LTpanda$core$String$Index$Q$GT$R$panda$core$String, panda$core$String$$IDX$panda$core$Range$LTpanda$core$String$Index$GT$R$panda$core$String, panda$core$String$$IDX$panda$core$Range$LTpanda$core$String$Index$Q$GT$R$panda$core$String, panda$core$String$$IDX$panda$core$SteppedRange$LTpanda$core$String$Index$Q$Cpanda$core$Int64$GT$R$panda$core$String, panda$core$String$$IDX$panda$core$Range$LTpanda$core$Int64$Q$GT$R$panda$core$String, panda$core$String$$IDX$panda$core$SteppedRange$LTpanda$core$Int64$Q$Cpanda$core$Int64$GT$R$panda$core$String, panda$core$String$contains$panda$core$Char8$R$panda$core$Bit, panda$core$String$contains$panda$core$String$R$panda$core$Bit, panda$core$String$indexOf$panda$core$String$R$panda$core$String$Index$Q, panda$core$String$indexOf$panda$core$String$panda$core$String$Index$R$panda$core$String$Index$Q, panda$core$String$lastIndexOf$panda$core$String$R$panda$core$String$Index$Q, panda$core$String$lastIndexOf$panda$core$String$panda$core$String$Index$R$panda$core$String$Index$Q, panda$core$String$matches$panda$core$RegularExpression$R$panda$core$Bit, panda$core$String$contains$panda$core$RegularExpression$R$panda$core$Bit, panda$core$String$parse$panda$core$RegularExpression$R$panda$collections$ListView$LTpanda$core$String$GT$Q, panda$core$String$replace$panda$core$String$panda$core$String$R$panda$core$String, panda$core$String$replace$panda$core$RegularExpression$panda$core$String$R$panda$core$String, panda$core$String$replace$panda$core$RegularExpression$panda$core$String$panda$core$Bit$R$panda$core$String, panda$core$String$replace$panda$core$RegularExpression$$LPpanda$core$String$RP$EQ$GT$LPpanda$core$Object$RP$R$panda$core$String, panda$core$String$replace$panda$core$RegularExpression$$LPpanda$collections$ListView$LTpanda$core$String$Q$GT$RP$EQ$GT$LPpanda$core$Object$RP$R$panda$core$String, panda$core$String$find$panda$core$String$R$panda$collections$Iterator$LTpanda$core$String$Index$GT, panda$core$String$find$panda$core$String$panda$core$Bit$R$panda$collections$Iterator$LTpanda$core$String$Index$GT, panda$core$String$find$panda$core$RegularExpression$R$panda$collections$Iterator$LTpanda$core$String$Match$GT, panda$core$String$find$panda$core$RegularExpression$panda$core$Bit$R$panda$collections$Iterator$LTpanda$core$String$Match$GT, panda$core$String$start$R$panda$core$String$Index, panda$core$String$end$R$panda$core$String$Index, panda$core$String$next$panda$core$String$Index$R$panda$core$String$Index, panda$core$String$previous$panda$core$String$Index$R$panda$core$String$Index, panda$core$String$offset$panda$core$String$Index$panda$core$Int64$R$panda$core$String$Index, panda$core$String$leftAlign$panda$core$Int64$R$panda$core$String, panda$core$String$leftAlign$panda$core$Int64$panda$core$Char32$R$panda$core$String, panda$core$String$rightAlign$panda$core$Int64$R$panda$core$String, panda$core$String$rightAlign$panda$core$Int64$panda$core$Char32$R$panda$core$String, panda$core$String$centerAlign$panda$core$Int64$R$panda$core$String, panda$core$String$centerAlign$panda$core$Int64$panda$core$Char32$R$panda$core$String, panda$core$String$split$panda$core$String$R$panda$collections$Array$LTpanda$core$String$GT, panda$core$String$split$panda$core$String$panda$core$Int64$R$panda$collections$Array$LTpanda$core$String$GT, panda$core$String$split$panda$core$RegularExpression$panda$core$Int64$R$panda$collections$ListView$LTpanda$core$String$GT, panda$core$String$split$panda$core$RegularExpression$R$panda$collections$ListView$LTpanda$core$String$GT, panda$core$String$convert$R$panda$core$Int64$Q, panda$core$String$convert$R$panda$core$UInt64$Q, panda$core$String$hash$R$panda$core$Int64} };
+panda$core$String$class_type panda$core$String$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Immutable$class, (ITable*) &panda$core$String$_panda$collections$Iterable, { panda$core$String$convert$R$panda$core$String, panda$core$String$cleanup, panda$core$String$format$panda$core$String$R$panda$core$String, panda$core$String$utf8$R$panda$collections$ListView$LTpanda$core$Char8$GT, panda$core$String$utf16$R$panda$collections$Iterator$LTpanda$core$Char16$GT, panda$core$String$iterator$R$panda$collections$Iterator$LTpanda$core$Char32$GT$shim, panda$core$String$length$R$panda$core$Int64, panda$core$String$byteLength$R$panda$core$Int64, panda$core$String$startsWith$panda$core$String$R$panda$core$Bit, panda$core$String$endsWith$panda$core$String$R$panda$core$Bit, panda$core$String$trim$R$panda$core$String, panda$core$String$$ADD$panda$core$String$R$panda$core$String, panda$core$String$$ADD$panda$core$Object$R$panda$core$String, panda$core$String$$MUL$panda$core$Int64$R$panda$core$String, panda$core$String$$EQ$panda$core$String$R$panda$core$Bit$shim, panda$core$String$$NEQ$panda$core$String$R$panda$core$Bit$shim, panda$core$String$$IDX$panda$core$String$Index$R$panda$core$Char32, panda$core$String$$IDX$panda$core$Int64$R$panda$core$Char32, panda$core$String$substring$panda$core$Range$LTpanda$core$String$Index$GT$R$panda$core$String, panda$core$String$substring$panda$core$Range$LTpanda$core$String$Index$Q$GT$R$panda$core$String, panda$core$String$$IDX$panda$core$Range$LTpanda$core$String$Index$GT$R$panda$core$String, panda$core$String$$IDX$panda$core$Range$LTpanda$core$String$Index$Q$GT$R$panda$core$String, panda$core$String$$IDX$panda$core$SteppedRange$LTpanda$core$String$Index$Q$Cpanda$core$Int64$GT$R$panda$core$String, panda$core$String$$IDX$panda$core$Range$LTpanda$core$Int64$Q$GT$R$panda$core$String, panda$core$String$$IDX$panda$core$SteppedRange$LTpanda$core$Int64$Q$Cpanda$core$Int64$GT$R$panda$core$String, panda$core$String$contains$panda$core$Char8$R$panda$core$Bit, panda$core$String$contains$panda$core$String$R$panda$core$Bit, panda$core$String$indexOf$panda$core$String$R$panda$core$String$Index$Q, panda$core$String$indexOf$panda$core$String$panda$core$String$Index$R$panda$core$String$Index$Q, panda$core$String$lastIndexOf$panda$core$String$R$panda$core$String$Index$Q, panda$core$String$lastIndexOf$panda$core$String$panda$core$String$Index$R$panda$core$String$Index$Q, panda$core$String$matches$panda$core$RegularExpression$R$panda$core$Bit, panda$core$String$contains$panda$core$RegularExpression$R$panda$core$Bit, panda$core$String$parse$panda$core$RegularExpression$R$panda$collections$ListView$LTpanda$core$String$GT$Q, panda$core$String$replace$panda$core$String$panda$core$String$R$panda$core$String, panda$core$String$replace$panda$core$RegularExpression$panda$core$String$R$panda$core$String, panda$core$String$replace$panda$core$RegularExpression$panda$core$String$panda$core$Bit$R$panda$core$String, panda$core$String$replace$panda$core$RegularExpression$$LPpanda$core$String$RP$EQ$GT$LPpanda$core$Object$RP$R$panda$core$String, panda$core$String$replace$panda$core$RegularExpression$$LPpanda$collections$ListView$LTpanda$core$String$Q$GT$RP$EQ$GT$LPpanda$core$Object$RP$R$panda$core$String, panda$core$String$find$panda$core$String$R$panda$collections$Iterator$LTpanda$core$String$Index$GT, panda$core$String$find$panda$core$String$panda$core$Bit$R$panda$collections$Iterator$LTpanda$core$String$Index$GT, panda$core$String$find$panda$core$RegularExpression$R$panda$collections$Iterator$LTpanda$core$String$Match$GT, panda$core$String$find$panda$core$RegularExpression$panda$core$Bit$R$panda$collections$Iterator$LTpanda$core$String$Match$GT, panda$core$String$start$R$panda$core$String$Index, panda$core$String$end$R$panda$core$String$Index, panda$core$String$next$panda$core$String$Index$R$panda$core$String$Index, panda$core$String$previous$panda$core$String$Index$R$panda$core$String$Index, panda$core$String$offset$panda$core$String$Index$panda$core$Int64$R$panda$core$String$Index, panda$core$String$leftAlign$panda$core$Int64$R$panda$core$String, panda$core$String$leftAlign$panda$core$Int64$panda$core$Char32$R$panda$core$String, panda$core$String$rightAlign$panda$core$Int64$R$panda$core$String, panda$core$String$rightAlign$panda$core$Int64$panda$core$Char32$R$panda$core$String, panda$core$String$centerAlign$panda$core$Int64$R$panda$core$String, panda$core$String$centerAlign$panda$core$Int64$panda$core$Char32$R$panda$core$String, panda$core$String$split$panda$core$String$R$panda$collections$Array$LTpanda$core$String$GT, panda$core$String$split$panda$core$String$panda$core$Int64$R$panda$collections$Array$LTpanda$core$String$GT, panda$core$String$split$panda$core$RegularExpression$panda$core$Int64$R$panda$collections$ListView$LTpanda$core$String$GT, panda$core$String$split$panda$core$RegularExpression$R$panda$collections$ListView$LTpanda$core$String$GT, panda$core$String$convert$R$panda$core$Int64$Q, panda$core$String$convert$R$panda$core$UInt64$Q, panda$core$String$convert$R$panda$core$Real64$Q, panda$core$String$hash$R$panda$core$Int64} };
 
 typedef panda$core$Int64 (*$fn11)(panda$collections$CollectionView*);
 typedef panda$core$Object* (*$fn32)(panda$collections$ListView*, panda$core$Int64);
@@ -70,10 +71,10 @@ typedef panda$core$Object* (*$fn90)(panda$collections$Iterator*);
 typedef panda$core$Int64 (*$fn163)(panda$collections$Iterator*);
 typedef panda$core$String* (*$fn327)(panda$core$Object*);
 typedef panda$core$String* (*$fn377)(panda$core$Object*);
-typedef panda$core$Object* (*$fn1109)(panda$core$String*, panda$core$String*);
+typedef panda$core$Object* (*$fn1109)(panda$core$Object*, panda$core$String*);
 typedef panda$core$Object* (*$fn1110)(panda$core$String*);
 typedef panda$core$String* (*$fn1111)(panda$core$Object*);
-typedef panda$core$Object* (*$fn1171)(panda$collections$ListView*, panda$collections$ListView*);
+typedef panda$core$Object* (*$fn1171)(panda$core$Object*, panda$collections$ListView*);
 typedef panda$core$Object* (*$fn1172)(panda$collections$ListView*);
 typedef panda$core$String* (*$fn1173)(panda$core$Object*);
 
@@ -2440,7 +2441,7 @@ panda$core$String* panda$core$String$replace$panda$core$RegularExpression$$LPpan
             panda$core$String* $tmp1107 = panda$core$Matcher$group$panda$core$Int64$R$panda$core$String$Q(matcher1095, $tmp1106);
             $tmp1105 = $tmp1107;
             if (p_replacement->target) {
-                $tmp1108 = (($fn1109) p_replacement->pointer)(((panda$core$String*) p_replacement->target), $tmp1105);
+                $tmp1108 = (($fn1109) p_replacement->pointer)(p_replacement->target, $tmp1105);
             } else {
                 $tmp1108 = (($fn1110) p_replacement->pointer)($tmp1105);
             }
@@ -2561,7 +2562,7 @@ panda$core$String* panda$core$String$replace$panda$core$RegularExpression$$LPpan
                 goto $l1152;
                 $l1154:;
                 if (p_replacement->target) {
-                    $tmp1170 = (($fn1171) p_replacement->pointer)(((panda$collections$ListView*) p_replacement->target), ((panda$collections$ListView*) groups1139));
+                    $tmp1170 = (($fn1171) p_replacement->pointer)(p_replacement->target, ((panda$collections$ListView*) groups1139));
                 } else {
                     $tmp1170 = (($fn1172) p_replacement->pointer)(((panda$collections$ListView*) groups1139));
                 }
@@ -3448,57 +3449,64 @@ panda$core$UInt64$nullable panda$core$String$convert$R$panda$core$UInt64$Q(panda
     $returnValue1551 = ((panda$core$UInt64$nullable) { result1553, true });
     return $returnValue1551;
 }
+panda$core$Real64$nullable panda$core$String$convert$R$panda$core$Real64$Q(panda$core$String* self) {
+    panda$core$Real64$nullable $returnValue1593;
+    panda$core$Real64 $tmp1594;
+    panda$core$Panda$toReal64$panda$core$String$R$panda$core$Real64(&$tmp1594, self);
+    $returnValue1593 = ((panda$core$Real64$nullable) { $tmp1594, true });
+    return $returnValue1593;
+}
 panda$core$Int64 panda$core$String$hash$R$panda$core$Int64(panda$core$String* self) {
-    panda$core$Int64 $tmp1593;
-    panda$core$Int64 h1595;
     panda$core$Int64 $tmp1596;
-    panda$core$Range$LTpanda$core$Int64$GT $tmp1597;
-    panda$core$Int64 $tmp1598;
-    panda$core$Bit $tmp1599;
-    panda$core$Int64 $tmp1613;
-    panda$core$Int64 $tmp1615;
-    panda$core$Int64 $returnValue1623;
-    panda$core$Int64$init$builtin_int64(&$tmp1593, 0);
-    panda$core$Bit $tmp1594 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(self->_hash, $tmp1593);
-    if ($tmp1594.value) {
+    panda$core$Int64 h1598;
+    panda$core$Int64 $tmp1599;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp1600;
+    panda$core$Int64 $tmp1601;
+    panda$core$Bit $tmp1602;
+    panda$core$Int64 $tmp1616;
+    panda$core$Int64 $tmp1618;
+    panda$core$Int64 $returnValue1626;
+    panda$core$Int64$init$builtin_int64(&$tmp1596, 0);
+    panda$core$Bit $tmp1597 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(self->_hash, $tmp1596);
+    if ($tmp1597.value) {
     {
-        panda$core$Int64$init$builtin_int64(&$tmp1596, 1);
-        h1595 = $tmp1596;
-        panda$core$Int64$init$builtin_int64(&$tmp1598, 0);
-        panda$core$Bit$init$builtin_bit(&$tmp1599, false);
-        panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp1597, $tmp1598, self->_length, $tmp1599);
-        int64_t $tmp1601 = $tmp1597.min.value;
-        panda$core$Int64 i1600 = { $tmp1601 };
-        int64_t $tmp1603 = $tmp1597.max.value;
-        bool $tmp1604 = $tmp1597.inclusive.value;
-        if ($tmp1604) goto $l1611; else goto $l1612;
-        $l1611:;
-        if ($tmp1601 <= $tmp1603) goto $l1605; else goto $l1607;
-        $l1612:;
-        if ($tmp1601 < $tmp1603) goto $l1605; else goto $l1607;
-        $l1605:;
-        {
-            panda$core$Int64$init$builtin_int64(&$tmp1613, 101);
-            panda$core$Int64 $tmp1614 = panda$core$Int64$$MUL$panda$core$Int64$R$panda$core$Int64(h1595, $tmp1613);
-            panda$core$Int64$init$builtin_int64(&$tmp1615, ((int64_t) self->data[i1600.value].value));
-            panda$core$Int64 $tmp1616 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64($tmp1614, $tmp1615);
-            h1595 = $tmp1616;
-        }
+        panda$core$Int64$init$builtin_int64(&$tmp1599, 1);
+        h1598 = $tmp1599;
+        panda$core$Int64$init$builtin_int64(&$tmp1601, 0);
+        panda$core$Bit$init$builtin_bit(&$tmp1602, false);
+        panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp1600, $tmp1601, self->_length, $tmp1602);
+        int64_t $tmp1604 = $tmp1600.min.value;
+        panda$core$Int64 i1603 = { $tmp1604 };
+        int64_t $tmp1606 = $tmp1600.max.value;
+        bool $tmp1607 = $tmp1600.inclusive.value;
+        if ($tmp1607) goto $l1614; else goto $l1615;
+        $l1614:;
+        if ($tmp1604 <= $tmp1606) goto $l1608; else goto $l1610;
+        $l1615:;
+        if ($tmp1604 < $tmp1606) goto $l1608; else goto $l1610;
         $l1608:;
-        int64_t $tmp1618 = $tmp1603 - i1600.value;
-        if ($tmp1604) goto $l1619; else goto $l1620;
-        $l1619:;
-        if ((uint64_t) $tmp1618 >= 1) goto $l1617; else goto $l1607;
+        {
+            panda$core$Int64$init$builtin_int64(&$tmp1616, 101);
+            panda$core$Int64 $tmp1617 = panda$core$Int64$$MUL$panda$core$Int64$R$panda$core$Int64(h1598, $tmp1616);
+            panda$core$Int64$init$builtin_int64(&$tmp1618, ((int64_t) self->data[i1603.value].value));
+            panda$core$Int64 $tmp1619 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64($tmp1617, $tmp1618);
+            h1598 = $tmp1619;
+        }
+        $l1611:;
+        int64_t $tmp1621 = $tmp1606 - i1603.value;
+        if ($tmp1607) goto $l1622; else goto $l1623;
+        $l1622:;
+        if ((uint64_t) $tmp1621 >= 1) goto $l1620; else goto $l1610;
+        $l1623:;
+        if ((uint64_t) $tmp1621 > 1) goto $l1620; else goto $l1610;
         $l1620:;
-        if ((uint64_t) $tmp1618 > 1) goto $l1617; else goto $l1607;
-        $l1617:;
-        i1600.value += 1;
-        goto $l1605;
-        $l1607:;
-        self->_hash = h1595;
+        i1603.value += 1;
+        goto $l1608;
+        $l1610:;
+        self->_hash = h1598;
     }
     }
-    $returnValue1623 = self->_hash;
-    return $returnValue1623;
+    $returnValue1626 = self->_hash;
+    return $returnValue1626;
 }
 

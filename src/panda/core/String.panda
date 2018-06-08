@@ -1403,6 +1403,10 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
         return result
     }
 
+    function convert():Real64? {
+        return Panda.toReal64(self)
+    }
+
     @override
     function hash():Int {
         if _hash = 0 {

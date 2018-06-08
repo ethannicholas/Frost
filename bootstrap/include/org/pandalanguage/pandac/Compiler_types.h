@@ -42,8 +42,9 @@ typedef struct org$pandalanguage$pandac$Compiler {
     panda$core$Bit inFieldCleanup;
     panda$collections$Array* atPreSetupStatements;
     panda$core$Bit inAtPre;
+    panda$collections$Stack* captures;
 } org$pandalanguage$pandac$Compiler;
 #include "panda/core/Class.h"
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[161]; } org$pandalanguage$pandac$Compiler$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[163]; } org$pandalanguage$pandac$Compiler$class_type;
 extern org$pandalanguage$pandac$Compiler$class_type org$pandalanguage$pandac$Compiler$class;
 

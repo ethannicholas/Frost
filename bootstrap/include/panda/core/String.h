@@ -19,6 +19,7 @@ typedef struct panda$core$RegularExpression panda$core$RegularExpression;
 typedef struct panda$core$MutableMethod panda$core$MutableMethod;
 typedef struct panda$collections$Array panda$collections$Array;
 #include "panda/core/UInt64_types.h"
+#include "panda/core/Real64_types.h"
 
 void panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64(panda$core$String* self, panda$core$Char8* p_data, panda$core$Int64 p_length);
 void panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64$panda$core$String(panda$core$String* self, panda$core$Char8* p_data, panda$core$Int64 p_length, panda$core$String* p_owner);
@@ -84,5 +85,6 @@ panda$collections$ListView* panda$core$String$split$panda$core$RegularExpression
 panda$collections$ListView* panda$core$String$split$panda$core$RegularExpression$R$panda$collections$ListView$LTpanda$core$String$GT(panda$core$String* self, panda$core$RegularExpression* p_delimiter);
 panda$core$Int64$nullable panda$core$String$convert$R$panda$core$Int64$Q(panda$core$String* self);
 panda$core$UInt64$nullable panda$core$String$convert$R$panda$core$UInt64$Q(panda$core$String* self);
+panda$core$Real64$nullable panda$core$String$convert$R$panda$core$Real64$Q(panda$core$String* self);
 panda$core$Int64 panda$core$String$hash$R$panda$core$Int64(panda$core$String* self);
 

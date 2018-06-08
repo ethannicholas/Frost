@@ -645,7 +645,7 @@ panda$json$JSON* panda$json$JSONParser$node$R$panda$json$JSON(panda$json$JSONPar
             panda$core$Int64$init$builtin_int64(&$tmp237, 1);
             panda$core$String* $tmp239 = panda$json$JSONParser$text$org$pandalanguage$json$Token$R$panda$core$String(self, token182);
             $tmp238 = $tmp239;
-            panda$core$Real64$nullable $tmp240 = panda$core$Real64$parse$panda$core$String$R$panda$core$Real64$Q($tmp238);
+            panda$core$Real64$nullable $tmp240 = panda$core$String$convert$R$panda$core$Real64$Q($tmp238);
             panda$json$JSON$init$panda$core$Int64$panda$core$Real64($tmp236, $tmp237, ((panda$core$Real64) $tmp240.value));
             $tmp235 = $tmp236;
             $tmp234 = $tmp235;
