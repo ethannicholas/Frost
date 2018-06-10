@@ -9,7 +9,6 @@ typedef struct panda$collections$HashSet panda$collections$HashSet;
 typedef struct panda$collections$HashMap panda$collections$HashMap;
 typedef struct panda$collections$IdentityMap panda$collections$IdentityMap;
 typedef struct panda$core$String panda$core$String;
-typedef struct org$pandalanguage$pandac$MethodDecl org$pandalanguage$pandac$MethodDecl;
 typedef struct panda$collections$Stack panda$collections$Stack;
 #include "panda/core/Int64_types.h"
 
@@ -30,7 +29,6 @@ typedef struct org$pandalanguage$pandac$LLVMCodeGenerator {
     panda$collections$HashMap* classConstants;
     panda$collections$IdentityMap* variableNames;
     panda$core$String* currentBlock;
-    org$pandalanguage$pandac$MethodDecl* currentMethod;
     panda$core$String* returnValueVar;
     panda$collections$Stack* enclosingContexts;
     panda$collections$Stack* extraEffects;
@@ -43,6 +41,6 @@ typedef struct org$pandalanguage$pandac$LLVMCodeGenerator {
     panda$collections$IdentityMap* choiceDataSizes;
 } org$pandalanguage$pandac$LLVMCodeGenerator;
 #include "panda/core/Class.h"
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[114]; } org$pandalanguage$pandac$LLVMCodeGenerator$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[115]; } org$pandalanguage$pandac$LLVMCodeGenerator$class_type;
 extern org$pandalanguage$pandac$LLVMCodeGenerator$class_type org$pandalanguage$pandac$LLVMCodeGenerator$class;
 

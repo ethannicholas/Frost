@@ -2,6 +2,7 @@ package panda.core
 
 uses panda.unsafe.Pointer
 
+@private
 @final
 class Method : Immutable {
     ================================================================================================

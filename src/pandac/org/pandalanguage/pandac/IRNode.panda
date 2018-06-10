@@ -49,6 +49,7 @@ choice IRNode {
     REUSED_VALUE(Position, Type, Int -* id *-)
     REUSED_VALUE_DEFINITION(IRNode, Int -* id *-)
     SELF(Position, Type)
+    SELF_CAPTURE(Position, Type)
     STRING(Position, String)
     SUPER(Position, Type)
     -- C-style ternary expression. Not supported in Panda source code, but used internally.
@@ -66,6 +67,7 @@ choice IRNode {
     UNRESOLVED_METHOD_REFERENCE(Position, IRNode? -* target *-, ImmutableArray<MethodRef>)
     UNRESOLVED_RANGE(Position, IRNode -* start *-, IRNode -* end *-, Bit, IRNode -* step *-)
     VAR(Position, Variable.Kind, ImmutableArray<IRNode> -* DECLARATIONs *-)
+    VARIABLE_CAPTURE(Position, String, Type)
     VARIABLE_REFERENCE(Position, Variable)
     WHEN(Position, ImmutableArray<IRNode> -* tests *-, ImmutableArray<IRNode> -* statements *-)
     WHILE(Position, String?, IRNode, ImmutableArray<IRNode>)
@@ -118,6 +120,8 @@ choice IRNode {
                 return base.type()
             when SELF(_, type):
                 return type
+            when SELF_CAPTURE(_, type):
+                return type
             when STRING:
                 return Type.StringType()
             when SUPER(_, type):
@@ -139,6 +143,8 @@ choice IRNode {
                 return Type.Invalid()
             when UNRESOLVED_RANGE:
                 return Type.Invalid()
+            when VARIABLE_CAPTURE(_, _, type):
+                return type
             when VARIABLE_REFERENCE(_, variable):
                 return variable.type
             otherwise:
@@ -216,6 +222,8 @@ choice IRNode {
                 return base.position()
             when SELF(position, _):
                 return position
+            when SELF_CAPTURE(position, _):
+                return position
             when STRING(position, _):
                 return position
             when SUPER(position, _):
@@ -238,6 +246,8 @@ choice IRNode {
                 return position
             when VAR(position, _, _):
                 return position
+            when VARIABLE_CAPTURE(position, _, _):
+                return position
             when VARIABLE_REFERENCE(position, _):
                 return position
             when WHEN(position, _, _):
@@ -257,7 +267,7 @@ choice IRNode {
                 return false
             when BINARY(_, _, left, op, right):
                 return Compiler.isAssignment(op) | left.hasSideEffects() | right.hasSideEffects()
-            when BIT(_, _, bit):
+            when BIT:
                 return false
             when BLOCK(_, statements):
                 for s in statements {
@@ -266,7 +276,7 @@ choice IRNode {
                     }
                 }
                 return false
-            when BREAK(_, label):
+            when BREAK:
                 return false
             when CALL(_, _, m, args):
                 if m.value.methodKind = MethodDecl.Kind.METHOD {
@@ -278,17 +288,17 @@ choice IRNode {
                     }
                 }
                 return false
-            when CAST(_, value, type, _):
+            when CAST:
                 return false
-            when CHOICE_ENTRY_REFERENCE(_, ce):
+            when CHOICE_ENTRY_REFERENCE:
                 return false
-            when CHOICE_FIELD_REFERENCE(_, base, ce, field):
+            when CHOICE_FIELD_REFERENCE:
                 return false
             when CONSTRUCT(_, type, call):
                 return call.hasSideEffects()
-            when CONSTRUCTED_OBJECT(_, Type):
+            when CONSTRUCTED_OBJECT:
                 return false
-            when CONTINUE(_, label):
+            when CONTINUE:
                 return false
             when DECLARATION(target, value):
                 return value != null & value.hasSideEffects()
@@ -304,7 +314,7 @@ choice IRNode {
                 return false
             when EXPRESSION_WITH_EXTRA_EFFECTS:
                 return true
-            when FIELD_REFERENCE(_, _, base, field):
+            when FIELD_REFERENCE:
                 return false
             when IF(_, test, ifTrue, ifFalse):
                 if test.hasSideEffects() {
@@ -316,7 +326,7 @@ choice IRNode {
                     }
                 }
                 return ifFalse.hasSideEffects()
-            when INT(_, _, value):
+            when INT:
                 return false
             when IS_NONNULL(_, value):
                 return value.hasSideEffects()
@@ -347,13 +357,13 @@ choice IRNode {
 
             when METHOD_REFERENCE:
                 return false
-            when NEGATED_INT(_, _, value):
+            when NEGATED_INT:
                 return false
             when NULL:
                 return false
-            when PREFIX(_, op, base):
+            when PREFIX(_, _, base):
                 return base.hasSideEffects()
-            when RANGE_FOR(_, label, target, list, statements):
+            when RANGE_FOR(_, _, _, list, statements):
                 if list.hasSideEffects() {
                     return true
                 }
@@ -363,44 +373,48 @@ choice IRNode {
                     }
                 }
                 return false
-            when REAL(_, _, value):
+            when REAL:
                 return false
             when RETURN(_, value):
                 return value.hasSideEffects()
-            when REUSED_VALUE(_, _, id):
+            when REUSED_VALUE:
                 return false
-            when REUSED_VALUE_DEFINITION(base, id):
+            when REUSED_VALUE_DEFINITION(base, _):
                 return base.hasSideEffects()
             when SELF:
                 return false
-            when STRING(_, str):
+            when SELF_CAPTURE:
+                return false
+            when STRING:
                 return false
             when SUPER:
                 return false
             when TERNARY(_, test, ifTrue, ifFalse):
                 return test.hasSideEffects() | ifTrue.hasSideEffects() | ifFalse.hasSideEffects()
-            when TYPE_REFERENCE(_, type):
+            when TYPE_REFERENCE:
                 return false
-            when UNRESOLVED_IDENTIFIER(_, name):
+            when UNRESOLVED_IDENTIFIER:
                 assert false
-            when UNRESOLVED_INDEX(_, _, base, args):
+            when UNRESOLVED_INDEX:
                 assert false
             when UNRESOLVED_LAMBDA:
                 assert false
-            when UNRESOLVED_METHOD_CALL(_, _, target, methods, args):
+            when UNRESOLVED_METHOD_CALL:
                 assert false
-            when UNRESOLVED_METHOD_REFERENCE(_, target, methods):
+            when UNRESOLVED_METHOD_REFERENCE:
                 assert false
-            when UNRESOLVED_RANGE(_, start, end, inclusive, step):
+            when UNRESOLVED_RANGE:
                 assert false
-            when VAR(_, kind, decls):
+            when VAR(_, _, decls):
                 for d in decls {
                     if d.hasSideEffects() {
                         return true
                     }
                 }
                 return false
-            when VARIABLE_REFERENCE(_, variable):
+            when VARIABLE_CAPTURE:
+                return false
+            when VARIABLE_REFERENCE:
                 return false
             when WHEN(_, tests, statements):
                 for t in tests {
@@ -414,7 +428,7 @@ choice IRNode {
                     }
                 }
                 return false
-            when WHILE(_, label, test, statements):
+            when WHILE(_, _, test, statements):
                 if test.hasSideEffects() {
                     return true
                 }
@@ -585,6 +599,8 @@ choice IRNode {
                 return "$reused(\{id} := \{base})"
             when SELF:
                 return "self"
+            when SELF_CAPTURE:
+                return "self-*capture*-"
             when STRING(_, str):
                 return str.format("panda")
             when SUPER:
@@ -641,8 +657,10 @@ choice IRNode {
                 }
                 result.append(decls.join())
                 return result.finish()
+            when VARIABLE_CAPTURE(_, name, _):
+                return name
             when VARIABLE_REFERENCE(_, variable):
-                return variable.name
+                return variable.name + "-*capture*-"
             when WHEN(_, tests, statements):
                 return "when \{tests.join()}:\n\{statements.join("\n")}"
             when WHILE(_, label, test, statements):

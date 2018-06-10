@@ -142,7 +142,7 @@ interface Iterator<T> {
 
     Example:
 
-        File(path).lines().range(..count).apply(Console.printLine)
+        File(path).lines()[..count].apply(Console.printLine)
 
     This is roughly equivalent to the Unix `head` utility, in that it will print the first `count`
     lines of a file.
@@ -152,23 +152,23 @@ interface Iterator<T> {
     that point.
     ================================================================================================
     @pre(range.min = null | range.min >= 0 & range.max = null | range.min >= 0)
-    function range(range:Range<Int?>):Iterator<T> {
+    function [](range:Range<Int?>):Iterator<T> {
         return RangeIterator<T>(self, range.min, range.max, range.inclusive, 1)
     }
 
     ================================================================================================
-    As [range(Range<Int?>)], but additionally handles a `step`.
+    As [[](Range<Int?>)], but additionally handles a `step`.
 
     Example:
 
-        for v in arr.iterator().step(1.. by 2) {
+        for v in arr.iterator()[1.. by 2] {
             ...
         }
 
     This will loop over every odd-numbered element in `arr`.
     ================================================================================================
     @pre(range.start = null | range.start >= 0 & range.end = null | range.end >= 0 & range.step > 0)
-    function range(range:SteppedRange<Int?, Int>):Iterator<T> {
+    function [](range:SteppedRange<Int?, Int>):Iterator<T> {
         return RangeIterator<T>(self, range.start, range.end, range.inclusive, range.step)
     }
 
@@ -202,7 +202,7 @@ interface Iterator<T> {
 
     @pre(!get_done())
     @post(get_done())
-    method fold(f:(T, T)=>(T)):T { -- FIXME (T, U)=>(U) when generics are in
+    method fold(f:(T, T)=>(T)):T {
         var result := next()
         while !get_done() {
             result := f(result, next())
@@ -211,7 +211,7 @@ interface Iterator<T> {
     }
 
     @post(get_done())
-    method fold(f:(T, T)=>(T), start:T):T { -- FIXME (T, U)=>(U) when generics are in
+    method fold(f:(T, T)=>(T), start:T):T {
         var result := start
         while !get_done() {
             result := f(result, next())

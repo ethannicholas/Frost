@@ -54,8 +54,9 @@ static panda$core$String $s287 = { (panda$core$Class*) &panda$core$String$class,
 static panda$core$String $s292 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
 static panda$core$String $s305 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2e", 1, 147, NULL };
 static panda$core$String $s310 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
-static panda$core$String $s322 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x20", 1, 133, NULL };
-static panda$core$String $s325 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
+static panda$core$String $s322 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
+static panda$core$String $s327 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x20", 1, 133, NULL };
+static panda$core$String $s330 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
 
 void org$pandalanguage$pandac$MethodDecl$init$org$pandalanguage$pandac$ClassDecl$org$pandalanguage$pandac$Position$panda$core$String$Q$org$pandalanguage$pandac$Annotations$org$pandalanguage$pandac$MethodDecl$Kind$panda$core$String$panda$collections$Array$LTorg$pandalanguage$pandac$ClassDecl$GenericParameter$GT$Q$panda$collections$Array$LTorg$pandalanguage$pandac$MethodDecl$Parameter$GT$org$pandalanguage$pandac$Type$panda$collections$ImmutableArray$LTorg$pandalanguage$pandac$ASTNode$GT$Q(org$pandalanguage$pandac$MethodDecl* self, org$pandalanguage$pandac$ClassDecl* p_owner, org$pandalanguage$pandac$Position p_position, panda$core$String* p_doccomment, org$pandalanguage$pandac$Annotations* p_annotations, org$pandalanguage$pandac$MethodDecl$Kind p_methodKind, panda$core$String* p_name, panda$collections$Array* p_genericParameters, panda$collections$Array* p_parameters, org$pandalanguage$pandac$Type* p_returnType, panda$collections$ImmutableArray* p_body) {
     panda$collections$ImmutableArray* $tmp2;
@@ -792,20 +793,26 @@ panda$core$String* org$pandalanguage$pandac$MethodDecl$convert$R$panda$core$Stri
     panda$core$String* $tmp317;
     panda$core$String* $tmp318;
     panda$core$String* $tmp319;
-    panda$core$String* $tmp328;
-    panda$core$String* $tmp329;
+    panda$core$String* $tmp320;
+    panda$core$String* $tmp324;
+    panda$core$String* $tmp333;
+    panda$core$String* $tmp334;
     if (((panda$core$Bit) { self->body != NULL }).value) {
     {
-        panda$core$String* $tmp320 = org$pandalanguage$pandac$MethodDecl$signature$R$panda$core$String(self);
-        $tmp319 = $tmp320;
-        panda$core$String* $tmp321 = panda$core$String$convert$R$panda$core$String($tmp319);
-        $tmp318 = $tmp321;
-        panda$core$String* $tmp323 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp318, &$s322);
-        $tmp317 = $tmp323;
-        panda$core$String* $tmp324 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp317, ((panda$core$Object*) self->body));
-        $tmp316 = $tmp324;
-        panda$core$String* $tmp326 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp316, &$s325);
-        $tmp315 = $tmp326;
+        panda$core$String* $tmp321 = org$pandalanguage$pandac$Annotations$convert$R$panda$core$String(self->annotations);
+        $tmp320 = $tmp321;
+        panda$core$String* $tmp323 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp320, &$s322);
+        $tmp319 = $tmp323;
+        panda$core$String* $tmp325 = org$pandalanguage$pandac$MethodDecl$signature$R$panda$core$String(self);
+        $tmp324 = $tmp325;
+        panda$core$String* $tmp326 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp319, $tmp324);
+        $tmp318 = $tmp326;
+        panda$core$String* $tmp328 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp318, &$s327);
+        $tmp317 = $tmp328;
+        panda$core$String* $tmp329 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String($tmp317, ((panda$core$Object*) self->body));
+        $tmp316 = $tmp329;
+        panda$core$String* $tmp331 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp316, &$s330);
+        $tmp315 = $tmp331;
         $tmp314 = $tmp315;
         $returnValue313 = $tmp314;
         panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp314));
@@ -813,30 +820,32 @@ panda$core$String* org$pandalanguage$pandac$MethodDecl$convert$R$panda$core$Stri
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp316));
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp317));
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp318));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp324));
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp319));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp320));
         return $returnValue313;
     }
     }
-    panda$core$String* $tmp330 = org$pandalanguage$pandac$MethodDecl$signature$R$panda$core$String(self);
-    $tmp329 = $tmp330;
-    $tmp328 = $tmp329;
-    $returnValue313 = $tmp328;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp328));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp329));
+    panda$core$String* $tmp335 = org$pandalanguage$pandac$MethodDecl$signature$R$panda$core$String(self);
+    $tmp334 = $tmp335;
+    $tmp333 = $tmp334;
+    $returnValue313 = $tmp333;
+    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp333));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp334));
     return $returnValue313;
 }
 void org$pandalanguage$pandac$MethodDecl$cleanup(org$pandalanguage$pandac$MethodDecl* self) {
-    int $tmp334;
+    int $tmp339;
     {
     }
-    $tmp334 = -1;
-    goto $l332;
-    $l332:;
+    $tmp339 = -1;
+    goto $l337;
+    $l337:;
     org$pandalanguage$pandac$Symbol$cleanup(((org$pandalanguage$pandac$Symbol*) self));
-    switch ($tmp334) {
-        case -1: goto $l335;
+    switch ($tmp339) {
+        case -1: goto $l340;
     }
-    $l335:;
+    $l340:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->owner));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->doccomment));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->annotations));

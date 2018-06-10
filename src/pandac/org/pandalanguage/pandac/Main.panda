@@ -218,7 +218,6 @@ class Main {
         llc := llvmDir.resolve("bin/llc")
         gcc := File("/usr/bin/gcc")
         if sources.get_count() = 0 {
-            Console.printLine(1234567)
             err.printLine("no input files specified")
             System.exit(1)
         }

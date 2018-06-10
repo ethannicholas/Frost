@@ -149,7 +149,7 @@ class MethodDecl : Symbol {
     @override
     function convert():String {
         if body != null {
-            return "\{signature()} \{body}"
+            return "\{annotations}\{signature()} \{body}"
         }
         return signature()
     }

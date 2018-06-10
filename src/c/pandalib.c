@@ -17,7 +17,7 @@
 #define true 1
 #define false 0
 
-#define DEBUG_ALLOCS 0
+#define DEBUG_ALLOCS 1
 
 struct Class;
 struct String;
@@ -198,7 +198,7 @@ static pthread_mutex_t preventsExitThreadsMutex = PTHREAD_MUTEX_INITIALIZER;
 Object* panda = NULL;
 
 #if DEBUG_ALLOCS
-Bit debugAllocs = true;
+uint8_t debugAllocs = true;
 #endif
 
 void* pandaAlloc(size_t size) {

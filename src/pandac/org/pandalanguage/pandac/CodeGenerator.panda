@@ -23,6 +23,7 @@ interface CodeGenerator {
     ================================================================================================
     Writes a method with a compiled body,
     ================================================================================================
+    @pre(compiler.currentClass[0] == m.owner & compiler.currentMethod[0] == m)
     method write(m:MethodDecl, body:ImmutableArray<IRNode>)
 
     ================================================================================================

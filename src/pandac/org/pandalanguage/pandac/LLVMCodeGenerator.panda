@@ -357,6 +357,7 @@ class LLVMCodeGenerator : CodeGenerator {
         return result
     }
 
+    @post(compiler.currentClass[0] = @pre(compiler.currentClass[0]))
     method writeType(t:Type) {
         if writtenTypes.contains(t.name) {
             return
@@ -1425,7 +1426,9 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
---    @post(currentMethod = @pre(currentMethod) & returnValueVar = @pre(returnValueVar))
+    @post(compiler.currentClass[0] = @pre(compiler.currentClass[0]) &
+          currentMethod = @pre(currentMethod) &
+          returnValueVar = @pre(returnValueVar))
     method getInlineCallReference(t:Type, mref:MethodRef, args:ImmutableArray<IRNode>,
             body:ImmutableArray<IRNode>, out:OutputStream):String {
         def m := mref.value
@@ -1988,6 +1991,15 @@ class LLVMCodeGenerator : CodeGenerator {
         return result
     }
 
+    @pre(compiler.currentClass[0] == compiler.currentMethod[0].owner)
+    method getVariableCaptureReference(name:String, out:OutputStream):String {
+        def cl := compiler.currentClass[0]
+        def f := compiler.getSymbolTable(cl)[name]
+        assert f != null & f.kind = Symbol.Kind.FIELD,
+                "did not find expected field \{name} in \{cl} (writing \{compiler.currentMethod[0]})"
+        return getFieldReference(IRNode.SELF(cl.position, cl.type()), f->FieldDecl, out)
+    }
+
     method getStringReference(s:String):String {
         labelCount += 1
         def chars := "@$chars\{labelCount}"
@@ -2319,6 +2331,8 @@ class LLVMCodeGenerator : CodeGenerator {
                 return getSuperReference(t, out)
             when IRNode.TERNARY(_, test, ifTrue, ifFalse):
                 return getTernaryReference(test, ifTrue, ifFalse, out)
+            when IRNode.VARIABLE_CAPTURE(_, name, _):
+                return getVariableCaptureReference(name, out)
             when IRNode.VARIABLE_REFERENCE(_, variable):
                 return getVariableReference(variable, out)
             otherwise:
@@ -3204,7 +3218,7 @@ class LLVMCodeGenerator : CodeGenerator {
                 break
             }
         }
-        assert index != -1
+        assert index != -1, "cannot find \{field.owner.name}.\{field.name} in class \{cl.name}"
         out.printLine("\{raw} = getelementptr inbounds \{typeName(cl.type())}, " +
                 "\{typeName(cl.type())}* \{baseRef}, i64 0, i32 \{index}")
         if !field.type.isClass() | compiler.isValue(compiler.getClass(field.type)) {

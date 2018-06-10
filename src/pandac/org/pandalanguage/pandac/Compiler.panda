@@ -154,6 +154,9 @@ class Compiler {
     var inAtPre := false
 
     @private
+    var writeCode := true
+
+    @private
     -- MethodDecl is the method *containing* the closure, not the closure itself
     def captures := Stack<Pair<MethodDecl, Map<String, Variable>>>()
 
@@ -262,6 +265,7 @@ class Compiler {
     Attempts to locate a class with the given, possibly not-fully-qualified, class name. Returns
     null and does not report any errors on failure.
     ================================================================================================
+    @post(currentClass[0] = @pre(currentClass[0]) & currentMethod[0] = @pre(currentMethod[0]))
     method tryResolveClass(name:String):ClassDecl? {
         def current:ClassDecl?
         if currentClass.get_count() > 0 {
@@ -457,6 +461,7 @@ class Compiler {
         }
     }
 
+    @post(currentClass[0] = @pre(currentClass[0]) & currentMethod[0] = @pre(currentMethod[0]))
     method resolve(cl:ClassDecl) {
         if cl.resolved != Resolution.UNRESOLVED {
             return
@@ -547,6 +552,7 @@ class Compiler {
         currentClass.pop()
     }
 
+    @post(currentClass[0] = @pre(currentClass[0]) & currentMethod[0] = @pre(currentMethod[0]))
     method resolve(m:MethodDecl) {
         if m.resolved != Resolution.UNRESOLVED {
             return
@@ -600,6 +606,7 @@ class Compiler {
         currentClass.pop()
     }
 
+    @post(currentClass[0] = @pre(currentClass[0]) & currentMethod[0] = @pre(currentMethod[0]))
     method determineRawType(f:FieldDecl) {
         currentClass.push(f.owner)
         def old := symbolTable
@@ -677,6 +684,7 @@ class Compiler {
         }
     }
 
+    @post(currentClass[0] = @pre(currentClass[0]) & currentMethod[0] = @pre(currentMethod[0]))
     method resolve(c:ChoiceEntry) {
         if c.resolved != Resolution.UNRESOLVED {
             return
@@ -873,6 +881,7 @@ class Compiler {
         return result
     }
 
+    @post(currentClass[0] = @pre(currentClass[0]) & currentMethod[0] = @pre(currentMethod[0]))
     method specialize(cl:ClassDecl, rawType:Type):ClassDecl {
         resolve(cl)
         def type := resolve(rawType)
@@ -1095,11 +1104,15 @@ class Compiler {
                         cl.symbolTable.parents.add(getSymbolTable(intf))
                     }
                 }
+                if cl.owner != null {
+                    --cl.symbolTable.parents.add(getSymbolTable(cl.owner))
+                }
             }
         }
         return cl.symbolTable
     }
 
+    @post(currentClass[0] = @pre(currentClass[0]) & currentMethod[0] = @pre(currentMethod[0]))
     method getVTable(cl:ClassDecl):ListView<MethodDecl> {
         if cl.virtualMethods.get_count() = 0 {
             resolve(cl)
@@ -1177,10 +1190,14 @@ class Compiler {
     }
 
     method capture(position:Position, v:Variable) {
-        if captures[0].second[v.name] = null {
-            captures[0].second[v.name] := v
+        for c in captures {
             if v.varKind = Variable.Kind.VAR {
                 error(position, "closure cannot capture 'var \{v}'; use 'def' instead")
+                break
+            }
+            c.second[v.name] := v
+            if v.owner == c.first {
+                break
             }
         }
     }
@@ -1200,6 +1217,7 @@ class Compiler {
                 def v := s->Variable
                 if v.owner !== null & v.owner !== currentMethod[0] {
                     capture(position, v)
+                    return IRNode.VARIABLE_CAPTURE(position, v.name, v.type)
                 }
                 return IRNode.VARIABLE_REFERENCE(position, v)
             when Symbol.Kind.FIELD:
@@ -1231,7 +1249,7 @@ class Compiler {
                     return result
                 }
                 else {
-                    def finalTarget := IRNode.SELF(position, currentClass[0].type())
+                    def finalTarget := compileSelf(position, false)
                     return IRNode.FIELD_REFERENCE(position, f.type, finalTarget, f)
                 }
             when Symbol.Kind.CHOICE_ENTRY:
@@ -2112,7 +2130,9 @@ class Compiler {
         return result
     }
 
-    @post(@return = null | @return.type() = target)
+    @post(@return = null | @return.type() = target &
+            currentClass[0] = @pre(currentClass[0]) &
+            currentMethod[0] = @pre(currentMethod[0]))
     method methodCast(node:IRNode, target:Type):IRNode? {
         match node {
             when IRNode.UNRESOLVED_METHOD_REFERENCE(position, targetNode, methods):
@@ -2470,7 +2490,7 @@ class Compiler {
         if m.value.methodKind = MethodDecl.Kind.INIT {
             if target = null {
                 if currentMethod[0].methodKind = MethodDecl.Kind.INIT {
-                    finalArgs.add(IRNode.SELF(position, currentClass[0].type()))
+                    finalArgs.add(compileSelf(position, false))
                 }
                 else {
                     error(position, "cannot directly call 'init' outside of an init method")
@@ -3222,7 +3242,13 @@ class Compiler {
             }
         }
         if !isAssignment(op) {
-            error(position, "expected a statement, but found an expression")
+            if op = Token.Kind.EQ {
+                error(position, "found '=' expression where a statement was expected; did you " +
+                        "mean ':='?")
+            }
+            else {
+                error(position, "expected a statement, but found an expression")
+            }
             return null
         }
         -- compound assignment
@@ -3733,7 +3759,7 @@ class Compiler {
         return IRNode.STRING(position, s)
     }
 
-    method compileSelf(position:Position):IRNode? {
+    method compileSelf(position:Position, explicit:Bit):IRNode? {
         if currentMethod[0].annotations.isClass() {
             error(position, "cannot reference 'self' from a @class method")
             return null
@@ -3903,6 +3929,7 @@ class Compiler {
         m.owner := result
         result.methods.add(m)
         classes[result.name] := result
+        result.owner := currentClass[0]
         return result
     }
 
@@ -3940,31 +3967,48 @@ class Compiler {
         }
         def currentCaptures := Pair<MethodDecl, Map<String, Variable>>(currentMethod[0],
                 HashMap<String, Variable>())
-        -- first pass: need to run it through the compiler to figure out what our captures are
         captures.push(currentCaptures)
-        def methodDecl := MethodDecl(currentClass[0], position, null,
-                Annotations(Annotations.Flag.CLASS), kind, name, null, parameters, returnType, body)
-        compile(methodDecl, symbolTable)
+        def annotations:Annotations
+        if currentMethod[0].annotations.isClass() {
+            annotations := Annotations(Annotations.Flag.CLASS)
+        }
+        else {
+            annotations := Annotations(0)
+        }
+        def methodDecl := MethodDecl(currentClass[0], position, null, annotations, kind, name, null,
+                parameters, returnType, body)
+        def oldWriteCode := writeCode
+        -- need to scan through the method to determine captures, but we don't actually want to
+        -- output it yet - if it has captures, we need to put it into a closure class
+        writeCode := false
+        def compiled := compile(methodDecl, symbolTable)
 
         def target:IRNode?
+        writeCode := true
         if currentCaptures.second.get_count() != 0 {
-            -- second pass: we have captures, need to build an actual closure for it
+            -- we have captures, need to build an actual closure for it
+            methodDecl.compiledBody := compiled
             def cl := createClosureClass(methodDecl, currentCaptures.second.values().all())
             def args := Array<IRNode>()
             for capture in currentCaptures.second.keys() {
                 def s := symbolTable[capture]
-                assert s != null
+                assert s != null, "'\{capture}' was captured but is not in symbol table"
                 args.add(symbolRef(position, null, s, symbolTable))
             }
             captures.pop(currentCaptures)
             compile(cl)
+            methodDecl.compiledBody := null
             target := call(IRNode.TYPE_REFERENCE(position, cl.type()), args.finish())
         }
         else {
-            -- no captures, first pass method is already good
-            target := null
+            -- no captures, method is already good
+            compile(methodDecl, symbolTable)
+            if !methodDecl.annotations.isClass() {
+                target := IRNode.SELF(position, currentClass[0].type())
+            }
             captures.pop(currentCaptures)
         }
+        writeCode := oldWriteCode
         return IRNode.METHOD_REFERENCE(position, methodDecl.type(), target,
                 MethodRef(methodDecl, Array<Type>())) -- FIXME literal
     }
@@ -4025,7 +4069,7 @@ class Compiler {
             when ASTNode.RANGE(position, start, end, inclusive, step):
                 return compileRange(position, start, end, inclusive, step)
             when ASTNode.SELF(position):
-                return compileSelf(position)
+                return compileSelf(position, true)
             when ASTNode.STRING(position, str):
                 return compileString(position, str)
             when ASTNode.SUPER(position):
@@ -5136,7 +5180,9 @@ class Compiler {
         return false
     }
 
-    @post(symbolTable == @pre(symbolTable))
+    @post(symbolTable == @pre(symbolTable) &
+            currentClass[0] == @pre(currentClass[0]) &
+            currentMethod[0] = @pre(currentMethod[0]))
     method compileBody(m:MethodDecl, enclosingContext:SymbolTable?):ImmutableArray<IRNode>? {
         if m.compiledBody != null {
             return m.compiledBody
@@ -5173,7 +5219,7 @@ class Compiler {
                 resolve(f)
                 if f.resolved = Resolution.RESOLVED & !f.annotations.isClass() & f.value != null {
                     def fieldRef := IRNode.FIELD_REFERENCE(m.position, f.type,
-                            IRNode.SELF(m.position, m.owner.type()), f)
+                            compileSelf(m.position, true), f)
                     def value:IRNode
                     if isRefCounted(f.type) {
                         reusedValueCount += 1
@@ -5221,7 +5267,7 @@ class Compiler {
                     if f.resolved = Resolution.RESOLVED & !f.annotations.isClass() &
                             isRefCounted(f.type) {
                         def fieldRef := IRNode.FIELD_REFERENCE(Position(), f.type,
-                                IRNode.SELF(Position(), m.owner.type()), f)
+                                compileSelf(Position(), false), f)
                         finalBody.add(compilePandaCall("unref", fieldRef))
                     }
                 }
@@ -5339,7 +5385,8 @@ class Compiler {
         compile(m, null)
     }
 
-    method compile(m:MethodDecl, enclosingContext:SymbolTable?) {
+    @pre(currentClass[0] == m.owner)
+    method compile(m:MethodDecl, enclosingContext:SymbolTable?):ImmutableArray<IRNode>? {
         checkAnnotations(m)
         if m.owner.classKind = ClassDecl.Kind.CHOICE & m.name = "cleanup" {
             createChoiceCleanup(m)
@@ -5364,17 +5411,24 @@ class Compiler {
             }
         }
         if m.body != null {
-            def compiled := compileBody(m, enclosingContext)
-            if errorCount = 0 & compiled != null &
-                    (captures.get_count() = 0 | captures[0].second.get_count() = 0) {
-                codeGenerator.write(m, compiled)
+            var compiled := m.compiledBody
+            if compiled = null {
+                compiled := compileBody(m, enclosingContext)
             }
+            if errorCount = 0 & compiled != null & writeCode {
+                assert currentClass[0] == m.owner
+                currentMethod.push(m)
+                codeGenerator.write(m, compiled)
+                currentMethod.pop(m)
+            }
+            return compiled
         }
         else {
             resolve(m)
             if m.resolved = Resolution.RESOLVED {
                 codeGenerator.writeDeclaration(m)
             }
+            return null
         }
     }
 
@@ -5482,6 +5536,7 @@ class Compiler {
         checkAccessModifierCount(f.position, f.annotations)
     }
 
+    @post(currentClass.get_count() = @pre(currentClass.get_count()))
     method compile(cl:ClassDecl) {
         currentClass.push(cl)
         checkAnnotations(cl)

@@ -376,7 +376,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$Scanner$convertType$org$
                 $tmp19 = node13;
                 $match$27_1718 = $tmp19;
                 panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp19));
-                panda$core$Int64$init$builtin_int64(&$tmp20, 38);
+                panda$core$Int64$init$builtin_int64(&$tmp20, 39);
                 panda$core$Bit $tmp21 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$27_1718->$rawValue, $tmp20);
                 if ($tmp21.value) {
                 {
@@ -870,7 +870,7 @@ panda$core$Int64 org$pandalanguage$pandac$Scanner$add$org$pandalanguage$pandac$P
     $returnValue252 = $tmp253;
     return $returnValue252;
 }
-panda$core$Bit org$pandalanguage$pandac$Scanner$$anonymous1$org$pandalanguage$pandac$Scanner$org$pandalanguage$pandac$Position$panda$core$String$org$pandalanguage$pandac$ASTNode$Q$R$panda$core$Bit(org$pandalanguage$pandac$Scanner* p_scanner, org$pandalanguage$pandac$Position p_position, panda$core$String* p_text, org$pandalanguage$pandac$ASTNode* p_expr) {
+panda$core$Bit org$pandalanguage$pandac$Scanner$$anonymous1$org$pandalanguage$pandac$Scanner$org$pandalanguage$pandac$Position$panda$core$String$org$pandalanguage$pandac$ASTNode$Q$R$panda$core$Bit(org$pandalanguage$pandac$Scanner* self, org$pandalanguage$pandac$Scanner* p_scanner, org$pandalanguage$pandac$Position p_position, panda$core$String* p_text, org$pandalanguage$pandac$ASTNode* p_expr) {
     panda$core$Bit $returnValue255;
     panda$core$Bit $tmp256;
     panda$core$String* $tmp258;
@@ -978,7 +978,7 @@ org$pandalanguage$pandac$Annotations* org$pandalanguage$pandac$Scanner$convertAn
         expressions271 = $tmp272;
         panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp272));
         panda$core$MutableMethod* $tmp275 = (panda$core$MutableMethod*) pandaObjectAlloc(32, (panda$core$Class*) &panda$core$MutableMethod$class);
-        panda$core$MutableMethod$init$panda$unsafe$Pointer$LTpanda$core$Int8$GT$panda$core$Object$Q($tmp275, (panda$core$Int8*) &org$pandalanguage$pandac$Scanner$$anonymous1$org$pandalanguage$pandac$Scanner$org$pandalanguage$pandac$Position$panda$core$String$org$pandalanguage$pandac$ASTNode$Q$R$panda$core$Bit, NULL);
+        panda$core$MutableMethod$init$panda$unsafe$Pointer$LTpanda$core$Int8$GT$panda$core$Object$Q($tmp275, (panda$core$Int8*) &org$pandalanguage$pandac$Scanner$$anonymous1$org$pandalanguage$pandac$Scanner$org$pandalanguage$pandac$Position$panda$core$String$org$pandalanguage$pandac$ASTNode$Q$R$panda$core$Bit, ((panda$core$Object*) self));
         $tmp274 = ((panda$core$Object*) $tmp275);
         checkExpression273 = $tmp274;
         panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp274));

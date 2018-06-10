@@ -30,6 +30,8 @@ class Parser {
 
     var allowLambdas := true
 
+    var reportErrors := true
+
     init(errors:MessageQueue<Compiler.Error>) {
         self.errors := errors
         commaSeparatedExpressionContext.push(false)
@@ -37,6 +39,7 @@ class Parser {
     }
 
     method start(path:File, source:String) {
+        reportErrors := true
         lexer.start(source)
         self.path := path
         self.source := source
@@ -84,6 +87,7 @@ class Parser {
                                 continue outer
                             when Token.Kind.EOF:
                                 error(result, "unterminated comment")
+                                reportErrors := false
                                 return next
                         }
                     }
@@ -123,7 +127,7 @@ class Parser {
     }
 
     method error(token:Token, msg:String) {
-        if !inSpeculative {
+        if !inSpeculative & reportErrors {
             errors.post(Compiler.Error(path, token.position, msg))
         }
     }
@@ -436,7 +440,9 @@ class Parser {
                         }
                         return ASTNode.UNTYPED_LAMBDA(start.position, parameters.finish(), body)
                     }
-                    return ASTNode.TUPLE(start.position, parameters.finish())
+                    --return ASTNode.TUPLE(start.position, parameters.finish())
+                    error(start, "tuples are not yet supported")
+                    return null
                 }
                 -- either a single-parameter untyped lambda or a parenthesized identifier
                 if expect(Token.Kind.RPAREN, "')'") = null {
@@ -469,7 +475,9 @@ class Parser {
                 }
                 while checkNext(Token.Kind.COMMA) != null
                 expect(Token.Kind.RPAREN, "')'")
-                return ASTNode.TUPLE(start.position, arguments.finish())
+--                return ASTNode.TUPLE(start.position, arguments.finish())
+                error(start, "tuples are not yet supported")
+                return null
         }
     }
 
@@ -1465,6 +1473,7 @@ class Parser {
                     next()
                     error(token, "expected 'when', 'otherwise', or '}', but " +
                             "found '\{text(token)}'")
+                    break
             }
         }
         if expect(Token.Kind.RBRACE, "'}'") = null {

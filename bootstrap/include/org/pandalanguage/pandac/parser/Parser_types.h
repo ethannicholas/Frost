@@ -24,6 +24,7 @@ typedef struct org$pandalanguage$pandac$parser$Parser {
     panda$core$Bit inSpeculative;
     panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT* speculativeBuffer;
     panda$core$Bit allowLambdas;
+    panda$core$Bit reportErrors;
 } org$pandalanguage$pandac$parser$Parser;
 #include "panda/core/Class.h"
 typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[79]; } org$pandalanguage$pandac$parser$Parser$class_type;
