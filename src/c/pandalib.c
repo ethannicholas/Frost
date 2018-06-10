@@ -17,7 +17,7 @@
 #define true 1
 #define false 0
 
-#define DEBUG_ALLOCS 1
+#define DEBUG_ALLOCS 0
 
 struct Class;
 struct String;
@@ -241,7 +241,9 @@ void* pandaRealloc(void* ptr, size_t oldSize, size_t newSize) {
 
 void pandaFree(void* ptr) {
     allocations--;
+#if !DEBUG_ALLOCS
     free(ptr);
+#endif
 }
 
 void pandaObjectFree(Object* o) {

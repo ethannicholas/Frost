@@ -1504,7 +1504,7 @@ void org$pandalanguage$pandac$Main$run$panda$collections$ListView$LTpanda$core$S
                     {
                         {
                             $tmp536 = cg522;
-                            org$pandalanguage$pandac$LLVMCodeGenerator* $tmp539 = (org$pandalanguage$pandac$LLVMCodeGenerator*) pandaObjectAlloc(208, (panda$core$Class*) &org$pandalanguage$pandac$LLVMCodeGenerator$class);
+                            org$pandalanguage$pandac$LLVMCodeGenerator* $tmp539 = (org$pandalanguage$pandac$LLVMCodeGenerator*) pandaObjectAlloc(216, (panda$core$Class*) &org$pandalanguage$pandac$LLVMCodeGenerator$class);
                             panda$core$String* $tmp541 = org$pandalanguage$pandac$Config$llvmTriple$R$panda$core$String();
                             $tmp540 = $tmp541;
                             panda$io$File* $tmp545 = panda$io$File$changeExtension$panda$core$String$R$panda$io$File(outFile260, &$s544);

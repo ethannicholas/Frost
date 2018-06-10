@@ -13,6 +13,9 @@ handle duplicate classes, more than one public class per file, classes not being
 figure out rules for init / cleanup, make sure I'm following them consistently, check any cases I
 can that don't rely on dataflow
 
+change def current := compiler.currentMethod[0] for i in 0 .. current.parameters.get_count() in
+    LLVMCodeGenerator to just for i in 0 .. compiler.currentMethod[0].parameters.get_count() and we
+    leak memory
 using = on two non-trivial choice entries does not work (merely compares rawValue)
 Need to figure out & enforce init and cleanup rules
 Add tests for things like breaking out of multiple loops w/ memory management

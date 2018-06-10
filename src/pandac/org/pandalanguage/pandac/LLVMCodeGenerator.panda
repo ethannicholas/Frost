@@ -141,8 +141,6 @@ class LLVMCodeGenerator : CodeGenerator {
 
     var currentBlock:String
 
-    var currentMethod:MethodDecl?
-
     var returnValueVar:String?
 
     def enclosingContexts := Stack<EnclosingContext>()
@@ -937,8 +935,9 @@ class LLVMCodeGenerator : CodeGenerator {
         def inline := getInlineContext()
         if v.storage = Variable.Storage.PARAMETER {
             if inline != null {
-                for i in 0 .. currentMethod.parameters.get_count() {
-                    if v.name == currentMethod.parameters[i].name {
+                def current := compiler.currentMethod[0]
+                for i in 0 .. current.parameters.get_count() {
+                    if v.name == current.parameters[i].name {
                         return inline.argRefs[i]
                     }
                 }
@@ -1426,14 +1425,9 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    @post(compiler.currentClass[0] = @pre(compiler.currentClass[0]) &
-          currentMethod = @pre(currentMethod) &
-          returnValueVar = @pre(returnValueVar))
     method getInlineCallReference(t:Type, mref:MethodRef, args:ImmutableArray<IRNode>,
             body:ImmutableArray<IRNode>, out:OutputStream):String {
         def m := mref.value
-        compiler.currentClass.push(m.owner)
-        currentlyInlining[m] := m
         var selfRef := "<inline call self error>"
         def argStart:Int
         if m.isInstance() {
@@ -1449,16 +1443,17 @@ class LLVMCodeGenerator : CodeGenerator {
         }
         def end := nextLabel()
         assert argRefs.get_count() = m.parameters.get_count()
+        compiler.currentClass.push(m.owner)
+        currentlyInlining[m] := m
         def inline := InlineContext("$inline\{varCount}", selfRef, argRefs, end)
         {
             def context := AutoContext(self, EnclosingContext.INLINE(inline))
-            def old := currentMethod
-            currentMethod := m
+            compiler.currentMethod.push(m)
             def oldReturnValueVar := returnValueVar
             returnValueVar := null
             writeBlock(body, out)
             returnValueVar := oldReturnValueVar
-            currentMethod := old
+            compiler.currentMethod.pop(m)
         }
         if !compiler.endsWithBranch(body) {
             out.printLine("unreachable")
@@ -1721,7 +1716,7 @@ class LLVMCodeGenerator : CodeGenerator {
         def cl := compiler.getClass(base.type())
         assert cl != null
         if compiler.isValue(cl) & (base != IRNode.SELF |
-                currentMethod.methodKind != MethodDecl.Kind.INIT) {
+                compiler.currentMethod[0].methodKind != MethodDecl.Kind.INIT) {
             def baseRef := getReference(base, out)
             def fields := compiler.instanceFields(cl)
             def index:Int? := null
@@ -2031,8 +2026,8 @@ class LLVMCodeGenerator : CodeGenerator {
     This returns true if our current %self is a pointer to a value.
     ================================================================================================
     function haveSelfValuePointer():Bit {
-        return currentMethod.methodKind = MethodDecl.Kind.INIT &
-                compiler.isValue(currentMethod.owner)
+        return compiler.currentMethod[0].methodKind = MethodDecl.Kind.INIT &
+                compiler.isValue(compiler.currentMethod[0].owner)
     }
 
     ================================================================================================
@@ -2040,10 +2035,10 @@ class LLVMCodeGenerator : CodeGenerator {
     init methods.
     ================================================================================================
     method getSelfPointer():String {
-        assert currentMethod.methodKind = MethodDecl.Kind.INIT |
-                !compiler.isValue(currentMethod.owner),
+        assert compiler.currentMethod[0].methodKind = MethodDecl.Kind.INIT |
+                !compiler.isValue(compiler.currentMethod[0].owner),
                 "self pointer for values is only accessible from init methods " +
-                "(in \{currentMethod.declaration()})"
+                "(in \{compiler.currentMethod[0].declaration()})"
         def inline := getInlineContext()
         if inline != null {
             return inline.selfRef
@@ -2056,11 +2051,11 @@ class LLVMCodeGenerator : CodeGenerator {
     %self is always a pointer.
     ================================================================================================
     method getSelfValue(out:OutputStream):String {
-        assert currentMethod != null
+        assert compiler.currentMethod[0] != null
         if haveSelfValuePointer() {
             def load := nextVar()
-            out.printLine("\{load} = load \{type(currentMethod.owner.type())}, " +
-                    "\{type(currentMethod.owner.type())}* \{getSelfPointer()}")
+            out.printLine("\{load} = load \{type(compiler.currentMethod[0].owner.type())}, " +
+                    "\{type(compiler.currentMethod[0].owner.type())}* \{getSelfPointer()}")
             return load
         }
         def inline := getInlineContext()
@@ -2077,7 +2072,8 @@ class LLVMCodeGenerator : CodeGenerator {
     method getSuperReference(t:Type, out:OutputStream):String {
         def ref := getSelfReference(out)
         def result := nextVar()
-        out.printLine("\{result} = bitcast \{selfType(currentMethod)} \{ref} to \{type(t)}")
+        out.printLine("\{result} = bitcast \{selfType(compiler.currentMethod[0])} \{ref} to " +
+                "\{type(t)}")
         return result
     }
 
@@ -2464,8 +2460,8 @@ class LLVMCodeGenerator : CodeGenerator {
             if target = null & i = 0 & args[i] = IRNode.SUPER &
                     m.methodKind = MethodDecl.Kind.INIT {
                 def cast := nextVar()
-                out.printLine("\{cast} = bitcast \{selfType(currentMethod)} \{getSelfPointer()} " +
-                        " to \{argType}")
+                out.printLine("\{cast} = bitcast \{selfType(compiler.currentMethod[0])} " +
+                        "\{getSelfPointer()} to \{argType}")
                 argRefs.add("\{argType} \{cast}")
                 continue
             }
@@ -3548,6 +3544,7 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
+    @pre(compiler.currentClass[0] == compiler.currentMethod[0].owner)
     @post(extraEffects.get_count() = @pre(extraEffects.get_count()))
     method writeStatement(stmt:IRNode, out:OutputStream) {
         extraEffects.push(Array<ExtraEffect>())
@@ -3635,9 +3632,8 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     @override
-    @preOr(compiler.currentClass[0] == m.owner)
+    @preOr(compiler.currentClass[0] == m.owner & compiler.currentMethod[0] == m)
     method write(m:MethodDecl, body:ImmutableArray<IRNode>) {
-        currentMethod := m
         returnValueVar := null
         currentBlock := "0"
         varCount := 0
@@ -3682,7 +3678,6 @@ class LLVMCodeGenerator : CodeGenerator {
             }
         }
         methods.printLine("}")
-        currentMethod := null
     }
 
     @override
