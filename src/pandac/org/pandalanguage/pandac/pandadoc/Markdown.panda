@@ -59,10 +59,8 @@ class Protector {
         return result
     }
 
-    function decode(s:String):String {
-        def result := decodeMap[s]
-        assert result != null
-        return result
+    function decode(s:String):String? {
+        return decodeMap[s]
     }
 
     method randomToken():String {
@@ -115,9 +113,9 @@ class Markdown {
 
     method process(raw:String):String {
         def text := MutableString(raw)
-        text.replace(/\\r\\n/, "\n") -- DOS to Unix
-        text.replace(/\\r/, "\n")    -- Mac to Unix
-        text.replace(/(?m)^[ \\t]+$/, "")
+        text.replace(/\r\n/, "\n") -- DOS to Unix
+        text.replace(/\r/, "\n")    -- Mac to Unix
+        text.replace(/(?m)^[ \t]+$/, "")
 
         -- Make sure text ends with a couple of newlines:
         text.append("\n\n")
@@ -198,7 +196,8 @@ class Markdown {
         hrDelimiters.add("-")
         hrDelimiters.add("_")
         for hrDelimiter in hrDelimiters {
-            text.replace(/(?m)^[ ]{0,2}([ ]?\{hrDelimiter}[ ]?){3,}[ ]*$/, "<hr />")
+            text.replace(RegularExpression("(?m)^[ ]{0,2}([ ]?\{hrDelimiter}[ ]?){3,}[ ]*$"),
+                    "<hr />")
         }
     }
 
@@ -315,14 +314,14 @@ class Markdown {
     }
 
     method formParagraphs(markup:MutableString) {
-        markup.replace(/\\A\\n+/, "")
-        markup.replace(/\\n+\\z/, "")
+        markup.replace(/\A\n+/, "")
+        markup.replace(/\n+\z/, "")
 
         def paragraphs:Array<String>
         if markup.byteLength() = 0 {
             paragraphs := Array<String>()
         } else {
-            paragraphs := Array<String>(markup.convert().split(/\\n{2,}/))
+            paragraphs := Array<String>(markup.convert().split(/\n{2,}/))
         }
         for i in 0 .. paragraphs.get_count() {
             def paragraph := paragraphs[i]
@@ -340,8 +339,8 @@ class Markdown {
     }
 
     method doAutoLinks(markup:MutableString) {
-        markup.replace(/<((https?|ftp):[^'\">\\s]+)>/, "<a href=\"$1\">$1</a>")
-        def email := /<([-.\\w]+\\@[-a-z0-9]+(\\.[-a-z0-9]+)*\\.[a-z]+)>/
+        markup.replace(/<((https?|ftp):[^'\">\s]+)>/, "<a href=\"$1\">$1</a>")
+        def email := /<([-.\w]+\@[-a-z0-9]+(\.[-a-z0-9]+)*\.[a-z]+)>/
         markup.replace(email, function(groups:ListView<String?>):String {
             def address := groups[1]
             def ed := MutableString(address)
@@ -405,7 +404,7 @@ class Markdown {
     }
 
     method detabify(text:MutableString) {
-        text.replace(/(.*?)\\t/, function(groups:ListView<String?>):String {
+        text.replace(/(.*?)\t/, function(groups:ListView<String?>):String {
             def lineSoFar := groups[1]
             def width := lineSoFar.length()
             def replacement := MutableString(lineSoFar)
@@ -420,20 +419,26 @@ class Markdown {
 
     @class
     method outdent(s:MutableString) {
-        s.replace(/(?m)^(\\t|[ ]{1,4})/, "")
+        s.replace(/(?m)^(\t|[ ]{1,4})/, "")
     }
 
     class CodeReplacer {
         constant LANG_IDENTIFIER := "lang:"
 
+        def markdown:Markdown
+
+        init(markdown:Markdown) {
+            self.markdown := markdown
+        }
+
         function replacement(groups:ListView<String?>):String {
             def codeBlock := groups[1]
             def ed := MutableString(codeBlock)
-            outdent(ed)
-            encodeCode(ed)
-            detabify(ed)
-            ed.replace(/\\A\\n+/, "")
-            ed.replace("\\s+\\z", "")
+            Markdown.outdent(ed)
+            markdown.encodeCode(ed)
+            markdown.detabify(ed)
+            ed.replace(/\A\n+/, "")
+            ed.replace(/\s+\z/, "")
             def text := ed.convert()
             def out:String
             def firstLine := firstLine(text)
@@ -447,7 +452,7 @@ class Markdown {
         }
 
         function firstLine(text:String):String {
-            return text.split("\\n")[0]
+            return text.split("\n")[0]
         }
 
         function isLanguageIdentifier(line:String):Bit {
@@ -478,10 +483,9 @@ class Markdown {
                 ")+" +
                 ")" +
                 "((?=^[ ]{0,4}\\S)|\\Z)", RegularExpression.MULTILINE)
-        markup.replace(p, CodeReplacer().replacement)
+        markup.replace(p, CodeReplacer(self).replacement)
     }
 
-    @class
     method encodeCode(ed:MutableString) {
         ed.replace("&", "&amp;")
         ed.replace("<", "&lt;")
@@ -568,7 +572,7 @@ class Markdown {
         }
     }
 
-    method processListItems(list:String):String {
+    method processListItems(rawList:String):String {
         -- The listLevel variable keeps track of when we're inside a list. Each time we enter a
         -- list, we increment it; when we leave a list, we decrement. If it's zero, we're not in a
         -- list anymore.
@@ -591,14 +595,14 @@ class Markdown {
         listLevel += 1
 
         -- Trim trailing blank lines:
-        list := list.replace(/\\n{2,}\\z/, "\n")
+        def list := rawList.replace(/\\n{2,}\\z/, "\n")
 
         def p := RegularExpression("(\\n)?" +
                 "^([ \\t]*)([-+*]|\\d+[.])[ ]+" +
                 "((?s:.+?)(\\n{1,2}))" +
                 "(?=\\n*(\\z|\\2([-+\\*]|\\d+[.])[ \\t]+))",
                 RegularExpression.MULTILINE)
-        list = list.replace(p, function(groups:ListView<String?>):String {
+        list := list.replace(p, function(groups:ListView<String?>):String {
             def text := groups[4]
             def item := MutableString(text)
             def leadingLine := groups[1]
@@ -838,7 +842,7 @@ class Markdown {
             var url := groups[3]
             def title := groups[6]
             -- protect emphasis (* and _) within urls
-            url := url.replace(/\\*/, charProtector.encode("*"))
+            url := url.replace(/\*/, charProtector.encode("*"))
             url := url.replace(/_/, charProtector.encode("_"))
             def result := MutableString()
             result.append("<a href=\"\{url}\"")
@@ -895,24 +899,24 @@ class Markdown {
     }
 
      method doItalicsAndBold(markup:MutableString) {
-        markup.replace(/(\\*\\*|__)(?=\\S)(.+?[*_]*)(?<=\\S)\\1/, "<strong>$2</strong>")
-        markup.replace(/(\\*|_)(?=\\S)(.+?)(?<=\\S)\\1/, "<em>$2</em>")
+        markup.replace(/(\*\\*|__)(?=\S)(.+?[*_]*)(?<=\S)\1/, "<strong>$2</strong>")
+        markup.replace(/(\*|_)(?=\S)(.+?)(?<=\S)\1/, "<em>$2</em>")
     }
 
     method encodeAmpsAndAngles(markup:MutableString) {
         -- Ampersand-encoding based entirely on Nat Irons's Amputator MT plugin:
         -- http://bumppo.net/projects/amputator/
-        markup.replace(/&(?!#?[xX]?(?:[0-9a-fA-F]+|\\w+);)/, "&amp;")
-        markup.replace(/<(?![a-zA-Z/?\\$!])/, "&lt;")
+        markup.replace(/&(?!#?[xX]?(?:[0-9a-fA-F]+|\w+);)/, "&amp;")
+        markup.replace(/<(?![a-zA-Z/?\$!])/, "&lt;")
     }
 
     method doCodeSpans(markup:MutableString) {
-        markup.replace(/(?<!\\\\)(`+)(.+?)(?<!`)\\1(?!`)/,
+        markup.replace(/(?<!\\)(`+)(.+?)(?<!`)\1(?!`)/,
             function(groups:ListView<String?>):String {
                 def code := groups[2]
                 def sub := MutableString(code)
-                sub.replace(/^[ \\t]+/, "")
-                sub.replace(/[ \\t]+$/, "")
+                sub.replace(/^[ \t]+/, "")
+                sub.replace(/[ \t]+$/, "")
                 encodeCode(sub)
                 return "<code>\{sub}</code>"
             }

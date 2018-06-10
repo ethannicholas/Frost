@@ -599,7 +599,7 @@ class MutableString {
                 break
             }
             self[next .. Index(next.value + search.byteLength())] := replacement
-            index := Index(index.value + replacement.byteLength().max(1))
+            index := Index(next.value + replacement.byteLength().max(1))
         }
     }
 

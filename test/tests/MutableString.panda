@@ -10,4 +10,12 @@ method main() {
     def m2 := MutableString("Hello ")
     m2.append("again!")
     Console.printLine(m2.finish())
+
+    def m3 := MutableString("and again!")
+    m3.replace("a", "aaa")
+    Console.printLine(m3)
+
+    def m4 := MutableString("and again!")
+    m4.replace(/a/, "aaa")
+    Console.printLine(m4)
 }

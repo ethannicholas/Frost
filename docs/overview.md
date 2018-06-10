@@ -275,9 +275,9 @@ used frequently in the core APIs; for instance, many classes provide multiple `c
 for converting to various other types. The appropriate function is chosen based on context:
 
     def i:Int     := 32
-    def i8:Int8   := i.convert()   -- calls Int.convert():Int8
-    def i16:Int16 := i.convert()   -- calls Int.convert():Int16
-    def fail      := i.convert()   -- ERROR, ambiguous!
+    def i8:Int8   := i.convert() -- calls Int.convert():Int8
+    def i16:Int16 := i.convert() -- calls Int.convert():Int16
+    def fail      := i.convert() -- ERROR, ambiguous!
 
 Classes
 -------

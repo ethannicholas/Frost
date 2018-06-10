@@ -17,7 +17,7 @@
 #define true 1
 #define false 0
 
-#define DEBUG_ALLOCS 1
+#define DEBUG_ALLOCS 0
 
 struct Class;
 struct String;
