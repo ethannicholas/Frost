@@ -616,11 +616,17 @@ class Scanner {
         }
         if kind = ClassDecl.Kind.CHOICE {
             var haveFields := false
-            for e in result.choiceEntries {
-                if e.fields.get_count() > 0 {
-                    haveFields := true
-                    break
+            if result.choiceEntries.get_count() > 0 {
+                for e in result.choiceEntries {
+                    if e.fields.get_count() > 0 {
+                        haveFields := true
+                        break
+                    }
                 }
+            }
+            else {
+                error(result.position, "'choice' must have at least one entry")
+                return null
             }
             if !haveFields {
                 result.rawSuper := Type.Value()

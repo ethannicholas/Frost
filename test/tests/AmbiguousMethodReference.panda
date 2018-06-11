@@ -1,0 +1,3 @@
+method main() {
+    def add := Int.+
+}

@@ -1760,7 +1760,7 @@ void panda$core$MutableString$replace$panda$core$String$panda$core$String(panda$
         panda$core$Int64 $tmp931 = panda$core$String$byteLength$R$panda$core$Int64(p_replacement);
         panda$core$Int64$init$builtin_int64(&$tmp932, 1);
         panda$core$Int64 $tmp933 = panda$core$Int64$max$panda$core$Int64$R$panda$core$Int64($tmp931, $tmp932);
-        panda$core$Int64 $tmp934 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(index919.value, $tmp933);
+        panda$core$Int64 $tmp934 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(((panda$core$MutableString$Index) next923.value).value, $tmp933);
         panda$core$MutableString$Index$init$panda$core$Int64(&$tmp930, $tmp934);
         index919 = $tmp930;
     }

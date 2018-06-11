@@ -1,0 +1,11 @@
+class BadClassParentage {
+    -- test symboltable resolution by attempting to resolve a class within another class. The
+    -- identifier 'Int64' legitimately should resolve within BadClassParentage, but not as part of a
+    -- dotted expression.
+    def i := BadClassParentage.Int64(64)
+
+    @class
+    method main() {
+        Console.printLine(BadClassParentage().i)
+    }
+}

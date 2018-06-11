@@ -1,0 +1,2 @@
+BadClassParentage.panda:5:31: error: class 'anonymous.BadClassParentage' does not have a member named 'Int64'
+1 error

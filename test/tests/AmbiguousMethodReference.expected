@@ -1,0 +1,6 @@
+AmbiguousMethodReference.panda:2:19: error: reference to method '+' is ambiguous. The following methods are equally good matches:
+    function panda.core.Int64.+(other:panda.core.Int64):panda.core.Int64 (Int64.panda:63:5)
+    function panda.core.Int64.+(other:panda.core.Int32):panda.core.Int64 (Int64.panda:59:5)
+    function panda.core.Int64.+(other:panda.core.Int16):panda.core.Int64 (Int64.panda:55:5)
+    function panda.core.Int64.+(other:panda.core.Int8):panda.core.Int64 (Int64.panda:51:5)
+1 error

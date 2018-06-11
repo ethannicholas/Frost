@@ -629,7 +629,7 @@ class Compiler {
             symbolTable := old
             return
         }
-        f.value := compileExpression(f.rawValue)
+        f.value := resolve(compileExpression(f.rawValue))
         if f.value = null {
             currentClass.pop()
             symbolTable := old
@@ -657,7 +657,7 @@ class Compiler {
                     break
                 }
             }
-            assert firstInit != null
+            assert firstInit != null, "class \{f.owner.name} has no init methods"
             currentMethod.push(firstInit)
             determineRawType(f)
             currentMethod.pop(firstInit)
@@ -743,6 +743,15 @@ class Compiler {
             when IRNode.UNRESOLVED_IDENTIFIER(position, _):
                 error(position, "unknown identifier")
                 return null
+            when IRNode.UNRESOLVED_METHOD_REFERENCE(position, _, methods):
+                def msg := MutableString("reference to method '\{methods[0].value.name}' is " +
+                        "ambiguous. The following methods are equally good matches:")
+                for m in methods {
+                    msg.append("\n    \{m.value.declaration()} (\{m.value.owner.source.name()}:" +
+                            "\{m.value.position})")
+                }
+                error(position, msg.finish())
+                return null
             when IRNode.UNRESOLVED_METHOD_CALL(position, _, callTarget, methods, args):
                 return resolveMethodCall(position, callTarget, methods, args, null)
             when IRNode.SUPER(position, _):
@@ -755,6 +764,22 @@ class Compiler {
                     return call(get, Array<IRNode>())
                 }
                 return expr
+            when IRNode.UNRESOLVED_RANGE(_, rawStart, rawEnd, _, rawStep):
+                def start := resolve(rawStart)
+                if start = null {
+                    return null
+                }
+                def end := resolve(rawEnd)
+                if end = null {
+                    return null
+                }
+                if rawStep != null {
+                    def step := resolve(rawStep)
+                    if step = null {
+                        return null
+                    }
+                }
+                return coerce(expr, variableType(expr))
             otherwise:
                 return coerce(expr, variableType(expr))
         }
@@ -1254,8 +1279,11 @@ class Compiler {
                 }
             when Symbol.Kind.CHOICE_ENTRY:
                 return IRNode.CHOICE_ENTRY_REFERENCE(position, s->ChoiceEntry)
+            when Symbol.Kind.GENERIC_PARAMETER:
+                error(position, "generic parameter '\{s.name}' is not an expression")
+                return null
             otherwise:
-                assert false, "unsupported symbol kind: \{s.kind}"
+                assert false, "unsupported symbol kind: \{s}"
         }
     }
 
@@ -1447,6 +1475,22 @@ class Compiler {
             }
             return result + NULLABLE_TO_NONNULLABLE_CAST_COST
         }
+        match target.typeKind {
+            when Type.Kind.NULLABLE:
+                def result := coercionCost(type, target.subtypes[0])
+                if result = null {
+                    return null
+                }
+                return result + NONNULLABLE_TO_NULLABLE_CAST_COST
+            when Type.Kind.GENERIC_PARAMETER:
+                return null
+            when Type.Kind.BUILTIN_INT, Type.Kind.BUILTIN_UINT:
+                return null
+            when Type.Kind.CLASS:
+                if type.typeKind = Type.Kind.GENERIC {
+                    return coercionCost(type.subtypes[0], target)
+                }
+        }
         if type.isMethod() {
             if target.isMethod() {
                 if type.subtypes.get_count() != target.subtypes.get_count() {
@@ -1514,22 +1558,6 @@ class Compiler {
                 }
             }
             return coercionCost(Type.MutableMethod(), target)
-        }
-        match target.typeKind {
-            when Type.Kind.NULLABLE:
-                def result := coercionCost(type, target.subtypes[0])
-                if result = null {
-                    return null
-                }
-                return result + NONNULLABLE_TO_NULLABLE_CAST_COST
-            when Type.Kind.GENERIC_PARAMETER:
-                return null
-            when Type.Kind.BUILTIN_INT, Type.Kind.BUILTIN_UINT:
-                return null
-            when Type.Kind.CLASS:
-                if type.typeKind = Type.Kind.GENERIC {
-                    return coercionCost(type.subtypes[0], target)
-                }
         }
         match type.typeKind {
             when Type.Kind.BUILTIN_BIT:
@@ -2026,6 +2054,10 @@ class Compiler {
                 else {
                     return coerce(resolve(expr), target)
                 }
+            when IRNode.UNRESOLVED_METHOD_REFERENCE:
+                if target.nonnullable().isMethod() & coercionCost(expr, target) != 0 {
+                    return methodCast(expr, target)
+                }
             when IRNode.UNRESOLVED_METHOD_CALL(position, _, callTarget, methods, args):
                 return resolveMethodCall(position, callTarget, methods, args, target)
             when IRNode.UNRESOLVED_INDEX(_, _, base, args):
@@ -2134,6 +2166,9 @@ class Compiler {
             currentClass[0] = @pre(currentClass[0]) &
             currentMethod[0] = @pre(currentMethod[0]))
     method methodCast(node:IRNode, target:Type):IRNode? {
+        if target.typeKind = Type.Kind.NULLABLE {
+            return coerce(methodCast(node, target.nonnullable()), target)
+        }
         match node {
             when IRNode.UNRESOLVED_METHOD_REFERENCE(position, targetNode, methods):
                 var bestCost:Int? := null
@@ -2157,7 +2192,7 @@ class Compiler {
                             effectiveMethodType(targetNode, best[0].value),
                             targetNode, best[0]), target)
                 }
-                assert false, "no or ambiguous match"
+                assert false, "no or ambiguous match: \{methods}->\{target} = \{best} (\{position})"
                 return null
             when IRNode.UNRESOLVED_LAMBDA(position, rawParameters, expr):
                 def parameters := Array<ASTNode>()
@@ -2419,8 +2454,8 @@ class Compiler {
         }
         msg.append(" is ambiguous. The following methods are equally good matches:")
         for m in methods {
-            msg.append("\n    \{m.value.declaration()}:\{m.value.owner.source.name()}:" +
-                    "\{m.value.position}")
+            msg.append("\n    \{m.value.declaration()} (\{m.value.owner.source.name()}:" +
+                    "\{m.value.position})")
         }
         error(position, msg.finish())
     }
@@ -3633,10 +3668,12 @@ class Compiler {
     }
 
     method compileDot(position:Position, base:IRNode, name:String):IRNode? {
+        def className:String
         def cl:ClassDecl?
         match base {
             when IRNode.TYPE_REFERENCE(_, type):
                 cl := getClass(type)
+                className := type.convert()
             when IRNode.UNRESOLVED_IDENTIFIER(_, baseName):
                 def fullName := "\{baseName}.\{name}"
                 def cl := tryResolveClass(fullName)
@@ -3647,20 +3684,23 @@ class Compiler {
             when IRNode.SUPER:
                 resolve(currentClass[0])
                 cl := getClass(currentClass[0].rawSuper)
+                className := cl.name
             otherwise:
                 if !base.type().isClass() {
                     error(position, "type '\{base.type()}' is not a class")
                     return null
                 }
                 cl := getClass(base.type())
+                className := cl.name
         }
         if cl = null {
             return null
         }
         def st := getSymbolTable(cl)
         def s := st[name]
-        if s = null {
-            error(position, "class '\{base.type()}' does not have a member named '\{name}'")
+        if s = null |
+                (s.kind = Symbol.Kind.ALIAS & !s->Alias.fullName.startsWith(className + ".")) {
+            error(position, "class '\{className}' does not have a member named '\{name}'")
             return null
         }
         return symbolRef(position, base, s, st)
