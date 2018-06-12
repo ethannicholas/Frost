@@ -1,7 +1,8 @@
 package org.pandalanguage.pandac.pandadoc
 
--- Port of markdownj (https://github.com/myabc/markdownj) with some enhancements. As this is a port
--- of Java code which is in turn a port of Perl code, this isn't especially idiomatic Panda code.
+-- Port of markdownj (https://github.com/myabc/markdownj) with some fixes and enhancements. As this
+-- is a port of Java code which is in turn a port of Perl code, this isn't especially idiomatic
+-- Panda code.
 
 -- Original markdownj license and copyright:
 -*
@@ -492,8 +493,6 @@ class Markdown {
         ed.replace(">", "&gt;")
         ed.replace("\\*", charProtector.encode("*"))
         ed.replace("_", charProtector.encode("_"))
-        ed.replace("\\{", charProtector.encode("{"))
-        ed.replace("\\}", charProtector.encode("}"))
         ed.replace("\\[", charProtector.encode("["))
         ed.replace("\\]", charProtector.encode("]"))
         ed.replace("\\\\", charProtector.encode("\\"))
@@ -635,14 +634,23 @@ class Markdown {
 
     method doHeaders(markup:MutableString) {
         -- setext-style headers
-        markup.replace(/(?m)^(.*)\n====+$/, "<h1>$1</h1>")
-        markup.replace(/(?m)^(.*)\n----+$/, "<h2>$1</h2>")
+        markup.replace(/(?m)^(.*)\n====+$/, function(groups:ListView<String?>):String {
+            def result := MutableString(groups[1])
+            runSpanGamut(result)
+            return "<h1>\{result}</h1>"
+        })
+        markup.replace(/(?m)^(.*)\n----+$/, function(groups:ListView<String?>):String {
+            def result := MutableString(groups[1])
+            runSpanGamut(result)
+            return "<h2>\{result}</h2>"
+        })
 
         -- atx-style headers - e.g., "#### heading 4 ####"
         def p := RegularExpression("^(#{1,6})\\s*(.*?)\\s*\\1?$", RegularExpression.MULTILINE)
         markup.replace(p, function(groups:ListView<String?>):Object {
             def marker := groups[1]
-            def heading := groups[2]
+            def heading := MutableString(groups[2])
+            runSpanGamut(heading)
             def level := marker.length()
             def tag := "h" + level
             return "<\{tag}>\{heading}</\{tag}>\n"

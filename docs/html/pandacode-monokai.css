@@ -1,0 +1,51 @@
+/* Inspired by the Monokai theme, 
+        http://www.monokai.nl/blog/2006/07/15/textmate-color-theme/ */
+
+.pandacode {
+    padding: 10px;
+    font-family: Menlo, Consolas, Andale Mono, sans-serif;
+    font-size: 10pt;
+    white-space: pre;
+    background-color: #272822;
+    color: #F8F8F2;
+}
+
+.pandacode .comment {
+    color: #857A65;
+    font-style: italic;
+}
+
+.pandacode .annotation, .pandacode .label {
+    color: #D6C2FF;
+    font-style: italic;
+}
+
+.pandacode .control, .pandacode .method, .pandacode .class, .pandacode .var, 
+        .pandacode .operator, .pandacode .NEW, .pandacode .DOT, 
+        .pandacode .ATRETURN, .pandacode .PACKAGE, .pandacode .assert {
+    color: #F92672;
+}
+
+.pandacode .control {
+    font-style: italic;
+}
+
+.pandacode .methodName {
+    color: #A6E22E;
+}
+
+.pandacode .type {
+    color: #66D9EF;
+}
+
+.pandacode .literal {
+    color: #AE81FF;
+}
+
+.pandacode .STRING {
+    color: #E6DB74;
+}
+
+.pandacode .parameterName {
+    color: #FD971F;
+}

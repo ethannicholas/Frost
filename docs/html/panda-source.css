@@ -1,0 +1,9 @@
+#content {
+    width: auto;
+}
+
+.pandacode {
+    border: solid #e0e0e0 1px;
+    border-radius: 4pt;
+    padding: 8pt;
+}

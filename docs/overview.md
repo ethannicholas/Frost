@@ -53,10 +53,15 @@ Basic Types
 -----------
 
 `Int8`, `Int16`, `Int32`, `Int64`
+
 `UInt8`, `UInt16`, `UInt32`, `UInt64`
+
 `Real32`, `Real64`
+
 `Bit`
+
 `Char8`, `Char16`, `Char32`
+
 `String`
 
 `Bit` is Panda's Boolean type, which has only two values: `true` and `false`.
@@ -149,7 +154,7 @@ Braces are required, even when there is only one statement in the block.
     }
     while <expression>
 
-    loop { -- infinite loop, similar to `while true { ... }`
+    loop { -- infinite loop, similar to 'while true { ... }'
         ...
     }
 

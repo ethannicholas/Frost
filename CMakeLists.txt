@@ -771,4 +771,12 @@ run_markdown(markdown_html
 
 add_custom_target(docs
     DEPENDS ${markdown_html}
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/docs/html/panda-master.css
+            ${CMAKE_CURRENT_BINARY_DIR}/docs
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/docs/html/panda-source.css
+            ${CMAKE_CURRENT_BINARY_DIR}/docs
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/docs/html/pandacode-monokai.css
+            ${CMAKE_CURRENT_BINARY_DIR}/docs
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/docs/html/pandadoc.css
+            ${CMAKE_CURRENT_BINARY_DIR}/docs
 )

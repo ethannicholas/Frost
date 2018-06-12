@@ -1,5 +1,19 @@
 package org.pandalanguage.pandac.pandadoc
 
+constant HEADER :=
+    "<html>" +
+    "  <head>\n" +
+    "    <link rel=\"stylesheet\" type=\"text/css\" href=\"panda-master.css\" />\n" +
+    "    <link rel=\"stylesheet\" type=\"text/css\" href=\"pandacode-monokai.css\" />\n" +
+    "  </head>\n" +
+    "  <body>\n"
+
+constant FOOTER :=
+    "  </body>" +
+    "</html>"
+
 method main(args:ListView<String>) {
-    File(args[2]).write(Markdown(null).process(File(args[1]).readFully()))
+    File(args[2]).write(HEADER +
+            Markdown(null).process(File(args[1]).readFully()) +
+            FOOTER)
 }
