@@ -922,9 +922,4 @@ class Markdown {
             }
         )
     }
-
-    @class
-    method main(args:ListView<String>) {
-        File(args[2]).write(Markdown(null).process(File(args[1]).readFully()))
-    }
 }

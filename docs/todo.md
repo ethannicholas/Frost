@@ -1,7 +1,8 @@
 Need:
 
+delete temporary files
 fix <invalid> on unknown identifier
-Closures
+Closures not working with both self and local variable captures at the same time
 Proper lambda / inner method errors
 Documentation
 Array literals
@@ -12,6 +13,8 @@ permissions
 handle duplicate classes, more than one public class per file, classes not being in the correct path
 figure out rules for init / cleanup, make sure I'm following them consistently, check any cases I
 can that don't rely on dataflow
+
+Bugs:
 
 change def current := compiler.currentMethod[0] for i in 0 .. current.parameters.get_count() in
     LLVMCodeGenerator to just for i in 0 .. compiler.currentMethod[0].parameters.get_count() and we

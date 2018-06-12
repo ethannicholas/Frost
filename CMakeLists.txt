@@ -712,3 +712,63 @@ add_custom_command(
     COMMAND ${CMAKE_CURRENT_BINARY_DIR}/TestRunner ${CMAKE_CURRENT_SOURCE_DIR}
             ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_C_COMPILER} ${ICU_LIBRARIES}
 )
+
+function(compile_markdown_sources out_var)
+    set(result)
+    foreach(input ${ARGN})
+        set(input "${CMAKE_CURRENT_SOURCE_DIR}/${input}")
+        get_filename_component(outputDir ${input} DIRECTORY)
+        get_filename_component(output ${input} NAME_WE)
+        set(output "${CMAKE_CURRENT_BINARY_DIR}/${outputDir}/${output}.o")
+        add_custom_command(
+            OUTPUT ${output}
+            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/pandac ${BOOTSTRAP_ARGS}
+                    -i ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac -f o -o ${output} ${input}
+            DEPENDS pandac ${input}
+            WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        )
+        list(APPEND result ${output})
+    endforeach()
+    set(${out_var} "${result}" PARENT_SCOPE)
+endfunction()
+
+compile_markdown_sources(markdown_objects
+    src/pandac/org/pandalanguage/pandac/pandadoc/Markdown.panda
+    src/pandac/org/pandalanguage/pandac/pandadoc/Main.panda
+)
+
+add_executable(pandamd
+    ${markdown_objects}
+)
+target_link_libraries(pandamd panda ${SYSTEM_LIBRARIES} ${ICU_LIBRARIES})
+set_target_properties(pandamd PROPERTIES LINKER_LANGUAGE CXX)
+
+function(run_markdown out_var)
+    set(result)
+    foreach(input ${ARGN})
+        set(input "${CMAKE_CURRENT_SOURCE_DIR}/${input}")
+        get_filename_component(output ${input} NAME_WE)
+        set(output "${CMAKE_CURRENT_BINARY_DIR}/docs/${output}.html")
+        add_custom_command(
+            OUTPUT ${output}
+            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/pandamd ${input} ${output}
+            DEPENDS pandamd ${input}
+        )
+        list(APPEND result ${output})
+    endforeach()
+    set(${out_var} "${result}" PARENT_SCOPE)
+endfunction()
+
+run_markdown(markdown_html
+    docs/bareCode.md
+    docs/errorHandling.md
+    docs/main.md
+    docs/memoryManagement.md
+    docs/overview.md
+    docs/programs.md
+    docs/weakReferences.md
+)
+
+add_custom_target(docs
+    DEPENDS ${markdown_html}
+)

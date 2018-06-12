@@ -2726,6 +2726,7 @@ class Compiler {
         cl.symbolTable.add(synthetic)
     }
 
+    @post(@return != null | errorCount != 0 | !reportErrors)
     method call(m:IRNode, args:ListView<IRNode>, expectedType:Type?):IRNode? {
         if m.type().typeKind = Type.Kind.NULLABLE {
             return call(coerce(m, m.type().nonnullable()), args, expectedType)
@@ -2744,14 +2745,14 @@ class Compiler {
                 -- FIXME use lambda to filter
                 def filtered := Array<MethodRef>()
                 for m in mrefs {
-                    if m.value.annotations.isClass() = isClass {
+                    if m.value.annotations.isClass() | !isClass {
                         filtered.add(m)
                     }
                 }
                 def matchResult := matchMethods(position, filtered, args, expectedType, false)
                 if matchResult = null {
                     -- report error
-                    matchMethods(position, mrefs, args, expectedType, true)
+                    matchMethods(position, filtered, args, expectedType, true)
                     return null
                 }
                 if matchResult.second.get_count() > 1 {
@@ -3650,6 +3651,7 @@ class Compiler {
         return compilePrefix(position, op, base)
     }
 
+    @post(@return != null | errorCount != 0 | !reportErrors)
     method compileCall(position:Position, rawTarget:ASTNode,
             rawArgs:ImmutableArray<ASTNode>):IRNode? {
         def target := compileExpression(rawTarget)
@@ -4059,6 +4061,7 @@ class Compiler {
         return call(IRNode.TYPE_REFERENCE(position, Type.RegularExpression()), args.finish())
     }
 
+    @post(@return != null | errorCount != 0 | !reportErrors)
     method compileExpression(e:ASTNode):IRNode? {
         match e {
             when ASTNode.AT_PRE(position, expr):
@@ -5009,6 +5012,7 @@ class Compiler {
         return IRNode.UNRESOLVED_LAMBDA(position, parameters.finish(), expr)
     }
 
+    @post(@return != null | errorCount != 0 | !reportErrors)
     method compileStatement(s:ASTNode):IRNode? {
         match s {
             when ASTNode.ASSERT(position, test, msg):
