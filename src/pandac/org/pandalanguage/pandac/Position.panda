@@ -1,7 +1,7 @@
 package org.pandalanguage.pandac
 
 @final
-class Position : Value {
+class Position : Value, Equatable<Position> {
     def line:Int
 
     def column:Int
@@ -15,6 +15,16 @@ class Position : Value {
         assert line != 0 & column != 0
         self.line := line
         self.column := column
+    }
+
+    @override
+    function =(other:Position):Bit {
+        return line = other.line & column = other.column
+    }
+
+    @override
+    function !=(other:Position):Bit { -- FIXME shouldn't need this definition
+        return line != other.line | column != other.column
     }
 
     @override

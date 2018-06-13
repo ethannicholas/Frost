@@ -51,7 +51,7 @@ class SymbolTable {
             }
         }
         compiler.error(s.position, "duplicate symbol '\{name}' (previous declaration was at " +
-                old.position)
+                old.position + ")")
     }
 
     @private

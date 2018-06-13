@@ -132,6 +132,8 @@ class Parser {
         }
     }
 
+    @pre(!inSpeculative)
+    @post(inSpeculative)
     method startSpeculative() {
         assert !inSpeculative
         inSpeculative := true
@@ -139,10 +141,14 @@ class Parser {
         speculativeBuffer.addAll(pushbackBuffer)
     }
 
+    @pre(inSpeculative)
+    @post(!inSpeculative)
     method accept() {
         inSpeculative := false
     }
 
+    @pre(inSpeculative)
+    @post(!inSpeculative)
     method rewind() {
         inSpeculative := false
         for i in speculativeBuffer.get_count() - 1 ... 0 by -1 {
@@ -795,7 +801,9 @@ class Parser {
                     return null
                 }
                 result := ASTNode.GENERIC_TYPE(start.position, finalName, children.finish())
-                accept()
+                if needSpeculativeParse {
+                    accept()
+                }
             }
         }
         if checkNext(Token.Kind.QUESTION) != null {
@@ -899,7 +907,8 @@ class Parser {
                             }
                             types.add(t)
                         }
-                        if expect(Token.Kind.GT, "'>'") = null {
+                        def gt := expect(Token.Kind.GT, "'>'")
+                        if gt = null {
                             rewind()
                             return result
                         }
@@ -924,14 +933,26 @@ class Parser {
                         -- in an expression list. If not, we know it's a type regardless of what
                         -- follows it, because there is no way it can resolve to multiple
                         -- expressions.
+                        --
+                        -- There is one remaining ambiguity: if the next token is a left
+                        -- parenthesis ('bar(X<Y, Z>(foo))'), either interpretation is valid . We
+                        -- resolve this (very rare) case using whitespace: if there is no space
+                        -- between the '>' and '(', we assume it is a type, otherwise we assume it
+                        -- is an operator.
                         def shouldAccept:Bit
                         if commaSeparatedExpressionContext[0] {
-                            match peek().kind {
-                                when Token.Kind.DOT, Token.Kind.LPAREN, Token.Kind.COMMA,
-                                        Token.Kind.CAST:
+                            def n := next()
+                            match n.kind {
+                                when Token.Kind.DOT, Token.Kind.COMMA, Token.Kind.CAST:
                                     shouldAccept := true
+                                when Token.Kind.LPAREN:
+                                    shouldAccept := n.position.line = gt.position.line &
+                                            n.position.column = gt.position.column + 1
                                 otherwise:
                                     shouldAccept := false
+                            }
+                            if shouldAccept {
+                                pushback(n)
                             }
                         }
                         else {

@@ -1,0 +1,27 @@
+class X<T, U> {
+    def o:Object
+
+    init(o:Object) {
+        self.o := o
+    }
+
+    @override
+    function convert():String {
+        return "X(\{o})"
+    }
+}
+
+class Y {
+}
+
+method print(a:Object, b:Object) {
+    Console.printLine("\{a}, \{b}")
+}
+
+method main() {
+    var x := 1
+    var y := 2
+
+    print(x < y, y > (x))
+    Console.printLine(X < Y, Y >(x))
+}

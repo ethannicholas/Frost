@@ -983,7 +983,8 @@ class Compiler {
             when Type.Kind.IMMUTABLE_METHOD, Type.Kind.IMMUTABLE_FUNCTION:
                 return getClass(Type.Method())
             otherwise:
-                assert false, "type '\{type}' is not a class"
+                error(type.position, "type '\{type}' is not a class")
+                return null
         }
         if result != null & result.annotations.isSpecialize() {
             result := specialize(result, type)
@@ -1274,7 +1275,13 @@ class Compiler {
                     return result
                 }
                 else {
-                    def finalTarget := compileSelf(position, false)
+                    def finalTarget:IRNode?
+                    if !f.annotations.isClass() {
+                        finalTarget := compileSelf(position, false)
+                    }
+                    else {
+                        finalTarget := null
+                    }
                     return IRNode.FIELD_REFERENCE(position, f.type, finalTarget, f)
                 }
             when Symbol.Kind.CHOICE_ENTRY:
@@ -2537,14 +2544,15 @@ class Compiler {
             }
         }
         else if m.value.isInstance() & (target = null | target = IRNode.TYPE_REFERENCE) {
-            if !currentMethod[0].isInstance() & target = null {
+            if !currentMethod[0].isInstance() & (target = null | target = IRNode.TYPE_REFERENCE) {
                 error(position, "cannot call instance \{m.value.declaration()} from a @class " +
                         "context")
                 return null
             }
             var selfNode := IRNode.SELF(position, currentClass[0].type())
             selfNode := coerce(selfNode, m.value.owner.type())
-            assert selfNode != null
+            assert selfNode != null, "could not coerce self(\{currentClass[0].type()}) to " +
+                    m.value.owner.type()
             finalArgs.add(selfNode)
         }
         else if !m.value.isInstance() & target != null & target != IRNode.TYPE_REFERENCE {
@@ -3804,6 +3812,7 @@ class Compiler {
     method compileSelf(position:Position, explicit:Bit):IRNode? {
         if currentMethod[0].annotations.isClass() {
             error(position, "cannot reference 'self' from a @class method")
+            System.crash()
             return null
         }
         def type:Type

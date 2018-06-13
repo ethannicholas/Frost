@@ -1,0 +1,2 @@
+class GenericDuplicateParameters<A, B, B, C> {
+}

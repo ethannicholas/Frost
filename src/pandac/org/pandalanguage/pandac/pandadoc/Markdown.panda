@@ -1,5 +1,8 @@
 package org.pandalanguage.pandac.pandadoc
 
+uses org.pandalanguage.pandac.Compiler
+uses org.pandalanguage.pandac.parser.Parser
+
 -- Port of markdownj (https://github.com/myabc/markdownj) with some fixes and enhancements. As this
 -- is a port of Java code which is in turn a port of Perl code, this isn't especially idiomatic
 -- Panda code.
@@ -88,6 +91,12 @@ class Markdown {
 
     constant TAB_WIDTH := 4
 
+    def source:File
+
+    def errorQueue := MessageQueue<Compiler.Error>()
+
+    def parser := Parser(errorQueue)
+
     @private
     def linkResolver:(String)=>(String)?
 
@@ -105,10 +114,8 @@ class Markdown {
     @private
     var listLevel := 0
 
-    init() {
-    }
-
-    init(linkResolver:(String)=>(String)?) {
+    init(source:File, linkResolver:(String)=>(String)?) {
+        self.source := source
         self.linkResolver := linkResolver
     }
 
@@ -487,6 +494,31 @@ class Markdown {
         markup.replace(p, CodeReplacer(self).replacement)
     }
 
+    method syntaxHighlight(ed:MutableString) {
+        parser.start(source, ed.convert())
+        def file := parser.file()
+        if file != null {
+            Console.printLine("got file: \{file}")
+        }
+        else {
+            parser.start(source, ed.convert())
+            def stmt := parser.statement()
+            if stmt != null {
+                Console.printLine("got statement: \{stmt}")
+            }
+            else {
+                parser.start(source, ed.convert())
+                def expr := parser.expression()
+                if expr != null {
+                    Console.printLine("got expression: \{expr}")
+                }
+                else {
+                    Console.printLine("no good")
+                }
+            }
+        }
+    }
+
     method encodeCode(ed:MutableString) {
         ed.replace("&", "&amp;")
         ed.replace("<", "&lt;")
@@ -496,6 +528,7 @@ class Markdown {
         ed.replace("\\[", charProtector.encode("["))
         ed.replace("\\]", charProtector.encode("]"))
         ed.replace("\\\\", charProtector.encode("\\"))
+        syntaxHighlight(ed)
     }
 
     method doLists(text:MutableString) {

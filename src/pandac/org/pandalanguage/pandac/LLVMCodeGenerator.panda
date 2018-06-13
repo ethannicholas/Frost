@@ -2271,6 +2271,11 @@ class LLVMCodeGenerator : CodeGenerator {
         return result
     }
 
+    method getTypeReference(type:Type, out:OutputStream):String {
+        def cc := getClassConstant(compiler.getClass(type))
+        return "bitcast(\{cc.type}* \{cc.name} to %panda$core$Class*)"
+    }
+
     @pre(expr.type() != Type.Void())
     @post(extraEffects.get_count() = @pre(extraEffects.get_count()))
     method getReference(expr:IRNode, out:OutputStream):String {
@@ -2331,6 +2336,8 @@ class LLVMCodeGenerator : CodeGenerator {
                 return getVariableCaptureReference(name, out)
             when IRNode.VARIABLE_REFERENCE(_, variable):
                 return getVariableReference(variable, out)
+            when IRNode.TYPE_REFERENCE(_, type):
+                return getTypeReference(type, out)
             otherwise:
                 assert false, "unsupported expression \{expr}(\{expr.$rawValue}):\{expr.position()}"
         }

@@ -123,9 +123,11 @@ class ClassDecl {
         self.parameters := parameters
         self.symbolTable := SymbolTable(parent)
         self.resolved := Compiler.Resolution.UNRESOLVED
+        symbolTable.compiler.currentClass.push(self)
         for p in parameters {
             symbolTable.add(p)
         }
+        symbolTable.compiler.currentClass.pop(self)
     }
 
     function simpleName():String {

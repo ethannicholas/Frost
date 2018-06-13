@@ -2,7 +2,7 @@ package panda.core
 
 class Object {
     function convert():String {
-        return "<object>"
+        return "<\{$class.name}>"
     }
 
     @protected

@@ -16,6 +16,8 @@ can that don't rely on dataflow
 
 Bugs:
 
+need to handle pre/postconditions inherited from multiple sources (remember that multiple interfaces
+can define the same method with different contracts)
 change def current := compiler.currentMethod[0] for i in 0 .. current.parameters.get_count() in
     LLVMCodeGenerator to just for i in 0 .. compiler.currentMethod[0].parameters.get_count() and we
     leak memory

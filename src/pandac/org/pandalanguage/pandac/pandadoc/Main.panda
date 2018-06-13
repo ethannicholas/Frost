@@ -1,5 +1,7 @@
 package org.pandalanguage.pandac.pandadoc
 
+uses org.pandalanguage.pandac.pandadoc.Markdown -- FIXME this shouldn't be necessary
+
 constant HEADER :=
     "<html>" +
     "  <head>\n" +
@@ -13,7 +15,9 @@ constant FOOTER :=
     "</html>"
 
 method main(args:ListView<String>) {
-    File(args[2]).write(HEADER +
-            Markdown(null).process(File(args[1]).readFully()) +
+    def input := File(args[1])
+    def output := File(args[2])
+    output.write(HEADER +
+            Markdown(input, null).process(input.readFully()) +
             FOOTER)
 }
