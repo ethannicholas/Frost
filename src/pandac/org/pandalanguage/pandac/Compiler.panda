@@ -265,7 +265,6 @@ class Compiler {
     Attempts to locate a class with the given, possibly not-fully-qualified, class name. Returns
     null and does not report any errors on failure.
     ================================================================================================
-    @post(currentClass[0] = @pre(currentClass[0]) & currentMethod[0] = @pre(currentMethod[0]))
     method tryResolveClass(name:String):ClassDecl? {
         def current:ClassDecl?
         if currentClass.get_count() > 0 {
@@ -461,7 +460,6 @@ class Compiler {
         }
     }
 
-    @post(currentClass[0] = @pre(currentClass[0]) & currentMethod[0] = @pre(currentMethod[0]))
     method resolve(cl:ClassDecl) {
         if cl.resolved != Resolution.UNRESOLVED {
             return
@@ -552,7 +550,6 @@ class Compiler {
         currentClass.pop()
     }
 
-    @post(currentClass[0] = @pre(currentClass[0]) & currentMethod[0] = @pre(currentMethod[0]))
     method resolve(m:MethodDecl) {
         if m.resolved != Resolution.UNRESOLVED {
             return
@@ -606,7 +603,7 @@ class Compiler {
         currentClass.pop()
     }
 
-    @post(currentClass[0] = @pre(currentClass[0]) & currentMethod[0] = @pre(currentMethod[0]))
+    @post(currentClass[0] == @pre(currentClass[0]) & currentMethod[0] == @pre(currentMethod[0]))
     method determineRawType(f:FieldDecl) {
         currentClass.push(f.owner)
         def old := symbolTable
@@ -684,7 +681,6 @@ class Compiler {
         }
     }
 
-    @post(currentClass[0] = @pre(currentClass[0]) & currentMethod[0] = @pre(currentMethod[0]))
     method resolve(c:ChoiceEntry) {
         if c.resolved != Resolution.UNRESOLVED {
             return
@@ -906,7 +902,6 @@ class Compiler {
         return result
     }
 
-    @post(currentClass[0] = @pre(currentClass[0]) & currentMethod[0] = @pre(currentMethod[0]))
     method specialize(cl:ClassDecl, rawType:Type):ClassDecl {
         resolve(cl)
         def type := resolve(rawType)
@@ -1138,7 +1133,6 @@ class Compiler {
         return cl.symbolTable
     }
 
-    @post(currentClass[0] = @pre(currentClass[0]) & currentMethod[0] = @pre(currentMethod[0]))
     method getVTable(cl:ClassDecl):ListView<MethodDecl> {
         if cl.virtualMethods.get_count() = 0 {
             resolve(cl)
@@ -2170,8 +2164,8 @@ class Compiler {
     }
 
     @post(@return = null | @return.type() = target &
-            currentClass[0] = @pre(currentClass[0]) &
-            currentMethod[0] = @pre(currentMethod[0]))
+            currentClass[0] == @pre(currentClass[0]) &
+            currentMethod[0] == @pre(currentMethod[0]))
     method methodCast(node:IRNode, target:Type):IRNode? {
         if target.typeKind = Type.Kind.NULLABLE {
             return coerce(methodCast(node, target.nonnullable()), target)
@@ -3905,7 +3899,7 @@ class Compiler {
             return null
         }
         def flag := AutoAtPreFlag(self)
-        def compiled := compileExpression(expr)
+        def compiled := resolve(compileExpression(expr))
         if compiled = null {
             return null
         }
@@ -4072,6 +4066,14 @@ class Compiler {
 
     @post(@return != null | errorCount != 0 | !reportErrors)
     method compileExpression(e:ASTNode):IRNode? {
+        def result := doCompileExpression(e)
+        if result = null & errorCount = 0 & reportErrors {
+            Console.printLine("ERROR: \{e}")
+        }
+        return result
+    }
+
+    method doCompileExpression(e:ASTNode):IRNode? {
         match e {
             when ASTNode.AT_PRE(position, expr):
                 return compileAtPre(position, expr)
@@ -5234,8 +5236,8 @@ class Compiler {
     }
 
     @post(symbolTable == @pre(symbolTable) &
-            currentClass[0] == @pre(currentClass[0]) &
-            currentMethod[0] = @pre(currentMethod[0]))
+            currentClass.get_count() = @pre(currentClass.get_count()) &
+            currentMethod.get_count() = @pre(currentMethod.get_count()))
     method compileBody(m:MethodDecl, enclosingContext:SymbolTable?):ImmutableArray<IRNode>? {
         if m.compiledBody != null {
             return m.compiledBody
@@ -5438,7 +5440,7 @@ class Compiler {
         compile(m, null)
     }
 
-    @pre(currentClass[0] == m.owner)
+--    @pre(currentClass[0] == m.owner)
     method compile(m:MethodDecl, enclosingContext:SymbolTable?):ImmutableArray<IRNode>? {
         checkAnnotations(m)
         if m.owner.classKind = ClassDecl.Kind.CHOICE & m.name = "cleanup" {

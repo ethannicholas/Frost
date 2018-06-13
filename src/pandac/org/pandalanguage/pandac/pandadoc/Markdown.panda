@@ -495,7 +495,7 @@ class Markdown {
     }
 
     method syntaxHighlight(ed:MutableString) {
-        parser.start(source, ed.convert())
+-*        parser.start(source, ed.convert())
         def file := parser.file()
         if file != null {
             Console.printLine("got file: \{file}")
@@ -516,7 +516,7 @@ class Markdown {
                     Console.printLine("no good")
                 }
             }
-        }
+        }*-
     }
 
     method encodeCode(ed:MutableString) {

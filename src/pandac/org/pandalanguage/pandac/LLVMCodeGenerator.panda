@@ -355,7 +355,7 @@ class LLVMCodeGenerator : CodeGenerator {
         return result
     }
 
-    @post(compiler.currentClass[0] = @pre(compiler.currentClass[0]))
+    --@post(compiler.currentClass[0] == @pre(compiler.currentClass[0]))
     method writeType(t:Type) {
         if writtenTypes.contains(t.name) {
             return

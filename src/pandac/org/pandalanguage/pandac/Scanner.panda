@@ -224,6 +224,10 @@ class Scanner {
         match node {
             when ASTNode.ASSERT(_, test, _):
                 return complexity(test)
+            when ASTNode.AT_PRE:
+                return 0
+            when ASTNode.AT_RETURN:
+                return 0
             when ASTNode.BINARY(_, left, _, right):
                 return 1 + complexity(left) + complexity(right)
             when ASTNode.BIT:

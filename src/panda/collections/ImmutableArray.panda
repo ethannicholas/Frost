@@ -56,7 +56,7 @@ class ImmutableArray<T> : Immutable, ListView<T> {
     @override
     method cleanup() {
         for i in 0 .. count {
-            data[i] := null->T? -- FIXME this should be automatic
+            data[i] := null
         }
         data.destroy()
     }

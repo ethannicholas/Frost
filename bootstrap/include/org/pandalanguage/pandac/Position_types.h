@@ -10,7 +10,7 @@ typedef struct org$pandalanguage$pandac$Position {
     panda$core$Int64 column;
 } org$pandalanguage$pandac$Position;
 #include "panda/core/Class.h"
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[2]; } org$pandalanguage$pandac$Position$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[5]; } org$pandalanguage$pandac$Position$class_type;
 extern org$pandalanguage$pandac$Position$class_type org$pandalanguage$pandac$Position$class;
 typedef struct org$pandalanguage$pandac$Position$wrapper {
     panda$core$Class* cl;

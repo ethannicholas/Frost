@@ -6,7 +6,7 @@ interface CollectionView<T> : Iterable<T> {
     function get_count():Int
 
     @pre(get_count() > 0)
-    function fold(f:(T, T)=>(T)):T { -- FIXME (T, U)=>(U) when generics are in
+    function fold(f:(T, T)=>(T)):T {
         def i := iterator()
         var result := i.next()
         while !i.get_done() {
@@ -15,7 +15,7 @@ interface CollectionView<T> : Iterable<T> {
         return result
     }
 
-    function fold(f:(T, T)=>(T), start:T):T { -- FIXME (T, U)=>(U) when generics are in
+    function fold(f:(T, T)=>(T), start:T):T {
         var result := start
         for v in self {
             result := f(result, v)

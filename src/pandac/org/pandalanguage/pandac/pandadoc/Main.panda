@@ -1,7 +1,5 @@
 package org.pandalanguage.pandac.pandadoc
 
-uses org.pandalanguage.pandac.pandadoc.Markdown -- FIXME this shouldn't be necessary
-
 constant HEADER :=
     "<html>" +
     "  <head>\n" +
