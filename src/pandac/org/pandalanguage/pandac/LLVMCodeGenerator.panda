@@ -3551,9 +3551,10 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    @pre(compiler.currentClass[0] == compiler.currentMethod[0].owner)
+--    @pre(compiler.currentClass[0] == compiler.currentMethod[0].owner)
     @post(extraEffects.get_count() = @pre(extraEffects.get_count()))
     method writeStatement(stmt:IRNode, out:OutputStream) {
+        assert compiler.currentClass[0] == compiler.currentMethod[0].owner, "writing \{stmt} from \{compiler.currentMethod[0].declaration()} while in \{compiler.currentClass[0].name}"
         extraEffects.push(Array<ExtraEffect>())
         match stmt {
             when IRNode.BINARY(_, _, left, op, right):
