@@ -10,6 +10,27 @@ uses org.pandalanguage.regex.RegexParser
 
 @final
 class Parser {
+    class AutoSyntaxHighlight {
+        def parser:Parser
+
+        def kind:SyntaxHighlighter.Kind
+
+        init(parser:Parser, kind:SyntaxHighlighter.Kind) {
+            self.parser := parser
+            self.kind := kind
+            if parser.syntaxHighlighter != null {
+                parser.syntaxHighlighter.open(kind)
+            }
+        }
+
+        @override
+        method cleanup() {
+            if parser.syntaxHighlighter != null {
+                parser.syntaxHighlighter.close(kind)
+            }
+        }
+    }
+
     def lexer := Lexer()
 
     def regexParser:RegexParser
@@ -32,6 +53,8 @@ class Parser {
 
     var reportErrors := true
 
+    var syntaxHighlighter:SyntaxHighlighter?
+
     init(errors:MessageQueue<Compiler.Error>) {
         self.errors := errors
         commaSeparatedExpressionContext.push(false)
@@ -45,6 +68,9 @@ class Parser {
         self.source := source
         pushbackBuffer.clear()
         regexParser.start(path, source)
+        if syntaxHighlighter != null {
+            syntaxHighlighter.reset()
+        }
     }
 
     method rawNext():Token {
@@ -52,9 +78,15 @@ class Parser {
             def idx := pushbackBuffer.get_count() - 1
             def result := pushbackBuffer[idx]
             pushbackBuffer.removeIndex(idx)
+            if syntaxHighlighter != null {
+                syntaxHighlighter.add(text(result), result.kind)
+            }
             return result
         }
         def result := lexer.next()
+        if syntaxHighlighter != null {
+            syntaxHighlighter.add(text(result), result.kind)
+        }
         if inSpeculative {
             speculativeBuffer.add(result)
         }
@@ -68,27 +100,29 @@ class Parser {
                 when Token.Kind.WHITESPACE:
                     continue
                 when Token.Kind.LINE_COMMENT:
+                    def auto := AutoSyntaxHighlight(self, SyntaxHighlighter.Kind.COMMENT)
                     loop {
-                        def next := rawNext()
-                        match next.kind {
+                        def t := rawNext()
+                        match t.kind {
                             when Token.Kind.WHITESPACE:
-                                if text(next).contains("\n") {
-                                    continue outer
+                                if text(t).contains("\n") {
+                                    break
                                 }
                             when Token.Kind.EOF:
-                                return next
+                                return t
                         }
                     }
                 when Token.Kind.BLOCK_COMMENT_START:
+                    def auto := AutoSyntaxHighlight(self, SyntaxHighlighter.Kind.COMMENT)
                     loop {
-                        def next := next()
-                        match next.kind {
+                        def t := next()
+                        match t.kind {
                             when Token.Kind.BLOCK_COMMENT_END:
-                                continue outer
+                                break
                             when Token.Kind.EOF:
                                 error(result, "unterminated comment")
                                 reportErrors := false
-                                return next
+                                return t
                         }
                     }
                 otherwise:
@@ -98,6 +132,13 @@ class Parser {
     }
 
     method pushback(token:Token) {
+        if syntaxHighlighter != null {
+            while syntaxHighlighter.tokens[syntaxHighlighter.tokens.get_count() - 1].text !=
+                    text(token) {
+                syntaxHighlighter.rewind()
+            }
+            syntaxHighlighter.rewind()
+        }
         pushbackBuffer.add(token)
     }
 
@@ -129,6 +170,18 @@ class Parser {
     method error(token:Token, msg:String) {
         if !inSpeculative & reportErrors {
             errors.post(Compiler.Error(path, token.position, msg))
+        }
+    }
+
+    method open(kind:SyntaxHighlighter.Kind) {
+        if syntaxHighlighter != null {
+            syntaxHighlighter.open(kind)
+        }
+    }
+
+    method close(kind:SyntaxHighlighter.Kind) {
+        if syntaxHighlighter != null {
+            syntaxHighlighter.close(kind)
         }
     }
 
@@ -271,6 +324,7 @@ class Parser {
 
     @post(allowLambdas = @pre(allowLambdas))
     method string():ASTNode? {
+        def auto := AutoSyntaxHighlight(self, SyntaxHighlighter.Kind.STRING)
         def start := next()
         if start.kind != Token.Kind.DOUBLE_QUOTE & start.kind != Token.Kind.SINGLE_QUOTE {
             error(start, "expected a string, but found '\{text(start)}'")
@@ -1999,11 +2053,11 @@ class Parser {
         return result.finish()
     }
 
-    method doccomment():ASTNode? {
-        def start := expect(Token.Kind.DOC_COMMENT, "a documentation comment")
-        if start = null {
-            return null
-        }
+     method doccomment():ASTNode? {
+         def start := expect(Token.Kind.DOC_COMMENT, "a documentation comment")
+         if start = null {
+             return null
+         }
         def result := MutableString()
         loop {
             def next := rawNext()
@@ -2023,7 +2077,9 @@ class Parser {
     parameter = IDENTIFIER typeDeclaration
     ================================================================================================
     method parameter():ASTNode? {
+        open(SyntaxHighlighter.Kind.METHOD_PARAMETER)
         def id := expect(Token.Kind.IDENTIFIER, "an identifier")
+        close(SyntaxHighlighter.Kind.METHOD_PARAMETER)
         if id = null {
             return null
         }
@@ -2080,7 +2136,9 @@ class Parser {
         else {
             kind := MethodDecl.Kind.FUNCTION
         }
+        open(SyntaxHighlighter.Kind.METHOD_NAME)
         def name := methodName()
+        close(SyntaxHighlighter.Kind.METHOD_NAME)
         if name = null {
             return null
         }

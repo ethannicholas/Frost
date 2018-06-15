@@ -57,19 +57,12 @@ a:hover {
     cursor: pointer;
 }
 
-.pandacode {
-    display: inline-block;
-    margin-top: -3pt;
-    margin-left: 6pt;
-    margin-right: 30pt;
-}
-
 pre {
     display:inline-block;
     font-family: monospace;
     background-color: #272822;
     color: #F8F8F2;
-    border: solid #707070 1px;
+    border: solid #404040 1px;
     border-radius: 4pt;
     padding: 8pt;
     margin-top: -3pt;

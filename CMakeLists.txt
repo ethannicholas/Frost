@@ -198,6 +198,7 @@ add_executable(bootstrap
     bootstrap/src/org/pandalanguage/pandac/ClassDecl/Resolution.c
     bootstrap/src/org/pandalanguage/pandac/CodeGenerator.c
     bootstrap/src/org/pandalanguage/pandac/Compiler.c
+    bootstrap/src/org/pandalanguage/pandac/Compiler/_Closure1.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/AutoAtPreFlag.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/AutoSymbolTable.c
     bootstrap/src/org/pandalanguage/pandac/Compiler/CompileTargetResult.c
@@ -234,7 +235,11 @@ add_executable(bootstrap
     bootstrap/src/org/pandalanguage/pandac/Variable/Kind.c
     bootstrap/src/org/pandalanguage/pandac/Variable/Storage.c
     bootstrap/src/org/pandalanguage/pandac/parser/Parser.c
+    bootstrap/src/org/pandalanguage/pandac/parser/Parser/AutoSyntaxHighlight.c
     bootstrap/src/org/pandalanguage/pandac/parser/Lexer.c
+    bootstrap/src/org/pandalanguage/pandac/parser/SyntaxHighlighter.c
+    bootstrap/src/org/pandalanguage/pandac/parser/SyntaxHighlighter/Kind.c
+    bootstrap/src/org/pandalanguage/pandac/parser/SyntaxHighlighter/SyntaxToken.c
     bootstrap/src/org/pandalanguage/pandac/parser/Token.c
     bootstrap/src/org/pandalanguage/pandac/parser/Token/Kind.c
     bootstrap/src/org/pandalanguage/plex/runtime/DFA.c
@@ -566,6 +571,7 @@ set(pandac_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/Type.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/Variable.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/parser/Parser.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/parser/SyntaxHighlighter.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/regex/RegexParser.panda
 )
 

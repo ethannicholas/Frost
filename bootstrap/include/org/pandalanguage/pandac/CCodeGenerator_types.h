@@ -49,6 +49,6 @@ typedef struct org$pandalanguage$pandac$CCodeGenerator {
     panda$collections$IdentityMap* methodShims;
 } org$pandalanguage$pandac$CCodeGenerator;
 #include "panda/core/Class.h"
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[101]; } org$pandalanguage$pandac$CCodeGenerator$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[102]; } org$pandalanguage$pandac$CCodeGenerator$class_type;
 extern org$pandalanguage$pandac$CCodeGenerator$class_type org$pandalanguage$pandac$CCodeGenerator$class;
 

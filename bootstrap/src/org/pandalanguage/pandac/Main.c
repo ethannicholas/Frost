@@ -1587,7 +1587,7 @@ void org$pandalanguage$pandac$Main$run$panda$collections$ListView$LTpanda$core$S
                 errorQueue567 = $tmp568;
                 panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp568));
                 panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp569));
-                org$pandalanguage$pandac$Compiler* $tmp574 = (org$pandalanguage$pandac$Compiler*) pandaObjectAlloc(208, (panda$core$Class*) &org$pandalanguage$pandac$Compiler$class);
+                org$pandalanguage$pandac$Compiler* $tmp574 = (org$pandalanguage$pandac$Compiler*) pandaObjectAlloc(224, (panda$core$Class*) &org$pandalanguage$pandac$Compiler$class);
                 org$pandalanguage$pandac$Compiler$init$panda$threads$MessageQueue$LTorg$pandalanguage$pandac$Compiler$Error$GT$org$pandalanguage$pandac$CodeGenerator$org$pandalanguage$pandac$Compiler$Settings($tmp574, errorQueue567, cg522, settings563);
                 $tmp573 = $tmp574;
                 $tmp572 = $tmp573;

@@ -80,10 +80,10 @@ typedef panda$core$Bit (*$fn939)(panda$collections$Iterator*);
 typedef panda$core$Object* (*$fn950)(panda$collections$Iterator*);
 typedef void (*$fn974)(panda$io$OutputStream*, panda$core$String*);
 typedef void (*$fn981)(panda$io$OutputStream*, panda$core$String*);
-typedef void (*$fn985)(panda$io$OutputStream*, panda$core$String*);
 typedef void (*$fn988)(panda$io$OutputStream*, panda$core$String*);
 typedef void (*$fn991)(panda$io$OutputStream*, panda$core$String*);
 typedef void (*$fn994)(panda$io$OutputStream*, panda$core$String*);
+typedef void (*$fn997)(panda$io$OutputStream*, panda$core$String*);
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x48\x43\x6f\x64\x65\x47\x65\x6e\x65\x72\x61\x74\x6f\x72", 39, 1240305825190866532, NULL };
 static panda$core$String $s34 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
@@ -208,6 +208,7 @@ static panda$core$String $s967 = { (panda$core$Class*) &panda$core$String$class,
 static panda$core$String $s972 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
 static panda$core$String $s977 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2c\x20", 2, 14677, NULL };
 static panda$core$String $s980 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x29\x3b", 2, 14401, NULL };
+static panda$core$String $s985 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x48\x43\x6f\x64\x65\x47\x65\x6e\x65\x72\x61\x74\x6f\x72\x2e\x70\x61\x6e\x64\x61", 20, 1337001099935674209, NULL };
 
 void org$pandalanguage$pandac$HCodeGenerator$init$panda$io$File(org$pandalanguage$pandac$HCodeGenerator* self, panda$io$File* p_outDir) {
     panda$core$Weak* $tmp2;
@@ -2273,41 +2274,49 @@ void org$pandalanguage$pandac$HCodeGenerator$write$org$pandalanguage$pandac$Meth
     org$pandalanguage$pandac$HCodeGenerator$writeDeclaration$org$pandalanguage$pandac$MethodDecl(self, p_m);
 }
 void org$pandalanguage$pandac$HCodeGenerator$end$org$pandalanguage$pandac$ClassDecl(org$pandalanguage$pandac$HCodeGenerator* self, org$pandalanguage$pandac$ClassDecl* p_cl) {
-    panda$core$String* $tmp983;
     panda$core$String* $tmp986;
     panda$core$String* $tmp989;
     panda$core$String* $tmp992;
-    panda$core$String* $tmp984 = panda$io$MemoryOutputStream$finish$R$panda$core$String(self->typeImportStream);
-    $tmp983 = $tmp984;
-    (($fn985) ((panda$io$OutputStream*) self->typesOut)->$class->vtable[21])(((panda$io$OutputStream*) self->typesOut), $tmp983);
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp983));
-    panda$core$String* $tmp987 = panda$io$MemoryOutputStream$finish$R$panda$core$String(self->typesBuffer);
+    panda$core$String* $tmp995;
+    panda$core$Bit $tmp998;
+    if (self->inClass.value) goto $l983; else goto $l984;
+    $l984:;
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s985, (panda$core$Int64) { 294 });
+    abort();
+    $l983:;
+    panda$core$String* $tmp987 = panda$io$MemoryOutputStream$finish$R$panda$core$String(self->typeImportStream);
     $tmp986 = $tmp987;
     (($fn988) ((panda$io$OutputStream*) self->typesOut)->$class->vtable[21])(((panda$io$OutputStream*) self->typesOut), $tmp986);
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp986));
-    panda$core$String* $tmp990 = panda$io$MemoryOutputStream$finish$R$panda$core$String(self->bodyImportStream);
+    panda$core$String* $tmp990 = panda$io$MemoryOutputStream$finish$R$panda$core$String(self->typesBuffer);
     $tmp989 = $tmp990;
-    (($fn991) ((panda$io$OutputStream*) self->out)->$class->vtable[21])(((panda$io$OutputStream*) self->out), $tmp989);
+    (($fn991) ((panda$io$OutputStream*) self->typesOut)->$class->vtable[21])(((panda$io$OutputStream*) self->typesOut), $tmp989);
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp989));
-    panda$core$String* $tmp993 = panda$io$MemoryOutputStream$finish$R$panda$core$String(self->bodyBuffer);
+    panda$core$String* $tmp993 = panda$io$MemoryOutputStream$finish$R$panda$core$String(self->bodyImportStream);
     $tmp992 = $tmp993;
     (($fn994) ((panda$io$OutputStream*) self->out)->$class->vtable[21])(((panda$io$OutputStream*) self->out), $tmp992);
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp992));
+    panda$core$String* $tmp996 = panda$io$MemoryOutputStream$finish$R$panda$core$String(self->bodyBuffer);
+    $tmp995 = $tmp996;
+    (($fn997) ((panda$io$OutputStream*) self->out)->$class->vtable[21])(((panda$io$OutputStream*) self->out), $tmp995);
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp995));
+    panda$core$Bit$init$builtin_bit(&$tmp998, false);
+    self->inClass = $tmp998;
 }
 void org$pandalanguage$pandac$HCodeGenerator$finish(org$pandalanguage$pandac$HCodeGenerator* self) {
 }
 void org$pandalanguage$pandac$HCodeGenerator$cleanup(org$pandalanguage$pandac$HCodeGenerator* self) {
-    int $tmp997;
+    int $tmp1001;
     {
     }
-    $tmp997 = -1;
-    goto $l995;
-    $l995:;
+    $tmp1001 = -1;
+    goto $l999;
+    $l999:;
     panda$core$Object$cleanup(((panda$core$Object*) self));
-    switch ($tmp997) {
-        case -1: goto $l998;
+    switch ($tmp1001) {
+        case -1: goto $l1002;
     }
-    $l998:;
+    $l1002:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->compiler));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->typeImportStream));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->typesBuffer));

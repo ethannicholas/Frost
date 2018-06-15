@@ -31,7 +31,7 @@ Numeric Literals
 Unlike in many languages, there are no suffixes to specify the type of a numeric literal. The number
 `3` could be interpted as a signed integer, unsigned integer, or real number, depending on context.
 
-There must be at least one digit after a decimal point, so `3.` is not a valid number. Use `3.0`
+There must be at least one digit after a decimal point, so "`3.`" is not a valid number. Use `3.0`
 instead.
 
 Strings

@@ -291,10 +291,12 @@ class HCodeGenerator : CodeGenerator {
 
     @override
     method end(cl:ClassDecl) {
+        assert inClass
         typesOut.printLine(typeImportStream.finish())
         typesOut.printLine(typesBuffer.finish())
         out.printLine(bodyImportStream.finish())
         out.printLine(bodyBuffer.finish())
+        inClass := false
     }
 
     @override

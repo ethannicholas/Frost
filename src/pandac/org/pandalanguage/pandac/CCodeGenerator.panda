@@ -1104,6 +1104,15 @@ class CCodeGenerator : CodeGenerator {
         return getName(v)
     }
 
+    @pre(compiler.currentClass[0] == compiler.currentMethod[0].owner)
+    method getVariableCaptureReference(name:String, out:IndentedOutputStream):String {
+        def cl := compiler.currentClass[0]
+        def f := compiler.getSymbolTable(cl)[name]
+        assert f != null & f.kind = Symbol.Kind.FIELD,
+                "did not find expected field \{name} in \{cl} (writing \{compiler.currentMethod[0]})"
+        return getFieldReference(IRNode.SELF(cl.position, cl.type()), f->FieldDecl, out)
+    }
+
     method getStringReference(s:String):String {
         varCount += 1
         def result := "$s\{varCount}"
@@ -1357,6 +1366,8 @@ class CCodeGenerator : CodeGenerator {
                 return getBitReference(value, out)
             when IRNode.CONSTRUCT(_, type, initCall):
                 return getConstructReference(type, initCall, out)
+            when IRNode.VARIABLE_CAPTURE(_, name, _):
+                return getVariableCaptureReference(name, out)
             when IRNode.VARIABLE_REFERENCE(_, variable):
                 return getVariableReference(variable, out)
             when IRNode.FIELD_REFERENCE(_, _, base, field):

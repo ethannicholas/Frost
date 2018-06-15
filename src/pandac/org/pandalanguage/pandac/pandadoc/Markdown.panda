@@ -2,6 +2,8 @@ package org.pandalanguage.pandac.pandadoc
 
 uses org.pandalanguage.pandac.Compiler
 uses org.pandalanguage.pandac.parser.Parser
+uses org.pandalanguage.pandac.parser.SyntaxHighlighter
+uses org.pandalanguage.pandac.parser.Token
 
 -- Port of markdownj (https://github.com/myabc/markdownj) with some fixes and enhancements. As this
 -- is a port of Java code which is in turn a port of Perl code, this isn't especially idiomatic
@@ -117,6 +119,7 @@ class Markdown {
     init(source:File, linkResolver:(String)=>(String)?) {
         self.source := source
         self.linkResolver := linkResolver
+        parser.syntaxHighlighter := SyntaxHighlighter()
     }
 
     method process(raw:String):String {
@@ -494,40 +497,92 @@ class Markdown {
         markup.replace(p, CodeReplacer(self).replacement)
     }
 
+    method prettyPrint(parser:Parser):String {
+        def result := MutableString("<span class=\"pandacode\">")
+        var current := SyntaxHighlighter.Kind.DEFAULT
+        for t in parser.syntaxHighlighter.tokens {
+            if t.syntaxKind != current & current != SyntaxHighlighter.Kind.DEFAULT {
+                result.append("</span>")
+            }
+            if t.syntaxKind != current {
+                current := t.syntaxKind
+                match t.syntaxKind {
+                    when SyntaxHighlighter.Kind.DEFAULT: {}
+                    when SyntaxHighlighter.Kind.COMMENT, SyntaxHighlighter.Kind.DOC_COMMENT:
+                        result.append("<span class=\"comment\">")
+                    when SyntaxHighlighter.Kind.ANNOTATION:
+                        result.append("<span class=\"annotation\">")
+                    when SyntaxHighlighter.Kind.METHOD_NAME:
+                        result.append("<span class=\"methodName\">")
+                    when SyntaxHighlighter.Kind.METHOD_PARAMETER:
+                        result.append("<span class=\"parameterName\">")
+                    when SyntaxHighlighter.Kind.TYPE:
+                        result.append("<span class=\"type\">")
+                    when SyntaxHighlighter.Kind.KEYWORD:
+                        result.append("<span class=\"keyword\">")
+                    when SyntaxHighlighter.Kind.CONTROL_KEYWORD:
+                        result.append("<span class=\"control\">")
+                    when SyntaxHighlighter.Kind.LITERAL:
+                        result.append("<span class=\"literal\">")
+                    when SyntaxHighlighter.Kind.STRING:
+                        result.append("<span class=\"string\">")
+                    when SyntaxHighlighter.Kind.OPERATOR:
+                        result.append("<span class=\"operator\">")
+                }
+            }
+            def s := MutableString(t.text)
+            s.replace("&", "&amp;")
+            s.replace("<", "&lt;")
+            s.replace(">", "&gt;")
+            s.replace("\\*", charProtector.encode("*"))
+            s.replace("_", charProtector.encode("_"))
+            s.replace("\\[", charProtector.encode("["))
+            s.replace("\\]", charProtector.encode("]"))
+            s.replace("\\\\", charProtector.encode("\\"))
+            result.append("<span class=\"\{t.tokenKind}\">")
+            result.append(s)
+            result.append("</span>")
+        }
+        if current != SyntaxHighlighter.Kind.DEFAULT {
+            result.append("</span>")
+        }
+        result.append("</span>")
+        return result.finish()
+    }
+
     method syntaxHighlight(ed:MutableString) {
--*        parser.start(source, ed.convert())
+        parser.start(source, ed.convert().trim())
         def file := parser.file()
         if file != null {
-            Console.printLine("got file: \{file}")
+            ed[..] := prettyPrint(parser)
         }
         else {
             parser.start(source, ed.convert())
             def stmt := parser.statement()
             if stmt != null {
-                Console.printLine("got statement: \{stmt}")
+                ed[..] := prettyPrint(parser)
             }
             else {
                 parser.start(source, ed.convert())
                 def expr := parser.expression()
                 if expr != null {
-                    Console.printLine("got expression: \{expr}")
+                    ed[..] := prettyPrint(parser)
                 }
                 else {
-                    Console.printLine("no good")
+                    parser.start(source, ed.convert())
+                    loop {
+                        def next := parser.next()
+                        if next.kind = Token.Kind.EOF {
+                            break
+                        }
+                    }
+                    ed[..] := prettyPrint(parser)
                 }
             }
-        }*-
+        }
     }
 
     method encodeCode(ed:MutableString) {
-        ed.replace("&", "&amp;")
-        ed.replace("<", "&lt;")
-        ed.replace(">", "&gt;")
-        ed.replace("\\*", charProtector.encode("*"))
-        ed.replace("_", charProtector.encode("_"))
-        ed.replace("\\[", charProtector.encode("["))
-        ed.replace("\\]", charProtector.encode("]"))
-        ed.replace("\\\\", charProtector.encode("\\"))
         syntaxHighlight(ed)
     }
 

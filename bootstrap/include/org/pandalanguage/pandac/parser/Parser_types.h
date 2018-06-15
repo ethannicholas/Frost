@@ -10,6 +10,7 @@ typedef struct panda$core$String panda$core$String;
 typedef struct panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT;
 typedef struct panda$collections$Stack panda$collections$Stack;
 #include "panda/core/Bit_types.h"
+typedef struct org$pandalanguage$pandac$parser$SyntaxHighlighter org$pandalanguage$pandac$parser$SyntaxHighlighter;
 
 typedef struct org$pandalanguage$pandac$parser$Parser {
     panda$core$Class* $class;
@@ -25,8 +26,9 @@ typedef struct org$pandalanguage$pandac$parser$Parser {
     panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT* speculativeBuffer;
     panda$core$Bit allowLambdas;
     panda$core$Bit reportErrors;
+    org$pandalanguage$pandac$parser$SyntaxHighlighter* syntaxHighlighter;
 } org$pandalanguage$pandac$parser$Parser;
 #include "panda/core/Class.h"
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[79]; } org$pandalanguage$pandac$parser$Parser$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[81]; } org$pandalanguage$pandac$parser$Parser$class_type;
 extern org$pandalanguage$pandac$parser$Parser$class_type org$pandalanguage$pandac$parser$Parser$class;
 

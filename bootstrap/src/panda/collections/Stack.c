@@ -103,7 +103,7 @@ void panda$collections$Stack$pop$panda$collections$Stack$T(panda$collections$Sta
     panda$core$Panda$unref$panda$core$Object($tmp33);
     if (((panda$core$Bit) { $tmp33 == p_expected }).value) goto $l36; else goto $l37;
     $l37:;
-    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s38, (panda$core$Int64) { 66 }, &$s39);
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s38, (panda$core$Int64) { 70 }, &$s39);
     abort();
     $l36:;
     panda$core$Object* $tmp41 = panda$collections$Stack$pop$R$panda$collections$Stack$T(self);
@@ -127,14 +127,14 @@ panda$core$Object* panda$collections$Stack$$IDX$panda$core$Int64$R$panda$collect
     panda$core$Bit $tmp48 = { $tmp42 };
     if ($tmp48.value) goto $l49; else goto $l50;
     $l50:;
-    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s51, (panda$core$Int64) { 75 }, &$s52);
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s51, (panda$core$Int64) { 79 }, &$s52);
     abort();
     $l49:;
     panda$core$Int64 $tmp53 = panda$collections$Array$get_count$R$panda$core$Int64(self->contents);
     panda$core$Bit $tmp54 = panda$core$Int64$$GT$panda$core$Int64$R$panda$core$Bit($tmp53, p_depth);
     if ($tmp54.value) goto $l55; else goto $l56;
     $l56:;
-    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s57, (panda$core$Int64) { 76 });
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s57, (panda$core$Int64) { 80 });
     abort();
     $l55:;
     panda$core$Int64$init$builtin_int64(&$tmp61, 1);

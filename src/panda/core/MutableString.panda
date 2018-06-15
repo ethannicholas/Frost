@@ -605,6 +605,7 @@ class MutableString {
 
     @private
     -- FIXME @self
+    @pre(maxLength > 0)
     method ensureCapacity(newSize:Int) {
         if maxLength >= newSize {
             return

@@ -9,4 +9,9 @@ class Pair<A, B> {
         self.first := first
         self.second := second
     }
+
+    @override
+    function convert():String {
+        return "(\{first}, \{second})"
+    }
 }

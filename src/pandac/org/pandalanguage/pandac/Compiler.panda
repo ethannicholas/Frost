@@ -139,6 +139,9 @@ class Compiler {
     var tmpCount := 0
 
     @private
+    var closureCount := 0
+
+    @private
     var reportErrors := true
 
     @private
@@ -159,6 +162,9 @@ class Compiler {
     @private
     -- MethodDecl is the method *containing* the closure, not the closure itself
     def captures := Stack<Pair<MethodDecl, Map<String, Variable>>>()
+
+    @private
+    def pendingClasses := Array<ClassDecl>()
 
     init(errorQueue:MessageQueue<Error>, codeGenerator:CodeGenerator, settings:Settings) {
         self.settings := settings
@@ -354,6 +360,7 @@ class Compiler {
         return true
     }
 
+    @post(@return = null | @return.resolved)
     method resolve(type:Type, checkParameters:Bit):Type? {
         if type.resolved {
             return type
@@ -473,6 +480,11 @@ class Compiler {
             if resolved != null {
                 p.bound := resolved
             }
+            else {
+                cl.resolved := Resolution.RESOLVED_WITH_ERRORS
+                currentClass.pop(cl)
+                return
+            }
         }
         def supertypes := HashSet<String>()
         for rawS in cl.declaredSupers {
@@ -502,6 +514,11 @@ class Compiler {
                         assert sClass.classKind = ClassDecl.Kind.INTERFACE
                         cl.rawInterfaces.add(s)
                     }
+                }
+                else {
+                    cl.resolved := Resolution.RESOLVED_WITH_ERRORS
+                    currentClass.pop(cl)
+                    return
                 }
             }
         }
@@ -654,7 +671,11 @@ class Compiler {
                     break
                 }
             }
-            assert firstInit != null, "class \{f.owner.name} has no init methods"
+            assert firstInit != null | errorCount > 0, "class \{f.owner.name} has no init methods"
+            if firstInit = null {
+                f.resolved := Resolution.RESOLVED_WITH_ERRORS
+                return
+            }
             currentMethod.push(firstInit)
             determineRawType(f)
             currentMethod.pop(firstInit)
@@ -2469,6 +2490,7 @@ class Compiler {
     match. Note that in the case of ambiguity, you will receive a non-`null` response even though an
     error has occurred.
     ================================================================================================
+    @pre(methods.get_count() > 0)
     method matchMethods(position:Position, methods:ListView<MethodRef>, args:ListView<IRNode>,
             expectedReturn:Type?, reportErrors:Bit):Pair<Int, ListView<MethodRef>>? {
         def result := Array<MethodRef>()
@@ -2737,19 +2759,17 @@ class Compiler {
             when IRNode.METHOD_REFERENCE(_, _, target, mref):
                 return call(m.position(), target, mref, args)
             when IRNode.UNRESOLVED_METHOD_REFERENCE(position, target, mrefs):
-                var isClass:Bit
+                def isClass:Bit
                 if target != null {
                     isClass := target = IRNode.TYPE_REFERENCE
                 }
                 else {
                     isClass := !currentMethod[0].isInstance()
                 }
-                -- FIXME use lambda to filter
-                def filtered := Array<MethodRef>()
-                for m in mrefs {
-                    if m.value.annotations.isClass() | !isClass {
-                        filtered.add(m)
-                    }
+                def filtered := mrefs.filter(m => m.value.annotations.isClass() | !isClass)
+                if filtered.get_count() = 0 {
+                    error(m.position(), "cannot call instance method from @class context")
+                    return null
                 }
                 def matchResult := matchMethods(position, filtered, args, expectedType, false)
                 if matchResult = null {
@@ -2798,6 +2818,10 @@ class Compiler {
                     finalArgs.add(arg)
                 }
                 def initMethod := ce.initMethod
+                assert initMethod != null | errorCount > 0
+                if initMethod = null {
+                    return null
+                }
                 def owner := IRNode.TYPE_REFERENCE(m.position(), ce.owner.type())
                 def initCall := call(m.position(),
                         IRNode.CONSTRUCTED_OBJECT(m.position(), ce.owner.type()),
@@ -3932,10 +3956,10 @@ class Compiler {
     method createClosureClass(m:MethodDecl, captures:ListView<Variable>):ClassDecl {
         def p := m.position
         m.annotations := Annotations(0)
-        tmpCount += 1
+        closureCount += 1
         def result := ClassDecl(currentClass[0].source, p, HashMap<String, String>(), null,
                 Annotations(Annotations.Flag.SYNTHETIC), ClassDecl.Kind.CLASS,
-                "\{currentClass[0].name}.$Closure\{tmpCount}", Array<Type>(),
+                "\{currentClass[0].name}._Closure\{closureCount}", Array<Type>(),
                 Array<ClassDecl.GenericParameter>(), root)
         result.external := false
 
@@ -4041,8 +4065,7 @@ class Compiler {
                 args.add(symbolRef(position, null, s, symbolTable))
             }
             captures.pop(currentCaptures)
-            compile(cl)
-            methodDecl.compiledBody := null
+            pendingClasses.add(cl)
             target := call(IRNode.TYPE_REFERENCE(position, cl.type()), args.finish())
         }
         else {
@@ -5272,6 +5295,7 @@ class Compiler {
             fieldInitializers := Array<IRNode>()
             for f in currentClass[0].fields {
                 resolve(f)
+                assert currentClass[0] == f.owner
                 if f.resolved = Resolution.RESOLVED & !f.annotations.isClass() & f.value != null {
                     def fieldRef := IRNode.FIELD_REFERENCE(m.position, f.type,
                             compileSelf(m.position, true), f)
@@ -5440,7 +5464,6 @@ class Compiler {
         compile(m, null)
     }
 
---    @pre(currentClass[0] == m.owner)
     method compile(m:MethodDecl, enclosingContext:SymbolTable?):ImmutableArray<IRNode>? {
         checkAnnotations(m)
         if m.owner.classKind = ClassDecl.Kind.CHOICE & m.name = "cleanup" {
@@ -5597,6 +5620,7 @@ class Compiler {
         checkAnnotations(cl)
         resolve(cl)
         if cl.resolved != Resolution.RESOLVED {
+            currentClass.pop()
             return
         }
         if cl.annotations.isSpecialize() {
@@ -5676,6 +5700,10 @@ class Compiler {
     }
 
     method finish() {
+        while pendingClasses.get_count() > 0 {
+            def cl := pendingClasses.removeIndex(pendingClasses.get_count() - 1)
+            compile(cl)
+        }
         codeGenerator.finish()
         for cl in classes.values() {
             for m in cl.methods {

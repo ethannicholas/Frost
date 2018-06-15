@@ -62,6 +62,10 @@ class Stack<T> : Iterable<T> {
     This will generate a safety violation if the stack was incorrectly modified in between the
     `push` and `pop`, because the `pop` will not result in the expected value.
     ================================================================================================
+    -- FIXME doesn't work with Values, which confused the hell out of me because I subconsciously
+    -- assumed I had used '=' for this comparison. This is absolutely more trouble than it's worth
+    -- unless I can fix that. Figure out a way to provide a different implementation for Equatable
+    -- types? Add -?> back and just live with the typecast? Just remove the method for now?
     @pre(self[0] == expected)
     method pop(expected:T) {
         pop()

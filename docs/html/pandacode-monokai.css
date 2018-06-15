@@ -2,11 +2,8 @@
         http://www.monokai.nl/blog/2006/07/15/textmate-color-theme/ */
 
 .pandacode {
-    padding: 10px;
     font-family: Menlo, Consolas, Andale Mono, sans-serif;
     font-size: 10pt;
-    white-space: pre;
-    background-color: #272822;
     color: #F8F8F2;
 }
 
@@ -20,10 +17,15 @@
     font-style: italic;
 }
 
-.pandacode .control, .pandacode .method, .pandacode .class, .pandacode .var, 
-        .pandacode .operator, .pandacode .NEW, .pandacode .DOT, 
-        .pandacode .ATRETURN, .pandacode .PACKAGE, .pandacode .assert {
+.pandacode .control, .pandacode .VAR, .pandacode .DEF, .pandacode .CONSTANT, .pandacode .PROPERTY,
+        .pandacode .AT_RETURN {
     color: #F92672;
+}
+
+.pandacode .PACKAGE, .pandacode .CLASS, .pandacode .CHOICE, .pandacode .INTERFACE,
+        .pandacode .FUNCTION, .pandacode .METHOD, .pandacode .INIT {
+    color: #30E1EF;
+    font-style: italic;
 }
 
 .pandacode .control {
