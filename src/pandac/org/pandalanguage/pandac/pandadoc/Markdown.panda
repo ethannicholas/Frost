@@ -543,11 +543,13 @@ class Markdown {
             s.replace("\\[", charProtector.encode("["))
             s.replace("\\]", charProtector.encode("]"))
             s.replace("\\\\", charProtector.encode("\\"))
-            if current != SyntaxHighlighter.Kind.COMMENT {
+            if current != SyntaxHighlighter.Kind.COMMENT &
+                    current != SyntaxHighlighter.Kind.DOC_COMMENT {
                 result.append("<span class=\"\{t.first.kind}\">")
             }
             result.append(s)
-            if current != SyntaxHighlighter.Kind.COMMENT {
+            if current != SyntaxHighlighter.Kind.COMMENT &
+                    current != SyntaxHighlighter.Kind.DOC_COMMENT {
                 result.append("</span>")
             }
         }
@@ -703,7 +705,7 @@ class Markdown {
         listLevel += 1
 
         -- Trim trailing blank lines:
-        def list := rawList.replace(/\\n{2,}\\z/, "\n")
+        def list := rawList.replace(/\n{2,}\z/, "\n")
 
         def p := RegularExpression("(\\n)?" +
                 "^([ \\t]*)([-+*]|\\d+[.])[ ]+" +

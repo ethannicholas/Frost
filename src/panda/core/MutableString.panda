@@ -405,7 +405,7 @@ class MutableString {
         while i != start() & self[i].isWhitespace() {
             i := previous(i)
         }
-        self[i..] := ""
+        self[next(i)..] := ""
     }
 
     -- FIXME @self

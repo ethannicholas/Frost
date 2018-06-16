@@ -29,9 +29,10 @@ Numeric Literals
     1e6
 
 Unlike in many languages, there are no suffixes to specify the type of a numeric literal. The number
-`3` could be interpted as a signed integer, unsigned integer, or real number, depending on context.
+`3` could be interpreted as a signed integer, unsigned integer, or real number, depending on
+context.
 
-There must be at least one digit after a decimal point, so "`3.`" is not a valid number. Use `3.0`
+There must be at least one digit after a decimal point, so "3." is not a valid number. Use `3.0`
 instead.
 
 Strings
@@ -371,9 +372,9 @@ be extracted using `match`:
 
     match expr {
         when NUMBER(value):
-            Console.printLine(value)
+            return value.convert()
         when ADD(left, right):
-            Console.printLine("\{left} + \{right}")
+            return "\{left} + \{right}"
         ...
     }
 
@@ -452,11 +453,14 @@ frequently used to tie operations to a particular scope, such as with [ScopedLoc
     {
         def auto := ScopedLock(lock)
         -- lock is now locked
+
         ...
-        -- 'auto' goes out of scope here; the lock is automatically unlocked at this point
+
+        -- 'auto' goes out of scope here; the lock is automatically unlocked
+        -- at this point
     }
 
-Panda provides [weak references](weakReferences.md) to help handle reference cycles.
+Panda provides [weak references](weakReferences.html) to help handle reference cycles.
 
 Main and Bare Code
 ------------------
