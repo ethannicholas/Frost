@@ -501,12 +501,12 @@ class Markdown {
         def result := MutableString("<span class=\"pandacode\">")
         var current := SyntaxHighlighter.Kind.DEFAULT
         for t in parser.syntaxHighlighter.tokens {
-            if t.syntaxKind != current & current != SyntaxHighlighter.Kind.DEFAULT {
+            if t.second != current & current != SyntaxHighlighter.Kind.DEFAULT {
                 result.append("</span>")
             }
-            if t.syntaxKind != current {
-                current := t.syntaxKind
-                match t.syntaxKind {
+            if t.second!= current {
+                current := t.second
+                match current {
                     when SyntaxHighlighter.Kind.DEFAULT: {}
                     when SyntaxHighlighter.Kind.COMMENT, SyntaxHighlighter.Kind.DOC_COMMENT:
                         result.append("<span class=\"comment\">")
@@ -528,9 +528,13 @@ class Markdown {
                         result.append("<span class=\"string\">")
                     when SyntaxHighlighter.Kind.OPERATOR:
                         result.append("<span class=\"operator\">")
+                    when SyntaxHighlighter.Kind.LABEL:
+                        result.append("<span class=\"label\">")
+                    otherwise:
+                        assert false
                 }
             }
-            def s := MutableString(t.text)
+            def s := MutableString(parser.text(t.first))
             s.replace("&", "&amp;")
             s.replace("<", "&lt;")
             s.replace(">", "&gt;")
@@ -539,9 +543,13 @@ class Markdown {
             s.replace("\\[", charProtector.encode("["))
             s.replace("\\]", charProtector.encode("]"))
             s.replace("\\\\", charProtector.encode("\\"))
-            result.append("<span class=\"\{t.tokenKind}\">")
+            if current != SyntaxHighlighter.Kind.COMMENT {
+                result.append("<span class=\"\{t.first.kind}\">")
+            }
             result.append(s)
-            result.append("</span>")
+            if current != SyntaxHighlighter.Kind.COMMENT {
+                result.append("</span>")
+            }
         }
         if current != SyntaxHighlighter.Kind.DEFAULT {
             result.append("</span>")
@@ -551,39 +559,52 @@ class Markdown {
     }
 
     method syntaxHighlight(ed:MutableString) {
-        parser.start(source, ed.convert().trim())
+        errorQueue.clear()
+        def text := ed.convert().trim()
+        parser.start(source, text)
         def file := parser.file()
-        if file != null {
+        if file != null & errorQueue.pendingMessages() = 0 {
             ed[..] := prettyPrint(parser)
+            return
         }
-        else {
-            parser.start(source, ed.convert())
-            def stmt := parser.statement()
-            if stmt != null {
-                ed[..] := prettyPrint(parser)
-            }
-            else {
-                parser.start(source, ed.convert())
-                def expr := parser.expression()
-                if expr != null {
-                    ed[..] := prettyPrint(parser)
-                }
-                else {
-                    parser.start(source, ed.convert())
-                    loop {
-                        def next := parser.next()
-                        if next.kind = Token.Kind.EOF {
-                            break
-                        }
-                    }
-                    ed[..] := prettyPrint(parser)
-                }
+
+        errorQueue.clear()
+        parser.start(source, text)
+        while parser.peek().kind != Token.Kind.EOF & errorQueue.pendingMessages() = 0 {
+            parser.statement()
+        }
+        if errorQueue.pendingMessages() = 0 {
+            ed[..] := prettyPrint(parser)
+            return
+        }
+
+        errorQueue.clear()
+        parser.start(source, text)
+        while parser.peek().kind != Token.Kind.EOF & errorQueue.pendingMessages() = 0 {
+            parser.expression()
+        }
+        if errorQueue.pendingMessages() = 0 {
+            ed[..] := prettyPrint(parser)
+            return
+        }
+
+        errorQueue.clear()
+        parser.start(source, text)
+        loop {
+            def next := parser.next()
+            if next.kind = Token.Kind.EOF {
+                break
             }
         }
+        ed[..] := prettyPrint(parser)
     }
 
     method encodeCode(ed:MutableString) {
+        -- we want to allow "..." on a line by itself, so turn it into an escaped comment to make it
+        -- through the parser
+        ed.replace(/(?m)$(\s*)\.\.\.(\s*)^/, "$1-*#...#*-$2")
         syntaxHighlight(ed)
+        ed.replace("-*#...#*-", "<span class=\"ellipsis\">...</span>")
     }
 
     method doLists(text:MutableString) {

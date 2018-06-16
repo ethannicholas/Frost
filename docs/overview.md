@@ -384,12 +384,12 @@ Annotations are special tokens beginning with `@` which appear before a class, f
 They provide instruction to the compiler about things like access control, safety checks, and so
 forth. The most common annotations you will see are:
 
-`@override`: method overrides an inherited method
-`@private`: only accessible within the file which contains it
-`@class`: method belongs to the class itself, as opposed to instances of the class
-`@final`: method may not be overridden or class may not be subclassed
-`@pre`: a precondition contract (see "Contracts" below)
-`@post`: a postcondition contract (see "Contracts" below)
+* `@override`: method overrides an inherited method
+* `@private`: only accessible within the file which contains it
+* `@class`: method belongs to the class itself, as opposed to instances of the class
+* `@final`: method may not be overridden or class may not be subclassed
+* `@pre`: a precondition contract (see "Contracts" below)
+* `@post`: a postcondition contract (see "Contracts" below)
 
 Contracts
 ---------
@@ -408,7 +408,7 @@ Postconditions may refer to the return value of the method as `@return`, and may
     }
 
 This remove method ensures that its `index` parameter is inside the valid range, and that running
-the method reduces the value of `count` by 1. These checks are similar to `assert`s, in that they
+the method reduces the value of `count` by `1`. These checks are similar to `assert`s, in that they
 are checked at runtime by default, but this checking can be disabled via a command-line option for
 performance reasons.
 
@@ -626,7 +626,7 @@ above like this:
         def add := Complex.+
         Console.printLine(add(Complex(3, 1), Complex(7, 2))) -- prints (10 + 3i)
         def add3 := Complex(3, 0).+
-        Console.printLine(add3(Complex(12, 2)) -- prints (15 + 2i)
+        Console.printLine(add3(Complex(12, 2))) -- prints (15 + 2i)
     }
 
 The first reference to `Complex.+` gives us a method reference which requires an extra parameter to

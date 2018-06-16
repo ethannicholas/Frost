@@ -3,6 +3,7 @@
 #include "CCodeGenerator_types.h"
 typedef struct org$pandalanguage$pandac$CCodeGenerator org$pandalanguage$pandac$CCodeGenerator;
 typedef struct panda$io$File panda$io$File;
+typedef struct org$pandalanguage$pandac$HCodeGenerator org$pandalanguage$pandac$HCodeGenerator;
 typedef struct panda$core$String panda$core$String;
 typedef struct org$pandalanguage$pandac$MethodDecl org$pandalanguage$pandac$MethodDecl;
 #include "panda/core/Int64_types.h"
@@ -29,6 +30,7 @@ typedef struct org$pandalanguage$pandac$CCodeGenerator$EnclosingContext org$pand
 #include "org/pandalanguage/pandac/Position_types.h"
 
 void org$pandalanguage$pandac$CCodeGenerator$init$panda$io$File(org$pandalanguage$pandac$CCodeGenerator* self, panda$io$File* p_outDir);
+void org$pandalanguage$pandac$CCodeGenerator$init$panda$io$File$org$pandalanguage$pandac$HCodeGenerator(org$pandalanguage$pandac$CCodeGenerator* self, panda$io$File* p_outDir, org$pandalanguage$pandac$HCodeGenerator* p_hCodeGen);
 panda$core$String* org$pandalanguage$pandac$CCodeGenerator$escapeName$panda$core$String$R$panda$core$String(org$pandalanguage$pandac$CCodeGenerator* self, panda$core$String* p_s);
 panda$core$String* org$pandalanguage$pandac$CCodeGenerator$getName$org$pandalanguage$pandac$MethodDecl$R$panda$core$String(org$pandalanguage$pandac$CCodeGenerator* self, org$pandalanguage$pandac$MethodDecl* p_m);
 panda$core$Int64 org$pandalanguage$pandac$CCodeGenerator$sizeOf$org$pandalanguage$pandac$Type$R$panda$core$Int64(org$pandalanguage$pandac$CCodeGenerator* self, org$pandalanguage$pandac$Type* p_t);

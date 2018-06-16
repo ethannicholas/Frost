@@ -14,7 +14,7 @@ org$pandalanguage$pandac$CCodeGenerator$ExtraEffect$class_type org$pandalanguage
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x43\x43\x6f\x64\x65\x47\x65\x6e\x65\x72\x61\x74\x6f\x72\x2e\x45\x78\x74\x72\x61\x45\x66\x66\x65\x63\x74", 51, 7840256694814311930, NULL };
 
 void org$pandalanguage$pandac$CCodeGenerator$ExtraEffect$cleanup(org$pandalanguage$pandac$CCodeGenerator$ExtraEffect* self) {
-    org$pandalanguage$pandac$CCodeGenerator$ExtraEffect* $match$195_58 = NULL;
+    org$pandalanguage$pandac$CCodeGenerator$ExtraEffect* $match$203_58 = NULL;
     org$pandalanguage$pandac$CCodeGenerator$ExtraEffect* $tmp9;
     panda$core$Int64 $tmp10;
     org$pandalanguage$pandac$IRNode* _f012 = NULL;
@@ -25,23 +25,23 @@ void org$pandalanguage$pandac$CCodeGenerator$ExtraEffect$cleanup(org$pandalangua
         int $tmp7;
         {
             $tmp9 = self;
-            $match$195_58 = $tmp9;
+            $match$203_58 = $tmp9;
             panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp9));
             panda$core$Int64$init$builtin_int64(&$tmp10, 0);
-            panda$core$Bit $tmp11 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$195_58->$rawValue, $tmp10);
+            panda$core$Bit $tmp11 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$203_58->$rawValue, $tmp10);
             if ($tmp11.value) {
             {
-                org$pandalanguage$pandac$IRNode** $tmp13 = ((org$pandalanguage$pandac$IRNode**) ((char*) $match$195_58->$data + 0));
+                org$pandalanguage$pandac$IRNode** $tmp13 = ((org$pandalanguage$pandac$IRNode**) ((char*) $match$203_58->$data + 0));
                 _f012 = *$tmp13;
                 panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) _f012));
             }
             }
             else {
             panda$core$Int64$init$builtin_int64(&$tmp14, 1);
-            panda$core$Bit $tmp15 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$195_58->$rawValue, $tmp14);
+            panda$core$Bit $tmp15 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$203_58->$rawValue, $tmp14);
             if ($tmp15.value) {
             {
-                panda$core$String** $tmp17 = ((panda$core$String**) ((char*) $match$195_58->$data + 0));
+                panda$core$String** $tmp17 = ((panda$core$String**) ((char*) $match$203_58->$data + 0));
                 _f016 = *$tmp17;
                 panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) _f016));
             }

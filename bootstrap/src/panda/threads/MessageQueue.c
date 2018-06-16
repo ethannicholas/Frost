@@ -12,7 +12,7 @@
 #include "panda/threads/Lock.h"
 
 static panda$core$String $s1;
-panda$threads$MessageQueue$class_type panda$threads$MessageQueue$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Immutable$class, NULL, { panda$core$Object$convert$R$panda$core$String, panda$threads$MessageQueue$cleanup, panda$threads$MessageQueue$post$panda$threads$MessageQueue$T, panda$threads$MessageQueue$pendingMessages$R$panda$core$Int64, panda$threads$MessageQueue$hasMessage$R$panda$core$Bit, panda$threads$MessageQueue$getMessage$R$panda$threads$MessageQueue$T} };
+panda$threads$MessageQueue$class_type panda$threads$MessageQueue$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Immutable$class, NULL, { panda$core$Object$convert$R$panda$core$String, panda$threads$MessageQueue$cleanup, panda$threads$MessageQueue$post$panda$threads$MessageQueue$T, panda$threads$MessageQueue$pendingMessages$R$panda$core$Int64, panda$threads$MessageQueue$hasMessage$R$panda$core$Bit, panda$threads$MessageQueue$getMessage$R$panda$threads$MessageQueue$T, panda$threads$MessageQueue$clear} };
 
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x74\x68\x72\x65\x61\x64\x73\x2e\x4d\x65\x73\x73\x61\x67\x65\x51\x75\x65\x75\x65", 26, -1815112700899824502, NULL };
@@ -226,45 +226,59 @@ panda$core$Immutable* panda$threads$MessageQueue$getMessage$R$panda$threads$Mess
     $l70:;
     abort();
 }
+void panda$threads$MessageQueue$clear(panda$threads$MessageQueue* self) {
+    panda$core$Immutable* $tmp75;
+    $l71:;
+    panda$core$Bit $tmp74 = panda$threads$MessageQueue$hasMessage$R$panda$core$Bit(self);
+    bool $tmp73 = $tmp74.value;
+    if (!$tmp73) goto $l72;
+    {
+        panda$core$Immutable* $tmp76 = panda$threads$MessageQueue$getMessage$R$panda$threads$MessageQueue$T(self);
+        $tmp75 = $tmp76;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp75));
+    }
+    goto $l71;
+    $l72:;
+}
 void panda$threads$MessageQueue$init(panda$threads$MessageQueue* self) {
-    panda$threads$Lock* $tmp71;
-    panda$threads$Lock* $tmp72;
-    panda$threads$Notifier* $tmp74;
-    panda$threads$Notifier* $tmp75;
-    panda$core$Int64 $tmp77;
+    panda$threads$Lock* $tmp77;
+    panda$threads$Lock* $tmp78;
+    panda$threads$Notifier* $tmp80;
+    panda$threads$Notifier* $tmp81;
+    panda$core$Int64 $tmp83;
     self->lock = NULL;
     self->notifier = NULL;
     self->head = NULL;
     self->tail = NULL;
-    panda$threads$Lock* $tmp73 = (panda$threads$Lock*) pandaObjectAlloc(24, (panda$core$Class*) &panda$threads$Lock$class);
-    panda$threads$Lock$init($tmp73);
-    $tmp72 = $tmp73;
-    $tmp71 = $tmp72;
-    self->lock = $tmp71;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp71));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp72));
-    panda$threads$Notifier* $tmp76 = (panda$threads$Notifier*) pandaObjectAlloc(32, (panda$core$Class*) &panda$threads$Notifier$class);
-    panda$threads$Notifier$init$panda$threads$Lock($tmp76, self->lock);
-    $tmp75 = $tmp76;
-    $tmp74 = $tmp75;
-    self->notifier = $tmp74;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp74));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp75));
-    panda$core$Int64$init$builtin_int64(&$tmp77, 0);
-    self->count = $tmp77;
+    panda$threads$Lock* $tmp79 = (panda$threads$Lock*) pandaObjectAlloc(24, (panda$core$Class*) &panda$threads$Lock$class);
+    panda$threads$Lock$init($tmp79);
+    $tmp78 = $tmp79;
+    $tmp77 = $tmp78;
+    self->lock = $tmp77;
+    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp77));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp78));
+    panda$threads$Notifier* $tmp82 = (panda$threads$Notifier*) pandaObjectAlloc(32, (panda$core$Class*) &panda$threads$Notifier$class);
+    panda$threads$Notifier$init$panda$threads$Lock($tmp82, self->lock);
+    $tmp81 = $tmp82;
+    $tmp80 = $tmp81;
+    self->notifier = $tmp80;
+    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp80));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp81));
+    panda$core$Int64$init$builtin_int64(&$tmp83, 0);
+    self->count = $tmp83;
 }
 void panda$threads$MessageQueue$cleanup(panda$threads$MessageQueue* self) {
-    int $tmp80;
+    int $tmp86;
     {
     }
-    $tmp80 = -1;
-    goto $l78;
-    $l78:;
+    $tmp86 = -1;
+    goto $l84;
+    $l84:;
     panda$core$Immutable$cleanup(((panda$core$Immutable*) self));
-    switch ($tmp80) {
-        case -1: goto $l81;
+    switch ($tmp86) {
+        case -1: goto $l87;
     }
-    $l81:;
+    $l87:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->lock));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->notifier));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->head));

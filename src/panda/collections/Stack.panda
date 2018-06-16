@@ -81,6 +81,10 @@ class Stack<T> : Iterable<T> {
         return contents[contents.count - 1 - depth]
     }
 
+    method clear() {
+        contents.clear()
+    }
+
     ================================================================================================
     Returns an iterator which returns elements from the stack, starting from the top and working
     down to the bottom. Iterating over the stack does not modify it.

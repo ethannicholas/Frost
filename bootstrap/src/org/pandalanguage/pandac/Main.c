@@ -1531,7 +1531,7 @@ void org$pandalanguage$pandac$Main$run$panda$collections$ListView$LTpanda$core$S
                     {
                         {
                             $tmp549 = cg522;
-                            org$pandalanguage$pandac$HCodeGenerator* $tmp552 = (org$pandalanguage$pandac$HCodeGenerator*) pandaObjectAlloc(137, (panda$core$Class*) &org$pandalanguage$pandac$HCodeGenerator$class);
+                            org$pandalanguage$pandac$HCodeGenerator* $tmp552 = (org$pandalanguage$pandac$HCodeGenerator*) pandaObjectAlloc(160, (panda$core$Class*) &org$pandalanguage$pandac$HCodeGenerator$class);
                             org$pandalanguage$pandac$HCodeGenerator$init$panda$io$File($tmp552, outFile260);
                             $tmp551 = $tmp552;
                             $tmp550 = ((org$pandalanguage$pandac$CodeGenerator*) $tmp551);
@@ -1549,7 +1549,7 @@ void org$pandalanguage$pandac$Main$run$panda$collections$ListView$LTpanda$core$S
                     {
                         {
                             $tmp555 = cg522;
-                            org$pandalanguage$pandac$CCodeGenerator* $tmp558 = (org$pandalanguage$pandac$CCodeGenerator*) pandaObjectAlloc(240, (panda$core$Class*) &org$pandalanguage$pandac$CCodeGenerator$class);
+                            org$pandalanguage$pandac$CCodeGenerator* $tmp558 = (org$pandalanguage$pandac$CCodeGenerator*) pandaObjectAlloc(248, (panda$core$Class*) &org$pandalanguage$pandac$CCodeGenerator$class);
                             org$pandalanguage$pandac$CCodeGenerator$init$panda$io$File($tmp558, outFile260);
                             $tmp557 = $tmp558;
                             $tmp556 = ((org$pandalanguage$pandac$CodeGenerator*) $tmp557);

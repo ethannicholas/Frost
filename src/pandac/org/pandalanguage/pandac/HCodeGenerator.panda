@@ -35,10 +35,21 @@ class HCodeGenerator : CodeGenerator {
 
     var inClass := false
 
+    @weak
+    def cCodeGen:CCodeGenerator
+
+    def cCodeGenRetain:CCodeGenerator?
+
     init(outDir:File) {
+        cCodeGenRetain := CCodeGenerator(outDir, self)
+        init(outDir, cCodeGenRetain)
+    }
+
+    init(outDir:File, cCodeGen:CCodeGenerator) {
         self.outDir := outDir
         self.out := IndentedOutputStream(MemoryOutputStream())
         self.typesOut := IndentedOutputStream(MemoryOutputStream())
+        self.cCodeGen := cCodeGen
     }
 
     function escapeName(s:String):String {

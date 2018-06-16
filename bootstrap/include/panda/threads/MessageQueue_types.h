@@ -18,6 +18,6 @@ typedef struct panda$threads$MessageQueue {
     panda$threads$MessageQueue$Message* tail;
 } panda$threads$MessageQueue;
 #include "panda/core/Class.h"
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[6]; } panda$threads$MessageQueue$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[7]; } panda$threads$MessageQueue$class_type;
 extern panda$threads$MessageQueue$class_type panda$threads$MessageQueue$class;
 

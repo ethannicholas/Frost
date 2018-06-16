@@ -16,6 +16,7 @@ class SyntaxHighlighter {
         LITERAL
         STRING
         OPERATOR
+        LABEL
 
         @override -- FIXME should be automatic
         function convert():String {
@@ -44,21 +45,9 @@ class SyntaxHighlighter {
                     return "STRING"
                 when OPERATOR:
                     return "OPERATOR"
+                when LABEL:
+                    return "LABEL"
             }
-        }
-    }
-
-    class SyntaxToken {
-        def text:String
-
-        def tokenKind:Token.Kind
-
-        def syntaxKind:Kind
-
-        init(text:String, tokenKind:Token.Kind, syntaxKind:Kind) {
-            self.text := text
-            self.tokenKind := tokenKind
-            self.syntaxKind := syntaxKind
         }
     }
 
@@ -66,15 +55,11 @@ class SyntaxHighlighter {
     def stack := Stack<Kind>()
 
     @private
-    def tokens := Array<SyntaxToken>()
-
-    init() {
-        stack.push(Kind.DEFAULT)
-    }
+    def tokens := Array<Pair<Token, Kind>>()
 
     method reset() {
         tokens.clear()
-        assert stack.get_count() = 1, "stack: \{stack}"
+        stack.clear()
     }
 
     method open(kind:Kind) {
@@ -86,42 +71,42 @@ class SyntaxHighlighter {
         stack.pop()
     }
 
-    method add(s:String, tokenKind:Token.Kind, syntaxKind:SyntaxHighlighter.Kind) {
-        tokens.add(SyntaxToken(s, tokenKind, syntaxKind))
+    method add(token:Token, syntaxKind:SyntaxHighlighter.Kind) {
+        tokens.add(Pair<Token, Kind>(token, syntaxKind))
     }
 
-    method add(s:String, kind:Token.Kind) {
-        if stack[0] != Kind.DEFAULT {
-            add(s, kind, stack[0])
+    method add(token:Token) {
+        if stack.get_count() > 0 {
+            add(token, stack[0])
             return
         }
 
-        match kind {
+        match token.kind {
             when Token.Kind.SHIFTRIGHT:
-                add(s, kind, Kind.OPERATOR)
+                add(token, Kind.OPERATOR)
             when Token.Kind.DECIMAL, Token.Kind.BINARY, Token.Kind.HEX, Token.Kind.REAL,
                     Token.Kind.TRUE, Token.Kind.FALSE, Token.Kind.NULL:
-                add(s, kind, Kind.LITERAL)
+                add(token, Kind.LITERAL)
             when Token.Kind.LINE_COMMENT, Token.Kind.BLOCK_COMMENT_START:
-                add(s, kind, Kind.COMMENT)
+                add(token, Kind.COMMENT)
             when Token.Kind.BLOCK_COMMENT_END:
-                add(s, kind, Kind.COMMENT)
+                add(token, Kind.COMMENT)
             when Token.Kind.DOC_COMMENT:
-                add(s, kind, Kind.COMMENT)
+                add(token, Kind.DOC_COMMENT)
             when Token.Kind.ANNOTATION:
-                add(s, kind, Kind.ANNOTATION)
+                add(token, Kind.ANNOTATION)
             when Token.Kind.PACKAGE, Token.Kind.USES, Token.Kind.AS, Token.Kind.CLASS,
                     Token.Kind.INTERFACE, Token.Kind.CHOICE, Token.Kind.FUNCTION,
                     Token.Kind.METHOD, Token.Kind.VAR, Token.Kind.DEF, Token.Kind.PROPERTY,
                     Token.Kind.CONSTANT, Token.Kind.BY, Token.Kind.IN:
-                add(s, kind, Kind.KEYWORD)
+                add(token, Kind.KEYWORD)
             when Token.Kind.RETURN, Token.Kind.BREAK, Token.Kind.CONTINUE, Token.Kind.DO,
                     Token.Kind.WHILE, Token.Kind.FOR, Token.Kind.LOOP, Token.Kind.IF,
                     Token.Kind.ELSE, Token.Kind.MATCH, Token.Kind.WHEN, Token.Kind.OTHERWISE,
                     Token.Kind.INIT, Token.Kind.ASSERT, Token.Kind.UNREACHABLE:
-                add(s, kind, Kind.CONTROL_KEYWORD)
+                add(token, Kind.CONTROL_KEYWORD)
             when Token.Kind.SELF, Token.Kind.SUPER:
-                add(s, kind, Kind.LITERAL)
+                add(token, Kind.LITERAL)
             when Token.Kind.NOT, Token.Kind.BITWISENOT, Token.Kind.ADD, Token.Kind.SUB,
                     Token.Kind.MUL, Token.Kind.DIV, Token.Kind.INTDIV, Token.Kind.REM,
                     Token.Kind.POW, Token.Kind.EQ, Token.Kind.NEQ, Token.Kind.IDENTITY,
@@ -136,9 +121,9 @@ class SyntaxHighlighter {
                     Token.Kind.YIELDS, Token.Kind.YIELDS_METHOD, Token.Kind.YIELDS_IMMUTABLE,
                     Token.Kind.YIELDS_METHOD_IMMUTABLE, Token.Kind.QUESTION, Token.Kind.COLON,
                     Token.Kind.ELLIPSIS, Token.Kind.DOTDOT:
-                add(s, kind, Kind.OPERATOR)
+                add(token, Kind.OPERATOR)
             otherwise:
-                add(s, kind, stack[0])
+                add(token, Kind.DEFAULT)
         }
     }
 

@@ -2214,7 +2214,17 @@ class Compiler {
                             effectiveMethodType(targetNode, best[0].value),
                             targetNode, best[0]), target)
                 }
-                assert false, "no or ambiguous match: \{methods}->\{target} = \{best} (\{position})"
+                if best.get_count() = 0 {
+                    error(position, "no match for '\{methods[0].value.name}' with type '\{target}'")
+                    return null
+                }
+                def msg := MutableString("reference to '\{methods[0].value.name}' with type " +
+                        "'\{target}' is ambiguous. The follow methods are equally good matches:")
+                for m in best {
+                    msg.append("\n    \{m.value.declaration()} (\{m.value.owner.source.name()}:" +
+                            "\{m.value.position})")
+                }
+                error(position, msg.finish())
                 return null
             when IRNode.UNRESOLVED_LAMBDA(position, rawParameters, expr):
                 def parameters := Array<ASTNode>()

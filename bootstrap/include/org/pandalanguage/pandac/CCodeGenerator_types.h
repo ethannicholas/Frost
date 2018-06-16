@@ -24,7 +24,8 @@ typedef struct org$pandalanguage$pandac$CCodeGenerator {
     panda$io$IndentedOutputStream* out;
     panda$io$MemoryOutputStream* strings;
     panda$collections$HashSet* imports;
-    org$pandalanguage$pandac$HCodeGenerator* hCodeGen;
+    panda$core$Weak* hCodeGen;
+    org$pandalanguage$pandac$HCodeGenerator* hCodeGenRetain;
     org$pandalanguage$pandac$ClassDecl* currentClass;
     panda$io$MemoryOutputStream* declarations;
     panda$io$MemoryOutputStream* types;

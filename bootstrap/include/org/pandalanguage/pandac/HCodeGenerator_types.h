@@ -9,6 +9,7 @@ typedef struct panda$collections$HashSet panda$collections$HashSet;
 typedef struct panda$io$File panda$io$File;
 typedef struct org$pandalanguage$pandac$LLVMCodeGenerator org$pandalanguage$pandac$LLVMCodeGenerator;
 #include "panda/core/Bit_types.h"
+typedef struct org$pandalanguage$pandac$CCodeGenerator org$pandalanguage$pandac$CCodeGenerator;
 typedef struct panda$core$String panda$core$String;
 
 typedef struct org$pandalanguage$pandac$HCodeGenerator {
@@ -30,6 +31,8 @@ typedef struct org$pandalanguage$pandac$HCodeGenerator {
     panda$io$IndentedOutputStream* typesOut;
     org$pandalanguage$pandac$LLVMCodeGenerator* llvmCodeGen;
     panda$core$Bit inClass;
+    panda$core$Weak* cCodeGen;
+    org$pandalanguage$pandac$CCodeGenerator* cCodeGenRetain;
 } org$pandalanguage$pandac$HCodeGenerator;
 #include "panda/core/Class.h"
 typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[17]; } org$pandalanguage$pandac$HCodeGenerator$class_type;

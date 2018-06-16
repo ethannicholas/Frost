@@ -46,14 +46,22 @@ class CCodeGenerator : CodeGenerator {
 
     def imports := HashSet<String>()
 
+    @weak
     def hCodeGen:HCodeGenerator
+
+    def hCodeGenRetain:HCodeGenerator?
 
     var currentClass:ClassDecl? := null
 
     init(outDir:File) {
+        hCodeGenRetain := HCodeGenerator(outDir, self)
+        init(outDir, hCodeGenRetain)
+    }
+
+    init(outDir:File, hCodeGen:HCodeGenerator) {
         self.outDir := outDir
         self.out := IndentedOutputStream(MemoryOutputStream())
-        self.hCodeGen := HCodeGenerator(outDir)
+        self.hCodeGen := hCodeGen
     }
 
     function escapeName(s:String):String {

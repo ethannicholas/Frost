@@ -108,4 +108,13 @@ class MessageQueue<T:Immutable> : Immutable {
         count -= 1
         return result
     }
+
+    ================================================================================================
+    Remove all pending messages from the queue.
+    ================================================================================================
+    method clear() {
+        while hasMessage() {
+            getMessage()
+        }
+    }
 }

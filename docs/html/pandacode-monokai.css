@@ -18,7 +18,7 @@
 }
 
 .pandacode .control, .pandacode .VAR, .pandacode .DEF, .pandacode .CONSTANT, .pandacode .PROPERTY,
-        .pandacode .AT_RETURN {
+        .pandacode .AT_RETURN, .pandacode .DOT {
     color: #F92672;
 }
 
@@ -50,4 +50,8 @@
 
 .pandacode .parameterName {
     color: #FD971F;
+}
+
+.pandacode .ellipsis {
+    color: #F8F8F2;
 }

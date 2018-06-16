@@ -54,7 +54,7 @@ class System {
     ================================================================================================
     @class
     @external
-    method exit(status:Int)
+    method exit(status:UInt8)
 
     ================================================================================================
     Causes the program to perform an illegal operation which forces an abnormal exit.

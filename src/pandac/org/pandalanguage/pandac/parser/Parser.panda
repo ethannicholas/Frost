@@ -79,13 +79,21 @@ class Parser {
             def result := pushbackBuffer[idx]
             pushbackBuffer.removeIndex(idx)
             if syntaxHighlighter != null {
-                syntaxHighlighter.add(text(result), result.kind)
+                syntaxHighlighter.add(result)
             }
             return result
         }
         def result := lexer.next()
         if syntaxHighlighter != null {
-            syntaxHighlighter.add(text(result), result.kind)
+            if result.kind = Token.Kind.DOC_COMMENT {
+                if syntaxHighlighter.stack.get_count() = 0 {
+                    syntaxHighlighter.open(SyntaxHighlighter.Kind.DOC_COMMENT)
+                }
+                else {
+                    syntaxHighlighter.close(SyntaxHighlighter.Kind.DOC_COMMENT)
+                }
+            }
+            syntaxHighlighter.add(result)
         }
         if inSpeculative {
             speculativeBuffer.add(result)
@@ -133,8 +141,10 @@ class Parser {
 
     method pushback(token:Token) {
         if syntaxHighlighter != null {
-            while syntaxHighlighter.tokens[syntaxHighlighter.tokens.get_count() - 1].text !=
+            while text(syntaxHighlighter.tokens[syntaxHighlighter.tokens.get_count() - 1].first) !=
                     text(token) {
+                pushbackBuffer.add(syntaxHighlighter.tokens[syntaxHighlighter.tokens.get_count() -
+                        1].first)
                 syntaxHighlighter.rewind()
             }
             syntaxHighlighter.rewind()
@@ -1877,7 +1887,16 @@ class Parser {
             when Token.Kind.LBRACE: return block()
             when Token.Kind.IDENTIFIER:
                 def id := next()
-                if checkNext(Token.Kind.COLON) != null {
+                def colon := checkNext(Token.Kind.COLON)
+                if colon != null {
+                    if syntaxHighlighter != null {
+                        pushback(colon)
+                        pushback(id)
+                        syntaxHighlighter.open(SyntaxHighlighter.Kind.LABEL)
+                        next()
+                        next()
+                        syntaxHighlighter.close(SyntaxHighlighter.Kind.LABEL)
+                    }
                     return anyLoop(text(id))
                 }
                 pushback(id)
