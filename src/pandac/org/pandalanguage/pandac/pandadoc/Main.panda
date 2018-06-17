@@ -15,7 +15,5 @@ constant FOOTER :=
 method main(args:ListView<String>) {
     def input := File(args[1])
     def output := File(args[2])
-    output.write(HEADER +
-            Markdown(input, null).process(input.readFully()) +
-            FOOTER)
+    output.write(HEADER + Markdown().process(input.readFully()) + FOOTER)
 }

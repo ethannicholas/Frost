@@ -53,17 +53,12 @@ Panda's strings are immutable, but there is a mutable variant called `MutableStr
 Basic Types
 -----------
 
-`Int8`, `Int16`, `Int32`, `Int64`
-
-`UInt8`, `UInt16`, `UInt32`, `UInt64`
-
-`Real32`, `Real64`
-
-`Bit`
-
-`Char8`, `Char16`, `Char32`
-
-`String`
+* `Int8`, `Int16`, `Int32`, `Int64`
+* `UInt8`, `UInt16`, `UInt32`, `UInt64`
+* `Real32`, `Real64`
+* `Bit`
+* `Char8`, `Char16`, `Char32`
+* `String`
 
 `Bit` is Panda's Boolean type, which has only two values: `true` and `false`.
 
@@ -76,21 +71,49 @@ Basic Types
 Operators
 ---------
 
-Arithmetic: `+` (add), `-` (subtract), `*` (multiply), `/` (real divide), `//` (integer divide),
-`%` (remainder)
+### Arithmetic: ###
+* `+` (add)
+* `-` (subtract)
+* `*` (multiply)
+* `/` (real divide)
+* `//` (integer divide),
+* `%` (remainder)
 
-Comparison: `=` (equal), `!=` (not equal), `==` (identical), `!==` (not identical), `<` (less than),
-`<=` (less than or equal), `>` (greater than), `>=` (greater than or equal)
+### Comparison: ###
+* `=` (equal)
+* `!=` (not equal)
+* `==` (identical)
+* `!==` (not identical)
+* `<` (less than),
+* `<=` (less than or equal)
+* `>` (greater than)
+* `>=` (greater than or equal)
 
-Logical: `!` (not), `&` (and), `|` (or), `~` (xor)
+### Logical: ###
+* `!` (not)
+* `&` (and)
+* `|` (or)
+* `~` (xor)
 
-Bitwise: `!!` (bitwise not), `&&` (bitwise and), `||` (bitwise or), `~~` (bitwise xor)
+### Bitwise: ###
+* `!!` (bitwise not)
+* `&&` (bitwise and)
+* `||` (bitwise or)
+* `~~` (bitwise xor)
 
-Shift: `<<` (shift left), `>>` (shift right)
+### Shift: ###
+* `<<` (shift left)
+* `>>` (shift right)
 
-Assignment: `:=` (assignment), `+=`, `-=`, `*=`, ...
+### Assignment: ###
+* `:=` (assignment)
+* `+=` (add and assign)
+* `-=` (subtract and assign)
+* `*=` (multiply and assign)
+* ...
 
-Other: `->` (typecast)
+### Other: ###
+* `->` (typecast)
 
 The "identical" and "not identical" operators check whether two objects are *the same object*,
 rather than merely containing the same data. For instance, two strings may be equal (they contain

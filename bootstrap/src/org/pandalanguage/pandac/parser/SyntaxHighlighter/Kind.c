@@ -35,9 +35,10 @@ static panda$core$String $s48 = { (panda$core$Class*) &panda$core$String$class, 
 static panda$core$String $s53 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x4c\x49\x54\x45\x52\x41\x4c", 7, 188665117000526, NULL };
 static panda$core$String $s58 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x53\x54\x52\x49\x4e\x47", 6, 1942684803172, NULL };
 static panda$core$String $s63 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x4f\x50\x45\x52\x41\x54\x4f\x52", 8, 19384091747696221, NULL };
+static panda$core$String $s68 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x4c\x41\x42\x45\x4c", 5, 18486340853, NULL };
 
 panda$core$String* org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind$convert$R$panda$core$String(org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind self) {
-    org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind $match$22_133;
+    org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind $match$23_133;
     panda$core$Int64 $tmp4;
     panda$core$String* $returnValue6;
     panda$core$String* $tmp7;
@@ -63,10 +64,12 @@ panda$core$String* org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind$conver
     panda$core$String* $tmp57;
     panda$core$Int64 $tmp60;
     panda$core$String* $tmp62;
+    panda$core$Int64 $tmp65;
+    panda$core$String* $tmp67;
     {
-        $match$22_133 = self;
+        $match$23_133 = self;
         panda$core$Int64$init$builtin_int64(&$tmp4, 0);
-        panda$core$Bit $tmp5 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$22_133.$rawValue, $tmp4);
+        panda$core$Bit $tmp5 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$23_133.$rawValue, $tmp4);
         if ($tmp5.value) {
         {
             $tmp7 = &$s8;
@@ -77,7 +80,7 @@ panda$core$String* org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind$conver
         }
         else {
         panda$core$Int64$init$builtin_int64(&$tmp10, 1);
-        panda$core$Bit $tmp11 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$22_133.$rawValue, $tmp10);
+        panda$core$Bit $tmp11 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$23_133.$rawValue, $tmp10);
         if ($tmp11.value) {
         {
             $tmp12 = &$s13;
@@ -88,7 +91,7 @@ panda$core$String* org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind$conver
         }
         else {
         panda$core$Int64$init$builtin_int64(&$tmp15, 2);
-        panda$core$Bit $tmp16 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$22_133.$rawValue, $tmp15);
+        panda$core$Bit $tmp16 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$23_133.$rawValue, $tmp15);
         if ($tmp16.value) {
         {
             $tmp17 = &$s18;
@@ -99,7 +102,7 @@ panda$core$String* org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind$conver
         }
         else {
         panda$core$Int64$init$builtin_int64(&$tmp20, 3);
-        panda$core$Bit $tmp21 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$22_133.$rawValue, $tmp20);
+        panda$core$Bit $tmp21 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$23_133.$rawValue, $tmp20);
         if ($tmp21.value) {
         {
             $tmp22 = &$s23;
@@ -110,7 +113,7 @@ panda$core$String* org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind$conver
         }
         else {
         panda$core$Int64$init$builtin_int64(&$tmp25, 4);
-        panda$core$Bit $tmp26 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$22_133.$rawValue, $tmp25);
+        panda$core$Bit $tmp26 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$23_133.$rawValue, $tmp25);
         if ($tmp26.value) {
         {
             $tmp27 = &$s28;
@@ -121,7 +124,7 @@ panda$core$String* org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind$conver
         }
         else {
         panda$core$Int64$init$builtin_int64(&$tmp30, 5);
-        panda$core$Bit $tmp31 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$22_133.$rawValue, $tmp30);
+        panda$core$Bit $tmp31 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$23_133.$rawValue, $tmp30);
         if ($tmp31.value) {
         {
             $tmp32 = &$s33;
@@ -132,7 +135,7 @@ panda$core$String* org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind$conver
         }
         else {
         panda$core$Int64$init$builtin_int64(&$tmp35, 6);
-        panda$core$Bit $tmp36 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$22_133.$rawValue, $tmp35);
+        panda$core$Bit $tmp36 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$23_133.$rawValue, $tmp35);
         if ($tmp36.value) {
         {
             $tmp37 = &$s38;
@@ -143,7 +146,7 @@ panda$core$String* org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind$conver
         }
         else {
         panda$core$Int64$init$builtin_int64(&$tmp40, 7);
-        panda$core$Bit $tmp41 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$22_133.$rawValue, $tmp40);
+        panda$core$Bit $tmp41 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$23_133.$rawValue, $tmp40);
         if ($tmp41.value) {
         {
             $tmp42 = &$s43;
@@ -154,7 +157,7 @@ panda$core$String* org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind$conver
         }
         else {
         panda$core$Int64$init$builtin_int64(&$tmp45, 8);
-        panda$core$Bit $tmp46 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$22_133.$rawValue, $tmp45);
+        panda$core$Bit $tmp46 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$23_133.$rawValue, $tmp45);
         if ($tmp46.value) {
         {
             $tmp47 = &$s48;
@@ -165,7 +168,7 @@ panda$core$String* org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind$conver
         }
         else {
         panda$core$Int64$init$builtin_int64(&$tmp50, 9);
-        panda$core$Bit $tmp51 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$22_133.$rawValue, $tmp50);
+        panda$core$Bit $tmp51 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$23_133.$rawValue, $tmp50);
         if ($tmp51.value) {
         {
             $tmp52 = &$s53;
@@ -176,7 +179,7 @@ panda$core$String* org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind$conver
         }
         else {
         panda$core$Int64$init$builtin_int64(&$tmp55, 10);
-        panda$core$Bit $tmp56 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$22_133.$rawValue, $tmp55);
+        panda$core$Bit $tmp56 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$23_133.$rawValue, $tmp55);
         if ($tmp56.value) {
         {
             $tmp57 = &$s58;
@@ -187,13 +190,25 @@ panda$core$String* org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind$conver
         }
         else {
         panda$core$Int64$init$builtin_int64(&$tmp60, 11);
-        panda$core$Bit $tmp61 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$22_133.$rawValue, $tmp60);
+        panda$core$Bit $tmp61 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$23_133.$rawValue, $tmp60);
         if ($tmp61.value) {
         {
             $tmp62 = &$s63;
             $returnValue6 = $tmp62;
             panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp62));
             return $returnValue6;
+        }
+        }
+        else {
+        panda$core$Int64$init$builtin_int64(&$tmp65, 12);
+        panda$core$Bit $tmp66 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$23_133.$rawValue, $tmp65);
+        if ($tmp66.value) {
+        {
+            $tmp67 = &$s68;
+            $returnValue6 = $tmp67;
+            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp67));
+            return $returnValue6;
+        }
         }
         }
         }
@@ -211,102 +226,111 @@ panda$core$String* org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind$conver
     abort();
 }
 void org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind$cleanup(org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind self) {
-    org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind $match$6_565;
-    panda$core$Int64 $tmp66;
-    panda$core$Int64 $tmp68;
-    panda$core$Int64 $tmp70;
-    panda$core$Int64 $tmp72;
-    panda$core$Int64 $tmp74;
-    panda$core$Int64 $tmp76;
-    panda$core$Int64 $tmp78;
-    panda$core$Int64 $tmp80;
-    panda$core$Int64 $tmp82;
-    panda$core$Int64 $tmp84;
-    panda$core$Int64 $tmp86;
-    panda$core$Int64 $tmp88;
+    org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind $match$6_570;
+    panda$core$Int64 $tmp71;
+    panda$core$Int64 $tmp73;
+    panda$core$Int64 $tmp75;
+    panda$core$Int64 $tmp77;
+    panda$core$Int64 $tmp79;
+    panda$core$Int64 $tmp81;
+    panda$core$Int64 $tmp83;
+    panda$core$Int64 $tmp85;
+    panda$core$Int64 $tmp87;
+    panda$core$Int64 $tmp89;
+    panda$core$Int64 $tmp91;
+    panda$core$Int64 $tmp93;
+    panda$core$Int64 $tmp95;
     {
-        $match$6_565 = self;
-        panda$core$Int64$init$builtin_int64(&$tmp66, 0);
-        panda$core$Bit $tmp67 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$6_565.$rawValue, $tmp66);
-        if ($tmp67.value) {
+        $match$6_570 = self;
+        panda$core$Int64$init$builtin_int64(&$tmp71, 0);
+        panda$core$Bit $tmp72 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$6_570.$rawValue, $tmp71);
+        if ($tmp72.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp68, 1);
-        panda$core$Bit $tmp69 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$6_565.$rawValue, $tmp68);
-        if ($tmp69.value) {
+        panda$core$Int64$init$builtin_int64(&$tmp73, 1);
+        panda$core$Bit $tmp74 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$6_570.$rawValue, $tmp73);
+        if ($tmp74.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp70, 2);
-        panda$core$Bit $tmp71 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$6_565.$rawValue, $tmp70);
-        if ($tmp71.value) {
+        panda$core$Int64$init$builtin_int64(&$tmp75, 2);
+        panda$core$Bit $tmp76 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$6_570.$rawValue, $tmp75);
+        if ($tmp76.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp72, 3);
-        panda$core$Bit $tmp73 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$6_565.$rawValue, $tmp72);
-        if ($tmp73.value) {
+        panda$core$Int64$init$builtin_int64(&$tmp77, 3);
+        panda$core$Bit $tmp78 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$6_570.$rawValue, $tmp77);
+        if ($tmp78.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp74, 4);
-        panda$core$Bit $tmp75 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$6_565.$rawValue, $tmp74);
-        if ($tmp75.value) {
+        panda$core$Int64$init$builtin_int64(&$tmp79, 4);
+        panda$core$Bit $tmp80 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$6_570.$rawValue, $tmp79);
+        if ($tmp80.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp76, 5);
-        panda$core$Bit $tmp77 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$6_565.$rawValue, $tmp76);
-        if ($tmp77.value) {
+        panda$core$Int64$init$builtin_int64(&$tmp81, 5);
+        panda$core$Bit $tmp82 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$6_570.$rawValue, $tmp81);
+        if ($tmp82.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp78, 6);
-        panda$core$Bit $tmp79 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$6_565.$rawValue, $tmp78);
-        if ($tmp79.value) {
+        panda$core$Int64$init$builtin_int64(&$tmp83, 6);
+        panda$core$Bit $tmp84 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$6_570.$rawValue, $tmp83);
+        if ($tmp84.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp80, 7);
-        panda$core$Bit $tmp81 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$6_565.$rawValue, $tmp80);
-        if ($tmp81.value) {
+        panda$core$Int64$init$builtin_int64(&$tmp85, 7);
+        panda$core$Bit $tmp86 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$6_570.$rawValue, $tmp85);
+        if ($tmp86.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp82, 8);
-        panda$core$Bit $tmp83 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$6_565.$rawValue, $tmp82);
-        if ($tmp83.value) {
+        panda$core$Int64$init$builtin_int64(&$tmp87, 8);
+        panda$core$Bit $tmp88 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$6_570.$rawValue, $tmp87);
+        if ($tmp88.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp84, 9);
-        panda$core$Bit $tmp85 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$6_565.$rawValue, $tmp84);
-        if ($tmp85.value) {
+        panda$core$Int64$init$builtin_int64(&$tmp89, 9);
+        panda$core$Bit $tmp90 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$6_570.$rawValue, $tmp89);
+        if ($tmp90.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp86, 10);
-        panda$core$Bit $tmp87 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$6_565.$rawValue, $tmp86);
-        if ($tmp87.value) {
+        panda$core$Int64$init$builtin_int64(&$tmp91, 10);
+        panda$core$Bit $tmp92 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$6_570.$rawValue, $tmp91);
+        if ($tmp92.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp88, 11);
-        panda$core$Bit $tmp89 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$6_565.$rawValue, $tmp88);
-        if ($tmp89.value) {
+        panda$core$Int64$init$builtin_int64(&$tmp93, 11);
+        panda$core$Bit $tmp94 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$6_570.$rawValue, $tmp93);
+        if ($tmp94.value) {
         {
+        }
+        }
+        else {
+        panda$core$Int64$init$builtin_int64(&$tmp95, 12);
+        panda$core$Bit $tmp96 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$6_570.$rawValue, $tmp95);
+        if ($tmp96.value) {
+        {
+        }
         }
         }
         }
@@ -325,4 +349,8 @@ void org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind$cleanup(org$pandalan
 void org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind$init$panda$core$Int64(org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind* self, panda$core$Int64 p_rv) {
     self->$rawValue = p_rv;
 }
+
+
+
+
 

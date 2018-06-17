@@ -592,7 +592,11 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
     forcing the parent string to remain in memory is acceptable.
     ================================================================================================
     function substring(r:Range<Index>):String {
-        return String(data.offset(r.min.value), r.max.value - r.min.value, self)
+        var length := r.max.value - r.min.value
+        if r.inclusive {
+            length += 1
+        }
+        return String(data.offset(r.min.value), length, self)
     }
 
     ================================================================================================
@@ -1351,9 +1355,9 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
     }
 
     ================================================================================================
-    Converts this string to a number. The string must be a sequence of decimal digits, optionally
-    preceded by a minus sign (`-`), whose numeric representation can fit into an `Int64`. Returns
-    `null` if the conversion fails.
+    Converts this string to a signed number. The string must be a sequence of decimal digits,
+    optionally preceded by a minus sign (`-`), whose numeric representation can fit into an `Int64`.
+    Returns `null` if the conversion fails.
 
     @returns this string converted to a number, or `null`
     ================================================================================================
@@ -1383,8 +1387,8 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
     }
 
     ================================================================================================
-    Converts this string to a number. The string must be a sequence of decimal digits whose numeric
-    representation can fit into a `UInt64`. Returns `null` if the conversion fails.
+    Converts this string to an unsigned number. The string must be a sequence of decimal digits
+    whose numeric representation can fit into a `UInt64`. Returns `null` if the conversion fails.
 
     @returns this string converted to a number, or `null`
     ================================================================================================
@@ -1403,6 +1407,12 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
         return result
     }
 
+    ================================================================================================
+    Converts this string to a real number. The string must be a valid Panda real literal. Returns
+    `null` if the conversion fails.
+
+    @returns this string converted to a number, or `null`
+    ================================================================================================
     function convert():Real64? {
         return Panda.toReal64(self)
     }

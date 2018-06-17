@@ -2076,9 +2076,16 @@ class Compiler {
                 else {
                     return coerce(resolve(expr), target)
                 }
-            when IRNode.UNRESOLVED_METHOD_REFERENCE:
-                if target.nonnullable().isMethod() & coercionCost(expr, target) != 0 {
-                    return methodCast(expr, target)
+            when IRNode.UNRESOLVED_METHOD_REFERENCE(position, targetNode, methods):
+                if target.nonnullable().isMethod() {
+                    if coercionCost(expr, target) != null {
+                        return methodCast(expr, target)
+                    }
+                    else {
+                        error(position, "no match for method '\{methods[0].value.name}' with " +
+                                "type '\{target}'")
+                        return null
+                    }
                 }
             when IRNode.UNRESOLVED_METHOD_CALL(position, _, callTarget, methods, args):
                 return resolveMethodCall(position, callTarget, methods, args, target)

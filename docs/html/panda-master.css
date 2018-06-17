@@ -28,7 +28,6 @@ a:hover {
 #content {
     display: inline-block;
     vertical-align: top;
-    width: 550px;
     white-space: normal;
 }
 
@@ -55,17 +54,4 @@ a:hover {
 
 #toc .bullet {
     cursor: pointer;
-}
-
-pre {
-    display:inline-block;
-    font-family: monospace;
-    background-color: #272822;
-    color: #F8F8F2;
-    border: solid #404040 1px;
-    border-radius: 4pt;
-    padding: 8pt;
-    margin-top: -3pt;
-    margin-left: 6pt;
-    margin-right: 30pt;
 }

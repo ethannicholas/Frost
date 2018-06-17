@@ -11,6 +11,7 @@ void panda$collections$Stack$push$panda$collections$Stack$T(panda$collections$St
 panda$core$Object* panda$collections$Stack$pop$R$panda$collections$Stack$T(panda$collections$Stack* self);
 void panda$collections$Stack$pop$panda$collections$Stack$T(panda$collections$Stack* self, panda$core$Object* p_expected);
 panda$core$Object* panda$collections$Stack$$IDX$panda$core$Int64$R$panda$collections$Stack$T(panda$collections$Stack* self, panda$core$Int64 p_depth);
+void panda$collections$Stack$clear(panda$collections$Stack* self);
 panda$collections$Iterator* panda$collections$Stack$iterator$R$panda$collections$Iterator$LTpanda$collections$Stack$T$GT(panda$collections$Stack* self);
 panda$core$Int64 panda$collections$Stack$get_count$R$panda$core$Int64(panda$collections$Stack* self);
 panda$core$String* panda$collections$Stack$convert$R$panda$core$String(panda$collections$Stack* self);

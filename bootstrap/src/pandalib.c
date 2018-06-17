@@ -50,6 +50,10 @@ typedef struct Int64 {
     int64_t value;
 } Int64;
 
+typedef struct UInt8 {
+    uint8_t value;
+} UInt8;
+
 typedef struct Real64 {
     double value;
 } Real64;
@@ -334,7 +338,7 @@ int main(int argc, char** argv) {
 
 // System
 
-void panda$core$System$exit$panda$core$Int64(Int64 code) {
+void panda$core$System$exit$panda$core$UInt8(UInt8 code) {
     exit(code.value);
 }
 

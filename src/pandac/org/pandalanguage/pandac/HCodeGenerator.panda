@@ -33,8 +33,6 @@ class HCodeGenerator : CodeGenerator {
 
     def llvmCodeGen := LLVMCodeGenerator("", MemoryOutputStream())
 
-    var inClass := false
-
     @weak
     def cCodeGen:CCodeGenerator
 
@@ -162,16 +160,12 @@ class HCodeGenerator : CodeGenerator {
 
     @override
     method start(cl:ClassDecl) {
-        if inClass {
-            finish()
-        }
         typeImportStream.clear()
         typesBuffer.clear()
         bodyImportStream.clear()
         bodyBuffer.clear()
         typeImports.clear()
         bodyImports.clear()
-        inClass := true
         def path := getPath(cl, ".h")
         path.parent().createDirectories()
         self.out := IndentedOutputStream(path.openOutputStream())
@@ -302,12 +296,10 @@ class HCodeGenerator : CodeGenerator {
 
     @override
     method end(cl:ClassDecl) {
-        assert inClass
         typesOut.printLine(typeImportStream.finish())
         typesOut.printLine(typesBuffer.finish())
         out.printLine(bodyImportStream.finish())
         out.printLine(bodyBuffer.finish())
-        inClass := false
     }
 
     @override

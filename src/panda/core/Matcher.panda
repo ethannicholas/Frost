@@ -164,6 +164,7 @@ class Matcher {
         target.append(searchText[replacementIndex..])
     }
 
+    @private
     @external
     method nativeFind(start:String.Index):Bit
 

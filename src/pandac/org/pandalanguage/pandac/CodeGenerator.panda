@@ -21,7 +21,7 @@ interface CodeGenerator {
     method writeDeclaration(m:MethodDecl)
 
     ================================================================================================
-    Writes a method with a compiled body,
+    Writes a method with a compiled body.
     ================================================================================================
     method write(m:MethodDecl, body:ImmutableArray<IRNode>)
 

@@ -1,0 +1,320 @@
+package org.pandalanguage.pandac.pandadoc
+
+uses org.pandalanguage.pandac.ClassDecl
+uses org.pandalanguage.pandac.CodeGenerator
+uses org.pandalanguage.pandac.Compiler
+uses org.pandalanguage.pandac.FieldDecl
+uses org.pandalanguage.pandac.IRNode
+uses org.pandalanguage.pandac.MethodDecl
+uses org.pandalanguage.pandac.Type
+
+class PandaDoc : CodeGenerator {
+    class XMLWriter {
+        def out:IndentedOutputStream
+
+        def stack := Stack<String>()
+
+        init(out:OutputStream) {
+            self.out := IndentedOutputStream(out)
+        }
+
+        method open(tag:String) {
+            out.printLine("<\{tag}>")
+            out.level += 1
+            stack.push(tag)
+        }
+
+        method close(tag:String) {
+            out.level -= 1
+            out.printLine("</\{tag}>")
+            stack.pop(tag)
+        }
+
+        method write(tag:String, text:String) {
+            out.printLine("<\{tag}>\{text}</\{tag}>")
+        }
+    }
+
+    def outDir:File
+
+    @weak
+    var compiler:Compiler?
+
+    var out:XMLWriter
+
+    init(outDir:File) {
+        self.outDir := outDir
+    }
+
+    @override
+    method setCompiler(compiler:Compiler) {
+        self.compiler := compiler
+    }
+
+    function getRelativePath(cl:ClassDecl, extension:String):String {
+        return cl.name.replace(".", "/").replace("<", ".LT").replace(">", ".GT")
+                .replace("?", ".Q").replace(",", ".C").replace(" ", "") + extension
+    }
+
+    function getPath(cl:ClassDecl, extension:String):File {
+        return outDir.resolve(getRelativePath(cl, extension))
+    }
+
+    function simpleName(t:Type):String {
+        match t.typeKind {
+            when Type.Kind.CLASS:
+                def index := t.name.lastIndexOf(".")
+                if index = null {
+                    return t.name
+                }
+                return t.name[t.name.next(index)..]
+            when Type.Kind.NULLABLE:
+                return simpleName(t.subtypes[0]) + "?"
+            when Type.Kind.GENERIC:
+                def simpleNames := Array<String>() -- FIXME use map
+                for s in t.subtypes {
+                    simpleNames.add(simpleName(s))
+                }
+                return simpleNames[0] + "<" + simpleNames[1..].join() + ">"
+            otherwise:
+                return t.name
+        }
+    }
+
+    method write(t:Type) {
+        out.open("type")
+        out.write("name", t.name.replace("<", "&lt;").replace(">", "&gt;"))
+        out.write("simpleName", simpleName(t).replace("<", "&lt;").replace(">", "&gt;"))
+        out.close("type")
+    }
+
+    method writeDoc(rawDoccomment:String?) {
+        if rawDoccomment != null {
+            -- figure out how many spaces are at the start of each line and remove them
+            var lines := rawDoccomment.split("\n")
+            if lines[0] = "" {
+                lines.removeIndex(0)
+            }
+            var spaces := Int.MAX
+            for line in lines {
+                if line != "" {
+                    spaces := spaces.min(line.parse(/( *).*/)[0].byteLength())
+                }
+            }
+            for i in 0 .. lines.get_count() { -- FIXME use map
+                if lines[i] != "" {
+                    lines[i] := lines[i][spaces..]
+                }
+            }
+            def doccomment := lines.join("\n")
+            def summary:String
+            def index := doccomment.indexOf(".")
+            if index != null {
+                summary := doccomment.substring(...index)
+            }
+            else {
+                summary := doccomment
+            }
+            def md := Markdown()
+            out.open("doc")
+            var processedSummary := md.process(summary)
+            if processedSummary.startsWith("<p>") {
+                processedSummary := processedSummary.parse(/(?s)<p>(.*)<\/p>\s*/)[0]
+            }
+            out.write("summary", processedSummary)
+            out.write("description", md.process(doccomment))
+            out.close("doc")
+        }
+    }
+
+    function visible(f:FieldDecl):Bit {
+        return true | !f.annotations.isPrivate()
+    }
+
+    function visible(m:MethodDecl):Bit {
+        return true | !m.annotations.isPrivate()
+    }
+
+    method write(f:FieldDecl) {
+        if !visible(f) {
+            return
+        }
+        out.open("field")
+        out.write("name", f.name)
+        def kind:String
+        match f.fieldKind {
+            when FieldDecl.Kind.VAR:
+                kind := "var"
+            when FieldDecl.Kind.DEF:
+                kind := "def"
+            when FieldDecl.Kind.CONSTANT:
+                kind := "constant"
+            when FieldDecl.Kind.PROPERTY:
+                kind := "property"
+        }
+        out.write("kind", kind)
+        write(f.type)
+        writeDoc(f.doccomment)
+        out.close("field")
+    }
+
+    method write(m:MethodDecl) {
+        if !visible(m) {
+            return
+        }
+        def tag:String
+        match m.methodKind {
+            when MethodDecl.Kind.METHOD:
+                tag := "method"
+            when MethodDecl.Kind.FUNCTION:
+                tag := "function"
+            when MethodDecl.Kind.INIT:
+                tag := "init"
+        }
+        out.open(tag)
+        out.write("name", m.name)
+        writeDoc(m.doccomment)
+        out.open("params")
+        for p in m.parameters {
+            out.open("param")
+            out.write("name", p.name)
+            write(p.type)
+            out.close("param")
+        }
+        out.close("params")
+        if m.returnType != Type.Void() {
+            out.open("return")
+            write(m.returnType)
+            out.close("return")
+        }
+        out.close(tag)
+    }
+
+    method writeAncestors(cl:ClassDecl) {
+        out.open("ancestors")
+        var ancestor := cl.rawSuper
+        while ancestor != null {
+            write(ancestor)
+            def ancestorClass := compiler.getClass(ancestor)
+            if ancestorClass = null {
+                return
+            }
+            ancestor := ancestorClass.rawSuper
+        }
+        out.close("ancestors")
+    }
+
+    function linkTo(cl:ClassDecl):String {
+        return "broken link.html"
+    }
+
+    method writeInheritedFields(cl:ClassDecl) {
+        def fields := Array<FieldDecl>()
+        var ancestor := cl.rawSuper
+        while ancestor != null {
+            def ancestorClass := compiler.getClass(ancestor)
+            if ancestorClass = null {
+                return
+            }
+            for f in ancestorClass.fields {
+                if visible(f) {
+                    compiler.resolve(f)
+                    fields.add(f)
+                }
+            }
+            ancestor := ancestorClass.rawSuper
+        }
+        fields[..] := fields[.. by -1]
+
+        if fields.get_count() > 0 {
+            out.open("inheritedFields")
+            for f in fields {
+                out.open("field")
+                out.write("name", f.name)
+                out.write("link", "\{linkTo(f.owner)}#\{f.name}")
+                out.close("field")
+            }
+            out.close("inheritedFields")
+        }
+    }
+
+    method writeInheritedMethods(cl:ClassDecl) {
+        def methods := Array<MethodDecl>()
+        def overridden := HashSet<String>()
+        for m in cl.methods {
+            def o := compiler.getOverriddenMethod(m)
+            if o != null {
+                overridden.add(o.signature())
+            }
+        }
+        var ancestor := cl.rawSuper
+        while ancestor != null {
+            def ancestorClass := compiler.getClass(ancestor)
+            if ancestorClass = null {
+                return
+            }
+            for m in ancestorClass.methods {
+                if m.methodKind != MethodDecl.Kind.INIT & visible(m) &
+                        !overridden.contains(m.signature()) {
+                    compiler.resolve(m)
+                    methods.add(m)
+                    def o := compiler.getOverriddenMethod(m)
+                    if o != null {
+                        overridden.add(o.signature())
+                    }
+                }
+            }
+            ancestor := ancestorClass.rawSuper
+        }
+        methods[..] := methods[.. by -1]
+
+        if methods.get_count() > 0 {
+            out.open("inheritedMethods")
+            for m in methods {
+                out.open("method")
+                out.write("name", m.name)
+                out.write("link", "\{linkTo(m.owner)}#\{m.name}")
+                out.close("method")
+            }
+            out.close("inheritedMethods")
+        }
+    }
+
+    @override
+    method start(cl:ClassDecl) {
+        def dest := getPath(cl, ".xml")
+        dest.parent().createDirectories()
+        out := XMLWriter(dest.openOutputStream())
+        out.open("class")
+        out.write("name", cl.name)
+        out.write("simpleName", simpleName(cl.type()))
+        if cl.doccomment != null {
+            writeDoc(cl.doccomment)
+        }
+        writeAncestors(cl)
+        out.open("interfaces")
+        cl.rawInterfaces.apply(self.write) -- FIXME shouldn't need 'self.'
+        out.close("interfaces")
+        writeInheritedFields(cl)
+        writeInheritedMethods(cl)
+        cl.fields.apply(self.write) -- FIXME shouldn't need 'self.'
+        cl.methods.apply(self.write) -- FIXME shouldn't need 'self.'
+        out.close("class")
+    }
+
+    @override
+    method writeDeclaration(m:MethodDecl) {
+    }
+
+    @override
+    method write(m:MethodDecl, body:ImmutableArray<IRNode>) {
+    }
+
+    @override
+    method end(cl:ClassDecl) {
+    }
+
+    @override
+    method finish() {
+    }
+}

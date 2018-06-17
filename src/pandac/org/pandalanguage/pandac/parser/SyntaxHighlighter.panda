@@ -130,4 +130,5 @@ class SyntaxHighlighter {
     method rewind() {
         tokens.removeIndex(tokens.get_count() - 1)
     }
+
 }

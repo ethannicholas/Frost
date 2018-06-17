@@ -1,6 +1,12 @@
 body {
     font-family: sans-serif;
     font-size: 12pt;
+    background-color: #ffffff;
+    color: #000000;
+}
+
+#content {
+    margin-right: 12pt;
 }
 
 a {

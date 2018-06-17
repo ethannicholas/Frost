@@ -60,7 +60,7 @@ org$pandalanguage$plex$runtime$RawToken org$pandalanguage$plex$runtime$DFA$next$
     panda$core$String* $tmp30;
     panda$core$String* $tmp31;
     panda$core$Object* $tmp33;
-    panda$core$Int64 $tmp39;
+    panda$core$UInt8 $tmp39;
     panda$core$Int64 $tmp41;
     panda$core$Int64 $tmp43;
     panda$core$Int64 $tmp46;
@@ -116,8 +116,8 @@ org$pandalanguage$plex$runtime$RawToken org$pandalanguage$plex$runtime$DFA$next$
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp30));
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp31));
             panda$core$Panda$unref$panda$core$Object($tmp33);
-            panda$core$Int64$init$builtin_int64(&$tmp39, 1);
-            panda$core$System$exit$panda$core$Int64($tmp39);
+            panda$core$UInt8$init$builtin_uint8(&$tmp39, 1);
+            panda$core$System$exit$panda$core$UInt8($tmp39);
         }
         }
         panda$core$Int64 $tmp40 = panda$core$Char8$convert$R$panda$core$Int64(c26);

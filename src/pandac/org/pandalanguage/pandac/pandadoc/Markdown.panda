@@ -116,8 +116,12 @@ class Markdown {
     @private
     var listLevel := 0
 
-    init(source:File, linkResolver:(String)=>(String)?) {
-        self.source := source
+    init() {
+        init(null)
+    }
+
+    init(linkResolver:(String)=>(String)?) {
+        self.source := File("/tmp/dummy")
         self.linkResolver := linkResolver
         parser.syntaxHighlighter := SyntaxHighlighter()
     }
@@ -504,7 +508,7 @@ class Markdown {
             if t.second != current & current != SyntaxHighlighter.Kind.DEFAULT {
                 result.append("</span>")
             }
-            if t.second!= current {
+            if t.second != current {
                 current := t.second
                 match current {
                     when SyntaxHighlighter.Kind.DEFAULT: {}

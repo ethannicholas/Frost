@@ -1489,7 +1489,7 @@ void org$pandalanguage$pandac$CCodeGenerator$init$panda$io$File(org$pandalanguag
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp62));
     {
         $tmp64 = self->hCodeGenRetain;
-        org$pandalanguage$pandac$HCodeGenerator* $tmp67 = (org$pandalanguage$pandac$HCodeGenerator*) pandaObjectAlloc(160, (panda$core$Class*) &org$pandalanguage$pandac$HCodeGenerator$class);
+        org$pandalanguage$pandac$HCodeGenerator* $tmp67 = (org$pandalanguage$pandac$HCodeGenerator*) pandaObjectAlloc(152, (panda$core$Class*) &org$pandalanguage$pandac$HCodeGenerator$class);
         org$pandalanguage$pandac$HCodeGenerator$init$panda$io$File$org$pandalanguage$pandac$CCodeGenerator($tmp67, p_outDir, self);
         $tmp66 = $tmp67;
         $tmp65 = $tmp66;

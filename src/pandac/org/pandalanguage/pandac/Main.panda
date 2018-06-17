@@ -1,17 +1,20 @@
 package org.pandalanguage.pandac
 
+uses org.pandalanguage.pandac.pandadoc.PandaDoc
 uses org.pandalanguage.pandac.parser.Lexer
 uses org.pandalanguage.pandac.parser.Parser
 uses org.pandalanguage.pandac.parser.TokenKind
 
 @final
 class Main {
-    class Format {
-        constant LLVM       := 917
-        constant EXECUTABLE := 918
-        constant OBJECT     := 919
-        constant C_HEADER   := 920
-        constant C          := 921
+    choice Format {
+        LLVM
+        EXECUTABLE
+        OBJECT
+        C_HEADER
+        C
+        HTML
+        XML
     }
 
     var opt:File
@@ -152,7 +155,8 @@ class Main {
         var outFile:File? := null
         var optimizationLevel := 3
         var safetyLevel := 3
-        var format:Int? := null
+        var format:Format? := null
+        var root:String? := null
         def err := Console.errorStream()
         while !args.get_done() {
             def a := args.next()
@@ -189,20 +193,21 @@ class Main {
                     }
                     def f := args.next("an output format")
                     match f {
-                        when "exe": format := Format.EXECUTABLE
-                        when "o":   format := Format.OBJECT
-                        when "ll":  format := Format.LLVM
-                        when "h":   format := Format.C_HEADER
-                        when "c":   format := Format.C
+                        when "exe":  format := Format.EXECUTABLE
+                        when "o":    format := Format.OBJECT
+                        when "ll":   format := Format.LLVM
+                        when "h":    format := Format.C_HEADER
+                        when "c":    format := Format.C
+                        when "html": format := Format.HTML
+                        when "xml":  format := Format.XML
                         otherwise:
                             err.printLine("unsupported output format '\{f}'")
                             System.exit(1)
                     }
                 when "-i":
                     imports.add(File(args.next("a path to an import directory")))
-                when "-pause":
-                    Console.printLine("Press enter to continue...")
-                    Console.readLine()
+                when "--root":
+                    root := args.next("a path")
                 otherwise:
                     if a.endsWith(".panda") {
                         sources.add(File(a))
@@ -230,18 +235,34 @@ class Main {
                 match format {
                     when Format.EXECUTABLE: extension := ""
                     when Format.OBJECT:     extension := ".o"
-                    when Format.C_HEADER:   extension := ".h"
-                    when Format.C:          extension := ".c"
                     when Format.LLVM:       extension := ".ll"
-                    otherwise: assert false
+                    when Format.HTML:       extension := ".html"
+                    otherwise:
+                        err.printLine("output format requires a '-o' output to be specified")
+                        System.exit(1)
                 }
                 outFile := sources[0].changeExtension(extension)
+            }
+            else if format = Format.HTML {
+                err.printLine("format 'html' requires exactly one input file")
+                System.exit(1)
             }
             else {
                 err.printLine("multiple input files specified, must use '-o' to specify output " +
                         "file")
                 System.exit(1)
             }
+        }
+        if format = Format.HTML {
+            if root = null {
+                root := "."
+            }
+            HTMLProcessor().process(sources[0], outFile, root)
+            return
+        }
+        if root != null {
+            err.printLine("--root requires 'html' output format")
+            System.exit(1)
         }
         def errorCount:Int
         {
@@ -254,6 +275,8 @@ class Main {
                     cg := HCodeGenerator(outFile)
                 when Format.C:
                     cg := CCodeGenerator(outFile)
+                when Format.XML:
+                    cg := PandaDoc(outFile)
                 otherwise:
                     assert false
             }

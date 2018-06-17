@@ -10,6 +10,7 @@
 #include "panda/io/OutputStream.h"
 #include "panda/io/Console.h"
 #include "panda/core/System.h"
+#include "panda/core/UInt8.h"
 
 static panda$core$String $s1;
 org$pandalanguage$pandac$Main$Arguments$class_type org$pandalanguage$pandac$Main$Arguments$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, NULL, { panda$core$Object$convert$R$panda$core$String, org$pandalanguage$pandac$Main$Arguments$cleanup, org$pandalanguage$pandac$Main$Arguments$get_done$R$panda$core$Bit, org$pandalanguage$pandac$Main$Arguments$next$R$panda$core$String, org$pandalanguage$pandac$Main$Arguments$next$panda$core$String$R$panda$core$String} };
@@ -67,7 +68,7 @@ panda$core$String* org$pandalanguage$pandac$Main$Arguments$next$R$panda$core$Str
     panda$core$Bit $tmp14 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp13);
     if ($tmp14.value) goto $l15; else goto $l16;
     $l16:;
-    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s17, (panda$core$Int64) { 42 });
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s17, (panda$core$Int64) { 45 });
     abort();
     $l15:;
     panda$core$Int64$init$builtin_int64(&$tmp18, 1);
@@ -97,7 +98,7 @@ panda$core$String* org$pandalanguage$pandac$Main$Arguments$next$panda$core$Strin
     panda$core$String* $tmp42;
     panda$core$Object* $tmp44;
     panda$core$Int64 $tmp49;
-    panda$core$Int64 $tmp60;
+    panda$core$UInt8 $tmp60;
     panda$core$String* $returnValue61;
     panda$core$String* $tmp62;
     panda$core$String* $tmp63;
@@ -139,8 +140,8 @@ panda$core$String* org$pandalanguage$pandac$Main$Arguments$next$panda$core$Strin
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp35));
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp36));
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp32));
-        panda$core$Int64$init$builtin_int64(&$tmp60, 1);
-        panda$core$System$exit$panda$core$Int64($tmp60);
+        panda$core$UInt8$init$builtin_uint8(&$tmp60, 1);
+        panda$core$System$exit$panda$core$UInt8($tmp60);
     }
     }
     panda$core$String* $tmp65 = (($fn64) self->$class->vtable[3])(self);

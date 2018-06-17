@@ -1,6 +1,19 @@
 /* Inspired by the Monokai theme, 
         http://www.monokai.nl/blog/2006/07/15/textmate-color-theme/ */
 
+pre {
+    display:inline-block;
+    font-family: monospace;
+    background-color: #272822;
+    color: #F8F8F2;
+    border: solid #404040 1px;
+    border-radius: 4pt;
+    padding: 8pt;
+    margin-top: -3pt;
+    margin-left: 6pt;
+    margin-right: 30pt;
+}
+
 .pandacode {
     font-family: Menlo, Consolas, Andale Mono, sans-serif;
     color: #F8F8F2;
@@ -11,6 +24,11 @@
     font-style: italic;
 }
 
+.pandacode .lineNumber {
+    color: #857A65;
+    font-style: italic;
+    font-size: 90%;
+}
 .pandacode .annotation, .pandacode .label {
     color: #D6C2FF;
     font-style: italic;

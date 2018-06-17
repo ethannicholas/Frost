@@ -208,6 +208,7 @@ add_executable(bootstrap
     bootstrap/src/org/pandalanguage/pandac/FieldDecl.c
     bootstrap/src/org/pandalanguage/pandac/FieldDecl/Kind.c
     bootstrap/src/org/pandalanguage/pandac/HCodeGenerator.c
+    bootstrap/src/org/pandalanguage/pandac/HTMLProcessor.c
     bootstrap/src/org/pandalanguage/pandac/IRNode.c
     bootstrap/src/org/pandalanguage/pandac/LLVMCodeGenerator.c
     bootstrap/src/org/pandalanguage/pandac/LLVMCodeGenerator/AutoContext.c
@@ -218,6 +219,7 @@ add_executable(bootstrap
     bootstrap/src/org/pandalanguage/pandac/LLVMCodeGenerator/MethodShim.c
     bootstrap/src/org/pandalanguage/pandac/Main.c
     bootstrap/src/org/pandalanguage/pandac/Main/Arguments.c
+    bootstrap/src/org/pandalanguage/pandac/Main/Format.c
     bootstrap/src/org/pandalanguage/pandac/MethodDecl.c
     bootstrap/src/org/pandalanguage/pandac/MethodDecl/Kind.c
     bootstrap/src/org/pandalanguage/pandac/MethodDecl/Parameter.c
@@ -234,12 +236,13 @@ add_executable(bootstrap
     bootstrap/src/org/pandalanguage/pandac/Variable.c
     bootstrap/src/org/pandalanguage/pandac/Variable/Kind.c
     bootstrap/src/org/pandalanguage/pandac/Variable/Storage.c
+    bootstrap/src/org/pandalanguage/pandac/pandadoc/PandaDoc.c
+    bootstrap/src/org/pandalanguage/pandac/pandadoc/PandaDoc/XMLWriter.c
     bootstrap/src/org/pandalanguage/pandac/parser/Parser.c
     bootstrap/src/org/pandalanguage/pandac/parser/Parser/AutoSyntaxHighlight.c
     bootstrap/src/org/pandalanguage/pandac/parser/Lexer.c
     bootstrap/src/org/pandalanguage/pandac/parser/SyntaxHighlighter.c
     bootstrap/src/org/pandalanguage/pandac/parser/SyntaxHighlighter/Kind.c
-    bootstrap/src/org/pandalanguage/pandac/parser/SyntaxHighlighter/SyntaxToken.c
     bootstrap/src/org/pandalanguage/pandac/parser/Token.c
     bootstrap/src/org/pandalanguage/pandac/parser/Token/Kind.c
     bootstrap/src/org/pandalanguage/plex/runtime/DFA.c
@@ -558,6 +561,7 @@ set(pandac_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/Compiler.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/FieldDecl.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/HCodeGenerator.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/HTMLProcessor.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/IRNode.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/LLVMCodeGenerator.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/MethodDecl.panda
@@ -570,6 +574,8 @@ set(pandac_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/SymbolTable.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/Type.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/Variable.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/pandadoc/Markdown.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/pandadoc/PandaDoc.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/parser/Parser.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/parser/SyntaxHighlighter.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/regex/RegexParser.panda
@@ -726,7 +732,6 @@ add_custom_command(
 )
 
 compile_pandac_sources(markdown_objects
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/pandadoc/Markdown.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/pandadoc/Main.panda
     ${pandac_source}
 )
@@ -763,8 +768,31 @@ run_markdown(markdown_html
     docs/weakReferences.md
 )
 
+function(syntax_highlight out_var)
+    set(result)
+    foreach(input ${ARGN})
+        file(RELATIVE_PATH relative "${CMAKE_CURRENT_SOURCE_DIR}/src" ${input})
+        get_filename_component(outputPath ${relative} DIRECTORY)
+        get_filename_component(outputName ${relative} NAME_WE)
+        set(output "${CMAKE_CURRENT_BINARY_DIR}/docs/source/${outputPath}/${outputName}.html")
+        string(REGEX REPLACE "[A-Za-z]+" ".." root ${outputPath})
+        add_custom_command(
+            OUTPUT ${output}
+            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/pandac -f html ${input} -o ${output} --root ../${root}
+            DEPENDS ${input} pandac
+        )
+        list(APPEND result ${output})
+    endforeach()
+    set(${out_var} "${result}" PARENT_SCOPE)
+endfunction()
+
+syntax_highlight(panda_html
+    ${core_source}
+)
+
 add_custom_target(docs
     DEPENDS ${markdown_html}
+    DEPENDS ${panda_html}
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/docs/html/panda-master.css
             ${CMAKE_CURRENT_BINARY_DIR}/docs
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/docs/html/panda-source.css

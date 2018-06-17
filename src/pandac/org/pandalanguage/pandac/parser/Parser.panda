@@ -86,7 +86,8 @@ class Parser {
         def result := lexer.next()
         if syntaxHighlighter != null {
             if result.kind = Token.Kind.DOC_COMMENT {
-                if syntaxHighlighter.stack.get_count() = 0 {
+                if syntaxHighlighter.stack.get_count() = 0 |
+                        syntaxHighlighter.stack[0] != SyntaxHighlighter.Kind.DOC_COMMENT {
                     syntaxHighlighter.open(SyntaxHighlighter.Kind.DOC_COMMENT)
                 }
                 else {
