@@ -1,5 +1,20 @@
 package panda.collections
 
+====================================================================================================
+Provides functionality necessary for being used as a key in a [HashMap] or [HashSet]. In addition to
+the operators inherited from [Equatable], `Key` provides the ability to compute a hash code for an
+object.  A hash code is a number with the following properties:
+
+1. It is stable. Hash codes do not change during the lifetime of the object.
+2. If two objects compare equal, their hash codes are guaranteed to be equal.
+3. If two objects compare unequal, their hash codes are unlikely to be equal.
+
+If requirements 1 or 2 are violated, the [HashMap] or [HashSet] will have undefined behavior.
+Violating requirement 3 will not break anything, but will reduce performance.
+====================================================================================================
 interface Key<T:Equatable<T>> : Equatable<T> {
+    ================================================================================================
+    Computes a hash code for this object.
+    ================================================================================================
     function hash():Int
 }

@@ -5,7 +5,7 @@ delete temporary files
 fix <invalid> on unknown identifier
 Closures not working with both self and local variable captures at the same time
 Proper lambda / inner method errors
-Documentation (still need: links, choices, inner classes, ToC...)
+Documentation (still need: @param etc., links, choices, inner classes, ToC, source links...)
 Array literals
 Properties
 fix command line parsing

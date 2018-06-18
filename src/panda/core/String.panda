@@ -36,7 +36,7 @@ beginning to find each successive character. We can rewrite this code using `Str
         index := s.next(index)
     }
 
-this avoids the expensive re-scan of the string. Of course, iteration over the string is even
+This avoids the expensive re-scan of the string. Of course, iteration over the string is even
 simpler:
 
     for c in string {
@@ -91,6 +91,9 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
             return value >= other.value
         }
 
+        ============================================================================================
+        @inherit
+        ============================================================================================
         @override
         function hash():Int {
             return value
@@ -359,6 +362,9 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
         owner := null
     }
 
+    ================================================================================================
+    Returns this string.
+    ================================================================================================
     @override
     function convert():String {
         return self
@@ -429,6 +435,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
     }
 
     ================================================================================================
+    Returns an `Iterator` over the characters in this string.
     ================================================================================================
     @override
     function iterator():Iterator<Char32> {
@@ -498,6 +505,9 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
         return self[Index(start) ... Index(end)]
     }
 
+    ================================================================================================
+    Returns the concatenation of this string and another string.
+    ================================================================================================
     function +(other:String):String {
         def result := Pointer<Char8>.alloc(_length + other._length)
         for i in 0 .. _length {
@@ -509,10 +519,17 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
         return String(result, _length + other._length)
     }
 
+    ================================================================================================
+    Returns the concatenation of this string and another object's string representation. The
+    object's string representation is computed using its [convert() method](Object.convert()).
+    ================================================================================================
     function +(other:Object):String {
         return self + other.convert()->String
     }
 
+    ================================================================================================
+    Returns a string consisting of `count` copies of this string.
+    ================================================================================================
     @pre(count >= 0)
     function *(count:Int):String {
         def result := MutableString()
@@ -522,11 +539,23 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
         return result.finish()
     }
 
+    ================================================================================================
+    Returns the concatenation of another object's string representation and this string. The
+    object's string representation is computed using its [convert() method](Object.convert()).
+    ================================================================================================
     @class
     function +(o:Object, s:String):String {
         return o.convert() + s
     }
 
+    ================================================================================================
+    Returns true if these two strings are equal (contain the same sequence of codepoints). Strings
+    which logically mean the same thing but contain different codepoints are not equal. For
+    instance, the string with Unicode codepoint LATIN CAPITAL LETTER A WITH ACUTE and the string
+    with Unicode codepoints LATIN CAPITAL LETTER A followed by COMBINING ACUTE ACCENT will (in most
+    programs) display and behave exactly the same, but they do not contain the same sequence of
+    codepoints and therefore are not equal.
+    ================================================================================================
     @override
     function =(other:String):Bit {
         if _length != other._length {
@@ -541,7 +570,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
     }
 
     @override
-    function !=(other:String):Bit {
+    function !=(other:String):Bit { -- FIXME shouldn't need this implementation
         return !(self = other)
     }
 
@@ -1417,6 +1446,9 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
         return Panda.toReal64(self)
     }
 
+    ================================================================================================
+    @inherit
+    ================================================================================================
     @override
     function hash():Int {
         if _hash = 0 {

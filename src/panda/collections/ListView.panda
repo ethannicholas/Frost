@@ -25,6 +25,11 @@ interface ListView<T> : CollectionView<T> {
         }
     }
 
+    ================================================================================================
+    Returns an item from this list.
+
+    @param index the (zero-based) index of the item to return
+    ================================================================================================    
     @pre(index >= 0 & index < get_count())
     function [](index:Int):T
 
@@ -129,10 +134,20 @@ interface ListView<T> : CollectionView<T> {
         return result
     }
 
+    ================================================================================================
+    Returns a comma-separated string containing all of the items in this list. Equivalent to
+    `join(", ")`.
+    ================================================================================================
     function join():String {
         return join(", ")
     }
 
+    ================================================================================================
+    Converts all of the items in this list to strings and concatenates them, with the given
+    separator between them. For instance, `[1, 2, 3].join("|")` returns `"1|2|3"`.
+
+    @param separator the delimiter string
+    ================================================================================================    
     function join(separator:String):String {
         if get_count() = 0 {
             return ""
@@ -150,6 +165,10 @@ interface ListView<T> : CollectionView<T> {
         return result.finish()
     }
 
+    ================================================================================================
+    Returns a new list containing every entry in this list for which the `predicate` function
+    returns true. For instance, `[1, 7, -10, 5, -2].filter(x => x > 0)` returns `[1, 7, 5]`.
+    ================================================================================================
     function filter(predicate:(T)=>(Bit)):ListView<T> {
         def result := Array<T>()
         for v in self {

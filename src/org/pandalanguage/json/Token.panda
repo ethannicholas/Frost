@@ -23,6 +23,25 @@ class Token : Value {
         RBRACKET
         COMMA
         COLON
+
+        @override
+        function convert():String {
+            match self {
+                when COMMA: return "COMMA"
+                when LBRACE: return "LBRACE"
+                when REAL: return "REAL"
+                when RBRACKET: return "RBRACKET"
+                when COLON: return "COLON"
+                when STRING: return "STRING"
+                when WS: return "WS"
+                when INT: return "INT"
+                when LBRACKET: return "LBRACKET"
+                when NULL: return "NULL"
+                when TRUE: return "TRUE"
+                when FALSE: return "FALSE"
+                when RBRACE: return "RBRACE"
+            }
+        }
     }
 
     def kind:Kind

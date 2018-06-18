@@ -1,5 +1,6 @@
 package org.pandalanguage.pandac.pandadoc
 
+uses org.pandalanguage.pandac.Annotations
 uses org.pandalanguage.pandac.ClassDecl
 uses org.pandalanguage.pandac.CodeGenerator
 uses org.pandalanguage.pandac.Compiler
@@ -31,6 +32,7 @@ class PandaDoc : CodeGenerator {
         }
 
         method write(tag:String, text:String) {
+            assert !text.contains("&&gt")
             out.printLine("<\{tag}>\{text}</\{tag}>")
         }
     }
@@ -81,11 +83,46 @@ class PandaDoc : CodeGenerator {
         }
     }
 
+    function escape(s:String):String {
+        return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+    }
+
     method write(t:Type) {
         out.open("type")
-        out.write("name", t.name.replace("<", "&lt;").replace(">", "&gt;"))
-        out.write("simpleName", simpleName(t).replace("<", "&lt;").replace(">", "&gt;"))
+        out.write("name", escape(t.name))
+        out.write("simpleName", escape(simpleName(t)))
         out.close("type")
+    }
+
+    method write(a:Annotations) {
+        out.open("annotations")
+        if a.isPrivate() {
+            out.write("annotation", "@private")
+        }
+        if a.isProtected() {
+            out.write("annotation", "@protected")
+        }
+        if a.isPackage() {
+            out.write("annotation", "@package")
+        }
+        if a.isClass() {
+            out.write("annotation", "@class")
+        }
+        if a.isOverride() {
+            out.write("annotation", "@override")
+        }
+        out.close("annotations")
+-*        constant OVERRIDE         := 1 << 5
+        constant EXTERNAL         := 1 << 6
+        constant IMPLICIT         := 1 << 7
+        constant FINAL            := 1 << 8
+        constant ABSTRACT         := 1 << 9
+        constant INLINE           := 1 << 10
+        constant SPECIALIZE       := 1 << 11
+        constant WEAK             := 1 << 12
+        constant SYNTHETIC        := 1 << 13
+        constant UNSAFE_IMMUTABLE := 1 << 14*-
+
     }
 
     method writeDoc(rawDoccomment:String?) {
@@ -97,12 +134,12 @@ class PandaDoc : CodeGenerator {
             }
             var spaces := Int.MAX
             for line in lines {
-                if line != "" {
+                if line.trim() != "" {
                     spaces := spaces.min(line.parse(/( *).*/)[0].byteLength())
                 }
             }
             for i in 0 .. lines.get_count() { -- FIXME use map
-                if lines[i] != "" {
+                if lines[i].trim() != "" {
                     lines[i] := lines[i][spaces..]
                 }
             }
@@ -117,22 +154,27 @@ class PandaDoc : CodeGenerator {
             }
             def md := Markdown()
             out.open("doc")
+            def oldLevel := out.out.level
+            -- the indentation from the IndentedOutputStream will screw up any <pre> blocks in the
+            -- doccomment, so we need to temporarily zero it out
+            out.out.level := 0
             var processedSummary := md.process(summary)
             if processedSummary.startsWith("<p>") {
                 processedSummary := processedSummary.parse(/(?s)<p>(.*)<\/p>\s*/)[0]
             }
             out.write("summary", processedSummary)
             out.write("description", md.process(doccomment))
+            out.out.level := oldLevel
             out.close("doc")
         }
     }
 
     function visible(f:FieldDecl):Bit {
-        return true | !f.annotations.isPrivate()
+        return !f.annotations.isPrivate()
     }
 
     function visible(m:MethodDecl):Bit {
-        return true | !m.annotations.isPrivate()
+        return !m.annotations.isPrivate() & !m.annotations.isSynthetic()
     }
 
     method write(f:FieldDecl) {
@@ -153,9 +195,30 @@ class PandaDoc : CodeGenerator {
                 kind := "property"
         }
         out.write("kind", kind)
+        write(f.annotations)
         write(f.type)
         writeDoc(f.doccomment)
         out.close("field")
+    }
+
+    method getDocComment(m:MethodDecl):String? {
+        if m.doccomment != null & m.doccomment.trim() = "@inherit" {
+            Console.printLine("FOUND OVERRIDE ON: \{m.declaration()}")
+            def overridden := compiler.getOverriddenMethod(m)
+            if overridden = null {
+                compiler.error(m.position, "method specifies '@inherit', but no matching method " +
+                        "found among its ancestors")
+                return null
+            }
+            def result := getDocComment(overridden)
+            if result = null {
+                compiler.error(m.position, "method specifies '@inherit', but " +
+                        "\{overridden.declaration()} does not have any documentation")
+                return null
+            }
+            return result
+        }
+        return m.doccomment
     }
 
     method write(m:MethodDecl) {
@@ -172,8 +235,9 @@ class PandaDoc : CodeGenerator {
                 tag := "init"
         }
         out.open(tag)
-        out.write("name", m.name)
-        writeDoc(m.doccomment)
+        out.write("name", escape(m.name))
+        writeDoc(getDocComment(m))
+        write(m.annotations)
         out.open("params")
         for p in m.parameters {
             out.open("param")
@@ -292,9 +356,11 @@ class PandaDoc : CodeGenerator {
             writeDoc(cl.doccomment)
         }
         writeAncestors(cl)
-        out.open("interfaces")
-        cl.rawInterfaces.apply(self.write) -- FIXME shouldn't need 'self.'
-        out.close("interfaces")
+        if cl.rawInterfaces.get_count() > 0 {
+            out.open("interfaces")
+            cl.rawInterfaces.apply(self.write) -- FIXME shouldn't need 'self.'
+            out.close("interfaces")
+        }
         writeInheritedFields(cl)
         writeInheritedMethods(cl)
         cl.fields.apply(self.write) -- FIXME shouldn't need 'self.'

@@ -177,13 +177,14 @@ class WriteInts {
     }
 
     @class
-    method writeOperator(op:String, leftType:Type, rightType:Type, signMatters:Bit,
+    method writeOperator(op:String, doc:String, leftType:Type, rightType:Type, signMatters:Bit,
             out:OutputStream) {
         def resultType := binaryType(leftType, rightType, signMatters)
         if resultType = Type.INVALID {
             return
         }
         out.printLine()
+        out.printLine("    ===\{doc}===")
         out.printLine("    function \{op}(other:\{object(rightType)}):\{object(resultType)} {")
         out.printLine("        return value\{cast(leftType, resultType)} \{op} " +
                 "other.value\{cast(rightType, resultType)}")
@@ -191,15 +192,15 @@ class WriteInts {
     }
 
     @class
-    method writeOperator(op:String, type:Type, signMatters:Bit, out:OutputStream) {
-        writeOperator(op, type, Type.INT8,   signMatters, out)
-        writeOperator(op, type, Type.INT16,  signMatters, out)
-        writeOperator(op, type, Type.INT32,  signMatters, out)
-        writeOperator(op, type, Type.INT64,  signMatters, out)
-        writeOperator(op, type, Type.UINT8,  signMatters, out)
-        writeOperator(op, type, Type.UINT16, signMatters, out)
-        writeOperator(op, type, Type.UINT32, signMatters, out)
-        writeOperator(op, type, Type.UINT64, signMatters, out)
+    method writeOperator(op:String, doc:String, type:Type, signMatters:Bit, out:OutputStream) {
+        writeOperator(op, doc, type, Type.INT8,   signMatters, out)
+        writeOperator(op, doc, type, Type.INT16,  signMatters, out)
+        writeOperator(op, doc, type, Type.INT32,  signMatters, out)
+        writeOperator(op, doc, type, Type.INT64,  signMatters, out)
+        writeOperator(op, doc, type, Type.UINT8,  signMatters, out)
+        writeOperator(op, doc, type, Type.UINT16, signMatters, out)
+        writeOperator(op, doc, type, Type.UINT32, signMatters, out)
+        writeOperator(op, doc, type, Type.UINT64, signMatters, out)
     }
 
     @class
@@ -212,6 +213,7 @@ class WriteInts {
             resultType := Type.REAL32
         }
         out.printLine()
+        out.printLine("    ===Divides this number by another number.===")
         out.printLine("    function /(other:\{object(rightType)}):\{object(resultType)} {")
         out.printLine("        return value\{cast(leftType, resultType)} / " +
                 "other.value\{cast(rightType, resultType)}")
@@ -231,20 +233,23 @@ class WriteInts {
     }
 
     @class
-    method writePrefixOperator(op:String, type:Type, out:OutputStream) {
+    method writePrefixOperator(op:String, doc:String, type:Type, out:OutputStream) {
         out.printLine()
+        out.printLine("    ===\{doc}===")
         out.printLine("    function \{op}():\{object(type)} {")
         out.printLine("        return \{object(type)}(\{op}value)")
         out.printLine("    }")
     }
 
     @class
-    method writeComparisonOperator(op:String, leftType:Type, rightType:Type, out:OutputStream) {
+    method writeComparisonOperator(op:String, doc:String, leftType:Type, rightType:Type,
+            out:OutputStream) {
         def operandType := binaryType(leftType, rightType, true)
         if operandType = Type.INVALID {
             return
         }
         out.printLine()
+        out.printLine("    ===\{doc}===")
         if leftType = rightType {
             out.printLine("    @override")
         }
@@ -255,15 +260,15 @@ class WriteInts {
     }
 
     @class
-    method writeComparisonOperator(op:String, type:Type, out:OutputStream) {
-        writeComparisonOperator(op, type, Type.INT8,   out)
-        writeComparisonOperator(op, type, Type.INT16,  out)
-        writeComparisonOperator(op, type, Type.INT32,  out)
-        writeComparisonOperator(op, type, Type.INT64,  out)
-        writeComparisonOperator(op, type, Type.UINT8,  out)
-        writeComparisonOperator(op, type, Type.UINT16, out)
-        writeComparisonOperator(op, type, Type.UINT32, out)
-        writeComparisonOperator(op, type, Type.UINT64, out)
+    method writeComparisonOperator(op:String, doc:String, type:Type, out:OutputStream) {
+        writeComparisonOperator(op, doc, type, Type.INT8,   out)
+        writeComparisonOperator(op, doc, type, Type.INT16,  out)
+        writeComparisonOperator(op, doc, type, Type.INT32,  out)
+        writeComparisonOperator(op, doc, type, Type.INT64,  out)
+        writeComparisonOperator(op, doc, type, Type.UINT8,  out)
+        writeComparisonOperator(op, doc, type, Type.UINT16, out)
+        writeComparisonOperator(op, doc, type, Type.UINT32, out)
+        writeComparisonOperator(op, doc, type, Type.UINT64, out)
     }
 
     @class
@@ -273,6 +278,8 @@ class WriteInts {
         if resultType = Type.INVALID {
             return
         }
+        out.printLine("    ===Returns the larger (closest to positive infinity) of this number " +
+                "and another number.===")
         out.printLine("    function max(other:\{object(rightType)}):\{object(resultType)} {")
         out.printLine("        if value\{cast(leftType, resultType)} > " +
                 "other.value\{cast(rightType, resultType)} {")
@@ -301,6 +308,8 @@ class WriteInts {
         if resultType = Type.INVALID {
             return
         }
+        out.printLine("    ===Returns the smaller (closest to negative infinity) of this number " +
+                "and another number.===")
         out.printLine("    function min(other:\{object(rightType)}):\{object(resultType)} {")
         out.printLine("        if value\{cast(leftType, resultType)} < " +
                 "other.value\{cast(rightType, resultType)} {")
@@ -325,6 +334,8 @@ class WriteInts {
     @class
     method writeIndex(leftType:Type, rightType:Type, out:OutputStream) {
         out.printLine()
+        out.printLine("    ===Returns a single bit from this number, where index 0 is the least " +
+                "significant bit.===")
         if rightType = Type.INT64 {
             out.printLine("    @override")
         }
@@ -335,11 +346,17 @@ class WriteInts {
 
     @class
     method writeIndex(type:Type, out:OutputStream) {
+        out.printLine("    ===Returns a list of all integers in the given range. The list is " +
+                "'lazy', meaning that it does not actually allocate memory to hold the entire " +
+                "list.===")
         out.printLine("    @class")
         out.printLine("    function [](range:Range<\{object(type)}>):ListView<\{object(type)}> {")
         out.printLine("        return org.pandalanguage.panda.\{object(type)}List(SteppedRange<" +
                 "\{object(type)}, \{object(type)}>(range.min, range.max, 1, range.inclusive))")
         out.printLine("    }")
+        out.printLine("    ===Returns a list of all integers in the given stepped range. The " +
+                "list is 'lazy', meaning that it does not actually allocate memory to hold the " +
+                "entire list.===")
         out.printLine("    @class")
         out.printLine("    function [](range:SteppedRange<\{object(type)}, \{object(type)}>):" +
                 "ListView<\{object(type)}> {")
@@ -360,14 +377,16 @@ class WriteInts {
         out.printLine()
         out.printLine("    @override")
         out.printLine("    function iterator():Iterator<Bit> {")
-        out.printLine("        return org.pandalanguage.panda.IntBitIterator(self\{castInt(type, Type.UINT64)}, 1 << " +
-                "\{size(type) - 1})")
+        out.printLine("        return org.pandalanguage.panda.IntBitIterator(self" +
+                "\{castInt(type, Type.UINT64)}, 1 << \{size(type) - 1})")
         out.printLine("    }")
     }
 
     @class
     method writeCount(type:Type, out:OutputStream) {
         out.printLine()
+        out.printLine("    ===Returns the number of bits in this integer, which is always " +
+                "\{size(type)}.===")
         out.printLine("    @override")
         out.printLine("    function get_count():Int {")
         out.printLine("        return \{size(type)}")
@@ -386,6 +405,7 @@ class WriteInts {
     @class
     method writeConvertToString(type:Type, out:OutputStream) {
         out.printLine()
+        out.printLine("    ===Returns this number converted to a decimal string.===")
         out.printLine("    @override")
         out.printLine("    function convert():String {")
         var max := max(type).convert()->String.length()
@@ -425,6 +445,21 @@ class WriteInts {
     @class
     method writeConvert(type:Type, target:Type, out:OutputStream) {
         out.printLine()
+        def converted:String
+        if size(type) > size(target) {
+            converted := "truncated"
+        }
+        else if size(type) < size(target) & signed(type) {
+            converted := "sign extended"
+        }
+        else if size(type) < size(target) & !signed(type) {
+            converted := "zero extended"
+        }
+        else {
+            converted := "reinterpreted"
+        }
+        out.printLine("    ===Returns this number \{converted} to a\{size(target) = 8:n|} bit " +
+                "\{signed(target):signed|unsigned} number.===")
         out.printLine("    function convert():\{object(target)} {")
         out.printLine("        return \{object(target)}(value->\{builtin(target)})")
         out.printLine("    }")
@@ -471,6 +506,10 @@ class WriteInts {
             when 32: mask := "0xFFFFFFFF"
             when 64: mask := "0xFFFFFFFFFFFFFFFF"
         }
+        out.printLine("    === Returns a formatted representation of this number. Supported " +
+                "format strings are `\"\"`, `\"d\"`, or `\"D\"` for decimal, `\"b\"` or `\"B\"` " +
+                "for binary, `\"o\"` or `\"O\"` for octal, `\"x\"` for lowercase hexadecimal, " +
+                "and `\"X\"` for uppercase hexadecimal. ===")
         out.printLine("    @override")
         out.printLine("    function format(fmt:String):String {")
         if signed(type) {
@@ -486,6 +525,7 @@ class WriteInts {
     @class
     method writeAbs(type:Type, out:OutputStream) {
         out.printLine()
+        out.printLine("    ===Returns the absolute value of this number.===")
         out.printLine("    function abs():\{object(type)} {")
         out.printLine("        if self < 0 {")
         out.printLine("            return -self")
@@ -497,7 +537,10 @@ class WriteInts {
     @class
     method writeParse(type:Type, out:OutputStream) {
         out.printLine()
+        out.printLine("    ===Parses a string as a number in the specified radix. Returns `null` " +
+                "if the parse fails.===")
         out.printLine("    @class")
+        out.printLine("    @pre(radix >= 2 & radix <= 36)")
         out.printLine("    function parse(str:String, radix:Int):\{object(type)}? {")
         if signed(type) {
             out.printLine("        if str.startsWith(\"-\") {")
@@ -526,17 +569,45 @@ class WriteInts {
     }
 
     @class
+    function insertCommas(s:String):String {
+        if s.length() < 4 {
+            return s
+        }
+        def result := MutableString(s)
+        var index := result.end()
+        def end := result.offset(result.start(), 4)
+        while index >= end {
+            index := result.offset(index, -3)
+            result[index .. index] := ","
+        }
+        return result.finish()
+    }
+
+    @class
     method writeInt(type:Type, out:OutputStream) {
-        out.printLine("-- This file was autogenerated by 'writeints', do not modify")
+        out.printLine("---------------------------------------------------------------")
+        out.printLine("-- This file was autogenerated by 'writeints', do not modify --")
+        out.printLine("---------------------------------------------------------------")
+        out.printLine()
         out.printLine("package panda.core")
         out.printLine()
         out.printLine("uses panda.unsafe.Pointer")
         out.printLine()
+        out.printLine("===")
+        out.printLine("A\{size(type) = 8:n|} \{size(type)}-bit \{signed(type):signed|unsigned} " +
+                "integer.")
+        out.printLine("===")
         out.printLine("@final")
         out.printLine("class \{object(type)} : Value, Key<\{object(type)}>, " +
                 "Comparable<\{object(type)}>, Formattable, ListView<Bit> {")
+        out.printLine("    ===")
+        out.printLine("    The smallest value this type can hold (\{insertCommas(min(type))}).")
+        out.printLine("    ===")
         out.printLine("    constant MIN:\{object(type)} := \{min(type)}")
         out.printLine()
+        out.printLine("    ===")
+        out.printLine("    The largest value this type can hold (\{insertCommas(max(type))}).")
+        out.printLine("    ===")
         out.printLine("    constant MAX:\{object(type)} := \{max(type)}")
         out.printLine()
         out.printLine("    @private")
@@ -548,25 +619,39 @@ class WriteInts {
         out.printLine("        self.value := value")
         out.printLine("    }")
         writeConstructors(type, out)
-        writeOperator("+", type, true, out)
-        writeOperator("-", type, true, out)
-        writePrefixOperator("-", type, out)
-        writeOperator("*", type, true, out)
-        writeOperator("//", type, true, out)
-        writeOperator("%", type, true, out)
+        writeOperator("+", "Adds another number to this number.", type, true, out)
+        writeOperator("-", "Subtracts another number from this number.", type, true, out)
+        writePrefixOperator("-", "Returns the negation (additive inverse) of this number", type,
+                out)
+        writeOperator("*", "Multiplies this number by another number.", type, true, out)
+        writeOperator("//", "Divides this number by another number, returning the whole number " +
+                "portion.", type, true, out)
+        writeOperator("%", "Returns the remainder of dividing this number by another number.", type,
+                true, out)
         writeDivide(type, out)
-        writePrefixOperator("!!", type, out)
-        writeOperator("&&", type, false, out)
-        writeOperator("||", type, false, out)
-        writeOperator("~~", type, false, out)
-        writeOperator("<<", type, false, out)
-        writeOperator(">>", type, false, out)
-        writeComparisonOperator("=", type, out)
-        writeComparisonOperator("!=", type, out)
-        writeComparisonOperator("<", type, out)
-        writeComparisonOperator(">", type, out)
-        writeComparisonOperator(">=", type, out)
-        writeComparisonOperator("<=", type, out)
+        writePrefixOperator("!!", "Returns the bitwise NOT of this number.", type, out)
+        writeOperator("&&", "Returns the bitwise AND of this number with another number.", type,
+                false, out)
+        writeOperator("||", "Returns the bitwise OR of this number with another number.", type,
+                false, out)
+        writeOperator("~~", "Returns the bitwise XOR of this number with another number.", type,
+                false, out)
+        writeOperator("<<", "Returns this number shifted left by the specified number of bits.",
+                type, false, out)
+        writeOperator(">>", "Returns this number \{signed(type):arithmetic|logical} shifted " +
+                "right by the specified number of bits.", type, false, out)
+        writeComparisonOperator("=", "Returns `true` if this number is equal to the given number.",
+                type, out)
+        writeComparisonOperator("!=", "Returns `true` if this number is not equal to the given " +
+                "number.", type, out)
+        writeComparisonOperator("<", "Returns `true` if this number is less than the given " +
+                "number.", type, out)
+        writeComparisonOperator(">", "Returns `true` if this number is greater than the given " +
+                "number.", type, out)
+        writeComparisonOperator(">=", "Returns `true` if this number is greater than or equal to " +
+                "the given number.", type, out)
+        writeComparisonOperator("<=", "Returns `true` if this number is less than or equal to " +
+                "the given number.", type, out)
         if signed(type) {
             writeAbs(type, out)
         }

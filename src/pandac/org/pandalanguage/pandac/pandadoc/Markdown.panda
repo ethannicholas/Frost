@@ -967,6 +967,7 @@ class Markdown {
             -- protect emphasis (* and _) within urls
             url := url.replace(/\*/, charProtector.encode("*"))
             url := url.replace(/_/, charProtector.encode("_"))
+            url := "waiting on link resolver"
             def result := MutableString()
             result.append("<a href=\"\{url}\"")
             if title != null {

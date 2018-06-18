@@ -3,7 +3,7 @@ package org.pandalanguage.pandac.pandadoc
 constant HEADER :=
     "<html>" +
     "  <head>\n" +
-    "    <link rel=\"stylesheet\" type=\"text/css\" href=\"panda-master.css\" />\n" +
+    "    <link rel=\"stylesheet\" type=\"text/css\" href=\"panda-source.css\" />\n" +
     "    <link rel=\"stylesheet\" type=\"text/css\" href=\"pandacode-monokai.css\" />\n" +
     "  </head>\n" +
     "  <body>\n"

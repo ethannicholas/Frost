@@ -5,6 +5,51 @@ body {
     color: #000000;
 }
 
+#main {
+    white-space: nowrap;
+    display: table;
+    height: 100%;
+    width: 100%;
+}
+
+#toc {
+    display: table-cell;
+    vertical-align: top;
+    width: 200px;
+    text-overflow: ellipsis;
+}
+
+#content {
+    display: table-cell;
+    vertical-align: top;
+    white-space: normal;
+}
+
+#toc ul {
+    list-style-type: none;
+    padding-left: 12px;
+}
+
+#toc > ul {
+    padding-left: 0px;    
+}
+
+#toc li {
+    padding-left: 12px;
+}
+
+#toc li.open, #toc li.closed {
+    padding-left: 0;
+}
+
+#toc li.closed ul {
+    display: none;
+}
+
+#toc .bullet {
+    cursor: pointer;
+}
+
 #content {
     margin-right: 12pt;
 }

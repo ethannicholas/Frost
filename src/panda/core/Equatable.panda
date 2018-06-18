@@ -5,8 +5,14 @@ Interface for objects which can be compared for equality. As `Equatable` provide
 implementation of `!=`, only the `=` operator is strictly required.
 ====================================================================================================
 interface Equatable<T:Equatable<T>> {
+    ================================================================================================
+    Returns `true` if these objects are equal.
+    ================================================================================================
     function =(other:T):Bit
 
+    ================================================================================================
+    Returns `true` if these objects are not equal.
+    ================================================================================================
     function !=(other:T):Bit {
         return !(self = other)
     }

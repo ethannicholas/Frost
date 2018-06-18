@@ -15,13 +15,13 @@ class Method : Immutable {
     "real" parameters of the method, with the return value pointer coming first.
 
     It is common to, at the Panda source code level, call methods whose types do not match -
-    consider the case of calling intListView.filter(0.<=). The method 0.<= has type (Int)=>(Bit),
-    but ListView.filter has an actual parameter type of (ListView.T)=>(Bit). Obviously these are
-    logically the same thing in a ListView<Int>, but at the binary level ListView.T is really an
-    Object? and is not compatible with Int. The compiler will create a method shim in this
-    situation - a hidden method which matches the signature (ListView.T)=>(Bit) but internally
-    forwards the call to an (Int)=>(Bit). In this case the target will be a struct containing the
-    pointer to the actual method and the actual target.
+    consider the case of calling `intListView.filter(0.<=)`. The method `0.<=` has type
+    `(Int)=>(Bit)`, but `ListView.filter` has an actual parameter type of `(ListView.T)=>(Bit)`.
+    Obviously these are logically the same thing in a `ListView<Int>`, but at the binary level
+    `ListView.T` is really an `Object?` and is not compatible with `Int`. The compiler will create a
+    method shim in this situation - a hidden method which matches the signature
+    `(ListView.T)=>(Bit)` but internally forwards the call to an (Int)=>(Bit). In this case the
+    target will be a struct containing the pointer to the actual method and the actual target.
     ================================================================================================
     @private
     def pointer:Pointer<Int8>

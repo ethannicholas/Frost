@@ -1,17 +1,27 @@
 package panda.core
 
+====================================================================================================
+The root of the Panda class heirarchy. Every class in Panda ultimately descends from `Object`.
+====================================================================================================
 class Object {
-    function convert():String {
-        return "<\{$class.name}>"
-    }
-
-    @protected
-    method cleanup() {
-    }
-
     @private
     def $class:Class
 
     @private
     var refCount:Int32
+
+    ================================================================================================
+    Converts this object to a `String`. The default implementation returns `"<Class Name>"`, but
+    many classes override this to provide a more useful description of the object.
+    ================================================================================================
+    function convert():String {
+        return "<\{$class.name}>"
+    }
+
+    ================================================================================================
+    Called just before the object is destroyed. The default implementation does nothing.
+    ================================================================================================
+    @protected
+    method cleanup() {
+    }
 }

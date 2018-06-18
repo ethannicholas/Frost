@@ -116,21 +116,15 @@
     </xsl:template>
 
     <xsl:template name="toc">
-      @@@TOC@@@
+        <div id="toc">
+            @@@TOC@@@
+        </div>
     </xsl:template>
 
     <xsl:template match="/class">
         <html>
             <head>
                 <xsl:apply-templates select="name" mode="title"/>
-                <link rel="stylesheet" type="text/css">
-                    <xsl:attribute name="href">
-                        <xsl:call-template name="basePath">
-                            <xsl:with-param name="className" select="name"/> 
-                        </xsl:call-template>
-                        <xsl:text>panda-master.css</xsl:text>
-                    </xsl:attribute>
-                </link>
                 <link rel="stylesheet" type="text/css">
                     <xsl:attribute name="href">
                         <xsl:call-template name="basePath">
@@ -532,9 +526,7 @@
                 <div class="methodDescription">
                     <xsl:apply-templates select="doc/description"/>
                     <xsl:apply-templates select="params" mode="description"/>
-                    <xsl:apply-templates select="annotations" mode="pre"/>
                     <xsl:apply-templates select="return/description"/>
-                    <xsl:apply-templates select="annotations" mode="post"/>
                     <xsl:apply-templates select="seeAlsos"/>
                 </div>
             </div>
@@ -599,24 +591,6 @@
 
     <xsl:template match="annotations">
         <xsl:apply-templates select="annotation"/>
-    </xsl:template>
-
-    <xsl:template match="annotations" mode="pre">
-        <xsl:if test="count(pre/text()) > 0">
-            <dl>
-                <dt><b>Preconditions:</b></dt>
-                <dd><code><xsl:apply-templates select="pre/text()"/></code></dd>
-            </dl>
-        </xsl:if>
-    </xsl:template>
-
-    <xsl:template match="annotations" mode="post">
-        <xsl:if test="count(post/text()) > 0">
-            <dl>
-                <dt><b>Postconditions:</b></dt>
-                <dd><code><xsl:apply-templates select="post/text()"/></code></dd>
-            </dl>
-        </xsl:if>
     </xsl:template>
 
     <xsl:template match="return">

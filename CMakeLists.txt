@@ -786,18 +786,64 @@ function(syntax_highlight out_var)
     set(${out_var} "${result}" PARENT_SCOPE)
 endfunction()
 
-syntax_highlight(panda_html
+syntax_highlight(panda_source_html
     ${core_source}
+)
+
+function(run_pandadoc out_var)
+    set(result)
+    foreach(input ${ARGN})
+        file(RELATIVE_PATH relative "${CMAKE_CURRENT_SOURCE_DIR}/src" ${input})
+        get_filename_component(outputPath ${relative} DIRECTORY)
+        get_filename_component(outputName ${relative} NAME_WE)
+        set(output "${CMAKE_CURRENT_BINARY_DIR}/docs/xml/${outputPath}/${outputName}.xml")
+        string(REGEX REPLACE "[A-Za-z]+" ".." root ${outputPath})
+        add_custom_command(
+            OUTPUT ${output}
+            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/pandac -f xml ${input} -o ${CMAKE_CURRENT_BINARY_DIR}/docs/xml
+            DEPENDS ${input} pandac
+        )
+        list(APPEND result ${output})
+    endforeach()
+    set(${out_var} "${result}" PARENT_SCOPE)
+endfunction()
+
+run_pandadoc(panda_xml
+    ${core_source}
+)
+
+function(xslt_pandadoc out_var)
+    set(result)
+    set(xsl ${CMAKE_CURRENT_SOURCE_DIR}/src/tools/pandadoc.xsl)
+    foreach(input ${ARGN})
+        file(RELATIVE_PATH relative "${CMAKE_CURRENT_BINARY_DIR}/docs/xml" ${input})
+        get_filename_component(outputPath ${relative} DIRECTORY)
+        get_filename_component(outputName ${relative} NAME_WE)
+        set(output "${CMAKE_CURRENT_BINARY_DIR}/docs/${outputPath}/${outputName}.html")
+        file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/docs/${outputPath}")
+        add_custom_command(
+            OUTPUT ${output}
+            COMMAND xsltproc ${xsl} ${input} > ${output}
+            DEPENDS ${xsl} ${input}
+        )
+        list(APPEND result ${output})
+    endforeach()
+    set(${out_var} "${result}" PARENT_SCOPE)
+endfunction()
+
+xslt_pandadoc(panda_doc_html
+    ${panda_xml}
 )
 
 add_custom_target(docs
     DEPENDS ${markdown_html}
-    DEPENDS ${panda_html}
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/docs/html/panda-master.css
-            ${CMAKE_CURRENT_BINARY_DIR}/docs
+    DEPENDS ${panda_source_html}
+    DEPENDS ${panda_doc_html}
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/docs/html/panda-source.css
             ${CMAKE_CURRENT_BINARY_DIR}/docs
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/docs/html/pandacode-monokai.css
+            ${CMAKE_CURRENT_BINARY_DIR}/docs
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/docs/html/pandacode-light.css
             ${CMAKE_CURRENT_BINARY_DIR}/docs
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/docs/html/pandadoc.css
             ${CMAKE_CURRENT_BINARY_DIR}/docs
