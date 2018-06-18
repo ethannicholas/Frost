@@ -748,7 +748,7 @@ class Compiler {
         return null
     }
 
-    @post(expr = null | expr.type().resolved)
+    @post(@return = null | @return.type().resolved )
     method resolve(expr:IRNode?):IRNode? {
         if expr = null {
             return null
@@ -2769,6 +2769,13 @@ class Compiler {
 
     @post(@return != null | errorCount != 0 | !reportErrors)
     method call(m:IRNode, args:ListView<IRNode>, expectedType:Type?):IRNode? {
+        for a in args {
+            if a = IRNode.UNRESOLVED_IDENTIFIER {
+                -- force error
+                resolve(a)
+                return null
+            }
+        }
         if m.type().typeKind = Type.Kind.NULLABLE {
             return call(coerce(m, m.type().nonnullable()), args, expectedType)
         }
@@ -3386,6 +3393,7 @@ class Compiler {
         assert false
     }
 
+    @post(@return != null | errorCount != 0 | !reportErrors)
     method compileBinary(position:Position, rawLeft:IRNode, op:Token.Kind,
             rawRight:IRNode):IRNode? {
         -- FIXME use var parameters
@@ -3560,17 +3568,29 @@ class Compiler {
         def old := reportErrors
         reportErrors := false
         var result := call(left, operatorName(op), args)
-        reportErrors := old
         if result = null {
             args.clear()
             args.add(left)
+            reportErrors := old
             def resolved := resolve(right)
-            if resolved != null & resolved.type().isClass() {
+            reportErrors := false
+            if resolved != null {
+                if !resolved.type().isClass() {
+                    -- trigger error
+                    reportErrors := old
+                    return call(left, operatorName(op), args)
+                }
                 args.add(resolved)
                 def target := IRNode.TYPE_REFERENCE(resolved.position(), resolved.type())
                 result := call(target, operatorName(op), args)
+                if result = null {
+                    -- trigger error
+                    reportErrors := old
+                    return call(left, operatorName(op), args)
+                }
             }
         }
+        reportErrors := old
         return result
     }
 
@@ -4106,14 +4126,6 @@ class Compiler {
 
     @post(@return != null | errorCount != 0 | !reportErrors)
     method compileExpression(e:ASTNode):IRNode? {
-        def result := doCompileExpression(e)
-        if result = null & errorCount = 0 & reportErrors {
-            Console.printLine("ERROR: \{e}")
-        }
-        return result
-    }
-
-    method doCompileExpression(e:ASTNode):IRNode? {
         match e {
             when ASTNode.AT_PRE(position, expr):
                 return compileAtPre(position, expr)
