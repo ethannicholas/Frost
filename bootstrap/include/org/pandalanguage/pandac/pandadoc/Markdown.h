@@ -2,7 +2,6 @@
 #include "panda_c.h"
 #include "Markdown_types.h"
 typedef struct org$pandalanguage$pandac$pandadoc$Markdown org$pandalanguage$pandac$pandadoc$Markdown;
-typedef struct panda$io$File panda$io$File;
 typedef struct panda$core$MutableMethod panda$core$MutableMethod;
 typedef struct panda$core$String panda$core$String;
 typedef struct panda$core$MutableString panda$core$MutableString;
@@ -12,7 +11,8 @@ typedef struct org$pandalanguage$pandac$parser$Parser org$pandalanguage$pandac$p
 #include "panda/core/Bit_types.h"
 #include "panda/core/Int64_types.h"
 
-void org$pandalanguage$pandac$pandadoc$Markdown$init$panda$io$File$$LPpanda$core$String$RP$EQ$GT$LPpanda$core$String$RP$Q(org$pandalanguage$pandac$pandadoc$Markdown* self, panda$io$File* p_source, panda$core$MutableMethod* p_linkResolver);
+void org$pandalanguage$pandac$pandadoc$Markdown$init(org$pandalanguage$pandac$pandadoc$Markdown* self);
+void org$pandalanguage$pandac$pandadoc$Markdown$init$$LPpanda$core$String$RP$EQ$GT$LPpanda$core$String$RP$Q(org$pandalanguage$pandac$pandadoc$Markdown* self, panda$core$MutableMethod* p_linkResolver);
 panda$core$String* org$pandalanguage$pandac$pandadoc$Markdown$process$panda$core$String$R$panda$core$String(org$pandalanguage$pandac$pandadoc$Markdown* self, panda$core$String* p_raw);
 void org$pandalanguage$pandac$pandadoc$Markdown$encodeBackslashEscapes$panda$core$MutableString(org$pandalanguage$pandac$pandadoc$Markdown* self, panda$core$MutableString* p_text);
 void org$pandalanguage$pandac$pandadoc$Markdown$encodeEscapes$panda$core$MutableString$panda$collections$ListView$LTpanda$core$Char8$GT$panda$core$String(org$pandalanguage$pandac$pandadoc$Markdown* self, panda$core$MutableString* p_text, panda$collections$ListView* p_chars, panda$core$String* p_slashes);

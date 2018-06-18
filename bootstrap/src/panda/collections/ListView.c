@@ -311,7 +311,7 @@ panda$collections$ListView* panda$collections$ListView$$IDX$panda$core$SteppedRa
             panda$core$Bit $tmp101 = panda$core$Int64$$LT$panda$core$Int64$R$panda$core$Bit(p_r.step, $tmp100);
             if ($tmp101.value) goto $l102; else goto $l103;
             $l103:;
-            panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s104, (panda$core$Int64) { 120 });
+            panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s104, (panda$core$Int64) { 125 });
             abort();
             $l102:;
             $l105:;
@@ -328,7 +328,7 @@ panda$collections$ListView* panda$collections$ListView$$IDX$panda$core$SteppedRa
                 $tmp109 = $tmp113;
                 panda$collections$Array$add$panda$collections$Array$T(result84, $tmp109);
                 panda$core$Panda$unref$panda$core$Object($tmp109);
-                panda$core$Int64 $tmp114 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(current66, step65);
+                panda$core$Int64 $tmp114 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(current66, step65);
                 current66 = $tmp114;
             }
             goto $l105;
@@ -546,7 +546,7 @@ panda$collections$ListView* panda$collections$ListView$filter$$LPpanda$collectio
     panda$collections$Array* result222 = NULL;
     panda$collections$Array* $tmp223;
     panda$collections$Array* $tmp224;
-    panda$collections$Iterator* Iter$155$9229 = NULL;
+    panda$collections$Iterator* Iter$174$9229 = NULL;
     panda$collections$Iterator* $tmp230;
     panda$collections$Iterator* $tmp231;
     panda$core$Object* v247 = NULL;
@@ -575,28 +575,28 @@ panda$collections$ListView* panda$collections$ListView$filter$$LPpanda$collectio
                 panda$collections$Iterator* $tmp235 = $tmp233(((panda$collections$Iterable*) self));
                 $tmp231 = $tmp235;
                 $tmp230 = $tmp231;
-                Iter$155$9229 = $tmp230;
+                Iter$174$9229 = $tmp230;
                 panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp230));
                 panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp231));
                 $l236:;
-                ITable* $tmp239 = Iter$155$9229->$class->itable;
+                ITable* $tmp239 = Iter$174$9229->$class->itable;
                 while ($tmp239->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
                     $tmp239 = $tmp239->next;
                 }
                 $fn241 $tmp240 = $tmp239->methods[0];
-                panda$core$Bit $tmp242 = $tmp240(Iter$155$9229);
+                panda$core$Bit $tmp242 = $tmp240(Iter$174$9229);
                 panda$core$Bit $tmp243 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp242);
                 bool $tmp238 = $tmp243.value;
                 if (!$tmp238) goto $l237;
                 {
                     int $tmp246;
                     {
-                        ITable* $tmp250 = Iter$155$9229->$class->itable;
+                        ITable* $tmp250 = Iter$174$9229->$class->itable;
                         while ($tmp250->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
                             $tmp250 = $tmp250->next;
                         }
                         $fn252 $tmp251 = $tmp250->methods[1];
-                        panda$core$Object* $tmp253 = $tmp251(Iter$155$9229);
+                        panda$core$Object* $tmp253 = $tmp251(Iter$174$9229);
                         $tmp249 = $tmp253;
                         $tmp248 = $tmp249;
                         v247 = $tmp248;
@@ -629,8 +629,8 @@ panda$collections$ListView* panda$collections$ListView$filter$$LPpanda$collectio
             $tmp228 = -1;
             goto $l226;
             $l226:;
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$155$9229));
-            Iter$155$9229 = NULL;
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$174$9229));
+            Iter$174$9229 = NULL;
             switch ($tmp228) {
                 case -1: goto $l258;
             }

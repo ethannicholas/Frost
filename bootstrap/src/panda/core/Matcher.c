@@ -97,7 +97,7 @@ void panda$core$Matcher$appendReplacement$panda$core$MutableString$panda$core$St
     panda$core$Bit $tmp31;
     if (self->matched.value) goto $l27; else goto $l28;
     $l28:;
-    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s29, (panda$core$Int64) { 109 }, &$s30);
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s29, (panda$core$Int64) { 110 }, &$s30);
     abort();
     $l27:;
     panda$core$Bit$init$builtin_bit(&$tmp31, true);
@@ -136,7 +136,7 @@ void panda$core$Matcher$appendReplacement$panda$core$MutableString$panda$core$St
     panda$core$String$Index $tmp94;
     if (self->matched.value) goto $l32; else goto $l33;
     $l33:;
-    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s34, (panda$core$Int64) { 126 }, &$s35);
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s34, (panda$core$Int64) { 127 }, &$s35);
     abort();
     $l32:;
     panda$core$Matcher$get_start$R$panda$core$String$Index(&$tmp38, self);

@@ -236,8 +236,13 @@ add_executable(bootstrap
     bootstrap/src/org/pandalanguage/pandac/Variable.c
     bootstrap/src/org/pandalanguage/pandac/Variable/Kind.c
     bootstrap/src/org/pandalanguage/pandac/Variable/Storage.c
+    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown.c
+    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/CodeReplacer.c
+    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/HTMLToken.c
+    bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/LinkDefinition.c
     bootstrap/src/org/pandalanguage/pandac/pandadoc/PandaDoc.c
     bootstrap/src/org/pandalanguage/pandac/pandadoc/PandaDoc/XMLWriter.c
+    bootstrap/src/org/pandalanguage/pandac/pandadoc/Protector.c
     bootstrap/src/org/pandalanguage/pandac/parser/Parser.c
     bootstrap/src/org/pandalanguage/pandac/parser/Parser/AutoSyntaxHighlight.c
     bootstrap/src/org/pandalanguage/pandac/parser/Lexer.c

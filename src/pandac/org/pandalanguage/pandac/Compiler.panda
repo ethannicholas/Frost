@@ -819,20 +819,17 @@ class Compiler {
         if cl.resolved != Resolution.RESOLVED {
             return false
         }
-        var current := cl.type()
-        loop {
-            if current = null {
-                return false
-            }
-            if current.name = "panda.core.Immutable" {
-                return true
-            }
-            def superclass := getClass(current)
+        if cl.name = "panda.core.Immutable" {
+            return true
+        }
+        if cl.rawSuper != null {
+            def superclass := getClass(cl.rawSuper)
             if superclass = null {
                 return false
             }
-            current := superclass.rawSuper
+            return isImmutable(superclass)
         }
+        return false
     }
 
     method isImmutable(t:Type):Bit {

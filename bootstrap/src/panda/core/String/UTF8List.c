@@ -71,7 +71,7 @@ panda$core$Char8 panda$core$String$UTF8List$$IDX$panda$core$Int64$R$panda$core$C
     panda$core$Bit $tmp12 = { $tmp5 };
     if ($tmp12.value) goto $l13; else goto $l14;
     $l14:;
-    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s15, (panda$core$Int64) { 109 }, &$s16);
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s15, (panda$core$Int64) { 112 }, &$s16);
     abort();
     $l13:;
     $returnValue17 = self->str->data[p_index.value];

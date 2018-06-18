@@ -93,7 +93,7 @@ panda$core$Char32 panda$core$String$UTF32Iterator$next$R$panda$core$Char32(panda
     panda$core$Bit $tmp9 = panda$core$Int64$$LT$panda$core$Int64$R$panda$core$Bit(self->index, self->str->_length);
     if ($tmp9.value) goto $l10; else goto $l11;
     $l11:;
-    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s12, (panda$core$Int64) { 186 });
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s12, (panda$core$Int64) { 189 });
     abort();
     $l10:;
     c13 = self->str->data[self->index.value];

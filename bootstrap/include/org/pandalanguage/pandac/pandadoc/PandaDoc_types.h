@@ -15,6 +15,6 @@ typedef struct org$pandalanguage$pandac$pandadoc$PandaDoc {
     org$pandalanguage$pandac$pandadoc$PandaDoc$XMLWriter* out;
 } org$pandalanguage$pandac$pandadoc$PandaDoc;
 #include "panda/core/Class.h"
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[12]; } org$pandalanguage$pandac$pandadoc$PandaDoc$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[24]; } org$pandalanguage$pandac$pandadoc$PandaDoc$class_type;
 extern org$pandalanguage$pandac$pandadoc$PandaDoc$class_type org$pandalanguage$pandac$pandadoc$PandaDoc$class;
 
