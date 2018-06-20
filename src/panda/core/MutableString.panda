@@ -29,28 +29,8 @@ class MutableString {
         }
 
         @override
-        function !=(other:Index):Bit {
-            return !(self = other)
-        }
-
-        @override
-        function <(other:Index):Bit {
-            return value < other.value
-        }
-
-        @override
         function >(other:Index):Bit {
             return value > other.value
-        }
-
-        @override
-        function <=(other:Index):Bit {
-            return value <= other.value
-        }
-
-        @override
-        function >=(other:Index):Bit {
-            return value >= other.value
         }
 
         @override

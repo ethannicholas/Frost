@@ -1794,6 +1794,7 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     method getCastReference(value:String, src:Type, target:Type, out:OutputStream):String {
+        out.printLine("; cast \{src} to \{target}")
         def op:String
         if target.isBuiltinNumber() {
             assert src.isBuiltinNumber()

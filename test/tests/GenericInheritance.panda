@@ -1,0 +1,36 @@
+interface Interface1<A> {
+    method check(a:A):Bit {
+        Console.printLine("checking \{a}")
+        return true
+    }
+}
+
+interface Interface2<B, C> : Interface1<B> {
+    method test1(b:B, c:C) {
+        Console.printLine("test1: b:\{b}, c:\{c}")
+        check(b)
+    }
+
+    method test2():B
+}
+
+class GenericInheritance<D, E> : Interface2<E, D> {
+    def d:D
+    def e:E
+
+    init(d:D, e:E) {
+        self.d := d
+        self.e := e
+    }
+
+    @override
+    method test2():E {
+        test1(e, d)
+        return e
+    }
+
+    @class
+    method main() {
+        Console.printLine(GenericInheritance<String, Int>("Hello", 12).test2())
+    }
+}

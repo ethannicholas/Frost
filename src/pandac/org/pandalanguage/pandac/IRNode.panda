@@ -523,7 +523,10 @@ choice IRNode {
             when EXPRESSION_WITH_EXTRA_EFFECTS(expr, stmt):
                 return "\{expr} -* and then: \{stmt} *-"
             when FIELD_REFERENCE(_, _, base, field):
-                return "\{base}.\{field.name}"
+                if base != null {
+                    return "\{base}.\{field.name}"
+                }
+                return field.name
             when IF(_, test, ifTrue, ifFalse):
                 def result := MutableString("if \{test} {")
                 for s in ifTrue {

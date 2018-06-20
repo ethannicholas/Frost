@@ -1189,12 +1189,26 @@ class Compiler {
         return cl.virtualMethods
     }
 
-    method addInheritedMethods(st:SymbolTable, name:String, result:Array<MethodRef>,
-            types:ListView<Type>) {
+    method addInheritedMethods(st:SymbolTable, name:String, result:Array<MethodRef>) {
     }
 
-    method getMethodReference(st:SymbolTable, target:IRNode?, name:String, position:Position,
-            types:ListView<Type>):IRNode? {
+    function getTarget(position:Position, m:MethodDecl, explicitTarget:IRNode?):IRNode {
+        if explicitTarget != null {
+            return explicitTarget
+        }
+        if m.methodKind = MethodDecl.Kind.INIT {
+            return IRNode.CONSTRUCTED_OBJECT(position, m.owner.type())
+        }
+        if m.annotations.isClass() | currentMethod[0].annotations.isClass() {
+            return IRNode.TYPE_REFERENCE(position, m.owner.type())
+        }
+        def result := compileSelf(position, false)
+        assert result != null, "failed to grab self for \{m.declaration()}:\{position}"
+        return result
+    }
+
+    method getMethodReference(st:SymbolTable, rawTarget:IRNode?, name:String,
+            position:Position):IRNode? {
         def methods := Array<MethodRef>()
         def s := st[name]
         assert s != null, "could not find method '\{name}'"
@@ -1203,27 +1217,37 @@ class Compiler {
             if s->MethodDecl.resolved != Resolution.RESOLVED {
                 return null
             }
-            methods.add(MethodRef(s->MethodDecl, types))
+            def target := getTarget(position, s->MethodDecl, rawTarget)
+            methods.add(MethodRef(self, target, s->MethodDecl))
         }
         else {
             assert s.kind = Symbol.Kind.METHODS
             for m in s->Methods.methods {
+                if m.annotations.isClass() & rawTarget != null &
+                        rawTarget != IRNode.TYPE_REFERENCE {
+                    continue
+                }
                 resolve(m)
                 if m.resolved != Resolution.RESOLVED {
                     return null
                 }
-                methods.add(MethodRef(m, types))
+                def target := getTarget(position, m, rawTarget)
+                methods.add(MethodRef(self, target, m))
+            }
+            if methods.get_count() = 0 {
+                error(position, "class '\{rawTarget.type().name}' does not contain any @class " +
+                        "methods named '\{name}'")
             }
         }
         for p in st.parents {
-            addInheritedMethods(p, name, methods, types)
+            addInheritedMethods(p, name, methods)
         }
         if methods.get_count() = 1 {
-            return IRNode.METHOD_REFERENCE(position, effectiveMethodType(target, methods[0]),
-                    target, methods[0])
+            return IRNode.METHOD_REFERENCE(position, methods[0].effectiveType, methods[0].target,
+                    methods[0])
         }
         else {
-            return IRNode.UNRESOLVED_METHOD_REFERENCE(position, target, methods.finish())
+            return IRNode.UNRESOLVED_METHOD_REFERENCE(position, rawTarget, methods.finish())
         }
     }
 
@@ -1250,7 +1274,7 @@ class Compiler {
                 }
                 return null
             when Symbol.Kind.METHOD, Symbol.Kind.METHODS:
-                return getMethodReference(st, target, s.name, position, typeParameters(target))
+                return getMethodReference(st, target, s.name, position)
             when Symbol.Kind.VARIABLE:
                 def v := s->Variable
                 if v.owner !== null & v.owner !== currentMethod[0] {
@@ -1331,7 +1355,7 @@ class Compiler {
             when Type.Kind.GENERIC_PARAMETER:
                 return raw
             otherwise:
-                assert false, "cannot remap type \{context}"
+                assert false, "cannot remap type using context \{context}"
         }
     }
 
@@ -1647,45 +1671,6 @@ class Compiler {
         return 64
     }
 
-    @private
-    function effectiveMethodType(target:IRNode?, owner:ClassDecl, isClass:Bit,
-            methodType:Type):Type {
-        var result := methodType
-        if (target = null | target = IRNode.TYPE_REFERENCE) & !isClass {
-            def params := Array<Type>()
-            params.add(owner.type())
-            params.addAll(result.subtypes[0 .. result.subtypes.get_count() - 1])
-            result := Type.methodType(result.position, result.typeKind, params,
-                    result.subtypes[result.subtypes.get_count() - 1])
-        }
-        -- if we have a mutable target, we need to mark the method mutable
-        if target != null & (result.typeKind = Type.Kind.IMMUTABLE_METHOD |
-                result.typeKind = Type.Kind.IMMUTABLE_FUNCTION) {
-            def cl := getClass(target.type())
-            if cl != null & !isImmutable(cl) {
-                def typeKind:Type.Kind
-                if result.typeKind = Type.Kind.IMMUTABLE_METHOD {
-                    typeKind := Type.Kind.METHOD
-                }
-                else {
-                    typeKind := Type.Kind.FUNCTION
-                }
-                result := Type.methodType(result.position, typeKind,
-                        result.subtypes[0 .. result.subtypes.get_count() - 1],
-                        result.subtypes[result.subtypes.get_count() - 1])
-            }
-        }
-        return result
-    }
-
-    function effectiveMethodType(target:IRNode?, m:MethodRef):Type {
-        return effectiveMethodType(target, m.value.owner, m.value.annotations.isClass(), m.type())
-    }
-
-    function effectiveMethodType(target:IRNode?, m:MethodDecl):Type {
-        return effectiveMethodType(target, m.owner, m.annotations.isClass(), m.type())
-    }
-
     function unresolvedLambdaCoercionCost(parameters:ImmutableArray<String>, expr:ASTNode,
             target:Type):Int? {
         if !target.isMethod() {
@@ -1732,7 +1717,6 @@ class Compiler {
                 }
                 return base + cost + NONNULLABLE_TO_NULLABLE_CAST_COST
             when Type.Kind.GENERIC_PARAMETER:
-                assert base = 0
                 return coercionCost(expr, target.parameter.bound)
         }
         match expr {
@@ -1806,7 +1790,7 @@ class Compiler {
             when IRNode.UNRESOLVED_METHOD_REFERENCE(_, targetNode, methods):
                 var bestCost:Int? := null
                 for m in methods {
-                    def cost := coercionCost(effectiveMethodType(targetNode, m), target)
+                    def cost := coercionCost(m.effectiveType, target)
                     if cost = null {
                         continue
                     }
@@ -2200,7 +2184,7 @@ class Compiler {
                 var bestCost:Int? := null
                 var best := Array<MethodRef?>()
                 for m in methods {
-                    def type := effectiveMethodType(targetNode, m)
+                    def type := m.effectiveType
                     def cost := coercionCost(type, target)
                     if cost = null {
                         continue
@@ -2214,8 +2198,7 @@ class Compiler {
                     }
                 }
                 if best.get_count() = 1 {
-                    return methodCast(IRNode.METHOD_REFERENCE(position,
-                            effectiveMethodType(targetNode, best[0].value),
+                    return methodCast(IRNode.METHOD_REFERENCE(position, best[0].effectiveType,
                             targetNode, best[0]), target)
                 }
                 if best.get_count() = 0 {
@@ -2324,7 +2307,8 @@ class Compiler {
         currentClass.push(methodClass)
         compile(shim)
         currentClass.pop(methodClass)
-        return IRNode.METHOD_REFERENCE(position, target, node, MethodRef(shim, Array<Type>())) -- FIXME literal
+        return coerce(IRNode.METHOD_REFERENCE(position, shim.type(), node,
+                MethodRef(self, IRNode.SELF(position, shim.owner.type()), shim)), target)
     }
 
     -- FIXME figure out how to handle list comparisons
@@ -2366,7 +2350,9 @@ class Compiler {
             def methodClass := getClass("panda.core.Method")
             assert methodClass != null
             resolve(methodClass.methods[0])
-            def initMethod := MethodRef(methodClass.methods[0], Array<Type>())
+            def initMethod := MethodRef(self,
+                    getTarget(position, methodClass.methods[0], null),
+                    methodClass.methods[0])
             def args := Array<IRNode>() -- FIXME literal
             args.add(node)
             args.add(IRNode.NULL(position, Type.Any()))
@@ -2535,7 +2521,7 @@ class Compiler {
     }
 
     method actualReturnType(m:MethodRef):Type {
-        if getClass(m.owner()).annotations.isSpecialize() {
+        if getClass(m.owner).annotations.isSpecialize() {
             return m.returnType()
         }
         if m.value.annotations.isFinal() {
@@ -2544,7 +2530,8 @@ class Compiler {
         return inheritedType(m.value).returnType()
     }
 
-    method call(position:Position, target:IRNode?, rawM:MethodRef, args:ListView<IRNode>):IRNode? {
+    method call(position:Position, target:IRNode?, rawM:MethodRef?, args:ListView<IRNode>):IRNode? {
+        assert rawM != null
         assert rawM.value.resolved != Resolution.UNRESOLVED
         if rawM.value.resolved = Resolution.RESOLVED_WITH_ERRORS {
             return null
@@ -2557,7 +2544,7 @@ class Compiler {
         def finalArgs := Array<IRNode>()
         if target != null & target != IRNode.CONSTRUCTED_OBJECT &
                 !m.value.annotations.isClass() {
-            finalArgs.add(cast(position, target, m.owner(), false))
+            finalArgs.add(cast(position, target, m.owner, false))
         }
         if m.value.methodKind = MethodDecl.Kind.INIT {
             if target = null {
@@ -2600,9 +2587,9 @@ class Compiler {
             finalArgs.add(coerced)
         }
         if m.value.owner.name = "panda.unsafe.Pointer" {
-            if isRefCounted(m.types[0]) {
-                match m.value.name {
-                    when "[]:=":
+            match m.value.name {
+                when "[]:=":
+                    if isRefCounted(m.target.type().subtypes[1]) {
                         def statements := Array<IRNode>()
                         reusedValueCount += 1
                         def reusedPointer := IRNode.REUSED_VALUE_DEFINITION(finalArgs[0],
@@ -2627,7 +2614,7 @@ class Compiler {
                         statements.add(compilePandaCall("ref", reusedValue))
                         statements.add(IRNode.CALL(position, m.returnType(), m, finalArgs.finish()))
                         return IRNode.BLOCK(position, statements.finish())
-                }
+                    }
             }
             return IRNode.CALL(position, m.returnType(), m, finalArgs.finish())
         }
@@ -2647,7 +2634,8 @@ class Compiler {
         }
     }
 
-    method call(target:IRNode, name:String, args:ListView<IRNode>):IRNode? {
+    method call(target:IRNode?, name:String, args:ListView<IRNode>):IRNode? {
+        assert target != null
         return call(target, name, args, null)
     }
 
@@ -2674,7 +2662,8 @@ class Compiler {
         return null
     }
 
-    method call(target:IRNode, name:String, args:ListView<IRNode>, expectedType:Type?):IRNode? {
+    method call(target:IRNode?, name:String, args:ListView<IRNode>, expectedType:Type?):IRNode? {
+        assert target != null
         def resolved := resolve(target)
         if resolved = null {
             return null
@@ -2714,7 +2703,8 @@ class Compiler {
         return call(ref, args, expectedType)
     }
 
-    method call(m:IRNode, args:ListView<IRNode>):IRNode? {
+    method call(m:IRNode?, args:ListView<IRNode>):IRNode? {
+        assert m != null
         return call(m, args, null)
     }
 
@@ -2765,7 +2755,8 @@ class Compiler {
     }
 
     @post(@return != null | errorCount != 0 | !reportErrors)
-    method call(m:IRNode, args:ListView<IRNode>, expectedType:Type?):IRNode? {
+    method call(m:IRNode?, args:ListView<IRNode>, expectedType:Type?):IRNode? {
+        assert m != null -- FIXME use nonnullable parameter
         for a in args {
             if a = IRNode.UNRESOLVED_IDENTIFIER {
                 -- force error
@@ -2844,9 +2835,10 @@ class Compiler {
                     return null
                 }
                 def owner := IRNode.TYPE_REFERENCE(m.position(), ce.owner.type())
+                def target := IRNode.CONSTRUCTED_OBJECT(m.position(), ce.owner.type())
                 def initCall := call(m.position(),
                         IRNode.CONSTRUCTED_OBJECT(m.position(), ce.owner.type()),
-                        MethodRef(initMethod, Array<Type>()), finalArgs) -- FIXME literal
+                        MethodRef(self, target, initMethod), finalArgs) -- FIXME literal
                 var construct := IRNode.CONSTRUCT(m.position(), ce.owner.type(), initCall)
                 if isRefCounted(ce.owner.type()) {
                     reusedValueCount += 1
@@ -3511,7 +3503,6 @@ class Compiler {
                 if cl = null {
                     return null
                 }
-                def parameters := typeParameters(left.type())
                 def methods := getSymbolTable(cl)["[]"]
                 def type:Type
                 if methods != null {
@@ -3519,13 +3510,13 @@ class Compiler {
                     if methods.kind = Symbol.Kind.METHOD {
                         def m := methods->MethodDecl
                         resolve(m)
-                        types.add(MethodRef(m, parameters).returnType())
+                        types.add(MethodRef(self, left, m).returnType())
                     }
                     else {
                         assert methods.kind = Symbol.Kind.METHODS
                         for m in methods->Methods.methods {
                             resolve(m)
-                            types.add(MethodRef(m, parameters).returnType())
+                            types.add(MethodRef(self, left, m).returnType())
                         }
                     }
                     type := Type(types)
@@ -3566,8 +3557,6 @@ class Compiler {
         reportErrors := false
         var result := call(left, operatorName(op), args)
         if result = null {
-            args.clear()
-            args.add(left)
             reportErrors := old
             def resolved := resolve(right)
             reportErrors := false
@@ -3577,9 +3566,11 @@ class Compiler {
                     reportErrors := old
                     return call(left, operatorName(op), args)
                 }
-                args.add(resolved)
+                def args2 := Array<IRNode>()
+                args2.add(left)
+                args2.add(resolved)
                 def target := IRNode.TYPE_REFERENCE(resolved.position(), resolved.type())
-                result := call(target, operatorName(op), args)
+                result := call(target, operatorName(op), args2)
                 if result = null {
                     -- trigger error
                     reportErrors := old
@@ -3660,8 +3651,8 @@ class Compiler {
                 }
                 if m != null {
                     resolve(m)
-                    def ref := MethodRef(m, typeParameters(base))
-                    def methodRef := IRNode.METHOD_REFERENCE(position, ref.type(), base, ref)
+                    def ref := MethodRef(self, base, m)
+                    def methodRef := IRNode.METHOD_REFERENCE(position, ref.effectiveType, base, ref)
                     def args := Array<IRNode>() -- FIXME literal
                     return call(methodRef, args)
                 }
@@ -3864,7 +3855,6 @@ class Compiler {
     method compileSelf(position:Position, explicit:Bit):IRNode? {
         if currentMethod[0].annotations.isClass() {
             error(position, "cannot reference 'self' from a @class method")
-            System.crash()
             return null
         }
         def type:Type
@@ -4112,7 +4102,7 @@ class Compiler {
         }
         writeCode := oldWriteCode
         return IRNode.METHOD_REFERENCE(position, methodDecl.type(), target,
-                MethodRef(methodDecl, Array<Type>())) -- FIXME literal
+                MethodRef(self, getTarget(position, methodDecl, target), methodDecl)) -- FIXME literal
     }
 
     method compileRegex(position:Position, regex:String):IRNode? {

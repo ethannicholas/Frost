@@ -15,6 +15,7 @@ figure out rules for init / cleanup, make sure I'm following them consistently, 
     can that don't rely on dataflow
 remove broken '='' crap on choice, add proper Equatable implementation when appropriate. Accept that
     we'll have to use 'match' whenever the choice is not Equatable.
+var parameters
 all tests working (incl. C)
 verify build & run from directories containing spaces
 

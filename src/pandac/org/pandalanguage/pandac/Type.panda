@@ -596,6 +596,8 @@ class Type : Symbol, Key<Type> {
         return Type.Object()
     }
 
+    @pre(typeKind != Kind.INVALID)
+    @post(@return.typeKind != Kind.INVALID)
     method remap(types:HashMap<String, Type>):Type {
         if types.get_count() = 0 {
             return self
@@ -617,37 +619,13 @@ class Type : Symbol, Key<Type> {
             when Kind.NULLABLE:
                 return subtypes[0].remap(types).nullable()
             when Kind.METHOD, Kind.FUNCTION, Kind.IMMUTABLE_METHOD, Kind.IMMUTABLE_FUNCTION:
-                def remapped := Array<Type>()
-                def name := MutableString("(")
-                var separator := ""
+                def parameters := Array<Type>()
                 assert subtypes.get_count() >= 1
                 for i in 0 .. subtypes.get_count() - 1 {
-                    def child := subtypes[i].remap(types)
-                    name.append(separator)
-                    name.append(child.name)
-                    remapped.add(child)
-                    separator := ", "
+                    parameters.add(subtypes[i].remap(types))
                 }
-                match typeKind {
-                    when Kind.FUNCTION:
-                        name.append(")=>(")
-                    when Kind.METHOD:
-                        name.append(")=&>(")
-                    when Kind.IMMUTABLE_FUNCTION:
-                        name.append(")=>*(")
-                    when Kind.IMMUTABLE_METHOD:
-                        name.append(")=&>*(")
-                }
-                if subtypes[subtypes.get_count() - 1] != Type.Void() {
-                    def child := subtypes[subtypes.get_count() - 1].remap(types)
-                    name.append(child.name)
-                    remapped.add(child)
-                }
-                else {
-                    remapped.add(Type.Void())
-                }
-                name.append(")")
-                return Type(name.finish(), typeKind, position, remapped, resolved)
+                return methodType(position, typeKind, parameters,
+                        subtypes[subtypes.get_count() - 1].remap(types))
             otherwise: return self
         }
     }

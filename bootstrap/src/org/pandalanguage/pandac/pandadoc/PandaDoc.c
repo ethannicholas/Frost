@@ -2437,7 +2437,7 @@ void org$pandalanguage$pandac$pandadoc$PandaDoc$start$org$pandalanguage$pandac$C
                 $tmp993 = $tmp993->next;
             }
             $fn995 $tmp994 = $tmp993->methods[3];
-            $tmp994(((panda$collections$CollectionView*) p_cl->rawInterfaces), ((panda$core$Object*) $tmp991));
+            $tmp994(((panda$collections$CollectionView*) p_cl->rawInterfaces), ((panda$core$MutableMethod*) ((panda$core$Object*) $tmp991)));
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp991));
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp992));
             (($fn997) self->out->$class->vtable[3])(self->out, &$s996);
@@ -2454,7 +2454,7 @@ void org$pandalanguage$pandac$pandadoc$PandaDoc$start$org$pandalanguage$pandac$C
             $tmp1002 = $tmp1002->next;
         }
         $fn1004 $tmp1003 = $tmp1002->methods[3];
-        $tmp1003(((panda$collections$CollectionView*) p_cl->fields), ((panda$core$Object*) $tmp1000));
+        $tmp1003(((panda$collections$CollectionView*) p_cl->fields), ((panda$core$MutableMethod*) ((panda$core$Object*) $tmp1000)));
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp1000));
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp1001));
         panda$core$MutableMethod* $tmp1005 = (panda$core$MutableMethod*) pandaObjectAlloc(32, (panda$core$Class*) &panda$core$MutableMethod$class);
@@ -2466,7 +2466,7 @@ void org$pandalanguage$pandac$pandadoc$PandaDoc$start$org$pandalanguage$pandac$C
             $tmp1007 = $tmp1007->next;
         }
         $fn1009 $tmp1008 = $tmp1007->methods[3];
-        $tmp1008(((panda$collections$CollectionView*) p_cl->methods), ((panda$core$Object*) $tmp1005));
+        $tmp1008(((panda$collections$CollectionView*) p_cl->methods), ((panda$core$MutableMethod*) ((panda$core$Object*) $tmp1005)));
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp1005));
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp1006));
         (($fn1011) self->out->$class->vtable[3])(self->out, &$s1010);

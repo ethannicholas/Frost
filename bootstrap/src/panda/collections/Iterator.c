@@ -174,7 +174,7 @@ panda$collections$Iterator* panda$collections$Iterator$filter$$LPpanda$collectio
     panda$collections$Iterator$FilterIterator* $tmp53 = (panda$collections$Iterator$FilterIterator*) pandaObjectAlloc(48, (panda$core$Class*) &panda$collections$Iterator$FilterIterator$class);
     panda$core$MutableMethod* $tmp54 = (panda$core$MutableMethod*) pandaObjectAlloc(32, (panda$core$Class*) &panda$core$MutableMethod$class);
     panda$core$MutableMethod$init$panda$unsafe$Pointer$LTpanda$core$Int8$GT$panda$core$Object$Q($tmp54, (panda$core$Int8*) &panda$core$MutableMethod$$shim1$panda$collections$Iterator$FilterIterator$T$R$panda$core$Bit, ((panda$core$Object*) p_predicate));
-    panda$collections$Iterator$FilterIterator$init$panda$collections$Iterator$LTpanda$collections$Iterator$FilterIterator$T$GT$$LPpanda$collections$Iterator$FilterIterator$T$RP$EQ$GT$LPpanda$core$Bit$RP($tmp53, self, ((panda$core$Object*) $tmp54));
+    panda$collections$Iterator$FilterIterator$init$panda$collections$Iterator$LTpanda$collections$Iterator$FilterIterator$T$GT$$LPpanda$collections$Iterator$FilterIterator$T$RP$EQ$GT$LPpanda$core$Bit$RP($tmp53, self, ((panda$core$MutableMethod*) ((panda$core$Object*) $tmp54)));
     $tmp52 = $tmp53;
     $tmp51 = ((panda$collections$Iterator*) $tmp52);
     $returnValue50 = $tmp51;
