@@ -96,14 +96,14 @@ method main() {
 
     Console.printLine("split1")
     def split1 := "This is a long string".split(" ")
-    for i in 0 .. split1.count {
+    for i in 0 .. split1.get_count() {
         Console.printLine(split1[i])
     }
     Console.printLine()
 
     Console.printLine("split2")
     def split2 := "This is a long string".split(" ", 3)
-    for i in 0 .. split2.count {
+    for i in 0 .. split2.get_count() {
         Console.printLine(split2[i])
     }
     Console.printLine()

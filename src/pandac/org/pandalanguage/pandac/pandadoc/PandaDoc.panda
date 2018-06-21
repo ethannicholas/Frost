@@ -7,6 +7,7 @@ uses org.pandalanguage.pandac.Compiler
 uses org.pandalanguage.pandac.FieldDecl
 uses org.pandalanguage.pandac.IRNode
 uses org.pandalanguage.pandac.MethodDecl
+uses org.pandalanguage.pandac.Pair
 uses org.pandalanguage.pandac.Type
 
 class PandaDoc : CodeGenerator {
@@ -43,6 +44,10 @@ class PandaDoc : CodeGenerator {
     var compiler:Compiler?
 
     var out:XMLWriter
+
+    var returns:String?
+
+    var params := HashMap<String, String>()
 
     init(outDir:File) {
         self.outDir := outDir
@@ -111,62 +116,77 @@ class PandaDoc : CodeGenerator {
         if a.isOverride() {
             out.write("annotation", "@override")
         }
+        if a.isFinal() {
+            out.write("annotation", "@final")
+        }
+        if a.isWeak() {
+            out.write("annotation", "@weak")
+        }
         out.close("annotations")
--*        constant OVERRIDE         := 1 << 5
-        constant EXTERNAL         := 1 << 6
-        constant IMPLICIT         := 1 << 7
-        constant FINAL            := 1 << 8
-        constant ABSTRACT         := 1 << 9
-        constant INLINE           := 1 << 10
-        constant SPECIALIZE       := 1 << 11
-        constant WEAK             := 1 << 12
-        constant SYNTHETIC        := 1 << 13
-        constant UNSAFE_IMMUTABLE := 1 << 14*-
-
     }
 
-    method writeDoc(rawDoccomment:String?) {
-        if rawDoccomment != null {
-            -- figure out how many spaces are at the start of each line and remove them
-            var lines := rawDoccomment.split("\n")
-            if lines[0] = "" {
-                lines.removeIndex(0)
+    ================================================================================================
+    Given a documentation comment string, splits it into the main text and tags. For instance, given
+    `"This is a doccomment @param foo a Foo @returns a Bar", returns `[("", "This is a doccomment"),
+    ("param", "foo a Foo"), ("returns", "a Bar")]`.
+    ================================================================================================
+    function splitDoc(text:String):ListView<Pair<String, String>> {
+        -- figure out how many spaces are at the start of each line and remove them
+        def lines := Array<String>(text.split(/\r?\n/))
+        if lines[0] = "" {
+            lines.removeIndex(0)
+        }
+        var spaces := Int.MAX
+        for line in lines {
+            if line.trim() != "" {
+                spaces := spaces.min(line.parse(/( *).*/)[0].byteLength())
             }
-            var spaces := Int.MAX
-            for line in lines {
-                if line.trim() != "" {
-                    spaces := spaces.min(line.parse(/( *).*/)[0].byteLength())
-                }
+        }
+        for i in 0 .. lines.get_count() { -- FIXME use map
+            if lines[i].trim() != "" {
+                lines[i] := lines[i][spaces..]
             }
-            for i in 0 .. lines.get_count() { -- FIXME use map
-                if lines[i].trim() != "" {
-                    lines[i] := lines[i][spaces..]
-                }
-            }
-            def doccomment := lines.join("\n")
-            def summary:String
-            def index := doccomment.indexOf(".")
-            if index != null {
-                summary := doccomment.substring(...index)
+        }
+
+        def result := Array<Pair<String, String>>()
+        def split := lines.join("\n").split(/(?m)^(?=[ \t]*@\w+)/)
+        for raw in split {
+            def s := raw.trim()
+            if !s.startsWith("@") {
+                result.add(Pair<String, String>("", s))
             }
             else {
-                summary := doccomment
+                def parsed := s.parse(/(?d)@(\w*)\s*(.*)/)
+                if parsed != null {
+                result.add(Pair<String, String>(parsed[0], parsed[1])) }
             }
-            def md := Markdown()
-            out.open("doc")
-            def oldLevel := out.out.level
-            -- the indentation from the IndentedOutputStream will screw up any <pre> blocks in the
-            -- doccomment, so we need to temporarily zero it out
-            out.out.level := 0
-            var processedSummary := md.process(summary)
-            if processedSummary.startsWith("<p>") {
-                processedSummary := processedSummary.parse(/(?s)<p>(.*)<\/p>\s*/)[0]
-            }
-            out.write("summary", processedSummary)
-            out.write("description", md.process(doccomment))
-            out.out.level := oldLevel
-            out.close("doc")
         }
+        return result
+    }
+
+    method writeDoc(doccomment:String) {
+        def summary:String
+        def index := doccomment.indexOf(".")
+        if index != null {
+            summary := doccomment.substring(...index)
+        }
+        else {
+            summary := doccomment
+        }
+        def md := Markdown()
+        out.open("doc")
+        def oldLevel := out.out.level
+        -- the indentation from the IndentedOutputStream will screw up any <pre> blocks in the
+        -- doccomment, so we need to temporarily zero it out
+        out.out.level := 0
+        var processedSummary := md.process(summary)
+        if processedSummary.startsWith("<p>") {
+            processedSummary := processedSummary.parse(/(?s)<p>(.*)<\/p>\s*/)[0]
+        }
+        out.write("summary", processedSummary)
+        out.write("description", md.process(doccomment))
+        out.out.level := oldLevel
+        out.close("doc")
     }
 
     function visible(f:FieldDecl):Bit {
@@ -175,6 +195,20 @@ class PandaDoc : CodeGenerator {
 
     function visible(m:MethodDecl):Bit {
         return !m.annotations.isPrivate() & !m.annotations.isSynthetic()
+    }
+
+    method writeDoc(f:FieldDecl) {
+        if f.doccomment != null {
+            def split := splitDoc(f.doccomment)
+            writeDoc(split[0].second)
+            for tag in split[1..] {
+                match tag.first {
+                    when "see":
+                    otherwise:
+                        compiler.error(f.position, "tag '@\{tag.first}' is not supported on fields")
+                }
+            }
+        }
     }
 
     method write(f:FieldDecl) {
@@ -197,13 +231,12 @@ class PandaDoc : CodeGenerator {
         out.write("kind", kind)
         write(f.annotations)
         write(f.type)
-        writeDoc(f.doccomment)
+        writeDoc(f)
         out.close("field")
     }
 
     method getDocComment(m:MethodDecl):String? {
         if m.doccomment != null & m.doccomment.trim() = "@inherit" {
-            Console.printLine("FOUND OVERRIDE ON: \{m.declaration()}")
             def overridden := compiler.getOverriddenMethod(m)
             if overridden = null {
                 compiler.error(m.position, "method specifies '@inherit', but no matching method " +
@@ -221,6 +254,39 @@ class PandaDoc : CodeGenerator {
         return m.doccomment
     }
 
+    function stripParagraph(s:String):String {
+        def parsed := s.parse(/<p>(.*)<\/p>\s*/)
+        if parsed != null {
+            return parsed[0]
+        }
+        return s
+    }
+
+    method writeDoc(m:MethodDecl) {
+        def c := getDocComment(m)
+        if c = null {
+            return
+        }
+        def split := splitDoc(c)
+        writeDoc(split[0].second)
+        for tag in split[1..] {
+            match tag.first {
+                when "param":
+                    def split := tag.second.parse(/(?d)(\S+)\s+(.+)/)
+                    if split = null {
+                        compiler.error(m.position, "invalid '@param' contents '\{tag.second}'")
+                        continue
+                    }
+                    params[split[0]] := stripParagraph(Markdown().process(split[1]))
+                when "returns":
+                    returns := stripParagraph(Markdown().process(tag.second))
+                when "see":
+                otherwise:
+                    compiler.error(m.position, "tag '@\{tag.first}' is not supported on methods")
+            }
+        }
+    }
+
     method write(m:MethodDecl) {
         if !visible(m) {
             return
@@ -236,19 +302,26 @@ class PandaDoc : CodeGenerator {
         }
         out.open(tag)
         out.write("name", escape(m.name))
-        writeDoc(getDocComment(m))
+        writeDoc(m)
         write(m.annotations)
         out.open("params")
         for p in m.parameters {
             out.open("param")
             out.write("name", p.name)
             write(p.type)
+            def desc := params[p.name]
+            if desc != null {
+                out.write("description", desc)
+            }
             out.close("param")
         }
         out.close("params")
         if m.returnType != Type.Void() {
             out.open("return")
             write(m.returnType)
+            if returns != null {
+                out.write("description", returns)
+            }
             out.close("return")
         }
         out.close(tag)
@@ -344,17 +417,24 @@ class PandaDoc : CodeGenerator {
         }
     }
 
+    method writeDoc(cl:ClassDecl) {
+        if cl.doccomment != null {
+            def split := splitDoc(cl.doccomment)
+            writeDoc(split[0].second)
+        }
+    }
+
     @override
     method start(cl:ClassDecl) {
+        returns := null
+        params.clear()
         def dest := getPath(cl, ".xml")
         dest.parent().createDirectories()
         out := XMLWriter(dest.openOutputStream())
         out.open("class")
         out.write("name", cl.name)
         out.write("simpleName", simpleName(cl.type()))
-        if cl.doccomment != null {
-            writeDoc(cl.doccomment)
-        }
+        writeDoc(cl)
         writeAncestors(cl)
         if cl.rawInterfaces.get_count() > 0 {
             out.open("interfaces")

@@ -85,7 +85,7 @@ class SyntaxHighlighter {
             when Token.Kind.SHIFTRIGHT:
                 add(token, Kind.OPERATOR)
             when Token.Kind.DECIMAL, Token.Kind.BINARY, Token.Kind.HEX, Token.Kind.REAL,
-                    Token.Kind.TRUE, Token.Kind.FALSE, Token.Kind.NULL:
+                    Token.Kind.TRUE, Token.Kind.FALSE, Token.Kind.NULL, Token.Kind.REGEX:
                 add(token, Kind.LITERAL)
             when Token.Kind.LINE_COMMENT, Token.Kind.BLOCK_COMMENT_START:
                 add(token, Kind.COMMENT)

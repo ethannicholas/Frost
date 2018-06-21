@@ -29,10 +29,13 @@ class PLex {
         token.level += 1
         token.printLine("choice Kind {")
         token.level += 1
+        -- define synthetic tokens not present in .plex file
         var offset := 0
         token.printLine("EOF")
         offset += 1
         token.printLine("SHIFTRIGHT")
+        offset += 1
+        token.printLine("REGEX")
         offset += 1
         for rawLine in input.lines() {
             def line := rawLine.trim()

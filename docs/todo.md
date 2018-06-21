@@ -1,10 +1,13 @@
 Immediate
 =========
 
+@default on interface methods? need to figure out how to distinguish them in PandaDoc at least,
+definitely thinking @default might not be a bad plan.
 delete temporary files
 Closures not working with both self and local variable captures at the same time
 Proper lambda / inner method errors
-Documentation (still need: @param etc., links, choices, inner classes, ToC, source links...)
+Documentation (still need: @param etc., links, choices, inner classes, ToC, source links, short
+    names on function types...)
 Array literals
 Properties
 fix command line parsing

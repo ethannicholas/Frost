@@ -1213,8 +1213,14 @@ class Compiler {
         def s := st[name]
         assert s != null, "could not find method '\{name}'"
         if s.kind = Symbol.Kind.METHOD {
-            resolve(s->MethodDecl)
-            if s->MethodDecl.resolved != Resolution.RESOLVED {
+            def m := s->MethodDecl
+            resolve(m)
+            if m.resolved != Resolution.RESOLVED {
+                return null
+            }
+            if m.annotations.isClass() & rawTarget != null &
+                    rawTarget != IRNode.TYPE_REFERENCE {
+                error(position, "cannot call class \{m.declaration()} on an instance")
                 return null
             }
             def target := getTarget(position, s->MethodDecl, rawTarget)

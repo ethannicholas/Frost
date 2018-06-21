@@ -592,6 +592,8 @@ class Parser {
         if expect(Token.Kind.DIV, "'/'") = null {
             return null
         }
+
+        def start := lexer.dfa.offset - 1
         regexParser.lexer.dfa.offset := lexer.dfa.offset
         regexParser.lexer.dfa.line := lexer.dfa.line
         regexParser.lexer.dfa.column := lexer.dfa.column
@@ -602,7 +604,17 @@ class Parser {
         if regex = null {
             return null
         }
-        expect(Token.Kind.DIV, "'/'")
+        if expect(Token.Kind.DIV, "'/'") = null {
+            return null
+        }
+        if syntaxHighlighter != null {
+            -- remove the two '/'s
+            syntaxHighlighter.rewind()
+            syntaxHighlighter.rewind()
+            -- add back the whole regex
+            syntaxHighlighter.add(Token(Token.Kind.REGEX, String.Index(start),
+                    String.Index(lexer.dfa.offset), regex.position()))
+        }
         return regex
     }
 

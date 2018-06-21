@@ -1283,7 +1283,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
     @param delimiter the token delimiter
     @returns the split tokens
     ================================================================================================
-    function split(delimiter:String):Array<String> {
+    function split(delimiter:String):ListView<String> {
         return split(delimiter, Int.MAX)
     }
 
@@ -1296,7 +1296,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
     @param maxResults the maximum number of results to return
     @returns the split tokens
     ================================================================================================
-    function split(delimiter:String, maxResults:Int):Array<String> {
+    function split(delimiter:String, maxResults:Int):ListView<String> {
         def result := Array<String>()
         var index := start()
         loop {
