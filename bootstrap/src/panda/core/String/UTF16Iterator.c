@@ -45,7 +45,7 @@ void panda$core$String$UTF16Iterator$init$panda$core$String(panda$core$String$UT
     panda$core$Bit$init$builtin_bit(&$tmp6, false);
     if ($tmp6.value) goto $l7; else goto $l8;
     $l8:;
-    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s9, (panda$core$Int64) { 157 }, &$s10);
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s9, (panda$core$Int64) { 137 }, &$s10);
     abort();
     $l7:;
 }

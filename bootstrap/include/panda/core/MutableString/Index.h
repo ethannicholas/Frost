@@ -7,11 +7,7 @@
 
 void panda$core$MutableString$Index$init$panda$core$Int64(panda$core$MutableString$Index* self, panda$core$Int64 p_value);
 panda$core$Bit panda$core$MutableString$Index$$EQ$panda$core$MutableString$Index$R$panda$core$Bit(panda$core$MutableString$Index self, panda$core$MutableString$Index p_other);
-panda$core$Bit panda$core$MutableString$Index$$NEQ$panda$core$MutableString$Index$R$panda$core$Bit(panda$core$MutableString$Index self, panda$core$MutableString$Index p_other);
-panda$core$Bit panda$core$MutableString$Index$$LT$panda$core$MutableString$Index$R$panda$core$Bit(panda$core$MutableString$Index self, panda$core$MutableString$Index p_other);
 panda$core$Bit panda$core$MutableString$Index$$GT$panda$core$MutableString$Index$R$panda$core$Bit(panda$core$MutableString$Index self, panda$core$MutableString$Index p_other);
-panda$core$Bit panda$core$MutableString$Index$$LE$panda$core$MutableString$Index$R$panda$core$Bit(panda$core$MutableString$Index self, panda$core$MutableString$Index p_other);
-panda$core$Bit panda$core$MutableString$Index$$GE$panda$core$MutableString$Index$R$panda$core$Bit(panda$core$MutableString$Index self, panda$core$MutableString$Index p_other);
 panda$core$Int64 panda$core$MutableString$Index$hash$R$panda$core$Int64(panda$core$MutableString$Index self);
 void panda$core$MutableString$Index$cleanup(panda$core$MutableString$Index self);
 

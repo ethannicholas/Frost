@@ -1,0 +1,7 @@
+method div() {
+    def x := 1 // 0
+}
+
+method rem() {
+    def x := 1 // 0
+}

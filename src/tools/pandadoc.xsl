@@ -121,6 +121,10 @@
         </div>
     </xsl:template>
 
+    <xsl:template match="source">
+        <a href="{text()}">View Source</a>
+    </xsl:template>
+
     <xsl:template match="/class">
         <html>
             <head>
@@ -167,6 +171,7 @@
                         <div class="classDescription">
                         <xsl:apply-templates select="doc/description"/>
                         </div>
+                        <xsl:apply-templates select="source"/>
 
                         <xsl:if test="count(field[count(annotations/annotation[text() = '@class']) > 0]) > 0">
                             <h2>Constant Summary</h2>

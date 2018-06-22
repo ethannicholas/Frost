@@ -18,28 +18,8 @@ __attribute__((weak)) panda$core$Bit panda$core$MutableString$Index$$GT$panda$co
 
     return result;
 }
-__attribute__((weak)) panda$core$Bit panda$core$MutableString$Index$$LT$panda$core$MutableString$Index$R$panda$core$Bit$shim(panda$core$Object* p0, panda$core$Comparable* p1) {
-    panda$core$Bit result = panda$core$MutableString$Index$$LT$panda$core$MutableString$Index$R$panda$core$Bit(((panda$core$MutableString$Index$wrapper*) p0)->value, ((panda$core$MutableString$Index$wrapper*) p1)->value);
-
-    return result;
-}
-__attribute__((weak)) panda$core$Bit panda$core$MutableString$Index$$GE$panda$core$MutableString$Index$R$panda$core$Bit$shim(panda$core$Object* p0, panda$core$Comparable* p1) {
-    panda$core$Bit result = panda$core$MutableString$Index$$GE$panda$core$MutableString$Index$R$panda$core$Bit(((panda$core$MutableString$Index$wrapper*) p0)->value, ((panda$core$MutableString$Index$wrapper*) p1)->value);
-
-    return result;
-}
-__attribute__((weak)) panda$core$Bit panda$core$MutableString$Index$$LE$panda$core$MutableString$Index$R$panda$core$Bit$shim(panda$core$Object* p0, panda$core$Comparable* p1) {
-    panda$core$Bit result = panda$core$MutableString$Index$$LE$panda$core$MutableString$Index$R$panda$core$Bit(((panda$core$MutableString$Index$wrapper*) p0)->value, ((panda$core$MutableString$Index$wrapper*) p1)->value);
-
-    return result;
-}
 __attribute__((weak)) panda$core$Bit panda$core$MutableString$Index$$EQ$panda$core$MutableString$Index$R$panda$core$Bit$shim(panda$core$Object* p0, panda$core$Equatable* p1) {
     panda$core$Bit result = panda$core$MutableString$Index$$EQ$panda$core$MutableString$Index$R$panda$core$Bit(((panda$core$MutableString$Index$wrapper*) p0)->value, ((panda$core$MutableString$Index$wrapper*) p1)->value);
-
-    return result;
-}
-__attribute__((weak)) panda$core$Bit panda$core$MutableString$Index$$NEQ$panda$core$MutableString$Index$R$panda$core$Bit$shim(panda$core$Object* p0, panda$core$Equatable* p1) {
-    panda$core$Bit result = panda$core$MutableString$Index$$NEQ$panda$core$MutableString$Index$R$panda$core$Bit(((panda$core$MutableString$Index$wrapper*) p0)->value, ((panda$core$MutableString$Index$wrapper*) p1)->value);
 
     return result;
 }
@@ -50,18 +30,18 @@ __attribute__((weak)) void panda$core$MutableString$Index$cleanup$shim(panda$cor
 
 struct { panda$core$Class* cl; ITable* next; void* methods[1]; } panda$core$MutableString$Index$_panda$collections$Key = { (panda$core$Class*) &panda$collections$Key$class, NULL, { panda$core$MutableString$Index$hash$R$panda$core$Int64$shim} };
 
-struct { panda$core$Class* cl; ITable* next; void* methods[4]; } panda$core$MutableString$Index$_panda$core$Comparable = { (panda$core$Class*) &panda$core$Comparable$class, (ITable*) &panda$core$MutableString$Index$_panda$collections$Key, { panda$core$MutableString$Index$$GT$panda$core$MutableString$Index$R$panda$core$Bit$shim, panda$core$MutableString$Index$$LT$panda$core$MutableString$Index$R$panda$core$Bit$shim, panda$core$MutableString$Index$$GE$panda$core$MutableString$Index$R$panda$core$Bit$shim, panda$core$MutableString$Index$$LE$panda$core$MutableString$Index$R$panda$core$Bit$shim} };
+struct { panda$core$Class* cl; ITable* next; void* methods[4]; } panda$core$MutableString$Index$_panda$core$Comparable = { (panda$core$Class*) &panda$core$Comparable$class, (ITable*) &panda$core$MutableString$Index$_panda$collections$Key, { panda$core$MutableString$Index$$GT$panda$core$MutableString$Index$R$panda$core$Bit$shim, panda$core$Comparable$$LT$panda$core$Comparable$T$R$panda$core$Bit, panda$core$Comparable$$GE$panda$core$Comparable$T$R$panda$core$Bit, panda$core$Comparable$$LE$panda$core$Comparable$T$R$panda$core$Bit} };
 
-struct { panda$core$Class* cl; ITable* next; void* methods[2]; } panda$core$MutableString$Index$_panda$core$Equatable = { (panda$core$Class*) &panda$core$Equatable$class, (ITable*) &panda$core$MutableString$Index$_panda$core$Comparable, { panda$core$MutableString$Index$$EQ$panda$core$MutableString$Index$R$panda$core$Bit$shim, panda$core$MutableString$Index$$NEQ$panda$core$MutableString$Index$R$panda$core$Bit$shim} };
+struct { panda$core$Class* cl; ITable* next; void* methods[2]; } panda$core$MutableString$Index$_panda$core$Equatable = { (panda$core$Class*) &panda$core$Equatable$class, (ITable*) &panda$core$MutableString$Index$_panda$core$Comparable, { panda$core$MutableString$Index$$EQ$panda$core$MutableString$Index$R$panda$core$Bit$shim, panda$core$Equatable$$NEQ$panda$core$Equatable$T$R$panda$core$Bit} };
 
 static panda$core$String $s1;
-panda$core$MutableString$Index$class_type panda$core$MutableString$Index$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Value$class, (ITable*) &panda$core$MutableString$Index$_panda$core$Equatable, { panda$core$Object$convert$R$panda$core$String, panda$core$Value$cleanup, panda$core$MutableString$Index$$EQ$panda$core$MutableString$Index$R$panda$core$Bit$shim, panda$core$MutableString$Index$$NEQ$panda$core$MutableString$Index$R$panda$core$Bit$shim, panda$core$MutableString$Index$$LT$panda$core$MutableString$Index$R$panda$core$Bit$shim, panda$core$MutableString$Index$$GT$panda$core$MutableString$Index$R$panda$core$Bit$shim, panda$core$MutableString$Index$$LE$panda$core$MutableString$Index$R$panda$core$Bit$shim, panda$core$MutableString$Index$$GE$panda$core$MutableString$Index$R$panda$core$Bit$shim, panda$core$MutableString$Index$hash$R$panda$core$Int64$shim, panda$core$MutableString$Index$cleanup$shim} };
+panda$core$MutableString$Index$class_type panda$core$MutableString$Index$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Value$class, (ITable*) &panda$core$MutableString$Index$_panda$core$Equatable, { panda$core$Object$convert$R$panda$core$String, panda$core$Value$cleanup, panda$core$MutableString$Index$$EQ$panda$core$MutableString$Index$R$panda$core$Bit$shim, panda$core$MutableString$Index$$GT$panda$core$MutableString$Index$R$panda$core$Bit$shim, panda$core$MutableString$Index$hash$R$panda$core$Int64$shim, panda$core$MutableString$Index$cleanup$shim} };
 
 struct { panda$core$Class* cl; ITable* itable; void* methods[1]; } panda$core$MutableString$Index$wrapper_panda$collections$Key = { (panda$core$Class*) &panda$collections$Key$class, NULL, { panda$core$MutableString$Index$hash$R$panda$core$Int64$shim} };
 
-struct { panda$core$Class* cl; ITable* itable; void* methods[4]; } panda$core$MutableString$Index$wrapper_panda$core$Comparable = { (panda$core$Class*) &panda$core$Comparable$class, (ITable*) &panda$core$MutableString$Index$wrapper_panda$collections$Key, { panda$core$MutableString$Index$$GT$panda$core$MutableString$Index$R$panda$core$Bit$shim, panda$core$MutableString$Index$$LT$panda$core$MutableString$Index$R$panda$core$Bit$shim, panda$core$MutableString$Index$$GE$panda$core$MutableString$Index$R$panda$core$Bit$shim, panda$core$MutableString$Index$$LE$panda$core$MutableString$Index$R$panda$core$Bit$shim} };
+struct { panda$core$Class* cl; ITable* itable; void* methods[4]; } panda$core$MutableString$Index$wrapper_panda$core$Comparable = { (panda$core$Class*) &panda$core$Comparable$class, (ITable*) &panda$core$MutableString$Index$wrapper_panda$collections$Key, { panda$core$MutableString$Index$$GT$panda$core$MutableString$Index$R$panda$core$Bit$shim, panda$core$Comparable$$LT$panda$core$Comparable$T$R$panda$core$Bit, panda$core$Comparable$$GE$panda$core$Comparable$T$R$panda$core$Bit, panda$core$Comparable$$LE$panda$core$Comparable$T$R$panda$core$Bit} };
 
-struct { panda$core$Class* cl; ITable* itable; void* methods[2]; } panda$core$MutableString$Index$wrapper_panda$core$Equatable = { (panda$core$Class*) &panda$core$Equatable$class, (ITable*) &panda$core$MutableString$Index$wrapper_panda$core$Comparable, { panda$core$MutableString$Index$$EQ$panda$core$MutableString$Index$R$panda$core$Bit$shim, panda$core$MutableString$Index$$NEQ$panda$core$MutableString$Index$R$panda$core$Bit$shim} };
+struct { panda$core$Class* cl; ITable* itable; void* methods[2]; } panda$core$MutableString$Index$wrapper_panda$core$Equatable = { (panda$core$Class*) &panda$core$Equatable$class, (ITable*) &panda$core$MutableString$Index$wrapper_panda$core$Comparable, { panda$core$MutableString$Index$$EQ$panda$core$MutableString$Index$R$panda$core$Bit$shim, panda$core$Equatable$$NEQ$panda$core$Equatable$T$R$panda$core$Bit} };
 
 static panda$core$String $s2;
 panda$core$MutableString$Index$wrapperclass_type panda$core$MutableString$Index$wrapperclass = { (panda$core$Class*) &panda$core$Class$class, -999, &$s2, (panda$core$Class*) &panda$core$Value$class, (ITable*) &panda$core$MutableString$Index$wrapper_panda$core$Equatable, { panda$core$Object$convert$R$panda$core$String, panda$core$Value$cleanup} };
@@ -77,41 +57,16 @@ panda$core$Bit panda$core$MutableString$Index$$EQ$panda$core$MutableString$Index
     $returnValue3 = $tmp4;
     return $returnValue3;
 }
-panda$core$Bit panda$core$MutableString$Index$$NEQ$panda$core$MutableString$Index$R$panda$core$Bit(panda$core$MutableString$Index self, panda$core$MutableString$Index p_other) {
+panda$core$Bit panda$core$MutableString$Index$$GT$panda$core$MutableString$Index$R$panda$core$Bit(panda$core$MutableString$Index self, panda$core$MutableString$Index p_other) {
     panda$core$Bit $returnValue6;
-    panda$core$Bit $tmp7 = panda$core$MutableString$Index$$EQ$panda$core$MutableString$Index$R$panda$core$Bit(self, p_other);
-    panda$core$Bit $tmp8 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp7);
-    $returnValue6 = $tmp8;
+    panda$core$Bit $tmp7 = panda$core$Int64$$GT$panda$core$Int64$R$panda$core$Bit(self.value, p_other.value);
+    $returnValue6 = $tmp7;
     return $returnValue6;
 }
-panda$core$Bit panda$core$MutableString$Index$$LT$panda$core$MutableString$Index$R$panda$core$Bit(panda$core$MutableString$Index self, panda$core$MutableString$Index p_other) {
-    panda$core$Bit $returnValue10;
-    panda$core$Bit $tmp11 = panda$core$Int64$$LT$panda$core$Int64$R$panda$core$Bit(self.value, p_other.value);
-    $returnValue10 = $tmp11;
-    return $returnValue10;
-}
-panda$core$Bit panda$core$MutableString$Index$$GT$panda$core$MutableString$Index$R$panda$core$Bit(panda$core$MutableString$Index self, panda$core$MutableString$Index p_other) {
-    panda$core$Bit $returnValue13;
-    panda$core$Bit $tmp14 = panda$core$Int64$$GT$panda$core$Int64$R$panda$core$Bit(self.value, p_other.value);
-    $returnValue13 = $tmp14;
-    return $returnValue13;
-}
-panda$core$Bit panda$core$MutableString$Index$$LE$panda$core$MutableString$Index$R$panda$core$Bit(panda$core$MutableString$Index self, panda$core$MutableString$Index p_other) {
-    panda$core$Bit $returnValue16;
-    panda$core$Bit $tmp17 = panda$core$Int64$$LE$panda$core$Int64$R$panda$core$Bit(self.value, p_other.value);
-    $returnValue16 = $tmp17;
-    return $returnValue16;
-}
-panda$core$Bit panda$core$MutableString$Index$$GE$panda$core$MutableString$Index$R$panda$core$Bit(panda$core$MutableString$Index self, panda$core$MutableString$Index p_other) {
-    panda$core$Bit $returnValue19;
-    panda$core$Bit $tmp20 = panda$core$Int64$$GE$panda$core$Int64$R$panda$core$Bit(self.value, p_other.value);
-    $returnValue19 = $tmp20;
-    return $returnValue19;
-}
 panda$core$Int64 panda$core$MutableString$Index$hash$R$panda$core$Int64(panda$core$MutableString$Index self) {
-    panda$core$Int64 $returnValue22;
-    $returnValue22 = self.value;
-    return $returnValue22;
+    panda$core$Int64 $returnValue9;
+    $returnValue9 = self.value;
+    return $returnValue9;
 }
 void panda$core$MutableString$Index$cleanup(panda$core$MutableString$Index self) {
 }

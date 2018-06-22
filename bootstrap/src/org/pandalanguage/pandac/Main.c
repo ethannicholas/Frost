@@ -474,9 +474,9 @@ panda$io$File* org$pandalanguage$pandac$Main$toExecutable$panda$io$File$panda$io
     panda$core$String* $tmp131;
     panda$core$String* $tmp132;
     panda$core$String* $tmp134;
-    panda$collections$Array* icuLibs142 = NULL;
-    panda$collections$Array* $tmp143;
-    panda$collections$Array* $tmp144;
+    panda$collections$ListView* icuLibs142 = NULL;
+    panda$collections$ListView* $tmp143;
+    panda$collections$ListView* $tmp144;
     panda$core$String* $tmp145;
     panda$collections$Iterator* Iter$120$9152 = NULL;
     panda$collections$Iterator* $tmp153;
@@ -536,7 +536,7 @@ panda$io$File* org$pandalanguage$pandac$Main$toExecutable$panda$io$File$panda$io
         panda$collections$Array$add$panda$collections$Array$T(args127, ((panda$core$Object*) &$s141));
         panda$core$String* $tmp146 = org$pandalanguage$pandac$Config$icuLibraries$R$panda$core$String();
         $tmp145 = $tmp146;
-        panda$collections$Array* $tmp148 = panda$core$String$split$panda$core$String$R$panda$collections$Array$LTpanda$core$String$GT($tmp145, &$s147);
+        panda$collections$ListView* $tmp148 = panda$core$String$split$panda$core$String$R$panda$collections$ListView$LTpanda$core$String$GT($tmp145, &$s147);
         $tmp144 = $tmp148;
         $tmp143 = $tmp144;
         icuLibs142 = $tmp143;
@@ -1695,7 +1695,7 @@ void org$pandalanguage$pandac$Main$run$panda$collections$ListView$LTpanda$core$S
                     {
                         {
                             $tmp606 = cg567;
-                            org$pandalanguage$pandac$pandadoc$PandaDoc* $tmp609 = (org$pandalanguage$pandac$pandadoc$PandaDoc*) pandaObjectAlloc(40, (panda$core$Class*) &org$pandalanguage$pandac$pandadoc$PandaDoc$class);
+                            org$pandalanguage$pandac$pandadoc$PandaDoc* $tmp609 = (org$pandalanguage$pandac$pandadoc$PandaDoc*) pandaObjectAlloc(56, (panda$core$Class*) &org$pandalanguage$pandac$pandadoc$PandaDoc$class);
                             org$pandalanguage$pandac$pandadoc$PandaDoc$init$panda$io$File($tmp609, outFile260);
                             $tmp608 = $tmp609;
                             $tmp607 = ((org$pandalanguage$pandac$CodeGenerator*) $tmp608);

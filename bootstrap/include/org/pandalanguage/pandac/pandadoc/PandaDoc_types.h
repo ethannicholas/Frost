@@ -6,6 +6,7 @@ typedef struct panda$io$File panda$io$File;
 typedef struct panda$core$Weak panda$core$Weak;
 typedef struct org$pandalanguage$pandac$pandadoc$PandaDoc$XMLWriter org$pandalanguage$pandac$pandadoc$PandaDoc$XMLWriter;
 typedef struct panda$core$String panda$core$String;
+typedef struct panda$collections$HashMap panda$collections$HashMap;
 
 typedef struct org$pandalanguage$pandac$pandadoc$PandaDoc {
     panda$core$Class* $class;
@@ -13,8 +14,10 @@ typedef struct org$pandalanguage$pandac$pandadoc$PandaDoc {
     panda$io$File* outDir;
     panda$core$Weak* compiler;
     org$pandalanguage$pandac$pandadoc$PandaDoc$XMLWriter* out;
+    panda$core$String* returns;
+    panda$collections$HashMap* params;
 } org$pandalanguage$pandac$pandadoc$PandaDoc;
 #include "panda/core/Class.h"
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[24]; } org$pandalanguage$pandac$pandadoc$PandaDoc$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[29]; } org$pandalanguage$pandac$pandadoc$PandaDoc$class_type;
 extern org$pandalanguage$pandac$pandadoc$PandaDoc$class_type org$pandalanguage$pandac$pandadoc$PandaDoc$class;
 

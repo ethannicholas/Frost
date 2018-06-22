@@ -81,6 +81,9 @@ class Stack<T> : Iterable<T> {
         return contents[contents.count - 1 - depth]
     }
 
+    ================================================================================================
+    Removes all elements from the stack.
+    ================================================================================================
     method clear() {
         contents.clear()
     }

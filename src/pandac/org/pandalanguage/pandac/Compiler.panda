@@ -264,7 +264,10 @@ class Compiler {
     }
 
     method isRefCounted(type:Type):Bit {
-        return type.isClass() & !isValue(getClass(type))
+        if !type.isClass() {
+            return false
+        }
+        return !isValue(type)
     }
 
     ================================================================================================
@@ -811,7 +814,11 @@ class Compiler {
         if !t.isClass() {
             return true
         }
-        return isValue(getClass(t))
+        def cl := getClass(t)
+        if cl = null {
+            return false
+        }
+        return isValue(cl)
     }
 
     method isImmutable(cl:ClassDecl):Bit {
@@ -836,7 +843,11 @@ class Compiler {
         if !t.isClass() {
             return true
         }
-        return isImmutable(getClass(t))
+        def cl := getClass(t)
+        if cl = null {
+            return false
+        }
+        return isImmutable(cl)
     }
 
     method instanceFields(cl:ClassDecl):ListView<FieldDecl> {
@@ -1192,12 +1203,14 @@ class Compiler {
     method addInheritedMethods(st:SymbolTable, name:String, result:Array<MethodRef>) {
     }
 
-    function getTarget(position:Position, m:MethodDecl, explicitTarget:IRNode?):IRNode {
+    method getTarget(position:Position, m:MethodDecl, explicitTarget:IRNode?):IRNode? {
         if explicitTarget != null {
             return explicitTarget
         }
-        if m.methodKind = MethodDecl.Kind.INIT {
-            return IRNode.CONSTRUCTED_OBJECT(position, m.owner.type())
+        if m.methodKind = MethodDecl.Kind.INIT &
+                currentMethod[0].methodKind != MethodDecl.Kind.INIT {
+            error(position, "cannot directly call 'init' outside of an init method")
+            return null
         }
         if m.annotations.isClass() | currentMethod[0].annotations.isClass() {
             return IRNode.TYPE_REFERENCE(position, m.owner.type())
@@ -1224,10 +1237,16 @@ class Compiler {
                 return null
             }
             def target := getTarget(position, s->MethodDecl, rawTarget)
+            if target = null {
+                return null
+            }
             methods.add(MethodRef(self, target, s->MethodDecl))
         }
         else {
             assert s.kind = Symbol.Kind.METHODS
+            if name = "clear" {
+                Console.printLine("raw methods: \{s->Methods.methods}")
+            }
             for m in s->Methods.methods {
                 if m.annotations.isClass() & rawTarget != null &
                         rawTarget != IRNode.TYPE_REFERENCE {
@@ -1238,6 +1257,9 @@ class Compiler {
                     return null
                 }
                 def target := getTarget(position, m, rawTarget)
+                if target = null {
+                    return null
+                }
                 methods.add(MethodRef(self, target, m))
             }
             if methods.get_count() = 0 {
@@ -1343,8 +1365,6 @@ class Compiler {
                 return raw
         }
         match context.typeKind {
-            when Type.Kind.CLASS:
-                return raw
             when Type.Kind.NULLABLE:
                 assert context.subtypes.get_count() = 1
                 return remapType(context.subtypes[0], raw)
@@ -1358,10 +1378,8 @@ class Compiler {
                     typeMap[cl.name + "." + cl.parameters[i - 1].name] := context.subtypes[i]
                 }
                 return raw.remap(typeMap)
-            when Type.Kind.GENERIC_PARAMETER:
-                return raw
             otherwise:
-                assert false, "cannot remap type using context \{context}"
+                return raw
         }
     }
 
@@ -2357,7 +2375,7 @@ class Compiler {
             assert methodClass != null
             resolve(methodClass.methods[0])
             def initMethod := MethodRef(self,
-                    getTarget(position, methodClass.methods[0], null),
+                    IRNode.CONSTRUCTED_OBJECT(position, methodClass.type()),
                     methodClass.methods[0])
             def args := Array<IRNode>() -- FIXME literal
             args.add(node)
@@ -2536,7 +2554,8 @@ class Compiler {
         return inheritedType(m.value).returnType()
     }
 
-    method call(position:Position, target:IRNode?, rawM:MethodRef?, args:ListView<IRNode>):IRNode? {
+    method call(position:Position, rawTarget:IRNode?, rawM:MethodRef?,
+            args:ListView<IRNode>):IRNode? {
         assert rawM != null
         assert rawM.value.resolved != Resolution.UNRESOLVED
         if rawM.value.resolved = Resolution.RESOLVED_WITH_ERRORS {
@@ -2548,25 +2567,18 @@ class Compiler {
         }
         def m := matchResult.second
         def finalArgs := Array<IRNode>()
-        if target != null & target != IRNode.CONSTRUCTED_OBJECT &
-                !m.value.annotations.isClass() {
+        def target := getTarget(position, m.value, rawTarget)
+        if target = null {
+            return null
+        }
+        if target != IRNode.CONSTRUCTED_OBJECT & !m.value.annotations.isClass() {
             finalArgs.add(cast(position, target, m.owner, false))
         }
-        if m.value.methodKind = MethodDecl.Kind.INIT {
-            if target = null {
-                if currentMethod[0].methodKind = MethodDecl.Kind.INIT {
-                    finalArgs.add(compileSelf(position, false))
-                }
-                else {
-                    error(position, "cannot directly call 'init' outside of an init method")
-                }
-            }
-            else if target != IRNode.SELF & target != IRNode.SUPER &
-                    target != IRNode.CONSTRUCTED_OBJECT {
-                error(position, "'init' may only be called on 'self' or 'super'")
-            }
+        if m.value.methodKind = MethodDecl.Kind.INIT & target != IRNode.SELF &
+                target != IRNode.SUPER & target != IRNode.CONSTRUCTED_OBJECT {
+            error(position, "'init' may only be called on 'self' or 'super'")
         }
-        else if m.value.isInstance() & (target = null | target = IRNode.TYPE_REFERENCE) {
+        else if m.value.isInstance() & target = IRNode.TYPE_REFERENCE {
             if !currentMethod[0].isInstance() & (target = null | target = IRNode.TYPE_REFERENCE) {
                 error(position, "cannot call instance \{m.value.declaration()} from a @class " +
                         "context")
@@ -2578,7 +2590,7 @@ class Compiler {
                     m.value.owner.type()
             finalArgs.add(selfNode)
         }
-        else if !m.value.isInstance() & target != null & target != IRNode.TYPE_REFERENCE {
+        else if !m.value.isInstance() & target != IRNode.TYPE_REFERENCE {
             error(position, "cannot call class \{m.value.declaration()} on an instance")
         }
         for i in 0 .. args.get_count() {
@@ -3098,9 +3110,17 @@ class Compiler {
                 def v := (l * r).convert()->UInt64
                 return IRNode.INT(position, Type.IntLiteral(v), v)
             when Token.Kind.INTDIV:
+                if r = 0 {
+                    error(right.position(), "division by 0")
+                    return null
+                }
                 def v := (l // r).convert()->UInt64
                 return IRNode.INT(position, Type.IntLiteral(v), v)
             when Token.Kind.REM:
+                if r = 0 {
+                    error(right.position(), "division by 0")
+                    return null
+                }
                 def v := (l % r).convert()->UInt64
                 return IRNode.INT(position, Type.IntLiteral(v), v)
             when Token.Kind.EQ:
@@ -5464,11 +5484,6 @@ class Compiler {
         }
         if m.annotations.flags && Annotations.Flag.ABSTRACT != 0 & m.body != null {
             error(m.position, "methods annotated with '@abstract' may not have a body")
-        }
-        if m.annotations.flags && Annotations.Flag.OVERRIDE != 0 &
-                m.annotations.flags && Annotations.Flag.EXTERNAL = 0 &
-                m.body = null {
-            error(m.position, "methods annotated with '@override' must have a body")
         }
         if m.annotations.flags && Annotations.Flag.OVERRIDE != 0 &
                 m.annotations.flags && Annotations.Flag.CLASS != 0 {

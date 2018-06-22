@@ -2,6 +2,13 @@ package panda.collections
 
 uses panda.unsafe.Pointer
 
+====================================================================================================
+A random-access `CollectionView` with numbered elements. Each entry has an index, ranging from `0`
+to `count - 1`, by which it can be accessed.
+
+@see ListWriter
+@see List
+====================================================================================================
 interface ListView<T> : CollectionView<T> {
     @private
     class ListIterator<T> : Iterator<T> {

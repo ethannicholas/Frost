@@ -1,5 +1,10 @@
 package panda.collections
 
+====================================================================================================
+A read/write random-access list of elements.
+
+@see Array
+====================================================================================================
 interface List<T> : ListView<T>, ListWriter<T>, Collection<T> {
     method filterInPlace(f:(T)=>(Bit)) {
         for i in get_count() - 1 ... 0 by -1 {

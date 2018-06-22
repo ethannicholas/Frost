@@ -9,7 +9,7 @@ typedef struct panda$core$MutableString$Index {
     panda$core$Int64 value;
 } panda$core$MutableString$Index;
 #include "panda/core/Class.h"
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[10]; } panda$core$MutableString$Index$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[6]; } panda$core$MutableString$Index$class_type;
 extern panda$core$MutableString$Index$class_type panda$core$MutableString$Index$class;
 typedef struct panda$core$MutableString$Index$wrapper {
     panda$core$Class* cl;

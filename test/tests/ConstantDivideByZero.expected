@@ -1,0 +1,3 @@
+ConstantDivideByZero.panda:2:19: error: division by 0
+ConstantDivideByZero.panda:6:19: error: division by 0
+2 errors

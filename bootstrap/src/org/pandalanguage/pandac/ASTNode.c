@@ -3835,7 +3835,7 @@ panda$core$String* org$pandalanguage$pandac$ASTNode$convert$R$panda$core$String(
                 memset(&yield1437, 0, sizeof(yield1437));
                 {
                     $match$381_171438 = kind1428;
-                    panda$core$Int64$init$builtin_int64(&$tmp1439, 90);
+                    panda$core$Int64$init$builtin_int64(&$tmp1439, 91);
                     panda$core$Bit $tmp1440 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$381_171438.$rawValue, $tmp1439);
                     if ($tmp1440.value) {
                     {
@@ -3849,7 +3849,7 @@ panda$core$String* org$pandalanguage$pandac$ASTNode$convert$R$panda$core$String(
                     }
                     }
                     else {
-                    panda$core$Int64$init$builtin_int64(&$tmp1444, 91);
+                    panda$core$Int64$init$builtin_int64(&$tmp1444, 92);
                     panda$core$Bit $tmp1445 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$381_171438.$rawValue, $tmp1444);
                     if ($tmp1445.value) {
                     {
@@ -3863,7 +3863,7 @@ panda$core$String* org$pandalanguage$pandac$ASTNode$convert$R$panda$core$String(
                     }
                     }
                     else {
-                    panda$core$Int64$init$builtin_int64(&$tmp1449, 92);
+                    panda$core$Int64$init$builtin_int64(&$tmp1449, 93);
                     panda$core$Bit $tmp1450 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$381_171438.$rawValue, $tmp1449);
                     if ($tmp1450.value) {
                     {
@@ -3877,7 +3877,7 @@ panda$core$String* org$pandalanguage$pandac$ASTNode$convert$R$panda$core$String(
                     }
                     }
                     else {
-                    panda$core$Int64$init$builtin_int64(&$tmp1454, 93);
+                    panda$core$Int64$init$builtin_int64(&$tmp1454, 94);
                     panda$core$Bit $tmp1455 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$381_171438.$rawValue, $tmp1454);
                     if ($tmp1455.value) {
                     {

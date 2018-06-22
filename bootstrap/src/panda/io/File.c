@@ -34,6 +34,7 @@ panda$io$File$class_type panda$io$File$class = { (panda$core$Class*) &panda$core
 typedef panda$collections$Iterator* (*$fn25)(panda$io$InputStream*);
 typedef panda$core$String* (*$fn130)(panda$io$InputStream*);
 typedef void (*$fn135)(panda$io$OutputStream*, panda$core$String*);
+typedef panda$core$Bit (*$fn142)(panda$core$Equatable*, panda$core$Equatable*);
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x69\x6f\x2e\x46\x69\x6c\x65", 13, 4119532389314393493, NULL };
 static panda$core$String $s4 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2f", 1, 148, NULL };
@@ -382,36 +383,41 @@ panda$core$Bit panda$io$File$$EQ$panda$io$File$R$panda$core$Bit(panda$io$File* s
 }
 panda$core$Bit panda$io$File$$NEQ$panda$io$File$R$panda$core$Bit(panda$io$File* self, panda$io$File* p_other) {
     panda$core$Bit $returnValue139;
-    panda$core$Bit $tmp140 = panda$core$String$$NEQ$panda$core$String$R$panda$core$Bit(self->path, p_other->path);
-    $returnValue139 = $tmp140;
+    ITable* $tmp140 = ((panda$core$Equatable*) self->path)->$class->itable;
+    while ($tmp140->$class != (panda$core$Class*) &panda$core$Equatable$class) {
+        $tmp140 = $tmp140->next;
+    }
+    $fn142 $tmp141 = $tmp140->methods[1];
+    panda$core$Bit $tmp143 = $tmp141(((panda$core$Equatable*) self->path), ((panda$core$Equatable*) p_other->path));
+    $returnValue139 = $tmp143;
     return $returnValue139;
 }
 panda$core$Int64 panda$io$File$hash$R$panda$core$Int64(panda$io$File* self) {
-    panda$core$Int64 $returnValue142;
-    panda$core$Int64 $tmp143 = panda$core$String$hash$R$panda$core$Int64(self->path);
-    $returnValue142 = $tmp143;
-    return $returnValue142;
-}
-panda$core$String* panda$io$File$convert$R$panda$core$String(panda$io$File* self) {
-    panda$core$String* $returnValue145;
-    panda$core$String* $tmp146;
-    $tmp146 = self->path;
+    panda$core$Int64 $returnValue145;
+    panda$core$Int64 $tmp146 = panda$core$String$hash$R$panda$core$Int64(self->path);
     $returnValue145 = $tmp146;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp146));
     return $returnValue145;
 }
+panda$core$String* panda$io$File$convert$R$panda$core$String(panda$io$File* self) {
+    panda$core$String* $returnValue148;
+    panda$core$String* $tmp149;
+    $tmp149 = self->path;
+    $returnValue148 = $tmp149;
+    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp149));
+    return $returnValue148;
+}
 void panda$io$File$cleanup(panda$io$File* self) {
-    int $tmp150;
+    int $tmp153;
     {
     }
-    $tmp150 = -1;
-    goto $l148;
-    $l148:;
-    panda$core$Immutable$cleanup(((panda$core$Immutable*) self));
-    switch ($tmp150) {
-        case -1: goto $l151;
-    }
+    $tmp153 = -1;
+    goto $l151;
     $l151:;
+    panda$core$Immutable$cleanup(((panda$core$Immutable*) self));
+    switch ($tmp153) {
+        case -1: goto $l154;
+    }
+    $l154:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->path));
 }
 

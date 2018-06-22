@@ -60,8 +60,12 @@ class SymbolTable {
             return
         }
         for test in methods {
-            if compiler.getOverriddenMethod(test) == m {
+            def overridden := compiler.getOverriddenMethod(test)
+            if overridden == m {
                 return
+            }
+            if overridden != null & overridden == compiler.getOverriddenMethod(m) {
+                Console.printLine("extra reject: \{overridden.declaration()} due to \{m.declaration()}")
             }
         }
         methods.add(m)
@@ -92,8 +96,11 @@ class SymbolTable {
                         }
                         return Methods(methods)
                     when Symbol.Kind.METHOD:
-                        if compiler.getOverriddenMethod(symbol->MethodDecl) ==
-                                inherited->MethodDecl {
+                        def overridden1 := compiler.getOverriddenMethod(inherited->MethodDecl)
+                        def overridden2 := compiler.getOverriddenMethod(symbol->MethodDecl)
+                        if  overridden1 == symbol->MethodDecl |
+                                overridden2 == inherited->MethodDecl |
+                                (overridden1 !== null & overridden1 == overridden2) {
                             return symbol
                         }
                         def methods := Array<MethodDecl>() -- FIXME literal

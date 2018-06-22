@@ -1,11 +1,38 @@
 package panda.collections
 
+====================================================================================================
+A write-only view of a list of elements. `ListWriter` adds random-access methods to the basic
+functionality inherited from [CollectionWriter].
+
+@see ListView
+@see List
+====================================================================================================
 interface ListWriter<T> : CollectionWriter<T> {
+    ================================================================================================
+    Replaces the element at `index` with a new value.
+
+    @param index the element to modify
+    @param value the new value
+    ================================================================================================
     @pre(index >= 0 & index < get_count())
     method []:=(index:Int, value:T)
 
+    ================================================================================================
+    Inserts a new element at `index`, moving all elements from `index` to the end of the list out of
+    the way to make room for it.
+
+    @param index the location at which to insert
+    @param value the new value
+    ================================================================================================
     method insert(index:Int, value:T)
 
+    ================================================================================================
+    Removes the element at `index`, moving all elements from `index + 1` to the end of the list down
+    one index to fill in the "hole" created by the deletion.
+
+    @param index the index to remove
+    @returns the value which was removed
+    ================================================================================================
     @pre(index >= 0 & index < get_count())
     method removeIndex(index:Int):T
 }

@@ -6,7 +6,7 @@
 
 struct { panda$core$Class* cl; ITable* next; void* methods[3]; } panda$collections$ListWriter$_panda$collections$ListWriter = { (panda$core$Class*) &panda$collections$ListWriter$class, NULL, { NULL, NULL, NULL} };
 
-struct { panda$core$Class* cl; ITable* next; void* methods[3]; } panda$collections$ListWriter$_panda$collections$CollectionWriter = { (panda$core$Class*) &panda$collections$CollectionWriter$class, (ITable*) &panda$collections$ListWriter$_panda$collections$ListWriter, { NULL, NULL, NULL} };
+struct { panda$core$Class* cl; ITable* next; void* methods[3]; } panda$collections$ListWriter$_panda$collections$CollectionWriter = { (panda$core$Class*) &panda$collections$CollectionWriter$class, (ITable*) &panda$collections$ListWriter$_panda$collections$ListWriter, { NULL, panda$collections$CollectionWriter$addAll$panda$collections$CollectionView$LTpanda$collections$CollectionWriter$T$GT, NULL} };
 
 static panda$core$String $s1;
 panda$collections$ListWriter$class_type panda$collections$ListWriter$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, (ITable*) &panda$collections$ListWriter$_panda$collections$CollectionWriter, { panda$core$Object$convert$R$panda$core$String, panda$core$Object$cleanup, NULL, NULL, NULL} };

@@ -98,7 +98,7 @@ void org$pandalanguage$pandac$pandadoc$PandaDoc$XMLWriter$write$panda$core$Strin
     panda$core$Bit $tmp29 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp28);
     if ($tmp29.value) goto $l30; else goto $l31;
     $l31:;
-    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s32, (panda$core$Int64) { 35 });
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s32, (panda$core$Int64) { 36 });
     abort();
     $l30:;
     panda$core$String* $tmp40 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s39, p_tag);

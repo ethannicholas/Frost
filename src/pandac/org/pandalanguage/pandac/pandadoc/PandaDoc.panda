@@ -303,7 +303,11 @@ class PandaDoc : CodeGenerator {
         out.open(tag)
         out.write("name", escape(m.name))
         writeDoc(m)
-        write(m.annotations)
+        def annotations := m.annotations
+        if m.owner.annotations.isFinal() {
+            annotations.flags &&= !!Annotations.Flag.FINAL
+            write(annotations)
+        }
         out.open("params")
         for p in m.parameters {
             out.open("param")
@@ -434,6 +438,8 @@ class PandaDoc : CodeGenerator {
         out.open("class")
         out.write("name", cl.name)
         out.write("simpleName", simpleName(cl.type()))
+        out.write("source", "../" * cl.name.find(".").count() + "source/" +
+                cl.name.replace(".", "/") + ".html")
         writeDoc(cl)
         writeAncestors(cl)
         if cl.rawInterfaces.get_count() > 0 {

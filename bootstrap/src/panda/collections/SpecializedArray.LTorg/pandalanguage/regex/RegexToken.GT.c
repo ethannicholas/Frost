@@ -65,7 +65,7 @@ __attribute__((weak)) panda$core$Object* panda$collections$SpecializedArray$LTor
     return ((panda$core$Object*) $tmp3);
 }
 
-struct { panda$core$Class* cl; ITable* next; void* methods[0]; } panda$collections$SpecializedArray$LTorg$pandalanguage$regex$RegexToken$GT$_panda$collections$Collection = { (panda$core$Class*) &panda$collections$Collection$class, NULL, { } };
+struct { panda$core$Class* cl; ITable* next; void* methods[1]; } panda$collections$SpecializedArray$LTorg$pandalanguage$regex$RegexToken$GT$_panda$collections$Collection = { (panda$core$Class*) &panda$collections$Collection$class, NULL, { panda$collections$SpecializedArray$LTorg$pandalanguage$regex$RegexToken$GT$clear} };
 
 struct { panda$core$Class* cl; ITable* next; void* methods[4]; } panda$collections$SpecializedArray$LTorg$pandalanguage$regex$RegexToken$GT$_panda$collections$CollectionView = { (panda$core$Class*) &panda$collections$CollectionView$class, (ITable*) &panda$collections$SpecializedArray$LTorg$pandalanguage$regex$RegexToken$GT$_panda$collections$Collection, { panda$collections$SpecializedArray$LTorg$pandalanguage$regex$RegexToken$GT$get_count$R$panda$core$Int64, panda$collections$CollectionView$fold$$LPpanda$collections$CollectionView$T$Cpanda$collections$CollectionView$T$RP$EQ$GT$LPpanda$collections$CollectionView$T$RP$R$panda$collections$CollectionView$T, panda$collections$CollectionView$fold$$LPpanda$collections$CollectionView$T$Cpanda$collections$CollectionView$T$RP$EQ$GT$LPpanda$collections$CollectionView$T$RP$panda$collections$CollectionView$T$R$panda$collections$CollectionView$T, panda$collections$CollectionView$apply$$LPpanda$collections$CollectionView$T$RP$EQ$AM$GT$LP$RP} };
 

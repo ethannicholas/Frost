@@ -4,16 +4,24 @@ package org.pandalanguage.pandac
 class Methods : Symbol {
     def methods:ImmutableArray<MethodDecl>
 
+    @pre(methods.get_count() > 0 & !containsDuplicates(methods))
     init(methods:ListView<MethodDecl>) {
-        assert methods.get_count() > 0
-        for i in 1 .. methods.get_count() {
-            for j in 0 .. i {
-                if methods[i] == methods[j] {
-                    assert false, "duplicate method: \{methods[i]}"
-                }
-            }
-        }
         super.init(Kind.METHODS, Position(), methods[0].name)
         self.methods := ImmutableArray<MethodDecl>(methods)
+    }
+
+    @class
+    function containsDuplicates(methods:ListView<MethodDecl>):Bit {
+        def sigs := HashSet<String>()
+        for m in methods {
+            sigs.add(m.signature())
+        }
+        if sigs.get_count() < methods.get_count() {
+            Console.printLine("duplicate methods:")
+            for m in methods {
+                Console.printLine(m.declaration())
+            }
+        }
+        return sigs.get_count() < methods.get_count()
     }
 }

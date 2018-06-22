@@ -1,5 +1,13 @@
 package panda.collections
 
+====================================================================================================
+A read-only view of a collection of elements. A `CollectionView`'s elements are accessed via its
+[iterator()].
+
+@see CollectionWriter
+@see Collection
+@see ListView
+====================================================================================================
 interface CollectionView<T> : Iterable<T> {
     -- property count:Int
 
