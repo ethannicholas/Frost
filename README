@@ -29,5 +29,6 @@ questions / complaints / bug reports, or even just to say "Hi!".
 Panda would not have been possible without the help of other amazing open-source projects,
 including:
 
-    LLVM (http://llvm.org/)
-    ICU (http://site.icu-project.org/)
+    LLVM  (http://llvm.org/)
+    ICU   (http://site.icu-project.org/)
+    CMake (http://cmake.org/)
