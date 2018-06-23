@@ -1,0 +1,28 @@
+====================================================================================================
+Scans through a tree of .html files, looking for the token `@@@TOC@@@` and replacing it with the
+final table of contents (first correcting the table of contents links to account for the directory
+depth at which the file was found). Expects three command-line arguments: the path to the ToC file,
+the root path to scan, and the root path to write the finished files to.
+====================================================================================================
+method processTree(toc:String, input:File, output:File, level:Int) {
+    if input.isDirectory() {
+        for file in input.list() {
+            processTree(toc, file, output.resolve(file.name()), level + 1)
+        }
+    }
+    else if input.name().endsWith(".html") {
+        def root := level * "../"
+        def finalToc := toc.replace("href=\"", "href=\"\{root}")
+                .replace("src=\"", "src=\"\{root}")
+                .replace("prepareToC(\"", "prepareToC(\"\{root}")
+        output.parent().createDirectories()
+        output.write(input.readFully().replace("@@@TOC@@@", finalToc))
+    }
+}
+
+method main(args:ListView<String>) {
+    def toc := File(args[1]).readFully()
+    def input := File(args[2])
+    def output := File(args[3])
+    processTree(toc, input, output, -1)
+}

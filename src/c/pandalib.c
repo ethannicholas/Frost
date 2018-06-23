@@ -854,6 +854,20 @@ FileOutputStream* panda$io$File$openOutputStream$R$panda$io$OutputStream(File* s
     return result;
 }
 
+FileOutputStream* panda$io$File$openForAppend$R$panda$io$OutputStream(File* self) {
+    FileOutputStream* result = pandaObjectAlloc(sizeof(FileOutputStream),
+            &panda$io$FileOutputStream$class);
+    char* str = pandaGetCString(self->path);
+    result->file = fopen(str, "ab");
+    if (!result->file) {
+        printf("error opening '%s' for appending\n", str);
+        exit(1);
+    }
+    result->closeOnCleanup.value = true;
+    pandaFree(str);
+    return result;
+}
+
 String* panda$io$File$absolutePath$R$panda$core$String(File* file) {
     char result[PATH_MAX];
     char* rawPath = pandaGetCString(file->path);

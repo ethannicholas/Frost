@@ -133,6 +133,9 @@ class File : Immutable, Key<File> {
     @external
     method openOutputStream():OutputStream
 
+    @external
+    method openForAppend():OutputStream
+
     method readFully():String {
         return openInputStream().readFully()
     }

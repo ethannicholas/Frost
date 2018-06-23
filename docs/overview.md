@@ -1,5 +1,5 @@
-Overview
-========
+Syntax Overview
+===============
 
 This is a basic overview of Panda's syntax and features, intended to help experienced programmers
 quickly get started in Panda.
@@ -141,7 +141,8 @@ The `def` keyword is similar to `var`, but defines a value which cannot be reass
     def hello := "Hello, World!"
     hello := "Goodbye!" -- ERROR, cannot reassign a def
 
-Use `def` instead of `var` wherever possible. In idiomatic Panda code, `var` is uncommon.
+You should generally use `def` instead of `var` wherever possible. In idiomatic Panda code, `var` is
+very uncommon.
 
 The `constant` keyword is similar to `def`, but has the additional requirement that the value must
 be [Immutable]:

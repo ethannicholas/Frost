@@ -1,0 +1,33 @@
+Overview
+========
+
+Panda is a general-purpose multi-paradigm programming language with support for:
+
+* First-class immutable objects and value types
+* First-class functions and closures
+* Type inference
+* Non-nullable references, static proofs of `null` safety
+* Contracts (preconditions and postconditions)
+* Tuples
+* "Sane" operator overloading
+* Actor model threading
+
+And many other features. Panda is still under development; it is nearly feature complete, but not
+quite ready for prime time yet.
+
+Installation
+============
+
+To install Panda, see the 'docs/gettingStarted.md' file.
+
+Credits
+=======
+
+Panda was created by Ethan Nicholas, ethan@ethannicholas.com. Feel free to contact him with any
+questions / complaints / bug reports, or even just to say "Hi!".
+
+Panda would not have been possible without the help of other amazing open-source projects,
+including:
+
+    LLVM (http://llvm.org/)
+    ICU (http://site.icu-project.org/)

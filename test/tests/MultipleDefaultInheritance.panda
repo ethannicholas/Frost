@@ -1,0 +1,18 @@
+interface Example1 {
+    method defaultMethod() {
+        Console.writeLine("this method has an implementation!")
+    }
+}
+
+interface Example2 {
+    method defaultMethod() {
+        Console.writeLine("this method also has an implementation!")
+    }
+}    
+
+class Foo : Example2, Example1 {
+}
+
+method main() {
+    Foo().defaultMethod()
+}

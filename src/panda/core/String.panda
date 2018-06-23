@@ -520,6 +520,19 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
     }
 
     ================================================================================================
+    Returns a string consisting of `count` copies of `s`.
+    ================================================================================================
+    @class
+    @pre(count >= 0)
+    function *(count:Int, s:String):String {
+        def result := MutableString()
+        for i in 0 .. count {
+            result.append(s)
+        }
+        return result.finish()
+    }
+
+    ================================================================================================
     Returns the concatenation of another object's string representation and this string. The
     object's string representation is computed using its [convert() method](Object.convert()).
     ================================================================================================

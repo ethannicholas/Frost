@@ -15,7 +15,7 @@ body {
 #toc {
     display: table-cell;
     vertical-align: top;
-    width: 200px;
+    width: 250px;
     text-overflow: ellipsis;
 }
 

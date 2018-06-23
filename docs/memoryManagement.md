@@ -13,7 +13,7 @@ reference counting is no different.
 The chief *advantages* of Panda's memory management are:
 
 * **Simple**: In practice Panda memory management feels much like a typical garbage collector; just
-  throw objects on the floor when you're done with them, and it will handle cleanup for you
+  'drop objects on the floor' when you're done with them, and it will handle cleanup for you
   automatically.
 * **Timely**: Unlike typical garbage collected languages, Panda cleans up objects the instant the
   last reference is removed. This means that you may rely on `cleanup()` methods being called

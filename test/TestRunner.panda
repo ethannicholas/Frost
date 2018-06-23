@@ -201,7 +201,6 @@ class TestRunner {
         return true
     }
 
-
     @private
     @class
     method swap(a:List<File>, i1:Int, i2:Int) {

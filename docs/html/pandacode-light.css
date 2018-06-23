@@ -3,12 +3,12 @@
 }
 
 .pandacode .comment {
-    color: #A0A0A0;
+    color: #808080;
     font-style: italic;
 }
 
 .pandacode .annotation, .label {
-    color: #D6C2FF;
+    color: #A888BD;
     font-style: italic;
 }
 

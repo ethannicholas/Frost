@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?> 
 <!--
-    Default stylesheet for Panda documentation, still pretty sparse.
+    Default stylesheet for Panda documentation
 -->
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
     <xsl:output method="html" indent="yes"/>
@@ -94,25 +94,6 @@
                 <xsl:value-of select="$name"/>
             </xsl:otherwise>
         </xsl:choose>
-    </xsl:template>
-
-    <xsl:template match="/packages">
-        <ul>
-            <xsl:apply-templates/>
-        </ul>
-    </xsl:template>
-
-    <xsl:template match="/packages/package">
-        <li id="package{name}" class="collapse">
-          <a href="{path}"><xsl:value-of select="name"/></a>
-          <ul>
-            <xsl:apply-templates select="classes"/>
-          </ul>
-        </li>
-    </xsl:template>
-
-    <xsl:template match="/packages/package/classes/class">
-        <li><a href="api/{path}"><xsl:value-of select="name"/></a></li>
     </xsl:template>
 
     <xsl:template name="toc">

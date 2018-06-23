@@ -752,7 +752,7 @@ function(run_markdown out_var)
     foreach(input ${ARGN})
         set(input "${CMAKE_CURRENT_SOURCE_DIR}/${input}")
         get_filename_component(output ${input} NAME_WE)
-        set(output "${CMAKE_CURRENT_BINARY_DIR}/docs/${output}.html")
+        set(output "${CMAKE_CURRENT_BINARY_DIR}/rawDocs/${output}.html")
         add_custom_command(
             OUTPUT ${output}
             COMMAND ${CMAKE_CURRENT_BINARY_DIR}/pandamd ${input} ${output}
@@ -765,11 +765,30 @@ endfunction()
 
 run_markdown(markdown_html
     docs/bareCode.md
+    docs/classes.md
+    docs/comments.md
+    docs/defines.md
+    docs/documentationComments.md
     docs/errorHandling.md
+    docs/expressions.md
+    docs/functions.md
+    docs/gettingStarted.md
+    docs/index.md
+    docs/inlineMethods.md
+    docs/innerMethods.md
+    docs/interfaces.md
+    docs/keywords.md
     docs/main.md
     docs/memoryManagement.md
+    docs/methods.md
+    docs/methodReferences.md
+    docs/operators.md
+    docs/operatorOverloading.md
     docs/overview.md
     docs/programs.md
+    docs/statements.md
+    docs/stringInterpolation.md
+    docs/variablesAndConstants.md
     docs/weakReferences.md
 )
 
@@ -779,7 +798,7 @@ function(syntax_highlight out_var)
         file(RELATIVE_PATH relative "${CMAKE_CURRENT_SOURCE_DIR}/src" ${input})
         get_filename_component(outputPath ${relative} DIRECTORY)
         get_filename_component(outputName ${relative} NAME_WE)
-        set(output "${CMAKE_CURRENT_BINARY_DIR}/docs/source/${outputPath}/${outputName}.html")
+        set(output "${CMAKE_CURRENT_BINARY_DIR}/rawDocs/source/${outputPath}/${outputName}.html")
         string(REGEX REPLACE "[A-Za-z]+" ".." root ${outputPath})
         add_custom_command(
             OUTPUT ${output}
@@ -801,11 +820,11 @@ function(run_pandadoc out_var)
         file(RELATIVE_PATH relative "${CMAKE_CURRENT_SOURCE_DIR}/src" ${input})
         get_filename_component(outputPath ${relative} DIRECTORY)
         get_filename_component(outputName ${relative} NAME_WE)
-        set(output "${CMAKE_CURRENT_BINARY_DIR}/docs/xml/${outputPath}/${outputName}.xml")
+        set(output "${CMAKE_CURRENT_BINARY_DIR}/xml/${outputPath}/${outputName}.xml")
         string(REGEX REPLACE "[A-Za-z]+" ".." root ${outputPath})
         add_custom_command(
             OUTPUT ${output}
-            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/pandac -f xml ${input} -o ${CMAKE_CURRENT_BINARY_DIR}/docs/xml
+            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/pandac -f xml --classList ${CMAKE_CURRENT_BINARY_DIR}/classList.txt ${input} -o ${CMAKE_CURRENT_BINARY_DIR}/xml
             DEPENDS ${input} pandac
         )
         list(APPEND result ${output})
@@ -821,11 +840,11 @@ function(xslt_pandadoc out_var)
     set(result)
     set(xsl ${CMAKE_CURRENT_SOURCE_DIR}/src/tools/pandadoc.xsl)
     foreach(input ${ARGN})
-        file(RELATIVE_PATH relative "${CMAKE_CURRENT_BINARY_DIR}/docs/xml" ${input})
+        file(RELATIVE_PATH relative "${CMAKE_CURRENT_BINARY_DIR}/xml" ${input})
         get_filename_component(outputPath ${relative} DIRECTORY)
         get_filename_component(outputName ${relative} NAME_WE)
-        set(output "${CMAKE_CURRENT_BINARY_DIR}/docs/${outputPath}/${outputName}.html")
-        file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/docs/${outputPath}")
+        set(output "${CMAKE_CURRENT_BINARY_DIR}/rawDocs/${outputPath}/${outputName}.html")
+        file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/rawDocs/${outputPath}")
         add_custom_command(
             OUTPUT ${output}
             COMMAND xsltproc ${xsl} ${input} > ${output}
@@ -836,14 +855,74 @@ function(xslt_pandadoc out_var)
     set(${out_var} "${result}" PARENT_SCOPE)
 endfunction()
 
+add_custom_command(
+    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/MakeTableOfContents
+    COMMAND pandac -o MakeTableOfContents
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/tools/MakeTableOfContents.panda
+    DEPENDS pandac src/tools/MakeTableOfContents.panda
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+)
+
+add_custom_command(
+    OUTPUT xml/toc.xml
+    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/MakeTableOfContents
+            classList.txt
+            xml/toc.xml
+    DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/MakeTableOfContents ${panda_xml}
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+)
+
 xslt_pandadoc(panda_doc_html
     ${panda_xml}
 )
 
+function(xslt_tableOfContents out_var)
+    set(result)
+    set(xsl ${CMAKE_CURRENT_SOURCE_DIR}/src/tools/tableOfContents.xsl)
+    foreach(input ${ARGN})
+        file(RELATIVE_PATH relative "${CMAKE_CURRENT_BINARY_DIR}/xml" ${input})
+        get_filename_component(outputPath ${relative} DIRECTORY)
+        get_filename_component(outputName ${relative} NAME_WE)
+        set(output "${CMAKE_CURRENT_BINARY_DIR}/rawDocs/${outputPath}/${outputName}.html")
+        file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/rawDocs/${outputPath}")
+        add_custom_command(
+            OUTPUT ${output}
+            COMMAND xsltproc ${xsl} ${input} > ${output}
+            DEPENDS ${xsl} ${input} ${panda_html}
+        )
+        list(APPEND result ${output})
+    endforeach()
+    set(${out_var} "${result}" PARENT_SCOPE)
+endfunction()
+
+xslt_tableOfContents(toc_html
+    ${CMAKE_CURRENT_BINARY_DIR}/xml/toc.xml
+)
+
+add_custom_command(
+    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/AddTableOfContents
+    COMMAND pandac -o AddTableOfContents
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/tools/AddTableOfContents.panda
+    DEPENDS pandac src/tools/AddTableOfContents.panda
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+)
+
+add_custom_target(add_toc
+    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/AddTableOfContents
+            rawDocs/toc.html
+            rawDocs
+            docs
+    DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/AddTableOfContents ${toc_html} 
+            ${markdown_html} ${panda_source_html} ${panda_doc_html}
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+)
+
 add_custom_target(docs
-    DEPENDS ${markdown_html}
-    DEPENDS ${panda_source_html}
-    DEPENDS ${panda_doc_html}
+    DEPENDS add_toc
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/docs/html/closed.png
+            ${CMAKE_CURRENT_BINARY_DIR}/docs
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/docs/html/open.png
+            ${CMAKE_CURRENT_BINARY_DIR}/docs
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/docs/html/panda-source.css
             ${CMAKE_CURRENT_BINARY_DIR}/docs
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/docs/html/pandacode-monokai.css
@@ -851,5 +930,9 @@ add_custom_target(docs
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/docs/html/pandacode-light.css
             ${CMAKE_CURRENT_BINARY_DIR}/docs
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/docs/html/pandadoc.css
+            ${CMAKE_CURRENT_BINARY_DIR}/docs
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/docs/html/toc.css
+            ${CMAKE_CURRENT_BINARY_DIR}/docs
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/docs/html/site.js
             ${CMAKE_CURRENT_BINARY_DIR}/docs
 )

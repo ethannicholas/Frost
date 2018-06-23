@@ -142,37 +142,6 @@ interface ListView<T> : CollectionView<T> {
     }
 
     ================================================================================================
-    Returns a comma-separated string containing all of the items in this list. Equivalent to
-    `join(", ")`.
-    ================================================================================================
-    function join():String {
-        return join(", ")
-    }
-
-    ================================================================================================
-    Converts all of the items in this list to strings and concatenates them, with the given
-    separator between them. For instance, `[1, 2, 3].join("|")` returns `"1|2|3"`.
-
-    @param separator the delimiter string
-    ================================================================================================    
-    function join(separator:String):String {
-        if get_count() = 0 {
-            return ""
-        }
-        def result := MutableString(self[0].convert())
-        for i in 1 .. get_count() {
-            result.append(separator)
-            if self[i] != null {
-                result.append(self[i])
-            }
-            else {
-                result.append("<null>")
-            }
-        }
-        return result.finish()
-    }
-
-    ================================================================================================
     Returns a new list containing every entry in this list for which the `predicate` function
     returns true. For instance, `[1, 7, -10, 5, -2].filter(x => x > 0)` returns `[1, 7, 5]`.
     ================================================================================================

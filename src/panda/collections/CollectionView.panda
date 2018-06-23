@@ -13,6 +13,44 @@ interface CollectionView<T> : Iterable<T> {
 
     function get_count():Int
 
+    ================================================================================================
+    Returns a comma-separated string containing all of the items in this collection, in iteration
+    order. Equivalent to `join(", ")`.
+    ================================================================================================
+    function join():String {
+        return join(", ")
+    }
+
+    ================================================================================================
+    Converts all of the items in this collection to strings and concatenates them in iteration
+    order, with the given separator between them. For instance, `[1, 2, 3].join("|")` returns
+    `"1|2|3"`.
+
+    @param separator the delimiter string
+    ================================================================================================    
+    function join(separator:String):String {
+        if get_count() = 0 {
+            return ""
+        }
+        var first := true
+        def result := MutableString()
+        for v in self {
+            if first {
+                first := false
+            }
+            else {
+                result.append(separator)
+            }
+            if v != null {
+                result.append(v)
+            }
+            else {
+                result.append("<null>")
+            }
+        }
+        return result.finish()
+    }
+
     @pre(get_count() > 0)
     function fold(f:(T, T)=>(T)):T {
         def i := iterator()

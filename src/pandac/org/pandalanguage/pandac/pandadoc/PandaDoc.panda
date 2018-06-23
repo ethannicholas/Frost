@@ -45,12 +45,22 @@ class PandaDoc : CodeGenerator {
 
     var out:XMLWriter
 
+    def classListPath:File
+
+    def classList := HashSet<String>()
+
     var returns:String?
 
     var params := HashMap<String, String>()
 
-    init(outDir:File) {
+    init(outDir:File, classListPath:File?) {
         self.outDir := outDir
+        if classListPath != null {
+            self.classListPath := classListPath
+            if classListPath.exists() {
+                classListPath.lines().apply(classList.add)
+            }
+        }
     }
 
     @override
@@ -432,6 +442,9 @@ class PandaDoc : CodeGenerator {
     method start(cl:ClassDecl) {
         returns := null
         params.clear()
+        if !cl.annotations.isPrivate() {
+            classList.add(cl.name)
+        }
         def dest := getPath(cl, ".xml")
         dest.parent().createDirectories()
         out := XMLWriter(dest.openOutputStream())
@@ -468,5 +481,8 @@ class PandaDoc : CodeGenerator {
 
     @override
     method finish() {
+        if classListPath != null {
+            classListPath.write(classList.join("\n"))
+        }
     }
 }

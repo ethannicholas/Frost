@@ -173,11 +173,11 @@ interface Iterator<T> {
     }
 
     ================================================================================================
-    Scans through the `Iterator` until the end, collecting all of the traversed elements into a
-    `List`.
+    Scans through the `Iterator` until the end, collecting all of the traversed elements into an
+    `Array`.
     ================================================================================================
     @post(get_done())
-    method all():List<T> {
+    method all():Array<T> {
         def result := Array<T>()
         for v in self {
             result.add(v)
