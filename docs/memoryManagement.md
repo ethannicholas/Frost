@@ -27,8 +27,8 @@ The chief *disadvantages* of Panda's memory management are:
 * **Reference cycles**: When object A refers to object B, and object B refers to object A, each of
   them will have a reference count of 1 even when no outside references to them exist. This is a
   "reference cycle", and it means that these objects will remain in memory even when you are
-  finished with them. Cycles are easily fixed using [weak references](weakReferences.md), but it is
-  something you will need to be aware of.
+  finished with them. Cycles are easily fixed using [weak references](weakReferences.html), but it
+  is something you will need to be aware of.
 * **Throughput**: A garbage collector's pauses can be annoying, but garbage collectors do little or
   no work in between these pauses. Reference counting, on the other hand, does a tiny bit of work
   every time a reference is updated. This is a tradeoff which leads to zero pauses, but slightly

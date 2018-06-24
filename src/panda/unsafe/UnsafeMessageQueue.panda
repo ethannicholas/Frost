@@ -1,0 +1,114 @@
+package panda.unsafe
+
+@final
+@unsafeImmutable
+class UnsafeMessageQueue<T> : Immutable {
+    @private
+    class Message<T> {
+        def payload:T
+
+        def next:Message<T>?
+
+        init(payload:T) {
+            self.payload := payload
+        }
+
+        @override
+        function convert():String {
+            if next != null {
+                return "Message(\{payload}, \{next})"
+            }
+            return "Message(\{payload})"
+        }
+    }
+
+    @private
+    def lock := Lock()
+
+    @private
+    def notifier := Notifier(lock)
+
+    @private
+    var count := 0
+
+    @private
+    var head:Message<T>?
+
+    @private
+    var tail:Message<T>?
+
+    ================================================================================================
+    Posts an object to the queue.
+    
+    @param data the object to post
+    ================================================================================================
+    method post(data:T) {
+        def scope := ScopedLock(lock)
+        if tail != null {
+            assert head != null
+            tail.next := Message<T>(data)
+            tail := tail.next
+        }
+        else {
+            assert count = 0
+            head := Message<T>(data)
+            tail := head
+        }
+        count += 1
+        notifier.notify()
+    }
+
+    ================================================================================================
+    Returns the number of messages currently in the queue.
+    
+    @returns the number of messages in this `MessageQueue`
+    @see hasMessage()
+    @see getMessage()
+    @see getMessage(Int)
+    ================================================================================================
+    method pendingMessages():Int {
+        def scope := ScopedLock(lock)
+        return count
+    }
+    
+    ================================================================================================
+    Returns `true` if there are one or more messages in the queue.
+    
+    @returns whether this queue has pending messages
+    @see pendingMessages()
+    @see getMessage()
+    @see getMessage(Int)
+    ================================================================================================
+    method hasMessage():Bit {
+        return pendingMessages() > 0
+    }
+    
+    ================================================================================================
+    Returns the next message from the queue, blocking until one is available.
+    
+    @see getMessage(Int)
+    @returns the next message from the queue
+    ================================================================================================
+    method getMessage():T {
+        def scope := ScopedLock(lock)
+        while head = null {
+            notifier.wait()
+        }
+        def result := head.payload
+        head := head.next
+        if head = null {
+            tail := null
+        }
+        count -= 1
+        return result
+    }
+
+    ================================================================================================
+    Remove all pending messages from the queue.
+    ================================================================================================
+    method clear() {
+        while hasMessage() {
+            getMessage()
+        }
+    }
+}

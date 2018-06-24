@@ -1,5 +1,9 @@
 package panda.math
 
+====================================================================================================
+Provices methods for calculating pseudorandom numbers. Implementations of `Random` generally need
+only implement the [int64()] method, with all other methods having default implementations.
+====================================================================================================
 interface Random {
     ================================================================================================
     Provides an automatically-seeded implementation of the default random number generator. The
@@ -64,7 +68,7 @@ interface Random {
     ================================================================================================
     @post(@return >= 0 & @return < 1)
     method real32():Real32 {
-        return 12--(int32().convert()->UInt32 >> 8) / (1 << 24)
+        return (int32().convert()->UInt32 >> 8) / (1 << 24)
     }
         
     ================================================================================================

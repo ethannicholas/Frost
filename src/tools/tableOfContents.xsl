@@ -47,7 +47,7 @@
                                         <li><a href="self.html"><code>self</code></a></li>
                                         <li><a href="super.html"><code>super</code></a></li>
                                         <li><a href="null.html"><code>null</code></a></li>
-                                        <li><a href="arrays.html">Arrays</a></li>
+                                        <li><a href="arrayLiterals.html">Array Literals</a></li>
                                         <li><a href="tuples.html">Tuples</a></li>
                                         <li><a href="inlineMethods.html">Inline Methods</a></li>
                                     </ul>
@@ -55,7 +55,6 @@
                                 <li><a href="annotations.html">Annotations</a></li>
                                 <li><a href="comments.html">Comments</a></li>
                                 <li><a href="documentationComments.html">Documentation Comments</a></li>
-                                <li><a href="codingConventions.html">Coding Conventions</a></li>
                             </ul>
                         </li>
                         <li id="classesBullet" class="collapse">
@@ -64,7 +63,7 @@
                                 <li><a href="interfaces.html">Interfaces</a></li>
                                 <li><a href="choices.html">Choices</a></li>
                                 <li><a href="values.html">Values</a></li>
-                                <li><a href="immutable.html">Immutability</a></li>
+                                <li><a href="immutability.html">Immutability</a></li>
                                 <li id="packagesBullet" class="collapse">
                                     <a href="packages.html">Packages</a>
                                     <ul>
@@ -127,8 +126,8 @@
 
     <xsl:template match="/entry/contents/entry">
         <li id="entry.{name}">
-          <a href="{path}"><xsl:value-of select="simpleName"/></a>
-            <xsl:apply-templates select="contents"/>
+          <a href="{path}"><code><xsl:value-of select="simpleName"/></code></a>
+            <code><xsl:apply-templates select="contents"/></code>
         </li>
     </xsl:template>
 

@@ -36,9 +36,9 @@ __attribute__((weak)) panda$collections$Iterator* panda$collections$ListView$ite
 
 struct { panda$core$Class* cl; ITable* next; void* methods[1]; } panda$collections$ImmutableArray$_panda$collections$Iterable = { (panda$core$Class*) &panda$collections$Iterable$class, NULL, { panda$collections$ImmutableArray$iterator$R$panda$collections$Iterator$LTpanda$collections$ImmutableArray$T$GT$shim} };
 
-struct { panda$core$Class* cl; ITable* next; void* methods[4]; } panda$collections$ImmutableArray$_panda$collections$CollectionView = { (panda$core$Class*) &panda$collections$CollectionView$class, (ITable*) &panda$collections$ImmutableArray$_panda$collections$Iterable, { panda$collections$ImmutableArray$get_count$R$panda$core$Int64, panda$collections$CollectionView$fold$$LPpanda$collections$CollectionView$T$Cpanda$collections$CollectionView$T$RP$EQ$GT$LPpanda$collections$CollectionView$T$RP$R$panda$collections$CollectionView$T, panda$collections$CollectionView$fold$$LPpanda$collections$CollectionView$T$Cpanda$collections$CollectionView$T$RP$EQ$GT$LPpanda$collections$CollectionView$T$RP$panda$collections$CollectionView$T$R$panda$collections$CollectionView$T, panda$collections$CollectionView$apply$$LPpanda$collections$CollectionView$T$RP$EQ$AM$GT$LP$RP} };
+struct { panda$core$Class* cl; ITable* next; void* methods[6]; } panda$collections$ImmutableArray$_panda$collections$CollectionView = { (panda$core$Class*) &panda$collections$CollectionView$class, (ITable*) &panda$collections$ImmutableArray$_panda$collections$Iterable, { panda$collections$ImmutableArray$get_count$R$panda$core$Int64, panda$collections$CollectionView$join$R$panda$core$String, panda$collections$CollectionView$join$panda$core$String$R$panda$core$String, panda$collections$CollectionView$fold$$LPpanda$collections$CollectionView$T$Cpanda$collections$CollectionView$T$RP$EQ$GT$LPpanda$collections$CollectionView$T$RP$R$panda$collections$CollectionView$T, panda$collections$CollectionView$fold$$LPpanda$collections$CollectionView$T$Cpanda$collections$CollectionView$T$RP$EQ$GT$LPpanda$collections$CollectionView$T$RP$panda$collections$CollectionView$T$R$panda$collections$CollectionView$T, panda$collections$CollectionView$apply$$LPpanda$collections$CollectionView$T$RP$EQ$AM$GT$LP$RP} };
 
-struct { panda$core$Class* cl; ITable* next; void* methods[8]; } panda$collections$ImmutableArray$_panda$collections$ListView = { (panda$core$Class*) &panda$collections$ListView$class, (ITable*) &panda$collections$ImmutableArray$_panda$collections$CollectionView, { panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T$shim, panda$collections$ListView$$IDX$panda$core$Range$LTpanda$core$Int64$GT$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT, panda$collections$ListView$$IDX$panda$core$Range$LTpanda$core$Int64$Q$GT$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT, panda$collections$ListView$$IDX$panda$core$SteppedRange$LTpanda$core$Int64$Q$Cpanda$core$Int64$GT$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT, panda$collections$ListView$join$R$panda$core$String, panda$collections$ListView$join$panda$core$String$R$panda$core$String, panda$collections$ListView$filter$$LPpanda$collections$ListView$T$RP$EQ$GT$LPpanda$core$Bit$RP$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT, panda$collections$ListView$iterator$R$panda$collections$Iterator$LTpanda$collections$ListView$T$GT$shim} };
+struct { panda$core$Class* cl; ITable* next; void* methods[6]; } panda$collections$ImmutableArray$_panda$collections$ListView = { (panda$core$Class*) &panda$collections$ListView$class, (ITable*) &panda$collections$ImmutableArray$_panda$collections$CollectionView, { panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T$shim, panda$collections$ListView$$IDX$panda$core$Range$LTpanda$core$Int64$GT$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT, panda$collections$ListView$$IDX$panda$core$Range$LTpanda$core$Int64$Q$GT$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT, panda$collections$ListView$$IDX$panda$core$SteppedRange$LTpanda$core$Int64$Q$Cpanda$core$Int64$GT$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT, panda$collections$ListView$filter$$LPpanda$collections$ListView$T$RP$EQ$GT$LPpanda$core$Bit$RP$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT, panda$collections$ListView$iterator$R$panda$collections$Iterator$LTpanda$collections$ListView$T$GT$shim} };
 
 static panda$core$String $s1;
 panda$collections$ImmutableArray$class_type panda$collections$ImmutableArray$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Immutable$class, (ITable*) &panda$collections$ImmutableArray$_panda$collections$ListView, { panda$collections$ImmutableArray$convert$R$panda$core$String, panda$collections$ImmutableArray$cleanup, panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$panda$collections$ImmutableArray$T$shim, panda$collections$ImmutableArray$get_count$R$panda$core$Int64, panda$collections$ImmutableArray$$IDX$panda$core$Range$LTpanda$core$Int64$GT$R$panda$collections$ImmutableArray$LTpanda$collections$ImmutableArray$T$GT, panda$collections$ImmutableArray$$IDX$panda$core$Range$LTpanda$core$Int64$Q$GT$R$panda$collections$ImmutableArray$LTpanda$collections$ImmutableArray$T$GT, panda$collections$ImmutableArray$$IDX$panda$core$SteppedRange$LTpanda$core$Int64$Q$Cpanda$core$Int64$GT$R$panda$collections$ImmutableArray$LTpanda$collections$ImmutableArray$T$GT, panda$collections$ImmutableArray$iterator$R$panda$collections$Iterator$LTpanda$collections$ImmutableArray$T$GT$shim} };
@@ -198,7 +198,7 @@ panda$core$Object* panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$pand
     panda$core$Bit $tmp73 = { $tmp67 };
     if ($tmp73.value) goto $l74; else goto $l75;
     $l75:;
-    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s76, (panda$core$Int64) { 65 }, &$s77);
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s76, (panda$core$Int64) { 66 }, &$s77);
     abort();
     $l74:;
     panda$core$Int64$init$builtin_int64(&$tmp79, 0);
@@ -211,7 +211,7 @@ panda$core$Object* panda$collections$ImmutableArray$$IDX$panda$core$Int64$R$pand
     panda$core$Bit $tmp83 = { $tmp78 };
     if ($tmp83.value) goto $l84; else goto $l85;
     $l85:;
-    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s86, (panda$core$Int64) { 66 });
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s86, (panda$core$Int64) { 67 });
     abort();
     $l84:;
     $tmp88 = self->data[p_index.value];
@@ -448,7 +448,7 @@ panda$collections$ImmutableArray* panda$collections$ImmutableArray$$IDX$panda$co
             panda$core$Bit $tmp173 = panda$core$Int64$$LT$panda$core$Int64$R$panda$core$Bit(p_r.step, $tmp172);
             if ($tmp173.value) goto $l174; else goto $l175;
             $l175:;
-            panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s176, (panda$core$Int64) { 155 });
+            panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s176, (panda$core$Int64) { 156 });
             abort();
             $l174:;
             $l177:;
@@ -535,7 +535,7 @@ panda$core$String* panda$collections$ImmutableArray$convert$R$panda$core$String(
     panda$core$UInt8 $tmp218;
     panda$core$String* separator219 = NULL;
     panda$core$String* $tmp220;
-    panda$collections$Iterator* Iter$177$9225 = NULL;
+    panda$collections$Iterator* Iter$178$9225 = NULL;
     panda$collections$Iterator* $tmp226;
     panda$collections$Iterator* $tmp227;
     panda$core$Object* v243 = NULL;
@@ -574,28 +574,28 @@ panda$core$String* panda$collections$ImmutableArray$convert$R$panda$core$String(
                 panda$collections$Iterator* $tmp231 = $tmp229(((panda$collections$Iterable*) self));
                 $tmp227 = $tmp231;
                 $tmp226 = $tmp227;
-                Iter$177$9225 = $tmp226;
+                Iter$178$9225 = $tmp226;
                 panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp226));
                 panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp227));
                 $l232:;
-                ITable* $tmp235 = Iter$177$9225->$class->itable;
+                ITable* $tmp235 = Iter$178$9225->$class->itable;
                 while ($tmp235->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
                     $tmp235 = $tmp235->next;
                 }
                 $fn237 $tmp236 = $tmp235->methods[0];
-                panda$core$Bit $tmp238 = $tmp236(Iter$177$9225);
+                panda$core$Bit $tmp238 = $tmp236(Iter$178$9225);
                 panda$core$Bit $tmp239 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp238);
                 bool $tmp234 = $tmp239.value;
                 if (!$tmp234) goto $l233;
                 {
                     int $tmp242;
                     {
-                        ITable* $tmp246 = Iter$177$9225->$class->itable;
+                        ITable* $tmp246 = Iter$178$9225->$class->itable;
                         while ($tmp246->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
                             $tmp246 = $tmp246->next;
                         }
                         $fn248 $tmp247 = $tmp246->methods[1];
-                        panda$core$Object* $tmp249 = $tmp247(Iter$177$9225);
+                        panda$core$Object* $tmp249 = $tmp247(Iter$178$9225);
                         $tmp245 = $tmp249;
                         $tmp244 = $tmp245;
                         v243 = $tmp244;
@@ -627,8 +627,8 @@ panda$core$String* panda$collections$ImmutableArray$convert$R$panda$core$String(
             $tmp224 = -1;
             goto $l222;
             $l222:;
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$177$9225));
-            Iter$177$9225 = NULL;
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$178$9225));
+            Iter$178$9225 = NULL;
             switch ($tmp224) {
                 case -1: goto $l254;
             }

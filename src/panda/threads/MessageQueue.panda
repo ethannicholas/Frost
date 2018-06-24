@@ -1,10 +1,10 @@
 package panda.threads
 
 ====================================================================================================
-A queue which can be shared between multiple [threads](Thread), allowing any of them to submit
-messages to or pull messages out of it. Multiple threads may simultaneously wait for a message from
-the same message queue, in which case one of the waiting threads will be selected to receive the
-message in a system-dependent fashion, while the other threads will continue to wait.
+A queue which can be shared between multiple [Thread]s, allowing any of them to submit messages to
+or pull messages out of it. Multiple threads may simultaneously wait for a message from the same
+message queue, in which case one of the waiting threads will be selected to receive the message in a
+system-dependent fashion, while the other threads will continue to wait.
 ====================================================================================================
 @final
 @unsafeImmutable

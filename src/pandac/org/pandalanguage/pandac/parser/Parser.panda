@@ -2560,24 +2560,28 @@ class Parser {
     }
 
     ================================================================================================
-    bodyEntry = usesDeclaration | packageDeclaration | declaration
+    bodyEntry = usesDeclaration | declaration
     ================================================================================================
     method bodyEntry():ASTNode? {
         match peek().kind {
             when Token.Kind.USES:
                 return usesDeclaration()
-            when Token.Kind.PACKAGE:
-                return packageDeclaration()
             otherwise:
                 return declaration()
         }
     }
 
     ================================================================================================
-    file = bodyEntry*
+    file = packageDeclaration? bodyEntry*
     ================================================================================================
     method file():ASTNode? {
         def entries := Array<ASTNode>()
+        if peek().kind = Token.Kind.PACKAGE {
+            def decl := packageDeclaration()
+            if decl != null {
+                entries.add(decl)
+            }
+        }
         while peek().kind != Token.Kind.EOF {
             def entry := bodyEntry()
             if entry = null {

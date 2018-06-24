@@ -100,7 +100,7 @@ class Markdown {
     def parser := Parser(errorQueue)
 
     @private
-    def linkResolver:(String)=>(String)?
+    def linkResolver:(String)=&>(String?)?
 
     def linkDefinitions := HashMap<String, LinkDefinition>()
 
@@ -120,7 +120,7 @@ class Markdown {
         init(null)
     }
 
-    init(linkResolver:(String)=>(String)?) {
+    init(linkResolver:(String)=&>(String?)?) {
         self.source := File("/tmp/dummy")
         self.linkResolver := linkResolver
         parser.syntaxHighlighter := SyntaxHighlighter()
@@ -965,9 +965,19 @@ class Markdown {
             var url := groups[3]
             def title := groups[6]
             -- protect emphasis (* and _) within urls
+            if linkResolver != null {
+                def newURL := linkResolver(url)
+                if newURL = null {
+                    Console.errorStream().printLine("error: unable to resolve link '\{url}'")
+                    newURL := "(error)"
+                }
+                url := newURL
+            }
+            else {
+                url := "[no link resolver]"
+            }
             url := url.replace(/\*/, charProtector.encode("*"))
             url := url.replace(/_/, charProtector.encode("_"))
-            url := "waiting on link resolver"
             def result := MutableString()
             result.append("<a href=\"\{url}\"")
             if title != null {
@@ -989,12 +999,12 @@ class Markdown {
         -- or [link test](/foo)
         def referenceShortcut := RegularExpression("(" + -- wrap whole match in $1
                                                    "\\[" +
-                                                   "([^\\[\\]]+)" + -- link text = $2; can't contain '[' or ']'
+                                                   "([^\\[\\]<>]+)" + -- link text = $2; can't contain '[' or ']'
                                                    "\\]" +
                                                    ")",
                                                    RegularExpression.DOTALL)
         markup.replace(referenceShortcut, function(groups:ListView<String?>):Object {
-            def replacementText:String
+            var replacementText:String
             def wholeMatch := groups[1]
             def linkText := groups[2]
             var id := linkText -- FIXME .toLowerCase()
@@ -1016,7 +1026,18 @@ class Markdown {
                 replacementText := "<a href=\"\{url}\"\{titleTag}>\{linkText}</a>"
             }
             else {
-                replacementText := wholeMatch
+                if linkResolver != null {
+                    replacementText := linkResolver(linkText)
+                    if replacementText != null {
+                        replacementText := "<a href=\"\{replacementText}\"><code>\{linkText}</code></a>"
+                    }
+                    else {
+                        replacementText := "(no match:\{linkText})"
+                    }
+                }
+                else {
+                    replacementText := "(no link resolver)"
+                }
             }
             return replacementText
         })

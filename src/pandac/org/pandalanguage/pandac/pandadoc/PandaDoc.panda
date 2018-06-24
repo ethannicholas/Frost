@@ -53,6 +53,10 @@ class PandaDoc : CodeGenerator {
 
     var params := HashMap<String, String>()
 
+    var currentClass:ClassDecl?
+
+    var haveSees := false
+
     init(outDir:File, classListPath:File?) {
         self.outDir := outDir
         if classListPath != null {
@@ -79,7 +83,7 @@ class PandaDoc : CodeGenerator {
 
     function simpleName(t:Type):String {
         match t.typeKind {
-            when Type.Kind.CLASS:
+            when Type.Kind.CLASS, Type.Kind.GENERIC_PARAMETER:
                 def index := t.name.lastIndexOf(".")
                 if index = null {
                     return t.name
@@ -174,6 +178,10 @@ class PandaDoc : CodeGenerator {
         return result
     }
 
+    function getMarkdown():Markdown {
+        return Markdown(LinkResolver(compiler, currentClass).resolve)
+    }
+
     method writeDoc(doccomment:String) {
         def summary:String
         def index := doccomment.indexOf(".")
@@ -183,20 +191,32 @@ class PandaDoc : CodeGenerator {
         else {
             summary := doccomment
         }
-        def md := Markdown()
+        def md := getMarkdown()
         out.open("doc")
         def oldLevel := out.out.level
         -- the indentation from the IndentedOutputStream will screw up any <pre> blocks in the
         -- doccomment, so we need to temporarily zero it out
         out.out.level := 0
-        var processedSummary := md.process(summary)
-        if processedSummary.startsWith("<p>") {
-            processedSummary := processedSummary.parse(/(?s)<p>(.*)<\/p>\s*/)[0]
-        }
+        def processedSummary := stripParagraph(md.process(summary))
         out.write("summary", processedSummary)
         out.write("description", md.process(doccomment))
         out.out.level := oldLevel
         out.close("doc")
+    }
+
+    method writeSee(s:String) {
+        if !haveSees {
+            out.open("seeAlsos")
+            haveSees := true
+        }
+        out.write("seeAlso", stripParagraph(getMarkdown().process("[\{s}]")))
+    }
+
+    method finishSees() {
+        if haveSees {
+            out.close("seeAlsos")
+            haveSees := false
+        }
     }
 
     function visible(f:FieldDecl):Bit {
@@ -214,10 +234,12 @@ class PandaDoc : CodeGenerator {
             for tag in split[1..] {
                 match tag.first {
                     when "see":
+                        writeSee(tag.second)
                     otherwise:
                         compiler.error(f.position, "tag '@\{tag.first}' is not supported on fields")
                 }
             }
+            finishSees()
         }
     }
 
@@ -287,17 +309,21 @@ class PandaDoc : CodeGenerator {
                         compiler.error(m.position, "invalid '@param' contents '\{tag.second}'")
                         continue
                     }
-                    params[split[0]] := stripParagraph(Markdown().process(split[1]))
+                    params[split[0]] := stripParagraph(getMarkdown().process(split[1]))
                 when "returns":
-                    returns := stripParagraph(Markdown().process(tag.second))
+                    returns := stripParagraph(getMarkdown().process(tag.second))
                 when "see":
+                    writeSee(tag.second)
                 otherwise:
                     compiler.error(m.position, "tag '@\{tag.first}' is not supported on methods")
             }
         }
+        finishSees()
     }
 
     method write(m:MethodDecl) {
+        returns := null
+        params.clear()
         if !visible(m) {
             return
         }
@@ -435,13 +461,22 @@ class PandaDoc : CodeGenerator {
         if cl.doccomment != null {
             def split := splitDoc(cl.doccomment)
             writeDoc(split[0].second)
+            for tag in split[1..] {
+                match tag.first {
+                    when "see":
+                        writeSee(tag.second)
+                    otherwise:
+                        compiler.error(cl.position,
+                                "tag '@\{tag.first}' is not supported on classes")
+                }
+            }
+            finishSees()
         }
     }
 
     @override
     method start(cl:ClassDecl) {
-        returns := null
-        params.clear()
+        self.currentClass := cl
         if !cl.annotations.isPrivate() {
             classList.add(cl.name)
         }
@@ -450,7 +485,25 @@ class PandaDoc : CodeGenerator {
         out := XMLWriter(dest.openOutputStream())
         out.open("class")
         out.write("name", cl.name)
-        out.write("simpleName", simpleName(cl.type()))
+        var simple := simpleName(cl.type())
+        if cl.parameters.get_count() != 0 {
+            var separator := "&lt;"
+            for p in cl.parameters {
+                simple += separator
+                simple += p.name
+                separator := ", "
+            }
+            simple += "&gt;"
+        }
+        out.write("simpleName", simple)
+        match cl.classKind {
+            when ClassDecl.Kind.CLASS:
+                out.write("kind", "class")
+            when ClassDecl.Kind.INTERFACE:
+                out.write("kind", "interface")
+            when ClassDecl.Kind.CHOICE:
+                out.write("kind", "choice")
+        }
         out.write("source", "../" * cl.name.find(".").count() + "source/" +
                 cl.name.replace(".", "/") + ".html")
         writeDoc(cl)

@@ -236,6 +236,7 @@ add_executable(bootstrap
     bootstrap/src/org/pandalanguage/pandac/Variable.c
     bootstrap/src/org/pandalanguage/pandac/Variable/Kind.c
     bootstrap/src/org/pandalanguage/pandac/Variable/Storage.c
+    bootstrap/src/org/pandalanguage/pandac/pandadoc/LinkResolver.c
     bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown.c
     bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/CodeReplacer.c
     bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/HTMLToken.c
@@ -349,6 +350,7 @@ set(core_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/threads/MessageQueue.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/threads/ScopedLock.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/threads/Thread.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/unsafe/UnsafeMessageQueue.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/json/Lexer.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/json/Position.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/json/Token.panda
@@ -579,6 +581,7 @@ set(pandac_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/SymbolTable.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/Type.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/Variable.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/pandadoc/LinkResolver.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/pandadoc/Markdown.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/pandadoc/PandaDoc.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/parser/Parser.panda
@@ -764,16 +767,21 @@ function(run_markdown out_var)
 endfunction()
 
 run_markdown(markdown_html
+    docs/annotations.md
+    docs/arrayLiterals.md
     docs/bareCode.md
     docs/classes.md
     docs/comments.md
+    docs/constants.md
     docs/defines.md
     docs/documentationComments.md
     docs/errorHandling.md
     docs/expressions.md
     docs/functions.md
     docs/gettingStarted.md
+    docs/immutability.md
     docs/index.md
+    docs/initMethods.md
     docs/inlineMethods.md
     docs/innerMethods.md
     docs/interfaces.md
@@ -782,13 +790,22 @@ run_markdown(markdown_html
     docs/memoryManagement.md
     docs/methods.md
     docs/methodReferences.md
+    docs/null.md
     docs/operators.md
     docs/operatorOverloading.md
     docs/overview.md
+    docs/packages.md
     docs/programs.md
+    docs/properties.md
+    docs/self.md
+    docs/super.md
     docs/statements.md
     docs/stringInterpolation.md
+    docs/tuples.md
+    docs/types.md
+    docs/values.md
     docs/variablesAndConstants.md
+    docs/variables.md
     docs/weakReferences.md
 )
 
@@ -922,6 +939,8 @@ add_custom_target(docs
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/docs/html/closed.png
             ${CMAKE_CURRENT_BINARY_DIR}/docs
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/docs/html/open.png
+            ${CMAKE_CURRENT_BINARY_DIR}/docs
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/docs/html/panda-main.css
             ${CMAKE_CURRENT_BINARY_DIR}/docs
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/docs/html/panda-source.css
             ${CMAKE_CURRENT_BINARY_DIR}/docs

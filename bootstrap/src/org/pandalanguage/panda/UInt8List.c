@@ -28,14 +28,14 @@ __attribute__((weak)) panda$core$Object* org$pandalanguage$panda$UInt8List$$IDX$
 
 struct { panda$core$Class* cl; ITable* next; void* methods[1]; } org$pandalanguage$panda$UInt8List$_panda$collections$Iterable = { (panda$core$Class*) &panda$collections$Iterable$class, NULL, { panda$collections$ListView$iterator$R$panda$collections$Iterator$LTpanda$collections$ListView$T$GT$shim} };
 
-struct { panda$core$Class* cl; ITable* next; void* methods[4]; } org$pandalanguage$panda$UInt8List$_panda$collections$CollectionView = { (panda$core$Class*) &panda$collections$CollectionView$class, (ITable*) &org$pandalanguage$panda$UInt8List$_panda$collections$Iterable, { org$pandalanguage$panda$UInt8List$get_count$R$panda$core$Int64, panda$collections$CollectionView$fold$$LPpanda$collections$CollectionView$T$Cpanda$collections$CollectionView$T$RP$EQ$GT$LPpanda$collections$CollectionView$T$RP$R$panda$collections$CollectionView$T, panda$collections$CollectionView$fold$$LPpanda$collections$CollectionView$T$Cpanda$collections$CollectionView$T$RP$EQ$GT$LPpanda$collections$CollectionView$T$RP$panda$collections$CollectionView$T$R$panda$collections$CollectionView$T, panda$collections$CollectionView$apply$$LPpanda$collections$CollectionView$T$RP$EQ$AM$GT$LP$RP} };
+struct { panda$core$Class* cl; ITable* next; void* methods[6]; } org$pandalanguage$panda$UInt8List$_panda$collections$CollectionView = { (panda$core$Class*) &panda$collections$CollectionView$class, (ITable*) &org$pandalanguage$panda$UInt8List$_panda$collections$Iterable, { org$pandalanguage$panda$UInt8List$get_count$R$panda$core$Int64, panda$collections$CollectionView$join$R$panda$core$String, panda$collections$CollectionView$join$panda$core$String$R$panda$core$String, panda$collections$CollectionView$fold$$LPpanda$collections$CollectionView$T$Cpanda$collections$CollectionView$T$RP$EQ$GT$LPpanda$collections$CollectionView$T$RP$R$panda$collections$CollectionView$T, panda$collections$CollectionView$fold$$LPpanda$collections$CollectionView$T$Cpanda$collections$CollectionView$T$RP$EQ$GT$LPpanda$collections$CollectionView$T$RP$panda$collections$CollectionView$T$R$panda$collections$CollectionView$T, panda$collections$CollectionView$apply$$LPpanda$collections$CollectionView$T$RP$EQ$AM$GT$LP$RP} };
 
-struct { panda$core$Class* cl; ITable* next; void* methods[8]; } org$pandalanguage$panda$UInt8List$_panda$collections$ListView = { (panda$core$Class*) &panda$collections$ListView$class, (ITable*) &org$pandalanguage$panda$UInt8List$_panda$collections$CollectionView, { org$pandalanguage$panda$UInt8List$$IDX$panda$core$Int64$R$panda$core$UInt8$shim, panda$collections$ListView$$IDX$panda$core$Range$LTpanda$core$Int64$GT$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT, panda$collections$ListView$$IDX$panda$core$Range$LTpanda$core$Int64$Q$GT$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT, panda$collections$ListView$$IDX$panda$core$SteppedRange$LTpanda$core$Int64$Q$Cpanda$core$Int64$GT$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT, panda$collections$ListView$join$R$panda$core$String, panda$collections$ListView$join$panda$core$String$R$panda$core$String, panda$collections$ListView$filter$$LPpanda$collections$ListView$T$RP$EQ$GT$LPpanda$core$Bit$RP$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT, panda$collections$ListView$iterator$R$panda$collections$Iterator$LTpanda$collections$ListView$T$GT$shim} };
+struct { panda$core$Class* cl; ITable* next; void* methods[6]; } org$pandalanguage$panda$UInt8List$_panda$collections$ListView = { (panda$core$Class*) &panda$collections$ListView$class, (ITable*) &org$pandalanguage$panda$UInt8List$_panda$collections$CollectionView, { org$pandalanguage$panda$UInt8List$$IDX$panda$core$Int64$R$panda$core$UInt8$shim, panda$collections$ListView$$IDX$panda$core$Range$LTpanda$core$Int64$GT$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT, panda$collections$ListView$$IDX$panda$core$Range$LTpanda$core$Int64$Q$GT$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT, panda$collections$ListView$$IDX$panda$core$SteppedRange$LTpanda$core$Int64$Q$Cpanda$core$Int64$GT$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT, panda$collections$ListView$filter$$LPpanda$collections$ListView$T$RP$EQ$GT$LPpanda$core$Bit$RP$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT, panda$collections$ListView$iterator$R$panda$collections$Iterator$LTpanda$collections$ListView$T$GT$shim} };
 
 static panda$core$String $s1;
 org$pandalanguage$panda$UInt8List$class_type org$pandalanguage$panda$UInt8List$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, (ITable*) &org$pandalanguage$panda$UInt8List$_panda$collections$ListView, { org$pandalanguage$panda$UInt8List$convert$R$panda$core$String, org$pandalanguage$panda$UInt8List$cleanup, org$pandalanguage$panda$UInt8List$computeCount$R$panda$core$Int64, org$pandalanguage$panda$UInt8List$get_count$R$panda$core$Int64, org$pandalanguage$panda$UInt8List$$IDX$panda$core$Int64$R$panda$core$UInt8$shim} };
 
-typedef panda$core$String* (*$fn59)(panda$collections$ListView*);
+typedef panda$core$String* (*$fn59)(panda$collections$CollectionView*);
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x2e\x55\x49\x6e\x74\x38\x4c\x69\x73\x74", 33, 8188706894388873591, NULL };
 static panda$core$String $s43 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x55\x49\x6e\x74\x38\x4c\x69\x73\x74\x2e\x70\x61\x6e\x64\x61", 15, 1218913292913467847, NULL };
@@ -152,12 +152,12 @@ panda$core$String* org$pandalanguage$panda$UInt8List$convert$R$panda$core$String
     panda$core$String* $tmp53;
     panda$core$String* $tmp54;
     panda$core$String* $tmp56;
-    ITable* $tmp57 = ((panda$collections$ListView*) self)->$class->itable;
-    while ($tmp57->$class != (panda$core$Class*) &panda$collections$ListView$class) {
+    ITable* $tmp57 = ((panda$collections$CollectionView*) self)->$class->itable;
+    while ($tmp57->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
         $tmp57 = $tmp57->next;
     }
-    $fn59 $tmp58 = $tmp57->methods[4];
-    panda$core$String* $tmp60 = $tmp58(((panda$collections$ListView*) self));
+    $fn59 $tmp58 = $tmp57->methods[1];
+    panda$core$String* $tmp60 = $tmp58(((panda$collections$CollectionView*) self));
     $tmp56 = $tmp60;
     panda$core$String* $tmp61 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s55, $tmp56);
     $tmp54 = $tmp61;

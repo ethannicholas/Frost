@@ -355,8 +355,11 @@ class LLVMCodeGenerator : CodeGenerator {
         return result
     }
 
-    --@post(compiler.currentClass[0] == @pre(compiler.currentClass[0]))
     method writeType(t:Type) {
+        if !t.resolved {
+            out.print("<unresolved type: \{t}>")
+            return
+        }
         if writtenTypes.contains(t.name) {
             return
         }
@@ -364,6 +367,11 @@ class LLVMCodeGenerator : CodeGenerator {
         def cl := compiler.getClass(t)
         assert cl != null
         assert !cl.annotations.isSpecialize()
+        compiler.resolve(cl)
+        if cl.resolved != Compiler.Resolution.RESOLVED {
+            out.print("<error resolving \{t}>")
+            return
+        }
         def code := MutableString("%\{escapeName(t.name)} = type { ")
         compiler.currentClass.push(cl)
         assert cl != null
@@ -430,6 +438,9 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     method type(t:Type):String {
+        if !t.resolved {
+            return "<unresolved type: \{t}>"
+        }
         match t.typeKind {
             when Type.Kind.VOID:
                 return "void"

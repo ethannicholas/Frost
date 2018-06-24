@@ -1,8 +1,18 @@
 package org.pandalanguage.pandac.pandadoc
 
+uses org.pandalanguage.pandac.ClassDecl
+uses org.pandalanguage.pandac.CodeGenerator
+uses org.pandalanguage.pandac.Compiler
+uses org.pandalanguage.pandac.Compiler.Error
+uses org.pandalanguage.pandac.Compiler.Settings
+uses org.pandalanguage.pandac.Config
+uses org.pandalanguage.pandac.IRNode
+uses org.pandalanguage.pandac.MethodDecl
+
 constant HEADER :=
     "<html>" +
     "  <head>\n" +
+    "    <link rel=\"stylesheet\" type=\"text/css\" href=\"panda-main.css\" />\n" +
     "    <link rel=\"stylesheet\" type=\"text/css\" href=\"pandadoc.css\" />\n" +
     "    <link rel=\"stylesheet\" type=\"text/css\" href=\"pandacode-light.css\" />\n" +
     "    <script src=\"site.js\"></script>\n" +
@@ -18,8 +28,40 @@ constant FOOTER :=
     "  </body>" +
     "</html>"
 
+class DummyCodeGenerator : CodeGenerator {
+    @override
+    method setCompiler(compiler:Compiler) {
+    }
+
+    @override
+    method start(cl:ClassDecl) {
+    }
+
+    @override
+    method writeDeclaration(m:MethodDecl) {
+    }
+
+    @override
+    method write(m:MethodDecl, body:ImmutableArray<IRNode>) {
+    }
+
+    @override
+    method end(cl:ClassDecl) {
+    }
+
+    @override
+    method finish() {
+    }
+}
+
 method main(args:ListView<String>) {
     def input := File(args[1])
     def output := File(args[2])
-    output.write(HEADER + Markdown().process(input.readFully()) + FOOTER)
+    def imports := Array<File>() -- FIXME literal
+    imports.add(File(Config.pandaSourceDir()))
+    def settings := Settings(File(Config.pandaSourceDir()), imports, 0, 0)
+    def compiler := Compiler(MessageQueue<Error>(), DummyCodeGenerator(), settings)
+    imports.add(File(Config.pandaSourceDir()))
+    def resolve := LinkResolver(compiler).resolve
+    output.write(HEADER + Markdown(resolve).process(input.readFully()) + FOOTER)
 }

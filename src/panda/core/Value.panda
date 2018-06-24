@@ -36,4 +36,8 @@ the performance implications are clear.
 ====================================================================================================
 @abstract
 class Value : Immutable {
+    @override
+    @final
+    method cleanup() {
+    }
 }

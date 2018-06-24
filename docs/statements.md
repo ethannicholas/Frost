@@ -33,8 +33,8 @@ return values of methods called as statements are ignored.
 [Functions](functions.html) may not be called as statements: the only reason to call a method as a
 statement is for the side effects it may have, and functions do not have side effects.
 
-A method call `<object>` may be the special keyword `super`. This is equivalent to `self`, except
-that the superclass' implementation of the method is used. For example,
+A method call `<object>` may be the keyword `super`. This is equivalent to `self`, except that the
+superclass' implementation of the method is used. For example,
 
     @override
     function convert():String {

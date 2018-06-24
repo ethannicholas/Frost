@@ -103,13 +103,24 @@
     </xsl:template>
 
     <xsl:template match="source">
-        <a href="{text()}">View Source</a>
+        <dl>
+            <dt><b>Source Code:</b></dt>
+            <dd><a href="{text()}">View Source</a></dd>
+        </dl>
     </xsl:template>
 
     <xsl:template match="/class">
         <html>
             <head>
                 <xsl:apply-templates select="name" mode="title"/>
+                <link rel="stylesheet" type="text/css">
+                    <xsl:attribute name="href">
+                        <xsl:call-template name="basePath">
+                            <xsl:with-param name="className" select="name"/> 
+                        </xsl:call-template>
+                        <xsl:text>panda-main.css</xsl:text>
+                    </xsl:attribute>
+                </link>
                 <link rel="stylesheet" type="text/css">
                     <xsl:attribute name="href">
                         <xsl:call-template name="basePath">
@@ -152,6 +163,7 @@
                         <div class="classDescription">
                         <xsl:apply-templates select="doc/description"/>
                         </div>
+                        <xsl:apply-templates select="seeAlsos"/>
                         <xsl:apply-templates select="source"/>
 
                         <xsl:if test="count(field[count(annotations/annotation[text() = '@class']) > 0]) > 0">
@@ -215,7 +227,7 @@
     <xsl:template match="class/name" mode="title">
         <title>
             <xsl:choose>
-                <xsl:when test="../@type = 'interface'">
+                <xsl:when test="../kind/text() = 'interface'">
                     <xsl:text>Interface </xsl:text>
                 </xsl:when>
                 <xsl:otherwise>Class </xsl:otherwise>
@@ -238,7 +250,7 @@
         </xsl:if>
         <h1>
             <xsl:choose>
-                <xsl:when test="@type = 'interface'">
+                <xsl:when test="kind/text() = 'interface'">
                     <xsl:text>Interface </xsl:text>
                 </xsl:when>
                 <xsl:otherwise>Class </xsl:otherwise>
@@ -259,7 +271,7 @@
                 <xsl:apply-templates select="." mode="href"/>
             </xsl:variable>
             <a href="{$href}">
-                <xsl:apply-templates select="simpleName/text()"/>
+                <code><xsl:apply-templates select="simpleName/text()"/></code>
             </a>
         </div>
     </xsl:template>
@@ -303,6 +315,7 @@
             </div>
             <div class="fieldBody">
                 <xsl:apply-templates select="doc/description"/>
+                <xsl:apply-templates select="seeAlsos"/>
             </div>
         </div>
     </xsl:template>
@@ -419,7 +432,7 @@
     
     <xsl:template match="method|function|field" mode="inherited">
         <xsl:if test="count(preceding-sibling::*) > 0">, </xsl:if>
-        <a href="{link}"><xsl:value-of select="name"/></a>
+        <a href="{link}"><code><xsl:value-of select="name"/></code></a>
     </xsl:template>
 
     <xsl:template match="summary">
@@ -635,7 +648,7 @@
             <xsl:apply-templates select="." mode="href"/>
         </xsl:variable>
         <a href="{$href}">
-            <xsl:apply-templates select="simpleName"/>
+            <code><xsl:apply-templates select="simpleName"/></code>
         </a>
     </xsl:template>
     

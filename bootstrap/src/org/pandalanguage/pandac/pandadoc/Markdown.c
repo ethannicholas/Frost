@@ -43,6 +43,8 @@
 #include "org/pandalanguage/pandac/pandadoc/Markdown/HTMLToken.h"
 #include "panda/core/Range.LTpanda/core/String/Index.GT.h"
 #include "panda/core/Equatable.h"
+#include "panda/io/OutputStream.h"
+#include "panda/io/Console.h"
 
 static panda$core$String $s1;
 org$pandalanguage$pandac$pandadoc$Markdown$class_type org$pandalanguage$pandac$pandadoc$Markdown$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, NULL, { panda$core$Object$convert$R$panda$core$String, org$pandalanguage$pandac$pandadoc$Markdown$cleanup, org$pandalanguage$pandac$pandadoc$Markdown$process$panda$core$String$R$panda$core$String, org$pandalanguage$pandac$pandadoc$Markdown$encodeBackslashEscapes$panda$core$MutableString, org$pandalanguage$pandac$pandadoc$Markdown$encodeEscapes$panda$core$MutableString$panda$collections$ListView$LTpanda$core$Char8$GT$panda$core$String, org$pandalanguage$pandac$pandadoc$Markdown$stripLinkDefinitions$panda$core$MutableString, org$pandalanguage$pandac$pandadoc$Markdown$runBlockGamut$panda$core$MutableString, org$pandalanguage$pandac$pandadoc$Markdown$doHorizontalRules$panda$core$MutableString, org$pandalanguage$pandac$pandadoc$Markdown$hashHTMLBlocks$panda$core$MutableString, org$pandalanguage$pandac$pandadoc$Markdown$formParagraphs$panda$core$MutableString, org$pandalanguage$pandac$pandadoc$Markdown$doAutoLinks$panda$core$MutableString, org$pandalanguage$pandac$pandadoc$Markdown$unescapeSpecialChars$panda$core$MutableString, org$pandalanguage$pandac$pandadoc$Markdown$encodeEmail$panda$core$String$R$panda$core$String, org$pandalanguage$pandac$pandadoc$Markdown$doBlockQuotes$panda$core$MutableString, org$pandalanguage$pandac$pandadoc$Markdown$detabify$panda$core$MutableString, org$pandalanguage$pandac$pandadoc$Markdown$doCodeBlocks$panda$core$MutableString, org$pandalanguage$pandac$pandadoc$Markdown$prettyPrint$org$pandalanguage$pandac$parser$Parser$R$panda$core$String, org$pandalanguage$pandac$pandadoc$Markdown$syntaxHighlight$panda$core$MutableString, org$pandalanguage$pandac$pandadoc$Markdown$encodeCode$panda$core$MutableString, org$pandalanguage$pandac$pandadoc$Markdown$doLists$panda$core$MutableString, org$pandalanguage$pandac$pandadoc$Markdown$processListItems$panda$core$String$R$panda$core$String, org$pandalanguage$pandac$pandadoc$Markdown$doHeaders$panda$core$MutableString, org$pandalanguage$pandac$pandadoc$Markdown$runSpanGamut$panda$core$MutableString, org$pandalanguage$pandac$pandadoc$Markdown$tokenizeHTML$panda$core$String$R$panda$collections$ListView$LTorg$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$GT, org$pandalanguage$pandac$pandadoc$Markdown$escapeSpecialCharsWithinTagAttributes$panda$core$MutableString, org$pandalanguage$pandac$pandadoc$Markdown$doImages$panda$core$MutableString, org$pandalanguage$pandac$pandadoc$Markdown$doAnchors$panda$core$MutableString, org$pandalanguage$pandac$pandadoc$Markdown$doItalicsAndBold$panda$core$MutableString, org$pandalanguage$pandac$pandadoc$Markdown$encodeAmpsAndAngles$panda$core$MutableString, org$pandalanguage$pandac$pandadoc$Markdown$doCodeSpans$panda$core$MutableString} };
@@ -86,11 +88,11 @@ typedef panda$core$String* (*$fn359)(panda$core$Object*, panda$collections$ListV
 typedef panda$core$String* (*$fn360)(panda$collections$ListView*);
 typedef panda$core$String* (*$fn377)(panda$core$Object*, panda$collections$ListView*);
 typedef panda$core$String* (*$fn378)(panda$collections$ListView*);
-typedef panda$core$String* (*$fn421)(panda$collections$ListView*, panda$core$String*);
-typedef panda$core$String* (*$fn436)(panda$collections$ListView*, panda$core$String*);
+typedef panda$core$String* (*$fn421)(panda$collections$CollectionView*, panda$core$String*);
+typedef panda$core$String* (*$fn436)(panda$collections$CollectionView*, panda$core$String*);
 typedef panda$core$String* (*$fn633)(org$pandalanguage$pandac$pandadoc$Protector*, panda$core$String*);
 typedef void (*$fn642)(org$pandalanguage$pandac$pandadoc$Markdown*, panda$core$MutableString*);
-typedef panda$core$String* (*$fn663)(panda$collections$ListView*, panda$core$String*);
+typedef panda$core$String* (*$fn663)(panda$collections$CollectionView*, panda$core$String*);
 typedef panda$core$Object* (*$fn675)(panda$collections$ListView*, panda$core$Int64);
 typedef void (*$fn681)(org$pandalanguage$pandac$pandadoc$Markdown*, panda$core$MutableString*);
 typedef panda$core$String* (*$fn687)(org$pandalanguage$pandac$pandadoc$Markdown*, panda$core$String*);
@@ -190,23 +192,28 @@ typedef panda$core$String* (*$fn2244)(org$pandalanguage$pandac$pandadoc$Protecto
 typedef panda$core$Object* (*$fn2290)(panda$collections$ListView*, panda$core$Int64);
 typedef panda$core$Object* (*$fn2298)(panda$collections$ListView*, panda$core$Int64);
 typedef panda$core$Object* (*$fn2306)(panda$collections$ListView*, panda$core$Int64);
-typedef panda$core$String* (*$fn2316)(org$pandalanguage$pandac$pandadoc$Protector*, panda$core$String*);
-typedef panda$core$String* (*$fn2327)(org$pandalanguage$pandac$pandadoc$Protector*, panda$core$String*);
-typedef panda$core$String* (*$fn2349)(org$pandalanguage$pandac$pandadoc$Protector*, panda$core$String*);
-typedef panda$core$String* (*$fn2358)(org$pandalanguage$pandac$pandadoc$Protector*, panda$core$String*);
-typedef panda$core$String* (*$fn2397)(panda$core$Object*, panda$collections$ListView*);
-typedef panda$core$String* (*$fn2398)(panda$collections$ListView*);
-typedef panda$core$Object* (*$fn2412)(panda$collections$ListView*, panda$core$Int64);
-typedef panda$core$Object* (*$fn2420)(panda$collections$ListView*, panda$core$Int64);
-typedef panda$core$String* (*$fn2447)(org$pandalanguage$pandac$pandadoc$Protector*, panda$core$String*);
-typedef panda$core$String* (*$fn2456)(org$pandalanguage$pandac$pandadoc$Protector*, panda$core$String*);
-typedef panda$core$Bit (*$fn2469)(panda$core$Equatable*, panda$core$Equatable*);
-typedef panda$core$String* (*$fn2478)(org$pandalanguage$pandac$pandadoc$Protector*, panda$core$String*);
-typedef panda$core$String* (*$fn2487)(org$pandalanguage$pandac$pandadoc$Protector*, panda$core$String*);
-typedef panda$core$Object* (*$fn2574)(panda$collections$ListView*, panda$core$Int64);
-typedef void (*$fn2588)(org$pandalanguage$pandac$pandadoc$Markdown*, panda$core$MutableString*);
-typedef panda$core$String* (*$fn2613)(panda$core$Object*, panda$collections$ListView*);
-typedef panda$core$String* (*$fn2614)(panda$collections$ListView*);
+typedef panda$core$String* (*$fn2315)(panda$core$Object*, panda$core$String*);
+typedef panda$core$String* (*$fn2316)(panda$core$String*);
+typedef void (*$fn2325)(panda$io$OutputStream*, panda$core$String*);
+typedef panda$core$String* (*$fn2343)(org$pandalanguage$pandac$pandadoc$Protector*, panda$core$String*);
+typedef panda$core$String* (*$fn2354)(org$pandalanguage$pandac$pandadoc$Protector*, panda$core$String*);
+typedef panda$core$String* (*$fn2373)(org$pandalanguage$pandac$pandadoc$Protector*, panda$core$String*);
+typedef panda$core$String* (*$fn2382)(org$pandalanguage$pandac$pandadoc$Protector*, panda$core$String*);
+typedef panda$core$String* (*$fn2421)(panda$core$Object*, panda$collections$ListView*);
+typedef panda$core$String* (*$fn2422)(panda$collections$ListView*);
+typedef panda$core$Object* (*$fn2436)(panda$collections$ListView*, panda$core$Int64);
+typedef panda$core$Object* (*$fn2444)(panda$collections$ListView*, panda$core$Int64);
+typedef panda$core$String* (*$fn2471)(org$pandalanguage$pandac$pandadoc$Protector*, panda$core$String*);
+typedef panda$core$String* (*$fn2480)(org$pandalanguage$pandac$pandadoc$Protector*, panda$core$String*);
+typedef panda$core$Bit (*$fn2493)(panda$core$Equatable*, panda$core$Equatable*);
+typedef panda$core$String* (*$fn2502)(org$pandalanguage$pandac$pandadoc$Protector*, panda$core$String*);
+typedef panda$core$String* (*$fn2511)(org$pandalanguage$pandac$pandadoc$Protector*, panda$core$String*);
+typedef panda$core$String* (*$fn2545)(panda$core$Object*, panda$core$String*);
+typedef panda$core$String* (*$fn2546)(panda$core$String*);
+typedef panda$core$Object* (*$fn2626)(panda$collections$ListView*, panda$core$Int64);
+typedef void (*$fn2640)(org$pandalanguage$pandac$pandadoc$Markdown*, panda$core$MutableString*);
+typedef panda$core$String* (*$fn2665)(panda$core$Object*, panda$collections$ListView*);
+typedef panda$core$String* (*$fn2666)(panda$collections$ListView*);
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x70\x61\x6e\x64\x61\x64\x6f\x63\x2e\x4d\x61\x72\x6b\x64\x6f\x77\x6e", 42, 5747153137714602429, NULL };
 static panda$core$String $s25 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2f\x74\x6d\x70\x2f\x64\x75\x6d\x6d\x79", 10, -2887356857474712656, NULL };
@@ -487,59 +494,68 @@ static panda$core$String $s2263 = { (panda$core$Class*) &panda$core$String$class
 static panda$core$String $s2265 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x22", 1, 135, NULL };
 static panda$core$String $s2268 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x3e", 1, 163, NULL };
 static panda$core$String $s2271 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x3c\x2f\x61\x3e", 4, 166367767, NULL };
-static panda$core$String $s2313 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x5c\x2a", 2, 19535, NULL };
-static panda$core$String $s2315 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2a", 1, 143, NULL };
-static panda$core$String $s2324 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x5f", 1, 196, NULL };
-static panda$core$String $s2326 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x5f", 1, 196, NULL };
-static panda$core$String $s2332 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x77\x61\x69\x74\x69\x6e\x67\x20\x6f\x6e\x20\x6c\x69\x6e\x6b\x20\x72\x65\x73\x6f\x6c\x76\x65\x72", 24, 6436901740777774405, NULL };
-static panda$core$String $s2339 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x3c\x61\x20\x68\x72\x65\x66\x3d\x22", 9, 1753834082639911106, NULL };
-static panda$core$String $s2341 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x22", 1, 135, NULL };
-static panda$core$String $s2346 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x5c\x2a", 2, 19535, NULL };
-static panda$core$String $s2348 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2a", 1, 143, NULL };
-static panda$core$String $s2355 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x5f", 1, 196, NULL };
-static panda$core$String $s2357 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x5f", 1, 196, NULL };
-static panda$core$String $s2364 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x22", 1, 135, NULL };
-static panda$core$String $s2365 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x26\x71\x75\x6f\x74\x3b", 6, 1472784484255, NULL };
-static panda$core$String $s2367 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x20\x74\x69\x74\x6c\x65\x3d\x22", 8, 14383652264361074, NULL };
-static panda$core$String $s2372 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x3e", 1, 163, NULL };
-static panda$core$String $s2374 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
-static panda$core$String $s2376 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x3c\x2f\x61\x3e", 4, 166367767, NULL };
-static panda$core$String $s2429 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x5b\x20\x5d\x3f\x5c\x5c\x6e", 7, 204157935605574, NULL };
-static panda$core$String $s2430 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x20", 1, 133, NULL };
-static panda$core$String $s2444 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x5c\x2a", 2, 19535, NULL };
-static panda$core$String $s2446 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2a", 1, 143, NULL };
-static panda$core$String $s2453 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x5f", 1, 196, NULL };
-static panda$core$String $s2455 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x5f", 1, 196, NULL };
-static panda$core$String $s2463 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
-static panda$core$String $s2466 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
-static panda$core$String $s2475 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x5c\x2a", 2, 19535, NULL };
-static panda$core$String $s2477 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2a", 1, 143, NULL };
-static panda$core$String $s2484 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x5f", 1, 196, NULL };
-static panda$core$String $s2486 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x5f", 1, 196, NULL };
-static panda$core$String $s2494 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x20\x74\x69\x74\x6c\x65\x3d\x22", 8, 14383652264361074, NULL };
-static panda$core$String $s2496 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x22", 1, 135, NULL };
-static panda$core$String $s2506 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x3c\x61\x20\x68\x72\x65\x66\x3d\x22", 9, 1753834082639911106, NULL };
-static panda$core$String $s2508 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x22", 1, 135, NULL };
-static panda$core$String $s2511 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x3e", 1, 163, NULL };
-static panda$core$String $s2514 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x3c\x2f\x61\x3e", 4, 166367767, NULL };
-static panda$core$String $s2531 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x28\x5c\x5b\x28\x2e\x2a\x3f\x29\x5c\x5d\x5b\x20\x5d\x3f\x28\x3f\x3a\x5c\x6e\x5b\x20\x5d\x2a\x29\x3f\x5c\x5b\x28\x2e\x2a\x3f\x29\x5c\x5d\x29", 35, 4482227048438022174, NULL };
-static panda$core$String $s2537 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x28\x5c\x5b\x28\x2e\x2a\x3f\x29\x5c\x5d\x5c\x28\x5b\x20\x5c\x74\x5d\x2a\x3c\x3f\x28\x2e\x2a\x3f\x29\x3e\x3f\x5b\x20\x5c\x74\x5d\x2a\x28\x28\x5b\x27\x22\x5d\x29\x28\x2e\x2a\x3f\x29\x5c\x35\x29\x3f\x5c\x29\x29", 52, 2691589156809831866, NULL };
-static panda$core$String $s2545 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x28\x5c\x5b\x28\x5b\x5e\x5c\x5b\x5c\x5d\x5d\x2b\x29\x5c\x5d\x29", 16, 8227630457021096112, NULL };
-static panda$core$String $s2551 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x28\x5c\x2a\x5c\x5c\x2a\x7c\x5f\x5f\x29\x28\x3f\x3d\x5c\x53\x29\x28\x2e\x2b\x3f\x5b\x2a\x5f\x5d\x2a\x29\x28\x3f\x3c\x3d\x5c\x53\x29\x5c\x31", 35, 636172404878895653, NULL };
-static panda$core$String $s2552 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x3c\x73\x74\x72\x6f\x6e\x67\x3e\x24\x32\x3c\x2f\x73\x74\x72\x6f\x6e\x67\x3e", 19, 504491683038092400, NULL };
-static panda$core$String $s2555 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x28\x5c\x2a\x7c\x5f\x29\x28\x3f\x3d\x5c\x53\x29\x28\x2e\x2b\x3f\x29\x28\x3f\x3c\x3d\x5c\x53\x29\x5c\x31", 26, -4247179954659836315, NULL };
-static panda$core$String $s2556 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x3c\x65\x6d\x3e\x24\x32\x3c\x2f\x65\x6d\x3e", 11, 2723679958089201678, NULL };
-static panda$core$String $s2559 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x26\x28\x3f\x21\x23\x3f\x5b\x78\x58\x5d\x3f\x28\x3f\x3a\x5b\x30\x2d\x39\x61\x2d\x66\x41\x2d\x46\x5d\x2b\x7c\x5c\x77\x2b\x29\x3b\x29", 33, -6716186838887255919, NULL };
-static panda$core$String $s2560 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x26\x61\x6d\x70\x3b", 5, 14565458216, NULL };
-static panda$core$String $s2563 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x3c\x28\x3f\x21\x5b\x61\x2d\x7a\x41\x2d\x5a\x2f\x3f\x5c\x24\x21\x5d\x29", 18, 6433614010358842861, NULL };
-static panda$core$String $s2564 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x26\x6c\x74\x3b", 4, 144325322, NULL };
-static panda$core$String $s2582 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x5e\x5b\x20\x5c\x74\x5d\x2b", 7, 207956274426062, NULL };
-static panda$core$String $s2583 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
-static panda$core$String $s2586 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x5b\x20\x5c\x74\x5d\x2b\x24", 7, 204157886156304, NULL };
-static panda$core$String $s2587 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
-static panda$core$String $s2593 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x3c\x63\x6f\x64\x65\x3e", 6, 1702543554134, NULL };
-static panda$core$String $s2595 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x3c\x2f\x63\x6f\x64\x65\x3e", 7, 171409136343781, NULL };
-static panda$core$String $s2620 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x28\x3f\x3c\x21\x5c\x5c\x29\x28\x60\x2b\x29\x28\x2e\x2b\x3f\x29\x28\x3f\x3c\x21\x60\x29\x5c\x31\x28\x3f\x21\x60\x29", 29, 7657757978565690602, NULL };
+static panda$core$String $s2321 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x65\x72\x72\x6f\x72\x3a\x20\x75\x6e\x61\x62\x6c\x65\x20\x74\x6f\x20\x72\x65\x73\x6f\x6c\x76\x65\x20\x6c\x69\x6e\x6b\x20\x27", 31, 6850877155588619032, NULL };
+static panda$core$String $s2323 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x27", 1, 140, NULL };
+static panda$core$String $s2328 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x28\x65\x72\x72\x6f\x72\x29", 7, 150747842869236, NULL };
+static panda$core$String $s2334 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x5b\x6e\x6f\x20\x6c\x69\x6e\x6b\x20\x72\x65\x73\x6f\x6c\x76\x65\x72\x5d", 18, -5787080662771743994, NULL };
+static panda$core$String $s2340 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x5c\x2a", 2, 19535, NULL };
+static panda$core$String $s2342 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2a", 1, 143, NULL };
+static panda$core$String $s2351 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x5f", 1, 196, NULL };
+static panda$core$String $s2353 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x5f", 1, 196, NULL };
+static panda$core$String $s2363 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x3c\x61\x20\x68\x72\x65\x66\x3d\x22", 9, 1753834082639911106, NULL };
+static panda$core$String $s2365 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x22", 1, 135, NULL };
+static panda$core$String $s2370 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x5c\x2a", 2, 19535, NULL };
+static panda$core$String $s2372 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2a", 1, 143, NULL };
+static panda$core$String $s2379 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x5f", 1, 196, NULL };
+static panda$core$String $s2381 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x5f", 1, 196, NULL };
+static panda$core$String $s2388 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x22", 1, 135, NULL };
+static panda$core$String $s2389 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x26\x71\x75\x6f\x74\x3b", 6, 1472784484255, NULL };
+static panda$core$String $s2391 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x20\x74\x69\x74\x6c\x65\x3d\x22", 8, 14383652264361074, NULL };
+static panda$core$String $s2396 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x3e", 1, 163, NULL };
+static panda$core$String $s2398 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
+static panda$core$String $s2400 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x3c\x2f\x61\x3e", 4, 166367767, NULL };
+static panda$core$String $s2453 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x5b\x20\x5d\x3f\x5c\x5c\x6e", 7, 204157935605574, NULL };
+static panda$core$String $s2454 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x20", 1, 133, NULL };
+static panda$core$String $s2468 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x5c\x2a", 2, 19535, NULL };
+static panda$core$String $s2470 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2a", 1, 143, NULL };
+static panda$core$String $s2477 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x5f", 1, 196, NULL };
+static panda$core$String $s2479 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x5f", 1, 196, NULL };
+static panda$core$String $s2487 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
+static panda$core$String $s2490 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
+static panda$core$String $s2499 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x5c\x2a", 2, 19535, NULL };
+static panda$core$String $s2501 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2a", 1, 143, NULL };
+static panda$core$String $s2508 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x5f", 1, 196, NULL };
+static panda$core$String $s2510 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x5f", 1, 196, NULL };
+static panda$core$String $s2518 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x20\x74\x69\x74\x6c\x65\x3d\x22", 8, 14383652264361074, NULL };
+static panda$core$String $s2520 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x22", 1, 135, NULL };
+static panda$core$String $s2530 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x3c\x61\x20\x68\x72\x65\x66\x3d\x22", 9, 1753834082639911106, NULL };
+static panda$core$String $s2532 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x22", 1, 135, NULL };
+static panda$core$String $s2535 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x3e", 1, 163, NULL };
+static panda$core$String $s2538 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x3c\x2f\x61\x3e", 4, 166367767, NULL };
+static panda$core$String $s2553 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x3c\x61\x20\x68\x72\x65\x66\x3d\x22", 9, 1753834082639911106, NULL };
+static panda$core$String $s2555 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x22\x3e\x3c\x63\x6f\x64\x65\x3e", 8, 14540282526185430, NULL };
+static panda$core$String $s2558 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x3c\x2f\x63\x6f\x64\x65\x3e\x3c\x2f\x61\x3e", 11, -1098056279549389125, NULL };
+static panda$core$String $s2564 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x28\x6e\x6f\x20\x6d\x61\x74\x63\x68\x3a", 10, 7838749061877918149, NULL };
+static panda$core$String $s2566 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x29", 1, 142, NULL };
+static panda$core$String $s2570 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x28\x6e\x6f\x20\x6c\x69\x6e\x6b\x20\x72\x65\x73\x6f\x6c\x76\x65\x72\x29", 18, -7339959284735798157, NULL };
+static panda$core$String $s2583 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x28\x5c\x5b\x28\x2e\x2a\x3f\x29\x5c\x5d\x5b\x20\x5d\x3f\x28\x3f\x3a\x5c\x6e\x5b\x20\x5d\x2a\x29\x3f\x5c\x5b\x28\x2e\x2a\x3f\x29\x5c\x5d\x29", 35, 4482227048438022174, NULL };
+static panda$core$String $s2589 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x28\x5c\x5b\x28\x2e\x2a\x3f\x29\x5c\x5d\x5c\x28\x5b\x20\x5c\x74\x5d\x2a\x3c\x3f\x28\x2e\x2a\x3f\x29\x3e\x3f\x5b\x20\x5c\x74\x5d\x2a\x28\x28\x5b\x27\x22\x5d\x29\x28\x2e\x2a\x3f\x29\x5c\x35\x29\x3f\x5c\x29\x29", 52, 2691589156809831866, NULL };
+static panda$core$String $s2597 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x28\x5c\x5b\x28\x5b\x5e\x5c\x5b\x5c\x5d\x3c\x3e\x5d\x2b\x29\x5c\x5d\x29", 18, -2630760642664285566, NULL };
+static panda$core$String $s2603 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x28\x5c\x2a\x5c\x5c\x2a\x7c\x5f\x5f\x29\x28\x3f\x3d\x5c\x53\x29\x28\x2e\x2b\x3f\x5b\x2a\x5f\x5d\x2a\x29\x28\x3f\x3c\x3d\x5c\x53\x29\x5c\x31", 35, 636172404878895653, NULL };
+static panda$core$String $s2604 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x3c\x73\x74\x72\x6f\x6e\x67\x3e\x24\x32\x3c\x2f\x73\x74\x72\x6f\x6e\x67\x3e", 19, 504491683038092400, NULL };
+static panda$core$String $s2607 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x28\x5c\x2a\x7c\x5f\x29\x28\x3f\x3d\x5c\x53\x29\x28\x2e\x2b\x3f\x29\x28\x3f\x3c\x3d\x5c\x53\x29\x5c\x31", 26, -4247179954659836315, NULL };
+static panda$core$String $s2608 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x3c\x65\x6d\x3e\x24\x32\x3c\x2f\x65\x6d\x3e", 11, 2723679958089201678, NULL };
+static panda$core$String $s2611 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x26\x28\x3f\x21\x23\x3f\x5b\x78\x58\x5d\x3f\x28\x3f\x3a\x5b\x30\x2d\x39\x61\x2d\x66\x41\x2d\x46\x5d\x2b\x7c\x5c\x77\x2b\x29\x3b\x29", 33, -6716186838887255919, NULL };
+static panda$core$String $s2612 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x26\x61\x6d\x70\x3b", 5, 14565458216, NULL };
+static panda$core$String $s2615 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x3c\x28\x3f\x21\x5b\x61\x2d\x7a\x41\x2d\x5a\x2f\x3f\x5c\x24\x21\x5d\x29", 18, 6433614010358842861, NULL };
+static panda$core$String $s2616 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x26\x6c\x74\x3b", 4, 144325322, NULL };
+static panda$core$String $s2634 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x5e\x5b\x20\x5c\x74\x5d\x2b", 7, 207956274426062, NULL };
+static panda$core$String $s2635 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
+static panda$core$String $s2638 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x5b\x20\x5c\x74\x5d\x2b\x24", 7, 204157886156304, NULL };
+static panda$core$String $s2639 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
+static panda$core$String $s2645 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x3c\x63\x6f\x64\x65\x3e", 6, 1702543554134, NULL };
+static panda$core$String $s2647 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x3c\x2f\x63\x6f\x64\x65\x3e", 7, 171409136343781, NULL };
+static panda$core$String $s2672 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x28\x3f\x3c\x21\x5c\x5c\x29\x28\x60\x2b\x29\x28\x2e\x2b\x3f\x29\x28\x3f\x3c\x21\x60\x29\x5c\x31\x28\x3f\x21\x60\x29", 29, 7657757978565690602, NULL };
 
 void org$pandalanguage$pandac$pandadoc$Markdown$init(org$pandalanguage$pandac$pandadoc$Markdown* self) {
     self->source = NULL;
@@ -550,9 +566,9 @@ void org$pandalanguage$pandac$pandadoc$Markdown$init(org$pandalanguage$pandac$pa
     self->charProtector = NULL;
     self->htmlProtector = NULL;
     self->random = NULL;
-    org$pandalanguage$pandac$pandadoc$Markdown$init$$LPpanda$core$String$RP$EQ$GT$LPpanda$core$String$RP$Q(self, NULL);
+    org$pandalanguage$pandac$pandadoc$Markdown$init$$LPpanda$core$String$RP$EQ$AM$GT$LPpanda$core$String$Q$RP$Q(self, NULL);
 }
-void org$pandalanguage$pandac$pandadoc$Markdown$init$$LPpanda$core$String$RP$EQ$GT$LPpanda$core$String$RP$Q(org$pandalanguage$pandac$pandadoc$Markdown* self, panda$core$MutableMethod* p_linkResolver) {
+void org$pandalanguage$pandac$pandadoc$Markdown$init$$LPpanda$core$String$RP$EQ$AM$GT$LPpanda$core$String$Q$RP$Q(org$pandalanguage$pandac$pandadoc$Markdown* self, panda$core$MutableMethod* p_linkResolver) {
     panda$threads$MessageQueue* $tmp2;
     panda$threads$MessageQueue* $tmp3;
     org$pandalanguage$pandac$parser$Parser* $tmp5;
@@ -1578,12 +1594,12 @@ void org$pandalanguage$pandac$pandadoc$Markdown$hashHTMLBlocks$panda$core$Mutabl
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp411));
         panda$collections$Array$add$panda$collections$Array$T(tagsB409, ((panda$core$Object*) &$s413));
         panda$collections$Array$add$panda$collections$Array$T(tagsB409, ((panda$core$Object*) &$s414));
-        ITable* $tmp419 = ((panda$collections$ListView*) tagsA385)->$class->itable;
-        while ($tmp419->$class != (panda$core$Class*) &panda$collections$ListView$class) {
+        ITable* $tmp419 = ((panda$collections$CollectionView*) tagsA385)->$class->itable;
+        while ($tmp419->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
             $tmp419 = $tmp419->next;
         }
-        $fn421 $tmp420 = $tmp419->methods[5];
-        panda$core$String* $tmp422 = $tmp420(((panda$collections$ListView*) tagsA385), &$s418);
+        $fn421 $tmp420 = $tmp419->methods[2];
+        panda$core$String* $tmp422 = $tmp420(((panda$collections$CollectionView*) tagsA385), &$s418);
         $tmp417 = $tmp422;
         $tmp416 = $tmp417;
         alternationA415 = $tmp416;
@@ -1593,12 +1609,12 @@ void org$pandalanguage$pandac$pandadoc$Markdown$hashHTMLBlocks$panda$core$Mutabl
         $tmp428 = $tmp429;
         panda$core$String* $tmp431 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp428, &$s430);
         $tmp427 = $tmp431;
-        ITable* $tmp434 = ((panda$collections$ListView*) tagsB409)->$class->itable;
-        while ($tmp434->$class != (panda$core$Class*) &panda$collections$ListView$class) {
+        ITable* $tmp434 = ((panda$collections$CollectionView*) tagsB409)->$class->itable;
+        while ($tmp434->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
             $tmp434 = $tmp434->next;
         }
-        $fn436 $tmp435 = $tmp434->methods[5];
-        panda$core$String* $tmp437 = $tmp435(((panda$collections$ListView*) tagsB409), &$s433);
+        $fn436 $tmp435 = $tmp434->methods[2];
+        panda$core$String* $tmp437 = $tmp435(((panda$collections$CollectionView*) tagsB409), &$s433);
         $tmp432 = $tmp437;
         panda$core$String* $tmp438 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp427, $tmp432);
         $tmp426 = $tmp438;
@@ -1984,12 +2000,12 @@ void org$pandalanguage$pandac$pandadoc$Markdown$formParagraphs$panda$core$Mutabl
         $l617:;
         panda$core$Bit$init$builtin_bit(&$tmp658, false);
         panda$core$Range$LTpanda$core$Int64$Q$GT$init$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Bit(&$tmp657, ((panda$core$Int64$nullable) { .nonnull = false }), ((panda$core$Int64$nullable) { .nonnull = false }), $tmp658);
-        ITable* $tmp661 = ((panda$collections$ListView*) paragraphs587)->$class->itable;
-        while ($tmp661->$class != (panda$core$Class*) &panda$collections$ListView$class) {
+        ITable* $tmp661 = ((panda$collections$CollectionView*) paragraphs587)->$class->itable;
+        while ($tmp661->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
             $tmp661 = $tmp661->next;
         }
-        $fn663 $tmp662 = $tmp661->methods[5];
-        panda$core$String* $tmp664 = $tmp662(((panda$collections$ListView*) paragraphs587), &$s660);
+        $fn663 $tmp662 = $tmp661->methods[2];
+        panda$core$String* $tmp664 = $tmp662(((panda$collections$CollectionView*) paragraphs587), &$s660);
         $tmp659 = $tmp664;
         panda$core$MutableString$$IDXEQ$panda$core$Range$LTpanda$core$Int64$Q$GT$panda$core$String(p_markup, $tmp657, $tmp659);
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp659));
@@ -5675,41 +5691,52 @@ panda$core$String* org$pandalanguage$pandac$pandadoc$Markdown$$anonymous28$panda
     panda$core$String* $tmp2301;
     panda$core$Object* $tmp2302;
     panda$core$Int64 $tmp2303;
-    panda$core$String* $tmp2308;
-    panda$core$String* $tmp2309;
-    panda$core$String* $tmp2310;
-    panda$core$RegularExpression* $tmp2311;
+    panda$core$String* newURL2311 = NULL;
+    panda$core$String* $tmp2312;
+    panda$core$String* $tmp2313;
     panda$core$String* $tmp2314;
+    panda$io$OutputStream* $tmp2317;
     panda$core$String* $tmp2319;
     panda$core$String* $tmp2320;
-    panda$core$String* $tmp2321;
-    panda$core$RegularExpression* $tmp2322;
-    panda$core$String* $tmp2325;
+    panda$core$String* $tmp2326;
+    panda$core$String* $tmp2327;
+    panda$core$String* $tmp2329;
     panda$core$String* $tmp2330;
-    panda$core$String* $tmp2331;
-    panda$core$MutableString* result2333 = NULL;
-    panda$core$MutableString* $tmp2334;
-    panda$core$MutableString* $tmp2335;
+    panda$core$String* $tmp2332;
+    panda$core$String* $tmp2333;
+    panda$core$String* $tmp2335;
+    panda$core$String* $tmp2336;
     panda$core$String* $tmp2337;
-    panda$core$String* $tmp2338;
-    panda$core$String* $tmp2343;
-    panda$core$String* $tmp2344;
-    panda$core$String* $tmp2345;
+    panda$core$RegularExpression* $tmp2338;
+    panda$core$String* $tmp2341;
+    panda$core$String* $tmp2346;
     panda$core$String* $tmp2347;
+    panda$core$String* $tmp2348;
+    panda$core$RegularExpression* $tmp2349;
     panda$core$String* $tmp2352;
-    panda$core$String* $tmp2353;
-    panda$core$String* $tmp2354;
-    panda$core$String* $tmp2356;
+    panda$core$MutableString* result2357 = NULL;
+    panda$core$MutableString* $tmp2358;
+    panda$core$MutableString* $tmp2359;
     panda$core$String* $tmp2361;
     panda$core$String* $tmp2362;
-    panda$core$String* $tmp2363;
-    panda$core$Char8 $tmp2368;
-    panda$core$UInt8 $tmp2369;
-    panda$core$String* $tmp2370;
+    panda$core$String* $tmp2367;
+    panda$core$String* $tmp2368;
+    panda$core$String* $tmp2369;
     panda$core$String* $tmp2371;
-    panda$core$String* $returnValue2377;
+    panda$core$String* $tmp2376;
+    panda$core$String* $tmp2377;
     panda$core$String* $tmp2378;
-    panda$core$String* $tmp2379;
+    panda$core$String* $tmp2380;
+    panda$core$String* $tmp2385;
+    panda$core$String* $tmp2386;
+    panda$core$String* $tmp2387;
+    panda$core$Char8 $tmp2392;
+    panda$core$UInt8 $tmp2393;
+    panda$core$String* $tmp2394;
+    panda$core$String* $tmp2395;
+    panda$core$String* $returnValue2401;
+    panda$core$String* $tmp2402;
+    panda$core$String* $tmp2403;
     int $tmp2283;
     {
         panda$core$Int64$init$builtin_int64(&$tmp2287, 2);
@@ -5748,708 +5775,842 @@ panda$core$String* org$pandalanguage$pandac$pandadoc$Markdown$$anonymous28$panda
         title2300 = $tmp2301;
         panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2301));
         panda$core$Panda$unref$panda$core$Object($tmp2302);
+        if (((panda$core$Bit) { self->linkResolver != NULL }).value) {
         {
-            $tmp2308 = url2292;
-            panda$core$RegularExpression* $tmp2312 = (panda$core$RegularExpression*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$RegularExpression$class);
-            panda$core$RegularExpression$init$panda$core$String($tmp2312, &$s2313);
-            $tmp2311 = $tmp2312;
-            panda$core$String* $tmp2317 = (($fn2316) self->charProtector->$class->vtable[2])(self->charProtector, &$s2315);
-            $tmp2314 = $tmp2317;
-            panda$core$String* $tmp2318 = panda$core$String$replace$panda$core$RegularExpression$panda$core$String$R$panda$core$String(url2292, $tmp2311, $tmp2314);
-            $tmp2310 = $tmp2318;
-            $tmp2309 = $tmp2310;
-            url2292 = $tmp2309;
-            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2309));
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2310));
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2314));
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2311));
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2308));
+            int $tmp2310;
+            {
+                if (self->linkResolver->target) {
+                    $tmp2314 = (($fn2315) self->linkResolver->pointer)(self->linkResolver->target, url2292);
+                } else {
+                    $tmp2314 = (($fn2316) self->linkResolver->pointer)(url2292);
+                }
+                $tmp2313 = $tmp2314;
+                $tmp2312 = $tmp2313;
+                newURL2311 = $tmp2312;
+                panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2312));
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2313));
+                if (((panda$core$Bit) { newURL2311 == NULL }).value) {
+                {
+                    panda$io$OutputStream* $tmp2318 = panda$io$Console$errorStream$R$panda$io$OutputStream();
+                    $tmp2317 = $tmp2318;
+                    panda$core$String* $tmp2322 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s2321, url2292);
+                    $tmp2320 = $tmp2322;
+                    panda$core$String* $tmp2324 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp2320, &$s2323);
+                    $tmp2319 = $tmp2324;
+                    (($fn2325) $tmp2317->$class->vtable[21])($tmp2317, $tmp2319);
+                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2319));
+                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2320));
+                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2317));
+                    {
+                        $tmp2326 = newURL2311;
+                        $tmp2327 = &$s2328;
+                        newURL2311 = $tmp2327;
+                        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2327));
+                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2326));
+                    }
+                }
+                }
+                {
+                    $tmp2329 = url2292;
+                    $tmp2330 = newURL2311;
+                    url2292 = $tmp2330;
+                    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2330));
+                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2329));
+                }
+            }
+            $tmp2310 = -1;
+            goto $l2308;
+            $l2308:;
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) newURL2311));
+            newURL2311 = NULL;
+            switch ($tmp2310) {
+                case -1: goto $l2331;
+            }
+            $l2331:;
+        }
+        }
+        else {
+        {
+            {
+                $tmp2332 = url2292;
+                $tmp2333 = &$s2334;
+                url2292 = $tmp2333;
+                panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2333));
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2332));
+            }
+        }
         }
         {
-            $tmp2319 = url2292;
-            panda$core$RegularExpression* $tmp2323 = (panda$core$RegularExpression*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$RegularExpression$class);
-            panda$core$RegularExpression$init$panda$core$String($tmp2323, &$s2324);
-            $tmp2322 = $tmp2323;
-            panda$core$String* $tmp2328 = (($fn2327) self->charProtector->$class->vtable[2])(self->charProtector, &$s2326);
-            $tmp2325 = $tmp2328;
-            panda$core$String* $tmp2329 = panda$core$String$replace$panda$core$RegularExpression$panda$core$String$R$panda$core$String(url2292, $tmp2322, $tmp2325);
-            $tmp2321 = $tmp2329;
-            $tmp2320 = $tmp2321;
-            url2292 = $tmp2320;
-            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2320));
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2321));
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2325));
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2322));
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2319));
+            $tmp2335 = url2292;
+            panda$core$RegularExpression* $tmp2339 = (panda$core$RegularExpression*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$RegularExpression$class);
+            panda$core$RegularExpression$init$panda$core$String($tmp2339, &$s2340);
+            $tmp2338 = $tmp2339;
+            panda$core$String* $tmp2344 = (($fn2343) self->charProtector->$class->vtable[2])(self->charProtector, &$s2342);
+            $tmp2341 = $tmp2344;
+            panda$core$String* $tmp2345 = panda$core$String$replace$panda$core$RegularExpression$panda$core$String$R$panda$core$String(url2292, $tmp2338, $tmp2341);
+            $tmp2337 = $tmp2345;
+            $tmp2336 = $tmp2337;
+            url2292 = $tmp2336;
+            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2336));
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2337));
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2341));
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2338));
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2335));
         }
         {
-            $tmp2330 = url2292;
-            $tmp2331 = &$s2332;
-            url2292 = $tmp2331;
-            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2331));
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2330));
+            $tmp2346 = url2292;
+            panda$core$RegularExpression* $tmp2350 = (panda$core$RegularExpression*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$RegularExpression$class);
+            panda$core$RegularExpression$init$panda$core$String($tmp2350, &$s2351);
+            $tmp2349 = $tmp2350;
+            panda$core$String* $tmp2355 = (($fn2354) self->charProtector->$class->vtable[2])(self->charProtector, &$s2353);
+            $tmp2352 = $tmp2355;
+            panda$core$String* $tmp2356 = panda$core$String$replace$panda$core$RegularExpression$panda$core$String$R$panda$core$String(url2292, $tmp2349, $tmp2352);
+            $tmp2348 = $tmp2356;
+            $tmp2347 = $tmp2348;
+            url2292 = $tmp2347;
+            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2347));
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2348));
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2352));
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2349));
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2346));
         }
-        panda$core$MutableString* $tmp2336 = (panda$core$MutableString*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$MutableString$class);
-        panda$core$MutableString$init($tmp2336);
-        $tmp2335 = $tmp2336;
-        $tmp2334 = $tmp2335;
-        result2333 = $tmp2334;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2334));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2335));
-        panda$core$String* $tmp2340 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s2339, url2292);
-        $tmp2338 = $tmp2340;
-        panda$core$String* $tmp2342 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp2338, &$s2341);
-        $tmp2337 = $tmp2342;
-        panda$core$MutableString$append$panda$core$String(result2333, $tmp2337);
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2337));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2338));
+        panda$core$MutableString* $tmp2360 = (panda$core$MutableString*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$MutableString$class);
+        panda$core$MutableString$init($tmp2360);
+        $tmp2359 = $tmp2360;
+        $tmp2358 = $tmp2359;
+        result2357 = $tmp2358;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2358));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2359));
+        panda$core$String* $tmp2364 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s2363, url2292);
+        $tmp2362 = $tmp2364;
+        panda$core$String* $tmp2366 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp2362, &$s2365);
+        $tmp2361 = $tmp2366;
+        panda$core$MutableString$append$panda$core$String(result2357, $tmp2361);
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2361));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2362));
         if (((panda$core$Bit) { title2300 != NULL }).value) {
         {
             {
-                $tmp2343 = title2300;
-                panda$core$String* $tmp2350 = (($fn2349) self->charProtector->$class->vtable[2])(self->charProtector, &$s2348);
-                $tmp2347 = $tmp2350;
-                panda$core$String* $tmp2351 = panda$core$String$replace$panda$core$String$panda$core$String$R$panda$core$String(title2300, &$s2346, $tmp2347);
-                $tmp2345 = $tmp2351;
-                $tmp2344 = $tmp2345;
-                title2300 = $tmp2344;
-                panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2344));
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2345));
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2347));
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2343));
+                $tmp2367 = title2300;
+                panda$core$String* $tmp2374 = (($fn2373) self->charProtector->$class->vtable[2])(self->charProtector, &$s2372);
+                $tmp2371 = $tmp2374;
+                panda$core$String* $tmp2375 = panda$core$String$replace$panda$core$String$panda$core$String$R$panda$core$String(title2300, &$s2370, $tmp2371);
+                $tmp2369 = $tmp2375;
+                $tmp2368 = $tmp2369;
+                title2300 = $tmp2368;
+                panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2368));
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2369));
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2371));
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2367));
             }
             {
-                $tmp2352 = title2300;
-                panda$core$String* $tmp2359 = (($fn2358) self->charProtector->$class->vtable[2])(self->charProtector, &$s2357);
-                $tmp2356 = $tmp2359;
-                panda$core$String* $tmp2360 = panda$core$String$replace$panda$core$String$panda$core$String$R$panda$core$String(title2300, &$s2355, $tmp2356);
-                $tmp2354 = $tmp2360;
-                $tmp2353 = $tmp2354;
-                title2300 = $tmp2353;
-                panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2353));
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2354));
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2356));
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2352));
+                $tmp2376 = title2300;
+                panda$core$String* $tmp2383 = (($fn2382) self->charProtector->$class->vtable[2])(self->charProtector, &$s2381);
+                $tmp2380 = $tmp2383;
+                panda$core$String* $tmp2384 = panda$core$String$replace$panda$core$String$panda$core$String$R$panda$core$String(title2300, &$s2379, $tmp2380);
+                $tmp2378 = $tmp2384;
+                $tmp2377 = $tmp2378;
+                title2300 = $tmp2377;
+                panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2377));
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2378));
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2380));
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2376));
             }
             {
-                $tmp2361 = title2300;
-                panda$core$String* $tmp2366 = panda$core$String$replace$panda$core$String$panda$core$String$R$panda$core$String(title2300, &$s2364, &$s2365);
-                $tmp2363 = $tmp2366;
-                $tmp2362 = $tmp2363;
-                title2300 = $tmp2362;
-                panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2362));
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2363));
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2361));
+                $tmp2385 = title2300;
+                panda$core$String* $tmp2390 = panda$core$String$replace$panda$core$String$panda$core$String$R$panda$core$String(title2300, &$s2388, &$s2389);
+                $tmp2387 = $tmp2390;
+                $tmp2386 = $tmp2387;
+                title2300 = $tmp2386;
+                panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2386));
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2387));
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2385));
             }
-            panda$core$MutableString$append$panda$core$String(result2333, &$s2367);
-            panda$core$MutableString$append$panda$core$String(result2333, title2300);
-            panda$core$UInt8$init$builtin_uint8(&$tmp2369, 34);
-            panda$core$Char8$init$panda$core$UInt8(&$tmp2368, $tmp2369);
-            panda$core$MutableString$append$panda$core$Char8(result2333, $tmp2368);
+            panda$core$MutableString$append$panda$core$String(result2357, &$s2391);
+            panda$core$MutableString$append$panda$core$String(result2357, title2300);
+            panda$core$UInt8$init$builtin_uint8(&$tmp2393, 34);
+            panda$core$Char8$init$panda$core$UInt8(&$tmp2392, $tmp2393);
+            panda$core$MutableString$append$panda$core$Char8(result2357, $tmp2392);
         }
         }
-        panda$core$String* $tmp2373 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s2372, linkText2284);
-        $tmp2371 = $tmp2373;
-        panda$core$String* $tmp2375 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp2371, &$s2374);
-        $tmp2370 = $tmp2375;
-        panda$core$MutableString$append$panda$core$String(result2333, $tmp2370);
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2370));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2371));
-        panda$core$MutableString$append$panda$core$String(result2333, &$s2376);
-        panda$core$String* $tmp2380 = panda$core$MutableString$convert$R$panda$core$String(result2333);
-        $tmp2379 = $tmp2380;
-        $tmp2378 = $tmp2379;
-        $returnValue2377 = $tmp2378;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2378));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2379));
+        panda$core$String* $tmp2397 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s2396, linkText2284);
+        $tmp2395 = $tmp2397;
+        panda$core$String* $tmp2399 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp2395, &$s2398);
+        $tmp2394 = $tmp2399;
+        panda$core$MutableString$append$panda$core$String(result2357, $tmp2394);
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2394));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2395));
+        panda$core$MutableString$append$panda$core$String(result2357, &$s2400);
+        panda$core$String* $tmp2404 = panda$core$MutableString$convert$R$panda$core$String(result2357);
+        $tmp2403 = $tmp2404;
+        $tmp2402 = $tmp2403;
+        $returnValue2401 = $tmp2402;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2402));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2403));
         $tmp2283 = 0;
         goto $l2281;
-        $l2381:;
-        return $returnValue2377;
+        $l2405:;
+        return $returnValue2401;
     }
     $l2281:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result2333));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result2357));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) title2300));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) url2292));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) linkText2284));
     linkText2284 = NULL;
     url2292 = NULL;
     title2300 = NULL;
-    result2333 = NULL;
+    result2357 = NULL;
     switch ($tmp2283) {
-        case 0: goto $l2381;
+        case 0: goto $l2405;
     }
-    $l2383:;
+    $l2407:;
     abort();
 }
 panda$core$Object* panda$core$MutableMethod$$shim29$panda$collections$ListView$LTpanda$core$String$Q$GT$R$panda$core$Object(panda$core$MutableMethod* self, panda$collections$ListView* p_p0) {
-    panda$core$Method* methodVar2387 = NULL;
-    panda$core$Method* $tmp2388;
-    panda$core$Method* $tmp2389;
-    panda$core$Object* $tmp2391;
-    panda$core$Object* $tmp2392;
-    panda$core$Object* $returnValue2393;
-    panda$core$Object* $tmp2394;
-    panda$core$String* $tmp2395;
-    panda$core$String* $tmp2396;
-    int $tmp2386;
+    panda$core$Method* methodVar2411 = NULL;
+    panda$core$Method* $tmp2412;
+    panda$core$Method* $tmp2413;
+    panda$core$Object* $tmp2415;
+    panda$core$Object* $tmp2416;
+    panda$core$Object* $returnValue2417;
+    panda$core$Object* $tmp2418;
+    panda$core$String* $tmp2419;
+    panda$core$String* $tmp2420;
+    int $tmp2410;
     {
-        panda$core$Method* $tmp2390 = (panda$core$Method*) pandaObjectAlloc(32, (panda$core$Class*) &panda$core$Method$class);
-        panda$core$Method$init$panda$unsafe$Pointer$LTpanda$core$Int8$GT$panda$core$Immutable$Q($tmp2390, self->pointer, ((panda$core$Immutable*) NULL));
-        $tmp2389 = $tmp2390;
-        $tmp2388 = $tmp2389;
-        methodVar2387 = $tmp2388;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2388));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2389));
+        panda$core$Method* $tmp2414 = (panda$core$Method*) pandaObjectAlloc(32, (panda$core$Class*) &panda$core$Method$class);
+        panda$core$Method$init$panda$unsafe$Pointer$LTpanda$core$Int8$GT$panda$core$Immutable$Q($tmp2414, self->pointer, ((panda$core$Immutable*) NULL));
+        $tmp2413 = $tmp2414;
+        $tmp2412 = $tmp2413;
+        methodVar2411 = $tmp2412;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2412));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2413));
         {
-            $tmp2391 = ((panda$core$MutableMethod*) methodVar2387)->target;
-            $tmp2392 = self->target;
-            ((panda$core$MutableMethod*) methodVar2387)->target = $tmp2392;
-            panda$core$Panda$ref$panda$core$Object($tmp2392);
-            panda$core$Panda$unref$panda$core$Object($tmp2391);
+            $tmp2415 = ((panda$core$MutableMethod*) methodVar2411)->target;
+            $tmp2416 = self->target;
+            ((panda$core$MutableMethod*) methodVar2411)->target = $tmp2416;
+            panda$core$Panda$ref$panda$core$Object($tmp2416);
+            panda$core$Panda$unref$panda$core$Object($tmp2415);
         }
-        if (methodVar2387->target) {
-            $tmp2396 = (($fn2397) methodVar2387->pointer)(methodVar2387->target, p_p0);
+        if (methodVar2411->target) {
+            $tmp2420 = (($fn2421) methodVar2411->pointer)(methodVar2411->target, p_p0);
         } else {
-            $tmp2396 = (($fn2398) methodVar2387->pointer)(p_p0);
+            $tmp2420 = (($fn2422) methodVar2411->pointer)(p_p0);
         }
-        $tmp2395 = $tmp2396;
-        $tmp2394 = ((panda$core$Object*) $tmp2395);
-        $returnValue2393 = $tmp2394;
-        panda$core$Panda$ref$panda$core$Object($tmp2394);
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2395));
-        $tmp2386 = 0;
-        goto $l2384;
-        $l2399:;
-        return $returnValue2393;
+        $tmp2419 = $tmp2420;
+        $tmp2418 = ((panda$core$Object*) $tmp2419);
+        $returnValue2417 = $tmp2418;
+        panda$core$Panda$ref$panda$core$Object($tmp2418);
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2419));
+        $tmp2410 = 0;
+        goto $l2408;
+        $l2423:;
+        return $returnValue2417;
     }
-    $l2384:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) methodVar2387));
-    methodVar2387 = NULL;
-    switch ($tmp2386) {
-        case 0: goto $l2399;
+    $l2408:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) methodVar2411));
+    methodVar2411 = NULL;
+    switch ($tmp2410) {
+        case 0: goto $l2423;
     }
-    $l2401:;
+    $l2425:;
     abort();
 }
 panda$core$Object* org$pandalanguage$pandac$pandadoc$Markdown$$anonymous30$panda$collections$ListView$LTpanda$core$String$Q$GT$R$panda$core$Object(org$pandalanguage$pandac$pandadoc$Markdown* self, panda$collections$ListView* p_groups) {
-    panda$core$String* replacementText2405 = NULL;
-    panda$core$String* wholeMatch2406 = NULL;
-    panda$core$String* $tmp2407;
-    panda$core$Object* $tmp2408;
-    panda$core$Int64 $tmp2409;
-    panda$core$String* linkText2414 = NULL;
-    panda$core$String* $tmp2415;
-    panda$core$Object* $tmp2416;
-    panda$core$Int64 $tmp2417;
-    panda$core$String* id2422 = NULL;
-    panda$core$String* $tmp2423;
-    panda$core$String* $tmp2424;
-    panda$core$String* $tmp2425;
-    panda$core$String* $tmp2426;
-    panda$core$RegularExpression* $tmp2427;
-    org$pandalanguage$pandac$pandadoc$Markdown$LinkDefinition* defn2432 = NULL;
-    org$pandalanguage$pandac$pandadoc$Markdown$LinkDefinition* $tmp2433;
-    panda$core$Object* $tmp2434;
-    panda$core$String* url2439 = NULL;
-    panda$core$String* $tmp2440;
-    panda$core$String* $tmp2441;
-    panda$core$String* $tmp2442;
-    panda$core$String* $tmp2443;
-    panda$core$String* $tmp2445;
+    panda$core$String* replacementText2429 = NULL;
+    panda$core$String* wholeMatch2430 = NULL;
+    panda$core$String* $tmp2431;
+    panda$core$Object* $tmp2432;
+    panda$core$Int64 $tmp2433;
+    panda$core$String* linkText2438 = NULL;
+    panda$core$String* $tmp2439;
+    panda$core$Object* $tmp2440;
+    panda$core$Int64 $tmp2441;
+    panda$core$String* id2446 = NULL;
+    panda$core$String* $tmp2447;
+    panda$core$String* $tmp2448;
+    panda$core$String* $tmp2449;
     panda$core$String* $tmp2450;
-    panda$core$String* $tmp2451;
-    panda$core$String* $tmp2452;
-    panda$core$String* $tmp2454;
-    panda$core$String* title2459 = NULL;
-    panda$core$String* $tmp2460;
-    panda$core$String* titleTag2461 = NULL;
-    panda$core$String* $tmp2462;
-    panda$core$String* $tmp2472;
-    panda$core$String* $tmp2473;
+    panda$core$RegularExpression* $tmp2451;
+    org$pandalanguage$pandac$pandadoc$Markdown$LinkDefinition* defn2456 = NULL;
+    org$pandalanguage$pandac$pandadoc$Markdown$LinkDefinition* $tmp2457;
+    panda$core$Object* $tmp2458;
+    panda$core$String* url2463 = NULL;
+    panda$core$String* $tmp2464;
+    panda$core$String* $tmp2465;
+    panda$core$String* $tmp2466;
+    panda$core$String* $tmp2467;
+    panda$core$String* $tmp2469;
     panda$core$String* $tmp2474;
+    panda$core$String* $tmp2475;
     panda$core$String* $tmp2476;
-    panda$core$String* $tmp2481;
-    panda$core$String* $tmp2482;
-    panda$core$String* $tmp2483;
-    panda$core$String* $tmp2485;
-    panda$core$String* $tmp2490;
-    panda$core$String* $tmp2491;
-    panda$core$String* $tmp2492;
-    panda$core$String* $tmp2493;
+    panda$core$String* $tmp2478;
+    panda$core$String* title2483 = NULL;
+    panda$core$String* $tmp2484;
+    panda$core$String* titleTag2485 = NULL;
+    panda$core$String* $tmp2486;
+    panda$core$String* $tmp2496;
+    panda$core$String* $tmp2497;
     panda$core$String* $tmp2498;
-    panda$core$String* $tmp2499;
     panda$core$String* $tmp2500;
-    panda$core$String* $tmp2501;
-    panda$core$String* $tmp2502;
-    panda$core$String* $tmp2503;
-    panda$core$String* $tmp2504;
     panda$core$String* $tmp2505;
+    panda$core$String* $tmp2506;
+    panda$core$String* $tmp2507;
+    panda$core$String* $tmp2509;
+    panda$core$String* $tmp2514;
+    panda$core$String* $tmp2515;
+    panda$core$String* $tmp2516;
     panda$core$String* $tmp2517;
-    panda$core$String* $tmp2518;
-    panda$core$Object* $returnValue2519;
-    panda$core$Object* $tmp2520;
-    int $tmp2404;
+    panda$core$String* $tmp2522;
+    panda$core$String* $tmp2523;
+    panda$core$String* $tmp2524;
+    panda$core$String* $tmp2525;
+    panda$core$String* $tmp2526;
+    panda$core$String* $tmp2527;
+    panda$core$String* $tmp2528;
+    panda$core$String* $tmp2529;
+    panda$core$String* $tmp2541;
+    panda$core$String* $tmp2542;
+    panda$core$String* $tmp2543;
+    panda$core$String* $tmp2544;
+    panda$core$String* $tmp2547;
+    panda$core$String* $tmp2548;
+    panda$core$String* $tmp2549;
+    panda$core$String* $tmp2550;
+    panda$core$String* $tmp2551;
+    panda$core$String* $tmp2552;
+    panda$core$String* $tmp2560;
+    panda$core$String* $tmp2561;
+    panda$core$String* $tmp2562;
+    panda$core$String* $tmp2563;
+    panda$core$String* $tmp2568;
+    panda$core$String* $tmp2569;
+    panda$core$Object* $returnValue2571;
+    panda$core$Object* $tmp2572;
+    int $tmp2428;
     {
-        memset(&replacementText2405, 0, sizeof(replacementText2405));
-        panda$core$Int64$init$builtin_int64(&$tmp2409, 1);
-        ITable* $tmp2410 = p_groups->$class->itable;
-        while ($tmp2410->$class != (panda$core$Class*) &panda$collections$ListView$class) {
-            $tmp2410 = $tmp2410->next;
+        memset(&replacementText2429, 0, sizeof(replacementText2429));
+        panda$core$Int64$init$builtin_int64(&$tmp2433, 1);
+        ITable* $tmp2434 = p_groups->$class->itable;
+        while ($tmp2434->$class != (panda$core$Class*) &panda$collections$ListView$class) {
+            $tmp2434 = $tmp2434->next;
         }
-        $fn2412 $tmp2411 = $tmp2410->methods[0];
-        panda$core$Object* $tmp2413 = $tmp2411(p_groups, $tmp2409);
-        $tmp2408 = $tmp2413;
-        $tmp2407 = ((panda$core$String*) $tmp2408);
-        wholeMatch2406 = $tmp2407;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2407));
-        panda$core$Panda$unref$panda$core$Object($tmp2408);
-        panda$core$Int64$init$builtin_int64(&$tmp2417, 2);
-        ITable* $tmp2418 = p_groups->$class->itable;
-        while ($tmp2418->$class != (panda$core$Class*) &panda$collections$ListView$class) {
-            $tmp2418 = $tmp2418->next;
+        $fn2436 $tmp2435 = $tmp2434->methods[0];
+        panda$core$Object* $tmp2437 = $tmp2435(p_groups, $tmp2433);
+        $tmp2432 = $tmp2437;
+        $tmp2431 = ((panda$core$String*) $tmp2432);
+        wholeMatch2430 = $tmp2431;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2431));
+        panda$core$Panda$unref$panda$core$Object($tmp2432);
+        panda$core$Int64$init$builtin_int64(&$tmp2441, 2);
+        ITable* $tmp2442 = p_groups->$class->itable;
+        while ($tmp2442->$class != (panda$core$Class*) &panda$collections$ListView$class) {
+            $tmp2442 = $tmp2442->next;
         }
-        $fn2420 $tmp2419 = $tmp2418->methods[0];
-        panda$core$Object* $tmp2421 = $tmp2419(p_groups, $tmp2417);
-        $tmp2416 = $tmp2421;
-        $tmp2415 = ((panda$core$String*) $tmp2416);
-        linkText2414 = $tmp2415;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2415));
-        panda$core$Panda$unref$panda$core$Object($tmp2416);
-        $tmp2423 = linkText2414;
-        id2422 = $tmp2423;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2423));
+        $fn2444 $tmp2443 = $tmp2442->methods[0];
+        panda$core$Object* $tmp2445 = $tmp2443(p_groups, $tmp2441);
+        $tmp2440 = $tmp2445;
+        $tmp2439 = ((panda$core$String*) $tmp2440);
+        linkText2438 = $tmp2439;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2439));
+        panda$core$Panda$unref$panda$core$Object($tmp2440);
+        $tmp2447 = linkText2438;
+        id2446 = $tmp2447;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2447));
         {
-            $tmp2424 = id2422;
-            panda$core$RegularExpression* $tmp2428 = (panda$core$RegularExpression*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$RegularExpression$class);
-            panda$core$RegularExpression$init$panda$core$String($tmp2428, &$s2429);
-            $tmp2427 = $tmp2428;
-            panda$core$String* $tmp2431 = panda$core$String$replace$panda$core$RegularExpression$panda$core$String$R$panda$core$String(id2422, $tmp2427, &$s2430);
-            $tmp2426 = $tmp2431;
-            $tmp2425 = $tmp2426;
-            id2422 = $tmp2425;
-            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2425));
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2426));
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2427));
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2424));
+            $tmp2448 = id2446;
+            panda$core$RegularExpression* $tmp2452 = (panda$core$RegularExpression*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$RegularExpression$class);
+            panda$core$RegularExpression$init$panda$core$String($tmp2452, &$s2453);
+            $tmp2451 = $tmp2452;
+            panda$core$String* $tmp2455 = panda$core$String$replace$panda$core$RegularExpression$panda$core$String$R$panda$core$String(id2446, $tmp2451, &$s2454);
+            $tmp2450 = $tmp2455;
+            $tmp2449 = $tmp2450;
+            id2446 = $tmp2449;
+            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2449));
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2450));
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2451));
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2448));
         }
-        panda$core$Object* $tmp2435 = panda$collections$HashMap$$IDX$panda$collections$HashMap$K$R$panda$collections$HashMap$V$Q(self->linkDefinitions, ((panda$collections$Key*) id2422));
-        $tmp2434 = $tmp2435;
-        $tmp2433 = ((org$pandalanguage$pandac$pandadoc$Markdown$LinkDefinition*) $tmp2434);
-        defn2432 = $tmp2433;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2433));
-        panda$core$Panda$unref$panda$core$Object($tmp2434);
-        if (((panda$core$Bit) { defn2432 != NULL }).value) {
+        panda$core$Object* $tmp2459 = panda$collections$HashMap$$IDX$panda$collections$HashMap$K$R$panda$collections$HashMap$V$Q(self->linkDefinitions, ((panda$collections$Key*) id2446));
+        $tmp2458 = $tmp2459;
+        $tmp2457 = ((org$pandalanguage$pandac$pandadoc$Markdown$LinkDefinition*) $tmp2458);
+        defn2456 = $tmp2457;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2457));
+        panda$core$Panda$unref$panda$core$Object($tmp2458);
+        if (((panda$core$Bit) { defn2456 != NULL }).value) {
         {
-            int $tmp2438;
+            int $tmp2462;
             {
-                $tmp2440 = defn2432->url;
-                url2439 = $tmp2440;
-                panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2440));
+                $tmp2464 = defn2456->url;
+                url2463 = $tmp2464;
+                panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2464));
                 {
-                    $tmp2441 = url2439;
-                    panda$core$String* $tmp2448 = (($fn2447) self->charProtector->$class->vtable[2])(self->charProtector, &$s2446);
-                    $tmp2445 = $tmp2448;
-                    panda$core$String* $tmp2449 = panda$core$String$replace$panda$core$String$panda$core$String$R$panda$core$String(url2439, &$s2444, $tmp2445);
-                    $tmp2443 = $tmp2449;
-                    $tmp2442 = $tmp2443;
-                    url2439 = $tmp2442;
-                    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2442));
-                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2443));
-                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2445));
-                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2441));
+                    $tmp2465 = url2463;
+                    panda$core$String* $tmp2472 = (($fn2471) self->charProtector->$class->vtable[2])(self->charProtector, &$s2470);
+                    $tmp2469 = $tmp2472;
+                    panda$core$String* $tmp2473 = panda$core$String$replace$panda$core$String$panda$core$String$R$panda$core$String(url2463, &$s2468, $tmp2469);
+                    $tmp2467 = $tmp2473;
+                    $tmp2466 = $tmp2467;
+                    url2463 = $tmp2466;
+                    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2466));
+                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2467));
+                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2469));
+                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2465));
                 }
                 {
-                    $tmp2450 = url2439;
-                    panda$core$String* $tmp2457 = (($fn2456) self->charProtector->$class->vtable[2])(self->charProtector, &$s2455);
-                    $tmp2454 = $tmp2457;
-                    panda$core$String* $tmp2458 = panda$core$String$replace$panda$core$String$panda$core$String$R$panda$core$String(url2439, &$s2453, $tmp2454);
-                    $tmp2452 = $tmp2458;
-                    $tmp2451 = $tmp2452;
-                    url2439 = $tmp2451;
-                    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2451));
-                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2452));
-                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2454));
-                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2450));
+                    $tmp2474 = url2463;
+                    panda$core$String* $tmp2481 = (($fn2480) self->charProtector->$class->vtable[2])(self->charProtector, &$s2479);
+                    $tmp2478 = $tmp2481;
+                    panda$core$String* $tmp2482 = panda$core$String$replace$panda$core$String$panda$core$String$R$panda$core$String(url2463, &$s2477, $tmp2478);
+                    $tmp2476 = $tmp2482;
+                    $tmp2475 = $tmp2476;
+                    url2463 = $tmp2475;
+                    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2475));
+                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2476));
+                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2478));
+                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2474));
                 }
-                $tmp2460 = defn2432->title;
-                title2459 = $tmp2460;
-                panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2460));
-                $tmp2462 = &$s2463;
-                titleTag2461 = $tmp2462;
-                panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2462));
-                bool $tmp2464 = ((panda$core$Bit) { title2459 != NULL }).value;
-                if (!$tmp2464) goto $l2465;
-                ITable* $tmp2467 = ((panda$core$Equatable*) title2459)->$class->itable;
-                while ($tmp2467->$class != (panda$core$Class*) &panda$core$Equatable$class) {
-                    $tmp2467 = $tmp2467->next;
+                $tmp2484 = defn2456->title;
+                title2483 = $tmp2484;
+                panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2484));
+                $tmp2486 = &$s2487;
+                titleTag2485 = $tmp2486;
+                panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2486));
+                bool $tmp2488 = ((panda$core$Bit) { title2483 != NULL }).value;
+                if (!$tmp2488) goto $l2489;
+                ITable* $tmp2491 = ((panda$core$Equatable*) title2483)->$class->itable;
+                while ($tmp2491->$class != (panda$core$Class*) &panda$core$Equatable$class) {
+                    $tmp2491 = $tmp2491->next;
                 }
-                $fn2469 $tmp2468 = $tmp2467->methods[1];
-                panda$core$Bit $tmp2470 = $tmp2468(((panda$core$Equatable*) title2459), ((panda$core$Equatable*) &$s2466));
-                $tmp2464 = $tmp2470.value;
-                $l2465:;
-                panda$core$Bit $tmp2471 = { $tmp2464 };
-                if ($tmp2471.value) {
+                $fn2493 $tmp2492 = $tmp2491->methods[1];
+                panda$core$Bit $tmp2494 = $tmp2492(((panda$core$Equatable*) title2483), ((panda$core$Equatable*) &$s2490));
+                $tmp2488 = $tmp2494.value;
+                $l2489:;
+                panda$core$Bit $tmp2495 = { $tmp2488 };
+                if ($tmp2495.value) {
                 {
                     {
-                        $tmp2472 = title2459;
-                        panda$core$String* $tmp2479 = (($fn2478) self->charProtector->$class->vtable[2])(self->charProtector, &$s2477);
-                        $tmp2476 = $tmp2479;
-                        panda$core$String* $tmp2480 = panda$core$String$replace$panda$core$String$panda$core$String$R$panda$core$String(title2459, &$s2475, $tmp2476);
-                        $tmp2474 = $tmp2480;
-                        $tmp2473 = $tmp2474;
-                        title2459 = $tmp2473;
-                        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2473));
-                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2474));
-                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2476));
-                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2472));
+                        $tmp2496 = title2483;
+                        panda$core$String* $tmp2503 = (($fn2502) self->charProtector->$class->vtable[2])(self->charProtector, &$s2501);
+                        $tmp2500 = $tmp2503;
+                        panda$core$String* $tmp2504 = panda$core$String$replace$panda$core$String$panda$core$String$R$panda$core$String(title2483, &$s2499, $tmp2500);
+                        $tmp2498 = $tmp2504;
+                        $tmp2497 = $tmp2498;
+                        title2483 = $tmp2497;
+                        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2497));
+                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2498));
+                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2500));
+                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2496));
                     }
                     {
-                        $tmp2481 = title2459;
-                        panda$core$String* $tmp2488 = (($fn2487) self->charProtector->$class->vtable[2])(self->charProtector, &$s2486);
-                        $tmp2485 = $tmp2488;
-                        panda$core$String* $tmp2489 = panda$core$String$replace$panda$core$String$panda$core$String$R$panda$core$String(title2459, &$s2484, $tmp2485);
-                        $tmp2483 = $tmp2489;
-                        $tmp2482 = $tmp2483;
-                        title2459 = $tmp2482;
-                        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2482));
-                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2483));
-                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2485));
-                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2481));
+                        $tmp2505 = title2483;
+                        panda$core$String* $tmp2512 = (($fn2511) self->charProtector->$class->vtable[2])(self->charProtector, &$s2510);
+                        $tmp2509 = $tmp2512;
+                        panda$core$String* $tmp2513 = panda$core$String$replace$panda$core$String$panda$core$String$R$panda$core$String(title2483, &$s2508, $tmp2509);
+                        $tmp2507 = $tmp2513;
+                        $tmp2506 = $tmp2507;
+                        title2483 = $tmp2506;
+                        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2506));
+                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2507));
+                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2509));
+                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2505));
                     }
                     {
-                        $tmp2490 = titleTag2461;
-                        panda$core$String* $tmp2495 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s2494, title2459);
-                        $tmp2493 = $tmp2495;
-                        panda$core$String* $tmp2497 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp2493, &$s2496);
-                        $tmp2492 = $tmp2497;
-                        $tmp2491 = $tmp2492;
-                        titleTag2461 = $tmp2491;
-                        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2491));
-                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2492));
-                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2493));
-                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2490));
+                        $tmp2514 = titleTag2485;
+                        panda$core$String* $tmp2519 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s2518, title2483);
+                        $tmp2517 = $tmp2519;
+                        panda$core$String* $tmp2521 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp2517, &$s2520);
+                        $tmp2516 = $tmp2521;
+                        $tmp2515 = $tmp2516;
+                        titleTag2485 = $tmp2515;
+                        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2515));
+                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2516));
+                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2517));
+                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2514));
                     }
                 }
                 }
                 {
-                    $tmp2498 = replacementText2405;
-                    panda$core$String* $tmp2507 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s2506, url2439);
-                    $tmp2505 = $tmp2507;
-                    panda$core$String* $tmp2509 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp2505, &$s2508);
-                    $tmp2504 = $tmp2509;
-                    panda$core$String* $tmp2510 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp2504, titleTag2461);
-                    $tmp2503 = $tmp2510;
-                    panda$core$String* $tmp2512 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp2503, &$s2511);
-                    $tmp2502 = $tmp2512;
-                    panda$core$String* $tmp2513 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp2502, linkText2414);
-                    $tmp2501 = $tmp2513;
-                    panda$core$String* $tmp2515 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp2501, &$s2514);
-                    $tmp2500 = $tmp2515;
-                    $tmp2499 = $tmp2500;
-                    replacementText2405 = $tmp2499;
-                    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2499));
-                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2500));
-                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2501));
-                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2502));
-                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2503));
-                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2504));
-                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2505));
-                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2498));
+                    $tmp2522 = replacementText2429;
+                    panda$core$String* $tmp2531 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s2530, url2463);
+                    $tmp2529 = $tmp2531;
+                    panda$core$String* $tmp2533 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp2529, &$s2532);
+                    $tmp2528 = $tmp2533;
+                    panda$core$String* $tmp2534 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp2528, titleTag2485);
+                    $tmp2527 = $tmp2534;
+                    panda$core$String* $tmp2536 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp2527, &$s2535);
+                    $tmp2526 = $tmp2536;
+                    panda$core$String* $tmp2537 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp2526, linkText2438);
+                    $tmp2525 = $tmp2537;
+                    panda$core$String* $tmp2539 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp2525, &$s2538);
+                    $tmp2524 = $tmp2539;
+                    $tmp2523 = $tmp2524;
+                    replacementText2429 = $tmp2523;
+                    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2523));
+                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2524));
+                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2525));
+                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2526));
+                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2527));
+                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2528));
+                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2529));
+                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2522));
                 }
             }
-            $tmp2438 = -1;
-            goto $l2436;
-            $l2436:;
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) titleTag2461));
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) title2459));
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) url2439));
-            url2439 = NULL;
-            title2459 = NULL;
-            titleTag2461 = NULL;
-            switch ($tmp2438) {
-                case -1: goto $l2516;
+            $tmp2462 = -1;
+            goto $l2460;
+            $l2460:;
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) titleTag2485));
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) title2483));
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) url2463));
+            url2463 = NULL;
+            title2483 = NULL;
+            titleTag2485 = NULL;
+            switch ($tmp2462) {
+                case -1: goto $l2540;
             }
-            $l2516:;
+            $l2540:;
         }
         }
         else {
         {
+            if (((panda$core$Bit) { self->linkResolver != NULL }).value) {
             {
-                $tmp2517 = replacementText2405;
-                $tmp2518 = wholeMatch2406;
-                replacementText2405 = $tmp2518;
-                panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2518));
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2517));
+                {
+                    $tmp2541 = replacementText2429;
+                    if (self->linkResolver->target) {
+                        $tmp2544 = (($fn2545) self->linkResolver->pointer)(self->linkResolver->target, linkText2438);
+                    } else {
+                        $tmp2544 = (($fn2546) self->linkResolver->pointer)(linkText2438);
+                    }
+                    $tmp2543 = $tmp2544;
+                    $tmp2542 = $tmp2543;
+                    replacementText2429 = $tmp2542;
+                    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2542));
+                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2543));
+                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2541));
+                }
+                if (((panda$core$Bit) { replacementText2429 != NULL }).value) {
+                {
+                    {
+                        $tmp2547 = replacementText2429;
+                        panda$core$String* $tmp2554 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s2553, replacementText2429);
+                        $tmp2552 = $tmp2554;
+                        panda$core$String* $tmp2556 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp2552, &$s2555);
+                        $tmp2551 = $tmp2556;
+                        panda$core$String* $tmp2557 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp2551, linkText2438);
+                        $tmp2550 = $tmp2557;
+                        panda$core$String* $tmp2559 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp2550, &$s2558);
+                        $tmp2549 = $tmp2559;
+                        $tmp2548 = $tmp2549;
+                        replacementText2429 = $tmp2548;
+                        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2548));
+                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2549));
+                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2550));
+                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2551));
+                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2552));
+                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2547));
+                    }
+                }
+                }
+                else {
+                {
+                    {
+                        $tmp2560 = replacementText2429;
+                        panda$core$String* $tmp2565 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s2564, linkText2438);
+                        $tmp2563 = $tmp2565;
+                        panda$core$String* $tmp2567 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp2563, &$s2566);
+                        $tmp2562 = $tmp2567;
+                        $tmp2561 = $tmp2562;
+                        replacementText2429 = $tmp2561;
+                        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2561));
+                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2562));
+                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2563));
+                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2560));
+                    }
+                }
+                }
+            }
+            }
+            else {
+            {
+                {
+                    $tmp2568 = replacementText2429;
+                    $tmp2569 = &$s2570;
+                    replacementText2429 = $tmp2569;
+                    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2569));
+                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2568));
+                }
+            }
             }
         }
         }
-        $tmp2520 = ((panda$core$Object*) replacementText2405);
-        $returnValue2519 = $tmp2520;
-        panda$core$Panda$ref$panda$core$Object($tmp2520);
-        $tmp2404 = 0;
-        goto $l2402;
-        $l2521:;
-        return $returnValue2519;
+        $tmp2572 = ((panda$core$Object*) replacementText2429);
+        $returnValue2571 = $tmp2572;
+        panda$core$Panda$ref$panda$core$Object($tmp2572);
+        $tmp2428 = 0;
+        goto $l2426;
+        $l2573:;
+        return $returnValue2571;
     }
-    $l2402:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) defn2432));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) id2422));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) linkText2414));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) wholeMatch2406));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) replacementText2405));
-    wholeMatch2406 = NULL;
-    linkText2414 = NULL;
-    id2422 = NULL;
-    defn2432 = NULL;
-    switch ($tmp2404) {
-        case 0: goto $l2521;
+    $l2426:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) defn2456));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) id2446));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) linkText2438));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) wholeMatch2430));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) replacementText2429));
+    wholeMatch2430 = NULL;
+    linkText2438 = NULL;
+    id2446 = NULL;
+    defn2456 = NULL;
+    switch ($tmp2428) {
+        case 0: goto $l2573;
     }
-    $l2523:;
+    $l2575:;
     abort();
 }
 void org$pandalanguage$pandac$pandadoc$Markdown$doAnchors$panda$core$MutableString(org$pandalanguage$pandac$pandadoc$Markdown* self, panda$core$MutableString* p_markup) {
-    panda$core$RegularExpression* internalLink2527 = NULL;
-    panda$core$RegularExpression* $tmp2528;
-    panda$core$RegularExpression* $tmp2529;
-    panda$core$RegularExpression* inlineLink2533 = NULL;
-    panda$core$RegularExpression* $tmp2534;
-    panda$core$RegularExpression* $tmp2535;
-    panda$core$Int64 $tmp2538;
-    panda$core$RegularExpression* referenceShortcut2541 = NULL;
-    panda$core$RegularExpression* $tmp2542;
-    panda$core$RegularExpression* $tmp2543;
-    panda$core$Int64 $tmp2546;
-    int $tmp2526;
-    {
-        panda$core$RegularExpression* $tmp2530 = (panda$core$RegularExpression*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$RegularExpression$class);
-        panda$core$RegularExpression$init$panda$core$String($tmp2530, &$s2531);
-        $tmp2529 = $tmp2530;
-        $tmp2528 = $tmp2529;
-        internalLink2527 = $tmp2528;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2528));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2529));
-        panda$core$MutableMethod* $tmp2532 = (panda$core$MutableMethod*) pandaObjectAlloc(32, (panda$core$Class*) &panda$core$MutableMethod$class);
-        panda$core$MutableMethod$init$panda$unsafe$Pointer$LTpanda$core$Int8$GT$panda$core$Object$Q($tmp2532, (panda$core$Int8*) &org$pandalanguage$pandac$pandadoc$Markdown$$anonymous27$panda$collections$ListView$LTpanda$core$String$Q$GT$R$panda$core$Object, ((panda$core$Object*) self));
-        panda$core$MutableString$replace$panda$core$RegularExpression$$LPpanda$collections$ListView$LTpanda$core$String$Q$GT$RP$EQ$GT$LPpanda$core$Object$RP(p_markup, internalLink2527, ((panda$core$MutableMethod*) ((panda$core$Object*) $tmp2532)));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2532));
-        panda$core$RegularExpression* $tmp2536 = (panda$core$RegularExpression*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$RegularExpression$class);
-        panda$core$Int64$init$builtin_int64(&$tmp2538, 4);
-        panda$core$RegularExpression$init$panda$core$String$panda$core$Int64($tmp2536, &$s2537, $tmp2538);
-        $tmp2535 = $tmp2536;
-        $tmp2534 = $tmp2535;
-        inlineLink2533 = $tmp2534;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2534));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2535));
-        panda$core$MutableMethod* $tmp2539 = (panda$core$MutableMethod*) pandaObjectAlloc(32, (panda$core$Class*) &panda$core$MutableMethod$class);
-        panda$core$MutableMethod* $tmp2540 = (panda$core$MutableMethod*) pandaObjectAlloc(32, (panda$core$Class*) &panda$core$MutableMethod$class);
-        panda$core$MutableMethod$init$panda$unsafe$Pointer$LTpanda$core$Int8$GT$panda$core$Object$Q($tmp2540, (panda$core$Int8*) &org$pandalanguage$pandac$pandadoc$Markdown$$anonymous28$panda$collections$ListView$LTpanda$core$String$Q$GT$R$panda$core$String, ((panda$core$Object*) self));
-        panda$core$MutableMethod$init$panda$unsafe$Pointer$LTpanda$core$Int8$GT$panda$core$Object$Q($tmp2539, (panda$core$Int8*) &panda$core$MutableMethod$$shim29$panda$collections$ListView$LTpanda$core$String$Q$GT$R$panda$core$Object, ((panda$core$Object*) ((panda$core$Object*) $tmp2540)));
-        panda$core$MutableString$replace$panda$core$RegularExpression$$LPpanda$collections$ListView$LTpanda$core$String$Q$GT$RP$EQ$GT$LPpanda$core$Object$RP(p_markup, inlineLink2533, ((panda$core$MutableMethod*) ((panda$core$Object*) $tmp2539)));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2539));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2540));
-        panda$core$RegularExpression* $tmp2544 = (panda$core$RegularExpression*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$RegularExpression$class);
-        panda$core$Int64$init$builtin_int64(&$tmp2546, 4);
-        panda$core$RegularExpression$init$panda$core$String$panda$core$Int64($tmp2544, &$s2545, $tmp2546);
-        $tmp2543 = $tmp2544;
-        $tmp2542 = $tmp2543;
-        referenceShortcut2541 = $tmp2542;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2542));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2543));
-        panda$core$MutableMethod* $tmp2547 = (panda$core$MutableMethod*) pandaObjectAlloc(32, (panda$core$Class*) &panda$core$MutableMethod$class);
-        panda$core$MutableMethod$init$panda$unsafe$Pointer$LTpanda$core$Int8$GT$panda$core$Object$Q($tmp2547, (panda$core$Int8*) &org$pandalanguage$pandac$pandadoc$Markdown$$anonymous30$panda$collections$ListView$LTpanda$core$String$Q$GT$R$panda$core$Object, ((panda$core$Object*) self));
-        panda$core$MutableString$replace$panda$core$RegularExpression$$LPpanda$collections$ListView$LTpanda$core$String$Q$GT$RP$EQ$GT$LPpanda$core$Object$RP(p_markup, referenceShortcut2541, ((panda$core$MutableMethod*) ((panda$core$Object*) $tmp2547)));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2547));
-    }
-    $tmp2526 = -1;
-    goto $l2524;
-    $l2524:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) referenceShortcut2541));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) inlineLink2533));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) internalLink2527));
-    internalLink2527 = NULL;
-    inlineLink2533 = NULL;
-    referenceShortcut2541 = NULL;
-    switch ($tmp2526) {
-        case -1: goto $l2548;
-    }
-    $l2548:;
-}
-void org$pandalanguage$pandac$pandadoc$Markdown$doItalicsAndBold$panda$core$MutableString(org$pandalanguage$pandac$pandadoc$Markdown* self, panda$core$MutableString* p_markup) {
-    panda$core$RegularExpression* $tmp2549;
-    panda$core$RegularExpression* $tmp2553;
-    panda$core$RegularExpression* $tmp2550 = (panda$core$RegularExpression*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$RegularExpression$class);
-    panda$core$RegularExpression$init$panda$core$String($tmp2550, &$s2551);
-    $tmp2549 = $tmp2550;
-    panda$core$MutableString$replace$panda$core$RegularExpression$panda$core$String(p_markup, $tmp2549, &$s2552);
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2549));
-    panda$core$RegularExpression* $tmp2554 = (panda$core$RegularExpression*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$RegularExpression$class);
-    panda$core$RegularExpression$init$panda$core$String($tmp2554, &$s2555);
-    $tmp2553 = $tmp2554;
-    panda$core$MutableString$replace$panda$core$RegularExpression$panda$core$String(p_markup, $tmp2553, &$s2556);
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2553));
-}
-void org$pandalanguage$pandac$pandadoc$Markdown$encodeAmpsAndAngles$panda$core$MutableString(org$pandalanguage$pandac$pandadoc$Markdown* self, panda$core$MutableString* p_markup) {
-    panda$core$RegularExpression* $tmp2557;
-    panda$core$RegularExpression* $tmp2561;
-    panda$core$RegularExpression* $tmp2558 = (panda$core$RegularExpression*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$RegularExpression$class);
-    panda$core$RegularExpression$init$panda$core$String($tmp2558, &$s2559);
-    $tmp2557 = $tmp2558;
-    panda$core$MutableString$replace$panda$core$RegularExpression$panda$core$String(p_markup, $tmp2557, &$s2560);
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2557));
-    panda$core$RegularExpression* $tmp2562 = (panda$core$RegularExpression*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$RegularExpression$class);
-    panda$core$RegularExpression$init$panda$core$String($tmp2562, &$s2563);
-    $tmp2561 = $tmp2562;
-    panda$core$MutableString$replace$panda$core$RegularExpression$panda$core$String(p_markup, $tmp2561, &$s2564);
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2561));
-}
-panda$core$String* org$pandalanguage$pandac$pandadoc$Markdown$$anonymous31$panda$collections$ListView$LTpanda$core$String$Q$GT$R$panda$core$String(org$pandalanguage$pandac$pandadoc$Markdown* self, panda$collections$ListView* p_groups) {
-    panda$core$String* code2568 = NULL;
-    panda$core$String* $tmp2569;
-    panda$core$Object* $tmp2570;
-    panda$core$Int64 $tmp2571;
-    panda$core$MutableString* sub2576 = NULL;
-    panda$core$MutableString* $tmp2577;
-    panda$core$MutableString* $tmp2578;
+    panda$core$RegularExpression* internalLink2579 = NULL;
     panda$core$RegularExpression* $tmp2580;
-    panda$core$RegularExpression* $tmp2584;
-    panda$core$String* $returnValue2589;
-    panda$core$String* $tmp2590;
-    panda$core$String* $tmp2591;
-    panda$core$String* $tmp2592;
-    int $tmp2567;
+    panda$core$RegularExpression* $tmp2581;
+    panda$core$RegularExpression* inlineLink2585 = NULL;
+    panda$core$RegularExpression* $tmp2586;
+    panda$core$RegularExpression* $tmp2587;
+    panda$core$Int64 $tmp2590;
+    panda$core$RegularExpression* referenceShortcut2593 = NULL;
+    panda$core$RegularExpression* $tmp2594;
+    panda$core$RegularExpression* $tmp2595;
+    panda$core$Int64 $tmp2598;
+    int $tmp2578;
     {
-        panda$core$Int64$init$builtin_int64(&$tmp2571, 2);
-        ITable* $tmp2572 = p_groups->$class->itable;
-        while ($tmp2572->$class != (panda$core$Class*) &panda$collections$ListView$class) {
-            $tmp2572 = $tmp2572->next;
-        }
-        $fn2574 $tmp2573 = $tmp2572->methods[0];
-        panda$core$Object* $tmp2575 = $tmp2573(p_groups, $tmp2571);
-        $tmp2570 = $tmp2575;
-        $tmp2569 = ((panda$core$String*) $tmp2570);
-        code2568 = $tmp2569;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2569));
-        panda$core$Panda$unref$panda$core$Object($tmp2570);
-        panda$core$MutableString* $tmp2579 = (panda$core$MutableString*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$MutableString$class);
-        panda$core$MutableString$init$panda$core$String($tmp2579, code2568);
-        $tmp2578 = $tmp2579;
-        $tmp2577 = $tmp2578;
-        sub2576 = $tmp2577;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2577));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2578));
-        panda$core$RegularExpression* $tmp2581 = (panda$core$RegularExpression*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$RegularExpression$class);
-        panda$core$RegularExpression$init$panda$core$String($tmp2581, &$s2582);
+        panda$core$RegularExpression* $tmp2582 = (panda$core$RegularExpression*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$RegularExpression$class);
+        panda$core$RegularExpression$init$panda$core$String($tmp2582, &$s2583);
+        $tmp2581 = $tmp2582;
         $tmp2580 = $tmp2581;
-        panda$core$MutableString$replace$panda$core$RegularExpression$panda$core$String(sub2576, $tmp2580, &$s2583);
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2580));
-        panda$core$RegularExpression* $tmp2585 = (panda$core$RegularExpression*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$RegularExpression$class);
-        panda$core$RegularExpression$init$panda$core$String($tmp2585, &$s2586);
-        $tmp2584 = $tmp2585;
-        panda$core$MutableString$replace$panda$core$RegularExpression$panda$core$String(sub2576, $tmp2584, &$s2587);
+        internalLink2579 = $tmp2580;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2580));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2581));
+        panda$core$MutableMethod* $tmp2584 = (panda$core$MutableMethod*) pandaObjectAlloc(32, (panda$core$Class*) &panda$core$MutableMethod$class);
+        panda$core$MutableMethod$init$panda$unsafe$Pointer$LTpanda$core$Int8$GT$panda$core$Object$Q($tmp2584, (panda$core$Int8*) &org$pandalanguage$pandac$pandadoc$Markdown$$anonymous27$panda$collections$ListView$LTpanda$core$String$Q$GT$R$panda$core$Object, ((panda$core$Object*) self));
+        panda$core$MutableString$replace$panda$core$RegularExpression$$LPpanda$collections$ListView$LTpanda$core$String$Q$GT$RP$EQ$GT$LPpanda$core$Object$RP(p_markup, internalLink2579, ((panda$core$MutableMethod*) ((panda$core$Object*) $tmp2584)));
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2584));
-        (($fn2588) self->$class->vtable[18])(self, sub2576);
-        panda$core$String* $tmp2594 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s2593, ((panda$core$Object*) sub2576));
-        $tmp2592 = $tmp2594;
-        panda$core$String* $tmp2596 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp2592, &$s2595);
-        $tmp2591 = $tmp2596;
-        $tmp2590 = $tmp2591;
-        $returnValue2589 = $tmp2590;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2590));
+        panda$core$RegularExpression* $tmp2588 = (panda$core$RegularExpression*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$RegularExpression$class);
+        panda$core$Int64$init$builtin_int64(&$tmp2590, 4);
+        panda$core$RegularExpression$init$panda$core$String$panda$core$Int64($tmp2588, &$s2589, $tmp2590);
+        $tmp2587 = $tmp2588;
+        $tmp2586 = $tmp2587;
+        inlineLink2585 = $tmp2586;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2586));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2587));
+        panda$core$MutableMethod* $tmp2591 = (panda$core$MutableMethod*) pandaObjectAlloc(32, (panda$core$Class*) &panda$core$MutableMethod$class);
+        panda$core$MutableMethod* $tmp2592 = (panda$core$MutableMethod*) pandaObjectAlloc(32, (panda$core$Class*) &panda$core$MutableMethod$class);
+        panda$core$MutableMethod$init$panda$unsafe$Pointer$LTpanda$core$Int8$GT$panda$core$Object$Q($tmp2592, (panda$core$Int8*) &org$pandalanguage$pandac$pandadoc$Markdown$$anonymous28$panda$collections$ListView$LTpanda$core$String$Q$GT$R$panda$core$String, ((panda$core$Object*) self));
+        panda$core$MutableMethod$init$panda$unsafe$Pointer$LTpanda$core$Int8$GT$panda$core$Object$Q($tmp2591, (panda$core$Int8*) &panda$core$MutableMethod$$shim29$panda$collections$ListView$LTpanda$core$String$Q$GT$R$panda$core$Object, ((panda$core$Object*) ((panda$core$Object*) $tmp2592)));
+        panda$core$MutableString$replace$panda$core$RegularExpression$$LPpanda$collections$ListView$LTpanda$core$String$Q$GT$RP$EQ$GT$LPpanda$core$Object$RP(p_markup, inlineLink2585, ((panda$core$MutableMethod*) ((panda$core$Object*) $tmp2591)));
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2591));
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2592));
-        $tmp2567 = 0;
-        goto $l2565;
-        $l2597:;
-        return $returnValue2589;
+        panda$core$RegularExpression* $tmp2596 = (panda$core$RegularExpression*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$RegularExpression$class);
+        panda$core$Int64$init$builtin_int64(&$tmp2598, 4);
+        panda$core$RegularExpression$init$panda$core$String$panda$core$Int64($tmp2596, &$s2597, $tmp2598);
+        $tmp2595 = $tmp2596;
+        $tmp2594 = $tmp2595;
+        referenceShortcut2593 = $tmp2594;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2594));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2595));
+        panda$core$MutableMethod* $tmp2599 = (panda$core$MutableMethod*) pandaObjectAlloc(32, (panda$core$Class*) &panda$core$MutableMethod$class);
+        panda$core$MutableMethod$init$panda$unsafe$Pointer$LTpanda$core$Int8$GT$panda$core$Object$Q($tmp2599, (panda$core$Int8*) &org$pandalanguage$pandac$pandadoc$Markdown$$anonymous30$panda$collections$ListView$LTpanda$core$String$Q$GT$R$panda$core$Object, ((panda$core$Object*) self));
+        panda$core$MutableString$replace$panda$core$RegularExpression$$LPpanda$collections$ListView$LTpanda$core$String$Q$GT$RP$EQ$GT$LPpanda$core$Object$RP(p_markup, referenceShortcut2593, ((panda$core$MutableMethod*) ((panda$core$Object*) $tmp2599)));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2599));
     }
-    $l2565:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) sub2576));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) code2568));
-    code2568 = NULL;
-    sub2576 = NULL;
-    switch ($tmp2567) {
-        case 0: goto $l2597;
+    $tmp2578 = -1;
+    goto $l2576;
+    $l2576:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) referenceShortcut2593));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) inlineLink2585));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) internalLink2579));
+    internalLink2579 = NULL;
+    inlineLink2585 = NULL;
+    referenceShortcut2593 = NULL;
+    switch ($tmp2578) {
+        case -1: goto $l2600;
     }
-    $l2599:;
+    $l2600:;
+}
+void org$pandalanguage$pandac$pandadoc$Markdown$doItalicsAndBold$panda$core$MutableString(org$pandalanguage$pandac$pandadoc$Markdown* self, panda$core$MutableString* p_markup) {
+    panda$core$RegularExpression* $tmp2601;
+    panda$core$RegularExpression* $tmp2605;
+    panda$core$RegularExpression* $tmp2602 = (panda$core$RegularExpression*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$RegularExpression$class);
+    panda$core$RegularExpression$init$panda$core$String($tmp2602, &$s2603);
+    $tmp2601 = $tmp2602;
+    panda$core$MutableString$replace$panda$core$RegularExpression$panda$core$String(p_markup, $tmp2601, &$s2604);
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2601));
+    panda$core$RegularExpression* $tmp2606 = (panda$core$RegularExpression*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$RegularExpression$class);
+    panda$core$RegularExpression$init$panda$core$String($tmp2606, &$s2607);
+    $tmp2605 = $tmp2606;
+    panda$core$MutableString$replace$panda$core$RegularExpression$panda$core$String(p_markup, $tmp2605, &$s2608);
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2605));
+}
+void org$pandalanguage$pandac$pandadoc$Markdown$encodeAmpsAndAngles$panda$core$MutableString(org$pandalanguage$pandac$pandadoc$Markdown* self, panda$core$MutableString* p_markup) {
+    panda$core$RegularExpression* $tmp2609;
+    panda$core$RegularExpression* $tmp2613;
+    panda$core$RegularExpression* $tmp2610 = (panda$core$RegularExpression*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$RegularExpression$class);
+    panda$core$RegularExpression$init$panda$core$String($tmp2610, &$s2611);
+    $tmp2609 = $tmp2610;
+    panda$core$MutableString$replace$panda$core$RegularExpression$panda$core$String(p_markup, $tmp2609, &$s2612);
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2609));
+    panda$core$RegularExpression* $tmp2614 = (panda$core$RegularExpression*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$RegularExpression$class);
+    panda$core$RegularExpression$init$panda$core$String($tmp2614, &$s2615);
+    $tmp2613 = $tmp2614;
+    panda$core$MutableString$replace$panda$core$RegularExpression$panda$core$String(p_markup, $tmp2613, &$s2616);
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2613));
+}
+panda$core$String* org$pandalanguage$pandac$pandadoc$Markdown$$anonymous31$panda$collections$ListView$LTpanda$core$String$Q$GT$R$panda$core$String(org$pandalanguage$pandac$pandadoc$Markdown* self, panda$collections$ListView* p_groups) {
+    panda$core$String* code2620 = NULL;
+    panda$core$String* $tmp2621;
+    panda$core$Object* $tmp2622;
+    panda$core$Int64 $tmp2623;
+    panda$core$MutableString* sub2628 = NULL;
+    panda$core$MutableString* $tmp2629;
+    panda$core$MutableString* $tmp2630;
+    panda$core$RegularExpression* $tmp2632;
+    panda$core$RegularExpression* $tmp2636;
+    panda$core$String* $returnValue2641;
+    panda$core$String* $tmp2642;
+    panda$core$String* $tmp2643;
+    panda$core$String* $tmp2644;
+    int $tmp2619;
+    {
+        panda$core$Int64$init$builtin_int64(&$tmp2623, 2);
+        ITable* $tmp2624 = p_groups->$class->itable;
+        while ($tmp2624->$class != (panda$core$Class*) &panda$collections$ListView$class) {
+            $tmp2624 = $tmp2624->next;
+        }
+        $fn2626 $tmp2625 = $tmp2624->methods[0];
+        panda$core$Object* $tmp2627 = $tmp2625(p_groups, $tmp2623);
+        $tmp2622 = $tmp2627;
+        $tmp2621 = ((panda$core$String*) $tmp2622);
+        code2620 = $tmp2621;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2621));
+        panda$core$Panda$unref$panda$core$Object($tmp2622);
+        panda$core$MutableString* $tmp2631 = (panda$core$MutableString*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$MutableString$class);
+        panda$core$MutableString$init$panda$core$String($tmp2631, code2620);
+        $tmp2630 = $tmp2631;
+        $tmp2629 = $tmp2630;
+        sub2628 = $tmp2629;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2629));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2630));
+        panda$core$RegularExpression* $tmp2633 = (panda$core$RegularExpression*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$RegularExpression$class);
+        panda$core$RegularExpression$init$panda$core$String($tmp2633, &$s2634);
+        $tmp2632 = $tmp2633;
+        panda$core$MutableString$replace$panda$core$RegularExpression$panda$core$String(sub2628, $tmp2632, &$s2635);
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2632));
+        panda$core$RegularExpression* $tmp2637 = (panda$core$RegularExpression*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$RegularExpression$class);
+        panda$core$RegularExpression$init$panda$core$String($tmp2637, &$s2638);
+        $tmp2636 = $tmp2637;
+        panda$core$MutableString$replace$panda$core$RegularExpression$panda$core$String(sub2628, $tmp2636, &$s2639);
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2636));
+        (($fn2640) self->$class->vtable[18])(self, sub2628);
+        panda$core$String* $tmp2646 = panda$core$String$$ADD$panda$core$Object$R$panda$core$String(&$s2645, ((panda$core$Object*) sub2628));
+        $tmp2644 = $tmp2646;
+        panda$core$String* $tmp2648 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp2644, &$s2647);
+        $tmp2643 = $tmp2648;
+        $tmp2642 = $tmp2643;
+        $returnValue2641 = $tmp2642;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2642));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2643));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2644));
+        $tmp2619 = 0;
+        goto $l2617;
+        $l2649:;
+        return $returnValue2641;
+    }
+    $l2617:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) sub2628));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) code2620));
+    code2620 = NULL;
+    sub2628 = NULL;
+    switch ($tmp2619) {
+        case 0: goto $l2649;
+    }
+    $l2651:;
     abort();
 }
 panda$core$Object* panda$core$MutableMethod$$shim32$panda$collections$ListView$LTpanda$core$String$Q$GT$R$panda$core$Object(panda$core$MutableMethod* self, panda$collections$ListView* p_p0) {
-    panda$core$Method* methodVar2603 = NULL;
-    panda$core$Method* $tmp2604;
-    panda$core$Method* $tmp2605;
-    panda$core$Object* $tmp2607;
-    panda$core$Object* $tmp2608;
-    panda$core$Object* $returnValue2609;
-    panda$core$Object* $tmp2610;
-    panda$core$String* $tmp2611;
-    panda$core$String* $tmp2612;
-    int $tmp2602;
+    panda$core$Method* methodVar2655 = NULL;
+    panda$core$Method* $tmp2656;
+    panda$core$Method* $tmp2657;
+    panda$core$Object* $tmp2659;
+    panda$core$Object* $tmp2660;
+    panda$core$Object* $returnValue2661;
+    panda$core$Object* $tmp2662;
+    panda$core$String* $tmp2663;
+    panda$core$String* $tmp2664;
+    int $tmp2654;
     {
-        panda$core$Method* $tmp2606 = (panda$core$Method*) pandaObjectAlloc(32, (panda$core$Class*) &panda$core$Method$class);
-        panda$core$Method$init$panda$unsafe$Pointer$LTpanda$core$Int8$GT$panda$core$Immutable$Q($tmp2606, self->pointer, ((panda$core$Immutable*) NULL));
-        $tmp2605 = $tmp2606;
-        $tmp2604 = $tmp2605;
-        methodVar2603 = $tmp2604;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2604));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2605));
+        panda$core$Method* $tmp2658 = (panda$core$Method*) pandaObjectAlloc(32, (panda$core$Class*) &panda$core$Method$class);
+        panda$core$Method$init$panda$unsafe$Pointer$LTpanda$core$Int8$GT$panda$core$Immutable$Q($tmp2658, self->pointer, ((panda$core$Immutable*) NULL));
+        $tmp2657 = $tmp2658;
+        $tmp2656 = $tmp2657;
+        methodVar2655 = $tmp2656;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2656));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2657));
         {
-            $tmp2607 = ((panda$core$MutableMethod*) methodVar2603)->target;
-            $tmp2608 = self->target;
-            ((panda$core$MutableMethod*) methodVar2603)->target = $tmp2608;
-            panda$core$Panda$ref$panda$core$Object($tmp2608);
-            panda$core$Panda$unref$panda$core$Object($tmp2607);
+            $tmp2659 = ((panda$core$MutableMethod*) methodVar2655)->target;
+            $tmp2660 = self->target;
+            ((panda$core$MutableMethod*) methodVar2655)->target = $tmp2660;
+            panda$core$Panda$ref$panda$core$Object($tmp2660);
+            panda$core$Panda$unref$panda$core$Object($tmp2659);
         }
-        if (methodVar2603->target) {
-            $tmp2612 = (($fn2613) methodVar2603->pointer)(methodVar2603->target, p_p0);
+        if (methodVar2655->target) {
+            $tmp2664 = (($fn2665) methodVar2655->pointer)(methodVar2655->target, p_p0);
         } else {
-            $tmp2612 = (($fn2614) methodVar2603->pointer)(p_p0);
+            $tmp2664 = (($fn2666) methodVar2655->pointer)(p_p0);
         }
-        $tmp2611 = $tmp2612;
-        $tmp2610 = ((panda$core$Object*) $tmp2611);
-        $returnValue2609 = $tmp2610;
-        panda$core$Panda$ref$panda$core$Object($tmp2610);
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2611));
-        $tmp2602 = 0;
-        goto $l2600;
-        $l2615:;
-        return $returnValue2609;
+        $tmp2663 = $tmp2664;
+        $tmp2662 = ((panda$core$Object*) $tmp2663);
+        $returnValue2661 = $tmp2662;
+        panda$core$Panda$ref$panda$core$Object($tmp2662);
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2663));
+        $tmp2654 = 0;
+        goto $l2652;
+        $l2667:;
+        return $returnValue2661;
     }
-    $l2600:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) methodVar2603));
-    methodVar2603 = NULL;
-    switch ($tmp2602) {
-        case 0: goto $l2615;
+    $l2652:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) methodVar2655));
+    methodVar2655 = NULL;
+    switch ($tmp2654) {
+        case 0: goto $l2667;
     }
-    $l2617:;
+    $l2669:;
     abort();
 }
 void org$pandalanguage$pandac$pandadoc$Markdown$doCodeSpans$panda$core$MutableString(org$pandalanguage$pandac$pandadoc$Markdown* self, panda$core$MutableString* p_markup) {
-    panda$core$RegularExpression* $tmp2618;
-    panda$core$RegularExpression* $tmp2619 = (panda$core$RegularExpression*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$RegularExpression$class);
-    panda$core$RegularExpression$init$panda$core$String($tmp2619, &$s2620);
-    $tmp2618 = $tmp2619;
-    panda$core$MutableMethod* $tmp2621 = (panda$core$MutableMethod*) pandaObjectAlloc(32, (panda$core$Class*) &panda$core$MutableMethod$class);
-    panda$core$MutableMethod* $tmp2622 = (panda$core$MutableMethod*) pandaObjectAlloc(32, (panda$core$Class*) &panda$core$MutableMethod$class);
-    panda$core$MutableMethod$init$panda$unsafe$Pointer$LTpanda$core$Int8$GT$panda$core$Object$Q($tmp2622, (panda$core$Int8*) &org$pandalanguage$pandac$pandadoc$Markdown$$anonymous31$panda$collections$ListView$LTpanda$core$String$Q$GT$R$panda$core$String, ((panda$core$Object*) self));
-    panda$core$MutableMethod$init$panda$unsafe$Pointer$LTpanda$core$Int8$GT$panda$core$Object$Q($tmp2621, (panda$core$Int8*) &panda$core$MutableMethod$$shim32$panda$collections$ListView$LTpanda$core$String$Q$GT$R$panda$core$Object, ((panda$core$Object*) ((panda$core$Object*) $tmp2622)));
-    panda$core$MutableString$replace$panda$core$RegularExpression$$LPpanda$collections$ListView$LTpanda$core$String$Q$GT$RP$EQ$GT$LPpanda$core$Object$RP(p_markup, $tmp2618, ((panda$core$MutableMethod*) ((panda$core$Object*) $tmp2621)));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2621));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2622));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2618));
+    panda$core$RegularExpression* $tmp2670;
+    panda$core$RegularExpression* $tmp2671 = (panda$core$RegularExpression*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$RegularExpression$class);
+    panda$core$RegularExpression$init$panda$core$String($tmp2671, &$s2672);
+    $tmp2670 = $tmp2671;
+    panda$core$MutableMethod* $tmp2673 = (panda$core$MutableMethod*) pandaObjectAlloc(32, (panda$core$Class*) &panda$core$MutableMethod$class);
+    panda$core$MutableMethod* $tmp2674 = (panda$core$MutableMethod*) pandaObjectAlloc(32, (panda$core$Class*) &panda$core$MutableMethod$class);
+    panda$core$MutableMethod$init$panda$unsafe$Pointer$LTpanda$core$Int8$GT$panda$core$Object$Q($tmp2674, (panda$core$Int8*) &org$pandalanguage$pandac$pandadoc$Markdown$$anonymous31$panda$collections$ListView$LTpanda$core$String$Q$GT$R$panda$core$String, ((panda$core$Object*) self));
+    panda$core$MutableMethod$init$panda$unsafe$Pointer$LTpanda$core$Int8$GT$panda$core$Object$Q($tmp2673, (panda$core$Int8*) &panda$core$MutableMethod$$shim32$panda$collections$ListView$LTpanda$core$String$Q$GT$R$panda$core$Object, ((panda$core$Object*) ((panda$core$Object*) $tmp2674)));
+    panda$core$MutableString$replace$panda$core$RegularExpression$$LPpanda$collections$ListView$LTpanda$core$String$Q$GT$RP$EQ$GT$LPpanda$core$Object$RP(p_markup, $tmp2670, ((panda$core$MutableMethod*) ((panda$core$Object*) $tmp2673)));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2673));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2674));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2670));
 }
 void org$pandalanguage$pandac$pandadoc$Markdown$cleanup(org$pandalanguage$pandac$pandadoc$Markdown* self) {
-    int $tmp2625;
+    int $tmp2677;
     {
     }
-    $tmp2625 = -1;
-    goto $l2623;
-    $l2623:;
+    $tmp2677 = -1;
+    goto $l2675;
+    $l2675:;
     panda$core$Object$cleanup(((panda$core$Object*) self));
-    switch ($tmp2625) {
-        case -1: goto $l2626;
+    switch ($tmp2677) {
+        case -1: goto $l2678;
     }
-    $l2626:;
+    $l2678:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->source));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->errorQueue));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->parser));

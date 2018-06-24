@@ -42,6 +42,8 @@ class Stack<T> : Iterable<T> {
 
     ================================================================================================
     Pops the top value from the stack and returns it.
+
+    @see pop(T)
     ================================================================================================
     @pre(get_count() > 0)
     method pop():T {
@@ -56,11 +58,13 @@ class Stack<T> : Iterable<T> {
     useful for balanced stack operations, e.g.:
 
         stack.push(value)
-        <perform various operations which should ultimately leave the stack unmodified>
+        <code which should leave the stack unmodified>
         stack.pop(value)
 
     This will generate a safety violation if the stack was incorrectly modified in between the
     `push` and `pop`, because the `pop` will not result in the expected value.
+
+    @see pop()
     ================================================================================================
     -- FIXME doesn't work with Values, which confused the hell out of me because I subconsciously
     -- assumed I had used '=' for this comparison. This is absolutely more trouble than it's worth
