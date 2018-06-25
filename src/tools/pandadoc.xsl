@@ -166,6 +166,12 @@
                         <xsl:apply-templates select="seeAlsos"/>
                         <xsl:apply-templates select="source"/>
 
+                        <xsl:if test="count(class) > 0">
+                            <h2>Inner Classes</h2>
+                            <dl class="summary">
+                                <xsl:apply-templates select="class" mode="summary"/>
+                            </dl>
+                        </xsl:if>
                         <xsl:if test="count(field[count(annotations/annotation[text() = '@class']) > 0]) > 0">
                             <h2>Constant Summary</h2>
                             <dl class="summary">
@@ -230,6 +236,9 @@
                 <xsl:when test="../kind/text() = 'interface'">
                     <xsl:text>Interface </xsl:text>
                 </xsl:when>
+                <xsl:when test="../kind/text() = 'choice'">
+                    <xsl:text>Choice </xsl:text>
+                </xsl:when>
                 <xsl:otherwise>Class </xsl:otherwise>
             </xsl:choose>
             <xsl:apply-templates/>
@@ -244,7 +253,6 @@
         </xsl:variable>
         <xsl:if test="$package != ''">
             <strong>
-                <xsl:text>Package </xsl:text>
                 <xsl:value-of select="$package"/>
             </strong>
         </xsl:if>
@@ -253,10 +261,26 @@
                 <xsl:when test="kind/text() = 'interface'">
                     <xsl:text>Interface </xsl:text>
                 </xsl:when>
+                <xsl:when test="kind/text() = 'choice'">
+                    <xsl:text>Choice </xsl:text>
+                </xsl:when>
                 <xsl:otherwise>Class </xsl:otherwise>
             </xsl:choose>
             <xsl:value-of select="simpleName"/>
         </h1>
+    </xsl:template>
+
+    <xsl:template match="class" mode="summary">
+        <dt>
+            <a href="{type/url}">
+                <code>
+                    <xsl:apply-templates select="../simpleName"/>
+                    <xsl:text>.</xsl:text>
+                    <xsl:apply-templates select="type/simpleName"/>
+                </code>
+            </a>
+        </dt>
+        <dd><xsl:apply-templates select="doc/summary"/></dd>
     </xsl:template>
 
     <xsl:template match="ancestors/type" mode="indent">
@@ -431,8 +455,7 @@
     </xsl:template>
     
     <xsl:template match="method|function|field" mode="inherited">
-        <xsl:if test="count(preceding-sibling::*) > 0">, </xsl:if>
-        <a href="{link}"><code><xsl:value-of select="name"/></code></a>
+        <a href="{link}"><code><xsl:value-of select="name"/></code></a><br/>
     </xsl:template>
 
     <xsl:template match="summary">
@@ -614,33 +637,7 @@
     </xsl:template>
 
     <xsl:template match="type" mode="href">
-        <xsl:variable name="baseDepth">
-            <xsl:call-template name="countSubstrings">
-                <xsl:with-param name="haystack" select="/class/name"/>
-                <xsl:with-param name="needle" select="'.'"/>
-            </xsl:call-template>
-        </xsl:variable>
-        <xsl:call-template name="repeatString">
-            <xsl:with-param name="text" select="'../'"/>
-            <xsl:with-param name="count" select="$baseDepth"/>
-        </xsl:call-template>
-        <xsl:variable name="typeName">
-            <xsl:call-template name="baseName">
-                <xsl:with-param name="name">
-                    <xsl:call-template name="replaceString">
-                        <xsl:with-param name="haystack" select="name"/>
-                        <xsl:with-param name="needle" select="'?'"/>
-                        <xsl:with-param name="replacement" select="''"/>
-                    </xsl:call-template>
-                </xsl:with-param>
-            </xsl:call-template>
-        </xsl:variable>
-        <xsl:call-template name="replaceString">
-            <xsl:with-param name="haystack" select="$typeName"/>
-            <xsl:with-param name="needle" select="'.'"/>
-            <xsl:with-param name="replacement" select="'/'"/>
-        </xsl:call-template>
-        <xsl:text>.html</xsl:text>
+        <xsl:apply-templates select="url"/>
     </xsl:template>
 
     <xsl:template match="type" name="type">

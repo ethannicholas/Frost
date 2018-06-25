@@ -31,7 +31,6 @@ panda$core$String* panda$io$File$readFully$R$panda$core$String(panda$io$File* se
 void panda$io$File$write$panda$core$String(panda$io$File* self, panda$core$String* p_contents);
 void panda$io$File$delete(panda$io$File* self);
 panda$core$Bit panda$io$File$$EQ$panda$io$File$R$panda$core$Bit(panda$io$File* self, panda$io$File* p_other);
-panda$core$Bit panda$io$File$$NEQ$panda$io$File$R$panda$core$Bit(panda$io$File* self, panda$io$File* p_other);
 panda$core$Int64 panda$io$File$hash$R$panda$core$Int64(panda$io$File* self);
 panda$core$String* panda$io$File$convert$R$panda$core$String(panda$io$File* self);
 void panda$io$File$cleanup(panda$io$File* self);

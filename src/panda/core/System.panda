@@ -6,7 +6,7 @@ Provides utility methods that interface with the operating environment.
 @final
 class System {
     ================================================================================================
-    Represents a program launched by [exec].
+    Represents a program launched by [System.exec].
     ================================================================================================
     @final
     class Process {
@@ -66,7 +66,7 @@ class System {
 
     ================================================================================================
     Executes an external program with the given command line arguments. Returns the resulting
-    process, or null if the program could not be started.
+    process, or `null` if the program could not be started.
     ================================================================================================
     @class
     @external

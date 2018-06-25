@@ -2,97 +2,253 @@ package panda.io
 
 uses panda.unsafe.Pointer
 
+====================================================================================================
+A stream of binary or character data which can be written to. The various `write` methods output
+binary data, whereas `print` outputs text. This means that `out.write(65)` will write an `"A"`
+(which has numeric value 65) to the stream, while `out.print(65)` will print the two characters
+`"6"` and `"5"`.
+====================================================================================================
 @abstract
 class OutputStream {
+    choice ByteOrder {
+        LITTLE_ENDIAN
+        BIG_ENDIAN
+    }
+
+    ================================================================================================
+    Determines the endianness of the data in this stream when writing multi-byte values. Defaults to
+    `LITTLE_ENDIAN`, but may be freely changed.
+    ================================================================================================
+    var byteOrder := ByteOrder.LITTLE_ENDIAN
+
+    ================================================================================================
+    The string used to terminate lines written by the various `printLine` methods. Defaults to the
+    correct line ending sequence for the current platform.
+    ================================================================================================
+    var lineEnding := "\n" -- FIXME this will need to be changed on Windows
+
+    ================================================================================================
+    Writes a single byte.
+
+    @param value the value to write
+    ================================================================================================
     @abstract
     method write(value:UInt8)
 
+    ================================================================================================
+    Writes the two bytes comprising a `UInt16`. The byte order is controlled by the [byteOrder]
+    field.
+
+    @param value the value to write
+    ================================================================================================
+    method write(value:UInt16) {
+        if byteOrder = ByteOrder.LITTLE_ENDIAN {
+            write(value.convert()->UInt8)
+            write((value >> 8).convert()->UInt8)
+        }
+        else {
+            write((value >> 8).convert()->UInt8)
+            write(value.convert()->UInt8)        
+        }
+    }
+
+    ================================================================================================
+    Writes the four bytes comprising a `UInt32`. The byte order is controlled by the [byteOrder]
+    field.
+
+    @param value the value to write
+    ================================================================================================
+    method write(value:UInt32) {
+        if byteOrder = ByteOrder.LITTLE_ENDIAN {
+            write(value.convert()->UInt16)
+            write((value >> 16).convert()->UInt16)
+        }
+        else {
+            write((value >> 16).convert()->UInt16)
+            write(value.convert()->UInt16)
+        }
+    }
+
+    ================================================================================================
+    Writes the eight bytes comprising a `UInt64`. The byte order is controlled by the [byteOrder]
+    field.
+
+    @param value the value to write
+    ================================================================================================
+    method write(value:UInt64) {
+        if byteOrder = ByteOrder.LITTLE_ENDIAN {
+            write(value.convert()->UInt32)
+            write((value >> 32).convert()->UInt32)
+        }
+        else {
+            write((value >> 32).convert()->UInt32)
+            write(value.convert()->UInt32)
+        }
+    }
+
+    ================================================================================================
+    Writes a single byte.
+
+    @param value the value to write
+    ================================================================================================
     @final
     method write(value:Int8) {
         write(value.convert()->UInt8)
     }
 
+    ================================================================================================
+    Writes the two bytes comprising an `Int16`. The byte order is controlled by the [byteOrder]
+    field.
+
+    @param value the value to write
+    ================================================================================================
+    method write(value:Int16) {
+        write(value.convert()->UInt16)
+    }
+
+    ================================================================================================
+    Writes the four bytes comprising an `Int32`. The byte order is controlled by the [byteOrder]
+    field.
+
+    @param value the value to write
+    ================================================================================================
+    method write(value:Int32) {
+        write(value.convert()->UInt32)
+    }
+
+    ================================================================================================
+    Writes the eight bytes comprising an `Int64`. The byte order is controlled by the [byteOrder]
+    field.
+
+    @param value the value to write
+    ================================================================================================
+    method write(value:Int64) {
+        write(value.convert()->UInt64)
+    }
+
+    ================================================================================================
+    Writes a block of data to this stream.
+
+    @param ptr pointer to the data to write
+    @param count number of bytes to write
+    ================================================================================================
     method write(ptr:Pointer<UInt8>, count:Int) {
         for i in 0 .. count {
             write(ptr[i])
         }
     }
 
+    ================================================================================================
+    Writes a block of data to this stream.
+
+    @param ptr pointer to the data to write
+    @param count number of bytes to write
+    ================================================================================================
     @final
     method write(ptr:Pointer<Int8>, count:Int) {
         write(ptr->Pointer<UInt8>, count)
     }
 
+    ================================================================================================
+    Writes a block of data to this stream.
+
+    @param ptr pointer to the data to write
+    @param count number of bytes to write
+    ================================================================================================
     @final
     method write(ptr:Pointer<Char8>, count:Int) {
         write(ptr->Pointer<UInt8>, count)
     }
 
+    ================================================================================================
+    Writes a portion of an array of bytes to this stream. The write begins at index `0` and the last
+    byte written is at index `count - 1`.
+
+    @param a the array to write
+    @param count number of bytes to write
+    ================================================================================================
     @final
     method write(a:Array<UInt8>, count:Int) {
         write(a.data, count)
     }
 
+    ================================================================================================
+    Writes a portion of an array of bytes to this stream. The write begins at index `0` and the last
+    byte written is at index `count - 1`.
+
+    @param a the array to write
+    @param count number of bytes to write
+    ================================================================================================
     @final
     method write(a:Array<Int8>, count:Int) {
         write(a.data, count)
     }
 
+    ================================================================================================
+    Writes a portion of an array of bytes to this stream. The write begins at index `0` and the last
+    byte written is at index `count - 1`.
+
+    @param a the array to write
+    @param count number of bytes to write
+    ================================================================================================
     @final
     method write(a:Array<Char8>, count:Int) {
         write(a.data, count)
     }
 
-    method write(value:UInt16) {
-        write((value >> 8).convert()->UInt8)
-        write(value.convert()->UInt8)
+    ================================================================================================
+    Writes a single byte.
+
+    @param value the value to write
+    ================================================================================================
+    method write(value:Char8) {
+        write(value.value)
     }
 
-    method write(value:Int16) {
-        write(value.convert()->UInt16)
-    }
+    ================================================================================================
+    Prints a string to the stream.
 
-    method write(value:UInt32) {
-        write((value >> 16).convert()->UInt16)
-        write(value.convert()->UInt16)
-    }
-
-    method write(value:Int32) {
-        write(value.convert()->UInt32)
-    }
-
-    method write(value:UInt64) {
-        write((value >> 32).convert()->UInt32)
-        write(value.convert()->UInt32)
-    }
-
-    method write(value:Int64) {
-        write(value.convert()->UInt64)
-    }
-
-    method write(c:Char8) {
-        write(c.value)
-    }
-
-    method print(o:Object) {
-        print(o.convert())
-    }
-
+    @param s the string to write
+    ================================================================================================
     method print(s:String) {
         write(s.data, s._length)
     }
 
-    method printLine() {
-        write(Char8(10))
+    ================================================================================================
+    Prints the string represention of an object (as given by [convert()](Object.convert)) to the
+    stream.
+
+    @param o the object to write
+    ================================================================================================
+    method print(o:Object) {
+        print(o.convert())
     }
 
+    ================================================================================================
+    Prints a string to the stream., followed by a [line ending](lineEnding).
+
+    @param s the string to write
+    ================================================================================================
+    method printLine(s:String) {
+        print(s)
+        printLine()
+    }
+
+    ================================================================================================
+    Prints the string represention of an object (as given by [convert()](Object.convert)) to the
+    stream, followed by a [line ending](lineEnding).
+
+    @param o the object to write
+    ================================================================================================
     method printLine(o:Object) {
         printLine(o.convert())
     }
 
-    method printLine(s:String) {
-        print(s)
-        printLine()
+    ================================================================================================
+    Prints a [line ending](lineEnding).
+    ================================================================================================
+    method printLine() {
+        print(lineEnding)
     }
 
     ================================================================================================

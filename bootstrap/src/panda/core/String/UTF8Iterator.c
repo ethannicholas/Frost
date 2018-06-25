@@ -21,8 +21,11 @@ struct { panda$core$Class* cl; ITable* next; void* methods[10]; } panda$core$Str
 static panda$core$String $s1;
 panda$core$String$UTF8Iterator$class_type panda$core$String$UTF8Iterator$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, (ITable*) &panda$core$String$UTF8Iterator$_panda$collections$Iterator, { panda$core$Object$convert$R$panda$core$String, panda$core$String$UTF8Iterator$cleanup, panda$core$String$UTF8Iterator$get_done$R$panda$core$Bit, panda$core$String$UTF8Iterator$next$R$panda$core$Char8$shim} };
 
+typedef panda$core$Bit (*$fn9)(panda$core$String$UTF8Iterator*);
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x55\x54\x46\x38\x49\x74\x65\x72\x61\x74\x6f\x72", 30, -723788367184202580, NULL };
+static panda$core$String $s14 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x53\x74\x72\x69\x6e\x67\x2e\x70\x61\x6e\x64\x61", 12, -7878295537817775382, NULL };
+static panda$core$String $s15 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x55\x54\x46\x38\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x6e\x65\x78\x74\x28\x29\x3a\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x43\x68\x61\x72\x38", 88, 7939732105252298174, NULL };
 
 void panda$core$String$UTF8Iterator$init$panda$core$String(panda$core$String$UTF8Iterator* self, panda$core$String* p_str) {
     panda$core$Int64 $tmp3;
@@ -46,29 +49,36 @@ panda$core$Bit panda$core$String$UTF8Iterator$get_done$R$panda$core$Bit(panda$co
     return $returnValue6;
 }
 panda$core$Char8 panda$core$String$UTF8Iterator$next$R$panda$core$Char8(panda$core$String$UTF8Iterator* self) {
-    panda$core$Int64 $tmp9;
-    panda$core$Char8 $returnValue11;
-    panda$core$Int64 $tmp12;
-    panda$core$Int64$init$builtin_int64(&$tmp9, 1);
-    panda$core$Int64 $tmp10 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, $tmp9);
-    self->index = $tmp10;
-    panda$core$Int64$init$builtin_int64(&$tmp12, 1);
-    panda$core$Int64 $tmp13 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(self->index, $tmp12);
-    $returnValue11 = self->str->data[$tmp13.value];
-    return $returnValue11;
+    panda$core$Int64 $tmp16;
+    panda$core$Char8 $returnValue18;
+    panda$core$Int64 $tmp19;
+    panda$core$Bit $tmp10 = (($fn9) self->$class->vtable[2])(self);
+    panda$core$Bit $tmp11 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp10);
+    if ($tmp11.value) goto $l12; else goto $l13;
+    $l13:;
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s14, (panda$core$Int64) { 123 }, &$s15);
+    abort();
+    $l12:;
+    panda$core$Int64$init$builtin_int64(&$tmp16, 1);
+    panda$core$Int64 $tmp17 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, $tmp16);
+    self->index = $tmp17;
+    panda$core$Int64$init$builtin_int64(&$tmp19, 1);
+    panda$core$Int64 $tmp20 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(self->index, $tmp19);
+    $returnValue18 = self->str->data[$tmp20.value];
+    return $returnValue18;
 }
 void panda$core$String$UTF8Iterator$cleanup(panda$core$String$UTF8Iterator* self) {
-    int $tmp17;
+    int $tmp24;
     {
     }
-    $tmp17 = -1;
-    goto $l15;
-    $l15:;
+    $tmp24 = -1;
+    goto $l22;
+    $l22:;
     panda$core$Object$cleanup(((panda$core$Object*) self));
-    switch ($tmp17) {
-        case -1: goto $l18;
+    switch ($tmp24) {
+        case -1: goto $l25;
     }
-    $l18:;
+    $l25:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->str));
 }
 

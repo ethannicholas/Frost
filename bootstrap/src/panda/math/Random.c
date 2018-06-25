@@ -8,6 +8,7 @@
 #include "panda/core/Bit.h"
 #include "panda/core/Int32.h"
 #include "panda/core/Real32.h"
+#include "panda/core/UInt32.h"
 #include "panda/core/Real64.h"
 #include "panda/core/UInt64.h"
 
@@ -19,17 +20,18 @@ panda$math$Random$class_type panda$math$Random$class = { (panda$core$Class*) &pa
 typedef panda$core$Int64 (*$fn12)(panda$math$Random*);
 typedef panda$core$Int64 (*$fn20)(panda$math$Random*);
 typedef panda$core$Int64 (*$fn47)(panda$math$Random*);
-typedef panda$core$Int64 (*$fn89)(panda$math$Random*);
+typedef panda$core$Int32 (*$fn70)(panda$math$Random*);
+typedef panda$core$Int64 (*$fn97)(panda$math$Random*);
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x6d\x61\x74\x68\x2e\x52\x61\x6e\x64\x6f\x6d", 17, -791852923676021540, NULL };
 static panda$core$String $s31 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x52\x61\x6e\x64\x6f\x6d\x2e\x70\x61\x6e\x64\x61", 12, -4563581818467016900, NULL };
 static panda$core$String $s32 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x70\x61\x6e\x64\x61\x2e\x6d\x61\x74\x68\x2e\x52\x61\x6e\x64\x6f\x6d\x2e\x69\x6e\x74\x28\x6e\x3a\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x29\x3a\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34", 90, -6489941155474524358, NULL };
 static panda$core$String $s62 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x52\x61\x6e\x64\x6f\x6d\x2e\x70\x61\x6e\x64\x61", 12, -4563581818467016900, NULL };
 static panda$core$String $s63 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x6f\x73\x74\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x70\x61\x6e\x64\x61\x2e\x6d\x61\x74\x68\x2e\x52\x61\x6e\x64\x6f\x6d\x2e\x69\x6e\x74\x28\x6e\x3a\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x29\x3a\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34", 91, -8241417805943957811, NULL };
-static panda$core$String $s81 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x52\x61\x6e\x64\x6f\x6d\x2e\x70\x61\x6e\x64\x61", 12, -4563581818467016900, NULL };
-static panda$core$String $s82 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x6f\x73\x74\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x70\x61\x6e\x64\x61\x2e\x6d\x61\x74\x68\x2e\x52\x61\x6e\x64\x6f\x6d\x2e\x72\x65\x61\x6c\x33\x32\x28\x29\x3a\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x52\x65\x61\x6c\x33\x32", 77, 4829225525059687821, NULL };
-static panda$core$String $s108 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x52\x61\x6e\x64\x6f\x6d\x2e\x70\x61\x6e\x64\x61", 12, -4563581818467016900, NULL };
-static panda$core$String $s109 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x6f\x73\x74\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x70\x61\x6e\x64\x61\x2e\x6d\x61\x74\x68\x2e\x52\x61\x6e\x64\x6f\x6d\x2e\x72\x65\x61\x6c\x36\x34\x28\x29\x3a\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x52\x65\x61\x6c\x36\x34", 77, 219884244517965983, NULL };
+static panda$core$String $s89 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x52\x61\x6e\x64\x6f\x6d\x2e\x70\x61\x6e\x64\x61", 12, -4563581818467016900, NULL };
+static panda$core$String $s90 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x6f\x73\x74\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x70\x61\x6e\x64\x61\x2e\x6d\x61\x74\x68\x2e\x52\x61\x6e\x64\x6f\x6d\x2e\x72\x65\x61\x6c\x33\x32\x28\x29\x3a\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x52\x65\x61\x6c\x33\x32", 77, 4829225525059687821, NULL };
+static panda$core$String $s116 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x52\x61\x6e\x64\x6f\x6d\x2e\x70\x61\x6e\x64\x61", 12, -4563581818467016900, NULL };
+static panda$core$String $s117 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x6f\x73\x74\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x70\x61\x6e\x64\x61\x2e\x6d\x61\x74\x68\x2e\x52\x61\x6e\x64\x6f\x6d\x2e\x72\x65\x61\x6c\x36\x34\x28\x29\x3a\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x52\x65\x61\x6c\x36\x34", 77, 219884244517965983, NULL };
 
 panda$math$Random* panda$math$Random$default$R$panda$math$Random() {
     panda$math$Random* $returnValue2;
@@ -87,7 +89,7 @@ panda$core$Int64 panda$math$Random$int$panda$core$Int64$R$panda$core$Int64(panda
         panda$core$Bit $tmp28 = panda$core$Int64$$GE$panda$core$Int64$R$panda$core$Bit(p_n, $tmp27);
         if ($tmp28.value) goto $l29; else goto $l30;
         $l30:;
-        panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s31, (panda$core$Int64) { 46 }, &$s32);
+        panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s31, (panda$core$Int64) { 50 }, &$s32);
         abort();
         $l29:;
         panda$core$Int64$init$builtin_int64(&$tmp33, 1);
@@ -143,7 +145,7 @@ panda$core$Int64 panda$math$Random$int$panda$core$Int64$R$panda$core$Int64(panda
     panda$core$Bit $tmp59 = { $tmp54 };
     if ($tmp59.value) goto $l60; else goto $l61;
     $l61:;
-    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s62, (panda$core$Int64) { 46 }, &$s63);
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s62, (panda$core$Int64) { 50 }, &$s63);
     abort();
     $l60:;
     switch ($tmp26) {
@@ -156,83 +158,94 @@ panda$core$Int64 panda$math$Random$int$panda$core$Int64$R$panda$core$Int64(panda
 }
 panda$core$Real32 panda$math$Random$real32$R$panda$core$Real32(panda$math$Random* self) {
     panda$core$Real32 $returnValue67;
-    panda$core$Real32 $tmp68;
-    panda$core$Real32 $tmp73;
-    panda$core$Real32 $tmp76;
+    panda$core$UInt32 $tmp73;
+    panda$core$UInt32 $tmp75;
+    panda$core$Real32 $tmp81;
+    panda$core$Real32 $tmp84;
     int $tmp66;
     {
-        panda$core$Real32$init$builtin_float32(&$tmp68, 12.0);
-        $returnValue67 = $tmp68;
+        ITable* $tmp68 = self->$class->itable;
+        while ($tmp68->$class != (panda$core$Class*) &panda$math$Random$class) {
+            $tmp68 = $tmp68->next;
+        }
+        $fn70 $tmp69 = $tmp68->methods[1];
+        panda$core$Int32 $tmp71 = $tmp69(self);
+        panda$core$UInt32 $tmp72 = panda$core$Int32$convert$R$panda$core$UInt32($tmp71);
+        panda$core$UInt32$init$builtin_uint32(&$tmp73, 8);
+        panda$core$UInt32 $tmp74 = panda$core$UInt32$$SHR$panda$core$UInt32$R$panda$core$UInt32($tmp72, $tmp73);
+        panda$core$UInt32$init$builtin_uint32(&$tmp75, 16777216);
+        panda$core$Real32 $tmp76 = panda$core$UInt32$$DIV$panda$core$UInt32$R$panda$core$Real32($tmp74, $tmp75);
+        $returnValue67 = $tmp76;
         $tmp66 = 0;
         goto $l64;
-        $l69:;
+        $l77:;
         return $returnValue67;
     }
     $l64:;
-    panda$core$Real32$init$builtin_float32(&$tmp73, 0.0);
-    panda$core$Bit $tmp74 = panda$core$Real32$$GE$panda$core$Real32$R$panda$core$Bit($returnValue67, $tmp73);
-    bool $tmp72 = $tmp74.value;
-    if (!$tmp72) goto $l75;
-    panda$core$Real32$init$builtin_float32(&$tmp76, 1.0);
-    panda$core$Bit $tmp77 = panda$core$Real32$$LT$panda$core$Real32$R$panda$core$Bit($returnValue67, $tmp76);
-    $tmp72 = $tmp77.value;
-    $l75:;
-    panda$core$Bit $tmp78 = { $tmp72 };
-    if ($tmp78.value) goto $l79; else goto $l80;
-    $l80:;
-    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s81, (panda$core$Int64) { 66 }, &$s82);
+    panda$core$Real32$init$builtin_float32(&$tmp81, 0.0);
+    panda$core$Bit $tmp82 = panda$core$Real32$$GE$panda$core$Real32$R$panda$core$Bit($returnValue67, $tmp81);
+    bool $tmp80 = $tmp82.value;
+    if (!$tmp80) goto $l83;
+    panda$core$Real32$init$builtin_float32(&$tmp84, 1.0);
+    panda$core$Bit $tmp85 = panda$core$Real32$$LT$panda$core$Real32$R$panda$core$Bit($returnValue67, $tmp84);
+    $tmp80 = $tmp85.value;
+    $l83:;
+    panda$core$Bit $tmp86 = { $tmp80 };
+    if ($tmp86.value) goto $l87; else goto $l88;
+    $l88:;
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s89, (panda$core$Int64) { 70 }, &$s90);
     abort();
-    $l79:;
+    $l87:;
     switch ($tmp66) {
-        case 0: goto $l69;
+        case 0: goto $l77;
     }
-    $l71:;
+    $l79:;
     abort();
 }
 panda$core$Real64 panda$math$Random$real64$R$panda$core$Real64(panda$math$Random* self) {
-    panda$core$Real64 $returnValue86;
-    panda$core$UInt64 $tmp92;
-    panda$core$UInt64 $tmp94;
-    panda$core$Real64 $tmp100;
-    panda$core$Real64 $tmp103;
-    int $tmp85;
+    panda$core$Real64 $returnValue94;
+    panda$core$UInt64 $tmp100;
+    panda$core$UInt64 $tmp102;
+    panda$core$Real64 $tmp108;
+    panda$core$Real64 $tmp111;
+    int $tmp93;
     {
-        ITable* $tmp87 = self->$class->itable;
-        while ($tmp87->$class != (panda$core$Class*) &panda$math$Random$class) {
-            $tmp87 = $tmp87->next;
+        ITable* $tmp95 = self->$class->itable;
+        while ($tmp95->$class != (panda$core$Class*) &panda$math$Random$class) {
+            $tmp95 = $tmp95->next;
         }
-        $fn89 $tmp88 = $tmp87->methods[2];
-        panda$core$Int64 $tmp90 = $tmp88(self);
-        panda$core$UInt64 $tmp91 = panda$core$Int64$convert$R$panda$core$UInt64($tmp90);
-        panda$core$UInt64$init$builtin_uint64(&$tmp92, 11);
-        panda$core$UInt64 $tmp93 = panda$core$UInt64$$SHR$panda$core$UInt64$R$panda$core$UInt64($tmp91, $tmp92);
-        panda$core$UInt64$init$builtin_uint64(&$tmp94, 9007199254740992);
-        panda$core$Real64 $tmp95 = panda$core$UInt64$$DIV$panda$core$UInt64$R$panda$core$Real64($tmp93, $tmp94);
-        $returnValue86 = $tmp95;
-        $tmp85 = 0;
-        goto $l83;
-        $l96:;
-        return $returnValue86;
+        $fn97 $tmp96 = $tmp95->methods[2];
+        panda$core$Int64 $tmp98 = $tmp96(self);
+        panda$core$UInt64 $tmp99 = panda$core$Int64$convert$R$panda$core$UInt64($tmp98);
+        panda$core$UInt64$init$builtin_uint64(&$tmp100, 11);
+        panda$core$UInt64 $tmp101 = panda$core$UInt64$$SHR$panda$core$UInt64$R$panda$core$UInt64($tmp99, $tmp100);
+        panda$core$UInt64$init$builtin_uint64(&$tmp102, 9007199254740992);
+        panda$core$Real64 $tmp103 = panda$core$UInt64$$DIV$panda$core$UInt64$R$panda$core$Real64($tmp101, $tmp102);
+        $returnValue94 = $tmp103;
+        $tmp93 = 0;
+        goto $l91;
+        $l104:;
+        return $returnValue94;
     }
-    $l83:;
-    panda$core$Real64$init$builtin_float64(&$tmp100, 0.0);
-    panda$core$Bit $tmp101 = panda$core$Real64$$GE$panda$core$Real64$R$panda$core$Bit($returnValue86, $tmp100);
-    bool $tmp99 = $tmp101.value;
-    if (!$tmp99) goto $l102;
-    panda$core$Real64$init$builtin_float64(&$tmp103, 1.0);
-    panda$core$Bit $tmp104 = panda$core$Real64$$LT$panda$core$Real64$R$panda$core$Bit($returnValue86, $tmp103);
-    $tmp99 = $tmp104.value;
-    $l102:;
-    panda$core$Bit $tmp105 = { $tmp99 };
-    if ($tmp105.value) goto $l106; else goto $l107;
-    $l107:;
-    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s108, (panda$core$Int64) { 76 }, &$s109);
+    $l91:;
+    panda$core$Real64$init$builtin_float64(&$tmp108, 0.0);
+    panda$core$Bit $tmp109 = panda$core$Real64$$GE$panda$core$Real64$R$panda$core$Bit($returnValue94, $tmp108);
+    bool $tmp107 = $tmp109.value;
+    if (!$tmp107) goto $l110;
+    panda$core$Real64$init$builtin_float64(&$tmp111, 1.0);
+    panda$core$Bit $tmp112 = panda$core$Real64$$LT$panda$core$Real64$R$panda$core$Bit($returnValue94, $tmp111);
+    $tmp107 = $tmp112.value;
+    $l110:;
+    panda$core$Bit $tmp113 = { $tmp107 };
+    if ($tmp113.value) goto $l114; else goto $l115;
+    $l115:;
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s116, (panda$core$Int64) { 80 }, &$s117);
     abort();
-    $l106:;
-    switch ($tmp85) {
-        case 0: goto $l96;
+    $l114:;
+    switch ($tmp93) {
+        case 0: goto $l104;
     }
-    $l98:;
+    $l106:;
     abort();
 }
 

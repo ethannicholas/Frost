@@ -77,37 +77,6 @@ class Array<T> : List<T> {
         data[index] := value
     }
 
-    @pre(range.min <= range.max)
-    method []:=(range:Range<Int>, list:ListView<T>) {
-        -- FIXME performance, doing this the slow and stupid way for now
-        var max := range.max
-        if !range.inclusive {
-            max -= 1
-        }
-        for i in max ... range.min by -1 {
-            removeIndex(i)
-        }
-        var index := range.min
-        for v in list {
-            insert(index, v)
-            index += 1
-        }
-    }
-
-    method []:=(range:Range<Int?>, list:ListView<T>) {
-        var min := range.min
-        if min = null {
-            min := 0
-        }
-
-        var max := range.max
-        if max = null {
-            max := get_count()
-        }
-
-        self[Range<Int>(min, max, range.inclusive)] := list
-    }
-
     @override
     method insert(index:Int, value:T) {
         ensureCapacity(count + 1)

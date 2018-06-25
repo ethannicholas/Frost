@@ -15,7 +15,7 @@ class IndentedOutputStream : OutputStream {
     var level := 0 -- FIXME make these properties and store the indentation string
 
     ================================================================================================
-    The number of spaces represented by each increment of `level`.
+    The number of spaces represented by each increment of `level`. Defaults to `4`.
     ================================================================================================
     var indentSize := 4
 
@@ -35,6 +35,7 @@ class IndentedOutputStream : OutputStream {
     ================================================================================================
     init(out:OutputStream) {
         self.out := out
+        super.init()
     }
 
     @override

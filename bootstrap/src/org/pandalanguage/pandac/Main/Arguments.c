@@ -132,7 +132,7 @@ panda$core$String* org$pandalanguage$pandac$Main$Arguments$next$panda$core$Strin
         $tmp41 = $tmp57;
         panda$core$String* $tmp58 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp35, $tmp41);
         $tmp34 = $tmp58;
-        (($fn59) $tmp32->$class->vtable[21])($tmp32, $tmp34);
+        (($fn59) $tmp32->$class->vtable[19])($tmp32, $tmp34);
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp34));
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp41));
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp42));

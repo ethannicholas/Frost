@@ -1,52 +1,87 @@
 package panda.io
 
+====================================================================================================
+Provides access to the standard input, output, and error streams.
+====================================================================================================
 @final
 class Console {
     @private
     init() {
     }
 
+    ================================================================================================
+    Returns the standard input stream.
+    ================================================================================================
     @class
     @external
     function inputStream():InputStream
 
+    ================================================================================================
+    Returns the standard output stream.
+    ================================================================================================
     @class
     @external
     function outputStream():OutputStream
 
+    ================================================================================================
+    Returns the standard error stream.
+    ================================================================================================
     @class
     @external
     function errorStream():OutputStream
 
+    ================================================================================================
+    Prints a string to the standard output stream.
+    ================================================================================================
     @class
     @external
     method print(s:String)
 
+    ================================================================================================
+    Prints a string followed by a newline to the standard output stream.
+    ================================================================================================
     @class
     method printLine(s:String) {
         print(s)
         printLine()
     }
 
+    ================================================================================================
+    Prints the string represention of an object to the standard output stream.
+    ================================================================================================
     @class
     method print(o:Object) {
         print(o.convert())
     }
 
+    ================================================================================================
+    Prints the string represention of an object followed by a newline to the standard output stream.
+    ================================================================================================
     @class
     method printLine(o:Object) {
         printLine(o.convert())
     }
 
+    ================================================================================================
+    Prints a newline to the standard output stream.
+    ================================================================================================
     @class
     method printLine() {
         print("\n")
     }
 
+    ================================================================================================
+    Reads a single byte from the standard input stream. Returns `null` if the end of the stream has
+    been reached.
+    ================================================================================================
     @class
     @external
     method read():Char8?
 
+    ================================================================================================
+    Reads a line of text from the standard input stream. Returns `null` if the end of the stream has
+    been reached.
+    ================================================================================================
     @class
     method readLine():String? {
         def result := MutableString()

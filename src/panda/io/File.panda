@@ -1,14 +1,32 @@
 package panda.io
 
+====================================================================================================
+Represents a file path, providing methods to query, read, and write files. A `File` object itself is
+merely the path to the file, not the actual physical file on disk, so creating a `File` object does
+not in and of itself cause any interaction with the filesystem.
+
+Paths are always assumed to use `"/"` as a file separator regardless of operating system.
+====================================================================================================
 @final
 class File : Immutable, Key<File> {
-    @private
+    ================================================================================================
+    The path represented by this `File`.
+    ================================================================================================
     def path:String
 
     init(path:String) {
         self.path := path
     }
 
+    ================================================================================================
+    Resolves a path relative to this `File`. If the path begins with `"/"`, it is absolute and
+    returned as-is. Otherwise this `File` is interpreted as a directory containing the relative
+    path, so for instance `File("/tmp/output").relative("data/dump.xml")` results in the path
+    `"/tmp/output/data/dump.xml"`.
+
+    @param path the relative or absolute path
+    @returns the final path
+    ================================================================================================
     function resolve(path:String):File {
         if path.startsWith("/") {
             return File(path)
@@ -16,6 +34,12 @@ class File : Immutable, Key<File> {
         return File(self.path + "/" + path)
     }
 
+    ================================================================================================
+    Returns an iterator which reads from the file line-by-line. Either `"\r\n"` or `"\n"` is
+    accepted as a line ending, and the line endings are not part of the returned strings.
+
+    @returns the contents of the file line-by-line
+    ================================================================================================
     function lines():Iterator<String> {
         return openInputStream().lines()
     }
@@ -34,7 +58,7 @@ class File : Immutable, Key<File> {
     }
 
     ================================================================================================
-    Returns the directory containing this file, or `null` if the file does not have a parent.
+    Returns the directory containing this file, or `null` if this is the root directory.
 
     @returns the path to the file
     ================================================================================================
@@ -54,6 +78,12 @@ class File : Immutable, Key<File> {
         }
     }
 
+    ================================================================================================
+    Returns the name (not including directory) of this file. For instance,
+    `File("/tmp/data/log.txt").name()` returns `"log.txt"`.
+
+    @returns the name of this file
+    ================================================================================================
     function name():String {
         def index := path.lastIndexOf("/")
         if index != null {
@@ -68,6 +98,8 @@ class File : Immutable, Key<File> {
     Returns the name of this file without its extension. The file's extension is considered to start
     at the last period (`'.'`) it contains, so `File("/tmp/foo.bar.baz").simpleName()` returns the
     path `"foo.bar"`. If the filename does not contain a period, this call is equivalen to `name()`.
+
+    @returns the extensionless name of this file
     ================================================================================================
     function simpleName():String {
         def result := name()
@@ -89,6 +121,9 @@ class File : Immutable, Key<File> {
         File("/tmp/foo.gif").changeExtension(".png") => /tmp/foo.png
         File("/tmp/foo").changeExtension(".png") => /tmp/foo.png
         File("/tmp/foo.gif").changeExtension("") => /tmp/foo
+
+    @param ext the new extension
+    @returns the path with a new extension
     ================================================================================================
     function changeExtension(ext:String):File {
         return parent().resolve(simpleName() + ext)
@@ -102,9 +137,19 @@ class File : Immutable, Key<File> {
     @external
     method exists():Bit
 
+    ================================================================================================
+    Returns `true` if this path represents a directory.
+
+    @returns `true` if this is a directory
+    ================================================================================================
     @external
     method isDirectory():Bit
 
+    ================================================================================================
+    Returns a list of files contained by this directory.
+
+    @returns the contents of the directory
+    ================================================================================================
     @external
     method list():ListView<File>
 
@@ -127,19 +172,48 @@ class File : Immutable, Key<File> {
         createDirectory()
     }
 
+    ================================================================================================
+    Returns an `InputStream` for reading this file.
+
+    @returns an `InputStream`
+    ================================================================================================
     @external
     method openInputStream():InputStream
 
+    ================================================================================================
+    Destroys any existing contents of this file and returns an `OutputStream` for writing it. If the
+    file does not already exist, it is created.
+
+    @returns an `OutputStream`
+    ================================================================================================
     @external
     method openOutputStream():OutputStream
 
+    ================================================================================================
+    Returns an `OutputStream` for writing to the end of this file. If the file does not already
+    exist, it is created.
+
+    @returns an `OutputStream`
+    ================================================================================================
     @external
     method openForAppend():OutputStream
 
+    ================================================================================================
+    Reads the entire contents of the file into memory as a `String` and returns it. Naturally, you
+    should be careful to only call `readFully()` for files which comfortably fit into memory.
+
+    @returns the contents of the file
+    ================================================================================================
     method readFully():String {
         return openInputStream().readFully()
     }
 
+    ================================================================================================
+    Writes a string to this path. If the file already exists, its contents are replaced. If it does
+    not exist, it is created.
+
+    @param contents the data to write
+    ================================================================================================
     method write(contents:String) {
         openOutputStream().print(contents)
     }
@@ -162,11 +236,6 @@ class File : Immutable, Key<File> {
     @override
     function =(other:File):Bit {
         return path = other.path
-    }
-
-    @override
-    function !=(other:File):Bit {
-        return path != other.path
     }
 
     @override

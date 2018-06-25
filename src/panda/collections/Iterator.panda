@@ -1,5 +1,8 @@
 package panda.collections
 
+====================================================================================================
+Returns a collection of objects one at a time. `Iterator`s are valid `for` loop targets.
+====================================================================================================
 interface Iterator<T> {
     @private
     class FilterIterator<T> : Iterator<T> {
@@ -111,6 +114,10 @@ interface Iterator<T> {
 
     function get_done():Bit
 
+    ================================================================================================
+    Returns the next element from the iterator.
+    ================================================================================================
+    @pre(!get_done())
     method next():T
 
     ================================================================================================
@@ -148,8 +155,7 @@ interface Iterator<T> {
     lines of a file.
 
     The range iterator will never read past the end of the base iterator. If the base iterator does
-    not produce enough elements to finish (or even begin) the range, iteration will simply end at
-    that point.
+    not produce enough elements to finish the range, iteration will simply end at that point.
     ================================================================================================
     @pre(range.min = null | range.min >= 0 & range.max = null | range.min >= 0)
     function [](range:Range<Int?>):Iterator<T> {
@@ -200,6 +206,30 @@ interface Iterator<T> {
         }
     }
 
+    ================================================================================================
+    Successively applies a binary function to 'fold' the elements returned by the iterator down to a
+    single value. For instance, if we have an `Iterator<Int64>` and fold it using the binary
+    function [Int64.+(Int64)], as in:
+
+        iter.fold(Int.+)
+
+    this would add the first and second elements returned by the iterator together, and
+    then add the sum of the first to elements to the third, and so forth until all of the elements
+    had been added together.
+
+    Similarly, we could fold using [Int64.max(Int64)] to find the biggest number in returned by the
+    iterator, [Int64.*(Int64)] to get the product of all of the numbers returned by the iterator,
+    etc.
+
+    If the iterator returns only a single element, the result of `fold` is this single element and
+    the function `f` is never called. This variant of `fold` may not be called on an iterator with
+    no remaining elements because the result would be undefined. After calling `fold`, there will be
+    no more elements remaining.
+
+    @param f a binary function to combine elements of the iterator
+    @returns the result of combining all elements from the iterator
+    @see fold((T, T)=>(T), T)
+    ================================================================================================
     @pre(!get_done())
     @post(get_done())
     method fold(f:(T, T)=>(T)):T {
@@ -210,6 +240,17 @@ interface Iterator<T> {
         return result
     }
 
+    ================================================================================================
+    As [fold((T, T)=>(T))], but additionally takes a starting value for the fold operation. The
+    starting value is folded into the first element, the result is then folded into the second
+    element, etc. This allows `fold` to be well-defined even on an empty iterator: folding an empty
+    iterator simply returns the start value.
+
+    @param f a binary function to combine elements of the iterator
+    @param start the starting value for the fold
+    @returns the result of combining all elements from the iterator
+    @see fold((T, T)=>(T))
+    ================================================================================================
     @post(get_done())
     method fold(f:(T, T)=>(T), start:T):T {
         var result := start

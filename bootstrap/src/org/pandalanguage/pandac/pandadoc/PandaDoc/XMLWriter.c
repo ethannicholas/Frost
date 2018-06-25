@@ -45,7 +45,7 @@ void org$pandalanguage$pandac$pandadoc$PandaDoc$XMLWriter$init$panda$io$OutputSt
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp3));
     {
         $tmp5 = self->out;
-        panda$io$IndentedOutputStream* $tmp8 = (panda$io$IndentedOutputStream*) pandaObjectAlloc(56, (panda$core$Class*) &panda$io$IndentedOutputStream$class);
+        panda$io$IndentedOutputStream* $tmp8 = (panda$io$IndentedOutputStream*) pandaObjectAlloc(72, (panda$core$Class*) &panda$io$IndentedOutputStream$class);
         panda$io$IndentedOutputStream$init$panda$io$OutputStream($tmp8, p_out);
         $tmp7 = $tmp8;
         $tmp6 = $tmp7;
@@ -63,7 +63,7 @@ void org$pandalanguage$pandac$pandadoc$PandaDoc$XMLWriter$open$panda$core$String
     $tmp10 = $tmp12;
     panda$core$String* $tmp14 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp10, &$s13);
     $tmp9 = $tmp14;
-    (($fn15) ((panda$io$OutputStream*) self->out)->$class->vtable[21])(((panda$io$OutputStream*) self->out), $tmp9);
+    (($fn15) ((panda$io$OutputStream*) self->out)->$class->vtable[19])(((panda$io$OutputStream*) self->out), $tmp9);
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp9));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp10));
     panda$core$Int64$init$builtin_int64(&$tmp16, 1);
@@ -82,7 +82,7 @@ void org$pandalanguage$pandac$pandadoc$PandaDoc$XMLWriter$close$panda$core$Strin
     $tmp21 = $tmp23;
     panda$core$String* $tmp25 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp21, &$s24);
     $tmp20 = $tmp25;
-    (($fn26) ((panda$io$OutputStream*) self->out)->$class->vtable[21])(((panda$io$OutputStream*) self->out), $tmp20);
+    (($fn26) ((panda$io$OutputStream*) self->out)->$class->vtable[19])(((panda$io$OutputStream*) self->out), $tmp20);
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp20));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp21));
     panda$collections$Stack$pop$panda$collections$Stack$T(self->stack, ((panda$core$Object*) p_tag));
@@ -113,7 +113,7 @@ void org$pandalanguage$pandac$pandadoc$PandaDoc$XMLWriter$write$panda$core$Strin
     $tmp34 = $tmp46;
     panda$core$String* $tmp48 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp34, &$s47);
     $tmp33 = $tmp48;
-    (($fn49) ((panda$io$OutputStream*) self->out)->$class->vtable[21])(((panda$io$OutputStream*) self->out), $tmp33);
+    (($fn49) ((panda$io$OutputStream*) self->out)->$class->vtable[19])(((panda$io$OutputStream*) self->out), $tmp33);
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp33));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp34));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp35));

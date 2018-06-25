@@ -24,6 +24,8 @@ panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$pandac$parser$Tok
 
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x53\x70\x65\x63\x69\x61\x6c\x69\x7a\x65\x64\x41\x72\x72\x61\x79\x49\x74\x65\x72\x61\x74\x6f\x72\x3c\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x70\x61\x72\x73\x65\x72\x2e\x54\x6f\x6b\x65\x6e\x3e", 81, -1091975073017356571, NULL };
+static panda$core$String $s13 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x53\x70\x65\x63\x69\x61\x6c\x69\x7a\x65\x64\x41\x72\x72\x61\x79\x2e\x70\x61\x6e\x64\x61", 22, -8814985354570301085, NULL };
+static panda$core$String $s14 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x70\x61\x6e\x64\x61\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x53\x70\x65\x63\x69\x61\x6c\x69\x7a\x65\x64\x41\x72\x72\x61\x79\x49\x74\x65\x72\x61\x74\x6f\x72\x3c\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x70\x61\x72\x73\x65\x72\x2e\x54\x6f\x6b\x65\x6e\x3e\x2e\x6e\x65\x78\x74\x28\x29\x3a\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x70\x61\x72\x73\x65\x72\x2e\x54\x6f\x6b\x65\x6e", 160, 281117904936359041, NULL };
 
 void panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$pandac$parser$Token$GT$init$panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT(panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$pandac$parser$Token$GT* self, panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT* p_array) {
     panda$core$Int64 $tmp3;
@@ -47,30 +49,37 @@ panda$core$Bit panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$pa
     return $returnValue6;
 }
 org$pandalanguage$pandac$parser$Token panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$pandac$parser$Token$GT$next$R$org$pandalanguage$pandac$parser$Token(panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$pandac$parser$Token$GT* self) {
-    panda$core$Int64 $tmp9;
-    org$pandalanguage$pandac$parser$Token $returnValue11;
-    panda$core$Int64 $tmp12;
-    panda$core$Int64$init$builtin_int64(&$tmp9, 1);
-    panda$core$Int64 $tmp10 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, $tmp9);
-    self->index = $tmp10;
-    panda$core$Int64$init$builtin_int64(&$tmp12, 1);
-    panda$core$Int64 $tmp13 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(self->index, $tmp12);
-    org$pandalanguage$pandac$parser$Token $tmp14 = panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$$IDX$panda$core$Int64$R$org$pandalanguage$pandac$parser$Token(self->array, $tmp13);
-    $returnValue11 = $tmp14;
-    return $returnValue11;
+    panda$core$Int64 $tmp15;
+    org$pandalanguage$pandac$parser$Token $returnValue17;
+    panda$core$Int64 $tmp18;
+    panda$core$Bit $tmp9 = panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$pandac$parser$Token$GT$get_done$R$panda$core$Bit(self);
+    panda$core$Bit $tmp10 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp9);
+    if ($tmp10.value) goto $l11; else goto $l12;
+    $l12:;
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s13, (panda$core$Int64) { 23 }, &$s14);
+    abort();
+    $l11:;
+    panda$core$Int64$init$builtin_int64(&$tmp15, 1);
+    panda$core$Int64 $tmp16 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, $tmp15);
+    self->index = $tmp16;
+    panda$core$Int64$init$builtin_int64(&$tmp18, 1);
+    panda$core$Int64 $tmp19 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(self->index, $tmp18);
+    org$pandalanguage$pandac$parser$Token $tmp20 = panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$$IDX$panda$core$Int64$R$org$pandalanguage$pandac$parser$Token(self->array, $tmp19);
+    $returnValue17 = $tmp20;
+    return $returnValue17;
 }
 void panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$pandac$parser$Token$GT$cleanup(panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$pandac$parser$Token$GT* self) {
-    int $tmp18;
+    int $tmp24;
     {
     }
-    $tmp18 = -1;
-    goto $l16;
-    $l16:;
+    $tmp24 = -1;
+    goto $l22;
+    $l22:;
     panda$core$Object$cleanup(((panda$core$Object*) self));
-    switch ($tmp18) {
-        case -1: goto $l19;
+    switch ($tmp24) {
+        case -1: goto $l25;
     }
-    $l19:;
+    $l25:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->array));
 }
 

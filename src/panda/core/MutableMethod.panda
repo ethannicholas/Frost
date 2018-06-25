@@ -18,7 +18,7 @@ object `text`. On the other hand,
 does *not* result in a mutable method reference. Even though the method itself comes from a mutable
 class, the reference does not capture anything and so does not itself carry any mutable state.
 ====================================================================================================
-@private
+@package
 @final
 class MutableMethod {
     @private

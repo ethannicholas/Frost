@@ -14,8 +14,21 @@ class PLex {
         out.printLine("-***********************************************************************-")
     }
 
+    method test1() {
+        File("/tmp/test1").openOutputStream().printLine("Hello, Test1!")
+    }
+
+    method test2() {
+        def out := IndentedOutputStream(File("/tmp/test2").openOutputStream())
+        out.printLine("Hello, Test2!")
+        out.level += 1
+        out.printLine("Goodbye, Test2!")
+    }
+
     method process(inputPath:File, tokenName:String, tokenPath:File, lexerName:String,
             lexerPath:File, positionName:String) {
+        test1()
+        test2()
         def input := inputPath.openInputStream()
         def token := IndentedOutputStream(tokenPath.openOutputStream())
         def nfa := NFA()

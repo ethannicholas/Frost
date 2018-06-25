@@ -9,7 +9,6 @@ objects. The syntax for init methods is:
             <statements>
         }
     }
-)
 
 `init` parameters are defined just like other method parameters, but unlike normal methods,
 `init` methods do not have a name or return type. `init` methods are implicitly invoked when
@@ -24,7 +23,6 @@ creating new objects. For instance, if we define a `Point` class as follows:
             self.y := y
         }
     }
-)
 
 we can create a new `Point` as follows:
 
@@ -41,7 +39,6 @@ init*. The default init looks like:
 
     init() {
     }
-)
 
 In other words, it is public, takes no parameters and does nothing. Defining any other `init`
 methods will suppress the default `init`. You may wish to create non-instantiable objects by
@@ -51,9 +48,7 @@ defining:
         @private
         init() {
         }
-    --END
     }
-)
 
 Assuming this is the only `init` method, no one outside of this source code file can create an
 instance of the class.

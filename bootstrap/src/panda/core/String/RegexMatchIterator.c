@@ -20,8 +20,11 @@ struct { panda$core$Class* cl; ITable* next; void* methods[10]; } panda$core$Str
 static panda$core$String $s1;
 panda$core$String$RegexMatchIterator$class_type panda$core$String$RegexMatchIterator$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, (ITable*) &panda$core$String$RegexMatchIterator$_panda$collections$Iterator, { panda$core$Object$convert$R$panda$core$String, panda$core$String$RegexMatchIterator$cleanup, panda$core$String$RegexMatchIterator$get_done$R$panda$core$Bit, panda$core$String$RegexMatchIterator$next$R$panda$core$String$Match$shim} };
 
+typedef panda$core$Bit (*$fn12)(panda$core$String$RegexMatchIterator*);
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x52\x65\x67\x65\x78\x4d\x61\x74\x63\x68\x49\x74\x65\x72\x61\x74\x6f\x72", 36, 9169160126284605533, NULL };
+static panda$core$String $s17 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x53\x74\x72\x69\x6e\x67\x2e\x70\x61\x6e\x64\x61", 12, -7878295537817775382, NULL };
+static panda$core$String $s18 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x52\x65\x67\x65\x78\x4d\x61\x74\x63\x68\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x6e\x65\x78\x74\x28\x29\x3a\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x4d\x61\x74\x63\x68", 99, 3959721154300098506, NULL };
 
 void panda$core$String$RegexMatchIterator$init$panda$core$String$panda$core$RegularExpression$panda$core$Bit(panda$core$String$RegexMatchIterator* self, panda$core$String* p_haystack, panda$core$RegularExpression* p_needle, panda$core$Bit p_allowOveraps) {
     panda$core$String* $tmp2;
@@ -59,68 +62,75 @@ panda$core$Bit panda$core$String$RegexMatchIterator$get_done$R$panda$core$Bit(pa
     return $returnValue9;
 }
 panda$core$String$Match* panda$core$String$RegexMatchIterator$next$R$panda$core$String$Match(panda$core$String$RegexMatchIterator* self) {
-    panda$core$String$Match* result15 = NULL;
-    panda$core$String$Match* $tmp16;
-    panda$core$String$Match* $tmp17;
-    panda$core$String$Index start19;
-    panda$core$String$Index $tmp20;
-    panda$core$String$Index $tmp22;
-    panda$core$String$Match* $returnValue24;
-    panda$core$String$Match* $tmp25;
-    int $tmp14;
+    panda$core$String$Match* result22 = NULL;
+    panda$core$String$Match* $tmp23;
+    panda$core$String$Match* $tmp24;
+    panda$core$String$Index start26;
+    panda$core$String$Index $tmp27;
+    panda$core$String$Index $tmp29;
+    panda$core$String$Match* $returnValue31;
+    panda$core$String$Match* $tmp32;
+    panda$core$Bit $tmp13 = (($fn12) self->$class->vtable[2])(self);
+    panda$core$Bit $tmp14 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp13);
+    if ($tmp14.value) goto $l15; else goto $l16;
+    $l16:;
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s17, (panda$core$Int64) { 307 }, &$s18);
+    abort();
+    $l15:;
+    int $tmp21;
     {
-        panda$core$String$Match* $tmp18 = (panda$core$String$Match*) pandaObjectAlloc(40, (panda$core$Class*) &panda$core$String$Match$class);
-        panda$core$String$Match$init$panda$core$Matcher($tmp18, self->matcher);
-        $tmp17 = $tmp18;
-        $tmp16 = $tmp17;
-        result15 = $tmp16;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp16));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp17));
-        memset(&start19, 0, sizeof(start19));
+        panda$core$String$Match* $tmp25 = (panda$core$String$Match*) pandaObjectAlloc(40, (panda$core$Class*) &panda$core$String$Match$class);
+        panda$core$String$Match$init$panda$core$Matcher($tmp25, self->matcher);
+        $tmp24 = $tmp25;
+        $tmp23 = $tmp24;
+        result22 = $tmp23;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp23));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp24));
+        memset(&start26, 0, sizeof(start26));
         if (self->allowOverlaps.value) {
         {
-            panda$core$Matcher$get_start$R$panda$core$String$Index(&$tmp20, self->matcher);
-            panda$core$String$Index $tmp21 = panda$core$String$next$panda$core$String$Index$R$panda$core$String$Index(self->haystack, $tmp20);
-            start19 = $tmp21;
+            panda$core$Matcher$get_start$R$panda$core$String$Index(&$tmp27, self->matcher);
+            panda$core$String$Index $tmp28 = panda$core$String$next$panda$core$String$Index$R$panda$core$String$Index(self->haystack, $tmp27);
+            start26 = $tmp28;
         }
         }
         else {
         {
-            panda$core$Matcher$get_end$R$panda$core$String$Index(&$tmp22, self->matcher);
-            start19 = $tmp22;
+            panda$core$Matcher$get_end$R$panda$core$String$Index(&$tmp29, self->matcher);
+            start26 = $tmp29;
         }
         }
-        panda$core$Bit $tmp23 = panda$core$Matcher$find$panda$core$String$Index$R$panda$core$Bit(self->matcher, start19);
-        self->found = $tmp23;
-        $tmp25 = result15;
-        $returnValue24 = $tmp25;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp25));
-        $tmp14 = 0;
-        goto $l12;
-        $l26:;
-        return $returnValue24;
+        panda$core$Bit $tmp30 = panda$core$Matcher$find$panda$core$String$Index$R$panda$core$Bit(self->matcher, start26);
+        self->found = $tmp30;
+        $tmp32 = result22;
+        $returnValue31 = $tmp32;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp32));
+        $tmp21 = 0;
+        goto $l19;
+        $l33:;
+        return $returnValue31;
     }
-    $l12:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result15));
-    result15 = NULL;
-    switch ($tmp14) {
-        case 0: goto $l26;
+    $l19:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result22));
+    result22 = NULL;
+    switch ($tmp21) {
+        case 0: goto $l33;
     }
-    $l28:;
+    $l35:;
     abort();
 }
 void panda$core$String$RegexMatchIterator$cleanup(panda$core$String$RegexMatchIterator* self) {
-    int $tmp31;
+    int $tmp38;
     {
     }
-    $tmp31 = -1;
-    goto $l29;
-    $l29:;
+    $tmp38 = -1;
+    goto $l36;
+    $l36:;
     panda$core$Object$cleanup(((panda$core$Object*) self));
-    switch ($tmp31) {
-        case -1: goto $l32;
+    switch ($tmp38) {
+        case -1: goto $l39;
     }
-    $l32:;
+    $l39:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->matcher));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->haystack));
 }

@@ -100,6 +100,7 @@ typedef struct File {
 typedef struct FileInputStream {
     Class* cl;
     int32_t refcnt;
+    int64_t byteOrder;
     FILE* file;
     Bit closeOnCleanup;
 } FileInputStream;
@@ -109,6 +110,8 @@ extern Class panda$io$FileInputStream$class;
 typedef struct FileOutputStream {
     Class* cl;
     int32_t refcnt;
+    int64_t byteOrder;
+    String* lineEnding;
     FILE* file;
     Bit closeOnCleanup;
 } FileOutputStream;
@@ -188,6 +191,10 @@ void panda$core$Panda$countDeallocation$panda$core$Class(Object*, Class*);
 void panda$core$Panda$countTrace$panda$core$String(Object*, String*);
 
 void panda$collections$Array$add$panda$collections$Array$T(Array*, Object*);
+
+void panda$io$InputStream$init(void*);
+
+void panda$io$OutputStream$init(void*);
 
 char* pandaGetCString(String* s);
 
@@ -417,14 +424,17 @@ Process* panda$core$System$exec$panda$io$File$panda$collections$ListView$LTpanda
         result->pid = pid;
         result->input = pandaObjectAlloc(sizeof(FileOutputStream),
                 &panda$io$FileOutputStream$class);
+        panda$io$OutputStream$init(result->input);
         result->input->file = fdopen(stdinPipe[1], "wb");
         result->input->closeOnCleanup.value = true;
 //        setvbuf(result->input->file, NULL, _IONBF, 0);
         result->output = pandaObjectAlloc(sizeof(FileInputStream), &panda$io$FileInputStream$class);
+        panda$io$InputStream$init(result->output);
         result->output->file = fdopen(stdoutPipe[0], "rb");
         result->output->closeOnCleanup.value = true;
 //        setvbuf(result->output->file, NULL, _IONBF, 0);
         result->error = pandaObjectAlloc(sizeof(FileInputStream), &panda$io$FileInputStream$class);
+        panda$io$InputStream$init(result->error);
         result->error->file = fdopen(stderrPipe[0], "rb");
         result->error->closeOnCleanup.value = true;
 //        setvbuf(result->error->file, NULL, _IONBF, 0);
@@ -806,6 +816,7 @@ void panda$io$Console$read$R$panda$core$Char8$Q(NullableChar* result) {
 FileInputStream* panda$io$Console$inputStream$R$panda$io$InputStream() {
     FileInputStream* result = pandaObjectAlloc(sizeof(FileInputStream),
             &panda$io$FileInputStream$class);
+    panda$io$InputStream$init(result);
     result->file = stdin;
     return result;
 }
@@ -813,6 +824,7 @@ FileInputStream* panda$io$Console$inputStream$R$panda$io$InputStream() {
 FileOutputStream* panda$io$Console$outputStream$R$panda$io$OutputStream() {
     FileOutputStream* result = pandaObjectAlloc(sizeof(FileOutputStream),
             &panda$io$FileOutputStream$class);
+    panda$io$OutputStream$init(result);
     result->file = stdout;
     return result;
 }
@@ -820,6 +832,7 @@ FileOutputStream* panda$io$Console$outputStream$R$panda$io$OutputStream() {
 FileOutputStream* panda$io$Console$errorStream$R$panda$io$OutputStream() {
     FileOutputStream* result = pandaObjectAlloc(sizeof(FileOutputStream),
             &panda$io$FileOutputStream$class);
+    panda$io$OutputStream$init(result);
     result->file = stderr;
     return result;
 }
@@ -829,6 +842,7 @@ FileOutputStream* panda$io$Console$errorStream$R$panda$io$OutputStream() {
 FileInputStream* panda$io$File$openInputStream$R$panda$io$InputStream(File* self) {
     FileInputStream* result = pandaObjectAlloc(sizeof(FileInputStream),
             &panda$io$FileInputStream$class);
+    panda$io$InputStream$init(result);
     char* str = pandaGetCString(self->path);
     result->file = fopen(str, "rb");
     if (!result->file) {
@@ -843,6 +857,7 @@ FileInputStream* panda$io$File$openInputStream$R$panda$io$InputStream(File* self
 FileOutputStream* panda$io$File$openOutputStream$R$panda$io$OutputStream(File* self) {
     FileOutputStream* result = pandaObjectAlloc(sizeof(FileOutputStream),
             &panda$io$FileOutputStream$class);
+    panda$io$OutputStream$init(result);
     char* str = pandaGetCString(self->path);
     result->file = fopen(str, "wb");
     if (!result->file) {
@@ -857,6 +872,7 @@ FileOutputStream* panda$io$File$openOutputStream$R$panda$io$OutputStream(File* s
 FileOutputStream* panda$io$File$openForAppend$R$panda$io$OutputStream(File* self) {
     FileOutputStream* result = pandaObjectAlloc(sizeof(FileOutputStream),
             &panda$io$FileOutputStream$class);
+    panda$io$OutputStream$init(result);
     char* str = pandaGetCString(self->path);
     result->file = fopen(str, "ab");
     if (!result->file) {

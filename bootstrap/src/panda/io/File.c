@@ -18,23 +18,17 @@ __attribute__((weak)) panda$core$Bit panda$io$File$$EQ$panda$io$File$R$panda$cor
 
     return result;
 }
-__attribute__((weak)) panda$core$Bit panda$io$File$$NEQ$panda$io$File$R$panda$core$Bit$shim(panda$io$File* p0, panda$core$Equatable* p1) {
-    panda$core$Bit result = panda$io$File$$NEQ$panda$io$File$R$panda$core$Bit(p0, ((panda$io$File*) p1));
 
-    return result;
-}
-
-struct { panda$core$Class* cl; ITable* next; void* methods[2]; } panda$io$File$_panda$core$Equatable = { (panda$core$Class*) &panda$core$Equatable$class, NULL, { panda$io$File$$EQ$panda$io$File$R$panda$core$Bit$shim, panda$io$File$$NEQ$panda$io$File$R$panda$core$Bit$shim} };
+struct { panda$core$Class* cl; ITable* next; void* methods[2]; } panda$io$File$_panda$core$Equatable = { (panda$core$Class*) &panda$core$Equatable$class, NULL, { panda$io$File$$EQ$panda$io$File$R$panda$core$Bit$shim, panda$core$Equatable$$NEQ$panda$core$Equatable$T$R$panda$core$Bit} };
 
 struct { panda$core$Class* cl; ITable* next; void* methods[1]; } panda$io$File$_panda$collections$Key = { (panda$core$Class*) &panda$collections$Key$class, (ITable*) &panda$io$File$_panda$core$Equatable, { panda$io$File$hash$R$panda$core$Int64} };
 
 static panda$core$String $s1;
-panda$io$File$class_type panda$io$File$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Immutable$class, (ITable*) &panda$io$File$_panda$collections$Key, { panda$io$File$convert$R$panda$core$String, panda$io$File$cleanup, panda$io$File$resolve$panda$core$String$R$panda$io$File, panda$io$File$lines$R$panda$collections$Iterator$LTpanda$core$String$GT, panda$io$File$absolutePath$R$panda$core$String, panda$io$File$absolute$R$panda$io$File, panda$io$File$parent$R$panda$io$File$Q, panda$io$File$name$R$panda$core$String, panda$io$File$simpleName$R$panda$core$String, panda$io$File$changeExtension$panda$core$String$R$panda$io$File, panda$io$File$exists$R$panda$core$Bit, panda$io$File$isDirectory$R$panda$core$Bit, panda$io$File$list$R$panda$collections$ListView$LTpanda$io$File$GT, panda$io$File$createDirectory, panda$io$File$createDirectories, panda$io$File$openInputStream$R$panda$io$InputStream, panda$io$File$openOutputStream$R$panda$io$OutputStream, panda$io$File$openForAppend$R$panda$io$OutputStream, panda$io$File$readFully$R$panda$core$String, panda$io$File$write$panda$core$String, panda$io$File$delete, panda$io$File$$EQ$panda$io$File$R$panda$core$Bit$shim, panda$io$File$$NEQ$panda$io$File$R$panda$core$Bit$shim, panda$io$File$hash$R$panda$core$Int64} };
+panda$io$File$class_type panda$io$File$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Immutable$class, (ITable*) &panda$io$File$_panda$collections$Key, { panda$io$File$convert$R$panda$core$String, panda$io$File$cleanup, panda$io$File$resolve$panda$core$String$R$panda$io$File, panda$io$File$lines$R$panda$collections$Iterator$LTpanda$core$String$GT, panda$io$File$absolutePath$R$panda$core$String, panda$io$File$absolute$R$panda$io$File, panda$io$File$parent$R$panda$io$File$Q, panda$io$File$name$R$panda$core$String, panda$io$File$simpleName$R$panda$core$String, panda$io$File$changeExtension$panda$core$String$R$panda$io$File, panda$io$File$exists$R$panda$core$Bit, panda$io$File$isDirectory$R$panda$core$Bit, panda$io$File$list$R$panda$collections$ListView$LTpanda$io$File$GT, panda$io$File$createDirectory, panda$io$File$createDirectories, panda$io$File$openInputStream$R$panda$io$InputStream, panda$io$File$openOutputStream$R$panda$io$OutputStream, panda$io$File$openForAppend$R$panda$io$OutputStream, panda$io$File$readFully$R$panda$core$String, panda$io$File$write$panda$core$String, panda$io$File$delete, panda$io$File$$EQ$panda$io$File$R$panda$core$Bit$shim, panda$io$File$hash$R$panda$core$Int64} };
 
 typedef panda$collections$Iterator* (*$fn25)(panda$io$InputStream*);
 typedef panda$core$String* (*$fn130)(panda$io$InputStream*);
 typedef void (*$fn135)(panda$io$OutputStream*, panda$core$String*);
-typedef panda$core$Bit (*$fn142)(panda$core$Equatable*, panda$core$Equatable*);
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x69\x6f\x2e\x46\x69\x6c\x65", 13, 4119532389314393493, NULL };
 static panda$core$String $s4 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2f", 1, 148, NULL };
@@ -101,7 +95,7 @@ panda$collections$Iterator* panda$io$File$lines$R$panda$collections$Iterator$LTp
     panda$io$InputStream* $tmp23;
     panda$io$InputStream* $tmp24 = panda$io$File$openInputStream$R$panda$io$InputStream(self);
     $tmp23 = $tmp24;
-    panda$collections$Iterator* $tmp26 = (($fn25) $tmp23->$class->vtable[13])($tmp23);
+    panda$collections$Iterator* $tmp26 = (($fn25) $tmp23->$class->vtable[17])($tmp23);
     $tmp22 = $tmp26;
     $tmp21 = $tmp22;
     $returnValue20 = $tmp21;
@@ -359,7 +353,7 @@ panda$core$String* panda$io$File$readFully$R$panda$core$String(panda$io$File* se
     panda$io$InputStream* $tmp128;
     panda$io$InputStream* $tmp129 = panda$io$File$openInputStream$R$panda$io$InputStream(self);
     $tmp128 = $tmp129;
-    panda$core$String* $tmp131 = (($fn130) $tmp128->$class->vtable[6])($tmp128);
+    panda$core$String* $tmp131 = (($fn130) $tmp128->$class->vtable[14])($tmp128);
     $tmp127 = $tmp131;
     $tmp126 = $tmp127;
     $returnValue125 = $tmp126;
@@ -372,7 +366,7 @@ void panda$io$File$write$panda$core$String(panda$io$File* self, panda$core$Strin
     panda$io$OutputStream* $tmp133;
     panda$io$OutputStream* $tmp134 = panda$io$File$openOutputStream$R$panda$io$OutputStream(self);
     $tmp133 = $tmp134;
-    (($fn135) $tmp133->$class->vtable[18])($tmp133, p_contents);
+    (($fn135) $tmp133->$class->vtable[17])($tmp133, p_contents);
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp133));
 }
 panda$core$Bit panda$io$File$$EQ$panda$io$File$R$panda$core$Bit(panda$io$File* self, panda$io$File* p_other) {
@@ -381,43 +375,32 @@ panda$core$Bit panda$io$File$$EQ$panda$io$File$R$panda$core$Bit(panda$io$File* s
     $returnValue136 = $tmp137;
     return $returnValue136;
 }
-panda$core$Bit panda$io$File$$NEQ$panda$io$File$R$panda$core$Bit(panda$io$File* self, panda$io$File* p_other) {
-    panda$core$Bit $returnValue139;
-    ITable* $tmp140 = ((panda$core$Equatable*) self->path)->$class->itable;
-    while ($tmp140->$class != (panda$core$Class*) &panda$core$Equatable$class) {
-        $tmp140 = $tmp140->next;
-    }
-    $fn142 $tmp141 = $tmp140->methods[1];
-    panda$core$Bit $tmp143 = $tmp141(((panda$core$Equatable*) self->path), ((panda$core$Equatable*) p_other->path));
-    $returnValue139 = $tmp143;
+panda$core$Int64 panda$io$File$hash$R$panda$core$Int64(panda$io$File* self) {
+    panda$core$Int64 $returnValue139;
+    panda$core$Int64 $tmp140 = panda$core$String$hash$R$panda$core$Int64(self->path);
+    $returnValue139 = $tmp140;
     return $returnValue139;
 }
-panda$core$Int64 panda$io$File$hash$R$panda$core$Int64(panda$io$File* self) {
-    panda$core$Int64 $returnValue145;
-    panda$core$Int64 $tmp146 = panda$core$String$hash$R$panda$core$Int64(self->path);
-    $returnValue145 = $tmp146;
-    return $returnValue145;
-}
 panda$core$String* panda$io$File$convert$R$panda$core$String(panda$io$File* self) {
-    panda$core$String* $returnValue148;
-    panda$core$String* $tmp149;
-    $tmp149 = self->path;
-    $returnValue148 = $tmp149;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp149));
-    return $returnValue148;
+    panda$core$String* $returnValue142;
+    panda$core$String* $tmp143;
+    $tmp143 = self->path;
+    $returnValue142 = $tmp143;
+    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp143));
+    return $returnValue142;
 }
 void panda$io$File$cleanup(panda$io$File* self) {
-    int $tmp153;
+    int $tmp147;
     {
     }
-    $tmp153 = -1;
-    goto $l151;
-    $l151:;
+    $tmp147 = -1;
+    goto $l145;
+    $l145:;
     panda$core$Immutable$cleanup(((panda$core$Immutable*) self));
-    switch ($tmp153) {
-        case -1: goto $l154;
+    switch ($tmp147) {
+        case -1: goto $l148;
     }
-    $l154:;
+    $l148:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->path));
 }
 

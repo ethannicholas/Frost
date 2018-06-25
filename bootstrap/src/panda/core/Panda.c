@@ -458,7 +458,7 @@ void panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(panda$
     $tmp160 = $tmp169;
     panda$core$String* $tmp171 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp160, &$s170);
     $tmp159 = $tmp171;
-    (($fn172) $tmp157->$class->vtable[21])($tmp157, $tmp159);
+    (($fn172) $tmp157->$class->vtable[19])($tmp157, $tmp159);
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp159));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp160));
     panda$core$Panda$unref$panda$core$Object($tmp167);
@@ -494,7 +494,7 @@ void panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$
     $tmp176 = $tmp190;
     panda$core$String* $tmp192 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp176, &$s191);
     $tmp175 = $tmp192;
-    (($fn193) $tmp173->$class->vtable[21])($tmp173, $tmp175);
+    (($fn193) $tmp173->$class->vtable[19])($tmp173, $tmp175);
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp175));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp176));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp177));

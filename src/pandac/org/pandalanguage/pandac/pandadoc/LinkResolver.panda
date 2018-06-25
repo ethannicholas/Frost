@@ -7,6 +7,7 @@ uses org.pandalanguage.pandac.MethodDecl
 uses org.pandalanguage.pandac.Methods
 uses org.pandalanguage.pandac.Symbol
 uses org.pandalanguage.pandac.Type
+uses org.pandalanguage.pandac.parser.Token
 
 class LinkResolver {
     @private
@@ -68,6 +69,7 @@ class LinkResolver {
             result.append(":")
             result.append(m.returnType)
         }
+        result.replace("&", "&amp;")
         result.replace("<", "&lt;")
         return result.finish()
     }
@@ -110,27 +112,25 @@ class LinkResolver {
         }
         def parsed := link.parse(/(\w+(?:\.\w+)*)\((.*)\)/)
         if parsed != null {
-            def rawParameters:ListView<String>
+            def parameters := Array<Type>()
             if parsed[1].trim() != "" {
-                rawParameters := parsed[1].split(",")
-            }
-            else {
-                rawParameters := Array<String>() -- FIXME literal
-            }
-            def parameters := Array<Type>(rawParameters.get_count())
-            for p in rawParameters {
-                compiler.parser.start(File(p), p)
-                def type := compiler.parser.type()
-                if type = null {
-                    Console.printLine("could not parse: \{p}")
-                    return null
+                compiler.parser.start(File(parsed[1]), parsed[1])
+                loop {
+                    def type := compiler.parser.type()
+                    if type = null {
+                        Console.printLine("could not parse: \{parsed[1]}")
+                        return null
+                    }
+                    def converted := compiler.scanner.convertType(type)
+                    def resolved := compiler.resolve(converted)
+                    if resolved = null {
+                        return null
+                    }
+                    parameters.add(resolved)
+                    if compiler.parser.checkNext(Token.Kind.COMMA) = null {
+                        break
+                    }
                 }
-                def converted := compiler.scanner.convertType(type)
-                def resolved := compiler.resolve(converted)
-                if resolved = null {
-                    return null
-                }
-                parameters.add(resolved)
             }
             def name := parsed[0]
             def index := name.lastIndexOf(".")

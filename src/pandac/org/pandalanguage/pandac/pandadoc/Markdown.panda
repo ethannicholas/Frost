@@ -999,7 +999,7 @@ class Markdown {
         -- or [link test](/foo)
         def referenceShortcut := RegularExpression("(" + -- wrap whole match in $1
                                                    "\\[" +
-                                                   "([^\\[\\]<>]+)" + -- link text = $2; can't contain '[' or ']'
+                                                   "([^\\[\\]]+)" + -- link text = $2; can't contain '[' or ']'
                                                    "\\]" +
                                                    ")",
                                                    RegularExpression.DOTALL)
@@ -1029,7 +1029,8 @@ class Markdown {
                 if linkResolver != null {
                     replacementText := linkResolver(linkText)
                     if replacementText != null {
-                        replacementText := "<a href=\"\{replacementText}\"><code>\{linkText}</code></a>"
+                        def escaped := linkText.replace("&", "&amp;").replace("<", "&lt;")
+                        replacementText := "<a href=\"\{replacementText}\"><code>\{escaped}</code></a>"
                     }
                     else {
                         replacementText := "(no match:\{linkText})"

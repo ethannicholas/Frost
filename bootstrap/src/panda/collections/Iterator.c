@@ -113,7 +113,7 @@ panda$core$Int64 panda$collections$Iterator$count$R$panda$core$Int64(panda$colle
     panda$core$Bit $tmp29 = $tmp27(self);
     if ($tmp29.value) goto $l30; else goto $l31;
     $l31:;
-    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s32, (panda$core$Int64) { 120 }, &$s33);
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s32, (panda$core$Int64) { 127 }, &$s33);
     abort();
     $l30:;
     switch ($tmp4) {
@@ -210,7 +210,7 @@ panda$collections$Iterator* panda$collections$Iterator$$IDX$panda$core$Range$LTp
     panda$core$Bit $tmp68 = { $tmp56 };
     if ($tmp68.value) goto $l69; else goto $l70;
     $l70:;
-    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s71, (panda$core$Int64) { 155 }, &$s72);
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s71, (panda$core$Int64) { 161 }, &$s72);
     abort();
     $l69:;
     panda$collections$Iterator$RangeIterator* $tmp76 = (panda$collections$Iterator$RangeIterator*) pandaObjectAlloc(65, (panda$core$Class*) &panda$collections$Iterator$RangeIterator$class);
@@ -258,7 +258,7 @@ panda$collections$Iterator* panda$collections$Iterator$$IDX$panda$core$SteppedRa
     panda$core$Bit $tmp96 = { $tmp79 };
     if ($tmp96.value) goto $l97; else goto $l98;
     $l98:;
-    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s99, (panda$core$Int64) { 171 }, &$s100);
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s99, (panda$core$Int64) { 177 }, &$s100);
     abort();
     $l97:;
     panda$collections$Iterator$RangeIterator* $tmp104 = (panda$collections$Iterator$RangeIterator*) pandaObjectAlloc(65, (panda$core$Class*) &panda$collections$Iterator$RangeIterator$class);
@@ -274,7 +274,7 @@ panda$collections$Array* panda$collections$Iterator$all$R$panda$collections$Arra
     panda$collections$Array* result112 = NULL;
     panda$collections$Array* $tmp113;
     panda$collections$Array* $tmp114;
-    panda$collections$Iterator* Iter$182$9119 = NULL;
+    panda$collections$Iterator* Iter$188$9119 = NULL;
     panda$collections$Iterator* $tmp120;
     panda$core$Object* v132 = NULL;
     panda$core$Object* $tmp133;
@@ -296,27 +296,27 @@ panda$collections$Array* panda$collections$Iterator$all$R$panda$collections$Arra
                 int $tmp118;
                 {
                     $tmp120 = self;
-                    Iter$182$9119 = $tmp120;
+                    Iter$188$9119 = $tmp120;
                     panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp120));
                     $l121:;
-                    ITable* $tmp124 = Iter$182$9119->$class->itable;
+                    ITable* $tmp124 = Iter$188$9119->$class->itable;
                     while ($tmp124->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
                         $tmp124 = $tmp124->next;
                     }
                     $fn126 $tmp125 = $tmp124->methods[0];
-                    panda$core$Bit $tmp127 = $tmp125(Iter$182$9119);
+                    panda$core$Bit $tmp127 = $tmp125(Iter$188$9119);
                     panda$core$Bit $tmp128 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp127);
                     bool $tmp123 = $tmp128.value;
                     if (!$tmp123) goto $l122;
                     {
                         int $tmp131;
                         {
-                            ITable* $tmp135 = Iter$182$9119->$class->itable;
+                            ITable* $tmp135 = Iter$188$9119->$class->itable;
                             while ($tmp135->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
                                 $tmp135 = $tmp135->next;
                             }
                             $fn137 $tmp136 = $tmp135->methods[1];
-                            panda$core$Object* $tmp138 = $tmp136(Iter$182$9119);
+                            panda$core$Object* $tmp138 = $tmp136(Iter$188$9119);
                             $tmp134 = $tmp138;
                             $tmp133 = $tmp134;
                             v132 = $tmp133;
@@ -340,8 +340,8 @@ panda$collections$Array* panda$collections$Iterator$all$R$panda$collections$Arra
                 $tmp118 = -1;
                 goto $l116;
                 $l116:;
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$182$9119));
-                Iter$182$9119 = NULL;
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$188$9119));
+                Iter$188$9119 = NULL;
                 switch ($tmp118) {
                     case -1: goto $l140;
                 }
@@ -377,7 +377,7 @@ panda$collections$Array* panda$collections$Iterator$all$R$panda$collections$Arra
     panda$core$Bit $tmp151 = $tmp149(self);
     if ($tmp151.value) goto $l152; else goto $l153;
     $l153:;
-    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s154, (panda$core$Int64) { 180 }, &$s155);
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s154, (panda$core$Int64) { 186 }, &$s155);
     abort();
     $l152:;
     switch ($tmp108) {
@@ -388,7 +388,7 @@ panda$collections$Array* panda$collections$Iterator$all$R$panda$collections$Arra
     abort();
 }
 void panda$collections$Iterator$apply$$LPpanda$collections$Iterator$T$RP$EQ$AM$GT$LP$RP(panda$collections$Iterator* self, panda$core$MutableMethod* p_m) {
-    panda$collections$Iterator* Iter$198$9162 = NULL;
+    panda$collections$Iterator* Iter$204$9162 = NULL;
     panda$collections$Iterator* $tmp163;
     panda$core$Object* v175 = NULL;
     panda$core$Object* $tmp176;
@@ -399,27 +399,27 @@ void panda$collections$Iterator$apply$$LPpanda$collections$Iterator$T$RP$EQ$AM$G
             int $tmp161;
             {
                 $tmp163 = self;
-                Iter$198$9162 = $tmp163;
+                Iter$204$9162 = $tmp163;
                 panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp163));
                 $l164:;
-                ITable* $tmp167 = Iter$198$9162->$class->itable;
+                ITable* $tmp167 = Iter$204$9162->$class->itable;
                 while ($tmp167->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
                     $tmp167 = $tmp167->next;
                 }
                 $fn169 $tmp168 = $tmp167->methods[0];
-                panda$core$Bit $tmp170 = $tmp168(Iter$198$9162);
+                panda$core$Bit $tmp170 = $tmp168(Iter$204$9162);
                 panda$core$Bit $tmp171 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp170);
                 bool $tmp166 = $tmp171.value;
                 if (!$tmp166) goto $l165;
                 {
                     int $tmp174;
                     {
-                        ITable* $tmp178 = Iter$198$9162->$class->itable;
+                        ITable* $tmp178 = Iter$204$9162->$class->itable;
                         while ($tmp178->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
                             $tmp178 = $tmp178->next;
                         }
                         $fn180 $tmp179 = $tmp178->methods[1];
-                        panda$core$Object* $tmp181 = $tmp179(Iter$198$9162);
+                        panda$core$Object* $tmp181 = $tmp179(Iter$204$9162);
                         $tmp177 = $tmp181;
                         $tmp176 = $tmp177;
                         v175 = $tmp176;
@@ -447,8 +447,8 @@ void panda$collections$Iterator$apply$$LPpanda$collections$Iterator$T$RP$EQ$AM$G
             $tmp161 = -1;
             goto $l159;
             $l159:;
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$198$9162));
-            Iter$198$9162 = NULL;
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$204$9162));
+            Iter$204$9162 = NULL;
             switch ($tmp161) {
                 case -1: goto $l185;
             }
@@ -466,7 +466,7 @@ void panda$collections$Iterator$apply$$LPpanda$collections$Iterator$T$RP$EQ$AM$G
     panda$core$Bit $tmp190 = $tmp188(self);
     if ($tmp190.value) goto $l191; else goto $l192;
     $l192:;
-    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s193, (panda$core$Int64) { 197 }, &$s194);
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s193, (panda$core$Int64) { 203 }, &$s194);
     abort();
     $l191:;
     switch ($tmp158) {
@@ -496,7 +496,7 @@ panda$core$Object* panda$collections$Iterator$fold$$LPpanda$collections$Iterator
         panda$core$Bit $tmp202 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp201);
         if ($tmp202.value) goto $l203; else goto $l204;
         $l204:;
-        panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s205, (panda$core$Int64) { 205 }, &$s206);
+        panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s205, (panda$core$Int64) { 235 }, &$s206);
         abort();
         $l203:;
         int $tmp209;
@@ -578,7 +578,7 @@ panda$core$Object* panda$collections$Iterator$fold$$LPpanda$collections$Iterator
     panda$core$Bit $tmp246 = $tmp244(self);
     if ($tmp246.value) goto $l247; else goto $l248;
     $l248:;
-    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s249, (panda$core$Int64) { 205 }, &$s250);
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s249, (panda$core$Int64) { 235 }, &$s250);
     abort();
     $l247:;
     switch ($tmp197) {
@@ -671,7 +671,7 @@ panda$core$Object* panda$collections$Iterator$fold$$LPpanda$collections$Iterator
     panda$core$Bit $tmp288 = $tmp286(self);
     if ($tmp288.value) goto $l289; else goto $l290;
     $l290:;
-    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s291, (panda$core$Int64) { 214 }, &$s292);
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s291, (panda$core$Int64) { 255 }, &$s292);
     abort();
     $l289:;
     switch ($tmp253) {

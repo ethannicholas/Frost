@@ -145,11 +145,13 @@ add_library(c_panda
     bootstrap/src/panda/io/FileOutputStream.c
     bootstrap/src/panda/io/IndentedOutputStream.c
     bootstrap/src/panda/io/InputStream.c
+    bootstrap/src/panda/io/InputStream/ByteOrder.c
     bootstrap/src/panda/io/InputStream/LineIterator.c
     bootstrap/src/panda/io/LineNumberInputStream.c
     bootstrap/src/panda/io/MemoryInputStream.c
     bootstrap/src/panda/io/MemoryOutputStream.c
     bootstrap/src/panda/io/OutputStream.c
+    bootstrap/src/panda/io/OutputStream/ByteOrder.c
     bootstrap/src/panda/io/PushbackInputStream.c
     bootstrap/src/panda/json/JSON.c
     bootstrap/src/panda/json/JSONParser.c
@@ -279,7 +281,7 @@ function(compile_panda_sources out_var)
     set(${out_var} "${result}" PARENT_SCOPE)
 endfunction()
 
-set(core_source
+set(public_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/Array.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/Collection.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/collections/CollectionView.panda
@@ -312,8 +314,6 @@ set(core_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Int32.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Int64.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Int8.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Method.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/MutableMethod.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/UInt16.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/UInt32.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/UInt64.panda
@@ -321,7 +321,6 @@ set(core_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Matcher.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/MutableString.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Object.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Panda.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Real32.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Real64.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/RegularExpression.panda
@@ -331,8 +330,6 @@ set(core_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Weak.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/io/Console.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/io/File.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/io/FileInputStream.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/io/FileOutputStream.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/io/IndentedOutputStream.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/io/InputStream.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/io/LineNumberInputStream.panda
@@ -365,6 +362,15 @@ set(core_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/panda/UInt64List.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/plex/runtime/DFA.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/org/pandalanguage/plex/runtime/RawToken.panda
+)
+
+set(core_source
+    ${public_source}
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Method.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/MutableMethod.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Panda.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/io/FileInputStream.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/io/FileOutputStream.panda
 )
 
 compile_panda_sources(panda_objects
@@ -828,7 +834,7 @@ function(syntax_highlight out_var)
 endfunction()
 
 syntax_highlight(panda_source_html
-    ${core_source}
+    ${public_source}
 )
 
 function(run_pandadoc out_var)
@@ -850,7 +856,9 @@ function(run_pandadoc out_var)
 endfunction()
 
 run_pandadoc(panda_xml
-    ${core_source}
+    ${public_source}
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Range.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/SteppedRange.panda
 )
 
 function(xslt_pandadoc out_var)
@@ -872,6 +880,27 @@ function(xslt_pandadoc out_var)
     set(${out_var} "${result}" PARENT_SCOPE)
 endfunction()
 
+# hack to add the inner classes to the output; they should already have been in panda_xml, but
+# it's hard to capture this
+set(inner_class_xml
+        ${CMAKE_CURRENT_BINARY_DIR}/xml/panda/core/MutableString/Index.xml
+        ${CMAKE_CURRENT_BINARY_DIR}/xml/panda/core/String/Index.xml
+        ${CMAKE_CURRENT_BINARY_DIR}/xml/panda/core/String/Match.xml
+        ${CMAKE_CURRENT_BINARY_DIR}/xml/panda/core/System/Process.xml
+        ${CMAKE_CURRENT_BINARY_DIR}/xml/panda/io/InputStream/ByteOrder.xml
+        ${CMAKE_CURRENT_BINARY_DIR}/xml/panda/io/OutputStream/ByteOrder.xml
+)
+add_custom_command(
+    DEPENDS
+        ${CMAKE_CURRENT_BINARY_DIR}/xml/panda/core/MutableString.xml
+        ${CMAKE_CURRENT_BINARY_DIR}/xml/panda/core/String.xml
+        ${CMAKE_CURRENT_BINARY_DIR}/xml/panda/core/System.xml
+        ${CMAKE_CURRENT_BINARY_DIR}/xml/panda/io/InputStream.xml
+        ${CMAKE_CURRENT_BINARY_DIR}/xml/panda/io/OutputStream.xml
+    OUTPUT
+        ${inner_class_xml}
+)
+
 add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/MakeTableOfContents
     COMMAND pandac -o MakeTableOfContents
@@ -891,6 +920,7 @@ add_custom_command(
 
 xslt_pandadoc(panda_doc_html
     ${panda_xml}
+    ${inner_class_xml}
 )
 
 function(xslt_tableOfContents out_var)

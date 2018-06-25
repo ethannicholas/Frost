@@ -97,6 +97,31 @@ class PandaDoc : CodeGenerator {
                     simpleNames.add(simpleName(s))
                 }
                 return simpleNames[0] + "<" + simpleNames[1..].join() + ">"
+            when Type.Kind.METHOD, Type.Kind.FUNCTION, Type.Kind.IMMUTABLE_METHOD,
+                    Type.Kind.IMMUTABLE_FUNCTION:
+                def result := MutableString("(")
+                var separator := ""
+                for p in t.subtypes[0 .. t.subtypes.get_count() - 1] {
+                    result.append(separator)
+                    result.append(simpleName(p))
+                    separator := ", "
+                }
+                match t.typeKind {
+                    when Type.Kind.METHOD:
+                        result.append(")=&>(")
+                    when Type.Kind.FUNCTION:
+                        result.append(")=>(")
+                    when Type.Kind.IMMUTABLE_METHOD:
+                        result.append(")=&>*(")
+                    when Type.Kind.IMMUTABLE_FUNCTION:
+                        result.append(")=>*(")
+                }
+                def returnType := t.subtypes[t.subtypes.get_count() - 1]
+                if returnType != Type.Void() {
+                    result.append(simpleName(returnType))
+                }
+                result.append(")")
+                return result.finish()
             otherwise:
                 return t.name
         }
@@ -110,6 +135,18 @@ class PandaDoc : CodeGenerator {
         out.open("type")
         out.write("name", escape(t.name))
         out.write("simpleName", escape(simpleName(t)))
+        if t.isClass() {
+            def cl := compiler.getClass(t)
+            if cl != null {
+                if cl.isSpecialization() {
+                    -- link to base
+                    out.write("url", linkTo(compiler.getClass(t.subtypes[0])))
+                }
+                else {
+                    out.write("url", linkTo(cl))
+                }
+            }
+        }
         out.close("type")
     }
 
@@ -219,11 +256,18 @@ class PandaDoc : CodeGenerator {
         }
     }
 
+    function visible(cl:ClassDecl):Bit {
+        return !cl.annotations.isPrivate() & !cl.annotations.isPackage()
+    }
+
     function visible(f:FieldDecl):Bit {
         return !f.annotations.isPrivate()
     }
 
     function visible(m:MethodDecl):Bit {
+        if m.signature() = "cleanup()" & currentClass.name != "panda.core.Object" {
+            return false
+        }
         return !m.annotations.isPrivate() & !m.annotations.isSynthetic()
     }
 
@@ -243,8 +287,25 @@ class PandaDoc : CodeGenerator {
         }
     }
 
+    method write(cl:ClassDecl) {
+        if !visible(cl) {
+            return
+        }
+        out.open("class")
+        write(cl.type())
+        if cl.doccomment != null {
+            writeDoc(cl.doccomment)
+        }
+        out.close("class")
+    }
+
+
     method write(f:FieldDecl) {
         if !visible(f) {
+            return
+        }
+        compiler.resolve(f)
+        if f.resolved != Compiler.Resolution.RESOLVED {
             return
         }
         out.open("field")
@@ -327,6 +388,10 @@ class PandaDoc : CodeGenerator {
         if !visible(m) {
             return
         }
+        compiler.resolve(m)
+        if m.resolved != Compiler.Resolution.RESOLVED {
+            return
+        }
         def tag:String
         match m.methodKind {
             when MethodDecl.Kind.METHOD:
@@ -368,6 +433,9 @@ class PandaDoc : CodeGenerator {
     }
 
     method writeAncestors(cl:ClassDecl) {
+        if cl.classKind != ClassDecl.Kind.CLASS {
+            return
+        }
         out.open("ancestors")
         var ancestor := cl.rawSuper
         while ancestor != null {
@@ -382,7 +450,15 @@ class PandaDoc : CodeGenerator {
     }
 
     function linkTo(cl:ClassDecl):String {
-        return "broken link.html"
+        return LinkResolver(compiler, currentClass).linkTo(cl)
+    }
+
+    function linkTo(m:MethodDecl):String {
+        return LinkResolver(compiler, currentClass).linkTo(m)
+    }
+
+    function linkTo(f:FieldDecl):String {
+        return LinkResolver(compiler, currentClass).linkTo(f)
     }
 
     method writeInheritedFields(cl:ClassDecl) {
@@ -408,11 +484,54 @@ class PandaDoc : CodeGenerator {
             for f in fields {
                 out.open("field")
                 out.write("name", f.name)
-                out.write("link", "\{linkTo(f.owner)}#\{f.name}")
+                out.write("link", linkTo(f))
                 out.close("field")
             }
             out.close("inheritedFields")
         }
+    }
+
+    method addInheritedMethods(t:Type, methods:Array<MethodDecl>,
+            overridden:HashSet<String>) {
+        def cl := compiler.getClass(t)
+        if cl = null {
+            return
+        }
+        for m in cl.methods {
+            var base := compiler.getOverriddenMethod(m)
+            if base = null {
+                base := m
+            }
+            if m.methodKind != MethodDecl.Kind.INIT & visible(m) &
+                    !overridden.contains(base.signature()) {
+                compiler.resolve(m)
+                if visible(m) {
+                    methods.add(m)
+                }
+                overridden.add(base.signature())
+            }
+        }
+        if cl.rawSuper != null {
+            addInheritedMethods(cl.rawSuper, methods, overridden)
+        }
+        for intf in cl.rawInterfaces {
+            addInheritedMethods(intf, methods, overridden)
+        }
+    }
+
+    function simpleSignature(m:MethodDecl):String {
+        def result := MutableString("\{m.name}(")
+        var separator := ""
+        for p in m.parameters {
+            result.append(separator)
+            result.append(simpleName(p.type))
+            separator := ", "
+        }
+        result.append(")")
+        if m.returnType != Type.Void() {
+            result.append(":\{simpleName(m.returnType)}")
+        }
+        return result.finish()
     }
 
     method writeInheritedMethods(cl:ClassDecl) {
@@ -423,34 +542,19 @@ class PandaDoc : CodeGenerator {
             if o != null {
                 overridden.add(o.signature())
             }
-        }
-        var ancestor := cl.rawSuper
-        while ancestor != null {
-            def ancestorClass := compiler.getClass(ancestor)
-            if ancestorClass = null {
-                return
+            else {
+                overridden.add(m.signature())
             }
-            for m in ancestorClass.methods {
-                if m.methodKind != MethodDecl.Kind.INIT & visible(m) &
-                        !overridden.contains(m.signature()) {
-                    compiler.resolve(m)
-                    methods.add(m)
-                    def o := compiler.getOverriddenMethod(m)
-                    if o != null {
-                        overridden.add(o.signature())
-                    }
-                }
-            }
-            ancestor := ancestorClass.rawSuper
         }
+        addInheritedMethods(cl.type(), methods, overridden)
         methods[..] := methods[.. by -1]
 
         if methods.get_count() > 0 {
             out.open("inheritedMethods")
             for m in methods {
                 out.open("method")
-                out.write("name", m.name)
-                out.write("link", "\{linkTo(m.owner)}#\{m.name}")
+                out.write("name", escape(simpleSignature(m)))
+                out.write("link", linkTo(m))
                 out.close("method")
             }
             out.close("inheritedMethods")
@@ -476,6 +580,9 @@ class PandaDoc : CodeGenerator {
 
     @override
     method start(cl:ClassDecl) {
+        if !visible(cl) {
+            return
+        }
         self.currentClass := cl
         if !cl.annotations.isPrivate() {
             classList.add(cl.name)
@@ -504,8 +611,12 @@ class PandaDoc : CodeGenerator {
             when ClassDecl.Kind.CHOICE:
                 out.write("kind", "choice")
         }
+        var base := cl
+        while base.owner != null {
+            base := base.owner
+        }
         out.write("source", "../" * cl.name.find(".").count() + "source/" +
-                cl.name.replace(".", "/") + ".html")
+                base.name.replace(".", "/") + ".html")
         writeDoc(cl)
         writeAncestors(cl)
         if cl.rawInterfaces.get_count() > 0 {
@@ -515,6 +626,7 @@ class PandaDoc : CodeGenerator {
         }
         writeInheritedFields(cl)
         writeInheritedMethods(cl)
+        cl.classes.apply(self.write) -- FIXME shouldn't need 'self.'
         cl.fields.apply(self.write) -- FIXME shouldn't need 'self.'
         cl.methods.apply(self.write) -- FIXME shouldn't need 'self.'
         out.close("class")

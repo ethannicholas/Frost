@@ -21,8 +21,11 @@ struct { panda$core$Class* cl; ITable* next; void* methods[10]; } panda$core$Str
 static panda$core$String $s1;
 panda$core$String$MatchIterator$class_type panda$core$String$MatchIterator$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, (ITable*) &panda$core$String$MatchIterator$_panda$collections$Iterator, { panda$core$Object$convert$R$panda$core$String, panda$core$String$MatchIterator$cleanup, panda$core$String$MatchIterator$get_done$R$panda$core$Bit, panda$core$String$MatchIterator$next$R$panda$core$String$Index$shim} };
 
+typedef panda$core$Bit (*$fn10)(panda$core$String$MatchIterator*);
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x4d\x61\x74\x63\x68\x49\x74\x65\x72\x61\x74\x6f\x72", 31, 1240365279592640354, NULL };
+static panda$core$String $s15 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x53\x74\x72\x69\x6e\x67\x2e\x70\x61\x6e\x64\x61", 12, -7878295537817775382, NULL };
+static panda$core$String $s16 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x4d\x61\x74\x63\x68\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x6e\x65\x78\x74\x28\x29\x3a\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x49\x6e\x64\x65\x78", 94, 5579456169478881106, NULL };
 
 void panda$core$String$MatchIterator$init$panda$core$String$panda$core$String$panda$core$Bit(panda$core$String$MatchIterator* self, panda$core$String* p_haystack, panda$core$String* p_needle, panda$core$Bit p_allowOveraps) {
     panda$core$String* $tmp3;
@@ -55,43 +58,50 @@ panda$core$Bit panda$core$String$MatchIterator$get_done$R$panda$core$Bit(panda$c
     return $returnValue8;
 }
 panda$core$String$Index panda$core$String$MatchIterator$next$R$panda$core$String$Index(panda$core$String$MatchIterator* self) {
-    panda$core$String$Index$nullable result10;
-    panda$core$String$Index start11;
-    panda$core$String$Index $tmp13;
-    panda$core$String$Index $returnValue17;
-    result10 = self->nextMatch;
-    memset(&start11, 0, sizeof(start11));
+    panda$core$String$Index$nullable result17;
+    panda$core$String$Index start18;
+    panda$core$String$Index $tmp20;
+    panda$core$String$Index $returnValue24;
+    panda$core$Bit $tmp11 = (($fn10) self->$class->vtable[2])(self);
+    panda$core$Bit $tmp12 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp11);
+    if ($tmp12.value) goto $l13; else goto $l14;
+    $l14:;
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s15, (panda$core$Int64) { 234 }, &$s16);
+    abort();
+    $l13:;
+    result17 = self->nextMatch;
+    memset(&start18, 0, sizeof(start18));
     if (self->allowOverlaps.value) {
     {
-        panda$core$String$Index $tmp12 = panda$core$String$next$panda$core$String$Index$R$panda$core$String$Index(self->haystack, start11);
-        start11 = $tmp12;
+        panda$core$String$Index $tmp19 = panda$core$String$next$panda$core$String$Index$R$panda$core$String$Index(self->haystack, start18);
+        start18 = $tmp19;
     }
     }
     else {
     {
-        panda$core$Int64 $tmp14 = panda$core$String$byteLength$R$panda$core$Int64(self->needle);
-        panda$core$Int64 $tmp15 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(((panda$core$String$Index) self->nextMatch.value).value, $tmp14);
-        panda$core$String$Index$init$panda$core$Int64(&$tmp13, $tmp15);
-        start11 = $tmp13;
+        panda$core$Int64 $tmp21 = panda$core$String$byteLength$R$panda$core$Int64(self->needle);
+        panda$core$Int64 $tmp22 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(((panda$core$String$Index) self->nextMatch.value).value, $tmp21);
+        panda$core$String$Index$init$panda$core$Int64(&$tmp20, $tmp22);
+        start18 = $tmp20;
     }
     }
-    panda$core$String$Index$nullable $tmp16 = panda$core$String$indexOf$panda$core$String$panda$core$String$Index$R$panda$core$String$Index$Q(self->haystack, self->needle, start11);
-    self->nextMatch = $tmp16;
-    $returnValue17 = ((panda$core$String$Index) result10.value);
-    return $returnValue17;
+    panda$core$String$Index$nullable $tmp23 = panda$core$String$indexOf$panda$core$String$panda$core$String$Index$R$panda$core$String$Index$Q(self->haystack, self->needle, start18);
+    self->nextMatch = $tmp23;
+    $returnValue24 = ((panda$core$String$Index) result17.value);
+    return $returnValue24;
 }
 void panda$core$String$MatchIterator$cleanup(panda$core$String$MatchIterator* self) {
-    int $tmp21;
+    int $tmp28;
     {
     }
-    $tmp21 = -1;
-    goto $l19;
-    $l19:;
+    $tmp28 = -1;
+    goto $l26;
+    $l26:;
     panda$core$Object$cleanup(((panda$core$Object*) self));
-    switch ($tmp21) {
-        case -1: goto $l22;
+    switch ($tmp28) {
+        case -1: goto $l29;
     }
-    $l22:;
+    $l29:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->haystack));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->needle));
 }

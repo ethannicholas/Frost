@@ -2,8 +2,22 @@ package panda.io
 
 uses panda.unsafe.Pointer
 
+====================================================================================================
+A stream of binary or character data which can be read from.
+====================================================================================================
 @abstract
 class InputStream {
+    choice ByteOrder {
+        LITTLE_ENDIAN
+        BIG_ENDIAN
+    }
+
+    ================================================================================================
+    Determines the endianness of the data in this stream when reading multi-byte values. Defaults to
+    `LITTLE_ENDIAN`, but may be freely changed.
+    ================================================================================================
+    var byteOrder := ByteOrder.LITTLE_ENDIAN
+
     @private
     class LineIterator : Iterator<String> {
         def input:InputStream
@@ -32,9 +46,140 @@ class InputStream {
         }
     }
 
+    ================================================================================================
+    Reads and returns a single byte. Blocks until at least one byte is available for reading, or
+    returns `null` if the end of the stream has been reached.
+    ================================================================================================
     @abstract
     method read():UInt8?
 
+    ================================================================================================
+    Reads two bytes from this stream, interpreting them as a `UInt16` value. The interpretation of
+    the bytes is determined by the [byteOrder] field.
+    ================================================================================================
+    method read():UInt16? {
+        def result:Int16 := read()
+        if result != null {
+            return result.convert()->UInt16
+        }
+        return null
+    }
+
+    ================================================================================================
+    Reads four bytes from this stream, interpreting them as a `UInt32` value. The interpretation of
+    the bytes is determined by the [byteOrder] field.
+    ================================================================================================
+    method read():UInt32? {
+        def result:Int32 := read()
+        if result != null {
+            return result.convert()->UInt32
+        }
+        return null
+    }
+
+    ================================================================================================
+    Reads eight bytes from this stream, interpreting them as a `UInt64` value. The interpretation of
+    the bytes is determined by the [byteOrder] field.
+    ================================================================================================
+    method read():UInt64? {
+        def result:Int64 := read()
+        if result != null {
+            return result.convert()->UInt64
+        }
+        return null
+    }
+
+    ================================================================================================
+    Reads a single byte from this stream as an `Int8`.
+    ================================================================================================
+    method read():Int8? {
+        def result:UInt8? := read()
+        if result != null {
+            return result.convert()->Int8
+        }
+        return null
+    }
+
+    ================================================================================================
+    Reads two bytes from this stream, interpreting them as an `Int16` value. The interpretation of
+    the bytes is determined by the [byteOrder] field.
+    ================================================================================================
+    method read():Int16? {
+        def a:UInt8? := read()
+        if a = null {
+            return null
+        }
+        def b:UInt8? := read()
+        if b = null {
+            return null
+        }
+        if byteOrder = ByteOrder.LITTLE_ENDIAN {
+            return (b << 8 + a).convert()
+        }
+        else {
+            return (a << 8 + b).convert()
+        }
+    }
+
+    ================================================================================================
+    Reads four bytes from this stream, interpreting them as an `Int32` value. The interpretation of
+    the bytes is determined by the [byteOrder] field.
+    ================================================================================================
+    method read():Int32? {
+        def a:Int16? := read()
+        if a = null {
+            return null
+        }
+        def b:Int16? := read()
+        if b = null {
+            return null
+        }
+        if byteOrder = ByteOrder.LITTLE_ENDIAN {
+            return b << 16 + a
+        }
+        else {
+            return a << 16 + b
+        }
+    }
+
+    ================================================================================================
+    Reads eight bytes from this stream, interpreting them as an `Int64` value. The interpretation of
+    the bytes is determined by the [byteOrder] field.
+    ================================================================================================
+    method read():Int64? {
+        def a:Int32? := read()
+        if a = null {
+            return null
+        }
+        def b:Int32? := read()
+        if b = null {
+            return null
+        }
+        if byteOrder = ByteOrder.LITTLE_ENDIAN {
+            return Int64(b.value->builtin_int64) << 32 + a
+        }
+        else {
+            return Int64(a.value->builtin_int64) << 32 + b
+        }
+    }
+
+    ================================================================================================
+    Reads a single byte from this stream as a `Char8`.
+    ================================================================================================
+    method read():Char8? {
+        def result:UInt8? := read()
+        if result != null {
+            return Char8(result)
+        }
+        return null
+    }
+
+    ================================================================================================
+    Reads up to `max` bytes from this stream into a buffer and returns the number of bytes actually
+    read. Blocks until at least one byte is available for reading, or returns `0` if the end of the
+    stream has been reached.
+    ================================================================================================
+    @post(@return >= 0)
     method read(buffer:Pointer<UInt8>, max:Int):Int {
         var i := 0
         while i < max {
@@ -48,16 +193,27 @@ class InputStream {
         return i
     }
 
+    ================================================================================================
+    As [read(Pointer<UInt8>, Int)], but treats the read bytes as signed.
+    ================================================================================================
     @final
     method read(buffer:Pointer<Int8>, max:Int):Int {
         return read(buffer->Pointer<UInt8>, max)
     }
 
+    ================================================================================================
+    As [read(Pointer<UInt8>, Int)], but treats the read bytes as `Char8`s.
+    ================================================================================================
     @final
     method read(buffer:Pointer<Char8>, max:Int):Int {
         return read(buffer->Pointer<UInt8>, max)
     }
 
+    ================================================================================================
+    Reads from this stream until the end, returning the data read as a `String`. As streams may
+    contain a very large (or even infinite) amount of data, you should exercise caution when using
+    `readFully`.
+    ================================================================================================
     method readFully():String {
         constant BUFFER_SIZE := 2048
         def result := MutableString()
@@ -73,50 +229,10 @@ class InputStream {
         return result.finish()
     }
 
-    method read():Int16? {
-        def a:UInt8? := read()
-        if a = null {
-            return null
-        }
-        def b:UInt8? := read()
-        if b = null {
-            return null
-        }
-        return (a << 8 + b).convert()
-    }
-
-    method read():Int32? {
-        def a:Int16? := read()
-        if a = null {
-            return null
-        }
-        def b:Int16? := read()
-        if b = null {
-            return null
-        }
-        return a << 16 + b
-    }
-
-    method read():Int64? {
-        def a:Int32? := read()
-        if a = null {
-            return null
-        }
-        def b:Int32? := read()
-        if b = null {
-            return null
-        }
-        return Int64(a.value->builtin_int64) << 32 + b
-    }
-
-    method read():Char8? {
-        def result:UInt8? := read()
-        if result != null {
-            return Char8(result)
-        }
-        return null
-    }
-
+    ================================================================================================
+    Reads a single line of text from this stream and returns it as a `String`. Either `"\n"` or
+    `"\r\n"` is accepted as a valid line ending. The line ending is not part of the returned string.
+    ================================================================================================
     method readLine():String? {
         def result := MutableString()
         loop {
@@ -127,7 +243,10 @@ class InputStream {
                 }
                 break
             }
-            if c = Char8(10) {
+            if c = "\n" {
+                if result._length > 0 & result[result._length - 1] = "\r" {
+                    result._length -= 1
+                }
                 break
             }
             result.append(c)
@@ -155,6 +274,9 @@ class InputStream {
         return total
     }
 
+    ================================================================================================
+    Returns an `Iterator` which reads from this string one line at a time.
+    ================================================================================================
     function lines():Iterator<String> {
         return LineIterator(self)
     }

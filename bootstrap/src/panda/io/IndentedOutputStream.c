@@ -9,7 +9,7 @@
 #include "panda/core/UInt8.h"
 
 static panda$core$String $s1;
-panda$io$IndentedOutputStream$class_type panda$io$IndentedOutputStream$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$io$OutputStream$class, NULL, { panda$core$Object$convert$R$panda$core$String, panda$io$IndentedOutputStream$cleanup, panda$io$IndentedOutputStream$write$panda$core$UInt8, panda$io$OutputStream$write$panda$core$Int8, panda$io$IndentedOutputStream$write$panda$unsafe$Pointer$LTpanda$core$UInt8$GT$panda$core$Int64, panda$io$OutputStream$write$panda$unsafe$Pointer$LTpanda$core$Int8$GT$panda$core$Int64, panda$io$OutputStream$write$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64, panda$io$OutputStream$write$panda$collections$Array$LTpanda$core$UInt8$GT$panda$core$Int64, panda$io$OutputStream$write$panda$collections$Array$LTpanda$core$Int8$GT$panda$core$Int64, panda$io$OutputStream$write$panda$collections$Array$LTpanda$core$Char8$GT$panda$core$Int64, panda$io$OutputStream$write$panda$core$UInt16, panda$io$OutputStream$write$panda$core$Int16, panda$io$OutputStream$write$panda$core$UInt32, panda$io$OutputStream$write$panda$core$Int32, panda$io$OutputStream$write$panda$core$UInt64, panda$io$OutputStream$write$panda$core$Int64, panda$io$OutputStream$write$panda$core$Char8, panda$io$OutputStream$print$panda$core$Object, panda$io$OutputStream$print$panda$core$String, panda$io$OutputStream$printLine, panda$io$OutputStream$printLine$panda$core$Object, panda$io$OutputStream$printLine$panda$core$String, panda$io$OutputStream$flush, panda$io$IndentedOutputStream$indentIfNeeded} };
+panda$io$IndentedOutputStream$class_type panda$io$IndentedOutputStream$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$io$OutputStream$class, NULL, { panda$core$Object$convert$R$panda$core$String, panda$io$IndentedOutputStream$cleanup, panda$io$IndentedOutputStream$write$panda$core$UInt8, panda$io$OutputStream$write$panda$core$UInt16, panda$io$OutputStream$write$panda$core$UInt32, panda$io$OutputStream$write$panda$core$UInt64, panda$io$OutputStream$write$panda$core$Int8, panda$io$OutputStream$write$panda$core$Int16, panda$io$OutputStream$write$panda$core$Int32, panda$io$OutputStream$write$panda$core$Int64, panda$io$IndentedOutputStream$write$panda$unsafe$Pointer$LTpanda$core$UInt8$GT$panda$core$Int64, panda$io$OutputStream$write$panda$unsafe$Pointer$LTpanda$core$Int8$GT$panda$core$Int64, panda$io$OutputStream$write$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64, panda$io$OutputStream$write$panda$collections$Array$LTpanda$core$UInt8$GT$panda$core$Int64, panda$io$OutputStream$write$panda$collections$Array$LTpanda$core$Int8$GT$panda$core$Int64, panda$io$OutputStream$write$panda$collections$Array$LTpanda$core$Char8$GT$panda$core$Int64, panda$io$OutputStream$write$panda$core$Char8, panda$io$OutputStream$print$panda$core$String, panda$io$OutputStream$print$panda$core$Object, panda$io$OutputStream$printLine$panda$core$String, panda$io$OutputStream$printLine$panda$core$Object, panda$io$OutputStream$printLine, panda$io$OutputStream$flush, panda$io$IndentedOutputStream$indentIfNeeded} };
 
 typedef void (*$fn12)(panda$io$OutputStream*, panda$core$UInt8);
 typedef void (*$fn23)(panda$io$OutputStream*, panda$core$UInt8*, panda$core$Int64);
@@ -28,6 +28,7 @@ void panda$io$IndentedOutputStream$init$panda$io$OutputStream(panda$io$IndentedO
     panda$core$Bit $tmp6;
     panda$io$OutputStream* $tmp7;
     panda$io$OutputStream* $tmp8;
+    self->lineEnding = NULL;
     self->indent = NULL;
     self->out = NULL;
     panda$core$Int64$init$builtin_int64(&$tmp2, 0);
@@ -46,6 +47,7 @@ void panda$io$IndentedOutputStream$init$panda$io$OutputStream(panda$io$IndentedO
         panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp8));
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp7));
     }
+    panda$io$OutputStream$init(((panda$io$OutputStream*) self));
 }
 void panda$io$IndentedOutputStream$write$panda$core$UInt8(panda$io$IndentedOutputStream* self, panda$core$UInt8 p_b) {
     panda$core$UInt8 $tmp9;
@@ -85,7 +87,7 @@ void panda$io$IndentedOutputStream$write$panda$unsafe$Pointer$LTpanda$core$UInt8
         if ($tmp21.value) {
         {
             panda$core$Int64 $tmp22 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(current15, start13);
-            (($fn23) self->out->$class->vtable[4])(self->out, (p_ptr + start13.value), $tmp22);
+            (($fn23) self->out->$class->vtable[10])(self->out, (p_ptr + start13.value), $tmp22);
             start13 = current15;
             panda$core$Bit$init$builtin_bit(&$tmp24, true);
             self->atLineStart = $tmp24;
@@ -95,7 +97,7 @@ void panda$io$IndentedOutputStream$write$panda$unsafe$Pointer$LTpanda$core$UInt8
         if (self->atLineStart.value) {
         {
             panda$core$Int64 $tmp25 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(current15, start13);
-            (($fn26) self->out->$class->vtable[4])(self->out, (p_ptr + start13.value), $tmp25);
+            (($fn26) self->out->$class->vtable[10])(self->out, (p_ptr + start13.value), $tmp25);
             start13 = current15;
             panda$io$IndentedOutputStream$indentIfNeeded(self);
         }
@@ -108,7 +110,7 @@ void panda$io$IndentedOutputStream$write$panda$unsafe$Pointer$LTpanda$core$UInt8
     goto $l16;
     $l17:;
     panda$core$Int64 $tmp29 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(current15, start13);
-    (($fn30) self->out->$class->vtable[4])(self->out, (p_ptr + start13.value), $tmp29);
+    (($fn30) self->out->$class->vtable[10])(self->out, (p_ptr + start13.value), $tmp29);
 }
 void panda$io$IndentedOutputStream$indentIfNeeded(panda$io$IndentedOutputStream* self) {
     panda$core$Bit $tmp31;
@@ -136,7 +138,7 @@ void panda$io$IndentedOutputStream$indentIfNeeded(panda$io$IndentedOutputStream*
             }
         }
         }
-        (($fn40) ((panda$io$OutputStream*) self)->$class->vtable[18])(((panda$io$OutputStream*) self), self->indent);
+        (($fn40) ((panda$io$OutputStream*) self)->$class->vtable[17])(((panda$io$OutputStream*) self), self->indent);
     }
     }
 }

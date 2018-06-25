@@ -181,6 +181,10 @@ class Parser {
     method error(token:Token, msg:String) {
         if !inSpeculative & reportErrors {
             errors.post(Compiler.Error(path, token.position, msg))
+            if msg = "expected '(', but found 'T'" {
+                Console.printLine(msg)
+                System.crash()
+            }
         }
     }
 

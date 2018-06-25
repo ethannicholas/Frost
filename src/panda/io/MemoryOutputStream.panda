@@ -13,12 +13,19 @@ class MemoryOutputStream : OutputStream {
     @private
     var data:MutableString
 
+    ================================================================================================
+    Creates a new `MemoryOutputStream`.
+    ================================================================================================
     init() {
         init(DEFAULT_CAPACITY)
     }
 
+    ================================================================================================
+    Creates a new `MemoryOutputStream` with the specified capacity.
+    ================================================================================================
     init(capacity:Int) {
         data := MutableString(capacity)
+        super.init()
     }
 
     @override
@@ -31,6 +38,9 @@ class MemoryOutputStream : OutputStream {
         data.append(ptr->Pointer<Char8>, count)
     }
 
+    ================================================================================================
+    Clears all data written to the stream.
+    ================================================================================================
     method clear() {
         data.clear()
     }
@@ -47,7 +57,8 @@ class MemoryOutputStream : OutputStream {
     ================================================================================================
     Invalidates this stream and returns its contents as an immutable `String`. This is generally
     preferable to [convert()], as it does not copy the stream's contents. Interacting in any way
-    with a `MemoryOutputStream` after `finish`ing it will cause precondition violations.
+    with a `MemoryOutputStream` after `finish`ing it will cause precondition violations (or, if
+    safety checks are disabled, undefined behavior).
     ================================================================================================
     method finish():String {
         return data.finish()

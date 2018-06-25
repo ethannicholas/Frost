@@ -20,6 +20,7 @@ class PushbackInputStream : InputStream {
     ================================================================================================
     init(source:InputStream) {
         self.source := source
+        super.init()
     }
 
     @override

@@ -22,10 +22,13 @@ struct { panda$core$Class* cl; ITable* next; void* methods[10]; } panda$core$Str
 static panda$core$String $s1;
 panda$core$String$UTF16Iterator$class_type panda$core$String$UTF16Iterator$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, (ITable*) &panda$core$String$UTF16Iterator$_panda$collections$Iterator, { panda$core$Object$convert$R$panda$core$String, panda$core$String$UTF16Iterator$cleanup, panda$core$String$UTF16Iterator$get_done$R$panda$core$Bit, panda$core$String$UTF16Iterator$next$R$panda$core$Char16$shim} };
 
+typedef panda$core$Bit (*$fn14)(panda$core$String$UTF16Iterator*);
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x55\x54\x46\x31\x36\x49\x74\x65\x72\x61\x74\x6f\x72", 31, -7181782867719721369, NULL };
 static panda$core$String $s9 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x53\x74\x72\x69\x6e\x67\x2e\x70\x61\x6e\x64\x61", 12, -7878295537817775382, NULL };
 static panda$core$String $s10 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x75\x6e\x69\x6d\x70\x6c\x65\x6d\x65\x6e\x74\x65\x64", 13, -3192095292821253576, NULL };
+static panda$core$String $s19 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x53\x74\x72\x69\x6e\x67\x2e\x70\x61\x6e\x64\x61", 12, -7878295537817775382, NULL };
+static panda$core$String $s20 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x53\x74\x72\x69\x6e\x67\x2e\x55\x54\x46\x31\x36\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x6e\x65\x78\x74\x28\x29\x3a\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x43\x68\x61\x72\x31\x36", 90, 4917415208278291084, NULL };
 
 void panda$core$String$UTF16Iterator$init$panda$core$String(panda$core$String$UTF16Iterator* self, panda$core$String* p_str) {
     panda$core$Int64 $tmp3;
@@ -56,30 +59,37 @@ panda$core$Bit panda$core$String$UTF16Iterator$get_done$R$panda$core$Bit(panda$c
     return $returnValue11;
 }
 panda$core$Char16 panda$core$String$UTF16Iterator$next$R$panda$core$Char16(panda$core$String$UTF16Iterator* self) {
-    panda$core$Int64 $tmp14;
-    panda$core$Char16 $returnValue16;
-    panda$core$Char16 $tmp17;
-    panda$core$UInt16 $tmp18;
-    panda$core$Int64$init$builtin_int64(&$tmp14, 1);
-    panda$core$Int64 $tmp15 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, $tmp14);
-    self->index = $tmp15;
-    panda$core$UInt16$init$builtin_uint16(&$tmp18, 1);
-    panda$core$Char16$init$panda$core$UInt16(&$tmp17, $tmp18);
-    $returnValue16 = $tmp17;
-    return $returnValue16;
+    panda$core$Int64 $tmp21;
+    panda$core$Char16 $returnValue23;
+    panda$core$Char16 $tmp24;
+    panda$core$UInt16 $tmp25;
+    panda$core$Bit $tmp15 = (($fn14) self->$class->vtable[2])(self);
+    panda$core$Bit $tmp16 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp15);
+    if ($tmp16.value) goto $l17; else goto $l18;
+    $l18:;
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s19, (panda$core$Int64) { 146 }, &$s20);
+    abort();
+    $l17:;
+    panda$core$Int64$init$builtin_int64(&$tmp21, 1);
+    panda$core$Int64 $tmp22 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, $tmp21);
+    self->index = $tmp22;
+    panda$core$UInt16$init$builtin_uint16(&$tmp25, 1);
+    panda$core$Char16$init$panda$core$UInt16(&$tmp24, $tmp25);
+    $returnValue23 = $tmp24;
+    return $returnValue23;
 }
 void panda$core$String$UTF16Iterator$cleanup(panda$core$String$UTF16Iterator* self) {
-    int $tmp22;
+    int $tmp29;
     {
     }
-    $tmp22 = -1;
-    goto $l20;
-    $l20:;
+    $tmp29 = -1;
+    goto $l27;
+    $l27:;
     panda$core$Object$cleanup(((panda$core$Object*) self));
-    switch ($tmp22) {
-        case -1: goto $l23;
+    switch ($tmp29) {
+        case -1: goto $l30;
     }
-    $l23:;
+    $l30:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->str));
 }
 

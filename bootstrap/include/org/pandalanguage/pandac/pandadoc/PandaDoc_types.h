@@ -25,6 +25,6 @@ typedef struct org$pandalanguage$pandac$pandadoc$PandaDoc {
     panda$core$Bit haveSees;
 } org$pandalanguage$pandac$pandadoc$PandaDoc;
 #include "panda/core/Class.h"
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[32]; } org$pandalanguage$pandac$pandadoc$PandaDoc$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[38]; } org$pandalanguage$pandac$pandadoc$PandaDoc$class_type;
 extern org$pandalanguage$pandac$pandadoc$PandaDoc$class_type org$pandalanguage$pandac$pandadoc$PandaDoc$class;
 
