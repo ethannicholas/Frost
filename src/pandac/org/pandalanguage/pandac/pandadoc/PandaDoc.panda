@@ -10,44 +10,19 @@ uses org.pandalanguage.pandac.MethodDecl
 uses org.pandalanguage.pandac.Pair
 uses org.pandalanguage.pandac.Type
 
-class PandaDoc : CodeGenerator {
-    class XMLWriter {
-        def out:IndentedOutputStream
-
-        def stack := Stack<String>()
-
-        init(out:OutputStream) {
-            self.out := IndentedOutputStream(out)
-        }
-
-        method open(tag:String) {
-            out.printLine("<\{tag}>")
-            out.level += 1
-            stack.push(tag)
-        }
-
-        method close(tag:String) {
-            out.level -= 1
-            out.printLine("</\{tag}>")
-            stack.pop(tag)
-        }
-
-        method write(tag:String, text:String) {
-            assert !text.contains("&&gt")
-            out.printLine("<\{tag}>\{text}</\{tag}>")
-        }
-    }
-
+class PandaDoc {
     def outDir:File
+
+    def tocFile:File
+
+    def apiRelativePath:String
 
     @weak
     var compiler:Compiler?
 
     var out:XMLWriter
 
-    def classListPath:File
-
-    def classList := HashSet<String>()
+    def classes := Array<ClassDecl>()
 
     var returns:String?
 
@@ -57,19 +32,13 @@ class PandaDoc : CodeGenerator {
 
     var haveSees := false
 
-    init(outDir:File, classListPath:File?) {
-        self.outDir := outDir
-        if classListPath != null {
-            self.classListPath := classListPath
-            if classListPath.exists() {
-                classListPath.lines().apply(classList.add)
-            }
-        }
-    }
+    def tableOfContents := TableOfContentsNode("", "")
 
-    @override
-    method setCompiler(compiler:Compiler) {
+    init(compiler:Compiler, outDir:File, tocFile:File, apiRelativePath:String) {
         self.compiler := compiler
+        self.outDir := outDir
+        self.tocFile := tocFile
+        self.apiRelativePath := apiRelativePath
     }
 
     function getRelativePath(cl:ClassDecl, extension:String):String {
@@ -216,7 +185,7 @@ class PandaDoc : CodeGenerator {
     }
 
     function getMarkdown():Markdown {
-        return Markdown(LinkResolver(compiler, currentClass).resolve)
+        return Markdown(LinkResolver(compiler, apiRelativePath, currentClass).resolve)
     }
 
     method writeDoc(doccomment:String) {
@@ -450,15 +419,15 @@ class PandaDoc : CodeGenerator {
     }
 
     function linkTo(cl:ClassDecl):String {
-        return LinkResolver(compiler, currentClass).linkTo(cl)
+        return LinkResolver(compiler, apiRelativePath, currentClass).linkTo(cl)
     }
 
     function linkTo(m:MethodDecl):String {
-        return LinkResolver(compiler, currentClass).linkTo(m)
+        return LinkResolver(compiler, apiRelativePath, currentClass).linkTo(m)
     }
 
     function linkTo(f:FieldDecl):String {
-        return LinkResolver(compiler, currentClass).linkTo(f)
+        return LinkResolver(compiler, apiRelativePath, currentClass).linkTo(f)
     }
 
     method writeInheritedFields(cl:ClassDecl) {
@@ -578,15 +547,34 @@ class PandaDoc : CodeGenerator {
         }
     }
 
-    @override
-    method start(cl:ClassDecl) {
-        if !visible(cl) {
-            return
+    method addTableOfContentsEntry(s:String, url:String) {
+        var name := ""
+        var current := tableOfContents
+        for component in s.split(".") {
+            if name != "" {
+                name += "."
+            }
+            name += component
+            var child := current.children[component]
+            if child = null {
+                child := TableOfContentsNode(name, url)
+                current.children[component] := child
+            }
+            current := child
         }
+    }
+
+    method add(cl:ClassDecl) {
+        if visible(cl) {
+            self.currentClass := cl
+            classes.add(cl)
+            addTableOfContentsEntry(cl.name, cl.name.replace(".", "/") + ".html")
+        }
+    }
+
+    method process(cl:ClassDecl) {
+        compiler.currentClass.push(cl)
         self.currentClass := cl
-        if !cl.annotations.isPrivate() {
-            classList.add(cl.name)
-        }
         def dest := getPath(cl, ".xml")
         dest.parent().createDirectories()
         out := XMLWriter(dest.openOutputStream())
@@ -615,7 +603,7 @@ class PandaDoc : CodeGenerator {
         while base.owner != null {
             base := base.owner
         }
-        out.write("source", "../" * cl.name.find(".").count() + "source/" +
+        out.write("source", "../" * (cl.name.find(".").count() + 1) + "source/" +
                 base.name.replace(".", "/") + ".html")
         writeDoc(cl)
         writeAncestors(cl)
@@ -630,24 +618,49 @@ class PandaDoc : CodeGenerator {
         cl.fields.apply(self.write) -- FIXME shouldn't need 'self.'
         cl.methods.apply(self.write) -- FIXME shouldn't need 'self.'
         out.close("class")
+        compiler.currentClass.pop(cl)
+        out := XMLWriter(MemoryOutputStream())
     }
 
-    @override
-    method writeDeclaration(m:MethodDecl) {
-    }
-
-    @override
-    method write(m:MethodDecl, body:ImmutableArray<IRNode>) {
-    }
-
-    @override
-    method end(cl:ClassDecl) {
-    }
-
-    @override
-    method finish() {
-        if classListPath != null {
-            classListPath.write(classList.join("\n"))
+    method writePackage(node:TableOfContentsNode) {
+        out.open("package")
+        out.write("name", node.name)
+        out.open("contents")
+        for c in node.children.values() {
+            def cl := compiler.getClass(c.name)
+            if cl = null {
+                writePackage(c)
+            }
+            else {
+                out.open("class")
+                write(cl.type())
+                if cl.doccomment != null {
+                    writeDoc(cl.doccomment)
+                }
+                out.close("class")
+            }
         }
+        out.close("contents")
+        out.close("package")
+    }
+
+    method writePackages(node:TableOfContentsNode) {
+        if compiler.getClass(node.name) = null {
+            def dest := outDir.resolve(node.name.replace(".", "/")).resolve("index.xml")
+            Console.printLine(dest)
+            out := XMLWriter(dest.openOutputStream())
+            writePackage(node)
+        }
+        for c in node.children.values() {
+            writePackages(c)
+        }
+    }
+
+    method finish() {
+        classes.apply(process)
+        writePackages(tableOfContents)
+        out := XMLWriter(tocFile.openOutputStream())
+        tableOfContents.write(apiRelativePath, out)
+        out := XMLWriter(MemoryOutputStream())
     }
 }

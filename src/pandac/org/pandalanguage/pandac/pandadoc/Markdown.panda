@@ -752,12 +752,12 @@ class Markdown {
         markup.replace(/(?m)^(.*)\n====+$/, function(groups:ListView<String?>):String {
             def result := MutableString(groups[1])
             runSpanGamut(result)
-            return "<h1>\{result}</h1>"
+            return "<a name=\"\{groups[1]}\"></a><h1>\{result}</h1>"
         })
         markup.replace(/(?m)^(.*)\n----+$/, function(groups:ListView<String?>):String {
             def result := MutableString(groups[1])
             runSpanGamut(result)
-            return "<h2>\{result}</h2>"
+            return "<a name=\"\{groups[1]}\"></a><h2>\{result}</h2>"
         })
 
         -- atx-style headers - e.g., "#### heading 4 ####"

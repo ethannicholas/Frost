@@ -53,12 +53,12 @@ Panda's strings are immutable, but there is a mutable variant called `MutableStr
 Basic Types
 -----------
 
-* `Int8`, `Int16`, `Int32`, `Int64`
-* `UInt8`, `UInt16`, `UInt32`, `UInt64`
-* `Real32`, `Real64`
-* `Bit`
-* `Char8`, `Char16`, `Char32`
-* `String`
+* [Int8], [Int16], [Int32], [Int64]
+* [UInt8], [UInt16], [UInt32], [UInt64]
+* [Real32], [Real64]
+* [Bit]
+* [Char8], [Char16], [Char32]
+* [String]
 
 `Bit` is Panda's Boolean type, which has only two values: `true` and `false`.
 
@@ -402,6 +402,23 @@ be extracted using `match`:
         ...
     }
 
+Packages
+--------
+
+A [package](packages.html) is a dotted namespace in which classes reside. Packages are declared by
+a `package` statement at the beginning of a file:
+
+    package com.example.foo
+
+Uses
+----
+
+The [`uses`](packages.html#uses) declaration allows you to refer to a class by its simple name:
+
+    uses com.example.foo.Example
+
+After this `uses` declaration, the name `Example` refers to the class `com.example.foo.Example`.
+
 Annotations
 -----------
 
@@ -735,7 +752,7 @@ value of an expression.
 
     (x:Int, y:Int) => x + y
 
-If the type of the lambda is implied by its context (for instance, passing it to a method which
+If the type of the lambda is implied by its context (for instance, when passing it to a method which
 expects a particular function type), you may omit the types:
 
     x => x.abs()
@@ -745,7 +762,6 @@ expects a particular function type), you may omit the types:
 And that's it!
 --------------
 
-That provides at least a brief overview of all of the major features of Panda. To learn more, take a
-look at the links below:
-
-[pending]
+That provides at least a brief overview of all of the major features of Panda. If you haven't
+already done so, you may wish to take a look at how to [get started](gettingStarted.html) with
+Panda programming.

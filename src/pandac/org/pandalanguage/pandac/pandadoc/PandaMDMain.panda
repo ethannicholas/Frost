@@ -15,11 +15,10 @@ constant HEADER :=
     "    <link rel=\"stylesheet\" type=\"text/css\" href=\"panda-main.css\" />\n" +
     "    <link rel=\"stylesheet\" type=\"text/css\" href=\"pandadoc.css\" />\n" +
     "    <link rel=\"stylesheet\" type=\"text/css\" href=\"pandacode-light.css\" />\n" +
-    "    <script src=\"site.js\"></script>\n" +
     "  </head>\n" +
     "  <body>\n" +
     "    <div id=\"main\">" +
-    "      @@@TOC@@@" +
+    "      <!--TOCBEGIN--><!--TOCEND-->" +
     "      <div id=\"content\">"
 
 constant FOOTER :=
@@ -28,6 +27,7 @@ constant FOOTER :=
     "  </body>" +
     "</html>"
 
+@private
 class DummyCodeGenerator : CodeGenerator {
     @override
     method setCompiler(compiler:Compiler) {
@@ -55,13 +55,17 @@ class DummyCodeGenerator : CodeGenerator {
 }
 
 method main(args:ListView<String>) {
+    if args.get_count() != 3 {
+        Console.errorStream().printLine("usage: pandamd <input.md> <output.html>")
+        System.exit(1)
+    }
     def input := File(args[1])
     def output := File(args[2])
+    output.parent().createDirectories()
     def imports := Array<File>() -- FIXME literal
     imports.add(File(Config.pandaSourceDir()))
     def settings := Settings(File(Config.pandaSourceDir()), imports, 0, 0)
     def compiler := Compiler(MessageQueue<Error>(), DummyCodeGenerator(), settings)
-    imports.add(File(Config.pandaSourceDir()))
-    def resolve := LinkResolver(compiler).resolve
+    def resolve := LinkResolver(compiler, "api/").resolve
     output.write(HEADER + Markdown(resolve).process(input.readFully()) + FOOTER)
 }

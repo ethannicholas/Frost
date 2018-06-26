@@ -1,7 +1,7 @@
 Overview
 ========
 
-Panda is a general-purpose multi-paradigm programming language with support for:
+Panda is a general purpose multi-paradigm programming language with support for:
 
 * First-class immutable objects and value types
 * First-class functions and closures

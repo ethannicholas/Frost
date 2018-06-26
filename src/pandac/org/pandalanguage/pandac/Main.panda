@@ -14,7 +14,6 @@ class Main {
         C_HEADER
         C
         HTML
-        XML
     }
 
     var opt:File
@@ -157,7 +156,6 @@ class Main {
         var safetyLevel := 3
         var format:Format? := null
         var root:String? := null
-        var classList:String? := null
         def err := Console.errorStream()
         while !args.get_done() {
             def a := args.next()
@@ -200,7 +198,6 @@ class Main {
                         when "h":    format := Format.C_HEADER
                         when "c":    format := Format.C
                         when "html": format := Format.HTML
-                        when "xml":  format := Format.XML
                         otherwise:
                             err.printLine("unsupported output format '\{f}'")
                             System.exit(1)
@@ -209,8 +206,6 @@ class Main {
                     imports.add(File(args.next("a path to an import directory")))
                 when "--root":
                     root := args.next("a path")
-                when "--classList":
-                    classList := args.next("a path")
                 otherwise:
                     if a.endsWith(".panda") {
                         sources.add(File(a))
@@ -267,10 +262,6 @@ class Main {
             err.printLine("--root requires 'html' output format")
             System.exit(1)
         }
-        if classList != null & format != Format.XML {
-            err.printLine("--classList requires 'xml' output format")
-            System.exit(1)
-        }
         def errorCount:Int
         {
             def cg:CodeGenerator
@@ -282,8 +273,6 @@ class Main {
                     cg := HCodeGenerator(outFile)
                 when Format.C:
                     cg := CCodeGenerator(outFile)
-                when Format.XML:
-                    cg := PandaDoc(outFile, File(classList))
                 otherwise:
                     assert false
             }

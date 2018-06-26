@@ -1,0 +1,29 @@
+package org.pandalanguage.pandac.pandadoc
+
+class XMLWriter {
+    def out:IndentedOutputStream
+
+    def stack := Stack<String>()
+
+    init(out:OutputStream) {
+        self.out := IndentedOutputStream(out)
+    }
+
+    method open(tag:String) {
+        out.printLine("<\{tag}>")
+        out.level += 1
+        stack.push(tag)
+    }
+
+    method close(tag:String) {
+        out.level -= 1
+        out.printLine("</\{tag}>")
+        stack.pop(tag)
+    }
+
+    method write(tag:String, text:String) {
+        assert !text.contains("&&gt")
+        out.printLine("<\{tag}>\{text}</\{tag}>")
+    }
+}
+

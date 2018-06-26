@@ -2,8 +2,8 @@ Properties
 ==========
 
 A `property` is a value of an object which is used like a [field](fields.html), but which actually
-results in a [function](functions.html) call for getting its value and a [method](methods.html) call
-for setting its value. There are many advantages of properties, such as:
+results in a [function](functions.html) call when getting its value and a [method](methods.html)
+call when setting its value. There are many advantages of properties, such as:
 
 1. The ability to perform additional actions when a property is set
 2. The ability to compute property values at runtime, without having to store them in the object

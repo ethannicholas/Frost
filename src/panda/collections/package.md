@@ -1,0 +1,1 @@
+Standard collection data types such as `Array` and `HashMap`.

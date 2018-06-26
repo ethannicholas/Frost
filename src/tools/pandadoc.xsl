@@ -66,7 +66,7 @@
         </xsl:variable>
         <xsl:call-template name="repeatString">
             <xsl:with-param name="text" select="'../'"/>
-            <xsl:with-param name="count" select="$count"/>
+            <xsl:with-param name="count" select="$count + 1"/>
         </xsl:call-template>
     </xsl:template>
 
@@ -98,7 +98,7 @@
 
     <xsl:template name="toc">
         <div id="toc">
-            @@@TOC@@@
+            <xsl:comment>TOCBEGIN</xsl:comment><xsl:comment>TOCEND</xsl:comment>
         </div>
     </xsl:template>
 
@@ -701,5 +701,18 @@
         <xsl:copy>
             <xsl:apply-templates select="node()|@*"/>
         </xsl:copy>
+    </xsl:template>
+
+    <xsl:template match="package">
+        <h1>Package <xsl:apply-templates select="name/text()"/></h1>
+        <dl>
+            <xsl:apply-templates select="contents/package"/>
+            <xsl:apply-templates select="contents/class" mode="package"/>
+        </dl>
+    </xsl:template>
+
+    <xsl:template match="class" mode="package">
+        <dt><a href="api/{path}"><xsl:value-of select="type/simpleName"/></a></dt>
+        <dd><xsl:apply-templates select="doc/summary"/></dd>
     </xsl:template>
 </xsl:stylesheet>

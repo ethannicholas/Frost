@@ -1,15 +1,20 @@
-class Node {
+package org.pandalanguage.pandac.pandadoc
+
+class TableOfContentsNode {
     def name:String
 
-    def children := HashMap<String, Node>()
+    def url:String
 
-    init(name:String) {
+    def children := HashMap<String, TableOfContentsNode>()
+
+    init(name:String, url:String) {
         self.name := name
+        self.url := url
     }
 
     @private
     @class
-    method swap(a:List<Node>, i1:Int, i2:Int) {
+    method swap(a:List<TableOfContentsNode>, i1:Int, i2:Int) {
         def tmp := a[i1]
         a[i1] := a[i2]
         a[i2] := tmp
@@ -31,7 +36,7 @@ class Node {
 
     @private
     @class
-    method sort(a:List<Node>, left:Int, right:Int) {
+    method sort(a:List<TableOfContentsNode>, left:Int, right:Int) {
         if left >= right {
             return
         }
@@ -55,14 +60,13 @@ class Node {
     sorted natively. FIXME kill this.
     ================================================================================================
     @class
-    method sort(a:List<Node>) {
+    method sort(a:List<TableOfContentsNode>) {
         sort(a, 0, a.get_count() - 1)
     }
 
-    method write(out:IndentedOutputStream) {
-        out.printLine("<entry>")
-        out.level += 1
-        if name != "" {
+    method write(apiRelativePath:String, out:XMLWriter) {
+        out.open("entry")
+        if name != null {
             var index := name.lastIndexOf(".")
             if index != null {
                 index := name.next(index)
@@ -70,53 +74,19 @@ class Node {
             else {
                 index := name.start()
             }
-            out.printLine("<name>\{name}</name>")
-            out.printLine("<simpleName>\{name[index..]}</simpleName>")
-            out.printLine("<path>\{name.replace(".", "/")}.html</path>")
+            out.write("name", name)
+            out.write("simpleName", name[index..])
+            out.write("url", apiRelativePath + url)
         }
         if children.get_count() != 0 {
-            out.printLine("<contents>")
-            out.level += 1
+            out.open("contents")
             def list := children.values().all()
             sort(list)
             for child in list {
-                child.write(out)
+                child.write(apiRelativePath, out)
             }
-            out.level -= 1
-            out.printLine("</contents>")
+            out.close("contents")
         }
-        out.level -= 1
-        out.printLine("</entry>")
+        out.close("entry")
     }
-}
-
-def root := Node("")
-
-method add(s:String) {
-    if s.contains("<") | s.startsWith("org.") {
-        -- don't add specializations or org.* classes
-        return
-    }
-    var name := ""
-    var current := root
-    for component in s.split(".") {
-        if name != "" {
-            name += "."
-        }
-        name += component
-        var child := current.children[component]
-        if child = null {
-            child := Node(name)
-            current.children[component] := child
-        }
-        current := child
-    }
-}
-
-method main(args:ListView<String>) {
-    assert args.get_count() = 3
-    File(args[1]).lines().apply(add)
-    def dest := File(args[2])
-    dest.parent().createDirectories()
-    root.write(IndentedOutputStream(dest.openOutputStream()))
 }

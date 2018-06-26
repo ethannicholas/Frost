@@ -6,8 +6,7 @@ definitely thinking @default might not be a bad plan.
 delete temporary files
 Closures not working with both self and local variable captures at the same time
 Proper lambda / inner method errors
-Documentation (still need: choices, inner classes,fix bug with * in operators.md,
-    fix links with parentheses...)
+Documentation (still need: choices, fix bug with * in operators.md, fix links with parentheses...)
 Array literals
 Properties
 fix command line parsing

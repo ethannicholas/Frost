@@ -1,5 +1,5 @@
-Overview
-========
+The Panda Programming Language
+==============================
 
 Panda is a high-level, general-purpose multiparadigm programming language with support for:
 

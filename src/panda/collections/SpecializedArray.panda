@@ -26,6 +26,7 @@ class SpecializedArrayIterator<T> : Iterator<T> {
     }
 }
 
+@private
 @final
 @specialize
 class SpecializedArray<T> : List<T> {

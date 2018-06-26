@@ -14,14 +14,18 @@ class LinkResolver {
     def compiler:Compiler
 
     @private
+    def apiRelativePath:String
+
+    @private
     def context:ClassDecl?
 
-    init(compiler:Compiler) {
-        init(compiler, null)
+    init(compiler:Compiler, apiRelativePath:String) {
+        init(compiler, apiRelativePath, null)
     }
 
-    init(compiler:Compiler, context:ClassDecl?) {
+    init(compiler:Compiler, apiRelativePath:String, context:ClassDecl?) {
         self.compiler := compiler
+        self.apiRelativePath := apiRelativePath
         self.context := context
     }
 
@@ -43,7 +47,7 @@ class LinkResolver {
             base := "../" * context.name.find(".").count()
         }
         else {
-            base := ""
+            base := apiRelativePath
         }
         return base + cl.name.replace(".", "/") + ".html"
     }

@@ -5,7 +5,7 @@ Represents a file path, providing methods to query, read, and write files. A `Fi
 merely the path to the file, not the actual physical file on disk, so creating a `File` object does
 not in and of itself cause any interaction with the filesystem.
 
-Paths are always assumed to use `"/"` as a file separator regardless of operating system.
+`File` always uses `"/"` as a path separator regardless of operating system.
 ====================================================================================================
 @final
 class File : Immutable, Key<File> {
@@ -31,6 +31,9 @@ class File : Immutable, Key<File> {
         if path.startsWith("/") {
             return File(path)
         }
+        if self.path.endsWith("/") {
+            return File(self.path + path)
+        }
         return File(self.path + "/" + path)
     }
 
@@ -44,6 +47,13 @@ class File : Immutable, Key<File> {
         return openInputStream().lines()
     }
 
+    ================================================================================================
+    Returns `true` if this file represents an absolute path.
+    ================================================================================================
+    function isAbsolute():Bit {
+        return path.startsWith("/")
+    }
+    
     @private
     @external
     method absolutePath():String

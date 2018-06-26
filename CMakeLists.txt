@@ -589,7 +589,6 @@ set(pandac_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/Variable.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/pandadoc/LinkResolver.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/pandadoc/Markdown.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/pandadoc/PandaDoc.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/parser/Parser.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/parser/SyntaxHighlighter.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/regex/RegexParser.panda
@@ -745,13 +744,13 @@ add_custom_command(
             ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_C_COMPILER} ${ICU_LIBRARIES}
 )
 
-compile_pandac_sources(markdown_objects
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/pandadoc/Main.panda
+compile_pandac_sources(pandamd_objects
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/pandadoc/PandaMDMain.panda
     ${pandac_source}
 )
 
 add_executable(pandamd
-    ${markdown_objects}
+    ${pandamd_objects}
 )
 target_link_libraries(pandamd panda ${SYSTEM_LIBRARIES} ${ICU_LIBRARIES})
 set_target_properties(pandamd PROPERTIES LINKER_LANGUAGE CXX)
@@ -761,7 +760,7 @@ function(run_markdown out_var)
     foreach(input ${ARGN})
         set(input "${CMAKE_CURRENT_SOURCE_DIR}/${input}")
         get_filename_component(output ${input} NAME_WE)
-        set(output "${CMAKE_CURRENT_BINARY_DIR}/rawDocs/${output}.html")
+        set(output "${CMAKE_CURRENT_BINARY_DIR}/docs/${output}.html")
         add_custom_command(
             OUTPUT ${output}
             COMMAND ${CMAKE_CURRENT_BINARY_DIR}/pandamd ${input} ${output}
@@ -815,13 +814,27 @@ run_markdown(markdown_html
     docs/weakReferences.md
 )
 
+compile_pandac_sources(pandadoc_objects
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/pandadoc/PandaDoc.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/pandadoc/PandaDocMain.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/pandadoc/TableOfContentsNode.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/pandadoc/XMLWriter.panda
+    ${pandac_source}
+)
+
+add_executable(pandadoc
+    ${pandadoc_objects}
+)
+target_link_libraries(pandadoc panda ${SYSTEM_LIBRARIES} ${ICU_LIBRARIES})
+set_target_properties(pandadoc PROPERTIES LINKER_LANGUAGE CXX)
+
 function(syntax_highlight out_var)
     set(result)
     foreach(input ${ARGN})
         file(RELATIVE_PATH relative "${CMAKE_CURRENT_SOURCE_DIR}/src" ${input})
         get_filename_component(outputPath ${relative} DIRECTORY)
         get_filename_component(outputName ${relative} NAME_WE)
-        set(output "${CMAKE_CURRENT_BINARY_DIR}/rawDocs/source/${outputPath}/${outputName}.html")
+        set(output "${CMAKE_CURRENT_BINARY_DIR}/docs/source/${outputPath}/${outputName}.html")
         string(REGEX REPLACE "[A-Za-z]+" ".." root ${outputPath})
         add_custom_command(
             OUTPUT ${output}
@@ -837,151 +850,7 @@ syntax_highlight(panda_source_html
     ${public_source}
 )
 
-function(run_pandadoc out_var)
-    set(result)
-    foreach(input ${ARGN})
-        file(RELATIVE_PATH relative "${CMAKE_CURRENT_SOURCE_DIR}/src" ${input})
-        get_filename_component(outputPath ${relative} DIRECTORY)
-        get_filename_component(outputName ${relative} NAME_WE)
-        set(output "${CMAKE_CURRENT_BINARY_DIR}/xml/${outputPath}/${outputName}.xml")
-        string(REGEX REPLACE "[A-Za-z]+" ".." root ${outputPath})
-        add_custom_command(
-            OUTPUT ${output}
-            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/pandac -f xml --classList ${CMAKE_CURRENT_BINARY_DIR}/classList.txt ${input} -o ${CMAKE_CURRENT_BINARY_DIR}/xml
-            DEPENDS ${input} pandac
-        )
-        list(APPEND result ${output})
-    endforeach()
-    set(${out_var} "${result}" PARENT_SCOPE)
-endfunction()
-
-run_pandadoc(panda_xml
-    ${public_source}
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Range.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/SteppedRange.panda
-)
-
-function(xslt_pandadoc out_var)
-    set(result)
-    set(xsl ${CMAKE_CURRENT_SOURCE_DIR}/src/tools/pandadoc.xsl)
-    foreach(input ${ARGN})
-        file(RELATIVE_PATH relative "${CMAKE_CURRENT_BINARY_DIR}/xml" ${input})
-        get_filename_component(outputPath ${relative} DIRECTORY)
-        get_filename_component(outputName ${relative} NAME_WE)
-        set(output "${CMAKE_CURRENT_BINARY_DIR}/rawDocs/${outputPath}/${outputName}.html")
-        file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/rawDocs/${outputPath}")
-        add_custom_command(
-            OUTPUT ${output}
-            COMMAND xsltproc ${xsl} ${input} > ${output}
-            DEPENDS ${xsl} ${input}
-        )
-        list(APPEND result ${output})
-    endforeach()
-    set(${out_var} "${result}" PARENT_SCOPE)
-endfunction()
-
-# hack to add the inner classes to the output; they should already have been in panda_xml, but
-# it's hard to capture this
-set(inner_class_xml
-        ${CMAKE_CURRENT_BINARY_DIR}/xml/panda/core/MutableString/Index.xml
-        ${CMAKE_CURRENT_BINARY_DIR}/xml/panda/core/String/Index.xml
-        ${CMAKE_CURRENT_BINARY_DIR}/xml/panda/core/String/Match.xml
-        ${CMAKE_CURRENT_BINARY_DIR}/xml/panda/core/System/Process.xml
-        ${CMAKE_CURRENT_BINARY_DIR}/xml/panda/io/InputStream/ByteOrder.xml
-        ${CMAKE_CURRENT_BINARY_DIR}/xml/panda/io/OutputStream/ByteOrder.xml
-)
-add_custom_command(
-    DEPENDS
-        ${CMAKE_CURRENT_BINARY_DIR}/xml/panda/core/MutableString.xml
-        ${CMAKE_CURRENT_BINARY_DIR}/xml/panda/core/String.xml
-        ${CMAKE_CURRENT_BINARY_DIR}/xml/panda/core/System.xml
-        ${CMAKE_CURRENT_BINARY_DIR}/xml/panda/io/InputStream.xml
-        ${CMAKE_CURRENT_BINARY_DIR}/xml/panda/io/OutputStream.xml
-    OUTPUT
-        ${inner_class_xml}
-)
-
-add_custom_command(
-    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/MakeTableOfContents
-    COMMAND pandac -o MakeTableOfContents
-            ${CMAKE_CURRENT_SOURCE_DIR}/src/tools/MakeTableOfContents.panda
-    DEPENDS pandac src/tools/MakeTableOfContents.panda
-    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-)
-
-add_custom_command(
-    OUTPUT xml/toc.xml
-    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/MakeTableOfContents
-            classList.txt
-            xml/toc.xml
-    DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/MakeTableOfContents ${panda_xml}
-    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-)
-
-xslt_pandadoc(panda_doc_html
-    ${panda_xml}
-    ${inner_class_xml}
-)
-
-function(xslt_tableOfContents out_var)
-    set(result)
-    set(xsl ${CMAKE_CURRENT_SOURCE_DIR}/src/tools/tableOfContents.xsl)
-    foreach(input ${ARGN})
-        file(RELATIVE_PATH relative "${CMAKE_CURRENT_BINARY_DIR}/xml" ${input})
-        get_filename_component(outputPath ${relative} DIRECTORY)
-        get_filename_component(outputName ${relative} NAME_WE)
-        set(output "${CMAKE_CURRENT_BINARY_DIR}/rawDocs/${outputPath}/${outputName}.html")
-        file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/rawDocs/${outputPath}")
-        add_custom_command(
-            OUTPUT ${output}
-            COMMAND xsltproc ${xsl} ${input} > ${output}
-            DEPENDS ${xsl} ${input} ${panda_html}
-        )
-        list(APPEND result ${output})
-    endforeach()
-    set(${out_var} "${result}" PARENT_SCOPE)
-endfunction()
-
-xslt_tableOfContents(toc_html
-    ${CMAKE_CURRENT_BINARY_DIR}/xml/toc.xml
-)
-
-add_custom_command(
-    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/AddTableOfContents
-    COMMAND pandac -o AddTableOfContents
-            ${CMAKE_CURRENT_SOURCE_DIR}/src/tools/AddTableOfContents.panda
-    DEPENDS pandac src/tools/AddTableOfContents.panda
-    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-)
-
-add_custom_target(add_toc
-    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/AddTableOfContents
-            rawDocs/toc.html
-            rawDocs
-            docs
-    DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/AddTableOfContents ${toc_html} 
-            ${markdown_html} ${panda_source_html} ${panda_doc_html}
-    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-)
-
 add_custom_target(docs
-    DEPENDS add_toc
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/docs/html/closed.png
-            ${CMAKE_CURRENT_BINARY_DIR}/docs
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/docs/html/open.png
-            ${CMAKE_CURRENT_BINARY_DIR}/docs
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/docs/html/panda-main.css
-            ${CMAKE_CURRENT_BINARY_DIR}/docs
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/docs/html/panda-source.css
-            ${CMAKE_CURRENT_BINARY_DIR}/docs
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/docs/html/pandacode-monokai.css
-            ${CMAKE_CURRENT_BINARY_DIR}/docs
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/docs/html/pandacode-light.css
-            ${CMAKE_CURRENT_BINARY_DIR}/docs
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/docs/html/pandadoc.css
-            ${CMAKE_CURRENT_BINARY_DIR}/docs
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/docs/html/toc.css
-            ${CMAKE_CURRENT_BINARY_DIR}/docs
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/docs/html/site.js
-            ${CMAKE_CURRENT_BINARY_DIR}/docs
+    COMMAND pandadoc ${CMAKE_CURRENT_SOURCE_DIR}/src/panda ${CMAKE_CURRENT_BINARY_DIR}/docs api
+    DEPENDS pandadoc ${public_source} ${markdown_html} ${panda_source_html}
 )

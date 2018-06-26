@@ -6,7 +6,6 @@
     <xsl:output method="html" indent="yes"/>
 
     <xsl:template match="/entry">
-        <link rel="stylesheet" type="text/css" href="toc.css"/>
         <script src="site.js"/>
         <div id="toc">
             <ul>
@@ -67,7 +66,7 @@
                                 <li id="packagesBullet" class="collapse">
                                     <a href="packages.html">Packages</a>
                                     <ul>
-                                        <li><a href="uses.html">Uses</a></li>
+                                        <li><a href="packages.html#uses">Uses</a></li>
                                     </ul>
                                 </li>
                                 <li><a href="bareCode.html">Bare Code</a></li>
@@ -136,7 +135,7 @@
             <xsl:if test="contents">
                 <xsl:attribute name="class">collapse</xsl:attribute>
             </xsl:if>
-            <a href="{path}"><xsl:value-of select="simpleName"/></a>
+            <a href="{url}"><xsl:value-of select="simpleName"/></a>
             <xsl:apply-templates select="contents"/>
         </li>
     </xsl:template>

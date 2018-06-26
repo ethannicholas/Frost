@@ -410,7 +410,7 @@ Process* panda$core$System$exec$panda$io$File$panda$collections$ListView$LTpanda
             cargs[i + 1] = pandaGetCString(index(args, i));
         }
         cargs[argCount + 1] = NULL;
-        execv(cargs[0], cargs);
+        execvp(cargs[0], cargs);
         perror("error exec'ing child process");
         // we don't bother freeing the argument memory because we just kill the process here
         exit(1);
