@@ -17,9 +17,9 @@ choice IRNode {
     CALL(Position, Type, MethodRef, ImmutableArray<IRNode>)
     CAST(Position, IRNode, Type, Bit -* explicit *-)
     -- a choice entry, like IRNode.Kind.STRING
-    CHOICE_ENTRY_REFERENCE(Position, ChoiceEntry)
+    CHOICE_CASE_REFERENCE(Position, ChoiceCase)
     -- a field of a choice entry, like IRNode.Kind.STRING[0]
-    CHOICE_FIELD_REFERENCE(Position, IRNode, ChoiceEntry, Int)
+    CHOICE_FIELD_REFERENCE(Position, IRNode, ChoiceCase, Int)
     CONSTRUCT(Position, Type, IRNode -* init call *-)
     -- target used for init calls during object construction, meaning "the object that was just
     -- constructed"
@@ -84,7 +84,7 @@ choice IRNode {
                 return type
             when CAST(_, _, type, _):
                 return type
-            when CHOICE_ENTRY_REFERENCE(_, ce):
+            when CHOICE_CASE_REFERENCE(_, ce):
                 return Type.Invalid()
             when CHOICE_FIELD_REFERENCE(_, _, ce, field):
                 return ce.fields[field]
@@ -170,7 +170,7 @@ choice IRNode {
                 return position
             when CAST(position, _, _, _):
                 return position
-            when CHOICE_ENTRY_REFERENCE(position, _):
+            when CHOICE_CASE_REFERENCE(position, _):
                 return position
             when CHOICE_FIELD_REFERENCE(position, _, _, _):
                 return position
@@ -290,7 +290,7 @@ choice IRNode {
                 return false
             when CAST:
                 return false
-            when CHOICE_ENTRY_REFERENCE:
+            when CHOICE_CASE_REFERENCE:
                 return false
             when CHOICE_FIELD_REFERENCE:
                 return false
@@ -504,7 +504,7 @@ choice IRNode {
             return transformed
         }
         match self {
-            when AT_RETURN, BIT, BREAK, CHOICE_ENTRY_REFERENCE, CONSTRUCTED_OBJECT, CONTINUE, INT,
+            when AT_RETURN, BIT, BREAK, CHOICE_CASE_REFERENCE, CONSTRUCTED_OBJECT, CONTINUE, INT,
                     NEGATED_INT, NULL, REAL, SELF, SELF_CAPTURE, STRING, SUPER, REUSED_VALUE,
                     TYPE_REFERENCE, UNRESOLVED_IDENTIFIER, UNRESOLVED_METHOD_REFERENCE,
                     UNRESOLVED_INDEX, UNRESOLVED_LAMBDA, UNRESOLVED_METHOD_CALL, UNRESOLVED_RANGE,
@@ -718,7 +718,7 @@ choice IRNode {
                 return "\{m.value.name}(\{args.join()})"
             when CAST(_, value, type, _):
                 return "\{value}->\{type}"
-            when CHOICE_ENTRY_REFERENCE(_, ce):
+            when CHOICE_CASE_REFERENCE(_, ce):
                 return ce.convert()
             when CHOICE_FIELD_REFERENCE(_, base, ce, field):
                 return "\{base}.\{ce}[\{field}]"

@@ -100,7 +100,7 @@ void org$pandalanguage$pandac$Variable$init$org$pandalanguage$pandac$Position$or
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp28));
     }
     self->storage = p_storage;
-    panda$core$Int64$init$builtin_int64(&$tmp31, 7);
+    panda$core$Int64$init$builtin_int64(&$tmp31, 8);
     org$pandalanguage$pandac$Symbol$Kind$init$panda$core$Int64(&$tmp30, $tmp31);
     org$pandalanguage$pandac$Symbol$init$org$pandalanguage$pandac$Symbol$Kind$org$pandalanguage$pandac$Position$panda$core$String(((org$pandalanguage$pandac$Symbol*) self), $tmp30, p_position, p_name);
 }

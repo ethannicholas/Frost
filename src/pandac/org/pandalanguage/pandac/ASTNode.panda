@@ -3,7 +3,7 @@ package org.pandalanguage.pandac
 uses org.pandalanguage.pandac.parser.Token
 
 choice ASTNode {
-    ANNOTATION             (Position, String, ASTNode? -* expression *-)
+    ANNOTATION             (Position, String, String? -* expr text *-, ASTNode? -* expr *-)
     ASSERT                 (Position, ASTNode, ASTNode?)
     AT_PRE                 (Position, ASTNode -* expression *-)
     AT_RETURN              (Position)
@@ -12,11 +12,11 @@ choice ASTNode {
     BLOCK                  (Position, ImmutableArray<ASTNode>)
     BREAK                  (Position, String?)
     CALL                   (Position, ASTNode, ImmutableArray<ASTNode>)
-    CHOICE_ENTRY           (Position,
+    CHOICE_CASE            (Position,
                             ASTNode?                 -* Doccomment (STRING) *-,
                             String                   -* name *-,
                             ImmutableArray<ASTNode>? -* field TYPEs *-)
-    CHOICE_FIELD_REFERENCE (Position, ASTNode -* base *-, ChoiceEntry, Int -* field index *-)
+    CHOICE_FIELD_REFERENCE (Position, ASTNode -* base *-, ChoiceCase, Int -* field index *-)
     CLASS                  (Position,
                             ASTNode?                 -* Doccomment (STRING) *-,
                             ImmutableArray<ASTNode>  -* ANNOTATIONs *-,
@@ -84,7 +84,7 @@ choice ASTNode {
 
     function position():Position {
         match self {
-            when ANNOTATION(position, _, _):
+            when ANNOTATION(position, _, _, _):
                 return position
             when ASSERT(position, _, _):
                 return position
@@ -102,7 +102,7 @@ choice ASTNode {
                 return position
             when CALL(position, _, _):
                 return position
-            when CHOICE_ENTRY(position, _, _, _):
+            when CHOICE_CASE(position, _, _, _):
                 return position
             when CHOICE_FIELD_REFERENCE(position, _, _, _):
                 return position
@@ -191,7 +191,7 @@ choice ASTNode {
     @override
     function convert():String {
         match self {
-            when ANNOTATION(_, name, expr):
+            when ANNOTATION(_, name, _, expr):
                 if expr != null {
                     return "\{name}(\{expr})"
                 }
@@ -223,7 +223,7 @@ choice ASTNode {
                 return "break"
             when CALL(_, target, args):
                 return "\{target}(\{args.join()})"
-            when CHOICE_ENTRY(_, dc, name, fields):
+            when CHOICE_CASE(_, dc, name, fields):
                 def result := MutableString()
                 if dc != null {
                     result.append(dc + "\n")

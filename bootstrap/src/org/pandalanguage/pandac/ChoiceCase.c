@@ -1,4 +1,4 @@
-#include "org/pandalanguage/pandac/ChoiceEntry.h"
+#include "org/pandalanguage/pandac/ChoiceCase.h"
 #include "org/pandalanguage/pandac/Symbol.h"
 #include "panda/core/Class.h"
 #include "panda/core/String.h"
@@ -16,14 +16,14 @@
 #include "org/pandalanguage/pandac/Symbol/Kind.h"
 
 static panda$core$String $s1;
-org$pandalanguage$pandac$ChoiceEntry$class_type org$pandalanguage$pandac$ChoiceEntry$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &org$pandalanguage$pandac$Symbol$class, NULL, { org$pandalanguage$pandac$ChoiceEntry$convert$R$panda$core$String, org$pandalanguage$pandac$ChoiceEntry$cleanup, org$pandalanguage$pandac$Symbol$get_heritable$R$panda$core$Bit} };
+org$pandalanguage$pandac$ChoiceCase$class_type org$pandalanguage$pandac$ChoiceCase$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &org$pandalanguage$pandac$Symbol$class, NULL, { org$pandalanguage$pandac$ChoiceCase$convert$R$panda$core$String, org$pandalanguage$pandac$ChoiceCase$cleanup, org$pandalanguage$pandac$Symbol$get_heritable$R$panda$core$Bit} };
 
 
-static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x43\x68\x6f\x69\x63\x65\x45\x6e\x74\x72\x79", 36, 4258235931078372511, NULL };
+static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x43\x68\x6f\x69\x63\x65\x43\x61\x73\x65", 35, 1868571056118340221, NULL };
 static panda$core$String $s28 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2e", 1, 147, NULL };
 static panda$core$String $s31 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
 
-void org$pandalanguage$pandac$ChoiceEntry$init$org$pandalanguage$pandac$ClassDecl$org$pandalanguage$pandac$Position$panda$core$String$panda$core$String$Q$panda$core$Int64$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT(org$pandalanguage$pandac$ChoiceEntry* self, org$pandalanguage$pandac$ClassDecl* p_owner, org$pandalanguage$pandac$Position p_position, panda$core$String* p_name, panda$core$String* p_doccomment, panda$core$Int64 p_rawValue, panda$collections$ListView* p_fields) {
+void org$pandalanguage$pandac$ChoiceCase$init$org$pandalanguage$pandac$ClassDecl$org$pandalanguage$pandac$Position$panda$core$String$panda$core$String$Q$panda$core$Int64$panda$collections$ListView$LTorg$pandalanguage$pandac$Type$GT(org$pandalanguage$pandac$ChoiceCase* self, org$pandalanguage$pandac$ClassDecl* p_owner, org$pandalanguage$pandac$Position p_position, panda$core$String* p_name, panda$core$String* p_doccomment, panda$core$Int64 p_rawValue, panda$collections$ListView* p_fields) {
     panda$core$Weak* $tmp2;
     panda$core$Weak* $tmp3;
     org$pandalanguage$pandac$Compiler$Resolution $tmp5;
@@ -83,11 +83,11 @@ void org$pandalanguage$pandac$ChoiceEntry$init$org$pandalanguage$pandac$ClassDec
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp15));
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp13));
     }
-    panda$core$Int64$init$builtin_int64(&$tmp18, 8);
+    panda$core$Int64$init$builtin_int64(&$tmp18, 1);
     org$pandalanguage$pandac$Symbol$Kind$init$panda$core$Int64(&$tmp17, $tmp18);
     org$pandalanguage$pandac$Symbol$init$org$pandalanguage$pandac$Symbol$Kind$org$pandalanguage$pandac$Position$panda$core$String(((org$pandalanguage$pandac$Symbol*) self), $tmp17, p_position, p_name);
 }
-panda$core$String* org$pandalanguage$pandac$ChoiceEntry$convert$R$panda$core$String(org$pandalanguage$pandac$ChoiceEntry* self) {
+panda$core$String* org$pandalanguage$pandac$ChoiceCase$convert$R$panda$core$String(org$pandalanguage$pandac$ChoiceCase* self) {
     panda$core$String* $returnValue19;
     panda$core$String* $tmp20;
     panda$core$String* $tmp21;
@@ -115,7 +115,7 @@ panda$core$String* org$pandalanguage$pandac$ChoiceEntry$convert$R$panda$core$Str
     panda$core$Panda$unref$panda$core$Object($tmp25);
     return $returnValue19;
 }
-void org$pandalanguage$pandac$ChoiceEntry$cleanup(org$pandalanguage$pandac$ChoiceEntry* self) {
+void org$pandalanguage$pandac$ChoiceCase$cleanup(org$pandalanguage$pandac$ChoiceCase* self) {
     int $tmp36;
     {
     }

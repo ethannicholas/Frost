@@ -107,7 +107,7 @@ void org$pandalanguage$pandac$FieldDecl$init$org$pandalanguage$pandac$ClassDecl$
         panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp17));
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp16));
     }
-    panda$core$Int64$init$builtin_int64(&$tmp19, 1);
+    panda$core$Int64$init$builtin_int64(&$tmp19, 2);
     org$pandalanguage$pandac$Symbol$Kind$init$panda$core$Int64(&$tmp18, $tmp19);
     org$pandalanguage$pandac$Symbol$init$org$pandalanguage$pandac$Symbol$Kind$org$pandalanguage$pandac$Position$panda$core$String(((org$pandalanguage$pandac$Symbol*) self), $tmp18, p_position, p_name);
 }

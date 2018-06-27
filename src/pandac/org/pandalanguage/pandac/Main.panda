@@ -56,7 +56,7 @@ class Main {
         }
     }
 
-    method optimize(llvm:File, level:Int):File {
+    method optimize(llvm:File, level:Int, preserveTemporaries:Bit):File {
         if level = 0 {
             return llvm
         }
@@ -70,13 +70,17 @@ class Main {
         args.add(dest.path)
         def p := System.exec(opt, args)
         Console.errorStream().print(p.error.readFully())
-        if p.waitFor() != 0 {
+        def exitCode := p.waitFor()
+        if !preserveTemporaries {
+            llvm.delete()
+        }
+        if exitCode != 0 {
             System.exit(1)
         }
         return dest
     }
 
-    method toAssembly(llvm:File):File {
+    method toAssembly(llvm:File, preserveTemporaries:Bit):File {
         def dest := llvm.changeExtension(".s")
         def args := Array<String>() -- FIXME literal
         args.add(llvm.path)
@@ -85,13 +89,17 @@ class Main {
         args.add(dest.path)
         def p := System.exec(llc, args)
         Console.errorStream().print(p.error.readFully())
-        if p.waitFor() != 0 {
+        def exitCode := p.waitFor()
+        if !preserveTemporaries {
+            llvm.delete()
+        }
+        if exitCode != 0 {
             System.exit(1)
         }
         return dest
     }
 
-    method toObject(assembly:File, dest:File):File {
+    method toObject(assembly:File, dest:File, preserveTemporaries:Bit):File {
         def args := Array<String>() -- FIXME literal
         args.add(assembly.path)
         args.add("-m64")
@@ -102,13 +110,17 @@ class Main {
         def p := System.exec(gcc, args)
         Console.errorStream().print(p.output.readFully())
         Console.errorStream().print(p.error.readFully())
-        if p.waitFor() != 0 {
+        def exitCode := p.waitFor()
+        if !preserveTemporaries {
+            assembly.delete()
+        }
+        if exitCode != 0 {
             System.exit(1)
         }
         return dest
     }
 
-    method toExecutable(assembly:File, dest:File):File {
+    method toExecutable(assembly:File, dest:File, preserveTemporaries:Bit):File {
         def args := Array<String>() -- FIXME literal
         args.add(assembly.path)
         args.add("-L\{Config.pandaLibDir()}")
@@ -131,7 +143,11 @@ class Main {
         def p := System.exec(gcc, args)
         Console.errorStream().print(p.output.readFully())
         Console.errorStream().print(p.error.readFully())
-        if p.waitFor() != 0 {
+        def exitCode := p.waitFor()
+        if !preserveTemporaries {
+            assembly.delete()
+        }
+        if exitCode != 0 {
             System.exit(1)
         }
         return dest
@@ -156,6 +172,7 @@ class Main {
         var safetyLevel := 3
         var format:Format? := null
         var root:String? := null
+        var preserveTemporaries := false
         def err := Console.errorStream()
         while !args.get_done() {
             def a := args.next()
@@ -297,13 +314,15 @@ class Main {
         if errorCount = 0 {
             match format {
                 when Format.EXECUTABLE:
-                    def optimized := optimize(outFile.changeExtension(".ll"), optimizationLevel)
-                    def assembly := toAssembly(optimized)
-                    toExecutable(assembly, outFile)
+                    def optimized := optimize(outFile.changeExtension(".ll"), optimizationLevel,
+                            preserveTemporaries)
+                    def assembly := toAssembly(optimized, preserveTemporaries)
+                    toExecutable(assembly, outFile, preserveTemporaries)
                 when Format.OBJECT:
-                    def optimized := optimize(outFile.changeExtension(".ll"), optimizationLevel)
-                    def assembly := toAssembly(optimized)
-                    toObject(assembly, outFile)
+                    def optimized := optimize(outFile.changeExtension(".ll"), optimizationLevel,
+                            preserveTemporaries)
+                    def assembly := toAssembly(optimized, preserveTemporaries)
+                    toObject(assembly, outFile, preserveTemporaries)
             }
         }
         else {

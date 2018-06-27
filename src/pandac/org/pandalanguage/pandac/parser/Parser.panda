@@ -2063,15 +2063,21 @@ class Parser {
     ================================================================================================
     method annotation():ASTNode? {
         def a := expect(Token.Kind.ANNOTATION, "an annotation")
-        def expr:ASTNode?
-        if checkNext(Token.Kind.LPAREN) != null {
+        def exprText:String?
+        def expr:ASTNode? := null
+        def exprStart := checkNext(Token.Kind.LPAREN)
+        if exprStart != null {
             expr := expression()
             if expr = null {
                 return null
             }
-            expect(Token.Kind.RPAREN, "')'")
+            def exprEnd := expect(Token.Kind.RPAREN, "')'")
+            if exprEnd = null {
+                return null
+            }
+            exprText := source.substring(source.next(exprStart.start) .. exprEnd.start)
         }
-        return ASTNode.ANNOTATION(a.position, text(a), expr)
+        return ASTNode.ANNOTATION(a.position, text(a), exprText, expr)
     }
 
     ================================================================================================
@@ -2283,9 +2289,9 @@ class Parser {
     }
 
     ================================================================================================
-    choiceEntry = IDENTIFIER (LPAREN (type (COMMA type)*)? RPAREN)?
+    choiceCase = IDENTIFIER (LPAREN (type (COMMA type)*)? RPAREN)?
     ================================================================================================
-    method choiceEntry(doccomment:ASTNode?):ASTNode? {
+    method choiceCase(doccomment:ASTNode?):ASTNode? {
         def name := expect(Token.Kind.IDENTIFIER, "an identifier")
         if name = null {
             return null
@@ -2310,11 +2316,11 @@ class Parser {
                 return null
             }
         }
-        return ASTNode.CHOICE_ENTRY(name.position, doccomment, text(name), fields.finish())
+        return ASTNode.CHOICE_CASE(name.position, doccomment, text(name), fields.finish())
     }
 
     ================================================================================================
-    choiceDeclaration = CHOICE IDENTIFIER LBRACE choiceEntry* declaration* RBRACE
+    choiceDeclaration = CHOICE IDENTIFIER LBRACE choiceCase* declaration* RBRACE
     ================================================================================================
     method choiceDeclaration(choiceDoccomment:ASTNode?,
             choiceAnnotations:ImmutableArray<ASTNode>):ASTNode? {
@@ -2344,7 +2350,7 @@ class Parser {
                     }
                     dc := doccomment()
                 when Token.Kind.IDENTIFIER:
-                    def c := choiceEntry(dc)
+                    def c := choiceCase(dc)
                     if c = null {
                         return null
                     }

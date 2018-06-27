@@ -341,7 +341,7 @@ class LLVMCodeGenerator : CodeGenerator {
         var result := choiceDataSizes[cl]
         if result = null {
             result := 0
-            for entry in cl.choiceEntries {
+            for entry in cl.choiceCases {
                 compiler.resolve(entry)
                 var current := 0
                 for f in entry.fields {
@@ -2165,7 +2165,7 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method getChoiceFieldReference(base:IRNode, ce:ChoiceEntry, field:Int,
+    method getChoiceFieldReference(base:IRNode, ce:ChoiceCase, field:Int,
             out:OutputStream):String {
         def lvalue := getChoiceFieldLValue(base, ce, field, out)
         def load := nextVar()
@@ -3205,7 +3205,7 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method getChoiceFieldOffset(e:ChoiceEntry, index:Int):Int {
+    method getChoiceFieldOffset(e:ChoiceCase, index:Int):Int {
         var result := 0
         for i in 0 .. index {
             -- FIXME need to respect alignment!
@@ -3244,7 +3244,7 @@ class LLVMCodeGenerator : CodeGenerator {
         return result
     }
 
-    method getChoiceFieldLValue(base:IRNode, ce:ChoiceEntry, field:Int, out:OutputStream):String {
+    method getChoiceFieldLValue(base:IRNode, ce:ChoiceCase, field:Int, out:OutputStream):String {
         def data := ce.owner.fields[1]
         assert data.name = ClassDecl.CHOICE_DATA_NAME
         def dataLValue := getFieldLValue(base, data, out)

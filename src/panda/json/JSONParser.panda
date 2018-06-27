@@ -19,7 +19,12 @@ class JSONParser {
     @private
     def pushbackToken:Token? := null
 
-    method parse(json:String):JSON {
+    ================================================================================================
+    Parses a JSON string.
+
+    @returns the JSON node the string contains, or `null` if it could not be parsed
+    ================================================================================================
+    method parse(json:String):JSON? {
         source := json
         lexer.start(json)
         return node()

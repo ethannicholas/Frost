@@ -92,7 +92,7 @@ class Scanner {
         }
         for c in a {
             match c {
-                when ASTNode.ANNOTATION(p, text, rawExpr):
+                when ASTNode.ANNOTATION(p, text, exprText, rawExpr):
                     var expr := rawExpr
                     match text {
                         when "@private":         flags := add(p, flags, Annotations.Flag.PRIVATE)
@@ -113,7 +113,7 @@ class Scanner {
                                 expressions := Array<Annotations.Expression>()
                             }
                             if checkExpression(self, p, text, expr) {
-                                expressions.add(Annotations.Expression.PRE(expr))
+                                expressions.add(Annotations.Expression.PRE(exprText, expr))
                                 expr := null
                             }
                         when "@preOr":
@@ -121,7 +121,7 @@ class Scanner {
                                 expressions := Array<Annotations.Expression>()
                             }
                             if checkExpression(self, p, text, expr) {
-                                expressions.add(Annotations.Expression.PRE_OR(expr))
+                                expressions.add(Annotations.Expression.PRE_OR(exprText, expr))
                                 expr := null
                             }
                         when "@post":
@@ -129,7 +129,7 @@ class Scanner {
                                 expressions := Array<Annotations.Expression>()
                             }
                             if checkExpression(self, p, text, expr) {
-                                expressions.add(Annotations.Expression.POST(expr))
+                                expressions.add(Annotations.Expression.POST(exprText, expr))
                                 expr := null
                             }
                         when "@postAnd":
@@ -137,7 +137,7 @@ class Scanner {
                                 expressions := Array<Annotations.Expression>()
                             }
                             if checkExpression(self, p, text, expr) {
-                                expressions.add(Annotations.Expression.POST_AND(expr))
+                                expressions.add(Annotations.Expression.POST_AND(exprText, expr))
                                 expr := null
                             }
                         otherwise:
@@ -471,14 +471,14 @@ class Scanner {
                             Position()))
                     inner.symbolTable.add(Alias(cl.simpleName(), cl.name, Position()))
                 }
-            when ASTNode.CHOICE_ENTRY(position, dc, name, fields):
-                scanChoiceEntry(cl, position, dc, name, fields)
+            when ASTNode.CHOICE_CASE(position, dc, name, fields):
+                scanChoiceCase(cl, position, dc, name, fields)
             otherwise:
                 assert false, "unsupported class child: \{node}"
         }
     }
 
-    method scanChoiceEntry(cl:ClassDecl, position:Position, rawDoccomment:ASTNode?, name:String,
+    method scanChoiceCase(cl:ClassDecl, position:Position, rawDoccomment:ASTNode?, name:String,
             rawFields:ImmutableArray<ASTNode>?) {
         def doccomment:String?
         -- FIXME should be able to match against null too
@@ -497,9 +497,9 @@ class Scanner {
         for t in rawFields {
             fields.add(convertType(t))
         }
-        def entry := ChoiceEntry(cl, position, name, doccomment, cl.choiceEntries.count,
+        def entry := ChoiceCase(cl, position, name, doccomment, cl.choiceCases.count,
                 fields)
-        cl.choiceEntries.add(entry)
+        cl.choiceCases.add(entry)
         cl.symbolTable.add(entry)
     }
 
@@ -622,8 +622,8 @@ class Scanner {
         }
         if kind = ClassDecl.Kind.CHOICE {
             var haveFields := false
-            if result.choiceEntries.count > 0 {
-                for e in result.choiceEntries {
+            if result.choiceCases.count > 0 {
+                for e in result.choiceCases {
                     if e.fields.count > 0 {
                         haveFields := true
                         break

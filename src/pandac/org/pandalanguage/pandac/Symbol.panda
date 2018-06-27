@@ -3,6 +3,7 @@ package org.pandalanguage.pandac
 class Symbol {
     choice Kind {
         ALIAS
+        CHOICE_CASE
         FIELD
         GENERIC_PARAMETER
         METHOD
@@ -10,7 +11,6 @@ class Symbol {
         PACKAGE
         TYPE
         VARIABLE
-        CHOICE_ENTRY
     }
 
     def kind:Kind

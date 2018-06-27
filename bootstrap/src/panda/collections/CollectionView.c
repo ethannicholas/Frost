@@ -73,7 +73,7 @@ panda$core$String* panda$collections$CollectionView$join$panda$core$String$R$pan
     panda$core$MutableString* result27 = NULL;
     panda$core$MutableString* $tmp28;
     panda$core$MutableString* $tmp29;
-    panda$collections$Iterator* Iter$40$934 = NULL;
+    panda$collections$Iterator* Iter$43$934 = NULL;
     panda$collections$Iterator* $tmp35;
     panda$collections$Iterator* $tmp36;
     panda$core$Object* v52 = NULL;
@@ -123,28 +123,28 @@ panda$core$String* panda$collections$CollectionView$join$panda$core$String$R$pan
                 panda$collections$Iterator* $tmp40 = $tmp38(((panda$collections$Iterable*) self));
                 $tmp36 = $tmp40;
                 $tmp35 = $tmp36;
-                Iter$40$934 = $tmp35;
+                Iter$43$934 = $tmp35;
                 panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp35));
                 panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp36));
                 $l41:;
-                ITable* $tmp44 = Iter$40$934->$class->itable;
+                ITable* $tmp44 = Iter$43$934->$class->itable;
                 while ($tmp44->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
                     $tmp44 = $tmp44->next;
                 }
                 $fn46 $tmp45 = $tmp44->methods[0];
-                panda$core$Bit $tmp47 = $tmp45(Iter$40$934);
+                panda$core$Bit $tmp47 = $tmp45(Iter$43$934);
                 panda$core$Bit $tmp48 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp47);
                 bool $tmp43 = $tmp48.value;
                 if (!$tmp43) goto $l42;
                 {
                     int $tmp51;
                     {
-                        ITable* $tmp55 = Iter$40$934->$class->itable;
+                        ITable* $tmp55 = Iter$43$934->$class->itable;
                         while ($tmp55->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
                             $tmp55 = $tmp55->next;
                         }
                         $fn57 $tmp56 = $tmp55->methods[1];
-                        panda$core$Object* $tmp58 = $tmp56(Iter$40$934);
+                        panda$core$Object* $tmp58 = $tmp56(Iter$43$934);
                         $tmp54 = $tmp58;
                         $tmp53 = $tmp54;
                         v52 = $tmp53;
@@ -188,8 +188,8 @@ panda$core$String* panda$collections$CollectionView$join$panda$core$String$R$pan
             $tmp33 = -1;
             goto $l31;
             $l31:;
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$40$934));
-            Iter$40$934 = NULL;
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$43$934));
+            Iter$43$934 = NULL;
             switch ($tmp33) {
                 case -1: goto $l62;
             }
@@ -241,7 +241,7 @@ panda$core$Object* panda$collections$CollectionView$fold$$LPpanda$collections$Co
     panda$core$Bit $tmp74 = panda$core$Int64$$GT$panda$core$Int64$R$panda$core$Bit($tmp72, $tmp73);
     if ($tmp74.value) goto $l75; else goto $l76;
     $l76:;
-    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s77, (panda$core$Int64) { 81 }, &$s78);
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s77, (panda$core$Int64) { 84 }, &$s78);
     abort();
     $l75:;
     int $tmp81;
@@ -326,7 +326,7 @@ panda$core$Object* panda$collections$CollectionView$fold$$LPpanda$collections$Co
 panda$core$Object* panda$collections$CollectionView$fold$$LPpanda$collections$CollectionView$T$Cpanda$collections$CollectionView$T$RP$EQ$GT$LPpanda$collections$CollectionView$T$RP$panda$collections$CollectionView$T$R$panda$collections$CollectionView$T(panda$collections$CollectionView* self, panda$core$MutableMethod* p_f, panda$core$Object* p_start) {
     panda$core$Object* result123 = NULL;
     panda$core$Object* $tmp124;
-    panda$collections$Iterator* Iter$102$9128 = NULL;
+    panda$collections$Iterator* Iter$105$9128 = NULL;
     panda$collections$Iterator* $tmp129;
     panda$collections$Iterator* $tmp130;
     panda$core$Object* v146 = NULL;
@@ -354,28 +354,28 @@ panda$core$Object* panda$collections$CollectionView$fold$$LPpanda$collections$Co
                 panda$collections$Iterator* $tmp134 = $tmp132(((panda$collections$Iterable*) self));
                 $tmp130 = $tmp134;
                 $tmp129 = $tmp130;
-                Iter$102$9128 = $tmp129;
+                Iter$105$9128 = $tmp129;
                 panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp129));
                 panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp130));
                 $l135:;
-                ITable* $tmp138 = Iter$102$9128->$class->itable;
+                ITable* $tmp138 = Iter$105$9128->$class->itable;
                 while ($tmp138->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
                     $tmp138 = $tmp138->next;
                 }
                 $fn140 $tmp139 = $tmp138->methods[0];
-                panda$core$Bit $tmp141 = $tmp139(Iter$102$9128);
+                panda$core$Bit $tmp141 = $tmp139(Iter$105$9128);
                 panda$core$Bit $tmp142 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp141);
                 bool $tmp137 = $tmp142.value;
                 if (!$tmp137) goto $l136;
                 {
                     int $tmp145;
                     {
-                        ITable* $tmp149 = Iter$102$9128->$class->itable;
+                        ITable* $tmp149 = Iter$105$9128->$class->itable;
                         while ($tmp149->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
                             $tmp149 = $tmp149->next;
                         }
                         $fn151 $tmp150 = $tmp149->methods[1];
-                        panda$core$Object* $tmp152 = $tmp150(Iter$102$9128);
+                        panda$core$Object* $tmp152 = $tmp150(Iter$105$9128);
                         $tmp148 = $tmp152;
                         $tmp147 = $tmp148;
                         v146 = $tmp147;
@@ -412,8 +412,8 @@ panda$core$Object* panda$collections$CollectionView$fold$$LPpanda$collections$Co
             $tmp127 = -1;
             goto $l125;
             $l125:;
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$102$9128));
-            Iter$102$9128 = NULL;
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$105$9128));
+            Iter$105$9128 = NULL;
             switch ($tmp127) {
                 case -1: goto $l160;
             }
@@ -437,7 +437,7 @@ panda$core$Object* panda$collections$CollectionView$fold$$LPpanda$collections$Co
     abort();
 }
 void panda$collections$CollectionView$apply$$LPpanda$collections$CollectionView$T$RP$EQ$AM$GT$LP$RP(panda$collections$CollectionView* self, panda$core$MutableMethod* p_m) {
-    panda$collections$Iterator* Iter$117$9169 = NULL;
+    panda$collections$Iterator* Iter$120$9169 = NULL;
     panda$collections$Iterator* $tmp170;
     panda$collections$Iterator* $tmp171;
     panda$core$Object* v187 = NULL;
@@ -454,28 +454,28 @@ void panda$collections$CollectionView$apply$$LPpanda$collections$CollectionView$
             panda$collections$Iterator* $tmp175 = $tmp173(((panda$collections$Iterable*) self));
             $tmp171 = $tmp175;
             $tmp170 = $tmp171;
-            Iter$117$9169 = $tmp170;
+            Iter$120$9169 = $tmp170;
             panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp170));
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp171));
             $l176:;
-            ITable* $tmp179 = Iter$117$9169->$class->itable;
+            ITable* $tmp179 = Iter$120$9169->$class->itable;
             while ($tmp179->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
                 $tmp179 = $tmp179->next;
             }
             $fn181 $tmp180 = $tmp179->methods[0];
-            panda$core$Bit $tmp182 = $tmp180(Iter$117$9169);
+            panda$core$Bit $tmp182 = $tmp180(Iter$120$9169);
             panda$core$Bit $tmp183 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp182);
             bool $tmp178 = $tmp183.value;
             if (!$tmp178) goto $l177;
             {
                 int $tmp186;
                 {
-                    ITable* $tmp190 = Iter$117$9169->$class->itable;
+                    ITable* $tmp190 = Iter$120$9169->$class->itable;
                     while ($tmp190->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
                         $tmp190 = $tmp190->next;
                     }
                     $fn192 $tmp191 = $tmp190->methods[1];
-                    panda$core$Object* $tmp193 = $tmp191(Iter$117$9169);
+                    panda$core$Object* $tmp193 = $tmp191(Iter$120$9169);
                     $tmp189 = $tmp193;
                     $tmp188 = $tmp189;
                     v187 = $tmp188;
@@ -503,8 +503,8 @@ void panda$collections$CollectionView$apply$$LPpanda$collections$CollectionView$
         $tmp168 = -1;
         goto $l166;
         $l166:;
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$117$9169));
-        Iter$117$9169 = NULL;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$120$9169));
+        Iter$120$9169 = NULL;
         switch ($tmp168) {
             case -1: goto $l197;
         }

@@ -91,7 +91,7 @@ class ClassDecl {
 
     def classes := Array<ClassDecl>()
 
-    def choiceEntries := Array<ChoiceEntry>()
+    def choiceCases := Array<ChoiceCase>()
 
     @weak
     def owner:ClassDecl? := null

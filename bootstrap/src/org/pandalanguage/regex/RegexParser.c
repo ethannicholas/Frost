@@ -10,6 +10,7 @@
 #include "org/pandalanguage/regex/RegexToken.h"
 #include "panda/core/Int64.h"
 #include "panda/core/Bit.h"
+#include "panda/collections/CollectionView.h"
 #include "org/pandalanguage/regex/RegexToken/Kind.h"
 #include "org/pandalanguage/pandac/Compiler/Error.h"
 #include "panda/core/Immutable.h"
@@ -22,16 +23,20 @@
 static panda$core$String $s1;
 org$pandalanguage$regex$RegexParser$class_type org$pandalanguage$regex$RegexParser$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, NULL, { panda$core$Object$convert$R$panda$core$String, org$pandalanguage$regex$RegexParser$cleanup, org$pandalanguage$regex$RegexParser$start$panda$io$File$panda$core$String, org$pandalanguage$regex$RegexParser$next$R$org$pandalanguage$regex$RegexToken, org$pandalanguage$regex$RegexParser$pushback$org$pandalanguage$regex$RegexToken, org$pandalanguage$regex$RegexParser$peek$R$org$pandalanguage$regex$RegexToken, org$pandalanguage$regex$RegexParser$checkNext$org$pandalanguage$regex$RegexToken$Kind$R$panda$core$Bit, org$pandalanguage$regex$RegexParser$expect$org$pandalanguage$regex$RegexToken$Kind$panda$core$String$R$panda$core$Bit, org$pandalanguage$regex$RegexParser$error$org$pandalanguage$regex$RegexToken$panda$core$String, org$pandalanguage$regex$RegexParser$text$org$pandalanguage$regex$RegexToken$R$panda$core$String, org$pandalanguage$regex$RegexParser$characterClass$R$panda$core$Bit, org$pandalanguage$regex$RegexParser$integer$R$panda$core$Bit, org$pandalanguage$regex$RegexParser$metacharacter$R$panda$core$Bit, org$pandalanguage$regex$RegexParser$atom$R$panda$core$Bit, org$pandalanguage$regex$RegexParser$factor$R$panda$core$Bit, org$pandalanguage$regex$RegexParser$term$R$panda$core$Bit, org$pandalanguage$regex$RegexParser$expression$R$panda$core$Bit, org$pandalanguage$regex$RegexParser$regex$R$org$pandalanguage$pandac$ASTNode$Q} };
 
+typedef panda$core$Int64 (*$fn16)(panda$collections$CollectionView*);
+typedef panda$core$Int64 (*$fn23)(panda$collections$CollectionView*);
+typedef panda$core$Int64 (*$fn36)(panda$collections$CollectionView*);
+typedef panda$core$Int64 (*$fn44)(panda$collections$CollectionView*);
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x72\x65\x67\x65\x78\x2e\x52\x65\x67\x65\x78\x50\x61\x72\x73\x65\x72", 35, -3638705302730546102, NULL };
-static panda$core$String $s56 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x65\x78\x70\x65\x63\x74\x65\x64\x20", 9, 2200356131793558883, NULL };
-static panda$core$String $s58 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2c\x20\x62\x75\x74\x20\x66\x6f\x75\x6e\x64\x20\x27", 13, 2997537454666094279, NULL };
-static panda$core$String $s63 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x27", 1, 140, NULL };
-static panda$core$String $s82 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x5d", 1, 194, NULL };
-static panda$core$String $s93 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x61\x6e\x20\x69\x6e\x74\x65\x67\x65\x72", 10, -3616559055790534302, NULL };
-static panda$core$String $s192 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x27\x29\x27", 3, 1432320, NULL };
-static panda$core$String $s203 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x27\x5d\x27", 3, 1437572, NULL };
-static panda$core$String $s217 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x27\x7d\x27", 3, 1440804, NULL };
+static panda$core$String $s68 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x65\x78\x70\x65\x63\x74\x65\x64\x20", 9, 2200356131793558883, NULL };
+static panda$core$String $s70 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2c\x20\x62\x75\x74\x20\x66\x6f\x75\x6e\x64\x20\x27", 13, 2997537454666094279, NULL };
+static panda$core$String $s75 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x27", 1, 140, NULL };
+static panda$core$String $s94 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x5d", 1, 194, NULL };
+static panda$core$String $s105 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x61\x6e\x20\x69\x6e\x74\x65\x67\x65\x72", 10, -3616559055790534302, NULL };
+static panda$core$String $s204 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x27\x29\x27", 3, 1432320, NULL };
+static panda$core$String $s215 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x27\x5d\x27", 3, 1437572, NULL };
+static panda$core$String $s229 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x27\x7d\x27", 3, 1440804, NULL };
 
 void org$pandalanguage$regex$RegexParser$init$panda$threads$MessageQueue$LTorg$pandalanguage$pandac$Compiler$Error$GT(org$pandalanguage$regex$RegexParser* self, panda$threads$MessageQueue* p_errors) {
     org$pandalanguage$regex$RegexLexer* $tmp2;
@@ -90,286 +95,306 @@ void org$pandalanguage$regex$RegexParser$start$panda$io$File$panda$core$String(o
     panda$collections$SpecializedArray$LTorg$pandalanguage$regex$RegexToken$GT$clear(self->pushbackBuffer);
 }
 org$pandalanguage$regex$RegexToken org$pandalanguage$regex$RegexParser$next$R$org$pandalanguage$regex$RegexToken(org$pandalanguage$regex$RegexParser* self) {
-    panda$core$Int64 $tmp15;
-    panda$core$Int64 idx17;
-    panda$core$Int64 $tmp19;
-    org$pandalanguage$regex$RegexToken result21;
-    org$pandalanguage$regex$RegexToken $returnValue23;
-    org$pandalanguage$regex$RegexToken result25;
-    panda$core$Int64 $tmp14 = panda$collections$SpecializedArray$LTorg$pandalanguage$regex$RegexToken$GT$get_count$R$panda$core$Int64(self->pushbackBuffer);
-    panda$core$Int64$init$builtin_int64(&$tmp15, 0);
-    panda$core$Bit $tmp16 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit($tmp14, $tmp15);
-    if ($tmp16.value) {
+    panda$core$Int64 $tmp18;
+    panda$core$Int64 idx20;
+    panda$core$Int64 $tmp25;
+    org$pandalanguage$regex$RegexToken result27;
+    org$pandalanguage$regex$RegexToken $returnValue29;
+    org$pandalanguage$regex$RegexToken result31;
+    ITable* $tmp14 = ((panda$collections$CollectionView*) self->pushbackBuffer)->$class->itable;
+    while ($tmp14->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
+        $tmp14 = $tmp14->next;
+    }
+    $fn16 $tmp15 = $tmp14->methods[0];
+    panda$core$Int64 $tmp17 = $tmp15(((panda$collections$CollectionView*) self->pushbackBuffer));
+    panda$core$Int64$init$builtin_int64(&$tmp18, 0);
+    panda$core$Bit $tmp19 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit($tmp17, $tmp18);
+    if ($tmp19.value) {
     {
-        panda$core$Int64 $tmp18 = panda$collections$SpecializedArray$LTorg$pandalanguage$regex$RegexToken$GT$get_count$R$panda$core$Int64(self->pushbackBuffer);
-        panda$core$Int64$init$builtin_int64(&$tmp19, 1);
-        panda$core$Int64 $tmp20 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64($tmp18, $tmp19);
-        idx17 = $tmp20;
-        org$pandalanguage$regex$RegexToken $tmp22 = panda$collections$SpecializedArray$LTorg$pandalanguage$regex$RegexToken$GT$$IDX$panda$core$Int64$R$org$pandalanguage$regex$RegexToken(self->pushbackBuffer, idx17);
-        result21 = $tmp22;
-        panda$collections$SpecializedArray$LTorg$pandalanguage$regex$RegexToken$GT$removeIndex$panda$core$Int64$R$org$pandalanguage$regex$RegexToken(self->pushbackBuffer, idx17);
-        $returnValue23 = result21;
-        return $returnValue23;
+        ITable* $tmp21 = ((panda$collections$CollectionView*) self->pushbackBuffer)->$class->itable;
+        while ($tmp21->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
+            $tmp21 = $tmp21->next;
+        }
+        $fn23 $tmp22 = $tmp21->methods[0];
+        panda$core$Int64 $tmp24 = $tmp22(((panda$collections$CollectionView*) self->pushbackBuffer));
+        panda$core$Int64$init$builtin_int64(&$tmp25, 1);
+        panda$core$Int64 $tmp26 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64($tmp24, $tmp25);
+        idx20 = $tmp26;
+        org$pandalanguage$regex$RegexToken $tmp28 = panda$collections$SpecializedArray$LTorg$pandalanguage$regex$RegexToken$GT$$IDX$panda$core$Int64$R$org$pandalanguage$regex$RegexToken(self->pushbackBuffer, idx20);
+        result27 = $tmp28;
+        panda$collections$SpecializedArray$LTorg$pandalanguage$regex$RegexToken$GT$removeIndex$panda$core$Int64$R$org$pandalanguage$regex$RegexToken(self->pushbackBuffer, idx20);
+        $returnValue29 = result27;
+        return $returnValue29;
     }
     }
-    org$pandalanguage$regex$RegexToken $tmp26 = org$pandalanguage$regex$RegexLexer$next$R$org$pandalanguage$regex$RegexToken(self->lexer);
-    result25 = $tmp26;
-    $returnValue23 = result25;
-    return $returnValue23;
+    org$pandalanguage$regex$RegexToken $tmp32 = org$pandalanguage$regex$RegexLexer$next$R$org$pandalanguage$regex$RegexToken(self->lexer);
+    result31 = $tmp32;
+    $returnValue29 = result31;
+    return $returnValue29;
 }
 void org$pandalanguage$regex$RegexParser$pushback$org$pandalanguage$regex$RegexToken(org$pandalanguage$regex$RegexParser* self, org$pandalanguage$regex$RegexToken p_token) {
     panda$collections$SpecializedArray$LTorg$pandalanguage$regex$RegexToken$GT$add$org$pandalanguage$regex$RegexToken(self->pushbackBuffer, p_token);
 }
 org$pandalanguage$regex$RegexToken org$pandalanguage$regex$RegexParser$peek$R$org$pandalanguage$regex$RegexToken(org$pandalanguage$regex$RegexParser* self) {
-    panda$core$Int64 $tmp29;
-    org$pandalanguage$regex$RegexToken $returnValue32;
-    panda$core$Int64 $tmp34;
-    panda$core$Int64 $tmp28 = panda$collections$SpecializedArray$LTorg$pandalanguage$regex$RegexToken$GT$get_count$R$panda$core$Int64(self->pushbackBuffer);
-    panda$core$Int64$init$builtin_int64(&$tmp29, 0);
-    panda$core$Bit $tmp30 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp28, $tmp29);
-    if ($tmp30.value) {
+    panda$core$Int64 $tmp38;
+    org$pandalanguage$regex$RegexToken $returnValue41;
+    panda$core$Int64 $tmp46;
+    ITable* $tmp34 = ((panda$collections$CollectionView*) self->pushbackBuffer)->$class->itable;
+    while ($tmp34->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
+        $tmp34 = $tmp34->next;
+    }
+    $fn36 $tmp35 = $tmp34->methods[0];
+    panda$core$Int64 $tmp37 = $tmp35(((panda$collections$CollectionView*) self->pushbackBuffer));
+    panda$core$Int64$init$builtin_int64(&$tmp38, 0);
+    panda$core$Bit $tmp39 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($tmp37, $tmp38);
+    if ($tmp39.value) {
     {
-        org$pandalanguage$regex$RegexToken $tmp31 = org$pandalanguage$regex$RegexParser$next$R$org$pandalanguage$regex$RegexToken(self);
-        org$pandalanguage$regex$RegexParser$pushback$org$pandalanguage$regex$RegexToken(self, $tmp31);
+        org$pandalanguage$regex$RegexToken $tmp40 = org$pandalanguage$regex$RegexParser$next$R$org$pandalanguage$regex$RegexToken(self);
+        org$pandalanguage$regex$RegexParser$pushback$org$pandalanguage$regex$RegexToken(self, $tmp40);
     }
     }
-    panda$core$Int64 $tmp33 = panda$collections$SpecializedArray$LTorg$pandalanguage$regex$RegexToken$GT$get_count$R$panda$core$Int64(self->pushbackBuffer);
-    panda$core$Int64$init$builtin_int64(&$tmp34, 1);
-    panda$core$Int64 $tmp35 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64($tmp33, $tmp34);
-    org$pandalanguage$regex$RegexToken $tmp36 = panda$collections$SpecializedArray$LTorg$pandalanguage$regex$RegexToken$GT$$IDX$panda$core$Int64$R$org$pandalanguage$regex$RegexToken(self->pushbackBuffer, $tmp35);
-    $returnValue32 = $tmp36;
-    return $returnValue32;
-}
-panda$core$Bit org$pandalanguage$regex$RegexParser$checkNext$org$pandalanguage$regex$RegexToken$Kind$R$panda$core$Bit(org$pandalanguage$regex$RegexParser* self, org$pandalanguage$regex$RegexToken$Kind p_kind) {
-    org$pandalanguage$regex$RegexToken result38;
-    panda$core$Bit $returnValue41;
-    panda$core$Bit $tmp42;
-    panda$core$Bit $tmp44;
-    org$pandalanguage$regex$RegexToken $tmp39 = org$pandalanguage$regex$RegexParser$next$R$org$pandalanguage$regex$RegexToken(self);
-    result38 = $tmp39;
-    panda$core$Bit $tmp40 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(result38.kind.$rawValue, p_kind.$rawValue);
-    if ($tmp40.value) {
-    {
-        panda$core$Bit$init$builtin_bit(&$tmp42, true);
-        $returnValue41 = $tmp42;
-        return $returnValue41;
+    ITable* $tmp42 = ((panda$collections$CollectionView*) self->pushbackBuffer)->$class->itable;
+    while ($tmp42->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
+        $tmp42 = $tmp42->next;
     }
-    }
-    org$pandalanguage$regex$RegexParser$pushback$org$pandalanguage$regex$RegexToken(self, result38);
-    panda$core$Bit$init$builtin_bit(&$tmp44, false);
-    $returnValue41 = $tmp44;
+    $fn44 $tmp43 = $tmp42->methods[0];
+    panda$core$Int64 $tmp45 = $tmp43(((panda$collections$CollectionView*) self->pushbackBuffer));
+    panda$core$Int64$init$builtin_int64(&$tmp46, 1);
+    panda$core$Int64 $tmp47 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64($tmp45, $tmp46);
+    org$pandalanguage$regex$RegexToken $tmp48 = panda$collections$SpecializedArray$LTorg$pandalanguage$regex$RegexToken$GT$$IDX$panda$core$Int64$R$org$pandalanguage$regex$RegexToken(self->pushbackBuffer, $tmp47);
+    $returnValue41 = $tmp48;
     return $returnValue41;
 }
-panda$core$Bit org$pandalanguage$regex$RegexParser$expect$org$pandalanguage$regex$RegexToken$Kind$panda$core$String$R$panda$core$Bit(org$pandalanguage$regex$RegexParser* self, org$pandalanguage$regex$RegexToken$Kind p_kind, panda$core$String* p_expected) {
-    org$pandalanguage$regex$RegexToken result46;
-    panda$core$Bit $returnValue49;
-    panda$core$Bit $tmp50;
-    panda$core$String* $tmp52;
-    panda$core$String* $tmp53;
-    panda$core$String* $tmp54;
-    panda$core$String* $tmp55;
-    panda$core$String* $tmp60;
-    panda$core$Bit $tmp65;
-    org$pandalanguage$regex$RegexToken $tmp47 = org$pandalanguage$regex$RegexParser$next$R$org$pandalanguage$regex$RegexToken(self);
-    result46 = $tmp47;
-    panda$core$Bit $tmp48 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(result46.kind.$rawValue, p_kind.$rawValue);
-    if ($tmp48.value) {
+panda$core$Bit org$pandalanguage$regex$RegexParser$checkNext$org$pandalanguage$regex$RegexToken$Kind$R$panda$core$Bit(org$pandalanguage$regex$RegexParser* self, org$pandalanguage$regex$RegexToken$Kind p_kind) {
+    org$pandalanguage$regex$RegexToken result50;
+    panda$core$Bit $returnValue53;
+    panda$core$Bit $tmp54;
+    panda$core$Bit $tmp56;
+    org$pandalanguage$regex$RegexToken $tmp51 = org$pandalanguage$regex$RegexParser$next$R$org$pandalanguage$regex$RegexToken(self);
+    result50 = $tmp51;
+    panda$core$Bit $tmp52 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(result50.kind.$rawValue, p_kind.$rawValue);
+    if ($tmp52.value) {
     {
-        panda$core$Bit$init$builtin_bit(&$tmp50, true);
-        $returnValue49 = $tmp50;
-        return $returnValue49;
+        panda$core$Bit$init$builtin_bit(&$tmp54, true);
+        $returnValue53 = $tmp54;
+        return $returnValue53;
     }
     }
-    panda$core$String* $tmp57 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s56, p_expected);
-    $tmp55 = $tmp57;
-    panda$core$String* $tmp59 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp55, &$s58);
-    $tmp54 = $tmp59;
-    panda$core$String* $tmp61 = org$pandalanguage$regex$RegexParser$text$org$pandalanguage$regex$RegexToken$R$panda$core$String(self, result46);
-    $tmp60 = $tmp61;
-    panda$core$String* $tmp62 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp54, $tmp60);
-    $tmp53 = $tmp62;
-    panda$core$String* $tmp64 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp53, &$s63);
-    $tmp52 = $tmp64;
-    org$pandalanguage$regex$RegexParser$error$org$pandalanguage$regex$RegexToken$panda$core$String(self, result46, $tmp52);
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp52));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp53));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp60));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp54));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp55));
-    panda$core$Bit$init$builtin_bit(&$tmp65, false);
-    $returnValue49 = $tmp65;
-    return $returnValue49;
+    org$pandalanguage$regex$RegexParser$pushback$org$pandalanguage$regex$RegexToken(self, result50);
+    panda$core$Bit$init$builtin_bit(&$tmp56, false);
+    $returnValue53 = $tmp56;
+    return $returnValue53;
+}
+panda$core$Bit org$pandalanguage$regex$RegexParser$expect$org$pandalanguage$regex$RegexToken$Kind$panda$core$String$R$panda$core$Bit(org$pandalanguage$regex$RegexParser* self, org$pandalanguage$regex$RegexToken$Kind p_kind, panda$core$String* p_expected) {
+    org$pandalanguage$regex$RegexToken result58;
+    panda$core$Bit $returnValue61;
+    panda$core$Bit $tmp62;
+    panda$core$String* $tmp64;
+    panda$core$String* $tmp65;
+    panda$core$String* $tmp66;
+    panda$core$String* $tmp67;
+    panda$core$String* $tmp72;
+    panda$core$Bit $tmp77;
+    org$pandalanguage$regex$RegexToken $tmp59 = org$pandalanguage$regex$RegexParser$next$R$org$pandalanguage$regex$RegexToken(self);
+    result58 = $tmp59;
+    panda$core$Bit $tmp60 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(result58.kind.$rawValue, p_kind.$rawValue);
+    if ($tmp60.value) {
+    {
+        panda$core$Bit$init$builtin_bit(&$tmp62, true);
+        $returnValue61 = $tmp62;
+        return $returnValue61;
+    }
+    }
+    panda$core$String* $tmp69 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s68, p_expected);
+    $tmp67 = $tmp69;
+    panda$core$String* $tmp71 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp67, &$s70);
+    $tmp66 = $tmp71;
+    panda$core$String* $tmp73 = org$pandalanguage$regex$RegexParser$text$org$pandalanguage$regex$RegexToken$R$panda$core$String(self, result58);
+    $tmp72 = $tmp73;
+    panda$core$String* $tmp74 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp66, $tmp72);
+    $tmp65 = $tmp74;
+    panda$core$String* $tmp76 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp65, &$s75);
+    $tmp64 = $tmp76;
+    org$pandalanguage$regex$RegexParser$error$org$pandalanguage$regex$RegexToken$panda$core$String(self, result58, $tmp64);
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp64));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp65));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp72));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp66));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp67));
+    panda$core$Bit$init$builtin_bit(&$tmp77, false);
+    $returnValue61 = $tmp77;
+    return $returnValue61;
 }
 void org$pandalanguage$regex$RegexParser$error$org$pandalanguage$regex$RegexToken$panda$core$String(org$pandalanguage$regex$RegexParser* self, org$pandalanguage$regex$RegexToken p_token, panda$core$String* p_msg) {
-    org$pandalanguage$pandac$Compiler$Error* $tmp67;
-    org$pandalanguage$pandac$Compiler$Error* $tmp68 = (org$pandalanguage$pandac$Compiler$Error*) pandaObjectAlloc(56, (panda$core$Class*) &org$pandalanguage$pandac$Compiler$Error$class);
-    org$pandalanguage$pandac$Compiler$Error$init$panda$io$File$org$pandalanguage$pandac$Position$panda$core$String($tmp68, self->path, p_token.position, p_msg);
-    $tmp67 = $tmp68;
-    panda$threads$MessageQueue$post$panda$threads$MessageQueue$T(self->errors, ((panda$core$Immutable*) $tmp67));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp67));
+    org$pandalanguage$pandac$Compiler$Error* $tmp79;
+    org$pandalanguage$pandac$Compiler$Error* $tmp80 = (org$pandalanguage$pandac$Compiler$Error*) pandaObjectAlloc(56, (panda$core$Class*) &org$pandalanguage$pandac$Compiler$Error$class);
+    org$pandalanguage$pandac$Compiler$Error$init$panda$io$File$org$pandalanguage$pandac$Position$panda$core$String($tmp80, self->path, p_token.position, p_msg);
+    $tmp79 = $tmp80;
+    panda$threads$MessageQueue$post$panda$threads$MessageQueue$T(self->errors, ((panda$core$Immutable*) $tmp79));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp79));
 }
 panda$core$String* org$pandalanguage$regex$RegexParser$text$org$pandalanguage$regex$RegexToken$R$panda$core$String(org$pandalanguage$regex$RegexParser* self, org$pandalanguage$regex$RegexToken p_token) {
-    panda$core$String* $returnValue69;
-    panda$core$String* $tmp70;
-    panda$core$String* $tmp71;
-    panda$core$Range$LTpanda$core$String$Index$GT $tmp72;
-    panda$core$Bit $tmp73;
-    panda$core$Bit$init$builtin_bit(&$tmp73, false);
-    panda$core$Range$LTpanda$core$String$Index$GT$init$panda$core$String$Index$panda$core$String$Index$panda$core$Bit(&$tmp72, p_token.start, p_token.end, $tmp73);
-    panda$core$String* $tmp74 = panda$core$String$substring$panda$core$Range$LTpanda$core$String$Index$GT$R$panda$core$String(self->source, $tmp72);
-    $tmp71 = $tmp74;
-    $tmp70 = $tmp71;
-    $returnValue69 = $tmp70;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp70));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp71));
-    return $returnValue69;
+    panda$core$String* $returnValue81;
+    panda$core$String* $tmp82;
+    panda$core$String* $tmp83;
+    panda$core$Range$LTpanda$core$String$Index$GT $tmp84;
+    panda$core$Bit $tmp85;
+    panda$core$Bit$init$builtin_bit(&$tmp85, false);
+    panda$core$Range$LTpanda$core$String$Index$GT$init$panda$core$String$Index$panda$core$String$Index$panda$core$Bit(&$tmp84, p_token.start, p_token.end, $tmp85);
+    panda$core$String* $tmp86 = panda$core$String$substring$panda$core$Range$LTpanda$core$String$Index$GT$R$panda$core$String(self->source, $tmp84);
+    $tmp83 = $tmp86;
+    $tmp82 = $tmp83;
+    $returnValue81 = $tmp82;
+    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp82));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp83));
+    return $returnValue81;
 }
 panda$core$Bit org$pandalanguage$regex$RegexParser$characterClass$R$panda$core$Bit(org$pandalanguage$regex$RegexParser* self) {
-    org$pandalanguage$regex$RegexToken char78;
-    panda$core$String* $tmp80;
-    panda$core$Bit $returnValue84;
-    panda$core$Bit $tmp85;
-    panda$core$Int64 $tmp87;
-    panda$core$Bit $tmp89;
-    $l76:;
+    org$pandalanguage$regex$RegexToken char90;
+    panda$core$String* $tmp92;
+    panda$core$Bit $returnValue96;
+    panda$core$Bit $tmp97;
+    panda$core$Int64 $tmp99;
+    panda$core$Bit $tmp101;
+    $l88:;
     while (true) {
     {
-        org$pandalanguage$regex$RegexToken $tmp79 = org$pandalanguage$regex$RegexParser$next$R$org$pandalanguage$regex$RegexToken(self);
-        char78 = $tmp79;
-        panda$core$String* $tmp81 = org$pandalanguage$regex$RegexParser$text$org$pandalanguage$regex$RegexToken$R$panda$core$String(self, char78);
-        $tmp80 = $tmp81;
-        panda$core$Bit $tmp83 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit($tmp80, &$s82);
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp80));
-        if ($tmp83.value) {
+        org$pandalanguage$regex$RegexToken $tmp91 = org$pandalanguage$regex$RegexParser$next$R$org$pandalanguage$regex$RegexToken(self);
+        char90 = $tmp91;
+        panda$core$String* $tmp93 = org$pandalanguage$regex$RegexParser$text$org$pandalanguage$regex$RegexToken$R$panda$core$String(self, char90);
+        $tmp92 = $tmp93;
+        panda$core$Bit $tmp95 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit($tmp92, &$s94);
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp92));
+        if ($tmp95.value) {
         {
-            org$pandalanguage$regex$RegexParser$pushback$org$pandalanguage$regex$RegexToken(self, char78);
-            panda$core$Bit$init$builtin_bit(&$tmp85, true);
-            $returnValue84 = $tmp85;
-            return $returnValue84;
+            org$pandalanguage$regex$RegexParser$pushback$org$pandalanguage$regex$RegexToken(self, char90);
+            panda$core$Bit$init$builtin_bit(&$tmp97, true);
+            $returnValue96 = $tmp97;
+            return $returnValue96;
         }
         }
-        panda$core$Int64$init$builtin_int64(&$tmp87, 0);
-        panda$core$Bit $tmp88 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(char78.kind.$rawValue, $tmp87);
-        if ($tmp88.value) {
+        panda$core$Int64$init$builtin_int64(&$tmp99, 0);
+        panda$core$Bit $tmp100 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(char90.kind.$rawValue, $tmp99);
+        if ($tmp100.value) {
         {
-            panda$core$Bit$init$builtin_bit(&$tmp89, false);
-            $returnValue84 = $tmp89;
-            return $returnValue84;
+            panda$core$Bit$init$builtin_bit(&$tmp101, false);
+            $returnValue96 = $tmp101;
+            return $returnValue96;
         }
         }
     }
     }
-    $l77:;
+    $l89:;
     abort();
 }
 panda$core$Bit org$pandalanguage$regex$RegexParser$integer$R$panda$core$Bit(org$pandalanguage$regex$RegexParser* self) {
-    org$pandalanguage$regex$RegexToken$Kind $tmp91;
-    panda$core$Int64 $tmp92;
-    panda$core$Bit $returnValue96;
-    panda$core$Bit $tmp97;
-    org$pandalanguage$regex$RegexToken$Kind $tmp102;
-    panda$core$Int64 $tmp103;
-    panda$core$Bit $tmp105;
-    panda$core$Int64$init$builtin_int64(&$tmp92, 4);
-    org$pandalanguage$regex$RegexToken$Kind$init$panda$core$Int64(&$tmp91, $tmp92);
-    panda$core$Bit $tmp94 = org$pandalanguage$regex$RegexParser$expect$org$pandalanguage$regex$RegexToken$Kind$panda$core$String$R$panda$core$Bit(self, $tmp91, &$s93);
-    panda$core$Bit $tmp95 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp94);
-    if ($tmp95.value) {
+    org$pandalanguage$regex$RegexToken$Kind $tmp103;
+    panda$core$Int64 $tmp104;
+    panda$core$Bit $returnValue108;
+    panda$core$Bit $tmp109;
+    org$pandalanguage$regex$RegexToken$Kind $tmp114;
+    panda$core$Int64 $tmp115;
+    panda$core$Bit $tmp117;
+    panda$core$Int64$init$builtin_int64(&$tmp104, 4);
+    org$pandalanguage$regex$RegexToken$Kind$init$panda$core$Int64(&$tmp103, $tmp104);
+    panda$core$Bit $tmp106 = org$pandalanguage$regex$RegexParser$expect$org$pandalanguage$regex$RegexToken$Kind$panda$core$String$R$panda$core$Bit(self, $tmp103, &$s105);
+    panda$core$Bit $tmp107 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp106);
+    if ($tmp107.value) {
     {
-        panda$core$Bit$init$builtin_bit(&$tmp97, false);
-        $returnValue96 = $tmp97;
-        return $returnValue96;
+        panda$core$Bit$init$builtin_bit(&$tmp109, false);
+        $returnValue108 = $tmp109;
+        return $returnValue108;
     }
     }
-    $l99:;
-    panda$core$Int64$init$builtin_int64(&$tmp103, 4);
-    org$pandalanguage$regex$RegexToken$Kind$init$panda$core$Int64(&$tmp102, $tmp103);
-    panda$core$Bit $tmp104 = org$pandalanguage$regex$RegexParser$checkNext$org$pandalanguage$regex$RegexToken$Kind$R$panda$core$Bit(self, $tmp102);
-    bool $tmp101 = $tmp104.value;
-    if (!$tmp101) goto $l100;
+    $l111:;
+    panda$core$Int64$init$builtin_int64(&$tmp115, 4);
+    org$pandalanguage$regex$RegexToken$Kind$init$panda$core$Int64(&$tmp114, $tmp115);
+    panda$core$Bit $tmp116 = org$pandalanguage$regex$RegexParser$checkNext$org$pandalanguage$regex$RegexToken$Kind$R$panda$core$Bit(self, $tmp114);
+    bool $tmp113 = $tmp116.value;
+    if (!$tmp113) goto $l112;
     {
     }
-    goto $l99;
-    $l100:;
-    panda$core$Bit$init$builtin_bit(&$tmp105, true);
-    $returnValue96 = $tmp105;
-    return $returnValue96;
+    goto $l111;
+    $l112:;
+    panda$core$Bit$init$builtin_bit(&$tmp117, true);
+    $returnValue108 = $tmp117;
+    return $returnValue108;
 }
 panda$core$Bit org$pandalanguage$regex$RegexParser$metacharacter$R$panda$core$Bit(org$pandalanguage$regex$RegexParser* self) {
-    org$pandalanguage$regex$RegexToken token107;
-    org$pandalanguage$regex$RegexToken$Kind $match$112_9109;
-    panda$core$Int64 $tmp111;
-    panda$core$Int64 $tmp114;
-    org$pandalanguage$regex$RegexToken$Kind $tmp117;
-    panda$core$Int64 $tmp118;
-    panda$core$Bit $returnValue119;
-    panda$core$Bit $tmp120;
-    panda$core$Int64 $tmp122;
-    panda$core$Bit $tmp124;
+    org$pandalanguage$regex$RegexToken token119;
+    org$pandalanguage$regex$RegexToken$Kind $match$112_9121;
+    panda$core$Int64 $tmp123;
     panda$core$Int64 $tmp126;
-    org$pandalanguage$regex$RegexToken$Kind $match$119_17128;
-    panda$core$Int64 $tmp132;
-    panda$core$Int64 $tmp135;
-    panda$core$Int64 $tmp139;
-    panda$core$Bit $tmp142;
-    org$pandalanguage$regex$RegexToken $tmp108 = org$pandalanguage$regex$RegexParser$next$R$org$pandalanguage$regex$RegexToken(self);
-    token107 = $tmp108;
+    org$pandalanguage$regex$RegexToken$Kind $tmp129;
+    panda$core$Int64 $tmp130;
+    panda$core$Bit $returnValue131;
+    panda$core$Bit $tmp132;
+    panda$core$Int64 $tmp134;
+    panda$core$Bit $tmp136;
+    panda$core$Int64 $tmp138;
+    org$pandalanguage$regex$RegexToken$Kind $match$119_17140;
+    panda$core$Int64 $tmp144;
+    panda$core$Int64 $tmp147;
+    panda$core$Int64 $tmp151;
+    panda$core$Bit $tmp154;
+    org$pandalanguage$regex$RegexToken $tmp120 = org$pandalanguage$regex$RegexParser$next$R$org$pandalanguage$regex$RegexToken(self);
+    token119 = $tmp120;
     {
-        $match$112_9109 = token107.kind;
-        panda$core$Int64$init$builtin_int64(&$tmp111, 5);
-        panda$core$Bit $tmp112 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$112_9109.$rawValue, $tmp111);
-        bool $tmp110 = $tmp112.value;
-        if ($tmp110) goto $l113;
-        panda$core$Int64$init$builtin_int64(&$tmp114, 6);
-        panda$core$Bit $tmp115 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$112_9109.$rawValue, $tmp114);
-        $tmp110 = $tmp115.value;
-        $l113:;
-        panda$core$Bit $tmp116 = { $tmp110 };
-        if ($tmp116.value) {
+        $match$112_9121 = token119.kind;
+        panda$core$Int64$init$builtin_int64(&$tmp123, 5);
+        panda$core$Bit $tmp124 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$112_9121.$rawValue, $tmp123);
+        bool $tmp122 = $tmp124.value;
+        if ($tmp122) goto $l125;
+        panda$core$Int64$init$builtin_int64(&$tmp126, 6);
+        panda$core$Bit $tmp127 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$112_9121.$rawValue, $tmp126);
+        $tmp122 = $tmp127.value;
+        $l125:;
+        panda$core$Bit $tmp128 = { $tmp122 };
+        if ($tmp128.value) {
         {
-            panda$core$Int64$init$builtin_int64(&$tmp118, 7);
-            org$pandalanguage$regex$RegexToken$Kind$init$panda$core$Int64(&$tmp117, $tmp118);
-            org$pandalanguage$regex$RegexParser$checkNext$org$pandalanguage$regex$RegexToken$Kind$R$panda$core$Bit(self, $tmp117);
-            panda$core$Bit$init$builtin_bit(&$tmp120, true);
-            $returnValue119 = $tmp120;
-            return $returnValue119;
+            panda$core$Int64$init$builtin_int64(&$tmp130, 7);
+            org$pandalanguage$regex$RegexToken$Kind$init$panda$core$Int64(&$tmp129, $tmp130);
+            org$pandalanguage$regex$RegexParser$checkNext$org$pandalanguage$regex$RegexToken$Kind$R$panda$core$Bit(self, $tmp129);
+            panda$core$Bit$init$builtin_bit(&$tmp132, true);
+            $returnValue131 = $tmp132;
+            return $returnValue131;
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp122, 7);
-        panda$core$Bit $tmp123 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$112_9109.$rawValue, $tmp122);
-        if ($tmp123.value) {
+        panda$core$Int64$init$builtin_int64(&$tmp134, 7);
+        panda$core$Bit $tmp135 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$112_9121.$rawValue, $tmp134);
+        if ($tmp135.value) {
         {
-            panda$core$Bit$init$builtin_bit(&$tmp124, true);
-            $returnValue119 = $tmp124;
-            return $returnValue119;
+            panda$core$Bit$init$builtin_bit(&$tmp136, true);
+            $returnValue131 = $tmp136;
+            return $returnValue131;
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp126, 17);
-        panda$core$Bit $tmp127 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$112_9109.$rawValue, $tmp126);
-        if ($tmp127.value) {
+        panda$core$Int64$init$builtin_int64(&$tmp138, 17);
+        panda$core$Bit $tmp139 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$112_9121.$rawValue, $tmp138);
+        if ($tmp139.value) {
         {
             {
-                org$pandalanguage$regex$RegexToken $tmp129 = org$pandalanguage$regex$RegexParser$peek$R$org$pandalanguage$regex$RegexToken(self);
-                $match$119_17128 = $tmp129.kind;
-                panda$core$Int64$init$builtin_int64(&$tmp132, 18);
-                panda$core$Bit $tmp133 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$119_17128.$rawValue, $tmp132);
-                bool $tmp131 = $tmp133.value;
-                if ($tmp131) goto $l134;
-                panda$core$Int64$init$builtin_int64(&$tmp135, 19);
-                panda$core$Bit $tmp136 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$119_17128.$rawValue, $tmp135);
-                $tmp131 = $tmp136.value;
-                $l134:;
-                panda$core$Bit $tmp137 = { $tmp131 };
-                bool $tmp130 = $tmp137.value;
-                if ($tmp130) goto $l138;
-                panda$core$Int64$init$builtin_int64(&$tmp139, 17);
-                panda$core$Bit $tmp140 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$119_17128.$rawValue, $tmp139);
-                $tmp130 = $tmp140.value;
-                $l138:;
-                panda$core$Bit $tmp141 = { $tmp130 };
-                if ($tmp141.value) {
+                org$pandalanguage$regex$RegexToken $tmp141 = org$pandalanguage$regex$RegexParser$peek$R$org$pandalanguage$regex$RegexToken(self);
+                $match$119_17140 = $tmp141.kind;
+                panda$core$Int64$init$builtin_int64(&$tmp144, 18);
+                panda$core$Bit $tmp145 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$119_17140.$rawValue, $tmp144);
+                bool $tmp143 = $tmp145.value;
+                if ($tmp143) goto $l146;
+                panda$core$Int64$init$builtin_int64(&$tmp147, 19);
+                panda$core$Bit $tmp148 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$119_17140.$rawValue, $tmp147);
+                $tmp143 = $tmp148.value;
+                $l146:;
+                panda$core$Bit $tmp149 = { $tmp143 };
+                bool $tmp142 = $tmp149.value;
+                if ($tmp142) goto $l150;
+                panda$core$Int64$init$builtin_int64(&$tmp151, 17);
+                panda$core$Bit $tmp152 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$119_17140.$rawValue, $tmp151);
+                $tmp142 = $tmp152.value;
+                $l150:;
+                panda$core$Bit $tmp153 = { $tmp142 };
+                if ($tmp153.value) {
                 {
                     org$pandalanguage$regex$RegexParser$next$R$org$pandalanguage$regex$RegexToken(self);
                 }
@@ -379,10 +404,10 @@ panda$core$Bit org$pandalanguage$regex$RegexParser$metacharacter$R$panda$core$Bi
         }
         else {
         {
-            org$pandalanguage$regex$RegexParser$pushback$org$pandalanguage$regex$RegexToken(self, token107);
-            panda$core$Bit$init$builtin_bit(&$tmp142, false);
-            $returnValue119 = $tmp142;
-            return $returnValue119;
+            org$pandalanguage$regex$RegexParser$pushback$org$pandalanguage$regex$RegexToken(self, token119);
+            panda$core$Bit$init$builtin_bit(&$tmp154, false);
+            $returnValue131 = $tmp154;
+            return $returnValue131;
         }
         }
         }
@@ -391,169 +416,169 @@ panda$core$Bit org$pandalanguage$regex$RegexParser$metacharacter$R$panda$core$Bi
     abort();
 }
 panda$core$Bit org$pandalanguage$regex$RegexParser$atom$R$panda$core$Bit(org$pandalanguage$regex$RegexParser* self) {
-    org$pandalanguage$regex$RegexToken token144;
-    org$pandalanguage$regex$RegexToken$Kind $match$136_9146;
-    panda$core$Int64 $tmp153;
-    panda$core$Int64 $tmp156;
-    panda$core$Int64 $tmp160;
-    panda$core$Int64 $tmp164;
+    org$pandalanguage$regex$RegexToken token156;
+    org$pandalanguage$regex$RegexToken$Kind $match$136_9158;
+    panda$core$Int64 $tmp165;
     panda$core$Int64 $tmp168;
     panda$core$Int64 $tmp172;
     panda$core$Int64 $tmp176;
-    panda$core$Bit $returnValue179;
-    panda$core$Bit $tmp180;
-    panda$core$Int64 $tmp182;
-    org$pandalanguage$regex$RegexToken$Kind $tmp184;
-    panda$core$Int64 $tmp185;
-    panda$core$Bit $tmp188;
-    org$pandalanguage$regex$RegexToken$Kind $tmp190;
-    panda$core$Int64 $tmp191;
-    panda$core$Int64 $tmp195;
-    panda$core$Bit $tmp199;
-    org$pandalanguage$regex$RegexToken$Kind $tmp201;
-    panda$core$Int64 $tmp202;
-    panda$core$Int64 $tmp206;
-    panda$core$Bit $tmp210;
-    org$pandalanguage$regex$RegexToken$Kind $tmp212;
-    panda$core$Int64 $tmp213;
-    org$pandalanguage$regex$RegexToken$Kind $tmp215;
-    panda$core$Int64 $tmp216;
-    panda$core$Bit $tmp220;
-    org$pandalanguage$regex$RegexToken $tmp145 = org$pandalanguage$regex$RegexParser$next$R$org$pandalanguage$regex$RegexToken(self);
-    token144 = $tmp145;
+    panda$core$Int64 $tmp180;
+    panda$core$Int64 $tmp184;
+    panda$core$Int64 $tmp188;
+    panda$core$Bit $returnValue191;
+    panda$core$Bit $tmp192;
+    panda$core$Int64 $tmp194;
+    org$pandalanguage$regex$RegexToken$Kind $tmp196;
+    panda$core$Int64 $tmp197;
+    panda$core$Bit $tmp200;
+    org$pandalanguage$regex$RegexToken$Kind $tmp202;
+    panda$core$Int64 $tmp203;
+    panda$core$Int64 $tmp207;
+    panda$core$Bit $tmp211;
+    org$pandalanguage$regex$RegexToken$Kind $tmp213;
+    panda$core$Int64 $tmp214;
+    panda$core$Int64 $tmp218;
+    panda$core$Bit $tmp222;
+    org$pandalanguage$regex$RegexToken$Kind $tmp224;
+    panda$core$Int64 $tmp225;
+    org$pandalanguage$regex$RegexToken$Kind $tmp227;
+    panda$core$Int64 $tmp228;
+    panda$core$Bit $tmp232;
+    org$pandalanguage$regex$RegexToken $tmp157 = org$pandalanguage$regex$RegexParser$next$R$org$pandalanguage$regex$RegexToken(self);
+    token156 = $tmp157;
     {
-        $match$136_9146 = token144.kind;
-        panda$core$Int64$init$builtin_int64(&$tmp153, 3);
-        panda$core$Bit $tmp154 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$136_9146.$rawValue, $tmp153);
-        bool $tmp152 = $tmp154.value;
-        if ($tmp152) goto $l155;
-        panda$core$Int64$init$builtin_int64(&$tmp156, 4);
-        panda$core$Bit $tmp157 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$136_9146.$rawValue, $tmp156);
-        $tmp152 = $tmp157.value;
-        $l155:;
-        panda$core$Bit $tmp158 = { $tmp152 };
-        bool $tmp151 = $tmp158.value;
-        if ($tmp151) goto $l159;
-        panda$core$Int64$init$builtin_int64(&$tmp160, 17);
-        panda$core$Bit $tmp161 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$136_9146.$rawValue, $tmp160);
-        $tmp151 = $tmp161.value;
-        $l159:;
-        panda$core$Bit $tmp162 = { $tmp151 };
-        bool $tmp150 = $tmp162.value;
-        if ($tmp150) goto $l163;
-        panda$core$Int64$init$builtin_int64(&$tmp164, 16);
-        panda$core$Bit $tmp165 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$136_9146.$rawValue, $tmp164);
-        $tmp150 = $tmp165.value;
-        $l163:;
-        panda$core$Bit $tmp166 = { $tmp150 };
-        bool $tmp149 = $tmp166.value;
-        if ($tmp149) goto $l167;
-        panda$core$Int64$init$builtin_int64(&$tmp168, 18);
-        panda$core$Bit $tmp169 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$136_9146.$rawValue, $tmp168);
-        $tmp149 = $tmp169.value;
+        $match$136_9158 = token156.kind;
+        panda$core$Int64$init$builtin_int64(&$tmp165, 3);
+        panda$core$Bit $tmp166 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$136_9158.$rawValue, $tmp165);
+        bool $tmp164 = $tmp166.value;
+        if ($tmp164) goto $l167;
+        panda$core$Int64$init$builtin_int64(&$tmp168, 4);
+        panda$core$Bit $tmp169 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$136_9158.$rawValue, $tmp168);
+        $tmp164 = $tmp169.value;
         $l167:;
-        panda$core$Bit $tmp170 = { $tmp149 };
-        bool $tmp148 = $tmp170.value;
-        if ($tmp148) goto $l171;
-        panda$core$Int64$init$builtin_int64(&$tmp172, 19);
-        panda$core$Bit $tmp173 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$136_9146.$rawValue, $tmp172);
-        $tmp148 = $tmp173.value;
+        panda$core$Bit $tmp170 = { $tmp164 };
+        bool $tmp163 = $tmp170.value;
+        if ($tmp163) goto $l171;
+        panda$core$Int64$init$builtin_int64(&$tmp172, 17);
+        panda$core$Bit $tmp173 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$136_9158.$rawValue, $tmp172);
+        $tmp163 = $tmp173.value;
         $l171:;
-        panda$core$Bit $tmp174 = { $tmp148 };
-        bool $tmp147 = $tmp174.value;
-        if ($tmp147) goto $l175;
-        panda$core$Int64$init$builtin_int64(&$tmp176, 20);
-        panda$core$Bit $tmp177 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$136_9146.$rawValue, $tmp176);
-        $tmp147 = $tmp177.value;
+        panda$core$Bit $tmp174 = { $tmp163 };
+        bool $tmp162 = $tmp174.value;
+        if ($tmp162) goto $l175;
+        panda$core$Int64$init$builtin_int64(&$tmp176, 16);
+        panda$core$Bit $tmp177 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$136_9158.$rawValue, $tmp176);
+        $tmp162 = $tmp177.value;
         $l175:;
-        panda$core$Bit $tmp178 = { $tmp147 };
-        if ($tmp178.value) {
+        panda$core$Bit $tmp178 = { $tmp162 };
+        bool $tmp161 = $tmp178.value;
+        if ($tmp161) goto $l179;
+        panda$core$Int64$init$builtin_int64(&$tmp180, 18);
+        panda$core$Bit $tmp181 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$136_9158.$rawValue, $tmp180);
+        $tmp161 = $tmp181.value;
+        $l179:;
+        panda$core$Bit $tmp182 = { $tmp161 };
+        bool $tmp160 = $tmp182.value;
+        if ($tmp160) goto $l183;
+        panda$core$Int64$init$builtin_int64(&$tmp184, 19);
+        panda$core$Bit $tmp185 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$136_9158.$rawValue, $tmp184);
+        $tmp160 = $tmp185.value;
+        $l183:;
+        panda$core$Bit $tmp186 = { $tmp160 };
+        bool $tmp159 = $tmp186.value;
+        if ($tmp159) goto $l187;
+        panda$core$Int64$init$builtin_int64(&$tmp188, 20);
+        panda$core$Bit $tmp189 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$136_9158.$rawValue, $tmp188);
+        $tmp159 = $tmp189.value;
+        $l187:;
+        panda$core$Bit $tmp190 = { $tmp159 };
+        if ($tmp190.value) {
         {
-            panda$core$Bit$init$builtin_bit(&$tmp180, true);
-            $returnValue179 = $tmp180;
-            return $returnValue179;
+            panda$core$Bit$init$builtin_bit(&$tmp192, true);
+            $returnValue191 = $tmp192;
+            return $returnValue191;
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp182, 8);
-        panda$core$Bit $tmp183 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$136_9146.$rawValue, $tmp182);
-        if ($tmp183.value) {
+        panda$core$Int64$init$builtin_int64(&$tmp194, 8);
+        panda$core$Bit $tmp195 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$136_9158.$rawValue, $tmp194);
+        if ($tmp195.value) {
         {
-            panda$core$Int64$init$builtin_int64(&$tmp185, 7);
-            org$pandalanguage$regex$RegexToken$Kind$init$panda$core$Int64(&$tmp184, $tmp185);
-            org$pandalanguage$regex$RegexParser$checkNext$org$pandalanguage$regex$RegexToken$Kind$R$panda$core$Bit(self, $tmp184);
-            panda$core$Bit $tmp186 = org$pandalanguage$regex$RegexParser$expression$R$panda$core$Bit(self);
-            panda$core$Bit $tmp187 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp186);
-            if ($tmp187.value) {
+            panda$core$Int64$init$builtin_int64(&$tmp197, 7);
+            org$pandalanguage$regex$RegexToken$Kind$init$panda$core$Int64(&$tmp196, $tmp197);
+            org$pandalanguage$regex$RegexParser$checkNext$org$pandalanguage$regex$RegexToken$Kind$R$panda$core$Bit(self, $tmp196);
+            panda$core$Bit $tmp198 = org$pandalanguage$regex$RegexParser$expression$R$panda$core$Bit(self);
+            panda$core$Bit $tmp199 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp198);
+            if ($tmp199.value) {
             {
-                panda$core$Bit$init$builtin_bit(&$tmp188, false);
-                $returnValue179 = $tmp188;
-                return $returnValue179;
+                panda$core$Bit$init$builtin_bit(&$tmp200, false);
+                $returnValue191 = $tmp200;
+                return $returnValue191;
             }
             }
-            panda$core$Int64$init$builtin_int64(&$tmp191, 9);
-            org$pandalanguage$regex$RegexToken$Kind$init$panda$core$Int64(&$tmp190, $tmp191);
-            panda$core$Bit $tmp193 = org$pandalanguage$regex$RegexParser$expect$org$pandalanguage$regex$RegexToken$Kind$panda$core$String$R$panda$core$Bit(self, $tmp190, &$s192);
-            $returnValue179 = $tmp193;
-            return $returnValue179;
+            panda$core$Int64$init$builtin_int64(&$tmp203, 9);
+            org$pandalanguage$regex$RegexToken$Kind$init$panda$core$Int64(&$tmp202, $tmp203);
+            panda$core$Bit $tmp205 = org$pandalanguage$regex$RegexParser$expect$org$pandalanguage$regex$RegexToken$Kind$panda$core$String$R$panda$core$Bit(self, $tmp202, &$s204);
+            $returnValue191 = $tmp205;
+            return $returnValue191;
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp195, 12);
-        panda$core$Bit $tmp196 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$136_9146.$rawValue, $tmp195);
-        if ($tmp196.value) {
+        panda$core$Int64$init$builtin_int64(&$tmp207, 12);
+        panda$core$Bit $tmp208 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$136_9158.$rawValue, $tmp207);
+        if ($tmp208.value) {
         {
-            panda$core$Bit $tmp197 = org$pandalanguage$regex$RegexParser$characterClass$R$panda$core$Bit(self);
-            panda$core$Bit $tmp198 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp197);
-            if ($tmp198.value) {
+            panda$core$Bit $tmp209 = org$pandalanguage$regex$RegexParser$characterClass$R$panda$core$Bit(self);
+            panda$core$Bit $tmp210 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp209);
+            if ($tmp210.value) {
             {
-                panda$core$Bit$init$builtin_bit(&$tmp199, false);
-                $returnValue179 = $tmp199;
-                return $returnValue179;
+                panda$core$Bit$init$builtin_bit(&$tmp211, false);
+                $returnValue191 = $tmp211;
+                return $returnValue191;
             }
             }
-            panda$core$Int64$init$builtin_int64(&$tmp202, 13);
-            org$pandalanguage$regex$RegexToken$Kind$init$panda$core$Int64(&$tmp201, $tmp202);
-            panda$core$Bit $tmp204 = org$pandalanguage$regex$RegexParser$expect$org$pandalanguage$regex$RegexToken$Kind$panda$core$String$R$panda$core$Bit(self, $tmp201, &$s203);
-            $returnValue179 = $tmp204;
-            return $returnValue179;
+            panda$core$Int64$init$builtin_int64(&$tmp214, 13);
+            org$pandalanguage$regex$RegexToken$Kind$init$panda$core$Int64(&$tmp213, $tmp214);
+            panda$core$Bit $tmp216 = org$pandalanguage$regex$RegexParser$expect$org$pandalanguage$regex$RegexToken$Kind$panda$core$String$R$panda$core$Bit(self, $tmp213, &$s215);
+            $returnValue191 = $tmp216;
+            return $returnValue191;
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp206, 10);
-        panda$core$Bit $tmp207 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$136_9146.$rawValue, $tmp206);
-        if ($tmp207.value) {
+        panda$core$Int64$init$builtin_int64(&$tmp218, 10);
+        panda$core$Bit $tmp219 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$136_9158.$rawValue, $tmp218);
+        if ($tmp219.value) {
         {
-            panda$core$Bit $tmp208 = org$pandalanguage$regex$RegexParser$integer$R$panda$core$Bit(self);
-            panda$core$Bit $tmp209 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp208);
-            if ($tmp209.value) {
+            panda$core$Bit $tmp220 = org$pandalanguage$regex$RegexParser$integer$R$panda$core$Bit(self);
+            panda$core$Bit $tmp221 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp220);
+            if ($tmp221.value) {
             {
-                panda$core$Bit$init$builtin_bit(&$tmp210, false);
-                $returnValue179 = $tmp210;
-                return $returnValue179;
+                panda$core$Bit$init$builtin_bit(&$tmp222, false);
+                $returnValue191 = $tmp222;
+                return $returnValue191;
             }
             }
-            panda$core$Int64$init$builtin_int64(&$tmp213, 14);
-            org$pandalanguage$regex$RegexToken$Kind$init$panda$core$Int64(&$tmp212, $tmp213);
-            panda$core$Bit $tmp214 = org$pandalanguage$regex$RegexParser$checkNext$org$pandalanguage$regex$RegexToken$Kind$R$panda$core$Bit(self, $tmp212);
-            if ($tmp214.value) {
+            panda$core$Int64$init$builtin_int64(&$tmp225, 14);
+            org$pandalanguage$regex$RegexToken$Kind$init$panda$core$Int64(&$tmp224, $tmp225);
+            panda$core$Bit $tmp226 = org$pandalanguage$regex$RegexParser$checkNext$org$pandalanguage$regex$RegexToken$Kind$R$panda$core$Bit(self, $tmp224);
+            if ($tmp226.value) {
             {
                 org$pandalanguage$regex$RegexParser$integer$R$panda$core$Bit(self);
             }
             }
-            panda$core$Int64$init$builtin_int64(&$tmp216, 11);
-            org$pandalanguage$regex$RegexToken$Kind$init$panda$core$Int64(&$tmp215, $tmp216);
-            panda$core$Bit $tmp218 = org$pandalanguage$regex$RegexParser$expect$org$pandalanguage$regex$RegexToken$Kind$panda$core$String$R$panda$core$Bit(self, $tmp215, &$s217);
-            $returnValue179 = $tmp218;
-            return $returnValue179;
+            panda$core$Int64$init$builtin_int64(&$tmp228, 11);
+            org$pandalanguage$regex$RegexToken$Kind$init$panda$core$Int64(&$tmp227, $tmp228);
+            panda$core$Bit $tmp230 = org$pandalanguage$regex$RegexParser$expect$org$pandalanguage$regex$RegexToken$Kind$panda$core$String$R$panda$core$Bit(self, $tmp227, &$s229);
+            $returnValue191 = $tmp230;
+            return $returnValue191;
         }
         }
         else {
         {
-            org$pandalanguage$regex$RegexParser$pushback$org$pandalanguage$regex$RegexToken(self, token144);
-            panda$core$Bit$init$builtin_bit(&$tmp220, false);
-            $returnValue179 = $tmp220;
-            return $returnValue179;
+            org$pandalanguage$regex$RegexParser$pushback$org$pandalanguage$regex$RegexToken(self, token156);
+            panda$core$Bit$init$builtin_bit(&$tmp232, false);
+            $returnValue191 = $tmp232;
+            return $returnValue191;
         }
         }
         }
@@ -563,151 +588,151 @@ panda$core$Bit org$pandalanguage$regex$RegexParser$atom$R$panda$core$Bit(org$pan
     abort();
 }
 panda$core$Bit org$pandalanguage$regex$RegexParser$factor$R$panda$core$Bit(org$pandalanguage$regex$RegexParser* self) {
-    panda$core$Bit $returnValue224;
-    panda$core$Bit $tmp225;
-    panda$core$Bit $tmp227;
-    panda$core$Bit $tmp222 = org$pandalanguage$regex$RegexParser$atom$R$panda$core$Bit(self);
-    panda$core$Bit $tmp223 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp222);
-    if ($tmp223.value) {
+    panda$core$Bit $returnValue236;
+    panda$core$Bit $tmp237;
+    panda$core$Bit $tmp239;
+    panda$core$Bit $tmp234 = org$pandalanguage$regex$RegexParser$atom$R$panda$core$Bit(self);
+    panda$core$Bit $tmp235 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp234);
+    if ($tmp235.value) {
     {
-        panda$core$Bit$init$builtin_bit(&$tmp225, false);
-        $returnValue224 = $tmp225;
-        return $returnValue224;
+        panda$core$Bit$init$builtin_bit(&$tmp237, false);
+        $returnValue236 = $tmp237;
+        return $returnValue236;
     }
     }
     org$pandalanguage$regex$RegexParser$metacharacter$R$panda$core$Bit(self);
-    panda$core$Bit$init$builtin_bit(&$tmp227, true);
-    $returnValue224 = $tmp227;
-    return $returnValue224;
+    panda$core$Bit$init$builtin_bit(&$tmp239, true);
+    $returnValue236 = $tmp239;
+    return $returnValue236;
 }
 panda$core$Bit org$pandalanguage$regex$RegexParser$term$R$panda$core$Bit(org$pandalanguage$regex$RegexParser* self) {
-    panda$core$Bit $returnValue231;
-    panda$core$Bit $tmp232;
-    panda$core$Bit $tmp234;
-    panda$core$Bit $tmp229 = org$pandalanguage$regex$RegexParser$factor$R$panda$core$Bit(self);
-    panda$core$Bit $tmp230 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp229);
-    if ($tmp230.value) {
+    panda$core$Bit $returnValue243;
+    panda$core$Bit $tmp244;
+    panda$core$Bit $tmp246;
+    panda$core$Bit $tmp241 = org$pandalanguage$regex$RegexParser$factor$R$panda$core$Bit(self);
+    panda$core$Bit $tmp242 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp241);
+    if ($tmp242.value) {
     {
-        panda$core$Bit$init$builtin_bit(&$tmp232, false);
-        $returnValue231 = $tmp232;
-        return $returnValue231;
+        panda$core$Bit$init$builtin_bit(&$tmp244, false);
+        $returnValue243 = $tmp244;
+        return $returnValue243;
     }
     }
     org$pandalanguage$regex$RegexParser$term$R$panda$core$Bit(self);
-    panda$core$Bit$init$builtin_bit(&$tmp234, true);
-    $returnValue231 = $tmp234;
-    return $returnValue231;
+    panda$core$Bit$init$builtin_bit(&$tmp246, true);
+    $returnValue243 = $tmp246;
+    return $returnValue243;
 }
 panda$core$Bit org$pandalanguage$regex$RegexParser$expression$R$panda$core$Bit(org$pandalanguage$regex$RegexParser* self) {
-    panda$core$Bit $returnValue238;
-    panda$core$Bit $tmp239;
-    panda$core$Bit $tmp241;
-    panda$core$Bit $tmp236 = org$pandalanguage$regex$RegexParser$term$R$panda$core$Bit(self);
-    panda$core$Bit $tmp237 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp236);
-    if ($tmp237.value) {
+    panda$core$Bit $returnValue250;
+    panda$core$Bit $tmp251;
+    panda$core$Bit $tmp253;
+    panda$core$Bit $tmp248 = org$pandalanguage$regex$RegexParser$term$R$panda$core$Bit(self);
+    panda$core$Bit $tmp249 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp248);
+    if ($tmp249.value) {
     {
-        panda$core$Bit$init$builtin_bit(&$tmp239, false);
-        $returnValue238 = $tmp239;
-        return $returnValue238;
+        panda$core$Bit$init$builtin_bit(&$tmp251, false);
+        $returnValue250 = $tmp251;
+        return $returnValue250;
     }
     }
     org$pandalanguage$regex$RegexParser$expression$R$panda$core$Bit(self);
-    panda$core$Bit$init$builtin_bit(&$tmp241, true);
-    $returnValue238 = $tmp241;
-    return $returnValue238;
+    panda$core$Bit$init$builtin_bit(&$tmp253, true);
+    $returnValue250 = $tmp253;
+    return $returnValue250;
 }
 org$pandalanguage$pandac$ASTNode* org$pandalanguage$regex$RegexParser$regex$R$org$pandalanguage$pandac$ASTNode$Q(org$pandalanguage$regex$RegexParser* self) {
-    org$pandalanguage$pandac$Position position243;
-    org$pandalanguage$pandac$Position $tmp244;
-    panda$core$Int64 start245;
-    org$pandalanguage$pandac$ASTNode* $returnValue248;
-    org$pandalanguage$pandac$ASTNode* $tmp249;
-    org$pandalanguage$plex$runtime$DFA* $tmp251;
-    panda$core$Int64 $tmp252;
-    panda$core$Int64 end254;
-    panda$core$Int64 length255;
-    panda$core$Char8* result257;
-    panda$core$Range$LTpanda$core$Int64$GT $tmp258;
-    panda$core$Bit $tmp259;
-    org$pandalanguage$pandac$ASTNode* $tmp280;
-    org$pandalanguage$pandac$ASTNode* $tmp281;
-    panda$core$Int64 $tmp283;
-    panda$core$String* $tmp284;
+    org$pandalanguage$pandac$Position position255;
+    org$pandalanguage$pandac$Position $tmp256;
+    panda$core$Int64 start257;
+    org$pandalanguage$pandac$ASTNode* $returnValue260;
+    org$pandalanguage$pandac$ASTNode* $tmp261;
+    org$pandalanguage$plex$runtime$DFA* $tmp263;
+    panda$core$Int64 $tmp264;
+    panda$core$Int64 end266;
+    panda$core$Int64 length267;
+    panda$core$Char8* result269;
+    panda$core$Range$LTpanda$core$Int64$GT $tmp270;
+    panda$core$Bit $tmp271;
+    org$pandalanguage$pandac$ASTNode* $tmp292;
+    org$pandalanguage$pandac$ASTNode* $tmp293;
+    panda$core$Int64 $tmp295;
+    panda$core$String* $tmp296;
     panda$collections$SpecializedArray$LTorg$pandalanguage$regex$RegexToken$GT$clear(self->pushbackBuffer);
-    org$pandalanguage$pandac$Position$init$panda$core$Int64$panda$core$Int64(&$tmp244, self->lexer->dfa->line, self->lexer->dfa->column);
-    position243 = $tmp244;
-    start245 = self->lexer->dfa->offset;
-    panda$core$Bit $tmp246 = org$pandalanguage$regex$RegexParser$expression$R$panda$core$Bit(self);
-    panda$core$Bit $tmp247 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp246);
-    if ($tmp247.value) {
+    org$pandalanguage$pandac$Position$init$panda$core$Int64$panda$core$Int64(&$tmp256, self->lexer->dfa->line, self->lexer->dfa->column);
+    position255 = $tmp256;
+    start257 = self->lexer->dfa->offset;
+    panda$core$Bit $tmp258 = org$pandalanguage$regex$RegexParser$expression$R$panda$core$Bit(self);
+    panda$core$Bit $tmp259 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp258);
+    if ($tmp259.value) {
     {
-        $tmp249 = NULL;
-        $returnValue248 = $tmp249;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp249));
-        return $returnValue248;
+        $tmp261 = NULL;
+        $returnValue260 = $tmp261;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp261));
+        return $returnValue260;
     }
     }
-    $tmp251 = self->lexer->dfa;
-    panda$core$Int64$init$builtin_int64(&$tmp252, 1);
-    panda$core$Int64 $tmp253 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64($tmp251->offset, $tmp252);
-    $tmp251->offset = $tmp253;
-    end254 = self->lexer->dfa->offset;
-    panda$core$Int64 $tmp256 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(end254, start245);
-    length255 = $tmp256;
-    result257 = ((panda$core$Char8*) pandaZAlloc(length255.value * 1));
-    panda$core$Bit$init$builtin_bit(&$tmp259, false);
-    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp258, start245, end254, $tmp259);
-    int64_t $tmp261 = $tmp258.min.value;
-    panda$core$Int64 i260 = { $tmp261 };
-    int64_t $tmp263 = $tmp258.max.value;
-    bool $tmp264 = $tmp258.inclusive.value;
-    if ($tmp264) goto $l271; else goto $l272;
-    $l271:;
-    if ($tmp261 <= $tmp263) goto $l265; else goto $l267;
-    $l272:;
-    if ($tmp261 < $tmp263) goto $l265; else goto $l267;
-    $l265:;
-    {
-        panda$core$Int64 $tmp273 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(i260, start245);
-        result257[$tmp273.value] = self->lexer->dfa->source[i260.value];
-    }
-    $l268:;
-    int64_t $tmp275 = $tmp263 - i260.value;
-    if ($tmp264) goto $l276; else goto $l277;
-    $l276:;
-    if ((uint64_t) $tmp275 >= 1) goto $l274; else goto $l267;
+    $tmp263 = self->lexer->dfa;
+    panda$core$Int64$init$builtin_int64(&$tmp264, 1);
+    panda$core$Int64 $tmp265 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64($tmp263->offset, $tmp264);
+    $tmp263->offset = $tmp265;
+    end266 = self->lexer->dfa->offset;
+    panda$core$Int64 $tmp268 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(end266, start257);
+    length267 = $tmp268;
+    result269 = ((panda$core$Char8*) pandaZAlloc(length267.value * 1));
+    panda$core$Bit$init$builtin_bit(&$tmp271, false);
+    panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp270, start257, end266, $tmp271);
+    int64_t $tmp273 = $tmp270.min.value;
+    panda$core$Int64 i272 = { $tmp273 };
+    int64_t $tmp275 = $tmp270.max.value;
+    bool $tmp276 = $tmp270.inclusive.value;
+    if ($tmp276) goto $l283; else goto $l284;
+    $l283:;
+    if ($tmp273 <= $tmp275) goto $l277; else goto $l279;
+    $l284:;
+    if ($tmp273 < $tmp275) goto $l277; else goto $l279;
     $l277:;
-    if ((uint64_t) $tmp275 > 1) goto $l274; else goto $l267;
-    $l274:;
-    i260.value += 1;
-    goto $l265;
-    $l267:;
-    org$pandalanguage$pandac$ASTNode* $tmp282 = (org$pandalanguage$pandac$ASTNode*) pandaObjectAlloc(104, (panda$core$Class*) &org$pandalanguage$pandac$ASTNode$class);
-    panda$core$Int64$init$builtin_int64(&$tmp283, 35);
-    panda$core$String* $tmp285 = (panda$core$String*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$String$class);
-    panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp285, result257, length255);
-    $tmp284 = $tmp285;
-    org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$String($tmp282, $tmp283, position243, $tmp284);
-    $tmp281 = $tmp282;
-    $tmp280 = $tmp281;
-    $returnValue248 = $tmp280;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp280));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp281));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp284));
-    return $returnValue248;
+    {
+        panda$core$Int64 $tmp285 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(i272, start257);
+        result269[$tmp285.value] = self->lexer->dfa->source[i272.value];
+    }
+    $l280:;
+    int64_t $tmp287 = $tmp275 - i272.value;
+    if ($tmp276) goto $l288; else goto $l289;
+    $l288:;
+    if ((uint64_t) $tmp287 >= 1) goto $l286; else goto $l279;
+    $l289:;
+    if ((uint64_t) $tmp287 > 1) goto $l286; else goto $l279;
+    $l286:;
+    i272.value += 1;
+    goto $l277;
+    $l279:;
+    org$pandalanguage$pandac$ASTNode* $tmp294 = (org$pandalanguage$pandac$ASTNode*) pandaObjectAlloc(104, (panda$core$Class*) &org$pandalanguage$pandac$ASTNode$class);
+    panda$core$Int64$init$builtin_int64(&$tmp295, 35);
+    panda$core$String* $tmp297 = (panda$core$String*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$String$class);
+    panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp297, result269, length267);
+    $tmp296 = $tmp297;
+    org$pandalanguage$pandac$ASTNode$init$panda$core$Int64$org$pandalanguage$pandac$Position$panda$core$String($tmp294, $tmp295, position255, $tmp296);
+    $tmp293 = $tmp294;
+    $tmp292 = $tmp293;
+    $returnValue260 = $tmp292;
+    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp292));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp293));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp296));
+    return $returnValue260;
 }
 void org$pandalanguage$regex$RegexParser$cleanup(org$pandalanguage$regex$RegexParser* self) {
-    int $tmp289;
+    int $tmp301;
     {
     }
-    $tmp289 = -1;
-    goto $l287;
-    $l287:;
+    $tmp301 = -1;
+    goto $l299;
+    $l299:;
     panda$core$Object$cleanup(((panda$core$Object*) self));
-    switch ($tmp289) {
-        case -1: goto $l290;
+    switch ($tmp301) {
+        case -1: goto $l302;
     }
-    $l290:;
+    $l302:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->lexer));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->errors));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->path));

@@ -34,7 +34,7 @@ typedef struct org$pandalanguage$pandac$ClassDecl {
     panda$collections$Array* fields;
     panda$collections$Array* methods;
     panda$collections$Array* classes;
-    panda$collections$Array* choiceEntries;
+    panda$collections$Array* choiceCases;
     panda$core$Weak* owner;
     org$pandalanguage$pandac$SymbolTable* symbolTable;
     panda$core$Bit symbolTableResolved;

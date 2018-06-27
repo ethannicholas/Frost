@@ -192,7 +192,7 @@ add_executable(bootstrap
     bootstrap/src/org/pandalanguage/pandac/CCodeGenerator/ExtraEffect.c
     bootstrap/src/org/pandalanguage/pandac/CCodeGenerator/MethodShim.c
     bootstrap/src/org/pandalanguage/pandac/CCodeGenerator/OpClass.c
-    bootstrap/src/org/pandalanguage/pandac/ChoiceEntry.c
+    bootstrap/src/org/pandalanguage/pandac/ChoiceCase.c
     bootstrap/src/org/pandalanguage/pandac/ClassDecl.c
     bootstrap/src/org/pandalanguage/pandac/ClassDecl/GenericParameter.c
     bootstrap/src/org/pandalanguage/pandac/ClassDecl/Kind.c
@@ -566,7 +566,7 @@ set(pandac_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/Annotations.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/ASTNode.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/CCodeGenerator.panda
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/ChoiceEntry.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/ChoiceCase.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/ClassDecl.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/CodeGenerator.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/pandac/org/pandalanguage/pandac/Compiler.panda

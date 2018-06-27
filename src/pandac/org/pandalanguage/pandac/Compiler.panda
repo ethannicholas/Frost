@@ -376,10 +376,9 @@ class Compiler {
                 def resolved := tryResolveClass(type.name)
                 if resolved != null {
                     def result := resolved.type()
-                    if checkParameters {
-                        if !checkGenericParameters(type.position, resolved, result) {
-                            return null
-                        }
+                    if result != null & checkParameters &
+                            !checkGenericParameters(type.position, resolved, result) {
+                        return null
                     }
                     return result
                 }
@@ -422,11 +421,10 @@ class Compiler {
                     args.add(resolved)
                 }
                 def result := Type.generic(base, args)
-                if checkParameters {
-                    if !checkGenericParameters(type.position, getClass(result.subtypes[0]),
-                            result) {
-                        return null
-                    }
+                def cl := getClass(result.subtypes[0])
+                if cl != null & checkParameters &
+                        !checkGenericParameters(type.position, cl, result) {
+                    return null
                 }
                 return result
             when Type.Kind.METHOD, Type.Kind.FUNCTION, Type.Kind.IMMUTABLE_METHOD,
@@ -497,8 +495,8 @@ class Compiler {
             def s := resolve(rawS, false)
             if s != null {
                 def sClass := getClass(s)
-                resolve(sClass)
                 if sClass != null {
+                    resolve(sClass)
                     addAllSupertypes(sClass, supertypes)
                     if sClass.classKind = ClassDecl.Kind.CLASS {
                         if cl.classKind = ClassDecl.Kind.INTERFACE {
@@ -563,7 +561,7 @@ class Compiler {
                 checkGenericParameters(cl.position, cl, p.bound)
             }
         }
-        for ce in cl.choiceEntries {
+        for ce in cl.choiceCases {
             resolve(ce)
         }
         if cl.resolved = Resolution.IN_PROGRESS {
@@ -707,13 +705,13 @@ class Compiler {
         }
     }
 
-    method resolve(c:ChoiceEntry) {
+    method resolve(c:ChoiceCase) {
         if c.resolved != Resolution.UNRESOLVED {
             return
         }
         if c.fields.count = 0 {
             c.resolved := Resolution.RESOLVED
-            createChoiceEntryInit(c)
+            createChoiceCaseInit(c)
             return
         }
         c.resolved := Resolution.IN_PROGRESS
@@ -733,7 +731,7 @@ class Compiler {
         if c.resolved = Resolution.IN_PROGRESS {
             c.resolved := Resolution.RESOLVED
         }
-        createChoiceEntryInit(c)
+        createChoiceCaseInit(c)
         symbolTable := old
         currentClass.pop()
     }
@@ -1347,8 +1345,8 @@ class Compiler {
                     }
                     return IRNode.FIELD_REFERENCE(position, f.type, finalTarget, f)
                 }
-            when Symbol.Kind.CHOICE_ENTRY:
-                return IRNode.CHOICE_ENTRY_REFERENCE(position, s->ChoiceEntry)
+            when Symbol.Kind.CHOICE_CASE:
+                return IRNode.CHOICE_CASE_REFERENCE(position, s->ChoiceCase)
             when Symbol.Kind.GENERIC_PARAMETER:
                 error(position, "generic parameter '\{s.name}' is not an expression")
                 return null
@@ -1513,7 +1511,7 @@ class Compiler {
                     return Type.Any()
                 }
                 return c.type()
-            when IRNode.CHOICE_ENTRY_REFERENCE(_, ce):
+            when IRNode.CHOICE_CASE_REFERENCE(_, ce):
                 return ce.owner.type()
         }
         return variableType(expr.type())
@@ -1897,7 +1895,7 @@ class Compiler {
                     return null
                 }
                 return coercionCost(c, target)
-            when IRNode.CHOICE_ENTRY_REFERENCE(_, ce):
+            when IRNode.CHOICE_CASE_REFERENCE(_, ce):
                 return coercionCost(ce.owner.type(), target)
             when IRNode.FIELD_REFERENCE(_, _, _, field):
                 if field.annotations.isWeak() & !inFieldCleanup {
@@ -2095,7 +2093,7 @@ class Compiler {
                 return resolveMethodCall(position, callTarget, methods, args, target)
             when IRNode.UNRESOLVED_INDEX(_, _, base, args):
                 return coerce(call(base, "[]", args, target), target)
-            when IRNode.CHOICE_ENTRY_REFERENCE(_, ce):
+            when IRNode.CHOICE_CASE_REFERENCE(_, ce):
                 if ce.fields.count = 0 {
                     def owner := IRNode.TYPE_REFERENCE(expr.position(), ce.owner.type())
                     def args := Array<IRNode>()
@@ -2659,7 +2657,7 @@ class Compiler {
     method compileChoiceComparison(left:IRNode, name:String, right:IRNode):IRNode? {
         def args := Array<IRNode>()
         match right {
-            when IRNode.CHOICE_ENTRY_REFERENCE(_, rightEntry):
+            when IRNode.CHOICE_CASE_REFERENCE(_, rightEntry):
                 def leftValue := compileDot(left.position(), left, ClassDecl.RAW_VALUE_NAME)
                 def rightValue := rightEntry.rawValue.convert()->UInt64
                 args.add(IRNode.INT(right.position(), Type.IntLiteral(rightValue),
@@ -2725,7 +2723,7 @@ class Compiler {
         return call(m, args, null)
     }
 
-    method createChoiceEntryInit(entry:ChoiceEntry) {
+    method createChoiceCaseInit(entry:ChoiceCase) {
         def cl := entry.owner
         assert entry.resolved != Resolution.UNRESOLVED
         if entry.resolved != Resolution.RESOLVED {
@@ -2828,7 +2826,7 @@ class Compiler {
                             compilePandaCall("unref", reused))
                 }
                 return construct
-            when IRNode.CHOICE_ENTRY_REFERENCE(_, ce):
+            when IRNode.CHOICE_CASE_REFERENCE(_, ce):
                 if ce.fields.count != args.count {
                     error(m.position(), "choice '\{m}' requires \{ce.fields.count} " +
                             "argument\{ce.fields.count = 1:|s}, but found " +
@@ -3762,6 +3760,9 @@ class Compiler {
         match base {
             when IRNode.TYPE_REFERENCE(_, type):
                 cl := getClass(type)
+                if cl = null {
+                    return null
+                }
                 className := type.convert()
             when IRNode.UNRESOLVED_IDENTIFIER(_, baseName):
                 def fullName := "\{baseName}.\{name}"
@@ -3773,6 +3774,9 @@ class Compiler {
             when IRNode.SUPER:
                 resolve(currentClass[0])
                 cl := getClass(currentClass[0].rawSuper)
+                if cl = null {
+                    return null
+                }
                 className := cl.name
             otherwise:
                 if !base.type().isClass() {
@@ -3780,11 +3784,12 @@ class Compiler {
                     return null
                 }
                 cl := getClass(base.type())
+                if cl = null {
+                    return null
+                }
                 className := cl.name
         }
-        if cl = null {
-            return null
-        }
+        assert cl != null
         def st := getSymbolTable(cl)
         def s := st[name]
         if s = null |
@@ -3963,7 +3968,7 @@ class Compiler {
         return IRNode.NULL(position, Type.Null())
     }
 
-    method compileChoiceFieldReference(position:Position, rawBase:ASTNode, ce:ChoiceEntry,
+    method compileChoiceFieldReference(position:Position, rawBase:ASTNode, ce:ChoiceCase,
             field:Int):IRNode? {
         resolve(ce)
         def base := compileExpression(rawBase)
@@ -4769,7 +4774,7 @@ class Compiler {
                                 return null
                             }
                             match base {
-                                when IRNode.CHOICE_ENTRY_REFERENCE(_, entry):
+                                when IRNode.CHOICE_CASE_REFERENCE(_, entry):
                                     def callChildren := Array<IRNode>()
                                     callChildren.add(base)
                                     def target := IRNode.VARIABLE_REFERENCE(testPosition, value)
@@ -5222,7 +5227,7 @@ class Compiler {
                 var currentPost:IRNode? := null
                 for ann in current.annotations.expressions {
                     match ann {
-                        when Annotations.Expression.PRE(expr):
+                        when Annotations.Expression.PRE(_, expr):
                             if current == m {
                                 if m.overridden != null {
                                     error(expr.position(), "cannot use '@pre' in a method which " +
@@ -5234,7 +5239,7 @@ class Compiler {
                             }
                             currentPre := coerce(compileExpressionInContext(expr, current, m),
                                     Type.Bit())
-                        when Annotations.Expression.PRE_OR(expr):
+                        when Annotations.Expression.PRE_OR(_, expr):
                             if current == m {
                                 if m.overridden = null {
                                     error(expr.position(), "cannot use '@preOr' in a method " +
@@ -5247,7 +5252,7 @@ class Compiler {
                             }
                             currentPre := coerce(compileExpressionInContext(expr, current, m),
                                     Type.Bit())
-                        when Annotations.Expression.POST(expr):
+                        when Annotations.Expression.POST(_, expr):
                             if current == m {
                                 if m.overridden != null {
                                     error(expr.position(), "cannot use '@post' in a method which " +
@@ -5259,7 +5264,7 @@ class Compiler {
                             }
                             currentPost := coerce(compileExpressionInContext(expr, current, m),
                                     Type.Bit())
-                        when Annotations.Expression.POST_AND(expr):
+                        when Annotations.Expression.POST_AND(_, expr):
                             if current == m {
                                 if m.overridden = null {
                                     error(expr.position(), "cannot use '@postAnd' in a method " +
@@ -5453,7 +5458,7 @@ class Compiler {
         def statements := Array<ASTNode>()
         def value := ASTNode.SELF(cl.position)
         def whens := Array<ASTNode>()
-        for e in cl.choiceEntries {
+        for e in cl.choiceCases {
             resolve(e)
             if errorCount != 0 {
                 return

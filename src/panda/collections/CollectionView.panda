@@ -9,6 +9,9 @@ A read-only view of a collection of elements. A `CollectionView`'s elements are 
 @see ListView
 ====================================================================================================
 interface CollectionView<T> : Iterable<T> {
+    ================================================================================================
+    The number of elements in the collection.
+    ================================================================================================
     property count:Int
 
     function get_count():Int

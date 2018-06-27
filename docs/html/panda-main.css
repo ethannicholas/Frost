@@ -5,6 +5,10 @@ body {
     color: #000000;
 }
 
+td {
+    font-size: 12pt;
+}
+
 #main {
     white-space: nowrap;
     display: table;
@@ -61,98 +65,4 @@ a {
 
 a:hover {
     text-decoration: underline;
-}
-
-span.methodName {
-    font-weight: bold;
-}
-
-.classDescription {
-    border-top: solid gray 1px;
-    border-bottom: solid gray 1px;
-    padding-top: 12px;
-    padding-bottom: 12px;
-    margin-bottom: 12px;
-}
-
-.minorSectionTitle {
-    font-weight: bold;
-}
-
-.minorSection {
-    padding-top: 6px;
-    padding-left: 24px;
-    margin-bottom: 12px;
-}
-
-dl.summary dt {
-    border-top: solid gray 1px;
-    padding-top: 8pt;
-}
-
-dl.summary dd {
-    padding-top: 3pt;
-    padding-bottom: 8pt;
-}
-
-dl.summary {
-    border-bottom: solid gray 1px;    
-}
-
-dt {
-   padding-left: 6px; 
-   padding-right: 6px;
-}
-
-dt:nth-child(4n - 1), dd:nth-child(4n) {
-    background: #EEEEEE;
-}
-
-dd {
-    margin: 0;
-    padding-left: 24pt;
-}
-
-div.ancestor {
-    margin-bottom: 4px;
-}
-
-div.field, div.method, div.case {
-    border-radius: 6pt;
-    box-shadow: 2px 2px 3px #A0A0A0;
-    margin-bottom: 18pt;
-}
-
-div.fieldHeader, div.methodHeader, div.caseHeader {
-    border-left: solid #c0c0c0 1px;
-    border-right: solid #c0c0c0 1px;
-    border-top: solid #c0c0c0 1px;
-    border-radius: 6pt 6pt 0 0;
-    padding: 4pt;
-    margin-top: 6pt;
-
-    background: #e2e2e2; /* Old browsers */
-    background: -moz-linear-gradient(top,  #e2e2e2 0%, #dbdbdb 50%, #d1d1d1 51%, #fefefe 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e2e2e2), color-stop(50%,#dbdbdb), color-stop(51%,#d1d1d1), color-stop(100%,#fefefe)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top,  #e2e2e2 0%,#dbdbdb 50%,#d1d1d1 51%,#fefefe 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top,  #e2e2e2 0%,#dbdbdb 50%,#d1d1d1 51%,#fefefe 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top,  #e2e2e2 0%,#dbdbdb 50%,#d1d1d1 51%,#fefefe 100%); /* IE10+ */
-    background: linear-gradient(to bottom,  #e2e2e2 0%,#dbdbdb 50%,#d1d1d1 51%,#fefefe 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', endColorstr='#fefefe',GradientType=0 ); /* IE6-9 */
-}
-
-div.fieldBody, div.methodBody, div.caseBody {
-    border: solid #c0c0c0 1px;
-    border-radius: 0 0 6pt 6pt;
-    padding-left: 4pt;
-    padding-right: 4pt;
-    padding-top: -4pt;
-}
-
-div.methodSignature {
-    margin-top: 6pt;
-}
-
-div.methodDescription {
-    margin-top: 6pt;
 }

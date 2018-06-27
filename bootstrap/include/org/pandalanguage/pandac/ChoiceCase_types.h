@@ -10,7 +10,7 @@ typedef struct panda$collections$Array panda$collections$Array;
 #include "panda/core/Int64_types.h"
 #include "org/pandalanguage/pandac/Compiler/Resolution_types.h"
 
-typedef struct org$pandalanguage$pandac$ChoiceEntry {
+typedef struct org$pandalanguage$pandac$ChoiceCase {
     panda$core$Class* $class;
     panda$core$Int32 refCount;
     org$pandalanguage$pandac$Symbol$Kind kind;
@@ -22,8 +22,8 @@ typedef struct org$pandalanguage$pandac$ChoiceEntry {
     panda$core$Int64 rawValue;
     panda$core$Weak* initMethod;
     org$pandalanguage$pandac$Compiler$Resolution resolved;
-} org$pandalanguage$pandac$ChoiceEntry;
+} org$pandalanguage$pandac$ChoiceCase;
 #include "panda/core/Class.h"
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[3]; } org$pandalanguage$pandac$ChoiceEntry$class_type;
-extern org$pandalanguage$pandac$ChoiceEntry$class_type org$pandalanguage$pandac$ChoiceEntry$class;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[3]; } org$pandalanguage$pandac$ChoiceCase$class_type;
+extern org$pandalanguage$pandac$ChoiceCase$class_type org$pandalanguage$pandac$ChoiceCase$class;
 

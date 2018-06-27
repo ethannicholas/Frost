@@ -11,6 +11,7 @@
 #include "org/pandalanguage/pandac/parser/Token.h"
 #include "org/pandalanguage/pandac/Pair.h"
 #include "org/pandalanguage/pandac/parser/Token/Kind.h"
+#include "panda/collections/CollectionView.h"
 
 static panda$core$String $s1;
 org$pandalanguage$pandac$parser$SyntaxHighlighter$class_type org$pandalanguage$pandac$parser$SyntaxHighlighter$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, NULL, { panda$core$Object$convert$R$panda$core$String, org$pandalanguage$pandac$parser$SyntaxHighlighter$cleanup, org$pandalanguage$pandac$parser$SyntaxHighlighter$reset, org$pandalanguage$pandac$parser$SyntaxHighlighter$open$org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind, org$pandalanguage$pandac$parser$SyntaxHighlighter$close$org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind, org$pandalanguage$pandac$parser$SyntaxHighlighter$add$org$pandalanguage$pandac$parser$Token$org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind, org$pandalanguage$pandac$parser$SyntaxHighlighter$add$org$pandalanguage$pandac$parser$Token, org$pandalanguage$pandac$parser$SyntaxHighlighter$rewind} };
@@ -27,6 +28,7 @@ typedef void (*$fn241)(org$pandalanguage$pandac$parser$SyntaxHighlighter*, org$p
 typedef void (*$fn251)(org$pandalanguage$pandac$parser$SyntaxHighlighter*, org$pandalanguage$pandac$parser$Token, org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind);
 typedef void (*$fn496)(org$pandalanguage$pandac$parser$SyntaxHighlighter*, org$pandalanguage$pandac$parser$Token, org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind);
 typedef void (*$fn499)(org$pandalanguage$pandac$parser$SyntaxHighlighter*, org$pandalanguage$pandac$parser$Token, org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind);
+typedef panda$core$Int64 (*$fn503)(panda$collections$CollectionView*);
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x70\x61\x72\x73\x65\x72\x2e\x53\x79\x6e\x74\x61\x78\x48\x69\x67\x68\x6c\x69\x67\x68\x74\x65\x72", 49, -1741021081154568297, NULL };
 static panda$core$String $s10 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x53\x79\x6e\x74\x61\x78\x48\x69\x67\x68\x6c\x69\x67\x68\x74\x65\x72\x2e\x70\x61\x6e\x64\x61", 23, -4185779237782815759, NULL };
@@ -925,48 +927,53 @@ void org$pandalanguage$pandac$parser$SyntaxHighlighter$add$org$pandalanguage$pan
 }
 void org$pandalanguage$pandac$parser$SyntaxHighlighter$rewind(org$pandalanguage$pandac$parser$SyntaxHighlighter* self) {
     panda$core$Object* $tmp500;
-    panda$core$Int64 $tmp502;
-    panda$core$Int64 $tmp501 = panda$collections$Array$get_count$R$panda$core$Int64(self->tokens);
-    panda$core$Int64$init$builtin_int64(&$tmp502, 1);
-    panda$core$Int64 $tmp503 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64($tmp501, $tmp502);
-    panda$core$Object* $tmp504 = panda$collections$Array$removeIndex$panda$core$Int64$R$panda$collections$Array$T(self->tokens, $tmp503);
-    $tmp500 = $tmp504;
+    panda$core$Int64 $tmp505;
+    ITable* $tmp501 = ((panda$collections$CollectionView*) self->tokens)->$class->itable;
+    while ($tmp501->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
+        $tmp501 = $tmp501->next;
+    }
+    $fn503 $tmp502 = $tmp501->methods[0];
+    panda$core$Int64 $tmp504 = $tmp502(((panda$collections$CollectionView*) self->tokens));
+    panda$core$Int64$init$builtin_int64(&$tmp505, 1);
+    panda$core$Int64 $tmp506 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64($tmp504, $tmp505);
+    panda$core$Object* $tmp507 = panda$collections$Array$removeIndex$panda$core$Int64$R$panda$collections$Array$T(self->tokens, $tmp506);
+    $tmp500 = $tmp507;
     panda$core$Panda$unref$panda$core$Object($tmp500);
 }
 void org$pandalanguage$pandac$parser$SyntaxHighlighter$init(org$pandalanguage$pandac$parser$SyntaxHighlighter* self) {
-    panda$collections$Stack* $tmp505;
-    panda$collections$Stack* $tmp506;
-    panda$collections$Array* $tmp508;
-    panda$collections$Array* $tmp509;
+    panda$collections$Stack* $tmp508;
+    panda$collections$Stack* $tmp509;
+    panda$collections$Array* $tmp511;
+    panda$collections$Array* $tmp512;
     self->stack = NULL;
     self->tokens = NULL;
-    panda$collections$Stack* $tmp507 = (panda$collections$Stack*) pandaObjectAlloc(24, (panda$core$Class*) &panda$collections$Stack$class);
-    panda$collections$Stack$init($tmp507);
-    $tmp506 = $tmp507;
-    $tmp505 = $tmp506;
-    self->stack = $tmp505;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp505));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp506));
-    panda$collections$Array* $tmp510 = (panda$collections$Array*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$Array$class);
-    panda$collections$Array$init($tmp510);
+    panda$collections$Stack* $tmp510 = (panda$collections$Stack*) pandaObjectAlloc(24, (panda$core$Class*) &panda$collections$Stack$class);
+    panda$collections$Stack$init($tmp510);
     $tmp509 = $tmp510;
     $tmp508 = $tmp509;
-    self->tokens = $tmp508;
+    self->stack = $tmp508;
     panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp508));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp509));
+    panda$collections$Array* $tmp513 = (panda$collections$Array*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$Array$class);
+    panda$collections$Array$init($tmp513);
+    $tmp512 = $tmp513;
+    $tmp511 = $tmp512;
+    self->tokens = $tmp511;
+    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp511));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp512));
 }
 void org$pandalanguage$pandac$parser$SyntaxHighlighter$cleanup(org$pandalanguage$pandac$parser$SyntaxHighlighter* self) {
-    int $tmp513;
+    int $tmp516;
     {
     }
-    $tmp513 = -1;
-    goto $l511;
-    $l511:;
-    panda$core$Object$cleanup(((panda$core$Object*) self));
-    switch ($tmp513) {
-        case -1: goto $l514;
-    }
+    $tmp516 = -1;
+    goto $l514;
     $l514:;
+    panda$core$Object$cleanup(((panda$core$Object*) self));
+    switch ($tmp516) {
+        case -1: goto $l517;
+    }
+    $l517:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->stack));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->tokens));
 }

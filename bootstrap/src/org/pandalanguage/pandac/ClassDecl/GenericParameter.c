@@ -42,7 +42,7 @@ void org$pandalanguage$pandac$ClassDecl$GenericParameter$init$org$pandalanguage$
         panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp5));
         panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp4));
     }
-    panda$core$Int64$init$builtin_int64(&$tmp7, 2);
+    panda$core$Int64$init$builtin_int64(&$tmp7, 3);
     org$pandalanguage$pandac$Symbol$Kind$init$panda$core$Int64(&$tmp6, $tmp7);
     org$pandalanguage$pandac$Symbol$init$org$pandalanguage$pandac$Symbol$Kind$org$pandalanguage$pandac$Position$panda$core$String(((org$pandalanguage$pandac$Symbol*) self), $tmp6, p_position, p_name);
 }

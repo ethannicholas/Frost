@@ -20,18 +20,18 @@ class Annotations {
     }
 
     choice Expression {
-        PRE(ASTNode)
-        PRE_OR(ASTNode)
-        POST(ASTNode)
-        POST_AND(ASTNode)
+        PRE(String, ASTNode)
+        PRE_OR(String, ASTNode)
+        POST(String, ASTNode)
+        POST_AND(String, ASTNode)
 
         @override
         function convert():String {
             match self {
-                when PRE(expr):      return "@pre(\{expr})"
-                when PRE_OR(expr):   return "@preOr(\{expr})"
-                when POST(expr):     return "@post(\{expr})"
-                when POST_AND(expr): return "@postAnd(\{expr})"
+                when PRE(_, expr):      return "@pre(\{expr})"
+                when PRE_OR(_, expr):   return "@preOr(\{expr})"
+                when POST(_, expr):     return "@post(\{expr})"
+                when POST_AND(_, expr): return "@postAnd(\{expr})"
             }
         }
     }

@@ -339,13 +339,23 @@
 
     <xsl:template match="case" mode="summary">
         <dt>
-            <a href="#{name}">
-                <b><xsl:apply-templates select="name"/></b>
-            </a>
+            <a href="#{name}"><b><xsl:apply-templates select="name"/></b></a>
+            <xsl:if test="count(fields) > 0">
+                <xsl:text>(</xsl:text>
+                <xsl:apply-templates select="fields/type" mode="list"/>
+                <xsl:text>)</xsl:text>
+            </xsl:if>
         </dt>
         <dd>
             <xsl:apply-templates select="doc/summary"/>
         </dd>
+    </xsl:template>
+
+    <xsl:template match="type" mode="list">
+        <xsl:if test="position() > 1">
+            <xsl:text>, </xsl:text>
+        </xsl:if>
+        <xsl:apply-templates select="."/>
     </xsl:template>
 
     <xsl:template match="case">
@@ -353,6 +363,11 @@
             <div class="caseHeader">
                 <a name="{name}"/>
                 <b><xsl:apply-templates select="name"/></b>
+                <xsl:if test="count(fields) > 0">
+                    <xsl:text>(</xsl:text>
+                    <xsl:apply-templates select="fields/type" mode="list"/>
+                    <xsl:text>)</xsl:text>
+                </xsl:if>
             </div>
             <div class="caseBody">
                 <xsl:apply-templates select="doc/description"/>
@@ -394,7 +409,7 @@
 
     <xsl:template name="hint">
         <xsl:param name="operator"/>
-        -- <xsl:value-of select="$operator"/> --<br/>
+        <span class="hint">-- <xsl:value-of select="$operator"/> --</span><br/>
     </xsl:template>
     
     <xsl:template match="name" mode="hint">
@@ -513,13 +528,7 @@
     <xsl:template match="method|init|function" mode="summary">
         <dt>
             <code>
-                <xsl:variable name="hint">
-                    <xsl:apply-templates select="name" mode="hint"/>
-                </xsl:variable>
-                <xsl:if test="$hint != ''">
-                    <xsl:value-of select="$hint"/>
-                    <br/>
-                </xsl:if>
+                <xsl:apply-templates select="name" mode="hint"/>
                 <b>
                     <a>
                         <xsl:attribute name="href">
@@ -653,8 +662,8 @@
     </xsl:template>
 
     <xsl:template match="annotation">
-        <xsl:if test="text() != '@external' and text() != '@math(overflow)'">
-            <xsl:apply-templates/>
+        <xsl:if test="text() != '@external'">
+            <span class="annotation"><xsl:apply-templates/></span>
             <br/>
         </xsl:if>
     </xsl:template>

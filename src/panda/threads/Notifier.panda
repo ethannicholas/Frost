@@ -1,5 +1,11 @@
 package panda.threads
 
+====================================================================================================
+A condition variable which helps multiple [Thread]s coordinate their scheduling. `Notifier` is not
+necessary from within safe Panda code; normally you would use [MessageQueue] to coordinate between
+threads. `Notifier` generally only comes into play when [Lock]s are necessary due to unsafe
+threading.
+====================================================================================================
 @final
 class Notifier : Immutable {
     @private

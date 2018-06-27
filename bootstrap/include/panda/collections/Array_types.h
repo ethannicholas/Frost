@@ -9,7 +9,7 @@ typedef struct panda$core$String panda$core$String;
 typedef struct panda$collections$Array {
     panda$core$Class* $class;
     panda$core$Int32 refCount;
-    panda$core$Int64 count;
+    panda$core$Int64 _count;
     panda$core$Int64 capacity;
     panda$core$Object** data;
 } panda$collections$Array;

@@ -135,7 +135,7 @@ void org$pandalanguage$pandac$ClassDecl$init$panda$io$File$org$pandalanguage$pan
     self->fields = NULL;
     self->methods = NULL;
     self->classes = NULL;
-    self->choiceEntries = NULL;
+    self->choiceCases = NULL;
     self->owner = NULL;
     self->symbolTable = NULL;
     self->virtualMethods = NULL;
@@ -175,7 +175,7 @@ void org$pandalanguage$pandac$ClassDecl$init$panda$io$File$org$pandalanguage$pan
     panda$collections$Array$init($tmp17);
     $tmp16 = $tmp17;
     $tmp15 = $tmp16;
-    self->choiceEntries = $tmp15;
+    self->choiceCases = $tmp15;
     panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp15));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp16));
     panda$core$Weak* $tmp20 = (panda$core$Weak*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$Weak$class);
@@ -1008,7 +1008,7 @@ void org$pandalanguage$pandac$ClassDecl$cleanup(org$pandalanguage$pandac$ClassDe
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->fields));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->methods));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->classes));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->choiceEntries));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->choiceCases));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->owner));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->symbolTable));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->virtualMethods));

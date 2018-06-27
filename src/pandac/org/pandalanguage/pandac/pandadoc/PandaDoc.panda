@@ -142,6 +142,20 @@ class PandaDoc {
         if a.isWeak() {
             out.write("annotation", "@weak")
         }
+        if a.expressions != null {
+            for expr in a.expressions {
+                match expr {
+                    when Annotations.Expression.PRE(text, _):
+                        out.write("annotation", "@pre(\{escape(text)})")
+                    when Annotations.Expression.PRE_OR(text, _):
+                        out.write("annotation", "@preOr(\{escape(text)})")
+                    when Annotations.Expression.POST(text, _):
+                        out.write("annotation", "@post(\{escape(text)})")
+                    when Annotations.Expression.POST_AND(text, _):
+                        out.write("annotation", "@postAnd(\{escape(text)})")
+                }
+            }
+        }
         out.close("annotations")
     }
 
@@ -235,6 +249,9 @@ class PandaDoc {
 
     function visible(m:MethodDecl):Bit {
         if m.signature() = "cleanup()" & currentClass.name != "panda.core.Object" {
+            return false
+        }
+        if m.name.startsWith("get_") | m.name.startsWith("set_") {
             return false
         }
         return !m.annotations.isPrivate() & !m.annotations.isSynthetic()
@@ -376,8 +393,8 @@ class PandaDoc {
         def annotations := m.annotations
         if m.owner.annotations.isFinal() {
             annotations.flags &&= !!Annotations.Flag.FINAL
-            write(annotations)
         }
+        write(annotations)
         out.open("params")
         for p in m.parameters {
             out.open("param")
@@ -605,12 +622,15 @@ class PandaDoc {
                 out.write("kind", "interface")
             when ClassDecl.Kind.CHOICE:
                 out.write("kind", "choice")
-                for ce in cl.choiceEntries {
+                for cc in cl.choiceCases {
                     out.open("case")
-                    out.write("name", ce.name)
-                    if ce.fields.count > 0 {
+                    out.write("name", cc.name)
+                    if cc.doccomment != null {
+                        writeDoc(cc.doccomment)
+                    }
+                    if cc.fields.count > 0 {
                         out.open("fields")
-                        for f in ce.fields {
+                        for f in cc.fields {
                             write(f)
                         }
                         out.close("fields")

@@ -1,5 +1,10 @@
 package panda.threads
 
+====================================================================================================
+A lock (mutex) which allows multiple threads to coordinate access to a shared resource. Locks are
+typically unnecessary in Panda, as only immutable data can be shared between threads without
+resorting to unsafe code.
+====================================================================================================
 @final
 class Lock : Immutable {
     @private

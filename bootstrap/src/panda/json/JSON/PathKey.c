@@ -14,7 +14,7 @@ panda$json$JSON$PathKey$class_type panda$json$JSON$PathKey$class = { (panda$core
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x6a\x73\x6f\x6e\x2e\x4a\x53\x4f\x4e\x2e\x50\x61\x74\x68\x4b\x65\x79", 23, 7178919972541529313, NULL };
 
 void panda$json$JSON$PathKey$cleanup(panda$json$JSON$PathKey* self) {
-    panda$json$JSON$PathKey* $match$15_58 = NULL;
+    panda$json$JSON$PathKey* $match$45_58 = NULL;
     panda$json$JSON$PathKey* $tmp9;
     panda$core$Int64 $tmp10;
     panda$core$String* _f012 = NULL;
@@ -27,27 +27,27 @@ void panda$json$JSON$PathKey$cleanup(panda$json$JSON$PathKey* self) {
         int $tmp7;
         {
             $tmp9 = self;
-            $match$15_58 = $tmp9;
+            $match$45_58 = $tmp9;
             panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp9));
             panda$core$Int64$init$builtin_int64(&$tmp10, 0);
-            panda$core$Bit $tmp11 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$15_58->$rawValue, $tmp10);
+            panda$core$Bit $tmp11 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$45_58->$rawValue, $tmp10);
             if ($tmp11.value) {
             {
-                panda$core$String** $tmp13 = ((panda$core$String**) ((char*) $match$15_58->$data + 0));
+                panda$core$String** $tmp13 = ((panda$core$String**) ((char*) $match$45_58->$data + 0));
                 _f012 = *$tmp13;
-                panda$core$String$Index* $tmp15 = ((panda$core$String$Index*) ((char*) $match$15_58->$data + 8));
+                panda$core$String$Index* $tmp15 = ((panda$core$String$Index*) ((char*) $match$45_58->$data + 8));
                 _f114 = *$tmp15;
                 panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) _f012));
             }
             }
             else {
             panda$core$Int64$init$builtin_int64(&$tmp16, 1);
-            panda$core$Bit $tmp17 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$15_58->$rawValue, $tmp16);
+            panda$core$Bit $tmp17 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$45_58->$rawValue, $tmp16);
             if ($tmp17.value) {
             {
-                panda$core$Int64* $tmp19 = ((panda$core$Int64*) ((char*) $match$15_58->$data + 0));
+                panda$core$Int64* $tmp19 = ((panda$core$Int64*) ((char*) $match$45_58->$data + 0));
                 _f018 = *$tmp19;
-                panda$core$String$Index* $tmp21 = ((panda$core$String$Index*) ((char*) $match$15_58->$data + 8));
+                panda$core$String$Index* $tmp21 = ((panda$core$String$Index*) ((char*) $match$45_58->$data + 8));
                 _f120 = *$tmp21;
             }
             }
