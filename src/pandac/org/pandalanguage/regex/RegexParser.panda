@@ -29,8 +29,8 @@ class RegexParser {
     }
 
     method next():RegexToken {
-        if pushbackBuffer.get_count() != 0 {
-            def idx := pushbackBuffer.get_count() - 1
+        if pushbackBuffer.count != 0 {
+            def idx := pushbackBuffer.count - 1
             def result := pushbackBuffer[idx]
             pushbackBuffer.removeIndex(idx)
             return result
@@ -44,10 +44,10 @@ class RegexParser {
     }
 
     method peek():RegexToken {
-        if pushbackBuffer.get_count() = 0 {
+        if pushbackBuffer.count = 0 {
             pushback(next())
         }
-        return pushbackBuffer[pushbackBuffer.get_count() - 1]
+        return pushbackBuffer[pushbackBuffer.count - 1]
     }
 
     method checkNext(kind:RegexToken.Kind):Bit {

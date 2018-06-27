@@ -125,7 +125,7 @@
 
     <xsl:template match="/entry/contents/entry">
         <li id="entry.{name}">
-          <a href="{path}"><code><xsl:value-of select="simpleName"/></code></a>
+          <a href="{url}"><code><xsl:value-of select="simpleName"/></code></a>
             <code><xsl:apply-templates select="contents"/></code>
         </li>
     </xsl:template>

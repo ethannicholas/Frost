@@ -74,8 +74,8 @@ class Parser {
     }
 
     method rawNext():Token {
-        if pushbackBuffer.get_count() != 0 {
-            def idx := pushbackBuffer.get_count() - 1
+        if pushbackBuffer.count != 0 {
+            def idx := pushbackBuffer.count - 1
             def result := pushbackBuffer[idx]
             pushbackBuffer.removeIndex(idx)
             if syntaxHighlighter != null {
@@ -86,7 +86,7 @@ class Parser {
         def result := lexer.next()
         if syntaxHighlighter != null {
             if result.kind = Token.Kind.DOC_COMMENT {
-                if syntaxHighlighter.stack.get_count() = 0 |
+                if syntaxHighlighter.stack.count = 0 |
                         syntaxHighlighter.stack[0] != SyntaxHighlighter.Kind.DOC_COMMENT {
                     syntaxHighlighter.open(SyntaxHighlighter.Kind.DOC_COMMENT)
                 }
@@ -142,9 +142,9 @@ class Parser {
 
     method pushback(token:Token) {
         if syntaxHighlighter != null {
-            while text(syntaxHighlighter.tokens[syntaxHighlighter.tokens.get_count() - 1].first) !=
+            while text(syntaxHighlighter.tokens[syntaxHighlighter.tokens.count - 1].first) !=
                     text(token) {
-                pushbackBuffer.add(syntaxHighlighter.tokens[syntaxHighlighter.tokens.get_count() -
+                pushbackBuffer.add(syntaxHighlighter.tokens[syntaxHighlighter.tokens.count -
                         1].first)
                 syntaxHighlighter.rewind()
             }
@@ -154,10 +154,10 @@ class Parser {
     }
 
     method peek():Token {
-        if pushbackBuffer.get_count() = 0 {
+        if pushbackBuffer.count = 0 {
             pushback(next())
         }
-        return pushbackBuffer[pushbackBuffer.get_count() - 1]
+        return pushbackBuffer[pushbackBuffer.count - 1]
     }
 
     method checkNext(kind:Token.Kind):Token? {
@@ -219,7 +219,7 @@ class Parser {
     @post(!inSpeculative)
     method rewind() {
         inSpeculative := false
-        for i in speculativeBuffer.get_count() - 1 ... 0 by -1 {
+        for i in speculativeBuffer.count - 1 ... 0 by -1 {
             pushbackBuffer.add(speculativeBuffer[i])
         }
     }
@@ -798,10 +798,10 @@ class Parser {
                     }
                 }
                 def returnType:ASTNode?
-                if returnTypes.get_count() = 0 {
+                if returnTypes.count = 0 {
                     returnType := null
                 }
-                else if returnTypes.get_count() = 1 {
+                else if returnTypes.count = 1 {
                     returnType := returnTypes[0]
                 }
                 else {
@@ -2359,13 +2359,13 @@ class Parser {
             def next := peek()
             match next.kind {
                 when Token.Kind.ANNOTATION:
-                    if a.get_count() > 0 {
+                    if a.count > 0 {
                         error(next, "expected a declaration, but found '\{text(next)}'")
                         return null
                     }
                     a := annotations()
                 when Token.Kind.DOC_COMMENT:
-                    if dc != null | a.get_count() > 0 {
+                    if dc != null | a.count > 0 {
                         error(next, "expected a declaration, but found '\{text(next)}'")
                         return null
                     }

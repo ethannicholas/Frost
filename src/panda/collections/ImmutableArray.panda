@@ -27,7 +27,7 @@ class ImmutableArray<T> : Immutable, ListView<T> {
     }
 
     @private
-    def count:Int
+    def _count:Int
 
     @private
     def dummy:Int -- for binary compatibility with Array
@@ -36,13 +36,13 @@ class ImmutableArray<T> : Immutable, ListView<T> {
     def data:Pointer<T>
 
     init() {
-        self.count := 0
+        self._count := 0
         data := Pointer<T>.alloc(0)
     }
 
     init(data:ListView<T>) {
-        self.count := data.get_count()
-        self.data := Pointer<T>.alloc(count)
+        self._count := data.count
+        self.data := Pointer<T>.alloc(_count)
         for i in 0 .. count {
             self.data[i] := data[i]
         }
@@ -51,7 +51,7 @@ class ImmutableArray<T> : Immutable, ListView<T> {
     @private
     init(data:Pointer<T>, count:Int) {
         self.data := data
-        self.count := count
+        self._count := count
     }
 
     @override
@@ -70,7 +70,7 @@ class ImmutableArray<T> : Immutable, ListView<T> {
 
     @override
     function get_count():Int {
-        return count
+        return _count
     }
 
     ================================================================================================
@@ -109,7 +109,7 @@ class ImmutableArray<T> : Immutable, ListView<T> {
             end := r.max
         }
         else {
-            end := get_count()
+            end := _count
             if r.inclusive {
                 end -= 1
             }
@@ -131,7 +131,7 @@ class ImmutableArray<T> : Immutable, ListView<T> {
             current := 0
         }
         else {
-            current := get_count() - 1
+            current := _count - 1
         }
 
         def end:Int
@@ -139,7 +139,7 @@ class ImmutableArray<T> : Immutable, ListView<T> {
             end := r.end
         }
         else if step > 0 {
-            end := get_count()
+            end := _count
         }
         else {
             end := 0
@@ -159,7 +159,7 @@ class ImmutableArray<T> : Immutable, ListView<T> {
                 current -= step
             }
         }
-        if (r.inclusive | r.end = null) & current = end & end < get_count() {
+        if (r.inclusive | r.end = null) & current = end & end < _count {
             result.add(self[current])
         }
         return ImmutableArray<T>(result)

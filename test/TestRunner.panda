@@ -250,7 +250,7 @@ class TestRunner {
     ================================================================================================
     @class
     method sort(a:List<File>) {
-        sort(a, 0, a.get_count() - 1)
+        sort(a, 0, a.count - 1)
     }
 
     method run() {
@@ -282,7 +282,7 @@ class TestRunner {
 
     @class
     method main(args:ListView<String>) {
-        if args.get_count() < 5 {
+        if args.count < 5 {
             Console.printLine("usage: testrunner <panda home> <build path> <c compiler> <c libs...>")
             System.exit(1)
         }

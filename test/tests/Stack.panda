@@ -12,5 +12,5 @@ method main() {
     Console.printLine(s.pop())
     Console.printLine(s.pop())
     Console.printLine(s.pop())
-    Console.printLine(s.get_count())
+    Console.printLine(s.count)
 }

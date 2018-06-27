@@ -61,7 +61,7 @@ class TableOfContentsNode {
     ================================================================================================
     @class
     method sort(a:List<TableOfContentsNode>) {
-        sort(a, 0, a.get_count() - 1)
+        sort(a, 0, a.count - 1)
     }
 
     method write(apiRelativePath:String, out:XMLWriter) {
@@ -78,7 +78,7 @@ class TableOfContentsNode {
             out.write("simpleName", name[index..])
             out.write("url", apiRelativePath + url)
         }
-        if children.get_count() != 0 {
+        if children.count != 0 {
             out.open("contents")
             def list := children.values().all()
             sort(list)

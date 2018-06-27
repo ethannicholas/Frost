@@ -10,11 +10,6 @@ binary data, whereas `print` outputs text. This means that `out.write(65)` will 
 ====================================================================================================
 @abstract
 class OutputStream {
-    choice ByteOrder {
-        LITTLE_ENDIAN
-        BIG_ENDIAN
-    }
-
     ================================================================================================
     Determines the endianness of the data in this stream when writing multi-byte values. Defaults to
     `LITTLE_ENDIAN`, but may be freely changed.

@@ -30,10 +30,10 @@ class LinkResolver {
     }
 
     function matches(m:MethodDecl, parameters:ListView<Type>):Bit {
-        if m.parameters.get_count() != parameters.get_count() {
+        if m.parameters.count != parameters.count {
             return false
         }
-        for i in 0 .. parameters.get_count() {
+        for i in 0 .. parameters.count {
             if m.parameters[i].type != parameters[i] {
                 return false
             }

@@ -179,7 +179,7 @@ class Markdown {
             def url := MutableString(groups[2])
             encodeAmpsAndAngles(url)
             var title:String?
-            if groups.get_count() > 3 {
+            if groups.count > 3 {
                 title := groups[3]
                 if title = null {
                     title := ""
@@ -338,7 +338,7 @@ class Markdown {
         } else {
             paragraphs := Array<String>(markup.convert().split(/\n{2,}/))
         }
-        for i in 0 .. paragraphs.get_count() {
+        for i in 0 .. paragraphs.count {
             def paragraph := paragraphs[i]
             def decoded := htmlProtector.decode(paragraph)
             if decoded != null {

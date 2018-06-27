@@ -34,7 +34,8 @@ void panda$unsafe$UnsafeMessageQueue$post$panda$unsafe$UnsafeMessageQueue$T(pand
     panda$unsafe$UnsafeMessageQueue$Message* $tmp25;
     panda$unsafe$UnsafeMessageQueue$Message* $tmp27;
     panda$unsafe$UnsafeMessageQueue$Message* $tmp28;
-    panda$core$Int64 $tmp29;
+    panda$unsafe$UnsafeMessageQueue* $tmp29;
+    panda$core$Int64 $tmp30;
     int $tmp4;
     {
         panda$threads$ScopedLock* $tmp8 = (panda$threads$ScopedLock*) pandaObjectAlloc(24, (panda$core$Class*) &panda$threads$ScopedLock$class);
@@ -100,9 +101,10 @@ void panda$unsafe$UnsafeMessageQueue$post$panda$unsafe$UnsafeMessageQueue$T(pand
             }
         }
         }
-        panda$core$Int64$init$builtin_int64(&$tmp29, 1);
-        panda$core$Int64 $tmp30 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->count, $tmp29);
-        self->count = $tmp30;
+        $tmp29 = self;
+        panda$core$Int64$init$builtin_int64(&$tmp30, 1);
+        panda$core$Int64 $tmp31 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64($tmp29->count, $tmp30);
+        $tmp29->count = $tmp31;
         panda$threads$Notifier$notify(self->notifier);
     }
     $tmp4 = -1;
@@ -111,174 +113,176 @@ void panda$unsafe$UnsafeMessageQueue$post$panda$unsafe$UnsafeMessageQueue$T(pand
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) scope5));
     scope5 = NULL;
     switch ($tmp4) {
-        case -1: goto $l31;
-    }
-    $l31:;
-}
-panda$core$Int64 panda$unsafe$UnsafeMessageQueue$pendingMessages$R$panda$core$Int64(panda$unsafe$UnsafeMessageQueue* self) {
-    panda$threads$ScopedLock* scope35 = NULL;
-    panda$threads$ScopedLock* $tmp36;
-    panda$threads$ScopedLock* $tmp37;
-    panda$core$Int64 $returnValue39;
-    int $tmp34;
-    {
-        panda$threads$ScopedLock* $tmp38 = (panda$threads$ScopedLock*) pandaObjectAlloc(24, (panda$core$Class*) &panda$threads$ScopedLock$class);
-        panda$threads$ScopedLock$init$panda$threads$Lock($tmp38, self->lock);
-        $tmp37 = $tmp38;
-        $tmp36 = $tmp37;
-        scope35 = $tmp36;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp36));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp37));
-        $returnValue39 = self->count;
-        $tmp34 = 0;
-        goto $l32;
-        $l40:;
-        return $returnValue39;
+        case -1: goto $l32;
     }
     $l32:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) scope35));
-    scope35 = NULL;
-    switch ($tmp34) {
-        case 0: goto $l40;
+}
+panda$core$Int64 panda$unsafe$UnsafeMessageQueue$pendingMessages$R$panda$core$Int64(panda$unsafe$UnsafeMessageQueue* self) {
+    panda$threads$ScopedLock* scope36 = NULL;
+    panda$threads$ScopedLock* $tmp37;
+    panda$threads$ScopedLock* $tmp38;
+    panda$core$Int64 $returnValue40;
+    int $tmp35;
+    {
+        panda$threads$ScopedLock* $tmp39 = (panda$threads$ScopedLock*) pandaObjectAlloc(24, (panda$core$Class*) &panda$threads$ScopedLock$class);
+        panda$threads$ScopedLock$init$panda$threads$Lock($tmp39, self->lock);
+        $tmp38 = $tmp39;
+        $tmp37 = $tmp38;
+        scope36 = $tmp37;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp37));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp38));
+        $returnValue40 = self->count;
+        $tmp35 = 0;
+        goto $l33;
+        $l41:;
+        return $returnValue40;
     }
-    $l42:;
+    $l33:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) scope36));
+    scope36 = NULL;
+    switch ($tmp35) {
+        case 0: goto $l41;
+    }
+    $l43:;
     abort();
 }
 panda$core$Bit panda$unsafe$UnsafeMessageQueue$hasMessage$R$panda$core$Bit(panda$unsafe$UnsafeMessageQueue* self) {
-    panda$core$Bit $returnValue43;
-    panda$core$Int64 $tmp45;
-    panda$core$Int64 $tmp44 = panda$unsafe$UnsafeMessageQueue$pendingMessages$R$panda$core$Int64(self);
-    panda$core$Int64$init$builtin_int64(&$tmp45, 0);
-    panda$core$Bit $tmp46 = panda$core$Int64$$GT$panda$core$Int64$R$panda$core$Bit($tmp44, $tmp45);
-    $returnValue43 = $tmp46;
-    return $returnValue43;
+    panda$core$Bit $returnValue44;
+    panda$core$Int64 $tmp46;
+    panda$core$Int64 $tmp45 = panda$unsafe$UnsafeMessageQueue$pendingMessages$R$panda$core$Int64(self);
+    panda$core$Int64$init$builtin_int64(&$tmp46, 0);
+    panda$core$Bit $tmp47 = panda$core$Int64$$GT$panda$core$Int64$R$panda$core$Bit($tmp45, $tmp46);
+    $returnValue44 = $tmp47;
+    return $returnValue44;
 }
 panda$core$Object* panda$unsafe$UnsafeMessageQueue$getMessage$R$panda$unsafe$UnsafeMessageQueue$T(panda$unsafe$UnsafeMessageQueue* self) {
-    panda$threads$ScopedLock* scope51 = NULL;
-    panda$threads$ScopedLock* $tmp52;
+    panda$threads$ScopedLock* scope52 = NULL;
     panda$threads$ScopedLock* $tmp53;
-    panda$core$Object* result58 = NULL;
-    panda$core$Object* $tmp59;
-    panda$unsafe$UnsafeMessageQueue$Message* $tmp60;
+    panda$threads$ScopedLock* $tmp54;
+    panda$core$Object* result59 = NULL;
+    panda$core$Object* $tmp60;
     panda$unsafe$UnsafeMessageQueue$Message* $tmp61;
     panda$unsafe$UnsafeMessageQueue$Message* $tmp62;
     panda$unsafe$UnsafeMessageQueue$Message* $tmp63;
-    panda$core$Int64 $tmp64;
-    panda$core$Object* $returnValue66;
-    panda$core$Object* $tmp67;
-    int $tmp50;
+    panda$unsafe$UnsafeMessageQueue$Message* $tmp64;
+    panda$unsafe$UnsafeMessageQueue* $tmp65;
+    panda$core$Int64 $tmp66;
+    panda$core$Object* $returnValue68;
+    panda$core$Object* $tmp69;
+    int $tmp51;
     {
-        panda$threads$ScopedLock* $tmp54 = (panda$threads$ScopedLock*) pandaObjectAlloc(24, (panda$core$Class*) &panda$threads$ScopedLock$class);
-        panda$threads$ScopedLock$init$panda$threads$Lock($tmp54, self->lock);
+        panda$threads$ScopedLock* $tmp55 = (panda$threads$ScopedLock*) pandaObjectAlloc(24, (panda$core$Class*) &panda$threads$ScopedLock$class);
+        panda$threads$ScopedLock$init$panda$threads$Lock($tmp55, self->lock);
+        $tmp54 = $tmp55;
         $tmp53 = $tmp54;
-        $tmp52 = $tmp53;
-        scope51 = $tmp52;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp52));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp53));
-        $l55:;
-        bool $tmp57 = ((panda$core$Bit) { self->head == NULL }).value;
-        if (!$tmp57) goto $l56;
+        scope52 = $tmp53;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp53));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp54));
+        $l56:;
+        bool $tmp58 = ((panda$core$Bit) { self->head == NULL }).value;
+        if (!$tmp58) goto $l57;
         {
             panda$threads$Notifier$wait(self->notifier);
         }
-        goto $l55;
-        $l56:;
-        $tmp59 = self->head->payload;
-        result58 = $tmp59;
-        panda$core$Panda$ref$panda$core$Object($tmp59);
+        goto $l56;
+        $l57:;
+        $tmp60 = self->head->payload;
+        result59 = $tmp60;
+        panda$core$Panda$ref$panda$core$Object($tmp60);
         {
-            $tmp60 = self->head;
-            $tmp61 = self->head->next;
-            self->head = $tmp61;
-            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp61));
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp60));
+            $tmp61 = self->head;
+            $tmp62 = self->head->next;
+            self->head = $tmp62;
+            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp62));
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp61));
         }
         if (((panda$core$Bit) { self->head == NULL }).value) {
         {
             {
-                $tmp62 = self->tail;
-                $tmp63 = NULL;
-                self->tail = $tmp63;
-                panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp63));
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp62));
+                $tmp63 = self->tail;
+                $tmp64 = NULL;
+                self->tail = $tmp64;
+                panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp64));
+                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp63));
             }
         }
         }
-        panda$core$Int64$init$builtin_int64(&$tmp64, 1);
-        panda$core$Int64 $tmp65 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(self->count, $tmp64);
-        self->count = $tmp65;
-        $tmp67 = result58;
-        $returnValue66 = $tmp67;
-        panda$core$Panda$ref$panda$core$Object($tmp67);
-        $tmp50 = 0;
-        goto $l48;
-        $l68:;
-        return $returnValue66;
+        $tmp65 = self;
+        panda$core$Int64$init$builtin_int64(&$tmp66, 1);
+        panda$core$Int64 $tmp67 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64($tmp65->count, $tmp66);
+        $tmp65->count = $tmp67;
+        $tmp69 = result59;
+        $returnValue68 = $tmp69;
+        panda$core$Panda$ref$panda$core$Object($tmp69);
+        $tmp51 = 0;
+        goto $l49;
+        $l70:;
+        return $returnValue68;
     }
-    $l48:;
-    panda$core$Panda$unref$panda$core$Object(result58);
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) scope51));
-    scope51 = NULL;
-    result58 = NULL;
-    switch ($tmp50) {
-        case 0: goto $l68;
+    $l49:;
+    panda$core$Panda$unref$panda$core$Object(result59);
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) scope52));
+    scope52 = NULL;
+    result59 = NULL;
+    switch ($tmp51) {
+        case 0: goto $l70;
     }
-    $l70:;
+    $l72:;
     abort();
 }
 void panda$unsafe$UnsafeMessageQueue$clear(panda$unsafe$UnsafeMessageQueue* self) {
-    panda$core$Object* $tmp75;
-    $l71:;
-    panda$core$Bit $tmp74 = panda$unsafe$UnsafeMessageQueue$hasMessage$R$panda$core$Bit(self);
-    bool $tmp73 = $tmp74.value;
-    if (!$tmp73) goto $l72;
+    panda$core$Object* $tmp77;
+    $l73:;
+    panda$core$Bit $tmp76 = panda$unsafe$UnsafeMessageQueue$hasMessage$R$panda$core$Bit(self);
+    bool $tmp75 = $tmp76.value;
+    if (!$tmp75) goto $l74;
     {
-        panda$core$Object* $tmp76 = panda$unsafe$UnsafeMessageQueue$getMessage$R$panda$unsafe$UnsafeMessageQueue$T(self);
-        $tmp75 = $tmp76;
-        panda$core$Panda$unref$panda$core$Object($tmp75);
+        panda$core$Object* $tmp78 = panda$unsafe$UnsafeMessageQueue$getMessage$R$panda$unsafe$UnsafeMessageQueue$T(self);
+        $tmp77 = $tmp78;
+        panda$core$Panda$unref$panda$core$Object($tmp77);
     }
-    goto $l71;
-    $l72:;
+    goto $l73;
+    $l74:;
 }
 void panda$unsafe$UnsafeMessageQueue$init(panda$unsafe$UnsafeMessageQueue* self) {
-    panda$threads$Lock* $tmp77;
-    panda$threads$Lock* $tmp78;
-    panda$threads$Notifier* $tmp80;
-    panda$threads$Notifier* $tmp81;
-    panda$core$Int64 $tmp83;
+    panda$threads$Lock* $tmp79;
+    panda$threads$Lock* $tmp80;
+    panda$threads$Notifier* $tmp82;
+    panda$threads$Notifier* $tmp83;
+    panda$core$Int64 $tmp85;
     self->lock = NULL;
     self->notifier = NULL;
     self->head = NULL;
     self->tail = NULL;
-    panda$threads$Lock* $tmp79 = (panda$threads$Lock*) pandaObjectAlloc(24, (panda$core$Class*) &panda$threads$Lock$class);
-    panda$threads$Lock$init($tmp79);
-    $tmp78 = $tmp79;
-    $tmp77 = $tmp78;
-    self->lock = $tmp77;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp77));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp78));
-    panda$threads$Notifier* $tmp82 = (panda$threads$Notifier*) pandaObjectAlloc(32, (panda$core$Class*) &panda$threads$Notifier$class);
-    panda$threads$Notifier$init$panda$threads$Lock($tmp82, self->lock);
-    $tmp81 = $tmp82;
+    panda$threads$Lock* $tmp81 = (panda$threads$Lock*) pandaObjectAlloc(24, (panda$core$Class*) &panda$threads$Lock$class);
+    panda$threads$Lock$init($tmp81);
     $tmp80 = $tmp81;
-    self->notifier = $tmp80;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp80));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp81));
-    panda$core$Int64$init$builtin_int64(&$tmp83, 0);
-    self->count = $tmp83;
+    $tmp79 = $tmp80;
+    self->lock = $tmp79;
+    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp79));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp80));
+    panda$threads$Notifier* $tmp84 = (panda$threads$Notifier*) pandaObjectAlloc(32, (panda$core$Class*) &panda$threads$Notifier$class);
+    panda$threads$Notifier$init$panda$threads$Lock($tmp84, self->lock);
+    $tmp83 = $tmp84;
+    $tmp82 = $tmp83;
+    self->notifier = $tmp82;
+    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp82));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp83));
+    panda$core$Int64$init$builtin_int64(&$tmp85, 0);
+    self->count = $tmp85;
 }
 void panda$unsafe$UnsafeMessageQueue$cleanup(panda$unsafe$UnsafeMessageQueue* self) {
-    int $tmp86;
+    int $tmp88;
     {
     }
-    $tmp86 = -1;
-    goto $l84;
-    $l84:;
+    $tmp88 = -1;
+    goto $l86;
+    $l86:;
     panda$core$Immutable$cleanup(((panda$core$Immutable*) self));
-    switch ($tmp86) {
-        case -1: goto $l87;
+    switch ($tmp88) {
+        case -1: goto $l89;
     }
-    $l87:;
+    $l89:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->lock));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->notifier));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->head));

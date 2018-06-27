@@ -497,7 +497,7 @@ class Scanner {
         for t in rawFields {
             fields.add(convertType(t))
         }
-        def entry := ChoiceEntry(cl, position, name, doccomment, cl.choiceEntries.get_count(),
+        def entry := ChoiceEntry(cl, position, name, doccomment, cl.choiceEntries.count,
                 fields)
         cl.choiceEntries.add(entry)
         cl.symbolTable.add(entry)
@@ -562,12 +562,14 @@ class Scanner {
                 supertypes, parameters, compiler.root)
         compiler.currentClass.push(result)
         if kind = ClassDecl.Kind.CHOICE {
-            def rawValue := FieldDecl(result, result.position, null, Annotations(),
-                        FieldDecl.Kind.DEF, ClassDecl.RAW_VALUE_NAME, Type.Int64(), null)
+            def rawValue := FieldDecl(result, result.position, null,
+                    Annotations(Annotations.Flag.SYNTHETIC), FieldDecl.Kind.DEF,
+                    ClassDecl.RAW_VALUE_NAME, Type.Int64(), null)
             result.fields.add(rawValue)
             result.symbolTable.add(rawValue)
-            def data := FieldDecl(result, result.position, null, Annotations(), FieldDecl.Kind.DEF,
-                        ClassDecl.CHOICE_DATA_NAME, Type.ChoiceData(), null)
+            def data := FieldDecl(result, result.position, null,
+                    Annotations(Annotations.Flag.SYNTHETIC), FieldDecl.Kind.DEF,
+                    ClassDecl.CHOICE_DATA_NAME, Type.ChoiceData(), null)
             result.fields.add(data)
             result.symbolTable.add(data)
         }
@@ -594,7 +596,7 @@ class Scanner {
             if m.methodKind = MethodDecl.Kind.INIT {
                 foundInit := true
             }
-            if m.name = "cleanup" & m.parameters.get_count() = 0 {
+            if m.name = "cleanup" & m.parameters.count = 0 {
                 foundCleanup := true
                 if kind = ClassDecl.Kind.CHOICE {
                     error(position, "choice cleanup method cannot be overridden")
@@ -620,9 +622,9 @@ class Scanner {
         }
         if kind = ClassDecl.Kind.CHOICE {
             var haveFields := false
-            if result.choiceEntries.get_count() > 0 {
+            if result.choiceEntries.count > 0 {
                 for e in result.choiceEntries {
-                    if e.fields.get_count() > 0 {
+                    if e.fields.count > 0 {
                         haveFields := true
                         break
                     }
@@ -767,9 +769,9 @@ class Scanner {
                             bareCodeClass.symbolTable.add(m)
                         when ASTNode.FIELD(position, dc, annotations, varDecl):
                             createBareCodeClass(source, aliases, currentPackage, result)
-                            def old := bareCodeClass.fields.get_count()
+                            def old := bareCodeClass.fields.count
                             scanFields(bareCodeClass, position, dc, annotations, varDecl)
-                            for i in old .. bareCodeClass.fields.get_count() {
+                            for i in old .. bareCodeClass.fields.count {
                                 def f := bareCodeClass.fields[i]
                                 if f.fieldKind != FieldDecl.Kind.CONSTANT &
                                         f.annotations.isClass() {

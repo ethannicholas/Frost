@@ -94,10 +94,10 @@ class MethodDecl : Symbol {
         if returnType != other.returnType {
             return false
         }
-        if parameters.get_count() != other.parameters.get_count() {
+        if parameters.count != other.parameters.count {
             return false
         }
-        for i in 0 .. parameters.get_count() {
+        for i in 0 .. parameters.count {
             if parameters[i].type != other.parameters[i].type {
                 return false
             }
@@ -106,7 +106,7 @@ class MethodDecl : Symbol {
     }
 
     function type():Type {
-        def paramTypes := Array<Type>(parameters.get_count()) -- FIXME use map
+        def paramTypes := Array<Type>(parameters.count) -- FIXME use map
         for p in parameters {
             paramTypes.add(p.type)
         }

@@ -6,6 +6,8 @@ key appears more than once in the collection. Given a key, a `MapView` will retu
 value, and generally does so very quickly (linear or `log n` time, depending on the implementation).
 ====================================================================================================
 interface MapView<K, V> {
+    property count:Int
+
     function get_count():Int
 
     function [](key:K):V?

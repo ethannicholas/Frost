@@ -7,5 +7,5 @@ typedef struct org$pandalanguage$pandac$MethodRef org$pandalanguage$pandac$Metho
 
 void org$pandalanguage$pandac$Compiler$_Closure1$init$panda$core$Bit(org$pandalanguage$pandac$Compiler$_Closure1* self, panda$core$Bit p_isClass);
 void org$pandalanguage$pandac$Compiler$_Closure1$cleanup(org$pandalanguage$pandac$Compiler$_Closure1* self);
-panda$core$Bit org$pandalanguage$pandac$Compiler$_Closure1$$anonymous5$org$pandalanguage$pandac$MethodRef$R$panda$core$Bit(org$pandalanguage$pandac$Compiler$_Closure1* self, org$pandalanguage$pandac$MethodRef* p_m);
+panda$core$Bit org$pandalanguage$pandac$Compiler$_Closure1$$anonymous3$org$pandalanguage$pandac$MethodRef$R$panda$core$Bit(org$pandalanguage$pandac$Compiler$_Closure1* self, org$pandalanguage$pandac$MethodRef* p_m);
 

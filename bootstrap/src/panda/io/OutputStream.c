@@ -5,7 +5,7 @@
 #include "panda/core/UInt16.h"
 #include "panda/core/Int64.h"
 #include "panda/core/Bit.h"
-#include "panda/io/OutputStream/ByteOrder.h"
+#include "panda/io/ByteOrder.h"
 #include "panda/core/UInt8.h"
 #include "panda/core/UInt32.h"
 #include "panda/core/UInt64.h"
@@ -228,12 +228,12 @@ void panda$io$OutputStream$printLine(panda$io$OutputStream* self) {
 void panda$io$OutputStream$flush(panda$io$OutputStream* self) {
 }
 void panda$io$OutputStream$init(panda$io$OutputStream* self) {
-    panda$io$OutputStream$ByteOrder $tmp91;
+    panda$io$ByteOrder $tmp91;
     panda$core$Int64 $tmp92;
     panda$core$String* $tmp93;
     self->lineEnding = NULL;
     panda$core$Int64$init$builtin_int64(&$tmp92, 0);
-    panda$io$OutputStream$ByteOrder$init$panda$core$Int64(&$tmp91, $tmp92);
+    panda$io$ByteOrder$init$panda$core$Int64(&$tmp91, $tmp92);
     self->byteOrder = $tmp91;
     $tmp93 = &$s94;
     self->lineEnding = $tmp93;

@@ -14,7 +14,7 @@ interface ListWriter<T> : CollectionWriter<T> {
     @param index the element to modify
     @param value the new value
     ================================================================================================
-    @pre(index >= 0 & index < get_count())
+    @pre(index >= 0 & index < count)
     method []:=(index:Int, value:T)
 
     ================================================================================================
@@ -33,6 +33,6 @@ interface ListWriter<T> : CollectionWriter<T> {
     @param index the index to remove
     @returns the value which was removed
     ================================================================================================
-    @pre(index >= 0 & index < get_count())
+    @pre(index >= 0 & index < count)
     method removeIndex(index:Int):T
 }

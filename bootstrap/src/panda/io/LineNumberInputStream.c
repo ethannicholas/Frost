@@ -42,10 +42,13 @@ panda$core$UInt8$nullable panda$io$LineNumberInputStream$read$R$panda$core$UInt8
     panda$core$UInt8$nullable $returnValue10;
     panda$core$UInt8$nullable $match$44_1312;
     panda$core$UInt8 $tmp13;
-    panda$core$Int64 $tmp15;
-    panda$core$Int64 $tmp17;
-    panda$core$UInt8 $tmp18;
-    panda$core$Int64 $tmp23;
+    panda$io$LineNumberInputStream* $tmp15;
+    panda$core$Int64 $tmp16;
+    panda$core$Int64 $tmp18;
+    panda$core$UInt8 $tmp19;
+    panda$io$LineNumberInputStream* $tmp21;
+    panda$io$LineNumberInputStream* $tmp25;
+    panda$core$Int64 $tmp26;
     panda$core$UInt8$nullable $tmp9 = (($fn8) self->source->$class->vtable[2])(self->source);
     result7 = $tmp9;
     if (((panda$core$Bit) { !result7.nonnull }).value) {
@@ -60,29 +63,32 @@ panda$core$UInt8$nullable panda$io$LineNumberInputStream$read$R$panda$core$UInt8
         panda$core$Bit $tmp14 = panda$core$UInt8$$EQ$panda$core$UInt8$R$panda$core$Bit(((panda$core$UInt8) $match$44_1312.value), $tmp13);
         if ($tmp14.value) {
         {
-            panda$core$Int64$init$builtin_int64(&$tmp15, 1);
-            panda$core$Int64 $tmp16 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->line, $tmp15);
-            self->line = $tmp16;
-            panda$core$Int64$init$builtin_int64(&$tmp17, 1);
-            self->column = $tmp17;
+            $tmp15 = self;
+            panda$core$Int64$init$builtin_int64(&$tmp16, 1);
+            panda$core$Int64 $tmp17 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64($tmp15->line, $tmp16);
+            $tmp15->line = $tmp17;
+            panda$core$Int64$init$builtin_int64(&$tmp18, 1);
+            self->column = $tmp18;
         }
         }
         else {
-        panda$core$UInt8$init$builtin_uint8(&$tmp18, 9);
-        panda$core$Bit $tmp19 = panda$core$UInt8$$EQ$panda$core$UInt8$R$panda$core$Bit(((panda$core$UInt8) $match$44_1312.value), $tmp18);
-        if ($tmp19.value) {
+        panda$core$UInt8$init$builtin_uint8(&$tmp19, 9);
+        panda$core$Bit $tmp20 = panda$core$UInt8$$EQ$panda$core$UInt8$R$panda$core$Bit(((panda$core$UInt8) $match$44_1312.value), $tmp19);
+        if ($tmp20.value) {
         {
-            panda$core$Int64 $tmp20 = panda$core$Int64$$REM$panda$core$Int64$R$panda$core$Int64(self->column, self->tabSize);
-            panda$core$Int64 $tmp21 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(self->tabSize, $tmp20);
-            panda$core$Int64 $tmp22 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->column, $tmp21);
-            self->column = $tmp22;
+            $tmp21 = self;
+            panda$core$Int64 $tmp22 = panda$core$Int64$$REM$panda$core$Int64$R$panda$core$Int64(self->column, self->tabSize);
+            panda$core$Int64 $tmp23 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(self->tabSize, $tmp22);
+            panda$core$Int64 $tmp24 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64($tmp21->column, $tmp23);
+            $tmp21->column = $tmp24;
         }
         }
         else {
         {
-            panda$core$Int64$init$builtin_int64(&$tmp23, 1);
-            panda$core$Int64 $tmp24 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->column, $tmp23);
-            self->column = $tmp24;
+            $tmp25 = self;
+            panda$core$Int64$init$builtin_int64(&$tmp26, 1);
+            panda$core$Int64 $tmp27 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64($tmp25->column, $tmp26);
+            $tmp25->column = $tmp27;
         }
         }
         }
@@ -91,17 +97,17 @@ panda$core$UInt8$nullable panda$io$LineNumberInputStream$read$R$panda$core$UInt8
     return $returnValue10;
 }
 void panda$io$LineNumberInputStream$cleanup(panda$io$LineNumberInputStream* self) {
-    int $tmp28;
+    int $tmp31;
     {
     }
-    $tmp28 = -1;
-    goto $l26;
-    $l26:;
-    panda$io$InputStream$cleanup(((panda$io$InputStream*) self));
-    switch ($tmp28) {
-        case -1: goto $l29;
-    }
+    $tmp31 = -1;
+    goto $l29;
     $l29:;
+    panda$io$InputStream$cleanup(((panda$io$InputStream*) self));
+    switch ($tmp31) {
+        case -1: goto $l32;
+    }
+    $l32:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->source));
 }
 

@@ -9,7 +9,7 @@ A read-only view of a collection of elements. A `CollectionView`'s elements are 
 @see ListView
 ====================================================================================================
 interface CollectionView<T> : Iterable<T> {
-    -- property count:Int
+    property count:Int
 
     function get_count():Int
 
@@ -32,7 +32,7 @@ interface CollectionView<T> : Iterable<T> {
     @see join()
     ================================================================================================    
     function join(separator:String):String {
-        if get_count() = 0 {
+        if count = 0 {
             return ""
         }
         var first := true
@@ -77,7 +77,7 @@ interface CollectionView<T> : Iterable<T> {
     @returns the result of combining the entire collection
     @see fold((T, T)=>(T), T)
     ================================================================================================
-    @pre(get_count() > 0)
+    @pre(count > 0)
     function fold(f:(T, T)=>(T)):T {
         def i := iterator()
         var result := i.next()

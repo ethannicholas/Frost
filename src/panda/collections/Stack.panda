@@ -19,7 +19,7 @@ class Stack<T> : Iterable<T> {
 
         @override
         function get_done():Bit {
-            return index >= stack.get_count()
+            return index >= stack.count
         }
 
         @override
@@ -33,6 +33,8 @@ class Stack<T> : Iterable<T> {
     @private
     def contents := Array<T>()
 
+    property count:Int
+
     ================================================================================================
     Pushes a new element onto the stack.
     ================================================================================================
@@ -45,9 +47,9 @@ class Stack<T> : Iterable<T> {
 
     @see pop(T)
     ================================================================================================
-    @pre(get_count() > 0)
+    @pre(count > 0)
     method pop():T {
-        assert contents.get_count() > 0
+        assert contents.count > 0
         def result := contents[contents.count - 1]
         contents.removeIndex(contents.count - 1)
         return result
@@ -79,9 +81,9 @@ class Stack<T> : Iterable<T> {
     Returns the value at the given depth in the stack. The top element (most recently pushed) is
     element 0, and the bottom element (earliest pushed) is element `count - 1`.
     ================================================================================================
-    @pre(depth >= 0 & depth < get_count())
+    @pre(depth >= 0 & depth < count)
     function [](depth:Int):T {
-        assert contents.get_count() > depth
+        assert contents.count > depth
         return contents[contents.count - 1 - depth]
     }
 

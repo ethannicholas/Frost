@@ -112,7 +112,7 @@ class CCodeGenerator : CodeGenerator {
         varCount += 1
         def result := "$fn\{varCount}"
         def code := MutableString("typedef ")
-        code.append(type(t.subtypes[t.subtypes.get_count() - 1]))
+        code.append(type(t.subtypes[t.subtypes.count - 1]))
         code.append(" (*")
         code.append(result)
         code.append(")(")
@@ -121,7 +121,7 @@ class CCodeGenerator : CodeGenerator {
             code.append(type(selfType))
             separator := ", "
         }
-        for i in 0 .. t.subtypes.get_count() - 1 {
+        for i in 0 .. t.subtypes.count - 1 {
             code.append(separator)
             code.append(type(t.subtypes[i]))
             separator := ", "
@@ -338,7 +338,7 @@ class CCodeGenerator : CodeGenerator {
             result.append("$wrapper")
         }
         result.append("*")
-        for i in 0 .. inheritedType.subtypes.get_count() - 1 { 
+        for i in 0 .. inheritedType.subtypes.count - 1 { 
             result.append(", ")
             result.append(type(inheritedType.subtypes[i]))
         }
@@ -360,7 +360,7 @@ class CCodeGenerator : CodeGenerator {
             def methods := compiler.interfaceMethods(cl, intfType)
             def name := "\{escapeName(cl.name)}$_\{escapeName(intf.name)}"
             def result := MutableString("struct { \{type(Type.Class())} cl; ITable* next; " +
-                    "void* methods[\{methods.get_count()}]; } \{name} = { " +
+                    "void* methods[\{methods.count}]; } \{name} = { " +
                     "(panda$core$Class*) &\{intfCC.name}, \{previous}, { ")
             var separator := ""
             for m in methods {
@@ -388,7 +388,7 @@ class CCodeGenerator : CodeGenerator {
             return found
         }
         assert effective.isMethod()
-        assert effective.subtypes.get_count() = raw.parameters.get_count() + 2 -- self and return
+        assert effective.subtypes.count = raw.parameters.count + 2 -- self and return
         assert raw.isInstance()
         def effectiveReturnType := effective.returnType()
         def resultName := getName(raw) + "$shim"
@@ -396,7 +396,7 @@ class CCodeGenerator : CodeGenerator {
         out.print("__attribute__((weak)) \{resultType} \{resultName}(")
         resultType.append("(")
         var separator := ""
-        for i in 0 .. effective.subtypes.get_count() - 1 {
+        for i in 0 .. effective.subtypes.count - 1 {
             def pType := type(effective.subtypes[i])
             resultType.append(", ")
             resultType.append(pType)
@@ -408,7 +408,7 @@ class CCodeGenerator : CodeGenerator {
         resultType.append(")*")
         def unrefs := MemoryOutputStream()
         def casts := Array<String>()
-        for i in 0 .. effective.subtypes.get_count() - 1 {
+        for i in 0 .. effective.subtypes.count - 1 {
             def p := "p\{i}"
             def rawType:Type
             if i = 0 {
@@ -434,7 +434,7 @@ class CCodeGenerator : CodeGenerator {
         }
         out.print("\{getName(raw)}(")
         separator := ""
-        for i in 0 .. effective.subtypes.get_count() - 1 {
+        for i in 0 .. effective.subtypes.count - 1 {
             out.print("\{separator}\{casts[i]}")
             separator := ", "
         }
@@ -461,7 +461,7 @@ class CCodeGenerator : CodeGenerator {
             def methods := compiler.interfaceMethods(cl, intfType)
             def name := "\{escapeName(cl.name)}$wrapper_\{escapeName(intf.name)}"
             def result := MutableString("struct { \{type(Type.Class())} cl; ITable* itable; " +
-                    "void* methods[\{methods.get_count()}]; } \{name} = { " +
+                    "void* methods[\{methods.count}]; } \{name} = { " +
                     "(\{type(Type.Class())}) &\{intfCC.name}, \{previous}, { ")
             var separator := ""
             for m in methods {
@@ -585,7 +585,7 @@ class CCodeGenerator : CodeGenerator {
                         "(panda$core$Class*) &\{clConstant.name}, \{NO_REFCNT}, " +
                         "\{name}, \{superCast}, \{itable}, { ")
                 var separator := ""
-                for i in 0 .. valueVTable.get_count() {
+                for i in 0 .. valueVTable.count {
                     code.append("\{separator}\{getMethodTableEntry(vtable[i])}")
                     separator := ", "
                 }
@@ -768,7 +768,7 @@ class CCodeGenerator : CodeGenerator {
         def cc := getClassConstant(m.owner)
         var index := -1
         def vtable := compiler.getVTable(m.owner)
-        for i in 0 .. vtable.get_count() {
+        for i in 0 .. vtable.count {
             if vtable[i]->MethodDecl == m {
                 index := i
                 break
@@ -791,13 +791,13 @@ class CCodeGenerator : CodeGenerator {
         out.printLine("}")
         var index := -1
         def vtable := compiler.getVTable(m.owner)
-        for i in 0 .. vtable.get_count() {
+        for i in 0 .. vtable.count {
             if vtable[i]->MethodDecl == m {
                 index := i
                 break
             }
         }
-        index -= compiler.getVTable(compiler.getClass(Type.Object())).get_count()
+        index -= compiler.getVTable(compiler.getClass(Type.Object())).count
         assert index != -1
         def result := nextVar()
         def methodType := methodType(compiler.inheritedTypeWithSelf(m), null)
@@ -828,31 +828,31 @@ class CCodeGenerator : CodeGenerator {
             out:IndentedOutputStream):String {
         match m.value.name {
             when "alloc":
-                assert args.get_count() = 1
+                assert args.count = 1
                 def count := getReference(args[0], out)
-                assert m.returnType().subtypes.get_count() = 2
+                assert m.returnType().subtypes.count = 2
                 def elementSize := fieldSize(m.returnType().subtypes[1])
                 return "((\{type(t)}) pandaZAlloc(\{count}.value * \{elementSize}))"
             when "get":
-                assert args.get_count() = 1
+                assert args.count = 1
                 def ptr := getReference(args[0], out)
                 return "(*\{ptr})"
             when "[]":
-                assert args.get_count() = 2
+                assert args.count = 2
                 def ptr := getReference(args[0], out)
                 def index := getReference(args[1], out)
                 return "\{ptr}[\{index}.value]"
             when "realloc":
-                assert args.get_count() = 3
+                assert args.count = 3
                 def ptr := getReference(args[0], out)
                 def oldCount := getReference(args[1], out)
                 def newCount := getReference(args[2], out)
-                assert m.returnType().subtypes.get_count() = 2
+                assert m.returnType().subtypes.count = 2
                 def elementSize := fieldSize(m.returnType().subtypes[1])
                 return "((\{type(t)}) pandaRealloc(\{ptr}, \{oldCount}.value * \{elementSize}, " +
                         "\{newCount}.value * \{elementSize}))"
             when "offset":
-                assert args.get_count() = 2
+                assert args.count = 2
                 def ptr := getReference(args[0], out)
                 def offset := getReference(args[1], out)
                 return "(\{ptr} + \{offset}.value)"
@@ -872,34 +872,34 @@ class CCodeGenerator : CodeGenerator {
         }
         if m.owner.name = "panda.core.Bit" {
             if m.name = "&" {
-                assert args.get_count() = 2
+                assert args.count = 2
                 def bit := getAndReference(args[0], args[1], out)
                 def result := nextVar()
                 out.printLine("panda$core$Bit \{result} = { \{bit} };")
                 return result
             }
             if m.name = "|" {
-                assert args.get_count() = 2
+                assert args.count = 2
                 def bit := getOrReference(args[0], args[1], out)
                 def result := nextVar()
                 out.printLine("panda$core$Bit \{result} = { \{bit} };")
                 return result
             }
         }
-        def argRefs := Array<String>(args.get_count())
+        def argRefs := Array<String>(args.count)
         def actualMethodType:Type
         def actualResultType:String
-        def isSuper := args.get_count() >= 1 & args[0] = IRNode.SUPER
+        def isSuper := args.count >= 1 & args[0] = IRNode.SUPER
         if !isSuper & m.isVirtual() {
             actualMethodType := compiler.inheritedType(m)
-            actualResultType := type(actualMethodType.subtypes[actualMethodType.subtypes.get_count() - 1])
+            actualResultType := type(actualMethodType.subtypes[actualMethodType.subtypes.count - 1])
         }
         else {
             actualMethodType := compiler.declaredType(m)
             actualResultType := type(t)
         }
-        def offset := args.get_count() - actualMethodType.subtypes.get_count() + 1
-        for i in 0 .. args.get_count() {
+        def offset := args.count - actualMethodType.subtypes.count + 1
+        for i in 0 .. args.count {
             def arg := getReference(args[i], out)
             if i >= offset & actualMethodType.subtypes[i - offset] != args[i].type() {
                 arg := getCastReference(arg, args[i].type(),
@@ -908,7 +908,7 @@ class CCodeGenerator : CodeGenerator {
             argRefs.add(arg)
         }
         def target:String?
-        if argRefs.get_count() > 0 {
+        if argRefs.count > 0 {
             -- this isn't actually correct - args[0] could be the target of an instance method, or
             -- just the first parameter to a class method. But getMethodReference ignores target for
             -- class methods, so this works and is easier than doing it the right way.
@@ -937,7 +937,7 @@ class CCodeGenerator : CodeGenerator {
         out.printLine(");")
         if type(t) != actualResultType {
             return getCastReference(result, 
-                        actualMethodType.subtypes[actualMethodType.subtypes.get_count() - 1],
+                        actualMethodType.subtypes[actualMethodType.subtypes.count - 1],
                         t,
                         out)
         }
@@ -1131,7 +1131,7 @@ class CCodeGenerator : CodeGenerator {
         for c in s.utf8() {
             strings.print("\\x\{c.convert()->UInt8,0>2:x}")
         }
-        strings.printLine("\", \{s.utf8().get_count()}, \{s.hash()}, NULL };")
+        strings.printLine("\", \{s.utf8().count}, \{s.hash()}, NULL };")
         return "&\{result}"
     }
 
@@ -1244,14 +1244,14 @@ class CCodeGenerator : CodeGenerator {
     }
 
     method getDynamicCallReference(m:IRNode, args:ListView<IRNode>, out:IndentedOutputStream):String {
-        def argRefs := Array<String>(args.get_count())
+        def argRefs := Array<String>(args.count)
         for a in args {
             argRefs.add(getReference(a, out))
         }
         def mRef := getReference(m, out)
         def result := nextVar()
         def mtype := m.type()
-        def returnType := mtype.subtypes[mtype.subtypes.get_count() - 1]
+        def returnType := mtype.subtypes[mtype.subtypes.count - 1]
         methodHeader.printLine("\{hCodeGen.declaration(returnType, result)};")
         out.printLine("if (\{mRef}->target) {")
         out.level += 1
@@ -1309,8 +1309,8 @@ class CCodeGenerator : CodeGenerator {
             -- to shim the method
             def parameterTypes := Array<Type>()
             parameterTypes.add(Type.Object())
-            parameterTypes.addAll(refType.subtypes[0 .. refType.subtypes.get_count() - 1])
-            def returnType := refType.subtypes[refType.subtypes.get_count() - 1]
+            parameterTypes.addAll(refType.subtypes[0 .. refType.subtypes.count - 1])
+            def returnType := refType.subtypes[refType.subtypes.count - 1]
             actualMethodType := Type.methodType(refType.position, refType.typeKind, parameterTypes,
                     returnType)
             methodName := createMethodShim(m, actualMethodType, shims).name
@@ -1465,19 +1465,19 @@ class CCodeGenerator : CodeGenerator {
     method writePointerCall(m:MethodRef, args:ImmutableArray<IRNode>, out:IndentedOutputStream) {
         match m.value.name {
             when "set":
-                assert args.get_count() = 2
+                assert args.count = 2
                 def ptr := getTypedReference(args[0], out)
                 def arg := getTypedReference(compiler.unwrapCast(args[1]), out)
                 out.printLine("store2 \{arg}, \{ptr}")
             when "[]:=":
-                assert args.get_count() = 3
-                assert compiler.unwrapCast(args[0]).type().subtypes.get_count() = 2
+                assert args.count = 3
+                assert compiler.unwrapCast(args[0]).type().subtypes.count = 2
                 def base := getReference(args[0], out)
                 def index := getReference(args[1], out)
                 def value := getReference(compiler.unwrapCast(args[2]), out)
                 out.printLine("\{base}[\{index}.value] = \{value};")
             when "destroy":
-                assert args.get_count() = 1
+                assert args.count = 1
                 out.printLine("pandaFree(\{getReference(args[0], out)});")
             otherwise:
                 assert false
@@ -1498,10 +1498,10 @@ class CCodeGenerator : CodeGenerator {
         }
         def actualMethodType:Type
         def actualResultType:String
-        def isSuper := args.get_count() >= 1 & args[0] = IRNode.SUPER
+        def isSuper := args.count >= 1 & args[0] = IRNode.SUPER
         if !isSuper & m.isVirtual() {
             actualMethodType := compiler.inheritedType(m)
-            actualResultType := type(actualMethodType.subtypes[actualMethodType.subtypes.get_count() - 1])
+            actualResultType := type(actualMethodType.subtypes[actualMethodType.subtypes.count - 1])
         }
         else {
             actualMethodType := compiler.declaredType(m)
@@ -1511,8 +1511,8 @@ class CCodeGenerator : CodeGenerator {
         if target != null {
             argRefs.add(target)
         }
-        def offset := args.get_count() - actualMethodType.subtypes.get_count() + 1
-        for i in 0 .. args.get_count() {
+        def offset := args.count - actualMethodType.subtypes.count + 1
+        for i in 0 .. args.count {
             var arg := getReference(args[i], out)
             if i >= offset & actualMethodType.subtypes[i - offset] != args[i].type() {
                 arg := getCastReference(arg, args[i].type(),
@@ -1521,7 +1521,7 @@ class CCodeGenerator : CodeGenerator {
             argRefs.add(arg)
         }
         def targetRef:String?
-        if argRefs.get_count() > 0 {
+        if argRefs.count > 0 {
             -- this isn't actually correct - argRefs[0] could be the target of an instance method,
             -- or just the first parameter to a class method. But getMethodReference ignores target
             -- for non-virtual methods, so this works and is easier than doing it the right way.
@@ -1573,14 +1573,14 @@ class CCodeGenerator : CodeGenerator {
         -- using gotos instead of anything resembling idiomatic C code, mostly to help ensure the
         -- behavior is identical.
         assert list.type().typeKind = Type.Kind.GENERIC
-        assert list.type().subtypes.get_count() = 2
+        assert list.type().subtypes.count = 2
         assert list.type().subtypes[0].name = Compiler.RANGE_NAME
         def range := getTypedReference(list, out)
         def t := list.type().subtypes[1]
         def llt := type(t)
         def indexType:String
         if t.typeKind = Type.Kind.NULLABLE {
-            assert t.subtypes.get_count() = 1
+            assert t.subtypes.count = 1
             indexType := type(t.subtypes[0])
         }
         else {
@@ -1588,7 +1588,7 @@ class CCodeGenerator : CodeGenerator {
         }
         def cl := compiler.getClass(t)
         assert cl != null
-        assert compiler.instanceFields(cl).get_count() = 1
+        assert compiler.instanceFields(cl).count = 1
         def field := compiler.instanceFields(cl)[0]
         compiler.resolve(field)
         def numberType := type(field.type)
@@ -1687,7 +1687,7 @@ class CCodeGenerator : CodeGenerator {
         -- using gotos instead of anything resembling idiomatic C code, mostly to help ensure the
         -- behavior is identical.
         assert list.type().typeKind = Type.Kind.GENERIC
-        assert list.type().subtypes.get_count() = 3
+        assert list.type().subtypes.count = 3
         assert list.type().subtypes[0].name = Compiler.STEPPED_RANGE_NAME
         def range := getTypedReference(list, out)
         def t := list.type().subtypes[1]
@@ -1695,7 +1695,7 @@ class CCodeGenerator : CodeGenerator {
         def llt := type(t)
         def indexType:String
         if t.typeKind = Type.Kind.NULLABLE {
-            assert t.subtypes.get_count() = 1
+            assert t.subtypes.count = 1
             indexType := type(t.subtypes[0])
         }
         else {
@@ -1703,7 +1703,7 @@ class CCodeGenerator : CodeGenerator {
         }
         def cl := compiler.getClass(t)
         assert cl != null
-        assert compiler.instanceFields(cl).get_count() = 1
+        assert compiler.instanceFields(cl).count = 1
         def field := compiler.instanceFields(cl)[0]
         compiler.resolve(field)
         def numberType := type(field.type)
@@ -1731,7 +1731,7 @@ class CCodeGenerator : CodeGenerator {
         def step := nextVar()
         def stepCl := compiler.getClass(stepType)
         assert stepCl != null
-        assert compiler.instanceFields(stepCl).get_count() = 1
+        assert compiler.instanceFields(stepCl).count = 1
         def stepField := compiler.instanceFields(stepCl)[0]
         compiler.resolve(stepField)
         out.printLine("\{type(stepField.type)} \{step} = \{range}.step.value;")
@@ -2005,9 +2005,9 @@ class CCodeGenerator : CodeGenerator {
             match c {
                 when EnclosingContext.FINALLY(label, returnMap, sourceBlock):
                     def returnLabel := nextLabel()
-                    out.printLine("\{sourceBlock} = \{returnMap.get_count()};")
+                    out.printLine("\{sourceBlock} = \{returnMap.count};")
                     out.printLine("goto \{label};")
-                    returnMap[currentBlock] := Pair<Int, String>(returnMap.get_count(), returnLabel)
+                    returnMap[currentBlock] := Pair<Int, String>(returnMap.count, returnLabel)
                     createBlock(returnLabel, out)
             }
             if boundary != null & boundary == c {
@@ -2017,7 +2017,7 @@ class CCodeGenerator : CodeGenerator {
     }
 
     function findLoop(name:String?):EnclosingContext {
-        for i in 0 .. enclosingContexts.get_count() {
+        for i in 0 .. enclosingContexts.count {
             def context := enclosingContexts[i]
             match context {
                 when EnclosingContext.LOOP(loopLabel, _, _):
@@ -2131,7 +2131,7 @@ class CCodeGenerator : CodeGenerator {
 
     method writeExtraEffects(out:IndentedOutputStream) {
         def finalEffects := extraEffects.pop()
-        for i in finalEffects.get_count() - 1 ... 0 by -1 {
+        for i in finalEffects.count - 1 ... 0 by -1 {
             match finalEffects[i] {
                 when ExtraEffect.STATEMENT(stmt):
                     writeStatement(stmt, out)
@@ -2142,13 +2142,13 @@ class CCodeGenerator : CodeGenerator {
     }
 
     method writeDynamicCall(m:IRNode, args:ListView<IRNode>, out:IndentedOutputStream) {
-        def argRefs := Array<String>(args.get_count())
+        def argRefs := Array<String>(args.count)
         for a in args {
             argRefs.add(getReference(a, out))
         }
         def mRef := getReference(m, out)
         def mtype := m.type()
-        def returnType := mtype.subtypes[mtype.subtypes.get_count() - 1]
+        def returnType := mtype.subtypes[mtype.subtypes.count - 1]
         out.printLine("if (\{mRef}->target) {")
         out.level += 1
         def finalTargetType := Type.Object()

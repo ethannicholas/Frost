@@ -26,7 +26,6 @@ void org$pandalanguage$pandac$Main$Format$cleanup(org$pandalanguage$pandac$Main$
     panda$core$Int64 $tmp10;
     panda$core$Int64 $tmp12;
     panda$core$Int64 $tmp14;
-    panda$core$Int64 $tmp16;
     {
         $match$10_53 = self;
         panda$core$Int64$init$builtin_int64(&$tmp4, 0);
@@ -68,14 +67,6 @@ void org$pandalanguage$pandac$Main$Format$cleanup(org$pandalanguage$pandac$Main$
         panda$core$Bit $tmp15 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_53.$rawValue, $tmp14);
         if ($tmp15.value) {
         {
-        }
-        }
-        else {
-        panda$core$Int64$init$builtin_int64(&$tmp16, 6);
-        panda$core$Bit $tmp17 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_53.$rawValue, $tmp16);
-        if ($tmp17.value) {
-        {
-        }
         }
         }
         }

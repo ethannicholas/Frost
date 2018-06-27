@@ -22,7 +22,7 @@ method main() {
     Console.printLine(s[s.offset(s.end(), -2)])
     Console.printLine(s[s.offset(s.end(), -3)])
     Console.printLine(s[s.offset(s.end(), -4)])
-    Console.printLine(s.utf8().get_count())
+    Console.printLine(s.utf8().count)
     for c in s.utf8() {
         Console.printLine(c.convert()->Int8)
     }

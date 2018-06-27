@@ -31,7 +31,7 @@ choice IRNode {
     -- statement
     DYNAMIC_CALL(IRNode -* panda.core.Method *-, ImmutableArray<IRNode>)
     EXPRESSION_WITH_EXTRA_EFFECTS(IRNode -* expression *-, IRNode -* extraEffectStatement *-)
-    FIELD_REFERENCE(Position, Type, IRNode -* base *-, FieldDecl)
+    FIELD_REFERENCE(Position, Type, IRNode? -* base *-, FieldDecl)
     IF(Position, IRNode, ImmutableArray<IRNode>, IRNode?)
     INT(Position, Type, UInt64)
     IS_NONNULL(Position, IRNode)
@@ -93,7 +93,7 @@ choice IRNode {
             when CONSTRUCTED_OBJECT(_, type):
                 return type
             when DYNAMIC_CALL(m, _):
-                return m.type().subtypes[m.type().subtypes.get_count() - 1]
+                return m.type().subtypes[m.type().subtypes.count - 1]
             when EXPRESSION_WITH_EXTRA_EFFECTS(expr, _):
                 return expr.type()
             when FIELD_REFERENCE(_, type, _, _):
@@ -443,6 +443,240 @@ choice IRNode {
         }
     }
 
+    @private
+    @class
+    method transform(nodes:ImmutableArray<IRNode>?,
+            f:(IRNode)=&>(IRNode?)):ImmutableArray<IRNode>? {
+        var newNodes:Array<IRNode>? := null
+        if nodes != null {
+            for i in 0 .. nodes.count {
+                def newNode := nodes[i].doTransform(f)
+                if newNode != null {
+                    if newNodes = null {
+                        newNodes := Array<IRNode>(nodes)
+                    }
+                    newNodes[i] := newNode
+                }
+            }
+        }
+        if newNodes != null {
+            return newNodes.finish()
+        }
+        return null
+    }
+
+    @private
+    @class
+    method transform(node:IRNode?, f:(IRNode)=&>(IRNode?)):IRNode? {
+        if node = null {
+            return null
+        }
+        return node.transform(f)
+    }
+
+    function default(node:IRNode?, defaultValue:IRNode?):IRNode? {
+        if node != null {
+            return node
+        }
+        return defaultValue
+    }
+
+    function default(nodes:ImmutableArray<IRNode>?,
+            defaultValue:ImmutableArray<IRNode>?):ImmutableArray<IRNode>? {
+        if nodes != null {
+            return nodes
+        }
+        return defaultValue
+    }
+
+    method transform(f:(IRNode)=&>(IRNode?)):IRNode {
+        def result := doTransform(f)
+        if result != null {
+            return result
+        }
+        return self
+    }
+
+    @private
+    method doTransform(f:(IRNode)=&>(IRNode?)):IRNode? {
+        def transformed := f(self)
+        if transformed != null {
+            return transformed
+        }
+        match self {
+            when AT_RETURN, BIT, BREAK, CHOICE_ENTRY_REFERENCE, CONSTRUCTED_OBJECT, CONTINUE, INT,
+                    NEGATED_INT, NULL, REAL, SELF, SELF_CAPTURE, STRING, SUPER, REUSED_VALUE,
+                    TYPE_REFERENCE, UNRESOLVED_IDENTIFIER, UNRESOLVED_METHOD_REFERENCE,
+                    UNRESOLVED_INDEX, UNRESOLVED_LAMBDA, UNRESOLVED_METHOD_CALL, UNRESOLVED_RANGE,
+                    VARIABLE_CAPTURE, VARIABLE_REFERENCE:
+                -- do nothing
+            when ASSERT(position, test, message):
+                def newTest := test.doTransform(f)
+                def newMessage := transform(message, f)
+                if newTest != null | newMessage != null {
+                    return IRNode.ASSERT(position, default(newTest, test),
+                            default(newMessage, message))
+                }
+            when BINARY(position, type, left, op, right):
+                def newLeft := left.doTransform(f)
+                def newRight := right.doTransform(f)
+                if newLeft != null | newRight != null {
+                    return IRNode.BINARY(position, type, default(newLeft, left), op,
+                                  default(newRight, right))
+                }
+            when BLOCK(position, statements):
+                def newStatements := transform(statements, f)
+                if newStatements != null {
+                    return IRNode.BLOCK(position, newStatements)
+                }
+            when BLOCK_WITH_FINALLY(position, statements, finally):
+                def newStatements := transform(statements, f)
+                def newFinally := transform(finally, f)
+                if newStatements != null {
+                    return IRNode.BLOCK_WITH_FINALLY(position, default(newStatements, statements),
+                            default(newFinally, finally))
+                }
+            when CALL(position, type, m, args):
+                def newArgs := transform(args, f)
+                if newArgs != null {
+                    return IRNode.CALL(position, type, m, default(newArgs, args))
+                }
+            when CAST(position, value, type, explicit):
+                def newValue := value.doTransform(f)
+                if newValue != null {
+                    return IRNode.CAST(position, newValue, type, explicit)
+                }
+            when CHOICE_FIELD_REFERENCE(position, base, ce, field):
+                def newBase := base.doTransform(f)
+                if newBase != null {
+                    return IRNode.CHOICE_FIELD_REFERENCE(position, newBase, ce, field)
+                }
+            when CONSTRUCT(position, type, call):
+                def newCall := call.doTransform(f)
+                if newCall != null {
+                    return IRNode.CONSTRUCT(position, type, newCall)
+                }
+            when DECLARATION(target, value):
+                def newValue := transform(value, f)
+                if newValue != null {
+                    return IRNode.DECLARATION(target, newValue)
+                }
+            when DO(position, label, statements, test):
+                def newStatements := transform(statements, f)
+                def newTest := test.doTransform(f)
+                if newStatements != null | newTest != null {
+                    return IRNode.DO(position, label, default(newStatements, statements),
+                            default(newTest, test))
+                }
+            when DYNAMIC_CALL(m, args):
+                def newM := m.doTransform(f)
+                def newArgs := transform(args, f)
+                if newM != null | newArgs != null {
+                    return IRNode.DYNAMIC_CALL(default(newM, m), default(newArgs, args))
+                }
+            when EXPRESSION_WITH_EXTRA_EFFECTS(expr, statements):
+                def newExpr := expr.doTransform(f)
+                def newStatements := statements.doTransform(f)
+                if newExpr != null | newStatements != null {
+                    return IRNode.EXPRESSION_WITH_EXTRA_EFFECTS(default(newExpr, expr),
+                            default(newStatements, statements))
+                }
+            when FIELD_REFERENCE(position, type, base, field):
+                def newBase := transform(base, f)
+                if newBase != null {
+                    return IRNode.FIELD_REFERENCE(position, type, newBase, field)
+                }
+            when IF(position, test, ifTrue, ifFalse):
+                def newTest := test.doTransform(f)
+                def newIfTrue := transform(ifTrue, f)
+                def newIfFalse := transform(ifFalse, f)
+                if newTest != null | newIfTrue != null | newIfFalse != null {
+                    return IRNode.IF(position, default(newTest, test), default(newIfTrue, ifTrue),
+                            default(newIfFalse, ifFalse))
+                }
+            when IS_NONNULL(position, value):
+                def newValue := value.doTransform(f)
+                if newValue != null {
+                    return IRNode.IS_NONNULL(position, newValue)
+                }
+            when IS_NULL(position, value):
+                def newValue := value.doTransform(f)
+                if newValue != null {
+                    return IRNode.IS_NULL(position, newValue)
+                }
+            when LOOP(position, label, statements):
+                def newStatements := transform(statements, f)
+                if newStatements != null {
+                    return IRNode.LOOP(position, label, newStatements)
+                }
+            when MATCH(position, value, whens, other):
+                def newValue := value.doTransform(f)
+                def newWhens := transform(whens, f)
+                def newOther := transform(other, f)
+                if newValue != null | newWhens != null | newOther != null {
+                    return IRNode.MATCH(position, default(newValue, value),
+                            default(newWhens, whens), default(newOther, other))
+                }
+            when METHOD_REFERENCE(position, type, target, m):
+                def newTarget := transform(target, f)
+                if newTarget != null {
+                    return IRNode.METHOD_REFERENCE(position, type, newTarget, m)
+                }
+            when PREFIX(position, op, base):
+                def newBase := base.doTransform(f)
+                if newBase != null {
+                    return IRNode.PREFIX(position, op, newBase)
+                }
+            when RANGE_FOR(position, label, target, list, statements):
+                def newList := list.doTransform(f)
+                def newStatements := transform(statements, f)
+                if newList != null | newStatements != null {
+                    return IRNode.RANGE_FOR(position, label, target, default(newList, list),
+                            default(newStatements, statements))
+                }
+            when RETURN(position, value):
+                def newValue := transform(value, f)
+                if newValue != null {
+                    return RETURN(position, newValue)
+                }
+            when REUSED_VALUE_DEFINITION(base, id):
+                def newBase := base.doTransform(f)
+                if newBase != null {
+                    return IRNode.REUSED_VALUE_DEFINITION(newBase, id)
+                }
+            when TERNARY(position, test, ifTrue, ifFalse):
+                def newTest := test.doTransform(f)
+                def newIfTrue := ifTrue.doTransform(f)
+                def newIfFalse := ifFalse.doTransform(f)
+                if newTest != null | newIfTrue != null | newIfFalse != null {
+                    return IRNode.TERNARY(position, default(newTest, test),
+                            default(newIfTrue, ifTrue), default(newIfFalse, ifFalse))
+                }
+            when VAR(position, kind, decls):
+                def newDecls := transform(decls, f)
+                if newDecls != null {
+                    return VAR(position, kind, newDecls)
+                }
+            when WHEN(position, tests, statements):
+                def newTests := transform(tests, f)
+                def newStatements := transform(statements, f)
+                if newTests != null | newStatements != null {
+                    return IRNode.WHEN(position, default(newTests, tests),
+                            default(newStatements, statements))
+                }
+            when WHILE(position, label, test, statements):
+                def newTest := test.doTransform(f)
+                def newStatements := transform(statements, f)
+                if newTest != null | newStatements != null {
+                    return IRNode.WHILE(position, label, default(newTest, test),
+                            default(newStatements, statements))
+                }
+            otherwise:
+                assert false
+        }        
+        return null
+    }
+
     @override
     function convert():String {
         match self {
@@ -464,7 +698,7 @@ choice IRNode {
                 }
                 result.append("}")
                 return result.finish()
-            when BLOCK_WITH_FINALLY(_, statements, finally ):
+            when BLOCK_WITH_FINALLY(_, statements, finally):
                 def result := MutableString("try {\n")
                 for s in statements {
                     result.append(s + "\n")

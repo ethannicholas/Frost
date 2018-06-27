@@ -28,7 +28,7 @@ class HashSet<T:Key<T>> : Collection<T> {
 
     @override
     function get_count():Int {
-        return contents.get_count()
+        return contents.count
     }
 
     @override

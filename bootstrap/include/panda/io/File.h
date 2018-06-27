@@ -13,6 +13,7 @@ typedef struct panda$io$OutputStream panda$io$OutputStream;
 void panda$io$File$init$panda$core$String(panda$io$File* self, panda$core$String* p_path);
 panda$io$File* panda$io$File$resolve$panda$core$String$R$panda$io$File(panda$io$File* self, panda$core$String* p_path);
 panda$collections$Iterator* panda$io$File$lines$R$panda$collections$Iterator$LTpanda$core$String$GT(panda$io$File* self);
+panda$core$Bit panda$io$File$isAbsolute$R$panda$core$Bit(panda$io$File* self);
 panda$core$String* panda$io$File$absolutePath$R$panda$core$String(panda$io$File* self);
 panda$io$File* panda$io$File$absolute$R$panda$io$File(panda$io$File* self);
 panda$io$File* panda$io$File$parent$R$panda$io$File$Q(panda$io$File* self);

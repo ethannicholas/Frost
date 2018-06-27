@@ -32,7 +32,7 @@ class PandaDoc {
 
     var haveSees := false
 
-    def tableOfContents := TableOfContentsNode("", "")
+    def tableOfContents := TableOfContentsNode("", "index.html")
 
     init(compiler:Compiler, outDir:File, tocFile:File, apiRelativePath:String) {
         self.compiler := compiler
@@ -70,7 +70,7 @@ class PandaDoc {
                     Type.Kind.IMMUTABLE_FUNCTION:
                 def result := MutableString("(")
                 var separator := ""
-                for p in t.subtypes[0 .. t.subtypes.get_count() - 1] {
+                for p in t.subtypes[0 .. t.subtypes.count - 1] {
                     result.append(separator)
                     result.append(simpleName(p))
                     separator := ", "
@@ -85,7 +85,7 @@ class PandaDoc {
                     when Type.Kind.IMMUTABLE_FUNCTION:
                         result.append(")=>*(")
                 }
-                def returnType := t.subtypes[t.subtypes.get_count() - 1]
+                def returnType := t.subtypes[t.subtypes.count - 1]
                 if returnType != Type.Void() {
                     result.append(simpleName(returnType))
                 }
@@ -162,7 +162,7 @@ class PandaDoc {
                 spaces := spaces.min(line.parse(/( *).*/)[0].byteLength())
             }
         }
-        for i in 0 .. lines.get_count() { -- FIXME use map
+        for i in 0 .. lines.count { -- FIXME use map
             if lines[i].trim() != "" {
                 lines[i] := lines[i][spaces..]
             }
@@ -176,7 +176,7 @@ class PandaDoc {
                 result.add(Pair<String, String>("", s))
             }
             else {
-                def parsed := s.parse(/(?d)@(\w*)\s*(.*)/)
+                def parsed := s.parse(/(?s)@(\w*)\s*(.*)/)
                 if parsed != null {
                 result.add(Pair<String, String>(parsed[0], parsed[1])) }
             }
@@ -230,7 +230,7 @@ class PandaDoc {
     }
 
     function visible(f:FieldDecl):Bit {
-        return !f.annotations.isPrivate()
+        return !f.annotations.isPrivate() & !f.annotations.isSynthetic()
     }
 
     function visible(m:MethodDecl):Bit {
@@ -317,7 +317,7 @@ class PandaDoc {
     }
 
     function stripParagraph(s:String):String {
-        def parsed := s.parse(/<p>(.*)<\/p>\s*/)
+        def parsed := s.parse(/(?s)<p>(.*)<\/p>\s*/)
         if parsed != null {
             return parsed[0]
         }
@@ -334,7 +334,7 @@ class PandaDoc {
         for tag in split[1..] {
             match tag.first {
                 when "param":
-                    def split := tag.second.parse(/(?d)(\S+)\s+(.+)/)
+                    def split := tag.second.parse(/(?s)(\S+)\s+(.+)/)
                     if split = null {
                         compiler.error(m.position, "invalid '@param' contents '\{tag.second}'")
                         continue
@@ -448,7 +448,7 @@ class PandaDoc {
         }
         fields[..] := fields[.. by -1]
 
-        if fields.get_count() > 0 {
+        if fields.count > 0 {
             out.open("inheritedFields")
             for f in fields {
                 out.open("field")
@@ -518,7 +518,7 @@ class PandaDoc {
         addInheritedMethods(cl.type(), methods, overridden)
         methods[..] := methods[.. by -1]
 
-        if methods.get_count() > 0 {
+        if methods.count > 0 {
             out.open("inheritedMethods")
             for m in methods {
                 out.open("method")
@@ -547,7 +547,7 @@ class PandaDoc {
         }
     }
 
-    method addTableOfContentsEntry(s:String, url:String) {
+    method addTableOfContentsEntry(s:String) {
         var name := ""
         var current := tableOfContents
         for component in s.split(".") {
@@ -557,6 +557,13 @@ class PandaDoc {
             name += component
             var child := current.children[component]
             if child = null {
+                def url:String
+                if compiler.getClass(name) != null {
+                    url := name.replace(".", "/") + ".html"
+                }
+                else {
+                    url := name.replace(".", "/") + "/index.html"
+                }
                 child := TableOfContentsNode(name, url)
                 current.children[component] := child
             }
@@ -568,7 +575,7 @@ class PandaDoc {
         if visible(cl) {
             self.currentClass := cl
             classes.add(cl)
-            addTableOfContentsEntry(cl.name, cl.name.replace(".", "/") + ".html")
+            addTableOfContentsEntry(cl.name)
         }
     }
 
@@ -581,7 +588,7 @@ class PandaDoc {
         out.open("class")
         out.write("name", cl.name)
         var simple := simpleName(cl.type())
-        if cl.parameters.get_count() != 0 {
+        if cl.parameters.count != 0 {
             var separator := "&lt;"
             for p in cl.parameters {
                 simple += separator
@@ -598,6 +605,18 @@ class PandaDoc {
                 out.write("kind", "interface")
             when ClassDecl.Kind.CHOICE:
                 out.write("kind", "choice")
+                for ce in cl.choiceEntries {
+                    out.open("case")
+                    out.write("name", ce.name)
+                    if ce.fields.count > 0 {
+                        out.open("fields")
+                        for f in ce.fields {
+                            write(f)
+                        }
+                        out.close("fields")
+                    }
+                    out.close("case")
+                }
         }
         var base := cl
         while base.owner != null {
@@ -607,7 +626,7 @@ class PandaDoc {
                 base.name.replace(".", "/") + ".html")
         writeDoc(cl)
         writeAncestors(cl)
-        if cl.rawInterfaces.get_count() > 0 {
+        if cl.rawInterfaces.count > 0 {
             out.open("interfaces")
             cl.rawInterfaces.apply(self.write) -- FIXME shouldn't need 'self.'
             out.close("interfaces")

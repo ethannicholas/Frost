@@ -63,7 +63,7 @@ class Bit : Value, Key<Bit>, Formattable {
     @override
     function format(fmt:String):String {
         def s := fmt.split("|")
-        assert s.get_count() = 2, "invalid format string '\{fmt}'"
+        assert s.count = 2, "invalid format string '\{fmt}'"
         if self {
             return s[0]
         }

@@ -347,7 +347,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
     }
 
     init(chars:ListView<Char8>) {
-        _length := chars.get_count()
+        _length := chars.count
         data := Pointer<Char8>.alloc(_length)
         for i in 0 .. _length {
             data[i] := chars[i]

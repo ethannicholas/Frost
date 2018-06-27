@@ -279,7 +279,7 @@ class Compiler {
     ================================================================================================
     method tryResolveClass(name:String):ClassDecl? {
         def current:ClassDecl?
-        if currentClass.get_count() > 0 {
+        if currentClass.count > 0 {
             current := currentClass[0]
         }
         else {
@@ -343,9 +343,9 @@ class Compiler {
     method checkGenericParameters(position:Position, cl:ClassDecl, type:Type):Bit {
         resolve(cl)
         assert type.resolved
-        def expectedCount := cl.parameters.get_count()
+        def expectedCount := cl.parameters.count
         def foundTypes := typeParameters(type)
-        def foundCount := foundTypes.get_count()
+        def foundCount := foundTypes.count
         if expectedCount != foundCount {
             error(position, "'\{cl.name}' expected \{expectedCount} generic " +
                     "parameter\{expectedCount = 1:|s}, but found \{foundCount}")
@@ -399,7 +399,7 @@ class Compiler {
                 error(type.position, "unknown type '\{type}'")
                 return null
             when Type.Kind.NULLABLE:
-                assert type.subtypes.get_count() = 1
+                assert type.subtypes.count = 1
                 def subtypes := Array<Type>()
                 def sub := resolve(type.subtypes[0])
                 if sub = null {
@@ -408,13 +408,13 @@ class Compiler {
                 subtypes.add(sub)
                 return Type(subtypes[0].name + "?", Type.Kind.NULLABLE, type.position, subtypes, true)
             when Type.Kind.GENERIC:
-                assert type.subtypes.get_count() >= 2
+                assert type.subtypes.count >= 2
                 def base := resolve(type.subtypes[0], false)
                 if base = null {
                     return null
                 }
                 def args := Array<Type>()
-                for i in 1 .. type.subtypes.get_count() {
+                for i in 1 .. type.subtypes.count {
                     def resolved := resolve(type.subtypes[i])
                     if resolved = null {
                         return null
@@ -432,14 +432,14 @@ class Compiler {
             when Type.Kind.METHOD, Type.Kind.FUNCTION, Type.Kind.IMMUTABLE_METHOD,
                     Type.Kind.IMMUTABLE_FUNCTION:
                 def params := Array<Type>()
-                for i in 0 .. type.subtypes.get_count() - 1 {
+                for i in 0 .. type.subtypes.count - 1 {
                     def resolved := resolve(type.subtypes[i])
                     if resolved = null {
                         return null
                     }
                     params.add(resolved)
                 }
-                def returnType := resolve(type.subtypes[type.subtypes.get_count() - 1])
+                def returnType := resolve(type.subtypes[type.subtypes.count - 1])
                 if returnType = null {
                     return null
                 }
@@ -507,7 +507,7 @@ class Compiler {
                         }
                         if cl.rawSuper = null {
                             cl.rawSuper := s
-                            if cl.rawInterfaces.get_count() > 0 {
+                            if cl.rawInterfaces.count > 0 {
                                 error(s.position, "superclass '\{s}' of class '\{cl.name}' must be " +
                                         "listed before any superinterfaces")
                             }
@@ -626,7 +626,6 @@ class Compiler {
         currentClass.pop()
     }
 
-    @post(currentClass[0] == @pre(currentClass[0]) & currentMethod[0] == @pre(currentMethod[0]))
     method determineRawType(f:FieldDecl) {
         currentClass.push(f.owner)
         def old := symbolTable
@@ -712,7 +711,7 @@ class Compiler {
         if c.resolved != Resolution.UNRESOLVED {
             return
         }
-        if c.fields.get_count() = 0 {
+        if c.fields.count = 0 {
             c.resolved := Resolution.RESOLVED
             createChoiceEntryInit(c)
             return
@@ -721,7 +720,7 @@ class Compiler {
         currentClass.push(c.owner)
         def old := symbolTable
         symbolTable := c.owner.symbolTable
-        for i in 0 .. c.fields.get_count() {
+        for i in 0 .. c.fields.count {
             def resolved := resolve(c.fields[i])
             if resolved != null {
                 c.fields[i] := resolved
@@ -744,7 +743,7 @@ class Compiler {
             targetType:Type?):IRNode? {
         var matches := Array<MethodRef>(methods)
         def matchResult := matchMethods(position, matches, args, targetType, true)
-        if matchResult != null & matchResult.second.get_count() = 1 {
+        if matchResult != null & matchResult.second.count = 1 {
             var result := call(position, callTarget, matchResult.second[0], args)
             if targetType != null {
                 result := coerce(result, targetType)
@@ -863,7 +862,7 @@ class Compiler {
             }
         }
         for f in cl.fields {
-            if !f.annotations.isClass() {
+            if !f.annotations.isClass() & f.fieldKind != FieldDecl.Kind.PROPERTY {
                 result.add(f)
             }
         }
@@ -954,7 +953,7 @@ class Compiler {
                 supertypes.add(remapType(type, intf))
             }
             def aliases := HashMap<String, String>(cl.aliases)
-            for i in 0 .. cl.parameters.get_count() {
+            for i in 0 .. cl.parameters.count {
                 aliases[cl.parameters[i].name] := type.subtypes[i + 1].name
             }
             result := ClassDecl(cl.source, cl.position, aliases, cl.doccomment, annotations,
@@ -1042,10 +1041,10 @@ class Compiler {
     function signatureMatch(t1:Type, t2:Type):Bit {
         assert t1.isMethod()
         assert t2.isMethod()
-        if t1.subtypes.get_count() != t2.subtypes.get_count() {
+        if t1.subtypes.count != t2.subtypes.count {
             return false
         }
-        for i in 0 .. t1.subtypes.get_count() {
+        for i in 0 .. t1.subtypes.count {
             if t1.subtypes[i] != t2.subtypes[i] {
                 return false
             }
@@ -1166,7 +1165,7 @@ class Compiler {
     }
 
     method getVTable(cl:ClassDecl):ListView<MethodDecl> {
-        if cl.virtualMethods.get_count() = 0 {
+        if cl.virtualMethods.count = 0 {
             resolve(cl)
             currentClass.push(cl) -- FIXME Auto
             if cl.rawSuper != null {
@@ -1183,7 +1182,7 @@ class Compiler {
                     continue
                 }
                 var found := false
-                for i in 0 .. cl.virtualMethods.get_count() {
+                for i in 0 .. cl.virtualMethods.count {
                     def base := cl.virtualMethods[i]
                     resolve(base)
                     def overridden := getOverriddenMethod(derived)
@@ -1247,9 +1246,6 @@ class Compiler {
         }
         else {
             assert s.kind = Symbol.Kind.METHODS
-            if name = "clear" {
-                Console.printLine("raw methods: \{s->Methods.methods}")
-            }
             for m in s->Methods.methods {
                 if m.annotations.isClass() & rawTarget != null &
                         rawTarget != IRNode.TYPE_REFERENCE {
@@ -1265,7 +1261,7 @@ class Compiler {
                 }
                 methods.add(MethodRef(self, target, m))
             }
-            if methods.get_count() = 0 {
+            if methods.count = 0 {
                 error(position, "class '\{rawTarget.type().name}' does not contain any @class " +
                         "methods named '\{name}'")
             }
@@ -1273,7 +1269,7 @@ class Compiler {
         for p in st.parents {
             addInheritedMethods(p, name, methods)
         }
-        if methods.get_count() = 1 {
+        if methods.count = 1 {
             return IRNode.METHOD_REFERENCE(position, methods[0].effectiveType, methods[0].target,
                     methods[0])
         }
@@ -1369,15 +1365,15 @@ class Compiler {
         }
         match context.typeKind {
             when Type.Kind.NULLABLE:
-                assert context.subtypes.get_count() = 1
+                assert context.subtypes.count = 1
                 return remapType(context.subtypes[0], raw)
             when Type.Kind.GENERIC:
-                assert context.subtypes.get_count() >= 2
+                assert context.subtypes.count >= 2
                 def typeMap := HashMap<String, Type>()
                 def base := context.subtypes[0]
                 def cl := tryResolveClass(base.name)
                 assert cl != null
-                for i in 1 .. context.subtypes.get_count() {
+                for i in 1 .. context.subtypes.count {
                     typeMap[cl.name + "." + cl.parameters[i - 1].name] := context.subtypes[i]
                 }
                 return raw.remap(typeMap)
@@ -1563,7 +1559,7 @@ class Compiler {
         }
         if type.isMethod() {
             if target.isMethod() {
-                if type.subtypes.get_count() != target.subtypes.get_count() {
+                if type.subtypes.count != target.subtypes.count {
                     return null
                 }
                 var total := 0
@@ -1611,7 +1607,7 @@ class Compiler {
                 if targetMutable != srcMutable {
                     total += 1
                 }
-                for i in 0 .. type.subtypes.get_count() {
+                for i in 0 .. type.subtypes.count {
                     def cost := coercionCost(type.subtypes[i], target.subtypes[i])
                     if cost = null {
                         return null
@@ -1703,11 +1699,11 @@ class Compiler {
         if !target.isMethod() {
             return null
         }
-        if target.subtypes.get_count() != parameters.get_count() + 1 {
+        if target.subtypes.count != parameters.count + 1 {
             return null
         }
         def symbols := AutoSymbolTable(self)
-        for i in 0 .. parameters.get_count() {
+        for i in 0 .. parameters.count {
             symbolTable.add(Variable(expr.position(), Variable.Kind.DEF, parameters[i],
                     target.subtypes[i]))
         }
@@ -1718,7 +1714,7 @@ class Compiler {
         if compiledExpr = null {
             return null
         }
-        return coercionCost(compiledExpr.type(), target.subtypes[target.subtypes.get_count() - 1])
+        return coercionCost(compiledExpr.type(), target.subtypes[target.subtypes.count - 1])
     }
 
     function coercionCost(expr:IRNode, target:Type):Int? {
@@ -1918,7 +1914,7 @@ class Compiler {
             for m in targetClass.methods {
                 if m.annotations.isImplicit() {
                     resolve(m)
-                    if m.methodKind = MethodDecl.Kind.INIT & m.parameters.get_count() = 1 {
+                    if m.methodKind = MethodDecl.Kind.INIT & m.parameters.count = 1 {
                         def cost := coercionCost(expr, m.parameters[0].type)
                         if cost != null {
                             return base + cost + 2
@@ -2100,15 +2096,15 @@ class Compiler {
             when IRNode.UNRESOLVED_INDEX(_, _, base, args):
                 return coerce(call(base, "[]", args, target), target)
             when IRNode.CHOICE_ENTRY_REFERENCE(_, ce):
-                if ce.fields.get_count() = 0 {
+                if ce.fields.count = 0 {
                     def owner := IRNode.TYPE_REFERENCE(expr.position(), ce.owner.type())
                     def args := Array<IRNode>()
                     def value := ce.rawValue.convert()->UInt64
                     args.add(IRNode.INT(expr.position(), Type.IntLiteral(value), value))
                     return coerce(call(owner, args), target)
                 }
-                error(expr.position(), "choice '\{expr}' requires \{ce.fields.get_count()} " +
-                        "argument\{ce.fields.get_count() = 1:|s}, but found 0")
+                error(expr.position(), "choice '\{expr}' requires \{ce.fields.count} " +
+                        "argument\{ce.fields.count = 1:|s}, but found 0")
                 return null
             when IRNode.FIELD_REFERENCE(_, _, _, field):
                 if field.annotations.isWeak() & !inFieldCleanup {
@@ -2135,7 +2131,7 @@ class Compiler {
                 for m in cl.methods {
                     if m.annotations.isImplicit() {
                         resolve(m)
-                        if m.methodKind = MethodDecl.Kind.INIT & m.parameters.get_count() = 1 &
+                        if m.methodKind = MethodDecl.Kind.INIT & m.parameters.count = 1 &
                                 coercionCost(expr, m.parameters[0].type) != null {
                             def type := IRNode.TYPE_REFERENCE(expr.position(), cl.type())
                             def args := Array<IRNode>(1) -- FIXME literal
@@ -2224,11 +2220,11 @@ class Compiler {
                         best.add(m)
                     }
                 }
-                if best.get_count() = 1 {
+                if best.count = 1 {
                     return methodCast(IRNode.METHOD_REFERENCE(position, best[0].effectiveType,
                             targetNode, best[0]), target)
                 }
-                if best.get_count() = 0 {
+                if best.count = 0 {
                     error(position, "no match for '\{methods[0].value.name}' with type '\{target}'")
                     return null
                 }
@@ -2242,7 +2238,7 @@ class Compiler {
                 return null
             when IRNode.UNRESOLVED_LAMBDA(position, rawParameters, expr):
                 def parameters := Array<ASTNode>()
-                for i in 0 .. rawParameters.get_count() {
+                for i in 0 .. rawParameters.count {
                     parameters.add(ASTNode.PARAMETER(position, rawParameters[i],
                             ASTNode.IR_WRAPPER(IRNode.TYPE_REFERENCE(position,
                                 target.subtypes[i]))))
@@ -2255,10 +2251,10 @@ class Compiler {
         if src = target {
             return node
         }
-        assert src.subtypes.get_count() = target.subtypes.get_count(),
+        assert src.subtypes.count = target.subtypes.count,
                 "signature mismatch between \{src} and \{target}"
         var same := true
-        for i in 0 .. src.subtypes.get_count() {
+        for i in 0 .. src.subtypes.count {
             if src.subtypes[i] != target.subtypes[i] {
                 same := false
                 break
@@ -2268,9 +2264,9 @@ class Compiler {
             return IRNode.CAST(position, node, target, false)
         }
         -- FIXME need to reuse shims if possible
-        def parameters := Array<MethodDecl.Parameter>(target.subtypes.get_count())
+        def parameters := Array<MethodDecl.Parameter>(target.subtypes.count)
         def args := Array<ASTNode>()
-        for i in 0 .. target.subtypes.get_count() - 1 {
+        for i in 0 .. target.subtypes.count - 1 {
             def name := "p\{i}"
             parameters.add(MethodDecl.Parameter(name, target.subtypes[i]))
             args.add(ASTNode.BINARY(position, ASTNode.IDENTIFIER(position, name), Token.Kind.CAST,
@@ -2289,11 +2285,11 @@ class Compiler {
         def body := Array<ASTNode>()
         -- def methodVar := pointer-><src type>
         def methodPointer := ASTNode.IDENTIFIER(position, "pointer")
-        def realParams := Array<Type>(src.subtypes.get_count() + 1)
+        def realParams := Array<Type>(src.subtypes.count + 1)
         realParams.add(Type.Method())
-        realParams.addAll(src.subtypes[0 .. src.subtypes.get_count() - 1])
+        realParams.addAll(src.subtypes[0 .. src.subtypes.count - 1])
         def realType := Type.methodType(src.position, src.typeKind, realParams,
-                src.subtypes[src.subtypes.get_count() - 1])
+                src.subtypes[src.subtypes.count - 1])
         def methodType := ASTNode.IR_WRAPPER(IRNode.TYPE_REFERENCE(position, node.type()))
         def methodVar := ASTNode.IDENTIFIER(position, "methodVar")
         def declarations := Array<ASTNode>()
@@ -2310,7 +2306,7 @@ class Compiler {
         body.add(ASTNode.BINARY(position, methodVarTarget, Token.Kind.ASSIGNMENT, selfTarget))
         -- perform actual call
         def call := ASTNode.CALL(position, methodVar, args.finish())
-        def returnType := target.subtypes[target.subtypes.get_count() - 1]
+        def returnType := target.subtypes[target.subtypes.count - 1]
         if returnType != Type.Void() {
             def cast := ASTNode.BINARY(position, call, Token.Kind.CAST,
                     ASTNode.IR_WRAPPER(IRNode.TYPE_REFERENCE(position, returnType)))
@@ -2340,10 +2336,10 @@ class Compiler {
 
     -- FIXME figure out how to handle list comparisons
     function equal(a:ListView<Type>, b:ListView<Type>):Bit {
-        if a.get_count() != b.get_count() {
+        if a.count != b.count {
             return false
         }
-        for i in 0 .. a.get_count() {
+        for i in 0 .. a.count {
             if a[i] != b[i] {
                 return false
             }
@@ -2413,7 +2409,7 @@ class Compiler {
         return result
     }
 
-    @pre(args.get_count() = m.parameterCount())
+    @pre(args.count = m.parameterCount())
     method matchGenericMethod(position:Position, m:MethodRef, args:ListView<IRNode>,
             expectedReturn:Type?, reportErrors:Bit):Pair<Int, MethodRef>? {
         return Pair<Int, MethodRef>(0, m)
@@ -2430,10 +2426,10 @@ class Compiler {
         if m.value.resolved = Resolution.RESOLVED_WITH_ERRORS {
             return null
         }
-        if args.get_count() != m.parameterCount() {
+        if args.count != m.parameterCount() {
             if reportErrors {
                 error(position, "\{m.value.declaration()} expected \{m.parameterCount()} argument" +
-                        "\{m.parameterCount() = 1:|s}, but found \{args.get_count()}")
+                        "\{m.parameterCount() = 1:|s}, but found \{args.count}")
             }
             return null
         }
@@ -2463,7 +2459,7 @@ class Compiler {
         }
         -- numbers prefer to operate on their own sizes, i.e. we should treat Int8 + 10 as
         -- Int8 + Int8 rather than complain about it being ambiguous
-        if m.value.owner.type().isNumber() & args.get_count() = 1 &
+        if m.value.owner.type().isNumber() & args.count = 1 &
                 m.value.parameters[0].type != m.value.owner.type() {
             result += 1
         }
@@ -2487,7 +2483,7 @@ class Compiler {
         error(position, msg.finish())
     }
 
-    @pre(methods.get_count() > 1)
+    @pre(methods.count > 1)
     method reportAmbiguousMatch(position:Position, args:ListView<IRNode>, expectedReturn:Type?,
             methods:ListView<MethodRef>) {
         def msg := MutableString("call to '\{methods[0].value.name}' with arguments (")
@@ -2517,7 +2513,7 @@ class Compiler {
     match. Note that in the case of ambiguity, you will receive a non-`null` response even though an
     error has occurred.
     ================================================================================================
-    @pre(methods.get_count() > 0)
+    @pre(methods.count > 0)
     method matchMethods(position:Position, methods:ListView<MethodRef>, args:ListView<IRNode>,
             expectedReturn:Type?, reportErrors:Bit):Pair<Int, ListView<MethodRef>>? {
         def result := Array<MethodRef>()
@@ -2535,13 +2531,13 @@ class Compiler {
                 result.add(matchResult.second)
             }
         }
-        if result.get_count() = 0 {
+        if result.count = 0 {
             if reportErrors {
                 reportNoMatch(position, args, expectedReturn, methods)
             }
             return null
         }
-        if result.get_count() > 1 & reportErrors {
+        if result.count > 1 & reportErrors {
             reportAmbiguousMatch(position, args, expectedReturn, result)
         }
         return Pair<Int, ListView<MethodRef>>(best, result)
@@ -2596,7 +2592,7 @@ class Compiler {
         else if !m.value.isInstance() & target != IRNode.TYPE_REFERENCE {
             error(position, "cannot call class \{m.value.declaration()} on an instance")
         }
-        for i in 0 .. args.get_count() {
+        for i in 0 .. args.count {
             var coerced := coerce(args[i], m.parameter(i))
             if coerced = null {
                 return null
@@ -2707,7 +2703,7 @@ class Compiler {
         def s := getSymbolTable(cl)[name]
         if s = null {
             if (name = "=" | name = "!=") & cl.classKind = ClassDecl.Kind.CHOICE &
-                    args.get_count() = 1 {
+                    args.count = 1 {
                 return compileChoiceComparison(resolved, name, args[0])
             }
             error(resolved.position(), "class '\{cl.name}' does not have a member named '\{name}'")
@@ -2737,11 +2733,11 @@ class Compiler {
         }
         outer: for m in cl.methods {
             if m.methodKind != MethodDecl.Kind.INIT |
-                    m.parameters.get_count() != entry.fields.get_count() + 1 {
+                    m.parameters.count != entry.fields.count + 1 {
                 continue
             }
             assert m.parameters[0].type = Type.Int64()
-            for i in 0 .. entry.fields.get_count() {
+            for i in 0 .. entry.fields.count {
                 if entry.fields[i] != m.parameters[i + 1].type {
                     continue outer
                 }
@@ -2757,7 +2753,7 @@ class Compiler {
                 ASTNode.IDENTIFIER(cl.position, ClassDecl.RAW_VALUE_NAME),
                 Token.Kind.ASSIGNMENT,
                 ASTNode.IDENTIFIER(cl.position, "rv")))
-        for i in 0 .. entry.fields.get_count() {
+        for i in 0 .. entry.fields.count {
             parameters.add(MethodDecl.Parameter("f\{i}", entry.fields[i]))
             statements.add(ASTNode.BINARY(cl.position,
                     ASTNode.CHOICE_FIELD_REFERENCE(cl.position,
@@ -2767,8 +2763,8 @@ class Compiler {
                     Token.Kind.ASSIGNMENT,
                     ASTNode.IDENTIFIER(cl.position, "f\{i}")))
         }
-        def synthetic := MethodDecl(cl, cl.position, null, Annotations(), MethodDecl.Kind.INIT,
-                "init", null, parameters, Type.Void(), statements.finish())
+        def synthetic := MethodDecl(cl, cl.position, null, Annotations(Annotations.Flag.SYNTHETIC),
+                MethodDecl.Kind.INIT, "init", null, parameters, Type.Void(), statements.finish())
         synthetic.resolved := Resolution.RESOLVED
         entry.initMethod := synthetic
         cl.methods.add(synthetic)
@@ -2800,7 +2796,7 @@ class Compiler {
                     isClass := !currentMethod[0].isInstance()
                 }
                 def filtered := mrefs.filter(m => m.value.annotations.isClass() | !isClass)
-                if filtered.get_count() = 0 {
+                if filtered.count = 0 {
                     error(m.position(), "cannot call instance method from @class context")
                     return null
                 }
@@ -2810,11 +2806,11 @@ class Compiler {
                     matchMethods(position, filtered, args, expectedType, true)
                     return null
                 }
-                if matchResult.second.get_count() > 1 {
+                if matchResult.second.count > 1 {
                     return IRNode.UNRESOLVED_METHOD_CALL(m.position(), Type.Invalid(), target,
                             mrefs, ImmutableArray<IRNode>(args))
                 }
-                assert matchResult.second.get_count() = 1
+                assert matchResult.second.count = 1
                 return call(m.position(), target, matchResult.second[0], args)
             when IRNode.TYPE_REFERENCE(_, type):
                 def target := IRNode.CONSTRUCTED_OBJECT(m.position(), type)
@@ -2833,17 +2829,17 @@ class Compiler {
                 }
                 return construct
             when IRNode.CHOICE_ENTRY_REFERENCE(_, ce):
-                if ce.fields.get_count() != args.get_count() {
-                    error(m.position(), "choice '\{m}' requires \{ce.fields.get_count()} " +
-                            "argument\{ce.fields.get_count() = 1:|s}, but found " +
-                            args.get_count())
+                if ce.fields.count != args.count {
+                    error(m.position(), "choice '\{m}' requires \{ce.fields.count} " +
+                            "argument\{ce.fields.count = 1:|s}, but found " +
+                            args.count)
                     return null
                 }
                 resolve(ce)
                 def finalArgs := Array<IRNode>()
                 def value := ce.rawValue.convert()->UInt64
                 finalArgs.add(IRNode.INT(m.position(), Type.IntLiteral(value), value))
-                for i in 0 .. args.get_count() {
+                for i in 0 .. args.count {
                     def arg := coerce(args[i], ce.fields[i])
                     if arg = null {
                         return null
@@ -2879,8 +2875,8 @@ class Compiler {
                 if t.typeKind = Type.Kind.METHOD | t.typeKind = Type.Kind.FUNCTION |
                         t.typeKind = Type.Kind.IMMUTABLE_METHOD |
                         t.typeKind = Type.Kind.IMMUTABLE_FUNCTION {
-                    def expected := t.subtypes.get_count() - 1
-                    def actual := args.get_count()
+                    def expected := t.subtypes.count - 1
+                    def actual := args.count
                     if expected != actual {
                         error(resolved.position(), "method expected \{expected} arguments, but " +
                                 "found \{actual}")
@@ -2895,7 +2891,7 @@ class Compiler {
                         finalArgs.add(arg)
                     }
                     var result := IRNode.DYNAMIC_CALL(m, finalArgs.finish())
-                    if isRefCounted(t.subtypes[t.subtypes.get_count() - 1]) {
+                    if isRefCounted(t.subtypes[t.subtypes.count - 1]) {
                         reusedValueCount += 1
                         result := IRNode.REUSED_VALUE_DEFINITION(result, reusedValueCount)
                         def reused := IRNode.REUSED_VALUE(result.position(), result.type(),
@@ -3172,7 +3168,7 @@ class Compiler {
                         match extra {
                             when IRNode.CALL(_, _, m, args):
                                 if m.value.owner.name = "panda.core.Panda" &
-                                        m.value.name = "unref" & args.get_count() = 1 {
+                                        m.value.name = "unref" & args.count = 1 {
                                     match unwrapCast(unwrapCast(args[0])) {
                                         when IRNode.REUSED_VALUE(_, _, idx2):
                                             assert idx = idx2
@@ -3195,7 +3191,7 @@ class Compiler {
             when IRNode.UNRESOLVED_INDEX(_, _, base, args):
                 if op = Token.Kind.ASSIGNMENT {
                     def callArgs := Array<IRNode>() -- FIXME literal
-                    assert args.get_count() = 1
+                    assert args.count = 1
                     callArgs.addAll(args)
                     callArgs.add(right)
                     return call(base, "[]:=", callArgs)
@@ -3229,7 +3225,7 @@ class Compiler {
                 }
                 match resolved {
                     when IRNode.CALL(_, _, _, resolvedArgs):
-                        assert resolvedArgs.get_count() = 2
+                        assert resolvedArgs.count = 2
                         reusedValueCount += 1
                         def baseId := reusedValueCount
                         def base := IRNode.REUSED_VALUE_DEFINITION(unwrapCast(resolvedArgs[0]),
@@ -3368,9 +3364,20 @@ class Compiler {
             return null
         }
         reusedValueCount += 1
-        left := IRNode.REUSED_VALUE_DEFINITION(left, reusedValueCount)
-        def reusedLeft := IRNode.REUSED_VALUE(left.position(), left.type(),
-                reusedValueCount)
+        def reusedLeft:IRNode
+        match left {
+            -- for fields, we reuse just the base rather than the entire node in order to make
+            -- property->get/set transformations in postProcess easier
+            when IRNode.FIELD_REFERENCE(position, type, base, field):
+                left := IRNode.FIELD_REFERENCE(position, type,
+                        IRNode.REUSED_VALUE_DEFINITION(base, reusedValueCount), field)
+                reusedLeft := IRNode.FIELD_REFERENCE(position, type,
+                        IRNode.REUSED_VALUE(base.position(), base.type(), reusedValueCount), field)
+            otherwise:
+                left := IRNode.REUSED_VALUE_DEFINITION(left, reusedValueCount)
+                reusedLeft := IRNode.REUSED_VALUE(left.position(), left.type(),
+                        reusedValueCount)
+        }
         right := compileBinary(position, reusedLeft, removeAssignment(op), right)
         if right = null {
             return null
@@ -3632,7 +3639,7 @@ class Compiler {
             when Type.Kind.GENERIC_PARAMETER:
                 return typeParameters(type.parameter.bound)
             when Type.Kind.GENERIC:
-                assert type.subtypes.get_count() >= 2
+                assert type.subtypes.count >= 2
                 return type.subtypes[1..]
             when Type.Kind.NULLABLE:
                 return typeParameters(type.subtypes[0])
@@ -3666,11 +3673,11 @@ class Compiler {
                 match s.kind {
                     when Symbol.Kind.METHOD:
                         m := s->MethodDecl
-                        assert m.parameters.get_count() = 0
+                        assert m.parameters.count = 0
                         assert !m.annotations.isClass()
                     when Symbol.Kind.METHODS:
                         for test in s->Methods.methods {
-                            if !test.annotations.isClass() & test.parameters.get_count() = 0 {
+                            if !test.annotations.isClass() & test.parameters.count = 0 {
                                 m := test
                                 break
                             }
@@ -3888,7 +3895,7 @@ class Compiler {
         }
         def type:Type
         def cl := currentClass[0]
-        if cl.parameters.get_count() > 0 {
+        if cl.parameters.count > 0 {
             def args := Array<Type>()
             for p in cl.parameters {
                 args.add(Type(p))
@@ -4107,7 +4114,7 @@ class Compiler {
 
         def target:IRNode?
         writeCode := true
-        if currentCaptures.second.get_count() != 0 {
+        if currentCaptures.second.count != 0 {
             -- we have captures, need to build an actual closure for it
             methodDecl.compiledBody := compiled
             def cl := createClosureClass(methodDecl, currentCaptures.second.values().all())
@@ -4207,10 +4214,10 @@ class Compiler {
     }
 
     function endsWithBranch(statements:ListView<IRNode>):Bit {
-        if statements.get_count() = 0 {
+        if statements.count = 0 {
             return false
         }
-        return endsWithBranch(statements[statements.get_count() - 1])
+        return endsWithBranch(statements[statements.count - 1])
     }
 
     function endsWithBranch(stmt:IRNode):Bit {
@@ -4242,7 +4249,7 @@ class Compiler {
         }
         finallies.pop()
         symbolTable := symbols.parents[0]
-        if finalFinally.get_count() > 0 {
+        if finalFinally.count > 0 {
             def resultWithFinally := Array<IRNode>() -- FIXME literal
             resultWithFinally.add(IRNode.BLOCK_WITH_FINALLY(position, result.finish(),
                                                             finalFinally.finish()))
@@ -4637,7 +4644,7 @@ class Compiler {
                 error(position, "'break \{label}' must be inside a loop labelled '\{label}:'")
             }
         }
-        else if loops.get_count() = 0 {
+        else if loops.count = 0 {
             error(position, "'break' must be inside a loop")
         }
         return IRNode.BREAK(position, label)
@@ -4656,7 +4663,7 @@ class Compiler {
                 error(position, "'continue \{label}' must be inside a loop labelled '\{label}:'")
             }
         }
-        else if loops.get_count() = 0 {
+        else if loops.count = 0 {
             error(position, "'continue' must be inside a loop")
         }
         return IRNode.CONTINUE(position, label)
@@ -4750,7 +4757,7 @@ class Compiler {
 
     method compileChainedIfWhen(value:Variable, position:Position, tests:ImmutableArray<ASTNode>,
                      rawStatements:ImmutableArray<ASTNode>):IRNode? {
-        if tests.get_count() = 1 {
+        if tests.count = 1 {
             def test := tests[0]
             if value.type.isClass() {
                 match test {
@@ -4771,8 +4778,8 @@ class Compiler {
                                         return null
                                     }
                                     resolve(entry)
-                                    def requiredCount := entry.fields.get_count()
-                                    def actualCount := args.get_count()
+                                    def requiredCount := entry.fields.count
+                                    def actualCount := args.count
                                     if actualCount != requiredCount {
                                         error(testPosition, "'\{entry}' requires \{requiredCount}" +
                                                 " argument\{requiredCount = 1:|s}, but found " +
@@ -4824,7 +4831,7 @@ class Compiler {
         if test = null {
             return null
         }
-        for i in 1 .. tests.get_count() {
+        for i in 1 .. tests.count {
             def nextTest := compileWhenTest(value, tests[i])
             if nextTest = null {
                 return null
@@ -4889,7 +4896,7 @@ class Compiler {
             }
             result.add(IRNode.BLOCK(position, statements))
         }
-        for i in result.get_count() - 1 .. 1 by -1 {
+        for i in result.count - 1 .. 1 by -1 {
             match result[i - 1] {
                 when IRNode.IF(position, test, ifTrue, ifFalse):
                     assert ifFalse = null
@@ -4897,7 +4904,7 @@ class Compiler {
                 otherwise:
                     assert false
             }
-            result.removeIndex(result.get_count() - 1)
+            result.removeIndex(result.count - 1)
         }
         if finally != null {
             return IRNode.BLOCK_WITH_FINALLY(position, result.finish(), finally.finish())
@@ -4944,7 +4951,7 @@ class Compiler {
                 }
                 match initCall {
                     when IRNode.CALL(_, _, _, args):
-                        assert args.get_count() = 1
+                        assert args.count = 1
                         return isConstantInt(args[0])
                     otherwise:
                         return false
@@ -4972,7 +4979,7 @@ class Compiler {
             when IRNode.CONSTRUCT(_, _, initCall):
                 match initCall {
                     when IRNode.CALL(_, _, _, args):
-                        assert args.get_count() = 1
+                        assert args.count = 1
                         return getConstantInt(args[0])
                     otherwise:
                         assert false
@@ -5068,7 +5075,7 @@ class Compiler {
         }
         if expectedType != null {
             compiledExpr := coerce(compiledExpr,
-                    expectedType.subtypes[expectedType.subtypes.get_count() - 1])
+                    expectedType.subtypes[expectedType.subtypes.count - 1])
         }
         def body := Array<ASTNode>() -- FIXME literal
         body.add(ASTNode.RETURN(position, expr))
@@ -5187,10 +5194,10 @@ class Compiler {
     both methods. Since the second `check` method does not have a parameter named `param`, we need
     to use `compileExpressionInContext` to be able to compile the expression correctly.
     ================================================================================================
-    @pre(owner.name = context.name & owner.parameters.get_count() = context.parameters.get_count())
+    @pre(owner.name = context.name & owner.parameters.count = context.parameters.count)
     method compileExpressionInContext(expr:ASTNode, owner:MethodDecl, context:MethodDecl):IRNode? {
         def symbols := AutoSymbolTable(self)
-        for i in 0 .. owner.parameters.get_count() {
+        for i in 0 .. owner.parameters.count {
             symbolTable.add(symbols.oldSymbolTable[context.parameters[i].name],
                     owner.parameters[i].name)
         }
@@ -5290,7 +5297,7 @@ class Compiler {
     }
 
     function callsOtherSelf(body:ImmutableArray<ASTNode>):Bit {
-        if body.get_count() = 0 {
+        if body.count = 0 {
             return false
         }
         match body[0] {
@@ -5303,9 +5310,40 @@ class Compiler {
         return false
     }
 
+    method replaceProperties(node:IRNode):IRNode? {
+        match node {
+            when IRNode.FIELD_REFERENCE(position, type, base, field):
+                if field.fieldKind = FieldDecl.Kind.PROPERTY {
+                    return call(base.transform(replaceProperties), "get_\{field.name}",
+                            Array<IRNode>(), type) -- FIXME literal
+                }
+            when IRNode.BINARY(position, type, left, op, right):
+                if op = Token.Kind.ASSIGNMENT {
+                    match left {
+                        when IRNode.FIELD_REFERENCE(position, type, base, field):
+                            if field.fieldKind = FieldDecl.Kind.PROPERTY {
+                                def args := Array<IRNode>()
+                                args.add(right.transform(replaceProperties))
+                                return call(base.transform(replaceProperties),
+                                        "set_\{field.name}", args) -- FIXME literal
+                            }
+                    }
+                }
+        }
+        return null
+    }
+
+    method postProcess(body:ImmutableArray<IRNode>):ImmutableArray<IRNode> {
+        def result := IRNode.transform(body, replaceProperties)
+        if result = null {
+            return body
+        }
+        return result
+    }
+
     @post(symbolTable == @pre(symbolTable) &
-            currentClass.get_count() = @pre(currentClass.get_count()) &
-            currentMethod.get_count() = @pre(currentMethod.get_count()))
+            currentClass.count = @pre(currentClass.count) &
+            currentMethod.count = @pre(currentMethod.count))
     method compileBody(m:MethodDecl, enclosingContext:SymbolTable?):ImmutableArray<IRNode>? {
         if m.compiledBody != null {
             return m.compiledBody
@@ -5362,7 +5400,7 @@ class Compiler {
             }
         }
         def finally:Array<IRNode>?
-        if errorCount = 0 & m.name = "cleanup" & m.parameters.get_count() = 0 &
+        if errorCount = 0 & m.name = "cleanup" & m.parameters.count = 0 &
             m.owner.name != "panda.core.Object" & !isValue(m.owner) {
             def cleanup := compileExpression(ASTNode.DOT(m.position, ASTNode.SUPER(m.position),
                     "cleanup"))
@@ -5382,7 +5420,7 @@ class Compiler {
                 finalBody.addAll(compiled)
                 compiled := finalBody.finish()
             }
-            if m.name = "cleanup" & m.parameters.get_count() = 0 & m.owner.name != WEAK_NAME {
+            if m.name = "cleanup" & m.parameters.count = 0 & m.owner.name != WEAK_NAME {
                 assert !inFieldCleanup
                 inFieldCleanup := true
                 def finalBody := Array<IRNode>(compiled)
@@ -5403,6 +5441,7 @@ class Compiler {
         }
         currentMethod.pop()
         currentClass.pop()
+        compiled := postProcess(compiled)
         if m.annotations.isInline() {
             m.compiledBody := compiled
         }
@@ -5421,13 +5460,13 @@ class Compiler {
             }
             def tests := Array<ASTNode>() -- FIXME literal
             def fields := Array<ASTNode>()
-            for i in 0 .. e.fields.get_count() {
+            for i in 0 .. e.fields.count {
                 fields.add(ASTNode.IDENTIFIER(cl.position, "_f\{i}"))
             }
             tests.add(ASTNode.CALL(cl.position, ASTNode.IDENTIFIER(cl.position, e.name),
                     fields.finish()))
             def unrefs := Array<ASTNode>()
-            for i in 0 .. e.fields.get_count() {
+            for i in 0 .. e.fields.count {
                 if isRefCounted(e.fields[i]) {
                     def p := Position()
                     def unref := ASTNode.DOT(p, ASTNode.DOT(p, ASTNode.DOT(p,
@@ -5521,9 +5560,8 @@ class Compiler {
                 error(m.position, "'main' must be declared @class")
             }
             def required := "panda.collections.ListView<panda.core.String>"
-            if m.parameters.get_count() > 1 |
-                    (m.parameters.get_count() = 1 &
-                        m.parameters[0].type.name != required) {
+            if m.parameters.count > 1 |
+                    (m.parameters.count = 1 & m.parameters[0].type.name != required) {
                 error(m.position, "'main' must have either zero parameters or one parameter of " +
                         "type '\{required}'")
             }
@@ -5654,7 +5692,7 @@ class Compiler {
         checkAccessModifierCount(f.position, f.annotations)
     }
 
-    @post(currentClass.get_count() = @pre(currentClass.get_count()))
+    @post(currentClass.count = @pre(currentClass.count))
     method compile(cl:ClassDecl) {
         currentClass.push(cl)
         checkAnnotations(cl)
@@ -5695,12 +5733,12 @@ class Compiler {
         symbolTable := old
         currentClass.pop()
 
-        if compilationQueue.get_count() > 0 {
+        if compilationQueue.count > 0 {
             def next := compilationQueue[0]
             compilationQueue.removeIndex(0)
             compile(next)
         }
-        assert compilationQueue.get_count() = 0
+        assert compilationQueue.count = 0
     }
 
     method scan(file:File):ListView<ClassDecl> {
@@ -5740,8 +5778,8 @@ class Compiler {
     }
 
     method finish() {
-        while pendingClasses.get_count() > 0 {
-            def cl := pendingClasses.removeIndex(pendingClasses.get_count() - 1)
+        while pendingClasses.count > 0 {
+            def cl := pendingClasses.removeIndex(pendingClasses.count - 1)
             compile(cl)
         }
         codeGenerator.finish()

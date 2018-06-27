@@ -47,16 +47,16 @@ class MethodRef {
                     kind := Type.Kind.METHOD
                 }
                 effectiveType := Type.methodType(value.position, kind,
-                        effectiveType.subtypes[..effectiveType.subtypes.get_count() - 1],
-                        effectiveType.subtypes[effectiveType.subtypes.get_count() - 1])
+                        effectiveType.subtypes[..effectiveType.subtypes.count - 1],
+                        effectiveType.subtypes[effectiveType.subtypes.count - 1])
             }
             match target {
                 when IRNode.TYPE_REFERENCE(_, type):
                     def params := Array<Type>()
                     params.add(owner)
-                    params.addAll(effectiveType.subtypes[..effectiveType.subtypes.get_count() - 1])
+                    params.addAll(effectiveType.subtypes[..effectiveType.subtypes.count - 1])
                     effectiveType := Type.methodType(effectiveType.position, effectiveType.typeKind,
-                            params, effectiveType.subtypes[effectiveType.subtypes.get_count() - 1])
+                            params, effectiveType.subtypes[effectiveType.subtypes.count - 1])
             }
         }
         else {
@@ -104,7 +104,7 @@ class MethodRef {
     }
 
     function parameterCount():Int {
-        return value.parameters.get_count()
+        return value.parameters.count
     }
 
     function parameter(index:Int):Type {
@@ -112,7 +112,7 @@ class MethodRef {
     }
 
     function returnType():Type {
-        return effectiveType.subtypes[effectiveType.subtypes.get_count() - 1]
+        return effectiveType.subtypes[effectiveType.subtypes.count - 1]
     }
 
     @override

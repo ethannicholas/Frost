@@ -105,7 +105,7 @@ method addTableOfContents(tocFile:File, tree:File, apiRelativePath:String) {
 }
 
 method main(args:ListView<String>) {
-    if args.get_count() != 4 {
+    if args.count != 4 {
         Console.errorStream().printLine("usage: pandadoc <source dir> <api dir> <root dir>")
         System.exit(1)
     }
@@ -127,8 +127,8 @@ method main(args:ListView<String>) {
     for file in File(Config.pandaSourceDir()).resolve("../docs/html").list() {
         file.openInputStream().sendTo(root.resolve(file.name()).openOutputStream())
     }
-    recursiveDelete(tmpOutput.absolute(), tmpOutput.absolute())
+--    recursiveDelete(tmpOutput.absolute(), tmpOutput.absolute())
     addTableOfContents(tocFile, root, apiRelativePath)
---    tocFile.delete()
     Console.printLine(tocFile)
+--  tocFile.delete()
 }

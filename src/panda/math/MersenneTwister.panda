@@ -26,7 +26,7 @@ class MersenneTwister : Random {
     @private
     var index := N
 
-    property state:ListView<UInt32>
+    --property state:ListView<UInt32>
 
     ================================================================================================
     Creates a new, automatically-seeded `MersenneTwister`.

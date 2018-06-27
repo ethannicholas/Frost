@@ -22,7 +22,7 @@ interface ListView<T> : CollectionView<T> {
 
         @override
         function get_done():Bit {
-            return index = list.get_count()
+            return index = list.count
         }
 
         @override
@@ -37,7 +37,7 @@ interface ListView<T> : CollectionView<T> {
 
     @param index the (zero-based) index of the item to return
     ================================================================================================    
-    @pre(index >= 0 & index < get_count())
+    @pre(index >= 0 & index < count)
     function [](index:Int):T
 
     ================================================================================================
@@ -82,7 +82,7 @@ interface ListView<T> : CollectionView<T> {
             end := r.max
         }
         else {
-            end := get_count()
+            end := count
             if r.inclusive {
                 end -= 1
             }
@@ -107,7 +107,7 @@ interface ListView<T> : CollectionView<T> {
             current := 0
         }
         else {
-            current := get_count() - 1
+            current := count - 1
         }
 
         def end:Int
@@ -115,7 +115,7 @@ interface ListView<T> : CollectionView<T> {
             end := r.end
         }
         else if step > 0 {
-            end := get_count()
+            end := count
         }
         else {
             end := 0
@@ -135,7 +135,7 @@ interface ListView<T> : CollectionView<T> {
                 current += step
             }
         }
-        if (r.inclusive | r.end = null) & current = end & end < get_count() {
+        if (r.inclusive | r.end = null) & current = end & end < count {
             result.add(self[current])
         }
         return result

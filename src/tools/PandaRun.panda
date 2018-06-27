@@ -14,7 +14,7 @@ class StreamSender {
 }
 
 method main(args:ListView<String>) {
-    if args.get_count() < 2 | !args[1].endsWith(".panda") {
+    if args.count < 2 | !args[1].endsWith(".panda") {
         Console.errorStream().printLine("Usage: panda <Script.panda> <args...>")
         System.exit(1)
     }

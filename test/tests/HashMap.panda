@@ -14,10 +14,10 @@ method main() {
             Console.printLine("null")
         }
     }
-    Console.printLine(h.get_count())
+    Console.printLine(h.count)
     Console.printLine(h[0] != null)
     h.clear()
-    Console.printLine(h.get_count())
+    Console.printLine(h.count)
     h[-12] := 124
     Console.printLine(h[0] != null)
     Console.printLine(h[-12])

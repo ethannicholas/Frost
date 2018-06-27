@@ -8,7 +8,7 @@
 #include "org/pandalanguage/pandac/MethodDecl.h"
 
 static panda$core$String $s1;
-org$pandalanguage$pandac$Compiler$_Closure1$class_type org$pandalanguage$pandac$Compiler$_Closure1$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, NULL, { panda$core$Object$convert$R$panda$core$String, org$pandalanguage$pandac$Compiler$_Closure1$cleanup, org$pandalanguage$pandac$Compiler$_Closure1$$anonymous5$org$pandalanguage$pandac$MethodRef$R$panda$core$Bit} };
+org$pandalanguage$pandac$Compiler$_Closure1$class_type org$pandalanguage$pandac$Compiler$_Closure1$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, NULL, { panda$core$Object$convert$R$panda$core$String, org$pandalanguage$pandac$Compiler$_Closure1$cleanup, org$pandalanguage$pandac$Compiler$_Closure1$$anonymous3$org$pandalanguage$pandac$MethodRef$R$panda$core$Bit} };
 
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x63\x2e\x43\x6f\x6d\x70\x69\x6c\x65\x72\x2e\x5f\x43\x6c\x6f\x73\x75\x72\x65\x31", 43, -943905825475553504, NULL };
@@ -29,7 +29,7 @@ void org$pandalanguage$pandac$Compiler$_Closure1$cleanup(org$pandalanguage$panda
     }
     $l5:;
 }
-panda$core$Bit org$pandalanguage$pandac$Compiler$_Closure1$$anonymous5$org$pandalanguage$pandac$MethodRef$R$panda$core$Bit(org$pandalanguage$pandac$Compiler$_Closure1* self, org$pandalanguage$pandac$MethodRef* p_m) {
+panda$core$Bit org$pandalanguage$pandac$Compiler$_Closure1$$anonymous3$org$pandalanguage$pandac$MethodRef$R$panda$core$Bit(org$pandalanguage$pandac$Compiler$_Closure1* self, org$pandalanguage$pandac$MethodRef* p_m) {
     panda$core$Bit $returnValue6;
     panda$core$Bit $tmp8 = org$pandalanguage$pandac$Annotations$isClass$R$panda$core$Bit(p_m->value->annotations);
     bool $tmp7 = $tmp8.value;

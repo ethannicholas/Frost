@@ -12,6 +12,6 @@ typedef struct org$pandalanguage$pandac$IRNode {
     int8_t $data[48];
 } org$pandalanguage$pandac$IRNode;
 #include "panda/core/Class.h"
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[5]; } org$pandalanguage$pandac$IRNode$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[9]; } org$pandalanguage$pandac$IRNode$class_type;
 extern org$pandalanguage$pandac$IRNode$class_type org$pandalanguage$pandac$IRNode$class;
 

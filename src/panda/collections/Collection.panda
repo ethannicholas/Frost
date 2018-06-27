@@ -5,6 +5,6 @@ A read/write collection of elements.
 ====================================================================================================
 interface Collection<T> : CollectionView<T>, CollectionWriter<T> {
     @override
-    @postAnd(get_count() = 0)
+    @postAnd(count = 0)
     method clear()
 }

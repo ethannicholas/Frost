@@ -508,7 +508,7 @@ class Type : Symbol, Key<Type> {
     @pre(typeKind = Kind.FUNCTION | typeKind = Kind.METHOD | typeKind = Kind.IMMUTABLE_FUNCTION |
             typeKind = Kind.IMMUTABLE_METHOD)
     function returnType():Type {
-        return subtypes[subtypes.get_count() - 1]
+        return subtypes[subtypes.count - 1]
     }
 
     -- returns the narrowest type that can hold an instance of either type
@@ -599,7 +599,7 @@ class Type : Symbol, Key<Type> {
     @pre(typeKind != Kind.INVALID)
     @post(@return.typeKind != Kind.INVALID)
     method remap(types:HashMap<String, Type>):Type {
-        if types.get_count() = 0 {
+        if types.count = 0 {
             return self
         }
         match typeKind {
@@ -612,7 +612,7 @@ class Type : Symbol, Key<Type> {
             when Kind.GENERIC:
                 def base := subtypes[0].remap(types)
                 def remappedArgs := Array<Type>()
-                for i in 1 .. subtypes.get_count() {
+                for i in 1 .. subtypes.count {
                     remappedArgs.add(subtypes[i].remap(types))
                 }
                 return Type.generic(base, remappedArgs)
@@ -620,12 +620,12 @@ class Type : Symbol, Key<Type> {
                 return subtypes[0].remap(types).nullable()
             when Kind.METHOD, Kind.FUNCTION, Kind.IMMUTABLE_METHOD, Kind.IMMUTABLE_FUNCTION:
                 def parameters := Array<Type>()
-                assert subtypes.get_count() >= 1
-                for i in 0 .. subtypes.get_count() - 1 {
+                assert subtypes.count >= 1
+                for i in 0 .. subtypes.count - 1 {
                     parameters.add(subtypes[i].remap(types))
                 }
                 return methodType(position, typeKind, parameters,
-                        subtypes[subtypes.get_count() - 1].remap(types))
+                        subtypes[subtypes.count - 1].remap(types))
             otherwise: return self
         }
     }

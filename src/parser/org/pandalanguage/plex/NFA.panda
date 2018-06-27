@@ -31,7 +31,7 @@ class NFA {
 
     method addState(s:State):Int {
         def newStates := Array<State>(states)
-        def i := states.get_count()
+        def i := states.count
         newStates.add(s)
         states := ImmutableArray<State>(newStates)
         return i

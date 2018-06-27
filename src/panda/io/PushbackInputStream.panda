@@ -25,9 +25,9 @@ class PushbackInputStream : InputStream {
 
     @override
     method read():UInt8? {
-        if pushbackBuffer.get_count() > 0 {
-            def result := pushbackBuffer[pushbackBuffer.get_count() - 1]
-            pushbackBuffer.removeIndex(pushbackBuffer.get_count() - 1)
+        if pushbackBuffer.count > 0 {
+            def result := pushbackBuffer[pushbackBuffer.count - 1]
+            pushbackBuffer.removeIndex(pushbackBuffer.count - 1)
             return result
         }
         return source.read()
@@ -59,7 +59,7 @@ class PushbackInputStream : InputStream {
     @param v the array to push
     ============================================================================
     method pushback(v:ListView<UInt8>) {
-        for i in v.get_count() - 1 ... 0 by -1 {
+        for i in v.count - 1 ... 0 by -1 {
             pushback(v[i])
         }
     }
@@ -70,7 +70,7 @@ class PushbackInputStream : InputStream {
     @param v the array to push
     ============================================================================
     method pushback(v:ListView<Int8>) {
-        for i in v.get_count() - 1 ... 0 by -1 {
+        for i in v.count - 1 ... 0 by -1 {
             pushback(v[i])
         }
     }
@@ -90,7 +90,7 @@ class PushbackInputStream : InputStream {
     @param c the array to push
     ============================================================================
     method pushback(c:ListView<Char8>) {
-        for i in c.get_count() - 1 ... 0 by -1 {
+        for i in c.count - 1 ... 0 by -1 {
             pushback(c[i])
         }
     }

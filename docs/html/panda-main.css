@@ -117,13 +117,13 @@ div.ancestor {
     margin-bottom: 4px;
 }
 
-div.field, div.method {
+div.field, div.method, div.case {
     border-radius: 6pt;
     box-shadow: 2px 2px 3px #A0A0A0;
     margin-bottom: 18pt;
 }
 
-div.fieldHeader, div.methodHeader {
+div.fieldHeader, div.methodHeader, div.caseHeader {
     border-left: solid #c0c0c0 1px;
     border-right: solid #c0c0c0 1px;
     border-top: solid #c0c0c0 1px;
@@ -141,7 +141,7 @@ div.fieldHeader, div.methodHeader {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', endColorstr='#fefefe',GradientType=0 ); /* IE6-9 */
 }
 
-div.fieldBody, div.methodBody {
+div.fieldBody, div.methodBody, div.caseBody {
     border: solid #c0c0c0 1px;
     border-radius: 0 0 6pt 6pt;
     padding-left: 4pt;

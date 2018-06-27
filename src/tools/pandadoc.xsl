@@ -109,14 +109,24 @@
         </dl>
     </xsl:template>
 
-    <xsl:template match="/class">
+    <xsl:template match="/">
+        <xsl:variable name="name">
+            <xsl:choose>
+                <xsl:when test="class">
+                    <xsl:value-of select="class/name"/>
+                </xsl:when>
+                <xsl:when test="package">
+                    <xsl:value-of select="package/name"/><xsl:text>.Index</xsl:text>
+                </xsl:when>
+            </xsl:choose>
+        </xsl:variable>
         <html>
             <head>
                 <xsl:apply-templates select="name" mode="title"/>
                 <link rel="stylesheet" type="text/css">
                     <xsl:attribute name="href">
                         <xsl:call-template name="basePath">
-                            <xsl:with-param name="className" select="name"/> 
+                            <xsl:with-param name="className" select="$name"/> 
                         </xsl:call-template>
                         <xsl:text>panda-main.css</xsl:text>
                     </xsl:attribute>
@@ -124,7 +134,7 @@
                 <link rel="stylesheet" type="text/css">
                     <xsl:attribute name="href">
                         <xsl:call-template name="basePath">
-                            <xsl:with-param name="className" select="name"/> 
+                            <xsl:with-param name="className" select="$name"/> 
                         </xsl:call-template>
                         <xsl:text>pandadoc.css</xsl:text>
                     </xsl:attribute>
@@ -132,7 +142,7 @@
                 <link rel="stylesheet" type="text/css">
                     <xsl:attribute name="href">
                         <xsl:call-template name="basePath">
-                            <xsl:with-param name="className" select="name"/> 
+                            <xsl:with-param name="className" select="$name"/> 
                         </xsl:call-template>
                         <xsl:text>pandacode-light.css</xsl:text>
                     </xsl:attribute>
@@ -140,7 +150,7 @@
                 <script>
                     <xsl:attribute name="src">
                         <xsl:call-template name="basePath">
-                            <xsl:with-param name="className" select="name"/> 
+                            <xsl:with-param name="className" select="$name"/> 
                         </xsl:call-template>
                         <xsl:text>scripts/site.js</xsl:text>
                     </xsl:attribute>
@@ -152,84 +162,98 @@
                         <xsl:with-param name="base">
                             <xsl:text>../</xsl:text>
                             <xsl:call-template name="basePath">
-                                <xsl:with-param name="className" select="name"/> 
+                                <xsl:with-param name="className" select="$name"/> 
                             </xsl:call-template>
                         </xsl:with-param>
                     </xsl:call-template>
                     <div id="content">
-                        <xsl:apply-templates select="." mode="header"/>
-                        <xsl:apply-templates select="ancestors"/>
-                        <xsl:apply-templates select="interfaces"/>
-                        <div class="classDescription">
-                        <xsl:apply-templates select="doc/description"/>
-                        </div>
-                        <xsl:apply-templates select="seeAlsos"/>
-                        <xsl:apply-templates select="source"/>
-
-                        <xsl:if test="count(class) > 0">
-                            <h2>Inner Classes</h2>
-                            <dl class="summary">
-                                <xsl:apply-templates select="class" mode="summary"/>
-                            </dl>
-                        </xsl:if>
-                        <xsl:if test="count(field[count(annotations/annotation[text() = '@class']) > 0]) > 0">
-                            <h2>Constant Summary</h2>
-                            <dl class="summary">
-                                <xsl:apply-templates select="field[count(annotations/annotation[text() = '@class']) > 0]" mode="summary"/>
-                            </dl>
-                        </xsl:if>
-                        <xsl:if test="count((method|function)[count(annotations/annotation[text() = '@class']) > 0]) > 0">
-                            <h2>Class Method Summary</h2>
-                            <dl class="summary">
-                                <xsl:apply-templates select="(method|function)[count(annotations/annotation[text() = '@class']) > 0]" mode="summary"/>
-                            </dl>
-                        </xsl:if>
-                        <xsl:if test="count(init) > 0">
-                            <h2>Initializer Summary</h2>
-                            <dl class="summary">
-                                <xsl:apply-templates select="init" mode="summary"/>
-                            </dl>
-                        </xsl:if>
-                        <xsl:if test="count(field[count(annotations/annotation[text() = '@class']) = 0]) > 0">
-                            <h2>Field Summary</h2>
-                            <dl class="summary">
-                                <xsl:apply-templates select="field[count(annotations/annotation[text() = '@class']) = 0]" mode="summary"/>
-                            </dl>
-                        </xsl:if>
-                        <xsl:apply-templates select="inheritedFields"/>
-                        <xsl:if test="count((method|function)[count(annotations/annotation[text() = '@class']) = 0]) > 0">
-                            <h2>Instance Method Summary</h2>
-                            <dl class="summary">
-                                <xsl:apply-templates select="(method|function)[count(annotations/annotation[text() = '@class']) = 0]" mode="summary"/>
-                            </dl>
-                        </xsl:if>
-                        <xsl:apply-templates select="inheritedMethods"/>
-                        <xsl:if test="count(field[count(annotations/annotation[text() = '@class']) > 0]) > 0">
-                            <h2>Constants</h2>
-                            <xsl:apply-templates select="field[count(annotations/annotation[text() = '@class']) > 0]"/>
-                        </xsl:if>
-                        <xsl:if test="count(init) > 0">
-                            <h2>Initializers</h2>
-                            <xsl:apply-templates select="init"/>
-                        </xsl:if>
-                        <xsl:if test="count(field[count(annotations/annotation[text() = '@class']) = 0]) > 0">
-                            <h2>Fields</h2>
-                            <xsl:apply-templates select="field[count(annotations/annotation[text() = '@class']) = 0]"/>
-                        </xsl:if>
-                        <xsl:if test="count((method|function)[count(annotations/annotation[text() = '@class']) > 0]) > 0">
-                            <h2>Class Methods</h2>
-                            <xsl:apply-templates select="(method|function)[count(annotations/annotation[text() = '@class']) > 0]"/>
-                        </xsl:if>
-                        <xsl:if test="count((method|function)[count(annotations/annotation[text() = '@class']) = 0]) > 0">
-                            <h2>Instance Methods</h2>
-                            <xsl:apply-templates select="(method|function)[count(annotations/annotation[text() = '@class']) = 0]"/>
-                        </xsl:if>
+                        <xsl:apply-templates/>
                     </div>
                 </div>
             </body>
         </html>
     </xsl:template>
     
+    <xsl:template match="/class">
+        <xsl:apply-templates select="." mode="header"/>
+        <xsl:apply-templates select="ancestors"/>
+        <xsl:apply-templates select="interfaces"/>
+        <div class="classDescription">
+        <xsl:apply-templates select="doc/description"/>
+        </div>
+        <xsl:apply-templates select="seeAlsos"/>
+        <xsl:apply-templates select="source"/>
+
+        <xsl:if test="count(class) > 0">
+            <h2>Inner Classes</h2>
+            <dl class="summary">
+                <xsl:apply-templates select="class" mode="summary"/>
+            </dl>
+        </xsl:if>
+        <xsl:if test="count(case) > 0">
+            <h2>Case Summary</h2>
+            <dl class="summary">
+                <xsl:apply-templates select="case" mode="summary"/>
+            </dl>
+        </xsl:if>
+        <xsl:if test="count(field[count(annotations/annotation[text() = '@class']) > 0]) > 0">
+            <h2>Constant Summary</h2>
+            <dl class="summary">
+                <xsl:apply-templates select="field[count(annotations/annotation[text() = '@class']) > 0]" mode="summary"/>
+            </dl>
+        </xsl:if>
+        <xsl:if test="count((method|function)[count(annotations/annotation[text() = '@class']) > 0]) > 0">
+            <h2>Class Method Summary</h2>
+            <dl class="summary">
+                <xsl:apply-templates select="(method|function)[count(annotations/annotation[text() = '@class']) > 0]" mode="summary"/>
+            </dl>
+        </xsl:if>
+        <xsl:if test="count(init) > 0">
+            <h2>Initializer Summary</h2>
+            <dl class="summary">
+                <xsl:apply-templates select="init" mode="summary"/>
+            </dl>
+        </xsl:if>
+        <xsl:if test="count(field[count(annotations/annotation[text() = '@class']) = 0]) > 0">
+            <h2>Field Summary</h2>
+            <dl class="summary">
+                <xsl:apply-templates select="field[count(annotations/annotation[text() = '@class']) = 0]" mode="summary"/>
+            </dl>
+        </xsl:if>
+        <xsl:apply-templates select="inheritedFields"/>
+        <xsl:if test="count((method|function)[count(annotations/annotation[text() = '@class']) = 0]) > 0">
+            <h2>Instance Method Summary</h2>
+            <dl class="summary">
+                <xsl:apply-templates select="(method|function)[count(annotations/annotation[text() = '@class']) = 0]" mode="summary"/>
+            </dl>
+        </xsl:if>
+        <xsl:apply-templates select="inheritedMethods"/>
+        <xsl:if test="count(field[count(annotations/annotation[text() = '@class']) > 0]) > 0">
+            <h2>Constants</h2>
+            <xsl:apply-templates select="field[count(annotations/annotation[text() = '@class']) > 0]"/>
+        </xsl:if>
+        <xsl:if test="count(init) > 0">
+            <h2>Initializers</h2>
+            <xsl:apply-templates select="init"/>
+        </xsl:if>
+        <xsl:if test="count(case) > 0">
+            <h2>Cases</h2>
+            <xsl:apply-templates select="case"/>
+        </xsl:if>
+        <xsl:if test="count(field[count(annotations/annotation[text() = '@class']) = 0]) > 0">
+            <h2>Fields</h2>
+            <xsl:apply-templates select="field[count(annotations/annotation[text() = '@class']) = 0]"/>
+        </xsl:if>
+        <xsl:if test="count((method|function)[count(annotations/annotation[text() = '@class']) > 0]) > 0">
+            <h2>Class Methods</h2>
+            <xsl:apply-templates select="(method|function)[count(annotations/annotation[text() = '@class']) > 0]"/>
+        </xsl:if>
+        <xsl:if test="count((method|function)[count(annotations/annotation[text() = '@class']) = 0]) > 0">
+            <h2>Instance Methods</h2>
+            <xsl:apply-templates select="(method|function)[count(annotations/annotation[text() = '@class']) = 0]"/>
+        </xsl:if>
+    </xsl:template>
+
     <xsl:template match="class/name" mode="title">
         <title>
             <xsl:choose>
@@ -313,6 +337,30 @@
         </div>
     </xsl:template>
 
+    <xsl:template match="case" mode="summary">
+        <dt>
+            <a href="#{name}">
+                <b><xsl:apply-templates select="name"/></b>
+            </a>
+        </dt>
+        <dd>
+            <xsl:apply-templates select="doc/summary"/>
+        </dd>
+    </xsl:template>
+
+    <xsl:template match="case">
+        <div class="case">
+            <div class="caseHeader">
+                <a name="{name}"/>
+                <b><xsl:apply-templates select="name"/></b>
+            </div>
+            <div class="caseBody">
+                <xsl:apply-templates select="doc/description"/>
+                <xsl:apply-templates select="seeAlsos"/>
+            </div>
+        </div>
+    </xsl:template>
+
     <xsl:template match="field" mode="summary">
         <dt>
             <a href="#{name}">
@@ -330,7 +378,7 @@
         <div class="field">
             <div class="fieldHeader">
                 <xsl:apply-templates select="annotations"/>
-                <a name="{name}" />
+                <a name="{name}"/>
                 <xsl:apply-templates select="kind"/>
                 <xsl:text> </xsl:text>
                 <b><xsl:apply-templates select="name"/></b>
@@ -703,16 +751,24 @@
         </xsl:copy>
     </xsl:template>
 
-    <xsl:template match="package">
+    <xsl:template match="/package">
         <h1>Package <xsl:apply-templates select="name/text()"/></h1>
-        <dl>
+        <dl class="summary">
+            <xsl:apply-templates select="contents/package"/>
+            <xsl:apply-templates select="contents/class" mode="package"/>
+        </dl>
+    </xsl:template>
+
+    <xsl:template match="package">
+        <h2>Package <xsl:apply-templates select="name/text()"/></h2>
+        <dl class="summary">
             <xsl:apply-templates select="contents/package"/>
             <xsl:apply-templates select="contents/class" mode="package"/>
         </dl>
     </xsl:template>
 
     <xsl:template match="class" mode="package">
-        <dt><a href="api/{path}"><xsl:value-of select="type/simpleName"/></a></dt>
+        <dt><a href="{type/url}"><xsl:value-of select="type/simpleName"/></a></dt>
         <dd><xsl:apply-templates select="doc/summary"/></dd>
     </xsl:template>
 </xsl:stylesheet>

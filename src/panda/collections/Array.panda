@@ -16,7 +16,7 @@ class Array<T> : List<T> {
     constant DEFAULT_CAPACITY := 16
 
     @private
-    var count := 0
+    var _count := 0
 
     @private
     var capacity:Int
@@ -44,7 +44,7 @@ class Array<T> : List<T> {
     Creates a new `Array` containing all the elements in another collection.
     ================================================================================================
     init(c:CollectionView<T>) {
-        init(c.get_count().max(DEFAULT_CAPACITY))
+        init(c.count.max(DEFAULT_CAPACITY))
         for v in c {
             add(v)
         }
@@ -53,7 +53,7 @@ class Array<T> : List<T> {
     @private
     init(data:Pointer<T>, count:Int) {
         self.data := data
-        self.count := count
+        self._count := count
         self.capacity := count
     }
 
@@ -83,23 +83,23 @@ class Array<T> : List<T> {
         for i in count .. index by -1 {
             data[i] := data[i - 1]
         }
-        count += 1
+        _count += 1
         data[index] := value
     }
 
     @override
     method add(value:T) {
-        ensureCapacity(count + 1)
-        data[count] := value
-        count += 1
+        ensureCapacity(_count + 1)
+        data[_count] := value
+        _count += 1
     }
 
     @override
     method addAll(c:CollectionView<T>) {
-        ensureCapacity(count + c.get_count())
+        ensureCapacity(_count + c.count)
         for v in c {
-            data[count] := v
-            count += 1
+            data[_count] := v
+            _count += 1
         }
     }
 
@@ -118,23 +118,23 @@ class Array<T> : List<T> {
 
     @override
     function get_count():Int {
-        return count
+        return _count
     }
 
     @override
     method removeIndex(index:Int):T {
         def result := self[index]
-        for i in index .. count - 1 {
+        for i in index .. _count - 1 {
             self[i] := self[i + 1]
         }
-        count -= 1
-        data[count] := null->T?
+        _count -= 1
+        data[_count] := null->T?
         return result
     }
 
     @override
     method clear() {
-        count := 0
+        _count := 0
         for i in 0 .. capacity {
             data[i] := null->T?
         }
@@ -167,7 +167,7 @@ class Array<T> : List<T> {
     ================================================================================================
     method finish():ImmutableArray<T> {
         -- FIXME this transformation is only safe at -S0
-        data := data.realloc(capacity, count)
+        data := data.realloc(capacity, _count)
         self.$class := ImmutableArray<T>().$class
         self.capacity := -1
         return self->Object->ImmutableArray<T>

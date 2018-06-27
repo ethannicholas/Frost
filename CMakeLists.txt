@@ -139,19 +139,18 @@ add_library(c_panda
     bootstrap/src/panda/core/UInt8.c
     bootstrap/src/panda/core/Value.c
     bootstrap/src/panda/core/Weak.c
+    bootstrap/src/panda/io/ByteOrder.c
     bootstrap/src/panda/io/Console.c
     bootstrap/src/panda/io/File.c
     bootstrap/src/panda/io/FileInputStream.c
     bootstrap/src/panda/io/FileOutputStream.c
     bootstrap/src/panda/io/IndentedOutputStream.c
     bootstrap/src/panda/io/InputStream.c
-    bootstrap/src/panda/io/InputStream/ByteOrder.c
     bootstrap/src/panda/io/InputStream/LineIterator.c
     bootstrap/src/panda/io/LineNumberInputStream.c
     bootstrap/src/panda/io/MemoryInputStream.c
     bootstrap/src/panda/io/MemoryOutputStream.c
     bootstrap/src/panda/io/OutputStream.c
-    bootstrap/src/panda/io/OutputStream/ByteOrder.c
     bootstrap/src/panda/io/PushbackInputStream.c
     bootstrap/src/panda/json/JSON.c
     bootstrap/src/panda/json/JSONParser.c
@@ -243,8 +242,6 @@ add_executable(bootstrap
     bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/CodeReplacer.c
     bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/HTMLToken.c
     bootstrap/src/org/pandalanguage/pandac/pandadoc/Markdown/LinkDefinition.c
-    bootstrap/src/org/pandalanguage/pandac/pandadoc/PandaDoc.c
-    bootstrap/src/org/pandalanguage/pandac/pandadoc/PandaDoc/XMLWriter.c
     bootstrap/src/org/pandalanguage/pandac/pandadoc/Protector.c
     bootstrap/src/org/pandalanguage/pandac/parser/Parser.c
     bootstrap/src/org/pandalanguage/pandac/parser/Parser/AutoSyntaxHighlight.c
@@ -328,6 +325,7 @@ set(public_source
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/System.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Value.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/core/Weak.panda
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/io/ByteOrder.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/io/Console.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/io/File.panda
     ${CMAKE_CURRENT_SOURCE_DIR}/src/panda/io/IndentedOutputStream.panda

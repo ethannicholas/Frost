@@ -19,7 +19,7 @@ class NFAtoDFA {
     method getState(label:DFAStateLabel):DFAState {
         var result := states[label]
         if result = null {
-            result := DFAState(states.get_count(), label)
+            result := DFAState(states.count, label)
             states[label] := result
         }
         return result
@@ -44,11 +44,11 @@ class NFAtoDFA {
     }
 
     method addTransition(c:Char8, start:Int, next:Int) {
-        while transitions.get_count() <= c.convert() {
+        while transitions.count <= c.convert() {
             transitions.add(Array<Int>())
         }
         def a := transitions[c.convert()]
-        while a.get_count() <= start {
+        while a.count <= start {
             a.add(-1)
         }
         assert a[start] = -1
@@ -90,7 +90,7 @@ class NFAtoDFA {
     ================================================================================================
     @class
     method sort(a:List<Int>) {
-        sort(a, 0, a.get_count() - 1)
+        sort(a, 0, a.count - 1)
     }
 
     method scanState(state:DFAState) {
@@ -115,7 +115,7 @@ class NFAtoDFA {
             def nextState := getState(DFAStateLabel(next))
             addTransition(Char8(c), state.id, nextState.id)
             if bestAccept < Int32.MAX {
-                while accepts.get_count() <= nextState.id {
+                while accepts.count <= nextState.id {
                     accepts.add(-1)
                 }
                 accepts[nextState.id] := bestAccept
@@ -131,7 +131,7 @@ class NFAtoDFA {
         getState(DFAStateLabel(Array<Int>()))
         -- map DFA states to the set of NFA states each represents
         def startStates := Array<Int>()
-        for i in 0 .. nfa.startStates.get_count() {
+        for i in 0 .. nfa.startStates.count {
             startStates.add(nfa.startStates[i])
         }
         sort(startStates)
@@ -140,14 +140,14 @@ class NFAtoDFA {
         scanState(start)
 
         var stateCount := 0
-        for i in 0 .. transitions.get_count() {
-            stateCount := stateCount.max(transitions[i].get_count())
+        for i in 0 .. transitions.count {
+            stateCount := stateCount.max(transitions[i].count)
         }
-        def outTransitions := Pointer<Pointer<Int>>.alloc(transitions.get_count())
+        def outTransitions := Pointer<Pointer<Int>>.alloc(transitions.count)
         for i in 0 ... DFA.END_CHAR.convert()->Int {
             outTransitions[i] := Pointer<Int>.alloc(stateCount)
             for j in 0 .. stateCount {
-                if i < transitions.get_count() & j < transitions[i].get_count() {
+                if i < transitions.count & j < transitions[i].count {
                     outTransitions[i][j] := transitions[i][j]
                 }
                 else {
@@ -155,9 +155,9 @@ class NFAtoDFA {
                 }
             }
         }
-        def outAccepts := Pointer<Int>.alloc(accepts.get_count())
+        def outAccepts := Pointer<Int>.alloc(accepts.count)
         for i in 0 .. stateCount {
-            if i >= accepts.get_count() {
+            if i >= accepts.count {
                 outAccepts[i] := -1
             }
             else {

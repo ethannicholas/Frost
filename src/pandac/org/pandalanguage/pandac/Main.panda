@@ -37,7 +37,7 @@ class Main {
         }
 
         function get_done():Bit {
-            return index = args.get_count()
+            return index = args.count
         }
 
         method next():String {
@@ -49,7 +49,7 @@ class Main {
         method next(label:String):String {
             if get_done() {
                 Console.errorStream().printLine("expected \{label} after " +
-                        "'\{args[args.get_count() - 1]}'")
+                        "'\{args[args.count - 1]}'")
                 System.exit(1)
             }
             return next()
@@ -220,7 +220,7 @@ class Main {
         opt := llvmDir.resolve("bin/opt")
         llc := llvmDir.resolve("bin/llc")
         gcc := File("/usr/bin/gcc")
-        if sources.get_count() = 0 {
+        if sources.count = 0 {
             err.printLine("no input files specified")
             System.exit(1)
         }
@@ -228,7 +228,7 @@ class Main {
             format := Format.EXECUTABLE
         }
         if outFile = null {
-            if sources.get_count() = 1 {
+            if sources.count = 1 {
                 def extension:String
                 match format {
                     when Format.EXECUTABLE: extension := ""

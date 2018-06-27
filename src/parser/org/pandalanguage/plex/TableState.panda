@@ -14,7 +14,7 @@ class TableState : State {
     function accept(c:Char8):Bit {
         def i:Int := c.convert()
         def value:Bit
-        if i < acceptStates.get_count() {
+        if i < acceptStates.count {
             value := acceptStates[i]
         }
         else {

@@ -49,9 +49,10 @@ panda$core$Bit panda$core$String$UTF8Iterator$get_done$R$panda$core$Bit(panda$co
     return $returnValue6;
 }
 panda$core$Char8 panda$core$String$UTF8Iterator$next$R$panda$core$Char8(panda$core$String$UTF8Iterator* self) {
-    panda$core$Int64 $tmp16;
-    panda$core$Char8 $returnValue18;
-    panda$core$Int64 $tmp19;
+    panda$core$String$UTF8Iterator* $tmp16;
+    panda$core$Int64 $tmp17;
+    panda$core$Char8 $returnValue19;
+    panda$core$Int64 $tmp20;
     panda$core$Bit $tmp10 = (($fn9) self->$class->vtable[2])(self);
     panda$core$Bit $tmp11 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp10);
     if ($tmp11.value) goto $l12; else goto $l13;
@@ -59,26 +60,27 @@ panda$core$Char8 panda$core$String$UTF8Iterator$next$R$panda$core$Char8(panda$co
     panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s14, (panda$core$Int64) { 123 }, &$s15);
     abort();
     $l12:;
-    panda$core$Int64$init$builtin_int64(&$tmp16, 1);
-    panda$core$Int64 $tmp17 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, $tmp16);
-    self->index = $tmp17;
-    panda$core$Int64$init$builtin_int64(&$tmp19, 1);
-    panda$core$Int64 $tmp20 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(self->index, $tmp19);
-    $returnValue18 = self->str->data[$tmp20.value];
-    return $returnValue18;
+    $tmp16 = self;
+    panda$core$Int64$init$builtin_int64(&$tmp17, 1);
+    panda$core$Int64 $tmp18 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64($tmp16->index, $tmp17);
+    $tmp16->index = $tmp18;
+    panda$core$Int64$init$builtin_int64(&$tmp20, 1);
+    panda$core$Int64 $tmp21 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64(self->index, $tmp20);
+    $returnValue19 = self->str->data[$tmp21.value];
+    return $returnValue19;
 }
 void panda$core$String$UTF8Iterator$cleanup(panda$core$String$UTF8Iterator* self) {
-    int $tmp24;
+    int $tmp25;
     {
     }
-    $tmp24 = -1;
-    goto $l22;
-    $l22:;
+    $tmp25 = -1;
+    goto $l23;
+    $l23:;
     panda$core$Object$cleanup(((panda$core$Object*) self));
-    switch ($tmp24) {
-        case -1: goto $l25;
+    switch ($tmp25) {
+        case -1: goto $l26;
     }
-    $l25:;
+    $l26:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->str));
 }
 

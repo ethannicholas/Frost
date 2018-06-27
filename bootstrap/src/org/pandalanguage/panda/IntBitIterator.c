@@ -40,8 +40,9 @@ panda$core$Bit org$pandalanguage$panda$IntBitIterator$get_done$R$panda$core$Bit(
 panda$core$Bit org$pandalanguage$panda$IntBitIterator$next$R$panda$core$Bit(org$pandalanguage$panda$IntBitIterator* self) {
     panda$core$Bit result13;
     panda$core$UInt64 $tmp15;
-    panda$core$UInt64 $tmp17;
-    panda$core$Bit $returnValue19;
+    org$pandalanguage$panda$IntBitIterator* $tmp17;
+    panda$core$UInt64 $tmp18;
+    panda$core$Bit $returnValue20;
     panda$core$Bit $tmp7 = org$pandalanguage$panda$IntBitIterator$get_done$R$panda$core$Bit(self);
     panda$core$Bit $tmp8 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp7);
     if ($tmp8.value) goto $l9; else goto $l10;
@@ -53,24 +54,25 @@ panda$core$Bit org$pandalanguage$panda$IntBitIterator$next$R$panda$core$Bit(org$
     panda$core$UInt64$init$builtin_uint64(&$tmp15, 0);
     panda$core$Bit $tmp16 = panda$core$UInt64$$NEQ$panda$core$UInt64$R$panda$core$Bit($tmp14, $tmp15);
     result13 = $tmp16;
-    panda$core$UInt64$init$builtin_uint64(&$tmp17, 1);
-    panda$core$UInt64 $tmp18 = panda$core$UInt64$$SHR$panda$core$UInt64$R$panda$core$UInt64(self->mask, $tmp17);
-    self->mask = $tmp18;
-    $returnValue19 = result13;
-    return $returnValue19;
+    $tmp17 = self;
+    panda$core$UInt64$init$builtin_uint64(&$tmp18, 1);
+    panda$core$UInt64 $tmp19 = panda$core$UInt64$$SHR$panda$core$UInt64$R$panda$core$UInt64($tmp17->mask, $tmp18);
+    $tmp17->mask = $tmp19;
+    $returnValue20 = result13;
+    return $returnValue20;
 }
 void org$pandalanguage$panda$IntBitIterator$cleanup(org$pandalanguage$panda$IntBitIterator* self) {
-    int $tmp23;
+    int $tmp24;
     {
     }
-    $tmp23 = -1;
-    goto $l21;
-    $l21:;
+    $tmp24 = -1;
+    goto $l22;
+    $l22:;
     panda$core$Object$cleanup(((panda$core$Object*) self));
-    switch ($tmp23) {
-        case -1: goto $l24;
+    switch ($tmp24) {
+        case -1: goto $l25;
     }
-    $l24:;
+    $l25:;
 }
 
 

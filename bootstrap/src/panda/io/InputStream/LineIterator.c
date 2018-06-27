@@ -55,14 +55,14 @@ panda$core$String* panda$io$InputStream$LineIterator$next$R$panda$core$String(pa
     panda$core$Bit $tmp9 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp8);
     if ($tmp9.value) goto $l10; else goto $l11;
     $l11:;
-    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s12, (panda$core$Int64) { 37 }, &$s13);
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s12, (panda$core$Int64) { 32 }, &$s13);
     abort();
     $l10:;
     int $tmp16;
     {
         if (((panda$core$Bit) { self->_next != NULL }).value) goto $l17; else goto $l18;
         $l18:;
-        panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s19, (panda$core$Int64) { 38 });
+        panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s19, (panda$core$Int64) { 33 });
         abort();
         $l17:;
         $tmp21 = self->_next;

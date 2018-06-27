@@ -16,7 +16,7 @@ class Regex {
 
     @private
     function peek():Char8 {
-        if index = source.utf8().get_count() {
+        if index = source.utf8().count {
             return EOF
         }
         return source.utf8()[index]

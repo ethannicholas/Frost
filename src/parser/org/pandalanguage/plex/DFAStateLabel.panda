@@ -18,10 +18,10 @@ class DFAStateLabel : Key<DFAStateLabel> {
 
     @override
     function =(other:DFAStateLabel):Bit {
-        if other.states.get_count() != states.get_count() {
+        if other.states.count != states.count {
             return false
         }
-        for i in 0 .. states.get_count() {
+        for i in 0 .. states.count {
             if other.states[i] != states[i] {
                 return false
             }

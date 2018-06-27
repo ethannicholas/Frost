@@ -2,7 +2,7 @@
 #include "panda_c.h"
 typedef struct panda$core$Class panda$core$Class;
 #include "panda/core/Int32_types.h"
-#include "panda/io/InputStream/ByteOrder_types.h"
+#include "panda/io/ByteOrder_types.h"
 typedef struct panda$io$InputStream panda$io$InputStream;
 typedef struct panda$collections$Array panda$collections$Array;
 typedef struct panda$core$String panda$core$String;
@@ -10,7 +10,7 @@ typedef struct panda$core$String panda$core$String;
 typedef struct panda$io$PushbackInputStream {
     panda$core$Class* $class;
     panda$core$Int32 refCount;
-    panda$io$InputStream$ByteOrder byteOrder;
+    panda$io$ByteOrder byteOrder;
     panda$io$InputStream* source;
     panda$collections$Array* pushbackBuffer;
 } panda$io$PushbackInputStream;

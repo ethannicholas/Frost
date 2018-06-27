@@ -7,11 +7,6 @@ A stream of binary or character data which can be read from.
 ====================================================================================================
 @abstract
 class InputStream {
-    choice ByteOrder {
-        LITTLE_ENDIAN
-        BIG_ENDIAN
-    }
-
     ================================================================================================
     Determines the endianness of the data in this stream when reading multi-byte values. Defaults to
     `LITTLE_ENDIAN`, but may be freely changed.

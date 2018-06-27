@@ -50,9 +50,10 @@ panda$core$Object* panda$collections$Stack$StackIterator$next$R$panda$collection
     panda$core$Object* result19 = NULL;
     panda$core$Object* $tmp20;
     panda$core$Object* $tmp21;
-    panda$core$Int64 $tmp23;
-    panda$core$Object* $returnValue25;
-    panda$core$Object* $tmp26;
+    panda$collections$Stack$StackIterator* $tmp23;
+    panda$core$Int64 $tmp24;
+    panda$core$Object* $returnValue26;
+    panda$core$Object* $tmp27;
     panda$core$Bit $tmp10 = (($fn9) self->$class->vtable[2])(self);
     panda$core$Bit $tmp11 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp10);
     if ($tmp11.value) goto $l12; else goto $l13;
@@ -68,38 +69,39 @@ panda$core$Object* panda$collections$Stack$StackIterator$next$R$panda$collection
         result19 = $tmp20;
         panda$core$Panda$ref$panda$core$Object($tmp20);
         panda$core$Panda$unref$panda$core$Object($tmp21);
-        panda$core$Int64$init$builtin_int64(&$tmp23, 1);
-        panda$core$Int64 $tmp24 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, $tmp23);
-        self->index = $tmp24;
-        $tmp26 = result19;
-        $returnValue25 = $tmp26;
-        panda$core$Panda$ref$panda$core$Object($tmp26);
+        $tmp23 = self;
+        panda$core$Int64$init$builtin_int64(&$tmp24, 1);
+        panda$core$Int64 $tmp25 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64($tmp23->index, $tmp24);
+        $tmp23->index = $tmp25;
+        $tmp27 = result19;
+        $returnValue26 = $tmp27;
+        panda$core$Panda$ref$panda$core$Object($tmp27);
         $tmp18 = 0;
         goto $l16;
-        $l27:;
-        return $returnValue25;
+        $l28:;
+        return $returnValue26;
     }
     $l16:;
     panda$core$Panda$unref$panda$core$Object(result19);
     result19 = NULL;
     switch ($tmp18) {
-        case 0: goto $l27;
+        case 0: goto $l28;
     }
-    $l29:;
+    $l30:;
     abort();
 }
 void panda$collections$Stack$StackIterator$cleanup(panda$collections$Stack$StackIterator* self) {
-    int $tmp32;
+    int $tmp33;
     {
     }
-    $tmp32 = -1;
-    goto $l30;
-    $l30:;
+    $tmp33 = -1;
+    goto $l31;
+    $l31:;
     panda$core$Object$cleanup(((panda$core$Object*) self));
-    switch ($tmp32) {
-        case -1: goto $l33;
+    switch ($tmp33) {
+        case -1: goto $l34;
     }
-    $l33:;
+    $l34:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->stack));
 }
 

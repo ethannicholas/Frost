@@ -31,14 +31,14 @@ interface List<T> : ListView<T>, ListWriter<T>, Collection<T> {
 
         var max := range.max
         if max = null {
-            max := get_count()
+            max := count
         }
 
         self[Range<Int>(min, max, range.inclusive)] := list
     }
 
     method filterInPlace(f:(T)=>(Bit)) {
-        for i in get_count() - 1 ... 0 by -1 {
+        for i in count - 1 ... 0 by -1 {
             if !f(self[i]) {
                 removeIndex(i)
             }

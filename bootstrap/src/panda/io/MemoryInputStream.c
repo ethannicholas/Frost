@@ -35,34 +35,36 @@ void panda$io$MemoryInputStream$init$panda$core$String(panda$io$MemoryInputStrea
 }
 panda$core$UInt8$nullable panda$io$MemoryInputStream$read$R$panda$core$UInt8$Q(panda$io$MemoryInputStream* self) {
     panda$core$UInt8 result7;
-    panda$core$Int64 $tmp8;
-    panda$core$UInt8$nullable $returnValue10;
+    panda$io$MemoryInputStream* $tmp8;
+    panda$core$Int64 $tmp9;
+    panda$core$UInt8$nullable $returnValue11;
     panda$core$Bit $tmp6 = panda$core$Int64$$LT$panda$core$Int64$R$panda$core$Bit(self->index, self->length);
     if ($tmp6.value) {
     {
         result7 = self->data[self->index.value];
-        panda$core$Int64$init$builtin_int64(&$tmp8, 1);
-        panda$core$Int64 $tmp9 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->index, $tmp8);
-        self->index = $tmp9;
-        $returnValue10 = ((panda$core$UInt8$nullable) { result7, true });
-        return $returnValue10;
+        $tmp8 = self;
+        panda$core$Int64$init$builtin_int64(&$tmp9, 1);
+        panda$core$Int64 $tmp10 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64($tmp8->index, $tmp9);
+        $tmp8->index = $tmp10;
+        $returnValue11 = ((panda$core$UInt8$nullable) { result7, true });
+        return $returnValue11;
     }
     }
-    $returnValue10 = ((panda$core$UInt8$nullable) { .nonnull = false });
-    return $returnValue10;
+    $returnValue11 = ((panda$core$UInt8$nullable) { .nonnull = false });
+    return $returnValue11;
 }
 void panda$io$MemoryInputStream$cleanup(panda$io$MemoryInputStream* self) {
-    int $tmp15;
+    int $tmp16;
     {
     }
-    $tmp15 = -1;
-    goto $l13;
-    $l13:;
+    $tmp16 = -1;
+    goto $l14;
+    $l14:;
     panda$io$InputStream$cleanup(((panda$io$InputStream*) self));
-    switch ($tmp15) {
-        case -1: goto $l16;
+    switch ($tmp16) {
+        case -1: goto $l17;
     }
-    $l16:;
+    $l17:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->string));
 }
 
