@@ -8,7 +8,7 @@
 #include "panda/core/Int64.h"
 #include "panda/core/Equatable.h"
 #include "panda/core/Panda.h"
-#include "panda/collections/ListView.h"
+#include "panda/collections/Array.h"
 #include "panda/collections/CollectionView.h"
 __attribute__((weak)) panda$core$String* panda$core$Bit$format$panda$core$String$R$panda$core$String$shim(panda$core$Object* p0, panda$core$String* p1) {
     panda$core$String* result = panda$core$Bit$format$panda$core$String$R$panda$core$String(((panda$core$Bit$wrapper*) p0)->value, p1);
@@ -77,8 +77,6 @@ struct { panda$core$Class* cl; ITable* itable; void* methods[2]; } panda$core$Bi
 
 static panda$core$String $s2;
 panda$core$Bit$wrapperclass_type panda$core$Bit$wrapperclass = { (panda$core$Class*) &panda$core$Class$class, -999, &$s2, (panda$core$Class*) &panda$core$Value$class, (ITable*) &panda$core$Bit$wrapper_panda$core$Equatable, { panda$core$Bit$convert$R$panda$core$String$shim, panda$core$Value$cleanup} };typedef panda$core$Int64 (*$fn52)(panda$collections$CollectionView*);
-typedef panda$core$Object* (*$fn71)(panda$collections$ListView*, panda$core$Int64);
-typedef panda$core$Object* (*$fn80)(panda$collections$ListView*, panda$core$Int64);
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x42\x69\x74", 14, -8202984937925717763, NULL };
 static panda$core$String $s2 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x42\x69\x74", 14, -8202984937925717763, NULL };
@@ -185,9 +183,9 @@ panda$core$Bit panda$core$Bit$$XOR$panda$core$Bit$R$panda$core$Bit(panda$core$Bi
     return $returnValue38;
 }
 panda$core$String* panda$core$Bit$format$panda$core$String$R$panda$core$String(panda$core$Bit self, panda$core$String* p_fmt) {
-    panda$collections$ListView* s45 = NULL;
-    panda$collections$ListView* $tmp46;
-    panda$collections$ListView* $tmp47;
+    panda$collections$Array* s45 = NULL;
+    panda$collections$Array* $tmp46;
+    panda$collections$Array* $tmp47;
     panda$core$Int64 $tmp54;
     panda$core$String* $tmp59;
     panda$core$String* $tmp60;
@@ -195,12 +193,12 @@ panda$core$String* panda$core$Bit$format$panda$core$String$R$panda$core$String(p
     panda$core$String* $tmp66;
     panda$core$Object* $tmp67;
     panda$core$Int64 $tmp68;
-    panda$core$String* $tmp75;
-    panda$core$Object* $tmp76;
-    panda$core$Int64 $tmp77;
+    panda$core$String* $tmp72;
+    panda$core$Object* $tmp73;
+    panda$core$Int64 $tmp74;
     int $tmp44;
     {
-        panda$collections$ListView* $tmp49 = panda$core$String$split$panda$core$String$R$panda$collections$ListView$LTpanda$core$String$GT(p_fmt, &$s48);
+        panda$collections$Array* $tmp49 = panda$core$String$split$panda$core$String$R$panda$collections$Array$LTpanda$core$String$GT(p_fmt, &$s48);
         $tmp47 = $tmp49;
         $tmp46 = $tmp47;
         s45 = $tmp46;
@@ -226,48 +224,38 @@ panda$core$String* panda$core$Bit$format$panda$core$String$R$panda$core$String(p
         if (self.value) {
         {
             panda$core$Int64$init$builtin_int64(&$tmp68, 0);
-            ITable* $tmp69 = s45->$class->itable;
-            while ($tmp69->$class != (panda$core$Class*) &panda$collections$ListView$class) {
-                $tmp69 = $tmp69->next;
-            }
-            $fn71 $tmp70 = $tmp69->methods[0];
-            panda$core$Object* $tmp72 = $tmp70(s45, $tmp68);
-            $tmp67 = $tmp72;
+            panda$core$Object* $tmp69 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(s45, $tmp68);
+            $tmp67 = $tmp69;
             $tmp66 = ((panda$core$String*) $tmp67);
             $returnValue65 = $tmp66;
             panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp66));
             panda$core$Panda$unref$panda$core$Object($tmp67);
             $tmp44 = 0;
             goto $l42;
-            $l73:;
+            $l70:;
             return $returnValue65;
         }
         }
-        panda$core$Int64$init$builtin_int64(&$tmp77, 1);
-        ITable* $tmp78 = s45->$class->itable;
-        while ($tmp78->$class != (panda$core$Class*) &panda$collections$ListView$class) {
-            $tmp78 = $tmp78->next;
-        }
-        $fn80 $tmp79 = $tmp78->methods[0];
-        panda$core$Object* $tmp81 = $tmp79(s45, $tmp77);
-        $tmp76 = $tmp81;
-        $tmp75 = ((panda$core$String*) $tmp76);
-        $returnValue65 = $tmp75;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp75));
-        panda$core$Panda$unref$panda$core$Object($tmp76);
+        panda$core$Int64$init$builtin_int64(&$tmp74, 1);
+        panda$core$Object* $tmp75 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(s45, $tmp74);
+        $tmp73 = $tmp75;
+        $tmp72 = ((panda$core$String*) $tmp73);
+        $returnValue65 = $tmp72;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp72));
+        panda$core$Panda$unref$panda$core$Object($tmp73);
         $tmp44 = 1;
         goto $l42;
-        $l82:;
+        $l76:;
         return $returnValue65;
     }
     $l42:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) s45));
     s45 = NULL;
     switch ($tmp44) {
-        case 0: goto $l73;
-        case 1: goto $l82;
+        case 0: goto $l70;
+        case 1: goto $l76;
     }
-    $l84:;
+    $l78:;
     abort();
 }
 void panda$core$Bit$cleanup(panda$core$Bit self) {

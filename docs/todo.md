@@ -1,11 +1,9 @@
 Immediate
 =========
 
-@default on interface methods? need to figure out how to distinguish them in PandaDoc at least,
-definitely thinking @default might not be a bad plan.
 Closures not working with both self and local variable captures at the same time
 Proper lambda / inner method errors
-Documentation (still need: choices, fix bug with * in operators.md, fix links with parentheses...)
+Documentation (still need: fix bug with * in operators.md, fix links with parentheses...)
 Array literals
 fix command line parsing
 error handling (at least Maybe / Error / try, can wait on forcing people to check for errors)
@@ -13,16 +11,20 @@ permissions
 handle duplicate classes, more than one public class per file, classes not being in the correct path
 figure out rules for init / cleanup, make sure I'm following them consistently, check any cases I
     can that don't rely on dataflow
-remove broken '='' crap on choice, add proper Equatable implementation when appropriate. Accept that
+remove broken '=' crap on choice, add proper Equatable implementation when appropriate. Accept that
     we'll have to use 'match' whenever the choice is not Equatable.
 var parameters
 all tests working (incl. C)
 verify build & run from directories containing spaces
-postfix !
+postfix '!'
+enforce class directory and filename rules
 
 Eventually
 ==========
 
+Dataflow, null safety, function safety
+Proper native code headers
+Tuples
 Property error reporting
 automatically calculate dependency information during build
 DWARF info

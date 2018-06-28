@@ -4,6 +4,7 @@ interface Test1 {
 
 interface Test2 : Test1 {
     @override
+    @default
     method foo() {
         Console.printLine("Test2.foo")
     }

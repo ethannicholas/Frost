@@ -16,9 +16,9 @@ choice IRNode {
     BREAK(Position, String?)
     CALL(Position, Type, MethodRef, ImmutableArray<IRNode>)
     CAST(Position, IRNode, Type, Bit -* explicit *-)
-    -- a choice entry, like IRNode.Kind.STRING
-    CHOICE_CASE_REFERENCE(Position, ChoiceCase)
-    -- a field of a choice entry, like IRNode.Kind.STRING[0]
+    -- a choice case, like IRNode.Kind.STRING
+    CHOICE_CASE_REFERENCE(Position, Type, ChoiceCase)
+    -- a field of a choice case, like IRNode.Kind.STRING[0]
     CHOICE_FIELD_REFERENCE(Position, IRNode, ChoiceCase, Int)
     CONSTRUCT(Position, Type, IRNode -* init call *-)
     -- target used for init calls during object construction, meaning "the object that was just
@@ -84,7 +84,7 @@ choice IRNode {
                 return type
             when CAST(_, _, type, _):
                 return type
-            when CHOICE_CASE_REFERENCE(_, ce):
+            when CHOICE_CASE_REFERENCE:
                 return Type.Invalid()
             when CHOICE_FIELD_REFERENCE(_, _, ce, field):
                 return ce.fields[field]
@@ -170,7 +170,7 @@ choice IRNode {
                 return position
             when CAST(position, _, _, _):
                 return position
-            when CHOICE_CASE_REFERENCE(position, _):
+            when CHOICE_CASE_REFERENCE(position, _, _):
                 return position
             when CHOICE_FIELD_REFERENCE(position, _, _, _):
                 return position
@@ -718,7 +718,7 @@ choice IRNode {
                 return "\{m.value.name}(\{args.join()})"
             when CAST(_, value, type, _):
                 return "\{value}->\{type}"
-            when CHOICE_CASE_REFERENCE(_, ce):
+            when CHOICE_CASE_REFERENCE(_, _, ce):
                 return ce.convert()
             when CHOICE_FIELD_REFERENCE(_, base, ce, field):
                 return "\{base}.\{ce}[\{field}]"

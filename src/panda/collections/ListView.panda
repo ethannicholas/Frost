@@ -46,6 +46,7 @@ interface ListView<T> : CollectionView<T> {
     without affecting the copy. It is not, however, a deep copy, and thus both lists will refer
     to the same objects.
     ================================================================================================
+    @default
     function [](r:Range<Int>):ListView<T> {
         var max := r.max
         if r.inclusive {
@@ -68,6 +69,7 @@ interface ListView<T> : CollectionView<T> {
     As usual for `Range`, a null `min` starts from the beginning of the list, and a null `max` ends
     at the end of the list.
     ================================================================================================
+    @default
     function [](r:Range<Int?>):ListView<T> {
         def start:Int
         if r.min != null {
@@ -96,6 +98,7 @@ interface ListView<T> : CollectionView<T> {
     without affecting the copy. It is not, however, a deep copy, and thus both lists will refer
     to the same objects.
     ================================================================================================
+    @default
     function [](r:SteppedRange<Int?, Int>):ListView<T> {
         def step := r.step
 
@@ -145,6 +148,7 @@ interface ListView<T> : CollectionView<T> {
     Returns a new list containing every entry in this list for which the `predicate` function
     returns true. For instance, `[1, 7, -10, 5, -2].filter(x => x > 0)` returns `[1, 7, 5]`.
     ================================================================================================
+    @default
     function filter(predicate:(T)=>(Bit)):ListView<T> {
         def result := Array<T>()
         for v in self {
@@ -155,6 +159,7 @@ interface ListView<T> : CollectionView<T> {
         return result
     }
 
+    @default
     @override
     function iterator():Iterator<T> {
         return ListIterator<T>(self)

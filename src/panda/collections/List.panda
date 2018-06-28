@@ -6,6 +6,7 @@ A read/write random-access list of elements.
 @see Array
 ====================================================================================================
 interface List<T> : ListView<T>, ListWriter<T>, Collection<T> {
+    @default
     @pre(range.min <= range.max)
     method []:=(range:Range<Int>, list:ListView<T>) {
         -- FIXME performance, doing this the slow and stupid way for now
@@ -23,6 +24,7 @@ interface List<T> : ListView<T>, ListWriter<T>, Collection<T> {
         }
     }
 
+    @default
     method []:=(range:Range<Int?>, list:ListView<T>) {
         var min := range.min
         if min = null {
@@ -37,6 +39,7 @@ interface List<T> : ListView<T>, ListWriter<T>, Collection<T> {
         self[Range<Int>(min, max, range.inclusive)] := list
     }
 
+    @default
     method filterInPlace(f:(T)=>(Bit)) {
         for i in count - 1 ... 0 by -1 {
             if !f(self[i]) {

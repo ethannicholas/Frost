@@ -1,4 +1,5 @@
 interface Intf {
+    @default
     method defaultMethod() {
         Console.printLine("nobody overrode me!")
     }

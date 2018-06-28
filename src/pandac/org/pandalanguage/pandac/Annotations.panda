@@ -17,6 +17,7 @@ class Annotations {
         constant WEAK             := 1 << 12
         constant SYNTHETIC        := 1 << 13
         constant UNSAFE_IMMUTABLE := 1 << 14
+        constant DEFAULT          := 1 << 15
     }
 
     choice Expression {
@@ -114,6 +115,10 @@ class Annotations {
         return flags && Flag.UNSAFE_IMMUTABLE != 0
     }
 
+    function isDefault():Bit {
+        return flags && Flag.DEFAULT != 0
+    }
+
     @override
     function convert():String {
         def result := MutableString()
@@ -158,6 +163,9 @@ class Annotations {
         }
         if isUnsafeImmutable() {
             result.append("@unsafeImmutable\n")
+        }
+        if isDefault() {
+            result.append("@default\n")
         }
         if expressions != null {
             for expr in expressions {

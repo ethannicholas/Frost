@@ -64,7 +64,7 @@ void panda$collections$List$$IDXEQ$panda$core$Range$LTpanda$core$Int64$GT$panda$
     panda$core$Bit $tmp13;
     panda$core$Object* $tmp32;
     panda$core$Int64 index48;
-    panda$collections$Iterator* Iter$20$952 = NULL;
+    panda$collections$Iterator* Iter$21$952 = NULL;
     panda$collections$Iterator* $tmp53;
     panda$collections$Iterator* $tmp54;
     panda$core$Object* v70 = NULL;
@@ -74,7 +74,7 @@ void panda$collections$List$$IDXEQ$panda$core$Range$LTpanda$core$Int64$GT$panda$
     panda$core$Bit $tmp2 = panda$core$Int64$$LE$panda$core$Int64$R$panda$core$Bit(p_range.min, p_range.max);
     if ($tmp2.value) goto $l3; else goto $l4;
     $l4:;
-    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s5, (panda$core$Int64) { 10 }, &$s6);
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s5, (panda$core$Int64) { 11 }, &$s6);
     abort();
     $l3:;
     max7 = p_range.max;
@@ -151,28 +151,28 @@ void panda$collections$List$$IDXEQ$panda$core$Range$LTpanda$core$Int64$GT$panda$
             panda$collections$Iterator* $tmp58 = $tmp56(((panda$collections$Iterable*) p_list));
             $tmp54 = $tmp58;
             $tmp53 = $tmp54;
-            Iter$20$952 = $tmp53;
+            Iter$21$952 = $tmp53;
             panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp53));
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp54));
             $l59:;
-            ITable* $tmp62 = Iter$20$952->$class->itable;
+            ITable* $tmp62 = Iter$21$952->$class->itable;
             while ($tmp62->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
                 $tmp62 = $tmp62->next;
             }
             $fn64 $tmp63 = $tmp62->methods[0];
-            panda$core$Bit $tmp65 = $tmp63(Iter$20$952);
+            panda$core$Bit $tmp65 = $tmp63(Iter$21$952);
             panda$core$Bit $tmp66 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp65);
             bool $tmp61 = $tmp66.value;
             if (!$tmp61) goto $l60;
             {
                 int $tmp69;
                 {
-                    ITable* $tmp73 = Iter$20$952->$class->itable;
+                    ITable* $tmp73 = Iter$21$952->$class->itable;
                     while ($tmp73->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
                         $tmp73 = $tmp73->next;
                     }
                     $fn75 $tmp74 = $tmp73->methods[1];
-                    panda$core$Object* $tmp76 = $tmp74(Iter$20$952);
+                    panda$core$Object* $tmp76 = $tmp74(Iter$21$952);
                     $tmp72 = $tmp76;
                     $tmp71 = $tmp72;
                     v70 = $tmp71;
@@ -204,8 +204,8 @@ void panda$collections$List$$IDXEQ$panda$core$Range$LTpanda$core$Int64$GT$panda$
         $tmp51 = -1;
         goto $l49;
         $l49:;
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$20$952));
-        Iter$20$952 = NULL;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$21$952));
+        Iter$21$952 = NULL;
         switch ($tmp51) {
             case -1: goto $l83;
         }

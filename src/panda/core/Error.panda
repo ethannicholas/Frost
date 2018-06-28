@@ -1,20 +1,18 @@
 package panda.core
 
 ====================================================================================================
-Interface for objects which can be compared for equality. As `Equatable` provides a default
-implementation of `!=`, only the `=` operator is strictly required.
+Returned by methods to indicate that they encounter an error.
 ====================================================================================================
-interface Equatable<T:Equatable<T>> {
+class Error {
     ================================================================================================
-    Returns `true` if these objects are equal.
+    A human-readable description of the problem.
     ================================================================================================
-    function =(other:T):Bit
+    def message:String
 
     ================================================================================================
-    Returns `true` if these objects are not equal.
+    Creates a new `Error`.
     ================================================================================================
-    @default
-    function !=(other:T):Bit {
-        return !(self = other)
+    init(message:String) {
+        self.message := message
     }
 }

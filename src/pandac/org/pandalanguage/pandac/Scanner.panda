@@ -108,6 +108,7 @@ class Scanner {
                         when "@specialize":      flags := add(p, flags, Annotations.Flag.SPECIALIZE)
                         when "@weak":            flags := add(p, flags, Annotations.Flag.WEAK)
                         when "@unsafeImmutable": flags := add(p, flags, Annotations.Flag.UNSAFE_IMMUTABLE)
+                        when "@default":         flags := add(p, flags, Annotations.Flag.DEFAULT)
                         when "@pre":
                             if expressions = null {
                                 expressions := Array<Annotations.Expression>()
@@ -441,6 +442,10 @@ class Scanner {
             annotations.flags ||= Annotations.Flag.INLINE
         }
         if statements = null & owner.classKind = ClassDecl.Kind.INTERFACE {
+            if annotations.flags && Annotations.Flag.ABSTRACT != 0 {
+                error(position,  "interface methods are abstract by default and may not have an " +
+                        "explicit '@abstract' annotation")
+            }
             annotations.flags ||= Annotations.Flag.ABSTRACT
         }
         return MethodDecl(owner, position, doccomment, annotations, kind, name, generics,
@@ -544,9 +549,6 @@ class Scanner {
                         assert false
                 }
                 parameters.add(ClassDecl.GenericParameter(p.position(), fullName, name, bound))
-            }
-            if kind = ClassDecl.Kind.CHOICE {
-                error(position, "choices may not have generic parameters")
             }
         }
         def supertypes := Array<Type>()

@@ -101,6 +101,9 @@ class PandaDoc {
     }
 
     method write(t:Type) {
+        if !t.resolved {
+            Console.printLine("unresolved type: \{t}")
+        }
         out.open("type")
         out.write("name", escape(t.name))
         out.write("simpleName", escape(simpleName(t)))
@@ -623,6 +626,7 @@ class PandaDoc {
             when ClassDecl.Kind.CHOICE:
                 out.write("kind", "choice")
                 for cc in cl.choiceCases {
+                    compiler.resolve(cc)
                     out.open("case")
                     out.write("name", cc.name)
                     if cc.doccomment != null {

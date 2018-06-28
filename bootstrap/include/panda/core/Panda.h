@@ -2,9 +2,10 @@
 #include "panda_c.h"
 #include "Panda_types.h"
 typedef struct panda$core$Panda panda$core$Panda;
+typedef struct panda$core$Maybe panda$core$Maybe;
+typedef struct panda$core$Object panda$core$Object;
 typedef struct panda$core$String panda$core$String;
 typedef struct panda$core$Class panda$core$Class;
-typedef struct panda$core$Object panda$core$Object;
 #include "panda/core/Real64_types.h"
 #include "panda/core/Int64_types.h"
 #include "panda/core/UInt64_types.h"
@@ -12,6 +13,8 @@ typedef struct panda$core$Object panda$core$Object;
 #include "panda/core/Bit_types.h"
 
 void panda$core$Panda$init(panda$core$Panda* self);
+panda$core$Maybe* panda$core$Panda$success$panda$core$Object$R$panda$core$Maybe$LTpanda$core$Object$GT$Q(panda$core$Object* p_o);
+panda$core$Maybe* panda$core$Panda$error$panda$core$String$R$panda$core$Maybe$LTpanda$core$Object$GT$Q(panda$core$String* p_msg);
 panda$core$String* panda$core$Panda$allocationName$panda$core$Class$R$panda$core$String(panda$core$Class* p_cl);
 void panda$core$Panda$countAllocation$panda$core$Class(panda$core$Panda* self, panda$core$Class* p_cl);
 void panda$core$Panda$countDeallocation$panda$core$Class(panda$core$Panda* self, panda$core$Class* p_cl);

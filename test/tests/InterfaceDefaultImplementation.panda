@@ -2,12 +2,14 @@ class Base {
 }
 
 interface Foo {
+    @default
     method foo() {
         Console.printLine("Foo.foo")
     } 
 }
 
 interface Bar : Foo {
+    @default
     method bar() {
         Console.printLine("Bar.bar")
     }

@@ -499,9 +499,9 @@ panda$io$File* org$pandalanguage$pandac$Main$toExecutable$panda$io$File$panda$io
     panda$core$String* $tmp137;
     panda$core$String* $tmp138;
     panda$core$String* $tmp140;
-    panda$collections$ListView* icuLibs148 = NULL;
-    panda$collections$ListView* $tmp149;
-    panda$collections$ListView* $tmp150;
+    panda$collections$Array* icuLibs148 = NULL;
+    panda$collections$Array* $tmp149;
+    panda$collections$Array* $tmp150;
     panda$core$String* $tmp151;
     panda$collections$Iterator* Iter$131$9158 = NULL;
     panda$collections$Iterator* $tmp159;
@@ -562,7 +562,7 @@ panda$io$File* org$pandalanguage$pandac$Main$toExecutable$panda$io$File$panda$io
         panda$collections$Array$add$panda$collections$Array$T(args133, ((panda$core$Object*) &$s147));
         panda$core$String* $tmp152 = org$pandalanguage$pandac$Config$icuLibraries$R$panda$core$String();
         $tmp151 = $tmp152;
-        panda$collections$ListView* $tmp154 = panda$core$String$split$panda$core$String$R$panda$collections$ListView$LTpanda$core$String$GT($tmp151, &$s153);
+        panda$collections$Array* $tmp154 = panda$core$String$split$panda$core$String$R$panda$collections$Array$LTpanda$core$String$GT($tmp151, &$s153);
         $tmp150 = $tmp154;
         $tmp149 = $tmp150;
         icuLibs148 = $tmp149;

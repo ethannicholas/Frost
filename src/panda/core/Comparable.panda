@@ -8,14 +8,17 @@ all have default implementations.
 interface Comparable<T:Comparable<T>> : Equatable<T> {
     function >(other:T):Bit
 
+    @default
     function <(other:T):Bit {
         return other > self
     }
 
+    @default
     function >=(other:T):Bit {
         return !(self < other)
     }
 
+    @default
     function <=(other:T):Bit {
         return !(self > other)
     }

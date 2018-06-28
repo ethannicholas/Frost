@@ -1,4 +1,5 @@
 interface Interface1<A> {
+    @default
     method check(a:A):Bit {
         Console.printLine("checking \{a}")
         return true
@@ -6,6 +7,7 @@ interface Interface1<A> {
 }
 
 interface Interface2<B, C> : Interface1<B> {
+    @default
     method test1(b:B, c:C) {
         Console.printLine("test1: b:\{b}, c:\{c}")
         check(b)

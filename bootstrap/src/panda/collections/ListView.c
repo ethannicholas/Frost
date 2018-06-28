@@ -300,7 +300,7 @@ panda$collections$ListView* panda$collections$ListView$$IDX$panda$core$SteppedRa
             panda$core$Bit $tmp101 = panda$core$Int64$$LT$panda$core$Int64$R$panda$core$Bit(p_r.step, $tmp100);
             if ($tmp101.value) goto $l102; else goto $l103;
             $l103:;
-            panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s104, (panda$core$Int64) { 132 });
+            panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64(&$s104, (panda$core$Int64) { 135 });
             abort();
             $l102:;
             $l105:;
@@ -381,7 +381,7 @@ panda$collections$ListView* panda$collections$ListView$filter$$LPpanda$collectio
     panda$collections$Array* result143 = NULL;
     panda$collections$Array* $tmp144;
     panda$collections$Array* $tmp145;
-    panda$collections$Iterator* Iter$150$9150 = NULL;
+    panda$collections$Iterator* Iter$154$9150 = NULL;
     panda$collections$Iterator* $tmp151;
     panda$collections$Iterator* $tmp152;
     panda$core$Object* v168 = NULL;
@@ -410,28 +410,28 @@ panda$collections$ListView* panda$collections$ListView$filter$$LPpanda$collectio
                 panda$collections$Iterator* $tmp156 = $tmp154(((panda$collections$Iterable*) self));
                 $tmp152 = $tmp156;
                 $tmp151 = $tmp152;
-                Iter$150$9150 = $tmp151;
+                Iter$154$9150 = $tmp151;
                 panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp151));
                 panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp152));
                 $l157:;
-                ITable* $tmp160 = Iter$150$9150->$class->itable;
+                ITable* $tmp160 = Iter$154$9150->$class->itable;
                 while ($tmp160->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
                     $tmp160 = $tmp160->next;
                 }
                 $fn162 $tmp161 = $tmp160->methods[0];
-                panda$core$Bit $tmp163 = $tmp161(Iter$150$9150);
+                panda$core$Bit $tmp163 = $tmp161(Iter$154$9150);
                 panda$core$Bit $tmp164 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp163);
                 bool $tmp159 = $tmp164.value;
                 if (!$tmp159) goto $l158;
                 {
                     int $tmp167;
                     {
-                        ITable* $tmp171 = Iter$150$9150->$class->itable;
+                        ITable* $tmp171 = Iter$154$9150->$class->itable;
                         while ($tmp171->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
                             $tmp171 = $tmp171->next;
                         }
                         $fn173 $tmp172 = $tmp171->methods[1];
-                        panda$core$Object* $tmp174 = $tmp172(Iter$150$9150);
+                        panda$core$Object* $tmp174 = $tmp172(Iter$154$9150);
                         $tmp170 = $tmp174;
                         $tmp169 = $tmp170;
                         v168 = $tmp169;
@@ -464,8 +464,8 @@ panda$collections$ListView* panda$collections$ListView$filter$$LPpanda$collectio
             $tmp149 = -1;
             goto $l147;
             $l147:;
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$150$9150));
-            Iter$150$9150 = NULL;
+            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$154$9150));
+            Iter$154$9150 = NULL;
             switch ($tmp149) {
                 case -1: goto $l179;
             }

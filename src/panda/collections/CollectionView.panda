@@ -22,6 +22,7 @@ interface CollectionView<T> : Iterable<T> {
 
     @see join(String)
     ================================================================================================
+    @default
     function join():String {
         return join(", ")
     }
@@ -34,6 +35,7 @@ interface CollectionView<T> : Iterable<T> {
     @param separator the delimiter string
     @see join()
     ================================================================================================    
+    @default
     function join(separator:String):String {
         if count = 0 {
             return ""
@@ -81,6 +83,7 @@ interface CollectionView<T> : Iterable<T> {
     @see fold((T, T)=>(T), T)
     ================================================================================================
     @pre(count > 0)
+    @default
     function fold(f:(T, T)=>(T)):T {
         def i := iterator()
         var result := i.next()
@@ -100,6 +103,7 @@ interface CollectionView<T> : Iterable<T> {
     @param start the starting value for the fold
     @see fold((T, T)=>(T))
     ================================================================================================
+    @default
     function fold(f:(T, T)=>(T), start:T):T {
         var result := start
         for v in self {
@@ -116,6 +120,7 @@ interface CollectionView<T> : Iterable<T> {
 
     @param m a method to call on each element
     ================================================================================================
+    @default
     method apply(m:(T)=&>()) {
         for v in self {
             m(v)

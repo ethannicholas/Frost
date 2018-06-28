@@ -8,12 +8,24 @@ Contains utility methods used in the internal implementation of certain language
 @package
 @final
 class Panda {
-    @private
-    init() {}
-
     def allocations := HashMap<String, Int>()
 
     def traces := HashMap<String, Int>()
+
+    @private
+    init() {}
+
+    @private
+    @class
+    function success(o:Object):Maybe<Object>? {
+        return Maybe<Object>.SUCCESS(o)
+    }
+
+    @private
+    @class
+    function error(msg:String):Maybe<Object>? {
+        return Maybe<Object>.ERROR(Error(msg))
+    }
 
     @private
     @class

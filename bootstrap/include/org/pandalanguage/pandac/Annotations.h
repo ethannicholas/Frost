@@ -24,6 +24,7 @@ panda$core$Bit org$pandalanguage$pandac$Annotations$isSpecialize$R$panda$core$Bi
 panda$core$Bit org$pandalanguage$pandac$Annotations$isWeak$R$panda$core$Bit(org$pandalanguage$pandac$Annotations* self);
 panda$core$Bit org$pandalanguage$pandac$Annotations$isSynthetic$R$panda$core$Bit(org$pandalanguage$pandac$Annotations* self);
 panda$core$Bit org$pandalanguage$pandac$Annotations$isUnsafeImmutable$R$panda$core$Bit(org$pandalanguage$pandac$Annotations* self);
+panda$core$Bit org$pandalanguage$pandac$Annotations$isDefault$R$panda$core$Bit(org$pandalanguage$pandac$Annotations* self);
 panda$core$String* org$pandalanguage$pandac$Annotations$convert$R$panda$core$String(org$pandalanguage$pandac$Annotations* self);
 void org$pandalanguage$pandac$Annotations$cleanup(org$pandalanguage$pandac$Annotations* self);
 

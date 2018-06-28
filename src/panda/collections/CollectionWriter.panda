@@ -22,6 +22,7 @@ interface CollectionWriter<T> {
     Adds all elements in `c` to this collection. The default implementation simply calls [add] for
     each element in `c`, in iteration order.
     ================================================================================================
+    @default
     method addAll(c:CollectionView<T>) {
         for v in c {
             add(v)

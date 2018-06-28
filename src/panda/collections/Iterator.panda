@@ -123,6 +123,7 @@ interface Iterator<T> {
     ================================================================================================
     Scans through the `Iterator` until the end, returning the number of elements traversed over.
     ================================================================================================
+    @default
     @post(get_done())
     method count():Int {
         var result := 0
@@ -138,6 +139,7 @@ interface Iterator<T> {
     match the predicate. As the new `Iterator` internally reads from this `Iterator`, you should not
     interact with an `Iterator` after calling `filter` on it.
     ================================================================================================
+    @default
     function filter(predicate:(T)=>(Bit)):Iterator<T> {
         return FilterIterator<T>(self, predicate)
     }
@@ -157,6 +159,7 @@ interface Iterator<T> {
     The range iterator will never read past the end of the base iterator. If the base iterator does
     not produce enough elements to finish the range, iteration will simply end at that point.
     ================================================================================================
+    @default
     @pre(range.min = null | range.min >= 0 & range.max = null | range.min >= 0)
     function [](range:Range<Int?>):Iterator<T> {
         return RangeIterator<T>(self, range.min, range.max, range.inclusive, 1)
@@ -173,6 +176,7 @@ interface Iterator<T> {
 
     This will loop over every odd-numbered element in `arr`.
     ================================================================================================
+    @default
     @pre(range.start = null | range.start >= 0 & range.end = null | range.end >= 0 & range.step > 0)
     function [](range:SteppedRange<Int?, Int>):Iterator<T> {
         return RangeIterator<T>(self, range.start, range.end, range.inclusive, range.step)
@@ -182,6 +186,7 @@ interface Iterator<T> {
     Scans through the `Iterator` until the end, collecting all of the traversed elements into an
     `Array`.
     ================================================================================================
+    @default
     @post(get_done())
     method all():Array<T> {
         def result := Array<T>()
@@ -199,6 +204,7 @@ interface Iterator<T> {
 
         File(path).lines().apply(process)
     ================================================================================================
+    @default
     @post(get_done())
     method apply(m:(T)=&>()) {
         for v in self {
@@ -230,6 +236,7 @@ interface Iterator<T> {
     @returns the result of combining all elements from the iterator
     @see fold((T, T)=>(T), T)
     ================================================================================================
+    @default
     @pre(!get_done())
     @post(get_done())
     method fold(f:(T, T)=>(T)):T {
@@ -251,6 +258,7 @@ interface Iterator<T> {
     @returns the result of combining all elements from the iterator
     @see fold((T, T)=>(T))
     ================================================================================================
+    @default
     @post(get_done())
     method fold(f:(T, T)=>(T), start:T):T {
         var result := start

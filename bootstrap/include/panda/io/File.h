@@ -5,6 +5,7 @@ typedef struct panda$io$File panda$io$File;
 typedef struct panda$core$String panda$core$String;
 typedef struct panda$collections$Iterator panda$collections$Iterator;
 #include "panda/core/Bit_types.h"
+typedef struct panda$core$Maybe panda$core$Maybe;
 typedef struct panda$collections$ListView panda$collections$ListView;
 typedef struct panda$io$InputStream panda$io$InputStream;
 typedef struct panda$io$OutputStream panda$io$OutputStream;
@@ -14,8 +15,8 @@ void panda$io$File$init$panda$core$String(panda$io$File* self, panda$core$String
 panda$io$File* panda$io$File$resolve$panda$core$String$R$panda$io$File(panda$io$File* self, panda$core$String* p_path);
 panda$collections$Iterator* panda$io$File$lines$R$panda$collections$Iterator$LTpanda$core$String$GT(panda$io$File* self);
 panda$core$Bit panda$io$File$isAbsolute$R$panda$core$Bit(panda$io$File* self);
-panda$core$String* panda$io$File$absolutePath$R$panda$core$String(panda$io$File* self);
-panda$io$File* panda$io$File$absolute$R$panda$io$File(panda$io$File* self);
+panda$core$Maybe* panda$io$File$absolute$R$panda$core$Maybe$LTpanda$io$File$GT(panda$io$File* self);
+panda$core$String* panda$io$File$normalize$panda$core$String$R$panda$core$String$Q(panda$io$File* self, panda$core$String* p_path);
 panda$io$File* panda$io$File$parent$R$panda$io$File$Q(panda$io$File* self);
 panda$core$String* panda$io$File$name$R$panda$core$String(panda$io$File* self);
 panda$core$String* panda$io$File$simpleName$R$panda$core$String(panda$io$File* self);

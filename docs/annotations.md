@@ -18,6 +18,13 @@ attached to. Annotations come directly before the entity they describe, as in:
 The `@protected` annotation on a class member signifies that the member is only accessible within
 subclasses of the class.
 
+<a name="package"></a>
+@package
+----------
+
+Classes and class members annotated with `@package` are only accessible from within the same
+package.
+
 <a name="private"></a>
 @private
 --------

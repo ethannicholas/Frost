@@ -1,5 +1,7 @@
 package panda.io
 
+uses panda.core.Maybe
+
 ====================================================================================================
 Represents a file path, providing methods to query, read, and write files. A `File` object itself is
 merely the path to the file, not the actual physical file on disk, so creating a `File` object does
@@ -54,38 +56,70 @@ class File : Immutable, Key<File> {
         return path.startsWith("/")
     }
     
-    @private
-    @external
-    method absolutePath():String
-
     ================================================================================================
-    Returns a `File` representing the absolute path of this file.
+    Returns a `File` representing the absolute path of this file. This queries the filesystem and
+    thus is not guaranteed to succeed.
 
     @returns the file's absolute path
     ================================================================================================
-    method absolute():File {
-        return File(absolutePath())
+    @external
+    method absolute():Maybe<File>
+
+    @private
+    function normalize(path:String):String? {
+        var result := path
+        -- coalesce multiple repeated '/'s into a single '/'
+        result := result.replace(/\/+/, "/")
+        if result = "/" {
+            return result
+        }
+        -- remove trailing '/'
+        while result.endsWith("/") {
+            result := result[..result.length() - 1]
+        }
+        def absolute := result.startsWith("/")
+        if absolute {
+            result := result[1..]
+        }
+        -- collapse "foo/../bar" to just "bar"
+        def components := result.split("/")
+        outer: loop {
+            for i in 1 .. components.count {
+                if components[i] = ".." & components[i - 1] != ".." {
+                    components.removeIndex(i)
+                    components.removeIndex(i - 1)
+                    continue outer
+                }
+            }
+            break
+        }
+        result := components.join("/")
+        if absolute {
+            result := "/" + result
+        }
+        if absolute & result.contains("/..") {
+            -- uh-oh, we went above root level
+            return null
+        }
+        if result = "" {
+            result := "."
+        }
+        return result
     }
 
     ================================================================================================
-    Returns the directory containing this file, or `null` if this is the root directory.
+    Returns the directory containing this file, or `null` if this is the root directory. This
+    function computes the parent directory based purely on the path string, without accessing the
+    filesystem.
 
     @returns the path to the file
     ================================================================================================
-    method parent():File? {
-        if path = "/" {
+    function parent():File? {
+        def result := normalize(resolve("..").path)
+        if result = null {
             return null
         }
-        if path = "" {
-            return File(".").parent()
-        }
-        def index := path.lastIndexOf("/")
-        if index != null {
-            return File(path[..index])
-        }
-        else {
-            return absolute().parent()
-        }
+        return File(result)
     }
 
     ================================================================================================

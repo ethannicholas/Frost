@@ -22,6 +22,7 @@ interface Random {
 
     @returns a random bit
     ============================================================================
+    @default
     method bit():Bit {
         return self.int64() >= 0
     }
@@ -29,6 +30,7 @@ interface Random {
     ================================================================================================
     Returns a random number between [Int32.MIN] and [Int32.MAX], inclusive.
     ================================================================================================
+    @default
     method int32():Int32 {
         return int64().convert()
     }
@@ -45,6 +47,7 @@ interface Random {
     @param n the range of possible values to generate
     @returns a random number between `0` and `n - 1`
     ================================================================================================
+    @default
     @pre(n >= 1)
     @post(@return >= 0 & @return < n)
     method int(n:Int64):Int64 {
@@ -66,6 +69,7 @@ interface Random {
     
     @returns a random `Real32`
     ================================================================================================
+    @default
     @post(@return >= 0 & @return < 1)
     method real32():Real32 {
         return (int32().convert()->UInt32 >> 8) / (1 << 24)
@@ -76,6 +80,7 @@ interface Random {
     
     @returns a random `Real64`
     ================================================================================================
+    @default
     @post(@return >= 0 & @return < 1)
     method real64():Real64 {
         return (int64().convert()->UInt64 >> 11) / (1 << 53)

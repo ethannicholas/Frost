@@ -2320,7 +2320,8 @@ class Parser {
     }
 
     ================================================================================================
-    choiceDeclaration = CHOICE IDENTIFIER LBRACE choiceCase* declaration* RBRACE
+    choiceDeclaration = CHOICE IDENTIFIER genericsDeclaration? LBRACE choiceCase* declaration*
+            RBRACE
     ================================================================================================
     method choiceDeclaration(choiceDoccomment:ASTNode?,
             choiceAnnotations:ImmutableArray<ASTNode>):ASTNode? {
@@ -2331,6 +2332,16 @@ class Parser {
         def name := expect(Token.Kind.IDENTIFIER, "an identifier")
         if name = null {
             return null
+        }
+        def generics:ImmutableArray<ASTNode>?
+        if peek().kind = Token.Kind.LT {
+            generics := genericsDeclaration()
+            if generics = null {
+                return null
+            }
+        }
+        else {
+            generics := null
         }
         if expect(Token.Kind.LBRACE, "'{'") = null {
             return null
@@ -2426,7 +2437,7 @@ class Parser {
             }
         }
         return ASTNode.CLASS(start.position, choiceDoccomment, choiceAnnotations,
-                ClassDecl.Kind.CHOICE, text(name), null, null, members.finish())
+                ClassDecl.Kind.CHOICE, text(name), generics, null, members.finish())
     }
 
     ================================================================================================

@@ -1842,7 +1842,7 @@ void org$pandalanguage$pandac$pandadoc$Markdown$formParagraphs$panda$core$Mutabl
     panda$collections$Array* $tmp595;
     panda$collections$Array* $tmp596;
     panda$collections$Array* $tmp597;
-    panda$collections$ListView* $tmp599;
+    panda$collections$Array* $tmp599;
     panda$core$String* $tmp600;
     panda$core$RegularExpression* $tmp602;
     panda$core$Range$LTpanda$core$Int64$GT $tmp606;
@@ -1903,7 +1903,7 @@ void org$pandalanguage$pandac$pandadoc$Markdown$formParagraphs$panda$core$Mutabl
                 panda$core$RegularExpression* $tmp603 = (panda$core$RegularExpression*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$RegularExpression$class);
                 panda$core$RegularExpression$init$panda$core$String($tmp603, &$s604);
                 $tmp602 = $tmp603;
-                panda$collections$ListView* $tmp605 = panda$core$String$split$panda$core$RegularExpression$R$panda$collections$ListView$LTpanda$core$String$GT($tmp600, $tmp602);
+                panda$collections$Array* $tmp605 = panda$core$String$split$panda$core$RegularExpression$R$panda$collections$Array$LTpanda$core$String$GT($tmp600, $tmp602);
                 $tmp599 = $tmp605;
                 panda$collections$Array$init$panda$collections$CollectionView$LTpanda$collections$Array$T$GT($tmp598, ((panda$collections$CollectionView*) $tmp599));
                 $tmp597 = $tmp598;

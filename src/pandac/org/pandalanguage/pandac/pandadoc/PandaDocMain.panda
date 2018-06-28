@@ -54,7 +54,7 @@ method recursiveDelete(root:File, currentPath:File) {
         recursiveDelete(root, f)
     }
     -- deleting a directory tree on an end user's machine is scary, so let's be extra careful...
-    if !currentPath.absolute().path.startsWith(root.absolute().path) {
+    if !currentPath.absolute().get().path.startsWith(root.absolute().get().path) {
         Console.errorStream().printLine("Panicking! Recursive delete stepped outside of the " +
                 "expected path tree! (was deleting \{root}, ended up looking at \{currentPath})")
         System.exit(1)
@@ -127,8 +127,8 @@ method main(args:ListView<String>) {
     for file in File(Config.pandaSourceDir()).resolve("../docs/html").list() {
         file.openInputStream().sendTo(root.resolve(file.name()).openOutputStream())
     }
---    recursiveDelete(tmpOutput.absolute(), tmpOutput.absolute())
+    recursiveDelete(tmpOutput.absolute().get(), tmpOutput.absolute().get())
     addTableOfContents(tocFile, root, apiRelativePath)
     Console.printLine(tocFile)
---  tocFile.delete()
+    tocFile.delete()
 }

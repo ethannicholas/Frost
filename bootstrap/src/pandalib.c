@@ -178,6 +178,14 @@ extern Class panda$core$Matcher$class;
 
 void panda$core$Panda$init(Object*);
 
+Object* panda$core$Panda$success$panda$core$Object$R$panda$core$Maybe$LTpanda$core$Object$GT$Q(Object*);
+
+Object* panda$core$Panda$error$panda$core$String$R$panda$core$Maybe$LTpanda$core$Object$GT$Q(String*);
+
+#define pandaMaybeSuccess panda$core$Panda$success$panda$core$Object$R$panda$core$Maybe$LTpanda$core$Object$GT$Q
+
+#define pandaMaybeError panda$core$Panda$error$panda$core$String$R$panda$core$Maybe$LTpanda$core$Object$GT$Q
+
 void panda$core$Panda$unref$panda$core$Object(Object*);
 
 void panda$core$Panda$dumpReport(Object*);
@@ -884,12 +892,17 @@ FileOutputStream* panda$io$File$openForAppend$R$panda$io$OutputStream(File* self
     return result;
 }
 
-String* panda$io$File$absolutePath$R$panda$core$String(File* file) {
-    char result[PATH_MAX];
+Object* panda$io$File$absolute$R$panda$core$Maybe$LTpanda$io$File$GT(File* file) {
+    char path[PATH_MAX];
     char* rawPath = pandaGetCString(file->path);
-    realpath(rawPath, result);
+    if (!realpath(rawPath, path)) {
+        const char* msg = "unable to resolve absolute path";
+        return pandaMaybeError(pandaNewString(msg, strlen(msg)));
+    }
     pandaFree(rawPath);
-    return pandaNewString(result, strlen(result));
+    File* result = pandaObjectAlloc(sizeof(File), &panda$io$File$class);
+    result->path = pandaNewString(path, strlen(path));
+    return pandaMaybeSuccess(result);
 }
 
 void panda$io$File$delete(File* file) {

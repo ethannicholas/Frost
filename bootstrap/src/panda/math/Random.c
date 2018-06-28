@@ -89,7 +89,7 @@ panda$core$Int64 panda$math$Random$int$panda$core$Int64$R$panda$core$Int64(panda
         panda$core$Bit $tmp28 = panda$core$Int64$$GE$panda$core$Int64$R$panda$core$Bit(p_n, $tmp27);
         if ($tmp28.value) goto $l29; else goto $l30;
         $l30:;
-        panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s31, (panda$core$Int64) { 50 }, &$s32);
+        panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s31, (panda$core$Int64) { 53 }, &$s32);
         abort();
         $l29:;
         panda$core$Int64$init$builtin_int64(&$tmp33, 1);
@@ -145,7 +145,7 @@ panda$core$Int64 panda$math$Random$int$panda$core$Int64$R$panda$core$Int64(panda
     panda$core$Bit $tmp59 = { $tmp54 };
     if ($tmp59.value) goto $l60; else goto $l61;
     $l61:;
-    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s62, (panda$core$Int64) { 50 }, &$s63);
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s62, (panda$core$Int64) { 53 }, &$s63);
     abort();
     $l60:;
     switch ($tmp26) {
@@ -193,7 +193,7 @@ panda$core$Real32 panda$math$Random$real32$R$panda$core$Real32(panda$math$Random
     panda$core$Bit $tmp86 = { $tmp80 };
     if ($tmp86.value) goto $l87; else goto $l88;
     $l88:;
-    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s89, (panda$core$Int64) { 70 }, &$s90);
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s89, (panda$core$Int64) { 74 }, &$s90);
     abort();
     $l87:;
     switch ($tmp66) {
@@ -239,7 +239,7 @@ panda$core$Real64 panda$math$Random$real64$R$panda$core$Real64(panda$math$Random
     panda$core$Bit $tmp113 = { $tmp107 };
     if ($tmp113.value) goto $l114; else goto $l115;
     $l115:;
-    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s116, (panda$core$Int64) { 80 }, &$s117);
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s116, (panda$core$Int64) { 85 }, &$s117);
     abort();
     $l114:;
     switch ($tmp93) {

@@ -1,6 +1,7 @@
 interface Intf<T> {
     function compute():T
 
+    @default
     method doSomething() {
         Console.printLine(compute())
     }

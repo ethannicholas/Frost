@@ -1346,7 +1346,17 @@ class Compiler {
                     return IRNode.FIELD_REFERENCE(position, f.type, finalTarget, f)
                 }
             when Symbol.Kind.CHOICE_CASE:
-                return IRNode.CHOICE_CASE_REFERENCE(position, s->ChoiceCase)
+                if target != null {
+                    match target {
+                        when IRNode.TYPE_REFERENCE(_, type):
+                            return IRNode.CHOICE_CASE_REFERENCE(position, type, s->ChoiceCase)
+                        otherwise:
+                            assert false, "invalid choice case reference at \{position}"
+                    }
+                }
+                def owner := s->ChoiceCase.owner
+                return IRNode.CHOICE_CASE_REFERENCE(position, owner.type(),
+                        s->ChoiceCase)
             when Symbol.Kind.GENERIC_PARAMETER:
                 error(position, "generic parameter '\{s.name}' is not an expression")
                 return null
@@ -1511,8 +1521,8 @@ class Compiler {
                     return Type.Any()
                 }
                 return c.type()
-            when IRNode.CHOICE_CASE_REFERENCE(_, ce):
-                return ce.owner.type()
+            when IRNode.CHOICE_CASE_REFERENCE(_, type, _):
+                return type
         }
         return variableType(expr.type())
     }
@@ -1895,8 +1905,8 @@ class Compiler {
                     return null
                 }
                 return coercionCost(c, target)
-            when IRNode.CHOICE_CASE_REFERENCE(_, ce):
-                return coercionCost(ce.owner.type(), target)
+            when IRNode.CHOICE_CASE_REFERENCE(_, type, _):
+                return coercionCost(type, target)
             when IRNode.FIELD_REFERENCE(_, _, _, field):
                 if field.annotations.isWeak() & !inFieldCleanup {
                     def get := compileDot(expr.position(), expr, "get")
@@ -2093,9 +2103,9 @@ class Compiler {
                 return resolveMethodCall(position, callTarget, methods, args, target)
             when IRNode.UNRESOLVED_INDEX(_, _, base, args):
                 return coerce(call(base, "[]", args, target), target)
-            when IRNode.CHOICE_CASE_REFERENCE(_, ce):
+            when IRNode.CHOICE_CASE_REFERENCE(_, type, ce):
                 if ce.fields.count = 0 {
-                    def owner := IRNode.TYPE_REFERENCE(expr.position(), ce.owner.type())
+                    def owner := IRNode.TYPE_REFERENCE(expr.position(), type)
                     def args := Array<IRNode>()
                     def value := ce.rawValue.convert()->UInt64
                     args.add(IRNode.INT(expr.position(), Type.IntLiteral(value), value))
@@ -2657,7 +2667,7 @@ class Compiler {
     method compileChoiceComparison(left:IRNode, name:String, right:IRNode):IRNode? {
         def args := Array<IRNode>()
         match right {
-            when IRNode.CHOICE_CASE_REFERENCE(_, rightEntry):
+            when IRNode.CHOICE_CASE_REFERENCE(_, _, rightEntry):
                 def leftValue := compileDot(left.position(), left, ClassDecl.RAW_VALUE_NAME)
                 def rightValue := rightEntry.rawValue.convert()->UInt64
                 args.add(IRNode.INT(right.position(), Type.IntLiteral(rightValue),
@@ -2826,7 +2836,7 @@ class Compiler {
                             compilePandaCall("unref", reused))
                 }
                 return construct
-            when IRNode.CHOICE_CASE_REFERENCE(_, ce):
+            when IRNode.CHOICE_CASE_REFERENCE(_, type, ce):
                 if ce.fields.count != args.count {
                     error(m.position(), "choice '\{m}' requires \{ce.fields.count} " +
                             "argument\{ce.fields.count = 1:|s}, but found " +
@@ -2849,12 +2859,12 @@ class Compiler {
                 if initMethod = null {
                     return null
                 }
-                def owner := IRNode.TYPE_REFERENCE(m.position(), ce.owner.type())
+                def owner := IRNode.TYPE_REFERENCE(m.position(), type)
                 def target := IRNode.CONSTRUCTED_OBJECT(m.position(), ce.owner.type())
                 def initCall := call(m.position(),
-                        IRNode.CONSTRUCTED_OBJECT(m.position(), ce.owner.type()),
+                        IRNode.CONSTRUCTED_OBJECT(m.position(), type),
                         MethodRef(self, target, initMethod), finalArgs) -- FIXME literal
-                var construct := IRNode.CONSTRUCT(m.position(), ce.owner.type(), initCall)
+                var construct := IRNode.CONSTRUCT(m.position(), type, initCall)
                 if isRefCounted(ce.owner.type()) {
                     reusedValueCount += 1
                     construct := IRNode.REUSED_VALUE_DEFINITION(construct, reusedValueCount)
@@ -4774,7 +4784,7 @@ class Compiler {
                                 return null
                             }
                             match base {
-                                when IRNode.CHOICE_CASE_REFERENCE(_, entry):
+                                when IRNode.CHOICE_CASE_REFERENCE(_, type, entry):
                                     def callChildren := Array<IRNode>()
                                     callChildren.add(base)
                                     def target := IRNode.VARIABLE_REFERENCE(testPosition, value)
@@ -4800,17 +4810,21 @@ class Compiler {
                                                     continue
                                                 }
                                                 def variable := Variable(position,
-                                                        Variable.Kind.DEF, name, entry.fields[i])
+                                                        Variable.Kind.DEF, name,
+                                                        remapType(type, entry.fields[i]))
                                                 symbolTable.add(variable)
                                                 def decls := Array<IRNode>()
-                                                decls.add(IRNode.DECLARATION(
-                                                        IRNode.VARIABLE_REFERENCE(variable.position,
-                                                            variable),
+                                                def final := cast(position,
                                                         IRNode.CHOICE_FIELD_REFERENCE(
                                                             variable.position,
                                                             IRNode.VARIABLE_REFERENCE(position,
                                                                 value),
-                                                            entry, i)))
+                                                            entry, i),
+                                                        variable.type, false)
+                                                decls.add(IRNode.DECLARATION(
+                                                        IRNode.VARIABLE_REFERENCE(variable.position,
+                                                            variable),
+                                                        final))
                                                 statements.add(IRNode.VAR(variable.position,
                                                         Variable.Kind.DEF, decls.finish()))
                                             otherwise:
@@ -5541,6 +5555,19 @@ class Compiler {
                 m.body = null {
             error(m.position, "expected non-abstract method '\{m.name}' to have a body")
         }
+        if m.annotations.flags && Annotations.Flag.DEFAULT != 0 {
+            if m.owner.classKind != ClassDecl.Kind.INTERFACE {
+                error(m.position, "annotation '@default' may only appear on interface methods")
+            }
+            if m.body = null {
+                error(m.position, "expected '@default' method '\{m.name}' to have a body")
+            }
+        }
+        else if m.kind != MethodDecl.Kind.INIT & m.owner.classKind = ClassDecl.Kind.INTERFACE &
+                !m.annotations.isClass() & m.body != null {
+            error(m.position, "non-abstract interface method '\{m.name}' must be annotated with " +
+                    "'@default'")
+        }
         checkAccessModifierCount(m.position, m.annotations)
     }
 
@@ -5642,6 +5669,7 @@ class Compiler {
         disallow(self, cl, Annotations.Flag.IMPLICIT,  "@implicit")
         disallow(self, cl, Annotations.Flag.INLINE,    "@inline")
         disallow(self, cl, Annotations.Flag.WEAK,      "@weak")
+        disallow(self, cl, Annotations.Flag.DEFAULT,   "@default")
         if cl.annotations.expressions != null {
             for expr in cl.annotations.expressions {
                 match expr {
@@ -5672,6 +5700,7 @@ class Compiler {
         disallow(self, f, Annotations.Flag.INLINE,           "@inline")
         disallow(self, f, Annotations.Flag.SPECIALIZE,       "@specialize")
         disallow(self, f, Annotations.Flag.UNSAFE_IMMUTABLE, "@unsafeImmutable")
+        disallow(self, f, Annotations.Flag.DEFAULT,          "@default")
         if f.annotations.expressions != null {
             for expr in f.annotations.expressions {
                 match expr {

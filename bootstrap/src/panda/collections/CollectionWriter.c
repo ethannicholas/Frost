@@ -21,7 +21,7 @@ typedef void (*$fn32)(panda$collections$CollectionWriter*, panda$core$Object*);
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x43\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x57\x72\x69\x74\x65\x72", 34, -9068070593840742067, NULL };
 
 void panda$collections$CollectionWriter$addAll$panda$collections$CollectionView$LTpanda$collections$CollectionWriter$T$GT(panda$collections$CollectionWriter* self, panda$collections$CollectionView* p_c) {
-    panda$collections$Iterator* Iter$26$95 = NULL;
+    panda$collections$Iterator* Iter$27$95 = NULL;
     panda$collections$Iterator* $tmp6;
     panda$collections$Iterator* $tmp7;
     panda$core$Object* v23 = NULL;
@@ -38,28 +38,28 @@ void panda$collections$CollectionWriter$addAll$panda$collections$CollectionView$
             panda$collections$Iterator* $tmp11 = $tmp9(((panda$collections$Iterable*) p_c));
             $tmp7 = $tmp11;
             $tmp6 = $tmp7;
-            Iter$26$95 = $tmp6;
+            Iter$27$95 = $tmp6;
             panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp6));
             panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp7));
             $l12:;
-            ITable* $tmp15 = Iter$26$95->$class->itable;
+            ITable* $tmp15 = Iter$27$95->$class->itable;
             while ($tmp15->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
                 $tmp15 = $tmp15->next;
             }
             $fn17 $tmp16 = $tmp15->methods[0];
-            panda$core$Bit $tmp18 = $tmp16(Iter$26$95);
+            panda$core$Bit $tmp18 = $tmp16(Iter$27$95);
             panda$core$Bit $tmp19 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp18);
             bool $tmp14 = $tmp19.value;
             if (!$tmp14) goto $l13;
             {
                 int $tmp22;
                 {
-                    ITable* $tmp26 = Iter$26$95->$class->itable;
+                    ITable* $tmp26 = Iter$27$95->$class->itable;
                     while ($tmp26->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
                         $tmp26 = $tmp26->next;
                     }
                     $fn28 $tmp27 = $tmp26->methods[1];
-                    panda$core$Object* $tmp29 = $tmp27(Iter$26$95);
+                    panda$core$Object* $tmp29 = $tmp27(Iter$27$95);
                     $tmp25 = $tmp29;
                     $tmp24 = $tmp25;
                     v23 = $tmp24;
@@ -88,8 +88,8 @@ void panda$collections$CollectionWriter$addAll$panda$collections$CollectionView$
         $tmp4 = -1;
         goto $l2;
         $l2:;
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$26$95));
-        Iter$26$95 = NULL;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$27$95));
+        Iter$27$95 = NULL;
         switch ($tmp4) {
             case -1: goto $l34;
         }
