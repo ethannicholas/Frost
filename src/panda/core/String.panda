@@ -325,7 +325,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
     def _length:Int
 
     @private
-    def _hash := 0
+    def _hash:Int := 0
 
     ================================================================================================
     For dependent substrings, points to the parent String.

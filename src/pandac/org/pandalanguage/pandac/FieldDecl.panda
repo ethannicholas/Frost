@@ -22,8 +22,6 @@ class FieldDecl : Symbol {
 
     def rawValue:ASTNode?
 
-    def value:IRNode?
-
     var resolved := Compiler.Resolution.UNRESOLVED
     
     init(owner:ClassDecl, position:Position, doccomment:String?, annotations:Annotations,
@@ -34,7 +32,6 @@ class FieldDecl : Symbol {
         self.fieldKind := fieldKind
         self.type := type
         self.rawValue := value
-        self.value := null
         super.init(Symbol.Kind.FIELD, position, name)
     }
 
@@ -50,11 +47,7 @@ class FieldDecl : Symbol {
         result.append(name)
         result.append(":")
         result.append(type)
-        if value != null {
-            result.append(" := ")
-            result.append(value)
-        }
-        else if rawValue != null {
+        if rawValue != null {
             result.append(" := ")
             result.append(rawValue)
         }

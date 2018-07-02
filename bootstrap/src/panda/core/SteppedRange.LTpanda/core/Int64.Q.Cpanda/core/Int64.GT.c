@@ -27,6 +27,8 @@ static panda$core$String $s2 = { (panda$core$Class*) &panda$core$String$class, -
 static panda$core$String $s12 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2e\x2e\x2e", 3, 1504239, NULL };
 static panda$core$String $s13 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2e\x2e", 2, 14893, NULL };
 static panda$core$String $s16 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x20\x62\x79\x20", 4, 138041984, NULL };
+static panda$core$String $s28 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x53\x74\x65\x70\x70\x65\x64\x52\x61\x6e\x67\x65\x2e\x70\x61\x6e\x64\x61", 18, -6556486770955801127, NULL };
+static panda$core$String $s29 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6d\x65\x74\x68\x6f\x64\x20\x65\x78\x69\x74\x65\x64\x20\x77\x69\x74\x68\x6f\x75\x74\x20\x72\x65\x74\x75\x72\x6e\x69\x6e\x67", 31, 7480581949655794403, NULL };
 
 void panda$core$SteppedRange$LTpanda$core$Int64$Q$Cpanda$core$Int64$GT$init$panda$core$Int64$Q$panda$core$Int64$Q$panda$core$Int64$panda$core$Bit(panda$core$SteppedRange$LTpanda$core$Int64$Q$Cpanda$core$Int64$GT* self, panda$core$Int64$nullable p_start, panda$core$Int64$nullable p_end, panda$core$Int64 p_step, panda$core$Bit p_inclusive) {
     self->start = p_start;
@@ -108,6 +110,11 @@ panda$core$String* panda$core$SteppedRange$LTpanda$core$Int64$Q$Cpanda$core$Int6
         case 0: goto $l23;
     }
     $l25:;
+    if (false) goto $l26; else goto $l27;
+    $l27:;
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s28, (panda$core$Int64) { 50 }, &$s29);
+    abort();
+    $l26:;
     abort();
 }
 void panda$core$SteppedRange$LTpanda$core$Int64$Q$Cpanda$core$Int64$GT$cleanup(panda$core$SteppedRange$LTpanda$core$Int64$Q$Cpanda$core$Int64$GT self) {

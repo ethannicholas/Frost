@@ -28,6 +28,8 @@ typedef void (*$fn40)(panda$collections$Iterator$FilterIterator*);
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x46\x69\x6c\x74\x65\x72\x49\x74\x65\x72\x61\x74\x6f\x72", 41, 7769725683637530640, NULL };
 static panda$core$String $s33 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x70\x61\x6e\x64\x61", 14, -6782353983774632655, NULL };
 static panda$core$String $s34 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x70\x61\x6e\x64\x61\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x46\x69\x6c\x74\x65\x72\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x6e\x65\x78\x74\x28\x29\x3a\x70\x61\x6e\x64\x61\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x46\x69\x6c\x74\x65\x72\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x54", 124, -6681978521071191293, NULL };
+static panda$core$String $s48 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x70\x61\x6e\x64\x61", 14, -6782353983774632655, NULL };
+static panda$core$String $s49 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6d\x65\x74\x68\x6f\x64\x20\x65\x78\x69\x74\x65\x64\x20\x77\x69\x74\x68\x6f\x75\x74\x20\x72\x65\x74\x75\x72\x6e\x69\x6e\x67", 31, 7480581949655794403, NULL };
 
 void panda$collections$Iterator$FilterIterator$init$panda$collections$Iterator$LTpanda$collections$Iterator$FilterIterator$T$GT$$LPpanda$collections$Iterator$FilterIterator$T$RP$EQ$GT$LPpanda$core$Bit$RP(panda$collections$Iterator$FilterIterator* self, panda$collections$Iterator* p_base, panda$core$MutableMethod* p_filter) {
     panda$collections$Iterator* $tmp2;
@@ -138,20 +140,25 @@ panda$core$Object* panda$collections$Iterator$FilterIterator$next$R$panda$collec
         case 0: goto $l43;
     }
     $l45:;
+    if (false) goto $l46; else goto $l47;
+    $l47:;
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s48, (panda$core$Int64) { 40 }, &$s49);
+    abort();
+    $l46:;
     abort();
 }
 void panda$collections$Iterator$FilterIterator$cleanup(panda$collections$Iterator$FilterIterator* self) {
-    int $tmp48;
+    int $tmp52;
     {
     }
-    $tmp48 = -1;
-    goto $l46;
-    $l46:;
+    $tmp52 = -1;
+    goto $l50;
+    $l50:;
     panda$core$Object$cleanup(((panda$core$Object*) self));
-    switch ($tmp48) {
-        case -1: goto $l49;
+    switch ($tmp52) {
+        case -1: goto $l53;
     }
-    $l49:;
+    $l53:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->base));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->filter));
     panda$core$Panda$unref$panda$core$Object(self->nextValue);

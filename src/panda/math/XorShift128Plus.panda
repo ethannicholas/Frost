@@ -26,7 +26,7 @@ class XorShift128Plus : Random {
     init(seed:Int64) {
         -- if we start with a small seed, the first few numbers tend to likewise be small. Since
         -- manually-chosen seeds are likely to be small, let's get out of that regime.
-        state1 := seed + 123456789
+        state1 := seed * 6713 + 123456789
         if state1 = 0 {
             -- XorShift seed cannot be zero, replace with an arbitrarily-chosen value
             state1 := 123456789

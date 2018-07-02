@@ -5,7 +5,6 @@ uses org.pandalanguage.pandac.ClassDecl
 uses org.pandalanguage.pandac.CodeGenerator
 uses org.pandalanguage.pandac.Compiler
 uses org.pandalanguage.pandac.FieldDecl
-uses org.pandalanguage.pandac.IRNode
 uses org.pandalanguage.pandac.MethodDecl
 uses org.pandalanguage.pandac.Pair
 uses org.pandalanguage.pandac.Type

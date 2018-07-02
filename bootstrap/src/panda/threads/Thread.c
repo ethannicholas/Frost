@@ -14,6 +14,14 @@ panda$threads$Thread$class_type panda$threads$Thread$class = { (panda$core$Class
 
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x74\x68\x72\x65\x61\x64\x73\x2e\x54\x68\x72\x65\x61\x64", 20, -5279973239765409956, NULL };
+static panda$core$String $s16 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x54\x68\x72\x65\x61\x64\x2e\x70\x61\x6e\x64\x61", 12, -8900681894031961741, NULL };
+static panda$core$String $s17 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6d\x65\x74\x68\x6f\x64\x20\x65\x78\x69\x74\x65\x64\x20\x77\x69\x74\x68\x6f\x75\x74\x20\x72\x65\x74\x75\x72\x6e\x69\x6e\x67", 31, 7480581949655794403, NULL };
+static panda$core$String $s32 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x54\x68\x72\x65\x61\x64\x2e\x70\x61\x6e\x64\x61", 12, -8900681894031961741, NULL };
+static panda$core$String $s33 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6d\x65\x74\x68\x6f\x64\x20\x65\x78\x69\x74\x65\x64\x20\x77\x69\x74\x68\x6f\x75\x74\x20\x72\x65\x74\x75\x72\x6e\x69\x6e\x67", 31, 7480581949655794403, NULL };
+static panda$core$String $s48 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x54\x68\x72\x65\x61\x64\x2e\x70\x61\x6e\x64\x61", 12, -8900681894031961741, NULL };
+static panda$core$String $s49 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6d\x65\x74\x68\x6f\x64\x20\x65\x78\x69\x74\x65\x64\x20\x77\x69\x74\x68\x6f\x75\x74\x20\x72\x65\x74\x75\x72\x6e\x69\x6e\x67", 31, 7480581949655794403, NULL };
+static panda$core$String $s64 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x54\x68\x72\x65\x61\x64\x2e\x70\x61\x6e\x64\x61", 12, -8900681894031961741, NULL };
+static panda$core$String $s65 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6d\x65\x74\x68\x6f\x64\x20\x65\x78\x69\x74\x65\x64\x20\x77\x69\x74\x68\x6f\x75\x74\x20\x72\x65\x74\x75\x72\x6e\x69\x6e\x67", 31, 7480581949655794403, NULL };
 
 void panda$threads$Thread$init(panda$threads$Thread* self) {
 }
@@ -48,126 +56,146 @@ panda$threads$Thread* panda$threads$Thread$start$$LP$RP$EQ$AM$GT$ST$LP$RP$R$pand
         case 0: goto $l11;
     }
     $l13:;
+    if (false) goto $l14; else goto $l15;
+    $l15:;
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s16, (panda$core$Int64) { 47 }, &$s17);
+    abort();
+    $l14:;
     abort();
 }
 panda$threads$Thread* panda$threads$Thread$start$$LP$RP$EQ$AM$GT$ST$LP$RP$panda$core$Bit$R$panda$threads$Thread(panda$core$Method* p_run, panda$core$Bit p_preventsExit) {
-    panda$threads$Thread* result17 = NULL;
-    panda$threads$Thread* $tmp18;
-    panda$threads$Thread* $tmp19;
-    panda$threads$Thread* $returnValue21;
+    panda$threads$Thread* result21 = NULL;
     panda$threads$Thread* $tmp22;
-    int $tmp16;
+    panda$threads$Thread* $tmp23;
+    panda$threads$Thread* $returnValue25;
+    panda$threads$Thread* $tmp26;
+    int $tmp20;
     {
-        panda$threads$Thread* $tmp20 = (panda$threads$Thread*) pandaObjectAlloc(12, (panda$core$Class*) &panda$threads$Thread$class);
-        panda$threads$Thread$init($tmp20);
-        $tmp19 = $tmp20;
-        $tmp18 = $tmp19;
-        result17 = $tmp18;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp18));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp19));
-        panda$threads$Thread$run$$LP$RP$EQ$AM$GT$LP$RP$builtin_bit(result17, ((panda$core$MutableMethod*) p_run), p_preventsExit.value);
-        $tmp22 = result17;
-        $returnValue21 = $tmp22;
+        panda$threads$Thread* $tmp24 = (panda$threads$Thread*) pandaObjectAlloc(12, (panda$core$Class*) &panda$threads$Thread$class);
+        panda$threads$Thread$init($tmp24);
+        $tmp23 = $tmp24;
+        $tmp22 = $tmp23;
+        result21 = $tmp22;
         panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp22));
-        $tmp16 = 0;
-        goto $l14;
-        $l23:;
-        return $returnValue21;
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp23));
+        panda$threads$Thread$run$$LP$RP$EQ$AM$GT$LP$RP$builtin_bit(result21, ((panda$core$MutableMethod*) p_run), p_preventsExit.value);
+        $tmp26 = result21;
+        $returnValue25 = $tmp26;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp26));
+        $tmp20 = 0;
+        goto $l18;
+        $l27:;
+        return $returnValue25;
     }
-    $l14:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result17));
-    result17 = NULL;
-    switch ($tmp16) {
-        case 0: goto $l23;
+    $l18:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result21));
+    result21 = NULL;
+    switch ($tmp20) {
+        case 0: goto $l27;
     }
-    $l25:;
+    $l29:;
+    if (false) goto $l30; else goto $l31;
+    $l31:;
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s32, (panda$core$Int64) { 54 }, &$s33);
+    abort();
+    $l30:;
     abort();
 }
 panda$threads$Thread* panda$threads$Thread$unsafeStart$$LP$RP$EQ$AM$GT$LP$RP$R$panda$threads$Thread(panda$core$MutableMethod* p_run) {
-    panda$threads$Thread* result29 = NULL;
-    panda$threads$Thread* $tmp30;
-    panda$threads$Thread* $tmp31;
-    panda$threads$Thread* $returnValue33;
-    panda$threads$Thread* $tmp34;
-    int $tmp28;
+    panda$threads$Thread* result37 = NULL;
+    panda$threads$Thread* $tmp38;
+    panda$threads$Thread* $tmp39;
+    panda$threads$Thread* $returnValue41;
+    panda$threads$Thread* $tmp42;
+    int $tmp36;
     {
-        panda$threads$Thread* $tmp32 = (panda$threads$Thread*) pandaObjectAlloc(12, (panda$core$Class*) &panda$threads$Thread$class);
-        panda$threads$Thread$init($tmp32);
-        $tmp31 = $tmp32;
-        $tmp30 = $tmp31;
-        result29 = $tmp30;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp30));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp31));
-        panda$threads$Thread$run$$LP$RP$EQ$AM$GT$LP$RP$builtin_bit(result29, p_run, true);
-        $tmp34 = result29;
-        $returnValue33 = $tmp34;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp34));
-        $tmp28 = 0;
-        goto $l26;
-        $l35:;
-        return $returnValue33;
+        panda$threads$Thread* $tmp40 = (panda$threads$Thread*) pandaObjectAlloc(12, (panda$core$Class*) &panda$threads$Thread$class);
+        panda$threads$Thread$init($tmp40);
+        $tmp39 = $tmp40;
+        $tmp38 = $tmp39;
+        result37 = $tmp38;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp38));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp39));
+        panda$threads$Thread$run$$LP$RP$EQ$AM$GT$LP$RP$builtin_bit(result37, p_run, true);
+        $tmp42 = result37;
+        $returnValue41 = $tmp42;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp42));
+        $tmp36 = 0;
+        goto $l34;
+        $l43:;
+        return $returnValue41;
     }
-    $l26:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result29));
-    result29 = NULL;
-    switch ($tmp28) {
-        case 0: goto $l35;
+    $l34:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result37));
+    result37 = NULL;
+    switch ($tmp36) {
+        case 0: goto $l43;
     }
-    $l37:;
+    $l45:;
+    if (false) goto $l46; else goto $l47;
+    $l47:;
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s48, (panda$core$Int64) { 61 }, &$s49);
+    abort();
+    $l46:;
     abort();
 }
 panda$threads$Thread* panda$threads$Thread$unsafeStart$$LP$RP$EQ$AM$GT$LP$RP$panda$core$Bit$R$panda$threads$Thread(panda$core$MutableMethod* p_run, panda$core$Bit p_preventsExit) {
-    panda$threads$Thread* result41 = NULL;
-    panda$threads$Thread* $tmp42;
-    panda$threads$Thread* $tmp43;
-    panda$threads$Thread* $returnValue45;
-    panda$threads$Thread* $tmp46;
-    int $tmp40;
+    panda$threads$Thread* result53 = NULL;
+    panda$threads$Thread* $tmp54;
+    panda$threads$Thread* $tmp55;
+    panda$threads$Thread* $returnValue57;
+    panda$threads$Thread* $tmp58;
+    int $tmp52;
     {
-        panda$threads$Thread* $tmp44 = (panda$threads$Thread*) pandaObjectAlloc(12, (panda$core$Class*) &panda$threads$Thread$class);
-        panda$threads$Thread$init($tmp44);
-        $tmp43 = $tmp44;
-        $tmp42 = $tmp43;
-        result41 = $tmp42;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp42));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp43));
-        panda$threads$Thread$run$$LP$RP$EQ$AM$GT$LP$RP$builtin_bit(result41, p_run, p_preventsExit.value);
-        $tmp46 = result41;
-        $returnValue45 = $tmp46;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp46));
-        $tmp40 = 0;
-        goto $l38;
-        $l47:;
-        return $returnValue45;
+        panda$threads$Thread* $tmp56 = (panda$threads$Thread*) pandaObjectAlloc(12, (panda$core$Class*) &panda$threads$Thread$class);
+        panda$threads$Thread$init($tmp56);
+        $tmp55 = $tmp56;
+        $tmp54 = $tmp55;
+        result53 = $tmp54;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp54));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp55));
+        panda$threads$Thread$run$$LP$RP$EQ$AM$GT$LP$RP$builtin_bit(result53, p_run, p_preventsExit.value);
+        $tmp58 = result53;
+        $returnValue57 = $tmp58;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp58));
+        $tmp52 = 0;
+        goto $l50;
+        $l59:;
+        return $returnValue57;
     }
-    $l38:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result41));
-    result41 = NULL;
-    switch ($tmp40) {
-        case 0: goto $l47;
+    $l50:;
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result53));
+    result53 = NULL;
+    switch ($tmp52) {
+        case 0: goto $l59;
     }
-    $l49:;
+    $l61:;
+    if (false) goto $l62; else goto $l63;
+    $l63:;
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s64, (panda$core$Int64) { 68 }, &$s65);
+    abort();
+    $l62:;
     abort();
 }
 panda$core$Int64 panda$threads$Thread$preferredThreadCount$R$panda$core$Int64() {
-    panda$core$Int64 $returnValue50;
-    panda$core$Int64 $tmp51;
-    panda$core$Int64$init$builtin_int64(&$tmp51, 8);
-    $returnValue50 = $tmp51;
-    return $returnValue50;
+    panda$core$Int64 $returnValue66;
+    panda$core$Int64 $tmp67;
+    panda$core$Int64$init$builtin_int64(&$tmp67, 8);
+    $returnValue66 = $tmp67;
+    return $returnValue66;
 }
 void panda$threads$Thread$cleanup(panda$threads$Thread* self) {
-    int $tmp55;
+    int $tmp71;
     {
     }
-    $tmp55 = -1;
-    goto $l53;
-    $l53:;
+    $tmp71 = -1;
+    goto $l69;
+    $l69:;
     panda$core$Immutable$cleanup(((panda$core$Immutable*) self));
-    switch ($tmp55) {
-        case -1: goto $l56;
+    switch ($tmp71) {
+        case -1: goto $l72;
     }
-    $l56:;
+    $l72:;
 }
 
 

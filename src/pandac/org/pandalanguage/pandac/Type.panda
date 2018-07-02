@@ -349,6 +349,13 @@ class Type : Symbol, Key<Type> {
     }
 
     @class
+    method ClassLiteral(cl:ClassDecl):Type {
+        def children := Array<Type>() -- FIXME literal
+        children.add(cl.type())
+        return generic(Class(), children)
+    }
+
+    @class
     method BuiltinBit():Type {
         return Type("builtin_bit", Kind.BUILTIN_BIT, Position(), true)
     }

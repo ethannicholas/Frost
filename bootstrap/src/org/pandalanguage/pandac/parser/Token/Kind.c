@@ -130,6 +130,8 @@ static panda$core$String $s523 = { (panda$core$Class*) &panda$core$String$class,
 static panda$core$String $s528 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x46\x41\x4c\x53\x45", 5, 17862081864, NULL };
 static panda$core$String $s533 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x47\x54", 2, 17456, NULL };
 static panda$core$String $s538 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x3e\x3e", 2, 16525, NULL };
+static panda$core$String $s542 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x54\x6f\x6b\x65\x6e\x2e\x70\x61\x6e\x64\x61", 11, 8405089767322347052, NULL };
+static panda$core$String $s543 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6d\x65\x74\x68\x6f\x64\x20\x65\x78\x69\x74\x65\x64\x20\x77\x69\x74\x68\x6f\x75\x74\x20\x72\x65\x74\x75\x72\x6e\x69\x6e\x67", 31, 7480581949655794403, NULL };
 
 panda$core$String* org$pandalanguage$pandac$parser$Token$Kind$convert$R$panda$core$String(org$pandalanguage$pandac$parser$Token$Kind self) {
     org$pandalanguage$pandac$parser$Token$Kind $match$123_133;
@@ -1633,12 +1635,15 @@ panda$core$String* org$pandalanguage$pandac$parser$Token$Kind$convert$R$panda$co
         }
         }
     }
+    if (false) goto $l540; else goto $l541;
+    $l541:;
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s542, (panda$core$Int64) { 122 }, &$s543);
+    abort();
+    $l540:;
     abort();
 }
 void org$pandalanguage$pandac$parser$Token$Kind$cleanup(org$pandalanguage$pandac$parser$Token$Kind self) {
-    org$pandalanguage$pandac$parser$Token$Kind $match$10_5540;
-    panda$core$Int64 $tmp541;
-    panda$core$Int64 $tmp543;
+    org$pandalanguage$pandac$parser$Token$Kind $match$10_5544;
     panda$core$Int64 $tmp545;
     panda$core$Int64 $tmp547;
     panda$core$Int64 $tmp549;
@@ -1746,767 +1751,769 @@ void org$pandalanguage$pandac$parser$Token$Kind$cleanup(org$pandalanguage$pandac
     panda$core$Int64 $tmp753;
     panda$core$Int64 $tmp755;
     panda$core$Int64 $tmp757;
+    panda$core$Int64 $tmp759;
+    panda$core$Int64 $tmp761;
     {
-        $match$10_5540 = self;
-        panda$core$Int64$init$builtin_int64(&$tmp541, 0);
-        panda$core$Bit $tmp542 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp541);
-        if ($tmp542.value) {
-        {
-        }
-        }
-        else {
-        panda$core$Int64$init$builtin_int64(&$tmp543, 1);
-        panda$core$Bit $tmp544 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp543);
-        if ($tmp544.value) {
-        {
-        }
-        }
-        else {
-        panda$core$Int64$init$builtin_int64(&$tmp545, 2);
-        panda$core$Bit $tmp546 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp545);
+        $match$10_5544 = self;
+        panda$core$Int64$init$builtin_int64(&$tmp545, 0);
+        panda$core$Bit $tmp546 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp545);
         if ($tmp546.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp547, 3);
-        panda$core$Bit $tmp548 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp547);
+        panda$core$Int64$init$builtin_int64(&$tmp547, 1);
+        panda$core$Bit $tmp548 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp547);
         if ($tmp548.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp549, 4);
-        panda$core$Bit $tmp550 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp549);
+        panda$core$Int64$init$builtin_int64(&$tmp549, 2);
+        panda$core$Bit $tmp550 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp549);
         if ($tmp550.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp551, 5);
-        panda$core$Bit $tmp552 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp551);
+        panda$core$Int64$init$builtin_int64(&$tmp551, 3);
+        panda$core$Bit $tmp552 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp551);
         if ($tmp552.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp553, 6);
-        panda$core$Bit $tmp554 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp553);
+        panda$core$Int64$init$builtin_int64(&$tmp553, 4);
+        panda$core$Bit $tmp554 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp553);
         if ($tmp554.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp555, 7);
-        panda$core$Bit $tmp556 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp555);
+        panda$core$Int64$init$builtin_int64(&$tmp555, 5);
+        panda$core$Bit $tmp556 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp555);
         if ($tmp556.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp557, 8);
-        panda$core$Bit $tmp558 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp557);
+        panda$core$Int64$init$builtin_int64(&$tmp557, 6);
+        panda$core$Bit $tmp558 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp557);
         if ($tmp558.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp559, 9);
-        panda$core$Bit $tmp560 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp559);
+        panda$core$Int64$init$builtin_int64(&$tmp559, 7);
+        panda$core$Bit $tmp560 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp559);
         if ($tmp560.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp561, 10);
-        panda$core$Bit $tmp562 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp561);
+        panda$core$Int64$init$builtin_int64(&$tmp561, 8);
+        panda$core$Bit $tmp562 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp561);
         if ($tmp562.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp563, 11);
-        panda$core$Bit $tmp564 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp563);
+        panda$core$Int64$init$builtin_int64(&$tmp563, 9);
+        panda$core$Bit $tmp564 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp563);
         if ($tmp564.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp565, 12);
-        panda$core$Bit $tmp566 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp565);
+        panda$core$Int64$init$builtin_int64(&$tmp565, 10);
+        panda$core$Bit $tmp566 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp565);
         if ($tmp566.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp567, 13);
-        panda$core$Bit $tmp568 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp567);
+        panda$core$Int64$init$builtin_int64(&$tmp567, 11);
+        panda$core$Bit $tmp568 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp567);
         if ($tmp568.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp569, 14);
-        panda$core$Bit $tmp570 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp569);
+        panda$core$Int64$init$builtin_int64(&$tmp569, 12);
+        panda$core$Bit $tmp570 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp569);
         if ($tmp570.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp571, 15);
-        panda$core$Bit $tmp572 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp571);
+        panda$core$Int64$init$builtin_int64(&$tmp571, 13);
+        panda$core$Bit $tmp572 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp571);
         if ($tmp572.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp573, 16);
-        panda$core$Bit $tmp574 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp573);
+        panda$core$Int64$init$builtin_int64(&$tmp573, 14);
+        panda$core$Bit $tmp574 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp573);
         if ($tmp574.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp575, 17);
-        panda$core$Bit $tmp576 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp575);
+        panda$core$Int64$init$builtin_int64(&$tmp575, 15);
+        panda$core$Bit $tmp576 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp575);
         if ($tmp576.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp577, 18);
-        panda$core$Bit $tmp578 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp577);
+        panda$core$Int64$init$builtin_int64(&$tmp577, 16);
+        panda$core$Bit $tmp578 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp577);
         if ($tmp578.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp579, 19);
-        panda$core$Bit $tmp580 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp579);
+        panda$core$Int64$init$builtin_int64(&$tmp579, 17);
+        panda$core$Bit $tmp580 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp579);
         if ($tmp580.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp581, 20);
-        panda$core$Bit $tmp582 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp581);
+        panda$core$Int64$init$builtin_int64(&$tmp581, 18);
+        panda$core$Bit $tmp582 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp581);
         if ($tmp582.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp583, 21);
-        panda$core$Bit $tmp584 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp583);
+        panda$core$Int64$init$builtin_int64(&$tmp583, 19);
+        panda$core$Bit $tmp584 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp583);
         if ($tmp584.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp585, 22);
-        panda$core$Bit $tmp586 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp585);
+        panda$core$Int64$init$builtin_int64(&$tmp585, 20);
+        panda$core$Bit $tmp586 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp585);
         if ($tmp586.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp587, 23);
-        panda$core$Bit $tmp588 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp587);
+        panda$core$Int64$init$builtin_int64(&$tmp587, 21);
+        panda$core$Bit $tmp588 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp587);
         if ($tmp588.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp589, 24);
-        panda$core$Bit $tmp590 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp589);
+        panda$core$Int64$init$builtin_int64(&$tmp589, 22);
+        panda$core$Bit $tmp590 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp589);
         if ($tmp590.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp591, 25);
-        panda$core$Bit $tmp592 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp591);
+        panda$core$Int64$init$builtin_int64(&$tmp591, 23);
+        panda$core$Bit $tmp592 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp591);
         if ($tmp592.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp593, 26);
-        panda$core$Bit $tmp594 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp593);
+        panda$core$Int64$init$builtin_int64(&$tmp593, 24);
+        panda$core$Bit $tmp594 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp593);
         if ($tmp594.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp595, 27);
-        panda$core$Bit $tmp596 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp595);
+        panda$core$Int64$init$builtin_int64(&$tmp595, 25);
+        panda$core$Bit $tmp596 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp595);
         if ($tmp596.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp597, 28);
-        panda$core$Bit $tmp598 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp597);
+        panda$core$Int64$init$builtin_int64(&$tmp597, 26);
+        panda$core$Bit $tmp598 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp597);
         if ($tmp598.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp599, 29);
-        panda$core$Bit $tmp600 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp599);
+        panda$core$Int64$init$builtin_int64(&$tmp599, 27);
+        panda$core$Bit $tmp600 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp599);
         if ($tmp600.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp601, 30);
-        panda$core$Bit $tmp602 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp601);
+        panda$core$Int64$init$builtin_int64(&$tmp601, 28);
+        panda$core$Bit $tmp602 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp601);
         if ($tmp602.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp603, 31);
-        panda$core$Bit $tmp604 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp603);
+        panda$core$Int64$init$builtin_int64(&$tmp603, 29);
+        panda$core$Bit $tmp604 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp603);
         if ($tmp604.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp605, 32);
-        panda$core$Bit $tmp606 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp605);
+        panda$core$Int64$init$builtin_int64(&$tmp605, 30);
+        panda$core$Bit $tmp606 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp605);
         if ($tmp606.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp607, 33);
-        panda$core$Bit $tmp608 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp607);
+        panda$core$Int64$init$builtin_int64(&$tmp607, 31);
+        panda$core$Bit $tmp608 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp607);
         if ($tmp608.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp609, 34);
-        panda$core$Bit $tmp610 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp609);
+        panda$core$Int64$init$builtin_int64(&$tmp609, 32);
+        panda$core$Bit $tmp610 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp609);
         if ($tmp610.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp611, 35);
-        panda$core$Bit $tmp612 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp611);
+        panda$core$Int64$init$builtin_int64(&$tmp611, 33);
+        panda$core$Bit $tmp612 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp611);
         if ($tmp612.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp613, 36);
-        panda$core$Bit $tmp614 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp613);
+        panda$core$Int64$init$builtin_int64(&$tmp613, 34);
+        panda$core$Bit $tmp614 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp613);
         if ($tmp614.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp615, 37);
-        panda$core$Bit $tmp616 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp615);
+        panda$core$Int64$init$builtin_int64(&$tmp615, 35);
+        panda$core$Bit $tmp616 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp615);
         if ($tmp616.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp617, 38);
-        panda$core$Bit $tmp618 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp617);
+        panda$core$Int64$init$builtin_int64(&$tmp617, 36);
+        panda$core$Bit $tmp618 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp617);
         if ($tmp618.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp619, 39);
-        panda$core$Bit $tmp620 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp619);
+        panda$core$Int64$init$builtin_int64(&$tmp619, 37);
+        panda$core$Bit $tmp620 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp619);
         if ($tmp620.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp621, 40);
-        panda$core$Bit $tmp622 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp621);
+        panda$core$Int64$init$builtin_int64(&$tmp621, 38);
+        panda$core$Bit $tmp622 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp621);
         if ($tmp622.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp623, 41);
-        panda$core$Bit $tmp624 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp623);
+        panda$core$Int64$init$builtin_int64(&$tmp623, 39);
+        panda$core$Bit $tmp624 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp623);
         if ($tmp624.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp625, 42);
-        panda$core$Bit $tmp626 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp625);
+        panda$core$Int64$init$builtin_int64(&$tmp625, 40);
+        panda$core$Bit $tmp626 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp625);
         if ($tmp626.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp627, 43);
-        panda$core$Bit $tmp628 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp627);
+        panda$core$Int64$init$builtin_int64(&$tmp627, 41);
+        panda$core$Bit $tmp628 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp627);
         if ($tmp628.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp629, 44);
-        panda$core$Bit $tmp630 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp629);
+        panda$core$Int64$init$builtin_int64(&$tmp629, 42);
+        panda$core$Bit $tmp630 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp629);
         if ($tmp630.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp631, 45);
-        panda$core$Bit $tmp632 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp631);
+        panda$core$Int64$init$builtin_int64(&$tmp631, 43);
+        panda$core$Bit $tmp632 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp631);
         if ($tmp632.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp633, 46);
-        panda$core$Bit $tmp634 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp633);
+        panda$core$Int64$init$builtin_int64(&$tmp633, 44);
+        panda$core$Bit $tmp634 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp633);
         if ($tmp634.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp635, 47);
-        panda$core$Bit $tmp636 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp635);
+        panda$core$Int64$init$builtin_int64(&$tmp635, 45);
+        panda$core$Bit $tmp636 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp635);
         if ($tmp636.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp637, 48);
-        panda$core$Bit $tmp638 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp637);
+        panda$core$Int64$init$builtin_int64(&$tmp637, 46);
+        panda$core$Bit $tmp638 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp637);
         if ($tmp638.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp639, 49);
-        panda$core$Bit $tmp640 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp639);
+        panda$core$Int64$init$builtin_int64(&$tmp639, 47);
+        panda$core$Bit $tmp640 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp639);
         if ($tmp640.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp641, 50);
-        panda$core$Bit $tmp642 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp641);
+        panda$core$Int64$init$builtin_int64(&$tmp641, 48);
+        panda$core$Bit $tmp642 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp641);
         if ($tmp642.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp643, 51);
-        panda$core$Bit $tmp644 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp643);
+        panda$core$Int64$init$builtin_int64(&$tmp643, 49);
+        panda$core$Bit $tmp644 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp643);
         if ($tmp644.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp645, 52);
-        panda$core$Bit $tmp646 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp645);
+        panda$core$Int64$init$builtin_int64(&$tmp645, 50);
+        panda$core$Bit $tmp646 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp645);
         if ($tmp646.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp647, 53);
-        panda$core$Bit $tmp648 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp647);
+        panda$core$Int64$init$builtin_int64(&$tmp647, 51);
+        panda$core$Bit $tmp648 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp647);
         if ($tmp648.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp649, 54);
-        panda$core$Bit $tmp650 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp649);
+        panda$core$Int64$init$builtin_int64(&$tmp649, 52);
+        panda$core$Bit $tmp650 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp649);
         if ($tmp650.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp651, 55);
-        panda$core$Bit $tmp652 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp651);
+        panda$core$Int64$init$builtin_int64(&$tmp651, 53);
+        panda$core$Bit $tmp652 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp651);
         if ($tmp652.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp653, 56);
-        panda$core$Bit $tmp654 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp653);
+        panda$core$Int64$init$builtin_int64(&$tmp653, 54);
+        panda$core$Bit $tmp654 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp653);
         if ($tmp654.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp655, 57);
-        panda$core$Bit $tmp656 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp655);
+        panda$core$Int64$init$builtin_int64(&$tmp655, 55);
+        panda$core$Bit $tmp656 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp655);
         if ($tmp656.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp657, 58);
-        panda$core$Bit $tmp658 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp657);
+        panda$core$Int64$init$builtin_int64(&$tmp657, 56);
+        panda$core$Bit $tmp658 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp657);
         if ($tmp658.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp659, 59);
-        panda$core$Bit $tmp660 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp659);
+        panda$core$Int64$init$builtin_int64(&$tmp659, 57);
+        panda$core$Bit $tmp660 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp659);
         if ($tmp660.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp661, 60);
-        panda$core$Bit $tmp662 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp661);
+        panda$core$Int64$init$builtin_int64(&$tmp661, 58);
+        panda$core$Bit $tmp662 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp661);
         if ($tmp662.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp663, 61);
-        panda$core$Bit $tmp664 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp663);
+        panda$core$Int64$init$builtin_int64(&$tmp663, 59);
+        panda$core$Bit $tmp664 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp663);
         if ($tmp664.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp665, 62);
-        panda$core$Bit $tmp666 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp665);
+        panda$core$Int64$init$builtin_int64(&$tmp665, 60);
+        panda$core$Bit $tmp666 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp665);
         if ($tmp666.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp667, 63);
-        panda$core$Bit $tmp668 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp667);
+        panda$core$Int64$init$builtin_int64(&$tmp667, 61);
+        panda$core$Bit $tmp668 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp667);
         if ($tmp668.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp669, 64);
-        panda$core$Bit $tmp670 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp669);
+        panda$core$Int64$init$builtin_int64(&$tmp669, 62);
+        panda$core$Bit $tmp670 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp669);
         if ($tmp670.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp671, 65);
-        panda$core$Bit $tmp672 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp671);
+        panda$core$Int64$init$builtin_int64(&$tmp671, 63);
+        panda$core$Bit $tmp672 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp671);
         if ($tmp672.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp673, 66);
-        panda$core$Bit $tmp674 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp673);
+        panda$core$Int64$init$builtin_int64(&$tmp673, 64);
+        panda$core$Bit $tmp674 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp673);
         if ($tmp674.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp675, 67);
-        panda$core$Bit $tmp676 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp675);
+        panda$core$Int64$init$builtin_int64(&$tmp675, 65);
+        panda$core$Bit $tmp676 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp675);
         if ($tmp676.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp677, 68);
-        panda$core$Bit $tmp678 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp677);
+        panda$core$Int64$init$builtin_int64(&$tmp677, 66);
+        panda$core$Bit $tmp678 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp677);
         if ($tmp678.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp679, 69);
-        panda$core$Bit $tmp680 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp679);
+        panda$core$Int64$init$builtin_int64(&$tmp679, 67);
+        panda$core$Bit $tmp680 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp679);
         if ($tmp680.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp681, 70);
-        panda$core$Bit $tmp682 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp681);
+        panda$core$Int64$init$builtin_int64(&$tmp681, 68);
+        panda$core$Bit $tmp682 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp681);
         if ($tmp682.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp683, 71);
-        panda$core$Bit $tmp684 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp683);
+        panda$core$Int64$init$builtin_int64(&$tmp683, 69);
+        panda$core$Bit $tmp684 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp683);
         if ($tmp684.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp685, 72);
-        panda$core$Bit $tmp686 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp685);
+        panda$core$Int64$init$builtin_int64(&$tmp685, 70);
+        panda$core$Bit $tmp686 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp685);
         if ($tmp686.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp687, 73);
-        panda$core$Bit $tmp688 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp687);
+        panda$core$Int64$init$builtin_int64(&$tmp687, 71);
+        panda$core$Bit $tmp688 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp687);
         if ($tmp688.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp689, 74);
-        panda$core$Bit $tmp690 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp689);
+        panda$core$Int64$init$builtin_int64(&$tmp689, 72);
+        panda$core$Bit $tmp690 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp689);
         if ($tmp690.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp691, 75);
-        panda$core$Bit $tmp692 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp691);
+        panda$core$Int64$init$builtin_int64(&$tmp691, 73);
+        panda$core$Bit $tmp692 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp691);
         if ($tmp692.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp693, 76);
-        panda$core$Bit $tmp694 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp693);
+        panda$core$Int64$init$builtin_int64(&$tmp693, 74);
+        panda$core$Bit $tmp694 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp693);
         if ($tmp694.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp695, 77);
-        panda$core$Bit $tmp696 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp695);
+        panda$core$Int64$init$builtin_int64(&$tmp695, 75);
+        panda$core$Bit $tmp696 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp695);
         if ($tmp696.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp697, 78);
-        panda$core$Bit $tmp698 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp697);
+        panda$core$Int64$init$builtin_int64(&$tmp697, 76);
+        panda$core$Bit $tmp698 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp697);
         if ($tmp698.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp699, 79);
-        panda$core$Bit $tmp700 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp699);
+        panda$core$Int64$init$builtin_int64(&$tmp699, 77);
+        panda$core$Bit $tmp700 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp699);
         if ($tmp700.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp701, 80);
-        panda$core$Bit $tmp702 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp701);
+        panda$core$Int64$init$builtin_int64(&$tmp701, 78);
+        panda$core$Bit $tmp702 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp701);
         if ($tmp702.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp703, 81);
-        panda$core$Bit $tmp704 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp703);
+        panda$core$Int64$init$builtin_int64(&$tmp703, 79);
+        panda$core$Bit $tmp704 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp703);
         if ($tmp704.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp705, 82);
-        panda$core$Bit $tmp706 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp705);
+        panda$core$Int64$init$builtin_int64(&$tmp705, 80);
+        panda$core$Bit $tmp706 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp705);
         if ($tmp706.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp707, 83);
-        panda$core$Bit $tmp708 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp707);
+        panda$core$Int64$init$builtin_int64(&$tmp707, 81);
+        panda$core$Bit $tmp708 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp707);
         if ($tmp708.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp709, 84);
-        panda$core$Bit $tmp710 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp709);
+        panda$core$Int64$init$builtin_int64(&$tmp709, 82);
+        panda$core$Bit $tmp710 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp709);
         if ($tmp710.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp711, 85);
-        panda$core$Bit $tmp712 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp711);
+        panda$core$Int64$init$builtin_int64(&$tmp711, 83);
+        panda$core$Bit $tmp712 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp711);
         if ($tmp712.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp713, 86);
-        panda$core$Bit $tmp714 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp713);
+        panda$core$Int64$init$builtin_int64(&$tmp713, 84);
+        panda$core$Bit $tmp714 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp713);
         if ($tmp714.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp715, 87);
-        panda$core$Bit $tmp716 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp715);
+        panda$core$Int64$init$builtin_int64(&$tmp715, 85);
+        panda$core$Bit $tmp716 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp715);
         if ($tmp716.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp717, 88);
-        panda$core$Bit $tmp718 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp717);
+        panda$core$Int64$init$builtin_int64(&$tmp717, 86);
+        panda$core$Bit $tmp718 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp717);
         if ($tmp718.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp719, 89);
-        panda$core$Bit $tmp720 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp719);
+        panda$core$Int64$init$builtin_int64(&$tmp719, 87);
+        panda$core$Bit $tmp720 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp719);
         if ($tmp720.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp721, 90);
-        panda$core$Bit $tmp722 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp721);
+        panda$core$Int64$init$builtin_int64(&$tmp721, 88);
+        panda$core$Bit $tmp722 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp721);
         if ($tmp722.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp723, 91);
-        panda$core$Bit $tmp724 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp723);
+        panda$core$Int64$init$builtin_int64(&$tmp723, 89);
+        panda$core$Bit $tmp724 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp723);
         if ($tmp724.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp725, 92);
-        panda$core$Bit $tmp726 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp725);
+        panda$core$Int64$init$builtin_int64(&$tmp725, 90);
+        panda$core$Bit $tmp726 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp725);
         if ($tmp726.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp727, 93);
-        panda$core$Bit $tmp728 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp727);
+        panda$core$Int64$init$builtin_int64(&$tmp727, 91);
+        panda$core$Bit $tmp728 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp727);
         if ($tmp728.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp729, 94);
-        panda$core$Bit $tmp730 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp729);
+        panda$core$Int64$init$builtin_int64(&$tmp729, 92);
+        panda$core$Bit $tmp730 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp729);
         if ($tmp730.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp731, 95);
-        panda$core$Bit $tmp732 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp731);
+        panda$core$Int64$init$builtin_int64(&$tmp731, 93);
+        panda$core$Bit $tmp732 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp731);
         if ($tmp732.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp733, 96);
-        panda$core$Bit $tmp734 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp733);
+        panda$core$Int64$init$builtin_int64(&$tmp733, 94);
+        panda$core$Bit $tmp734 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp733);
         if ($tmp734.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp735, 97);
-        panda$core$Bit $tmp736 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp735);
+        panda$core$Int64$init$builtin_int64(&$tmp735, 95);
+        panda$core$Bit $tmp736 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp735);
         if ($tmp736.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp737, 98);
-        panda$core$Bit $tmp738 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp737);
+        panda$core$Int64$init$builtin_int64(&$tmp737, 96);
+        panda$core$Bit $tmp738 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp737);
         if ($tmp738.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp739, 99);
-        panda$core$Bit $tmp740 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp739);
+        panda$core$Int64$init$builtin_int64(&$tmp739, 97);
+        panda$core$Bit $tmp740 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp739);
         if ($tmp740.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp741, 100);
-        panda$core$Bit $tmp742 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp741);
+        panda$core$Int64$init$builtin_int64(&$tmp741, 98);
+        panda$core$Bit $tmp742 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp741);
         if ($tmp742.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp743, 101);
-        panda$core$Bit $tmp744 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp743);
+        panda$core$Int64$init$builtin_int64(&$tmp743, 99);
+        panda$core$Bit $tmp744 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp743);
         if ($tmp744.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp745, 102);
-        panda$core$Bit $tmp746 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp745);
+        panda$core$Int64$init$builtin_int64(&$tmp745, 100);
+        panda$core$Bit $tmp746 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp745);
         if ($tmp746.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp747, 103);
-        panda$core$Bit $tmp748 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp747);
+        panda$core$Int64$init$builtin_int64(&$tmp747, 101);
+        panda$core$Bit $tmp748 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp747);
         if ($tmp748.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp749, 104);
-        panda$core$Bit $tmp750 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp749);
+        panda$core$Int64$init$builtin_int64(&$tmp749, 102);
+        panda$core$Bit $tmp750 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp749);
         if ($tmp750.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp751, 105);
-        panda$core$Bit $tmp752 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp751);
+        panda$core$Int64$init$builtin_int64(&$tmp751, 103);
+        panda$core$Bit $tmp752 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp751);
         if ($tmp752.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp753, 106);
-        panda$core$Bit $tmp754 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp753);
+        panda$core$Int64$init$builtin_int64(&$tmp753, 104);
+        panda$core$Bit $tmp754 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp753);
         if ($tmp754.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp755, 107);
-        panda$core$Bit $tmp756 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp755);
+        panda$core$Int64$init$builtin_int64(&$tmp755, 105);
+        panda$core$Bit $tmp756 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp755);
         if ($tmp756.value) {
         {
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp757, 108);
-        panda$core$Bit $tmp758 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5540.$rawValue, $tmp757);
+        panda$core$Int64$init$builtin_int64(&$tmp757, 106);
+        panda$core$Bit $tmp758 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp757);
         if ($tmp758.value) {
+        {
+        }
+        }
+        else {
+        panda$core$Int64$init$builtin_int64(&$tmp759, 107);
+        panda$core$Bit $tmp760 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp759);
+        if ($tmp760.value) {
+        {
+        }
+        }
+        else {
+        panda$core$Int64$init$builtin_int64(&$tmp761, 108);
+        panda$core$Bit $tmp762 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$10_5544.$rawValue, $tmp761);
+        if ($tmp762.value) {
         {
         }
         }

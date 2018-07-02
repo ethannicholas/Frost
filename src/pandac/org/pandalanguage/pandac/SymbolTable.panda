@@ -64,9 +64,6 @@ class SymbolTable {
             if overridden == m {
                 return
             }
-            if overridden != null & overridden == compiler.getOverriddenMethod(m) {
-                Console.printLine("extra reject: \{overridden.declaration()} due to \{m.declaration()}")
-            }
         }
         methods.add(m)
     }

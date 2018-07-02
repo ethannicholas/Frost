@@ -35,13 +35,15 @@ struct { panda$core$Class* cl; ITable* next; void* methods[6]; } org$pandalangua
 static panda$core$String $s1;
 org$pandalanguage$panda$Int16List$class_type org$pandalanguage$panda$Int16List$class = { (panda$core$Class*) &panda$core$Class$class, -999, &$s1, (panda$core$Class*) &panda$core$Object$class, (ITable*) &org$pandalanguage$panda$Int16List$_panda$collections$ListView, { org$pandalanguage$panda$Int16List$convert$R$panda$core$String, org$pandalanguage$panda$Int16List$cleanup, org$pandalanguage$panda$Int16List$computeCount$R$panda$core$Int64, org$pandalanguage$panda$Int16List$get_count$R$panda$core$Int64, org$pandalanguage$panda$Int16List$$IDX$panda$core$Int64$R$panda$core$Int16$shim} };
 
-typedef panda$core$String* (*$fn68)(panda$collections$CollectionView*);
+typedef panda$core$String* (*$fn72)(panda$collections$CollectionView*);
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x2e\x49\x6e\x74\x31\x36\x4c\x69\x73\x74", 33, 8062736655252349153, NULL };
-static panda$core$String $s52 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x49\x6e\x74\x31\x36\x4c\x69\x73\x74\x2e\x70\x61\x6e\x64\x61", 15, 1244863149427928833, NULL };
-static panda$core$String $s53 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x2e\x49\x6e\x74\x31\x36\x4c\x69\x73\x74\x2e\x5b\x5d\x28\x69\x6e\x64\x65\x78\x3a\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x29\x3a\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x31\x36", 111, -3053817462390854804, NULL };
-static panda$core$String $s64 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x5b", 1, 192, NULL };
-static panda$core$String $s71 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x5d", 1, 194, NULL };
+static panda$core$String $s43 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x49\x6e\x74\x31\x36\x4c\x69\x73\x74\x2e\x70\x61\x6e\x64\x61", 15, 1244863149427928833, NULL };
+static panda$core$String $s44 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6d\x65\x74\x68\x6f\x64\x20\x65\x78\x69\x74\x65\x64\x20\x77\x69\x74\x68\x6f\x75\x74\x20\x72\x65\x74\x75\x72\x6e\x69\x6e\x67", 31, 7480581949655794403, NULL };
+static panda$core$String $s56 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x49\x6e\x74\x31\x36\x4c\x69\x73\x74\x2e\x70\x61\x6e\x64\x61", 15, 1244863149427928833, NULL };
+static panda$core$String $s57 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x6f\x72\x67\x2e\x70\x61\x6e\x64\x61\x6c\x61\x6e\x67\x75\x61\x67\x65\x2e\x70\x61\x6e\x64\x61\x2e\x49\x6e\x74\x31\x36\x4c\x69\x73\x74\x2e\x5b\x5d\x28\x69\x6e\x64\x65\x78\x3a\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x36\x34\x29\x3a\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x31\x36", 111, -3053817462390854804, NULL };
+static panda$core$String $s68 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x5b", 1, 192, NULL };
+static panda$core$String $s75 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x5d", 1, 194, NULL };
 
 void org$pandalanguage$panda$Int16List$init$panda$core$SteppedRange$LTpanda$core$Int16$Cpanda$core$Int16$GT(org$pandalanguage$panda$Int16List* self, panda$core$SteppedRange$LTpanda$core$Int16$Cpanda$core$Int16$GT p_range) {
     self->range = p_range;
@@ -147,73 +149,78 @@ panda$core$Int64 org$pandalanguage$panda$Int16List$computeCount$R$panda$core$Int
         return $returnValue7;
     }
     }
+    if (false) goto $l41; else goto $l42;
+    $l42:;
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s43, (panda$core$Int64) { 18 }, &$s44);
+    abort();
+    $l41:;
     abort();
 }
 panda$core$Int64 org$pandalanguage$panda$Int16List$get_count$R$panda$core$Int64(org$pandalanguage$panda$Int16List* self) {
-    panda$core$Int64 $returnValue41;
-    $returnValue41 = self->_count;
-    return $returnValue41;
+    panda$core$Int64 $returnValue45;
+    $returnValue45 = self->_count;
+    return $returnValue45;
 }
 panda$core$Int16 org$pandalanguage$panda$Int16List$$IDX$panda$core$Int64$R$panda$core$Int16(org$pandalanguage$panda$Int16List* self, panda$core$Int64 p_index) {
-    panda$core$Int64 $tmp44;
-    panda$core$Int16 $returnValue54;
-    panda$core$Int64$init$builtin_int64(&$tmp44, 0);
-    panda$core$Bit $tmp45 = panda$core$Int64$$GE$panda$core$Int64$R$panda$core$Bit(p_index, $tmp44);
-    bool $tmp43 = $tmp45.value;
-    if (!$tmp43) goto $l46;
-    panda$core$Int64 $tmp47 = org$pandalanguage$panda$Int16List$get_count$R$panda$core$Int64(self);
-    panda$core$Bit $tmp48 = panda$core$Int64$$LT$panda$core$Int64$R$panda$core$Bit(p_index, $tmp47);
-    $tmp43 = $tmp48.value;
-    $l46:;
-    panda$core$Bit $tmp49 = { $tmp43 };
-    if ($tmp49.value) goto $l50; else goto $l51;
-    $l51:;
-    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s52, (panda$core$Int64) { 52 }, &$s53);
-    abort();
+    panda$core$Int64 $tmp48;
+    panda$core$Int16 $returnValue58;
+    panda$core$Int64$init$builtin_int64(&$tmp48, 0);
+    panda$core$Bit $tmp49 = panda$core$Int64$$GE$panda$core$Int64$R$panda$core$Bit(p_index, $tmp48);
+    bool $tmp47 = $tmp49.value;
+    if (!$tmp47) goto $l50;
+    panda$core$Int64 $tmp51 = org$pandalanguage$panda$Int16List$get_count$R$panda$core$Int64(self);
+    panda$core$Bit $tmp52 = panda$core$Int64$$LT$panda$core$Int64$R$panda$core$Bit(p_index, $tmp51);
+    $tmp47 = $tmp52.value;
     $l50:;
-    panda$core$Int16 $tmp55 = panda$core$Int64$convert$R$panda$core$Int16(p_index);
-    panda$core$Int32 $tmp56 = panda$core$Int16$$MUL$panda$core$Int16$R$panda$core$Int32(self->range.step, $tmp55);
-    panda$core$Int32 $tmp57 = panda$core$Int16$$ADD$panda$core$Int32$R$panda$core$Int32(self->range.start, $tmp56);
-    panda$core$Int16 $tmp58 = panda$core$Int32$convert$R$panda$core$Int16($tmp57);
-    $returnValue54 = $tmp58;
-    return $returnValue54;
+    panda$core$Bit $tmp53 = { $tmp47 };
+    if ($tmp53.value) goto $l54; else goto $l55;
+    $l55:;
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s56, (panda$core$Int64) { 52 }, &$s57);
+    abort();
+    $l54:;
+    panda$core$Int16 $tmp59 = panda$core$Int64$convert$R$panda$core$Int16(p_index);
+    panda$core$Int32 $tmp60 = panda$core$Int16$$MUL$panda$core$Int16$R$panda$core$Int32(self->range.step, $tmp59);
+    panda$core$Int32 $tmp61 = panda$core$Int16$$ADD$panda$core$Int32$R$panda$core$Int32(self->range.start, $tmp60);
+    panda$core$Int16 $tmp62 = panda$core$Int32$convert$R$panda$core$Int16($tmp61);
+    $returnValue58 = $tmp62;
+    return $returnValue58;
 }
 panda$core$String* org$pandalanguage$panda$Int16List$convert$R$panda$core$String(org$pandalanguage$panda$Int16List* self) {
-    panda$core$String* $returnValue60;
-    panda$core$String* $tmp61;
-    panda$core$String* $tmp62;
-    panda$core$String* $tmp63;
+    panda$core$String* $returnValue64;
     panda$core$String* $tmp65;
-    ITable* $tmp66 = ((panda$collections$CollectionView*) self)->$class->itable;
-    while ($tmp66->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
-        $tmp66 = $tmp66->next;
+    panda$core$String* $tmp66;
+    panda$core$String* $tmp67;
+    panda$core$String* $tmp69;
+    ITable* $tmp70 = ((panda$collections$CollectionView*) self)->$class->itable;
+    while ($tmp70->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
+        $tmp70 = $tmp70->next;
     }
-    $fn68 $tmp67 = $tmp66->methods[1];
-    panda$core$String* $tmp69 = $tmp67(((panda$collections$CollectionView*) self));
-    $tmp65 = $tmp69;
-    panda$core$String* $tmp70 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s64, $tmp65);
-    $tmp63 = $tmp70;
-    panda$core$String* $tmp72 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp63, &$s71);
-    $tmp62 = $tmp72;
-    $tmp61 = $tmp62;
-    $returnValue60 = $tmp61;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp61));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp62));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp63));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp65));
-    return $returnValue60;
+    $fn72 $tmp71 = $tmp70->methods[1];
+    panda$core$String* $tmp73 = $tmp71(((panda$collections$CollectionView*) self));
+    $tmp69 = $tmp73;
+    panda$core$String* $tmp74 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(&$s68, $tmp69);
+    $tmp67 = $tmp74;
+    panda$core$String* $tmp76 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp67, &$s75);
+    $tmp66 = $tmp76;
+    $tmp65 = $tmp66;
+    $returnValue64 = $tmp65;
+    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp65));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp66));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp67));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp69));
+    return $returnValue64;
 }
 void org$pandalanguage$panda$Int16List$cleanup(org$pandalanguage$panda$Int16List* self) {
-    int $tmp76;
+    int $tmp80;
     {
     }
-    $tmp76 = -1;
-    goto $l74;
-    $l74:;
+    $tmp80 = -1;
+    goto $l78;
+    $l78:;
     panda$core$Object$cleanup(((panda$core$Object*) self));
-    switch ($tmp76) {
-        case -1: goto $l77;
+    switch ($tmp80) {
+        case -1: goto $l81;
     }
-    $l77:;
+    $l81:;
 }
 

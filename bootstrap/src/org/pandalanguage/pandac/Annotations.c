@@ -38,6 +38,8 @@ static panda$core$String $s131 = { (panda$core$Class*) &panda$core$String$class,
 static panda$core$String $s133 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x40\x75\x6e\x73\x61\x66\x65\x49\x6d\x6d\x75\x74\x61\x62\x6c\x65\x0a", 17, -4826913329991877603, NULL };
 static panda$core$String $s135 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x40\x64\x65\x66\x61\x75\x6c\x74\x0a", 9, 1797543213588381616, NULL };
 static panda$core$String $s168 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x0a", 1, 111, NULL };
+static panda$core$String $s181 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x41\x6e\x6e\x6f\x74\x61\x74\x69\x6f\x6e\x73\x2e\x70\x61\x6e\x64\x61", 17, -1635004358326492355, NULL };
+static panda$core$String $s182 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6d\x65\x74\x68\x6f\x64\x20\x65\x78\x69\x74\x65\x64\x20\x77\x69\x74\x68\x6f\x75\x74\x20\x72\x65\x74\x75\x72\x6e\x69\x6e\x67", 31, 7480581949655794403, NULL };
 
 void org$pandalanguage$pandac$Annotations$init(org$pandalanguage$pandac$Annotations* self) {
     panda$core$Int64 $tmp2;
@@ -454,20 +456,25 @@ panda$core$String* org$pandalanguage$pandac$Annotations$convert$R$panda$core$Str
         case 0: goto $l176;
     }
     $l178:;
+    if (false) goto $l179; else goto $l180;
+    $l180:;
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s181, (panda$core$Int64) { 123 }, &$s182);
+    abort();
+    $l179:;
     abort();
 }
 void org$pandalanguage$pandac$Annotations$cleanup(org$pandalanguage$pandac$Annotations* self) {
-    int $tmp181;
+    int $tmp185;
     {
     }
-    $tmp181 = -1;
-    goto $l179;
-    $l179:;
+    $tmp185 = -1;
+    goto $l183;
+    $l183:;
     panda$core$Object$cleanup(((panda$core$Object*) self));
-    switch ($tmp181) {
-        case -1: goto $l182;
+    switch ($tmp185) {
+        case -1: goto $l186;
     }
-    $l182:;
+    $l186:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->expressions));
 }
 

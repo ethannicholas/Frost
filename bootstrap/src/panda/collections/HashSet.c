@@ -55,6 +55,8 @@ static panda$core$String $s70 = { (panda$core$Class*) &panda$core$String$class, 
 static panda$core$String $s73 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "", 0, 1, NULL };
 static panda$core$String $s99 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x3c\x6e\x75\x6c\x6c\x3e", 6, 1703694482666, NULL };
 static panda$core$String $s102 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2c\x20", 2, 14677, NULL };
+static panda$core$String $s116 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x48\x61\x73\x68\x53\x65\x74\x2e\x70\x61\x6e\x64\x61", 13, 1882673794583885547, NULL };
+static panda$core$String $s117 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6d\x65\x74\x68\x6f\x64\x20\x65\x78\x69\x74\x65\x64\x20\x77\x69\x74\x68\x6f\x75\x74\x20\x72\x65\x74\x75\x72\x6e\x69\x6e\x67", 31, 7480581949655794403, NULL };
 
 void panda$collections$HashSet$init(panda$collections$HashSet* self) {
     panda$collections$HashMap* $tmp2;
@@ -335,20 +337,25 @@ panda$core$String* panda$collections$HashSet$convert$R$panda$core$String(panda$c
         case 0: goto $l111;
     }
     $l113:;
+    if (false) goto $l114; else goto $l115;
+    $l115:;
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s116, (panda$core$Int64) { 49 }, &$s117);
+    abort();
+    $l114:;
     abort();
 }
 void panda$collections$HashSet$cleanup(panda$collections$HashSet* self) {
-    int $tmp116;
+    int $tmp120;
     {
     }
-    $tmp116 = -1;
-    goto $l114;
-    $l114:;
+    $tmp120 = -1;
+    goto $l118;
+    $l118:;
     panda$core$Object$cleanup(((panda$core$Object*) self));
-    switch ($tmp116) {
-        case -1: goto $l117;
+    switch ($tmp120) {
+        case -1: goto $l121;
     }
-    $l117:;
+    $l121:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->contents));
 }
 

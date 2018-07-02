@@ -23,13 +23,6 @@ class Scanner {
 
     method convertType(type:ASTNode):Type {
         match type {
-            when ASTNode.IR_WRAPPER(node):
-                match node {
-                    when IRNode.TYPE_REFERENCE(_, type):
-                        return type
-                    otherwise:
-                        assert false                
-                }
             when ASTNode.TYPE(position, name):
                 return Type(name, Type.Kind.CLASS, position)
             when ASTNode.NULLABLE_TYPE(position, base):

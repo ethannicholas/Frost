@@ -23,6 +23,8 @@ typedef panda$core$Bit (*$fn9)(panda$collections$Stack$StackIterator*);
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x53\x74\x61\x63\x6b\x2e\x53\x74\x61\x63\x6b\x49\x74\x65\x72\x61\x74\x6f\x72", 37, 4888538230325112768, NULL };
 static panda$core$String $s14 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x53\x74\x61\x63\x6b\x2e\x70\x61\x6e\x64\x61", 11, -4463479324022222579, NULL };
 static panda$core$String $s15 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x72\x65\x63\x6f\x6e\x64\x69\x74\x69\x6f\x6e\x20\x66\x61\x69\x6c\x75\x72\x65\x20\x66\x6f\x72\x20\x6d\x65\x74\x68\x6f\x64\x20\x70\x61\x6e\x64\x61\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x53\x74\x61\x63\x6b\x2e\x53\x74\x61\x63\x6b\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x6e\x65\x78\x74\x28\x29\x3a\x70\x61\x6e\x64\x61\x2e\x63\x6f\x6c\x6c\x65\x63\x74\x69\x6f\x6e\x73\x2e\x53\x74\x61\x63\x6b\x2e\x53\x74\x61\x63\x6b\x49\x74\x65\x72\x61\x74\x6f\x72\x2e\x54", 116, 2142613279611990419, NULL };
+static panda$core$String $s33 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x53\x74\x61\x63\x6b\x2e\x70\x61\x6e\x64\x61", 11, -4463479324022222579, NULL };
+static panda$core$String $s34 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6d\x65\x74\x68\x6f\x64\x20\x65\x78\x69\x74\x65\x64\x20\x77\x69\x74\x68\x6f\x75\x74\x20\x72\x65\x74\x75\x72\x6e\x69\x6e\x67", 31, 7480581949655794403, NULL };
 
 void panda$collections$Stack$StackIterator$init$panda$collections$Stack$LTpanda$collections$Stack$StackIterator$T$GT(panda$collections$Stack$StackIterator* self, panda$collections$Stack* p_stack) {
     panda$core$Int64 $tmp2;
@@ -88,20 +90,25 @@ panda$core$Object* panda$collections$Stack$StackIterator$next$R$panda$collection
         case 0: goto $l28;
     }
     $l30:;
+    if (false) goto $l31; else goto $l32;
+    $l32:;
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s33, (panda$core$Int64) { 26 }, &$s34);
+    abort();
+    $l31:;
     abort();
 }
 void panda$collections$Stack$StackIterator$cleanup(panda$collections$Stack$StackIterator* self) {
-    int $tmp33;
+    int $tmp37;
     {
     }
-    $tmp33 = -1;
-    goto $l31;
-    $l31:;
+    $tmp37 = -1;
+    goto $l35;
+    $l35:;
     panda$core$Object$cleanup(((panda$core$Object*) self));
-    switch ($tmp33) {
-        case -1: goto $l34;
+    switch ($tmp37) {
+        case -1: goto $l38;
     }
-    $l34:;
+    $l38:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->stack));
 }
 

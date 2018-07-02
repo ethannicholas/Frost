@@ -24,8 +24,6 @@ class Variable : Symbol {
 
     def storage:Storage
 
-    def initialValue:IRNode? := null
-
     @weak
     var owner:MethodDecl? := null
 

@@ -26,6 +26,8 @@ static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -
 static panda$core$String $s2 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x52\x61\x6e\x67\x65\x3c\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x49\x6e\x74\x38\x3e", 33, 4518971011793287321, NULL };
 static panda$core$String $s12 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2e\x2e\x2e", 3, 1504239, NULL };
 static panda$core$String $s13 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x2e\x2e", 2, 14893, NULL };
+static panda$core$String $s25 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x52\x61\x6e\x67\x65\x2e\x70\x61\x6e\x64\x61", 11, -6437309673427079776, NULL };
+static panda$core$String $s26 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6d\x65\x74\x68\x6f\x64\x20\x65\x78\x69\x74\x65\x64\x20\x77\x69\x74\x68\x6f\x75\x74\x20\x72\x65\x74\x75\x72\x6e\x69\x6e\x67", 31, 7480581949655794403, NULL };
 
 void panda$core$Range$LTpanda$core$Int8$GT$init$panda$core$Int8$panda$core$Int8$panda$core$Bit(panda$core$Range$LTpanda$core$Int8$GT* self, panda$core$Int8 p_min, panda$core$Int8 p_max, panda$core$Bit p_inclusive) {
     self->min = p_min;
@@ -98,6 +100,11 @@ panda$core$String* panda$core$Range$LTpanda$core$Int8$GT$convert$R$panda$core$St
         case 0: goto $l20;
     }
     $l22:;
+    if (false) goto $l23; else goto $l24;
+    $l24:;
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s25, (panda$core$Int64) { 36 }, &$s26);
+    abort();
+    $l23:;
     abort();
 }
 void panda$core$Range$LTpanda$core$Int8$GT$cleanup(panda$core$Range$LTpanda$core$Int8$GT self) {

@@ -1,0 +1,197 @@
+package org.pandalanguage.pandac
+
+class IR {
+    choice Statement {
+        ============================================================================================
+        Unconditionally branch to the given block.
+        ============================================================================================
+        BRANCH(Int)
+
+        ============================================================================================
+        Casts a value of one type to another type. This handles bitcasting, truncating / extending,
+        wrapping, unwrapping, and nullable->non-nullable value / vice versa as needed.
+        ============================================================================================
+        CAST(Value, Type)
+
+        ============================================================================================
+        Conditionally branch to the first block if true, the second block if false.
+        ============================================================================================
+        CONDITIONAL_BRANCH(Value, Int, Int)
+
+        ============================================================================================
+        Constructs a new object instance. The object will have an initialized class pointer and a
+        refcount of 1, with all other fields initialized to 0. `init` calls appear separately as
+        `STATIC_CALL` statements. `CONSTRUCT` is used only for non-`Value` objects; `Value`s are
+        directly returned by their `init` methods (non-`Value` `init` methods return void).
+        ============================================================================================
+        CONSTRUCT(ClassDecl)
+
+        ============================================================================================
+        Extracts a field from an object. The id of the field is its numeric index in the object
+        structure, starting from 0. Field 0 of a normal object is its `Class`, while field 0 of a
+        value object is the first data field it contains. The `Type` must be the actual in-memory
+        type of the field.
+        ============================================================================================
+        GET_FIELD(Value, Type, Int -* id *-)
+
+        ============================================================================================
+        A static (non-virtual, non-dynamic) call to a method. `args` is the actual, IR-level
+        arguments, meaning that `self` (if any) appears explicitly as `args[0]`.
+        ============================================================================================
+        STATIC_CALL(MethodDecl, ImmutableArray<Value>)
+
+        ============================================================================================
+        A `return` statement.
+        ============================================================================================
+        RETURN(IR.Value?)
+
+        @override
+        function convert():String {
+            match self {
+                when BRANCH(id):
+                    return "branch \{id}"
+                when CAST(value, type):
+                    return "\{value}->\{type}"
+                when CONDITIONAL_BRANCH(test, ifTrue, ifFalse):
+                    return "branch \{test}, \{ifTrue}, \{ifFalse}"
+                when CONSTRUCT(cl):
+                    return "construct \{cl.name}"
+                when GET_FIELD(value, type, id):
+                    return "get_field \{value}, \{type}, \{id}"
+                when RETURN(value):
+                    if value != null {
+                        return "return \{value}"
+                    }
+                    return "return"
+                when STATIC_CALL(m, args):
+                    return "static_call \{m.declaration()}(\{args.join(", ")})"
+            }
+        }
+    }
+
+    choice Value {
+        INT(UInt64, Type)
+        NEGATED_INT(UInt64, Type)
+        REAL(Real64, Type)
+        REF(Int, Type)
+        STRING(String)
+
+        METHOD(Value? -* target *-, MethodDecl)
+        METHODS(Value? -* target *-, ImmutableArray<MethodDecl>)
+        TYPE(Type)
+
+        function type():Type {
+            match self {
+                when INT(_, type):
+                    return type
+                when NEGATED_INT(_, type):
+                    return type
+                when REAL(_, type):
+                    return type
+                when REF(_, type):
+                    return type
+                when STRING:
+                    return Type.StringType()
+                when METHOD(_, m):
+                    return m.type()
+                when METHODS:
+                    return Type.Invalid()
+                when TYPE(type):
+                    return Type.Class()
+            }
+        }
+
+        @override
+        function convert():String {
+            match self {
+                when INT(value, _):
+                    return value.convert()
+                when NEGATED_INT(value, _):
+                    return "-" + value
+                when REAL(value, _):
+                    return value.convert()
+                when REF(id, type):
+                    return "REF(\{id}:\{type})"
+                when STRING(s):
+                    return s.format("panda")
+                when METHOD(target, m):
+                    if target != null {
+                        return "\{target}.\{m.declaration}"
+                    }
+                    return m.declaration()
+                when METHODS(target, m):
+                    if target != null {
+                        return "\{target}.\{m}"
+                    }
+                    return m.convert()
+                when TYPE(type):
+                    return type.convert()
+                otherwise:
+                    assert false
+            }
+        }
+    }
+
+    def blocks := Array<Array<Statement>>()
+
+    @private
+    var currentId := -1
+
+    @private
+    def currentBlock:Array<Statement>
+
+    init() {
+        currentBlock := Array<Statement>()
+        blocks.add(currentBlock)
+    }
+
+    ================================================================================================
+    Adds a new statement to the end of the current block and returns its id.
+    ================================================================================================
+    method add(s:Statement):Int {
+        currentId += 1
+        currentBlock.add(s)
+        return currentId
+    }
+
+    ================================================================================================
+    Creates (but does not make current!) a new block and returns its id.
+    ================================================================================================
+    method newBlock():Int {
+        blocks.add(Array<Statement>())
+        return blocks.count - 1
+    }
+
+    method setCurrentBlock(id:Int) {
+        currentBlock := blocks[id]
+    }
+
+    function currentBlockFinished():Bit {
+        if currentBlock.count = 0 {
+            return false
+        }
+        match currentBlock[currentBlock.count - 1] {
+            when Statement.BRANCH, Statement.CONDITIONAL_BRANCH, Statement.RETURN:
+                return true
+            otherwise:
+                return false
+        }
+    }
+
+    @override
+    function convert():String {
+        var id := 0
+        def result := MutableString()
+        for i in 0 .. blocks.count {
+            result.append("block\{i}:\n")
+            for s in blocks[i] {
+                result.append(id)
+                result.append(": ")
+                result.append(s)
+                result.append("\n")
+                id += 1
+            }
+        }
+        return result.finish()
+    }
+}

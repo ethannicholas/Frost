@@ -44,9 +44,6 @@ class MethodDecl : Symbol {
 
     def body:ImmutableArray<ASTNode>?
 
-    -- only set for @inline methods
-    def compiledBody:ImmutableArray<IRNode>? := null
-
     var resolved := Compiler.Resolution.UNRESOLVED
 
     var overrideKnown := false

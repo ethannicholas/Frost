@@ -17,6 +17,8 @@ typedef panda$core$String* (*$fn6)(panda$core$Object*);
 
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x69\x6f\x2e\x43\x6f\x6e\x73\x6f\x6c\x65", 16, 2336552278051400340, NULL };
 static panda$core$String $s8 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x0a", 1, 111, NULL };
+static panda$core$String $s43 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x43\x6f\x6e\x73\x6f\x6c\x65\x2e\x70\x61\x6e\x64\x61", 13, -8047080313940579210, NULL };
+static panda$core$String $s44 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6d\x65\x74\x68\x6f\x64\x20\x65\x78\x69\x74\x65\x64\x20\x77\x69\x74\x68\x6f\x75\x74\x20\x72\x65\x74\x75\x72\x6e\x69\x6e\x67", 31, 7480581949655794403, NULL };
 
 void panda$io$Console$init(panda$io$Console* self) {
 }
@@ -130,20 +132,25 @@ panda$core$String* panda$io$Console$readLine$R$panda$core$String$Q() {
         case 1: goto $l38;
     }
     $l40:;
+    if (false) goto $l41; else goto $l42;
+    $l42:;
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s43, (panda$core$Int64) { 86 }, &$s44);
+    abort();
+    $l41:;
     abort();
 }
 void panda$io$Console$cleanup(panda$io$Console* self) {
-    int $tmp43;
+    int $tmp47;
     {
     }
-    $tmp43 = -1;
-    goto $l41;
-    $l41:;
+    $tmp47 = -1;
+    goto $l45;
+    $l45:;
     panda$core$Object$cleanup(((panda$core$Object*) self));
-    switch ($tmp43) {
-        case -1: goto $l44;
+    switch ($tmp47) {
+        case -1: goto $l48;
     }
-    $l44:;
+    $l48:;
 }
 
 

@@ -11,24 +11,21 @@ interface CodeGenerator {
 
     ================================================================================================
     Begin writing a class. This will be called prior to writing any of the class' methods. The
-    compiler will not call `start()` again without first calling `end()`.
+    compiler will not call `startClass()` again without first calling `endClass()`.
     ================================================================================================
     method start(cl:ClassDecl)
+
+    ================================================================================================
+    Informs the code generator that this class is complete and no more methods will be written.
+    ================================================================================================
+    method end(cl:ClassDecl)
 
     ================================================================================================
     Writes the declaration (i.e. no method body) of a method.
     ================================================================================================
     method writeDeclaration(m:MethodDecl)
 
-    ================================================================================================
-    Writes a method with a compiled body.
-    ================================================================================================
-    method write(m:MethodDecl, body:ImmutableArray<IRNode>)
-
-    ================================================================================================
-    Informs the code generator that this class is complete and no more methods will be written.
-    ================================================================================================
-    method end(cl:ClassDecl)
+    method write(m:MethodDecl, ir:IR)
 
     ================================================================================================
     Informs the code generator that the entire compilation is complete and nothing more will be

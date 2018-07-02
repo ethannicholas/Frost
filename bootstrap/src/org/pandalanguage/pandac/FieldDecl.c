@@ -31,6 +31,8 @@ static panda$core$String $s38 = { (panda$core$Class*) &panda$core$String$class, 
 static panda$core$String $s41 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x72\x6f\x70\x65\x72\x74\x79\x20", 9, 2318826142498553734, NULL };
 static panda$core$String $s44 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x20\x3a\x3d\x20", 4, 137627884, NULL };
 static panda$core$String $s45 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x20\x3a\x3d\x20", 4, 137627884, NULL };
+static panda$core$String $s55 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x46\x69\x65\x6c\x64\x44\x65\x63\x6c\x2e\x70\x61\x6e\x64\x61", 15, -1057146786940706361, NULL };
+static panda$core$String $s56 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6d\x65\x74\x68\x6f\x64\x20\x65\x78\x69\x74\x65\x64\x20\x77\x69\x74\x68\x6f\x75\x74\x20\x72\x65\x74\x75\x72\x6e\x69\x6e\x67", 31, 7480581949655794403, NULL };
 
 void org$pandalanguage$pandac$FieldDecl$init$org$pandalanguage$pandac$ClassDecl$org$pandalanguage$pandac$Position$panda$core$String$Q$org$pandalanguage$pandac$Annotations$org$pandalanguage$pandac$FieldDecl$Kind$panda$core$String$org$pandalanguage$pandac$Type$org$pandalanguage$pandac$ASTNode$Q(org$pandalanguage$pandac$FieldDecl* self, org$pandalanguage$pandac$ClassDecl* p_owner, org$pandalanguage$pandac$Position p_position, panda$core$String* p_doccomment, org$pandalanguage$pandac$Annotations* p_annotations, org$pandalanguage$pandac$FieldDecl$Kind p_fieldKind, panda$core$String* p_name, org$pandalanguage$pandac$Type* p_type, org$pandalanguage$pandac$ASTNode* p_value) {
     org$pandalanguage$pandac$Compiler$Resolution $tmp2;
@@ -212,20 +214,25 @@ panda$core$String* org$pandalanguage$pandac$FieldDecl$convert$R$panda$core$Strin
         case 0: goto $l50;
     }
     $l52:;
+    if (false) goto $l53; else goto $l54;
+    $l54:;
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s55, (panda$core$Int64) { 42 }, &$s56);
+    abort();
+    $l53:;
     abort();
 }
 void org$pandalanguage$pandac$FieldDecl$cleanup(org$pandalanguage$pandac$FieldDecl* self) {
-    int $tmp55;
+    int $tmp59;
     {
     }
-    $tmp55 = -1;
-    goto $l53;
-    $l53:;
+    $tmp59 = -1;
+    goto $l57;
+    $l57:;
     org$pandalanguage$pandac$Symbol$cleanup(((org$pandalanguage$pandac$Symbol*) self));
-    switch ($tmp55) {
-        case -1: goto $l56;
+    switch ($tmp59) {
+        case -1: goto $l60;
     }
-    $l56:;
+    $l60:;
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->owner));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->doccomment));
     panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->annotations));

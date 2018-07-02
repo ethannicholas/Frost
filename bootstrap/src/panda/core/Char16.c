@@ -128,6 +128,8 @@ static panda$core$String $s2;
 panda$core$Char16$wrapperclass_type panda$core$Char16$wrapperclass = { (panda$core$Class*) &panda$core$Class$class, -999, &$s2, (panda$core$Class*) &panda$core$Value$class, (ITable*) &panda$core$Char16$wrapper_panda$collections$Key, { panda$core$Char16$convert$R$panda$core$String$shim, panda$core$Value$cleanup} };
 static panda$core$String $s1 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x43\x68\x61\x72\x31\x36", 17, -1766463100090469421, NULL };
 static panda$core$String $s2 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x70\x61\x6e\x64\x61\x2e\x63\x6f\x72\x65\x2e\x43\x68\x61\x72\x31\x36", 17, -1766463100090469421, NULL };
+static panda$core$String $s67 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x43\x68\x61\x72\x31\x36\x2e\x70\x61\x6e\x64\x61", 12, -3107378386046589328, NULL };
+static panda$core$String $s68 = { (panda$core$Class*) &panda$core$String$class, -999, (panda$core$Char8*) "\x6d\x65\x74\x68\x6f\x64\x20\x65\x78\x69\x74\x65\x64\x20\x77\x69\x74\x68\x6f\x75\x74\x20\x72\x65\x74\x75\x72\x6e\x69\x6e\x67", 31, 7480581949655794403, NULL };
 
 void panda$core$Char16$init$panda$core$UInt16(panda$core$Char16* self, panda$core$UInt16 p_value) {
     self->value = p_value.value;
@@ -250,198 +252,203 @@ panda$core$String* panda$core$Char16$$MUL$panda$core$Int64$R$panda$core$String(p
         case 0: goto $l62;
     }
     $l64:;
+    if (false) goto $l65; else goto $l66;
+    $l66:;
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s67, (panda$core$Int64) { 52 }, &$s68);
+    abort();
+    $l65:;
     abort();
 }
 panda$core$String* panda$core$Char16$$MUL$panda$core$Int64$panda$core$Char16$R$panda$core$String(panda$core$Int64 p_count, panda$core$Char16 p_char) {
-    panda$core$String* $returnValue65;
-    panda$core$String* $tmp66;
-    panda$core$String* $tmp67;
-    panda$core$String* $tmp68 = panda$core$Char16$$MUL$panda$core$Int64$R$panda$core$String(p_char, p_count);
-    $tmp67 = $tmp68;
-    $tmp66 = $tmp67;
-    $returnValue65 = $tmp66;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp66));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp67));
-    return $returnValue65;
+    panda$core$String* $returnValue69;
+    panda$core$String* $tmp70;
+    panda$core$String* $tmp71;
+    panda$core$String* $tmp72 = panda$core$Char16$$MUL$panda$core$Int64$R$panda$core$String(p_char, p_count);
+    $tmp71 = $tmp72;
+    $tmp70 = $tmp71;
+    $returnValue69 = $tmp70;
+    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp70));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp71));
+    return $returnValue69;
 }
 panda$core$Int64 panda$core$Char16$hash$R$panda$core$Int64(panda$core$Char16 self) {
-    panda$core$Int64 $returnValue70;
-    panda$core$Int64 $tmp71 = panda$core$Char16$convert$R$panda$core$Int64(self);
-    $returnValue70 = $tmp71;
-    return $returnValue70;
+    panda$core$Int64 $returnValue74;
+    panda$core$Int64 $tmp75 = panda$core$Char16$convert$R$panda$core$Int64(self);
+    $returnValue74 = $tmp75;
+    return $returnValue74;
 }
 panda$core$Int8 panda$core$Char16$convert$R$panda$core$Int8(panda$core$Char16 self) {
-    panda$core$Int8 $returnValue73;
-    panda$core$Int8 $tmp74;
-    panda$core$Int8$init$builtin_int8(&$tmp74, ((int8_t) self.value));
-    $returnValue73 = $tmp74;
-    return $returnValue73;
+    panda$core$Int8 $returnValue77;
+    panda$core$Int8 $tmp78;
+    panda$core$Int8$init$builtin_int8(&$tmp78, ((int8_t) self.value));
+    $returnValue77 = $tmp78;
+    return $returnValue77;
 }
 panda$core$Int16 panda$core$Char16$convert$R$panda$core$Int16(panda$core$Char16 self) {
-    panda$core$Int16 $returnValue76;
-    panda$core$Int16 $tmp77;
-    panda$core$Int16$init$builtin_int16(&$tmp77, ((int16_t) self.value));
-    $returnValue76 = $tmp77;
-    return $returnValue76;
+    panda$core$Int16 $returnValue80;
+    panda$core$Int16 $tmp81;
+    panda$core$Int16$init$builtin_int16(&$tmp81, ((int16_t) self.value));
+    $returnValue80 = $tmp81;
+    return $returnValue80;
 }
 panda$core$Int32 panda$core$Char16$convert$R$panda$core$Int32(panda$core$Char16 self) {
-    panda$core$Int32 $returnValue79;
-    panda$core$Int32 $tmp80;
-    panda$core$Int32$init$builtin_int32(&$tmp80, ((int32_t) self.value));
-    $returnValue79 = $tmp80;
-    return $returnValue79;
+    panda$core$Int32 $returnValue83;
+    panda$core$Int32 $tmp84;
+    panda$core$Int32$init$builtin_int32(&$tmp84, ((int32_t) self.value));
+    $returnValue83 = $tmp84;
+    return $returnValue83;
 }
 panda$core$Int64 panda$core$Char16$convert$R$panda$core$Int64(panda$core$Char16 self) {
-    panda$core$Int64 $returnValue82;
-    panda$core$Int64 $tmp83;
-    panda$core$Int64$init$builtin_int64(&$tmp83, ((int64_t) self.value));
-    $returnValue82 = $tmp83;
-    return $returnValue82;
+    panda$core$Int64 $returnValue86;
+    panda$core$Int64 $tmp87;
+    panda$core$Int64$init$builtin_int64(&$tmp87, ((int64_t) self.value));
+    $returnValue86 = $tmp87;
+    return $returnValue86;
 }
 panda$core$UInt8 panda$core$Char16$convert$R$panda$core$UInt8(panda$core$Char16 self) {
-    panda$core$UInt8 $returnValue85;
-    panda$core$UInt8 $tmp86;
-    panda$core$UInt8$init$builtin_uint8(&$tmp86, ((uint8_t) self.value));
-    $returnValue85 = $tmp86;
-    return $returnValue85;
+    panda$core$UInt8 $returnValue89;
+    panda$core$UInt8 $tmp90;
+    panda$core$UInt8$init$builtin_uint8(&$tmp90, ((uint8_t) self.value));
+    $returnValue89 = $tmp90;
+    return $returnValue89;
 }
 panda$core$UInt16 panda$core$Char16$convert$R$panda$core$UInt16(panda$core$Char16 self) {
-    panda$core$UInt16 $returnValue88;
-    panda$core$UInt16 $tmp89;
-    panda$core$UInt16$init$builtin_uint16(&$tmp89, self.value);
-    $returnValue88 = $tmp89;
-    return $returnValue88;
+    panda$core$UInt16 $returnValue92;
+    panda$core$UInt16 $tmp93;
+    panda$core$UInt16$init$builtin_uint16(&$tmp93, self.value);
+    $returnValue92 = $tmp93;
+    return $returnValue92;
 }
 panda$core$UInt32 panda$core$Char16$convert$R$panda$core$UInt32(panda$core$Char16 self) {
-    panda$core$UInt32 $returnValue91;
-    panda$core$UInt32 $tmp92;
-    panda$core$UInt32$init$builtin_uint32(&$tmp92, ((uint32_t) self.value));
-    $returnValue91 = $tmp92;
-    return $returnValue91;
+    panda$core$UInt32 $returnValue95;
+    panda$core$UInt32 $tmp96;
+    panda$core$UInt32$init$builtin_uint32(&$tmp96, ((uint32_t) self.value));
+    $returnValue95 = $tmp96;
+    return $returnValue95;
 }
 panda$core$UInt64 panda$core$Char16$convert$R$panda$core$UInt64(panda$core$Char16 self) {
-    panda$core$UInt64 $returnValue94;
-    panda$core$UInt64 $tmp95;
-    panda$core$UInt64$init$builtin_uint64(&$tmp95, ((uint64_t) self.value));
-    $returnValue94 = $tmp95;
-    return $returnValue94;
+    panda$core$UInt64 $returnValue98;
+    panda$core$UInt64 $tmp99;
+    panda$core$UInt64$init$builtin_uint64(&$tmp99, ((uint64_t) self.value));
+    $returnValue98 = $tmp99;
+    return $returnValue98;
 }
 panda$core$String* panda$core$Char16$convert$R$panda$core$String(panda$core$Char16 self) {
-    panda$core$Bit $tmp97;
-    panda$core$Char8* data99;
-    panda$core$Int64 $tmp100;
-    panda$core$Int64 $tmp101;
-    panda$core$Char8 $tmp102;
-    panda$core$String* $returnValue104;
-    panda$core$String* $tmp105;
-    panda$core$String* $tmp106;
-    panda$core$Int64 $tmp108;
-    panda$core$Bit $tmp110;
-    panda$core$Char8* data112;
-    panda$core$Int64 $tmp113;
-    panda$core$Int64 $tmp114;
-    panda$core$Char8 $tmp115;
-    panda$core$UInt8 $tmp116;
-    panda$core$Int64 $tmp119;
-    panda$core$Char8 $tmp120;
-    panda$core$UInt8 $tmp121;
-    panda$core$String* $tmp124;
-    panda$core$String* $tmp125;
-    panda$core$Int64 $tmp127;
-    panda$core$Char8* data129;
-    panda$core$Int64 $tmp130;
+    panda$core$Bit $tmp101;
+    panda$core$Char8* data103;
+    panda$core$Int64 $tmp104;
+    panda$core$Int64 $tmp105;
+    panda$core$Char8 $tmp106;
+    panda$core$String* $returnValue108;
+    panda$core$String* $tmp109;
+    panda$core$String* $tmp110;
+    panda$core$Int64 $tmp112;
+    panda$core$Bit $tmp114;
+    panda$core$Char8* data116;
+    panda$core$Int64 $tmp117;
+    panda$core$Int64 $tmp118;
+    panda$core$Char8 $tmp119;
+    panda$core$UInt8 $tmp120;
+    panda$core$Int64 $tmp123;
+    panda$core$Char8 $tmp124;
+    panda$core$UInt8 $tmp125;
+    panda$core$String* $tmp128;
+    panda$core$String* $tmp129;
     panda$core$Int64 $tmp131;
-    panda$core$Char8 $tmp132;
-    panda$core$UInt8 $tmp133;
-    panda$core$Int64 $tmp136;
-    panda$core$Char8 $tmp137;
-    panda$core$UInt8 $tmp138;
-    panda$core$Int64 $tmp142;
-    panda$core$Char8 $tmp143;
-    panda$core$UInt8 $tmp144;
-    panda$core$String* $tmp147;
-    panda$core$String* $tmp148;
-    panda$core$Int64 $tmp150;
-    bool $tmp98 = self.value < 128;
-    panda$core$Bit$init$builtin_bit(&$tmp97, $tmp98);
-    if ($tmp97.value) {
+    panda$core$Char8* data133;
+    panda$core$Int64 $tmp134;
+    panda$core$Int64 $tmp135;
+    panda$core$Char8 $tmp136;
+    panda$core$UInt8 $tmp137;
+    panda$core$Int64 $tmp140;
+    panda$core$Char8 $tmp141;
+    panda$core$UInt8 $tmp142;
+    panda$core$Int64 $tmp146;
+    panda$core$Char8 $tmp147;
+    panda$core$UInt8 $tmp148;
+    panda$core$String* $tmp151;
+    panda$core$String* $tmp152;
+    panda$core$Int64 $tmp154;
+    bool $tmp102 = self.value < 128;
+    panda$core$Bit$init$builtin_bit(&$tmp101, $tmp102);
+    if ($tmp101.value) {
     {
-        panda$core$Int64$init$builtin_int64(&$tmp100, 1);
-        data99 = ((panda$core$Char8*) pandaZAlloc($tmp100.value * 1));
-        panda$core$Int64$init$builtin_int64(&$tmp101, 0);
-        panda$core$UInt8 $tmp103 = panda$core$Char16$convert$R$panda$core$UInt8(self);
-        panda$core$Char8$init$panda$core$UInt8(&$tmp102, $tmp103);
-        data99[$tmp101.value] = $tmp102;
-        panda$core$String* $tmp107 = (panda$core$String*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$String$class);
-        panda$core$Int64$init$builtin_int64(&$tmp108, 1);
-        panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp107, data99, $tmp108);
-        $tmp106 = $tmp107;
-        $tmp105 = $tmp106;
-        $returnValue104 = $tmp105;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp105));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp106));
-        return $returnValue104;
+        panda$core$Int64$init$builtin_int64(&$tmp104, 1);
+        data103 = ((panda$core$Char8*) pandaZAlloc($tmp104.value * 1));
+        panda$core$Int64$init$builtin_int64(&$tmp105, 0);
+        panda$core$UInt8 $tmp107 = panda$core$Char16$convert$R$panda$core$UInt8(self);
+        panda$core$Char8$init$panda$core$UInt8(&$tmp106, $tmp107);
+        data103[$tmp105.value] = $tmp106;
+        panda$core$String* $tmp111 = (panda$core$String*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$String$class);
+        panda$core$Int64$init$builtin_int64(&$tmp112, 1);
+        panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp111, data103, $tmp112);
+        $tmp110 = $tmp111;
+        $tmp109 = $tmp110;
+        $returnValue108 = $tmp109;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp109));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp110));
+        return $returnValue108;
     }
     }
-    bool $tmp111 = self.value < 2048;
-    panda$core$Bit$init$builtin_bit(&$tmp110, $tmp111);
-    if ($tmp110.value) {
+    bool $tmp115 = self.value < 2048;
+    panda$core$Bit$init$builtin_bit(&$tmp114, $tmp115);
+    if ($tmp114.value) {
     {
-        panda$core$Int64$init$builtin_int64(&$tmp113, 2);
-        data112 = ((panda$core$Char8*) pandaZAlloc($tmp113.value * 1));
-        panda$core$Int64$init$builtin_int64(&$tmp114, 0);
-        uint16_t $tmp117 = self.value >> 6;
-        uint16_t $tmp118 = $tmp117 | 192;
-        panda$core$UInt8$init$builtin_uint8(&$tmp116, ((uint8_t) $tmp118));
-        panda$core$Char8$init$panda$core$UInt8(&$tmp115, $tmp116);
-        data112[$tmp114.value] = $tmp115;
-        panda$core$Int64$init$builtin_int64(&$tmp119, 1);
-        uint16_t $tmp122 = self.value & 63;
-        uint16_t $tmp123 = $tmp122 | 128;
-        panda$core$UInt8$init$builtin_uint8(&$tmp121, ((uint8_t) $tmp123));
-        panda$core$Char8$init$panda$core$UInt8(&$tmp120, $tmp121);
-        data112[$tmp119.value] = $tmp120;
-        panda$core$String* $tmp126 = (panda$core$String*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$String$class);
-        panda$core$Int64$init$builtin_int64(&$tmp127, 2);
-        panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp126, data112, $tmp127);
-        $tmp125 = $tmp126;
-        $tmp124 = $tmp125;
-        $returnValue104 = $tmp124;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp124));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp125));
-        return $returnValue104;
+        panda$core$Int64$init$builtin_int64(&$tmp117, 2);
+        data116 = ((panda$core$Char8*) pandaZAlloc($tmp117.value * 1));
+        panda$core$Int64$init$builtin_int64(&$tmp118, 0);
+        uint16_t $tmp121 = self.value >> 6;
+        uint16_t $tmp122 = $tmp121 | 192;
+        panda$core$UInt8$init$builtin_uint8(&$tmp120, ((uint8_t) $tmp122));
+        panda$core$Char8$init$panda$core$UInt8(&$tmp119, $tmp120);
+        data116[$tmp118.value] = $tmp119;
+        panda$core$Int64$init$builtin_int64(&$tmp123, 1);
+        uint16_t $tmp126 = self.value & 63;
+        uint16_t $tmp127 = $tmp126 | 128;
+        panda$core$UInt8$init$builtin_uint8(&$tmp125, ((uint8_t) $tmp127));
+        panda$core$Char8$init$panda$core$UInt8(&$tmp124, $tmp125);
+        data116[$tmp123.value] = $tmp124;
+        panda$core$String* $tmp130 = (panda$core$String*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$String$class);
+        panda$core$Int64$init$builtin_int64(&$tmp131, 2);
+        panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp130, data116, $tmp131);
+        $tmp129 = $tmp130;
+        $tmp128 = $tmp129;
+        $returnValue108 = $tmp128;
+        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp128));
+        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp129));
+        return $returnValue108;
     }
     }
-    panda$core$Int64$init$builtin_int64(&$tmp130, 3);
-    data129 = ((panda$core$Char8*) pandaZAlloc($tmp130.value * 1));
-    panda$core$Int64$init$builtin_int64(&$tmp131, 0);
-    uint16_t $tmp134 = self.value >> 12;
-    uint16_t $tmp135 = $tmp134 | 224;
-    panda$core$UInt8$init$builtin_uint8(&$tmp133, ((uint8_t) $tmp135));
-    panda$core$Char8$init$panda$core$UInt8(&$tmp132, $tmp133);
-    data129[$tmp131.value] = $tmp132;
-    panda$core$Int64$init$builtin_int64(&$tmp136, 1);
-    uint16_t $tmp139 = self.value >> 6;
-    uint16_t $tmp140 = $tmp139 & 63;
-    uint16_t $tmp141 = $tmp140 | 128;
-    panda$core$UInt8$init$builtin_uint8(&$tmp138, ((uint8_t) $tmp141));
-    panda$core$Char8$init$panda$core$UInt8(&$tmp137, $tmp138);
-    data129[$tmp136.value] = $tmp137;
-    panda$core$Int64$init$builtin_int64(&$tmp142, 2);
-    uint16_t $tmp145 = self.value & 63;
-    uint16_t $tmp146 = $tmp145 | 128;
-    panda$core$UInt8$init$builtin_uint8(&$tmp144, ((uint8_t) $tmp146));
-    panda$core$Char8$init$panda$core$UInt8(&$tmp143, $tmp144);
-    data129[$tmp142.value] = $tmp143;
-    panda$core$String* $tmp149 = (panda$core$String*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$String$class);
-    panda$core$Int64$init$builtin_int64(&$tmp150, 3);
-    panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp149, data129, $tmp150);
-    $tmp148 = $tmp149;
-    $tmp147 = $tmp148;
-    $returnValue104 = $tmp147;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp147));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp148));
-    return $returnValue104;
+    panda$core$Int64$init$builtin_int64(&$tmp134, 3);
+    data133 = ((panda$core$Char8*) pandaZAlloc($tmp134.value * 1));
+    panda$core$Int64$init$builtin_int64(&$tmp135, 0);
+    uint16_t $tmp138 = self.value >> 12;
+    uint16_t $tmp139 = $tmp138 | 224;
+    panda$core$UInt8$init$builtin_uint8(&$tmp137, ((uint8_t) $tmp139));
+    panda$core$Char8$init$panda$core$UInt8(&$tmp136, $tmp137);
+    data133[$tmp135.value] = $tmp136;
+    panda$core$Int64$init$builtin_int64(&$tmp140, 1);
+    uint16_t $tmp143 = self.value >> 6;
+    uint16_t $tmp144 = $tmp143 & 63;
+    uint16_t $tmp145 = $tmp144 | 128;
+    panda$core$UInt8$init$builtin_uint8(&$tmp142, ((uint8_t) $tmp145));
+    panda$core$Char8$init$panda$core$UInt8(&$tmp141, $tmp142);
+    data133[$tmp140.value] = $tmp141;
+    panda$core$Int64$init$builtin_int64(&$tmp146, 2);
+    uint16_t $tmp149 = self.value & 63;
+    uint16_t $tmp150 = $tmp149 | 128;
+    panda$core$UInt8$init$builtin_uint8(&$tmp148, ((uint8_t) $tmp150));
+    panda$core$Char8$init$panda$core$UInt8(&$tmp147, $tmp148);
+    data133[$tmp146.value] = $tmp147;
+    panda$core$String* $tmp153 = (panda$core$String*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$String$class);
+    panda$core$Int64$init$builtin_int64(&$tmp154, 3);
+    panda$core$String$init$panda$unsafe$Pointer$LTpanda$core$Char8$GT$panda$core$Int64($tmp153, data133, $tmp154);
+    $tmp152 = $tmp153;
+    $tmp151 = $tmp152;
+    $returnValue108 = $tmp151;
+    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp151));
+    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp152));
+    return $returnValue108;
 }
 void panda$core$Char16$cleanup(panda$core$Char16 self) {
 }

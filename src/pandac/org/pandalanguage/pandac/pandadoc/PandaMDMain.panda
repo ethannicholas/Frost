@@ -6,7 +6,6 @@ uses org.pandalanguage.pandac.Compiler
 uses org.pandalanguage.pandac.Compiler.Error
 uses org.pandalanguage.pandac.Compiler.Settings
 uses org.pandalanguage.pandac.Config
-uses org.pandalanguage.pandac.IRNode
 uses org.pandalanguage.pandac.MethodDecl
 
 constant HEADER :=
@@ -26,33 +25,6 @@ constant FOOTER :=
     "    </div>" +
     "  </body>" +
     "</html>"
-
-@private
-class DummyCodeGenerator : CodeGenerator {
-    @override
-    method setCompiler(compiler:Compiler) {
-    }
-
-    @override
-    method start(cl:ClassDecl) {
-    }
-
-    @override
-    method writeDeclaration(m:MethodDecl) {
-    }
-
-    @override
-    method write(m:MethodDecl, body:ImmutableArray<IRNode>) {
-    }
-
-    @override
-    method end(cl:ClassDecl) {
-    }
-
-    @override
-    method finish() {
-    }
-}
 
 method main(args:ListView<String>) {
     if args.count != 3 {
