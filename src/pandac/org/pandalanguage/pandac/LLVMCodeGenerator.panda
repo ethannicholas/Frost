@@ -75,7 +75,9 @@ class LLVMCodeGenerator : CodeGenerator {
 
     def methodShims := IdentityMap<MethodDecl, MethodShim>()
 
-    def refs := HashMap<Int, String>()
+    def refs := HashMap<IR.Statement.ID, String>()
+
+    def ir:IR
 
     init(triple:String, out:OutputStream) {
         self.physicalOut := out
@@ -903,13 +905,14 @@ class LLVMCodeGenerator : CodeGenerator {
         return "@\{escapeName(f.owner.name)}$\{f.name}"
     }
 
-    class OpClass {
-        constant SIGNED   := 10121
-        constant UNSIGNED := 10122
-        constant FLOAT    := 10123
+    choice OpClass {
+        SIGNED
+        UNSIGNED
+        FLOAT
+        CLASS
     }
 
-    function opClass(t:Type):Int {
+    function opClass(t:Type):OpClass {
         match t.typeKind {
             when Type.Kind.BUILTIN_INT:
                 return OpClass.SIGNED
@@ -918,123 +921,7 @@ class LLVMCodeGenerator : CodeGenerator {
             when Type.Kind.BUILTIN_FLOAT:
                 return OpClass.FLOAT
             otherwise:
-                assert false
-        }
-    }
-
-    method getVirtualMethodReference(target:String, m:MethodDecl, out:OutputStream):String {
-        def cc := getClassConstant(m.owner)
-        var index := -1
-        def vtable := compiler.getVTable(m.owner)
-        for i in 0 .. vtable.count {
-            if vtable[i]->MethodDecl == m { -- FIXME unnecessary cast
-                index := i
-                break
-            }
-        }
-        assert index != -1
-        def classPtrPtr := nextVar()
-        out.printLine("\{classPtrPtr} = getelementptr inbounds \{typeName(m.owner.type())}, " +
-                "\{target}, i64 0, i32 0")
-        def classPtr := nextVar()
-        out.printLine("\{classPtr} = load i8*, i8** \{classPtrPtr}")
-        def cast := nextVar()
-        out.printLine("\{cast} = bitcast i8* \{classPtr} to \{cc.type}*")
-        def ptr := nextVar()
-        out.printLine("\{ptr} = getelementptr inbounds \{cc.type}, \{cc.type}* \{cast}, i64 0, " +
-                "i32 \{VTABLE_INDEX}, i64 \{index}")
-        def load := nextVar()
-        out.printLine("\{load} = load i8*, i8** \{ptr}")
-        def result := nextVar()
-        out.printLine("\{result} = bitcast i8* \{load} to " +
-                methodType(compiler.inheritedTypeWithSelf(m), null))
-        return result
-    }
-
-    method getInterfaceMethodReference(target:String, m:MethodDecl,
-            out:OutputStream):String {
-        def methodTypeString := methodType(compiler.inheritedTypeWithSelf(m), null)
-        -- load class constant entry
-        def entry := nextLabel()
-        out.printLine("br label %\{entry}")
-        createBlock(entry, out)
-        def rawClassPointer := nextVar()
-        out.printLine("\{rawClassPointer} = getelementptr inbounds \{typeName(m.owner.type())}, " +
-                "\{target}, \{SIZE_TYPE} 0, i32 \{CLASS_POINTER_INDEX}")
-        def classPointer := nextVar()
-        def classType := typeName(Type.Class())
-        out.printLine("\{classPointer} = bitcast i8** \{rawClassPointer} to \{classType}**")
-        def loadedClass := nextVar()
-        out.printLine("\{loadedClass} = load \{classType}*, \{classType}** \{classPointer}")
-        def itableFirst := nextVar()
-        out.printLine("\{itableFirst} = getelementptr inbounds \{classType}, \{classType}* " +
-                "\{loadedClass}, \{SIZE_TYPE} 0, i32 \{ITABLE_INDEX}")
-        def next := nextLabel()
-        out.printLine("br label %\{next}")
-        def leavingEntryLabel := currentBlock
-        createBlock(next, out)
-        labelCount += 1
-        def itableNext := "%$itable\{labelCount}"
-        def itablePtrPtr := nextVar()
-        def fail := nextLabel()
-        out.printLine("\{itablePtrPtr} = phi %$itable** [ \{itableFirst}, %\{leavingEntryLabel}]," +
-                " [ \{itableNext}, %\{fail} ]")
-        def itablePtr := nextVar()
-        out.printLine("\{itablePtr} = load %$itable*, %$itable** \{itablePtrPtr}")
-        def itableClassPtr := nextVar()
-        out.printLine("\{itableClassPtr} = getelementptr inbounds %$itable, %$itable* " +
-                "\{itablePtr}, \{SIZE_TYPE} 0, i32 0")
-        def itableClass := nextVar()
-        out.printLine("\{itableClass} = load \{classType}*, \{classType}** \{itableClassPtr}")
-        def test := nextVar()
-        def intfCC := getClassConstant(m.owner)
-        out.printLine("\{test} = icmp eq \{classType}* bitcast(\{intfCC.type}* \{intfCC.name} to " +
-                "\{classType}*), \{itableClass}")
-        def success := nextLabel()
-        out.printLine("br i1 \{test}, label %\{success}, label %\{fail}")
-
-        createBlock(fail, out)
-        out.printLine("\{itableNext} = getelementptr inbounds %$itable, %$itable* \{itablePtr}, " +
-                "\{SIZE_TYPE} 0, i32 1")
-        out.printLine("br label %\{next}")
-
-        createBlock(success, out)
-        var index := -1
-        def vtable := compiler.getVTable(m.owner)
-        for i in 0 .. vtable.count {
-            if vtable[i]->MethodDecl == m { -- FIXME unnecessary cast
-                index := i
-                break
-            }
-        }
-        index -= compiler.getVTable(compiler.getClass(Type.Object())).count
-        assert index != -1
-        def methodPtrPtr := nextVar()
-        out.printLine("\{methodPtrPtr} = getelementptr inbounds %$itable, %$itable* " +
-                "\{itablePtr}, \{SIZE_TYPE} 0, i32 2, i32 \{index}")
-        def cast := nextVar()
-        out.printLine("\{cast} = bitcast i8** \{methodPtrPtr} to \{methodTypeString}*")
-        def methodPtr := nextVar()
-        out.printLine("\{methodPtr} = load \{methodTypeString}, \{methodTypeString}* \{cast}")
-        return methodPtr
-    }
-
-    method getMethodReference(target:String?, m:MethodDecl, isSuper:Bit,
-            out:OutputStream):String {
-        if !isSuper & m.isVirtual() {
-            assert target != null, "calling instance \{m.signature()} without a target"
-            if m.owner.classKind = ClassDecl.Kind.INTERFACE {
-                return getInterfaceMethodReference(target, m, out)
-            }
-            else {
-                return getVirtualMethodReference(target, m, out)
-            }
-        }
-        else {
-            if m.owner.external {
-                writeDeclaration(m)
-            }
-            return getName(m)
+                return OpClass.CLASS
         }
     }
 
@@ -1191,9 +1078,9 @@ class LLVMCodeGenerator : CodeGenerator {
         }
         else {
             def srcClass := compiler.getClass(src)
-            assert srcClass != null
+            assert srcClass != null, "class \{src} not found"
             def targetClass := compiler.getClass(target)
-            assert targetClass != null
+            assert targetClass != null, "class \{target} not found"
             if compiler.isValue(srcClass) & !compiler.isValue(targetClass) {
                 return wrapValue(value, src, target, out)
             }
@@ -1400,6 +1287,8 @@ class LLVMCodeGenerator : CodeGenerator {
         match v {
             when IR.Value.INT(value, _):
                 return value.convert()
+            when IR.Value.NULL(_):
+                return "null"
             when IR.Value.REF(id, _):
                 assert refs[id] != null, "id \{id} has not been defined"
                 return refs[id]
@@ -1414,20 +1303,155 @@ class LLVMCodeGenerator : CodeGenerator {
         return "\{llvmType(v.type())} \{getReference(v)}"
     }
 
-    method writeBranch(target:Int) {
-        out.printLine("br label %block\{target}")
+    method writeIsNull(id:IR.Statement.ID, value:IR.Value) {
+        def valueRef := getTypedReference(value)
+        def cl := compiler.getClass(value.type())
+        def resultValue:String
+        if compiler.isValue(cl) {
+            if value.type().typeKind != Type.Kind.NULLABLE {
+                refs[id] := "0"
+                return
+            }
+            def field := nextVar()
+            out.printLine("\{field} = extractvalue \{valueRef}, 1")
+            def result := nextVar()
+            out.printLine("\{result} = xor i1 \{field}, -1")
+            refs[id] := result
+        }
+        else {
+            def result := nextVar()
+            out.printLine("\{result} = icmp eq \{valueRef}, null")
+            refs[id] := result
+        }
     }
 
-    method writeCast(id:Int, value:IR.Value, target:Type) {
+    method writeIsNonNull(id:IR.Statement.ID, value:IR.Value) {
+        def valueRef := getTypedReference(value)
+        def cl := compiler.getClass(value.type())
+        if compiler.isValue(cl) {
+            if value.type().typeKind != Type.Kind.NULLABLE {
+                refs[id] := "1"
+                return
+            }
+            def result := nextVar()
+            out.printLine("\{result} = extractvalue \{valueRef}, 1")
+            refs[id] := result
+        }
+        else {
+            def result := nextVar()
+            out.printLine("\{result} = icmp ne \{valueRef}, null")
+            refs[id] := result
+        }
+    }
+
+    method writeBinary(id:IR.Statement.ID, left:IR.Value, op:Token.Kind, right:IR.Value,
+            type:Type) {
+        def llvmOp:String
+        match opClass(left.type()) {
+            when OpClass.SIGNED:
+                match op {
+                    when Token.Kind.ADD:        llvmOp := "add"
+                    when Token.Kind.SUB:        llvmOp := "sub"
+                    when Token.Kind.MUL:        llvmOp := "mul"
+                    when Token.Kind.INTDIV:     llvmOp := "sdiv"
+                    when Token.Kind.REM:        llvmOp := "srem"
+                    when Token.Kind.SHIFTLEFT:  llvmOp := "shl"
+                    when Token.Kind.SHIFTRIGHT: llvmOp := "ashr"
+                    when Token.Kind.BITWISEAND: llvmOp := "and"
+                    when Token.Kind.BITWISEOR:  llvmOp := "or"
+                    when Token.Kind.XOR, Token.Kind.BITWISEXOR: 
+                                                llvmOp := "xor"
+                    when Token.Kind.EQ:         llvmOp := "icmp eq"
+                    when Token.Kind.NEQ:        llvmOp := "icmp ne"
+                    when Token.Kind.GT:         llvmOp := "icmp sgt"
+                    when Token.Kind.LT:         llvmOp := "icmp slt"
+                    when Token.Kind.GTEQ:       llvmOp := "icmp sge"
+                    when Token.Kind.LTEQ:       llvmOp := "icmp sle"
+                    otherwise:
+                        assert false
+                }
+            when OpClass.UNSIGNED:
+                match op {
+                    when Token.Kind.ADD:        llvmOp := "add"
+                    when Token.Kind.SUB:        llvmOp := "sub"
+                    when Token.Kind.MUL:        llvmOp := "mul"
+                    when Token.Kind.INTDIV:     llvmOp := "udiv"
+                    when Token.Kind.REM:        llvmOp := "urem"
+                    when Token.Kind.SHIFTLEFT:  llvmOp := "shl"
+                    when Token.Kind.SHIFTRIGHT: llvmOp := "lshr"
+                    when Token.Kind.BITWISEAND: llvmOp := "and"
+                    when Token.Kind.BITWISEOR:  llvmOp := "or"
+                    when Token.Kind.XOR, Token.Kind.BITWISEXOR: 
+                                                llvmOp := "xor"
+                    when Token.Kind.EQ:         llvmOp := "icmp eq"
+                    when Token.Kind.NEQ:        llvmOp := "icmp ne"
+                    when Token.Kind.GT:         llvmOp := "icmp ugt"
+                    when Token.Kind.LT:         llvmOp := "icmp ult"
+                    when Token.Kind.GTEQ:       llvmOp := "icmp uge"
+                    when Token.Kind.LTEQ:       llvmOp := "icmp ule"
+                    otherwise:
+                        assert false
+                }
+            when OpClass.FLOAT:
+                match op {
+                    when Token.Kind.ADD:        llvmOp := "fadd"
+                    when Token.Kind.SUB:        llvmOp := "fsub"
+                    when Token.Kind.MUL:        llvmOp := "fmul"
+                    when Token.Kind.DIV:        llvmOp := "fdiv"
+                    when Token.Kind.EQ:         llvmOp := "fcmp oeq"
+                    when Token.Kind.NEQ:        llvmOp := "fcmp one"
+                    when Token.Kind.GT:         llvmOp := "fcmp ogt"
+                    when Token.Kind.LT:         llvmOp := "fcmp olt"
+                    when Token.Kind.GTEQ:       llvmOp := "fcmp oge"
+                    when Token.Kind.LTEQ:       llvmOp := "fcmp ole"
+                    otherwise:
+                        assert false
+                }
+            when OpClass.CLASS:
+                match op {
+                    when Token.Kind.IDENTITY:
+                        if left = IR.Value.NULL {
+                            writeIsNull(id, right)
+                            return
+                        }
+                        if right = IR.Value.NULL {
+                            writeIsNull(id, left)
+                            return
+                        }
+                        llvmOp := "icmp eq"
+                    when Token.Kind.NIDENTITY:
+                        if left = IR.Value.NULL {
+                            writeIsNonNull(id, right)
+                            return
+                        }
+                        if right = IR.Value.NULL {
+                            writeIsNonNull(id, left)
+                            return
+                        }
+                        llvmOp := "icmp ne"
+                }
+        }
+        def result := nextVar()
+        def leftRef := getReference(left)
+        def rightRef := getReference(right)
+        out.printLine("\{result} = \{llvmOp} \{llvmType(left.type())} \{leftRef}, \{rightRef}")
+        refs[id] := result
+    }
+
+    method writeBranch(target:IR.Block.ID) {
+        out.printLine("br label %\{target}")
+    }
+
+    method writeCast(id:IR.Statement.ID, value:IR.Value, target:Type) {
         refs[id] := getCastReference(getReference(value), value.type(), target)
     }
 
-    method writeConditionalBranch(test:IR.Value, ifTrue:Int, ifFalse:Int) {
-        out.printLine("br \{getTypedReference(test)}, label %block\{ifTrue}, " +
-                "label %block\{ifFalse}")
+    method writeConditionalBranch(test:IR.Value, ifTrue:IR.Block.ID, ifFalse:IR.Block.ID) {
+        out.printLine("br \{getTypedReference(test)}, label %\{ifTrue}, " +
+                "label %\{ifFalse}")
     }
 
-    method writeConstruct(id:Int, cl:ClassDecl) {
+    method writeConstruct(id:IR.Statement.ID, cl:ClassDecl) {
         if compiler.isValue(cl) {
             labelCount += 1
             def alloca := "%$tmp\{labelCount}"
@@ -1452,9 +1476,111 @@ class LLVMCodeGenerator : CodeGenerator {
         refs[id] := result
     }
 
-    method writeGetField(id:Int, value:IR.Value, type:Type, field:Int) {
+    method writeDynamicCall(id:IR.Statement.ID, m:IR.Value, args:ListView<IR.Value>) {
+        def type := m.type()
+        def returnType := type.subtypes[type.subtypes.count - 1]
+        if returnType != Type.Void() {
+            def result := nextVar()
+            out.print("\{result} = ")
+            refs[id] := result
+        }
+        out.print("call \{llvmType(returnType)} \{getReference(m)}(")
+        var separator := ""
+        for a in args {
+            out.print(separator)
+            out.print(getTypedReference(a))
+            separator := ", "
+        }
+        out.printLine(")")
+    }
+
+    method writeGetField(id:IR.Statement.ID, value:IR.Value, field:Int, type:Type) {
         def result := nextVar()
         out.printLine("\{result} = extractvalue \{getTypedReference(value)}, \{field}")
+        refs[id] := result
+    }
+
+    method writeGetInterfaceMethod(id:IR.Statement.ID, value:IR.Value, cl:ClassDecl, index:Int, 
+            type:Type) {
+        def methodTypeString := methodType(type, null)
+        -- load class constant entry
+        def entry := nextLabel()
+        out.printLine("br label %\{entry}")
+        createBlock(entry, out)
+        def rawClassPointer := nextVar()
+        out.printLine("\{rawClassPointer} = getelementptr inbounds \{typeName(cl.type())}, " +
+                "\{getTypedReference(value)}, \{SIZE_TYPE} 0, i32 \{CLASS_POINTER_INDEX}")
+        def classPointer := nextVar()
+        def classType := typeName(Type.Class())
+        out.printLine("\{classPointer} = bitcast i8** \{rawClassPointer} to \{classType}**")
+        def loadedClass := nextVar()
+        out.printLine("\{loadedClass} = load \{classType}*, \{classType}** \{classPointer}")
+        def itableFirst := nextVar()
+        out.printLine("\{itableFirst} = getelementptr inbounds \{classType}, \{classType}* " +
+                "\{loadedClass}, \{SIZE_TYPE} 0, i32 \{ITABLE_INDEX}")
+        def next := nextLabel()
+        out.printLine("br label %\{next}")
+        def leavingEntryLabel := currentBlock
+        createBlock(next, out)
+        labelCount += 1
+        def itableNext := "%$itable\{labelCount}"
+        def itablePtrPtr := nextVar()
+        def fail := nextLabel()
+        out.printLine("\{itablePtrPtr} = phi %$itable** [ \{itableFirst}, %\{leavingEntryLabel}]," +
+                " [ \{itableNext}, %\{fail} ]")
+        def itablePtr := nextVar()
+        out.printLine("\{itablePtr} = load %$itable*, %$itable** \{itablePtrPtr}")
+        def itableClassPtr := nextVar()
+        out.printLine("\{itableClassPtr} = getelementptr inbounds %$itable, %$itable* " +
+                "\{itablePtr}, \{SIZE_TYPE} 0, i32 0")
+        def itableClass := nextVar()
+        out.printLine("\{itableClass} = load \{classType}*, \{classType}** \{itableClassPtr}")
+        def test := nextVar()
+        def intfCC := getClassConstant(cl)
+        out.printLine("\{test} = icmp eq \{classType}* bitcast(\{intfCC.type}* \{intfCC.name} to " +
+                "\{classType}*), \{itableClass}")
+        def success := nextLabel()
+        out.printLine("br i1 \{test}, label %\{success}, label %\{fail}")
+
+        createBlock(fail, out)
+        out.printLine("\{itableNext} = getelementptr inbounds %$itable, %$itable* \{itablePtr}, " +
+                "\{SIZE_TYPE} 0, i32 1")
+        out.printLine("br label %\{next}")
+
+        createBlock(success, out)
+        def methodPtrPtr := nextVar()
+        out.printLine("\{methodPtrPtr} = getelementptr inbounds %$itable, %$itable* " +
+                "\{itablePtr}, \{SIZE_TYPE} 0, i32 2, i32 \{index}")
+        def cast := nextVar()
+        out.printLine("\{cast} = bitcast i8** \{methodPtrPtr} to \{methodTypeString}*")
+        def methodPtr := nextVar()
+        out.printLine("\{methodPtr} = load \{methodTypeString}, \{methodTypeString}* \{cast}")
+        refs[id] := methodPtr
+    }
+
+    method writeGetVirtualMethod(id:IR.Statement.ID, value:IR.Value, index:Int, type:Type) {
+        def classPtrPtr := nextVar()
+        out.printLine("\{classPtrPtr} = getelementptr inbounds \{typeName(value.type())}, " +
+                "\{getTypedReference(value)}, i64 0, i32 0")
+        def classPtr := nextVar()
+        out.printLine("\{classPtr} = load i8*, i8** \{classPtrPtr}")
+        def cast := nextVar()
+        def classType := llvmType(Type.Class())
+        out.printLine("\{cast} = bitcast i8* \{classPtr} to \{classType}*")
+        def ptr := nextVar()
+        out.printLine("\{ptr} = getelementptr inbounds \{classType}, \{classType}* \{cast}, " +
+                "i64 0, i32 \{VTABLE_INDEX}, i64 \{index}")
+        def load := nextVar()
+        out.printLine("\{load} = load i8*, i8** \{ptr}")
+        def result := nextVar()
+        out.printLine("\{result} = bitcast i8* \{load} to \{methodType(type, null)}")
+        refs[id] := result
+    }
+
+    method writeLoad(id:IR.Statement.ID, slot:Int) {
+        def result := nextVar()
+        def type := llvmType(ir.locals[slot])
+        out.printLine("\{result} = load \{type}, \{type}* %local\{slot}")
         refs[id] := result
     }
 
@@ -1467,7 +1593,7 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method writeStaticCall(id:Int, m:MethodDecl, args:ListView<IR.Value>) {
+    method writeStaticCall(id:IR.Statement.ID, m:MethodDecl, args:ListView<IR.Value>) {
         if m.owner.external {
             writeDeclaration(m)
         }
@@ -1487,8 +1613,15 @@ class LLVMCodeGenerator : CodeGenerator {
         out.printLine(")")
     }
 
-    method writeStatement(id:Int, s:IR.Statement) {
+    method writeStore(value:IR.Value, slot:Int) {
+        out.printLine("store \{getTypedReference(value)}, \{llvmType(ir.locals[slot])}* " +
+                "%local\{slot}")
+    }
+
+    method writeStatement(id:IR.Statement.ID, s:IR.Statement) {
         match s {
+            when IR.Statement.BINARY(left, op, right, type):
+                writeBinary(id, left, op, right, type)
             when IR.Statement.BRANCH(target):
                 writeBranch(target)
             when IR.Statement.CAST(value, type):
@@ -1497,41 +1630,49 @@ class LLVMCodeGenerator : CodeGenerator {
                 writeConditionalBranch(test, ifTrue, ifFalse)
             when IR.Statement.CONSTRUCT(cl):
                 writeConstruct(id, cl)
-            when IR.Statement.GET_FIELD(value, type, field):
-                writeGetField(id, value, type, field)
+            when IR.Statement.DYNAMIC_CALL(m, args):
+                writeDynamicCall(id, m, args)
+            when IR.Statement.GET_FIELD(value, field, type):
+                writeGetField(id, value, field, type)
+            when IR.Statement.GET_INTERFACE_METHOD(value, cl, index, type):
+                writeGetInterfaceMethod(id, value, cl, index, type)
+            when IR.Statement.GET_VIRTUAL_METHOD(value, index, type):
+                writeGetVirtualMethod(id, value, index, type)
+            when IR.Statement.LOAD(slot):
+                writeLoad(id, slot)
             when IR.Statement.RETURN(value):
                 writeReturn(value)
             when IR.Statement.STATIC_CALL(m, args):
                 writeStaticCall(id, m, args)
+            when IR.Statement.STORE(value, slot):
+                writeStore(value, slot)
             otherwise:
                 assert false, "unsupported statement \{s}"
         }
     }
 
-    method writeBlock(blockId:Int, statementStartId:Int, block:ListView<IR.Statement>) {
-        if blockId != 0 {
-            out.printLine("block\{blockId}:")
+    method writeBlock(block:IR.Block) {
+        if block.id.value != 0 {
+            out.printLine("\{block.id}:")
         }
-        var id := statementStartId
-        for s in block {
-            writeStatement(id, s)
-            id += 1
+        for i in 0 .. block.statements.count {
+            writeStatement(block.ids[i], block.statements[i])
         }
     }
 
     method writeIR(ir:IR) {
-        var blockId := 0
-        var statementId := 0
+        for i in 0 .. ir.locals.count {
+            out.printLine("%local\{i} = alloca \{llvmType(ir.locals[i])}")
+        }
         for bl in ir.blocks {
-            writeBlock(blockId, statementId, bl)
-            statementId += bl.count
-            blockId += 1
+            writeBlock(bl)
         }
     }
 
     @override
     method write(m:MethodDecl, ir:IR) {
         out := methods
+        self.ir := ir
         out.print("define ")
         if m.owner.isSpecialization() {
             out.print("linkonce_odr ")

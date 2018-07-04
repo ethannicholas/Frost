@@ -1,11 +1,21 @@
 package org.pandalanguage.pandac
 
+uses org.pandalanguage.pandac.parser.Token
+
 class IR {
     choice Statement {
         ============================================================================================
+        Perform a binary operation on two values. Arithmetic, shift, and comparison operations
+        are supported on all builtin integer types. Arithmetic and comparison are supported on
+        builtin float types. Class types support the IDENTITY and NIDENTITY operations. The left and
+        right types must match on all comparisons other than IDENTITY and NIDENTITY.
+        ============================================================================================
+        BINARY(Value, Token.Kind, Value, Type)
+
+        ============================================================================================
         Unconditionally branch to the given block.
         ============================================================================================
-        BRANCH(Int)
+        BRANCH(Block.ID)
 
         ============================================================================================
         Casts a value of one type to another type. This handles bitcasting, truncating / extending,
@@ -16,15 +26,21 @@ class IR {
         ============================================================================================
         Conditionally branch to the first block if true, the second block if false.
         ============================================================================================
-        CONDITIONAL_BRANCH(Value, Int, Int)
+        CONDITIONAL_BRANCH(Value, Block.ID, Block.ID)
 
         ============================================================================================
         Constructs a new object instance. The object will have an initialized class pointer and a
         refcount of 1, with all other fields initialized to 0. `init` calls appear separately as
         `STATIC_CALL` statements. `CONSTRUCT` is used only for non-`Value` objects; `Value`s are
-        directly returned by their `init` methods (non-`Value` `init` methods return void).
+        directly returned by their `init` methods (non-`Value` `init` methods instead return void).
         ============================================================================================
         CONSTRUCT(ClassDecl)
+
+        ============================================================================================
+        Dynamically calls a method reference. `args` is the actual, IR-level arguments, meaning that
+        `self` (if any) appears explicitly as `args[0]`.
+        ============================================================================================
+        DYNAMIC_CALL(Value -* method *-, ImmutableArray<Value> -* args *-)
 
         ============================================================================================
         Extracts a field from an object. The id of the field is its numeric index in the object
@@ -32,22 +48,67 @@ class IR {
         value object is the first data field it contains. The `Type` must be the actual in-memory
         type of the field.
         ============================================================================================
-        GET_FIELD(Value, Type, Int -* id *-)
+        GET_FIELD(Value, Int -* id *-, Type)
 
         ============================================================================================
-        A static (non-virtual, non-dynamic) call to a method. `args` is the actual, IR-level
-        arguments, meaning that `self` (if any) appears explicitly as `args[0]`.
+        Gets a reference to a virtual method from an object, by its vtable index.
         ============================================================================================
-        STATIC_CALL(MethodDecl, ImmutableArray<Value>)
+        GET_VIRTUAL_METHOD(Value, Int, Type)
+
+        ============================================================================================
+        Gets a reference to an interface method from an object, by its class and itable index.
+        ============================================================================================
+        GET_INTERFACE_METHOD(Value, ClassDecl, Int, Type)
+
+        ============================================================================================
+        Loads the value of the local variable in the numbered slot.
+        ============================================================================================
+        LOAD(Int)
 
         ============================================================================================
         A `return` statement.
         ============================================================================================
         RETURN(IR.Value?)
 
+        ============================================================================================
+        A static (non-virtual, non-dynamic) call to a method. `args` is the actual, IR-level
+        arguments, meaning that `self` (if any) appears explicitly as `args[0]`.
+        ============================================================================================
+        STATIC_CALL(MethodDecl, ImmutableArray<Value> -* args *-)
+
+        ============================================================================================
+        Assign to the local variable in the numbered slot.
+        ============================================================================================
+        STORE(Value, Int)
+
+        class ID : panda.core.Value, Key<ID> {
+            def value:Int
+
+            init(value:Int) {
+                self.value := value
+            }
+
+            @override
+            function hash():Int {
+                return value
+            }
+
+            @override
+            function =(other:ID):Bit {
+                return value = other.value
+            }
+
+            @override
+            function convert():String {
+                return "$\{value}"
+            }
+        }
+
         @override
         function convert():String {
             match self {
+                when BINARY(left, op, right, type):
+                    return "binary \{left}, \{op}, \{right}, \{type}"
                 when BRANCH(id):
                     return "branch \{id}"
                 when CAST(value, type):
@@ -56,8 +117,16 @@ class IR {
                     return "branch \{test}, \{ifTrue}, \{ifFalse}"
                 when CONSTRUCT(cl):
                     return "construct \{cl.name}"
+                when DYNAMIC_CALL(m, args):
+                    return "dynamic_call \{m}(\{args.join(", ")})"
                 when GET_FIELD(value, type, id):
                     return "get_field \{value}, \{type}, \{id}"
+                when GET_INTERFACE_METHOD(value, cl, id, type):
+                    return "get_interface_method \{value}, \{cl.name}, \{id}, \{type}"
+                when GET_VIRTUAL_METHOD(value, id, type):
+                    return "get_virtual_method \{value}, \{id}, \{type}"
+                when LOAD(slot):
+                    return "load %\{slot}"
                 when RETURN(value):
                     if value != null {
                         return "return \{value}"
@@ -65,17 +134,58 @@ class IR {
                     return "return"
                 when STATIC_CALL(m, args):
                     return "static_call \{m.declaration()}(\{args.join(", ")})"
+                when STORE(slot, value):
+                    return "store \{value}, %\{slot}"
             }
+        }
+    }
+
+    class Block {
+        class ID : panda.core.Value {
+            def value:Int
+
+            init(value:Int) {
+                self.value := value
+            }
+
+            @override
+            function convert():String {
+                return "block\{value}"
+            }
+        }
+
+        def id:ID
+
+        def ids := Array<Statement.ID>()
+
+        def statements := Array<Statement>()
+
+        init(id:ID) {
+            self.id := id
+        }
+
+        @override
+        function convert():String {
+            def result := MutableString()
+            for i in 0 .. statements.count {
+                result.append(ids[i])
+                result.append(": ")
+                result.append(statements[i])
+                result.append("\n")
+            }
+            return result.finish()
         }
     }
 
     choice Value {
         INT(UInt64, Type)
         NEGATED_INT(UInt64, Type)
+        NULL(Type)
         REAL(Real64, Type)
-        REF(Int, Type)
+        REF(Statement.ID, Type)
         STRING(String)
 
+        -- intermediate values; these never show up in finished IR sent to the code generator
         METHOD(Value? -* target *-, MethodDecl)
         METHODS(Value? -* target *-, ImmutableArray<MethodDecl>)
         TYPE(Type)
@@ -85,6 +195,8 @@ class IR {
                 when INT(_, type):
                     return type
                 when NEGATED_INT(_, type):
+                    return type
+                when NULL(type):
                     return type
                 when REAL(_, type):
                     return type
@@ -108,6 +220,8 @@ class IR {
                     return value.convert()
                 when NEGATED_INT(value, _):
                     return "-" + value
+                when NULL(type):
+                    return "null->\{type}"
                 when REAL(value, _):
                     return value.convert()
                 when REF(id, type):
@@ -132,45 +246,50 @@ class IR {
         }
     }
 
-    def blocks := Array<Array<Statement>>()
+    def locals := Array<Type>()
+
+    def blocks := Array<Block>()
 
     @private
-    var currentId := -1
+    var currentStatementId := -1
 
     @private
-    def currentBlock:Array<Statement>
+    def currentBlock:Block
 
     init() {
-        currentBlock := Array<Statement>()
-        blocks.add(currentBlock)
+        newBlock()
+        currentBlock := blocks[0]
     }
 
     ================================================================================================
     Adds a new statement to the end of the current block and returns its id.
     ================================================================================================
-    method add(s:Statement):Int {
-        currentId += 1
-        currentBlock.add(s)
-        return currentId
+    method add(s:Statement):Statement.ID {
+        currentStatementId += 1
+        def result := Statement.ID(currentStatementId)
+        currentBlock.ids.add(result)
+        currentBlock.statements.add(s)
+        return result
     }
 
     ================================================================================================
     Creates (but does not make current!) a new block and returns its id.
     ================================================================================================
-    method newBlock():Int {
-        blocks.add(Array<Statement>())
-        return blocks.count - 1
+    method newBlock():Block.ID {
+        def result := Block.ID(blocks.count)
+        blocks.add(Block(result))
+        return result
     }
 
-    method setCurrentBlock(id:Int) {
-        currentBlock := blocks[id]
+    method setCurrentBlock(id:Block.ID) {
+        currentBlock := blocks[id.value]
     }
 
     function currentBlockFinished():Bit {
-        if currentBlock.count = 0 {
+        if currentBlock.statements.count = 0 {
             return false
         }
-        match currentBlock[currentBlock.count - 1] {
+        match currentBlock.statements[currentBlock.statements.count - 1] {
             when Statement.BRANCH, Statement.CONDITIONAL_BRANCH, Statement.RETURN:
                 return true
             otherwise:
@@ -180,18 +299,6 @@ class IR {
 
     @override
     function convert():String {
-        var id := 0
-        def result := MutableString()
-        for i in 0 .. blocks.count {
-            result.append("block\{i}:\n")
-            for s in blocks[i] {
-                result.append(id)
-                result.append(": ")
-                result.append(s)
-                result.append("\n")
-                id += 1
-            }
-        }
-        return result.finish()
+        return blocks.join("\n")
     }
 }

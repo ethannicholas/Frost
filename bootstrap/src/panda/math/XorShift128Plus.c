@@ -18,58 +18,61 @@ void panda$math$XorShift128Plus$init$panda$core$Int64(panda$math$XorShift128Plus
     panda$core$Int64 $tmp2;
     panda$core$Int64 $tmp4;
     panda$core$Int64 $tmp6;
-    panda$core$Int64$init$builtin_int64(&$tmp2, 123456789);
-    panda$core$Int64 $tmp3 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(p_seed, $tmp2);
-    self->state1 = $tmp3;
-    panda$core$Int64$init$builtin_int64(&$tmp4, 0);
-    panda$core$Bit $tmp5 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(self->state1, $tmp4);
-    if ($tmp5.value) {
+    panda$core$Int64 $tmp8;
+    panda$core$Int64$init$builtin_int64(&$tmp2, 6713);
+    panda$core$Int64 $tmp3 = panda$core$Int64$$MUL$panda$core$Int64$R$panda$core$Int64(p_seed, $tmp2);
+    panda$core$Int64$init$builtin_int64(&$tmp4, 123456789);
+    panda$core$Int64 $tmp5 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64($tmp3, $tmp4);
+    self->state1 = $tmp5;
+    panda$core$Int64$init$builtin_int64(&$tmp6, 0);
+    panda$core$Bit $tmp7 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(self->state1, $tmp6);
+    if ($tmp7.value) {
     {
-        panda$core$Int64$init$builtin_int64(&$tmp6, 123456789);
-        self->state1 = $tmp6;
+        panda$core$Int64$init$builtin_int64(&$tmp8, 123456789);
+        self->state1 = $tmp8;
     }
     }
-    panda$core$Int64 $tmp7 = panda$core$Int64$$BNOT$R$panda$core$Int64(self->state1);
-    self->state2 = $tmp7;
+    panda$core$Int64 $tmp9 = panda$core$Int64$$BNOT$R$panda$core$Int64(self->state1);
+    self->state2 = $tmp9;
 }
 panda$core$Int64 panda$math$XorShift128Plus$int64$R$panda$core$Int64(panda$math$XorShift128Plus* self) {
-    panda$core$Int64 x8;
-    panda$core$Int64 y9;
-    panda$core$Int64 $tmp10;
-    panda$core$Int64 $tmp14;
-    panda$core$Int64 $tmp17;
-    panda$core$Int64 $returnValue20;
-    x8 = self->state1;
-    y9 = self->state2;
-    self->state1 = y9;
-    panda$core$Int64$init$builtin_int64(&$tmp10, 23);
-    panda$core$Int64 $tmp11 = panda$core$Int64$$SHL$panda$core$Int64$R$panda$core$Int64(x8, $tmp10);
-    panda$core$Int64 $tmp12 = panda$core$Int64$$BXOR$panda$core$Int64$R$panda$core$Int64(x8, $tmp11);
-    x8 = $tmp12;
-    panda$core$Int64 $tmp13 = panda$core$Int64$$BXOR$panda$core$Int64$R$panda$core$Int64(x8, y9);
-    panda$core$Int64$init$builtin_int64(&$tmp14, 17);
-    panda$core$Int64 $tmp15 = panda$core$Int64$$SHR$panda$core$Int64$R$panda$core$Int64(x8, $tmp14);
-    panda$core$Int64 $tmp16 = panda$core$Int64$$BXOR$panda$core$Int64$R$panda$core$Int64($tmp13, $tmp15);
-    panda$core$Int64$init$builtin_int64(&$tmp17, 26);
-    panda$core$Int64 $tmp18 = panda$core$Int64$$SHR$panda$core$Int64$R$panda$core$Int64(y9, $tmp17);
-    panda$core$Int64 $tmp19 = panda$core$Int64$$BXOR$panda$core$Int64$R$panda$core$Int64($tmp16, $tmp18);
-    self->state2 = $tmp19;
-    panda$core$Int64 $tmp21 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->state2, y9);
-    $returnValue20 = $tmp21;
-    return $returnValue20;
+    panda$core$Int64 x10;
+    panda$core$Int64 y11;
+    panda$core$Int64 $tmp12;
+    panda$core$Int64 $tmp16;
+    panda$core$Int64 $tmp19;
+    panda$core$Int64 $returnValue22;
+    x10 = self->state1;
+    y11 = self->state2;
+    self->state1 = y11;
+    panda$core$Int64$init$builtin_int64(&$tmp12, 23);
+    panda$core$Int64 $tmp13 = panda$core$Int64$$SHL$panda$core$Int64$R$panda$core$Int64(x10, $tmp12);
+    panda$core$Int64 $tmp14 = panda$core$Int64$$BXOR$panda$core$Int64$R$panda$core$Int64(x10, $tmp13);
+    x10 = $tmp14;
+    panda$core$Int64 $tmp15 = panda$core$Int64$$BXOR$panda$core$Int64$R$panda$core$Int64(x10, y11);
+    panda$core$Int64$init$builtin_int64(&$tmp16, 17);
+    panda$core$Int64 $tmp17 = panda$core$Int64$$SHR$panda$core$Int64$R$panda$core$Int64(x10, $tmp16);
+    panda$core$Int64 $tmp18 = panda$core$Int64$$BXOR$panda$core$Int64$R$panda$core$Int64($tmp15, $tmp17);
+    panda$core$Int64$init$builtin_int64(&$tmp19, 26);
+    panda$core$Int64 $tmp20 = panda$core$Int64$$SHR$panda$core$Int64$R$panda$core$Int64(y11, $tmp19);
+    panda$core$Int64 $tmp21 = panda$core$Int64$$BXOR$panda$core$Int64$R$panda$core$Int64($tmp18, $tmp20);
+    self->state2 = $tmp21;
+    panda$core$Int64 $tmp23 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(self->state2, y11);
+    $returnValue22 = $tmp23;
+    return $returnValue22;
 }
 void panda$math$XorShift128Plus$cleanup(panda$math$XorShift128Plus* self) {
-    int $tmp25;
+    int $tmp27;
     {
     }
-    $tmp25 = -1;
-    goto $l23;
-    $l23:;
+    $tmp27 = -1;
+    goto $l25;
+    $l25:;
     panda$core$Object$cleanup(((panda$core$Object*) self));
-    switch ($tmp25) {
-        case -1: goto $l26;
+    switch ($tmp27) {
+        case -1: goto $l28;
     }
-    $l26:;
+    $l28:;
 }
 
 

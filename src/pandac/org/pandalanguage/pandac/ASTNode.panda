@@ -203,7 +203,7 @@ choice ASTNode {
             when AT_RETURN(_):
                 return "@return"
             when BINARY(_, left, op, right):
-                return "\{left} \{op} \{right}"
+                return "(\{left} \{op} \{right})"
             when BIT(_, value):
                 return value.convert()
             when BLOCK(_, statements):

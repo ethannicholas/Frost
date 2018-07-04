@@ -13,7 +13,7 @@ class Variable : Symbol {
     }
 
     choice Storage {
-        LOCAL
+        LOCAL(Int -* slot *-)
         PARAMETER
         GLOBAL
     }
@@ -26,11 +26,6 @@ class Variable : Symbol {
 
     @weak
     var owner:MethodDecl? := null
-
-    @pre(type != Type.Void())
-    init(position:Position, kind:Kind, name:String, type:Type?) {
-        init(position, kind, name, type, Storage.LOCAL)
-    }
 
     @pre(type != Type.Void())
     init(position:Position, kind:Kind, name:String, type:Type, storage:Storage) {
