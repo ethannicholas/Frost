@@ -61,7 +61,7 @@ choice ASTNode {
     PACKAGE                (Position, String)
     PARAMETER              (Position, String, ASTNode -* type *-)
     PREFIX                 (Position, Token.Kind, ASTNode)
-    RANGE                  (Position, ASTNode?, ASTNode?, Bit, ASTNode?)
+    RANGE                  (Position, ASTNode?, Bit, ASTNode?, ASTNode?)
     REAL                   (Position, Real64)
     REGEX                  (Position, String)
     RETURN                 (Position, ASTNode?)
@@ -398,7 +398,7 @@ choice ASTNode {
                 return "\{name}:\{type}"
             when PREFIX(_, kind, base):
                 return "\{kind}\{base}"
-            when RANGE(_, start, end, inclusive, step):
+            when RANGE(_, start, inclusive, end, step):
                 def result := MutableString()
                 if start != null {
                     result.append(start)

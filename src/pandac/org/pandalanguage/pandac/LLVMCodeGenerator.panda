@@ -403,7 +403,7 @@ class LLVMCodeGenerator : CodeGenerator {
                 }
                 return llvmType(t.subtypes[0])
             when Type.Kind.GENERIC_PARAMETER:
-                return llvmType(t.parameter.bound)
+                return llvmType(t.genericParameter.bound)
             when Type.Kind.FUNCTION, Type.Kind.METHOD:
                 return llvmType(Type.MutableMethod())
             when Type.Kind.IMMUTABLE_FUNCTION, Type.Kind.IMMUTABLE_METHOD:
@@ -1264,7 +1264,7 @@ class LLVMCodeGenerator : CodeGenerator {
             declarations.print("void")
         }
         else {
-            declarations.print(llvmType(compiler.returnType(null, m)))
+            declarations.print(llvmType(compiler.actualReturnType(null, m, m.type())))
         }
         declarations.print(" \{getName(m)}(")
         var separator := ""
@@ -1597,7 +1597,7 @@ class LLVMCodeGenerator : CodeGenerator {
         if m.owner.external {
             writeDeclaration(m)
         }
-        def type := compiler.returnType(null, m)
+        def type := compiler.actualReturnType(null, m, m.type())
         if type != Type.Void() {
             def result := nextVar()
             out.print("\{result} = ")

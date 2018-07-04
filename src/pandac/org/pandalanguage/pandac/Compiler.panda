@@ -391,7 +391,7 @@ class Compiler {
     function typeParameters(type:Type):ListView<Type> {
         match type.typeKind {
             when Type.Kind.GENERIC_PARAMETER:
-                return typeParameters(type.parameter.bound)
+                return typeParameters(type.genericParameter.bound)
             when Type.Kind.GENERIC:
                 assert type.subtypes.count >= 2
                 return type.subtypes[1..]
@@ -496,14 +496,14 @@ class Compiler {
             when Type.Kind.METHOD, Type.Kind.FUNCTION, Type.Kind.IMMUTABLE_METHOD,
                     Type.Kind.IMMUTABLE_FUNCTION:
                 def params := Array<Type>()
-                for i in 0 .. type.subtypes.count - 1 {
-                    def resolved := resolve(type.subtypes[i])
+                for i in 0 .. type.parameterCount {
+                    def resolved := resolve(type.parameterType(i))
                     if resolved = null {
                         return null
                     }
                     params.add(resolved)
                 }
-                def returnType := resolve(type.subtypes[type.subtypes.count - 1])
+                def returnType := resolve(type.returnType())
                 if returnType = null {
                     return null
                 }
@@ -693,15 +693,75 @@ class Compiler {
         return m.resolved = Resolution.RESOLVED
     }
 
-    method resolve(f:FieldDecl) {
+    method determineRawType(f:FieldDecl) {
+        currentClass.push(f.owner)
+        def old := symbolTable
+        symbolTable := f.owner.symbolTable
         if f.type != Type.Void() {
             def resolved := resolve(f.type)
-            if resolved = null {
+            if resolved != null {
+                f.type := resolved
+            }
+            currentClass.pop()
+            symbolTable := old
+            return
+        }
+        if f.rawValue = null {
+            error(f.position, "field has neither a type nor a value")
+            currentClass.pop()
+            symbolTable := old
+            return
+        }
+        def preferred := preferredType(f.rawValue)
+        if preferred = null {
+            currentClass.pop()
+            symbolTable := old
+            return
+        }
+        f.type := preferred
+        currentClass.pop()
+        symbolTable := old
+    }
+
+    method resolve(f:FieldDecl) {
+        if f.resolved != Resolution.UNRESOLVED {
+            return
+        }
+        f.resolved := Resolution.IN_PROGRESS
+        if f.owner.classKind != ClassDecl.Kind.INTERFACE {
+            -- we need to mark that we are in an instance context so 'self' works. Since the class
+            -- is guaranteed to have at least one init method, we just pretend we're in one of
+            -- those.
+            def firstInit:MethodDecl? := null
+            for m in f.owner.methods {
+                if m.methodKind = MethodDecl.Kind.INIT {
+                    firstInit := m
+                    break
+                }
+            }
+            assert firstInit != null | errorCount > 0, "class \{f.owner.name} has no init methods"
+            if firstInit = null {
                 f.resolved := Resolution.RESOLVED_WITH_ERRORS
                 return
             }
-            f.type := resolved
+            currentMethod.push(firstInit)
+            determineRawType(f)
+            currentMethod.pop(firstInit)
+        }
+        else {
+            def old := currentMethod
+            currentMethod := Stack<MethodDecl>()
+            determineRawType(f)
+            currentMethod := old
+        }
+        if f.type != Type.Void() & f.type.resolved {
             f.resolved := Resolution.RESOLVED
+        }
+        else {
+            f.resolved := Resolution.RESOLVED_WITH_ERRORS
+        }
+        if f.annotations.isWeak() & f.type != Type.Void() {
+            f.type := Type.WeakOf(f.type)
         }
     }
 
@@ -934,7 +994,7 @@ class Compiler {
             when Type.Kind.NULLABLE, Type.Kind.GENERIC:
                 result := getClass(type.subtypes[0])
             when Type.Kind.GENERIC_PARAMETER:
-                return getClass(type.parameter.bound)
+                return getClass(type.genericParameter.bound)
             when Type.Kind.METHOD, Type.Kind.FUNCTION:
                 return getClass(Type.MutableMethod())
             when Type.Kind.IMMUTABLE_METHOD, Type.Kind.IMMUTABLE_FUNCTION:
@@ -1159,7 +1219,7 @@ class Compiler {
         }
     }
 
-    function variableType(type:Type):Type {
+    function preferredType(type:Type):Type {
         if type.typeKind = Type.Kind.INT_LITERAL {
             return Type.Int64()
         }
@@ -1175,12 +1235,20 @@ class Compiler {
         return type
     }
 
-    function variableType(expr:ASTNode):Type {
+    function preferredType(expr:ASTNode):Type? {
         match expr {
             when ASTNode.INT:
                 return Type.Int64()
         }
-        assert false, "unsupported variableType: \{expr} (\{expr.$rawValue}, \{ASTNode.INT(Position(), 1).$rawValue})"
+        def possible := possibleTypes(expr)
+        if possible = null {
+            return null
+        }
+        if possible.count = 1 {
+            return possible[0]
+        }
+        error(expr.position(), "expression type is ambiguous")
+        return null
     }
 
     method coercionCost(type:Type, target:Type):Int? {
@@ -1302,7 +1370,7 @@ class Compiler {
                 }
                 return best
             when Type.Kind.GENERIC_PARAMETER:
-                return coercionCost(type.parameter.bound, target)
+                return coercionCost(type.genericParameter.bound, target)
         }
         if !target.isClass() {
             return null
@@ -1387,7 +1455,7 @@ class Compiler {
                 }
                 cost += argCost
             }
-            def returnType := m.subtypes[m.subtypes.count - 1]
+            def returnType := m.returnType()
             match type {
                 when TypeContext.IMMUTABLE:
                     if returnType = Type.Void() | !isImmutable(returnType) {
@@ -1540,7 +1608,7 @@ class Compiler {
                 if result != null {
                     def resultTypes := Array<Type>() -- FIXME literal
                     for m in result.first {
-                        resultTypes.add(m.subtypes[m.subtypes.count - 1])
+                        resultTypes.add(m.returnType())
                     }
                     return resultTypes
                 }
@@ -1649,7 +1717,9 @@ class Compiler {
                     return 1
                 }
                 if !target.isNumber() {
-                    return coercionCost(variableType(expr), target)
+                    def preferred := preferredType(expr)
+                    assert preferred != null
+                    return coercionCost(preferred, target)
                 }
                 return 2
             when ASTNode.NULL:
@@ -1701,7 +1771,7 @@ class Compiler {
             return true
         }
         if type.typeKind = Type.Kind.GENERIC_PARAMETER {
-            return canCast(type.parameter.bound, target)
+            return canCast(type.genericParameter.bound, target)
         }
         if type.typeKind = Type.Kind.INVALID {
             return false
@@ -2177,11 +2247,11 @@ class Compiler {
         return m.methodKind = MethodDecl.Kind.INIT & isValue(m.owner)
     }
 
-    method returnType(target:IR.Value?, m:MethodDecl):Type {
+    method actualReturnType(target:IR.Value?, m:MethodDecl, effectiveType:Type):Type {
         if isValueInit(m) {
             return m.owner.type()
         }
-        return m.returnType
+        return effectiveType.returnType()
     }
 
     method implicitInit(position:Position, value:IR.Value, m:MethodDecl):IR.Value {
@@ -2258,6 +2328,16 @@ class Compiler {
         }
     }
 
+    method cast(value:IR.Value?, target:Type):IR.Value? {
+        if value = null {
+            return null
+        }
+        if value.type() = target {
+            return value
+        }
+        return IR.Value.REF(ir.add(IR.Statement.CAST(value, target)), target)
+    }
+
     method getVTableIndex(m:MethodDecl):Int {
         def vtable := getVTable(m.owner)
         for i in 0 .. vtable.count {
@@ -2275,10 +2355,17 @@ class Compiler {
         if target != null {
             finalArgs.add(target)
         }
+        var effectiveType := m.type()
+        if target != null {
+            effectiveType := remapType(target.type(), effectiveType)
+        }
         for i in 0 .. args.count {
-            def a := compileExpression(args[i], TypeContext.TYPE(m.parameters[i].type))
+            var a := compileExpression(args[i], TypeContext.TYPE(effectiveType.parameterType(i)))
             if a = null {
                 return null
+            }
+            if a.type() != m.parameters[i].type {
+                a := cast(a, m.parameters[i].type)
             }
             finalArgs.add(a)
         }
@@ -2301,7 +2388,7 @@ class Compiler {
         else {
             result := ir.add(IR.Statement.STATIC_CALL(m, finalArgs.finish()))
         }
-        def returnType := returnType(target, m)
+        def returnType := actualReturnType(target, m, effectiveType)
         if returnType != Type.Void() {
             return coerce(position, IR.Value.REF(result, returnType), type)
         }
@@ -2319,9 +2406,13 @@ class Compiler {
             if !resolve(m) {
                 continue
             }
+            var effectiveType := m.type()
+            if target != null {
+                effectiveType := remapType(target.type(), effectiveType)
+            }
             var cost := 0
             for i in 0 .. args.count {
-                def argCost := coercionCost(args[i], m.parameters[i].type)
+                def argCost := coercionCost(args[i], effectiveType.parameterType(i))
                 if argCost = null {
                     continue outer
                 }
@@ -2329,11 +2420,11 @@ class Compiler {
             }
             match type {
                 when TypeContext.IMMUTABLE:
-                    if m.returnType = Type.Void() | !isImmutable(m.returnType) {
+                    if m.returnType = Type.Void() | !isImmutable(effectiveType.returnType()) {
                         continue
                     }
                 when TypeContext.TYPE(t):
-                    def returnCost := coercionCost(returnType(target, m), t)
+                    def returnCost := coercionCost(actualReturnType(target, m, effectiveType), t)
                     if returnCost = null {
                         continue
                     }
@@ -2377,11 +2468,8 @@ class Compiler {
                 }
                 def construct := ir.add(IR.Statement.CONSTRUCT(cl))
                 def constructRef := IR.Value.REF(construct, t)
-                def initCall := call(position, symbolRef(position, constructRef, inits), args,
+                call(position, symbolRef(position, constructRef, inits), args,
                         TypeContext.UNSPECIFIED)
-                if initCall = null {
-                    return null
-                }
                 return coerce(position, constructRef, type)
             otherwise:
                 assert false, "cannot call \{m}"
@@ -2462,6 +2550,14 @@ class Compiler {
 
     method compileCall(position:Position, m:ASTNode, args:ImmutableArray<ASTNode>,
                        type:TypeContext):IR.Value? {
+        match m {
+            when ASTNode.GENERIC_TYPE:
+                def resolved := resolve(scanner.convertType(m))
+                if resolved = null {
+                    return null
+                }
+                return call(position, IR.Value.TYPE(resolved), args, type)
+        }
         def compiledM := compileExpression(m)
         if compiledM = null {
             return null
@@ -2581,6 +2677,11 @@ class Compiler {
         }
     }
 
+    method compileRange(position:Position, start:ASTNode?, inclusive:Bit, end:ASTNode?,
+            step:ASTNode?, type:TypeContext):IR.Value? {
+        return null
+    }
+
     method typeMatch(value:IR.Value?, type:TypeContext):Bit {
         if value = null {
             return true
@@ -2597,7 +2698,7 @@ class Compiler {
         }
     }
 
-    @post(typeMatch(@return, type))
+    @post(typeMatch(@return, type) & (@return != null | errorCount > 0))
     method compileExpression(expr:ASTNode, type:TypeContext):IR.Value? {
         match expr {
             when ASTNode.BINARY(position, left, op, right):
@@ -2616,8 +2717,12 @@ class Compiler {
                 return compileInt(position, value, type)
             when ASTNode.NULL(position):
                 return compileNull(position, type)
+            when ASTNode.RANGE(position, start, inclusive, end, step):
+                return compileRange(position, start, inclusive, end, step, type)
             when ASTNode.STRING(position, text):
                 return coerce(expr.position(), IR.Value.STRING(text), type)
+            when ASTNode.TYPE(position, t):
+                error(position, "expected an expression, but found type '\{t}'")
             otherwise:
                 assert false, "unsupported expression \{expr}"
         }
@@ -2824,9 +2929,15 @@ class Compiler {
                 if rawValue != null {
                     if kind = Variable.Kind.CONSTANT {
                         value := compileExpression(rawValue, TypeContext.IMMUTABLE)
+                        if value = null {
+                            return null
+                        }
                     }
                     else {
                         value := compileExpression(rawValue, TypeContext.UNSPECIFIED)
+                        if value = null {
+                            return null
+                        }
                     }
                 }
                 else {
@@ -3140,6 +3251,7 @@ class Compiler {
 
     method error(file:File, pos:Position, msg:String) {
         if reportErrors {
+            Console.printLine("error: \{pos}: \{msg}")
             errorCount += 1
             errorQueue.post(Error(file, pos, msg))
         }

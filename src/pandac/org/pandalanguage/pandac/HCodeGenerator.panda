@@ -134,7 +134,7 @@ class HCodeGenerator : CodeGenerator {
                 }
                 return type(t.subtypes[0])
             when Type.Kind.GENERIC_PARAMETER:
-                return type(t.parameter.bound)
+                return type(t.genericParameter.bound)
             when Type.Kind.FUNCTION, Type.Kind.METHOD:
                 return type(Type.MutableMethod())
             when Type.Kind.IMMUTABLE_FUNCTION, Type.Kind.IMMUTABLE_METHOD:

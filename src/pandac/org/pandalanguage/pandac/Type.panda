@@ -30,8 +30,10 @@ class Type : Symbol, Key<Type> {
 
     def subtypes:Array<Type>?
 
+    property parameterCount:Int
+
     @weak
-    def parameter:ClassDecl.GenericParameter?
+    def genericParameter:ClassDecl.GenericParameter?
 
     init(name:String, typeKind:Kind, position:Position) {
         init(name, typeKind, position, false)
@@ -85,7 +87,7 @@ class Type : Symbol, Key<Type> {
 
     init(param:ClassDecl.GenericParameter) {
         self.typeKind := Kind.GENERIC_PARAMETER
-        self.parameter := param
+        self.genericParameter := param
         self.resolved := true
         self.subtypes := null
         super.init(Symbol.Kind.TYPE, position, "\{param.owner}.\{param.name}")
@@ -514,6 +516,18 @@ class Type : Symbol, Key<Type> {
 
     @pre(typeKind = Kind.FUNCTION | typeKind = Kind.METHOD | typeKind = Kind.IMMUTABLE_FUNCTION |
             typeKind = Kind.IMMUTABLE_METHOD)
+    function get_parameterCount():Int {
+        return subtypes.count - 1
+    }
+
+    @pre((typeKind = Kind.FUNCTION | typeKind = Kind.METHOD | typeKind = Kind.IMMUTABLE_FUNCTION |
+            typeKind = Kind.IMMUTABLE_METHOD) & i >= 0 & i < subtypes.count - 1)
+    function parameterType(i:Int):Type {
+        return subtypes[i]
+    }
+
+    @pre(typeKind = Kind.FUNCTION | typeKind = Kind.METHOD | typeKind = Kind.IMMUTABLE_FUNCTION |
+            typeKind = Kind.IMMUTABLE_METHOD)
     function returnType():Type {
         return subtypes[subtypes.count - 1]
     }
@@ -569,8 +583,8 @@ class Type : Symbol, Key<Type> {
         if other.typeKind = Kind.NULLABLE {
             return union(compiler, other.subtypes[0]).nullable()
         }
-        def t1 := compiler.variableType(self)
-        def t2 := compiler.variableType(other)
+        def t1 := compiler.preferredType(self)
+        def t2 := compiler.preferredType(other)
         if t1.isClass() & t2.isClass() {
             def ancestors := HashSet<Type>()
             var t := self

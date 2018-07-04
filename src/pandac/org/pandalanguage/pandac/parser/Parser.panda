@@ -1205,7 +1205,7 @@ class Parser {
                 else {
                     step := null
                 }
-                return ASTNode.RANGE(op.position, result, right, op.kind = Token.Kind.ELLIPSIS,
+                return ASTNode.RANGE(op.position, result, op.kind = Token.Kind.ELLIPSIS, right,
                         step)
             otherwise:
                 pushback(op)
