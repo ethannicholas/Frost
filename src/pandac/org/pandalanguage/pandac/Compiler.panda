@@ -2043,27 +2043,6 @@ class Compiler {
         return result
     }
 
-    method checkSteppedRangeTypes(position:Position, type:Type):Bit {
-        if type.typeKind = Type.Kind.NULLABLE {
-            return checkSteppedRangeTypes(position, type.subtypes[0])
-        }
-        if type.isSteppedRange() {
-            def type1 := type.subtypes[1].nonnullable()
-            def type2 := type.subtypes[2]
-            if type1 = type2 {
-                return true
-            }
-            if type1.isChar() & type2.name.startsWith("panda.core.Int") &
-                    type1.name.endsWith(type2.name["panda.core.Int".length()..]) {
-                return true
-            }
-            error(position, "for loop cannot iterate over '\{type}'; endpoint and step types " +
-                    "are not compatible")
-            return false
-        }
-        return true
-    }
-
     method createChoiceCleanup(m:MethodDecl) {
         def cl := m.owner
         def statements := Array<ASTNode>()
@@ -2353,6 +2332,10 @@ class Compiler {
 
     method call(position:Position, target:IR.Value?, m:MethodDecl, args:ListView<ASTNode>,
             type:TypeContext):IR.Value? {
+        resolve(m)
+        if m.resolved != Resolution.RESOLVED {
+            return null
+        }
         def finalArgs := Array<IR.Value>(args.count)
         if target != null {
             finalArgs.add(target)
@@ -2398,6 +2381,16 @@ class Compiler {
             return coerce(position, resultCast, type)
         }
         return null
+    }
+
+    method call(position:Position, target:IR.Value, m:String, args:ListView<ASTNode>,
+            type:TypeContext):IR.Value? {
+        def cl := getClass(target.type())
+        assert cl != null
+        def s := getSymbolTable(cl)[m]
+        assert s != null, "could not find \{m} in \{cl.name}"
+        assert s.kind = Symbol.Kind.METHOD
+        return call(position, target, s->MethodDecl, args, type)
     }
 
     method findBestMethod(position:Position, target:IR.Value?, methods:ListView<MethodDecl>,
@@ -2919,6 +2912,180 @@ class Compiler {
         ir.setCurrentBlock(endBlock)
     }
 
+    method checkSteppedRangeTypes(position:Position, type:Type):Bit {
+        if type.typeKind = Type.Kind.NULLABLE {
+            return checkSteppedRangeTypes(position, type.subtypes[0])
+        }
+        if type.isSteppedRange() {
+            def type1 := type.subtypes[1].nonnullable()
+            def type2 := type.subtypes[2]
+            if type1 = type2 {
+                return true
+            }
+            if type1.isChar() & type2.name.startsWith("panda.core.Int") &
+                    type1.name.endsWith(type2.name["panda.core.Int".length()..]) {
+                return true
+            }
+            error(position, "for loop cannot iterate over '\{type}'; endpoint and step types " +
+                    "are not compatible")
+            return false
+        }
+        return true
+    }
+
+    method compileRangeFor(position:Position, label:String?, astTarget:ASTNode, rawList:IR.Value,
+            rawBody:ListView<ASTNode>) {
+-*        def elementType:Type
+        def list:IRNode?
+        match astTarget {
+            when ASTNode.TYPED_IDENTIFIER(position, _, type):
+                def t := resolve(scanner.convertType(type))
+                if t.typeKind = Type.Kind.NULLABLE {
+                    error(position, "for loop variable cannot have nullable type '\{t}'")
+                    return null
+                }
+                if !t.isNumeric() {
+                    error(position, "for loop variable cannot have non-numeric type '\{t}'")
+                    return null
+                }
+                match rawList {
+                    when IRNode.UNRESOLVED_RANGE(_, _, _, _, step): -- use pattern match with "& step != null", "& step = null"
+                        if step != null {
+                            list := coerce(rawList, Type.SteppedRangeOf(t))
+                        }
+                        else {
+                            list := coerce(rawList, Type.RangeOf(t))
+                        }
+                    otherwise:
+                        if rawList.type().isSteppedRange() {
+                            list := coerce(rawList, Type.SteppedRangeOf(t))
+                        }
+                        else if coercionCost(rawList, Type.RangeOf(t)) != null {
+                            list := coerce(rawList, Type.RangeOf(t))
+                        }
+                        else {
+                            list := coerce(rawList, Type.SteppedRangeOf(t))
+                        }
+                }
+            otherwise:
+                var listType := variableType(rawList)
+                assert listType.isRange() | listType.isSteppedRange()
+                if listType.subtypes[1].typeKind = Type.Kind.NULLABLE {
+                    if listType.isRange() {
+                        listType := Type.RangeOf(listType.subtypes[1].nonnullable())
+                    }
+                    else {
+                        listType := Type.SteppedRangeOf(listType.subtypes[1].nonnullable())
+                    }
+                }
+                list := coerce(rawList, listType)
+        }
+        if list = null {
+            return null
+        }
+        if !checkSteppedRangeTypes(list.position(), list.type()) {
+            return null
+        }
+        if list.type().typeKind = Type.Kind.NULLABLE {
+            assert list.type().subtypes[0].typeKind = Type.Kind.GENERIC
+            elementType := list.type().subtypes[0].subtypes[1]
+        }
+        else {
+            assert list.type().typeKind = Type.Kind.GENERIC
+            elementType := list.type().subtypes[1]
+        }
+        if !elementType.isNumeric() {
+            error(list.position(), "for loop expected a numeric range, but found '\{list.type()}'")
+        }
+        def target := compileTarget(astTarget, Variable.Kind.DEF, null, elementType)
+        if target = null {
+            return null
+        }
+        assert target.value = null
+        def body := compileBlockStatements(position, rawBody)
+        if body = null {
+            return null
+        }
+        return IRNode.RANGE_FOR(position, label, target.target, list, body)*-
+        assert false
+    }
+
+    method compileIteratorFor(position:Position, label:String?, target:ASTNode, iterator:IR.Value,
+            statements:ListView<ASTNode>) {
+        assert iterator.type().typeKind = Type.Kind.GENERIC &
+                iterator.type().subtypes[0] = Type.Iterator()
+        def compiledTarget := compileTarget(target, Variable.Kind.DEF, null)
+        if compiledTarget = null {
+            return
+        }
+        def slot:Int
+        match compiledTarget.first.storage {
+            when Variable.Storage.LOCAL(varSlot):
+                slot := varSlot
+            otherwise:
+                assert false
+        }
+        def testBlock := ir.newBlock()
+        def bodyBlock := ir.newBlock()
+        def endBlock := ir.newBlock()
+        def auto := AutoContext(self, EnclosingContext.LOOP(label, endBlock, testBlock))
+        ir.add(IR.Statement.BRANCH(testBlock))
+        ir.setCurrentBlock(testBlock)
+        def compiledTest := call(position, iterator, "get_done", Array<ASTNode>(),
+                TypeContext.UNSPECIFIED)
+        if compiledTest = null {
+            return
+        }
+        def inverted := call(position, compiledTest, "!", Array<ASTNode>(), TypeContext.UNSPECIFIED)
+        def bitTest := ir.add(IR.Statement.GET_FIELD(inverted, 0, Type.BuiltinBit()))
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(IR.Value.REF(bitTest, Type.BuiltinBit()),
+                bodyBlock, endBlock))
+        ir.setCurrentBlock(bodyBlock)
+        def next := call(position, iterator, "next", Array<ASTNode>(), TypeContext.UNSPECIFIED)
+        ir.add(IR.Statement.STORE(next, slot))
+        for s in statements {
+            compileStatement(s)
+        }
+        if !ir.currentBlockFinished() {
+            ir.add(IR.Statement.BRANCH(testBlock))
+        }
+        ir.setCurrentBlock(endBlock)
+    }
+
+    method compileFor(position:Position, label:String?, rawTarget:ASTNode, rawList:ASTNode,
+            statements:ListView<ASTNode>) {
+        def list := compileExpression(rawList)
+        if list = null {
+            return
+        }
+        def symbols := AutoSymbolTable(self, symbolTable)
+        if list.type().isRange() | list.type().isSteppedRange() {
+            compileRangeFor(position, label, rawTarget, list, statements)
+        }
+        else {
+            for intf in allInterfaces(list.type()) {
+                if intf.typeKind = Type.Kind.GENERIC & intf.subtypes[0] = Type.Iterator() {
+                    def iterator := coerce(rawList.position(), list, intf)
+                    compileIteratorFor(position, label, rawTarget, iterator, statements)
+                    return
+                }
+                if intf.typeKind = Type.Kind.GENERIC & intf.subtypes[0] = Type.Iterable() {
+                    def iterable := coerce(rawList.position(), list, intf)
+                    if iterable = null {
+                        return
+                    }
+                    def iterator := call(position, iterable, "iterator", Array<ASTNode>(),
+                            TypeContext.UNSPECIFIED)
+                    assert iterator != null
+                    compileIteratorFor(position, label, rawTarget, iterator, statements)
+                    return
+                }
+            }
+            error(rawList.position(), "expected a range, Iterable, or Iterator, but found " +
+                    "'\{list.type()}'")
+        }
+    }
+
     method compileIf(position:Position, test:ASTNode, ifTrue:ImmutableArray<ASTNode>,
             ifFalse:ASTNode?) {
         def compiledTest := compileExpression(test, TypeContext.TYPE(Type.Bit()))
@@ -3078,6 +3245,7 @@ class Compiler {
             when ASTNode.BINARY(position, left, op, right):
                 compileAssignment(position, left, op, right)
             when ASTNode.BLOCK(position, statements):
+                def symbols := AutoSymbolTable(self, symbolTable)
                 for stmt in statements {
                     compileStatement(stmt)
                 }
@@ -3089,6 +3257,8 @@ class Compiler {
                 compileContinue(position, label)
             when ASTNode.DO(position, label, statements, test):
                 compileDo(position, label, statements, test)
+            when ASTNode.FOR(position, label, target, list, statements):
+                compileFor(position, label, target, list, statements)
             when ASTNode.IF(position, test, ifTrue, ifFalse):
                 compileIf(position, test, ifTrue, ifFalse)
             when ASTNode.LOOP(position, label, statements):
