@@ -40,7 +40,7 @@ class MethodDecl : Symbol {
 
     def parameters:Array<Parameter>
 
-    def returnType:Type
+    var returnType:Type
 
     def body:ImmutableArray<ASTNode>?
 

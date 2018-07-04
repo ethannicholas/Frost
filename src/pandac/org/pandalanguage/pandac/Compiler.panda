@@ -661,12 +661,19 @@ class Compiler {
                 m.resolved := Resolution.RESOLVED_WITH_ERRORS
             }
         }
-        def resolved := resolve(m.returnType)
-        if resolved != null {
-            m.returnType := resolved
+        if m.methodKind = MethodDecl.Kind.INIT {
+            if isValue(m.owner) {
+                m.returnType := m.owner.type()
+            }
         }
         else {
-            m.resolved := Resolution.RESOLVED_WITH_ERRORS
+            def resolved := resolve(m.returnType)
+            if resolved != null {
+                m.returnType := resolved
+            }
+            else {
+                m.resolved := Resolution.RESOLVED_WITH_ERRORS
+            }
         }
         if m.resolved = Resolution.IN_PROGRESS {
             m.resolved := Resolution.RESOLVED
@@ -2247,13 +2254,6 @@ class Compiler {
         return m.methodKind = MethodDecl.Kind.INIT & isValue(m.owner)
     }
 
-    method actualReturnType(target:IR.Value?, m:MethodDecl, effectiveType:Type):Type {
-        if isValueInit(m) {
-            return m.owner.type()
-        }
-        return effectiveType.returnType()
-    }
-
     method implicitInit(position:Position, value:IR.Value, m:MethodDecl):IR.Value {
         def cl := m.owner
         assert isValue(cl)
@@ -2263,15 +2263,16 @@ class Compiler {
         return IR.Value.REF(result, m.owner.type())
     }
 
-    method coerce(position:Position, value:IR.Value?, type:Type):IR.Value? {
+    @pre(target != Type.Void())
+    method coerce(position:Position, value:IR.Value?, target:Type):IR.Value? {
         if value = null {
             return null
         }
-        if value.type() = type {
+        if value.type() = target {
             return value
         }
-        if coercionCost(value.type(), type) != null {
-            def cl := getClass(type)
+        if coercionCost(value.type(), target) != null {
+            def cl := getClass(target)
             if cl = null {
                 return null
             }
@@ -2301,10 +2302,10 @@ class Compiler {
                         }
                     }
             }
-            def result := ir.add(IR.Statement.CAST(value, type))
-            return IR.Value.REF(result, type)
+            def result := ir.add(IR.Statement.CAST(value, target))
+            return IR.Value.REF(result, target)
         }
-        error(position, "expected '\{type}', but found '\{value.type()}'")
+        error(position, "expected '\{target}', but found '\{value.type()}'")
         return null
     }
 
@@ -2328,6 +2329,7 @@ class Compiler {
         }
     }
 
+    @pre(target != Type.Void())
     method cast(value:IR.Value?, target:Type):IR.Value? {
         if value = null {
             return null
@@ -2388,9 +2390,12 @@ class Compiler {
         else {
             result := ir.add(IR.Statement.STATIC_CALL(m, finalArgs.finish()))
         }
-        def returnType := actualReturnType(target, m, effectiveType)
-        if returnType != Type.Void() {
-            return coerce(position, IR.Value.REF(result, returnType), type)
+        if m.returnType != Type.Void() {
+            var resultCast := IR.Value.REF(result, m.returnType)
+            if m.methodKind != MethodDecl.Kind.INIT & effectiveType.returnType() != m.returnType {
+                resultCast := cast(resultCast, effectiveType.returnType())
+            }
+            return coerce(position, resultCast, type)
         }
         return null
     }
@@ -2424,7 +2429,7 @@ class Compiler {
                         continue
                     }
                 when TypeContext.TYPE(t):
-                    def returnCost := coercionCost(actualReturnType(target, m, effectiveType), t)
+                    def returnCost := coercionCost(effectiveType.returnType(), t)
                     if returnCost = null {
                         continue
                     }
@@ -2491,13 +2496,14 @@ class Compiler {
         }
         def args := Array<ASTNode>() -- FIXME literal
         args.add(right)
+        def target := IR.Value.REF(IR.Statement.ID(-1), left)
         match methods.kind {
             when Symbol.Kind.METHOD:
                 def list := Array<MethodDecl>()
                 list.add(methods->MethodDecl)
-                return findBestMethod(Position(), null, list, args, type)                
+                return findBestMethod(Position(), target, list, args, type)                
             when Symbol.Kind.METHODS:
-                return findBestMethod(Position(), null, methods->Methods.methods, args, type)
+                return findBestMethod(Position(), target, methods->Methods.methods, args, type)
             otherwise:
                 assert false
         }
@@ -2524,6 +2530,47 @@ class Compiler {
         return null
     }
 
+    ================================================================================================
+    Returns the type under which a particular class was inherited. For instance,
+    `HashMap<String, File>` inherits `MapView` under the type `MapView<String, File>`.
+    ================================================================================================
+    function findType(start:Type, target:ClassDecl):Type? {
+        if start.typeKind = Type.Kind.GENERIC_PARAMETER {
+            return findType(start.genericParameter.bound, target)
+        }
+        def startClass := getClass(start)
+        if startClass = null {
+            return null
+        }
+        if startClass == target {
+            return start.nonnullable()
+        }
+        if startClass.rawSuper != null {
+            def result := findType(remapType(start, startClass.rawSuper),
+                    target)
+            if result != null {
+                return result
+            }
+        }
+        for intf in startClass.rawInterfaces {
+            def result := findType(remapType(start, intf), target)
+            if result != null {
+                return result
+            }
+        }
+        return null
+    }
+
+    function findType(start:ListView<Type>, target:ClassDecl):Type? {
+        for t in start {
+            def result := findType(t, target)
+            if result != null {
+                return result
+            }
+        }
+        return null
+    }
+
     method compileBinary(position:Position, left:ASTNode, op:Token.Kind, right:ASTNode,
             type:TypeContext):IR.Value? {
         match op {
@@ -2539,7 +2586,9 @@ class Compiler {
                 def matches := findOverloadedOperator(left, op, right, type)
                 if matches != null {
                     assert matches.first.count = 1, "ambiguous call: \{matches.first} on \{left}, \{right}"
-                    def target := compileExpression(left, TypeContext.TYPE(matches.first[0].owner.type()))
+                    def found := findType(possibleTypes(left), matches.first[0].owner)
+                    assert found != null
+                    def target := compileExpression(left, TypeContext.TYPE(found))
                     def args := Array<ASTNode>() -- FIXME literal
                     args.add(right)
                     return call(position, IR.Value.METHOD(target, matches.first[0]), args, type)

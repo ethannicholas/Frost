@@ -893,7 +893,7 @@ class LLVMCodeGenerator : CodeGenerator {
         for p in m.parameters {
             result.append("$\{escapeName(p.type.name)}")
         }
-        if m.returnType != Type.Void() {
+        if m.methodKind != MethodDecl.Kind.INIT & m.returnType != Type.Void() {
             result.append("$R$")
             result.append(escapeName(m.returnType.name))
         }
@@ -1264,7 +1264,7 @@ class LLVMCodeGenerator : CodeGenerator {
             declarations.print("void")
         }
         else {
-            declarations.print(llvmType(compiler.actualReturnType(null, m, m.type())))
+            declarations.print(llvmType(m.returnType))
         }
         declarations.print(" \{getName(m)}(")
         var separator := ""
@@ -1597,7 +1597,7 @@ class LLVMCodeGenerator : CodeGenerator {
         if m.owner.external {
             writeDeclaration(m)
         }
-        def type := compiler.actualReturnType(null, m, m.type())
+        def type := m.returnType
         if type != Type.Void() {
             def result := nextVar()
             out.print("\{result} = ")
