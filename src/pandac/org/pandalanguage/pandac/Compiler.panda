@@ -3014,10 +3014,12 @@ class Compiler {
             statements:ListView<ASTNode>) {
         assert iterator.type().typeKind = Type.Kind.GENERIC &
                 iterator.type().subtypes[0] = Type.Iterator()
-        def compiledTarget := compileTarget(target, Variable.Kind.DEF, null)
+        def compiledTarget := compileTarget(target, Variable.Kind.DEF, null,
+                iterator.type().subtypes[1])
         if compiledTarget = null {
             return
         }
+        def targetType := compiledTarget.first.type
         def slot:Int
         match compiledTarget.first.storage {
             when Variable.Storage.LOCAL(varSlot):
@@ -3042,7 +3044,11 @@ class Compiler {
                 bodyBlock, endBlock))
         ir.setCurrentBlock(bodyBlock)
         def next := call(position, iterator, "next", Array<ASTNode>(), TypeContext.UNSPECIFIED)
-        ir.add(IR.Statement.STORE(next, slot))
+        def coerced := coerce(position, next, targetType)
+        if coerced = null {
+            return
+        }
+        ir.add(IR.Statement.STORE(coerced, slot))
         for s in statements {
             compileStatement(s)
         }
@@ -3137,11 +3143,12 @@ class Compiler {
     }
 
     method compileTarget(t:ASTNode, kind:Variable.Kind,
-            rawValue:ASTNode?):Pair<Variable, IR.Value?>? {
+            rawValue:ASTNode?, valueType:Type?):Pair<Variable, IR.Value?>? {
         match t {
             when ASTNode.IDENTIFIER(position, name):
                 -- no type, infer from value
                 def value:IR.Value?
+                def type:Type
                 if rawValue != null {
                     if kind = Variable.Kind.CONSTANT {
                         value := compileExpression(rawValue, TypeContext.IMMUTABLE)
@@ -3155,12 +3162,16 @@ class Compiler {
                             return null
                         }
                     }
+                    type := value.type()
+                }
+                else if valueType != null {
+                    type := valueType
                 }
                 else {
                     error(position, "declaration has neither a type nor a value")
                     return null
                 }
-                def v := Variable(position, kind, name, value.type(),
+                def v := Variable(position, kind, name, type,
                         Variable.Storage.LOCAL(ir.locals.count))
                 ir.locals.add(v.type)
                 symbolTable.add(v)
@@ -3192,7 +3203,7 @@ class Compiler {
 
     method compileDeclaration(position:Position, target:ASTNode, value:ASTNode?,
             varKind:Variable.Kind) {
-        def target := compileTarget(target, varKind, value)
+        def target := compileTarget(target, varKind, value, null)
         if target = null {
             return
         }
