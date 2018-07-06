@@ -43,12 +43,14 @@ class IR {
         DYNAMIC_CALL(Value -* method *-, ImmutableArray<Value> -* args *-)
 
         ============================================================================================
-        Extracts a field from an object. The id of the field is its numeric index in the object
-        structure, starting from 0. Field 0 of a normal object is its `Class`, while field 0 of a
-        value object is the first data field it contains. The `Type` must be the actual in-memory
-        type of the field.
+        Given a value, returns the value of a field within the value.
         ============================================================================================
-        GET_FIELD(Value, Int -* id *-, Type)
+        EXTRACT_FIELD(Value, FieldDecl)
+
+        ============================================================================================
+        Given a pointer to an object, returns a pointer to a field within the object.
+        ============================================================================================
+        GET_FIELD_POINTER(Value, FieldDecl)
 
         ============================================================================================
         Gets a reference to a virtual method from an object, by its vtable index.
@@ -61,9 +63,9 @@ class IR {
         GET_INTERFACE_METHOD(Value, ClassDecl, Int, Type)
 
         ============================================================================================
-        Loads the value of the local variable in the numbered slot.
+        Loads the value of the given pointer.
         ============================================================================================
-        LOAD(Int)
+        LOAD(Value)
 
         ============================================================================================
         A `return` statement.
@@ -77,9 +79,9 @@ class IR {
         STATIC_CALL(MethodDecl, ImmutableArray<Value> -* args *-)
 
         ============================================================================================
-        Assign to the local variable in the numbered slot.
+        Writes a value to the target of the given pointer.
         ============================================================================================
-        STORE(Value, Int)
+        STORE(Value -* value *-, Value -* dest pointer *-)
 
         class ID : panda.core.Value, Key<ID> {
             def value:Int
@@ -119,14 +121,16 @@ class IR {
                     return "construct \{cl.name}"
                 when DYNAMIC_CALL(m, args):
                     return "dynamic_call \{m}(\{args.join(", ")})"
-                when GET_FIELD(value, type, id):
-                    return "get_field \{value}, \{type}, \{id}"
+                when EXTRACT_FIELD(value, field):
+                    return "load_field \{value}, \{field.name}"
+                when GET_FIELD_POINTER(ptr, field):
+                    return "get_field_pointer \{ptr}, \{field}"
                 when GET_INTERFACE_METHOD(value, cl, id, type):
                     return "get_interface_method \{value}, \{cl.name}, \{id}, \{type}"
                 when GET_VIRTUAL_METHOD(value, id, type):
                     return "get_virtual_method \{value}, \{id}, \{type}"
-                when LOAD(slot):
-                    return "load %\{slot}"
+                when LOAD(ptr):
+                    return "load \{ptr}"
                 when RETURN(value):
                     if value != null {
                         return "return \{value}"
@@ -134,8 +138,8 @@ class IR {
                     return "return"
                 when STATIC_CALL(m, args):
                     return "static_call \{m.declaration()}(\{args.join(", ")})"
-                when STORE(slot, value):
-                    return "store \{value}, %\{slot}"
+                when STORE(value, ptr):
+                    return "store \{value}, \{ptr}"
             }
         }
     }
@@ -178,9 +182,13 @@ class IR {
     }
 
     choice Value {
+        BIT(Bit)
         INT(UInt64, Type)
+        -- value is a *pointer to* the given type
+        LOCAL(Int, Type)
         NEGATED_INT(UInt64, Type)
         NULL(Type)
+        PARAMETER(Int, Type)
         REAL(Real64, Type)
         REF(Statement.ID, Type)
         STRING(String)
@@ -192,11 +200,17 @@ class IR {
 
         function type():Type {
             match self {
+                when BIT:
+                    return Type.BuiltinBit()
                 when INT(_, type):
                     return type
+                when LOCAL(_, type):
+                    return type -- note that the actual IR type is a pointer to this type
                 when NEGATED_INT(_, type):
                     return type
                 when NULL(type):
+                    return type
+                when PARAMETER(_, type):
                     return type
                 when REAL(_, type):
                     return type
@@ -216,12 +230,18 @@ class IR {
         @override
         function convert():String {
             match self {
+                when BIT(value):
+                    return value.convert()
                 when INT(value, _):
                     return value.convert()
+                when LOCAL(slot, type):
+                    return "LOCAL(\{slot}:\{type}*)"
                 when NEGATED_INT(value, _):
                     return "-" + value
                 when NULL(type):
                     return "null->\{type}"
+                when PARAMETER(index, type):
+                    return "PARAMETER(\{index}:\{type})"
                 when REAL(value, _):
                     return value.convert()
                 when REF(id, type):
@@ -240,8 +260,6 @@ class IR {
                     return m.convert()
                 when TYPE(type):
                     return type.convert()
-                otherwise:
-                    assert false
             }
         }
     }
@@ -299,6 +317,11 @@ class IR {
 
     @override
     function convert():String {
-        return blocks.join("\n")
+        def result := MutableString()
+        for i in 0 .. locals.count {
+            result.append("local\{i}: \{locals[i]}\n")
+        }
+        result.append(blocks.join("\n"))
+        return result.finish()
     }
 }

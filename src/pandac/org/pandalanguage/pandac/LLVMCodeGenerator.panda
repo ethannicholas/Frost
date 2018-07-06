@@ -520,12 +520,13 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     method createMethodShim(raw:MethodDecl, effective:Type, rawOut:OutputStream):MethodShim {
-        Console.printLine("need to change main out")
-        def out := MemoryOutputStream()
         def found := methodShims[raw]
         if found != null {
             return found
         }
+        Console.printLine("need to change main out")
+        def oldOut := out
+        out := shims
         assert effective.isMethod()
         assert effective.subtypes.count = raw.parameters.count + 2 -- self and return
         assert raw.isInstance()
@@ -607,7 +608,7 @@ class LLVMCodeGenerator : CodeGenerator {
         varCount := oldVarCount
         def result := MethodShim(resultName, resultType.finish())
         methodShims[raw] := result
-        rawOut.print(out.finish())
+        out := oldOut
         return result
     }
 
@@ -1217,7 +1218,7 @@ class LLVMCodeGenerator : CodeGenerator {
         return result
     }
 
-    method getNullReference(t:Type, out:OutputStream):String {
+    method getNullReference(t:Type):String {
         assert t.typeKind = Type.Kind.NULLABLE
         def cl := compiler.getClass(t.subtypes[0])
         assert cl != null
@@ -1285,10 +1286,16 @@ class LLVMCodeGenerator : CodeGenerator {
 
     method getReference(v:IR.Value):String {
         match v {
+            when IR.Value.BIT(value):
+                return value.convert()
             when IR.Value.INT(value, _):
                 return value.convert()
-            when IR.Value.NULL(_):
-                return "null"
+            when IR.Value.LOCAL(index, _):
+                return "%local\{index}"
+            when IR.Value.NULL(type):
+                return getNullReference(type)
+            when IR.Value.PARAMETER(index, _):
+                return "%param\{index}"
             when IR.Value.REF(id, _):
                 assert refs[id] != null, "id \{id} has not been defined"
                 return refs[id]
@@ -1494,9 +1501,20 @@ class LLVMCodeGenerator : CodeGenerator {
         out.printLine(")")
     }
 
-    method writeGetField(id:IR.Statement.ID, value:IR.Value, field:Int, type:Type) {
+    method writeExtractField(id:IR.Statement.ID, target:IR.Value, field:FieldDecl) {
+        var targetRef := getTypedReference(target)
+        def index := compiler.getIndex(field)
         def result := nextVar()
-        out.printLine("\{result} = extractvalue \{getTypedReference(value)}, \{field}")
+        out.printLine("\{result} = extractvalue \{targetRef}, \{index}")
+        refs[id] := result
+    }
+
+    method writeGetFieldPointer(id:IR.Statement.ID, target:IR.Value, field:FieldDecl) {
+        def targetRef := getReference(target)
+        def index := compiler.getIndex(field)
+        def result := nextVar()
+        out.printLine("\{result} = getelementptr \{typeName(target.type())}, " +
+                "\{typeName(target.type())}* \{targetRef}, i64 0, i32 \{index}")
         refs[id] := result
     }
 
@@ -1565,7 +1583,7 @@ class LLVMCodeGenerator : CodeGenerator {
         def classPtr := nextVar()
         out.printLine("\{classPtr} = load i8*, i8** \{classPtrPtr}")
         def cast := nextVar()
-        def classType := llvmType(Type.Class())
+        def classType := typeName(Type.Class())
         out.printLine("\{cast} = bitcast i8* \{classPtr} to \{classType}*")
         def ptr := nextVar()
         out.printLine("\{ptr} = getelementptr inbounds \{classType}, \{classType}* \{cast}, " +
@@ -1577,10 +1595,10 @@ class LLVMCodeGenerator : CodeGenerator {
         refs[id] := result
     }
 
-    method writeLoad(id:IR.Statement.ID, slot:Int) {
+    method writeLoad(id:IR.Statement.ID, ptr:IR.Value) {
         def result := nextVar()
-        def type := llvmType(ir.locals[slot])
-        out.printLine("\{result} = load \{type}, \{type}* %local\{slot}")
+        out.printLine("\{result} = load \{llvmType(ptr.type())}, \{llvmType(ptr.type())}* " +
+                getReference(ptr))
         refs[id] := result
     }
 
@@ -1613,12 +1631,13 @@ class LLVMCodeGenerator : CodeGenerator {
         out.printLine(")")
     }
 
-    method writeStore(value:IR.Value, slot:Int) {
-        out.printLine("store \{getTypedReference(value)}, \{llvmType(ir.locals[slot])}* " +
-                "%local\{slot}")
+    method writeStore(value:IR.Value, ptr:IR.Value) {
+        out.printLine("store \{getTypedReference(value)}, \{llvmType(ptr.type())}* " +
+                getReference(ptr))
     }
 
     method writeStatement(id:IR.Statement.ID, s:IR.Statement) {
+        out.printLine("; \{s}")
         match s {
             when IR.Statement.BINARY(left, op, right, type):
                 writeBinary(id, left, op, right, type)
@@ -1632,14 +1651,16 @@ class LLVMCodeGenerator : CodeGenerator {
                 writeConstruct(id, cl)
             when IR.Statement.DYNAMIC_CALL(m, args):
                 writeDynamicCall(id, m, args)
-            when IR.Statement.GET_FIELD(value, field, type):
-                writeGetField(id, value, field, type)
+            when IR.Statement.EXTRACT_FIELD(target, field):
+                writeExtractField(id, target, field)
+            when IR.Statement.GET_FIELD_POINTER(target, field):
+                writeGetFieldPointer(id, target, field)
             when IR.Statement.GET_INTERFACE_METHOD(value, cl, index, type):
                 writeGetInterfaceMethod(id, value, cl, index, type)
             when IR.Statement.GET_VIRTUAL_METHOD(value, index, type):
                 writeGetVirtualMethod(id, value, index, type)
-            when IR.Statement.LOAD(slot):
-                writeLoad(id, slot)
+            when IR.Statement.LOAD(ptr):
+                writeLoad(id, ptr)
             when IR.Statement.RETURN(value):
                 writeReturn(value)
             when IR.Statement.STATIC_CALL(m, args):
@@ -1653,7 +1674,11 @@ class LLVMCodeGenerator : CodeGenerator {
 
     method writeBlock(block:IR.Block) {
         if block.id.value != 0 {
-            out.printLine("\{block.id}:")
+            currentBlock := "\{block.id}"
+            out.printLine(currentBlock + ":")
+        }
+        else {
+            currentBlock := "0"
         }
         for i in 0 .. block.statements.count {
             writeStatement(block.ids[i], block.statements[i])
@@ -1673,18 +1698,22 @@ class LLVMCodeGenerator : CodeGenerator {
     method write(m:MethodDecl, ir:IR) {
         out := methods
         self.ir := ir
+        varCount := 0
         out.print("define ")
         if m.owner.isSpecialization() {
             out.print("linkonce_odr ")
         }
         out.print("\{llvmType(m.returnType)} \{getName(m)}(")
         var separator := ""
-        if !m.annotations.isClass() {
-            out.print("\{selfType(m)} %self")
+        var index := 0
+        if compiler.hasSelfParam(m) {
+            out.print("\{selfType(m)} %param\{index}")
+            index += 1
             separator := ", "
         }
         for p in m.parameters {
-            out.print("\{separator}\{llvmType(p.type)} %\{escapeName(p.name)}")
+            out.print("\{separator}\{llvmType(p.type)} %param\{index}")
+            index += 1
             separator := ", "
         }
         out.printLine(") {")

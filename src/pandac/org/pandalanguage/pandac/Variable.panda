@@ -13,8 +13,8 @@ class Variable : Symbol {
     }
 
     choice Storage {
-        LOCAL(Int -* slot *-)
-        PARAMETER
+        LOCAL(Int)
+        PARAMETER(Int)
         GLOBAL
     }
 

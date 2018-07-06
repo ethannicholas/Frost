@@ -35,7 +35,7 @@ class Range<T:Value?> : Value {
     @override
     function convert():String {
         def result := MutableString()
-        if min != null {
+        if min !== null {
             result.append(min)
         }
         if inclusive {
@@ -44,7 +44,7 @@ class Range<T:Value?> : Value {
         else {
             result.append("..")
         }
-        if max != null {
+        if max !== null {
             result.append(max)
         }
         return result.finish()
