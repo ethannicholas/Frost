@@ -160,12 +160,15 @@ class IR {
 
         def id:ID
 
+        def comment:String
+
         def ids := Array<Statement.ID>()
 
         def statements := Array<Statement>()
 
-        init(id:ID) {
+        init(id:ID, comment:String) {
             self.id := id
+            self.comment := comment
         }
 
         @override
@@ -186,7 +189,6 @@ class IR {
         INT(UInt64, Type)
         -- value is a *pointer to* the given type
         LOCAL(Int, Type)
-        NEGATED_INT(UInt64, Type)
         NULL(Type)
         PARAMETER(Int, Type)
         REAL(Real64, Type)
@@ -206,8 +208,6 @@ class IR {
                     return type
                 when LOCAL(_, type):
                     return type -- note that the actual IR type is a pointer to this type
-                when NEGATED_INT(_, type):
-                    return type
                 when NULL(type):
                     return type
                 when PARAMETER(_, type):
@@ -236,8 +236,6 @@ class IR {
                     return value.convert()
                 when LOCAL(slot, type):
                     return "LOCAL(\{slot}:\{type}*)"
-                when NEGATED_INT(value, _):
-                    return "-" + value
                 when NULL(type):
                     return "null->\{type}"
                 when PARAMETER(index, type):
@@ -275,7 +273,7 @@ class IR {
     def currentBlock:Block
 
     init() {
-        newBlock()
+        newBlock("start")
         currentBlock := blocks[0]
     }
 
@@ -293,9 +291,9 @@ class IR {
     ================================================================================================
     Creates (but does not make current!) a new block and returns its id.
     ================================================================================================
-    method newBlock():Block.ID {
+    method newBlock(comment:String):Block.ID {
         def result := Block.ID(blocks.count)
-        blocks.add(Block(result))
+        blocks.add(Block(result, comment))
         return result
     }
 

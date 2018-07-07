@@ -1872,6 +1872,8 @@ class Compiler {
                     return coercionCost(preferred, target)
                 }
                 return 2
+            when ASTNode.IR_WRAPPER(_, ir):
+                return coercionCost(ir.type(), target)
             when ASTNode.NULL:
                 if target.typeKind = Type.Kind.NULLABLE {
                     return 0
@@ -2508,8 +2510,8 @@ class Compiler {
         assert cl != null
         def s := getSymbolTable(cl)[m]
         assert s != null, "could not find \{m} in \{cl.name}"
-        assert s.kind = Symbol.Kind.METHOD
-        return call(position, target, s->MethodDecl, args, type)
+        def ref := symbolRef(position, target, s)
+        return call(position, ref, args, type)
     }
 
     method findBestMethod(position:Position, target:IR.Value?, methods:ListView<MethodDecl>,
@@ -2592,7 +2594,8 @@ class Compiler {
                 def inits := getSymbolTable(cl)["init"]
                 assert inits != null, "no init for \{cl.name}"
                 if isValue(cl) {
-                    return call(position, symbolRef(position, null, inits), args, type)
+                    return coerce(position, cast(call(position, symbolRef(position, null, inits),
+                            args, type), t), type)
                 }
                 def construct := ir.add(IR.Statement.CONSTRUCT(cl))
                 def constructRef := IR.Value.REF(construct, t)
@@ -2865,6 +2868,30 @@ class Compiler {
         }
     }
 
+    method compilePrefix(position:Position, op:Token.Kind, operand:ASTNode,
+            type:TypeContext):IR.Value? {
+        if op = Token.Kind.SUB {
+            match operand {
+                when ASTNode.INT(_, value):
+                    match type {
+                        when TypeContext.TYPE(t):
+                            if t.typeKind = Type.Kind.BUILTIN_INT |
+                                    t.typeKind = Type.Kind.BUILTIN_UINT {
+                                return IR.Value.INT(-value, t)
+                            }
+                            if t.isNumber() {
+                                def args := Array<ASTNode>()
+                                args.add(ASTNode.INT(position, -value))
+                                return call(position, IR.Value.TYPE(t), args, type)
+                            }
+                    }
+            }
+            return coerce(position, compilePrefix(position, op, operand,
+                    TypeContext.TYPE(Type.Int64())), type)
+        }
+        assert false
+    }
+
     method compileRange(position:Position, start:ASTNode?, inclusive:Bit, end:ASTNode?,
             step:ASTNode?, type:TypeContext):IR.Value? {
         var endpointContext := TypeContext.UNSPECIFIED
@@ -2963,8 +2990,7 @@ class Compiler {
             args.add(ASTNode.IR_WRAPPER(position, compiledEnd))
             args.add(ASTNode.IR_WRAPPER(step.position(), compiledStep))
             args.add(ASTNode.BIT(position, inclusive))
-            return call(position, IR.Value.TYPE(Type.SteppedRangeOf(endpointType)),
-                    args, type)
+            return call(position, IR.Value.TYPE(Type.SteppedRangeOf(endpointType)), args, type)
         }
         else {
             def args := Array<ASTNode>()
@@ -3024,6 +3050,8 @@ class Compiler {
                 return coerce(expr.position(), value, type)
             when ASTNode.NULL(position):
                 return compileNull(position, type)
+            when ASTNode.PREFIX(position, op, operand):
+                return compilePrefix(position, op, operand, type)
             when ASTNode.RANGE(position, start, inclusive, end, step):
                 return compileRange(position, start, inclusive, end, step, type)
             when ASTNode.SELF(position):
@@ -3286,9 +3314,9 @@ class Compiler {
 
     method compileDo(position:Position, label:String?, statements:ImmutableArray<ASTNode>,
             test:ASTNode) {
-        def bodyBlock := ir.newBlock()
-        def testBlock := ir.newBlock()
-        def endBlock := ir.newBlock()
+        def bodyBlock := ir.newBlock("do body")
+        def testBlock := ir.newBlock("do test")
+        def endBlock := ir.newBlock("do end")
         def auto := AutoContext(self, EnclosingContext.LOOP(label, endBlock, testBlock))
         ir.add(IR.Statement.BRANCH(bodyBlock))
         ir.setCurrentBlock(bodyBlock)
@@ -3329,59 +3357,293 @@ class Compiler {
         return true
     }
 
-    method compileRangeFor(position:Position, label:String?, astTarget:ASTNode, rawList:IR.Value,
-            rawBody:ListView<ASTNode>) {
--*        def elementType:Type
-        def list:IRNode?
-        match astTarget {
-            when ASTNode.TYPED_IDENTIFIER(position, _, type):
-                def t := resolve(scanner.convertType(type))
-                if t.typeKind = Type.Kind.NULLABLE {
-                    error(position, "for loop variable cannot have nullable type '\{t}'")
-                    return null
-                }
-                if !t.isNumeric() {
-                    error(position, "for loop variable cannot have non-numeric type '\{t}'")
-                    return null
-                }
-                match rawList {
-                    when IRNode.UNRESOLVED_RANGE(_, _, _, _, step): -- use pattern match with "& step != null", "& step = null"
-                        if step != null {
-                            list := coerce(rawList, Type.SteppedRangeOf(t))
-                        }
-                        else {
-                            list := coerce(rawList, Type.RangeOf(t))
-                        }
-                    otherwise:
-                        if rawList.type().isSteppedRange() {
-                            list := coerce(rawList, Type.SteppedRangeOf(t))
-                        }
-                        else if coercionCost(rawList, Type.RangeOf(t)) != null {
-                            list := coerce(rawList, Type.RangeOf(t))
-                        }
-                        else {
-                            list := coerce(rawList, Type.SteppedRangeOf(t))
-                        }
-                }
+    method compileSimpleRangeFor(position:Position, label:String?, index:Variable, range:IR.Value,
+            statements:ListView<ASTNode>) {
+        function arg(a:IR.Value):ListView<ASTNode> {
+            -- FIXME until I have array literals
+            def result := Array<ASTNode>()
+            result.add(ASTNode.IR_WRAPPER(Position(), a))
+            return result
+        }
+        assert range.type().typeKind = Type.Kind.GENERIC
+        assert range.type().subtypes.count = 2
+        assert range.type().subtypes[0].name = RANGE_NAME
+        def indexSlot:Int
+        match index.storage {
+            when Variable.Storage.LOCAL(slot):
+                indexSlot := slot
             otherwise:
-                var listType := variableType(rawList)
-                assert listType.isRange() | listType.isSteppedRange()
-                if listType.subtypes[1].typeKind = Type.Kind.NULLABLE {
-                    if listType.isRange() {
-                        listType := Type.RangeOf(listType.subtypes[1].nonnullable())
-                    }
-                    else {
-                        listType := Type.SteppedRangeOf(listType.subtypes[1].nonnullable())
-                    }
-                }
-                list := coerce(rawList, listType)
+                assert false
         }
-        if list = null {
-            return null
+        def indexType := range.type().subtypes[1]
+        assert indexType.typeKind != Type.Kind.NULLABLE
+        def rangeClass := getClass(range.type())
+        if rangeClass = null {
+            return
         }
-        if !checkSteppedRangeTypes(list.position(), list.type()) {
-            return null
+        def rangeFields := instanceFields(rangeClass)
+
+        -- extract start value from range
+        def start := IR.Value.REF(ir.add(IR.Statement.EXTRACT_FIELD(range, rangeFields[0])),
+                indexType)
+
+        -- store start value
+        ir.add(IR.Statement.STORE(start, IR.Value.LOCAL(indexSlot, indexType)))
+
+        -- extract end value from range
+        def end := IR.Value.REF(ir.add(IR.Statement.EXTRACT_FIELD(range, rangeFields[1])),
+                indexType)
+
+        -- extract inclusive / exclusive from range
+        def inclusive := extractBuiltinBit(IR.Value.REF(ir.add(IR.Statement.EXTRACT_FIELD(range,
+                rangeFields[2])), Type.Bit()))
+
+        def step := compileExpression(ASTNode.INT(position, 1), TypeContext.TYPE(indexType))
+
+        -- start block
+        def loopStart := ir.newBlock("loopStart")
+        def loopEnd := ir.newBlock("loopEnd")
+        def loopTest := ir.newBlock("loopTest")
+        def entryInclusive := ir.newBlock("entryInclusive")
+        def entryExclusive := ir.newBlock("entryExclusive")
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(inclusive, entryInclusive, entryExclusive))
+        ir.setCurrentBlock(entryInclusive)
+        def entryInclusiveTest := extractBuiltinBit(call(position, start, "<=", arg(end),
+                    TypeContext.UNSPECIFIED))
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(entryInclusiveTest, loopStart, loopEnd))
+        ir.setCurrentBlock(entryExclusive)
+        def entryExclusiveTest := extractBuiltinBit(call(position, start, "<", arg(end),
+                    TypeContext.UNSPECIFIED))
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(entryExclusiveTest, loopStart, loopEnd))
+        ir.setCurrentBlock(loopStart)
+        for s in statements {
+            compileStatement(s)
         }
+        if !ir.currentBlockFinished() {
+            ir.add(IR.Statement.BRANCH(loopTest))
+        }
+        ir.setCurrentBlock(loopTest)
+        def loopInc := ir.newBlock("loopInc")
+        -- perform the test by subtracting index from end and then comparing to step, to avoid
+        -- overflows near the maximum value
+        def indexLoad := IR.Value.REF(ir.add(IR.Statement.LOAD(IR.Value.LOCAL(indexSlot,
+                indexType))), indexType)
+        def delta := call(position, end, "-", arg(indexLoad), TypeContext.UNSPECIFIED)
+
+        def inclusiveTest := ir.newBlock("inclusiveTest")
+        def exclusiveTest := ir.newBlock("exclusiveTest")
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(inclusive, inclusiveTest, exclusiveTest))
+
+        -- inclusive test
+        ir.setCurrentBlock(inclusiveTest)
+        -- always use unsigned comparison to avoid overflow; we know both the delta and the step are
+        -- the same sign
+        def inclusiveTestBit := extractBuiltinBit(call(position, delta, ">=", arg(step),
+                TypeContext.UNSPECIFIED))
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(inclusiveTestBit, loopInc, loopEnd))
+
+        -- exclusive test
+        ir.setCurrentBlock(exclusiveTest)
+        def exclusiveTestBit := extractBuiltinBit(call(position, delta, ">", arg(step),
+                TypeContext.UNSPECIFIED))
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(exclusiveTestBit, loopInc, loopEnd))
+
+        ir.setCurrentBlock(loopInc)
+        def inc := call(position, indexLoad, "+", arg(step), TypeContext.UNSPECIFIED)
+        ir.add(IR.Statement.STORE(inc, IR.Value.LOCAL(indexSlot, indexType)))
+        ir.add(IR.Statement.BRANCH(loopStart))
+
+        ir.setCurrentBlock(loopEnd)
+    }
+
+    method compileSteppedRangeFor(position:Position, label:String?, index:Variable, range:IR.Value,
+            statements:ListView<ASTNode>) {
+        -- I am acutely aware of how horrific this looks.
+        --
+        -- There's no easy way to produce clean output here, since we have to handle different step
+        -- values, different loop directions, and both inclusive and exclusive ranges, all of which
+        -- could potentially be determined at runtime. It gets even uglier when you consider the
+        -- difficulty of handling the extremes of the numeric types. You can't just add 1 and then
+        -- check to see if it's in range when the limit is MAX_INT, because you'll overflow and end
+        -- up with an infinite loop. You also can't just check for being equal to the limit before
+        -- adding the step, because with a step bigger than 1 (or smaller than -1) you might need to
+        -- stop before actually hitting the end. So you instead check the difference between the
+        -- current index and the limit, but even there you need to be careful because it could
+        -- overflow in a signed test, and... ugh, it's surprisingly messy and results in a ton of
+        -- code.
+        --
+        -- Fortunately, we can just write incredibly-awful-but-straightforward code and let LLVM
+        -- optimize it to something sensible if it turns out the values are known at compile time.
+        -- This works remarkably well, because LLVM is awesome.
+        function arg(a:IR.Value):ListView<ASTNode> {
+            -- FIXME until I have array literals
+            def result := Array<ASTNode>()
+            result.add(ASTNode.IR_WRAPPER(Position(), a))
+            return result
+        }
+        assert range.type().typeKind = Type.Kind.GENERIC
+        assert range.type().subtypes.count = 3
+        assert range.type().subtypes[0].name = STEPPED_RANGE_NAME
+        def indexSlot:Int
+        match index.storage {
+            when Variable.Storage.LOCAL(slot):
+                indexSlot := slot
+            otherwise:
+                assert false
+        }
+        def indexType := range.type().subtypes[1]
+        assert indexType.typeKind != Type.Kind.NULLABLE
+        def stepType := range.type().subtypes[2]
+        def rangeClass := getClass(range.type())
+        if rangeClass = null {
+            return
+        }
+        def rangeFields := instanceFields(rangeClass)
+
+        -- extract start value from range
+        def start := IR.Value.REF(ir.add(IR.Statement.EXTRACT_FIELD(range, rangeFields[0])),
+                indexType)
+
+        -- store start value
+        ir.add(IR.Statement.STORE(start, IR.Value.LOCAL(indexSlot, indexType)))
+
+        -- extract end value from range
+        def end := IR.Value.REF(ir.add(IR.Statement.EXTRACT_FIELD(range, rangeFields[1])),
+                indexType)
+
+        -- extract step value from range
+        def step := IR.Value.REF(ir.add(IR.Statement.EXTRACT_FIELD(range, rangeFields[2])),
+                stepType)
+
+        -- extract inclusive / exclusive from range
+        def inclusive := extractBuiltinBit(IR.Value.REF(ir.add(IR.Statement.EXTRACT_FIELD(range,
+                rangeFields[3])), Type.Bit()))
+
+        -- start block
+        def loopStart := ir.newBlock("loopStart")
+        def loopEnd := ir.newBlock("loopEnd")
+        def loopTest := ir.newBlock("loopTest")
+        def forwardEntry := ir.newBlock("forwardEntry")
+        def backwardEntry := ir.newBlock("backwardEntry")
+        def direction:IR.Value
+        if stepType.name.startsWith("panda.core.Int") {
+            def args := Array<ASTNode>() -- FIXME literal
+            args.add(ASTNode.INT(position, 0))
+            direction := extractBuiltinBit(call(position, step, ">=", args,
+                    TypeContext.UNSPECIFIED))
+        }
+        else {
+            assert stepType.name.startsWith("panda.core.UInt")
+            direction := IR.Value.BIT(true)
+        }
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(direction, forwardEntry, backwardEntry))
+        ir.setCurrentBlock(forwardEntry)
+        def forwardEntryInclusive := ir.newBlock("forwardEntryInclusive")
+        def forwardEntryExclusive := ir.newBlock("forwardEntryExclusive")
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(inclusive, forwardEntryInclusive,
+                forwardEntryExclusive))
+        ir.setCurrentBlock(forwardEntryInclusive)
+        def forwardEntryInclusiveTest := extractBuiltinBit(call(position, start, "<=", arg(end),
+                    TypeContext.UNSPECIFIED))
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(forwardEntryInclusiveTest, loopStart, loopEnd))
+        ir.setCurrentBlock(forwardEntryExclusive)
+        def forwardEntryExclusiveTest := extractBuiltinBit(call(position, start, "<", arg(end),
+                    TypeContext.UNSPECIFIED))
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(forwardEntryExclusiveTest, loopStart, loopEnd))
+        ir.setCurrentBlock(backwardEntry)
+        def backwardEntryInclusive := ir.newBlock("backwardEntryInclusive")
+        def backwardEntryExclusive := ir.newBlock("backwardEntryExclusive")
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(inclusive, backwardEntryInclusive,
+                backwardEntryExclusive))
+        ir.setCurrentBlock(backwardEntryInclusive)
+        def backwardEntryInclusiveTest := extractBuiltinBit(call(position, start, ">=", arg(end),
+                    TypeContext.UNSPECIFIED))
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(backwardEntryInclusiveTest, loopStart, loopEnd))
+        ir.setCurrentBlock(backwardEntryExclusive)
+        def backwardEntryExclusiveTest := extractBuiltinBit(call(position, start, ">", arg(end),
+                    TypeContext.UNSPECIFIED))
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(backwardEntryExclusiveTest, loopStart, loopEnd))
+        ir.setCurrentBlock(loopStart)
+        for s in statements {
+            compileStatement(s)
+        }
+        if !ir.currentBlockFinished() {
+            ir.add(IR.Statement.BRANCH(loopTest))
+        }
+        ir.setCurrentBlock(loopTest)
+        def loopInc := ir.newBlock("loopInc")
+        -- beginning of loop test, load index and determine direction
+        def indexLoad := IR.Value.REF(ir.add(IR.Statement.LOAD(IR.Value.LOCAL(indexSlot,
+                indexType))), indexType)
+        def forwardTest := ir.newBlock("forwardTest")
+        def backwardTest := ir.newBlock("backwardTest")
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(direction, forwardTest, backwardTest))
+
+        -- forward loop; perform the test by subtracting index from end and then comparing to step,
+        -- to avoid overflows near the maximum value
+        ir.setCurrentBlock(forwardTest)
+        def forwardDelta := call(position, end, "-", arg(indexLoad), TypeContext.UNSPECIFIED)
+
+        -- forward loop; determine inclusive / exclusive
+        def forwardInclusiveTest := ir.newBlock("forwardInclusiveTest")
+        def forwardExclusiveTest := ir.newBlock("forwardExclusiveTest")
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(inclusive, forwardInclusiveTest,
+                forwardExclusiveTest))
+
+        -- forward inclusive test
+        ir.setCurrentBlock(forwardInclusiveTest)
+        -- always use unsigned comparison to avoid overflow; we know both the delta and the step are
+        -- the same sign
+        def forwardInclusiveTestBit := extractBuiltinBit(call(position, forwardDelta, ">=",
+                arg(step), TypeContext.UNSPECIFIED))
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(forwardInclusiveTestBit, loopInc, loopEnd))
+
+        -- forward exclusive test
+        ir.setCurrentBlock(forwardExclusiveTest)
+        def forwardExclusiveTestBit := extractBuiltinBit(call(position, forwardDelta, ">",
+                arg(step), TypeContext.UNSPECIFIED))
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(forwardExclusiveTestBit, loopInc, loopEnd))
+
+        -- backward loop; perform the test by subtracting end from index and then comparing to
+        -- -step, to avoid overflows near the minimum value
+        ir.setCurrentBlock(backwardTest)
+        def backwardDelta := call(position, indexLoad, "-", arg(end), TypeContext.UNSPECIFIED)
+        def negStep := call(position, step, "-", Array<ASTNode>() -* FIXME literal *-,
+                TypeContext.UNSPECIFIED)
+
+        -- backward loop; determine inclusive / exclusive
+        def backwardInclusiveTest := ir.newBlock("backwardInclusiveTest")
+        def backwardExclusiveTest := ir.newBlock("backwardExclusiveTest")
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(inclusive, backwardInclusiveTest,
+                backwardExclusiveTest))
+
+        -- backward inclusive test
+        ir.setCurrentBlock(backwardInclusiveTest)
+        def backwardInclusiveTestBit := extractBuiltinBit(call(position, backwardDelta, ">=",
+                arg(negStep), TypeContext.UNSPECIFIED))
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(backwardInclusiveTestBit, loopInc, loopEnd))
+
+        -- backward exclusive test
+        ir.setCurrentBlock(backwardExclusiveTest)
+        def backwardExclusiveTestBit := extractBuiltinBit(call(position, backwardDelta, ">",
+                arg(negStep), TypeContext.UNSPECIFIED))
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(backwardExclusiveTestBit, loopInc, loopEnd))
+
+        ir.setCurrentBlock(loopInc)
+        def inc := call(position, indexLoad, "+", arg(step), TypeContext.UNSPECIFIED)
+        ir.add(IR.Statement.STORE(inc, IR.Value.LOCAL(indexSlot, indexType)))
+        ir.add(IR.Statement.BRANCH(loopStart))
+
+        ir.setCurrentBlock(loopEnd)
+    }
+
+    method compileRangeFor(position:Position, label:String?, astTarget:ASTNode, list:IR.Value,
+            statements:ListView<ASTNode>) {
+        assert list.type().isRange() | list.type().isSteppedRange()
+        if !checkSteppedRangeTypes(position, list.type()) {
+            return
+        }
+        def elementType:Type
         if list.type().typeKind = Type.Kind.NULLABLE {
             assert list.type().subtypes[0].typeKind = Type.Kind.GENERIC
             elementType := list.type().subtypes[0].subtypes[1]
@@ -3391,19 +3653,58 @@ class Compiler {
             elementType := list.type().subtypes[1]
         }
         if !elementType.isNumeric() {
-            error(list.position(), "for loop expected a numeric range, but found '\{list.type()}'")
+            error(position, "for loop expected a numeric range, but found '\{list.type()}'")
+            return
         }
+        def auto := AutoSymbolTable(self)
         def target := compileTarget(astTarget, Variable.Kind.DEF, null, elementType)
         if target = null {
-            return null
+            return
         }
-        assert target.value = null
-        def body := compileBlockStatements(position, rawBody)
-        if body = null {
-            return null
+        assert target.second = null
+        if list.type().isRange() {
+            compileSimpleRangeFor(position, label, target.first, list, statements)
         }
-        return IRNode.RANGE_FOR(position, label, target.target, list, body)*-
-        assert false
+        else {
+            compileSteppedRangeFor(position, label, target.first, list, statements)
+        }
+    }
+
+    method compileRangeFor(position:Position, label:String?, astTarget:ASTNode, rawList:ASTNode,
+            statements:ListView<ASTNode>) {
+        def elementType:Type
+        def list:IR.Value?
+        match astTarget {
+            when ASTNode.TYPED_IDENTIFIER(position, _, type):
+                def t := resolve(scanner.convertType(type))
+                if t.typeKind = Type.Kind.NULLABLE {
+                    error(position, "for loop variable cannot have nullable type '\{t}'")
+                    return
+                }
+                if !t.isNumeric() {
+                    error(position, "for loop variable cannot have non-numeric type '\{t}'")
+                    return
+                }
+                match rawList {
+                    when ASTNode.RANGE(_, _, _, _, step):
+                        def type:Type
+                        if step != null {
+                            type := Type.SteppedRangeOf(t)
+                        }
+                        else {
+                            type := Type.RangeOf(t)
+                        }
+                        list := compileExpression(rawList, TypeContext.TYPE(type))
+                    otherwise:
+                        assert false -- shouldn't end up here otherwise
+                }
+            otherwise:
+                list := compileExpression(rawList)
+        }
+        if list = null {
+            return
+        }
+        compileRangeFor(position, label, astTarget, list, statements)
     }
 
     method compileIteratorFor(position:Position, label:String?, target:ASTNode, iterator:IR.Value,
@@ -3423,9 +3724,9 @@ class Compiler {
             otherwise:
                 assert false
         }
-        def testBlock := ir.newBlock()
-        def bodyBlock := ir.newBlock()
-        def endBlock := ir.newBlock()
+        def testBlock := ir.newBlock("testBlock")
+        def bodyBlock := ir.newBlock("bodyBlock")
+        def endBlock := ir.newBlock("endBlock")
         def auto := AutoContext(self, EnclosingContext.LOOP(label, endBlock, testBlock))
         ir.add(IR.Statement.BRANCH(testBlock))
         ir.setCurrentBlock(testBlock)
@@ -3454,12 +3755,19 @@ class Compiler {
 
     method compileFor(position:Position, label:String?, rawTarget:ASTNode, rawList:ASTNode,
             statements:ListView<ASTNode>) {
+        if rawList = ASTNode.RANGE {
+            -- need to resolve unresolved range in terms of its target, as for i:Int8 in 0 .. 10 and
+            -- for i:Int64 in 0 .. 10 result in different kinds of ranges
+            compileRangeFor(position, label, rawTarget, rawList, statements)
+            return
+        }
         def list := compileExpression(rawList)
         if list = null {
             return
         }
         def symbols := AutoSymbolTable(self, symbolTable)
         if list.type().isRange() | list.type().isSteppedRange() {
+            -- it's a range, but not an unresolved one
             compileRangeFor(position, label, rawTarget, list, statements)
         }
         else {
@@ -3492,11 +3800,11 @@ class Compiler {
         if compiledTest = null {
             return
         }
-        def ifTrueBlock := ir.newBlock()
+        def ifTrueBlock := ir.newBlock("if true")
         def ifFalseBlock:IR.Block.ID
-        def endBlock := ir.newBlock()
+        def endBlock := ir.newBlock("if end")
         if ifFalse != null {
-            ifFalseBlock := ir.newBlock()
+            ifFalseBlock := ir.newBlock("if false")
         }
         else {
             ifFalseBlock := endBlock
@@ -3521,8 +3829,8 @@ class Compiler {
     }
 
     method compileLoop(position:Position, label:String?, statements:ImmutableArray<ASTNode>) {
-        def bodyBlock := ir.newBlock()
-        def endBlock := ir.newBlock()
+        def bodyBlock := ir.newBlock("loop body")
+        def endBlock := ir.newBlock("loop end")
         def auto := AutoContext(self, EnclosingContext.LOOP(label, endBlock, bodyBlock))
         ir.add(IR.Statement.BRANCH(bodyBlock))
         ir.setCurrentBlock(bodyBlock)
@@ -3646,9 +3954,9 @@ class Compiler {
 
     method compileWhile(position:Position, label:String?, test:ASTNode,
             statements:ImmutableArray<ASTNode>) {
-        def testBlock := ir.newBlock()
-        def bodyBlock := ir.newBlock()
-        def endBlock := ir.newBlock()
+        def testBlock := ir.newBlock("while test")
+        def bodyBlock := ir.newBlock("while body")
+        def endBlock := ir.newBlock("while end")
         def auto := AutoContext(self, EnclosingContext.LOOP(label, endBlock, testBlock))
         ir.add(IR.Statement.BRANCH(testBlock))
         ir.setCurrentBlock(testBlock)

@@ -155,12 +155,12 @@ class Type : Symbol, Key<Type> {
 
     @override
     function =(other:Type):Bit {
-        return name = other.name
-    }
-
-    @override
-    function !=(other:Type):Bit {
-        return name != other.name
+        -- FIXME the typeKind comparison shouldn't be necessary - types with the same name should
+        -- always be equal. But specialized generic classes are returning a type() which is a CLASS
+        -- equal to their specialized name, instead of the actual GENERIC type, which is causing
+        -- problems. This isn't a real fix, but rather a quick hack that works around the issue and
+        -- lets me keep moving. Need to fix it so they return GENERIC.
+        return name = other.name & typeKind = other.typeKind
     }
 
     @class
@@ -485,17 +485,11 @@ class Type : Symbol, Key<Type> {
     }
 
     function isRange():Bit {
-        if typeKind = Kind.NULLABLE {
-            return subtypes[0].isRange()
-        }
-        return typeKind = Kind.GENERIC & subtypes[0].name = Compiler.RANGE_NAME
+        return name.startsWith("panda.core.Range<")
     }
 
     function isSteppedRange():Bit {
-        if typeKind = Kind.NULLABLE {
-            return subtypes[0].isSteppedRange()
-        }
-        return typeKind = Kind.GENERIC & subtypes[0].name = Compiler.STEPPED_RANGE_NAME
+        return name.startsWith("panda.core.SteppedRange<")
     }
 
     function nullable():Type {

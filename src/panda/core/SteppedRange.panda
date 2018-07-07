@@ -49,7 +49,7 @@ class SteppedRange<EndPoint:Value?, Step:Value> : Value {
     @override
     function convert():String {
         def result := MutableString()
-        if start != null {
+        if start !== null {
             result.append(start)
         }
         if inclusive {
@@ -58,7 +58,7 @@ class SteppedRange<EndPoint:Value?, Step:Value> : Value {
         else {
             result.append("..")
         }
-        if end != null {
+        if end !== null {
             result.append(end)
         }
         result.append(" by ")

@@ -1675,7 +1675,7 @@ class LLVMCodeGenerator : CodeGenerator {
     method writeBlock(block:IR.Block) {
         if block.id.value != 0 {
             currentBlock := "\{block.id}"
-            out.printLine(currentBlock + ":")
+            out.printLine(currentBlock + ": ; \{block.comment}")
         }
         else {
             currentBlock := "0"
