@@ -1,3 +1,15 @@
+Rearchitecture
+==============
+
+@class binary overloads (12 + "Hello")
+properties
+boolean short circuiting
+lambdas / inner methods
+choice
+match
+finally
+memory management
+
 Immediate
 =========
 

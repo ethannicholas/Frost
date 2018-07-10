@@ -51,6 +51,8 @@ class ClassDecl {
 
     def name:String
 
+    def type:Type
+
     ================================================================================================
     Maps simple class names to fully-qualified class names. This is populated from "uses" statements
     which were in effect when this class was parsed as well as built-in implicit aliases.
@@ -110,10 +112,11 @@ class ClassDecl {
     var resolved:Compiler.Resolution
 
     init(source:File, position:Position, aliases:MapView<String, String>, doccomment:String?,
-            annotations:Annotations, kind:Kind, name:String, declaredSupers:ListView<Type>,
+            annotations:Annotations, kind:Kind, type:Type, declaredSupers:ListView<Type>,
             parameters:Array<GenericParameter>, parent:SymbolTable) {
         self.position := position
-        self.name := name
+        self.name := type.name
+        self.type := type
         self.source := source
         self.aliases := HashMap<String, String>(aliases)
         self.doccomment := doccomment
@@ -130,6 +133,13 @@ class ClassDecl {
         symbolTable.compiler.currentClass.pop(self)
     }
 
+    init(source:File, position:Position, aliases:MapView<String, String>, doccomment:String?,
+            annotations:Annotations, kind:Kind, name:String, declaredSupers:ListView<Type>,
+            parameters:Array<GenericParameter>, parent:SymbolTable) {
+        self.init(source, position, aliases, doccomment, annotations, kind,
+                Type(name, Type.Kind.CLASS, Position(), true), declaredSupers, parameters, parent)
+    }
+
     function simpleName():String {
         def index := name.lastIndexOf(".")
         if index = null {
@@ -138,20 +148,16 @@ class ClassDecl {
         return name[name.next(index)..]
     }
 
-    function type():Type {
-        return Type(name, Type.Kind.CLASS, Position(), true)
-    }
-
     function typeWithParameters():Type {
         if parameters.count = 0 {
-            return type()
+            return type
         }
         def finalParameters := Array<Type>()
         for p in parameters {
             finalParameters.add(Type(self.name + "." + p.name, Type.Kind.GENERIC_PARAMETER,
                     Position(), true))
         }
-        return Type.generic(type(), finalParameters)
+        return Type.generic(type, finalParameters)
     }
 
     function isSpecialization():Bit {

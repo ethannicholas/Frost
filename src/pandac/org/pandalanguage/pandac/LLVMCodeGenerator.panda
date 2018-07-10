@@ -478,7 +478,7 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     method getITable(cl:ClassDecl):String {
-        def interfaces := compiler.allInterfaces(cl.type())
+        def interfaces := compiler.allInterfaces(cl.type)
         var previous := "%$itable* null"
         for intfType in interfaces {
             def intf := compiler.getClass(intfType)
@@ -554,7 +554,7 @@ class LLVMCodeGenerator : CodeGenerator {
             def p := "%p\{i}"
             def rawType:Type
             if i = 0 {
-                rawType := raw.owner.type()
+                rawType := raw.owner.type
             }
             else {
                 rawType := raw.parameters[i - 1].type
@@ -589,7 +589,7 @@ class LLVMCodeGenerator : CodeGenerator {
         for i in 0 .. effective.subtypes.count - 1 {
             def rawType:Type
             if i = 0 {
-                rawType := raw.owner.type()
+                rawType := raw.owner.type
             }
             else {
                 rawType := raw.parameters[i - 1].type
@@ -613,7 +613,7 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     method getWrapperITable(cl:ClassDecl):String {
-        def interfaces := compiler.allInterfaces(cl.type())
+        def interfaces := compiler.allInterfaces(cl.type)
         var previous := "%$itable* null"
         for intfType in interfaces {
             def intf := compiler.getClass(intfType)
@@ -690,13 +690,13 @@ class LLVMCodeGenerator : CodeGenerator {
             writeDeclaration(m)
         }
         def resultName:String
-        def declared := compiler.declaredTypeWithSelf(m, m.owner.type())
+        def declared := compiler.declaredTypeWithSelf(m, m.owner.type)
         def effectiveSelf:Type
         if compiler.isValue(m.owner) {
             effectiveSelf := Type.Object()
         }
         else {
-            effectiveSelf := m.owner.type()
+            effectiveSelf := m.owner.type
         }
         def inherited := compiler.inheritedTypeWithSelf(m, effectiveSelf)
         if declared != inherited {
@@ -727,14 +727,14 @@ class LLVMCodeGenerator : CodeGenerator {
             compiler.resolve(cl)
             def type:String
             if cl.external {
-                result := ClassConstant("@\{escapeName(cl.type().name)}$class",
+                result := ClassConstant("@\{escapeName(cl.type.name)}$class",
                         "%panda$core$Class")
                 classConstants[cl.name] := result
                 types.printLine("\{result.name} = external global \{result.type}")
                 return classConstants[cl.name]
             }
             def vtable := compiler.getVTable(cl)
-            result := ClassConstant("@\{escapeName(cl.type().name)}$class",
+            result := ClassConstant("@\{escapeName(cl.type.name)}$class",
                     "{ %panda$core$Class*, \{INT_TYPE}, %panda$core$String*, %panda$core$Class*, " +
                     "%$itable*, [\{vtable.count} x i8*] }")
             classConstants[cl.name] := result
@@ -957,9 +957,9 @@ class LLVMCodeGenerator : CodeGenerator {
         }
         def mallocRef := nextVar()
         out.printLine("\{mallocRef} = call i8* @pandaObjectAlloc(" +
-                "i64 \{sizeOfWrapper(src.type())}, %panda$core$Class* \{ccCast})")
-        def wrapperTypeName := wrapperTypeName(src.type())
-        def wrapperType := wrapperType(src.type())
+                "i64 \{sizeOfWrapper(src.type)}, %panda$core$Class* \{ccCast})")
+        def wrapperTypeName := wrapperTypeName(src.type)
+        def wrapperType := wrapperType(src.type)
         def wrapperCast := nextVar()
         out.printLine("\{wrapperCast} = bitcast i8* \{mallocRef} to \{wrapperType}")
         def target := nextVar()
@@ -1199,8 +1199,8 @@ class LLVMCodeGenerator : CodeGenerator {
         assert compiler.currentMethod[0] != null
         if haveSelfValuePointer() {
             def load := nextVar()
-            out.printLine("\{load} = load \{llvmType(compiler.currentMethod[0].owner.type())}, " +
-                    "\{llvmType(compiler.currentMethod[0].owner.type())}* \{getSelfPointer()}")
+            out.printLine("\{load} = load \{llvmType(compiler.currentMethod[0].owner.type)}, " +
+                    "\{llvmType(compiler.currentMethod[0].owner.type)}* \{getSelfPointer()}")
             return load
         }
         return "%self"
@@ -1245,7 +1245,7 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     method selfType(m:MethodDecl):String {
-        def result := llvmType(m.owner.type())
+        def result := llvmType(m.owner.type)
         if m.methodKind = MethodDecl.Kind.INIT & !result.endsWith("*") {
             return result + "*"
         }
@@ -1290,6 +1290,8 @@ class LLVMCodeGenerator : CodeGenerator {
                 return value.convert()
             when IR.Value.INT(value, _):
                 return value.convert()
+            when IR.Value.GLOBAL(field):
+                return getName(field)
             when IR.Value.LOCAL(index, _):
                 return "%local\{index}"
             when IR.Value.NULL(type):
@@ -1462,7 +1464,7 @@ class LLVMCodeGenerator : CodeGenerator {
         if compiler.isValue(cl) {
             labelCount += 1
             def alloca := "%$tmp\{labelCount}"
-            methodHeader.printLine("\{alloca} = alloca \{cl.type()}")
+            methodHeader.printLine("\{alloca} = alloca \{cl.type}")
             refs[id] := alloca
             return
         }
@@ -1475,7 +1477,7 @@ class LLVMCodeGenerator : CodeGenerator {
             ccCast := cc.name
         }
         def callRef := nextVar()
-        def target := cl.type()
+        def target := cl.type
         out.printLine("\{callRef} = call i8* @pandaObjectAlloc(i64 \{sizeOf(target)}, " +
                 "%panda$core$Class* \{ccCast})")
         def result := nextVar()
@@ -1515,7 +1517,14 @@ class LLVMCodeGenerator : CodeGenerator {
         def result := nextVar()
         out.printLine("\{result} = getelementptr \{typeName(target.type())}, " +
                 "\{typeName(target.type())}* \{targetRef}, i64 0, i32 \{index}")
-        refs[id] := result
+        if compiler.isValue(field.type) {
+            refs[id] := result
+        }
+        else {
+            def cast := nextVar()
+            out.printLine("\{cast} = bitcast i8** \{result} to \{llvmType(field.type)}*")
+            refs[id] := cast
+        }
     }
 
     method writeGetInterfaceMethod(id:IR.Statement.ID, value:IR.Value, cl:ClassDecl, index:Int, 
@@ -1526,7 +1535,7 @@ class LLVMCodeGenerator : CodeGenerator {
         out.printLine("br label %\{entry}")
         createBlock(entry, out)
         def rawClassPointer := nextVar()
-        out.printLine("\{rawClassPointer} = getelementptr inbounds \{typeName(cl.type())}, " +
+        out.printLine("\{rawClassPointer} = getelementptr inbounds \{typeName(cl.type)}, " +
                 "\{getTypedReference(value)}, \{SIZE_TYPE} 0, i32 \{CLASS_POINTER_INDEX}")
         def classPointer := nextVar()
         def classType := typeName(Type.Class())
@@ -1726,7 +1735,7 @@ class LLVMCodeGenerator : CodeGenerator {
         if cl.annotations.isSpecialize() {
             return
         }
-        writeType(cl.type())
+        writeType(cl.type)
         getClassConstant(cl)
     }
 

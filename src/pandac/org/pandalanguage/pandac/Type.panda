@@ -351,9 +351,9 @@ class Type : Symbol, Key<Type> {
     }
 
     @class
-    method ClassLiteral(cl:ClassDecl):Type {
+    method ClassLiteral(t:Type):Type {
         def children := Array<Type>() -- FIXME literal
-        children.add(cl.type())
+        children.add(t)
         return generic(Class(), children)
     }
 

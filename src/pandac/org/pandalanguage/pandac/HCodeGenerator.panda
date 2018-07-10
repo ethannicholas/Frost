@@ -206,7 +206,7 @@ class HCodeGenerator : CodeGenerator {
             types.level += 1
             types.printLine("panda$core$Class* cl;")
             types.printLine("int32_t refCount;")
-            types.printLine("\{type(cl.type())} value;")
+            types.printLine("\{type(cl.type)} value;")
             types.level -= 1
             types.printLine("} \{escapeName(cl.name)}$wrapper;")
             types.printLine("typedef struct \{escapeName(cl.name)}$nullable {")
@@ -227,7 +227,7 @@ class HCodeGenerator : CodeGenerator {
     }
 
     method selfType(m:MethodDecl):String {
-        def result := type(m.owner.type())
+        def result := type(m.owner.type)
         if m.methodKind = MethodDecl.Kind.INIT & !result.endsWith("*") {
             return result + "*"
         }

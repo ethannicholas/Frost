@@ -3,6 +3,7 @@ package panda.core
 ====================================================================================================
 The root of the Panda class heirarchy. Every class in Panda ultimately descends from `Object`.
 ====================================================================================================
+@abstract
 class Object {
     @private
     def $class:Class

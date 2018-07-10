@@ -346,7 +346,7 @@ class CCodeGenerator : CodeGenerator {
     }
 
     method getITable(cl:ClassDecl):String {
-        def interfaces := compiler.allInterfaces(cl.type())
+        def interfaces := compiler.allInterfaces(cl.type)
         var previous := "NULL"
         for intfType in interfaces {
             def intf := compiler.getClass(intfType)
@@ -406,7 +406,7 @@ class CCodeGenerator : CodeGenerator {
             def p := "p\{i}"
             def rawType:Type
             if i = 0 {
-                rawType := raw.owner.type()
+                rawType := raw.owner.type
             }
             else {
                 rawType := raw.parameters[i - 1].type
@@ -447,7 +447,7 @@ class CCodeGenerator : CodeGenerator {
     }
 
     method getWrapperITable(cl:ClassDecl):String {
-        def interfaces := compiler.allInterfaces(cl.type())
+        def interfaces := compiler.allInterfaces(cl.type)
         var previous := "NULL"
         for intfType in interfaces {
             def intf := compiler.getClass(intfType)
@@ -485,13 +485,13 @@ class CCodeGenerator : CodeGenerator {
             writeDeclaration(m)
         }
         def result:String
-        def declared := compiler.declaredTypeWithSelf(m, m.owner.type())
+        def declared := compiler.declaredTypeWithSelf(m, m.owner.type)
         def effectiveSelf:Type
         if compiler.isValue(m.owner) {
             effectiveSelf := Type.Object()
         }
         else {
-            effectiveSelf := m.owner.type()
+            effectiveSelf := m.owner.type
         }
         def inherited := compiler.inheritedTypeWithSelf(m, effectiveSelf)
         if declared != inherited {
@@ -511,14 +511,14 @@ class CCodeGenerator : CodeGenerator {
             compiler.resolve(cl)
             def type:String
             if isExternal(cl) {
-                result := ClassConstant("\{escapeName(cl.type().name)}$class",
+                result := ClassConstant("\{escapeName(cl.type.name)}$class",
                         "%panda$core$Class")
                 classConstants[cl.name] := result
                 return classConstants[cl.name]
             }
             compiler.currentClass.push(cl)
             def vtable := compiler.getVTable(cl)
-            result := ClassConstant("\{escapeName(cl.type().name)}$class", "<error>")
+            result := ClassConstant("\{escapeName(cl.type.name)}$class", "<error>")
             classConstants[cl.name] := result
             def superPtr:String
             if cl.rawSuper != null {
@@ -908,7 +908,7 @@ class CCodeGenerator : CodeGenerator {
     }
 
     method selfType(m:MethodDecl):String {
-        def result := type(m.owner.type())
+        def result := type(m.owner.type)
         if m.methodKind = MethodDecl.Kind.INIT & !result.endsWith("*") {
             return result + "*"
         }

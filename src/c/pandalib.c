@@ -261,7 +261,7 @@ void* pandaRealloc(void* ptr, size_t oldSize, size_t newSize) {
 void pandaFree(void* ptr) {
     allocations--;
 #if !DEBUG_ALLOCS
-    free(ptr);
+    //free(ptr);
 #endif
 }
 

@@ -40,9 +40,8 @@ class Bit : Value, Key<Bit>, Formattable {
     }
 
     -- note that the '|' and '&' functions do not have any way to provide for short circuiting, so
-    -- these operators require special support in the CodeGenerator. These implementations are
-    -- therefore only actually called in unusual circumstances, such as via dynamic method
-    -- references.
+    -- these operators require special support in the compiler. These implementations are therefore
+    -- only actually called in unusual circumstances, such as via dynamic method references.
     function |(other:Bit):Bit {
         return value | other.value
     }

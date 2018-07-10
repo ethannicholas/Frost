@@ -186,6 +186,7 @@ class IR {
 
     choice Value {
         BIT(Bit)
+        GLOBAL(FieldDecl)
         INT(UInt64, Type)
         -- value is a *pointer to* the given type
         LOCAL(Int, Type)

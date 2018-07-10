@@ -280,7 +280,7 @@ class PandaDoc {
             return
         }
         out.open("class")
-        write(cl.type())
+        write(cl.type)
         if cl.doccomment != null {
             writeDoc(cl.doccomment)
         }
@@ -534,7 +534,7 @@ class PandaDoc {
                 overridden.add(m.signature())
             }
         }
-        addInheritedMethods(cl.type(), methods, overridden)
+        addInheritedMethods(cl.type, methods, overridden)
         methods[..] := methods[.. by -1]
 
         if methods.count > 0 {
@@ -606,7 +606,7 @@ class PandaDoc {
         out := XMLWriter(dest.openOutputStream())
         out.open("class")
         out.write("name", cl.name)
-        var simple := simpleName(cl.type())
+        var simple := simpleName(cl.type)
         if cl.parameters.count != 0 {
             var separator := "&lt;"
             for p in cl.parameters {
@@ -675,7 +675,7 @@ class PandaDoc {
             }
             else {
                 out.open("class")
-                write(cl.type())
+                write(cl.type)
                 if cl.doccomment != null {
                     writeDoc(cl.doccomment)
                 }

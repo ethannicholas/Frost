@@ -1,0 +1,44 @@
+package org.pandalanguage.pandac
+
+====================================================================================================
+A reference to a method in a particular context type. For instance, the method `String.!=` and the
+method `File.!=` are actually the same method (inherited from `Equatable`), but have different types
+because one of them comes from `Equatable<String>` and the other `Equatable<File>`.
+====================================================================================================
+@final
+class MethodRef {
+    def target:Type
+
+    def value:MethodDecl
+
+    def effectiveType:Type
+
+    ================================================================================================
+    Creates a reference to a method within a particular "target type", where the target is the
+    object from which the method was taken. In `"Hello".length()`, the target is the string
+    `"Hello"`. For class methods, the target type is the class type.
+    ================================================================================================
+    init(compiler:Compiler, target:Type, value:MethodDecl) {
+        assert value.resolved != Compiler.Resolution.UNRESOLVED
+        self.value := value
+        self.target := target
+        self.effectiveType := compiler.remapType(target, value.type())
+    }
+
+    function parameterCount():Int {
+        return value.parameters.count
+    }
+
+    function parameterType(index:Int):Type {
+        return effectiveType.subtypes[index]
+    }
+
+    function returnType():Type {
+        return effectiveType.subtypes[effectiveType.subtypes.count - 1]
+    }
+
+    @override
+    function convert():String {
+        return "MethodRef(\{value.declaration()}, \{effectiveType})"
+    }
+}
