@@ -1,14 +1,14 @@
 Rearchitecture
 ==============
 
-@class binary overloads (12 + "Hello")
-properties
+indirect struct returns
+@class binary overloads (12 + "Hello"), Int[1 .. 10]
 boolean short circuiting
 lambdas / inner methods
-choice
-match
 finally
-memory management
+memory management -- note to self: can't punt on this, because Auto stuff won't work otherwise
+@weak / Weak
+inlining
 
 Immediate
 =========
@@ -23,8 +23,6 @@ permissions
 handle duplicate classes, more than one public class per file, classes not being in the correct path
 figure out rules for init / cleanup, make sure I'm following them consistently, check any cases I
     can that don't rely on dataflow
-remove broken '=' crap on choice, add proper Equatable implementation when appropriate. Accept that
-    we'll have to use 'match' whenever the choice is not Equatable.
 var parameters
 all tests working (incl. C)
 verify build & run from directories containing spaces
@@ -34,6 +32,7 @@ enforce class directory and filename rules
 Eventually
 ==========
 
+Move wrappers / structs / casting / etc. out of CG and into Compiler. Create IR.Type.
 Dataflow, null safety, function safety
 Proper native code headers
 Tuples

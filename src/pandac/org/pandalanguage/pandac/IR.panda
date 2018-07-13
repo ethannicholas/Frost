@@ -23,6 +23,8 @@ class IR {
         ============================================================================================
         CAST(Value, Type)
 
+        GET_CHOICE_FIELD_POINTER(Value, ChoiceCase, Int)
+
         ============================================================================================
         Conditionally branch to the first block if true, the second block if false.
         ============================================================================================
@@ -68,6 +70,47 @@ class IR {
         LOAD(Value)
 
         ============================================================================================
+        Allocates memory and returns a raw pointer to it. Only POINTER_ operations are legal on a
+        raw pointer.
+        ============================================================================================
+        POINTER_ALLOC(Value -* count *-, Type)
+
+        ============================================================================================
+        Deallocates a pointer
+        ============================================================================================
+        POINTER_DESTROY(Value -* pointer *-)
+
+        ============================================================================================
+        Dereferences a raw pointer.
+        ============================================================================================
+        POINTER_GET(Value)
+
+        ============================================================================================
+        Reads from `pointer + index * sizeof(type)`.
+        ============================================================================================
+        POINTER_GET_INDEX(Value -* pointer *-, Value -* index *-)
+
+        ============================================================================================
+        Returns `pointer + index * sizeof(type)`.
+        ============================================================================================
+        POINTER_OFFSET(Value -* pointer *-, Value -* index *-)
+
+        ============================================================================================
+        Equivalent to the C realloc function.
+        ============================================================================================
+        POINTER_REALLOC(Value -* pointer *-, Value -* size *-)
+
+        ============================================================================================
+        Writes to a raw pointer.
+        ============================================================================================
+        POINTER_SET(Value -* value *-, Value -* pointer *-)
+
+        ============================================================================================
+        Writes to `pointer + index * sizeof(type)`.
+        ============================================================================================
+        POINTER_SET_INDEX(Value -* value *-, Value -* pointer *-, Value -* index *-)
+
+        ============================================================================================
         A `return` statement.
         ============================================================================================
         RETURN(IR.Value?)
@@ -82,6 +125,8 @@ class IR {
         Writes a value to the target of the given pointer.
         ============================================================================================
         STORE(Value -* value *-, Value -* dest pointer *-)
+
+        UNREACHABLE
 
         class ID : panda.core.Value, Key<ID> {
             def value:Int
@@ -122,9 +167,11 @@ class IR {
                 when DYNAMIC_CALL(m, args):
                     return "dynamic_call \{m}(\{args.join(", ")})"
                 when EXTRACT_FIELD(value, field):
-                    return "load_field \{value}, \{field.name}"
+                    return "load_field \{value}, \{field.owner.name}.\{field.name}"
+                when GET_CHOICE_FIELD_POINTER(target, cc, index):
+                    return "get_choice_field_pointer \{target}, \{cc.name}, \{index}"
                 when GET_FIELD_POINTER(ptr, field):
-                    return "get_field_pointer \{ptr}, \{field}"
+                    return "get_field_pointer \{ptr}, \{field.owner.name}.\{field.name}"
                 when GET_INTERFACE_METHOD(value, cl, id, type):
                     return "get_interface_method \{value}, \{cl.name}, \{id}, \{type}"
                 when GET_VIRTUAL_METHOD(value, id, type):
@@ -140,6 +187,8 @@ class IR {
                     return "static_call \{m.declaration()}(\{args.join(", ")})"
                 when STORE(value, ptr):
                     return "store \{value}, \{ptr}"
+                when UNREACHABLE:
+                    return "unreachable"
             }
         }
     }
@@ -173,7 +222,7 @@ class IR {
 
         @override
         function convert():String {
-            def result := MutableString()
+            def result := MutableString("\{id}: -- \{comment}\n")
             for i in 0 .. statements.count {
                 result.append(ids[i])
                 result.append(": ")
@@ -186,7 +235,6 @@ class IR {
 
     choice Value {
         BIT(Bit)
-        GLOBAL(FieldDecl)
         INT(UInt64, Type)
         -- value is a *pointer to* the given type
         LOCAL(Int, Type)

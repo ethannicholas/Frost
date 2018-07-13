@@ -13,6 +13,10 @@ class MethodRef {
 
     def effectiveType:Type
 
+    property parameterCount:Int
+
+    property returnType:Type
+
     ================================================================================================
     Creates a reference to a method within a particular "target type", where the target is the
     object from which the method was taken. In `"Hello".length()`, the target is the string
@@ -22,10 +26,12 @@ class MethodRef {
         assert value.resolved != Compiler.Resolution.UNRESOLVED
         self.value := value
         self.target := target
-        self.effectiveType := compiler.remapType(target, value.type())
+        def found := compiler.findType(target, value.owner)
+        assert found != null
+        self.effectiveType := compiler.remapType(found, value.type())
     }
 
-    function parameterCount():Int {
+    function get_parameterCount():Int {
         return value.parameters.count
     }
 
@@ -33,8 +39,8 @@ class MethodRef {
         return effectiveType.subtypes[index]
     }
 
-    function returnType():Type {
-        return effectiveType.subtypes[effectiveType.subtypes.count - 1]
+    function get_returnType():Type {
+        return effectiveType.returnType()
     }
 
     @override

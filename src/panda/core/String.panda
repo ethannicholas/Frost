@@ -1458,6 +1458,16 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
                 h := h * 101 + Int64(data[i].value->builtin_int64)
             }
             _hash := h
+-*
+            -- FNV-1a hash, thanks to Fowler, Landon, and Vo. This algorithm is in the public
+            -- domain: http://www.isthe.com/chongo/tech/comp/fnv/index.html#public_domain
+            var h := 0xcbf29ce484222325
+            for i in 0 .. _length {
+                h ~~= data[i].convert()
+                h *= 0x100000001b3
+            }
+            _hash := h
+*-
         }
         return _hash
     }

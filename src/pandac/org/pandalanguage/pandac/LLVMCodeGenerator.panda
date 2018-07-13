@@ -294,7 +294,6 @@ class LLVMCodeGenerator : CodeGenerator {
         for f in compiler.instanceFields(cl) {
             compiler.resolve(f)
             if !f.type.resolved {
-                Console.printLine("can't resolve: \{f.owner.name}:\{f}")
                 compiler.currentClass.pop()
                 return
             }
@@ -519,12 +518,11 @@ class LLVMCodeGenerator : CodeGenerator {
         return previous
     }
 
-    method createMethodShim(raw:MethodDecl, effective:Type, rawOut:OutputStream):MethodShim {
+    method createMethodShim(raw:MethodDecl, effective:Type):MethodShim {
         def found := methodShims[raw]
         if found != null {
             return found
         }
-        Console.printLine("need to change main out")
         def oldOut := out
         out := shims
         assert effective.isMethod()
@@ -700,7 +698,7 @@ class LLVMCodeGenerator : CodeGenerator {
         }
         def inherited := compiler.inheritedTypeWithSelf(m, effectiveSelf)
         if declared != inherited {
-            def shim := createMethodShim(m, inherited, shims)
+            def shim := createMethodShim(m, inherited)
             resultName := shim.name
         }
         else {
@@ -1290,8 +1288,6 @@ class LLVMCodeGenerator : CodeGenerator {
                 return value.convert()
             when IR.Value.INT(value, _):
                 return value.convert()
-            when IR.Value.GLOBAL(field):
-                return getName(field)
             when IR.Value.LOCAL(index, _):
                 return "%local\{index}"
             when IR.Value.NULL(type):
@@ -1511,6 +1507,24 @@ class LLVMCodeGenerator : CodeGenerator {
         refs[id] := result
     }
 
+    method writeGetChoiceFieldPointer(id:IR.Statement.ID, target:IR.Value, cc:ChoiceCase,
+            index:Int) {
+        def data := cc.owner.fields[1]
+        assert data.name = ClassDecl.CHOICE_DATA_NAME
+        def targetRef := getReference(target)
+        def fieldIndex := compiler.getIndex(data)
+        def dataPointer := nextVar()
+        out.printLine("\{dataPointer} = getelementptr \{typeName(target.type())}, " +
+                "\{typeName(target.type())}* \{targetRef}, i64 0, i32 \{fieldIndex}")
+        def size := getChoiceDataSize(cc.owner)
+        def offset := nextVar()
+        out.printLine("\{offset} = getelementptr [\{size} x i8], [\{size} x i8]* \{dataPointer}," +
+                " i64 0, i64 \{getChoiceFieldOffset(cc, index)}")
+        def cast := nextVar()
+        out.printLine("\{cast} = bitcast i8* \{offset} to \{llvmType(cc.fields[index])}*")
+        refs[id] := cast
+    }
+
     method writeGetFieldPointer(id:IR.Statement.ID, target:IR.Value, field:FieldDecl) {
         def targetRef := getReference(target)
         def index := compiler.getIndex(field)
@@ -1624,20 +1638,38 @@ class LLVMCodeGenerator : CodeGenerator {
         if m.owner.external {
             writeDeclaration(m)
         }
-        def type := m.returnType
-        if type != Type.Void() {
-            def result := nextVar()
-            out.print("\{result} = ")
+        def indirect := needsStructIndirection(m)
+        def actualResultType := llvmType(m.returnType)
+        var separator := ""
+        def result:String?
+        if indirect {
+            labelCount += 1
+            result := "%tmp\{labelCount}"
+            methodHeader.printLine("\{result} = alloca \{actualResultType}")
+            out.print("call void \{getName(m)}(\{actualResultType}* \{result}")
+            separator := ", "
+        }
+        else if m.returnType != Type.Void() {
+            result := nextVar()
+            out.print("\{result} = call \{actualResultType} \{getName(m)}(")
             refs[id] := result
         }
-        out.print("call \{llvmType(type)} \{getName(m)}(")
-        var separator := ""
+        else {
+            out.print("call void \{getName(m)}(")
+        }
         for a in args {
             out.print(separator)
             out.print(getTypedReference(a))
             separator := ", "
         }
         out.printLine(")")
+        if indirect {
+            assert result != null
+            def load := nextVar()
+            out.printLine("\{load} = load \{actualResultType}, \{actualResultType}* " +
+                        result)
+            refs[id] := load
+        }
     }
 
     method writeStore(value:IR.Value, ptr:IR.Value) {
@@ -1662,6 +1694,8 @@ class LLVMCodeGenerator : CodeGenerator {
                 writeDynamicCall(id, m, args)
             when IR.Statement.EXTRACT_FIELD(target, field):
                 writeExtractField(id, target, field)
+            when IR.Statement.GET_CHOICE_FIELD_POINTER(target, cc, index):
+                writeGetChoiceFieldPointer(id, target, cc, index)
             when IR.Statement.GET_FIELD_POINTER(target, field):
                 writeGetFieldPointer(id, target, field)
             when IR.Statement.GET_INTERFACE_METHOD(value, cl, index, type):
@@ -1676,6 +1710,8 @@ class LLVMCodeGenerator : CodeGenerator {
                 writeStaticCall(id, m, args)
             when IR.Statement.STORE(value, slot):
                 writeStore(value, slot)
+            when IR.Statement.UNREACHABLE:
+                out.printLine("unreachable")
             otherwise:
                 assert false, "unsupported statement \{s}"
         }
@@ -1706,6 +1742,7 @@ class LLVMCodeGenerator : CodeGenerator {
     @override
     method write(m:MethodDecl, ir:IR) {
         out := methods
+        methodHeader.clear()
         self.ir := ir
         varCount := 0
         out.print("define ")
@@ -1726,8 +1763,11 @@ class LLVMCodeGenerator : CodeGenerator {
             separator := ", "
         }
         out.printLine(") {")
+        out := MemoryOutputStream()
         writeIR(ir)
-        out.printLine("}")
+        methods.printLine(methodHeader)
+        methods.printLine(out)
+        methods.printLine("}")
     }
 
     @override

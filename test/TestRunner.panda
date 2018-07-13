@@ -150,9 +150,9 @@ class TestRunner {
     method runTest(pandac:File, cLibs:ListView<String>, workingDir:File, test:String,
             mode:Mode):Bit {
         Console.print("Testing \{test} (\{mode})...")
-        if mode = Mode.C {
+-*        if mode = Mode.C {
             return runTestC(pandac, cLibs, workingDir, test)
-        }
+        }*-
         def expected := workingDir.resolve(test + ".expected").readFully()
         def exe := File("/tmp/test.out")
         if exe.exists() {
