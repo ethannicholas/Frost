@@ -2707,6 +2707,7 @@ class Compiler {
             finalArgs.add(a)
         }
         var result:IR.Statement.ID
+        def actualType := inheritedTypeWithSelf(m.value)
         if m.value.isVirtual() {
             def finalTarget:IR.Value?
             if target != null {
@@ -2726,22 +2727,22 @@ class Compiler {
             if m.value.owner.classKind = ClassDecl.Kind.INTERFACE {
                 mref := ir.add(IR.Statement.GET_INTERFACE_METHOD(finalTarget, m.value.owner,
                         getVTableIndex(m.value) - getVTable(getClass(Type.Object())).count,
-                        inheritedTypeWithSelf(m.value)))
+                        actualType))
             }
             else {
                 mref := ir.add(IR.Statement.GET_VIRTUAL_METHOD(finalTarget, getVTableIndex(m.value),
-                inheritedTypeWithSelf(m.value)))
+                        actualType))
             }
-            result := ir.add(IR.Statement.DYNAMIC_CALL(IR.Value.REF(mref, m.value.type()),
+            result := ir.add(IR.Statement.DYNAMIC_CALL(IR.Value.REF(mref, actualType),
                     finalArgs.finish()))
         }
         else {
             result := ir.add(IR.Statement.STATIC_CALL(m.value, finalArgs.finish()))
         }
         if m.returnType != Type.Void() {
-            var resultCast := IR.Value.REF(result, m.value.returnType)
+            var resultCast := IR.Value.REF(result, actualType.returnType())
             if m.value.methodKind != MethodDecl.Kind.INIT &
-                    effectiveType.returnType() != m.value.returnType {
+                    effectiveType.returnType() != actualType.returnType() {
                 resultCast := cast(resultCast, effectiveType.returnType())
             }
             return coerce(position, resultCast, type)
@@ -4628,6 +4629,9 @@ class Compiler {
                                                 value, cc, i))
                                         def load := ir.add(IR.Statement.LOAD(IR.Value.REF(ptr,
                                                 cc.fields[i])))
+                                        if getText(args[i]) = "_" {
+                                            continue
+                                        }
                                         def target := compileTarget(args[i], Variable.Kind.DEF,
                                                 ASTNode.IR_WRAPPER(position,
                                                         IR.Value.REF(load, cc.fields[i])),
