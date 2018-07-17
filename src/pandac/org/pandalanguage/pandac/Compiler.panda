@@ -2567,7 +2567,6 @@ class Compiler {
             return IR.Value.REF(result, target)
         }
         error(position, "expected '\{target}', but found '\{value.type()}'")
-        System.crash()
         return null
     }
 
@@ -3490,7 +3489,7 @@ class Compiler {
             when ASTNode.RANGE(position, start, inclusive, end, step):
                 return compileRange(position, start, inclusive, end, step, type)
             when ASTNode.SELF(position):
-                return compileSelf(position)
+                return coerce(position, compileSelf(position), type)
             when ASTNode.STRING(position, text):
                 return coerce(expr.position(), IR.Value.STRING(text), type)
             when ASTNode.TYPE, ASTNode.GENERIC_TYPE:
