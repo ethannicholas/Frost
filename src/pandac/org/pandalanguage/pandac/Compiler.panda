@@ -4827,55 +4827,78 @@ class Compiler {
         if !resolve(m) {
             return
         }
-        ir := IR()
         currentMethod.push(m)
-        def auto := AutoSymbolTable(self)
-        var index := 0
-        if hasSelfParam(m) {
-            def selfParam := Variable(m.position, Variable.Kind.DEF, "self", m.owner.type,
-                    Variable.Storage.PARAMETER(index))
-            index += 1
-            selfParam.owner := m
-            symbolTable.add(selfParam)
-        }
-        else if !m.annotations.isClass() {
-            def selfVar := Variable(m.position, Variable.Kind.DEF, "self", m.owner.type,
-                    Variable.Storage.LOCAL(0))
-            selfVar.owner := m
-            ir.locals.add(selfVar.type)
-            symbolTable.add(selfVar)
-        }
-        if m.methodKind = MethodDecl.Kind.INIT & !callsOtherSelf(m.body) {
-            for f in m.owner.fields {
-                if f.rawValue != null & !f.annotations.isClass() {
-                    def p := f.rawValue.position()
-                    compileStatement(ASTNode.BINARY(p, ASTNode.DOT(p, ASTNode.SELF(p), f.name),
-                            Token.Kind.ASSIGNMENT, f.rawValue))
+        if m.body != null {
+            ir := IR()
+            def auto := AutoSymbolTable(self)
+            if m.name = "main" {
+                if m.methodKind != MethodDecl.Kind.METHOD {
+                    error(m.position, "'main' must be a method")
+                }
+                if m.returnType != Type.Void() {
+                    error(m.position, "'main' must not have a return type")
+                }
+                if !m.annotations.isClass() {
+                    error(m.position, "'main' must be declared @class")
+                }
+                def required := "panda.collections.ListView<panda.core.String>"
+                if m.parameters.count > 1 |
+                        (m.parameters.count = 1 & m.parameters[0].type.name != required) {
+                    error(m.position, "'main' must have either zero parameters or one parameter " +
+                            "of type '\{required}'")
                 }
             }
-        }
-        for p in m.parameters {
-            def v := Variable(m.position, Variable.Kind.DEF, p.name, p.type,
-                    Variable.Storage.PARAMETER(index))
-            v.owner := m
-            symbolTable.add(v)
-            index += 1
-        }
-        for s in m.body {
-            compileStatement(s)
-        }
-        if !ir.currentBlockFinished() {
-            if m.returnType = Type.Void() | m.methodKind = MethodDecl.Kind.INIT {
-                compileReturn(m.position, null)
+            var index := 0
+            if hasSelfParam(m) {
+                def selfParam := Variable(m.position, Variable.Kind.DEF, "self", m.owner.type,
+                        Variable.Storage.PARAMETER(index))
+                index += 1
+                selfParam.owner := m
+                symbolTable.add(selfParam)
             }
-            else {
-                compileAssert(m.position, ASTNode.BIT(m.position, false),
-                        ASTNode.STRING(m.position, "\{m.declaration()} exited without returning"))
-                ir.add(IR.Statement.UNREACHABLE)
+            else if !m.annotations.isClass() {
+                def selfVar := Variable(m.position, Variable.Kind.DEF, "self", m.owner.type,
+                        Variable.Storage.LOCAL(0))
+                selfVar.owner := m
+                ir.locals.add(selfVar.type)
+                symbolTable.add(selfVar)
             }
+            if m.methodKind = MethodDecl.Kind.INIT & !callsOtherSelf(m.body) {
+                for f in m.owner.fields {
+                    if f.rawValue != null & !f.annotations.isClass() {
+                        def p := f.rawValue.position()
+                        compileStatement(ASTNode.BINARY(p, ASTNode.DOT(p, ASTNode.SELF(p), f.name),
+                                Token.Kind.ASSIGNMENT, f.rawValue))
+                    }
+                }
+            }
+            for p in m.parameters {
+                def v := Variable(m.position, Variable.Kind.DEF, p.name, p.type,
+                        Variable.Storage.PARAMETER(index))
+                v.owner := m
+                symbolTable.add(v)
+                index += 1
+            }
+            for s in m.body {
+                compileStatement(s)
+            }
+            if !ir.currentBlockFinished() {
+                if m.returnType = Type.Void() | m.methodKind = MethodDecl.Kind.INIT {
+                    compileReturn(m.position, null)
+                }
+                else {
+                    compileAssert(m.position, ASTNode.BIT(m.position, false),
+                            ASTNode.STRING(m.position,
+                                "\{m.declaration()} exited without returning"))
+                    ir.add(IR.Statement.UNREACHABLE)
+                }
+            }
+            codeGenerator.write(m, ir)
+        }
+        else {
+            codeGenerator.writeDeclaration(m)
         }
         currentMethod.pop(m)
-        codeGenerator.write(m, ir)
     }
 
     method markNonExternal(cl:ClassDecl) {
