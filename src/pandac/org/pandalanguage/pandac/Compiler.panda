@@ -3312,8 +3312,11 @@ class Compiler {
                                 }
                         }
                 }
-                return coerce(position, compilePrefix(position, op, operand,
-                        TypeContext.TYPE(Type.Int64())), type)
+                def target := compileExpression(operand, TypeContext.UNSPECIFIED)
+                if target = null {
+                    return null
+                }
+                return call(position, target, "-", Array<ASTNode>() -* FIXME literal *-, type)
             when Token.Kind.NOT:
                 def target := compileExpression(operand, TypeContext.UNSPECIFIED)
                 if target = null {
@@ -4577,6 +4580,7 @@ class Compiler {
             def w := whens[i]
             match w {
                 when ASTNode.WHEN(position, tests, statements):
+                    def auto := AutoSymbolTable(self)
                     ir.setCurrentBlock(nextBlock)
                     var testSuccess := ir.newBlock("test success")
                     for j in 0 .. tests.count {
