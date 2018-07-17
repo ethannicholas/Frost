@@ -3195,12 +3195,7 @@ class Compiler {
         if compiledBase = null {
             return null
         }
-        match compiledBase {
-            when IR.Value.TYPE(type):
-                return compileDot(position, IR.Value.TYPE(type.subtypes[1]), name)
-            otherwise:
-                return compileDot(position, compiledBase, name)
-        }
+        return compileDot(position, compiledBase, name)
     }
 
     method compileIdentifier(position:Position, name:String):IR.Value? {
@@ -3467,7 +3462,12 @@ class Compiler {
             when ASTNode.BINARY(position, left, op, right):
                 return compileBinary(position, left, op, right, type)
             when ASTNode.BIT(_, value):
-                return coerce(expr.position(), IR.Value.BIT(value), type)
+                match type {
+                    when TypeContext.TYPE:
+                        return coerce(expr.position(), IR.Value.BIT(value), type)
+                    otherwise:
+                        return coerce(expr.position(), IR.Value.BIT(value), Type.Bit())
+                }
             when ASTNode.CALL(position, m, args):
                 return compileCall(position, m, args, type)
             when ASTNode.DOT(position, base, name):
@@ -3493,8 +3493,11 @@ class Compiler {
             when ASTNode.STRING(position, text):
                 return coerce(expr.position(), IR.Value.STRING(text), type)
             when ASTNode.TYPE, ASTNode.GENERIC_TYPE:
-                error(expr.position(), "expected an expression, but found type '\{expr}'")
-                return null
+                def type := resolve(scanner.convertType(expr))
+                if type = null {
+                    return null
+                }
+                return IR.Value.TYPE(type)
             otherwise:
                 assert false, "unsupported expression \{expr}:\{expr.position}"
         }
