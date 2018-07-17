@@ -10,6 +10,20 @@ class Compiler {
         IN_PROGRESS
         RESOLVED
         RESOLVED_WITH_ERRORS
+
+        @override
+        function convert():String {
+            match self {
+                when UNRESOLVED:
+                    return "UNRESOLVED"
+                when IN_PROGRESS:
+                    return "IN_PROGRESS"
+                when RESOLVED:
+                    return "RESOLVED"
+                when RESOLVED_WITH_ERRORS:
+                    return "RESOLVED_WITH_ERRORS"
+            }
+        }
     }
 
     class Error : Immutable {
@@ -419,7 +433,10 @@ class Compiler {
     refers to. Reports error(s) and returns false if the type is not valid.
     ================================================================================================
     method checkGenericParameters(position:Position, cl:ClassDecl, type:Type):Bit {
-        resolve(cl)
+        if !resolve(cl) {
+            assert errorCount > 0
+            return false
+        }
         assert type.resolved
         def expectedCount := cl.parameters.count
         def foundTypes := typeParameters(type)
@@ -444,7 +461,7 @@ class Compiler {
         return true
     }
 
-    @post(@return = null | @return.resolved)
+    @post(@return = null & errorCount > 0 | @return != null & @return.resolved)
     method resolve(type:Type, checkParameters:Bit):Type? {
         if type.resolved {
             return type
@@ -467,7 +484,6 @@ class Compiler {
                             return Type(s->Alias.fullName, Type.Kind.CLASS, type.position, true)
                         when Symbol.Kind.GENERIC_PARAMETER:
                             def gp := s->ClassDecl.GenericParameter
-                            resolve(getClass(type.position, gp.owner))
                             return Type(gp)
                         when Symbol.Kind.TYPE:
                             return s->Type
@@ -549,105 +565,114 @@ class Compiler {
         }
     }
 
-    @post(currentClass.count = @pre(currentClass.count))
-    method resolve(cl:ClassDecl) {
-        if cl.resolved != Resolution.UNRESOLVED {
-            return
-        }
-        cl.resolved := Resolution.IN_PROGRESS
-        currentClass.push(cl)
-        def old := symbolTable
-        symbolTable := cl.symbolTable
-        for p in cl.parameters {
-            def resolved := resolve(p.bound, false)
-            if resolved != null {
-                p.bound := resolved
+    @post(currentClass.count = @pre(currentClass.count) & (@return | errorCount > 0))
+    method resolve(cl:ClassDecl):Bit {
+        if cl.resolved = Resolution.UNRESOLVED {
+            cl.resolved := Resolution.IN_PROGRESS
+            currentClass.push(cl)
+            def auto := AutoSymbolTable(self, cl.symbolTable)
+            for p in cl.parameters {
+                def resolved := resolve(p.bound, false)
+                if resolved != null {
+                    p.bound := resolved
+                }
+                else {
+                    cl.resolved := Resolution.RESOLVED_WITH_ERRORS
+                    currentClass.pop(cl)
+                    return false
+                }
             }
-            else {
-                cl.resolved := Resolution.RESOLVED_WITH_ERRORS
-                currentClass.pop(cl)
-                return
-            }
-        }
-        def supertypes := HashSet<String>()
-        for rawS in cl.declaredSupers {
-            def s := resolve(rawS, false)
-            if s != null {
-                def sClass := getClass(s)
-                if sClass != null {
-                    resolve(sClass)
-                    addAllSupertypes(sClass, supertypes)
-                    if sClass.classKind = ClassDecl.Kind.CLASS {
-                        if cl.classKind = ClassDecl.Kind.INTERFACE {
-                            error(s.position, "interface '\{cl.name}' cannot extend class " +
-                                    "'\{s.name}'")
-                        }
-                        if cl.rawSuper = null {
-                            cl.rawSuper := s
-                            if cl.rawInterfaces.count > 0 {
-                                error(s.position, "superclass '\{s}' of class '\{cl.name}' must be " +
-                                        "listed before any superinterfaces")
+            def supertypes := HashSet<String>()
+            for rawS in cl.declaredSupers {
+                def resolvedType := resolve(rawS, false)
+                if resolvedType = null {
+                    cl.resolved := Resolution.RESOLVED_WITH_ERRORS
+                    currentClass.pop(cl)
+                    return false
+                }
+                def s := resolve(resolvedType, false)
+                if s != null {
+                    def sClass := getClass(s)
+                    if sClass != null {
+                        resolve(sClass)
+                        addAllSupertypes(sClass, supertypes)
+                        if sClass.classKind = ClassDecl.Kind.CLASS {
+                            if cl.classKind = ClassDecl.Kind.INTERFACE {
+                                error(s.position, "interface '\{cl.name}' cannot extend class " +
+                                        "'\{s.name}'")
+                            }
+                            if cl.rawSuper = null {
+                                cl.rawSuper := s
+                                if cl.rawInterfaces.count > 0 {
+                                    error(s.position, "superclass '\{s}' of class '\{cl.name}' must be " +
+                                            "listed before any superinterfaces")
+                                }
+                            }
+                            else {
+                                error(s.position, "class '\{cl.name}' has more than one superclass")
                             }
                         }
                         else {
-                            error(s.position, "class '\{cl.name}' has more than one superclass")
+                            assert sClass.classKind = ClassDecl.Kind.INTERFACE
+                            cl.rawInterfaces.add(s)
                         }
                     }
                     else {
-                        assert sClass.classKind = ClassDecl.Kind.INTERFACE
-                        cl.rawInterfaces.add(s)
+                        cl.resolved := Resolution.RESOLVED_WITH_ERRORS
+                        currentClass.pop(cl)
+                        return false
                     }
                 }
                 else {
                     cl.resolved := Resolution.RESOLVED_WITH_ERRORS
                     currentClass.pop(cl)
-                    return
+                    return false
                 }
             }
-        }
-        if cl.rawSuper = null & cl.name != "panda.core.Object" {
-            cl.rawSuper := Type.Object()
-        }
-        if cl.rawSuper != null & !cl.annotations.isFinal() &
-                cl.rawSuper.name = "panda.core.Value" {
-            cl.annotations.flags ||= Annotations.Flag.FINAL
-            for m in cl.methods {
-                m.annotations.flags ||= Annotations.Flag.FINAL
-                if scanner.shouldInline(m.annotations, m.body) {
-                    m.annotations.flags ||= Annotations.Flag.INLINE
+            if cl.rawSuper = null & cl.name != "panda.core.Object" {
+                cl.rawSuper := Type.Object()
+            }
+            if cl.rawSuper != null & !cl.annotations.isFinal() &
+                    cl.rawSuper.name = "panda.core.Value" {
+                cl.annotations.flags ||= Annotations.Flag.FINAL
+                for m in cl.methods {
+                    m.annotations.flags ||= Annotations.Flag.FINAL
+                    if scanner.shouldInline(m.annotations, m.body) {
+                        m.annotations.flags ||= Annotations.Flag.INLINE
+                    }
                 }
             }
-        }
-        if supertypes.contains(cl.name) {
-            error(cl.position, "circular inheritance; '\{cl.name}' inherits from itself")
-            cl.resolved := Resolution.RESOLVED_WITH_ERRORS
-        }
-        if cl.rawSuper != null {
-            def superclass := getClass(cl.rawSuper)
-            if superclass != null {
-                checkGenericParameters(cl.position, superclass, cl.rawSuper)
+            if supertypes.contains(cl.name) {
+                error(cl.position, "circular inheritance; '\{cl.name}' inherits from itself")
+                cl.resolved := Resolution.RESOLVED_WITH_ERRORS
             }
-        }
-        for intf in cl.rawInterfaces {
-            def intfclass := getClass(intf)
-            if intfclass != null {
-                checkGenericParameters(cl.position, intfclass, intf)
+            for cc in cl.choiceCases {
+                resolve(cc)
             }
-        }
-        for p in cl.parameters {
-            def cl := getClass(p.bound)
-            if cl != null {
-                checkGenericParameters(cl.position, cl, p.bound)
+            if cl.resolved = Resolution.IN_PROGRESS {
+                cl.resolved := Resolution.RESOLVED
             }
+            if cl.rawSuper != null {
+                def superclass := getClass(cl.rawSuper)
+                if superclass != null {
+                    checkGenericParameters(cl.position, superclass, cl.rawSuper)
+                }
+            }
+            for intf in cl.rawInterfaces {
+                def intfclass := getClass(intf)
+                if intfclass != null {
+                    checkGenericParameters(cl.position, intfclass, intf)
+                }
+            }
+            for p in cl.parameters {
+                def cl := getClass(p.bound)
+                if cl != null {
+                    checkGenericParameters(cl.position, cl, p.bound)
+                }
+            }
+            currentClass.pop()
         }
-        for cc in cl.choiceCases {
-            resolve(cc)
-        }
-        if cl.resolved = Resolution.IN_PROGRESS {
-            cl.resolved := Resolution.RESOLVED
-        }
-        symbolTable := old
-        currentClass.pop()
+        return cl.resolved != Resolution.RESOLVED_WITH_ERRORS
     }
 
     @post(currentClass.count = @pre(currentClass.count))
@@ -712,36 +737,38 @@ class Compiler {
         return m.resolved = Resolution.RESOLVED
     }
 
+    @post(f.type != Type.Void() & f.type.resolved | errorCount > 0)
     method determineRawType(f:FieldDecl) {
         currentClass.push(f.owner)
-        def old := symbolTable
-        symbolTable := f.owner.symbolTable
+        def auto := AutoSymbolTable(self, f.owner.symbolTable)
         if f.type != Type.Void() {
             def resolved := resolve(f.type)
             if resolved != null {
                 f.type := resolved
             }
+            else {
+                assert errorCount > 0
+            }
             currentClass.pop()
-            symbolTable := old
             return
         }
         if f.rawValue = null {
             error(f.position, "field has neither a type nor a value")
             currentClass.pop()
-            symbolTable := old
             return
         }
         def preferred := preferredType(f.rawValue)
         if preferred = null {
+            -- force error report
+            compileExpression(f.rawValue)
             currentClass.pop()
-            symbolTable := old
             return
         }
         f.type := preferred
         currentClass.pop()
-        symbolTable := old
     }
 
+    @post(@return | errorCount > 0)
     method resolve(f:FieldDecl):Bit {
         if f.resolved = Resolution.UNRESOLVED {
             f.resolved := Resolution.IN_PROGRESS
@@ -797,8 +824,7 @@ class Compiler {
         }
         c.resolved := Resolution.IN_PROGRESS
         currentClass.push(c.owner)
-        def old := symbolTable
-        symbolTable := c.owner.symbolTable
+        def auto := AutoSymbolTable(self, c.owner.symbolTable)
         for i in 0 .. c.fields.count {
             def resolved := resolve(c.fields[i])
             if resolved != null {
@@ -813,12 +839,13 @@ class Compiler {
             c.resolved := Resolution.RESOLVED
         }
         createChoiceCaseInit(c)
-        symbolTable := old
         currentClass.pop()
     }
 
     method isValue(cl:ClassDecl):Bit {
-        resolve(cl)
+        if !resolve(cl) {
+            return false
+        }
         return cl.rawSuper != null & cl.rawSuper.name = "panda.core.Value"
     }
 
@@ -834,8 +861,7 @@ class Compiler {
     }
 
     method isImmutable(cl:ClassDecl):Bit {
-        resolve(cl)
-        if cl.resolved != Resolution.RESOLVED {
+        if !resolve(cl) {
             return false
         }
         if cl.name = "panda.core.Immutable" {
@@ -863,17 +889,18 @@ class Compiler {
     }
 
     method instanceFields(cl:ClassDecl):ListView<FieldDecl> {
-        resolve(cl)
         def result := Array<FieldDecl>()
-        if !isValue(cl) & cl.rawSuper != null {
-            def s := getClass(cl.rawSuper)
-            if s != null {
-                result.addAll(instanceFields(s))
+        if resolve(cl) {
+            if !isValue(cl) & cl.rawSuper != null {
+                def s := getClass(cl.rawSuper)
+                if s != null {
+                    result.addAll(instanceFields(s))
+                }
             }
-        }
-        for f in cl.fields {
-            if !f.annotations.isClass() & f.fieldKind != FieldDecl.Kind.PROPERTY {
-                result.add(f)
+            for f in cl.fields {
+                if !f.annotations.isClass() & f.fieldKind != FieldDecl.Kind.PROPERTY {
+                    result.add(f)
+                }
             }
         }
         return result
@@ -945,7 +972,9 @@ class Compiler {
 
     @post(currentClass.count = @pre(currentClass.count))
     method specialize(cl:ClassDecl, rawType:Type):ClassDecl {
-        resolve(cl)
+        if !resolve(cl) {
+            return cl
+        }
         def type := resolve(rawType)
         if type.typeKind = Type.Kind.NULLABLE {
             return specialize(cl, type.subtypes[0])
@@ -1011,7 +1040,12 @@ class Compiler {
         match type.typeKind {
             when Type.Kind.CLASS:
                 result := getClass(type.position, type.name)
-            when Type.Kind.NULLABLE, Type.Kind.GENERIC:
+            when Type.Kind.GENERIC:
+                if type.subtypes[0] = Type.Class() {
+                    return getClass(type.subtypes[1])
+                }
+                result := getClass(type.subtypes[0])
+            when Type.Kind.NULLABLE:
                 result := getClass(type.subtypes[0])
             when Type.Kind.GENERIC_PARAMETER:
                 return getClass(type.genericParameter.bound)
@@ -1032,8 +1066,7 @@ class Compiler {
     method allInterfaces(t:Type):HashSet<Type> {
         def result := HashSet<Type>()
         def cl := getClass(t)
-        if cl != null {
-            resolve(cl)
+        if cl != null & resolve(cl) {
             if cl.resolved = Resolution.RESOLVED {
                 if cl.rawSuper != null {
                     result.addAll(allInterfaces(remapType(t, cl.rawSuper)))
@@ -1068,7 +1101,9 @@ class Compiler {
         if cl = null {
             return null
         }
-        resolve(cl)
+        if !resolve(cl) {
+            return null
+        }
         for test in cl.methods {
             if test.name = name {
                 resolve(test)
@@ -1153,8 +1188,7 @@ class Compiler {
     method getSymbolTable(cl:ClassDecl):SymbolTable {
         if !cl.symbolTableResolved {
             cl.symbolTableResolved := true
-            resolve(cl)
-            if cl.resolved = Resolution.RESOLVED {
+            if resolve(cl) {
                 if cl.rawSuper != null {
                     def superCl := getClass(cl.rawSuper)
                     if superCl != null {
@@ -1525,7 +1559,7 @@ class Compiler {
         return null
     }
 
-    function symbolType(s:Symbol):ListView<Type>? {
+    function symbolType(target:Type?, s:Symbol):ListView<Type>? {
         def result := Array<Type>()
         match s.kind {
             when Symbol.Kind.ALIAS:
@@ -1549,11 +1583,21 @@ class Compiler {
                 if !resolve(s->MethodDecl) {
                     return null
                 }
-                result.add(s->MethodDecl.type())
+                if target != null {
+                    result.add(MethodRef(self, target, s->MethodDecl).effectiveType)
+                }
+                else {
+                    result.add(s->MethodDecl.type())
+                }
             when Symbol.Kind.METHODS:
                 for m in s->Methods.methods { -- FIXME use map
                     if resolve(m) {
-                        result.add(m.type())
+                        if m.annotations.isClass() | target == null {
+                            result.add(m.type())
+                        }
+                        else {
+                            result.add(MethodRef(self, target, m).effectiveType)
+                        }
                     }
                 }
             when Symbol.Kind.VARIABLE:
@@ -1565,28 +1609,31 @@ class Compiler {
     }
 
     method dotTypes(base:Type, name:String):ListView<Type>? {
-        def cl:ClassDecl
-        if base.typeKind = Type.Kind.GENERIC & base.subtypes[0] = Type.Class() {
-            -- class literal, grab the class itself rather than panda.core.Class
-            cl := getClass(base.subtypes[1])
+        if base.isClass() {
+            def cl:ClassDecl
+            if base.typeKind = Type.Kind.GENERIC & base.subtypes[0] = Type.Class() {
+                -- class literal, grab the class itself rather than panda.core.Class
+                cl := getClass(base.subtypes[1])
+            }
+            else {
+                cl := getClass(base)
+            }
+            if cl = null {
+                return null
+            }
+            def symbol := getSymbolTable(cl)[name]
+            if symbol = null {
+                return null
+            }
+            return symbolType(base, symbol)
         }
-        else {
-            cl := getClass(base)
-        }
-        if cl = null {
-            return null
-        }
-        def symbol := getSymbolTable(cl)[name]
-        if symbol = null {
-            return null
-        }
-        return symbolType(symbol)
+        return null
     }
 
     method identifierType(name:String):ListView<Type>? {
         def s := symbolTable[name]
         if s != null {
-            return symbolType(s)
+            return symbolType(null, s)
         }
         def cl := tryResolveClass(name)
         if cl != null {
@@ -1599,27 +1646,34 @@ class Compiler {
 
     method getText(value:ASTNode):String? {
         match value {
-            when ASTNode.IDENTIFIER(_, name):
-                return name
             when ASTNode.DOT(_, base, name):
                 def baseText := getText(base)
                 if baseText = null {
                     return null
                 }
                 return "\{baseText}.\{name}"
+            when ASTNode.IDENTIFIER(_, name):
+                return name
             otherwise:
                 return null
         }
     }
 
     ================================================================================================
-    If `value` represents the name of a class, returns the corresponding [ClassDecl]. Otherwise
-    returns `null` without reporting an error.
+    If `value` represents the name of a type, returns the corresponding [Type]. Otherwise returns
+    `null` without reporting an error.
     ================================================================================================
-    method tryResolveClassLiteral(value:ASTNode):ClassDecl? {
+    method tryResolveType(value:ASTNode):Type? {
+        match value {
+            when ASTNode.GENERIC_TYPE:
+                return resolve(scanner.convertType(value))
+        }
         def text := getText(value)
         if text != null {
-            return tryResolveClass(text)
+            def cl := tryResolveClass(text)
+            if cl != null {
+                return cl.type
+            }
         }
         return null
     }
@@ -1735,10 +1789,10 @@ class Compiler {
                 }
                 return null
             when ASTNode.DOT(position, base, name):
-                def cl := tryResolveClassLiteral(value)
-                if cl != null {
+                def type := tryResolveType(value)
+                if type != null {
                     def result := Array<Type>() -- FIXME literal
-                    result.add(Type.ClassLiteral(cl.type))
+                    result.add(Type.ClassLiteral(type))
                     return result
                 }
                 def result:Array<Type>? := null
@@ -2396,6 +2450,7 @@ class Compiler {
         assert false, "field '\{f}' not found in \{f.owner.name}"
     }
 
+    @post(@return != null | errorCount > 0)
     method symbolRef(position:Position, target:IR.Value?, s:Symbol):IR.Value? {
         match s.kind {
             when Symbol.Kind.ALIAS:
@@ -2416,6 +2471,7 @@ class Compiler {
                         def result := ir.add(IR.Statement.LOAD(IR.Value.LOCAL(slot, v.type)))
                         return IR.Value.REF(result, v.type)
                     when Variable.Storage.PARAMETER(index):
+                        assert s->Variable.type.resolved
                         return IR.Value.PARAMETER(index, s->Variable.type)
                     otherwise:
                         assert false
@@ -2474,7 +2530,7 @@ class Compiler {
 
     @pre(target != Type.Void())
     method coerce(position:Position, value:IR.Value?, target:Type):IR.Value? {
-        if value = null {
+        if value == null {
             return null
         }
         if value.type() = target {
@@ -2511,6 +2567,7 @@ class Compiler {
             return IR.Value.REF(result, target)
         }
         error(position, "expected '\{target}', but found '\{value.type()}'")
+        System.crash()
         return null
     }
 
@@ -2534,7 +2591,7 @@ class Compiler {
         }
     }
 
-    @pre(target != Type.Void())
+    @pre(target != Type.Void() & target.resolved)
     method cast(value:IR.Value?, target:Type):IR.Value? {
         if value = null {
             return null
@@ -2557,52 +2614,57 @@ class Compiler {
     }
 
     method compileIntrinsic(target:IR.Value?, m:MethodRef,
-            args:ListView<IR.Value>):Pair<Bit, IR.Statement.ID?> {
-        if m.target.isPointer() {
+            args:ListView<ASTNode>):Pair<Bit, IR.Value?> {
+        if m.target.isPointer() | m.target.isClassLiteral() & m.target.subtypes[1].isPointer() {
+            def pointerType:Type
+            if m.target.isPointer() {
+                pointerType := m.target.subtypes[1]
+            }
+            else {
+                pointerType := m.target.subtypes[1].subtypes[1]
+            }
+            assert m.target.typeKind = Type.Kind.GENERIC
             match m.value.name {
                 when "alloc":
-                    return Pair<Bit, IR.Statement.ID?>(true,
-                            ir.add(IR.Statement.POINTER_ALLOC(args[0], m.target.subtypes[1])))
+                    def count := compileExpression(args[0], TypeContext.TYPE(Type.Int64()))
+                    if count = null {
+                        return Pair<Bit, IR.Value?>(false, null)
+                    }
+                    def alloc := ir.add(IR.Statement.POINTER_ALLOC(extractBuiltinInt(count),
+                                pointerType))
+                    return Pair<Bit, IR.Value?>(true,
+                            IR.Value.REF(alloc, Type.pointerTo(pointerType)))
                 when "destroy":
-                    ir.add(IR.Statement.POINTER_DESTROY(args[0]))
-                    return Pair<Bit, IR.Statement.ID?>(true, null)
+                    assert target != null
+                    ir.add(IR.Statement.POINTER_DESTROY(target))
+                    return Pair<Bit, IR.Value?>(true, null)
                 when "get":
-                    return Pair<Bit, IR.Statement.ID?>(true,
-                            ir.add(IR.Statement.POINTER_GET(target)))
--*        POINTER_DESTROY(Value -* pointer *-, Value -* index *-)
-
-        ============================================================================================
-        Dereferences a raw pointer.
-        ============================================================================================
-        POINTER_GET(Value)
-
-        ============================================================================================
-        Reads from `pointer + index * sizeof(type)`.
-        ============================================================================================
-        POINTER_GET_INDEX(Value -* pointer *-, Value -* index *-)
-
-        ============================================================================================
-        Returns `pointer + index * sizeof(type)`.
-        ============================================================================================
-        POINTER_OFFSET(Value -* pointer *-, Value -* index *-)
-
-        ============================================================================================
-        Equivalent to the C realloc function.
-        ============================================================================================
-        POINTER_REALLOC(Value -* pointer *-, Value -* size *-)
-
-        ============================================================================================
-        Writes to a raw pointer.
-        ============================================================================================
-        POINTER_SET(Value -* value *-, Value, -* pointer *-)
-
-        ============================================================================================
-        Writes to `pointer + index * sizeof(type)`.
-        ============================================================================================
-        POINTER_SET_INDEX(Value -* value *-, Value -* pointer *-, Value -* index *-)*-
+                    assert target != null
+                    def get := ir.add(IR.Statement.POINTER_GET(target))
+                    return Pair<Bit, IR.Value?>(true, IR.Value.REF(get, pointerType))
+                when "[]":
+                    assert target != null
+                    def index := compileExpression(args[0], TypeContext.TYPE(Type.Int64()))
+                    if index = null {
+                        return Pair<Bit, IR.Value?>(false, null)
+                    }
+                    def get := ir.add(IR.Statement.POINTER_GET_INDEX(target,
+                            extractBuiltinInt(index)))
+                    return Pair<Bit, IR.Value?>(true, IR.Value.REF(get, pointerType))
+                when "[]:=":
+                    assert target != null
+                    def index := compileExpression(args[0], TypeContext.TYPE(Type.Int64()))
+                    def value := compileExpression(args[1], TypeContext.TYPE(pointerType))
+                    if index = null | value = null {
+                        return Pair<Bit, IR.Value?>(false, null)
+                    }
+                    ir.add(IR.Statement.POINTER_SET_INDEX(value, target, extractBuiltinInt(index)))
+                    return Pair<Bit, IR.Value?>(true, null)
+                otherwise:
+                    assert false
             }
         }
-        return Pair<Bit, IR.Statement.ID?>(false, null)
+        return Pair<Bit, IR.Value?>(false, null)
     }
 
     @post((m.returnType = Type.Void() & @return = null) | @return != null | errorCount > 0)
@@ -2613,9 +2675,23 @@ class Compiler {
                     "\{m.parameterCount = 1:|s} argument, but found \{args.count}")
             return null
         }
+        var intrinsic := compileIntrinsic(target, m, args)
+        if intrinsic.first {
+            return coerce(position, intrinsic.second, type)
+        }
         def finalArgs := Array<IR.Value>(args.count)
         if target != null {
-            finalArgs.add(coerce(position, target, m.value.owner.type))
+            match target {
+                when IR.Value.TYPE:
+                    -- do nothing
+                otherwise:
+                    if m.value.owner.name = POINTER_NAME {
+                        finalArgs.add(target)
+                    }
+                    else {
+                        finalArgs.add(coerce(position, target, m.value.owner.type))
+                    }
+            }
         }
         def effectiveType := m.effectiveType
         for i in 0 .. args.count {
@@ -2661,13 +2737,7 @@ class Compiler {
                     finalArgs.finish()))
         }
         else {
-            var intrinsic := compileIntrinsic(target, m, finalArgs)
-            if intrinsic.first {
-                result := intrinsic.second
-            }
-            else {
-                result := ir.add(IR.Statement.STATIC_CALL(m.value, finalArgs.finish()))
-            }
+            result := ir.add(IR.Statement.STATIC_CALL(m.value, finalArgs.finish()))
         }
         if m.returnType != Type.Void() {
             var resultCast := IR.Value.REF(result, m.value.returnType)
@@ -3100,29 +3170,37 @@ class Compiler {
         return compileExpression(value, TypeContext.TYPE(target))
     }
 
-    method compileDot(position:Position, target:IR.Value?, targetType:Type, name:String):IR.Value? {
-        def cl := getClass(targetType)
+    method compileDot(position:Position, target:IR.Value, name:String):IR.Value? {
+        def cl := getClass(target.type())
         if cl = null {
             return null
         }
         def symbol := getSymbolTable(cl)[name]
         if symbol = null {
-            error(position, "class '\{targetType}' does not have a member named '\{name}'")
+            error(position, "class '\{target.type()}' does not have a member named '\{name}'")
             return null
         }
         return symbolRef(position, target, symbol)
     }
 
     method compileDot(position:Position, base:ASTNode, name:String):IR.Value? {
+        match base {
+            when ASTNode.GENERIC_TYPE:
+                def resolved := resolve(scanner.convertType(base))
+                if resolved = null {
+                    return null
+                }
+                return compileDot(position, IR.Value.TYPE(resolved), name)
+        }
         def compiledBase := compileExpression(base)
         if compiledBase = null {
             return null
         }
         match compiledBase {
             when IR.Value.TYPE(type):
-                return compileDot(position, null, type.subtypes[1], name)
+                return compileDot(position, IR.Value.TYPE(type.subtypes[1]), name)
             otherwise:
-                return compileDot(position, compiledBase, compiledBase.type(), name)
+                return compileDot(position, compiledBase, name)
         }
     }
 
@@ -3391,9 +3469,9 @@ class Compiler {
             when ASTNode.CALL(position, m, args):
                 return compileCall(position, m, args, type)
             when ASTNode.DOT(position, base, name):
-                def cl := tryResolveClassLiteral(expr)
-                if cl != null {
-                    return IR.Value.TYPE(cl.type)
+                def t := tryResolveType(expr)
+                if t != null {
+                    return coerce(expr.position(), IR.Value.TYPE(Type.ClassLiteral(t)), type)
                 }
                 return coerce(expr.position(), compileDot(position, base, name), type)
             when ASTNode.IDENTIFIER(position, name):
@@ -3412,10 +3490,11 @@ class Compiler {
                 return compileSelf(position)
             when ASTNode.STRING(position, text):
                 return coerce(expr.position(), IR.Value.STRING(text), type)
-            when ASTNode.TYPE(position, t):
-                error(position, "expected an expression, but found type '\{t}'")
+            when ASTNode.TYPE, ASTNode.GENERIC_TYPE:
+                error(expr.position(), "expected an expression, but found type '\{expr}'")
+                return null
             otherwise:
-                assert false, "unsupported expression \{expr}"
+                assert false, "unsupported expression \{expr}:\{expr.position}"
         }
     }
 
@@ -3858,6 +3937,13 @@ class Compiler {
         def result := ir.add(IR.Statement.EXTRACT_FIELD(bit,
                 getSymbolTable(getClass(Type.Bit()))["value"]->FieldDecl))
         return IR.Value.REF(result, Type.BuiltinBit())
+    }
+
+    @pre(int.type() = Type.Int64())
+    method extractBuiltinInt(int:IR.Value):IR.Value {
+        def result := ir.add(IR.Statement.EXTRACT_FIELD(int,
+                getSymbolTable(getClass(Type.Int64()))["value"]->FieldDecl))
+        return IR.Value.REF(result, Type.BuiltinInt64())
     }
 
     method compileDo(position:Position, label:String?, statements:ImmutableArray<ASTNode>,
@@ -4600,8 +4686,7 @@ class Compiler {
         def choiceClass:ClassDecl? := null
         def choiceRawValue:IR.Value?
         if cl.classKind = ClassDecl.Kind.CHOICE {
-            choiceRawValue := compileDot(position, compiledValue, compiledValue.type(),
-                    ClassDecl.RAW_VALUE_NAME)
+            choiceRawValue := compileDot(position, compiledValue, ClassDecl.RAW_VALUE_NAME)
             choiceClass := cl
         }
         else if getSymbolTable(cl)["="] == null {
@@ -4736,6 +4821,9 @@ class Compiler {
     }
 
     method compile(m:MethodDecl) {
+        if !resolve(m) {
+            return
+        }
         ir := IR()
         currentMethod.push(m)
         def auto := AutoSymbolTable(self)
@@ -4908,8 +4996,7 @@ class Compiler {
             currentClass.pop()
             return
         }
-        def old := symbolTable
-        symbolTable := getSymbolTable(cl)
+        def auto := AutoSymbolTable(self, getSymbolTable(cl))
         checkImmutable(cl)
         checkValue(cl)
         checkInterfaceMethods()
@@ -4931,7 +5018,6 @@ class Compiler {
         if started {
             codeGenerator.end(cl)
         }
-        symbolTable := old
         currentClass.pop()
 
         if compilationQueue.count > 0 {

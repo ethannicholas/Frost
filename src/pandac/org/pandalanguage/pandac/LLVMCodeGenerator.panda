@@ -683,7 +683,9 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     method getMethodTableEntry(m:MethodDecl):Pair<String, String> -* name, type *- {
-        compiler.resolve(m)
+        if !compiler.resolve(m) {
+            return Pair<String, String>("<error>", "<error>")
+        }
         if m.owner.external {
             writeDeclaration(m)
         }
@@ -773,7 +775,9 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     method getWrapperClassConstant(cl:ClassDecl):ClassConstant {
-        compiler.resolve(cl)
+        if !compiler.resolve(cl) {
+            return ClassConstant("<error>", "<error>")
+        }
         def name := "@\{escapeName(cl.name)}$wrapperclass"
         var result := classConstants[name]
         if result = null {
@@ -1625,6 +1629,49 @@ class LLVMCodeGenerator : CodeGenerator {
         refs[id] := result
     }
 
+    method writePointerAlloc(id:IR.Statement.ID, count:IR.Value, type:Type) {
+        def countRef := getTypedReference(count)
+        def elementSize := stride(type)
+        assert elementSize > 0, "invalid size for type \{type}"
+        def size := nextVar()
+        out.printLine("\{size} = mul \{countRef}, \{elementSize}")
+        def malloc := nextVar()
+        out.printLine("\{malloc} = call i8* @pandaZAlloc(\{SIZE_TYPE} \{size})")
+        def result := nextVar()
+        out.printLine("\{result} = bitcast i8* \{malloc} to \{llvmType(Type.pointerTo(type))}")
+        refs[id] := result
+    }
+
+    method writePointerDestroy(ptr:IR.Value) {
+        def ptr := getTypedReference(ptr)
+        def cast := nextVar()
+        out.printLine("\{cast} = bitcast \{ptr} to i8*")
+        out.printLine("call void @pandaFree(i8* \{cast})")
+    }
+
+    method writePointerGetIndex(id:IR.Statement.ID, ptr:IR.Value, index:IR.Value) {
+        def base := getTypedReference(ptr)
+        def indexRef := getTypedReference(index)
+        def baseType := llvmType(ptr.type().subtypes[1])
+        def offset := nextVar()
+        out.printLine("\{offset} = getelementptr inbounds \{baseType}, " +
+                "\{base}, \{indexRef}")
+        def result := nextVar()
+        out.printLine("\{result} = load \{baseType}, \{baseType}* \{offset}")
+        refs[id] := result
+    }
+
+    method writePointerSetIndex(value:IR.Value, ptr:IR.Value, index:IR.Value) {
+        def base := getTypedReference(ptr)
+        def indexRef := getTypedReference(index)
+        def valueRef := getTypedReference(value)
+        def baseType := llvmType(ptr.type().subtypes[1])
+        def offset := nextVar()
+        out.printLine("\{offset} = getelementptr inbounds \{baseType}, " +
+                "\{base}, \{indexRef}")
+        out.printLine("store \{valueRef}, \{baseType}* \{offset}")
+    }
+
     method writeReturn(value:IR.Value?) {
         if value != null {
             out.printLine("ret \{getTypedReference(value)}")
@@ -1704,6 +1751,14 @@ class LLVMCodeGenerator : CodeGenerator {
                 writeGetVirtualMethod(id, value, index, type)
             when IR.Statement.LOAD(ptr):
                 writeLoad(id, ptr)
+            when IR.Statement.POINTER_ALLOC(count, type):
+                writePointerAlloc(id, count, type)
+            when IR.Statement.POINTER_DESTROY(ptr):
+                writePointerDestroy(ptr)
+            when IR.Statement.POINTER_GET_INDEX(ptr, index):
+                writePointerGetIndex(id, ptr, index)
+            when IR.Statement.POINTER_SET_INDEX(value, ptr, index):
+                writePointerSetIndex(value, ptr, index)
             when IR.Statement.RETURN(value):
                 writeReturn(value)
             when IR.Statement.STATIC_CALL(m, args):

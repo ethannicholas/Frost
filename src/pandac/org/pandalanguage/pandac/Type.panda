@@ -471,6 +471,10 @@ class Type : Symbol, Key<Type> {
         }
     }
 
+    function isClassLiteral():Bit {
+        return typeKind = Kind.GENERIC & subtypes[0] = Class()
+    }
+
     function isMethod():Bit {
         match typeKind {
             when Kind.METHOD, Kind.FUNCTION, Kind.IMMUTABLE_METHOD, Kind.IMMUTABLE_FUNCTION:

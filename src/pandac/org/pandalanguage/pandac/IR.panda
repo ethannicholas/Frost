@@ -178,6 +178,22 @@ class IR {
                     return "get_virtual_method \{value}, \{id}, \{type}"
                 when LOAD(ptr):
                     return "load \{ptr}"
+                when POINTER_ALLOC(count, type):
+                    return "pointer_alloc \{count}, \{type}"
+                when POINTER_DESTROY(ptr):
+                    return "pointer_destroy \{ptr}"
+                when POINTER_GET(ptr):
+                    return "pointer_get \{ptr}"
+                when POINTER_GET_INDEX(ptr, index):
+                    return "pointer_get_index \{ptr}, \{index}"
+                when POINTER_OFFSET(ptr, index):
+                    return "pointer_offset \{ptr}, \{index}"
+                when POINTER_REALLOC(ptr, size):
+                    return "pointer_realloc \{ptr}, \{size}"
+                when POINTER_SET(value, ptr):
+                    return "pointer_set \{value}, \{ptr}"
+                when POINTER_SET_INDEX(value, ptr, index):
+                    return "pointer_set_index \{value}, \{ptr}, \{index}"
                 when RETURN(value):
                     if value != null {
                         return "return \{value}"
@@ -272,7 +288,7 @@ class IR {
                 when METHODS:
                     return Type.Invalid()
                 when TYPE(type):
-                    return Type.Class()
+                    return Type.ClassLiteral(type)
             }
         }
 

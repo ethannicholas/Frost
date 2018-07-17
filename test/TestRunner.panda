@@ -263,10 +263,10 @@ class TestRunner {
         for file in files {
             if file.path.endsWith(".panda") {
                 def name := file.changeExtension("").name()
-                total += 1
+-*                total += 1
                 if runTest(pandac, cLibs, tests, name, Mode.O0) {
                     success += 1
-                }
+                }*-
                 total += 1
                 if runTest(pandac, cLibs, tests, name, Mode.O3) {
                     success += 1
@@ -276,6 +276,7 @@ class TestRunner {
 --                    success += 1
 --                }
             }
+            Console.printLine("Passed \{success} / \{total} tests.")
         }
         Console.printLine("Passed \{success} / \{total} tests.")
     }

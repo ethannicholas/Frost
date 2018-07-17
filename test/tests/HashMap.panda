@@ -7,7 +7,7 @@ method main() {
     h.remove(10)
     for i in 0 .. 200 {
         def value := h[i]
-        if value != null {
+        if value !== null {
             Console.printLine(h[i])
         }
         else {
@@ -15,11 +15,11 @@ method main() {
         }
     }
     Console.printLine(h.count)
-    Console.printLine(h[0] != null)
+    Console.printLine(h[0] !== null)
     h.clear()
     Console.printLine(h.count)
     h[-12] := 124
-    Console.printLine(h[0] != null)
+    Console.printLine(h[0] !== null)
     Console.printLine(h[-12])
 
     def h2 := HashMap<Int, String>()
