@@ -88,7 +88,8 @@ class Compiler {
 
     choice EnclosingContext {
         LOOP(String? -* label *-, IR.Block.ID -* break target *-, IR.Block.ID -* continue target *-)
-        FINALLY(String -* label *-, Map<String, String> -* map from source label to return label *-)
+        SCOPE
+        VARIABLE_SCOPE(Variable)
 
         @override
         function convert():String {
@@ -98,8 +99,10 @@ class Compiler {
                         return "LOOP(\{label}, \{breakTarget}, \{continueTarget})"
                     }
                     return "LOOP(<null>, \{breakTarget}, \{continueTarget})"
-                when FINALLY(label, map):
-                    return "FINALLY(\{label}, \{map})"
+                when SCOPE:
+                    return "SCOPE"
+                when VARIABLE_SCOPE(v):
+                    return "VARIABLE_SCOPE(v)"
             }
         }
     }
@@ -121,7 +124,7 @@ class Compiler {
         }
     }
 
-    class AutoSymbolTable {
+    class AutoScope {
         def compiler:Compiler
 
         def oldSymbolTable:SymbolTable
@@ -137,12 +140,48 @@ class Compiler {
             self.oldSymbolTable := compiler.symbolTable
             self.newSymbolTable := symbolTable
             compiler.symbolTable := symbolTable
+            compiler.enclosingContexts.push(EnclosingContext.SCOPE)
         }
 
         @override
         method cleanup() {
+            loop {
+                def pop := compiler.enclosingContexts.pop()
+                match pop {
+                    when EnclosingContext.SCOPE:
+                        break
+                    when EnclosingContext.VARIABLE_SCOPE(v):
+                        if !compiler.ir.currentBlockFinished() {
+                            def ref := compiler.symbolRef(v.position, null, v)
+                            assert ref != null
+                            compiler.compileUnref(ref)
+                        }
+                    otherwise:
+                        assert false
+                }
+            }
             assert compiler.symbolTable == newSymbolTable
             compiler.symbolTable := oldSymbolTable
+        }
+    }
+
+    class AutoUnrefs {
+        def compiler:Compiler
+
+        def old:Array<IR.Value>?
+
+        init(compiler:Compiler) {
+            self.compiler := compiler
+            self.old := compiler.statementUnrefs
+            compiler.statementUnrefs := Array<IR.Value>()
+        }
+
+        @override
+        method cleanup() {
+            for v in compiler.statementUnrefs {
+                compiler.compileUnref(v)
+            }
+            compiler.statementUnrefs := old
         }
     }
 
@@ -242,6 +281,9 @@ class Compiler {
 
     @private
     var inAtPre := false
+
+    @private
+    var statementUnrefs:Array<IR.Value>?
 
     init(errorQueue:MessageQueue<Error>, codeGenerator:CodeGenerator, settings:Settings) {
         self.settings := settings
@@ -570,7 +612,7 @@ class Compiler {
         if cl.resolved = Resolution.UNRESOLVED {
             cl.resolved := Resolution.IN_PROGRESS
             currentClass.push(cl)
-            def auto := AutoSymbolTable(self, cl.symbolTable)
+            def auto := AutoScope(self, cl.symbolTable)
             for p in cl.parameters {
                 def resolved := resolve(p.bound, false)
                 if resolved != null {
@@ -683,7 +725,7 @@ class Compiler {
         m.resolved := Resolution.IN_PROGRESS
         resolve(m.owner)
         currentClass.push(m.owner)
-        def symbols := AutoSymbolTable(self, SymbolTable(m.owner.symbolTable))
+        def symbols := AutoScope(self, SymbolTable(m.owner.symbolTable))
         if m.genericParameters != null {
             for p in m.genericParameters {
                 symbolTable.add(Type(p), p.name)
@@ -740,7 +782,7 @@ class Compiler {
     @post(f.type != Type.Void() & f.type.resolved | errorCount > 0)
     method determineRawType(f:FieldDecl) {
         currentClass.push(f.owner)
-        def auto := AutoSymbolTable(self, f.owner.symbolTable)
+        def auto := AutoScope(self, f.owner.symbolTable)
         if f.type != Type.Void() {
             def resolved := resolve(f.type)
             if resolved != null {
@@ -824,7 +866,7 @@ class Compiler {
         }
         c.resolved := Resolution.IN_PROGRESS
         currentClass.push(c.owner)
-        def auto := AutoSymbolTable(self, c.owner.symbolTable)
+        def auto := AutoScope(self, c.owner.symbolTable)
         for i in 0 .. c.fields.count {
             def resolved := resolve(c.fields[i])
             if resolved != null {
@@ -2503,6 +2545,7 @@ class Compiler {
                 else {
                     def construct := ir.add(IR.Statement.CONSTRUCT(cc.owner))
                     def constructRef := IR.Value.REF(construct, cc.owner.type)
+                    statementUnrefs.add(constructRef)
                     call(position, symbolRef(position, constructRef, inits), args,
                             TypeContext.UNSPECIFIED)
                     return constructRef
@@ -2563,8 +2606,11 @@ class Compiler {
                         }
                     }
             }
-            def result := ir.add(IR.Statement.CAST(value, target))
-            return IR.Value.REF(result, target)
+            def result := IR.Value.REF(ir.add(IR.Statement.CAST(value, target)), target)
+            if !isRefCounted(value.type()) & isRefCounted(target) {
+                statementUnrefs.add(result)
+            }
+            return result
         }
         error(position, "expected '\{target}', but found '\{value.type()}'")
         return null
@@ -2598,7 +2644,11 @@ class Compiler {
         if value.type() = target {
             return value
         }
-        return IR.Value.REF(ir.add(IR.Statement.CAST(value, target)), target)
+        def result := IR.Value.REF(ir.add(IR.Statement.CAST(value, target)), target)
+        if !isRefCounted(value.type()) & isRefCounted(target) {
+            statementUnrefs.add(result)
+        }
+        return result
     }
 
     method getVTableIndex(m:MethodDecl):Int {
@@ -2610,6 +2660,20 @@ class Compiler {
         }
         assert false, "could not find \{m.declaration} in vtable for \{m.owner.name}"
         return -1
+    }
+
+    @pre(isRefCounted(v.type()))
+    method compileRef(v:IR.Value) {
+        def args := Array<ASTNode>()
+        args.add(ASTNode.IR_WRAPPER(Position(), v))
+        call(Position(), IR.Value.TYPE(Type.Panda()), "ref", args, TypeContext.UNSPECIFIED)
+    }
+
+    @pre(isRefCounted(v.type()))
+    method compileUnref(v:IR.Value) {
+        def args := Array<ASTNode>()
+        args.add(ASTNode.IR_WRAPPER(Position(), v))
+        call(Position(), IR.Value.TYPE(Type.Panda()), "unref", args, TypeContext.UNSPECIFIED)
     }
 
     method compileIntrinsic(target:IR.Value?, m:MethodRef,
@@ -2741,11 +2805,15 @@ class Compiler {
         }
         if m.returnType != Type.Void() {
             var resultCast := IR.Value.REF(result, actualType.returnType())
+            if isRefCounted(actualType.returnType()) {
+                statementUnrefs.add(resultCast)
+            }
             if m.value.methodKind != MethodDecl.Kind.INIT &
                     effectiveType.returnType() != actualType.returnType() {
                 resultCast := cast(resultCast, effectiveType.returnType())
             }
-            return coerce(position, resultCast, type)
+            resultCast := coerce(position, resultCast, type)
+            return resultCast
         }
         return null
     }
@@ -2872,6 +2940,7 @@ class Compiler {
                 }
                 def construct := ir.add(IR.Statement.CONSTRUCT(cl))
                 def constructRef := IR.Value.REF(construct, finalType)
+                statementUnrefs.add(constructRef)
                 call(position, symbolRef(position, constructRef, inits), args,
                         TypeContext.UNSPECIFIED)
                 return coerce(position, constructRef, type)
@@ -3111,6 +3180,7 @@ class Compiler {
         else {
             def construct := ir.add(IR.Statement.CONSTRUCT(cc.owner))
             def constructRef := IR.Value.REF(construct, cc.owner.type)
+            statementUnrefs.add(constructRef)
             call(position, symbolRef(position, constructRef, initMethod), finalArgs,
                     TypeContext.UNSPECIFIED)
             return constructRef
@@ -3553,6 +3623,10 @@ class Compiler {
 
         @override
         method compileStore(value:IR.Value) {
+            if compiler.isRefCounted(type()) {
+                compiler.compileUnref(compileLoad())
+                compiler.compileRef(value)
+            }
             compiler.ir.add(IR.Statement.STORE(value, IR.Value.LOCAL(slot, type())))
         }
     }
@@ -3644,6 +3718,10 @@ class Compiler {
                         TypeContext.TYPE(rawType))
             }
             else {
+                if compiler.isRefCounted(type()) {
+                    compiler.compileUnref(compileLoad())
+                    compiler.compileRef(value)
+                }
                 def ptr := IR.Value.REF(compiler.ir.add(IR.Statement.GET_FIELD_POINTER(target,
                         field)), rawType)
                 compiler.ir.add(IR.Statement.STORE(cast, ptr))
@@ -3870,7 +3948,10 @@ class Compiler {
         if !resolve(m) {
             return
         }
-        call(position, null, MethodRef(self, Type.Panda(), m), args, TypeContext.UNSPECIFIED)
+        {
+            def unrefs := AutoUnrefs(self)
+            call(position, null, MethodRef(self, Type.Panda(), m), args, TypeContext.UNSPECIFIED)
+        }
         ir.add(IR.Statement.UNREACHABLE)
         ir.setCurrentBlock(success)
     }
@@ -3957,7 +4038,8 @@ class Compiler {
         def bodyBlock := ir.newBlock("do body")
         def testBlock := ir.newBlock("do test")
         def endBlock := ir.newBlock("do end")
-        def auto := AutoContext(self, EnclosingContext.LOOP(label, endBlock, testBlock))
+        def context := AutoContext(self, EnclosingContext.LOOP(label, endBlock, testBlock))
+        def scope := AutoScope(self)
         ir.add(IR.Statement.BRANCH(bodyBlock))
         ir.setCurrentBlock(bodyBlock)
         for s in statements {
@@ -4046,7 +4128,8 @@ class Compiler {
         def loopTest := ir.newBlock("loopTest")
         def entryInclusive := ir.newBlock("entryInclusive")
         def entryExclusive := ir.newBlock("entryExclusive")
-        def auto := AutoContext(self, EnclosingContext.LOOP(label, loopEnd, loopTest))
+        def context := AutoContext(self, EnclosingContext.LOOP(label, loopEnd, loopTest))
+        def scope := AutoScope(self)
         ir.add(IR.Statement.CONDITIONAL_BRANCH(inclusive, entryInclusive, entryExclusive))
         ir.setCurrentBlock(entryInclusive)
         def entryInclusiveTest := extractBuiltinBit(call(position, start, "<=", arg(end),
@@ -4167,7 +4250,8 @@ class Compiler {
         def forwardEntry := ir.newBlock("forwardEntry")
         def backwardEntry := ir.newBlock("backwardEntry")
         def direction:IR.Value
-        def auto := AutoContext(self, EnclosingContext.LOOP(label, loopEnd, loopTest))
+        def context := AutoContext(self, EnclosingContext.LOOP(label, loopEnd, loopTest))
+        def scope := AutoScope(self)
         if stepType.name.startsWith("panda.core.Int") {
             def args := Array<ASTNode>() -- FIXME literal
             args.add(ASTNode.INT(position, 0))
@@ -4298,7 +4382,7 @@ class Compiler {
             error(position, "for loop expected a numeric range, but found '\{list.type()}'")
             return
         }
-        def auto := AutoSymbolTable(self)
+        def scope := AutoScope(self)
         def target := compileTarget(astTarget, Variable.Kind.DEF, null, elementType)
         if target = null {
             return
@@ -4351,25 +4435,12 @@ class Compiler {
 
     method compileIteratorFor(position:Position, label:String?, target:ASTNode, iterator:IR.Value,
             statements:ListView<ASTNode>) {
-        assert iterator.type().typeKind = Type.Kind.GENERIC &
-                iterator.type().subtypes[0] = Type.Iterator()
-        def compiledTarget := compileTarget(target, Variable.Kind.DEF, null,
-                iterator.type().subtypes[1])
-        if compiledTarget = null {
-            return
-        }
-        def targetType := compiledTarget.first.type
-        def slot:Int
-        match compiledTarget.first.storage {
-            when Variable.Storage.LOCAL(varSlot):
-                slot := varSlot
-            otherwise:
-                assert false
-        }
         def testBlock := ir.newBlock("testBlock")
         def bodyBlock := ir.newBlock("bodyBlock")
         def endBlock := ir.newBlock("endBlock")
-        def auto := AutoContext(self, EnclosingContext.LOOP(label, endBlock, testBlock))
+        def context := AutoContext(self, EnclosingContext.LOOP(label, endBlock, testBlock))
+        assert iterator.type().typeKind = Type.Kind.GENERIC &
+                iterator.type().subtypes[0] = Type.Iterator()
         ir.add(IR.Statement.BRANCH(testBlock))
         ir.setCurrentBlock(testBlock)
         def compiledTest := call(position, iterator, "get_done", Array<ASTNode>(),
@@ -4380,14 +4451,31 @@ class Compiler {
         def inverted := call(position, compiledTest, "!", Array<ASTNode>(), TypeContext.UNSPECIFIED)
         ir.add(IR.Statement.CONDITIONAL_BRANCH(extractBuiltinBit(inverted), bodyBlock, endBlock))
         ir.setCurrentBlock(bodyBlock)
-        def next := call(position, iterator, "next", Array<ASTNode>(), TypeContext.UNSPECIFIED)
-        def coerced := coerce(position, next, targetType)
-        if coerced = null {
-            return
-        }
-        ir.add(IR.Statement.STORE(coerced, IR.Value.LOCAL(slot, targetType)))
-        for s in statements {
-            compileStatement(s)
+        {
+            def auto := AutoScope(self)
+            def unrefs := AutoUnrefs(self)
+            def compiledTarget := compileTarget(target, Variable.Kind.DEF, null,
+                    iterator.type().subtypes[1])
+            if compiledTarget = null {
+                return
+            }
+            def targetType := compiledTarget.first.type
+            def slot:Int
+            match compiledTarget.first.storage {
+                when Variable.Storage.LOCAL(varSlot):
+                    slot := varSlot
+                otherwise:
+                    assert false
+            }
+            def next := call(position, iterator, "next", Array<ASTNode>(), TypeContext.UNSPECIFIED)
+            def coerced := coerce(position, next, targetType)
+            if coerced = null {
+                return
+            }
+            ir.add(IR.Statement.STORE(coerced, IR.Value.LOCAL(slot, targetType)))
+            for s in statements {
+                compileStatement(s)
+            }
         }
         if !ir.currentBlockFinished() {
             ir.add(IR.Statement.BRANCH(testBlock))
@@ -4407,7 +4495,6 @@ class Compiler {
         if list = null {
             return
         }
-        def symbols := AutoSymbolTable(self, symbolTable)
         if list.type().isRange() | list.type().isSteppedRange() {
             -- it's a range, but not an unresolved one
             compileRangeFor(position, label, rawTarget, list, statements)
@@ -4474,6 +4561,7 @@ class Compiler {
         def bodyBlock := ir.newBlock("loop body")
         def endBlock := ir.newBlock("loop end")
         def auto := AutoContext(self, EnclosingContext.LOOP(label, endBlock, bodyBlock))
+        def scope := AutoScope(self)
         ir.add(IR.Statement.BRANCH(bodyBlock))
         ir.setCurrentBlock(bodyBlock)
         for s in statements {
@@ -4514,6 +4602,9 @@ class Compiler {
                 }
                 def v := Variable(position, kind, name, type,
                         Variable.Storage.LOCAL(ir.locals.count))
+                if isRefCounted(v.type) {
+                    enclosingContexts.push(EnclosingContext.VARIABLE_SCOPE(v))
+                }
                 ir.locals.add(v.type)
                 symbolTable.add(v)
                 return Pair<Variable, IR.Value?>(v, value)
@@ -4534,6 +4625,9 @@ class Compiler {
                 }
                 def v := Variable(position, kind, name, type,
                         Variable.Storage.LOCAL(ir.locals.count))
+                if isRefCounted(v.type) {
+                    enclosingContexts.push(EnclosingContext.VARIABLE_SCOPE(v))
+                }
                 ir.locals.add(v.type)
                 symbolTable.add(v)
                 return Pair<Variable, IR.Value?>(v, value)
@@ -4551,6 +4645,9 @@ class Compiler {
         if target.second != null {
             match target.first.storage {
                 when Variable.Storage.LOCAL(slot):
+                    if isRefCounted(target.first.type) {
+                        compileRef(target.second)
+                    }
                     ir.add(IR.Statement.STORE(target.second,
                             IR.Value.LOCAL(slot, target.first.type)))
             }
@@ -4583,7 +4680,7 @@ class Compiler {
             def w := whens[i]
             match w {
                 when ASTNode.WHEN(position, tests, statements):
-                    def auto := AutoSymbolTable(self)
+                    def auto := AutoScope(self)
                     ir.setCurrentBlock(nextBlock)
                     var testSuccess := ir.newBlock("test success")
                     for j in 0 .. tests.count {
@@ -4710,14 +4807,36 @@ class Compiler {
     }
 
     method compileReturn(position:Position, value:ASTNode?) {
+        for c in enclosingContexts {
+            match c {
+                when EnclosingContext.VARIABLE_SCOPE(v):
+                    def ref := symbolRef(v.position, null, v)
+                    assert ref != null
+                    compileUnref(ref)
+            }
+        }
+        if currentMethod[0].name = "cleanup" & currentMethod[0].parameters.count = 0 &
+                currentMethod[0].owner.name != WEAK_NAME {
+            for f in currentMethod[0].owner.fields {
+                if resolve(f) & !f.annotations.isClass() & f.fieldKind != FieldDecl.Kind.PROPERTY &
+                        isRefCounted(f.type) {
+                    def load := FieldLValue(self, position, compileSelf(position), f).compileLoad()
+                    compileUnref(load)
+                }
+            }
+        }
         if value != null {
             if currentMethod[0].returnType = Type.Void() {
                 error(position, "cannot return a value from a method with no return type")
                 return
             }
-            def compiled := compileExpression(value, TypeContext.TYPE(currentMethod[0].returnType))
-            if compiled = null {
-                return
+            def compiled:IR.Value?
+            {
+                def unrefs := AutoUnrefs(self)
+                compiled := compileExpression(value, TypeContext.TYPE(currentMethod[0].returnType))
+                if compiled = null {
+                    return
+                }
             }
             ir.add(IR.Statement.RETURN(compiled))
         }
@@ -4749,7 +4868,8 @@ class Compiler {
         def testBlock := ir.newBlock("while test")
         def bodyBlock := ir.newBlock("while body")
         def endBlock := ir.newBlock("while end")
-        def auto := AutoContext(self, EnclosingContext.LOOP(label, endBlock, testBlock))
+        def context := AutoContext(self, EnclosingContext.LOOP(label, endBlock, testBlock))
+        def scope := AutoScope(self)
         ir.add(IR.Statement.BRANCH(testBlock))
         ir.setCurrentBlock(testBlock)
         def compiledTest := compileExpression(test, TypeContext.TYPE(Type.Bit()))
@@ -4769,13 +4889,14 @@ class Compiler {
     }
 
     method compileStatement(s:ASTNode) {
+        def unrefs := AutoUnrefs(self)
         match s {
             when ASTNode.ASSERT(position, test, msg):
                 compileAssert(position, test, msg)
             when ASTNode.BINARY(position, left, op, right):
                 compileAssignment(position, left, op, right)
             when ASTNode.BLOCK(position, statements):
-                def symbols := AutoSymbolTable(self, symbolTable)
+                def symbols := AutoScope(self, symbolTable)
                 for stmt in statements {
                     compileStatement(stmt)
                 }
@@ -4837,67 +4958,71 @@ class Compiler {
         currentMethod.push(m)
         if m.body != null {
             ir := IR()
-            def auto := AutoSymbolTable(self)
-            if m.name = "main" {
-                if m.methodKind != MethodDecl.Kind.METHOD {
-                    error(m.position, "'main' must be a method")
-                }
-                if m.returnType != Type.Void() {
-                    error(m.position, "'main' must not have a return type")
-                }
-                if !m.annotations.isClass() {
-                    error(m.position, "'main' must be declared @class")
-                }
-                def required := "panda.collections.ListView<panda.core.String>"
-                if m.parameters.count > 1 |
-                        (m.parameters.count = 1 & m.parameters[0].type.name != required) {
-                    error(m.position, "'main' must have either zero parameters or one parameter " +
-                            "of type '\{required}'")
-                }
-            }
-            var index := 0
-            if hasSelfParam(m) {
-                def selfParam := Variable(m.position, Variable.Kind.DEF, "self", m.owner.type,
-                        Variable.Storage.PARAMETER(index))
-                index += 1
-                selfParam.owner := m
-                symbolTable.add(selfParam)
-            }
-            else if !m.annotations.isClass() {
-                def selfVar := Variable(m.position, Variable.Kind.DEF, "self", m.owner.type,
-                        Variable.Storage.LOCAL(0))
-                selfVar.owner := m
-                ir.locals.add(selfVar.type)
-                symbolTable.add(selfVar)
-            }
-            if m.methodKind = MethodDecl.Kind.INIT & !callsOtherSelf(m.body) {
-                for f in m.owner.fields {
-                    if f.rawValue != null & !f.annotations.isClass() {
-                        def p := f.rawValue.position()
-                        compileStatement(ASTNode.BINARY(p, ASTNode.DOT(p, ASTNode.SELF(p), f.name),
-                                Token.Kind.ASSIGNMENT, f.rawValue))
+            {
+                def auto := AutoScope(self)
+                if m.name = "main" {
+                    if m.methodKind != MethodDecl.Kind.METHOD {
+                        error(m.position, "'main' must be a method")
+                    }
+                    if m.returnType != Type.Void() {
+                        error(m.position, "'main' must not have a return type")
+                    }
+                    if !m.annotations.isClass() {
+                        error(m.position, "'main' must be declared @class")
+                    }
+                    def required := "panda.collections.ListView<panda.core.String>"
+                    if m.parameters.count > 1 |
+                            (m.parameters.count = 1 & m.parameters[0].type.name != required) {
+                        error(m.position, "'main' must have either zero parameters or one " +
+                                "parameter of type '\{required}'")
                     }
                 }
-            }
-            for p in m.parameters {
-                def v := Variable(m.position, Variable.Kind.DEF, p.name, p.type,
-                        Variable.Storage.PARAMETER(index))
-                v.owner := m
-                symbolTable.add(v)
-                index += 1
-            }
-            for s in m.body {
-                compileStatement(s)
-            }
-            if !ir.currentBlockFinished() {
-                if m.returnType = Type.Void() | m.methodKind = MethodDecl.Kind.INIT {
-                    compileReturn(m.position, null)
+                var index := 0
+                if hasSelfParam(m) {
+                    def selfParam := Variable(m.position, Variable.Kind.DEF, "self", m.owner.type,
+                            Variable.Storage.PARAMETER(index))
+                    index += 1
+                    selfParam.owner := m
+                    symbolTable.add(selfParam)
                 }
-                else {
-                    compileAssert(m.position, ASTNode.BIT(m.position, false),
-                            ASTNode.STRING(m.position,
-                                "\{m.declaration()} exited without returning"))
-                    ir.add(IR.Statement.UNREACHABLE)
+                else if !m.annotations.isClass() {
+                    def selfVar := Variable(m.position, Variable.Kind.DEF, "self", m.owner.type,
+                            Variable.Storage.LOCAL(0))
+                    selfVar.owner := m
+                    ir.locals.add(selfVar.type)
+                    symbolTable.add(selfVar)
+                }
+                if m.methodKind = MethodDecl.Kind.INIT & !callsOtherSelf(m.body) {
+                    for f in m.owner.fields {
+                        if f.rawValue != null & !f.annotations.isClass() {
+                            def p := f.rawValue.position()
+                            compileStatement(ASTNode.BINARY(p,
+                                    ASTNode.DOT(p, ASTNode.SELF(p), f.name),
+                                    Token.Kind.ASSIGNMENT,
+                                    f.rawValue))
+                        }
+                    }
+                }
+                for p in m.parameters {
+                    def v := Variable(m.position, Variable.Kind.DEF, p.name, p.type,
+                            Variable.Storage.PARAMETER(index))
+                    v.owner := m
+                    symbolTable.add(v)
+                    index += 1
+                }
+                for s in m.body {
+                    compileStatement(s)
+                }
+                if !ir.currentBlockFinished() {
+                    if m.returnType = Type.Void() | m.methodKind = MethodDecl.Kind.INIT {
+                        compileReturn(m.position, null)
+                    }
+                    else {
+                        compileAssert(m.position, ASTNode.BIT(m.position, false),
+                                ASTNode.STRING(m.position,
+                                    "\{m.declaration()} exited without returning"))
+                        ir.add(IR.Statement.UNREACHABLE)
+                    }
                 }
             }
             codeGenerator.write(m, ir)
@@ -5029,7 +5154,7 @@ class Compiler {
             currentClass.pop()
             return
         }
-        def auto := AutoSymbolTable(self, getSymbolTable(cl))
+        def auto := AutoScope(self, getSymbolTable(cl))
         checkImmutable(cl)
         checkValue(cl)
         checkInterfaceMethods()

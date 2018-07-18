@@ -159,7 +159,7 @@ class IR {
                 when BRANCH(id):
                     return "branch \{id}"
                 when CAST(value, type):
-                    return "\{value}->\{type}"
+                    return "cast \{value}->\{type}"
                 when CONDITIONAL_BRANCH(test, ifTrue, ifFalse):
                     return "branch \{test}, \{ifTrue}, \{ifFalse}"
                 when CONSTRUCT(cl):
@@ -345,6 +345,7 @@ class IR {
     ================================================================================================
     Adds a new statement to the end of the current block and returns its id.
     ================================================================================================
+    @pre(!currentBlockFinished())
     method add(s:Statement):Statement.ID {
         currentStatementId += 1
         def result := Statement.ID(currentStatementId)

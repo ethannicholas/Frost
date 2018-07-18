@@ -1,7 +1,6 @@
 Rearchitecture
 ==============
 
-indirect struct returns
 @class binary overloads (12 + "Hello"), Int[1 .. 10]
 boolean short circuiting
 lambdas / inner methods

@@ -342,15 +342,12 @@ int main(int argc, char** argv) {
         panda$core$Panda$dumpReport(panda);
         panda$core$Panda$unref$panda$core$Object(panda);
     }
-/*    if (allocations && allocations != 1) {
+    if (allocations && allocations != 1) {
         printf("warning: %d objects were still in memory on exit\n", allocations);
     }
     else if (allocations == 1) {
         printf("warning: 1 object was still in memory on exit\n");
-    }*/
-    // IMPORTANT: see line 
-    // for i in 0 .. 5 { Panda.ref(ref) } -- FIXME seems to be a bug in the bootstrap compiler's refcounting
-    // in Compilerpanda
+    }
     return 0;
 }
 
