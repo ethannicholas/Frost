@@ -45,10 +45,15 @@ class Compiler {
     ================================================================================================
     choice TypeContext {
         ============================================================================================
-        We have no information about the expected type, e.g. when evaluating `foo()` in the
-        statement `def x := foo()`.
+        We have no information about the expected type, e.g. when evaluating the statement `foo()`.
         ============================================================================================
         UNSPECIFIED
+
+        ============================================================================================
+        We know the expression cannot result in void, e.g. when evaluating `foo()` in the statement
+        `def x := foo()`.
+        ============================================================================================
+        NON_VOID
 
         ============================================================================================
         We know that the result has to be immutable, but not of any specific type, e.g. when
@@ -66,6 +71,8 @@ class Compiler {
             match self {
                 when UNSPECIFIED:
                     return ""
+                when NON_VOID:
+                    return ""
                 when IMMUTABLE:
                     return " with expected return type 'panda.core.Immutable'"
                 when TYPE(type):
@@ -78,6 +85,8 @@ class Compiler {
             match self {
                 when UNSPECIFIED:
                     return "UNSPECIFIED"
+                when NON_VOID:
+                    return "NON_VOID"
                 when IMMUTABLE:
                     return "IMMUTABLE"
                 when TYPE(type):
@@ -1512,6 +1521,11 @@ class Compiler {
         match target {
             when TypeContext.UNSPECIFIED:
                 return 0
+            when TypeContext.NON_VOID:
+                if type = Type.Void() {
+                    return null
+                }
+                return 0
             when TypeContext.IMMUTABLE:
                 if isImmutable(type) {
                     return 0
@@ -1570,6 +1584,10 @@ class Compiler {
                         continue
                     }
                     cost += returnCost
+                when TypeContext.NON_VOID:
+                    if returnType = Type.Void() {
+                        continue
+                    }
             }
             if cost < bestCost {
                 bestCost := cost
@@ -1781,7 +1799,7 @@ class Compiler {
                         return result
                     otherwise:
                         def matches := findOverloadedOperator(left, op, right,
-                                TypeContext.UNSPECIFIED)
+                                TypeContext.NON_VOID)
                         if matches != null {
                             def result := Array<Type>() -- FIXME literal
                             for m in matches.first { -- FIXME map
@@ -1817,7 +1835,7 @@ class Compiler {
                     result.add(methodTypes[0].subtypes[1])
                     return result
                 }
-                def result := possibleMatches(methodTypes, args, TypeContext.UNSPECIFIED)
+                def result := possibleMatches(methodTypes, args, TypeContext.NON_VOID)
                 if result != null {
                     def resultTypes := Array<Type>() -- FIXME literal
                     for m in result.first {
@@ -2004,8 +2022,7 @@ class Compiler {
                 if methodTypes = null {
                     return null
                 }
-                if methodTypes.count = 1 & methodTypes[0].typeKind = Type.Kind.GENERIC &
-                        methodTypes[0].subtypes[0] = Type.Class() {
+                if methodTypes.count = 1 & methodTypes[0].isClassLiteral() {
                     def resultCost := coercionCost(methodTypes[0].subtypes[1], target)
                     if resultCost = null {
                         return null
@@ -2617,7 +2634,7 @@ class Compiler {
             return value
         }
         match type {
-            when TypeContext.UNSPECIFIED:
+            when TypeContext.UNSPECIFIED, TypeContext.NON_VOID:
                 return value
             when TypeContext.IMMUTABLE:
                 if isImmutable(value.type()) {
@@ -2810,6 +2827,9 @@ class Compiler {
             }
             resultCast := coerce(position, resultCast, type)
             return resultCast
+        }
+        if type != TypeContext.UNSPECIFIED {
+            error(position, "\{m.value.declaration()} does not return a value")
         }
         return null
     }
@@ -3171,8 +3191,8 @@ class Compiler {
                             type)
                 }
                 -- generate errors
-                def compiledLeft := compileExpression(left, TypeContext.UNSPECIFIED)
-                def compiledRight := compileExpression(right, TypeContext.UNSPECIFIED)
+                def compiledLeft := compileExpression(left, TypeContext.NON_VOID)
+                def compiledRight := compileExpression(right, TypeContext.NON_VOID)
                 if compiledLeft != null & compiledRight != null {
                     error(position, "no match for '\{operatorName(op)}' on " +
                             "'\{compiledLeft.type()}', '\{compiledRight.type()}'")
@@ -3309,11 +3329,11 @@ class Compiler {
     @pre(op = Token.Kind.IDENTITY | op = Token.Kind.NIDENTITY)
     method compileIdentityComparison(position:Position, left:ASTNode, op:Token.Kind, right:ASTNode,
             type:TypeContext):IR.Value? {
-        def compiledLeft := compileExpression(left, TypeContext.UNSPECIFIED)
+        def compiledLeft := compileExpression(left, TypeContext.NON_VOID)
         if compiledLeft = null {
             return null
         }
-        def compiledRight := compileExpression(right, TypeContext.UNSPECIFIED)
+        def compiledRight := compileExpression(right, TypeContext.NON_VOID)
         if compiledRight = null {
             return null
         }
@@ -3398,13 +3418,13 @@ class Compiler {
                                 }
                         }
                 }
-                def target := compileExpression(operand, TypeContext.UNSPECIFIED)
+                def target := compileExpression(operand, TypeContext.NON_VOID)
                 if target = null {
                     return null
                 }
                 return call(position, target, "-", Array<ASTNode>() -* FIXME literal *-, type)
             when Token.Kind.NOT:
-                def target := compileExpression(operand, TypeContext.UNSPECIFIED)
+                def target := compileExpression(operand, TypeContext.NON_VOID)
                 if target = null {
                     return null
                 }
@@ -3415,9 +3435,9 @@ class Compiler {
 
     method compileRange(position:Position, start:ASTNode?, inclusive:Bit, end:ASTNode?,
             step:ASTNode?, type:TypeContext):IR.Value? {
-        var endpointContext := TypeContext.UNSPECIFIED
+        var endpointContext := TypeContext.NON_VOID
         var endpointType:Type? := null
-        var stepContext := TypeContext.UNSPECIFIED
+        var stepContext := TypeContext.NON_VOID
         match type {
             when TypeContext.TYPE(t):
                 if t.typeKind = Type.Kind.GENERIC & t.subtypes.count = 2 &
@@ -3537,7 +3557,7 @@ class Compiler {
             return true
         }
         match type {
-            when TypeContext.UNSPECIFIED:
+            when TypeContext.UNSPECIFIED, TypeContext.NON_VOID:
                 return true
             when TypeContext.IMMUTABLE:
                 return isImmutable(value.type())
@@ -3784,8 +3804,8 @@ class Compiler {
         @override
         method compileLoad():IR.Value {
             if index = null {
-                def m := compiler.findOverloadedOperator(target.type(), Token.Kind.LBRACKET, rawIndex,
-                        TypeContext.UNSPECIFIED)
+                def m := compiler.findOverloadedOperator(target.type(), Token.Kind.LBRACKET,
+                        rawIndex, TypeContext.NON_VOID)
                 if m != null {
                     assert m.first.count = 1 -- FIXME handle ambiguous matches
                     index := compiler.compileExpression(rawIndex,
@@ -3794,7 +3814,7 @@ class Compiler {
             }
             return compiler.compileBinary(position, ASTNode.IR_WRAPPER(position, target),
                     Token.Kind.LBRACKET, ASTNode.IR_WRAPPER(position, index),
-                    TypeContext.UNSPECIFIED)
+                    TypeContext.NON_VOID)
         }
 
         @override
@@ -3989,7 +4009,7 @@ class Compiler {
         }
         else {
             right := compileBinary(position, ASTNode.IR_WRAPPER(position, left.compileLoad()),
-                    removeAssignment(op), rawRight, TypeContext.UNSPECIFIED)
+                    removeAssignment(op), rawRight, TypeContext.TYPE(left.type()))
         }
         if right = null {
             return
@@ -4157,11 +4177,11 @@ class Compiler {
             ir.add(IR.Statement.CONDITIONAL_BRANCH(inclusive, entryInclusive, entryExclusive))
             ir.setCurrentBlock(entryInclusive)
             def entryInclusiveTest := extractBuiltinBit(call(position, start, "<=", arg(end),
-                        TypeContext.UNSPECIFIED))
+                        TypeContext.TYPE(Type.Bit())))
             ir.add(IR.Statement.CONDITIONAL_BRANCH(entryInclusiveTest, loopStart, loopEnd))
             ir.setCurrentBlock(entryExclusive)
             def entryExclusiveTest := extractBuiltinBit(call(position, start, "<", arg(end),
-                        TypeContext.UNSPECIFIED))
+                        TypeContext.TYPE(Type.Bit())))
             ir.add(IR.Statement.CONDITIONAL_BRANCH(entryExclusiveTest, loopStart, loopEnd))
             ir.setCurrentBlock(loopStart)
             for s in statements {
@@ -4177,7 +4197,7 @@ class Compiler {
         -- overflows near the maximum value
         def indexLoad := IR.Value.REF(ir.add(IR.Statement.LOAD(IR.Value.LOCAL(indexSlot,
                 indexType))), indexType)
-        def delta := call(position, end, "-", arg(indexLoad), TypeContext.UNSPECIFIED)
+        def delta := call(position, end, "-", arg(indexLoad), TypeContext.TYPE(indexType))
 
         def inclusiveTest := ir.newBlock("inclusiveTest")
         def exclusiveTest := ir.newBlock("exclusiveTest")
@@ -4188,17 +4208,17 @@ class Compiler {
         -- always use unsigned comparison to avoid overflow; we know both the delta and the step are
         -- the same sign
         def inclusiveTestBit := extractBuiltinBit(call(position, delta, ">=", arg(step),
-                TypeContext.UNSPECIFIED))
+                TypeContext.TYPE(Type.Bit())))
         ir.add(IR.Statement.CONDITIONAL_BRANCH(inclusiveTestBit, loopInc, loopEnd))
 
         -- exclusive test
         ir.setCurrentBlock(exclusiveTest)
         def exclusiveTestBit := extractBuiltinBit(call(position, delta, ">", arg(step),
-                TypeContext.UNSPECIFIED))
+                TypeContext.TYPE(Type.Bit())))
         ir.add(IR.Statement.CONDITIONAL_BRANCH(exclusiveTestBit, loopInc, loopEnd))
 
         ir.setCurrentBlock(loopInc)
-        def inc := call(position, indexLoad, "+", arg(step), TypeContext.UNSPECIFIED)
+        def inc := call(position, indexLoad, "+", arg(step), TypeContext.TYPE(indexType))
         ir.add(IR.Statement.STORE(inc, IR.Value.LOCAL(indexSlot, indexType)))
         ir.add(IR.Statement.BRANCH(loopStart))
 
@@ -4282,7 +4302,7 @@ class Compiler {
                 def args := Array<ASTNode>() -- FIXME literal
                 args.add(ASTNode.INT(position, 0))
                 direction := extractBuiltinBit(call(position, step, ">=", args,
-                        TypeContext.UNSPECIFIED))
+                        TypeContext.TYPE(Type.Bit())))
             }
             else {
                 assert stepType.name.startsWith("panda.core.UInt")
@@ -4296,11 +4316,11 @@ class Compiler {
                     forwardEntryExclusive))
             ir.setCurrentBlock(forwardEntryInclusive)
             def forwardEntryInclusiveTest := extractBuiltinBit(call(position, start, "<=", arg(end),
-                        TypeContext.UNSPECIFIED))
+                        TypeContext.TYPE(Type.Bit())))
             ir.add(IR.Statement.CONDITIONAL_BRANCH(forwardEntryInclusiveTest, loopStart, loopEnd))
             ir.setCurrentBlock(forwardEntryExclusive)
             def forwardEntryExclusiveTest := extractBuiltinBit(call(position, start, "<", arg(end),
-                        TypeContext.UNSPECIFIED))
+                        TypeContext.TYPE(Type.Bit())))
             ir.add(IR.Statement.CONDITIONAL_BRANCH(forwardEntryExclusiveTest, loopStart, loopEnd))
             ir.setCurrentBlock(backwardEntry)
             def backwardEntryInclusive := ir.newBlock("backwardEntryInclusive")
@@ -4309,11 +4329,11 @@ class Compiler {
                     backwardEntryExclusive))
             ir.setCurrentBlock(backwardEntryInclusive)
             def backwardEntryInclusiveTest := extractBuiltinBit(call(position, start, ">=", arg(end),
-                        TypeContext.UNSPECIFIED))
+                        TypeContext.TYPE(Type.Bit())))
             ir.add(IR.Statement.CONDITIONAL_BRANCH(backwardEntryInclusiveTest, loopStart, loopEnd))
             ir.setCurrentBlock(backwardEntryExclusive)
             def backwardEntryExclusiveTest := extractBuiltinBit(call(position, start, ">", arg(end),
-                        TypeContext.UNSPECIFIED))
+                        TypeContext.TYPE(Type.Bit())))
             ir.add(IR.Statement.CONDITIONAL_BRANCH(backwardEntryExclusiveTest, loopStart, loopEnd))
             ir.setCurrentBlock(loopStart)
             for s in statements {
@@ -4335,7 +4355,7 @@ class Compiler {
         -- forward loop; perform the test by subtracting index from end and then comparing to step,
         -- to avoid overflows near the maximum value
         ir.setCurrentBlock(forwardTest)
-        def forwardDelta := call(position, end, "-", arg(indexLoad), TypeContext.UNSPECIFIED)
+        def forwardDelta := call(position, end, "-", arg(indexLoad), TypeContext.TYPE(indexType))
 
         -- forward loop; determine inclusive / exclusive
         def forwardInclusiveTest := ir.newBlock("forwardInclusiveTest")
@@ -4348,13 +4368,13 @@ class Compiler {
         -- always use unsigned comparison to avoid overflow; we know both the delta and the step are
         -- the same sign
         def forwardInclusiveTestBit := extractBuiltinBit(call(position, forwardDelta, ">=",
-                arg(step), TypeContext.UNSPECIFIED))
+                arg(step), TypeContext.TYPE(Type.Bit())))
         ir.add(IR.Statement.CONDITIONAL_BRANCH(forwardInclusiveTestBit, loopInc, loopEnd))
 
         -- forward exclusive test
         ir.setCurrentBlock(forwardExclusiveTest)
         def forwardExclusiveTestBit := extractBuiltinBit(call(position, forwardDelta, ">",
-                arg(step), TypeContext.UNSPECIFIED))
+                arg(step), TypeContext.TYPE(Type.Bit())))
         ir.add(IR.Statement.CONDITIONAL_BRANCH(forwardExclusiveTestBit, loopInc, loopEnd))
 
         -- backward loop; perform the test by subtracting end from index and then comparing to
@@ -4362,7 +4382,7 @@ class Compiler {
         ir.setCurrentBlock(backwardTest)
         def backwardDelta := call(position, indexLoad, "-", arg(end), TypeContext.UNSPECIFIED)
         def negStep := call(position, step, "-", Array<ASTNode>() -* FIXME literal *-,
-                TypeContext.UNSPECIFIED)
+                TypeContext.TYPE(indexType))
 
         -- backward loop; determine inclusive / exclusive
         def backwardInclusiveTest := ir.newBlock("backwardInclusiveTest")
@@ -4373,17 +4393,17 @@ class Compiler {
         -- backward inclusive test
         ir.setCurrentBlock(backwardInclusiveTest)
         def backwardInclusiveTestBit := extractBuiltinBit(call(position, backwardDelta, ">=",
-                arg(negStep), TypeContext.UNSPECIFIED))
+                arg(negStep), TypeContext.TYPE(Type.Bit())))
         ir.add(IR.Statement.CONDITIONAL_BRANCH(backwardInclusiveTestBit, loopInc, loopEnd))
 
         -- backward exclusive test
         ir.setCurrentBlock(backwardExclusiveTest)
         def backwardExclusiveTestBit := extractBuiltinBit(call(position, backwardDelta, ">",
-                arg(negStep), TypeContext.UNSPECIFIED))
+                arg(negStep), TypeContext.TYPE(Type.Bit())))
         ir.add(IR.Statement.CONDITIONAL_BRANCH(backwardExclusiveTestBit, loopInc, loopEnd))
 
         ir.setCurrentBlock(loopInc)
-        def inc := call(position, indexLoad, "+", arg(step), TypeContext.UNSPECIFIED)
+        def inc := call(position, indexLoad, "+", arg(step), TypeContext.TYPE(indexType))
         ir.add(IR.Statement.STORE(inc, IR.Value.LOCAL(indexSlot, indexType)))
         ir.add(IR.Statement.BRANCH(loopStart))
 
@@ -4471,7 +4491,7 @@ class Compiler {
         ir.add(IR.Statement.BRANCH(testBlock))
         ir.setCurrentBlock(testBlock)
         def compiledTest := call(position, iterator, "get_done", Array<ASTNode>(),
-                TypeContext.UNSPECIFIED)
+                TypeContext.TYPE(Type.Bit()))
         if compiledTest = null {
             return
         }
@@ -4487,12 +4507,12 @@ class Compiler {
                 return
             }
             def targetType := compiledTarget.first.type
-            def next := call(position, iterator, "next", Array<ASTNode>(), TypeContext.UNSPECIFIED)
-            def coerced := coerce(position, next, targetType)
-            if coerced = null {
+            def next := call(position, iterator, "next", Array<ASTNode>(),
+                    TypeContext.TYPE(targetType))
+            if next = null {
                 return
             }
-            VariableLValue(self, compiledTarget.first).compileStore(coerced)
+            VariableLValue(self, compiledTarget.first).compileStore(next)
             for s in statements {
                 compileStatement(s)
             }
@@ -4532,7 +4552,7 @@ class Compiler {
                         return
                     }
                     def iterator := call(position, iterable, "iterator", Array<ASTNode>(),
-                            TypeContext.UNSPECIFIED)
+                            TypeContext.NON_VOID)
                     assert iterator != null
                     compileIteratorFor(position, label, rawTarget, iterator, statements)
                     return
@@ -4604,7 +4624,7 @@ class Compiler {
                     def preferred := preferredType(rawValue)
                     if preferred = null {
                         -- force error to be reported
-                        compileExpression(rawValue)
+                        compileExpression(rawValue, TypeContext.NON_VOID)
                         return null
                     }
                     value := compileExpression(rawValue, TypeContext.TYPE(preferred))
@@ -4729,7 +4749,7 @@ class Compiler {
                                     def eqArgs := Array<ASTNode>() -- FIXME literal
                                     eqArgs.add(ASTNode.INT(base.position(), cc.rawValue.convert()))
                                     def test := call(base.position(), choiceRawValue, "=", eqArgs,
-                                            TypeContext.UNSPECIFIED)
+                                            TypeContext.TYPE(Type.Bit()))
                                     assert test != null
                                     ir.add(IR.Statement.CONDITIONAL_BRANCH(extractBuiltinBit(test),
                                             testSuccess, nextBlock))
@@ -4758,7 +4778,7 @@ class Compiler {
                             def args := Array<ASTNode>() -- FIXME literal
                             args.add(ASTNode.INT(t.position(), cc.rawValue.convert()))
                             test := call(t.position(), choiceRawValue, "=", args,
-                                    TypeContext.UNSPECIFIED)
+                                    TypeContext.TYPE(Type.Bit()))
                             if test = null {
                                 return
                             }
@@ -4766,7 +4786,8 @@ class Compiler {
                         else {
                             def args := Array<ASTNode>() -- FIXME literal
                             args.add(t)
-                            test := call(t.position(), value, "=", args, TypeContext.UNSPECIFIED)
+                            test := call(t.position(), value, "=", args,
+                                    TypeContext.TYPE(Type.Bit()))
                             if test = null {
                                 return
                             }
@@ -4790,7 +4811,7 @@ class Compiler {
 
     method compileMatch(position:Position, value:ASTNode, whens:ImmutableArray<ASTNode>,
             other:ImmutableArray<ASTNode>?) {
-        var compiledValue := compileExpression(value, TypeContext.UNSPECIFIED)
+        var compiledValue := compileExpression(value, TypeContext.NON_VOID)
         if compiledValue = null | (whens.count = 0 & other = null) {
             return
         }
