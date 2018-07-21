@@ -11,7 +11,7 @@ typedef struct panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$par
     panda$core$Int32 refCount;
     panda$core$Int64 _count;
     panda$core$Int64 capacity;
-    org$pandalanguage$pandac$parser$Token* data;
+    org$pandalanguage$pandac$parser$Token$nullable* data;
 } panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT;
 #include "panda/core/Class.h"
 typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[15]; } panda$collections$SpecializedArray$LTorg$pandalanguage$pandac$parser$Token$GT$class_type;

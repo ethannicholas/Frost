@@ -202,10 +202,10 @@ panda$core$String* org$pandalanguage$panda$Int32List$convert$R$panda$core$String
     $tmp65 = $tmp75;
     $tmp64 = $tmp65;
     $returnValue63 = $tmp64;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp64));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp65));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp66));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp68));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp64));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp65));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp66));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp68));
     return $returnValue63;
 }
 void org$pandalanguage$panda$Int32List$cleanup(org$pandalanguage$panda$Int32List* self) {

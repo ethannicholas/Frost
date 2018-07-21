@@ -44,32 +44,32 @@ void org$pandalanguage$pandac$ChoiceCase$init$org$pandalanguage$pandac$ClassDecl
     self->fields = NULL;
     self->initMethod = NULL;
     panda$core$Weak* $tmp4 = (panda$core$Weak*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$Weak$class);
-    panda$core$Weak$init$panda$core$Weak$T($tmp4, ((panda$core$Object*) NULL));
+    panda$core$Weak$init$panda$core$Weak$T$Q($tmp4, ((panda$core$Object*) NULL));
     $tmp3 = $tmp4;
     $tmp2 = $tmp3;
     self->initMethod = $tmp2;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp3));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
     panda$core$Int64$init$builtin_int64(&$tmp6, 0);
     org$pandalanguage$pandac$Compiler$Resolution$init$panda$core$Int64(&$tmp5, $tmp6);
     self->resolved = $tmp5;
     {
         $tmp7 = self->owner;
         panda$core$Weak* $tmp10 = (panda$core$Weak*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$Weak$class);
-        panda$core$Weak$init$panda$core$Weak$T($tmp10, ((panda$core$Object*) p_owner));
+        panda$core$Weak$init$panda$core$Weak$T$Q($tmp10, ((panda$core$Object*) p_owner));
         $tmp9 = $tmp10;
         $tmp8 = $tmp9;
         self->owner = $tmp8;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp8));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp9));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp7));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp8));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp9));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp7));
     }
     {
         $tmp11 = self->doccomment;
         $tmp12 = p_doccomment;
         self->doccomment = $tmp12;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp12));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp11));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp12));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp11));
     }
     self->rawValue = p_rawValue;
     {
@@ -79,9 +79,9 @@ void org$pandalanguage$pandac$ChoiceCase$init$org$pandalanguage$pandac$ClassDecl
         $tmp15 = $tmp16;
         $tmp14 = $tmp15;
         self->fields = $tmp14;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp14));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp15));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp13));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp14));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp15));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp13));
     }
     panda$core$Int64$init$builtin_int64(&$tmp18, 1);
     org$pandalanguage$pandac$Symbol$Kind$init$panda$core$Int64(&$tmp17, $tmp18);
@@ -95,7 +95,7 @@ panda$core$String* org$pandalanguage$pandac$ChoiceCase$convert$R$panda$core$Stri
     panda$core$String* $tmp23;
     panda$core$String* $tmp24;
     panda$core$Object* $tmp25;
-    panda$core$Object* $tmp26 = panda$core$Weak$get$R$panda$core$Weak$T(self->owner);
+    panda$core$Object* $tmp26 = panda$core$Weak$get$R$panda$core$Weak$T$Q(self->owner);
     $tmp25 = $tmp26;
     panda$core$String* $tmp27 = panda$core$String$convert$R$panda$core$String(((org$pandalanguage$pandac$ClassDecl*) $tmp25)->name);
     $tmp24 = $tmp27;
@@ -107,12 +107,12 @@ panda$core$String* org$pandalanguage$pandac$ChoiceCase$convert$R$panda$core$Stri
     $tmp21 = $tmp32;
     $tmp20 = $tmp21;
     $returnValue19 = $tmp20;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp20));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp21));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp22));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp23));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp24));
-    panda$core$Panda$unref$panda$core$Object($tmp25);
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp20));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp21));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp22));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp23));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp24));
+    panda$core$Panda$unref$panda$core$Object$Q($tmp25);
     return $returnValue19;
 }
 void org$pandalanguage$pandac$ChoiceCase$cleanup(org$pandalanguage$pandac$ChoiceCase* self) {
@@ -127,10 +127,10 @@ void org$pandalanguage$pandac$ChoiceCase$cleanup(org$pandalanguage$pandac$Choice
         case -1: goto $l37;
     }
     $l37:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->owner));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->doccomment));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->fields));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->initMethod));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->owner));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->doccomment));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->fields));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->initMethod));
 }
 
 

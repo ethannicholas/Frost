@@ -116,12 +116,12 @@ panda$core$String* org$pandalanguage$pandac$Position$convert$R$panda$core$String
     $tmp31 = $tmp42;
     $tmp30 = $tmp31;
     $returnValue29 = $tmp30;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp30));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp31));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp32));
-    panda$core$Panda$unref$panda$core$Object($tmp38);
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp33));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp34));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp30));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp31));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp32));
+    panda$core$Panda$unref$panda$core$Object$Q($tmp38);
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp33));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp34));
     return $returnValue29;
 }
 void org$pandalanguage$pandac$Position$cleanup(org$pandalanguage$pandac$Position self) {

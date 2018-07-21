@@ -102,7 +102,7 @@ class Compiler {
                 when SCOPE:
                     return "SCOPE"
                 when VARIABLE_SCOPE(v):
-                    return "VARIABLE_SCOPE(v)"
+                    return "VARIABLE_SCOPE(\{v})"
             }
         }
     }
@@ -150,12 +150,8 @@ class Compiler {
                 match pop {
                     when EnclosingContext.SCOPE:
                         break
-                    when EnclosingContext.VARIABLE_SCOPE(v):
-                        if !compiler.ir.currentBlockFinished() {
-                            def ref := compiler.symbolRef(v.position, null, v)
-                            assert ref != null
-                            compiler.compileUnref(ref)
-                        }
+                    when EnclosingContext.VARIABLE_SCOPE:
+                        compiler.leaveScope(pop)
                     otherwise:
                         assert false
                 }
@@ -3042,7 +3038,7 @@ class Compiler {
         return null
     }
 
-    method foldInts(position:Position, left:ASTNode, op:Token.Kind, right:ASTNode):ASTNode? {
+    method foldInts(left:ASTNode, op:Token.Kind, right:ASTNode):ASTNode? {
         def l:Int64
         def r:Int64
         -- ensure both values fit into a signed Int64
@@ -3067,63 +3063,88 @@ class Compiler {
         match op {
             when Token.Kind.ADD:
                 def v := (l + r).convert()->UInt64
-                return ASTNode.INT(position, v)
+                return ASTNode.INT(left.position(), v)
             when Token.Kind.SUB:
                 def v := (l - r).convert()->UInt64
-                return ASTNode.INT(position, v)
+                return ASTNode.INT(left.position(), v)
             when Token.Kind.MUL:
                 def v := (l * r).convert()->UInt64
-                return ASTNode.INT(position, v)
+                return ASTNode.INT(left.position(), v)
             when Token.Kind.INTDIV:
                 if r = 0 {
                     error(right.position(), "division by 0")
                     return null
                 }
                 def v := (l // r).convert()->UInt64
-                return ASTNode.INT(position, v)
+                return ASTNode.INT(left.position(), v)
             when Token.Kind.REM:
                 if r = 0 {
                     error(right.position(), "division by 0")
                     return null
                 }
                 def v := (l % r).convert()->UInt64
-                return ASTNode.INT(position, v)
+                return ASTNode.INT(left.position(), v)
             when Token.Kind.EQ:
-                return ASTNode.BIT(position, l = r)
+                return ASTNode.BIT(left.position(), l = r)
             when Token.Kind.NEQ:
-                return ASTNode.BIT(position, l != r)
+                return ASTNode.BIT(left.position(), l != r)
             when Token.Kind.LT:
-                return ASTNode.BIT(position, l < r)
+                return ASTNode.BIT(left.position(), l < r)
             when Token.Kind.GT:
-                return ASTNode.BIT(position, l > r)
+                return ASTNode.BIT(left.position(), l > r)
             when Token.Kind.LTEQ:
-                return ASTNode.BIT(position, l <= r)
+                return ASTNode.BIT(left.position(), l <= r)
             when Token.Kind.GTEQ:
-                return ASTNode.BIT(position, l >= r)
+                return ASTNode.BIT(left.position(), l >= r)
             when Token.Kind.BITWISEAND:
                 def v := (l && r).convert()->UInt64
-                return ASTNode.INT(position, v)
+                return ASTNode.INT(left.position(), v)
             when Token.Kind.BITWISEOR:
                 def v := (l || r).convert()->UInt64
-                return ASTNode.INT(position, v)
+                return ASTNode.INT(left.position(), v)
             when Token.Kind.BITWISEXOR:
                 def v := (l ~~ r).convert()->UInt64
-                return ASTNode.INT(position, v)
+                return ASTNode.INT(left.position(), v)
             when Token.Kind.SHIFTLEFT:
                 def v := (l << r).convert()->UInt64
-                return ASTNode.INT(position, v)
+                return ASTNode.INT(left.position(), v)
             when Token.Kind.SHIFTRIGHT:
                 def v := (l >> r).convert()->UInt64
-                return ASTNode.INT(position, v)
+                return ASTNode.INT(left.position(), v)
         }
-        error(position, "'\{operatorName(op)}' cannot operate on 'panda.core.Int64', " +
+        error(left.position(), "'\{operatorName(op)}' cannot operate on 'panda.core.Int64', " +
                 "'panda.core.Int64'")
         return null
     }
 
+    function foldStrings(left:ASTNode, op:Token.Kind, right:ASTNode):ASTNode? {
+        if op != Token.Kind.ADD {
+            return null
+        }
+        match left {
+            when ASTNode.STRING(position, s1):
+                match right {
+                    when ASTNode.STRING(_, s2):
+                        return ASTNode.STRING(position, s1 + s2)
+                }
+        }
+        return null
+    }
+
+    function fold(left:ASTNode, op:Token.Kind, right:ASTNode):ASTNode? {
+        match left {
+            when ASTNode.INT:
+                return foldInts(left, op, right)
+            when ASTNode.STRING:
+                return foldStrings(left, op, right)
+            otherwise:
+                return null
+        }
+    }
+
     method compileBinary(position:Position, left:ASTNode, op:Token.Kind, right:ASTNode,
             type:TypeContext):IR.Value? {
-        def folded := foldInts(position, left, op, right)
+        def folded := fold(left, op, right)
         if folded != null {
             return compileExpression(folded, type)
         }
@@ -3976,8 +3997,9 @@ class Compiler {
         left.compileStore(right)
     }
 
-    function findLoop(position:Position, label:String?):EnclosingContext? {
+    method findAndLeaveLoopScope(position:Position, label:String?):EnclosingContext? {
         for c in enclosingContexts {
+            leaveScope(c)
             match c {
                 when EnclosingContext.LOOP(loopLabel, _, _):
                     if label = null | loopLabel != null & label = loopLabel {
@@ -3995,7 +4017,8 @@ class Compiler {
     }
 
     method compileBreak(position:Position, label:String?) {
-        def l := findLoop(position, label)
+        ir.add(IR.Statement.COMMENT("break"))
+        def l := findAndLeaveLoopScope(position, label)
         if l != null {
             match l {
                 when EnclosingContext.LOOP(_, breakTarget, _):
@@ -4007,7 +4030,7 @@ class Compiler {
     }
 
     method compileContinue(position:Position, label:String?) {
-        def l := findLoop(position, label)
+        def l := findAndLeaveLoopScope(position, label)
         if l != null {
             match l {
                 when EnclosingContext.LOOP(_, _, continueTarget):
@@ -4129,19 +4152,21 @@ class Compiler {
         def entryInclusive := ir.newBlock("entryInclusive")
         def entryExclusive := ir.newBlock("entryExclusive")
         def context := AutoContext(self, EnclosingContext.LOOP(label, loopEnd, loopTest))
-        def scope := AutoScope(self)
-        ir.add(IR.Statement.CONDITIONAL_BRANCH(inclusive, entryInclusive, entryExclusive))
-        ir.setCurrentBlock(entryInclusive)
-        def entryInclusiveTest := extractBuiltinBit(call(position, start, "<=", arg(end),
-                    TypeContext.UNSPECIFIED))
-        ir.add(IR.Statement.CONDITIONAL_BRANCH(entryInclusiveTest, loopStart, loopEnd))
-        ir.setCurrentBlock(entryExclusive)
-        def entryExclusiveTest := extractBuiltinBit(call(position, start, "<", arg(end),
-                    TypeContext.UNSPECIFIED))
-        ir.add(IR.Statement.CONDITIONAL_BRANCH(entryExclusiveTest, loopStart, loopEnd))
-        ir.setCurrentBlock(loopStart)
-        for s in statements {
-            compileStatement(s)
+        {
+            def scope := AutoScope(self)
+            ir.add(IR.Statement.CONDITIONAL_BRANCH(inclusive, entryInclusive, entryExclusive))
+            ir.setCurrentBlock(entryInclusive)
+            def entryInclusiveTest := extractBuiltinBit(call(position, start, "<=", arg(end),
+                        TypeContext.UNSPECIFIED))
+            ir.add(IR.Statement.CONDITIONAL_BRANCH(entryInclusiveTest, loopStart, loopEnd))
+            ir.setCurrentBlock(entryExclusive)
+            def entryExclusiveTest := extractBuiltinBit(call(position, start, "<", arg(end),
+                        TypeContext.UNSPECIFIED))
+            ir.add(IR.Statement.CONDITIONAL_BRANCH(entryExclusiveTest, loopStart, loopEnd))
+            ir.setCurrentBlock(loopStart)
+            for s in statements {
+                compileStatement(s)
+            }
         }
         if !ir.currentBlockFinished() {
             ir.add(IR.Statement.BRANCH(loopTest))
@@ -4251,47 +4276,49 @@ class Compiler {
         def backwardEntry := ir.newBlock("backwardEntry")
         def direction:IR.Value
         def context := AutoContext(self, EnclosingContext.LOOP(label, loopEnd, loopTest))
-        def scope := AutoScope(self)
-        if stepType.name.startsWith("panda.core.Int") {
-            def args := Array<ASTNode>() -- FIXME literal
-            args.add(ASTNode.INT(position, 0))
-            direction := extractBuiltinBit(call(position, step, ">=", args,
-                    TypeContext.UNSPECIFIED))
-        }
-        else {
-            assert stepType.name.startsWith("panda.core.UInt")
-            direction := IR.Value.BIT(true)
-        }
-        ir.add(IR.Statement.CONDITIONAL_BRANCH(direction, forwardEntry, backwardEntry))
-        ir.setCurrentBlock(forwardEntry)
-        def forwardEntryInclusive := ir.newBlock("forwardEntryInclusive")
-        def forwardEntryExclusive := ir.newBlock("forwardEntryExclusive")
-        ir.add(IR.Statement.CONDITIONAL_BRANCH(inclusive, forwardEntryInclusive,
-                forwardEntryExclusive))
-        ir.setCurrentBlock(forwardEntryInclusive)
-        def forwardEntryInclusiveTest := extractBuiltinBit(call(position, start, "<=", arg(end),
-                    TypeContext.UNSPECIFIED))
-        ir.add(IR.Statement.CONDITIONAL_BRANCH(forwardEntryInclusiveTest, loopStart, loopEnd))
-        ir.setCurrentBlock(forwardEntryExclusive)
-        def forwardEntryExclusiveTest := extractBuiltinBit(call(position, start, "<", arg(end),
-                    TypeContext.UNSPECIFIED))
-        ir.add(IR.Statement.CONDITIONAL_BRANCH(forwardEntryExclusiveTest, loopStart, loopEnd))
-        ir.setCurrentBlock(backwardEntry)
-        def backwardEntryInclusive := ir.newBlock("backwardEntryInclusive")
-        def backwardEntryExclusive := ir.newBlock("backwardEntryExclusive")
-        ir.add(IR.Statement.CONDITIONAL_BRANCH(inclusive, backwardEntryInclusive,
-                backwardEntryExclusive))
-        ir.setCurrentBlock(backwardEntryInclusive)
-        def backwardEntryInclusiveTest := extractBuiltinBit(call(position, start, ">=", arg(end),
-                    TypeContext.UNSPECIFIED))
-        ir.add(IR.Statement.CONDITIONAL_BRANCH(backwardEntryInclusiveTest, loopStart, loopEnd))
-        ir.setCurrentBlock(backwardEntryExclusive)
-        def backwardEntryExclusiveTest := extractBuiltinBit(call(position, start, ">", arg(end),
-                    TypeContext.UNSPECIFIED))
-        ir.add(IR.Statement.CONDITIONAL_BRANCH(backwardEntryExclusiveTest, loopStart, loopEnd))
-        ir.setCurrentBlock(loopStart)
-        for s in statements {
-            compileStatement(s)
+        {
+            def scope := AutoScope(self)
+            if stepType.name.startsWith("panda.core.Int") {
+                def args := Array<ASTNode>() -- FIXME literal
+                args.add(ASTNode.INT(position, 0))
+                direction := extractBuiltinBit(call(position, step, ">=", args,
+                        TypeContext.UNSPECIFIED))
+            }
+            else {
+                assert stepType.name.startsWith("panda.core.UInt")
+                direction := IR.Value.BIT(true)
+            }
+            ir.add(IR.Statement.CONDITIONAL_BRANCH(direction, forwardEntry, backwardEntry))
+            ir.setCurrentBlock(forwardEntry)
+            def forwardEntryInclusive := ir.newBlock("forwardEntryInclusive")
+            def forwardEntryExclusive := ir.newBlock("forwardEntryExclusive")
+            ir.add(IR.Statement.CONDITIONAL_BRANCH(inclusive, forwardEntryInclusive,
+                    forwardEntryExclusive))
+            ir.setCurrentBlock(forwardEntryInclusive)
+            def forwardEntryInclusiveTest := extractBuiltinBit(call(position, start, "<=", arg(end),
+                        TypeContext.UNSPECIFIED))
+            ir.add(IR.Statement.CONDITIONAL_BRANCH(forwardEntryInclusiveTest, loopStart, loopEnd))
+            ir.setCurrentBlock(forwardEntryExclusive)
+            def forwardEntryExclusiveTest := extractBuiltinBit(call(position, start, "<", arg(end),
+                        TypeContext.UNSPECIFIED))
+            ir.add(IR.Statement.CONDITIONAL_BRANCH(forwardEntryExclusiveTest, loopStart, loopEnd))
+            ir.setCurrentBlock(backwardEntry)
+            def backwardEntryInclusive := ir.newBlock("backwardEntryInclusive")
+            def backwardEntryExclusive := ir.newBlock("backwardEntryExclusive")
+            ir.add(IR.Statement.CONDITIONAL_BRANCH(inclusive, backwardEntryInclusive,
+                    backwardEntryExclusive))
+            ir.setCurrentBlock(backwardEntryInclusive)
+            def backwardEntryInclusiveTest := extractBuiltinBit(call(position, start, ">=", arg(end),
+                        TypeContext.UNSPECIFIED))
+            ir.add(IR.Statement.CONDITIONAL_BRANCH(backwardEntryInclusiveTest, loopStart, loopEnd))
+            ir.setCurrentBlock(backwardEntryExclusive)
+            def backwardEntryExclusiveTest := extractBuiltinBit(call(position, start, ">", arg(end),
+                        TypeContext.UNSPECIFIED))
+            ir.add(IR.Statement.CONDITIONAL_BRANCH(backwardEntryExclusiveTest, loopStart, loopEnd))
+            ir.setCurrentBlock(loopStart)
+            for s in statements {
+                compileStatement(s)
+            }
         }
         if !ir.currentBlockFinished() {
             ir.add(IR.Statement.BRANCH(loopTest))
@@ -4448,8 +4475,8 @@ class Compiler {
         if compiledTest = null {
             return
         }
-        def inverted := call(position, compiledTest, "!", Array<ASTNode>(), TypeContext.UNSPECIFIED)
-        ir.add(IR.Statement.CONDITIONAL_BRANCH(extractBuiltinBit(inverted), bodyBlock, endBlock))
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(extractBuiltinBit(compiledTest), endBlock,
+                bodyBlock))
         ir.setCurrentBlock(bodyBlock)
         {
             def auto := AutoScope(self)
@@ -4460,19 +4487,12 @@ class Compiler {
                 return
             }
             def targetType := compiledTarget.first.type
-            def slot:Int
-            match compiledTarget.first.storage {
-                when Variable.Storage.LOCAL(varSlot):
-                    slot := varSlot
-                otherwise:
-                    assert false
-            }
             def next := call(position, iterator, "next", Array<ASTNode>(), TypeContext.UNSPECIFIED)
             def coerced := coerce(position, next, targetType)
             if coerced = null {
                 return
             }
-            ir.add(IR.Statement.STORE(coerced, IR.Value.LOCAL(slot, targetType)))
+            VariableLValue(self, compiledTarget.first).compileStore(coerced)
             for s in statements {
                 compileStatement(s)
             }
@@ -4643,14 +4663,7 @@ class Compiler {
             return
         }
         if target.second != null {
-            match target.first.storage {
-                when Variable.Storage.LOCAL(slot):
-                    if isRefCounted(target.first.type) {
-                        compileRef(target.second)
-                    }
-                    ir.add(IR.Statement.STORE(target.second,
-                            IR.Value.LOCAL(slot, target.first.type)))
-            }
+            VariableLValue(self, target.first).compileStore(target.second)
         }
     }
 
@@ -4733,13 +4746,8 @@ class Compiler {
                                                 ASTNode.IR_WRAPPER(position,
                                                         IR.Value.REF(load, cc.fields[i])),
                                                         null)
-                                        match target.first.storage {
-                                            when Variable.Storage.LOCAL(slot):
-                                                ir.add(IR.Statement.STORE(
-                                                        IR.Value.REF(load, cc.fields[i]),
-                                                        IR.Value.LOCAL(slot,
-                                                            target.first.type)))
-                                        }
+                                        VariableLValue(self, target.first).compileStore(
+                                                IR.Value.REF(load, cc.fields[i]))
                                     }
                                     continue
                                 }
@@ -4806,15 +4814,34 @@ class Compiler {
         compileChainedIfMatch(compiledValue, choiceClass, choiceRawValue, whens, other)
     }
 
-    method compileReturn(position:Position, value:ASTNode?) {
-        for c in enclosingContexts {
-            match c {
-                when EnclosingContext.VARIABLE_SCOPE(v):
-                    def ref := symbolRef(v.position, null, v)
-                    assert ref != null
-                    compileUnref(ref)
-            }
+    method leaveScope(c:EnclosingContext) {
+        if ir.currentBlockFinished() {
+            -- we've already left the scope by other means; cleanup will have happened there
+            return
         }
+        match c {
+            when EnclosingContext.VARIABLE_SCOPE(v):
+                def ref := symbolRef(v.position, null, v)
+                assert ref != null
+                compileUnref(ref)
+                match v.storage {
+                    when Variable.Storage.LOCAL(slot):
+                        ir.add(IR.Statement.STORE(
+                                IR.Value.NULL(v.type.nullable()),
+                                IR.Value.LOCAL(slot, v.type.nullable())))
+                    otherwise:
+                        assert false
+                }
+        }
+    }
+
+    method leaveAllScopes() {
+        for c in enclosingContexts {
+            leaveScope(c)
+        }
+    }
+
+    method compileReturn(position:Position, value:ASTNode?) {
         if currentMethod[0].name = "cleanup" & currentMethod[0].parameters.count = 0 &
                 currentMethod[0].owner.name != WEAK_NAME {
             for f in currentMethod[0].owner.fields {
@@ -4837,7 +4864,11 @@ class Compiler {
                 if compiled = null {
                     return
                 }
+                if isRefCounted(compiled.type()) {
+                    compileRef(compiled)
+                }
             }
+            leaveAllScopes()
             ir.add(IR.Statement.RETURN(compiled))
         }
         else {
@@ -4848,6 +4879,7 @@ class Compiler {
                 }
                 error(position, "expected a return value of type '\{currentMethod[0].returnType}'")
             }
+            leaveAllScopes()
             ir.add(IR.Statement.RETURN(null))
         }
     }

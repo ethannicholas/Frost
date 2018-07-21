@@ -24,15 +24,15 @@ void org$pandalanguage$pandac$LLVMCodeGenerator$AutoContext$init$org$pandalangua
         $tmp2 = self->cg;
         $tmp3 = p_cg;
         self->cg = $tmp3;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp3));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
     }
     {
         $tmp4 = self->context;
         $tmp5 = p_context;
         self->context = $tmp5;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp5));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp4));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp5));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp4));
     }
     panda$collections$Stack$push$panda$collections$Stack$T(p_cg->enclosingContexts, ((panda$core$Object*) p_context));
 }
@@ -49,7 +49,7 @@ void org$pandalanguage$pandac$LLVMCodeGenerator$AutoContext$cleanup(org$pandalan
         case -1: goto $l9;
     }
     $l9:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->cg));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->context));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->cg));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->context));
 }
 

@@ -25,8 +25,8 @@ void panda$threads$MessageQueue$Message$init$panda$threads$MessageQueue$Message$
         $tmp2 = self->payload;
         $tmp3 = p_payload;
         self->payload = $tmp3;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp3));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
     }
 }
 panda$core$String* panda$threads$MessageQueue$Message$convert$R$panda$core$String(panda$threads$MessageQueue$Message* self) {
@@ -51,11 +51,11 @@ panda$core$String* panda$threads$MessageQueue$Message$convert$R$panda$core$Strin
         $tmp6 = $tmp16;
         $tmp5 = $tmp6;
         $returnValue4 = $tmp5;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp5));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp6));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp7));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp8));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp9));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp5));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp7));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp8));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp9));
         return $returnValue4;
     }
     }
@@ -65,9 +65,9 @@ panda$core$String* panda$threads$MessageQueue$Message$convert$R$panda$core$Strin
     $tmp19 = $tmp24;
     $tmp18 = $tmp19;
     $returnValue4 = $tmp18;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp18));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp19));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp20));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp18));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp19));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp20));
     return $returnValue4;
 }
 void panda$threads$MessageQueue$Message$cleanup(panda$threads$MessageQueue$Message* self) {
@@ -82,8 +82,8 @@ void panda$threads$MessageQueue$Message$cleanup(panda$threads$MessageQueue$Messa
         case -1: goto $l29;
     }
     $l29:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->payload));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->next));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->payload));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->next));
 }
 
 

@@ -42,14 +42,14 @@ void panda$io$PushbackInputStream$init$panda$io$InputStream(panda$io$PushbackInp
     $tmp3 = $tmp4;
     $tmp2 = $tmp3;
     self->pushbackBuffer = $tmp2;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp3));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
     {
         $tmp5 = self->source;
         $tmp6 = p_source;
         self->source = $tmp6;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp6));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp5));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp5));
     }
     panda$io$InputStream$init(((panda$io$InputStream*) self));
 }
@@ -82,7 +82,7 @@ panda$core$UInt8$nullable panda$io$PushbackInputStream$read$R$panda$core$UInt8$Q
         panda$core$Object* $tmp21 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(self->pushbackBuffer, $tmp20);
         $tmp14 = $tmp21;
         result13 = ((panda$core$UInt8$wrapper*) $tmp14)->value;
-        panda$core$Panda$unref$panda$core$Object($tmp14);
+        panda$core$Panda$unref$panda$core$Object$Q($tmp14);
         ITable* $tmp23 = ((panda$collections$CollectionView*) self->pushbackBuffer)->$class->itable;
         while ($tmp23->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
             $tmp23 = $tmp23->next;
@@ -93,7 +93,7 @@ panda$core$UInt8$nullable panda$io$PushbackInputStream$read$R$panda$core$UInt8$Q
         panda$core$Int64 $tmp28 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64($tmp26, $tmp27);
         panda$core$Object* $tmp29 = panda$collections$Array$removeIndex$panda$core$Int64$R$panda$collections$Array$T(self->pushbackBuffer, $tmp28);
         $tmp22 = $tmp29;
-        panda$core$Panda$unref$panda$core$Object($tmp22);
+        panda$core$Panda$unref$panda$core$Object$Q($tmp22);
         $returnValue30 = ((panda$core$UInt8$nullable) { result13, true });
         return $returnValue30;
     }
@@ -109,7 +109,7 @@ void panda$io$PushbackInputStream$pushback$panda$core$UInt8(panda$io$PushbackInp
     $tmp36->value = p_v;
     $tmp35 = ((panda$core$Object*) $tmp36);
     panda$collections$Array$add$panda$collections$Array$T(self->pushbackBuffer, $tmp35);
-    panda$core$Panda$unref$panda$core$Object($tmp35);
+    panda$core$Panda$unref$panda$core$Object$Q($tmp35);
 }
 void panda$io$PushbackInputStream$pushback$panda$core$Int8(panda$io$PushbackInputStream* self, panda$core$Int8 p_v) {
     panda$core$Object* $tmp37;
@@ -119,7 +119,7 @@ void panda$io$PushbackInputStream$pushback$panda$core$Int8(panda$io$PushbackInpu
     $tmp39->value = $tmp38;
     $tmp37 = ((panda$core$Object*) $tmp39);
     panda$collections$Array$add$panda$collections$Array$T(self->pushbackBuffer, $tmp37);
-    panda$core$Panda$unref$panda$core$Object($tmp37);
+    panda$core$Panda$unref$panda$core$Object$Q($tmp37);
 }
 void panda$io$PushbackInputStream$pushback$panda$collections$ListView$LTpanda$core$UInt8$GT(panda$io$PushbackInputStream* self, panda$collections$ListView* p_v) {
     panda$core$SteppedRange$LTpanda$core$Int64$Cpanda$core$Int64$GT $tmp40;
@@ -169,7 +169,7 @@ void panda$io$PushbackInputStream$pushback$panda$collections$ListView$LTpanda$co
         panda$core$Object* $tmp72 = $tmp70(p_v, i50);
         $tmp68 = $tmp72;
         panda$io$PushbackInputStream$pushback$panda$core$UInt8(self, ((panda$core$UInt8$wrapper*) $tmp68)->value);
-        panda$core$Panda$unref$panda$core$Object($tmp68);
+        panda$core$Panda$unref$panda$core$Object$Q($tmp68);
     }
     $l59:;
     if ($tmp62) goto $l74; else goto $l75;
@@ -240,7 +240,7 @@ void panda$io$PushbackInputStream$pushback$panda$collections$ListView$LTpanda$co
         panda$core$Object* $tmp116 = $tmp114(p_v, i94);
         $tmp112 = $tmp116;
         panda$io$PushbackInputStream$pushback$panda$core$Int8(self, ((panda$core$Int8$wrapper*) $tmp112)->value);
-        panda$core$Panda$unref$panda$core$Object($tmp112);
+        panda$core$Panda$unref$panda$core$Object$Q($tmp112);
     }
     $l103:;
     if ($tmp106) goto $l118; else goto $l119;
@@ -315,7 +315,7 @@ void panda$io$PushbackInputStream$pushback$panda$collections$ListView$LTpanda$co
         panda$core$Object* $tmp161 = $tmp159(p_c, i139);
         $tmp157 = $tmp161;
         panda$io$PushbackInputStream$pushback$panda$core$Char8(self, ((panda$core$Char8$wrapper*) $tmp157)->value);
-        panda$core$Panda$unref$panda$core$Object($tmp157);
+        panda$core$Panda$unref$panda$core$Object$Q($tmp157);
     }
     $l148:;
     if ($tmp151) goto $l163; else goto $l164;
@@ -343,7 +343,7 @@ void panda$io$PushbackInputStream$pushback$panda$core$String(panda$io$PushbackIn
     panda$collections$ListView* $tmp174 = panda$core$String$utf8$R$panda$collections$ListView$LTpanda$core$Char8$GT(p_s);
     $tmp173 = $tmp174;
     panda$io$PushbackInputStream$pushback$panda$collections$ListView$LTpanda$core$Char8$GT(self, $tmp173);
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp173));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp173));
 }
 void panda$io$PushbackInputStream$cleanup(panda$io$PushbackInputStream* self) {
     int $tmp177;
@@ -357,7 +357,7 @@ void panda$io$PushbackInputStream$cleanup(panda$io$PushbackInputStream* self) {
         case -1: goto $l178;
     }
     $l178:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->source));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->pushbackBuffer));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->source));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->pushbackBuffer));
 }
 

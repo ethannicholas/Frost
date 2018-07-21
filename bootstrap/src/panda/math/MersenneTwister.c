@@ -32,7 +32,7 @@ void panda$math$MersenneTwister$init(panda$math$MersenneTwister* self) {
     panda$math$Random* $tmp3 = panda$math$Random$default$R$panda$math$Random();
     $tmp2 = $tmp3;
     panda$math$MersenneTwister$init$panda$math$Random(self, $tmp2);
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
 }
 void panda$math$MersenneTwister$init$panda$math$Random(panda$math$MersenneTwister* self, panda$math$Random* p_seed) {
     panda$core$Int64 $tmp4;
@@ -56,9 +56,9 @@ void panda$math$MersenneTwister$init$panda$math$Random(panda$math$MersenneTwiste
         $tmp7 = $tmp8;
         $tmp6 = $tmp7;
         self->mt = $tmp6;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp6));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp7));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp5));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp7));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp5));
     }
     panda$core$Int64$init$builtin_int64(&$tmp11, 0);
     panda$core$Int64$init$builtin_int64(&$tmp12, 624);
@@ -87,7 +87,7 @@ void panda$math$MersenneTwister$init$panda$math$Random(panda$math$MersenneTwiste
         $tmp33->value = $tmp32;
         $tmp27 = ((panda$core$Object*) $tmp33);
         panda$collections$Array$add$panda$collections$Array$T(self->mt, $tmp27);
-        panda$core$Panda$unref$panda$core$Object($tmp27);
+        panda$core$Panda$unref$panda$core$Object$Q($tmp27);
     }
     $l22:;
     int64_t $tmp35 = $tmp17 - i14.value;
@@ -157,10 +157,10 @@ void panda$math$MersenneTwister$init$panda$collections$Array$LTpanda$core$UInt32
             $tmp49 = $tmp50;
             $tmp48 = $tmp49;
             self->mt = $tmp48;
-            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp48));
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp49));
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp51));
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp47));
+            panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp48));
+            panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp49));
+            panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp51));
+            panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp47));
         }
         return;
     }
@@ -172,9 +172,9 @@ void panda$math$MersenneTwister$init$panda$collections$Array$LTpanda$core$UInt32
         $tmp62 = $tmp63;
         $tmp61 = $tmp62;
         self->mt = $tmp61;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp61));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp62));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp60));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp61));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp62));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp60));
     }
     ITable* $tmp65 = ((panda$collections$CollectionView*) p_state)->$class->itable;
     while ($tmp65->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
@@ -218,9 +218,9 @@ void panda$math$MersenneTwister$init$panda$collections$Array$LTpanda$core$UInt32
         $tmp102->value = $tmp101;
         $tmp84 = ((panda$core$Object*) $tmp102);
         panda$collections$Array$add$panda$collections$Array$T(self->mt, $tmp84);
-        panda$core$Panda$unref$panda$core$Object($tmp84);
-        panda$core$Panda$unref$panda$core$Object($tmp90);
-        panda$core$Panda$unref$panda$core$Object($tmp86);
+        panda$core$Panda$unref$panda$core$Object$Q($tmp84);
+        panda$core$Panda$unref$panda$core$Object$Q($tmp90);
+        panda$core$Panda$unref$panda$core$Object$Q($tmp86);
     }
     $l79:;
     int64_t $tmp104 = $tmp74 - i71.value;
@@ -267,9 +267,9 @@ void panda$math$MersenneTwister$init$panda$core$Int64(panda$math$MersenneTwister
         $tmp112 = $tmp113;
         $tmp111 = $tmp112;
         self->mt = $tmp111;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp111));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp112));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp110));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp111));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp112));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp110));
     }
     panda$core$Int64$init$builtin_int64(&$tmp116, 32);
     panda$core$Int64 $tmp117 = panda$core$Int64$$SHR$panda$core$Int64$R$panda$core$Int64(p_seed, $tmp116);
@@ -279,14 +279,14 @@ void panda$math$MersenneTwister$init$panda$core$Int64(panda$math$MersenneTwister
     $tmp119->value = $tmp118;
     $tmp115 = ((panda$core$Object*) $tmp119);
     panda$collections$Array$add$panda$collections$Array$T(self->mt, $tmp115);
-    panda$core$Panda$unref$panda$core$Object($tmp115);
+    panda$core$Panda$unref$panda$core$Object$Q($tmp115);
     panda$core$UInt32 $tmp121 = panda$core$Int64$convert$R$panda$core$UInt32(p_seed);
     panda$core$UInt32$wrapper* $tmp122;
     $tmp122 = (panda$core$UInt32$wrapper*) pandaObjectAlloc(16, (panda$core$Class*) &panda$core$UInt32$wrapperclass);
     $tmp122->value = $tmp121;
     $tmp120 = ((panda$core$Object*) $tmp122);
     panda$collections$Array$add$panda$collections$Array$T(self->mt, $tmp120);
-    panda$core$Panda$unref$panda$core$Object($tmp120);
+    panda$core$Panda$unref$panda$core$Object$Q($tmp120);
     panda$core$Int64$init$builtin_int64(&$tmp124, 2);
     panda$core$Int64$init$builtin_int64(&$tmp125, 624);
     panda$core$Bit$init$builtin_bit(&$tmp126, false);
@@ -324,9 +324,9 @@ void panda$math$MersenneTwister$init$panda$core$Int64(panda$math$MersenneTwister
         $tmp158->value = $tmp157;
         $tmp140 = ((panda$core$Object*) $tmp158);
         panda$collections$Array$add$panda$collections$Array$T(self->mt, $tmp140);
-        panda$core$Panda$unref$panda$core$Object($tmp140);
-        panda$core$Panda$unref$panda$core$Object($tmp146);
-        panda$core$Panda$unref$panda$core$Object($tmp142);
+        panda$core$Panda$unref$panda$core$Object$Q($tmp140);
+        panda$core$Panda$unref$panda$core$Object$Q($tmp146);
+        panda$core$Panda$unref$panda$core$Object$Q($tmp142);
     }
     $l135:;
     int64_t $tmp160 = $tmp130 - i127.value;
@@ -349,8 +349,8 @@ panda$collections$ListView* panda$math$MersenneTwister$get_state$R$panda$collect
     $tmp167 = $tmp168;
     $tmp166 = ((panda$collections$ListView*) $tmp167);
     $returnValue165 = $tmp166;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp166));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp167));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp166));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp167));
     return $returnValue165;
 }
 panda$core$UInt32 panda$math$MersenneTwister$extract$R$panda$core$UInt32(panda$math$MersenneTwister* self) {
@@ -376,7 +376,7 @@ panda$core$UInt32 panda$math$MersenneTwister$extract$R$panda$core$UInt32(panda$m
     panda$core$Object* $tmp174 = panda$collections$Array$$IDX$panda$core$Int64$R$panda$collections$Array$T(self->mt, self->index);
     $tmp173 = $tmp174;
     y172 = ((panda$core$UInt32$wrapper*) $tmp173)->value;
-    panda$core$Panda$unref$panda$core$Object($tmp173);
+    panda$core$Panda$unref$panda$core$Object$Q($tmp173);
     panda$core$UInt32$init$builtin_uint32(&$tmp175, 11);
     panda$core$UInt32 $tmp176 = panda$core$UInt32$$SHR$panda$core$UInt32$R$panda$core$UInt32(y172, $tmp175);
     panda$core$UInt32 $tmp177 = panda$core$UInt32$$BXOR$panda$core$UInt32$R$panda$core$UInt32(y172, $tmp176);
@@ -458,8 +458,8 @@ void panda$math$MersenneTwister$twist(panda$math$MersenneTwister* self) {
         panda$core$UInt32 $tmp225 = panda$core$UInt32$$BAND$panda$core$UInt32$R$panda$core$UInt32(((panda$core$UInt32$wrapper*) $tmp218)->value, $tmp224);
         panda$core$UInt32 $tmp226 = panda$core$UInt32$$ADD$panda$core$UInt32$R$panda$core$UInt32($tmp217, $tmp225);
         y213 = $tmp226;
-        panda$core$Panda$unref$panda$core$Object($tmp218);
-        panda$core$Panda$unref$panda$core$Object($tmp214);
+        panda$core$Panda$unref$panda$core$Object$Q($tmp218);
+        panda$core$Panda$unref$panda$core$Object$Q($tmp214);
         panda$core$Int32$init$builtin_int32(&$tmp229, 397);
         panda$core$Int64 $tmp230 = panda$core$Int64$$ADD$panda$core$Int32$R$panda$core$Int64(i200, $tmp229);
         panda$core$Int64$init$builtin_int64(&$tmp231, 624);
@@ -474,8 +474,8 @@ void panda$math$MersenneTwister$twist(panda$math$MersenneTwister* self) {
         $tmp237->value = $tmp236;
         $tmp227 = ((panda$core$Object*) $tmp237);
         panda$collections$Array$$IDXEQ$panda$core$Int64$panda$collections$Array$T(self->mt, i200, $tmp227);
-        panda$core$Panda$unref$panda$core$Object($tmp227);
-        panda$core$Panda$unref$panda$core$Object($tmp228);
+        panda$core$Panda$unref$panda$core$Object$Q($tmp227);
+        panda$core$Panda$unref$panda$core$Object$Q($tmp228);
         panda$core$UInt32$init$builtin_uint32(&$tmp238, 2);
         panda$core$UInt32 $tmp239 = panda$core$UInt32$$REM$panda$core$UInt32$R$panda$core$UInt32(y213, $tmp238);
         panda$core$UInt32$init$builtin_uint32(&$tmp240, 0);
@@ -493,8 +493,8 @@ void panda$math$MersenneTwister$twist(panda$math$MersenneTwister* self) {
             $tmp249->value = $tmp248;
             $tmp244 = ((panda$core$Object*) $tmp249);
             panda$collections$Array$$IDXEQ$panda$core$Int64$panda$collections$Array$T($tmp242, $tmp243, $tmp244);
-            panda$core$Panda$unref$panda$core$Object($tmp244);
-            panda$core$Panda$unref$panda$core$Object($tmp245);
+            panda$core$Panda$unref$panda$core$Object$Q($tmp244);
+            panda$core$Panda$unref$panda$core$Object$Q($tmp245);
         }
         }
     }
@@ -543,6 +543,6 @@ void panda$math$MersenneTwister$cleanup(panda$math$MersenneTwister* self) {
         case -1: goto $l272;
     }
     $l272:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->mt));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->mt));
 }
 

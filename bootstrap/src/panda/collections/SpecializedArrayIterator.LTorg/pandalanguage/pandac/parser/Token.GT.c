@@ -40,8 +40,8 @@ void panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$pandac$parse
         $tmp4 = self->array;
         $tmp5 = p_array;
         self->array = $tmp5;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp5));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp4));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp5));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp4));
     }
 }
 panda$core$Bit panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$pandac$parser$Token$GT$get_done$R$panda$core$Bit(panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$pandac$parser$Token$GT* self) {
@@ -90,6 +90,6 @@ void panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$pandac$parse
         case -1: goto $l30;
     }
     $l30:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->array));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->array));
 }
 

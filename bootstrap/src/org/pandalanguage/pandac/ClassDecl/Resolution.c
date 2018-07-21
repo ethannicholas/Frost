@@ -20,22 +20,22 @@ void org$pandalanguage$pandac$ClassDecl$Resolution$init$org$pandalanguage$pandac
     panda$core$Weak* $tmp7;
     self->value = NULL;
     panda$core$Weak* $tmp4 = (panda$core$Weak*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$Weak$class);
-    panda$core$Weak$init$panda$core$Weak$T($tmp4, ((panda$core$Object*) NULL));
+    panda$core$Weak$init$panda$core$Weak$T$Q($tmp4, ((panda$core$Object*) NULL));
     $tmp3 = $tmp4;
     $tmp2 = $tmp3;
     self->value = $tmp2;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp3));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
     {
         $tmp5 = self->value;
         panda$core$Weak* $tmp8 = (panda$core$Weak*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$Weak$class);
-        panda$core$Weak$init$panda$core$Weak$T($tmp8, ((panda$core$Object*) p_value));
+        panda$core$Weak$init$panda$core$Weak$T$Q($tmp8, ((panda$core$Object*) p_value));
         $tmp7 = $tmp8;
         $tmp6 = $tmp7;
         self->value = $tmp6;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp6));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp7));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp5));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp7));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp5));
     }
 }
 void org$pandalanguage$pandac$ClassDecl$Resolution$cleanup(org$pandalanguage$pandac$ClassDecl$Resolution* self) {
@@ -50,7 +50,7 @@ void org$pandalanguage$pandac$ClassDecl$Resolution$cleanup(org$pandalanguage$pan
         case -1: goto $l12;
     }
     $l12:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->value));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->value));
 }
 
 

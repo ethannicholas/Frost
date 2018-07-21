@@ -41,6 +41,6 @@ typedef struct org$pandalanguage$pandac$LLVMCodeGenerator {
     panda$collections$IdentityMap* choiceDataSizes;
 } org$pandalanguage$pandac$LLVMCodeGenerator;
 #include "panda/core/Class.h"
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[116]; } org$pandalanguage$pandac$LLVMCodeGenerator$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[117]; } org$pandalanguage$pandac$LLVMCodeGenerator$class_type;
 extern org$pandalanguage$pandac$LLVMCodeGenerator$class_type org$pandalanguage$pandac$LLVMCodeGenerator$class;
 

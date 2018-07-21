@@ -20,7 +20,7 @@ panda$core$String* org$pandalanguage$pandac$Config$pandaSourceDir$R$panda$core$S
     panda$core$String* $tmp3;
     $tmp3 = &$s4;
     $returnValue2 = $tmp3;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp3));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
     return $returnValue2;
 }
 panda$core$String* org$pandalanguage$pandac$Config$pandaLibDir$R$panda$core$String() {
@@ -28,7 +28,7 @@ panda$core$String* org$pandalanguage$pandac$Config$pandaLibDir$R$panda$core$Stri
     panda$core$String* $tmp7;
     $tmp7 = &$s8;
     $returnValue6 = $tmp7;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp7));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp7));
     return $returnValue6;
 }
 panda$core$String* org$pandalanguage$pandac$Config$llvmDir$R$panda$core$String() {
@@ -36,7 +36,7 @@ panda$core$String* org$pandalanguage$pandac$Config$llvmDir$R$panda$core$String()
     panda$core$String* $tmp11;
     $tmp11 = &$s12;
     $returnValue10 = $tmp11;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp11));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp11));
     return $returnValue10;
 }
 panda$core$String* org$pandalanguage$pandac$Config$llvmTriple$R$panda$core$String() {
@@ -44,7 +44,7 @@ panda$core$String* org$pandalanguage$pandac$Config$llvmTriple$R$panda$core$Strin
     panda$core$String* $tmp15;
     $tmp15 = &$s16;
     $returnValue14 = $tmp15;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp15));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp15));
     return $returnValue14;
 }
 panda$core$String* org$pandalanguage$pandac$Config$icuLibraries$R$panda$core$String() {
@@ -52,7 +52,7 @@ panda$core$String* org$pandalanguage$pandac$Config$icuLibraries$R$panda$core$Str
     panda$core$String* $tmp19;
     $tmp19 = &$s20;
     $returnValue18 = $tmp19;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp19));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp19));
     return $returnValue18;
 }
 void org$pandalanguage$pandac$Config$init(org$pandalanguage$pandac$Config* self) {

@@ -25,14 +25,14 @@ void org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$cleanup(org$pandalangu
         {
             $tmp9 = self;
             $match$796_58 = $tmp9;
-            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp9));
+            panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp9));
             panda$core$Int64$init$builtin_int64(&$tmp10, 0);
             panda$core$Bit $tmp11 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$796_58->$rawValue, $tmp10);
             if ($tmp11.value) {
             {
                 panda$core$String** $tmp13 = ((panda$core$String**) ((char*) $match$796_58->$data + 0));
                 _f012 = *$tmp13;
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) _f012));
+                panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) _f012));
             }
             }
             else {
@@ -42,7 +42,7 @@ void org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$cleanup(org$pandalangu
             {
                 panda$core$String** $tmp17 = ((panda$core$String**) ((char*) $match$796_58->$data + 0));
                 _f016 = *$tmp17;
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) _f016));
+                panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) _f016));
             }
             }
             }
@@ -50,7 +50,7 @@ void org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$cleanup(org$pandalangu
         $tmp7 = -1;
         goto $l5;
         $l5:;
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp9));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp9));
         switch ($tmp7) {
             case -1: goto $l18;
         }
@@ -75,8 +75,8 @@ void org$pandalanguage$pandac$pandadoc$Markdown$HTMLToken$init$panda$core$Int64$
         panda$core$String** $tmp22 = ((panda$core$String**) ((char*) self->$data + 0));
         $tmp23 = p_f0;
         *$tmp22 = $tmp23;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp23));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp20));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp23));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp20));
     }
 }
 

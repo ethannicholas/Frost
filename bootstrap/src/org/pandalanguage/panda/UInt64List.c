@@ -168,10 +168,10 @@ panda$core$String* org$pandalanguage$panda$UInt64List$convert$R$panda$core$Strin
     $tmp56 = $tmp66;
     $tmp55 = $tmp56;
     $returnValue54 = $tmp55;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp55));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp56));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp57));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp59));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp55));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp56));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp57));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp59));
     return $returnValue54;
 }
 void org$pandalanguage$panda$UInt64List$cleanup(org$pandalanguage$panda$UInt64List* self) {

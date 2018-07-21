@@ -35,21 +35,21 @@ void org$pandalanguage$pandac$LLVMCodeGenerator$InlineContext$init$panda$core$St
     $tmp3 = $tmp4;
     $tmp2 = $tmp3;
     self->returns = $tmp2;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp3));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
     {
         $tmp5 = self->varSuffix;
         $tmp6 = p_varSuffix;
         self->varSuffix = $tmp6;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp6));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp5));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp5));
     }
     {
         $tmp7 = self->selfRef;
         $tmp8 = p_selfRef;
         self->selfRef = $tmp8;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp8));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp7));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp8));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp7));
     }
     {
         $tmp9 = self->argRefs;
@@ -58,16 +58,16 @@ void org$pandalanguage$pandac$LLVMCodeGenerator$InlineContext$init$panda$core$St
         $tmp11 = $tmp12;
         $tmp10 = $tmp11;
         self->argRefs = $tmp10;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp10));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp11));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp9));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp10));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp11));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp9));
     }
     {
         $tmp13 = self->exitLabel;
         $tmp14 = p_exitLabel;
         self->exitLabel = $tmp14;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp14));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp13));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp14));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp13));
     }
 }
 void org$pandalanguage$pandac$LLVMCodeGenerator$InlineContext$cleanup(org$pandalanguage$pandac$LLVMCodeGenerator$InlineContext* self) {
@@ -82,10 +82,10 @@ void org$pandalanguage$pandac$LLVMCodeGenerator$InlineContext$cleanup(org$pandal
         case -1: goto $l18;
     }
     $l18:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->varSuffix));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->selfRef));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->argRefs));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->returns));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->exitLabel));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->varSuffix));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->selfRef));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->argRefs));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->returns));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->exitLabel));
 }
 

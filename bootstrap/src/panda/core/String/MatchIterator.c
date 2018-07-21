@@ -38,15 +38,15 @@ void panda$core$String$MatchIterator$init$panda$core$String$panda$core$String$pa
         $tmp3 = self->haystack;
         $tmp4 = p_haystack;
         self->haystack = $tmp4;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp4));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp3));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp4));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
     }
     {
         $tmp5 = self->needle;
         $tmp6 = p_needle;
         self->needle = $tmp6;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp6));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp5));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp5));
     }
     self->allowOverlaps = self->allowOverlaps;
     panda$core$String$Index$nullable $tmp7 = panda$core$String$indexOf$panda$core$String$R$panda$core$String$Index$Q(p_haystack, p_needle);
@@ -102,7 +102,7 @@ void panda$core$String$MatchIterator$cleanup(panda$core$String$MatchIterator* se
         case -1: goto $l29;
     }
     $l29:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->haystack));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->needle));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->haystack));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->needle));
 }
 

@@ -23,15 +23,15 @@ void panda$collections$ImmutableHashMap$Entry$init$panda$collections$ImmutableHa
         $tmp2 = self->key;
         $tmp3 = p_key;
         self->key = $tmp3;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp3));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
     }
     {
         $tmp4 = self->value;
         $tmp5 = p_value;
         self->value = $tmp5;
-        panda$core$Panda$ref$panda$core$Object($tmp5);
-        panda$core$Panda$unref$panda$core$Object($tmp4);
+        panda$core$Panda$ref$panda$core$Object$Q($tmp5);
+        panda$core$Panda$unref$panda$core$Object$Q($tmp4);
     }
 }
 void panda$collections$ImmutableHashMap$Entry$cleanup(panda$collections$ImmutableHashMap$Entry* self) {
@@ -46,8 +46,8 @@ void panda$collections$ImmutableHashMap$Entry$cleanup(panda$collections$Immutabl
         case -1: goto $l9;
     }
     $l9:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->key));
-    panda$core$Panda$unref$panda$core$Object(self->value);
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->next));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->key));
+    panda$core$Panda$unref$panda$core$Object$Q(self->value);
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->next));
 }
 

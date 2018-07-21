@@ -38,8 +38,8 @@ void panda$io$InputStream$LineIterator$init$panda$io$InputStream(panda$io$InputS
         $tmp2 = self->input;
         $tmp3 = p_input;
         self->input = $tmp3;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp3));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
     }
     (($fn4) self->$class->vtable[4])(self);
 }
@@ -69,18 +69,18 @@ panda$core$String* panda$io$InputStream$LineIterator$next$R$panda$core$String(pa
         $l17:;
         $tmp21 = self->_next;
         result20 = $tmp21;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp21));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp21));
         (($fn22) self->$class->vtable[4])(self);
         $tmp24 = result20;
         $returnValue23 = $tmp24;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp24));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp24));
         $tmp16 = 0;
         goto $l14;
         $l25:;
         return $returnValue23;
     }
     $l14:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result20));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) result20));
     result20 = NULL;
     switch ($tmp16) {
         case 0: goto $l25;
@@ -103,9 +103,9 @@ void panda$io$InputStream$LineIterator$readNext(panda$io$InputStream$LineIterato
         $tmp34 = $tmp36;
         $tmp33 = $tmp34;
         self->_next = $tmp33;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp33));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp34));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp32));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp33));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp34));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp32));
     }
 }
 void panda$io$InputStream$LineIterator$cleanup(panda$io$InputStream$LineIterator* self) {
@@ -120,8 +120,8 @@ void panda$io$InputStream$LineIterator$cleanup(panda$io$InputStream$LineIterator
         case -1: goto $l40;
     }
     $l40:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->input));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->_next));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->input));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->_next));
 }
 
 

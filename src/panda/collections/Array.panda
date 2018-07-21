@@ -22,7 +22,7 @@ class Array<T> : List<T> {
     var capacity:Int
 
     @private
-    var data:Pointer<T>
+    var data:Pointer<T?>
 
     ================================================================================================
     Creates a new, empty `Array`.
@@ -37,7 +37,7 @@ class Array<T> : List<T> {
     ================================================================================================
     init(capacity:Int) {
         self.capacity := capacity
-        data := Pointer<T>.alloc(capacity)
+        data := Pointer<T?>.alloc(capacity)
     }
 
     ================================================================================================
@@ -52,18 +52,14 @@ class Array<T> : List<T> {
 
     @private
     init(data:Pointer<T>, count:Int) {
-        self.data := data
+        self.data := data->Pointer<T?>
         self._count := count
         self.capacity := count
     }
 
     @override
     method cleanup() {
-        for i in 0 .. count {
-            if data[i] != null {
-                Panda.unref(data[i])
-            }
-        }
+        clear()
         data.destroy()
     }
 
@@ -128,7 +124,7 @@ class Array<T> : List<T> {
             self[i] := self[i + 1]
         }
         _count -= 1
-        data[_count] := null->T?
+        data[_count] := null
         return result
     }
 
@@ -136,7 +132,7 @@ class Array<T> : List<T> {
     method clear() {
         _count := 0
         for i in 0 .. capacity {
-            data[i] := null->T?
+            data[i] := null
         }
     }
 

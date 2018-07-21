@@ -40,8 +40,8 @@ void panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$regex$RegexT
         $tmp4 = self->array;
         $tmp5 = p_array;
         self->array = $tmp5;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp5));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp4));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp5));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp4));
     }
 }
 panda$core$Bit panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$regex$RegexToken$GT$get_done$R$panda$core$Bit(panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$regex$RegexToken$GT* self) {
@@ -90,7 +90,7 @@ void panda$collections$SpecializedArrayIterator$LTorg$pandalanguage$regex$RegexT
         case -1: goto $l30;
     }
     $l30:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->array));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->array));
 }
 
 

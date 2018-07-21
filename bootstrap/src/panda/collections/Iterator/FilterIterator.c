@@ -43,15 +43,15 @@ void panda$collections$Iterator$FilterIterator$init$panda$collections$Iterator$L
         $tmp2 = self->base;
         $tmp3 = p_base;
         self->base = $tmp3;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp3));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
     }
     {
         $tmp4 = self->filter;
         $tmp5 = p_filter;
         self->filter = $tmp5;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp5));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp4));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp5));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp4));
     }
     (($fn6) self->$class->vtable[2])(self);
 }
@@ -87,9 +87,9 @@ void panda$collections$Iterator$FilterIterator$getNext(panda$collections$Iterato
             $tmp16 = $tmp20;
             $tmp15 = $tmp16;
             self->nextValue = $tmp15;
-            panda$core$Panda$ref$panda$core$Object($tmp15);
-            panda$core$Panda$unref$panda$core$Object($tmp16);
-            panda$core$Panda$unref$panda$core$Object($tmp14);
+            panda$core$Panda$ref$panda$core$Object$Q($tmp15);
+            panda$core$Panda$unref$panda$core$Object$Q($tmp16);
+            panda$core$Panda$unref$panda$core$Object$Q($tmp14);
         }
     }
     if (self->filter->target) {
@@ -123,18 +123,18 @@ panda$core$Object* panda$collections$Iterator$FilterIterator$next$R$panda$collec
     {
         $tmp39 = self->nextValue;
         result38 = $tmp39;
-        panda$core$Panda$ref$panda$core$Object($tmp39);
+        panda$core$Panda$ref$panda$core$Object$Q($tmp39);
         (($fn40) self->$class->vtable[2])(self);
         $tmp42 = result38;
         $returnValue41 = $tmp42;
-        panda$core$Panda$ref$panda$core$Object($tmp42);
+        panda$core$Panda$ref$panda$core$Object$Q($tmp42);
         $tmp37 = 0;
         goto $l35;
         $l43:;
         return $returnValue41;
     }
     $l35:;
-    panda$core$Panda$unref$panda$core$Object(result38);
+    panda$core$Panda$unref$panda$core$Object$Q(result38);
     result38 = NULL;
     switch ($tmp37) {
         case 0: goto $l43;
@@ -159,8 +159,8 @@ void panda$collections$Iterator$FilterIterator$cleanup(panda$collections$Iterato
         case -1: goto $l53;
     }
     $l53:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->base));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->filter));
-    panda$core$Panda$unref$panda$core$Object(self->nextValue);
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->base));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->filter));
+    panda$core$Panda$unref$panda$core$Object$Q(self->nextValue);
 }
 

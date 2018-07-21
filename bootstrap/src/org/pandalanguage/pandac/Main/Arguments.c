@@ -42,8 +42,8 @@ void org$pandalanguage$pandac$Main$Arguments$init$panda$collections$ListView$LTp
         $tmp3 = self->args;
         $tmp4 = p_args;
         self->args = $tmp4;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp4));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp3));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp4));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
     }
 }
 panda$core$Bit org$pandalanguage$pandac$Main$Arguments$get_done$R$panda$core$Bit(org$pandalanguage$pandac$Main$Arguments* self) {
@@ -87,8 +87,8 @@ panda$core$String* org$pandalanguage$pandac$Main$Arguments$next$R$panda$core$Str
     $tmp23 = $tmp29;
     $tmp22 = ((panda$core$String*) $tmp23);
     $returnValue21 = $tmp22;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp22));
-    panda$core$Panda$unref$panda$core$Object($tmp23);
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp22));
+    panda$core$Panda$unref$panda$core$Object$Q($tmp23);
     return $returnValue21;
 }
 panda$core$String* org$pandalanguage$pandac$Main$Arguments$next$panda$core$String$R$panda$core$String(org$pandalanguage$pandac$Main$Arguments* self, panda$core$String* p_label) {
@@ -135,13 +135,13 @@ panda$core$String* org$pandalanguage$pandac$Main$Arguments$next$panda$core$Strin
         panda$core$String* $tmp59 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp36, $tmp42);
         $tmp35 = $tmp59;
         (($fn60) $tmp33->$class->vtable[19])($tmp33, $tmp35);
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp35));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp42));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp43));
-        panda$core$Panda$unref$panda$core$Object($tmp45);
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp36));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp37));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp33));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp35));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp42));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp43));
+        panda$core$Panda$unref$panda$core$Object$Q($tmp45);
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp36));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp37));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp33));
         panda$core$UInt8$init$builtin_uint8(&$tmp61, 1);
         panda$core$System$exit$panda$core$UInt8($tmp61);
     }
@@ -150,8 +150,8 @@ panda$core$String* org$pandalanguage$pandac$Main$Arguments$next$panda$core$Strin
     $tmp64 = $tmp66;
     $tmp63 = $tmp64;
     $returnValue62 = $tmp63;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp63));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp64));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp63));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp64));
     return $returnValue62;
 }
 void org$pandalanguage$pandac$Main$Arguments$cleanup(org$pandalanguage$pandac$Main$Arguments* self) {
@@ -166,6 +166,6 @@ void org$pandalanguage$pandac$Main$Arguments$cleanup(org$pandalanguage$pandac$Ma
         case -1: goto $l71;
     }
     $l71:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->args));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->args));
 }
 

@@ -402,8 +402,8 @@ panda$core$String* panda$core$Real32$convert$R$panda$core$String(panda$core$Real
     $tmp105 = $tmp107;
     $tmp104 = $tmp105;
     $returnValue103 = $tmp104;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp104));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp105));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp104));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp105));
     return $returnValue103;
 }
 void panda$core$Real32$cleanup(panda$core$Real32 self) {

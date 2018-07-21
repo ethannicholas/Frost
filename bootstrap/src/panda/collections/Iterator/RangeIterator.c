@@ -64,8 +64,8 @@ void panda$collections$Iterator$RangeIterator$init$panda$collections$Iterator$LT
         $tmp9 = self->base;
         $tmp10 = p_base;
         self->base = $tmp10;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp10));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp9));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp10));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp9));
     }
     if (((panda$core$Bit) { p_start.nonnull }).value) {
     {
@@ -99,7 +99,7 @@ void panda$collections$Iterator$RangeIterator$init$panda$collections$Iterator$LT
                 $fn35 $tmp34 = $tmp33->methods[1];
                 panda$core$Object* $tmp36 = $tmp34(p_base);
                 $tmp32 = $tmp36;
-                panda$core$Panda$unref$panda$core$Object($tmp32);
+                panda$core$Panda$unref$panda$core$Object$Q($tmp32);
             }
             }
         }
@@ -160,9 +160,9 @@ void panda$collections$Iterator$RangeIterator$init$panda$collections$Iterator$LT
             $tmp53 = $tmp57;
             $tmp52 = $tmp53;
             self->pending = $tmp52;
-            panda$core$Panda$ref$panda$core$Object($tmp52);
-            panda$core$Panda$unref$panda$core$Object($tmp53);
-            panda$core$Panda$unref$panda$core$Object($tmp51);
+            panda$core$Panda$ref$panda$core$Object$Q($tmp52);
+            panda$core$Panda$unref$panda$core$Object$Q($tmp53);
+            panda$core$Panda$unref$panda$core$Object$Q($tmp51);
         }
     }
     }
@@ -204,7 +204,7 @@ panda$core$Object* panda$collections$Iterator$RangeIterator$next$R$panda$collect
     {
         $tmp72 = self->pending;
         result71 = $tmp72;
-        panda$core$Panda$ref$panda$core$Object($tmp72);
+        panda$core$Panda$ref$panda$core$Object$Q($tmp72);
         panda$core$Int64$init$builtin_int64(&$tmp74, 0);
         panda$core$Bit$init$builtin_bit(&$tmp75, false);
         panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp73, $tmp74, self->step, $tmp75);
@@ -247,8 +247,8 @@ panda$core$Object* panda$collections$Iterator$RangeIterator$next$R$panda$collect
                     $tmp103 = self->pending;
                     $tmp104 = NULL;
                     self->pending = $tmp104;
-                    panda$core$Panda$ref$panda$core$Object($tmp104);
-                    panda$core$Panda$unref$panda$core$Object($tmp103);
+                    panda$core$Panda$ref$panda$core$Object$Q($tmp104);
+                    panda$core$Panda$unref$panda$core$Object$Q($tmp103);
                 }
                 goto $l83;
             }
@@ -264,9 +264,9 @@ panda$core$Object* panda$collections$Iterator$RangeIterator$next$R$panda$collect
                 $tmp107 = $tmp111;
                 $tmp106 = $tmp107;
                 self->pending = $tmp106;
-                panda$core$Panda$ref$panda$core$Object($tmp106);
-                panda$core$Panda$unref$panda$core$Object($tmp107);
-                panda$core$Panda$unref$panda$core$Object($tmp105);
+                panda$core$Panda$ref$panda$core$Object$Q($tmp106);
+                panda$core$Panda$unref$panda$core$Object$Q($tmp107);
+                panda$core$Panda$unref$panda$core$Object$Q($tmp105);
             }
         }
         $l84:;
@@ -282,14 +282,14 @@ panda$core$Object* panda$collections$Iterator$RangeIterator$next$R$panda$collect
         $l83:;
         $tmp119 = result71;
         $returnValue118 = $tmp119;
-        panda$core$Panda$ref$panda$core$Object($tmp119);
+        panda$core$Panda$ref$panda$core$Object$Q($tmp119);
         $tmp70 = 0;
         goto $l68;
         $l120:;
         return $returnValue118;
     }
     $l68:;
-    panda$core$Panda$unref$panda$core$Object(result71);
+    panda$core$Panda$unref$panda$core$Object$Q(result71);
     result71 = NULL;
     switch ($tmp70) {
         case 0: goto $l120;
@@ -314,7 +314,7 @@ void panda$collections$Iterator$RangeIterator$cleanup(panda$collections$Iterator
         case -1: goto $l130;
     }
     $l130:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->base));
-    panda$core$Panda$unref$panda$core$Object(self->pending);
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->base));
+    panda$core$Panda$unref$panda$core$Object$Q(self->pending);
 }
 

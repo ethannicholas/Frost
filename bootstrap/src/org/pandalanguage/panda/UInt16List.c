@@ -172,10 +172,10 @@ panda$core$String* org$pandalanguage$panda$UInt16List$convert$R$panda$core$Strin
     $tmp57 = $tmp67;
     $tmp56 = $tmp57;
     $returnValue55 = $tmp56;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp56));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp57));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp58));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp60));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp56));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp57));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp58));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp60));
     return $returnValue55;
 }
 void org$pandalanguage$panda$UInt16List$cleanup(org$pandalanguage$panda$UInt16List* self) {

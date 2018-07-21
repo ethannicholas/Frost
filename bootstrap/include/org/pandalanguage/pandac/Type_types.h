@@ -22,6 +22,6 @@ typedef struct org$pandalanguage$pandac$Type {
     panda$core$Weak* parameter;
 } org$pandalanguage$pandac$Type;
 #include "panda/core/Class.h"
-typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[22]; } org$pandalanguage$pandac$Type$class_type;
+typedef struct { panda$core$Class* cl; int32_t refCount; panda$core$String* name; panda$core$Class* super; ITable* itable; void* vtable[23]; } org$pandalanguage$pandac$Type$class_type;
 extern org$pandalanguage$pandac$Type$class_type org$pandalanguage$pandac$Type$class;
 

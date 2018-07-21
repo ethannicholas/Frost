@@ -196,10 +196,10 @@ panda$core$String* org$pandalanguage$panda$Int64List$convert$R$panda$core$String
     $tmp62 = $tmp72;
     $tmp61 = $tmp62;
     $returnValue60 = $tmp61;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp61));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp62));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp63));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp65));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp61));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp62));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp63));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp65));
     return $returnValue60;
 }
 void org$pandalanguage$panda$Int64List$cleanup(org$pandalanguage$panda$Int64List* self) {

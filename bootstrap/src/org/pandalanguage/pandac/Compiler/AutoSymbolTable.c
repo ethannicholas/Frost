@@ -23,7 +23,7 @@ void org$pandalanguage$pandac$Compiler$AutoSymbolTable$init$org$pandalanguage$pa
     org$pandalanguage$pandac$SymbolTable$init$org$pandalanguage$pandac$SymbolTable($tmp3, p_compiler->symbolTable);
     $tmp2 = $tmp3;
     org$pandalanguage$pandac$Compiler$AutoSymbolTable$init$org$pandalanguage$pandac$Compiler$org$pandalanguage$pandac$SymbolTable(self, p_compiler, $tmp2);
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
 }
 void org$pandalanguage$pandac$Compiler$AutoSymbolTable$init$org$pandalanguage$pandac$Compiler$org$pandalanguage$pandac$SymbolTable(org$pandalanguage$pandac$Compiler$AutoSymbolTable* self, org$pandalanguage$pandac$Compiler* p_compiler, org$pandalanguage$pandac$SymbolTable* p_symbolTable) {
     org$pandalanguage$pandac$Compiler* $tmp4;
@@ -41,29 +41,29 @@ void org$pandalanguage$pandac$Compiler$AutoSymbolTable$init$org$pandalanguage$pa
         $tmp4 = self->compiler;
         $tmp5 = p_compiler;
         self->compiler = $tmp5;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp5));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp4));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp5));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp4));
     }
     {
         $tmp6 = self->oldSymbolTable;
         $tmp7 = p_compiler->symbolTable;
         self->oldSymbolTable = $tmp7;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp7));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp6));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp7));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
     }
     {
         $tmp8 = self->newSymbolTable;
         $tmp9 = p_symbolTable;
         self->newSymbolTable = $tmp9;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp9));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp8));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp9));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp8));
     }
     {
         $tmp10 = p_compiler->symbolTable;
         $tmp11 = p_symbolTable;
         p_compiler->symbolTable = $tmp11;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp11));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp10));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp11));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp10));
     }
 }
 void org$pandalanguage$pandac$Compiler$AutoSymbolTable$cleanup(org$pandalanguage$pandac$Compiler$AutoSymbolTable* self) {
@@ -80,8 +80,8 @@ void org$pandalanguage$pandac$Compiler$AutoSymbolTable$cleanup(org$pandalanguage
             $tmp18 = self->compiler->symbolTable;
             $tmp19 = self->oldSymbolTable;
             self->compiler->symbolTable = $tmp19;
-            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp19));
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp18));
+            panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp19));
+            panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp18));
         }
     }
     $tmp14 = -1;
@@ -92,8 +92,8 @@ void org$pandalanguage$pandac$Compiler$AutoSymbolTable$cleanup(org$pandalanguage
         case -1: goto $l20;
     }
     $l20:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->compiler));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->oldSymbolTable));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->newSymbolTable));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->compiler));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->oldSymbolTable));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->newSymbolTable));
 }
 

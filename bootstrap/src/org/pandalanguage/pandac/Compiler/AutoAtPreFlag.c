@@ -22,8 +22,8 @@ void org$pandalanguage$pandac$Compiler$AutoAtPreFlag$init$org$pandalanguage$pand
         $tmp2 = self->compiler;
         $tmp3 = p_compiler;
         self->compiler = $tmp3;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp3));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
     }
     panda$core$Bit$init$builtin_bit(&$tmp4, true);
     p_compiler->inAtPre = $tmp4;
@@ -48,6 +48,6 @@ void org$pandalanguage$pandac$Compiler$AutoAtPreFlag$cleanup(org$pandalanguage$p
         case -1: goto $l12;
     }
     $l12:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->compiler));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->compiler));
 }
 

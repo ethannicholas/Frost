@@ -31,9 +31,9 @@ void org$pandalanguage$json$Lexer$start$panda$core$String(org$pandalanguage$json
         $tmp4 = $tmp5;
         $tmp3 = $tmp4;
         self->dfa = $tmp3;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp3));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp4));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp4));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
     }
 }
 panda$core$Int64* org$pandalanguage$json$Lexer$alloc$panda$core$Int64$panda$core$Int64$R$panda$unsafe$Pointer$LTpanda$core$Int64$GT(panda$core$Int64 p_count, panda$core$Int64 p_fill) {
@@ -2166,7 +2166,7 @@ void org$pandalanguage$json$Lexer$cleanup(org$pandalanguage$json$Lexer* self) {
         case -1: goto $l896;
     }
     $l896:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->dfa));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->dfa));
 }
 org$pandalanguage$json$Token org$pandalanguage$json$Lexer$next$R$org$pandalanguage$json$Token(org$pandalanguage$json$Lexer* self) {
     org$pandalanguage$plex$runtime$RawToken raw897;

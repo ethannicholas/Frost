@@ -23,8 +23,8 @@ void org$pandalanguage$pandac$parser$Parser$AutoSyntaxHighlight$init$org$pandala
         $tmp2 = self->parser;
         $tmp3 = p_parser;
         self->parser = $tmp3;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp3));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
     }
     self->kind = p_kind;
     if (((panda$core$Bit) { p_parser->syntaxHighlighter != NULL }).value) {
@@ -50,7 +50,7 @@ void org$pandalanguage$pandac$parser$Parser$AutoSyntaxHighlight$cleanup(org$pand
         case -1: goto $l9;
     }
     $l9:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->parser));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->parser));
 }
 
 

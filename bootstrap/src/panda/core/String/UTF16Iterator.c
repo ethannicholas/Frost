@@ -42,8 +42,8 @@ void panda$core$String$UTF16Iterator$init$panda$core$String(panda$core$String$UT
         $tmp4 = self->str;
         $tmp5 = p_str;
         self->str = $tmp5;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp5));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp4));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp5));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp4));
     }
     panda$core$Bit$init$builtin_bit(&$tmp6, false);
     if ($tmp6.value) goto $l7; else goto $l8;
@@ -92,6 +92,6 @@ void panda$core$String$UTF16Iterator$cleanup(panda$core$String$UTF16Iterator* se
         case -1: goto $l31;
     }
     $l31:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->str));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->str));
 }
 

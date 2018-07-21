@@ -28,8 +28,8 @@ void panda$io$MemoryInputStream$init$panda$core$String(panda$io$MemoryInputStrea
         $tmp4 = self->string;
         $tmp5 = p_source;
         self->string = $tmp5;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp5));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp4));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp5));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp4));
     }
     panda$io$InputStream$init(((panda$io$InputStream*) self));
 }
@@ -65,7 +65,7 @@ void panda$io$MemoryInputStream$cleanup(panda$io$MemoryInputStream* self) {
         case -1: goto $l17;
     }
     $l17:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->string));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->string));
 }
 
 

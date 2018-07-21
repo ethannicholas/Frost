@@ -146,49 +146,49 @@ void org$pandalanguage$pandac$ClassDecl$init$panda$io$File$org$pandalanguage$pan
     self->classResolutionCache = NULL;
     $tmp2 = NULL;
     self->rawSuper = $tmp2;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
     panda$collections$Array* $tmp5 = (panda$collections$Array*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$Array$class);
     panda$collections$Array$init($tmp5);
     $tmp4 = $tmp5;
     $tmp3 = $tmp4;
     self->rawInterfaces = $tmp3;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp3));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp4));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp4));
     panda$collections$Array* $tmp8 = (panda$collections$Array*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$Array$class);
     panda$collections$Array$init($tmp8);
     $tmp7 = $tmp8;
     $tmp6 = $tmp7;
     self->fields = $tmp6;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp6));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp7));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp7));
     panda$collections$Array* $tmp11 = (panda$collections$Array*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$Array$class);
     panda$collections$Array$init($tmp11);
     $tmp10 = $tmp11;
     $tmp9 = $tmp10;
     self->methods = $tmp9;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp9));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp10));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp9));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp10));
     panda$collections$Array* $tmp14 = (panda$collections$Array*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$Array$class);
     panda$collections$Array$init($tmp14);
     $tmp13 = $tmp14;
     $tmp12 = $tmp13;
     self->classes = $tmp12;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp12));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp13));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp12));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp13));
     panda$collections$Array* $tmp17 = (panda$collections$Array*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$Array$class);
     panda$collections$Array$init($tmp17);
     $tmp16 = $tmp17;
     $tmp15 = $tmp16;
     self->choiceCases = $tmp15;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp15));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp16));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp15));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp16));
     panda$core$Weak* $tmp20 = (panda$core$Weak*) pandaObjectAlloc(24, (panda$core$Class*) &panda$core$Weak$class);
-    panda$core$Weak$init$panda$core$Weak$T($tmp20, ((panda$core$Object*) NULL));
+    panda$core$Weak$init$panda$core$Weak$T$Q($tmp20, ((panda$core$Object*) NULL));
     $tmp19 = $tmp20;
     $tmp18 = $tmp19;
     self->owner = $tmp18;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp18));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp19));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp18));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp19));
     panda$core$Bit$init$builtin_bit(&$tmp21, false);
     self->symbolTableResolved = $tmp21;
     panda$core$Bit$init$builtin_bit(&$tmp22, true);
@@ -198,29 +198,29 @@ void org$pandalanguage$pandac$ClassDecl$init$panda$io$File$org$pandalanguage$pan
     $tmp24 = $tmp25;
     $tmp23 = $tmp24;
     self->virtualMethods = $tmp23;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp23));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp24));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp23));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp24));
     panda$collections$HashMap* $tmp28 = (panda$collections$HashMap*) pandaObjectAlloc(56, (panda$core$Class*) &panda$collections$HashMap$class);
     panda$collections$HashMap$init($tmp28);
     $tmp27 = $tmp28;
     $tmp26 = $tmp27;
     self->classResolutionCache = $tmp26;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp26));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp27));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp26));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp27));
     self->position = p_position;
     {
         $tmp29 = self->name;
         $tmp30 = p_name;
         self->name = $tmp30;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp30));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp29));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp30));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp29));
     }
     {
         $tmp31 = self->source;
         $tmp32 = p_source;
         self->source = $tmp32;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp32));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp31));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp32));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp31));
     }
     {
         $tmp33 = self->aliases;
@@ -229,23 +229,23 @@ void org$pandalanguage$pandac$ClassDecl$init$panda$io$File$org$pandalanguage$pan
         $tmp35 = $tmp36;
         $tmp34 = ((panda$collections$MapView*) $tmp35);
         self->aliases = $tmp34;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp34));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp35));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp33));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp34));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp35));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp33));
     }
     {
         $tmp37 = self->doccomment;
         $tmp38 = p_doccomment;
         self->doccomment = $tmp38;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp38));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp37));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp38));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp37));
     }
     {
         $tmp39 = self->annotations;
         $tmp40 = p_annotations;
         self->annotations = $tmp40;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp40));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp39));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp40));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp39));
     }
     self->classKind = p_kind;
     {
@@ -255,16 +255,16 @@ void org$pandalanguage$pandac$ClassDecl$init$panda$io$File$org$pandalanguage$pan
         $tmp43 = $tmp44;
         $tmp42 = $tmp43;
         self->declaredSupers = $tmp42;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp42));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp43));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp41));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp42));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp43));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp41));
     }
     {
         $tmp45 = self->parameters;
         $tmp46 = ((panda$collections$List*) p_parameters);
         self->parameters = $tmp46;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp46));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp45));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp46));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp45));
     }
     {
         $tmp47 = self->symbolTable;
@@ -273,17 +273,17 @@ void org$pandalanguage$pandac$ClassDecl$init$panda$io$File$org$pandalanguage$pan
         $tmp49 = $tmp50;
         $tmp48 = $tmp49;
         self->symbolTable = $tmp48;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp48));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp49));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp47));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp48));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp49));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp47));
     }
     panda$core$Int64$init$builtin_int64(&$tmp52, 0);
     org$pandalanguage$pandac$Compiler$Resolution$init$panda$core$Int64(&$tmp51, $tmp52);
     self->resolved = $tmp51;
-    panda$core$Object* $tmp54 = panda$core$Weak$get$R$panda$core$Weak$T(self->symbolTable->compiler);
+    panda$core$Object* $tmp54 = panda$core$Weak$get$R$panda$core$Weak$T$Q(self->symbolTable->compiler);
     $tmp53 = $tmp54;
     panda$collections$Stack$push$panda$collections$Stack$T(((org$pandalanguage$pandac$Compiler*) $tmp53)->currentClass, ((panda$core$Object*) self));
-    panda$core$Panda$unref$panda$core$Object($tmp53);
+    panda$core$Panda$unref$panda$core$Object$Q($tmp53);
     {
         int $tmp57;
         {
@@ -296,8 +296,8 @@ void org$pandalanguage$pandac$ClassDecl$init$panda$io$File$org$pandalanguage$pan
             $tmp60 = $tmp64;
             $tmp59 = $tmp60;
             Iter$127$958 = $tmp59;
-            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp59));
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp60));
+            panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp59));
+            panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp60));
             $l65:;
             ITable* $tmp68 = Iter$127$958->$class->itable;
             while ($tmp68->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
@@ -320,14 +320,14 @@ void org$pandalanguage$pandac$ClassDecl$init$panda$io$File$org$pandalanguage$pan
                     $tmp78 = $tmp82;
                     $tmp77 = ((org$pandalanguage$pandac$ClassDecl$GenericParameter*) $tmp78);
                     p76 = $tmp77;
-                    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp77));
-                    panda$core$Panda$unref$panda$core$Object($tmp78);
+                    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp77));
+                    panda$core$Panda$unref$panda$core$Object$Q($tmp78);
                     org$pandalanguage$pandac$SymbolTable$add$org$pandalanguage$pandac$Symbol(self->symbolTable, ((org$pandalanguage$pandac$Symbol*) p76));
                 }
                 $tmp75 = -1;
                 goto $l73;
                 $l73:;
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) p76));
+                panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) p76));
                 p76 = NULL;
                 switch ($tmp75) {
                     case -1: goto $l83;
@@ -340,17 +340,17 @@ void org$pandalanguage$pandac$ClassDecl$init$panda$io$File$org$pandalanguage$pan
         $tmp57 = -1;
         goto $l55;
         $l55:;
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$127$958));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) Iter$127$958));
         Iter$127$958 = NULL;
         switch ($tmp57) {
             case -1: goto $l84;
         }
         $l84:;
     }
-    panda$core$Object* $tmp86 = panda$core$Weak$get$R$panda$core$Weak$T(self->symbolTable->compiler);
+    panda$core$Object* $tmp86 = panda$core$Weak$get$R$panda$core$Weak$T$Q(self->symbolTable->compiler);
     $tmp85 = $tmp86;
     panda$collections$Stack$pop$panda$collections$Stack$T(((org$pandalanguage$pandac$Compiler*) $tmp85)->currentClass, ((panda$core$Object*) self));
-    panda$core$Panda$unref$panda$core$Object($tmp85);
+    panda$core$Panda$unref$panda$core$Object$Q($tmp85);
 }
 panda$core$String* org$pandalanguage$pandac$ClassDecl$simpleName$R$panda$core$String(org$pandalanguage$pandac$ClassDecl* self) {
     panda$core$String$Index$nullable index87;
@@ -366,7 +366,7 @@ panda$core$String* org$pandalanguage$pandac$ClassDecl$simpleName$R$panda$core$St
     {
         $tmp91 = self->name;
         $returnValue90 = $tmp91;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp91));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp91));
         return $returnValue90;
     }
     }
@@ -377,8 +377,8 @@ panda$core$String* org$pandalanguage$pandac$ClassDecl$simpleName$R$panda$core$St
     $tmp94 = $tmp98;
     $tmp93 = $tmp94;
     $returnValue90 = $tmp93;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp93));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp94));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp93));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp94));
     return $returnValue90;
 }
 org$pandalanguage$pandac$Type* org$pandalanguage$pandac$ClassDecl$type$R$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$ClassDecl* self) {
@@ -398,8 +398,8 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$ClassDecl$type$R$org$pan
     $tmp102 = $tmp103;
     $tmp101 = $tmp102;
     $returnValue100 = $tmp101;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp101));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp102));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp101));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp102));
     return $returnValue100;
 }
 org$pandalanguage$pandac$Type* org$pandalanguage$pandac$ClassDecl$typeWithParameters$R$org$pandalanguage$pandac$Type(org$pandalanguage$pandac$ClassDecl* self) {
@@ -442,8 +442,8 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$ClassDecl$typeWithParame
             $tmp120 = $tmp121;
             $tmp119 = $tmp120;
             $returnValue118 = $tmp119;
-            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp119));
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp120));
+            panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp119));
+            panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp120));
             $tmp111 = 0;
             goto $l109;
             $l122:;
@@ -455,8 +455,8 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$ClassDecl$typeWithParame
         $tmp126 = $tmp127;
         $tmp125 = $tmp126;
         finalParameters124 = $tmp125;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp125));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp126));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp125));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp126));
         {
             int $tmp130;
             {
@@ -469,8 +469,8 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$ClassDecl$typeWithParame
                 $tmp133 = $tmp137;
                 $tmp132 = $tmp133;
                 Iter$150$9131 = $tmp132;
-                panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp132));
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp133));
+                panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp132));
+                panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp133));
                 $l138:;
                 ITable* $tmp141 = Iter$150$9131->$class->itable;
                 while ($tmp141->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
@@ -493,8 +493,8 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$ClassDecl$typeWithParame
                         $tmp151 = $tmp155;
                         $tmp150 = ((org$pandalanguage$pandac$ClassDecl$GenericParameter*) $tmp151);
                         p149 = $tmp150;
-                        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp150));
-                        panda$core$Panda$unref$panda$core$Object($tmp151);
+                        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp150));
+                        panda$core$Panda$unref$panda$core$Object$Q($tmp151);
                         org$pandalanguage$pandac$Type* $tmp157 = (org$pandalanguage$pandac$Type*) pandaObjectAlloc(88, (panda$core$Class*) &org$pandalanguage$pandac$Type$class);
                         panda$core$String* $tmp161 = panda$core$String$$ADD$panda$core$String$R$panda$core$String(self->name, &$s160);
                         $tmp159 = $tmp161;
@@ -507,14 +507,14 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$ClassDecl$typeWithParame
                         org$pandalanguage$pandac$Type$init$panda$core$String$org$pandalanguage$pandac$Type$Kind$org$pandalanguage$pandac$Position$panda$core$Bit($tmp157, $tmp158, $tmp163, $tmp165, $tmp166);
                         $tmp156 = $tmp157;
                         panda$collections$Array$add$panda$collections$Array$T(finalParameters124, ((panda$core$Object*) $tmp156));
-                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp156));
-                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp158));
-                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp159));
+                        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp156));
+                        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp158));
+                        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp159));
                     }
                     $tmp148 = -1;
                     goto $l146;
                     $l146:;
-                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) p149));
+                    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) p149));
                     p149 = NULL;
                     switch ($tmp148) {
                         case -1: goto $l167;
@@ -527,7 +527,7 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$ClassDecl$typeWithParame
             $tmp130 = -1;
             goto $l128;
             $l128:;
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$150$9131));
+            panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) Iter$150$9131));
             Iter$150$9131 = NULL;
             switch ($tmp130) {
                 case -1: goto $l168;
@@ -540,16 +540,16 @@ org$pandalanguage$pandac$Type* org$pandalanguage$pandac$ClassDecl$typeWithParame
         $tmp170 = $tmp173;
         $tmp169 = $tmp170;
         $returnValue118 = $tmp169;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp169));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp170));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp171));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp169));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp170));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp171));
         $tmp111 = 1;
         goto $l109;
         $l174:;
         return $returnValue118;
     }
     $l109:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) finalParameters124));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) finalParameters124));
     finalParameters124 = NULL;
     switch ($tmp111) {
         case 1: goto $l174;
@@ -645,15 +645,15 @@ panda$core$String* org$pandalanguage$pandac$ClassDecl$convert$R$panda$core$Strin
         $tmp191 = $tmp192;
         $tmp190 = $tmp191;
         result189 = $tmp190;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp190));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp191));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp193));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp194));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp195));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp196));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp190));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp191));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp193));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp194));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp195));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp196));
         $tmp204 = &$s205;
         separator203 = $tmp204;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp204));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp204));
         if (((panda$core$Bit) { self->rawSuper != NULL }).value) {
         {
             panda$core$String* $tmp210 = panda$core$String$convert$R$panda$core$String(separator203);
@@ -665,16 +665,16 @@ panda$core$String* org$pandalanguage$pandac$ClassDecl$convert$R$panda$core$Strin
             panda$core$String* $tmp215 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp207, &$s214);
             $tmp206 = $tmp215;
             panda$core$MutableString$append$panda$core$String(result189, $tmp206);
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp206));
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp207));
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp208));
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp209));
+            panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp206));
+            panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp207));
+            panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp208));
+            panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp209));
             {
                 $tmp216 = separator203;
                 $tmp217 = &$s218;
                 separator203 = $tmp217;
-                panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp217));
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp216));
+                panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp217));
+                panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp216));
             }
         }
         }
@@ -690,8 +690,8 @@ panda$core$String* org$pandalanguage$pandac$ClassDecl$convert$R$panda$core$Strin
                 $tmp224 = $tmp228;
                 $tmp223 = $tmp224;
                 Iter$169$9222 = $tmp223;
-                panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp223));
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp224));
+                panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp223));
+                panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp224));
                 $l229:;
                 ITable* $tmp232 = Iter$169$9222->$class->itable;
                 while ($tmp232->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
@@ -714,8 +714,8 @@ panda$core$String* org$pandalanguage$pandac$ClassDecl$convert$R$panda$core$Strin
                         $tmp242 = $tmp246;
                         $tmp241 = ((org$pandalanguage$pandac$Type*) $tmp242);
                         intf240 = $tmp241;
-                        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp241));
-                        panda$core$Panda$unref$panda$core$Object($tmp242);
+                        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp241));
+                        panda$core$Panda$unref$panda$core$Object$Q($tmp242);
                         panda$core$String* $tmp251 = panda$core$String$convert$R$panda$core$String(separator203);
                         $tmp250 = $tmp251;
                         panda$core$String* $tmp253 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp250, &$s252);
@@ -725,22 +725,22 @@ panda$core$String* org$pandalanguage$pandac$ClassDecl$convert$R$panda$core$Strin
                         panda$core$String* $tmp256 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp248, &$s255);
                         $tmp247 = $tmp256;
                         panda$core$MutableString$append$panda$core$String(result189, $tmp247);
-                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp247));
-                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp248));
-                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp249));
-                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp250));
+                        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp247));
+                        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp248));
+                        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp249));
+                        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp250));
                         {
                             $tmp257 = separator203;
                             $tmp258 = &$s259;
                             separator203 = $tmp258;
-                            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp258));
-                            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp257));
+                            panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp258));
+                            panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp257));
                         }
                     }
                     $tmp239 = -1;
                     goto $l237;
                     $l237:;
-                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) intf240));
+                    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) intf240));
                     intf240 = NULL;
                     switch ($tmp239) {
                         case -1: goto $l260;
@@ -753,7 +753,7 @@ panda$core$String* org$pandalanguage$pandac$ClassDecl$convert$R$panda$core$Strin
             $tmp221 = -1;
             goto $l219;
             $l219:;
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$169$9222));
+            panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) Iter$169$9222));
             Iter$169$9222 = NULL;
             switch ($tmp221) {
                 case -1: goto $l261;
@@ -773,8 +773,8 @@ panda$core$String* org$pandalanguage$pandac$ClassDecl$convert$R$panda$core$Strin
                 $tmp268 = $tmp272;
                 $tmp267 = $tmp268;
                 Iter$174$9266 = $tmp267;
-                panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp267));
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp268));
+                panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp267));
+                panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp268));
                 $l273:;
                 ITable* $tmp276 = Iter$174$9266->$class->itable;
                 while ($tmp276->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
@@ -797,20 +797,20 @@ panda$core$String* org$pandalanguage$pandac$ClassDecl$convert$R$panda$core$Strin
                         $tmp286 = $tmp290;
                         $tmp285 = ((org$pandalanguage$pandac$ClassDecl*) $tmp286);
                         cl284 = $tmp285;
-                        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp285));
-                        panda$core$Panda$unref$panda$core$Object($tmp286);
+                        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp285));
+                        panda$core$Panda$unref$panda$core$Object$Q($tmp286);
                         panda$core$String* $tmp293 = org$pandalanguage$pandac$ClassDecl$convert$R$panda$core$String(cl284);
                         $tmp292 = $tmp293;
                         panda$core$String* $tmp295 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp292, &$s294);
                         $tmp291 = $tmp295;
                         panda$core$MutableString$append$panda$core$String(result189, $tmp291);
-                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp291));
-                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp292));
+                        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp291));
+                        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp292));
                     }
                     $tmp283 = -1;
                     goto $l281;
                     $l281:;
-                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) cl284));
+                    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) cl284));
                     cl284 = NULL;
                     switch ($tmp283) {
                         case -1: goto $l296;
@@ -823,7 +823,7 @@ panda$core$String* org$pandalanguage$pandac$ClassDecl$convert$R$panda$core$Strin
             $tmp265 = -1;
             goto $l263;
             $l263:;
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$174$9266));
+            panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) Iter$174$9266));
             Iter$174$9266 = NULL;
             switch ($tmp265) {
                 case -1: goto $l297;
@@ -842,8 +842,8 @@ panda$core$String* org$pandalanguage$pandac$ClassDecl$convert$R$panda$core$Strin
                 $tmp303 = $tmp307;
                 $tmp302 = $tmp303;
                 Iter$177$9301 = $tmp302;
-                panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp302));
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp303));
+                panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp302));
+                panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp303));
                 $l308:;
                 ITable* $tmp311 = Iter$177$9301->$class->itable;
                 while ($tmp311->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
@@ -866,20 +866,20 @@ panda$core$String* org$pandalanguage$pandac$ClassDecl$convert$R$panda$core$Strin
                         $tmp321 = $tmp325;
                         $tmp320 = ((org$pandalanguage$pandac$FieldDecl*) $tmp321);
                         f319 = $tmp320;
-                        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp320));
-                        panda$core$Panda$unref$panda$core$Object($tmp321);
+                        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp320));
+                        panda$core$Panda$unref$panda$core$Object$Q($tmp321);
                         panda$core$String* $tmp328 = org$pandalanguage$pandac$FieldDecl$convert$R$panda$core$String(f319);
                         $tmp327 = $tmp328;
                         panda$core$String* $tmp330 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp327, &$s329);
                         $tmp326 = $tmp330;
                         panda$core$MutableString$append$panda$core$String(result189, $tmp326);
-                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp326));
-                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp327));
+                        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp326));
+                        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp327));
                     }
                     $tmp318 = -1;
                     goto $l316;
                     $l316:;
-                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) f319));
+                    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) f319));
                     f319 = NULL;
                     switch ($tmp318) {
                         case -1: goto $l331;
@@ -892,7 +892,7 @@ panda$core$String* org$pandalanguage$pandac$ClassDecl$convert$R$panda$core$Strin
             $tmp300 = -1;
             goto $l298;
             $l298:;
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$177$9301));
+            panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) Iter$177$9301));
             Iter$177$9301 = NULL;
             switch ($tmp300) {
                 case -1: goto $l332;
@@ -911,8 +911,8 @@ panda$core$String* org$pandalanguage$pandac$ClassDecl$convert$R$panda$core$Strin
                 $tmp338 = $tmp342;
                 $tmp337 = $tmp338;
                 Iter$180$9336 = $tmp337;
-                panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp337));
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp338));
+                panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp337));
+                panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp338));
                 $l343:;
                 ITable* $tmp346 = Iter$180$9336->$class->itable;
                 while ($tmp346->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
@@ -935,20 +935,20 @@ panda$core$String* org$pandalanguage$pandac$ClassDecl$convert$R$panda$core$Strin
                         $tmp356 = $tmp360;
                         $tmp355 = ((org$pandalanguage$pandac$MethodDecl*) $tmp356);
                         m354 = $tmp355;
-                        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp355));
-                        panda$core$Panda$unref$panda$core$Object($tmp356);
+                        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp355));
+                        panda$core$Panda$unref$panda$core$Object$Q($tmp356);
                         panda$core$String* $tmp363 = org$pandalanguage$pandac$MethodDecl$convert$R$panda$core$String(m354);
                         $tmp362 = $tmp363;
                         panda$core$String* $tmp365 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp362, &$s364);
                         $tmp361 = $tmp365;
                         panda$core$MutableString$append$panda$core$String(result189, $tmp361);
-                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp361));
-                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp362));
+                        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp361));
+                        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp362));
                     }
                     $tmp353 = -1;
                     goto $l351;
                     $l351:;
-                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) m354));
+                    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) m354));
                     m354 = NULL;
                     switch ($tmp353) {
                         case -1: goto $l366;
@@ -961,7 +961,7 @@ panda$core$String* org$pandalanguage$pandac$ClassDecl$convert$R$panda$core$Strin
             $tmp335 = -1;
             goto $l333;
             $l333:;
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$180$9336));
+            panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) Iter$180$9336));
             Iter$180$9336 = NULL;
             switch ($tmp335) {
                 case -1: goto $l367;
@@ -975,16 +975,16 @@ panda$core$String* org$pandalanguage$pandac$ClassDecl$convert$R$panda$core$Strin
         $tmp372 = $tmp373;
         $tmp371 = $tmp372;
         $returnValue370 = $tmp371;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp371));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp372));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp371));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp372));
         $tmp188 = 0;
         goto $l186;
         $l374:;
         return $returnValue370;
     }
     $l186:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator203));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result189));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) separator203));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) result189));
     result189 = NULL;
     separator203 = NULL;
     switch ($tmp188) {
@@ -1010,22 +1010,22 @@ void org$pandalanguage$pandac$ClassDecl$cleanup(org$pandalanguage$pandac$ClassDe
         case -1: goto $l384;
     }
     $l384:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->source));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->name));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->aliases));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->doccomment));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->annotations));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->declaredSupers));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->rawSuper));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->rawInterfaces));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->parameters));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->fields));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->methods));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->classes));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->choiceCases));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->owner));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->symbolTable));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->virtualMethods));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->classResolutionCache));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->source));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->name));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->aliases));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->doccomment));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->annotations));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->declaredSupers));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->rawSuper));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->rawInterfaces));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->parameters));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->fields));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->methods));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->classes));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->choiceCases));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->owner));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->symbolTable));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->virtualMethods));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->classResolutionCache));
 }
 

@@ -37,15 +37,15 @@ void panda$io$IndentedOutputStream$init$panda$io$OutputStream(panda$io$IndentedO
     self->indentSize = $tmp3;
     $tmp4 = &$s5;
     self->indent = $tmp4;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp4));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp4));
     panda$core$Bit$init$builtin_bit(&$tmp6, true);
     self->atLineStart = $tmp6;
     {
         $tmp7 = self->out;
         $tmp8 = p_out;
         self->out = $tmp8;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp8));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp7));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp8));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp7));
     }
     panda$io$OutputStream$init(((panda$io$OutputStream*) self));
 }
@@ -132,9 +132,9 @@ void panda$io$IndentedOutputStream$indentIfNeeded(panda$io$IndentedOutputStream*
                 $tmp36 = $tmp39;
                 $tmp35 = $tmp36;
                 self->indent = $tmp35;
-                panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp35));
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp36));
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp34));
+                panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp35));
+                panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp36));
+                panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp34));
             }
         }
         }
@@ -154,8 +154,8 @@ void panda$io$IndentedOutputStream$cleanup(panda$io$IndentedOutputStream* self) 
         case -1: goto $l44;
     }
     $l44:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->indent));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->out));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->indent));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->out));
 }
 
 

@@ -51,7 +51,7 @@ panda$core$String* org$pandalanguage$pandac$Annotations$Expression$convert$R$pan
     {
         $tmp6 = self;
         $match$31_135 = $tmp6;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp6));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
         panda$core$Int64$init$builtin_int64(&$tmp7, 0);
         panda$core$Bit $tmp8 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$31_135->$rawValue, $tmp7);
         if ($tmp8.value) {
@@ -64,9 +64,9 @@ panda$core$String* org$pandalanguage$pandac$Annotations$Expression$convert$R$pan
             $tmp13 = $tmp18;
             $tmp12 = $tmp13;
             $returnValue11 = $tmp12;
-            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp12));
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp13));
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp14));
+            panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp12));
+            panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp13));
+            panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp14));
             $tmp4 = 0;
             goto $l2;
             $l19:;
@@ -86,9 +86,9 @@ panda$core$String* org$pandalanguage$pandac$Annotations$Expression$convert$R$pan
             $tmp26 = $tmp31;
             $tmp25 = $tmp26;
             $returnValue11 = $tmp25;
-            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp25));
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp26));
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp27));
+            panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp25));
+            panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp26));
+            panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp27));
             $tmp4 = 1;
             goto $l2;
             $l32:;
@@ -108,9 +108,9 @@ panda$core$String* org$pandalanguage$pandac$Annotations$Expression$convert$R$pan
             $tmp39 = $tmp44;
             $tmp38 = $tmp39;
             $returnValue11 = $tmp38;
-            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp38));
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp39));
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp40));
+            panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp38));
+            panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp39));
+            panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp40));
             $tmp4 = 2;
             goto $l2;
             $l45:;
@@ -130,9 +130,9 @@ panda$core$String* org$pandalanguage$pandac$Annotations$Expression$convert$R$pan
             $tmp52 = $tmp57;
             $tmp51 = $tmp52;
             $returnValue11 = $tmp51;
-            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp51));
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp52));
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp53));
+            panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp51));
+            panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp52));
+            panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp53));
             $tmp4 = 3;
             goto $l2;
             $l58:;
@@ -146,7 +146,7 @@ panda$core$String* org$pandalanguage$pandac$Annotations$Expression$convert$R$pan
     $tmp4 = -1;
     goto $l2;
     $l2:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp6));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
     switch ($tmp4) {
         case 3: goto $l58;
         case -1: goto $l60;
@@ -183,7 +183,7 @@ void org$pandalanguage$pandac$Annotations$Expression$cleanup(org$pandalanguage$p
         {
             $tmp72 = self;
             $match$23_571 = $tmp72;
-            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp72));
+            panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp72));
             panda$core$Int64$init$builtin_int64(&$tmp73, 0);
             panda$core$Bit $tmp74 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$23_571->$rawValue, $tmp73);
             if ($tmp74.value) {
@@ -192,8 +192,8 @@ void org$pandalanguage$pandac$Annotations$Expression$cleanup(org$pandalanguage$p
                 _f075 = *$tmp76;
                 org$pandalanguage$pandac$ASTNode** $tmp78 = ((org$pandalanguage$pandac$ASTNode**) ((char*) $match$23_571->$data + 8));
                 _f177 = *$tmp78;
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) _f075));
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) _f177));
+                panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) _f075));
+                panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) _f177));
             }
             }
             else {
@@ -205,8 +205,8 @@ void org$pandalanguage$pandac$Annotations$Expression$cleanup(org$pandalanguage$p
                 _f081 = *$tmp82;
                 org$pandalanguage$pandac$ASTNode** $tmp84 = ((org$pandalanguage$pandac$ASTNode**) ((char*) $match$23_571->$data + 8));
                 _f183 = *$tmp84;
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) _f081));
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) _f183));
+                panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) _f081));
+                panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) _f183));
             }
             }
             else {
@@ -218,8 +218,8 @@ void org$pandalanguage$pandac$Annotations$Expression$cleanup(org$pandalanguage$p
                 _f087 = *$tmp88;
                 org$pandalanguage$pandac$ASTNode** $tmp90 = ((org$pandalanguage$pandac$ASTNode**) ((char*) $match$23_571->$data + 8));
                 _f189 = *$tmp90;
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) _f087));
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) _f189));
+                panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) _f087));
+                panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) _f189));
             }
             }
             else {
@@ -231,8 +231,8 @@ void org$pandalanguage$pandac$Annotations$Expression$cleanup(org$pandalanguage$p
                 _f093 = *$tmp94;
                 org$pandalanguage$pandac$ASTNode** $tmp96 = ((org$pandalanguage$pandac$ASTNode**) ((char*) $match$23_571->$data + 8));
                 _f195 = *$tmp96;
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) _f093));
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) _f195));
+                panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) _f093));
+                panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) _f195));
             }
             }
             }
@@ -242,7 +242,7 @@ void org$pandalanguage$pandac$Annotations$Expression$cleanup(org$pandalanguage$p
         $tmp70 = -1;
         goto $l68;
         $l68:;
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp72));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp72));
         switch ($tmp70) {
             case -1: goto $l97;
         }
@@ -269,8 +269,8 @@ void org$pandalanguage$pandac$Annotations$Expression$init$panda$core$Int64$panda
         panda$core$String** $tmp101 = ((panda$core$String**) ((char*) self->$data + 0));
         $tmp102 = p_f0;
         *$tmp101 = $tmp102;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp102));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp99));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp102));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp99));
     }
     {
         org$pandalanguage$pandac$ASTNode** $tmp104 = ((org$pandalanguage$pandac$ASTNode**) ((char*) self->$data + 8));
@@ -278,8 +278,8 @@ void org$pandalanguage$pandac$Annotations$Expression$init$panda$core$Int64$panda
         org$pandalanguage$pandac$ASTNode** $tmp105 = ((org$pandalanguage$pandac$ASTNode**) ((char*) self->$data + 8));
         $tmp106 = p_f1;
         *$tmp105 = $tmp106;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp106));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp103));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp106));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp103));
     }
 }
 

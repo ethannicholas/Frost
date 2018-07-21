@@ -23,6 +23,8 @@ class IR {
         ============================================================================================
         CAST(Value, Type)
 
+        COMMENT(String)
+
         GET_CHOICE_FIELD_POINTER(Value, ChoiceCase, Int)
 
         ============================================================================================
@@ -160,6 +162,8 @@ class IR {
                     return "branch \{id}"
                 when CAST(value, type):
                     return "cast \{value}->\{type}"
+                when COMMENT(text):
+                    return "-- \{text}"
                 when CONDITIONAL_BRANCH(test, ifTrue, ifFalse):
                     return "branch \{test}, \{ifTrue}, \{ifFalse}"
                 when CONSTRUCT(cl):

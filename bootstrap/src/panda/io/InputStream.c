@@ -370,8 +370,8 @@ panda$core$String* panda$io$InputStream$readFully$R$panda$core$String(panda$io$I
         $tmp149 = $tmp150;
         $tmp148 = $tmp149;
         result147 = $tmp148;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp148));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp149));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp148));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp149));
         buffer151 = ((panda$core$Int8*) pandaZAlloc(BUFFER_SIZE145.value * 1));
         $l152:;
         while (true) {
@@ -394,15 +394,15 @@ panda$core$String* panda$io$InputStream$readFully$R$panda$core$String(panda$io$I
         $tmp160 = $tmp161;
         $tmp159 = $tmp160;
         $returnValue158 = $tmp159;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp159));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp160));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp159));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp160));
         $tmp144 = 0;
         goto $l142;
         $l162:;
         return $returnValue158;
     }
     $l142:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result147));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) result147));
     result147 = NULL;
     switch ($tmp144) {
         case 0: goto $l162;
@@ -442,8 +442,8 @@ panda$core$String* panda$io$InputStream$readLine$R$panda$core$String$Q(panda$io$
         $tmp174 = $tmp175;
         $tmp173 = $tmp174;
         result172 = $tmp173;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp173));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp174));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp173));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp174));
         $l176:;
         while (true) {
         {
@@ -457,7 +457,7 @@ panda$core$String* panda$io$InputStream$readLine$R$panda$core$String$Q(panda$io$
                 {
                     $tmp184 = NULL;
                     $returnValue183 = $tmp184;
-                    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp184));
+                    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp184));
                     $tmp171 = 0;
                     goto $l169;
                     $l185:;
@@ -515,15 +515,15 @@ panda$core$String* panda$io$InputStream$readLine$R$panda$core$String$Q(panda$io$
         $tmp211 = $tmp212;
         $tmp210 = $tmp211;
         $returnValue183 = $tmp210;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp210));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp211));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp210));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp211));
         $tmp171 = 1;
         goto $l169;
         $l213:;
         return $returnValue183;
     }
     $l169:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result172));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) result172));
     result172 = NULL;
     switch ($tmp171) {
         case 0: goto $l185;
@@ -582,8 +582,8 @@ panda$collections$Iterator* panda$io$InputStream$lines$R$panda$collections$Itera
     $tmp238 = $tmp239;
     $tmp237 = ((panda$collections$Iterator*) $tmp238);
     $returnValue236 = $tmp237;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp237));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp238));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp237));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp238));
     return $returnValue236;
 }
 void panda$io$InputStream$init(panda$io$InputStream* self) {

@@ -32,15 +32,15 @@ void org$pandalanguage$pandac$ClassDecl$GenericParameter$init$org$pandalanguage$
         $tmp2 = self->owner;
         $tmp3 = p_owner;
         self->owner = $tmp3;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp3));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
     }
     {
         $tmp4 = self->bound;
         $tmp5 = p_bound;
         self->bound = $tmp5;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp5));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp4));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp5));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp4));
     }
     panda$core$Int64$init$builtin_int64(&$tmp7, 3);
     org$pandalanguage$pandac$Symbol$Kind$init$panda$core$Int64(&$tmp6, $tmp7);
@@ -69,13 +69,13 @@ panda$core$String* org$pandalanguage$pandac$ClassDecl$GenericParameter$convert$R
     $tmp10 = $tmp24;
     $tmp9 = $tmp10;
     $returnValue8 = $tmp9;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp9));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp10));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp11));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp12));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp13));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp14));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp15));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp9));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp10));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp11));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp12));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp13));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp14));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp15));
     return $returnValue8;
 }
 void org$pandalanguage$pandac$ClassDecl$GenericParameter$cleanup(org$pandalanguage$pandac$ClassDecl$GenericParameter* self) {
@@ -90,7 +90,7 @@ void org$pandalanguage$pandac$ClassDecl$GenericParameter$cleanup(org$pandalangua
         case -1: goto $l29;
     }
     $l29:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->owner));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->bound));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->owner));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->bound));
 }
 

@@ -24,16 +24,16 @@ void org$pandalanguage$pandac$Compiler$Error$init$panda$io$File$org$pandalanguag
         $tmp2 = self->file;
         $tmp3 = p_file;
         self->file = $tmp3;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp3));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
     }
     self->position = p_position;
     {
         $tmp4 = self->message;
         $tmp5 = p_message;
         self->message = $tmp5;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp5));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp4));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp5));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp4));
     }
 }
 void org$pandalanguage$pandac$Compiler$Error$cleanup(org$pandalanguage$pandac$Compiler$Error* self) {
@@ -48,7 +48,7 @@ void org$pandalanguage$pandac$Compiler$Error$cleanup(org$pandalanguage$pandac$Co
         case -1: goto $l9;
     }
     $l9:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->file));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->message));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->file));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->message));
 }
 

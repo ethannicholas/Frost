@@ -26,14 +26,14 @@ void org$pandalanguage$pandac$LLVMCodeGenerator$ExtraEffect$cleanup(org$pandalan
         {
             $tmp9 = self;
             $match$148_58 = $tmp9;
-            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp9));
+            panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp9));
             panda$core$Int64$init$builtin_int64(&$tmp10, 0);
             panda$core$Bit $tmp11 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$148_58->$rawValue, $tmp10);
             if ($tmp11.value) {
             {
                 org$pandalanguage$pandac$IRNode** $tmp13 = ((org$pandalanguage$pandac$IRNode**) ((char*) $match$148_58->$data + 0));
                 _f012 = *$tmp13;
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) _f012));
+                panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) _f012));
             }
             }
             else {
@@ -43,7 +43,7 @@ void org$pandalanguage$pandac$LLVMCodeGenerator$ExtraEffect$cleanup(org$pandalan
             {
                 panda$core$String** $tmp17 = ((panda$core$String**) ((char*) $match$148_58->$data + 0));
                 _f016 = *$tmp17;
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) _f016));
+                panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) _f016));
             }
             }
             }
@@ -51,7 +51,7 @@ void org$pandalanguage$pandac$LLVMCodeGenerator$ExtraEffect$cleanup(org$pandalan
         $tmp7 = -1;
         goto $l5;
         $l5:;
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp9));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp9));
         switch ($tmp7) {
             case -1: goto $l18;
         }
@@ -76,8 +76,8 @@ void org$pandalanguage$pandac$LLVMCodeGenerator$ExtraEffect$init$panda$core$Int6
         org$pandalanguage$pandac$IRNode** $tmp22 = ((org$pandalanguage$pandac$IRNode**) ((char*) self->$data + 0));
         $tmp23 = p_f0;
         *$tmp22 = $tmp23;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp23));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp20));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp23));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp20));
     }
 }
 void org$pandalanguage$pandac$LLVMCodeGenerator$ExtraEffect$init$panda$core$Int64$panda$core$String(org$pandalanguage$pandac$LLVMCodeGenerator$ExtraEffect* self, panda$core$Int64 p_rv, panda$core$String* p_f0) {
@@ -90,8 +90,8 @@ void org$pandalanguage$pandac$LLVMCodeGenerator$ExtraEffect$init$panda$core$Int6
         panda$core$String** $tmp26 = ((panda$core$String**) ((char*) self->$data + 0));
         $tmp27 = p_f0;
         *$tmp26 = $tmp27;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp27));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp24));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp27));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp24));
     }
 }
 

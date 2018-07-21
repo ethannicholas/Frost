@@ -28,7 +28,7 @@ void panda$json$JSON$PathKey$cleanup(panda$json$JSON$PathKey* self) {
         {
             $tmp9 = self;
             $match$45_58 = $tmp9;
-            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp9));
+            panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp9));
             panda$core$Int64$init$builtin_int64(&$tmp10, 0);
             panda$core$Bit $tmp11 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$45_58->$rawValue, $tmp10);
             if ($tmp11.value) {
@@ -37,7 +37,7 @@ void panda$json$JSON$PathKey$cleanup(panda$json$JSON$PathKey* self) {
                 _f012 = *$tmp13;
                 panda$core$String$Index* $tmp15 = ((panda$core$String$Index*) ((char*) $match$45_58->$data + 8));
                 _f114 = *$tmp15;
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) _f012));
+                panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) _f012));
             }
             }
             else {
@@ -56,7 +56,7 @@ void panda$json$JSON$PathKey$cleanup(panda$json$JSON$PathKey* self) {
         $tmp7 = -1;
         goto $l5;
         $l5:;
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp9));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp9));
         switch ($tmp7) {
             case -1: goto $l22;
         }
@@ -81,8 +81,8 @@ void panda$json$JSON$PathKey$init$panda$core$Int64$panda$core$String$panda$core$
         panda$core$String** $tmp26 = ((panda$core$String**) ((char*) self->$data + 0));
         $tmp27 = p_f0;
         *$tmp26 = $tmp27;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp27));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp24));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp27));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp24));
     }
     panda$core$String$Index* $tmp28 = ((panda$core$String$Index*) ((char*) self->$data + 8));
     *$tmp28 = p_f1;

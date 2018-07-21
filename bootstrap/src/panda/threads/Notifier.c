@@ -23,14 +23,14 @@ void panda$threads$Notifier$init$panda$threads$Lock(panda$threads$Notifier* self
     $tmp3 = $tmp4;
     $tmp2 = $tmp3;
     self->lock = $tmp2;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp3));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
     {
         $tmp5 = self->lock;
         $tmp6 = p_lock;
         self->lock = $tmp6;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp6));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp5));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp5));
     }
     panda$threads$Notifier$create(self);
 }
@@ -47,7 +47,7 @@ void panda$threads$Notifier$cleanup(panda$threads$Notifier* self) {
         case -1: goto $l10;
     }
     $l10:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->lock));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->lock));
 }
 
 

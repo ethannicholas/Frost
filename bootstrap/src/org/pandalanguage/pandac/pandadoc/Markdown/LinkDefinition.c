@@ -21,15 +21,15 @@ void org$pandalanguage$pandac$pandadoc$Markdown$LinkDefinition$init$panda$core$S
         $tmp2 = self->url;
         $tmp3 = p_url;
         self->url = $tmp3;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp3));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
     }
     {
         $tmp4 = self->title;
         $tmp5 = p_title;
         self->title = $tmp5;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp5));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp4));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp5));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp4));
     }
 }
 void org$pandalanguage$pandac$pandadoc$Markdown$LinkDefinition$cleanup(org$pandalanguage$pandac$pandadoc$Markdown$LinkDefinition* self) {
@@ -44,7 +44,7 @@ void org$pandalanguage$pandac$pandadoc$Markdown$LinkDefinition$cleanup(org$panda
         case -1: goto $l9;
     }
     $l9:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->url));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->title));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->url));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->title));
 }
 

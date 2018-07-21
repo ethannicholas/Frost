@@ -40,8 +40,8 @@ panda$core$String* org$pandalanguage$pandac$pandadoc$Protector$encode$panda$core
         $tmp7 = $tmp8;
         $tmp6 = ((panda$core$String*) $tmp7);
         result5 = $tmp6;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp6));
-        panda$core$Panda$unref$panda$core$Object($tmp7);
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
+        panda$core$Panda$unref$panda$core$Object$Q($tmp7);
         if (((panda$core$Bit) { result5 == NULL }).value) {
         {
             {
@@ -50,9 +50,9 @@ panda$core$String* org$pandalanguage$pandac$pandadoc$Protector$encode$panda$core
                 $tmp11 = $tmp13;
                 $tmp10 = $tmp11;
                 result5 = $tmp10;
-                panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp10));
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp11));
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp9));
+                panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp10));
+                panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp11));
+                panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp9));
             }
             panda$collections$HashMap$$IDXEQ$panda$collections$HashMap$K$panda$collections$HashMap$V(self->encodeMap, ((panda$collections$Key*) p_s), ((panda$core$Object*) result5));
             panda$collections$HashMap$$IDXEQ$panda$collections$HashMap$K$panda$collections$HashMap$V(self->decodeMap, ((panda$collections$Key*) result5), ((panda$core$Object*) p_s));
@@ -60,14 +60,14 @@ panda$core$String* org$pandalanguage$pandac$pandadoc$Protector$encode$panda$core
         }
         $tmp15 = result5;
         $returnValue14 = $tmp15;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp15));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp15));
         $tmp4 = 0;
         goto $l2;
         $l16:;
         return $returnValue14;
     }
     $l2:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result5));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) result5));
     result5 = NULL;
     switch ($tmp4) {
         case 0: goto $l16;
@@ -88,8 +88,8 @@ panda$core$String* org$pandalanguage$pandac$pandadoc$Protector$decode$panda$core
     $tmp25 = $tmp26;
     $tmp24 = ((panda$core$String*) $tmp25);
     $returnValue23 = $tmp24;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp24));
-    panda$core$Panda$unref$panda$core$Object($tmp25);
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp24));
+    panda$core$Panda$unref$panda$core$Object$Q($tmp25);
     return $returnValue23;
 }
 panda$core$String* org$pandalanguage$pandac$pandadoc$Protector$randomToken$R$panda$core$String(org$pandalanguage$pandac$pandadoc$Protector* self) {
@@ -112,14 +112,14 @@ panda$core$String* org$pandalanguage$pandac$pandadoc$Protector$randomToken$R$pan
         LENGTH31 = $tmp32;
         $tmp34 = &$s35;
         SAFE_CHARS33 = $tmp34;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp34));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp34));
         panda$core$MutableString* $tmp39 = (panda$core$MutableString*) pandaObjectAlloc(48, (panda$core$Class*) &panda$core$MutableString$class);
         panda$core$MutableString$init($tmp39);
         $tmp38 = $tmp39;
         $tmp37 = $tmp38;
         result36 = $tmp37;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp37));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp38));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp37));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp38));
         panda$core$Int64$init$builtin_int64(&$tmp41, 0);
         panda$core$Bit$init$builtin_bit(&$tmp42, false);
         panda$core$Range$LTpanda$core$Int64$GT$init$panda$core$Int64$panda$core$Int64$panda$core$Bit(&$tmp40, $tmp41, LENGTH31, $tmp42);
@@ -159,16 +159,16 @@ panda$core$String* org$pandalanguage$pandac$pandadoc$Protector$randomToken$R$pan
         $tmp70 = $tmp71;
         $tmp69 = $tmp70;
         $returnValue68 = $tmp69;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp69));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp70));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp69));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp70));
         $tmp30 = 0;
         goto $l28;
         $l72:;
         return $returnValue68;
     }
     $l28:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result36));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) SAFE_CHARS33));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) result36));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) SAFE_CHARS33));
     SAFE_CHARS33 = NULL;
     result36 = NULL;
     switch ($tmp30) {
@@ -197,21 +197,21 @@ void org$pandalanguage$pandac$pandadoc$Protector$init(org$pandalanguage$pandac$p
     $tmp80 = $tmp81;
     $tmp79 = $tmp80;
     self->encodeMap = $tmp79;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp79));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp80));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp79));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp80));
     panda$collections$HashMap* $tmp84 = (panda$collections$HashMap*) pandaObjectAlloc(56, (panda$core$Class*) &panda$collections$HashMap$class);
     panda$collections$HashMap$init($tmp84);
     $tmp83 = $tmp84;
     $tmp82 = $tmp83;
     self->decodeMap = $tmp82;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp82));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp83));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp82));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp83));
     panda$math$Random* $tmp87 = panda$math$Random$default$R$panda$math$Random();
     $tmp86 = $tmp87;
     $tmp85 = $tmp86;
     self->random = $tmp85;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp85));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp86));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp85));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp86));
 }
 void org$pandalanguage$pandac$pandadoc$Protector$cleanup(org$pandalanguage$pandac$pandadoc$Protector* self) {
     int $tmp90;
@@ -225,8 +225,8 @@ void org$pandalanguage$pandac$pandadoc$Protector$cleanup(org$pandalanguage$panda
         case -1: goto $l91;
     }
     $l91:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->encodeMap));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->decodeMap));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->random));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->encodeMap));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->decodeMap));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->random));
 }
 

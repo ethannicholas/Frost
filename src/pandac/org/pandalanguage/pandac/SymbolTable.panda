@@ -134,7 +134,9 @@ class SymbolTable {
             for p in parents {
                 result := merge(result, p[name])
             }
-            merged[name] := result
+            if result != null {
+                merged[name] := result
+            }
         }
         return result
     }

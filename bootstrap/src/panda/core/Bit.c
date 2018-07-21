@@ -102,7 +102,7 @@ panda$core$String* panda$core$Bit$convert$R$panda$core$String(panda$core$Bit sel
     {
         $tmp4 = &$s5;
         $returnValue3 = $tmp4;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp4));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp4));
         return $returnValue3;
     }
     }
@@ -110,7 +110,7 @@ panda$core$String* panda$core$Bit$convert$R$panda$core$String(panda$core$Bit sel
     {
         $tmp7 = &$s8;
         $returnValue3 = $tmp7;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp7));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp7));
         return $returnValue3;
     }
     }
@@ -211,8 +211,8 @@ panda$core$String* panda$core$Bit$format$panda$core$String$R$panda$core$String(p
         $tmp51 = $tmp53;
         $tmp50 = $tmp51;
         s49 = $tmp50;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp50));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp51));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp50));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp51));
         ITable* $tmp54 = ((panda$collections$CollectionView*) s49)->$class->itable;
         while ($tmp54->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
             $tmp54 = $tmp54->next;
@@ -237,8 +237,8 @@ panda$core$String* panda$core$Bit$format$panda$core$String$R$panda$core$String(p
             $tmp71 = $tmp73;
             $tmp70 = ((panda$core$String*) $tmp71);
             $returnValue69 = $tmp70;
-            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp70));
-            panda$core$Panda$unref$panda$core$Object($tmp71);
+            panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp70));
+            panda$core$Panda$unref$panda$core$Object$Q($tmp71);
             $tmp48 = 0;
             goto $l46;
             $l74:;
@@ -250,15 +250,15 @@ panda$core$String* panda$core$Bit$format$panda$core$String$R$panda$core$String(p
         $tmp77 = $tmp79;
         $tmp76 = ((panda$core$String*) $tmp77);
         $returnValue69 = $tmp76;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp76));
-        panda$core$Panda$unref$panda$core$Object($tmp77);
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp76));
+        panda$core$Panda$unref$panda$core$Object$Q($tmp77);
         $tmp48 = 1;
         goto $l46;
         $l80:;
         return $returnValue69;
     }
     $l46:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) s49));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) s49));
     s49 = NULL;
     switch ($tmp48) {
         case 1: goto $l80;

@@ -46,8 +46,8 @@ void panda$core$String$Match$init$panda$core$Matcher(panda$core$String$Match* se
         $tmp9 = $tmp10;
         $tmp8 = $tmp9;
         g7 = $tmp8;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp8));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp9));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp8));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp9));
         panda$core$Int64$init$builtin_int64(&$tmp12, 0);
         panda$core$Matcher$get_groupCount$R$panda$core$Int64(&$tmp13, p_m);
         panda$core$Bit$init$builtin_bit(&$tmp14, false);
@@ -66,7 +66,7 @@ void panda$core$String$Match$init$panda$core$Matcher(panda$core$String$Match* se
             panda$core$String* $tmp29 = panda$core$Matcher$group$panda$core$Int64$R$panda$core$String$Q(p_m, i15);
             $tmp28 = $tmp29;
             panda$collections$Array$add$panda$collections$Array$T(g7, ((panda$core$Object*) $tmp28));
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp28));
+            panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp28));
         }
         $l23:;
         int64_t $tmp31 = $tmp18 - i15.value;
@@ -85,15 +85,15 @@ void panda$core$String$Match$init$panda$core$Matcher(panda$core$String$Match* se
             $tmp38 = $tmp39;
             $tmp37 = $tmp38;
             self->groups = $tmp37;
-            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp37));
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp38));
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp36));
+            panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp37));
+            panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp38));
+            panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp36));
         }
     }
     $tmp4 = -1;
     goto $l2;
     $l2:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) g7));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) g7));
     g7 = NULL;
     switch ($tmp4) {
         case -1: goto $l40;
@@ -116,10 +116,10 @@ panda$core$String* panda$core$String$Match$convert$R$panda$core$String(panda$cor
     $tmp43 = $tmp51;
     $tmp42 = $tmp43;
     $returnValue41 = $tmp42;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp42));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp43));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp44));
-    panda$core$Panda$unref$panda$core$Object($tmp46);
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp42));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp43));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp44));
+    panda$core$Panda$unref$panda$core$Object$Q($tmp46);
     return $returnValue41;
 }
 void panda$core$String$Match$cleanup(panda$core$String$Match* self) {
@@ -134,6 +134,6 @@ void panda$core$String$Match$cleanup(panda$core$String$Match* self) {
         case -1: goto $l56;
     }
     $l56:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->groups));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->groups));
 }
 

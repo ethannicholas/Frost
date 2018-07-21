@@ -44,13 +44,13 @@ void panda$collections$ImmutableHashMap$EntryIterator$init$panda$collections$Imm
     self->bucket = $tmp2;
     $tmp3 = NULL;
     self->entry = $tmp3;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp3));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
     {
         $tmp4 = self->map;
         $tmp5 = p_map;
         self->map = $tmp5;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp5));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp4));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp5));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp4));
     }
     $l6:;
     panda$core$Bit $tmp10 = panda$core$Int64$$LT$panda$core$Int64$R$panda$core$Bit(self->bucket, p_map->bucketCount);
@@ -76,8 +76,8 @@ void panda$collections$ImmutableHashMap$EntryIterator$init$panda$collections$Imm
             $tmp17 = self->entry;
             $tmp18 = p_map->contents[self->bucket.value];
             self->entry = $tmp18;
-            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp18));
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp17));
+            panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp18));
+            panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp17));
         }
     }
     }
@@ -126,13 +126,13 @@ panda$collections$ImmutableHashMap$Entry* panda$collections$ImmutableHashMap$Ent
         $l39:;
         $tmp43 = self->entry;
         result42 = $tmp43;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp43));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp43));
         {
             $tmp44 = self->entry;
             $tmp45 = self->entry->next;
             self->entry = $tmp45;
-            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp45));
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp44));
+            panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp45));
+            panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp44));
         }
         $l46:;
         bool $tmp48 = ((panda$core$Bit) { self->entry == NULL }).value;
@@ -152,22 +152,22 @@ panda$collections$ImmutableHashMap$Entry* panda$collections$ImmutableHashMap$Ent
                 $tmp53 = self->entry;
                 $tmp54 = self->map->contents[self->bucket.value];
                 self->entry = $tmp54;
-                panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp54));
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp53));
+                panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp54));
+                panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp53));
             }
         }
         goto $l46;
         $l47:;
         $tmp56 = result42;
         $returnValue55 = $tmp56;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp56));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp56));
         $tmp34 = 0;
         goto $l32;
         $l57:;
         return $returnValue55;
     }
     $l32:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result42));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) result42));
     result42 = NULL;
     switch ($tmp34) {
         case 0: goto $l57;
@@ -192,7 +192,7 @@ void panda$collections$ImmutableHashMap$EntryIterator$cleanup(panda$collections$
         case -1: goto $l67;
     }
     $l67:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->map));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->entry));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->map));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->entry));
 }
 

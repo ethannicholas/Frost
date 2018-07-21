@@ -24,15 +24,15 @@ void org$pandalanguage$pandac$Pair$init$org$pandalanguage$pandac$Pair$A$org$pand
         $tmp2 = self->first;
         $tmp3 = p_first;
         self->first = $tmp3;
-        panda$core$Panda$ref$panda$core$Object($tmp3);
-        panda$core$Panda$unref$panda$core$Object($tmp2);
+        panda$core$Panda$ref$panda$core$Object$Q($tmp3);
+        panda$core$Panda$unref$panda$core$Object$Q($tmp2);
     }
     {
         $tmp4 = self->second;
         $tmp5 = p_second;
         self->second = $tmp5;
-        panda$core$Panda$ref$panda$core$Object($tmp5);
-        panda$core$Panda$unref$panda$core$Object($tmp4);
+        panda$core$Panda$ref$panda$core$Object$Q($tmp5);
+        panda$core$Panda$unref$panda$core$Object$Q($tmp4);
     }
 }
 panda$core$String* org$pandalanguage$pandac$Pair$convert$R$panda$core$String(org$pandalanguage$pandac$Pair* self) {
@@ -52,11 +52,11 @@ panda$core$String* org$pandalanguage$pandac$Pair$convert$R$panda$core$String(org
     $tmp8 = $tmp18;
     $tmp7 = $tmp8;
     $returnValue6 = $tmp7;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp7));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp8));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp9));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp10));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp11));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp7));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp8));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp9));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp10));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp11));
     return $returnValue6;
 }
 void org$pandalanguage$pandac$Pair$cleanup(org$pandalanguage$pandac$Pair* self) {
@@ -71,8 +71,8 @@ void org$pandalanguage$pandac$Pair$cleanup(org$pandalanguage$pandac$Pair* self) 
         case -1: goto $l23;
     }
     $l23:;
-    panda$core$Panda$unref$panda$core$Object(self->first);
-    panda$core$Panda$unref$panda$core$Object(self->second);
+    panda$core$Panda$unref$panda$core$Object$Q(self->first);
+    panda$core$Panda$unref$panda$core$Object$Q(self->second);
 }
 
 

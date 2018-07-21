@@ -38,19 +38,19 @@ panda$threads$Thread* panda$threads$Thread$start$$LP$RP$EQ$AM$GT$ST$LP$RP$R$pand
         $tmp7 = $tmp8;
         $tmp6 = $tmp7;
         result5 = $tmp6;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp6));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp7));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp7));
         panda$threads$Thread$run$$LP$RP$EQ$AM$GT$LP$RP$builtin_bit(result5, ((panda$core$MutableMethod*) p_run), true);
         $tmp10 = result5;
         $returnValue9 = $tmp10;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp10));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp10));
         $tmp4 = 0;
         goto $l2;
         $l11:;
         return $returnValue9;
     }
     $l2:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result5));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) result5));
     result5 = NULL;
     switch ($tmp4) {
         case 0: goto $l11;
@@ -76,19 +76,19 @@ panda$threads$Thread* panda$threads$Thread$start$$LP$RP$EQ$AM$GT$ST$LP$RP$panda$
         $tmp23 = $tmp24;
         $tmp22 = $tmp23;
         result21 = $tmp22;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp22));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp23));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp22));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp23));
         panda$threads$Thread$run$$LP$RP$EQ$AM$GT$LP$RP$builtin_bit(result21, ((panda$core$MutableMethod*) p_run), p_preventsExit.value);
         $tmp26 = result21;
         $returnValue25 = $tmp26;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp26));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp26));
         $tmp20 = 0;
         goto $l18;
         $l27:;
         return $returnValue25;
     }
     $l18:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result21));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) result21));
     result21 = NULL;
     switch ($tmp20) {
         case 0: goto $l27;
@@ -114,19 +114,19 @@ panda$threads$Thread* panda$threads$Thread$unsafeStart$$LP$RP$EQ$AM$GT$LP$RP$R$p
         $tmp39 = $tmp40;
         $tmp38 = $tmp39;
         result37 = $tmp38;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp38));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp39));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp38));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp39));
         panda$threads$Thread$run$$LP$RP$EQ$AM$GT$LP$RP$builtin_bit(result37, p_run, true);
         $tmp42 = result37;
         $returnValue41 = $tmp42;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp42));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp42));
         $tmp36 = 0;
         goto $l34;
         $l43:;
         return $returnValue41;
     }
     $l34:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result37));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) result37));
     result37 = NULL;
     switch ($tmp36) {
         case 0: goto $l43;
@@ -152,19 +152,19 @@ panda$threads$Thread* panda$threads$Thread$unsafeStart$$LP$RP$EQ$AM$GT$LP$RP$pan
         $tmp55 = $tmp56;
         $tmp54 = $tmp55;
         result53 = $tmp54;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp54));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp55));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp54));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp55));
         panda$threads$Thread$run$$LP$RP$EQ$AM$GT$LP$RP$builtin_bit(result53, p_run, p_preventsExit.value);
         $tmp58 = result53;
         $returnValue57 = $tmp58;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp58));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp58));
         $tmp52 = 0;
         goto $l50;
         $l59:;
         return $returnValue57;
     }
     $l50:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result53));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) result53));
     result53 = NULL;
     switch ($tmp52) {
         case 0: goto $l59;

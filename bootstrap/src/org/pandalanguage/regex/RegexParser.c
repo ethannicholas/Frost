@@ -61,21 +61,21 @@ void org$pandalanguage$regex$RegexParser$init$panda$threads$MessageQueue$LTorg$p
     $tmp3 = $tmp4;
     $tmp2 = $tmp3;
     self->lexer = $tmp2;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp3));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
     panda$collections$SpecializedArray$LTorg$pandalanguage$regex$RegexToken$GT* $tmp7 = (panda$collections$SpecializedArray$LTorg$pandalanguage$regex$RegexToken$GT*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$SpecializedArray$LTorg$pandalanguage$regex$RegexToken$GT$class);
     panda$collections$SpecializedArray$LTorg$pandalanguage$regex$RegexToken$GT$init($tmp7);
     $tmp6 = $tmp7;
     $tmp5 = $tmp6;
     self->pushbackBuffer = $tmp5;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp5));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp6));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp5));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
     {
         $tmp8 = self->errors;
         $tmp9 = p_errors;
         self->errors = $tmp9;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp9));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp8));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp9));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp8));
     }
 }
 void org$pandalanguage$regex$RegexParser$start$panda$io$File$panda$core$String(org$pandalanguage$regex$RegexParser* self, panda$io$File* p_path, panda$core$String* p_source) {
@@ -88,15 +88,15 @@ void org$pandalanguage$regex$RegexParser$start$panda$io$File$panda$core$String(o
         $tmp10 = self->path;
         $tmp11 = p_path;
         self->path = $tmp11;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp11));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp10));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp11));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp10));
     }
     {
         $tmp12 = self->source;
         $tmp13 = p_source;
         self->source = $tmp13;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp13));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp12));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp13));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp12));
     }
     panda$collections$SpecializedArray$LTorg$pandalanguage$regex$RegexToken$GT$clear(self->pushbackBuffer);
 }
@@ -222,11 +222,11 @@ panda$core$Bit org$pandalanguage$regex$RegexParser$expect$org$pandalanguage$rege
     panda$core$String* $tmp76 = panda$core$String$$ADD$panda$core$String$R$panda$core$String($tmp65, &$s75);
     $tmp64 = $tmp76;
     org$pandalanguage$regex$RegexParser$error$org$pandalanguage$regex$RegexToken$panda$core$String(self, result58, $tmp64);
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp64));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp65));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp72));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp66));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp67));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp64));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp65));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp72));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp66));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp67));
     panda$core$Bit$init$builtin_bit(&$tmp77, false);
     $returnValue61 = $tmp77;
     return $returnValue61;
@@ -237,7 +237,7 @@ void org$pandalanguage$regex$RegexParser$error$org$pandalanguage$regex$RegexToke
     org$pandalanguage$pandac$Compiler$Error$init$panda$io$File$org$pandalanguage$pandac$Position$panda$core$String($tmp80, self->path, p_token.position, p_msg);
     $tmp79 = $tmp80;
     panda$threads$MessageQueue$post$panda$threads$MessageQueue$T(self->errors, ((panda$core$Immutable*) $tmp79));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp79));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp79));
 }
 panda$core$String* org$pandalanguage$regex$RegexParser$text$org$pandalanguage$regex$RegexToken$R$panda$core$String(org$pandalanguage$regex$RegexParser* self, org$pandalanguage$regex$RegexToken p_token) {
     panda$core$String* $returnValue81;
@@ -251,8 +251,8 @@ panda$core$String* org$pandalanguage$regex$RegexParser$text$org$pandalanguage$re
     $tmp83 = $tmp86;
     $tmp82 = $tmp83;
     $returnValue81 = $tmp82;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp82));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp83));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp82));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp83));
     return $returnValue81;
 }
 panda$core$Bit org$pandalanguage$regex$RegexParser$characterClass$R$panda$core$Bit(org$pandalanguage$regex$RegexParser* self) {
@@ -270,7 +270,7 @@ panda$core$Bit org$pandalanguage$regex$RegexParser$characterClass$R$panda$core$B
         panda$core$String* $tmp93 = org$pandalanguage$regex$RegexParser$text$org$pandalanguage$regex$RegexToken$R$panda$core$String(self, char90);
         $tmp92 = $tmp93;
         panda$core$Bit $tmp95 = panda$core$String$$EQ$panda$core$String$R$panda$core$Bit($tmp92, &$s94);
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp92));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp92));
         if ($tmp95.value) {
         {
             org$pandalanguage$regex$RegexParser$pushback$org$pandalanguage$regex$RegexToken(self, char90);
@@ -689,7 +689,7 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$regex$RegexParser$regex$R$or
     {
         $tmp273 = NULL;
         $returnValue272 = $tmp273;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp273));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp273));
         return $returnValue272;
     }
     }
@@ -737,9 +737,9 @@ org$pandalanguage$pandac$ASTNode* org$pandalanguage$regex$RegexParser$regex$R$or
     $tmp305 = $tmp306;
     $tmp304 = $tmp305;
     $returnValue272 = $tmp304;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp304));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp305));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp308));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp304));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp305));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp308));
     return $returnValue272;
 }
 void org$pandalanguage$regex$RegexParser$cleanup(org$pandalanguage$regex$RegexParser* self) {
@@ -754,10 +754,10 @@ void org$pandalanguage$regex$RegexParser$cleanup(org$pandalanguage$regex$RegexPa
         case -1: goto $l314;
     }
     $l314:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->lexer));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->errors));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->path));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->source));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->pushbackBuffer));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->lexer));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->errors));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->path));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->source));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->pushbackBuffer));
 }
 

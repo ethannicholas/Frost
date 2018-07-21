@@ -47,8 +47,8 @@ panda$math$Random* panda$math$Random$default$R$panda$math$Random() {
     $tmp4 = $tmp5;
     $tmp3 = ((panda$math$Random*) $tmp4);
     $returnValue2 = $tmp3;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp3));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp4));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp4));
     return $returnValue2;
 }
 panda$core$Bit panda$math$Random$bit$R$panda$core$Bit(panda$math$Random* self) {

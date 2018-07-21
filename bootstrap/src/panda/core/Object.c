@@ -22,13 +22,13 @@ panda$core$String* panda$core$Object$convert$R$panda$core$String(panda$core$Obje
     $tmp4 = $tmp9;
     $tmp3 = $tmp4;
     $returnValue2 = $tmp3;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp3));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp4));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp5));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp4));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp5));
     return $returnValue2;
 }
 void panda$core$Object$cleanup(panda$core$Object* self) {
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->$class));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->$class));
 }
 void panda$core$Object$init(panda$core$Object* self) {
 }

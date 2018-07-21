@@ -27,8 +27,8 @@ void org$pandalanguage$pandac$Symbol$init$org$pandalanguage$pandac$Symbol$Kind$o
         $tmp2 = self->name;
         $tmp3 = p_name;
         self->name = $tmp3;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp3));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
     }
     ITable* $tmp5 = ((panda$core$Equatable*) p_name)->$class->itable;
     while ($tmp5->$class != (panda$core$Class*) &panda$core$Equatable$class) {
@@ -61,6 +61,6 @@ void org$pandalanguage$pandac$Symbol$cleanup(org$pandalanguage$pandac$Symbol* se
         case -1: goto $l18;
     }
     $l18:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->name));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->name));
 }
 

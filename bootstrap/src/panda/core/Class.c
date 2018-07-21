@@ -26,8 +26,8 @@ void panda$core$Class$cleanup(panda$core$Class* self) {
         case -1: goto $l5;
     }
     $l5:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->name));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->superclass));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->name));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->superclass));
 }
 
 

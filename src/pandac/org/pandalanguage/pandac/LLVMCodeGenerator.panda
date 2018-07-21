@@ -565,7 +565,7 @@ class LLVMCodeGenerator : CodeGenerator {
                     def objectCast := "%objectCast\{labelCount}"
                     unrefs.printLine("\{objectCast} = bitcast \{llvmType(rawType)} \{cast} to " +
                             "%panda$core$Object*")
-                    unrefs.printLine("call void @panda$core$Panda$unref$panda$core$Object(" +
+                    unrefs.printLine("call void @panda$core$Panda$unref$panda$core$Object$Q(" +
                             "%panda$core$Object* \{objectCast})")
 
                 }
@@ -1461,13 +1461,7 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     method writeConstruct(id:IR.Statement.ID, cl:ClassDecl) {
-        if compiler.isValue(cl) {
-            labelCount += 1
-            def alloca := "%$tmp\{labelCount}"
-            methodHeader.printLine("\{alloca} = alloca \{cl.type}")
-            refs[id] := alloca
-            return
-        }
+        assert !compiler.isValue(cl)
         def cc := getClassConstant(cl)
         def ccCast:String
         if cc.type != "%panda$core$Class" {
@@ -1725,7 +1719,6 @@ class LLVMCodeGenerator : CodeGenerator {
     }
 
     method writeStatement(id:IR.Statement.ID, s:IR.Statement) {
-        out.printLine("; \{s}")
         match s {
             when IR.Statement.BINARY(left, op, right, type):
                 writeBinary(id, left, op, right, type)
@@ -1733,6 +1726,8 @@ class LLVMCodeGenerator : CodeGenerator {
                 writeBranch(target)
             when IR.Statement.CAST(value, type):
                 writeCast(id, value, type)
+            when IR.Statement.COMMENT(text):
+                out.printLine("; \{text}")
             when IR.Statement.CONDITIONAL_BRANCH(test, ifTrue, ifFalse):
                 writeConditionalBranch(test, ifTrue, ifFalse)
             when IR.Statement.CONSTRUCT(cl):
@@ -1787,7 +1782,12 @@ class LLVMCodeGenerator : CodeGenerator {
 
     method writeIR(ir:IR) {
         for i in 0 .. ir.locals.count {
-            out.printLine("%local\{i} = alloca \{llvmType(ir.locals[i])}")
+            def name := "%local\{i}"
+            def type := llvmType(ir.locals[i])
+            out.printLine("\{name} = alloca \{type}")
+            if compiler.isRefCounted(ir.locals[i]) {
+                out.printLine("store \{type} null, \{type}* \{name}")
+            }
         }
         for bl in ir.blocks {
             writeBlock(bl)

@@ -41,8 +41,8 @@ void panda$core$String$UTF32Iterator$init$panda$core$String(panda$core$String$UT
         $tmp4 = self->str;
         $tmp5 = p_str;
         self->str = $tmp5;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp5));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp4));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp5));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp4));
     }
 }
 panda$core$Bit panda$core$String$UTF32Iterator$get_done$R$panda$core$Bit(panda$core$String$UTF32Iterator* self) {
@@ -271,6 +271,6 @@ void panda$core$String$UTF32Iterator$cleanup(panda$core$String$UTF32Iterator* se
         case -1: goto $l122;
     }
     $l122:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->str));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->str));
 }
 

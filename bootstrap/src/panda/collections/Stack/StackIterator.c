@@ -37,8 +37,8 @@ void panda$collections$Stack$StackIterator$init$panda$collections$Stack$LTpanda$
         $tmp3 = self->stack;
         $tmp4 = p_stack;
         self->stack = $tmp4;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp4));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp3));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp4));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
     }
 }
 panda$core$Bit panda$collections$Stack$StackIterator$get_done$R$panda$core$Bit(panda$collections$Stack$StackIterator* self) {
@@ -69,22 +69,22 @@ panda$core$Object* panda$collections$Stack$StackIterator$next$R$panda$collection
         $tmp21 = $tmp22;
         $tmp20 = $tmp21;
         result19 = $tmp20;
-        panda$core$Panda$ref$panda$core$Object($tmp20);
-        panda$core$Panda$unref$panda$core$Object($tmp21);
+        panda$core$Panda$ref$panda$core$Object$Q($tmp20);
+        panda$core$Panda$unref$panda$core$Object$Q($tmp21);
         $tmp23 = self;
         panda$core$Int64$init$builtin_int64(&$tmp24, 1);
         panda$core$Int64 $tmp25 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64($tmp23->index, $tmp24);
         $tmp23->index = $tmp25;
         $tmp27 = result19;
         $returnValue26 = $tmp27;
-        panda$core$Panda$ref$panda$core$Object($tmp27);
+        panda$core$Panda$ref$panda$core$Object$Q($tmp27);
         $tmp18 = 0;
         goto $l16;
         $l28:;
         return $returnValue26;
     }
     $l16:;
-    panda$core$Panda$unref$panda$core$Object(result19);
+    panda$core$Panda$unref$panda$core$Object$Q(result19);
     result19 = NULL;
     switch ($tmp18) {
         case 0: goto $l28;
@@ -109,7 +109,7 @@ void panda$collections$Stack$StackIterator$cleanup(panda$collections$Stack$Stack
         case -1: goto $l38;
     }
     $l38:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->stack));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->stack));
 }
 
 

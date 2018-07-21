@@ -40,8 +40,8 @@ void panda$core$String$RegexMatchIterator$init$panda$core$String$panda$core$Regu
         $tmp2 = self->haystack;
         $tmp3 = p_haystack;
         self->haystack = $tmp3;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp3));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
     }
     self->allowOverlaps = self->allowOverlaps;
     {
@@ -50,9 +50,9 @@ void panda$core$String$RegexMatchIterator$init$panda$core$String$panda$core$Regu
         $tmp6 = $tmp7;
         $tmp5 = $tmp6;
         self->matcher = $tmp5;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp5));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp6));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp4));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp5));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp4));
     }
     panda$core$Bit $tmp8 = panda$core$Matcher$find$R$panda$core$Bit(self->matcher);
     self->found = $tmp8;
@@ -86,8 +86,8 @@ panda$core$String$Match* panda$core$String$RegexMatchIterator$next$R$panda$core$
         $tmp24 = $tmp25;
         $tmp23 = $tmp24;
         result22 = $tmp23;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp23));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp24));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp23));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp24));
         memset(&start26, 0, sizeof(start26));
         if (self->allowOverlaps.value) {
         {
@@ -106,14 +106,14 @@ panda$core$String$Match* panda$core$String$RegexMatchIterator$next$R$panda$core$
         self->found = $tmp30;
         $tmp32 = result22;
         $returnValue31 = $tmp32;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp32));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp32));
         $tmp21 = 0;
         goto $l19;
         $l33:;
         return $returnValue31;
     }
     $l19:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result22));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) result22));
     result22 = NULL;
     switch ($tmp21) {
         case 0: goto $l33;
@@ -138,8 +138,8 @@ void panda$core$String$RegexMatchIterator$cleanup(panda$core$String$RegexMatchIt
         case -1: goto $l43;
     }
     $l43:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->matcher));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->haystack));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->matcher));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->haystack));
 }
 
 

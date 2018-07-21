@@ -20,8 +20,8 @@ void panda$threads$ScopedLock$init$panda$threads$Lock(panda$threads$ScopedLock* 
         $tmp2 = self->lock;
         $tmp3 = p_lock;
         self->lock = $tmp3;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp3));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
     }
     panda$threads$Lock$lock(p_lock);
 }
@@ -38,7 +38,7 @@ void panda$threads$ScopedLock$cleanup(panda$threads$ScopedLock* self) {
         case -1: goto $l7;
     }
     $l7:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->lock));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->lock));
 }
 
 

@@ -32,8 +32,8 @@ void panda$io$LineNumberInputStream$init$panda$io$InputStream(panda$io$LineNumbe
         $tmp5 = self->source;
         $tmp6 = p_source;
         self->source = $tmp6;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp6));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp5));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp5));
     }
     panda$io$InputStream$init(((panda$io$InputStream*) self));
 }
@@ -108,7 +108,7 @@ void panda$io$LineNumberInputStream$cleanup(panda$io$LineNumberInputStream* self
         case -1: goto $l32;
     }
     $l32:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->source));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->source));
 }
 
 

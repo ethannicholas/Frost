@@ -22,15 +22,15 @@ void org$pandalanguage$pandac$LLVMCodeGenerator$ClassConstant$init$panda$core$St
         $tmp2 = self->name;
         $tmp3 = p_name;
         self->name = $tmp3;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp3));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
     }
     {
         $tmp4 = self->type;
         $tmp5 = p_type;
         self->type = $tmp5;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp5));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp4));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp5));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp4));
     }
 }
 void org$pandalanguage$pandac$LLVMCodeGenerator$ClassConstant$cleanup(org$pandalanguage$pandac$LLVMCodeGenerator$ClassConstant* self) {
@@ -45,7 +45,7 @@ void org$pandalanguage$pandac$LLVMCodeGenerator$ClassConstant$cleanup(org$pandal
         case -1: goto $l9;
     }
     $l9:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->name));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->type));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->name));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->type));
 }
 

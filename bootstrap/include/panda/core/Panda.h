@@ -19,8 +19,8 @@ panda$core$String* panda$core$Panda$allocationName$panda$core$Class$R$panda$core
 void panda$core$Panda$countAllocation$panda$core$Class(panda$core$Panda* self, panda$core$Class* p_cl);
 void panda$core$Panda$countDeallocation$panda$core$Class(panda$core$Panda* self, panda$core$Class* p_cl);
 void panda$core$Panda$dumpReport(panda$core$Panda* self);
-void panda$core$Panda$ref$panda$core$Object(panda$core$Object* p_o);
-void panda$core$Panda$unref$panda$core$Object(panda$core$Object* p_o);
+void panda$core$Panda$ref$panda$core$Object$Q(panda$core$Object* p_o);
+void panda$core$Panda$unref$panda$core$Object$Q(panda$core$Object* p_o);
 void panda$core$Panda$trace$panda$core$String(panda$core$String* p_s);
 void panda$core$Panda$countTrace$panda$core$String(panda$core$Panda* self, panda$core$String* p_s);
 void panda$core$Panda$toReal64$panda$core$String$R$panda$core$Real64(panda$core$Real64* result, panda$core$String* p_s);

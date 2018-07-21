@@ -415,7 +415,7 @@ class CCodeGenerator : CodeGenerator {
                 def cast := getCastReference(p, effective.subtypes[i], rawType, out)
                 casts.add(cast)
                 if compiler.isValue(effective.subtypes[i]) & !compiler.isValue(rawType) {
-                    unrefs.printLine("panda$core$Panda$unref$panda$core$Object(" +
+                    unrefs.printLine("panda$core$Panda$unref$panda$core$Object$Q(" +
                             "(panda$core$Object*) \{cast});")
                 }
             }

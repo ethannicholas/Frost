@@ -261,6 +261,7 @@ class TestRunner {
         var total := 0
         var success := 0
         for file in files {
+            if file.path.endsWith("JSON.panda") { continue }
             if file.path.endsWith(".panda") {
                 def name := file.changeExtension("").name()
 -*                total += 1
@@ -275,8 +276,8 @@ class TestRunner {
 --                if runTest(pandac, cLibs, tests, name, Mode.C) {
 --                    success += 1
 --                }
+                Console.printLine("Passed \{success} / \{total} tests.")
             }
-            Console.printLine("Passed \{success} / \{total} tests.")
         }
         Console.printLine("Passed \{success} / \{total} tests.")
     }

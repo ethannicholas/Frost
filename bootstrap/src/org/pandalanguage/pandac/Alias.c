@@ -31,8 +31,8 @@ void org$pandalanguage$pandac$Alias$init$panda$core$String$panda$core$String$org
         $tmp4 = self->fullName;
         $tmp5 = p_fullName;
         self->fullName = $tmp5;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp5));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp4));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp5));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp4));
     }
 }
 panda$core$String* org$pandalanguage$pandac$Alias$convert$R$panda$core$String(org$pandalanguage$pandac$Alias* self) {
@@ -52,11 +52,11 @@ panda$core$String* org$pandalanguage$pandac$Alias$convert$R$panda$core$String(or
     $tmp8 = $tmp18;
     $tmp7 = $tmp8;
     $returnValue6 = $tmp7;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp7));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp8));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp9));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp10));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp11));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp7));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp8));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp9));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp10));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp11));
     return $returnValue6;
 }
 void org$pandalanguage$pandac$Alias$cleanup(org$pandalanguage$pandac$Alias* self) {
@@ -71,7 +71,7 @@ void org$pandalanguage$pandac$Alias$cleanup(org$pandalanguage$pandac$Alias* self
         case -1: goto $l23;
     }
     $l23:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->fullName));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->fullName));
 }
 
 

@@ -29,9 +29,9 @@ void panda$core$System$Process$cleanup(panda$core$System$Process* self) {
         case -1: goto $l5;
     }
     $l5:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->input));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->output));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->error));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->input));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->output));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->error));
 }
 
 

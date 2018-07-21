@@ -39,8 +39,8 @@ void panda$collections$CollectionWriter$addAll$panda$collections$CollectionView$
             $tmp7 = $tmp11;
             $tmp6 = $tmp7;
             Iter$27$95 = $tmp6;
-            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp6));
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp7));
+            panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
+            panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp7));
             $l12:;
             ITable* $tmp15 = Iter$27$95->$class->itable;
             while ($tmp15->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
@@ -63,8 +63,8 @@ void panda$collections$CollectionWriter$addAll$panda$collections$CollectionView$
                     $tmp25 = $tmp29;
                     $tmp24 = $tmp25;
                     v23 = $tmp24;
-                    panda$core$Panda$ref$panda$core$Object($tmp24);
-                    panda$core$Panda$unref$panda$core$Object($tmp25);
+                    panda$core$Panda$ref$panda$core$Object$Q($tmp24);
+                    panda$core$Panda$unref$panda$core$Object$Q($tmp25);
                     ITable* $tmp30 = self->$class->itable;
                     while ($tmp30->$class != (panda$core$Class*) &panda$collections$CollectionWriter$class) {
                         $tmp30 = $tmp30->next;
@@ -75,7 +75,7 @@ void panda$collections$CollectionWriter$addAll$panda$collections$CollectionView$
                 $tmp22 = -1;
                 goto $l20;
                 $l20:;
-                panda$core$Panda$unref$panda$core$Object(v23);
+                panda$core$Panda$unref$panda$core$Object$Q(v23);
                 v23 = NULL;
                 switch ($tmp22) {
                     case -1: goto $l33;
@@ -88,7 +88,7 @@ void panda$collections$CollectionWriter$addAll$panda$collections$CollectionView$
         $tmp4 = -1;
         goto $l2;
         $l2:;
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$27$95));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) Iter$27$95));
         Iter$27$95 = NULL;
         switch ($tmp4) {
             case -1: goto $l34;

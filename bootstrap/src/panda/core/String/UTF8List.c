@@ -53,8 +53,8 @@ void panda$core$String$UTF8List$init$panda$core$String(panda$core$String$UTF8Lis
         $tmp3 = self->str;
         $tmp4 = p_str;
         self->str = $tmp4;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp4));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp3));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp4));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
     }
 }
 panda$core$Char8 panda$core$String$UTF8List$$IDX$panda$core$Int64$R$panda$core$Char8(panda$core$String$UTF8List* self, panda$core$Int64 p_index) {
@@ -91,8 +91,8 @@ panda$collections$Iterator* panda$core$String$UTF8List$iterator$R$panda$collecti
     $tmp23 = $tmp24;
     $tmp22 = ((panda$collections$Iterator*) $tmp23);
     $returnValue21 = $tmp22;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp22));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp23));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp22));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp23));
     return $returnValue21;
 }
 void panda$core$String$UTF8List$cleanup(panda$core$String$UTF8List* self) {
@@ -107,6 +107,6 @@ void panda$core$String$UTF8List$cleanup(panda$core$String$UTF8List* self) {
         case -1: goto $l29;
     }
     $l29:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->str));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->str));
 }
 

@@ -38,8 +38,8 @@ void panda$core$String$UTF8Iterator$init$panda$core$String(panda$core$String$UTF
         $tmp4 = self->str;
         $tmp5 = p_str;
         self->str = $tmp5;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp5));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp4));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp5));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp4));
     }
 }
 panda$core$Bit panda$core$String$UTF8Iterator$get_done$R$panda$core$Bit(panda$core$String$UTF8Iterator* self) {
@@ -81,6 +81,6 @@ void panda$core$String$UTF8Iterator$cleanup(panda$core$String$UTF8Iterator* self
         case -1: goto $l26;
     }
     $l26:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->str));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->str));
 }
 

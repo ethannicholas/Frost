@@ -27,8 +27,8 @@ void org$pandalanguage$pandac$Compiler$Settings$init$panda$io$File$panda$collect
         $tmp2 = self->pandaHome;
         $tmp3 = p_pandaHome;
         self->pandaHome = $tmp3;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp3));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
     }
     {
         $tmp4 = self->importDirs;
@@ -37,9 +37,9 @@ void org$pandalanguage$pandac$Compiler$Settings$init$panda$io$File$panda$collect
         $tmp6 = $tmp7;
         $tmp5 = $tmp6;
         self->importDirs = $tmp5;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp5));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp6));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp4));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp5));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp4));
     }
     self->optimizationLevel = p_optimizationLevel;
     self->safetyLevel = p_safetyLevel;
@@ -56,7 +56,7 @@ void org$pandalanguage$pandac$Compiler$Settings$cleanup(org$pandalanguage$pandac
         case -1: goto $l11;
     }
     $l11:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->pandaHome));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->importDirs));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->pandaHome));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->importDirs));
 }
 

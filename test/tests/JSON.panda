@@ -6,7 +6,7 @@ method main() {
     Console.printLine(json1.getInt("[1]"))
     Console.printLine(json1.getString("[2]"))
 
-    def json2 := p.parse("{\n" +
+    def json2 := p.parse(("{\n" +
                          "  \"firstName\": \"John\",\n" +
                          "  \"lastName\": \"Smith\",\n" +
                          "  \"isAlive\": true,\n" +
@@ -33,7 +33,7 @@ method main() {
                          "  ],\n" +
                          "  \"children\": [],\n" +
                          "  \"spouse\": null\n" +
-                         "}")
+                         "}")->String)
     Console.printLine(json2)
     Console.printLine(json2.getBit("/isAlive"))
     Console.printLine(json2.getInt("/age"))

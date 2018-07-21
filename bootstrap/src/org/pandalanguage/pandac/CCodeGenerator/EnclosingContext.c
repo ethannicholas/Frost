@@ -30,7 +30,7 @@ void org$pandalanguage$pandac$CCodeGenerator$EnclosingContext$cleanup(org$pandal
         {
             $tmp9 = self;
             $match$12_58 = $tmp9;
-            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp9));
+            panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp9));
             panda$core$Int64$init$builtin_int64(&$tmp10, 0);
             panda$core$Bit $tmp11 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$12_58->$rawValue, $tmp10);
             if ($tmp11.value) {
@@ -41,9 +41,9 @@ void org$pandalanguage$pandac$CCodeGenerator$EnclosingContext$cleanup(org$pandal
                 _f114 = *$tmp15;
                 panda$core$String** $tmp17 = ((panda$core$String**) ((char*) $match$12_58->$data + 16));
                 _f216 = *$tmp17;
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) _f012));
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) _f114));
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) _f216));
+                panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) _f012));
+                panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) _f114));
+                panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) _f216));
             }
             }
             else {
@@ -57,9 +57,9 @@ void org$pandalanguage$pandac$CCodeGenerator$EnclosingContext$cleanup(org$pandal
                 _f122 = *$tmp23;
                 panda$core$String** $tmp25 = ((panda$core$String**) ((char*) $match$12_58->$data + 16));
                 _f224 = *$tmp25;
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) _f020));
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) _f122));
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) _f224));
+                panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) _f020));
+                panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) _f122));
+                panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) _f224));
             }
             }
             }
@@ -67,7 +67,7 @@ void org$pandalanguage$pandac$CCodeGenerator$EnclosingContext$cleanup(org$pandal
         $tmp7 = -1;
         goto $l5;
         $l5:;
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp9));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp9));
         switch ($tmp7) {
             case -1: goto $l26;
         }
@@ -96,8 +96,8 @@ void org$pandalanguage$pandac$CCodeGenerator$EnclosingContext$init$panda$core$In
         panda$core$String** $tmp30 = ((panda$core$String**) ((char*) self->$data + 0));
         $tmp31 = p_f0;
         *$tmp30 = $tmp31;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp31));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp28));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp31));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp28));
     }
     {
         panda$core$String** $tmp33 = ((panda$core$String**) ((char*) self->$data + 8));
@@ -105,8 +105,8 @@ void org$pandalanguage$pandac$CCodeGenerator$EnclosingContext$init$panda$core$In
         panda$core$String** $tmp34 = ((panda$core$String**) ((char*) self->$data + 8));
         $tmp35 = p_f1;
         *$tmp34 = $tmp35;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp35));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp32));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp35));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp32));
     }
     {
         panda$core$String** $tmp37 = ((panda$core$String**) ((char*) self->$data + 16));
@@ -114,8 +114,8 @@ void org$pandalanguage$pandac$CCodeGenerator$EnclosingContext$init$panda$core$In
         panda$core$String** $tmp38 = ((panda$core$String**) ((char*) self->$data + 16));
         $tmp39 = p_f2;
         *$tmp38 = $tmp39;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp39));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp36));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp39));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp36));
     }
 }
 void org$pandalanguage$pandac$CCodeGenerator$EnclosingContext$init$panda$core$Int64$panda$core$String$panda$collections$Map$LTpanda$core$String$Corg$pandalanguage$pandac$Pair$LTpanda$core$Int64$Cpanda$core$String$GT$GT$panda$core$String(org$pandalanguage$pandac$CCodeGenerator$EnclosingContext* self, panda$core$Int64 p_rv, panda$core$String* p_f0, panda$collections$Map* p_f1, panda$core$String* p_f2) {
@@ -132,8 +132,8 @@ void org$pandalanguage$pandac$CCodeGenerator$EnclosingContext$init$panda$core$In
         panda$core$String** $tmp42 = ((panda$core$String**) ((char*) self->$data + 0));
         $tmp43 = p_f0;
         *$tmp42 = $tmp43;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp43));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp40));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp43));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp40));
     }
     {
         panda$collections$Map** $tmp45 = ((panda$collections$Map**) ((char*) self->$data + 8));
@@ -141,8 +141,8 @@ void org$pandalanguage$pandac$CCodeGenerator$EnclosingContext$init$panda$core$In
         panda$collections$Map** $tmp46 = ((panda$collections$Map**) ((char*) self->$data + 8));
         $tmp47 = p_f1;
         *$tmp46 = $tmp47;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp47));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp44));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp47));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp44));
     }
     {
         panda$core$String** $tmp49 = ((panda$core$String**) ((char*) self->$data + 16));
@@ -150,8 +150,8 @@ void org$pandalanguage$pandac$CCodeGenerator$EnclosingContext$init$panda$core$In
         panda$core$String** $tmp50 = ((panda$core$String**) ((char*) self->$data + 16));
         $tmp51 = p_f2;
         *$tmp50 = $tmp51;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp51));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp48));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp51));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp48));
     }
 }
 

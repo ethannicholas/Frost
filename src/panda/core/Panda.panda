@@ -70,11 +70,11 @@ class Panda {
 
     @class
     @external
-    method ref(o:Object)
+    method ref(o:Object?)
 
     @class
     @external
-    method unref(o:Object)
+    method unref(o:Object?)
 
     @class
     @external

@@ -77,12 +77,12 @@ panda$core$String* org$pandalanguage$json$Position$convert$R$panda$core$String(o
     $tmp17 = $tmp28;
     $tmp16 = $tmp17;
     $returnValue15 = $tmp16;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp16));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp17));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp18));
-    panda$core$Panda$unref$panda$core$Object($tmp24);
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp19));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp20));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp16));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp17));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp18));
+    panda$core$Panda$unref$panda$core$Object$Q($tmp24);
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp19));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp20));
     return $returnValue15;
 }
 void org$pandalanguage$json$Position$cleanup(org$pandalanguage$json$Position self) {

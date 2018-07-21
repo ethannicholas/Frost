@@ -37,8 +37,8 @@ void panda$collections$ImmutableArray$ImmutableArrayIterator$init$panda$collecti
         $tmp3 = self->array;
         $tmp4 = p_array;
         self->array = $tmp4;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp4));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp3));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp4));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
     }
 }
 panda$core$Bit panda$collections$ImmutableArray$ImmutableArrayIterator$get_done$R$panda$core$Bit(panda$collections$ImmutableArray$ImmutableArrayIterator* self) {
@@ -77,8 +77,8 @@ panda$core$Object* panda$collections$ImmutableArray$ImmutableArrayIterator$next$
     $tmp24 = $tmp27;
     $tmp23 = $tmp24;
     $returnValue22 = $tmp23;
-    panda$core$Panda$ref$panda$core$Object($tmp23);
-    panda$core$Panda$unref$panda$core$Object($tmp24);
+    panda$core$Panda$ref$panda$core$Object$Q($tmp23);
+    panda$core$Panda$unref$panda$core$Object$Q($tmp24);
     return $returnValue22;
 }
 void panda$collections$ImmutableArray$ImmutableArrayIterator$cleanup(panda$collections$ImmutableArray$ImmutableArrayIterator* self) {
@@ -93,7 +93,7 @@ void panda$collections$ImmutableArray$ImmutableArrayIterator$cleanup(panda$colle
         case -1: goto $l32;
     }
     $l32:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->array));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->array));
 }
 
 

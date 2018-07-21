@@ -38,8 +38,8 @@ void panda$collections$ListView$ListIterator$init$panda$collections$ListView$LTp
         $tmp3 = self->list;
         $tmp4 = p_list;
         self->list = $tmp4;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp4));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp3));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp4));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
     }
 }
 panda$core$Bit panda$collections$ListView$ListIterator$get_done$R$panda$core$Bit(panda$collections$ListView$ListIterator* self) {
@@ -83,8 +83,8 @@ panda$core$Object* panda$collections$ListView$ListIterator$next$R$panda$collecti
     $tmp24 = $tmp30;
     $tmp23 = $tmp24;
     $returnValue22 = $tmp23;
-    panda$core$Panda$ref$panda$core$Object($tmp23);
-    panda$core$Panda$unref$panda$core$Object($tmp24);
+    panda$core$Panda$ref$panda$core$Object$Q($tmp23);
+    panda$core$Panda$unref$panda$core$Object$Q($tmp24);
     return $returnValue22;
 }
 void panda$collections$ListView$ListIterator$cleanup(panda$collections$ListView$ListIterator* self) {
@@ -99,7 +99,7 @@ void panda$collections$ListView$ListIterator$cleanup(panda$collections$ListView$
         case -1: goto $l35;
     }
     $l35:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->list));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->list));
 }
 
 

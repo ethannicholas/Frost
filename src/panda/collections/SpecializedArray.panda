@@ -39,7 +39,7 @@ class SpecializedArray<T> : List<T> {
     var capacity:Int
 
     @private
-    var data:Pointer<T>
+    var data:Pointer<T?>
 
     init() {
         init(DEFAULT_CAPACITY)
@@ -47,7 +47,7 @@ class SpecializedArray<T> : List<T> {
 
     init(capacity:Int) {
         self.capacity := capacity
-        data := Pointer<T>.alloc(capacity)
+        data := Pointer<T?>.alloc(capacity)
     }
 
     init(list:ListView<T>) {
@@ -59,7 +59,7 @@ class SpecializedArray<T> : List<T> {
 
     @private
     init(data:Pointer<T>, count:Int) {
-        self.data := data
+        self.data := data->Pointer<T?>
         self._count := count
         self.capacity := count
     }

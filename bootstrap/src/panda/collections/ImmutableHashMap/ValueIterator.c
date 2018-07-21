@@ -39,9 +39,9 @@ void panda$collections$ImmutableHashMap$ValueIterator$init$panda$collections$Imm
         $tmp4 = $tmp5;
         $tmp3 = $tmp4;
         self->base = $tmp3;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp3));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp4));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp4));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
     }
 }
 panda$core$Bit panda$collections$ImmutableHashMap$ValueIterator$get_done$R$panda$core$Bit(panda$collections$ImmutableHashMap$ValueIterator* self) {
@@ -65,8 +65,8 @@ panda$core$Object* panda$collections$ImmutableHashMap$ValueIterator$next$R$panda
     $tmp19 = $tmp21;
     $tmp18 = ((panda$collections$ImmutableHashMap$Entry*) $tmp19)->value;
     $returnValue17 = $tmp18;
-    panda$core$Panda$ref$panda$core$Object($tmp18);
-    panda$core$Panda$unref$panda$core$Object($tmp19);
+    panda$core$Panda$ref$panda$core$Object$Q($tmp18);
+    panda$core$Panda$unref$panda$core$Object$Q($tmp19);
     return $returnValue17;
 }
 void panda$collections$ImmutableHashMap$ValueIterator$cleanup(panda$collections$ImmutableHashMap$ValueIterator* self) {
@@ -81,7 +81,7 @@ void panda$collections$ImmutableHashMap$ValueIterator$cleanup(panda$collections$
         case -1: goto $l26;
     }
     $l26:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->base));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->base));
 }
 
 

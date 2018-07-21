@@ -54,8 +54,8 @@ panda$core$String* panda$core$SteppedRange$LTpanda$core$String$Index$Q$Cpanda$co
         $tmp8 = $tmp9;
         $tmp7 = $tmp8;
         result6 = $tmp7;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp7));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp8));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp7));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp8));
         if (((panda$core$Bit) { self.start.nonnull }).value) {
         {
             panda$core$String$Index$wrapper* $tmp11;
@@ -63,7 +63,7 @@ panda$core$String* panda$core$SteppedRange$LTpanda$core$String$Index$Q$Cpanda$co
             $tmp11->value = ((panda$core$String$Index) self.start.value);
             $tmp10 = ((panda$core$Object*) $tmp11);
             panda$core$MutableString$append$panda$core$Object(result6, $tmp10);
-            panda$core$Panda$unref$panda$core$Object($tmp10);
+            panda$core$Panda$unref$panda$core$Object$Q($tmp10);
         }
         }
         if (self.inclusive.value) {
@@ -83,7 +83,7 @@ panda$core$String* panda$core$SteppedRange$LTpanda$core$String$Index$Q$Cpanda$co
             $tmp15->value = ((panda$core$String$Index) self.end.value);
             $tmp14 = ((panda$core$Object*) $tmp15);
             panda$core$MutableString$append$panda$core$Object(result6, $tmp14);
-            panda$core$Panda$unref$panda$core$Object($tmp14);
+            panda$core$Panda$unref$panda$core$Object$Q($tmp14);
         }
         }
         panda$core$MutableString$append$panda$core$String(result6, &$s16);
@@ -92,20 +92,20 @@ panda$core$String* panda$core$SteppedRange$LTpanda$core$String$Index$Q$Cpanda$co
         $tmp18->value = self.step;
         $tmp17 = ((panda$core$Object*) $tmp18);
         panda$core$MutableString$append$panda$core$Object(result6, $tmp17);
-        panda$core$Panda$unref$panda$core$Object($tmp17);
+        panda$core$Panda$unref$panda$core$Object$Q($tmp17);
         panda$core$String* $tmp22 = panda$core$MutableString$finish$R$panda$core$String(result6);
         $tmp21 = $tmp22;
         $tmp20 = $tmp21;
         $returnValue19 = $tmp20;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp20));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp21));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp20));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp21));
         $tmp5 = 0;
         goto $l3;
         $l23:;
         return $returnValue19;
     }
     $l3:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result6));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) result6));
     result6 = NULL;
     switch ($tmp5) {
         case 0: goto $l23;

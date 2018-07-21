@@ -35,9 +35,9 @@ void panda$io$MemoryOutputStream$init$panda$core$Int64(panda$io$MemoryOutputStre
         $tmp5 = $tmp6;
         $tmp4 = $tmp5;
         self->data = $tmp4;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp4));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp5));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp3));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp4));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp5));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
     }
     panda$io$OutputStream$init(((panda$io$OutputStream*) self));
 }
@@ -60,8 +60,8 @@ panda$core$String* panda$io$MemoryOutputStream$convert$R$panda$core$String(panda
     $tmp10 = $tmp11;
     $tmp9 = $tmp10;
     $returnValue8 = $tmp9;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp9));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp10));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp9));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp10));
     return $returnValue8;
 }
 panda$core$String* panda$io$MemoryOutputStream$finish$R$panda$core$String(panda$io$MemoryOutputStream* self) {
@@ -72,8 +72,8 @@ panda$core$String* panda$io$MemoryOutputStream$finish$R$panda$core$String(panda$
     $tmp15 = $tmp16;
     $tmp14 = $tmp15;
     $returnValue13 = $tmp14;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp14));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp15));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp14));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp15));
     return $returnValue13;
 }
 void panda$io$MemoryOutputStream$cleanup(panda$io$MemoryOutputStream* self) {
@@ -88,7 +88,7 @@ void panda$io$MemoryOutputStream$cleanup(panda$io$MemoryOutputStream* self) {
         case -1: goto $l21;
     }
     $l21:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->data));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->data));
 }
 
 

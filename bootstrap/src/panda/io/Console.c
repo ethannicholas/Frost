@@ -31,14 +31,14 @@ void panda$io$Console$print$panda$core$Object(panda$core$Object* p_o) {
     panda$core$String* $tmp4 = (($fn3) p_o->$class->vtable[0])(p_o);
     $tmp2 = $tmp4;
     panda$io$Console$print$panda$core$String($tmp2);
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
 }
 void panda$io$Console$printLine$panda$core$Object(panda$core$Object* p_o) {
     panda$core$String* $tmp5;
     panda$core$String* $tmp7 = (($fn6) p_o->$class->vtable[0])(p_o);
     $tmp5 = $tmp7;
     panda$io$Console$printLine$panda$core$String($tmp5);
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp5));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp5));
 }
 void panda$io$Console$printLine() {
     panda$io$Console$print$panda$core$String(&$s8);
@@ -65,8 +65,8 @@ panda$core$String* panda$io$Console$readLine$R$panda$core$String$Q() {
         $tmp14 = $tmp15;
         $tmp13 = $tmp14;
         result12 = $tmp13;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp13));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp14));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp13));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp14));
         $l16:;
         while (true) {
         {
@@ -80,7 +80,7 @@ panda$core$String* panda$io$Console$readLine$R$panda$core$String$Q() {
                 {
                     $tmp23 = NULL;
                     $returnValue22 = $tmp23;
-                    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp23));
+                    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp23));
                     $tmp11 = 0;
                     goto $l9;
                     $l24:;
@@ -117,15 +117,15 @@ panda$core$String* panda$io$Console$readLine$R$panda$core$String$Q() {
         $tmp36 = $tmp37;
         $tmp35 = $tmp36;
         $returnValue22 = $tmp35;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp35));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp36));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp35));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp36));
         $tmp11 = 1;
         goto $l9;
         $l38:;
         return $returnValue22;
     }
     $l9:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result12));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) result12));
     result12 = NULL;
     switch ($tmp11) {
         case 0: goto $l24;

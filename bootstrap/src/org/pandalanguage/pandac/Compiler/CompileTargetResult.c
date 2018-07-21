@@ -22,15 +22,15 @@ void org$pandalanguage$pandac$Compiler$CompileTargetResult$init$org$pandalanguag
         $tmp2 = self->target;
         $tmp3 = p_target;
         self->target = $tmp3;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp3));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
     }
     {
         $tmp4 = self->value;
         $tmp5 = p_value;
         self->value = $tmp5;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp5));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp4));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp5));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp4));
     }
 }
 void org$pandalanguage$pandac$Compiler$CompileTargetResult$cleanup(org$pandalanguage$pandac$Compiler$CompileTargetResult* self) {
@@ -45,7 +45,7 @@ void org$pandalanguage$pandac$Compiler$CompileTargetResult$cleanup(org$pandalang
         case -1: goto $l9;
     }
     $l9:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->target));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->value));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->target));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->value));
 }
 

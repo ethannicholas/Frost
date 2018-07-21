@@ -76,7 +76,7 @@ panda$core$String* org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind$conver
         {
             $tmp7 = &$s8;
             $returnValue6 = $tmp7;
-            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp7));
+            panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp7));
             return $returnValue6;
         }
         }
@@ -87,7 +87,7 @@ panda$core$String* org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind$conver
         {
             $tmp12 = &$s13;
             $returnValue6 = $tmp12;
-            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp12));
+            panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp12));
             return $returnValue6;
         }
         }
@@ -98,7 +98,7 @@ panda$core$String* org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind$conver
         {
             $tmp17 = &$s18;
             $returnValue6 = $tmp17;
-            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp17));
+            panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp17));
             return $returnValue6;
         }
         }
@@ -109,7 +109,7 @@ panda$core$String* org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind$conver
         {
             $tmp22 = &$s23;
             $returnValue6 = $tmp22;
-            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp22));
+            panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp22));
             return $returnValue6;
         }
         }
@@ -120,7 +120,7 @@ panda$core$String* org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind$conver
         {
             $tmp27 = &$s28;
             $returnValue6 = $tmp27;
-            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp27));
+            panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp27));
             return $returnValue6;
         }
         }
@@ -131,7 +131,7 @@ panda$core$String* org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind$conver
         {
             $tmp32 = &$s33;
             $returnValue6 = $tmp32;
-            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp32));
+            panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp32));
             return $returnValue6;
         }
         }
@@ -142,7 +142,7 @@ panda$core$String* org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind$conver
         {
             $tmp37 = &$s38;
             $returnValue6 = $tmp37;
-            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp37));
+            panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp37));
             return $returnValue6;
         }
         }
@@ -153,7 +153,7 @@ panda$core$String* org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind$conver
         {
             $tmp42 = &$s43;
             $returnValue6 = $tmp42;
-            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp42));
+            panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp42));
             return $returnValue6;
         }
         }
@@ -164,7 +164,7 @@ panda$core$String* org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind$conver
         {
             $tmp47 = &$s48;
             $returnValue6 = $tmp47;
-            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp47));
+            panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp47));
             return $returnValue6;
         }
         }
@@ -175,7 +175,7 @@ panda$core$String* org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind$conver
         {
             $tmp52 = &$s53;
             $returnValue6 = $tmp52;
-            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp52));
+            panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp52));
             return $returnValue6;
         }
         }
@@ -186,7 +186,7 @@ panda$core$String* org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind$conver
         {
             $tmp57 = &$s58;
             $returnValue6 = $tmp57;
-            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp57));
+            panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp57));
             return $returnValue6;
         }
         }
@@ -197,7 +197,7 @@ panda$core$String* org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind$conver
         {
             $tmp62 = &$s63;
             $returnValue6 = $tmp62;
-            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp62));
+            panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp62));
             return $returnValue6;
         }
         }
@@ -208,7 +208,7 @@ panda$core$String* org$pandalanguage$pandac$parser$SyntaxHighlighter$Kind$conver
         {
             $tmp67 = &$s68;
             $returnValue6 = $tmp67;
-            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp67));
+            panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp67));
             return $returnValue6;
         }
         }

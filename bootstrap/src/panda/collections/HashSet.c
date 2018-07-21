@@ -67,8 +67,8 @@ void panda$collections$HashSet$init(panda$collections$HashSet* self) {
     $tmp3 = $tmp4;
     $tmp2 = $tmp3;
     self->contents = $tmp2;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp2));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp3));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
 }
 void panda$collections$HashSet$init$panda$collections$CollectionView$LTpanda$collections$HashSet$T$GT(panda$collections$HashSet* self, panda$collections$CollectionView* p_c) {
     panda$collections$HashMap* $tmp5;
@@ -79,8 +79,8 @@ void panda$collections$HashSet$init$panda$collections$CollectionView$LTpanda$col
     $tmp6 = $tmp7;
     $tmp5 = $tmp6;
     self->contents = $tmp5;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp5));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp6));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp5));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
     panda$collections$HashSet$addAll$panda$collections$CollectionView$LTpanda$collections$HashSet$T$GT(self, p_c);
 }
 void panda$collections$HashSet$add$panda$collections$HashSet$T(panda$collections$HashSet* self, panda$collections$Key* p_value) {
@@ -105,8 +105,8 @@ void panda$collections$HashSet$addAll$panda$collections$CollectionView$LTpanda$c
             $tmp13 = $tmp17;
             $tmp12 = $tmp13;
             Iter$24$911 = $tmp12;
-            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp12));
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp13));
+            panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp12));
+            panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp13));
             $l18:;
             ITable* $tmp21 = Iter$24$911->$class->itable;
             while ($tmp21->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
@@ -129,14 +129,14 @@ void panda$collections$HashSet$addAll$panda$collections$CollectionView$LTpanda$c
                     $tmp31 = $tmp35;
                     $tmp30 = ((panda$collections$Key*) $tmp31);
                     v29 = $tmp30;
-                    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp30));
-                    panda$core$Panda$unref$panda$core$Object($tmp31);
+                    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp30));
+                    panda$core$Panda$unref$panda$core$Object$Q($tmp31);
                     panda$collections$HashSet$add$panda$collections$HashSet$T(self, v29);
                 }
                 $tmp28 = -1;
                 goto $l26;
                 $l26:;
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) v29));
+                panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) v29));
                 v29 = NULL;
                 switch ($tmp28) {
                     case -1: goto $l36;
@@ -149,7 +149,7 @@ void panda$collections$HashSet$addAll$panda$collections$CollectionView$LTpanda$c
         $tmp10 = -1;
         goto $l8;
         $l8:;
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$24$911));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) Iter$24$911));
         Iter$24$911 = NULL;
         switch ($tmp10) {
             case -1: goto $l37;
@@ -198,8 +198,8 @@ panda$collections$Iterator* panda$collections$HashSet$iterator$R$panda$collectio
     $tmp57 = $tmp58;
     $tmp56 = $tmp57;
     $returnValue55 = $tmp56;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp56));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp57));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp56));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp57));
     return $returnValue55;
 }
 panda$core$Bit panda$collections$HashSet$contains$panda$collections$HashSet$T$R$panda$core$Bit(panda$collections$HashSet* self, panda$collections$Key* p_value) {
@@ -234,11 +234,11 @@ panda$core$String* panda$collections$HashSet$convert$R$panda$core$String(panda$c
         $tmp68 = $tmp69;
         $tmp67 = $tmp68;
         result66 = $tmp67;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp67));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp68));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp67));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp68));
         $tmp72 = &$s73;
         separator71 = $tmp72;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp72));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp72));
         {
             int $tmp76;
             {
@@ -246,8 +246,8 @@ panda$core$String* panda$collections$HashSet$convert$R$panda$core$String(panda$c
                 $tmp79 = $tmp80;
                 $tmp78 = $tmp79;
                 Iter$52$977 = $tmp78;
-                panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp78));
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp79));
+                panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp78));
+                panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp79));
                 $l81:;
                 ITable* $tmp84 = Iter$52$977->$class->itable;
                 while ($tmp84->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
@@ -270,8 +270,8 @@ panda$core$String* panda$collections$HashSet$convert$R$panda$core$String(panda$c
                         $tmp94 = $tmp98;
                         $tmp93 = ((panda$collections$Key*) $tmp94);
                         v92 = $tmp93;
-                        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp93));
-                        panda$core$Panda$unref$panda$core$Object($tmp94);
+                        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp93));
+                        panda$core$Panda$unref$panda$core$Object$Q($tmp94);
                         panda$core$MutableString$append$panda$core$String(result66, separator71);
                         if (((panda$core$Bit) { v92 != NULL }).value) {
                         {
@@ -287,14 +287,14 @@ panda$core$String* panda$collections$HashSet$convert$R$panda$core$String(panda$c
                             $tmp100 = separator71;
                             $tmp101 = &$s102;
                             separator71 = $tmp101;
-                            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp101));
-                            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp100));
+                            panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp101));
+                            panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp100));
                         }
                     }
                     $tmp91 = -1;
                     goto $l89;
                     $l89:;
-                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) v92));
+                    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) v92));
                     v92 = NULL;
                     switch ($tmp91) {
                         case -1: goto $l103;
@@ -307,7 +307,7 @@ panda$core$String* panda$collections$HashSet$convert$R$panda$core$String(panda$c
             $tmp76 = -1;
             goto $l74;
             $l74:;
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$52$977));
+            panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) Iter$52$977));
             Iter$52$977 = NULL;
             switch ($tmp76) {
                 case -1: goto $l104;
@@ -321,16 +321,16 @@ panda$core$String* panda$collections$HashSet$convert$R$panda$core$String(panda$c
         $tmp109 = $tmp110;
         $tmp108 = $tmp109;
         $returnValue107 = $tmp108;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp108));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp109));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp108));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp109));
         $tmp65 = 0;
         goto $l63;
         $l111:;
         return $returnValue107;
     }
     $l63:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) separator71));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result66));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) separator71));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) result66));
     result66 = NULL;
     separator71 = NULL;
     switch ($tmp65) {
@@ -356,7 +356,7 @@ void panda$collections$HashSet$cleanup(panda$collections$HashSet* self) {
         case -1: goto $l121;
     }
     $l121:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->contents));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->contents));
 }
 
 

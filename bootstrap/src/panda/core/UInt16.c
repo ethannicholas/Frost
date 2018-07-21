@@ -2181,8 +2181,8 @@ panda$collections$ListView* panda$core$UInt16$$IDX$panda$core$Range$LTpanda$core
     $tmp612 = $tmp613;
     $tmp611 = ((panda$collections$ListView*) $tmp612);
     $returnValue610 = $tmp611;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp611));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp612));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp611));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp612));
     return $returnValue610;
 }
 panda$collections$ListView* panda$core$UInt16$$IDX$panda$core$SteppedRange$LTpanda$core$UInt16$Cpanda$core$UInt16$GT$R$panda$collections$ListView$LTpanda$core$UInt16$GT(panda$core$SteppedRange$LTpanda$core$UInt16$Cpanda$core$UInt16$GT p_range) {
@@ -2194,8 +2194,8 @@ panda$collections$ListView* panda$core$UInt16$$IDX$panda$core$SteppedRange$LTpan
     $tmp619 = $tmp620;
     $tmp618 = ((panda$collections$ListView*) $tmp619);
     $returnValue617 = $tmp618;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp618));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp619));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp618));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp619));
     return $returnValue617;
 }
 panda$core$Bit panda$core$UInt16$$IDX$panda$core$Int8$R$panda$core$Bit(panda$core$UInt16 self, panda$core$Int8 p_index) {
@@ -2328,8 +2328,8 @@ panda$collections$Iterator* panda$core$UInt16$iterator$R$panda$collections$Itera
     $tmp694 = $tmp695;
     $tmp693 = ((panda$collections$Iterator*) $tmp694);
     $returnValue692 = $tmp693;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp693));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp694));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp693));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp694));
     return $returnValue692;
 }
 panda$core$Int64 panda$core$UInt16$hash$R$panda$core$Int64(panda$core$UInt16 self) {
@@ -2565,8 +2565,8 @@ panda$core$String* panda$core$UInt16$convert$R$panda$core$String(panda$core$UInt
     $tmp818 = $tmp819;
     $tmp817 = $tmp818;
     $returnValue816 = $tmp817;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp817));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp818));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp817));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp818));
     return $returnValue816;
 }
 panda$core$String* panda$core$UInt16$format$panda$core$String$R$panda$core$String(panda$core$UInt16 self, panda$core$String* p_fmt) {
@@ -2582,8 +2582,8 @@ panda$core$String* panda$core$UInt16$format$panda$core$String$R$panda$core$Strin
     $tmp823 = $tmp827;
     $tmp822 = $tmp823;
     $returnValue821 = $tmp822;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp822));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp823));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp822));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp823));
     return $returnValue821;
 }
 void panda$core$UInt16$cleanup(panda$core$UInt16 self) {

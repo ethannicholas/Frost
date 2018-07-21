@@ -94,7 +94,7 @@ panda$collections$ListView* panda$collections$ListView$$IDX$panda$core$Range$LTp
         {
             $tmp24 = result7;
             $tmp25 = i11;
-            panda$core$Panda$unref$panda$core$Object($tmp24[$tmp25.value]);
+            panda$core$Panda$unref$panda$core$Object$Q($tmp24[$tmp25.value]);
             panda$core$Int64 $tmp28 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(p_r.min, i11);
             ITable* $tmp29 = self->$class->itable;
             while ($tmp29->$class != (panda$core$Class*) &panda$collections$ListView$class) {
@@ -104,8 +104,8 @@ panda$collections$ListView* panda$collections$ListView$$IDX$panda$core$Range$LTp
             panda$core$Object* $tmp32 = $tmp30(self, $tmp28);
             $tmp27 = $tmp32;
             $tmp26 = $tmp27;
-            panda$core$Panda$ref$panda$core$Object($tmp26);
-            panda$core$Panda$unref$panda$core$Object($tmp27);
+            panda$core$Panda$ref$panda$core$Object$Q($tmp26);
+            panda$core$Panda$unref$panda$core$Object$Q($tmp27);
             $tmp24[$tmp25.value] = $tmp26;
         }
     }
@@ -125,8 +125,8 @@ panda$collections$ListView* panda$collections$ListView$$IDX$panda$core$Range$LTp
     $tmp41 = $tmp42;
     $tmp40 = ((panda$collections$ListView*) $tmp41);
     $returnValue39 = $tmp40;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp40));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp41));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp40));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp41));
     return $returnValue39;
 }
 panda$collections$ListView* panda$collections$ListView$$IDX$panda$core$Range$LTpanda$core$Int64$Q$GT$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT(panda$collections$ListView* self, panda$core$Range$LTpanda$core$Int64$Q$GT p_r) {
@@ -184,8 +184,8 @@ panda$collections$ListView* panda$collections$ListView$$IDX$panda$core$Range$LTp
     $tmp55 = $tmp60;
     $tmp54 = $tmp55;
     $returnValue53 = $tmp54;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp54));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp55));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp54));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp55));
     return $returnValue53;
 }
 panda$collections$ListView* panda$collections$ListView$$IDX$panda$core$SteppedRange$LTpanda$core$Int64$Q$Cpanda$core$Int64$GT$R$panda$collections$ListView$LTpanda$collections$ListView$T$GT(panda$collections$ListView* self, panda$core$SteppedRange$LTpanda$core$Int64$Q$Cpanda$core$Int64$GT p_r) {
@@ -271,8 +271,8 @@ panda$collections$ListView* panda$collections$ListView$$IDX$panda$core$SteppedRa
         $tmp86 = $tmp87;
         $tmp85 = $tmp86;
         result84 = $tmp85;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp85));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp86));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp85));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp86));
         panda$core$Int64$init$builtin_int64(&$tmp88, 0);
         panda$core$Bit $tmp89 = panda$core$Int64$$GT$panda$core$Int64$R$panda$core$Bit(p_r.step, $tmp88);
         if ($tmp89.value) {
@@ -290,7 +290,7 @@ panda$collections$ListView* panda$collections$ListView$$IDX$panda$core$SteppedRa
                 panda$core$Object* $tmp98 = $tmp96(self, current66);
                 $tmp94 = $tmp98;
                 panda$collections$Array$add$panda$collections$Array$T(result84, $tmp94);
-                panda$core$Panda$unref$panda$core$Object($tmp94);
+                panda$core$Panda$unref$panda$core$Object$Q($tmp94);
                 panda$core$Int64 $tmp99 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(current66, step65);
                 current66 = $tmp99;
             }
@@ -320,7 +320,7 @@ panda$collections$ListView* panda$collections$ListView$$IDX$panda$core$SteppedRa
                 panda$core$Object* $tmp113 = $tmp111(self, current66);
                 $tmp109 = $tmp113;
                 panda$collections$Array$add$panda$collections$Array$T(result84, $tmp109);
-                panda$core$Panda$unref$panda$core$Object($tmp109);
+                panda$core$Panda$unref$panda$core$Object$Q($tmp109);
                 panda$core$Int64 $tmp114 = panda$core$Int64$$ADD$panda$core$Int64$R$panda$core$Int64(current66, step65);
                 current66 = $tmp114;
             }
@@ -361,19 +361,19 @@ panda$collections$ListView* panda$collections$ListView$$IDX$panda$core$SteppedRa
             panda$core$Object* $tmp134 = $tmp132(self, current66);
             $tmp130 = $tmp134;
             panda$collections$Array$add$panda$collections$Array$T(result84, $tmp130);
-            panda$core$Panda$unref$panda$core$Object($tmp130);
+            panda$core$Panda$unref$panda$core$Object$Q($tmp130);
         }
         }
         $tmp136 = ((panda$collections$ListView*) result84);
         $returnValue135 = $tmp136;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp136));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp136));
         $tmp64 = 0;
         goto $l62;
         $l137:;
         return $returnValue135;
     }
     $l62:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result84));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) result84));
     result84 = NULL;
     switch ($tmp64) {
         case 0: goto $l137;
@@ -406,8 +406,8 @@ panda$collections$ListView* panda$collections$ListView$filter$$LPpanda$collectio
         $tmp149 = $tmp150;
         $tmp148 = $tmp149;
         result147 = $tmp148;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp148));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp149));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp148));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp149));
         {
             int $tmp153;
             {
@@ -420,8 +420,8 @@ panda$collections$ListView* panda$collections$ListView$filter$$LPpanda$collectio
                 $tmp156 = $tmp160;
                 $tmp155 = $tmp156;
                 Iter$154$9154 = $tmp155;
-                panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp155));
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp156));
+                panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp155));
+                panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp156));
                 $l161:;
                 ITable* $tmp164 = Iter$154$9154->$class->itable;
                 while ($tmp164->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
@@ -444,8 +444,8 @@ panda$collections$ListView* panda$collections$ListView$filter$$LPpanda$collectio
                         $tmp174 = $tmp178;
                         $tmp173 = $tmp174;
                         v172 = $tmp173;
-                        panda$core$Panda$ref$panda$core$Object($tmp173);
-                        panda$core$Panda$unref$panda$core$Object($tmp174);
+                        panda$core$Panda$ref$panda$core$Object$Q($tmp173);
+                        panda$core$Panda$unref$panda$core$Object$Q($tmp174);
                         if (p_predicate->target) {
                             $tmp179 = (($fn180) p_predicate->pointer)(p_predicate->target, v172);
                         } else {
@@ -460,7 +460,7 @@ panda$collections$ListView* panda$collections$ListView$filter$$LPpanda$collectio
                     $tmp171 = -1;
                     goto $l169;
                     $l169:;
-                    panda$core$Panda$unref$panda$core$Object(v172);
+                    panda$core$Panda$unref$panda$core$Object$Q(v172);
                     v172 = NULL;
                     switch ($tmp171) {
                         case -1: goto $l182;
@@ -473,7 +473,7 @@ panda$collections$ListView* panda$collections$ListView$filter$$LPpanda$collectio
             $tmp153 = -1;
             goto $l151;
             $l151:;
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$154$9154));
+            panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) Iter$154$9154));
             Iter$154$9154 = NULL;
             switch ($tmp153) {
                 case -1: goto $l183;
@@ -482,14 +482,14 @@ panda$collections$ListView* panda$collections$ListView$filter$$LPpanda$collectio
         }
         $tmp185 = ((panda$collections$ListView*) result147);
         $returnValue184 = $tmp185;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp185));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp185));
         $tmp146 = 0;
         goto $l144;
         $l186:;
         return $returnValue184;
     }
     $l144:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) result147));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) result147));
     result147 = NULL;
     switch ($tmp146) {
         case 0: goto $l186;
@@ -511,8 +511,8 @@ panda$collections$Iterator* panda$collections$ListView$iterator$R$panda$collecti
     $tmp195 = $tmp196;
     $tmp194 = ((panda$collections$Iterator*) $tmp195);
     $returnValue193 = $tmp194;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp194));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp195));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp194));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp195));
     return $returnValue193;
 }
 

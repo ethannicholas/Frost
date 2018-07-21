@@ -18,8 +18,8 @@ void panda$core$Error$init$panda$core$String(panda$core$Error* self, panda$core$
         $tmp2 = self->message;
         $tmp3 = p_message;
         self->message = $tmp3;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp3));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
     }
 }
 void panda$core$Error$cleanup(panda$core$Error* self) {
@@ -34,7 +34,7 @@ void panda$core$Error$cleanup(panda$core$Error* self) {
         case -1: goto $l7;
     }
     $l7:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->message));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->message));
 }
 
 

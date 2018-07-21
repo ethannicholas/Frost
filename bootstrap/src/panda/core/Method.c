@@ -25,8 +25,8 @@ void panda$core$Method$init$panda$unsafe$Pointer$LTpanda$core$Int8$GT$panda$core
         $tmp2 = self->target;
         $tmp3 = p_target;
         self->target = $tmp3;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp3));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp2));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp3));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp2));
     }
 }
 panda$core$String* panda$core$Method$convert$R$panda$core$String(panda$core$Method* self) {
@@ -55,12 +55,12 @@ panda$core$String* panda$core$Method$convert$R$panda$core$String(panda$core$Meth
         $tmp6 = $tmp18;
         $tmp5 = $tmp6;
         $returnValue4 = $tmp5;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp5));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp6));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp7));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp8));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp9));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp11));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp5));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp6));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp7));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp8));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp9));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp11));
         return $returnValue4;
     }
     }
@@ -72,10 +72,10 @@ panda$core$String* panda$core$Method$convert$R$panda$core$String(panda$core$Meth
     $tmp21 = $tmp28;
     $tmp20 = $tmp21;
     $returnValue4 = $tmp20;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp20));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp21));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp22));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp24));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp20));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp21));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp22));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp24));
     return $returnValue4;
 }
 void panda$core$Method$cleanup(panda$core$Method* self) {
@@ -90,7 +90,7 @@ void panda$core$Method$cleanup(panda$core$Method* self) {
         case -1: goto $l33;
     }
     $l33:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->target));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->target));
 }
 
 

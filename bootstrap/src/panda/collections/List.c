@@ -117,7 +117,7 @@ void panda$collections$List$$IDXEQ$panda$core$Range$LTpanda$core$Int64$GT$panda$
         $fn35 $tmp34 = $tmp33->methods[2];
         panda$core$Object* $tmp36 = $tmp34(((panda$collections$ListWriter*) self), i14);
         $tmp32 = $tmp36;
-        panda$core$Panda$unref$panda$core$Object($tmp32);
+        panda$core$Panda$unref$panda$core$Object$Q($tmp32);
     }
     $l23:;
     if ($tmp26) goto $l38; else goto $l39;
@@ -152,8 +152,8 @@ void panda$collections$List$$IDXEQ$panda$core$Range$LTpanda$core$Int64$GT$panda$
             $tmp54 = $tmp58;
             $tmp53 = $tmp54;
             Iter$21$952 = $tmp53;
-            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp53));
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp54));
+            panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp53));
+            panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp54));
             $l59:;
             ITable* $tmp62 = Iter$21$952->$class->itable;
             while ($tmp62->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
@@ -176,8 +176,8 @@ void panda$collections$List$$IDXEQ$panda$core$Range$LTpanda$core$Int64$GT$panda$
                     $tmp72 = $tmp76;
                     $tmp71 = $tmp72;
                     v70 = $tmp71;
-                    panda$core$Panda$ref$panda$core$Object($tmp71);
-                    panda$core$Panda$unref$panda$core$Object($tmp72);
+                    panda$core$Panda$ref$panda$core$Object$Q($tmp71);
+                    panda$core$Panda$unref$panda$core$Object$Q($tmp72);
                     ITable* $tmp77 = ((panda$collections$ListWriter*) self)->$class->itable;
                     while ($tmp77->$class != (panda$core$Class*) &panda$collections$ListWriter$class) {
                         $tmp77 = $tmp77->next;
@@ -191,7 +191,7 @@ void panda$collections$List$$IDXEQ$panda$core$Range$LTpanda$core$Int64$GT$panda$
                 $tmp69 = -1;
                 goto $l67;
                 $l67:;
-                panda$core$Panda$unref$panda$core$Object(v70);
+                panda$core$Panda$unref$panda$core$Object$Q(v70);
                 v70 = NULL;
                 switch ($tmp69) {
                     case -1: goto $l82;
@@ -204,7 +204,7 @@ void panda$collections$List$$IDXEQ$panda$core$Range$LTpanda$core$Int64$GT$panda$
         $tmp51 = -1;
         goto $l49;
         $l49:;
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$21$952));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) Iter$21$952));
         Iter$21$952 = NULL;
         switch ($tmp51) {
             case -1: goto $l83;
@@ -299,7 +299,7 @@ void panda$collections$List$filterInPlace$$LPpanda$collections$List$T$RP$EQ$GT$L
             $tmp128 = (($fn130) p_f->pointer)($tmp123);
         }
         panda$core$Bit $tmp131 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp128);
-        panda$core$Panda$unref$panda$core$Object($tmp123);
+        panda$core$Panda$unref$panda$core$Object$Q($tmp123);
         if ($tmp131.value) {
         {
             ITable* $tmp133 = ((panda$collections$ListWriter*) self)->$class->itable;
@@ -309,7 +309,7 @@ void panda$collections$List$filterInPlace$$LPpanda$collections$List$T$RP$EQ$GT$L
             $fn135 $tmp134 = $tmp133->methods[2];
             panda$core$Object* $tmp136 = $tmp134(((panda$collections$ListWriter*) self), i105);
             $tmp132 = $tmp136;
-            panda$core$Panda$unref$panda$core$Object($tmp132);
+            panda$core$Panda$unref$panda$core$Object$Q($tmp132);
         }
         }
     }

@@ -204,10 +204,10 @@ panda$core$String* org$pandalanguage$panda$Int16List$convert$R$panda$core$String
     $tmp66 = $tmp76;
     $tmp65 = $tmp66;
     $returnValue64 = $tmp65;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp65));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp66));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp67));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp69));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp65));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp66));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp67));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp69));
     return $returnValue64;
 }
 void org$pandalanguage$panda$Int16List$cleanup(org$pandalanguage$panda$Int16List* self) {

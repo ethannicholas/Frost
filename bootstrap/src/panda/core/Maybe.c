@@ -45,7 +45,7 @@ panda$core$Object* panda$core$Maybe$get$R$panda$core$Maybe$T(panda$core$Maybe* s
     {
         $tmp12 = self;
         $match$23_911 = $tmp12;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp12));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp12));
         panda$core$Int64$init$builtin_int64(&$tmp13, 0);
         panda$core$Bit $tmp14 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$23_911->$rawValue, $tmp13);
         if ($tmp14.value) {
@@ -54,7 +54,7 @@ panda$core$Object* panda$core$Maybe$get$R$panda$core$Maybe$T(panda$core$Maybe* s
             value15 = *$tmp16;
             $tmp18 = value15;
             $returnValue17 = $tmp18;
-            panda$core$Panda$ref$panda$core$Object($tmp18);
+            panda$core$Panda$ref$panda$core$Object$Q($tmp18);
             $tmp10 = 0;
             goto $l8;
             $l19:;
@@ -65,7 +65,7 @@ panda$core$Object* panda$core$Maybe$get$R$panda$core$Maybe$T(panda$core$Maybe* s
     $tmp10 = -1;
     goto $l8;
     $l8:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp12));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp12));
     switch ($tmp10) {
         case 0: goto $l19;
         case -1: goto $l21;
@@ -103,7 +103,7 @@ panda$core$Error* panda$core$Maybe$error$R$panda$core$Error(panda$core$Maybe* se
     {
         $tmp41 = self;
         $match$35_940 = $tmp41;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp41));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp41));
         panda$core$Int64$init$builtin_int64(&$tmp42, 1);
         panda$core$Bit $tmp43 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$35_940->$rawValue, $tmp42);
         if ($tmp43.value) {
@@ -112,7 +112,7 @@ panda$core$Error* panda$core$Maybe$error$R$panda$core$Error(panda$core$Maybe* se
             error44 = *$tmp45;
             $tmp47 = error44;
             $returnValue46 = $tmp47;
-            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp47));
+            panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp47));
             $tmp39 = 0;
             goto $l37;
             $l48:;
@@ -123,7 +123,7 @@ panda$core$Error* panda$core$Maybe$error$R$panda$core$Error(panda$core$Maybe* se
     $tmp39 = -1;
     goto $l37;
     $l37:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp41));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp41));
     switch ($tmp39) {
         case -1: goto $l50;
         case 0: goto $l48;
@@ -154,7 +154,7 @@ panda$core$Bit panda$core$Maybe$succeeded$R$panda$core$Bit(panda$core$Maybe* sel
     {
         $tmp63 = self;
         $match$46_962 = $tmp63;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp63));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp63));
         panda$core$Int64$init$builtin_int64(&$tmp64, 0);
         panda$core$Bit $tmp65 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$46_962->$rawValue, $tmp64);
         if ($tmp65.value) {
@@ -185,7 +185,7 @@ panda$core$Bit panda$core$Maybe$succeeded$R$panda$core$Bit(panda$core$Maybe* sel
     $tmp61 = -1;
     goto $l59;
     $l59:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp63));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp63));
     switch ($tmp61) {
         case 1: goto $l73;
         case 0: goto $l68;
@@ -212,14 +212,14 @@ void panda$core$Maybe$cleanup(panda$core$Maybe* self) {
         {
             $tmp87 = self;
             $match$7_186 = $tmp87;
-            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp87));
+            panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp87));
             panda$core$Int64$init$builtin_int64(&$tmp88, 0);
             panda$core$Bit $tmp89 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$7_186->$rawValue, $tmp88);
             if ($tmp89.value) {
             {
                 panda$core$Object** $tmp91 = ((panda$core$Object**) ((char*) $match$7_186->$data + 0));
                 _f090 = *$tmp91;
-                panda$core$Panda$unref$panda$core$Object(_f090);
+                panda$core$Panda$unref$panda$core$Object$Q(_f090);
             }
             }
             else {
@@ -229,7 +229,7 @@ void panda$core$Maybe$cleanup(panda$core$Maybe* self) {
             {
                 panda$core$Error** $tmp95 = ((panda$core$Error**) ((char*) $match$7_186->$data + 0));
                 _f094 = *$tmp95;
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) _f094));
+                panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) _f094));
             }
             }
             }
@@ -237,7 +237,7 @@ void panda$core$Maybe$cleanup(panda$core$Maybe* self) {
         $tmp85 = -1;
         goto $l83;
         $l83:;
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp87));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp87));
         switch ($tmp85) {
             case -1: goto $l96;
         }
@@ -262,8 +262,8 @@ void panda$core$Maybe$init$panda$core$Int64$panda$core$Maybe$T(panda$core$Maybe*
         panda$core$Object** $tmp100 = ((panda$core$Object**) ((char*) self->$data + 0));
         $tmp101 = p_f0;
         *$tmp100 = $tmp101;
-        panda$core$Panda$ref$panda$core$Object($tmp101);
-        panda$core$Panda$unref$panda$core$Object($tmp98);
+        panda$core$Panda$ref$panda$core$Object$Q($tmp101);
+        panda$core$Panda$unref$panda$core$Object$Q($tmp98);
     }
 }
 void panda$core$Maybe$init$panda$core$Int64$panda$core$Error(panda$core$Maybe* self, panda$core$Int64 p_rv, panda$core$Error* p_f0) {
@@ -276,8 +276,8 @@ void panda$core$Maybe$init$panda$core$Int64$panda$core$Error(panda$core$Maybe* s
         panda$core$Error** $tmp104 = ((panda$core$Error**) ((char*) self->$data + 0));
         $tmp105 = p_f0;
         *$tmp104 = $tmp105;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp105));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp102));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp105));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp102));
     }
 }
 

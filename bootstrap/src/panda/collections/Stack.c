@@ -89,8 +89,8 @@ panda$core$Object* panda$collections$Stack$pop$R$panda$collections$Stack$T(panda
         $tmp23 = $tmp30;
         $tmp22 = $tmp23;
         result21 = $tmp22;
-        panda$core$Panda$ref$panda$core$Object($tmp22);
-        panda$core$Panda$unref$panda$core$Object($tmp23);
+        panda$core$Panda$ref$panda$core$Object$Q($tmp22);
+        panda$core$Panda$unref$panda$core$Object$Q($tmp23);
         ITable* $tmp32 = ((panda$collections$CollectionView*) self->contents)->$class->itable;
         while ($tmp32->$class != (panda$core$Class*) &panda$collections$CollectionView$class) {
             $tmp32 = $tmp32->next;
@@ -101,17 +101,17 @@ panda$core$Object* panda$collections$Stack$pop$R$panda$collections$Stack$T(panda
         panda$core$Int64 $tmp37 = panda$core$Int64$$SUB$panda$core$Int64$R$panda$core$Int64($tmp35, $tmp36);
         panda$core$Object* $tmp38 = panda$collections$Array$removeIndex$panda$core$Int64$R$panda$collections$Array$T(self->contents, $tmp37);
         $tmp31 = $tmp38;
-        panda$core$Panda$unref$panda$core$Object($tmp31);
+        panda$core$Panda$unref$panda$core$Object$Q($tmp31);
         $tmp40 = result21;
         $returnValue39 = $tmp40;
-        panda$core$Panda$ref$panda$core$Object($tmp40);
+        panda$core$Panda$ref$panda$core$Object$Q($tmp40);
         $tmp11 = 0;
         goto $l9;
         $l41:;
         return $returnValue39;
     }
     $l9:;
-    panda$core$Panda$unref$panda$core$Object(result21);
+    panda$core$Panda$unref$panda$core$Object$Q(result21);
     result21 = NULL;
     switch ($tmp11) {
         case 0: goto $l41;
@@ -131,7 +131,7 @@ void panda$collections$Stack$pop$panda$collections$Stack$T(panda$collections$Sta
     panda$core$Int64$init$builtin_int64(&$tmp49, 0);
     panda$core$Object* $tmp50 = panda$collections$Stack$$IDX$panda$core$Int64$R$panda$collections$Stack$T(self, $tmp49);
     $tmp48 = $tmp50;
-    panda$core$Panda$unref$panda$core$Object($tmp48);
+    panda$core$Panda$unref$panda$core$Object$Q($tmp48);
     if (((panda$core$Bit) { $tmp48 == p_expected }).value) goto $l51; else goto $l52;
     $l52:;
     panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s53, (panda$core$Int64) { 76 }, &$s54);
@@ -139,7 +139,7 @@ void panda$collections$Stack$pop$panda$collections$Stack$T(panda$collections$Sta
     $l51:;
     panda$core$Object* $tmp56 = panda$collections$Stack$pop$R$panda$collections$Stack$T(self);
     $tmp55 = $tmp56;
-    panda$core$Panda$unref$panda$core$Object($tmp55);
+    panda$core$Panda$unref$panda$core$Object$Q($tmp55);
 }
 panda$core$Object* panda$collections$Stack$$IDX$panda$core$Int64$R$panda$collections$Stack$T(panda$collections$Stack* self, panda$core$Int64 p_depth) {
     panda$core$Int64 $tmp58;
@@ -186,8 +186,8 @@ panda$core$Object* panda$collections$Stack$$IDX$panda$core$Int64$R$panda$collect
     $tmp78 = $tmp86;
     $tmp77 = $tmp78;
     $returnValue76 = $tmp77;
-    panda$core$Panda$ref$panda$core$Object($tmp77);
-    panda$core$Panda$unref$panda$core$Object($tmp78);
+    panda$core$Panda$ref$panda$core$Object$Q($tmp77);
+    panda$core$Panda$unref$panda$core$Object$Q($tmp78);
     return $returnValue76;
 }
 void panda$collections$Stack$clear(panda$collections$Stack* self) {
@@ -202,8 +202,8 @@ panda$collections$Iterator* panda$collections$Stack$iterator$R$panda$collections
     $tmp90 = $tmp91;
     $tmp89 = ((panda$collections$Iterator*) $tmp90);
     $returnValue88 = $tmp89;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp89));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp90));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp89));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp90));
     return $returnValue88;
 }
 panda$core$Int64 panda$collections$Stack$get_count$R$panda$core$Int64(panda$collections$Stack* self) {
@@ -225,8 +225,8 @@ panda$core$String* panda$collections$Stack$convert$R$panda$core$String(panda$col
     $tmp101 = $tmp102;
     $tmp100 = $tmp101;
     $returnValue99 = $tmp100;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp100));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp101));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp100));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp101));
     return $returnValue99;
 }
 void panda$collections$Stack$init(panda$collections$Stack* self) {
@@ -238,8 +238,8 @@ void panda$collections$Stack$init(panda$collections$Stack* self) {
     $tmp105 = $tmp106;
     $tmp104 = $tmp105;
     self->contents = $tmp104;
-    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp104));
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp105));
+    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp104));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp105));
 }
 void panda$collections$Stack$cleanup(panda$collections$Stack* self) {
     int $tmp109;
@@ -253,6 +253,6 @@ void panda$collections$Stack$cleanup(panda$collections$Stack* self) {
         case -1: goto $l110;
     }
     $l110:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->contents));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->contents));
 }
 

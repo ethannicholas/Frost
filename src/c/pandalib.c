@@ -186,7 +186,7 @@ Object* panda$core$Panda$error$panda$core$String$R$panda$core$Maybe$LTpanda$core
 
 #define pandaMaybeError panda$core$Panda$error$panda$core$String$R$panda$core$Maybe$LTpanda$core$Object$GT$Q
 
-void panda$core$Panda$unref$panda$core$Object(Object*);
+void panda$core$Panda$unref$panda$core$Object$Q(Object*);
 
 void panda$core$Panda$dumpReport(Object*);
 
@@ -261,7 +261,7 @@ void* pandaRealloc(void* ptr, size_t oldSize, size_t newSize) {
 void pandaFree(void* ptr) {
     allocations--;
 #if !DEBUG_ALLOCS
-    free(ptr);
+    //free(ptr);
 #endif
 }
 
@@ -292,7 +292,7 @@ char* pandaConvertToString(void* o) {
     String* (*convert)(void*) = (String*(*)(void*)) ((Object*) o)->cl->vtable[0]; // FIXME hardcoded index to convert
     String* pandaString = convert(o);
     char* result = pandaGetCString(pandaString);
-    panda$core$Panda$unref$panda$core$Object((Object*) pandaString);
+    panda$core$Panda$unref$panda$core$Object$Q((Object*) pandaString);
     return result;
 }
 
@@ -334,20 +334,20 @@ int main(int argc, char** argv) {
         }
         pthread_cond_wait(&preventsExitThreadsVar, &preventsExitThreadsMutex);
     }
-    panda$core$Panda$unref$panda$core$Object((Object*) args);
+    panda$core$Panda$unref$panda$core$Object$Q((Object*) args);
 #if DEBUG_ALLOCS
     debugAllocs = false;
 #endif
     if (panda) {
         panda$core$Panda$dumpReport(panda);
-        panda$core$Panda$unref$panda$core$Object(panda);
+        panda$core$Panda$unref$panda$core$Object$Q(panda);
     }
-    if (allocations && allocations != 1) {
+/*    if (allocations && allocations != 1) {
         printf("warning: %d objects were still in memory on exit\n", allocations);
     }
     else if (allocations == 1) {
         printf("warning: 1 object was still in memory on exit\n");
-    }
+    }*/
     return 0;
 }
 
@@ -505,7 +505,7 @@ void panda$core$Panda$trace$panda$core$String(String* s) {
     panda$core$Panda$countTrace$panda$core$String(panda, s);
 }
 
-void panda$core$Panda$ref$panda$core$Object(Object* o) {
+void panda$core$Panda$ref$panda$core$Object$Q(Object* o) {
     if (o && o->refcnt != NO_REFCNT) {
         int newCount = __atomic_add_fetch(&o->refcnt, 1, __ATOMIC_RELAXED <= 1);
         if (newCount <= 1) {
@@ -516,7 +516,7 @@ void panda$core$Panda$ref$panda$core$Object(Object* o) {
     }
 }
 
-void panda$core$Panda$unref$panda$core$Object(Object* o) {
+void panda$core$Panda$unref$panda$core$Object$Q(Object* o) {
     if (o && o->refcnt != NO_REFCNT) {
         int newCount = __atomic_sub_fetch(&o->refcnt, 1, __ATOMIC_RELAXED);
         if (newCount < 0) {
@@ -630,7 +630,7 @@ Matcher* panda$core$RegularExpression$matcher$panda$core$String$R$panda$core$Mat
         pandaFatalError(u_errorName(status));
     }
     result->searchText = s;
-    panda$core$Panda$ref$panda$core$Object((Object*) s);    
+    panda$core$Panda$ref$panda$core$Object$Q((Object*) s);    
     UText* ut = utext_openUTF8(NULL, (const char*) s->data, s->size, &status);
     if (U_FAILURE(status)) {
         pandaFatalError(u_errorName(status));
@@ -731,7 +731,7 @@ void pandaThreadEntry(ThreadInfo* threadInfo) {
     else {
         ((void(*)()) threadInfo->run->pointer)();
     }
-    panda$core$Panda$unref$panda$core$Object((Object*) threadInfo->run);
+    panda$core$Panda$unref$panda$core$Object$Q((Object*) threadInfo->run);
     pandaFree(threadInfo);
     if (threadInfo->preventsExit.value) {
         pthread_mutex_lock(&preventsExitThreadsMutex);
@@ -746,7 +746,7 @@ void panda$threads$Thread$run$$LP$RP$EQ$AM$GT$ST$LP$RP$builtin_bit(Object* threa
         Bit preventsExit) {
     pthread_t threadId;
     ThreadInfo* threadInfo = pandaAlloc(sizeof(ThreadInfo));
-    panda$core$Panda$ref$panda$core$Object((Object*) run);
+    panda$core$Panda$ref$panda$core$Object$Q((Object*) run);
     threadInfo->run = run;
     threadInfo->preventsExit = preventsExit;
     pthread_create(&threadId, NULL, (void* (*)()) &pandaThreadEntry, threadInfo);

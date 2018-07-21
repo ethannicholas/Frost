@@ -85,7 +85,7 @@ void org$pandalanguage$pandac$Methods$init$panda$collections$ListView$LTorg$pand
     panda$core$Object* $tmp25 = $tmp23(p_methods, $tmp21);
     $tmp20 = $tmp25;
     org$pandalanguage$pandac$Symbol$init$org$pandalanguage$pandac$Symbol$Kind$org$pandalanguage$pandac$Position$panda$core$String(((org$pandalanguage$pandac$Symbol*) self), $tmp17, $tmp19, ((org$pandalanguage$pandac$Symbol*) ((org$pandalanguage$pandac$MethodDecl*) $tmp20))->name);
-    panda$core$Panda$unref$panda$core$Object($tmp20);
+    panda$core$Panda$unref$panda$core$Object$Q($tmp20);
     {
         $tmp26 = self->methods;
         panda$collections$ImmutableArray* $tmp29 = (panda$collections$ImmutableArray*) pandaObjectAlloc(40, (panda$core$Class*) &panda$collections$ImmutableArray$class);
@@ -93,9 +93,9 @@ void org$pandalanguage$pandac$Methods$init$panda$collections$ListView$LTorg$pand
         $tmp28 = $tmp29;
         $tmp27 = $tmp28;
         self->methods = $tmp27;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp27));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp28));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp26));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp27));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp28));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp26));
     }
 }
 panda$core$Bit org$pandalanguage$pandac$Methods$containsDuplicates$panda$collections$ListView$LTorg$pandalanguage$pandac$MethodDecl$GT$R$panda$core$Bit(panda$collections$ListView* p_methods) {
@@ -124,8 +124,8 @@ panda$core$Bit org$pandalanguage$pandac$Methods$containsDuplicates$panda$collect
         $tmp35 = $tmp36;
         $tmp34 = $tmp35;
         sigs33 = $tmp34;
-        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp34));
-        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp35));
+        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp34));
+        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp35));
         {
             int $tmp39;
             {
@@ -138,8 +138,8 @@ panda$core$Bit org$pandalanguage$pandac$Methods$containsDuplicates$panda$collect
                 $tmp42 = $tmp46;
                 $tmp41 = $tmp42;
                 Iter$16$940 = $tmp41;
-                panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp41));
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp42));
+                panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp41));
+                panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp42));
                 $l47:;
                 ITable* $tmp50 = Iter$16$940->$class->itable;
                 while ($tmp50->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
@@ -162,17 +162,17 @@ panda$core$Bit org$pandalanguage$pandac$Methods$containsDuplicates$panda$collect
                         $tmp60 = $tmp64;
                         $tmp59 = ((org$pandalanguage$pandac$MethodDecl*) $tmp60);
                         m58 = $tmp59;
-                        panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp59));
-                        panda$core$Panda$unref$panda$core$Object($tmp60);
+                        panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp59));
+                        panda$core$Panda$unref$panda$core$Object$Q($tmp60);
                         panda$core$String* $tmp66 = org$pandalanguage$pandac$MethodDecl$signature$R$panda$core$String(m58);
                         $tmp65 = $tmp66;
                         panda$collections$HashSet$add$panda$collections$HashSet$T(sigs33, ((panda$collections$Key*) $tmp65));
-                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp65));
+                        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp65));
                     }
                     $tmp57 = -1;
                     goto $l55;
                     $l55:;
-                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) m58));
+                    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) m58));
                     m58 = NULL;
                     switch ($tmp57) {
                         case -1: goto $l67;
@@ -185,7 +185,7 @@ panda$core$Bit org$pandalanguage$pandac$Methods$containsDuplicates$panda$collect
             $tmp39 = -1;
             goto $l37;
             $l37:;
-            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$16$940));
+            panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) Iter$16$940));
             Iter$16$940 = NULL;
             switch ($tmp39) {
                 case -1: goto $l68;
@@ -220,8 +220,8 @@ panda$core$Bit org$pandalanguage$pandac$Methods$containsDuplicates$panda$collect
                     $tmp84 = $tmp88;
                     $tmp83 = $tmp84;
                     Iter$21$1382 = $tmp83;
-                    panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp83));
-                    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp84));
+                    panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp83));
+                    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp84));
                     $l89:;
                     ITable* $tmp92 = Iter$21$1382->$class->itable;
                     while ($tmp92->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
@@ -244,17 +244,17 @@ panda$core$Bit org$pandalanguage$pandac$Methods$containsDuplicates$panda$collect
                             $tmp102 = $tmp106;
                             $tmp101 = ((org$pandalanguage$pandac$MethodDecl*) $tmp102);
                             m100 = $tmp101;
-                            panda$core$Panda$ref$panda$core$Object(((panda$core$Object*) $tmp101));
-                            panda$core$Panda$unref$panda$core$Object($tmp102);
+                            panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp101));
+                            panda$core$Panda$unref$panda$core$Object$Q($tmp102);
                             panda$core$String* $tmp108 = org$pandalanguage$pandac$MethodDecl$declaration$R$panda$core$String(m100);
                             $tmp107 = $tmp108;
                             panda$io$Console$printLine$panda$core$String($tmp107);
-                            panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) $tmp107));
+                            panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp107));
                         }
                         $tmp99 = -1;
                         goto $l97;
                         $l97:;
-                        panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) m100));
+                        panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) m100));
                         m100 = NULL;
                         switch ($tmp99) {
                             case -1: goto $l109;
@@ -267,7 +267,7 @@ panda$core$Bit org$pandalanguage$pandac$Methods$containsDuplicates$panda$collect
                 $tmp81 = -1;
                 goto $l79;
                 $l79:;
-                panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) Iter$21$1382));
+                panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) Iter$21$1382));
                 Iter$21$1382 = NULL;
                 switch ($tmp81) {
                     case -1: goto $l110;
@@ -296,7 +296,7 @@ panda$core$Bit org$pandalanguage$pandac$Methods$containsDuplicates$panda$collect
         return $returnValue111;
     }
     $l30:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) sigs33));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) sigs33));
     sigs33 = NULL;
     switch ($tmp32) {
         case 0: goto $l121;
@@ -321,7 +321,7 @@ void org$pandalanguage$pandac$Methods$cleanup(org$pandalanguage$pandac$Methods* 
         case -1: goto $l131;
     }
     $l131:;
-    panda$core$Panda$unref$panda$core$Object(((panda$core$Object*) self->methods));
+    panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) self->methods));
 }
 
 
