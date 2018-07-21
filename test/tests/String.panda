@@ -90,8 +90,8 @@ method main() {
     Console.printLine(h[h.next(h.indexOf("l"))])
     Console.printLine(h[h.next(h.lastIndexOf("l"))])
     Console.printLine(h[h.previous(h.lastIndexOf("ll"))])
-    Console.printLine(h.indexOf("Hello, World!!") = null)
-    Console.printLine(h.indexOf("Q") = null)
+    Console.printLine(h.indexOf("Hello, World!!") == null)
+    Console.printLine(h.indexOf("Q") == null)
     Console.printLine()
 
     Console.printLine("split1")

@@ -27,7 +27,7 @@ class MethodRef {
         self.value := value
         self.target := target
         def found := compiler.findType(target, value.owner)
-        assert found != null
+        assert found != null, "findType(\{target}, \{value.owner.name}) failed"
         self.effectiveType := compiler.remapType(found, value.type())
     }
 

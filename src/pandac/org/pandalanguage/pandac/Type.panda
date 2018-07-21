@@ -413,18 +413,26 @@ class Type : Symbol, Key<Type> {
     method SteppedRangeOf(t:Type):Type {
         def children := Array<Type>() -- FIXME literal
         children.add(t)
-        if t = Char8() {
+        if t.nonnullable() = Char8() {
             children.add(Int8())
         }
-        else if t = Char16() {
+        else if t.nonnullable() = Char16() {
             children.add(Int16())
         }
-        else if t = Char32() {
+        else if t.nonnullable() = Char32() {
             children.add(Int32())
         }
         else {
             children.add(t.nonnullable())
         }
+        return generic(Type(Compiler.STEPPED_RANGE_NAME, Kind.CLASS, Position(), true), children)
+    }
+
+    @class
+    method SteppedRangeOf(endpoint:Type, step:Type):Type {
+        def children := Array<Type>() -- FIXME literal
+        children.add(endpoint)
+        children.add(step)
         return generic(Type(Compiler.STEPPED_RANGE_NAME, Kind.CLASS, Position(), true), children)
     }
 

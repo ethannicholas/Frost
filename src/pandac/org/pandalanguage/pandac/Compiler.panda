@@ -1388,7 +1388,7 @@ class Compiler {
                 return result + NONNULLABLE_TO_NULLABLE_CAST_COST
             when Type.Kind.GENERIC_PARAMETER:
                 return null
-            when Type.Kind.BUILTIN_INT, Type.Kind.BUILTIN_UINT:
+            when Type.Kind.BUILTIN_INT, Type.Kind.BUILTIN_UINT, Type.Kind.BUILTIN_BIT:
                 return null
             when Type.Kind.CLASS:
                 if type.typeKind = Type.Kind.GENERIC {
@@ -1954,6 +1954,12 @@ class Compiler {
             if target.subtypes[0].name = RANGE_NAME & target.subtypes.count = 2 |
                     target.subtypes[0].name = STEPPED_RANGE_NAME & target.subtypes.count = 3 {
                 var cost := 0
+                if !target.subtypes[1].isNumber() {
+                    -- FIXME hack, this fixes an ambiguity with string[..] (String.Index? vs.
+                    -- Int64?). The real fix for this is to add an annotation which prioritizes one
+                    -- method higher.
+                    cost += 1
+                }
                 if start != null {
                     def startCost := coercionCost(start, target.subtypes[1])
                     if startCost = null {
@@ -2619,6 +2625,7 @@ class Compiler {
                         }
                     }
             }
+            assert value.type().isClass()
             def result := IR.Value.REF(ir.add(IR.Statement.CAST(value, target)), target)
             if !isRefCounted(value.type()) & isRefCounted(target) {
                 statementUnrefs.add(result)
@@ -2656,6 +2663,9 @@ class Compiler {
         }
         if value.type() = target {
             return value
+        }
+        if coercionCost(value.type(), target) != null {
+            return coerce(Position(), value, TypeContext.TYPE(target))
         }
         def result := IR.Value.REF(ir.add(IR.Statement.CAST(value, target)), target)
         if !isRefCounted(value.type()) & isRefCounted(target) {
@@ -2970,24 +2980,73 @@ class Compiler {
         if !left.isClass() {
             return null
         }
-        def cl := getClass(left)
-        if cl = null {
+        def leftCl := getClass(left)
+        if leftCl = null {
             return null
         }
-        def methods := getSymbolTable(cl)[operatorName(op)]
+        def target := IR.Value.REF(IR.Statement.ID(-1), left) -- fake target, just used for matching
+        var methods := getSymbolTable(leftCl)[operatorName(op)]
+        if methods != null {
+            def args := Array<ASTNode>() -- FIXME literal
+            args.add(right)
+            -- look for left.op(right)
+            match methods.kind {
+                when Symbol.Kind.METHOD:
+                    if !methods->MethodDecl.annotations.isClass() {
+                        def list := Array<MethodDecl>()
+                        list.add(methods->MethodDecl)
+                        def result := findBestMethod(Position(), target, list, args, type)
+                        if result != null {
+                            return result
+                        }
+                    }
+                when Symbol.Kind.METHODS:
+                    def result := findBestMethod(Position(), target,
+                            methods->Methods.methods.filter(m => !m.annotations.isClass()), args,
+                                    type)
+                    if result != null {
+                        return result
+                    }
+                otherwise:
+                    assert false
+            }
+        }
+
+        -- look for RightClass.op(left, right)
+        def rightType := preferredType(right)
+        if rightType == null {
+            return null
+        }
+        if !rightType.isClass() {
+            return null
+        }
+        def rightCl := getClass(rightType)
+        if rightCl = null {
+            return null
+        }
+        methods := getSymbolTable(rightCl)[operatorName(op)]
         if methods = null {
             return null
         }
         def args := Array<ASTNode>() -- FIXME literal
+        args.add(ASTNode.IR_WRAPPER(Position(), target))
         args.add(right)
-        def target := IR.Value.REF(IR.Statement.ID(-1), left)
         match methods.kind {
             when Symbol.Kind.METHOD:
-                def list := Array<MethodDecl>()
-                list.add(methods->MethodDecl)
-                return findBestMethod(Position(), target, list, args, type)                
+                if methods->MethodDecl.annotations.isClass() {
+                    def list := Array<MethodDecl>()
+                    list.add(methods->MethodDecl)
+                    def result := findBestMethod(Position(), null, list, args, type)
+                    if result != null {
+                        return result
+                    }
+                }
             when Symbol.Kind.METHODS:
-                return findBestMethod(Position(), target, methods->Methods.methods, args, type)
+                def result := findBestMethod(Position(), null,
+                        methods->Methods.methods.filter(m => m.annotations.isClass()), args, type)
+                if result != null {
+                    return result
+                }
             otherwise:
                 assert false
         }
@@ -3182,10 +3241,16 @@ class Compiler {
                 if matches != null {
                     assert matches.first.count = 1,
                             "ambiguous call: \{matches.first} on \{left}, \{right}"
+                    def args := Array<ASTNode>() -- FIXME literal
+                    if matches.first[0].value.annotations.isClass() {
+                        args.add(left)
+                        args.add(right)
+                        return call(position, IR.Value.METHOD(null, matches.first[0].value), args,
+                                type)
+                    }
                     def found := findType(possibleTypes(left), matches.first[0].value.owner)
                     assert found != null
                     def target := compileExpression(left, TypeContext.TYPE(found))
-                    def args := Array<ASTNode>() -- FIXME literal
                     args.add(right)
                     return call(position, IR.Value.METHOD(target, matches.first[0].value), args,
                             type)
@@ -3531,7 +3596,8 @@ class Compiler {
             args.add(ASTNode.IR_WRAPPER(position, compiledEnd))
             args.add(ASTNode.IR_WRAPPER(step.position(), compiledStep))
             args.add(ASTNode.BIT(position, inclusive))
-            return call(position, IR.Value.TYPE(Type.SteppedRangeOf(endpointType)), args, type)
+            return call(position, IR.Value.TYPE(Type.SteppedRangeOf(endpointType,
+                    compiledStep.type())), args, type)
         }
         else {
             def args := Array<ASTNode>()
@@ -3575,11 +3641,14 @@ class Compiler {
                 return compileBinary(position, left, op, right, type)
             when ASTNode.BIT(_, value):
                 match type {
-                    when TypeContext.TYPE:
-                        return coerce(expr.position(), IR.Value.BIT(value), type)
-                    otherwise:
-                        return coerce(expr.position(), IR.Value.BIT(value), Type.Bit())
+                    when TypeContext.TYPE(t):
+                        if t = Type.BuiltinBit() {
+                            return IR.Value.BIT(value)
+                        }
                 }
+                return coerce(expr.position(),
+                        coerce(expr.position(), IR.Value.BIT(value), Type.Bit()),
+                        type)
             when ASTNode.CALL(position, m, args):
                 return compileCall(position, m, args, type)
             when ASTNode.DOT(position, base, name):
