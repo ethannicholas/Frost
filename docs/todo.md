@@ -1,11 +1,9 @@
 Rearchitecture
 ==============
 
-@class binary overloads (12 + "Hello"), Int[1 .. 10]
+@class binary overloads Int[1 .. 10]
 boolean short circuiting
 lambdas / inner methods
-finally
-memory management -- note to self: can't punt on this, because Auto stuff won't work otherwise
 @weak / Weak
 inlining
 

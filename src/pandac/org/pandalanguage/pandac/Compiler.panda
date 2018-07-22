@@ -1388,8 +1388,6 @@ class Compiler {
                 return result + NONNULLABLE_TO_NULLABLE_CAST_COST
             when Type.Kind.GENERIC_PARAMETER:
                 return null
-            when Type.Kind.BUILTIN_INT, Type.Kind.BUILTIN_UINT, Type.Kind.BUILTIN_BIT:
-                return null
             when Type.Kind.CLASS:
                 if type.typeKind = Type.Kind.GENERIC {
                     return coercionCost(type.subtypes[0], target)
@@ -1481,25 +1479,26 @@ class Compiler {
         if !target.isClass() {
             return null
         }
-        if !type.isClass() {
-            return null
-        }
-        def cl := getClass(type)
-        if cl = null {
-            return null
-        } 
-        resolve(cl)
-        for m in cl.methods {
+        def targetCl := getClass(target)
+        for m in targetCl.methods {
             if m.annotations.isImplicit() & m.parameters.count = 1 {
                 resolve(m)
                 if type = m.parameters[0].type {
-                    if cl.name = "panda.core.Int64" {
+                    if targetCl.name = "panda.core.Int64" {
                         return 1
                     }
                     return 2
                 }
             }
         }
+        if !type.isClass() {
+            return null
+        }
+        def cl := getClass(type)
+        if cl = null {
+            return null
+        }
+        resolve(cl)
         if cl.resolved != Resolution.RESOLVED_WITH_ERRORS {
             if cl.rawSuper != null {
                 var cost := coercionCost(remapType(type, remapType(type, cl.rawSuper)), target)
@@ -2779,14 +2778,24 @@ class Compiler {
                     }
             }
         }
+        -- actualType always has a "self", even for a @class method. This will probably be tightened
+        -- up in the future, but it simplifies the logic a bit here.
+        def actualType:Type
+        if m.value.isVirtual() {
+            actualType := inheritedTypeWithSelf(m.value)
+        }
+        else {
+            actualType := declaredTypeWithSelf(m.value, m.value.owner.type)
+        }
         def effectiveType := m.effectiveType
         for i in 0 .. args.count {
-            var a := compileExpression(args[i], TypeContext.TYPE(effectiveType.parameterType(i)))
+            var a := compileExpression(args[i],
+                    TypeContext.TYPE(effectiveType.parameterType(i)))
             if a = null {
                 return null
             }
-            if a.type() != m.value.parameters[i].type {
-                a := cast(a, m.value.parameters[i].type)
+            if a.type() != actualType.parameterType(i + 1) {
+                a := cast(a, actualType.parameterType(i + 1))
             }
             if a = null {
                 return null
@@ -2794,17 +2803,16 @@ class Compiler {
             finalArgs.add(a)
         }
         var result:IR.Statement.ID
-        def actualType := inheritedTypeWithSelf(m.value)
         if m.value.isVirtual() {
             def finalTarget:IR.Value?
             if target != null {
-                finalTarget := coerce(position, target, m.value.owner.type)
+                finalTarget := coerce(position, target, actualType.parameterType(0))
                 if finalTarget = null {
                     return null
                 }
             }
             else {
-                finalTarget := coerce(position, compileSelf(position), m.value.owner.type)
+                finalTarget := coerce(position, compileSelf(position), actualType.parameterType(0))
                 if finalTarget = null {
                     return null
                 }
@@ -4161,9 +4169,13 @@ class Compiler {
             ir.add(IR.Statement.BRANCH(testBlock))
         }
         ir.setCurrentBlock(testBlock)
-        def compiledTest := compileExpression(test, TypeContext.TYPE(Type.Bit()))
-        if compiledTest = null {
-            return
+        def compiledTest:IR.Value?
+        {
+            def unrefs := AutoUnrefs(self)
+            compiledTest := compileExpression(test, TypeContext.TYPE(Type.Bit()))
+            if compiledTest = null {
+                return
+            }
         }
         ir.add(IR.Statement.CONDITIONAL_BRANCH(extractBuiltinBit(compiledTest), bodyBlock,
                 endBlock))
@@ -4634,9 +4646,13 @@ class Compiler {
 
     method compileIf(position:Position, test:ASTNode, ifTrue:ImmutableArray<ASTNode>,
             ifFalse:ASTNode?) {
-        def compiledTest := compileExpression(test, TypeContext.TYPE(Type.Bit()))
-        if compiledTest = null {
-            return
+        def compiledTest:IR.Value?
+        {
+            def unrefs := AutoUnrefs(self)
+            compiledTest := compileExpression(test, TypeContext.TYPE(Type.Bit()))
+            if compiledTest = null {
+                return
+            }
         }
         def ifTrueBlock := ir.newBlock("if true")
         def ifFalseBlock:IR.Block.ID
@@ -4994,9 +5010,13 @@ class Compiler {
         def scope := AutoScope(self)
         ir.add(IR.Statement.BRANCH(testBlock))
         ir.setCurrentBlock(testBlock)
-        def compiledTest := compileExpression(test, TypeContext.TYPE(Type.Bit()))
-        if compiledTest = null {
-            return
+        def compiledTest:IR.Value?
+        {
+            def unrefs := AutoUnrefs(self)
+            compiledTest := compileExpression(test, TypeContext.TYPE(Type.Bit()))
+            if compiledTest = null {
+                return
+            }
         }
         ir.add(IR.Statement.CONDITIONAL_BRANCH(extractBuiltinBit(compiledTest), bodyBlock,
                 endBlock))
