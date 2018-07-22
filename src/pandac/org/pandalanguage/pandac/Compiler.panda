@@ -2673,6 +2673,17 @@ class Compiler {
         return result
     }
 
+    method convert(value:IR.Value?, target:Type):IR.Value? {
+        if value = null {
+            return value
+        }
+        if value.type() = target {
+            return value
+        }
+        return call(Position(), value, "convert", Array<ASTNode>() -* FIXME literal *-,
+                TypeContext.TYPE(target))
+    }
+
     method getVTableIndex(m:MethodDecl):Int {
         def vtable := getVTable(m.owner)
         for i in 0 .. vtable.count {
@@ -2759,6 +2770,14 @@ class Compiler {
             error(position, "\{m.value.declaration()} expects \{m.parameterCount}" +
                     "\{m.parameterCount = 1:|s} argument, but found \{args.count}")
             return null
+        }
+        if target != null & m.value.annotations.isClass() {
+            match target {
+                when IR.Value.TYPE:
+                    -- do nothing
+                otherwise:
+                    error(position, "cannot call class \{m.value.declaration()} on an instance")
+            }
         }
         var intrinsic := compileIntrinsic(target, m, args)
         if intrinsic.first {
@@ -3595,6 +3614,17 @@ class Compiler {
             compiledEnd := IR.Value.NULL(endpointType)
         }
         if step != null {
+            if stepContext = TypeContext.NON_VOID & endpointType.isNumber() {
+                def p := possibleTypes(step)
+                if p != null {
+                    for t in p {
+                        if t = endpointType {
+                            stepContext := TypeContext.TYPE(endpointType)
+                            break
+                        }
+                    }
+                }
+            }
             def compiledStep := compileExpression(step, stepContext)
             if compiledStep = null {
                 return null
@@ -4203,6 +4233,34 @@ class Compiler {
         return true
     }
 
+    function signed(type:Type):Type {
+        match type.nonnullable() {
+            when Type.UInt8():  return Type.Int8()
+            when Type.UInt16(): return Type.Int16()
+            when Type.UInt32(): return Type.Int32()
+            when Type.UInt64(): return Type.Int64()
+            otherwise: return type
+        }
+    }
+    function unsigned(type:Type):Type {
+        match type.nonnullable() {
+            when Type.Int8():  return Type.UInt8()
+            when Type.Int16(): return Type.UInt16()
+            when Type.Int32(): return Type.UInt32()
+            when Type.Int64(): return Type.UInt64()
+            otherwise: return type
+        }
+    }
+
+    method debugPrint(value:IR.Value) {
+        def auto := AutoUnrefs(self)
+        def p := Position()
+        def args := Array<ASTNode>() -- FIXME literal
+        args.add(ASTNode.IR_WRAPPER(p, value))
+        compileCall(p, ASTNode.DOT(p, ASTNode.IDENTIFIER(p, "Console"), "printLine"), args.finish(),
+                TypeContext.UNSPECIFIED)
+    }
+
     method compileSimpleRangeFor(position:Position, label:String?, index:Variable, range:IR.Value,
             statements:ListView<ASTNode>) {
         function arg(a:IR.Value):ListView<ASTNode> {
@@ -4245,6 +4303,13 @@ class Compiler {
                 rangeFields[2])), Type.Bit()))
 
         def step := compileExpression(ASTNode.INT(position, 1), TypeContext.TYPE(indexType))
+        def stepComparison:IR.Value
+        if step.type() = Type.Int64() {
+            stepComparison := convert(step, Type.UInt64())
+        }
+        else {
+            stepComparison := step
+        }
 
         -- start block
         def loopStart := ir.newBlock("loopStart")
@@ -4278,7 +4343,11 @@ class Compiler {
         -- overflows near the maximum value
         def indexLoad := IR.Value.REF(ir.add(IR.Statement.LOAD(IR.Value.LOCAL(indexSlot,
                 indexType))), indexType)
-        def delta := call(position, end, "-", arg(indexLoad), TypeContext.TYPE(indexType))
+        -- always use unsigned comparison to avoid overflow; we know both the delta and the step are
+        -- the same sign
+        def delta := convert(call(position, end, "-", arg(indexLoad), TypeContext.NON_VOID),
+                unsigned(indexType))
+        assert delta != null, "can't negate \{arg(indexLoad)}"
 
         def inclusiveTest := ir.newBlock("inclusiveTest")
         def exclusiveTest := ir.newBlock("exclusiveTest")
@@ -4286,20 +4355,19 @@ class Compiler {
 
         -- inclusive test
         ir.setCurrentBlock(inclusiveTest)
-        -- always use unsigned comparison to avoid overflow; we know both the delta and the step are
-        -- the same sign
-        def inclusiveTestBit := extractBuiltinBit(call(position, delta, ">=", arg(step),
+        def inclusiveTestBit := extractBuiltinBit(call(position, delta, ">=", arg(stepComparison),
                 TypeContext.TYPE(Type.Bit())))
         ir.add(IR.Statement.CONDITIONAL_BRANCH(inclusiveTestBit, loopInc, loopEnd))
 
         -- exclusive test
         ir.setCurrentBlock(exclusiveTest)
-        def exclusiveTestBit := extractBuiltinBit(call(position, delta, ">", arg(step),
+        def exclusiveTestBit := extractBuiltinBit(call(position, delta, ">", arg(stepComparison),
                 TypeContext.TYPE(Type.Bit())))
         ir.add(IR.Statement.CONDITIONAL_BRANCH(exclusiveTestBit, loopInc, loopEnd))
 
         ir.setCurrentBlock(loopInc)
-        def inc := call(position, indexLoad, "+", arg(step), TypeContext.TYPE(indexType))
+        def inc := convert(call(position, indexLoad, "+", arg(step), TypeContext.NON_VOID),
+                indexType)
         ir.add(IR.Statement.STORE(inc, IR.Value.LOCAL(indexSlot, indexType)))
         ir.add(IR.Statement.BRANCH(loopStart))
 
@@ -4364,6 +4432,22 @@ class Compiler {
         -- extract step value from range
         def step := IR.Value.REF(ir.add(IR.Statement.EXTRACT_FIELD(range, rangeFields[2])),
                 stepType)
+        def stepComparison:IR.Value
+        if step.type() = Type.Int64() {
+            stepComparison := convert(step, Type.UInt64())
+        }
+        else {
+            stepComparison := step
+        }
+        def negStep := convert(call(position, convert(step, signed(step.type())), "-",
+                Array<ASTNode>() -* FIXME literal *-, TypeContext.NON_VOID), stepType)
+        def negStepComparison:IR.Value
+        if step.type() = Type.Int64() {
+            negStepComparison := convert(negStep, Type.UInt64())
+        }
+        else {
+            negStepComparison := negStep
+        }
 
         -- extract inclusive / exclusive from range
         def inclusive := extractBuiltinBit(IR.Value.REF(ir.add(IR.Statement.EXTRACT_FIELD(range,
@@ -4436,7 +4520,10 @@ class Compiler {
         -- forward loop; perform the test by subtracting index from end and then comparing to step,
         -- to avoid overflows near the maximum value
         ir.setCurrentBlock(forwardTest)
-        def forwardDelta := call(position, end, "-", arg(indexLoad), TypeContext.TYPE(indexType))
+        -- always use unsigned comparison to avoid overflow; we know both the delta and the step are
+        -- the same sign
+        def forwardDelta := convert(call(position, end, "-", arg(indexLoad), TypeContext.NON_VOID),
+                unsigned(indexType))
 
         -- forward loop; determine inclusive / exclusive
         def forwardInclusiveTest := ir.newBlock("forwardInclusiveTest")
@@ -4446,24 +4533,21 @@ class Compiler {
 
         -- forward inclusive test
         ir.setCurrentBlock(forwardInclusiveTest)
-        -- always use unsigned comparison to avoid overflow; we know both the delta and the step are
-        -- the same sign
         def forwardInclusiveTestBit := extractBuiltinBit(call(position, forwardDelta, ">=",
-                arg(step), TypeContext.TYPE(Type.Bit())))
+                arg(stepComparison), TypeContext.TYPE(Type.Bit())))
         ir.add(IR.Statement.CONDITIONAL_BRANCH(forwardInclusiveTestBit, loopInc, loopEnd))
 
         -- forward exclusive test
         ir.setCurrentBlock(forwardExclusiveTest)
         def forwardExclusiveTestBit := extractBuiltinBit(call(position, forwardDelta, ">",
-                arg(step), TypeContext.TYPE(Type.Bit())))
+                arg(stepComparison), TypeContext.TYPE(Type.Bit())))
         ir.add(IR.Statement.CONDITIONAL_BRANCH(forwardExclusiveTestBit, loopInc, loopEnd))
 
         -- backward loop; perform the test by subtracting end from index and then comparing to
         -- -step, to avoid overflows near the minimum value
         ir.setCurrentBlock(backwardTest)
-        def backwardDelta := call(position, indexLoad, "-", arg(end), TypeContext.UNSPECIFIED)
-        def negStep := call(position, step, "-", Array<ASTNode>() -* FIXME literal *-,
-                TypeContext.TYPE(indexType))
+        def backwardDelta := convert(call(position, indexLoad, "-", arg(end), TypeContext.NON_VOID),
+                unsigned(indexType))
 
         -- backward loop; determine inclusive / exclusive
         def backwardInclusiveTest := ir.newBlock("backwardInclusiveTest")
@@ -4474,17 +4558,18 @@ class Compiler {
         -- backward inclusive test
         ir.setCurrentBlock(backwardInclusiveTest)
         def backwardInclusiveTestBit := extractBuiltinBit(call(position, backwardDelta, ">=",
-                arg(negStep), TypeContext.TYPE(Type.Bit())))
+                arg(negStepComparison), TypeContext.TYPE(Type.Bit())))
         ir.add(IR.Statement.CONDITIONAL_BRANCH(backwardInclusiveTestBit, loopInc, loopEnd))
 
         -- backward exclusive test
         ir.setCurrentBlock(backwardExclusiveTest)
         def backwardExclusiveTestBit := extractBuiltinBit(call(position, backwardDelta, ">",
-                arg(negStep), TypeContext.TYPE(Type.Bit())))
+                arg(negStepComparison), TypeContext.TYPE(Type.Bit())))
         ir.add(IR.Statement.CONDITIONAL_BRANCH(backwardExclusiveTestBit, loopInc, loopEnd))
 
         ir.setCurrentBlock(loopInc)
-        def inc := call(position, indexLoad, "+", arg(step), TypeContext.TYPE(indexType))
+        def inc := convert(call(position, indexLoad, "+", arg(step), TypeContext.NON_VOID),
+                indexType)
         ir.add(IR.Statement.STORE(inc, IR.Value.LOCAL(indexSlot, indexType)))
         ir.add(IR.Statement.BRANCH(loopStart))
 
@@ -5098,6 +5183,7 @@ class Compiler {
             return
         }
         currentMethod.push(m)
+        checkAnnotations(m)
         if m.body != null {
             ir := IR()
             {
