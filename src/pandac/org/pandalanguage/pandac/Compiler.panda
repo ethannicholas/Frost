@@ -787,7 +787,7 @@ class Compiler {
     @post(f.type != Type.Void() & f.type.resolved | errorCount > 0)
     method determineRawType(f:FieldDecl) {
         currentClass.push(f.owner)
-        def auto := AutoScope(self, f.owner.symbolTable)
+        def auto := AutoScope(self, getSymbolTable(f.owner))
         if f.type != Type.Void() {
             def resolved := resolve(f.type)
             if resolved != null {
@@ -3718,7 +3718,7 @@ class Compiler {
                 }
                 return IR.Value.TYPE(type)
             otherwise:
-                assert false, "unsupported expression \{expr}:\{expr.position}"
+                assert false, "unsupported expression \{expr}:\{expr.position()}"
         }
     }
 
@@ -3738,7 +3738,7 @@ class Compiler {
     interface LValue {
         function type():Type
 
-        method compileLoad():IR.Value
+        method compileLoad():IR.Value?
 
         method compileStore(value:IR.Value)
     }
@@ -3764,7 +3764,7 @@ class Compiler {
         }
 
         @override
-        method compileLoad():IR.Value {
+        method compileLoad():IR.Value? {
             def result := compiler.ir.add(IR.Statement.LOAD(IR.Value.LOCAL(slot, type())))
             return IR.Value.REF(result, compiler.ir.locals[slot])
         }
@@ -3797,10 +3797,10 @@ class Compiler {
             self.position := position
             assert field.resolved = Resolution.RESOLVED
             self.field := field
-            if target != null {
+            if target != null & !target.type().isClassLiteral() {
                 self.target := target
             }
-            else {
+            else if !field.annotations.isClass() {
                 self.target := compiler.compileSelf(position)
             }
             rawType := field.type
@@ -3821,9 +3821,13 @@ class Compiler {
         }
 
         @override
-        method compileLoad():IR.Value {
+        method compileLoad():IR.Value? {
             if field.annotations.isClass() & field.fieldKind = FieldDecl.Kind.CONSTANT {
-                return compiler.compileExpression(field.rawValue)
+                compiler.currentClass.push(field.owner)
+                def auto := AutoScope(compiler, compiler.getSymbolTable(field.owner))
+                def result := compiler.compileExpression(field.rawValue)
+                compiler.currentClass.pop()
+                return result
             }
             var result:IR.Value
             if field.fieldKind = FieldDecl.Kind.PROPERTY {
@@ -3909,7 +3913,7 @@ class Compiler {
         }
 
         @override
-        method compileLoad():IR.Value {
+        method compileLoad():IR.Value? {
             if index = null {
                 def m := compiler.findOverloadedOperator(target.type(), Token.Kind.LBRACKET,
                         rawIndex, TypeContext.NON_VOID)
@@ -3982,7 +3986,7 @@ class Compiler {
         }
 
         @override
-        method compileLoad():IR.Value {
+        method compileLoad():IR.Value? {
             assert false
         }
 
