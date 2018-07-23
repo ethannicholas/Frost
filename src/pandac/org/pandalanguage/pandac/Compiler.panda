@@ -1345,6 +1345,16 @@ class Compiler {
                 return Type.Bit()
             when ASTNode.INT:
                 return Type.Int64()
+            when ASTNode.PREFIX(_, op, base):
+                def baseType := preferredType(base)
+                if baseType != null {
+                    def p := expr.position()
+                     -- fake target, just used for matching
+                    def target := IR.Value.REF(IR.Statement.ID(-1), baseType)
+                    return preferredType(ASTNode.CALL(p,
+                            ASTNode.DOT(p, ASTNode.IR_WRAPPER(p, target), operatorName(op)),
+                            ImmutableArray<ASTNode>()))
+                }
         }
         def possible := possibleTypes(expr)
         if possible = null {
