@@ -2611,14 +2611,17 @@ class Compiler {
                         }
                     }
                 when Symbol.Kind.METHODS:
-                    def methods := inits->Methods.methods
-                    for m in methods {
-                        if m.annotations.isImplicit() {
-                            if resolve(m) {
-                                if coercionCost(value.type(), m.parameters[0].type) != null {
-                                    return implicitInit(position, value, m)
-                                }
+                    def methods := inits->Methods.methods.filter(m => m.annotations.isImplicit())
+                    if methods.count > 0 {
+                        def args := Array<ASTNode>()
+                        args.add(ASTNode.IR_WRAPPER(position, value))
+                        def best := findBestMethod(position, null, methods, args,
+                                TypeContext.UNSPECIFIED)
+                        if best != null {
+                            if best.first.count = 1 {
+                                return implicitInit(position, value, best.first[0].value)
                             }
+                            assert false, "ambiguous implicit init"
                         }
                     }
             }
