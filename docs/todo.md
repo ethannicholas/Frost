@@ -6,6 +6,7 @@ boolean short circuiting
 lambdas / inner methods
 @weak / Weak
 inlining
+JSON test
 
 Immediate
 =========

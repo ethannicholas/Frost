@@ -1948,6 +1948,10 @@ class Compiler {
                 result.add(Type.Real32())
                 result.add(Type.Real64())
                 return result
+            when ASTNode.SELF:
+                def a := Array<Type>() -- FIXME literal
+                a.add(currentClass[0].type)
+                return a
             when ASTNode.STRING(_, text):
                 def result := Array<Type>() -- FIXME literal
                 result.add(Type.StringType())
@@ -2948,8 +2952,11 @@ class Compiler {
             if target != null {
                 ref := MethodRef(self, target.type(), m)
             }
-            else {
+            else if m.annotations.isClass() | m.methodKind = MethodDecl.Kind.INIT {
                 ref := MethodRef(self, m.owner.type, m)
+            }
+            else {
+                ref := MethodRef(self, findType(currentClass[0].type, m.owner), m)
             }
             var cost := 0
             for i in 0 .. 5 { Panda.ref(ref) } -- FIXME seems to be a bug in the bootstrap compiler's refcounting
@@ -3013,8 +3020,11 @@ class Compiler {
                 if target != null {
                     targetType := target.type()
                 }
-                else {
+                else if m.annotations.isClass() | m.methodKind = MethodDecl.Kind.INIT {
                     targetType := m.owner.type
+                }
+                else {
+                    targetType := findType(currentClass[0].type, m.owner)
                 }
                 if !resolve(m) {
                     return null
