@@ -8,7 +8,7 @@ method main() {
     Console.printLine(s[0])
     Console.printLine(s.pop())
     Console.printLine(s[1])
-    Console.printLine(s.pop() != null)
+    Console.printLine(s.pop() !== null)
     Console.printLine(s.pop())
     Console.printLine(s.pop())
     Console.printLine(s.pop())

@@ -699,6 +699,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
     of the string. If `Range.min` is greater than `Range.max`, the resulting substring will be
     empty.
     ================================================================================================
+    @priority(1)
     function [](r:Range<Index?>):String {
         if _length = 0 {
             return ""
@@ -734,6 +735,7 @@ class String : Immutable, Key<String>, Iterable<Char32>, Formattable {
     will reverse the Unicode codepoints in the input string. Note again that this will mangle
     Unicode characters which consist of more than one Unicode codepoint.
     ================================================================================================
+    @priority(1)
     function [](r:SteppedRange<Index?, Int>):String {
         if _length = 0 {
             return ""

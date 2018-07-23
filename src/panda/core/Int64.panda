@@ -76,6 +76,7 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
     }
 
     ===Adds another number to this number.===
+    @priority(1)
     function +(other:Int64):Int64 {
         return value + other.value
     }
@@ -96,6 +97,7 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
     }
 
     ===Subtracts another number from this number.===
+    @priority(1)
     function -(other:Int64):Int64 {
         return value - other.value
     }
@@ -121,6 +123,7 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
     }
 
     ===Multiplies this number by another number.===
+    @priority(1)
     function *(other:Int64):Int64 {
         return value * other.value
     }
@@ -141,6 +144,7 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
     }
 
     ===Divides this number by another number, returning the whole number portion.===
+    @priority(1)
     function //(other:Int64):Int64 {
         return value // other.value
     }
@@ -161,6 +165,7 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
     }
 
     ===Returns the remainder of dividing this number by another number.===
+    @priority(1)
     function %(other:Int64):Int64 {
         return value % other.value
     }
@@ -226,6 +231,7 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
     }
 
     ===Returns the bitwise AND of this number with another number.===
+    @priority(1)
     function &&(other:Int64):Int64 {
         return value && other.value
     }
@@ -266,6 +272,7 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
     }
 
     ===Returns the bitwise OR of this number with another number.===
+    @priority(1)
     function ||(other:Int64):Int64 {
         return value || other.value
     }
@@ -306,6 +313,7 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
     }
 
     ===Returns the bitwise XOR of this number with another number.===
+    @priority(1)
     function ~~(other:Int64):Int64 {
         return value ~~ other.value
     }
@@ -346,6 +354,7 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
     }
 
     ===Returns this number shifted left by the specified number of bits.===
+    @priority(1)
     function <<(other:Int64):Int64 {
         return value << other.value
     }
@@ -386,6 +395,7 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
     }
 
     ===Returns this number arithmetic shifted right by the specified number of bits.===
+    @priority(1)
     function >>(other:Int64):Int64 {
         return value >> other.value
     }
@@ -427,6 +437,7 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
 
     ===Returns `true` if this number is equal to the given number.===
     @override
+    @priority(1)
     function =(other:Int64):Bit {
         return value = other.value
     }
@@ -448,6 +459,7 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
 
     ===Returns `true` if this number is not equal to the given number.===
     @override
+    @priority(1)
     function !=(other:Int64):Bit {
         return value != other.value
     }
@@ -469,6 +481,7 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
 
     ===Returns `true` if this number is less than the given number.===
     @override
+    @priority(1)
     function <(other:Int64):Bit {
         return value < other.value
     }
@@ -490,6 +503,7 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
 
     ===Returns `true` if this number is greater than the given number.===
     @override
+    @priority(1)
     function >(other:Int64):Bit {
         return value > other.value
     }
@@ -511,6 +525,7 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
 
     ===Returns `true` if this number is greater than or equal to the given number.===
     @override
+    @priority(1)
     function >=(other:Int64):Bit {
         return value >= other.value
     }
@@ -532,6 +547,7 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
 
     ===Returns `true` if this number is less than or equal to the given number.===
     @override
+    @priority(1)
     function <=(other:Int64):Bit {
         return value <= other.value
     }
@@ -738,12 +754,12 @@ class Int64 : Value, Key<Int64>, Comparable<Int64>, Formattable, ListView<Bit> {
         return UInt64(value->builtin_uint64)
     }
 
-    ===Returns this number reinterpreted to a bit unsigned number.===
+    ===Returns this number truncated to a bit signed number.===
     function convert():Real32 {
         return Real32(value->builtin_float32)
     }
 
-    ===Returns this number reinterpreted to a bit unsigned number.===
+    ===Returns this number reinterpreted to a bit signed number.===
     function convert():Real64 {
         return Real64(value->builtin_float64)
     }

@@ -10,6 +10,7 @@ class Token : Value {
     choice Kind {
         EOF
         SHIFTRIGHT
+        REGEX
         STRING
         INT
         REAL
@@ -40,6 +41,7 @@ class Token : Value {
                 when TRUE: return "TRUE"
                 when FALSE: return "FALSE"
                 when RBRACE: return "RBRACE"
+                when SHIFTRIGHT: return ">>"
             }
         }
     }

@@ -25,6 +25,7 @@ class Annotations {
         PRE_OR(String, ASTNode)
         POST(String, ASTNode)
         POST_AND(String, ASTNode)
+        PRIORITY(String, ASTNode)
 
         @override
         function convert():String {
@@ -33,6 +34,7 @@ class Annotations {
                 when PRE_OR(_, expr):   return "@preOr(\{expr})"
                 when POST(_, expr):     return "@post(\{expr})"
                 when POST_AND(_, expr): return "@postAnd(\{expr})"
+                when PRIORITY(_, expr): return "@priority(\{expr})"
             }
         }
     }

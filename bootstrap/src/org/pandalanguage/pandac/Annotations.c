@@ -255,7 +255,7 @@ panda$core$String* org$pandalanguage$pandac$Annotations$convert$R$panda$core$Str
     panda$core$MutableString* result102 = NULL;
     panda$core$MutableString* $tmp103;
     panda$core$MutableString* $tmp104;
-    panda$collections$Iterator* Iter$171$13139 = NULL;
+    panda$collections$Iterator* Iter$173$13139 = NULL;
     panda$collections$Iterator* $tmp140;
     panda$collections$Iterator* $tmp141;
     org$pandalanguage$pandac$Annotations$Expression* expr157 = NULL;
@@ -378,28 +378,28 @@ panda$core$String* org$pandalanguage$pandac$Annotations$convert$R$panda$core$Str
                     panda$collections$Iterator* $tmp145 = $tmp143(((panda$collections$Iterable*) self->expressions));
                     $tmp141 = $tmp145;
                     $tmp140 = $tmp141;
-                    Iter$171$13139 = $tmp140;
+                    Iter$173$13139 = $tmp140;
                     panda$core$Panda$ref$panda$core$Object$Q(((panda$core$Object*) $tmp140));
                     panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp141));
                     $l146:;
-                    ITable* $tmp149 = Iter$171$13139->$class->itable;
+                    ITable* $tmp149 = Iter$173$13139->$class->itable;
                     while ($tmp149->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
                         $tmp149 = $tmp149->next;
                     }
                     $fn151 $tmp150 = $tmp149->methods[0];
-                    panda$core$Bit $tmp152 = $tmp150(Iter$171$13139);
+                    panda$core$Bit $tmp152 = $tmp150(Iter$173$13139);
                     panda$core$Bit $tmp153 = panda$core$Bit$$NOT$R$panda$core$Bit($tmp152);
                     bool $tmp148 = $tmp153.value;
                     if (!$tmp148) goto $l147;
                     {
                         int $tmp156;
                         {
-                            ITable* $tmp160 = Iter$171$13139->$class->itable;
+                            ITable* $tmp160 = Iter$173$13139->$class->itable;
                             while ($tmp160->$class != (panda$core$Class*) &panda$collections$Iterator$class) {
                                 $tmp160 = $tmp160->next;
                             }
                             $fn162 $tmp161 = $tmp160->methods[1];
-                            panda$core$Object* $tmp163 = $tmp161(Iter$171$13139);
+                            panda$core$Object* $tmp163 = $tmp161(Iter$173$13139);
                             $tmp159 = $tmp163;
                             $tmp158 = ((org$pandalanguage$pandac$Annotations$Expression*) $tmp159);
                             expr157 = $tmp158;
@@ -429,8 +429,8 @@ panda$core$String* org$pandalanguage$pandac$Annotations$convert$R$panda$core$Str
                 $tmp138 = -1;
                 goto $l136;
                 $l136:;
-                panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) Iter$171$13139));
-                Iter$171$13139 = NULL;
+                panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) Iter$173$13139));
+                Iter$173$13139 = NULL;
                 switch ($tmp138) {
                     case -1: goto $l171;
                 }
@@ -458,7 +458,7 @@ panda$core$String* org$pandalanguage$pandac$Annotations$convert$R$panda$core$Str
     $l178:;
     if (false) goto $l179; else goto $l180;
     $l180:;
-    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s181, (panda$core$Int64) { 123 }, &$s182);
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s181, (panda$core$Int64) { 125 }, &$s182);
     abort();
     $l179:;
     abort();

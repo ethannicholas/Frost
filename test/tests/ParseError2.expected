@@ -1,3 +1,3 @@
 Broken.panda:8:5: error: expected a declaration, but found 'Broken'
-ParseError2.panda:2:29: error: unknown identifier
+ParseError2.panda:2:23: error: unknown identifier
 2 errors

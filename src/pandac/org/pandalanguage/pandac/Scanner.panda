@@ -134,6 +134,14 @@ class Scanner {
                                 expressions.add(Annotations.Expression.POST_AND(exprText, expr))
                                 expr := null
                             }
+                        when "@priority":
+                            if expressions = null {
+                                expressions := Array<Annotations.Expression>()
+                            }
+                            if checkExpression(self, p, text, expr) {
+                                expressions.add(Annotations.Expression.PRIORITY(exprText, expr))
+                                expr := null
+                            }
                         otherwise:
                             error(p, "unrecognized annotation '\{text}'")
                     }

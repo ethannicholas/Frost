@@ -114,7 +114,7 @@ class NFAtoDFA {
             sort(next)
             def nextState := getState(DFAStateLabel(next))
             addTransition(Char8(c), state.id, nextState.id)
-            if bestAccept < Int32.MAX {
+            if bestAccept < Int32.MAX.convert()->Int64 {
                 while accepts.count <= nextState.id {
                     accepts.add(-1)
                 }

@@ -84,7 +84,7 @@ org$pandalanguage$json$Token panda$json$JSONParser$next$R$org$pandalanguage$json
     org$pandalanguage$json$Token $tmp13 = org$pandalanguage$json$Lexer$next$R$org$pandalanguage$json$Token(self->lexer);
     result12 = $tmp13;
     $l14:;
-    panda$core$Int64$init$builtin_int64(&$tmp17, 5);
+    panda$core$Int64$init$builtin_int64(&$tmp17, 6);
     panda$core$Bit $tmp18 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit(result12.kind.$rawValue, $tmp17);
     bool $tmp16 = $tmp18.value;
     if (!$tmp16) goto $l15;
@@ -168,7 +168,7 @@ panda$json$JSON* panda$json$JSONParser$array$R$panda$json$JSON(panda$json$JSONPa
     panda$core$Bit $tmp78;
     int $tmp43;
     {
-        panda$core$Int64$init$builtin_int64(&$tmp45, 12);
+        panda$core$Int64$init$builtin_int64(&$tmp45, 13);
         org$pandalanguage$json$Token$Kind$init$panda$core$Int64(&$tmp44, $tmp45);
         org$pandalanguage$json$Token$nullable $tmp46 = panda$json$JSONParser$checkNext$org$pandalanguage$json$Token$Kind$R$org$pandalanguage$json$Token$Q(self, $tmp44);
         if (((panda$core$Bit) { $tmp46.nonnull }).value) {
@@ -208,7 +208,7 @@ panda$json$JSON* panda$json$JSONParser$array$R$panda$json$JSON(panda$json$JSONPa
             {
                 org$pandalanguage$json$Token $tmp65 = panda$json$JSONParser$next$R$org$pandalanguage$json$Token(self);
                 $match$83_1364 = $tmp65.kind;
-                panda$core$Int64$init$builtin_int64(&$tmp66, 12);
+                panda$core$Int64$init$builtin_int64(&$tmp66, 13);
                 panda$core$Bit $tmp67 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$83_1364.$rawValue, $tmp66);
                 if ($tmp67.value) {
                 {
@@ -230,7 +230,7 @@ panda$json$JSON* panda$json$JSONParser$array$R$panda$json$JSON(panda$json$JSONPa
                 }
                 }
                 else {
-                panda$core$Int64$init$builtin_int64(&$tmp76, 13);
+                panda$core$Int64$init$builtin_int64(&$tmp76, 14);
                 panda$core$Bit $tmp77 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$83_1364.$rawValue, $tmp76);
                 if ($tmp77.value) {
                 {
@@ -299,7 +299,7 @@ panda$json$JSON* panda$json$JSONParser$object$R$panda$json$JSON(panda$json$JSONP
     panda$core$Bit $tmp143;
     int $tmp90;
     {
-        panda$core$Int64$init$builtin_int64(&$tmp92, 10);
+        panda$core$Int64$init$builtin_int64(&$tmp92, 11);
         org$pandalanguage$json$Token$Kind$init$panda$core$Int64(&$tmp91, $tmp92);
         org$pandalanguage$json$Token$nullable $tmp93 = panda$json$JSONParser$checkNext$org$pandalanguage$json$Token$Kind$R$org$pandalanguage$json$Token$Q(self, $tmp91);
         if (((panda$core$Bit) { $tmp93.nonnull }).value) {
@@ -342,7 +342,7 @@ panda$json$JSON* panda$json$JSONParser$object$R$panda$json$JSON(panda$json$JSONP
                 panda$core$Panda$unref$panda$core$Object$Q(((panda$core$Object*) $tmp114));
                 org$pandalanguage$json$Token $tmp117 = panda$json$JSONParser$next$R$org$pandalanguage$json$Token(self);
                 colon116 = $tmp117;
-                panda$core$Int64$init$builtin_int64(&$tmp118, 14);
+                panda$core$Int64$init$builtin_int64(&$tmp118, 15);
                 panda$core$Bit $tmp119 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit(colon116.kind.$rawValue, $tmp118);
                 if ($tmp119.value) {
                 {
@@ -361,7 +361,7 @@ panda$json$JSON* panda$json$JSONParser$object$R$panda$json$JSON(panda$json$JSONP
                 {
                     org$pandalanguage$json$Token $tmp128 = panda$json$JSONParser$next$R$org$pandalanguage$json$Token(self);
                     $match$107_13127 = $tmp128.kind;
-                    panda$core$Int64$init$builtin_int64(&$tmp129, 10);
+                    panda$core$Int64$init$builtin_int64(&$tmp129, 11);
                     panda$core$Bit $tmp130 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$107_13127.$rawValue, $tmp129);
                     if ($tmp130.value) {
                     {
@@ -386,7 +386,7 @@ panda$json$JSON* panda$json$JSONParser$object$R$panda$json$JSON(panda$json$JSONP
                     }
                     }
                     else {
-                    panda$core$Int64$init$builtin_int64(&$tmp140, 13);
+                    panda$core$Int64$init$builtin_int64(&$tmp140, 14);
                     panda$core$Bit $tmp141 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$107_13127.$rawValue, $tmp140);
                     if ($tmp141.value) {
                     {
@@ -461,7 +461,7 @@ panda$core$String* panda$json$JSONParser$string$R$panda$core$String(panda$json$J
     {
         org$pandalanguage$json$Token $tmp158 = panda$json$JSONParser$next$R$org$pandalanguage$json$Token(self);
         token157 = $tmp158;
-        panda$core$Int64$init$builtin_int64(&$tmp159, 2);
+        panda$core$Int64$init$builtin_int64(&$tmp159, 3);
         panda$core$Bit $tmp160 = panda$core$Int64$$NEQ$panda$core$Int64$R$panda$core$Bit(token157.kind.$rawValue, $tmp159);
         if ($tmp160.value) {
         {
@@ -568,7 +568,7 @@ panda$json$JSON* panda$json$JSONParser$node$R$panda$json$JSON(panda$json$JSONPar
     token194 = $tmp195;
     {
         $match$131_9196 = token194.kind;
-        panda$core$Int64$init$builtin_int64(&$tmp197, 9);
+        panda$core$Int64$init$builtin_int64(&$tmp197, 10);
         panda$core$Bit $tmp198 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$131_9196.$rawValue, $tmp197);
         if ($tmp198.value) {
         {
@@ -582,7 +582,7 @@ panda$json$JSON* panda$json$JSONParser$node$R$panda$json$JSON(panda$json$JSONPar
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp204, 11);
+        panda$core$Int64$init$builtin_int64(&$tmp204, 12);
         panda$core$Bit $tmp205 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$131_9196.$rawValue, $tmp204);
         if ($tmp205.value) {
         {
@@ -596,7 +596,7 @@ panda$json$JSON* panda$json$JSONParser$node$R$panda$json$JSON(panda$json$JSONPar
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp210, 2);
+        panda$core$Int64$init$builtin_int64(&$tmp210, 3);
         panda$core$Bit $tmp211 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$131_9196.$rawValue, $tmp210);
         if ($tmp211.value) {
         {
@@ -640,7 +640,7 @@ panda$json$JSON* panda$json$JSONParser$node$R$panda$json$JSON(panda$json$JSONPar
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp234, 3);
+        panda$core$Int64$init$builtin_int64(&$tmp234, 4);
         panda$core$Bit $tmp235 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$131_9196.$rawValue, $tmp234);
         if ($tmp235.value) {
         {
@@ -660,7 +660,7 @@ panda$json$JSON* panda$json$JSONParser$node$R$panda$json$JSON(panda$json$JSONPar
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp244, 4);
+        panda$core$Int64$init$builtin_int64(&$tmp244, 5);
         panda$core$Bit $tmp245 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$131_9196.$rawValue, $tmp244);
         if ($tmp245.value) {
         {
@@ -680,7 +680,7 @@ panda$json$JSON* panda$json$JSONParser$node$R$panda$json$JSON(panda$json$JSONPar
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp254, 6);
+        panda$core$Int64$init$builtin_int64(&$tmp254, 7);
         panda$core$Bit $tmp255 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$131_9196.$rawValue, $tmp254);
         if ($tmp255.value) {
         {
@@ -697,7 +697,7 @@ panda$json$JSON* panda$json$JSONParser$node$R$panda$json$JSON(panda$json$JSONPar
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp262, 7);
+        panda$core$Int64$init$builtin_int64(&$tmp262, 8);
         panda$core$Bit $tmp263 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$131_9196.$rawValue, $tmp262);
         if ($tmp263.value) {
         {
@@ -714,7 +714,7 @@ panda$json$JSON* panda$json$JSONParser$node$R$panda$json$JSON(panda$json$JSONPar
         }
         }
         else {
-        panda$core$Int64$init$builtin_int64(&$tmp270, 8);
+        panda$core$Int64$init$builtin_int64(&$tmp270, 9);
         panda$core$Bit $tmp271 = panda$core$Int64$$EQ$panda$core$Int64$R$panda$core$Bit($match$131_9196.$rawValue, $tmp270);
         if ($tmp271.value) {
         {

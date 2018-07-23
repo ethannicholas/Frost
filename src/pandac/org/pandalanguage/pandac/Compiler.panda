@@ -1484,10 +1484,7 @@ class Compiler {
             if m.annotations.isImplicit() & m.parameters.count = 1 {
                 resolve(m)
                 if type = m.parameters[0].type {
-                    if targetCl.name = "panda.core.Int64" {
-                        return 1
-                    }
-                    return 2
+                    return 1
                 }
             }
         }
@@ -1900,6 +1897,14 @@ class Compiler {
                 def a := Array<Type>() -- FIXME literal
                 a.add(node.type())
                 return a
+            when ASTNode.NULL:
+                def a := Array<Type>() -- FIXME literal
+                a.add(Type.Any())
+                return a
+            when ASTNode.REGEX:
+                def a := Array<Type>() -- FIXME literal
+                a.add(Type.RegularExpression())
+                return a
             when ASTNode.PREFIX(position, op, operand):
                 return possibleTypes(ASTNode.CALL(position,
                         ASTNode.DOT(position, operand, operatorName(op)),
@@ -1953,12 +1958,6 @@ class Compiler {
             if target.subtypes[0].name = RANGE_NAME & target.subtypes.count = 2 |
                     target.subtypes[0].name = STEPPED_RANGE_NAME & target.subtypes.count = 3 {
                 var cost := 0
-                if !target.subtypes[1].isNumber() {
-                    -- FIXME hack, this fixes an ambiguity with string[..] (String.Index? vs.
-                    -- Int64?). The real fix for this is to add an annotation which prioritizes one
-                    -- method higher.
-                    cost += 1
-                }
                 if start != null {
                     def startCost := coercionCost(start, target.subtypes[1])
                     if startCost = null {
@@ -2065,15 +2064,12 @@ class Compiler {
                 if target.typeKind = Type.Kind.BUILTIN_FLOAT {
                     return 2
                 }
-                if target.name = "panda.core.Int64" {
-                    return 1
-                }
                 if !target.isNumber() {
                     def preferred := preferredType(expr)
                     assert preferred != null
                     return coercionCost(preferred, target)
                 }
-                return 2
+                return 1
             when ASTNode.IR_WRAPPER(_, ir):
                 return coercionCost(ir.type(), target)
             when ASTNode.NULL:
@@ -2088,6 +2084,8 @@ class Compiler {
                         target)
             when ASTNode.RANGE(_, start, _, end, step):
                 return rangeCoercionCost(start, end, step, target)
+            when ASTNode.REGEX:
+                return coercionCost(Type.RegularExpression(), target)
             when ASTNode.STRING:
                 return coercionCost(Type.StringType(), target)
             otherwise:
@@ -2313,11 +2311,11 @@ class Compiler {
     @class
     function isAssignment(op:Token.Kind):Bit {
         match op {
-            when Token.Kind.ADDEQ, Token.Kind.SUBEQ, Token.Kind.MULEQ, Token.Kind.DIVEQ,
-                    Token.Kind.INTDIVEQ, Token.Kind.REMEQ, Token.Kind.POWEQ, Token.Kind.OREQ,
-                    Token.Kind.BITWISEOREQ, Token.Kind.ANDEQ, Token.Kind.BITWISEANDEQ,
-                    Token.Kind.XOREQ, Token.Kind.BITWISEXOREQ, Token.Kind.SHIFTLEFTEQ,
-                    Token.Kind.SHIFTRIGHTEQ:
+            when Token.Kind.ASSIGNMENT, Token.Kind.ADDEQ, Token.Kind.SUBEQ, Token.Kind.MULEQ,
+                    Token.Kind.DIVEQ, Token.Kind.INTDIVEQ, Token.Kind.REMEQ, Token.Kind.POWEQ,
+                    Token.Kind.OREQ, Token.Kind.BITWISEOREQ, Token.Kind.ANDEQ,
+                    Token.Kind.BITWISEANDEQ, Token.Kind.XOREQ, Token.Kind.BITWISEXOREQ,
+                    Token.Kind.SHIFTLEFTEQ, Token.Kind.SHIFTRIGHTEQ:
                 return true
             otherwise:
                 return false
@@ -2922,6 +2920,25 @@ class Compiler {
                     }
                     cost += returnCost
             }
+            if m.annotations.expressions != null {
+                for a in m.annotations.expressions {
+                    match a {
+                        when Annotations.Expression.PRIORITY(_, expr):
+                            match expr {
+                                when ASTNode.INT(_, value):
+                                    cost -= value.convert()
+                                    break
+                                when ASTNode.PREFIX(_, op, base):
+                                    if op = Token.Kind.SUB {
+                                        match base {
+                                            when ASTNode.INT(_, value):
+                                                cost += value.convert()
+                                        }
+                                    }
+                            }
+                    }
+                }
+            }
             if cost < bestCost {
                 bestCost := cost
                 best.clear()
@@ -3267,7 +3284,8 @@ class Compiler {
                 def matches := findOverloadedOperator(left, op, right, type)
                 if matches != null {
                     assert matches.first.count = 1,
-                            "ambiguous call: \{matches.first} on \{left}, \{right}"
+                            "ambiguous call: \{matches.first} on \{left}, \{right} with expected " +
+                                    "\{type} at \{position}"
                     def args := Array<ASTNode>() -- FIXME literal
                     if matches.first[0].value.annotations.isClass() {
                         args.add(left)
@@ -3287,7 +3305,8 @@ class Compiler {
                 def compiledRight := compileExpression(right, TypeContext.NON_VOID)
                 if compiledLeft != null & compiledRight != null {
                     error(position, "no match for '\{operatorName(op)}' on " +
-                            "'\{compiledLeft.type()}', '\{compiledRight.type()}'")
+                            "'\{compiledLeft.type()}', '\{compiledRight.type()}'" +
+                            type.description())
                 }
                 return null
         }
@@ -3521,6 +3540,12 @@ class Compiler {
                     return null
                 }
                 return call(position, target, "!", Array<ASTNode>() -* FIXME literal *-, type)
+            when Token.Kind.BITWISENOT:
+                def target := compileExpression(operand, TypeContext.NON_VOID)
+                if target = null {
+                    return null
+                }
+                return call(position, target, "!!", Array<ASTNode>() -* FIXME literal *-, type)
         }
         assert false
     }
@@ -3646,6 +3671,13 @@ class Compiler {
         }
     }
 
+    method compileRegex(position:Position, text:String):IR.Value? {
+        def args := Array<ASTNode>() -- FIXME literal
+        args.add(ASTNode.STRING(position, text))
+        return call(position, IR.Value.TYPE(Type.RegularExpression()), args,
+                TypeContext.UNSPECIFIED)
+    }
+
     method compileSelf(position:Position):IR.Value? {
         if currentMethod[0].annotations.isClass() {
             error(position, "cannot reference 'self' from a @class context")
@@ -3707,6 +3739,8 @@ class Compiler {
                 return compilePrefix(position, op, operand, type)
             when ASTNode.RANGE(position, start, inclusive, end, step):
                 return compileRange(position, start, inclusive, end, step, type)
+            when ASTNode.REGEX(position, text):
+                return compileRegex(position, text)
             when ASTNode.SELF(position):
                 return coerce(position, compileSelf(position), type)
             when ASTNode.STRING(position, text):
@@ -3825,7 +3859,7 @@ class Compiler {
             if field.annotations.isClass() & field.fieldKind = FieldDecl.Kind.CONSTANT {
                 compiler.currentClass.push(field.owner)
                 def auto := AutoScope(compiler, compiler.getSymbolTable(field.owner))
-                def result := compiler.compileExpression(field.rawValue)
+                def result := compiler.compileExpression(field.rawValue, TypeContext.TYPE(type()))
                 compiler.currentClass.pop()
                 return result
             }
@@ -4110,6 +4144,10 @@ class Compiler {
 
     method compileAssignment(position:Position, rawLeft:ASTNode, op:Token.Kind,
             rawRight:ASTNode) {
+        if !isAssignment(op) {
+            error(position, "not a statement")
+            return
+        }
         def left := compileLValue(rawLeft)
         if left = null {
             return

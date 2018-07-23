@@ -2250,7 +2250,7 @@ panda$core$Bit panda$core$UInt16$$IDX$panda$core$Int64$R$panda$core$Bit(panda$co
     panda$core$Bit $tmp649 = { $tmp643 };
     if ($tmp649.value) goto $l650; else goto $l651;
     $l651:;
-    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s652, (panda$core$Int64) { 820 }, &$s653);
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s652, (panda$core$Int64) { 830 }, &$s653);
     abort();
     $l650:;
     panda$core$Int64$init$builtin_int64(&$tmp655, 1);
@@ -2355,7 +2355,7 @@ panda$core$UInt16$nullable panda$core$UInt16$parse$panda$core$String$panda$core$
     panda$core$Bit $tmp708 = { $tmp702 };
     if ($tmp708.value) goto $l709; else goto $l710;
     $l710:;
-    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s711, (panda$core$Int64) { 863 }, &$s712);
+    panda$core$Panda$assertionFailure$panda$core$String$panda$core$Int64$panda$core$String(&$s711, (panda$core$Int64) { 873 }, &$s712);
     abort();
     $l709:;
     panda$core$UInt64$nullable $tmp714 = panda$core$Panda$parse$panda$core$String$panda$core$Int64$R$panda$core$UInt64$Q(p_str, p_radix);

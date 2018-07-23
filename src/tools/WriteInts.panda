@@ -59,7 +59,8 @@ class WriteInts {
     @class
     function signed(type:Type):Bit {
         match type {
-            when Type.INT8,  Type.INT16,  Type.INT32,  Type.INT64:  return true
+            when Type.INT8,  Type.INT16,  Type.INT32,  Type.INT64, Type.REAL32, Type.REAL64:
+                return true
             when Type.UINT8, Type.UINT16, Type.UINT32, Type.UINT64: return false
         }
     }
@@ -69,8 +70,8 @@ class WriteInts {
         match type {
             when Type.INT8,  Type.UINT8:  return 8
             when Type.INT16, Type.UINT16: return 16
-            when Type.INT32, Type.UINT32: return 32
-            when Type.INT64, Type.UINT64: return 64
+            when Type.INT32, Type.UINT32, Type.REAL32: return 32
+            when Type.INT64, Type.UINT64, Type.REAL64: return 64
         }
     }
 
@@ -185,10 +186,23 @@ class WriteInts {
         }
         out.printLine()
         out.printLine("    ===\{doc}===")
+        if leftType = rightType {
+            out.printLine("    @priority(1)")
+        }
         out.printLine("    function \{op}(other:\{object(rightType)}):\{object(resultType)} {")
         out.printLine("        return value\{cast(leftType, resultType)} \{op} " +
                 "other.value\{cast(rightType, resultType)}")
         out.printLine("    }")
+
+        if leftType = rightType & resultType != leftType {
+            out.printLine("    ===\{doc}===")
+            if leftType = rightType {
+                out.printLine("    @priority(-1)")
+            }
+            out.printLine("    function \{op}(other:\{object(leftType)}):\{object(leftType)} {")
+            out.printLine("        return value \{op} other.value")
+            out.printLine("    }")
+        }
     }
 
     @class
@@ -252,6 +266,7 @@ class WriteInts {
         out.printLine("    ===\{doc}===")
         if leftType = rightType {
             out.printLine("    @override")
+            out.printLine("    @priority(1)")
         }
         out.printLine("    function \{op}(other:\{object(rightType)}):Bit {")
         out.printLine("        return value\{cast(leftType, operandType)} \{op} " +
