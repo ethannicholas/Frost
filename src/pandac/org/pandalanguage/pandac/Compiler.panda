@@ -1355,6 +1355,8 @@ class Compiler {
                             ASTNode.DOT(p, ASTNode.IR_WRAPPER(p, target), operatorName(op)),
                             ImmutableArray<ASTNode>()))
                 }
+            when ASTNode.STRING:
+                return Type.StringType()
         }
         def possible := possibleTypes(expr)
         if possible = null {
@@ -1780,6 +1782,20 @@ class Compiler {
     }
 
     ================================================================================================
+    Returns the size in bits of the smallest Char type that can this codepoint.
+    ================================================================================================
+    function smallestCharSize(char:Char32):Int {
+        def v := char.convert()->Int32
+        if v <= 255 {
+            return 8
+        }
+        if v <= 65535 {
+            return 16
+        }
+        return 32
+    }
+
+    ================================================================================================
     Returns the types we should consider this expression to potentially be when evaluating method
     calls and field accesses against it. This is not always (nor could it reasonably be) an
     exhaustive list.
@@ -1932,9 +1948,19 @@ class Compiler {
                 result.add(Type.Real32())
                 result.add(Type.Real64())
                 return result
-            when ASTNode.STRING:
+            when ASTNode.STRING(_, text):
                 def result := Array<Type>() -- FIXME literal
                 result.add(Type.StringType())
+                if text.length() = 1 {
+                    def size := smallestCharSize(text[0])
+                    if size = 8 {
+                        result.add(Type.Char8())
+                    }
+                    if size <= 16 {
+                        result.add(Type.Char16())
+                    }
+                    result.add(Type.Char32())
+                }
                 return result
             otherwise:
                 assert false, "unsupported possibleType: \{value}:\{value.position()}"
@@ -2096,7 +2122,20 @@ class Compiler {
                 return rangeCoercionCost(start, end, step, target)
             when ASTNode.REGEX:
                 return coercionCost(Type.RegularExpression(), target)
-            when ASTNode.STRING:
+            when ASTNode.STRING(_, text):
+                if target.isChar() & text.length() = 1 {
+                    def size := smallestCharSize(text[0])
+                    def targetSize:Int
+                    match target {
+                        when Type.Char8():  targetSize := 8
+                        when Type.Char16(): targetSize := 16
+                        when Type.Char32(): targetSize := 32
+                    }
+                    if targetSize >= size {
+                        return 1
+                    }
+                    return null
+                }
                 return coercionCost(Type.StringType(), target)
             otherwise:
                 assert false, "unsupported coercionCost: \{expr}"
@@ -3757,6 +3796,16 @@ class Compiler {
             when ASTNode.SELF(position):
                 return coerce(position, compileSelf(position), type)
             when ASTNode.STRING(position, text):
+                match type {
+                    when TypeContext.TYPE(t):
+                        if t.isChar() & text.length() = 1 {
+                            def args := Array<ASTNode>()
+                            args.add(ASTNode.INT(position, text[0].convert()))
+                            return compileExpression(ASTNode.CALL(position,
+                                    ASTNode.IR_WRAPPER(position, IR.Value.TYPE(t)),
+                                    args.finish()))
+                        }
+                }
                 return coerce(expr.position(), IR.Value.STRING(text), type)
             when ASTNode.TYPE, ASTNode.GENERIC_TYPE:
                 def type := resolve(scanner.convertType(expr))

@@ -14,7 +14,7 @@ method main() {
         }
     }
     for i in 0 .. a.count {
-        if a[i] != null {
+        if a[i] !== null {
             Console.printLine(a[i])
         }
         else {

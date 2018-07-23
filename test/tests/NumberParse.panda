@@ -1,6 +1,6 @@
 method parse64(s:String, radix:Int) {
     def result := Int64.parse(s, radix)
-    if result != null {
+    if result !== null {
         Console.printLine(result)
     }
     else {
