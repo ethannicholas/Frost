@@ -1,0 +1,15 @@
+var count := 0
+
+@post(count = @pre(count + 1))
+method increment() {
+    count += 1
+}
+
+method main() {
+    increment()
+    Console.printLine(count)
+    increment()
+    Console.printLine(count)
+    increment()
+    Console.printLine(count)
+}

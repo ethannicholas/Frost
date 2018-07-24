@@ -1767,19 +1767,6 @@ class LLVMCodeGenerator : CodeGenerator {
         }
     }
 
-    method writeBlock(block:IR.Block) {
-        if block.id.value != 0 {
-            currentBlock := "\{block.id}"
-            out.printLine(currentBlock + ": ; \{block.comment}")
-        }
-        else {
-            currentBlock := "0"
-        }
-        for i in 0 .. block.statements.count {
-            writeStatement(block.ids[i], block.statements[i])
-        }
-    }
-
     method writeIR(ir:IR) {
         for i in 0 .. ir.locals.count {
             def name := "%local\{i}"
@@ -1789,8 +1776,18 @@ class LLVMCodeGenerator : CodeGenerator {
                 out.printLine("store \{type} null, \{type}* \{name}")
             }
         }
-        for bl in ir.blocks {
-            writeBlock(bl)
+        for i in 0 .. ir.blocks.count {
+            def block := ir.blocks[i]
+            if i != 0 {
+                currentBlock := "\{block.id}"
+                out.printLine(currentBlock + ": ; \{block.comment}")
+            }
+            else {
+                currentBlock := "0"
+            }
+            for j in 0 .. block.statements.count {
+                writeStatement(block.ids[j], block.statements[j])
+            }
         }
     }
 
