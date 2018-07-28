@@ -2137,6 +2137,43 @@ class Compiler {
                 return 1
             when ASTNode.IR_WRAPPER(_, ir):
                 return coercionCost(ir.type(), target)
+            when ASTNode.METHOD(position, _, _, kind, _, _, parameters, returnType, _):
+                def paramTypes := Array<Type>()
+                for p in parameters { -- FIXME map
+                    match p {
+                        when ASTNode.PARAMETER(_, _, type):
+                            def resolved := resolve(scanner.convertType(type))
+                            if resolved == null {
+                                return null
+                            }
+                            paramTypes.add(resolved)
+                        otherwise:
+                            assert false
+                    }
+                }
+                def resolvedReturnType:Type
+                if returnType !== null {
+                    resolvedReturnType := resolve(scanner.convertType(returnType))
+                    if resolvedReturnType == null {
+                        return null
+                    }
+                }
+                else {
+                    resolvedReturnType := Type.Void()
+                }
+                def typeKind:Type.Kind
+                -- we don't actually know whether the method has any captures yet (it might turn
+                -- out to be mutable), but we assume it's immutable here and let it error later if
+                -- that turns out to be a problem
+                if kind = MethodDecl.Kind.FUNCTION {
+                    typeKind := Type.Kind.IMMUTABLE_FUNCTION
+                }
+                else {
+                    assert kind = MethodDecl.Kind.METHOD
+                    typeKind := Type.Kind.IMMUTABLE_METHOD
+                }
+                return coercionCost(Type.methodType(position, typeKind, paramTypes,
+                        resolvedReturnType), target)
             when ASTNode.NULL:
                 if target.typeKind = Type.Kind.NULLABLE {
                     return 0
@@ -2665,6 +2702,50 @@ class Compiler {
         return IR.Value.REF(result, m.owner.type)
     }
 
+    method createMethodObject(position:Position, target:IR.Value?, m:MethodDecl):IR.Value? {
+        def effectiveType:Type
+        def irType:Type
+        if target !== null {
+            if m.annotations.isClass() {
+                assert target.type().isClassLiteral()
+                effectiveType := m.type()
+                irType := Type.pointerTo(m.type())
+            }
+            else {
+                effectiveType := MethodRef(self, target.type(), m).effectiveType
+                irType := Type.pointerTo(declaredTypeWithSelf(m, m.owner.type))
+            }
+        }
+        else {
+            if m.annotations.isClass() {
+                effectiveType := m.type()
+                irType := Type.pointerTo(m.type())
+            }
+            else {
+                effectiveType := declaredTypeWithSelf(m, m.owner.type)
+                irType := Type.pointerTo(declaredTypeWithSelf(m, m.owner.type))
+            }
+        }
+        def args := Array<ASTNode>()
+        args.add(ASTNode.IR_WRAPPER(position, cast(IR.Value.METHOD_POINTER(m, irType),
+                Type.pointerTo(Type.Int8()))))
+        if m.annotations.isClass() {
+            args.add(ASTNode.NULL(position))
+        }
+        else {
+            args.add(ASTNode.IR_WRAPPER(position, target))
+        }
+        def methodType:Type
+        if target != null & !isImmutable(target.type()) {
+            methodType := Type.MutableMethod()
+        }
+        else {
+            methodType := Type.Method()
+        }
+        return cast(call(position, IR.Value.TYPE(methodType), args, TypeContext.UNSPECIFIED),
+                effectiveType)
+    }
+
     @pre(target != Type.Void())
     method coerce(position:Position, value:IR.Value?, target:Type):IR.Value? {
         if value == null {
@@ -2675,23 +2756,12 @@ class Compiler {
         }
         match value {
             when IR.Value.METHOD(targetObj, m):
-                if coercionCost(m.type(), target) = null {
+                def result := createMethodObject(position, targetObj, m)
+                if coercionCost(result.type(), target) = null {
+                    error(position, "expected '\{target}', but found '\{result.type()}'")
                     return null
                 }
-                def args := Array<ASTNode>()
-                def pandaType := inheritedType(m)
-                def irType := Type.pointerTo(pandaType)
-                args.add(ASTNode.IR_WRAPPER(position, cast(IR.Value.METHOD_POINTER(m, irType),
-                        Type.pointerTo(Type.Int8()))))
-                if m.annotations.isClass() {
-                    assert targetObj.type().isClassLiteral()
-                    args.add(ASTNode.NULL(position))
-                }
-                else {
-                    args.add(ASTNode.IR_WRAPPER(position, targetObj))
-                }
-                return cast(call(position, IR.Value.TYPE(Type.Method()), args,
-                        TypeContext.UNSPECIFIED), pandaType)
+                return coerce(position, result, target)
             when IR.Value.METHODS(targetObj, methods):
                 def best := Array<MethodDecl>()
                 var bestCost := Int.MAX
@@ -3081,6 +3151,86 @@ class Compiler {
         return Pair<ListView<MethodRef>, Int>(best, bestCost)
     }
 
+    method callMethodObject(position:Position, m:IR.Value, args:ListView<ASTNode>,
+            type:TypeContext):IR.Value? {
+        def t := m.type()
+        if !t.isMethod() {
+            error(position, "value of type '\{t}' is not a method")
+            return null
+        }
+        if t.parameterCount != args.count {
+            error(position, "method of type '\{t}' expected \{t.parameterCount} " +
+                    "argument\{t.parameterCount = 1:|s}, but found \{args.count}")
+            return null
+        }
+        def finalArgs := Array<IR.Value>(args.count)
+        for i in 0 .. args.count {
+            def compiled := compileExpression(args[i], TypeContext.TYPE(t.parameterType(i)))
+            if compiled == null {
+                return null
+            }
+            finalArgs.add(compiled)
+        }
+        def result:IR.Value?
+        def resultSlot := ir.locals.count
+        if t.returnType() != Type.Void() {
+            ir.locals.add(t.returnType())
+            result := IR.Value.LOCAL(resultSlot, t.returnType())
+        }
+        else {
+            result := null
+        }
+        def st := getSymbolTable(getClass(Type.Method()))
+        def pointerField := st["pointer"]->FieldDecl
+        def methodObj := cast(m, Type.Method())
+        def methodPtrPtr := ir.add(IR.Statement.GET_FIELD_POINTER(methodObj, pointerField))
+        def methodPtr := ir.add(IR.Statement.LOAD(IR.Value.REF(methodPtrPtr,
+                Type.pointerTo(Type.Int8()))))
+        def targetField := st["target"]->FieldDecl
+        def targetPtr := ir.add(IR.Statement.GET_FIELD_POINTER(methodObj, targetField))
+        def targetType := Type.Immutable()
+        def target := ir.add(IR.Statement.LOAD(IR.Value.REF(targetPtr, targetType)))
+        def targetNonNull := ir.add(IR.Statement.BINARY(IR.Value.REF(target, targetType),
+                Token.Kind.NIDENTITY, IR.Value.NULL(targetType), Type.BuiltinBit()))
+        def haveTargetBlock := ir.newBlock("dynamic call with target")
+        def noTargetBlock := ir.newBlock("dynamic call without target")
+        def mergeBlock := ir.newBlock("dynamic call merge")
+        ir.add(IR.Statement.CONDITIONAL_BRANCH(IR.Value.REF(targetNonNull,
+                Type.BuiltinBit()), haveTargetBlock, noTargetBlock))
+        ir.setCurrentBlock(noTargetBlock)
+        def noTargetCast := cast(IR.Value.REF(methodPtr, Type.pointerTo(Type.Int8())),
+                Type.pointerTo(t))
+        def noTargetResult := ir.add(IR.Statement.DYNAMIC_CALL(noTargetCast,
+                ImmutableArray<IR.Value>(finalArgs)))
+        if result != null {
+            ir.add(IR.Statement.STORE(IR.Value.REF(noTargetResult, t.returnType()), result))
+        }
+        ir.add(IR.Statement.BRANCH(mergeBlock))
+        ir.setCurrentBlock(haveTargetBlock)
+        def targetParams := Array<Type>()
+        targetParams.add(targetType)
+        for i in 0 .. t.parameterCount {
+            targetParams.add(t.parameterType(i))
+        }
+        def haveTargetType := Type.methodType(position, t.typeKind, targetParams,
+                t.returnType())
+        def haveTargetCast := cast(IR.Value.REF(methodPtr, Type.pointerTo(Type.Int8())),
+                Type.pointerTo(haveTargetType))
+        finalArgs.insert(0, IR.Value.REF(target, targetType))
+        def haveTargetResult := ir.add(IR.Statement.DYNAMIC_CALL(haveTargetCast,
+                ImmutableArray<IR.Value>(finalArgs)))
+        if result != null {
+            ir.add(IR.Statement.STORE(IR.Value.REF(haveTargetResult, t.returnType()), result))
+        }
+        ir.add(IR.Statement.BRANCH(mergeBlock))
+        ir.setCurrentBlock(mergeBlock)
+        if result != null {
+            def resultLoad := ir.add(IR.Statement.LOAD(result))
+            return coerce(position, IR.Value.REF(resultLoad, t.returnType()), type)
+        }
+        return null
+    }
+
     method call(position:Position, m:IR.Value, args:ListView<ASTNode>,
             type:TypeContext):IR.Value? {
         match m {
@@ -3121,33 +3271,8 @@ class Compiler {
                 error(position, "no match for \{methods[0].name}(\{argTypes.join(", ")})" +
                         type.description())
                 return null
-            when IR.Value.REF(_, t):
-                if !t.isMethod() {
-                    error(position, "value of type '\{t}' is not a method")
-                    return null
-                }
-                if t.parameterCount != args.count {
-                    error(position, "method of type '\{t}' expected \{t.parameterCount} " +
-                            "argument\{t.parameterCount = 1:|s}, but found \{args.count}")
-                    return null
-                }
-                def finalArgs := Array<IR.Value>(args.count)
-                for i in 0 .. args.count {
-                    def compiled := compileExpression(args[i], TypeContext.TYPE(t.parameterType(i)))
-                    if compiled == null {
-                        return null
-                    }
-                    finalArgs.add(compiled)
-                }
-                def pointerField := getSymbolTable(getClass(Type.Method()))["pointer"]->FieldDecl
-                def methodObj := cast(m, Type.Method())
-                def methodPtrPtr := ir.add(IR.Statement.GET_FIELD_POINTER(methodObj, pointerField))
-                def methodPtr := ir.add(IR.Statement.LOAD(IR.Value.REF(methodPtrPtr,
-                        Type.pointerTo(Type.Int8()))))
-                def castedPtr := cast(IR.Value.REF(methodPtr, Type.pointerTo(Type.Int8())),
-                        Type.pointerTo(t))
-                def result := ir.add(IR.Statement.DYNAMIC_CALL(castedPtr, finalArgs.finish()))
-                return coerce(position, IR.Value.REF(result, t.returnType()), type)
+            when IR.Value.PARAMETER, IR.Value.REF:
+                return callMethodObject(position, m, args, type)
             when IR.Value.TYPE(t):
                 def finalType:Type
                 if t.typeKind = Type.Kind.GENERIC & t.subtypes[0] = Type.Class() {
@@ -4057,16 +4182,7 @@ class Compiler {
         }
         match unresolved {
             when IR.Value.METHOD(target, m):
-                def position := expr.position()
-                def args := Array<ASTNode>()
-                def pandaType := inheritedType(m)
-                def irType := Type.pointerTo(pandaType)
-                args.add(ASTNode.IR_WRAPPER(position,
-                        cast(IR.Value.METHOD_POINTER(m, irType), Type.pointerTo(Type.Int8()))))
-                args.add(ASTNode.IR_WRAPPER(position, target))
-                def construct := cast(call(position, IR.Value.TYPE(Type.MutableMethod()), args,
-                        TypeContext.UNSPECIFIED), pandaType)
-                return coerce(position, construct, type)
+                return coerce(expr.position(), createMethodObject(expr.position(), target, m), type)
             when IR.Value.METHODS(target, methods):
                 match type {
                     when TypeContext.TYPE(t):
